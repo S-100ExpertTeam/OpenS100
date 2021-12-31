@@ -1,19 +1,19 @@
 # OSS Notice - OpenS100
 
-# Clipper
+### Clipper
 Boost Software License
 
-# GeographicLic
+### GeographicLic
 The MIT License (MIT)
 
-# HDF5
+### HDF5
 Limited portions of HDF5 were developed by Lawrence Berkeley National Laboratory (LBNL).
 
-# Lua
+### Lua
 The MIT License (MIT)
 
-# pugixml
+### pugixml
 The MIT License (MIT)
 
-# LuaScriptingReference
+### LuaScriptingReference
 Unknown.
