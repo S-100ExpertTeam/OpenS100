@@ -1,0 +1,3 @@
+Clipper
+Boost Software License
+
