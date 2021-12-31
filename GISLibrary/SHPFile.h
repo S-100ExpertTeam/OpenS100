@@ -1,0 +1,36 @@
+#pragma once
+#include "spatialobject.h"
+
+class Geometry;
+class Scaler;
+
+class SHPFile :
+	public SpatialObject
+{
+public:
+	SHPFile();
+	virtual ~SHPFile();
+
+public:
+	unsigned int m_nRecords;					// The number of records
+	unsigned int m_nShapeType;					// Shape Type
+	Geometry **m_pSHPObject;
+
+public:
+	/*
+	** Description: Read the file and store the data in the layer.
+	*/
+	bool Open(CString _filepath);
+
+	void Draw(CDC *pDC, Scaler *scaler, double offset = 0);
+	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
+	void Draw(HDC &hDC, Scaler *scaler, int priority, int geoType, double offset = 0) {};
+
+	//void Draw(CDCRenderTarget* pRenderTarget, Scaler *scaler, double offsetX = 0, double offsetY = 0);
+	void Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, Scaler *scaler, double offsetX = 0, double offsetY = 0);
+
+	/*
+	** Description: Translate Big Endian and Little Endian into each other.
+	*/
+	void SwapWord(int _length, void *_pData);
+};

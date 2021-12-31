@@ -1,0 +1,1037 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="8211Lib">
+      <UniqueIdentifier>{be76d840-9fe5-4f27-8c29-d1e589df2e41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="S100">
+      <UniqueIdentifier>{a7f16c24-a899-4791-95a0-4fbf32e702b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S101">
+      <UniqueIdentifier>{66640108-15be-40df-860f-fd1a14106751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S101\Record">
+      <UniqueIdentifier>{28c38bef-a409-4f9f-bcc9-ff09d05772f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S101\NameStruct">
+      <UniqueIdentifier>{bad8f7a8-4f33-4b3f-86a4-a3eed81bfa5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S101\Field">
+      <UniqueIdentifier>{56e67ed0-89f3-4c8a-bc76-18a31dbd1eda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="SENC_Instruction">
+      <UniqueIdentifier>{044b1bec-ab5f-4ac8-8761-4f29df7d5437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{a5ddfb9c-97f6-42a8-aaae-77bc0d6b1ac7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SENC_Instruction\Items">
+      <UniqueIdentifier>{01444e8b-30d9-4da4-85e3-68b0f21b0faa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="GISLibrary.def">
+      <Filter>소스 파일</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GISLibrary.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SpatialObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="LayerManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SHPFile.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DRReader.cpp">
+      <Filter>8211Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="DRDirectoryInfo.cpp">
+      <Filter>8211Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="ISO8211Fuc.cpp">
+      <Filter>8211Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="S101Cell.cpp">
+      <Filter>S101</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipInfo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="F_ATTR.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_CCID.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_CRID.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_CRSH.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_CSAX.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_CSID.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_CUCO.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_DSID.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_DSSI.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_FOID.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_FRID.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_INAS.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_IRID.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_MASK.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_MRID.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_PRID.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_PTAS.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_RIAS.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_SEGH.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_SPAS.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_SRID.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_THAS.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_VDAT.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="R_CompositeRecord.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="R_CurveRecord.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="R_DSCRS.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="R_DSGIR.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="R_FeatureRecord.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="R_InformationRecord.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="R_MultiPointRecord.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="R_PointRecord.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="R_SurfaceRecord.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="Record.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipMonitoringLayer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipMonitoringXMLFile.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectName.cpp">
+      <Filter>S101\NameStruct</Filter>
+    </ClCompile>
+    <ClCompile Include="RecordName.cpp">
+      <Filter>S101\NameStruct</Filter>
+    </ClCompile>
+    <ClCompile Include="F_CodeWithNumericCode.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_PROJ.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_GDAT.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_C2IT.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_COCC.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_C3IT.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_C2FT.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_C3FT.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_C2IL.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_C3IL.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_C3FL.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_C2FL.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_FASC.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_CCOC.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="F_SECC.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="S101Layer.cpp">
+      <Filter>S101</Filter>
+    </ClCompile>
+    <ClCompile Include="R_VectorRecord.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="S100SpatialObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicFile.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Catalogue.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="OrientedCurveRecord.cpp">
+      <Filter>S101\Record</Filter>
+    </ClCompile>
+    <ClCompile Include="S100Layer.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="DDR.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="D2D1Resources.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ATTR.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="FC2D.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="IC2D.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="FC3D.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="C3IL.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeWithNumericCode.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="CSAX.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="FASC.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="CUCO.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="MASK.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="RIAS.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="PTAS.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="SPAS.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="THAS.cpp">
+      <Filter>S101\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="CatalogItem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingSet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundingDraft.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="S100Utilities.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="D2D1ChartResources.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateInputSchemaS101.cpp">
+      <Filter>S101</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessS101.cpp">
+      <Filter>S101</Filter>
+    </ClCompile>
+    <ClCompile Include="PCOutputSchemaManager.cpp">
+      <Filter>S101</Filter>
+    </ClCompile>
+    <ClCompile Include="S101LuaScriptingReference.cpp">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="host_data.cpp">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="host_functions.cpp">
+      <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Annulus.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Arc3Points.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_ArcByRadius.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_AreaFillBase.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_AreaFillReference.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_AreaPlacement.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Attribute.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_CallTemplate.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Color.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_ColorFill.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_ColorProfile.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_CommonFuc.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_CompositeLineStyle.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Dash.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Element.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Font.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Foreground.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Hatch.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_HatchFill.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Item.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_LinePlacement.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_LineStyle.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_LineStyleBase.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_LineStyleReference.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_LineSymbol.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_NullInstruction.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_OverrideColor.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Palette.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Path.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_PatternFill.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Pen.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Pixmap.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_pixmapFill.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Polyline.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Rotation.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Rule.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Sector.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_SimpleLineStyle.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_SpatialReference.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Symbol.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_SymbolFill.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Template.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Text.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_TextPoint.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_VectorPoint.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_WithParam.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_LineInstruction.cpp">
+      <Filter>SENC_Instruction</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_Instruction.cpp">
+      <Filter>SENC_Instruction</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_AugmentedRay.cpp">
+      <Filter>SENC_Instruction</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_AugmentedPath.cpp">
+      <Filter>SENC_Instruction</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_AreaInstruction.cpp">
+      <Filter>SENC_Instruction</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_PointInstruction.cpp">
+      <Filter>SENC_Instruction</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_TextInstruction.cpp">
+      <Filter>SENC_Instruction</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_DisplayList.cpp">
+      <Filter>SENC_Instruction</Filter>
+    </ClCompile>
+    <ClCompile Include="ClipperUtil.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SENC_AlertReference.cpp">
+      <Filter>SENC_Instruction</Filter>
+    </ClCompile>
+    <ClCompile Include="NewFeatureManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="NewInformationManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GISLibrary.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SHPFile.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SpatialObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DRDirectoryInfo.h">
+      <Filter>8211Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="DRReader.h">
+      <Filter>8211Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="ISO8211Fuc.h">
+      <Filter>8211Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="NonPrintableCharacter.h">
+      <Filter>8211Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="S101Cell.h">
+      <Filter>S101</Filter>
+    </ClInclude>
+    <ClInclude Include="AddtionalStruct.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipInfo.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="F_ATTR.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_CCID.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_CRID.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_CRSH.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_CSAX.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_CSID.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_CUCO.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_DSID.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_DSSI.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_FOID.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_FRID.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_INAS.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_IRID.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_MASK.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_MRID.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_PRID.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_PTAS.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_RIAS.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_SEGH.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_SPAS.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_SRID.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_THAS.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_VDAT.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="R_CompositeRecord.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="R_CurveRecord.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="R_DSCRS.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="R_DSGIR.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="R_FeatureRecord.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="R_InformationRecord.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="R_MultiPointRecord.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="R_PointRecord.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="R_SurfaceRecord.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="Record.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipMonitoringLayer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipMonitoringXMLFile.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectName.h">
+      <Filter>S101\NameStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordName.h">
+      <Filter>S101\NameStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="F_CodeWithNumericCode.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_PROJ.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_GDAT.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_COCC.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_C2IT.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_C3IT.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_C2FT.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_C3FT.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_C2FL.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_C2IL.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_C3FL.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_C3IL.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_FASC.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_CCOC.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="F_SECC.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="S101Layer.h">
+      <Filter>S101</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="R_VectorRecord.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="S100SpatialObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicFile.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogExCatalogSelect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Catalogue.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GISViewer\DialogExCatalogSelect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="OrientedCurveRecord.h">
+      <Filter>S101\Record</Filter>
+    </ClInclude>
+    <ClInclude Include="S100Layer.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="DDR.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_S100_FileType.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="D2D1Resources.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Namespace_GISLibrary.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ATTR.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="FC2D.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="IC2D.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="FC3D.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="C3IL.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeWithNumericCode.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="CSAX.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="CUCO.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="FASC.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="MASK.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="PTAS.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="RIAS.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="SPAS.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="THAS.h">
+      <Filter>S101\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="CatalogItem.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingSet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundingDraft.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DRDirectory.h">
+      <Filter>8211Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="S100Utilities.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="D2D1ChartResources.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateInputSchemaS101.h">
+      <Filter>S101</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessS101.h">
+      <Filter>S101</Filter>
+    </ClInclude>
+    <ClInclude Include="PCOutputSchemaManager.h">
+      <Filter>S101</Filter>
+    </ClInclude>
+    <ClInclude Include="S101LuaScriptingReference.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="host_data.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="host_functions.h">
+      <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Annulus.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Arc3Points.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_ArcByRadius.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_AreaFillBase.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_AreaFillReference.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_AreaPlacement.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Attribute.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_CallTemplate.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_CIE.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Color.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_ColorFill.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_ColorProfile.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_CommonFuc.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_CompositeLineStyle.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Dash.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Define.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Element.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Font.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Foreground.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Hatch.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_HatchFill.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Item.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_LinePlacement.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_LineStyle.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_LineStyleBase.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_LineStyleReference.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_LineSymbol.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_NullInstruction.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_OverrideColor.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Palette.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Path.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_PatternFill.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Pen.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Pixmap.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_pixmapFill.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Polyline.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Rotation.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Rule.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Sector.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_SimpleLineStyle.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_SpatialReference.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_SRGB.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Symbol.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_SymbolFill.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Template.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Text.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_TextPoint.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_VectorPoint.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_WithParam.h">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_LineInstruction.h">
+      <Filter>SENC_Instruction</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_Instruction.h">
+      <Filter>SENC_Instruction</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_AugmentedRay.h">
+      <Filter>SENC_Instruction</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_AugmentedPath.h">
+      <Filter>SENC_Instruction</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_AreaInstruction.h">
+      <Filter>SENC_Instruction</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_PointInstruction.h">
+      <Filter>SENC_Instruction</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_TextInstruction.h">
+      <Filter>SENC_Instruction</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_DisplayList.h">
+      <Filter>SENC_Instruction</Filter>
+    </ClInclude>
+    <ClInclude Include="ClipperUtil.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_AlertReference.h">
+      <Filter>SENC_Instruction</Filter>
+    </ClInclude>
+    <ClInclude Include="NewFeatureManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="NewInformationManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GISLibrary.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

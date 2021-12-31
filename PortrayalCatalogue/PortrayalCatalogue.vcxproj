@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8EE76986-C155-4907-9088-D146AE47EBC8}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>PortrayalCatalogue</RootNamespace>
+    <ProjectName>PortrayalCatalogue</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\x64_include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\x64_include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;S101PORTRAYER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
+      <AdditionalOptions>/MACHINE:X86 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;S101PORTRAYER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;S101PORTRAYER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
+      <AdditionalOptions>/MACHINE:X86 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;S101PORTRAYER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CatalogItem.h" />
+    <ClInclude Include="Context.h" />
+    <ClInclude Include="ContextParameter.h" />
+    <ClInclude Include="DisplayMode.h" />
+    <ClInclude Include="DisplayModes.h" />
+    <ClInclude Include="DisplayPlane.h" />
+    <ClInclude Include="DisplayPlanes.h" />
+    <ClInclude Include="Enum_BoundaryType.h" />
+    <ClInclude Include="Enum_GeometricPrimitive.h" />
+    <ClInclude Include="Enum_InterpolationType.h" />
+    <ClInclude Include="Enum_PortrayalRuleType.h" />
+    <ClInclude Include="Enum_FileFormat.h" />
+    <ClInclude Include="Enum_FileType.h" />
+    <ClInclude Include="Enum_ParameterType.h" />
+    <ClInclude Include="FoundationMode.h" />
+    <ClInclude Include="Enum_Orientation.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="S100_AlertReference.h" />
+    <ClInclude Include="S100_Annulus.h" />
+    <ClInclude Include="S100_Arc3Points.h" />
+    <ClInclude Include="S100_ArcByRadius.h" />
+    <ClInclude Include="S100_AreaFillBase.h" />
+    <ClInclude Include="S100_AreaFillFile.h" />
+    <ClInclude Include="S100_AreaFillReference.h" />
+    <ClInclude Include="S100_AreaFills.h" />
+    <ClInclude Include="S100_AugmentedGeometry.h" />
+    <ClInclude Include="S100_AugmentedLineOrArea.h" />
+    <ClInclude Include="S100_AugmentedPath.h" />
+    <ClInclude Include="S100_AugmentedPoint.h" />
+    <ClInclude Include="S100_AugmentedRay.h" />
+    <ClInclude Include="S100_CIE.h" />
+    <ClInclude Include="S100_ColorProfile.h" />
+    <ClInclude Include="S100_ColorProfiles.h" />
+    <ClInclude Include="S100_ComplexLineStyle.h" />
+    <ClInclude Include="S100_CompositeLineStyle.h" />
+    <ClInclude Include="S100_Description.h" />
+    <ClInclude Include="S100_Hatch.h" />
+    <ClInclude Include="S100_HatchFill.h" />
+    <ClInclude Include="S100_Item.h" />
+    <ClInclude Include="S100_LinePlacement.h" />
+    <ClInclude Include="S100_LineStyle.h" />
+    <ClInclude Include="S100_LineStyleBase.h" />
+    <ClInclude Include="S100_LineStyleFile.h" />
+    <ClInclude Include="S100_LineStyleReference.h" />
+    <ClInclude Include="S100_LineStyles.h" />
+    <ClInclude Include="S100_LineSymbol.h" />
+    <ClInclude Include="S100_OverrideColor.h" />
+    <ClInclude Include="S100_Palette.h" />
+    <ClInclude Include="S100_Path.h" />
+    <ClInclude Include="S100_PatternFill.h" />
+    <ClInclude Include="S100_Pixmap.h" />
+    <ClInclude Include="S100_PixmapFill.h" />
+    <ClInclude Include="S100_Polyline.h" />
+    <ClInclude Include="S100_Rotation.h" />
+    <ClInclude Include="S100_Sector.h" />
+    <ClInclude Include="S100_SpatialReference.h" />
+    <ClInclude Include="S100_SRGB.h" />
+    <ClInclude Include="S100_AreaInstruction.h" />
+    <ClInclude Include="S100_AreaPlacement.h" />
+    <ClInclude Include="S100_CallTemplate.h" />
+    <ClInclude Include="S100_Color.h" />
+    <ClInclude Include="S100_ColorFill.h" />
+    <ClInclude Include="S100_Dash.h" />
+    <ClInclude Include="S100_DisplayList.h" />
+    <ClInclude Include="S100_Element.h" />
+    <ClInclude Include="S100_FeatureReference.h" />
+    <ClInclude Include="S100_Font.h" />
+    <ClInclude Include="S100_Foreground.h" />
+    <ClInclude Include="S100_Include.h" />
+    <ClInclude Include="S100_Instruction.h" />
+    <ClInclude Include="S100_LineInstruction.h" />
+    <ClInclude Include="PortrayalCatalogue.h" />
+    <ClInclude Include="S100_NullInstruction.h" />
+    <ClInclude Include="S100_Pen.h" />
+    <ClInclude Include="S100_PointInstruction.h" />
+    <ClInclude Include="S100_RuleFile.h" />
+    <ClInclude Include="S100_Rules.h" />
+    <ClInclude Include="S100_Symbol.h" />
+    <ClInclude Include="S100_SimpleLineStyle.h" />
+    <ClInclude Include="S100_SymbolFill.h" />
+    <ClInclude Include="S100_Template.h" />
+    <ClInclude Include="S100_Text.h" />
+    <ClInclude Include="S100_TextInstruction.h" />
+    <ClInclude Include="S100_TextPoint.h" />
+    <ClInclude Include="S100_Transform.h" />
+    <ClInclude Include="S100_VectorPoint.h" />
+    <ClInclude Include="S100_WithParam.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="ViewingGroup.h" />
+    <ClInclude Include="ViewingGroupLayer.h" />
+    <ClInclude Include="ViewingGroupLayers.h" />
+    <ClInclude Include="ViewingGroups.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CatalogItem.cpp" />
+    <ClCompile Include="Context.cpp" />
+    <ClCompile Include="ContextParameter.cpp" />
+    <ClCompile Include="DisplayMode.cpp" />
+    <ClCompile Include="DisplayModes.cpp" />
+    <ClCompile Include="DisplayPlane.cpp" />
+    <ClCompile Include="DisplayPlanes.cpp" />
+    <ClCompile Include="Enum_BoundaryType.cpp" />
+    <ClCompile Include="Enum_InterpolationType.cpp" />
+    <ClCompile Include="FoundationMode.cpp" />
+    <ClCompile Include="Enum_GeometricPrimitive.cpp" />
+    <ClCompile Include="Enum_Orientation.cpp" />
+    <ClCompile Include="S100_AlertReference.cpp" />
+    <ClCompile Include="S100_Annulus.cpp" />
+    <ClCompile Include="S100_Arc3Points.cpp" />
+    <ClCompile Include="S100_ArcByRadius.cpp" />
+    <ClCompile Include="S100_AreaFillBase.cpp" />
+    <ClCompile Include="S100_AreaFillFile.cpp" />
+    <ClCompile Include="S100_AreaFillReference.cpp" />
+    <ClCompile Include="S100_AreaFills.cpp" />
+    <ClCompile Include="S100_AugmentedGeometry.cpp" />
+    <ClCompile Include="S100_AugmentedLineOrArea.cpp" />
+    <ClCompile Include="S100_AugmentedPath.cpp" />
+    <ClCompile Include="S100_AugmentedPoint.cpp" />
+    <ClCompile Include="S100_AugmentedRay.cpp" />
+    <ClCompile Include="S100_CIE.cpp" />
+    <ClCompile Include="S100_ColorProfile.cpp" />
+    <ClCompile Include="S100_ColorProfiles.cpp" />
+    <ClCompile Include="S100_ComplexLineStyle.cpp" />
+    <ClCompile Include="S100_CompositeLineStyle.cpp" />
+    <ClCompile Include="S100_Description.cpp" />
+    <ClCompile Include="S100_Hatch.cpp" />
+    <ClCompile Include="S100_HatchFill.cpp" />
+    <ClCompile Include="S100_Item.cpp" />
+    <ClCompile Include="S100_LinePlacement.cpp" />
+    <ClCompile Include="S100_LineStyle.cpp" />
+    <ClCompile Include="S100_LineStyleBase.cpp" />
+    <ClCompile Include="S100_LineStyleFile.cpp" />
+    <ClCompile Include="S100_LineStyleReference.cpp" />
+    <ClCompile Include="S100_LineStyles.cpp" />
+    <ClCompile Include="S100_LineSymbol.cpp" />
+    <ClCompile Include="S100_OverrideColor.cpp" />
+    <ClCompile Include="S100_Palette.cpp" />
+    <ClCompile Include="S100_Path.cpp" />
+    <ClCompile Include="S100_PatternFill.cpp" />
+    <ClCompile Include="S100_Pixmap.cpp" />
+    <ClCompile Include="S100_PixmapFill.cpp" />
+    <ClCompile Include="S100_Polyline.cpp" />
+    <ClCompile Include="S100_Rotation.cpp" />
+    <ClCompile Include="S100_Sector.cpp" />
+    <ClCompile Include="S100_SpatialReference.cpp" />
+    <ClCompile Include="S100_SRGB.cpp" />
+    <ClCompile Include="S100_AreaInstruction.cpp" />
+    <ClCompile Include="dllmain.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="S100_AreaPlacement.cpp" />
+    <ClCompile Include="S100_CallTemplate.cpp" />
+    <ClCompile Include="S100_Color.cpp" />
+    <ClCompile Include="S100_ColorFill.cpp" />
+    <ClCompile Include="S100_Dash.cpp" />
+    <ClCompile Include="S100_DisplayList.cpp" />
+    <ClCompile Include="S100_Element.cpp" />
+    <ClCompile Include="S100_FeatureReference.cpp" />
+    <ClCompile Include="S100_Font.cpp" />
+    <ClCompile Include="S100_Foreground.cpp" />
+    <ClCompile Include="S100_Include.cpp" />
+    <ClCompile Include="S100_Instruction.cpp" />
+    <ClCompile Include="S100_LineInstruction.cpp" />
+    <ClCompile Include="PortrayalCatalogue.cpp" />
+    <ClCompile Include="S100_NullInstruction.cpp" />
+    <ClCompile Include="S100_Pen.cpp" />
+    <ClCompile Include="S100_PointInstruction.cpp" />
+    <ClCompile Include="S100_RuleFile.cpp" />
+    <ClCompile Include="S100_Rules.cpp" />
+    <ClCompile Include="S100_Symbol.cpp" />
+    <ClCompile Include="S100_SimpleLineStyle.cpp" />
+    <ClCompile Include="S100_SymbolFill.cpp" />
+    <ClCompile Include="S100_Template.cpp" />
+    <ClCompile Include="S100_Text.cpp" />
+    <ClCompile Include="S100_TextInstruction.cpp" />
+    <ClCompile Include="S100_TextPoint.cpp" />
+    <ClCompile Include="S100_Transform.cpp" />
+    <ClCompile Include="S100_VectorPoint.cpp" />
+    <ClCompile Include="S100_WithParam.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ViewingGroup.cpp" />
+    <ClCompile Include="ViewingGroupLayer.cpp" />
+    <ClCompile Include="ViewingGroupLayers.cpp" />
+    <ClCompile Include="ViewingGroups.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FeatureCatalog\FeatureCatalog.vcxproj">
+      <Project>{4964c844-dae9-4dd3-b9d9-daa7520d019a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GeoMetryLibrary\GeoMetryLibrary.vcxproj">
+      <Project>{a95f413a-d144-4140-8e51-05d2e2ba5770}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LatLonUtility\LatLonUtility.vcxproj">
+      <Project>{d87f9640-70b7-4695-85c5-105ba24fa7c0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMFCUtil\LibMFCUtil.vcxproj">
+      <Project>{423e4835-a278-43c4-ad2d-e8a4d0c98f8a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\S100Engine\S100Engine.vcxproj">
+      <Project>{e3f7a8cb-3453-4046-a4fc-94bb8769021a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\S100Geometry\S100Geometry.vcxproj">
+      <Project>{8748cc36-d24a-426b-9ece-fec57a3f80ea}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\S100_SVG_D2D1_DLL\S100_SVG_D2D1_DLL.vcxproj">
+      <Project>{50452e5a-6e4b-4374-a0e7-c717b2e89ca3}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PortrayalCatalogue.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

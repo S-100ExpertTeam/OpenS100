@@ -1,0 +1,25 @@
+
+                      Release notes for SZIP 2.1.1
+                          January 13, 2017
+
+
+Bug fixes:
+
+   -- None.
+
+New features:
+
+   -- Changed version to 2.1.1
+   -- CMake support added, which allows for shared or static builds.
+   -- CMake dual-binary code added to build both static and shared
+
+Know problems:
+
+   -- On IRIX64-6.5, shared library version 3.0 is created instead of 2.0.
+   -- There is no support for shared library on the AIX 5.* systems.
+
+User support:
+    Report all problems to help@hdfgroup.org.
+    For more information on SZIP, see:
+        http://www.hdfgroup.org/doc_resource/SZIP/
+

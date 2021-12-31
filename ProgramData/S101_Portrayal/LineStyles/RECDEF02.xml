@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="RECDEF02" exposition="non-regulated recommended track, direction not defined in data"?>
+<lineStyle>
+   <intervalLength>19.3</intervalLength>
+   <pen width="0.32">
+      <color>CHGRD</color>
+   </pen>
+   <dash>
+      <start>2</start>
+      <length>3.3</length>
+   </dash>
+   <dash>
+      <start>16</start>
+      <length>3.3</length>
+   </dash>
+   <dash>
+      <start>21.3</start>
+      <length>3.3</length>
+   </dash>
+   <symbol reference="EMRECTR1">
+      <position>7.9</position>
+   </symbol>
+   <symbol reference="EMQUESM2">
+      <position>10.6</position>
+   </symbol>
+   <symbol reference="EMRECTR2">
+      <position>13.3</position>
+   </symbol>
+</lineStyle>

@@ -1,0 +1,143 @@
+        Instructions for the SZIP 2.1.1 Library Installation
+        ==================================================
+
+        CONTENTS
+        --------
+        1. Obtaining SZIP
+        2. License agreement
+        3. Installation on UNIX and Mac OSX platforms
+                3.1 Installation with encoder (license may be required)
+                3.2 Installation without encoder (license not required)
+                3.3 Using non-default compiler
+        4. Installation on Windows platforms
+        5. Supported OSs
+        6. User's Support
+
+1. Obtaining SZIP
+
+   The latest supported public release of SZIP is available from The
+   HDF Group's (THG) FTP server:
+       ftp://ftp.hdfgroup.org/lib-external/szip/2.1.1
+   Since there were no changes to the source code, but only in configuration
+   files, we are not providing binaries for this release.  If you need a
+   binary distribution (with encoder enabled), it can be found here:
+       ftp://ftp.hdfgroup.org/lib-external/szip/2.0/bin
+   For general information about SZIP, see the following material:
+       http://hdfgroup.org/doc_resource/SZIP/
+
+2. License agreement
+
+   SZIP comes with a license. SZIP distributed with HDF products is free for
+   non-commercial use; commercial licenses are available for commercial users
+   who wish to distribute an Szip-based software product. For details check
+   the "License terms" section under http://hdfgroup.org/doc_resource/SZIP/
+   or the COPYING file in the top-level directory of the SZIP source code
+   distribution.
+
+3. Installation on UNIX and Mac OSX
+
+   Obtain a source tar ball from
+   ftp://ftp.hdfgroup.org/lib-external/szip/2.1.1/src/.
+
+   3.1 Installation with encoder (license may be required)
+
+   Untar the source into an szip-2.1.1 directory
+   % tar -xvf szip-2.1.1.tar
+
+   Change directory to the szip-2.1.1 directory; configure, build, and
+   test for your platform:
+
+   % cd szip-2.1.1
+   % ./configure --prefix=/where_to_install
+   % make
+   % make check
+   % make install
+
+   The encoder is available by default. If the "prefix" flag is not specified,
+   the library will be installed under the szip-2.1.1/szip directory.
+
+   3.2 Installation without encoder (license not required)
+
+   Untar the source into the szip-2.1.1 directory
+   % tar -xvf szip-2.1.1.tar
+
+   Change directory to the szip-2.1.1 directory; configure and build for your
+   platform:
+
+   % cd szip-2.1.1
+   % ./configure --disable-encoding --prefix=/where_to_install
+   % make
+   % make check (you should get an error message when you try to test since
+                 encoding is disabled)
+   % make install
+
+   3.3 Using non-default compiler
+
+   By default, the platform configuration file under the config directory
+   is used to set up compiler and compilation flags.
+
+   Use CC and CFLAGS environment variables if a different compiler or
+   additional flags are desired. For example:
+
+   % setenv CC /my_compiler/bin/foo
+   % setenv CFLAGS "-foo_flags"
+
+   Then follow instructions from 3.1 or 3.2 to configure and build the library.
+
+4. Using CMake
+
+   1.   We suggest you obtain the latest CMake for windows from the Kitware
+        web site. This product requires a minimum CMake version 3.2.2.
+
+   2.   We use the file cacheinit.cmake in the
+        config/cmake source folder for our testing. This file enables all of the
+        basic options and we turn specific options on or off for testing
+        using the following command line within the build directory:
+
+        cmake -C <sourcepath>/config/cmake/cacheinit.cmake -G "<generator>"  [-D<options>]  <sourcepath>
+
+        Where <generator> is
+            * MinGW Makefiles
+            * NMake Makefiles
+            * Unix Makefiles
+            * Visual Studio 12 2013
+            * Visual Studio 12 2013 Win64
+            * Visual Studio 11 2012
+            * Visual Studio 11 2012 Win64
+            * Visual Studio 14 2015
+            * Visual Studio 14 2015 Win64
+
+        <options> is:
+            * SZIP_ENABLE_ENCODING:BOOL=[ON | OFF]
+
+        <cacheinit.cmake> is:
+                # This is the CMakeCache file used by HDF Group for daily tests.
+                ########################
+                # EXTERNAL cache entries
+                ########################
+                set (BUILD_SHARED_LIBS ON CACHE BOOL "Build Shared Libraries" FORCE)
+                set (CMAKE_INSTALL_FRAMEWORK_PREFIX "Library/Frameworks" CACHE STRING "Frameworks installation directory" FORCE)
+                set (SZIP_PACKAGE_EXT "" CACHE STRING "Name of package extension" FORCE)
+                set (BUILD_TESTING ON CACHE BOOL "Build SZIP Unit Testing" FORCE)
+                set (SZIP_ENABLE_ENCODING ON CACHE BOOL "Enable SZIP Encoding" FORCE)
+
+5. Supported OSs
+
+   Solaris 2.10 (32 and 64-bit)
+   FreeBSD (32 and 64-bit)
+   Linux 2.6 32-bit and 64-bit
+   Mac OSX
+   Windows
+   AIX 5.3 and 5.2 (32 and 64-bit)
+   Altix SGI
+   HPUX 11.23
+
+6. User Support
+
+   Report problems to help@hdfgroup.org.
+
+
+
+
+
+

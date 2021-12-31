@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="CURENT01" exposition="non-tidal current"?>
+<lineStyle>
+   <intervalLength>12</intervalLength>
+   <pen width="0.32">
+      <color>CHGRD</color>
+   </pen>
+   <dash>
+      <start>0</start>
+      <length>9</length>
+   </dash>
+   <symbol reference="EMCURNT1">
+      <position>2.5</position>
+   </symbol>
+   <symbol reference="EMCURNT1">
+      <position>4</position>
+   </symbol>
+   <symbol reference="EMCURNT1">
+      <position>9</position>
+   </symbol>
+</lineStyle>

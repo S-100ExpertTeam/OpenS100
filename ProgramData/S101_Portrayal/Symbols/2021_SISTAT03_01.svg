@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.41mm" height="6.26mm" viewBox="-1.25 -1.25 8.41 6.26">
+  <title>2021_SISTAT03_01</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2021-09-03" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.25" y="5.01" height="6.26" width="8.41" />
+  <rect class="svgBox layout" fill="none" x="-1.25" y="-1.25" height="6.26" width="8.41" />
+  <path d=" M 0.16,0.29 L 6.16,0.29" class="sl f0 sCHMGF" style="stroke-width:0.64;" />
+  <path d=" M 6.14,0.26 L 6.16,3.99 L 0.14,3.99 L 0.13,0.26" class="sl f0 sCHMGF" style="stroke-width:0.64;" />
+  <path d=" M 0.15,0.29 L 6.15,0.29 L 6.15,4.01 L 0.15,4.01 L 0.15,0.29" class="fCHWHT" style="stroke-width:0;" />
+  <path d=" M 1.86,1.16 L 1.61,0.93 L 1.36,0.93 L 1.11,0.93 L 0.86,1.16 L 0.86,1.68 L 1.11,1.93 L 1.51,1.93 L 1.86,2.18 L 1.86,2.68 L 1.61,3.02 L 0.95,3.02 L 0.67,2.71" class="sl f0 sCHMGF" style="stroke-width:0.64;" />
+  <path d=" M 3.68,1.22 L 3.43,0.98 L 2.93,0.98 L 2.68,1.22 L 2.68,1.73 L 2.96,1.98 L 3.33,1.98 L 3.68,2.23 L 3.68,2.76 L 3.43,3.01 L 2.77,3.01 L 2.49,2.73" class="sl f0 sCHMGF" style="stroke-width:0.64;" />
+  <circle cx="0" cy="0" r="0.25" class="fLANDF" style="stroke-width:0" />
+  <path d=" M 4.31,0.94 L 4.4,3.04 L 4.65,3.04 L 4.77,2.06 L 5.02,2.06 L 5.04,3.04 L 5.3,3.04 L 5.42,0.94" class="sl f0 sCHMGF" style="stroke-width:0.64;" />
+</svg>

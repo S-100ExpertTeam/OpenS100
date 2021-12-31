@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="RCRDEF11" exposition="regulated recommended route centreline, details not defined"?>
+<lineStyle>
+   <intervalLength>24.6</intervalLength>
+   <pen width="0.32">
+      <color>TRFCD</color>
+   </pen>
+   <dash>
+      <start>1</start>
+      <length>3.5</length>
+   </dash>
+   <dash>
+      <start>6.5</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>16.5</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>21.5</start>
+      <length>3.5</length>
+   </dash>
+   <symbol reference="EMRCRTC1">
+      <position>1</position>
+   </symbol>
+   <symbol reference="EMQUESM3">
+      <position>13.5</position>
+   </symbol>
+   <symbol reference="EMRCRTC2">
+      <position>16.5</position>
+   </symbol>
+</lineStyle>

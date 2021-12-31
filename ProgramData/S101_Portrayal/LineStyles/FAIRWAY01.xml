@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2021-07-02"?>
+<?S100Meta name="FAIRWAY01" exposition="boundary of a fairway"?>
+<lineStyle>
+   <intervalLength>8.6</intervalLength>
+   <pen width="0.32">
+      <color>CHMGF</color>
+   </pen>
+   <dash>
+      <start>1</start>
+      <length>6</length>
+   </dash>
+   <symbol reference="EMAREMG2">
+      <position>4</position>
+   </symbol>
+</lineStyle>

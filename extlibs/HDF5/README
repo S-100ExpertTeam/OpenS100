@@ -1,0 +1,14 @@
+
+
+This is a source distribution for the SZIP compression library.
+The following directories contain:
+
+      ./         - INSTALL file with installation instructions for
+                   Unix and Mac OSX and CMake
+                 - COPYING file with license terms and conditions
+                 - README (this file)
+      bin        - configuration scripts
+      config     - configuration files
+      src        - library header and source files
+      test       - test sources and scripts
+

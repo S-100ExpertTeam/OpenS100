@@ -1,0 +1,605 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Catalogue">
+      <UniqueIdentifier>{c50adc91-1ec4-4f4c-9e94-471c2a81f999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rules">
+      <UniqueIdentifier>{f6b3c51d-7af8-440e-ba67-ba4108d5f8d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LineStyles">
+      <UniqueIdentifier>{65e3e0cc-c0b3-48e5-a6f2-3cd4889c7f70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AreaFills">
+      <UniqueIdentifier>{7612ae99-273d-4f5c-a28b-961982541137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ColorProfile">
+      <UniqueIdentifier>{dbf880f3-cb0f-4d15-932e-47b87d7ce577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents">
+      <UniqueIdentifier>{7b149c4c-fefe-44bf-af46-516ef6580ed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SymbolDefinition">
+      <UniqueIdentifier>{db50afe7-ff7b-40ea-928d-5592faf780fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ResultOfXSLTProcess">
+      <UniqueIdentifier>{05680651-b080-4d3b-b28a-50516f8ebd33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enum">
+      <UniqueIdentifier>{289ca82f-03bf-43cd-9845-00e02a0a797f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProcessingPortrayalSchema">
+      <UniqueIdentifier>{e8c335d5-d54b-4982-a721-0be4f9ed0251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BASE">
+      <UniqueIdentifier>{875946ea-2a91-436f-9cf1-b9889d3a98e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="S100_Rules.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="PortrayalCatalogue.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Transform.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_NullInstruction.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Template.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_TextInstruction.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_LineInstruction.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AreaInstruction.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Instruction.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>BASE</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Include.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_CallTemplate.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Color.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Dash.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Element.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_FeatureReference.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Font.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Foreground.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Pen.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_SimpleLineStyle.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Symbol.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Text.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_TextPoint.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_WithParam.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_VectorPoint.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_SpatialReference.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_PointInstruction.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_ComplexLineStyle.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_LinePlacement.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AreaPlacement.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Rotation.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_LineStyles.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_RuleFile.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_LineStyleFile.h">
+      <Filter>LineStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_LineStyle.h">
+      <Filter>LineStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Description.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AreaFillFile.h">
+      <Filter>AreaFills</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_ColorProfiles.h">
+      <Filter>ColorProfile</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_ColorProfile.h">
+      <Filter>ColorProfile</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_CIE.h">
+      <Filter>ColorProfile</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Item.h">
+      <Filter>ColorProfile</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Palette.h">
+      <Filter>ColorProfile</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_SRGB.h">
+      <Filter>ColorProfile</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_LineStyleBase.h">
+      <Filter>LineStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_LineStyleReference.h">
+      <Filter>LineStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_LineSymbol.h">
+      <Filter>LineStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_CompositeLineStyle.h">
+      <Filter>LineStyles</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_SymbolFill.h">
+      <Filter>SymbolDefinition</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_ColorFill.h">
+      <Filter>SymbolDefinition</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_PatternFill.h">
+      <Filter>SymbolDefinition</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_HatchFill.h">
+      <Filter>SymbolDefinition</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_PixmapFill.h">
+      <Filter>SymbolDefinition</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Hatch.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_OverrideColor.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Pixmap.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AreaFillBase.h">
+      <Filter>AreaFills</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_DisplayList.h">
+      <Filter>ResultOfXSLTProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AreaFillReference.h">
+      <Filter>SymbolDefinition</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AreaFills.h">
+      <Filter>SymbolDefinition</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AugmentedPath.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AugmentedRay.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AugmentedLineOrArea.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AugmentedGeometry.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_ArcByRadius.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Arc3Points.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Annulus.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Path.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Polyline.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_Sector.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AugmentedPoint.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CatalogItem.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="FoundationMode.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewingGroup.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewingGroupLayer.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewingGroupLayers.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewingGroups.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DisplayMode.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="DisplayModes.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="DisplayPlane.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="DisplayPlanes.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextParameter.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="Context.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_FileFormat.h">
+      <Filter>Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_PortrayalRuleType.h">
+      <Filter>Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_FileType.h">
+      <Filter>Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_ParameterType.h">
+      <Filter>Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_GeometricPrimitive.h">
+      <Filter>Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_Orientation.h">
+      <Filter>Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_BoundaryType.h">
+      <Filter>Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_InterpolationType.h">
+      <Filter>Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_AlertReference.h">
+      <Filter>Rules</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="S100_Rules.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="PortrayalCatalogue.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Transform.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_NullInstruction.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Template.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_TextInstruction.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_LineInstruction.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AreaInstruction.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Instruction.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>BASE</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Include.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_CallTemplate.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Color.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Dash.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Element.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_FeatureReference.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Font.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Foreground.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Pen.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_SimpleLineStyle.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Symbol.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Text.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_TextPoint.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_VectorPoint.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_WithParam.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_SpatialReference.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_PointInstruction.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_LinePlacement.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_ComplexLineStyle.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AreaPlacement.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Rotation.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_LineStyles.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_RuleFile.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_LineStyleFile.cpp">
+      <Filter>LineStyles</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_LineStyle.cpp">
+      <Filter>LineStyles</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Description.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AreaFillFile.cpp">
+      <Filter>AreaFills</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_ColorProfiles.cpp">
+      <Filter>ColorProfile</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_ColorProfile.cpp">
+      <Filter>ColorProfile</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_CIE.cpp">
+      <Filter>ColorProfile</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Item.cpp">
+      <Filter>ColorProfile</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Palette.cpp">
+      <Filter>ColorProfile</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_SRGB.cpp">
+      <Filter>ColorProfile</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_LineStyleBase.cpp">
+      <Filter>LineStyles</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_CompositeLineStyle.cpp">
+      <Filter>LineStyles</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_LineStyleReference.cpp">
+      <Filter>LineStyles</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_LineSymbol.cpp">
+      <Filter>LineStyles</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_SymbolFill.cpp">
+      <Filter>SymbolDefinition</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_ColorFill.cpp">
+      <Filter>SymbolDefinition</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_HatchFill.cpp">
+      <Filter>SymbolDefinition</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_PatternFill.cpp">
+      <Filter>SymbolDefinition</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_PixmapFill.cpp">
+      <Filter>SymbolDefinition</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Hatch.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_OverrideColor.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Pixmap.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AreaFillBase.cpp">
+      <Filter>AreaFills</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_DisplayList.cpp">
+      <Filter>ResultOfXSLTProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AreaFillReference.cpp">
+      <Filter>SymbolDefinition</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AreaFills.cpp">
+      <Filter>SymbolDefinition</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AugmentedRay.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AugmentedPath.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AugmentedGeometry.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AugmentedLineOrArea.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Path.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Sector.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Polyline.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_ArcByRadius.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Arc3Points.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Annulus.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AugmentedPoint.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CatalogItem.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewingGroups.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewingGroup.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewingGroupLayer.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewingGroupLayers.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="FoundationMode.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayMode.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayModes.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayPlane.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayPlanes.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="ContextParameter.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="Context.cpp">
+      <Filter>Catalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="Enum_Orientation.cpp">
+      <Filter>Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="Enum_GeometricPrimitive.cpp">
+      <Filter>Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="Enum_BoundaryType.cpp">
+      <Filter>Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="Enum_InterpolationType.cpp">
+      <Filter>Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_AlertReference.cpp">
+      <Filter>Rules</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PortrayalCatalogue.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

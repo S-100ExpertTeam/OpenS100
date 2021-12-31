@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{33943243-A35E-42C3-AD7E-B6BE65F4BC47}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>LuaScriptingReference</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\extlibs\pugixml\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;..\extlibs\pugixml\lib\$(Configuration);..\extlibs\lua\lib</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\extlibs\pugixml\x64_include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;..\extlibs\pugixml\x64_lib\$(Configuration);..\extlibs\lua\x64_lib</LibraryPath>
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\extlibs\pugixml\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;..\extlibs\pugixml\lib\$(Configuration)$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;..\extlibs\pugixml\lib\$(Configuration);..\extlibs\lua\lib</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\extlibs\pugixml\x64_include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;..\extlibs\pugixml\x64_lib\$(Configuration);..\extlibs\lua\x64_lib</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>KRS_LUA_SCRIPT_REFERENCE_DLL_EXPORTS;WIN32;LUA_BUILD_AS_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>D:\Windows Kits\10\Include\10.0.18362.0\ucrt;D:\Windows Kits\10\Lib\10.0.18362.0\ucrt\x86;..\extlibs\lua\dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\Windows Kits\10\Lib\10.0.18362.0\ucrt\x86;..\extlibs\lua\dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pugixml.lib;lua5.1.lib</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>KRS_LUA_SCRIPT_REFERENCE_DLL_EXPORTS;LUA_BUILD_AS_DLL;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>D:\Windows Kits\10\Include\10.0.18362.0\ucrt;D:\Windows Kits\10\Lib\10.0.18362.0\ucrt\x86;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\Windows Kits\10\Lib\10.0.18362.0\ucrt\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pugixml.lib;lua5.1.lib</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>KRS_LUA_SCRIPT_REFERENCE_DLL_EXPORTS;WIN32;LUA_BUILD_AS_DLL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>pugixml.lib;lua5.1.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>KRS_LUA_SCRIPT_REFERENCE_DLL_EXPORTS;LUA_BUILD_AS_DLL;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>pugixml.lib;lua5.1.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="composite_curve.h" />
+    <ClInclude Include="context_parameter.h" />
+    <ClInclude Include="curve.h" />
+    <ClInclude Include="curve_segment.h" />
+    <ClInclude Include="feature_catalog.h" />
+    <ClInclude Include="lauxlib.h" />
+    <ClInclude Include="lua.h" />
+    <ClInclude Include="luaconf.h" />
+    <ClInclude Include="lualib.h" />
+    <ClInclude Include="LuaScriptingReference.h" />
+    <ClInclude Include="lua_functions.h" />
+    <ClInclude Include="lua_reference.h" />
+    <ClInclude Include="lua_session.h" />
+    <ClInclude Include="multipoint.h" />
+    <ClInclude Include="point.h" />
+    <ClInclude Include="portrayal_catalog.h" />
+    <ClInclude Include="rapidxml.hpp" />
+    <ClInclude Include="Result_DrawingInstruction.h" />
+    <ClInclude Include="S100_CD_AttributeConstraints.h" />
+    <ClInclude Include="S100_CD_AttributeValueType.h" />
+    <ClInclude Include="S100_CD_FeatureUseType.h" />
+    <ClInclude Include="S100_CD_QuantitySpecification.h" />
+    <ClInclude Include="S100_FC_Attribute.h" />
+    <ClInclude Include="S100_FC_AttributeBinding.h" />
+    <ClInclude Include="S100_FC_ComplexAttribute.h" />
+    <ClInclude Include="S100_FC_FeatureAssociation.h" />
+    <ClInclude Include="S100_FC_FeatureBinding.h" />
+    <ClInclude Include="S100_FC_FeatureType.h" />
+    <ClInclude Include="S100_FC_InformationAssociation.h" />
+    <ClInclude Include="S100_FC_InformationBinding.h" />
+    <ClInclude Include="S100_FC_InformationType.h" />
+    <ClInclude Include="S100_FC_Item.h" />
+    <ClInclude Include="S100_FC_ItemReference.h" />
+    <ClInclude Include="S100_FC_ListedValue.h" />
+    <ClInclude Include="S100_FC_NamedType.h" />
+    <ClInclude Include="S100_FC_ObjectType.h" />
+    <ClInclude Include="S100_FC_Role.h" />
+    <ClInclude Include="S100_FC_RoleType.h" />
+    <ClInclude Include="S100_FC_SimpleAttribute.h" />
+    <ClInclude Include="S100_FC_SpatialPrimitiveType.h" />
+    <ClInclude Include="S100_IntervalType.h" />
+    <ClInclude Include="S100_Multiplicity.h" />
+    <ClInclude Include="S100_NumericRange.h" />
+    <ClInclude Include="S100_UnitOfMeasure.h" />
+    <ClInclude Include="spatial_association.h" />
+    <ClInclude Include="spatial_type.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="surface.h" />
+    <ClInclude Include="UnlimitedInteger_LUA.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="host_interface.cpp" />
+    <ClCompile Include="LuaScriptingReference.cpp" />
+    <ClCompile Include="lua_functions.cpp" />
+    <ClCompile Include="lua_reference.cpp" />
+    <ClCompile Include="lua_session.cpp" />
+    <ClCompile Include="portrayal_catalog.cpp" />
+    <ClCompile Include="Result_DrawingInstruction.cpp" />
+    <ClCompile Include="S100_CD_AttributeConstraints.cpp" />
+    <ClCompile Include="S100_FC_Attribute.cpp" />
+    <ClCompile Include="S100_FC_AttributeBinding.cpp" />
+    <ClCompile Include="S100_FC_ComplexAttribute.cpp" />
+    <ClCompile Include="S100_FC_FeatureAssociation.cpp" />
+    <ClCompile Include="S100_FC_FeatureBinding.cpp" />
+    <ClCompile Include="S100_FC_FeatureType.cpp" />
+    <ClCompile Include="S100_FC_InformationAssociation.cpp" />
+    <ClCompile Include="S100_FC_InformationBinding.cpp" />
+    <ClCompile Include="S100_FC_InformationType.cpp" />
+    <ClCompile Include="S100_FC_Item.cpp" />
+    <ClCompile Include="S100_FC_ListedValue.cpp" />
+    <ClCompile Include="S100_FC_NamedType.cpp" />
+    <ClCompile Include="S100_FC_ObjectType.cpp" />
+    <ClCompile Include="S100_FC_Role.cpp" />
+    <ClCompile Include="S100_FC_SimpleAttribute.cpp" />
+    <ClCompile Include="S100_Multiplicity.cpp" />
+    <ClCompile Include="S100_NumericRange.cpp" />
+    <ClCompile Include="S100_UnitOfMeasure.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="UnlimitedInteger_LUA.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FeatureCatalog\FeatureCatalog.vcxproj">
+      <Project>{4964c844-dae9-4dd3-b9d9-daa7520d019a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LatLonUtility\LatLonUtility.vcxproj">
+      <Project>{d87f9640-70b7-4695-85c5-105ba24fa7c0}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

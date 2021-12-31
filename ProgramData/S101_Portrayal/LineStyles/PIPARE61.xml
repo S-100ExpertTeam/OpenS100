@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="PIPARE61" exposition="boundary of a submarine pipeline area with generally non-dangerous contents"?>
+<lineStyle>
+   <intervalLength>32.3</intervalLength>
+   <pen width="0.32">
+      <color>CHGRD</color>
+   </pen>
+   <dash>
+      <start>2</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>18.2</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>26.2</start>
+      <length>6</length>
+   </dash>
+   <symbol reference="EMAREGR1">
+      <position>5</position>
+   </symbol>
+   <symbol reference="EMPIPAR2">
+      <position>13.1</position>
+   </symbol>
+   <symbol reference="EMAREGR1">
+      <position>21.2</position>
+   </symbol>
+   <symbol reference="EMAREGR1">
+      <position>29.3</position>
+   </symbol>
+</lineStyle>

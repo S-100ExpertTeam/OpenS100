@@ -1,0 +1,427 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="S100CI">
+      <UniqueIdentifier>{8fabf026-f009-40df-8922-fb03cbcbae6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S100FD">
+      <UniqueIdentifier>{e020dc81-e24d-4f69-90d6-d19374a24519}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S100FC">
+      <UniqueIdentifier>{261f6eaf-08dd-4c77-80e1-fdd3f9034ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S100Base">
+      <UniqueIdentifier>{1ff3655c-ab96-4fa1-9d51-e72ae4ae4df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{678077f8-cd28-45cd-af6d-a4a207a9e567}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FeatureCatalog.def">
+      <Filter>헤더 파일</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="XML_Item.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="ResponsibleParty.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="Restriction_Item.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureCatalogue.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="DefinitionSources.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="DefinitionSource.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="Contact.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="DateExt.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="RoleCode.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTypeCode.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="PresentationFormCode.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleAttributes.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="Attribute.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="StringCode.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitOfMeasure.cpp">
+      <Filter>S100Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AttributeConstraints.cpp">
+      <Filter>S100FD</Filter>
+    </ClCompile>
+    <ClCompile Include="NumericRange.cpp">
+      <Filter>S100Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ListedValues.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="ListedValue.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="IntegerCode.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleAttribute.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="ComplexAttributes.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="AttributeBinding.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="Multiplicity.cpp">
+      <Filter>S100Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ComplexAttribute.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="InformationAssociation.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="InformationAssociations.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="NamedType.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="InformationTypes.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="Roles.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="Role.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="ValueList.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureTypes.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureAssociations.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="DefinitionReference.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="Reference.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="Series.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="IntervalType.cpp">
+      <Filter>S100Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Telephone.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureAssociation.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="InformationBinding.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureUseType.cpp">
+      <Filter>S100FD</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureBinding.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureType.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="InformationType.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="RoleType.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="SpatialPrimitiveType.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="S100ObjectType.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
+    <ClCompile Include="Citation.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlineFunctionCode.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="OnlineResource.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="UnlimitedInteger.cpp">
+      <Filter>S100Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Address.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="Party.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="ContactInfo.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="CI_Organisation.cpp">
+      <Filter>S100CI</Filter>
+    </ClCompile>
+    <ClCompile Include="XML_Attribute.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_CD_AttributeValueType.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_CD_QuantitySpecification.cpp">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Citation.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="XML_Item.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ResponsibleParty.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="S100CI.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="Restriction_Item.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureCatalogue.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="DefinitionSources.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="DefinitionSource.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="Contact.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="DateExt.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="Date.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="RoleCode.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTypeCode.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="PresentationFormCode.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleAttributes.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="Attribute.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="StringCode.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitOfMeasure.h">
+      <Filter>S100Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AttributeConstraints.h">
+      <Filter>S100FD</Filter>
+    </ClInclude>
+    <ClInclude Include="NumericRange.h">
+      <Filter>S100Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ListedValues.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="ListedValue.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="IntegerCode.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleAttribute.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="ComplexAttributes.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="AttributeBinding.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="Multiplicity.h">
+      <Filter>S100Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ComplexAttribute.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="InformationAssociations.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="InformationAssociation.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="NamedType.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="InformationTypes.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="Roles.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="Role.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="ValueList.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureTypes.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureAssociations.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="DefinitionReference.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="Reference.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="Series.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="IntervalType.h">
+      <Filter>S100Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Telephone.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureAssociation.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="InformationBinding.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureUseType.h">
+      <Filter>S100FD</Filter>
+    </ClInclude>
+    <ClInclude Include="RoleType.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="InformationType.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureType.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureBinding.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="SpatialPrimitiveType.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="S100ObjectType.h">
+      <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineResource.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineFunctionCode.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="UnlimitedInteger.h">
+      <Filter>S100Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Address.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="Party.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="ContactInfo.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_Organisation.h">
+      <Filter>S100CI</Filter>
+    </ClInclude>
+    <ClInclude Include="XML_Attribute.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_CD_AttributeValueType.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_CD_QuantitySpecification.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FeatureCatalog.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

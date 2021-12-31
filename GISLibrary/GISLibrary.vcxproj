@@ -1,0 +1,617 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AD396C19-6F9E-4F51-AC6E-AB02A1348795}</ProjectGuid>
+    <RootNamespace>GISLibrary</RootNamespace>
+    <Keyword>MFCDLLProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v141</PlatformToolset>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v141</PlatformToolset>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\extlibs\HDF5\include;..\extlibs\pugixml\include;..\extlibs\tinyxml\include;..\extlibs\TinyXML2\include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\HDF5\lib;..\extlibs\tinyxml\lib\$(Configuration);..\extlibs\TinyXML2\lib\$(Configuration);..\extlibs\lua\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\extlibs\HDF5\include;..\extlibs\pugixml\x64_include;..\extlibs\tinyxml\include;..\extlibs\TinyXML2\include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\HDF5\x64_lib\$(Configuration);..\extlibs\tinyxml\lib\$(Configuration);..\extlibs\TinyXML2\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\extlibs\HDF5\include;..\extlibs\pugixml\include;..\extlibs\tinyxml\include;..\extlibs\TinyXML2\include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\HDF5\lib;..\extlibs\tinyxml\lib\$(Configuration);..\extlibs\TinyXML2\lib\$(Configuration);..\extlibs\lua\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\extlibs\HDF5\include;..\extlibs\pugixml\x64_include;..\extlibs\tinyxml\include;..\extlibs\TinyXML2\include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\HDF5\x64_lib\$(Configuration);..\extlibs\tinyxml\lib\$(Configuration);..\extlibs\TinyXML2\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>H5_BUILT_AS_DYNAMIC_LIB;WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>.\GISLibrary.def</ModuleDefinitionFile>
+      <AdditionalDependencies>GeoMetryLibrary.lib</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>hdf5.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>H5_BUILT_AS_DYNAMIC_LIB;WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>.\GISLibrary.def</ModuleDefinitionFile>
+      <AdditionalDependencies>GeoMetryLibrary.lib</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>hdf5_D.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>H5_BUILT_AS_DYNAMIC_LIB;WIN32;_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\GISLibrary.def</ModuleDefinitionFile>
+      <AdditionalDependencies>GeoMetryLibrary.lib</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>hdf5.lib</AdditionalDependencies>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>H5_BUILT_AS_DYNAMIC_LIB;WIN32;_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\GISLibrary.def</ModuleDefinitionFile>
+      <AdditionalDependencies>GeoMetryLibrary.lib</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>hdf5.lib</AdditionalDependencies>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="GISLibrary.def" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ATTR.cpp" />
+    <ClCompile Include="BasicFile.cpp" />
+    <ClCompile Include="C3IL.cpp" />
+    <ClCompile Include="CatalogItem.cpp" />
+    <ClCompile Include="Catalogue.cpp" />
+    <ClCompile Include="ClipperUtil.cpp" />
+    <ClCompile Include="CodeWithNumericCode.cpp" />
+    <ClCompile Include="CreateInputSchemaS101.cpp" />
+    <ClCompile Include="CSAX.cpp" />
+    <ClCompile Include="CUCO.cpp" />
+    <ClCompile Include="D2D1ChartResources.cpp" />
+    <ClCompile Include="D2D1Resources.cpp" />
+    <ClCompile Include="DDR.cpp" />
+    <ClCompile Include="DrawingSet.cpp" />
+    <ClCompile Include="FASC.cpp" />
+    <ClCompile Include="FC2D.cpp" />
+    <ClCompile Include="FC3D.cpp" />
+    <ClCompile Include="F_C2FL.cpp" />
+    <ClCompile Include="F_C2IL.cpp" />
+    <ClCompile Include="DRDirectoryInfo.cpp" />
+    <ClCompile Include="DRReader.cpp" />
+    <ClCompile Include="Field.cpp" />
+    <ClCompile Include="F_ATTR.cpp" />
+    <ClCompile Include="F_C2FT.cpp" />
+    <ClCompile Include="F_C2IT.cpp" />
+    <ClCompile Include="F_C3FL.cpp" />
+    <ClCompile Include="F_C3FT.cpp" />
+    <ClCompile Include="F_C3IL.cpp" />
+    <ClCompile Include="F_C3IT.cpp" />
+    <ClCompile Include="F_CCID.cpp" />
+    <ClCompile Include="F_CCOC.cpp" />
+    <ClCompile Include="F_COCC.cpp" />
+    <ClCompile Include="F_CodeWithNumericCode.cpp" />
+    <ClCompile Include="F_CRID.cpp" />
+    <ClCompile Include="F_CRSH.cpp" />
+    <ClCompile Include="F_CSAX.cpp" />
+    <ClCompile Include="F_CSID.cpp" />
+    <ClCompile Include="F_CUCO.cpp" />
+    <ClCompile Include="F_DSID.cpp" />
+    <ClCompile Include="F_DSSI.cpp" />
+    <ClCompile Include="F_FASC.cpp" />
+    <ClCompile Include="F_FOID.cpp" />
+    <ClCompile Include="F_FRID.cpp" />
+    <ClCompile Include="F_GDAT.cpp" />
+    <ClCompile Include="F_INAS.cpp" />
+    <ClCompile Include="F_IRID.cpp" />
+    <ClCompile Include="F_MASK.cpp" />
+    <ClCompile Include="F_MRID.cpp" />
+    <ClCompile Include="F_PRID.cpp" />
+    <ClCompile Include="F_PROJ.cpp" />
+    <ClCompile Include="F_PTAS.cpp" />
+    <ClCompile Include="F_RIAS.cpp" />
+    <ClCompile Include="F_SECC.cpp" />
+    <ClCompile Include="F_SEGH.cpp" />
+    <ClCompile Include="F_SPAS.cpp" />
+    <ClCompile Include="F_SRID.cpp" />
+    <ClCompile Include="F_THAS.cpp" />
+    <ClCompile Include="F_VDAT.cpp" />
+    <ClCompile Include="GISLibrary.cpp" />
+    <ClCompile Include="host_data.cpp" />
+    <ClCompile Include="host_functions.cpp" />
+    <ClCompile Include="IC2D.cpp" />
+    <ClCompile Include="ISO8211Fuc.cpp" />
+    <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="LayerManager.cpp" />
+    <ClCompile Include="MASK.cpp" />
+    <ClCompile Include="NewFeatureManager.cpp" />
+    <ClCompile Include="NewInformationManager.cpp" />
+    <ClCompile Include="ObjectName.cpp" />
+    <ClCompile Include="OrientedCurveRecord.cpp" />
+    <ClCompile Include="PCOutputSchemaManager.cpp" />
+    <ClCompile Include="ProcessS101.cpp" />
+    <ClCompile Include="PTAS.cpp" />
+    <ClCompile Include="RIAS.cpp" />
+    <ClCompile Include="R_VectorRecord.cpp" />
+    <ClCompile Include="S100Layer.cpp" />
+    <ClCompile Include="S100SpatialObject.cpp" />
+    <ClCompile Include="S100Utilities.cpp" />
+    <ClCompile Include="S101Layer.cpp" />
+    <ClCompile Include="S101LuaScriptingReference.cpp" />
+    <ClCompile Include="SENC_AlertReference.cpp" />
+    <ClCompile Include="SENC_Annulus.cpp" />
+    <ClCompile Include="SENC_Arc3Points.cpp" />
+    <ClCompile Include="SENC_ArcByRadius.cpp" />
+    <ClCompile Include="SENC_AreaFillBase.cpp" />
+    <ClCompile Include="SENC_AreaFillReference.cpp" />
+    <ClCompile Include="SENC_AreaInstruction.cpp" />
+    <ClCompile Include="SENC_AreaPlacement.cpp" />
+    <ClCompile Include="SENC_Attribute.cpp" />
+    <ClCompile Include="SENC_AugmentedPath.cpp" />
+    <ClCompile Include="SENC_AugmentedRay.cpp" />
+    <ClCompile Include="SENC_CallTemplate.cpp" />
+    <ClCompile Include="SENC_Color.cpp" />
+    <ClCompile Include="SENC_ColorFill.cpp" />
+    <ClCompile Include="SENC_ColorProfile.cpp" />
+    <ClCompile Include="SENC_CommonFuc.cpp" />
+    <ClCompile Include="SENC_CompositeLineStyle.cpp" />
+    <ClCompile Include="SENC_Dash.cpp" />
+    <ClCompile Include="SENC_DisplayList.cpp" />
+    <ClCompile Include="SENC_Element.cpp" />
+    <ClCompile Include="SENC_Font.cpp" />
+    <ClCompile Include="SENC_Foreground.cpp" />
+    <ClCompile Include="SENC_Hatch.cpp" />
+    <ClCompile Include="SENC_HatchFill.cpp" />
+    <ClCompile Include="SENC_Instruction.cpp" />
+    <ClCompile Include="SENC_Item.cpp" />
+    <ClCompile Include="SENC_LineInstruction.cpp" />
+    <ClCompile Include="SENC_LinePlacement.cpp" />
+    <ClCompile Include="SENC_LineStyle.cpp" />
+    <ClCompile Include="SENC_LineStyleBase.cpp" />
+    <ClCompile Include="SENC_LineStyleReference.cpp" />
+    <ClCompile Include="SENC_LineSymbol.cpp" />
+    <ClCompile Include="SENC_NullInstruction.cpp" />
+    <ClCompile Include="SENC_OverrideColor.cpp" />
+    <ClCompile Include="SENC_Palette.cpp" />
+    <ClCompile Include="SENC_Path.cpp" />
+    <ClCompile Include="SENC_PatternFill.cpp" />
+    <ClCompile Include="SENC_Pen.cpp" />
+    <ClCompile Include="SENC_Pixmap.cpp" />
+    <ClCompile Include="SENC_pixmapFill.cpp" />
+    <ClCompile Include="SENC_PointInstruction.cpp" />
+    <ClCompile Include="SENC_Polyline.cpp" />
+    <ClCompile Include="SENC_Rotation.cpp" />
+    <ClCompile Include="SENC_Rule.cpp" />
+    <ClCompile Include="SENC_Sector.cpp" />
+    <ClCompile Include="SENC_SimpleLineStyle.cpp" />
+    <ClCompile Include="SENC_SpatialReference.cpp" />
+    <ClCompile Include="SENC_Symbol.cpp" />
+    <ClCompile Include="SENC_SymbolFill.cpp" />
+    <ClCompile Include="SENC_Template.cpp" />
+    <ClCompile Include="SENC_Text.cpp" />
+    <ClCompile Include="SENC_TextInstruction.cpp" />
+    <ClCompile Include="SENC_TextPoint.cpp" />
+    <ClCompile Include="SENC_VectorPoint.cpp" />
+    <ClCompile Include="SENC_WithParam.cpp" />
+    <ClCompile Include="ShipInfo.cpp" />
+    <ClCompile Include="Record.cpp" />
+    <ClCompile Include="RecordName.cpp" />
+    <ClCompile Include="R_CompositeRecord.cpp" />
+    <ClCompile Include="R_CurveRecord.cpp" />
+    <ClCompile Include="R_DSCRS.cpp" />
+    <ClCompile Include="R_DSGIR.cpp" />
+    <ClCompile Include="R_FeatureRecord.cpp" />
+    <ClCompile Include="R_InformationRecord.cpp" />
+    <ClCompile Include="R_MultiPointRecord.cpp" />
+    <ClCompile Include="R_PointRecord.cpp" />
+    <ClCompile Include="R_SurfaceRecord.cpp" />
+    <ClCompile Include="S101Cell.cpp" />
+    <ClCompile Include="ShipMonitoringLayer.cpp" />
+    <ClCompile Include="ShipMonitoringXMLFile.cpp" />
+    <ClCompile Include="SHPFile.cpp" />
+    <ClCompile Include="SoundingDraft.cpp" />
+    <ClCompile Include="SPAS.cpp" />
+    <ClCompile Include="SpatialObject.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="THAS.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\GISViewer\DialogExCatalogSelect.h" />
+    <ClInclude Include="AddtionalStruct.h" />
+    <ClInclude Include="ATTR.h" />
+    <ClInclude Include="BasicFile.h" />
+    <ClInclude Include="C3IL.h" />
+    <ClInclude Include="CatalogItem.h" />
+    <ClInclude Include="Catalogue.h" />
+    <ClInclude Include="ClipperUtil.h" />
+    <ClInclude Include="CodeWithNumericCode.h" />
+    <ClInclude Include="CreateInputSchemaS101.h" />
+    <ClInclude Include="CSAX.h" />
+    <ClInclude Include="CUCO.h" />
+    <ClInclude Include="D2D1ChartResources.h" />
+    <ClInclude Include="D2D1Resources.h" />
+    <ClInclude Include="DDR.h" />
+    <ClInclude Include="DialogExCatalogSelect.h" />
+    <ClInclude Include="DrawingSet.h" />
+    <ClInclude Include="DRDirectory.h" />
+    <ClInclude Include="Enum_S100_FileType.h" />
+    <ClInclude Include="FASC.h" />
+    <ClInclude Include="FC2D.h" />
+    <ClInclude Include="FC3D.h" />
+    <ClInclude Include="F_C2FL.h" />
+    <ClInclude Include="F_C2IL.h" />
+    <ClInclude Include="Common.h" />
+    <ClInclude Include="DRDirectoryInfo.h" />
+    <ClInclude Include="DRReader.h" />
+    <ClInclude Include="Field.h" />
+    <ClInclude Include="F_ATTR.h" />
+    <ClInclude Include="F_C2FT.h" />
+    <ClInclude Include="F_C2IT.h" />
+    <ClInclude Include="F_C3FL.h" />
+    <ClInclude Include="F_C3FT.h" />
+    <ClInclude Include="F_C3IL.h" />
+    <ClInclude Include="F_C3IT.h" />
+    <ClInclude Include="F_CCID.h" />
+    <ClInclude Include="F_CCOC.h" />
+    <ClInclude Include="F_COCC.h" />
+    <ClInclude Include="F_CodeWithNumericCode.h" />
+    <ClInclude Include="F_CRID.h" />
+    <ClInclude Include="F_CRSH.h" />
+    <ClInclude Include="F_CSAX.h" />
+    <ClInclude Include="F_CSID.h" />
+    <ClInclude Include="F_CUCO.h" />
+    <ClInclude Include="F_DSID.h" />
+    <ClInclude Include="F_DSSI.h" />
+    <ClInclude Include="F_FASC.h" />
+    <ClInclude Include="F_FOID.h" />
+    <ClInclude Include="F_FRID.h" />
+    <ClInclude Include="F_GDAT.h" />
+    <ClInclude Include="F_INAS.h" />
+    <ClInclude Include="F_IRID.h" />
+    <ClInclude Include="F_MASK.h" />
+    <ClInclude Include="F_MRID.h" />
+    <ClInclude Include="F_PRID.h" />
+    <ClInclude Include="F_PROJ.h" />
+    <ClInclude Include="F_PTAS.h" />
+    <ClInclude Include="F_RIAS.h" />
+    <ClInclude Include="F_SECC.h" />
+    <ClInclude Include="F_SEGH.h" />
+    <ClInclude Include="F_SPAS.h" />
+    <ClInclude Include="F_SRID.h" />
+    <ClInclude Include="F_THAS.h" />
+    <ClInclude Include="F_VDAT.h" />
+    <ClInclude Include="GISLibrary.h" />
+    <ClInclude Include="host_data.h" />
+    <ClInclude Include="host_functions.h" />
+    <ClInclude Include="IC2D.h" />
+    <ClInclude Include="image.h" />
+    <ClInclude Include="ISO8211Fuc.h" />
+    <ClInclude Include="Layer.h" />
+    <ClInclude Include="LayerManager.h" />
+    <ClInclude Include="MASK.h" />
+    <ClInclude Include="Namespace_GISLibrary.h" />
+    <ClInclude Include="NewFeatureManager.h" />
+    <ClInclude Include="NewInformationManager.h" />
+    <ClInclude Include="NonPrintableCharacter.h" />
+    <ClInclude Include="ObjectName.h" />
+    <ClInclude Include="OrientedCurveRecord.h" />
+    <ClInclude Include="PCOutputSchemaManager.h" />
+    <ClInclude Include="ProcessS101.h" />
+    <ClInclude Include="PTAS.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="RIAS.h" />
+    <ClInclude Include="R_VectorRecord.h" />
+    <ClInclude Include="S100Layer.h" />
+    <ClInclude Include="S100SpatialObject.h" />
+    <ClInclude Include="S100Utilities.h" />
+    <ClInclude Include="S101Layer.h" />
+    <ClInclude Include="S101LuaScriptingReference.h" />
+    <ClInclude Include="SENC_AlertReference.h" />
+    <ClInclude Include="SENC_Annulus.h" />
+    <ClInclude Include="SENC_Arc3Points.h" />
+    <ClInclude Include="SENC_ArcByRadius.h" />
+    <ClInclude Include="SENC_AreaFillBase.h" />
+    <ClInclude Include="SENC_AreaFillReference.h" />
+    <ClInclude Include="SENC_AreaInstruction.h" />
+    <ClInclude Include="SENC_AreaPlacement.h" />
+    <ClInclude Include="SENC_Attribute.h" />
+    <ClInclude Include="SENC_AugmentedPath.h" />
+    <ClInclude Include="SENC_AugmentedRay.h" />
+    <ClInclude Include="SENC_CallTemplate.h" />
+    <ClInclude Include="SENC_CIE.h" />
+    <ClInclude Include="SENC_Color.h" />
+    <ClInclude Include="SENC_ColorFill.h" />
+    <ClInclude Include="SENC_ColorProfile.h" />
+    <ClInclude Include="SENC_CommonFuc.h" />
+    <ClInclude Include="SENC_CompositeLineStyle.h" />
+    <ClInclude Include="SENC_Dash.h" />
+    <ClInclude Include="SENC_Define.h" />
+    <ClInclude Include="SENC_DisplayList.h" />
+    <ClInclude Include="SENC_Element.h" />
+    <ClInclude Include="SENC_Font.h" />
+    <ClInclude Include="SENC_Foreground.h" />
+    <ClInclude Include="SENC_Hatch.h" />
+    <ClInclude Include="SENC_HatchFill.h" />
+    <ClInclude Include="SENC_Instruction.h" />
+    <ClInclude Include="SENC_Item.h" />
+    <ClInclude Include="SENC_LineInstruction.h" />
+    <ClInclude Include="SENC_LinePlacement.h" />
+    <ClInclude Include="SENC_LineStyle.h" />
+    <ClInclude Include="SENC_LineStyleBase.h" />
+    <ClInclude Include="SENC_LineStyleReference.h" />
+    <ClInclude Include="SENC_LineSymbol.h" />
+    <ClInclude Include="SENC_NullInstruction.h" />
+    <ClInclude Include="SENC_OverrideColor.h" />
+    <ClInclude Include="SENC_Palette.h" />
+    <ClInclude Include="SENC_Path.h" />
+    <ClInclude Include="SENC_PatternFill.h" />
+    <ClInclude Include="SENC_Pen.h" />
+    <ClInclude Include="SENC_Pixmap.h" />
+    <ClInclude Include="SENC_pixmapFill.h" />
+    <ClInclude Include="SENC_PointInstruction.h" />
+    <ClInclude Include="SENC_Polyline.h" />
+    <ClInclude Include="SENC_Rotation.h" />
+    <ClInclude Include="SENC_Rule.h" />
+    <ClInclude Include="SENC_Sector.h" />
+    <ClInclude Include="SENC_SimpleLineStyle.h" />
+    <ClInclude Include="SENC_SpatialReference.h" />
+    <ClInclude Include="SENC_SRGB.h" />
+    <ClInclude Include="SENC_Symbol.h" />
+    <ClInclude Include="SENC_SymbolFill.h" />
+    <ClInclude Include="SENC_Template.h" />
+    <ClInclude Include="SENC_Text.h" />
+    <ClInclude Include="SENC_TextInstruction.h" />
+    <ClInclude Include="SENC_TextPoint.h" />
+    <ClInclude Include="SENC_VectorPoint.h" />
+    <ClInclude Include="SENC_WithParam.h" />
+    <ClInclude Include="ShipInfo.h" />
+    <ClInclude Include="Record.h" />
+    <ClInclude Include="RecordName.h" />
+    <ClInclude Include="R_CompositeRecord.h" />
+    <ClInclude Include="R_CurveRecord.h" />
+    <ClInclude Include="R_DSCRS.h" />
+    <ClInclude Include="R_DSGIR.h" />
+    <ClInclude Include="R_FeatureRecord.h" />
+    <ClInclude Include="R_InformationRecord.h" />
+    <ClInclude Include="R_MultiPointRecord.h" />
+    <ClInclude Include="R_PointRecord.h" />
+    <ClInclude Include="R_SurfaceRecord.h" />
+    <ClInclude Include="S101Cell.h" />
+    <ClInclude Include="ShipMonitoringLayer.h" />
+    <ClInclude Include="ShipMonitoringXMLFile.h" />
+    <ClInclude Include="SHPFile.h" />
+    <ClInclude Include="SoundingDraft.h" />
+    <ClInclude Include="SPAS.h" />
+    <ClInclude Include="SpatialObject.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="THAS.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GISLibrary.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FeatureCatalog\FeatureCatalog.vcxproj">
+      <Project>{4964c844-dae9-4dd3-b9d9-daa7520d019a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GeoMetryLibrary\GeoMetryLibrary.vcxproj">
+      <Project>{a95f413a-d144-4140-8e51-05d2e2ba5770}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LatLonUtility\LatLonUtility.vcxproj">
+      <Project>{d87f9640-70b7-4695-85c5-105ba24fa7c0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LibMFCUtil\LibMFCUtil.vcxproj">
+      <Project>{423e4835-a278-43c4-ad2d-e8a4d0c98f8a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\LuaScriptingReference\LuaScriptingReference.vcxproj">
+      <Project>{33943243-a35e-42c3-ad7e-b6be65f4bc47}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PortrayalCatalogue\PortrayalCatalogue.vcxproj">
+      <Project>{8ee76986-c155-4907-9088-d146ae47ebc8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\S100Engine\S100Engine.vcxproj">
+      <Project>{e3f7a8cb-3453-4046-a4fc-94bb8769021a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\S100Geometry\S100Geometry.vcxproj">
+      <Project>{8748cc36-d24a-426b-9ece-fec57a3f80ea}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\S100_SVG_D2D1_DLL\S100_SVG_D2D1_DLL.vcxproj">
+      <Project>{50452e5a-6e4b-4374-a0e7-c717b2e89ca3}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

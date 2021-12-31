@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-03"?>
+<?S100Meta name="AIRARE02" exposition="pattern of symbols for an airport area"?><symbolFill>
+  <areaCRS>GlobalGeometry</areaCRS>
+  <symbol reference="AIRARE02P"/>
+  <v1>
+    <x>38.24</x>
+    <y>0.0</y>
+  </v1>
+  <v2>
+    <x>18.24</x>
+    <y>38.04</y>
+  </v2>
+</symbolFill>

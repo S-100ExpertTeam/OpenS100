@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4964C844-DAE9-4DD3-B9D9-DAA7520D019A}</ProjectGuid>
+    <RootNamespace>FeatureCatalog</RootNamespace>
+    <Keyword>MFCDLLProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v141</PlatformToolset>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v141</PlatformToolset>
+    <CLRSupport>false</CLRSupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\x64_include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\x64_include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>.\FeatureCatalog.def</ModuleDefinitionFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>.\FeatureCatalog.def</ModuleDefinitionFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\FeatureCatalog.def</ModuleDefinitionFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\FeatureCatalog.def</ModuleDefinitionFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="FeatureCatalog.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Address.cpp" />
+    <ClCompile Include="Attribute.cpp" />
+    <ClCompile Include="AttributeBinding.cpp" />
+    <ClCompile Include="AttributeConstraints.cpp" />
+    <ClCompile Include="CI_Organisation.cpp" />
+    <ClCompile Include="ComplexAttribute.cpp" />
+    <ClCompile Include="ComplexAttributes.cpp" />
+    <ClCompile Include="Contact.cpp" />
+    <ClCompile Include="ContactInfo.cpp" />
+    <ClCompile Include="Date.cpp" />
+    <ClCompile Include="DateExt.cpp" />
+    <ClCompile Include="DateTypeCode.cpp" />
+    <ClCompile Include="DefinitionReference.cpp" />
+    <ClCompile Include="DefinitionSource.cpp" />
+    <ClCompile Include="DefinitionSources.cpp" />
+    <ClCompile Include="FeatureAssociation.cpp" />
+    <ClCompile Include="FeatureAssociations.cpp" />
+    <ClCompile Include="FeatureBinding.cpp" />
+    <ClCompile Include="FeatureCatalogue.cpp" />
+    <ClCompile Include="FeatureType.cpp" />
+    <ClCompile Include="FeatureTypes.cpp" />
+    <ClCompile Include="FeatureUseType.cpp" />
+    <ClCompile Include="InformationAssociation.cpp" />
+    <ClCompile Include="InformationAssociations.cpp" />
+    <ClCompile Include="InformationBinding.cpp" />
+    <ClCompile Include="InformationType.cpp" />
+    <ClCompile Include="InformationTypes.cpp" />
+    <ClCompile Include="IntegerCode.cpp" />
+    <ClCompile Include="IntervalType.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ListedValue.cpp" />
+    <ClCompile Include="ListedValues.cpp" />
+    <ClCompile Include="Multiplicity.cpp" />
+    <ClCompile Include="NamedType.cpp" />
+    <ClCompile Include="NumericRange.cpp" />
+    <ClCompile Include="Party.cpp" />
+    <ClCompile Include="S100ObjectType.cpp" />
+    <ClCompile Include="OnlineFunctionCode.cpp" />
+    <ClCompile Include="OnlineResource.cpp" />
+    <ClCompile Include="PresentationFormCode.cpp" />
+    <ClCompile Include="Reference.cpp" />
+    <ClCompile Include="ResponsibleParty.cpp" />
+    <ClCompile Include="Restriction_Item.cpp" />
+    <ClCompile Include="Role.cpp" />
+    <ClCompile Include="RoleCode.cpp" />
+    <ClCompile Include="Roles.cpp" />
+    <ClCompile Include="RoleType.cpp" />
+    <ClCompile Include="S100_CD_AttributeValueType.cpp" />
+    <ClCompile Include="S100_CD_QuantitySpecification.cpp" />
+    <ClCompile Include="Series.cpp" />
+    <ClCompile Include="SimpleAttribute.cpp" />
+    <ClCompile Include="SimpleAttributes.cpp" />
+    <ClCompile Include="SpatialPrimitiveType.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="StringCode.cpp" />
+    <ClCompile Include="Telephone.cpp" />
+    <ClCompile Include="UnitOfMeasure.cpp" />
+    <ClCompile Include="UnlimitedInteger.cpp" />
+    <ClCompile Include="ValueList.cpp" />
+    <ClCompile Include="XML_Attribute.cpp" />
+    <ClCompile Include="XML_Item.cpp" />
+    <ClCompile Include="Citation.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Address.h" />
+    <ClInclude Include="Attribute.h" />
+    <ClInclude Include="AttributeBinding.h" />
+    <ClInclude Include="AttributeConstraints.h" />
+    <ClInclude Include="Citation.h" />
+    <ClInclude Include="CI_Organisation.h" />
+    <ClInclude Include="ComplexAttribute.h" />
+    <ClInclude Include="ComplexAttributes.h" />
+    <ClInclude Include="Contact.h" />
+    <ClInclude Include="ContactInfo.h" />
+    <ClInclude Include="Date.h" />
+    <ClInclude Include="DateExt.h" />
+    <ClInclude Include="DateTypeCode.h" />
+    <ClInclude Include="DefinitionReference.h" />
+    <ClInclude Include="DefinitionSource.h" />
+    <ClInclude Include="DefinitionSources.h" />
+    <ClInclude Include="FeatureAssociation.h" />
+    <ClInclude Include="FeatureAssociations.h" />
+    <ClInclude Include="FeatureBinding.h" />
+    <ClInclude Include="FeatureCatalogue.h" />
+    <ClInclude Include="FeatureType.h" />
+    <ClInclude Include="FeatureTypes.h" />
+    <ClInclude Include="FeatureUseType.h" />
+    <ClInclude Include="InformationAssociation.h" />
+    <ClInclude Include="InformationAssociations.h" />
+    <ClInclude Include="InformationBinding.h" />
+    <ClInclude Include="InformationType.h" />
+    <ClInclude Include="InformationTypes.h" />
+    <ClInclude Include="IntegerCode.h" />
+    <ClInclude Include="IntervalType.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ListedValue.h" />
+    <ClInclude Include="ListedValues.h" />
+    <ClInclude Include="Multiplicity.h" />
+    <ClInclude Include="NamedType.h" />
+    <ClInclude Include="NumericRange.h" />
+    <ClInclude Include="Party.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="S100ObjectType.h" />
+    <ClInclude Include="OnlineFunctionCode.h" />
+    <ClInclude Include="OnlineResource.h" />
+    <ClInclude Include="PresentationFormCode.h" />
+    <ClInclude Include="Reference.h" />
+    <ClInclude Include="ResponsibleParty.h" />
+    <ClInclude Include="Restriction_Item.h" />
+    <ClInclude Include="Role.h" />
+    <ClInclude Include="RoleCode.h" />
+    <ClInclude Include="Roles.h" />
+    <ClInclude Include="RoleType.h" />
+    <ClInclude Include="S100CI.h" />
+    <ClInclude Include="S100_CD_AttributeValueType.h" />
+    <ClInclude Include="S100_CD_QuantitySpecification.h" />
+    <ClInclude Include="Series.h" />
+    <ClInclude Include="SimpleAttribute.h" />
+    <ClInclude Include="SimpleAttributes.h" />
+    <ClInclude Include="SpatialPrimitiveType.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StringCode.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Telephone.h" />
+    <ClInclude Include="UnitOfMeasure.h" />
+    <ClInclude Include="UnlimitedInteger.h" />
+    <ClInclude Include="ValueList.h" />
+    <ClInclude Include="XML_Attribute.h" />
+    <ClInclude Include="XML_Item.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FeatureCatalog.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

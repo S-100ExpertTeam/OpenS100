@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="PIPSOL06" exposition="water pipeline, sewer, etc."?>
+<lineStyle>
+   <intervalLength>8.7</intervalLength>
+   <pen width="0.32">
+      <color>CHGRD</color>
+   </pen>
+   <dash>
+      <start>3.6</start>
+      <length>4</length>
+   </dash>
+   <symbol reference="EMPIPSL2">
+      <position>8</position>
+   </symbol>
+</lineStyle>

@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{50452E5A-6E4B-4374-A0E7-C717B2E89CA3}</ProjectGuid>
+    <RootNamespace>S100_SVG_D2D1_DLL</RootNamespace>
+    <Keyword>MFCDLLProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\x64_include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\extlibs\pugixml\x64_include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>S100_SVG_D2D1_DLL_EXPORT;_AFXEXT;WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>.\S100_SVG_D2D1_DLL.def</ModuleDefinitionFile>
+      <AdditionalDependencies>pugixml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>S100_SVG_D2D1_DLL_EXPORT;_AFXEXT;WIN32;_WINDOWS;_DEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>.\S100_SVG_D2D1_DLL.def</ModuleDefinitionFile>
+      <AdditionalDependencies>pugixml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>S100_SVG_D2D1_DLL_EXPORT;_AFXEXT;WIN32;_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\S100_SVG_D2D1_DLL.def</ModuleDefinitionFile>
+      <AdditionalDependencies>pugixml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>S100_SVG_D2D1_DLL_EXPORT;_AFXEXT;WIN32;_WINDOWS;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\S100_SVG_D2D1_DLL.def</ModuleDefinitionFile>
+      <AdditionalDependencies>pugixml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0412</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BoxLayout.cpp" />
+    <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="CSS.cpp" />
+    <ClCompile Include="CSSDisplay.cpp" />
+    <ClCompile Include="CSSFill.cpp" />
+    <ClCompile Include="CSSOpacity.cpp" />
+    <ClCompile Include="CSSStroke.cpp" />
+    <ClCompile Include="CSSStrokeLinecap.cpp" />
+    <ClCompile Include="CSSStrokeLinejoin.cpp" />
+    <ClCompile Include="CSSStrokeWidth.cpp" />
+    <ClCompile Include="CSSStyle.cpp" />
+    <ClCompile Include="DArc.cpp" />
+    <ClCompile Include="Declaration.cpp" />
+    <ClCompile Include="Description.cpp" />
+    <ClCompile Include="DPoint.cpp" />
+    <ClCompile Include="DrawingPathUnit.cpp" />
+    <ClCompile Include="DrawingPattern.cpp" />
+    <ClCompile Include="IHO_Description.cpp" />
+    <ClCompile Include="IHO_S100SVG.cpp" />
+    <ClCompile Include="Metadata.cpp" />
+    <ClCompile Include="OrgArc.cpp" />
+    <ClCompile Include="OrgCircle.cpp" />
+    <ClCompile Include="OrgDrawingPattern.cpp" />
+    <ClCompile Include="OrgPath.cpp" />
+    <ClCompile Include="Path.cpp" />
+    <ClCompile Include="PivotPointLayout.cpp" />
+    <ClCompile Include="RealSymbol.cpp" />
+    <ClCompile Include="S100_Line.cpp" />
+    <ClCompile Include="S100_LineManager.cpp" />
+    <ClCompile Include="S100_LinePen.cpp" />
+    <ClCompile Include="S100_LineStyle.cpp" />
+    <ClCompile Include="S100_SVG_D2D1_DLL.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SVG.cpp" />
+    <ClCompile Include="SVGManager.cpp" />
+    <ClCompile Include="Symbol.cpp" />
+    <ClCompile Include="SymbolCircle.cpp" />
+    <ClCompile Include="SymbolPath.cpp" />
+    <ClCompile Include="SymColor.cpp" />
+    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="UnitOfCSS.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BoxLayout.h" />
+    <ClInclude Include="Circle.h" />
+    <ClInclude Include="CommonDefinition.h" />
+    <ClInclude Include="CSS.h" />
+    <ClInclude Include="CSSDisplay.h" />
+    <ClInclude Include="CSSFill.h" />
+    <ClInclude Include="CSSOpacity.h" />
+    <ClInclude Include="CSSStroke.h" />
+    <ClInclude Include="CSSStrokeLinecap.h" />
+    <ClInclude Include="CSSStrokeLinejoin.h" />
+    <ClInclude Include="CSSStrokeWidth.h" />
+    <ClInclude Include="CSSStyle.h" />
+    <ClInclude Include="DArc.h" />
+    <ClInclude Include="Declaration.h" />
+    <ClInclude Include="Description.h" />
+    <ClInclude Include="DPoint.h" />
+    <ClInclude Include="DrawingPathUnit.h" />
+    <ClInclude Include="DrawingPattern.h" />
+    <ClInclude Include="DRAW_BRUSH_STRUCT.h" />
+    <ClInclude Include="IHO_Description.h" />
+    <ClInclude Include="IHO_S100SVG.h" />
+    <ClInclude Include="Metadata.h" />
+    <ClInclude Include="OrgArc.h" />
+    <ClInclude Include="OrgCircle.h" />
+    <ClInclude Include="OrgDrawingPattern.h" />
+    <ClInclude Include="OrgPath.h" />
+    <ClInclude Include="Path.h" />
+    <ClInclude Include="PivotPointLayout.h" />
+    <ClInclude Include="RealLine.h" />
+    <ClInclude Include="RealSymbol.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="S100_Line.h" />
+    <ClInclude Include="S100_LineColor.h" />
+    <ClInclude Include="S100_LineDash.h" />
+    <ClInclude Include="S100_LineManager.h" />
+    <ClInclude Include="S100_LinePen.h" />
+    <ClInclude Include="S100_LineStyle.h" />
+    <ClInclude Include="S100_LineSymbol.h" />
+    <ClInclude Include="S100_Pattern.h" />
+    <ClInclude Include="S100_SVG_D2D1_DLL.h" />
+    <ClInclude Include="S100_Text.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SVG.h" />
+    <ClInclude Include="SVGManager.h" />
+    <ClInclude Include="Symbol.h" />
+    <ClInclude Include="SymbolCircle.h" />
+    <ClInclude Include="SymbolPath.h" />
+    <ClInclude Include="SymColor.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Title.h" />
+    <ClInclude Include="UnitOfCSS.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="S100_SVG_D2D1_DLL.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibMFCUtil\LibMFCUtil.vcxproj">
+      <Project>{423e4835-a278-43c4-ad2d-e8a4d0c98f8a}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
