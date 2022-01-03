@@ -972,6 +972,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 			{
 				F_ATTR* attrParent = *itorParent;
 
+
 				for (auto itor = attrParent->m_arr.begin(); itor != attrParent->m_arr.end(); itor++)
 				{
 					ATTR* attr = *itor;
