@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>PortrayalCatalogue</RootNamespace>
     <ProjectName>PortrayalCatalogue</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\extlibs\pugixml\x64_include;$(IncludePath)</IncludePath>
+    <IncludePath>..\extlibs\;..\extlibs\pugixml\x64_include;$(IncludePath)</IncludePath>
     <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
@@ -90,7 +90,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\extlibs\pugixml\x64_include;$(IncludePath)</IncludePath>
+    <IncludePath>..\extlibs\;..\extlibs\pugixml\x64_include;$(IncludePath)</IncludePath>
     <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
@@ -127,6 +127,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Debug;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -166,6 +167,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Release;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
