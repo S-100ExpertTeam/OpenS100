@@ -11,6 +11,7 @@ Currently only a single S-101 ENC is supported, in the future it will support mu
 - Microsoft Visual Studio 17 (or later)
 - MFC (Microsoft Foundation Class Library)
 - Windows 10 (or later)
+- Visual C++ Redistributable for Visual Studio 2012
 - Only support x64.
 
 # Build instructions
