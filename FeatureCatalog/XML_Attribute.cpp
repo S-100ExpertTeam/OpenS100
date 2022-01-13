@@ -42,10 +42,8 @@ void XML_Attribute::Setvalue(char* _value)
 }
 
 #pragma warning(disable:4996)
-char* XML_Attribute::GetvalueString()
+std::string XML_Attribute::GetvalueString()
 {
-	std::string resultstring= std::string(value.begin(), value.end());
-	char*  result = new char[resultstring.size()+1];
-	strcpy(result, resultstring.c_str());
-	return result;
+	std::string resultstring = std::string(value.begin(), value.end());
+	return resultstring;
 }

@@ -92,7 +92,7 @@ END_MESSAGE_MAP()
 COpenS100View::COpenS100View() 
 {
 	theApp.pView = this;
-
+	
 	// Direct2D : Distance, Area, Editing
 	D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
 		D2D1_RENDER_TARGET_TYPE_DEFAULT,
@@ -135,7 +135,6 @@ COpenS100View::~COpenS100View()
 
 	
 	CoUninitialize();
-
 }
 
 void COpenS100View::SaveLastPosScale()
