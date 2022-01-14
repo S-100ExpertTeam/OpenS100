@@ -777,7 +777,7 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 		}
 	}
 
-	Invalidate();
+	Invalidate(FALSE);
 	m_bMoveStart = FALSE;
 	isMoved = false;
 
