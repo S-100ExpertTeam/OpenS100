@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Docking">
       <UniqueIdentifier>{f0e3adc5-269b-49d8-a0c2-932fe0ed3a79}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dialog">
       <UniqueIdentifier>{432fd049-1132-452a-822a-de1872ef261c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일">
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
       <UniqueIdentifier>{4ab65e55-aa53-47bc-bdb8-cef4a73c7c0f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -48,40 +48,40 @@
       <Filter>Docking</Filter>
     </ClInclude>
     <ClInclude Include="OpenS100.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OpenS100Doc.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OpenS100View.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MainFrm.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MFCTabCtrlMsgToParent.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PropertyGridDrawingCommands.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Common.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FeatureCodeString.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DialogViewInformationType.h">
       <Filter>Dialog</Filter>
@@ -105,33 +105,33 @@
       <Filter>Dialog</Filter>
     </ClInclude>
     <ClInclude Include="TreeCtrlExt.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InformationCodeString.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PropertyGridAttributeModify.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PropertyGridVectorModify.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenS100.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainFrm.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OpenS100Doc.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OpenS100View.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DockablePaneRelation.cpp">
       <Filter>Docking</Filter>
@@ -161,13 +161,13 @@
       <Filter>Docking</Filter>
     </ClCompile>
     <ClCompile Include="MFCTabCtrlMsgToParent.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PropertyGridDrawingCommands.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FeatureCodeString.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DialogViewInformationType.cpp">
       <Filter>Dialog</Filter>
@@ -176,19 +176,19 @@
       <Filter>Dialog</Filter>
     </ClCompile>
     <ClCompile Include="InformationCodeString.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DialogTreeAttributeList.cpp">
       <Filter>Dialog</Filter>
     </ClCompile>
     <ClCompile Include="PropertyGridAttributeModify.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PropertyGridVectorModify.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TreeCtrlExt.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ConfigrationDlg.cpp">
       <Filter>Dialog</Filter>
@@ -205,119 +205,119 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\file_view.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\file_view_hc.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\class_view.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\class_view_hc.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\fileview.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\fileview_hc.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\classview.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\classview_hc.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\explorer.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\explorer_hc.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\sort.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\sort_hc.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\menuimages.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\menuimages_hc.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\output_wnd.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\output_wnd_hc.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\properties_wnd.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\properties_wnd_hc.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\properties.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\properties_hc.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\userimages.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\Toolbar.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\Toolbar256.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\writelarge.png">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\toolbar1.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\UNTITLED.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\toolbar3.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\small.png">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\pickArrow.png">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\close.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\OpenS100Doc.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\OpenS100.ico">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="POINTER.cur">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </None>
     <None Include="res\cursor1.cur">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </None>
     <None Include="res\cursor2.cur">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </None>
     <None Include="res\OpenS100.rc2">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OpenS100.rc">
-      <Filter>리소스 파일</Filter>
+      <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>
