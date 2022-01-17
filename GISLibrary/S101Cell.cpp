@@ -622,7 +622,6 @@ void S101Cell::GmlifileMakeByPugi(CString _filePath)
 	}
 	else
 	{
-#pragma region ≈∏¿‘∫∞ namespacesetting
 		Layer* layer = GetS100Layer();
 		auto s100layer = (S100Layer*)layer;
 
@@ -642,9 +641,7 @@ void S101Cell::GmlifileMakeByPugi(CString _filePath)
 			root.append_attribute("xmlns:s100_profile") = "http://www.iho.int/S-100/profile/s100_gmlProfile";
 			root.append_attribute("gml:id") = "KRNPI101_TEST002_001";
 		}
-#pragma endregion
 	}
-
 
 	auto boundedBy = root.append_child("gml:boundedBy");
 	auto Envelope = boundedBy.append_child("gml:Envelope");
