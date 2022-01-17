@@ -11,6 +11,17 @@ S100_AugmentedLineOrArea::S100_AugmentedLineOrArea()
 
 S100_AugmentedLineOrArea::~S100_AugmentedLineOrArea()
 {
+	if (lineStyleReference)
+		delete lineStyleReference;
+	lineStyleReference = NULL;
+
+	if (compositeLineStyle)
+		delete compositeLineStyle;
+	compositeLineStyle = NULL;
+
+	if (lineStyle)
+		delete lineStyle;
+	lineStyle = NULL;
 
 }
 

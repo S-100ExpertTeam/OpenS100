@@ -972,7 +972,6 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 			{
 				F_ATTR* attrParent = *itorParent;
 
-
 				for (auto itor = attrParent->m_arr.begin(); itor != attrParent->m_arr.end(); itor++)
 				{
 					ATTR* attr = *itor;
@@ -1083,7 +1082,7 @@ void CDockablePaneEditWindow::SetVectors()
 	R_CompositeRecord* ccr = NULL;
 	R_SurfaceRecord* sr = NULL;
 
-	if (m_cell == nullptr)
+	if (m_cell == nullptr || m_pFeature == nullptr)
 	{
 		return;
 	}

@@ -704,7 +704,7 @@ void S101Cell::GmlifileMakeByPugi(CString _filePath)
 	pugi::xml_node datasetLanguage = DatasetIdentificationInformation.append_child("S100:datasetLanguage");
 	datasetLanguage.append_child(pugi::node_pcdata).set_value(GetDatasetLanguageToString().c_str());
 
-	//문서보고 추가함
+	//added the document
 	pugi::xml_node datasetAbstract = DatasetIdentificationInformation.append_child("S100:datasetAbstract");
 	datasetAbstract.append_child(pugi::node_pcdata).set_value(GetDatasetAbstractToString().c_str());
 

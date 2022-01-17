@@ -199,8 +199,25 @@ static void get_referenced_spatials(std::string spatial_id, std::vector<std::str
 
 void hd_delete()
 {
-	for (auto data : s_spatial_features)
-		delete  data.second;	
+	if (!s_spatial_features.empty())
+	{
+		for (auto data : s_spatial_features)
+		{
+			data.second->clear();
+			delete  data.second;
+		}
+		s_spatial_features.clear();
+	}
+		
+	s_feature_nodes.clear();
+	s_information_nodes.clear();
+	s_spatial_point_nodes.clear();
+	s_spatial_mpoint_nodes.clear();
+	s_spatial_curve_nodes.clear();
+	s_spatial_ccurve_nodes.clear();
+	s_spatial_surface_nodes.clear();
+
+	s_feature_ids.clear();
 }
 
 void hd_init(/*const char *input_schema, */S101Cell *c)

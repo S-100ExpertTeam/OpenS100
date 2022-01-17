@@ -20,5 +20,5 @@ public:
 	void Setvalue(std::wstring& value);
 	void Setvalue(char* attribute);
 	const std::wstring& Getvalue();
-	char* GetvalueString();
+	std::string GetvalueString();
 };

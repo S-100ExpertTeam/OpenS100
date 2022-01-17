@@ -8,5 +8,8 @@ S100_AlertReference::S100_AlertReference()
 
 S100_AlertReference::~S100_AlertReference()
 {
+	alertType.clear();
+	plan.clear();
+	monitor.clear();
 
 }

@@ -193,6 +193,10 @@ void S100_DisplayList::RemoveInstructions()
 		}
 	}
 
+	for (auto itor = alertInstructions.begin(); itor != alertInstructions.end(); itor++)
+		delete *itor;
+
+	alertInstructions.clear();
 	displayInstructions.clear();
 }
 

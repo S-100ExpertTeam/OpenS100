@@ -3,12 +3,14 @@
 
 S100_Path::S100_Path()
 {
-
 }
 
 S100_Path::~S100_Path()
 {
-
+	for (auto value : arcByRadiuses)
+	{
+		value.DeleteLeftPtr();
+	}
 }
 
 void S100_Path::GetContents(MSXML2::IXMLDOMNodePtr pNode)

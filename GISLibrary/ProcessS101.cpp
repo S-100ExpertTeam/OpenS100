@@ -310,14 +310,14 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 			LUA_ParsingDrawingInstructions(i->featureID, di_splited, c->pcManager);
 		}
 
-		KRS_LUA_SCRIPT_REFERENCE::SaveDrawingInstructions("..\\TEMP\\drawingCommands.txt");
-		KRS_LUA_SCRIPT_REFERENCE::RemoveResultDrawingInstructions();
-
 		// change : S100_DisplayList -> SENC_DisplayList 
 		c->pcManager->GenerateSENCInstruction(c, layer->GetPC());
-		c->pcManager->GenerateSENCAlertInstruction(c, layer->GetPC());
+		//c->pcManager->GenerateSENCAlertInstruction(c, layer->GetPC());
 
 		c->pcManager->InitDisplayList();
+
+		KRS_LUA_SCRIPT_REFERENCE::SaveDrawingInstructions("..\\TEMP\\drawingCommands.txt");
+		KRS_LUA_SCRIPT_REFERENCE::RemoveResultDrawingInstructions();
 	}
 	catch (_com_error &e)
 	{
@@ -751,7 +751,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 								arcByRadius.GetCenter()->SetY(std::wstring(v_splited[1].begin(), v_splited[1].end()));
 								arcByRadius.SetRadius(std::wstring(v_splited[2].begin(), v_splited[2].end()));
 
-								if (!arcByRadius.GetSector())arcByRadius.SetSector(new S100_Sector());
+								if (arcByRadius.GetSector() == nullptr)arcByRadius.SetSector(new S100_Sector());
 								arcByRadius.GetSector()->SetStartAngle(std::wstring(v_splited[3].begin(), v_splited[3].end()));
 								arcByRadius.GetSector()->SetAnglearDistance(std::wstring(v_splited[4].begin(), v_splited[4].end()));
 

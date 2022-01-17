@@ -3,12 +3,11 @@
 
 S100_ArcByRadius::S100_ArcByRadius()
 {
-	sector = NULL;
+	sector = nullptr;
 }
 
 S100_ArcByRadius::~S100_ArcByRadius()
 {
-
 }
 
 void S100_ArcByRadius::GetContents(MSXML2::IXMLDOMNodePtr pNode)
@@ -92,4 +91,13 @@ void S100_ArcByRadius::SetRadius(std::wstring& value)
 std::wstring S100_ArcByRadius::GetRadius() 
 {
 	return radius;
+}
+
+void S100_ArcByRadius::DeleteLeftPtr()
+{
+	if (sector != nullptr)
+	{
+		delete sector;
+		sector = nullptr;
+	}
 }

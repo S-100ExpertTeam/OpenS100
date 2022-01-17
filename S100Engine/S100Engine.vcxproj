@@ -23,7 +23,7 @@
     <ProjectGuid>{E3F7A8CB-3453-4046-A4FC-94BB8769021A}</ProjectGuid>
     <Keyword>MFCDLLProj</Keyword>
     <RootNamespace>S100Engine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -81,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\extlibs\libxml2\include;..\extlibs\pugixml\x64_include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\extlibs\;..\extlibs\libxml2\include;..\extlibs\pugixml\x64_include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\extlibs\libxml2\lib\$(Configuration);..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
@@ -92,7 +92,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\extlibs\libxml2\include;..\extlibs\pugixml\x64_include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\extlibs\;..\extlibs\libxml2\include;..\extlibs\pugixml\x64_include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\extlibs\libxml2\lib\$(Configuration);..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
@@ -161,6 +161,7 @@
     <Lib>
       <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Release;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -220,6 +221,7 @@
     <Lib>
       <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Debug;</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

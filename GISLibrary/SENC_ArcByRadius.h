@@ -10,6 +10,6 @@ public:
 
 public:
 	SENC_VectorPoint center;
-	SENC_Sector *sector;
+	SENC_Sector *sector = nullptr;
 	double radius;
 };
