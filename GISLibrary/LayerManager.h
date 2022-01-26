@@ -113,7 +113,6 @@ public:
 	unsigned m_surfaceCurrentIndex = 0;
 
 	void BuildPortrayalCatalogue(Layer* l);
-	void DeletePortrayalCatalogue(Layer* l/*, PORTRAYAL_BUILD_TYPE type = PORTRAYAL_BUILD_TYPE::ALL*/);
 	void S101RebuildPortrayal(/*PORTRAYAL_BUILD_TYPE type = PORTRAYAL_BUILD_TYPE::ALL*/);
 	void Draw(HDC &hDC, int offset = 0);
 	void DrawLayerList(HDC &hDC, int offset = 0);

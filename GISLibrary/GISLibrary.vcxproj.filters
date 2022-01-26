@@ -324,9 +324,6 @@
     <ClCompile Include="D2D1ChartResources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CreateInputSchemaS101.cpp">
-      <Filter>S101</Filter>
-    </ClCompile>
     <ClCompile Include="ProcessS101.cpp">
       <Filter>S101</Filter>
     </ClCompile>
@@ -826,9 +823,6 @@
     </ClInclude>
     <ClInclude Include="D2D1ChartResources.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateInputSchemaS101.h">
-      <Filter>S101</Filter>
     </ClInclude>
     <ClInclude Include="ProcessS101.h">
       <Filter>S101</Filter>

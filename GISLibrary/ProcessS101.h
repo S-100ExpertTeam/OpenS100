@@ -19,7 +19,6 @@ public:
 	static std::string g_unknown_attribute_value;
 
 public:
-	static int ProcessS101XSLT2XML(std::wstring xsltPath, std::wstring inXMLPath, std::wstring outXMLPath);
 	static int ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer);
 
 	static bool LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm);

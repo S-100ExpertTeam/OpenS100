@@ -25,6 +25,7 @@ class CTreeCtrl;
 
 class LIBMFC_API CLibMFCUtilApp : public CWinApp
 {
+
 public:
 	CLibMFCUtilApp();
 	LARGE_INTEGER sPos;

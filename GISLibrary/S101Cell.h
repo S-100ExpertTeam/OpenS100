@@ -7,7 +7,6 @@
 #include "DDR.h"
 
 #include "..\\GeoMetryLibrary\\MBR.h"
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
 
 #include <unordered_map>
 #include <set>
@@ -40,10 +39,8 @@ class F_C2IL;
 class F_C3IL;
 class F_COCC;
 class F_ATTR;
+
 struct ATTR;
-namespace S100DatasetGML {
-	class S100GML_Dataset;
-}
 
 // Class for saving 000 information.
 // Base and Update save
@@ -60,8 +57,6 @@ public:
 
 	// only have the base.
 	std::vector<S101Cell*> updates;
-
-	S100DatasetGML::S100GML_Dataset* gml_dataset = nullptr;
 
 	// Dataset General Information Record 
 	R_DSGIR m_dsgir;
@@ -161,29 +156,6 @@ public:
 	
 	// [ Text Placement ]
 	void CheckHasTextPlacement();
-
-	//MsXml
-	void SetFeaturesType(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr);
-	void SetInformationsType(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr parentElement);
-	void SetVector(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr parentElement, R_FeatureRecord *fr);
-	void SetVectorPointsType(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr parentElement, SPoint* p);
-	void SetVectorMultiPointsType(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr parentElement, SMultiPoint* p);
-	void SetVectorCurvesType(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr parentElement, SCurve* p);
-	void SetVectorSurfacesType(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr parentElement, SSurface* p);
-
-	// product : S101, S122, S201 ...
-	void SetInformationsType(pugi::xml_document *doc,pugi::xml_node parentNode, std::string productNamespace);
-	void GmlifileMakeByPugi(CString _filePath);
-	void SetFeaturesType(pugi::xml_document *document,pugi::xml_node parentNode, std::string productNamespace);
-	void SetVector(pugi::xml_node parentNode, R_FeatureRecord *fr);
-	void SetVectorPointsType(pugi::xml_node parentNode,SPoint* p);
-	void SetVectorMultiPointsType(pugi::xml_node parentNode,SMultiPoint* p);
-	void SetVectorCurvesType(pugi::xml_node parentNode, SCurve* p);
-	void SetVectorCompositeCurvesType(pugi::xml_node parentNode, SCompositeCurve* p);
-	void SetVectorSurfacesType(pugi::xml_node parentNode,SSurface* p);
-	void SetFeaturesTypeRelation_v2(pugi::xml_node rootNode);
-	void SetInformationsTypeRelation_v2(pugi::xml_node parentNode);
-	void SetAttributeType(pugi::xml_document *doc ,pugi::xml_node parentNode, std::list<F_ATTR*>* f_attrList);
 
 	void SetEncodingSpecification(CString value);
 	CString GetEncodingSpecification();

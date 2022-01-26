@@ -43,7 +43,6 @@ public:
 	void Draw(HDC &hDC, int offset = 0);
 	void Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, double offsetX = 0, double offsetY = 0);
 	void BuildPortrayalCatalogue(Layer* l);
-	void DeletePortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal();
 	void DrawValidationLayers(HDC &hDC, int offset = 0);
 	void DrawOverlay(HDC &hDC, int type, int offset = 0);

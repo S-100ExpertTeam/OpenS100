@@ -1,23 +1,18 @@
-// GISLibrary.cpp : 해당 DLL의 초기화 루틴을 정의합니다.
-//
-
 #include "stdafx.h"
 #include "GISLibrary.h"
 #include "ClipperUtil.h"
+
 #include "..\\GeoMetryLibrary\\ENCCommon.h"
 #include "..\\GeoMetryLibrary\\ENCGeometry.h"
 
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+
 #include "..\\S100Geometry\\SGeometry.h"
-
-
-
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-// CGISLibraryApp
 CGISLibraryApp::CGISLibraryApp()
 {
 	m_pLayerManager->scaler = m_pScaler;
@@ -36,13 +31,10 @@ CGISLibraryApp::~CGISLibraryApp()
 
 	delete[] SGeometry::viewPoints;
 	SGeometry::viewPoints = nullptr;
-
-	//delete ENCGeometry::pSymbolManager;
-	//ENCGeometry::pSymbolManager = nullptr;
 }
 
-//CGISLibraryApp theApp;
 CGISLibraryApp* gisLib = new CGISLibraryApp();
+
 Scaler* CGISLibraryApp::GetScaler()
 {
 	return m_pScaler;
@@ -88,10 +80,6 @@ void CGISLibraryApp::BuildPortrayalCatalogue(Layer* l)
 	m_pLayerManager->BuildPortrayalCatalogue(l);
 }
 
-void CGISLibraryApp::DeletePortrayalCatalogue(Layer* l)
-{
-	m_pLayerManager->DeletePortrayalCatalogue(l);
-}
 void CGISLibraryApp::S101RebuildPortrayal()
 {
 	m_pLayerManager->S101RebuildPortrayal();

@@ -247,7 +247,6 @@
     <ClCompile Include="Catalogue.cpp" />
     <ClCompile Include="ClipperUtil.cpp" />
     <ClCompile Include="CodeWithNumericCode.cpp" />
-    <ClCompile Include="CreateInputSchemaS101.cpp" />
     <ClCompile Include="CSAX.cpp" />
     <ClCompile Include="CUCO.cpp" />
     <ClCompile Include="D2D1ChartResources.cpp" />
@@ -412,7 +411,6 @@
     <ClInclude Include="Catalogue.h" />
     <ClInclude Include="ClipperUtil.h" />
     <ClInclude Include="CodeWithNumericCode.h" />
-    <ClInclude Include="CreateInputSchemaS101.h" />
     <ClInclude Include="CSAX.h" />
     <ClInclude Include="CUCO.h" />
     <ClInclude Include="D2D1ChartResources.h" />

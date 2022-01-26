@@ -8,7 +8,6 @@
 #include "ATTR.h"
 #include "CodeWithNumericCode.h"
 #include "DrawingSet.h"
-#include "CreateInputSchemaS101.h"
 #include "ProcessS101.h"
 #include "PCOutputSchemaManager.h"
 #include "SENC_SpatialReference.h"
@@ -1120,6 +1119,7 @@ void LayerManager::AddSymbolDrawing(
 	for (auto i = augmentedPath[drawingPrioriy].begin(); i != augmentedPath[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
+		instruction->DrawInstruction(gisLib->D2.pRT, gisLib->D2.pD2Factory, gisLib->D2.pBrush, &gisLib->D2.D2D1StrokeStyleGroup, scaler, pc);
 	}
 
 	// Point
@@ -1731,58 +1731,6 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 		DeleteFile(inputPath.c_str());
 
 		ProcessS101::ProcessS101_LUA(L"..\\ProgramData\\S101_Portrayal\\Rules\\main.lua", (S101Layer*)l); //memory leak
-	}
-}
-
-void LayerManager::DeletePortrayalCatalogue(Layer* l)
-{
-	DWORD dwStartTime, dwEndTime, dwTotalTime;
-
-	std::wstring layerName(l->GetLayerName());
-	auto ci = layerName.find_last_of(L"\\");
-	layerName = layerName.substr(++ci);
-
-	ci = layerName.find_last_of(L".");
-	layerName = layerName.substr(0, ci);
-
-	std::wstring inputPath = L"..\\ProgramData\\S100_PC_IO_XML\\INPUT\\";
-	std::wstring outputPath = L"..\\ProgramData\\S100_PC_IO_XML\\OUTPUT\\";
-
-	inputPath.append(layerName);
-	inputPath.append(L".xml");
-
-	outputPath.append(layerName);
-	outputPath.append(L".xml");
-
-	CString excuteFolderPath;
-	::GetModuleFileName(NULL, excuteFolderPath.GetBuffer(MAX_PATH), MAX_PATH);
-	excuteFolderPath.ReleaseBuffer();
-	if (excuteFolderPath.Find('\\') != -1)
-	{
-		for (int i = excuteFolderPath.GetLength() - 1; i >= 0; i--)
-		{
-			TCHAR ch = excuteFolderPath[i];
-			excuteFolderPath.Delete(i);
-			if (ch == '\\') break;
-
-		}
-	}
-
-	if (l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
-	{
-		dwStartTime = timeGetTime();
-		CreateInputSchemaS101::CreatePortrayalCatalogueInputData((S101Cell*)l->m_spatialObject);
-		dwEndTime = timeGetTime();
-		dwTotalTime = dwEndTime - dwStartTime;
-
-		CString msg;
-		msg.Format(L"Create Portrayal Input Data PST : %03d ms", dwTotalTime);
-
-		CFileFind cff;
-		BOOL bExist = cff.FindFile(outputPath.c_str());
-
-		DeleteFile(inputPath.c_str());
-		DeleteFile(outputPath.c_str());
 	}
 }
 
