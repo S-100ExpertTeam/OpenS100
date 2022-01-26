@@ -18,5 +18,4 @@ public:
 	MBR GetMBR();
 	void SetPCOutputManager(PCOutputSchemaManager* value);
 	PCOutputSchemaManager* GetPCOutputManager();
-	S100Layer* GetS100Layer();
 };

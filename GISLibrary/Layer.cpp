@@ -53,11 +53,6 @@ bool Layer::Open(CString _filepath)
 	return m_spatialObject->Open(strFolderPath);
 }
 
-void Layer::Save(CString _filepath, CString extend)
-{
-	m_spatialObject->Save(_filepath, extend);
-}
-
 void Layer::Draw(CDC *pDC, Scaler *scaler, double offset)
 {
 	// only draw layers when it's on.

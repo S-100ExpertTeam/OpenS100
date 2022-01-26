@@ -157,7 +157,6 @@ void CDialogDockRelation::OnNMClickListLm(NMHDR *pNMHDR, LRESULT *pResult)
 		
 		FeatureType* ft = fc->GetFeatureType(itor->second->m_code.GetBuffer());
 
-		theApp.m_DockablePaneAttributeList.SetShowTree(fc, ft);
 		theApp.m_DockablePaneEditWindow.m_cell = cell;
 		theApp.m_DockablePaneEditWindow.SetFeatureRecord(inr);
 	}
@@ -191,7 +190,6 @@ void CDialogDockRelation::OnNMClickListLm(NMHDR *pNMHDR, LRESULT *pResult)
 		}
 
 		FeatureType* ft = fc->GetFeatureType(itor->second->m_code.GetBuffer());
-		theApp.m_DockablePaneAttributeList.SetShowTree(fc, ft);
 		theApp.m_DockablePaneEditWindow.m_cell = cell;
 		theApp.m_DockablePaneEditWindow.SetFeatureRecord(pFe);
 

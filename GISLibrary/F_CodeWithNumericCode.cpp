@@ -42,20 +42,6 @@ void F_CodeWithNumericCode::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-BOOL F_CodeWithNumericCode::Save(CFile *file)
-{
-	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
-	{
-		CodeWithNumericCode *cnc = itor->second;
-		CT2CA outputString(cnc->m_code, CP_UTF8);
-		file->Write(outputString, (UINT)::strlen(outputString));
-		file->Write(&NonPrintableCharacter::unitTerminator, 1);
-		file->Write(&cnc->m_nmcd, 2);
-	}
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_CodeWithNumericCode::GetFieldLength()
 {
 	unsigned len = 0;

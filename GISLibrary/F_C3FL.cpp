@@ -43,22 +43,6 @@ void F_C3FL::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-BOOL F_C3FL::Save(CFile *file)
-{
-	file->Write(&m_vcid, 1);
-	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
-	{
-		FC3D *cont = *itor;
-
-		file->Write(&cont->m_ycoo, 8);
-		file->Write(&cont->m_xcoo, 8);
-		file->Write(&cont->m_zcoo, 8);
-	}
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
-
 int F_C3FL::GetFieldLength()
 {
 	int len = 0;

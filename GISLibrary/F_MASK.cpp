@@ -50,21 +50,6 @@ void F_MASK::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-BOOL F_MASK::Save(CFile *file)
-{
-	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
-	{
-		MASK *mask = itor->second;
-		
-		file->Write(&mask->m_name.RCNM, 1);
-		file->Write(&mask->m_name.RCID, 4);
-		file->Write(&mask->m_mind, 1);
-		file->Write(&mask->m_muin, 1);
-	}
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_MASK::GetFieldLength()
 {
 	int len = 0;

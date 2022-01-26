@@ -2,7 +2,6 @@
 namespace GISLibrary
 {
 	class D2D1Resources;
-	class D2D1ChartResources;
 	struct S57SencPoint;
 	struct S57_CATD;
 	class DSID;

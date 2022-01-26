@@ -20,16 +20,6 @@ void F_COCC::ReadField(BYTE *&buf)
 	m_ncor = buf2uint(buf, 2);
 }
 
-BOOL F_COCC::Save(CFile *file)
-{
-	file->Write(&m_coui, 1);
-	file->Write(&m_coix, 2);
-	file->Write(&m_ncor, 2);
-
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_COCC::GetFieldLength()
 {
 	int len = 0;

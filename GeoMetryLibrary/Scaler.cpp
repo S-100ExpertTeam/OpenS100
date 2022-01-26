@@ -520,90 +520,6 @@ void Scaler::PrivateMoveMap(int sx, int sy, double mx, double my)
 	}
 }
 
-
-#pragma warning(disable:4244)
-void Scaler::Rotate(LONG *sx, LONG *sy, double degree)
-{
-	if (((int)degree % 360) != 0)
-	{
-		// Move the point to square one
-		*sx -= sox;
-		*sy -= soy;
-
-		// Transforming to the axis of the real world.
-		*sy *= (-1);
-
-		// The distance between the starting point and the moving point.s
-		double d = sqrt((double)(*sx) * (*sx) + (*sy) * (*sy));
-
-		// The angle between the existing straight line and the x-axis.
-		double alpha = acos(abs((double)(*sx) / d));
-
-		// The angle to rotate.
-		double theta = rotateDegree * EXC;
-
-		// Change the alpha value to the actual value in [0, 2 * PI].
-		// first quadrant.
-		if ((*sx >= 0) && (*sy >= 0)) 
-		{
-
-		}
-		// Two quadrants.
-		else if ((*sx < 0) && (*sy >= 0)) 
-		{
-			alpha = 3.14 - alpha;
-		}
-		// Three quadrants.
-		else if ((*sx < 0) && (*sy < 0))
-		{
-			alpha = 3.14 + alpha;
-		}
-		// Four quadrants.
-		else if ((*sx >= 0) && (*sy < 0))
-		{
-			alpha = (3.14 * 2) - alpha;
-		} 
-		else {
-			return;
-		}
-
-		// The angle between the new straight line and the x-axis.
-		double beta = alpha - theta;
-
-		// Save new coordinates in the real world.
-		*sx = (LONG)(d * cos(beta));
-		*sy = (LONG)(d * sin(beta));
-
-		// Restoring to the screen coordinate system.
-		*sy *= (-1);
-
-		// Restoration of the work that moved the point to square one.
-		*sx += sox;
-		*sy += soy;
-	}
-}
-
-void Scaler::RotateMap(double degree)
-{
-	rotateDegree += degree;
-
-	if (rotateDegree >= 360.0)
-	{
-		rotateDegree -= 360.0;
-	}
-
-	if (rotateDegree < 0) 
-	{
-		rotateDegree += 360.0;
-	}
-}
-
-
-void Scaler::NorthUp()
-{
-	rotateDegree = 0;
-}
-
 void Scaler::AdjustScreenMap()
 {
 	AdjustScreenMap_Internal();
@@ -715,11 +631,6 @@ MBR Scaler::GetMapCalcMBR()
 	MBR mbr(mxMinCalcMBR, myMinCalcMBR, mxMaxCalcMBR, myMaxCalcMBR);
 
 	return mbr;
-}
-
-double Scaler::GetDistanceScreen(int x1, int y1, int x2, int y2)
-{
-	return sqrt((double)((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 }
 
 double Scaler::GetScreenWidthKM()

@@ -33,17 +33,6 @@ void DDR::Delete()
 	content = nullptr;
 }
 
-
-void DDR::Save(std::wstring filename)
-{
-	CFile file;
-	if (file.Open(filename.c_str(), CFile::modeCreate | CFile::modeWrite))
-	{
-		file.Write(GetContent(), size);
-		file.Close();
-	}
-}
-
 BYTE* DDR::GetContent()
 {
 	return content;

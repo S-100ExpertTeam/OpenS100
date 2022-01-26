@@ -86,7 +86,6 @@ std::wstring get_wstring_from_int_1(int value)
 	return wss.str();
 }
 
-std::unordered_map<std::wstring, MSXML2::IXMLDOMElementPtr> objectXmlElementMap;
 // Key : Feature ID
 // Value : Feature Element?
 std::unordered_map<std::string, pugi::xml_node*> objectPugiXmlElementMap;
@@ -438,8 +437,6 @@ BOOL S101Cell::ReadDDR(BYTE*& buf)
 	m_S101DDR.SetBytes(size, buf);
 
 	buf += m_S101DDR.GetSize();
-
-	//m_S101DDR.Save(L"..\\ProgramData\\s101ddr.txt");
 
 	return TRUE;
 }
@@ -1733,33 +1730,6 @@ MBR S101Cell::CalcMBR()
 	}
 
 	return *pMBR;
-}
-
-void S101Cell::ReadPCManager()
-{
-	if (pcManager) //existing value,
-	{
-		delete pcManager;
-	}
-
-	pcManager = new PCOutputSchemaManager();
-
-	std::wstring outputPath;
-	outputPath = L"..\\ProgramData\\S100_PC_IO_XML\\OUTPUT\\";
-	outputPath.append(std::wstring(GetFileName()));
-	outputPath.erase(outputPath.end() - 3, outputPath.end());
-	outputPath.append(L"xml");
-
-	DWORD dwStartTime, dwEndTime, dwTotalTime;
-	dwStartTime = timeGetTime();
-
-	pcManager->ReadPCOutputXML(outputPath, this);
-
-	dwEndTime = timeGetTime();
-	dwTotalTime = dwEndTime - dwStartTime;
-
-	CString msg;
-	msg.Format(L"Read PC Manager PST : %03d ms", dwTotalTime);
 }
 
 // [ Text Placement ]

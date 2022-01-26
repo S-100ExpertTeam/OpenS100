@@ -151,7 +151,6 @@ public:
 	//void SaveTextPlacement(CString _filepath, CString extend);
 	void GetDDRFromFile(CString _filepath);
 
-	void ReadPCManager(/*PORTRAYAL_BUILD_TYPE type*/);
 	void ProcessSpatialReference();
 	
 	// [ Text Placement ]

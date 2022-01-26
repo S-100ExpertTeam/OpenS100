@@ -165,13 +165,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LatLonUtility.cpp" />
-    <ClCompile Include="TileCalculator.cpp" />
-    <ClCompile Include="TimeUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LatLonUtility.h" />
-    <ClInclude Include="TileCalculator.h" />
-    <ClInclude Include="TimeUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

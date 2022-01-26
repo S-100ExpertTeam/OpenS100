@@ -25,14 +25,6 @@ void F_C3FT::ReadField(BYTE *&buf)
 	m_zcoo = buf2double(buf, 8);
 }
 
-BOOL F_C3FT::Save(CFile *file)
-{
-	file->Write(&m_ycoo, 8);
-	file->Write(&m_xcoo, 8);
-	file->Write(&m_zcoo, 8);
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
 int F_C3FT::GetFieldLength()
 {
 	int len = 0;

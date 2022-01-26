@@ -192,7 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LibMFCUtil.cpp" />
-    <ClCompile Include="MD5Checksum.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -203,8 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LibMFCUtil.h" />
-    <ClInclude Include="MD5Checksum.h" />
-    <ClInclude Include="MD5ChecksumDefines.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StringTokenizer.h" />

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "GISLibrary.h"
-#include "ClipperUtil.h"
 
 #include "..\\GeoMetryLibrary\\ENCCommon.h"
 #include "..\\GeoMetryLibrary\\ENCGeometry.h"
@@ -43,7 +42,6 @@ Scaler* CGISLibraryApp::GetScaler()
 void CGISLibraryApp::InitLibrary()
 {
 	D2.CreateDeviceIndependentResources();
-	D2ChartResources.SetChartResources(&gisLib->D2);
 	D2.CreateDeviceDependentResources();
 	InitS100Engine();
 
@@ -93,11 +91,6 @@ void CGISLibraryApp::DrawValidationLayers(HDC &hDC, int offset)
 void CGISLibraryApp::DrawOverlay(HDC &hDC, int type, int offset)
 {
 	m_pLayerManager->DrawOverlay(hDC, type, offset);
-}
-
-void CGISLibraryApp::DrawShipMonitoringLayer(HDC &hDC, int offset)
-{
-	m_pLayerManager->DrawShipMonitoringLayer(hDC, offset);
 }
 
 void CGISLibraryApp::GetLayer(int index, Layer *_layer)
@@ -233,16 +226,6 @@ void CGISLibraryApp::ReMBR()
 	m_pLayerManager->ReMBR();
 }
 
-void CGISLibraryApp::SaveLayer(CString filename, CString extend, int index)
-{
-	m_pLayerManager->SaveLayer(filename, extend, index);
-}
-
-void CGISLibraryApp::SaveLayer(CString filename, CString extend, Layer *pLayer)
-{
-	m_pLayerManager->SaveLayer(filename, extend, pLayer);
-}
-
 void CGISLibraryApp::SetViewMBR(RECT r)
 {
 	m_pLayerManager->SetViewMBR(r);
@@ -294,14 +277,6 @@ void CGISLibraryApp::DeviceToWorld(D2D1_POINT_2F& p)
 
 	p.x = (float)mx;
 	p.y = (float)my;
-}
-
-/*
-** Calculating the distance.
-*/
-double CGISLibraryApp::GetDistanceScreen(int x1, int y1, int x2, int y2)
-{
-	return m_pScaler->GetDistanceScreen(x1, y1, x2, y2);
 }
 
 /*
@@ -449,22 +424,6 @@ void CGISLibraryApp::MoveMap(int sx, int sy, double mx, double my)
 	m_pScaler->MoveMap(sx, sy, mx, my);
 }
 
-/*
-** rotation screen
-*/
-void CGISLibraryApp::Rotate(LONG *sx, LONG *sy, double degree)
-{
-	m_pScaler->Rotate(sx, sy, degree);
-}
-void CGISLibraryApp::RotateMap(double degree)
-{
-	m_pScaler->RotateMap(degree);
-}	//Maintain the range of rotateDegrees to [0, 360]
-void CGISLibraryApp::NorthUp()
-{
-	m_pScaler->NorthUp();
-}
-
 bool CGISLibraryApp::PtInMap(double _x, double _y)
 {
 	return m_pScaler->PtInMap(_x, _y);
@@ -544,35 +503,6 @@ void CGISLibraryApp::ChangeDisplayFont()
 	}
 }
 
-void CGISLibraryApp::SetDrawBackground(bool on)
-{
-	m_pLayerManager->m_baseMapOn = on;
-}
-bool CGISLibraryApp::GetDrawBackground()
-{
-	return m_pLayerManager->m_baseMapOn;
-}
-
-void CGISLibraryApp::SetExPCPath(CString value)
-{
-	m_pLayerManager->SetExPCPath(value);
-}
-
-CString CGISLibraryApp::GetExPCPath()
-{
-	return m_pLayerManager->GetExPCPath();
-}
-
-void CGISLibraryApp::SetExFCPath(CString value)
-{
-	m_pLayerManager->SetExFCPath(value);
-}
-
-CString CGISLibraryApp::GetExFCPath()
-{
-	return m_pLayerManager->GetExFCPath();
-}
-
 void CGISLibraryApp::BasicFileSetting()
 {
 	// load FC/PC 
@@ -625,69 +555,4 @@ std::wstring CGISLibraryApp::GetColorTable()
 	{
 		return L"";
 	}
-}
-
-void CGISLibraryApp::SetOwnShipPosition(double lon, double lat)
-{
-	m_pLayerManager->SetOwnShipPosition(lon, lat);
-}
-
-void CGISLibraryApp::SetOwnShipSize(double length, double width)
-{
-	m_pLayerManager->SetOwnShipSize(length, width);
-}
-
-ID2D1PathGeometry* CGISLibraryApp::combine_twice_path_geometries(ID2D1Factory1*& srcfactory, ID2D1PathGeometry* geo1, ID2D1PathGeometry* geo2)
-{
-	ID2D1PathGeometry* path_geo_1 = NULL;
-	srcfactory->CreatePathGeometry(&path_geo_1);
-	ID2D1GeometrySink* cmpl_s1 = NULL;
-	path_geo_1->Open(&cmpl_s1);
-	geo1->CombineWithGeometry(geo2, D2D1_COMBINE_MODE_UNION, NULL, cmpl_s1);
-	cmpl_s1->Close();
-	cmpl_s1->Release();
-
-	return path_geo_1;
-}
-
-double CGISLibraryApp::GetAngleFromLegs(double _heading1, double _heading2, bool _radian)
-{
-	double PI = acos(-1.0);
-
-	if (!_radian) {
-		PI *= RAD2DEG;
-	}
-
-	if (_heading1 > PI) {
-		_heading1 -= PI;
-	}
-
-	if (_heading2 > PI) {
-		_heading2 -= PI;
-	}
-
-	double result = PI - _heading1 + _heading2;
-
-	if (result > PI) {
-		result = (2 * PI) - result;
-	}
-
-	return abs(result);
-}
-
-bool CGISLibraryApp::IsRight(double _x1Leg1, double _y1Leg1, double _x2Leg1, double _y2Leg1,
-	double _x1Leg2, double _y1Leg2, double _x2Leg2, double _y2Leg2)
-{
-	double x1 = _x2Leg1 - _x1Leg1;
-	double y1 = _y2Leg1 - _y1Leg1;
-	double x2 = _x2Leg2 - _x1Leg2;
-	double y2 = _y2Leg2 - _y1Leg2;
-
-	double det = (x1 * y2) - (y1 * x2);
-
-	if (det < 0) {
-		return true;
-	}
-
-	return false;
 }

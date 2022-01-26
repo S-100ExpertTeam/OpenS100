@@ -13,7 +13,6 @@
 #include "..\\GISLibrary\\S101Cell.h"
 #include "..\\GISLibrary\\F_INAS.h"
 #include "..\\GISLibrary\\CodeWithNumericCode.h"
-#include "..\\GISLibrary\\NewFeatureManager.h"
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"
 #include "..\\FeatureCatalog\\FeatureType.h"
 
@@ -148,7 +147,6 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 				m_selectedInformationType = fc->GetInformationType(std::wstring(itor->second->m_code));
 
-				theApp.m_DockablePaneAttributeList.SetShowTree(fc, m_selectedInformationType);
 				theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
 				theApp.m_DockablePaneEditWindow.SetFeatureRecord(rfr);
 			}
@@ -391,7 +389,6 @@ void CDialogDockCurrentSelection::DeleteItem(CString id)
 	}
 
 	theApp.m_DockablePaneEditWindow.DeleteAllItems(); //delete all feature information list 
-	theApp.m_DockablePaneAttributeList.RemoveAll(); //delete Attribute List
 }
 
 void CDialogDockCurrentSelection::StringSplit(

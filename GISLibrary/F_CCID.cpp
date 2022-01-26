@@ -24,17 +24,6 @@ void F_CCID::ReadField(BYTE *&buf)
 	m_ruin = *(buf++);
 }
 
-BOOL F_CCID::Save(CFile *file)
-{
-	file->Write(&m_name.RCNM, 1);
-	file->Write(&m_name.RCID, 4);
-	file->Write(&m_rver, 2);
-	file->Write(&m_ruin, 1);
-
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_CCID::GetFieldLength()
 {
 	unsigned len = 0;

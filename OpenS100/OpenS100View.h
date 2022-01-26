@@ -20,9 +20,6 @@ public:
 	bool m_bMoveStart = false;
 	bool m_bMapRefesh = false;
 	
-	CDCRenderTarget		m_RenderTarget;
-	CD2DSolidColorBrush* m_pBlackBrush;
-	
 	CDC mem_dc;
 	CBitmap memBitmap;
 	CDC transDC;
@@ -54,7 +51,6 @@ public:
 	CString	m_strLatitude;
 	CString	m_strLongitude;
 
-	CDialogDockCurrentSelection* m_pDlgCurrentSelection;
 
 	NewFeatureManager *m_pNewFeatureManager = new NewFeatureManager();
 
@@ -140,14 +136,6 @@ public:
 
 	void DrawFromMapRefresh(CDC* pDC, CRect& rect);
 	void DrawFromInvalidate(CDC* pDC, CRect& rect);
-
-
-	void DrawUIScale();
-	void DrawUILatLon();
-	void DrawUILatDegree();
-	void DrawUILatDMS();
-	void DrawUILonDegree();
-	void DrawUILonDMS();
 
 	Layer* GetCurrentLayer();
 

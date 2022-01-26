@@ -25,16 +25,6 @@ void F_CCOC::ReadField(BYTE *&buf)
 	m_ncco = buf2uint(buf, 2);
 }
 
-BOOL F_CCOC::Save(CFile *file)
-{
-	file->Write(&m_ccui, 1);
-	file->Write(&m_ccix, 2);
-	file->Write(&m_ncco, 2);
-
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_CCOC::GetFieldLength()
 {
 	int len = 0;

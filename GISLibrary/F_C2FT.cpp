@@ -24,15 +24,6 @@ void F_C2FT::ReadField(BYTE *&buf)
 	m_xcoo = buf2double(buf, 8);
 }
 
-BOOL F_C2FT::Save(CFile *file)
-{
-	file->Write(&m_ycoo, 8);
-	file->Write(&m_xcoo, 8);
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-
-	return TRUE;
-}
-
 int  F_C2FT::GetFieldLength()
 {
 	unsigned len = 0;

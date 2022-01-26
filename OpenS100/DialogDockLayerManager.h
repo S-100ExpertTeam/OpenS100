@@ -26,7 +26,6 @@ public:
 	CMFCPropertyGridCtrl m_wndPropList;
 	CFont m_fntPropList;
 
-	int nSelectedItem = 0;
 	CDWordArray m_anDragIndexes; // Remember the item you chose.
 	std::vector<CString> SelectdItem;
 

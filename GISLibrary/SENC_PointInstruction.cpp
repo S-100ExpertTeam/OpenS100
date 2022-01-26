@@ -5,9 +5,12 @@
 #include "PCOutputSchemaManager.h"
 
 #include "..\\GISLibrary\\R_FeatureRecord.h"
+
 #include "..\\S100Geometry\\SCommonFuction.h"
 #include "..\\S100Geometry\\SCurve.h"
+
 #include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
+
 #include "..\\PortrayalCatalogue\\S100_PointInstruction.h"
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
 

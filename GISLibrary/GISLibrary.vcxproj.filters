@@ -78,9 +78,6 @@
     <ClCompile Include="S101Cell.cpp">
       <Filter>S101</Filter>
     </ClCompile>
-    <ClCompile Include="ShipInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="F_ATTR.cpp">
       <Filter>S101\Field</Filter>
     </ClCompile>
@@ -182,12 +179,6 @@
     </ClCompile>
     <ClCompile Include="Record.cpp">
       <Filter>S101\Record</Filter>
-    </ClCompile>
-    <ClCompile Include="ShipMonitoringLayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShipMonitoringXMLFile.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ObjectName.cpp">
       <Filter>S101\NameStruct</Filter>
@@ -315,13 +306,7 @@
     <ClCompile Include="DrawingSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SoundingDraft.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="S100Utilities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="D2D1ChartResources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ProcessS101.cpp">
@@ -501,16 +486,10 @@
     <ClCompile Include="SENC_DisplayList.cpp">
       <Filter>SENC_Instruction</Filter>
     </ClCompile>
-    <ClCompile Include="ClipperUtil.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SENC_AlertReference.cpp">
       <Filter>SENC_Instruction</Filter>
     </ClCompile>
     <ClCompile Include="NewFeatureManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NewInformationManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -553,12 +532,6 @@
     </ClInclude>
     <ClInclude Include="S101Cell.h">
       <Filter>S101</Filter>
-    </ClInclude>
-    <ClInclude Include="AddtionalStruct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShipInfo.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="F_ATTR.h">
       <Filter>S101\Field</Filter>
@@ -662,12 +635,6 @@
     <ClInclude Include="Record.h">
       <Filter>S101\Record</Filter>
     </ClInclude>
-    <ClInclude Include="ShipMonitoringLayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShipMonitoringXMLFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectName.h">
       <Filter>S101\NameStruct</Filter>
     </ClInclude>
@@ -734,13 +701,7 @@
     <ClInclude Include="BasicFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DialogExCatalogSelect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Catalogue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GISViewer\DialogExCatalogSelect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="image.h">
@@ -812,16 +773,10 @@
     <ClInclude Include="DrawingSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SoundingDraft.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DRDirectory.h">
       <Filter>8211Lib</Filter>
     </ClInclude>
     <ClInclude Include="S100Utilities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="D2D1ChartResources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ProcessS101.h">
@@ -1010,16 +965,10 @@
     <ClInclude Include="SENC_DisplayList.h">
       <Filter>SENC_Instruction</Filter>
     </ClInclude>
-    <ClInclude Include="ClipperUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SENC_AlertReference.h">
       <Filter>SENC_Instruction</Filter>
     </ClInclude>
     <ClInclude Include="NewFeatureManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NewInformationManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

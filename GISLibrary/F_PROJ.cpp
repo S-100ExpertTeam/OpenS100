@@ -44,20 +44,6 @@ void F_PROJ::ReadField(BYTE *&buf, int loopCnt)
 	m_fnor = buf2double(buf, 8);
 }
 
-BOOL F_PROJ::Save(CFile *file)
-{
-	file->Write(&m_prom, 1);
-	file->Write(&m_prp1, 8);
-	file->Write(&m_prp2, 8);
-	file->Write(&m_prp3, 8);
-	file->Write(&m_prp4, 8);
-	file->Write(&m_prp5, 8);
-	file->Write(&m_feas, 8);
-	file->Write(&m_fnor, 8);
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_PROJ::GetFieldLength()
 {
 	int len = 0;

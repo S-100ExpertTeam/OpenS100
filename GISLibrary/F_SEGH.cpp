@@ -24,13 +24,6 @@ void F_SEGH::ReadField(BYTE *&buf)
 	m_intp = *(buf++);
 }
 
-BOOL F_SEGH::Save(CFile *file)
-{
-	file->Write(&m_intp, 1);
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_SEGH::GetFieldLength()
 {
 	int len = 0;

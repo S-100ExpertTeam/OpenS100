@@ -21,8 +21,6 @@ public:
 	int m_geometryType;
 
 public:
-	R_FeatureRecord* SearchFeatureRecordHasVector(R_PointRecord *vr);
-	ENC_Feature* SearchFeatureRecordHasVector(ENC_Vector *vr);
 	FeatureCatalogue* GetFeatureCatalog();
 	FeatureType* GetFeatureType();
 	void SetFeatureType(FeatureCatalogue* _catalog, FeatureType* _ft);
