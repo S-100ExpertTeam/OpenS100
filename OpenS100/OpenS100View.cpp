@@ -189,6 +189,8 @@ void COpenS100View::OnDraw(CDC* pDC)
 		if (m_bMapRefesh) // Re-drawing part with MapRefresh() (Including Invalidate())
 		{
 			DrawFromMapRefresh(&map_dc, rect);
+
+			m_strFormatedScale = gisLib->GetScaler()->GetFormatedScale();
 		}
 
 		mem_dc.BitBlt(rect.left, rect.top, rect.Width(), rect.Height(), &map_dc, 0, 0, SRCCOPY);
@@ -583,7 +585,8 @@ void COpenS100View::OnLButtonDown(UINT nFlags, CPoint point)
 	int cellCnt = gisLib->GetLayerCount();
 
 	Layer *l = (Layer*)gisLib->GetLayer(0);
-	m_pNewFeatureManager->m_cell = (S101Cell*)l->m_spatialObject;
+	if( l != nullptr)
+		m_pNewFeatureManager->m_cell = (S101Cell*)l->m_spatialObject;
 
 	CRect cr;
 	GetClientRect(&cr);
@@ -778,6 +781,7 @@ void COpenS100View::OnMouseMove(UINT nFlags, CPoint point)
 	else {
 		strLon.Format(_T("%3d-%.3lf(W)"), std::abs((int)degree), std::fabs(minute));
 	}
+	m_strFormatedLongitude = strLon;
 	
 	//====================================================================================
 	// The X coordinate values are modified to be included within the ranges of (-180 and 180).
@@ -804,11 +808,16 @@ void COpenS100View::OnMouseMove(UINT nFlags, CPoint point)
 	else {
 		strLat.Format(_T("%2d-%.3lf(S)"), std::abs((int)degree), std::fabs(minute));
 	}
-	CString statusText= m_strLatitude;
-	statusText.Format(_T("%s , %s"), strLat, strLon);
+	m_strFormatedLongitude = strLat;
+
+
+	
+	
+	CString strFomatedInfo = _T("");
+	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLongitude, m_strFormatedLongitude);
 
 	CMainFrame *frame = (CMainFrame*)AfxGetMainWnd(); 
-	frame->SetMessageText(statusText);
+	frame->SetMessageText(strFomatedInfo);
 
 
 	CFont mFont3;
@@ -974,6 +983,14 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	}
 
 	MapRefresh();
+
+
+	m_strFormatedScale = gisLib->GetScaler()->GetFormatedScale();
+	CString strFomatedInfo = _T("");
+	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLongitude, m_strFormatedLongitude);
+
+	CMainFrame* frame = (CMainFrame*)AfxGetMainWnd();
+	frame->SetMessageText(strFomatedInfo);
 
 	return CView::OnMouseWheel(nFlags, zDelta, pt);
 }

@@ -320,6 +320,57 @@ void Scaler::SetScale(int scale)
 	UpdateScale();
 }
 
+CString Scaler::GetFormatedScale()
+{
+	CString str;
+	// Scale (ÄÞ¸¶¸¦ Âï´Â ´Ù)
+	double Scale = GetCurrentScale();
+
+	CString newStr, strComma;
+
+	strComma.Format(_T(","));
+	str.Format(_T("%.lf"), Scale);
+
+	int addedLength;
+
+	if ((str.GetLength() % 3) == 0) {
+		addedLength = (str.GetLength() / 3) - 1;
+	}
+	else {
+		addedLength = (str.GetLength() / 3);
+	}
+
+	newStr = str;
+
+	for (int k = 0; k < addedLength; k++) {
+		newStr.AppendChar('a');
+	}
+
+	int cnt = 0;
+
+	int i = str.GetLength() - 1;
+	int j = newStr.GetLength() - 1;
+
+	for (; i >= 0;) {
+		newStr.SetAt(j, str.GetAt(i));
+		j--;
+		i--;
+		cnt++;
+
+		if ((cnt == 3) && (j >= 0)) {
+			newStr.SetAt(j, strComma.GetAt(0));
+			j--;
+			cnt = 0;
+		}
+	}
+
+	str.Format(_T("1 : "));
+	str.AppendFormat(newStr);
+
+
+	return str;
+}
+
 double Scaler::GetRotationDegree()
 {
 	return rotateDegree;
@@ -656,6 +707,10 @@ CRect Scaler::GetScreenRect()
 {
 	return CRect(0, 0, GetScreenWidth(), GetScreenHeight());
 }
+
+
+
+
 
 #pragma warning(disable:4244)
 D2D1_RECT_F Scaler::GetD2Rect()

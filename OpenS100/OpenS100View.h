@@ -50,6 +50,10 @@ public:
 	CString m_strScale;
 	CString	m_strLatitude;
 	CString	m_strLongitude;
+	CString m_strFormatedScale;
+	CString m_strFormatedLatitude;
+	CString m_strFormatedLongitude;
+	
 
 
 	NewFeatureManager *m_pNewFeatureManager = new NewFeatureManager();

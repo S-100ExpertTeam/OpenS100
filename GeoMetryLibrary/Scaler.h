@@ -69,6 +69,7 @@ public:
 	int  GetScreenHeight();
 	CRect GetScreenRect();
 	D2D1_RECT_F GetD2Rect();
+	
 	/*
 	** Map's information shown on the screen.
 	*/
@@ -81,13 +82,14 @@ public:
 	void GetMap(MBR *mbr);
 	MBR GetMap();
 	MBR GetMapCalcMBR();
-
+	
 	/*
 	** Scale info
 	*/
 	int GetCurrentScale();
 	void SetScale(int scale);
 	void UpdateScale();
+	CString GetFormatedScale();
 	
 	/*
 	** Rotation info
