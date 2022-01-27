@@ -28,7 +28,6 @@ public:
 	virtual void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler) {};
 	virtual void Draw(CDCRenderTarget* pRenderTarget, Scaler *scaler, double offsetX = 0, double offsetY = 0) {};
 	virtual void Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, Scaler *scaler, double offsetX = 0, double offsetY = 0) {};
-	virtual void Save(CString filename, CString extend);
 
 	void SetLayer(Layer* value);
 	Layer* GetLayer();

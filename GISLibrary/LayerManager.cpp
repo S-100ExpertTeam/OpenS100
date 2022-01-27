@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "LayerManager.h"
-#include "ShipMonitoringLayer.h"
 #include "S101Layer.h"
 #include "BAGLayer.h"
 #include "F_ATTR.h"
@@ -8,7 +7,6 @@
 #include "ATTR.h"
 #include "CodeWithNumericCode.h"
 #include "DrawingSet.h"
-#include "CreateInputSchemaS101.h"
 #include "ProcessS101.h"
 #include "PCOutputSchemaManager.h"
 #include "SENC_SpatialReference.h"
@@ -55,9 +53,6 @@ std::unordered_map<FeatureCatalogue*, PortrayalCatalogue*> LayerManager::Catalog
 std::unordered_map<std::wstring, FeatureCatalogue*>* LayerManager::hash_FC = nullptr;
 std::vector<FeatureCatalogue*>* LayerManager::pS100Catalogs = nullptr;
 
-PortrayalCatalogue* LayerManager::pUserDefinedLayerPC;
-FeatureCatalogue* LayerManager::pUserDefinedLayerFC;
-
 // calc Performance
 UINT wTimerRes;
 CRITICAL_SECTION g_CsAddLayer;
@@ -76,13 +71,6 @@ LayerManager::LayerManager(void)
 			if (ch == '\\') break;
 		}
 	}
-
-	m_coastlineLayer = NULL;
-
-	m_userDefinedLayer = nullptr;
-
-	pUserDefinedLayerPC = nullptr;
-	pUserDefinedLayerFC = nullptr;
 
 	::InitializeCriticalSection(&g_CsAddLayer);
 }
@@ -109,17 +97,6 @@ LayerManager::~LayerManager()
 	}
 	m_listLayer.clear();
 
-	if (m_coastlineLayer != NULL)
-	{
-		delete m_coastlineLayer;
-	}
-
-	if (m_userDefinedLayer != NULL)
-	{
-		delete m_userDefinedLayer;
-	}
-
-
 	if (pPortrayalCatalogues)
 	{
 		for (auto itor = pPortrayalCatalogues->begin(); itor != pPortrayalCatalogues->end(); itor++)
@@ -139,19 +116,6 @@ LayerManager::~LayerManager()
 		delete pS100Catalogs;
 		pS100Catalogs = NULL;
 	}
-
-	if (pUserDefinedLayerPC)
-	{
-		delete pUserDefinedLayerPC;
-		pUserDefinedLayerPC = NULL;
-	}
-
-	if (pUserDefinedLayerFC)
-	{
-		delete pUserDefinedLayerFC;
-		pUserDefinedLayerFC = NULL;
-	}
-
 
 	if (hash_FC)
 	{
@@ -206,46 +170,6 @@ void LayerManager::LoadFeatureCatalogs()
 			if (ch == '\\') break;
 		}
 	}
-}
-
-Layer* LayerManager::LoadCoastline(CString _filepath)
-{
-	CString file_extension = _T("");
-
-	file_extension.AppendChar(_filepath.GetAt(_filepath.GetLength() - 3));
-	file_extension.AppendChar(_filepath.GetAt(_filepath.GetLength() - 2));
-	file_extension.AppendChar(_filepath.GetAt(_filepath.GetLength() - 1));
-
-	if (m_coastlineLayer != NULL)
-	{
-		delete m_coastlineLayer;
-		m_coastlineLayer = NULL;
-	}
-	int type = 0;
-
-	if (file_extension.CompareNoCase(_T("shp")) == 0) {
-		m_coastlineLayer = new Layer();
-		type = m_coastlineLayer->Open(_filepath);
-	}
-
-	if (type == 0) {
-		return FALSE;
-	}
-	else if (type == 2) {
-#ifdef _DEBUG
-		USES_CONVERSION;
-		LARGE_INTEGER liCounter1, liCounter2, liFrequency;
-		QueryPerformanceFrequency(&liFrequency);	// retrieves the frequency of the high-resolution performance counter   
-		QueryPerformanceCounter(&liCounter1);		// Start
-#endif
-
-#ifdef _DEBUG
-		QueryPerformanceCounter(&liCounter2);  // End
-		TRACE(W2A(TEXT("DB Insert ½Ã°£ : %f sec\n")), (double)(liCounter2.QuadPart - liCounter1.QuadPart) / (double)liFrequency.QuadPart);
-
-#endif
-	}
-	return m_coastlineLayer;
 }
 
 bool LayerManager::AddBackgroundLayer(CString _filepath)
@@ -1120,6 +1044,7 @@ void LayerManager::AddSymbolDrawing(
 	for (auto i = augmentedPath[drawingPrioriy].begin(); i != augmentedPath[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
+		instruction->DrawInstruction(gisLib->D2.pRT, gisLib->D2.pD2Factory, gisLib->D2.pBrush, &gisLib->D2.D2D1StrokeStyleGroup, scaler, pc);
 	}
 
 	// Point
@@ -1734,58 +1659,6 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 	}
 }
 
-void LayerManager::DeletePortrayalCatalogue(Layer* l)
-{
-	DWORD dwStartTime, dwEndTime, dwTotalTime;
-
-	std::wstring layerName(l->GetLayerName());
-	auto ci = layerName.find_last_of(L"\\");
-	layerName = layerName.substr(++ci);
-
-	ci = layerName.find_last_of(L".");
-	layerName = layerName.substr(0, ci);
-
-	std::wstring inputPath = L"..\\ProgramData\\S100_PC_IO_XML\\INPUT\\";
-	std::wstring outputPath = L"..\\ProgramData\\S100_PC_IO_XML\\OUTPUT\\";
-
-	inputPath.append(layerName);
-	inputPath.append(L".xml");
-
-	outputPath.append(layerName);
-	outputPath.append(L".xml");
-
-	CString excuteFolderPath;
-	::GetModuleFileName(NULL, excuteFolderPath.GetBuffer(MAX_PATH), MAX_PATH);
-	excuteFolderPath.ReleaseBuffer();
-	if (excuteFolderPath.Find('\\') != -1)
-	{
-		for (int i = excuteFolderPath.GetLength() - 1; i >= 0; i--)
-		{
-			TCHAR ch = excuteFolderPath[i];
-			excuteFolderPath.Delete(i);
-			if (ch == '\\') break;
-
-		}
-	}
-
-	if (l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
-	{
-		dwStartTime = timeGetTime();
-		CreateInputSchemaS101::CreatePortrayalCatalogueInputData((S101Cell*)l->m_spatialObject);
-		dwEndTime = timeGetTime();
-		dwTotalTime = dwEndTime - dwStartTime;
-
-		CString msg;
-		msg.Format(L"Create Portrayal Input Data PST : %03d ms", dwTotalTime);
-
-		CFileFind cff;
-		BOOL bExist = cff.FindFile(outputPath.c_str());
-
-		DeleteFile(inputPath.c_str());
-		DeleteFile(outputPath.c_str());
-	}
-}
-
 void LayerManager::DrawValidationLayers(HDC& hdc, int offset)
 {
 	POSITION pos = m_listBackgroundLayer.GetHeadPosition();
@@ -1808,10 +1681,6 @@ void LayerManager::DrawValidationLayers(HDC& hdc, int offset)
 			m_listBackgroundLayer.GetNext(pos);
 		}
 	}
-
-	if (m_coastlineLayer != NULL)
-		m_coastlineLayer->Draw(hdc, scaler, offset);
-	/////////////////////////////////
 }
 
 void LayerManager::DrawOverlay(HDC& hdc, int type, int offset)
@@ -1820,25 +1689,6 @@ void LayerManager::DrawOverlay(HDC& hdc, int type, int offset)
 	{
 	case 1:
 		break;
-	}
-}
-
-void LayerManager::DrawShipMonitoringLayer(HDC& hdc, int offset)
-{
-	// Draw Ship Monitoring Layer
-	POSITION pos = m_listShipMonitoringLayer.GetHeadPosition();
-
-	while (pos)
-	{
-		if (m_listShipMonitoringLayer.GetAt(pos)->IsOn())
-		{
-			Layer* layer = m_listShipMonitoringLayer.GetNext(pos);
-
-			if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
-			{
-				layer->Draw(CDC::FromHandle(hdc), scaler, offset);
-			}
-		}
 	}
 }
 
@@ -2008,22 +1858,6 @@ void LayerManager::SetViewMBR(RECT r)
 	scaler->SetMap(r);
 }
 
-void LayerManager::SaveLayer(CString filename, CString extend, int index)
-{
-	if ((index >= 0) && (index < GetLayerCount()))
-	{
-		auto iter = m_listLayer.begin();
-		std::advance(iter, index);
-		(*iter)->Save(filename, extend);
-	}
-}
-
-
-void LayerManager::SaveLayer(CString filename, CString extend, Layer* layer)
-{
-	layer->Save(filename, extend);
-}
-
 void LayerManager::ShowTextPlacement(BOOL bShow)
 {
 	ENCCommon::SHOW_TEXT_PLACEMENT = bShow;
@@ -2159,89 +1993,6 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 	{
 		auto pc = *i;
 		pc->SetCurrentPaletteName(paletteName);
-	}
-}
-
-void LayerManager::SetSelectedFCPath(CString value)
-{
-	selectedFCPath = value;
-}
-
-CString LayerManager::GetSelectedFCPath()
-{
-	return selectedFCPath;
-}
-
-void LayerManager::SetSelectedPCPath(CString value)
-{
-	selectedPCPath = value;
-}
-
-CString LayerManager::GetSelectedPCPath()
-{
-	return selectedPCPath;
-}
-
-int LayerManager::SelectFCPC(CString path, Layer* layer, FeatureCatalogue* fc, PortrayalCatalogue* pc)
-{
-	while (true)
-	{
-		//CString filePath;	
-
-		SelectCatalogindex = GetSelectedCatalogIndex(path);
-		if (SelectCatalogindex == -1)
-		{
-			return -1;
-		}
-		else if (SelectCatalogindex == -10000000)
-		{
-			//Read the path and set it up.
-			CFileDialog FCDialog(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT, _T("Xml Files(*.xml)|*.xml"));
-
-			if (GetExFCPath().IsEmpty() != true)
-			{
-				FCDialog.m_ofn.lpstrInitialDir = GetExFCPath();
-			}
-
-			FCDialog.m_ofn.lpstrTitle = TEXT("Feature_catalogue");
-			if (FCDialog.DoModal() == IDOK)
-			{
-
-				CFileDialog PCDialog(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT, _T("Xml Files(*.xml)|*.xml"));
-				if (GetExPCPath().IsEmpty() != true)
-				{
-					PCDialog.m_ofn.lpstrInitialDir = GetExPCPath();
-				}
-
-				PCDialog.m_ofn.lpstrTitle = TEXT("Portrayal_catalogue");
-				if (PCDialog.DoModal() == IDOK)
-				{
-					CString fc = CString(FCDialog.GetPathName());
-					CString fcfolderpath = LibMFCUtil::GetFolderPathFromFilePath(fc);
-					SetSelectedFCPath(fc);
-					SetExFCPath(fcfolderpath);
-
-					CString pc = CString(PCDialog.GetPathName());
-					CString pcfolderpath = LibMFCUtil::GetFolderPathFromFilePath(pc);
-					SetSelectedPCPath(pc);
-					SetExPCPath(pcfolderpath);
-					return -10000000;
-				}
-				else
-				{
-					continue;
-				}
-			}
-			else
-			{
-				continue;
-			}
-		}
-		else
-		{
-			return SelectCatalogindex;
-		}
-
 	}
 }
 
@@ -2418,26 +2169,6 @@ PortrayalCatalogue* LayerManager::GetPC(std::wstring pcName)
 	}
 
 	return item->second;
-}
-
-CString LayerManager::GetExPCPath()
-{
-	return ExPCPath;
-}
-
-void LayerManager::SetExPCPath(CString value)
-{
-	ExPCPath = value;
-}
-
-CString LayerManager::GetExFCPath()
-{
-	return ExFCPath;
-}
-
-void LayerManager::SetExFCPath(CString value)
-{
-	ExFCPath = value;
 }
 
 void LayerManager::SuppressS101Lines(
@@ -2665,54 +2396,9 @@ int LayerManager::CheckFileType(CString path)
 	return ret;
 }
 
-void LayerManager::OnScaleMinMax()
-{
-	onScaleMinMax = true;
-}
-
-void LayerManager::OffScaleMinMax()
-{
-	onScaleMinMax = false;
-}
-
-bool LayerManager::IsOnScaleMinMax()
-{
-	return onScaleMinMax;
-}
-
 bool LayerManager::IsOn(Layer* layer)
 {
-	if (true == IsOnScaleMinMax())
-	{
-		auto scale = scaler->GetCurrentScale();
-		return layer->IsOn(scale);
-	}
-
 	return layer->IsOn();
-}
-
-void LayerManager::DrawS101Symbol(std::wstring symbolName, int screenX, int screenY)
-{
-	auto rt = gisLib->D2.pRT;
-	rt->SetTransform(D2D1::Matrix3x2F::Identity());
-	auto pc = GetPC(101);
-	S100_SVG_D2D1_DLL::RealSymbol rs;
-	rs.symName = L"EMLOWAC01";
-	rs.rotation = 0;
-	rs.x = 100;
-	rs.y = 100;
-	rs.scale = 1;
-	if (nullptr != pc)
-	{
-		pc->GetSVGManager()->DrawRealSymbol(rs, pc);
-	}
-}
-
-void LayerManager::SetInteroperabilityLevel(int lv)
-{
-	ENCCommon::INTEROPERABILITY_LEVEL = lv;
-	gisLib->S101RebuildPortrayal();
-
 }
 
 struct ROUTE_FOR_PROCESSING
@@ -2742,40 +2428,6 @@ std::vector<S100Layer*> LayerManager::GetS100Layers(int productNumber)
 	}
 
 	return result;
-}
-
-S100Layer* LayerManager::GetS100Layer(int productNumber, int sx, int sy)
-{
-	double mx = 0;
-	double my = 0;
-	scaler->DeviceToWorld(sx, sy, &mx, &my);
-
-	auto layers = GetS100Layers(productNumber);
-	for (auto i = layers.begin(); i != layers.end(); i++)
-	{
-		auto mbr = (*i)->GetMBR();
-		if (true == mbr.PtInMBR(mx, my))
-		{
-			return (*i);
-		}
-	}
-
-	return nullptr;
-}
-
-S100Layer* LayerManager::GetS100Layer(int productNumber, double mx, double my)
-{
-	auto layers = GetS100Layers(productNumber);
-	for (auto i = layers.begin(); i != layers.end(); i++)
-	{
-		auto mbr = (*i)->GetMBR();
-		if (true == mbr.PtInMBR(mx, my))
-		{
-			return (*i);
-		}
-	}
-
-	return nullptr;
 }
 
 std::wstring LayerManager::GetObjectAttributeString(S101Cell* cell, F_ATTR* f_attr)
@@ -2834,53 +2486,4 @@ std::wstring LayerManager::GetObjectAttributeString(S101Cell* cell, F_ATTR* f_at
 	}
 
 	return ret;
-}
-
-void LayerManager::SetOwnShipPosition(double lon, double lat)
-{
-	m_ownShipInformation.SetPosition(lon, lat);
-}
-
-void LayerManager::SetOwnShipSize(double length, double width)
-{
-	m_ownShipInformation.SetLength(length);
-	m_ownShipInformation.SetWidth(width);
-}
-
-void LayerManager::SetOwnShipMovementStatus(double sog, double cog, double hdg)
-{
-	m_ownShipInformation.SetMovementStatus(sog, cog, hdg);
-}
-
-void LayerManager::GetOwnShipPosition(double& lon, double& lat)
-{
-	m_ownShipInformation.GetPosition(lon, lat);
-}
-
-void LayerManager::GetOwnShipSize(double& length, double& width)
-{
-	m_ownShipInformation.GetLength(length);
-	m_ownShipInformation.GetWidth(width);
-}
-
-void LayerManager::GetOwnShipMovementStatus(double& sog, double& cog, double& hdg)
-{
-	m_ownShipInformation.GetMovementStatus(sog, cog, hdg);
-}
-
-void LayerManager::SetOwnShipGuardZone(D2D1_POINT_2F p[4])
-{
-	D2D1_POINT_2F point[4];
-	point[0].x = p[0].x;
-	point[0].y = p[0].y;
-
-	point[1].x = p[1].x;
-	point[1].y = p[1].y;
-
-	point[2].x = p[2].x;
-	point[2].y = p[2].y;
-
-	point[3].x = p[3].x;
-	point[3].y = p[3].y;
-	gisLib->D2ChartResources.MakeGuardZoneGeometry(point);
 }

@@ -42,20 +42,6 @@ void F_CSAX::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-BOOL F_CSAX::Save(CFile *file)
-{
-	int len = 0;
-	POSITION pos = m_arr.GetHeadPosition();
-	while(pos != NULL)
-	{
-		CSAX *csax = m_arr.GetNext(pos);
-		file->Write(&csax->m_axty, 1);
-		file->Write(&csax->m_axum, 1);
-	}
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_CSAX::GetFieldLength()
 {
 	int len = 0;

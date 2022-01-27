@@ -24,6 +24,5 @@ public:
 
 public:
 	void ReadField(BYTE *&buf);
-	BOOL Save(CFile *file);
 	int GetFieldLength();
 };

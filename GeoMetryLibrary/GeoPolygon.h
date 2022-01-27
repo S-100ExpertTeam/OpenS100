@@ -17,8 +17,6 @@ public:
 	POINT* CPoints = nullptr;
 
 public:
-	// with Clipper
-	GeoPolygon* Clip(int left, int bottom, int right, int top);
 	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
 	void DrawGeometry(CDCRenderTarget* pRenderTarget, Scaler *scaler, double offsetX = 0, double offsetY = 0);
 };

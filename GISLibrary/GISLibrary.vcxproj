@@ -158,7 +158,8 @@
       </Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>hdf5_D.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
@@ -231,7 +232,8 @@
       </Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>hdf5.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <TargetMachine>MachineX64</TargetMachine>
     </Lib>
   </ItemDefinitionGroup>
@@ -244,13 +246,9 @@
     <ClCompile Include="BasicFile.cpp" />
     <ClCompile Include="C3IL.cpp" />
     <ClCompile Include="CatalogItem.cpp" />
-    <ClCompile Include="Catalogue.cpp" />
-    <ClCompile Include="ClipperUtil.cpp" />
     <ClCompile Include="CodeWithNumericCode.cpp" />
-    <ClCompile Include="CreateInputSchemaS101.cpp" />
     <ClCompile Include="CSAX.cpp" />
     <ClCompile Include="CUCO.cpp" />
-    <ClCompile Include="D2D1ChartResources.cpp" />
     <ClCompile Include="D2D1Resources.cpp" />
     <ClCompile Include="DDR.cpp" />
     <ClCompile Include="DrawingSet.cpp" />
@@ -306,8 +304,6 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LayerManager.cpp" />
     <ClCompile Include="MASK.cpp" />
-    <ClCompile Include="NewFeatureManager.cpp" />
-    <ClCompile Include="NewInformationManager.cpp" />
     <ClCompile Include="ObjectName.cpp" />
     <ClCompile Include="OrientedCurveRecord.cpp" />
     <ClCompile Include="PCOutputSchemaManager.cpp" />
@@ -375,7 +371,6 @@
     <ClCompile Include="SENC_TextPoint.cpp" />
     <ClCompile Include="SENC_VectorPoint.cpp" />
     <ClCompile Include="SENC_WithParam.cpp" />
-    <ClCompile Include="ShipInfo.cpp" />
     <ClCompile Include="Record.cpp" />
     <ClCompile Include="RecordName.cpp" />
     <ClCompile Include="R_CompositeRecord.cpp" />
@@ -388,10 +383,7 @@
     <ClCompile Include="R_PointRecord.cpp" />
     <ClCompile Include="R_SurfaceRecord.cpp" />
     <ClCompile Include="S101Cell.cpp" />
-    <ClCompile Include="ShipMonitoringLayer.cpp" />
-    <ClCompile Include="ShipMonitoringXMLFile.cpp" />
     <ClCompile Include="SHPFile.cpp" />
-    <ClCompile Include="SoundingDraft.cpp" />
     <ClCompile Include="SPAS.cpp" />
     <ClCompile Include="SpatialObject.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -403,22 +395,15 @@
     <ClCompile Include="THAS.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\GISViewer\DialogExCatalogSelect.h" />
-    <ClInclude Include="AddtionalStruct.h" />
     <ClInclude Include="ATTR.h" />
     <ClInclude Include="BasicFile.h" />
     <ClInclude Include="C3IL.h" />
     <ClInclude Include="CatalogItem.h" />
-    <ClInclude Include="Catalogue.h" />
-    <ClInclude Include="ClipperUtil.h" />
     <ClInclude Include="CodeWithNumericCode.h" />
-    <ClInclude Include="CreateInputSchemaS101.h" />
     <ClInclude Include="CSAX.h" />
     <ClInclude Include="CUCO.h" />
-    <ClInclude Include="D2D1ChartResources.h" />
     <ClInclude Include="D2D1Resources.h" />
     <ClInclude Include="DDR.h" />
-    <ClInclude Include="DialogExCatalogSelect.h" />
     <ClInclude Include="DrawingSet.h" />
     <ClInclude Include="DRDirectory.h" />
     <ClInclude Include="Enum_S100_FileType.h" />
@@ -471,14 +456,11 @@
     <ClInclude Include="host_data.h" />
     <ClInclude Include="host_functions.h" />
     <ClInclude Include="IC2D.h" />
-    <ClInclude Include="image.h" />
     <ClInclude Include="ISO8211Fuc.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LayerManager.h" />
     <ClInclude Include="MASK.h" />
     <ClInclude Include="Namespace_GISLibrary.h" />
-    <ClInclude Include="NewFeatureManager.h" />
-    <ClInclude Include="NewInformationManager.h" />
     <ClInclude Include="NonPrintableCharacter.h" />
     <ClInclude Include="ObjectName.h" />
     <ClInclude Include="OrientedCurveRecord.h" />
@@ -551,7 +533,6 @@
     <ClInclude Include="SENC_TextPoint.h" />
     <ClInclude Include="SENC_VectorPoint.h" />
     <ClInclude Include="SENC_WithParam.h" />
-    <ClInclude Include="ShipInfo.h" />
     <ClInclude Include="Record.h" />
     <ClInclude Include="RecordName.h" />
     <ClInclude Include="R_CompositeRecord.h" />
@@ -564,10 +545,7 @@
     <ClInclude Include="R_PointRecord.h" />
     <ClInclude Include="R_SurfaceRecord.h" />
     <ClInclude Include="S101Cell.h" />
-    <ClInclude Include="ShipMonitoringLayer.h" />
-    <ClInclude Include="ShipMonitoringXMLFile.h" />
     <ClInclude Include="SHPFile.h" />
-    <ClInclude Include="SoundingDraft.h" />
     <ClInclude Include="SPAS.h" />
     <ClInclude Include="SpatialObject.h" />
     <ClInclude Include="stdafx.h" />

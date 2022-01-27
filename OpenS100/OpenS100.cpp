@@ -325,8 +325,3 @@ void COpenS100App::SaveSettings()
 	ENCCommon::Save(L"..\\ProgramData\\data\\settings.txt");
 	return;
 }
-
-CDockablePaneAttributeList& COpenS100App::GetDockFeatureInformationList()
-{
-	return m_DockablePaneAttributeList;
-}

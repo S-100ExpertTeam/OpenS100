@@ -99,43 +99,6 @@ bool   ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE = true;
 #define OVERGROUP_CON30 viewGroup >= 62010 && viewGroup <= 62020
 #define OVERGROUP_CON31 true
 
-__int64 ENCCommon::GetOverGroup(int viewGroup)
-{
-	__int64 curOverGroup;
-	if (OVERGROUP_CON1) { curOverGroup = 0x00000001 << 0; }
-	else if (OVERGROUP_CON2) { curOverGroup = 0x00000001 << 1; }
-	else if (OVERGROUP_CON3) { curOverGroup = 0x00000001 << 2; }
-	else if (OVERGROUP_CON4) { curOverGroup = 0x00000001 << 3; }
-	else if (OVERGROUP_CON5) { curOverGroup = 0x00000001 << 4; }
-	else if (OVERGROUP_CON6) { curOverGroup = 0x00000001 << 5; }
-	else if (OVERGROUP_CON7) { curOverGroup = 0x00000001 << 6; }
-	else if (OVERGROUP_CON8) { curOverGroup = 0x00000001 << 7; }
-	else if (OVERGROUP_CON9) { curOverGroup = 0x00000001 << 8; }
-	else if (OVERGROUP_CON10) { curOverGroup = 0x00000001 << 9; }
-	else if (OVERGROUP_CON11) { curOverGroup = 0x00000001 << 10; }
-	else if (OVERGROUP_CON12) { curOverGroup = 0x00000001 << 11; }
-	else if (OVERGROUP_CON13) { curOverGroup = 0x00000001 << 12; }
-	else if (OVERGROUP_CON14) { curOverGroup = 0x00000001 << 13; }
-	else if (OVERGROUP_CON15) { curOverGroup = 0x00000001 << 14; }
-	else if (OVERGROUP_CON16) { curOverGroup = 0x00000001 << 15; }
-	else if (OVERGROUP_CON17) { curOverGroup = 0x00000001 << 16; }
-	else if (OVERGROUP_CON18) { curOverGroup = 0x00000001 << 17; }
-	else if (OVERGROUP_CON19) { curOverGroup = 0x00000001 << 18; }
-	else if (OVERGROUP_CON20) { curOverGroup = 0x00000001 << 19; }
-	else if (OVERGROUP_CON21) { curOverGroup = 0x00000001 << 20; }
-	else if (OVERGROUP_CON22) { curOverGroup = 0x00000001 << 21; }
-	else if (OVERGROUP_CON23) { curOverGroup = 0x00000001 << 22; }
-	else if (OVERGROUP_CON24) { curOverGroup = 0x00000001 << 23; }
-	else if (OVERGROUP_CON25) { curOverGroup = 0x00000001 << 24; }
-	else if (OVERGROUP_CON26) { curOverGroup = 0x00000001 << 25; }
-	else if (OVERGROUP_CON27) { curOverGroup = 0x00000001 << 26; }
-	else if (OVERGROUP_CON28) { curOverGroup = 0x00000001 << 27; }
-	else if (OVERGROUP_CON29) { curOverGroup = 0x00000001 << 28; }
-	else if (OVERGROUP_CON30) { curOverGroup = 0x00000001 << 29; }
-	else if (OVERGROUP_CON31) { curOverGroup = 0x00000001 << 30; }
-
-	return curOverGroup;
-}
 
 bool ENCCommon::SIMPLIFIED_POINT_SYMBOL = false;
 bool ENCCommon::AUTOSELECTION_CATALOGUE = true;

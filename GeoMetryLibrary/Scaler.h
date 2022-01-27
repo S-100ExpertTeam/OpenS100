@@ -59,33 +59,6 @@ public:
 	void WorldToDevice_F(double mx, double my, float *sx, float *sy, bool rotate = TRUE);
 
 	/*
-	******* Calculating the distance *******
-	*/
-	/*
-	** function : Calculate the distance between two points on the spherical surface.
-	** factor :
-				Double longitude1 - Hardness of the first point (unit: radian)
-				Double Latitude1 - The latitude of the first point (unit: radian)
-				Double longitude 2 - Hardness of the second point (unit: radian)
-				Double Latitude 2 - The latitude of the second point (unit: radians)
-	** return value : The distance between the two points (km)
-	*/
-	//double GetDistanceLatitudeLongitude(double longitude1, double latitude1, double longitude2, double latitude2); // 사용 금지 (LatLonUtility사용)
-
-	//double GetDistanceRhumbLineMercator(double lat1, double lon1, double lat2, double lon2, bool radian); // 사용 금지 (LatLonUtility사용)
-
-	/*
-	** function : Calculate the distance between two points on a two-dimensional plane.
-	** factor :
-			int x1 - The x-coordinate of the first point (unit: integer)
-			int y1 - The y-coordinate of the first point (unit: integer)
-			int x2 - The x-coordinate of the second point (unit: integer)
-			int y2 - The y-coordinate of the second point (unit: integer)
-	** return value : Distance between two points (integer)
-	*/
-	double GetDistanceScreen(int x1, int y1, int x2, int y2);
-
-	/*
 	** Screen settings.
 	*/
 	// You must call me when the size of View changes (OnSize)
@@ -96,6 +69,7 @@ public:
 	int  GetScreenHeight();
 	CRect GetScreenRect();
 	D2D1_RECT_F GetD2Rect();
+	
 	/*
 	** Map's information shown on the screen.
 	*/
@@ -108,13 +82,14 @@ public:
 	void GetMap(MBR *mbr);
 	MBR GetMap();
 	MBR GetMapCalcMBR();
-
+	
 	/*
 	** Scale info
 	*/
 	int GetCurrentScale();
 	void SetScale(int scale);
 	void UpdateScale();
+	CString GetFormatedScale();
 	
 	/*
 	** Rotation info
@@ -141,16 +116,6 @@ public:
 
 	// Use to position a desired point (mx, my) at a desired location (sy, sy)
 	void MoveMap(int sx, int sy, double mx, double my);
-
-	//void Projection(double *x, double *y);
-	//void InverseProjection(double *x, double *y);
-
-	/*
-	** Screen rotation.
-	*/
-	void Rotate(LONG *sx, LONG *sy, double degree);
-	void RotateMap(double degree);	// Maintain the range of rotateDegrees to [0, 360]
-	void NorthUp();
 
 	// Adjust the screen that's off.
 	void AdjustScreenMap();

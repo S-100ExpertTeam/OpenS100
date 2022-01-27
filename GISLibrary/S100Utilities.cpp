@@ -5,18 +5,6 @@
 #include <filesystem>
 #include <cctype>
 
-bool S100Utilities::IsS100Catalog(std::wstring path)
-{
-	pugi::xml_document xmldoc;
-	xmldoc.load_file(path.c_str());
-	auto name = xmldoc.first_child().name();
-	if (strcmp("S100XC:S100_ExchangeCatalogue",name)==0) 
-	{
-		return true;
-	}
-	return false;
-}
-
 int S100Utilities::GetLevel(std::wstring path)
 {
 	// get without extension
@@ -31,10 +19,5 @@ int S100Utilities::GetLevel(std::wstring path)
 		}
 	}
 
-	return 0;
-}
-
-int S100Utilities::GetScaleByLevel(int level)
-{
 	return 0;
 }

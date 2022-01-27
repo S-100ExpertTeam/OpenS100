@@ -60,8 +60,6 @@ public:
 
 	__int64 OVER_GROUP;
 
-	__int64 GetOverGroup(int viewGroup);
-
 	int m_UserMode;
 	int DISPLAY_MODE;
 	int m_eColorTable;

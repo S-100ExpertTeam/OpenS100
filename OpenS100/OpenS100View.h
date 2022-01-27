@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include "..\\GISLibrary\\NewFeatureManager.h"
 
 class COpenS100Doc;
 class Layer;
@@ -20,9 +19,6 @@ public:
 	bool m_bMoveStart = false;
 	bool m_bMapRefesh = false;
 	
-	CDCRenderTarget		m_RenderTarget;
-	CD2DSolidColorBrush* m_pBlackBrush;
-	
 	CDC mem_dc;
 	CBitmap memBitmap;
 	CDC transDC;
@@ -31,7 +27,6 @@ public:
 	CBitmap mapBitmap;
 
 	volatile int m_Icon = 0;
-	CPoint			 m_ptCurrentPoint;
 
 	// Variables used in the screen movement function.
 	// screen movement is calculated based on the center point.
@@ -41,7 +36,6 @@ public:
 	// starting and ending points used for the screen movement function.
 	CPoint m_sp;
 	CPoint m_ep;
-
 
 	// If the mouse is clicked, TRUE or FALSE.
 	CPoint m_ptCurrent; // OnMouseMove's point Save variable
@@ -53,13 +47,12 @@ public:
 	CString m_strScale;
 	CString	m_strLatitude;
 	CString	m_strLongitude;
-
-	CDialogDockCurrentSelection* m_pDlgCurrentSelection;
-
-	NewFeatureManager *m_pNewFeatureManager = new NewFeatureManager();
+	CString m_strFormatedScale;
+	CString m_strFormatedLatitude;
+	CString m_strFormatedLongitude;
+	
 
 	CPoint ptPick = { -100, -100 };
-	bool onPickArrow = false;
 	bool isMoved = false;
 
 	R_FeatureRecord* frPick = nullptr;  // Feature selected on the screen (S-101)
@@ -141,14 +134,6 @@ public:
 	void DrawFromMapRefresh(CDC* pDC, CRect& rect);
 	void DrawFromInvalidate(CDC* pDC, CRect& rect);
 
-
-	void DrawUIScale();
-	void DrawUILatLon();
-	void DrawUILatDegree();
-	void DrawUILatDMS();
-	void DrawUILonDegree();
-	void DrawUILonDMS();
-
 	Layer* GetCurrentLayer();
 
 
@@ -156,10 +141,6 @@ public:
 	void DrawS101PickReport(Graphics& g, int offsetX = 0, int offsetY = 0);
 	void ClearPickReport();
 	void PickReport(CPoint _point);
-
-	void PickReportS101(CPoint _point, S101Cell* cell);
-
-	void CurrentSelectionS101(CPoint _point, S101Cell* cell);
 	void SetPickReportFeature(R_FeatureRecord* _fr);
 
 	// It runs at the end and stores the last location and scale.

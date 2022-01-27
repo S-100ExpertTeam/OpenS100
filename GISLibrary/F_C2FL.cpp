@@ -37,18 +37,6 @@ void F_C2FL::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-BOOL F_C2FL::Save(CFile *file)
-{
-	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
-	{
-		FC2D *cont = *itor;
-		file->Write(&cont->m_ycoo, 8);
-		file->Write(&cont->m_xcoo, 8);
-	}
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_C2FL::GetFieldLength()
 {
 	unsigned len = 0;

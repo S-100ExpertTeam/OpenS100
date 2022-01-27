@@ -1,4 +1,5 @@
 #pragma once
+
 #include "afxwin.h"
 #include "afxcmn.h"
 #include "resource.h"
@@ -10,7 +11,6 @@ class COpenS100View;
 class R_FeatureRecord;
 class R_InformationRecord;
 class S101Cell;
-// CDialogDockRelation dialog
 class CDialogDockRelation : public CDialog
 {
 	DECLARE_DYNAMIC(CDialogDockRelation)
@@ -25,13 +25,10 @@ public:
 	// Dialog Data 
 	enum { IDD = IDD_DIALOG_DOCK_RELATION };
 	 
-	COpenS100View *pView;
-	//CGISLibraryApp *pGisLib;
 	CMenu m_ContextMenu; 
 
 	int nSelectedItem;
 	S101Cell* m_cell;
-	// Attributes
 
 public:
 	void AdjustLayout();

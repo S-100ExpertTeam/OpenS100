@@ -134,7 +134,6 @@ public:
 	static bool S111_THINNING;
 
 public:
-	static __int64 GetOverGroup(int viewGroup);
 	static bool Save(std::wstring filePath);
 	static bool Open(std::wstring filePath);
 };

@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "DockablePaneLayerManager.h"
 #include "DockablePaneCurrentSelection.h"
-#include "DockablePaneLogger.h"
 #include "DockablePaneRelation.h"
 #include "DockablePaneEditWindow.h"
 

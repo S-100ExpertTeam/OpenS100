@@ -37,6 +37,5 @@ public:
 public:
 	static int GetSize();
 	void ReadField(BYTE *&buf);
-	BOOL Save(CFile *file);
 	int GetFieldLength();
 };

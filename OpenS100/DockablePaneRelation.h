@@ -1,18 +1,14 @@
 #pragma once
 
-class COpenS100View;
 class CDialogDockRelation;
 
 class CDockablePaneRelation : public CDockablePane
 {
-
 	DECLARE_DYNAMIC(CDockablePaneRelation)
 
 public:
-
 	void UpdateList();
 
-	COpenS100View			*pView;
 	CDialogDockRelation		*pDlg;
 
 	BOOL CanBeClosed() const;
@@ -22,8 +18,6 @@ public:
 
 	CDockablePaneRelation();
 	virtual ~CDockablePaneRelation();
-
-	void SaveLayer(CString filename);
 
 protected:
 	DECLARE_MESSAGE_MAP()

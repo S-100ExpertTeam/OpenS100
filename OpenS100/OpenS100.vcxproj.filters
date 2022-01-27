@@ -26,9 +26,6 @@
     <ClInclude Include="DialogDockLayerManager.h">
       <Filter>Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="DialogDockLogger.h">
-      <Filter>Dialog</Filter>
-    </ClInclude>
     <ClInclude Include="DialogDockRelation.h">
       <Filter>Dialog</Filter>
     </ClInclude>
@@ -36,9 +33,6 @@
       <Filter>Docking</Filter>
     </ClInclude>
     <ClInclude Include="DockablePaneLayerManager.h">
-      <Filter>Docking</Filter>
-    </ClInclude>
-    <ClInclude Include="DockablePaneLogger.h">
       <Filter>Docking</Filter>
     </ClInclude>
     <ClInclude Include="DockablePaneRelation.h">
@@ -86,14 +80,8 @@
     <ClInclude Include="DialogViewInformationType.h">
       <Filter>Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="DialogTreeAttributeList.h">
-      <Filter>Dialog</Filter>
-    </ClInclude>
     <ClInclude Include="DialogViewNoGeometry.h">
       <Filter>Dialog</Filter>
-    </ClInclude>
-    <ClInclude Include="DockablePaneAttributeList.h">
-      <Filter>Docking</Filter>
     </ClInclude>
     <ClInclude Include="ConfigrationDlg.h">
       <Filter>Dialog</Filter>
@@ -142,16 +130,10 @@
     <ClCompile Include="DockablePaneLayerManager.cpp">
       <Filter>Docking</Filter>
     </ClCompile>
-    <ClCompile Include="DockablePaneLogger.cpp">
-      <Filter>Docking</Filter>
-    </ClCompile>
     <ClCompile Include="DialogDockCurrentSelection.cpp">
       <Filter>Dialog</Filter>
     </ClCompile>
     <ClCompile Include="DialogDockLayerManager.cpp">
-      <Filter>Dialog</Filter>
-    </ClCompile>
-    <ClCompile Include="DialogDockLogger.cpp">
       <Filter>Dialog</Filter>
     </ClCompile>
     <ClCompile Include="DialogDockRelation.cpp">
@@ -178,9 +160,6 @@
     <ClCompile Include="InformationCodeString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DialogTreeAttributeList.cpp">
-      <Filter>Dialog</Filter>
-    </ClCompile>
     <ClCompile Include="PropertyGridAttributeModify.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -198,9 +177,6 @@
     </ClCompile>
     <ClCompile Include="Configuration_4.cpp">
       <Filter>Dialog</Filter>
-    </ClCompile>
-    <ClCompile Include="DockablePaneAttributeList.cpp">
-      <Filter>Docking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

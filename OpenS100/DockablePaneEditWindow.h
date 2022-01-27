@@ -138,14 +138,6 @@ public:
 	void DeleteAttributeItems();
 	void DeleteVectorItems();
 
-	void AddAttribute(AttributeBinding* ab, CMFCPropertyGridProperty *pSuperProperty = nullptr, unsigned parentIndex = 0);
-	void AddSimpleAttribute(SimpleAttribute* sa, CMFCPropertyGridProperty *pSuperProperty = nullptr, unsigned parentIndex = 0);
-	void AddComplexAttribute(ComplexAttribute* ca, CMFCPropertyGridProperty *pSuperProperty = nullptr, unsigned parentIndex = 0);
-
-	//// Check for duplication of data in the feature information list.
-	//// return true: Can be added //false: Cannot be added
-	bool CheckingAttriData(AttributeBinding* ab, CString inputName, CMFCPropertyGridProperty *pSuperProperty);
-
 	//// Sort and then add the enumtype to the Simple Attribute.
 	void SettingEnumType(std::list<ListedValues> list, CMFCPropertyGridProperty* pSuperProperty);
 	//  

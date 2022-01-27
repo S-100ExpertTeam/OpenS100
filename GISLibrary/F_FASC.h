@@ -38,6 +38,5 @@ public:
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
-	BOOL Save(CFile *file);
 	int GetFieldLength();
 };

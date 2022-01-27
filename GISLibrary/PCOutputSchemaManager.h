@@ -34,10 +34,7 @@ public:
 	// Lua Drawing Instructions
 	SENC_DisplayList *displayListSENC = nullptr;
 
-
 public:
-	bool ReadPCOutputXML(std::wstring path, S101Cell* cell);
-	bool ReadPCOutputXMLByPugiXML(std::wstring path, S101Cell* cell);
 	void GenerateSENCInstruction(S101Cell* cell, PortrayalCatalogue* pc);
 	void InitDisplayList();
 	void GenerateSENCAlertInstruction(S101Cell* cell, PortrayalCatalogue* pc);

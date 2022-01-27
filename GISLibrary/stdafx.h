@@ -92,7 +92,6 @@
 #include <d2d1_1.h>
 #pragma comment(lib, "d2d1.lib")
 
-#include "..\\extlibs\\hdf5\\include\\hdf5.h"
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
 #ifndef D2_SAFE_RELEASE

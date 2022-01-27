@@ -47,26 +47,6 @@ void F_ATTR::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-BOOL F_ATTR::Save(CFile *file)
-{
-
-	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
-	{
-		ATTR *attr = *itor;
-
-		file->Write(&attr->m_natc, 2);
-		file->Write(&attr->m_atix, 2);
-		file->Write(&attr->m_paix, 2);
-		file->Write(&attr->m_atin, 1);
-		CT2CA outputString(attr->m_atvl, CP_UTF8);
-		file->Write(outputString, (UINT)::strlen(outputString));
-		file->Write(&NonPrintableCharacter::unitTerminator, 1);
-	}
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-
-	return TRUE;
-}
-
 int F_ATTR::GetFieldLength()
 {
 	unsigned len = 0;

@@ -40,20 +40,6 @@ void F_C2IL::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-BOOL F_C2IL::Save(CFile *file)
-{
-	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
-	{
-		IC2D *cont = *itor;
-		file->Write(&cont->m_ycoo, 4);
-		file->Write(&cont->m_xcoo, 4);
-	}
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-
-	return TRUE;
-}
-
-
 int F_C2IL::GetFieldLength()
 {
 	unsigned len = 0;

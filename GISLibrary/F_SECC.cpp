@@ -29,15 +29,6 @@ void F_SECC::ReadField(BYTE *&buf, int loopCnt)
 	*m_nseg = buf2uint(buf, 2);
 }
 
-BOOL F_SECC::Save(CFile *file)
-{
-	file->Write(m_seui, 1);
-	file->Write(m_seix, 2);
-	file->Write(m_nseg, 2);
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_SECC::GetFieldLength()
 {
 	int len = 0;

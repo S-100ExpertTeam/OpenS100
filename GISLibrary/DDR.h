@@ -13,7 +13,6 @@ private:
 public:
 	void Set(BYTE* buffer);
 	void Delete();
-	void Save(std::wstring filename);
 
 	BYTE* GetContent();
 	void Allocate();

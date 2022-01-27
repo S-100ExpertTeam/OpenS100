@@ -25,7 +25,6 @@ public:
 
 public:
 	virtual bool Open(CString _filepath);
-	void Save(CString _filepath, CString extend);
 	virtual void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler) {};
 	void Draw(CDC *pDC, Scaler *scaler, double offset = 0);
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0);

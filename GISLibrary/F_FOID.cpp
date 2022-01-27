@@ -23,16 +23,6 @@ void F_FOID::ReadField(BYTE *&buf)
 	m_objName.m_fids = buf2uint(buf, 2);
 }
 
-BOOL F_FOID::Save(CFile *file)
-{
-	file->Write(&m_objName.m_agen, 2);
-	file->Write(&m_objName.m_fidn, 4);
-	file->Write(&m_objName.m_fids, 2);
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-
-	return TRUE;
-}
-
 int F_FOID::GetFieldLength()
 {
 	int len = 0;

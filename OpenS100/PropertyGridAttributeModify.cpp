@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "PropertyGridAttributeModify.h"
 #include "resource.h"
-#include "DockablePaneAttributeList.h"
 #include "DockablePaneEditWindow.h"
 #include "OpenS100.h"
 #include "OpenS100View.h"
@@ -92,10 +91,6 @@ void CPropertyGridAttributeModify::OnDeleteAttribute()
 		auto s101Cell = GetS101Cell();
 		auto DGIR = s101Cell->GetDatasetGeneralInformationRecord();
 		auto attributeCode = DGIR->GetAttributeCode(attr->m_natc);
-
-		theApp.m_DockablePaneAttributeList.BaseSetShowThee();
-		theApp.GetDockFeatureInformationList().SetParentProperty(nullptr);// Initialize the value to be added.
-		theApp.GetDockFeatureInformationList().SetindexNum(0);
 	}
 }
 void CPropertyGridAttributeModify::SetSpatialObject(SpatialObject *spatialObject)

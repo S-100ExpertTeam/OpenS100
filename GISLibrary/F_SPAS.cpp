@@ -49,22 +49,6 @@ void F_SPAS::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-BOOL F_SPAS::Save(CFile *file)
-{
-	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
-	{
-		SPAS *spas = *itor;
-		file->Write(&spas->m_name.RCNM, 1);
-		file->Write(&spas->m_name.RCID, 4);
-		file->Write(&spas->m_ornt, 1);
-		file->Write(&spas->m_smin, 4);
-		file->Write(&spas->m_smax, 4);
-		file->Write(&spas->m_saui, 1);
-	}
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_SPAS::GetFieldLength()
 {
 	int len = 0;

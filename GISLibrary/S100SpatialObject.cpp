@@ -45,8 +45,3 @@ PCOutputSchemaManager* S100SpatialObject::GetPCOutputManager()
 {
 	return pcManager;
 }
-
-S100Layer* S100SpatialObject::GetS100Layer() 
-{
-	return (S100Layer*)m_pLayer;
-}

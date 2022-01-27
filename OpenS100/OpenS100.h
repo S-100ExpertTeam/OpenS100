@@ -9,10 +9,8 @@
 #include "resource.h" 
 #include "DockablePaneLayerManager.h"
 #include "DockablePaneCurrentSelection.h"
-#include "DockablePaneRelation.h"
-#include "DockablePaneLogger.h"
 #include "DockablePaneEditWindow.h"
-#include "DockablePaneAttributeList.h"
+#include "DockablePaneRelation.h"
 
 class COpenS100View;
 class COpenS100App : public CWinAppEx
@@ -23,16 +21,17 @@ public:
 
 public:
 	ULONG_PTR gdiplusToken = NULL; // GDI
+
 	COpenS100View* pView = nullptr;
+
 	CDockablePaneLayerManager m_pDockablePaneLayerManager; //Layer Manager
 	CDockablePaneCurrentSelection m_DockablePaneCurrentSelection; //Current Selection
 	CDockablePaneRelation m_DockablePaneRelation; //Relation
 	CDockablePaneEditWindow m_DockablePaneEditWindow; //
-	CDockablePaneAttributeList m_DockablePaneAttributeList;
+
 	BOOL  m_bHiColorIcons;
 
 public:
-	CDockablePaneAttributeList& GetDockFeatureInformationList();
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 	virtual void PreLoadState();

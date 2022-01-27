@@ -67,29 +67,6 @@ void F_INAS::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-BOOL F_INAS::Save(CFile *file)
-{
-	file->Write(&m_name.RCNM, 1);
-	file->Write(&m_name.RCID, 4);
-	file->Write(&m_niac, 2);
-	file->Write(&m_narc, 2);
-	file->Write(&m_iuin, 1);
-	POSITION pos = m_arr.GetHeadPosition();
-	while (pos != NULL)
-	{
-		ATTR *attr = m_arr.GetNext(pos);
-		file->Write(&attr->m_natc, 2);
-		file->Write(&attr->m_atix, 2);
-		file->Write(&attr->m_paix, 2);
-		file->Write(&attr->m_atin, 1);
-		CT2CA outputString(attr->m_atvl, CP_UTF8);
-		file->Write(outputString, (UINT)::strlen(outputString));
-		file->Write(&NonPrintableCharacter::unitTerminator, 1);
-	}
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	return TRUE;
-}
-
 int F_INAS::GetFieldLength()
 {
 	int len = 0;

@@ -21,7 +21,6 @@
 #include "..\\GISLibrary\\Layer.h"
 #include "..\\GISLibrary\\R_FeatureRecord.h"
 #include "..\\GISLibrary\\CodeWithNumericCode.h"
-#include "..\\GISLibrary\\NewFeatureManager.h" //hold 
 
 #include "..\\GeoMetryLibrary\\GeometricFuc.h"
 #include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
@@ -92,21 +91,6 @@ END_MESSAGE_MAP()
 COpenS100View::COpenS100View() 
 {
 	theApp.pView = this;
-	
-	// Direct2D : Distance, Area, Editing
-	D2D1_RENDER_TARGET_PROPERTIES props = D2D1::RenderTargetProperties(
-		D2D1_RENDER_TARGET_TYPE_DEFAULT,
-		D2D1::PixelFormat(
-			DXGI_FORMAT_B8G8R8A8_UNORM,
-			D2D1_ALPHA_MODE_IGNORE),
-		0,
-		0,
-		D2D1_RENDER_TARGET_USAGE_NONE,
-		D2D1_FEATURE_LEVEL_DEFAULT
-	);
-
-	m_RenderTarget.Create(props);
-	m_pBlackBrush = new CD2DSolidColorBrush(&m_RenderTarget, D2D1::ColorF(D2D1::ColorF::Crimson));
 }
 
 COpenS100View::~COpenS100View()
@@ -117,23 +101,9 @@ COpenS100View::~COpenS100View()
 
 	DeleteDCs();
 
-	if (m_pNewFeatureManager)
-	{
-		delete m_pNewFeatureManager;
-		m_pNewFeatureManager = nullptr;
-	}
-
-	if (m_pBlackBrush) {
-		delete m_pBlackBrush;
-		m_pBlackBrush = nullptr;
-	}
-
-
 	delete gisLib;
 	gisLib = nullptr;
 
-
-	
 	CoUninitialize();
 }
 
@@ -212,6 +182,8 @@ void COpenS100View::OnDraw(CDC* pDC)
 		if (m_bMapRefesh) // Re-drawing part with MapRefresh() (Including Invalidate())
 		{
 			DrawFromMapRefresh(&map_dc, rect);
+
+			m_strFormatedScale = gisLib->GetScaler()->GetFormatedScale();
 		}
 
 		mem_dc.BitBlt(rect.left, rect.top, rect.Width(), rect.Height(), &map_dc, 0, 0, SRCCOPY);
@@ -221,11 +193,6 @@ void COpenS100View::OnDraw(CDC* pDC)
 
 		pDC->BitBlt(rect.left, rect.top, rect.Width(), rect.Height(), &mem_dc, 0, 0, SRCCOPY);
 	}
-
-	DrawUIScale();
-	DrawUILatLon();
-
-
 }
 
 
@@ -608,16 +575,6 @@ void COpenS100View::OnMButtonUp(UINT nFlags, CPoint point)
 void COpenS100View::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	SetCapture();
-	int cellCnt = gisLib->GetLayerCount();
-
-	if (theApp.m_pDockablePaneLayerManager.pDlg->nSelectedItem >= gisLib->GetLayerCount() || theApp.m_pDockablePaneLayerManager.pDlg->nSelectedItem == -1)
-	{
-	}
-	else
-	{
-		Layer *l = (Layer*)gisLib->GetLayer(theApp.m_pDockablePaneLayerManager.pDlg->nSelectedItem);
-		m_pNewFeatureManager->m_cell = (S101Cell*)l->m_spatialObject;
-	}
 
 	CRect cr;
 	GetClientRect(&cr);
@@ -629,17 +586,11 @@ void COpenS100View::OnLButtonDown(UINT nFlags, CPoint point)
 
 	switch (m_Icon)
 	{
-	case MOVE:
-		break;
-	case EDIT_VECTOR:
-		break;
 	case ZOOM_AREA:
-	{
 		m_ptStartZoomArea = point;
 		m_bZoomArea = true;
 		SetCursor(AfxGetApp()->LoadCursor(IDC_CURSOR_ZOOM_AREA));
 		break;
-	}
 	}
 
 	CView::OnLButtonDown(nFlags, point);
@@ -669,22 +620,14 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 		dy = (int)-tempY;
 
 	}
+
 	calc_point.x = dx + calc_point.x;
 	calc_point.y = dy + calc_point.y;
 
 	if (!(
 		(m_Icon == ZOOM_AREA) ||
-		(m_Icon == MOUSE_ADD_WP) ||
-		(m_Icon == MOUSE_MODIFY_WP) ||
-		(m_Icon == MOUSE_REMOVE_WP) ||
 		(m_Icon == DISTANCE) ||
-		(m_Icon == MEASURE_AREA) ||
-		(m_Icon == FEATURE_ADD_POINT) ||
-		(m_Icon == FEATURE_ADD_MULTI_POINT) ||
-		(m_Icon == FEATURE_ADD_LINE) ||
-		(m_Icon == FEATURE_ADD_AREA) ||
-		(m_Icon == EDIT_VECTOR) ||
-		(m_Icon == FEATURE_ADD_INNER_AREA)
+		(m_Icon == MEASURE_AREA)
 		))
 	{
 		if (isMoved == false)
@@ -823,6 +766,7 @@ void COpenS100View::OnMouseMove(UINT nFlags, CPoint point)
 	else {
 		strLon.Format(_T("%3d-%.3lf(W)"), std::abs((int)degree), std::fabs(minute));
 	}
+	m_strFormatedLongitude = strLon;
 	
 	//====================================================================================
 	// The X coordinate values are modified to be included within the ranges of (-180 and 180).
@@ -849,11 +793,16 @@ void COpenS100View::OnMouseMove(UINT nFlags, CPoint point)
 	else {
 		strLat.Format(_T("%2d-%.3lf(S)"), std::abs((int)degree), std::fabs(minute));
 	}
-	CString statusText= m_strLatitude;
-	statusText.Format(_T("%s , %s"), strLat, strLon);
+	m_strFormatedLongitude = strLat;
+
+
+	
+	
+	CString strFomatedInfo = _T("");
+	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLongitude, m_strFormatedLongitude);
 
 	CMainFrame *frame = (CMainFrame*)AfxGetMainWnd(); 
-	frame->SetMessageText(statusText);
+	frame->SetMessageText(strFomatedInfo);
 
 
 	CFont mFont3;
@@ -879,13 +828,8 @@ void COpenS100View::OnMouseMove(UINT nFlags, CPoint point)
 
 	frame->SetFont(&mFont3);
 	m_ep = point;
-
-	if (m_Icon == EDIT_VECTOR)
-	{
-		int i = 0;
-	}
-	// There is no screen movement in this situation.
-	else if (!(beModifyWaypoint ||
+	
+	if (!(beModifyWaypoint ||
 		ZOOM_AREA == m_Icon
 		))
 	{
@@ -908,21 +852,9 @@ void COpenS100View::OnMouseMove(UINT nFlags, CPoint point)
 		{
 		case MOVE:
 			break;
-		case FEATURE_ADD_POINT:
-		case FEATURE_ADD_MULTI_POINT:
-		case FEATURE_ADD_LINE:
-		case FEATURE_ADD_AREA:
-			::SetCursor(AfxGetApp()->LoadCursor(IDC_CUR_PEN));
-			Invalidate(FALSE);
-			break;
 		case DISTANCE:
 			Invalidate(FALSE);
 			break;
-		case MOUSE_MODIFY_WP:
-		{
-			Invalidate(FALSE);
-			break;
-		}
 		case ZOOM_AREA:
 		{
 			if (m_bZoomArea)
@@ -1010,167 +942,11 @@ void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
 
 	DrawZoomArea(pDC);
 	DrawPickReport(hdc);
-
-	m_RenderTarget.BindDC(*pDC, rect);
-	m_RenderTarget.BeginDraw();
-	m_RenderTarget.SetTransform(D2D1::Matrix3x2F::Identity());
-
-	m_RenderTarget.EndDraw();
-}
-
-void COpenS100View::DrawUIScale()
-{
-	if (gisLib->GetLayerCount() >= 0) {
-		double Scale = gisLib->GetCurrentScale();
-
-		CString str, newStr, strComma;
-
-		strComma.Format(_T(","));
-
-		str.Format(_T("%.lf"), Scale);
-
-		int addedLength;
-
-		if ((str.GetLength() % 3) == 0) {
-			addedLength = (str.GetLength() / 3) - 1;
-		}
-		else {
-			addedLength = (str.GetLength() / 3);
-		}
-
-		newStr = str;
-
-		for (int k = 0; k < addedLength; k++) {
-			newStr.AppendChar('a');
-		}
-
-		int cnt = 0;
-
-		int i = str.GetLength() - 1;
-		int j = newStr.GetLength() - 1;
-
-		for (; i >= 0;) {
-			newStr.SetAt(j, str.GetAt(i));
-			j--;
-			i--;
-			cnt++;
-
-			if ((cnt == 3) && (j >= 0)) {
-				newStr.SetAt(j, strComma.GetAt(0));
-				j--;
-				cnt = 0;
-			}
-		}
-
-		str.Format(_T("1 : "));
-		str.AppendFormat(newStr);
-		m_strScale = str;
-	}
-}
-
-void COpenS100View::DrawUILatLon()
-{
-	if (!ENCCommon::WGS84_TEXT_TYPE)
-	{
-		DrawUILatDegree();
-		DrawUILonDegree();
-	}
-	else
-	{
-		DrawUILatDMS();
-		DrawUILonDMS();
-	}
-}
-
-void COpenS100View::DrawUILatDegree()
-{
-	double curLat, curLong;
-	gisLib->DeviceToWorld(m_ptCurrent.x, m_ptCurrent.y, &curLong, &curLat);
-	inverseProjection(curLong, curLat);
-
-	m_strLatitude.Format(_T("Lat : %lf"), curLat);;
-}
-
-void COpenS100View::DrawUILatDMS()
-{
-	double curLat, curLong;
-	gisLib->DeviceToWorld(m_ptCurrent.x, m_ptCurrent.y, &curLong, &curLat);
-	inverseProjection(curLong, curLat);
-
-	//X coordinate values are modified to be included within the ranges of (-180 and 180).
-	if (curLong < -180) {
-		curLong += 360;
-	}
-
-	if (curLong > 180) {
-		curLong -= 360;
-	}
-
-	double degree, minute, second;
-
-	degree = (int)curLat;
-
-	minute = (curLat - degree) * 60;
-
-	second = (minute - (int)minute) * 60;
-
-	LatLonUtility::DegreeToDMS(curLat, degree, minute, second);
-
-	CString str;
-	str.Format(_T("Lat : %.0lf˚ %.0lf' %0.2lf"), degree, minute, second);
-}
-
-void COpenS100View::DrawUILonDegree()
-{
-	double curLat, curLong;
-	gisLib->DeviceToWorld(m_ptCurrent.x, m_ptCurrent.y, &curLong, &curLat);
-	inverseProjection(curLong, curLat);
-
-	//X coordinate values are modified to be included within the ranges of (-180 and 180).
-	if (curLong < -180) {
-		curLong += 360;
-	}
-
-	if (curLong > 180) {
-		curLong -= 360;
-	}
-
-	m_strLongitude.Format(_T("Lon : %lf"), curLong);
-}
-
-void COpenS100View::DrawUILonDMS()
-{
-	double curLat, curLong;
-	gisLib->DeviceToWorld(m_ptCurrent.x, m_ptCurrent.y, &curLong, &curLat);
-	inverseProjection(curLong, curLat);
-
-	//X coordinate values are modified to be included within the ranges of (-180 and 180).
-	if (curLong < -180) {
-		curLong += 360;
-	}
-
-	if (curLong > 180) {
-		curLong -= 360;
-	}
-
-	double degree, minute, second;
-
-	degree = (int)curLong;
-
-	minute = (curLong - degree) * 60;
-
-	second = (minute - (int)minute) * 60;
-
-	DegreeToDMS(curLong, degree, minute, second);
-
-
-	CString str;
-	str.Format(_T("Lon : %.0lf˚ %.0lf' %.2lf"), degree, minute, second);
 }
 
 Layer* COpenS100View::GetCurrentLayer()
 {
-	return gisLib->GetLayer(theApp.m_pDockablePaneLayerManager.pDlg->nSelectedItem);
+	return gisLib->GetLayer(0);
 }
 
 BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
@@ -1193,55 +969,24 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 
 	MapRefresh();
 
+
+	m_strFormatedScale = gisLib->GetScaler()->GetFormatedScale();
+	CString strFomatedInfo = _T("");
+	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLongitude, m_strFormatedLongitude);
+
+	CMainFrame* frame = (CMainFrame*)AfxGetMainWnd();
+	frame->SetMessageText(strFomatedInfo);
+
 	return CView::OnMouseWheel(nFlags, zDelta, pt);
 }
 
 void COpenS100View::DrawPickReport(HDC& _hdc, int offsetX, int offsetY)
 {
 	Graphics gPick(_hdc);
-// S-101 Pick Report
 	if (frPick != nullptr)
 	{
 		DrawS101PickReport(gPick, offsetX, offsetY);
 	}
-
-	if (onPickArrow == true && false) // Erase arrow mark (test)
-	{
-		HRSRC hResource = FindResource(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_PICK_ARROW_PNG), TEXT("PNG"));
-		if (!hResource) return;
-
-		DWORD imageSize = SizeofResource(AfxGetApp()->m_hInstance, hResource);
-		HGLOBAL hGlobal = LoadResource(AfxGetApp()->m_hInstance, hResource);
-		LPVOID pData = LockResource(hGlobal);
-
-		HGLOBAL hBuffer = GlobalAlloc(GMEM_MOVEABLE, imageSize);
-		LPVOID pBuffer = GlobalLock(hBuffer);
-
-		CopyMemory(pBuffer, pData, imageSize);
-		GlobalUnlock(hBuffer);
-
-		IStream *pStream;
-		HRESULT hr = CreateStreamOnHGlobal(hBuffer, TRUE, &pStream);
-
-		Image imagePNG(pStream);
-
-		pStream->Release();
-		if (imagePNG.GetLastStatus() != Ok) return;
-
-		CPoint ptPickPosition;
-
-		gisLib->WorldToDevice(ptPickX, ptPickY, &(ptPickPosition.x), &(ptPickPosition.y));
-
-		ptPickPosition.x += offsetX;
-		ptPickPosition.y += offsetY;
-		gPick.DrawImage(&imagePNG,
-			(INT)(ptPickPosition.x - (imagePNG.GetWidth() / 2)),
-			(INT)(ptPickPosition.y - (imagePNG.GetHeight() / 2)),
-			(INT)(imagePNG.GetWidth()),
-			(INT)(imagePNG.GetHeight()));
-	}
-	RECT r;
-	::GetClientRect(GetSafeHwnd(), &r);
 }
 
 void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
@@ -1364,47 +1109,28 @@ void COpenS100View::ClearPickReport()
 
 void COpenS100View::PickReport(CPoint _point)
 {
-	if (isMoved == false)
+	auto layer = gisLib->GetLayerManager()->GetLayer(0);
+	if (nullptr == layer)
 	{
-		onPickArrow = true;
-		gisLib->DeviceToWorld(_point.x, _point.y, &ptPickX, &ptPickY);
-		ptPick = _point;
-
-		int selItem = theApp.m_pDockablePaneLayerManager.pDlg->nSelectedItem;
-		int cellCnt = gisLib->GetLayerCount();
-		if (selItem >= cellCnt || selItem == -1)
-		{
-			return;
-		}
-
-		Layer *l = (Layer*)gisLib->GetLayer(selItem);
-		if (l->GetFileType() == FILE_S_100_VECTOR && l->IsOn())
-		{
-			PickReportS101(_point, (S101Cell*)l->m_spatialObject);
-		}
+		return;
 	}
-}
+	
+	auto cell = (S101Cell*)layer->GetSpatialObject();
+	if (nullptr == cell)
+	{
+		return;
+	}
 
+	gisLib->DeviceToWorld(_point.x, _point.y, &ptPickX, &ptPickY);
+	ptPick = _point;
 
-void COpenS100View::PickReportS101(CPoint _point, S101Cell* cell)
-{
-	CurrentSelectionS101(_point, cell);
-}
-
-
-void COpenS100View::CurrentSelectionS101(CPoint _point, S101Cell* cell)
-{
-	BOOL isCtrl = (0x8000 == (0x8000 & GetKeyState(VK_CONTROL)));
-	CString isCtrlClicked;
 	CString featureType = L"Feature";
-	isCtrlClicked = isCtrl ? "1" : "0";
 	CStringArray csa;
 
 	double xmin = 0;
 	double ymin = 0;
 	double xmax = 0;
 	double ymax = 0;
-
 
 	LONG spt_x = m_ptMDown.x;
 	LONG spt_y = m_ptMDown.y;
@@ -1500,7 +1226,7 @@ void COpenS100View::CurrentSelectionS101(CPoint _point, S101Cell* cell)
 				csAssoCnt.Format(_T("%d"), assoCnt);
 
 				csa.Add(
-					isCtrlClicked + _T("|||") +
+					_T("0|||") +
 					csFoid + _T("|||") +
 					csFrid + _T("|||") +
 					csLat + _T("|||") +
@@ -1560,7 +1286,7 @@ void COpenS100View::CurrentSelectionS101(CPoint _point, S101Cell* cell)
 				csType.Format(_T("%d"), compositeCurve->type);
 				csName.Format(_T("%s"), itor->second->m_code);
 				csAssoCnt.Format(_T("%d"), assoCnt);
-				csa.Add(isCtrlClicked + _T("|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+				csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
 			}
 		}
 	}
@@ -1607,7 +1333,7 @@ void COpenS100View::CurrentSelectionS101(CPoint _point, S101Cell* cell)
 						csType.Format(_T("%d"), multiPoint->GetType());
 						csName.Format(_T("%s"), itor->second->m_code);
 						csAssoCnt.Format(_T("%d"), assoCnt);
-						csa.Add(isCtrlClicked + _T("|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+						csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
 
 						break;
 					}
@@ -1639,13 +1365,13 @@ void COpenS100View::CurrentSelectionS101(CPoint _point, S101Cell* cell)
 					csType.Format(_T("%d"), sr->type);
 					csName.Format(_T("%s"), itor->second->m_code);
 					csAssoCnt.Format(_T("%d"), assoCnt);
-					csa.Add(isCtrlClicked + _T("|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+					csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
 				}
 			}
 		}
 	}
 	// directly send value
-	theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, cell, isCtrlClicked);
+	theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, cell, L"0");
 	Invalidate(FALSE);
 }
 
@@ -1654,23 +1380,12 @@ void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)
 	frPick = _fr;
 	Layer* l = nullptr;
 
-	if (m_Icon == FEATURE_ADD_INNER_AREA ||
-		m_Icon == FEATURE_ADD_POINT ||
-		m_Icon == FEATURE_ADD_LINE ||
-		m_Icon == FEATURE_ADD_AREA ||
-		m_Icon == FEATURE_ADD_MULTI_POINT)
-	{
-		l = m_pNewFeatureManager->m_cell->GetLayer();
-	}
-	else
-	{
-		l = (Layer*)gisLib->GetLayer(theApp.m_pDockablePaneLayerManager.pDlg->nSelectedItem);
-	}
+	l = (Layer*)gisLib->GetLayer(0);
 
 	if (l == NULL)
 	{
 		CString str;
-		str.Format(_T("Layer (%d) could not be retrieved."), theApp.m_pDockablePaneLayerManager.pDlg->nSelectedItem);
+		str.Format(_T("Layer (%d) could not be retrieved."), 0);
 		AfxMessageBox(str);
 		return;
 	}

@@ -13,7 +13,8 @@
 #include "..\\GISLibrary\\S101Cell.h"
 #include "..\\GISLibrary\\F_INAS.h"
 #include "..\\GISLibrary\\CodeWithNumericCode.h"
-#include "..\\GISLibrary\\NewFeatureManager.h"
+#include "..\\GISLibrary\\GISLibrary.h"
+
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"
 #include "..\\FeatureCatalog\\FeatureType.h"
 
@@ -112,7 +113,6 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 				// feature type
 				FeatureType* ft = fc->GetFeatureType(itor->second->m_code.GetBuffer());
-				theApp.pView->m_pNewFeatureManager->SetFeatureType(fc, ft);
 				CString geoType = m_ListCurrentSelection.GetItemText(idx, 3);
 
 				if (geoType != L"No geometry")
@@ -148,7 +148,6 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 				m_selectedInformationType = fc->GetInformationType(std::wstring(itor->second->m_code));
 
-				theApp.m_DockablePaneAttributeList.SetShowTree(fc, m_selectedInformationType);
 				theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
 				theApp.m_DockablePaneEditWindow.SetFeatureRecord(rfr);
 			}
@@ -209,7 +208,7 @@ BOOL CDialogDockCurrentSelection::OnInitDialog()
 	** init List Ctrl
 	*/
 	m_ListCurrentSelection.SetExtendedStyle(LVS_EX_FULLROWSELECT);
-	m_ListCurrentSelection.ModifyStyle(LVS_SINGLESEL, LVS_SHOWSELALWAYS); // multi select 
+	m_ListCurrentSelection.ModifyStyle(NULL, LVS_SHOWSELALWAYS); // multi select 
 
 	CRect listRect;
 	m_ListCurrentSelection.GetWindowRect(listRect);
@@ -238,9 +237,9 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 	{
 		m_ListCurrentSelection.DeleteAllItems();
 	}
-
 	
-	auto fc = ((S101Layer*)theApp.pView->m_pNewFeatureManager->m_cell->m_pLayer)->GetFeatureCatalog();
+	auto fc = gisLib->GetLayerManager()->GetFC(101);
+	
 	if (nullptr == fc)
 	{
 		return;
@@ -391,7 +390,6 @@ void CDialogDockCurrentSelection::DeleteItem(CString id)
 	}
 
 	theApp.m_DockablePaneEditWindow.DeleteAllItems(); //delete all feature information list 
-	theApp.m_DockablePaneAttributeList.RemoveAll(); //delete Attribute List
 }
 
 void CDialogDockCurrentSelection::StringSplit(
