@@ -21,7 +21,6 @@
 #include "..\\GISLibrary\\Layer.h"
 #include "..\\GISLibrary\\R_FeatureRecord.h"
 #include "..\\GISLibrary\\CodeWithNumericCode.h"
-#include "..\\GISLibrary\\NewFeatureManager.h" //hold 
 
 #include "..\\GeoMetryLibrary\\GeometricFuc.h"
 #include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
@@ -101,12 +100,6 @@ COpenS100View::~COpenS100View()
 
 
 	DeleteDCs();
-
-	if (m_pNewFeatureManager)
-	{
-		delete m_pNewFeatureManager;
-		m_pNewFeatureManager = nullptr;
-	}
 
 	delete gisLib;
 	gisLib = nullptr;
@@ -580,10 +573,6 @@ void COpenS100View::OnMButtonUp(UINT nFlags, CPoint point)
 void COpenS100View::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	SetCapture();
-	int cellCnt = gisLib->GetLayerCount();
-
-	Layer *l = (Layer*)gisLib->GetLayer(0);
-	m_pNewFeatureManager->m_cell = (S101Cell*)l->m_spatialObject;
 
 	CRect cr;
 	GetClientRect(&cr);
@@ -595,15 +584,11 @@ void COpenS100View::OnLButtonDown(UINT nFlags, CPoint point)
 
 	switch (m_Icon)
 	{
-	case MOVE:
-		break;
 	case ZOOM_AREA:
-	{
 		m_ptStartZoomArea = point;
 		m_bZoomArea = true;
 		SetCursor(AfxGetApp()->LoadCursor(IDC_CURSOR_ZOOM_AREA));
 		break;
-	}
 	}
 
 	CView::OnLButtonDown(nFlags, point);
@@ -633,6 +618,7 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 		dy = (int)-tempY;
 
 	}
+
 	calc_point.x = dx + calc_point.x;
 	calc_point.y = dy + calc_point.y;
 
@@ -981,49 +967,10 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 void COpenS100View::DrawPickReport(HDC& _hdc, int offsetX, int offsetY)
 {
 	Graphics gPick(_hdc);
-// S-101 Pick Report
 	if (frPick != nullptr)
 	{
 		DrawS101PickReport(gPick, offsetX, offsetY);
 	}
-
-	if (onPickArrow == true && false) // Erase arrow mark (test)
-	{
-		HRSRC hResource = FindResource(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDB_PICK_ARROW_PNG), TEXT("PNG"));
-		if (!hResource) return;
-
-		DWORD imageSize = SizeofResource(AfxGetApp()->m_hInstance, hResource);
-		HGLOBAL hGlobal = LoadResource(AfxGetApp()->m_hInstance, hResource);
-		LPVOID pData = LockResource(hGlobal);
-
-		HGLOBAL hBuffer = GlobalAlloc(GMEM_MOVEABLE, imageSize);
-		LPVOID pBuffer = GlobalLock(hBuffer);
-
-		CopyMemory(pBuffer, pData, imageSize);
-		GlobalUnlock(hBuffer);
-
-		IStream *pStream;
-		HRESULT hr = CreateStreamOnHGlobal(hBuffer, TRUE, &pStream);
-
-		Image imagePNG(pStream);
-
-		pStream->Release();
-		if (imagePNG.GetLastStatus() != Ok) return;
-
-		CPoint ptPickPosition;
-
-		gisLib->WorldToDevice(ptPickX, ptPickY, &(ptPickPosition.x), &(ptPickPosition.y));
-
-		ptPickPosition.x += offsetX;
-		ptPickPosition.y += offsetY;
-		gPick.DrawImage(&imagePNG,
-			(INT)(ptPickPosition.x - (imagePNG.GetWidth() / 2)),
-			(INT)(ptPickPosition.y - (imagePNG.GetHeight() / 2)),
-			(INT)(imagePNG.GetWidth()),
-			(INT)(imagePNG.GetHeight()));
-	}
-	RECT r;
-	::GetClientRect(GetSafeHwnd(), &r);
 }
 
 void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
@@ -1146,47 +1093,28 @@ void COpenS100View::ClearPickReport()
 
 void COpenS100View::PickReport(CPoint _point)
 {
-	if (isMoved == false)
+	auto layer = gisLib->GetLayerManager()->GetLayer(0);
+	if (nullptr == layer)
 	{
-		onPickArrow = true;
-		gisLib->DeviceToWorld(_point.x, _point.y, &ptPickX, &ptPickY);
-		ptPick = _point;
-
-		int selItem = 0;
-		int cellCnt = gisLib->GetLayerCount();
-		if (selItem >= cellCnt || selItem == -1)
-		{
-			return;
-		}
-
-		Layer *l = (Layer*)gisLib->GetLayer(selItem);
-		if (l->GetFileType() == FILE_S_100_VECTOR && l->IsOn())
-		{
-			PickReportS101(_point, (S101Cell*)l->m_spatialObject);
-		}
+		return;
 	}
-}
+	
+	auto cell = (S101Cell*)layer->GetSpatialObject();
+	if (nullptr == cell)
+	{
+		return;
+	}
 
+	gisLib->DeviceToWorld(_point.x, _point.y, &ptPickX, &ptPickY);
+	ptPick = _point;
 
-void COpenS100View::PickReportS101(CPoint _point, S101Cell* cell)
-{
-	CurrentSelectionS101(_point, cell);
-}
-
-
-void COpenS100View::CurrentSelectionS101(CPoint _point, S101Cell* cell)
-{
-	BOOL isCtrl = (0x8000 == (0x8000 & GetKeyState(VK_CONTROL)));
-	CString isCtrlClicked;
 	CString featureType = L"Feature";
-	isCtrlClicked = isCtrl ? "1" : "0";
 	CStringArray csa;
 
 	double xmin = 0;
 	double ymin = 0;
 	double xmax = 0;
 	double ymax = 0;
-
 
 	LONG spt_x = m_ptMDown.x;
 	LONG spt_y = m_ptMDown.y;
@@ -1282,7 +1210,7 @@ void COpenS100View::CurrentSelectionS101(CPoint _point, S101Cell* cell)
 				csAssoCnt.Format(_T("%d"), assoCnt);
 
 				csa.Add(
-					isCtrlClicked + _T("|||") +
+					_T("0|||") +
 					csFoid + _T("|||") +
 					csFrid + _T("|||") +
 					csLat + _T("|||") +
@@ -1342,7 +1270,7 @@ void COpenS100View::CurrentSelectionS101(CPoint _point, S101Cell* cell)
 				csType.Format(_T("%d"), compositeCurve->type);
 				csName.Format(_T("%s"), itor->second->m_code);
 				csAssoCnt.Format(_T("%d"), assoCnt);
-				csa.Add(isCtrlClicked + _T("|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+				csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
 			}
 		}
 	}
@@ -1389,7 +1317,7 @@ void COpenS100View::CurrentSelectionS101(CPoint _point, S101Cell* cell)
 						csType.Format(_T("%d"), multiPoint->GetType());
 						csName.Format(_T("%s"), itor->second->m_code);
 						csAssoCnt.Format(_T("%d"), assoCnt);
-						csa.Add(isCtrlClicked + _T("|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+						csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
 
 						break;
 					}
@@ -1421,13 +1349,13 @@ void COpenS100View::CurrentSelectionS101(CPoint _point, S101Cell* cell)
 					csType.Format(_T("%d"), sr->type);
 					csName.Format(_T("%s"), itor->second->m_code);
 					csAssoCnt.Format(_T("%d"), assoCnt);
-					csa.Add(isCtrlClicked + _T("|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+					csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
 				}
 			}
 		}
 	}
 	// directly send value
-	theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, cell, isCtrlClicked);
+	theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, cell, L"0");
 	Invalidate(FALSE);
 }
 
