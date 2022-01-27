@@ -243,9 +243,6 @@
     <ClCompile Include="BasicFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Catalogue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OrientedCurveRecord.cpp">
       <Filter>S101\Record</Filter>
     </ClCompile>
@@ -489,9 +486,6 @@
     <ClCompile Include="SENC_AlertReference.cpp">
       <Filter>SENC_Instruction</Filter>
     </ClCompile>
-    <ClCompile Include="NewFeatureManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -699,12 +693,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BasicFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Catalogue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OrientedCurveRecord.h">
@@ -967,9 +955,6 @@
     </ClInclude>
     <ClInclude Include="SENC_AlertReference.h">
       <Filter>SENC_Instruction</Filter>
-    </ClInclude>
-    <ClInclude Include="NewFeatureManager.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

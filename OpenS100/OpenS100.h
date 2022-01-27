@@ -21,11 +21,14 @@ public:
 
 public:
 	ULONG_PTR gdiplusToken = NULL; // GDI
+
 	COpenS100View* pView = nullptr;
+
 	CDockablePaneLayerManager m_pDockablePaneLayerManager; //Layer Manager
 	CDockablePaneCurrentSelection m_DockablePaneCurrentSelection; //Current Selection
 	CDockablePaneRelation m_DockablePaneRelation; //Relation
 	CDockablePaneEditWindow m_DockablePaneEditWindow; //
+
 	BOOL  m_bHiColorIcons;
 
 public:

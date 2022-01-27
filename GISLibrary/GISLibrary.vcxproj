@@ -246,7 +246,6 @@
     <ClCompile Include="BasicFile.cpp" />
     <ClCompile Include="C3IL.cpp" />
     <ClCompile Include="CatalogItem.cpp" />
-    <ClCompile Include="Catalogue.cpp" />
     <ClCompile Include="CodeWithNumericCode.cpp" />
     <ClCompile Include="CSAX.cpp" />
     <ClCompile Include="CUCO.cpp" />
@@ -305,7 +304,6 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LayerManager.cpp" />
     <ClCompile Include="MASK.cpp" />
-    <ClCompile Include="NewFeatureManager.cpp" />
     <ClCompile Include="ObjectName.cpp" />
     <ClCompile Include="OrientedCurveRecord.cpp" />
     <ClCompile Include="PCOutputSchemaManager.cpp" />
@@ -401,7 +399,6 @@
     <ClInclude Include="BasicFile.h" />
     <ClInclude Include="C3IL.h" />
     <ClInclude Include="CatalogItem.h" />
-    <ClInclude Include="Catalogue.h" />
     <ClInclude Include="CodeWithNumericCode.h" />
     <ClInclude Include="CSAX.h" />
     <ClInclude Include="CUCO.h" />
@@ -459,13 +456,11 @@
     <ClInclude Include="host_data.h" />
     <ClInclude Include="host_functions.h" />
     <ClInclude Include="IC2D.h" />
-    <ClInclude Include="image.h" />
     <ClInclude Include="ISO8211Fuc.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LayerManager.h" />
     <ClInclude Include="MASK.h" />
     <ClInclude Include="Namespace_GISLibrary.h" />
-    <ClInclude Include="NewFeatureManager.h" />
     <ClInclude Include="NonPrintableCharacter.h" />
     <ClInclude Include="ObjectName.h" />
     <ClInclude Include="OrientedCurveRecord.h" />
