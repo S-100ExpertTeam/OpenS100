@@ -39,23 +39,18 @@ public:
 	// Overlay Layer
 	MBR						mbr;
 
-	static std::unordered_map<FeatureCatalogue*, PortrayalCatalogue*> CatalogueList; //Save the feature catalog and the portrait catalog.
+	//static std::unordered_map<FeatureCatalogue*, PortrayalCatalogue*> CatalogueList; //Save the feature catalog and the portrait catalog.
 
-	//  The index of the currently selected FC/PC catalog.
-	int SelectCatalogindex = -1;
-	static std::vector<PortrayalCatalogue*>	*pPortrayalCatalogues;
-	static std::vector<FeatureCatalogue*>			*pS100Catalogs;
-	static std::unordered_map<std::wstring, PortrayalCatalogue*> *hash_PC;
-	static std::unordered_map<std::wstring, FeatureCatalogue*> *hash_FC;
+	////  The index of the currently selected FC/PC catalog.
+	//int SelectCatalogindex = -1;
+	//static std::vector<PortrayalCatalogue*>	*pPortrayalCatalogues;
+	//static std::vector<FeatureCatalogue*>			*pS100Catalogs;
+	//static std::unordered_map<std::wstring, PortrayalCatalogue*> *hash_PC;
+	//static std::unordered_map<std::wstring, FeatureCatalogue*> *hash_FC;
 
 	CString selectedFCPath;
 	CString selectedPCPath;
 
-	/*
-	key
-		pre		32 bit: chart index
-		post	32 bit: curve identifier
-	*/
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
 	CString ExPCPath;
@@ -97,6 +92,7 @@ public:
 	void DrawBackground(HDC &hDC, int offset = 0);
 
 	void DrawS100Datasets(HDC &hDC, int offset = 0);
+	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer);
 	float GetTextPlaceBearingValue(S101Cell* c, R_FeatureRecord* fr);
 	void DrawSemiCircle(float x, float y, float radius, float startAngle, float endAngle);
 	void AddSymbolDrawing(
@@ -119,7 +115,6 @@ public:
 
 	void DrawDataCoverageOverscale(HDC &hdc);
 
-	void Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, double offsetX = 0, double offsetY = 0);
 	void DrawValidationLayers(HDC &hDC, int offset = 0);
 	void DrawOverlay(HDC &hDC, int type, int offset = 0);
 	void GetLayer(int index, Layer *_layer);
@@ -142,15 +137,15 @@ public:
 	// callback function that receives an index of FC/PC.
 	int(*GetSelectedCatalogIndex)(CString filepath) = nullptr;
 
-	static FeatureCatalogue* AddS100FC(std::wstring path);
-	static PortrayalCatalogue* AddS100PC(FeatureCatalogue* fc, std::wstring path);
-	static PortrayalCatalogue* AddS100PC(FeatureCatalogue* fc, std::wstring path, std::wstring currentName);
+	//static FeatureCatalogue* AddS100FC(std::wstring path);
+	//static PortrayalCatalogue* AddS100PC(FeatureCatalogue* fc, std::wstring path);
+	//static PortrayalCatalogue* AddS100PC(FeatureCatalogue* fc, std::wstring path, std::wstring currentName);
 
-	FeatureCatalogue* GetCatalog(int index);
-	FeatureCatalogue* GetCatalogFromName(CString value);
+	//FeatureCatalogue* GetCatalog(int index);
+	//FeatureCatalogue* GetCatalogFromName(CString value);
 
-	PortrayalCatalogue* GetPortrayalCatalogue(int index);
-	PortrayalCatalogue* GetPortrayalCatalogueFromName(CString value);
+	//PortrayalCatalogue* GetPortrayalCatalogue(int index);
+	//PortrayalCatalogue* GetPortrayalCatalogueFromName(CString value);
 
 	int GetLayerCount();
 
@@ -158,14 +153,14 @@ public:
 
 	Scaler* GetScaler();
 
-	static FeatureCatalogue* GetFC(int productNumber);
-	static PortrayalCatalogue* GetPC(int productNumber);
+	//static FeatureCatalogue* GetFC(int productNumber);
+	//static PortrayalCatalogue* GetPC(int productNumber);
 
-	static FeatureCatalogue* GetFC(std::wstring fcName);
-	static PortrayalCatalogue* GetPC(std::wstring pcName);
+	//static FeatureCatalogue* GetFC(std::wstring fcName);
+	//static PortrayalCatalogue* GetPC(std::wstring pcName);
 
 
-	void SuppressS101Lines(std::set<int>& drawingPriority, std::unordered_map<PortrayalCatalogue*, DrawingSet*>& drawingSetByPC);
+	void SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet);
 
 	// Result
 	// 1 : S-57
@@ -174,8 +169,6 @@ public:
 	// 4 : S-100 H5
 	static int CheckFileType(CString path, int update);
 	static int CheckFileType(CString path);
-
-	bool IsOn(Layer* layer);
 
 	std::vector<S100Layer*> GetS100Layers(int productNumber);
 

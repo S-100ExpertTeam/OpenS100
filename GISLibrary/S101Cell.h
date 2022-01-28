@@ -124,9 +124,6 @@ public:
 	SCurve* GetCurveGeometry(R_CurveRecord *r/*, CArray<GeoPoint> &geoArr, unsigned ORNT = 1*/);
 	BOOL SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList);
 
-
-	BOOL GetFullCurveData(R_FeatureRecord*  fe, R_PointRecord *r, int ornt = 1);
-	BOOL GetFullCurveData(R_FeatureRecord* fe, R_MultiPointRecord *r, int ornt = 1);
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CompositeRecord *r, int ornt = 1);
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int ornt = 1);

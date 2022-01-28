@@ -30,6 +30,9 @@ CGISLibraryApp::~CGISLibraryApp()
 
 	delete[] SGeometry::viewPoints;
 	SGeometry::viewPoints = nullptr;
+
+	delete fc;
+	delete pc;
 }
 
 CGISLibraryApp* gisLib = new CGISLibraryApp();
@@ -45,11 +48,11 @@ void CGISLibraryApp::InitLibrary()
 	D2.CreateDeviceDependentResources();
 	InitS100Engine();
 
-	BasicFile S_101;
-	S_101.Set_BasicFile(L"..\\ProgramData\\xml\\S-101_FC.xml" , L"..\\ProgramData\\S101_Portrayal\\");
-	BasicFilePath.push_back(S_101);
-
-	BasicFileSetting();
+	fc = new FeatureCatalogue(L"..\\ProgramData\\xml\\S-101_FC.xml");
+	pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\");
+	pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
+	pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+	pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
 }
 
 bool CGISLibraryApp::AddLayer(CString _filepath)
@@ -66,11 +69,6 @@ bool CGISLibraryApp::AddBackgroundLayer(CString _filepath)
 void CGISLibraryApp::Draw(HDC &hDC, int offset)
 {
 	m_pLayerManager->Draw(hDC, offset);
-}
-
-void CGISLibraryApp::Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, double offsetX, double offsetY)
-{
-	m_pLayerManager->Draw(pRenderTarget, pDXFactory, offsetX, offsetY);
 }
 
 void CGISLibraryApp::BuildPortrayalCatalogue(Layer* l)
@@ -105,7 +103,6 @@ Layer* CGISLibraryApp::GetLayer(int index)
 
 void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale)
 {
-	auto pc = LayerManager::GetPC(productNumber);
 	if (pc)
 	{
 		auto pcManager = pc->GetS100PCManager();
@@ -503,39 +500,6 @@ void CGISLibraryApp::ChangeDisplayFont()
 	}
 }
 
-void CGISLibraryApp::BasicFileSetting()
-{
-	// load FC/PC 
-	if (!LayerManager::pPortrayalCatalogues) //The part where  add something like S101.
-	{
-		LayerManager::pS100Catalogs = new std::vector<FeatureCatalogue*>();
-		LayerManager::pPortrayalCatalogues = new std::vector<PortrayalCatalogue*>();
-
-		LayerManager::hash_FC = new std::unordered_map<std::wstring, FeatureCatalogue*>();
-		LayerManager::hash_PC = new std::unordered_map<std::wstring, PortrayalCatalogue*>();
-
-		for (unsigned i = 0; i < BasicFilePath.size(); i++)
-		{
-			//add change color
-			auto fc = LayerManager::AddS100FC(BasicFilePath[i].Get_FcPath());
-			if (GetColorTable() != L"")
-			{
-				auto pc = LayerManager::AddS100PC(fc, BasicFilePath[i].Get_PortrayalPath(), GetColorTable());
-				pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
-				pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-				pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-			}
-			else
-			{
-				auto pc = LayerManager::AddS100PC(fc, BasicFilePath[i].Get_PortrayalPath());
-				pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
-				pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-				pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-			}
-		}
-	}
-}
-
 std::wstring CGISLibraryApp::GetColorTable()
 {
 	if (ENCCommon::m_eColorTable == GeoMetryLibrary ::ColorTable::Day)
@@ -554,4 +518,14 @@ std::wstring CGISLibraryApp::GetColorTable()
 	{
 		return L"";
 	}
+}
+
+FeatureCatalogue* CGISLibraryApp::GetFC()
+{
+	return fc;
+}
+
+PortrayalCatalogue* CGISLibraryApp::GetPC()
+{
+	return pc;
 }

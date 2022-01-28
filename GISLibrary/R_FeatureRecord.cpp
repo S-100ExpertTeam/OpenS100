@@ -200,63 +200,6 @@ int R_FeatureRecord::GetRCID()
 	return m_frid.m_name.RCID;
 }
 
-void R_FeatureRecord::GetXYPointOfTheVisiblePoints(double &x, double &y)
-{
-	std::list<SCurveHasOrient> *pListCurveLink = NULL;
-	if (m_geometry->type == 1)
-	{
-		SPoint* p = (SPoint*)m_geometry;
-		x = p->m_point.GetX();
-		y = p->m_point.GetY();
-
-		return;
-	}
-	else if (m_geometry->type == 2)
-	{
-		SCompositeCurve* cc = (SCompositeCurve*)m_geometry;
-
-		pListCurveLink = &cc->m_listCurveLink;
-	}
-	else if (m_geometry->type == 3)
-	{
-		SSurface* s = (SSurface*)m_geometry;
-
-		pListCurveLink = &s->m_listCurveLink;
-	}
-
-	if (pListCurveLink)
-	{
-		for (auto i = pListCurveLink->begin(); i != pListCurveLink->end(); i++)
-		{
-			SCurve* curve = (*i).GetCurve();
-			if (!(*i).GetMasking())
-			{
-				if (curve->m_numPoints > 2)
-				{
-					x = curve->m_pPoints[1].GetX();
-					y = curve->m_pPoints[1].GetY();
-
-					return;
-				}
-			}
-		}
-
-		if (m_geometry->type == 3)
-		{
-			SSurface* s = (SSurface*)m_geometry;
-
-			if (s->m_centerPoint)
-			{
-				x = s->m_centerPoint->GetX();
-				y = s->m_centerPoint->GetY();
-				return;
-			}
-		}
-	}
-	return;
-}
-
-
 int R_FeatureRecord::GetAttributeIndex(ATTR* value)
 {
 	int result = 1;
