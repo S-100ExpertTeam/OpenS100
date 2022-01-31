@@ -372,10 +372,10 @@ void COpenS100View::Setting()
 {
 	CConfigrationDlg dlg(this);
 
-	auto itor = LayerManager::hash_FC->find(L"S-101");
-	if (itor != LayerManager::hash_FC->end())
+	auto fc = gisLib->GetFC();
+	if (fc)
 	{
-		dlg.InitS101FeatureTypes(itor->second);
+		dlg.InitS101FeatureTypes(fc);
 	}
 
 	if (m_systemFontList.size() == 0)

@@ -2,19 +2,20 @@
 
 #include "LayerManager.h"
 #include "D2D1Resources.h"
-#include "BasicFile.h"
 
 #include "../S100Engine/S100Engine.h"
+
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../GeoMetryLibrary/ENCGeometry.h"
-#include "../extlibs/Clipper/include/clipper.hpp"
 
+#include "../extlibs/Clipper/include/clipper.hpp"
 
 #ifndef __AFXWIN_H__
 	#error "PCH에 대해 이 파일을 포함하기 전에 'stdafx.h'를 포함합니다."
 #endif
 
 class S100Engine;
+
 class CGISLibraryApp
 {
 public:
@@ -25,8 +26,11 @@ public:
 	Scaler* m_pScaler = new Scaler();
 	LayerManager* m_pLayerManager = new LayerManager(m_pScaler);
 	GISLibrary::D2D1Resources D2;
-	std::vector<BasicFile> BasicFilePath;
 	bool checkRouteDetection = false;
+
+	// FC & PC for S-101
+	FeatureCatalogue* fc = nullptr;
+	PortrayalCatalogue* pc = nullptr;
 
 public:
 	Scaler* GetScaler();
@@ -37,7 +41,6 @@ public:
 	bool AddBackgroundLayer(CString _filepath);
 	bool AddLayer(CString _filepath);
 	void Draw(HDC &hDC, int offset = 0);
-	void Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, double offsetX = 0, double offsetY = 0);
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal();
 	void DrawValidationLayers(HDC &hDC, int offset = 0);
@@ -119,10 +122,10 @@ public:
 
 	void ChangeDisplayFont();
 
-	// FC, PC loading
-	void BasicFileSetting();
-
 	std::wstring GetColorTable();
+
+	FeatureCatalogue* GetFC();
+	PortrayalCatalogue* GetPC();
 };
 
 extern CGISLibraryApp* gisLib;

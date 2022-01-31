@@ -43,19 +43,17 @@
 #include <string>
 #include <vector>
 #include <map>
+
 #pragma comment(lib, "winmm")
 
 // PC list 
-std::vector<PortrayalCatalogue*>* LayerManager::pPortrayalCatalogues = nullptr;
-std::unordered_map<std::wstring, PortrayalCatalogue*>* LayerManager::hash_PC = nullptr;
-
-std::unordered_map<FeatureCatalogue*, PortrayalCatalogue*> LayerManager::CatalogueList;
-std::unordered_map<std::wstring, FeatureCatalogue*>* LayerManager::hash_FC = nullptr;
-std::vector<FeatureCatalogue*>* LayerManager::pS100Catalogs = nullptr;
-
-// calc Performance
-UINT wTimerRes;
-CRITICAL_SECTION g_CsAddLayer;
+//std::vector<PortrayalCatalogue*>* LayerManager::pPortrayalCatalogues = nullptr;
+//std::unordered_map<std::wstring, PortrayalCatalogue*>* LayerManager::hash_PC = nullptr;
+//
+//std::vector<FeatureCatalogue*>* LayerManager::pS100Catalogs = nullptr;
+//std::unordered_map<std::wstring, FeatureCatalogue*>* LayerManager::hash_FC = nullptr;
+//
+//std::unordered_map<FeatureCatalogue*, PortrayalCatalogue*> LayerManager::CatalogueList;
 
 LayerManager::LayerManager(void)
 {
@@ -71,8 +69,6 @@ LayerManager::LayerManager(void)
 			if (ch == '\\') break;
 		}
 	}
-
-	::InitializeCriticalSection(&g_CsAddLayer);
 }
 
 LayerManager::LayerManager(Scaler* scaler) : LayerManager()
@@ -93,53 +89,52 @@ LayerManager::~LayerManager()
 	{
 		delete* itor;
 		*itor = nullptr;
-
 	}
 	m_listLayer.clear();
 
-	if (pPortrayalCatalogues)
-	{
-		for (auto itor = pPortrayalCatalogues->begin(); itor != pPortrayalCatalogues->end(); itor++)
-		{
-			delete* itor;
-		}
-		delete pPortrayalCatalogues;
-		pPortrayalCatalogues = NULL;
-	}
+	//if (pPortrayalCatalogues)
+	//{
+	//	for (auto itor = pPortrayalCatalogues->begin(); itor != pPortrayalCatalogues->end(); itor++)
+	//	{
+	//		delete* itor;
+	//	}
+	//	delete pPortrayalCatalogues;
+	//	pPortrayalCatalogues = NULL;
+	//}
 
-	if (pS100Catalogs)
-	{
-		for (auto itor = pS100Catalogs->begin(); itor != pS100Catalogs->end(); itor++)
-		{
-			delete* itor;
-		}
-		delete pS100Catalogs;
-		pS100Catalogs = NULL;
-	}
+	//if (pS100Catalogs)
+	//{
+	//	for (auto itor = pS100Catalogs->begin(); itor != pS100Catalogs->end(); itor++)
+	//	{
+	//		delete* itor;
+	//	}
+	//	delete pS100Catalogs;
+	//	pS100Catalogs = NULL;
+	//}
 
-	if (hash_FC)
-	{
-		delete hash_FC;
-		hash_FC = NULL;
-	}
-	if (hash_PC)
-	{
-		delete hash_PC;
-		hash_PC = NULL;
-	}
+	//if (hash_FC)
+	//{
+	//	delete hash_FC;
+	//	hash_FC = NULL;
+	//}
 
-	// calc perfomance
-	timeEndPeriod(wTimerRes);
+	//if (hash_PC)
+	//{
+	//	delete hash_PC;
+	//	hash_PC = NULL;
+	//}
 
 	if (m_routeDetection_DangerHighlight_Area)
 	{
 		SafeRelease(&m_routeDetection_DangerHighlight_Area);
 		m_routeDetection_DangerHighlight_Area = nullptr;
 	}
+
 	for (auto i = m_routeDetection_DangerHighlight_Lines.begin(); i != m_routeDetection_DangerHighlight_Lines.end(); i++)
 	{
 		SafeRelease(&(*i));
 	}
+
 	m_routeDetection_DangerHighlight_Lines.clear();
 	m_routeDetection_DangerHighlight_Points.clear();
 
@@ -148,10 +143,12 @@ LayerManager::~LayerManager()
 		SafeRelease(&m_routeDetection_InformationHighlight_Area);
 		m_routeDetection_InformationHighlight_Area = nullptr;
 	}
+
 	for (auto i = m_routeDetection_InformationHighlight_Lines.begin(); i != m_routeDetection_InformationHighlight_Lines.end(); i++)
 	{
 		SafeRelease(&(*i));
 	}
+
 	m_routeDetection_InformationHighlight_Lines.clear();
 	m_routeDetection_InformationHighlight_Points.clear();
 }
@@ -341,11 +338,11 @@ bool LayerManager::AddLayer(CString _filepath)
 			CString s = _T("S-");
 			strProductNumber = s + strProductNumber;
 
-			fc = GetCatalogFromName(strProductNumber);
+			fc = gisLib->GetFC();
 
 			if (fc != nullptr)
 			{
-				pc = GetPortrayalCatalogueFromName(strProductNumber);
+				pc = gisLib->GetPC();
 				fcName = fc->GetName();
 				fitor = fcName.find(L"S-");
 			}
@@ -433,107 +430,6 @@ bool LayerManager::AddOverlayLayer(CString _filepath)
 	return TRUE;
 }
 
-void LayerManager::Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory* pDXFactory, double offsetX, double offsetY)
-{
-	POSITION pos = m_listBackgroundLayer.GetHeadPosition();
-
-	while (pos)
-	{
-		if (m_listBackgroundLayer.GetAt(pos)->IsOn())
-		{
-			Layer* layer = m_listBackgroundLayer.GetNext(pos);
-
-			if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
-			{
-				layer->Draw(pRenderTarget, pDXFactory, scaler, offsetX - 360);
-				layer->Draw(pRenderTarget, pDXFactory, scaler, offsetX);
-				layer->Draw(pRenderTarget, pDXFactory, scaler, offsetX + 360);
-			}
-		}
-		else
-		{
-			m_listBackgroundLayer.GetNext(pos);
-		}
-	}
-
-	std::list<SENC_Instruction*> pointList[100];
-	std::list<SENC_Instruction*> lineList[100];
-	std::list<SENC_Instruction*> areaList[100];
-	std::list<SENC_Instruction*> textList[100];
-
-	for (auto itor = m_listLayer.begin(); itor != m_listLayer.end(); itor++)
-	{
-		if ((*itor)->IsOn()) {
-			Layer* layer = (*itor);
-			if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
-			{
-				if (layer->m_spatialObject->m_FileType != S100_FileType::FILE_S_100_VECTOR)
-					continue;
-				S101Cell* cell = (S101Cell*)layer->m_spatialObject;
-
-				if (!cell->pcManager)
-				{
-					continue;
-				}
-				if (!cell->pcManager->displayListSENC)
-				{
-					continue;
-				}
-				std::list<SENC_Instruction*> itList;
-				for (int i = 0; i < 100; i++)
-				{
-					/*
-					* Type Of Instruction
-					* 0 : Null Instruction
-					* 1 : Point Instruction
-					* 2 : Line Instruction
-					* 3 : Area Instruction
-					* 4 : Text Instruction
-					*/
-					cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, scaler, itList);
-					pointList[i].insert(pointList[i].begin(), itList.begin(), itList.end());
-
-					cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, scaler, itList);
-					lineList[i].insert(lineList[i].begin(), itList.begin(), itList.end());
-
-					cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, scaler, itList);
-					areaList[i].insert(areaList[i].begin(), itList.begin(), itList.end());
-
-					cell->pcManager->displayListSENC->GetDrawingInstruction(i, 5, scaler, itList);
-					textList[i].insert(textList[i].begin(), itList.begin(), itList.end());
-
-					cell->pcManager->displayListSENC->GetDrawingInstruction(i, 0, scaler, itList);
-				}
-
-				itList.clear();
-			}
-		}
-	}
-
-	SENC_Instruction* it = NULL;
-	for (int i = 0; i < 100; i++)
-	{
-		for (auto itor = areaList[i].begin(); itor != areaList[i].end(); itor++)
-		{
-			it = *itor;
-			it->DrawInstruction(pRenderTarget, pDXFactory, scaler);
-		}
-		for (auto itor = lineList[i].begin(); itor != lineList[i].end(); itor++)
-		{
-			it = *itor;
-		}
-		for (auto itor = pointList[i].begin(); itor != pointList[i].end(); itor++)
-		{
-			it = *itor;
-		}
-		for (auto itor = textList[i].begin(); itor != textList[i].end(); itor++)
-		{
-			it = *itor;
-		}
-	}
-
-}
-
 void LayerManager::Draw(HDC& hdc, int offset)
 {
 	CDC* pDC = CDC::FromHandle(hdc);
@@ -541,13 +437,9 @@ void LayerManager::Draw(HDC& hdc, int offset)
 
 	DrawBackground(hdc, offset);
 
-	/////////////////////////////////
-	//Exchange Set Drawing Select..
-
-	DrawS100Datasets(hdc, offset); //Draw
+	DrawS100Datasets(hdc, offset);
 
 	gisLib->D2.Begin(hdc);
-
 	gisLib->DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
 	gisLib->DrawScaleBar();
 	gisLib->D2.End();
@@ -1365,237 +1257,153 @@ void LayerManager::DrawBackground(HDC &hDC, int offset)
 
 void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 {
-
+	for (auto i = m_listLayer.begin(); i != m_listLayer.end(); i++)
 	{
-		std::set<int> drawingPriority;
-
-		unsigned numeric_number_of_text_placement = 0;
-
-		std::unordered_map<PortrayalCatalogue*, DrawingSet*> drawingSetByPC;
-
-		// Create drawing sets for each PC.
-		for (auto itor = m_listLayer.begin(); itor != m_listLayer.end(); itor++)
+		auto layer = *i;
+		if (layer->IsS100Layer())
 		{
-			auto layer = *itor;
-
-			if (true == IsOn(layer))
+			if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
 			{
-				if (layer->m_spatialObject->m_FileType != S100_FileType::FILE_S_100_VECTOR)
-				{
-					continue;
-				}
-
-				if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
-				{
-					auto s100Layer = (S100Layer*)layer;
-					auto cell = (S101Cell*)layer->GetSpatialObject();
-					auto fc = s100Layer->GetFeatureCatalog();
-					auto pc = s100Layer->GetPC();
-
-					numeric_number_of_text_placement = 0;
-					auto ii = cell->m_dsgir.m_ftcs->m_arrFindForCode.find(L"TextPlacement");
-					if (ii != cell->m_dsgir.m_ftcs->m_arrFindForCode.end())
-					{
-						numeric_number_of_text_placement = ii->second->m_nmcd;
-					}
-
-					DrawingSet* pCurDrawingSet = nullptr;
-					auto ipc = drawingSetByPC.find(pc);
-					if (ipc == drawingSetByPC.end())
-					{
-						auto curDrawingSet = new DrawingSet();
-						drawingSetByPC.insert({ pc, curDrawingSet });
-						pCurDrawingSet = curDrawingSet;
-					}
-					else
-					{
-						pCurDrawingSet = ipc->second;
-					}
-
-					if (cell->m_FileType == S100_FileType::FILE_S_100_VECTOR)
-					{
-						if (nullptr == cell->pcManager ||
-							nullptr == cell->pcManager->displayListSENC)
-						{
-							continue;
-						}
-
-						std::list<SENC_Instruction*> itList;
-						for (int i = 0; i < 100; i++)
-						{
-							/*
-							* Type Of Instruction
-							* 0 : Null Instruction
-							* 1 : Point Instruction
-							* 2 : Line Instruction
-							* 3 : Area Instruction
-							* 4 : Text Instruction
-							*/
-							int cnt = 0;
-
-							// Augmented Ray
-							cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, scaler, itList);
-
-							if (itList.size() > 0)
-							{
-								auto instructionList = pCurDrawingSet->GetAugmentedRayList(i);
-								instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-								cnt += (int)itList.size();
-							}
-
-							// Augmented Path
-							cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, scaler, itList);
-
-							if (itList.size() > 0)
-							{
-								auto instructionList = pCurDrawingSet->GetAugmentedPathList(i);
-								instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-								cnt += (int)itList.size();
-							}
-
-							// Point
-							cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, scaler, itList);
-
-							if (itList.size() > 0)
-							{
-								auto instructionList = pCurDrawingSet->GetPointList(i);
-								instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-								cnt += (int)itList.size();
-							}
-
-							// Line
-							cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, scaler, itList);
-
-							if (itList.size() > 0)
-							{
-								auto instructionList = pCurDrawingSet->GetLineList(i);
-								instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-								cnt += (int)itList.size();
-							}
-
-							// Area
-							cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, scaler, itList);
-
-							if (itList.size() > 0)
-							{
-								auto instructionList = pCurDrawingSet->GetAreaList(i);
-								instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-								cnt += (int)itList.size();
-							}
-
-							// Text
-
-							cell->pcManager->displayListSENC->GetDrawingInstructionByCondition(i, 5, scaler, itList, numeric_number_of_text_placement);
-
-
-
-							if (itList.size() > 0)
-							{
-								auto instructionList = pCurDrawingSet->GetTextList(i);
-								instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-								cnt += (int)itList.size();
-							}
-
-							cnt += (int)itList.size();
-
-							cell->pcManager->displayListSENC->GetDrawingInstruction(i, 0, scaler, itList);
-
-							if (cnt)
-							{
-								drawingPriority.insert(i);
-							}
-						}
-
-						itList.clear();
-					}
-				}
+				DrawS100Layer(hdc, offset, (S100Layer*)layer);
 			}
 		}
+	}
+}
 
-		// Line Suppression
-		SuppressS101Lines(drawingPriority, drawingSetByPC);
+void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
+{
+	auto fc = layer->GetFeatureCatalog();
+	auto pc = layer->GetPC();
 
-		std::list<D2D1_POINT_2F> points;
+	auto cell = (S101Cell*)layer->GetSpatialObject();
+	if (nullptr == cell->pcManager ||
+		nullptr == cell->pcManager->displayListSENC)
+	{
+		return;
+	}
 
-		auto rt = gisLib->D2.pRT;
-		rt->BindDC(hdc, scaler->GetScreenRect());
-		rt->BeginDraw();
-		gisLib->D2.pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-		gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	std::set<int> drawingPriority;
 
-		// IC Level 0 - S-10X Vector drawing
-		for (auto i = m_listLayer.begin(); i != m_listLayer.end(); i++)
+	unsigned numeric_number_of_text_placement = 0;
+
+	DrawingSet drawingSet;
+
+	if (true == layer->IsOn())
+	{
+		if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
 		{
-			auto layer = (S100Layer*)*i;
-			auto cell = layer->GetS100SpatialObject();
-
-			if (layer->IsOn() == true &&
-				MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
+			numeric_number_of_text_placement = 0;
+			auto ii = cell->m_dsgir.m_ftcs->m_arrFindForCode.find(L"TextPlacement");
+			if (ii != cell->m_dsgir.m_ftcs->m_arrFindForCode.end())
 			{
-				if (cell->m_FileType == S100_FileType::FILE_S_100_VECTOR)
+				numeric_number_of_text_placement = ii->second->m_nmcd;
+			}
+
+			std::list<SENC_Instruction*> itList;
+			for (int i = 0; i < 100; i++)
+			{
+				/*
+				* Type Of Instruction
+				* 0 : Null Instruction
+				* 1 : Point Instruction
+				* 2 : Line Instruction
+				* 3 : Area Instruction
+				* 4 : Text Instruction
+				*/
+				int cnt = 0;
+
+				// Augmented Ray
+				cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, scaler, itList);
+				if (itList.size() > 0)
 				{
-					auto s101Cell = (S101Cell*)cell;
-					auto pc = layer->GetPC();
-
-					numeric_number_of_text_placement = 0;
-					auto ii = s101Cell->m_dsgir.m_ftcs->m_arrFindForCode.find(L"TextPlacement");
-					if (ii != s101Cell->m_dsgir.m_ftcs->m_arrFindForCode.end())
-					{
-						numeric_number_of_text_placement = ii->second->m_nmcd;
-					}
-
-					if (nullptr == s101Cell->pcManager ||
-						nullptr == s101Cell->pcManager->displayListSENC)
-					{
-						continue;
-					}
-
-					for (auto dp = drawingPriority.begin(); dp != drawingPriority.end(); dp++)
-					{
-						int drawingPriority = *dp;
-
-						for (auto j = drawingSetByPC.begin(); j != drawingSetByPC.end(); j++)
-						{
-							auto pc = j->first;
-							auto pCurDrawingSet = j->second;
-
-							if (pc == layer->GetPC())
-							{
-								pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
-								pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
-
-								AddSymbolDrawing(drawingPriority, hdc, offset,
-									pCurDrawingSet->GetAugmentedRayList(),
-									pCurDrawingSet->GetAugmentedPathList(),
-									pCurDrawingSet->GetPointList(),
-									pCurDrawingSet->GetLineList(),
-									pCurDrawingSet->GetAreaList(),
-									pCurDrawingSet->GetTextList(),
-									pc);
-
-								pc->GetS100PCManager()->DeleteBitmapBrush();
-							}
-						}
-					}
+					auto instructionList = drawingSet.GetAugmentedRayList(i);
+					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+					cnt += (int)itList.size();
 				}
-				else if (cell->m_FileType == S100_FileType::FILE_S_100_GRID_H5)
+
+				// Augmented Path
+				cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, scaler, itList);
+				if (itList.size() > 0)
 				{
-					rt->EndDraw();
-					layer->Draw(hdc, scaler, offset);
-					rt->BindDC(hdc, scaler->GetScreenRect());
-					rt->BeginDraw();
+					auto instructionList = drawingSet.GetAugmentedPathList(i);
+					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+					cnt += (int)itList.size();
+				}
+
+				// Point
+				cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, scaler, itList);
+				if (itList.size() > 0)
+				{
+					auto instructionList = drawingSet.GetPointList(i);
+					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+					cnt += (int)itList.size();
+				}
+
+				// Line
+				cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, scaler, itList);
+				if (itList.size() > 0)
+				{
+					auto instructionList = drawingSet.GetLineList(i);
+					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+					cnt += (int)itList.size();
+				}
+
+				// Area
+				cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, scaler, itList);
+				if (itList.size() > 0)
+				{
+					auto instructionList = drawingSet.GetAreaList(i);
+					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+					cnt += (int)itList.size();
+				}
+
+				// Text
+				cell->pcManager->displayListSENC->GetDrawingInstructionByCondition(i, 5, scaler, itList, numeric_number_of_text_placement);
+				if (itList.size() > 0)
+				{
+					auto instructionList = drawingSet.GetTextList(i);
+					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+					cnt += (int)itList.size();
+				}
+
+				if (cnt)
+				{
+					drawingPriority.insert(i);
 				}
 			}
+
+			itList.clear();
+
+			// Line Suppression
+			SuppressS101Lines(drawingPriority, &drawingSet);
+
+			std::list<D2D1_POINT_2F> points;
+
+			auto rt = gisLib->D2.pRT;
+			rt->BindDC(hDC, scaler->GetScreenRect());
+			rt->BeginDraw();
+			gisLib->D2.pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+			gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+
+			pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
+			pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
+
+			for (auto dp = drawingPriority.begin(); dp != drawingPriority.end(); dp++)
+			{
+				AddSymbolDrawing(*dp, hDC, offset,
+					drawingSet.GetAugmentedRayList(),
+					drawingSet.GetAugmentedPathList(),
+					drawingSet.GetPointList(),
+					drawingSet.GetLineList(),
+					drawingSet.GetAreaList(),
+					drawingSet.GetTextList(),
+					pc);
+			}
+
+			pc->GetS100PCManager()->DeleteBitmapBrush();
+
+			rt->EndDraw();
 		}
-
-		rt->EndDraw();
-
-		for (auto i = drawingSetByPC.begin(); i != drawingSetByPC.end(); i++)
-		{
-			delete i->second;
-		}
-
-		drawingSetByPC.clear();
 	}
 }
 
@@ -1863,101 +1671,101 @@ void LayerManager::ShowTextPlacement(BOOL bShow)
 	ENCCommon::SHOW_TEXT_PLACEMENT = bShow;
 }
 
-FeatureCatalogue* LayerManager::AddS100FC(std::wstring path)
-{
-	auto fc = new FeatureCatalogue(path);
+//FeatureCatalogue* LayerManager::AddS100FC(std::wstring path)
+//{
+//	auto fc = new FeatureCatalogue(path);
+//
+//	pS100Catalogs->push_back(fc);
+//	hash_FC->insert({ fc->GetName(), fc });
+//
+//	return fc;
+//}
 
-	pS100Catalogs->push_back(fc);
-	hash_FC->insert({ fc->GetName(), fc });
+//PortrayalCatalogue* LayerManager::AddS100PC(FeatureCatalogue* fc, std::wstring path)
+//{
+//	auto pc = new PortrayalCatalogue(path);
+//
+//	pPortrayalCatalogues->push_back(pc);
+//	hash_PC->insert({ pc->GetProduct(), pc });
+//
+//	// connect FC and PC
+//	CatalogueList[fc] = pc;
+//
+//	return pc;
+//}
 
-	return fc;
-}
+//PortrayalCatalogue* LayerManager::AddS100PC(FeatureCatalogue* fc, std::wstring path, std::wstring currentName)
+//{
+//	auto pc = new PortrayalCatalogue(path);
+//	pc->SetCurrentPaletteName(currentName);
+//
+//	pPortrayalCatalogues->push_back(pc);
+//
+//	(*hash_PC)[pc->GetProduct()] = pc;
+//
+//	// connect FC and PC
+//	CatalogueList[fc] = pc;
+//
+//	return pc;
+//}
 
-PortrayalCatalogue* LayerManager::AddS100PC(FeatureCatalogue* fc, std::wstring path)
-{
-	auto pc = new PortrayalCatalogue(path);
-
-	pPortrayalCatalogues->push_back(pc);
-	hash_PC->insert({ pc->GetProduct(), pc });
-
-	// connect FC and PC
-	CatalogueList[fc] = pc;
-
-	return pc;
-}
-
-PortrayalCatalogue* LayerManager::AddS100PC(FeatureCatalogue* fc, std::wstring path, std::wstring currentName)
-{
-	auto pc = new PortrayalCatalogue(path);
-	pc->SetCurrentPaletteName(currentName);
-
-	pPortrayalCatalogues->push_back(pc);
-
-	(*hash_PC)[pc->GetProduct()] = pc;
-
-	// connect FC and PC
-	CatalogueList[fc] = pc;
-
-	return pc;
-}
-
-FeatureCatalogue* LayerManager::GetCatalog(int index)
-{
-	try
-	{
-		return pS100Catalogs->at(index);
-	}
-	catch (std::out_of_range e)
-	{
-		return nullptr;
-	}
-
-	return nullptr;
-}
-
-FeatureCatalogue* LayerManager::GetCatalogFromName(CString value)
-{
-	try
-	{
-		return hash_FC->at(std::wstring(value));
-	}
-	catch (std::out_of_range e)
-	{
-		return nullptr;
-	}
-
-	return nullptr;
-}
-
-
-
-PortrayalCatalogue* LayerManager::GetPortrayalCatalogue(int index)
-{
-	try
-	{
-		return pPortrayalCatalogues->at(index);
-	}
-	catch (std::out_of_range e)
-	{
-		return nullptr;
-	}
-
-	return nullptr;
-}
-
-PortrayalCatalogue* LayerManager::GetPortrayalCatalogueFromName(CString value)
-{
-	try
-	{
-		return hash_PC->at(std::wstring(value));
-	}
-	catch (std::out_of_range e)
-	{
-		return nullptr;
-	}
-
-	return nullptr;
-}
+//FeatureCatalogue* LayerManager::GetCatalog(int index)
+//{
+//	try
+//	{
+//		return pS100Catalogs->at(index);
+//	}
+//	catch (std::out_of_range e)
+//	{
+//		return nullptr;
+//	}
+//
+//	return nullptr;
+//}
+//
+//FeatureCatalogue* LayerManager::GetCatalogFromName(CString value)
+//{
+//	try
+//	{
+//		return hash_FC->at(std::wstring(value));
+//	}
+//	catch (std::out_of_range e)
+//	{
+//		return nullptr;
+//	}
+//
+//	return nullptr;
+//}
+//
+//
+//
+//PortrayalCatalogue* LayerManager::GetPortrayalCatalogue(int index)
+//{
+//	try
+//	{
+//		return pPortrayalCatalogues->at(index);
+//	}
+//	catch (std::out_of_range e)
+//	{
+//		return nullptr;
+//	}
+//
+//	return nullptr;
+//}
+//
+//PortrayalCatalogue* LayerManager::GetPortrayalCatalogueFromName(CString value)
+//{
+//	try
+//	{
+//		return hash_PC->at(std::wstring(value));
+//	}
+//	catch (std::out_of_range e)
+//	{
+//		return nullptr;
+//	}
+//
+//	return nullptr;
+//}
 
 void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 {
@@ -1989,9 +1797,9 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 		}
 	}
 
-	for (auto i = pPortrayalCatalogues->begin(); i != pPortrayalCatalogues->end(); i++)
+	auto pc = gisLib->GetPC();
+	if (pc)
 	{
-		auto pc = *i;
 		pc->SetCurrentPaletteName(paletteName);
 	}
 }
@@ -2124,146 +1932,95 @@ void LayerManager::DrawSemiCircle(float x, float y, float radius, float startAng
 	SafeRelease(&pGeometryLeftLine);
 }
 
-FeatureCatalogue* LayerManager::GetFC(int productNumber)
+void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet)
 {
-	auto fcName = L"S-" + std::to_wstring(productNumber);
-	auto fc = GetFC(fcName);
-	return fc;
-}
-
-PortrayalCatalogue* LayerManager::GetPC(int productNumber)
-{
-	auto pcName = L"S-" + std::to_wstring(productNumber);
-	auto pc = GetPC(pcName);
-	return pc;
-}
-
-FeatureCatalogue* LayerManager::GetFC(std::wstring fcName)
-{
-	if (nullptr == hash_FC)
-	{
-		return nullptr;
-	}
-
-	auto item = hash_FC->find(fcName);
-	if (item == hash_FC->end())
-	{
-		return nullptr;
-	}
-
-	return item->second;
-}
-
-
-PortrayalCatalogue* LayerManager::GetPC(std::wstring pcName)
-{
-	if (nullptr == hash_PC)
-	{
-		return nullptr;
-	}
-
-	auto item = hash_PC->find(pcName);
-	if (item == hash_PC->end())
-	{
-		return nullptr;
-	}
-
-	return item->second;
-}
-
-void LayerManager::SuppressS101Lines(
-	std::set<int>& drawingPriority,
-	std::unordered_map<PortrayalCatalogue*, DrawingSet*>& drawingSetByPC)
-{
-	// Supression
 	lineSuppressionMap.clear();
-	for (auto i = drawingSetByPC.begin(); i != drawingSetByPC.end(); i++)
+
+	for (auto i = drawingPriority.rbegin(); i != drawingPriority.rend(); i++)
 	{
-		auto pCurDrawingSet = i->second;
+		int drawingPriority = *i;
 
-		for (auto j = drawingPriority.rbegin(); j != drawingPriority.rend(); j++)
+		auto lineInstructions = drawingSet->GetLineList()[drawingPriority];
+
+		for (auto j = lineInstructions.begin(); j != lineInstructions.end(); j++)
 		{
-			int drawingPriority = *j;
-			auto lineInstructions = pCurDrawingSet->GetLineList()[drawingPriority];
+			auto lineInstruction = (SENC_LineInstruction*)*j;
 
-			for (auto k = lineInstructions.begin(); k != lineInstructions.end(); k++)
+			auto fr = lineInstruction->fr;
+
+			std::list<SCurveHasOrient>* curListCurveLink = nullptr;
+
+			if (lineInstruction->spatialReference.size() > 0)
 			{
-				auto lineInstruction = (SENC_LineInstruction*)*k;
-				std::list<SCurveHasOrient>* curListCurveLink = nullptr;
-				R_FeatureRecord* fr = lineInstruction->fr;
-
-				if (lineInstruction->spatialReference.size() > 0)
+				if (lineInstruction->m_listCurveLink.size() == 0)
 				{
-					if (lineInstruction->m_listCurveLink.size() == 0)
+					if (fr->m_geometry->type == 3)
 					{
-						if (fr->m_geometry->type == 3)
+						auto surface = (SSurface*)fr->m_geometry;
+
+						curListCurveLink = &surface->m_listCurveLink;
+					}
+					else if (fr->m_geometry->type == 2)
+					{
+						auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
+
+						curListCurveLink = &compositeCurve->m_listCurveLink;
+					}
+
+					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
+					{
+						SENC_SpatialReference* sred = *iterLi;
+						int referencedID = sred->reference;
+
+						for (auto iterCurLcl = curListCurveLink->begin(); iterCurLcl != curListCurveLink->end(); iterCurLcl++)
 						{
-							auto surface = (SSurface*)fr->m_geometry;
+							auto curve = *iterCurLcl;
 
-							curListCurveLink = &surface->m_listCurveLink;
-						}
-						else if (fr->m_geometry->type == 2)
-						{
-							auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
+							int id = curve.GetCurve()->m_id & 0x0000FFFF;
 
-							curListCurveLink = &compositeCurve->m_listCurveLink;
-						}
-
-						for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
-						{
-							SENC_SpatialReference* sred = *iterLi;
-							int referencedID = sred->reference;
-
-							for (auto iterCurLcl = curListCurveLink->begin(); iterCurLcl != curListCurveLink->end(); iterCurLcl++)
+							if (id == referencedID)
 							{
-								auto curve = *iterCurLcl;
-
-								int id = curve.GetCurve()->m_id & 0x0000FFFF;
-
-								if (id == referencedID)
-								{
-									lineInstruction->m_listCurveLink.push_back(curve);
-									break;
-								}
+								lineInstruction->m_listCurveLink.push_back(curve);
+								break;
 							}
 						}
 					}
-					curListCurveLink = &lineInstruction->m_listCurveLink;
 				}
-				else if (fr->m_geometry->type == 3)
-				{
-					auto surface = (SSurface*)fr->m_geometry;
+				curListCurveLink = &lineInstruction->m_listCurveLink;
+			}
+			else if (fr->m_geometry->type == 3)
+			{
+				auto surface = (SSurface*)fr->m_geometry;
 
-					curListCurveLink = &surface->m_listCurveLink;
+				curListCurveLink = &surface->m_listCurveLink;
+			}
+			else if (fr->m_geometry->type == 2)
+			{
+				auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
+
+				curListCurveLink = &compositeCurve->m_listCurveLink;
+			}
+
+			for (auto m = curListCurveLink->begin(); m != curListCurveLink->end(); m++)
+			{
+				auto cw = m;
+				auto curve = cw->GetCurve();
+				int id = curve->m_id & 0x0000FFFF;
+
+				auto iterExist = lineSuppressionMap.find(id);
+
+				if (iterExist == lineSuppressionMap.end() && !cw->GetMasking())
+				{
+					lineSuppressionMap.insert(id);
+					cw->SetIsDuplicated(false);
 				}
-				else if (fr->m_geometry->type == 2)
+				else if (cw->GetMasking())
 				{
-					auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
-
-					curListCurveLink = &compositeCurve->m_listCurveLink;
+					cw->SetIsDuplicated(true);
 				}
-
-				for (auto m = curListCurveLink->begin(); m != curListCurveLink->end(); m++)
+				else
 				{
-					auto cw = m;
-					auto curve = cw->GetCurve();
-					int id = curve->m_id & 0x0000FFFF;
-
-					auto iterExist = lineSuppressionMap.find(id);
-
-					if (iterExist == lineSuppressionMap.end() && !cw->GetMasking())
-					{
-						lineSuppressionMap.insert(id);
-						cw->SetIsDuplicated(false);
-					}
-					else if (cw->GetMasking())
-					{
-						cw->SetIsDuplicated(true);
-					}
-					else
-					{
-						cw->SetIsDuplicated(true);
-					}
+					cw->SetIsDuplicated(true);
 				}
 			}
 		}
@@ -2396,11 +2153,6 @@ int LayerManager::CheckFileType(CString path)
 	return ret;
 }
 
-bool LayerManager::IsOn(Layer* layer)
-{
-	return layer->IsOn();
-}
-
 struct ROUTE_FOR_PROCESSING
 {
 	int LENGTH;
@@ -2445,7 +2197,7 @@ std::wstring LayerManager::GetObjectAttributeString(S101Cell* cell, F_ATTR* f_at
 		{
 			CodeWithNumericCode* nc = atcsitor->second;
 			std::wstring ts(nc->m_code);
-//			nc->m_code.ReleaseBuffer();
+			//			nc->m_code.ReleaseBuffer();
 			auto ai = fc->GetSimpleAttribute(ts);
 			if (ai != nullptr)
 			{

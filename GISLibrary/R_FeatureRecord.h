@@ -40,17 +40,12 @@ public:
 
 	int m_scaleMin = 0;
 	int m_scaleMax = 0;
-	int m_bShownAllScale = 0;
 
 	int m_displayPriority = 0;
-	int m_viewingGroup = 0;
-	int m_displayCategory = 0;
-	int m_radarOver = 0;
 	bool m_hasTextPlacement = false;
+
 	//	[Text Placement ]
 	float* m_textBearing = nullptr;
-
-	double m_depth;
 
 	/*
 	0: none
@@ -60,7 +55,6 @@ public:
 	*/
 	int m_alertIndicationType = 0;
 
-	std::list<R_PointRecord*> m_pointList;
 	std::list<OrientedCurveRecord> m_curveList;
 
 public:
@@ -79,7 +73,6 @@ public:
 	void CreateCS(S101Cell *cell, CString csName, bool bSENC);
 	MBR GetMBR();
 	int GetRCID();
-	void GetXYPointOfTheVisiblePoints(double &x, double &y);
 	int GetAttributeIndex(ATTR* value);
 	int GetAssociationCount();
 	int GetFeatureAssociationCount();

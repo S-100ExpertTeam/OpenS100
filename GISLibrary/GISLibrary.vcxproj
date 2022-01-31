@@ -243,7 +243,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ATTR.cpp" />
-    <ClCompile Include="BasicFile.cpp" />
     <ClCompile Include="C3IL.cpp" />
     <ClCompile Include="CatalogItem.cpp" />
     <ClCompile Include="CodeWithNumericCode.cpp" />
@@ -396,7 +395,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ATTR.h" />
-    <ClInclude Include="BasicFile.h" />
     <ClInclude Include="C3IL.h" />
     <ClInclude Include="CatalogItem.h" />
     <ClInclude Include="CodeWithNumericCode.h" />

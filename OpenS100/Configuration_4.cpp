@@ -7,8 +7,10 @@
 #include "ConfigrationDlg.h"
 #include "DialogDockLayerManager.h"
 
-#include "..\\GISLibrary\\LayerManager.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../GISLibrary/LayerManager.h"
+#include "../GISLibrary/GISLibrary.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 // Configuration_4 dialog box
 IMPLEMENT_DYNAMIC(CConfiguration_4, CDialogEx)
@@ -55,7 +57,7 @@ BOOL CConfiguration_4::OnInitDialog()
 			return false;
 		}
 
-		auto pc = LayerManager::pPortrayalCatalogues->at(0);
+		auto pc = gisLib->GetPC();
 		if (pc == nullptr)
 		{
 			return false;

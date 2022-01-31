@@ -1,8 +1,10 @@
 #pragma once
+
 #include <list>
 
 class PortrayalCatalogue;
 class SENC_Instruction;
+
 class DrawingSet
 {
 public:

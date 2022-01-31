@@ -240,9 +240,6 @@
     <ClCompile Include="S100SpatialObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BasicFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OrientedCurveRecord.cpp">
       <Filter>S101\Record</Filter>
     </ClCompile>
@@ -690,9 +687,6 @@
       <Filter>S101\Record</Filter>
     </ClInclude>
     <ClInclude Include="S100SpatialObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OrientedCurveRecord.h">

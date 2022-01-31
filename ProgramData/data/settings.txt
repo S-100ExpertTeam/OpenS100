@@ -18,7 +18,7 @@ SHOW_NOBJNM	true
 SHOW_LIST_ABBREVIATION	false
 WGS84_TEXT_TYPE	false
 SOUNDING	true
-SymbolizedAreaBoundary	false
+SymbolizedAreaBoundary	true
 SeabedType	false
 TEXTOUT	true
 TWO_SHADES	false

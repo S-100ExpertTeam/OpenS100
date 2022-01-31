@@ -1,10 +1,12 @@
 #pragma once
+
 #include "SGeometry.h"
 #include "SCurveHasOrient.h"
 
 class Scaler;
 class GeoPoint;
 class MBR;
+
 class SSurface : public SGeometry
 {
 public:
@@ -18,6 +20,7 @@ public:
 	int m_numParts = 0;
 	int	m_numPoints = 0;
 	int* m_pParts = nullptr;
+
 	GeoPoint* m_pPoints = nullptr;
 	GeoPoint* m_centerPoint = nullptr;
 	
