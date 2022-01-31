@@ -1,4 +1,4 @@
-// GeoMetryLibrary.cpp : 해당 DLL의 초기화 루틴을 정의합니다.
+// GeoMetryLibrary.cpp : Defines the initialization routine for that DLL.
 //
 #include "stdafx.h"
 #include "GeoMetryLibrary.h"
@@ -8,38 +8,39 @@
 #endif
 
 //
-//TODO: 이 DLL이 MFC DLL에 대해 동적으로 링크되어 있는 경우
-//		MFC로 호출되는 이 DLL에서 내보내지는 모든 함수의
-//		시작 부분에 AFX_MANAGE_STATE 매크로가
-//		들어 있어야 합니다.
+//TODO: If this DLL is dynamically linked against an MFC DLL, 
+// you must include the AFX_MANAGE_STATE macro 
+// at the beginning of every function exported 
+// from this DLL that is called into MFC.
 //
-//		예:
+//		Example:
 //
 //		extern "C" BOOL PASCAL EXPORT ExportedFunction()
 //		{
 //			AFX_MANAGE_STATE(AfxGetStaticModuleState());
-//			// 일반적인 함수 본문은 여기에 옵니다.
+//			// A generic function body comes here.
 //		}
 //
-//		이 매크로는 MFC로 호출하기 전에
-//		각 함수에 반드시 들어 있어야 합니다.
-//		즉, 매크로는 함수의 첫 번째 문이어야 하며 
-//		개체 변수의 생성자가 MFC DLL로
-//		호출할 수 있으므로 개체 변수가 선언되기 전에
-//		나와야 합니다.
+//		This macro must be included in each function 
+//		before calling it into MFC.
+//		In other words, 
+//		the macro must be the first statement in the function 
+//		and must appear before the object variable is declared, 
+//		as the object variable's constructor can be called 
+//		into the MFC DLL.
 //
-//		자세한 내용은
-//		MFC Technical Note 33 및 58을 참조하십시오.
+//		For more information
+//		See MFC Technical Notes 33 and 58.
 //
 
 // CGeoMetryLibraryApp
 
-// CGeoMetryLibraryApp 생성
+// CGeoMetryLibraryApp constructor
 
 CGeoMetryLibraryApp::CGeoMetryLibraryApp()
 {
-	// TODO: 여기에 생성 코드를 추가합니다.
-	// InitInstance에 모든 중요한 초기화 작업을 배치합니다.
+	// TODO: Add your generation code here.
+	// Place all important initialization tasks in InitInstance.
 }
 
 CGeoMetryLibraryApp::~CGeoMetryLibraryApp() 
