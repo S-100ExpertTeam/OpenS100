@@ -1,63 +1,66 @@
 ﻿========================================================================
-    MFC 라이브러리 : GeoMetryLibrary 프로젝트 개요
+    MFC Library: GeoMetryLibrary Project Overview
 ========================================================================
 
+The Application Wizard has created this GeoMetry Library DLL. 
+This DLL not only demonstrates the basic usage of MFC, 
+but also provides the basic structure for writing a DLL.
 
-응용 프로그램 마법사에서 이 GeoMetryLibrary DLL을 만들었습니다.  이 DLL은
-MFC의 기본 사용법을 보여 줄 뿐만 아니라 DLL을 작성하기 위한 기본 구조를 제공합니다.
-
-이 파일에는 GeoMetryLibrary DLL을 구성하는 각 파일에 대한
-요약 설명이 포함되어 있습니다.
+This file contains a summary description of each file 
+that makes up the GeoMetryLibrary DLL.
 
 GeoMetryLibrary.vcxproj
-    응용 프로그램 마법사를 사용하여 생성한 VC++ 프로젝트의 기본 프로젝트 파일입니다.
-    파일을 생성한 Visual C++ 버전에 대한 정보와 응용 프로그램 마법사를 사용하여 선택한 플랫폼,
-    구성 및 프로젝트 기능에 대한 정보가 포함되어 있습니다.
+    This is the main project file for VC++ projects created using the AppWizard.
+    It contains information about the version of Visual C++ that generated the file, 
+    as well as information about the platform, configuration, 
+    and project capabilities selected using the AppWizard.
 
 GeoMetryLibrary.vcxproj.filters
-    응용 프로그램 마법사를 사용하여 생성된 VC++ 프로젝트의 필터 파일입니다. 
-    이 파일에는 프로젝트의 파일과 필터 간의 연결 정보가 들어 있습니다.
-    이러한 연결은 특정 노드에서 유사한 확장명으로 그룹화된 파일을 표시하기 위해 IDE에서
-    사용됩니다. 예를 들어 ".cpp" 파일은 "소스 파일" 필터와 연결되어 있습니다.
+    A filter file for a VC++ project created using the AppWizard.
+    This file contains connection information between the files 
+    in the project and the filter.
+    These associations are used by the IDE to display files grouped by 
+    similar extensions on a particular node. For example, 
+    a ".cpp" file is associated with a "source file" filter.
 
 GeoMetryLibrary.h
-    해당 DLL의 기본 헤더 파일이며,  CGeoMetryLibraryApp
-    클래스가 선언되어 있습니다.
+    This is the main header file of the DLL, 
+    and the CGeoMetryLibraryApp class is declared here.
 
 GeoMetryLibrary.cpp
-    기본 DLL 소스 파일입니다.  CGeoMetryLibraryApp 클래스가 포함되어 있습니다.
+    This is the main DLL source file. Contains the CGeoMetryLibraryApp class.
 
 GeoMetryLibrary.rc
-    프로그램에서 사용하는 모든 Microsoft Windows 리소스의 목록입니다.
-    여기에는 RES 하위 디렉터리에 저장된 아이콘, 비트맵 및 커서가
-    포함됩니다.  이 파일은 Microsoft Visual C++에서
-    직접 편집할 수 있습니다.
+    A list of all Microsoft Windows resources used by the program.
+    This includes icons, bitmaps, and cursors stored in the RES subdirectory.
+    This file can be edited directly in Microsoft Visual C++.
 
 res\GeoMetryLibrary.rc2
-    이 파일에는 Microsoft Visual C++ 이외의 다른 도구에서 편집한 리소스가
-    포함되어 있습니다.  리소스 편집기로 편집할 수 없는 모든 리소스는
-    이 파일에 넣어야 합니다.
+    This file contains resources edited by tools other than Microsoft Visual C++.
+    Any resources that cannot be edited with the resource editor 
+    should be put in this file.
 
 GeoMetryLibrary.def
-    이 파일에는 Microsoft Windows에서 실행되기 위해 제공해야 하는
-    DLL에 대한 정보가 포함되어 있으며,  DLL의 이름 및 설명과 같은
-    매개 변수가 정의되어 있습니다.  또한 DLL에서 함수도 내보냅니다.
+    This file contains information about the DLL that must be provided 
+    in order to run on Microsoft Windows, and it defines parameters 
+    such as the DLL's name and description. 
+    It also exports functions from the DLL.
 
 /////////////////////////////////////////////////////////////////////////////
-기타 표준 파일:
+Other standard files:
 
 StdAfx.h, StdAfx.cpp
-    이 파일은 미리 컴파일된 헤더(PCH) 파일 GeoMetryLibrary.pch와
-    미리 컴파일된 형식(PCT) 파일 StdAfx.obj를 빌드하는 데 사용됩니다.
+    This file is used to build the precompiled header (PCH) file GeoMetryLibrary.pch 
+    and the precompiled format (PCT) file StdAfx.obj.
 
 Resource.h
-    새 리소스 ID를 정의하는 표준 헤더 파일입니다.
-    Microsoft Visual C++에서 이 파일을 읽고 업데이트합니다.
+    A standard header file that defines a new resource ID.
+    Microsoft Visual C++ reads and updates this file.
 
 /////////////////////////////////////////////////////////////////////////////
-기타 참고:
+Other notes:
 
-응용 프로그램 마법사에서 사용하는 "TODO:" 주석은 사용자가 추가하거나 사용자 지정해야 하는
-소스 코드 부분을 나타냅니다.
+The "TODO:" comments used by AppWizard indicate portions of source code 
+that you must add or customize.
 
 /////////////////////////////////////////////////////////////////////////////
