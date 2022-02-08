@@ -597,10 +597,10 @@ BOOL S101Cell::MakeFullSpatialData()
 	ClearCurveMap();
 
 	POSITION spasPos = NULL;
-	R_FeatureRecord *fr;
+	R_FeatureRecord* fr = nullptr;
 
 	POSITION pos = m_feaMap.GetStartPosition();
-	__int64 iKey;
+	__int64 iKey = 0;
 
 	while (pos)
 	{
@@ -610,31 +610,22 @@ BOOL S101Cell::MakeFullSpatialData()
 			continue;
 		}
 
-		for (auto itorParent = fr->m_spas.begin(); itorParent != fr->m_spas.end(); itorParent++)
+		auto rcnm = fr->GetSPASRCNM();
+		if (rcnm == 110)
 		{
-			F_SPAS *spasParent = *itorParent;
-
-			for (auto itor = spasParent->m_arr.begin(); itor != spasParent->m_arr.end(); itor++)
-			{
-				SPAS* spas = *itor;
-
-				if (spas->m_name.RCNM == 110)
-				{
-					MakePointData(fr);
-				}
-				else if (spas->m_name.RCNM == 115)
-				{
-					MakeSoundingData(fr);
-				}
-				else if (spas->m_name.RCNM == 120 || spas->m_name.RCNM == 125)
-				{
-					MakeLineData(fr);
-				}
-				else if (spas->m_name.RCNM == 130)
-				{
-					MakeAreaData(fr);
-				}
-			}
+			MakePointData(fr);
+		}
+		else if (rcnm == 115)
+		{
+			MakeSoundingData(fr);
+		}
+		else if (rcnm == 120 || rcnm == 125)
+		{
+			MakeLineData(fr);
+		}
+		else if (rcnm == 130)
+		{
+			MakeAreaData(fr);
 		}
 	}
 
@@ -664,15 +655,10 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 			{
 				if (r->m_c2it)
 				{
-					GeoPoint geoArr;
-					GetFullSpatialData(r, geoArr);
-
 					fe->m_geometry = new SPoint();
 					SPoint* geo = (SPoint*)fe->m_geometry;
-
-					geo->SetPoint(geoArr.x, geoArr.y);
-
-					geo->m_mbr.CalcMBR(geoArr.x, geoArr.y);
+					GetFullSpatialData(r, geo);
+					geo->m_mbr.CalcMBR(geo->m_point.x, geo->m_point.y);
 				}
 				else if (r->m_c3it)
 				{
@@ -777,8 +763,6 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 
 	__int64 iKey = 0;
 
-	CArray<GeoPoint> geoArr;
-
 	if (fe->m_geometry)
 	{
 		delete fe->m_geometry;
@@ -818,8 +802,6 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 	}
 
 	scc->CreateD2Geometry(gisLib->D2.pD2Factory);
-
-	geoArr.RemoveAll();
 
 	return TRUE;
 }
@@ -1007,24 +989,26 @@ BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, GeoPointZ &geo)
 	return TRUE;
 }
 
-BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, GeoPoint &geo)
+BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, SPoint* point)
 {
 	double x = r->m_c2it->m_xcoo;
 	double y = r->m_c2it->m_ycoo;
 
 	if (m_dsgir.m_dssi.m_cmfy && m_dsgir.m_dssi.m_cmfx)
 	{
-		geo.SetPoint(
+		point->SetPoint(
 			x / (double)m_dsgir.m_dssi.m_cmfx,
 			y / (double)m_dsgir.m_dssi.m_cmfy);
 	}
 	else
 	{
-		geo.SetPoint(
+		point->SetPoint(
 			x / 10000000.0,
 			y / 10000000.0);
 	}
-	projection(geo.x, geo.y);
+
+	projection(point->m_point.x, point->m_point.y);
+
 	return TRUE;
 }
 

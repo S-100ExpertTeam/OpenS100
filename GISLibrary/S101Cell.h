@@ -112,7 +112,7 @@ public:
 	BOOL MakeLineData(R_FeatureRecord* fe);
 	BOOL MakeAreaData(R_FeatureRecord* fe);
 
-	BOOL GetFullSpatialData(R_PointRecord *r, GeoPoint &geo);
+	BOOL GetFullSpatialData(R_PointRecord *r, SPoint* point);
 	BOOL GetFullSpatialData(R_PointRecord *r, GeoPointZ &geo);
 	BOOL GetFullSpatialData(R_MultiPointRecord *r, CArray<GeoPointZ> &geoArr);
 	BOOL GetFullSpatialData(R_CurveRecord *r, CArray<GeoPoint> &geoArr, int ORNT = 1);

@@ -878,7 +878,6 @@ void LayerManager::DrawLayerList(HDC &hdc, int offset)
 	rt->EndDraw();
 }
 
-// i : drawing priority
 void LayerManager::AddSymbolDrawing(
 	int drawingPrioriy,
 	HDC& hdc,
@@ -1260,11 +1259,15 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 	for (auto i = m_listLayer.begin(); i != m_listLayer.end(); i++)
 	{
 		auto layer = *i;
-		if (layer->IsS100Layer())
+
+		if (layer->IsOn())
 		{
-			if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+			if (layer->IsS100Layer())
 			{
-				DrawS100Layer(hdc, offset, (S100Layer*)layer);
+				if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+				{
+					DrawS100Layer(hdc, offset, (S100Layer*)layer);
+				}
 			}
 		}
 	}
@@ -1288,122 +1291,117 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 
 	DrawingSet drawingSet;
 
-	if (true == layer->IsOn())
+	if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
 	{
-		if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
+		numeric_number_of_text_placement = 0;
+		auto ii = cell->m_dsgir.m_ftcs->m_arrFindForCode.find(L"TextPlacement");
+		if (ii != cell->m_dsgir.m_ftcs->m_arrFindForCode.end())
 		{
-			numeric_number_of_text_placement = 0;
-			auto ii = cell->m_dsgir.m_ftcs->m_arrFindForCode.find(L"TextPlacement");
-			if (ii != cell->m_dsgir.m_ftcs->m_arrFindForCode.end())
-			{
-				numeric_number_of_text_placement = ii->second->m_nmcd;
-			}
-
-			std::list<SENC_Instruction*> itList;
-			for (int i = 0; i < 100; i++)
-			{
-				/*
-				* Type Of Instruction
-				* 0 : Null Instruction
-				* 1 : Point Instruction
-				* 2 : Line Instruction
-				* 3 : Area Instruction
-				* 4 : Text Instruction
-				*/
-				int cnt = 0;
-
-				// Augmented Ray
-				cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, scaler, itList);
-				if (itList.size() > 0)
-				{
-					auto instructionList = drawingSet.GetAugmentedRayList(i);
-					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-					cnt += (int)itList.size();
-				}
-
-				// Augmented Path
-				cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, scaler, itList);
-				if (itList.size() > 0)
-				{
-					auto instructionList = drawingSet.GetAugmentedPathList(i);
-					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-					cnt += (int)itList.size();
-				}
-
-				// Point
-				cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, scaler, itList);
-				if (itList.size() > 0)
-				{
-					auto instructionList = drawingSet.GetPointList(i);
-					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-					cnt += (int)itList.size();
-				}
-
-				// Line
-				cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, scaler, itList);
-				if (itList.size() > 0)
-				{
-					auto instructionList = drawingSet.GetLineList(i);
-					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-					cnt += (int)itList.size();
-				}
-
-				// Area
-				cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, scaler, itList);
-				if (itList.size() > 0)
-				{
-					auto instructionList = drawingSet.GetAreaList(i);
-					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-					cnt += (int)itList.size();
-				}
-
-				// Text
-				cell->pcManager->displayListSENC->GetDrawingInstructionByCondition(i, 5, scaler, itList, numeric_number_of_text_placement);
-				if (itList.size() > 0)
-				{
-					auto instructionList = drawingSet.GetTextList(i);
-					instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-					cnt += (int)itList.size();
-				}
-
-				if (cnt)
-				{
-					drawingPriority.insert(i);
-				}
-			}
-
-			itList.clear();
-
-			// Line Suppression
-			SuppressS101Lines(drawingPriority, &drawingSet);
-
-			std::list<D2D1_POINT_2F> points;
-
-			auto rt = gisLib->D2.pRT;
-			rt->BindDC(hDC, scaler->GetScreenRect());
-			rt->BeginDraw();
-			gisLib->D2.pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-			gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-
-			pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
-			pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
-
-			for (auto dp = drawingPriority.begin(); dp != drawingPriority.end(); dp++)
-			{
-				AddSymbolDrawing(*dp, hDC, offset,
-					drawingSet.GetAugmentedRayList(),
-					drawingSet.GetAugmentedPathList(),
-					drawingSet.GetPointList(),
-					drawingSet.GetLineList(),
-					drawingSet.GetAreaList(),
-					drawingSet.GetTextList(),
-					pc);
-			}
-
-			pc->GetS100PCManager()->DeleteBitmapBrush();
-
-			rt->EndDraw();
+			numeric_number_of_text_placement = ii->second->m_nmcd;
 		}
+
+		std::list<SENC_Instruction*> itList;
+		for (int i = 0; i < 100; i++)
+		{
+			/*
+			* Type Of Instruction
+			* 0 : Null Instruction
+			* 1 : Point Instruction
+			* 2 : Line Instruction
+			* 3 : Area Instruction
+			* 4 : Text Instruction
+			*/
+			int cnt = 0;
+
+			// Augmented Ray
+			cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, scaler, itList);
+			if (itList.size() > 0)
+			{
+				auto instructionList = drawingSet.GetAugmentedRayList(i);
+				instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+				cnt += (int)itList.size();
+			}
+
+			// Augmented Path
+			cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, scaler, itList);
+			if (itList.size() > 0)
+			{
+				auto instructionList = drawingSet.GetAugmentedPathList(i);
+				instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+				cnt += (int)itList.size();
+			}
+
+			// Point
+			cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, scaler, itList);
+			if (itList.size() > 0)
+			{
+				auto instructionList = drawingSet.GetPointList(i);
+				instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+				cnt += (int)itList.size();
+			}
+
+			// Line
+			cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, scaler, itList);
+			if (itList.size() > 0)
+			{
+				auto instructionList = drawingSet.GetLineList(i);
+				instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+				cnt += (int)itList.size();
+			}
+
+			// Area
+			cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, scaler, itList);
+			if (itList.size() > 0)
+			{
+				auto instructionList = drawingSet.GetAreaList(i);
+				instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+				cnt += (int)itList.size();
+			}
+
+			// Text
+			cell->pcManager->displayListSENC->GetDrawingInstructionByCondition(i, 5, scaler, itList, numeric_number_of_text_placement);
+			if (itList.size() > 0)
+			{
+				auto instructionList = drawingSet.GetTextList(i);
+				instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+				cnt += (int)itList.size();
+			}
+
+			if (cnt)
+			{
+				drawingPriority.insert(i);
+			}
+		}
+
+		itList.clear();
+
+		// Line Suppression
+		SuppressS101Lines(drawingPriority, &drawingSet);
+
+		auto rt = gisLib->D2.pRT;
+		rt->BindDC(hDC, scaler->GetScreenRect());
+		rt->BeginDraw();
+		gisLib->D2.pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+		gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+
+		pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
+		pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
+
+		for (auto dp = drawingPriority.begin(); dp != drawingPriority.end(); dp++)
+		{
+			AddSymbolDrawing(*dp, hDC, offset,
+				drawingSet.GetAugmentedRayList(),
+				drawingSet.GetAugmentedPathList(),
+				drawingSet.GetPointList(),
+				drawingSet.GetLineList(),
+				drawingSet.GetAreaList(),
+				drawingSet.GetTextList(),
+				pc);
+		}
+
+		pc->GetS100PCManager()->DeleteBitmapBrush();
+
+		rt->EndDraw();
 	}
 }
 
@@ -1946,7 +1944,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 		{
 			auto lineInstruction = (SENC_LineInstruction*)*j;
 
-			auto fr = lineInstruction->fr;
+			auto featureRecord = lineInstruction->fr;
 
 			std::list<SCurveHasOrient>* curListCurveLink = nullptr;
 
@@ -1954,15 +1952,15 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 			{
 				if (lineInstruction->m_listCurveLink.size() == 0)
 				{
-					if (fr->m_geometry->type == 3)
+					if (featureRecord->m_geometry->type == 3)
 					{
-						auto surface = (SSurface*)fr->m_geometry;
+						auto surface = (SSurface*)featureRecord->m_geometry;
 
 						curListCurveLink = &surface->m_listCurveLink;
 					}
-					else if (fr->m_geometry->type == 2)
+					else if (featureRecord->m_geometry->type == 2)
 					{
-						auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
+						auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
 
 						curListCurveLink = &compositeCurve->m_listCurveLink;
 					}
@@ -1988,15 +1986,15 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 				}
 				curListCurveLink = &lineInstruction->m_listCurveLink;
 			}
-			else if (fr->m_geometry->type == 3)
+			else if (featureRecord->m_geometry->type == 3)
 			{
-				auto surface = (SSurface*)fr->m_geometry;
+				auto surface = (SSurface*)featureRecord->m_geometry;
 
 				curListCurveLink = &surface->m_listCurveLink;
 			}
-			else if (fr->m_geometry->type == 2)
+			else if (featureRecord->m_geometry->type == 2)
 			{
-				auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
+				auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
 
 				curListCurveLink = &compositeCurve->m_listCurveLink;
 			}
