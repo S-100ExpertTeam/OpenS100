@@ -8,6 +8,7 @@ class SSurface;
 class Symbol;
 class R_FeatureRecord;
 class SENC_SymbolFill;
+
 class SGeometry : public Geometry
 {
 public:
@@ -26,7 +27,7 @@ public:
 	// 4 : Multi Point (Sounding)
 	int type;
 
-	R_FeatureRecord* m_pFeature = nullptr;
+	//R_FeatureRecord* m_pFeature = nullptr;
 
 public:
 	// 1 : Point 

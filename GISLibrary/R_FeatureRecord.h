@@ -17,7 +17,9 @@ class F_INAS;
 class F_SPAS;
 class F_FASC;
 class F_MASK;
+
 struct ATTR;
+
 // Feature Type Record
 class R_FeatureRecord : Record
 {
@@ -78,6 +80,11 @@ public:
 	int GetFeatureAssociationCount();
 	int GetInformationAssociationCount();
 	int GetNumericCode();
+
+	// 0 : No geometry
+	// 110 ~ 130 : normal
+	// -1 : error
+	int GetSPASRCNM();
 
 	SGeometry* GetGeometry();
 };

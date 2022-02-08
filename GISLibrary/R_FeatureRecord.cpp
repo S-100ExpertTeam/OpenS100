@@ -249,6 +249,36 @@ int R_FeatureRecord::GetNumericCode()
 	return m_frid.m_nftc;
 }
 
+int R_FeatureRecord::GetSPASRCNM()
+{
+	if (m_spas.size() == 0)
+	{
+		return 0;
+	}
+
+	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
+	{
+		F_SPAS *spasParent = *i;
+
+		for (auto j = spasParent->m_arr.begin(); j != spasParent->m_arr.end(); j++)
+		{
+			SPAS* spas = *j;
+
+			auto rcnm = spas->m_name.RCNM;
+			if (rcnm == 110 || rcnm == 115 || rcnm == 120 || rcnm == 125 || rcnm == 130)
+			{
+				return rcnm;
+			}
+			else
+			{
+				return -1;
+			}
+		}
+	}
+
+	return -1;
+}
+
 SGeometry* R_FeatureRecord::GetGeometry()
 {
 	return m_geometry;
