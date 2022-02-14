@@ -21,163 +21,50 @@
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib" )
 
-#ifdef _DEBUG
-FILE *file_pointer;
-FILE *file_pointer2;
-#endif
-
 std::list<Result_DrawingInstruction> resultDrawingInstructions;
 
-DWORD HostGetFeatureIDs_speed = 0;
-DWORD HostFeatureGetCode_speed = 0;
-DWORD HostGetInformationTypeIDs_speed = 0;
-DWORD HostInformationTypeGetCode_speed = 0;
-DWORD HostFeatureGetSimpleAttribute_speed = 0;
-DWORD HostFeatureGetComplexAttributeCount_speed = 0;
-DWORD HostFeatureGetSpatialAssociations_speed = 0;
-DWORD HostFeatureGetAssociatedFeatureIDs_speed = 0;
-DWORD HostFeatureGetAssociatedInformationIDs_speed = 0;
-DWORD HostGetSpatialIDs_speed = 0;
-DWORD HostGetSpatial_speed = 0;
-DWORD HostSpatialGetAssociatedInformationIDs_speed = 0;
-DWORD HostSpatialGetAssociatedFeatureIDs_speed = 0;
-DWORD HostInformationTypeGetSimpleAttribute_speed = 0;
-DWORD HostInformationTypeGetComplexAttributeCount_speed = 0;
-DWORD HostGetFeatureTypeCodes_speed = 0;
-DWORD HostGetInformationTypeCodes_speed = 0;
-DWORD HostGetSimpleAttributeTypeCodes_speed = 0;
-DWORD HostGetComplexAttributeTypeCodes_speed = 0;
-DWORD HostGetRoleTypeCodes_speed = 0;
-DWORD HostGetInformationAssociationTypeCodes_speed = 0;
-DWORD HostGetFeatureAssociationTypeCodes_speed = 0;
-DWORD HostGetFeatureTypeInfo_speed = 0;
-DWORD HostGetInformationTypeInfo_speed = 0;
-DWORD HostGetSimpleAttributeTypeInfo_speed = 0;
-DWORD HostGetComplexAttributeTypeInfo_speed = 0;
-DWORD HostSpatialRelate_speed = 0;
-DWORD HostDebuggerEntry_speed = 0;
-DWORD HostPortrayalEmit_speed = 0;
-
-// Data Access Functions
-
-static void set_unknown_attributes(const S100_FC_NamedType *named_type, std::string path, std::string attributeCode, std::vector<std::string> &values)
-{
-	// Determine if this is a mandatory attribute, and if so substitute unknown value.
-	auto attribute_bindings = named_type->attributeBinding;
-	std::list<AttributeBinding>* featureAttributeBinding = NULL;
-	size_t offset = 0;
-	size_t found;
-
-	if (!path.empty())
-		path += ";";
-
-	while ((found = path.find_first_of(';', offset)) != std::string::npos)
-	{
-		auto path_item = path.substr(offset, found - offset);
-		auto split = path_item.find(':', 0);
-		auto code = path_item.substr(0, split);
-
-		std::wstring wcode = std::wstring(code.begin(), code.end());
-		auto codeFindIter = pTheFC->GetFeatureTypesPointer().GetFeatureTypePointer().find(wcode);
-		if (codeFindIter != pTheFC->GetFeatureTypesPointer().GetFeatureTypePointer().end())
-		{
-			FeatureType* ft = &codeFindIter->second;
-			featureAttributeBinding = &ft->GetAttributeBindingPointer();
-		}
-		offset = found + 1;
-	}
-
-	for (auto attr_binding : attribute_bindings)
-	{
-		if (attr_binding.attribute.referenceCode == attributeCode && attr_binding.multiplicity.lower > 0)
-		{
-			for (unsigned i = 0; i < values.size(); i++)
-			{
-				if (values[i] == "")
-					values[i] = ProcessS101::g_unknown_attribute_value;
-			}
-		}
-	}
-}
-
-// string[] HostGetFeatureIDs()
 int HostGetFeatureIDs(lua_State *l)
 {
-#ifdef _DEBUG
-	if (fopen_s(&file_pointer, "..\\ProgramData\\LuaLog\\output.txt", "w+") == 0)
-	{
-		fclose(file_pointer);
-	}
-#endif
-
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	ls->push(hd_get_feature_ids());
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetFeatureIDs_speed += dwTotalTime1;
 	return 1;
 }
 
-// string HostFeatureGetCode(string featureID)
 int HostFeatureGetCode(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto featureID = ls->pop<std::string>();
 
 	ls->push(hd_get_feature_code(featureID));
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostFeatureGetCode_speed += dwTotalTime1;
-
 	return 1;
 }
 
-// string[] HostGetInformationTypeIDs()
 int HostGetInformationTypeIDs(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	ls->push(hd_get_information_type_ids());
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetInformationTypeIDs_speed += dwTotalTime1;
-
 	return 1;
 }
 
-// string HostInformationTypeGetCode(string informationTypeID)
 int HostInformationTypeGetCode(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto informationTypeID = ls->pop<std::string>();
 
 	ls->push(hd_get_information_type_code(informationTypeID));
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostInformationTypeGetCode_speed += dwTotalTime1;
-
 	return 1;
 }
 
-// string[] HostFeatureGetSimpleAttribute(string featureID, path path, string attributeCode)
 int HostFeatureGetSimpleAttribute(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto attributeCode = ls->pop<std::string>();
@@ -188,18 +75,11 @@ int HostFeatureGetSimpleAttribute(lua_State *l)
 
 	ls->push(values);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostFeatureGetSimpleAttribute_speed += dwTotalTime1;
-
 	return 1;
 }
 
-// integer HostFeatureGetComplexAttributeCount(string featureID, path path, string attributeCode)
 int HostFeatureGetComplexAttributeCount(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto attributeCode = ls->pop<std::string>();
@@ -210,18 +90,12 @@ int HostFeatureGetComplexAttributeCount(lua_State *l)
 
 	ls->push(count);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostFeatureGetComplexAttributeCount_speed += dwTotalTime1;
-
 	return 1;
 }
 
 // SpatialAssociation[] HostFeatureGetSpatialAssociations(string featureID)
 int HostFeatureGetSpatialAssociations(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto featureID = ls->pop<std::string>();
@@ -235,32 +109,20 @@ int HostFeatureGetSpatialAssociations(lua_State *l)
 
 	ls->push(sas_refs);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostFeatureGetSpatialAssociations_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostFeatureGetAssociatedFeatureIDs(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	assert(false); // TODO: Implement.
-
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostFeatureGetAssociatedFeatureIDs_speed += dwTotalTime1;
 
 	return 0;
 }
 
 int HostFeatureGetAssociatedInformationIDs(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto roleCode = ls->pop<std::string>();
@@ -269,25 +131,14 @@ int HostFeatureGetAssociatedInformationIDs(lua_State *l)
 
 	ls->push(hd_get_feature_associated_information_ids(featureID, associationCode, roleCode));
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostFeatureGetAssociatedInformationIDs_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostGetSpatialIDs(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	assert(false); // TODO: Implement.
-
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetSpatialIDs_speed += dwTotalTime1;
 
 	return 0;
 }
@@ -295,7 +146,6 @@ int HostGetSpatialIDs(lua_State *l)
 // Spatial HostGetSpatial(string spatialID)
 int HostGetSpatial(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto spatialID = ls->pop<std::string>();
@@ -328,17 +178,11 @@ int HostGetSpatial(lua_State *l)
 		return 0;
 	}
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetSpatial_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostSpatialGetAssociatedInformationIDs(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto roleCode = ls->pop<std::string>();
@@ -347,17 +191,11 @@ int HostSpatialGetAssociatedInformationIDs(lua_State *l)
 
 	ls->push(hd_get_spatial_associated_information_ids(spatialID, associationCode, roleCode));
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostSpatialGetAssociatedInformationIDs_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostSpatialGetAssociatedFeatureIDs(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto spatialID = ls->pop<std::string>();
@@ -369,17 +207,11 @@ int HostSpatialGetAssociatedFeatureIDs(lua_State *l)
 
 	ls->push(feature_ids);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostSpatialGetAssociatedFeatureIDs_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostInformationTypeGetSimpleAttribute(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto attributeCode = ls->pop<std::string>();
@@ -390,17 +222,11 @@ int HostInformationTypeGetSimpleAttribute(lua_State *l)
 
 	ls->push(values);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostInformationTypeGetSimpleAttribute_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostInformationTypeGetComplexAttributeCount(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto attributeCode = ls->pop<std::string>();
@@ -411,11 +237,6 @@ int HostInformationTypeGetComplexAttributeCount(lua_State *l)
 
 	ls->push(count);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostInformationTypeGetComplexAttributeCount_speed += dwTotalTime1;
-
 	return 1;
 }
 
@@ -425,7 +246,6 @@ int HostInformationTypeGetComplexAttributeCount(lua_State *l)
 
 int HostGetFeatureTypeCodes(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	/*
@@ -458,17 +278,11 @@ int HostGetFeatureTypeCodes(lua_State *l)
 
 	ls->push(ret_feature_codes);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetFeatureTypeCodes_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostGetInformationTypeCodes(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	/*
@@ -497,17 +311,11 @@ int HostGetInformationTypeCodes(lua_State *l)
 
 	ls->push(ret_information_codes);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetInformationTypeCodes_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostGetSimpleAttributeTypeCodes(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); 
 	auto ls = lua_session::get_session(l);
 
 	auto simpleattribute_types = pTheFC->GetSimpleAttributesPointer().GetSimpleAttributePointer();
@@ -523,16 +331,12 @@ int HostGetSimpleAttributeTypeCodes(lua_State *l)
 
 	ls->push(ret_simpleattribute_codes);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-	HostGetSimpleAttributeTypeCodes_speed += dwTotalTime1;
 	return 1;
 }
 
 // string[] HostGetComplexAttributeTypeCodes()
 int HostGetComplexAttributeTypeCodes(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 	/*
 
@@ -560,16 +364,11 @@ int HostGetComplexAttributeTypeCodes(lua_State *l)
 
 	ls->push(ret_complexattribute_codes);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetComplexAttributeTypeCodes_speed += dwTotalTime1;
 	return 1;
 }
 
 int HostGetRoleTypeCodes(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 	/*
 
@@ -598,17 +397,11 @@ int HostGetRoleTypeCodes(lua_State *l)
 
 	ls->push(ret_role_codes);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetRoleTypeCodes_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostGetInformationAssociationTypeCodes(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	/*
@@ -632,17 +425,11 @@ int HostGetInformationAssociationTypeCodes(lua_State *l)
 
 	ls->push(ret_information_association_codes);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetInformationAssociationTypeCodes_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostGetFeatureAssociationTypeCodes(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	/*
@@ -667,16 +454,11 @@ int HostGetFeatureAssociationTypeCodes(lua_State *l)
 
 	ls->push(ret_feature_association_codes);
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-	HostGetFeatureAssociationTypeCodes_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostGetFeatureTypeInfo(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto featureCode = ls->pop<std::string>();
@@ -684,17 +466,11 @@ int HostGetFeatureTypeInfo(lua_State *l)
 	FeatureType* ft = pTheFC->GetFeatureType(wfeatureCode);
 	ls->push(CreateFeatureType(ls, ft));
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetFeatureTypeInfo_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostGetInformationTypeInfo(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement. 
 	auto ls = lua_session::get_session(l);
 
 	auto informationCode = ls->pop<std::string>();
@@ -702,17 +478,11 @@ int HostGetInformationTypeInfo(lua_State *l)
 	auto it = pTheFC->GetInformationType(winformationCode);
 	ls->push(CreateInformationType(ls, it));
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetInformationTypeInfo_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostGetSimpleAttributeTypeInfo(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto attributeCode = ls->pop<std::string>();
@@ -720,28 +490,17 @@ int HostGetSimpleAttributeTypeInfo(lua_State *l)
 	auto attr = pTheFC->GetSimpleAttribute(wsimpleattributeCode);
 	ls->push(CreateSimpleAttribute(ls, attr));
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetSimpleAttributeTypeInfo_speed += dwTotalTime1;
-
 	return 1;
 }
 
 int HostGetComplexAttributeTypeInfo(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto attributeCode = ls->pop<std::string>();
 	std::wstring wattributeCode = std::wstring(attributeCode.begin(), attributeCode.end());
 	auto attr = pTheFC->GetComplexAttribute(wattributeCode);
 	ls->push(CreateComplexAttribute(ls, attr));
-
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostGetComplexAttributeTypeInfo_speed += dwTotalTime1;
 
 	return 1;
 }
@@ -752,15 +511,9 @@ int HostGetComplexAttributeTypeInfo(lua_State *l)
 
 int HostSpatialRelate(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	assert(false); // TODO: Implement.
-
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostSpatialRelate_speed += dwTotalTime1;
 
 	return 0;
 }
@@ -771,7 +524,6 @@ int HostSpatialRelate(lua_State *l)
 
 int HostDebuggerEntry(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto command = ls->peek<std::string>(1);
@@ -788,17 +540,11 @@ int HostDebuggerEntry(lua_State *l)
 		std::cout << '\t' << text << std::endl;
 	}
 
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-
-	HostDebuggerEntry_speed += dwTotalTime1;
-
 	return 0;
 }
 
 int HostPortrayalEmit(lua_State *l)
 {
-	DWORD dwStartTime1 = timeGetTime(); //Time measurement.
 	auto ls = lua_session::get_session(l);
 
 	auto observedParameters = ls->pop<std::string>();
@@ -815,25 +561,7 @@ int HostPortrayalEmit(lua_State *l)
 
 	resultDrawingInstructions.push_back(rdi);
 
-#ifdef _DEBUG
-	if (fopen_s(&file_pointer, "..\\ProgramData\\LuaLog\\output.txt", "a+") == 0)
-	{
-		//cout << featureID << " - "s << drawingInstructions << endl;
-		std::cout << featureID << std::endl;
-		std::cout << drawingInstructions << std::endl;
-		std::cout << observedParameters << std::endl;
-		fprintf(file_pointer, "%s | %s | %s\n", rdi.featureID.c_str(), rdi.drawingInstructions.c_str(), rdi.observedParameters.c_str());
-		// Continue processing features.
-
-		fclose(file_pointer);
-	}
-#endif
-
 	ls->push(true);
-
-	DWORD dwEndTime1 = timeGetTime();
-	DWORD dwTotalTime1 = dwEndTime1 - dwStartTime1;
-	HostPortrayalEmit_speed += dwTotalTime1;
 
 	return 1;
 }
