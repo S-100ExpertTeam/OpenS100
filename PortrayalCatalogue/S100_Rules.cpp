@@ -39,50 +39,6 @@ std::unordered_map<std::string, S100_RuleFile*> S100_Rules::GetRuleFiles()
 	return ruleFiles;
 }
 
-void S100_Rules::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode) 
-	{
-		return;
-	}
-	
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-		{
-			continue;
-		}
-			
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"ruleFile") == 0)
-		{
-			S100_RuleFile* ruleFile = new S100_RuleFile();
-			
-			MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-			MSXML2::IXMLDOMNodePtr pAttrNP;
-			pAttrNP = pAttr->getNamedItem(L"id");
-			VARIANT value;
-			pAttrNP->get_nodeValue(&value);
-			std::wstring valus(value.bstrVal);
-
-			ruleFile->GetID().assign(valus.begin(), valus.end());
-				
-			ruleFile->GetContents(pNode->childNodes);
-			ruleFiles[ruleFile->GetID()] = ruleFile; 
-		}
-		else 
-		{
-			std::wstring nodename = nodeName;
-			nodename.append(L"is another data");
-		}
-	}
-}
-
 void S100_Rules::GetContents(pugi::xml_node& node)
 {
 	if (!node)

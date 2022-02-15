@@ -492,7 +492,7 @@ void PortrayalCatalogue::GetAreaFills()
 	}
 }
 
-void PortrayalCatalogue::GetMainRuleFile()
+S100_RuleFile* PortrayalCatalogue::GetMainRuleFile()
 {
 	auto ruleFiles = rules.GetRuleFiles();
 	for (auto itor = ruleFiles.begin(); itor != ruleFiles.end(); itor++) //Add main rule.
@@ -507,6 +507,8 @@ void PortrayalCatalogue::GetMainRuleFile()
 			{
 				SetRuleType(LUA);
 			}
+
+			return rf;
 		}
 	}
 }

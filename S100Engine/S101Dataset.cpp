@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "S101Dataset.h"
-#include "Class_S100_OutputXML.h"
 #include "PointInstruction.h"
 #include "LineInstruction.h"
 #include "AreaInstruction.h"
@@ -48,12 +47,6 @@ bool S101Dataset::OpenS101SENC(CString _path)
 {
 	filePath = _path;
 	return senc.Open(_path);
-}
-
-bool S101Dataset::OpenS101OutputXML(CString _path)
-{	
-	displayList = CClass_S100_OutputXML::OpenOutputXMLbypugixml(_path);
-	return true;
 }
 
 bool S101Dataset::OpenS101(CString _path)

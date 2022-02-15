@@ -63,13 +63,7 @@
     <ClCompile Include="Circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Class_S100_OutputXML.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Class_S101_Base.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Class_S101_InputXML.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Color.cpp">
@@ -340,13 +334,7 @@
     <ClInclude Include="Circle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Class_S100_OutputXML.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Class_S101_Base.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Class_S101_InputXML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">

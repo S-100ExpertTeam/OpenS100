@@ -22,6 +22,5 @@ public:
 	S100_RuleFile* GetRuleFiles(std::string& key);
 	std::unordered_map<std::string, S100_RuleFile*> GetRuleFiles();
 
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 };

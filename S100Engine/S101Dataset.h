@@ -84,7 +84,6 @@ private:
 public:
 	bool OpenS101(CString _path);
 	bool OpenS101SENC(CString _path);
-	bool OpenS101OutputXML(CString _path);
 	CString GetFilePath();
 	void CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCManager& s100PCManager);
 	void DeleteS100DrawingUnit();

@@ -16,7 +16,6 @@ class PortrayalCatalogue;
 class SENC_Instruction;
 class DrawingSet;
 
-///////////////////////////////////////////////////
 class LayerManager
 {
 public:
@@ -39,42 +38,15 @@ public:
 	// Overlay Layer
 	MBR						mbr;
 
-	//static std::unordered_map<FeatureCatalogue*, PortrayalCatalogue*> CatalogueList; //Save the feature catalog and the portrait catalog.
-
-	////  The index of the currently selected FC/PC catalog.
-	//int SelectCatalogindex = -1;
-	//static std::vector<PortrayalCatalogue*>	*pPortrayalCatalogues;
-	//static std::vector<FeatureCatalogue*>			*pS100Catalogs;
-	//static std::unordered_map<std::wstring, PortrayalCatalogue*> *hash_PC;
-	//static std::unordered_map<std::wstring, FeatureCatalogue*> *hash_FC;
-
-	CString selectedFCPath;
-	CString selectedPCPath;
-
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
-	CString ExPCPath;
-	CString ExFCPath;
-
-private:
-
-	ID2D1PathGeometry* m_routeDetection_DangerHighlight_Area = nullptr;
-	std::vector<ID2D1PathGeometry*> m_routeDetection_DangerHighlight_Lines;
-	std::vector<D2D1_RECT_F> m_routeDetection_DangerHighlight_Points;
-
-	ID2D1PathGeometry* m_routeDetection_InformationHighlight_Area = nullptr;
-	std::vector<ID2D1PathGeometry*> m_routeDetection_InformationHighlight_Lines;
-	std::vector<D2D1_RECT_F> m_routeDetection_InformationHighlight_Points;
 
 public:
 	void SetViewMBR(RECT r);
 
-	void LoadFeatureCatalogs();
-
 	bool AddBackgroundLayer(CString _filepath);
 	bool AddLayer(CString _filepath);
 	int isUpdate(CString filePath);
-	bool AddLayer(CString _filepath, FeatureCatalogue* fc, PortrayalCatalogue* pc);
 	bool AddLayer(Layer* layer);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
 	S101Cell* FindBaseLayer(S101Cell* cell);
@@ -128,37 +100,11 @@ public:
 	void DeleteAllLayer();
 	void ReMBR();
 
-	// 0 : const
-	// 1 : dynamic
-
-	// FOR Text Placement
-	void ShowTextPlacement(BOOL bShow);
-
-	// callback function that receives an index of FC/PC.
-	int(*GetSelectedCatalogIndex)(CString filepath) = nullptr;
-
-	//static FeatureCatalogue* AddS100FC(std::wstring path);
-	//static PortrayalCatalogue* AddS100PC(FeatureCatalogue* fc, std::wstring path);
-	//static PortrayalCatalogue* AddS100PC(FeatureCatalogue* fc, std::wstring path, std::wstring currentName);
-
-	//FeatureCatalogue* GetCatalog(int index);
-	//FeatureCatalogue* GetCatalogFromName(CString value);
-
-	//PortrayalCatalogue* GetPortrayalCatalogue(int index);
-	//PortrayalCatalogue* GetPortrayalCatalogueFromName(CString value);
-
 	int GetLayerCount();
 
 	void ChangeS100ColorPalette(std::wstring paletteName);
 
 	Scaler* GetScaler();
-
-	//static FeatureCatalogue* GetFC(int productNumber);
-	//static PortrayalCatalogue* GetPC(int productNumber);
-
-	//static FeatureCatalogue* GetFC(std::wstring fcName);
-	//static PortrayalCatalogue* GetPC(std::wstring pcName);
-
 
 	void SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet);
 
@@ -169,12 +115,4 @@ public:
 	// 4 : S-100 H5
 	static int CheckFileType(CString path, int update);
 	static int CheckFileType(CString path);
-
-	std::vector<S100Layer*> GetS100Layers(int productNumber);
-
-	// S-124 Pick Report
-	int clickX, clickY;
-
-	std::wstring GetObjectAttributeString(S101Cell* cell, F_ATTR* f_attr);
-	///////////////////////////////////////////////////
 };

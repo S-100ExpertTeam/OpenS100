@@ -1,7 +1,6 @@
 #pragma once
 #include "S101Dataset.h"
 #include "Class_S101_Base.h"
-#include "Class_S101_InputXML.h"
 
 #include <map>
 #include <vector>
@@ -24,7 +23,6 @@ public:
 public:
 	bool OpenS101(CString _path);
 	bool OpenS101SENC(CString _path);
-	bool OpenS101OutputXML(CString _path);
 	void GeneratePathDatasetMap();
 	S101Dataset* GetS101Dataset(CString path);
 	void CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCManager& s100PCManager);

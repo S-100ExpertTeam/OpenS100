@@ -240,9 +240,7 @@
     <ClCompile Include="BackgroundLayer.cpp" />
     <ClCompile Include="BackgroundSHPFile.cpp" />
     <ClCompile Include="Circle.cpp" />
-    <ClCompile Include="Class_S100_OutputXML.cpp" />
     <ClCompile Include="Class_S101_Base.cpp" />
-    <ClCompile Include="Class_S101_InputXML.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Colors.cpp" />
     <ClCompile Include="CompositeLineStyle.cpp" />
@@ -338,9 +336,7 @@
     <ClInclude Include="BackgroundLayer.h" />
     <ClInclude Include="BackgroundSHPFile.h" />
     <ClInclude Include="Circle.h" />
-    <ClInclude Include="Class_S100_OutputXML.h" />
     <ClInclude Include="Class_S101_Base.h" />
-    <ClInclude Include="Class_S101_InputXML.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="CompositeLineStyle.h" />

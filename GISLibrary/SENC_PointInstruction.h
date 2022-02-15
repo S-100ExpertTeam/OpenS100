@@ -1,4 +1,5 @@
 #pragma once
+
 #include "SENC_Instruction.h"
 #include "SENC_Symbol.h"
 

@@ -90,85 +90,10 @@ LayerManager::~LayerManager()
 		delete* itor;
 		*itor = nullptr;
 	}
+
 	m_listLayer.clear();
-
-	//if (pPortrayalCatalogues)
-	//{
-	//	for (auto itor = pPortrayalCatalogues->begin(); itor != pPortrayalCatalogues->end(); itor++)
-	//	{
-	//		delete* itor;
-	//	}
-	//	delete pPortrayalCatalogues;
-	//	pPortrayalCatalogues = NULL;
-	//}
-
-	//if (pS100Catalogs)
-	//{
-	//	for (auto itor = pS100Catalogs->begin(); itor != pS100Catalogs->end(); itor++)
-	//	{
-	//		delete* itor;
-	//	}
-	//	delete pS100Catalogs;
-	//	pS100Catalogs = NULL;
-	//}
-
-	//if (hash_FC)
-	//{
-	//	delete hash_FC;
-	//	hash_FC = NULL;
-	//}
-
-	//if (hash_PC)
-	//{
-	//	delete hash_PC;
-	//	hash_PC = NULL;
-	//}
-
-	if (m_routeDetection_DangerHighlight_Area)
-	{
-		SafeRelease(&m_routeDetection_DangerHighlight_Area);
-		m_routeDetection_DangerHighlight_Area = nullptr;
-	}
-
-	for (auto i = m_routeDetection_DangerHighlight_Lines.begin(); i != m_routeDetection_DangerHighlight_Lines.end(); i++)
-	{
-		SafeRelease(&(*i));
-	}
-
-	m_routeDetection_DangerHighlight_Lines.clear();
-	m_routeDetection_DangerHighlight_Points.clear();
-
-	if (m_routeDetection_InformationHighlight_Area)
-	{
-		SafeRelease(&m_routeDetection_InformationHighlight_Area);
-		m_routeDetection_InformationHighlight_Area = nullptr;
-	}
-
-	for (auto i = m_routeDetection_InformationHighlight_Lines.begin(); i != m_routeDetection_InformationHighlight_Lines.end(); i++)
-	{
-		SafeRelease(&(*i));
-	}
-
-	m_routeDetection_InformationHighlight_Lines.clear();
-	m_routeDetection_InformationHighlight_Points.clear();
 }
-
-void LayerManager::LoadFeatureCatalogs()
-{
-	CString strFolderPath;
-	::GetModuleFileName(NULL, strFolderPath.GetBuffer(MAX_PATH), MAX_PATH);
-	strFolderPath.ReleaseBuffer();
-	if (strFolderPath.Find('\\') != -1)
-	{
-		for (int i = strFolderPath.GetLength() - 1; i >= 0; i--)
-		{
-			TCHAR ch = strFolderPath[i];
-			strFolderPath.Delete(i);
-			if (ch == '\\') break;
-		}
-	}
-}
-
+ 
 bool LayerManager::AddBackgroundLayer(CString _filepath)
 {
 	CString file_extension = _T("");
@@ -1427,41 +1352,20 @@ void LayerManager::S101RebuildPortrayal(/*PORTRAYAL_BUILD_TYPE type*/)
 
 void LayerManager::BuildPortrayalCatalogue(Layer* l)
 {
-	std::wstring layerName(l->GetLayerName());
-	auto ci = layerName.find_last_of(L"\\");
-	layerName = layerName.substr(++ci);
+	auto pc = ((S101Layer*)l)->GetPC();
 
-	ci = layerName.find_last_of(L".");
-	layerName = layerName.substr(0, ci);
-
-	std::wstring inputPath = L"..\\ProgramData\\S100_PC_IO_XML\\INPUT\\";
-	std::wstring outputPath = L"..\\ProgramData\\S100_PC_IO_XML\\OUTPUT\\";
-
-	inputPath.append(layerName);
-	inputPath.append(L".xml");
-
-	outputPath.append(layerName);
-	outputPath.append(L".xml");
-
-	CString excuteFolderPath;
-	::GetModuleFileName(NULL, excuteFolderPath.GetBuffer(MAX_PATH), MAX_PATH);
-	excuteFolderPath.ReleaseBuffer();
-	if (excuteFolderPath.Find('\\') != -1)
+	if (
+		l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR && 
+		pc->GetPortrayalRuleType() == PortrayalRuleType::LUA)
 	{
-		for (int i = excuteFolderPath.GetLength() - 1; i >= 0; i--)
-		{
-			TCHAR ch = excuteFolderPath[i];
-			excuteFolderPath.Delete(i);
-			if (ch == '\\') break;
+		auto mainRuleFile = pc->GetMainRuleFile();
+		auto fileName = mainRuleFile->GetFileName();
 
-		}
-	}
+		auto rootPath = pc->GetRootPath();
 
-	if (l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR && ((S101Layer*)l)->GetPC()->GetPortrayalRuleType() == PortrayalRuleType::LUA)
-	{
-		DeleteFile(inputPath.c_str());
+		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
-		ProcessS101::ProcessS101_LUA(L"..\\ProgramData\\S101_Portrayal\\Rules\\main.lua", (S101Layer*)l); //memory leak
+		ProcessS101::ProcessS101_LUA(mainRulePath, (S101Layer*)l);
 	}
 }
 
@@ -1662,11 +1566,6 @@ void LayerManager::ReMBR()
 void LayerManager::SetViewMBR(RECT r)
 {
 	scaler->SetMap(r);
-}
-
-void LayerManager::ShowTextPlacement(BOOL bShow)
-{
-	ENCCommon::SHOW_TEXT_PLACEMENT = bShow;
 }
 
 //FeatureCatalogue* LayerManager::AddS100FC(std::wstring path)
@@ -2156,84 +2055,3 @@ struct ROUTE_FOR_PROCESSING
 	int LENGTH;
 	int SPLIT_NUMBER;
 };
-
-std::vector<S100Layer*> LayerManager::GetS100Layers(int productNumber)
-{
-	std::vector<S100Layer*> result;
-
-	for (
-		auto i = m_listLayer.begin();
-		i != m_listLayer.end();
-		i++)
-	{
-		auto type = (*i)->GetLayerType();
-		if (type.Find(L"S_100", 0) >= 0)
-		{
-			auto layer = (S100Layer*)(*i);
-			if (productNumber == 101)
-			{
-				result.push_back(layer);
-			}
-		}
-	}
-
-	return result;
-}
-
-std::wstring LayerManager::GetObjectAttributeString(S101Cell* cell, F_ATTR* f_attr)
-{
-	FeatureCatalogue* fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
-
-	std::wstring ret = L"";
-	for (auto aitor = f_attr->m_arr.begin(); aitor != f_attr->m_arr.end(); aitor++)
-	{
-		ATTR* attr = *aitor;
-		ret.append(L"[");
-		auto atcsitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
-
-		if (atcsitor != cell->m_dsgir.m_atcs->m_arr.end())
-		{
-			CodeWithNumericCode* nc = atcsitor->second;
-			std::wstring ts(nc->m_code);
-			//			nc->m_code.ReleaseBuffer();
-			auto ai = fc->GetSimpleAttribute(ts);
-			if (ai != nullptr)
-			{
-				SimpleAttribute* sa = ai;
-				ret.append(sa->GetName());
-				ret.append(L"]\n");
-
-				FCD::S100_CD_AttributeValueType avt = sa->GetValueType();
-				if (avt == FCD::S100_CD_AttributeValueType::enumeration)
-				{
-					auto ei = sa->GetListedValuesPointer().begin()->GetListedValuePointer().find(_wtoi(attr->m_atvl));
-					if (ei == sa->GetListedValuesPointer().begin()->GetListedValuePointer().end())
-					{
-						ret.append(L" : ");
-						ret.append(attr->m_atvl);
-						ret.append(L"\n");
-					}
-					else
-					{
-						ListedValue* lv = &ei->second;
-						ret.append(L" : ");
-						ret.append(lv->GetLabel().c_str());
-						ret.append(L"\n");
-					}
-				}
-				else if (attr->m_atvl.Compare(L"") != 0)
-				{
-					ret.append(L" : ");
-					ret.append(attr->m_atvl);
-					ret.append(L"\n");
-				}
-			}
-			else
-			{
-
-			}
-		}
-	}
-
-	return ret;
-}

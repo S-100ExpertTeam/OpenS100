@@ -32,21 +32,6 @@ bool S100DatasetManager::OpenS101(CString _path)
 	return true;
 }
 
-bool S100DatasetManager::OpenS101OutputXML(CString _path)
-{
-	if (_path.GetLength() < 4)
-	{
-		return false;
-	}
-
-	CString sencPath = _path.Left(_path.GetLength() - 7) + _T(".000");
-	S101Dataset* s101Dataset = GetS101Dataset(sencPath);
-	if (!s101Dataset)
-		return false;
-
-	return s101Dataset->OpenS101OutputXML(_path);
-}
-
 bool S100DatasetManager::OpenS101SENC(CString _path)
 {
 	S101Dataset* s101Dataset = new S101Dataset();

@@ -12,8 +12,6 @@
 #include <set>
 #include <map>
 
-#import <msxml4.dll>
-
 class GeoPoint;
 class GeoPointZ;
 class Catalog;

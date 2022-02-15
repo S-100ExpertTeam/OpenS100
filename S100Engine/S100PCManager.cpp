@@ -29,6 +29,7 @@ bool S100PCManager::OpenS100ColorProfile(std::wstring _path)
 bool S100PCManager::OpenS100LineStyles(std::wstring _path)
 {
 	S100XMLReader::S100PCLineStylesReader::Open(_path, &lineStyles);
+	//S100XMLReader::S100PCLineStylesReader::OpenByPugi(_path, &lineStyles);
 	return true;
 }
 
