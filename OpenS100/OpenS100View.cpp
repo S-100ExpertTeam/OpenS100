@@ -927,12 +927,10 @@ void COpenS100View::DrawFromMapRefresh(CDC* pDC, CRect& rect)
 
 	HDC hdc = pDC->GetSafeHdc();
 
-#ifndef TILE_MAP
 	gisLib->Draw(hdc);
-#else
-	gisLib->GetLayerManager()->DrawLayerList(hdc);
-#endif
+
 	theApp.m_pDockablePaneLayerManager.UpdateList();
+
 	m_bMapRefesh = false;
 }
 

@@ -260,15 +260,6 @@ bool SHPFile::Open(CString _filepath)
 	return TRUE;
 }
 
-
-void SHPFile::Draw(CDC *pDC, Scaler *scaler, double offset)
-{
-	for (unsigned int i = 0; i < m_nRecords; i++) 
-	{
-		m_pSHPObject[i]->DrawGeometry(pDC->m_hDC, scaler, offset);
-	}
-}
-
 void SHPFile::Draw(HDC &hDC, Scaler *scaler, double offset)
 {
 	double zero  = 0;
@@ -277,36 +268,6 @@ void SHPFile::Draw(HDC &hDC, Scaler *scaler, double offset)
 	for (unsigned int i = 0; i < m_nRecords; i++) {
 		m_pSHPObject[i]->DrawGeometry(hDC, scaler, offset);
 	}
-}
-
-void SHPFile::Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, Scaler *scaler, double offsetX, double offsetY)
-{
-	projection(offsetX, offsetY);
-
-	ID2D1PathGeometry* pGeometry;
-	HRESULT hr = pDXFactory->CreatePathGeometry(&pGeometry);
-
-	ID2D1SolidColorBrush* pBlackBrush;
-
-	if (S_OK == pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0.2f, 0.2f, 0), &pBlackBrush))
-	{
-		//color info http://msdn.microsoft.com/ko-kr/library/windows/desktop/ff684180(v=vs.85).aspx				
-	}
-	ID2D1GeometrySink *pSink = NULL;
-
-	hr = pGeometry->Open(&pSink);
-
-	for (unsigned int i = 0; i < m_nRecords; i++) {
-		m_pSHPObject[i]->DrawGeometry(pSink, scaler, offsetX, offsetY);
-	}
-
-	pSink->Close();
-	pSink->Release();
-
-	pRenderTarget->FillGeometry(pGeometry, pBlackBrush);
-
-	pGeometry->Release();
-	pBlackBrush->Release();
 }
 
 //transforms Big Endian and Little Endian into each other.

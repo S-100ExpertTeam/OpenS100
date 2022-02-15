@@ -370,7 +370,6 @@ void CDialogDockLayerManager::UpdateList()
 			S101Cell* c = (S101Cell*)layer->m_spatialObject;
 
 			FillPropList(c);
-			//curCell = c;
 		}
 	}
 }
