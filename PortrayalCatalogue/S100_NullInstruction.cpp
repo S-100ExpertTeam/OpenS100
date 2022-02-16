@@ -56,7 +56,7 @@ void S100_NullInstruction::GetContents(MSXML2::IXMLDOMNodePtr pNode)
 		}
 		else
 		{
-			nodeName.append(L" : 없는 Context\n");
+			nodeName.append(L" : Context without\n");
 			OutputDebugString(nodeName.c_str());
 		}
 	}
@@ -99,7 +99,7 @@ void S100_NullInstruction::GetContents(pugi::xml_node node)
 		else 
 		{
 			std::wstring name =pugi::as_wide(instructionName);
-			name.append(L"는 없는 Context");
+			name.append(L" Context without");
 		}
 	}
 }

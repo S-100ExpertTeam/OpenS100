@@ -1,10 +1,8 @@
 ﻿
-// OpenS100.h: OpenS100 애플리케이션의 기본 헤더 파일
 //
 #pragma once
 
 #ifndef __AFXWIN_H__
-	#error "PCH에 대해 이 파일을 포함하기 전에 'pch.h'를 포함합니다."
 #endif
 #include "resource.h" 
 #include "DockablePaneLayerManager.h"

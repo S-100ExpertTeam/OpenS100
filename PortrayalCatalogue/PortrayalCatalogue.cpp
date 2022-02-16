@@ -193,7 +193,7 @@ void PortrayalCatalogue::GetContents(pugi::xml_node& node)
 		else
 		{
 			std::string value(instructionName);
-			value + ":พ๘ดย Context\n";
+			value + ": not Context\n";
 
 		}
 	}

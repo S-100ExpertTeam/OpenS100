@@ -59,7 +59,7 @@ __int64 ENCCommon::OVER_GROUP = 0x7FFFFFFF;
 
 BOOL ENCCommon::SHOW_TEXT_PLACEMENT = FALSE;
 
-std::wstring ENCCommon::DISPLAY_FONT_NAME = L"맑은 고딕";
+std::wstring ENCCommon::DISPLAY_FONT_NAME = L"Malgun Gothic";
 int ENCCommon::DISPLAY_FONT_SIZE = 15;
 
 float ENCCommon::DISPLAY_SYMBOL_SCALE = 5;
@@ -301,7 +301,7 @@ bool ENCCommon::Open(std::wstring filePath)
 
 	if (!ifs.is_open())
 	{
-		OutputDebugString(_T("설정파일(settings.txt)을 로드하지 못했습니다!"));
+		OutputDebugString(_T("Can not load (settings.txt)"));
 		return false;
 	}
 

@@ -119,7 +119,7 @@ void S100_Template::GetContents(MSXML2::IXMLDOMNodePtr pNode)
 		}
 		else
 		{
-			nodeName.append(L" : พ๘ดย Context\n");
+			nodeName.append(L" : Context without\n");
 			OutputDebugString(nodeName.c_str());
 		}
 	}

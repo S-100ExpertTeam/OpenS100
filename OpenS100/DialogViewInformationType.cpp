@@ -1,5 +1,4 @@
-﻿// DialogViewInformationType.cpp: 구현 파일
-//
+﻿//
 #include "pch.h"
 #include "afxdialogex.h"
 #include "DialogViewInformationType.h"
