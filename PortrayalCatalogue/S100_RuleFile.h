@@ -17,7 +17,6 @@ private:
 	std::wstring ruleType = L"";
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodeListPtr pNodeList);
 	void GetContents(pugi::xml_node& node);
 
 	void SetID(std::string& value);

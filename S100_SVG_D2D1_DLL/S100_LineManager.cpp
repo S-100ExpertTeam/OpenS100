@@ -17,67 +17,6 @@ namespace S100_SVG_D2D1_DLL
 
 	}
 
-	void S100_LineManager::GetColorInfo(std::wstring colorPath)
-	{
-		colorPath = colorPath + _T("ColorProfiles\\colorProfile.xml");
-		MSXML2::IXMLDOMDocument2Ptr pDoc;
-		if (!colorPath.empty())
-		{
-			pDoc.CreateInstance(__uuidof(DOMDocument));  // Create instance.
-			pDoc->load((_variant_t)colorPath.c_str());
-
-			MSXML2::IXMLDOMNodeListPtr pNodeList = pDoc->selectNodes(_T("/colorProfile/colors/color"));
-
-			for (int i = 0; i < pNodeList->Getlength(); i++)
-			{
-				MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-				MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-				MSXML2::IXMLDOMNodePtr pAttrNP;
-				VARIANT value;
-				S100_LineColor col;
-
-				pAttrNP = pAttr->getNamedItem(_T("token"));
-				pAttrNP->get_nodeValue(&value);
-				col.token = std::wstring(value.bstrVal);
-
-				pAttrNP = pAttr->getNamedItem(_T("name"));
-				pAttrNP->get_nodeValue(&value);
-				col.name = std::wstring(value.bstrVal);
-
-				col.description = pNode->firstChild->Gettext();
-
-				std::unordered_map <std::wstring, S100_LineColor>::iterator iter;
-				iter = colMap.find(col.token);
-
-				if (iter == colMap.end())
-				{
-					colMap.insert(std::unordered_map<std::wstring, S100_LineColor>::value_type(col.token, col));
-				}
-			}
-
-			pNodeList = pDoc->selectNodes(_T("/colorProfile/palette/item"));
-
-			for (int i = 0; i < pNodeList->Getlength(); i++)
-			{
-				MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-				MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-				MSXML2::IXMLDOMNodePtr pAttrNP;
-				VARIANT value;
-				std::wstring token;
-
-				pAttrNP = pAttr->getNamedItem(_T("token"));
-				pAttrNP->get_nodeValue(&value);
-				token = std::wstring(value.bstrVal);
-
-				pNode = pNodeList->Getitem(i)->selectSingleNode(_T("srgb"));
-
-				colMap[token].r = _wtoi(pNode->selectSingleNode(_T("red"))->Gettext());
-				colMap[token].g = _wtoi(pNode->selectSingleNode(_T("green"))->Gettext());
-				colMap[token].b = _wtoi(pNode->selectSingleNode(_T("blue"))->Gettext());
-			}
-		}
-	}
-
 	void S100_LineManager::GetColorInfoByPugi(std::wstring colorPath)
 	{
 		colorPath = colorPath + _T("ColorProfiles\\colorProfile.xml");

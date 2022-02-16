@@ -21,7 +21,6 @@ private:
 	std::wstring distance;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNodeList);
 	void GetContents(pugi::xml_node node);
 
 	void SetLineStyle(S100_LineStyle value);

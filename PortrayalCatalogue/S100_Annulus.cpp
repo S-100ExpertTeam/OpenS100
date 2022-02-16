@@ -12,48 +12,6 @@ S100_Annulus::~S100_Annulus()
 
 }
 
-void S100_Annulus::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"point") == 0)
-		{
-			point.GetContents(pNode);
-		}
-		else if (nodeName.compare(L"innerRadius") == 0)
-		{
-			innerRadius = new std::wstring;
-			*innerRadius = pNode->Gettext();
-		}
-		else if (nodeName.compare(L"outerRadius") == 0)
-		{
-			outerRadius = pNode->Gettext();
-		}
-		else if (nodeName.compare(L"sector") == 0)
-		{
-			sector = new S100_Sector();
-			sector->GetContents(pNode);
-		}
-		else
-		{
-			nodeName.append(L" : พ๘ดย Context\n");
-			OutputDebugString(nodeName.c_str());
-		}
-	}
-}
-
 void S100_Annulus::GetContents(pugi::xml_node node)
 {
 	for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())

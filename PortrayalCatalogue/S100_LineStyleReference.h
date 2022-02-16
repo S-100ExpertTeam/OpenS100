@@ -13,7 +13,6 @@ private:
 	std::wstring reference = L"";
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 
 	void SetReference(std::wstring& value);

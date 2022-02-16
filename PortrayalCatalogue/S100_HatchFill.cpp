@@ -14,33 +14,6 @@ S100_HatchFill::~S100_HatchFill()
 	}
 }
 
-void S100_HatchFill::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	((S100_PatternFill*)this)->GetContents(pNode);
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"hatch") == 0)
-		{
-			S100_Hatch* hatch = new S100_Hatch();
-			hatch->GetContents(pNode);
-			hatches.push_back(hatch);
-		}
-	}
-}
-
 void S100_HatchFill::GetContents(pugi::xml_node node)
 {
 	if (node==nullptr)

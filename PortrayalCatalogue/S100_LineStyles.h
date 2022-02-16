@@ -18,6 +18,5 @@ public:
 	S100_LineStyleFile* GetLineStyleFiles(std::wstring key);
 	std::unordered_map<std::wstring, S100_LineStyleFile*> GetLineStyleFiles();
 
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 };

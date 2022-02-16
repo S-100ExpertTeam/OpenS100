@@ -11,33 +11,6 @@ S100_VectorPoint::~S100_VectorPoint()
 
 }
 
-void S100_VectorPoint::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->childNodes;
-	if (!pNodeList)
-		return;
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pChildNode = pNodeList->Getitem(i);
-
-		if (!pChildNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pChildNode->GetnodeName();
-
-		if (nodeName.compare(L"x") == 0)
-		{
-			x = std::wstring(pChildNode->Gettext());
-		}
-		else if (nodeName.compare(L"y") == 0)
-		{
-			y = std::wstring(pChildNode->Gettext());
-		}
-	}
-}
 void S100_VectorPoint::GetContents(pugi::xml_node& node)
 {
 	if (!node)

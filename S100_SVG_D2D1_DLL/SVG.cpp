@@ -71,25 +71,6 @@ namespace S100_SVG_D2D1_DLL
 		}
 	}
 
-	bool SVG::ReadSVGFile(std::wstring path)
-	{
-		MSXML2::IXMLDOMDocument2Ptr pDoc;							// XML Document 
-		MSXML2::IXMLDOMNamedNodeMapPtr pNodeMap;					// for attribute
-		MSXML2::IXMLDOMNodeListPtr pNodeInfo;						// Found node list.
-		MSXML2::IXMLDOMNodePtr pNode;								
-
-		if (!path.empty())
-		{
-			pDoc.CreateInstance(__uuidof(DOMDocument));
-			pDoc->load((_variant_t)path.c_str());
-
-			m_filepath = path;
-			GetSVGInfo(pDoc);
-		}
-		OrganizeSymbol();
-		return true;
-	}
-
 	bool SVG::ReadSVGFileByPugiXml(std::wstring path)
 	{
 		if (!path.empty())
@@ -105,97 +86,6 @@ namespace S100_SVG_D2D1_DLL
 
 		OrganizeSymbol();
 		return true;
-	}
-
-	void SVG::GetSVGInfo(MSXML2::IXMLDOMNodePtr pNode)
-	{
-		if (!pNode)
-			return;
-
-		MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-		for (int i = 0; i < pNodeList->Getlength(); i++)
-		{
-			MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-			if (!pNode)
-				continue;
-			std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-
-			if (nodeName.compare(L"svg") == 0)
-			{
-
-				MSXML2::IXMLDOMNamedNodeMapPtr pCAttr;
-				VARIANT value;
-
-				pCAttr = pNode->Getattributes();
-
-				MSXML2::IXMLDOMNodePtr attrPtr = pCAttr->getNamedItem(L"height");
-				if (attrPtr)
-				{
-					attrPtr->get_nodeValue(&value);
-					m_height = value.bstrVal;
-				}
-				else
-				{
-					m_height = L"10";
-				}
-				attrPtr = pCAttr->getNamedItem(L"width");
-				if (attrPtr)
-				{
-					attrPtr->get_nodeValue(&value);
-					m_width = value.bstrVal;
-				}
-				else
-				{
-					m_width = L"10";
-				}
-				attrPtr = pCAttr->getNamedItem(L"viewBox");
-				if (attrPtr)
-				{
-					attrPtr->get_nodeValue(&value);
-					m_viewBox = value.bstrVal;
-				}
-				else
-				{
-					m_viewBox = L"-5 -5 5 5";
-				}
-
-				MSXML2::IXMLDOMNodeListPtr pCNList = pNode->GetchildNodes();
-
-				for (int j = 0; j < pCNList->Getlength(); j++)
-				{
-					MSXML2::IXMLDOMNodePtr pCN = pCNList->Getitem(j);
-					std::wstring nodeName = (LPCTSTR)pCN->GetnodeName();
-
-					if (nodeName.compare(L"title") == 0)
-					{
-						GetTitle(pCN->GetchildNodes());
-					}
-					else if (nodeName.compare(L"desc") == 0)
-					{
-						Getdesc(pCN->GetchildNodes());
-					}
-					else if (nodeName.compare(L"metadata") == 0)
-					{
-						Getmetadata(pCN->GetchildNodes());
-					}
-					else if (nodeName.compare(L"rect") == 0)
-					{
-						GetFigure(pCN);
-					}
-					else if (nodeName.compare(L"path") == 0)
-					{
-						GetFigure(pCN);
-					}
-					else if (nodeName.compare(L"circle") == 0)
-					{
-						GetFigure(pCN);
-					}
-				}
-			}
-		}
-		return;
 	}
 
 	void SVG::GetSVGInfo(pugi::xml_node& node)
@@ -272,25 +162,6 @@ namespace S100_SVG_D2D1_DLL
 		}
 	}
 
-	void SVG::GetTitle(MSXML2::IXMLDOMNodeListPtr pNodeList)
-	{
-		if (!pNodeList)
-			return;
-		for (int i = 0; i < pNodeList->Getlength(); i++)
-		{
-			MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-			if (!pNode)
-				continue;
-			std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-			if (nodeName.compare(L"#text") == 0)
-			{
-				m_title.value = std::wstring(pNode->GetnodeValue().bstrVal);
-			}
-		}
-	}
-
 	void SVG::GetTitle(pugi::xml_node& node)
 	{
 		if (!node)
@@ -300,96 +171,12 @@ namespace S100_SVG_D2D1_DLL
 
 	}
 
-	void SVG::Getdesc(MSXML2::IXMLDOMNodeListPtr pNodeList)
-	{
-		if (!pNodeList)
-			return;
-		for (int i = 0; i < pNodeList->Getlength(); i++)
-		{
-			MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-			if (!pNode)
-				continue;
-			std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-			if (nodeName.compare(L"#text") == 0)
-			{
-				m_desc.value = std::wstring(pNode->GetnodeValue().bstrVal);
-			}
-		}
-	}
-
 	void SVG::Getdesc(pugi::xml_node& node)
 	{
 		if (!node)
 			return;
 
 		m_desc.value = pugi::as_wide(node.child_value());
-	}
-
-	void SVG::Getmetadata(MSXML2::IXMLDOMNodeListPtr pNodeList)
-	{
-		if (!pNodeList)
-			return;
-		for (int i = 0; i < pNodeList->Getlength(); i++)
-		{
-			MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-			if (!pNode)
-				continue;
-			std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-			if (nodeName.compare(L"iho:S100SVG") == 0)
-			{
-				MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-				MSXML2::IXMLDOMNodePtr pAttrNP;
-				pAttrNP = pAttr->getNamedItem(L"xmlns:iho");
-				VARIANT value;
-				pAttrNP->get_nodeValue(&value);
-				m_metadata.s100svg.xmlns = std::wstring(value.bstrVal);
-
-				MSXML2::IXMLDOMNodeListPtr pCNL = pNode->GetchildNodes();
-				for (int k = 0; k < pCNL->Getlength(); k++)
-				{
-					MSXML2::IXMLDOMNodePtr pCN = pCNL->Getitem(k);
-					if (!pCN)
-						continue;
-					std::wstring cnn = (LPCTSTR)pCN->GetnodeName();
-
-					if (cnn.compare(L"iho:Description") == 0)
-					{
-						MSXML2::IXMLDOMNamedNodeMapPtr pCAttr = pCN->Getattributes();
-
-						for (int i = 0; i < pCAttr->Getlength(); i++)
-						{
-							MSXML2::IXMLDOMNodePtr pAttrNode = pCAttr->Getitem(i);
-
-							std::wstring attrNodeName = pAttrNode->GetnodeName();
-							if (attrNodeName.compare(L"iho:publisher") == 0)
-							{
-								m_metadata.s100svg.desc.publisher = pAttrNode->GetnodeValue().bstrVal;
-							}
-							else if (attrNodeName.compare(L"iho:creationDate") == 0)
-							{
-								m_metadata.s100svg.desc.creationDate = pAttrNode->GetnodeValue().bstrVal;
-							}
-							else if (attrNodeName.compare(L"iho:source") == 0)
-							{
-								m_metadata.s100svg.desc.source = pAttrNode->GetnodeValue().bstrVal;
-							}
-							else if (attrNodeName.compare(L"iho:format") == 0)
-							{
-								m_metadata.s100svg.desc.format = pAttrNode->GetnodeValue().bstrVal;
-							}
-							else if (attrNodeName.compare(L"iho:version") == 0)
-							{
-								m_metadata.s100svg.desc.version = pAttrNode->GetnodeValue().bstrVal;
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 
 	void SVG::Getmetadata(pugi::xml_node& node)
@@ -444,48 +231,6 @@ namespace S100_SVG_D2D1_DLL
 		}
 	}
 
-
-	void SVG::GetFigure(MSXML2::IXMLDOMNodePtr pNode)
-	{
-		if (!pNode)
-			return;
-
-		MSXML2::IXMLDOMNamedNodeMapPtr pCAttr;
-		VARIANT value;
-
-		std::wstring nodeName = pNode->GetnodeName();
-		pCAttr = pNode->Getattributes();
-		pCAttr->getNamedItem(L"class")->get_nodeValue(&value);
-
-		if (nodeName.compare(L"rect") == 0)
-		{
-			if (std::wstring(value.bstrVal).compare(L"symbolBox layout") == 0)
-			{
-				GetSymbolBoxLayout(pNode);
-			}
-			else if (std::wstring(value.bstrVal).compare(L"svgBox layout") == 0)
-			{
-				GetSVGBoxLayout(pNode);
-			}
-		}
-		else if (nodeName.compare(L"path") == 0)
-		{
-			GetSymbol(pNode);
-		}
-		else if (nodeName.compare(L"circle") == 0)
-		{
-
-			if (std::wstring(value.bstrVal).compare(L"pivotPoint layout") == 0)
-			{
-				GetPivotPointLayout(pNode);
-			}
-			else
-			{
-				GetSymbol(pNode);
-			}
-		}
-	}
-
 	void SVG::GetFigure(pugi::xml_node& node)
 	{
 		if (!node)
@@ -535,48 +280,6 @@ namespace S100_SVG_D2D1_DLL
 		}
 	}
 
-
-	void SVG::GetSymbolBoxLayout(MSXML2::IXMLDOMNodePtr pNode)
-	{
-		if (!pNode)
-			return;
-
-		MSXML2::IXMLDOMNamedNodeMapPtr pCAttr;
-
-		pCAttr = pNode->Getattributes();
-
-		for (int i = 0; i < pCAttr->Getlength(); i++)
-		{
-			MSXML2::IXMLDOMNodePtr pAttrNode = pCAttr->Getitem(i);
-
-			std::wstring attrNodeName = pAttrNode->GetnodeName();
-			if (attrNodeName.compare(L"class") == 0)
-			{
-				m_symbolLayout.className = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"fill") == 0)
-			{
-				m_symbolLayout.fill = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"x") == 0)
-			{
-				m_symbolLayout.x = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"y") == 0)
-			{
-				m_symbolLayout.y = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"height") == 0)
-			{
-				m_symbolLayout.height = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"width") == 0)
-			{
-				m_symbolLayout.width = pAttrNode->GetnodeValue().bstrVal;
-			}
-		}
-	}
-
 	void SVG::GetSymbolBoxLayout(pugi::xml_node& node)
 	{
 		if (!node)
@@ -609,50 +312,6 @@ namespace S100_SVG_D2D1_DLL
 			else if (!strcmp(attriName, "width"))
 			{
 				m_symbolLayout.width = pugi::as_wide(attri.value());
-			}
-		}
-	}
-
-
-
-	void SVG::GetSVGBoxLayout(MSXML2::IXMLDOMNodePtr pNode)
-	{
-		if (!pNode)
-			return;
-
-		MSXML2::IXMLDOMNamedNodeMapPtr pCAttr;
-
-		pCAttr = pNode->Getattributes();
-
-		for (int i = 0; i < pCAttr->Getlength(); i++)
-		{
-			MSXML2::IXMLDOMNodePtr pAttrNode = pCAttr->Getitem(i);
-
-			std::wstring attrNodeName = pAttrNode->GetnodeName();
-			if (attrNodeName.compare(L"class") == 0)
-			{
-				m_SVGBoxLayout.className = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"fill") == 0)
-			{
-				m_SVGBoxLayout.fill = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"x") == 0)
-			{
-				m_SVGBoxLayout.x = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"y") == 0)
-			{
-				m_SVGBoxLayout.y = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"height") == 0)
-			{
-				m_SVGBoxLayout.height = pAttrNode->GetnodeValue().bstrVal;
-
-			}
-			else if (attrNodeName.compare(L"width") == 0)
-			{
-				m_SVGBoxLayout.width = pAttrNode->GetnodeValue().bstrVal;
 			}
 		}
 	}
@@ -694,73 +353,6 @@ namespace S100_SVG_D2D1_DLL
 
 	}
 
-
-	void SVG::GetSymbol(MSXML2::IXMLDOMNodePtr pNode)
-	{
-		if (!pNode)
-			return;
-		MSXML2::IXMLDOMNamedNodeMapPtr pCAttr;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-		pCAttr = pNode->Getattributes();
-
-		if (nodeName.compare(L"path") == 0)
-		{
-			Path* pPath = new Path();
-			m_drawingObjList.push_back(pPath);
-
-			for (int i = 0; i < pCAttr->Getlength(); i++)
-			{
-				MSXML2::IXMLDOMNodePtr pAttrNode = pCAttr->Getitem(i);
-
-				std::wstring attrNodeName = pAttrNode->GetnodeName();
-				if (attrNodeName.compare(L"d") == 0)
-				{
-					pPath->d = pAttrNode->GetnodeValue().bstrVal;
-				}
-				else if (attrNodeName.compare(L"class") == 0)
-				{
-					pPath->className = pAttrNode->GetnodeValue().bstrVal;
-				}
-				else if (attrNodeName.compare(L"style") == 0)
-				{
-					pPath->style = pAttrNode->GetnodeValue().bstrVal;
-				}
-			}
-		}
-		else if (nodeName.compare(L"circle") == 0)
-		{
-			Circle* pCircle = new Circle();
-			m_drawingObjList.push_back(pCircle);
-
-			for (int i = 0; i < pCAttr->Getlength(); i++)
-			{
-				MSXML2::IXMLDOMNodePtr pAttrNode = pCAttr->Getitem(i);
-
-				std::wstring attrNodeName = pAttrNode->GetnodeName();
-				if (attrNodeName.compare(L"class") == 0)
-				{
-					pCircle->className = pAttrNode->GetnodeValue().bstrVal;
-				}
-				else if (attrNodeName.compare(L"style") == 0)
-				{
-					pCircle->style = pAttrNode->GetnodeValue().bstrVal;
-				}
-				else if (attrNodeName.compare(L"cx") == 0)
-				{
-					pCircle->cx = pAttrNode->GetnodeValue().bstrVal;
-				}
-				else if (attrNodeName.compare(L"cy") == 0)
-				{
-					pCircle->cy = pAttrNode->GetnodeValue().bstrVal;
-				}
-				else if (attrNodeName.compare(L"r") == 0)
-				{
-					pCircle->r = pAttrNode->GetnodeValue().bstrVal;
-				}
-			}
-		}
-	}
 	void SVG::GetSymbol(pugi::xml_node& node)
 	{
 		if (!node)
@@ -864,42 +456,6 @@ namespace S100_SVG_D2D1_DLL
 		}
 	}
 
-	void SVG::GetPivotPointLayout(MSXML2::IXMLDOMNodePtr pNode)
-	{
-		if (!pNode)
-			return;
-
-		MSXML2::IXMLDOMNamedNodeMapPtr pCAttr;
-
-		pCAttr = pNode->Getattributes();
-
-		for (int i = 0; i < pCAttr->Getlength(); i++)
-		{
-			MSXML2::IXMLDOMNodePtr pAttrNode = pCAttr->Getitem(i);
-
-			std::wstring attrNodeName = pAttrNode->GetnodeName();
-			if (attrNodeName.compare(L"class") == 0)
-			{
-				m_pivotPointLayout.className = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"fill") == 0)
-			{
-				m_pivotPointLayout.fill = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"cx") == 0)
-			{
-				m_pivotPointLayout.cx = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"cy") == 0)
-			{
-				m_pivotPointLayout.cy = pAttrNode->GetnodeValue().bstrVal;
-			}
-			else if (attrNodeName.compare(L"r") == 0)
-			{
-				m_pivotPointLayout.r = pAttrNode->GetnodeValue().bstrVal;
-			}
-		}
-	}
 	void SVG::GetPivotPointLayout(pugi::xml_node& node)
 	{
 		if (!node)

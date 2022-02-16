@@ -21,7 +21,6 @@ namespace S100_SVG_D2D1_DLL
 		std::vector<RealLine> lineList;
 
 	public:
-		void GetColorInfo(std::wstring colorPath);
 		void GetColorInfoByPugi(std::wstring colorPath);
 		void GetLineFiles(std::wstring lineFolderPath);	
 	};

@@ -16,69 +16,6 @@ S100_LineStyle::~S100_LineStyle()
 
 }
 
-void S100_LineStyle::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-	MSXML2::IXMLDOMNodePtr pAttrNP;
-	VARIANT value;
-
-	pAttrNP = pAttr->getNamedItem(L"capStyle");
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		capStyle = std::wstring(value.bstrVal).c_str();
-	}
-	pAttrNP = pAttr->getNamedItem(L"joinStyle");
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		joinStyle = std::wstring(value.bstrVal).c_str();
-	}
-	pAttrNP = pAttr->getNamedItem(L"offset");
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		offset = std::wstring(value.bstrVal).c_str();
-	}
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"intervalLength") == 0)
-		{
-			std::wstring str((wchar_t*)pNode->Gettext());
-			intervalLength = L"12";
-			intervalLength = str.c_str();
-		}
-		else if (nodeName.compare(L"pen") == 0)
-		{
-			m_pen.GetContents(pNode);
-		}
-		else if (nodeName.compare(L"dash") == 0)
-		{
-			S100_Dash dash;
-			dash.GetContents(pNode);
-			m_dash.push_back(dash);
-		}
-		else if (nodeName.compare(L"symbol") == 0)
-		{
-			S100_LineSymbol symbol;
-			symbol.GetContents(pNode);
-			m_symbol.push_back(symbol);
-		}
-	}
-}
 void S100_LineStyle::GetContents(pugi::xml_node& node) 
 {
 	if (!node)

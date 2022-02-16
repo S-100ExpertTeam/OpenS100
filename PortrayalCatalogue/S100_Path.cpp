@@ -13,50 +13,6 @@ S100_Path::~S100_Path()
 	}
 }
 
-void S100_Path::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"polyline") == 0)
-		{
-			S100_Polyline polyline;
-			polyline.GetContents(pNode);
-			polylines.push_back(polyline);
-		}
-		else if (nodeName.compare(L"arc3Points") == 0)
-		{
-			S100_Arc3Points arc3Points;
-			arc3Points.GetContents(pNode);
-			arc3Pointses.push_back(arc3Points);
-		}
-		else if (nodeName.compare(L"arcByRadius") == 0)
-		{
-			S100_ArcByRadius arcByRadius;
-			arcByRadius.GetContents(pNode);
-			arcByRadiuses.push_back(arcByRadius);
-		}
-		else if (nodeName.compare(L"annulus") == 0)
-		{
-			S100_Annulus annulus;
-			annulus.GetContents(pNode);
-			annuluses.push_back(annulus);
-		}
-	}
-}
-
 void S100_Path::GetContents(pugi::xml_node node)
 {
 	if (node == nullptr)

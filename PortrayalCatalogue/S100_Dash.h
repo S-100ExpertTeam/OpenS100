@@ -21,7 +21,6 @@ public:
 	void SetLength(std::wstring& value);
 	std::wstring GetLength();
 
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 
 	void SetFromStartLength(std::string& value);

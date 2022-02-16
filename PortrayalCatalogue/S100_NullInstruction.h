@@ -8,6 +8,5 @@ public:
 	virtual ~S100_NullInstruction();
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 };

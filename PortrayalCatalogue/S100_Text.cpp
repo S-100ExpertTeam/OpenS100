@@ -11,34 +11,6 @@ S100_Text::~S100_Text()
 
 }
 
-void S100_Text::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-	MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-	MSXML2::IXMLDOMNodePtr pAttrNP;
-	pAttrNP = pAttr->getNamedItem(L"useValueOf");
-	VARIANT variant;
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&variant);
-		useValueOf = std::wstring(variant.bstrVal);
-	}
-
-	value = pNode->Gettext().GetBSTR();
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->childNodes;
-	if (!pNodeList)
-		return;
-	for (int i = 0; i < pNodeList->Getlength(); i++) 
-	{
-		MSXML2::IXMLDOMNodePtr pChildNode = pNodeList->Getitem(i);
-		if (!pChildNode)
-			continue;
-		std::wstring nodeName = (LPCTSTR)pChildNode->GetnodeName();
-	}
-}
-
 void S100_Text::GetContents(pugi::xml_node node)
 {
 	if (node == nullptr)

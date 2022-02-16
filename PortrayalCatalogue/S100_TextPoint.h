@@ -20,7 +20,6 @@ private:
 	S100_AreaPlacement *areaPlacement;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void SetHorizontalAlignment(std::wstring& value);

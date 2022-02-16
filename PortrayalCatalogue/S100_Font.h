@@ -16,7 +16,6 @@ private:
 	std::wstring proportion;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void SetSerifs(std::wstring& value);

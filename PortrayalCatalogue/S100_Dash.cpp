@@ -36,33 +36,6 @@ std::wstring S100_Dash::GetLength()
 	return length;
 }
 
-void S100_Dash::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"start") == 0)
-		{
-			start = std::wstring(pNode->Gettext());
-		}
-		else if (nodeName.compare(L"length") == 0)
-		{
-			length = std::wstring(pNode->Gettext());
-		}
-	}
-}
-
 void S100_Dash::GetContents(pugi::xml_node& node)
 {
 	if (!node)

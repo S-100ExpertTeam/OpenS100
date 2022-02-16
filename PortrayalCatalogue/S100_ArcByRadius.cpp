@@ -8,38 +8,7 @@ S100_ArcByRadius::S100_ArcByRadius()
 
 S100_ArcByRadius::~S100_ArcByRadius()
 {
-}
 
-void S100_ArcByRadius::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"center") == 0)
-		{
-			center.GetContents(pNode);
-		}
-		else if (nodeName.compare(L"sector") == 0)
-		{
-			sector = new S100_Sector();
-			sector->GetContents(pNode);
-		}
-		else if (nodeName.compare(L"radius") == 0)
-		{
-			radius = pNode->Gettext();
-		}
-	}
 }
 
 void S100_ArcByRadius::GetContents(pugi::xml_node node) 

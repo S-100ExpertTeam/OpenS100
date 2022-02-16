@@ -28,15 +28,14 @@ bool S100PCManager::OpenS100ColorProfile(std::wstring _path)
 
 bool S100PCManager::OpenS100LineStyles(std::wstring _path)
 {
-	S100XMLReader::S100PCLineStylesReader::Open(_path, &lineStyles);
-	//S100XMLReader::S100PCLineStylesReader::OpenByPugi(_path, &lineStyles);
+	S100XMLReader::S100PCLineStylesReader::OpenByPugi(_path, &lineStyles);
 	return true;
 }
 
 
 bool S100PCManager::OpenS100AreaFills(std::wstring _path)
 {
-	CFileFind  finder;
+	CFileFind  finder; 
 	BOOL bWorking = finder.FindFile(_path.c_str());
 	while (bWorking)
 	{

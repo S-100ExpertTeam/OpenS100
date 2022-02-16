@@ -13,7 +13,6 @@ private:
 	S100_Path *path;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void SetPath(S100_Path* value);

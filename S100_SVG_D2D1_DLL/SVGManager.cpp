@@ -90,7 +90,7 @@ namespace S100_SVG_D2D1_DLL
 				if (symMap.find(svgName) == symMap.end())
 				{
 					SVG *pSvg = new SVG();
-					pSvg->ReadSVGFile(filepath);
+					pSvg->ReadSVGFileByPugiXml(filepath);
 					pSvg->m_svgName = svgName;
 					m_svgMap[svgName.c_str()] = pSvg;
 					symMap.insert({ svgName.c_str(), pSvg->GetSymbol(m_pDirect2dFactory, paletteName, colorProfile) });

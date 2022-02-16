@@ -32,7 +32,6 @@ private:
 	std::list<S100_LineSymbol> m_symbol;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 
 	void ParseValue(std::string value);

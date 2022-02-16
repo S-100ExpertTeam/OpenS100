@@ -20,7 +20,6 @@ public:
 	std::wstring position;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 
 	void SetReference(std::wstring& value);

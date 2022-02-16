@@ -13,51 +13,6 @@ S100_SimpleLineStyle::~S100_SimpleLineStyle()
 	if (dash) delete dash;
 }
 
-void S100_SimpleLineStyle::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"capStyle") == 0)
-		{
-			capStyle = std::wstring(pNode->Gettext());
-		}
-		else if (nodeName.compare(L"joinStyle") == 0)
-		{
-			joinStyle = std::wstring(pNode->Gettext());
-		}
-		else if (nodeName.compare(L"offset") == 0)
-		{
-			offset = std::wstring(pNode->Gettext());
-		}
-		else if (nodeName.compare(L"pen") == 0)
-		{
-			if (!pen)
-			{
-				pen = new S100_Pen();
-			}
-
-			pen->GetContents(pNode);
-		}
-		else if (nodeName.compare(L"dash") == 0)
-		{
-			if (!dash) dash = new S100_Dash();
-			dash->GetContents(pNode);
-		}
-	}
-}
-
 void S100_SimpleLineStyle::SetCapStyle(std::wstring& value)
 {
 	capStyle = value;

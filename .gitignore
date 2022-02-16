@@ -270,3 +270,5 @@ __pycache__/
 
 Redist/**
 
+# Backup file of WinMerge
+*.bak

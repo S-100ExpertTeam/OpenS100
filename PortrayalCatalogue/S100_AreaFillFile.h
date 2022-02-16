@@ -34,6 +34,5 @@ public:
 	void SetFileFormat(std::wstring& value);
 	std::wstring GetFileFormat();
 
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 };

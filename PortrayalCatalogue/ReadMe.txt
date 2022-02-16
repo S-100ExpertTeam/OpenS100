@@ -31,20 +31,3 @@ StdAfx.h, StdAfx.cpp
 응용 프로그램 마법사에서 사용하는 "TODO:" 주석은 사용자가 추가하거나 사용자 지정해야 하는 소스 코드 부분을 나타냅니다.
 
 /////////////////////////////////////////////////////////////////////////////
-
-
-	if (!pNodeList)
-		return;
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"nullInstruction") == 0)
-
-	}

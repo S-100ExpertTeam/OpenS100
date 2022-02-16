@@ -15,55 +15,6 @@ S100_TextInstruction::~S100_TextInstruction()
 		delete textPoint;
 }
 
-void S100_TextInstruction::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"featureReference") == 0)
-		{
-			GetFeatureReference()->GetContents(pNode);
-		}
-		else if (nodeName.compare(L"viewingGroup") == 0)
-		{
-			SetViewingGroup(std::wstring(pNode->Gettext()));
-		}
-		else if (nodeName.compare(L"displayPlane") == 0)
-		{
-			SetDisplayPlane(std::wstring(pNode->Gettext()));
-		}
-		else if (nodeName.compare(L"drawingPriority") == 0)
-		{
-			SetDrawingProiority(std::wstring(pNode->Gettext()));
-		}
-		else if (nodeName.compare(L"scaleMinimum") == 0)
-		{
-			SetScaleMinimum(std::wstring(pNode->Gettext()));
-		}
-		else if (nodeName.compare(L"scaleMaximum") == 0)
-		{
-			SetScaleMaximum(std::wstring(pNode->Gettext()));
-		}
-		else if (nodeName.compare(L"textPoint") == 0)
-		{
-			if (!textPoint) textPoint = new S100_TextPoint();
-			textPoint->GetContents(pNode);
-		}
-	}
-}
-
 void S100_TextInstruction::GetContents(pugi::xml_node node) 
 {
 	if (node==nullptr) 

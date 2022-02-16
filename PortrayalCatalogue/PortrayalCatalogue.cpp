@@ -482,7 +482,7 @@ void PortrayalCatalogue::GetAreaFills()
 
 		S100_SymbolFill* areaFill = new S100_SymbolFill();
 
-		if (!areaFill->ReadFile(rootPath + L"AreaFills\\" + path))
+		if (!areaFill->ReadFileByPugiXml(rootPath + L"AreaFills\\" + path))
 		{
 			delete areaFill;
 			continue;
@@ -511,6 +511,8 @@ S100_RuleFile* PortrayalCatalogue::GetMainRuleFile()
 			return rf;
 		}
 	}
+
+	return nullptr;
 }
 
 std::wstring PortrayalCatalogue::GetCurrentPaletteName()
