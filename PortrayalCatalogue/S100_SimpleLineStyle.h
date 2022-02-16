@@ -19,8 +19,6 @@ private:
 	S100_Dash *dash;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
-
 	void SetCapStyle(std::wstring& value);
 	void SetJoinStyle(std::wstring& value);
 	void SetOffset(std::wstring& value);

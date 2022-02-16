@@ -13,7 +13,6 @@ private:
 	S100_Pixmap pixmap;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNodeList);
 	void GetContents(pugi::xml_node node);
 
 	void SetPixmap(S100_Pixmap* value);

@@ -13,7 +13,6 @@ private:
 	S100_Color color;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNodeList);
 	void GetContents(pugi::xml_node node);
 
 	void SetOverrideColor(S100_Color* value);

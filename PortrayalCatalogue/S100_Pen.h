@@ -17,7 +17,6 @@ private:
 	GraphicBasePackage::Color color;
 
 public: 
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode) {};
 	void GetContents(pugi::xml_node& node);
 
 	void SetWidth(std::wstring& value);

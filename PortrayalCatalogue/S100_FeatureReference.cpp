@@ -11,36 +11,6 @@ S100_FeatureReference::~S100_FeatureReference()
 
 }
 
-void S100_FeatureReference::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-	MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-	MSXML2::IXMLDOMNodePtr pAttrNP;
-	pAttrNP = pAttr->getNamedItem(L"reference");
-	VARIANT value;
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		reference = std::wstring(value.bstrVal);
-	}
-	else
-	{
-		reference = pNode->Gettext();
-	}
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->childNodes;
-	if (!pNodeList)
-		return;
-	for (int i = 0; i < pNodeList->Getlength(); i++) 
-	{
-		MSXML2::IXMLDOMNodePtr pNode2 = pNodeList->Getitem(i);
-		if (!pNode2)
-			continue;
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName(); 
-	}
-}
-
 void S100_FeatureReference::GetContents(pugi::xml_node node)
 {
 	if (node == nullptr)

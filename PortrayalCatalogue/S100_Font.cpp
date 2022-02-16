@@ -11,40 +11,6 @@ S100_Font::~S100_Font()
 
 }
 
-void S100_Font::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->childNodes;
-	if (!pNodeList)
-		return;
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pChildNode = pNodeList->Getitem(i);
-		if (!pChildNode)
-			continue;
-		std::wstring nodeName = (LPCTSTR)pChildNode->GetnodeName();
-
-		if (nodeName.compare(L"serifs") == 0)
-		{
-			serifs = std::wstring(pChildNode->Gettext());
-		}
-		else if (nodeName.compare(L"weight") == 0)
-		{
-			weight = std::wstring(pChildNode->Gettext());
-		}
-		else if (nodeName.compare(L"slant") == 0)
-		{
-			slant = std::wstring(pChildNode->Gettext());
-		}
-		else if (nodeName.compare(L"proportion") == 0)
-		{
-			proportion = std::wstring(pChildNode->Gettext());
-		}
-	}
-}
-
 void S100_Font::GetContents(pugi::xml_node node)
 {
 	if (node==nullptr)

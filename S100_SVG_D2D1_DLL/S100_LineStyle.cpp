@@ -15,19 +15,6 @@ namespace S100_SVG_D2D1_DLL
 
 	}
 
-	S100_Line S100_LineStyle::ReadLineStyle(std::wstring path)
-	{
-		MSXML2::IXMLDOMDocument2Ptr pDoc;							// XML Document
-		if (!path.empty())
-		{
-			pDoc.CreateInstance(__uuidof(DOMDocument));  // create instance
-			pDoc->load((_variant_t)path.c_str());
-
-			m_filepath = path;
-			GetLineStyleInfo(pDoc);
-		}
-		return line;
-	}
 	S100_Line S100_LineStyle::ReadLineStyleByPugi(std::wstring path)
 	{
 	
@@ -42,50 +29,6 @@ namespace S100_SVG_D2D1_DLL
 		return line;
 	}
 
-	void S100_LineStyle::GetLineStyleInfo(MSXML2::IXMLDOMNodePtr pNode)
-	{
-		if (!pNode)
-			return;
-
-		MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-		for (int i = 0; i < pNodeList->Getlength(); i++)
-		{
-			MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-			if (!pNode)
-				continue;
-			std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-			if (nodeName.compare(L"lineStyle") == 0)
-			{
-				MSXML2::IXMLDOMNodeListPtr pCNList = pNode->GetchildNodes();
-				std::wstring aa;
-				for (int j = 0; j < pCNList->Getlength(); j++)
-				{
-					MSXML2::IXMLDOMNodePtr pCN = pCNList->Getitem(j);
-					std::wstring nodeName = (LPCTSTR)pCN->GetnodeName();
-
-					if (nodeName.compare(L"pen") == 0)
-					{
-						GetPen(pCN);
-					}
-					else if (nodeName.compare(L"dash") == 0)
-					{
-						GetDash(pCN->GetchildNodes());
-					}
-					else if (nodeName.compare(L"symbol") == 0)
-					{
-						GetSymbol(pCN);
-					}
-					//intervalLength
-					else if (nodeName.compare(L"intervalLength") == 0)
-						line.length = (float)_wtof(pCN->Gettext()) * factor;
-				}
-			}
-		}
-		return;
-	}
 	void S100_LineStyle::GetLineStyleInfo(pugi::xml_node node)
 	{
 		if (node==nullptr)
@@ -152,25 +95,6 @@ namespace S100_SVG_D2D1_DLL
 			line.pen.col =pugi::as_wide(colorNode.child_value());
 		}
 	}
-	void S100_LineStyle::GetPen(MSXML2::IXMLDOMNodePtr pNode)
-	{
-		if (!pNode)
-			return;
-
-		MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-		MSXML2::IXMLDOMNodePtr pAttrNP;
-		VARIANT value;
-
-		pAttrNP = pAttr->getNamedItem(L"width");
-		pAttrNP->get_nodeValue(&value);
-		VariantChangeType(&value, &value, 0, VT_R4);
-		line.pen.width = V_R4(&value);
-
-		pNode = pNode->GetfirstChild();
-		if (pNode)
-			line.pen.col = pNode->Gettext();
-
-	}
 
 	void S100_LineStyle::GetDash(pugi::xml_node node)
 	{
@@ -203,36 +127,6 @@ namespace S100_SVG_D2D1_DLL
 		}
 		line.dash.push_back(dash);
 	}
-	void S100_LineStyle::GetDash(MSXML2::IXMLDOMNodeListPtr pNodeList)
-	{
-		if (!pNodeList)
-			return;
-
-		S100_LineDash dash;
-
-		for (int i = 0; i < pNodeList->Getlength(); i++)
-		{
-			MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-			if (!pNode)
-				continue;
-			std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-			if (nodeName.compare(L"start") == 0)
-			{
-				dash.start = (float)_wtof(pNode->GetfirstChild()->Gettext())* factor;
-
-			}
-
-			else if (nodeName.compare(L"length") == 0)
-			{
-
-				dash.length = (float)_wtof(pNode->GetfirstChild()->Gettext())* factor;
-			}
-		}
-
-		line.dash.push_back(dash);
-	}
 
 	void S100_LineStyle::GetSymbol(pugi::xml_node node)
 	{
@@ -261,26 +155,6 @@ namespace S100_SVG_D2D1_DLL
 				sym.position = std::stof(positinoValue)*factor;
 			}
 		}
-
-		line.sym.push_back(sym);
-	}
-	void S100_LineStyle::GetSymbol(MSXML2::IXMLDOMNodePtr pNode)
-	{
-		if (!pNode)
-			return;
-
-		MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-		MSXML2::IXMLDOMNodePtr pAttrNP;
-		VARIANT value;
-
-		S100_LineSymbol sym;
-
-		pAttrNP = pAttr->getNamedItem(L"reference");
-		pAttrNP->get_nodeValue(&value);
-		sym.reference = std::wstring(value.bstrVal);
-
-		pNode = pNode->GetfirstChild();
-		sym.position = (float)_wtof(pNode->GetfirstChild()->Gettext()) * factor;
 
 		line.sym.push_back(sym);
 	}

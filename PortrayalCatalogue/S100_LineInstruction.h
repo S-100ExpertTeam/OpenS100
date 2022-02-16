@@ -32,7 +32,6 @@ public:
 	void SetSuppression(std::wstring& value);
 	std::wstring GetSuppression();
 
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 	bool SuppressionIsTrue();
 };

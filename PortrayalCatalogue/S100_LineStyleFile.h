@@ -20,7 +20,6 @@ private:
 	std::wstring fileFormat;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 
 	void SetId(std::wstring& value);

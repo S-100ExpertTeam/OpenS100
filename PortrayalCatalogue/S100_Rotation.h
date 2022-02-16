@@ -15,7 +15,6 @@ private:
 	std::wstring value;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 
 	void SetUseValueOf(std::wstring& value);

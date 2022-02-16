@@ -794,7 +794,8 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						S100_SymbolFill* tempAreaFill = new S100_SymbolFill();
 						tempAreaFill->SetFileTitle(cf->GetReference());
 
-						if (!tempAreaFill->ReadFile(path))
+						//여기를 pugi로 변경하면 심볼이 나오지않습니다
+						if (!tempAreaFill->ReadFileByPugiXml(path))
 						{
 							delete tempAreaFill;
 						}

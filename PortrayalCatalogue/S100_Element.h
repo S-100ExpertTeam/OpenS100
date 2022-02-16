@@ -33,7 +33,5 @@ public:
 
 	void SetFont(S100_Font* value);
 	S100_Font* GetFont();
-
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 };

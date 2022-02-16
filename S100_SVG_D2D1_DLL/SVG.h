@@ -54,34 +54,24 @@ namespace S100_SVG_D2D1_DLL
 		POINTF m_pivotPoint;
 
 	public:
-		bool ReadSVGFile(std::wstring path);
 		bool ReadSVGFileByPugiXml(std::wstring path);
 
-		void GetSVGInfo(MSXML2::IXMLDOMNodePtr pNode);
 		void GetSVGInfo(pugi::xml_node& node);
 
-		void GetTitle(MSXML2::IXMLDOMNodeListPtr pNodeList);
 		void GetTitle(pugi::xml_node& node);
 
-		void Getdesc(MSXML2::IXMLDOMNodeListPtr pNodeList);
 		void Getdesc(pugi::xml_node& node);
 
-		void Getmetadata(MSXML2::IXMLDOMNodeListPtr pNodeList);
 		void Getmetadata(pugi::xml_node& node);
 
-		void GetFigure(MSXML2::IXMLDOMNodePtr pNode);
 		void GetFigure(pugi::xml_node& node);
 
-		void GetSymbolBoxLayout(MSXML2::IXMLDOMNodePtr pNode);
 		void GetSymbolBoxLayout(pugi::xml_node& node);
 
-		void GetSVGBoxLayout(MSXML2::IXMLDOMNodePtr pNode);
 		void GetSVGBoxLayout(pugi::xml_node& node);
 
-		void GetSymbol(MSXML2::IXMLDOMNodePtr pNode);
 		void GetSymbol(pugi::xml_node& node);
 
-		void GetPivotPointLayout(MSXML2::IXMLDOMNodePtr pNode);
 		void GetPivotPointLayout(pugi::xml_node& node);
 
 		void OrganizeSymbol();

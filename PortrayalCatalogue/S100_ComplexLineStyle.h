@@ -12,8 +12,6 @@ private:
 	std::wstring scaleFactor;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
-
 	void SetSymbolReference(std::wstring& value);
 	std::wstring GetSymbolReference();
 

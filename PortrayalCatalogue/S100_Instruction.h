@@ -39,7 +39,6 @@ private:
 	std::wstring scaleMaximum;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodeListPtr pNodeList);
 	void GetContents(pugi::xml_node node);
 
 

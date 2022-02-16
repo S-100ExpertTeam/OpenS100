@@ -13,8 +13,6 @@ private:
 	std::wstring value;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
-
 	void SetName(std::wstring& value);
 	void SetSelect(std::wstring& value);
 	void SetValue(std::wstring& _value);

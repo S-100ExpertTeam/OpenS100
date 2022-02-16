@@ -14,8 +14,6 @@ private:
 	std::vector<S100_WithParam*> params;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
-
 	void SetName(std::wstring& value);
 	void SetParam(S100_WithParam* value);
 	void SetParams(std::vector<S100_WithParam*> value);

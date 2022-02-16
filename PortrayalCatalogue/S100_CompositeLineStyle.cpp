@@ -25,45 +25,6 @@ S100_CompositeLineStyle::~S100_CompositeLineStyle()
 	}
 }
 
-void S100_CompositeLineStyle::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-
-		S100_LineStyle *lineStyle = NULL;
-		if (nodeName.compare(L"lineStyle") == 0)
-		{
-			lineStyle = new S100_LineStyle();
-			lineStyle->GetContents(pNode);
-			lineStyles.push_back(lineStyle);
-		}
-		else if (nodeName.compare(L"lineStyleReference") == 0)
-		{
-			S100_LineStyleReference *lineStyleRef = new S100_LineStyleReference();
-			lineStyleRef->GetContents(pNode);
-			lineStyles.push_back(lineStyle);
-		}
-		else if (nodeName.compare(L"compositeLineStyle") == 0)
-		{
-			S100_CompositeLineStyle *complexLineStyle = new S100_CompositeLineStyle();
-			complexLineStyle->GetContents(pNode);
-			lineStyles.push_back(lineStyle);
-		}
-	}
-}
-
 void S100_CompositeLineStyle::GetContents(pugi::xml_node& node) 
 {
 	if (!node) 

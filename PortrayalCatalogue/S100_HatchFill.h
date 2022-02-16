@@ -15,7 +15,6 @@ private:
 	std::list<S100_Hatch*> hatches;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNodeList);
 	void GetContents(pugi::xml_node node);
 	
 	void SetHatches(S100_Hatch* value);

@@ -21,7 +21,5 @@ public:
 
 	S100_VectorPoint* GetEndPoint();
 	void SetEndPoint(S100_VectorPoint* value);
-
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 };

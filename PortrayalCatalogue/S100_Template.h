@@ -20,8 +20,6 @@ private:
 	S100_DisplayList *displayList;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
-
 	void SetMatch(std::wstring& value);
 	void SetPriority(std::wstring& value);
 	void SetInstruction(S100_Instruction* value);

@@ -14,7 +14,6 @@ private:
 	S100_TextPoint* textPoint;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void SetTextPoint(S100_TextPoint* value);
