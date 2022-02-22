@@ -12,7 +12,6 @@ private:
 	S100_Color *color;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void SetColor(S100_Color* value);

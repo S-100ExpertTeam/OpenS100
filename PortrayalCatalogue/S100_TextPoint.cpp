@@ -21,59 +21,6 @@ S100_TextPoint::~S100_TextPoint()
 	}
 }
 
-void S100_TextPoint::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-	MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-	MSXML2::IXMLDOMNodePtr pAttrNP;
-	VARIANT value;
-	pAttrNP = pAttr->getNamedItem(L"horizontalAlignment");
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		horizontalAlignment = std::wstring(value.bstrVal);
-	}
-	pAttrNP = pAttr->getNamedItem(L"verticalAlignment");
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		verticalAlignment = std::wstring(value.bstrVal);
-	}
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->childNodes;
-	if (!pNodeList)
-		return;
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pChildNode = pNodeList->Getitem(i);
-		if (!pChildNode)
-			continue;
-		std::wstring nodeName = (LPCTSTR)pChildNode->GetnodeName();
-
-		if (nodeName.compare(L"element") == 0)
-		{
-			S100_Element *element = new S100_Element();
-			element->GetContents(pChildNode);
-			elements.push_back(element);
-		}
-		else if (nodeName.compare(L"offset") == 0)
-		{
-			if (!offset) offset = new S100_VectorPoint();
-			offset->GetContents(pChildNode);
-		}
-		else if (nodeName.compare(L"rotation") == 0)
-		{
-			rotation = std::wstring(pChildNode->Gettext());
-		}
-		else if (nodeName.compare(L"areaPlacement") == 0)
-		{
-			if (!areaPlacement) areaPlacement = new S100_AreaPlacement();
-			areaPlacement->GetContents(pChildNode);
-		}
-	}
-}
 void S100_TextPoint::GetContents(pugi::xml_node node)
 {
 	if (node==nullptr) 

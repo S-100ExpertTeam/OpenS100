@@ -1,6 +1,4 @@
-﻿// Configuration_4.cpp: 구현 파일
-//
-#include "pch.h"
+﻿#include "pch.h"
 #include "OpenS100.h"
 #include "Configuration_4.h"
 #include "afxdialogex.h"

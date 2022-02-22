@@ -13,7 +13,6 @@ private:
 	S100_AreaFillBase *areaFill;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void SetAreaFill(S100_AreaFillBase* value);

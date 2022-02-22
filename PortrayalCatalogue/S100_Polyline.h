@@ -13,7 +13,6 @@ private:
 	std::list<S100_VectorPoint> points;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void SetPoints(S100_VectorPoint* value);

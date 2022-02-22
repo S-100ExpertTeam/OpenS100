@@ -15,7 +15,6 @@ private:
 	S100_Sector *sector;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void SetPoint(S100_VectorPoint* value);

@@ -21,9 +21,7 @@ private:
 	S100_VectorPoint* v2;
 
 public:
-	bool ReadFile(std::wstring& path);
 	bool ReadFileByPugiXml(std::wstring& path);
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 
 	void SetClipSymbols(std::wstring& value);

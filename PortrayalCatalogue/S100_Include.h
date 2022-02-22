@@ -11,7 +11,6 @@ private:
 	std::wstring href;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void SetHerf(std::wstring& value);
 	std::wstring GetHerf();
 }; 

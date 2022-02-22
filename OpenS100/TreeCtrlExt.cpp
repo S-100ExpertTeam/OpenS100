@@ -1,6 +1,3 @@
-// Tree.cpp : 구현 파일입니다.
-//
-
 #include "pch.h"
 #include "TreeCtrlExt.h"
 #include "MainFrm.h"

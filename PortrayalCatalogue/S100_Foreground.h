@@ -12,7 +12,6 @@ private:
 	std::wstring transparency;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodeListPtr pNodeList);
 	void GetContents(pugi::xml_node node);
 
 	void SetToken(std::wstring& value);

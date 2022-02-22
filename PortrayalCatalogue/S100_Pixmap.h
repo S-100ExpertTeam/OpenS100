@@ -17,7 +17,6 @@ private:
 	S100_OverrideColor overrideColor;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNodeList);
 	void GetContents(pugi::xml_node node);
 
 	void SetReference(std::wstring& value);

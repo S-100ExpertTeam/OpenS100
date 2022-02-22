@@ -15,48 +15,6 @@ S100_Element::~S100_Element()
 	if (font) delete font;
 }
 
-void S100_Element::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->childNodes;
-	if (!pNodeList)
-		return;
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pChildNode = pNodeList->Getitem(i);
-		if (!pChildNode)
-			continue;
-		std::wstring nodeName = (LPCTSTR)pChildNode->GetnodeName();
-
-		if (nodeName.compare(L"text") == 0)
-		{
-			if (!text) text = new S100_Text();
-			text->GetContents(pChildNode);
-		}
-		else if (nodeName.compare(L"bodySize") == 0)
-		{
-			bodySize = std::wstring(pChildNode->Gettext());
-		}
-		else if (nodeName.compare(L"verticalOffset") == 0)
-		{
-			verticalOffset = std::wstring(pChildNode->Gettext());
-		}
-		else if (nodeName.compare(L"foreground") == 0)
-		{
-			if (!foreground) foreground = new S100_Foreground();
-			foreground->SetToken(std::wstring(pChildNode->Gettext()));
-			foreground->GetContents(pChildNode);
-		}
-		else if (nodeName.compare(L"font") == 0)
-		{
-			if (!font) font = new S100_Font();
-			font->GetContents(pChildNode);
-		}
-	}
-}
-
 void S100_Element::GetContents(pugi::xml_node node)
 {
 	if (node == nullptr)

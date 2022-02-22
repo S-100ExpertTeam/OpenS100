@@ -14,57 +14,6 @@ S100_LineSymbol::~S100_LineSymbol()
 
 }
 
-void S100_LineSymbol::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-	MSXML2::IXMLDOMNodePtr pAttrNP;
-	VARIANT value;
-
-	pAttrNP = pAttr->getNamedItem(L"reference");
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		reference = std::wstring(value.bstrVal).c_str();
-	}
-	pAttrNP = pAttr->getNamedItem(L"rotation");
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		rotation = std::wstring(value.bstrVal).c_str();
-	}
-	pAttrNP = pAttr->getNamedItem(L"scaleFactor");
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		scaleFactor = std::wstring(value.bstrVal).c_str();
-	}
-	pAttrNP = pAttr->getNamedItem(L"crsType");
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		crsType = std::wstring(value.bstrVal).c_str();
-	}
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"position") == 0)
-		{
-			position = std::wstring(pNode->Gettext());
-		}
-	}
-}
 void S100_LineSymbol::GetContents(pugi::xml_node& node) 
 {
 	if (!node)

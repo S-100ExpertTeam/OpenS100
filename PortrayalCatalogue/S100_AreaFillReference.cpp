@@ -11,38 +11,6 @@ S100_AreaFillReference::~S100_AreaFillReference()
 
 }
 
-void S100_AreaFillReference::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNamedNodeMapPtr pAttr = pNode->Getattributes();
-	MSXML2::IXMLDOMNodePtr pAttrNP;
-	pAttrNP = pAttr->getNamedItem(L"reference");
-	VARIANT value;
-	if (pAttrNP)
-	{
-		pAttrNP->get_nodeValue(&value);
-		reference = std::wstring(value.bstrVal);
-	}
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"reference") == 0)
-		{
-			reference = pNode->Gettext();
-		}
-	}
-}
-
 void S100_AreaFillReference::GetContents(pugi::xml_node node) 
 {
 	if (node == nullptr) 

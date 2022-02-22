@@ -17,8 +17,6 @@ private:
 	std::vector<S100_Include*> includes;
 
 public:
-	bool ReadRuleFile(std::wstring path);
-	void GetContents(MSXML2::IXMLDOMNodeListPtr pNodeList);
 
 	void ExcuteIncludeRuleFile();
 	void CopyTo(S100_Transform* toObject);

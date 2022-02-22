@@ -1,11 +1,5 @@
-﻿
-// OpenS100View.cpp: COpenS100View 클래스의 구현
-//
-
-#include "pch.h"
+﻿#include "pch.h"
 #include "framework.h"
-// SHARED_HANDLERS는 미리 보기, 축소판 그림 및 검색 필터 처리기를 구현하는 ATL 프로젝트에서 정의할 수 있으며
-// 해당 프로젝트와 문서 코드를 공유하도록 해 줍니다.
 #ifndef SHARED_HANDLERS
 #include "OpenS100.h"
 #endif
@@ -86,7 +80,6 @@ ON_WM_NCMOUSEHOVER()
 ON_WM_MOUSELEAVE()
 END_MESSAGE_MAP()
 
-// COpenS100View 생성/소멸
 
 COpenS100View::COpenS100View() 
 {
@@ -142,13 +135,10 @@ void COpenS100View::SaveLastPosScale()
 
 BOOL COpenS100View::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: CREATESTRUCT cs를 수정하여 여기에서
-	//  Window 클래스 또는 스타일을 수정합니다.
 
 	return CView::PreCreateWindow(cs);
 }
 
-// COpenS100View 그리기
 
 void COpenS100View::OnDraw(CDC* pDC)
 {
@@ -159,7 +149,6 @@ void COpenS100View::OnDraw(CDC* pDC)
 		return;
 	}
 
-	// View의 Rect
 	CRect rect;
 	GetClientRect(&rect);
 	gisLib->SetViewMBR(rect);
@@ -214,7 +203,6 @@ void COpenS100View::OnSize(UINT nType, int cx, int cy)
 
 
 
-// COpenS100View 인쇄
 
 
 void COpenS100View::OnFilePrintPreview()
@@ -231,12 +219,10 @@ BOOL COpenS100View::OnPreparePrinting(CPrintInfo* pInfo)
 
 void COpenS100View::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: 인쇄하기 전에 추가 초기화 작업을 추가합니다.
 }
 
 void COpenS100View::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
-	// TODO: 인쇄 후 정리 작업을 추가합니다.
 }
 
 void COpenS100View::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -254,7 +240,6 @@ void COpenS100View::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 }
 
 
-// COpenS100View 진단
 
 #ifdef _DEBUG
 void COpenS100View::AssertValid() const

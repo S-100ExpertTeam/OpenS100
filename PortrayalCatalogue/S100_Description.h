@@ -18,7 +18,6 @@ private:
 	bool on = true;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodeListPtr pNodeList);
 	void GetContents(pugi::xml_node& node);
 
 	void Setname(std::wstring& value);

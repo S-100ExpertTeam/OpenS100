@@ -14,11 +14,6 @@ S100_Instruction::~S100_Instruction()
 	}
 }
 
-void S100_Instruction::GetContents(MSXML2::IXMLDOMNodeListPtr pNodeList)
-{
-
-}
-
 void S100_Instruction::GetContents(pugi::xml_node node)
 {
 

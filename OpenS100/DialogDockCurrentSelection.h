@@ -15,7 +15,6 @@ class S101Cell;
 class FeatureType;
 class CGISLibraryApp;
 
-// Current Selection¿« Dialog
 class CDialogDockCurrentSelection : public CDialogEx
 {
 	DECLARE_DYNAMIC(CDialogDockCurrentSelection)

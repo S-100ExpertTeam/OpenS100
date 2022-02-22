@@ -11,45 +11,6 @@ S100_Hatch::~S100_Hatch()
 
 }
 
-void S100_Hatch::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"lineStyle") == 0)
-		{
-			lineStyle.GetContents(pNode);
-		}
-		else if (nodeName.compare(L"lineStyleReference") == 0)
-		{
-			lineStyleReference.GetContents(pNode);
-		}
-		else if (nodeName.compare(L"compositeLineStyle") == 0)
-		{
-			compositeLineStyle.GetContents(pNode);
-		}
-		else if (nodeName.compare(L"direction") == 0)
-		{
-			direction.GetContents(pNode);
-		}
-		else if (nodeName.compare(L"distance") == 0)
-		{
-			distance = pNode->Gettext();
-		}
-	}
-}
-
 void S100_Hatch::GetContents(pugi::xml_node node)
 {
 	if (node==nullptr)

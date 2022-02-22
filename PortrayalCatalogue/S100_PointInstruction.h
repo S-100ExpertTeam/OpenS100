@@ -14,7 +14,6 @@ private:
 	S100_VectorPoint *vectorPoint;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void SetSymbol(S100_Symbol* value);

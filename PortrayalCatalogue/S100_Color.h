@@ -17,7 +17,6 @@ private:
 	std::wstring description;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 
 	void SetToken(std::wstring& value);

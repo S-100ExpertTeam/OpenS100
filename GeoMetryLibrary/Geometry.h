@@ -96,7 +96,7 @@ public:
 	** factor   :
 				POINT _p1 - The starting point of the vector.
 				POINT _p2 - The end point of the vector.
-	** Return value : 결과값(단위 : radian, 범위 : 0 ~ 2 * pi)
+	** Return value :  radian, range : 0 ~ 2 * pi
 	*/
 	double GetAngle(POINT _p1, POINT _p2);
 

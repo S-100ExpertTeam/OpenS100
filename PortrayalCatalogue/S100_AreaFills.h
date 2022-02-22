@@ -14,7 +14,6 @@ private:
 	std::unordered_map<std::wstring, S100_AreaFillFile*> areaFillFiles;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 
 	void SetAreaFillFiles(std::wstring key, S100_AreaFillFile* value);

@@ -15,31 +15,6 @@ S100_AreaFills::~S100_AreaFills()
 	}
 }
 
-void S100_AreaFills::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"areaFill") == 0)
-		{
-			S100_AreaFillFile* areaFillFIle = new S100_AreaFillFile();
-
-			areaFillFIle->GetContents(pNode);
-
-			areaFillFiles.insert(std::unordered_map<std::wstring, S100_AreaFillFile*>::value_type(areaFillFIle->Getid(), areaFillFIle));
-		}
-	}
-}
 void S100_AreaFills::GetContents(pugi::xml_node& node) 
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())

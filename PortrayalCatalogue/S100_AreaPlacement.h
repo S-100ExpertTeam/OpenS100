@@ -13,9 +13,7 @@ private:
 	std::wstring placementMode;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodeListPtr pNodeList);
 	void GetContents(pugi::xml_node& node);
-
 	void SetPlacementMode(std::wstring& value);
 	std::wstring GetPlacementMode();
 };

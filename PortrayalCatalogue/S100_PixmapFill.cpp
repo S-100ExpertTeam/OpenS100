@@ -11,31 +11,6 @@ S100_PixmapFill::~S100_PixmapFill()
 
 }
 
-void S100_PixmapFill::GetContents(MSXML2::IXMLDOMNodePtr pNode)
-{
-	if (!pNode)
-		return;
-
-	((S100_PatternFill*)this)->GetContents(pNode);
-
-	MSXML2::IXMLDOMNodeListPtr pNodeList = pNode->GetchildNodes();
-
-	for (int i = 0; i < pNodeList->Getlength(); i++)
-	{
-		MSXML2::IXMLDOMNodePtr pNode = pNodeList->Getitem(i);
-
-		if (!pNode)
-			continue;
-
-		std::wstring nodeName = (LPCTSTR)pNode->GetnodeName();
-
-		if (nodeName.compare(L"pixmap") == 0)
-		{
-			pixmap.GetContents(pNode->childNodes);
-		}
-	}
-}
-
 void S100_PixmapFill::GetContents(pugi::xml_node node)
 {
 	if (!node)

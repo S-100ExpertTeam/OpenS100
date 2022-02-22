@@ -19,7 +19,6 @@ private:
 	std::vector<S100_Annulus> annuluses;
 
 public:
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void SetPolylines(S100_Polyline* value);

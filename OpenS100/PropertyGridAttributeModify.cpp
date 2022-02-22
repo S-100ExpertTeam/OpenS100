@@ -1,6 +1,3 @@
-// PropertyModify.cpp : 구현 파일입니다.
-//
-
 #include "pch.h"
 #include "PropertyGridAttributeModify.h"
 #include "resource.h"
