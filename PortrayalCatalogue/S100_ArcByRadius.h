@@ -23,7 +23,6 @@ public:
 	void SetRadius(std::wstring& value);
 	std::wstring GetRadius();
 
-	void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node node);
 
 	void DeleteLeftPtr();

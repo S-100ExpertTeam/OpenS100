@@ -22,61 +22,63 @@ AreaFill::~AreaFill()
 
 bool AreaFill::Read(std::wstring path)
 {
-	try
-	{
-		pugi::xml_document doc;
-		auto result = doc.load_file(path.c_str(), pugi::parse_pi);
+	return ReadByPugi(path);
 
-		if (result)
-		{
-			pugi::xml_node root = doc.root();
+	//try
+	//{
+	//	pugi::xml_document doc;
+	//	auto result = doc.load_file(path.c_str(), pugi::parse_pi);
 
-			for (auto child = root.first_child(); child; child = child.next_sibling())
-			{
-				auto name = child.name();
-				if (strcmp(name, "S100Meta") == 0)
-				{
-					auto type = child.type();
-					auto value = child.value();
-					auto meta = std::string(value);
-					auto startIndex = meta.find("name=\"");
-					auto sub = meta.substr(startIndex + 6);
-					auto endIndex = sub.find("\"");
-					auto sname = sub.substr(0, endIndex);
-					_name = pugi::as_wide(sname);
-					break;
-				}
-			}
-		}
+	//	if (result)
+	//	{
+	//		pugi::xml_node root = doc.root();
 
-		initializeCOM();
+	//		for (auto child = root.first_child(); child; child = child.next_sibling())
+	//		{
+	//			auto name = child.name();
+	//			if (strcmp(name, "S100Meta") == 0)
+	//			{
+	//				auto type = child.type();
+	//				auto value = child.value();
+	//				auto meta = std::string(value);
+	//				auto startIndex = meta.find("name=\"");
+	//				auto sub = meta.substr(startIndex + 6);
+	//				auto endIndex = sub.find("\"");
+	//				auto sname = sub.substr(0, endIndex);
+	//				_name = pugi::as_wide(sname);
+	//				break;
+	//			}
+	//		}
+	//	}
 
-		IXMLDOMDocumentPtr pDoc = NULL;
-		VARIANT_BOOL bBool;
-		IXMLDOMNodePtr pNode;
+	//	initializeCOM();
 
-		pDoc.CreateInstance(__uuidof(DOMDocument));
-		pDoc->load((_variant_t)path.c_str(), &bBool);
+	//	IXMLDOMDocumentPtr pDoc = NULL;
+	//	VARIANT_BOOL bBool;
+	//	IXMLDOMNodePtr pNode;
 
-		IXMLDOMNodeListPtr childs;
-		pDoc->get_childNodes(&childs);
+	//	pDoc.CreateInstance(__uuidof(DOMDocument));
+	//	pDoc->load((_variant_t)path.c_str(), &bBool);
 
-		long length = 0;
-		childs->get_length(&length);
+	//	IXMLDOMNodeListPtr childs;
+	//	pDoc->get_childNodes(&childs);
 
-		_areaCRS = getNodeValue(pDoc, L"//symbolFill//areaCRS");
-		_symbolReference = getNodeAttribute(pDoc, L"//symbolFill//symbol");
+	//	long length = 0;
+	//	childs->get_length(&length);
 
-		v1_x = (float)_wtof(getNodeValue(pDoc, L"//symbolFill//v1//x").c_str());
-		v1_y = (float)_wtof(getNodeValue(pDoc, L"//symbolFill//v1//y").c_str());
-		v2_x = (float)_wtof(getNodeValue(pDoc, L"//symbolFill//v2//x").c_str());
-		v2_y = (float)_wtof(getNodeValue(pDoc, L"//symbolFill//v2//y").c_str());
-	}
-	catch (std::exception ex)
-	{
-		return false;
-	}
-	return true;
+	//	_areaCRS = getNodeValue(pDoc, L"//symbolFill//areaCRS");
+	//	_symbolReference = getNodeAttribute(pDoc, L"//symbolFill//symbol");
+
+	//	v1_x = (float)_wtof(getNodeValue(pDoc, L"//symbolFill//v1//x").c_str());
+	//	v1_y = (float)_wtof(getNodeValue(pDoc, L"//symbolFill//v1//y").c_str());
+	//	v2_x = (float)_wtof(getNodeValue(pDoc, L"//symbolFill//v2//x").c_str());
+	//	v2_y = (float)_wtof(getNodeValue(pDoc, L"//symbolFill//v2//y").c_str());
+	//}
+	//catch (std::exception ex)
+	//{
+	//	return false;
+	//}
+	//return true;
 }
 
 bool AreaFill::ReadByPugi(std::wstring path)
