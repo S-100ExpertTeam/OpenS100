@@ -24,6 +24,5 @@ public:
 	//void UpdateS102ColorMapType(int _type, std::vector<COLORREF> _colorMap);
 	//void GetS102ColorMapType(int& _type, std::vector<COLORREF>& _colorMap);
 	bool BuildInputXML();
-	void SetVectorPointsType(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr parentElement);
-	void SetFeaturesType(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr parentElement);
+
 };

@@ -67,13 +67,3 @@ bool BAGLayer::BuildInputXML()
 	}
 	return false;
 }
-
-void BAGLayer::SetVectorPointsType(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr parentElement)
-{
-
-}
-
-void BAGLayer::SetFeaturesType(MSXML2::IXMLDOMDocument2Ptr pDoc, MSXML2::IXMLDOMElementPtr parentElement)
-{
-
-}

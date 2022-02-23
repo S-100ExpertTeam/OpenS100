@@ -18,6 +18,3 @@ using namespace Gdiplus;
 #ifndef _TEXTWHITEBACK	
 	//#define _TEXTWHITEBACK	
 #endif
-
-#import <msxml4.dll>
-#include "msxml.h"

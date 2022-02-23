@@ -15,7 +15,6 @@
 #include <list>
 #include <gdiplus.h>
 
-#import <msxml4.dll>
 
 #define factor (float)3.5
 
