@@ -311,7 +311,6 @@ void LayerManager::DrawInformationLayer(HDC& hDC, int nindex)
 	SolidBrush internalBrush(internalColor);
 	Pen linePen(lineColor);
 
-	//auto selectedLayer = GetLayer(nindex);
 	auto selectedLayer = layer;
 
 	auto mbr = selectedLayer->GetMBR();
@@ -1288,7 +1287,6 @@ void LayerManager::DrawOverlay(HDC& hdc, int type, int offset)
 
 Layer* LayerManager::GetLayer()
 {
-
 	return layer;
 }
 

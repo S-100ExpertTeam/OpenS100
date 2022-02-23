@@ -32,10 +32,7 @@ public:
 	/*
 	** Cell Layer
 	*/
-	//std::vector<Layer*>		m_listLayer;
 	Layer * layer  = nullptr;
-
-	//std::vector<Layer*>		m_SelectedLayer; //사용의미 모르겠음
 
 	// Overlay Layer
 	MBR						mbr;
@@ -51,7 +48,6 @@ public:
 	int isUpdate(CString filePath);
 	bool AddLayer(Layer* layer);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
-	//S101Cell* FindBaseLayer(S101Cell* cell);
 
 	
 
@@ -83,26 +79,17 @@ public:
 
 
 	void DrawInformationLayer(HDC &hDC, int nIndex);
-	//void ClearInformationLayer(int nindex);
-	//void ClearInformationLayer(CString filepath);
-	//void ClearAllInformationLayer();
-
 	void DrawDataCoverageOverscale(HDC &hdc);
 
 	void DrawValidationLayers(HDC &hDC, int offset = 0);
 	void DrawOverlay(HDC &hDC, int type, int offset = 0);
-	//void GetLayer(int index, Layer *_layer);
 	Layer* GetLayer();
 
-	//int GetLayerIndex(CString _pathName);
 	CString GetLayerName();
 	BOOL IsOn();
 	void DeleteLayer();
 	void DeleteLayer(CString filepath);
-	//void DeleteAllLayer();
 	void ReMBR();
-
-	//int GetLayerCount();
 
 	void ChangeS100ColorPalette(std::wstring paletteName);
 

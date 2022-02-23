@@ -22,7 +22,6 @@ CDialogDockLayerManager::~CDialogDockLayerManager()
 void CDialogDockLayerManager::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	//DDX_Control(pDX, IDC_LIST_LM, m_ListLayer);
 }
 
 
@@ -66,15 +65,6 @@ BOOL CDialogDockLayerManager::OnInitDialog()
 	/*
 	** init List Ctrl
 	*/
-	//m_ListLayer.SetExtendedStyle(LVS_EX_FULLROWSELECT);
-
-	//CRect listRect;
-	//m_ListLayer.GetWindowRect(listRect);
-	//m_ListLayer.InsertColumn(0, _T("No. "), LVCFMT_CENTER, 40);
-	//m_ListLayer.InsertColumn(1, _T("Type "), LVCFMT_CENTER, 40);
-	//m_ListLayer.InsertColumn(2, _T("Name"), LVCFMT_CENTER, listRect.Width() - 130);
-	//m_ListLayer.InsertColumn(3, _T("On/Off"), LVCFMT_CENTER, 50);
-	//m_ListLayer.InsertColumn(4, _T("Info"), LVCFMT_CENTER, 50);
 
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
@@ -117,21 +107,9 @@ void CDialogDockLayerManager::AdjustLayout()
 
 	CRect      rectENCs;
 
-	/*if (m_ListLayer.GetSafeHwnd())
-	{
-		rectENCs = CRect(rectClient.left, rectClient.top, rectClient.Size().cx, rectClient.Size().cy / 2);
-		m_ListLayer.MoveWindow(rectENCs);
-		m_ListLayer.SetColumnWidth(0, 40);
-		m_ListLayer.SetColumnWidth(1, 40);
-		m_ListLayer.SetColumnWidth(2, rectENCs.Width() - 130);
-		m_ListLayer.SetColumnWidth(3, 50);
-	}*/
-
-
 	int cyCmb = rectCombo.Size().cy;
 	if (m_wndPropList.GetSafeHwnd())
 		m_wndPropList.SetWindowPos(NULL, rectClient.left, 0, rectClient.Width(), rectClient.Size().cy, SWP_NOACTIVATE | SWP_NOZORDER);
-	//m_wndPropList.SetWindowPos(NULL, rectClient.left, rectClient.Size().cy / 2, rectClient.Width(), rectClient.Size().cy / 2, SWP_NOACTIVATE | SWP_NOZORDER);s
 }
 
 void CDialogDockLayerManager::InitPropList() //Data Set Identification included in Layer Manager
@@ -318,7 +296,6 @@ void CDialogDockLayerManager::UpdateList()
 {
 	if (gisLib->GetLayer()!=nullptr)
 	{
-		//Layer *layer = (Layer *)gisLib->GetLayer(gisLib->GetLayerCount() - 1);
 		Layer *layer = (Layer *)gisLib->GetLayer();
 		if (layer->m_spatialObject->m_FileType == FILE_S_100_VECTOR)
 		{

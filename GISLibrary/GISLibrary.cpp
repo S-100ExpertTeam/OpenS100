@@ -90,11 +90,7 @@ void CGISLibraryApp::DrawOverlay(HDC &hDC, int type, int offset)
 {
 	m_pLayerManager->DrawOverlay(hDC, type, offset);
 }
-//
-//void CGISLibraryApp::GetLayer(int index, Layer *_layer)
-//{
-//	m_pLayerManager->GetLayer(index, _layer);
-//}
+
 
 Layer* CGISLibraryApp::GetLayer()
 {
@@ -180,20 +176,6 @@ void CGISLibraryApp::DrawScaleBar()
 		DrawS100Symbol(101, L"SCALEB11", sx1, sy1, 0, (float)symbolScale);
 	}
 }
-//
-//void CGISLibraryApp::ClearInformationLayer(int index)
-//{
-//	m_pLayerManager->ClearInformationLayer(index);
-//}
-//void CGISLibraryApp::ClearInformationLayer(CString filepath)
-//{
-//	m_pLayerManager->ClearInformationLayer(filepath);
-//}
-//
-//void CGISLibraryApp::ClearAllInformationLayer()
-//{
-//	m_pLayerManager->ClearAllInformationLayer();
-//}
 
 CString CGISLibraryApp::GetLayerName()
 {
@@ -212,11 +194,6 @@ void CGISLibraryApp::DeleteLayer(CString filepath)
 	m_pLayerManager->DeleteLayer(filepath);
 }
 
-//void CGISLibraryApp::DeleteAllLayer()
-//{
-//	m_pLayerManager->DeleteAllLayer();
-//}
-
 void CGISLibraryApp::ReMBR()
 {
 	m_pLayerManager->ReMBR();
@@ -226,16 +203,6 @@ void CGISLibraryApp::SetViewMBR(RECT r)
 {
 	m_pLayerManager->SetViewMBR(r);
 }
-
-//int CGISLibraryApp::GetLayerCount()
-//{
-//	return m_pLayerManager->GetLayerCount();
-//}
-//
-//std::vector<Layer*> CGISLibraryApp::GetAllLayer()
-//{
-//	return m_pLayerManager->m_listLayer;
-//}
 
 MBR* CGISLibraryApp::GetMBR()
 {
@@ -425,11 +392,6 @@ bool CGISLibraryApp::PtInMap(double _x, double _y)
 	return m_pScaler->PtInMap(_x, _y);
 }
 
-//
-//int CGISLibraryApp::GetLayerIndex(CString pathName)
-//{
-//	return m_pLayerManager->GetLayerIndex(pathName);
-//}
 
 void CGISLibraryApp::InitS100Engine()
 {
