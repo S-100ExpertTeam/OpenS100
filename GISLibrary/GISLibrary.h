@@ -34,7 +34,7 @@ public:
 public:
 	Scaler* GetScaler();
 	LayerManager* GetLayerManager();
-	int GetLayerIndex(CString pathName);
+	//int GetLayerIndex(CString pathName);
 	void InitS100Engine();
 	void InitLibrary();
 	bool AddBackgroundLayer(CString _filepath);
@@ -44,30 +44,30 @@ public:
 	void S101RebuildPortrayal();
 	void DrawValidationLayers(HDC &hDC, int offset = 0);
 	void DrawOverlay(HDC &hDC, int type, int offset = 0);
-	void GetLayer(int index, Layer *_layer);
-	Layer* GetLayer(int index);
+	//void GetLayer(int index, Layer *_layer);
+	Layer* GetLayer();
 
 	void DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale = 5);
 	void DrawScaleBar();
 
-	CString GetLayerName(int index);
-	BOOL IsOn(int index);
-	void DeleteLayer(int index);
+	CString GetLayerName();
+	BOOL IsOn();
+	void DeleteLayer();
 	void DeleteLayer(CString filepath);
-	void DeleteAllLayer();
+	//void DeleteAllLayer();
 	void ReMBR();
 
-	void ClearInformationLayer(int index);
-	void ClearInformationLayer(CString filepath);
-	void ClearAllInformationLayer();
+	//void ClearInformationLayer(int index);
+	//void ClearInformationLayer(CString filepath);
+	//void ClearAllInformationLayer();
 
 	void SetViewMBR(RECT r);
 
 	/*
 	**  Get number of saved layers 
 	*/
-	int GetLayerCount();
-	std::vector<Layer*> GetAllLayer();
+	//int GetLayerCount();
+	//std::vector<Layer*> GetAllLayer();
 
 	MBR* GetMBR();
 						

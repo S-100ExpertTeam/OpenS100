@@ -306,7 +306,7 @@ void COpenS100View::MapDragSize()
 
 void COpenS100View::MapFill()
 {
-	Layer *layer = gisLib->GetLayer(0);
+	Layer *layer = gisLib->GetLayer();
 	if (nullptr == layer)
 	{
 		return;
@@ -929,7 +929,7 @@ void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
 
 Layer* COpenS100View::GetCurrentLayer()
 {
-	return gisLib->GetLayer(0);
+	return gisLib->GetLayer();
 }
 
 BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
@@ -1092,7 +1092,7 @@ void COpenS100View::ClearPickReport()
 
 void COpenS100View::PickReport(CPoint _point)
 {
-	auto layer = gisLib->GetLayerManager()->GetLayer(0);
+	auto layer = gisLib->GetLayerManager()->GetLayer();
 	if (nullptr == layer)
 	{
 		return;
@@ -1363,7 +1363,7 @@ void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)
 	frPick = _fr;
 	Layer* l = nullptr;
 
-	l = (Layer*)gisLib->GetLayer(0);
+	l = (Layer*)gisLib->GetLayer();
 
 	if (l == NULL)
 	{
