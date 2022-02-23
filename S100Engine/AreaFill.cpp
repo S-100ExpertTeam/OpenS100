@@ -87,6 +87,10 @@ bool AreaFill::ReadByPugi(std::wstring path)
 		pugi::xml_document doc;
 		doc.load_file(path.c_str());
 
+
+
+
+
 		auto list = doc.child("symbolFill");
 		for (auto instruction = list.first_child(); instruction; instruction = instruction.next_sibling())
 		{
