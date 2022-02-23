@@ -1,5 +1,4 @@
-﻿// CDialogViewNoGeometry.cpp: 구현 파일
-//
+﻿//
 
 #include "pch.h"
 #include "OpenS100.h"
@@ -16,7 +15,6 @@
 #include <string>
 #include <algorithm>
 
-// CDialogViewNoGeometry 대화 상자
 
 IMPLEMENT_DYNAMIC(CDialogViewNoGeometry, CDialogEx)
 

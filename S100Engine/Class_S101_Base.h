@@ -564,7 +564,7 @@ struct ST_PTAS   // <Boundary>
 {
 	unsigned int				nRRNM;				// Reference Record Name
 	unsigned int				nRRID;				// Reference Record identifier  // <Boundary ref="RRID">
-	unsigned int				nTOPI;					// Topology indicator ( 1 = Beginning Point, 2 = End Point, 3 = Beginning & End Point ) // <Boundary boundaryType="TOPI"> // 3이면 바운더리가 2개
+	unsigned int				nTOPI;					// Topology indicator ( 1 = Beginning Point, 2 = End Point, 3 = Beginning & End Point ) // <Boundary boundaryType="TOPI"> 
 
 	ST_PTAS()
 	{

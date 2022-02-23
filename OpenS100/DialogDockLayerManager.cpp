@@ -86,13 +86,7 @@ BOOL CDialogDockLayerManager::OnInitDialog()
 	InitPropList();
 	AdjustLayout();
 
-
-#ifdef _S57_EDITOR
-	m_wndPropList.ShowWindow(FALSE);
-#endif
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	// EXCEPTION: OCX Property Pages should return FALSE
+	return TRUE; 
 }
 
 void CDialogDockLayerManager::OnButtonDelete()  //delete layer

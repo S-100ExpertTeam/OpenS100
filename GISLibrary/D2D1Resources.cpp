@@ -140,7 +140,7 @@ namespace GISLibrary
 
 			// Create a DirectWrite text format object.
 			hr = pDWriteFactory->CreateTextFormat(
-				L"HY°ß°íµñ",
+				L"hy gothic-extra",
 				NULL,
 				DWRITE_FONT_WEIGHT_BOLD,
 				DWRITE_FONT_STYLE_NORMAL,
@@ -258,7 +258,7 @@ namespace GISLibrary
 		SafeRelease(&pDWriteTextFormat);
 
 		auto result = pDWriteFactory->CreateTextFormat(
-				L"±¼¸²",
+				L"rounded typeface",
 				NULL,
 				DWRITE_FONT_WEIGHT_NORMAL,
 				DWRITE_FONT_STYLE_NORMAL,

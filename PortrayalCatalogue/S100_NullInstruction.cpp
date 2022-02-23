@@ -51,7 +51,7 @@ void S100_NullInstruction::GetContents(pugi::xml_node node)
 		else 
 		{
 			std::wstring name =pugi::as_wide(instructionName);
-			name.append(L"ดย พ๘ดย Context");
+			name.append(L" Context without");
 		}
 	}
 }

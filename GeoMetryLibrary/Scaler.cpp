@@ -323,7 +323,6 @@ void Scaler::SetScale(int scale)
 CString Scaler::GetFormatedScale()
 {
 	CString str;
-	// Scale (ÄÞ¸¶¸¦ Âï´Â ´Ù)
 	double Scale = GetCurrentScale();
 
 	CString newStr, strComma;

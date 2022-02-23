@@ -1,5 +1,4 @@
 ﻿#pragma once
-// CDialogViewNoGeometry 대화 상자
 #include "FeatureCodeString.h"
 class S101Cell;
 

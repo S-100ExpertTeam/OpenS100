@@ -1,15 +1,11 @@
-// S100_SVG_D2D1_DLL.h : S100_SVG_D2D1_DLL DLL의 기본 헤더 파일입니다.
-//
-
 #pragma once
 
 
 #ifndef __AFXWIN_H__
-#error "PCH에 대해 이 파일을 포함하기 전에 'stdafx.h'를 포함합니다."
+#error "Include 'stdafx.h' before including this file for PCH."
 #endif
 
 // CS100_SVG_D2D1_DLLApp
-// 이 클래스의 구현을 보려면 S100_SVG_D2D1_DLL.cpp를 참조하십시오.
 //
 #include <string>
 
