@@ -5,7 +5,9 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include <iostream>
+
 
 AreaFill::AreaFill()
 {
@@ -87,7 +89,22 @@ bool AreaFill::ReadByPugi(std::wstring path)
 	{
 		initializeCOM();
 		pugi::xml_document doc;
-		doc.load_file(path.c_str());
+		auto result = doc.load_file(path.c_str(),pugi::parse_full);
+
+		pugi::xml_node meta = doc.child("S100Meta");
+		std::wstring metaValue= pugi::as_wide( meta.value());
+
+		std::wistringstream ss(metaValue);
+		std::wstring strBuffer;
+		std::vector<std::wstring> v;
+
+		while (getline(ss, strBuffer,L'"'))
+		{
+			v.push_back(strBuffer);
+		}
+		_name = v[1];
+		_exposition = v[3];
+
 
 		auto list = doc.child("symbolFill");
 		for (auto instruction = list.first_child(); instruction; instruction = instruction.next_sibling())
@@ -99,8 +116,7 @@ bool AreaFill::ReadByPugi(std::wstring path)
 			}
 			else if (!strcmp(instructionName, "symbol"))
 			{
-				_symbolReference = pugi::as_wide(instruction.child_value());
-				_name = _symbolReference.substr(0, _symbolReference.size() - 1);
+				_symbolReference = pugi::as_wide(instruction.attribute("reference").value());
 			}
 			else if (!strcmp(instructionName, "v1"))
 			{

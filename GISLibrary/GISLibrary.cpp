@@ -91,14 +91,10 @@ void CGISLibraryApp::DrawOverlay(HDC &hDC, int type, int offset)
 	m_pLayerManager->DrawOverlay(hDC, type, offset);
 }
 
-void CGISLibraryApp::GetLayer(int index, Layer *_layer)
-{
-	m_pLayerManager->GetLayer(index, _layer);
-}
 
-Layer* CGISLibraryApp::GetLayer(int index)
+Layer* CGISLibraryApp::GetLayer()
 {
-	return m_pLayerManager->GetLayer(index);
+	return m_pLayerManager->GetLayer();
 }
 
 void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale)
@@ -181,41 +177,21 @@ void CGISLibraryApp::DrawScaleBar()
 	}
 }
 
-void CGISLibraryApp::ClearInformationLayer(int index)
+CString CGISLibraryApp::GetLayerName()
 {
-	m_pLayerManager->ClearInformationLayer(index);
+	return m_pLayerManager->GetLayerName();
 }
-void CGISLibraryApp::ClearInformationLayer(CString filepath)
+BOOL CGISLibraryApp::IsOn()
 {
-	m_pLayerManager->ClearInformationLayer(filepath);
+	return m_pLayerManager->IsOn();
 }
-
-void CGISLibraryApp::ClearAllInformationLayer()
+void CGISLibraryApp::DeleteLayer()
 {
-	m_pLayerManager->ClearAllInformationLayer();
-}
-
-CString CGISLibraryApp::GetLayerName(int index)
-{
-	return m_pLayerManager->GetLayerName(index);
-}
-BOOL CGISLibraryApp::IsOn(int index)
-{
-	return m_pLayerManager->IsOn(index);
-}
-void CGISLibraryApp::DeleteLayer(int index)
-{
-	m_pLayerManager->DeleteLayer(index);
-
+	m_pLayerManager->DeleteLayer();
 }
 void CGISLibraryApp::DeleteLayer(CString filepath)
 {
 	m_pLayerManager->DeleteLayer(filepath);
-}
-
-void CGISLibraryApp::DeleteAllLayer()
-{
-	m_pLayerManager->DeleteAllLayer();
 }
 
 void CGISLibraryApp::ReMBR()
@@ -226,16 +202,6 @@ void CGISLibraryApp::ReMBR()
 void CGISLibraryApp::SetViewMBR(RECT r)
 {
 	m_pLayerManager->SetViewMBR(r);
-}
-
-int CGISLibraryApp::GetLayerCount()
-{
-	return m_pLayerManager->GetLayerCount();
-}
-
-std::vector<Layer*> CGISLibraryApp::GetAllLayer()
-{
-	return m_pLayerManager->m_listLayer;
 }
 
 MBR* CGISLibraryApp::GetMBR()
@@ -426,11 +392,6 @@ bool CGISLibraryApp::PtInMap(double _x, double _y)
 	return m_pScaler->PtInMap(_x, _y);
 }
 
-
-int CGISLibraryApp::GetLayerIndex(CString pathName)
-{
-	return m_pLayerManager->GetLayerIndex(pathName);
-}
 
 void CGISLibraryApp::InitS100Engine()
 {

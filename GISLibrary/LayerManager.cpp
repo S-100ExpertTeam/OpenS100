@@ -46,15 +46,6 @@
 
 #pragma comment(lib, "winmm")
 
-// PC list 
-//std::vector<PortrayalCatalogue*>* LayerManager::pPortrayalCatalogues = nullptr;
-//std::unordered_map<std::wstring, PortrayalCatalogue*>* LayerManager::hash_PC = nullptr;
-//
-//std::vector<FeatureCatalogue*>* LayerManager::pS100Catalogs = nullptr;
-//std::unordered_map<std::wstring, FeatureCatalogue*>* LayerManager::hash_FC = nullptr;
-//
-//std::unordered_map<FeatureCatalogue*, PortrayalCatalogue*> LayerManager::CatalogueList;
-
 LayerManager::LayerManager(void)
 {
 	CString strFolderPath;
@@ -85,15 +76,10 @@ LayerManager::~LayerManager()
 		delete m_listBackgroundLayer.GetNext(pos);
 	}
 
-	for (auto itor = m_listLayer.begin(); itor != m_listLayer.end(); itor++)
-	{
-		delete* itor;
-		*itor = nullptr;
-	}
-
-	m_listLayer.clear();
+	delete layer;
+	layer = nullptr;
 }
- 
+
 bool LayerManager::AddBackgroundLayer(CString _filepath)
 {
 	CString file_extension = _T("");
@@ -149,62 +135,14 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 	return TRUE;
 }
 
-S101Cell* LayerManager::FindBaseLayer(S101Cell* cell)
+bool LayerManager::AddLayer(Layer* _layer)
 {
-
-	CString dsed = cell->m_dsgir.m_dsid.m_dsed;
-	int BaseNum = _ttoi(dsed.Left(1));
-	int updateNum = _ttoi(dsed.Right(1));
-
-	S101Cell* Basecell = nullptr;
-	for (Layer* BaseLayer : m_listLayer)
-	{
-		auto BaseLayerNum = ((S101Cell*)BaseLayer->GetSpatialObject())->m_dsgir.m_dsid.m_dsed;
-		int B = _ttoi(BaseLayerNum.Left(1));
-
-
-		if (BaseNum == B)
-		{
-			Basecell = ((S101Cell*)BaseLayer->GetSpatialObject());
-			if (Basecell->updates.size() == 0 && (updateNum - 1 == 0))
-			{
-				return Basecell;
-			}
-
-			S101Cell* update = Basecell->updates.back();
-			int U = _ttoi(update->m_dsgir.m_dsid.m_dsed.Right(1));
-
-			if (updateNum == (U + 1))
-			{
-				return Basecell;
-			}
-			else
-			{
-				return nullptr;
-			}
-		}
-	}
-
-	return nullptr;
-}
-
-bool LayerManager::AddLayer(Layer* layer)
-{
-	if (layer == nullptr)
+	if (_layer == nullptr)
 	{
 		return false;
 	}
-
-	if (m_listLayer.size() <= 1)
-	{
-		mbr.SetMBR(layer->m_mbr);
-	}
-	else
-	{
-		mbr.ReMBR(layer->m_mbr);
-	}
-
-	m_listLayer.push_back(layer);
+	mbr.SetMBR(_layer->m_mbr);
+	layer = _layer;
 
 	return true;
 }
@@ -343,15 +281,7 @@ bool LayerManager::AddOverlayLayer(CString _filepath)
 
 	MBR _mbr(xmin, ymin, xmax, ymax);
 
-	if (m_listLayer.size() <= 1)
-	{
-		mbr.SetMBR(_mbr);
-	}
-	else
-	{
-		mbr.ReMBR(_mbr);
-	}
-
+	mbr.SetMBR(_mbr);
 	return TRUE;
 }
 
@@ -381,7 +311,7 @@ void LayerManager::DrawInformationLayer(HDC& hDC, int nindex)
 	SolidBrush internalBrush(internalColor);
 	Pen linePen(lineColor);
 
-	auto selectedLayer = GetLayer(nindex);
+	auto selectedLayer = layer;
 
 	auto mbr = selectedLayer->GetMBR();
 	long sxmin = 0;
@@ -420,52 +350,10 @@ void LayerManager::DrawInformationLayer(HDC& hDC, int nindex)
 
 }
 
-
-
-void LayerManager::ClearInformationLayer(int nindex)
-{
-	for (auto i = m_SelectedLayer.begin(); i != m_SelectedLayer.end(); i++)
-	{
-		auto SelectedLayer = m_listLayer[nindex];
-		if ((*i) == SelectedLayer)
-		{
-			auto it = std::remove(m_SelectedLayer.begin(), m_SelectedLayer.end(), SelectedLayer);
-			m_SelectedLayer.resize(std::distance(m_SelectedLayer.begin(), it));
-			return;
-
-		}
-	}
-	return;
-}
-
-void LayerManager::ClearInformationLayer(CString filepath)
-{
-	for (auto i = m_SelectedLayer.begin(); i != m_SelectedLayer.end(); i++)
-	{
-		Layer* layer = (*i);
-
-		if (layer->GetLayerPath().Compare(filepath) == 0)
-		{
-			auto it = std::remove(m_SelectedLayer.begin(), m_SelectedLayer.end(), layer);
-			m_SelectedLayer.resize(std::distance(m_SelectedLayer.begin(), it));
-			return;
-
-		}
-	}
-}
-
-void LayerManager::ClearAllInformationLayer()
-{
-	m_SelectedLayer.erase(m_SelectedLayer.begin(), m_SelectedLayer.end());
-}
-
-
 void LayerManager::DrawDataCoverageOverscale(HDC& hdc)
 {
 
 }
-
-
 
 ID2D1PathGeometry* combine_multiple_path_geometries(ID2D1Factory1*& srcfactory, int geo_count, std::vector<ID2D1PathGeometry*> geos) {
 	ID2D1PathGeometry* path_geo_1 = NULL;
@@ -527,12 +415,12 @@ void LayerManager::DrawLayerList(HDC &hdc, int offset)
 	auto rt = gisLib->D2.pRT;
 	rt->BindDC(hdc, scaler->GetScreenRect());
 	rt->BeginDraw();
-	for (auto itor = m_listLayer.begin(); itor != m_listLayer.end(); itor++)
+
 	{
 		std::unordered_map<PortrayalCatalogue*, DrawingSet> drawingSetByPC;
-		if ((*itor)->IsOn())
+
+		if (layer->IsOn())
 		{
-			Layer* layer = *itor;
 
 			if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr)) //in range
 			{
@@ -568,7 +456,8 @@ void LayerManager::DrawLayerList(HDC &hdc, int offset)
 
 					if (nullptr == cell->pcManager || nullptr == cell->pcManager->displayListSENC)
 					{
-						continue;
+						return;
+						//continue;
 					}
 
 					std::list<SENC_Instruction*> itList;
@@ -777,24 +666,19 @@ void LayerManager::DrawLayerList(HDC &hdc, int offset)
 						pc->GetS100PCManager()->DeleteBitmapBrush();
 					}
 
-					for (auto itor = m_listLayer.begin(); itor != m_listLayer.end(); itor++)
+					if (layer->IsOn())
 					{
-						if ((*itor)->IsOn())
+						S100_FileType filetype = layer->m_spatialObject->GetFileType();
+						if (filetype != FILE_S_100_GRID_H5)
+							continue;
+
+						if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr)) //in range
 						{
-							Layer* layer = *itor;
-
-							S100_FileType filetype = layer->m_spatialObject->GetFileType();
-
-							if (filetype != FILE_S_100_GRID_H5)
-								continue;
-
-							if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr)) //in range
-							{
-								auto l = (S101Layer*)layer;
-								auto c = (S100SpatialObject*)l->m_spatialObject;
-							}
+							auto l = (S101Layer*)layer;
+							auto c = (S100SpatialObject*)l->m_spatialObject;
 						}
 					}
+
 				}
 			}
 		}
@@ -1181,21 +1065,22 @@ void LayerManager::DrawBackground(HDC &hDC, int offset)
 
 void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 {
-	for (auto i = m_listLayer.begin(); i != m_listLayer.end(); i++)
-	{
-		auto layer = *i;
 
-		if (layer->IsOn())
+	if (layer == nullptr)
+	{
+		return;
+	}
+	if (layer->IsOn())
+	{
+		if (layer->IsS100Layer())
 		{
-			if (layer->IsS100Layer())
+			if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
 			{
-				if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
-				{
-					DrawS100Layer(hdc, offset, (S100Layer*)layer);
-				}
+				DrawS100Layer(hdc, offset, (S100Layer*)layer);
 			}
 		}
 	}
+
 }
 
 void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
@@ -1332,22 +1217,20 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 
 void LayerManager::S101RebuildPortrayal(/*PORTRAYAL_BUILD_TYPE type*/)
 {
-	for (auto itor = m_listLayer.begin(); itor != m_listLayer.end(); itor++)
+
+	if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
 	{
-		Layer* layer = *itor;
-		if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
-		{
-			BuildPortrayalCatalogue(layer);
-		}
-		else if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_GRID_H5)
-		{
-			BuildPortrayalCatalogue(layer);
-		}
-		else if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_GRID_BAG)
-		{
-			BuildPortrayalCatalogue(layer);
-		}
+		BuildPortrayalCatalogue(layer);
 	}
+	else if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_GRID_H5)
+	{
+		BuildPortrayalCatalogue(layer);
+	}
+	else if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_GRID_BAG)
+	{
+		BuildPortrayalCatalogue(layer);
+	}
+
 }
 
 void LayerManager::BuildPortrayalCatalogue(Layer* l)
@@ -1355,7 +1238,7 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 	auto pc = ((S101Layer*)l)->GetPC();
 
 	if (
-		l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR && 
+		l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
 		pc->GetPortrayalRuleType() == PortrayalRuleType::LUA)
 	{
 		auto mainRuleFile = pc->GetMainRuleFile();
@@ -1402,134 +1285,54 @@ void LayerManager::DrawOverlay(HDC& hdc, int type, int offset)
 	}
 }
 
-int LayerManager::GetLayerCount()
+Layer* LayerManager::GetLayer()
 {
-	return (int)m_listLayer.size();
+	return layer;
 }
 
-void LayerManager::GetLayer(int index, Layer* _layer)
+CString LayerManager::GetLayerName()
 {
-	if ((index >= 0) && (index < GetLayerCount()))
-	{
-		auto iter = m_listLayer.begin();
-		std::advance(iter, index);
-		_layer = *iter;
-	}
-
-	_layer = nullptr;
-	return;
+	return layer->GetLayerName();
 }
 
-Layer* LayerManager::GetLayer(int index)
+BOOL LayerManager::IsOn()
 {
-	if (index < 0 || index >= GetLayerCount())
-	{
-		return NULL;
-	}
+	return layer->IsOn();
 
-	Layer* retLayer = NULL;
-	if (index >= GetLayerCount())
-	{
-		return NULL;
-	}
-
-
-	if (index < GetLayerCount())
-	{
-		auto iter = m_listLayer.begin();
-		std::advance(iter, index);
-		retLayer = *iter;
-	}
-
-	return retLayer;
 }
 
-int LayerManager::GetLayerIndex(CString _pathName)
+void LayerManager::DeleteLayer()
 {
-	for (unsigned i = 0; i < m_listLayer.size(); i++)
-	{
-		if (m_listLayer.at(i)->m_spatialObject->GetFileName() == _pathName)
-		{
-			return i;
-		}
-	}
 
-	return -1;
-}
 
-CString LayerManager::GetLayerName(int index)
-{
-	if ((index >= 0) && (index < GetLayerCount()))
-	{
-		auto iter = m_listLayer.begin();
-		std::advance(iter, index);
-
-		return (*iter)->GetLayerName();
-	}
-
-	return L"";
-}
-
-BOOL LayerManager::IsOn(int index)
-{
-	if ((index >= 0) && (index < GetLayerCount()))
-	{
-		auto iter = m_listLayer.begin();
-		std::advance(iter, index);
-
-		return (*iter)->IsOn();
-	}
-
-	return FALSE;
-}
-
-void LayerManager::DeleteLayer(int index)
-{
-	if ((index >= 0) && (index < GetLayerCount()))
-	{
-		auto i = m_listLayer.begin();
-		std::advance(i, index);
-		auto layer = *i;
-
-		m_listLayer.erase(i);
-
-		delete layer;
-		layer = nullptr;
-
-		ReMBR();
-	}
+	delete layer;
+	layer = nullptr;
+	ReMBR();
 
 	return;
 }
 
 void LayerManager::DeleteLayer(CString filepath)
 {
-	for (auto i = m_listLayer.begin(); i != m_listLayer.end(); i++)
+	if (layer == nullptr)
 	{
-		Layer* layer = *i;
-
-		if (layer->GetLayerPath().Compare(filepath) == 0)
-		{
-			m_listLayer.erase(i);
-
-			delete layer;
-			layer = nullptr;
-
-			ReMBR();
-			return;
-		}
-
+		return;
 	}
-}
 
-void LayerManager::DeleteAllLayer()
-{
-	m_listLayer.erase(m_listLayer.begin(), m_listLayer.end());
+	if (layer->GetLayerPath().Compare(filepath) == 0)
+	{
+		delete layer;
+		layer = nullptr;
+
+		ReMBR();
+		return;
+	}
+
 }
 
 void LayerManager::ReMBR()
 {
-	if (m_listLayer.size() == 0)
+	if (layer == nullptr)
 	{
 		double xmin = -170.0;
 		double ymin = -30.0;
@@ -1544,23 +1347,6 @@ void LayerManager::ReMBR()
 		mbr.xmax = xmax;
 		mbr.ymax = ymax;
 	}
-	else
-	{
-		MBR _mbr;
-		for (auto itor = m_listLayer.begin(); itor != m_listLayer.end(); itor++)
-		{
-			if (itor == m_listLayer.begin())
-			{
-				_mbr = (*itor)->m_mbr;
-			}
-			else
-			{
-				_mbr.ReMBR((*itor)->m_mbr);
-			}
-
-		}
-		mbr.SetMBR(_mbr);
-	}
 }
 
 void LayerManager::SetViewMBR(RECT r)
@@ -1568,131 +1354,33 @@ void LayerManager::SetViewMBR(RECT r)
 	scaler->SetMap(r);
 }
 
-//FeatureCatalogue* LayerManager::AddS100FC(std::wstring path)
-//{
-//	auto fc = new FeatureCatalogue(path);
-//
-//	pS100Catalogs->push_back(fc);
-//	hash_FC->insert({ fc->GetName(), fc });
-//
-//	return fc;
-//}
-
-//PortrayalCatalogue* LayerManager::AddS100PC(FeatureCatalogue* fc, std::wstring path)
-//{
-//	auto pc = new PortrayalCatalogue(path);
-//
-//	pPortrayalCatalogues->push_back(pc);
-//	hash_PC->insert({ pc->GetProduct(), pc });
-//
-//	// connect FC and PC
-//	CatalogueList[fc] = pc;
-//
-//	return pc;
-//}
-
-//PortrayalCatalogue* LayerManager::AddS100PC(FeatureCatalogue* fc, std::wstring path, std::wstring currentName)
-//{
-//	auto pc = new PortrayalCatalogue(path);
-//	pc->SetCurrentPaletteName(currentName);
-//
-//	pPortrayalCatalogues->push_back(pc);
-//
-//	(*hash_PC)[pc->GetProduct()] = pc;
-//
-//	// connect FC and PC
-//	CatalogueList[fc] = pc;
-//
-//	return pc;
-//}
-
-//FeatureCatalogue* LayerManager::GetCatalog(int index)
-//{
-//	try
-//	{
-//		return pS100Catalogs->at(index);
-//	}
-//	catch (std::out_of_range e)
-//	{
-//		return nullptr;
-//	}
-//
-//	return nullptr;
-//}
-//
-//FeatureCatalogue* LayerManager::GetCatalogFromName(CString value)
-//{
-//	try
-//	{
-//		return hash_FC->at(std::wstring(value));
-//	}
-//	catch (std::out_of_range e)
-//	{
-//		return nullptr;
-//	}
-//
-//	return nullptr;
-//}
-//
-//
-//
-//PortrayalCatalogue* LayerManager::GetPortrayalCatalogue(int index)
-//{
-//	try
-//	{
-//		return pPortrayalCatalogues->at(index);
-//	}
-//	catch (std::out_of_range e)
-//	{
-//		return nullptr;
-//	}
-//
-//	return nullptr;
-//}
-//
-//PortrayalCatalogue* LayerManager::GetPortrayalCatalogueFromName(CString value)
-//{
-//	try
-//	{
-//		return hash_PC->at(std::wstring(value));
-//	}
-//	catch (std::out_of_range e)
-//	{
-//		return nullptr;
-//	}
-//
-//	return nullptr;
-//}
-
 void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 {
-	for (auto i = m_listLayer.begin(); i != m_listLayer.end(); i++)
-	{
-		auto layer = *i;
-		if (true == layer->IsS100Layer())
-		{
-			auto s100layer = (S100Layer*)layer;
-			auto pc = s100layer->GetPC();
-			if (nullptr != pc)
-			{
-				pc->SetCurrentPaletteName(paletteName);
-				pc->DeletePatternImage();
-				pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-				pc->DeleteLineImages();
-				pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-			}
 
-			auto s100so = (S100SpatialObject*)layer->GetSpatialObject();
-			if (nullptr != s100so)
+	if (true == layer->IsS100Layer())
+	{
+		auto s100layer = (S100Layer*)layer;
+		auto pc = s100layer->GetPC();
+		if (nullptr != pc)
+		{
+			pc->SetCurrentPaletteName(paletteName);
+			pc->DeletePatternImage();
+			pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+			pc->DeleteLineImages();
+			pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+		}
+
+		auto s100so = (S100SpatialObject*)layer->GetSpatialObject();
+		if (nullptr != s100so)
+		{
+			auto pcOutputManager = s100so->GetPCOutputManager();
+			if (nullptr != pcOutputManager)
 			{
-				auto pcOutputManager = s100so->GetPCOutputManager();
-				if (nullptr != pcOutputManager)
-				{
-					pcOutputManager->ChangePallete(pc);
-				}
+				pcOutputManager->ChangePallete(pc);
 			}
 		}
 	}
+
 
 	auto pc = gisLib->GetPC();
 	if (pc)

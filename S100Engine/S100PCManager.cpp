@@ -44,7 +44,7 @@ bool S100PCManager::OpenS100AreaFills(std::wstring _path)
 		if (path.find(L".xml") != -1)
 		{
 			AreaFill areaFill;
-			areaFill.Read(path);
+			areaFill.ReadByPugi(path);
 
 			auto item = GetAreaFill(areaFill._name);
 			if (nullptr == item)

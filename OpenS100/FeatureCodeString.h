@@ -5,7 +5,7 @@ class R_FeatureRecord;
 class CFeatureCodeString
 {
 public:
-	int _id;
+	int _id; 
 	std::wstring _name;
 	R_FeatureRecord* _fr;
 

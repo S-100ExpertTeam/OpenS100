@@ -29,7 +29,6 @@ public:
 	CDWordArray m_anDragIndexes; // Remember the item you chose.
 	std::vector<CString> SelectdItem;
 
-	CListCtrl m_ListLayer;
 	bool isclickLayerManager = false; //Layer Manager Property Click Limit
 
 public:
