@@ -79,10 +79,7 @@ public:
 
 
 	void DrawInformationLayer(HDC &hDC, int nIndex);
-	void DrawDataCoverageOverscale(HDC &hdc);
 
-	void DrawValidationLayers(HDC &hDC, int offset = 0);
-	void DrawOverlay(HDC &hDC, int type, int offset = 0);
 	Layer* GetLayer();
 
 	CString GetLayerName();

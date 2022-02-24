@@ -350,62 +350,6 @@ void LayerManager::DrawInformationLayer(HDC& hDC, int nindex)
 
 }
 
-void LayerManager::DrawDataCoverageOverscale(HDC& hdc)
-{
-
-}
-
-ID2D1PathGeometry* combine_multiple_path_geometries(ID2D1Factory1*& srcfactory, int geo_count, std::vector<ID2D1PathGeometry*> geos) {
-	ID2D1PathGeometry* path_geo_1 = NULL;
-	ID2D1PathGeometry* path_geo_2 = NULL;
-
-	srcfactory->CreatePathGeometry(&path_geo_1);
-	srcfactory->CreatePathGeometry(&path_geo_2);
-
-	for (short i = 0; i < geo_count; i++) {
-
-		ID2D1GeometrySink* cmpl_s1 = NULL;
-		ID2D1GeometrySink* cmpl_s2 = NULL;
-
-		if (i % 2 == 0) {
-			path_geo_1->Open(&cmpl_s1);
-
-			if (i == 0)
-				geos[i]->CombineWithGeometry(geos[i], D2D1_COMBINE_MODE_UNION, NULL, cmpl_s1);
-			else
-				geos[i]->CombineWithGeometry(path_geo_2, D2D1_COMBINE_MODE_UNION, NULL, NULL, cmpl_s1);
-
-			cmpl_s1->Close();
-			cmpl_s1->Release();
-			if (i != 0) {
-				path_geo_2->Release();
-				srcfactory->CreatePathGeometry(&path_geo_2);
-			}
-		}
-		else {
-			path_geo_2->Open(&cmpl_s2);
-
-			geos[i]->CombineWithGeometry(path_geo_1, D2D1_COMBINE_MODE_UNION, NULL, cmpl_s2);
-
-			cmpl_s2->Close();
-			cmpl_s2->Release();
-			path_geo_1->Release();
-			srcfactory->CreatePathGeometry(&path_geo_1);
-		}
-	}
-
-	if (geo_count % 2 == 0) {
-		if (path_geo_1)
-			path_geo_1->Release();
-		return path_geo_2;
-	}
-	else {
-		if (path_geo_2)
-			path_geo_2->Release();
-		return path_geo_1;
-	}
-}
-
 void LayerManager::DrawLayerList(HDC &hdc, int offset)
 {
 	std::set<int> drawingPriority;
@@ -1249,39 +1193,6 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
 		ProcessS101::ProcessS101_LUA(mainRulePath, (S101Layer*)l);
-	}
-}
-
-void LayerManager::DrawValidationLayers(HDC& hdc, int offset)
-{
-	POSITION pos = m_listBackgroundLayer.GetHeadPosition();
-
-	while (pos)
-	{
-		if (m_listBackgroundLayer.GetAt(pos)->IsOn())
-		{
-			Layer* layer = m_listBackgroundLayer.GetNext(pos);
-
-			if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
-			{
-				layer->Draw(hdc, scaler, offset - 360);
-				layer->Draw(hdc, scaler, offset);
-				layer->Draw(hdc, scaler, offset + 360);
-			}
-		}
-		else
-		{
-			m_listBackgroundLayer.GetNext(pos);
-		}
-	}
-}
-
-void LayerManager::DrawOverlay(HDC& hdc, int type, int offset)
-{
-	switch (type)
-	{
-	case 1:
-		break;
 	}
 }
 
