@@ -7,9 +7,6 @@
 #include <afxext.h>        
 #include <windows.h>
 
-#import <msxml4.dll>
-#include "msxml.h"
-
 #include <gdiPlus.h>
 #pragma comment(lib, "gdiplus")
 using namespace Gdiplus;
@@ -34,6 +31,3 @@ inline void SafeRelease(Interface **ppInterfaceToRelease)
 }
 
 #endif
-
-#import <msxml4.dll>
-#include "msxml.h"

@@ -37,6 +37,3 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #include <atlimage.h>
-
-#import <msxml4.dll>
-#include "msxml.h"

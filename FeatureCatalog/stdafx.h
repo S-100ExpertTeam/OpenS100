@@ -33,5 +33,3 @@
 #include <afxcmn.h>                     
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
-#include "msxml.h"
-#import <msxml4.dll>

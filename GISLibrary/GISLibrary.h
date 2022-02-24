@@ -42,9 +42,6 @@ public:
 	void Draw(HDC &hDC, int offset = 0);
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal();
-	void DrawValidationLayers(HDC &hDC, int offset = 0);
-	void DrawOverlay(HDC &hDC, int type, int offset = 0);
-	//void GetLayer(int index, Layer *_layer);
 	Layer* GetLayer();
 
 	void DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale = 5);
@@ -54,26 +51,12 @@ public:
 	BOOL IsOn();
 	void DeleteLayer();
 	void DeleteLayer(CString filepath);
-	//void DeleteAllLayer();
 	void ReMBR();
-
-	//void ClearInformationLayer(int index);
-	//void ClearInformationLayer(CString filepath);
-	//void ClearAllInformationLayer();
 
 	void SetViewMBR(RECT r);
 
-	/*
-	**  Get number of saved layers 
-	*/
-	//int GetLayerCount();
-	//std::vector<Layer*> GetAllLayer();
-
 	MBR* GetMBR();
 						
-	/////////////////////////////////////////////////////////////////////////////
-	//  Scalar Method
-	//  Coordinate change.
 	void DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate = TRUE);
 	void WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate = TRUE);
 	void WorldToDevice(D2D1_POINT_2F& p);

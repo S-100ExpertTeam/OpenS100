@@ -51,6 +51,3 @@ inline void SafeRelease(Interface **ppInterfaceToRelease)
 #pragma comment(lib, "d2d1")
 #pragma comment(lib, "gdiplus")
 #pragma comment(lib, "Dwrite")
-
-#import <msxml4.dll>
-#include "msxml.h"

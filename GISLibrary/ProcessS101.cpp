@@ -58,16 +58,6 @@ ProcessS101::~ProcessS101()
 
 }
 
-int checkParseError(IXMLDOMParseErrorPtr pError)
-{
-	long lineNumber;
-	pError->get_line(&lineNumber);
-	BSTR reason;
-	pError->get_reason(&reason);
-	_bstr_t parseError = _bstr_t("At line ") + _bstr_t(lineNumber) + _bstr_t("\n") + _bstr_t(reason);
-	return 0;
-}
-
 void dump_com_error(_com_error &e)
 {
 	printf("Error\n");
@@ -78,31 +68,6 @@ void dump_com_error(_com_error &e)
 	printf("\a\tSource = %s\n", (LPCSTR)bstrSource);
 	printf("\a\tDescription = %s\n", (LPCSTR)bstrDescription);
 }
-
-char* XQ_ConvertBSTRToString(BSTR pSrc)
-{
-	if (!pSrc) return NULL;
-
-	DWORD cb, cwch = ::SysStringLen(pSrc);//convert even embeded NULL
-
-	char *szOut = NULL;
-
-	if (cb = ::WideCharToMultiByte(CP_ACP, 0, pSrc, cwch + 1, NULL, 0, 0, 0))
-	{
-		szOut = new char[cb];
-		if (szOut)
-		{
-			szOut[cb - 1] = '\0';
-
-			if (!::WideCharToMultiByte(CP_ACP, 0, pSrc, cwch + 1, szOut, cb, 0, 0))
-			{
-				delete[]szOut;//clean up if failed;
-				szOut = NULL;
-			}
-		}
-	}
-	return szOut;
-};
 
 int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 {

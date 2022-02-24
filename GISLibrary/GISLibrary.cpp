@@ -81,17 +81,6 @@ void CGISLibraryApp::S101RebuildPortrayal()
 	m_pLayerManager->S101RebuildPortrayal();
 }
 
-void CGISLibraryApp::DrawValidationLayers(HDC &hDC, int offset)
-{
-	m_pLayerManager->DrawValidationLayers(hDC, offset);
-}
-
-void CGISLibraryApp::DrawOverlay(HDC &hDC, int type, int offset)
-{
-	m_pLayerManager->DrawOverlay(hDC, type, offset);
-}
-
-
 Layer* CGISLibraryApp::GetLayer()
 {
 	return m_pLayerManager->GetLayer();
