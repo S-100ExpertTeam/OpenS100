@@ -34,7 +34,5 @@
 
 
 #include <optional>
-#import <msxml4.dll>
-#include "msxml.h"
 
 #pragma comment(lib, "d2d1.lib")

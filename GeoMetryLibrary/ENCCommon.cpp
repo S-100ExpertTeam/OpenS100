@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "ENCCommon.h"
 #include "ENCGeometry.h"
+#include "comutil.h"
 
 #include "..\\LibMFCUtil\\LibMFCUtil.h"
 #include "..\\LibMFCUtil\\StringTokenizer.h"

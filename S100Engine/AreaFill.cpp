@@ -132,49 +132,11 @@ bool AreaFill::initializeCOM() {
 	return true;
 }
 
-std::wstring AreaFill::getNodeValue(IXMLDOMDocumentPtr &pDoc, BSTR selectSingleNode)
-{
-	IXMLDOMNodePtr pNode;
-	std::wstring wsResult = _T("");
-	BSTR bszResult = _T("");
-
-	auto result = pDoc->selectSingleNode(selectSingleNode, &pNode);
-
-	if (S_OK == result)
-	{
-		pNode->get_text(&bszResult);
-
-		wsResult.append((std::wstring)bszResult);
-		return wsResult;
-	}
-
-	return L"";
-}
-
 std::wstring AreaFill::getNodeValue(pugi::xml_node node)
 {
 	return L"";
 }
 
-std::wstring AreaFill::getNodeAttribute(IXMLDOMDocumentPtr &pDoc, BSTR selectSingleNode)
-{
-	IXMLDOMNodePtr pNode;
-
-	std::wstring wsResult = _T("");
-	BSTR bszResult = _T("");
-	auto result = pDoc->selectSingleNode(selectSingleNode, &pNode);
-
-	if (S_OK == result)
-	{
-		VARIANT var;
-		((IXMLDOMElementPtr)pNode)->getAttribute(_T("reference"), &var);
-
-		wsResult.append((std::wstring)var.bstrVal);
-		return wsResult;
-	}
-
-	return L"";
-}
 std::wstring AreaFill::getNodeAttribute(pugi::xml_node node)
 {
 	return L"";

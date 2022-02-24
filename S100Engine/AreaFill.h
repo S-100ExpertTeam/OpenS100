@@ -33,8 +33,8 @@ public:
 	bool Read(std::wstring path);
 	bool ReadByPugi(std::wstring path);
 	bool initializeCOM();
-	std::wstring getNodeValue(IXMLDOMDocumentPtr &pDoc, BSTR selectSingleNode);
+	//std::wstring getNodeValue(IXMLDOMDocumentPtr &pDoc, BSTR selectSingleNode);
 	std::wstring getNodeValue(pugi::xml_node node);
-	std::wstring getNodeAttribute(IXMLDOMDocumentPtr &pDoc, BSTR selectSingleNode);
+	/*std::wstring getNodeAttribute(IXMLDOMDocumentPtr &pDoc, BSTR selectSingleNode);*/
 	std::wstring getNodeAttribute(pugi::xml_node node);
 };
