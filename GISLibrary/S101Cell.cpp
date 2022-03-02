@@ -959,9 +959,11 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	{
 		return false;
 	}
+
 	geo->CreateD2Geometry(gisLib->D2.pD2Factory);
 
 	geo->CalculateCenterPoint();
+
 	return TRUE;
 }
 
