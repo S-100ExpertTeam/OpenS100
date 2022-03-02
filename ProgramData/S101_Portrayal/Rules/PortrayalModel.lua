@@ -179,21 +179,6 @@ function CreateFeaturePortrayal(featureReference)
 		self.DrawingInstructions:Add(instructions)
 	end
 
-	function featurePortrayal:AddTextInstruction(text, textViewingGroup, textPriority, viewingGroup, priority)
-		CheckSelf(self, featurePortrayal.Type)
-		CheckType(text, 'string')
-		CheckType(textViewingGroup, 'number')
-		CheckType(textPriority, 'number')
-		CheckType(viewingGroup, 'number')
-		CheckType(priority, 'number')
-
-		--self.DrawingInstructions:Add('Parent:' .. EncodeDEFString(featurePortrayal.FeatureReference))
-		self.DrawingInstructions:Add('ViewingGroup:' .. textViewingGroup .. ',' .. viewingGroup .. ';DrawingPriority:' .. textPriority)
-		self.DrawingInstructions:Add('TextInstruction:' .. text)
-		--self.DrawingInstructions:Add('Parent:')
-		self.DrawingInstructions:Add('ViewingGroup:' .. viewingGroup .. ';DrawingPriority:' .. priority)
-	end
-
 	function featurePortrayal:AddSpatialReference(spatialAssociation)
 		CheckSelf(self, featurePortrayal.Type)
 		CheckType(spatialAssociation, 'SpatialAssociation')

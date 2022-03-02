@@ -3,11 +3,8 @@
 
 -- Radar station main entry point.
 function RadarStation(feature, featurePortrayal, contextParameters)
-	local viewingGroup
-
 	if feature.PrimitiveType == PrimitiveType.Point and contextParameters.SimplifiedPoints then
 		if contains(2, feature.categoryOfRadarStation) then
-			viewingGroup = 38010
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:38010;DrawingPriority:15;DisplayPlane:OverRADAR')
 			else
@@ -15,11 +12,9 @@ function RadarStation(feature, featurePortrayal, contextParameters)
 			end
 			featurePortrayal:AddInstructions('PointInstruction:RDOSTA02')
 			if feature.communicationChannel[1] then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;FontSize:10')
-				featurePortrayal:AddTextInstruction(EncodeString(feature.communicationChannel[1], 'ch %s'), 11, 24, 38010, 15)
+				featurePortrayal:AddInstructions('LocalOffset:0,0;FontSize:10;TextInstruction:' .. EncodeString(feature.communicationChannel[1], 'ch %s') .. ',11,24')
 			end
 		else
-			viewingGroup = 38010
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:38010;DrawingPriority:15;DisplayPlane:OverRADAR')
 			else
@@ -29,7 +24,6 @@ function RadarStation(feature, featurePortrayal, contextParameters)
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Point then
 		if contains(2, feature.categoryOfRadarStation) then
-			viewingGroup = 38010
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:38010;DrawingPriority:15;DisplayPlane:OverRADAR')
 			else
@@ -37,11 +31,9 @@ function RadarStation(feature, featurePortrayal, contextParameters)
 			end
 			featurePortrayal:AddInstructions('PointInstruction:RDOSTA02')
 			if feature.communicationChannel[1] then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;FontSize:10')
-				featurePortrayal:AddTextInstruction(EncodeString(feature.communicationChannel[1], 'ch %s'), 11, 24, 38010, 15)
+				featurePortrayal:AddInstructions('LocalOffset:0,0;FontSize:10;TextInstruction:' .. EncodeString(feature.communicationChannel[1], 'ch %s') .. ',11,24')
 			end
 		else
-			viewingGroup = 38010
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:38010;DrawingPriority:15;DisplayPlane:OverRADAR')
 			else
@@ -52,6 +44,4 @@ function RadarStation(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return viewingGroup
 end

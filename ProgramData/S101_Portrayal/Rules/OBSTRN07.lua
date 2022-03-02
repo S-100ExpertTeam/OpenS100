@@ -6,7 +6,7 @@ require 'UDWHAZ05'
 require 'SNDFRM04'
 
 -- Main entry point for CSP.
-function OBSTRN07(feature, featurePortrayal, contextParameters, viewingGroup)
+function OBSTRN07(feature, featurePortrayal, contextParameters)
 	Debug.StartPerformance('Lua Code - OBSTRN07')
 
 	local DEPTH_VALUE = feature.valueOfSounding or feature.defaultClearanceDepth
@@ -33,7 +33,8 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, viewingGroup)
 			featurePortrayal:AddInstructions('PointInstruction:' .. hazardSymbol)
 
 			if qualitySymbol then
-				featurePortrayal:AddInstructions('ViewingGroup:31011;PointInstruction:' .. qualitySymbol)
+				featurePortrayal:AddInstructions('ViewingGroup:31011')
+				featurePortrayal:AddInstructions('PointInstruction:' .. qualitySymbol)
 			end
 		else
 			local sounding = false
@@ -94,7 +95,8 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, viewingGroup)
 			end
 
 			if qualitySymbol then
-				featurePortrayal:AddInstructions('ViewingGroup:31011;PointInstruction:' .. qualitySymbol)
+				featurePortrayal:AddInstructions('ViewingGroup:31011')
+				featurePortrayal:AddInstructions('PointInstruction:' .. qualitySymbol)
 			end
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Curve then
@@ -125,7 +127,9 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, viewingGroup)
 
 		if hazardSymbol then
 			featurePortrayal:AddInstructions('LinePlacement:Relative,0.5;PointInstruction:' .. hazardSymbol)
-		elseif valueOfSounding then
+		end
+
+		if valueOfSounding then
 			local symbols = SNDFRM04(feature, featurePortrayal, contextParameters, nil, valueOfSounding)
 
 			for _, symbol in ipairs(symbols) do
@@ -176,7 +180,8 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, viewingGroup)
 		local qualitySymbol = QUAPNT02(feature, featurePortrayal, contextParameters)
 
 		if qualitySymbol then
-			featurePortrayal:AddInstructions('ViewingGroup:31011;PointInstruction:' .. qualitySymbol)
+			featurePortrayal:AddInstructions('ViewingGroup:31011')
+			featurePortrayal:AddInstructions('PointInstruction:' .. qualitySymbol)
 		end
 	end
 

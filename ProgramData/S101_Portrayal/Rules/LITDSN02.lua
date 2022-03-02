@@ -64,7 +64,6 @@ local statuses =
 
 -- Main entry point for CSP.
 function LITDSN02(categoryOfLight, rhythmOfLight, lightColour, height, valueOfNominalRange, status)
-
 	Debug.StartPerformance('Lua Code - LITDSN02')
 
 	local description = categoryOfLights[categoryOfLight] or ''

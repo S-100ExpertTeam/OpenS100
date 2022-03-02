@@ -1,7 +1,7 @@
 -- RESARE04 conditional symbology rules file.
 
 -- Main entry point for CSP.
-function RESARE04(feature, featurePortrayal, contextParameters, viewingGroup)
+function RESARE04(feature, featurePortrayal, contextParameters)
 	Debug.StartPerformance('Lua Code - RESARE04')
 
 	local restriction = feature.restriction

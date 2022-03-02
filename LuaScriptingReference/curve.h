@@ -7,8 +7,6 @@
 
 struct KRS_LUA_SCRIPT_REFERENCE_API curve
 {
-	curve() = default;
-
 	spatial_association start_point;
 	spatial_association end_point;
 	std::vector<curve_segment> segments;

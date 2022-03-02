@@ -45,87 +45,6 @@
     <ClInclude Include="portrayal_catalog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UnlimitedInteger_LUA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_Multiplicity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_UnitOfMeasure.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_NumericRange.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_CD_AttributeConstraints.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_Item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_Role.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_Attribute.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_ListedValue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_SimpleAttribute.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_AttributeBinding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_ComplexAttribute.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_NamedType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_InformationAssociation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_InformationBinding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_ObjectType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_InformationType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_FeatureAssociation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_FeatureBinding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_FeatureType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_CD_FeatureUseType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_RoleType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_SpatialPrimitiveType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_CD_AttributeValueType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_CD_QuantitySpecification.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_IntervalType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_FC_ItemReference.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="spatial_association.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -159,9 +78,6 @@
     <ClInclude Include="LuaScriptingReference.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="feature_catalog.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaScriptingReference.cpp">
@@ -183,66 +99,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="portrayal_catalog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UnlimitedInteger_LUA.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_Multiplicity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_UnitOfMeasure.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_NumericRange.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_CD_AttributeConstraints.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_Role.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_Attribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_ListedValue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_SimpleAttribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_AttributeBinding.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_ComplexAttribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_NamedType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_InformationAssociation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_InformationBinding.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_ObjectType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_InformationType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_FeatureAssociation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_FeatureBinding.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_FC_FeatureType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lua_reference.cpp">

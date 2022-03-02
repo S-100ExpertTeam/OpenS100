@@ -13,6 +13,7 @@ public:
 	virtual ~S100_Rules();
 
 private:
+	std::vector<S100_RuleFile*> ruleFileVector;
 	std::unordered_map<std::string, S100_RuleFile*> ruleFiles;
 
 public:

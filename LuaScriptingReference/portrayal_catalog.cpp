@@ -79,12 +79,6 @@ std::vector<std::string> pc_get_top_level_rules()
 	return tlr;
 }
 
-std::string pc_get_rules_path()
-{
-	return pc_path + "\\Rules";
-}
-
-
 void pc_delete()
 {
 	pc_path.clear();

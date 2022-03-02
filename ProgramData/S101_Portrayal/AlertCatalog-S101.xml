@@ -172,21 +172,21 @@
                 <priority>Indication</priority>
             </routePlan>
         </alert>
-      <alert id="NavHazard">
-        <description>
-          <name>Navigation hazards</name>
-          <description>Alert for passing close to a danger (e.g. obstruction, wreck, rock) or an aid to navigation. See IEC 61174:2015 4.10.2.1, 4.10.3 (MSC.232/A11.3.5, MSC.232/A11.4.6)</description>
-          <language>eng</language>
-        </description>
-        <routeMonitor msg="CrossingNavHazardsMsg" highlight="NavHazardsHighlight">
-          <priorities label="NavHazardsPriorityLbl">
-            <priority default="true">Caution</priority>
-            <priority optional="true">Warning</priority>
-          </priorities>
-        </routeMonitor>
-        <routePlan msg="CrossingNavHazardsMsg" highlight="NavHazardsHighlight">
-          <priority>Indication</priority>
-        </routePlan>
-      </alert>
+		<alert id="NavHazard">
+			<description>
+                <name>Navigation hazards</name>
+                <description>Alert for passing close to a danger (e.g. obstruction, wreck, rock) or an aid to navigation. See IEC 61174:2015 4.10.2.1, 4.10.3 (MSC.232/A11.3.5, MSC.232/A11.4.6)</description>
+                <language>eng</language>
+            </description>
+            <routeMonitor msg="CrossingNavHazardsMsg" highlight="NavHazardsHighlight">
+				<priorities label="NavHazardsPriorityLbl">
+					<priority default="true">Caution</priority>
+					<priority optional="true">Warning</priority>
+				</priorities>
+            </routeMonitor>
+            <routePlan msg="CrossingNavHazardsMsg" highlight="NavHazardsHighlight">
+                <priority>Indication</priority>
+            </routePlan>
+		</alert>
     </alerts>
-  </alertCatalog>
+</alertCatalog>

@@ -1,7 +1,5 @@
 -- LightSectored portrayal rules file.
 
-require 'LITDSN02'
-
 local function nmi2metres(nmi)
 	return nmi * 1852.0
 end
@@ -28,9 +26,7 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 	end
 
 	for isc, sectorCharacteristic in ipairs(feature.sectorCharacteristics) do
-
 		for ils, lightSector in ipairs(sectorCharacteristic.lightSector) do
-
 			local valueOfNominalRange = 9.0
 
 			if lightSector.valueOfNominalRange then
@@ -56,16 +52,12 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 			elseif colour[1] == 11 or colour[1] == 6 or colour[1] == 1 then -- orange or yellow or white
 				sectorColourToken = 'LITYW'
 				sectorLightSymbol = 'LIGHTS13'
-			elseif colour[1] == 1 and colour[2] == 6 then -- blue and yellow
-				sectorColourToken = 'LITYW'
-				sectorLightSymbol = 'LIGHTS13'
 			else
 				sectorColourToken = 'CHMGD'
 				sectorLightSymbol = 'LITDEF11'
 			end
 
 			if lightSector.sectorLimit then
-
 				-- Sectored light.
 				local sectorLimit1 = flipSector(lightSector.sectorLimit.sectorLimitOne.sectorBearing:ToNumber())
 				local sectorLimit2 = flipSector(lightSector.sectorLimit.sectorLimitTwo.sectorBearing:ToNumber())
@@ -108,7 +100,6 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
 				end
 			elseif lightSector.directionalCharacter then
-
 				-- Directional light.
 				local orientation = flipSector(lightSector.directionalCharacter.orientation.orientationValue:ToNumber())
 				local leglen = nmi2metres(valueOfNominalRange)
@@ -118,14 +109,6 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 				featurePortrayal:AddInstructions('LineInstruction:_simple_')
 
 				local categoryOfLight = feature.categoryOfLight
-				
-				-- added for testing 2021 Symbology
-				local moireEffect = lightSector.directionalCharacter.moireEffect
-				if lightSector.directionalCharacter.moireEffect then
-					if moireEffect then
-						sectorLightSymbol = '2021_MOIRE'
-					end
-				end
 
 				if valueOfNominalRange >= 10.0 and not contains(feature.categoryOfLight, { 5 }) and sectorCharacteristic.lightCharacteristic ~= 12 then
 					featurePortrayal:AddInstructions('ArcByRadius:0,0,25,0,360')
@@ -135,28 +118,22 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
 					featurePortrayal:SimpleLineStyle('solid',0.64,sectorColourToken)
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
-
 				else
 					featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. orientation)
 					featurePortrayal:AddInstructions('ClearGeometry;PointInstruction:' .. sectorLightSymbol)
-					featurePortrayal:AddInstructions('Rotation:PortrayalCRS,0')
-
 				end
 
-				featurePortrayal:AddInstructions('LocalOffset:10.53,-3.51;TextAlignVertical:Top;FontSize:10;FontColor:CHBLK;ClearGeometry')
-				featurePortrayal:AddTextInstruction(string.format('%03.0f deg', lightSector.directionalCharacter.orientation.orientationValue:ToNumber()), 23, 24, 27070, 24)
+				featurePortrayal:AddInstructions('LocalOffset:10.53,-3.51;TextAlignVertical:Top;FontSize:10;FontColor:CHBLK')
+				featurePortrayal:AddInstructions('ClearGeometry;TextInstruction:' .. string.format('%03.0f deg', lightSector.directionalCharacter.orientation.orientationValue:ToNumber()) .. ',23,24')
 
 				local description = LITDSN02(feature.categoryOfLight[1], sectorCharacteristic, colour, feature.height, lightSector.valueOfNominalRange, feature.status)
 
 				featurePortrayal:AddInstructions('TextAlignVertical:Bottom')
-				featurePortrayal:AddTextInstruction(EncodeString(description), 23, 24, 27070, 24)
+				featurePortrayal:AddInstructions('TextInstruction:' .. EncodeString(description) .. ',23,24')
 			else
 				-- Neither sectorLimit nor directionalCharacter was found.
 				featurePortrayal:AddInstructions('ClearGeometry;PointInstruction:QUESMRK1')
 			end
 		end
 	end
-
-	return 27070
 end
-

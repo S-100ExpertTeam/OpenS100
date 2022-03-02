@@ -3,31 +3,16 @@
 
 -- Weed/Kelp main entry point.
 function WeedKelp(feature, featurePortrayal, contextParameters)
-	local viewingGroup
-
 	if feature.PrimitiveType == PrimitiveType.Point then
 		-- Simplified and paper chart points use the same symbolization
-		if feature.categoryOfWeedKelp == 3 then
-			viewingGroup = 34020
-			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:34020;DrawingPriority:9;DisplayPlane:OverRADAR')
-			else
-				featurePortrayal:AddInstructions('ViewingGroup:34020;DrawingPriority:9;DisplayPlane:UnderRADAR')
-			end
-			featurePortrayal:AddInstructions('PointInstruction:SEAGRASS')
-		else	
-			viewingGroup = 34020
-			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:34020;DrawingPriority:9;DisplayPlane:OverRADAR')
-			else
-				featurePortrayal:AddInstructions('ViewingGroup:34020;DrawingPriority:9;DisplayPlane:UnderRADAR')
-			end
-			featurePortrayal:AddInstructions('PointInstruction:WEDKLP03')
+		if contextParameters.RadarOverlay then
+			featurePortrayal:AddInstructions('ViewingGroup:34020;DrawingPriority:9;DisplayPlane:OverRADAR')
+		else
+			featurePortrayal:AddInstructions('ViewingGroup:34020;DrawingPriority:9;DisplayPlane:UnderRADAR')
 		end
-
+		featurePortrayal:AddInstructions('PointInstruction:WEDKLP03')
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
-		viewingGroup = 34020
 		if contextParameters.RadarOverlay then
 			featurePortrayal:AddInstructions('ViewingGroup:34020;DrawingPriority:9;DisplayPlane:OverRADAR')
 		else
@@ -39,6 +24,4 @@ function WeedKelp(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return viewingGroup
 end

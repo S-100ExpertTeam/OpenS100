@@ -6,7 +6,5 @@
 
 struct KRS_LUA_SCRIPT_REFERENCE_API composite_curve
 {
-	composite_curve() = default;
-
 	std::vector<spatial_association> curve_associations;
 };

@@ -2,7 +2,6 @@
 
 #include "LuaScriptingReference.h"
 #include "lua_session.h"
-#include "feature_catalog.h"
 #include "spatial_association.h"
 #include "point.h"
 #include "multipoint.h"
@@ -11,14 +10,30 @@
 #include "composite_curve.h"
 #include "surface.h"
 
+#include "..\\FeatureCatalog\\Item.h"
+#include "..\\FeatureCatalog\\Attribute.h"
+#include "..\\FeatureCatalog\\ListedValue.h"
+#include "..\\FeatureCatalog\\SimpleAttribute.h"
+#include "..\\FeatureCatalog\\AttributeBinding.h"
+#include "..\\FeatureCatalog\\ComplexAttribute.h"
+#include "..\\FeatureCatalog\\Role.h"
+#include "..\\FeatureCatalog\\InformationAssociation.h"
+#include "..\\FeatureCatalog\\FeatureAssociation.h"
+#include "..\\FeatureCatalog\\InformationType.h"
+#include "..\\FeatureCatalog\\FeatureBinding.h"
+#include "..\\FeatureCatalog\\FeatureType.h"
+#include "..\\FeatureCatalog\\FeatureCatalogue.h"
+
 class S100_FC_Item;
 class S100_FC_NamedType;
 class S100_FC_ObjectType;
-class S100_CD_AttributeConstraints;
 class S100_FC_ListedValue;
 class S100_FC_AttributeBinding;
 class S100_FC_InformationBinding;
 class S100_FC_FeatureBinding;
+
+//extern S100_FC theFC;
+extern KRS_LUA_SCRIPT_REFERENCE_API FeatureCatalogue *pTheFC;
 
 lua_ref_ptr KRS_LUA_SCRIPT_REFERENCE_API CreateSpatialAssociation(lua_session *ls, spatial_association *spatial_association);
 

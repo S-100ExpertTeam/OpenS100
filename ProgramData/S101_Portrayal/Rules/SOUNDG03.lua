@@ -4,7 +4,7 @@
 require 'SNDFRM04'
 
 -- Main entry point for CSP.
-function SOUNDG03(feature, featurePortrayal, contextParameters, viewingGroup)
+function SOUNDG03(feature, featurePortrayal, contextParameters)
 	Debug.StartPerformance('Lua Code - SOUNDG03')
 
 	local points = feature.MultiPoint.Points

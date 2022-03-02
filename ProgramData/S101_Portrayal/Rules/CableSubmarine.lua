@@ -3,11 +3,8 @@
 
 -- Cable Submarine main entry point.
 function CableSubmarine(feature, featurePortrayal, contextParameters)
-	local viewingGroup
-
 	if feature.PrimitiveType == PrimitiveType.Curve then
 		if feature.categoryOfCable == 6 then
-			viewingGroup = 24010
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:24010;DrawingPriority:18;DisplayPlane:OverRADAR')
 			else
@@ -16,7 +13,6 @@ function CableSubmarine(feature, featurePortrayal, contextParameters)
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHMGD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
 		else
-			viewingGroup = 34070
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:34070;DrawingPriority:9;DisplayPlane:OverRADAR')
 			else
@@ -27,6 +23,4 @@ function CableSubmarine(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return viewingGroup
 end

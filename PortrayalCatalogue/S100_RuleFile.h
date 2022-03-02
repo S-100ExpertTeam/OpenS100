@@ -1,6 +1,8 @@
 #pragma once
 #include "..\\extlibs\pugixml\include\pugixml.hpp"
 
+#include "S100_Description.h"
+
 #include <string>
 
 class S100_RuleFile
@@ -15,6 +17,7 @@ private:
 	std::wstring fileType = L"";
 	std::wstring fileFormat = L"";
 	std::wstring ruleType = L"";
+	S100_Description description;
 
 public:
 	void GetContents(pugi::xml_node& node);

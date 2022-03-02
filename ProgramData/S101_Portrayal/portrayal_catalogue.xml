@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<?pcbinfo name="S-101" fieldOfApplication="Marine Navigation" scope="Ocean, Coastal, Ports and Harbors. Excludes Inland waters. Supports testing of magenta fairway proposal." versionDate="2021-07-02T00:00:00+0000" user="IHO Testbed" organization="International Hydrographic Organization"?>
-<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-101" version="1.1.4.mfp">
+<?pcbinfo name="S-101" fieldOfApplication="Marine Navigation" scope="Ocean, Coastal, Ports and Harbors. Excludes Inland waters. Supports QualityOfBathymetricData and 2015 updates to FC model." versionDate="2018-11-05T00:00:00+0000" user="IHO Testbed" organization="International Hydrographic Organization"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-101" version="1.1.1">
    <alertCatalog id="alertCatalog">
       <description>
          <name>Alert Catalog</name>
@@ -1383,16 +1383,6 @@
             <language>eng</language>
          </description>
          <fileName>EMAREMG1.svg</fileName>
-         <fileType>Symbol</fileType>
-         <fileFormat>SVG</fileFormat>
-      </symbol>
-      <symbol id="EMAREMG2">
-         <description>
-            <name>EMAREMG2</name>
-            <description>Embedded symbol</description>
-            <language>eng</language>
-         </description>
-         <fileName>EMAREMG2.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
@@ -5766,74 +5756,6 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-
-     <symbol id="2021_MOIRE">
-       <description>
-         <name>2021_MOIRE</name>
-         <description>--</description>
-         <language>eng</language>
-       </description>
-       <fileName>2021_MOIRE.svg</fileName>
-       <fileType>Symbol</fileType>
-       <fileFormat>SVG</fileFormat>
-     </symbol>
-
-     <symbol id="SEAGRASS">
-       <description>
-         <name>SEAGRASS</name>
-         <description>--</description>
-         <language>eng</language>
-       </description>
-       <fileName>SEAGRASS.svg</fileName>
-       <fileType>Symbol</fileType>
-       <fileFormat>SVG</fileFormat>
-     </symbol>
-
-     <symbol id="2021_SISTAT02_01">
-       <description>
-         <name>2021_SISTAT02_01</name>
-         <description>--</description>
-         <language>eng</language>
-       </description>
-       <fileName>2021_SISTAT02_01.svg</fileName>
-       <fileType>Symbol</fileType>
-       <fileFormat>SVG</fileFormat>
-     </symbol>
-
-     <symbol id="2021_SISTAT03_01">
-       <description>
-         <name>2021_SISTAT03_01</name>
-         <description>--</description>
-         <language>eng</language>
-       </description>
-       <fileName>2021_SISTAT03_01.svg</fileName>
-       <fileType>Symbol</fileType>
-       <fileFormat>SVG</fileFormat>
-     </symbol>
-
-
-     <symbol id="2021_TankFarm">
-       <description>
-         <name>2021_TankFarm</name>
-         <description>--</description>
-         <language>eng</language>
-       </description>
-       <fileName>2021_TankFarm.svg</fileName>
-       <fileType>Symbol</fileType>
-       <fileFormat>SVG</fileFormat>
-     </symbol>
-
-
-     <symbol id="2021_WaveFarm">
-       <description>
-         <name>2021_WaveFarm</name>
-         <description>--</description>
-         <language>eng</language>
-       </description>
-       <fileName>2021_WaveFarm.svg</fileName>
-       <fileType>Symbol</fileType>
-       <fileFormat>SVG</fileFormat>
-     </symbol>
    </symbols>
    <styleSheets>
       <styleSheet id="daySvgStyle">
@@ -5863,6 +5785,16 @@
             <language>eng</language>
          </description>
          <fileName>nightSvgStyle.css</fileName>
+         <fileType>StyleSheet</fileType>
+         <fileFormat>XML</fileFormat> <!-- fileFormat will need to be updated when Part 9 is updated to include CSS file format. -->
+      </styleSheet>
+      <styleSheet id="svgStyle">
+         <description>
+            <name>Generic</name>
+            <description>CSS file referenced by symbol files</description>
+            <language>eng</language>
+         </description>
+         <fileName>svgStyle.css</fileName>
          <fileType>StyleSheet</fileType>
          <fileFormat>XML</fileFormat> <!-- fileFormat will need to be updated when Part 9 is updated to include CSS file format. -->
       </styleSheet>
@@ -5998,16 +5930,6 @@
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
-      <lineStyle id="CTYARE51_CHGRD">
-         <description>
-            <name>CTYARE51_CHGRD</name>
-            <description>boundary of area to be navigated with caution</description>
-            <language>eng</language>
-         </description>
-         <fileName>CTYARE51_CHGRD.xml</fileName>
-         <fileType>LineStyle</fileType>
-         <fileFormat>XML</fileFormat>
-      </lineStyle>
       <lineStyle id="CURENT01">
          <description>
             <name>CURENT01</name>
@@ -6105,16 +6027,6 @@
             <language>eng</language>
          </description>
          <fileName>ESSARE01.xml</fileName>
-         <fileType>LineStyle</fileType>
-         <fileFormat>XML</fileFormat>
-      </lineStyle>
-      <lineStyle id="FAIRWAY01">
-         <description>
-            <name>FAIRWAY01</name>
-            <description>boundary of a fairway</description>
-            <language>eng</language>
-         </description>
-         <fileName>FAIRWAY01.xml</fileName>
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
@@ -6438,36 +6350,16 @@
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
-     <lineStyle id="TIDINF51">
-       <description>
-         <name>TIDINF51</name>
-         <description>boundary of an area for which there is tidal information</description>
-         <language>eng</language>
-       </description>
-       <fileName>TIDINF51.xml</fileName>
-       <fileType>LineStyle</fileType>
-       <fileFormat>XML</fileFormat>
-     </lineStyle>
-     <lineStyle id="PILE_2021">
-       <description>
-         <name>PILE_2021</name>
-         <description>-----</description>
-         <language>eng</language>
-       </description>
-       <fileName>PILE_2021.xml</fileName>
-       <fileType>LineStyle</fileType>
-       <fileFormat>XML</fileFormat>
-     </lineStyle>
-     <lineStyle id="ADMARE_2021">
-       <description>
-         <name>ADMARE_2021</name>
-         <description>-----</description>
-         <language>eng</language>
-       </description>
-       <fileName>ADMARE_2021.xml</fileName>
-       <fileType>LineStyle</fileType>
-       <fileFormat>XML</fileFormat>
-     </lineStyle>
+      <lineStyle id="TIDINF51">
+         <description>
+            <name>TIDINF51</name>
+            <description>boundary of an area for which there is tidal information</description>
+            <language>eng</language>
+         </description>
+         <fileName>TIDINF51.xml</fileName>
+         <fileType>LineStyle</fileType>
+         <fileFormat>XML</fileFormat>
+      </lineStyle>
    </lineStyles>
    <areaFills>
       <areaFill id="testPCB">
@@ -6891,7 +6783,55 @@
 	  <!-- END CHART INFORMATION - DISPLAY BASE -->
 	  
 	  <!-- MARINERS INFORMATION - DISPLAY BASE -->
-	  <!-- See S-98 Annex C / IMO SN_Circ243 -->
+	  <!-- 40000 Reserved for Mariners' information -->
+	  <!-- TOOLS -->
+	  <!-- 41000-41999 na -->
+	  <!-- OWN-SHIP, PLANNED ROUTES, PAST TRACKS -->
+      <viewingGroup id="42000">
+         <description>
+            <name>Own ship</name>
+            <description>Base: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="42010">
+         <description>
+            <name>Own ship (ownship), symbol or scaled version, together with heading line, beam bearing line and course and speed vector</name>
+            <description>Base: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="42200">
+         <description>
+            <name>Selected Planned Route</name>
+            <description>Base: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="42210">
+         <description>
+            <name>legline (leglin, select 1), way points (waypnt, select 1)</name>
+            <description>Base: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="42220">
+         <description>
+            <name>Course to make good for selected leglines</name>
+            <description>Base: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+	  <!-- MARINERS' FEATURES -->
+	  <!-- 43000 na -->
+	  <!-- OTHER VESSELS -->
+	  <!-- 44000 na -->
+	  <!-- MAANUFACTURERS' FEATURES -->
+	  <!-- TODO: add support for 45000-45999 once a way to specify ranges is developed -->
+	  <!-- MARINERS' ASSIGNMENTS TO DISPLAY BASE -->
+	  <!-- TODO: add support for 46000-46999 once a way to specify ranges is developed -->
+	  <!-- RESERVED -->
+	  <!-- 47000-49999 reserved for Mariners' information -->
 	  <!-- END MARINERS INFORMATION - DISPLAY BASE -->
 	  
 	  <!--********** END BASE DISPLAY ELEMENTS **********-->
@@ -7273,7 +7213,212 @@
 	  <!-- END CHART INFORMATION - STANDARD DISPLAY -->
 	  
 	  <!-- MARINERS' INFORMATION - STANDARD DISPLAY -->
-	  <!-- See S-98 Annex C / IMO SN_Circ243 -->
+	  <!-- RESERVED -->
+	  <!-- 50000 reserved for Mariners' information -->
+      <viewingGroup id="50000">
+         <description>
+            <name>reserved for Mariners' information</name>
+            <description>Standard: Mariners' reserved</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+	  <!-- TOOLS -->
+	  <!-- 51000-51999 na -->
+	  <!-- OWN-SHIP, PLANNED ROUTES, PAST TRACKS -->
+      <viewingGroup id="52000">
+         <description>
+            <name>Notations on Selected Planned Route</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="52010">
+         <description>
+            <name>wheel-over line (wholin), selected route</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="52020">
+         <description>
+            <name>course to make good on leglines (leglin, select 1) of selected route</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="52030">
+         <description>
+            <name>planned position (pinpos), distance to go, and other notations on selected planned route</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="52200">
+         <description>
+            <name>Alternate Planned Route</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="52210">
+         <description>
+            <name>leglin (leglin, select 2), waypoint (waypnt, select 2) of alternate planned route</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <!-- 52220 na -->
+      <viewingGroup id="52230">
+         <description>
+            <name>wheel-over line (wholin), alternate route</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="52240">
+         <description>
+            <name>other notations, alternate route</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="52400">
+         <description>
+            <name>Past Track</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="52410">
+         <description>
+            <name>event (events)</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <!-- 52420 na -->
+      <viewingGroup id="52430">
+         <description>
+            <name>primary past track (pastrk, catpst 1)</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="52440">
+         <description>
+            <name>notations on primary past track</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <!-- 52450 na -->
+      <viewingGroup id="52460">
+         <description>
+            <name>secondary past track (pastrk catpst 2)</name>
+            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+	  <!-- MARINERS' FEATURES -->
+      <viewingGroup id="53000">
+         <description>
+            <name>Mariners' features</name>
+            <description>Standard: Mariners' Features</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="53010">
+         <description>
+            <name>danger highlight (dnghlt)</name>
+            <description>Standard: Mariners' Features</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="53030">
+         <description>
+            <name>Mariners' information note (marnot catnot 1)</name>
+            <description>Standard: Mariners' Features</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="53040">
+         <description>
+            <name>Mariners' cautionary note (marnot catnot 2)</name>
+            <description>Standard: Mariners' Features</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="53050">
+         <description>
+            <name>Mariners' feature (marfea)</name>
+            <description>Standard: Mariners' Features</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <!-- 53060 na -->
+	  <!-- 53070 na -->
+      <viewingGroup id="53080">
+         <description>
+            <name>tidal current observed (tidcur, catcur 2), tidal current predicted (tidcur, catcur 1)</name>
+            <description>Standard: Mariners' Features</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+	  <!-- OTHER VESSELS -->
+      <viewingGroup id="54000">
+         <description>
+            <name>Other Ships</name>
+            <description>Standard: Other Vessels</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="54010">
+         <description>
+            <name>other ships (vessels) from radar</name>
+            <description>Standard: Other Vessels</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="54020">
+         <description>
+            <name>notations on other ships (acqsta)</name>
+            <description>Standard: Other Vessels</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="54030">
+         <description>
+            <name>other ships from other sources or undefined sources</name>
+            <description>Standard: Other Vessels</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+	  <!-- MANUFACTURERS' FEATURES -->
+      <viewingGroup id="55000">
+         <description>
+            <name>Manufacturers' Features</name>
+            <description>Standard: Manufacturers' Features</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="55010">
+         <description>
+            <name>manufacturers' feature (mnufea, catnot 1)</name>
+            <description>Standard: Manufacturers' Features</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="55020">
+         <description>
+            <name>manufacturers' feature (mnufea, catnot 2)</name>
+            <description>Standard: Manufacturers' Features</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+	  <!-- MARINERS' ASSIGNMENTS TO STANDARD DISPLAY -->
+	  <!-- TODO: add support for 56000-56999 once a way to specify ranges is developed -->
+	  <!-- RESERVED -->
+	  <!-- 57000-59999 reserved for Mariners' information -->
 	  <!-- END MARINERS' INFORMATION - STANDARD DISPLAY -->
 
 	  <!--********** END STANDARD DISPLAY ELEMENTS **********-->
@@ -7702,7 +7847,289 @@
 	  <!-- END OTHER CHART INFORMATION -->
 	  
 	  <!-- OTHER MARINERS' INFORMATION -->
-	  <!-- See S-98 Annex C / IMO SN_Circ243 -->
+	  <!-- RESERVED -->
+	  <!-- 60000 reserved for Mariners' information -->
+	  <!-- TOOLS -->
+      <viewingGroup id="61000">
+         <description>
+            <name>Tools</name>
+            <description>Other: Tools</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="61010">
+         <description>
+            <name>electronic bearing line (ebline), variable range marker (vrmark)</name>
+            <description>Other: Tools</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <!-- 61020 na -->
+      <viewingGroup id="61030">
+         <description>
+            <name>range rings (rngrng)</name>
+            <description>Other: Tools</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="61040">
+         <description>
+            <name>cursor, style B (cursor, cursty2)</name>
+            <description>Other: Tools</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="61050">
+         <description>
+            <name>cursor reference point (refpnt)</name>
+            <description>Other: Tools</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>  
+	  <!-- OWN-SHIP, PLANNED ROUTES, PAST TRACKS -->
+      <viewingGroup id="62000">
+         <description>
+            <name>Position fixes</name>
+            <description>Other: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="62010">
+         <description>
+            <name>position fix (positn)</name>
+            <description>Other: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="62020">
+         <description>
+            <name>position line (poslin)</name>
+            <description>Other: Own-ship, Planned Routes, Past Tracks</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+	  <!-- MARINERS' FEATURES -->
+	  <!-- 63000-63999 na -->
+	  <!-- OTHER VESSELS -->
+	  <!-- 64000-64999 na -->
+	  <!-- MANUFACTURERS' FEATURES -->
+	  <!-- TODO: add support for 65000-65999 once a way to specify ranges is developed -->
+	  <!-- MARINERS' ASSIGNMENTS TO OTHER INFORMATION -->
+	  <!-- TODO: add support for 66000-66999 once a way to specify ranges is developed -->
+	  <!-- RESERVED -->
+	  <!-- 67000-69999 reserved for Mariners' information -->
+	  <!-- MARINERS TEXT -->
+      <viewingGroup id="50">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="51">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="52">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="54">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="55">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="56">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="57">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="58">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="59">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="60">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="61">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="62">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="63">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="64">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="65">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="66">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="67">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="68">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="69">
+        <description>
+          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
+          <description>Other: Mariners' Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+	  <!-- MANUFACTURERS Text -->
+      <viewingGroup id="70">
+        <description>
+          <name>Text: Manufacturer's Text</name>
+          <description>Other: Manufacturer's Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="71">
+        <description>
+          <name>Text: Manufacturer's Text</name>
+          <description>Other: Manufacturer's Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="72">
+        <description>
+          <name>Text: Manufacturer's Text</name>
+          <description>Other: Manufacturer's Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="73">
+        <description>
+          <name>Text: Manufacturer's Text</name>
+          <description>Other: Manufacturer's Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="74">
+        <description>
+          <name>Text: Manufacturer's Text</name>
+          <description>Other: Manufacturer's Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="75">
+        <description>
+          <name>Text: Manufacturer's Text</name>
+          <description>Other: Manufacturer's Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="76">
+        <description>
+          <name>Text: Manufacturer's Text</name>
+          <description>Other: Manufacturer's Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="77">
+        <description>
+          <name>Text: Manufacturer's Text</name>
+          <description>Other: Manufacturer's Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="78">
+        <description>
+          <name>Text: Manufacturer's Text</name>
+          <description>Other: Manufacturer's Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="79">
+        <description>
+          <name>Text: Manufacturer's Text</name>
+          <description>Other: Manufacturer's Text</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
 	  <!-- END OTHER MARINERS' INFORMATION -->
 	
 	  <!--********** END OTHER DISPLAY ELEMENTS **********-->
@@ -7844,6 +8271,14 @@
          <!-- N - SPECIAL AREAS -->
          <!-- P, Q, R, S - AIDS TO NAVIGATION -->
          <!-- T, U - SERVICES -->
+		 <!-- MARINERS INFORMATION -->
+		 <viewingGroup>42000</viewingGroup>
+		 <viewingGroup>42010</viewingGroup>
+		 <viewingGroup>42200</viewingGroup>
+		 <viewingGroup>42210</viewingGroup>
+		 <viewingGroup>42220</viewingGroup>
+		 <!-- TODO: Add 45000-45999 once a way to add a range is provided -->
+		 <!-- TODO: Add 46000-46999 once a way to add a range is provided -->
    </foundationMode>
    <viewingGroupLayers>
 	  <!-- BASE LAYER GROUPS -->
@@ -7876,6 +8311,11 @@
          <viewingGroup>14000</viewingGroup>
          <viewingGroup>14010</viewingGroup>
 		 <viewingGroup>14050</viewingGroup>
+		 <viewingGroup>42000</viewingGroup>
+		 <viewingGroup>42010</viewingGroup>
+		 <viewingGroup>42200</viewingGroup>
+		 <viewingGroup>42210</viewingGroup>
+		 <viewingGroup>42220</viewingGroup>
          <!-- M - TRACKS AND ROUTES -->
          <!-- N - SPECIAL AREAS -->
          <!-- P, Q, R, S - AIDS TO NAVIGATION -->
@@ -8035,6 +8475,33 @@
          <viewingGroup>28000</viewingGroup>
          <viewingGroup>28010</viewingGroup>
          <viewingGroup>28020</viewingGroup>
+		 <!-- MARINERS INFORMATION -->
+         <viewingGroup>52000</viewingGroup>
+         <viewingGroup>52010</viewingGroup>
+         <viewingGroup>52020</viewingGroup>
+         <viewingGroup>52030</viewingGroup>
+         <viewingGroup>52200</viewingGroup>
+         <viewingGroup>52210</viewingGroup>
+         <viewingGroup>52230</viewingGroup>
+         <viewingGroup>52240</viewingGroup>
+         <viewingGroup>52400</viewingGroup>
+         <viewingGroup>52410</viewingGroup>
+         <viewingGroup>52430</viewingGroup>
+         <viewingGroup>52440</viewingGroup>
+         <viewingGroup>52460</viewingGroup>
+         <viewingGroup>53000</viewingGroup>
+         <viewingGroup>53010</viewingGroup>
+         <viewingGroup>53030</viewingGroup>
+         <viewingGroup>53040</viewingGroup>
+         <viewingGroup>53050</viewingGroup>
+         <viewingGroup>53080</viewingGroup>
+         <viewingGroup>54000</viewingGroup>
+         <viewingGroup>54010</viewingGroup>
+         <viewingGroup>54020</viewingGroup>
+         <viewingGroup>54030</viewingGroup>
+         <viewingGroup>55000</viewingGroup>
+         <viewingGroup>55010</viewingGroup>
+         <viewingGroup>55020</viewingGroup>
 		 <!-- Alert Highlights -->
 		 <viewingGroup>101</viewingGroup>
 		 <viewingGroup>102</viewingGroup>
@@ -8051,6 +8518,7 @@
 		 <viewingGroup>113</viewingGroup>
 		 <viewingGroup>114</viewingGroup>
 		 <viewingGroup>115</viewingGroup>
+		 <!-- TODO: Implement 56000-56999 once a way to specify ranges is provided -->
       </viewingGroupLayer>
 	  <viewingGroupLayer id="10a">
          <description>
@@ -8075,6 +8543,40 @@
          <viewingGroup>28020</viewingGroup>
       </viewingGroupLayer>
 	  <viewingGroupLayer id="10b">
+         <description>
+            <name>Mariners (Standard)</name>
+            <description>Miscellaneous Mariners Standard Display elements</description>
+            <language>eng</language>
+         </description>
+		 <!-- MARINERS INFORMATION -->
+         <viewingGroup>52000</viewingGroup>
+         <viewingGroup>52010</viewingGroup>
+         <viewingGroup>52020</viewingGroup>
+         <viewingGroup>52030</viewingGroup>
+         <viewingGroup>52200</viewingGroup>
+         <viewingGroup>52210</viewingGroup>
+         <viewingGroup>52230</viewingGroup>
+         <viewingGroup>52240</viewingGroup>
+         <viewingGroup>52400</viewingGroup>
+         <viewingGroup>52410</viewingGroup>
+         <viewingGroup>52430</viewingGroup>
+         <viewingGroup>52440</viewingGroup>
+         <viewingGroup>52460</viewingGroup>
+         <viewingGroup>53000</viewingGroup>
+         <viewingGroup>53010</viewingGroup>
+         <viewingGroup>53030</viewingGroup>
+         <viewingGroup>53040</viewingGroup>
+         <viewingGroup>53050</viewingGroup>
+         <viewingGroup>53080</viewingGroup>
+         <viewingGroup>54000</viewingGroup>
+         <viewingGroup>54010</viewingGroup>
+         <viewingGroup>54020</viewingGroup>
+         <viewingGroup>54030</viewingGroup>
+         <viewingGroup>55000</viewingGroup>
+         <viewingGroup>55010</viewingGroup>
+         <viewingGroup>55020</viewingGroup>
+	  </viewingGroupLayer>
+	  <viewingGroupLayer id="10c">
 		<description>
             <name>Alert Highlights (Standard)</name>
             <description>Toggles graphical highlighting of detected alerts</description>
@@ -8203,9 +8705,39 @@
          <viewingGroup>38030</viewingGroup>
          <viewingGroup>38200</viewingGroup>
          <viewingGroup>38210</viewingGroup>
+		 <!-- MARINERS INFORMATION -->
+		 <viewingGroup>50000</viewingGroup>
+         <viewingGroup>61000</viewingGroup>
+         <viewingGroup>61010</viewingGroup>
+         <viewingGroup>61030</viewingGroup>
+         <viewingGroup>61040</viewingGroup>
+         <viewingGroup>61050</viewingGroup>
+         <viewingGroup>62000</viewingGroup>
+         <viewingGroup>62010</viewingGroup>
+         <viewingGroup>62020</viewingGroup>
+		 <!-- TODO: Implement 65000-65999 once a way to specify ranges is provided -->
+		 <!-- TODO: Implement 66000-66999 once a way to specify ranges is provided -->
       </viewingGroupLayer>
-     <!-- END OTHER LAYER GROUPS -->
-     <!-- TEXT LAYER GROUPS (not part of a display mode / IMO display category) -->
+      <viewingGroupLayer id="18a">
+         <description>
+            <name>Mariners (Other)</name>
+            <description>Mariners Other Display elements</description>
+            <language>eng</language>
+         </description>
+		 <!-- MARINERS INFORMATION -->
+		 <viewingGroup>50000</viewingGroup>
+         <viewingGroup>61000</viewingGroup>
+         <viewingGroup>61010</viewingGroup>
+         <viewingGroup>61030</viewingGroup>
+         <viewingGroup>61040</viewingGroup>
+         <viewingGroup>61050</viewingGroup>
+         <viewingGroup>62000</viewingGroup>
+         <viewingGroup>62010</viewingGroup>
+         <viewingGroup>62020</viewingGroup>
+		 <!-- TODO: Implement 65000-65999 once a way to specify ranges is provided -->
+		 <!-- TODO: Implement 66000-66999 once a way to specify ranges is provided -->
+      </viewingGroupLayer>
+     <!-- TEXT LAYER GROUPS -->
      <viewingGroupLayer id="101">
        <description>
          <name>Important Text</name>
@@ -8229,6 +8761,38 @@
        <viewingGroup>28</viewingGroup>
        <viewingGroup>29</viewingGroup>
        <viewingGroup>30</viewingGroup>
+       <!-- Mariners Text Groups -->
+       <viewingGroup>50</viewingGroup>
+       <viewingGroup>51</viewingGroup>
+       <viewingGroup>52</viewingGroup>
+       <viewingGroup>53</viewingGroup>
+       <viewingGroup>54</viewingGroup>
+       <viewingGroup>55</viewingGroup>
+       <viewingGroup>56</viewingGroup>
+       <viewingGroup>57</viewingGroup>
+       <viewingGroup>58</viewingGroup>
+       <viewingGroup>59</viewingGroup>
+       <viewingGroup>60</viewingGroup>
+       <viewingGroup>61</viewingGroup>
+       <viewingGroup>62</viewingGroup>
+       <viewingGroup>63</viewingGroup>
+       <viewingGroup>64</viewingGroup>
+       <viewingGroup>65</viewingGroup>
+       <viewingGroup>66</viewingGroup>
+       <viewingGroup>67</viewingGroup>
+       <viewingGroup>68</viewingGroup>
+       <viewingGroup>69</viewingGroup>
+       <!-- Manufacturers Text Groups-->
+       <viewingGroup>70</viewingGroup>
+       <viewingGroup>71</viewingGroup>
+       <viewingGroup>72</viewingGroup>
+       <viewingGroup>73</viewingGroup>
+       <viewingGroup>74</viewingGroup>
+       <viewingGroup>75</viewingGroup>
+       <viewingGroup>76</viewingGroup>
+       <viewingGroup>77</viewingGroup>
+       <viewingGroup>78</viewingGroup>
+       <viewingGroup>79</viewingGroup>
      </viewingGroupLayer>
      <viewingGroupLayer id="102a">
        <description>
@@ -8260,7 +8824,47 @@
        <viewingGroup>28</viewingGroup>
        <viewingGroup>30</viewingGroup>
      </viewingGroupLayer>
+     <viewingGroupLayer id="102d">
+       <description>
+         <name>Mariners text</name>
+         <description>Text added by the manufacturer or mariner</description>
+         <language>eng</language>
+       </description>
+       <!-- Mariners Text Groups -->
+       <viewingGroup>50</viewingGroup>
+       <viewingGroup>51</viewingGroup>
+       <viewingGroup>52</viewingGroup>
+       <viewingGroup>53</viewingGroup>
+       <viewingGroup>54</viewingGroup>
+       <viewingGroup>55</viewingGroup>
+       <viewingGroup>56</viewingGroup>
+       <viewingGroup>57</viewingGroup>
+       <viewingGroup>58</viewingGroup>
+       <viewingGroup>59</viewingGroup>
+       <viewingGroup>60</viewingGroup>
+       <viewingGroup>61</viewingGroup>
+       <viewingGroup>62</viewingGroup>
+       <viewingGroup>63</viewingGroup>
+       <viewingGroup>64</viewingGroup>
+       <viewingGroup>65</viewingGroup>
+       <viewingGroup>66</viewingGroup>
+       <viewingGroup>67</viewingGroup>
+       <viewingGroup>68</viewingGroup>
+       <viewingGroup>69</viewingGroup>
+       <!-- Manufacturers Text Groups-->
+       <viewingGroup>70</viewingGroup>
+       <viewingGroup>71</viewingGroup>
+       <viewingGroup>72</viewingGroup>
+       <viewingGroup>73</viewingGroup>
+       <viewingGroup>74</viewingGroup>
+       <viewingGroup>75</viewingGroup>
+       <viewingGroup>76</viewingGroup>
+       <viewingGroup>77</viewingGroup>
+       <viewingGroup>78</viewingGroup>
+       <viewingGroup>79</viewingGroup>
+     </viewingGroupLayer>
      <!-- END TEXT LAYER GROUPS -->
+     <!-- END OTHER LAYER GROUPS -->
    </viewingGroupLayers>
    <displayModes>
       <displayMode id="1">
@@ -8291,6 +8895,7 @@
          <viewingGroupLayer>10</viewingGroupLayer>
          <viewingGroupLayer>10a</viewingGroupLayer>
          <viewingGroupLayer>10b</viewingGroupLayer>
+         <viewingGroupLayer>10c</viewingGroupLayer>
       </displayMode>
       <displayMode id="3">
          <description>
@@ -8312,6 +8917,7 @@
          <viewingGroupLayer>10</viewingGroupLayer>
          <viewingGroupLayer>10a</viewingGroupLayer>
          <viewingGroupLayer>10b</viewingGroupLayer>
+         <viewingGroupLayer>10c</viewingGroupLayer>
          <viewingGroupLayer>11</viewingGroupLayer>
          <viewingGroupLayer>12</viewingGroupLayer>
          <viewingGroupLayer>13</viewingGroupLayer>
@@ -8320,6 +8926,13 @@
          <viewingGroupLayer>16</viewingGroupLayer>
          <viewingGroupLayer>17</viewingGroupLayer>
          <viewingGroupLayer>18</viewingGroupLayer>
+         <viewingGroupLayer>18a</viewingGroupLayer>
+         <viewingGroupLayer>101</viewingGroupLayer>
+         <viewingGroupLayer>102</viewingGroupLayer>
+         <viewingGroupLayer>102a</viewingGroupLayer>
+         <viewingGroupLayer>102b</viewingGroupLayer>
+         <viewingGroupLayer>102c</viewingGroupLayer>
+         <viewingGroupLayer>102d</viewingGroupLayer>
       </displayMode>
    </displayModes>
    <displayPlanes>
@@ -8400,7 +9013,7 @@
             <language>eng</language>
          </description>
          <type>Boolean</type>
-         <default>true</default>
+         <default>false</default>
       </parameter>
      <parameter id="PlainBoundaries">
        <description>
@@ -8409,7 +9022,7 @@
          <language>eng</language>
        </description>
        <type>Boolean</type>
-       <default>true</default>
+       <default>false</default>
      </parameter>
      <parameter id="SimplifiedPoints">
        <description>
@@ -8427,7 +9040,7 @@
          <language>eng</language>
        </description>
        <type>Boolean</type>
-       <default>false</default>
+       <default>true</default>
      </parameter>
      <parameter id="RadarOverlay">
        <description>
@@ -8436,7 +9049,7 @@
          <language>eng</language>
        </description>
        <type>Boolean</type>
-       <default>false</default>
+       <default>true</default>
      </parameter>
      <parameter id="IgnoreScamin">
        <description>

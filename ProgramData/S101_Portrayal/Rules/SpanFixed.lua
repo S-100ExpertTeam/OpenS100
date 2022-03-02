@@ -7,11 +7,7 @@ function SpanFixed(feature, featurePortrayal, contextParameters)
 
 	if feature.PrimitiveType == PrimitiveType.Point then
 		-- Simplified and paper chart points use the same symbolization
-		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:12210;DrawingPriority:24;DisplayPlane:OverRADAR;NullInstruction')
-		else
-			featurePortrayal:AddInstructions('ViewingGroup:12210;DrawingPriority:24;DisplayPlane:UnderRADAR;NullInstruction')
-		end
+		featurePortrayal:AddInstructions('NullInstruction')
 	elseif feature.PrimitiveType == PrimitiveType.Curve then
 		if contextParameters.RadarOverlay then
 			featurePortrayal:AddInstructions('ViewingGroup:12210;DrawingPriority:24;DisplayPlane:OverRADAR')
@@ -23,8 +19,9 @@ function SpanFixed(feature, featurePortrayal, contextParameters)
 
 		-- This if statement is here since the ESRI converter doesn't always emit the mandatory attribute verticalClearanceFixed.verticalClearanceValue.
 		if feature.verticalClearanceFixed and feature.verticalClearanceFixed.verticalClearanceValue then
+			featurePortrayal:AddInstructions('ViewingGroup:11')
 			featurePortrayal:AddInstructions('LinePlacement:Relative,0.5;FontSize:10;FontColor:CHBLK')
-			featurePortrayal:AddTextInstruction(EncodeString(feature.verticalClearanceFixed.verticalClearanceValue, 'clr %4.1f'), 11, 24, 12210, 24)
+			featurePortrayal:AddInstructions('TextInstruction:' .. EncodeString(feature.verticalClearanceFixed.verticalClearanceValue, 'clr %4.1f') .. ',11,24')
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		if contextParameters.RadarOverlay then
@@ -37,12 +34,11 @@ function SpanFixed(feature, featurePortrayal, contextParameters)
 
 		-- This if statement is here since the ESRI converter doesn't always emit the mandatory attribute verticalClearanceFixed.verticalClearanceValue.
 		if feature.verticalClearanceFixed and feature.verticalClearanceFixed.verticalClearanceValue then
+			featurePortrayal:AddInstructions('ViewingGroup:11')
 			featurePortrayal:AddInstructions('LocalOffset:3.51,0;LinePlacement:Relative,0.5;FontSize:10;FontColor:CHBLK')
-			featurePortrayal:AddTextInstruction(EncodeString(feature.verticalClearanceFixed.verticalClearanceValue, 'clr %4.1f'), 11, 24, 12210, 24)
+			featurePortrayal:AddInstructions('TextInstruction:' .. EncodeString(feature.verticalClearanceFixed.verticalClearanceValue, 'clr %4.1f') .. ',11,24')
 		end
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return 12210
 end

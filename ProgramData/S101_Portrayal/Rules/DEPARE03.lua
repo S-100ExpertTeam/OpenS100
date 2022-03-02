@@ -8,7 +8,7 @@ require 'SEABED01'
 local sdMinus1 = CreateScaledDecimal(-1, 0)
 
 -- Main entry point for CSP.
-function DEPARE03(feature, featurePortrayal, contextParameters, viewingGroup)
+function DEPARE03(feature, featurePortrayal, contextParameters)
 	Debug.StartPerformance('Lua Code - DEPARE03')
 
 	local depthRangeMinimumValue = feature.depthRangeMinimumValue or sdMinus1
@@ -103,9 +103,9 @@ function DEPARE03(feature, featurePortrayal, contextParameters, viewingGroup)
 		end
 
 		if loc_safety or unsafe and safe then
-			--if unsafe then
-				--featurePortrayal:AddInstructions('AlertReference:SafetyContour,101,101')
-			--end
+			if unsafe then
+				featurePortrayal:AddInstructions('AlertReference:SafetyContour,101,101')
+			end
 
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:13010;DrawingPriority:24;DisplayPlane:OverRADAR')
@@ -143,7 +143,7 @@ function DEPARE03(feature, featurePortrayal, contextParameters, viewingGroup)
 
 			featurePortrayal:AddInstructions('ClearGeometry')
 
-			--featurePortrayal:AddInstructions('AlertReference')
+			featurePortrayal:AddInstructions('AlertReference')
 		end
 	end
 

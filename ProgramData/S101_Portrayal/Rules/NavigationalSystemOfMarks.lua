@@ -16,6 +16,4 @@ function NavigationalSystemOfMarks(feature, featurePortrayal, contextParameters)
 	else
 		featurePortrayal:AddInstructions('LineInstruction:MARSYS51')
 	end
-
-	return 27040
 end

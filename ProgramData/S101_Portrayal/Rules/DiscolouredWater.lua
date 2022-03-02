@@ -18,6 +18,4 @@ function DiscolouredWater(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return 26150
 end

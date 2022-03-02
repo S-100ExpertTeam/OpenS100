@@ -7,8 +7,14 @@
 #include "host_data.h"
 #include "host_functions.h"
 
+#include "../LuaScriptingReference/lua_functions.h"
+#include "..\\LuaScriptingReference\\lua_session.h"
+#include "..\\LuaScriptingReference\\portrayal_catalog.h"
+
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"
+
 #include "..\\GeoMetryLibrary\\ENCCommon.h"
+
 #include "..\\PortrayalCatalogue\\S100_ColorFill.h"
 #include "..\\PortrayalCatalogue\\S100_AreaFillReference.h"
 #include "..\\PortrayalCatalogue\\S100_DisplayList.h"
@@ -20,9 +26,9 @@
 #include "..\\PortrayalCatalogue\\S100_LineInstruction.h"
 #include "..\\PortrayalCatalogue\\S100_PointInstruction.h"
 #include "..\\PortrayalCatalogue\\S100_SymbolFill.h"
-#include "..\\LuaScriptingReference\\lua_session.h"
-#include "..\\LuaScriptingReference\\feature_catalog.h"
-#include "..\\LuaScriptingReference\\portrayal_catalog.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/ViewingGroupLayer.h"
+
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
 #include <sstream> 
@@ -73,7 +79,8 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 {
 	try {
 		auto fc = layer->GetFeatureCatalog();
-		if (nullptr == fc)
+		auto pc = layer->GetPC();
+		if (nullptr == fc || nullptr == pc)
 		{
 			return 0;
 		}
@@ -84,10 +91,10 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 		std::string luaRulePath_string(luaRulePath.begin(), luaRulePath.end());
 
 		InitPortrayal(
-			featureCatalogPath_string.c_str(),
 			luaRulePath_string.c_str(),
 			(S101Cell*)layer->m_spatialObject,
-			fc);
+			fc, 
+			pc);
 
 		std::string two_shades = ENCCommon::TWO_SHADES ? "true" : "false";
 		std::string national_language = ENCCommon::SHOW_NOBJNM ? "eng" : "kor";
@@ -152,7 +159,7 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 		c->pcManager->GenerateSENCInstruction(c, layer->GetPC());
 
 		c->pcManager->InitDisplayList();
-
+		
 		KRS_LUA_SCRIPT_REFERENCE::SaveDrawingInstructions("..\\TEMP\\drawingCommands.txt");
 		KRS_LUA_SCRIPT_REFERENCE::RemoveResultDrawingInstructions();
 	}
@@ -810,7 +817,7 @@ std::wstring ProcessS101::LUA_GetPriority(std::string lua_priority)
 	return std::wstring(lua_priority.begin(), lua_priority.end());
 }
 
-void ProcessS101::InitPortrayal(const char* featureCatalog, const char* topLevelRule, S101Cell* cell, FeatureCatalogue* fc)
+void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, FeatureCatalogue* fc, PortrayalCatalogue* pc)
 {
 	if (theInstance.m_lua_session)
 	{
@@ -821,6 +828,7 @@ void ProcessS101::InitPortrayal(const char* featureCatalog, const char* topLevel
 	{
 		theInstance.m_s101_cell = cell;
 	}
+
 	if (fc)
 	{
 		theInstance.m_s101_feature_catalogue = fc;
@@ -828,7 +836,6 @@ void ProcessS101::InitPortrayal(const char* featureCatalog, const char* topLevel
 
 	theInstance.m_lua_session = NULL;
 
-	const char *feature_catalog = featureCatalog;
 	std::string top_level_rule(topLevelRule);
 	pTheFC = fc;
 

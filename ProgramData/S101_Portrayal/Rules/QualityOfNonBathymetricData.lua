@@ -7,6 +7,4 @@ function QualityOfNonBathymetricData(feature, featurePortrayal, contextParameter
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return 31010
 end

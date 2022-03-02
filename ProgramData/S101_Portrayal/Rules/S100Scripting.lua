@@ -31,7 +31,7 @@ end
 -- Time commands support
 --
 
-function ProcessTimes(feature, featurePortrayal, contextParameters, viewingGroup)
+function ProcessTimes(feature, featurePortrayal, contextParameters)
 	local dateDependent = false
 	local periodicDateRanges = feature['!periodicDateRange']
 
@@ -67,12 +67,12 @@ function ProcessTimes(feature, featurePortrayal, contextParameters, viewingGroup
 		-- Clear any existing transforms and geometries
 		featurePortrayal:AddInstructions('LocalOffset:0,0;LinePlacement:Relative,0.5;AreaPlacement:VisibleParts;AreaCRS:GlobalGeometry;Rotation:PortrayalCRS,0;ScaleFactor:1;ClearGeometry')
 
-		featurePortrayal:AddInstructions('Hover:true')
+		featurePortrayal:AddInstructions('Parent:main;Hover:true')
 
 		local displayPlane = contextParameters.RadarOverlay and 'DisplayPlane:OverRADAR' or 'DisplayPlane:UnderRADAR'
 
 		featurePortrayal:AddInstructions(displayPlane)
-		featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31030;DrawingPriority:24;PointInstruction:CHDATD01')
+		featurePortrayal:AddInstructions('ViewingGroup:31030;DrawingPriority:24;PointInstruction:CHDATD01')
 	end
 end
 
@@ -80,14 +80,14 @@ end
 -- Nautical information support
 --
 
-function ProcessNauticalInformation(feature, featurePortrayal, contextParameters, viewingGroup)
+function ProcessNauticalInformation(feature, featurePortrayal, contextParameters)
 	local nauticalInformation = feature:GetInformationAssociation('AdditionalInformation', 'providesInformation', 'NauticalInformation')
 
 	if nauticalInformation then
 		-- Clear any existing transforms and geometries
 		featurePortrayal:AddInstructions('LocalOffset:0,0;LinePlacement:Relative,0.5;AreaPlacement:VisibleParts;AreaCRS:GlobalGeometry;Rotation:PortrayalCRS,0;ScaleFactor:1;ClearGeometry')
 
-		featurePortrayal:AddInstructions('Hover:true')
+		featurePortrayal:AddInstructions('Parent:main;Hover:true')
 
 		local vg31030, vg31031
 
@@ -109,12 +109,12 @@ function ProcessNauticalInformation(feature, featurePortrayal, contextParameters
 
 		if vg31030 then
 			featurePortrayal:AddInstructions(displayPlane)
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31030;DrawingPriority:24;PointInstruction:INFORM01')
+			featurePortrayal:AddInstructions('ViewingGroup:31030;DrawingPriority:24;PointInstruction:INFORM01')
 		end
 
 		if vg31031 then
 			featurePortrayal:AddInstructions(displayPlane)
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31031;DrawingPriority:24;PointInstruction:INFORM01')
+			featurePortrayal:AddInstructions('ViewingGroup:31031;DrawingPriority:24;PointInstruction:INFORM01')
 		end
 	end
 end

@@ -7,7 +7,6 @@
 
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"
 #include "..\\GeoMetryLibrary\\ENCCommon.h"
-#include "..\\LuaScriptingReference\\feature_catalog.h"
 #include "..\\LuaScriptingReference\\portrayal_catalog.h"
 #include "..\\LuaScriptingReference\\lua_session.h"
 

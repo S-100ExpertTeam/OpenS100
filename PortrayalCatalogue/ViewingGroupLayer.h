@@ -15,6 +15,7 @@ namespace Portrayal
 		virtual ~ViewingGroupLayer();
 
 	private:
+		std::vector<ViewingGroup*> viewingGroupVector;
 		std::unordered_map<int, ViewingGroup*> viewingGroup;
 		
 	public:

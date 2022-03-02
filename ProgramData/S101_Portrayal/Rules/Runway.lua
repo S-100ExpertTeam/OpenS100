@@ -3,18 +3,10 @@
 
 -- Runway main entry point.
 function Runway(feature, featurePortrayal, contextParameters)
-	local viewingGroup
-
 	if feature.PrimitiveType == PrimitiveType.Point then
 		-- Simplified and paper chart points use the same symbolization
-		viewingGroup = 32240
-		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:32240;DrawingPriority:18;DisplayPlane:OverRADAR;NullInstruction')
-		else
-			featurePortrayal:AddInstructions('ViewingGroup:32240;DrawingPriority:18;DisplayPlane:UnderRADAR;NullInstruction')
-		end
+		featurePortrayal:AddInstructions('NullInstruction')
 	elseif feature.PrimitiveType == PrimitiveType.Curve then
-		viewingGroup = 32240
 		if contextParameters.RadarOverlay then
 			featurePortrayal:AddInstructions('ViewingGroup:32240;DrawingPriority:18;DisplayPlane:OverRADAR')
 		else
@@ -24,12 +16,9 @@ function Runway(feature, featurePortrayal, contextParameters)
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
-		viewingGroup = 32240
 		featurePortrayal:AddInstructions('ViewingGroup:32240;DrawingPriority:15;DisplayPlane:UnderRADAR')
 		featurePortrayal:AddInstructions('ColorFill:CHBRN')
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return viewingGroup
 end

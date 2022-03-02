@@ -3,11 +3,8 @@
 
 -- Radio station main entry point.
 function RadioStation(feature, featurePortrayal, contextParameters)
-	local viewingGroup
-
 	if feature.PrimitiveType == PrimitiveType.Point and contextParameters.SimplifiedPoints then
 		if feature.categoryOfRadioStation == 10 then
-			viewingGroup = 38010
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:38010;DrawingPriority:12;DisplayPlane:OverRADAR')
 			else
@@ -15,7 +12,6 @@ function RadioStation(feature, featurePortrayal, contextParameters)
 			end
 			featurePortrayal:AddInstructions('PointInstruction:DRFSTA01')
 		else
-			viewingGroup = 38010
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:38010;DrawingPriority:12;DisplayPlane:OverRADAR')
 			else
@@ -25,7 +21,6 @@ function RadioStation(feature, featurePortrayal, contextParameters)
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Point then
 		if feature.categoryOfRadioStation == 10 then
-			viewingGroup = 38010
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:38010;DrawingPriority:12;DisplayPlane:OverRADAR')
 			else
@@ -33,7 +28,6 @@ function RadioStation(feature, featurePortrayal, contextParameters)
 			end
 			featurePortrayal:AddInstructions('PointInstruction:DRFSTA01')
 		else
-			viewingGroup = 38010
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:38010;DrawingPriority:12;DisplayPlane:OverRADAR')
 			else
@@ -44,6 +38,4 @@ function RadioStation(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return viewingGroup
 end

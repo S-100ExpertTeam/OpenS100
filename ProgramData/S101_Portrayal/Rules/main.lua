@@ -7,6 +7,7 @@ require 'Default'
 function PortrayalMain(featureIDs)
 	Debug.StartPerformance('Lua Code - Total')
 
+	-- portrayalContext is nill if PortrayalInitializeContextParameters() is not called
 	if not portrayalContext then
 		error('Host must call PortrayalInitializeContextParameters() before calling portrayal_main()')
 	end
@@ -43,20 +44,20 @@ function PortrayalMain(featureIDs)
 				featurePortrayal:AddInstructions('ScaleMaximum:' .. scaleMaximum)
 			end
 
-			require(feature.Code)
-			local viewingGroup = _G[feature.Code](feature, featurePortrayal, contextParameters)
+			featurePortrayal:AddInstructions('Id:main')
 
-			if not viewingGroup then
-				error('Viewing group not returned')
-			end
+			require(feature.Code)
+			_G[feature.Code](feature, featurePortrayal, contextParameters)
+
+			featurePortrayal:AddInstructions('Id:')
 
 			if #featurePortrayal.DrawingInstructions == 0 then
 				error('No drawing instructions were emitted for feature ' .. feature.ID)
 			end
 
-			ProcessTimes(feature, featurePortrayal, contextParameters, viewingGroup)
+			ProcessTimes(feature, featurePortrayal, contextParameters)
 
-			ProcessNauticalInformation(feature, featurePortrayal, contextParameters, viewingGroup)
+			ProcessNauticalInformation(feature, featurePortrayal, contextParameters)
 
 			Debug.StopPerformance('Lua Code - Rules processing')
 		end)

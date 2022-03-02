@@ -5,7 +5,7 @@ require 'QUAPNT02'
 require 'QUALIN02'
 
 -- Main entry point for CSP.
-function QUAPOS01(feature, featurePortrayal, contextParameters, viewingGroup)
+function QUAPOS01(feature, featurePortrayal, contextParameters)
 	Debug.StartPerformance('Lua Code - QUAPOS01')
 
 	if feature.PrimitiveType == PrimitiveType.Curve then
@@ -14,7 +14,7 @@ function QUAPOS01(feature, featurePortrayal, contextParameters, viewingGroup)
 		local symbol = QUAPNT02(feature, featurePortrayal, contextParameters)
 
 		if symbol then
-			featurePortrayal:AddInstructions('PointInstruction:' .. symbol)
+			featurePortrayal:AddInstructions('ViewingGroup:12210;PointInstruction:' .. symbol)
 		end
 	end
 

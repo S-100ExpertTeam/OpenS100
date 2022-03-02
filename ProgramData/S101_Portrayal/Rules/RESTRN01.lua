@@ -4,10 +4,10 @@
 require 'RESCSP03'
 
 -- Main entry point for CSP.
-function RESTRN01(feature, featurePortrayal, contextParameters, viewingGroup)
+function RESTRN01(feature, featurePortrayal, contextParameters)
 	Debug.StartPerformance('Lua Code - RESTRN01')
 
-	if #feature['restriction'] > 0 then
+	if feature['!restriction'] then
 		RESCSP03(feature, featurePortrayal, contextParameters)
 	end
 

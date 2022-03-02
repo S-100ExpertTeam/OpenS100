@@ -3,13 +3,10 @@
 
 -- Ice area main entry point.
 function IceArea(feature, featurePortrayal, contextParameters)
-	local viewingGroup
-
 	featurePortrayal:AddInstructions('AlertReference:NavHazard,115,115')
 
 	if feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
-		viewingGroup = 12410
 		featurePortrayal:AddInstructions('ViewingGroup:12410;DrawingPriority:9;DisplayPlane:UnderRADAR')
 		featurePortrayal:AddInstructions('ColorFill:NODTA')
 		featurePortrayal:AddInstructions('AreaFillReference:ICEARE04')
@@ -18,6 +15,4 @@ function IceArea(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return viewingGroup
 end

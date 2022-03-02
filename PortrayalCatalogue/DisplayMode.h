@@ -14,6 +14,7 @@ namespace Portrayal
 		virtual ~DisplayMode();
 
 	private:
+		std::vector<ViewingGroupLayer*> viewingGroupLayerVector;
 		std::unordered_map<int, ViewingGroupLayer*> viewingGroupLayer;
 
 	public:

@@ -192,7 +192,6 @@
     <ClInclude Include="context_parameter.h" />
     <ClInclude Include="curve.h" />
     <ClInclude Include="curve_segment.h" />
-    <ClInclude Include="feature_catalog.h" />
     <ClInclude Include="lauxlib.h" />
     <ClInclude Include="lua.h" />
     <ClInclude Include="luaconf.h" />
@@ -206,37 +205,10 @@
     <ClInclude Include="portrayal_catalog.h" />
     <ClInclude Include="rapidxml.hpp" />
     <ClInclude Include="Result_DrawingInstruction.h" />
-    <ClInclude Include="S100_CD_AttributeConstraints.h" />
-    <ClInclude Include="S100_CD_AttributeValueType.h" />
-    <ClInclude Include="S100_CD_FeatureUseType.h" />
-    <ClInclude Include="S100_CD_QuantitySpecification.h" />
-    <ClInclude Include="S100_FC_Attribute.h" />
-    <ClInclude Include="S100_FC_AttributeBinding.h" />
-    <ClInclude Include="S100_FC_ComplexAttribute.h" />
-    <ClInclude Include="S100_FC_FeatureAssociation.h" />
-    <ClInclude Include="S100_FC_FeatureBinding.h" />
-    <ClInclude Include="S100_FC_FeatureType.h" />
-    <ClInclude Include="S100_FC_InformationAssociation.h" />
-    <ClInclude Include="S100_FC_InformationBinding.h" />
-    <ClInclude Include="S100_FC_InformationType.h" />
-    <ClInclude Include="S100_FC_Item.h" />
-    <ClInclude Include="S100_FC_ItemReference.h" />
-    <ClInclude Include="S100_FC_ListedValue.h" />
-    <ClInclude Include="S100_FC_NamedType.h" />
-    <ClInclude Include="S100_FC_ObjectType.h" />
-    <ClInclude Include="S100_FC_Role.h" />
-    <ClInclude Include="S100_FC_RoleType.h" />
-    <ClInclude Include="S100_FC_SimpleAttribute.h" />
-    <ClInclude Include="S100_FC_SpatialPrimitiveType.h" />
-    <ClInclude Include="S100_IntervalType.h" />
-    <ClInclude Include="S100_Multiplicity.h" />
-    <ClInclude Include="S100_NumericRange.h" />
-    <ClInclude Include="S100_UnitOfMeasure.h" />
     <ClInclude Include="spatial_association.h" />
     <ClInclude Include="spatial_type.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="surface.h" />
-    <ClInclude Include="UnlimitedInteger_LUA.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="host_interface.cpp" />
@@ -246,32 +218,12 @@
     <ClCompile Include="lua_session.cpp" />
     <ClCompile Include="portrayal_catalog.cpp" />
     <ClCompile Include="Result_DrawingInstruction.cpp" />
-    <ClCompile Include="S100_CD_AttributeConstraints.cpp" />
-    <ClCompile Include="S100_FC_Attribute.cpp" />
-    <ClCompile Include="S100_FC_AttributeBinding.cpp" />
-    <ClCompile Include="S100_FC_ComplexAttribute.cpp" />
-    <ClCompile Include="S100_FC_FeatureAssociation.cpp" />
-    <ClCompile Include="S100_FC_FeatureBinding.cpp" />
-    <ClCompile Include="S100_FC_FeatureType.cpp" />
-    <ClCompile Include="S100_FC_InformationAssociation.cpp" />
-    <ClCompile Include="S100_FC_InformationBinding.cpp" />
-    <ClCompile Include="S100_FC_InformationType.cpp" />
-    <ClCompile Include="S100_FC_Item.cpp" />
-    <ClCompile Include="S100_FC_ListedValue.cpp" />
-    <ClCompile Include="S100_FC_NamedType.cpp" />
-    <ClCompile Include="S100_FC_ObjectType.cpp" />
-    <ClCompile Include="S100_FC_Role.cpp" />
-    <ClCompile Include="S100_FC_SimpleAttribute.cpp" />
-    <ClCompile Include="S100_Multiplicity.cpp" />
-    <ClCompile Include="S100_NumericRange.cpp" />
-    <ClCompile Include="S100_UnitOfMeasure.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="UnlimitedInteger_LUA.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FeatureCatalog\FeatureCatalog.vcxproj">

@@ -6,7 +6,7 @@ require 'SNDFRM04'
 require 'UDWHAZ05'
 
 -- Main entry point for CSP.
-function WRECKS05(feature, featurePortrayal, contextParameters, viewingGroup)
+function WRECKS05(feature, featurePortrayal, contextParameters)
 	Debug.StartPerformance('Lua Code - WRECKS05')
 
 	local DEPTH_VALUE = feature.valueOfSounding or feature.defaultClearanceDepth
@@ -48,6 +48,12 @@ function WRECKS05(feature, featurePortrayal, contextParameters, viewingGroup)
 					featurePortrayal:AddInstructions('PointInstruction:' .. symbol)
 				end
 			else
+				if contextParameters.RadarOverlay then
+					featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:OverRADAR')
+				else
+					featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				end
+
 				if feature.categoryOfWreck then
 					if feature.categoryOfWreck == 1 and feature.waterLevelEffect == 3 then
 						featurePortrayal:AddInstructions('PointInstruction:WRECKS04')
@@ -89,6 +95,12 @@ function WRECKS05(feature, featurePortrayal, contextParameters, viewingGroup)
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
 				end
 			else
+				if contextParameters.RadarOverlay then
+					featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:OverRADAR')
+				else
+					featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				end
+
 				if feature.waterLevelEffect == 1 or feature.waterLevelEffect == 2 then
 					featurePortrayal:SimpleLineStyle('solid',0.64,'CSTLN')
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')

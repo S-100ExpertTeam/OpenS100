@@ -1,6 +1,7 @@
 #pragma once
 #include "CatalogItem.h"
 #include "Enum_ParameterType.h"
+#include "S100_Description.h"
 
 namespace Portrayal
 {

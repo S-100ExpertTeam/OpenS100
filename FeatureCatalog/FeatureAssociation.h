@@ -1,4 +1,5 @@
 #pragma once
+
 #include "NamedType.h"
 
 #include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
@@ -16,7 +17,7 @@ private:
 
 public:
 	void GetContents(pugi::xml_node& node);
-	std::list<std::wstring> &GetSubTypePointer();
+	std::list<std::wstring>& GetSubTypePointer();
 	std::wstring& GetSuperType();
 	Reference(&GetRolePointer())[2];
 };

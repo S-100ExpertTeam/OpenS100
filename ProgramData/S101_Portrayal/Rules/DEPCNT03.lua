@@ -30,7 +30,7 @@ local function ComputeSafetyContour(safetyContour)
 end
 
 -- Main entry point for CSP.
-function DEPCNT03(feature, featurePortrayal, contextParameters, viewingGroup)
+function DEPCNT03(feature, featurePortrayal, contextParameters)
 	Debug.StartPerformance('Lua Code - DEPCNT03')
 
 	local function GenerateCurves()
@@ -77,7 +77,7 @@ function DEPCNT03(feature, featurePortrayal, contextParameters, viewingGroup)
 	end
 
 	local function GenerateLabels()
-		featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',33022')
+		featurePortrayal:AddInstructions('ViewingGroup:33022')
 
 		featurePortrayal:AddInstructions('LinePlacement:Relative,0.5')
 		local instructions = SAFCON01(contextParameters, feature.valueOfDepthContour or scaledDecimalZero)

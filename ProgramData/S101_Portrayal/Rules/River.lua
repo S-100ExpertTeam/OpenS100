@@ -3,10 +3,7 @@
 
 -- River main entry point.
 function River(feature, featurePortrayal, contextParameters)
-	local viewingGroup
-
 	if feature.PrimitiveType == PrimitiveType.Curve then
-		viewingGroup = 12420
 		if contextParameters.RadarOverlay then
 			featurePortrayal:AddInstructions('ViewingGroup:12420;DrawingPriority:6;DisplayPlane:OverRADAR')
 		else
@@ -16,7 +13,6 @@ function River(feature, featurePortrayal, contextParameters)
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
-		viewingGroup = 12420
 		featurePortrayal:AddInstructions('ViewingGroup:12420;DrawingPriority:6;DisplayPlane:UnderRADAR')
 		featurePortrayal:AddInstructions('ColorFill:DEPVS')
 		featurePortrayal:SimpleLineStyle('solid',0.32,'CHBLK')
@@ -24,6 +20,4 @@ function River(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return viewingGroup
 end

@@ -6,8 +6,6 @@
 
 #include "..\\LuaScriptingReference\\lua_session.h"
 #include "..\\LuaScriptingReference\\lua_functions.h"
-#include "..\\LuaScriptingReference\\feature_catalog.h"
-#include "..\\LuaScriptingReference\\S100_FC_NamedType.h"
 #include "..\\LuaScriptingReference\\Result_DrawingInstruction.h"
 
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"

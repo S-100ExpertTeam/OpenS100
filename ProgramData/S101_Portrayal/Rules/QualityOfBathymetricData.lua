@@ -51,6 +51,4 @@ function QualityOfBathymetricData(feature, featurePortrayal, contextParameters)
 	featurePortrayal:SimpleLineStyle('dash',0.64,'CHGRD')
 	featurePortrayal:AddInstructions('LineInstruction:_simple_;AreaFillReference:testPCB')
 	--featurePortrayal:AddInstructions('LineInstruction:_simple_;ScaleFactor:' .. scaleFactor .. ';PointInstruction:DQUAL' .. catzoc .. 'P')
-
-	return 31010
 end

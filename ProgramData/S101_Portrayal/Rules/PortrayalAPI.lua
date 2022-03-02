@@ -6,10 +6,11 @@ These functions are called by the host program.
 portrayalContext = nil
 
 function PortrayalInitializeContextParameters(contextParameters)
-	Debug.StartPerformance('Lua Code - Total')
+	-- Debug.StartPerformance('Lua Code - Total')
+	
 	CheckType(contextParameters, 'array:ContextParameter')
 
-	Debug.StartPerformance('Lua Code - PortrayalInitializeContextParameters')
+	-- Debug.StartPerformance('Lua Code - PortrayalInitializeContextParameters')
 
 	portrayalContext = PortrayalModel.CreatePortrayalContext()
 
@@ -22,8 +23,8 @@ function PortrayalInitializeContextParameters(contextParameters)
 		pccp._parameterTypes[cp.Name] = cp.ParameterType
 	end
 
-	Debug.StopPerformance('Lua Code - PortrayalInitializeContextParameters')
-	Debug.StopPerformance('Lua Code - Total')
+	-- Debug.StopPerformance('Lua Code - PortrayalInitializeContextParameters')
+	-- Debug.StopPerformance('Lua Code - Total')
 end
 
 function PortrayalCreateContextParameter(contextParameterName, parameterType, defaultValue)
@@ -167,11 +168,7 @@ local function LookupAttributeValue(container, attributeCode, HostGetSimpleAttri
 
 		if containerTypeInfo.AttributeBindings[attributeCode].UpperMultiplicity == 1 then
 			-- Single valued
-			local value
-
-			if #values > 0 then
-				value = ConvertEncodedValue(simpleAttributeTypeInfo.ValueType, values[1])
-			end
+			local value = ConvertEncodedValue(simpleAttributeTypeInfo.ValueType, values[1])
 
 			container['@' .. attributeCode] = value
 
@@ -481,7 +478,7 @@ function CreateFeature(featureID, featureCode)
 		return feature
 	end
 	
-	feature = { Type = 'Feature', ID = featureID, Code = featureCode, InformationAssociations = {}, FeatureAssociations = {} }
+	feature = { Type = 'Feature', ID = featureID, Code = featureCode, InformationAssociations = {} }
 
 	featureCache[featureID] = feature
 
@@ -555,7 +552,7 @@ function CreateFeature(featureID, featureCode)
 
 			for _, featureID in ipairs(featureIDs) do
 				Debug.StopPerformance('Lua Code - Total')
-				local code = HostFeatureGetCode(featureID)
+				local code = HostFeatureTypeGetCode(featureID)
 				Debug.StartPerformance('Lua Code - Total')
 				fas[#fas + 1] = CreateFeature(featureID, code)
 			end

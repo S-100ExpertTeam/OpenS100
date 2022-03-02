@@ -4,7 +4,7 @@
 require 'LITDSN02'
 
 -- Main entry point for feature type.
-function LightFlareAndDescription(feature, featurePortrayal, contextParameters, categoryOfLight, viewingGroup, priority)
+function LightFlareAndDescription(feature, featurePortrayal, contextParameters, categoryOfLight)
 	if feature.PrimitiveType ~= PrimitiveType.Point then
 		error(feature.Code .. ' must be of spatial type point')
 	end
@@ -73,5 +73,5 @@ function LightFlareAndDescription(feature, featurePortrayal, contextParameters, 
 	end
 
 	local description = LITDSN02(categoryOfLight, feature.rhythmOfLight, feature.colour, feature.height, feature['!valueOfNominalRange'], feature.status)
-	featurePortrayal:AddTextInstruction(description, 23, 24, viewingGroup, priority)
+	featurePortrayal:AddInstructions('TextInstruction:' .. description .. ',23,24')
 end

@@ -24,11 +24,11 @@ public:
 	static bool LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm);
 	static std::wstring LUA_GetPriority(std::string lua_priority);
 
-	static void InitPortrayal(
-		const char* featureCatalog, 
+	static void InitPortrayal( 
 		const char* topLevelRule, 
 		S101Cell* cell, 
-		FeatureCatalogue* fc);
+		FeatureCatalogue* fc, 
+		PortrayalCatalogue* pc);
 
 	static void PortrayalSetContextParameter(
 		const char* parameterName, 

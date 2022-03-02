@@ -3,10 +3,7 @@
 
 -- Traffic separation line main entry point.
 function TrafficSeparationLine(feature, featurePortrayal, contextParameters)
-	local viewingGroup
-
 	if feature.PrimitiveType == PrimitiveType.Curve then
-		viewingGroup = 25010
 		if contextParameters.RadarOverlay then
 			featurePortrayal:AddInstructions('ViewingGroup:25010;DrawingPriority:24;DisplayPlane:OverRADAR')
 		else
@@ -17,6 +14,4 @@ function TrafficSeparationLine(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
-
-	return viewingGroup
 end

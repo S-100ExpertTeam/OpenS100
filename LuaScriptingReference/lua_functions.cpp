@@ -11,7 +11,8 @@
 #include "..\\FeatureCatalog\\SimpleAttribute.h"
 
 
-FeatureCatalogue *pTheFC;
+//FeatureCatalogue *pTheFC = nullptr;
+FeatureCatalogue *pTheFC = nullptr;
 static lua_variant NullIfEmpty(std::string s)
 {
 	if (s == "")

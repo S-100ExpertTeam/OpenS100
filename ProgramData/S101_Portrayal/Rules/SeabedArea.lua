@@ -1,6 +1,6 @@
 -- Main entry point for feature type.
 function SeabedArea(feature, featurePortrayal, contextParameters)
-	local function AddNatureOfSurfaceText(priority)
+	local function AddNatureOfSurfaceText()
 		local natureOfSurfaceAbbrev =
 		{
 			[1] = 'M',
@@ -33,7 +33,7 @@ function SeabedArea(feature, featurePortrayal, contextParameters)
 
 			if text then
 				featurePortrayal:AddInstructions('FontSize:10;FontColor:CHBLK;TextAlignHorizontal:Center;TextAlignVertical:Center')
-				featurePortrayal:AddTextInstruction(text, 25, 24, 34010, priority)
+				featurePortrayal:AddInstructions('TextInstruction:' .. text .. ',25,24')
 			end
 		end
 	end
@@ -45,7 +45,7 @@ function SeabedArea(feature, featurePortrayal, contextParameters)
 		else
 			featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:12;DisplayPlane:UnderRADAR')
 		end
-		AddNatureOfSurfaceText(12)
+		AddNatureOfSurfaceText()
 	elseif feature.PrimitiveType == PrimitiveType.Curve then
 		if contextParameters.RadarOverlay then
 			featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:12;DisplayPlane:OverRADAR')
@@ -54,13 +54,13 @@ function SeabedArea(feature, featurePortrayal, contextParameters)
 		end
 		featurePortrayal:SimpleLineStyle('solid',0.32,'CHGRD')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
-		AddNatureOfSurfaceText(12)
+		AddNatureOfSurfaceText()
 	elseif feature.PrimitiveType == PrimitiveType.Surface and contextParameters.PlainBoundaries then
 		if feature.waterLevelEffect == 3 and feature.surfaceCharacteristics[1] and feature.surfaceCharacteristics[1].natureOfSurface then
 			featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:UnderRADAR')
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
-			AddNatureOfSurfaceText(9)
+			AddNatureOfSurfaceText()
 		elseif feature.waterLevelEffect == 4 and feature.surfaceCharacteristics[1] and feature.surfaceCharacteristics[1].natureOfSurface == 9 then
 			featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:UnderRADAR')
 			featurePortrayal:AddInstructions('AreaFillReference:RCKLDG01')
@@ -80,21 +80,21 @@ function SeabedArea(feature, featurePortrayal, contextParameters)
 			featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:UnderRADAR')
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
-			AddNatureOfSurfaceText(9)
+			AddNatureOfSurfaceText()
 		else
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:OverRADAR')
 			else
 				featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:UnderRADAR')
 			end
-			AddNatureOfSurfaceText(9)
+			AddNatureOfSurfaceText()
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		if feature.waterLevelEffect == 3 and feature.surfaceCharacteristics[1] and feature.surfaceCharacteristics[1].natureOfSurface then
 			featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:UnderRADAR')
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
-			AddNatureOfSurfaceText(9)
+			AddNatureOfSurfaceText()
 		elseif feature.waterLevelEffect == 4 and feature.surfaceCharacteristics[1] and feature.surfaceCharacteristics[1].natureOfSurface == 9 then
 			featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:UnderRADAR')
 			featurePortrayal:AddInstructions('AreaFillReference:RCKLDG01')
@@ -114,22 +114,20 @@ function SeabedArea(feature, featurePortrayal, contextParameters)
 			featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:UnderRADAR')
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
-			AddNatureOfSurfaceText(9)
+			AddNatureOfSurfaceText()
 		else
 			if contextParameters.RadarOverlay then
 				featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:OverRADAR')
 			else
 				featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:UnderRADAR')
 			end
-			AddNatureOfSurfaceText(9)
+			AddNatureOfSurfaceText()
 		end
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
 
 	if #featurePortrayal.DrawingInstructions == 0 then
-		featurePortrayal:AddInstructions('ViewingGroup:34010;DrawingPriority:9;DisplayPlane:UnderRADAR;NullInstruction')
+		featurePortrayal:AddInstructions('NullInstruction')
 	end
-
-	return 34010
 end

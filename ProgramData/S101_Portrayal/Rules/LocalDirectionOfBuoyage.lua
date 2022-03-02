@@ -24,7 +24,7 @@ function LocalDirectionOfBuoyage(feature, featurePortrayal, contextParameters)
 			dirboy = 'DIRBOY01'
 		end
 
-		featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. tostring(feature.orientationValue) .. ';PointInstruction:' .. dirboy .. ';Rotation:PortrayalCRS,0')
+		featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. tostring(feature.orientationValue) .. ';PointInstruction:' .. dirboy)
 
 		if contextParameters.PlainBoundaries then
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
@@ -35,8 +35,6 @@ function LocalDirectionOfBuoyage(feature, featurePortrayal, contextParameters)
 	else
 		featurePortrayal:AddInstructions('LineInstruction:MARSYS51')
 	end
-
-	return 27040
 end
 
 --[[

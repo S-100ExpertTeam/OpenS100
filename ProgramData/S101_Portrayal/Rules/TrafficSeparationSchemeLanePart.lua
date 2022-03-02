@@ -8,7 +8,6 @@ function TrafficSeparationSchemeLanePart(feature, featurePortrayal, contextParam
 			featurePortrayal:AddInstructions('ViewingGroup:25010;DrawingPriority:18;DisplayPlane:UnderRADAR')
 			featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. tostring(feature.orientationValue) .. '')
 			featurePortrayal:AddInstructions('PointInstruction:TSSLPT51')
-			featurePortrayal:AddInstructions('Rotation:PortrayalCRS,0')
 			RESTRN01(feature, featurePortrayal, contextParameters)
 		else
 			featurePortrayal:AddInstructions('ViewingGroup:25010;DrawingPriority:18;DisplayPlane:UnderRADAR')
@@ -20,7 +19,6 @@ function TrafficSeparationSchemeLanePart(feature, featurePortrayal, contextParam
 			featurePortrayal:AddInstructions('ViewingGroup:25010;DrawingPriority:18;DisplayPlane:UnderRADAR')
 			featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. tostring(feature.orientationValue) .. '')
 			featurePortrayal:AddInstructions('PointInstruction:TSSLPT51')
-			featurePortrayal:AddInstructions('Rotation:PortrayalCRS,0')
 			RESTRN01(feature, featurePortrayal, contextParameters)
 		else
 			featurePortrayal:AddInstructions('ViewingGroup:25010;DrawingPriority:18;DisplayPlane:UnderRADAR')
@@ -41,12 +39,9 @@ function TrafficSeparationSchemeLanePart(feature, featurePortrayal, contextParam
 				local text = GetInformationText(information, contextParameters)
 
 				if text then
-					featurePortrayal:AddInstructions('LocalOffset:0,7.02;TextAlignHorizontal:Center;FontSize:10')
-					featurePortrayal:AddTextInstruction(EncodeString(text), 24, 24, 25010, 18)
+					featurePortrayal:AddInstructions('LocalOffset:0,7.02;TextAlignHorizontal:Center;FontSize:10;TextInstruction:' .. EncodeString(text) .. ',24,24')
 				end
 			end
 		end
 	end
-
-	return 25010
 end

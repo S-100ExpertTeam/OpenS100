@@ -22,5 +22,6 @@ public:
 	void SetSuperType(std::wstring value);
 
 	std::list<std::wstring>& GetSubTypePointer();
+
 	Reference(&GetRolePointer())[2];
 };
