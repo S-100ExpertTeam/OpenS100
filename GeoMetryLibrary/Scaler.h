@@ -128,6 +128,8 @@ public:
 	void PrivateMoveMap(int sx, int sy, double mx, double my);
 	D2D1::Matrix3x2F GetMatrix();
 	D2D1::Matrix3x2F GetInverseMatrix();
+	D2D1::Matrix3x2F GetMatrixWithoutTranform();
+	D2D1::Matrix3x2F GetInverseMatrixWithoutTransform();
 	CRect WGS84MBRtoCRect(MBR& mbr);
 	double GetMapXMin();
 	double GetMapYMin();

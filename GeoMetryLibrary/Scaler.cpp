@@ -749,6 +749,23 @@ D2D1::Matrix3x2F Scaler::GetInverseMatrix()
 	return matrix;
 }
 
+D2D1::Matrix3x2F Scaler::GetMatrixWithoutTranform()
+{
+	D2D1::Matrix3x2F result = D2D1::Matrix3x2F::Identity();
+
+	double ratio = (sxMax - sxMin) / (mxMax - mxMin);
+	auto scale = D2D1::Matrix3x2F::Scale(ratio, ratio, D2D1::Point2F(-mox, moy));
+	result = scale;
+	return result;
+}
+
+D2D1::Matrix3x2F Scaler::GetInverseMatrixWithoutTransform()
+{
+	auto matrix = GetMatrixWithoutTranform();
+	matrix.Invert();
+	return matrix;
+}
+
 CRect Scaler::WGS84MBRtoCRect(MBR& mbr)
 {
 	CRect rect;

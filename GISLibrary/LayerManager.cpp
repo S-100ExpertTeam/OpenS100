@@ -1009,7 +1009,6 @@ void LayerManager::DrawBackground(HDC &hDC, int offset)
 
 void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 {
-
 	if (layer == nullptr)
 	{
 		return;
@@ -1139,7 +1138,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
 		pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
-		pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
+		//pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrixWithoutTransform());
 
 		for (auto dp = drawingPriority.begin(); dp != drawingPriority.end(); dp++)
 		{
