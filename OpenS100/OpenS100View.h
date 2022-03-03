@@ -145,6 +145,8 @@ public:
 
 	// It runs at the end and stores the last location and scale.
 	void SaveLastPosScale();
+	void ESC();
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 
 
