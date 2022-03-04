@@ -120,6 +120,7 @@ public:
 
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 
 public:
 	void MapRefresh();
@@ -146,7 +147,7 @@ public:
 	// It runs at the end and stores the last location and scale.
 	void SaveLastPosScale();
 	void ESC();
-	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	
 };
 
 
