@@ -30,6 +30,11 @@ void S100_RuleFile::GetContents(pugi::xml_node& node)
 			fileName = pugi::as_wide(instruction.child_value());
 		}
 
+		else if (!strcmp(instructionName, "description"))
+		{
+			description.GetContents(instruction);
+		}
+
 		else if (!strcmp(instructionName, "fileType"))
 		{
 			fileType = pugi::as_wide(instruction.child_value());

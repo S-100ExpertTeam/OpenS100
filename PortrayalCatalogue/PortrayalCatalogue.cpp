@@ -168,12 +168,12 @@ void PortrayalCatalogue::GetContents(pugi::xml_node& node)
 			viewingGroups.GetContents(instruction);
 		}
 
-		else if (!strcmp(instructionName, "foundationMode"))
+		else if (!strcmp(instructionName, "foundationMode")) //끝
 		{
 			foundationMode.GetContents(instruction);
 		}
 
-		else if (!strcmp(instructionName, "viewingGroupLayers"))
+		else if (!strcmp(instructionName, "viewingGroupLayers")) //회의필요 : viewingGroup의 id 값때문에
 		{
 			viewingGroupLayers.GetContents(instruction);
 		}

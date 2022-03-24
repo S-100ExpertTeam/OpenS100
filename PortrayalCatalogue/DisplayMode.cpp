@@ -58,11 +58,8 @@ namespace Portrayal
 			{
 				ViewingGroupLayer* viewing = new ViewingGroupLayer();
 				viewing->GetContents(instruction);
-
-				//다수
-				//심지어 값만 불러옴
 				//viewingGroupLayer
-				//viewingGroupLayerVector.push_back();
+				viewingGroupLayerVector.push_back(viewing);
 			}
 		}
 	}

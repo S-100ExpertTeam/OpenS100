@@ -20,6 +20,7 @@ namespace Portrayal
 	{
 		for (pugi::xml_node instruction =node.first_child(); instruction; instruction= instruction.next_sibling())
 		{
+		
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName,"viewingGroup")) 
 			{

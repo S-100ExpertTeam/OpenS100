@@ -54,6 +54,7 @@ void S100_Rules::GetContents(pugi::xml_node& node)
 			S100_RuleFile* ruleFile = new S100_RuleFile();
 			ruleFile->GetContents(instruction);
 			ruleFiles[ruleFile->GetID()]= ruleFile;
+			ruleFileVector.push_back(ruleFile);
 		}
 		else
 		{

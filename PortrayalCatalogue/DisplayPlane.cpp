@@ -36,7 +36,12 @@ namespace Portrayal
 		auto order_value = node.attribute("order").value();
 		SetOrder(std::stoi(order_value));
 
-		description = new S100_Description();
-		description->GetContents(node);
+		auto desNode = node.child("description");
+		if (desNode!=nullptr)
+		{
+			description = new S100_Description();
+			description->GetContents(desNode);
+		}
+		
 	}
 }

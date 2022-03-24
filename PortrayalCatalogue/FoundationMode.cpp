@@ -24,7 +24,6 @@ namespace Portrayal
 			{
 				ViewingGroup* value = new ViewingGroup();
 				value->GetContents(instruction);
-				
 				//viewingGroup.insert({ 1,value });
 				viewingGroup.insert({ index,value });
 				index++;

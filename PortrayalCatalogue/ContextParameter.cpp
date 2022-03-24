@@ -83,11 +83,11 @@ namespace Portrayal
 			}
 			else if (!strcmp(instructionName,"type"))
 			{
-				SetType(pugi::as_wide(instruction.value()));
+				SetType(pugi::as_wide(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName,"default"))
 			{
-				default = pugi::as_wide(instruction.value());
+				default = pugi::as_wide(instruction.child_value());
 			}
 		}
 	}

@@ -44,7 +44,7 @@ namespace Portrayal
 		for (auto instruction = node.first_child(); instruction; instruction= instruction.next_sibling())
 		{
 			auto instructionName = instruction.name();
-			if (strcmp(instructionName,"parameter")) 
+			if (!strcmp(instructionName,"parameter")) 
 			{
 				//std::vector<ContextParameter*> parameter;
 				ContextParameter* context = new ContextParameter();
