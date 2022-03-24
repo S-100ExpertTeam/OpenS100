@@ -78,6 +78,8 @@ BEGIN_MESSAGE_MAP(COpenS100View, CView)
 //	ON_WM_MOUSEHOVER()
 ON_WM_NCMOUSEHOVER()
 ON_WM_MOUSELEAVE()
+//ON_WM_SYSKEYDOWN()
+ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 
@@ -1374,4 +1376,55 @@ void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)
 	}
 
 	Invalidate(FALSE);
+}
+
+void COpenS100View::ESC()
+{
+	frPick = nullptr;
+
+	MapRefresh(); 
+}
+
+void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	switch (nChar)
+	{
+	case VK_LEFT:
+		gisLib->MoveMap(-10, 0);
+		MapRefresh();
+		break;
+	case VK_RIGHT:
+		gisLib->MoveMap(10, 0);
+		MapRefresh();
+		break;
+	case VK_UP:
+		gisLib->MoveMap(0, -10);
+		MapRefresh();
+		break;
+	case VK_DOWN:
+		gisLib->MoveMap(0, 10);
+		MapRefresh();
+		break;
+	case VK_ESCAPE:
+		ESC();
+		break;
+	case VK_ADD:
+		MapPlus();
+		MapRefresh();
+		break;
+	case VK_SUBTRACT:
+		MapMinus();
+		MapRefresh();
+		break;
+	case VK_PRIOR:
+		gisLib->ZoomIn(ZOOM_FACTOR);
+		MapRefresh();
+		break;
+	case VK_NEXT:
+		gisLib->ZoomOut(ZOOM_FACTOR);
+		MapRefresh();
+		break;
+	}
+
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }
