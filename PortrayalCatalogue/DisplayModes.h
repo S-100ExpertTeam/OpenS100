@@ -2,6 +2,9 @@
 
 #include <vector>
 
+
+#include "..\\extlibs\pugixml\include\pugixml.hpp"
+
 namespace Portrayal
 {
 	class DisplayMode;
@@ -20,5 +23,7 @@ namespace Portrayal
 		DisplayMode* GetDisplayMode(int index);
 		std::vector<DisplayMode*> GetDisplayMode();
 		int GetCountOfDisplayMode(); // displayMode
+
+		void GetContents(pugi::xml_node& node);
 	};
 }

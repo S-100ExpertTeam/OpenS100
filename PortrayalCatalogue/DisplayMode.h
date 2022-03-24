@@ -17,11 +17,17 @@ namespace Portrayal
 		std::vector<ViewingGroupLayer*> viewingGroupLayerVector;
 		std::unordered_map<int, ViewingGroupLayer*> viewingGroupLayer;
 
+		S100_Description* description;
+
+	
 	public:
 		void SetViewingGroupLayer(int key, ViewingGroupLayer* value);
 		void SetViewingGroupLayer(std::unordered_map<int, ViewingGroupLayer*> value);
 		ViewingGroupLayer* GetViewingGroupLayer(int value);
 		std::unordered_map<int, ViewingGroupLayer*> GetViewingGroupLayer();
 		bool HasViewingGroupLayer(int value);
+
+		void GetContents(pugi::xml_node& node);
+
 	};
 }

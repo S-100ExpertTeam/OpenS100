@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "..\\extlibs\pugixml\include\pugixml.hpp"
 
 namespace Portrayal
 {
@@ -22,5 +23,7 @@ namespace Portrayal
 
 		void SetContextParameter(ContextParameter* value);
 		void SetContextParameter(std::vector<ContextParameter*> value);
+		
+		void GetContents(pugi::xml_node& node);
 	};
 }

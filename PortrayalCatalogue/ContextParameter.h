@@ -5,7 +5,7 @@
 
 namespace Portrayal
 {
-
+	
 	class ContextParameter :
 		public CatalogItem
 	{
@@ -20,7 +20,11 @@ namespace Portrayal
 	public:
 		ParameterType* GetType();
 		void SetType(ParameterType* value);
+		void SetType(std::wstring value);
+
 		std::wstring GetDefault();
 		void SetDefault(std::wstring& value);
+
+		void GetContents(pugi::xml_node& node);
 	};
 }

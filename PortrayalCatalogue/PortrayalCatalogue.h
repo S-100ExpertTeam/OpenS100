@@ -13,6 +13,8 @@
 #include "FoundationMode.h"
 #include "DisplayPlanes.h"
 #include "Context.h"
+#include "S100_Symbols.h"
+
 
 #include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
 #include "..\\S100_SVG_D2D1_DLL\\SVGManager.h"
@@ -65,6 +67,9 @@ private:
 	//Context 
 	Context context;
 
+	//S100_Symbols
+	S100_Symbols symbols; //회의필요 
+
 	// ColorProfiles 
 	S100_ColorProfiles colorProfiles; //read color
 
@@ -78,6 +83,8 @@ private:
 	S100_ColorProfile s100_colorProfile;
 
 	std::unordered_map<std::wstring, S100_LineStyleBase*> s100_lineStyles; //save linestyle value
+	std::vector< S100_LineStyleBase*> s100_lineStyle_vec;
+
 
 	std::unordered_map<std::wstring, S100_SymbolFill*> s100_symbolFill; //save AreaFills value
 

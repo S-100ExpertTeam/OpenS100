@@ -18,6 +18,7 @@ namespace Portrayal
 		std::vector<ViewingGroup*> viewingGroupVector;
 		std::unordered_map<int, ViewingGroup*> viewingGroup;
 		
+		std::string value;
 	public:
 		void GetContents(pugi::xml_node& node);
 		void AddViewingGroup(int key,ViewingGroup* value);

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "DisplayMode.h"
-
+#include "ViewingGroupLayer.h"
 namespace Portrayal
 {
 	DisplayMode::DisplayMode()
@@ -41,5 +41,29 @@ namespace Portrayal
 			return true;
 		}
 		return false;
+	}
+
+	void DisplayMode::GetContents(pugi::xml_node& node) 
+	{
+		for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
+		{
+			auto instructionName = instruction.name();
+			if (!strcmp(instructionName,"description"))
+			{
+				description = new S100_Description();
+				description->GetContents(instruction);
+			}
+		
+			if (!strcmp(instructionName, "viewingGroupLayer")) 
+			{
+				ViewingGroupLayer* viewing = new ViewingGroupLayer();
+				viewing->GetContents(instruction);
+
+				//다수
+				//심지어 값만 불러옴
+				//viewingGroupLayer
+				//viewingGroupLayerVector.push_back();
+			}
+		}
 	}
 }

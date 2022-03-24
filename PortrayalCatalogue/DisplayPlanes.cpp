@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "DisplayPlanes.h"
+#include "DisplayPlane.h"
+
 
 namespace Portrayal
 {
@@ -36,5 +38,19 @@ namespace Portrayal
 	void DisplayPlanes::SetDisplayMode(std::vector<DisplayPlane*> value)
 	{
 		displayMode = value;
+	}
+
+	void DisplayPlanes::GetContents(pugi::xml_node& node) 
+	{
+		for (auto instruction = node.first_child(); instruction; instruction=instruction.next_sibling())
+		{
+			auto nodeName = instruction.name();
+			if (!strcmp(nodeName,"displayPlane"))
+			{
+				DisplayPlane* dis = new DisplayPlane();
+				dis->GetContents(instruction);
+				displayPlanes.push_back(dis);
+			}
+		}
 	}
 }

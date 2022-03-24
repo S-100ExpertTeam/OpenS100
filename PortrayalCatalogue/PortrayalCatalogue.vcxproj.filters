@@ -330,6 +330,9 @@
     <ClInclude Include="S100_AlertReference.h">
       <Filter>Rules</Filter>
     </ClInclude>
+    <ClInclude Include="S100_Symbols.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="S100_Rules.cpp">
@@ -595,6 +598,9 @@
     </ClCompile>
     <ClCompile Include="S100_AlertReference.cpp">
       <Filter>Rules</Filter>
+    </ClCompile>
+    <ClCompile Include="S100_Symbols.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

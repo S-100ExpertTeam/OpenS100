@@ -254,6 +254,7 @@
     <ClInclude Include="S100_Symbol.h" />
     <ClInclude Include="S100_SimpleLineStyle.h" />
     <ClInclude Include="S100_SymbolFill.h" />
+    <ClInclude Include="S100_Symbols.h" />
     <ClInclude Include="S100_Template.h" />
     <ClInclude Include="S100_Text.h" />
     <ClInclude Include="S100_TextInstruction.h" />
@@ -358,6 +359,7 @@
     <ClCompile Include="S100_Symbol.cpp" />
     <ClCompile Include="S100_SimpleLineStyle.cpp" />
     <ClCompile Include="S100_SymbolFill.cpp" />
+    <ClCompile Include="S100_Symbols.cpp" />
     <ClCompile Include="S100_Template.cpp" />
     <ClCompile Include="S100_Text.cpp" />
     <ClCompile Include="S100_TextInstruction.cpp" />

@@ -16,6 +16,15 @@ namespace Portrayal
 
 	void ViewingGroupLayer::GetContents(pugi::xml_node& node)
 	{
+		//auto dfsg =  node.first_child();
+		//auto ischild = node.child_value();//displayMode안에 있는 viewingGroupLayer 일 경우
+		//if (!strcmp(ischild, ""))
+		//{
+		//	value = node.child_value();
+		//	return;
+		//}
+
+
 		auto idNode=node.first_attribute();
 		if (idNode!= nullptr)
 		{
@@ -30,6 +39,7 @@ namespace Portrayal
 		for (auto instruction= node.first_child(); instruction; instruction= instruction.next_sibling()) 
 		{
 			auto instructionName = instruction.name();
+			.
 			if (strcmp(instructionName,"description")) 
 			{
 
@@ -43,6 +53,7 @@ namespace Portrayal
 
 				ViewingGroup* viewingGroupNode = new ViewingGroup();
 				viewingGroupNode->GetContents(instruction);
+				viewingGroupVector.push_back(viewingGroupNode);
 				viewingGroup.insert({1,viewingGroupNode});
 			}
 

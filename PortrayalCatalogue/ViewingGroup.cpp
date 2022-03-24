@@ -15,6 +15,12 @@ namespace Portrayal
 
 	void ViewingGroup::GetContents(pugi::xml_node& node) 
 	{
+		auto firstNodeName = node.first_child().name();
+		if (!strcmp(firstNodeName,"")) 
+		{
+			value = std::stoi(node.child_value());
+			return;
+		}
 		
 		for (auto instruction= node.first_child(); instruction; instruction=instruction.next_sibling())
 		{

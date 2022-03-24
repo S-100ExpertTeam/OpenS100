@@ -5,6 +5,7 @@
 
 #include "..\\extlibs\pugixml\include\pugixml.hpp"
 
+class S100_Description;
 class S100_Symbol
 {
 public:
@@ -19,6 +20,13 @@ private:
 
 	S100_AreaPlacement *areaPlacement;
 	S100_LinePlacement *linePlacement;
+
+	//pc º¯¼ö 
+	S100_Description* description;
+	std::wstring fileName;
+	std::wstring fileType;
+	std::wstring fileFormat;
+
 
 public:
 	void GetContents(pugi::xml_node& node);
