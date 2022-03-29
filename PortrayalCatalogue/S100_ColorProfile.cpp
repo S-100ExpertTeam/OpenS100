@@ -49,6 +49,7 @@ void S100_ColorProfile::GetContents(pugi::xml_node Node)
 				auto color = new S100_Color();
 				color->GetContents(child);
 				colors[color->GetToken()] = color;
+				colors_v.push_back(color);
 			}
 		}
 		else if (!strcmp(instructionName, "palette"))
@@ -56,6 +57,7 @@ void S100_ColorProfile::GetContents(pugi::xml_node Node)
 			auto palette = new S100_Palette();
 			palette->GetContents(instruction);
 			palettes[palette->GetName()] = palette;
+			palettes_v.push_back(palette);
 		}
 	}
 }

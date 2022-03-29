@@ -25,6 +25,7 @@ void S100_AreaFills::GetContents(pugi::xml_node& node)
 			S100_AreaFillFile* areaFillFIle = new S100_AreaFillFile();
 			areaFillFIle->GetContents(instruction);
 			areaFillFiles[areaFillFIle->Getid()]= areaFillFIle;
+			areaFillFiles_v.push_back(areaFillFIle);
 		}
 	}
 }

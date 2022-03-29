@@ -2,6 +2,7 @@
 #include "CatalogItem.h"
 
 #include <unordered_map>
+#include <string>
 
 namespace Portrayal
 {
@@ -15,16 +16,16 @@ namespace Portrayal
 		virtual ~ViewingGroupLayer();
 
 	private:
-		std::vector<ViewingGroup*> viewingGroupVector;
-		std::unordered_map<int, ViewingGroup*> viewingGroup;
+		std::vector<ViewingGroup*> viewingGroup_v;
+		std::unordered_map<std::wstring, ViewingGroup*> viewingGroup;
 		
 		std::string value;
 	public:
 		void GetContents(pugi::xml_node& node);
-		void AddViewingGroup(int key,ViewingGroup* value);
-		void SetViewingGroup(std::unordered_map<int, ViewingGroup*> value);
+		void AddViewingGroup(std::wstring key,ViewingGroup* value);
+		void SetViewingGroup(std::unordered_map<std::wstring, ViewingGroup*> value);
 
-		ViewingGroup* GetViewingGroup(int value);
-		bool HasViewingGroup(int value);
+		ViewingGroup* GetViewingGroup(std::wstring value);
+		bool HasViewingGroup(std::wstring value);
 	};
 }

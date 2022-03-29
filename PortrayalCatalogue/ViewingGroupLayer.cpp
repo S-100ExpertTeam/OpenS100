@@ -11,12 +11,14 @@ namespace Portrayal
 
 	ViewingGroupLayer::~ViewingGroupLayer()
 	{
-
+		for (auto i = viewingGroup_v.begin(); i != viewingGroup_v.end(); i++)
+		{
+			delete *i;
+		}
 	}
 
 	void ViewingGroupLayer::GetContents(pugi::xml_node& node)
 	{
-		//auto firstChild  =  node.first_child();
 		auto ischild = node.child_value();//displayMode안에 있는 viewingGroupLayer 일 경우
 		if (strcmp(ischild, ""))
 		{
@@ -49,31 +51,31 @@ namespace Portrayal
 			
 			else if (!strcmp(instructionName,"viewingGroup")) 
 			{
-
 				ViewingGroup* viewingGroupNode = new ViewingGroup();
 				viewingGroupNode->GetContents(instruction);
-				viewingGroupVector.push_back(viewingGroupNode);
-				viewingGroup.insert({1,viewingGroupNode});
+				viewingGroup_v.push_back(viewingGroupNode);
+
+				viewingGroup.insert({ viewingGroupNode->GetId(),viewingGroupNode});
 			}
 
 		}
 	}
 
-	void ViewingGroupLayer::AddViewingGroup(int key, ViewingGroup* value)
+	void ViewingGroupLayer::AddViewingGroup(std::wstring key, ViewingGroup* value)
 	{
 		viewingGroup[key] = value;
 	}
 
-	void ViewingGroupLayer::SetViewingGroup(std::unordered_map<int, ViewingGroup*> value)
+	void ViewingGroupLayer::SetViewingGroup(std::unordered_map<std::wstring , ViewingGroup*> value)
 	{
 		viewingGroup = value;
 	}
 
-	ViewingGroup* ViewingGroupLayer::GetViewingGroup(int value)
+	ViewingGroup* ViewingGroupLayer::GetViewingGroup(std::wstring key)
 	{
-		if(HasViewingGroup(value)==true)
+		if(HasViewingGroup(key)==true)
 		{
-			return viewingGroup[value];
+			return viewingGroup[key];
 		}
 		else
 		{
@@ -82,9 +84,9 @@ namespace Portrayal
 
 	}
 
-	bool ViewingGroupLayer::HasViewingGroup(int value) 
+	bool ViewingGroupLayer::HasViewingGroup(std::wstring key)
 	{
-		auto isView = viewingGroup.find(value);
+		auto isView = viewingGroup.find(key);
 		if (isView!= viewingGroup.end())
 		{
 			return true;

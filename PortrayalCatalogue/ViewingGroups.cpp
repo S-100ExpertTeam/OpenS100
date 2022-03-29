@@ -10,7 +10,7 @@ namespace Portrayal
 
 	ViewingGroups::~ViewingGroups() 
 	{
-		for (auto i = viewingGroup.begin(); i != viewingGroup.end(); i++)
+		for (auto i = viewingGroup_v.begin(); i != viewingGroup_v.end(); i++)
 		{
 			delete *i;
 		}
@@ -24,29 +24,45 @@ namespace Portrayal
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName,"viewingGroup")) 
 			{
-				viewingGroup.push_back(new ViewingGroup());
-				viewingGroup.back()->GetContents(instruction);
+				ViewingGroup* viewing = new ViewingGroup();
+				viewing->GetContents(instruction);
+				viewingGroup_v.push_back(viewing);
+				viewingGroup.insert({ viewing ->GetId(), viewing });
+				
 			}
 		}
 	}
 
 	void ViewingGroups::AddViewingGroup(ViewingGroup* value) 
 	{
-		viewingGroup.push_back(value);
+		viewingGroup_v.push_back(value);
 	}
 
 	void ViewingGroups::SetViewingGroup(std::vector<ViewingGroup*> value)
 	{
-		viewingGroup = value;
+		viewingGroup_v = value;
 	}
 
 	ViewingGroup* ViewingGroups::GetViewingGroup(int index)
 	{
-		return viewingGroup.at(index);
+		return viewingGroup_v.at(index);
+	}
+
+	ViewingGroup* ViewingGroups::GetViewingGroup_id(std::wstring id)
+	{
+		auto find=  viewingGroup.find(id);
+		if (find== viewingGroup.end())
+		{
+			return nullptr;
+		}
+
+		return viewingGroup[id];
 	}
 
 	std::vector<ViewingGroup*> ViewingGroups::GetViewingGroup()
 	{
-		return viewingGroup;
+		return viewingGroup_v;
 	}
+
+
 }

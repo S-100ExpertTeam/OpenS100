@@ -6,8 +6,12 @@ S100_Symbols::S100_Symbols() {
 
 }
 
-S100_Symbols::~S100_Symbols() {
-
+S100_Symbols::~S100_Symbols() 
+{
+	for (auto i = s100_symbols_v.begin(); i != s100_symbols_v.end(); i++)
+	{
+		delete *i;
+	}
 }
 
 void S100_Symbols::GetContents(pugi::xml_node& node) 
@@ -18,12 +22,12 @@ void S100_Symbols::GetContents(pugi::xml_node& node)
 
 		if (!strcmp(instructionName,"symbol")) 
 		{
+
 			S100_Symbol* symbol = new S100_Symbol();
 			symbol->GetContents(instruction);
-
-
-
-
+	
+			s100_symbols_v.push_back(symbol);
+			s100_symbols.insert({ symbol->GetId(),symbol });
 		}
 	}
 }

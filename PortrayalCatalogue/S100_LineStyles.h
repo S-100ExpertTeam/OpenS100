@@ -12,6 +12,7 @@ public:
 
 private:
 	std::unordered_map<std::wstring, S100_LineStyleFile*> lineStyleFiles;
+	std::vector< S100_LineStyleFile*> lineStyleFiles_v;
 
 public:
 	void SetLineStyleFiles(std::wstring& key, S100_LineStyleFile* value);

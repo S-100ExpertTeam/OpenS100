@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "S100_Symbol.h"
-
+#include "S100_Description.h"
 S100_Symbol::S100_Symbol()
 {
 	rotation = NULL;
 	areaPlacement = NULL;
 	linePlacement = NULL;
+	description = NULL;
 }
 
 S100_Symbol::~S100_Symbol()
@@ -13,6 +14,7 @@ S100_Symbol::~S100_Symbol()
 	if (rotation) delete rotation;
 	if (areaPlacement) delete areaPlacement;
 	if (linePlacement) delete linePlacement;
+	if (description) delete description;
 }
 
 void S100_Symbol::GetContents(pugi::xml_node& node)
@@ -22,6 +24,15 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		return;
 	}
 
+
+	auto idAttri = node.attribute("id");
+	if (idAttri)
+	{
+		id = pugi::as_wide( idAttri.value());
+	}
+
+
+	//==========================================================
 	auto Attribute = node.attribute("reference"); // save attribute 
 	if (Attribute)
 	{
@@ -47,6 +58,27 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		{
 			continue;
 		}
+
+		if (!strcmp(instructionName,"description")) 
+		{
+			description = new S100_Description();
+			description->GetContents(instruction);
+		}
+		else if (!strcmp(instructionName, "fileName"))
+		{
+			fileName = pugi::as_wide(instruction.child_value());
+		}
+		else if (!strcmp(instructionName, "fileType"))
+		{
+			fileType=  pugi::as_wide(instruction.child_value());
+		}
+		else if (!strcmp(instructionName, "fileFormat"))
+		{
+			fileFormat = pugi::as_wide(instruction.child_value());
+
+		}
+
+		//========================================================
 
 
 		if (!strcmp(instructionName, "symbolReference"))
@@ -86,10 +118,6 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 				linePlacement = new S100_LinePlacement();
 				linePlacement->GetContents(instruction);
 			}
-		}
-		else
-		{
-
 		}
 	}
 }
@@ -152,4 +180,9 @@ S100_AreaPlacement* S100_Symbol::GetAreaPlacement()
 S100_LinePlacement* S100_Symbol::GetLinePlacement()
 {
 	return linePlacement;
+}
+
+std::wstring S100_Symbol::GetId()
+{
+	return id;
 }

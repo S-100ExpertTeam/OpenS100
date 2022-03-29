@@ -41,13 +41,6 @@ namespace Portrayal
 
 			else if (!strcmp(instructionName,"viewingGroup"))
 			{
-				//auto idAttri = instruction.attribute("id");
-				//if (idAttri!=nullptr)
-				//{
-				//	auto value =pugi::as_wide(idAttri.value());
-				//	SetId(value);
-				//}
-
 				S100_Description* desc = new S100_Description();
 				desc->GetContents(instruction.first_child());
 				AddDescription(desc);

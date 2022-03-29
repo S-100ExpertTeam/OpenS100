@@ -16,21 +16,27 @@ void S100_Description::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		auto instructionName = instruction.name();
 
 		if (!strcmp(instructionName, "name"))
 		{
-			Setname(pugi::as_wide(instruction.child_value()));
+			std::wstring name_value = pugi::as_wide(instruction.child_value());
+			name = name_value;
+			//Setname(name_value);
 		}
 
 		if (!strcmp(instructionName, "description"))
 		{
-			Setdescription(pugi::as_wide(instruction.child_value()));
+			auto description_value = pugi::as_wide(instruction.child_value());
+			description = description_value;
+			//Setdescription(description_value);
 		}
 
 		if (!strcmp(instructionName, "language"))
 		{
-			Setlanguage(pugi::as_wide(instruction.child_value()));
+			auto language_value = pugi::as_wide(instruction.child_value());
+			language = language_value;
+			//Setlanguage(language_value);
 		}
 
 	}

@@ -2,15 +2,14 @@
 #include "..\\extlibs\pugixml\include\pugixml.hpp"
 
 #include <string>
-
 class S100_Description
 {
 public:
 	S100_Description();
 	virtual ~S100_Description();
 
-private:
-	std::wstring name;
+public:
+	std::wstring name ;
 	std::wstring description;
 	std::wstring language;
 

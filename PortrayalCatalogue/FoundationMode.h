@@ -1,11 +1,12 @@
 #pragma once
 #include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
 
+
 #include <unordered_map>
 namespace Portrayal
 {
 	class ViewingGroup;
-
+	class ViewingGroups;
 	class FoundationMode
 	{
 	public:
@@ -13,14 +14,15 @@ namespace Portrayal
 		virtual ~FoundationMode();
 
 	private:
-		std::unordered_map<int, ViewingGroup*> viewingGroup;
+		std::unordered_map<std::wstring, ViewingGroup*> viewingGroup;
+		std::vector<ViewingGroup*> viewingGroup_v;
 
 	public:
-		void GetContents(pugi::xml_node& node);
+		void GetContents(pugi::xml_node& node, ViewingGroups* view);
 
-		void SetViewingGroup(int index, ViewingGroup* value);
-		ViewingGroup* GetViewingGroup(int value);
+		void SetViewingGroup(std::wstring key, ViewingGroup* value);
+		ViewingGroup* GetViewingGroup(std::wstring key);
 
-		bool HasVewingGroup(int value);
+		bool HasVewingGroup(std::wstring key);
 	};
 }

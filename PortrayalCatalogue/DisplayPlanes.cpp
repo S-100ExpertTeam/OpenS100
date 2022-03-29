@@ -12,7 +12,10 @@ namespace Portrayal
 
 	DisplayPlanes::~DisplayPlanes()
 	{
-
+		for (auto i = displayPlanes.begin(); i != displayPlanes.end(); i++)
+		{
+			delete *i;
+		}
 	}
 
 	int DisplayPlanes::GetCountOfDisplayMode()

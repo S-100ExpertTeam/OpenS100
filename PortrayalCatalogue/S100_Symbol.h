@@ -4,7 +4,7 @@
 #include "S100_LinePlacement.h"
 
 #include "..\\extlibs\pugixml\include\pugixml.hpp"
-
+#include <string>
 class S100_Description;
 class S100_Symbol
 {
@@ -22,6 +22,7 @@ private:
 	S100_LinePlacement *linePlacement;
 
 	//pc º¯¼ö 
+	std::wstring id;
 	S100_Description* description;
 	std::wstring fileName;
 	std::wstring fileType;
@@ -37,6 +38,7 @@ public:
 	void SetScaleFactor(std::wstring& value);
 	void SetAreaPlacement(S100_AreaPlacement* value);
 	void SetLinePlacement(S100_LinePlacement* value);
+	void SetId(std::wstring id);
 
 	std::wstring GetReference();
 	S100_Rotation* GetRotation();
@@ -44,4 +46,6 @@ public:
 	std::wstring GetScaleFactor();
 	S100_AreaPlacement* GetAreaPlacement();
 	S100_LinePlacement* GetLinePlacement();
+	std::wstring GetId();
+
 };

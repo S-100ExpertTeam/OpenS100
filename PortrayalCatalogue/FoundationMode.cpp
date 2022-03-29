@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "FoundationMode.h"
 #include "ViewingGroup.h"
+#include "ViewingGroups.h"
 
 namespace Portrayal
 {
@@ -14,36 +15,37 @@ namespace Portrayal
 
 	}
 
-	void FoundationMode::GetContents(pugi::xml_node& node)
+	void FoundationMode::GetContents(pugi::xml_node& node,ViewingGroups* view)
 	{
-		int index = 0;
+	
 		for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 		{
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "viewingGroup"))
 			{
-				ViewingGroup* value = new ViewingGroup();
-				value->GetContents(instruction);
-				//viewingGroup.insert({ 1,value });
-				viewingGroup.insert({ index,value });
-				index++;
+				auto key = pugi::as_wide( instruction.child_value());
+				
+				auto Viewing  = view->GetViewingGroup_id(key);
+		
+				viewingGroup.insert({ key,Viewing });
+				viewingGroup_v.push_back(Viewing);
 			}
 		}
 	}
 
-	void FoundationMode::SetViewingGroup(int index, ViewingGroup* value)
+	void FoundationMode::SetViewingGroup(std::wstring key, ViewingGroup* value)
 	{
-		viewingGroup.insert({ index,value });
+		viewingGroup.insert({ key,value });
 	}
 
-	ViewingGroup* FoundationMode::GetViewingGroup(int value)
+	ViewingGroup* FoundationMode::GetViewingGroup(std::wstring key)
 	{
-		return viewingGroup[value];
+		return viewingGroup[key];
 	}
 
-	bool FoundationMode::HasVewingGroup(int value) 
+	bool FoundationMode::HasVewingGroup(std::wstring key) 
 	{
-		auto isviewing = viewingGroup.find(value);
+		auto isviewing = viewingGroup.find(key);
 		if (isviewing!= viewingGroup.end())
 		{
 			return true;

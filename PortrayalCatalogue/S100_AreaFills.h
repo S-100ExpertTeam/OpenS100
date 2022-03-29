@@ -12,6 +12,7 @@ public:
 
 private:
 	std::unordered_map<std::wstring, S100_AreaFillFile*> areaFillFiles;
+	std::vector< S100_AreaFillFile*> areaFillFiles_v;
 
 public:
 	void GetContents(pugi::xml_node& node);

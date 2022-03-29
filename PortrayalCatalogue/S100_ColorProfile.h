@@ -23,7 +23,10 @@ private:
 
 	//======colorProfile=========//
 	std::unordered_map<std::wstring, S100_Color*> colors;
+	std::vector< S100_Color*> colors_v;
+
 	std::unordered_map<std::wstring, S100_Palette*> palettes;
+	std::vector< S100_Palette*> palettes_v;
 
 public:
 	bool ReadFile(std::wstring path);

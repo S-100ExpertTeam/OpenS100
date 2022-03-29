@@ -14,7 +14,7 @@ public:
 	virtual ~S100_Symbols();
 
 private:
-	std::vector<S100_Symbol*> s100_symbols_vec;
+	std::vector<S100_Symbol*> s100_symbols_v;
 	std::unordered_map<std::wstring, S100_Symbol*> s100_symbols;
 
 public:

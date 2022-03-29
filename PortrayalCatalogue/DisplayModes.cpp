@@ -11,7 +11,10 @@ namespace Portrayal
 
 	DisplayModes::~DisplayModes()
 	{
-
+		for (auto i = displayMode.begin(); i != displayMode.end(); i++)
+		{
+			delete *i;
+		}
 	}
 
 	void DisplayModes::SetDisplayMode(DisplayMode* value)

@@ -10,7 +10,13 @@ namespace Portrayal
 
 	DisplayMode::~DisplayMode()
 	{
-
+		if (description) {
+			delete description;
+		}
+		for (auto i = viewingGroupLayerVector.begin(); i != viewingGroupLayerVector.end(); i++)
+		{
+			delete *i;
+		}
 	}
 	
 	void DisplayMode::SetViewingGroupLayer(int key , ViewingGroupLayer* value) 
@@ -58,7 +64,6 @@ namespace Portrayal
 			{
 				ViewingGroupLayer* viewing = new ViewingGroupLayer();
 				viewing->GetContents(instruction);
-				//viewingGroupLayer
 				viewingGroupLayerVector.push_back(viewing);
 			}
 		}

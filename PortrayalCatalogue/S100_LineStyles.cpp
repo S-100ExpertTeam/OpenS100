@@ -24,7 +24,9 @@ void S100_LineStyles::GetContents(pugi::xml_node& node)
 			S100_LineStyleFile* lineStyle = new S100_LineStyleFile();
 			lineStyle->GetContents(instruction);
 			lineStyleFiles[lineStyle->GetId()]= lineStyle;
+			lineStyleFiles_v.push_back(lineStyle);
 		}
+
 	}
 }
 

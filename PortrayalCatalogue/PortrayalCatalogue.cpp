@@ -148,6 +148,11 @@ void PortrayalCatalogue::GetContents(pugi::xml_node& node)
 			symbols.GetContents(instruction);
 		}
 
+		else if ((!strcmp(instructionName, "styleSheets"))) 
+		{
+			//문서에 없습니다
+		}
+
 		else if (!strcmp(instructionName, "lineStyles"))
 		{
 			lineStyles.GetContents(instruction);
@@ -168,12 +173,12 @@ void PortrayalCatalogue::GetContents(pugi::xml_node& node)
 			viewingGroups.GetContents(instruction);
 		}
 
-		else if (!strcmp(instructionName, "foundationMode")) //끝
+		else if (!strcmp(instructionName, "foundationMode")) 
 		{
-			foundationMode.GetContents(instruction);
+			foundationMode.GetContents(instruction,&viewingGroups);
 		}
 
-		else if (!strcmp(instructionName, "viewingGroupLayers")) //회의필요 : viewingGroup의 id 값때문에
+		else if (!strcmp(instructionName, "viewingGroupLayers"))
 		{
 			viewingGroupLayers.GetContents(instruction);
 		}

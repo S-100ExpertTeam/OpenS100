@@ -10,7 +10,10 @@ namespace Portrayal
 
 	DisplayPlane::~DisplayPlane()
 	{
-
+		if (description)
+		{
+			delete description;
+		}
 	}
 
 	int DisplayPlane::GetOrder()

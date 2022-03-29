@@ -25,6 +25,7 @@ void S100_ColorProfiles::GetContents(pugi::xml_node& node)
 		S100_ColorProfile* colorPath = new S100_ColorProfile();
 		colorPath->GetContentsInfo(colorProfile);
 		colorProfileFiles[colorPath->Getid()] = colorPath;
+		colorProfileFiles_v.push_back(colorPath);
 	}
 }
 
