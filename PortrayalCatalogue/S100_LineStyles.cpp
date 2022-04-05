@@ -49,3 +49,9 @@ std::unordered_map<std::wstring, S100_LineStyleFile*> S100_LineStyles::GetLineSt
 {
 	return lineStyleFiles;
 } 
+
+
+std::vector< S100_LineStyleFile*>* S100_LineStyles::GetLineStyleFilesVector()
+{
+	return &lineStyleFiles_v;
+}

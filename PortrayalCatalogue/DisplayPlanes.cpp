@@ -7,7 +7,7 @@ namespace Portrayal
 {
 	DisplayPlanes::DisplayPlanes()
 	{
-
+		
 	}
 
 	DisplayPlanes::~DisplayPlanes()
@@ -41,6 +41,11 @@ namespace Portrayal
 	void DisplayPlanes::SetDisplayMode(std::vector<DisplayPlane*> value)
 	{
 		displayMode = value;
+	}
+
+	std::vector< DisplayPlane*>* DisplayPlanes::GetDisplayPlanesVector()
+	{
+		return &displayPlanes;
 	}
 
 	void DisplayPlanes::GetContents(pugi::xml_node& node) 

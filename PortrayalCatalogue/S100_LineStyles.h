@@ -19,5 +19,7 @@ public:
 	S100_LineStyleFile* GetLineStyleFiles(std::wstring key);
 	std::unordered_map<std::wstring, S100_LineStyleFile*> GetLineStyleFiles();
 
+	std::vector< S100_LineStyleFile*>* GetLineStyleFilesVector();
+
 	void GetContents(pugi::xml_node& node);
 };

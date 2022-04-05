@@ -19,7 +19,7 @@ namespace Portrayal
 	public:
 		int GetCountOfParameter();
 		ContextParameter* GetContextParameter(int index);
-		std::vector<ContextParameter*> GetContextParameter();
+		std::vector<ContextParameter*>* GetContextParameter();
 
 		void SetContextParameter(ContextParameter* value);
 		void SetContextParameter(std::vector<ContextParameter*> value);

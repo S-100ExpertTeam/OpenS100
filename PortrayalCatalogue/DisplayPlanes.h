@@ -13,7 +13,6 @@ namespace Portrayal
 
 	private:
 		std::vector<DisplayPlane*> displayMode;
-
 		std::vector< DisplayPlane*> displayPlanes;
 	public:
 		int GetCountOfDisplayMode();
@@ -21,6 +20,8 @@ namespace Portrayal
 		std::vector<DisplayPlane*> GetDisplayMode();
 		void SetDisplayMode(DisplayPlane* value);
 		void SetDisplayMode(std::vector<DisplayPlane*> value);
+
+		std::vector< DisplayPlane*>* GetDisplayPlanesVector();
 
 		void GetContents(pugi::xml_node& node);
 	};

@@ -59,9 +59,9 @@ namespace Portrayal
 		return viewingGroup[id];
 	}
 
-	std::vector<ViewingGroup*> ViewingGroups::GetViewingGroup()
+	std::vector<ViewingGroup*>* ViewingGroups::GetViewingGroup()
 	{
-		return viewingGroup_v;
+		return &viewingGroup_v;
 	}
 
 

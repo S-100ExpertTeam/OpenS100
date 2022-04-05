@@ -12,6 +12,8 @@
 #include <vector>
 #include <string>
 
+
+
 PortrayalCatalogue::PortrayalCatalogue()
 {
 
@@ -19,6 +21,12 @@ PortrayalCatalogue::PortrayalCatalogue()
 
 PortrayalCatalogue::PortrayalCatalogue(std::wstring path) : PortrayalCatalogue()
 {
+	Open(path);
+}
+
+PortrayalCatalogue::PortrayalCatalogue(std::wstring path, bool startVisualTool) : PortrayalCatalogue()
+{
+	bVisualToolOn = startVisualTool;
 	Open(path);
 }
 
@@ -33,7 +41,9 @@ void PortrayalCatalogue::Open(std::wstring& path)
 {
 	ReadPortrayalCatalogueByPugiXML(path);
 
-	m_svgSymbolManager = new S100_SVG_D2D1_DLL::SVGManager(path, GetCurrentPaletteName(), colorProfiles.GetColorProfile());
+	if (!bVisualToolOn)
+		m_svgSymbolManager = new S100_SVG_D2D1_DLL::SVGManager(path, GetCurrentPaletteName(), colorProfiles.GetColorProfile());
+
 
 	s100PCManager->OpenS100Symbol(path + L"\\Symbols\\*.svg");
 	s100PCManager->OpenS100ColorProfile(path + L"ColorProfiles\\" + GetColorProfile()->GetfileName());
@@ -376,9 +386,24 @@ std::unordered_map<std::wstring, S100_LineStyleBase*> PortrayalCatalogue::GetLin
 	return s100_lineStyles;
 }
 
+std::vector<S100_LineStyleBase*>* PortrayalCatalogue::GetLineStylesVector()
+{
+	return &s100_lineStyle_vec;
+}
+
+S100_LineStyles* PortrayalCatalogue::GetTreeLineStyles()
+{
+	return &lineStyles;
+}
+
 S100_SymbolFill* PortrayalCatalogue::GetSymbolFill(std::wstring& key)
 {
 	return s100_symbolFill[key];
+}
+
+S100_Symbols* PortrayalCatalogue::GetSymbols()
+{
+	return &symbols;
 }
 
 std::unordered_map<std::wstring, S100_SymbolFill*> PortrayalCatalogue::GetSymbolFill()
@@ -482,25 +507,30 @@ void PortrayalCatalogue::GetLineStylesByPugiXml()
 	}
 }
 
-void PortrayalCatalogue::GetAreaFills()
+//void PortrayalCatalogue::GetAreaFills()
+//{
+//	auto areaFillFiles = areaFills.GetAreaFillFiles();
+//	for (auto itor = areaFillFiles.begin(); itor != areaFillFiles.end(); itor++)
+//	{
+//		S100_AreaFillFile *areaFillFile = itor->second;
+//
+//		std::wstring path = areaFillFile->GetFileName();
+//
+//		S100_SymbolFill* areaFill = new S100_SymbolFill();
+//
+//		if (!areaFill->ReadFileByPugiXml(rootPath + L"AreaFills\\" + path))
+//		{
+//			delete areaFill;
+//			continue;
+//		}
+//
+//		s100_symbolFill.insert({ areaFillFile->GetDescription()->Getname(), areaFill });
+//	}
+//}
+
+S100_AreaFills* PortrayalCatalogue::GetAreaFills()
 {
-	auto areaFillFiles = areaFills.GetAreaFillFiles();
-	for (auto itor = areaFillFiles.begin(); itor != areaFillFiles.end(); itor++)
-	{
-		S100_AreaFillFile *areaFillFile = itor->second;
-
-		std::wstring path = areaFillFile->GetFileName();
-
-		S100_SymbolFill* areaFill = new S100_SymbolFill();
-
-		if (!areaFill->ReadFileByPugiXml(rootPath + L"AreaFills\\" + path))
-		{
-			delete areaFill;
-			continue;
-		}
-
-		s100_symbolFill.insert({ areaFillFile->GetDescription()->Getname(), areaFill });
-	}
+	return &areaFills;
 }
 
 S100_RuleFile* PortrayalCatalogue::GetMainRuleFile()

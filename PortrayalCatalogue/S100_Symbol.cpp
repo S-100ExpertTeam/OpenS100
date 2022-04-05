@@ -186,3 +186,23 @@ std::wstring S100_Symbol::GetId()
 {
 	return id;
 }
+
+S100_Description* S100_Symbol::GetDescription()
+{
+	return description;
+}
+
+std::wstring S100_Symbol::GetFileName()
+{
+	return fileName;
+}
+
+std::wstring S100_Symbol::GetFileType()
+{
+	return fileType;
+}
+
+std::wstring S100_Symbol::GetFileFormat()
+{
+	return fileFormat;
+}

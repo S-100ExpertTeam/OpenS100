@@ -63,9 +63,9 @@ BOOL CConfiguration_4::OnInitDialog()
 
 		CString cs(_T(""));
 		int i = 1;
-		for (auto viewing : pc->GetViewingGroups()->GetViewingGroup())
+		for (auto viewing : *pc->GetViewingGroups()->GetViewingGroup())
 		{
-			for (S100_Description* dis : viewing->GetDescription())
+			for (S100_Description* dis : *viewing->GetDescription())
 			{
 				std::wstring Name = dis->Getname();
 				std::wstring Lag = dis->Getlanguage();

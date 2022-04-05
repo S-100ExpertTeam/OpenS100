@@ -122,7 +122,6 @@ bool S100_RuleFile::IsTypeLevelTemplate()
 	return false;
 }
 
-
 bool S100_RuleFile::IsLua()
 {
 	if (GetFileFormat().compare(L"LUA") == 0)
@@ -131,4 +130,9 @@ bool S100_RuleFile::IsLua()
 	}
 
 	return false;
+}
+
+S100_Description* S100_RuleFile::GetDescription()
+{
+	return &description;
 }

@@ -31,3 +31,8 @@ void S100_Symbols::GetContents(pugi::xml_node& node)
 		}
 	}
 }
+
+std::vector<S100_Symbol*>* S100_Symbols::GetSymbolsVector()
+{
+	return &s100_symbols_v;
+}

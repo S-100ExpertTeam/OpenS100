@@ -36,9 +36,9 @@ namespace Portrayal
 		return description.at(index);
 	}
 
-	std::vector<S100_Description*> CatalogItem::GetDescription()
+	std::vector<S100_Description*>* CatalogItem::GetDescription()
 	{
-		return description;
+		return &description;
 	}
 
 	int CatalogItem::GetCountOfDescription() 

@@ -18,5 +18,9 @@ private:
 	std::unordered_map<std::wstring, S100_Symbol*> s100_symbols;
 
 public:
+	std::vector<S100_Symbol*>* GetSymbolsVector();
+	
 	void GetContents(pugi::xml_node& node);
+
+
 };

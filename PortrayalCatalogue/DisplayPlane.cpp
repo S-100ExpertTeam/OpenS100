@@ -5,15 +5,10 @@ namespace Portrayal
 {
 	DisplayPlane::DisplayPlane()
 	{
-
 	}
 
 	DisplayPlane::~DisplayPlane()
 	{
-		if (description)
-		{
-			delete description;
-		}
 	}
 
 	int DisplayPlane::GetOrder()
@@ -39,12 +34,15 @@ namespace Portrayal
 		auto order_value = node.attribute("order").value();
 		SetOrder(std::stoi(order_value));
 
-		auto desNode = node.child("description");
-		if (desNode!=nullptr)
+		for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 		{
-			description = new S100_Description();
-			description->GetContents(desNode);
+			auto instructionName = instruction.name();
+			if (!strcmp(instructionName, "description"))
+			{
+				S100_Description* desc = new S100_Description();
+				desc->GetContents(instruction);
+				AddDescription(desc);
+			}
 		}
-		
 	}
 }

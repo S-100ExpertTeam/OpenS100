@@ -4,6 +4,8 @@
 
 namespace Portrayal
 {
+	class ViewingGroup;
+
 	ViewingGroupLayer::ViewingGroupLayer()
 	{
 
@@ -22,7 +24,7 @@ namespace Portrayal
 		auto ischild = node.child_value();//displayMode안에 있는 viewingGroupLayer 일 경우
 		if (strcmp(ischild, ""))
 		{
-			value = node.child_value();
+			value = pugi::as_wide(node.child_value());
 			return;
 		}
 
@@ -95,5 +97,15 @@ namespace Portrayal
 		{
 			return false;
 		}
+	}
+
+	std::vector<ViewingGroup*>* ViewingGroupLayer::GetViewingGroupVector()
+	{
+		return &viewingGroup_v;
+	}
+
+	std::wstring ViewingGroupLayer::GetValue()
+	{
+		return value;
 	}
 }

@@ -23,6 +23,6 @@ namespace Portrayal
 		ViewingGroup* GetViewingGroup(int index);
 		ViewingGroup* GetViewingGroup_id(std::wstring id);
 
-		std::vector<ViewingGroup*> GetViewingGroup();
+		std::vector<ViewingGroup*>* GetViewingGroup();
 	};
 }

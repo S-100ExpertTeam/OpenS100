@@ -16,9 +16,6 @@ namespace Portrayal
 	private:
 		std::vector<ViewingGroupLayer*> viewingGroupLayerVector;
 		std::unordered_map<int, ViewingGroupLayer*> viewingGroupLayer;
-
-		S100_Description* description;
-
 	
 	public:
 		void SetViewingGroupLayer(int key, ViewingGroupLayer* value);
@@ -26,6 +23,8 @@ namespace Portrayal
 		ViewingGroupLayer* GetViewingGroupLayer(int value);
 		std::unordered_map<int, ViewingGroupLayer*> GetViewingGroupLayer();
 		bool HasViewingGroupLayer(int value);
+
+		std::vector<ViewingGroupLayer*>* GetViewingGroupLayerVector();
 
 		void GetContents(pugi::xml_node& node);
 

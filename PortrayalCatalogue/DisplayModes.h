@@ -21,7 +21,7 @@ namespace Portrayal
 		void SetDisplayMode(DisplayMode* value);
 		void SetDisplayMode(std::vector<DisplayMode*> value);
 		DisplayMode* GetDisplayMode(int index);
-		std::vector<DisplayMode*> GetDisplayMode();
+		std::vector<DisplayMode*>* GetDisplayModeVector();
 		int GetCountOfDisplayMode(); // displayMode
 
 		void GetContents(pugi::xml_node& node);

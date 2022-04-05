@@ -53,3 +53,9 @@ std::unordered_map<std::wstring, S100_AreaFillFile*> S100_AreaFills::GetAreaFill
 {
 	return areaFillFiles;
 }
+
+
+std::vector< S100_AreaFillFile*>* S100_AreaFills::GetAreaFillFilesVecter()
+{
+	return &areaFillFiles_v;
+}

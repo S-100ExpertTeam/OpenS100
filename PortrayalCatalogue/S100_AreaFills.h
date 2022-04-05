@@ -22,4 +22,5 @@ public:
 
 	S100_AreaFillFile* GetAreaFillFiles(std::wstring value);
 	std::unordered_map<std::wstring, S100_AreaFillFile*> GetAreaFillFiles();
+	std::vector< S100_AreaFillFile*>* GetAreaFillFilesVecter();
 };
