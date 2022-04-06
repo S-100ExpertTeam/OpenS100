@@ -18,6 +18,7 @@
 #include "DisplayMode.h"
 #include "DisplayPlane.h"
 #include "ContextParameter.h"
+#include "S100_LineStyleFile.h"
 
 
 #include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
@@ -60,40 +61,32 @@ private:
 	// FoundationMode 
 	FoundationMode foundationMode;
 	
-	//ViewingGroupLayers 
+	// ViewingGroupLayers 
 	ViewingGroupLayers viewingGroupLayers;
 
-	//DisplayModes
+	// DisplayModes
 	DisplayModes displayModes;
 
-	//Displayplane
+	// Displayplane
 	DisplayPlanes displayPlanes;
 
-	//Context 
+	// Context 
 	Context context;
 
-	//S100_Symbols
-	S100_Symbols symbols; 
+	// S100_Symbols
+	S100_Symbols symbols; ////////
 
 	// ColorProfiles 
 	S100_ColorProfiles colorProfiles; //read color
 
-	//lineStyle
-	S100_LineStyles lineStyles;
+	// lineStyle
+	S100_LineStyles lineStyles;///////
 	
-	//AreaFills
-	S100_AreaFills areaFills;
-
-	// FOR Contents
-	S100_ColorProfile s100_colorProfile;
+	// AreaFills
+	S100_AreaFills areaFills;////
 
 	std::unordered_map<std::wstring, S100_LineStyleBase*> s100_lineStyles; //save linestyle value
 	std::vector< S100_LineStyleBase*> s100_lineStyle_vec;
-
-
-	std::unordered_map<std::wstring, S100_SymbolFill*> s100_symbolFill; //save AreaFills value
-
-	std::vector<S100_Transform*> s100_transform; //save rule value
 
 	// FOR SENC
 	std::unordered_map<std::wstring, S100_RuleFile*> mainRules;
@@ -128,10 +121,7 @@ public:
 	void SetContext(Context* value);
 	void SetColorProfiles(S100_ColorProfiles* value);
 	void SetAreaFills(S100_AreaFills* value);
-	void SetColorProfile(S100_ColorProfile* value);
 	void SetLineStyles(std::wstring& key, S100_LineStyleBase* value);
-	void SetSymbolFill(std::wstring& key, S100_SymbolFill* value);
-	void SetTransform(S100_Transform* value);
 	void SetCurrentPaletteName(std::wstring& paletteName);
 	void SetS100PCManager(S100PCManager* value);
 	void SetS100Render(S100Render* value);
@@ -151,7 +141,6 @@ public:
 	DisplayPlanes* GetDisplayPlanes();
 	Context* GetContext();
 	S100_ColorProfiles* GetColorProfiles();
-	//void GetAreaFills();
 	S100_AreaFills* GetAreaFills();
 	S100_ColorProfile* GetColorProfile();
 	S100_ColorProfile* GetColorProfile(std::wstring& id);
@@ -159,12 +148,6 @@ public:
 	S100_Symbols* GetSymbols();
 	std::unordered_map<std::wstring, S100_LineStyleBase*> GetLineStyles();
 	std::vector<S100_LineStyleBase*>* PortrayalCatalogue::GetLineStylesVector();
-
-	S100_SymbolFill* GetSymbolFill(std::wstring& key);
-	std::unordered_map<std::wstring, S100_SymbolFill*> GetSymbolFill();
-
-	S100_Transform* GetTransform(int index);
-	std::vector<S100_Transform*> GetTransform();
 
 	S100_RuleFile* GetMainRules(std::wstring& key);
 	std::unordered_map<std::wstring, S100_RuleFile*> GetMainRules();

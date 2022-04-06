@@ -333,6 +333,9 @@
     <ClInclude Include="S100_Symbols.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ExternalFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="S100_Rules.cpp">
@@ -600,6 +603,9 @@
       <Filter>Rules</Filter>
     </ClCompile>
     <ClCompile Include="S100_Symbols.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

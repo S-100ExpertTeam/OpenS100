@@ -77,7 +77,6 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 			fileFormat = pugi::as_wide(instruction.child_value());
 
 		}
-
 		//========================================================
 
 

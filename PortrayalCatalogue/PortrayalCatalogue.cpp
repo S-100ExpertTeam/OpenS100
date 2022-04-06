@@ -7,6 +7,7 @@
 #include "S100_ColorFill.h"
 #include "S100_ColorProfiles.h"
 
+
 #include "..\\S100Engine\\S100PCManager.h"
 
 #include <vector>
@@ -66,20 +67,6 @@ void PortrayalCatalogue::Delete()
 		i->second = nullptr;
 	}
 	s100_lineStyles.clear();
-
-	for (auto i = s100_symbolFill.begin(); i != s100_symbolFill.end(); i++)
-	{
-		delete i->second;
-		i->second = nullptr;
-	}
-	s100_symbolFill.clear();
-
-	for (auto i = s100_transform.begin(); i != s100_transform.end(); i++)
-	{
-		delete *i;
-		*i = nullptr;
-	}
-	s100_transform.clear();
 
 	delete m_svgSymbolManager;
 	m_svgSymbolManager = nullptr;
@@ -286,25 +273,11 @@ void PortrayalCatalogue::SetAreaFills(S100_AreaFills* value)
 	areaFills = *value;
 }
 
-void PortrayalCatalogue::SetColorProfile(S100_ColorProfile* value)
-{
-	s100_colorProfile = *value;
-}
-
 void PortrayalCatalogue::SetLineStyles(std::wstring& key, S100_LineStyleBase* value)
 {
 	s100_lineStyles.insert({ key, value });
 }
 
-void PortrayalCatalogue::SetSymbolFill(std::wstring& key, S100_SymbolFill* value)
-{
-	s100_symbolFill.insert({ key,value });
-}
-
-void PortrayalCatalogue::SetTransform(S100_Transform* value)
-{
-	s100_transform.push_back(value);
-}
 
 void PortrayalCatalogue::SetS100PCManager(S100PCManager* value)
 {
@@ -396,29 +369,9 @@ S100_LineStyles* PortrayalCatalogue::GetTreeLineStyles()
 	return &lineStyles;
 }
 
-S100_SymbolFill* PortrayalCatalogue::GetSymbolFill(std::wstring& key)
-{
-	return s100_symbolFill[key];
-}
-
 S100_Symbols* PortrayalCatalogue::GetSymbols()
 {
 	return &symbols;
-}
-
-std::unordered_map<std::wstring, S100_SymbolFill*> PortrayalCatalogue::GetSymbolFill()
-{
-	return s100_symbolFill;
-}
-
-S100_Transform* PortrayalCatalogue::GetTransform(int index)
-{
-	return s100_transform.at(index);
-}
-
-std::vector<S100_Transform*> PortrayalCatalogue::GetTransform()
-{
-	return s100_transform;
 }
 
 S100_RuleFile* PortrayalCatalogue::GetMainRules(std::wstring& key)
@@ -465,7 +418,7 @@ void PortrayalCatalogue::GetLineStylesByPugiXml()
 
 	for (auto itor = lineStyleFiles.begin(); itor != lineStyleFiles.end(); itor++)
 	{
-		S100_LineStyleFile *lineStyleFile = itor->second;
+		/*S100_LineStyleFile *lineStyleFile = itor->second;
 		std::wstring path = lineStyleFile->GetFileName();
 
 		std::wstring head = rootPath + L"LineStyles\\";
@@ -503,30 +456,55 @@ void PortrayalCatalogue::GetLineStylesByPugiXml()
 					unValue + "is unValue Context";
 				}
 			}
+		}*/
+
+		ExternalFile* lineStyleFile = itor->second;
+		std::wstring path = lineStyleFile->GetFileName();
+
+		std::wstring head = rootPath + L"LineStyles\\";
+		path.insert(path.begin(), head.begin(), head.end());
+
+		if (!path.empty())
+		{
+			pugi::xml_document doc;
+			pugi::xml_parse_result result = doc.load_file(path.c_str()); /// read file
+
+			if (!result)
+			{
+				continue;
+			}
+
+			for (pugi::xml_node instruction = doc.first_child(); instruction; instruction = instruction.next_sibling())
+			{
+				const pugi::char_t* instructionName = instruction.name();
+
+				if (!strcmp(instructionName, "lineStyle"))
+				{
+					S100_LineStyle* lineStyle = new S100_LineStyle();
+					lineStyle->GetContents(instruction);
+
+					std::vector<S100_Description*>* vecDescription = lineStyleFile->GetDescription();
+					for (int i = 0; i < vecDescription->size(); i++)
+						s100_lineStyles[vecDescription->at(i)->Getname()] = lineStyle;
+				}
+				else if (!strcmp(instructionName, "compositeLineStyle"))
+				{
+					S100_CompositeLineStyle* cls = new S100_CompositeLineStyle();
+					cls->GetContents(instruction);
+
+					std::vector<S100_Description*>* vecDescription = lineStyleFile->GetDescription();
+					for (int i = 0; i < vecDescription->size(); i++)
+						s100_lineStyles[vecDescription->at(i)->Getname()] = cls;
+				}
+				else
+				{
+					std::string unValue(instructionName);
+					unValue + "is unValue Context";
+				}
+			}
 		}
 	}
 }
-
-//void PortrayalCatalogue::GetAreaFills()
-//{
-//	auto areaFillFiles = areaFills.GetAreaFillFiles();
-//	for (auto itor = areaFillFiles.begin(); itor != areaFillFiles.end(); itor++)
-//	{
-//		S100_AreaFillFile *areaFillFile = itor->second;
-//
-//		std::wstring path = areaFillFile->GetFileName();
-//
-//		S100_SymbolFill* areaFill = new S100_SymbolFill();
-//
-//		if (!areaFill->ReadFileByPugiXml(rootPath + L"AreaFills\\" + path))
-//		{
-//			delete areaFill;
-//			continue;
-//		}
-//
-//		s100_symbolFill.insert({ areaFillFile->GetDescription()->Getname(), areaFill });
-//	}
-//}
 
 S100_AreaFills* PortrayalCatalogue::GetAreaFills()
 {
@@ -548,7 +526,6 @@ S100_RuleFile* PortrayalCatalogue::GetMainRuleFile()
 			{
 				SetRuleType(LUA);
 			}
-
 			return rf;
 		}
 	}
