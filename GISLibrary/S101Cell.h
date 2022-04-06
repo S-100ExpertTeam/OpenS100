@@ -205,7 +205,7 @@ public:
 	void RemoveAllInfoRecord();
 	int GetInfoMapCount();
 	//vectorinformation
-	std::vector<R_InformationRecord*> GetVecInformation();
+	std::vector<R_InformationRecord*>* GetVecInformation();
 
 
 	void InsertPointRecord(__int64 key, R_PointRecord* record);
@@ -215,7 +215,7 @@ public:
 	void GetNextAssoc(POSITION& index, long long& key, R_PointRecord*& value);
 	void RemoveAllPointRecord();
 	//vecpoint
-	std::vector<R_PointRecord*> GetVecPoint();
+	std::vector<R_PointRecord*>* GetVecPoint();
 
 
 	void InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record);
@@ -225,7 +225,7 @@ public:
 	void GetNextAssoc(POSITION& index, long long& key, R_MultiPointRecord*& value);
 	void RemoveAllMultRecord();
 	//vecMult
-	std::vector<R_MultiPointRecord*> GetVecMultiPoint();
+	std::vector<R_MultiPointRecord*>* GetVecMultiPoint();
 
 
 	void InsertCurveRecord(__int64 key, R_CurveRecord* record);
@@ -235,7 +235,7 @@ public:
 	void GetNextAssoc(POSITION& index, long long& key,R_CurveRecord*& value);
 	void RemoveAllCurRecord();
 	//veccurve
-	std::vector<R_CurveRecord*> GetVecCurve();
+	std::vector<R_CurveRecord*>* GetVecCurve();
 
 
 	void InsertCompositeCurveRecord(__int64 key, R_CompositeRecord* record);
@@ -245,7 +245,7 @@ public:
 	POSITION GetComStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_CompositeRecord*& value);
 	void RemoveAllComRecord();
-	std::vector<R_CompositeRecord*> GetVecComposite();
+	std::vector<R_CompositeRecord*>* GetVecComposite();
 
 
 	void InsertSurfaceRecord(__int64 key, R_SurfaceRecord* record);
@@ -254,7 +254,7 @@ public:
 	POSITION GetSurStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_SurfaceRecord*& value);
 	void RemoveAllSurRecord();
-	std::vector<R_SurfaceRecord*> GetVecSurface();
+	std::vector<R_SurfaceRecord*>* GetVecSurface();
 
 	void InsertFeatureRecord(__int64 key, R_FeatureRecord* record);
 	void RemoveFeatureRecord(__int64 key, R_FeatureRecord* record);
@@ -264,7 +264,7 @@ public:
 	void GetNextAssoc(POSITION& index,long long& key,R_FeatureRecord*& value);
 	void RemoveFeatureMapKey(long long key);
 	void RemoveAllFeatureRecord();
-	std::vector<R_FeatureRecord*> GetVecFeature();
+	std::vector<R_FeatureRecord*>* GetVecFeature();
 
 	//============================================================================//
 	int GetCount_InformationRecord();

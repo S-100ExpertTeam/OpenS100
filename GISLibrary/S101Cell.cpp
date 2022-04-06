@@ -2014,9 +2014,9 @@ int S101Cell::GetInfoMapCount()
 	return (int)m_infMap.GetCount();
 }
 
-std::vector<R_InformationRecord*> S101Cell::GetVecInformation()
+std::vector<R_InformationRecord*>* S101Cell::GetVecInformation()
 {
-	return vecInformation;
+	return &vecInformation;
 }
 
 void S101Cell::InsertPointRecord(__int64 key, R_PointRecord* record)
@@ -2056,9 +2056,9 @@ void S101Cell::RemoveAllPointRecord()
 	m_ptMap.RemoveAll();
 }
 
-std::vector<R_PointRecord*> S101Cell::GetVecPoint()
+std::vector<R_PointRecord*>* S101Cell::GetVecPoint()
 {
-	return vecPoint;
+	return &vecPoint;
 }
 
 void S101Cell::InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record)
@@ -2099,9 +2099,9 @@ void S101Cell::RemoveAllMultRecord()
 	m_mpMap.RemoveAll();
 }
 
-std::vector<R_MultiPointRecord*> S101Cell::GetVecMultiPoint()
+std::vector<R_MultiPointRecord*>* S101Cell::GetVecMultiPoint()
 {
-	return vecMultiPoint;
+	return &vecMultiPoint;
 }
 
 void S101Cell::InsertCurveRecord(__int64 key, R_CurveRecord* record)
@@ -2141,9 +2141,9 @@ void S101Cell::RemoveAllCurRecord()
 	m_curMap.RemoveAll();
 }
 
-std::vector<R_CurveRecord*> S101Cell::GetVecCurve()
+std::vector<R_CurveRecord*>* S101Cell::GetVecCurve()
 {
-	return vecCurve;
+	return &vecCurve;
 }
 
 void S101Cell::InsertCompositeCurveRecord(__int64 key, R_CompositeRecord* record)
@@ -2183,9 +2183,9 @@ void S101Cell::RemoveAllComRecord()
 	m_comMap.RemoveAll();
 }
 
-std::vector<R_CompositeRecord*> S101Cell::GetVecComposite()
+std::vector<R_CompositeRecord*>* S101Cell::GetVecComposite()
 {
-	return vecComposite;
+	return &vecComposite;
 }
 
 void S101Cell::InsertSurfaceRecord(__int64 key, R_SurfaceRecord* record)
@@ -2225,9 +2225,9 @@ void S101Cell::RemoveAllSurRecord()
 	m_surMap.RemoveAll();
 }
 
-std::vector<R_SurfaceRecord*> S101Cell::GetVecSurface()
+std::vector<R_SurfaceRecord*>* S101Cell::GetVecSurface()
 {
-	return vecSurface;
+	return &vecSurface;
 }
 
 void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
@@ -2272,9 +2272,9 @@ void S101Cell::RemoveAllFeatureRecord()
 	m_feaMap.RemoveAll();
 }
 
-std::vector<R_FeatureRecord*> S101Cell::GetVecFeature()
+std::vector<R_FeatureRecord*>* S101Cell::GetVecFeature()
 {
-	return vecFeature;
+	return &vecFeature;
 }
 
 int S101Cell::GetCount_InformationRecord()
