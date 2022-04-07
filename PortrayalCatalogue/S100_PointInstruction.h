@@ -10,8 +10,8 @@ public:
 	virtual ~S100_PointInstruction();
 
 private:
-	S100_Symbol *symbol;
-	S100_VectorPoint *vectorPoint;
+	S100_Symbol *symbol = nullptr;
+	S100_VectorPoint *vectorPoint = nullptr;
 
 public:
 	void GetContents(pugi::xml_node node);

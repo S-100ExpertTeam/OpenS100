@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "SENC_Rotation.h"
 #include "SENC_LinePlacement.h"
 #include "SENC_AreaPlacement.h"
 #include "SENC_OverrideColor.h"
@@ -21,12 +20,12 @@ public:
 	SENC_VectorPoint offset;
 	SENC_Color overrideAll;
 	SENC_OverrideColor overrideColor;
-	SENC_LinePlacement *linePlacement;
-	SENC_AreaPlacement *areaPlacement;
+	SENC_LinePlacement* linePlacement = nullptr;
+	SENC_AreaPlacement* areaPlacement = nullptr;
 
 	// attribute
 	std::wstring reference;
-	SENC_Rotation *rotation;
+	double rotation = 0;
 	int rotationCRS;
 	float scaleFactor;
 };

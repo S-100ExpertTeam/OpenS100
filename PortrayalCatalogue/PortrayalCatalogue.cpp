@@ -503,6 +503,14 @@ void PortrayalCatalogue::GetAreaFills()
 	}
 }
 
+std::wstring PortrayalCatalogue::GetMainRuleFilePath()
+{
+	auto itor = mainRules.begin();
+	if (itor == mainRules.end())
+		return L"";
+	return GetRootPath() + L"Rules\\" + itor->first;
+}
+
 S100_RuleFile* PortrayalCatalogue::GetMainRuleFile()
 {
 	auto ruleFiles = rules.GetRuleFiles();

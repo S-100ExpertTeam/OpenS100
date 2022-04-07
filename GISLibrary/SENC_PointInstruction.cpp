@@ -48,13 +48,10 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 
 	bool bDraw;
 
+
 	if (symbol)
 	{
-		if (symbol->rotation)
-		{
-			rotation = symbol->rotation->value;
-		}
-
+		rotation = symbol->rotation;
 		scaleFactor = symbol->scaleFactor;
 	}
 
@@ -262,10 +259,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 
 	if (symbol)
 	{
-		if (symbol->rotation)
-		{
-			rotation = symbol->rotation->value;
-		}
+		rotation = symbol->rotation;
 		scaleFactor = symbol->scaleFactor;
 	}
 
@@ -458,9 +452,7 @@ void SENC_PointInstruction::FromS100Instruction(S100_Instruction* s100Instructio
 
 		if (s100PointInstruction->GetSymbol()->GetRotation())
 		{
-			s->rotation = new SENC_Rotation();
-			s->rotation->useValueOf = s100PointInstruction->GetSymbol()->GetRotation()->GetUseValueOf();
-			s->rotation->value = _wtof(s100PointInstruction->GetSymbol()->GetRotation()->GetValue().c_str());
+			s->rotation = s100PointInstruction->GetSymbol()->GetRotation();
 		}
 		s->rotationCRS = SENC_CommonFuc::GetRotationCRS(s100PointInstruction->GetSymbol()->GetRotationCRS());
 
@@ -506,9 +498,8 @@ void SENC_PointInstruction::FromS100Instruction(S100_Instruction* s100Instructio
 			{
 				vectorPoint = new SENC_VectorPoint();
 			}
-
-			vectorPoint->x = _wtof(s100PointInstruction->GetVectorPoint()->GetX().c_str());
-			vectorPoint->y = _wtof(s100PointInstruction->GetVectorPoint()->GetY().c_str());
+			vectorPoint->x = s100PointInstruction->GetVectorPoint()->GetX();
+			vectorPoint->y = s100PointInstruction->GetVectorPoint()->GetY();
 		}
 	}
 }

@@ -6,7 +6,6 @@
 #include "..\\extlibs\pugixml\include\pugixml.hpp"
 
 class S100_Symbol;
-
 class S100_Symbols
 {
 public:

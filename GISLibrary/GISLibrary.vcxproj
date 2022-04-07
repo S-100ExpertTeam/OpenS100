@@ -250,6 +250,7 @@
     <ClCompile Include="CUCO.cpp" />
     <ClCompile Include="D2D1Resources.cpp" />
     <ClCompile Include="DDR.cpp" />
+    <ClCompile Include="DrawingCommand.cpp" />
     <ClCompile Include="DrawingSet.cpp" />
     <ClCompile Include="FASC.cpp" />
     <ClCompile Include="FC2D.cpp" />
@@ -357,7 +358,6 @@
     <ClCompile Include="SENC_pixmapFill.cpp" />
     <ClCompile Include="SENC_PointInstruction.cpp" />
     <ClCompile Include="SENC_Polyline.cpp" />
-    <ClCompile Include="SENC_Rotation.cpp" />
     <ClCompile Include="SENC_Rule.cpp" />
     <ClCompile Include="SENC_Sector.cpp" />
     <ClCompile Include="SENC_SimpleLineStyle.cpp" />
@@ -402,6 +402,7 @@
     <ClInclude Include="CUCO.h" />
     <ClInclude Include="D2D1Resources.h" />
     <ClInclude Include="DDR.h" />
+    <ClInclude Include="DrawingCommand.h" />
     <ClInclude Include="DrawingSet.h" />
     <ClInclude Include="DRDirectory.h" />
     <ClInclude Include="Enum_S100_FileType.h" />
@@ -517,7 +518,6 @@
     <ClInclude Include="SENC_pixmapFill.h" />
     <ClInclude Include="SENC_PointInstruction.h" />
     <ClInclude Include="SENC_Polyline.h" />
-    <ClInclude Include="SENC_Rotation.h" />
     <ClInclude Include="SENC_Rule.h" />
     <ClInclude Include="SENC_Sector.h" />
     <ClInclude Include="SENC_SimpleLineStyle.h" />

@@ -227,7 +227,6 @@
     <ClInclude Include="S100_Pixmap.h" />
     <ClInclude Include="S100_PixmapFill.h" />
     <ClInclude Include="S100_Polyline.h" />
-    <ClInclude Include="S100_Rotation.h" />
     <ClInclude Include="S100_Sector.h" />
     <ClInclude Include="S100_SpatialReference.h" />
     <ClInclude Include="S100_SRGB.h" />
@@ -318,7 +317,6 @@
     <ClCompile Include="S100_Pixmap.cpp" />
     <ClCompile Include="S100_PixmapFill.cpp" />
     <ClCompile Include="S100_Polyline.cpp" />
-    <ClCompile Include="S100_Rotation.cpp" />
     <ClCompile Include="S100_Sector.cpp" />
     <ClCompile Include="S100_SpatialReference.cpp" />
     <ClCompile Include="S100_SRGB.cpp" />

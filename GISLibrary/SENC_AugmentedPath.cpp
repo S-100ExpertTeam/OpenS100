@@ -208,8 +208,8 @@ void SENC_AugmentedPath::FromS100Instruction(S100_Instruction* s100Instruction, 
 		{
 			S100_ArcByRadius* p = &(*itor);
 			SENC_ArcByRadius* sp = new SENC_ArcByRadius();
-			sp->center.x = _wtof(p->GetCenter()->GetX().c_str());
-			sp->center.y = _wtof(p->GetCenter()->GetY().c_str());
+			sp->center.x = p->GetCenter()->GetX();
+			sp->center.y = p->GetCenter()->GetY();
 			sp->radius = _wtof(p->GetRadius().c_str());
 			if (p->GetSector())
 			{

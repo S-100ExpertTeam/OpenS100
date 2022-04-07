@@ -16,7 +16,6 @@ SENC_Symbol::SENC_Symbol()
 
 SENC_Symbol::~SENC_Symbol()
 {
-	if (rotation) delete rotation;
 	if (linePlacement) delete linePlacement;
 	if (areaPlacement) delete areaPlacement;
 }

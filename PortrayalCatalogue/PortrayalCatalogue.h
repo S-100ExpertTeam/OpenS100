@@ -165,6 +165,7 @@ public:
 	void GetLineStylesByPugiXml();
 
 	S100_RuleFile* GetMainRuleFile();
+	std::wstring GetMainRuleFilePath();
 	
 	std::wstring GetCurrentPaletteName();
 

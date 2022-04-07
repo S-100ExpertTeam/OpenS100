@@ -8,17 +8,15 @@ class S100_VectorPoint
 public:
 	S100_VectorPoint();
 	virtual ~S100_VectorPoint();
-
 private:
-	std::wstring x;
-	std::wstring y;
-
+	double x = 0;
+	double y = 0;
 public:
 	void GetContents(pugi::xml_node& node);
-
 	void SetX(std::wstring& value);
 	void SetY(std::wstring& value);
-
-	std::wstring GetX();
-	std::wstring GetY();
+	void SetX(double value);
+	void SetY(double value);
+	double GetX();
+	double GetY();
 };

@@ -286,6 +286,7 @@ public:
 	bool Check();
 	bool Update(S101Cell* cell);
 	bool IsUpdate();
+	void InitDrawingInstruction();
 
 private:
 	bool UpdateDsgirRecord(S101Cell* cell);

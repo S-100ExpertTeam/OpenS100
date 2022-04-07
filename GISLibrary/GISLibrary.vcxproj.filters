@@ -420,9 +420,6 @@
     <ClCompile Include="SENC_Polyline.cpp">
       <Filter>SENC_Instruction\Items</Filter>
     </ClCompile>
-    <ClCompile Include="SENC_Rotation.cpp">
-      <Filter>SENC_Instruction\Items</Filter>
-    </ClCompile>
     <ClCompile Include="SENC_Rule.cpp">
       <Filter>SENC_Instruction\Items</Filter>
     </ClCompile>
@@ -482,6 +479,9 @@
     </ClCompile>
     <ClCompile Include="SENC_AlertReference.cpp">
       <Filter>SENC_Instruction</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingCommand.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -884,9 +884,6 @@
     <ClInclude Include="SENC_Polyline.h">
       <Filter>SENC_Instruction\Items</Filter>
     </ClInclude>
-    <ClInclude Include="SENC_Rotation.h">
-      <Filter>SENC_Instruction\Items</Filter>
-    </ClInclude>
     <ClInclude Include="SENC_Rule.h">
       <Filter>SENC_Instruction\Items</Filter>
     </ClInclude>
@@ -949,6 +946,9 @@
     </ClInclude>
     <ClInclude Include="SENC_AlertReference.h">
       <Filter>SENC_Instruction</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingCommand.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

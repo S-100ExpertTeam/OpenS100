@@ -488,12 +488,15 @@ void SENC_AreaInstruction::FromS100Instruction(
 			{
 				symbolFill->symbol = new SENC_Symbol();
 				symbolFill->symbol->reference = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetReference();
+
 				if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation())
 				{
-					symbolFill->symbol->rotation = new SENC_Rotation();
-					symbolFill->symbol->rotation->useValueOf = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation()->GetUseValueOf();
-					symbolFill->symbol->rotation->value = _wtoi(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation()->GetValue().c_str());
+					//symbolFill->symbol->rotation = new SENC_Rotation();
+					//symbolFill->symbol->rotation->useValueOf = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation()->GetUseValueOf();
+					//symbolFill->symbol->rotation->value = _wtoi(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation()->GetValue().c_str());
+					symbolFill->symbol->rotation = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation();
 				}
+
 				symbolFill->symbol->rotationCRS = SENC_CommonFuc::GetRotationCRS(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotationCRS());
 				symbolFill->symbol->scaleFactor = (float)(_wtof(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetScaleFactor().c_str()));
 
@@ -515,13 +518,13 @@ void SENC_AreaInstruction::FromS100Instruction(
 			}
 			if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1())
 			{
-				symbolFill->v1.x = _wtof(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1()->GetX().c_str());
-				symbolFill->v1.y = _wtof(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1()->GetY().c_str());
+				symbolFill->v1.x = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1()->GetX();
+				symbolFill->v1.y = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1()->GetY();
 			}
 			if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2())
 			{
-				symbolFill->v2.x = _wtof(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2()->GetX().c_str());
-				symbolFill->v2.y = _wtof(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2()->GetY().c_str());
+				symbolFill->v2.x = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2()->GetX();
+				symbolFill->v2.y = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2()->GetY();
 			}
 		}
 	}

@@ -141,9 +141,6 @@
     <ClInclude Include="S100_AreaPlacement.h">
       <Filter>Contents</Filter>
     </ClInclude>
-    <ClInclude Include="S100_Rotation.h">
-      <Filter>Contents</Filter>
-    </ClInclude>
     <ClInclude Include="S100_LineStyles.h">
       <Filter>Catalogue</Filter>
     </ClInclude>
@@ -423,9 +420,6 @@
       <Filter>Contents</Filter>
     </ClCompile>
     <ClCompile Include="S100_AreaPlacement.cpp">
-      <Filter>Contents</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_Rotation.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
     <ClCompile Include="S100_LineStyles.cpp">

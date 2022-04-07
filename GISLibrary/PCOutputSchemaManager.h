@@ -3,7 +3,7 @@
 #include <string>
 
 class S101Cell;
-class BAG;
+
 class S100_DisplayList;
 class SENC_DisplayList;
 class PortrayalCatalogue;
@@ -30,9 +30,9 @@ public:
 	virtual ~PCOutputSchemaManager();
 	
 public:
-	S100_DisplayList *displayList = nullptr;
+	S100_DisplayList* displayList = nullptr;
 	// Lua Drawing Instructions
-	SENC_DisplayList *displayListSENC = nullptr;
+	SENC_DisplayList* displayListSENC = nullptr;
 
 public:
 	void GenerateSENCInstruction(S101Cell* cell, PortrayalCatalogue* pc);

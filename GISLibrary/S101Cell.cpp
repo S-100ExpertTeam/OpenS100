@@ -157,6 +157,14 @@ bool S101Cell::IsUpdate()
 	}
 }
 
+void S101Cell::InitDrawingInstruction()
+{
+	if (pcManager)
+	{
+		delete pcManager;
+	}
+	pcManager = new PCOutputSchemaManager();
+}
 
 R_DSGIR* S101Cell::GetDatasetGeneralInformationRecord()
 {
@@ -381,7 +389,7 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 				InsertMultiPointRecord(r->m_mrid.m_name.GetName(), r);
 				m_vecMap.insert({ r->m_mrid.m_name.GetName(), r });
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"CRID"))  //Output focused on warning and error messages.
+			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"CRID"))   // warning and error message-oriented output
 			{
 				R_CurveRecord* r = new R_CurveRecord();
 				r->ReadRecord(&drDir, pBuf);

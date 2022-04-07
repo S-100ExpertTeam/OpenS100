@@ -93,7 +93,7 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 		InitPortrayal(
 			luaRulePath_string.c_str(),
 			(S101Cell*)layer->m_spatialObject,
-			fc, 
+			fc,
 			pc);
 
 		std::string two_shades = ENCCommon::TWO_SHADES ? "true" : "false";
@@ -124,29 +124,30 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 		KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("RadarOverlay", radar_overlay.c_str());
 		KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("IgnoreScamin", ignore_scamin.c_str());
 		KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("NationalLanguage", national_language.c_str());
-		
+
 		std::list<Result_DrawingInstruction>* drawingInstructionResult = KRS_LUA_SCRIPT_REFERENCE::GetResultDrawingInstructions();
 
 		int t = (int)drawingInstructionResult->size();
 
 		S101Cell* c = (S101Cell*)layer->m_spatialObject;
-		if (c->pcManager) {
-			if (c->pcManager->displayList)
-			{
-				delete c->pcManager->displayList;
-				c->pcManager->displayList = nullptr;
-			}
+		c->InitDrawingInstruction();
+		//if (c->pcManager) {
+		//	if (c->pcManager->displayList)
+		//	{
+		//		delete c->pcManager->displayList;
+		//		c->pcManager->displayList = nullptr;
+		//	}
 
-			if (c->pcManager->displayListSENC)
-			{
-				delete c->pcManager->displayListSENC;
-				c->pcManager->displayListSENC = nullptr;
-			}
-			delete c->pcManager;
-		}
+		//	if (c->pcManager->displayListSENC)
+		//	{
+		//		delete c->pcManager->displayListSENC;
+		//		c->pcManager->displayListSENC = nullptr;
+		//	}
+		//	delete c->pcManager;
+		//}
 
-		c->pcManager = new PCOutputSchemaManager();
-		c->pcManager->displayList = new S100_DisplayList();
+		//c->pcManager = new PCOutputSchemaManager();
+		//c->pcManager->displayList = new S100_DisplayList();
 
 		for (auto i = drawingInstructionResult->begin(); i != drawingInstructionResult->end(); i++)
 		{
@@ -159,7 +160,7 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 		c->pcManager->GenerateSENCInstruction(c, layer->GetPC());
 
 		c->pcManager->InitDisplayList();
-		
+
 		KRS_LUA_SCRIPT_REFERENCE::SaveDrawingInstructions("..\\TEMP\\drawingCommands.txt");
 		KRS_LUA_SCRIPT_REFERENCE::RemoveResultDrawingInstructions();
 	}
@@ -172,34 +173,70 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 
 bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm)
 {
-	std::string v_Dash;
-	std::string v_FontSize;
-	std::string v_Rotation;
-	std::string v_ColorFill;
-	std::string v_LineStyle;
-	std::string v_FontColor;
-	std::string v_FontSlant;
-	std::string v_LocalOffset;
-	std::string v_ScaleFactor;
-	std::string v_ScaleMinimum;
+
+	// Visibility
 	std::string v_ViewingGroup;
 	std::string v_DisplayPlane;
-	std::string v_LinePlacement;
-	std::string v_AugmentedPoint;
 	std::string v_DrawingPriority;
+	std::string v_ScaleMinimum;
+	std::string v_ScaleMaximum;
+	// Transform
+	std::string v_LocalOffset;
+	std::string v_LinePlacement;
+	std::string v_AreaPlacement;
+	std::string v_AreaCRS;
+	std::string v_Rotation;
+	std::string v_ScaleFactor;
+	// Pen Style
+	std::string v_PenColor;
+	std::string v_PenWidth;
+	// Line Style
+	std::string v_LineStyle;
+	std::string v_LineSymbol;
+	std::string v_Dash;
+	// Text Style
+	std::string v_FontColor;
+	std::string v_FontSize;
+	std::string v_FontProportion;
+	std::string v_FontWeight;
+	std::string v_FontSlant;
+	std::string v_FontSerifs;
+	std::string v_FontUnderline;
+	std::string v_FontStrikethrough;
+	std::string v_FontUpperline;
+	std::string v_FontReference;
+	std::string v_TextAlignHorizontal;
+	std::string v_TextAlignVertical;
+	std::string v_TextVerticalOffset;
+	// Colour Override
+	std::string v_OverrideColor;
+	std::string v_OverrideAll;
+	// Geometry
+	std::string v_SpatialReference;
+	std::string v_AugmentedPoint;
+	std::string v_AugmentedRay;
+	std::string v_AugmentedPath;
+	std::string v_Polyline;
+	std::string v_Arc3Points;
+	std::string v_ArcByRadius;
+	std::string v_Annulus;
+	std::string v_ClearAugmented;
+
+	// Coverage
+	std::string v_LookupEntry;
+	std::string v_NumericAnnotation;
+	std::string v_SymbolAnnotation;
+	std::string v_CoverageColor;
+
+	std::string v_ColorFill;
 	std::string v_TextInstruction;
 	std::string v_LineInstruction;
 	std::string v_PointInstruction;
 	std::list<std::string> vl_SpatialReference;
-	std::string v_TextAlignVertical;
 	std::string v_AreaFillReference;
-	std::string v_TextAlignHorizontal;
-	std::string v_AugmentedRay;
-	std::string v_AugmentedPath;
-	std::string v_ArcByRadius;
 	std::string v_AlertReference;
-
 	S100_Dash dash;
+
 	S100_LineStyle lineStyle;
 
 	for (auto i = elements.begin(); i != elements.end(); i++)
@@ -475,7 +512,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
 					in->GetFeatureReference()->SetReference(std::wstring(featureID.begin(), featureID.end()));
-					in->SetDrawingProiority( LUA_GetPriority(v_DrawingPriority));
+					in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
 					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
 					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
@@ -544,8 +581,8 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						S100_AugmentedRay *in = new S100_AugmentedRay();
 						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-						in->GetFeatureReference()->SetReference( std::wstring(featureID.begin(), featureID.end()));
-						in->SetDrawingProiority(  LUA_GetPriority(v_DrawingPriority));
+						in->GetFeatureReference()->SetReference(std::wstring(featureID.begin(), featureID.end()));
+						in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
 						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
 						in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
@@ -599,7 +636,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 								arcByRadius.GetSector()->SetStartAngle(std::wstring(v_splited[3].begin(), v_splited[3].end()));
 								arcByRadius.GetSector()->SetAnglearDistance(std::wstring(v_splited[4].begin(), v_splited[4].end()));
 
-								
+
 								in->GetPath()->SetArcByRadiuses(&arcByRadius);
 							}
 						}
@@ -651,14 +688,10 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 			}
 			else if (sizeForIndex == 16)
 			{
-				// "PointInstruction:BCNSTK02"
+				// PointInstruction
 				if (tag.compare("PointInstruction") == 0)
 				{
 					v_PointInstruction = value;
-					if (value == "SAFCON02")
-					{
-						int a = 0;
-					}
 					S100_PointInstruction *in = new S100_PointInstruction();
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
@@ -673,15 +706,11 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						in->SetSymbol(new S100_Symbol());
 						in->GetSymbol()->SetReference(std::wstring(v_PointInstruction.begin(), v_PointInstruction.end()));
 
-						if (!in->GetSymbol()->GetRotation())
-						{
-							in->GetSymbol()->SetRotation(new S100_Rotation());
-						}
-
 						std::vector<std::string> r_splited = Split(v_Rotation, ",");
 						if (r_splited.size() == 2)
 						{
-							in->GetSymbol()->GetRotation()->SetValue(std::wstring(r_splited[1].begin(), r_splited[1].end()));
+							in->GetSymbol()->SetRotation(std::stod(r_splited[1]));
+
 						}
 					}
 
@@ -690,7 +719,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						std::vector<std::string> v_splited = Split(v_AugmentedPoint, ",");
 						if (v_splited.size() == 3)
 						{
-							if (!in->GetVectorPoint()) in->SetVectorPoint( new S100_VectorPoint());
+							if (!in->GetVectorPoint()) in->SetVectorPoint(new S100_VectorPoint());
 
 							in->GetVectorPoint()->SetX(std::wstring(v_splited[1].begin(), v_splited[1].end()));
 							in->GetVectorPoint()->SetY(std::wstring(v_splited[2].begin(), v_splited[2].end()));

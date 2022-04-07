@@ -54,7 +54,8 @@
 
 PCOutputSchemaManager::PCOutputSchemaManager()
 {
-
+	displayList = new S100_DisplayList();
+	displayListSENC = new SENC_DisplayList();
 }
 
 PCOutputSchemaManager::~PCOutputSchemaManager()
@@ -68,9 +69,6 @@ PCOutputSchemaManager::~PCOutputSchemaManager()
 
 void PCOutputSchemaManager::GenerateSENCAlertInstruction(S101Cell* cell, PortrayalCatalogue* pc)
 {
-	//S100_DisplayList *displayList;
-	// to
-	//SENC_DisplayList *displayListSENC;
 
 	if (nullptr == displayListSENC)
 	{
@@ -216,9 +214,7 @@ SENC_PointInstruction* PCOutputSchemaManager::GetSENCFromS100(S100_PointInstruct
 
 		if (it->GetSymbol()->GetRotation())
 		{
-			s->rotation = new SENC_Rotation();
-			s->rotation->useValueOf = it->GetSymbol()->GetRotation()->GetUseValueOf();
-			s->rotation->value = _wtof(it->GetSymbol()->GetRotation()->GetValue().c_str());
+			s->rotation = it->GetSymbol()->GetRotation();
 		}
 		s->rotationCRS = SENC_CommonFuc::GetRotationCRS(it->GetSymbol()->GetRotationCRS());
 
@@ -232,7 +228,7 @@ SENC_PointInstruction* PCOutputSchemaManager::GetSENCFromS100(S100_PointInstruct
 		}
 
 		auto svgSymbolManagersvgmap = pc->GetSVGManager()->m_svgMap;
-	
+
 		auto itor = svgSymbolManagersvgmap.find(it->GetSymbol()->GetReference());
 		if (itor != svgSymbolManagersvgmap.end())
 		{
@@ -247,24 +243,12 @@ SENC_PointInstruction* PCOutputSchemaManager::GetSENCFromS100(S100_PointInstruct
 			}
 		}
 
-		if (it->GetSymbol()->GetLinePlacement())
-		{
-			s->linePlacement = new SENC_LinePlacement();
-			s->linePlacement->offset = (float)(_wtof(it->GetSymbol()->GetLinePlacement()->GetOffset().c_str()));
-			s->linePlacement->placementMode = SENC_CommonFuc::GetLinePlacement(it->GetSymbol()->GetLinePlacement()->GetPlacementMode());
-		}
-		if (it->GetSymbol()->GetAreaPlacement())
-		{
-			s->areaPlacement = new SENC_AreaPlacement();
-			s->areaPlacement->placementMode = SENC_CommonFuc::GetAreaPlacement(it->GetSymbol()->GetAreaPlacement()->GetPlacementMode());
-		}
-
 		if (it->GetVectorPoint())
 		{
 			if (!sit->vectorPoint) sit->vectorPoint = new SENC_VectorPoint();
 
-			sit->vectorPoint->x = _wtof(it->GetVectorPoint()->GetX().c_str());
-			sit->vectorPoint->y = _wtof(it->GetVectorPoint()->GetY().c_str());
+			sit->vectorPoint->x = it->GetVectorPoint()->GetX();
+			sit->vectorPoint->y = it->GetVectorPoint()->GetY();
 		}
 	}
 
@@ -453,12 +437,12 @@ SENC_AreaInstruction* PCOutputSchemaManager::GetSENCFromS100(S100_AreaInstructio
 			auto s100AreaFillReference = (S100_AreaFillReference*)it->GetAreaFill();
 			sit->areaFill->SetFileTitle(s100AreaFillReference->GetReference());
 		}
-			break;
+		break;
 		case 4: // Symbol Fill
 			sit->areaFill = new SENC_SymbolFill();
 			symbolFill = (SENC_SymbolFill*)sit->areaFill;
 			symbolFill->areaCRSType = SENC_CommonFuc::GetAreaCRSType(((S100_SymbolFill*)it->GetAreaFill())->GetAreaCRS());
-			
+
 			sit->areaFill->SetFileTitle(it->GetAreaFill()->GetFileTitle());
 
 			if (((S100_SymbolFill*)it->GetAreaFill())->GetSymbol())
@@ -467,9 +451,7 @@ SENC_AreaInstruction* PCOutputSchemaManager::GetSENCFromS100(S100_AreaInstructio
 				symbolFill->symbol->reference = ((S100_SymbolFill*)it->GetAreaFill())->GetSymbol()->GetReference();
 				if (((S100_SymbolFill*)it->GetAreaFill())->GetSymbol()->GetRotation())
 				{
-					symbolFill->symbol->rotation = new SENC_Rotation();
-					symbolFill->symbol->rotation->useValueOf = ((S100_SymbolFill*)it->GetAreaFill())->GetSymbol()->GetRotation()->GetUseValueOf();
-					symbolFill->symbol->rotation->value = _wtoi(((S100_SymbolFill*)it->GetAreaFill())->GetSymbol()->GetRotation()->GetValue().c_str());
+					symbolFill->symbol->rotation = ((S100_SymbolFill*)it->GetAreaFill())->GetSymbol()->GetRotation();
 				}
 				symbolFill->symbol->rotationCRS = SENC_CommonFuc::GetRotationCRS(((S100_SymbolFill*)it->GetAreaFill())->GetSymbol()->GetRotationCRS());
 				symbolFill->symbol->scaleFactor = (float)(_wtof(((S100_SymbolFill*)it->GetAreaFill())->GetSymbol()->GetScaleFactor().c_str()));
@@ -491,17 +473,16 @@ SENC_AreaInstruction* PCOutputSchemaManager::GetSENCFromS100(S100_AreaInstructio
 			}
 			if (((S100_SymbolFill*)it->GetAreaFill())->GetV1())
 			{
-				symbolFill->v1.x = _wtof(((S100_SymbolFill*)it->GetAreaFill())->GetV1()->GetX().c_str());
-				symbolFill->v1.y = _wtof(((S100_SymbolFill*)it->GetAreaFill())->GetV1()->GetY().c_str());
+				symbolFill->v1.x = ((S100_SymbolFill*)it->GetAreaFill())->GetV1()->GetX();
+				symbolFill->v1.y = ((S100_SymbolFill*)it->GetAreaFill())->GetV1()->GetY();
 			}
 			if (((S100_SymbolFill*)it->GetAreaFill())->GetV2())
 			{
-				symbolFill->v2.x = _wtof(((S100_SymbolFill*)it->GetAreaFill())->GetV2()->GetX().c_str());
-				symbolFill->v2.y = _wtof(((S100_SymbolFill*)it->GetAreaFill())->GetV2()->GetY().c_str());
+				symbolFill->v2.x = ((S100_SymbolFill*)it->GetAreaFill())->GetV2()->GetX();
+				symbolFill->v2.y = ((S100_SymbolFill*)it->GetAreaFill())->GetV2()->GetY();
 			}
 		}
 	}
-
 	return sit;
 }
 SENC_TextInstruction* PCOutputSchemaManager::GetSENCFromS100(S100_TextInstruction* it, PortrayalCatalogue* pc)
@@ -516,8 +497,8 @@ SENC_TextInstruction* PCOutputSchemaManager::GetSENCFromS100(S100_TextInstructio
 		sit->textPoint->verticalAlignment = SENC_CommonFuc::GetVerticalAlignment(it->GetTextPoint()->GetVerticalAlignment());
 		if (it->GetTextPoint()->GetOffset())
 		{
-			sit->textPoint->offset.x = _wtof(it->GetTextPoint()->GetOffset()->GetX().c_str());
-			sit->textPoint->offset.y = _wtof(it->GetTextPoint()->GetOffset()->GetY().c_str());
+			sit->textPoint->offset.x = it->GetTextPoint()->GetOffset()->GetX();
+			sit->textPoint->offset.y = it->GetTextPoint()->GetOffset()->GetY();
 		}
 
 		auto elements = it->GetTextPoint()->GetElemets();
@@ -723,8 +704,8 @@ SENC_AugmentedPath* PCOutputSchemaManager::GetSENCFromS100(S100_AugmentedPath* i
 		{
 			S100_ArcByRadius* p = &(*itor);
 			SENC_ArcByRadius* sp = new SENC_ArcByRadius();
-			sp->center.x = _wtof(p->GetCenter()->GetX().c_str());
-			sp->center.y = _wtof(p->GetCenter()->GetY().c_str());
+			sp->center.x = p->GetCenter()->GetX();
+			sp->center.y = p->GetCenter()->GetY();
 			sp->radius = _wtof(p->GetRadius().c_str());
 			if (p->GetSector())
 			{

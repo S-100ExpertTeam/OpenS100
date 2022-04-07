@@ -22,7 +22,6 @@ void S100_Symbols::GetContents(pugi::xml_node& node)
 
 		if (!strcmp(instructionName,"symbol")) 
 		{
-
 			S100_Symbol* symbol = new S100_Symbol();
 			symbol->GetContents(instruction);
 	

@@ -726,7 +726,7 @@ void LayerManager::AddSymbolDrawing(
 
 			if ((instruction->symbol)->rotation)
 			{
-				rotation = (float)(instruction->symbol)->rotation->value;
+				rotation = (float)(instruction->symbol)->rotation;
 			}
 
 			float instructionScale = (instruction->symbol)->scaleFactor;

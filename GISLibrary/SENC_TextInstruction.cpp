@@ -292,8 +292,8 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 		textPoint->verticalAlignment = SENC_CommonFuc::GetVerticalAlignment(s100TextInstruction->GetTextPoint()->GetVerticalAlignment());
 		if (s100TextInstruction->GetTextPoint()->GetOffset())
 		{
-			textPoint->offset.x = _wtof(s100TextInstruction->GetTextPoint()->GetOffset()->GetX().c_str());
-			textPoint->offset.y = _wtof(s100TextInstruction->GetTextPoint()->GetOffset()->GetY().c_str());
+			textPoint->offset.x = s100TextInstruction->GetTextPoint()->GetOffset()->GetX();
+			textPoint->offset.y = s100TextInstruction->GetTextPoint()->GetOffset()->GetY();
 		}
 
 		auto elements = s100TextInstruction->GetTextPoint()->GetElemets();
