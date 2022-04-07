@@ -11,6 +11,8 @@ S100_Symbol::S100_Symbol()
 S100_Symbol::~S100_Symbol()
 {
 	if (description) delete description;
+	if (areaPlacement) delete areaPlacement;
+	if (linePlacement) delete linePlacement;
 }
 
 void S100_Symbol::GetContents(pugi::xml_node& node)
