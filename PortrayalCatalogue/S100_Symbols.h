@@ -2,20 +2,26 @@
 
 #include <vector>
 #include <unordered_map>
+#include "ExternalFile.h"
 
 #include "..\\extlibs\pugixml\include\pugixml.hpp"
 
-class S100_Symbol;
-class S100_Symbols
+
+namespace Portrayal
 {
-public:
-	S100_Symbols();
-	virtual ~S100_Symbols();
+	class S100_Symbols
+	{
+	public:
+		S100_Symbols();
+		virtual ~S100_Symbols();
 
-private:
-	std::vector<S100_Symbol*> s100_symbols_v;
-	std::unordered_map<std::wstring, S100_Symbol*> s100_symbols;
+	private:
+		std::vector<ExternalFile*> s100_symbols_v;
+		std::unordered_map<std::wstring, ExternalFile*> s100_symbols;
 
-public:
-	void GetContents(pugi::xml_node& node);
-};
+	public:
+		std::vector<ExternalFile*>* GetSymbolsVector();
+
+		void GetContents(pugi::xml_node& node);
+	};
+}

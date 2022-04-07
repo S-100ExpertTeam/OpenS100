@@ -188,6 +188,7 @@
     <ClInclude Include="Enum_FileFormat.h" />
     <ClInclude Include="Enum_FileType.h" />
     <ClInclude Include="Enum_ParameterType.h" />
+    <ClInclude Include="ExternalFile.h" />
     <ClInclude Include="FoundationMode.h" />
     <ClInclude Include="Enum_Orientation.h" />
     <ClInclude Include="resource.h" />
@@ -278,6 +279,7 @@
     <ClCompile Include="DisplayPlanes.cpp" />
     <ClCompile Include="Enum_BoundaryType.cpp" />
     <ClCompile Include="Enum_InterpolationType.cpp" />
+    <ClCompile Include="ExternalFile.cpp" />
     <ClCompile Include="FoundationMode.cpp" />
     <ClCompile Include="Enum_GeometricPrimitive.cpp" />
     <ClCompile Include="Enum_Orientation.cpp" />

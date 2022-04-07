@@ -47,4 +47,10 @@ public:
 	S100_AreaPlacement* GetAreaPlacement();
 	S100_LinePlacement* GetLinePlacement();
 	std::wstring GetId();
+
+	S100_Description* GetDescription();
+	std::wstring GetFileName();
+	std::wstring GetFileType();
+	std::wstring GetFileFormat();
+
 };

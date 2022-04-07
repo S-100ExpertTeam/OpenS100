@@ -32,9 +32,9 @@ namespace Portrayal
 		return displayMode[index];
 	}
 
-	std::vector<DisplayMode*> DisplayModes::GetDisplayMode()
+	std::vector<DisplayMode*>* DisplayModes::GetDisplayModeVector()
 	{
-		return displayMode;
+		return &displayMode;
 	}
 
 	int DisplayModes::GetCountOfDisplayMode() 

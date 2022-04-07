@@ -63,3 +63,8 @@ void S100_Rules::GetContents(pugi::xml_node& node)
 		}
 	}
 }
+
+std::vector<S100_RuleFile*>* S100_Rules::GetRuleFilesVector()
+{
+	return &ruleFileVector;
+}

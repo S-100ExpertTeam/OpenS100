@@ -45,4 +45,9 @@ namespace Portrayal
 	{
 		return (int)layer.size();
 	} 
+
+	std::vector<ViewingGroupLayer*>* ViewingGroupLayers::GetViewingGroupLayerVector()
+	{
+		return &layer;
+	}
 }

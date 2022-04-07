@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{A75C28D3-AD27-4EB1-AFA1-D7DDC022DF2C}</ProjectGuid>
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{1C7467BB-426C-4AAF-A38A-DD6FD92EE5BB}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
-    <RootNamespace>OpenS100</RootNamespace>
+    <RootNamespace>PCVisualTool</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -52,7 +52,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
@@ -74,28 +74,50 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\extlibs\;..\extlibs\pugixml\x64_include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);..\extlibs\libxml2\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\extlibs\pugixml\x64_$(Configuration);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <IncludePath>..\extlibs\;..\extlibs\pugixml\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\extlibs\;..\extlibs\pugixml\x64_include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);\extlibs\Clipper\lib\$(Configuration);..\extlibs\libxml2\lib;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>pugixml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -109,32 +131,7 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ResourceCompile>
-      <Culture>0x0412</Culture>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ResourceCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-    </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>pugixml.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Debug;</AdditionalLibraryDirectories>
-    </Link>
-    <Midl>
-      <MkTypLibCompatible>false</MkTypLibCompatible>
-      <ValidateAllParameters>true</ValidateAllParameters>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </Midl>
-    <ResourceCompile>
-      <Culture>0x0412</Culture>
+      <Culture>0x0409</Culture>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
@@ -143,6 +140,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -160,7 +158,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ResourceCompile>
-      <Culture>0x0412</Culture>
+      <Culture>0x0409</Culture>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
@@ -169,6 +167,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -179,8 +178,6 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>pugixml.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Release;</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -188,121 +185,41 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ResourceCompile>
-      <Culture>0x0412</Culture>
+      <Culture>0x0409</Culture>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="FeatureCodeString.h" />
-    <ClInclude Include="InformationCodeString.h" />
-    <ClInclude Include="Common.h" />
-    <ClInclude Include="ConfigrationDlg.h" />
-    <ClInclude Include="Configuration_1.h" />
-    <ClInclude Include="Configuration_4.h" />
-    <ClInclude Include="DialogDockCurrentSelection.h" />
-    <ClInclude Include="DialogDockLayerManager.h" />
-    <ClInclude Include="DialogDockRelation.h" />
-    <ClInclude Include="DialogViewInformationType.h" />
-    <ClInclude Include="DialogViewNoGeometry.h" />
-    <ClInclude Include="DockablePaneCurrentSelection.h" />
-    <ClInclude Include="DockablePaneEditWindow.h" />
-    <ClInclude Include="DockablePaneLayerManager.h" />
-    <ClInclude Include="DockablePaneRelation.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="OpenS100.h" />
-    <ClInclude Include="OpenS100Doc.h" />
-    <ClInclude Include="OpenS100View.h" />
-    <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="MFCTabCtrlMsgToParent.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="PropertyGridAttributeModify.h" />
-    <ClInclude Include="PropertyGridDrawingCommands.h" />
-    <ClInclude Include="PropertyGridVectorModify.h" />
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="PC_VisualTool.h" />
+    <ClInclude Include="PC_VisualToolDlg.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TreeCtrlExt.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InformationCodeString.cpp" />
-    <ClCompile Include="ConfigrationDlg.cpp" />
-    <ClCompile Include="Configuration_1.cpp" />
-    <ClCompile Include="Configuration_4.cpp" />
-    <ClCompile Include="DialogViewInformationType.cpp" />
-    <ClCompile Include="DialogViewNoGeometry.cpp" />
-    <ClCompile Include="FeatureCodeString.cpp" />
-    <ClCompile Include="DialogDockCurrentSelection.cpp" />
-    <ClCompile Include="DialogDockLayerManager.cpp" />
-    <ClCompile Include="DialogDockRelation.cpp" />
-    <ClCompile Include="DockablePaneCurrentSelection.cpp" />
-    <ClCompile Include="DockablePaneEditWindow.cpp" />
-    <ClCompile Include="DockablePaneLayerManager.cpp" />
-    <ClCompile Include="DockablePaneRelation.cpp" />
-    <ClCompile Include="OpenS100.cpp" />
-    <ClCompile Include="OpenS100Doc.cpp" />
-    <ClCompile Include="OpenS100View.cpp" />
-    <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="MFCTabCtrlMsgToParent.cpp" />
     <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="PropertyGridAttributeModify.cpp" />
-    <ClCompile Include="PropertyGridDrawingCommands.cpp" />
-    <ClCompile Include="PropertyGridVectorModify.cpp" />
-    <ClCompile Include="TreeCtrlExt.cpp" />
+    <ClCompile Include="PC_VisualTool.cpp" />
+    <ClCompile Include="PC_VisualToolDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="OpenS100.rc" />
+    <ResourceCompile Include="PCVisualTool.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\classview.bmp" />
-    <Image Include="res\classview_hc.bmp" />
-    <Image Include="res\class_view.ico" />
-    <Image Include="res\class_view_hc.ico" />
-    <Image Include="res\close.bmp" />
-    <Image Include="res\explorer.bmp" />
-    <Image Include="res\explorer_hc.bmp" />
-    <Image Include="res\fileview.bmp" />
-    <Image Include="res\fileview_hc.bmp" />
-    <Image Include="res\file_view.ico" />
-    <Image Include="res\file_view_hc.ico" />
-    <Image Include="res\OpenS100.ico" />
-    <Image Include="res\OpenS100Doc.ico" />
-    <Image Include="res\menuimages.bmp" />
-    <Image Include="res\menuimages_hc.bmp" />
-    <Image Include="res\output_wnd.ico" />
-    <Image Include="res\output_wnd_hc.ico" />
-    <Image Include="res\pickArrow.png" />
-    <Image Include="res\properties.bmp" />
-    <Image Include="res\properties_hc.bmp" />
-    <Image Include="res\properties_wnd.ico" />
-    <Image Include="res\properties_wnd_hc.ico" />
-    <Image Include="res\small.png" />
-    <Image Include="res\sort.bmp" />
-    <Image Include="res\sort_hc.bmp" />
-    <Image Include="res\Toolbar.bmp" />
-    <Image Include="res\toolbar1.bmp" />
-    <Image Include="res\Toolbar256.bmp" />
-    <Image Include="res\toolbar3.bmp" />
-    <Image Include="res\UNTITLED.bmp" />
-    <Image Include="res\userimages.bmp" />
-    <Image Include="res\writelarge.png" />
+    <None Include="res\PCVisualTool.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="POINTER.cur" />
-    <None Include="res\cursor1.cur" />
-    <None Include="res\cursor2.cur" />
-    <None Include="res\OpenS100.rc2" />
+    <Image Include="res\PC_VisualTool.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GeoMetryLibrary\GeoMetryLibrary.vcxproj">
-      <Project>{a95f413a-d144-4140-8e51-05d2e2ba5770}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\GISLibrary\GISLibrary.vcxproj">
-      <Project>{ad396c19-6f9e-4f51-ac6e-ab02a1348795}</Project>
+    <ProjectReference Include="..\PortrayalCatalogue\PortrayalCatalogue.vcxproj">
+      <Project>{8ee76986-c155-4907-9088-d146ae47ebc8}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -10,9 +10,6 @@ namespace Portrayal
 
 	DisplayMode::~DisplayMode()
 	{
-		if (description) {
-			delete description;
-		}
 		for (auto i = viewingGroupLayerVector.begin(); i != viewingGroupLayerVector.end(); i++)
 		{
 			delete *i;
@@ -51,13 +48,24 @@ namespace Portrayal
 
 	void DisplayMode::GetContents(pugi::xml_node& node) 
 	{
+		auto idNode = node.first_attribute();
+		if (idNode != nullptr)
+		{
+			auto idName = idNode.name();
+			if (!strcmp(idName, "id"))
+			{
+				SetId(pugi::as_wide(idNode.value()));
+			}
+		}
+
 		for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 		{
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName,"description"))
 			{
-				description = new S100_Description();
-				description->GetContents(instruction);
+				S100_Description* desc = new S100_Description();
+				desc->GetContents(instruction);
+				AddDescription(desc);
 			}
 		
 			if (!strcmp(instructionName, "viewingGroupLayer")) 
@@ -67,5 +75,10 @@ namespace Portrayal
 				viewingGroupLayerVector.push_back(viewing);
 			}
 		}
+	}
+
+	std::vector<ViewingGroupLayer*>* DisplayMode::GetViewingGroupLayerVector()
+	{
+		return &viewingGroupLayerVector;
 	}
 }

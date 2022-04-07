@@ -6,7 +6,6 @@
 
 namespace Portrayal
 {
-
 	class ViewingGroupLayer;
 	class ViewingGroupLayers
 	{
@@ -21,6 +20,7 @@ namespace Portrayal
 		void GetContents(pugi::xml_node& node);
 		void AddViewingGroupLayer(ViewingGroupLayer* value);
 		ViewingGroupLayer* GetViewingGroupLayer(int index);
+		std::vector<ViewingGroupLayer*>* GetViewingGroupLayerVector();
 		int GetCountOfViewingGroupLayer(); // layer size
 	};
 }

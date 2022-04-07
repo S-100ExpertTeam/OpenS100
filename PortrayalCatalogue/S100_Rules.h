@@ -23,5 +23,7 @@ public:
 	S100_RuleFile* GetRuleFiles(std::string& key);
 	std::unordered_map<std::string, S100_RuleFile*> GetRuleFiles();
 
+	std::vector<S100_RuleFile*>* GetRuleFilesVector();
+
 	void GetContents(pugi::xml_node& node);
 };

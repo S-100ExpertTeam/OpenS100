@@ -1,23 +1,28 @@
 #pragma once
-#include "S100_LineStyleFile.h"
+#include "ExternalFile.h"
 
 #include <unordered_map>
 #include <string>
 
-class S100_LineStyles
+namespace Portrayal
 {
-public:
-	S100_LineStyles();
-	virtual ~S100_LineStyles();
+	class S100_LineStyles
+	{
+	public:
+		S100_LineStyles();
+		virtual ~S100_LineStyles();
 
-private:
-	std::unordered_map<std::wstring, S100_LineStyleFile*> lineStyleFiles;
-	std::vector< S100_LineStyleFile*> lineStyleFiles_v;
+	private:
+		std::unordered_map<std::wstring, ExternalFile*> lineStyleFiles;
+		std::vector< ExternalFile*> lineStyleFiles_v;
 
-public:
-	void SetLineStyleFiles(std::wstring& key, S100_LineStyleFile* value);
-	S100_LineStyleFile* GetLineStyleFiles(std::wstring key);
-	std::unordered_map<std::wstring, S100_LineStyleFile*> GetLineStyleFiles();
+	public:
+		void SetLineStyleFiles(std::wstring& key, ExternalFile* value);
+		ExternalFile* GetLineStyleFiles(std::wstring key);
+		std::unordered_map<std::wstring, ExternalFile*> GetLineStyleFiles();
 
-	void GetContents(pugi::xml_node& node);
-};
+		std::vector< ExternalFile*>* GetLineStyleFilesVector();
+
+		void GetContents(pugi::xml_node& node);
+	};
+}

@@ -9,7 +9,7 @@ function Berth(feature, featurePortrayal, contextParameters)
 			featurePortrayal:AddInstructions('ViewingGroup:32440;DrawingPriority:15;DisplayPlane:OverRADAR')
 		else
 			featurePortrayal:AddInstructions('ViewingGroup:32440;DrawingPriority:15;DisplayPlane:UnderRADAR')
-		end
+		ends
 		featurePortrayal:AddInstructions('PointInstruction:BRTHNO01')
 		featurePortrayal:AddInstructions('LocalOffset:3.51,0;FontSize:10;TextInstruction:' .. EncodeString(GetFeatureName(feature, contextParameters), 'Nr %s') .. ',29,24')
 	elseif feature.PrimitiveType == PrimitiveType.Curve then

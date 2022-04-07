@@ -52,5 +52,12 @@ namespace Portrayal
 		}
 		return false;
 	}
+
+	std::vector<ViewingGroup*>* FoundationMode::GetViewingGroupVector()
+	{
+		return &viewingGroup_v;
+	}
 }
+
+
 

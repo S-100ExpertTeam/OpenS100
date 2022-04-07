@@ -23,6 +23,8 @@ namespace Portrayal
 		void SetViewingGroup(std::wstring key, ViewingGroup* value);
 		ViewingGroup* GetViewingGroup(std::wstring key);
 
+		std::vector<ViewingGroup*>* GetViewingGroupVector();
+
 		bool HasVewingGroup(std::wstring key);
 	};
 }

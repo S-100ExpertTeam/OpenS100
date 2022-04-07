@@ -1,25 +1,29 @@
 #pragma once
-#include "S100_AreaFillFile.h"
+#include "ExternalFile.h"
 
 #include <unordered_map>
 #include <string>
 
-class S100_AreaFills 
+namespace Portrayal
 {
-public:
-	S100_AreaFills();
-	virtual ~S100_AreaFills();
+	class S100_AreaFills
+	{
+	public:
+		S100_AreaFills();
+		virtual ~S100_AreaFills();
 
-private:
-	std::unordered_map<std::wstring, S100_AreaFillFile*> areaFillFiles;
-	std::vector< S100_AreaFillFile*> areaFillFiles_v;
+	private:
+		std::unordered_map<std::wstring, ExternalFile*> areaFillFiles;
+		std::vector< ExternalFile*> areaFillFiles_v;
 
-public:
-	void GetContents(pugi::xml_node& node);
+	public:
+		void GetContents(pugi::xml_node& node);
 
-	void SetAreaFillFiles(std::wstring key, S100_AreaFillFile* value);
-	void SetAreaFillFiles(std::unordered_map<std::wstring, S100_AreaFillFile*> value);
+		void SetAreaFillFiles(std::wstring key, ExternalFile* value);
+		void SetAreaFillFiles(std::unordered_map<std::wstring, ExternalFile*> value);
 
-	S100_AreaFillFile* GetAreaFillFiles(std::wstring value);
-	std::unordered_map<std::wstring, S100_AreaFillFile*> GetAreaFillFiles();
-};
+		ExternalFile* GetAreaFillFiles(std::wstring value);
+		std::unordered_map<std::wstring, ExternalFile*> GetAreaFillFiles();
+		std::vector< ExternalFile*>* GetAreaFillFilesVecter();
+	};
+}

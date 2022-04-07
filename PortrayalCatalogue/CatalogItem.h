@@ -21,7 +21,7 @@ namespace Portrayal
 		void SetId(std::wstring& value);
 
 		S100_Description* GetDescription(int index);
-		std::vector<S100_Description*> GetDescription();
+		std::vector<S100_Description*>* GetDescription();
 
 		void AddDescription(S100_Description* value);
 		int GetCountOfDescription(); // description size

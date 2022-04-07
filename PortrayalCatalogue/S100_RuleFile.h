@@ -37,6 +37,8 @@ public:
 	void SetRuleType(std::wstring& value);
 	std::wstring GetRuleType();
 
+	S100_Description* GetDescription();
+
 	bool IsTypeLevelTemplate();
 	
 	bool IsLua();

@@ -27,9 +27,9 @@ namespace Portrayal
 		return parameter.at(index);
 	}
 
-	std::vector<ContextParameter*> Context::GetContextParameter()
+	std::vector<ContextParameter*>* Context::GetContextParameter()
 	{
-		return parameter;
+		return &parameter;
 	}
 
 	void Context::SetContextParameter(ContextParameter* value)

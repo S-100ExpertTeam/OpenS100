@@ -12,7 +12,6 @@ namespace Portrayal
 
 	private:
 		int order = 0;
-		S100_Description* description;
 	public:
 		int GetOrder();
 		void SetOrder(int value);

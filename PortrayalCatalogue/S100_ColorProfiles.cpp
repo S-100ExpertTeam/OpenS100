@@ -60,3 +60,9 @@ void S100_ColorProfiles::SetColorProfile(std::wstring key, S100_ColorProfile* va
 {
 	colorProfileFiles[key] = value;
 }
+
+std::vector< S100_ColorProfile*>* S100_ColorProfiles::GetColorProfilesVector()
+{
+	return &colorProfileFiles_v;
+}
+
