@@ -8,7 +8,7 @@ Currently only a single S-101 ENC is supported, in the future it will support mu
 - Use source codes of LuaScriptingReference for S-101 PC.
 
 # Requirements
-- Microsoft Visual Studio 17 (or later)
+- Microsoft Visual Studio 17
 - MFC (Microsoft Foundation Class Library)
 - Windows 10 (or later)
 - Visual C++ Redistributable for Visual Studio 2012
