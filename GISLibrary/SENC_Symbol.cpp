@@ -5,13 +5,6 @@
 SENC_Symbol::SENC_Symbol()
 {
 	rotationCRS = PORTRAYAL_CRS;
-	scaleFactor = 0;
-
-	rotation = NULL;
-	linePlacement = NULL;
-	areaPlacement = NULL;
-
-	pSvg = NULL;
 }
 
 SENC_Symbol::~SENC_Symbol()

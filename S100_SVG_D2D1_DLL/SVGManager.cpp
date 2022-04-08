@@ -72,33 +72,6 @@ namespace S100_SVG_D2D1_DLL
 		}
 	}
 
-	void SVGManager::GetSVGFiles(std::wstring path, std::wstring paletteName, S100_ColorProfile *colorProfile)
-	{
-		CFileFind  finder;
-
-		std::wstring svgPath = path + _T("\\Symbols\\*.svg");
-		BOOL bWorking = finder.FindFile(svgPath.c_str());
-
-		while (bWorking)
-		{
-			bWorking = finder.FindNextFile();
-			if (!finder.IsDots() && !finder.IsDirectory())
-			{
-				std::wstring filepath = path + _T("\\Symbols\\") +std::wstring( finder.GetFileName());
-				std::wstring svgName = finder.GetFileName().Left(finder.GetFileName().GetLength() - 4);
-
-				if (symMap.find(svgName) == symMap.end())
-				{
-					SVG *pSvg = new SVG();
-					pSvg->ReadSVGFileByPugiXml(filepath);
-					pSvg->m_svgName = svgName;
-					m_svgMap[svgName.c_str()] = pSvg;
-					symMap.insert({ svgName.c_str(), pSvg->GetSymbol(m_pDirect2dFactory, paletteName, colorProfile) });
-				}
-			}
-		}
-	}
-
 	void SVGManager::GetSVGFilesByPugiXML(std::wstring svgFolderPath, std::wstring paletteName, S100_ColorProfile* colorProfile)
 	{
 		CFileFind  finder;
@@ -120,7 +93,6 @@ namespace S100_SVG_D2D1_DLL
 					pSvg->m_svgName = svgName;
 					m_svgMap[svgName.c_str()] = pSvg;
 					symMap.insert({ svgName.c_str(), pSvg->GetSymbol(m_pDirect2dFactory, paletteName, colorProfile) });
-					int i = 0;
 				}
 			}
 		}

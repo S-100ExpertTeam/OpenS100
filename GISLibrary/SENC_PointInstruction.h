@@ -11,8 +11,8 @@ public:
 	virtual ~SENC_PointInstruction();
 
 public:
-	SENC_Symbol *symbol;
-	SENC_VectorPoint *vectorPoint;
+	SENC_Symbol *symbol = nullptr;
+	SENC_VectorPoint *vectorPoint = nullptr;
 
 public:
 	void GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points);

@@ -59,7 +59,6 @@ namespace S100_SVG_D2D1_DLL
 		Symbol* GetSymbol(std::wstring name);
 
 		//Read the svg file in the specified folder...
-		void GetSVGFiles(std::wstring path, std::wstring paletteName, S100_ColorProfile *colorProfile);
 		void GetSVGFilesByPugiXML(std::wstring svgFolderPath, std::wstring paletteName, S100_ColorProfile *colorProfile);
 
 		//Create a factory.

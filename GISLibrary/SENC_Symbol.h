@@ -14,7 +14,7 @@ public:
 	virtual ~SENC_Symbol();
 
 public:
-	S100_SVG_D2D1_DLL::SVG* pSvg;
+	S100_SVG_D2D1_DLL::SVG* pSvg = nullptr;
 	
 	// element
 	SENC_VectorPoint offset;
@@ -27,5 +27,5 @@ public:
 	std::wstring reference;
 	double rotation = 0;
 	int rotationCRS;
-	float scaleFactor;
+	float scaleFactor = 0;
 };
