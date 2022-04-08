@@ -11,5 +11,4 @@ SENC_Symbol::~SENC_Symbol()
 {
 	if (linePlacement) delete linePlacement;
 	if (areaPlacement) delete areaPlacement;
-	if (pSvg) delete pSvg;
 }
