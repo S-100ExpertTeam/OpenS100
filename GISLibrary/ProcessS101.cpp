@@ -131,23 +131,6 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 
 		S101Cell* c = (S101Cell*)layer->m_spatialObject;
 		c->InitDrawingInstruction();
-		//if (c->pcManager) {
-		//	if (c->pcManager->displayList)
-		//	{
-		//		delete c->pcManager->displayList;
-		//		c->pcManager->displayList = nullptr;
-		//	}
-
-		//	if (c->pcManager->displayListSENC)
-		//	{
-		//		delete c->pcManager->displayListSENC;
-		//		c->pcManager->displayListSENC = nullptr;
-		//	}
-		//	delete c->pcManager;
-		//}
-
-		//c->pcManager = new PCOutputSchemaManager();
-		//c->pcManager->displayList = new S100_DisplayList();
 
 		for (auto i = drawingInstructionResult->begin(); i != drawingInstructionResult->end(); i++)
 		{
@@ -173,13 +156,13 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 
 bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm)
 {
-
 	// Visibility
 	std::string v_ViewingGroup;
 	std::string v_DisplayPlane;
 	std::string v_DrawingPriority;
 	std::string v_ScaleMinimum;
 	std::string v_ScaleMaximum;
+
 	// Transform
 	std::string v_LocalOffset;
 	std::string v_LinePlacement;
@@ -187,13 +170,16 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 	std::string v_AreaCRS;
 	std::string v_Rotation;
 	std::string v_ScaleFactor;
+
 	// Pen Style
 	std::string v_PenColor;
 	std::string v_PenWidth;
+
 	// Line Style
 	std::string v_LineStyle;
 	std::string v_LineSymbol;
 	std::string v_Dash;
+
 	// Text Style
 	std::string v_FontColor;
 	std::string v_FontSize;
@@ -208,9 +194,11 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 	std::string v_TextAlignHorizontal;
 	std::string v_TextAlignVertical;
 	std::string v_TextVerticalOffset;
+
 	// Colour Override
 	std::string v_OverrideColor;
 	std::string v_OverrideAll;
+
 	// Geometry
 	std::string v_SpatialReference;
 	std::string v_AugmentedPoint;
