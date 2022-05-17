@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <atlimage.h>
+#include <string>
 
 // CLibMFCUtilApp
 // See LibMFCUtil.cpp for the implementation of this class
