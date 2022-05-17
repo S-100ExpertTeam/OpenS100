@@ -23,7 +23,7 @@
     <ProjectGuid>{33943243-A35E-42C3-AD7E-B6BE65F4BC47}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>LuaScriptingReference</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.20348.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
