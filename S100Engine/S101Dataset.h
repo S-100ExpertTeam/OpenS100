@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <typeinfo>
 
 #include "Class_S101_Base.h"
 #include "DisplayList.h"

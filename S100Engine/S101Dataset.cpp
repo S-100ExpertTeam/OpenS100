@@ -16,7 +16,7 @@
 #include "S100PCManager.h"
 #include "TextPoint.h"
 #include "TextElement.h"
-#include <typeinfo>
+
 
 
 S101Dataset::S101Dataset()
