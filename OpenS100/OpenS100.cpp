@@ -58,7 +58,6 @@ COpenS100App::COpenS100App() noexcept
 #endif
 
 	SetAppID(_T("OpenS100.AppID.NoVersion"));
-
 }
 
 
