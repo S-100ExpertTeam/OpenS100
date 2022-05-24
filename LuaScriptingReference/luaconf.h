@@ -8,6 +8,9 @@
 #ifndef lconfig_h
 #define lconfig_h
 
+#include <limits.h>
+#include <stddef.h>
+
 
 /*
 ** ==================================================================
@@ -101,7 +104,7 @@
 		            LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua"
 #define LUA_CPATH_DEFAULT \
 		"./?.so;"  LUA_CDIR"?.so;" LUA_CDIR"loadall.so;" \
-		"./lib?51.so;" LUA_CDIR"lib?51.so;"
+		"./lib?51.so;" LUA_CDIR"lib?51.so"
 #endif
 
 

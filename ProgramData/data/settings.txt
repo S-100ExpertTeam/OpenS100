@@ -1,5 +1,5 @@
 *This is comment which is not effective on settings.
-APPLY_SCALE_MIN	false
+APPLY_SCALE_MIN	true
 CONTOUR_LABELS	true
 DEEP_CONTOUR	10
 DISPLAY_MODE	2

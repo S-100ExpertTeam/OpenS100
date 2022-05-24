@@ -118,14 +118,14 @@ function CreateContextParameters()
 			if type(v) == 'boolean' then
 				-- Cannot concatenate booleans
 				if v then
-					Debug.Trace('Setting portrayal paramter: ' .. k .. ' = true')
+					Debug.Trace('Setting portrayal paramter: ' .. k .. ' = true\n')
 				else
-					Debug.Trace('Setting portrayal paramter: ' .. k .. ' = false')
+					Debug.Trace('Setting portrayal paramter: ' .. k .. ' = false\n')
 				end
 			elseif type(v) ~= 'table' then
-				Debug.Trace('Setting portrayal paramter: ' .. k .. ' = ' .. v .. '')
+				Debug.Trace('Setting portrayal paramter: ' .. k .. ' = ' .. v .. '\n')
 			elseif v.Type == 'ScaledDecimal' then
-				Debug.Trace('Setting portrayal paramter: ' .. k .. ' = ' .. v:ToNumber() .. '')
+				Debug.Trace('Setting portrayal paramter: ' .. k .. ' = ' .. v:ToNumber() .. '\n')
 			end
 		end
 	}

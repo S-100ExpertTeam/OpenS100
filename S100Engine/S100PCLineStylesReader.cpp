@@ -232,6 +232,10 @@ namespace S100XMLReader
 			{
 				pSymbol->reference = pugi::as_wide(attri.value());
 			}
+			else if (!strcmp(attriName, "rotation"))
+			{
+				pSymbol->_rotation = std::stod(attri.value());
+			}
 		}
 
 		for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())

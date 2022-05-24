@@ -32,10 +32,10 @@ LUALIB_API void (luaL_setn) (lua_State *L, int t, int n);
 #define LUA_ERRFILE     (LUA_ERRERR+1)
 
 
-struct luaL_Reg {
+typedef struct luaL_Reg {
   const char *name;
   lua_CFunction func;
-} ;
+} luaL_Reg;
 
 
 
@@ -126,12 +126,12 @@ LUALIB_API const char *(luaL_findtable) (lua_State *L, int idx,
 
 
 
-struct luaL_Buffer {
+typedef struct luaL_Buffer {
   char *p;			/* current position in buffer */
   int lvl;  /* number of strings in the stack (level) */
   lua_State *L;
   char buffer[LUAL_BUFFERSIZE];
-};
+} luaL_Buffer;
 
 #define luaL_addchar(B,c) \
   ((void)((B)->p < ((B)->buffer+LUAL_BUFFERSIZE) || luaL_prepbuffer(B)), \

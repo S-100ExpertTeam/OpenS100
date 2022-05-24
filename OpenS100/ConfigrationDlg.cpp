@@ -359,6 +359,7 @@ void CConfigrationDlg::OnBnClickedApply()
 	if (ENCCommon::APPLY_SCALE_MIN != m_config.APPLY_SCALE_MIN)
 	{
 		ENCCommon::APPLY_SCALE_MIN = m_config.APPLY_SCALE_MIN;
+		bRebuildPortrayal = true;
 		bMapRefresh = true;
 	}
 
