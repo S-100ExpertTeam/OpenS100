@@ -57,7 +57,6 @@ namespace Portrayal
 			SetId(pugi::as_wide(idAttri.value()));
 		}
 
-		S100_Description* description = new S100_Description();
 		for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 		{
 			const pugi::char_t* instructionName = instruction.name();
@@ -68,7 +67,7 @@ namespace Portrayal
 
 			if (!strcmp(instructionName, "description"))
 			{
-				description = new S100_Description();
+				auto description = new S100_Description();
 				description->GetContents(instruction);
 				AddDescription(description);
 			}
