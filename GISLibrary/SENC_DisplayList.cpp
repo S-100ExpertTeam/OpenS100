@@ -112,10 +112,10 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, Scaler* sca
 		if (false == instruction->suppressedInstance &&
 			instruction->fr->m_geometry)
 		{
-			if (ENCCommon::APPLY_SCALE_MIN)
+			if (ENCCommon::APPLY_SCALE_MIN == TRUE)
 			{
-				if ((instruction->fr->m_scaleMin == 0 || currentScale <= instruction->fr->m_scaleMin) &&
-					(instruction->fr->m_scaleMax == 0 || currentScale >= instruction->fr->m_scaleMax) &&
+				if ((instruction->scaleMinimum == 0 || currentScale <= instruction->scaleMinimum) &&
+					(instruction->scaleMaximum == 0 || currentScale >= instruction->scaleMaximum) &&
 					(MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr)))
 				{
 					itList.push_back(instruction);
@@ -169,11 +169,11 @@ void SENC_DisplayList::GetDrawingInstructionByCondition(int priority, int type, 
 			{
 				if (instruction->fr->m_frid.m_nftc == FeatureID_textPlacement)
 				{
-					if (ENCCommon::APPLY_SCALE_MIN)
+					if (ENCCommon::APPLY_SCALE_MIN == TRUE)
 					{
 						if (
-							(instruction->fr->m_scaleMin == 0 || currentScale <= instruction->fr->m_scaleMin) &&
-							(instruction->fr->m_scaleMax == 0 || currentScale >= instruction->fr->m_scaleMax) &&
+							(instruction->scaleMinimum == 0 || currentScale <= instruction->scaleMinimum) &&
+							(instruction->scaleMaximum == 0 || currentScale >= instruction->scaleMaximum) &&
 							(MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr)))
 						{
 							itList.push_back(instruction);
@@ -189,10 +189,10 @@ void SENC_DisplayList::GetDrawingInstructionByCondition(int priority, int type, 
 				}
 				else
 				{
-					if (ENCCommon::APPLY_SCALE_MIN)
+					if (ENCCommon::APPLY_SCALE_MIN == TRUE)
 					{
-						if ((instruction->fr->m_scaleMin == 0 || currentScale <= instruction->fr->m_scaleMin) &&
-							(instruction->fr->m_scaleMax == 0 || currentScale >= instruction->fr->m_scaleMax) &&
+						if ((instruction->scaleMinimum == 0 || currentScale <= instruction->scaleMinimum) &&
+							(instruction->scaleMaximum == 0 || currentScale >= instruction->scaleMaximum) &&
 							(MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr)))
 						{
 							if (instruction->fr->m_hasTextPlacement) 
@@ -224,10 +224,10 @@ void SENC_DisplayList::GetDrawingInstructionByCondition(int priority, int type, 
 				}
 				else
 				{
-					if (ENCCommon::APPLY_SCALE_MIN)
+					if (ENCCommon::APPLY_SCALE_MIN == TRUE)
 					{
-						if ((instruction->fr->m_scaleMin == 0 || currentScale <= instruction->fr->m_scaleMin) &&
-							(instruction->fr->m_scaleMax == 0 || currentScale >= instruction->fr->m_scaleMax) &&
+						if ((instruction->scaleMinimum == 0 || currentScale <= instruction->scaleMinimum) &&
+							(instruction->scaleMaximum == 0 || currentScale >= instruction->scaleMaximum) &&
 							(MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr)))
 						{
 							itList.push_back(instruction);

@@ -98,7 +98,7 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 
 		std::string two_shades = ENCCommon::TWO_SHADES ? "true" : "false";
 		std::string national_language = ENCCommon::SHOW_NOBJNM ? "eng" : "kor";
-		std::string ignore_scamin = ENCCommon::APPLY_SCALE_MIN ? "true" : "false";
+		std::string ignore_scamin = ENCCommon::APPLY_SCALE_MIN ? "false" : "true";
 		std::string shallow_pattern = ENCCommon::SHALLOW_PATTERN ? "true" : "false";
 		std::string simplified_points = ENCCommon::SIMPLIFIED_POINT_SYMBOL ? "true" : "false";
 		std::string show_isolated_dangers_in_shallow_waters = ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER ? "true" : "false";
