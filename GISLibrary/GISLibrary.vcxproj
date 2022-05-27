@@ -30,7 +30,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -47,7 +47,7 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -75,24 +75,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\extlibs\HDF5\include;..\extlibs\pugixml\include;..\extlibs\tinyxml\include;..\extlibs\TinyXML2\include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\HDF5\lib;..\extlibs\tinyxml\lib\$(Configuration);..\extlibs\TinyXML2\lib\$(Configuration);..\extlibs\lua\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\extlibs\;..\extlibs\HDF5\include;..\extlibs\pugixml\x64_include;..\extlibs\tinyxml\include;..\extlibs\TinyXML2\include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\HDF5\x64_lib\$(Configuration);..\extlibs\tinyxml\lib\$(Configuration);..\extlibs\TinyXML2\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\extlibs\HDF5\include;..\extlibs\pugixml\include;..\extlibs\tinyxml\include;..\extlibs\TinyXML2\include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\HDF5\lib;..\extlibs\tinyxml\lib\$(Configuration);..\extlibs\TinyXML2\lib\$(Configuration);..\extlibs\lua\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\extlibs\;..\extlibs\HDF5\include;..\extlibs\pugixml\x64_include;..\extlibs\tinyxml\include;..\extlibs\TinyXML2\include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\HDF5\x64_lib\$(Configuration);..\extlibs\tinyxml\lib\$(Configuration);..\extlibs\TinyXML2\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -124,7 +126,8 @@
       </Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>hdf5.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
@@ -196,7 +199,8 @@
       </Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalDependencies>hdf5.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Lib>
   </ItemDefinitionGroup>

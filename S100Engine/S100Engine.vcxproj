@@ -29,7 +29,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -76,24 +76,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\extlibs\libxml2\include;..\extlibs\pugixml\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\libxml2\lib\$(Configuration);..\extlibs\pugixml\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>..\extlibs\pugixml\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\extlibs\;..\extlibs\libxml2\include;..\extlibs\pugixml\x64_include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\libxml2\lib\$(Configuration);..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>..\extlibs\;..\extlibs\pugixml\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\extlibs\libxml2\include;..\extlibs\pugixml\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\libxml2\lib\$(Configuration);..\extlibs\pugixml\lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>..\extlibs\pugixml\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\extlibs\;..\extlibs\libxml2\include;..\extlibs\pugixml\x64_include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\libxml2\lib\$(Configuration);..\extlibs\pugixml\x64_lib\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>..\extlibs\;..\extlibs\pugixml\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -161,7 +163,7 @@
     <Lib>
       <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Release;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\extlibs\pugixml\$(PlatformTarget)_$(Configuration);</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -221,7 +223,7 @@
     <Lib>
       <AdditionalDependencies>pugixml.lib</AdditionalDependencies>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Debug;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\extlibs\pugixml\$(PlatformTarget)_$(Configuration);</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -29,7 +29,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -77,25 +77,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\extlibs\pugixml\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;..\extlibs\pugixml\lib\$(Configuration);..\extlibs\lua\lib</LibraryPath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);..\extlibs\lua\lib\$(PlatformTarget)_$(Configuration)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\extlibs\;$(VC_IncludePath);$(WindowsSDK_IncludePath);..\extlibs\pugixml\x64_include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;..\extlibs\pugixml\x64_lib\$(Configuration);..\extlibs\lua\lib\$(Configuration)</LibraryPath>
+    <IncludePath>..\extlibs\;$(VC_IncludePath);$(WindowsSDK_IncludePath);..\extlibs\pugixml\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);..\extlibs\lua\lib\$(PlatformTarget)_$(Configuration)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\extlibs\pugixml\include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;..\extlibs\pugixml\lib\$(Configuration)$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;..\extlibs\pugixml\lib\$(Configuration);..\extlibs\lua\lib</LibraryPath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;..\extlibs\pugixml\lib\$(Configuration)$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);..\extlibs\lua\lib\$(PlatformTarget)_$(Configuration)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\extlibs\;$(VC_IncludePath);$(WindowsSDK_IncludePath);..\extlibs\pugixml\x64_include</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;..\extlibs\pugixml\x64_lib\$(Configuration);..\extlibs\lua\lib\$(Configuration)</LibraryPath>
+    <IncludePath>..\extlibs\;$(VC_IncludePath);$(WindowsSDK_IncludePath);..\extlibs\pugixml\include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);..\extlibs\lua\lib\$(PlatformTarget)_$(Configuration)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -136,7 +137,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Debug;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);</AdditionalLibraryDirectories>
       <AdditionalDependencies>pugixml.lib;lua5.1.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -184,7 +185,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>pugixml.lib;lua5.1.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Release;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

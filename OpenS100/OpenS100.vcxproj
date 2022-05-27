@@ -29,14 +29,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
@@ -76,20 +76,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>..\extlibs\;..\extlibs\pugixml\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\extlibs\;..\extlibs\pugixml\x64_include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);..\extlibs\libxml2\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\extlibs\;..\extlibs\pugixml\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>..\extlibs\;..\extlibs\pugixml\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\extlibs\;..\extlibs\pugixml\x64_include;..\extlibs\libxml2\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\extlibs\pugixml\x64_lib\$(Configuration);\extlibs\Clipper\lib\$(Configuration);..\extlibs\libxml2\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\extlibs\;..\extlibs\pugixml\include;..\extlibs\libiconv\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -126,7 +132,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>pugixml.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Debug;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -180,7 +186,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>pugixml.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\extlibs\pugixml\x64_Release;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\extlibs\pugixml\lib\$(PlatformTarget)_$(Configuration);</AdditionalLibraryDirectories>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
