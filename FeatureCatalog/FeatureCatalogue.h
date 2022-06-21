@@ -38,6 +38,8 @@ private:
 private:
 	std::wstring versionNumber = L"";
 	std::wstring versionDate = L""; 
+	std::wstring productId = L"";
+	
 	std::wstring filePath = L"";
 
 	// CI_Responsibility 
@@ -79,6 +81,10 @@ public:
 	const std::wstring& GetVersionDate();
 	void SetVersionDate(std::string value);
 	void SetVersionDate(std::wstring value);
+
+	const std::wstring& GetProductId();
+	void SetProductId(std::string value);
+	void SetProductId(std::wstring value);
 
 	SimpleAttribute* GetSimpleAttribute(std::wstring Code);
 	SimpleAttribute* GetSimpleAttributeFromName(std::wstring name);

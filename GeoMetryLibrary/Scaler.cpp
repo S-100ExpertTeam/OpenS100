@@ -370,14 +370,19 @@ CString Scaler::GetFormatedScale()
 	return str;
 }
 
-double Scaler::GetRotationDegree()
+int Scaler::GetRotationDegree()
 {
 	return rotateDegree;
 }
 
-void Scaler::SetRotationDegree(double _value)
+void Scaler::SetRotationDegree(int _value)
 {
 	rotateDegree = _value;
+}
+
+void Scaler::Rotate(int value)
+{
+	rotateDegree += value;
 }
 
 void Scaler::ZoomIn(double value)

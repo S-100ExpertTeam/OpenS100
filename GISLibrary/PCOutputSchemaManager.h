@@ -31,20 +31,12 @@ public:
 	
 public:
 	S100_DisplayList* displayList = nullptr;
-	// Lua Drawing Instructions
 	SENC_DisplayList* displayListSENC = nullptr;
 
 public:
 	void GenerateSENCInstruction(S101Cell* cell, PortrayalCatalogue* pc);
 	void InitDisplayList();
 	void GenerateSENCAlertInstruction(S101Cell* cell, PortrayalCatalogue* pc);
-	SENC_NullInstruction* GetSENCFromS100(S100_NullInstruction*, PortrayalCatalogue* pc);
-	SENC_PointInstruction* GetSENCFromS100(S100_PointInstruction*, PortrayalCatalogue* pc);
-	SENC_LineInstruction* GetSENCFromS100(S100_LineInstruction*, PortrayalCatalogue* pc);
-	SENC_AreaInstruction* GetSENCFromS100(S100_AreaInstruction*, PortrayalCatalogue* pc);
-	SENC_TextInstruction* GetSENCFromS100(S100_TextInstruction*, PortrayalCatalogue* pc);
-	SENC_AugmentedRay* GetSENCFromS100(S100_AugmentedRay*, PortrayalCatalogue* pc);
-	SENC_AugmentedPath* GetSENCFromS100(S100_AugmentedPath*, PortrayalCatalogue* pc);
 	void GetSENCFromS100Common(S100_Instruction* tp, SENC_Instruction* si);
 	void ChangePallete(PortrayalCatalogue *pc);
 };

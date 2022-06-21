@@ -14,8 +14,6 @@ public:
 	virtual ~SENC_Symbol();
 
 public:
-	S100_SVG_D2D1_DLL::SVG* pSvg = nullptr;
-	
 	// element
 	SENC_VectorPoint offset;
 	SENC_Color overrideAll;

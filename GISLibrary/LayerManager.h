@@ -4,8 +4,6 @@
 
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"
 
-#include "..\\S100_SVG_D2D1_DLL\\SVGManager.h"
-
 #include <vector>
 #include <functional>
 #include <unordered_map>

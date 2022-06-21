@@ -193,7 +193,6 @@ int CDockablePaneEditWindow::OnCreate(LPCREATESTRUCT lp)
 
 	::ShowScrollBar(m_wndListAttribute.GetSafeHwnd(), SB_VERT, FALSE);
 
-#ifndef _S101_VIEWER
 	if (!m_wndListVector.Create(WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_VSCROLL
 		| LVS_REPORT, rect, &m_wndTabs, 1)
 		)
@@ -212,15 +211,6 @@ int CDockablePaneEditWindow::OnCreate(LPCREATESTRUCT lp)
 
 	::ShowScrollBar(m_wndListVector.GetSafeHwnd(), SB_VERT, FALSE);
 
-#else
-	if (!m_wndListVector.Create(WS_CHILD | PGF_INVISIBLE | WS_CLIPSIBLINGS | WS_VSCROLL
-		| LVS_REPORT, rect, &m_wndTabs, IDC_PROPERTY_GRID_VECTOR)
-		)
-	{
-		TRACE0("Failed to create Nodes List\n");
-		return -1;
-	}
-#endif
 	//	viewer mode
 	return 0;
 

@@ -321,7 +321,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					S100_AreaInstruction *in = new S100_AreaInstruction();
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-					in->GetFeatureReference()->SetReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
 					in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
 					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
@@ -460,7 +460,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					S100_AlertReference* in = new S100_AlertReference();
 					pcm->displayList->AddAlertInstruction((S100_Instruction*)in);
 
-					in->GetFeatureReference()->SetReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
 
 					std::vector<std::string> v_splited = Split(v_AlertReference, ",");
 					if (v_splited.size() > 0)
@@ -499,7 +499,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					S100_TextInstruction *in = new S100_TextInstruction();
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-					in->GetFeatureReference()->SetReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
 					in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
 					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
@@ -559,7 +559,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					}
 					v_TextInstruction = "";
 				}
-				// "LineInstruction:QUESMRK1"	
 				else if (tag.compare("LineInstruction") == 0)
 				{
 					v_LineInstruction = value;
@@ -569,7 +568,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						S100_AugmentedRay *in = new S100_AugmentedRay();
 						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-						in->GetFeatureReference()->SetReference(std::wstring(featureID.begin(), featureID.end()));
+						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
 						in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
 						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
@@ -595,7 +594,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						S100_AugmentedPath *in = new S100_AugmentedPath();
 						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-						in->GetFeatureReference()->SetReference(std::wstring(featureID.begin(), featureID.end()));
+						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
 						in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
 						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
@@ -634,7 +633,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						S100_LineInstruction *in = new S100_LineInstruction();
 						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-						in->GetFeatureReference()->SetReference(std::wstring(featureID.begin(), featureID.end()));
+						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
 						in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
 						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
@@ -683,7 +682,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					S100_PointInstruction *in = new S100_PointInstruction();
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-					in->GetFeatureReference()->SetReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
 					in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
 					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
@@ -765,7 +764,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					S100_AreaInstruction *in = new S100_AreaInstruction();
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-					in->GetFeatureReference()->SetReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
 					in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
 					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));

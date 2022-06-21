@@ -483,6 +483,9 @@
     <ClCompile Include="DrawingCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Product.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -948,6 +951,9 @@
       <Filter>SENC_Instruction</Filter>
     </ClInclude>
     <ClInclude Include="DrawingCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Product.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

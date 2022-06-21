@@ -166,6 +166,21 @@ void S101Cell::InitDrawingInstruction()
 	pcManager = new PCOutputSchemaManager();
 }
 
+void S101Cell::GetDrawingPriority(std::vector<__int64>& key, std::vector<int>& priority)
+{
+	//priority.clear();
+	//std::fill_n(priority, key.size(), -1);
+	//
+	//for (size_t i = 0; i < key.size(); i++)
+	//{
+	//	auto featureRecord = GetFeatureRecord(key.at(i));
+	//	if (featureRecord)
+	//	{
+	//		featureRecord->MinimumDisplayPriority();
+	//	}
+	//}
+}
+
 R_DSGIR* S101Cell::GetDatasetGeneralInformationRecord()
 {
 	return &m_dsgir;

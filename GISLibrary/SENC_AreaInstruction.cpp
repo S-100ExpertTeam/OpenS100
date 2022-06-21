@@ -119,6 +119,11 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 				auto patternMap = &pc->GetS100PCManager()->areaFillInfo.patternMap;
 				auto i = patternMap->find(areaFillReference->GetFileTitle().c_str());
 
+				if (i == patternMap->end())
+				{
+					i = patternMap->find(L"QUESMRK1");
+				}
+
 				if (i != patternMap->end())
 				{
 					if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
@@ -143,17 +148,12 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 									(float)scaler->GetRotationDegree(),
 									D2D1::Point2F((float)scaler->sox, (float)scaler->soy))
 							);
-							//D2D1::Matrix3x2F bitmapTransform;
-							//i->second->pBitmapBrush->GetTransform(&bitmapTransform);
-							//bitmapTransform.Invert();
 
 							auto featureMBR = fr->GetMBR();
 							long sxmin = 0;
 							long symin = 0;
 							scaler->WorldToDevice(featureMBR.xmin, featureMBR.ymax, &sxmin, &symin);
 
-							// Changed it to make the origin of the pattern the same.
-							//i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Translation((float)sxmin, (float)symin) *  D2D1::Matrix3x2F::Identity());
 							i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Identity());
 							rt->FillGeometry(geometry, i->second->pBitmapBrush);
 							rt->SetTransform(oldMatrix);
@@ -167,10 +167,13 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 			symbolFill = (SENC_SymbolFill*)areaFill;
 			if (symbolFill->symbol)
 			{
-				S100_SVG_D2D1_DLL::SVG* pSvg = symbolFill->symbol->pSvg;
-
 				auto patternMap = &pc->GetS100PCManager()->areaFillInfo.patternMap;
 				auto i = patternMap->find(symbolFill->GetFileTitle().c_str());
+
+				if (i == patternMap->end())
+				{
+					i = patternMap->find(L"QUESMRK1");
+				}
 
 				if (i != patternMap->end())
 				{
@@ -195,18 +198,14 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 									(float)scaler->GetRotationDegree(),
 									D2D1::Point2F((float)scaler->sox, (float)scaler->soy))
 							);
-							//D2D1::Matrix3x2F bitmapTransform;
-							//i->second->pBitmapBrush->GetTransform(&bitmapTransform);
-							//bitmapTransform.Invert();
 
 							auto featureMBR = fr->GetMBR();
 							long sxmin = 0;
 							long symin = 0;
 							scaler->WorldToDevice(featureMBR.xmin, featureMBR.ymax, &sxmin, &symin);
 
-							// Changed it to make the origin of the pattern the same.
-							//i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Translation((float)sxmin, (float)symin) *  D2D1::Matrix3x2F::Identity());
 							i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Identity());
+							i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Rotation(-scaler->GetRotationDegree()));
 							rt->FillGeometry(geometry, i->second->pBitmapBrush);
 							rt->SetTransform(oldMatrix);
 							SafeRelease(&geometry);
@@ -217,212 +216,6 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 			break;
 		}
 	}
-}
-
-void SENC_AreaInstruction::DrawInstruction(CDCRenderTarget* pRenderTarget, Scaler *scaler)
-{
-	if (!fr)
-		return;
-	if (!fr->m_geometry)
-		return;
-
-	int viewPointNum = 0;
-	int partsIndex = 1;
-	int lastPointIndex = -1;
-	int preLoc = -1, curLoc = 0;
-
-	long cx, cy;
-	bool isBegin = true;
-	bool nc = false;
-	CD2DPointF p;
-	CD2DPointF sp;
-
-	int i = 0, j = 0;
-
-	CD2DPathGeometry* pGeometry = new CD2DPathGeometry(pRenderTarget);
-	pGeometry->Create(pRenderTarget);
-	CD2DGeometrySink* pSink = new  CD2DGeometrySink(*pGeometry);
-
-	// If the object is ready, draw what is in Field3 of the Presentation Library.
-	SSurface* geo = (SSurface*)fr->m_geometry;
-
-	GeoPoint cc(geo->m_pPoints[0].x, geo->m_pPoints[0].y);
-	for (j = 0; j < geo->m_numPoints; j++)
-	{
-		scaler->WorldToDevice(geo->m_pPoints[j].x, geo->m_pPoints[j].y,
-			&cx, &cy);
-
-		if (isBegin)
-		{
-			p.x = (FLOAT)cx;
-			p.y = (FLOAT)cy;
-			pSink->BeginFigure(p, D2D1_FIGURE_BEGIN_FILLED);
-			
-			sp.x = p.x;
-			sp.y = p.y;
-			isBegin = false;
-		}
-		else
-		{
-			p.x = (FLOAT)cx;
-			p.y = (FLOAT)cy;
-			pSink->AddLine(p);
-
-			if (nc)
-			{
-				cc.x = geo->m_pPoints[j].x;
-				cc.y = geo->m_pPoints[j].y;
-				nc = false;
-			}
-
-			else if (cc.x == geo->m_pPoints[j].x &&
-				cc.y == geo->m_pPoints[j].y)
-			{
-				pSink->AddLine(sp);
-
-				nc = true;
-			}
-		}
-	}
-	pSink->EndFigure(D2D1_FIGURE_END_CLOSED);
-	pSink->Close();
-
-	SENC_ColorFill* colorFill = NULL;
-	SENC_SymbolFill* symbolFill = NULL;
-	switch (areaFill->type)
-	{
-	case 1:
-		colorFill = (SENC_ColorFill*)areaFill;
-		if (colorFill->color)
-		{
-			CD2DSolidColorBrush* pBlackBrush = new CD2DSolidColorBrush(pRenderTarget,
-				D2D1::ColorF(((colorFill->color->RGBColor >> 16) & 0xff) / (FLOAT)255.,
-							 ((colorFill->color->RGBColor >> 8)  & 0xff) / (FLOAT)255.,
-							 ( colorFill->color->RGBColor        & 0xff) / (FLOAT)255., 
-							 1 - (FLOAT)colorFill->color->transparency)
-				);
-			pRenderTarget->FillGeometry(pGeometry, pBlackBrush);
-
-			delete pBlackBrush;
-		}
-		break;
-	case 4:
-		symbolFill = (SENC_SymbolFill*)areaFill;
-		if (symbolFill->symbol)
-		{
-			S100_SVG_D2D1_DLL::SVG* pSvg = symbolFill->symbol->pSvg;
-		}
-		break;
-	}
-	
-
-	delete pSink;
-	delete pGeometry;
-}
-
-void SENC_AreaInstruction::DrawInstruction(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, Scaler *scaler)
-{
-	if (!fr)
-		return;
-	if (!fr->m_geometry)
-		return;
-
-	int viewPointNum = 0;
-	int partsIndex = 1;
-	int lastPointIndex = -1;
-	int preLoc = -1, curLoc = 0;
-
-	long cx, cy;
-	bool isBegin = true;
-	bool nc = false;
-	CD2DPointF p;
-	CD2DPointF sp;
-
-	int i = 0, j = 0;
-
-	ID2D1PathGeometry* pGeometry;
-	HRESULT hr = pDXFactory->CreatePathGeometry(&pGeometry);
-	ID2D1GeometrySink *pSink = NULL;
-	hr = pGeometry->Open(&pSink);
-
-	// If the object is ready, draw what is in Field 3 of the Presentation Library..
-	SSurface* geo = (SSurface*)fr->m_geometry;
-
-	GeoPoint cc(geo->m_pPoints[0].x, geo->m_pPoints[0].y);
-	for (j = 0; j < geo->m_numPoints; j++)
-	{
-		scaler->WorldToDevice(geo->m_pPoints[j].x, geo->m_pPoints[j].y,
-			&cx, &cy);
-
-		if (isBegin)
-		{
-			p.x = (FLOAT)cx;
-			p.y = (FLOAT)cy;
-			pSink->BeginFigure(p, D2D1_FIGURE_BEGIN_FILLED);
-			
-			sp.x = p.x;
-			sp.y = p.y;
-			isBegin = false;
-		}
-		else
-		{
-			p.x = (FLOAT)cx;
-			p.y = (FLOAT)cy;
-			pSink->AddLine(p);
-
-			if (nc)
-			{
-				cc.x = geo->m_pPoints[j].x;
-				cc.y = geo->m_pPoints[j].y;
-				nc = false;
-			}
-
-			else if (cc.x == geo->m_pPoints[j].x &&
-				cc.y == geo->m_pPoints[j].y)
-			{
-				pSink->AddLine(sp);
-
-				nc = true;
-			}
-		}
-	}
-	pSink->EndFigure(D2D1_FIGURE_END_CLOSED);
-	pSink->Close();
-
-	SENC_ColorFill* colorFill = NULL;
-	SENC_SymbolFill* symbolFill = NULL;
-	switch (areaFill->type)
-	{
-	case 1:
-		colorFill = (SENC_ColorFill*)areaFill;
-		if (colorFill->color)
-		{
-			ID2D1SolidColorBrush* pBlackBrush;
-			
-			if (S_OK == pRenderTarget->CreateSolidColorBrush(
-				D2D1::ColorF(((colorFill->color->RGBColor >> 16) & 0xff) / (FLOAT)255.,
-							 ((colorFill->color->RGBColor >> 8) & 0xff) / (FLOAT)255.,
-							  (colorFill->color->RGBColor & 0xff) / (FLOAT)255.,
-							1 - (FLOAT)colorFill->color->transparency),
-				&pBlackBrush))
-			{
-				pRenderTarget->FillGeometry(pGeometry, pBlackBrush);
-			}
-			pBlackBrush->Release();
-		}
-		break;
-	case 4:
-		symbolFill = (SENC_SymbolFill*)areaFill;
-		if (symbolFill->symbol)
-		{
-			S100_SVG_D2D1_DLL::SVG* pSvg = symbolFill->symbol->pSvg;
-		}
-		break;
-	}
-	
-
-	pSink->Release();
-	pGeometry->Release();
 }
 
 void SENC_AreaInstruction::ChangePallete(PortrayalCatalogue *pc)
@@ -491,31 +284,13 @@ void SENC_AreaInstruction::FromS100Instruction(
 
 				if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation())
 				{
-					//symbolFill->symbol->rotation = new SENC_Rotation();
-					//symbolFill->symbol->rotation->useValueOf = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation()->GetUseValueOf();
-					//symbolFill->symbol->rotation->value = _wtoi(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation()->GetValue().c_str());
 					symbolFill->symbol->rotation = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation();
 				}
 
 				symbolFill->symbol->rotationCRS = SENC_CommonFuc::GetRotationCRS(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotationCRS());
 				symbolFill->symbol->scaleFactor = (float)(_wtof(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetScaleFactor().c_str()));
-
-				auto svgSymbolManger = pc->GetSVGManager();
-				auto itor = svgSymbolManger->m_svgMap.find(symbolFill->symbol->reference);
-				if (itor != svgSymbolManger->m_svgMap.end())
-				{
-					symbolFill->symbol->pSvg = itor->second;
-				}
-				else
-				{
-
-					itor = svgSymbolManger->m_svgMap.find(L"QUESMRK1");
-					if (itor != svgSymbolManger->m_svgMap.end())
-					{
-						symbolFill->symbol->pSvg = itor->second;
-					}
-				}
 			}
+
 			if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1())
 			{
 				symbolFill->v1.x = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1()->GetX();

@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "S100PCLineStylesReader.h"
 
+#include <iostream>
+#include <filesystem>
+
 namespace S100XMLReader
 {
 	S100PCLineStylesReader::S100PCLineStylesReader()
@@ -36,7 +39,9 @@ namespace S100XMLReader
 
 				if (!filePath.IsEmpty())
 				{
-					LineStylesPackage::AbstractLineStyle *pLineStyle = nullptr;
+					AddByPugi(path, pLineStyles);
+
+					/*LineStylesPackage::AbstractLineStyle *pLineStyle = nullptr;
 					pugi::xml_document doc;
 					pugi::xml_parse_result result = doc.load_file(filePath);
 
@@ -62,7 +67,7 @@ namespace S100XMLReader
 					{
 						pLineStyle->name = findFileData.cFileName;
 						pLineStyles->mapLineStyle.insert({ findFileData.cFileName, pLineStyle });
-					}
+					}*/
 				}
 			}
 		} while (FindNextFile(hFind, &findFileData));
@@ -72,6 +77,44 @@ namespace S100XMLReader
 
 		return true;
 
+	}
+
+	bool S100PCLineStylesReader::AddByPugi(std::wstring path, LineStylesPackage::LineStyles* pLineStyles)
+	{
+		LineStylesPackage::AbstractLineStyle* pLineStyle = nullptr;
+		pugi::xml_document doc;
+		pugi::xml_parse_result result = doc.load_file(path.c_str());
+
+		pugi::xml_node displayList = doc.child("lineStyle");
+		if (displayList != nullptr)
+		{
+			SetLineStyle(displayList, &pLineStyle);
+		}
+
+		displayList = doc.child("compositeLineStyle");
+		if (displayList != nullptr)
+		{
+			SetLineStyle(displayList, &pLineStyle);
+		}
+
+		displayList = doc.child("lineStyleReference");
+		if (displayList)
+		{
+		}
+
+		if (nullptr != pLineStyle)
+		{
+			auto key = std::filesystem::path(path).filename().wstring();
+			pLineStyle->name = key;
+
+			if (pLineStyles->mapLineStyle.find(key) == pLineStyles->mapLineStyle.end())
+			{
+				pLineStyles->mapLineStyle.insert({ key, pLineStyle });
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	bool S100PCLineStylesReader::SetLineStyle(pugi::xml_node node, std::vector<LineStylesPackage::AbstractLineStyle *>* lineStyle)

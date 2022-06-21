@@ -9,6 +9,6 @@ SENC_Symbol::SENC_Symbol()
 
 SENC_Symbol::~SENC_Symbol()
 {
-	if (linePlacement) delete linePlacement;
-	if (areaPlacement) delete areaPlacement;
+	delete linePlacement;
+	delete areaPlacement;
 }

@@ -2,9 +2,6 @@
 #include "ENCGeometry.h"
 #include "GeoPoint.h"
 
-#include "..\\S100_SVG_D2D1_DLL\\SVG.h"
-#include "..\\S100_SVG_D2D1_DLL\\SVGManager.h"
-
 #include <cmath>
 				
 CGeoObjectMap	*ENCGeometry::pObject = NULL;
@@ -18,7 +15,6 @@ ENCGeometry::ENCGeometry(void) /*: pen(Color(0, 0, 0), 1)*/
 	m_simplePLIndex = -1;
 	m_paperPLIndex = -1;
 	m_pFeature = NULL;
-	m_svgSymbol = NULL;
 }
 
 ENCGeometry::~ENCGeometry(void)

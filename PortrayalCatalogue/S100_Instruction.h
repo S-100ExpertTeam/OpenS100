@@ -1,6 +1,5 @@
 #pragma once
 
-#include "S100_FeatureReference.h"
 #include "S100_SpatialReference.h"
 #include "S100_LineStyle.h"
 
@@ -8,6 +7,8 @@
 
 class PCOutputSchemaManager;
 class PortrayalCatalogue;
+
+// DrawingInstruction
 class S100_Instruction
 {
 public:
@@ -30,7 +31,7 @@ private:
 	*/
 	int type;
 
-	S100_FeatureReference featureReference;
+	std::wstring featureReference;
 	std::list<S100_SpatialReference*> spatialReference;
 	std::wstring viewingGroup;
 	std::wstring displayPlane;
@@ -43,7 +44,7 @@ public:
 
 
 	void SetType(int value);
-	void SetFeatureReference(S100_FeatureReference* value);
+	void SetFeatureReference(std::wstring& value);
 	void SetSpatialReference(S100_SpatialReference* value);
 	void SetSpatialReference(std::list<S100_SpatialReference*> value);
 	void SetViewingGroup(std::wstring& value);
@@ -53,7 +54,7 @@ public:
 	void SetScaleMaximum(std::wstring& value);
 
 	int GetType();
-	S100_FeatureReference* GetFeatureReference();
+	const std::wstring& GetFeatureReference();
 	S100_SpatialReference* GetSpatialReference(int index);
 	std::list<S100_SpatialReference*> GetSpatialReference();
 	std::wstring GetViewingGroup();

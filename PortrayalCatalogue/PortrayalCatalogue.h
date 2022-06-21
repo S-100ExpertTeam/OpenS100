@@ -44,7 +44,7 @@ private:
 	// include PC folder (ex: ..\ProgramData\\S101_Portrayal\\)
 	std::wstring rootPath;
 
-	PortrayalRuleType portrayalRuleType = XSLT;
+	PortrayalRuleType portrayalRuleType = PortrayalRuleType::XSLT;
 
 	// ex : S-101
 	std::wstring product;
@@ -173,4 +173,11 @@ public:
 	void CreateLineImages(ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 	void DeleteLineImages();
 
+	bool OpenSVG();
+
+	// Without extension
+	bool HasSymbol(std::wstring fileName);
+
+	bool OpenLineStyle();
+	bool OpenAreaFill();
 };

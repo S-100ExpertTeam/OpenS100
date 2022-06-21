@@ -3,8 +3,10 @@
 
 #include "..\\PortrayalCatalogue\\S100_LineStyleReference.h"
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+
 #include "..\\S100Geometry\\SCurveHasOrient.h"
 #include "..\\S100Geometry\\SCurve.h"
+
 #include "..\\GeoMetryLibrary\\Scaler.h"
 
 SENC_LineStyleReference::SENC_LineStyleReference()
@@ -17,7 +19,7 @@ SENC_LineStyleReference::~SENC_LineStyleReference()
 
 }
 
-void SENC_LineStyleReference::GetStyleFromS100(S100_LineStyleReference* lineStyle, S100_SVG_D2D1_DLL::SVGManager *svgMgr)
+void SENC_LineStyleReference::GetStyleFromS100(S100_LineStyleReference* lineStyle)
 {
 	SetReference(lineStyle->GetReference());
 }
@@ -61,6 +63,18 @@ void SENC_LineStyleReference::DrawInstruction(
 	if (s100PCManager)
 	{
 		IWICBitmap* pIWICBitmap = s100PCManager->GetLineImage(GetReference() + _T(".xml"));
+
+		if (!pIWICBitmap)
+		{
+			std::wstring nameQUESMRK1(L"QUESMRK1.xml");
+			pIWICBitmap = s100PCManager->GetLineImage(nameQUESMRK1);
+
+			if (!pIWICBitmap)
+			{
+				return;
+			}
+		}
+
 		if (pIWICBitmap)
 		{
 			ID2D1Bitmap* pBitmap = nullptr;

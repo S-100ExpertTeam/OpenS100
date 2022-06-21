@@ -37,51 +37,6 @@
 #include "Common.h"
 #include <afxcontrolbars.h>
 
-#ifndef _TEXTCLUTTER
-	#define _TEXTCLUTTER
-#endif
-
-
-#ifndef _GETOBJECT
-	//#define _GETOBJECT
-#endif
-
-#ifndef _DRAW_WRECKS_CS
-	#define _DRAW_WRECKS_CS
-#endif
-
-#ifndef _TEST_PERFORMANCE
-	//#define _TEST_PERFORMANCE
-#endif
-
-#ifndef _GET_LANDREGION
-	//#define _GET_LANDREGION
-#endif
-
-#ifndef _GET_ATTRIBUTES
-//#define _GET_ATTRIBUTES
-#endif
-#ifndef _DEBUG_POINTS
-//#define _DEBUG_POINTS
-#endif
-
-#ifndef _USE_SENC
-	#define _USE_SENC
-#endif
-
-#ifndef _S101_VIEWER
-	//#define _S101_VIEWER
-#endif
-
-#ifndef ROUTE_CHECK 
-	#define ROUTE_CHECK
-#endif
-
-#ifndef PORTRAYAL_RULE_TEST 
-	//#define PORTRAYAL_RULE_TEST
-#endif
-
-
 #include <d2d1.h>
 #include <d2d1_1.h>
 #pragma comment(lib, "d2d1.lib")

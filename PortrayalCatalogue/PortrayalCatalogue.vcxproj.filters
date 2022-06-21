@@ -96,9 +96,6 @@
     <ClInclude Include="S100_Element.h">
       <Filter>Contents</Filter>
     </ClInclude>
-    <ClInclude Include="S100_FeatureReference.h">
-      <Filter>Contents</Filter>
-    </ClInclude>
     <ClInclude Include="S100_Font.h">
       <Filter>Contents</Filter>
     </ClInclude>
@@ -380,9 +377,6 @@
     <ClCompile Include="S100_Element.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
-    <ClCompile Include="S100_FeatureReference.cpp">
-      <Filter>Contents</Filter>
-    </ClCompile>
     <ClCompile Include="S100_Font.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
@@ -601,6 +595,12 @@
     </ClCompile>
     <ClCompile Include="ExternalFile.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enum_FileType.cpp">
+      <Filter>Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="Enum_FileFormat.cpp">
+      <Filter>Enum</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

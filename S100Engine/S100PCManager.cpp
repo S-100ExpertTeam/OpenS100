@@ -25,6 +25,10 @@ bool S100PCManager::OpenS100ColorProfile(std::wstring _path)
 	return ret;
 }
 
+bool S100PCManager::AddS100LineStyle(std::wstring path)
+{
+	return S100XMLReader::S100PCLineStylesReader::AddByPugi(path, &lineStyles);
+}
 
 bool S100PCManager::OpenS100LineStyles(std::wstring _path)
 {
@@ -32,6 +36,20 @@ bool S100PCManager::OpenS100LineStyles(std::wstring _path)
 	return true;
 }
 
+bool S100PCManager::AddS100AreaFill(std::wstring path)
+{
+	AreaFill areaFill;
+	areaFill.ReadByPugi(path);
+
+	auto item = GetAreaFill(areaFill._name);
+	if (nullptr == item)
+	{
+		areaFills.push_back(areaFill);
+		return true;
+	}
+
+	return false;
+}
 
 bool S100PCManager::OpenS100AreaFills(std::wstring _path)
 {
@@ -58,6 +76,22 @@ bool S100PCManager::OpenS100AreaFills(std::wstring _path)
 		}
 	}
 
+	return true;
+}
+
+bool S100PCManager::AddS100Symbol(std::wstring path)
+{
+	auto filePath = LibMFCUtil::ConvertWCtoC((wchar_t*)path.c_str());
+	SVGReader svg;
+	svg.OpenByPugi(filePath);
+	delete[] filePath;
+
+	if (s100SymbolManager.svgSymbols.find(svg.name) != s100SymbolManager.svgSymbols.end())
+	{
+		return false;
+	}
+
+	s100SymbolManager.svgSymbols.insert({ svg.name, svg });
 	return true;
 }
 
@@ -255,7 +289,14 @@ void S100PCManager::Draw(
 		}
 	}
 
-	if (!pSVG) return;
+	if (!pSVG)
+	{
+		pSVG = s100SymbolManager.GetSVG(L"QUESMRK1");
+		if (!pSVG)
+		{
+			return;
+		}
+	}
 
 	D2D1_POINT_2F yReversePoint = { point.x, point.y };
 

@@ -3,10 +3,8 @@
 
 SENC_LineSymbol::SENC_LineSymbol()
 {
-	pSvg = NULL;
 }
 
 SENC_LineSymbol::~SENC_LineSymbol()
 {
-
 }

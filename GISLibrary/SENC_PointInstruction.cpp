@@ -450,6 +450,8 @@ void SENC_PointInstruction::FromS100Instruction(S100_Instruction* s100Instructio
 
 		SENC_Symbol* s = symbol;
 
+		s->reference = s100PointInstruction->GetSymbol()->GetReference();
+
 		if (s100PointInstruction->GetSymbol()->GetRotation())
 		{
 			s->rotation = s100PointInstruction->GetSymbol()->GetRotation();
@@ -463,21 +465,6 @@ void SENC_PointInstruction::FromS100Instruction(S100_Instruction* s100Instructio
 		else
 		{
 			s->scaleFactor = (float)(_wtof(s100PointInstruction->GetSymbol()->GetScaleFactor().c_str()));
-		}
-
-		auto svgsymbolManager = pc->GetSVGManager();
-		auto itor = svgsymbolManager->m_svgMap.find(s100PointInstruction->GetSymbol()->GetReference());
-		if (itor != svgsymbolManager->m_svgMap.end())
-		{
-			symbol->pSvg = itor->second;
-		}
-		else
-		{
-			itor = svgsymbolManager->m_svgMap.find(L"QUESMRK1");
-			if (itor != svgsymbolManager->m_svgMap.end())
-			{
-				symbol->pSvg = itor->second;
-			}
 		}
 
 		if (s100PointInstruction->GetSymbol()->GetLinePlacement())

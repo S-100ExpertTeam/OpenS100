@@ -23,7 +23,7 @@ void S100_AugmentedPath::GetContents(pugi::xml_node node)
 
 		if (!strcmp(instructionName, "featureReference"))
 		{
-			GetFeatureReference()->GetContents(instruction);
+			SetFeatureReference(pugi::as_wide(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "viewingGroup"))
 		{

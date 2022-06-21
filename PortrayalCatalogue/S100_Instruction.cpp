@@ -24,9 +24,9 @@ void S100_Instruction::SetType(int value)
 	type = value;
 }
 
-void S100_Instruction::SetFeatureReference(S100_FeatureReference* value)
+void S100_Instruction::SetFeatureReference(std::wstring& value)
 {
-	featureReference = *value;
+	featureReference = value;
 }
 
 void S100_Instruction::SetSpatialReference(S100_SpatialReference* value)
@@ -66,9 +66,10 @@ int S100_Instruction::GetType()
 {
 	return type;
 }
-S100_FeatureReference* S100_Instruction::GetFeatureReference()
+
+const std::wstring& S100_Instruction::GetFeatureReference()
 {
-	return &featureReference;
+	return featureReference;
 }
 S100_SpatialReference* S100_Instruction::GetSpatialReference(int index) 
 {

@@ -8,6 +8,8 @@
 
 #include "..\\S100Geometry\\SGeometry.h"
 
+#include "Product.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -44,20 +46,31 @@ Scaler* CGISLibraryApp::GetScaler()
 
 void CGISLibraryApp::InitLibrary()
 {
+
+	//Product product;
+	//product.OpenFC(L"..\\ProgramData\\xml\\S-101_FC.xml");
+	//product.OpenPC(L"..\\ProgramData\\S101_Portrayal\\");
+	//product.OpenFC(L"..\\ProgramData\\xml\\S-101_FC.xml");
+	//product.OpenPC(L"..\\ProgramData\\S101_Portrayal\\");
+
 	D2.CreateDeviceIndependentResources();
 	D2.CreateDeviceDependentResources();
 	InitS100Engine();
+
 
 	fc = new FeatureCatalogue(L"..\\ProgramData\\xml\\S-101_FC.xml");
 	pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\");
 	pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
 	pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
 	pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+
+
 }
 
 bool CGISLibraryApp::AddLayer(CString _filepath)
 {
 	m_pLayerManager->AddLayer(_filepath);
+
 	return true;
 }
 
@@ -290,23 +303,13 @@ int CGISLibraryApp::GetCurrentScale()
 {
 	return m_pScaler->GetCurrentScale();
 }
-void   CGISLibraryApp::SetScale(int scale)
+void CGISLibraryApp::SetScale(int scale)
 {
 	m_pScaler->SetScale(scale);
-
-#ifdef PORTRAYAL_RULE_TEST 
-	ENCCommon::T_CURRENT_SCALE = (int)m_pScaler->GetCurrentScale();
-	m_pLayerManager->S101RebuildPortrayal();
-#endif
 }
-void   CGISLibraryApp::UpdateScale()
+void CGISLibraryApp::UpdateScale()
 {
 	m_pScaler->UpdateScale();
-
-#ifdef PORTRAYAL_RULE_TEST 
-	ENCCommon::T_CURRENT_SCALE = (int)m_pScaler->GetCurrentScale();
-	m_pLayerManager->S101RebuildPortrayal();
-#endif
 }
 
 /*
@@ -317,48 +320,22 @@ void   CGISLibraryApp::UpdateScale()
 void CGISLibraryApp::ZoomIn(double value)
 {
 	m_pScaler->ZoomIn(value);
-
-#ifdef PORTRAYAL_RULE_TEST 
-	ENCCommon::T_CURRENT_SCALE = (int)m_pScaler->GetCurrentScale();
-	m_pLayerManager->S101RebuildPortrayal();
-#endif
 }
 void CGISLibraryApp::ZoomIn(double value, int x, int y)
 {
 	m_pScaler->ZoomIn(value, x, y);
-
-#ifdef PORTRAYAL_RULE_TEST 
-	ENCCommon::T_CURRENT_SCALE = (int)m_pScaler->GetCurrentScale();
-	m_pLayerManager->S101RebuildPortrayal();
-#endif
 }
 void CGISLibraryApp::ZoomOut(double value)
 {
 	m_pScaler->ZoomOut(value);
-
-#ifdef PORTRAYAL_RULE_TEST 
-	ENCCommon::T_CURRENT_SCALE = (int)m_pScaler->GetCurrentScale();
-	m_pLayerManager->S101RebuildPortrayal();
-
-#endif
 }
 void CGISLibraryApp::ZoomOut(double value, int x, int y)
 {
 	m_pScaler->ZoomOut(value, x, y);
-
-#ifdef PORTRAYAL_RULE_TEST 
-	ENCCommon::T_CURRENT_SCALE = (int)m_pScaler->GetCurrentScale();
-	m_pLayerManager->S101RebuildPortrayal();
-#endif
 }
 void CGISLibraryApp::AdjustScreenMap()
 {
 	m_pScaler->AdjustScreenMap();
-
-#ifdef PORTRAYAL_RULE_TEST 
-	ENCCommon::T_CURRENT_SCALE = (int)m_pScaler->GetCurrentScale();
-	m_pLayerManager->S101RebuildPortrayal();
-#endif
 }
 
 /*
