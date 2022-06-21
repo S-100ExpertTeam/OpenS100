@@ -27,7 +27,7 @@ void S100_PointInstruction::GetContents(pugi::xml_node node)
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName,"featureReference")) 
 		{
-			GetFeatureReference()->GetContents(instruction);
+			SetFeatureReference(pugi::as_wide(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "viewingGroup"))
 		{

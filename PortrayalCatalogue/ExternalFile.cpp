@@ -20,12 +20,14 @@ namespace Portrayal
 
 	std::wstring ExternalFile::GetFileType()
 	{
-		return FileType;
+		//return FileType;
+		return FileTypeToWString(FileType);
 	}
 
 	std::wstring ExternalFile::GetFileFormat()
 	{
-		return FileFormat;
+		return FileFormatToWString(FileFormat);
+		//return FileFormat;
 	}
 
 	void ExternalFile::SetFileName(std::wstring value)
@@ -35,12 +37,14 @@ namespace Portrayal
 
 	void ExternalFile::SetFileType(std::wstring value)
 	{
-		FileType = value;
+		//FileType = value;
+		FileType = StringToFileType(value);
 	}
 
 	void ExternalFile::SetFileFormat(std::wstring value)
 	{
-		FileFormat = value;
+		//FileFormat = value;
+		FileFormat = StringToFileFormat(value);
 	}
 
 	void ExternalFile::GetContents(pugi::xml_node& node)

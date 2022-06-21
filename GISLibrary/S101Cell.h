@@ -288,6 +288,8 @@ public:
 	bool IsUpdate();
 	void InitDrawingInstruction();
 
+	void GetDrawingPriority(std::vector<__int64>& key, std::vector<int>& priority);
+
 private:
 	bool UpdateDsgirRecord(S101Cell* cell);
 	bool UpdateAttrField(std::list<F_ATTR*> Update, F_CodeWithNumericCode* atcs);

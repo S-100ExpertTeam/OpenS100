@@ -3,6 +3,7 @@
 #ifndef SHARED_HANDLERS
 #include "OpenS100.h"
 #endif
+
 #include "OpenS100Doc.h"
 #include "OpenS100View.h"
 #include "MainFrm.h"
@@ -21,7 +22,6 @@
 #include "..\\GeoMetryLibrary\\Scaler.h"
 #include "..\\GeoMetryLibrary\\GeoPolyline.h"
 
-
 #include "..\\S100Geometry\\SPoint.h"
 #include "..\\S100Geometry\\SMultiPoint.h"
 #include "..\\S100Geometry\\SCompositeCurve.h"
@@ -39,14 +39,12 @@
 #include <crtdbg.h>
 #include <iostream>
 
-
 #include "..\\LatLonUtility\\LatLonUtility.h"
 #pragma comment(lib, "d2d1.lib")
 
 using namespace LatLonUtility;
 
 class CMainFrame;
-// COpenS100View
 
 IMPLEMENT_DYNCREATE(COpenS100View, CView)
 
@@ -56,7 +54,6 @@ BEGIN_MESSAGE_MAP(COpenS100View, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &COpenS100View::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
-
 	ON_COMMAND(T1, Load100File)
 	ON_COMMAND(T2, RemoveLoadFile)
 	ON_COMMAND(T3, MapPlus)
@@ -75,13 +72,10 @@ BEGIN_MESSAGE_MAP(COpenS100View, CView)
 	ON_WM_MOUSEMOVE()
 	ON_WM_SIZE()
 	ON_WM_MOUSEWHEEL()
-//	ON_WM_MOUSEHOVER()
-ON_WM_NCMOUSEHOVER()
-ON_WM_MOUSELEAVE()
-//ON_WM_SYSKEYDOWN()
-ON_WM_KEYDOWN()
+	ON_WM_NCMOUSEHOVER()
+	ON_WM_MOUSELEAVE()
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
-
 
 COpenS100View::COpenS100View() 
 {
@@ -92,7 +86,6 @@ COpenS100View::~COpenS100View()
 {
 	SaveLastPosScale();
 	theApp.SaveSettings();
-
 
 	DeleteDCs();
 
@@ -134,13 +127,11 @@ void COpenS100View::SaveLastPosScale()
 	file.Close();
 }
 
-
 BOOL COpenS100View::PreCreateWindow(CREATESTRUCT& cs)
 {
 
 	return CView::PreCreateWindow(cs);
 }
-
 
 void COpenS100View::OnDraw(CDC* pDC)
 {
@@ -156,7 +147,6 @@ void COpenS100View::OnDraw(CDC* pDC)
 	gisLib->SetViewMBR(rect);
 
 	CreateDCs(pDC, rect);
-
 
 	if (m_bMoveStart)
 	{
@@ -186,7 +176,6 @@ void COpenS100View::OnDraw(CDC* pDC)
 	}
 }
 
-
 void COpenS100View::OnSize(UINT nType, int cx, int cy)
 {
 	CView::OnSize(nType, cx, cy);
@@ -202,10 +191,6 @@ void COpenS100View::OnSize(UINT nType, int cx, int cy)
 
 	m_bMapRefesh = true;
 }
-
-
-
-
 
 void COpenS100View::OnFilePrintPreview()
 {
@@ -229,7 +214,6 @@ void COpenS100View::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 
 void COpenS100View::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
-
 	ClientToScreen(&point);
 	OnContextMenu(this, point);
 }
@@ -240,8 +224,6 @@ void COpenS100View::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
 #endif
 }
-
-
 
 #ifdef _DEBUG
 void COpenS100View::AssertValid() const
@@ -1422,6 +1404,14 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		break;
 	case VK_NEXT:
 		gisLib->ZoomOut(ZOOM_FACTOR);
+		MapRefresh();
+		break;
+	case VK_HOME:
+		gisLib->GetScaler()->Rotate(-10);
+		MapRefresh();
+		break;
+	case VK_END:
+		gisLib->GetScaler()->Rotate(10);
 		MapRefresh();
 		break;
 	}

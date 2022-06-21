@@ -249,6 +249,26 @@ int R_FeatureRecord::GetNumericCode()
 	return m_frid.m_nftc;
 }
 
+int R_FeatureRecord::MinimumDisplayPriority()
+{
+	return minimumDisplayPriority;
+}
+
+void R_FeatureRecord::MinimumDisplayPriority(int value)
+{
+	minimumDisplayPriority = value;
+}
+
+int R_FeatureRecord::MaximumDisplayPriority()
+{
+	return maximumDisplayPriority;
+}
+
+void R_FeatureRecord::MaximumDisplayPriority(int value)
+{
+	maximumDisplayPriority = value;
+}
+
 int R_FeatureRecord::GetSPASRCNM()
 {
 	if (m_spas.size() == 0)

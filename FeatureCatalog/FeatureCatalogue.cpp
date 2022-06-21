@@ -252,6 +252,13 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 				versionDate = pugi::as_wide(instruction.child_value());
 			}
 		}
+		else if (!strcmp(instructionName, "S100FC:productId"))
+		{
+			if (instruction.child_value() != nullptr)
+			{
+				SetProductId(instruction.child_value());
+			}
+		}
 		else if (!strcmp(instructionName, "S100FC:producer"))
 		{
 			producer.GetContents(instruction);
@@ -615,4 +622,19 @@ void FeatureCatalogue::SetVersionDate(std::string value)
 void FeatureCatalogue::SetVersionDate(std::wstring value)
 {
 	versionDate = value;
+}
+
+const std::wstring& FeatureCatalogue::GetProductId()
+{
+	return productId;
+}
+
+void FeatureCatalogue::SetProductId(std::string value)
+{
+	productId = pugi::as_wide(value);
+}
+
+void FeatureCatalogue::SetProductId(std::wstring value)
+{
+	productId = value;
 }

@@ -48,7 +48,7 @@ public:
 	double myMaxLimit = 84.9;
 
 private:
-	double rotateDegree = 0;
+	int rotateDegree = 0;
 
 public:
 	/*
@@ -94,8 +94,9 @@ public:
 	/*
 	** Rotation info
 	*/
-	double GetRotationDegree();
-	void SetRotationDegree(double _value);
+	int GetRotationDegree();
+	void SetRotationDegree(int _value);
+	void Rotate(int value);
 
 	/*
 	** zoom in & zoom out

@@ -50,7 +50,7 @@ void SENC_CompositeLineStyle::GetStyleFromS100(S100_CompositeLineStyle* lineStyl
 			sencBase = new SENC_LineStyleReference();
 			SENC_LineStyleReference* ls = (SENC_LineStyleReference*)sencBase;
 
-			ls->GetStyleFromS100((S100_LineStyleReference*) base, pc->GetSVGManager());
+			ls->GetStyleFromS100((S100_LineStyleReference*) base);
 		}
 		else if (base->GetType() == 3)
 		{

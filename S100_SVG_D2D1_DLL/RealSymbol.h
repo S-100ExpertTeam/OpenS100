@@ -17,7 +17,7 @@ namespace S100_SVG_D2D1_DLL
 		float y;
 		float scale = 1.0f;
 		float rotation = 0;
-		SVGManager *svgManager = nullptr;
+		//SVGManager *svgManager = nullptr;
 
 	public:
 		void SetSymName(std::wstring value);

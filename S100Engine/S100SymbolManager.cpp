@@ -32,14 +32,26 @@ bool S100SymbolManager::Open(std::wstring _path)
 
 		auto cFilePath = m_fileFinder.GetFilePath();
 		auto wFilePath = std::wstring(cFilePath);
-		auto filePath = LibMFCUtil::ConvertWCtoC((wchar_t*)wFilePath.c_str());
-		SVGReader svg;
-		svg.OpenByPugi(filePath);
-
-		delete[] filePath; 
-
-		svgSymbols.insert({ svg.name, svg });
+		Add(wFilePath);
 	}
+	return true;
+}
+
+bool S100SymbolManager::Add(std::wstring path)
+{
+	auto filePath = LibMFCUtil::ConvertWCtoC((wchar_t*)path.c_str());
+	SVGReader svg;
+	svg.OpenByPugi(filePath);
+
+	delete[] filePath;
+
+	if (GetSVG(svg.name))
+	{
+		return false;
+	}
+
+	svgSymbols.insert({ svg.name, svg });
+
 	return true;
 }
 

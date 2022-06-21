@@ -26,7 +26,6 @@ namespace Portrayal
 
 			if (!strcmp(instructionName, "symbol"))
 			{
-
 				ExternalFile* symbol = new ExternalFile();
 				symbol->GetContents(instruction);
 

@@ -27,9 +27,19 @@ private:
 
 public:
 	bool OpenS100ColorProfile(std::wstring _path);
+	
+	// Open single svg
+	bool AddS100Symbol(std::wstring path);
 	bool OpenS100Symbol(std::wstring _path);	
-	bool OpenS100AreaFills(std::wstring _path);
+
+	// Open single line style
+	bool AddS100LineStyle(std::wstring path);
 	bool OpenS100LineStyles(std::wstring _path);
+
+	// Open single area fill
+	bool AddS100AreaFill(std::wstring path);
+	bool OpenS100AreaFills(std::wstring _path);
+	
 	void Draw(std::wstring& _symbolName, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, D2D1_POINT_2F point, FLOAT rotation = 0, FLOAT scale = 5, std::wstring paletteName = L"Day");
 	void DrawAreaFill(std::wstring _symbolName, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, std::wstring paletteName = L"Day");
 	void DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, std::wstring paletteName = L"Day");

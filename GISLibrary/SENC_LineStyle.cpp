@@ -8,11 +8,6 @@
 #include "..\\S100Geometry\\SCurveHasOrient.h"
 #include "..\\S100Geometry\\SCurve.h"
 
-#include "..\\S100_SVG_D2D1_DLL\\SVGManager.h"
-#include "..\\S100_SVG_D2D1_DLL\\UnitOfCSS.h"
-#include "..\\S100_SVG_D2D1_DLL\\CSSStroke.h"
-#include "..\\S100_SVG_D2D1_DLL\\CSS.h"
-
 SENC_LineStyle::SENC_LineStyle() : SENC_LineStyleBase()
 {
 	type = 1;
@@ -169,6 +164,18 @@ void SENC_LineStyle::DrawInstruction(
 		if (s100PCManager)
 		{
 			IWICBitmap* pIWICBitmap = s100PCManager->GetLineImage(GetLineStyleName() + _T(".xml"));
+
+			if (!pIWICBitmap)
+			{
+				std::wstring nameQUESMRK1(L"QUESMRK1.xml");
+				pIWICBitmap = s100PCManager->GetLineImage(nameQUESMRK1);
+
+				if (!pIWICBitmap)
+				{
+					return;
+				}
+			}
+
 			if (pIWICBitmap)
 			{
 				ID2D1Bitmap* pBitmap = nullptr;

@@ -11,6 +11,7 @@
 #include "SENC_TextInstruction.h"
 #include "SENC_AugmentedRay.h"
 #include "SENC_AugmentedPath.h"
+#include "R_FeatureRecord.h"
 
 #include "..\\PortrayalCatalogue\\S100_Symbol.h"
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
@@ -19,7 +20,6 @@
 #include "..\\GeoMetryLibrary\\GeoPoint.h"
 #include "..\\S100Geometry\\SSurface.h"
 #include "..\\LatLonUtility\\LatLonUtility.h"
-#include "..\\S100_SVG_D2D1_DLL\\SVG.h"
 
 SENC_Instruction::SENC_Instruction()
 {
@@ -27,6 +27,16 @@ SENC_Instruction::SENC_Instruction()
 
 	type = 0;
 	suppressedInstance = false;
+}
+
+int SENC_Instruction::FeatureReference()
+{
+	return featureReference;
+}
+
+int SENC_Instruction::DrawingPriority()
+{
+	return drawingPriority;
 }
 
 SENC_Instruction::~SENC_Instruction()
@@ -40,6 +50,55 @@ SENC_Instruction::~SENC_Instruction()
 bool SENC_Instruction::HasSpatialReference()
 {
 	return spatialReference.size() > 0;
+}
+
+bool SENC_Instruction::IsEqualPrimitive()
+{
+	auto SPAS_RCNM = fr->GetSPASRCNM();
+
+	auto prim = GeometryPrimitive();
+	if (prim == 0)
+	{
+		if (SPAS_RCNM == 0 || SPAS_RCNM == -1)
+		{
+			return false;
+		}
+	}
+	else if (prim == 1)
+	{
+		if (SPAS_RCNM == 110 || SPAS_RCNM == 115)
+		{
+			return true;
+		}
+	}
+	else if (prim == 2)
+	{
+
+	}
+	else if (prim == 3)
+	{
+
+	}
+
+	return false;
+}
+
+int SENC_Instruction::GeometryPrimitive()
+{
+	if (type == 1 || type == 5 || type == 6 || type == 7 || type == 8)
+	{
+		return 1;
+	}
+	else if (type == 2)
+	{
+		return 2;
+	}
+	else if (type == 3 || type == 4 || type == 9)
+	{
+		return 3;
+	}
+
+	return 0;
 }
 
 void SENC_Instruction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, CRect *_viewPort, Scaler *pScaler)

@@ -219,7 +219,7 @@ void CPCVisualToolDlg::SetTreeCtrlColorProfile(std::vector< S100_ColorProfile*>*
 	HTREEITEM h_root;
 	HTREEITEM h_id, h_description;
 
-	h_root = m_TreeCtrl.InsertItem(_T("ColorPeofiles"), NULL, NULL);
+	h_root = m_TreeCtrl.InsertItem(_T("ColorProfiles"), NULL, NULL);
 
 	for (auto value : *vecColorProfiles)
 	{

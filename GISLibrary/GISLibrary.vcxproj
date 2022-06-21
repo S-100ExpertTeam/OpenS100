@@ -312,6 +312,7 @@
     <ClCompile Include="OrientedCurveRecord.cpp" />
     <ClCompile Include="PCOutputSchemaManager.cpp" />
     <ClCompile Include="ProcessS101.cpp" />
+    <ClCompile Include="Product.cpp" />
     <ClCompile Include="PTAS.cpp" />
     <ClCompile Include="RIAS.cpp" />
     <ClCompile Include="R_VectorRecord.cpp" />
@@ -469,6 +470,7 @@
     <ClInclude Include="OrientedCurveRecord.h" />
     <ClInclude Include="PCOutputSchemaManager.h" />
     <ClInclude Include="ProcessS101.h" />
+    <ClInclude Include="Product.h" />
     <ClInclude Include="PTAS.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RIAS.h" />

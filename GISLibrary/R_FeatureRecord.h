@@ -43,7 +43,12 @@ public:
 	int m_scaleMin = 0;
 	int m_scaleMax = 0;
 
-	int m_displayPriority = 0;
+	// -1은 유효하지 않은 Priority
+	// No geometry이거나 Drawing Instruction이 없는 경우 -1
+	// Feature와 같은 Primitive의 Drawing Instruction의 우선순위만 계산
+	int minimumDisplayPriority = -1;
+	int maximumDisplayPriority = -1;
+
 	bool m_hasTextPlacement = false;
 
 	//	[Text Placement ]
@@ -80,6 +85,12 @@ public:
 	int GetFeatureAssociationCount();
 	int GetInformationAssociationCount();
 	int GetNumericCode();
+
+	int MinimumDisplayPriority();
+	void MinimumDisplayPriority(int value);
+
+	int MaximumDisplayPriority();
+	void MaximumDisplayPriority(int value);
 
 	// 0 : No geometry
 	// 110 ~ 130 : normal

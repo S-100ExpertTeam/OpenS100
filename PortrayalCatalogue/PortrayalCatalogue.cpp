@@ -46,10 +46,10 @@ void PortrayalCatalogue::Open(std::wstring& path)
 		m_svgSymbolManager = new S100_SVG_D2D1_DLL::SVGManager(path, GetCurrentPaletteName(), colorProfiles.GetColorProfile());
 
 
-	s100PCManager->OpenS100Symbol(path + L"\\Symbols\\*.svg");
+	OpenSVG();
+	OpenLineStyle();
+	OpenAreaFill();
 	s100PCManager->OpenS100ColorProfile(path + L"ColorProfiles\\" + GetColorProfile()->GetfileName());
-	s100PCManager->OpenS100AreaFills(path + L"AreaFills\\*.xml");
-	s100PCManager->OpenS100LineStyles(path + L"LineStyles");
 }
 
 
@@ -532,7 +532,7 @@ S100_RuleFile* PortrayalCatalogue::GetMainRuleFile()
 			mainRules[rf->GetFileName()] = rf;
 			if (true == rf->IsLua())
 			{
-				SetRuleType(LUA);
+				SetRuleType(PortrayalRuleType::LUA);
 			}
 			return rf;
 		}
@@ -611,4 +611,65 @@ void PortrayalCatalogue::DeleteLineImages()
 	{
 		s100PCManager->DeleteLineImage();
 	}
+}
+
+bool PortrayalCatalogue::OpenSVG()
+{
+	auto symbol = symbols.GetSymbolsVector();
+	for (auto i = symbol->begin(); i != symbol->end(); i++)
+	{
+		auto result = s100PCManager->AddS100Symbol(GetRootPath() + L"Symbols\\" + (*i)->GetFileName());
+		if (result == false)
+		{
+			CString strErr;
+			strErr.Format(L"Failed to open SVG(%s)\n", (*i)->GetFileName().c_str());
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool PortrayalCatalogue::HasSymbol(std::wstring fileName)
+{
+	if (s100PCManager->s100SymbolManager.GetSVG(fileName))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool PortrayalCatalogue::OpenLineStyle()
+{
+	auto line = lineStyles.GetLineStyleFilesVector();
+	for (auto i = line->begin(); i != line->end(); i++)
+	{
+		auto result = s100PCManager->AddS100LineStyle(GetRootPath() + L"LineStyles\\" + (*i)->GetFileName());
+		if (result == false)
+		{
+			CString strErr;
+			strErr.Format(L"Failed to open LineStyle(%s)\n", (*i)->GetFileName().c_str());
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool PortrayalCatalogue::OpenAreaFill()
+{
+	auto area = areaFills.GetAreaFillFilesVecter();
+	for (auto i = area->begin(); i != area->end(); i++)
+	{
+		auto result = s100PCManager->AddS100AreaFill(GetRootPath() + L"AreaFills\\" + (*i)->GetFileName());
+		if (result == false)
+		{
+			CString strErr;
+			strErr.Format(L"Failed to open AreaFill(%s)\n", (*i)->GetFileName().c_str());
+			return false;
+		}
+	}
+
+	return true;
 }

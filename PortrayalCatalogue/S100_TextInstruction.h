@@ -1,6 +1,5 @@
 #pragma once
 #include "S100_Instruction.h"
-#include "S100_FeatureReference.h"
 #include "S100_TextPoint.h"
 #include "S100_VectorPoint.h"
 

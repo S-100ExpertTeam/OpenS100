@@ -2,6 +2,14 @@
 #include <vector>
 
 class ENCCell;
+
+struct ID2D1Factory1;
+struct IDWriteFactory;
+struct IDWriteTextFormat;
+struct ID2D1StrokeStyle1;
+struct ID2D1DCRenderTarget;
+struct ID2D1SolidColorBrush;
+
 namespace GISLibrary
 {
 	class D2D1Resources

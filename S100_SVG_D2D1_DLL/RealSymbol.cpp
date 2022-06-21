@@ -71,11 +71,12 @@ namespace S100_SVG_D2D1_DLL
 
 	void RealSymbol::SetSvgManager(SVGManager* value)
 	{
-		this->svgManager = value;
+		//this->svgManager = value;
 	}
 
 	SVGManager* RealSymbol::GetSvgManager()
 	{
-		return svgManager;
+		//return svgManager;
+		return nullptr;
 	}
 }

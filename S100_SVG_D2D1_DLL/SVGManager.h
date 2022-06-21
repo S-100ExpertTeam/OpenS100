@@ -36,13 +36,13 @@ namespace S100_SVG_D2D1_DLL
 		static ID2D1StrokeStyle1* m_pStrokeStyle;
 
 		// Variables to store the drawn pattern
-		std::vector<S100_Pattern*> patList;
+		//std::vector<S100_Pattern*> patList;
 
 		// Variables to save the drawn text
-		std::vector<S100_Text> textList;
+		//std::vector<S100_Text> textList;
 
 		// Variables that contain drawing svg
-		std::vector<RealSymbol> symList;
+		//std::vector<RealSymbol> symList;
 
 		std::unordered_map<std::wstring, SVG*> m_svgMap;
 
@@ -72,30 +72,7 @@ namespace S100_SVG_D2D1_DLL
 
 		//Release the memory.
 		void DiscardDeviceResources();
-
-		//Drawing SVG
-		void D2PaintSVG();
-		void D2PaintSVG(PortrayalCatalogue *pc);
-
-		//Drawing Line
-		void D2PaintSymboledLine();
-
-		//Drawing Bitmap
-		void D2PaintBitmap();
-
-		//Drawing Text
-		void D2PaintText(CRect rectView);
-
-		//Drawing Symbols Function
-		void DrawSymbols();
-		void DrawSymbols(PortrayalCatalogue *pc);
-
-		void DrawRealSymbol(RealSymbol& symbol);
-		void DrawRealSymbol(RealSymbol& symbol, PortrayalCatalogue *pc);
-
-		//Set Drawing Symbol
-		void PushSymbol(std::wstring _symName, D2D_POINT_2F _position, float _rotation = 0.0, float _scale = 1.0);
-
+		
 		void SetTarget(CDC* pDC, CRect rectView);
 
 		//A function that obtains the coordinates of the desired position through the starting point, angle, and distance.

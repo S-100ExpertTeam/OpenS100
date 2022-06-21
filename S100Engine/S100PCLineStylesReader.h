@@ -16,6 +16,9 @@ namespace S100XMLReader
 	public:
 		static bool OpenByPugi(std::wstring path, LineStylesPackage::LineStyles *pLineStyles);
 
+		// Open singlie linestyle
+		static bool AddByPugi(std::wstring path, LineStylesPackage::LineStyles* pLineStyles);
+
 	private:
 		static bool SetLineStyle(pugi::xml_node node, LineStylesPackage::AbstractLineStyle **pLineStyle);
 		static bool SetLineStyle(pugi::xml_node node, std::vector<LineStylesPackage::AbstractLineStyle *>* lineStyle);

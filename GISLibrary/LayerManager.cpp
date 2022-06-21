@@ -32,8 +32,6 @@
 #include "..\\S100Geometry\\SCommonFuction.h"
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"
 #include "..\\LibMFCUtil\\LibMFCUtil.h"
-#include "..\\S100_SVG_D2D1_DLL\\S100_SVG_D2D1_DLL.h"
-#include "..\\S100_SVG_D2D1_DLL\\RealSymbol.h"
 #include "..\\GeoMetryLibrary\\ENCGeometry.h"
 #include "..\\GeoMetryLibrary\\GeometricFuc.h"
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
@@ -707,7 +705,6 @@ void LayerManager::AddSymbolDrawing(
 			instruction->GetDrawPoints(scaler, points);
 		}
 
-		S100_SVG_D2D1_DLL::RealSymbol rs;
 		for (auto pi = points.begin(); pi != points.end(); pi++)
 		{
 			// rotate Point
@@ -731,16 +728,27 @@ void LayerManager::AddSymbolDrawing(
 
 			float instructionScale = (instruction->symbol)->scaleFactor;
 
-			if (instruction &&
-				instruction->symbol &&
-				instruction->symbol->pSvg)
+			if (instruction && instruction->symbol)
 			{
-				rs.symName = instruction->symbol->pSvg->m_svgName;
-				rs.rotation = rotation;
-				rs.x = pi->x;
-				rs.y = pi->y;
-				rs.scale = instructionScale;
-				pc->GetSVGManager()->DrawRealSymbol(rs, pc);
+				auto s100PCManager = pc->GetS100PCManager();
+				if (s100PCManager)
+				{
+					auto pRenderTarget = gisLib->D2.RenderTarget();
+
+					D2D1::Matrix3x2F oldTransform;
+					pRenderTarget->GetTransform(&oldTransform);
+						
+					s100PCManager->Draw(
+						instruction->symbol->reference,
+						pRenderTarget,
+						gisLib->D2.SolidColorBrush(),
+						gisLib->D2.SolidStrokeStyle(),
+						D2D1::Point2F(pi->x, pi->y),
+						rotation,
+						5);
+
+					pRenderTarget->SetTransform(oldTransform);
+				}
 			}
 		}
 	}
@@ -1138,7 +1146,6 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
 		pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
-		//pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrixWithoutTransform());
 
 		for (auto dp = drawingPriority.begin(); dp != drawingPriority.end(); dp++)
 		{

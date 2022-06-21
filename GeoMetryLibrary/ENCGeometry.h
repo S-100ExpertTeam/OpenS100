@@ -18,14 +18,6 @@ class CColorMap;
 class CSymbolMap;
 class CSymbol;
 
-//struct CObjectFindStruct;
-
-namespace S100_SVG_D2D1_DLL
-{
-	class SVGManager;
-	class SVG;
-}
-
 class ENCGeometry :
 	public Geometry
 {
@@ -57,7 +49,6 @@ public:
 	ENC_Feature *m_pFeature;
 	int m_simplePLIndex;
 	int m_paperPLIndex;
-	S100_SVG_D2D1_DLL::SVG* m_svgSymbol;
 
 protected:
 	unsigned m_scaleMin;
