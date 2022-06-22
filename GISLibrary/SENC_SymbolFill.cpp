@@ -4,10 +4,10 @@
 SENC_SymbolFill::SENC_SymbolFill()
 {
 	type = 4;
-	symbol = NULL;
+	//symbol = NULL;
 }
 
 SENC_SymbolFill::~SENC_SymbolFill()
 {
-	if (symbol) delete symbol;
+	//if (symbol) delete symbol;
 }

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Enum_FileType.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include "../extlibs/pugixml/include/pugixml.hpp"
 
 namespace Portrayal
 {
@@ -22,7 +22,6 @@ namespace Portrayal
 	{
 		auto str = pugi::as_utf8(value);
 		return StringToFileType(str);
-
 	}
 
 	std::string FileTypeToString(FileType value)
@@ -35,6 +34,7 @@ namespace Portrayal
 		}
 		return FileType_String[index];
 	}
+
 	std::wstring FileTypeToWString(FileType value)
 	{
 		auto str = FileTypeToString(value);

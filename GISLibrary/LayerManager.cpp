@@ -139,6 +139,7 @@ bool LayerManager::AddLayer(Layer* _layer)
 	{
 		return false;
 	}
+
 	mbr.SetMBR(_layer->m_mbr);
 	layer = _layer;
 
@@ -191,31 +192,18 @@ bool LayerManager::AddLayer(CString _filepath)
 		std::wstring fcName = L"";
 
 		int type = CheckFileType(_filepath);
-		// S-101 8211 or GML or H5
+		
+		// S-101
 		if (type == 2)
 		{
-			// Product Number (S-XXX)
-			CString strProductNumber = LibMFCUtil::GetFileName(_filepath).Left(3);
-			CString s = _T("S-");
-			strProductNumber = s + strProductNumber;
-
 			fc = gisLib->GetFC();
+			pc = gisLib->GetPC();
 
-			if (fc != nullptr)
+			layer = new S101Layer(fc, pc);
+			if ((S101Layer*)layer->Open(_filepath) == false)
 			{
-				pc = gisLib->GetPC();
-				fcName = fc->GetName();
-				fitor = fcName.find(L"S-");
-			}
-
-			if (type == 2)
-			{
-				layer = new S101Layer(fc, pc);
-				if ((S101Layer*)layer->Open(_filepath) == false)
-				{
-					delete layer;
-					return false;
-				}
+				delete layer;
+				return false;
 			}
 		}
 	}
@@ -223,23 +211,17 @@ bool LayerManager::AddLayer(CString _filepath)
 	if (!layer ||
 		!layer->m_spatialObject)
 	{
+		if (layer)
+		{
+			delete layer;
+		}
+
 		return false;
 	}
 
-	std::wstring layerName(LibMFCUtil::GetFileName(layer->GetLayerName()));
-
-	std::wstring inputPath = L"..\\ProgramData\\S100_PC_IO_XML\\INPUT\\";
-	std::wstring outputPath = L"..\\ProgramData\\S100_PC_IO_XML\\OUTPUT\\";
-
-	inputPath.append(layerName);
-	inputPath.append(L".xml");
-
-	outputPath.append(layerName);
-	outputPath.append(L".xml");
-
 	//	 ENC, Lua
 	if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
-		((S101Layer*)layer)->GetPC()->GetPortrayalRuleType() == PortrayalRuleType::LUA)
+		((S101Layer*)layer)->GetPC()->GetRuleFileFormat() == Portrayal::FileFormat::LUA)
 	{
 		BuildPortrayalCatalogue(layer);
 	}
@@ -756,6 +738,8 @@ void LayerManager::AddSymbolDrawing(
 	// Text
 	if (ENCCommon::TEXTOUT)
 	{
+		gisLib->D2.pBrush->SetOpacity(1.0f);
+		gisLib->D2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
 		if (text[drawingPrioriy].size() > 0)
 		{
 			HWND hWnd = ::GetActiveWindow();
@@ -1191,15 +1175,12 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 {
 	auto pc = ((S101Layer*)l)->GetPC();
 
-	if (
-		l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
-		pc->GetPortrayalRuleType() == PortrayalRuleType::LUA)
+	if (l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
+		pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA)
 	{
 		auto mainRuleFile = pc->GetMainRuleFile();
 		auto fileName = mainRuleFile->GetFileName();
-
 		auto rootPath = pc->GetRootPath();
-
 		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
 		ProcessS101::ProcessS101_LUA(mainRulePath, (S101Layer*)l);

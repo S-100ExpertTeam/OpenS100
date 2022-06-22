@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 
 class ENCCell;
@@ -45,8 +46,6 @@ namespace GISLibrary
 		ID2D1DCRenderTarget *pRT = nullptr; // direct 2D
 		ID2D1SolidColorBrush *pBrush = nullptr;
 
-		ENCCell* pCell = nullptr;
-
 	public:
 		bool CreateDeviceIndependentResources();
 		void DeleteDeviceIndependentResources();
@@ -55,8 +54,6 @@ namespace GISLibrary
 		void DeleteDeviceDependentResources();
 
 		bool CreateReSizeTextFormat(int size);
-
-		ENCCell* GetCell();
 
 		ID2D1Factory1* Factory();
 		IDWriteFactory* WriteFactory();

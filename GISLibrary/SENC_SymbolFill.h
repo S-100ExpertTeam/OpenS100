@@ -10,8 +10,8 @@ public:
 	virtual ~SENC_SymbolFill();
 
 public:
-	SENC_Symbol *symbol;
-	SENC_VectorPoint v1;
-	SENC_VectorPoint v2;
-	bool clipSymbols;
+	//SENC_Symbol *symbol;
+	//SENC_VectorPoint v1;
+	//SENC_VectorPoint v2;
+	//bool clipSymbols;
 };

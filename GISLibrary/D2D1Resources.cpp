@@ -281,12 +281,6 @@ namespace GISLibrary
 		return true;
 	}
 
-
-	ENCCell* D2D1Resources::GetCell()
-	{
-		return pCell;
-	}
-
 	ID2D1Factory1* D2D1Resources::Factory()
 	{
 		return pD2Factory;

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GISLibrary.h"
+#include "Product.h"
 
 #include "..\\GeoMetryLibrary\\ENCCommon.h"
 #include "..\\GeoMetryLibrary\\ENCGeometry.h"
@@ -7,8 +8,6 @@
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
 
 #include "..\\S100Geometry\\SGeometry.h"
-
-#include "Product.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -46,25 +45,20 @@ Scaler* CGISLibraryApp::GetScaler()
 
 void CGISLibraryApp::InitLibrary()
 {
-
 	//Product product;
 	//product.OpenFC(L"..\\ProgramData\\xml\\S-101_FC.xml");
-	//product.OpenPC(L"..\\ProgramData\\S101_Portrayal\\");
+	//product.OpenPC(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
 	//product.OpenFC(L"..\\ProgramData\\xml\\S-101_FC.xml");
-	//product.OpenPC(L"..\\ProgramData\\S101_Portrayal\\");
+	//product.OpenPC(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
 
 	D2.CreateDeviceIndependentResources();
 	D2.CreateDeviceDependentResources();
-	InitS100Engine();
-
 
 	fc = new FeatureCatalogue(L"..\\ProgramData\\xml\\S-101_FC.xml");
-	pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\");
+	pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
 	pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
 	pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
 	pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-
-
 }
 
 bool CGISLibraryApp::AddLayer(CString _filepath)
@@ -356,17 +350,6 @@ void CGISLibraryApp::MoveMap(int sx, int sy, double mx, double my)
 bool CGISLibraryApp::PtInMap(double _x, double _y)
 {
 	return m_pScaler->PtInMap(_x, _y);
-}
-
-
-void CGISLibraryApp::InitS100Engine()
-{
-	//The part where View's Direct2D resources are handed over to SVGmanager.
-	//auto svgManager = S100_SVG_D2D1_DLL::GetApp()->GetSVGManager();
-	//if (svgManager)
-	//{
-	//	svgManager->SetD2Resource(gisLib->D2.pD2Factory, gisLib->D2.pRT, gisLib->D2.pBrush, gisLib->D2.D2D1StrokeStyleGroup[0]);
-	//}
 }
 
 LayerManager* CGISLibraryApp::GetLayerManager()

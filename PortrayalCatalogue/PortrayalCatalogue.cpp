@@ -25,13 +25,6 @@ PortrayalCatalogue::PortrayalCatalogue(std::wstring path) : PortrayalCatalogue()
 	Open(path);
 }
 
-PortrayalCatalogue::PortrayalCatalogue(std::wstring path, bool startVisualTool) : PortrayalCatalogue()
-{
-	bVisualToolOn = startVisualTool;
-	Open(path);
-}
-
-
 PortrayalCatalogue::~PortrayalCatalogue()
 {
 	Delete();
@@ -42,15 +35,10 @@ void PortrayalCatalogue::Open(std::wstring& path)
 {
 	ReadPortrayalCatalogueByPugiXML(path);
 
-	//if (!bVisualToolOn)
-	//	m_svgSymbolManager = new S100_SVG_D2D1_DLL::SVGManager(path, GetCurrentPaletteName());
-
-
 	OpenSVG();
 	OpenLineStyle();
 	OpenAreaFill();
 	OpenColorProfile();
-	// s100PCManager->OpenS100ColorProfile(path + L"ColorProfiles\\" + GetColorProfile()->GetfileName());
 }
 
 
@@ -80,15 +68,14 @@ bool PortrayalCatalogue::ReadPortrayalCatalogueByPugiXML(std::wstring& path)
 {
 	CoInitialize(nullptr);
 
-	std::wstring PCPath = path + _T("portrayal_catalogue.xml");
-
-	if (!PCPath.empty())
+	if (!path.empty())
 	{
-		auto itor = PCPath.find_last_of('\\');
-		rootPath = PCPath.substr(0, ++itor);
+		auto itor = path.find_last_of('\\');
+		rootPath = path.substr(0, ++itor);
+		catalogPath = path;
 
 		pugi::xml_document doc;
-		pugi::xml_parse_result result = doc.load_file(PCPath.c_str()); /// read file
+		pugi::xml_parse_result result = doc.load_file(path.c_str()); /// read file
 		pugi::xml_node displayList = doc.child("portrayalCatalog");
 
 		auto productId = displayList.attribute("productId");
@@ -111,11 +98,6 @@ bool PortrayalCatalogue::ReadPortrayalCatalogueByPugiXML(std::wstring& path)
 	}
 
 	GetLineStylesByPugiXml();
-	GetMainRuleFile();
-
-	//if (colorProfiles.ReadColorProfiles(path) == false)
-	//{
-	//}
 
 	return true;
 }
@@ -200,11 +182,11 @@ void PortrayalCatalogue::GetContents(pugi::xml_node& node)
 		{
 			rules.GetContents(instruction);
 		}
-		else
-		{
-			std::string value(instructionName);
-			value + ": not Context\n";
-		}
+		//else
+		//{
+		//	std::string value(instructionName);
+		//	value + ": not Context\n";
+		//}
 	}
 }
 
@@ -218,10 +200,6 @@ void PortrayalCatalogue::SetRootPath(std::wstring& value)
 	rootPath = value;
 }
 
-void PortrayalCatalogue::SetPortrayalRuleType(PortrayalRuleType value)
-{
-	portrayalRuleType = value;
-}
 void PortrayalCatalogue::SetProduct(std::wstring& value)
 {
 	product = value;
@@ -285,19 +263,14 @@ void PortrayalCatalogue::SetS100PCManager(S100PCManager* value)
 	s100PCManager = value;
 }
 
-void PortrayalCatalogue::SetS100Render(S100Render* value)
-{
-	s100Render = *value;
-}
+//void PortrayalCatalogue::SetS100Render(S100Render* value)
+//{
+//	s100Render = *value;
+//}
 
 std::wstring PortrayalCatalogue::GetRootPath()
 {
 	return rootPath;
-}
-
-PortrayalRuleType PortrayalCatalogue::GetPortrayalRuleType() 
-{
-	return portrayalRuleType;
 }
 
 std::wstring PortrayalCatalogue::GetProduct() 
@@ -385,34 +358,6 @@ std::unordered_map<std::wstring, S100_RuleFile*> PortrayalCatalogue::GetMainRule
 	return mainRules;
 }
 
-S100Render PortrayalCatalogue::GetS100Render()
-{
-	return s100Render;
-}
-
-//S100_ColorProfile* PortrayalCatalogue::GetColorProfile()
-//{
-//	auto colorpro = colorProfiles.GetColorProfiles();
-//	if (colorpro.begin() == colorpro.end())
-//	{
-//		return nullptr;
-//	}
-//	auto result = colorpro.begin()->second;
-//	return result;
-//}
-
-//S100_ColorProfile* PortrayalCatalogue::GetColorProfile(std::wstring& id)
-//{
-//	auto colorpro = colorProfiles();
-//	if (colorpro.find(id) == colorpro.end())
-//	{
-//		return nullptr;
-//	}
-//
-//	auto result = colorpro[id];
-//	return result;
-//}
-
 void PortrayalCatalogue::GetLineStylesByPugiXml()
 {
 	auto lineStyleFiles = lineStyles.GetLineStyleFiles();
@@ -457,11 +402,6 @@ void PortrayalCatalogue::GetLineStylesByPugiXml()
 					for (int i = 0; i < vecDescription->size(); i++)
 						s100_lineStyles[vecDescription->at(i)->Getname()] = cls;
 				}
-				else
-				{
-					std::string unValue(instructionName);
-					unValue + "is unValue Context";
-				}
 			}
 		}
 	}
@@ -488,13 +428,8 @@ S100_RuleFile* PortrayalCatalogue::GetMainRuleFile()
 		//load the "main.lua" file.
 		S100_RuleFile* rf = itor->second;
 
-		if (true == rf->IsTypeLevelTemplate())
+		if (true == rf->IsTopLevelTemplate())
 		{
-			mainRules[rf->GetFileName()] = rf;
-			if (true == rf->IsLua())
-			{
-				SetRuleType(PortrayalRuleType::LUA);
-			}
 			return rf;
 		}
 	}
@@ -521,26 +456,6 @@ S100PCManager* PortrayalCatalogue::GetS100PCManager()
 {
 	return s100PCManager;
 }
-
-void PortrayalCatalogue::SetRuleType(PortrayalRuleType value)
-{
-	portrayalRuleType = value;
-}
-
-PortrayalRuleType PortrayalCatalogue::GetRuleType()
-{
-	return portrayalRuleType;
-}
-
-//void PortrayalCatalogue::SetSVGManager(S100_SVG_D2D1_DLL::SVGManager* value)
-//{
-//	//m_svgSymbolManager = value;
-//}
-
-//S100_SVG_D2D1_DLL::SVGManager* PortrayalCatalogue::GetSVGManager()
-//{
-//	//return m_svgSymbolManager;
-//}
 
 void PortrayalCatalogue::CreatePatternImages(ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke)
 {
@@ -650,4 +565,20 @@ bool PortrayalCatalogue::OpenColorProfile()
 	}
 
 	return true;
+}
+
+Portrayal::FileFormat PortrayalCatalogue::GetRuleFileFormat()
+{
+	auto topLevelTemplate = GetMainRuleFile();
+	if (topLevelTemplate)
+	{
+		return topLevelTemplate->GetFileFormat();
+	}
+
+	return Portrayal::FileFormat::none;
+}
+
+std::string PortrayalCatalogue::GetCataloguePathAsString()
+{
+	return pugi::as_utf8(catalogPath);
 }

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SENC_LineStyleReference.h"
+#include "GISLibrary.h"
 
 #include "..\\PortrayalCatalogue\\S100_LineStyleReference.h"
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
@@ -86,7 +87,8 @@ void SENC_LineStyleReference::DrawInstruction(
 			}
 			else
 			{
-				pc->GetS100Render().DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
+				//pc->GetS100Render().DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
+				gisLib->s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
 				SafeRelease(&pBitmap);
 			}
 		}

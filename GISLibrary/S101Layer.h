@@ -11,9 +11,6 @@ public:
 	virtual ~S101Layer();
 
 public:
-	bool checkedDataCoverageScale = false;
-
-public:
 	virtual bool Open(CString _filepath) override;
 	void SetSpatialObject(S101Cell* cell);
 	void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler);

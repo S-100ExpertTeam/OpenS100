@@ -3,17 +3,15 @@
 #include "LayerManager.h"
 #include "D2D1Resources.h"
 
-#include "../S100Engine/S100Engine.h"
-
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../GeoMetryLibrary/ENCGeometry.h"
+
+#include "../S100Engine/S100Render.h"
 
 #include "../extlibs/Clipper/include/clipper.hpp"
 
 #ifndef __AFXWIN_H__
 #endif
-
-class S100Engine;
 
 class CGISLibraryApp
 {
@@ -25,17 +23,15 @@ public:
 	Scaler* m_pScaler = new Scaler();
 	LayerManager* m_pLayerManager = new LayerManager(m_pScaler);
 	GISLibrary::D2D1Resources D2;
-	bool checkRouteDetection = false;
+	S100Render s100Render;
 
-	// FC & PC for S-101
+	// Default FC & PC for S-101
 	FeatureCatalogue* fc = nullptr;
 	PortrayalCatalogue* pc = nullptr;
 
 public:
 	Scaler* GetScaler();
 	LayerManager* GetLayerManager();
-	//int GetLayerIndex(CString pathName);
-	void InitS100Engine();
 	void InitLibrary();
 	bool AddBackgroundLayer(CString _filepath);
 	bool AddLayer(CString _filepath);

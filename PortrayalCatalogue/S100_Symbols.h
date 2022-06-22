@@ -2,10 +2,10 @@
 
 #include <vector>
 #include <unordered_map>
+
 #include "ExternalFile.h"
 
 #include "..\\extlibs\pugixml\include\pugixml.hpp"
-
 
 namespace Portrayal
 {

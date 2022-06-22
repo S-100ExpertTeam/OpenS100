@@ -197,7 +197,6 @@ void PCOutputSchemaManager::GenerateSENCInstruction(S101Cell* cell, PortrayalCat
 
 void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Instruction* si)
 {
-	
 	si->displayPlane = tp->GetDisplayPlane().compare(L"UNDERRADAR") == 0 ? 0 : 1;
 	si->drawingPriority = _wtoi(tp->GetDrawingProiority().c_str());
 	si->viewingGroup = _wtoi(tp->GetViewingGroup().c_str());

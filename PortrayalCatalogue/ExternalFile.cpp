@@ -20,14 +20,17 @@ namespace Portrayal
 
 	std::wstring ExternalFile::GetFileType()
 	{
-		//return FileType;
 		return FileTypeToWString(FileType);
 	}
 
-	std::wstring ExternalFile::GetFileFormat()
+	std::wstring ExternalFile::GetFileFormatAsWstring()
 	{
 		return FileFormatToWString(FileFormat);
-		//return FileFormat;
+	}
+
+	Portrayal::FileFormat ExternalFile::GetFileFormat()
+	{
+		return FileFormat;
 	}
 
 	void ExternalFile::SetFileName(std::wstring value)
@@ -37,13 +40,11 @@ namespace Portrayal
 
 	void ExternalFile::SetFileType(std::wstring value)
 	{
-		//FileType = value;
 		FileType = StringToFileType(value);
 	}
 
 	void ExternalFile::SetFileFormat(std::wstring value)
 	{
-		//FileFormat = value;
 		FileFormat = StringToFileFormat(value);
 	}
 
@@ -53,7 +54,6 @@ namespace Portrayal
 		{
 			return;
 		}
-
 
 		auto idAttri = node.attribute("id");
 		if (idAttri)

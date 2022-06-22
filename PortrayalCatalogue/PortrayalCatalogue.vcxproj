@@ -190,10 +190,10 @@
     <ClInclude Include="Enum_BoundaryType.h" />
     <ClInclude Include="Enum_GeometricPrimitive.h" />
     <ClInclude Include="Enum_InterpolationType.h" />
-    <ClInclude Include="Enum_PortrayalRuleType.h" />
     <ClInclude Include="Enum_FileFormat.h" />
     <ClInclude Include="Enum_FileType.h" />
     <ClInclude Include="Enum_ParameterType.h" />
+    <ClInclude Include="Enum_RuleType.h" />
     <ClInclude Include="ExternalFile.h" />
     <ClInclude Include="FoundationMode.h" />
     <ClInclude Include="Enum_Orientation.h" />
@@ -286,6 +286,7 @@
     <ClCompile Include="Enum_FileFormat.cpp" />
     <ClCompile Include="Enum_FileType.cpp" />
     <ClCompile Include="Enum_InterpolationType.cpp" />
+    <ClCompile Include="Enum_RuleType.cpp" />
     <ClCompile Include="ExternalFile.cpp" />
     <ClCompile Include="FoundationMode.cpp" />
     <ClCompile Include="Enum_GeometricPrimitive.cpp" />
@@ -402,9 +403,6 @@
     </ProjectReference>
     <ProjectReference Include="..\S100Geometry\S100Geometry.vcxproj">
       <Project>{8748cc36-d24a-426b-9ece-fec57a3f80ea}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\S100_SVG_D2D1_DLL\S100_SVG_D2D1_DLL.vcxproj">
-      <Project>{50452e5a-6e4b-4374-a0e7-c717b2e89ca3}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

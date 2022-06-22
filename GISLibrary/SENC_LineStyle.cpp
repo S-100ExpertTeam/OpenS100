@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SENC_LineStyle.h"
 #include "SENC_CommonFuc.h"
+#include "GISLibrary.h"
 
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
 
@@ -203,7 +204,8 @@ void SENC_LineStyle::DrawInstruction(
 							p->y = (float)tempY + (float)scaler->soy;
 						}
 					}
-					pc->GetS100Render().DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect(), GetPenColor(), strokeGroup->at(1));
+
+					gisLib->s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect(), GetPenColor(), strokeGroup->at(1));
 					SafeRelease(&pBitmap);
 				}
 			}

@@ -275,9 +275,6 @@
     <ProjectReference Include="..\LibMFCUtil\LibMFCUtil.vcxproj">
       <Project>{423e4835-a278-43c4-ad2d-e8a4d0c98f8a}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\S100_SVG_D2D1_DLL\S100_SVG_D2D1_DLL.vcxproj">
-      <Project>{50452e5a-6e4b-4374-a0e7-c717b2e89ca3}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

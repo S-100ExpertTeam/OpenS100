@@ -1,5 +1,5 @@
 *This is comment which is not effective on settings.
-APPLY_SCALE_MIN	false
+APPLY_SCALE_MIN	true
 CONTOUR_LABELS	true
 DEEP_CONTOUR	10
 DISPLAY_MODE	2
@@ -23,7 +23,7 @@ SeabedType	false
 TEXTOUT	true
 TWO_SHADES	false
 AUTOSELECTION_CATALOGUE	false
-m_eColorTable	1
+m_eColorTable	0
 UNIT_DISTANCE	0
 S111_SHOW_NODATA	false
 Show_INFORM01	true
