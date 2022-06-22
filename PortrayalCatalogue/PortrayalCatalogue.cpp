@@ -42,8 +42,8 @@ void PortrayalCatalogue::Open(std::wstring& path)
 {
 	ReadPortrayalCatalogueByPugiXML(path);
 
-	if (!bVisualToolOn)
-		m_svgSymbolManager = new S100_SVG_D2D1_DLL::SVGManager(path, GetCurrentPaletteName());
+	//if (!bVisualToolOn)
+	//	m_svgSymbolManager = new S100_SVG_D2D1_DLL::SVGManager(path, GetCurrentPaletteName());
 
 
 	OpenSVG();
@@ -69,8 +69,8 @@ void PortrayalCatalogue::Delete()
 	}
 	s100_lineStyles.clear();
 
-	delete m_svgSymbolManager;
-	m_svgSymbolManager = nullptr;
+	//delete m_svgSymbolManager;
+	//m_svgSymbolManager = nullptr;
 
 	delete s100PCManager;
 	s100PCManager = nullptr;
@@ -532,15 +532,15 @@ PortrayalRuleType PortrayalCatalogue::GetRuleType()
 	return portrayalRuleType;
 }
 
-void PortrayalCatalogue::SetSVGManager(S100_SVG_D2D1_DLL::SVGManager* value)
-{
-	m_svgSymbolManager = value;
-}
+//void PortrayalCatalogue::SetSVGManager(S100_SVG_D2D1_DLL::SVGManager* value)
+//{
+//	//m_svgSymbolManager = value;
+//}
 
-S100_SVG_D2D1_DLL::SVGManager* PortrayalCatalogue::GetSVGManager()
-{
-	return m_svgSymbolManager;
-}
+//S100_SVG_D2D1_DLL::SVGManager* PortrayalCatalogue::GetSVGManager()
+//{
+//	//return m_svgSymbolManager;
+//}
 
 void PortrayalCatalogue::CreatePatternImages(ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke)
 {

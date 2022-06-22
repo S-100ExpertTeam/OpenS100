@@ -362,11 +362,11 @@ bool CGISLibraryApp::PtInMap(double _x, double _y)
 void CGISLibraryApp::InitS100Engine()
 {
 	//The part where View's Direct2D resources are handed over to SVGmanager.
-	auto svgManager = S100_SVG_D2D1_DLL::GetApp()->GetSVGManager();
-	if (svgManager)
-	{
-		svgManager->SetD2Resource(gisLib->D2.pD2Factory, gisLib->D2.pRT, gisLib->D2.pBrush, gisLib->D2.D2D1StrokeStyleGroup[0]);
-	}
+	//auto svgManager = S100_SVG_D2D1_DLL::GetApp()->GetSVGManager();
+	//if (svgManager)
+	//{
+	//	svgManager->SetD2Resource(gisLib->D2.pD2Factory, gisLib->D2.pRT, gisLib->D2.pBrush, gisLib->D2.D2D1StrokeStyleGroup[0]);
+	//}
 }
 
 LayerManager* CGISLibraryApp::GetLayerManager()

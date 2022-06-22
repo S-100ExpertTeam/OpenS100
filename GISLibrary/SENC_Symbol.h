@@ -5,7 +5,7 @@
 #include "SENC_OverrideColor.h"
 #include "SENC_VectorPoint.h"
 
-#include "..\\S100_SVG_D2D1_DLL\SVG.h"
+//#include "..\\S100_SVG_D2D1_DLL\SVG.h"
 
 class SENC_Symbol
 {

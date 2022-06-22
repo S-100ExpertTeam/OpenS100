@@ -22,7 +22,7 @@
 
 
 #include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
-#include "..\\S100_SVG_D2D1_DLL\\SVGManager.h"
+//#include "..\\S100_SVG_D2D1_DLL\\SVGManager.h"
 #include "..\\S100Engine\\S100Render.h"
 
 #include <unordered_map>
@@ -91,7 +91,7 @@ private:
 	// FOR SENC
 	std::unordered_map<std::wstring, S100_RuleFile*> mainRules;
 
-	S100_SVG_D2D1_DLL::SVGManager *m_svgSymbolManager = nullptr;
+	//S100_SVG_D2D1_DLL::SVGManager *m_svgSymbolManager = nullptr;
 	
 	std::wstring currentPalette = L"Day";
 	S100PCManager *s100PCManager = new S100PCManager();
@@ -125,7 +125,7 @@ public:
 	void SetCurrentPaletteName(std::wstring& paletteName);
 	void SetS100PCManager(S100PCManager* value);
 	void SetS100Render(S100Render* value);
-	void SetSVGManager(S100_SVG_D2D1_DLL::SVGManager* value);
+	//void SetSVGManager(S100_SVG_D2D1_DLL::SVGManager* value);
 	void SetRuleType(PortrayalRuleType value);
 
 	//get
@@ -154,7 +154,7 @@ public:
 
 	S100Render GetS100Render();
 	S100PCManager* GetS100PCManager();
-	S100_SVG_D2D1_DLL::SVGManager* GetSVGManager();
+	//S100_SVG_D2D1_DLL::SVGManager* GetSVGManager();
 
 	S100_LineStyles* GetTreeLineStyles();
 
