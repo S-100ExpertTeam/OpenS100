@@ -61,95 +61,95 @@ void S100_ColorProfile::GetContents(pugi::xml_node Node)
 		}
 	}
 }
-void S100_ColorProfile::GetContentsInfo(pugi::xml_node& node)
-{
-	if (!node)
-	{
-		return;
-	}
-
-	auto idvalue = node.attribute("id").value(); //Bring the attribute value.
-	if (idvalue)
-	{
-		id = pugi::as_wide(idvalue);
-	}
-
-	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
-	{
-		const pugi::char_t* instructionName = instruction.name();
-		if (!strcmp(instructionName, "description"))
-		{
-			description.GetContents(instruction);
-		}
-
-		else if (!strcmp(instructionName, "fileName"))
-		{
-			fileName = pugi::as_wide(instruction.child_value());
-		}
-
-		else if (!strcmp(instructionName, "fileType"))
-		{
-			fileType = pugi::as_wide(instruction.child_value());
-		}
-
-		else if (!strcmp(instructionName, "fileFormat"))
-		{
-			fileFormat = pugi::as_wide(instruction.child_value());
-		}
-	}
-}
+//void S100_ColorProfile::GetContentsInfo(pugi::xml_node& node)
+//{
+//	if (!node)
+//	{
+//		return;
+//	}
+//
+//	auto idvalue = node.attribute("id").value(); //Bring the attribute value.
+//	if (idvalue)
+//	{
+//		id = pugi::as_wide(idvalue);
+//	}
+//
+//	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
+//	{
+//		const pugi::char_t* instructionName = instruction.name();
+//		if (!strcmp(instructionName, "description"))
+//		{
+//			description.GetContents(instruction);
+//		}
+//
+//		else if (!strcmp(instructionName, "fileName"))
+//		{
+//			fileName = pugi::as_wide(instruction.child_value());
+//		}
+//
+//		else if (!strcmp(instructionName, "fileType"))
+//		{
+//			fileType = pugi::as_wide(instruction.child_value());
+//		}
+//
+//		else if (!strcmp(instructionName, "fileFormat"))
+//		{
+//			fileFormat = pugi::as_wide(instruction.child_value());
+//		}
+//	}
+//}
 
 //============================Property====================================//
 
-void S100_ColorProfile::Setid(std::wstring& value)
-{
-	id = value;
-}
+//void S100_ColorProfile::Setid(std::wstring& value)
+//{
+//	id = value;
+//}
+//
+//std::wstring S100_ColorProfile::Getid() 
+//{
+//	return id;
+//}
 
-std::wstring S100_ColorProfile::Getid() 
-{
-	return id;
-}
+//void S100_ColorProfile::Setdescription(S100_Description value)
+//{
+//	description = value;
+//}
+//
+//S100_Description S100_ColorProfile::Getdescription()
+//{
+//	return description;
+//}
 
-void S100_ColorProfile::Setdescription(S100_Description value)
-{
-	description = value;
-}
-
-S100_Description S100_ColorProfile::Getdescription()
-{
-	return description;
-}
-
-void S100_ColorProfile::SetfileName(std::wstring& value)
-{
-	fileName = value;
-}
-
-std::wstring S100_ColorProfile::GetfileName() 
-{
-	return fileName;
-}
-
-void S100_ColorProfile::SetfileType(std::wstring& value )
-{
-	fileType = value;
-}
-
-std::wstring S100_ColorProfile::GetfileType()
-{
-	return fileType;
-}
-
-void S100_ColorProfile::SetfileFormat(std::wstring& value)
-{
-	fileFormat = value;
-}
-
-std::wstring S100_ColorProfile::GetfileFormat() 
-{
-	return fileFormat;
-}
+//void S100_ColorProfile::SetfileName(std::wstring& value)
+//{
+//	fileName = value;
+//}
+//
+//std::wstring S100_ColorProfile::GetfileName() 
+//{
+//	return fileName;
+//}
+//
+//void S100_ColorProfile::SetfileType(std::wstring& value )
+//{
+//	fileType = value;
+//}
+//
+//std::wstring S100_ColorProfile::GetfileType()
+//{
+//	return fileType;
+//}
+//
+//void S100_ColorProfile::SetfileFormat(std::wstring& value)
+//{
+//	fileFormat = value;
+//}
+//
+//std::wstring S100_ColorProfile::GetfileFormat() 
+//{
+//	return fileFormat;
+//}
 
 void S100_ColorProfile::Setcolors(std::wstring key, S100_Color* value) 
 {

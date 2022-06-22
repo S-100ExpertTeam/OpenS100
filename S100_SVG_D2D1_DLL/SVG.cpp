@@ -491,7 +491,7 @@ namespace S100_SVG_D2D1_DLL
 	}
 
 
-	Symbol SVG::GetSymbol(ID2D1Factory* m_pDirect2dFactory, std::wstring paletteName, S100_ColorProfile *colorProfile)
+	Symbol SVG::GetSymbol(ID2D1Factory* m_pDirect2dFactory, std::wstring paletteName)
 	{
 		float fx = 0;
 		float fy = 0;

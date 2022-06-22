@@ -27,13 +27,13 @@ public:
 	int capStyle = 0;
 	int joinStyle = 0;
 	float offset = 0;
-	int pen_color = 0;
+	D2D1_COLOR_F pen_color;
 	std::wstring colorToken = L"";
 	std::wstring lineStyleName = L"";
 
 public:
-	void SetPenColor(int value);
-	int GetPenColor();
+	void SetPenColor(D2D1_COLOR_F value);
+	D2D1_COLOR_F GetPenColor();
 
 	void SetPenColorToken(std::wstring& value);
 	std::wstring GetPenColorToken();

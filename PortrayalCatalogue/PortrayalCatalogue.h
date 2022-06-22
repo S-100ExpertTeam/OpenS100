@@ -142,8 +142,8 @@ public:
 	Context* GetContext();
 	S100_ColorProfiles* GetColorProfiles();
 	S100_AreaFills* GetAreaFills();
-	S100_ColorProfile* GetColorProfile();
-	S100_ColorProfile* GetColorProfile(std::wstring& id);
+	//S100_ColorProfile* GetColorProfile();
+	//S100_ColorProfile* GetColorProfile(std::wstring& id);
 	S100_LineStyleBase* GetLineStyles(std::wstring& key);
 	S100_Symbols* GetSymbols();
 	std::unordered_map<std::wstring, S100_LineStyleBase*> GetLineStyles();
@@ -180,4 +180,5 @@ public:
 
 	bool OpenLineStyle();
 	bool OpenAreaFill();
+	bool OpenColorProfile();
 };

@@ -43,13 +43,14 @@ void PortrayalCatalogue::Open(std::wstring& path)
 	ReadPortrayalCatalogueByPugiXML(path);
 
 	if (!bVisualToolOn)
-		m_svgSymbolManager = new S100_SVG_D2D1_DLL::SVGManager(path, GetCurrentPaletteName(), colorProfiles.GetColorProfile());
+		m_svgSymbolManager = new S100_SVG_D2D1_DLL::SVGManager(path, GetCurrentPaletteName());
 
 
 	OpenSVG();
 	OpenLineStyle();
 	OpenAreaFill();
-	s100PCManager->OpenS100ColorProfile(path + L"ColorProfiles\\" + GetColorProfile()->GetfileName());
+	OpenColorProfile();
+	// s100PCManager->OpenS100ColorProfile(path + L"ColorProfiles\\" + GetColorProfile()->GetfileName());
 }
 
 
@@ -112,9 +113,9 @@ bool PortrayalCatalogue::ReadPortrayalCatalogueByPugiXML(std::wstring& path)
 	GetLineStylesByPugiXml();
 	GetMainRuleFile();
 
-	if (colorProfiles.ReadColorProfiles(path) == false)
-	{
-	}
+	//if (colorProfiles.ReadColorProfiles(path) == false)
+	//{
+	//}
 
 	return true;
 }
@@ -389,28 +390,28 @@ S100Render PortrayalCatalogue::GetS100Render()
 	return s100Render;
 }
 
-S100_ColorProfile* PortrayalCatalogue::GetColorProfile()
-{
-	auto colorpro = colorProfiles.GetColorProfiles();
-	if (colorpro.begin() == colorpro.end())
-	{
-		return nullptr;
-	}
-	auto result = colorpro.begin()->second;
-	return result;
-}
+//S100_ColorProfile* PortrayalCatalogue::GetColorProfile()
+//{
+//	auto colorpro = colorProfiles.GetColorProfiles();
+//	if (colorpro.begin() == colorpro.end())
+//	{
+//		return nullptr;
+//	}
+//	auto result = colorpro.begin()->second;
+//	return result;
+//}
 
-S100_ColorProfile* PortrayalCatalogue::GetColorProfile(std::wstring& id)
-{
-	auto colorpro = colorProfiles.GetColorProfiles();
-	if (colorpro.find(id) == colorpro.end())
-	{
-		return nullptr;
-	}
-
-	auto result = colorpro[id];
-	return result;
-}
+//S100_ColorProfile* PortrayalCatalogue::GetColorProfile(std::wstring& id)
+//{
+//	auto colorpro = colorProfiles();
+//	if (colorpro.find(id) == colorpro.end())
+//	{
+//		return nullptr;
+//	}
+//
+//	auto result = colorpro[id];
+//	return result;
+//}
 
 void PortrayalCatalogue::GetLineStylesByPugiXml()
 {
@@ -418,46 +419,6 @@ void PortrayalCatalogue::GetLineStylesByPugiXml()
 
 	for (auto itor = lineStyleFiles.begin(); itor != lineStyleFiles.end(); itor++)
 	{
-		/*S100_LineStyleFile *lineStyleFile = itor->second;
-		std::wstring path = lineStyleFile->GetFileName();
-
-		std::wstring head = rootPath + L"LineStyles\\";
-		path.insert(path.begin(), head.begin(), head.end());
-
-		if (!path.empty())
-		{
-			pugi::xml_document doc;
-			pugi::xml_parse_result result = doc.load_file(path.c_str()); /// read file
-
-			if (!result)
-			{
-				continue;
-			}
-
-			for (pugi::xml_node instruction = doc.first_child(); instruction; instruction = instruction.next_sibling())
-			{
-				const pugi::char_t* instructionName = instruction.name();
-
-				if (!strcmp(instructionName, "lineStyle"))
-				{
-					S100_LineStyle* lineStyle = new S100_LineStyle();
-					lineStyle->GetContents(instruction);
-					s100_lineStyles[lineStyleFile->GetDescription()->Getname()] = lineStyle;
-				}
-				else if (!strcmp(instructionName, "compositeLineStyle"))
-				{
-					S100_CompositeLineStyle* cls = new S100_CompositeLineStyle();
-					cls->GetContents(instruction);
-					s100_lineStyles[lineStyleFile->GetDescription()->Getname()] = cls;
-				}
-				else
-				{
-					std::string unValue(instructionName);
-					unValue + "is unValue Context";
-				}
-			}
-		}*/
-
 		ExternalFile* lineStyleFile = itor->second;
 		std::wstring path = lineStyleFile->GetFileName();
 
@@ -663,6 +624,23 @@ bool PortrayalCatalogue::OpenAreaFill()
 	for (auto i = area->begin(); i != area->end(); i++)
 	{
 		auto result = s100PCManager->AddS100AreaFill(GetRootPath() + L"AreaFills\\" + (*i)->GetFileName());
+		if (result == false)
+		{
+			CString strErr;
+			strErr.Format(L"Failed to open AreaFill(%s)\n", (*i)->GetFileName().c_str());
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool PortrayalCatalogue::OpenColorProfile()
+{
+	auto colorProfile = colorProfiles.GetColorProfilesVector();
+	for (auto i = colorProfile->begin(); i != colorProfile->end(); i++)
+	{
+		auto result = s100PCManager->AddS100ColorProfile((*i)->GetId(), GetRootPath() + L"ColorProfiles\\" + (*i)->GetFileName());
 		if (result == false)
 		{
 			CString strErr;

@@ -23,7 +23,7 @@ SeabedType	false
 TEXTOUT	true
 TWO_SHADES	false
 AUTOSELECTION_CATALOGUE	false
-m_eColorTable	2
+m_eColorTable	1
 UNIT_DISTANCE	0
 S111_SHOW_NODATA	false
 Show_INFORM01	true

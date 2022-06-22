@@ -89,7 +89,7 @@ namespace S100_SVG_D2D1_DLL
 		void DrawSVGSimpleLine(Gdiplus::Graphics *bitmapG, Gdiplus::PointF _p1, Gdiplus::PointF _p2);
 
 		// return symbol
-		Symbol GetSymbol(ID2D1Factory* m_pDirect2dFactory, std::wstring paletteName, S100_ColorProfile *colorProfile);
+		Symbol GetSymbol(ID2D1Factory* m_pDirect2dFactory, std::wstring paletteName);
 
 		void MoveVectorPoint(std::vector<DrawingPathUnit*> &pOrgVector, std::vector<DrawingPathUnit*> &pSourceVector);
 		void RotatePoint(POINT &p, const POINT pivotPoint, const double ROTATION);

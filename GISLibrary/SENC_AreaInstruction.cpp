@@ -77,10 +77,11 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 			colorFill = (SENC_ColorFill*)areaFill;
 			if (colorFill->color)
 			{
-				D2D1_COLOR_F color;
-				color.r = (float)(GetRValue(colorFill->color->RGBColor) / 255.0);
-				color.g = (float)(GetGValue(colorFill->color->RGBColor) / 255.0);
-				color.b = (float)(GetBValue(colorFill->color->RGBColor) / 255.0);
+				D2D1_COLOR_F color = colorFill->color->RGBColor;
+				//color.r = (float)(GetRValue(colorFill->color->RGBColor) / 255.0);
+				//color.g = (float)(GetGValue(colorFill->color->RGBColor) / 255.0);
+				//color.b = (float)(GetBValue(colorFill->color->RGBColor) / 255.0);
+				
 				color.a = 1 - colorFill->color->transparency;
 				brush->SetColor(color);
 
@@ -256,10 +257,13 @@ void SENC_AreaInstruction::FromS100Instruction(
 				colorFill->color->SetToken(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetToken());
 				colorFill->color->SetTransparency((float)_wtof(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTransparency().c_str()));
 
-				auto colorProfile = pc->GetColorProfile();
+				auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
+
+				//sauto colorProfile = pc->GetColorProfile();
 				if (colorProfile)
 				{
-					colorFill->color->RGBColor = colorProfile->GetRGBRef(pc->GetCurrentPaletteName(), colorFill->color->token);;
+					colorFill->color->RGBColor = colorProfile->GetColor(colorFill->color->token);
+					//colorFill->color->RGBColor = colorProfile->GetRGBRef(pc->GetCurrentPaletteName(), colorFill->color->token);;
 				}
 			}
 			break;

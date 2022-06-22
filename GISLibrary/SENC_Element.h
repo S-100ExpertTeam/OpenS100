@@ -17,6 +17,6 @@ public:
 	SENC_Foreground foreground;
 	SENC_Font font;
 	// For show text on screen
-	COLORREF* pColor;
-	CFont* pFont;
+	D2D1_COLOR_F* pColor = nullptr;
+	CFont* pFont = nullptr;
 };

@@ -77,7 +77,7 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 			if (lineStyle->IsLineStyle() == true)
 			{
 				SENC_LineStyle* ls = (SENC_LineStyle*)lineStyle;
-				int PEN_COLOR = ls->GetPenColor();
+				//int PEN_COLOR = ls->GetPenColor();
 				int PEN_WIDTH = (int)(ls->pen_width / 0.319);
 
 				D2D1_POINT_2F pBeginningPt = { (FLOAT)SGeometry::viewPoints[0].x, (FLOAT)SGeometry::viewPoints[0].y };
@@ -179,7 +179,8 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 					}
 				}
 
-				brush->SetColor(D2D1::ColorF((FLOAT)((PEN_COLOR >> 16) & 0xff) / 255.0, ((PEN_COLOR >> 8) & 0xff) / 255.0, ((PEN_COLOR >> 0) & 0xff) / 255.0));
+				//brush->SetColor(D2D1::ColorF((FLOAT)((PEN_COLOR >> 16) & 0xff) / 255.0, ((PEN_COLOR >> 8) & 0xff) / 255.0, ((PEN_COLOR >> 0) & 0xff) / 255.0));
+				brush->SetColor(ls->pen_color);
 
 				if (ls->dashes.size() > 0 || ls->symbols.size() > 0)
 				{

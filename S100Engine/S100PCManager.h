@@ -2,6 +2,7 @@
 
 #include <string>
 #include "S100ColorProfile.h"
+#include "S100ColorProfiles.h"
 #include "S100SymbolManager.h"
 #include "AreaFill.h"
 #include "LineStylesPackage.h"
@@ -15,7 +16,7 @@ public:
 	virtual ~S100PCManager();
 
 public:
-	S100ColorProfile s100ColorProfile;
+	S100ColorProfiles s100ColorProfiles;
 	S100SymbolManager s100SymbolManager;
 	std::vector<AreaFill> areaFills;
 	AreaFillInfo areaFillInfo;
@@ -26,7 +27,9 @@ private:
 	char* ConvertWCtoC(wchar_t* str);
 
 public:
-	bool OpenS100ColorProfile(std::wstring _path);
+	// Open single color profile
+	bool AddS100ColorProfile(std::wstring id, std::wstring path);
+	//bool OpenS100ColorProfile(std::wstring _path);
 	
 	// Open single svg
 	bool AddS100Symbol(std::wstring path);

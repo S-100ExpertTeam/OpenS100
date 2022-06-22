@@ -795,14 +795,14 @@ void LayerManager::AddSymbolDrawing(
 					if (angle)
 						radian = -angle / 180. * M_PI;
 
-					COLORREF color = 0x00000000;
-					if (element->pColor == NULL)
-					{
-					}
-					else
-					{
-						color = *element->pColor;
-					}
+					//COLORREF color = 0x00000000;
+					//if (element->pColor == NULL)
+					//{
+					//}
+					//else
+					//{
+					//	color = *element->pColor;
+					//}
 
 					int bodySize = element->bodySize;
 
@@ -941,10 +941,14 @@ void LayerManager::AddSymbolDrawing(
 					offset_x += XOFFS;
 					offset_y += YOFFS;
 
-					int r = (color >> 16) & 0xff;
-					int g = ((color >> 8) & 0xff);
-					int b = ((color >> 0) & 0xff);
-					gisLib->D2.pBrush->SetColor(D2D1::ColorF((FLOAT)(GetRValue(color)) / (float)255.0, (GetGValue(color)) / (float)255.0, (GetBValue(color) / (float)255.0)));
+					//int r = (color >> 16) & 0xff;
+					//int g = ((color >> 8) & 0xff);
+					//int b = ((color >> 0) & 0xff);
+					//gisLib->D2.pBrush->SetColor(D2D1::ColorF((FLOAT)(GetRValue(color)) / (float)255.0, (GetGValue(color)) / (float)255.0, (GetBValue(color) / (float)255.0)));
+					if (element->pColor)
+					{
+						gisLib->D2.pBrush->SetColor(element->pColor);
+					}
 
 					for (auto itor = points.begin(); itor != points.end(); itor++)
 					{
@@ -1271,10 +1275,25 @@ void LayerManager::SetViewMBR(RECT r)
 	scaler->SetMap(r);
 }
 
+void LayerManager::ChangeS100ColorPalette(GeoMetryLibrary::ColorTable value)
+{
+	if (value == GeoMetryLibrary::ColorTable::Day)
+	{
+		ChangeS100ColorPalette(L"Day");
+	}
+	else if (value == GeoMetryLibrary::ColorTable::Dusk)
+	{
+		ChangeS100ColorPalette(L"Dusk");
+	}
+	else if (value == GeoMetryLibrary::ColorTable::Night)
+	{
+		ChangeS100ColorPalette(L"Night");
+	}
+}
+
 void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 {
-
-	if (true == layer->IsS100Layer())
+	if (layer && true == layer->IsS100Layer())
 	{
 		auto s100layer = (S100Layer*)layer;
 		auto pc = s100layer->GetPC();
@@ -1298,11 +1317,14 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 		}
 	}
 
-
 	auto pc = gisLib->GetPC();
 	if (pc)
 	{
 		pc->SetCurrentPaletteName(paletteName);
+		pc->DeletePatternImage();
+		pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+		pc->DeleteLineImages();
+		pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
 	}
 }
 

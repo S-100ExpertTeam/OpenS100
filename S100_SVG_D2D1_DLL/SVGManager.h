@@ -23,11 +23,10 @@ namespace S100_SVG_D2D1_DLL
 	{
 	public:
 		SVGManager();
-		SVGManager(std::wstring path, std::wstring paletteName, S100_ColorProfile *colorProfile);
+		SVGManager(std::wstring path, std::wstring paletteName);
 		virtual ~SVGManager();
 
 	public:
-		S100_LineManager lineMng;
 
 		// Variables for D2.
 		static ID2D1Factory1* m_pDirect2dFactory;
@@ -59,7 +58,7 @@ namespace S100_SVG_D2D1_DLL
 		Symbol* GetSymbol(std::wstring name);
 
 		//Read the svg file in the specified folder...
-		void GetSVGFilesByPugiXML(std::wstring svgFolderPath, std::wstring paletteName, S100_ColorProfile *colorProfile);
+		void GetSVGFilesByPugiXML(std::wstring svgFolderPath, std::wstring paletteName);
 
 		//Create a factory.
 		HRESULT D2_SetFactory();

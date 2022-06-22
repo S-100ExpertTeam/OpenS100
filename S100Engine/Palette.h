@@ -11,7 +11,7 @@ public:
 	virtual ~Palette();
 
 private:
-	std::wstring      name;
+	std::wstring name;
 	std::unordered_map<std::wstring ,libS100Engine::Item> item;
 
 public:

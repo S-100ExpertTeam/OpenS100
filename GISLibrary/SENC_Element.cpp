@@ -3,12 +3,19 @@
 
 SENC_Element::SENC_Element()
 {
-	pFont = NULL;
-	pColor = NULL;
 }
 
 SENC_Element::~SENC_Element()
 {
-	if (pFont){		delete pFont; pFont = NULL; 	}
-	if (pColor) {	delete pColor; pColor = NULL;	}
+	if (pFont) 
+	{	
+		delete pFont;
+		pFont = nullptr; 	
+	}
+
+	if (pColor) 
+	{	
+		delete pColor; 
+		pColor = nullptr;	
+	}
 }

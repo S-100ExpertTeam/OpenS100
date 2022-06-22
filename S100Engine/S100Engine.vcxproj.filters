@@ -270,6 +270,9 @@
     <ClCompile Include="TextFlags.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="S100ColorProfiles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="S100Engine.def">
@@ -590,6 +593,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextFlags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S100ColorProfiles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

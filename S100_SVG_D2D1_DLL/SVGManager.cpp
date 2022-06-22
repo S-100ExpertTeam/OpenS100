@@ -30,17 +30,10 @@ namespace S100_SVG_D2D1_DLL
 		
 	}
 
-	SVGManager::SVGManager(std::wstring path, std::wstring paletteName, S100_ColorProfile *colorProfile) : SVGManager()
+	SVGManager::SVGManager(std::wstring path, std::wstring paletteName) : SVGManager()
 	{
 		//Read and add symbols that can be drawn.
-		GetSVGFilesByPugiXML(path, paletteName, colorProfile);
-
-		//Read the line style and add it.
-		lineMng.GetLineFiles(path);
-
-		//Read and add the color Profile.xml file.
-		lineMng.GetColorInfoByPugi(path);
-
+		GetSVGFilesByPugiXML(path, paletteName);
 	}
 
 	SVGManager::~SVGManager()
@@ -72,7 +65,7 @@ namespace S100_SVG_D2D1_DLL
 		}
 	}
 
-	void SVGManager::GetSVGFilesByPugiXML(std::wstring svgFolderPath, std::wstring paletteName, S100_ColorProfile* colorProfile)
+	void SVGManager::GetSVGFilesByPugiXML(std::wstring svgFolderPath, std::wstring paletteName)
 	{
 		CFileFind  finder;
 		std::wstring svgPath = svgFolderPath + _T("Symbols\\*.svg");
@@ -92,7 +85,7 @@ namespace S100_SVG_D2D1_DLL
 					pSvg->ReadSVGFileByPugiXml(filepath);
 					pSvg->m_svgName = svgName;
 					m_svgMap[svgName.c_str()] = pSvg;
-					symMap.insert({ svgName.c_str(), pSvg->GetSymbol(m_pDirect2dFactory, paletteName, colorProfile) });
+					symMap.insert({ svgName.c_str(), pSvg->GetSymbol(m_pDirect2dFactory, paletteName) });
 				}
 			}
 		}
@@ -237,7 +230,7 @@ namespace S100_SVG_D2D1_DLL
 		for (auto i = m_svgMap.begin(); i != m_svgMap.end(); i++)
 		{
 			auto svg = i->second;
-			symMap.insert({ i->first, svg->GetSymbol(m_pDirect2dFactory, paletteName, colorProfile) });
+			symMap.insert({ i->first, svg->GetSymbol(m_pDirect2dFactory, paletteName) });
 		}
 	}
 
