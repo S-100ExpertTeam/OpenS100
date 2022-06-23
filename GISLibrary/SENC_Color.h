@@ -10,13 +10,13 @@ public:
 	~SENC_Color();
 
 public:
-	int RGBColor;
+	D2D1_COLOR_F RGBColor;
 	std::wstring token;
 	float transparency;
 
 public:
-	void SetRGBColor(int value);
-	int GetRGBColor();
+	void SetRGBColor(D2D1_COLOR_F value);
+	D2D1_COLOR_F GetRGBColor();
 	void SetToken(std::wstring& value);
 	std::wstring GetToken();
 	void SetTransparency(float value);

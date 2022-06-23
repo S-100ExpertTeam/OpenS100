@@ -1,45 +1,30 @@
 #pragma once
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
-
-#include "S100_Description.h"
+#include "ExternalFile.h"
 
 #include <string>
 
-class S100_RuleFile
+#include "S100_Description.h"
+#include "Enum_RuleType.h"
+
+#include "..\\extlibs\pugixml\include\pugixml.hpp"
+
+class S100_RuleFile : public Portrayal::ExternalFile
 {
 public:
 	S100_RuleFile();
 	virtual ~S100_RuleFile();
 	
 private:
-	std::string id = "";
-	std::wstring fileName = L"";
-	std::wstring fileType = L"";
-	std::wstring fileFormat = L"";
-	std::wstring ruleType = L"";
-	S100_Description description;
+	Portrayal::RuleType ruleType = Portrayal::RuleType::none;
 
 public:
 	void GetContents(pugi::xml_node& node);
 
-	void SetID(std::string& value);
-	std::string GetID();
+	Portrayal::RuleType GetRuleType();
 
-	void SetFileName(std::wstring& value);
-	std::wstring GetFileName();
-
-	void SetFileType(std::wstring& value);
-	std::wstring GetFileType();
-
-	void SetFileFormat(std::wstring& value);
-	std::wstring GetFileFormat();
-
-	void SetRuleType(std::wstring& value);
-	std::wstring GetRuleType();
-
-	S100_Description* GetDescription();
-
-	bool IsTypeLevelTemplate();
+	bool IsTopLevelTemplate();
 	
 	bool IsLua();
+
+	const std::wstring GetRuleTypeAsWstring();
 };

@@ -17,13 +17,18 @@ S100PCManager::~S100PCManager()
 
 }
 
-bool S100PCManager::OpenS100ColorProfile(std::wstring _path)
+bool S100PCManager::AddS100ColorProfile(std::wstring id, std::wstring path)
 {
-	char* path = ConvertWCtoC((wchar_t*)_path.c_str());
-	bool ret = s100ColorProfile.OpenByPugi(path);
-	delete[] path;
-	return ret;
+	return s100ColorProfiles.AddColorProfile(id, path);
 }
+
+//bool S100PCManager::OpenS100ColorProfile(std::wstring _path)
+//{
+//	char* path = ConvertWCtoC((wchar_t*)_path.c_str());
+//	bool ret = s100ColorProfile.OpenByPugi(path);
+//	delete[] path;
+//	return ret;
+//}
 
 bool S100PCManager::AddS100LineStyle(std::wstring path)
 {
@@ -124,7 +129,7 @@ void S100PCManager::DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRender
 				if (pLineStyle->pen)
 				{
 					width = (FLOAT)(pLineStyle->pen->width / 0.32);
-					color = s100ColorProfile.GetColor(pLineStyle->pen->color.GetToken());
+					color = GetS100ColorProfile()->GetColor(pLineStyle->pen->color.GetToken());
 					pBrush->SetColor(color);
 					pBrush->SetOpacity(1);
 				}
@@ -137,7 +142,7 @@ void S100PCManager::DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRender
 
 			if (pLineStyle)
 			{
-				pBrush->SetColor(s100ColorProfile.GetColor(pLineStyle->pen->color.GetToken()));
+				pBrush->SetColor(GetS100ColorProfile()->GetColor(pLineStyle->pen->color.GetToken()));
 				D2D1_RECT_F rect = GetLineStyleRect(_name.c_str(), 2);
 
 				for (auto j = pLineStyle->dash.begin(); j != pLineStyle->dash.end(); j++)
@@ -312,14 +317,14 @@ void S100PCManager::Draw(
 		{
 			if (i->bFill)
 			{
-				pBrush->SetColor(s100ColorProfile.GetColor(i->fillColorName));
+				pBrush->SetColor(GetS100ColorProfile()->GetColor(i->fillColorName));
 				pBrush->SetOpacity(i->alpha);
 				pRenderTarget->FillGeometry(i->pGeometry, pBrush);
 			}
 
 			if (i->bStoke)
 			{
-				pBrush->SetColor(s100ColorProfile.GetColor(i->strokeColorName));
+				pBrush->SetColor(GetS100ColorProfile()->GetColor(i->strokeColorName));
 				pBrush->SetOpacity(i->alpha);
 				pRenderTarget->DrawGeometry(i->pGeometry, pBrush, i->width * 0.03937f * 96, pStrokeStyle);
 			}
@@ -328,14 +333,14 @@ void S100PCManager::Draw(
 		{
 			if (i->bFill)
 			{
-				pBrush->SetColor(s100ColorProfile.GetColor(i->fillColorName));
+				pBrush->SetColor(GetS100ColorProfile()->GetColor(i->fillColorName));
 				pBrush->SetOpacity(i->alpha);
 				pRenderTarget->FillEllipse(i->ellipse, pBrush);
 			}
 
 			if (i->bStoke)
 			{
-				pBrush->SetColor(s100ColorProfile.GetColor(i->strokeColorName));
+				pBrush->SetColor(GetS100ColorProfile()->GetColor(i->strokeColorName));
 				pBrush->SetOpacity(i->alpha);
 				pRenderTarget->DrawEllipse(i->ellipse, pBrush, i->width * 0.03937f * 96, pStrokeStyle);
 			}
@@ -663,5 +668,10 @@ IWICBitmap* S100PCManager::GetLineImage(std::wstring& key)
 
 S100ColorProfile* S100PCManager::GetS100ColorProfile()
 {
-	return &s100ColorProfile;
+	if (s100ColorProfiles.colorProfileMap.size() > 0)
+	{
+		return s100ColorProfiles.colorProfileMap.begin()->second;
+	}
+
+	return nullptr;
 }

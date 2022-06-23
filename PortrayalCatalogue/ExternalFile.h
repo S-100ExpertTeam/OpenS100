@@ -1,4 +1,5 @@
 #pragma once
+
 #include "CatalogItem.h"
 #include "Enum_FileType.h"
 #include "Enum_FileFormat.h"
@@ -14,15 +15,14 @@ namespace Portrayal
 
 	private:
 		std::wstring FileName = _T("");
-		//std::wstring FileType = _T("");
 		FileType FileType = FileType::none;
-		//std::wstring FileFormat = _T("");
 		FileFormat FileFormat = FileFormat::none;
 
 	public:
 		std::wstring GetFileName();
 		std::wstring GetFileType();
-		std::wstring GetFileFormat();
+		std::wstring GetFileFormatAsWstring();
+		Portrayal::FileFormat GetFileFormat();
 
 		void SetFileName(std::wstring value);
 		void SetFileType(std::wstring value);

@@ -14,14 +14,14 @@ public:
 
 private:
 	std::vector<S100_RuleFile*> ruleFileVector;
-	std::unordered_map<std::string, S100_RuleFile*> ruleFiles;
+	std::unordered_map<std::wstring, S100_RuleFile*> ruleFiles;
 
 public:
-	void AddRuleFiles(std::string& key, S100_RuleFile* value);
-	void SetRuleFiles(std::unordered_map<std::string, S100_RuleFile*> value);
+	void AddRuleFiles(std::wstring& key, S100_RuleFile* value);
+	void SetRuleFiles(std::unordered_map<std::wstring, S100_RuleFile*> value);
 
-	S100_RuleFile* GetRuleFiles(std::string& key);
-	std::unordered_map<std::string, S100_RuleFile*> GetRuleFiles();
+	S100_RuleFile* GetRuleFiles(std::wstring& key);
+	std::unordered_map<std::wstring, S100_RuleFile*> GetRuleFiles();
 
 	std::vector<S100_RuleFile*>* GetRuleFilesVector();
 

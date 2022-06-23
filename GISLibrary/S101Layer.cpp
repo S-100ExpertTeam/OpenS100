@@ -6,12 +6,10 @@
 
 S101Layer::S101Layer(FeatureCatalogue* fc, PortrayalCatalogue* pc) : S100Layer(fc, pc)
 {
-	checkedDataCoverageScale = false;
 }
 
 S101Layer::~S101Layer()
 {
-
 }
 
 void S101Layer::SetSpatialObject(S101Cell* cell)

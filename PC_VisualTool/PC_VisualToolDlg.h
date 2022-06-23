@@ -18,7 +18,7 @@ public:
 
 	void XMLreadFile(CString filepath);
 	void SetXmlTreeControl(PortrayalCatalogue* m_PC);
-	void SetTreeCtrlColorProfile(std::vector< S100_ColorProfile*>* vecColorProfiles);
+	void SetTreeCtrlColorProfile(std::vector< ExternalFile*>* vecColorProfiles);
 	void SetTreeCtrlSymbols(std::vector< ExternalFile*>* vecSymbols);
 	void SetTreeLinStyles(std::vector< ExternalFile*>* vecLinStyles);
 	void SetTreeAreaFills(std::vector< ExternalFile*>*  vecAreaFills);

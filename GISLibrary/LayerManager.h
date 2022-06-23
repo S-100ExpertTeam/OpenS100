@@ -2,7 +2,9 @@
 
 #include "S101Cell.h"
 
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../GeoMetryLibrary/ENCCommon.h"
 
 #include <vector>
 #include <functional>
@@ -86,6 +88,7 @@ public:
 	void DeleteLayer(CString filepath);
 	void ReMBR();
 
+	void ChangeS100ColorPalette(GeoMetryLibrary::ColorTable value);
 	void ChangeS100ColorPalette(std::wstring paletteName);
 
 	Scaler* GetScaler();

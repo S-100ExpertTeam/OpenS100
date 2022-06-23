@@ -6,7 +6,6 @@
 #include "S100_SymbolFill.h"
 #include "S100_ColorProfile.h"
 #include "S100_ColorProfiles.h"
-#include "Enum_PortrayalRuleType.h"
 #include "ViewingGroups.h"
 #include "ViewingGroupLayers.h"
 #include "DisplayModes.h"
@@ -18,11 +17,9 @@
 #include "DisplayMode.h"
 #include "DisplayPlane.h"
 #include "ContextParameter.h"
-#include "S100_LineStyleFile.h"
-
 
 #include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
-#include "..\\S100_SVG_D2D1_DLL\\SVGManager.h"
+
 #include "..\\S100Engine\\S100Render.h"
 
 #include <unordered_map>
@@ -37,14 +34,14 @@ class PortrayalCatalogue
 public:
 	PortrayalCatalogue();
 	PortrayalCatalogue(std::wstring path);
-	PortrayalCatalogue(std::wstring path, bool startVisualTool);
 	virtual ~PortrayalCatalogue();
 
 private:
-	// include PC folder (ex: ..\ProgramData\\S101_Portrayal\\)
+	// include PC folder (ex: ..\\ProgramData\\S101_Portrayal\\)
 	std::wstring rootPath;
 
-	PortrayalRuleType portrayalRuleType = PortrayalRuleType::XSLT;
+	// path of portrayal_catalogue.xml (ex: ..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml)
+	std::wstring catalogPath;
 
 	// ex : S-101
 	std::wstring product;
@@ -90,14 +87,9 @@ private:
 
 	// FOR SENC
 	std::unordered_map<std::wstring, S100_RuleFile*> mainRules;
-
-	S100_SVG_D2D1_DLL::SVGManager *m_svgSymbolManager = nullptr;
 	
 	std::wstring currentPalette = L"Day";
 	S100PCManager *s100PCManager = new S100PCManager();
-	S100Render s100Render;
-
-	bool bVisualToolOn = false;
 
 public:
 	void Open(std::wstring& path);
@@ -109,7 +101,6 @@ public:
 
 	//set
 	void SetRootPath(std::wstring& value);
-	void SetPortrayalRuleType(PortrayalRuleType value);
 	void SetProduct(std::wstring& value);
 	void SetVersion(std::wstring& value);
 	void SetRules(S100_Rules* value);
@@ -124,13 +115,9 @@ public:
 	void SetLineStyles(std::wstring& key, S100_LineStyleBase* value);
 	void SetCurrentPaletteName(std::wstring& paletteName);
 	void SetS100PCManager(S100PCManager* value);
-	void SetS100Render(S100Render* value);
-	void SetSVGManager(S100_SVG_D2D1_DLL::SVGManager* value);
-	void SetRuleType(PortrayalRuleType value);
 
 	//get
 	std::wstring GetRootPath();
-	PortrayalRuleType GetPortrayalRuleType();
 	std::wstring GetProduct();
 	std::wstring GetVersion();
 	S100_Rules* GetRules();
@@ -142,8 +129,6 @@ public:
 	Context* GetContext();
 	S100_ColorProfiles* GetColorProfiles();
 	S100_AreaFills* GetAreaFills();
-	S100_ColorProfile* GetColorProfile();
-	S100_ColorProfile* GetColorProfile(std::wstring& id);
 	S100_LineStyleBase* GetLineStyles(std::wstring& key);
 	S100_Symbols* GetSymbols();
 	std::unordered_map<std::wstring, S100_LineStyleBase*> GetLineStyles();
@@ -152,9 +137,7 @@ public:
 	S100_RuleFile* GetMainRules(std::wstring& key);
 	std::unordered_map<std::wstring, S100_RuleFile*> GetMainRules();
 
-	S100Render GetS100Render();
 	S100PCManager* GetS100PCManager();
-	S100_SVG_D2D1_DLL::SVGManager* GetSVGManager();
 
 	S100_LineStyles* GetTreeLineStyles();
 
@@ -164,8 +147,6 @@ public:
 	std::wstring GetMainRuleFilePath();
 	
 	std::wstring GetCurrentPaletteName();
-
-	PortrayalRuleType GetRuleType();
 
 	void CreatePatternImages(ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 	void DeletePatternImage();
@@ -180,4 +161,9 @@ public:
 
 	bool OpenLineStyle();
 	bool OpenAreaFill();
+	bool OpenColorProfile();
+
+	Portrayal::FileFormat GetRuleFileFormat();
+
+	std::string GetCataloguePathAsString();
 };

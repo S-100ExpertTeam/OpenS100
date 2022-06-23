@@ -584,9 +584,6 @@
     <ProjectReference Include="..\S100Geometry\S100Geometry.vcxproj">
       <Project>{8748cc36-d24a-426b-9ece-fec57a3f80ea}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\S100_SVG_D2D1_DLL\S100_SVG_D2D1_DLL.vcxproj">
-      <Project>{50452e5a-6e4b-4374-a0e7-c717b2e89ca3}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

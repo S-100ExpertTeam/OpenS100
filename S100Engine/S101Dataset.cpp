@@ -565,7 +565,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 				S100DrawingUnitPolygon* pS100DrawingUnitPolygon = new S100DrawingUnitPolygon();
 				pS100DrawingUnitPolygon->type = areaInstruction;
 			
-				pS100DrawingUnitPolygon->color = s100PCManager.s100ColorProfile.GetColor(std::wstring(pAreaInstruction->colorName));
+				pS100DrawingUnitPolygon->color = s100PCManager.GetS100ColorProfile()->GetColor(std::wstring(pAreaInstruction->colorName));
 				ST_FEATURE_RECORD* pFeatureRecord = base.GetFeatureRecord(id);
 				pS100DrawingUnitPolygon->pGeometry = CreateSurfaceGeometry(pDirect2dFactory, pFeatureRecord);
 				HRESULT hr = pS100DrawingUnitPolygon->pGeometry->GetBounds(D2D1::Matrix3x2F::Identity(), &pS100DrawingUnitPolygon->bounds);
@@ -613,7 +613,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 
 			S100DrawingUnitPolyLine* pS100DrawingUnitPolyLine = new S100DrawingUnitPolyLine();
 			pS100DrawingUnitPolyLine->type = lineInstruction;
-			pS100DrawingUnitPolyLine->color = s100PCManager.s100ColorProfile.GetColor(std::wstring(pLineInstruction->colorName));
+			pS100DrawingUnitPolyLine->color = s100PCManager.GetS100ColorProfile()->GetColor(std::wstring(pLineInstruction->colorName));
 			pS100DrawingUnitPolyLine->width = (FLOAT)(pLineInstruction->width / PIXEL_MM);
 			pS100DrawingUnitPolyLine->hasDash = pLineInstruction->hasDash;
 
@@ -751,7 +751,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 
 					if (pLineStyle->pen)
 					{
-						pS100DrawingUnit->_color = s100PCManager.s100ColorProfile.GetColor(pLineStyle->pen->color.GetToken());
+						pS100DrawingUnit->_color = s100PCManager.GetS100ColorProfile()->GetColor(pLineStyle->pen->color.GetToken());
 						pS100DrawingUnit->_width = pLineStyle->pen->width / PIXEL_MM;
 					}
 				}
@@ -778,7 +778,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 
 					if (pLineStyle->pen)
 					{
-						pS100DrawingUnit->_color = s100PCManager.s100ColorProfile.GetColor(pLineStyle->pen->color.GetToken());
+						pS100DrawingUnit->_color = s100PCManager.GetS100ColorProfile()->GetColor(pLineStyle->pen->color.GetToken());
 						pS100DrawingUnit->_width = pLineStyle->pen->width / PIXEL_MM;
 					}
 				}

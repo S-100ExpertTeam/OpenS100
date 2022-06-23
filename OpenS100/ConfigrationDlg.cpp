@@ -306,6 +306,7 @@ void CConfigrationDlg::OnBnClickedApply()
 	if (ENCCommon::m_eColorTable != m_config.m_eColorTable)
 	{
 		ENCCommon::m_eColorTable = m_config.m_eColorTable;
+		bMapRefresh = true;
 
 		auto lm = gisLib->GetLayerManager();
 		if (nullptr != lm)

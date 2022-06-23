@@ -16,6 +16,8 @@
 #include <ctime> 
 #include <mmsystem.h> 
 
+const float factor = 3.5;
+
 SENC_AugmentedRay::SENC_AugmentedRay()
 {
 	type = 7;
@@ -77,7 +79,7 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 			if (lineStyle->IsLineStyle() == true)
 			{
 				SENC_LineStyle* ls = (SENC_LineStyle*)lineStyle;
-				int PEN_COLOR = ls->GetPenColor();
+				//int PEN_COLOR = ls->GetPenColor();
 				int PEN_WIDTH = (int)(ls->pen_width / 0.319);
 
 				D2D1_POINT_2F pBeginningPt = { (FLOAT)SGeometry::viewPoints[0].x, (FLOAT)SGeometry::viewPoints[0].y };
@@ -179,7 +181,8 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 					}
 				}
 
-				brush->SetColor(D2D1::ColorF((FLOAT)((PEN_COLOR >> 16) & 0xff) / 255.0, ((PEN_COLOR >> 8) & 0xff) / 255.0, ((PEN_COLOR >> 0) & 0xff) / 255.0));
+				//brush->SetColor(D2D1::ColorF((FLOAT)((PEN_COLOR >> 16) & 0xff) / 255.0, ((PEN_COLOR >> 8) & 0xff) / 255.0, ((PEN_COLOR >> 0) & 0xff) / 255.0));
+				brush->SetColor(ls->pen_color);
 
 				if (ls->dashes.size() > 0 || ls->symbols.size() > 0)
 				{
@@ -248,24 +251,24 @@ void SENC_AugmentedRay::FromS100Instruction(S100_Instruction* s100Instruction, P
 			SENC_LineStyle* ls = new SENC_LineStyle();
 			ls->GetStyleFromS100(*itor, pc);
 
-			for (auto itorSymbol = ls->symbols.begin(); itorSymbol != ls->symbols.end(); itorSymbol++)
-			{
-				SENC_LineSymbol* symbol = *itorSymbol;
-				auto svgsymbolManager = pc->GetSVGManager();
-				auto itor = svgsymbolManager->m_svgMap.find(symbol->reference);
-				if (itor != svgsymbolManager->m_svgMap.end())
-				{
-					symbol->pSvg = itor->second;
-				}
-				else
-				{
-					itor = svgsymbolManager->m_svgMap.find(L"QUESMRK1");
-					if (itor != svgsymbolManager->m_svgMap.end())
-					{
-						symbol->pSvg = itor->second;
-					}
-				}
-			}
+			//for (auto itorSymbol = ls->symbols.begin(); itorSymbol != ls->symbols.end(); itorSymbol++)
+			//{
+			//	SENC_LineSymbol* symbol = *itorSymbol;
+			//	auto svgsymbolManager = pc->GetSVGManager();
+			//	auto itor = svgsymbolManager->m_svgMap.find(symbol->reference);
+			//	if (itor != svgsymbolManager->m_svgMap.end())
+			//	{
+			//		symbol->pSvg = itor->second;
+			//	}
+			//	else
+			//	{
+			//		itor = svgsymbolManager->m_svgMap.find(L"QUESMRK1");
+			//		if (itor != svgsymbolManager->m_svgMap.end())
+			//		{
+			//			symbol->pSvg = itor->second;
+			//		}
+			//	}
+			//}
 		
 			lineStyles.push_back(ls);
 		}
@@ -284,24 +287,24 @@ void SENC_AugmentedRay::FromS100Instruction(S100_Instruction* s100Instruction, P
 			{
 				ls->GetStyleFromS100((S100_LineStyle*)itorStyle->second, pc);
 
-				for (auto itorSymbol = ls->symbols.begin(); itorSymbol != ls->symbols.end(); itorSymbol++)
-				{
-					SENC_LineSymbol* symbol = *itorSymbol;
-					auto svgsymbolManager = pc->GetSVGManager();
-					auto itor = svgsymbolManager->m_svgMap.find(symbol->reference);
-					if (itor != svgsymbolManager->m_svgMap.end())
-					{
-						symbol->pSvg = itor->second;
-					}
-					else
-					{
-						itor = svgsymbolManager->m_svgMap.find(L"QUESMRK1");
-						if (itor != svgsymbolManager->m_svgMap.end())
-						{
-							symbol->pSvg = itor->second;
-						}
-					}
-				}
+				//for (auto itorSymbol = ls->symbols.begin(); itorSymbol != ls->symbols.end(); itorSymbol++)
+				//{
+				//	SENC_LineSymbol* symbol = *itorSymbol;
+				//	auto svgsymbolManager = pc->GetSVGManager();
+				//	auto itor = svgsymbolManager->m_svgMap.find(symbol->reference);
+				//	if (itor != svgsymbolManager->m_svgMap.end())
+				//	{
+				//		symbol->pSvg = itor->second;
+				//	}
+				//	else
+				//	{
+				//		itor = svgsymbolManager->m_svgMap.find(L"QUESMRK1");
+				//		if (itor != svgsymbolManager->m_svgMap.end())
+				//		{
+				//			symbol->pSvg = itor->second;
+				//		}
+				//	}
+				//}
 				lineStyles.push_back(ls);
 			}
 		}
@@ -318,24 +321,24 @@ void SENC_AugmentedRay::FromS100Instruction(S100_Instruction* s100Instruction, P
 
 				sencls->GetStyleFromS100(ls, pc);
 
-				for (auto itorSymbol = sencls->symbols.begin(); itorSymbol != sencls->symbols.end(); itorSymbol++)
-				{
-					SENC_LineSymbol* symbol = *itorSymbol;
-					auto svgsymbolManager = pc->GetSVGManager();
-					auto itor = svgsymbolManager->m_svgMap.find(symbol->reference);
-					if (itor != svgsymbolManager->m_svgMap.end())
-					{
-						symbol->pSvg = itor->second;
-					}
-					else
-					{
-						itor = svgsymbolManager->m_svgMap.find(L"QUESMRK1");
-						if (itor != svgsymbolManager->m_svgMap.end())
-						{
-							symbol->pSvg = itor->second;
-						}
-					}
-				}
+				//for (auto itorSymbol = sencls->symbols.begin(); itorSymbol != sencls->symbols.end(); itorSymbol++)
+				//{
+				//	SENC_LineSymbol* symbol = *itorSymbol;
+				//	auto svgsymbolManager = pc->GetSVGManager();
+				//	auto itor = svgsymbolManager->m_svgMap.find(symbol->reference);
+				//	if (itor != svgsymbolManager->m_svgMap.end())
+				//	{
+				//		symbol->pSvg = itor->second;
+				//	}
+				//	else
+				//	{
+				//		itor = svgsymbolManager->m_svgMap.find(L"QUESMRK1");
+				//		if (itor != svgsymbolManager->m_svgMap.end())
+				//		{
+				//			symbol->pSvg = itor->second;
+				//		}
+				//	}
+				//}
 				lineStyles.push_back(sencls);
 			}
 		}
@@ -346,24 +349,24 @@ void SENC_AugmentedRay::FromS100Instruction(S100_Instruction* s100Instruction, P
 		SENC_LineStyle* ls = new SENC_LineStyle();
 		ls->GetStyleFromS100(s100AugmentedRay->GetLineStyle(), pc);
 
-		for (auto itorSymbol = ls->symbols.begin(); itorSymbol != ls->symbols.end(); itorSymbol++)
-		{
-			SENC_LineSymbol* symbol = *itorSymbol;
-			auto svgsymbolManager = pc->GetSVGManager();
-			auto itor = svgsymbolManager->m_svgMap.find(symbol->reference);
-			if (itor != svgsymbolManager->m_svgMap.end())
-			{
-				symbol->pSvg = itor->second;
-			}
-			else
-			{
-				itor = svgsymbolManager->m_svgMap.find(L"QUESMRK1");
-				if (itor != svgsymbolManager->m_svgMap.end())
-				{
-					symbol->pSvg = itor->second;
-				}
-			}
-		}
+		//for (auto itorSymbol = ls->symbols.begin(); itorSymbol != ls->symbols.end(); itorSymbol++)
+		//{
+		//	SENC_LineSymbol* symbol = *itorSymbol;
+		//	auto svgsymbolManager = pc->GetSVGManager();
+		//	auto itor = svgsymbolManager->m_svgMap.find(symbol->reference);
+		//	if (itor != svgsymbolManager->m_svgMap.end())
+		//	{
+		//		symbol->pSvg = itor->second;
+		//	}
+		//	else
+		//	{
+		//		itor = svgsymbolManager->m_svgMap.find(L"QUESMRK1");
+		//		if (itor != svgsymbolManager->m_svgMap.end())
+		//		{
+		//			symbol->pSvg = itor->second;
+		//		}
+		//	}
+		//}
 
 		lineStyles.push_back(ls);
 	}

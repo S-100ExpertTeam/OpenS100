@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SENC_LineStyle.h"
 #include "SENC_CommonFuc.h"
+#include "GISLibrary.h"
 
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
 
@@ -25,12 +26,12 @@ SENC_LineStyle::~SENC_LineStyle()
 	}
 }
 
-void SENC_LineStyle::SetPenColor(int value)
+void SENC_LineStyle::SetPenColor(D2D1_COLOR_F value)
 {
 	pen_color = value;
 }
 
-int SENC_LineStyle::GetPenColor()
+D2D1_COLOR_F SENC_LineStyle::GetPenColor()
 {
 	return pen_color;
 }
@@ -55,10 +56,14 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 	std::wstring colorToken = lineStyle->GetPen()->GetColor().GetToken();
 	pen_width = _wtof(lineStyle->GetPen()->GetWidth().c_str()) + 0.01;
 	pen_transparency = lineStyle->GetPen()->GetColor().GetTransparency();
-	auto colorProfile = pc->GetColorProfile();
+
+	auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
+
+	//auto colorProfile = pc->GetColorProfile();
 	if (colorProfile)
 	{
-		SetPenColor(colorProfile->GetRGBRef(pc->GetCurrentPaletteName(), colorToken));
+		//SetPenColor(colorProfile->GetRGBRef(pc->GetCurrentPaletteName(), colorToken));
+		SetPenColor(colorProfile->GetColor(colorToken));
 		SetPenColorToken(colorToken);
 	}
 
@@ -92,11 +97,7 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 
 void SENC_LineStyle::ChangePallete(PortrayalCatalogue *pc)
 {
-	auto colorProfile = pc->GetColorProfile();
-	if (colorProfile)
-	{
-		SetPenColor(colorProfile->GetRGBRef(pc->GetCurrentPaletteName(), GetPenColorToken()));
-	}
+	SetPenColor(pc->GetS100PCManager()->GetS100ColorProfile()->GetColor(GetPenColorToken()));
 }
 
 void SENC_LineStyle::SetLineStyleName(std::wstring& value)
@@ -203,7 +204,8 @@ void SENC_LineStyle::DrawInstruction(
 							p->y = (float)tempY + (float)scaler->soy;
 						}
 					}
-					pc->GetS100Render().DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect(), D2D1::ColorF(GetPenColor()), strokeGroup->at(1));
+
+					gisLib->s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect(), GetPenColor(), strokeGroup->at(1));
 					SafeRelease(&pBitmap);
 				}
 			}
@@ -217,10 +219,10 @@ void SENC_LineStyle::DrawInstruction(
 		auto PEN_COLOR = GetPenColor();
 		auto PEN_WIDTH = (float)((pen_width + 0.01) / 0.32);
 
-		D2D1_COLOR_F color;
-		color.r = (float)(GetRValue(PEN_COLOR) / 255.0);
-		color.g = (float)(GetGValue(PEN_COLOR) / 255.0);
-		color.b = (float)(GetBValue(PEN_COLOR) / 255.0);
+		D2D1_COLOR_F color = PEN_COLOR;
+		//color.r = (float)(GetRValue(PEN_COLOR) / 255.0);
+		//color.g = (float)(GetGValue(PEN_COLOR) / 255.0);
+		//color.b = (float)(GetBValue(PEN_COLOR) / 255.0);
 		color.a = 1;
 		brush->SetColor(color);
 

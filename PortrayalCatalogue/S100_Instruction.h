@@ -42,7 +42,6 @@ private:
 public:
 	void GetContents(pugi::xml_node node);
 
-
 	void SetType(int value);
 	void SetFeatureReference(std::wstring& value);
 	void SetSpatialReference(S100_SpatialReference* value);

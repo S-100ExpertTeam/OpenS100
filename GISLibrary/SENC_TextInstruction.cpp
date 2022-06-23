@@ -256,7 +256,8 @@ void SENC_TextInstruction::ChangePallete(PortrayalCatalogue* pc)
 {
 	if (textPoint)
 	{
-		auto colorProfile = pc->GetColorProfile();
+		//auto colorProfile = pc->GetColorProfile();
+		auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
 		if (colorProfile)
 		{
 			auto itorTp = textPoint->elements.begin();
@@ -267,12 +268,12 @@ void SENC_TextInstruction::ChangePallete(PortrayalCatalogue* pc)
 
 				if (element->foreground.token.size() > 0)
 				{
-					element->pColor = new COLORREF();
-					*element->pColor = colorProfile->GetRGBRef(pc->GetCurrentPaletteName(), element->foreground.token);
+					element->pColor = new D2D1_COLOR_F();
+					*element->pColor = colorProfile->GetColor(element->foreground.token);
 				}
 				else
 				{
-					element->pColor = NULL;
+					element->pColor = nullptr;
 				}
 			}
 		}

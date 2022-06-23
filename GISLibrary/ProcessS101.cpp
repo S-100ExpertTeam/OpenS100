@@ -756,7 +756,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					v_TextAlignVertical = value;
 				}
-				// "AreaFillReference:MARSHES1"
 				else if (tag.compare("AreaFillReference") == 0)
 				{
 					v_AreaFillReference = value;
@@ -772,27 +771,18 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 					if (v_AreaFillReference.size() > 0)
 					{
-						if (!in->GetAreaFill()) in->SetAreaFill(new S100_AreaFillReference());
+						if (!in->GetAreaFill())
+						{
+							in->SetAreaFill(new S100_AreaFillReference());
+						}
+
 						S100_AreaFillReference* cf = (S100_AreaFillReference*)in->GetAreaFill();
 
 						cf->SetReference(std::wstring(v_AreaFillReference.begin(), v_AreaFillReference.end()));
 
 						std::wstring path = cf->GetReference();
 						path.append(L".xml");
-						S100_SymbolFill* tempAreaFill = new S100_SymbolFill();
-						tempAreaFill->SetFileTitle(cf->GetReference());
-
-						//여기를 pugi로 변경하면 심볼이 나오지않습니다
-						if (!tempAreaFill->ReadFileByPugiXml(path))
-						{
-							delete tempAreaFill;
-						}
-						else
-						{
-							delete (S100_AreaFillReference*)cf;
-
-							in->SetAreaFill(tempAreaFill);
-						}
+						in->SetAreaFill(cf);
 					}
 					v_AreaFillReference = "";
 				}
@@ -857,7 +847,8 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 
 	hd_init(cell);
 
-	pc_init("..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
+	//pc_init("..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
+	pc_init(pc->GetCataloguePathAsString().c_str());
 
 	//
 	// //Initialize Lua library

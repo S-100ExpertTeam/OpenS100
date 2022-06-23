@@ -206,13 +206,14 @@ void CPCVisualToolDlg::XMLreadFile(CString filepath)
 
 	//filepath
 	std::wstring path= CStringW(filepath);
-	m_PC = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\",true);
+	//m_PC = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\",true);
+	m_PC = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
 
 	SetXmlTreeControl(m_PC);
 }
 
 
-void CPCVisualToolDlg::SetTreeCtrlColorProfile(std::vector< S100_ColorProfile*>* vecColorProfiles)
+void CPCVisualToolDlg::SetTreeCtrlColorProfile(std::vector<ExternalFile*>* vecColorProfiles)
 {
 	CString temp;
 
@@ -224,29 +225,31 @@ void CPCVisualToolDlg::SetTreeCtrlColorProfile(std::vector< S100_ColorProfile*>*
 	for (auto value : *vecColorProfiles)
 	{
 		//color profile id
-		temp.Format(_T("colorProfile  id = %s"), value->Getid().c_str());
+		temp.Format(_T("colorProfile  id = %s"), value->GetId().c_str());
 		h_id = m_TreeCtrl.InsertItem(temp, h_root, NULL);
 
-		//description
 		h_description = m_TreeCtrl.InsertItem(_T("description"), h_id, NULL);
-		//description - name
-		temp.Format(_T("name = %s"), value->Getdescription().Getname().c_str());
-		m_TreeCtrl.InsertItem(temp, h_description, NULL);
-		//description - description
-		temp.Format(_T("description = %s"), value->Getdescription().Getdescription().c_str());
-		m_TreeCtrl.InsertItem(temp, h_description, NULL);
-		//description - language
-		temp.Format(_T("language = %s"), value->Getdescription().Getlanguage().c_str());
-		m_TreeCtrl.InsertItem(temp, h_description, NULL);
+		std::vector<S100_Description*>* vecDescription = value->GetDescription();
+		for (auto description : *vecDescription)
+		{
+			temp.Format(_T("name = %s"), description->Getname().c_str());
+			m_TreeCtrl.InsertItem(temp, h_description, NULL);
+			//description - description
+			temp.Format(_T("description = %s"), description->Getdescription().c_str());
+			m_TreeCtrl.InsertItem(temp, h_description, NULL);
+			//description - language
+			temp.Format(_T("language = %s"), description->Getlanguage().c_str());
+			m_TreeCtrl.InsertItem(temp, h_description, NULL);
+		}
 
 		//filename
-		temp.Format(_T("fileName = %s"), value->GetfileName().c_str());
+		temp.Format(_T("fileName = %s"), value->GetFileName().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 		//filetype
-		temp.Format(_T("fileType = %s"), value->GetfileType().c_str());
+		temp.Format(_T("fileType = %s"), value->GetFileType().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 		//fileFormat
-		temp.Format(_T("fileFormat = %s"), value->GetfileFormat().c_str());
+		temp.Format(_T("fileFormat = %s"), value->GetFileFormatAsWstring().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 	}
 }
@@ -291,7 +294,7 @@ void CPCVisualToolDlg::SetTreeCtrlSymbols(std::vector<ExternalFile*>* vecSymbols
 		temp.Format(_T("fileType = %s"), value->GetFileType().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 		//fileFormat
-		temp.Format(_T("fileFormat = %s"), value->GetFileFormat().c_str());
+		temp.Format(_T("fileFormat = %s"), value->GetFileFormatAsWstring().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 		
 	}
@@ -337,7 +340,7 @@ void CPCVisualToolDlg::SetTreeLinStyles(std::vector< ExternalFile*>* vecLinStyle
 		temp.Format(_T("fileType = %s"), value->GetFileType().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 		//fileFormat
-		temp.Format(_T("fileFormat = %s"), value->GetFileFormat().c_str());
+		temp.Format(_T("fileFormat = %s"), value->GetFileFormatAsWstring().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 	}
 }
@@ -382,7 +385,7 @@ void CPCVisualToolDlg::SetTreeAreaFills(std::vector< ExternalFile*>* vecAreaFill
 		temp.Format(_T("fileType = %s"), value->GetFileType().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 		//fileFormat
-		temp.Format(_T("fileFormat = %s"), value->GetFileFormat().c_str());
+		temp.Format(_T("fileFormat = %s"), value->GetFileFormatAsWstring().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 	}
 }
@@ -613,30 +616,35 @@ void CPCVisualToolDlg::SetTreeRuleFiles(std::vector<S100_RuleFile*>* vecRuleFile
 
 	for (auto value : *vecRuleFiles)
 	{
-		//color profile id
-		temp.Format(_T("ruleFile   id = %s"), pugi::as_wide(value->GetID()).c_str());
+		//description
+		temp.Format(_T("ruleFile  id = %s"), value->GetId().c_str());
 		h_id = m_TreeCtrl.InsertItem(temp, h_root, NULL);
 
 		//description
 		h_description = m_TreeCtrl.InsertItem(_T("description"), h_id, NULL);
-		//description - name
-		temp.Format(_T("name = %s"), value->GetDescription()->Getname().c_str());
-		m_TreeCtrl.InsertItem(temp, h_description, NULL);
-		//description - description
-		temp.Format(_T("description = %s"), value->GetDescription()->Getdescription().c_str());
-		m_TreeCtrl.InsertItem(temp, h_description, NULL);
-		//description - language
-		temp.Format(_T("language = %s"), value->GetDescription()->Getlanguage().c_str());
-		m_TreeCtrl.InsertItem(temp, h_description, NULL);
+
+		std::vector<S100_Description*>* vecDescription = value->GetDescription();
+		for (auto descriptionVal : *vecDescription)
+		{
+			//description - name
+			temp.Format(_T("name = %s"), descriptionVal->Getname().c_str());
+			m_TreeCtrl.InsertItem(temp, h_description, NULL);
+			//description - description
+			temp.Format(_T("description = %s"), descriptionVal->Getdescription().c_str());
+			m_TreeCtrl.InsertItem(temp, h_description, NULL);
+			//description - language
+			temp.Format(_T("language = %s"), descriptionVal->Getlanguage().c_str());
+			m_TreeCtrl.InsertItem(temp, h_description, NULL);
+		}
 
 
 		temp.Format(_T("fileName = %s"), value->GetFileName().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 		temp.Format(_T("fileType = %s"), value->GetFileType().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
-		temp.Format(_T("fileFormat = %s"), value->GetFileFormat().c_str());
+		temp.Format(_T("fileFormat = %s"), value->GetFileFormatAsWstring().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
-		temp.Format(_T("ruleType = %s"), value->GetRuleType().c_str());
+		temp.Format(_T("ruleType = %s"), value->GetRuleTypeAsWstring().c_str());
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 	}
 }
@@ -668,7 +676,7 @@ void CPCVisualToolDlg::SetXmlTreeControl(PortrayalCatalogue* m_PC)
 	m_TreeCtrl.DeleteAllItems();
 
 	S100_ColorProfiles* colorProfiles =  m_PC->GetColorProfiles();
-	std::vector< S100_ColorProfile*>* vecColorProfiles = colorProfiles->GetColorProfilesVector();
+	std::vector< ExternalFile*>* vecColorProfiles = colorProfiles->GetColorProfilesVector();
 	SetTreeCtrlColorProfile(vecColorProfiles);
 
 	S100_Symbols* symbols = m_PC->GetSymbols();

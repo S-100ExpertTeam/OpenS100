@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\\S100_SVG_D2D1_DLL\\SVG.h"
+//#include "..\\S100_SVG_D2D1_DLL\\SVG.h"
 
 class SENC_LineSymbol
 {
@@ -16,5 +16,5 @@ public:
 	double scaleFactor;
 	int crsType;
 
-	S100_SVG_D2D1_DLL::SVG* pSvg;
+	//S100_SVG_D2D1_DLL::SVG* pSvg;
 };

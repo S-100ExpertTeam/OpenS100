@@ -39,6 +39,7 @@ bool Product::OpenFC(std::wstring path)
 		return true;
 	}
 
+	delete fc;
 	return false;
 }
 
@@ -52,5 +53,6 @@ bool Product::OpenPC(std::wstring path)
 		return true;
 	}
 
+	delete pc;
 	return false;
 }

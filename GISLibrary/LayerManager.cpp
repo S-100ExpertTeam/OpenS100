@@ -139,6 +139,7 @@ bool LayerManager::AddLayer(Layer* _layer)
 	{
 		return false;
 	}
+
 	mbr.SetMBR(_layer->m_mbr);
 	layer = _layer;
 
@@ -191,31 +192,18 @@ bool LayerManager::AddLayer(CString _filepath)
 		std::wstring fcName = L"";
 
 		int type = CheckFileType(_filepath);
-		// S-101 8211 or GML or H5
+		
+		// S-101
 		if (type == 2)
 		{
-			// Product Number (S-XXX)
-			CString strProductNumber = LibMFCUtil::GetFileName(_filepath).Left(3);
-			CString s = _T("S-");
-			strProductNumber = s + strProductNumber;
-
 			fc = gisLib->GetFC();
+			pc = gisLib->GetPC();
 
-			if (fc != nullptr)
+			layer = new S101Layer(fc, pc);
+			if ((S101Layer*)layer->Open(_filepath) == false)
 			{
-				pc = gisLib->GetPC();
-				fcName = fc->GetName();
-				fitor = fcName.find(L"S-");
-			}
-
-			if (type == 2)
-			{
-				layer = new S101Layer(fc, pc);
-				if ((S101Layer*)layer->Open(_filepath) == false)
-				{
-					delete layer;
-					return false;
-				}
+				delete layer;
+				return false;
 			}
 		}
 	}
@@ -223,23 +211,17 @@ bool LayerManager::AddLayer(CString _filepath)
 	if (!layer ||
 		!layer->m_spatialObject)
 	{
+		if (layer)
+		{
+			delete layer;
+		}
+
 		return false;
 	}
 
-	std::wstring layerName(LibMFCUtil::GetFileName(layer->GetLayerName()));
-
-	std::wstring inputPath = L"..\\ProgramData\\S100_PC_IO_XML\\INPUT\\";
-	std::wstring outputPath = L"..\\ProgramData\\S100_PC_IO_XML\\OUTPUT\\";
-
-	inputPath.append(layerName);
-	inputPath.append(L".xml");
-
-	outputPath.append(layerName);
-	outputPath.append(L".xml");
-
 	//	 ENC, Lua
 	if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
-		((S101Layer*)layer)->GetPC()->GetPortrayalRuleType() == PortrayalRuleType::LUA)
+		((S101Layer*)layer)->GetPC()->GetRuleFileFormat() == Portrayal::FileFormat::LUA)
 	{
 		BuildPortrayalCatalogue(layer);
 	}
@@ -756,6 +738,8 @@ void LayerManager::AddSymbolDrawing(
 	// Text
 	if (ENCCommon::TEXTOUT)
 	{
+		gisLib->D2.pBrush->SetOpacity(1.0f);
+		gisLib->D2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
 		if (text[drawingPrioriy].size() > 0)
 		{
 			HWND hWnd = ::GetActiveWindow();
@@ -795,14 +779,14 @@ void LayerManager::AddSymbolDrawing(
 					if (angle)
 						radian = -angle / 180. * M_PI;
 
-					COLORREF color = 0x00000000;
-					if (element->pColor == NULL)
-					{
-					}
-					else
-					{
-						color = *element->pColor;
-					}
+					//COLORREF color = 0x00000000;
+					//if (element->pColor == NULL)
+					//{
+					//}
+					//else
+					//{
+					//	color = *element->pColor;
+					//}
 
 					int bodySize = element->bodySize;
 
@@ -941,10 +925,14 @@ void LayerManager::AddSymbolDrawing(
 					offset_x += XOFFS;
 					offset_y += YOFFS;
 
-					int r = (color >> 16) & 0xff;
-					int g = ((color >> 8) & 0xff);
-					int b = ((color >> 0) & 0xff);
-					gisLib->D2.pBrush->SetColor(D2D1::ColorF((FLOAT)(GetRValue(color)) / (float)255.0, (GetGValue(color)) / (float)255.0, (GetBValue(color) / (float)255.0)));
+					//int r = (color >> 16) & 0xff;
+					//int g = ((color >> 8) & 0xff);
+					//int b = ((color >> 0) & 0xff);
+					//gisLib->D2.pBrush->SetColor(D2D1::ColorF((FLOAT)(GetRValue(color)) / (float)255.0, (GetGValue(color)) / (float)255.0, (GetBValue(color) / (float)255.0)));
+					if (element->pColor)
+					{
+						gisLib->D2.pBrush->SetColor(element->pColor);
+					}
 
 					for (auto itor = points.begin(); itor != points.end(); itor++)
 					{
@@ -1165,8 +1153,13 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 	}
 }
 
-void LayerManager::S101RebuildPortrayal(/*PORTRAYAL_BUILD_TYPE type*/)
+void LayerManager::S101RebuildPortrayal()
 {
+	if (nullptr == layer)
+	{
+		return;
+	}
+	
 
 	if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
 	{
@@ -1187,15 +1180,12 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 {
 	auto pc = ((S101Layer*)l)->GetPC();
 
-	if (
-		l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
-		pc->GetPortrayalRuleType() == PortrayalRuleType::LUA)
+	if (l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
+		pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA)
 	{
 		auto mainRuleFile = pc->GetMainRuleFile();
 		auto fileName = mainRuleFile->GetFileName();
-
 		auto rootPath = pc->GetRootPath();
-
 		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
 		ProcessS101::ProcessS101_LUA(mainRulePath, (S101Layer*)l);
@@ -1271,10 +1261,25 @@ void LayerManager::SetViewMBR(RECT r)
 	scaler->SetMap(r);
 }
 
+void LayerManager::ChangeS100ColorPalette(GeoMetryLibrary::ColorTable value)
+{
+	if (value == GeoMetryLibrary::ColorTable::Day)
+	{
+		ChangeS100ColorPalette(L"Day");
+	}
+	else if (value == GeoMetryLibrary::ColorTable::Dusk)
+	{
+		ChangeS100ColorPalette(L"Dusk");
+	}
+	else if (value == GeoMetryLibrary::ColorTable::Night)
+	{
+		ChangeS100ColorPalette(L"Night");
+	}
+}
+
 void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 {
-
-	if (true == layer->IsS100Layer())
+	if (layer && true == layer->IsS100Layer())
 	{
 		auto s100layer = (S100Layer*)layer;
 		auto pc = s100layer->GetPC();
@@ -1298,11 +1303,14 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 		}
 	}
 
-
 	auto pc = gisLib->GetPC();
 	if (pc)
 	{
 		pc->SetCurrentPaletteName(paletteName);
+		pc->DeletePatternImage();
+		pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+		pc->DeleteLineImages();
+		pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
 	}
 }
 

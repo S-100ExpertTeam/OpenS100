@@ -5,7 +5,7 @@
 
 SENC_Color::SENC_Color()
 {
-	RGBColor = 0;
+	//RGBColor = 0;
 	transparency = 0;
 }
 
@@ -14,12 +14,12 @@ SENC_Color::~SENC_Color()
 
 }
 
-void SENC_Color::SetRGBColor(int value)
+void SENC_Color::SetRGBColor(D2D1_COLOR_F value)
 {
 	RGBColor = value;
 }
 
-int SENC_Color::GetRGBColor()
+D2D1_COLOR_F SENC_Color::GetRGBColor()
 {
 	return RGBColor;
 }
@@ -46,11 +46,12 @@ int SENC_Color::GetTransparency()
 
 void SENC_Color::ChangePallete(PortrayalCatalogue *pc)
 {
-	auto colorProfile = pc->GetColorProfile();
-	if (colorProfile)
-	{
-		auto paletteName = pc->GetCurrentPaletteName();
-		auto rgb = colorProfile->GetRGBRef(paletteName, GetToken());
-		SetRGBColor(rgb);
-	}
+	RGBColor = pc->GetS100PCManager()->GetS100ColorProfile()->GetColor(GetToken());
+	////auto colorProfile = pc->GetColorProfile();
+	////if (colorProfile)
+	//{
+	//	auto paletteName = pc->GetCurrentPaletteName();
+	//	auto rgb = colorProfile->GetRGBRef(paletteName, GetToken());
+	//	SetRGBColor(rgb);
+	//}
 }

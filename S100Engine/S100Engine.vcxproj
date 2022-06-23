@@ -287,6 +287,7 @@
     <ClCompile Include="PointInstruction.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="S100ColorProfile.cpp" />
+    <ClCompile Include="S100ColorProfiles.cpp" />
     <ClCompile Include="S100Data.cpp" />
     <ClCompile Include="S100DatasetManager.cpp" />
     <ClCompile Include="S100DrawingUnit.cpp" />
@@ -395,6 +396,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="S100BaseModelGeometricPrimitive.h" />
     <ClInclude Include="S100ColorProfile.h" />
+    <ClInclude Include="S100ColorProfiles.h" />
     <ClInclude Include="S100Data.h" />
     <ClInclude Include="S100DatasetManager.h" />
     <ClInclude Include="S100DrawingUnit.h" />

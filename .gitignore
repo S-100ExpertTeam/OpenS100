@@ -274,3 +274,6 @@ Redist/**
 
 # Backup file of WinMerge
 *.bak
+
+*_h.h
+settings.txt

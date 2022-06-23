@@ -1,5 +1,4 @@
-﻿//
-#include "pch.h"
+﻿#include "pch.h"
 #include "framework.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
@@ -8,10 +7,12 @@
 #include "OpenS100Doc.h"
 #include "OpenS100View.h"
 
-#include "..\\GeoMetryLibrary\\ENCCommon.h"
-#include "..\\GISLibrary\\GISLibrary.h"
-#include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
+#include "../GeoMetryLibrary/ENCCommon.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
 
+#include "../GISLibrary/GISLibrary.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
@@ -218,6 +219,7 @@ void COpenS100App::LoadSettings()
 {
 	ENCCommon::Open(L"..\\ProgramData\\data\\settings.txt");
 	gisLib->ChangeDisplayFont();
+	gisLib->GetLayerManager()->ChangeS100ColorPalette((GeoMetryLibrary::ColorTable)ENCCommon::m_eColorTable);
 	
 	return;
 }
@@ -268,4 +270,4 @@ void COpenS100App::SaveSettings()
 {
 	ENCCommon::Save(L"..\\ProgramData\\data\\settings.txt");
 	return;
-}
+} 

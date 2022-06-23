@@ -77,10 +77,11 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 			colorFill = (SENC_ColorFill*)areaFill;
 			if (colorFill->color)
 			{
-				D2D1_COLOR_F color;
-				color.r = (float)(GetRValue(colorFill->color->RGBColor) / 255.0);
-				color.g = (float)(GetGValue(colorFill->color->RGBColor) / 255.0);
-				color.b = (float)(GetBValue(colorFill->color->RGBColor) / 255.0);
+				D2D1_COLOR_F color = colorFill->color->RGBColor;
+				//color.r = (float)(GetRValue(colorFill->color->RGBColor) / 255.0);
+				//color.g = (float)(GetGValue(colorFill->color->RGBColor) / 255.0);
+				//color.b = (float)(GetBValue(colorFill->color->RGBColor) / 255.0);
+				
 				color.a = 1 - colorFill->color->transparency;
 				brush->SetColor(color);
 
@@ -165,7 +166,7 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 			break;
 		case 4:
 			symbolFill = (SENC_SymbolFill*)areaFill;
-			if (symbolFill->symbol)
+			//if (symbolFill->symbol)			
 			{
 				auto patternMap = &pc->GetS100PCManager()->areaFillInfo.patternMap;
 				auto i = patternMap->find(symbolFill->GetFileTitle().c_str());
@@ -256,10 +257,11 @@ void SENC_AreaInstruction::FromS100Instruction(
 				colorFill->color->SetToken(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetToken());
 				colorFill->color->SetTransparency((float)_wtof(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTransparency().c_str()));
 
-				auto colorProfile = pc->GetColorProfile();
+				auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
+
 				if (colorProfile)
 				{
-					colorFill->color->RGBColor = colorProfile->GetRGBRef(pc->GetCurrentPaletteName(), colorFill->color->token);;
+					colorFill->color->RGBColor = colorProfile->GetColor(colorFill->color->token);
 				}
 			}
 			break;
@@ -273,34 +275,37 @@ void SENC_AreaInstruction::FromS100Instruction(
 		case 4: // Symbol Fill
 			areaFill = new SENC_SymbolFill();
 			symbolFill = (SENC_SymbolFill*)areaFill;
-			symbolFill->areaCRSType = SENC_CommonFuc::GetAreaCRSType(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetAreaCRS());
 
-			areaFill->SetFileTitle(s100AreaInstruction->GetAreaFill()->GetFileTitle());
+			auto s100SymbolFill = (S100_SymbolFill*)s100AreaInstruction->GetAreaFill();
 
-			if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol())
-			{
-				symbolFill->symbol = new SENC_Symbol();
-				symbolFill->symbol->reference = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetReference();
+			symbolFill->areaCRSType = SENC_CommonFuc::GetAreaCRSType(s100SymbolFill->GetAreaCRS());
 
-				if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation())
-				{
-					symbolFill->symbol->rotation = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotation();
-				}
+			areaFill->SetFileTitle(s100SymbolFill->GetFileTitle());
 
-				symbolFill->symbol->rotationCRS = SENC_CommonFuc::GetRotationCRS(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetRotationCRS());
-				symbolFill->symbol->scaleFactor = (float)(_wtof(((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetSymbol()->GetScaleFactor().c_str()));
-			}
+			//if (s100SymbolFill->GetSymbol())
+			//{
+			//	symbolFill->symbol = new SENC_Symbol();
+			//	symbolFill->symbol->reference = s100SymbolFill->GetSymbol()->GetReference();
 
-			if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1())
-			{
-				symbolFill->v1.x = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1()->GetX();
-				symbolFill->v1.y = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1()->GetY();
-			}
-			if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2())
-			{
-				symbolFill->v2.x = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2()->GetX();
-				symbolFill->v2.y = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2()->GetY();
-			}
+			//	if (s100SymbolFill->GetSymbol()->GetRotation())
+			//	{
+			//		symbolFill->symbol->rotation = s100SymbolFill->GetSymbol()->GetRotation();
+			//	}
+
+			//	symbolFill->symbol->rotationCRS = SENC_CommonFuc::GetRotationCRS(s100SymbolFill->GetSymbol()->GetRotationCRS());
+			//	symbolFill->symbol->scaleFactor = (float)(_wtof(s100SymbolFill->GetSymbol()->GetScaleFactor().c_str()));
+			//}
+
+			//if (s100SymbolFill->GetV1())
+			//{
+			//	symbolFill->v1.x = s100SymbolFill->GetV1()->GetX();
+			//	symbolFill->v1.y = s100SymbolFill->GetV1()->GetY();
+			//}
+			//if (s100SymbolFill->GetV2())
+			//{
+			//	symbolFill->v2.x = s100SymbolFill->GetV2()->GetX();
+			//	symbolFill->v2.y = s100SymbolFill->GetV2()->GetY();
+			//}
 		}
 	}
 }
