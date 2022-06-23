@@ -43,7 +43,7 @@ Scaler* CGISLibraryApp::GetScaler()
 	return m_pScaler;
 }
 
-void CGISLibraryApp::InitLibrary()
+void CGISLibraryApp::InitLibrary(std::wstring fcPath, std::wstring pcPath)
 {
 	//Product product;
 	//product.OpenFC(L"..\\ProgramData\\xml\\S-101_FC.xml");
@@ -53,9 +53,9 @@ void CGISLibraryApp::InitLibrary()
 
 	D2.CreateDeviceIndependentResources();
 	D2.CreateDeviceDependentResources();
-
-	fc = new FeatureCatalogue(L"..\\ProgramData\\xml\\S-101_FC.xml");
-	pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
+		
+	fc = new FeatureCatalogue(fcPath);
+	pc = new PortrayalCatalogue(pcPath);
 	pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
 	pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
 	pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));

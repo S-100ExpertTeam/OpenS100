@@ -458,7 +458,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	gisLib->InitLibrary();
+	gisLib->InitLibrary(L"..\\ProgramData\\xml\\S-101_FC.xml", L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
 
 	return 0;
 }

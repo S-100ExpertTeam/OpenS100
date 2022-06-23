@@ -32,7 +32,7 @@ public:
 public:
 	Scaler* GetScaler();
 	LayerManager* GetLayerManager();
-	void InitLibrary();
+	void InitLibrary(std::wstring fcPath, std::wstring pcPath);
 	bool AddBackgroundLayer(CString _filepath);
 	bool AddLayer(CString _filepath);
 	void Draw(HDC &hDC, int offset = 0);
