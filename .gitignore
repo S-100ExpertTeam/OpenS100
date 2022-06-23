@@ -276,3 +276,4 @@ Redist/**
 *.bak
 
 *_h.h
+settings.txt

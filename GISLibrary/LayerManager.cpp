@@ -1153,8 +1153,13 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 	}
 }
 
-void LayerManager::S101RebuildPortrayal(/*PORTRAYAL_BUILD_TYPE type*/)
+void LayerManager::S101RebuildPortrayal()
 {
+	if (nullptr == layer)
+	{
+		return;
+	}
+	
 
 	if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
 	{
