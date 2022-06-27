@@ -66,5 +66,8 @@ namespace LatLonUtility {
 	wchar_t* ConvertCtoWC(char* str);
 
 	std::vector<std::string> Split(std::string targetStr, std::string token);
+
+	// value : 0101000000000000000000F03F000000000000F03F
+	char* WKBtoString(std::string value);
 };
 #endif 

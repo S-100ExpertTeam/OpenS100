@@ -457,7 +457,7 @@ int SCommonFuction::inside(SPoint* point, SSurface* poly, bool applyOption)
 {
 	unsigned i = 0, ret = 1;
 
-	if (inside(point->m_point.x, point->m_point.y, poly) == -1)
+	if (inside(point->x, point->y, poly) == -1)
 	{
 		ret = -1;
 	}

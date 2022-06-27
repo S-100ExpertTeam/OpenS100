@@ -67,8 +67,8 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 		auto p = (SPoint*)geom;
 
 		scaler->WorldToDevice(
-			p->m_point.x, 
-			p->m_point.y,
+			p->x, 
+			p->y,
 			&SGeometry::viewPoints[0].x, 
 			&SGeometry::viewPoints[0].y);
 
@@ -99,8 +99,8 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 
 				long ix = 0;
 				long iy = 0; 
-				double mx = p->m_point.GetX();
-				double my = p->m_point.GetY();
+				double mx = p->x;
+				double my = p->y;
 
 				if (false == ENCCommon::FULL_SECTORS)
 				{

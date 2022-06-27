@@ -174,3 +174,41 @@ std::vector<std::string> LatLonUtility::Split(std::string targetStr, std::string
 
 	return ret;
 }
+
+char* LatLonUtility::WKBtoString(std::string value)
+{
+	if (value.length() <= 0 || value.length() % 2 != 0)
+	{
+		return nullptr;
+	}
+
+	char* result = new char[value.length() / 2];
+
+	for (int i = 0; i < value.length() / 2; i++)
+	{
+		char first = value[i * 2];
+		char second = value[i * 2 + 1];
+
+		if (first < 58)
+		{
+			first -= 48;
+		}
+		else if (first > 64)
+		{
+			first -= 55;
+		}
+
+		if (second < 58)
+		{
+			second -= 48;
+		}
+		else if (second > 64)
+		{
+			second -= 55;
+		}
+
+		result[i] = (first << 4) | second;
+	}
+
+	return result;
+}

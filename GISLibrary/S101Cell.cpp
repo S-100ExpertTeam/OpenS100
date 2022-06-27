@@ -681,7 +681,7 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 					fe->m_geometry = new SPoint();
 					SPoint* geo = (SPoint*)fe->m_geometry;
 					GetFullSpatialData(r, geo);
-					geo->m_mbr.CalcMBR(geo->m_point.x, geo->m_point.y);
+					geo->m_mbr.CalcMBR(geo->x, geo->y);
 				}
 				else if (r->m_c3it)
 				{
@@ -1032,7 +1032,7 @@ BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, SPoint* point)
 			y / 10000000.0);
 	}
 
-	projection(point->m_point.x, point->m_point.y);
+	projection(point->x, point->y);
 
 	return TRUE;
 }
@@ -1471,7 +1471,7 @@ SCurve* S101Cell::GetCurveGeometry(R_CurveRecord *r)
 	}
 
 	retCurve->m_numPoints = totalCoordinateCount;
-	retCurve->m_pPoints = new GeoPoint[totalCoordinateCount];
+	retCurve->m_pPoints = new SPoint[totalCoordinateCount];
 
 	double x = spr->m_c2it->m_xcoo;
 	double y = spr->m_c2it->m_ycoo;

@@ -27,8 +27,6 @@ public:
 	// 4 : Multi Point (Sounding)
 	int type;
 
-	//R_FeatureRecord* m_pFeature = nullptr;
-
 public:
 	// 1 : Point 
 	// 2 : Curve

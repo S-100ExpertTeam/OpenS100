@@ -58,10 +58,10 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 	if (vectorPoint)
 	{
 		SPoint geo;
-		geo.m_point.x = vectorPoint->x;
-		geo.m_point.y = vectorPoint->y;
-		projection(geo.m_point.x, geo.m_point.y);
-		scaler->WorldToDevice_F(geo.m_point.x, geo.m_point.y, &tempPoint.x, &tempPoint.y);
+		geo.x = vectorPoint->x;
+		geo.y = vectorPoint->y;
+		projection(geo.x, geo.y);
+		scaler->WorldToDevice_F(geo.x, geo.y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
 	else if (HasSpatialReference() == true)
@@ -159,7 +159,7 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 	else if (fr->m_geometry->type == 1)
 	{
 		SPoint* geo = (SPoint*)fr->m_geometry;
-		scaler->WorldToDevice_F(geo->m_point.x, geo->m_point.y, &tempPoint.x, &tempPoint.y);
+		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
 	else if (fr->m_geometry->type == 2)
@@ -268,10 +268,10 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 	if (vectorPoint)
 	{
 		SPoint geo;
-		geo.m_point.x = vectorPoint->x;
-		geo.m_point.y = vectorPoint->y;
-		projection(geo.m_point.x, geo.m_point.y);
-		scaler->WorldToDevice_F(geo.m_point.x, geo.m_point.y, &tempPoint.x, &tempPoint.y);
+		geo.x = vectorPoint->x;
+		geo.y = vectorPoint->y;
+		projection(geo.x, geo.y);
+		scaler->WorldToDevice_F(geo.x, geo.y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
 	else if (true == HasSpatialReference())
@@ -368,7 +368,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 	else if (fr->m_geometry->type == 1)
 	{
 		SPoint* geo = (SPoint*)fr->m_geometry;
-		scaler->WorldToDevice_F(geo->m_point.x, geo->m_point.y, &tempPoint.x, &tempPoint.y);
+		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
 	else if (fr->m_geometry->type == 2)

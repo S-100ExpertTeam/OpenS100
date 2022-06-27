@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "SCurve.h"
 
-#include "..\\GeoMetryLibrary\\Scaler.h"
-#include "..\\GeoMetryLibrary\\GeoPoint.h"
+#include "../GeoMetryLibrary/Scaler.h"
+
+#include "../S100Geometry/SPoint.h"
 
 SCurve::SCurve() 
 {
@@ -34,7 +35,7 @@ double SCurve::GetX(int i)
 	{
 		return 0;
 	}
-	return (m_pPoints + i)->GetX();
+	return (m_pPoints + i)->x;
 }
 
 double SCurve::GetY(int i)
@@ -43,7 +44,7 @@ double SCurve::GetY(int i)
 	{
 		return 0;
 	}
-	return (m_pPoints + i)->GetY();
+	return (m_pPoints + i)->y;
 }
 
 #pragma warning(disable:4244)

@@ -31,6 +31,7 @@ public:
 	ID2D1PathGeometry* pGeometry = nullptr;
 
 public:
+
 	int GetNumPointPerPart(int partIndex);
 	void CalculateCenterPoint();
 	

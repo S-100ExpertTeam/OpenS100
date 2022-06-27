@@ -18,6 +18,9 @@ public:
 public:
 	virtual void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0) {};
 	virtual void DrawTextInfo(HDC &hDC, Scaler *scaler, double offset = 0) {};
+
+	virtual bool ImportFromWkb(char* value, int size) { return true; };
+	virtual bool ExportToWkb(char** value, int* size) { return true; };
 	
 public:
 	/*
@@ -110,14 +113,4 @@ public:
 	** Return value : The point that is offset from the starting point of the line.
 	*/
 	POINT GetOffsetPointOnLine(POINT _p1, POINT _p2, double offset);
-
-
-	/*
-	** Function : Draw a composite line on the line.
-	** factor :
-			  CDC*   pDC     - DC for drawing.
-			  POINT _p1      - The starting point of the line.
-			  POINT _p2      - The end point of the line.
-			  Symbol _symbol - CompositeLine
-	*/
 };

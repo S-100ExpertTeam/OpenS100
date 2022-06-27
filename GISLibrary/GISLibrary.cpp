@@ -2,12 +2,13 @@
 #include "GISLibrary.h"
 #include "Product.h"
 
-#include "..\\GeoMetryLibrary\\ENCCommon.h"
-#include "..\\GeoMetryLibrary\\ENCGeometry.h"
+#include "../GeoMetryLibrary/ENCCommon.h"
+#include "../GeoMetryLibrary/ENCGeometry.h"
 
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
-#include "..\\S100Geometry\\SGeometry.h"
+#include "../S100Geometry/SGeometry.h"
+#include "../S100Geometry/SPoint.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -15,6 +16,28 @@
 
 CGISLibraryApp::CGISLibraryApp()
 {
+	std::string wkb_string = "0101000000000000000000F03F000000000000F03F";
+
+
+	SPoint p;
+	//p.SetPoint(1, 1);
+	char* a = nullptr;
+	int size = 0;
+	
+	auto wkb = LatLonUtility::WKBtoString(wkb_string);
+	p.ImportFromWkb(wkb, 21);
+	delete[] wkb;
+
+	p.ExportToWkb(&a, &size);
+	delete[] a;
+
+	CString str;
+	for (int i = 0; i < size; i++)
+	{
+		str.AppendFormat(_T("%02X"), a[i] & 0xff);
+	}
+	OutputDebugString(str);
+
 	m_pLayerManager->scaler = m_pScaler;
 }
 

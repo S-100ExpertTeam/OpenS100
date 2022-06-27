@@ -68,7 +68,7 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 	if (fr->m_geometry->type == 1)
 	{
 		SPoint* geo = (SPoint*)fr->m_geometry;
-		scaler->WorldToDevice_F(geo->m_point.x, geo->m_point.y, &tempPoint.x, &tempPoint.y);
+		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 		dwTimeCheck_TextInstruction[1] += timeGetTime() - dwWorkStart;
 		iDebugCount_TextInstruction[1]++;
@@ -174,7 +174,7 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 	if (fr->m_geometry->type == 1)
 	{
 		SPoint* geo = (SPoint*)fr->m_geometry;
-		scaler->WorldToDevice_F(geo->m_point.x, geo->m_point.y, &tempPoint.x, &tempPoint.y);
+		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 		dwTimeCheck_TextInstruction[1] += timeGetTime() - dwWorkStart;
 		iDebugCount_TextInstruction[1]++;

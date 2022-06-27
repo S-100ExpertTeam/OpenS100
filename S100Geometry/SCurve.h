@@ -1,7 +1,7 @@
 #pragma once
 #include "SGeometry.h"
 
-class GeoPoint;
+class SPoint;
 class SCurve : public SGeometry
 {
 public:
@@ -11,7 +11,7 @@ public:
 public:
 	__int64 m_id = 0;
 	int m_numPoints = 0;
-	GeoPoint *m_pPoints = nullptr;
+	SPoint*m_pPoints = nullptr;
 	ID2D1PathGeometry* pGeometry = nullptr;
 
 public:

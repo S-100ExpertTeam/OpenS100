@@ -964,7 +964,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		long x = 0;
 		long y = 0;
 
-		gisLib->WorldToDevice(((SPoint*)(frPick->m_geometry))->m_point.x, ((SPoint*)(frPick->m_geometry))->m_point.y, &x, &y);
+		gisLib->WorldToDevice(((SPoint*)(frPick->m_geometry))->x, ((SPoint*)(frPick->m_geometry))->y, &x, &y);
 		x += offsetX;
 		y += offsetY;
 
@@ -1308,8 +1308,8 @@ void COpenS100View::PickReport(CPoint _point)
 			}
 			else if (sgeo->IsPoint())
 			{
-				double geoX = ((SPoint*)fr->m_geometry)->m_point.x;
-				double geoY = ((SPoint*)fr->m_geometry)->m_point.y;
+				double geoX = ((SPoint*)fr->m_geometry)->x;
+				double geoY = ((SPoint*)fr->m_geometry)->y;
 
 				if (((pickMBR.xmin <= geoX) && (geoX <= pickMBR.xmax))
 					&& ((pickMBR.ymin <= geoY) && (geoY <= pickMBR.ymax)))
@@ -1317,8 +1317,8 @@ void COpenS100View::PickReport(CPoint _point)
 					CString csFoid, csFrid, csLat, csLon, csType, csName, csAssoCnt;
 
 					SPoint* sr = (SPoint*)fr->m_geometry;
-					double lat = sr->m_point.x;
-					double lon = sr->m_point.y;
+					double lat = sr->x;
+					double lon = sr->y;
 
 					inverseProjection(lat, lon);
 
