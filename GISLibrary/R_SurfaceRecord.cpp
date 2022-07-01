@@ -36,8 +36,6 @@ BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 			F_INAS* inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
-
-			OutputDebugString(L"@@@ INAS @@@ \n\n");
 		}
 		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"RIAS"))
 		{

@@ -19,4 +19,13 @@ public:
 	int GetNumPoints();
 	double GetX(int index);
 	double GetY(int index);
+	double GetZ(int index);
+	void SetSize(int size);
+	void SetMBR();
+
+	void Add(double x, double y, double z);
+	void Set(int index, double x, double y, double z);
+
+	bool ImportFromWkb(char* value, int size);
+	bool ExportToWkb(char** value, int* size);
 };

@@ -9,6 +9,8 @@
 
 #include "../S100Geometry/SGeometry.h"
 #include "../S100Geometry/SPoint.h"
+#include "../S100Geometry/SMultiPoint.h"
+#include "../S100Geometry/SCurve.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -16,27 +18,70 @@
 
 CGISLibraryApp::CGISLibraryApp()
 {
-	std::string wkb_string = "0101000000000000000000F03F000000000000F03F";
+	//SCurve curve;
+	//curve.Init(3);
+	//curve.Set(0, 1, 2);
+	//curve.Set(1, 2, 3);
+	//curve.Set(2, 3, 4);
+	//
+
+	//std::string wkb_string = "0101000000000000000000F03F000000000000F03F";
+
+	//SMultiPoint mp;
+	//mp.Add(1, 2, 3);
+	//mp.Add(4, 5, 6);
+	//mp.Add(7, 8, 9);
+
+	//
+
+	////SPoint p;
+	////p.SetPoint(123, 456);
+	//char* a = nullptr;
+	//int size = 0;
+
+	//GeoPointZ p;
+	//p.SetPoint(123, 456, 789);
+
+	//curve.ExportToWkb(&a, &size);
+	//curve.WriteWkb(L"G:\\TDS\\WKBLineString.wkb");
+
+	//CString str;
+	//for (int i = 0; i < size; i++)
+	//{
+	//	str.AppendFormat(_T("%02X"), a[i] & 0xff);
+	//}
+	//OutputDebugString(str);
 
 
-	SPoint p;
-	//p.SetPoint(1, 1);
-	char* a = nullptr;
-	int size = 0;
-	
-	auto wkb = LatLonUtility::WKBtoString(wkb_string);
-	p.ImportFromWkb(wkb, 21);
-	delete[] wkb;
+	//mp.ExportToWkb(&a, &size);
+	//mp.WriteWkb(L"G:\\TDS\\a.wkb");
+	//auto wkb_mp = LatLonUtility::WKBtoString(wkb_string);
 
-	p.ExportToWkb(&a, &size);
-	delete[] a;
 
-	CString str;
-	for (int i = 0; i < size; i++)
-	{
-		str.AppendFormat(_T("%02X"), a[i] & 0xff);
-	}
-	OutputDebugString(str);
+	//for (int i = 0; i < size; i++)
+	//{
+	//	str.AppendFormat(_T("%02X"), a[i] & 0xff);
+	//}
+	//OutputDebugString(str);
+
+	//p.ExportToWkb(&a, &size);
+
+	//for (int i = 0; i < size; i++)
+	//{
+	//	str.AppendFormat(_T("%02X"), a[i] & 0xff);
+	//}
+	//OutputDebugString(str);
+
+
+	//delete[] a;
+
+
+	//auto wkb = LatLonUtility::WKBtoString(wkb_string);
+	//p.ImportFromWkb(wkb, 21);
+	//delete[] wkb;
+
+	//p.ExportToWkb(&a, &size);
+	//delete[] a;
 
 	m_pLayerManager->scaler = m_pScaler;
 }

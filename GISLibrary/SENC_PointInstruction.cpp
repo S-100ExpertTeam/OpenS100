@@ -115,7 +115,7 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 			{
 				SSurface* geo = (SSurface*)fr->m_geometry;
 
-				for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
+				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
 				{
 					auto curve = j->GetCurve();
 					auto rcid = curve->GetRCID();
@@ -325,7 +325,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 			{
 				SSurface* geo = (SSurface*)fr->m_geometry;
 
-				for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
+				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
 				{
 					auto curve = j->GetCurve();
 					auto rcid = curve->GetRCID();

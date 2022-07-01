@@ -19,6 +19,7 @@ class F_FASC;
 class F_MASK;
 
 struct ATTR;
+struct SPAS;
 
 // Feature Type Record
 class R_FeatureRecord : Record
@@ -31,6 +32,7 @@ public:
 	// 000
 	F_FRID m_frid;
 	F_FOID m_foid;
+
 
 	std::list<F_ATTR*> m_attr;
 	std::list<F_INAS*> m_inas;
@@ -66,21 +68,10 @@ public:
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
-	void Draw(CDC *pDC, Scaler *scaler, double offset = 0);
 	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 	
-	/*
-	* Drawing Instruction Type
-	* 1 : Point Instruction
-	* 2 : Curve Instruction
-	* 3 : Surface Instruction
-	* 4 : Text Instruction
-	*/
-	void Draw(HDC &hDC, Scaler *scaler, int type, int priority, double offset = 0);
-	void CreateCS(S101Cell *cell, CString csName, bool bSENC);
 	MBR GetMBR();
 	int GetRCID();
-	int GetAttributeIndex(ATTR* value);
 	int GetAssociationCount();
 	int GetFeatureAssociationCount();
 	int GetInformationAssociationCount();
@@ -96,6 +87,9 @@ public:
 	// 110 ~ 130 : normal
 	// -1 : error
 	int GetSPASRCNM();
+	int GetSPASCount();
 
 	SGeometry* GetGeometry();
+
+	SPAS* GetSPAS();
 };

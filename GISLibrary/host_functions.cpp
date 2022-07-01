@@ -522,21 +522,24 @@ int HostSpatialRelate(lua_State *l)
 
 int HostDebuggerEntry(lua_State *l)
 {
-	auto ls = lua_session::get_session(l);
+	//auto ls = lua_session::get_session(l);
 
-	auto command = ls->peek<std::string>(1);
+	//auto command = ls->peek<std::string>(1);
 
-	if (command == "trace")
-	{
-		auto text = ls->peek<std::string>(2);
-		std::cout << '\t' << text << std::endl;
-		OutputDebugStringA(text.c_str());
-	}
-	else
-	{
-		auto text = ls->peek<std::string>(2);
-		std::cout << '\t' << text << std::endl;
-	}
+	//if (command == "trace")
+	//{
+	//	auto text = ls->peek<std::string>(2);
+	//	//std::cout << '\t\n' << text << std::endl;
+	//	text.append("\n");
+	//	OutputDebugStringA(text.c_str());
+	//}
+	//else
+	//{
+	//	auto text = ls->peek<std::string>(2);
+	//	//std::cout << '\t\n' << text << std::endl;
+	//	text.append("\n");
+	//	OutputDebugStringA(text.c_str());
+	//}
 
 	return 0;
 }

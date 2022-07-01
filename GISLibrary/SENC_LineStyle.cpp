@@ -59,10 +59,8 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 
 	auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
 
-	//auto colorProfile = pc->GetColorProfile();
 	if (colorProfile)
 	{
-		//SetPenColor(colorProfile->GetRGBRef(pc->GetCurrentPaletteName(), colorToken));
 		SetPenColor(colorProfile->GetColor(colorToken));
 		SetPenColorToken(colorToken);
 	}
@@ -220,9 +218,6 @@ void SENC_LineStyle::DrawInstruction(
 		auto PEN_WIDTH = (float)((pen_width + 0.01) / 0.32);
 
 		D2D1_COLOR_F color = PEN_COLOR;
-		//color.r = (float)(GetRValue(PEN_COLOR) / 255.0);
-		//color.g = (float)(GetGValue(PEN_COLOR) / 255.0);
-		//color.b = (float)(GetBValue(PEN_COLOR) / 255.0);
 		color.a = 1;
 		brush->SetColor(color);
 

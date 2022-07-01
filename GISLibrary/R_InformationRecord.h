@@ -23,7 +23,6 @@ public:
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
 	int GetRCID();
-	int GetAttributeIndex(ATTR* value);
 	int GetAssociationCount();
 	int GetInformationAssociationCount();
 	int GetNumericCode();

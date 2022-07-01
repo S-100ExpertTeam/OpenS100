@@ -58,7 +58,6 @@ public:
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal(/*PORTRAYAL_BUILD_TYPE type = PORTRAYAL_BUILD_TYPE::ALL*/);
 	void Draw(HDC &hDC, int offset = 0);
-	void DrawLayerList(HDC &hDC, int offset = 0);
 	void DrawBackground(HDC &hDC, int offset = 0);
 
 	void DrawS100Datasets(HDC &hDC, int offset = 0);

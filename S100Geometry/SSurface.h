@@ -25,7 +25,7 @@ public:
 	GeoPoint* m_centerPoint = nullptr;
 	
 	// Curve points
-	std::list<SCurveHasOrient> m_listCurveLink;
+	std::list<SCurveHasOrient> curveList;
 
 	// AreaD2Geometry
 	ID2D1PathGeometry* pGeometry = nullptr;

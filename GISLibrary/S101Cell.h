@@ -110,9 +110,11 @@ public:
 	BOOL MakeLineData(R_FeatureRecord* fe);
 	BOOL MakeAreaData(R_FeatureRecord* fe);
 
+	// Record -> Geometry
 	BOOL GetFullSpatialData(R_PointRecord *r, SPoint* point);
 	BOOL GetFullSpatialData(R_PointRecord *r, GeoPointZ &geo);
 	BOOL GetFullSpatialData(R_MultiPointRecord *r, CArray<GeoPointZ> &geoArr);
+	BOOL GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint);
 	BOOL GetFullSpatialData(R_CurveRecord *r, CArray<GeoPoint> &geoArr, int ORNT = 1);
 	BOOL GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, int ORNT = 1);
 	BOOL GetFullSpatialData(R_CompositeRecord *r, CArray<GeoPoint> &geoArr, int ORNT = 1);
@@ -122,6 +124,7 @@ public:
 	SCurve* GetCurveGeometry(R_CurveRecord *r/*, CArray<GeoPoint> &geoArr, unsigned ORNT = 1*/);
 	BOOL SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList);
 
+	// Set R_FeatureRecord::m_curveList from Vector record
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CompositeRecord *r, int ornt = 1);
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int ornt = 1);
@@ -130,6 +133,7 @@ public:
 
 	void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler);
 	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
+
 	/*
 	* set instruction type 
 	* 1 : Point
@@ -142,8 +146,6 @@ public:
 
 	MBR CalcMBR();
 
-
-	//void SaveTextPlacement(CString _filepath, CString extend);
 	void GetDDRFromFile(CString _filepath);
 
 	void ProcessSpatialReference();
@@ -289,6 +291,8 @@ public:
 	void InitDrawingInstruction();
 
 	void GetDrawingPriority(std::vector<__int64>& key, std::vector<int>& priority);
+
+	void Validation();
 
 private:
 	bool UpdateDsgirRecord(S101Cell* cell);

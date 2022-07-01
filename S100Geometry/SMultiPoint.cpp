@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "SMultiPoint.h"
 
+#include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
+
 SMultiPoint::SMultiPoint()
 {
 	type = 4;
@@ -9,7 +11,9 @@ SMultiPoint::SMultiPoint()
 SMultiPoint::~SMultiPoint()
 {
 	delete pColor; pColor = nullptr;
-	delete m_pPoints; m_pPoints = nullptr;
+	
+	delete m_pPoints; 
+	m_pPoints = nullptr;
 }
 
 int SMultiPoint::GetNumPoints()
@@ -48,4 +52,115 @@ double SMultiPoint::GetY(int index)
 	}
 
 	return 0;
+}
+
+double SMultiPoint::GetZ(int index)
+{
+	try
+	{
+		if (m_pPoints)
+		{
+			return m_pPoints->at(index).z;
+		}
+	}
+	catch (std::out_of_range)
+	{
+		return 0;
+	}
+
+	return 0;
+}
+
+void SMultiPoint::SetSize(int size)
+{
+	if (m_pPoints == nullptr)
+	{
+		m_pPoints = new std::vector<GeoPointZ>();
+	}
+
+	m_pPoints->resize(size);
+}
+
+void SMultiPoint::SetMBR()
+{
+	for (auto i = m_pPoints->begin(); i != m_pPoints->end(); i++)
+	{
+		m_mbr.CalcMBR(i->GetX(), i->GetY());
+	}
+}
+
+void SMultiPoint::Add(double x, double y, double z)
+{
+	if (m_pPoints == nullptr)
+	{
+		m_pPoints = new std::vector<GeoPointZ>();
+	}
+
+	m_pPoints->push_back(GeoPointZ(x, y, z));
+	m_numPoints = m_pPoints->size();
+}
+
+void SMultiPoint::Set(int index, double x, double y, double z)
+{
+	if (m_pPoints && 
+		m_pPoints->size() > index)
+	{
+		m_pPoints->at(index).SetPoint(x, y, z);
+	}
+}
+
+bool SMultiPoint::ImportFromWkb(char* value, int size)
+{
+	if (value == nullptr ||
+		value[0] != 0x01)
+	{
+		return false;
+	}
+
+	int type = 0;
+
+	memcpy_s(&type, 4, value + 1, 4);
+
+	if (type != (int)WKBGeometryType::wkbMultiPointZ)
+	{
+		return false;
+	}
+
+	memcpy_s(&m_numPoints, 4, value + 5, 4);
+	m_pPoints = new std::vector<GeoPointZ>();
+	m_pPoints->resize(m_numPoints);
+
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		m_pPoints->at(i).ImportFromWkb(value + (9 + (29 * i)), 29);
+	}
+
+	return true;
+}
+
+bool SMultiPoint::ExportToWkb(char** value, int* size)
+{
+	*size = 9 + ((29) * m_numPoints);
+	if (*value == nullptr)
+	{
+		*value = new char[*size];
+	}
+	memset(*value, 0, *size);
+
+	(*value)[0] = 0x01;
+
+	int type = (int)WKBGeometryType::wkbMultiPointZ;
+
+	memcpy_s((*value) + 1, 4, &type, 4);
+
+	memcpy_s((*value) + 5, 4, &m_numPoints, 4);
+
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		int locSize = 0;
+		auto mem = (*value) + (9 + (29 * i));
+		m_pPoints->at(i).ExportToWkb(&mem, &locSize);
+	}
+
+	return true;
 }

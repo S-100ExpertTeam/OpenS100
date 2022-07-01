@@ -2,6 +2,8 @@
 #include "SCompositeCurve.h"
 #include "SCurve.h"
 
+#include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
+
 SCompositeCurve::SCompositeCurve()
 {
 	type = 2;
@@ -47,4 +49,38 @@ std::list<ID2D1PathGeometry*> SCompositeCurve::GetNewD2Geometry(ID2D1Factory1* f
 		ret.push_back((*i).GetCurve()->GetNewD2Geometry(factory, scaler));
 	}
 	return ret;
+}
+
+bool SCompositeCurve::ImportFromWkb(char* value, int size)
+{
+	if (value == nullptr ||
+		value[0] != 0x01)
+	{
+		return false;
+	}
+
+	int type = 0;
+
+	memcpy_s(&type, 4, value + 1, 4);
+
+	if (type != (int)WKBGeometryType::wkbMultiLineString)
+	{
+		return false;
+	}
+
+	int numLineStrings = 0;
+
+	memcpy_s(&numLineStrings, 4, value + 5, 4);
+	
+	for (int i = 0; i < numLineStrings; i++)
+	{
+	//	SCurveHasOrient curve(1,)
+	}
+
+	return true;
+}
+
+bool SCompositeCurve::ExportToWkb(char** value, int* size)
+{
+	return false;
 }

@@ -19,9 +19,15 @@ public:
 	int GetNumPoints();
 	double GetX(int i);
 	double GetY(int i);
+
+	void Init(int size);
+	void Set(int index, double x, double y);
 	
 public:
 	void CreateD2Geometry(ID2D1Factory1* factory);
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
+
+	bool ImportFromWkb(char* value, int size);
+	bool ExportToWkb(char** value, int* size);
 };

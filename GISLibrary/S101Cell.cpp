@@ -181,6 +181,35 @@ void S101Cell::GetDrawingPriority(std::vector<__int64>& key, std::vector<int>& p
 	//}
 }
 
+void S101Cell::Validation()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		auto feature = *i;
+		int spasCount = feature->GetSPASCount();
+
+		if (spasCount == 0)
+		{
+			OutputDebugString(L"No geometry\n");
+		}
+		else if (spasCount > 1)
+		{
+			OutputDebugString(L"Multiple spas field\n");
+		}
+		else if (spasCount == 1)
+		{
+			auto spas = feature->GetSPAS();
+			if (spas->m_ornt == 2)
+			{
+				auto featureCode = this->m_dsgir.GetFeatureCode(feature->m_frid.m_nftc);
+				CString str;
+				str.Format(L"ORNT in SPAS is reverse(RCNM : %d, %s(%d))\n", spas->m_name.RCNM, featureCode, feature->m_frid.m_name.RCID);
+				OutputDebugString(str);
+			}
+		}
+	}
+}
+
 R_DSGIR* S101Cell::GetDatasetGeneralInformationRecord()
 {
 	return &m_dsgir;
@@ -446,6 +475,8 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 		CalcMBR();
 		Check();
 
+		Validation();
+
 		return true;
 	}
 
@@ -683,33 +714,9 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 					GetFullSpatialData(r, geo);
 					geo->m_mbr.CalcMBR(geo->x, geo->y);
 				}
-				else if (r->m_c3it)
+				else
 				{
-					GeoPointZ geoArr;
-
-					GetFullSpatialData(r, geoArr);
-
-					int cnt = 1;
-
-					fe->m_geometry = new SMultiPoint();
-					SMultiPoint* geo = (SMultiPoint*)fe->m_geometry;
-
-					geo->m_numPoints = cnt;
-					if (!geo->m_pPoints)
-					{
-						geo->m_pPoints = new std::vector<GeoPointZ>(geo->m_numPoints);
-					}
-					else
-					{
-						geo->m_pPoints->clear();
-						if ((int)(*geo->m_pPoints).size() < geo->m_numPoints)
-							(*geo->m_pPoints).resize(geo->m_numPoints + 1);
-					}
-
-					for (int i = 0; i < cnt; i++)
-					{
-						(*geo->m_pPoints)[i].SetPoint(geoArr.x, geoArr.y, geoArr.z);
-					}
+					OutputDebugString(L"Invalid sub field in point record\n");
 				}
 			}
 		}
@@ -717,13 +724,19 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 
 	return TRUE;
 }
+
 BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 {
 	R_MultiPointRecord *r;
 	__int64 iKey;
 
-	CArray<GeoPointZ> geoArr;
+	if (fe->m_geometry)
+	{
+		delete fe->m_geometry;
+	}
 
+	fe->m_geometry = new SMultiPoint();
+	SMultiPoint* geo = (SMultiPoint*)fe->m_geometry;
 
 	for (auto itorParent = fe->m_spas.begin(); itorParent != fe->m_spas.end(); itorParent++)
 	{
@@ -736,49 +749,23 @@ BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 			iKey = ((__int64)spas->m_name.RCNM) << 32 | spas->m_name.RCID;
 			if (m_mpMap.Lookup(iKey, r))
 			{
-				GetFullSpatialData(r, geoArr);
+				GetFullSpatialData(r, geo);
+				geo->SetMBR();
 			}
 		}
 	}
 
-	int cnt = 0;
-	cnt = (int)geoArr.GetCount();
-
-	if (fe->m_geometry)
-		delete fe->m_geometry;
-
-	fe->m_geometry = new SMultiPoint();
-	SMultiPoint* geo = (SMultiPoint*)fe->m_geometry;
-
-	geo->m_numPoints = cnt;
-	if (!geo->m_pPoints) geo->m_pPoints = new std::vector<GeoPointZ>(geo->m_numPoints);
-	else
-	{
-		geo->m_pPoints->clear();
-		if ((int)(*geo->m_pPoints).size() < geo->m_numPoints)
-			(*geo->m_pPoints).resize(geo->m_numPoints + 1);
-	}
-
-	if (geo->m_numPoints > SGeometry::sizeOfPoint)
-	{
-		SGeometry::sizeOfPoint = geo->m_numPoints;
-		delete SGeometry::viewPoints;
-		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
-	}
-
-	for (int i = 0; i < cnt; i++)
-	{
-		(*geo->m_pPoints)[i].SetPoint(geoArr[i].x, geoArr[i].y, geoArr[i].z);
-		geo->m_mbr.CalcMBR(geoArr[i].x, geoArr[i].y);
-	}
-
-	geoArr.RemoveAll();
 	return TRUE;
 }
 
 BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 {
 	fe->m_curveList.clear();
+	//if (fe->m_geometry)
+	//{
+	//	delete fe->m_geometry;
+	//	fe->m_geometry = nullptr;
+	//}
 
 	R_CurveRecord *cr = nullptr;
 
@@ -829,8 +816,6 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 	return TRUE;
 }
 
-// feature - inCurveRecordList
-// 
 BOOL S101Cell::SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList)
 {
 	for (auto c = inCurveRecordList->begin(); c != inCurveRecordList->end(); c++)
@@ -974,7 +959,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 		}
 	}
 
-	SetSCurveList(&fe->m_curveList, &geo->m_listCurveLink);
+	SetSCurveList(&fe->m_curveList, &geo->curveList);
 
 	geoArr.RemoveAll();
 
@@ -1039,7 +1024,6 @@ BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, SPoint* point)
 
 BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord *r, CArray<GeoPointZ> &geoArr)
 {
-
 	for (auto itor = r->m_c3il.begin(); itor != r->m_c3il.end(); itor++)
 	{
 		F_C3IL *c3il = *itor;
@@ -1062,6 +1046,36 @@ BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord *r, CArray<GeoPointZ> &geoA
 	}
 
 	return TRUE;
+}
+
+BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint)
+{
+	if (r->m_c3il.size() == 1)
+	{
+		F_C3IL* c3il = r->m_c3il.front();
+
+		auto size = c3il->m_arr.size();
+		multiPoint->SetSize(size);
+
+		int index = 0;
+		for (auto itor = c3il->m_arr.begin(); itor != c3il->m_arr.end(); itor++)
+		{
+			C3IL* unitC3IL = *itor;
+
+			double x = unitC3IL->m_xcoo / (double)m_dsgir.m_dssi.m_cmfx;
+			double y = unitC3IL->m_ycoo / (double)m_dsgir.m_dssi.m_cmfy;
+			double z = (unitC3IL->m_zcoo > 0 ? unitC3IL->m_zcoo + 0.5 : unitC3IL->m_zcoo - 0.5) / (double)m_dsgir.m_dssi.m_cmfz;
+
+			projection(x, y);
+
+			multiPoint->Set(index, x, y, z);
+			index++;
+		}
+
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, CArray<GeoPoint> &geoArr, int ORNT)
@@ -1541,9 +1555,6 @@ BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CompositeRecord *r, int o
 			{
 				auto cuco = *itor;
 
-				if (cuco->m_ornt == 2)
-					ornt = (ornt == 2) ? 1 : 2;
-
 				if (cuco->m_name.RCNM == 120)
 				{
 					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
@@ -1569,9 +1580,6 @@ BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CompositeRecord *r, int o
 			for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
 			{
 				auto cuco = *itor;
-
-				if (cuco->m_ornt == 2)
-					ornt = (ornt == 2) ? 1 : 2;
 
 				if (cuco->m_name.RCNM == 120)
 				{
@@ -1608,7 +1616,9 @@ BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int orn
 			RIAS* rias = *itor;
 
 			if (rias->m_ornt == 2)
+			{
 				ornt = (ornt == 2) ? 1 : 2;
+			}
 
 			iKey = ((__int64)rias->m_name.RCNM) << 32 | rias->m_name.RCID;
 			if (rias->m_name.RCNM == 120)
@@ -1629,6 +1639,12 @@ BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int orn
 BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 {
 	std::list<SCurveHasOrient>* listCurveLink = nullptr;
+
+	if (fe->m_geometry == nullptr)
+	{
+		return FALSE;
+	}
+
 	if (fe->m_geometry->type == 2) // Line
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fe->m_geometry;
@@ -1637,7 +1653,7 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 	else if (fe->m_geometry->type == 3) // Line
 	{
 		SSurface* geo = (SSurface*)fe->m_geometry;
-		listCurveLink = &geo->m_listCurveLink;
+		listCurveLink = &geo->curveList;
 	}
 	else
 	{

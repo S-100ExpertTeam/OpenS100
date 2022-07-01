@@ -62,14 +62,12 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 {
 	std::list<SCurveHasOrient>* curListCurveLink = nullptr;
 
-	bool m_parentOrient = true;
-
 	// Surface
 	if (fr->m_geometry->type == 3)
 	{
 		auto surface = (SSurface*)fr->m_geometry;
 
-		curListCurveLink = &surface->m_listCurveLink;
+		curListCurveLink = &surface->curveList;
 	}
 	// Curve
 	else if (fr->m_geometry->type == 2)

@@ -42,8 +42,6 @@ BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 			inas->ReadField(buf);
 
 			m_inas.push_back(inas);
-
-			OutputDebugString(L"@@@ INAS @@@ \n\n");
 		}
 		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"COCC"))
 		{

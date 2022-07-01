@@ -1,8 +1,11 @@
 #include "StdAfx.h"
 #include "GeoPointZ.h"
-#include "Scaler.h"
 
 #include <sstream>
+
+#include "Scaler.h"
+
+#include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
 
 GeoPointZ::GeoPointZ(void)
 {
@@ -42,4 +45,47 @@ void GeoPointZ::DrawGeometry(HDC &hDC, Scaler *scaler, double offset)
 	streamVal << z;
 	std::wstring strVal = streamVal.str();
 	::TextOut(hDC, point.x - 15, point.y - 30, strVal.c_str(), (int)strVal.size());
+}
+
+bool GeoPointZ::ImportFromWkb(char* value, int size)
+{
+	if (value == nullptr || size != 29 ||
+		value[0] != 0x01)
+	{
+		return false;
+	}
+
+	int type = 0;
+	memcpy_s(&type, 4, value + 1, 4);
+
+	if (type != (int)WKBGeometryType::wkbPointZ)
+	{
+		return false;
+	}
+
+	memcpy_s(&x, 8, value + 5, 8);
+	memcpy_s(&y, 8, value + 13, 8);
+	memcpy_s(&z, 8, value + 21, 8);
+
+	return true;
+}
+
+bool GeoPointZ::ExportToWkb(char** value, int* size)
+{
+	*size = 29;
+	if (*value == nullptr)
+	{
+		*value = new char[*size];
+	}
+	memset(*value, 0, *size);
+
+	(*value)[0] = 0x01;
+
+	int type = (int)WKBGeometryType::wkbPointZ;
+	memcpy_s((*value) + 1, 4, &type, 4);
+
+	memcpy_s((*value) + 5, 8, &x, 8);
+	memcpy_s((*value) + 13, 8, &y, 8);
+	memcpy_s((*value) + 21, 8, &z, 8);
+	return true;
 }

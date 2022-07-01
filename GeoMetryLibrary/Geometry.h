@@ -21,7 +21,8 @@ public:
 
 	virtual bool ImportFromWkb(char* value, int size) { return true; };
 	virtual bool ExportToWkb(char** value, int* size) { return true; };
-	
+	bool WriteWkb(std::wstring path);
+
 public:
 	/*
 ** Function  : Find the center of gravity of a given polygon.

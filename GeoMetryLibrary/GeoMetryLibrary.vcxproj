@@ -256,6 +256,7 @@
     <ClInclude Include="ENCCommon.h" />
     <ClInclude Include="ENCConfiguration.h" />
     <ClInclude Include="ENCGeometry.h" />
+    <ClInclude Include="Enum_WKBGeometryType.h" />
     <ClInclude Include="GeoCommonFuc.h" />
     <ClInclude Include="GeometricFuc.h" />
     <ClInclude Include="Geometry.h" />

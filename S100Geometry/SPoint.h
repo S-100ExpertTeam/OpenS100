@@ -17,7 +17,7 @@ public:
 	double y = 0;
 
 	// It also has a CPoint arrangement to minimize memory allocation and recovery.
-	POINT   m_vPoint;
+	POINT   m_vPoint = {0, 0};
 
 public:
 	void SetPoint(double _x, double _y);

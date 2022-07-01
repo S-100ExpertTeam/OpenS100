@@ -13,15 +13,11 @@
 
 #include "..\\S100Geometry\\SGeometry.h"
 #include "..\\S100Geometry\\SPoint.h"
-#include "..\\S100Geometry\\SCompositeCurve.h"
 #include "..\\S100Geometry\\SSurface.h"
-#include "..\\S100Geometry\\SCurveHasOrient.h"
 #include "..\\S100Geometry\\SCurve.h"
 
 R_FeatureRecord::R_FeatureRecord(void)
 {
-	m_geometry = NULL;
-	m_scaleMin = 0;
 }
 
 R_FeatureRecord::~R_FeatureRecord(void)
@@ -155,13 +151,6 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return true;
 }
 
-void R_FeatureRecord::Draw(CDC *pDC, Scaler *scaler, double offset)
-{
-	if (m_geometry != NULL)
-	{
-	}
-}
-
 void R_FeatureRecord::Draw(HDC &hdc, Scaler *scaler, double offset)
 {
 	if (m_geometry != NULL)
@@ -169,22 +158,6 @@ void R_FeatureRecord::Draw(HDC &hdc, Scaler *scaler, double offset)
 		m_geometry->DrawGeometry(hdc, scaler, offset);
 		m_geometry->DrawTextInfo(hdc, scaler, offset);
 	}
-}
-
-void R_FeatureRecord::Draw(HDC &hDC, Scaler *scaler, int type, int priority, double offset)
-{
-
-}
-
-void R_FeatureRecord::CreateCS(S101Cell *cell, CString csName, bool bSENC)
-{
-	if (csName.Find(L"L") >= 0)
-		int io = 0;
-
-#ifdef _DEBUG11
-	return;
-#endif
-	return;
 }
 
 MBR R_FeatureRecord::GetMBR()
@@ -198,35 +171,6 @@ MBR R_FeatureRecord::GetMBR()
 int R_FeatureRecord::GetRCID()
 {
 	return m_frid.m_name.RCID;
-}
-
-int R_FeatureRecord::GetAttributeIndex(ATTR* value)
-{
-	int result = 1;
-	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
-	{
-		auto fATTR = *i;
-		if (fATTR == nullptr)
-		{
-			return -1;
-		}
-		if (fATTR != nullptr)
-		{
-			for (auto j = fATTR->m_arr.begin(); j != fATTR->m_arr.end(); j++)
-			{
-				auto attr = *j;
-				if (attr == value)
-				{
-					return result;
-				}
-				else
-				{
-					result++;
-				}
-			}
-		}
-	}
-	return result;
 }
 
 int R_FeatureRecord::GetAssociationCount()
@@ -299,7 +243,39 @@ int R_FeatureRecord::GetSPASRCNM()
 	return -1;
 }
 
+int R_FeatureRecord::GetSPASCount()
+{
+	int result = 0;
+
+	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
+	{
+		F_SPAS* spasParent = *i;
+
+		for (auto j = spasParent->m_arr.begin(); j != spasParent->m_arr.end(); j++)
+		{
+			result++;
+		}
+	}
+
+	return result;
+}
+
 SGeometry* R_FeatureRecord::GetGeometry()
 {
 	return m_geometry;
+}
+
+SPAS* R_FeatureRecord::GetSPAS()
+{
+	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
+	{
+		F_SPAS* spasParent = *i;
+
+		for (auto j = spasParent->m_arr.begin(); j != spasParent->m_arr.end(); j++)
+		{
+			return spasParent->m_arr.front();
+		}
+	}
+
+	return nullptr;
 }

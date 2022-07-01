@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "SCurve.h"
+#include "SPoint.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
+#include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
 
 #include "../S100Geometry/SPoint.h"
 
@@ -50,28 +52,30 @@ double SCurve::GetY(int i)
 #pragma warning(disable:4244)
 void SCurve::CreateD2Geometry(ID2D1Factory1* factory)
 {
-	if (nullptr == pGeometry)
+	if (pGeometry)
 	{
-		if (m_numPoints > 1)
+		SafeRelease(&pGeometry);
+	}
+
+	if (m_numPoints > 1)
+	{
+		auto points = new D2D1_POINT_2F[m_numPoints];
+		for (auto i = 0; i < m_numPoints; i++)
 		{
-			auto points = new D2D1_POINT_2F[m_numPoints];
-			for (auto i = 0; i < m_numPoints; i++)
-			{
-				points[i].x = m_pPoints[i].x;
-				points[i].y = -m_pPoints[i].y;
-			}
-
-			factory->CreatePathGeometry(&pGeometry);
-			ID2D1GeometrySink *pSink = nullptr;
-			pGeometry->Open(&pSink);
-			pSink->BeginFigure(points[0], D2D1_FIGURE_BEGIN_HOLLOW);
-			pSink->AddLines(points + 1, m_numPoints - 1);
-			pSink->EndFigure(D2D1_FIGURE_END_OPEN);
-			pSink->Close();
-			SafeRelease(&pSink);
-
-			delete[] points;
+			points[i].x = m_pPoints[i].x;
+			points[i].y = -m_pPoints[i].y;
 		}
+
+		factory->CreatePathGeometry(&pGeometry);
+		ID2D1GeometrySink *pSink = nullptr;
+		pGeometry->Open(&pSink);
+		pSink->BeginFigure(points[0], D2D1_FIGURE_BEGIN_HOLLOW);
+		pSink->AddLines(points + 1, m_numPoints - 1);
+		pSink->EndFigure(D2D1_FIGURE_END_OPEN);
+		pSink->Close();
+		SafeRelease(&pSink);
+
+		delete[] points;
 	}
 }
 
@@ -114,4 +118,69 @@ ID2D1PathGeometry* SCurve::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scal
 	return nullptr;
 }
 
+bool SCurve::ImportFromWkb(char* value, int size)
+{
+	if (value == nullptr ||
+		value[0] != 0x01)
+	{
+		return false;
+	}
 
+	int type = 0;
+
+	memcpy_s(&type, 4, value + 1, 4);
+
+	if (type != (int)WKBGeometryType::wkbLineString)
+	{
+		return false;
+	}
+
+	memcpy_s(&m_numPoints, 4, value + 5, 4);
+	m_pPoints = new SPoint[m_numPoints];
+
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		memcpy_s(&m_pPoints[i].x, 8, value + (9 + (8 * i)), 8);
+		memcpy_s(&m_pPoints[i].y, 8, value + (17 + (8 * i)), 8);
+	}
+
+	return true;
+}
+
+bool SCurve::ExportToWkb(char** value, int* size)
+{
+	*size = 9 + (16 * m_numPoints);
+	if (*value == nullptr)
+	{
+		*value = new char[*size];
+	}
+	memset(*value, 0, *size);
+
+	(*value)[0] = 0x01;
+
+	int type = (int)WKBGeometryType::wkbLineString;
+
+	memcpy_s((*value) + 1, 4, &type, 4);
+
+	memcpy_s((*value) + 5, 4, &m_numPoints, 4);
+
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		memcpy_s((*value) + (9 + (16 * i)), 8, &m_pPoints[i].x, 8);
+		memcpy_s((*value) + (17 + (16 * i)), 8, &m_pPoints[i].y, 8);
+	}
+
+	return true;
+}
+
+void SCurve::Init(int size)
+{
+	delete[] m_pPoints;
+	m_pPoints = new SPoint[size];
+	m_numPoints = size;
+}
+
+void SCurve::Set(int index, double x, double y)
+{
+	m_pPoints[index].SetPoint(x, y);
+}

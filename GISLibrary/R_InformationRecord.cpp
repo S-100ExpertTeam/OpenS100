@@ -82,29 +82,6 @@ int R_InformationRecord::GetRCID()
 	return m_irid.m_name.RCID;
 }
 
-int R_InformationRecord::GetAttributeIndex(ATTR* value)
-{
-	int result = 1;
-
-	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
-	{
-		auto fATTR = *i;
-		for (auto j = fATTR->m_arr.begin(); j != fATTR->m_arr.end(); j++)
-		{
-			auto attr = *j;
-			if (attr == value)
-			{
-				return result;
-			}
-			else
-			{
-				result++;
-			}
-		}
-	}
-	return result;
-}
-
 int R_InformationRecord::GetAssociationCount()
 {
 	return 0;
