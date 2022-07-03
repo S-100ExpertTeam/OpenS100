@@ -117,6 +117,8 @@ public:
 	BOOL GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint);
 	BOOL GetFullSpatialData(R_CurveRecord *r, CArray<GeoPoint> &geoArr, int ORNT = 1);
 	BOOL GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, int ORNT = 1);
+	BOOL GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT = 1);
+	BOOL GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT = 1);
 	BOOL GetFullSpatialData(R_CompositeRecord *r, CArray<GeoPoint> &geoArr, int ORNT = 1);
 	BOOL GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoArr, int ORNT = 1);
 	BOOL GetFullSpatialData(R_SurfaceRecord *r, CArray<GeoPoint> &geoArr);

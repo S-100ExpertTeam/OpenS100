@@ -23,6 +23,9 @@ public:
 	virtual bool ExportToWkb(char** value, int* size) { return true; };
 	bool WriteWkb(std::wstring path);
 
+	virtual void SetMBR() {};
+	virtual void CreateD2Geometry(ID2D1Factory1* factory) {};
+
 public:
 	/*
 ** Function  : Find the center of gravity of a given polygon.

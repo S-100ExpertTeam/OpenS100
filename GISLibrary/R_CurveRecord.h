@@ -49,4 +49,6 @@ public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
 	int GetRCID();
 	std::wstring GetRCIDasWstring();
+
+	int GetPointCount();
 };

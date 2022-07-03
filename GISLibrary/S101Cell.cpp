@@ -760,12 +760,12 @@ BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 
 BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 {
-	fe->m_curveList.clear();
-	//if (fe->m_geometry)
-	//{
-	//	delete fe->m_geometry;
-	//	fe->m_geometry = nullptr;
-	//}
+	//fe->m_curveList.clear();
+	if (fe->m_geometry)
+	{
+		delete fe->m_geometry;
+		fe->m_geometry = nullptr;
+	}
 
 	R_CurveRecord *cr = nullptr;
 
@@ -779,6 +779,10 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 		fe->m_geometry = nullptr;
 	}
 
+
+	//SCompositeCurve* scc = new SCompositeCurve();
+	//fe->m_geometry = scc;
+
 	for (auto i = fe->m_spas.begin(); i != fe->m_spas.end(); i++)
 	{
 		F_SPAS *spasParent = *i;
@@ -790,28 +794,39 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 
 			if (m_comMap.Lookup(iKey, ccr))
 			{
-				GetFullCurveData(fe, ccr, spas->m_ornt);
+				SCompositeCurve* scc = new SCompositeCurve();
+				fe->m_geometry = scc;
+				GetFullSpatialData(ccr, scc, spas->m_ornt);
+				//GetFullCurveData(fe, ccr, spas->m_ornt);
 			}
 			else if (m_curMap.Lookup(iKey, cr))
 			{
-				GetFullCurveData(fe, cr, spas->m_ornt);
+				auto sc = new SCurve();
+				fe->m_geometry = sc;
+				GetFullSpatialData(cr, sc, spas->m_ornt);
+				//GetFullSpatialData(cr, cr);
+				//GetFullCurveData(fe, cr, spas->m_ornt);
 			}
 		}
 	}
 
-	SCompositeCurve *scc = new SCompositeCurve();
-	fe->m_geometry = scc;
+	//SCompositeCurve *scc = new SCompositeCurve();
+	//fe->m_geometry = scc;
 
-	SetSCurveList(&fe->m_curveList, &scc->m_listCurveLink);
+	//SetSCurveList(&fe->m_curveList, &scc->m_listCurveLink);
 
-	scc->SetMBR();
 
 	if (gisLib == nullptr)
 	{
 		return false;
 	}
 
-	scc->CreateD2Geometry(gisLib->D2.pD2Factory);
+	if (fe->m_geometry)
+	{
+		fe->m_geometry->SetMBR();
+		fe->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
+
+	}
 
 	return TRUE;
 }
@@ -1255,7 +1270,150 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 		}
 	}
 
-	return TRUE;
+	return FALSE;
+}
+
+BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
+{
+	int pointCount = r->GetPointCount();
+	if (pointCount == 0)
+	{
+		return FALSE;
+	}
+
+	curve->Init(pointCount);
+	int pointIndex = 0;
+
+	if (nullptr != r->m_ptas)
+	{
+		auto countPTAS = r->m_ptas->m_arr.size();
+
+		if (countPTAS != 1 && countPTAS != 2)
+		{
+			OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
+		}
+
+		auto beginPointKey = r->m_ptas->m_arr.front()->m_name.GetName();
+		auto endPointKey = r->m_ptas->m_arr.back()->m_name.GetName();
+
+		auto beginPointRecord = GetPointRecord(beginPointKey);
+		if (nullptr == beginPointRecord || nullptr == beginPointRecord->m_c2it)
+		{
+			return FALSE;
+		}
+
+		auto endPointRecord = GetPointRecord(endPointKey);
+		if (nullptr == endPointRecord || nullptr == endPointRecord->m_c2it)
+		{
+			return FALSE;
+		}
+
+		// PTAS
+		if (1 == ORNT)
+		{
+			curve->Set(pointIndex++, beginPointRecord->m_c2it->m_xcoo, beginPointRecord->m_c2it->m_ycoo);
+		}
+		else if (2 == ORNT)
+		{
+			curve->Set(pointIndex++, endPointRecord->m_c2it->m_xcoo, endPointRecord->m_c2it->m_ycoo);
+		}
+		else
+		{
+			OutputDebugString(L"Invalied ORNT\n");
+			return FALSE;
+		}
+
+		// C2IL
+		if (r->m_c2il.size() == 1)
+		{
+			// Forward
+			if (1 == ORNT)
+			{
+				for (auto i = r->m_c2il.front()->m_arr.begin(); i != r->m_c2il.front()->m_arr.end(); i++)
+				{
+					auto segC2IL = *i;
+					curve->Set(pointIndex++, segC2IL->m_xcoo, segC2IL->m_ycoo);
+				}
+			}
+			// Reverse
+			else if (2 == ORNT)
+			{
+				for (auto i = r->m_c2il.front()->m_arr.rbegin(); i != r->m_c2il.front()->m_arr.rend(); i++)
+				{
+					auto segC2IL = *i;
+					curve->Set(pointIndex++, segC2IL->m_xcoo, segC2IL->m_ycoo);
+				}
+			}
+			else
+			{
+				OutputDebugString(L"Invalied ORNT\n");
+			}
+		}
+		else
+		{
+			OutputDebugString(L"Invalied C2IL count\n");
+		}
+
+		// PTAS
+		if (1 == ORNT)
+		{
+			curve->Set(pointIndex++, endPointRecord->m_c2it->m_xcoo, endPointRecord->m_c2it->m_ycoo);
+		}
+		else if (2 == ORNT)
+		{
+			curve->Set(pointIndex++, beginPointRecord->m_c2it->m_xcoo, beginPointRecord->m_c2it->m_ycoo);
+		}
+		else
+		{
+			OutputDebugString(L"Invalied ORNT\n");
+		}
+
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT)
+{
+	if (r->m_cuco.size() != 1)
+	{
+		return FALSE;
+	}
+
+	for (
+		auto i = r->m_cuco.front()->m_arr.begin();
+		i != r->m_cuco.front()->m_arr.end();
+		i++)
+	{
+		auto cuco = *i;
+		auto iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
+
+		if ((*i)->m_name.RCNM == 120)
+		{
+			R_CurveRecord* cr = nullptr;
+			
+			if (m_curMap.Lookup(iKey, cr))
+			{
+				GetFullSpatialData(cr, )
+			}
+		}
+		else if ((*i)->m_name.RCNM == 125)
+		{
+			R_CompositeRecord* ccr = nullptr;
+
+			if (m_comMap.Lookup(iKey, ccr))
+			{
+
+			}
+		}
+		else
+		{
+			OutputDebugString(L"Invalid rcnm\n");
+		}
+	}
+
+	return FALSE;
 }
 
 BOOL S101Cell::GetFullSpatialData(R_CompositeRecord *r, CArray<GeoPoint> &geoArr, int ORNT)
@@ -1535,6 +1693,19 @@ BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt)
 	ocr.m_pCurveRecord = r;
 	ocr.m_orient = ornt;
 	fe->m_curveList.push_back(ocr);
+
+
+	fe->m_geometry = new SCurve;
+
+	if (ornt == 1)
+	{
+
+	}
+	else
+	{
+
+	}
+
 	return TRUE;
 }
 

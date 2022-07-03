@@ -132,3 +132,32 @@ std::wstring R_CurveRecord::GetRCIDasWstring()
 {
 	return std::to_wstring(GetRCID());
 }
+
+int R_CurveRecord::GetPointCount()
+{
+	int result = 0;
+
+	auto countPTAS = m_ptas->m_arr.size();
+
+	if (countPTAS != 1 && countPTAS != 2)
+	{
+		OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
+		return 0;
+	}
+
+	// Separate start and last points
+	result = 2;
+
+	// C2IL
+	if (m_c2il.size() == 1)
+	{
+		result += m_c2il.front()->m_arr.size();
+	}
+	else
+	{
+		OutputDebugString(L"Invalied C2IL count\n");
+		return 0;
+	}
+
+	return result;
+}

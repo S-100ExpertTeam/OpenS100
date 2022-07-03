@@ -11,7 +11,7 @@ public:
 public:
 	__int64 m_id = 0;
 	int m_numPoints = 0;
-	SPoint*m_pPoints = nullptr;
+	SPoint* m_pPoints = nullptr;
 	ID2D1PathGeometry* pGeometry = nullptr;
 
 public:
@@ -27,7 +27,7 @@ public:
 	void CreateD2Geometry(ID2D1Factory1* factory);
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
-
+	void SetMBR();
 	bool ImportFromWkb(char* value, int size);
 	bool ExportToWkb(char** value, int* size);
 };
