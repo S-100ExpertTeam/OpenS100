@@ -187,10 +187,10 @@ void SCurve::Set(int index, double x, double y)
 
 void SCurve::SetMBR()
 {
-	m_mbr.InitMBR();
+	//m_mbr.InitMBR();
 
-	for (int i = 0; i < m_numPoints; i++)
-	{
-		m_mbr.CalcMBR(m_pPoints[i].x, m_pPoints[i].y);
-	}
+	//for (int i = 0; i < m_numPoints; i++)
+	//{
+	//	m_mbr.CalcMBR(m_pPoints[i].x, m_pPoints[i].y);
+	//}
 }

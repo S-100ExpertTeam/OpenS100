@@ -64,7 +64,7 @@ public:
 	*/
 	int m_alertIndicationType = 0;
 
-	//std::list<OrientedCurveRecord> m_curveList;
+	std::list<OrientedCurveRecord> m_curveList;
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
