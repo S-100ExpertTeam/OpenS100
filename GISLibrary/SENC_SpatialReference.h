@@ -10,9 +10,13 @@ public:
 
 public:
 	int RCNM = 0;
+
+	// RCID
 	unsigned int reference = 0;
+
 	bool bForward = true;
 
 public:
 	void SetRCNM(std::wstring& value);
+	long long GetRecordName();
 };

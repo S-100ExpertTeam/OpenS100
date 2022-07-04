@@ -17,10 +17,11 @@ public:
 	double y = 0;
 
 	// It also has a CPoint arrangement to minimize memory allocation and recovery.
-	POINT   m_vPoint = {0, 0};
+	POINT m_vPoint = {0, 0};
 
 public:
 	void SetPoint(double _x, double _y);
+	void SetMBR();
 
 	bool ImportFromWkb(char* value, int size);
 	bool ExportToWkb(char** value, int* size);

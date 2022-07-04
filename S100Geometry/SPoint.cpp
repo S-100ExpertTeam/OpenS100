@@ -26,6 +26,12 @@ void SPoint::SetPoint(double _x, double _y)
 	y = _y;
 }
 
+void SPoint::SetMBR()
+{
+	m_mbr.InitMBR();
+	m_mbr.CalcMBR(x, y);
+}
+
 bool SPoint::ImportFromWkb(char* value, int size)
 {
 	if (value == nullptr || size != 21 ||

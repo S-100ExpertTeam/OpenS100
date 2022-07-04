@@ -20,14 +20,19 @@
 SENC_PointInstruction::SENC_PointInstruction()
 {
 	type = 1;
-	symbol = NULL;
-	vectorPoint = NULL;
 }
 
 SENC_PointInstruction::~SENC_PointInstruction()
 {
-	if (symbol) delete symbol;
-	if (vectorPoint) delete vectorPoint;
+	if (symbol)
+	{
+		delete symbol;
+	}
+
+	if (vectorPoint)
+	{
+		delete vectorPoint;
+	}
 }
 
 #pragma warning(disable:4244)
@@ -47,7 +52,6 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 	D2D1_POINT_2F tempPoint;
 
 	bool bDraw;
-
 
 	if (symbol)
 	{
@@ -69,12 +73,17 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 		for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
 		{
 			auto sr = *i;
+			
+			// Point
 			if (sr->RCNM == 110)
 			{
+				
 			}
+			// Multi point
 			else if (sr->RCNM == 115)
 			{
 			}
+			// Curve
 			else if (sr->RCNM == 120 && fr->m_geometry->IsCurve())
 			{
 				SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
@@ -147,9 +156,11 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 					}
 				}
 			}
+			// Composite curve
 			else if (sr->RCNM == 125)
 			{
 			}
+			// Surface
 			else if (sr->RCNM == 130)
 			{
 			}

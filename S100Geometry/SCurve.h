@@ -9,6 +9,7 @@ public:
 	virtual ~SCurve();
 	
 public:
+	// RCNM(120) + RCID
 	__int64 m_id = 0;
 	int m_numPoints = 0;
 	SPoint* m_pPoints = nullptr;

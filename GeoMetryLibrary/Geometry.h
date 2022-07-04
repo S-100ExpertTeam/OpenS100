@@ -3,6 +3,9 @@
 
 class Scaler;
 class Symbol;
+
+struct ID2D1Factory1;
+
 class Geometry
 {
 public:

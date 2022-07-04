@@ -170,10 +170,10 @@ void SSurface::CreateD2Geometry(ID2D1Factory1* factory)
 		delete[] points;
 		points = nullptr;
 
-		for (auto i = curveList.begin(); i != curveList.end(); i++)
-		{
-			(*i).GetCurve()->CreateD2Geometry(factory);
-		}
+		//for (auto i = curveList.begin(); i != curveList.end(); i++)
+		//{
+		//	(*i).GetCurve()->CreateD2Geometry(factory);
+		//}
 	}
 }
 

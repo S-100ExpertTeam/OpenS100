@@ -83,6 +83,8 @@ void SMultiPoint::SetSize(int size)
 
 void SMultiPoint::SetMBR()
 {
+	m_mbr.InitMBR();
+
 	for (auto i = m_pPoints->begin(); i != m_pPoints->end(); i++)
 	{
 		m_mbr.CalcMBR(i->GetX(), i->GetY());

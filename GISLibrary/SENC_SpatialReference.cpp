@@ -13,7 +13,6 @@ SENC_SpatialReference::~SENC_SpatialReference()
 
 void SENC_SpatialReference::SetRCNM(std::wstring& value)
 {
-
 	if (value.compare(L"Point") == 0)
 	{
 		RCNM = 110;
@@ -34,4 +33,9 @@ void SENC_SpatialReference::SetRCNM(std::wstring& value)
 	{
 		RCNM = 130;
 	}
+}
+
+long long SENC_SpatialReference::GetRecordName()
+{
+	return ((__int64)RCNM) << 32 | (int)reference;
 }

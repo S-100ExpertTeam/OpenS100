@@ -46,6 +46,7 @@
 #include "SENC_DisplayList.h"
 #include "SENC_Instruction.h"
 #include "SENC_LineInstruction.h"
+#include "SENC_PointInstruction.h"
 
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"
 
@@ -53,7 +54,7 @@
 #include "..\\S100Geometry\\SMultiPoint.h"
 #include "..\\S100Geometry\\SCompositeCurve.h"
 #include "..\\S100Geometry\\SSurface.h"
-#include "..\\S100Geometry\\SCompositeCurve.h"
+#include "..\\S100Geometry\\SCommonFuction.h"
 #include "..\\S100Geometry\\SCurve.h"
 
 
@@ -712,7 +713,7 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 					fe->m_geometry = new SPoint();
 					SPoint* geo = (SPoint*)fe->m_geometry;
 					GetFullSpatialData(r, geo);
-					geo->m_mbr.CalcMBR(geo->x, geo->y);
+					//geo->m_mbr.CalcMBR(geo->x, geo->y);
 				}
 				else
 				{
@@ -750,7 +751,6 @@ BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 			if (m_mpMap.Lookup(iKey, r))
 			{
 				GetFullSpatialData(r, geo);
-				geo->SetMBR();
 			}
 		}
 	}
@@ -773,11 +773,11 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 
 	__int64 iKey = 0;
 
-	if (fe->m_geometry)
-	{
-		delete fe->m_geometry;
-		fe->m_geometry = nullptr;
-	}
+	//if (fe->m_geometry)
+	//{
+	//	delete fe->m_geometry;
+	//	fe->m_geometry = nullptr;
+	//}
 
 
 	//SCompositeCurve* scc = new SCompositeCurve();
@@ -823,7 +823,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 
 	if (fe->m_geometry)
 	{
-		fe->m_geometry->SetMBR();
+		//fe->m_geometry->SetMBR();
 		fe->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
 
 	}
@@ -863,7 +863,13 @@ BOOL S101Cell::SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, 
 // France
 BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 {
-	fe->m_curveList.clear();
+	//fe->m_curveList.clear();
+
+	if (fe->m_geometry)
+	{
+		delete fe->m_geometry;
+		fe->m_geometry = nullptr;
+	}
 
 	R_SurfaceRecord *sr;
 	__int64 iKey;
@@ -945,7 +951,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 
 	SSurface *geo = ((SSurface*)fe->m_geometry);
 
-	fe->m_curveList.clear();
+	//fe->m_curveList.clear();
 
 	R_CurveRecord *cr;
 	R_CompositeRecord *ccr;
@@ -974,7 +980,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 		}
 	}
 
-	SetSCurveList(&fe->m_curveList, &geo->curveList);
+	//SetSCurveList(&fe->m_curveList, &geo->curveList);
 
 	geoArr.RemoveAll();
 
@@ -1033,6 +1039,7 @@ BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, SPoint* point)
 	}
 
 	projection(point->x, point->y);
+	point->SetMBR();
 
 	return TRUE;
 }
@@ -1086,6 +1093,8 @@ BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 			multiPoint->Set(index, x, y, z);
 			index++;
 		}
+
+		multiPoint->SetMBR();
 
 		return TRUE;
 	}
@@ -1368,6 +1377,8 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 			OutputDebugString(L"Invalied ORNT\n");
 		}
 
+		curve->SetMBR();
+
 		return TRUE;
 	}
 
@@ -1395,7 +1406,19 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 			
 			if (m_curMap.Lookup(iKey, cr))
 			{
-				GetFullSpatialData(cr, )
+				SCurve* curve = new SCurve();
+				int localORNT = cuco->m_ornt;
+				
+				if (ORNT == 2)
+				{
+					if (cuco->m_ornt == 2)
+					{
+						cuco->m_ornt
+					}
+				}
+
+				GetFullSpatialData(cr, curve, if ();
+				curve->AddCurve(cr);
 			}
 		}
 		else if ((*i)->m_name.RCNM == 125)
@@ -1692,7 +1715,7 @@ BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt)
 	OrientedCurveRecord ocr;
 	ocr.m_pCurveRecord = r;
 	ocr.m_orient = ornt;
-	fe->m_curveList.push_back(ocr);
+	//fe->m_curveList.push_back(ocr);
 
 
 	fe->m_geometry = new SCurve;
@@ -3612,4 +3635,218 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 		}
 	}
 	return true;
+}
+
+void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* scaler, std::list<D2D1_POINT_2F>& points)
+{
+	if (nullptr == instruction ||nullptr == instruction->fr || nullptr == instruction->fr->m_geometry)
+	{
+		return;
+	}
+
+	double rotation = 0;
+	double scaleFactor = 1;
+	int viewPointNum = 0;
+	int partsIndex = 1;
+	int lastPointIndex = -1;
+	unsigned preLoc = -1, curLoc = 0;
+	D2D1_POINT_2F tempPoint;
+
+	bool bDraw;
+
+	if (instruction->symbol)
+	{
+		rotation = instruction->symbol->rotation;
+		scaleFactor = instruction->symbol->scaleFactor;
+	}
+
+	if (instruction->vectorPoint)
+	{
+		SPoint geo;
+		geo.x = instruction->vectorPoint->x;
+		geo.y = instruction->vectorPoint->y;
+		projection(geo.x, geo.y);
+		scaler->WorldToDevice_F(geo.x, geo.y, &tempPoint.x, &tempPoint.y);
+		points.push_back(tempPoint);
+	}
+	else if (instruction->HasSpatialReference() == true)
+	{
+		for (auto i = instruction->spatialReference.begin(); i != instruction->spatialReference.end(); i++)
+		{
+			auto sr = *i;
+
+			// Point
+			if (sr->RCNM == 110)
+			{
+				GetPointRecord(sr->GetRecordName());
+			}
+			// Multi point
+			else if (sr->RCNM == 115)
+			{
+			}
+			// Curve
+			else if (sr->RCNM == 120 && instruction->fr->m_geometry->IsCurve())
+			{
+				SCompositeCurve* geo = (SCompositeCurve*)instruction->fr->m_geometry;
+				for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
+				{
+					auto curve = j->GetCurve();
+					auto rcid = curve->GetRCID();
+					if (rcid == sr->reference)
+					{
+						int numPoints = curve->GetNumPoints();
+
+						POINT* screenPoints = new POINT[numPoints];
+
+						for (int k = 0; k < numPoints; k++)
+						{
+							scaler->WorldToDevice(
+								curve->GetX(k), curve->GetY(k),
+								&screenPoints[k].x, &screenPoints[k].y);
+						}
+
+						POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+
+						if (symbolPoint)
+						{
+							D2D1_POINT_2F d2Point;
+							d2Point.x = symbolPoint->x;
+							d2Point.y = symbolPoint->y;
+							delete symbolPoint;
+							points.push_back(d2Point);
+						}
+
+						delete[] screenPoints;
+						screenPoints = nullptr;
+					}
+				}
+			}
+			else if (sr->RCNM == 120 && instruction->fr->m_geometry->IsSurface())
+			{
+				SSurface* geo = (SSurface*)fr->m_geometry;
+
+				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
+				{
+					auto curve = j->GetCurve();
+					auto rcid = curve->GetRCID();
+					if (rcid == sr->reference)
+					{
+						int numPoints = curve->GetNumPoints();
+						POINT* screenPoints = new POINT[numPoints];
+
+						for (int k = 0; k < numPoints; k++)
+						{
+							scaler->WorldToDevice(
+								curve->GetX(k), curve->GetY(k),
+								&screenPoints[k].x, &screenPoints[k].y);
+						}
+
+						POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+
+						if (symbolPoint)
+						{
+							D2D1_POINT_2F d2Point;
+							d2Point.x = symbolPoint->x;
+							d2Point.y = symbolPoint->y;
+							delete symbolPoint;
+							points.push_back(d2Point);
+						}
+
+						delete[] screenPoints;
+						screenPoints = nullptr;
+					}
+				}
+			}
+			// Composite curve
+			else if (sr->RCNM == 125)
+			{
+			}
+			// Surface
+			else if (sr->RCNM == 130)
+			{
+			}
+		}
+	}
+	// When the feature is the point type,
+	else if (fr->m_geometry->type == 1)
+	{
+		SPoint* geo = (SPoint*)fr->m_geometry;
+		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
+		points.push_back(tempPoint);
+	}
+	else if (fr->m_geometry->type == 2)
+	{
+		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
+		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
+		{
+			bDraw = false;
+			SCurve* c = (*lcl).GetCurve();
+
+			if (!(*lcl).GetMasking())
+			{
+				for (auto index = 0; index < c->GetNumPoints(); index++)
+				{
+					if (scaler->GetMapCalcMBR().PtInMBR(c->m_pPoints[index].x, c->m_pPoints[index].y))
+					{
+						if (viewPointNum == 0 && index > 1)
+						{
+							scaler->WorldToDevice(c->m_pPoints[index - 1].x, c->m_pPoints[index - 1].y,
+								&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
+							viewPointNum++;
+						}
+						scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,
+							&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
+						viewPointNum++;
+					}
+				}
+			}
+			else
+			{
+				bDraw = true;
+			}
+
+			if (viewPointNum || bDraw)
+			{
+				POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+				if (symbolPoint)
+				{
+					tempPoint.x = (float)symbolPoint[0].x;
+					tempPoint.y = (float)symbolPoint[0].y;
+					points.push_back(tempPoint);
+
+					delete symbolPoint;
+				}
+				viewPointNum = 0;
+			}
+		}
+
+		if (viewPointNum)
+		{
+			POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+			if (symbolPoint)
+			{
+				tempPoint.x = (float)symbolPoint[0].x;
+				tempPoint.y = (float)symbolPoint[0].y;
+				points.push_back(tempPoint);
+
+				delete symbolPoint;
+			}
+			viewPointNum = 0;
+		}
+	}
+	else if (fr->m_geometry->type == 3)
+	{
+		SSurface* geo = (SSurface*)fr->m_geometry;
+
+		// need coordinates that are not clipped.
+		std::vector<POINT> vp;
+		SCommonFuction::CalculateCenterOfGravityOfSurface(vp, geo, &CRect(scaler->sxMin, scaler->syMin, scaler->sxMax, scaler->syMax), scaler);
+
+		for (auto itor = vp.begin(); itor != vp.end(); itor++)
+		{
+			tempPoint.x = (float)(*itor).x;
+			tempPoint.y = (float)(*itor).y;
+			points.push_back(tempPoint);
+		}
+	}
 }

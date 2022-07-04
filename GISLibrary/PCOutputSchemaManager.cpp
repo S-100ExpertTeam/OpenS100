@@ -115,7 +115,9 @@ void PCOutputSchemaManager::GenerateSENCAlertInstruction(S101Cell* cell, Portray
 			}
 			
 			if (sit->fr)
+			{
 				sit->fr->m_alertIndicationType = sit->alertType;
+			}
 
 			displayListSENC->AddAlertIndication(sit);
 		}

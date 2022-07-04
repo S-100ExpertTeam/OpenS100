@@ -11,7 +11,6 @@ public:
 
 public:
 	int m_numPoints = 0;
-	// For Sounding Depth
 	int* pColor = nullptr;
 	std::vector<GeoPointZ>* m_pPoints = nullptr;
 

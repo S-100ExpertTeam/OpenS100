@@ -1165,6 +1165,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 {
 	lineSuppressionMap.clear();
 
+	// Drawing priority : High -> Low
 	for (auto i = drawingPriority.rbegin(); i != drawingPriority.rend(); i++)
 	{
 		int drawingPriority = *i;
@@ -1238,12 +1239,12 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 
 				auto iterExist = lineSuppressionMap.find(id);
 
-				if (iterExist == lineSuppressionMap.end() && !cw->GetMasking())
+				if (iterExist == lineSuppressionMap.end() && false == cw->GetMasking())
 				{
 					lineSuppressionMap.insert(id);
 					cw->SetIsDuplicated(false);
 				}
-				else if (cw->GetMasking())
+				else if (true == cw->GetMasking())
 				{
 					cw->SetIsDuplicated(true);
 				}

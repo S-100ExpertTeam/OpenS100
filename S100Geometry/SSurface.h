@@ -6,6 +6,7 @@
 class Scaler;
 class GeoPoint;
 class MBR;
+class SCurve;
 
 class SSurface : public SGeometry
 {
@@ -25,7 +26,9 @@ public:
 	GeoPoint* m_centerPoint = nullptr;
 	
 	// Curve points
-	std::list<SCurveHasOrient> curveList;
+	//std::list<SCurveHasOrient> curveList;
+
+	//std::list<SCurve*> curveList;
 
 	// AreaD2Geometry
 	ID2D1PathGeometry* pGeometry = nullptr;

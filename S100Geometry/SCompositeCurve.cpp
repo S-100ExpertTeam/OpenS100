@@ -84,3 +84,8 @@ bool SCompositeCurve::ExportToWkb(char** value, int* size)
 {
 	return false;
 }
+
+void SCompositeCurve::AddCurve(SCurve* curve, bool masking)
+{
+	m_listCurveLink.push_back(SCurveHasOrient(curve, masking));
+}

@@ -37,6 +37,7 @@ class F_C2IL;
 class F_C3IL;
 class F_COCC;
 class F_ATTR;
+class SENC_PointIntruction;
 
 struct ATTR;
 
@@ -65,8 +66,7 @@ public:
 	// Comment : It's a record that doesn't exist when it's an update file, so you need to change it to a pointer
 	R_DSCRS m_dscrs;
 
-	std::unordered_map<__int64, SCurve*> m_curveMap;
-	std::unordered_map<__int64, R_VectorRecord*> m_vecMap;
+	//std::unordered_map<__int64, R_VectorRecord*> m_vecMap;
 
 	// When S101Cell stores GML, a variable for storing Namespace.
 	std::unordered_map<std::wstring, std::wstring>* gml_namespace = nullptr;
@@ -315,4 +315,6 @@ private:
 	bool UpdateComMapRecord(S101Cell* cell);
 	bool UpdateSurMapRecord(S101Cell* cell);
 	bool UpdateFeaMapRecord(S101Cell* cell);
+
+	void GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* scaler, std::list<D2D1_POINT_2F>& points);
 };
