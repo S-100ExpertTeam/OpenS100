@@ -7,13 +7,14 @@ class Scaler;
 class GeoPoint;
 class MBR;
 class SCurve;
+class SCompositeCurve;
 
 class SSurface : public SGeometry
 {
 public:
 	SSurface();
 	SSurface(MBR* mbr);
-	SSurface(std::vector<POINT>& points, std::vector<int> parts);
+	SSurface(std::vector<POINT>& points, std::vector<int>& parts);
 	virtual ~SSurface();
 	
 public:
@@ -26,9 +27,13 @@ public:
 	GeoPoint* m_centerPoint = nullptr;
 	
 	// Curve points
-	//std::list<SCurveHasOrient> curveList;
+	std::list<SCurveHasOrient> curveList;
 
 	//std::list<SCurve*> curveList;
+	//SCompositeCurve* compositeCurve = nullptr;
+
+	// Rings (front() is outerior)
+	//std::list<SGeometry*> curves;
 
 	// AreaD2Geometry
 	ID2D1PathGeometry* pGeometry = nullptr;
@@ -42,4 +47,10 @@ public:
 	
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
+
+	void AddCurve(SCurve* curve);
+	void AddCompositeCurve(SCompositeCurve* compositeCurve);
+	
+	void Init();
+	void Set(std::vector<POINT>& points, std::vector<int>& parts);
 };

@@ -31,4 +31,8 @@ public:
 	void SetMBR();
 	bool ImportFromWkb(char* value, int size);
 	bool ExportToWkb(char** value, int* size);
+
+	void Projection();
+	void SetMultiplicationFactor(int comfX, int comfY);
+	void SetRCID(int value);
 };

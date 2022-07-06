@@ -81,7 +81,6 @@ public:
 	static bool SHOW_LIST_ABBREVIATION;
 
 	static bool WGS84_TEXT_TYPE;
-	static bool	SHOW_USER_COAST_AREA_DETAIL;
 
 	static double SAFETY_DEPTH;				// unit : meter [IMP PS [3]]
 
@@ -106,14 +105,12 @@ public:
 	static std::unordered_map<std::wstring, bool> featureDisplaySettings;
 
 	static bool DISPLAY_PLANE;
-	static bool APPLY_DATA_COVERAGE_SCALE;
+
 	static float DISPLAY_SYMBOL_SCALE;
 
 	// true:  center Point(fluid)
 	// false: All AREA center point(fixed)
 	static bool AREA_SYMBOL_DYNAMIC_POSITION_MODE;
-
-	static int INTEROPERABILITY_LEVEL; //DISTANCE_TAGS;
 
 	// Show Text Placement
 	static BOOL	SHOW_TEXT_PLACEMENT;
@@ -122,16 +119,10 @@ public:
 	static int T_APPLY_OVER_N_UNDER_SCALE;
 	static int T_CURRENT_SCALE;
 
-	// setting DETECTION mode
-	static bool DETECTION_MODE;
-
-
 	static bool SIMPLIFIED_POINT_SYMBOL;
 	static bool AUTOSELECTION_CATALOGUE;
 	static bool S111_SHOW_NODATA;
 	static bool Show_INFORM01; //inform01 show / hide
-	
-	static bool S111_THINNING;
 
 public:
 	static bool Save(std::wstring filePath);

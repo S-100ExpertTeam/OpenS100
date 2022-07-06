@@ -21,5 +21,5 @@ public:
 	bool ImportFromWkb(char* value, int size);
 	bool ExportToWkb(char** value, int* size);
 
-	void AddCurve(SCurve* curve, bool masking);
+	void AddCurve(SCurve* curve, bool masking = false);
 };

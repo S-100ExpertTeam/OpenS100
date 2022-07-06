@@ -3,7 +3,6 @@
 #include "Product.h"
 
 #include "../GeoMetryLibrary/ENCCommon.h"
-#include "../GeoMetryLibrary/ENCGeometry.h"
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 

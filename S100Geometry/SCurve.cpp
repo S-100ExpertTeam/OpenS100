@@ -4,12 +4,13 @@
 
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
 
 #include "../S100Geometry/SPoint.h"
 
 SCurve::SCurve() 
 {
-
+	type = 5;
 }
 
 SCurve::~SCurve()
@@ -193,4 +194,26 @@ void SCurve::SetMBR()
 	{
 		m_mbr.CalcMBR(m_pPoints[i].x, m_pPoints[i].y);
 	}
+}
+
+void SCurve::Projection()
+{
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		projection(m_pPoints[i].x, m_pPoints[i].y);
+	}
+}
+
+void SCurve::SetMultiplicationFactor(int comfX, int comfY)
+{
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		m_pPoints[i].x /= comfX;
+		m_pPoints[i].y /= comfY;
+	}
+}
+
+void SCurve::SetRCID(int value)
+{
+	m_id = ((__int64)120) << 32 | value;
 }

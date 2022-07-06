@@ -16,7 +16,6 @@
 #include "..\\PortrayalCatalogue\\S100_Symbol.h"
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
 #include "..\\PortrayalCatalogue\\S100_NullInstruction.h"
-#include "..\\GeoMetryLibrary\\ENCGeometry.h"
 #include "..\\GeoMetryLibrary\\GeoPoint.h"
 #include "..\\S100Geometry\\SSurface.h"
 #include "..\\LatLonUtility\\LatLonUtility.h"

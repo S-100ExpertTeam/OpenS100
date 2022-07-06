@@ -37,7 +37,7 @@ class F_C2IL;
 class F_C3IL;
 class F_COCC;
 class F_ATTR;
-class SENC_PointIntruction;
+class SENC_PointInstruction;
 
 struct ATTR;
 
@@ -102,7 +102,7 @@ public:
 	void SetInstructionToFeature();
 	void SetInstructionToFeature(int type, R_FeatureRecord* fe);
 
-	void ClearCurveMap();
+	//void ClearCurveMap();
 
 	BOOL MakeFullSpatialData();
 	BOOL MakePointData(R_FeatureRecord* fe); 
@@ -124,7 +124,7 @@ public:
 	BOOL GetFullSpatialData(R_SurfaceRecord *r, CArray<GeoPoint> &geoArr);
 
 	SCurve* GetCurveGeometry(R_CurveRecord *r/*, CArray<GeoPoint> &geoArr, unsigned ORNT = 1*/);
-	BOOL SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList);
+	//BOOL SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList);
 
 	// Set R_FeatureRecord::m_curveList from Vector record
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);

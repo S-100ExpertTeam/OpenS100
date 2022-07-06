@@ -4,13 +4,15 @@
 #include "OpenS100View.h"
 #include "DialogDockLayerManager.h"
 
-#include "..\\LibMFCUtil\\StringTokenizer.h"
-#include "..\\LibMFCUtil\\LibMFCUtil.h"
-#include "..\\GISLibrary\\S101Layer.h"
-#include "..\\GISLibrary\\GISLibrary.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\GeoMetryLibrary\\ENCGeometry.h"
+#include "../LibMFCUtil/StringTokenizer.h"
+#include "../LibMFCUtil/LibMFCUtil.h"
+
+#include "../GISLibrary/S101Layer.h"
+#include "../GISLibrary/GISLibrary.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+
+#include "../FeatureCatalog/FeatureCatalogue.h"
 
 #include <fstream>
 

@@ -68,6 +68,10 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		auto surface = (SSurface*)fr->m_geometry;
 
 		curListCurveLink = &surface->curveList;
+		//if (surface->compositeCurve)
+		//{
+		//	curListCurveLink = &surface->compositeCurve->m_listCurveLink;
+		//}
 	}
 	// Curve
 	else if (fr->m_geometry->type == 2)
@@ -75,6 +79,16 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
 
 		curListCurveLink = &compositeCurve->m_listCurveLink;
+	}
+	else if (fr->m_geometry->type == 5)
+	{
+		auto curve = (SCurve*)fr->m_geometry;
+		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+		{
+			SENC_LineStyleBase* lineStyleBase = *itor;
+			SCurveHasOrient locCurve(curve, false);
+			lineStyleBase->DrawInstruction(&locCurve , rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+		}
 	}
 
 	if (nullptr == curListCurveLink)
@@ -87,7 +101,7 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 	{
 		auto curve = (*i).GetCurve();
 
-		if ((*i).GetIsDuplicated())
+		if ((*i).GetMasking())
 		{
 			continue;
 		}
@@ -99,7 +113,7 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		{
 			curve = nullptr;
 			unsigned ref = (*it)->reference;
-
+			 
 			if (compareCurveId == ref)
 			{
 				curve = compareCurve;

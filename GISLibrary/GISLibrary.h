@@ -4,7 +4,6 @@
 #include "D2D1Resources.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
-#include "../GeoMetryLibrary/ENCGeometry.h"
 
 #include "../S100Engine/S100Render.h"
 

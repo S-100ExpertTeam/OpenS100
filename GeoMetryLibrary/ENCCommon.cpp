@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "ENCCommon.h"
-#include "ENCGeometry.h"
 #include "comutil.h"
 
 #include "..\\LibMFCUtil\\LibMFCUtil.h"
@@ -40,12 +39,8 @@ bool   ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER = true;
 
 bool ENCCommon::FULL_SECTORS = false;
 
-int   ENCCommon::INTEROPERABILITY_LEVEL = 0;
 int   ENCCommon::T_APPLY_OVER_N_UNDER_SCALE = 1;
 int   ENCCommon::T_CURRENT_SCALE = 0;
-
-
-bool ENCCommon::DETECTION_MODE = false;
 
 std::unordered_map<int, bool> ENCCommon::objectDisplaySettings;
 std::unordered_map<std::wstring, bool> ENCCommon::featureDisplaySettings;
@@ -64,7 +59,6 @@ std::wstring ENCCommon::DISPLAY_FONT_NAME = L"Malgun Gothic";
 int ENCCommon::DISPLAY_FONT_SIZE = 15;
 
 float ENCCommon::DISPLAY_SYMBOL_SCALE = 5;
-bool   ENCCommon::APPLY_DATA_COVERAGE_SCALE = false;
 
 bool   ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE = true;
 
@@ -105,7 +99,6 @@ bool ENCCommon::SIMPLIFIED_POINT_SYMBOL = false;
 bool ENCCommon::AUTOSELECTION_CATALOGUE = true;
 bool ENCCommon::S111_SHOW_NODATA = false;
 bool ENCCommon::Show_INFORM01 = true;
-bool ENCCommon::S111_THINNING = false;
 
 bool ENCCommon::Save(std::wstring filePath)
 {

@@ -1002,18 +1002,19 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 	{
 		SolidBrush brush(Color(255, 0, 0));
 
-		SCompositeCurve* cc = (SCompositeCurve*)(frPick->m_geometry);
-
-		for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
+		if (frPick->m_geometry->type == 2)
 		{
-			SCurve* c = (*it).GetCurve();
-			Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
+			SCompositeCurve* cc = (SCompositeCurve*)(frPick->m_geometry);
 
-			int pickNumPoints = 0;
+			for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
+			{
+				SCurve* c = (*it).GetCurve();
+				Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
 
-			pickNumPoints = c->GetNumPoints();
+				int pickNumPoints = 0;
 
-			if ((*it).GetParentOrient()) {
+				pickNumPoints = c->GetNumPoints();
+
 				for (auto i = 0; i < pickNumPoints; i++)
 				{
 					pickPoints[i].X = (INT)c->m_pPoints[i].x;
@@ -1024,23 +1025,11 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 					pickPoints[i].X += offsetX;
 					pickPoints[i].Y += offsetY;
 				}
-			}
-			else
-			{
-				for (auto i = 0; i < pickNumPoints; i++)
-				{
-					pickPoints[i].X = (INT)c->m_pPoints[pickNumPoints - 1 - i].x;
-					pickPoints[i].Y = (INT)c->m_pPoints[pickNumPoints - 1 - i].y;
-					gisLib->WorldToDevice(c->m_pPoints[i].x, c->m_pPoints[i].y,
-						(long*)(&pickPoints[i].X), (long*)(&pickPoints[i].Y));
 
-					pickPoints[i].X += offsetX;
-					pickPoints[i].Y += offsetY;
-				}
-			}
-			g.DrawLines(&Pen(&brush, 4), pickPoints, pickNumPoints);
+				g.DrawLines(&Pen(&brush, 4), pickPoints, pickNumPoints);
 
-			delete[] pickPoints;
+				delete[] pickPoints;
+			}
 		}
 	}
 	// Area
@@ -1251,6 +1240,53 @@ void COpenS100View::PickReport(CPoint _point)
 				csLat.Format(_T("%f"), lat);
 				csLon.Format(_T("%f"), lon);
 				csType.Format(_T("%d"), compositeCurve->type);
+				csName.Format(_T("%s"), itor->second->m_code);
+				csAssoCnt.Format(_T("%d"), assoCnt);
+				csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+			}
+		}
+	}
+
+	pos = cell->GetFeatureStartPosition();
+	while (pos != NULL)
+	{
+		cell->GetNextAssoc(pos, key, fr);
+		if (fr->m_geometry == nullptr || fr->m_geometry->type != 5)
+		{
+			continue;
+		}
+
+		SCurve* curve = (SCurve*)fr->m_geometry;
+		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
+		{
+			int code = fr->m_frid.m_nftc;
+			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
+
+			SSurface mbrArea(&pickMBR);
+
+			if (SGeometricFuc::overlap(curve, &mbrArea) == 1)
+			{
+				CString csFoid;
+				CString csFrid;
+				CString csLat;
+				CString csLon;
+				CString csType;
+				CString csName;
+				CString csAssoCnt;
+
+				double lat = curve->GetY(0);
+				double lon = curve->GetX(0);
+
+				inverseProjection(lat, lon);
+
+				std::vector<int>::size_type assoCnt;
+				assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
+
+				csFoid.Format(_T("%d"), fr->m_foid.m_objName.m_fidn);
+				csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
+				csLat.Format(_T("%f"), lat);
+				csLon.Format(_T("%f"), lon);
+				csType.Format(_T("%d"), curve->type);
 				csName.Format(_T("%s"), itor->second->m_code);
 				csAssoCnt.Format(_T("%d"), assoCnt);
 				csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);

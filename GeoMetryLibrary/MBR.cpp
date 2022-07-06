@@ -3,7 +3,6 @@
 
 MBR::MBR(void)
 {
-	InitMBR();
 }
 
 MBR::MBR(double _xmin, double _ymin, double _xmax, double _ymax)
@@ -16,7 +15,6 @@ MBR::MBR(double _xmin, double _ymin, double _xmax, double _ymax)
 
 MBR::~MBR(void)
 {
-
 }
 
 void MBR::SetXMin(double value)

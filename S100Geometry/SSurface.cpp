@@ -36,44 +36,12 @@ SSurface::SSurface(MBR* mbr)
 	m_mbr.ymax = mbr->ymax;
 }
 
-SSurface::SSurface(std::vector<POINT>& points, std::vector<int> parts)
+SSurface::SSurface(std::vector<POINT>& points, std::vector<int>& parts)
 {
 	type = 3;
-	m_numParts = (int)parts.size();
-	m_numPoints = (int)points.size();
-
-	if (m_numParts < 2)
-	{
-		m_pParts = new int[1];
-		m_pParts[0] = 0;
-	}
-	else
-	{
-		m_pParts = new int[m_numParts];
-		m_pParts[0] = 0;
-		int size = 0;
-		size = (int)parts.size();
-		for (int i = 1; i < size ; i++)
-		{
-			m_pParts[i] = parts.at(i - 1);
-		}
-	}
-
-	m_pPoints = new GeoPoint[m_numPoints];
-
-	if (m_numPoints > SGeometry::sizeOfPoint)
-	{
-		SGeometry::sizeOfPoint = m_numPoints;
-		delete SGeometry::viewPoints;
-		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
-	}
-
-	for (int i = 0; i < m_numPoints; i++)
-	{
-		m_pPoints[i].SetPoint(points[i].x / 10000000.0, points[i].y / 10000000.0);
-		projection(m_pPoints[i].x, m_pPoints[i].y);
-		m_mbr.CalcMBR(m_pPoints[i].x, m_pPoints[i].y);
-	}
+	Set(points, parts);
+	
+	
 }
 
 SSurface::~SSurface()
@@ -88,6 +56,15 @@ SSurface::~SSurface()
 	m_centerPoint = nullptr;
 
 	SafeRelease(&pGeometry);
+
+	//delete compositeCurve;
+	//compositeCurve = nullptr;
+
+	//for (auto i = curves.begin(); i != curves.end(); i++)
+	//{
+	//	delete (*i);
+	//}
+	//curves.clear();
 }
 
 
@@ -170,10 +147,15 @@ void SSurface::CreateD2Geometry(ID2D1Factory1* factory)
 		delete[] points;
 		points = nullptr;
 
-		//for (auto i = curveList.begin(); i != curveList.end(); i++)
+		//for (auto i = compositeCurve->m_listCurveLink.begin(); i != compositeCurve->m_listCurveLink.end(); i++)
 		//{
 		//	(*i).GetCurve()->CreateD2Geometry(factory);
 		//}
+
+		for (auto i = curveList.begin(); i != curveList.end(); i++)
+		{
+			i->GetCurve()->CreateD2Geometry(factory);
+		}
 	}
 }
 
@@ -321,4 +303,78 @@ ID2D1PathGeometry* SSurface::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* sc
 
 	}
 	return nullptr;
+}
+
+void SSurface::AddCurve(SCurve* curve)
+{
+	curveList.push_back(SCurveHasOrient(curve, false));
+}
+
+void SSurface::AddCompositeCurve(SCompositeCurve* compositeCurve)
+{
+	for (
+		auto i = compositeCurve->m_listCurveLink.begin();
+		i != compositeCurve->m_listCurveLink.end();
+		i++)
+	{
+		curveList.push_back(*i);
+	}
+}
+
+void SSurface::Init()
+{
+	m_numParts = 0;
+	m_numPoints = 0;
+	
+	delete[] m_pParts; 
+	m_pParts = nullptr;
+
+	delete[] m_pPoints;
+	m_pPoints = nullptr;
+	
+	delete[] m_centerPoint;
+	m_centerPoint = nullptr;
+
+	curveList.clear();
+
+	SafeRelease(&pGeometry);
+}
+
+void SSurface::Set(std::vector<POINT>& points, std::vector<int>& parts)
+{
+	m_numParts = (int)parts.size();
+	m_numPoints = (int)points.size();
+
+	if (m_numParts < 2)
+	{
+		m_pParts = new int[1];
+		m_pParts[0] = 0;
+	}
+	else
+	{
+		m_pParts = new int[m_numParts];
+		m_pParts[0] = 0;
+		int size = 0;
+		size = (int)parts.size();
+		for (int i = 1; i < size; i++)
+		{
+			m_pParts[i] = parts.at(i - 1);
+		}
+	}
+
+	m_pPoints = new GeoPoint[m_numPoints];
+
+	if (m_numPoints > SGeometry::sizeOfPoint)
+	{
+		SGeometry::sizeOfPoint = m_numPoints;
+		delete SGeometry::viewPoints;
+		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
+	}
+
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		m_pPoints[i].SetPoint(points[i].x / 10000000.0, points[i].y / 10000000.0);
+		projection(m_pPoints[i].x, m_pPoints[i].y);
+		m_mbr.CalcMBR(m_pPoints[i].x, m_pPoints[i].y);
+	}
 }

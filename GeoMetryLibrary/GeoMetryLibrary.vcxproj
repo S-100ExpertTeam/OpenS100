@@ -232,7 +232,6 @@
   <ItemGroup>
     <ClCompile Include="ENCCommon.cpp" />
     <ClCompile Include="ENCConfiguration.cpp" />
-    <ClCompile Include="ENCGeometry.cpp" />
     <ClCompile Include="GeoCommonFuc.cpp" />
     <ClCompile Include="GeometricFuc.cpp" />
     <ClCompile Include="Geometry.cpp" />
@@ -255,7 +254,6 @@
   <ItemGroup>
     <ClInclude Include="ENCCommon.h" />
     <ClInclude Include="ENCConfiguration.h" />
-    <ClInclude Include="ENCGeometry.h" />
     <ClInclude Include="Enum_WKBGeometryType.h" />
     <ClInclude Include="GeoCommonFuc.h" />
     <ClInclude Include="GeometricFuc.h" />
