@@ -292,19 +292,19 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 			}
 
 			if (csType == "1") {
-				type = "point";
+				type = "Point";
 			}
-			else if (csType == "2") {
-				type = "curve";
+			else if (csType == "2" || csType == "5") {
+				type = "Curve";
 			}
 			else if (csType == "3") {
-				type = "surface";
+				type = "Surface";
 			}
 			else if (csType == "4") {
-				type = "multipoint (sounding)";
+				type = "Multi Point";
 			}
 			else if (csType == "999") {
-				type = "No geometry";
+				type = "No Geometry";
 			}
 			else {
 				type = "-";

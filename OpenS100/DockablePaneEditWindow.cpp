@@ -1039,21 +1039,30 @@ void CDockablePaneEditWindow::SetVector(R_CompositeRecord* r, CMFCPropertyGridPr
 		}
 	}
 
-	//for (auto itorParent = r->m_cuco.begin(); itorParent != r->m_cuco.end(); itorParent++)
-	//{
-	//	F_CUCO* cucoParent = *itorParent;
+	for (auto itorParent = r->m_cuco.begin(); itorParent != r->m_cuco.end(); itorParent++)
+	{
+		F_CUCO* cucoParent = *itorParent;
 
-	//	for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
-	//	{
-	//		CUCO* cuco = *itor;
+		for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
+		{
+			CUCO* cuco = *itor;
+			R_VectorRecord* vectorRecord = nullptr;
 
-	//		auto itorFind = cell->m_vecMap.find(cuco->m_name.GetName());
-	//		if (itorFind != cell->m_vecMap.end())
-	//		{
-	//			SetVector(cuco->m_name.RCNM, itorFind->second, pProperty);
-	//		}
-	//	}
-	//}
+			if (120 == cuco->m_name.RCNM)
+			{
+				vectorRecord = cell->GetCurveRecord(cuco->m_name.GetName());
+			}
+			else if (125 == cuco->m_name.RCNM)
+			{
+				vectorRecord = cell->GetCurveRecord(cuco->m_name.GetName());	
+			}
+
+			if (vectorRecord)
+			{
+				SetVector(cuco->m_name.RCNM, vectorRecord, pProperty);
+			}
+		}
+	}
 }
 
 void CDockablePaneEditWindow::SetVector(R_SurfaceRecord* r, CMFCPropertyGridProperty *pSuperProperty)
@@ -1096,21 +1105,31 @@ void CDockablePaneEditWindow::SetVector(R_SurfaceRecord* r, CMFCPropertyGridProp
 		}
 	}
 
-	//for (auto itorParent = r->m_rias.begin(); itorParent != r->m_rias.end(); itorParent++)
-	//{
-	//	F_RIAS* riasParent = *itorParent;
+	for (auto itorParent = r->m_rias.begin(); itorParent != r->m_rias.end(); itorParent++)
+	{
+		F_RIAS* riasParent = *itorParent;
 
-	//	for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
-	//	{
-	//		RIAS* rias = *itor;
+		for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
+		{
+			RIAS* rias = *itor;
 
-	//		auto itorFind = cell->m_vecMap.find(rias->m_name.GetName());
-	//		if (itorFind != cell->m_vecMap.end())
-	//		{
-	//			SetVector(rias->m_name.RCNM, itorFind->second, pProperty);
-	//		}
-	//	}
-	//}
+			R_VectorRecord* vectorRecord = nullptr;
+
+			if (120 == rias->m_name.RCNM)
+			{
+				vectorRecord = cell->GetCurveRecord(rias->m_name.GetName());
+			}
+			else if (125 == rias->m_name.RCNM)
+			{
+				vectorRecord = cell->GetCompositeCurveRecord(rias->m_name.GetName());
+			}
+
+			if (vectorRecord)
+			{
+				SetVector(rias->m_name.RCNM, vectorRecord, pProperty);
+			}
+		}
+	}
 }
 //
 void CDockablePaneEditWindow::SetFeatureList()

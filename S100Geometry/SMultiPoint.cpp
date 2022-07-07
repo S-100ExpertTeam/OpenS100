@@ -10,15 +10,13 @@ SMultiPoint::SMultiPoint()
 
 SMultiPoint::~SMultiPoint()
 {
-	delete pColor; pColor = nullptr;
-	
 	delete m_pPoints; 
 	m_pPoints = nullptr;
 }
 
 int SMultiPoint::GetNumPoints()
 {
-	return m_numPoints;
+	return m_pPoints->size();
 }
 
 double SMultiPoint::GetX(int index)
@@ -99,7 +97,6 @@ void SMultiPoint::Add(double x, double y, double z)
 	}
 
 	m_pPoints->push_back(GeoPointZ(x, y, z));
-	m_numPoints = m_pPoints->size();
 }
 
 void SMultiPoint::Set(int index, double x, double y, double z)
@@ -128,11 +125,12 @@ bool SMultiPoint::ImportFromWkb(char* value, int size)
 		return false;
 	}
 
-	memcpy_s(&m_numPoints, 4, value + 5, 4);
+	int numPoints = 0;
+	memcpy_s(&numPoints, 4, value + 5, 4);
 	m_pPoints = new std::vector<GeoPointZ>();
-	m_pPoints->resize(m_numPoints);
+	m_pPoints->resize(numPoints);
 
-	for (int i = 0; i < m_numPoints; i++)
+	for (int i = 0; i < numPoints; i++)
 	{
 		m_pPoints->at(i).ImportFromWkb(value + (9 + (29 * i)), 29);
 	}
@@ -142,7 +140,8 @@ bool SMultiPoint::ImportFromWkb(char* value, int size)
 
 bool SMultiPoint::ExportToWkb(char** value, int* size)
 {
-	*size = 9 + ((29) * m_numPoints);
+	int numPoints = GetNumPoints();
+	*size = 9 + ((29) * numPoints);
 	if (*value == nullptr)
 	{
 		*value = new char[*size];
@@ -155,9 +154,9 @@ bool SMultiPoint::ExportToWkb(char** value, int* size)
 
 	memcpy_s((*value) + 1, 4, &type, 4);
 
-	memcpy_s((*value) + 5, 4, &m_numPoints, 4);
+	memcpy_s((*value) + 5, 4, &numPoints, 4);
 
-	for (int i = 0; i < m_numPoints; i++)
+	for (int i = 0; i < numPoints; i++)
 	{
 		int locSize = 0;
 		auto mem = (*value) + (9 + (29 * i));
@@ -165,4 +164,9 @@ bool SMultiPoint::ExportToWkb(char** value, int* size)
 	}
 
 	return true;
+}
+
+int SMultiPoint::GetType()
+{
+	return 4;
 }

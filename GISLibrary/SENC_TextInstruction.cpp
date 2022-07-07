@@ -256,7 +256,6 @@ void SENC_TextInstruction::ChangePallete(PortrayalCatalogue* pc)
 {
 	if (textPoint)
 	{
-		//auto colorProfile = pc->GetColorProfile();
 		auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
 		if (colorProfile)
 		{

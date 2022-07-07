@@ -495,16 +495,9 @@ void LayerManager::AddSymbolDrawing(
 					int angle = element->font.slant;
 					double radian = 0;
 					if (angle)
+					{
 						radian = -angle / 180. * M_PI;
-
-					//COLORREF color = 0x00000000;
-					//if (element->pColor == NULL)
-					//{
-					//}
-					//else
-					//{
-					//	color = *element->pColor;
-					//}
+					}
 
 					int bodySize = element->bodySize;
 

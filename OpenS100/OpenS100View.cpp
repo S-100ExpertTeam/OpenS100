@@ -1195,6 +1195,7 @@ void COpenS100View::PickReport(CPoint _point)
 		}
 	}
 
+	// Composite curve
 	pos = cell->GetFeatureStartPosition();
 	while (pos != NULL)
 	{
@@ -1247,6 +1248,7 @@ void COpenS100View::PickReport(CPoint _point)
 		}
 	}
 
+	// Curve
 	pos = cell->GetFeatureStartPosition();
 	while (pos != NULL)
 	{
@@ -1294,6 +1296,7 @@ void COpenS100View::PickReport(CPoint _point)
 		}
 	}
 
+	// Point or Multi point
 	pos = cell->GetFeatureStartPosition();
 	while (pos != NULL)
 	{
