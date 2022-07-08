@@ -499,7 +499,7 @@ void LayerManager::AddSymbolDrawing(
 						radian = -angle / 180. * M_PI;
 					}
 
-					int bodySize = element->bodySize;
+					int bodySize = element->bodySize * (float)1.358;
 
 					IDWriteTextFormat* useWTF = NULL;
 					if (bodySize != 15)
@@ -515,7 +515,7 @@ void LayerManager::AddSymbolDrawing(
 								DWRITE_FONT_WEIGHT_NORMAL,
 								DWRITE_FONT_STYLE_NORMAL,
 								DWRITE_FONT_STRETCH_NORMAL,
-								(float)bodySize * (float)1.358,
+								(float)bodySize,
 								L"", //locale
 								&newWriteTextFormat
 							);
@@ -566,13 +566,15 @@ void LayerManager::AddSymbolDrawing(
 					float offset_x = 0;
 					float offset_y = 0;
 
-					// INCH to mm
-					float offsetUnitX = (dpiX / (float)25.4);
-					float offsetUnitY = (dpiY / (float)25.4);
+					//// INCH to mm
+	/*				float offsetUnitX = (dpiX / (float)25.4);
+					float offsetUnitY = (dpiY / (float)25.4);*/
 
 					// Determine the size of the Offset
-					float XOFFS = ((float)textPoint->offset.x * offsetUnitX);
-					float YOFFS = -((float)textPoint->offset.y * offsetUnitY);
+					//float XOFFS = ((float)textPoint->offset.x * offsetUnitX);
+					//float YOFFS = -((float)textPoint->offset.y * offsetUnitY);
+					float XOFFS = ((float)textPoint->offset.x / 0.32) * 1.358;
+					float YOFFS = -((float)textPoint->offset.y / 0.32) * 1.358;
 
 					// HJUST 
 					// CENTRE
@@ -582,7 +584,8 @@ void LayerManager::AddSymbolDrawing(
 						if (*instruction->fr->m_textBearing > 90 && *instruction->fr->m_textBearing <= 270)
 						{
 							offset_x = -width;
-							XOFFS = -((float)textPoint->offset.x * offsetUnitX);
+							//XOFFS = -((float)textPoint->offset.x * offsetUnitX);
+							XOFFS = -((float)textPoint->offset.x / 0.32) * 1.358;
 						}
 						else
 						{
@@ -614,7 +617,7 @@ void LayerManager::AddSymbolDrawing(
 						// BOTTOM
 						if (textPoint->verticalAlignment == BOTTOM)
 						{
-							offset_y = 0;
+							offset_y = -height;
 						}
 						// CENTRE
 						else if (textPoint->verticalAlignment == CENTER)
@@ -636,10 +639,6 @@ void LayerManager::AddSymbolDrawing(
 					offset_x += XOFFS;
 					offset_y += YOFFS;
 
-					//int r = (color >> 16) & 0xff;
-					//int g = ((color >> 8) & 0xff);
-					//int b = ((color >> 0) & 0xff);
-					//gisLib->D2.pBrush->SetColor(D2D1::ColorF((FLOAT)(GetRValue(color)) / (float)255.0, (GetGValue(color)) / (float)255.0, (GetBValue(color) / (float)255.0)));
 					if (element->pColor)
 					{
 						gisLib->D2.pBrush->SetColor(element->pColor);

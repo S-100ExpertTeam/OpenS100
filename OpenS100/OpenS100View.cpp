@@ -1032,6 +1032,33 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 			}
 		}
 	}
+	else if (5 == frPick->m_geometry->type)
+	{
+		SolidBrush brush(Color(255, 0, 0));
+
+		SCurve* c = (SCurve*)(frPick->m_geometry);
+
+		Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
+
+		int pickNumPoints = 0;
+
+		pickNumPoints = c->GetNumPoints();
+
+		for (auto i = 0; i < pickNumPoints; i++)
+		{
+			pickPoints[i].X = (INT)c->m_pPoints[i].x;
+			pickPoints[i].Y = (INT)c->m_pPoints[i].y;
+			gisLib->WorldToDevice(c->m_pPoints[i].x, c->m_pPoints[i].y,
+				(long*)(&pickPoints[i].X), (long*)(&pickPoints[i].Y));
+
+			pickPoints[i].X += offsetX;
+			pickPoints[i].Y += offsetY;
+		}
+
+		g.DrawLines(&Pen(&brush, 4), pickPoints, pickNumPoints);
+
+		delete[] pickPoints;
+	}
 	// Area
 	else if (frPick->m_geometry->IsSurface())
 	{

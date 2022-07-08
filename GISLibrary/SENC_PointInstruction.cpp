@@ -120,6 +120,39 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 					}
 				}
 			}
+			else if (sr->RCNM == 120 && fr->m_geometry->type == 5)
+			{
+				SCurve* curve = (SCurve*)fr->m_geometry;
+				
+				auto rcid = curve->GetRCID();
+				if (rcid == sr->reference)
+				{
+					int numPoints = curve->GetNumPoints();
+
+					POINT* screenPoints = new POINT[numPoints];
+
+					for (int k = 0; k < numPoints; k++)
+					{
+						scaler->WorldToDevice(
+							curve->GetX(k), curve->GetY(k),
+							&screenPoints[k].x, &screenPoints[k].y);
+					}
+
+					POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+
+					if (symbolPoint)
+					{
+						D2D1_POINT_2F d2Point;
+						d2Point.x = symbolPoint->x;
+						d2Point.y = symbolPoint->y;
+						delete symbolPoint;
+						points.push_back(d2Point);
+					}
+
+					delete[] screenPoints;
+					screenPoints = nullptr;
+				}
+			}
 			else if (sr->RCNM == 120 && fr->m_geometry->IsSurface())
 			{
 				SSurface* geo = (SSurface*)fr->m_geometry;
@@ -247,6 +280,40 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 			tempPoint.x = (float)(*itor).x;
 			tempPoint.y = (float)(*itor).y;
 			points.push_back(tempPoint);
+		}
+	}
+	else if (fr->m_geometry->type == 5)
+	{
+		SCurve* c = (SCurve*)fr->m_geometry;
+
+		for (auto index = 0; index < c->GetNumPoints(); index++)
+		{
+			if (scaler->GetMapCalcMBR().PtInMBR(c->m_pPoints[index].x, c->m_pPoints[index].y))
+			{
+				if (viewPointNum == 0 && index > 1)
+				{
+					scaler->WorldToDevice(c->m_pPoints[index - 1].x, c->m_pPoints[index - 1].y,
+						&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
+					viewPointNum++;
+				}
+				scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,
+					&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
+				viewPointNum++;
+			}
+		}
+
+		if (viewPointNum)
+		{
+			POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+			if (symbolPoint)
+			{
+				tempPoint.x = (float)symbolPoint[0].x;
+				tempPoint.y = (float)symbolPoint[0].y;
+				points.push_back(tempPoint);
+
+				delete symbolPoint;
+			}
+			viewPointNum = 0;
 		}
 	}
 }
