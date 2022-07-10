@@ -65,6 +65,11 @@ SSurface::~SSurface()
 	//	delete (*i);
 	//}
 	//curves.clear();
+
+	for (auto i = curveList.begin(); i != curveList.end(); i++)
+	{
+		delete (*i).GetCurve();
+	}
 }
 
 
@@ -367,7 +372,7 @@ void SSurface::Set(std::vector<POINT>& points, std::vector<int>& parts)
 	if (m_numPoints > SGeometry::sizeOfPoint)
 	{
 		SGeometry::sizeOfPoint = m_numPoints;
-		delete SGeometry::viewPoints;
+		delete[] SGeometry::viewPoints;
 		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
 	}
 

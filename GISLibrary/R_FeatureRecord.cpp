@@ -57,8 +57,12 @@ R_FeatureRecord::~R_FeatureRecord(void)
 	}
 	m_mask.clear();
 
-	delete m_geometry;
-	m_geometry = nullptr;
+	if (m_geometry)
+	{
+		m_geometry->Release();
+		delete m_geometry;
+		m_geometry = nullptr;
+	}
 
 	//	[Text Placement ]
 	delete m_textBearing;

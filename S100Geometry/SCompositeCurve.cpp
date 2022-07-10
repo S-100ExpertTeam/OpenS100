@@ -11,7 +11,7 @@ SCompositeCurve::SCompositeCurve()
 
 SCompositeCurve::~SCompositeCurve()
 {
-
+	
 }
 
 void SCompositeCurve::SetMBR()
@@ -88,4 +88,12 @@ bool SCompositeCurve::ExportToWkb(char** value, int* size)
 void SCompositeCurve::AddCurve(SCurve* curve, bool masking)
 {
 	m_listCurveLink.push_back(SCurveHasOrient(curve, masking));
+}
+
+void SCompositeCurve::Release()
+{
+	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
+	{
+		delete (*i).GetCurve();
+	}
 }

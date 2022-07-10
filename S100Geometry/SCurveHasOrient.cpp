@@ -36,7 +36,6 @@ SCurveHasOrient::SCurveHasOrient(SCurve* curve, bool masking)
 
 SCurveHasOrient::~SCurveHasOrient()
 {
-
 }
 
 //bool SCurveHasOrient::GetParentOrient()

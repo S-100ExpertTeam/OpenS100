@@ -32,6 +32,9 @@ public:
 	virtual void SetMBR() {};
 	virtual void CreateD2Geometry(ID2D1Factory1* factory) {};
 
+	// Function for memory release outside of deconstructor
+	virtual void Release() {};
+
 public:
 
 	/*

@@ -15,7 +15,7 @@ void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, S
 	{
 		SGeometry::sizeOfPoint = _surface->m_numPoints;
 
-		delete SGeometry::viewPoints;
+		delete[] SGeometry::viewPoints;
 		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
 	}
 

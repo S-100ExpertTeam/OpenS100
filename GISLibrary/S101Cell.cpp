@@ -880,7 +880,6 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							R_CurveRecord *cr = nullptr;
 							if (m_curMap.Lookup(iKey, cr))
 							{
-								//GetFullCurveData(fe, cr, rias->m_ornt);
 								SCurve* sCurve = new SCurve();
 								GetFullSpatialData(cr, sCurve, rias->m_ornt);
 								GetFullSpatialData(cr, vecPoint, rias->m_ornt);
@@ -892,11 +891,10 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							R_CompositeRecord *ccr = nullptr;
 							if (m_comMap.Lookup(iKey, ccr))
 							{
-								//GetFullCurveData(fe, ccr, rias->m_ornt);
-								SCompositeCurve* sCompositeCurve = new SCompositeCurve();
-								GetFullSpatialData(ccr, sCompositeCurve, rias->m_ornt);
+								SCompositeCurve sCompositeCurve;// = new SCompositeCurve();
+								GetFullSpatialData(ccr, &sCompositeCurve, rias->m_ornt);
 								GetFullSpatialData(ccr, vecPoint, rias->m_ornt);
-								geo->AddCompositeCurve(sCompositeCurve);
+								geo->AddCompositeCurve(&sCompositeCurve);
 							}
 						}
 
@@ -923,37 +921,6 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 
 	geo->Set(vecPoint, boundaryList);
 
-	//R_CurveRecord *cr;
-	//R_CompositeRecord *ccr;
-
-	//for (auto i = fe->m_spas.begin(); i != fe->m_spas.end(); i++)
-	//{
-	//	F_SPAS *spasParent = *i;
-
-	//	for (auto j = spasParent->m_arr.begin(); j != spasParent->m_arr.end(); j++)
-	//	{
-	//		SPAS* spas = *j;
-	//		iKey = spas->m_name.GetName();
-
-	//		if (m_surMap.Lookup(iKey, sr))
-	//		{
-	//			GetFullCurveData(fe, sr);
-	//		}
-	//		else if (m_comMap.Lookup(iKey, ccr))
-	//		{
-	//			GetFullCurveData(fe, ccr);
-	//		}
-	//		else if (m_curMap.Lookup(iKey, cr))
-	//		{
-	//			GetFullCurveData(fe, cr);
-	//		}
-	//	}
-	//}
-
-	//SetSCurveList(&fe->m_curveList, &geo->curveList);
-
-	//geoArr.RemoveAll();
-
 	if (gisLib == nullptr)
 	{
 		return false;
@@ -961,7 +928,6 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 
 	geo->SetMBR();
 	geo->CreateD2Geometry(gisLib->D2.pD2Factory);
-
 	geo->CalculateCenterPoint();
 
 	return TRUE;
@@ -1400,8 +1366,8 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 
 			if (m_comMap.Lookup(iKey, ccr))
 			{
-				SCompositeCurve* scc = new SCompositeCurve();
-				GetFullSpatialData(ccr, scc, cuco->m_ornt);
+				SCompositeCurve scc;// = new SCompositeCurve();
+				GetFullSpatialData(ccr, &scc, cuco->m_ornt);
 			}
 		}
 		else
@@ -1637,7 +1603,7 @@ SCurve* S101Cell::GetCurveGeometry(R_CurveRecord *r)
 	if (totalCoordinateCount > SGeometry::sizeOfPoint)
 	{
 		SGeometry::sizeOfPoint = totalCoordinateCount;
-		delete SGeometry::viewPoints;
+		delete[] SGeometry::viewPoints;
 		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
 	}
 

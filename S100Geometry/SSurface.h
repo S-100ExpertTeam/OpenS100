@@ -29,12 +29,6 @@ public:
 	// Curve points
 	std::list<SCurveHasOrient> curveList;
 
-	//std::list<SCurve*> curveList;
-	//SCompositeCurve* compositeCurve = nullptr;
-
-	// Rings (front() is outerior)
-	//std::list<SGeometry*> curves;
-
 	// AreaD2Geometry
 	ID2D1PathGeometry* pGeometry = nullptr;
 

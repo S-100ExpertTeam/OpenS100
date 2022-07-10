@@ -22,4 +22,6 @@ public:
 	bool ExportToWkb(char** value, int* size);
 
 	void AddCurve(SCurve* curve, bool masking = false);
+
+	void Release();
 };
