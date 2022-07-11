@@ -57,7 +57,6 @@
 #include "..\\S100Geometry\\SCommonFuction.h"
 #include "..\\S100Geometry\\SCurve.h"
 
-
 #include "..\\LibMFCUtil\\LibMFCUtil.h"
 
 #include <sstream> 
@@ -798,7 +797,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 		}
 	}
 
-	if (gisLib && fe->m_geometry)
+	if (fe->m_geometry)
 	{
 		fe->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
 	}

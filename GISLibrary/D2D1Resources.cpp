@@ -311,9 +311,9 @@ namespace GISLibrary
 		return pBrush;
 	}
 
-	void D2D1Resources::Begin(HDC& hdc)
+	void D2D1Resources::Begin(HDC& hdc, CRect& rect)
 	{
-		pRT->BindDC(hdc, gisLib->GetScaler()->GetScreenRect());
+		pRT->BindDC(hdc, rect);
 		pRT->BeginDraw();
 		pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 	}

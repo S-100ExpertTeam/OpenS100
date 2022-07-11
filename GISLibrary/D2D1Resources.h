@@ -62,7 +62,7 @@ namespace GISLibrary
 		ID2D1DCRenderTarget* RenderTarget();
 		ID2D1SolidColorBrush* SolidColorBrush();
 
-		void Begin(HDC& hdc);
+		void Begin(HDC& hdc, CRect& rect);
 		void End();
 
 	public:

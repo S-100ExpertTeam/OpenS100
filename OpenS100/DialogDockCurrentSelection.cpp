@@ -238,7 +238,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 		m_ListCurrentSelection.DeleteAllItems();
 	}
 	
-	auto fc = gisLib->GetFC();
+	auto fc = theApp.gisLib->GetFC();
 	
 	if (nullptr == fc)
 	{

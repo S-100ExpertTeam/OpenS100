@@ -24,16 +24,22 @@
 #include "F_INAS.h"
 #include "R_InformationRecord.h"
 
-#include "..\\S100Geometry\\SSurface.h"
-#include "..\\S100Geometry\\SMultiPoint.h"
-#include "..\\S100Geometry\\SCompositeCurve.h"
-#include "..\\S100Geometry\\SCurve.h"
-#include "..\\S100Geometry\\SPoint.h"
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\LibMFCUtil\\LibMFCUtil.h"
-#include "..\\GeoMetryLibrary\\GeometricFuc.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../S100Geometry/SSurface.h"
+#include "../S100Geometry/SMultiPoint.h"
+#include "../S100Geometry/SCompositeCurve.h"
+#include "../S100Geometry/SCurve.h"
+#include "../S100Geometry/SPoint.h"
+#include "../S100Geometry/SCommonFuction.h"
+
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../LibMFCUtil/LibMFCUtil.h"
+
+#include "../GeoMetryLibrary/GeometricFuc.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+
+#include "../LatLonUtility/LatLonUtility.h"
 
 #include <ctime> 
 #include <mmsystem.h> 
@@ -273,7 +279,7 @@ void LayerManager::Draw(HDC& hdc, int offset)
 
 	DrawS100Datasets(hdc, offset);
 
-	gisLib->D2.Begin(hdc);
+	gisLib->D2.Begin(hdc, rectView);
 	gisLib->DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
 	gisLib->DrawScaleBar();
 	gisLib->D2.End();
@@ -1154,9 +1160,9 @@ void LayerManager::DrawSemiCircle(float x, float y, float radius, float startAng
 
 void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet)
 {
-	lineSuppressionMap.clear();
+	//lineSuppressionMap.clear();
 
-	// Drawing priority : High -> Low
+	//// Drawing priority : High -> Low
 	//for (auto i = drawingPriority.rbegin(); i != drawingPriority.rend(); i++)
 	//{
 	//	int drawingPriority = *i;
@@ -1221,6 +1227,10 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 
 	//			curListCurveLink = &compositeCurve->m_listCurveLink;
 	//		}
+	//		else if (featureRecord->m_geometry->type == 5)
+	//		{
+	//			curListCurveLink->push_back(SCurveHasOrient((SCurve*)featureRecord->m_geometry, false));
+	//		}
 
 	//		for (auto m = curListCurveLink->begin(); m != curListCurveLink->end(); m++)
 	//		{
@@ -1233,15 +1243,6 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 	//			if (iterExist == lineSuppressionMap.end() && false == cw->GetMasking())
 	//			{
 	//				lineSuppressionMap.insert(id);
-	//				cw->SetIsDuplicated(false);
-	//			}
-	//			else if (true == cw->GetMasking())
-	//			{
-	//				cw->SetIsDuplicated(true);
-	//			}
-	//			else
-	//			{
-	//				cw->SetIsDuplicated(true);
 	//			}
 	//		}
 	//	}

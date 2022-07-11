@@ -32,6 +32,8 @@ public:
 	Scaler* GetScaler();
 	LayerManager* GetLayerManager();
 	void InitLibrary(std::wstring fcPath, std::wstring pcPath);
+	void InitLibrary(FeatureCatalogue* fc, PortrayalCatalogue* pc);
+
 	bool AddBackgroundLayer(CString _filepath);
 	bool AddLayer(CString _filepath);
 	void Draw(HDC &hDC, int offset = 0);
@@ -104,5 +106,3 @@ public:
 	FeatureCatalogue* GetFC();
 	PortrayalCatalogue* GetPC();
 };
-
-extern CGISLibraryApp* gisLib;

@@ -3,11 +3,13 @@
 #include "SENC_CommonFuc.h"
 #include "GISLibrary.h"
 
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\S100Geometry\\SCurveHasOrient.h"
-#include "..\\S100Geometry\\SCurve.h"
+#include "../S100Geometry/SCommonFuction.h"
+#include "../S100Geometry/SCurveHasOrient.h"
+#include "../S100Geometry/SCurve.h"
+
+#include "../LatLonUtility/LatLonUtility.h"
 
 SENC_LineStyle::SENC_LineStyle() : SENC_LineStyleBase()
 {

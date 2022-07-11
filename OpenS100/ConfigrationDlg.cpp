@@ -281,7 +281,7 @@ void CConfigrationDlg::OnBnClickedApply()
 	if (ENCCommon::SAFETY_CONTOUR != m_config.SAFETY_CONTOUR)
 	{
 		ENCCommon::SAFETY_CONTOUR = m_config.SAFETY_CONTOUR;
-		gisLib->S101RebuildPortrayal();
+		theApp.gisLib->S101RebuildPortrayal();
 		theApp.pView->MapRefresh();
 	}
 
@@ -310,7 +310,7 @@ void CConfigrationDlg::OnBnClickedApply()
 		ENCCommon::m_eColorTable = m_config.m_eColorTable;
 		bMapRefresh = true;
 
-		auto lm = gisLib->GetLayerManager();
+		auto lm = theApp.gisLib->GetLayerManager();
 		if (nullptr != lm)
 		{
 			if (m_config.m_eColorTable == GeoMetryLibrary::ColorTable::Day)
@@ -451,7 +451,7 @@ void CConfigrationDlg::OnBnClickedApply()
 		ENCCommon::DISPLAY_FONT_NAME = m_config.DISPLAY_FONT_NAME;
 		ENCCommon::DISPLAY_FONT_SIZE = m_config.DISPLAY_FONT_SIZE;
 
-		gisLib->ChangeDisplayFont();
+		theApp.gisLib->ChangeDisplayFont();
 		bMapRefresh = true;
 	}
 
@@ -472,7 +472,7 @@ void CConfigrationDlg::OnBnClickedApply()
 
 	if (true == bRebuildPortrayal)
 	{
-		gisLib->S101RebuildPortrayal();
+		theApp.gisLib->S101RebuildPortrayal();
 		theApp.pView->MapRefresh();
 	}
 	else if (true == bMapRefresh)

@@ -11,12 +11,15 @@
 #include "../S100Geometry/SMultiPoint.h"
 #include "../S100Geometry/SCurve.h"
 
+#include "../LatLonUtility/LatLonUtility.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 CGISLibraryApp::CGISLibraryApp()
 {
+	gisLib = this;
 	//SCurve curve;
 	//curve.Init(3);
 	//curve.Set(0, 1, 2);
@@ -100,10 +103,13 @@ CGISLibraryApp::~CGISLibraryApp()
 	SGeometry::viewPoints = nullptr;
 
 	delete fc;
+	fc = nullptr;
+	
 	delete pc;
+	pc = nullptr;
 }
 
-CGISLibraryApp* gisLib = new CGISLibraryApp();
+//CGISLibraryApp* gisLib = new CGISLibraryApp();
 
 Scaler* CGISLibraryApp::GetScaler()
 {
@@ -123,9 +129,21 @@ void CGISLibraryApp::InitLibrary(std::wstring fcPath, std::wstring pcPath)
 		
 	fc = new FeatureCatalogue(fcPath);
 	pc = new PortrayalCatalogue(pcPath);
-	pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
-	pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-	pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+	pc->CreateSVGD2Geometry(D2.pD2Factory);
+	pc->CreatePatternImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
+	pc->CreateLineImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
+}
+
+void CGISLibraryApp::InitLibrary(FeatureCatalogue* fc, PortrayalCatalogue* pc)
+{
+	D2.CreateDeviceIndependentResources();
+	D2.CreateDeviceDependentResources();
+
+	this->fc = fc;
+	this->pc = pc;
+	pc->CreateSVGD2Geometry(D2.pD2Factory);
+	pc->CreatePatternImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
+	pc->CreateLineImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
 }
 
 bool CGISLibraryApp::AddLayer(CString _filepath)
@@ -167,9 +185,9 @@ void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, 
 		auto pcManager = pc->GetS100PCManager();
 		if (pcManager)
 		{
-			auto rt = gisLib->D2.RenderTarget();
-			auto brush = gisLib->D2.SolidColorBrush();
-			auto stroke = gisLib->D2.SolidStrokeStyle();
+			auto rt = D2.RenderTarget();
+			auto brush = D2.SolidColorBrush();
+			auto stroke = D2.SolidStrokeStyle();
 
 			D2D1::Matrix3x2F oldTransform;
 			rt->GetTransform(&oldTransform);

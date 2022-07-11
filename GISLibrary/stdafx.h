@@ -41,8 +41,6 @@
 #include <d2d1_1.h>
 #pragma comment(lib, "d2d1.lib")
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
-
 #ifndef D2_SAFE_RELEASE
 #define D2_SAFE_RELEASE
 
@@ -58,3 +56,6 @@ inline void SafeRelease(Interface **ppInterfaceToRelease)
 }
 
 #endif
+
+class CGISLibraryApp;
+extern CGISLibraryApp* gisLib;

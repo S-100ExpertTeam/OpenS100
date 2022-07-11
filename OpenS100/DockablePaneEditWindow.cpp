@@ -149,7 +149,7 @@ LRESULT CDockablePaneEditWindow::OnPropertyChanged(WPARAM wparam, LPARAM lparam)
 				}
 			}
 
-			gisLib->BuildPortrayalCatalogue(cell->m_pLayer);
+			theApp.gisLib->BuildPortrayalCatalogue(cell->m_pLayer);
 			theApp.pView->MapRefresh();
 		}
 	}

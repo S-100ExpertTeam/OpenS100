@@ -55,7 +55,7 @@ BOOL CConfiguration_4::OnInitDialog()
 			return false;
 		}
 
-		auto pc = gisLib->GetPC();
+		auto pc = theApp.gisLib->GetPC();
 		if (pc == nullptr)
 		{
 			return false;
