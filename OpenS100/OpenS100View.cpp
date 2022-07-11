@@ -1013,7 +1013,8 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 
 			for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
 			{
-				SCurve* c = (*it).GetCurve();
+				//SCurve* c = (*it).GetCurve();
+				SCurve* c = (*it);
 				Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
 
 				int pickNumPoints = 0;
@@ -1259,8 +1260,10 @@ void COpenS100View::PickReport(CPoint _point)
 				double lon = 0;
 				if (compositeCurve->m_listCurveLink.size() > 0)
 				{
-					lat = ((*compositeCurve->m_listCurveLink.begin()).GetCurve())->m_pPoints[0].x;
-					lon = ((*compositeCurve->m_listCurveLink.begin()).GetCurve())->m_pPoints[0].y;
+					//lat = ((*compositeCurve->m_listCurveLink.begin()).GetCurve())->m_pPoints[0].x;
+					lat = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].x;
+					//lon = ((*compositeCurve->m_listCurveLink.begin()).GetCurve())->m_pPoints[0].y;
+					lon = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].y;
 				}
 
 				inverseProjection(lat, lon);

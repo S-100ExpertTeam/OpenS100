@@ -80,9 +80,10 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
-			SCurve* c = (*lcl).GetCurve();
+			//SCurve* c = (*lcl).GetCurve();
+			SCurve* c = (*lcl);
 
-			if (!(*lcl).GetMasking())
+			if (!(*lcl)->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{
@@ -186,9 +187,10 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
-			SCurve* c = (*lcl).GetCurve();
+			//SCurve* c = (*lcl).GetCurve();
+			SCurve* c = (*lcl);
 
-			if (!(*lcl).GetMasking())
+			if (!(*lcl)->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{

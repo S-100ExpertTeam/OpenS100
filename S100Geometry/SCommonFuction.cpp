@@ -614,7 +614,8 @@ int SCommonFuction::overlap(SCompositeCurve* objPoly, SSurface* comPoly, bool ap
 {
 	for (auto i = objPoly->m_listCurveLink.begin(); i != objPoly->m_listCurveLink.end(); i++)
 	{
-		SCurve* c = i->GetCurve();
+		//SCurve* c = i->GetCurve();
+		SCurve* c = (*i);
 
 		int result = overlap(c, comPoly, applyOption);
 		if (result)

@@ -119,7 +119,8 @@ void SENC_LineStyle::DrawInstruction(
 	Scaler *scaler,
 	PortrayalCatalogue* pc)
 {
-	auto curve = curveHasOrient->GetCurve();
+	//auto curve = curveHasOrient->GetCurve();
+	auto curve = curveHasOrient;
 	auto name = GetLineStyleName();
 
 	if (name != L"")

@@ -317,4 +317,6 @@ private:
 	bool UpdateFeaMapRecord(S101Cell* cell);
 
 	void GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* scaler, std::list<D2D1_POINT_2F>& points);
+
+	void InitCurveSuppression();
 };

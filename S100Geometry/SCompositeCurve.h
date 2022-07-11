@@ -9,7 +9,7 @@ public:
 	virtual ~SCompositeCurve();
 
 public:
-	std::list<SCurveHasOrient> m_listCurveLink;
+	std::list<SCurveHasOrient*> m_listCurveLink;
 
 public:
 	void SetMBR();
@@ -21,7 +21,8 @@ public:
 	bool ImportFromWkb(char* value, int size);
 	bool ExportToWkb(char** value, int* size);
 
-	void AddCurve(SCurve* curve, bool masking = false);
+	//void AddCurve(SCurve* curve, bool masking = false);
+	void AddCurve(SCurveHasOrient* curve);
 
 	void Release();
 };

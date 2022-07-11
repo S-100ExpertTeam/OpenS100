@@ -18,7 +18,7 @@ private:
 public:
 	std::vector<SENC_LineStyleBase*> lineStyles;
 	// Referenced Curve Link
-	std::list<SCurveHasOrient> m_listCurveLink;
+	//std::list<SCurveHasOrient*> m_listCurveLink;
 
 public:
 	void SetSuppression(bool value);

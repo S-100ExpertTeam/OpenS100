@@ -66,10 +66,10 @@ SSurface::~SSurface()
 	//}
 	//curves.clear();
 
-	for (auto i = curveList.begin(); i != curveList.end(); i++)
-	{
-		delete (*i).GetCurve();
-	}
+	//for (auto i = curveList.begin(); i != curveList.end(); i++)
+	//{
+	//	delete (*i).GetCurve();
+	//}
 }
 
 
@@ -159,7 +159,7 @@ void SSurface::CreateD2Geometry(ID2D1Factory1* factory)
 
 		for (auto i = curveList.begin(); i != curveList.end(); i++)
 		{
-			i->GetCurve()->CreateD2Geometry(factory);
+			(*i)->CreateD2Geometry(factory);
 		}
 	}
 }
@@ -310,9 +310,14 @@ ID2D1PathGeometry* SSurface::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* sc
 	return nullptr;
 }
 
-void SSurface::AddCurve(SCurve* curve)
+//void SSurface::AddCurve(SCurve* curve)
+//{
+//	curveList.push_back(SCurveHasOrient(curve, false));
+//}
+
+void SSurface::AddCurve(SCurveHasOrient* curve)
 {
-	curveList.push_back(SCurveHasOrient(curve, false));
+	curveList.push_back(curve);
 }
 
 void SSurface::AddCompositeCurve(SCompositeCurve* compositeCurve)
@@ -381,5 +386,13 @@ void SSurface::Set(std::vector<POINT>& points, std::vector<int>& parts)
 		m_pPoints[i].SetPoint(points[i].x / 10000000.0, points[i].y / 10000000.0);
 		projection(m_pPoints[i].x, m_pPoints[i].y);
 		m_mbr.CalcMBR(m_pPoints[i].x, m_pPoints[i].y);
+	}
+}
+
+void SSurface::Release()
+{
+	for (auto i = curveList.begin(); i != curveList.end(); i++)
+	{
+		delete (*i);
 	}
 }

@@ -44,7 +44,8 @@ void SENC_LineStyleReference::DrawInstruction(
 	Scaler *scaler,
 	PortrayalCatalogue* pc)
 {
-	auto curve = curveHasOrient->GetCurve();
+	//auto curve = curveHasOrient->GetCurve();
+	auto curve = curveHasOrient;
 
 	auto numPoints = curve->GetNumPoints();
 

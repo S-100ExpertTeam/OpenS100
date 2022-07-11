@@ -48,16 +48,17 @@
 #include "SENC_LineInstruction.h"
 #include "SENC_PointInstruction.h"
 
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
+#include "../FeatureCatalog/FeatureCatalogue.h"
 
-#include "..\\S100Geometry\\SPoint.h"
-#include "..\\S100Geometry\\SMultiPoint.h"
-#include "..\\S100Geometry\\SCompositeCurve.h"
-#include "..\\S100Geometry\\SSurface.h"
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\S100Geometry\\SCurve.h"
+#include "../S100Geometry/SPoint.h"
+#include "../S100Geometry/SMultiPoint.h"
+#include "../S100Geometry/SCompositeCurve.h"
+#include "../S100Geometry/SSurface.h"
+#include "../S100Geometry/SCommonFuction.h"
+#include "../S100Geometry/SCurve.h"
+#include "../S100Geometry/SCurveHasOrient.h"
 
-#include "..\\LibMFCUtil\\LibMFCUtil.h"
+#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <sstream> 
 #include <iomanip>
@@ -681,6 +682,8 @@ BOOL S101Cell::MakeFullSpatialData()
 		{
 			MakeAreaData(fr);
 		}
+
+		GetFullMaskData(fr);
 	}
 
 	return TRUE;
@@ -780,7 +783,8 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 			{
 				if (m_curMap.Lookup(iKey, cr))
 				{
-					auto sc = new SCurve();
+					//auto sc = new SCurve();
+					auto sc = new SCurveHasOrient();
 					fe->m_geometry = sc;
 					GetFullSpatialData(cr, sc, spas->m_ornt);
 				}
@@ -879,7 +883,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							R_CurveRecord *cr = nullptr;
 							if (m_curMap.Lookup(iKey, cr))
 							{
-								SCurve* sCurve = new SCurve();
+								SCurveHasOrient* sCurve = new SCurveHasOrient();
 								GetFullSpatialData(cr, sCurve, rias->m_ornt);
 								GetFullSpatialData(cr, vecPoint, rias->m_ornt);
 								geo->AddCurve(sCurve);
@@ -1340,7 +1344,8 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 			
 			if (m_curMap.Lookup(iKey, cr))
 			{
-				SCurve* scurve = new SCurve();
+				//SCurve* scurve = new SCurve();
+				SCurveHasOrient* scurve = new SCurveHasOrient();
 				int localORNT = cuco->m_ornt;
 				
 				if (ORNT == 2)
@@ -1773,7 +1778,7 @@ BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int orn
 
 BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 {
-	std::list<SCurveHasOrient>* listCurveLink = nullptr;
+	std::list<SCurveHasOrient*>* listCurveLink = nullptr;
 
 	if (fe->m_geometry == nullptr)
 	{
@@ -1791,6 +1796,11 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 		listCurveLink = &geo->curveList;
 		//listCurveLink = &geo->compositeCurve->m_listCurveLink;
 	}
+	else if (fe->m_geometry->type == 5)
+	{
+		listCurveLink = new std::list<SCurveHasOrient*>();
+		listCurveLink->push_back((SCurveHasOrient*)fe->m_geometry);
+	}
 	else
 	{
 		return FALSE;
@@ -1798,17 +1808,23 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 
 	for (auto iter = listCurveLink->begin(); iter != listCurveLink->end(); iter++)
 	{
-		SCurve* c = (*iter).GetCurve();
+		//SCurve* c = (*iter).GetCurve();
+		SCurve* c = (*iter);
 
 		for (auto itorParent = fe->m_mask.begin(); itorParent != fe->m_mask.end(); itorParent++)
 		{
 			F_MASK *maskParent = *itorParent;
 			auto mi = maskParent->m_arr.find(c->m_id);
-			if (mi == maskParent->m_arr.end())
+			if (mi != maskParent->m_arr.end())
 			{
-				(*iter).SetMasking(true);
+				(*iter)->SetMasking(true);
 			}
 		}
+	}
+
+	if (fe->m_geometry->type == 5)
+	{
+		delete listCurveLink;
 	}
 
 	return TRUE;
@@ -3632,7 +3648,8 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 				SCompositeCurve* geo = (SCompositeCurve*)instruction->fr->m_geometry;
 				for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
 				{
-					auto curve = j->GetCurve();
+					//auto curve = j->GetCurve();
+					auto curve = *j;
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -3670,7 +3687,8 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
 				//for (auto j = geo->compositeCurve->m_listCurveLink.begin(); j != geo->compositeCurve->m_listCurveLink.end(); j++)
 				{
-					auto curve = j->GetCurve();
+					//auto curve = j->GetCurve();
+					auto curve = *j;
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -3723,9 +3741,10 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
-			SCurve* c = (*lcl).GetCurve();
+			//SCurve* c = (*lcl).GetCurve();
+			SCurve* c = (*lcl);
 
-			if (!(*lcl).GetMasking())
+			if (!(*lcl)->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{
@@ -3790,6 +3809,42 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 			tempPoint.x = (float)(*itor).x;
 			tempPoint.y = (float)(*itor).y;
 			points.push_back(tempPoint);
+		}
+	}
+}
+
+void S101Cell::InitCurveSuppression()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		auto feature = *i;
+		
+		if (feature->m_geometry->type == 2)
+		{
+			auto compositeCurve = (SCompositeCurve*)feature->m_geometry;
+			for (
+				auto j = compositeCurve->m_listCurveLink.begin();
+				j != compositeCurve->m_listCurveLink.end();
+				j++)
+			{
+				(*j)->SetSuppress(false);
+			}
+		}
+		else if (feature->m_geometry->type == 3)
+		{
+			auto surface = (SSurface*)feature->m_geometry;
+			for (
+				auto j = surface->curveList.begin();
+				j != surface->curveList.end();
+				j++)
+			{
+				(*j)->SetSuppress(false);
+			}
+		}
+		else if (feature->m_geometry->type == 5)
+		{
+			auto curve = (SCurveHasOrient*)feature->m_geometry;
+			curve->SetSuppress(false);
 		}
 	}
 }

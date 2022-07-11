@@ -28,11 +28,22 @@
 //	this->m_isDuplicated = isDuplicated;
 //}
 
-SCurveHasOrient::SCurveHasOrient(SCurve* curve, bool masking)
+SCurveHasOrient::SCurveHasOrient()
 {
-	this->curve = curve;
+
+}
+
+SCurveHasOrient::SCurveHasOrient(bool masking)
+{
+	//this->curve = curve;
 	this->m_masking = masking;
 }
+
+//SCurveHasOrient::SCurveHasOrient(SCurve* curve, bool masking)
+//{
+//	//this->curve = curve;
+//	this->m_masking = masking;
+//}
 
 SCurveHasOrient::~SCurveHasOrient()
 {
@@ -43,10 +54,10 @@ SCurveHasOrient::~SCurveHasOrient()
 //	return parentOrient;
 //}
 
-SCurve* SCurveHasOrient::GetCurve()
-{
-	return curve;
-}
+//SCurve* SCurveHasOrient::GetCurve()
+//{
+//	return curve;
+//}
 
 void SCurveHasOrient::SetMasking(bool value)
 {
@@ -67,3 +78,13 @@ bool SCurveHasOrient::GetMasking()
 //{
 //	return m_isDuplicated;
 //}
+
+void SCurveHasOrient::SetSuppress(bool value)
+{
+	suppress = value;
+}
+
+bool SCurveHasOrient::GetSuppress()
+{
+	return suppress;
+}

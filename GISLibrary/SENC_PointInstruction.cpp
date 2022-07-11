@@ -89,7 +89,8 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 				SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 				for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
 				{
-					auto curve = j->GetCurve();
+					//auto curve = j->GetCurve();
+					auto curve = *j;
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -122,7 +123,8 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 			}
 			else if (sr->RCNM == 120 && fr->m_geometry->type == 5)
 			{
-				SCurve* curve = (SCurve*)fr->m_geometry;
+				//SCurve* curve = (SCurve*)fr->m_geometry;
+				SCurveHasOrient* curve = (SCurveHasOrient*)fr->m_geometry;
 				
 				auto rcid = curve->GetRCID();
 				if (rcid == sr->reference)
@@ -160,7 +162,8 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
 				//for (auto j = geo->compositeCurve->m_listCurveLink.begin(); j != geo->compositeCurve->m_listCurveLink.end(); j++)
 				{
-					auto curve = j->GetCurve();
+					//auto curve = j->GetCurve();
+					auto curve = (*j);
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -213,9 +216,10 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
-			SCurve* c = (*lcl).GetCurve();
+			//SCurve* c = (*lcl).GetCurve();
+			SCurve* c = *lcl;
 			
-			if (!(*lcl).GetMasking())
+			if (!(*lcl)->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{
@@ -369,7 +373,8 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 				SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 				for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
 				{
-					auto curve = j->GetCurve();
+					//auto curve = j->GetCurve();
+					auto curve = *j;
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -407,7 +412,8 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
 				//for (auto j = geo->compositeCurve->m_listCurveLink.begin(); j != geo->compositeCurve->m_listCurveLink.end(); j++)
 				{
-					auto curve = j->GetCurve();
+					//auto curve = j->GetCurve();
+					auto curve = (*j);
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -458,9 +464,10 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
-			SCurve* c = (*lcl).GetCurve();
+			//SCurve* c = (*lcl).GetCurve();
+			SCurve* c = (*lcl);
 			
-			if (!(*lcl).GetMasking())
+			if (!(*lcl)->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{

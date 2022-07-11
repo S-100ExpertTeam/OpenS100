@@ -60,7 +60,7 @@ bool SENC_LineInstruction::GetSuppression()
 #pragma warning(disable:4838)
 void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* pDirect2dFactory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
-	std::list<SCurveHasOrient>* curListCurveLink = nullptr;
+	std::list<SCurveHasOrient*>* curListCurveLink = nullptr;
 
 	// Surface
 	if (fr->m_geometry->type == 3)
@@ -68,10 +68,6 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		auto surface = (SSurface*)fr->m_geometry;
 
 		curListCurveLink = &surface->curveList;
-		//if (surface->compositeCurve)
-		//{
-		//	curListCurveLink = &surface->compositeCurve->m_listCurveLink;
-		//}
 	}
 	// Curve
 	else if (fr->m_geometry->type == 2)
@@ -82,12 +78,17 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 	}
 	else if (fr->m_geometry->type == 5)
 	{
-		auto curve = (SCurve*)fr->m_geometry;
+		auto curve = (SCurveHasOrient*)fr->m_geometry;
 		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
 		{
 			SENC_LineStyleBase* lineStyleBase = *itor;
-			SCurveHasOrient locCurve(curve, false);
-			lineStyleBase->DrawInstruction(&locCurve , rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+
+			if (curve->GetMasking() || curve->GetSuppress())
+			{
+				break;
+			}
+
+			lineStyleBase->DrawInstruction(curve, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
 		}
 	}
 
@@ -99,9 +100,9 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 
 	for (auto i = curListCurveLink->begin(); i != curListCurveLink->end(); i++)
 	{
-		auto curve = (*i).GetCurve();
+		auto curve = (*i);
 
-		if ((*i).GetMasking())
+		if ((*i)->GetMasking() || (*i)->GetSuppress())
 		{
 			continue;
 		}
@@ -130,7 +131,7 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
 		{
 			SENC_LineStyleBase *lineStyleBase = *itor;
-			lineStyleBase->DrawInstruction(&*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+			lineStyleBase->DrawInstruction(*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
 		}
 	}
 }

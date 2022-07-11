@@ -876,7 +876,6 @@ void LayerManager::S101RebuildPortrayal()
 		return;
 	}
 	
-
 	if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
 	{
 		BuildPortrayalCatalogue(layer);
@@ -1160,93 +1159,129 @@ void LayerManager::DrawSemiCircle(float x, float y, float radius, float startAng
 
 void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet)
 {
-	//lineSuppressionMap.clear();
+	lineSuppressionMap.clear();
 
-	//// Drawing priority : High -> Low
-	//for (auto i = drawingPriority.rbegin(); i != drawingPriority.rend(); i++)
-	//{
-	//	int drawingPriority = *i;
+	// Drawing priority : High -> Low
+	for (auto i = drawingPriority.rbegin(); i != drawingPriority.rend(); i++)
+	{
+		int drawingPriority = *i;
 
-	//	auto lineInstructions = drawingSet->GetLineList()[drawingPriority];
+		auto lineInstructions = drawingSet->GetLineList()[drawingPriority];
 
-	//	for (auto j = lineInstructions.begin(); j != lineInstructions.end(); j++)
-	//	{
-	//		auto lineInstruction = (SENC_LineInstruction*)*j;
+		for (auto j = lineInstructions.begin(); j != lineInstructions.end(); j++)
+		{
+			auto lineInstruction = (SENC_LineInstruction*)*j;
 
-	//		auto featureRecord = lineInstruction->fr;
+			auto featureRecord = lineInstruction->fr;
 
-	//		std::list<SCurveHasOrient>* curListCurveLink = nullptr;
+			std::list<SCurveHasOrient*> curListCurveLink;
 
-	//		if (lineInstruction->spatialReference.size() > 0)
-	//		{
-	//			if (lineInstruction->m_listCurveLink.size() == 0)
-	//			{
-	//				if (featureRecord->m_geometry->type == 3)
-	//				{
-	//					auto surface = (SSurface*)featureRecord->m_geometry;
+			if (lineInstruction->spatialReference.size() > 0)
+			{
+				//if (lineInstruction->m_listCurveLink.size() == 0)
+				{
+					if (featureRecord->m_geometry->type == 3)
+					{
+						auto surface = (SSurface*)featureRecord->m_geometry;
 
-	//					curListCurveLink = &surface->curveList;
-	//				}
-	//				else if (featureRecord->m_geometry->type == 2)
-	//				{
-	//					auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
+						for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
+						{
+							SENC_SpatialReference* sred = *iterLi;
+							int referencedID = sred->reference;
 
-	//					curListCurveLink = &compositeCurve->m_listCurveLink;
-	//				}
+							for (auto k = surface->curveList.begin(); k != surface->curveList.end(); k++)
+							{
+								if ((*k)->GetRCID() == referencedID)
+								{
+									curListCurveLink.push_back(*k);
+								}
+							}
+						}
+					}
+					else if (featureRecord->m_geometry->type == 2)
+					{
+						auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
 
-	//				for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
-	//				{
-	//					SENC_SpatialReference* sred = *iterLi;
-	//					int referencedID = sred->reference;
+						for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
+						{
+							SENC_SpatialReference* sred = *iterLi;
+							int referencedID = sred->reference;
 
-	//					for (auto iterCurLcl = curListCurveLink->begin(); iterCurLcl != curListCurveLink->end(); iterCurLcl++)
-	//					{
-	//						auto curve = *iterCurLcl;
+							for (auto k = compositeCurve->m_listCurveLink.begin(); k != compositeCurve->m_listCurveLink.end(); k++)
+							{
+								if ((*k)->GetRCID() == referencedID)
+								{
+									curListCurveLink.push_back(*k);
+								}
+							}
+						}
+					}
+					else if (featureRecord->m_geometry->type == 5)
+					{
+						auto curveHasOrient = (SCurveHasOrient*)featureRecord->m_geometry;
 
-	//						int id = curve.GetCurve()->m_id & 0x0000FFFF;
+						for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
+						{
+							SENC_SpatialReference* sred = *iterLi;
+							int referencedID = sred->reference;
 
-	//						if (id == referencedID)
-	//						{
-	//							lineInstruction->m_listCurveLink.push_back(curve);
-	//							break;
-	//						}
-	//					}
-	//				}
-	//			}
-	//			curListCurveLink = &lineInstruction->m_listCurveLink;
-	//		}
-	//		else if (featureRecord->m_geometry->type == 3)
-	//		{
-	//			auto surface = (SSurface*)featureRecord->m_geometry;
+							if (curveHasOrient->GetRCID() == referencedID)
+							{
+								curListCurveLink.push_back(curveHasOrient);
+							}
+						}
+					}
+				}
+			}
+			else if (featureRecord->m_geometry->type == 3)
+			{
+				auto surface = (SSurface*)featureRecord->m_geometry;
 
-	//			curListCurveLink = &surface->curveList;
-	//		}
-	//		else if (featureRecord->m_geometry->type == 2)
-	//		{
-	//			auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
+				for (auto i = surface->curveList.begin(); i != surface->curveList.end(); i++)
+				{
+					curListCurveLink.push_back((*i));
+				}
 
-	//			curListCurveLink = &compositeCurve->m_listCurveLink;
-	//		}
-	//		else if (featureRecord->m_geometry->type == 5)
-	//		{
-	//			curListCurveLink->push_back(SCurveHasOrient((SCurve*)featureRecord->m_geometry, false));
-	//		}
+//				curListCurveLink = surface->curveList;
+			}
+			else if (featureRecord->m_geometry->type == 2)
+			{
+				auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
 
-	//		for (auto m = curListCurveLink->begin(); m != curListCurveLink->end(); m++)
-	//		{
-	//			auto cw = m;
-	//			auto curve = cw->GetCurve();
-	//			int id = curve->m_id & 0x0000FFFF;
+				for (auto i = compositeCurve->m_listCurveLink.begin(); i != compositeCurve->m_listCurveLink.end(); i++)
+				{
+					curListCurveLink.push_back((*i));
+				}
 
-	//			auto iterExist = lineSuppressionMap.find(id);
+				//curListCurveLink = compositeCurve->m_listCurveLink;
+			}
+			else if (featureRecord->m_geometry->type == 5)
+			{
+				//curListCurveLink.push_back((SCurveHasOrient*)featureRecord->m_geometry);
+				curListCurveLink.push_back(((SCurveHasOrient*)featureRecord->m_geometry));
+			}
 
-	//			if (iterExist == lineSuppressionMap.end() && false == cw->GetMasking())
-	//			{
-	//				lineSuppressionMap.insert(id);
-	//			}
-	//		}
-	//	}
-	//}
+			for (auto m = curListCurveLink.begin(); m != curListCurveLink.end(); m++)
+			{
+				auto curve = *m;
+				int id = curve->m_id & 0x0000FFFF;
+
+				auto iterExist = lineSuppressionMap.find(id);
+
+				if (false == curve->GetMasking())
+				{
+					if (iterExist == lineSuppressionMap.end())
+					{
+						lineSuppressionMap.insert(id);
+					}
+					else if (iterExist != lineSuppressionMap.end())
+					{
+						curve->SetSuppress(true);
+					}
+				}
+			}
+		}
+	}
 }
 
 int LayerManager::CheckFileType(CString path, int update)
