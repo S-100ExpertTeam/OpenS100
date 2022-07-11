@@ -761,7 +761,6 @@ BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 
 BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 {
-	//fe->m_curveList.clear();
 	if (fe->m_geometry)
 	{
 		delete fe->m_geometry;
@@ -770,18 +769,6 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 
 	R_CurveRecord *cr = nullptr;
 	R_CompositeRecord *ccr = nullptr;
-
-	__int64 iKey = 0;
-
-	if (fe->m_geometry)
-	{
-		delete fe->m_geometry;
-		fe->m_geometry = nullptr;
-	}
-
-
-	//SCompositeCurve* scc = new SCompositeCurve();
-	//fe->m_geometry = scc;
 
 	for (auto i = fe->m_spas.begin(); i != fe->m_spas.end(); i++)
 	{
@@ -792,38 +779,30 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 			SPAS* spas = *j;
 			__int64 iKey = ((__int64)spas->m_name.RCNM) << 32 | spas->m_name.RCID;
 
-			if (m_comMap.Lookup(iKey, ccr))
+			if (spas->m_name.RCNM == 120)
 			{
-				SCompositeCurve* scc = new SCompositeCurve();
-				fe->m_geometry = scc;
-				GetFullSpatialData(ccr, scc, spas->m_ornt);
-				//GetFullCurveData(fe, ccr, spas->m_ornt);
+				if (m_curMap.Lookup(iKey, cr))
+				{
+					//auto sc = new SCurve();
+					auto sc = new SCurveHasOrient();
+					fe->m_geometry = sc;
+					GetFullSpatialData(cr, sc, spas->m_ornt);
+				}
 			}
-			else if (m_curMap.Lookup(iKey, cr))
+			else if (spas->m_name.RCNM == 125)
 			{
-				auto sc = new SCurve();
-				fe->m_geometry = sc;
-				GetFullSpatialData(cr, sc, spas->m_ornt);
-				//GetFullSpatialData(cr, cr);
-				//GetFullCurveData(fe, cr, spas->m_ornt);
+				if (m_comMap.Lookup(iKey, ccr))
+				{
+					SCompositeCurve* scc = new SCompositeCurve();
+					fe->m_geometry = scc;
+					GetFullSpatialData(ccr, scc, spas->m_ornt);
+				}
 			}
 		}
 	}
 
-	//SCompositeCurve *scc = new SCompositeCurve();
-	//fe->m_geometry = scc;
-
-	//SetSCurveList(&fe->m_curveList, &scc->m_listCurveLink);
-
-
-	if (gisLib == nullptr)
-	{
-		return false;
-	}
-
 	if (fe->m_geometry)
 	{
-		fe->m_geometry->SetMBR();
 		fe->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
 	}
 
@@ -1365,7 +1344,24 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 			
 			if (m_curMap.Lookup(iKey, cr))
 			{
-				GetFullSpatialData(cr, )
+				//SCurve* scurve = new SCurve();
+				SCurveHasOrient* scurve = new SCurveHasOrient();
+				int localORNT = cuco->m_ornt;
+				
+				if (ORNT == 2)
+				{
+					if (cuco->m_ornt == 1)
+					{
+						localORNT = 2;
+					}
+					else if (cuco->m_ornt == 2)
+					{
+						localORNT = 1;
+					}
+				}
+
+				GetFullSpatialData(cr, scurve, localORNT);
+				curve->AddCurve(scurve);
 			}
 		}
 		else if ((*i)->m_name.RCNM == 125)
@@ -1668,16 +1664,16 @@ BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt)
 	//fe->m_curveList.push_back(ocr);
 
 
-	//fe->m_geometry = new SCurve;
+	fe->m_geometry = new SCurve;
 
-	//if (ornt == 1)
-	//{
+	if (ornt == 1)
+	{
 
-	//}
-	//else
-	//{
+	}
+	else
+	{
 
-	//}
+	}
 
 	return TRUE;
 }
