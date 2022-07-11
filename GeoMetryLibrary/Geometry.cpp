@@ -19,43 +19,6 @@ MBR& Geometry::GetMBRRef()
 	return m_mbr;
 }
 
-POINT Geometry::CalculateCenterOfGravityOfPolygon(POINT *_p, int _count)
-{
-	int j = 0;
-	double area = 0;
-	double centerX = 0.0;
-	double centerY = 0.0;
-
-	double x1, y1, x2, y2, tmpArea;
-
-	for (int i = 0; i < _count; i++)
-	{
-		j = (i + 1) % _count;
-
-		x1 = _p[i].x;
-		y1 = _p[i].y;
-		x2 = _p[j].x;
-		y2 = _p[j].y;
-
-		tmpArea = ((x1 * y2) - (x2 * y1));
-
-		centerX += ((x1 + x2) * tmpArea);
-		centerY += ((y1 + y2) * tmpArea);
-		area += tmpArea;
-	}
-
-	area *= 0.5;
-
-	centerX = centerX / (6.0 * area);
-	centerY = centerY / (6.0 * area);
-
-	POINT returnValue;
-	returnValue.x = (LONG)centerX;
-	returnValue.y = (LONG)centerY;
-
-	return returnValue;
-}
-
 double Geometry::GetDistance(POINT _p1, POINT _p2)
 {
 	POINT p;

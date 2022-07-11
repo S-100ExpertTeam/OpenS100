@@ -16,7 +16,6 @@
 #include "..\\PortrayalCatalogue\\S100_Symbol.h"
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
 #include "..\\PortrayalCatalogue\\S100_NullInstruction.h"
-#include "..\\GeoMetryLibrary\\ENCGeometry.h"
 #include "..\\GeoMetryLibrary\\GeoPoint.h"
 #include "..\\S100Geometry\\SSurface.h"
 #include "..\\LatLonUtility\\LatLonUtility.h"
@@ -109,7 +108,7 @@ void SENC_Instruction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp,
 	{
 		SGeometry::sizeOfPoint = _surface->m_numPoints;
 
-		delete SGeometry::viewPoints; 
+		delete[] SGeometry::viewPoints; 
 		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
 	}
 

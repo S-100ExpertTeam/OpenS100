@@ -13,8 +13,6 @@
 #include <vector>
 #include <string>
 
-
-
 PortrayalCatalogue::PortrayalCatalogue()
 {
 

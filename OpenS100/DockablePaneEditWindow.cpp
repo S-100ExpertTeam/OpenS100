@@ -40,6 +40,8 @@
 #include <string>
 
 const UINT WM_FILTER_LIST = ::RegisterWindowMessage(_T("WM_FILTER_LIST"));
+const CString tabNameAttribute = L"Attributes";
+const CString tabNameVector = L"Vector";
 
 // CFeatureView
 //
@@ -147,7 +149,7 @@ LRESULT CDockablePaneEditWindow::OnPropertyChanged(WPARAM wparam, LPARAM lparam)
 				}
 			}
 
-			gisLib->BuildPortrayalCatalogue(cell->m_pLayer);
+			theApp.gisLib->BuildPortrayalCatalogue(cell->m_pLayer);
 			theApp.pView->MapRefresh();
 		}
 	}
@@ -189,7 +191,7 @@ int CDockablePaneEditWindow::OnCreate(LPCREATESTRUCT lp)
 	m_wndListAttribute.SetVSDotNetLook();
 	m_wndListAttribute.MarkModifiedProperties();
 
-	m_wndTabs.AddTab(&m_wndListAttribute, L"Attributes", (UINT)0, 0);
+	m_wndTabs.AddTab(&m_wndListAttribute, tabNameAttribute, (UINT)0, 0);
 
 	::ShowScrollBar(m_wndListAttribute.GetSafeHwnd(), SB_VERT, FALSE);
 
@@ -207,7 +209,7 @@ int CDockablePaneEditWindow::OnCreate(LPCREATESTRUCT lp)
 	m_wndListVector.SetVSDotNetLook();
 	m_wndListVector.MarkModifiedProperties();
 
-	m_wndTabs.AddTab(&m_wndListVector, L"Vector", (UINT)0, 0);
+	m_wndTabs.AddTab(&m_wndListVector, tabNameVector, (UINT)0, 0);
 
 	::ShowScrollBar(m_wndListVector.GetSafeHwnd(), SB_VERT, FALSE);
 
@@ -361,32 +363,22 @@ BOOL CDockablePaneEditWindow::OnEraseBkgnd(CDC* pDC)
 
 void CDockablePaneEditWindow::SetFeatureRecord(R_FeatureRecord* pFeature)//It came over after I clicked on the dot.
 {
-	int TabNum = m_wndTabs.GetActiveTab();
 	m_pFeature = pFeature;
 	m_pInformation = nullptr;
 	m_selectedObjectType = L"Feature";
 
-	if (TabNum == 0)
-	{
-		SetAttributes();
-	}
-	else if (TabNum == 1)
-	{
-		SetVectors();
-	}
+	SetAttributes();
+	SetVectors();
 }
 
 void CDockablePaneEditWindow::SetFeatureRecord(R_InformationRecord* pInformation)
 {
-	int TabNum = m_wndTabs.GetActiveTab();
 	m_pInformation = pInformation;
 	m_pFeature = nullptr;
-
 	m_selectedObjectType = L"Information";
-	if (TabNum == 0)
-	{
-		SetAttributes();
-	}
+
+	SetAttributes();
+	ClearVector(); 
 }
 
 
@@ -656,6 +648,7 @@ void CDockablePaneEditWindow::SetVectors()
 
 	if (m_cell == nullptr || m_pFeature == nullptr)
 	{
+		m_wndListVector.ShowWindow(TRUE);
 		return;
 	}
 	if (m_cell->m_FileType == FILE_S_100_VECTOR)
@@ -1046,11 +1039,20 @@ void CDockablePaneEditWindow::SetVector(R_CompositeRecord* r, CMFCPropertyGridPr
 		for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
 		{
 			CUCO* cuco = *itor;
+			R_VectorRecord* vectorRecord = nullptr;
 
-			auto itorFind = cell->m_vecMap.find(cuco->m_name.GetName());
-			if (itorFind != cell->m_vecMap.end())
+			if (120 == cuco->m_name.RCNM)
 			{
-				SetVector(cuco->m_name.RCNM, itorFind->second, pProperty);
+				vectorRecord = cell->GetCurveRecord(cuco->m_name.GetName());
+			}
+			else if (125 == cuco->m_name.RCNM)
+			{
+				vectorRecord = cell->GetCurveRecord(cuco->m_name.GetName());	
+			}
+
+			if (vectorRecord)
+			{
+				SetVector(cuco->m_name.RCNM, vectorRecord, pProperty);
 			}
 		}
 	}
@@ -1104,10 +1106,20 @@ void CDockablePaneEditWindow::SetVector(R_SurfaceRecord* r, CMFCPropertyGridProp
 		{
 			RIAS* rias = *itor;
 
-			auto itorFind = cell->m_vecMap.find(rias->m_name.GetName());
-			if (itorFind != cell->m_vecMap.end())
+			R_VectorRecord* vectorRecord = nullptr;
+
+			if (120 == rias->m_name.RCNM)
 			{
-				SetVector(rias->m_name.RCNM, itorFind->second, pProperty);
+				vectorRecord = cell->GetCurveRecord(rias->m_name.GetName());
+			}
+			else if (125 == rias->m_name.RCNM)
+			{
+				vectorRecord = cell->GetCompositeCurveRecord(rias->m_name.GetName());
+			}
+
+			if (vectorRecord)
+			{
+				SetVector(rias->m_name.RCNM, vectorRecord, pProperty);
 			}
 		}
 	}
@@ -1144,7 +1156,6 @@ void CDockablePaneEditWindow::DeleteAttributeItems()
 }
 void CDockablePaneEditWindow::DeleteVectorItems()
 {
-
 	while (m_wndListVector.GetPropertyCount() > 0)
 	{
 		CMFCPropertyGridProperty* prop = m_wndListVector.GetProperty(0);
@@ -1226,4 +1237,38 @@ SpatialObject *CDockablePaneEditWindow::GetSpatialObject()
 S101Cell* CDockablePaneEditWindow::GetS101Cell()
 {
 	return (S101Cell*)m_cell;
+}
+
+CString CDockablePaneEditWindow::GetActiveTabName()
+{
+	int tabNum = m_wndTabs.GetActiveTab();
+
+	CString tabName;
+
+	m_wndTabs.GetTabLabel(tabNum, tabName);
+
+	return tabName;
+}
+
+bool CDockablePaneEditWindow::IsAttributeTab()
+{
+	int tabNum = m_wndTabs.GetActiveTab();
+
+	CString tabName;
+
+	m_wndTabs.GetTabLabel(tabNum, tabName);
+
+	if (0 == tabName.Compare(tabNameAttribute))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void CDockablePaneEditWindow::ClearVector()
+{
+	m_wndListVector.ShowWindow(FALSE);
+	DeleteVectorItems();
+	m_wndListVector.ShowWindow(TRUE);
 }

@@ -53,9 +53,6 @@
     <ClCompile Include="Geometry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ENCGeometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ENCCommon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -104,9 +101,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ENCGeometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ENCCommon.h">

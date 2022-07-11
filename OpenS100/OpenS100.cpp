@@ -64,6 +64,8 @@ COpenS100App::COpenS100App() noexcept
 
 COpenS100App::~COpenS100App()
 {
+	delete gisLib;
+	gisLib = nullptr;
 }
 
 COpenS100App theApp;

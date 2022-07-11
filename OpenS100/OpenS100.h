@@ -10,6 +10,8 @@
 #include "DockablePaneEditWindow.h"
 #include "DockablePaneRelation.h"
 
+#include "../GISLibrary/GISLibrary.h"
+
 class COpenS100View;
 class COpenS100App : public CWinAppEx
 {
@@ -28,6 +30,8 @@ public:
 	CDockablePaneEditWindow m_DockablePaneEditWindow; //
 
 	BOOL  m_bHiColorIcons;
+
+	CGISLibraryApp* gisLib = new CGISLibraryApp();
 
 public:
 	virtual BOOL InitInstance();

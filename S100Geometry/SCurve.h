@@ -9,6 +9,7 @@ public:
 	virtual ~SCurve();
 	
 public:
+	// RCNM(120) + RCID
 	__int64 m_id = 0;
 	int m_numPoints = 0;
 	SPoint* m_pPoints = nullptr;
@@ -30,4 +31,8 @@ public:
 	void SetMBR();
 	bool ImportFromWkb(char* value, int size);
 	bool ExportToWkb(char** value, int* size);
+
+	void Projection();
+	void SetMultiplicationFactor(int comfX, int comfY);
+	void SetRCID(int value);
 };

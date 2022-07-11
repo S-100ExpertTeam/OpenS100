@@ -132,6 +132,7 @@ public:
 	void SetVector(R_CurveRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
 	void SetVector(R_CompositeRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
 	void SetVector(R_SurfaceRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
+	void ClearVector();
 
 	void SetFeatureList();
 	void DeleteAllItems();
@@ -147,6 +148,9 @@ public:
 	void SetSpatialObject(SpatialObject *object);
 	SpatialObject *GetSpatialObject();
 	S101Cell* GetS101Cell();
+
+	CString GetActiveTabName();
+	bool IsAttributeTab();
 
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lp);

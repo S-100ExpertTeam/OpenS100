@@ -29,10 +29,8 @@ public:
 	virtual ~R_FeatureRecord();
 
 public:
-	// 000
 	F_FRID m_frid;
 	F_FOID m_foid;
-
 
 	std::list<F_ATTR*> m_attr;
 	std::list<F_INAS*> m_inas;

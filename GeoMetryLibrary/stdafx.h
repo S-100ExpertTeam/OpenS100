@@ -12,9 +12,3 @@
 #include <gdiPlus.h>
 #pragma comment(lib, "gdiplus")
 using namespace Gdiplus;
-
-#include "..\\extlibs\\Clipper\\include\\clipper.hpp"
-
-#ifndef _TEXTWHITEBACK	
-	//#define _TEXTWHITEBACK	
-#endif

@@ -1,5 +1,8 @@
 #pragma once
+
 #include "MBR.h"
+
+#include <string>
 
 class Scaler;
 class Symbol;
@@ -29,15 +32,10 @@ public:
 	virtual void SetMBR() {};
 	virtual void CreateD2Geometry(ID2D1Factory1* factory) {};
 
+	// Function for memory release outside of deconstructor
+	virtual void Release() {};
+
 public:
-	/*
-** Function  : Find the center of gravity of a given polygon.
-** factor   :
-			POINT* _p     - The arrangement with the coordinates of polygon.
-			int    _count - The number of polygon coordinates.
-** Return value : center point of Weight
-*/
-	POINT CalculateCenterOfGravityOfPolygon(POINT *_p, int _count);
 
 	/*
 	** Function   : Find the distance between the two points.

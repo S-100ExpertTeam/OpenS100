@@ -65,7 +65,6 @@ std::wstring S101Layer::GetEditionNumberAsWstring()
 	// m is Update Number.
 	// I'll return the Edition Number here.
 	// e.g. If it's 1.4, return 1
-
 	return std::wstring(result);
 }
 

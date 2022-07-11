@@ -84,17 +84,11 @@ public:
 	// enccommon
 	bool DISPLAY_PLANE;
 
-	//extern bool APPLY_SYMBOL_SIZE_TEST_BY_SCALE;
-
-	bool APPLY_DATA_COVERAGE_SCALE;
-
 	float DISPLAY_SYMBOL_SCALE;
 
 	// true:  center Point(fluid)
 	// false: All AREA center point(fixed)
 	bool AREA_SYMBOL_DYNAMIC_POSITION_MODE;
-
-	int	  INTEROPERABILITY_LEVEL; //DISTANCE_TAGS;
 
    // Show Text Placement
 	BOOL	SHOW_TEXT_PLACEMENT;

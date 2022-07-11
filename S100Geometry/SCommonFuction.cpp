@@ -15,7 +15,7 @@ void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, S
 	{
 		SGeometry::sizeOfPoint = _surface->m_numPoints;
 
-		delete SGeometry::viewPoints;
+		delete[] SGeometry::viewPoints;
 		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
 	}
 
@@ -614,7 +614,8 @@ int SCommonFuction::overlap(SCompositeCurve* objPoly, SSurface* comPoly, bool ap
 {
 	for (auto i = objPoly->m_listCurveLink.begin(); i != objPoly->m_listCurveLink.end(); i++)
 	{
-		SCurve* c = i->GetCurve();
+		//SCurve* c = i->GetCurve();
+		SCurve* c = (*i);
 
 		int result = overlap(c, comPoly, applyOption);
 		if (result)

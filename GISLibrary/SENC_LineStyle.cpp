@@ -3,11 +3,13 @@
 #include "SENC_CommonFuc.h"
 #include "GISLibrary.h"
 
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\S100Geometry\\SCurveHasOrient.h"
-#include "..\\S100Geometry\\SCurve.h"
+#include "../S100Geometry/SCommonFuction.h"
+#include "../S100Geometry/SCurveHasOrient.h"
+#include "../S100Geometry/SCurve.h"
+
+#include "../LatLonUtility/LatLonUtility.h"
 
 SENC_LineStyle::SENC_LineStyle() : SENC_LineStyleBase()
 {
@@ -117,7 +119,8 @@ void SENC_LineStyle::DrawInstruction(
 	Scaler *scaler,
 	PortrayalCatalogue* pc)
 {
-	auto curve = curveHasOrient->GetCurve();
+	//auto curve = curveHasOrient->GetCurve();
+	auto curve = curveHasOrient;
 	auto name = GetLineStyleName();
 
 	if (name != L"")
@@ -125,18 +128,18 @@ void SENC_LineStyle::DrawInstruction(
 		auto numPoints = curve->GetNumPoints();
 		auto d2Points = new D2D1_POINT_2F[numPoints];
 
-		bool curOrient = true;
+		//bool curOrient = true;
 
-		if (true == curveHasOrient->GetParentOrient())
-		{
-			curOrient = true;
-		}
-		else
-		{
-			curOrient = false;
-		}
+		//if (true == curveHasOrient->GetParentOrient())
+		//{
+		//	curOrient = true;
+		//}
+		//else
+		//{
+		//	curOrient = false;
+		//}
 
-		if (curOrient)
+		//if (curOrient)
 		{
 			for (int pi = 0; pi < numPoints; pi++)
 			{
@@ -147,17 +150,17 @@ void SENC_LineStyle::DrawInstruction(
 					&d2Points[pi].y);
 			}
 		}
-		else
-		{
-			for (int pi = 0; pi < numPoints; pi++)
-			{
-				scaler->WorldToDevice_F(
-					curve->GetX(numPoints - 1 - pi),
-					curve->GetY(numPoints - 1 - pi),
-					&d2Points[pi].x,
-					&d2Points[pi].y);
-			}
-		}
+		//else
+		//{
+		//	for (int pi = 0; pi < numPoints; pi++)
+		//	{
+		//		scaler->WorldToDevice_F(
+		//			curve->GetX(numPoints - 1 - pi),
+		//			curve->GetY(numPoints - 1 - pi),
+		//			&d2Points[pi].x,
+		//			&d2Points[pi].y);
+		//	}
+		//}
 
 		auto s100PCManager = pc->GetS100PCManager();
 		if (s100PCManager)

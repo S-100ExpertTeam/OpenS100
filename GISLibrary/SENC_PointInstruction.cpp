@@ -20,14 +20,19 @@
 SENC_PointInstruction::SENC_PointInstruction()
 {
 	type = 1;
-	symbol = NULL;
-	vectorPoint = NULL;
 }
 
 SENC_PointInstruction::~SENC_PointInstruction()
 {
-	if (symbol) delete symbol;
-	if (vectorPoint) delete vectorPoint;
+	if (symbol)
+	{
+		delete symbol;
+	}
+
+	if (vectorPoint)
+	{
+		delete vectorPoint;
+	}
 }
 
 #pragma warning(disable:4244)
@@ -47,7 +52,6 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 	D2D1_POINT_2F tempPoint;
 
 	bool bDraw;
-
 
 	if (symbol)
 	{
@@ -69,18 +73,24 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 		for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
 		{
 			auto sr = *i;
+			
+			// Point
 			if (sr->RCNM == 110)
 			{
+				
 			}
+			// Multi point
 			else if (sr->RCNM == 115)
 			{
 			}
+			// Curve
 			else if (sr->RCNM == 120 && fr->m_geometry->IsCurve())
 			{
 				SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 				for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
 				{
-					auto curve = j->GetCurve();
+					//auto curve = j->GetCurve();
+					auto curve = *j;
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -109,6 +119,40 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 						delete[] screenPoints;
 						screenPoints = nullptr;
 					}
+				}
+			}
+			else if (sr->RCNM == 120 && fr->m_geometry->type == 5)
+			{
+				//SCurve* curve = (SCurve*)fr->m_geometry;
+				SCurveHasOrient* curve = (SCurveHasOrient*)fr->m_geometry;
+				
+				auto rcid = curve->GetRCID();
+				if (rcid == sr->reference)
+				{
+					int numPoints = curve->GetNumPoints();
+
+					POINT* screenPoints = new POINT[numPoints];
+
+					for (int k = 0; k < numPoints; k++)
+					{
+						scaler->WorldToDevice(
+							curve->GetX(k), curve->GetY(k),
+							&screenPoints[k].x, &screenPoints[k].y);
+					}
+
+					POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+
+					if (symbolPoint)
+					{
+						D2D1_POINT_2F d2Point;
+						d2Point.x = symbolPoint->x;
+						d2Point.y = symbolPoint->y;
+						delete symbolPoint;
+						points.push_back(d2Point);
+					}
+
+					delete[] screenPoints;
+					screenPoints = nullptr;
 				}
 			}
 			else if (sr->RCNM == 120 && fr->m_geometry->IsSurface())
@@ -116,8 +160,10 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 				SSurface* geo = (SSurface*)fr->m_geometry;
 
 				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
+				//for (auto j = geo->compositeCurve->m_listCurveLink.begin(); j != geo->compositeCurve->m_listCurveLink.end(); j++)
 				{
-					auto curve = j->GetCurve();
+					//auto curve = j->GetCurve();
+					auto curve = (*j);
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -147,9 +193,11 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 					}
 				}
 			}
+			// Composite curve
 			else if (sr->RCNM == 125)
 			{
 			}
+			// Surface
 			else if (sr->RCNM == 130)
 			{
 			}
@@ -168,9 +216,10 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
-			SCurve* c = (*lcl).GetCurve();
+			//SCurve* c = (*lcl).GetCurve();
+			SCurve* c = *lcl;
 			
-			if (!(*lcl).GetMasking())
+			if (!(*lcl)->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{
@@ -237,6 +286,40 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 			points.push_back(tempPoint);
 		}
 	}
+	else if (fr->m_geometry->type == 5)
+	{
+		SCurve* c = (SCurve*)fr->m_geometry;
+
+		for (auto index = 0; index < c->GetNumPoints(); index++)
+		{
+			if (scaler->GetMapCalcMBR().PtInMBR(c->m_pPoints[index].x, c->m_pPoints[index].y))
+			{
+				if (viewPointNum == 0 && index > 1)
+				{
+					scaler->WorldToDevice(c->m_pPoints[index - 1].x, c->m_pPoints[index - 1].y,
+						&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
+					viewPointNum++;
+				}
+				scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,
+					&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
+				viewPointNum++;
+			}
+		}
+
+		if (viewPointNum)
+		{
+			POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+			if (symbolPoint)
+			{
+				tempPoint.x = (float)symbolPoint[0].x;
+				tempPoint.y = (float)symbolPoint[0].y;
+				points.push_back(tempPoint);
+
+				delete symbolPoint;
+			}
+			viewPointNum = 0;
+		}
+	}
 }
 
 #pragma warning(disable:4244)
@@ -290,7 +373,8 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 				SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 				for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
 				{
-					auto curve = j->GetCurve();
+					//auto curve = j->GetCurve();
+					auto curve = *j;
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -326,8 +410,10 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 				SSurface* geo = (SSurface*)fr->m_geometry;
 
 				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
+				//for (auto j = geo->compositeCurve->m_listCurveLink.begin(); j != geo->compositeCurve->m_listCurveLink.end(); j++)
 				{
-					auto curve = j->GetCurve();
+					//auto curve = j->GetCurve();
+					auto curve = (*j);
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -378,9 +464,10 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
-			SCurve* c = (*lcl).GetCurve();
+			//SCurve* c = (*lcl).GetCurve();
+			SCurve* c = (*lcl);
 			
-			if (!(*lcl).GetMasking())
+			if (!(*lcl)->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{

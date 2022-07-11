@@ -10,9 +10,6 @@ public:
 	virtual ~SMultiPoint();
 
 public:
-	int m_numPoints = 0;
-	// For Sounding Depth
-	int* pColor = nullptr;
 	std::vector<GeoPointZ>* m_pPoints = nullptr;
 
 public:
@@ -28,4 +25,6 @@ public:
 
 	bool ImportFromWkb(char* value, int size);
 	bool ExportToWkb(char** value, int* size);
+
+	int GetType();
 };

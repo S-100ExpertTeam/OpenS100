@@ -12,23 +12,27 @@
 #include "DialogDockLayerManager.h"
 #include "ConfigrationDlg.h"
 
-#include "..\\GISLibrary\\GISLibrary.h"
-#include "..\\GISLibrary\\Layer.h"
-#include "..\\GISLibrary\\R_FeatureRecord.h"
-#include "..\\GISLibrary\\CodeWithNumericCode.h"
+#include "../GISLibrary/GISLibrary.h"
+#include "../GISLibrary/Layer.h"
+#include "../GISLibrary/R_FeatureRecord.h"
+#include "../GISLibrary/CodeWithNumericCode.h"
 
-#include "..\\GeoMetryLibrary\\GeometricFuc.h"
-#include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
-#include "..\\GeoMetryLibrary\\Scaler.h"
-#include "..\\GeoMetryLibrary\\GeoPolyline.h"
+#include "../GeoMetryLibrary/GeometricFuc.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
+#include "../GeoMetryLibrary/Scaler.h"
+#include "../GeoMetryLibrary/GeoPolyline.h"
 
-#include "..\\S100Geometry\\SPoint.h"
-#include "..\\S100Geometry\\SMultiPoint.h"
-#include "..\\S100Geometry\\SCompositeCurve.h"
-#include "..\\S100Geometry\\SSurface.h"
-#include "..\\S100Geometry\\SGeometricFuc.h"
+#include "../S100Geometry/SPoint.h"
+#include "../S100Geometry/SMultiPoint.h"
+#include "../S100Geometry/SCompositeCurve.h"
+#include "../S100Geometry/SSurface.h"
+#include "../S100Geometry/SGeometricFuc.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "../LatLonUtility/LatLonUtility.h"
+
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 #include <locale>        
 #include <codecvt>       
@@ -39,7 +43,7 @@
 #include <crtdbg.h>
 #include <iostream>
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "../LatLonUtility/LatLonUtility.h"
 #pragma comment(lib, "d2d1.lib")
 
 using namespace LatLonUtility;
@@ -89,20 +93,17 @@ COpenS100View::~COpenS100View()
 
 	DeleteDCs();
 
-	delete gisLib;
-	gisLib = nullptr;
-
 	CoUninitialize();
 }
 
 void COpenS100View::SaveLastPosScale()
 {
-	double scale = gisLib->GetCurrentScale();
-	int sox = gisLib->GetCenterXScreen();
-	int soy = gisLib->GetCenterYScreen();
+	double scale = theApp.gisLib->GetCurrentScale();
+	int sox = theApp.gisLib->GetCenterXScreen();
+	int soy = theApp.gisLib->GetCenterYScreen();
 
 	MBR mbr;
-	gisLib->GetMap(&mbr);
+	theApp.gisLib->GetMap(&mbr);
 
 	double mox = (mbr.xmax + mbr.xmin) / 2;
 	double moy = (mbr.ymax + mbr.ymin) / 2;
@@ -118,7 +119,7 @@ void COpenS100View::SaveLastPosScale()
 	strSoy.Format(_T("%lf\n"), moy);
 
 	CStdioFile file;
-	if (file.Open(_T("..\\ProgramData\\data\\init.txt"), CFile::modeWrite | CFile::modeCreate))
+	if (file.Open(_T("../ProgramData/data/init.txt"), CFile::modeWrite | CFile::modeCreate))
 	{
 		file.WriteString(strScale);
 		file.WriteString(strSox);
@@ -144,7 +145,7 @@ void COpenS100View::OnDraw(CDC* pDC)
 
 	CRect rect;
 	GetClientRect(&rect);
-	gisLib->SetViewMBR(rect);
+	theApp.gisLib->SetViewMBR(rect);
 
 	CreateDCs(pDC, rect);
 
@@ -164,7 +165,7 @@ void COpenS100View::OnDraw(CDC* pDC)
 		{
 			DrawFromMapRefresh(&map_dc, rect);
 
-			m_strFormatedScale = gisLib->GetScaler()->GetFormatedScale();
+			m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
 		}
 
 		mem_dc.BitBlt(rect.left, rect.top, rect.Width(), rect.Height(), &map_dc, 0, 0, SRCCOPY);
@@ -183,9 +184,9 @@ void COpenS100View::OnSize(UINT nType, int cx, int cy)
 	CRect viewRect;
 	GetClientRect(viewRect);
 
-	gisLib->SetScreen(viewRect);
-	gisLib->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
-	gisLib->UpdateScale();
+	theApp.gisLib->SetScreen(viewRect);
+	theApp.gisLib->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
+	theApp.gisLib->UpdateScale();
 
 	DeleteDCs();
 
@@ -256,7 +257,7 @@ void COpenS100View::Load100File()
 		CString filePath = dlg.GetPathName();
 
 		RemoveLoadFile(); //Delete the existing history.
-		addlayer = gisLib->AddLayer(filePath); //Add a layer.
+		addlayer = theApp.gisLib->AddLayer(filePath); //Add a layer.
 		theApp.m_pDockablePaneLayerManager.UpdateList();
 		MapRefresh();
 	}
@@ -271,7 +272,7 @@ void COpenS100View::MapPlus()
 {
 	CRect rect;
 	GetClientRect(rect);
-	gisLib->ZoomIn(ZOOM_FACTOR, rect.Width() / 2, rect.Height() / 2);
+	theApp.gisLib->ZoomIn(ZOOM_FACTOR, rect.Width() / 2, rect.Height() / 2);
 	MapRefresh();
 }
 
@@ -279,7 +280,7 @@ void COpenS100View::MapMinus()
 {
 	CRect rect;
 	GetClientRect(rect);
-	gisLib->ZoomOut(ZOOM_FACTOR, rect.Width() / 2, rect.Height() / 2);
+	theApp.gisLib->ZoomOut(ZOOM_FACTOR, rect.Width() / 2, rect.Height() / 2);
 	MapRefresh();
 }
 
@@ -290,7 +291,7 @@ void COpenS100View::MapDragSize()
 
 void COpenS100View::MapFill()
 {
-	Layer *layer = gisLib->GetLayer();
+	Layer *layer = theApp.gisLib->GetLayer();
 	if (nullptr == layer)
 	{
 		return;
@@ -298,8 +299,8 @@ void COpenS100View::MapFill()
 
 	auto layerMBR = layer->GetMBR();
 
-	gisLib->GetLayerManager()->GetScaler()->SetMap(layerMBR);
-	gisLib->AdjustScreenMap();
+	theApp.gisLib->GetLayerManager()->GetScaler()->SetMap(layerMBR);
+	theApp.gisLib->AdjustScreenMap();
 	theApp.MapRefresh();
 }
 
@@ -341,7 +342,7 @@ void COpenS100View::Setting()
 {
 	CConfigrationDlg dlg(this);
 
-	auto fc = gisLib->GetFC();
+	auto fc = theApp.gisLib->GetFC();
 	if (fc)
 	{
 		dlg.InitS101FeatureTypes(fc);
@@ -351,7 +352,7 @@ void COpenS100View::Setting()
 	{
 		// <FONT LIST>
 		HRESULT hr;
-		IDWriteFactory* pDWriteFactory = gisLib->D2.pDWriteFactory;
+		IDWriteFactory* pDWriteFactory = theApp.gisLib->D2.pDWriteFactory;
 		IDWriteFontCollection* pFontCollection = NULL;
 
 		// Get the system font collection.
@@ -448,7 +449,7 @@ void COpenS100View::MapRefresh()
 
 void COpenS100View::OpenWorldMap()
 {
-	gisLib->AddBackgroundLayer(_T("..\\ProgramData\\World\\World.shp"));
+	theApp.gisLib->AddBackgroundLayer(_T("../ProgramData/World/World.shp"));
 
 	MapRefresh();
 }
@@ -458,7 +459,11 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	gisLib->InitLibrary(L"..\\ProgramData\\xml\\S-101_FC.xml", L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
+	FeatureCatalogue* fc = new FeatureCatalogue(L"..\\ProgramData\\xml\\S-101_FC.xml");
+	PortrayalCatalogue* pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
+
+	theApp.gisLib->InitLibrary(fc, pc);
+	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
 
 	return 0;
 }
@@ -547,7 +552,7 @@ void COpenS100View::OnLButtonDown(UINT nFlags, CPoint point)
 
 	CRect cr;
 	GetClientRect(&cr);
-	gisLib->DeviceToWorld(cr.Width() / 2, cr.Height() / 2, &moveMX, &moveMY);
+	theApp.gisLib->DeviceToWorld(cr.Width() / 2, cr.Height() / 2, &moveMX, &moveMY);
 
 	m_sp = point;
 	m_ep = point;
@@ -578,9 +583,9 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 	int dx = point.x - m_sp.x;
 	int dy = point.y - m_sp.y;
 
-	if (gisLib->GetScaler()->GetRotationDegree())
+	if (theApp.gisLib->GetScaler()->GetRotationDegree())
 	{
-		double radian = (180 + gisLib->GetScaler()->GetRotationDegree()) * DEG2RAD;
+		double radian = (180 + theApp.gisLib->GetScaler()->GetRotationDegree()) * DEG2RAD;
 
 		FLOAT tempX = (float)dy * (float)sin(radian) + (float)dx * (float)cos(radian);
 		FLOAT tempY = (float)dy * (float)cos(radian) - (float)dx * (float)sin(radian);
@@ -609,7 +614,7 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 	if (isMoved == true)
 	{
 		::SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
-		gisLib->MoveMap(cr.Width() / 2 + dx, cr.Height() / 2 + dy, moveMX, moveMY);
+		theApp.gisLib->MoveMap(cr.Width() / 2 + dx, cr.Height() / 2 + dy, moveMX, moveMY);
 		MapRefresh();
 	}
 	else
@@ -632,13 +637,13 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 				double endX = 0;
 				double endY = 0;
 
-				gisLib->DeviceToWorld(
+				theApp.gisLib->DeviceToWorld(
 					m_ptStartZoomArea.x,
 					m_ptStartZoomArea.y,
 					&startX,
 					&startY);
 
-				gisLib->DeviceToWorld(
+				theApp.gisLib->DeviceToWorld(
 					m_ptEndZoomArea.x,
 					m_ptEndZoomArea.y,
 					&endX,
@@ -671,16 +676,16 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 					ymax = startY;
 				}
 
-				gisLib->SetMap(xmin, ymin, xmax, ymax);
+				theApp.gisLib->SetMap(xmin, ymin, xmax, ymax);
 
 				CRect viewRect;
 				GetClientRect(viewRect);
 
-				gisLib->SetScreen(viewRect);
-				gisLib->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
-				gisLib->UpdateScale();
+				theApp.gisLib->SetScreen(viewRect);
+				theApp.gisLib->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
+				theApp.gisLib->UpdateScale();
 
-				gisLib->AdjustScreenMap();
+				theApp.gisLib->AdjustScreenMap();
 
 				MapRefresh();
 			}
@@ -706,7 +711,7 @@ void COpenS100View::OnMouseMove(UINT nFlags, CPoint point)
 	** Display the latitude value of the current mouse pointer position.
 	*/
 	double curLat, curLong;
-	gisLib->DeviceToWorld(point.x, point.y, &curLong, &curLat);
+	theApp.gisLib->DeviceToWorld(point.x, point.y, &curLong, &curLat);
 	inverseProjection(curLong, curLat);
 
 	// The X coordinate values are modified to be included within the ranges of (-180 and 180).
@@ -896,7 +901,7 @@ void COpenS100View::DrawFromMapRefresh(CDC* pDC, CRect& rect)
 
 	HDC hdc = pDC->GetSafeHdc();
 
-	gisLib->Draw(hdc);
+	theApp.gisLib->Draw(hdc);
 
 	theApp.m_pDockablePaneLayerManager.UpdateList();
 
@@ -913,7 +918,7 @@ void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
 
 Layer* COpenS100View::GetCurrentLayer()
 {
-	return gisLib->GetLayer();
+	return theApp.gisLib->GetLayer();
 }
 
 BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
@@ -926,18 +931,18 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	// When raising the mouse, => Zoom in.
 	if (zDelta > 0)
 	{
-		gisLib->ZoomIn(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+		theApp.gisLib->ZoomIn(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
 	}
 	// When you lower the mouse wheel => Zoom out.
 	else
 	{
-		gisLib->ZoomOut(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+		theApp.gisLib->ZoomOut(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
 	}
 
 	MapRefresh();
 
 
-	m_strFormatedScale = gisLib->GetScaler()->GetFormatedScale();
+	m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
 	CString strFomatedInfo = _T("");
 	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLongitude, m_strFormatedLongitude);
 
@@ -964,7 +969,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		long x = 0;
 		long y = 0;
 
-		gisLib->WorldToDevice(((SPoint*)(frPick->m_geometry))->x, ((SPoint*)(frPick->m_geometry))->y, &x, &y);
+		theApp.gisLib->WorldToDevice(((SPoint*)(frPick->m_geometry))->x, ((SPoint*)(frPick->m_geometry))->y, &x, &y);
 		x += offsetX;
 		y += offsetY;
 
@@ -990,7 +995,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 			long x = 0;
 			long y = 0;
 
-			gisLib->WorldToDevice(multiPoint->GetX(i), multiPoint->GetY(i), &x, &y);
+			theApp.gisLib->WorldToDevice(multiPoint->GetX(i), multiPoint->GetY(i), &x, &y);
 			x += offsetX;
 			y += offsetY;
 
@@ -1002,52 +1007,69 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 	{
 		SolidBrush brush(Color(255, 0, 0));
 
-		SCompositeCurve* cc = (SCompositeCurve*)(frPick->m_geometry);
-
-		for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
+		if (frPick->m_geometry->type == 2)
 		{
-			SCurve* c = (*it).GetCurve();
-			Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
+			SCompositeCurve* cc = (SCompositeCurve*)(frPick->m_geometry);
 
-			int pickNumPoints = 0;
+			for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
+			{
+				//SCurve* c = (*it).GetCurve();
+				SCurve* c = (*it);
+				Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
 
-			pickNumPoints = c->GetNumPoints();
+				int pickNumPoints = 0;
 
-			if ((*it).GetParentOrient()) {
+				pickNumPoints = c->GetNumPoints();
+
 				for (auto i = 0; i < pickNumPoints; i++)
 				{
 					pickPoints[i].X = (INT)c->m_pPoints[i].x;
 					pickPoints[i].Y = (INT)c->m_pPoints[i].y;
-					gisLib->WorldToDevice(c->m_pPoints[i].x, c->m_pPoints[i].y,
+					theApp.gisLib->WorldToDevice(c->m_pPoints[i].x, c->m_pPoints[i].y,
 						(long*)(&pickPoints[i].X), (long*)(&pickPoints[i].Y));
 
 					pickPoints[i].X += offsetX;
 					pickPoints[i].Y += offsetY;
 				}
-			}
-			else
-			{
-				for (auto i = 0; i < pickNumPoints; i++)
-				{
-					pickPoints[i].X = (INT)c->m_pPoints[pickNumPoints - 1 - i].x;
-					pickPoints[i].Y = (INT)c->m_pPoints[pickNumPoints - 1 - i].y;
-					gisLib->WorldToDevice(c->m_pPoints[i].x, c->m_pPoints[i].y,
-						(long*)(&pickPoints[i].X), (long*)(&pickPoints[i].Y));
 
-					pickPoints[i].X += offsetX;
-					pickPoints[i].Y += offsetY;
-				}
-			}
-			g.DrawLines(&Pen(&brush, 4), pickPoints, pickNumPoints);
+				g.DrawLines(&Pen(&brush, 4), pickPoints, pickNumPoints);
 
-			delete[] pickPoints;
+				delete[] pickPoints;
+			}
 		}
+	}
+	else if (5 == frPick->m_geometry->type)
+	{
+		SolidBrush brush(Color(255, 0, 0));
+
+		SCurve* c = (SCurve*)(frPick->m_geometry);
+
+		Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
+
+		int pickNumPoints = 0;
+
+		pickNumPoints = c->GetNumPoints();
+
+		for (auto i = 0; i < pickNumPoints; i++)
+		{
+			pickPoints[i].X = (INT)c->m_pPoints[i].x;
+			pickPoints[i].Y = (INT)c->m_pPoints[i].y;
+			theApp.gisLib->WorldToDevice(c->m_pPoints[i].x, c->m_pPoints[i].y,
+				(long*)(&pickPoints[i].X), (long*)(&pickPoints[i].Y));
+
+			pickPoints[i].X += offsetX;
+			pickPoints[i].Y += offsetY;
+		}
+
+		g.DrawLines(&Pen(&brush, 4), pickPoints, pickNumPoints);
+
+		delete[] pickPoints;
 	}
 	// Area
 	else if (frPick->m_geometry->IsSurface())
 	{
 		auto surface = (SSurface*)frPick->m_geometry;
-		auto geometry = surface->GetNewD2Geometry(gisLib->D2.pD2Factory, gisLib->GetScaler());
+		auto geometry = surface->GetNewD2Geometry(theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler());
 
 		D2D1_COLOR_F color{};
 		color.r = 255 / float(255.0);
@@ -1056,16 +1078,16 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		color.a = float(0.7);
 
 		HDC hdc = g.GetHDC();
-		gisLib->D2.Begin(hdc);
+		theApp.gisLib->D2.Begin(hdc, theApp.gisLib->GetScaler()->GetScreenRect());
 		if (geometry)
 		{
-			gisLib->D2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(float(offsetX), float(offsetY)));
-			gisLib->D2.pBrush->SetColor(color);
-			gisLib->D2.pBrush->SetOpacity(float(0.7));
-			gisLib->D2.pRT->FillGeometry(geometry, gisLib->D2.pBrush);
+			theApp.gisLib->D2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(float(offsetX), float(offsetY)));
+			theApp.gisLib->D2.pBrush->SetColor(color);
+			theApp.gisLib->D2.pBrush->SetOpacity(float(0.7));
+			theApp.gisLib->D2.pRT->FillGeometry(geometry, theApp.gisLib->D2.pBrush);
 			SafeRelease(&geometry);
 		}
-		gisLib->D2.End();
+		theApp.gisLib->D2.End();
 	}
 }
 
@@ -1076,7 +1098,7 @@ void COpenS100View::ClearPickReport()
 
 void COpenS100View::PickReport(CPoint _point)
 {
-	auto layer = gisLib->GetLayerManager()->GetLayer();
+	auto layer = theApp.gisLib->GetLayerManager()->GetLayer();
 	if (nullptr == layer)
 	{
 		return;
@@ -1088,7 +1110,7 @@ void COpenS100View::PickReport(CPoint _point)
 		return;
 	}
 
-	gisLib->DeviceToWorld(_point.x, _point.y, &ptPickX, &ptPickY);
+	theApp.gisLib->DeviceToWorld(_point.x, _point.y, &ptPickX, &ptPickY);
 	ptPick = _point;
 
 	CString featureType = L"Feature";
@@ -1108,33 +1130,33 @@ void COpenS100View::PickReport(CPoint _point)
 	// point,
 	if (m_ptMUp.x == 0 || m_sp == m_ep)
 	{
-		gisLib->DeviceToWorld(_point.x - 5, _point.y + 5, &xmin, &ymin);  // start point
-		gisLib->DeviceToWorld(_point.x + 5, _point.y - 5, &xmax, &ymax);  // end point
+		theApp.gisLib->DeviceToWorld(_point.x - 5, _point.y + 5, &xmin, &ymin);  // start point
+		theApp.gisLib->DeviceToWorld(_point.x + 5, _point.y - 5, &xmax, &ymax);  // end point
 	}
 	// square
 	else
 	{
 		if (spt_x < ept_x && spt_y > ept_y)
 		{
-			gisLib->DeviceToWorld(spt_x, ept_y, &xmin, &ymax);
-			gisLib->DeviceToWorld(ept_x, spt_y, &xmax, &ymin);
+			theApp.gisLib->DeviceToWorld(spt_x, ept_y, &xmin, &ymax);
+			theApp.gisLib->DeviceToWorld(ept_x, spt_y, &xmax, &ymin);
 		}
 		else if (spt_x < ept_x && spt_y < ept_y)
 		{
-			gisLib->DeviceToWorld(spt_x, spt_y, &xmin, &ymax);
-			gisLib->DeviceToWorld(ept_x, ept_y, &xmax, &ymin);
+			theApp.gisLib->DeviceToWorld(spt_x, spt_y, &xmin, &ymax);
+			theApp.gisLib->DeviceToWorld(ept_x, ept_y, &xmax, &ymin);
 		}
 
 		else if (spt_x > ept_x && spt_y > ept_y)
 		{
-			gisLib->DeviceToWorld(ept_x, ept_y, &xmin, &ymax);
-			gisLib->DeviceToWorld(spt_x, spt_y, &xmax, &ymin);
+			theApp.gisLib->DeviceToWorld(ept_x, ept_y, &xmin, &ymax);
+			theApp.gisLib->DeviceToWorld(spt_x, spt_y, &xmax, &ymin);
 		}
 
 		else if (spt_x > ept_x && spt_y < ept_y)
 		{
-			gisLib->DeviceToWorld(ept_x, spt_y, &xmin, &ymax);
-			gisLib->DeviceToWorld(spt_x, ept_y, &xmax, &ymin);
+			theApp.gisLib->DeviceToWorld(ept_x, spt_y, &xmin, &ymax);
+			theApp.gisLib->DeviceToWorld(spt_x, ept_y, &xmax, &ymin);
 		}
 	}
 
@@ -1164,7 +1186,7 @@ void COpenS100View::PickReport(CPoint _point)
 			double centerX = 0;
 			double centerY = 0;
 
-			gisLib->DeviceToWorld(_point.x, _point.y, &centerX, &centerY);
+			theApp.gisLib->DeviceToWorld(_point.x, _point.y, &centerX, &centerY);
 
 			if (SGeometricFuc::inside(centerX, centerY, (SSurface*)surface) == 1)
 			{
@@ -1206,6 +1228,7 @@ void COpenS100View::PickReport(CPoint _point)
 		}
 	}
 
+	// Composite curve
 	pos = cell->GetFeatureStartPosition();
 	while (pos != NULL)
 	{
@@ -1237,8 +1260,10 @@ void COpenS100View::PickReport(CPoint _point)
 				double lon = 0;
 				if (compositeCurve->m_listCurveLink.size() > 0)
 				{
-					lat = ((*compositeCurve->m_listCurveLink.begin()).GetCurve())->m_pPoints[0].x;
-					lon = ((*compositeCurve->m_listCurveLink.begin()).GetCurve())->m_pPoints[0].y;
+					//lat = ((*compositeCurve->m_listCurveLink.begin()).GetCurve())->m_pPoints[0].x;
+					lat = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].x;
+					//lon = ((*compositeCurve->m_listCurveLink.begin()).GetCurve())->m_pPoints[0].y;
+					lon = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].y;
 				}
 
 				inverseProjection(lat, lon);
@@ -1258,6 +1283,55 @@ void COpenS100View::PickReport(CPoint _point)
 		}
 	}
 
+	// Curve
+	pos = cell->GetFeatureStartPosition();
+	while (pos != NULL)
+	{
+		cell->GetNextAssoc(pos, key, fr);
+		if (fr->m_geometry == nullptr || fr->m_geometry->type != 5)
+		{
+			continue;
+		}
+
+		SCurve* curve = (SCurve*)fr->m_geometry;
+		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
+		{
+			int code = fr->m_frid.m_nftc;
+			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
+
+			SSurface mbrArea(&pickMBR);
+
+			if (SGeometricFuc::overlap(curve, &mbrArea) == 1)
+			{
+				CString csFoid;
+				CString csFrid;
+				CString csLat;
+				CString csLon;
+				CString csType;
+				CString csName;
+				CString csAssoCnt;
+
+				double lat = curve->GetY(0);
+				double lon = curve->GetX(0);
+
+				inverseProjection(lat, lon);
+
+				std::vector<int>::size_type assoCnt;
+				assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
+
+				csFoid.Format(_T("%d"), fr->m_foid.m_objName.m_fidn);
+				csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
+				csLat.Format(_T("%f"), lat);
+				csLon.Format(_T("%f"), lon);
+				csType.Format(_T("%d"), curve->type);
+				csName.Format(_T("%s"), itor->second->m_code);
+				csAssoCnt.Format(_T("%d"), assoCnt);
+				csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+			}
+		}
+	}
+
+	// Point or Multi point
 	pos = cell->GetFeatureStartPosition();
 	while (pos != NULL)
 	{
@@ -1347,7 +1421,7 @@ void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)
 	frPick = _fr;
 	Layer* l = nullptr;
 
-	l = (Layer*)gisLib->GetLayer();
+	l = (Layer*)theApp.gisLib->GetLayer();
 
 	if (l == NULL)
 	{
@@ -1372,19 +1446,19 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	switch (nChar)
 	{
 	case VK_LEFT:
-		gisLib->MoveMap(-10, 0);
+		theApp.gisLib->MoveMap(-10, 0);
 		MapRefresh();
 		break;
 	case VK_RIGHT:
-		gisLib->MoveMap(10, 0);
+		theApp.gisLib->MoveMap(10, 0);
 		MapRefresh();
 		break;
 	case VK_UP:
-		gisLib->MoveMap(0, -10);
+		theApp.gisLib->MoveMap(0, -10);
 		MapRefresh();
 		break;
 	case VK_DOWN:
-		gisLib->MoveMap(0, 10);
+		theApp.gisLib->MoveMap(0, 10);
 		MapRefresh();
 		break;
 	case VK_ESCAPE:
@@ -1399,19 +1473,19 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		MapRefresh();
 		break;
 	case VK_PRIOR:
-		gisLib->ZoomIn(ZOOM_FACTOR);
+		theApp.gisLib->ZoomIn(ZOOM_FACTOR);
 		MapRefresh();
 		break;
 	case VK_NEXT:
-		gisLib->ZoomOut(ZOOM_FACTOR);
+		theApp.gisLib->ZoomOut(ZOOM_FACTOR);
 		MapRefresh();
 		break;
 	case VK_HOME:
-		gisLib->GetScaler()->Rotate(-10);
+		theApp.gisLib->GetScaler()->Rotate(-10);
 		MapRefresh();
 		break;
 	case VK_END:
-		gisLib->GetScaler()->Rotate(10);
+		theApp.gisLib->GetScaler()->Rotate(10);
 		MapRefresh();
 		break;
 	}

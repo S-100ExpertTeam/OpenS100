@@ -8,28 +8,30 @@
 #include "host_functions.h"
 
 #include "../LuaScriptingReference/lua_functions.h"
-#include "..\\LuaScriptingReference\\lua_session.h"
-#include "..\\LuaScriptingReference\\portrayal_catalog.h"
+#include "../LuaScriptingReference/lua_session.h"
+#include "../LuaScriptingReference/portrayal_catalog.h"
 
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
+#include "../FeatureCatalog/FeatureCatalogue.h"
 
-#include "..\\GeoMetryLibrary\\ENCCommon.h"
+#include "../GeoMetryLibrary/ENCCommon.h"
 
-#include "..\\PortrayalCatalogue\\S100_ColorFill.h"
-#include "..\\PortrayalCatalogue\\S100_AreaFillReference.h"
-#include "..\\PortrayalCatalogue\\S100_DisplayList.h"
-#include "..\\PortrayalCatalogue\\S100_AreaInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_TextInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_AlertReference.h"
-#include "..\\PortrayalCatalogue\\S100_AugmentedRay.h"
-#include "..\\PortrayalCatalogue\\S100_AugmentedPath.h"
-#include "..\\PortrayalCatalogue\\S100_LineInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_PointInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_SymbolFill.h"
+#include "../PortrayalCatalogue/S100_ColorFill.h"
+#include "../PortrayalCatalogue/S100_AreaFillReference.h"
+#include "../PortrayalCatalogue/S100_DisplayList.h"
+#include "../PortrayalCatalogue/S100_AreaInstruction.h"
+#include "../PortrayalCatalogue/S100_TextInstruction.h"
+#include "../PortrayalCatalogue/S100_AlertReference.h"
+#include "../PortrayalCatalogue/S100_AugmentedRay.h"
+#include "../PortrayalCatalogue/S100_AugmentedPath.h"
+#include "../PortrayalCatalogue/S100_LineInstruction.h"
+#include "../PortrayalCatalogue/S100_PointInstruction.h"
+#include "../PortrayalCatalogue/S100_SymbolFill.h"
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 #include "../PortrayalCatalogue/ViewingGroupLayer.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "../LatLonUtility/LatLonUtility.h"
+
+#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <sstream> 
 
@@ -37,22 +39,6 @@ using namespace LatLonUtility;
 
 S101LuaScriptingReference ProcessS101::theInstance;
 std::string ProcessS101::g_unknown_attribute_value = "";
-
-wchar_t* ConvertCtoWC2(char* str)
-{
-	wchar_t* pStr = nullptr;
-	int strSize = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, NULL);
-
-	if (strSize <= 0)
-	{
-		OutputDebugString(_T("Failed to MultiByteToWideChar()\n"));
-		return nullptr;
-	}
-
-	pStr = new WCHAR[strSize];
-	MultiByteToWideChar(CP_ACP, 0, str, (int)strlen(str) + 1, pStr, strSize);
-	return pStr;
-}
 
 ProcessS101::ProcessS101()
 {
@@ -541,7 +527,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 							std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
 
-							auto wValue = ConvertCtoWC2((char*)v_splited_text[0].c_str());
+							auto wValue = ConvertCtoWC((char*)v_splited_text[0].c_str());
 							std::wstring wstrValue = wValue;
 							delete[] wValue;
 							element->GetText()->SetValue(wstrValue);
@@ -847,18 +833,12 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 
 	hd_init(cell);
 
-	//pc_init("..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
 	pc_init(pc->GetCataloguePathAsString().c_str());
 
-	//
-	// //Initialize Lua library
-	//
-
+	//Initialize Lua library
 	theInstance.m_lua_session = new lua_session();
 
-	//
-	// Register host functions.
-	//
+	//Register host functions.
 	theInstance.m_lua_session->register_function("HostGetFeatureIDs", HostGetFeatureIDs);
 	theInstance.m_lua_session->register_function("HostFeatureGetCode", HostFeatureGetCode);
 	theInstance.m_lua_session->register_function("HostGetInformationTypeIDs", HostGetInformationTypeIDs);
@@ -893,36 +873,24 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 
 	theInstance.m_lua_session->register_function("HostPortrayalEmit", HostPortrayalEmit);
 
-	//
 	// Extract rules path from top level rule file name
-	//
 	std::string rules_path = top_level_rule.substr(0, top_level_rule.find_last_of('\\'));
 
-	//
 	// Setup path so Lua can find the rules files
-	//
 	std::string path = rules_path + (std::string)"\\?.lua";
 
 	theInstance.m_lua_session->set_field("package", "path", path.c_str());
 
-	//
 	// Load top level rule file
-	//
 	theInstance.m_lua_session->load_file(top_level_rule);
 
-	//
 	// Get unknown attribute value string
-	//
 	g_unknown_attribute_value = theInstance.m_lua_session->call<std::string>("GetUnknownAttributeString", { 1.0 });
 
-	//
 	// Turn on type system checks
-	//
 	theInstance.m_lua_session->call<bool>("TypeSystemChecks", { true });
 
-	//
 	// Initialize portrayal context parameters
-	//
 	theInstance.m_lua_session->get_function("PortrayalInitializeContextParameters");
 
 	auto cps = pc_get_context_parameters();

@@ -37,6 +37,7 @@ class F_C2IL;
 class F_C3IL;
 class F_COCC;
 class F_ATTR;
+class SENC_PointInstruction;
 
 struct ATTR;
 
@@ -65,8 +66,7 @@ public:
 	// Comment : It's a record that doesn't exist when it's an update file, so you need to change it to a pointer
 	R_DSCRS m_dscrs;
 
-	std::unordered_map<__int64, SCurve*> m_curveMap;
-	std::unordered_map<__int64, R_VectorRecord*> m_vecMap;
+	//std::unordered_map<__int64, R_VectorRecord*> m_vecMap;
 
 	// When S101Cell stores GML, a variable for storing Namespace.
 	std::unordered_map<std::wstring, std::wstring>* gml_namespace = nullptr;
@@ -102,7 +102,7 @@ public:
 	void SetInstructionToFeature();
 	void SetInstructionToFeature(int type, R_FeatureRecord* fe);
 
-	void ClearCurveMap();
+	//void ClearCurveMap();
 
 	BOOL MakeFullSpatialData();
 	BOOL MakePointData(R_FeatureRecord* fe); 
@@ -124,7 +124,7 @@ public:
 	BOOL GetFullSpatialData(R_SurfaceRecord *r, CArray<GeoPoint> &geoArr);
 
 	SCurve* GetCurveGeometry(R_CurveRecord *r/*, CArray<GeoPoint> &geoArr, unsigned ORNT = 1*/);
-	BOOL SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList);
+	//BOOL SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList);
 
 	// Set R_FeatureRecord::m_curveList from Vector record
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);
@@ -315,4 +315,8 @@ private:
 	bool UpdateComMapRecord(S101Cell* cell);
 	bool UpdateSurMapRecord(S101Cell* cell);
 	bool UpdateFeaMapRecord(S101Cell* cell);
+
+	void GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* scaler, std::list<D2D1_POINT_2F>& points);
+
+	void InitCurveSuppression();
 };

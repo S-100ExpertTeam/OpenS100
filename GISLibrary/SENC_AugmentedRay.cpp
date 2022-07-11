@@ -6,12 +6,17 @@
 #include "SENC_CommonFuc.h"
 #include "PCOutputSchemaManager.h"
 
-#include "..\\GISLibrary\\R_FeatureRecord.h"
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\GeoMetryLibrary\\ENCCommon.h"
-#include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
-#include "..\\PortrayalCatalogue\\S100_AugmentedRay.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../GISLibrary/R_FeatureRecord.h"
+
+#include "../S100Geometry/SCommonFuction.h"
+
+#include "../GeoMetryLibrary/ENCCommon.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
+
+#include "../PortrayalCatalogue/S100_AugmentedRay.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+
+#include "../LatLonUtility/LatLonUtility.h"
 
 #include <ctime> 
 #include <mmsystem.h> 

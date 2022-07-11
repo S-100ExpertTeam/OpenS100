@@ -37,6 +37,7 @@ public:
 	// Overlay Layer
 	MBR						mbr;
 
+	// RCID of already rendered curveRecords
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
 

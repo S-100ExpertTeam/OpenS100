@@ -11,14 +11,18 @@ SCompositeCurve::SCompositeCurve()
 
 SCompositeCurve::~SCompositeCurve()
 {
-
+	//for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
+	//{
+	//	delete (*i);
+	//}
 }
 
 void SCompositeCurve::SetMBR()
 {
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
-		m_mbr.CalcMBR((*i).GetCurve()->GetMBRRef());
+		//m_mbr.CalcMBR((*i).GetCurve()->GetMBRRef());
+		m_mbr.CalcMBR((*i)->GetMBRRef());
 	}
 }
 
@@ -26,7 +30,8 @@ void SCompositeCurve::CreateD2Geometry(ID2D1Factory1* factory)
 {
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
-		(*i).GetCurve()->CreateD2Geometry(factory);
+		//(*i).GetCurve()->CreateD2Geometry(factory);
+		(*i)->CreateD2Geometry(factory);
 	}
 }
 
@@ -36,7 +41,7 @@ std::list<ID2D1PathGeometry*> SCompositeCurve::GetD2Geometry()
 	std::list<ID2D1PathGeometry*> ret;
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
-		ret.push_back((*i).GetCurve()->GetD2Geometry());
+		//ret.push_back((*i).GetCurve()->GetD2Geometry());
 	}
 	return ret;
 }
@@ -46,7 +51,9 @@ std::list<ID2D1PathGeometry*> SCompositeCurve::GetNewD2Geometry(ID2D1Factory1* f
 	std::list<ID2D1PathGeometry*> ret;
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
-		ret.push_back((*i).GetCurve()->GetNewD2Geometry(factory, scaler));
+		//ret.push_back((*i).GetCurve()->GetNewD2Geometry(factory, scaler));
+		//ret.push_back((*i).GetNewD2Geometry(factory, scaler));
+		ret.push_back((*i)->GetNewD2Geometry(factory, scaler));
 	}
 	return ret;
 }
@@ -83,4 +90,23 @@ bool SCompositeCurve::ImportFromWkb(char* value, int size)
 bool SCompositeCurve::ExportToWkb(char** value, int* size)
 {
 	return false;
+}
+
+//void SCompositeCurve::AddCurve(SCurve* curve, bool masking)
+//{
+//	//m_listCurveLink.push_back(SCurveHasOrient(curve, masking));
+//	m_listCurveLink.push_back(SCurveHasOrient(curve, masking));
+//}
+
+void SCompositeCurve::AddCurve(SCurveHasOrient* curve)
+{
+	m_listCurveLink.push_back(curve);
+}
+
+void SCompositeCurve::Release()
+{
+	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
+	{
+		delete (*i);
+	}
 }

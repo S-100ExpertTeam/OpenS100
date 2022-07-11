@@ -24,17 +24,22 @@
 #include "F_INAS.h"
 #include "R_InformationRecord.h"
 
-#include "..\\S100Geometry\\SSurface.h"
-#include "..\\S100Geometry\\SMultiPoint.h"
-#include "..\\S100Geometry\\SCompositeCurve.h"
-#include "..\\S100Geometry\\SCurve.h"
-#include "..\\S100Geometry\\SPoint.h"
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\LibMFCUtil\\LibMFCUtil.h"
-#include "..\\GeoMetryLibrary\\ENCGeometry.h"
-#include "..\\GeoMetryLibrary\\GeometricFuc.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../S100Geometry/SSurface.h"
+#include "../S100Geometry/SMultiPoint.h"
+#include "../S100Geometry/SCompositeCurve.h"
+#include "../S100Geometry/SCurve.h"
+#include "../S100Geometry/SPoint.h"
+#include "../S100Geometry/SCommonFuction.h"
+
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../LibMFCUtil/LibMFCUtil.h"
+
+#include "../GeoMetryLibrary/GeometricFuc.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+
+#include "../LatLonUtility/LatLonUtility.h"
 
 #include <ctime> 
 #include <mmsystem.h> 
@@ -274,7 +279,7 @@ void LayerManager::Draw(HDC& hdc, int offset)
 
 	DrawS100Datasets(hdc, offset);
 
-	gisLib->D2.Begin(hdc);
+	gisLib->D2.Begin(hdc, rectView);
 	gisLib->DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
 	gisLib->DrawScaleBar();
 	gisLib->D2.End();
@@ -496,18 +501,11 @@ void LayerManager::AddSymbolDrawing(
 					int angle = element->font.slant;
 					double radian = 0;
 					if (angle)
+					{
 						radian = -angle / 180. * M_PI;
+					}
 
-					//COLORREF color = 0x00000000;
-					//if (element->pColor == NULL)
-					//{
-					//}
-					//else
-					//{
-					//	color = *element->pColor;
-					//}
-
-					int bodySize = element->bodySize;
+					int bodySize = element->bodySize * (float)1.358;
 
 					IDWriteTextFormat* useWTF = NULL;
 					if (bodySize != 15)
@@ -523,7 +521,7 @@ void LayerManager::AddSymbolDrawing(
 								DWRITE_FONT_WEIGHT_NORMAL,
 								DWRITE_FONT_STYLE_NORMAL,
 								DWRITE_FONT_STRETCH_NORMAL,
-								(float)bodySize * (float)1.358,
+								(float)bodySize,
 								L"", //locale
 								&newWriteTextFormat
 							);
@@ -574,13 +572,15 @@ void LayerManager::AddSymbolDrawing(
 					float offset_x = 0;
 					float offset_y = 0;
 
-					// INCH to mm
-					float offsetUnitX = (dpiX / (float)25.4);
-					float offsetUnitY = (dpiY / (float)25.4);
+					//// INCH to mm
+	/*				float offsetUnitX = (dpiX / (float)25.4);
+					float offsetUnitY = (dpiY / (float)25.4);*/
 
 					// Determine the size of the Offset
-					float XOFFS = ((float)textPoint->offset.x * offsetUnitX);
-					float YOFFS = -((float)textPoint->offset.y * offsetUnitY);
+					//float XOFFS = ((float)textPoint->offset.x * offsetUnitX);
+					//float YOFFS = -((float)textPoint->offset.y * offsetUnitY);
+					float XOFFS = ((float)textPoint->offset.x / 0.32) * 1.358;
+					float YOFFS = -((float)textPoint->offset.y / 0.32) * 1.358;
 
 					// HJUST 
 					// CENTRE
@@ -590,7 +590,8 @@ void LayerManager::AddSymbolDrawing(
 						if (*instruction->fr->m_textBearing > 90 && *instruction->fr->m_textBearing <= 270)
 						{
 							offset_x = -width;
-							XOFFS = -((float)textPoint->offset.x * offsetUnitX);
+							//XOFFS = -((float)textPoint->offset.x * offsetUnitX);
+							XOFFS = -((float)textPoint->offset.x / 0.32) * 1.358;
 						}
 						else
 						{
@@ -622,7 +623,7 @@ void LayerManager::AddSymbolDrawing(
 						// BOTTOM
 						if (textPoint->verticalAlignment == BOTTOM)
 						{
-							offset_y = 0;
+							offset_y = -height;
 						}
 						// CENTRE
 						else if (textPoint->verticalAlignment == CENTER)
@@ -644,10 +645,6 @@ void LayerManager::AddSymbolDrawing(
 					offset_x += XOFFS;
 					offset_y += YOFFS;
 
-					//int r = (color >> 16) & 0xff;
-					//int g = ((color >> 8) & 0xff);
-					//int b = ((color >> 0) & 0xff);
-					//gisLib->D2.pBrush->SetColor(D2D1::ColorF((FLOAT)(GetRValue(color)) / (float)255.0, (GetGValue(color)) / (float)255.0, (GetBValue(color) / (float)255.0)));
 					if (element->pColor)
 					{
 						gisLib->D2.pBrush->SetColor(element->pColor);
@@ -879,7 +876,6 @@ void LayerManager::S101RebuildPortrayal()
 		return;
 	}
 	
-
 	if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
 	{
 		BuildPortrayalCatalogue(layer);
@@ -1165,6 +1161,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 {
 	lineSuppressionMap.clear();
 
+	// Drawing priority : High -> Low
 	for (auto i = drawingPriority.rbegin(); i != drawingPriority.rend(); i++)
 	{
 		int drawingPriority = *i;
@@ -1177,79 +1174,110 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 
 			auto featureRecord = lineInstruction->fr;
 
-			std::list<SCurveHasOrient>* curListCurveLink = nullptr;
+			std::list<SCurveHasOrient*> curListCurveLink;
 
 			if (lineInstruction->spatialReference.size() > 0)
 			{
-				if (lineInstruction->m_listCurveLink.size() == 0)
+				//if (lineInstruction->m_listCurveLink.size() == 0)
 				{
 					if (featureRecord->m_geometry->type == 3)
 					{
 						auto surface = (SSurface*)featureRecord->m_geometry;
 
-						curListCurveLink = &surface->curveList;
+						for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
+						{
+							SENC_SpatialReference* sred = *iterLi;
+							int referencedID = sred->reference;
+
+							for (auto k = surface->curveList.begin(); k != surface->curveList.end(); k++)
+							{
+								if ((*k)->GetRCID() == referencedID)
+								{
+									curListCurveLink.push_back(*k);
+								}
+							}
+						}
 					}
 					else if (featureRecord->m_geometry->type == 2)
 					{
 						auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
 
-						curListCurveLink = &compositeCurve->m_listCurveLink;
-					}
-
-					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
-					{
-						SENC_SpatialReference* sred = *iterLi;
-						int referencedID = sred->reference;
-
-						for (auto iterCurLcl = curListCurveLink->begin(); iterCurLcl != curListCurveLink->end(); iterCurLcl++)
+						for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
 						{
-							auto curve = *iterCurLcl;
+							SENC_SpatialReference* sred = *iterLi;
+							int referencedID = sred->reference;
 
-							int id = curve.GetCurve()->m_id & 0x0000FFFF;
-
-							if (id == referencedID)
+							for (auto k = compositeCurve->m_listCurveLink.begin(); k != compositeCurve->m_listCurveLink.end(); k++)
 							{
-								lineInstruction->m_listCurveLink.push_back(curve);
-								break;
+								if ((*k)->GetRCID() == referencedID)
+								{
+									curListCurveLink.push_back(*k);
+								}
+							}
+						}
+					}
+					else if (featureRecord->m_geometry->type == 5)
+					{
+						auto curveHasOrient = (SCurveHasOrient*)featureRecord->m_geometry;
+
+						for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
+						{
+							SENC_SpatialReference* sred = *iterLi;
+							int referencedID = sred->reference;
+
+							if (curveHasOrient->GetRCID() == referencedID)
+							{
+								curListCurveLink.push_back(curveHasOrient);
 							}
 						}
 					}
 				}
-				curListCurveLink = &lineInstruction->m_listCurveLink;
 			}
 			else if (featureRecord->m_geometry->type == 3)
 			{
 				auto surface = (SSurface*)featureRecord->m_geometry;
 
-				curListCurveLink = &surface->curveList;
+				for (auto i = surface->curveList.begin(); i != surface->curveList.end(); i++)
+				{
+					curListCurveLink.push_back((*i));
+				}
+
+//				curListCurveLink = surface->curveList;
 			}
 			else if (featureRecord->m_geometry->type == 2)
 			{
 				auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
 
-				curListCurveLink = &compositeCurve->m_listCurveLink;
+				for (auto i = compositeCurve->m_listCurveLink.begin(); i != compositeCurve->m_listCurveLink.end(); i++)
+				{
+					curListCurveLink.push_back((*i));
+				}
+
+				//curListCurveLink = compositeCurve->m_listCurveLink;
+			}
+			else if (featureRecord->m_geometry->type == 5)
+			{
+				//curListCurveLink.push_back((SCurveHasOrient*)featureRecord->m_geometry);
+				curListCurveLink.push_back(((SCurveHasOrient*)featureRecord->m_geometry));
 			}
 
-			for (auto m = curListCurveLink->begin(); m != curListCurveLink->end(); m++)
+			for (auto m = curListCurveLink.begin(); m != curListCurveLink.end(); m++)
 			{
-				auto cw = m;
-				auto curve = cw->GetCurve();
+				auto curve = *m;
 				int id = curve->m_id & 0x0000FFFF;
 
 				auto iterExist = lineSuppressionMap.find(id);
 
-				if (iterExist == lineSuppressionMap.end() && !cw->GetMasking())
+				if (false == curve->GetMasking())
 				{
-					lineSuppressionMap.insert(id);
-					cw->SetIsDuplicated(false);
-				}
-				else if (cw->GetMasking())
-				{
-					cw->SetIsDuplicated(true);
-				}
-				else
-				{
-					cw->SetIsDuplicated(true);
+					if (iterExist == lineSuppressionMap.end())
+					{
+						lineSuppressionMap.insert(id);
+					}
+					else if (iterExist != lineSuppressionMap.end())
+					{
+						curve->SetSuppress(true);
+					}
 				}
 			}
 		}

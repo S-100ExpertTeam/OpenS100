@@ -87,11 +87,11 @@ void CDialogDockLayerManager::OnButtonDelete()  //delete layer
 
 void CDialogDockLayerManager::FocusLayerRange()
 {
-	Layer *layer = gisLib->GetLayer();
+	Layer *layer = theApp.gisLib->GetLayer();
 	auto layerMBR = layer->GetMBR();
 
-	gisLib->GetLayerManager()->GetScaler()->SetMap(layerMBR);
-	gisLib->AdjustScreenMap();
+	theApp.gisLib->GetLayerManager()->GetScaler()->SetMap(layerMBR);
+	theApp.gisLib->AdjustScreenMap();
 	theApp.MapRefresh();
 }
 
@@ -281,7 +281,7 @@ void CDialogDockLayerManager::InitPropList() //Data Set Identification included 
 void CDialogDockLayerManager::DeleteLayer() {
 
 	//gisLib->ClearInformationLayer(0);
-	gisLib->DeleteLayer(); //delete layer
+	theApp.gisLib->DeleteLayer(); //delete layer
 
 	theApp.m_DockablePaneEditWindow.DeleteAllItems();
 	RemoveAllPropList(); //delete Dataset identification
@@ -294,9 +294,9 @@ void CDialogDockLayerManager::DeleteLayer() {
 }
 void CDialogDockLayerManager::UpdateList()
 {
-	if (gisLib->GetLayer()!=nullptr)
+	if (theApp.gisLib->GetLayer()!=nullptr)
 	{
-		Layer *layer = (Layer *)gisLib->GetLayer();
+		Layer *layer = (Layer *)theApp.gisLib->GetLayer();
 		if (layer->m_spatialObject->m_FileType == FILE_S_100_VECTOR)
 		{
 			S101Cell* c = (S101Cell*)layer->m_spatialObject;
