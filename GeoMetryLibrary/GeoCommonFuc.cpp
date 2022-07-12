@@ -20,7 +20,7 @@ void projection(double &x, double &y)
 	}
 
 	y *= ex;			
-	//y = log(tan((y / 2.0) + M_PI_D4));
+	y = log(tan((y / 2.0) + M_PI_D4));
 }
 
 
@@ -47,7 +47,7 @@ void inverseProjection(double& x, double& y)
 	double RADDEG = (180.0 / pi);
 
 	x *= RADDEG;
-	//y = 2 * (atan(exp(y)) - (pi / 4.0));
+	y = 2 * (atan(exp(y)) - (pi / 4.0));
 	y *= RADDEG;
 }
 
