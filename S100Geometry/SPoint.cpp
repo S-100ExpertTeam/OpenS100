@@ -3,6 +3,8 @@
 
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
 
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
+
 SPoint::SPoint()
 {
 	type = 1;
@@ -51,6 +53,10 @@ bool SPoint::ImportFromWkb(char* value, int size)
 
 	memcpy_s(&x, 8, value + 5, 8);
 	memcpy_s(&y, 8, value + 13, 8);
+
+	projection(x, y);
+
+	SetMBR();
 }
 
 bool SPoint::ExportToWkb(char** value, int* size)
@@ -66,7 +72,14 @@ bool SPoint::ExportToWkb(char** value, int* size)
 	
 	int type = (int)WKBGeometryType::wkbPoint;
 	memcpy_s((*value) + 1, 4, &type, 4);
-	memcpy_s((*value) + 5, 8, &x, 8);
-	memcpy_s((*value) + 13, 8, &y, 8);
+
+	double localX = x;
+	double localY = y;
+
+	inverseProjection(localX, localY);
+
+	memcpy_s((*value) + 5, 8, &localX, 8);
+	memcpy_s((*value) + 13, 8, &localY, 8);
+
 	return true;
 }

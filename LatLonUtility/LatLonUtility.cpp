@@ -175,7 +175,7 @@ std::vector<std::string> LatLonUtility::Split(std::string targetStr, std::string
 	return ret;
 }
 
-char* LatLonUtility::WKBtoString(std::string value)
+char* LatLonUtility::HexStringToWKB(std::string value)
 {
 	if (value.length() <= 0 || value.length() % 2 != 0)
 	{
@@ -193,18 +193,26 @@ char* LatLonUtility::WKBtoString(std::string value)
 		{
 			first -= 48;
 		}
-		else if (first > 64)
+		else if (first > 64 && first <= 70)
 		{
 			first -= 55;
+		}
+		else if (first > 96)
+		{
+			first -= 87;
 		}
 
 		if (second < 58)
 		{
 			second -= 48;
 		}
-		else if (second > 64)
+		else if (second > 64 && second <= 70)
 		{
 			second -= 55;
+		}
+		else if (second > 96)
+		{
+			second -= 87;
 		}
 
 		result[i] = (first << 4) | second;

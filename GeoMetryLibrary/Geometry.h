@@ -28,6 +28,7 @@ public:
 	virtual bool ImportFromWkb(char* value, int size) { return true; };
 	virtual bool ExportToWkb(char** value, int* size) { return true; };
 	bool WriteWkb(std::wstring path);
+	virtual int WkbSize() { return 0; };
 
 	virtual void SetMBR() {};
 	virtual void CreateD2Geometry(ID2D1Factory1* factory) {};

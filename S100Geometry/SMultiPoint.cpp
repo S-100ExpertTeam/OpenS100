@@ -2,6 +2,7 @@
 #include "SMultiPoint.h"
 
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
 
 SMultiPoint::SMultiPoint()
 {
@@ -10,23 +11,18 @@ SMultiPoint::SMultiPoint()
 
 SMultiPoint::~SMultiPoint()
 {
-	delete m_pPoints; 
-	m_pPoints = nullptr;
 }
 
 int SMultiPoint::GetNumPoints()
 {
-	return m_pPoints->size();
+	return m_pPoints.size();
 }
 
 double SMultiPoint::GetX(int index)
 {
 	try
 	{
-		if (m_pPoints)
-		{
-			return m_pPoints->at(index).x;
-		}
+		return m_pPoints.at(index).x;
 	}
 	catch (std::out_of_range)
 	{
@@ -39,10 +35,7 @@ double SMultiPoint::GetY(int index)
 {
 	try
 	{
-		if (m_pPoints)
-		{
-			return m_pPoints->at(index).y;
-		}
+		return m_pPoints.at(index).y;
 	}
 	catch (std::out_of_range)
 	{
@@ -56,10 +49,7 @@ double SMultiPoint::GetZ(int index)
 {
 	try
 	{
-		if (m_pPoints)
-		{
-			return m_pPoints->at(index).z;
-		}
+		return m_pPoints.at(index).z;
 	}
 	catch (std::out_of_range)
 	{
@@ -71,19 +61,14 @@ double SMultiPoint::GetZ(int index)
 
 void SMultiPoint::SetSize(int size)
 {
-	if (m_pPoints == nullptr)
-	{
-		m_pPoints = new std::vector<GeoPointZ>();
-	}
-
-	m_pPoints->resize(size);
+	m_pPoints.resize(size);
 }
 
 void SMultiPoint::SetMBR()
 {
 	m_mbr.InitMBR();
 
-	for (auto i = m_pPoints->begin(); i != m_pPoints->end(); i++)
+	for (auto i = m_pPoints.begin(); i != m_pPoints.end(); i++)
 	{
 		m_mbr.CalcMBR(i->GetX(), i->GetY());
 	}
@@ -91,20 +76,18 @@ void SMultiPoint::SetMBR()
 
 void SMultiPoint::Add(double x, double y, double z)
 {
-	if (m_pPoints == nullptr)
-	{
-		m_pPoints = new std::vector<GeoPointZ>();
-	}
-
-	m_pPoints->push_back(GeoPointZ(x, y, z));
+	m_pPoints.push_back(GeoPointZ(x, y, z));
 }
 
 void SMultiPoint::Set(int index, double x, double y, double z)
 {
-	if (m_pPoints && 
-		m_pPoints->size() > index)
+	try
 	{
-		m_pPoints->at(index).SetPoint(x, y, z);
+		return m_pPoints.at(index).SetPoint(x, y, z);
+	}
+	catch (std::out_of_range)
+	{
+		return;
 	}
 }
 
@@ -127,13 +110,15 @@ bool SMultiPoint::ImportFromWkb(char* value, int size)
 
 	int numPoints = 0;
 	memcpy_s(&numPoints, 4, value + 5, 4);
-	m_pPoints = new std::vector<GeoPointZ>();
-	m_pPoints->resize(numPoints);
+
+	m_pPoints.resize(numPoints);
 
 	for (int i = 0; i < numPoints; i++)
 	{
-		m_pPoints->at(i).ImportFromWkb(value + (9 + (29 * i)), 29);
+		m_pPoints.at(i).ImportFromWkb(value + (9 + (29 * i)), 29);
 	}
+
+	SetMBR();
 
 	return true;
 }
@@ -160,7 +145,10 @@ bool SMultiPoint::ExportToWkb(char** value, int* size)
 	{
 		int locSize = 0;
 		auto mem = (*value) + (9 + (29 * i));
-		m_pPoints->at(i).ExportToWkb(&mem, &locSize);
+
+		GeoPointZ localPoint = m_pPoints.at(i);
+		inverseProjection(localPoint.x, localPoint.y);
+		localPoint.ExportToWkb(&mem, &locSize);
 	}
 
 	return true;

@@ -10,7 +10,7 @@ public:
 	virtual ~SMultiPoint();
 
 public:
-	std::vector<GeoPointZ>* m_pPoints = nullptr;
+	std::vector<GeoPointZ> m_pPoints;
 
 public:
 	int GetNumPoints();

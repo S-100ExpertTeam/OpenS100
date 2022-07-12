@@ -10,6 +10,8 @@
 #include "../S100Geometry/SPoint.h"
 #include "../S100Geometry/SMultiPoint.h"
 #include "../S100Geometry/SCurve.h"
+#include "../S100Geometry/SCompositeCurve.h"
+#include "../S100Geometry/SSurface.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
 
@@ -27,8 +29,24 @@ CGISLibraryApp::CGISLibraryApp()
 	//curve.Set(2, 3, 4);
 	//
 
-	//std::string wkb_string = "0101000000000000000000F03F000000000000F03F";
+	//std::string wkb_string = "010300000003000000050000000000000000003e400000000000002440000000000000244000000000000034405a1663db5d0d1440c1c69400de644540000000000000444000000000000044400000000000003e40000000000000244005000000e0bccaaf2fa62340088b1d196c384340ced595fa90862d40983dcea891d43540f04766949a083b40e07fa56f17a93340ea0954da635a3d403d6dbabf422c4240e0bccaaf2fa62340088b1d196c38434005000000168fd569e8c83f40c07544d9e0784240f0fb5eb0841c3f4023d071607c7b3f4002814e619fe9414084af9186c8004040d1bdba17e4cc4140858293ffcdeb4240168fd569e8c83f40c07544d9e0784240";
+	//SSurface surface;
+	//SCurveHasOrient compCurve;
+	//auto wkb = LatLonUtility::HexStringToWKB(wkb_string);
+	//surface.ImportFromWkb(wkb, wkb_string.size() / 2);
+	//char* a = nullptr;
+	//int size = 0;
+	//surface.ExportToWkb(&a, &size);
 
+	//CString str;
+	//for (int i = 0; i < size; i++)
+	//{
+	//	str.AppendFormat(_T("%02X"), a[i] & 0xff);
+	//}
+	//OutputDebugString(str);
+
+	//delete[] wkb;
+	//compCurve.Release();
 	//SMultiPoint mp;
 	//mp.Add(1, 2, 3);
 	//mp.Add(4, 5, 6);
@@ -57,7 +75,7 @@ CGISLibraryApp::CGISLibraryApp()
 
 	//mp.ExportToWkb(&a, &size);
 	//mp.WriteWkb(L"G:\\TDS\\a.wkb");
-	//auto wkb_mp = LatLonUtility::WKBtoString(wkb_string);
+	//auto wkb_mp = LatLonUtility::HexStringToWKB(wkb_string);
 
 
 	//for (int i = 0; i < size; i++)
@@ -78,7 +96,7 @@ CGISLibraryApp::CGISLibraryApp()
 	//delete[] a;
 
 
-	//auto wkb = LatLonUtility::WKBtoString(wkb_string);
+	//auto wkb = LatLonUtility::HexStringToWKB(wkb_string);
 	//p.ImportFromWkb(wkb, 21);
 	//delete[] wkb;
 

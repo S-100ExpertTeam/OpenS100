@@ -3,9 +3,12 @@
 #include "SCommonFuction.h"
 #include "SCurve.h"
 
-#include "..\\GeoMetryLibrary\\MBR.h"
-#include "..\\GeoMetryLibrary\\Scaler.h"
-#include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
+#include "../GeoMetryLibrary/MBR.h"
+#include "../GeoMetryLibrary/Scaler.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
+#include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
+
+#include <algorithm>
 
 SSurface::SSurface()
 {
@@ -56,20 +59,6 @@ SSurface::~SSurface()
 	m_centerPoint = nullptr;
 
 	SafeRelease(&pGeometry);
-
-	//delete compositeCurve;
-	//compositeCurve = nullptr;
-
-	//for (auto i = curves.begin(); i != curves.end(); i++)
-	//{
-	//	delete (*i);
-	//}
-	//curves.clear();
-
-	//for (auto i = curveList.begin(); i != curveList.end(); i++)
-	//{
-	//	delete (*i).GetCurve();
-	//}
 }
 
 
@@ -310,11 +299,6 @@ ID2D1PathGeometry* SSurface::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* sc
 	return nullptr;
 }
 
-//void SSurface::AddCurve(SCurve* curve)
-//{
-//	curveList.push_back(SCurveHasOrient(curve, false));
-//}
-
 void SSurface::AddCurve(SCurveHasOrient* curve)
 {
 	curveList.push_back(curve);
@@ -393,6 +377,145 @@ void SSurface::Release()
 {
 	for (auto i = curveList.begin(); i != curveList.end(); i++)
 	{
+		SafeRelease(&(*i)->pGeometry);
 		delete (*i);
 	}
+}
+
+bool SSurface::ImportFromWkb(char* value, int size)
+{
+	Init();
+
+	if (value == nullptr ||
+		value[0] != 0x01)
+	{
+		return false;
+	}
+
+	int type = 0;
+
+	memcpy_s(&type, 4, value + 1, 4);
+
+	if (type != (int)WKBGeometryType::wkbPolygon)
+	{
+		return false;
+	}
+
+	memcpy_s(&m_numParts, 4, value + 5, 4);
+	m_pParts = new int[m_numParts];
+	memset(m_pParts, 0, sizeof(int) * m_numParts);
+
+	int offset = 0;
+
+	std::vector<GeoPoint> localPointArray;
+
+	for (int i = 0; i < m_numParts; i++)
+	{
+		int numPointPerPart = 0;
+		memcpy_s(&numPointPerPart, 4, value + 9 + offset, 4);
+		offset += 4;
+
+		m_pParts[i] = localPointArray.size();
+
+		for (int j = 0; j < numPointPerPart; j++)
+		{
+			GeoPoint point;
+			memcpy_s(&point.x, 8, value + 9 + offset, 8);
+			memcpy_s(&point.y, 8, value + 17 + offset, 8);
+			offset += 16;
+
+			projection(point.y, point.y);
+			localPointArray.push_back(point);
+		}
+	}
+
+	m_numPoints = localPointArray.size();
+
+	m_pPoints = new GeoPoint[m_numPoints];
+	std::copy(localPointArray.begin(), localPointArray.end(), m_pPoints);
+
+	CalculateCenterPoint();
+	SetMBR();
+
+	return true;
+}
+
+bool SSurface::ExportToWkb(char** value, int* size)
+{
+	*size = WkbSize();
+	if (*value == nullptr)
+	{
+		*value = new char[*size];
+	}
+	memset(*value, 0, *size);
+
+	(*value)[0] = 0x01;
+
+	int type = (int)WKBGeometryType::wkbPolygon;
+
+	memcpy_s((*value) + 1, 4, &type, 4);
+
+	int numRings = m_numParts;
+	memcpy_s((*value) + 5, 4, &numRings, 4);
+
+	auto mem = (*value) + 9;
+	for (int i = 0; i < numRings; i++)
+	{
+		int numPoints = GetNumPointPerPart(i);
+		memcpy_s(mem, 4, &numPoints, 4);
+		mem += 4;
+
+		for (int j = 0; j < numPoints; j++)
+		{
+			auto xy = GetXY(i, j);
+
+			inverseProjection(xy.x, xy.y);
+
+			memcpy_s(mem, 8, &xy.x, 8);
+			mem += 8;
+
+			memcpy_s(mem, 8, &xy.y, 8);
+			mem += 8;
+		}
+	}
+
+	return true;
+}
+
+int SSurface::WkbSize()
+{
+	int size = 9;
+	
+	for (int i = 0; i < m_numParts; i++)
+	{
+		size += (4 + (16 * GetNumPointPerPart(i)));
+	}
+
+	return size;
+}
+
+void SSurface::SetMBR()
+{
+	m_mbr.InitMBR();
+
+	int outerRingPointCount = GetNumPointPerPart(0);
+	for (int i = 0; i < outerRingPointCount; i++)
+	{
+		m_mbr.CalcMBR(m_pPoints[i].x, m_pPoints[i].y);
+	}
+}
+
+GeoPoint SSurface::GetXY(int ringIndex, int pointIndex)
+{
+	if (ringIndex >= 0 && ringIndex < m_numParts)
+	{
+		int pointCountPerPart = GetNumPointPerPart(ringIndex);
+
+		if (pointIndex >= 0 && pointIndex < pointCountPerPart)
+		{
+			return m_pPoints[m_pParts[ringIndex] + pointIndex];
+		}
+	}
+
+	return GeoPoint();
 }

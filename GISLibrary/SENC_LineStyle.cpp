@@ -119,7 +119,6 @@ void SENC_LineStyle::DrawInstruction(
 	Scaler *scaler,
 	PortrayalCatalogue* pc)
 {
-	//auto curve = curveHasOrient->GetCurve();
 	auto curve = curveHasOrient;
 	auto name = GetLineStyleName();
 
@@ -128,39 +127,14 @@ void SENC_LineStyle::DrawInstruction(
 		auto numPoints = curve->GetNumPoints();
 		auto d2Points = new D2D1_POINT_2F[numPoints];
 
-		//bool curOrient = true;
-
-		//if (true == curveHasOrient->GetParentOrient())
-		//{
-		//	curOrient = true;
-		//}
-		//else
-		//{
-		//	curOrient = false;
-		//}
-
-		//if (curOrient)
+		for (int pi = 0; pi < numPoints; pi++)
 		{
-			for (int pi = 0; pi < numPoints; pi++)
-			{
-				scaler->WorldToDevice_F(
-					curve->GetX(pi),
-					curve->GetY(pi),
-					&d2Points[pi].x,
-					&d2Points[pi].y);
-			}
+			scaler->WorldToDevice_F(
+				curve->GetX(pi),
+				curve->GetY(pi),
+				&d2Points[pi].x,
+				&d2Points[pi].y);
 		}
-		//else
-		//{
-		//	for (int pi = 0; pi < numPoints; pi++)
-		//	{
-		//		scaler->WorldToDevice_F(
-		//			curve->GetX(numPoints - 1 - pi),
-		//			curve->GetY(numPoints - 1 - pi),
-		//			&d2Points[pi].x,
-		//			&d2Points[pi].y);
-		//	}
-		//}
 
 		auto s100PCManager = pc->GetS100PCManager();
 		if (s100PCManager)

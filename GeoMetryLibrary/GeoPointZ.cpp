@@ -6,6 +6,7 @@
 #include "Scaler.h"
 
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
 
 GeoPointZ::GeoPointZ(void)
 {
@@ -66,6 +67,8 @@ bool GeoPointZ::ImportFromWkb(char* value, int size)
 	memcpy_s(&x, 8, value + 5, 8);
 	memcpy_s(&y, 8, value + 13, 8);
 	memcpy_s(&z, 8, value + 21, 8);
+
+	projection(x, y);
 
 	return true;
 }

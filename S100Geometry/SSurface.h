@@ -50,4 +50,12 @@ public:
 	void Set(std::vector<POINT>& points, std::vector<int>& parts);
 
 	void Release();
+
+	bool ImportFromWkb(char* value, int size);
+	bool ExportToWkb(char** value, int* size);
+	int WkbSize();
+
+	void SetMBR();
+
+	GeoPoint GetXY(int ringIndex, int pointIndex);
 };

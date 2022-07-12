@@ -1218,8 +1218,6 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 
 BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 {
-	r->GetRCID();
-	curve->SetRCID(r->GetRCID());
 	int pointCount = r->GetPointCount();
 	if (pointCount == 0)
 	{
@@ -1227,6 +1225,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 	}
 
 	curve->Init(pointCount);
+	curve->SetRCID(r->GetRCID());
 	int pointIndex = 0;
 
 	if (nullptr != r->m_ptas)

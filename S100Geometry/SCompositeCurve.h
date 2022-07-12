@@ -1,6 +1,9 @@
 #pragma once
+
 #include "SGeometry.h"
 #include "SCurveHasOrient.h"
+
+#include "../GeoMetryLibrary/GeoPoint.h"
 
 class SCompositeCurve : public SGeometry
 {
@@ -15,14 +18,23 @@ public:
 	void SetMBR();
 
 	void CreateD2Geometry(ID2D1Factory1* factory);
-	std::list<ID2D1PathGeometry*> GetD2Geometry();
-	std::list<ID2D1PathGeometry*> GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
 
+	// Type : WKBMultiLineString
 	bool ImportFromWkb(char* value, int size);
 	bool ExportToWkb(char** value, int* size);
+	bool ExportToWkbMultiLineString(char** value, int* size);
+	
+	// WKBLineString
+	int WkbSize();
 
-	//void AddCurve(SCurve* curve, bool masking = false);
+	// WKBMultiLineString
+	int WkbSizeMultiLineString();
+
 	void AddCurve(SCurveHasOrient* curve);
 
 	void Release();
+
+	int GetPointCount();
+
+	GeoPoint GetXY(int index);
 };

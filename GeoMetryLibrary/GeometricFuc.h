@@ -1,15 +1,9 @@
 #pragma once
 
-class ENCPoint;
 class GeoPolygon;
 class GeoPolyline;
 class GeoPoint;
-class ENCPoint;
-class ENCSounding;
-class ENCArea;
-class SPoint;
-class SCurve;
-class SSurface;
+
 class GeometricFuc
 {
 public:

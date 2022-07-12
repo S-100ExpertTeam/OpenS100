@@ -137,13 +137,18 @@ bool SCurve::ImportFromWkb(char* value, int size)
 	}
 
 	memcpy_s(&m_numPoints, 4, value + 5, 4);
-	m_pPoints = new SPoint[m_numPoints];
+
+	Init(m_numPoints);
 
 	for (int i = 0; i < m_numPoints; i++)
 	{
-		memcpy_s(&m_pPoints[i].x, 8, value + (9 + (8 * i)), 8);
-		memcpy_s(&m_pPoints[i].y, 8, value + (17 + (8 * i)), 8);
+		memcpy_s(&m_pPoints[i].x, 8, value + (9 + (16 * i)), 8);
+		memcpy_s(&m_pPoints[i].y, 8, value + (17 + (16 * i)), 8);
+
+		projection(m_pPoints[i].x, m_pPoints[i].y);
 	}
+
+	SetMBR();
 
 	return true;
 }
@@ -167,15 +172,28 @@ bool SCurve::ExportToWkb(char** value, int* size)
 
 	for (int i = 0; i < m_numPoints; i++)
 	{
-		memcpy_s((*value) + (9 + (16 * i)), 8, &m_pPoints[i].x, 8);
-		memcpy_s((*value) + (17 + (16 * i)), 8, &m_pPoints[i].y, 8);
+		double localX = m_pPoints[i].x;
+		double localY = m_pPoints[i].y;
+		inverseProjection(localX, localY);
+
+		memcpy_s((*value) + (9 + (16 * i)), 8, &localX, 8);
+		memcpy_s((*value) + (17 + (16 * i)), 8, &localY, 8);
 	}
 
 	return true;
 }
 
+int SCurve::WkbSize()
+{
+	return 9 + (16 * m_numPoints);
+}
+
 void SCurve::Init(int size)
 {
+	SafeRelease(&pGeometry);
+
+	m_id = 0;
+
 	delete[] m_pPoints;
 	m_pPoints = new SPoint[size];
 	m_numPoints = size;
