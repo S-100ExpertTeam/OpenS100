@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "S101Layer.h"
 #include "S100Utilities.h"
+#include "R_FeatureRecord.h"
 
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+
+#include "../S100Geometry/SGeometry.h"
 
 S101Layer::S101Layer(FeatureCatalogue* fc, PortrayalCatalogue* pc) : S100Layer(fc, pc)
 {
@@ -30,6 +33,9 @@ bool S101Layer::Open(CString _filepath)
 		delete m_spatialObject;
 		return false;
 	}	
+
+	auto cell = (S101Cell*)m_spatialObject;
+	auto vecFe = cell->GetVecFeature();
 
 	return true;
 }
