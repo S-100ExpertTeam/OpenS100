@@ -51,4 +51,6 @@ namespace LibMFCUtil
 	extern LIBMFC_API CString GetFileName(CString path);
 
 	extern LIBMFC_API CString GetFolderPathFromFilePath(CString path);
+
+	extern LIBMFC_API void OutputDebugLongString(CString path);
 }

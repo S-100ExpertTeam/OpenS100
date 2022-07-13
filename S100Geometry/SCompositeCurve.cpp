@@ -194,14 +194,16 @@ GeoPoint SCompositeCurve::GetXY(int index)
 
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
-		if (index < pointCount + ((*i)->GetNumPoints()))
+		int currentPointCount = (*i)->GetNumPoints();
+		if (index < pointCount + currentPointCount)
 		{
 			int localIndex = index - pointCount;
 			result.x = (*i)->GetX(localIndex);
 			result.y = (*i)->GetY(localIndex);
+			return result;
 		}
 
-		pointCount += (*i)->GetNumPoints();
+		pointCount += currentPointCount;
 	}
 
 	return result;

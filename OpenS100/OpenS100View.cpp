@@ -34,6 +34,8 @@
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
+#include "../LibMFCUtil/LibMFCUtil.h"
+
 #include <locale>        
 #include <codecvt>       
 #include <d2d1_1.h>
@@ -1314,7 +1316,7 @@ void COpenS100View::PickReport(CPoint _point)
 				double lat = curve->GetY(0);
 				double lon = curve->GetX(0);
 
-				inverseProjection(lat, lon);
+				inverseProjection(lon, lat);
 
 				std::vector<int>::size_type assoCnt;
 				assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
@@ -1430,6 +1432,24 @@ void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)
 		AfxMessageBox(str);
 		return;
 	}
+
+	// Output WKB string
+	//if (frPick->m_geometry)
+	//{
+	//	char* wkb = nullptr;
+	//	int size = 0;
+	//	frPick->m_geometry->ExportToWkb(&wkb, &size);
+
+	//	CString str;
+	//	for (int i = 0; i < size; i++)
+	//	{
+	//		str.AppendFormat(_T("%02X"), wkb[i] & 0xff);
+	//	}
+
+	//	LibMFCUtil::OutputDebugLongString(str + L"\n");
+
+	//	delete[] wkb;
+	//}
 
 	Invalidate(FALSE);
 }

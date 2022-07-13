@@ -217,7 +217,7 @@ BOOL CDialogDockCurrentSelection::OnInitDialog()
 	m_ListCurrentSelection.InsertColumn(2, _T("Name"), LVCFMT_LEFT, (int)(listRect.Width()*0.30));
 	m_ListCurrentSelection.InsertColumn(3, _T("Geometry"), LVCFMT_LEFT, (int)(listRect.Width()*0.10));
 	m_ListCurrentSelection.InsertColumn(4, _T("Lat"), LVCFMT_CENTER, (int)(listRect.Width()*0.15));
-	m_ListCurrentSelection.InsertColumn(5, _T("Long"), LVCFMT_CENTER, (int)(listRect.Width()*0.15));
+	m_ListCurrentSelection.InsertColumn(5, _T("Lon"), LVCFMT_CENTER, (int)(listRect.Width()*0.15));
 	m_ListCurrentSelection.InsertColumn(6, _T("Relation Cnt"), LVCFMT_LEFT, (int)(listRect.Width()*0.10));
 	m_ListCurrentSelection.InsertColumn(7, _T("Feature type"), LVCFMT_LEFT, (int)(listRect.Width()*0.10));
 
