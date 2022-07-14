@@ -25,8 +25,8 @@ public:
 	virtual void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0) {};
 	virtual void DrawTextInfo(HDC &hDC, Scaler *scaler, double offset = 0) {};
 
-	virtual bool ImportFromWkb(char* value, int size) { return true; };
-	virtual bool ExportToWkb(char** value, int* size) { return true; };
+	virtual bool ImportFromWkb(unsigned char* value, int size) { return true; };
+	virtual bool ExportToWkb(unsigned char** value, int* size) { return true; };
 	bool WriteWkb(std::wstring path);
 	virtual int WkbSize() { return 0; };
 

@@ -1434,22 +1434,30 @@ void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)
 	}
 
 	// Output WKB string
-	//if (frPick->m_geometry)
-	//{
-	//	char* wkb = nullptr;
-	//	int size = 0;
-	//	frPick->m_geometry->ExportToWkb(&wkb, &size);
+	if (frPick->m_geometry)
+	{
+		unsigned char* wkb = nullptr;
+		int size = 0;
+		frPick->m_geometry->ExportToWkb(&wkb, &size);
 
-	//	CString str;
-	//	for (int i = 0; i < size; i++)
-	//	{
-	//		str.AppendFormat(_T("%02X"), wkb[i] & 0xff);
-	//	}
+		CString str;
+		for (int i = 0; i < size; i++)
+		{
+			str.AppendFormat(_T("%02X"), wkb[i] & 0xff);
+		}
 
-	//	LibMFCUtil::OutputDebugLongString(str + L"\n");
+		LibMFCUtil::OutputDebugLongString(str + L"\n");
 
-	//	delete[] wkb;
-	//}
+		delete[] wkb;
+
+		if (frPick->m_geometry->type == 3)
+		{
+			std::string hex = "0103000000010000003f000000ed5003bcbb7b4e40be672442234340c0ed5003bcbb7b4e40be672442234340c0154e7743bf7b4e40b2570ee3244340c052ba9976d67b4e40c03456ac2b4340c0210038f6ec7b4e4089d3a46f2d4340c0c83c3c951d7c4e400074982f2f4340c04fec46c4397c4e404bff379b334340c02c2e8eca4d7c4e4060cd0182394340c0a30f4c24877c4e40b61d09ea4a4340c026d7039c947c4e40d1dc54ee4f4340c069d608b3bf7c4e40f03504c7654340c07333dc80cf7c4e405e4fcf166b4340c0e75a0fbadf7c4e409ed6c8096e4340c057444df4f97c4e4044e7ebe86e4340c0fb6e5fac147d4e400795b88e714340c08f119a6e237d4e40b35cdb80744340c0beccc17d2e7d4e400990fc1c7a4340c07f8a8807397d4e4006781c50804340c0b28c1e09457d4e40131be20e8a4340c00fdcdcf3577d4e40d906ee409d4340c096abc4e1717d4e40e391d332ad4340c0998ea5b4a37d4e409df7ff71c24340c045c99a47b47d4e401bcc704dcb4340c0eb80da5ec17d4e40ce2335a3d54340c06dc19ceada7d4e4053aae91fe94340c07c4b395fec7d4e40454f255ef94340c02aedc330167e4e40b44f11f1204440c0729cca58237e4e40857e01182a4440c08c6a11514c7e4e406272593b404440c06af1ce46537e4e4013affc43444440c06af1ce46537e4e4013affc43444440c06af1ce46537e4e4013affc43444440c06af1ce46537e4e4013affc43444440c049bce1e3b87d4e4013affc43444440c049bce1e3b87d4e4013affc43444440c049bce1e3b87d4e4013affc43444440c049bce1e3b87d4e4013affc43444440c0bda4d6a0d47c4e4013affc43444440c0bda4d6a0d47c4e4013affc43444440c0bda4d6a0d47c4e4013affc43444440c0bda4d6a0d47c4e4013affc43444440c08a66af88ab7c4e40d698c6e52e4440c0387c77d0917c4e400690ebf0214440c075c2f0b6777c4e4058930266194440c022ac21cc487c4e40ddc2047f094440c0bcd3f8e0107c4e40218dafe2f94340c02d499eebfb7b4e40c40ce8e0f44340c043b8b87cda7b4e40ceb92583ed4340c0d81b21a8bf7b4e40e18cabdbea4340c0ed5003bcbb7b4e40ff774485ea4340c0ed5003bcbb7b4e40ff774485ea4340c0ed5003bcbb7b4e40ff774485ea4340c0ed5003bcbb7b4e40ff774485ea4340c0ed5003bcbb7b4e403f5b07077b4340c0ed5003bcbb7b4e403f5b07077b4340c0ed5003bcbb7b4e403f5b07077b4340c0ed5003bcbb7b4e403f5b07077b4340c0ed5003bcbb7b4e40de150b8d714340c0ed5003bcbb7b4e40de150b8d714340c0ed5003bcbb7b4e40de150b8d714340c0ed5003bcbb7b4e40de150b8d714340c0ed5003bcbb7b4e40be672442234340c0ed5003bcbb7b4e40be672442234340c0";
+			auto wkb = LatLonUtility::HexStringToWKB(hex);
+			frPick->m_geometry->ImportFromWkb(wkb, hex.length() / 2);
+			frPick->m_geometry->CreateD2Geometry(theApp.gisLib->D2.pD2Factory);
+		}
+	}
 
 	Invalidate(FALSE);
 }

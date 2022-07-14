@@ -326,7 +326,7 @@ void SSurface::Init()
 	delete[] m_pPoints;
 	m_pPoints = nullptr;
 	
-	delete[] m_centerPoint;
+	delete m_centerPoint;
 	m_centerPoint = nullptr;
 
 	curveList.clear();
@@ -382,7 +382,7 @@ void SSurface::Release()
 	}
 }
 
-bool SSurface::ImportFromWkb(char* value, int size)
+bool SSurface::ImportFromWkb(unsigned char* value, int size)
 {
 	Init();
 
@@ -424,7 +424,7 @@ bool SSurface::ImportFromWkb(char* value, int size)
 			memcpy_s(&point.y, 8, value + 17 + offset, 8);
 			offset += 16;
 
-			projection(point.y, point.y);
+			projection(point.x, point.y);
 			localPointArray.push_back(point);
 		}
 	}
@@ -440,12 +440,12 @@ bool SSurface::ImportFromWkb(char* value, int size)
 	return true;
 }
 
-bool SSurface::ExportToWkb(char** value, int* size)
+bool SSurface::ExportToWkb(unsigned char** value, int* size)
 {
 	*size = WkbSize();
 	if (*value == nullptr)
 	{
-		*value = new char[*size];
+		*value = new unsigned char[*size];
 	}
 	memset(*value, 0, *size);
 

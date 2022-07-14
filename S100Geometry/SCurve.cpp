@@ -119,7 +119,7 @@ ID2D1PathGeometry* SCurve::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scal
 	return nullptr;
 }
 
-bool SCurve::ImportFromWkb(char* value, int size)
+bool SCurve::ImportFromWkb(unsigned char* value, int size)
 {
 	if (value == nullptr ||
 		value[0] != 0x01)
@@ -153,12 +153,12 @@ bool SCurve::ImportFromWkb(char* value, int size)
 	return true;
 }
 
-bool SCurve::ExportToWkb(char** value, int* size)
+bool SCurve::ExportToWkb(unsigned char** value, int* size)
 {
 	*size = 9 + (16 * m_numPoints);
 	if (*value == nullptr)
 	{
-		*value = new char[*size];
+		*value = new unsigned char[*size];
 	}
 	memset(*value, 0, *size);
 

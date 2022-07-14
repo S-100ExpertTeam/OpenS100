@@ -20,9 +20,9 @@ public:
 	void CreateD2Geometry(ID2D1Factory1* factory);
 
 	// Type : WKBMultiLineString
-	bool ImportFromWkb(char* value, int size);
-	bool ExportToWkb(char** value, int* size);
-	bool ExportToWkbMultiLineString(char** value, int* size);
+	bool ImportFromWkb(unsigned char* value, int size);
+	bool ExportToWkb(unsigned char** value, int* size);
+	bool ExportToWkbMultiLineString(unsigned char** value, int* size);
 	
 	// WKBLineString
 	int WkbSize();

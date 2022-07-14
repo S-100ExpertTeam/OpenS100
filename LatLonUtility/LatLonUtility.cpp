@@ -175,14 +175,14 @@ std::vector<std::string> LatLonUtility::Split(std::string targetStr, std::string
 	return ret;
 }
 
-char* LatLonUtility::HexStringToWKB(std::string value)
+unsigned char* LatLonUtility::HexStringToWKB(std::string value)
 {
 	if (value.length() <= 0 || value.length() % 2 != 0)
 	{
 		return nullptr;
 	}
 
-	char* result = new char[value.length() / 2];
+	unsigned char* result = new unsigned char[value.length() / 2];
 
 	for (int i = 0; i < value.length() / 2; i++)
 	{
