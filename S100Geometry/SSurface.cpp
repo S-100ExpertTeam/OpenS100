@@ -43,8 +43,6 @@ SSurface::SSurface(std::vector<POINT>& points, std::vector<int>& parts)
 {
 	type = 3;
 	Set(points, parts);
-	
-	
 }
 
 SSurface::~SSurface()
@@ -329,7 +327,8 @@ void SSurface::Init()
 	delete m_centerPoint;
 	m_centerPoint = nullptr;
 
-	curveList.clear();
+	Release();
+	//curveList.clear();
 
 	SafeRelease(&pGeometry);
 }
@@ -380,6 +379,7 @@ void SSurface::Release()
 		SafeRelease(&(*i)->pGeometry);
 		delete (*i);
 	}
+	curveList.clear();
 }
 
 bool SSurface::ImportFromWkb(unsigned char* value, int size)
@@ -417,6 +417,10 @@ bool SSurface::ImportFromWkb(unsigned char* value, int size)
 
 		m_pParts[i] = localPointArray.size();
 
+		auto curve = new SCurveHasOrient();
+		curve->Init(numPointPerPart);
+		curveList.push_back(curve);
+
 		for (int j = 0; j < numPointPerPart; j++)
 		{
 			GeoPoint point;
@@ -426,6 +430,8 @@ bool SSurface::ImportFromWkb(unsigned char* value, int size)
 
 			projection(point.x, point.y);
 			localPointArray.push_back(point);
+
+			curve->Set(j, point.x, point.y);
 		}
 	}
 
