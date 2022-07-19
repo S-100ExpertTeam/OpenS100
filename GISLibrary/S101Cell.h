@@ -261,7 +261,7 @@ public:
 	std::vector<R_SurfaceRecord*>* GetVecSurface();
 
 	void InsertFeatureRecord(__int64 key, R_FeatureRecord* record);
-	void RemoveFeatureRecord(__int64 key, R_FeatureRecord* record);
+	void RemoveFeatureRecord(__int64 key);
 
 	R_FeatureRecord* GetFeatureRecord(__int64 key);
 	POSITION GetFeatureStartPosition();

@@ -2426,7 +2426,7 @@ void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
 	vecFeature.push_back(record);
 }
 
-void S101Cell::RemoveFeatureRecord(__int64 key, R_FeatureRecord* record)
+void S101Cell::RemoveFeatureRecord(__int64 key)
 {
 	m_feaMap.RemoveKey(key);
 }
@@ -3460,7 +3460,7 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 
 			if (mission == 2)
 			{
-				RemoveFeatureRecord(UpdateName, values);
+				RemoveFeatureRecord(UpdateName);
 			}
 			else if (mission == 3) //change
 			{
