@@ -12,4 +12,8 @@ public:
 
 public:
 	void GetContents(pugi::xml_node& node);
+
+	bool IsPoint();
+	bool IsLine();
+	bool IsArea();
 };

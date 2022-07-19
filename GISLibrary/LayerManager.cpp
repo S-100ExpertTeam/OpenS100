@@ -925,8 +925,6 @@ BOOL LayerManager::IsOn()
 
 void LayerManager::DeleteLayer()
 {
-
-
 	delete layer;
 	layer = nullptr;
 	ReMBR();

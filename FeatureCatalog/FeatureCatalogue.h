@@ -113,7 +113,7 @@ public:
 	FeatureType* GetFeatureType(std::wstring Code);
 	FeatureType* GetFeatureTypeName(std::wstring Name);
 	FeatureType* GetFeatureTypeFromIndex(int indexnum);
-	FeatureTypes& GetFeatureTypesPointer();
+	FeatureTypes& GetFeatureTypes();
 
 	void SetFullAssociations();
 	void SetSubAssociation(FeatureType* ft);
@@ -127,4 +127,9 @@ public:
 	void AddInformationBinding(InformationType* it, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName);
 
 	void NullCheckFieldOfApplication();
+
+	// Don't release result.
+	void GetPointFeatures(std::vector<FeatureType*>& result);
+	void GetLineFeatures(std::vector<FeatureType*>& result);
+	void GetAreaFeatures(std::vector<FeatureType*>& result);
 };

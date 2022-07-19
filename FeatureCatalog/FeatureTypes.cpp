@@ -100,7 +100,7 @@ bool FeatureTypes::SetAssociationFromSuperType(FeatureType* ft)
 
 }
 
-std::unordered_map<std::wstring, FeatureType>& FeatureTypes::GetFeatureTypePointer()
+std::unordered_map<std::wstring, FeatureType>& FeatureTypes::GetFeatureType()
 {
 	return featureType;
 }

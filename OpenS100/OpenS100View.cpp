@@ -467,6 +467,10 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	theApp.gisLib->InitLibrary(fc, pc);
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
 
+	//PointFeatureList();
+	//LineFeatureList();
+	//AreaFeatureList();
+
 	return 0;
 }
 
@@ -1531,4 +1535,52 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
+void COpenS100View::PointFeatureList()
+{
+	if (theApp.gisLib)
+	{
+		auto fc = theApp.gisLib->GetFC();
+		std::vector<FeatureType*> features;
+		fc->GetPointFeatures(features);
+
+		for (auto i = features.begin(); i != features.end(); i++)
+		{
+			CString name = (*i)->GetName().c_str();
+			OutputDebugString(name + L"\n");
+		}
+	}
+}
+
+void COpenS100View::LineFeatureList()
+{
+	if (theApp.gisLib)
+	{
+		auto fc = theApp.gisLib->GetFC();
+		std::vector<FeatureType*> features;
+		fc->GetLineFeatures(features);
+
+		for (auto i = features.begin(); i != features.end(); i++)
+		{
+			CString name = (*i)->GetName().c_str();
+			OutputDebugString(name + L"\n");
+		}
+	}
+}
+
+void COpenS100View::AreaFeatureList()
+{
+	if (theApp.gisLib)
+	{
+		auto fc = theApp.gisLib->GetFC();
+		std::vector<FeatureType*> features;
+		fc->GetAreaFeatures(features);
+
+		for (auto i = features.begin(); i != features.end(); i++)
+		{
+			CString name = (*i)->GetName().c_str();
+			OutputDebugString(name + L"\n");
+		}
+	}
 }

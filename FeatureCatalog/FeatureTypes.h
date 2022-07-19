@@ -19,5 +19,5 @@ public:
 	void ApplySuperType();
 	bool SetAttributeFromSuperType(FeatureType* ft);
 	bool SetAssociationFromSuperType(FeatureType* ft);
-	std::unordered_map<std::wstring, FeatureType>& GetFeatureTypePointer();
+	std::unordered_map<std::wstring, FeatureType>& GetFeatureType();
 };

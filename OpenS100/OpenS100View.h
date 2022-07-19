@@ -148,6 +148,9 @@ public:
 	void SaveLastPosScale();
 	void ESC();
 	
+	void PointFeatureList();
+	void LineFeatureList();
+	void AreaFeatureList();
 };
 
 
