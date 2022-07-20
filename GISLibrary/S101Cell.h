@@ -6,7 +6,7 @@
 #include "F_CodeWithNumericCode.h"
 #include "DDR.h"
 
-#include "..\\GeoMetryLibrary\\MBR.h"
+#include "../GeoMetryLibrary/MBR.h"
 
 #include <unordered_map>
 #include <set>
@@ -65,11 +65,6 @@ public:
 	// Update : X
 	// Comment : It's a record that doesn't exist when it's an update file, so you need to change it to a pointer
 	R_DSCRS m_dscrs;
-
-	//std::unordered_map<__int64, R_VectorRecord*> m_vecMap;
-
-	// When S101Cell stores GML, a variable for storing Namespace.
-	std::unordered_map<std::wstring, std::wstring>* gml_namespace = nullptr;
 
 private:
 	CMap<__int64, __int64, R_InformationRecord*, R_InformationRecord*&> m_infMap; // Information Type

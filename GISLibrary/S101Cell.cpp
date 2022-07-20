@@ -230,13 +230,6 @@ void S101Cell::UpdateRemoveAll(void)
 		delete item;
 	}
 	updates.clear();
-
-	//ClearCurveMap();
-
-	//m_vecMap.clear();
-
-	delete gml_namespace;
-	gml_namespace = nullptr;
 }
 
 void S101Cell::RemoveAll(void)
@@ -318,13 +311,6 @@ void S101Cell::RemoveAll(void)
 		delete fr;
 	}
 	m_feaMap.RemoveAll();
-
-	//ClearCurveMap();
-
-	//m_vecMap.clear();
-
-	delete gml_namespace;
-	gml_namespace = nullptr;
 }
 
 void S101Cell::ClearAll(void)

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Record.h"
 #include "F_DSID.h"
 #include "F_DSSI.h"
@@ -32,4 +33,7 @@ public:
 	CString GetInformationAssociationCode(int numericCode);
 	CString GetFeatureAssociationCode(int numericCode);
 	CString GetAssociationRoleCode(int numericCode);
+
+	void AddFeatureCode(CString& value);
+	void AddInformationCode(CString& value);
 };
