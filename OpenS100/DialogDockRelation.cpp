@@ -265,8 +265,8 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 
 		std::wstring orgFeatureName = orgFtItor->second->m_code;
 
-		auto fit = fc->GetFeatureTypesPointer().GetFeatureTypePointer().find(orgFeatureName);
-		if (fit == fc->GetFeatureTypesPointer().GetFeatureTypePointer().end())
+		auto fit = fc->GetFeatureTypes().GetFeatureType().find(orgFeatureName);
+		if (fit == fc->GetFeatureTypes().GetFeatureType().end())
 		{
 			CString msg;
 			msg.Format(L"[%s] Feature not found. -REALATION", orgFeatureName.c_str());

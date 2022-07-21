@@ -261,7 +261,7 @@ int HostGetFeatureTypeCodes(lua_State *l)
 +		[8]	"BeaconIsolatedDanger"	std::basic_string<char,std::char_traits<char>,std::allocator<char> >
 	*/
 
-	auto feature_types = pTheFC->GetFeatureTypesPointer().GetFeatureTypePointer();
+	auto feature_types = pTheFC->GetFeatureTypes().GetFeatureType();
 
 	std::vector<std::string> ret_feature_codes;
 

@@ -16,6 +16,6 @@ public:
 	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
 	double GetZ();
 
-	bool ImportFromWkb(char* value, int size);
-	bool ExportToWkb(char** value, int* size);
+	bool ImportFromWkb(unsigned char* value, int size);
+	bool ExportToWkb(unsigned char** value, int* size);
 };

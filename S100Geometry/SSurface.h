@@ -51,8 +51,8 @@ public:
 
 	void Release();
 
-	bool ImportFromWkb(char* value, int size);
-	bool ExportToWkb(char** value, int* size);
+	bool ImportFromWkb(unsigned char* value, int size);
+	bool ExportToWkb(unsigned char** value, int* size);
 	int WkbSize();
 
 	void SetMBR();
