@@ -34,6 +34,11 @@ public:
 	CString GetFeatureAssociationCode(int numericCode);
 	CString GetAssociationRoleCode(int numericCode);
 
-	void AddFeatureCode(CString& value);
-	void AddInformationCode(CString& value);
+	void AddAttributeCode(CString& value);
+	void AddInformationTypeCode(CString& value);
+	void AddFeatureTypeCode(CString& value);
+	void AddInformationAssociationCode(CString& value);
+	void AddFeatureAssociationCode(CString& value);
+	void AddAssociationRoleCode(CString& value);
+	
 };

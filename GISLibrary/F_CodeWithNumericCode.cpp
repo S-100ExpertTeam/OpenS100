@@ -25,8 +25,10 @@ void F_CodeWithNumericCode::ReadField(BYTE *&buf)
 		CodeWithNumericCode *cnc = new CodeWithNumericCode();
 		buf2charArr(cnc->m_code, buf);
 		cnc->m_nmcd = buf2uint(buf, 2);
-		m_arr.insert({ cnc->m_nmcd, cnc });
-		m_arrFindForCode.insert({ std::wstring(cnc->m_code), cnc });
+		//m_arr.insert({ cnc->m_nmcd, cnc });
+		//m_arrFindForCode.insert({ std::wstring(cnc->m_code), cnc });
+
+		InsertCodeNumericCode(cnc);
 	}
 }
 
@@ -37,8 +39,10 @@ void F_CodeWithNumericCode::ReadField(BYTE *&buf, int loopCnt)
 		CodeWithNumericCode *cnc = new CodeWithNumericCode();
 		buf2charArr(cnc->m_code, buf);
 		cnc->m_nmcd = buf2uint(buf, 2);
-		m_arr.insert({ cnc->m_nmcd, cnc });
-		m_arrFindForCode.insert({ std::wstring(cnc->m_code), cnc });
+		//m_arr.insert({ cnc->m_nmcd, cnc });
+		//m_arrFindForCode.insert({ std::wstring(cnc->m_code), cnc });
+
+		InsertCodeNumericCode(cnc);
 	}
 }
 
@@ -86,4 +90,31 @@ void F_CodeWithNumericCode::InsertCodeNumericCode(CodeWithNumericCode* value)
 {
 	m_arr.insert({ value->GetNumericCode(), value });
 	m_arrFindForCode.insert({ value->GetCode(), value });
+}
+
+void F_CodeWithNumericCode::InsertCodeNumericCode(CString& code, int numericCode)
+{
+	auto codeWithNumericCode = new CodeWithNumericCode(code, numericCode);
+	InsertCodeNumericCode(codeWithNumericCode);
+}
+
+int F_CodeWithNumericCode::GetNewNumericCode()
+{
+	int limitNumericCode = 65535;
+	for (int i = 0; i <= limitNumericCode; i++)
+	{
+		if (m_arr.find(i) == m_arr.end())
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+void F_CodeWithNumericCode::AddNewCodeNumericCode(CString& code)
+{
+	int numericCode = GetNewNumericCode();
+	auto codeWithNumericCode = new CodeWithNumericCode(code, numericCode);
+	InsertCodeNumericCode(codeWithNumericCode);
 }

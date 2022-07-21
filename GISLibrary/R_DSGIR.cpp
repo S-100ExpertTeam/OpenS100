@@ -197,3 +197,63 @@ CString R_DSGIR::GetAssociationRoleCode(int numericCode)
 	}
 	return L"";
 }
+
+void R_DSGIR::AddAttributeCode(CString& value)
+{
+	if (nullptr == m_atcs)
+	{
+		m_atcs = new F_CodeWithNumericCode();
+	}
+
+	m_atcs->AddNewCodeNumericCode(value);
+}
+
+void R_DSGIR::AddInformationTypeCode(CString& value)
+{
+	if (nullptr == m_itcs)
+	{
+		m_itcs = new F_CodeWithNumericCode();
+	}
+
+	m_itcs->AddNewCodeNumericCode(value);
+}
+
+void R_DSGIR::AddFeatureTypeCode(CString& value)
+{
+	if (nullptr == m_ftcs)
+	{
+		m_ftcs = new F_CodeWithNumericCode();
+	}
+
+	m_ftcs->AddNewCodeNumericCode(value);
+}
+
+void R_DSGIR::AddInformationAssociationCode(CString& value)
+{
+	if (nullptr == m_iacs)
+	{
+		m_iacs = new F_CodeWithNumericCode();
+	}
+
+	m_iacs->AddNewCodeNumericCode(value);
+}
+
+void R_DSGIR::AddFeatureAssociationCode(CString& value)
+{
+	if (nullptr == m_facs)
+	{
+		m_facs = new F_CodeWithNumericCode();
+	}
+
+	m_facs->AddNewCodeNumericCode(value);
+}
+
+void R_DSGIR::AddAssociationRoleCode(CString& value)
+{
+	if (nullptr == m_arcs)
+	{
+		m_arcs = new F_CodeWithNumericCode();
+	}
+
+	m_arcs->AddNewCodeNumericCode(value);
+}

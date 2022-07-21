@@ -23,6 +23,10 @@ public:
 	int GetFieldLength();
 	int GetCount();
 	void InsertCodeNumericCode(CodeWithNumericCode* value);
+	void InsertCodeNumericCode(CString& code, int numericCode);
 	CString GetFeatureCode(int numericCode);
 	int GetCode(CString nc);
+
+	int GetNewNumericCode();
+	void AddNewCodeNumericCode(CString& code);
 };

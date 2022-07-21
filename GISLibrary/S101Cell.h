@@ -87,7 +87,8 @@ public:
 	R_DSGIR* GetDatasetGeneralInformationRecord();
 	void UpdateRemoveAll(void);
 	void RemoveAll(void);
-	void ClearAll(void);
+	void ClearAll(void); 
+
 	bool Open(CString _filepath);
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
@@ -314,4 +315,20 @@ private:
 	void GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* scaler, std::list<D2D1_POINT_2F>& points);
 
 	void InitCurveSuppression();
+
+	R_InformationRecord* NewInformationRecord();
+	R_PointRecord* NewPointRecord();
+	R_MultiPointRecord* NewMultiPointRecord();
+	R_CurveRecord* NewCurveRecord();
+	R_CompositeRecord* NewCompositeCurveRecord();
+	R_SurfaceRecord* NewSurfaceRecord();
+	R_FeatureRecord* NewFeatureRecord();
+
+	int NewRCIDofInformationRecord();
+	int NewRCIDofPointRecord();
+	int NewRCIDofMultiPointRecord();
+	int NewRCIDofCurveRecord();
+	int NewRCIDofCompositeCurveRecord();
+	int NewRCIDofSurfaceRecord();
+	int NewRCIDofFeatureRecord();
 };
