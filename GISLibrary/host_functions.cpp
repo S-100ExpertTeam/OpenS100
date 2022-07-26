@@ -114,9 +114,13 @@ int HostFeatureGetAssociatedFeatureIDs(lua_State *l)
 {
 	auto ls = lua_session::get_session(l);
 
-	assert(false); // TODO: Implement.
+	auto roleCode = ls->pop<std::string>();
+	auto associationCode = ls->pop<std::string>();
+	auto featureID = ls->pop<std::string>();
 
-	return 0;
+	ls->push(hd_get_feature_associated_feature_ids(featureID, associationCode, roleCode));
+
+	return 1;
 }
 
 int HostFeatureGetAssociatedInformationIDs(lua_State *l)

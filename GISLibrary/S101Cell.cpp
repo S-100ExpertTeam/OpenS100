@@ -3836,5 +3836,5 @@ void S101Cell::InitCurveSuppression()
 
 int S101Cell::NewRCIDofFeatureRecord()
 {
-
+	return 0;
 }
