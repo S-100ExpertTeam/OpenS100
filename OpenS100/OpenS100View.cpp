@@ -462,7 +462,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	FeatureCatalogue* fc = new FeatureCatalogue(L"..\\ProgramData\\xml\\S-101_FC.xml");
-	PortrayalCatalogue* pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal_old\\portrayal_catalogue.xml");
+	PortrayalCatalogue* pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
 
 	theApp.gisLib->InitLibrary(fc, pc);
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
