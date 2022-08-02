@@ -127,7 +127,6 @@ void COpenS100View::SaveLastPosScale()
 		file.WriteString(strSox);
 		file.WriteString(strSoy);
 	}
-	file.Close();
 }
 
 BOOL COpenS100View::PreCreateWindow(CREATESTRUCT& cs)
