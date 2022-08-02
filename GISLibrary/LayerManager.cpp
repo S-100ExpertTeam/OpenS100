@@ -46,6 +46,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <algorithm>
 
 #pragma comment(lib, "winmm")
 
@@ -79,8 +80,11 @@ LayerManager::~LayerManager()
 		delete m_listBackgroundLayer.GetNext(pos);
 	}
 
-	delete layer;
-	layer = nullptr;
+	for (auto i = layers.begin(); i != layers.end(); i++)
+	{
+		delete* i;
+	}
+	layers.clear();
 }
 
 bool LayerManager::AddBackgroundLayer(CString _filepath)
@@ -145,8 +149,16 @@ bool LayerManager::AddLayer(Layer* _layer)
 		return false;
 	}
 
-	mbr.SetMBR(_layer->m_mbr);
-	layer = _layer;
+	if (LayerCount() == 0)
+	{
+		mbr.SetMBR(_layer->m_mbr);
+	}
+	else
+	{
+		mbr.CalcMBR(_layer->m_mbr);
+	}
+	
+	layers.push_back(_layer);
 
 	return true;
 }
@@ -296,7 +308,9 @@ void LayerManager::DrawInformationLayer(HDC& hDC, int nindex)
 	SolidBrush internalBrush(internalColor);
 	Pen linePen(lineColor);
 
-	auto selectedLayer = layer;
+	auto it = layers.begin();
+	std::advance(it, nindex);
+	auto selectedLayer = *it;
 
 	auto mbr = selectedLayer->GetMBR();
 	long sxmin = 0;
@@ -332,7 +346,6 @@ void LayerManager::DrawInformationLayer(HDC& hDC, int nindex)
 	graphics.DrawRectangle(&linePen, position.X, position.Y, position.Width, position.Height);
 	graphics.FillRectangle(&internalBrush, position.X, position.Y, position.Width, position.Height);
 	graphics.DrawString(layername, -1, &F, position, &sf, &B);
-
 }
 
 void LayerManager::AddSymbolDrawing(
@@ -721,21 +734,21 @@ void LayerManager::DrawBackground(HDC &hDC, int offset)
 
 void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 {
-	if (layer == nullptr)
+	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
-		return;
-	}
-	if (layer->IsOn())
-	{
-		if (layer->IsS100Layer())
+		auto layer = (*i);
+
+		if (layer->IsOn())
 		{
-			if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+			if (layer->IsS100Layer())
 			{
-				DrawS100Layer(hdc, offset, (S100Layer*)layer);
+				if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+				{
+					DrawS100Layer(hdc, offset, (S100Layer*)layer);
+				}
 			}
 		}
 	}
-
 }
 
 void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
@@ -871,24 +884,23 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 
 void LayerManager::S101RebuildPortrayal()
 {
-	if (nullptr == layer)
+	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
-		return;
-	}
-	
-	if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
-	{
-		BuildPortrayalCatalogue(layer);
-	}
-	else if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_GRID_H5)
-	{
-		BuildPortrayalCatalogue(layer);
-	}
-	else if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_GRID_BAG)
-	{
-		BuildPortrayalCatalogue(layer);
-	}
+		auto layer = (*i);
 
+		if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
+		{
+			BuildPortrayalCatalogue(layer);
+		}
+		else if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_GRID_H5)
+		{
+			BuildPortrayalCatalogue(layer);
+		}
+		else if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_GRID_BAG)
+		{
+			BuildPortrayalCatalogue(layer);
+		}
+	}
 }
 
 void LayerManager::BuildPortrayalCatalogue(Layer* l)
@@ -907,26 +919,59 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 	}
 }
 
-Layer* LayerManager::GetLayer()
+Layer* LayerManager::GetLayer(int index)
 {
-	return layer;
+	if (index < 0 || index >= LayerCount())
+	{
+		return nullptr;
+	}
+
+	auto it = layers.begin();
+
+	std::advance(it, index);
+
+	return *it;
 }
 
-CString LayerManager::GetLayerName()
+CString LayerManager::GetLayerName(int index)
 {
-	return layer->GetLayerName();
+	auto layer = GetLayer(index);
+
+	if (layer)
+	{
+		layer->GetLayerName();
+	}
+
+	return L"";
 }
 
-BOOL LayerManager::IsOn()
+bool LayerManager::IsOn(int index)
 {
-	return layer->IsOn();
+	auto layer = GetLayer(index);
 
+	if (layer)
+	{
+		layer->IsOn();
+	}
+
+	return false;
 }
 
-void LayerManager::DeleteLayer()
+void LayerManager::DeleteLayer(int index)
 {
-	delete layer;
-	layer = nullptr;
+	if (index < 0 || index >= LayerCount())
+	{
+		return;
+	}
+
+	auto it = layers.begin();
+
+	std::advance(it, index);
+
+	delete (*it);
+
+	layers.erase(it);
+
 	ReMBR();
 
 	return;
@@ -934,25 +979,25 @@ void LayerManager::DeleteLayer()
 
 void LayerManager::DeleteLayer(CString filepath)
 {
-	if (layer == nullptr)
+	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
-		return;
+		auto layer = *i;
+		if (layer->GetLayerPath().Compare(filepath) == 0)
+		{
+			delete layer;
+			layer = nullptr;
+
+			layers.erase(i);
+
+			ReMBR();
+			return;
+		}
 	}
-
-	if (layer->GetLayerPath().Compare(filepath) == 0)
-	{
-		delete layer;
-		layer = nullptr;
-
-		ReMBR();
-		return;
-	}
-
 }
 
 void LayerManager::ReMBR()
 {
-	if (layer == nullptr)
+	if (LayerCount() == 0)
 	{
 		double xmin = -170.0;
 		double ymin = -30.0;
@@ -966,6 +1011,15 @@ void LayerManager::ReMBR()
 		mbr.ymin = ymin;
 		mbr.xmax = xmax;
 		mbr.ymax = ymax;
+	}
+	else
+	{
+		mbr.InitMBR();
+
+		for (auto i = layers.begin(); i != layers.end(); i++)
+		{
+			mbr.CalcMBR((*i)->GetMBR());
+		}
 	}
 }
 
@@ -992,26 +1046,30 @@ void LayerManager::ChangeS100ColorPalette(GeoMetryLibrary::ColorTable value)
 
 void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 {
-	if (layer && true == layer->IsS100Layer())
+	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
-		auto s100layer = (S100Layer*)layer;
-		auto pc = s100layer->GetPC();
-		if (nullptr != pc)
+		auto layer = *i;
+		if (layer && true == layer->IsS100Layer())
 		{
-			pc->SetCurrentPaletteName(paletteName);
-			pc->DeletePatternImage();
-			pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-			pc->DeleteLineImages();
-			pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-		}
-
-		auto s100so = (S100SpatialObject*)layer->GetSpatialObject();
-		if (nullptr != s100so)
-		{
-			auto pcOutputManager = s100so->GetPCOutputManager();
-			if (nullptr != pcOutputManager)
+			auto s100layer = (S100Layer*)layer;
+			auto pc = s100layer->GetPC();
+			if (nullptr != pc)
 			{
-				pcOutputManager->ChangePallete(pc);
+				pc->SetCurrentPaletteName(paletteName);
+				pc->DeletePatternImage();
+				pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+				pc->DeleteLineImages();
+				pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+			}
+
+			auto s100so = (S100SpatialObject*)layer->GetSpatialObject();
+			if (nullptr != s100so)
+			{
+				auto pcOutputManager = s100so->GetPCOutputManager();
+				if (nullptr != pcOutputManager)
+				{
+					pcOutputManager->ChangePallete(pc);
+				}
 			}
 		}
 	}
@@ -1280,6 +1338,11 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 			}
 		}
 	}
+}
+
+int LayerManager::LayerCount()
+{
+	return layers.size();
 }
 
 int LayerManager::CheckFileType(CString path, int update)

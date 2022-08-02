@@ -331,4 +331,6 @@ private:
 	int NewRCIDofCompositeCurveRecord();
 	int NewRCIDofSurfaceRecord();
 	int NewRCIDofFeatureRecord();
+
+	bool Save(std::wstring path);
 };

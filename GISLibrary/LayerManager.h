@@ -7,6 +7,7 @@
 #include "../GeoMetryLibrary/ENCCommon.h"
 
 #include <vector>
+#include <list>
 #include <functional>
 #include <unordered_map>
 
@@ -24,18 +25,14 @@ public:
 	virtual ~LayerManager();
 
 public:
-	Scaler					*scaler = nullptr;
+	Scaler* scaler = nullptr;
 
 	// Background layer.
-	CList <Layer*, Layer* > m_listBackgroundLayer;
+	CList<Layer*, Layer* > m_listBackgroundLayer;
 
-	/*
-	** Cell Layer
-	*/
-	Layer * layer  = nullptr;
+	std::list<Layer*> layers;
 
-	// Overlay Layer
-	MBR						mbr;
+	MBR mbr;
 
 	// RCID of already rendered curveRecords
 	std::set<int> lineSuppressionMap;
@@ -49,12 +46,7 @@ public:
 	int isUpdate(CString filePath);
 	bool AddLayer(Layer* layer);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
-
-	
-
-	bool AddOverlayLayer(CString _filepath);;
-	// Drawing temporary S-111 files.
-	unsigned m_surfaceCurrentIndex = 0;
+	bool AddOverlayLayer(CString _filepath);
 
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal(/*PORTRAYAL_BUILD_TYPE type = PORTRAYAL_BUILD_TYPE::ALL*/);
@@ -80,11 +72,11 @@ public:
 
 	void DrawInformationLayer(HDC &hDC, int nIndex);
 
-	Layer* GetLayer();
+	Layer* GetLayer(int index);
 
-	CString GetLayerName();
-	BOOL IsOn();
-	void DeleteLayer();
+	CString GetLayerName(int index);
+	bool IsOn(int index);
+	void DeleteLayer(int index);
 	void DeleteLayer(CString filepath);
 	void ReMBR();
 
@@ -94,6 +86,8 @@ public:
 	Scaler* GetScaler();
 
 	void SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet);
+
+	int LayerCount();
 
 	// Result
 	// 1 : S-57
