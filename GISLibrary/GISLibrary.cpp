@@ -191,9 +191,9 @@ void CGISLibraryApp::S101RebuildPortrayal()
 	m_pLayerManager->S101RebuildPortrayal();
 }
 
-Layer* CGISLibraryApp::GetLayer()
+Layer* CGISLibraryApp::GetLayer(int index)
 {
-	return m_pLayerManager->GetLayer();
+	return m_pLayerManager->GetLayer(index);
 }
 
 void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale)
@@ -276,17 +276,17 @@ void CGISLibraryApp::DrawScaleBar()
 	}
 }
 
-CString CGISLibraryApp::GetLayerName()
+CString CGISLibraryApp::GetLayerName(int index)
 {
-	return m_pLayerManager->GetLayerName();
+	return m_pLayerManager->GetLayerName(index);
 }
-BOOL CGISLibraryApp::IsOn()
+BOOL CGISLibraryApp::IsOn(int index)
 {
-	return m_pLayerManager->IsOn();
+	return m_pLayerManager->IsOn(index);
 }
-void CGISLibraryApp::DeleteLayer()
+void CGISLibraryApp::DeleteLayer(int index)
 {
-	m_pLayerManager->DeleteLayer();
+	m_pLayerManager->DeleteLayer(index);
 }
 void CGISLibraryApp::DeleteLayer(CString filepath)
 {

@@ -292,7 +292,7 @@ void COpenS100View::MapDragSize()
 
 void COpenS100View::MapFill()
 {
-	Layer *layer = theApp.gisLib->GetLayer();
+	Layer *layer = theApp.gisLib->GetLayer(0);
 	if (nullptr == layer)
 	{
 		return;
@@ -466,7 +466,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	theApp.gisLib->InitLibrary(fc, pc);
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
 
-	//PointFeatureList();
+	PointFeatureList();
 	//LineFeatureList();
 	//AreaFeatureList();
 
@@ -923,7 +923,7 @@ void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
 
 Layer* COpenS100View::GetCurrentLayer()
 {
-	return theApp.gisLib->GetLayer();
+	return theApp.gisLib->GetLayer(0);
 }
 
 BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
@@ -1103,7 +1103,7 @@ void COpenS100View::ClearPickReport()
 
 void COpenS100View::PickReport(CPoint _point)
 {
-	auto layer = theApp.gisLib->GetLayerManager()->GetLayer();
+	auto layer = theApp.gisLib->GetLayerManager()->GetLayer(0);
 	if (nullptr == layer)
 	{
 		return;
@@ -1265,9 +1265,7 @@ void COpenS100View::PickReport(CPoint _point)
 				double lon = 0;
 				if (compositeCurve->m_listCurveLink.size() > 0)
 				{
-					//lat = ((*compositeCurve->m_listCurveLink.begin()).GetCurve())->m_pPoints[0].x;
 					lat = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].x;
-					//lon = ((*compositeCurve->m_listCurveLink.begin()).GetCurve())->m_pPoints[0].y;
 					lon = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].y;
 				}
 
@@ -1426,7 +1424,7 @@ void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)
 	frPick = _fr;
 	Layer* l = nullptr;
 
-	l = (Layer*)theApp.gisLib->GetLayer();
+	l = (Layer*)theApp.gisLib->GetLayer(0);
 
 	if (l == NULL)
 	{

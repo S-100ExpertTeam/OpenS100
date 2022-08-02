@@ -220,15 +220,13 @@ void hd_delete()
 	s_feature_ids.clear();
 }
 
-void hd_init(/*const char *input_schema, */S101Cell *c)
+void hd_init(S101Cell *c)
 {
 	s_feature_ids.clear();
 	s_feature_nodes.clear();
 	s_information_nodes.clear();
 	s_spatial_features.clear();
-	//
-	// Load data from input schema
-	//
+
 	__int64 key = 0;
 	cell = c;
 
@@ -353,10 +351,9 @@ std::string hd_get_feature_code(std::string id)
 		return "";
 	}
 
-	std::wstring s1 =std::wstring( f1->second->m_code);
+	std::wstring s1 =std::wstring(f1->second->m_code);
 	std::string ret;
 	ret.assign(s1.begin(), s1.end());
-	//f1->second->m_code.ReleaseBuffer();
 
 	return ret;
 }

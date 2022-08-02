@@ -39,14 +39,14 @@ public:
 	void Draw(HDC &hDC, int offset = 0);
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal();
-	Layer* GetLayer();
+	Layer* GetLayer(int index);
 
 	void DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale = 5);
 	void DrawScaleBar();
 
-	CString GetLayerName();
-	BOOL IsOn();
-	void DeleteLayer();
+	CString GetLayerName(int index);
+	BOOL IsOn(int index);
+	void DeleteLayer(int index);
 	void DeleteLayer(CString filepath);
 	void ReMBR();
 
