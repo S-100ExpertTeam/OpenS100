@@ -7,8 +7,9 @@
 #include "S100_ColorFill.h"
 #include "S100_ColorProfiles.h"
 
+#include "../S100Engine/S100PCManager.h"
 
-#include "..\\S100Engine\\S100PCManager.h"
+#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <vector>
 #include <string>
@@ -578,5 +579,5 @@ Portrayal::FileFormat PortrayalCatalogue::GetRuleFileFormat()
 
 std::string PortrayalCatalogue::GetCataloguePathAsString()
 {
-	return pugi::as_utf8(catalogPath);
+	return LibMFCUtil::WStringToString(catalogPath);
 }

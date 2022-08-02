@@ -461,8 +461,10 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	FeatureCatalogue* fc = new FeatureCatalogue(L"..\\ProgramData\\xml\\S-101_FC.xml");
-	PortrayalCatalogue* pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
+	//FeatureCatalogue* fc = new FeatureCatalogue(L"..\\ProgramData\\xml\\S-101_FC.xml");
+	//PortrayalCatalogue* pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
+	FeatureCatalogue* fc = new FeatureCatalogue(L"G:\\Codes\\한글\\xml\\S-101_FC.xml");
+	PortrayalCatalogue* pc = new PortrayalCatalogue(L"G:\\Codes\\한글\\S101_Portrayal\\portrayal_catalogue.xml");
 
 	theApp.gisLib->InitLibrary(fc, pc);
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
