@@ -71,10 +71,9 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
 			return 0;
 		}
 
-		std::wstring featureCatalogPath = fc->GetFilePath();
-
-		std::string featureCatalogPath_string(featureCatalogPath.begin(), featureCatalogPath.end());
-		std::string luaRulePath_string(luaRulePath.begin(), luaRulePath.end());
+		//std::wstring featureCatalogPath = fc->GetFilePath();
+		//std::string featureCatalogPath_string = pugi::as_utf8(featureCatalogPath);
+		std::string luaRulePath_string = LibMFCUtil::WStringToString(luaRulePath);
 
 		InitPortrayal(
 			luaRulePath_string.c_str(),
