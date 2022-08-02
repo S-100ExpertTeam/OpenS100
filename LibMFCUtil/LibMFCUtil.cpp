@@ -214,10 +214,10 @@ CString LibMFCUtil::GetFolderPathFromFilePath(CString path)
 
 std::string LibMFCUtil::WStringToString(std::wstring str) 
 {
-	std::string Value;
-	Value.assign(str.begin(), str.end());
-
-	return Value;
+	auto chars = ConvertWCtoC((wchar_t*)str.c_str());
+	std::string result(chars);
+	delete[] chars;
+	return result;
 }
 
 POINT LibMFCUtil::RotatePoint(POINT& pt, double radian, int centerX, int centerY)
