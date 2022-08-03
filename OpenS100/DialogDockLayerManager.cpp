@@ -33,6 +33,7 @@ BEGIN_MESSAGE_MAP(CDialogDockLayerManager, CDialog)
 	ON_WM_SIZING()
 
 	ON_WM_CONTEXTMENU()
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST_LM, &CDialogDockLayerManager::OnItemchangedListLm)
 END_MESSAGE_MAP()
 
 
@@ -71,6 +72,12 @@ BOOL CDialogDockLayerManager::OnInitDialog()
 	return TRUE; 
 }
 
+int CDialogDockLayerManager::GetSelectedLayerIndex()
+{
+	int result = listCtrlLayers.GetNextItem(-1, LVNI_SELECTED);
+	return result;
+}
+
 void CDialogDockLayerManager::OnButtonDelete()  //delete layer
 {
 	DeleteLayer();
@@ -89,24 +96,6 @@ void CDialogDockLayerManager::FocusLayerRange()
 
 void CDialogDockLayerManager::AdjustLayout()
 {
-	//if (GetSafeHwnd() == NULL)
-	//{
-	//	return;
-	//}
-
-	//CRect rectClient;
-	//GetClientRect(rectClient);
-
-	//if (listCtrlLayers.GetSafeHwnd())
-	//{
-	//	listCtrlLayers.SetWindowPos(NULL, rectClient.left, 0, rectClient.Width(), rectClient.Size().cy / 2, SWP_NOACTIVATE | SWP_NOZORDER);
-	//}
-
-	//if (propertyGridLayer.GetSafeHwnd())
-	//{
-	//	propertyGridLayer.SetWindowPos(NULL, rectClient.left, rectClient.Size().cy / 2, rectClient.Width(), rectClient.Size().cy / 2, SWP_NOACTIVATE | SWP_NOZORDER);
-	//}
-
 	if (GetSafeHwnd() == NULL)
 	{
 		return;
@@ -115,22 +104,15 @@ void CDialogDockLayerManager::AdjustLayout()
 	CRect rectClient, rectCombo;
 	GetClientRect(rectClient);
 
-	CRect      rectENCs;
-
+	CRect rectENCs;
 	if (listCtrlLayers.GetSafeHwnd())
 	{
 		rectENCs = CRect(rectClient.left, rectClient.top, rectClient.Size().cx, rectClient.Size().cy / 2);
 		listCtrlLayers.MoveWindow(rectENCs);						// ListCtrl의 크기 조정
 		listCtrlLayers.SetColumnWidth(0, 40);						// Column 0의 넓이 조정
-		listCtrlLayers.SetColumnWidth(1, 40);						// Column 1의 넓이 조정
-		listCtrlLayers.SetColumnWidth(2, rectENCs.Width() - 130); // Column 2의 넓이 조정
-		listCtrlLayers.SetColumnWidth(3, 50);						// Column 3의 넓이 조정
+		listCtrlLayers.SetColumnWidth(1, rectENCs.Width() - 130);						// Column 1의 넓이 조정
 	}
 
-	//m_wndObjectCombo.GetWindowRect(&rectCombo);
-
-	int cyCmb = rectCombo.Size().cy;
-	//m_wndObjectCombo.SetWindowPos(NULL, rectClient.left, rectClient.top, rectClient.Width(), 200, SWP_NOACTIVATE | SWP_NOZORDER);
 	if (propertyGridLayer.GetSafeHwnd())
 	{
 		propertyGridLayer.SetWindowPos(NULL, rectClient.left, rectClient.Size().cy / 2, rectClient.Width(), rectClient.Size().cy / 2, SWP_NOACTIVATE | SWP_NOZORDER);
@@ -145,9 +127,7 @@ void CDialogDockLayerManager::InitListCtrl()
 	CRect listRect;
 	listCtrlLayers.GetWindowRect(listRect);
 	listCtrlLayers.InsertColumn(0, _T("No. "), LVCFMT_CENTER, 40);
-	listCtrlLayers.InsertColumn(1, _T("Type "), LVCFMT_CENTER, 40);
-	listCtrlLayers.InsertColumn(2, _T("Name"), LVCFMT_CENTER, listRect.Width() - 130);
-	listCtrlLayers.InsertColumn(3, _T("On/Off"), LVCFMT_CENTER, 50);
+	listCtrlLayers.InsertColumn(2, _T("Name"), LVCFMT_CENTER, listRect.Width() - 40);
 }
 
 void CDialogDockLayerManager::InitPropList() //Data Set Identification included in Layer Manager
@@ -327,21 +307,41 @@ void CDialogDockLayerManager::DeleteLayer()
 	theApp.m_DockablePaneRelation.UpdateList();
 
 	UpdateList();
-	theApp.pView->ClearPickReport();
-	theApp.MapRefresh();
+	
+	//theApp.MapRefresh();
 }
 
 void CDialogDockLayerManager::UpdateList()
 {
-	if (theApp.gisLib->GetLayer(0) != nullptr)
+	RemoveAllListCtrl();
+
+	auto lm = theApp.gisLib->GetLayerManager();
+	auto cnt = lm->LayerCount();
+	for (int i = 0; i < cnt; i++)
 	{
-		Layer *layer = (Layer *)theApp.gisLib->GetLayer(0);
-		if (layer->m_spatialObject->m_FileType == FILE_S_100_VECTOR)
-		{
-			S101Cell* c = (S101Cell*)layer->m_spatialObject;
-			FillPropList(c);
-		}
+		CString strNo;
+		CString strName;
+
+		auto layer = lm->GetLayer(i);
+
+		strNo.Format(L"%d", i + 1);
+		strName = layer->GetLayerName();
+
+		listCtrlLayers.InsertItem(i, strNo);
+		listCtrlLayers.SetItemText(i, 1, strName);
 	}
+	//if (theApp.gisLib->GetLayer(0) != nullptr)
+	//{
+	//	
+	//	
+
+	//	Layer *layer = (Layer *)theApp.gisLib->GetLayer(0);
+	//	if (layer->m_spatialObject->m_FileType == FILE_S_100_VECTOR)
+	//	{
+	//		S101Cell* c = (S101Cell*)layer->m_spatialObject;
+	//		FillPropList(c);
+	//	}
+	//}
 }
 
 void CDialogDockLayerManager::RemoveAll()
@@ -613,4 +613,11 @@ void CDialogDockLayerManager::SetPropListFont()
 	m_fntPropList.CreateFontIndirect(&lf);
 
 	propertyGridLayer.SetFont(&m_fntPropList);
+}
+
+void CDialogDockLayerManager::OnItemchangedListLm(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+	// TODO: Add your control notification handler code here
+	*pResult = 0;
 }

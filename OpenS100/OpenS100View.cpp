@@ -254,16 +254,29 @@ void COpenS100View::Load100File()
 	{
 		CString filePath = dlg.GetPathName();
 
-		RemoveLoadFile(); //Delete the existing history.
+		//RemoveLoadFile(); //Delete the existing history.
 		theApp.gisLib->AddLayer(filePath); //Add a layer.
 		theApp.m_pDockablePaneLayerManager.UpdateList();
 		MapRefresh();
 	}
 }
 
+// Trash button
 void COpenS100View::RemoveLoadFile()
 {
+	int selectedLayerIndex = theApp.m_pDockablePaneLayerManager.pDlg->GetSelectedLayerIndex();
+
+	if (selectedLayerIndex < 0)
+	{
+		AfxMessageBox(L"Select a layer first.");
+		return;
+	}
+
+	auto lm = theApp.gisLib->GetLayerManager(); 
+	lm->DeleteLayer(selectedLayerIndex);
 	theApp.m_pDockablePaneLayerManager.DeleteLayer();
+	ClearPickReport();
+	MapRefresh();
 }
 
 void COpenS100View::MapPlus()

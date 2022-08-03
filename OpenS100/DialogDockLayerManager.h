@@ -47,6 +47,8 @@ public:
 	void FocusLayerRange();
 	virtual BOOL OnInitDialog();
 
+	int GetSelectedLayerIndex();
+
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	DECLARE_MESSAGE_MAP()
@@ -58,4 +60,5 @@ protected:
 public:
 	CListCtrl listCtrlLayers;
 	CMFCPropertyGridCtrl propertyGridLayer;
+	afx_msg void OnItemchangedListLm(NMHDR* pNMHDR, LRESULT* pResult);
 };

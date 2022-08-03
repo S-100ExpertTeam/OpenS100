@@ -87,7 +87,7 @@ public:
 	std::vector<DWORD_PTR> data;
 };
 
-// Class related to Feature Information List.
+// Feature/Information Type's information dialog for pick report.
 class CDockablePaneEditWindow : public CDockablePane
 {
 	DECLARE_DYNAMIC(CDockablePaneEditWindow)
