@@ -22,6 +22,8 @@ CDialogDockLayerManager::~CDialogDockLayerManager()
 void CDialogDockLayerManager::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST_LM, listCtrlLayers);
+	DDX_Control(pDX, IDC_MFCPROPERTYGRID_LAYER, propertyGridLayer);
 }
 
 
@@ -62,17 +64,7 @@ BOOL CDialogDockLayerManager::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	/*
-	** init List Ctrl
-	*/
-
-	CRect rectDummy;
-	rectDummy.SetRectEmpty();
-	if (!m_wndPropList.Create(WS_VISIBLE | WS_CHILD, rectDummy, this, 2))
-	{
-		TRACE0("Failed to create Properties Grid \n");
-		return -1;      // fail to create
-	}
+	InitListCtrl();
 	InitPropList();
 	AdjustLayout();
 
@@ -97,6 +89,24 @@ void CDialogDockLayerManager::FocusLayerRange()
 
 void CDialogDockLayerManager::AdjustLayout()
 {
+	//if (GetSafeHwnd() == NULL)
+	//{
+	//	return;
+	//}
+
+	//CRect rectClient;
+	//GetClientRect(rectClient);
+
+	//if (listCtrlLayers.GetSafeHwnd())
+	//{
+	//	listCtrlLayers.SetWindowPos(NULL, rectClient.left, 0, rectClient.Width(), rectClient.Size().cy / 2, SWP_NOACTIVATE | SWP_NOZORDER);
+	//}
+
+	//if (propertyGridLayer.GetSafeHwnd())
+	//{
+	//	propertyGridLayer.SetWindowPos(NULL, rectClient.left, rectClient.Size().cy / 2, rectClient.Width(), rectClient.Size().cy / 2, SWP_NOACTIVATE | SWP_NOZORDER);
+	//}
+
 	if (GetSafeHwnd() == NULL)
 	{
 		return;
@@ -107,19 +117,47 @@ void CDialogDockLayerManager::AdjustLayout()
 
 	CRect      rectENCs;
 
+	if (listCtrlLayers.GetSafeHwnd())
+	{
+		rectENCs = CRect(rectClient.left, rectClient.top, rectClient.Size().cx, rectClient.Size().cy / 2);
+		listCtrlLayers.MoveWindow(rectENCs);						// ListCtrl의 크기 조정
+		listCtrlLayers.SetColumnWidth(0, 40);						// Column 0의 넓이 조정
+		listCtrlLayers.SetColumnWidth(1, 40);						// Column 1의 넓이 조정
+		listCtrlLayers.SetColumnWidth(2, rectENCs.Width() - 130); // Column 2의 넓이 조정
+		listCtrlLayers.SetColumnWidth(3, 50);						// Column 3의 넓이 조정
+	}
+
+	//m_wndObjectCombo.GetWindowRect(&rectCombo);
+
 	int cyCmb = rectCombo.Size().cy;
-	if (m_wndPropList.GetSafeHwnd())
-		m_wndPropList.SetWindowPos(NULL, rectClient.left, 0, rectClient.Width(), rectClient.Size().cy, SWP_NOACTIVATE | SWP_NOZORDER);
+	//m_wndObjectCombo.SetWindowPos(NULL, rectClient.left, rectClient.top, rectClient.Width(), 200, SWP_NOACTIVATE | SWP_NOZORDER);
+	if (propertyGridLayer.GetSafeHwnd())
+	{
+		propertyGridLayer.SetWindowPos(NULL, rectClient.left, rectClient.Size().cy / 2, rectClient.Width(), rectClient.Size().cy / 2, SWP_NOACTIVATE | SWP_NOZORDER);
+	}
+}
+
+void CDialogDockLayerManager::InitListCtrl()
+{
+	//listCtrlLayers.ModifyStyle(0, LVS_SHOWSELALWAYS);
+	listCtrlLayers.SetExtendedStyle(LVS_EX_FULLROWSELECT);
+
+	CRect listRect;
+	listCtrlLayers.GetWindowRect(listRect);
+	listCtrlLayers.InsertColumn(0, _T("No. "), LVCFMT_CENTER, 40);
+	listCtrlLayers.InsertColumn(1, _T("Type "), LVCFMT_CENTER, 40);
+	listCtrlLayers.InsertColumn(2, _T("Name"), LVCFMT_CENTER, listRect.Width() - 130);
+	listCtrlLayers.InsertColumn(3, _T("On/Off"), LVCFMT_CENTER, 50);
 }
 
 void CDialogDockLayerManager::InitPropList() //Data Set Identification included in Layer Manager
 {
 	SetPropListFont();
 
-	m_wndPropList.EnableHeaderCtrl(FALSE);
+	propertyGridLayer.EnableHeaderCtrl(FALSE);
 
-	m_wndPropList.SetVSDotNetLook();
-	m_wndPropList.MarkModifiedProperties();
+	propertyGridLayer.SetVSDotNetLook();
+	propertyGridLayer.MarkModifiedProperties();
 
 	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Data Set Identification"));
 	CMFCPropertyGridProperty* Encoding_specification = new CMFCPropertyGridProperty(_T("Encoding specification"), (_variant_t)_T("-"), L"Encoding specification that defines the encoding");
@@ -193,7 +231,7 @@ void CDialogDockLayerManager::InitPropList() //Data Set Identification included 
 	Dataset_topic_category->Enable(false);
 
 	pGroup1->AddSubItem(Dataset_topic_category);
-	m_wndPropList.AddProperty(pGroup1);
+	propertyGridLayer.AddProperty(pGroup1);
 
 
 
@@ -275,13 +313,13 @@ void CDialogDockLayerManager::InitPropList() //Data Set Identification included 
 	Number_of_Feature_Type_records->Enable(false);
 
 	pGroup2->AddSubItem(Number_of_Feature_Type_records);
-	m_wndPropList.AddProperty(pGroup2);
+	propertyGridLayer.AddProperty(pGroup2);
 }
 
-void CDialogDockLayerManager::DeleteLayer() {
-
+void CDialogDockLayerManager::DeleteLayer() 
+{
 	//gisLib->ClearInformationLayer(0);
-	theApp.gisLib->DeleteLayer(0); //delete layer
+	//theApp.gisLib->DeleteLayer(0); //delete layer
 
 	theApp.m_DockablePaneEditWindow.DeleteAllItems();
 	RemoveAllPropList(); //delete Dataset identification
@@ -292,6 +330,7 @@ void CDialogDockLayerManager::DeleteLayer() {
 	theApp.pView->ClearPickReport();
 	theApp.MapRefresh();
 }
+
 void CDialogDockLayerManager::UpdateList()
 {
 	if (theApp.gisLib->GetLayer(0) != nullptr)
@@ -305,16 +344,27 @@ void CDialogDockLayerManager::UpdateList()
 	}
 }
 
+void CDialogDockLayerManager::RemoveAll()
+{
+	RemoveAllListCtrl();
+	RemoveAllPropList();
+}
+
+void CDialogDockLayerManager::RemoveAllListCtrl()
+{
+	listCtrlLayers.DeleteAllItems();
+}
+
 void CDialogDockLayerManager::RemoveAllPropList()
 {
-	m_wndPropList.RemoveAll();
+	propertyGridLayer.RemoveAll();
 
 	SetPropListFont();
 
-	m_wndPropList.EnableHeaderCtrl(FALSE);
-	m_wndPropList.EnableDescriptionArea();
-	m_wndPropList.SetVSDotNetLook();
-	m_wndPropList.MarkModifiedProperties();
+	propertyGridLayer.EnableHeaderCtrl(FALSE);
+	propertyGridLayer.EnableDescriptionArea();
+	propertyGridLayer.SetVSDotNetLook();
+	propertyGridLayer.MarkModifiedProperties();
 
 
 	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Data Set Identification"));
@@ -365,7 +415,7 @@ void CDialogDockLayerManager::RemoveAllPropList()
 	CMFCPropertyGridProperty* Dataset_topic_category = new CMFCPropertyGridProperty(_T("Dataset topic category"), (_variant_t)_T("-"), L"A set of topic categories");
 	Dataset_topic_category->Enable(false);
 	pGroup1->AddSubItem(Dataset_topic_category);
-	m_wndPropList.AddProperty(pGroup1);
+	propertyGridLayer.AddProperty(pGroup1);
 
 	CMFCPropertyGridProperty* pGroup2 = new CMFCPropertyGridProperty(_T("Data Set Structure Information"));
 	CMFCPropertyGridProperty* Dataset_Coordinate_Origin_X = new CMFCPropertyGridProperty(_T("Dataset Coordinate Origin X"), (_variant_t)_T("-"), L"Shift used to adjust x-coordinate before encoding");
@@ -419,13 +469,13 @@ void CDialogDockLayerManager::RemoveAllPropList()
 	CMFCPropertyGridProperty* Number_of_Feature_Type_records = new CMFCPropertyGridProperty(_T("Number of Feature Type records"), (_variant_t)_T("-"), L"Number of feature records in the data set");
 	Number_of_Feature_Type_records->Enable(false);
 	pGroup2->AddSubItem(Number_of_Feature_Type_records);
-	m_wndPropList.AddProperty(pGroup2);
+	propertyGridLayer.AddProperty(pGroup2);
 }
 
 //add identifier info
 void CDialogDockLayerManager::FillPropList(S101Cell* cell)
 {
-	m_wndPropList.RemoveAll();
+	propertyGridLayer.RemoveAll();
 
 	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Data Set Identification"));
 	CMFCPropertyGridProperty* Encoding_specification = new CMFCPropertyGridProperty(_T("Encoding specification"), (_variant_t)cell->m_dsgir.m_dsid.m_ensp, L"Encoding specification that defines the encoding");
@@ -480,7 +530,7 @@ void CDialogDockLayerManager::FillPropList(S101Cell* cell)
 	CMFCPropertyGridProperty* Dataset_topic_category = new CMFCPropertyGridProperty(_T("Dataset topic category"), (_variant_t)L"{14}{18}", L"A set of topic categories");
 	Dataset_topic_category->Enable(false);
 	pGroup1->AddSubItem(Dataset_topic_category);
-	m_wndPropList.AddProperty(pGroup1);
+	propertyGridLayer.AddProperty(pGroup1);
 
 	CMFCPropertyGridProperty* pGroup2 = new CMFCPropertyGridProperty(_T("Data Set Structure Information"));
 	CMFCPropertyGridProperty* Dataset_Coordinate_Origin_X = new CMFCPropertyGridProperty(_T("Dataset Coordinate Origin X"), (_variant_t)cell->m_dsgir.m_dssi.m_dcox, L"Shift used to adjust x-coordinate before encoding");
@@ -540,7 +590,7 @@ void CDialogDockLayerManager::FillPropList(S101Cell* cell)
 	Number_of_Feature_Type_records->Enable(false);
 	pGroup2->AddSubItem(Number_of_Feature_Type_records);
 
-	m_wndPropList.AddProperty(pGroup2);
+	propertyGridLayer.AddProperty(pGroup2);
 }
 
 
@@ -562,5 +612,5 @@ void CDialogDockLayerManager::SetPropListFont()
 
 	m_fntPropList.CreateFontIndirect(&lf);
 
-	m_wndPropList.SetFont(&m_fntPropList);
+	propertyGridLayer.SetFont(&m_fntPropList);
 }

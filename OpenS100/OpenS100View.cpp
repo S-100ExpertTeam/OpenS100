@@ -249,16 +249,13 @@ void COpenS100View::Load100File()
 {
 	//load file
 	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST, _T("ENC Files (*.000)|*.000"), this);
-	CString strFileList;
-
-	bool addlayer = false;
 
 	if (dlg.DoModal() == IDOK)
 	{
 		CString filePath = dlg.GetPathName();
 
 		RemoveLoadFile(); //Delete the existing history.
-		addlayer = theApp.gisLib->AddLayer(filePath); //Add a layer.
+		theApp.gisLib->AddLayer(filePath); //Add a layer.
 		theApp.m_pDockablePaneLayerManager.UpdateList();
 		MapRefresh();
 	}
@@ -466,7 +463,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	theApp.gisLib->InitLibrary(fc, pc);
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
 
-	PointFeatureList();
+	//PointFeatureList();
 	//LineFeatureList();
 	//AreaFeatureList();
 
