@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Scaler.h"
 #include "GeoCommonFuc.h"
 #include "MBR.h"

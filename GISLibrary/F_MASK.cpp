@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "F_MASK.h"
 #include "MASK.h"
 #include "ISO8211Fuc.h"

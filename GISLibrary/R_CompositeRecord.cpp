@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "R_CompositeRecord.h"
 #include "DRDirectoryInfo.h"
 #include "F_CCOC.h"

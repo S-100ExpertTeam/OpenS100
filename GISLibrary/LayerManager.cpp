@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "LayerManager.h"
 #include "S101Layer.h"
 #include "BAGLayer.h"

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "F_DSID.h"
 #include "ISO8211Fuc.h"
 #include "NonPrintableCharacter.h"

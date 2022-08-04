@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "R_SurfaceRecord.h"
 #include "DRDirectoryInfo.h"
 #include "F_INAS.h"

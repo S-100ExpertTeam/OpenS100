@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "F_CSAX.h"
 #include "CSAX.h"
 #include "NonPrintableCharacter.h"

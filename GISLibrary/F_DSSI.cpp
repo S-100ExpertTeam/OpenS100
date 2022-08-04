@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "F_DSSI.h"
 #include "ISO8211Fuc.h"
 #include "NonPrintableCharacter.h"
@@ -59,4 +59,74 @@ int F_DSSI::GetFieldLength()
 	len += 4;
 	len += 4;
 	return ++len;
+}
+
+int F_DSSI::GetNumberOfInformationTypeRecords()
+{
+	return m_noir;
+}
+
+void F_DSSI::SetNumberOfInformationTypeRecords(int value)
+{
+	m_noir = value;
+}
+
+int F_DSSI::GetNumberOfPointRecords()
+{
+	return m_nopn;
+}
+
+void F_DSSI::SetNumberOfPointRecords(int value)
+{
+	m_nopn = value;
+}
+
+int F_DSSI::GetNumberOfMultiPointRecords()
+{
+	return m_nomn;
+}
+
+void F_DSSI::SetNumberOfMultiPointRecords(int value)
+{
+	m_nomn = value;
+}
+
+int F_DSSI::GetNumberOfCurveRecords()
+{
+	return m_nocn;
+}
+
+void F_DSSI::SetNumberOfCurveRecords(int value)
+{
+	m_nocn = value;
+}
+
+int F_DSSI::GetNumberOfCompositeCurveRecords()
+{
+	return m_noxn;
+}
+
+void F_DSSI::SetNumberOfCompositeCurveRecords(int value)
+{
+	m_noxn = value;
+}
+
+int F_DSSI::GetNumberOfSurfaceRecords()
+{
+	return m_nosn;
+}
+
+void F_DSSI::SetNumberOfSurfaceRecords(int value)
+{
+	m_nosn = value;
+}
+
+int F_DSSI::GetNumberOfFeatureTypeRecords()
+{
+	return m_nofr;
+}
+
+void F_DSSI::SetNumberOfFeatureTypeRecords(int value)
+{
+	m_nofr = value;
 }

@@ -28,10 +28,14 @@
 #include "RIAS.h"
 #include "ProcessS101.h"
 
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\LatLonUtility\\LatLonUtility.h"
-#include "..\\LuaScriptingReference\\spatial_association.h"
-#include "..\\LuaScriptingReference\\composite_curve.h"
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../LatLonUtility/LatLonUtility.h"
+
+#include "../LuaScriptingReference/spatial_association.h"
+#include "../LuaScriptingReference/composite_curve.h"
+
+#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <iostream>
 #include <sstream>
@@ -69,7 +73,7 @@ static spatial_association get_spatial_association(RIAS* rias);
 
 static std::string WstringToString(CString& value)
 {
-	auto cValue = LatLonUtility::ConvertWCtoC((wchar_t*)std::wstring(value).c_str());
+	auto cValue = LibMFCUtil::ConvertWCtoC((wchar_t*)std::wstring(value).c_str());
 	std::string result(cValue);
 	delete[] cValue;
 	return result;

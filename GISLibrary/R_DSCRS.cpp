@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "R_DSCRS.h"
 #include "DRDirectoryInfo.h"
 #include "F_VDAT.h"

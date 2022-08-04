@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ENCCommon.h"
 #include "comutil.h"
 

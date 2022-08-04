@@ -526,7 +526,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 							std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
 
-							auto wValue = ConvertCtoWC((char*)v_splited_text[0].c_str());
+							auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_splited_text[0].c_str());
 							std::wstring wstrValue = wValue;
 							delete[] wValue;
 							element->GetText()->SetValue(wstrValue);

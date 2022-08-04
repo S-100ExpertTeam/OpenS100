@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "F_SEGH.h"
 #include "NonPrintableCharacter.h"
 

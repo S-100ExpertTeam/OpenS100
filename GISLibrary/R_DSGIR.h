@@ -41,4 +41,5 @@ public:
 	void AddFeatureAssociationCode(CString& value);
 	void AddAssociationRoleCode(CString& value);
 	
+	bool WriteRecord(CFile* file);
 };

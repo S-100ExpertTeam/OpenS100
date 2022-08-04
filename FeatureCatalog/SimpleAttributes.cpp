@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SimpleAttributes.h"
 
 SimpleAttributes::SimpleAttributes(void)

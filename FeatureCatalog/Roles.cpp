@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Roles.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"

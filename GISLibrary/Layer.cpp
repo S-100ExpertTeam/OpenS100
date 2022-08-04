@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Layer.h"
 #include "S100Utilities.h"
 

@@ -254,6 +254,7 @@
     <ClCompile Include="CUCO.cpp" />
     <ClCompile Include="D2D1Resources.cpp" />
     <ClCompile Include="DDR.cpp" />
+    <ClCompile Include="Directory.cpp" />
     <ClCompile Include="DrawingCommand.cpp" />
     <ClCompile Include="DrawingSet.cpp" />
     <ClCompile Include="FASC.cpp" />
@@ -307,6 +308,7 @@
     <ClCompile Include="ISO8211Fuc.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LayerManager.cpp" />
+    <ClCompile Include="Leader.cpp" />
     <ClCompile Include="MASK.cpp" />
     <ClCompile Include="ObjectName.cpp" />
     <ClCompile Include="OrientedCurveRecord.cpp" />
@@ -407,6 +409,7 @@
     <ClInclude Include="CUCO.h" />
     <ClInclude Include="D2D1Resources.h" />
     <ClInclude Include="DDR.h" />
+    <ClInclude Include="Directory.h" />
     <ClInclude Include="DrawingCommand.h" />
     <ClInclude Include="DrawingSet.h" />
     <ClInclude Include="DRDirectory.h" />
@@ -463,6 +466,7 @@
     <ClInclude Include="ISO8211Fuc.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LayerManager.h" />
+    <ClInclude Include="Leader.h" />
     <ClInclude Include="MASK.h" />
     <ClInclude Include="Namespace_GISLibrary.h" />
     <ClInclude Include="NonPrintableCharacter.h" />

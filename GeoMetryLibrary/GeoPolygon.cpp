@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GeoPolygon.h"
 #include "GeoPoint.h"
 #include "GeoCommonFuc.h"

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "R_FeatureRecord.h"
 #include "F_SPAS.h"
 #include "F_FASC.h"

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GeoMultiPointZ.h"
 #include "GeoPointZ.h"
 #include "Scaler.h"

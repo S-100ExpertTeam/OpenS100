@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "F_RIAS.h"
 #include "RIAS.h"
 #include "ISO8211Fuc.h"
