@@ -313,6 +313,8 @@ void CDialogDockLayerManager::DeleteLayer()
 
 void CDialogDockLayerManager::UpdateList()
 {
+	auto selectedLayerIndex = GetSelectedLayerIndex();
+	
 	RemoveAllListCtrl();
 
 	auto lm = theApp.gisLib->GetLayerManager();
@@ -330,18 +332,11 @@ void CDialogDockLayerManager::UpdateList()
 		listCtrlLayers.InsertItem(i, strNo);
 		listCtrlLayers.SetItemText(i, 1, strName);
 	}
-	//if (theApp.gisLib->GetLayer(0) != nullptr)
-	//{
-	//	
-	//	
 
-	//	Layer *layer = (Layer *)theApp.gisLib->GetLayer(0);
-	//	if (layer->m_spatialObject->m_FileType == FILE_S_100_VECTOR)
-	//	{
-	//		S101Cell* c = (S101Cell*)layer->m_spatialObject;
-	//		FillPropList(c);
-	//	}
-	//}
+	if (selectedLayerIndex >= 0 && selectedLayerIndex < listCtrlLayers.GetItemCount())
+	{
+		listCtrlLayers.SetItemState(selectedLayerIndex, LVIS_SELECTED, LVIS_SELECTED);
+	}
 }
 
 void CDialogDockLayerManager::RemoveAll()

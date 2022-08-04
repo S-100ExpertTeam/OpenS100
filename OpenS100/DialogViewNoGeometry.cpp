@@ -41,6 +41,8 @@ void CDialogViewNoGeometry::DoDataExchange(CDataExchange* pDX)
 
 void CDialogViewNoGeometry::SetNoGeometryFeatureList(S101Cell* cell)
 {
+	ngflist.clear();
+
 	auto fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
 	if (nullptr == fc)
 	{
@@ -74,6 +76,8 @@ void CDialogViewNoGeometry::SetNoGeometryFeatureList(S101Cell* cell)
 	}
 
 	sort(ngflist.begin(), ngflist.end());
+
+	InitNonGeometryList();
 }
 
 BOOL CDialogViewNoGeometry::OnInitDialog()
@@ -86,8 +90,6 @@ BOOL CDialogViewNoGeometry::OnInitDialog()
 	m_ViewListNoGeometry.InsertColumn(0, _T("ID"), LVCFMT_CENTER, (int)(listRect.Width()*0.20));
 	m_ViewListNoGeometry.InsertColumn(1, _T("Name"), LVCFMT_LEFT, (int)(listRect.Width()*0.30));
 	m_ViewListNoGeometry.InsertColumn(2, _T("Relation Cnt"), LVCFMT_LEFT, (int)(listRect.Width()*0.50));
-
-	InitNonGeometryList();
 
 	return true;
 }

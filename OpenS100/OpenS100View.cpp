@@ -96,6 +96,18 @@ COpenS100View::~COpenS100View()
 	DeleteDCs();
 
 	CoUninitialize();
+
+	if (dialogNoGeometry)
+	{
+		delete dialogNoGeometry;
+		dialogNoGeometry = nullptr;
+	}
+
+	if (dialogInformationType)
+	{
+		delete dialogInformationType;
+		dialogInformationType = nullptr;
+	}
 }
 
 void COpenS100View::SaveLastPosScale()
@@ -302,7 +314,17 @@ void COpenS100View::MapDragSize()
 
 void COpenS100View::MapFill()
 {
-	Layer *layer = theApp.gisLib->GetLayer(0);
+	int selectedLayerIndex = theApp.m_pDockablePaneLayerManager.pDlg->GetSelectedLayerIndex();
+
+	if (selectedLayerIndex < 0)
+	{
+		AfxMessageBox(L"Select a layer first.");
+		return;
+	}
+
+	auto lm = theApp.gisLib->GetLayerManager();
+
+	Layer *layer = theApp.gisLib->GetLayer(selectedLayerIndex);
 	if (nullptr == layer)
 	{
 		return;
@@ -310,8 +332,7 @@ void COpenS100View::MapFill()
 
 	auto layerMBR = layer->GetMBR();
 
-	theApp.gisLib->GetLayerManager()->GetScaler()->SetMap(layerMBR);
-	theApp.gisLib->AdjustScreenMap();
+	lm->GetScaler()->SetMap(layerMBR);
 	theApp.MapRefresh();
 }
 
@@ -320,33 +341,41 @@ void COpenS100View::NoGeometry()
 	auto layer = GetCurrentLayer();
 	if (layer == nullptr)
 	{
-		//if layer than nullptr.
-		AfxMessageBox(L"Please Open a layer");
+		AfxMessageBox(L"Select a layer first.");
 		return;
 	}
+
 	S101Cell* cell = (S101Cell*)layer->m_spatialObject;
 
-	CDialogViewNoGeometry*  dlg = new CDialogViewNoGeometry(this);
-	dlg->SetNoGeometryFeatureList(cell);
-	dlg->Create(IDD_DIALOG_NOGEOMETRY);
-	dlg->ShowWindow(SW_SHOW);
+	if (nullptr == dialogNoGeometry)
+	{
+		dialogNoGeometry = new CDialogViewNoGeometry(this);
+		dialogNoGeometry->Create(IDD_DIALOG_NOGEOMETRY);
+	}
+
+	dialogNoGeometry->SetNoGeometryFeatureList(cell);
+	dialogNoGeometry->ShowWindow(SW_SHOW);
 }
 
 void COpenS100View::NoGeometryInfo()
 {
-
 	auto layer = GetCurrentLayer();
 	if (layer == nullptr)
 	{
-		//if layer than nullptr
-		AfxMessageBox(L"Please Open a layer");
+		AfxMessageBox(L"Select a layer first.");
 		return;
 	}
+
 	S101Cell* cell = (S101Cell*)layer->m_spatialObject;
-	CDialogViewInformationType*  dlg = new CDialogViewInformationType(this);
-	dlg->SetInformationFeatureList(cell);
-	dlg->Create(IDD_DIALOG_INFORMATIONTYPE);
-	dlg->ShowWindow(SW_SHOW);
+
+	if (nullptr == dialogInformationType)
+	{
+		dialogInformationType = new CDialogViewInformationType(this);
+		dialogInformationType->Create(IDD_DIALOG_INFORMATIONTYPE);
+	}
+
+	dialogInformationType->SetInformationFeatureList(cell);
+	dialogInformationType->ShowWindow(SW_SHOW);
 }
 
 void COpenS100View::Setting()
@@ -933,7 +962,15 @@ void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
 
 Layer* COpenS100View::GetCurrentLayer()
 {
-	return theApp.gisLib->GetLayer(0);
+	int selectedLayerIndex = theApp.m_pDockablePaneLayerManager.pDlg->GetSelectedLayerIndex();
+
+	if (selectedLayerIndex < 0)
+	{		
+		return nullptr;
+	}
+
+	auto layer = theApp.gisLib->GetLayer(selectedLayerIndex);
+	return layer;
 }
 
 BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
@@ -1113,12 +1150,24 @@ void COpenS100View::ClearPickReport()
 
 void COpenS100View::PickReport(CPoint _point)
 {
-	auto layer = theApp.gisLib->GetLayerManager()->GetLayer(0);
+	auto selectedLayerIndex = theApp.m_pDockablePaneLayerManager.pDlg->GetSelectedLayerIndex();
+
+	if (selectedLayerIndex < 0 || selectedLayerIndex >> theApp.gisLib->GetLayerManager()->LayerCount())
+	{
+		return;
+	}
+
+	PickReport(_point, selectedLayerIndex);
+}
+
+void COpenS100View::PickReport(CPoint _point, int layerIndex)
+{
+	auto layer = theApp.gisLib->GetLayerManager()->GetLayer(layerIndex);
 	if (nullptr == layer)
 	{
 		return;
 	}
-	
+
 	auto cell = (S101Cell*)layer->GetSpatialObject();
 	if (nullptr == cell)
 	{
@@ -1191,7 +1240,7 @@ void COpenS100View::PickReport(CPoint _point)
 			continue;
 		}
 
-		SSurface *surface = (SSurface *)fr->m_geometry;
+		SSurface* surface = (SSurface*)fr->m_geometry;
 
 		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
 		{
@@ -1253,7 +1302,7 @@ void COpenS100View::PickReport(CPoint _point)
 			continue;
 		}
 
-		SCompositeCurve *compositeCurve = (SCompositeCurve *)fr->m_geometry;
+		SCompositeCurve* compositeCurve = (SCompositeCurve*)fr->m_geometry;
 		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
 		{
 			int code = fr->m_frid.m_nftc;
@@ -1356,7 +1405,7 @@ void COpenS100View::PickReport(CPoint _point)
 			continue;
 		}
 
-		SGeometry *sgeo = (SGeometry *)fr->m_geometry;
+		SGeometry* sgeo = (SGeometry*)fr->m_geometry;
 		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
 		{
 			int code = fr->m_frid.m_nftc;
@@ -1424,9 +1473,8 @@ void COpenS100View::PickReport(CPoint _point)
 			}
 		}
 	}
-	// directly send value
+
 	theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, cell, L"0");
-	Invalidate(FALSE);
 }
 
 void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)

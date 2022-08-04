@@ -4,6 +4,8 @@ class COpenS100Doc;
 class Layer;
 class R_FeatureRecord;
 class NewFeatureManager;
+class CDialogViewNoGeometry;
+class CDialogViewInformationType;
 
 class COpenS100View : public CView
 {
@@ -68,6 +70,10 @@ public:
 	CPoint m_ptStartZoomArea;
 	CPoint m_ptEndZoomArea;
 	bool m_bZoomArea = false;
+
+	// Modaless dialog
+	CDialogViewNoGeometry* dialogNoGeometry = nullptr;
+	CDialogViewInformationType* dialogInformationType = nullptr;
 
 protected:
 	std::vector<CString> m_systemFontList;
@@ -142,6 +148,7 @@ public:
 	void DrawS101PickReport(Graphics& g, int offsetX = 0, int offsetY = 0);
 	void ClearPickReport();
 	void PickReport(CPoint _point);
+	void PickReport(CPoint _point, int layerIndex);
 	void SetPickReportFeature(R_FeatureRecord* _fr);
 
 	// It runs at the end and stores the last location and scale.

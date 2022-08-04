@@ -45,13 +45,12 @@ BOOL CDialogViewInformationType::OnInitDialog()
 	m_ViewListInformationType.InsertColumn(1, _T("Name"), LVCFMT_LEFT, (int)(listRect.Width()*0.30));
 	m_ViewListInformationType.InsertColumn(2, _T("Relation Cnt"), LVCFMT_LEFT, (int)(listRect.Width()*0.50));
 
-	InitInformationFeatureList();
-
 	return true;
 }
 
 void CDialogViewInformationType::SetInformationFeatureList(S101Cell* cell) 
 {
+	ngflist.clear();
 	POSITION pos = cell->GetInfoStartPosition();
 	auto fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
 	if (nullptr == fc)
@@ -82,10 +81,12 @@ void CDialogViewInformationType::SetInformationFeatureList(S101Cell* cell)
 		ngflist.push_back(cs);
 	}
 	sort(ngflist.begin(), ngflist.end());
+	InitInformationFeatureList();
 }
 
 void CDialogViewInformationType::InitInformationFeatureList() 
 {
+	m_ViewListInformationType.DeleteAllItems();
 	auto fc = ((S101Layer*)m_cell->m_pLayer)->GetFeatureCatalog();
 	if (nullptr == fc)
 	{
