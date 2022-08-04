@@ -336,6 +336,11 @@ void CDialogDockLayerManager::UpdateList()
 	if (selectedLayerIndex >= 0 && selectedLayerIndex < listCtrlLayers.GetItemCount())
 	{
 		listCtrlLayers.SetItemState(selectedLayerIndex, LVIS_SELECTED, LVIS_SELECTED);
+		auto layer = theApp.gisLib->GetLayer(selectedLayerIndex);
+		if (layer)
+		{
+			FillPropList((S101Cell*)layer->GetSpatialObject());
+		}
 	}
 }
 
@@ -615,4 +620,10 @@ void CDialogDockLayerManager::OnItemchangedListLm(NMHDR* pNMHDR, LRESULT* pResul
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	// TODO: Add your control notification handler code here
 	*pResult = 0;
+
+	auto layer = theApp.gisLib->GetLayer(pNMLV->iItem);
+	if (layer)
+	{
+		FillPropList((S101Cell*)layer->GetSpatialObject());
+	}
 }
