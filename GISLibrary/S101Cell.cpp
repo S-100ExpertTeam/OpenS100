@@ -3841,84 +3841,84 @@ int S101Cell::NewRCIDofFeatureRecord()
 
 bool S101Cell::Save(std::wstring path)
 {
-	POSITION pos = NULL;
-	__int64 iKey;
+	//POSITION pos = NULL;
+	//__int64 iKey;
 
-	CString filePath(path.c_str());
+	//CString filePath(path.c_str());
 
-	CFile file;
-	file.Open(filePath, CFile::modeCreate | CFile::modeWrite);
+	//CFile file;
+	//file.Open(filePath, CFile::modeCreate | CFile::modeWrite);
 
-	file.Write(m_S101DDR.GetContent(), m_S101DDR.GetSize());
+	//file.Write(m_S101DDR.GetContent(), m_S101DDR.GetSize());
 
-	m_dsgir.m_dssi.SetNumberOfInformationTypeRecords(vecInformation.size());
-	m_dsgir.m_dssi.SetNumberOfPointRecords(vecPoint.size());
-	m_dsgir.m_dssi.SetNumberOfMultiPointRecords(vecMultiPoint.size());
-	m_dsgir.m_dssi.SetNumberOfCurveRecords(vecCurve.size());
-	m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords(vecComposite.size());
-	m_dsgir.m_dssi.SetNumberOfSurfaceRecords(vecSurface.size());
-	m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords(vecFeature.size());
+	//m_dsgir.m_dssi.SetNumberOfInformationTypeRecords(vecInformation.size());
+	//m_dsgir.m_dssi.SetNumberOfPointRecords(vecPoint.size());
+	//m_dsgir.m_dssi.SetNumberOfMultiPointRecords(vecMultiPoint.size());
+	//m_dsgir.m_dssi.SetNumberOfCurveRecords(vecCurve.size());
+	//m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords(vecComposite.size());
+	//m_dsgir.m_dssi.SetNumberOfSurfaceRecords(vecSurface.size());
+	//m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords(vecFeature.size());
 
-	m_dsgir.Save(&file);
-	m_dscrs.Save(&file);
+	//m_dsgir.Save(&file);
+	//m_dscrs.Save(&file);
 
-	R_PointRecord* pr;
-	pos = m_ptMap.GetStartPosition();
-	while (pos != NULL)
-	{
-		m_ptMap.GetNextAssoc(pos, iKey, pr);
-		pr->Save(&file);
-	}
+	//R_PointRecord* pr;
+	//pos = m_ptMap.GetStartPosition();
+	//while (pos != NULL)
+	//{
+	//	m_ptMap.GetNextAssoc(pos, iKey, pr);
+	//	pr->Save(&file);
+	//}
 
-	R_MultiPointRecord* mr;
-	pos = m_mpMap.GetStartPosition();
-	while (pos != NULL)
-	{
-		m_mpMap.GetNextAssoc(pos, iKey, mr);
-		mr->Save(&file);
-	}
+	//R_MultiPointRecord* mr;
+	//pos = m_mpMap.GetStartPosition();
+	//while (pos != NULL)
+	//{
+	//	m_mpMap.GetNextAssoc(pos, iKey, mr);
+	//	mr->Save(&file);
+	//}
 
-	R_CurveRecord* cr;
-	pos = m_curMap.GetStartPosition();
-	while (pos != NULL)
-	{
-		m_curMap.GetNextAssoc(pos, iKey, cr);
-		cr->Save(&file);
-	}
+	//R_CurveRecord* cr;
+	//pos = m_curMap.GetStartPosition();
+	//while (pos != NULL)
+	//{
+	//	m_curMap.GetNextAssoc(pos, iKey, cr);
+	//	cr->Save(&file);
+	//}
 
-	R_CompositeRecord* ccr;
-	pos = m_comMap.GetStartPosition();
-	while (pos != NULL)
-	{
-		m_comMap.GetNextAssoc(pos, iKey, ccr);
-		ccr->Save(&file);
-	}
+	//R_CompositeRecord* ccr;
+	//pos = m_comMap.GetStartPosition();
+	//while (pos != NULL)
+	//{
+	//	m_comMap.GetNextAssoc(pos, iKey, ccr);
+	//	ccr->Save(&file);
+	//}
 
-	R_SurfaceRecord* sr;
-	pos = m_surMap.GetStartPosition();
-	while (pos != NULL)
-	{
-		m_surMap.GetNextAssoc(pos, iKey, sr);
-		sr->Save(&file);
-	}
+	//R_SurfaceRecord* sr;
+	//pos = m_surMap.GetStartPosition();
+	//while (pos != NULL)
+	//{
+	//	m_surMap.GetNextAssoc(pos, iKey, sr);
+	//	sr->Save(&file);
+	//}
 
-	R_FeatureRecord* fr;
-	pos = m_feaMap.GetStartPosition();
-	while (pos != NULL)
-	{
-		m_feaMap.GetNextAssoc(pos, iKey, fr);
-		fr->Save(&file);
-	}
+	//R_FeatureRecord* fr;
+	//pos = m_feaMap.GetStartPosition();
+	//while (pos != NULL)
+	//{
+	//	m_feaMap.GetNextAssoc(pos, iKey, fr);
+	//	fr->Save(&file);
+	//}
 
-	R_InformationRecord* ir;
-	pos = m_infMap.GetStartPosition();
-	while (pos != NULL)
-	{
-		m_infMap.GetNextAssoc(pos, iKey, ir);
-		ir->Save(&file);
-	}
+	//R_InformationRecord* ir;
+	//pos = m_infMap.GetStartPosition();
+	//while (pos != NULL)
+	//{
+	//	m_infMap.GetNextAssoc(pos, iKey, ir);
+	//	ir->Save(&file);
+	//}
 
-	file.Close();
+	//file.Close();
 
 	return false;
 }
