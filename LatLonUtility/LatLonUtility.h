@@ -72,5 +72,6 @@ namespace LatLonUtility {
 
 	size_t countDigits(int n);
 
+	std::string replace_all(__in const std::string& message, __in const std::string& pattern, __in const std::string& replace);
 };
 #endif 

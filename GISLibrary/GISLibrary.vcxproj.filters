@@ -498,6 +498,9 @@
     <ClCompile Include="F_DataDescriptiveField.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="R_DDR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -978,6 +981,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="F_DataDescriptiveField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="R_DDR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

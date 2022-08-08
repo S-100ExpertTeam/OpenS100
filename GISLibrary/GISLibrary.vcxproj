@@ -319,6 +319,7 @@
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="PTAS.cpp" />
     <ClCompile Include="RIAS.cpp" />
+    <ClCompile Include="R_DDR.cpp" />
     <ClCompile Include="R_VectorRecord.cpp" />
     <ClCompile Include="S100Layer.cpp" />
     <ClCompile Include="S100SpatialObject.cpp" />
@@ -482,6 +483,7 @@
     <ClInclude Include="PTAS.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RIAS.h" />
+    <ClInclude Include="R_DDR.h" />
     <ClInclude Include="R_VectorRecord.h" />
     <ClInclude Include="S100Layer.h" />
     <ClInclude Include="S100SpatialObject.h" />

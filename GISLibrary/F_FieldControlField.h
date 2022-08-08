@@ -25,5 +25,6 @@ public:
 public:
     bool WriteField(CFile* file);
     void AddTagPair(char tag1[5], char tag2[5]);
+    int GetFieldLength();
 };
 

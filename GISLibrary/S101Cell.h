@@ -333,4 +333,17 @@ private:
 	int NewRCIDofFeatureRecord();
 
 	bool Save(std::wstring path);
+
+	bool InformationRecordHasAttributeField();
+	bool InformationRecordHasInformationAssociationField();
+	bool PointRecordHasInformationAssociationField();
+	bool MultiPointRecordHasInformationAssociationField();
+	bool CurveRecordHasInformationAssociationField();
+	bool CompositeCurveHasInformationAssociationField();
+	bool SurfaceRecordHasInformationAssociationField();
+	bool FeatureRecordHasAttributeField();
+	bool FeatureRecordHasInformationAssociationField();
+	bool FeatureRecordHasSpatialAssociationField();
+	bool FeatureRecordHasFeatureAssociationField();
+	bool FeatureRecordHasMaskedSpatialTypeField();
 };

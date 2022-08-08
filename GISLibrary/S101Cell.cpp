@@ -38,6 +38,7 @@
 #include "FASC.h"
 #include "MASK.h"
 #include "F_SECC.h"
+#include "R_DDR.h"
 
 #include "DRDirectoryInfo.h"
 #include "PCOutputSchemaManager.h"
@@ -463,8 +464,6 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 		Check();
 
 		Validation();
-
-		Save(L"..\\SampleData\\save.000");
 
 		return true;
 	}
@@ -3838,18 +3837,202 @@ bool S101Cell::Save(std::wstring path)
 {
 	CString filePath(path.c_str());
 
-	//CFile file;
-	//file.Open(filePath, CFile::modeCreate | CFile::modeWrite);
+	CFile file;
+	file.Open(filePath, CFile::modeCreate | CFile::modeWrite);
+
+	// DDR
+	R_DDR ddr;
+	ddr.f_FieldControlField.AddTagPair("DSID", "DSSI");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::DSSI));
+	
+	if (m_dsgir.m_atcs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "ATCS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::ATCS));
+	}
+
+	if (m_dsgir.m_itcs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "ITCS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::ITCS));
+	}
+
+	if (m_dsgir.m_ftcs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "FTCS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FTCS));
+	}
+
+	if (m_dsgir.m_iacs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "IACS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::IACS));
+	}
+
+	if (m_dsgir.m_facs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "FACS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FACS));
+	}
+
+	if (m_dsgir.m_arcs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "ARCS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::ARCS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("CSID", "CRSH");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CSID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CRSH));
+
+	if (m_dscrs.m_csax)
+	{
+		ddr.f_FieldControlField.AddTagPair("CRSH", "CSAX");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::CRSH));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::CSAX));
+	}
+
+	if (m_dscrs.m_vdat)
+	{
+		ddr.f_FieldControlField.AddTagPair("CRSH", "VDAT");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::CRSH));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::VDAT));
+	}
+
+	if (InformationRecordHasAttributeField())
+	{
+		ddr.f_FieldControlField.AddTagPair("IRID", "ATTR");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::IRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::ATTR));
+	}
+
+	if (InformationRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("IRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::IRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	if (PointRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("PRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::PRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("PRID", "C2IT");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::PRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::C2IT));
+	
+	if (MultiPointRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("MRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::MRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("MRID", "C3IL");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::MRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::C3IL));
+
+	if (CurveRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("CRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::CRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("CRID", "PTAS");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::PTAS));
+
+	ddr.f_FieldControlField.AddTagPair("CRID", "SEGH");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::SEGH));
+
+	ddr.f_FieldControlField.AddTagPair("SEGH", "C2IL");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::SEGH));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::C2IL));
+
+	if (CompositeCurveHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("CCID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::CCID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("CCID", "CUCO");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CCID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CUCO));
+
+	if (SurfaceRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("SRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::SRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("SRID", "RIAS");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::SRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::RIAS));
+
+	ddr.f_FieldControlField.AddTagPair("FRID", "FOID");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::FOID));
+
+	if (FeatureRecordHasAttributeField())
+	{
+		ddr.f_FieldControlField.AddTagPair("FRID", "ATTR");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::ATTR));
+	}
+
+	if (FeatureRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("FRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	if (FeatureRecordHasSpatialAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("FRID", "SPAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::SPAS));
+	}
+
+	if (FeatureRecordHasFeatureAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("FRID", "FASC");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FASC));
+	}
+
+	if (FeatureRecordHasMaskedSpatialTypeField())
+	{
+		ddr.f_FieldControlField.AddTagPair("FRID", "MASK");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::MASK));
+	}
+
+	ddr.WriteRecord(&file);
 
 	//file.Write(m_S101DDR.GetContent(), m_S101DDR.GetSize());
 
-	//m_dsgir.m_dssi.SetNumberOfInformationTypeRecords(vecInformation.size());
-	//m_dsgir.m_dssi.SetNumberOfPointRecords(vecPoint.size());
-	//m_dsgir.m_dssi.SetNumberOfMultiPointRecords(vecMultiPoint.size());
-	//m_dsgir.m_dssi.SetNumberOfCurveRecords(vecCurve.size());
-	//m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords(vecComposite.size());
-	//m_dsgir.m_dssi.SetNumberOfSurfaceRecords(vecSurface.size());
-	//m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords(vecFeature.size());
+	m_dsgir.m_dssi.SetNumberOfInformationTypeRecords(vecInformation.size());
+	m_dsgir.m_dssi.SetNumberOfPointRecords(vecPoint.size());
+	m_dsgir.m_dssi.SetNumberOfMultiPointRecords(vecMultiPoint.size());
+	m_dsgir.m_dssi.SetNumberOfCurveRecords(vecCurve.size());
+	m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords(vecComposite.size());
+	m_dsgir.m_dssi.SetNumberOfSurfaceRecords(vecSurface.size());
+	m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords(vecFeature.size());
 
 	m_dsgir.WriteRecord(&file);
 	m_dscrs.WriteRecord(&file);
@@ -3887,6 +4070,162 @@ bool S101Cell::Save(std::wstring path)
 	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
 	{
 		(*i)->WriteRecord(&file);
+	}
+
+	return false;
+}
+
+bool S101Cell::InformationRecordHasAttributeField()
+{
+	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
+	{
+		if ((*i)->m_attr.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::InformationRecordHasInformationAssociationField()
+{
+	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::PointRecordHasInformationAssociationField()
+{
+	for (auto i = vecPoint.begin(); i != vecPoint.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::MultiPointRecordHasInformationAssociationField()
+{
+	for (auto i = vecMultiPoint.begin(); i != vecMultiPoint.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::CurveRecordHasInformationAssociationField()
+{
+	for (auto i = vecCurve.begin(); i != vecCurve.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::CompositeCurveHasInformationAssociationField()
+{
+	for (auto i = vecComposite.begin(); i != vecComposite.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::SurfaceRecordHasInformationAssociationField()
+{
+	for (auto i = vecSurface.begin(); i != vecSurface.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::FeatureRecordHasAttributeField()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		if ((*i)->m_attr.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::FeatureRecordHasInformationAssociationField()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::FeatureRecordHasSpatialAssociationField()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		if ((*i)->m_spas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::FeatureRecordHasFeatureAssociationField()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		if ((*i)->m_fasc.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::FeatureRecordHasMaskedSpatialTypeField()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		if ((*i)->m_mask.size() > 0)
+		{
+			return true;
+		}
 	}
 
 	return false;

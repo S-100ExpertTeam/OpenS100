@@ -9,7 +9,7 @@ int S100Utilities::GetLevel(std::wstring path)
 {
 	// get without extension
 	std::wstring name = std::filesystem::path(path).stem();
-	if (name.length() >= 3)
+	if (name.length() >= 8)
 	{
 		auto levelStr = name.substr(7, 1);
 		if (std::isdigit(levelStr.at(0)))

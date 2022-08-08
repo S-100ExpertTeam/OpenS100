@@ -227,3 +227,16 @@ size_t LatLonUtility::countDigits(int n)
 	tmp = std::to_string(n);
 	return tmp.size();
 }
+
+std::string LatLonUtility::replace_all(__in const std::string& message, __in const std::string& pattern, __in const std::string& replace)
+{ 
+	std::string result = message;    
+	std::string::size_type pos = 0;     
+	
+	while ((pos = result.find(pattern)) != std::string::npos) 
+	{ 
+		result.replace(pos, pattern.size(), replace); 
+	}     
+	
+	return result; 
+}
