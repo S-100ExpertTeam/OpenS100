@@ -14,8 +14,7 @@ public:
 	virtual ~Record();
 
 	Leader leader;
-	std::list<Directory> directory;
-	
+	std::vector<Directory> directory;
 
 public:
 	virtual BOOL ReadRecord(DRDirectoryInfo* dir, BYTE*& buf) {	return TRUE; };

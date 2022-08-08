@@ -3838,18 +3838,18 @@ bool S101Cell::Save(std::wstring path)
 {
 	CString filePath(path.c_str());
 
-	CFile file;
-	file.Open(filePath, CFile::modeCreate | CFile::modeWrite);
+	//CFile file;
+	//file.Open(filePath, CFile::modeCreate | CFile::modeWrite);
 
 	//file.Write(m_S101DDR.GetContent(), m_S101DDR.GetSize());
 
-	m_dsgir.m_dssi.SetNumberOfInformationTypeRecords(vecInformation.size());
-	m_dsgir.m_dssi.SetNumberOfPointRecords(vecPoint.size());
-	m_dsgir.m_dssi.SetNumberOfMultiPointRecords(vecMultiPoint.size());
-	m_dsgir.m_dssi.SetNumberOfCurveRecords(vecCurve.size());
-	m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords(vecComposite.size());
-	m_dsgir.m_dssi.SetNumberOfSurfaceRecords(vecSurface.size());
-	m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords(vecFeature.size());
+	//m_dsgir.m_dssi.SetNumberOfInformationTypeRecords(vecInformation.size());
+	//m_dsgir.m_dssi.SetNumberOfPointRecords(vecPoint.size());
+	//m_dsgir.m_dssi.SetNumberOfMultiPointRecords(vecMultiPoint.size());
+	//m_dsgir.m_dssi.SetNumberOfCurveRecords(vecCurve.size());
+	//m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords(vecComposite.size());
+	//m_dsgir.m_dssi.SetNumberOfSurfaceRecords(vecSurface.size());
+	//m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords(vecFeature.size());
 
 	m_dsgir.WriteRecord(&file);
 	m_dscrs.WriteRecord(&file);
