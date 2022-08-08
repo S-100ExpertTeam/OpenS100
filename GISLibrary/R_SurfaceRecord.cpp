@@ -58,6 +58,57 @@ BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return TRUE;
 }
 
+bool R_SurfaceRecord::WriteRecord(CFile* file)
+{
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_srid.GetFieldLength();
+	Directory dir("SRID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_rias.begin(); i != m_rias.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("RIAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize, false);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_srid.WriteField(file);
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_rias.begin(); i != m_rias.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
+}
+
 int R_SurfaceRecord::GetRCID() 
 {
 	return m_srid.m_name.RCID;

@@ -86,6 +86,58 @@ BOOL R_MultiPointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return TRUE;
 }
 
+bool R_MultiPointRecord::WriteRecord(CFile* file)
+{
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_mrid.GetFieldLength();
+	Directory dir("MRID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_c3il.begin(); i != m_c3il.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("C3IL", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize, false);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_mrid.WriteField(file);
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_c3il.begin(); i != m_c3il.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
+}
+
 int R_MultiPointRecord::GetRCID()
 {
 	return m_mrid.m_name.RCID;

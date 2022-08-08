@@ -66,6 +66,8 @@ public:
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool WriteRecord(CFile* file);
+
 	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 	
 	MBR GetMBR();

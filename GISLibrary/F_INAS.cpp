@@ -74,6 +74,12 @@ void F_INAS::ReadField(BYTE *&buf, int loopCnt)
 
 bool F_INAS::WriteField(CFile* file)
 {
+	file->Write(&m_name.RCNM, 1);
+	file->Write(&m_name.RCID, 4);
+	file->Write(&m_niac, 2);
+	file->Write(&m_narc, 2);
+	file->Write(&m_iuin, 1);
+
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 	{
 		ATTR* attr = *itor;

@@ -26,7 +26,7 @@ bool Record::WriteDirectory(CFile* file)
 	return true;
 }
 
-void Record::SetLeader(int totalFieldSize)
+void Record::SetLeader(int totalFieldSize, bool adjustEntryMap)
 {
 	int maxFieldLength = 0;
 	int maxFieldPosition = 0;
@@ -47,15 +47,20 @@ void Record::SetLeader(int totalFieldSize)
 	leader.sizeOfFieldLengthField = LatLonUtility::countDigits(maxFieldLength);
 	leader.sizeOfFieldPositionField = LatLonUtility::countDigits(maxFieldPosition);
 
-	// For compatibility
-	if (leader.sizeOfFieldLengthField == 1)
+	if (adjustEntryMap)
 	{
-		leader.sizeOfFieldLengthField = 2;
-	}
 
-	if (leader.sizeOfFieldPositionField == 1)
-	{
-		leader.sizeOfFieldPositionField = 2;
+		// For compatibility
+		if (leader.sizeOfFieldLengthField == 1)
+		{
+			leader.sizeOfFieldLengthField = 2;
+		}
+
+		if (leader.sizeOfFieldPositionField == 1)
+		{
+			leader.sizeOfFieldPositionField = 2;
+		}
+
 	}
 
 	int directoryLength = DirectoryLength(leader.sizeOfFieldLengthField, leader.sizeOfFieldPositionField);

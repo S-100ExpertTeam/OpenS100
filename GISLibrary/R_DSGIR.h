@@ -26,6 +26,7 @@ public:
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool WriteRecord(CFile* file);
 	// function to get the code with the new memory code.
 	CString GetFeatureCode(int numericCode);
 	CString GetInformationCode(int numericCode);
@@ -40,6 +41,4 @@ public:
 	void AddInformationAssociationCode(CString& value);
 	void AddFeatureAssociationCode(CString& value);
 	void AddAssociationRoleCode(CString& value);
-	
-	bool WriteRecord(CFile* file);
 };

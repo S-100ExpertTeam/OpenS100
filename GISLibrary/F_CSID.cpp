@@ -22,6 +22,17 @@ void F_CSID::ReadField(BYTE *&buf)
 	m_ncrc = *(buf++);
 }
 
+bool F_CSID::WriteField(CFile* file)
+{
+	file->Write(&m_name.RCNM, 1);
+	file->Write(&m_name.RCID, 4);
+	file->Write(&m_ncrc, 1);
+	
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
+}
+
 int F_CSID::GetFieldLength()
 {
 	int len = 0;

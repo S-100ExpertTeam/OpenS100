@@ -127,6 +127,116 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return true;
 }
 
+bool R_DSGIR::WriteRecord(CFile* file)
+{
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_dsid.GetFieldLength();
+	Directory dirDSID("DSID", fieldLength, fieldOffset);
+	directory.push_back(dirDSID);
+	fieldOffset += fieldLength;
+
+	fieldLength = m_dssi.GetFieldLength();
+	Directory dirDSSI("DSSI", fieldLength, fieldOffset);
+	directory.push_back(dirDSSI);
+	fieldOffset += fieldLength;
+
+	if (m_atcs)
+	{
+		fieldLength = m_atcs->GetFieldLength();
+		Directory dir("ATCS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_itcs)
+	{
+		fieldLength = m_itcs->GetFieldLength();
+		Directory dir("ITCS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_ftcs)
+	{
+		fieldLength = m_ftcs->GetFieldLength();
+		Directory dir("FTCS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_iacs)
+	{
+		fieldLength = m_iacs->GetFieldLength();
+		Directory dir("IACS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_facs)
+	{
+		fieldLength = m_facs->GetFieldLength();
+		Directory dir("FACS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_arcs)
+	{
+		fieldLength = m_arcs->GetFieldLength();
+		Directory dir("ARCS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_dsid.WriteField(file);
+	m_dssi.WriteField(file);
+
+	if (m_atcs)
+	{
+		m_atcs->WriteField(file);
+	}
+
+	if (m_itcs)
+	{
+		m_itcs->WriteField(file);
+	}
+
+	if (m_ftcs)
+	{
+		m_ftcs->WriteField(file);
+	}
+
+	if (m_iacs)
+	{
+		m_iacs->WriteField(file);
+	}
+
+	if (m_facs)
+	{
+		m_facs->WriteField(file);
+	}
+
+	if (m_arcs)
+	{
+		m_arcs->WriteField(file);
+	}
+
+	return true;
+}
+
+
 CString R_DSGIR::GetFeatureCode(int numericCode)
 {
 	auto item = m_ftcs->m_arr.find(numericCode);
@@ -256,156 +366,4 @@ void R_DSGIR::AddAssociationRoleCode(CString& value)
 	}
 
 	m_arcs->AddNewCodeNumericCode(value);
-}
-
-bool R_DSGIR::WriteRecord(CFile* file)
-{
-	//DRReaderWriter dr;
-	//DRDirectoryInfoWriter dirInfo;
-	//DRDirectory* dir;
-	//unsigned rLen = 0;
-
-	//int dirInfoCnt = 0;
-
-	//dirInfoCnt++;
-
-	//dirInfoCnt++;
-
-	//if (m_atcs)
-	//{
-	//	dirInfoCnt++;
-	//}
-
-	//if (m_itcs)
-	//{
-	//	dirInfoCnt++;
-	//}
-
-	//if (m_ftcs)
-	//{
-	//	dirInfoCnt++;
-	//}
-
-	//if (m_iacs)
-	//{
-	//	dirInfoCnt++;
-	//}
-
-	//if (m_facs)
-	//{
-	//	dirInfoCnt++;
-	//}
-
-	//if (m_arcs)
-	//{
-	//	dirInfoCnt++;
-	//}
-
-	////dirInfoCnt += m_attr.size();
-
-	//dirInfo.ReAllocateDirectory(dirInfoCnt);
-
-	//dirInfoCnt = 0;
-
-	//rLen = 0;
-	//dir = dirInfo.GetDirectory(dirInfoCnt++);
-	//dir->tag = *((unsigned int*)"DSID");
-	//dir->pos = rLen;
-	//dir->length = m_dsid.GetFieldLength();
-	//rLen += dir->length;
-
-	//dir = dirInfo.GetDirectory(dirInfoCnt++);
-	//dir->tag = *((unsigned int*)"DSSI");
-	//dir->pos = rLen;
-	//dir->length = m_dssi.GetFieldLength();
-	//rLen += dir->length;
-
-
-	//if (m_atcs)
-	//{
-	//	dir = dirInfo.GetDirectory(dirInfoCnt++);
-	//	dir->tag = *((unsigned int*)"ATCS");
-	//	dir->pos = rLen;
-	//	dir->length = m_atcs->GetFieldLength();
-	//	rLen += dir->length;
-	//}
-
-	//if (m_itcs)
-	//{
-	//	dir = dirInfo.GetDirectory(dirInfoCnt++);
-	//	dir->tag = *((unsigned int*)"ITCS");
-	//	dir->pos = rLen;
-	//	dir->length = m_itcs->GetFieldLength();
-	//	rLen += dir->length;
-	//}
-
-	//if (m_ftcs)
-	//{
-	//	dir = dirInfo.GetDirectory(dirInfoCnt++);
-	//	dir->tag = *((unsigned int*)"FTCS");
-	//	dir->pos = rLen;
-	//	dir->length = m_ftcs->GetFieldLength();
-	//	rLen += dir->length;
-	//}
-
-	//if (m_iacs)
-	//{
-	//	dir = dirInfo.GetDirectory(dirInfoCnt++);
-	//	dir->tag = *((unsigned int*)"IACS");
-	//	dir->pos = rLen;
-	//	dir->length = m_iacs->GetFieldLength();
-	//	rLen += dir->length;
-	//}
-
-	//if (m_facs)
-	//{
-	//	dir = dirInfo.GetDirectory(dirInfoCnt++);
-	//	dir->tag = *((unsigned int*)"FACS");
-	//	dir->pos = rLen;
-	//	dir->length = m_facs->GetFieldLength();
-	//	rLen += dir->length;
-	//}
-
-	//if (m_arcs)
-	//{
-	//	dir = dirInfo.GetDirectory(dirInfoCnt++);
-	//	dir->tag = *((unsigned int*)"ARCS");
-	//	dir->pos = rLen;
-	//	dir->length = m_arcs->GetFieldLength();
-	//	rLen += dir->length;
-	//}
-
-
-	////for (auto itor = m_attr.begin(); itor != m_attr.end(); itor++)
-	////{
-	////	F_ATTR* attr = *itor;
-	////	dir = dirInfo.GetDirectory(dirInfoCnt++);
-	////	dir->tag = *((unsigned int*)"ATTR");
-	////	dir->pos = rLen;
-	////	dir->length = attr->GetFieldLength();
-	////	rLen += dir->length;
-	////}
-
-	//dirInfo.CheckLength(&dr);
-	//dr.m_fieldAreaLoc = DRReader::size + (4 + dr.m_fieldLength + dr.m_fieldPosition) * dirInfo.m_count + 1;
-	//dr.m_recordLength = dr.m_fieldAreaLoc + rLen;
-
-	////////////////////////////////////////////////
-	//dr.WriteDRReader(file);
-	//dirInfo.WriteDRDirectory(file, dr);
-	//m_dsid.Save(file);
-	//m_dssi.Save(file);
-	//if (m_atcs)	m_atcs->Save(file);
-	//if (m_itcs)	m_itcs->Save(file);
-	//if (m_ftcs)	m_ftcs->Save(file);
-	//if (m_iacs)	m_iacs->Save(file);
-	//if (m_facs)	m_facs->Save(file);
-	//if (m_arcs)	m_arcs->Save(file);
-	////for (auto itor = m_attr.begin(); itor != m_attr.end(); itor++)
-	////{
-	////	F_ATTR* attr = *itor;
-	////	attr->Save(file);
-	////}
-
-	return TRUE;
 }

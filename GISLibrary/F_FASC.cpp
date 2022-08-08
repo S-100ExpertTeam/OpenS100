@@ -33,6 +33,31 @@ void F_FASC::ReadField(BYTE *&buf, int loopCnt)
 	m_faui = *(buf++);
 }
 
+bool F_FASC::WriteField(CFile* file)
+{
+	file->Write(&m_name.RCNM, 1);
+	file->Write(&m_name.RCID, 4);
+	file->Write(&m_nfac, 2);
+	file->Write(&m_narc, 2);
+	file->Write(&m_faui, 1);
+
+	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
+	{
+		file->Write(&(*i)->m_natc, 2);
+		file->Write(&(*i)->m_atix, 2);
+		file->Write(&(*i)->m_paix, 2);
+		file->Write(&(*i)->m_atin, 1);
+		CT2CA outputString((*i) ->m_atvl, CP_UTF8);
+		file->Write(outputString, (UINT)::strlen(outputString));
+		file->Write(&NonPrintableCharacter::unitTerminator, 1);
+	}
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
+}
+
+
 int F_FASC::GetFieldLength()
 {
 	int len = 0;

@@ -41,6 +41,23 @@ void F_C3IL::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
+bool F_C3IL::WriteField(CFile* file)
+{
+	file->Write(&m_vcid, 1);
+
+	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
+	{
+		file->Write(&(*i)->m_ycoo, 4);
+		file->Write(&(*i)->m_xcoo, 4);
+		file->Write(&(*i)->m_zcoo, 4);
+	}
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
+}
+
+
 int F_C3IL::GetFieldLength()
 {
 	unsigned len = 0;

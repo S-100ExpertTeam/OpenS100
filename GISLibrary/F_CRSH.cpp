@@ -30,6 +30,31 @@ void F_CRSH::ReadField(BYTE *&buf)
 	buf2charArr(m_scri, buf);
 }
 
+bool F_CRSH::WriteField(CFile* file)
+{
+	file->Write(&m_crix, 1);
+	file->Write(&m_crst, 1);
+	file->Write(&m_csty, 1);
+
+	CT2CA outputStringCRNM(m_crnm, CP_UTF8);
+	file->Write(outputStringCRNM, (UINT)::strlen(outputStringCRNM));
+	file->Write(&NonPrintableCharacter::unitTerminator, 1);
+
+	CT2CA outputStringCRSI(m_crsi, CP_UTF8);
+	file->Write(outputStringCRSI, (UINT)::strlen(outputStringCRSI));
+	file->Write(&NonPrintableCharacter::unitTerminator, 1);
+
+	file->Write(&m_crss, 1);
+	
+	CT2CA outputStringSCRI(m_scri, CP_UTF8);
+	file->Write(outputStringSCRI, (UINT)::strlen(outputStringSCRI));
+	file->Write(&NonPrintableCharacter::unitTerminator, 1);
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
+}
+
 int F_CRSH::GetFieldLength()
 {
 	int len = 0;

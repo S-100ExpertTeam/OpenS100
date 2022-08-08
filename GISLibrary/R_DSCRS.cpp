@@ -70,3 +70,67 @@ BOOL R_DSCRS::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	}
 	return TRUE;
 }
+
+bool R_DSCRS::WriteRecord(CFile* file)
+{
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_csid.GetFieldLength();
+	Directory dirFRID("CSID", fieldLength, fieldOffset);
+	directory.push_back(dirFRID);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_crsh.begin(); i != m_crsh.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("CRSH", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_csax)
+	{
+		fieldLength = m_csax->GetFieldLength();
+		Directory dirFOID("CSAX", fieldLength, fieldOffset);
+		directory.push_back(dirFOID);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_vdat)
+	{
+		fieldLength = m_vdat->GetFieldLength();
+		Directory dirFOID("VDAT", fieldLength, fieldOffset);
+		directory.push_back(dirFOID);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_csid.WriteField(file);
+
+	for (auto i = m_crsh.begin(); i != m_crsh.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	if (m_csax)
+	{
+		m_csax->WriteField(file);
+	}
+
+	if (m_vdat)
+	{
+		m_vdat->WriteField(file);
+	}
+
+	return true;
+}

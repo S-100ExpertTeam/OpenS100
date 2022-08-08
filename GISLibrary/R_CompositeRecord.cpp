@@ -71,6 +71,57 @@ BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return TRUE;
 }
 
+bool R_CompositeRecord::WriteRecord(CFile* file)
+{
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_ccid.GetFieldLength();
+	Directory dir("CCID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_cuco.begin(); i != m_cuco.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("CUCO", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize, false);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_ccid.WriteField(file);
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_cuco.begin(); i != m_cuco.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
+}
+
 int R_CompositeRecord::GetRCID()
 {
 	return m_ccid.m_name.RCID;

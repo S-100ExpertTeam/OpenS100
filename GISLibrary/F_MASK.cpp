@@ -28,9 +28,8 @@ void F_MASK::ReadField(BYTE *&buf)
 		mask->m_mind = *(buf++);
 		mask->m_muin = *(buf++);
 
-		m_arr.insert(
-			std::unordered_map<__int64, MASK*>::value_type((__int64)mask->m_name.GetName(), mask)
-			);
+		AddMask(mask);
+		
 	}
 }
 
@@ -44,11 +43,25 @@ void F_MASK::ReadField(BYTE *&buf, int loopCnt)
 		mask->m_mind = *(buf++);
 		mask->m_muin = *(buf++);
 		
-		m_arr.insert(
-			std::unordered_map<__int64, MASK*>::value_type((__int64)mask->m_name.GetName(), mask)
-			);
+		AddMask(mask);
 	}
 }
+
+bool F_MASK::WriteField(CFile* file)
+{
+	for (auto i = listMask.begin(); i != listMask.end(); i++)
+	{
+		file->Write(&(*i)->m_name.RCNM, 1);
+		file->Write(&(*i)->m_name.RCID, 4);
+		file->Write(&(*i)->m_mind, 1);
+		file->Write(&(*i)->m_muin, 1);
+	}
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
+}
+
 
 int F_MASK::GetFieldLength()
 {
@@ -59,4 +72,10 @@ int F_MASK::GetFieldLength()
 		len += MASK::GetSize();
 	}
 	return ++len;
+}
+
+void F_MASK::AddMask(MASK* mask)
+{
+	listMask.push_back(mask);
+	m_arr.insert({ (__int64)mask->m_name.GetName(), mask });
 }

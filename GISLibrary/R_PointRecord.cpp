@@ -64,6 +64,57 @@ BOOL R_PointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return TRUE;
 }
 
+bool R_PointRecord::WriteRecord(CFile* file)
+{
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_prid.GetFieldLength();
+	Directory dir("PRID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_c2it)
+	{
+		fieldLength = m_c2it->GetFieldLength();
+		Directory dir("C2IT", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize, false);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_prid.WriteField(file);
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	if (m_c2it)
+	{
+		m_c2it->WriteField(file);
+	}
+
+	return true;
+}
+
 int R_PointRecord::GetRCID()
 {
 	return  m_prid.m_name.RCID;

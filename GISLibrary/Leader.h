@@ -24,7 +24,8 @@ public:
 	int GetSizeOfFieldLengthField();
 	int GetSizeOfFieldPositionField();
 
-	void SetAsDR();
+	void SetAsDDR();
+	void SetAsDR();	
 
 	bool WriteLeader(CFile* file);
 };

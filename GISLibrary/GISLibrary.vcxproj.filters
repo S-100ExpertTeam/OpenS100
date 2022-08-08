@@ -492,6 +492,12 @@
     <ClCompile Include="Directory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="F_FieldControlField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F_DataDescriptiveField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -966,6 +972,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Directory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F_FieldControlField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F_DataDescriptiveField.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

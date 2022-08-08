@@ -46,6 +46,22 @@ void F_CodeWithNumericCode::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
+bool F_CodeWithNumericCode::WriteField(CFile* file)
+{
+	for (auto i = listCodeWithNumericCode.begin(); i != listCodeWithNumericCode.end(); i++)
+	{
+		CT2CA outputStringCode((*i)->m_code, CP_UTF8);
+		file->Write(outputStringCode, (UINT)::strlen(outputStringCode));
+		file->Write(&NonPrintableCharacter::unitTerminator, 1);
+
+		file->Write(&(*i)->m_nmcd, 2);
+	}
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
+}
+
 int F_CodeWithNumericCode::GetFieldLength()
 {
 	unsigned len = 0;
@@ -88,6 +104,7 @@ int F_CodeWithNumericCode::GetCount()
 
 void F_CodeWithNumericCode::InsertCodeNumericCode(CodeWithNumericCode* value)
 {
+	listCodeWithNumericCode.push_back(value);
 	m_arr.insert({ value->GetNumericCode(), value });
 	m_arrFindForCode.insert({ value->GetCode(), value });
 }

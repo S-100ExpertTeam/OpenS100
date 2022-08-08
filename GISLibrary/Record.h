@@ -22,6 +22,6 @@ public:
 	virtual bool WriteRecord(CFile* file) { return true; };
 
 	bool WriteDirectory(CFile* file);
-	void SetLeader(int totalFieldSize);
+	void SetLeader(int totalFieldSize, bool adjustEntryMap = true);
 	int DirectoryLength(int sizeOfFieldLengthField, int sizeOfFieldPositionField);
 };

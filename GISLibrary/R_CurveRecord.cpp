@@ -123,6 +123,84 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return true;
 }
 
+bool R_CurveRecord::WriteRecord(CFile* file)
+{
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_crid.GetFieldLength();
+	Directory dir("CRID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_ptas)
+	{
+		fieldLength = m_ptas->GetFieldLength();
+		Directory dir("PTAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_segh.begin(); i != m_segh.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("SEGH", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+
+	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("C2IL", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize, false);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_crid.WriteField(file);
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	if (m_ptas)
+	{
+		m_ptas->WriteField(file);
+	}
+
+	for (auto i = m_segh.begin(); i != m_segh.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
+}
+
 int R_CurveRecord::GetRCID() 
 {
 	return m_crid.m_name.RCID;

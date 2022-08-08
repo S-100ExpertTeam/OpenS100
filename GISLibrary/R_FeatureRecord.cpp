@@ -155,6 +155,102 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return true;
 }
 
+bool R_FeatureRecord::WriteRecord(CFile* file)
+{
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_frid.GetFieldLength();
+	Directory dirFRID("FRID", fieldLength, fieldOffset);
+	directory.push_back(dirFRID);
+	fieldOffset += fieldLength;
+
+	fieldLength = m_foid.GetFieldLength();
+	Directory dirFOID("FOID", fieldLength, fieldOffset);
+	directory.push_back(dirFOID);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("ATTR", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("SPAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_fasc.begin(); i != m_fasc.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("FASC", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_mask.begin(); i != m_mask.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("MASK", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_frid.WriteField(file);
+	m_foid.WriteField(file);
+
+	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_fasc.begin(); i != m_fasc.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_mask.begin(); i != m_mask.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
+}
+
 void R_FeatureRecord::Draw(HDC &hdc, Scaler *scaler, double offset)
 {
 	if (m_geometry != NULL)

@@ -1,7 +1,11 @@
 #pragma once
+
 #include "Field.h"
 
+#include <list>
+
 struct CSAX;
+
 class F_CSAX : Field
 {
 public:
@@ -9,10 +13,12 @@ public:
 	virtual ~F_CSAX();
 
 public:
-	CList<CSAX*> m_arr;
+	std::list<CSAX*> m_arr;
 
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
+	bool WriteField(CFile* file);
+
 	int GetFieldLength();
 };

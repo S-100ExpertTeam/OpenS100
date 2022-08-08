@@ -21,6 +21,8 @@ public:
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool WriteRecord(CFile* file);
+
 	int GetRCID();
 	std::wstring GetRCIDasWstring();
 	void SetC2IT(F_C2IT* value);

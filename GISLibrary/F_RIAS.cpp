@@ -45,6 +45,22 @@ void F_RIAS::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
+bool F_RIAS::WriteField(CFile* file)
+{
+	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
+	{
+		file->Write(&(*i)->m_name.RCNM, 1);
+		file->Write(&(*i)->m_name.RCID, 4);
+		file->Write(&(*i)->m_ornt, 1);
+		file->Write(&(*i)->m_usag, 1);
+		file->Write(&(*i)->m_raui, 1);
+	}
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
+}
+
 int F_RIAS::GetFieldLength()
 {
 	int len = 0;
