@@ -3,6 +3,9 @@
 #include "DRDirectoryInfo.h"
 #include "F_INAS.h"
 #include "ATTR.h"
+#include "NonPrintableCharacter.h"
+
+#include "../LatLonUtility/LatLonUtility.h"
 
 R_InformationRecord::R_InformationRecord(void)
 {
@@ -75,6 +78,57 @@ BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 			TRACE(W2A(TEXT("terminator error")));
 	}
 	return TRUE;
+}
+
+bool R_InformationRecord::WriteRecord(CFile* file)
+{
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_irid.GetFieldLength();
+	Directory dir("IRID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("ATTR", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_irid.WriteField(file);
+
+	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
 }
 
 int R_InformationRecord::GetRCID()

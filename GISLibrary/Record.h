@@ -3,7 +3,7 @@
 #include "Leader.h"
 #include "Directory.h"
 
-#include <vector>
+#include <list>
 
 class DRDirectoryInfo;
 
@@ -20,4 +20,8 @@ public:
 public:
 	virtual BOOL ReadRecord(DRDirectoryInfo* dir, BYTE*& buf) {	return TRUE; };
 	virtual bool WriteRecord(CFile* file) { return true; };
+
+	bool WriteDirectory(CFile* file);
+	void SetLeader(int totalFieldSize);
+	int DirectoryLength(int sizeOfFieldLengthField, int sizeOfFieldPositionField);
 };

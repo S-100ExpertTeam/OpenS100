@@ -26,12 +26,20 @@ void F_IRID::ReadField(BYTE *&buf)
 	m_ruin = *(buf++);
 }
 
+bool F_IRID::WriteField(CFile* file)
+{
+	file->Write(&m_name.RCNM, 1);
+	file->Write(&m_name.RCID, 4);
+	file->Write(&m_nitc, 2);
+	file->Write(&m_rver, 2);
+	file->Write(&m_ruin, 1);
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+	
+	return true;
+}
+
 int F_IRID::GetFieldLength()
 {
-	int len = 0;
-	len += m_name.GetLength();
-	len += 2;
-	len += 2;
-	len++;
-	return ++len;
+	return 11;
 }

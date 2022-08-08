@@ -22,8 +22,10 @@ public:
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool WriteRecord(CFile* file);
+
 	int GetRCID();
 	int GetAssociationCount();
 	int GetInformationAssociationCount();
-	int GetNumericCode();
+	int GetNumericCode();	
 };

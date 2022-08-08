@@ -219,3 +219,11 @@ unsigned char* LatLonUtility::HexStringToWKB(std::string value)
 
 	return result;
 }
+
+size_t LatLonUtility::countDigits(int n)
+{
+	std::string tmp;
+
+	tmp = std::to_string(n);
+	return tmp.size();
+}

@@ -1,7 +1,10 @@
 #pragma once
+
 #include "Field.h"
 #include "RecordName.h"
 #include "F_ATTR.h"
+
+#include <list>
 
 class F_INAS : Field
 {
@@ -37,13 +40,14 @@ public:
 	/*
 	* Attribute Array
 	*/
-	CList<ATTR*> m_arr;
+	std::list<ATTR*> m_arr;
 public:
 	static int GetSize();
 
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
+	bool WriteField(CFile* file);
 	int GetFieldLength();
 };
 

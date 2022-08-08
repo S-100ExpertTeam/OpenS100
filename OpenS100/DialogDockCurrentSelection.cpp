@@ -445,7 +445,7 @@ void CDialogDockCurrentSelection::UpdateList()
 			if (0 < inforCount)
 			{
 				auto inas = *rfr->m_inas.begin();
-				int arrCount = (int)inas->m_arr.GetSize();
+				int arrCount = (int)inas->m_arr.size();
 				count = count + arrCount;
 			}
 
@@ -484,7 +484,7 @@ void CDialogDockCurrentSelection::UpdateList()
 			if (0 < inforCount)
 			{
 				auto inas = *rfr->m_inas.begin();
-				int arrCount = (int)inas->m_arr.GetSize();
+				int arrCount = (int)inas->m_arr.size();
 				count = count + arrCount;
 			}
 

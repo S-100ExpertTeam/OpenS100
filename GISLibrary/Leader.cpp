@@ -30,3 +30,51 @@ int Leader::GetSizeOfFieldPositionField()
 {
 	return sizeOfFieldPositionField;
 }
+
+void Leader::SetAsDR()
+{
+	// Record length
+	CString str;
+	str.Format(L"%05d", recordLength);
+	for (int i = 0; i < 5; i++)
+	{
+		byte[i] = (unsigned char)str[i];
+	}
+
+	byte[5] = 0x20; // SPACE
+	byte[6] = 0x44; // "D"
+	byte[7] = 0x20; // SPACE
+	byte[8] = 0x20; // SPACE
+	byte[9] = 0x20; // SPACE
+	
+	// Field control length
+	byte[10] = 0x20; // SPACE
+	byte[11] = 0x20; // SPACE
+
+	// Base address of field area
+	str.Format(L"%05d", baseAddressOfFieldArea);
+	for (int i = 0; i < 5; i++)
+	{
+		byte[12 + i] = (unsigned char)str[i];
+	}
+
+	// Extended character set indicator
+	byte[17] = 0x20; // SPACE
+	byte[18] = 0x20; // SPACE
+	byte[19] = 0x20; // SPACE
+
+	str.Format(L"%01d", sizeOfFieldLengthField);
+	byte[20] = (unsigned char)str[0];
+
+	str.Format(L"%01d", sizeOfFieldPositionField);
+	byte[21] = (unsigned char)str[0];
+
+	byte[22] = 0x30; // "0"
+	byte[23] = 0x34; // "4"
+}
+
+bool Leader::WriteLeader(CFile* file)
+{
+	file->Write(byte, 24);
+	return true;
+}

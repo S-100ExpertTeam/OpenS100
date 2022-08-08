@@ -15,13 +15,18 @@ F_INAS::F_INAS()
 
 F_INAS::~F_INAS()
 {
-	POSITION pos = m_arr.GetHeadPosition();
-
-	while (pos != NULL)
+	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{
-		ATTR* attr = m_arr.GetNext(pos);
-		delete attr;
+		delete (*i);
 	}
+
+	//POSITION pos = m_arr.GetHeadPosition();
+
+	//while (pos != NULL)
+	//{
+	//	ATTR* attr = m_arr.GetNext(pos);
+	//	delete attr;
+	//}
 }
 
 int F_INAS::GetSize()
@@ -44,7 +49,7 @@ void F_INAS::ReadField(BYTE *&buf)
 		attr->m_paix = buf2uint(buf, 2);
 		attr->m_atin = *(buf++);
 		buf2charArr(attr->m_atvl, buf);
-		m_arr.AddTail(attr);
+		m_arr.push_back(attr);
 	}
 }
 
@@ -63,21 +68,41 @@ void F_INAS::ReadField(BYTE *&buf, int loopCnt)
 		attr->m_paix = buf2uint(buf, 2);
 		attr->m_atin = *(buf++);
 		buf2charArr(attr->m_atvl, buf);
-		m_arr.AddTail(attr);
+		m_arr.push_back(attr);
 	}
+}
+
+bool F_INAS::WriteField(CFile* file)
+{
+	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
+	{
+		ATTR* attr = *itor;
+
+		file->Write(&attr->m_natc, 2);
+		file->Write(&attr->m_atix, 2);
+		file->Write(&attr->m_paix, 2);
+		file->Write(&attr->m_atin, 1);
+		CT2CA outputString(attr->m_atvl, CP_UTF8);
+		file->Write(outputString, (UINT)::strlen(outputString));
+		file->Write(&NonPrintableCharacter::unitTerminator, 1);
+	}
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
 }
 
 int F_INAS::GetFieldLength()
 {
 	int len = 0;
 	len += F_INAS::GetSize();
-	POSITION pos = m_arr.GetHeadPosition();
-	while (pos != NULL)
+
+	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{
-		ATTR *attr = m_arr.GetNext(pos);
+		auto attr = *i;
 		len += ATTR::GetOffsetToATVL();
 		CT2CA outputString(attr->m_atvl, CP_UTF8);
 		len += (int)::strlen(outputString) + 1;
 	}
+
 	return ++len;
 }

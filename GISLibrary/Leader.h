@@ -23,4 +23,8 @@ public:
 	int GetBaseAddressOfFieldArea();
 	int GetSizeOfFieldLengthField();
 	int GetSizeOfFieldPositionField();
+
+	void SetAsDR();
+
+	bool WriteLeader(CFile* file);
 };

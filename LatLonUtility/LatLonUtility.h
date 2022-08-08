@@ -69,5 +69,8 @@ namespace LatLonUtility {
 
 	// value : 0101000000000000000000F03F000000000000F03F
 	unsigned char* HexStringToWKB(std::string value);
+
+	size_t countDigits(int n);
+
 };
 #endif 
