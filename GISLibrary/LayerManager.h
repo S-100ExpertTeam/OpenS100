@@ -69,7 +69,6 @@ public:
 		std::list<SENC_Instruction*>* text,
 		PortrayalCatalogue *pc = nullptr);
 
-
 	void DrawInformationLayer(HDC &hDC, int nIndex);
 
 	Layer* GetLayer(int index);

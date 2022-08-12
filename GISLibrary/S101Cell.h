@@ -90,6 +90,8 @@ public:
 	void ClearAll(void); 
 
 	bool Open(CString _filepath);
+	bool Save(std::wstring path);
+
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
 	void GetAllFeatureDisplayOptions();
@@ -331,8 +333,6 @@ private:
 	int NewRCIDofCompositeCurveRecord();
 	int NewRCIDofSurfaceRecord();
 	int NewRCIDofFeatureRecord();
-
-	bool Save(std::wstring path);
 
 	bool InformationRecordHasAttributeField();
 	bool InformationRecordHasInformationAssociationField();
