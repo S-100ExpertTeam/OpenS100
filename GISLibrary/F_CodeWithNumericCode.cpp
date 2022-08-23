@@ -97,6 +97,17 @@ int F_CodeWithNumericCode::GetCode(CString numericCode)
 	return 0;
 }
 
+bool F_CodeWithNumericCode::HasCode(std::wstring& code)
+{
+	auto item = m_arrFindForCode.find(code);
+	if (item == m_arrFindForCode.end())
+	{
+		return false;
+	}
+
+	return true;
+}
+
 int F_CodeWithNumericCode::GetCount()
 {
 	return (int)m_arr.size();
@@ -129,9 +140,35 @@ int F_CodeWithNumericCode::GetNewNumericCode()
 	return -1;
 }
 
-void F_CodeWithNumericCode::AddNewCodeNumericCode(CString& code)
+int F_CodeWithNumericCode::AddNewCodeNumericCode(CString& code)
 {
 	int numericCode = GetNewNumericCode();
 	auto codeWithNumericCode = new CodeWithNumericCode(code, numericCode);
 	InsertCodeNumericCode(codeWithNumericCode);
+	return numericCode;
+}
+
+int F_CodeWithNumericCode::AddNewCodeNumericCode(std::wstring& code)
+{
+	CString strCode = code.c_str();
+	return AddNewCodeNumericCode(strCode);
+}
+
+int F_CodeWithNumericCode::GetNumericCode(CString& code)
+{
+	std::wstring wstr(code);
+	return GetNumericCode(code);
+}
+
+int F_CodeWithNumericCode::GetNumericCode(std::wstring& code)
+{
+	bool find = HasCode(code);
+	if (find)
+	{
+		auto numericCode = GetCode(code.c_str());
+		return numericCode;
+	}
+
+	int newNumericCode = AddNewCodeNumericCode(code);
+	return newNumericCode;
 }

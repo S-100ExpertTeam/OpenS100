@@ -34,9 +34,6 @@ bool S101Layer::Open(CString _filepath)
 		return false;
 	}	
 
-	auto cell = (S101Cell*)m_spatialObject;
-	auto vecFe = cell->GetVecFeature();
-
 	return true;
 }
 

@@ -501,6 +501,9 @@
     <ClCompile Include="R_DDR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="S101Creator.cpp">
+      <Filter>S101</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -984,6 +987,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="R_DDR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S101Creator.h">
+      <Filter>S101</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_RCNM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

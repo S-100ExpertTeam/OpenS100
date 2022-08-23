@@ -6,6 +6,7 @@ class F_FOID : Field
 {
 public:
 	F_FOID();
+	F_FOID();
 	virtual ~F_FOID();
 
 public:

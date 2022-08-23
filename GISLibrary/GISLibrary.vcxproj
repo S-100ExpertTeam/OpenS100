@@ -324,6 +324,7 @@
     <ClCompile Include="S100Layer.cpp" />
     <ClCompile Include="S100SpatialObject.cpp" />
     <ClCompile Include="S100Utilities.cpp" />
+    <ClCompile Include="S101Creator.cpp" />
     <ClCompile Include="S101Layer.cpp" />
     <ClCompile Include="S101LuaScriptingReference.cpp" />
     <ClCompile Include="SENC_AlertReference.cpp" />
@@ -416,6 +417,7 @@
     <ClInclude Include="DrawingCommand.h" />
     <ClInclude Include="DrawingSet.h" />
     <ClInclude Include="DRDirectory.h" />
+    <ClInclude Include="Enum_RCNM.h" />
     <ClInclude Include="Enum_S100_FileType.h" />
     <ClInclude Include="FASC.h" />
     <ClInclude Include="FC2D.h" />
@@ -488,6 +490,7 @@
     <ClInclude Include="S100Layer.h" />
     <ClInclude Include="S100SpatialObject.h" />
     <ClInclude Include="S100Utilities.h" />
+    <ClInclude Include="S101Creator.h" />
     <ClInclude Include="S101Layer.h" />
     <ClInclude Include="S101LuaScriptingReference.h" />
     <ClInclude Include="SENC_AlertReference.h" />

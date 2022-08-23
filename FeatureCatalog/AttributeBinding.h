@@ -20,10 +20,13 @@ private:
 
 public:
 	void GetContents(pugi::xml_node& node);
+
 	void SetMultiplicity(Multiplicity value);
 	Multiplicity& GetMultiplicity();
+
 	void SetPermittedValues(ValueList value);
 	ValueList& GetPermittedValues();
+
 	void SetAttribute(Reference value);
 	Reference& GetAttribute();
 };

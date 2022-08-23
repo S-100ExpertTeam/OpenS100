@@ -4,6 +4,8 @@
 
 #include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
 
+#include <map>
+
 class InformationTypes : public XML_Item
 {
 public:

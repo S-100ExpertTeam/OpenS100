@@ -30,7 +30,11 @@ public:
 	void InsertCodeNumericCode(CString& code, int numericCode);
 	CString GetFeatureCode(int numericCode);
 	int GetCode(CString nc);
+	bool HasCode(std::wstring& code);
 
 	int GetNewNumericCode();
-	void AddNewCodeNumericCode(CString& code);
+	int AddNewCodeNumericCode(CString& code);
+	int AddNewCodeNumericCode(std::wstring& code);
+	int GetNumericCode(CString& code);
+	int GetNumericCode(std::wstring& code);
 };

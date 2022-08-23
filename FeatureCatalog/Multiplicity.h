@@ -23,4 +23,7 @@ public:
 
 	void SetUpper(UnlimitedInteger& value);
 	UnlimitedInteger& GetUpper();
+
+	bool IsInfinite();
+	int GetUpperCount();
 };

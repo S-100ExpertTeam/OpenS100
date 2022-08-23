@@ -35,10 +35,21 @@ public:
 	CString GetFeatureAssociationCode(int numericCode);
 	CString GetAssociationRoleCode(int numericCode);
 
-	void AddAttributeCode(CString& value);
-	void AddInformationTypeCode(CString& value);
-	void AddFeatureTypeCode(CString& value);
-	void AddInformationAssociationCode(CString& value);
-	void AddFeatureAssociationCode(CString& value);
-	void AddAssociationRoleCode(CString& value);
+	int GetAttributeCode(std::wstring& value);
+	int GetAttributeCode(CString& value);
+
+	int GetInformationTypeCode(std::wstring& value);
+	int GetInformationTypeCode(CString& value);
+
+	int GetFeatureTypeCode(std::wstring& value);
+	int GetFeatureTypeCode(CString& value);
+
+	int GetInformationAssociationCode(std::wstring& value);
+	int GetInformationAssociationCode(CString& value);
+
+	int GetFeatureAssociationCode(std::wstring& value);
+	int GetFeatureAssociationCode(CString& value);
+
+	int GetAssociationRoleCode(std::wstring& value);
+	int GetAssociationRoleCode(CString& value);
 };

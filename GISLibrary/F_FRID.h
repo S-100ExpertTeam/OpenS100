@@ -6,6 +6,7 @@ class F_FRID : Field
 {
 public:
 	F_FRID();
+	F_FRID(RecordName recordName, int NFTC, int RVER = 1, int RUIN = 1);
 	virtual ~F_FRID();
 
 public:

@@ -47,3 +47,13 @@ UnlimitedInteger& Multiplicity::GetUpper()
 {
 	return upper;
 }
+
+bool Multiplicity::IsInfinite()
+{
+	return upper.IsInfinite();
+}
+
+int Multiplicity::GetUpperCount()
+{
+	return upper.GetIntegerValue();
+}

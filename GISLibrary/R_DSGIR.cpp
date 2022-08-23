@@ -308,62 +308,98 @@ CString R_DSGIR::GetAssociationRoleCode(int numericCode)
 	return L"";
 }
 
-void R_DSGIR::AddAttributeCode(CString& value)
+int R_DSGIR::GetAttributeCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetAttributeCode(str);
+}
+
+int R_DSGIR::GetAttributeCode(CString& value)
 {
 	if (nullptr == m_atcs)
 	{
 		m_atcs = new F_CodeWithNumericCode();
 	}
 
-	m_atcs->AddNewCodeNumericCode(value);
+	return m_atcs->GetNumericCode(value);
 }
 
-void R_DSGIR::AddInformationTypeCode(CString& value)
+int R_DSGIR::GetInformationTypeCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetInformationTypeCode(str);
+}
+
+int R_DSGIR::GetInformationTypeCode(CString& value)
 {
 	if (nullptr == m_itcs)
 	{
 		m_itcs = new F_CodeWithNumericCode();
 	}
 
-	m_itcs->AddNewCodeNumericCode(value);
+	return m_itcs->GetNumericCode(value);
 }
 
-void R_DSGIR::AddFeatureTypeCode(CString& value)
+int R_DSGIR::GetFeatureTypeCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetFeatureTypeCode(str);
+}
+
+int R_DSGIR::GetFeatureTypeCode(CString& value)
 {
 	if (nullptr == m_ftcs)
 	{
 		m_ftcs = new F_CodeWithNumericCode();
 	}
 
-	m_ftcs->AddNewCodeNumericCode(value);
+	return m_ftcs->GetNumericCode(value);
 }
 
-void R_DSGIR::AddInformationAssociationCode(CString& value)
+int R_DSGIR::GetInformationAssociationCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetInformationAssociationCode(str);
+}
+
+int R_DSGIR::GetInformationAssociationCode(CString& value)
 {
 	if (nullptr == m_iacs)
 	{
 		m_iacs = new F_CodeWithNumericCode();
 	}
 
-	m_iacs->AddNewCodeNumericCode(value);
+	return m_iacs->GetNumericCode(value);
 }
 
-void R_DSGIR::AddFeatureAssociationCode(CString& value)
+int R_DSGIR::GetFeatureAssociationCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetFeatureAssociationCode(str);
+}
+
+int R_DSGIR::GetFeatureAssociationCode(CString& value)
 {
 	if (nullptr == m_facs)
 	{
 		m_facs = new F_CodeWithNumericCode();
 	}
 
-	m_facs->AddNewCodeNumericCode(value);
+	return m_facs->GetNumericCode(value);
 }
 
-void R_DSGIR::AddAssociationRoleCode(CString& value)
+int R_DSGIR::GetAssociationRoleCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetAssociationRoleCode(str);
+}
+
+int R_DSGIR::GetAssociationRoleCode(CString& value)
 {
 	if (nullptr == m_arcs)
 	{
 		m_arcs = new F_CodeWithNumericCode();
 	}
 
-	m_arcs->AddNewCodeNumericCode(value);
+	return m_arcs->GetNumericCode(value);
 }

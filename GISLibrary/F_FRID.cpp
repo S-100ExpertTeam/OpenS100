@@ -12,6 +12,13 @@ F_FRID::F_FRID(void)
 	m_ruin = 0;
 }
 
+F_FRID::F_FRID(RecordName recordName, int NFTC, int RVER, int RUIN)
+{
+	m_name = recordName;
+	m_nftc = NFTC;
+	m_rver = RVER;
+	m_ruin = RUIN;
+}
 
 F_FRID::~F_FRID(void)
 {
