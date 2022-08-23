@@ -35,9 +35,40 @@ R_FeatureRecord* S101Creator::AddFeature(std::wstring code)
 		auto recordName = NewFeatureRecordName();
 		int NFTC = enc->m_dsgir.GetFeatureTypeCode(code);
 		F_FRID FRID(recordName, NFTC);
+		featureRecord->m_frid = FRID;
 
 		// FOID
-		F_FOID FOID;
+		F_FOID FOID(280, 1, 1);
+		featureRecord->m_foid = FOID;
+		
+		enc->InsertFeatureRecord(FRID.m_name.GetName(), featureRecord);
+
+		return featureRecord;
+	}
+
+	return nullptr;
+}
+
+R_InformationRecord* S101Creator::AddInformation(std::wstring code)
+{
+	auto informationType = fc->GetInformationType(code);
+	if (informationType)
+	{
+		R_InformationRecord* informationRecord = new R_InformationRecord();
+
+		// FRID
+		auto recordName = NewInformationRecordName();
+		int NFTC = enc->m_dsgir.GetInformationTypeCode(code);
+		//F_IRID IRID(recordName, NFTC);
+		//featureRecord->m_frid = FRID;
+
+		//// FOID
+		//F_FOID FOID(280, 1, 1);
+		//featureRecord->m_foid = FOID;
+
+		//enc->InsertFeatureRecord(FRID.m_name.GetName(), featureRecord);
+
+		return informationRecord;
 	}
 
 	return nullptr;

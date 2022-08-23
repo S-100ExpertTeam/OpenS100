@@ -1272,7 +1272,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				assoCnt = fr->m_fasc.size() + fr->m_inas.size();
 
 				csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
-				csFoid.Format(_T("%d"), fr->m_foid.m_objName.m_fidn);
+				csFoid.Format(_T("%d"), fr->m_foid.FIDN);
 				csLat.Format(_T("%f"), lat);
 				csLon.Format(_T("%f"), lon);
 				csType.Format(_T("%d"), surface->type);
@@ -1334,7 +1334,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				std::vector<int>::size_type assoCnt;
 				assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
 
-				csFoid.Format(_T("%d"), fr->m_foid.m_objName.m_fidn);
+				csFoid.Format(_T("%d"), fr->m_foid.FIDN);
 				csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
 				csLat.Format(_T("%f"), lat);
 				csLon.Format(_T("%f"), lon);
@@ -1382,7 +1382,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				std::vector<int>::size_type assoCnt;
 				assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
 
-				csFoid.Format(_T("%d"), fr->m_foid.m_objName.m_fidn);
+				csFoid.Format(_T("%d"), fr->m_foid.FIDN);
 				csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
 				csLat.Format(_T("%f"), lat);
 				csLon.Format(_T("%f"), lon);
@@ -1430,7 +1430,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 						std::vector<int>::size_type assoCnt;
 						assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
 
-						csFoid.Format(_T("%d"), fr->m_foid.m_objName.m_fidn);
+						csFoid.Format(_T("%d"), fr->m_foid.FIDN);
 						csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
 						csLat.Format(_T("%f"), geoX);
 						csLon.Format(_T("%f"), geoY);
@@ -1462,7 +1462,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 					std::vector<int>::size_type assoCnt;
 					assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
 
-					csFoid.Format(_T("%d"), fr->m_foid.m_objName.m_fidn);
+					csFoid.Format(_T("%d"), fr->m_foid.FIDN);
 					csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
 					csLat.Format(_T("%f"), lat);
 					csLon.Format(_T("%f"), lon);

@@ -180,9 +180,6 @@
     <ClCompile Include="Record.cpp">
       <Filter>S101\Record</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectName.cpp">
-      <Filter>S101\NameStruct</Filter>
-    </ClCompile>
     <ClCompile Include="RecordName.cpp">
       <Filter>S101\NameStruct</Filter>
     </ClCompile>
@@ -646,9 +643,6 @@
     </ClInclude>
     <ClInclude Include="Record.h">
       <Filter>S101\Record</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectName.h">
-      <Filter>S101\NameStruct</Filter>
     </ClInclude>
     <ClInclude Include="RecordName.h">
       <Filter>S101\NameStruct</Filter>

@@ -464,7 +464,6 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 		Check();
 
 		Validation();
-
 		return true;
 	}
 
@@ -3451,9 +3450,9 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 				values->m_frid.m_rver = fe->m_frid.m_rver;
 
 				//FOID
-				values->m_foid.m_objName.m_agen = fe->m_foid.m_objName.m_agen;
-				values->m_foid.m_objName.m_fidn = fe->m_foid.m_objName.m_fidn;
-				values->m_foid.m_objName.m_fids = fe->m_foid.m_objName.m_fids;
+				values->m_foid.AGEN = fe->m_foid.AGEN;
+				values->m_foid.FIDN = fe->m_foid.FIDN;
+				values->m_foid.FIDS = fe->m_foid.FIDS;
 
 				//need ATTR
 				UpdateAttrRecord(fe->m_attr, values->m_attr);
@@ -3571,6 +3570,7 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 			}
 		}
 	}
+	
 	return true;
 }
 

@@ -312,7 +312,6 @@
     <ClCompile Include="LayerManager.cpp" />
     <ClCompile Include="Leader.cpp" />
     <ClCompile Include="MASK.cpp" />
-    <ClCompile Include="ObjectName.cpp" />
     <ClCompile Include="OrientedCurveRecord.cpp" />
     <ClCompile Include="PCOutputSchemaManager.cpp" />
     <ClCompile Include="ProcessS101.cpp" />
@@ -477,7 +476,6 @@
     <ClInclude Include="MASK.h" />
     <ClInclude Include="Namespace_GISLibrary.h" />
     <ClInclude Include="NonPrintableCharacter.h" />
-    <ClInclude Include="ObjectName.h" />
     <ClInclude Include="OrientedCurveRecord.h" />
     <ClInclude Include="PCOutputSchemaManager.h" />
     <ClInclude Include="ProcessS101.h" />
