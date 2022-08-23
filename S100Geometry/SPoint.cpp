@@ -57,6 +57,8 @@ bool SPoint::ImportFromWkb(unsigned char* value, int size)
 	projection(x, y);
 
 	SetMBR();
+
+	return true;
 }
 
 bool SPoint::ExportToWkb(unsigned char** value, int* size)

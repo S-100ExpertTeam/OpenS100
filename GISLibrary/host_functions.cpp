@@ -552,19 +552,12 @@ int HostPortrayalEmit(lua_State *l)
 {
 	auto ls = lua_session::get_session(l);
 
-	auto observedParameters = ls->pop<std::string>();
-	auto drawingInstructions = ls->pop<std::string>();
-	auto featureID = ls->pop<std::string>();
-
 	Result_DrawingInstruction rdi;
-
-	rdi.featureID = featureID;
-	rdi.observedParameters = observedParameters;
-	rdi.drawingInstructions = drawingInstructions;
-
-	int id = std::stoi(rdi.featureID.c_str());
-
 	resultDrawingInstructions.push_back(rdi);
+
+	resultDrawingInstructions.back().observedParameters = ls->pop<std::string>();
+	resultDrawingInstructions.back().drawingInstructions = ls->pop<std::string>();
+	resultDrawingInstructions.back().featureID = ls->pop<std::string>();
 
 	ls->push(true);
 
