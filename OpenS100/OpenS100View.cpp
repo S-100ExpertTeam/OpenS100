@@ -17,6 +17,9 @@
 #include "../GISLibrary/Layer.h"
 #include "../GISLibrary/R_FeatureRecord.h"
 #include "../GISLibrary/CodeWithNumericCode.h"
+#include "../GISLibrary/S101Creator.h"
+#include "../GISLibrary/S101Layer.h"
+#include "../GISLibrary/S101Cell.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -45,6 +48,7 @@
 #include <fstream>
 #include <crtdbg.h>
 #include <iostream>
+#include <vector>
 
 #include "../LatLonUtility/LatLonUtility.h"
 #pragma comment(lib, "d2d1.lib")
@@ -1597,6 +1601,9 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VK_F3:
 		AreaFeatureList();
 		break;
+	case VK_F4:
+		CopyLayer();
+		break;
 	}
 
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
@@ -1708,4 +1715,36 @@ void COpenS100View::AreaFeatureList()
 			OutputDebugString(str + L"\n");
 		}
 	}
+}
+
+void COpenS100View::CopyLayer()
+{
+	auto layer1 = (S101Layer*)theApp.gisLib->GetLayer(0);
+	auto layer2 = (S101Layer*)theApp.gisLib->GetLayer(1);
+
+	auto enc1 = (S101Cell*)layer1->GetSpatialObject();
+	auto enc2 = (S101Cell*)layer2->GetSpatialObject();
+
+	S101Creator creator(layer1->GetFeatureCatalog(), enc1);
+
+	auto enc2Features = enc2->GetVecFeature();
+	for (auto i = enc2Features.begin(); i != enc2Features.end(); i++)
+	{
+		auto feature = *i;
+		auto newFeature = creator.AddFeature(std::wstring(enc2->m_dsgir.GetFeatureCode(feature->GetNumericCode())));
+		if (feature->m_geometry)
+		{
+			unsigned char* wkb = nullptr;
+			int sizeWKB = 0;
+			if (feature->m_geometry->ExportToWkb(&wkb, &sizeWKB))
+			{
+				if (feature->m_geometry->type == 1)
+				{
+					creator.SetPointGeometry(newFeature, wkb, sizeWKB);
+				}
+			}
+		}
+	}
+
+	enc1->Save(L"..\\TEMP\\edit.000");
 }

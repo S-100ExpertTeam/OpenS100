@@ -158,6 +158,7 @@ public:
 	void PointFeatureList();
 	void LineFeatureList();
 	void AreaFeatureList();
+	void CopyLayer();
 };
 
 

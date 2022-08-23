@@ -157,7 +157,7 @@ int F_CodeWithNumericCode::AddNewCodeNumericCode(std::wstring& code)
 int F_CodeWithNumericCode::GetNumericCode(CString& code)
 {
 	std::wstring wstr(code);
-	return GetNumericCode(code);
+	return GetNumericCode(wstr);
 }
 
 int F_CodeWithNumericCode::GetNumericCode(std::wstring& code)

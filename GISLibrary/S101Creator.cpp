@@ -270,7 +270,7 @@ RecordName S101Creator::NewFeatureRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *RCIDs.end();
+		auto RCID = *std::prev(RCIDs.end());
 		return RecordName(GISLibrary::RCNM::FeatureType, RCID);
 	}
 
@@ -289,7 +289,7 @@ RecordName S101Creator::NewInformationRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *RCIDs.end();
+		auto RCID = *std::prev(RCIDs.end());
 		return RecordName(GISLibrary::RCNM::InformationType, RCID);
 	}
 
@@ -308,7 +308,7 @@ RecordName S101Creator::NewPointRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *RCIDs.end();
+		auto RCID = *std::prev(RCIDs.end());
 		return RecordName(GISLibrary::RCNM::Point, RCID);
 	}
 
@@ -327,7 +327,7 @@ RecordName S101Creator::NewMultiPointRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *RCIDs.end();
+		auto RCID = *std::prev(RCIDs.end());
 		return RecordName(GISLibrary::RCNM::MultiPoint, RCID);
 	}
 
@@ -346,7 +346,7 @@ RecordName S101Creator::NewCurveRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *RCIDs.end();
+		auto RCID = *std::prev(RCIDs.end());
 		return RecordName(GISLibrary::RCNM::Curve, RCID);
 	}
 
@@ -365,7 +365,7 @@ RecordName S101Creator::NewCompositeCurveRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *RCIDs.end();
+		auto RCID = *std::prev(RCIDs.end());
 		return RecordName(GISLibrary::RCNM::CompositeCurve, RCID);
 	}
 
@@ -384,7 +384,7 @@ RecordName S101Creator::NewSurfaceRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *RCIDs.end();
+		auto RCID = *std::prev(RCIDs.end());
 		return RecordName(GISLibrary::RCNM::Surface, RCID);
 	}
 

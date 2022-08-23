@@ -3,6 +3,7 @@
 class S101Cell;
 class FeatureCatalogue;
 class R_FeatureRecord;
+class SGeometry;
 
 class S101Creator
 {
