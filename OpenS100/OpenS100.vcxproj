@@ -204,6 +204,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CDialogExFeatureInformationList.h" />
     <ClInclude Include="FeatureCodeString.h" />
     <ClInclude Include="InformationCodeString.h" />
     <ClInclude Include="Common.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="TreeCtrlExt.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CDialogExFeatureInformationList.cpp" />
     <ClCompile Include="InformationCodeString.cpp" />
     <ClCompile Include="ConfigrationDlg.cpp" />
     <ClCompile Include="Configuration_1.cpp" />

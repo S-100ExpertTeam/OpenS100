@@ -11,6 +11,7 @@
 #include "DialogViewInformationType.h"
 #include "DialogDockLayerManager.h"
 #include "ConfigrationDlg.h"
+#include "CDialogExFeatureInformationList.h"
 
 #include "../GISLibrary/GISLibrary.h"
 #include "../GISLibrary/Layer.h"
@@ -1587,6 +1588,15 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		theApp.gisLib->GetScaler()->Rotate(10);
 		MapRefresh();
 		break;
+	case VK_F1:
+		PointFeatureList();
+		break;
+	case VK_F2:
+		LineFeatureList();
+		break;
+	case VK_F3:
+		AreaFeatureList();
+		break;
 	}
 
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
@@ -1600,10 +1610,30 @@ void COpenS100View::PointFeatureList()
 		std::vector<FeatureType*> features;
 		fc->GetPointFeatures(features);
 
+		OutputDebugString(L"Name, Code, Definition, Alias\n");
+
 		for (auto i = features.begin(); i != features.end(); i++)
 		{
 			CString name = (*i)->GetName().c_str();
-			OutputDebugString(name + L"\n");
+			CString code = (*i)->GetCodeAsWString().c_str();
+			CString definition = (*i)->GetDefinition().c_str();
+			auto alias = (*i)->GetAlias();
+
+			CString str;
+			str.Format(L"%s, %s, %s, ", name, code, definition);
+			for (std::list<std::wstring>::const_iterator j = alias.begin(); j != alias.end(); j++)
+			{
+				if (j == alias.begin())
+				{
+					str.AppendFormat(L"%s", j->c_str());
+				}
+				else
+				{
+					str.AppendFormat(L";%s", j->c_str());
+				}
+			}
+
+			OutputDebugString(str + L"\n");
 		}
 	}
 }
@@ -1616,10 +1646,30 @@ void COpenS100View::LineFeatureList()
 		std::vector<FeatureType*> features;
 		fc->GetLineFeatures(features);
 
+		OutputDebugString(L"Name, Code, Definition, Alias\n");
+
 		for (auto i = features.begin(); i != features.end(); i++)
 		{
 			CString name = (*i)->GetName().c_str();
-			OutputDebugString(name + L"\n");
+			CString code = (*i)->GetCodeAsWString().c_str();
+			CString definition = (*i)->GetDefinition().c_str();
+			auto alias = (*i)->GetAlias();
+
+			CString str;
+			str.Format(L"%s, %s, %s, ", name, code, definition);
+			for (std::list<std::wstring>::const_iterator j = alias.begin(); j != alias.end(); j++)
+			{
+				if (j == alias.begin())
+				{
+					str.AppendFormat(L"%s", j->c_str());
+				}
+				else
+				{
+					str.AppendFormat(L";%s", j->c_str());
+				}
+			}
+
+			OutputDebugString(str + L"\n");
 		}
 	}
 }
@@ -1632,10 +1682,30 @@ void COpenS100View::AreaFeatureList()
 		std::vector<FeatureType*> features;
 		fc->GetAreaFeatures(features);
 
+		OutputDebugString(L"Name, Code, Definition, Alias\n");
+
 		for (auto i = features.begin(); i != features.end(); i++)
 		{
 			CString name = (*i)->GetName().c_str();
-			OutputDebugString(name + L"\n");
+			CString code = (*i)->GetCodeAsWString().c_str();
+			CString definition = (*i)->GetDefinition().c_str();
+			auto alias = (*i)->GetAlias();
+
+			CString str;
+			str.Format(L"%s, %s, %s, ", name, code, definition);
+			for (std::list<std::wstring>::const_iterator j = alias.begin(); j != alias.end(); j++)
+			{
+				if (j == alias.begin())
+				{
+					str.AppendFormat(L"%s", j->c_str());
+				}
+				else
+				{
+					str.AppendFormat(L";%s", j->c_str());
+				}
+			}
+
+			OutputDebugString(str + L"\n");
 		}
 	}
 }

@@ -104,6 +104,7 @@
     <ClInclude Include="PropertyGridVectorModify.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CDialogExFeatureInformationList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenS100.cpp">
@@ -177,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="Configuration_4.cpp">
       <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="CDialogExFeatureInformationList.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

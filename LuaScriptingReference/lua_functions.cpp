@@ -120,7 +120,7 @@ lua_ref_ptr CreateItem(lua_session *ls, Item *item) // -------------------------
 
 	std::vector<std::string> alias;
 
-	for (auto a : item->GetAliasPointer())
+	for (auto a : item->GetAlias())
 	{
 		alias.push_back(std::string(a.begin(), a.end()));
 	}

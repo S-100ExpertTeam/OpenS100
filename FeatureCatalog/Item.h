@@ -30,7 +30,7 @@ public:
 	bool CompareCode(std::string& value);
 	bool CompareCode(std::wstring& value);
 
-	std::list<std::wstring>& GetAliasPointer();
+	const std::list<std::wstring>& GetAlias();
 	
 	const std::wstring& GetName();
 	void SetName(std::wstring& value);

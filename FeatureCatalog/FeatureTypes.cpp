@@ -21,6 +21,7 @@ void FeatureTypes::GetContents(pugi::xml_node& node)
 			FeatureType sa;
 			sa.GetContents(instruction);
 			featureType[sa.GetCodeAsWString()] = sa;
+			vecFeatureType.push_back(&featureType[sa.GetCodeAsWString()]);
 
 			if (instruction.attribute("isAbstract"))
 			{
@@ -98,6 +99,11 @@ bool FeatureTypes::SetAssociationFromSuperType(FeatureType* ft)
 
 	return false;
 
+}
+
+std::vector<FeatureType*>& FeatureTypes::GetVecFeatureType()
+{
+	return vecFeatureType;
 }
 
 std::unordered_map<std::wstring, FeatureType>& FeatureTypes::GetFeatureType()

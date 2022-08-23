@@ -157,7 +157,7 @@ const bool Item::IsEmptyRemarks()
 	return true;
 }
 
-std::list<std::wstring>& Item::GetAliasPointer()
+const std::list<std::wstring>& Item::GetAlias()
 {
 	return alias;
 }

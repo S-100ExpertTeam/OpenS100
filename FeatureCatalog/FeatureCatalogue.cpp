@@ -92,12 +92,15 @@ FeatureTypes& FeatureCatalogue::GetFeatureTypes()
 
 FeatureType* FeatureCatalogue::GetFeatureTypeName(std::wstring name)
 {
-	for (auto i = featureTypes.GetFeatureType().begin();
+	for (
+		auto i = featureTypes.GetFeatureType().begin();
 		i != featureTypes.GetFeatureType().end();
 		i++)
 	{
 		if (i->second.GetName().compare(name) == 0)
+		{
 			return &i->second;
+		}
 	}
 	return nullptr;
 }
@@ -356,7 +359,10 @@ void FeatureCatalogue::SetSubAssociation(InformationType* it)
 
 void FeatureCatalogue::SetFeatureAssociationFromSuperType(FeatureType* ft, std::wstring superTypeName, std::wstring roleName, std::wstring associationName)
 {
-	for (auto fti = featureTypes.GetFeatureType().begin(); fti != featureTypes.GetFeatureType().end(); fti++)
+	for (
+		auto fti = featureTypes.GetFeatureType().begin(); 
+		fti != featureTypes.GetFeatureType().end(); 
+		fti++)
 	{
 		auto currentFeautreType = &fti->second;
 		auto currentFeautreCode = currentFeautreType->GetCodeAsWString();
@@ -641,17 +647,17 @@ void FeatureCatalogue::SetProductId(std::wstring value)
 
 void FeatureCatalogue::GetPointFeatures(std::vector<FeatureType*>& result)
 {
-	std::unordered_map<std::wstring, FeatureType>& featureMap = featureTypes.GetFeatureType();
+	auto featureMap = featureTypes.GetVecFeatureType();
 
 	for (auto i = featureMap.begin(); i != featureMap.end(); i++)
 	{
-		auto primList = i->second.GetPermittedPrimitivesPointer();
+		auto primList = (*i)->GetPermittedPrimitivesPointer();
 
 		for (auto j = primList.begin(); j != primList.end(); j++)
 		{
 			if (j->IsPoint())
 			{
-				result.push_back(&i->second);
+				result.push_back(*i);
 			}
 		}
 	}
@@ -659,17 +665,17 @@ void FeatureCatalogue::GetPointFeatures(std::vector<FeatureType*>& result)
 
 void FeatureCatalogue::GetLineFeatures(std::vector<FeatureType*>& result)
 {
-	std::unordered_map<std::wstring, FeatureType>& featureMap = featureTypes.GetFeatureType();
+	auto featureMap = featureTypes.GetVecFeatureType();
 
 	for (auto i = featureMap.begin(); i != featureMap.end(); i++)
 	{
-		auto primList = i->second.GetPermittedPrimitivesPointer();
+		auto primList = (*i)->GetPermittedPrimitivesPointer();
 
 		for (auto j = primList.begin(); j != primList.end(); j++)
 		{
 			if (j->IsLine())
 			{
-				result.push_back(&i->second);
+				result.push_back(*i);
 			}
 		}
 	}
@@ -677,17 +683,17 @@ void FeatureCatalogue::GetLineFeatures(std::vector<FeatureType*>& result)
 
 void FeatureCatalogue::GetAreaFeatures(std::vector<FeatureType*>& result)
 {
-	std::unordered_map<std::wstring, FeatureType>& featureMap = featureTypes.GetFeatureType();
+	auto featureMap = featureTypes.GetVecFeatureType();
 
 	for (auto i = featureMap.begin(); i != featureMap.end(); i++)
 	{
-		auto primList = i->second.GetPermittedPrimitivesPointer();
+		auto primList = (*i)->GetPermittedPrimitivesPointer();
 
 		for (auto j = primList.begin(); j != primList.end(); j++)
 		{
 			if (j->IsArea())
 			{
-				result.push_back(&i->second);
+				result.push_back(*i);
 			}
 		}
 	}
