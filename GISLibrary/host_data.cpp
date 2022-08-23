@@ -894,7 +894,7 @@ std::string hd_get_information_type_code(std::string id)
 {
 	R_InformationRecord* ir = s_information_nodes[id];
 
-	auto i1 = cell->m_dsgir.m_itcs->m_arr.find(ir->m_irid.m_nitc);
+	auto i1 = cell->m_dsgir.m_itcs->m_arr.find(ir->m_irid.NITC());
 	if (i1 == cell->m_dsgir.m_itcs->m_arr.end())
 	{
 		return "";

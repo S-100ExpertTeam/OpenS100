@@ -2730,9 +2730,9 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 		cell->m_infMap.GetNextAssoc(pos, infokey, ir);
 
 		//change itcs
-		auto updateCode = itcs->GetFeatureCode(ir->m_irid.m_nitc);
+		auto updateCode = itcs->GetFeatureCode(ir->m_irid.NITC());
 		int NewCode = m_dsgir.m_itcs->GetCode(updateCode);
-		ir->m_irid.m_nitc = NewCode;
+		ir->m_irid.NITC(NewCode);
 
 		UpdateAttrField(ir->m_attr, atcs);      //attr
 		UpdateInasField(ir->m_inas, iacs);		//INAS
@@ -2893,7 +2893,7 @@ bool S101Cell::UpdateInfMapRecord(S101Cell* cell)
 				//IRID
 				values->m_irid.m_name.RCNM = ir->m_irid.m_name.RCNM;
 				values->m_irid.m_name.RCID = ir->m_irid.m_name.RCID;
-				values->m_irid.m_nitc = ir->m_irid.m_nitc; //I'm going to change the numericcode.
+				values->m_irid.NITC(ir->m_irid.NITC()); //I'm going to change the numericcode.
 				values->m_irid.m_rver = ir->m_irid.m_rver;
 
 				//ATTR

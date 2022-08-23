@@ -65,7 +65,7 @@ void CDialogViewInformationType::SetInformationFeatureList(S101Cell* cell)
 		R_InformationRecord* ir = NULL;
 		cell->GetNextAssoc(pos, key, ir);
 
-		int code = ir->m_irid.m_nitc;
+		int code = ir->m_irid.NITC();
 
 		auto itor = cell->m_dsgir.m_itcs->m_arr.find(code);
 		CodeWithNumericCode* nc = itor->second;

@@ -144,7 +144,7 @@ void CDialogDockRelation::OnNMClickListLm(NMHDR *pNMHDR, LRESULT *pResult)
 		R_InformationRecord *inr = m_cell->GetInformationRecord(key);
 		S101Cell* cell = m_cell;
 
-		auto itor = cell->m_dsgir.m_ftcs->m_arr.find(inr->m_irid.m_nitc);
+		auto itor = cell->m_dsgir.m_ftcs->m_arr.find(inr->m_irid.NITC());
 		if (itor == cell->m_dsgir.m_ftcs->m_arr.end()) {
 			return;
 		}
@@ -414,7 +414,7 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 			__int64 key = ((__int64)150) << 32 | inas->m_name.RCID;
 			R_InformationRecord* rfr = m_cell->GetInformationRecord(key);
 			//R_InformationRecord* rfr = m_cell->m_infMap.PLookup(key)->value;
-			auto itors = cell->m_dsgir.m_itcs->m_arr.find(rfr->m_irid.m_nitc);
+			auto itors = cell->m_dsgir.m_itcs->m_arr.find(rfr->m_irid.NITC());
 			auto ws_objectCode2 = itors->second->m_code.GetBuffer();
 			itors->second->m_code.ReleaseBuffer();
 			auto fc_informationType = fc->GetInformationType(ws_objectCode2);
@@ -461,7 +461,7 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 	{
 		R_InformationRecord *orgIr = *ri;	// Feature that needs a relation
 
-		auto orgItItor = cell->m_dsgir.m_itcs->m_arr.find(orgIr->m_irid.m_nitc);
+		auto orgItItor = cell->m_dsgir.m_itcs->m_arr.find(orgIr->m_irid.NITC());
 		if (orgItItor == cell->m_dsgir.m_itcs->m_arr.end())  continue;
 		std::wstring orgFeatureName = orgItItor->second->m_code;
 
@@ -495,7 +495,7 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 
 
 			////////////////////////////////////////////////////////////////////////////////
-			int n_code = orgIr->m_irid.m_nitc;
+			int n_code = orgIr->m_irid.NITC();
 			auto itor = cell->m_dsgir.m_itcs->m_arr.find(n_code);
 			auto ws_objectCode1 = itor->second->m_code.GetBuffer();
 			itor->second->m_code.ReleaseBuffer();
@@ -507,7 +507,7 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 
 			R_InformationRecord* rfr = m_cell->GetInformationRecord(key);
 
-			auto itors = cell->m_dsgir.m_itcs->m_arr.find(rfr->m_irid.m_nitc);
+			auto itors = cell->m_dsgir.m_itcs->m_arr.find(rfr->m_irid.NITC());
 			auto ws_objectCode2 = itors->second->m_code.GetBuffer();
 			itors->second->m_code.ReleaseBuffer();
 			auto fc_informationTypeOBJ = fc->GetInformationType(ws_objectCode2);

@@ -144,7 +144,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 				R_InformationRecord *rfr = m_Cell->GetInformationRecord(key);
 				S101Cell* cell = m_Cell;
 
-				auto itor = cell->m_dsgir.m_itcs->m_arr.find(rfr->m_irid.m_nitc);
+				auto itor = cell->m_dsgir.m_itcs->m_arr.find(rfr->m_irid.NITC());
 
 				m_selectedInformationType = fc->GetInformationType(std::wstring(itor->second->m_code));
 

@@ -5,11 +5,15 @@
 
 F_IRID::F_IRID(void)
 {
-	m_name.RCNM = 0;
-	m_name.RCID = 0;
-	m_nitc = 0;
-	m_rver = 0;
-	m_ruin = 0;
+	
+}
+
+F_IRID::F_IRID(RecordName recordName, int NFTC, int RVER, int RUIN)
+{
+	m_name = recordName;
+	m_nftc = NFTC;
+	m_rver = RVER;
+	m_ruin = RUIN;
 }
 
 F_IRID::~F_IRID(void)
@@ -17,29 +21,12 @@ F_IRID::~F_IRID(void)
 
 }
 
-void F_IRID::ReadField(BYTE *&buf)
+int F_IRID::NITC()
 {
-	m_name.RCNM = *(buf++);
-	m_name.RCID = buf2uint(buf, 4);
-	m_nitc = buf2uint(buf, 2);
-	m_rver = buf2uint(buf, 2);
-	m_ruin = *(buf++);
+	return m_nftc;
 }
 
-bool F_IRID::WriteField(CFile* file)
+void F_IRID::NITC(int value)
 {
-	file->Write(&m_name.RCNM, 1);
-	file->Write(&m_name.RCID, 4);
-	file->Write(&m_nitc, 2);
-	file->Write(&m_rver, 2);
-	file->Write(&m_ruin, 1);
-
-	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
-	
-	return true;
-}
-
-int F_IRID::GetFieldLength()
-{
-	return 11;
+	m_nftc = value;
 }

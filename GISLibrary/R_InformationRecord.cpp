@@ -148,5 +148,5 @@ int R_InformationRecord::GetInformationAssociationCount()
 
 int R_InformationRecord::GetNumericCode()
 {
-	return m_irid.m_nitc;
+	return m_irid.NITC();
 }

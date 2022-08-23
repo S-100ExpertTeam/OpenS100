@@ -7,9 +7,6 @@ F_FRID::F_FRID(void)
 {
 	m_name.RCNM = 0;
 	m_name.RCID = 0;
-	m_nftc = 0;
-	m_rver = 0;
-	m_ruin = 0;
 }
 
 F_FRID::F_FRID(RecordName recordName, int NFTC, int RVER, int RUIN)

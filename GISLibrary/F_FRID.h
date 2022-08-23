@@ -16,9 +16,9 @@ public:
 	* Format		: b12
 	* Description	: A valid feature type code as defined in the FTCS field of the Dataset General Information Record
 	*/
-	int m_nftc;
-	int m_rver;
-	int m_ruin;
+	int m_nftc = 0;
+	int m_rver = 0;
+	int m_ruin = 0;
 
 public:
 	void ReadField(BYTE *&buf);
