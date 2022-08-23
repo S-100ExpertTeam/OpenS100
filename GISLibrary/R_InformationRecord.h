@@ -28,4 +28,14 @@ public:
 	int GetAssociationCount();
 	int GetInformationAssociationCount();
 	int GetNumericCode();	
+
+	std::vector<ATTR*> GetAllAttributes();
+
+	std::vector<ATTR*> GetRootAttributes();
+	std::vector<ATTR*> GetRootAttributes(int numericCode);
+
+	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR);
+	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR, int numericCode);
+
+	int GetAttributeIndex(ATTR* attr);
 };

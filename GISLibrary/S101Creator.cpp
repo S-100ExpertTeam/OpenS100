@@ -8,8 +8,16 @@
 #include "R_CurveRecord.h"
 #include "R_CompositeRecord.h"
 #include "R_SurfaceRecord.h"
+#include "ATTR.h"
+#include "F_ATTR.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../S100Geometry/SPoint.h"
+#include "../S100Geometry/SMultiPoint.h"
+#include "../S100Geometry/SCurve.h"
+#include "../S100Geometry/SCompositeCurve.h"
+#include "../S100Geometry/SSurface.h"
 
 #include <set>
 
@@ -70,9 +78,184 @@ R_InformationRecord* S101Creator::AddInformation(std::wstring code)
 	return nullptr;
 }
 
-R_FeatureRecord* S101Creator::AddAttribute(R_FeatureRecord* feature, std::wstring code, std::wstring value, int paix)
+ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, std::wstring code, std::wstring value)
 {
+	auto attribute = fc->GetSimpleAttribute(code);
+	if (attribute)
+	{
+		if (0 == feature->m_attr.size())
+		{
+			feature->m_attr.push_back(new F_ATTR());
+		}
+
+		auto attributeList = feature->m_attr.front();
+
+		auto attr = new ATTR();
+		attributeList->Insert(attr);
+
+		attr->m_natc = enc->m_dsgir.GetAttributeCode(code);
+		attr->m_atix = GetATIXofNewRootAttribute(feature, attr->m_natc);
+		attr->m_paix = 0;
+		attr->m_atin = 1;
+		attr->m_atvl = value.c_str();
+
+		return attr;
+	}
+
 	return nullptr;
+}
+
+ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, std::wstring code, std::wstring value)
+{
+	auto attribute = fc->GetSimpleAttribute(code);
+	if (attribute)
+	{
+		if (0 == information->m_attr.size())
+		{
+			information->m_attr.push_back(new F_ATTR());
+		}
+
+		auto attributeList = information->m_attr.front();
+
+		auto attr = new ATTR();
+		attributeList->Insert(attr);
+
+		attr->m_natc = enc->m_dsgir.GetAttributeCode(code);
+		attr->m_atix = GetATIXofNewRootAttribute(information, attr->m_natc);
+		attr->m_paix = 0;
+		attr->m_atin = 1;
+		attr->m_atvl = value.c_str();
+
+		return attr;
+	}
+
+	return nullptr;
+}
+
+ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code, std::wstring value)
+{
+	if (parentATTR == nullptr)
+	{
+		return AddSimpleAttribute(feature, code, value);
+	}
+
+	int parentAttributeIndex = feature->GetAttributeIndex(parentATTR);
+	if (parentAttributeIndex == 0)
+	{
+		return nullptr;
+	}
+
+	auto attribute = fc->GetSimpleAttribute(code);
+	if (attribute)
+	{
+		auto attributeList = feature->m_attr.front();
+
+		auto attr = new ATTR();
+		attributeList->Insert(attr);
+
+		attr->m_natc = enc->m_dsgir.GetAttributeCode(code);
+		attr->m_atix = GetATIXofNewChildAttribute(feature, parentATTR, attr->m_natc);
+		attr->m_paix = parentAttributeIndex;
+		attr->m_atin = 1;
+		attr->m_atvl = value.c_str();
+
+		return attr;
+	}
+
+	return nullptr;
+}
+
+ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code, std::wstring value)
+{
+	if (parentATTR == nullptr)
+	{
+		return AddSimpleAttribute(information, code, value);
+	}
+
+	int parentAttributeIndex = information->GetAttributeIndex(parentATTR);
+	if (parentAttributeIndex == 0)
+	{
+		return nullptr;
+	}
+
+	auto attribute = fc->GetSimpleAttribute(code);
+	if (attribute)
+	{
+		auto attributeList = information->m_attr.front();
+
+		auto attr = new ATTR();
+		attributeList->Insert(attr);
+
+		attr->m_natc = enc->m_dsgir.GetAttributeCode(code);
+		attr->m_atix = GetATIXofNewChildAttribute(information, parentATTR, attr->m_natc);
+		attr->m_paix = parentAttributeIndex;
+		attr->m_atin = 1;
+		attr->m_atvl = value.c_str();
+
+		return attr;
+	}
+
+	return nullptr;
+}
+
+SGeometry* S101Creator::SetPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size)
+{
+	if (feature->m_geometry == nullptr)
+	{
+		feature->m_geometry = new SPoint();
+	}
+
+	feature->m_geometry->ImportFromWkb(value, size);
+
+	return feature->m_geometry;
+}
+
+SGeometry* S101Creator::SetMultiPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size)
+{
+	if (feature->m_geometry == nullptr)
+	{
+		feature->m_geometry = new SMultiPoint();
+	}
+
+	feature->m_geometry->ImportFromWkb(value, size);
+
+	return feature->m_geometry;
+}
+
+SGeometry* S101Creator::SetCurveGeometry(R_FeatureRecord* feature, unsigned char* value, int size)
+{
+	if (feature->m_geometry == nullptr)
+	{
+		feature->m_geometry = new SCurve();
+	}
+
+	feature->m_geometry->ImportFromWkb(value, size);
+
+	return feature->m_geometry;
+}
+
+SGeometry* S101Creator::SetCompositeCurveGeometry(R_FeatureRecord* feature, unsigned char* value, int size)
+{
+	if (feature->m_geometry == nullptr)
+	{
+		feature->m_geometry = new SCompositeCurve();
+	}
+
+	feature->m_geometry->ImportFromWkb(value, size);
+
+	return feature->m_geometry;
+}
+
+SGeometry* S101Creator::SetSurfaceGeometry(R_FeatureRecord* feature, unsigned char* value, int size)
+{
+	if (feature->m_geometry == nullptr)
+	{
+		feature->m_geometry = new SSurface();
+	}
+
+	feature->m_geometry->ImportFromWkb(value, size);
+
+	return feature->m_geometry;
 }
 
 RecordName S101Creator::NewFeatureRecordName()
@@ -206,4 +389,76 @@ RecordName S101Creator::NewSurfaceRecordName()
 	}
 
 	return RecordName(GISLibrary::RCNM::Surface, 1);
+}
+
+int S101Creator::GetATIXofNewRootAttribute(R_FeatureRecord* feature, int numericCode)
+{
+	auto rootAttributes = feature->GetRootAttributes(numericCode);
+
+	if (rootAttributes.size() == 0)
+	{
+		return 1;
+	}
+	
+	std::set<int> ATIXs;
+	for (auto i = rootAttributes.begin(); i != rootAttributes.end(); i++)
+	{
+		ATIXs.insert((*i)->m_atix);
+	}
+
+	return (*ATIXs.end()) + 1;
+}
+
+int S101Creator::GetATIXofNewRootAttribute(R_InformationRecord* information, int numericCode)
+{
+	auto rootAttributes = information->GetRootAttributes(numericCode);
+
+	if (rootAttributes.size() == 0)
+	{
+		return 1;
+	}
+
+	std::set<int> ATIXs;
+	for (auto i = rootAttributes.begin(); i != rootAttributes.end(); i++)
+	{
+		ATIXs.insert((*i)->m_atix);
+	}
+
+	return (*ATIXs.end()) + 1;
+}
+
+int S101Creator::GetATIXofNewChildAttribute(R_FeatureRecord* feature, ATTR* parentATTR, int numericCode)
+{
+	auto childAttributes = feature->GetChildAttributes(parentATTR, numericCode);
+
+	if (childAttributes.size() == 0)
+	{
+		return 1;
+	}
+
+	std::set<int> ATIXs;
+	for (auto i = childAttributes.begin(); i != childAttributes.end(); i++)
+	{
+		ATIXs.insert((*i)->m_atix);
+	}
+
+	return (*ATIXs.end()) + 1;
+}
+
+int S101Creator::GetATIXofNewChildAttribute(R_InformationRecord* information, ATTR* parentATTR, int numericCode)
+{
+	auto childAttributes = information->GetChildAttributes(parentATTR, numericCode);
+
+	if (childAttributes.size() == 0)
+	{
+		return 1;
+	}
+
+	std::set<int> ATIXs;
+	for (auto i = childAttributes.begin(); i != childAttributes.end(); i++)
+	{
+		ATIXs.insert((*i)->m_atix);
+	}
+
+	return (*ATIXs.end()) + 1;
 }

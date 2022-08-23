@@ -82,3 +82,19 @@ int F_ATTR::GetFieldLength()
 	}
 	return ++len;
 }
+
+void F_ATTR::Insert(ATTR* attr)
+{
+	m_arr.push_back(attr);
+}
+
+//int F_ATTR::GetNewAttributeIndex(ATTR* attr, int paix)
+//{
+//	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
+//	{
+//		auto currentATTR = *i;
+//
+//		//if (attr->m_natc == currentATTR->m_natc && 
+//		//	pait)
+//	}
+//}

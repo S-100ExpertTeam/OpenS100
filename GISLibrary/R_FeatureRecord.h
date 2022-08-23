@@ -89,6 +89,16 @@ public:
 	int GetSPASRCNM();
 	int GetSPASCount();
 
+	std::vector<ATTR*> GetAllAttributes();
+
+	std::vector<ATTR*> GetRootAttributes();
+	std::vector<ATTR*> GetRootAttributes(int numericCode);
+
+	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR);
+	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR, int numericCode);
+
+	int GetAttributeIndex(ATTR* attr);
+
 	SGeometry* GetGeometry();
 
 	SPAS* GetSPAS();

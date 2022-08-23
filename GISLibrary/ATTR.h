@@ -4,6 +4,11 @@
 struct ATTR
 {
 public:
+	ATTR();
+	ATTR(int NATC, int ATIX, int PAIX, int ATIN, CString& ATVL);
+	virtual ~ATTR();
+
+public:
 	/*
 	* Numeric attribute code
 	* Format		: b12

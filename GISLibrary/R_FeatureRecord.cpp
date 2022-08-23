@@ -360,6 +360,130 @@ int R_FeatureRecord::GetSPASCount()
 	return result;
 }
 
+std::vector<ATTR*> R_FeatureRecord::GetAllAttributes()
+{
+	if (m_attr.size() == 0)
+	{
+		return std::vector<ATTR*>();
+	}
+
+	return m_attr.front()->m_arr;
+}
+
+std::vector<ATTR*> R_FeatureRecord::GetRootAttributes()
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+
+	for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+	{
+		if ((*i)->m_paix == 0)
+		{
+			result.push_back(*i);
+		}
+	}
+
+	return result;
+}
+
+std::vector<ATTR*> R_FeatureRecord::GetRootAttributes(int numericCode)
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+
+	for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+	{
+		if ((*i)->m_paix == 0 && (*i)->m_natc == numericCode)
+		{
+			result.push_back(*i);
+		}
+	}
+
+	return result;
+}
+
+std::vector<ATTR*> R_FeatureRecord::GetChildAttributes(ATTR* parentATTR)
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+	int parentIndex = -1;
+
+	for (int i = 0; i < allAttributes.size(); i++)
+	{
+		if (parentATTR == allAttributes[i])
+		{
+			parentIndex = i;
+			break;
+		}
+	}
+
+	if (parentIndex > 0)
+	{
+		for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+		{
+			if ((*i)->m_paix == parentIndex)
+			{
+				result.push_back(*i);
+			}
+		}
+	}
+
+	return result;
+}
+
+std::vector<ATTR*> R_FeatureRecord::GetChildAttributes(ATTR* parentATTR, int numericCode)
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+	int parentIndex = -1;
+
+	for (int i = 0; i < allAttributes.size(); i++)
+	{
+		if (parentATTR == allAttributes[i])
+		{
+			parentIndex = i;
+			break;
+		}
+	}
+
+	if (parentIndex > 0)
+	{
+		for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+		{
+			if ((*i)->m_paix == parentIndex && (*i)->m_natc == numericCode)
+			{
+				result.push_back(*i);
+			}
+		}
+	}
+
+	return result;
+}
+
+int R_FeatureRecord::GetAttributeIndex(ATTR* attr)
+{
+	if (m_attr.size() > 0)
+	{
+		auto ATTRs = m_attr.front();
+		for (
+			int i = 0;
+			i < ATTRs->m_arr.size();
+			i++)
+		{
+			if (ATTRs->m_arr[i] == attr)
+			{
+				return i + 1;
+			}
+		}
+	}
+
+	return 0;
+}
+
 SGeometry* R_FeatureRecord::GetGeometry()
 {
 	return m_geometry;

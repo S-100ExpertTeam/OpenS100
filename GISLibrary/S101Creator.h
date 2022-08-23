@@ -18,10 +18,17 @@ public:
 	R_FeatureRecord* AddFeature(std::wstring code);
 	R_InformationRecord* AddInformation(std::wstring code);
 
-	R_FeatureRecord* AddAttribute(R_FeatureRecord* feature, std::wstring code, std::wstring value, int paix = 0);
-	R_InformationRecord* AddAttribute(R_InformationRecord* feature, std::wstring code, std::wstring value, int paix = 0);
+	ATTR* AddSimpleAttribute(R_FeatureRecord* feature, std::wstring code, std::wstring value);
+	ATTR* AddSimpleAttribute(R_InformationRecord* information, std::wstring code, std::wstring value);
 
-	R_FeatureRecord* SetGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
+	ATTR* AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code, std::wstring value);
+	ATTR* AddSimpleAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code, std::wstring value);
+
+	SGeometry* SetPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
+	SGeometry* SetMultiPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
+	SGeometry* SetCurveGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
+	SGeometry* SetCompositeCurveGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
+	SGeometry* SetSurfaceGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
 
 	RecordName NewFeatureRecordName();
 	RecordName NewInformationRecordName();
@@ -30,5 +37,11 @@ public:
 	RecordName NewCurveRecordName();
 	RecordName NewCompositeCurveRecordName();
 	RecordName NewSurfaceRecordName();
+
+	int GetATIXofNewRootAttribute(R_FeatureRecord* feature, int numericCode);
+	int GetATIXofNewRootAttribute(R_InformationRecord* information, int numericCode);
+
+	int GetATIXofNewChildAttribute(R_FeatureRecord* feature, ATTR* parentATTR, int numericCode);
+	int GetATIXofNewChildAttribute(R_InformationRecord* information, ATTR* parentATTR, int numericCode);
 };
 
