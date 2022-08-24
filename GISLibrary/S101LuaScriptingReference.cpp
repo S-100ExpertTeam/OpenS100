@@ -5,10 +5,14 @@
 #include "host_functions.h"
 #include "ProcessS101.h"
 
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\GeoMetryLibrary\\ENCCommon.h"
-#include "..\\LuaScriptingReference\\portrayal_catalog.h"
-#include "..\\LuaScriptingReference\\lua_session.h"
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/Enum_ParameterType.h"
+
+#include "../GeoMetryLibrary/ENCCommon.h"
+
+#include "../LuaScriptingReference/lua_session.h"
 
 #include <iostream>
 #include <string>
@@ -72,5 +76,54 @@ namespace KRS_LUA_SCRIPT_REFERENCE
 		ProcessS101::theInstance.m_lua_session->call("PortrayalMain");
 
 		return &resultDrawingInstructions;
+	}
+
+	std::vector<context_parameter> GetContextParameters(PortrayalCatalogue* pc)
+	{
+		std::vector<context_parameter> result;
+
+		auto context = pc->GetContext();
+		auto cnt = context->GetCountOfParameter();
+
+		for (int i = 0; i < cnt; i++)
+		{
+			auto cp = context->GetContextParameter(i);
+			if (cp)
+			{
+				auto id = cp->GetIdAsString();
+				auto enumType = cp->GetType();
+				std::string strType = "";
+				auto default_value = cp->GetDefaultAsString();
+
+				if (enumType == ParameterType::Boolean)
+				{
+					strType = "boolean";
+				}
+				else if (enumType == ParameterType::Integer)
+				{
+					strType = "integer";
+				}
+				else if (enumType == ParameterType::Double)
+				{
+					strType = "real";
+				}
+				else if (enumType == ParameterType::String)
+				{
+					strType = "text";
+				}
+				else if (enumType == ParameterType::Date)
+				{
+					strType = "date";
+				}
+
+				context_parameter newItem;
+				newItem.name = id;
+				newItem.type = strType;
+				newItem.default_value = default_value;
+				result.push_back(newItem);
+			}
+		}
+
+		return result;
 	}
 }

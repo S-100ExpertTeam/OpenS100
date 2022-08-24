@@ -6,9 +6,6 @@
 
 struct lua_State;
 
-class S100_FC;
-class S101Cell;
-
 extern std::list<Result_DrawingInstruction> resultDrawingInstructions;
 
 int HostGetFeatureIDs(lua_State *l);

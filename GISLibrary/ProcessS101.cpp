@@ -9,7 +9,6 @@
 
 #include "../LuaScriptingReference/lua_functions.h"
 #include "../LuaScriptingReference/lua_session.h"
-#include "../LuaScriptingReference/portrayal_catalog.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -879,7 +878,7 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 	// Initialize portrayal context parameters
 	theInstance.m_lua_session->get_function("PortrayalInitializeContextParameters");
 
-	auto cps = pc_get_context_parameters_from_pc(pc);
+	auto cps = KRS_LUA_SCRIPT_REFERENCE::GetContextParameters(pc);
 
 	std::vector<lua_variant> cpts;
 

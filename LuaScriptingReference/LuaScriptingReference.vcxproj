@@ -203,7 +203,6 @@
     <ClInclude Include="lua_session.h" />
     <ClInclude Include="multipoint.h" />
     <ClInclude Include="point.h" />
-    <ClInclude Include="portrayal_catalog.h" />
     <ClInclude Include="Result_DrawingInstruction.h" />
     <ClInclude Include="spatial_association.h" />
     <ClInclude Include="spatial_type.h" />
@@ -211,11 +210,11 @@
     <ClInclude Include="surface.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="context_parameter.cpp" />
     <ClCompile Include="LuaScriptingReference.cpp" />
     <ClCompile Include="lua_functions.cpp" />
     <ClCompile Include="lua_reference.cpp" />
     <ClCompile Include="lua_session.cpp" />
-    <ClCompile Include="portrayal_catalog.cpp" />
     <ClCompile Include="Result_DrawingInstruction.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -225,8 +224,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PortrayalCatalogue\PortrayalCatalogue.vcxproj">
-      <Project>{8ee76986-c155-4907-9088-d146ae47ebc8}</Project>
+    <ProjectReference Include="..\FeatureCatalog\FeatureCatalog.vcxproj">
+      <Project>{4964c844-dae9-4dd3-b9d9-daa7520d019a}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
