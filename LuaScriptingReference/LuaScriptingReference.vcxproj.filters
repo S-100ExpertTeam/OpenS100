@@ -80,9 +80,6 @@
     <ClCompile Include="LuaScriptingReference.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="host_interface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lua_session.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

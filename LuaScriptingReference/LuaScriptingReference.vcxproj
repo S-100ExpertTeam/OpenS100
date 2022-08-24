@@ -211,7 +211,6 @@
     <ClInclude Include="surface.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="host_interface.cpp" />
     <ClCompile Include="LuaScriptingReference.cpp" />
     <ClCompile Include="lua_functions.cpp" />
     <ClCompile Include="lua_reference.cpp" />
