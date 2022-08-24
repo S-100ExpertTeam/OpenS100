@@ -16,9 +16,8 @@ private:
 	bool suppression = false;
 
 public:
+	// multiplicity (0..*) to support composite line style.
 	std::vector<SENC_LineStyleBase*> lineStyles;
-	// Referenced Curve Link
-	//std::list<SCurveHasOrient*> m_listCurveLink;
 
 public:
 	void SetSuppression(bool value);

@@ -190,25 +190,26 @@ void S101Cell::Validation()
 		auto feature = *i;
 		int spasCount = feature->GetSPASCount();
 
-		if (spasCount == 0)
-		{
-			OutputDebugString(L"No geometry\n");
-		}
-		else if (spasCount > 1)
+		//if (spasCount == 0)
+		//{
+		//	OutputDebugString(L"No geometry\n");
+		//}
+		//else 
+		if (spasCount > 1)
 		{
 			OutputDebugString(L"Multiple spas field\n");
 		}
-		else if (spasCount == 1)
-		{
-			auto spas = feature->GetSPAS();
-			if (spas->m_ornt == 2)
-			{
-				auto featureCode = this->m_dsgir.GetFeatureCode(feature->m_frid.m_nftc);
-				CString str;
-				str.Format(L"ORNT in SPAS is reverse(RCNM : %d, %s(%d))\n", spas->m_name.RCNM, featureCode, feature->m_frid.m_name.RCID);
-				OutputDebugString(str);
-			}
-		}
+		//else if (spasCount == 1)
+		//{
+		//	auto spas = feature->GetSPAS();
+		//	if (spas->m_ornt == 2)
+		//	{
+		//		auto featureCode = this->m_dsgir.GetFeatureCode(feature->m_frid.m_nftc);
+		//		CString str;
+		//		str.Format(L"ORNT in SPAS is reverse(RCNM : %d, %s(%d))\n", spas->m_name.RCNM, featureCode, feature->m_frid.m_name.RCID);
+		//		OutputDebugString(str);
+		//	}
+		//}
 	}
 }
 

@@ -30,7 +30,7 @@ SENC_LineInstruction::~SENC_LineInstruction()
 		switch ((*itor)->type)
 		{
 		case 0:
-			delete *itor;
+			delete * itor;
 			break;
 		case 1:
 			delete ((SENC_LineStyle*)*itor);
@@ -90,11 +90,12 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 
 			lineStyleBase->DrawInstruction(curve, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
 		}
+		return;
 	}
 
 	if (nullptr == curListCurveLink)
 	{
-		OutputDebugString(L"The spatial information format of the object is invalid..");
+		OutputDebugString(L"The spatial information format of the object is invalid.\n");
 		return;
 	}
 

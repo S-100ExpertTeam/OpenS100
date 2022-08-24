@@ -1,5 +1,9 @@
 #pragma once
 
+#include "../FeatureCatalog/AttributeBinding.h"
+
+#include <vector>
+
 class S101Cell;
 class FeatureCatalogue;
 class R_FeatureRecord;
@@ -44,5 +48,7 @@ public:
 
 	int GetATIXofNewChildAttribute(R_FeatureRecord* feature, ATTR* parentATTR, int numericCode);
 	int GetATIXofNewChildAttribute(R_InformationRecord* information, ATTR* parentATTR, int numericCode);
+
+	//std::vector<AttributeBinding> Get
 };
 
