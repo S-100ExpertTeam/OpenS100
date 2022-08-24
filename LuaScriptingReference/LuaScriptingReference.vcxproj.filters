@@ -30,9 +30,6 @@
     <ClInclude Include="lua_session.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rapidxml.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lua_functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
