@@ -319,15 +319,6 @@ void hd_init(S101Cell *c)
 std::vector<std::string>& hd_get_feature_ids()
 {
 	return s_feature_ids;
-
-	//std::vector<std::string> feature_ids;
-
-	//for (auto id : s_feature_ids)
-	//{
-	//	feature_ids.push_back(id);
-	//}
-
-	//return feature_ids;
 }
 
 std::string hd_get_feature_code(std::string id)

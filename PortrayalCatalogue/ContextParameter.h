@@ -15,14 +15,15 @@ namespace Portrayal
 
 	private:
 		ParameterType type;
-		std::wstring default;
+		std::wstring defaultValue;
 
 	public:
-		ParameterType* GetType();
-		void SetType(ParameterType* value);
+		ParameterType GetType();
+		void SetType(ParameterType value);
 		void SetType(std::wstring value);
 
 		std::wstring GetDefault();
+		std::string GetDefaultAsString();
 		void SetDefault(std::wstring& value);
 
 		void GetContents(pugi::xml_node& node);

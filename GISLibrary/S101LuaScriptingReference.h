@@ -27,6 +27,6 @@ public:
 
 public:
 	lua_session* m_lua_session;
-	S101Cell* m_s101_cell;
-	FeatureCatalogue* m_s101_feature_catalogue;
+	//S101Cell* m_s101_cell;
+	//FeatureCatalogue* m_s101_feature_catalogue;
 };

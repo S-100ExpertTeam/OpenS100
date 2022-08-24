@@ -813,26 +813,13 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 	if (theInstance.m_lua_session)
 	{
 		delete theInstance.m_lua_session;
+		theInstance.m_lua_session = nullptr;
 	}
-
-	if (cell)
-	{
-		theInstance.m_s101_cell = cell;
-	}
-
-	if (fc)
-	{
-		theInstance.m_s101_feature_catalogue = fc;
-	}
-
-	theInstance.m_lua_session = NULL;
 
 	std::string top_level_rule(topLevelRule);
 	pTheFC = fc;
 
 	hd_init(cell);
-
-	pc_init(pc->GetCataloguePathAsString().c_str());
 
 	//Initialize Lua library
 	theInstance.m_lua_session = new lua_session();
@@ -892,18 +879,18 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 	// Initialize portrayal context parameters
 	theInstance.m_lua_session->get_function("PortrayalInitializeContextParameters");
 
-	auto cps = pc_get_context_parameters();
+	auto cps = pc_get_context_parameters_from_pc(pc);
 
 	std::vector<lua_variant> cpts;
 
 	for (auto cp : cps)
+	{
 		cpts.push_back(theInstance.m_lua_session->call("PortrayalCreateContextParameter", { cp.name, cp.type, cp.default_value }));
+	}
 
 	theInstance.m_lua_session->push(cpts);
 
 	theInstance.m_lua_session->call_raw(1);
-
-	pc_delete();
 }
 
 void ProcessS101::PortrayalSetContextParameter(const char*  parameterName, const char*  parameterValue)

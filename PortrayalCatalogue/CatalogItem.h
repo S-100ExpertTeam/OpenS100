@@ -18,6 +18,7 @@ namespace Portrayal
 
 	public: 
 		std::wstring GetId();
+		std::string GetIdAsString();
 		void SetId(std::wstring& value);
 
 		S100_Description* GetDescription(int index);

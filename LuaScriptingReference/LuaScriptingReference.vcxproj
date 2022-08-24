@@ -204,7 +204,6 @@
     <ClInclude Include="multipoint.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="portrayal_catalog.h" />
-    <ClInclude Include="rapidxml.hpp" />
     <ClInclude Include="Result_DrawingInstruction.h" />
     <ClInclude Include="spatial_association.h" />
     <ClInclude Include="spatial_type.h" />
@@ -227,11 +226,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FeatureCatalog\FeatureCatalog.vcxproj">
-      <Project>{4964c844-dae9-4dd3-b9d9-daa7520d019a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\LatLonUtility\LatLonUtility.vcxproj">
-      <Project>{d87f9640-70b7-4695-85c5-105ba24fa7c0}</Project>
+    <ProjectReference Include="..\PortrayalCatalogue\PortrayalCatalogue.vcxproj">
+      <Project>{8ee76986-c155-4907-9088-d146ae47ebc8}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

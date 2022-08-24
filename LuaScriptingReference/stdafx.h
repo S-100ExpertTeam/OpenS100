@@ -35,4 +35,8 @@
 
 #include <optional>
 
-#pragma comment(lib, "d2d1.lib")
+#ifdef _DEBUG
+# pragma comment(lib, "comsuppwd.lib")
+#else
+# pragma comment(lib, "comsuppw.lib")
+#endif
