@@ -19,7 +19,7 @@ public:
 	*					{6} - Conic
 	*					{7} - CircularArcCenterPointWithRadius
 	*/
-	int m_intp;
+	int m_intp = 4;
 	/*
 	* Circle or arc
 	* Format		: b11
@@ -27,28 +27,28 @@ public:
 	*					{2} – segment is an arc
 	*					Required if INTP = 7 (CircularArcCenterPointWithRadius), otherwise omitted
 	*/
-	int m_circ;
+	int m_circ = 0;
 	/*
 	* Coordinate in Y axis
 	* Format		: b48
 	* Description	:	Y coordinate or latitude of centre
 	*					Required if INTP = 7 (CircularArcCenterPointWithRadius), otherwise omitted
 	*/
-	double m_ycoo;
+	double m_ycoo = 0;
 	/*
 	* Coordinate in X axis
 	* Format		: b48
 	* Description	:	X coordinate or longitude of centre
 	*					Required if INTP = 7 (CircularArcCenterPointWithRadius), otherwise omitted
 	*/
-	double m_xcoo;
+	double m_xcoo = 0;
 	/*
 	* Distance
 	* Format		: b48
 	* Description	:	Radius
 	*					Required if INTP = 7 (CircularArcCenterPointWithRadius), otherwise omitted
 	*/
-	double m_dist;
+	double m_dist = 0;
 	/*
 	* Distance unit
 	* Format		: b11
@@ -60,7 +60,7 @@ public:
 	*					{6} Millimetres on screen
 	*					Required if INTP = 7 (CircularArcCenterPointWithRadius), otherwise omitted
 	*/
-	int m_disu;
+	int m_disu = 0;
 	/*
 	* Start Bearing Angle
 	* Format		: b48
@@ -69,7 +69,7 @@ public:
 	*					Optional if INTP = 7 (CircularArcCenterPointWithRadius) and CIRC = 1 (circle).
 	*					Omitted for other values of INTP
 	*/
-	double m_sbrg;
+	double m_sbrg = 0;
 	/*
 	* Angular distance
 	* Format		: b48
@@ -79,7 +79,7 @@ public:
 	*					Optional if INTP = 7 (CircularArcCenterPointWithRadius) and CIRC = 1 (circle).
 	*					Omitted for other values of INTP
 	*/
-	double m_angl;
+	double m_angl = 0;
 
 public:
 	void ReadField(BYTE *&buf);

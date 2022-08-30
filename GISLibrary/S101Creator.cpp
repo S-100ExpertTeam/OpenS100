@@ -11,6 +11,9 @@
 #include "ATTR.h"
 #include "F_ATTR.h"
 #include "F_PTAS.h"
+#include "F_SEGH.h"
+#include "F_C2IL.h"
+#include "IC2D.h"
 #include "PTAS.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
@@ -520,8 +523,12 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 
 	vectorRecord->m_ptas = new F_PTAS();
 
+	int numC2IL = 0;
+
 	if (geom->IsClosed())
 	{
+		numC2IL = geom->GetNumPoints() - 1;
+
 		auto firstPoint = geom->GetFirstPoint();
 		
 		if (firstPoint)
@@ -540,6 +547,8 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 	}
 	else
 	{
+		numC2IL = geom->GetNumPoints() - 2;
+
 		auto firstPoint = geom->GetFirstPoint();
 		auto lastPoint = geom->GetLastPoint();
 
@@ -563,31 +572,24 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 		}
 	}
 
-	//vectorRecord->m_ptas->m_arr.resize(numPTAS);
+	vectorRecord->m_segh = new F_SEGH();
 
-	//for (int i = 0; i < numPTAS; i++)
-	//{
-	//	auto sPoint = geom->GetPoint(i + 1);
-	//	if (sPoint)
-	//	{
-	//		auto pointRecord = ConvertInsertVectorRecord(sPoint);
-	//		if (pointRecord)
-	//		{
-	//			pointRecord->
-	//		}
-	//	}
-	//}
+	auto f_C2IL = new F_C2IL();
+	vectorRecord->m_c2il.push_back(f_C2IL);
 
-	//auto numPoint = geom->GetNumPoints();
-	//for (int i = 0; i < numPoint; i++)
-	//{
-	//	vectorRecord->InsertC3IL(
-	//		geom->GetX(i) * enc->GetCMFX(),
-	//		geom->GetY(i) * enc->GetCMFY(),
-	//		geom->GetZ(i) * enc->GetCMFZ());
-	//}
+	for (int i = 0; i < numC2IL; i++)
+	{
+		auto sPoint = geom->GetPoint(i + 1);
+		if (sPoint)
+		{
+			auto C2IL = new IC2D();
+			C2IL->m_xcoo = sPoint->x * enc->GetCMFX();
+			C2IL->m_ycoo = sPoint->y * enc->GetCMFY();
+			f_C2IL->m_arr.push_back(C2IL);
+		}
+	}
 
-	//enc->InsertRecord(vectorRecord);
+	enc->InsertRecord(vectorRecord);
 
 	return vectorRecord;
 }

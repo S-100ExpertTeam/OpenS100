@@ -4,14 +4,6 @@
 
 F_SEGH::F_SEGH(void)
 {
-	m_intp = 0;
-	m_circ = 0;
-	m_ycoo = 0;
-	m_xcoo = 0;
-	m_dist = 0;
-	m_disu = 0;
-	m_sbrg = 0;
-	m_angl = 0;
 }
 
 F_SEGH::~F_SEGH(void)
