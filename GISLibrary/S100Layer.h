@@ -20,6 +20,7 @@ private:
 	PortrayalCatalogue *portrayalCatalogue = nullptr;
 	bool hasIndividualFC = false;
 	bool hasIndividualPC = false;
+	int productNumber = 100;
 
 public:
 	void SetFeatureCatalog(FeatureCatalogue* value);
@@ -35,6 +36,9 @@ public:
 	void DeleteCatalog();
 	void DrawInfo(HDC &hDC, Scaler *scaler);
 	S100SpatialObject* GetS100SpatialObject();
+	
+	int GetProductNumber();
+	void SetProductNumber(int value);
 
 public: // virtual
 	virtual std::wstring GetChartName() { return L""; }

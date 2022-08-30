@@ -234,9 +234,6 @@
     <ClCompile Include="R_VectorRecord.cpp">
       <Filter>S101\Record</Filter>
     </ClCompile>
-    <ClCompile Include="S100SpatialObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OrientedCurveRecord.cpp">
       <Filter>S101\Record</Filter>
     </ClCompile>
@@ -501,6 +498,9 @@
     <ClCompile Include="S101Creator.cpp">
       <Filter>S101</Filter>
     </ClCompile>
+    <ClCompile Include="S100SpatialObject.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -700,9 +700,6 @@
     </ClInclude>
     <ClInclude Include="R_VectorRecord.h">
       <Filter>S101\Record</Filter>
-    </ClInclude>
-    <ClInclude Include="S100SpatialObject.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OrientedCurveRecord.h">
       <Filter>S101\Record</Filter>
@@ -988,6 +985,9 @@
     </ClInclude>
     <ClInclude Include="Enum_RCNM.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S100SpatialObject.h">
+      <Filter>S100</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@
 
 S101Layer::S101Layer(FeatureCatalogue* fc, PortrayalCatalogue* pc) : S100Layer(fc, pc)
 {
+	SetProductNumber(101);
 }
 
 S101Layer::~S101Layer()

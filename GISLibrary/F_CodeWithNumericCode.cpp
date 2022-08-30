@@ -129,7 +129,7 @@ void F_CodeWithNumericCode::InsertCodeNumericCode(CString& code, int numericCode
 int F_CodeWithNumericCode::GetNewNumericCode()
 {
 	int limitNumericCode = 65535;
-	for (int i = 0; i <= limitNumericCode; i++)
+	for (int i = 1; i <= limitNumericCode; i++)
 	{
 		if (m_arr.find(i) == m_arr.end())
 		{

@@ -36,4 +36,10 @@ public:
 	void Projection();
 	void SetMultiplicationFactor(int comfX, int comfY);
 	void SetRCID(int value);
+
+	bool IsClosed();
+
+	SPoint* GetPoint(int index);
+	SPoint* GetFirstPoint();
+	SPoint* GetLastPoint();
 };

@@ -12,6 +12,7 @@
 #include "DialogDockLayerManager.h"
 #include "ConfigrationDlg.h"
 #include "CDialogExFeatureInformationList.h"
+#include "TestGISLibrary.h"
 
 #include "../GISLibrary/GISLibrary.h"
 #include "../GISLibrary/Layer.h"
@@ -1603,6 +1604,9 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		break;
 	case VK_F4:
 		CopyLayer();
+		break;
+	case VK_F5:
+		TestGISLibrary::TestCreateNewCode();
 		break;
 	}
 

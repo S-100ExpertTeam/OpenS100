@@ -10,6 +10,8 @@
 #include "R_SurfaceRecord.h"
 #include "ATTR.h"
 #include "F_ATTR.h"
+#include "F_PTAS.h"
+#include "PTAS.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -515,6 +517,62 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 
 	auto recordName = NewCurveRecordName();
 	vectorRecord->m_crid = F_CRID(recordName);
+
+	vectorRecord->m_ptas = new F_PTAS();
+
+	if (geom->IsClosed())
+	{
+		auto firstPoint = geom->GetFirstPoint();
+		
+		if (firstPoint)
+		{
+			auto pointRecord = ConvertInsertVectorRecord(firstPoint);
+
+			if (pointRecord)
+			{
+				auto ptas = new PTAS();
+				ptas->m_name = pointRecord->GetRecordName();
+				ptas->m_topi = 3;
+
+				vectorRecord->m_ptas->m_arr.push_back(ptas);
+			}
+		}
+	}
+	else
+	{
+		auto firstPoint = geom->GetFirstPoint();
+		auto lastPoint = geom->GetLastPoint();
+
+		if (firstPoint)
+		{
+			auto pointRecord = ConvertInsertVectorRecord(firstPoint);
+
+
+			if (pointRecord)
+			{
+				auto ptas = new PTAS();
+				ptas->m_name = pointRecord->GetRecordName();
+				ptas->m_topi = 3;
+
+				vectorRecord->m_ptas->m_arr.push_back(ptas);
+			}
+		}
+	}
+
+	//vectorRecord->m_ptas->m_arr.resize(numPTAS);
+
+	//for (int i = 0; i < numPTAS; i++)
+	//{
+	//	auto sPoint = geom->GetPoint(i + 1);
+	//	if (sPoint)
+	//	{
+	//		auto pointRecord = ConvertInsertVectorRecord(sPoint);
+	//		if (pointRecord)
+	//		{
+	//			pointRecord->
+	//		}
+	//	}
+	//}
 
 	//auto numPoint = geom->GetNumPoints();
 	//for (int i = 0; i < numPoint; i++)

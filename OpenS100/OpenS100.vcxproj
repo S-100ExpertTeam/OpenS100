@@ -232,6 +232,7 @@
     <ClInclude Include="PropertyGridVectorModify.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestGISLibrary.h" />
     <ClInclude Include="TreeCtrlExt.h" />
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +265,7 @@
     <ClCompile Include="PropertyGridAttributeModify.cpp" />
     <ClCompile Include="PropertyGridDrawingCommands.cpp" />
     <ClCompile Include="PropertyGridVectorModify.cpp" />
+    <ClCompile Include="TestGISLibrary.cpp" />
     <ClCompile Include="TreeCtrlExt.cpp" />
   </ItemGroup>
   <ItemGroup>

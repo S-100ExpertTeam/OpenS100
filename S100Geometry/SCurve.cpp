@@ -235,3 +235,55 @@ void SCurve::SetRCID(int value)
 {
 	m_id = ((__int64)120) << 32 | value;
 }
+
+bool SCurve::IsClosed()
+{
+	if (GetNumPoints() >= 3)
+	{
+		auto firstPoint = GetFirstPoint();
+		auto lastPoint = GetLastPoint();
+
+		if (firstPoint && lastPoint)
+		{
+			if (*firstPoint == *lastPoint)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+SPoint* SCurve::GetPoint(int index)
+{
+	if (index >= 0 && index < GetNumPoints())
+	{
+		return m_pPoints + index;
+	}
+	
+	return nullptr;
+}
+
+SPoint* SCurve::GetFirstPoint()
+{
+	if (GetNumPoints() > 0)
+	{
+		auto point = GetPoint(0);
+		return point;
+	}
+
+	return nullptr;
+}
+
+SPoint* SCurve::GetLastPoint()
+{
+	int numPoints = GetNumPoints();
+	if (numPoints > 0)
+	{
+		auto point = GetPoint(numPoints - 1);
+		return point;
+	}
+
+	return nullptr;
+}
