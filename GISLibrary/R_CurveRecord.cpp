@@ -33,12 +33,11 @@ R_CurveRecord::~R_CurveRecord()
 	}
 	m_inas.clear();
 
-	for (auto i = m_segh.begin(); i != m_segh.end(); i++)
+	if (m_segh)
 	{
-		delete *i;
-		*i = nullptr;
+		delete m_segh;
+		m_segh = nullptr;
 	}
-	m_segh.clear();
 
 	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++)
 	{
@@ -85,11 +84,9 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		}
 		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"SEGH"))
 		{
-			F_SEGH* segh = new F_SEGH();
+			m_segh = new F_SEGH();
 
-			segh->ReadField(buf);
-
-			m_segh.push_back(segh);
+			m_segh->ReadField(buf);
 		}
 		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"COCC"))
 		{
@@ -148,14 +145,13 @@ bool R_CurveRecord::WriteRecord(CFile* file)
 		fieldOffset += fieldLength;
 	}
 
-	for (auto i = m_segh.begin(); i != m_segh.end(); i++)
+	if (m_segh)
 	{
-		fieldLength = (*i)->GetFieldLength();
+		fieldLength = m_segh->GetFieldLength();
 		Directory dir("SEGH", fieldLength, fieldOffset);
 		directory.push_back(dir);
 		fieldOffset += fieldLength;
 	}
-
 
 	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++)
 	{
@@ -188,9 +184,9 @@ bool R_CurveRecord::WriteRecord(CFile* file)
 		m_ptas->WriteField(file);
 	}
 
-	for (auto i = m_segh.begin(); i != m_segh.end(); i++)
+	if (m_segh)
 	{
-		(*i)->WriteField(file);
+		m_segh->WriteField(file);
 	}
 
 	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++)

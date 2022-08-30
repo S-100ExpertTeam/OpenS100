@@ -3257,9 +3257,9 @@ bool S101Cell::UpdateCurMapRecord(S101Cell* cell) //curve Record.
 				value->m_secc->m_nseg = cur->m_secc->m_nseg;
 
 				//SEGH
-				if (cur->m_segh.size() > 0)
+				if (cur->m_segh)
 				{
-					value->m_segh.begin() = cur->m_segh.begin();
+					value->m_segh = cur->m_segh;
 				}
 
 				//C2IL

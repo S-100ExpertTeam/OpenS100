@@ -36,7 +36,7 @@ public:
 
 	// B : <1> (1)
 	// U : <0..1> (1)
-	std::list<F_SEGH*> m_segh;
+	F_SEGH* m_segh = nullptr;
 
 	// B : Not used
 	// U : <0..1> (3)

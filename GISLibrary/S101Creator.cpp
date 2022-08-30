@@ -543,18 +543,22 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 		auto firstPoint = geom->GetFirstPoint();
 		auto lastPoint = geom->GetLastPoint();
 
-		if (firstPoint)
+		if (firstPoint && lastPoint)
 		{
-			auto pointRecord = ConvertInsertVectorRecord(firstPoint);
+			auto firstPointRecord = ConvertInsertVectorRecord(firstPoint);
+			auto lastPointRecord = ConvertInsertVectorRecord(lastPoint);
 
-
-			if (pointRecord)
+			if (firstPointRecord && lastPointRecord)
 			{
-				auto ptas = new PTAS();
-				ptas->m_name = pointRecord->GetRecordName();
-				ptas->m_topi = 3;
+				auto firstPointPTAS = new PTAS();
+				firstPointPTAS->m_name = firstPointRecord->GetRecordName();
+				firstPointPTAS->m_topi = 3;
+				vectorRecord->m_ptas->m_arr.push_back(firstPointPTAS);
 
-				vectorRecord->m_ptas->m_arr.push_back(ptas);
+				auto lastPointPTAS = new PTAS();
+				lastPointPTAS->m_name = lastPointRecord->GetRecordName();
+				lastPointPTAS->m_topi = 3;
+				vectorRecord->m_ptas->m_arr.push_back(lastPointPTAS);
 			}
 		}
 	}
