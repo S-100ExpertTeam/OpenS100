@@ -115,6 +115,11 @@ bool R_PointRecord::WriteRecord(CFile* file)
 	return true;
 }
 
+RecordName R_PointRecord::GetRecordName()
+{
+	return m_prid.m_name;
+}
+
 int R_PointRecord::GetRCID()
 {
 	return  m_prid.m_name.RCID;
@@ -128,6 +133,17 @@ std::wstring R_PointRecord::GetRCIDasWstring()
 void R_PointRecord::SetC2IT(F_C2IT* value)
 {
 	m_c2it = value;
+}
+
+void R_PointRecord::SetC2IT(int x, int y)
+{
+	if (m_c2it == nullptr)
+	{
+		m_c2it = new F_C2IT();
+	}
+
+	m_c2it->m_xcoo = x;
+	m_c2it->m_ycoo = y;
 }
 
 void R_PointRecord::SetC3IT(F_C3IT* value) 

@@ -122,6 +122,11 @@ bool R_CompositeRecord::WriteRecord(CFile* file)
 	return true;
 }
 
+RecordName R_CompositeRecord::GetRecordName()
+{
+	return m_ccid.m_name;
+}
+
 int R_CompositeRecord::GetRCID()
 {
 	return m_ccid.m_name.RCID;

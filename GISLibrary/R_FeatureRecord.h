@@ -67,6 +67,7 @@ public:
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
 	bool WriteRecord(CFile* file);
+	RecordName GetRecordName();
 
 	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 	
@@ -102,4 +103,7 @@ public:
 	SGeometry* GetGeometry();
 
 	SPAS* GetSPAS();
+	SPAS* CreateEmptySPAS();
+
+	void SetVectorRecord(R_VectorRecord* record);
 };

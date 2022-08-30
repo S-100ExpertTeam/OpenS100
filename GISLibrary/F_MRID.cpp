@@ -11,6 +11,13 @@ F_MRID::F_MRID(void)
 	m_ruin = 0;
 }
 
+F_MRID::F_MRID(RecordName recordName, int RVER, int RUIN)
+{
+	m_name = recordName;
+	m_rver = RVER;
+	m_ruin = RUIN;
+}
+
 F_MRID::~F_MRID(void)
 {
 

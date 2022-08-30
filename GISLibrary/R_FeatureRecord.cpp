@@ -10,6 +10,11 @@
 #include "MASK.h"
 #include "SPAS.h"
 #include "DRDirectoryInfo.h"
+#include "R_PointRecord.h"
+#include "R_MultiPointRecord.h"
+#include "R_CurveRecord.h"
+#include "R_CompositeRecord.h"
+#include "R_SurfaceRecord.h"
 
 #include "..\\S100Geometry\\SGeometry.h"
 #include "..\\S100Geometry\\SPoint.h"
@@ -249,6 +254,11 @@ bool R_FeatureRecord::WriteRecord(CFile* file)
 	}
 
 	return true;
+}
+
+RecordName R_FeatureRecord::GetRecordName()
+{
+	return m_frid.m_name;
 }
 
 void R_FeatureRecord::Draw(HDC &hdc, Scaler *scaler, double offset)
@@ -502,4 +512,33 @@ SPAS* R_FeatureRecord::GetSPAS()
 	}
 
 	return nullptr;
+}
+
+SPAS* R_FeatureRecord::CreateEmptySPAS()
+{
+	if (m_spas.size() == 0)
+	{
+		m_spas.push_back(new F_SPAS());
+	}
+
+	if (m_spas.front()->m_arr.size() == 0)
+	{
+		m_spas.front()->m_arr.push_back(new SPAS());
+	}
+
+	return GetSPAS();
+}
+
+void R_FeatureRecord::SetVectorRecord(R_VectorRecord* record)
+{
+	auto spas = GetSPAS();
+	if (nullptr == spas)
+	{
+		spas = CreateEmptySPAS();
+	}
+
+	if (spas)
+	{
+		spas->Set(record->GetRecordName());
+	}
 }

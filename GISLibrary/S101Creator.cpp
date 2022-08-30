@@ -206,6 +206,12 @@ SGeometry* S101Creator::SetPointGeometry(R_FeatureRecord* feature, unsigned char
 	}
 
 	feature->m_geometry->ImportFromWkb(value, size);
+	
+	auto geometry = (SPoint*)feature->m_geometry;
+	
+	auto vectorRecord = ConvertInsertVectorRecord(geometry);
+
+	feature->SetVectorRecord(vectorRecord);
 
 	return feature->m_geometry;
 }
@@ -218,6 +224,12 @@ SGeometry* S101Creator::SetMultiPointGeometry(R_FeatureRecord* feature, unsigned
 	}
 
 	feature->m_geometry->ImportFromWkb(value, size);
+
+	auto geometry = (SMultiPoint*)feature->m_geometry;
+
+	auto vectorRecord = ConvertInsertVectorRecord(geometry);
+
+	feature->SetVectorRecord(vectorRecord);
 
 	return feature->m_geometry;
 }
@@ -461,4 +473,59 @@ int S101Creator::GetATIXofNewChildAttribute(R_InformationRecord* information, AT
 	}
 
 	return (*ATIXs.end()) + 1;
+}
+
+R_PointRecord* S101Creator::ConvertInsertVectorRecord(SPoint* geom)
+{
+	auto vectorRecord = new R_PointRecord();
+
+	auto recordName = NewPointRecordName();
+	vectorRecord->m_prid = F_PRID(recordName);
+	vectorRecord->SetC2IT(geom->x * enc->GetCMFX(), geom->y * enc->GetCMFY());
+
+	enc->InsertRecord(vectorRecord);
+
+	return vectorRecord;
+}
+
+R_MultiPointRecord* S101Creator::ConvertInsertVectorRecord(SMultiPoint* geom)
+{
+	auto vectorRecord = new R_MultiPointRecord();
+
+	auto recordName = NewMultiPointRecordName();
+	vectorRecord->m_mrid = F_MRID(recordName);
+	
+	auto numPoint = geom->GetNumPoints();
+	for (int i = 0; i < numPoint; i++)
+	{
+		vectorRecord->InsertC3IL(
+			geom->GetX(i) * enc->GetCMFX(),
+			geom->GetY(i) * enc->GetCMFY(),
+			geom->GetZ(i) * enc->GetCMFZ());
+	}
+
+	enc->InsertRecord(vectorRecord);
+
+	return vectorRecord;
+}
+
+R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
+{
+	auto vectorRecord = new R_CurveRecord();
+
+	auto recordName = NewCurveRecordName();
+	vectorRecord->m_crid = F_CRID(recordName);
+
+	//auto numPoint = geom->GetNumPoints();
+	//for (int i = 0; i < numPoint; i++)
+	//{
+	//	vectorRecord->InsertC3IL(
+	//		geom->GetX(i) * enc->GetCMFX(),
+	//		geom->GetY(i) * enc->GetCMFY(),
+	//		geom->GetZ(i) * enc->GetCMFZ());
+	//}
+
+	//enc->InsertRecord(vectorRecord);
+
+	return vectorRecord;
 }

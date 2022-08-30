@@ -131,6 +131,11 @@ bool R_InformationRecord::WriteRecord(CFile* file)
 	return true;
 }
 
+RecordName R_InformationRecord::GetRecordName()
+{
+	return m_irid.m_name;
+}
+
 int R_InformationRecord::GetRCID()
 {
 	return m_irid.m_name.RCID;

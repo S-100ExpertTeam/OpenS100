@@ -16,6 +16,13 @@ F_PRID::~F_PRID(void)
 
 }
 
+F_PRID::F_PRID(RecordName recordName, int RVER, int RUIN)
+{
+	m_name = recordName;
+	m_rver = RVER;
+	m_ruin = RUIN;
+}
+
 void F_PRID::ReadField(BYTE *&buf)
 {
 	m_name.RCNM = *(buf++);

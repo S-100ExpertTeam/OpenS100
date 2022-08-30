@@ -3,6 +3,11 @@
 struct C3IL 
 {
 public:
+	C3IL();
+	C3IL(int x, int y, int z);
+	virtual ~C3IL();
+
+public:
 	/*
 	* Coordinate in Y axis
 	* Format		: b24

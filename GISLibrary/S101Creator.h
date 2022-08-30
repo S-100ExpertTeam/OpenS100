@@ -49,6 +49,11 @@ public:
 	int GetATIXofNewChildAttribute(R_FeatureRecord* feature, ATTR* parentATTR, int numericCode);
 	int GetATIXofNewChildAttribute(R_InformationRecord* information, ATTR* parentATTR, int numericCode);
 
+	R_PointRecord* ConvertInsertVectorRecord(SPoint* geom);
+	R_MultiPointRecord* ConvertInsertVectorRecord(SMultiPoint* geom);
+	R_CurveRecord* ConvertInsertVectorRecord(SCurveHasOrient* geom);
+	
+
 	//std::vector<AttributeBinding> Get
 };
 

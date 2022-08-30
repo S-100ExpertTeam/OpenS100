@@ -8,7 +8,10 @@ FeatureAssociations::FeatureAssociations(void)
 
 FeatureAssociations::~FeatureAssociations(void)
 {
-
+	for (auto i = featureAssociation.begin(); i != featureAssociation.end(); i++)
+	{
+		delete i->second;
+	}
 }
 
 void FeatureAssociations::GetContents(pugi::xml_node& node)
@@ -18,9 +21,9 @@ void FeatureAssociations::GetContents(pugi::xml_node& node)
 		const pugi::char_t* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:S100_FC_FeatureAssociation"))
 		{
-			FeatureAssociation sa;
-			sa.GetContents(instruction);
-			featureAssociation[sa.GetCodeAsWString()] = sa;
+			auto sa = new FeatureAssociation();
+			sa->GetContents(instruction);
+			featureAssociation[sa->GetCodeAsWString()] = sa;
 
 			if (instruction.attribute("isAbstract"))
 			{
@@ -32,7 +35,7 @@ void FeatureAssociations::GetContents(pugi::xml_node& node)
 	}
 }
 
-std::unordered_map<std::wstring, FeatureAssociation>& FeatureAssociations::GetFeatureAssociationPointer()
+std::unordered_map<std::wstring, FeatureAssociation*>& FeatureAssociations::GetFeatureAssociationPointer()
 {
 	return featureAssociation;
 }

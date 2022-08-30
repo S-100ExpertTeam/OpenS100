@@ -109,6 +109,11 @@ bool R_SurfaceRecord::WriteRecord(CFile* file)
 	return true;
 }
 
+RecordName R_SurfaceRecord::GetRecordName()
+{
+	return m_srid.m_name;
+}
+
 int R_SurfaceRecord::GetRCID() 
 {
 	return m_srid.m_name.RCID;

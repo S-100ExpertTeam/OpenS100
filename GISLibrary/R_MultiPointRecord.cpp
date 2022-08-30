@@ -138,6 +138,11 @@ bool R_MultiPointRecord::WriteRecord(CFile* file)
 	return true;
 }
 
+RecordName R_MultiPointRecord::GetRecordName()
+{
+	return m_mrid.m_name;
+}
+
 int R_MultiPointRecord::GetRCID()
 {
 	return m_mrid.m_name.RCID;
@@ -146,4 +151,14 @@ int R_MultiPointRecord::GetRCID()
 std::wstring R_MultiPointRecord::GetRCIDasWstring()
 {
 	return std::to_wstring(GetRCID());
+}
+
+void R_MultiPointRecord::InsertC3IL(int x, int y, int z)
+{
+	if (m_c3il.size() == 0)
+	{
+		m_c3il.push_back(new F_C3IL());
+	}
+
+	m_c3il.front()->m_arr.push_back(new C3IL(x, y, z));
 }

@@ -8,7 +8,10 @@ FeatureTypes::FeatureTypes(void)
 
 FeatureTypes::~FeatureTypes(void)
 {
-
+	for (auto i = vecFeatureType.begin(); i != vecFeatureType.end(); i++)
+	{
+		delete (*i);
+	}
 }
 
 void FeatureTypes::GetContents(pugi::xml_node& node)
@@ -18,10 +21,10 @@ void FeatureTypes::GetContents(pugi::xml_node& node)
 		const pugi::char_t* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:S100_FC_FeatureType"))
 		{
-			FeatureType sa;
-			sa.GetContents(instruction);
-			featureType[sa.GetCodeAsWString()] = sa;
-			vecFeatureType.push_back(&featureType[sa.GetCodeAsWString()]);
+			auto sa = new FeatureType();
+			sa->GetContents(instruction);
+			featureType[sa->GetCodeAsWString()] = sa;
+			vecFeatureType.push_back(featureType[sa->GetCodeAsWString()]);
 
 			if (instruction.attribute("isAbstract"))
 			{
@@ -39,7 +42,7 @@ void FeatureTypes::ApplySuperType()
 {
 	for (auto itor = featureType.begin(); itor != featureType.end(); itor++)
 	{
-		FeatureType *ft = &itor->second;
+		FeatureType *ft = itor->second;
 		SetAttributeFromSuperType(ft);
 		SetAssociationFromSuperType(ft);
 	}
@@ -56,7 +59,7 @@ bool FeatureTypes::SetAttributeFromSuperType(FeatureType* ft)
 		}
 		else
 		{
-			FeatureType* sft = &itor->second;
+			FeatureType* sft = itor->second;
 			if (SetAttributeFromSuperType(sft))
 			{
 				ft->GetAttributeBindingPointer().insert(ft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().end());
@@ -84,7 +87,7 @@ bool FeatureTypes::SetAssociationFromSuperType(FeatureType* ft)
 		}
 		else
 		{
-			FeatureType* sft = &itor->second;
+			FeatureType* sft = itor->second;
 			if (SetAssociationFromSuperType(sft))
 			{
 				ft->GetFeatureBindingPointer().insert(sft->GetFeatureBindingPointer().begin(), sft->GetFeatureBindingPointer().end());
@@ -106,7 +109,7 @@ std::vector<FeatureType*>& FeatureTypes::GetVecFeatureType()
 	return vecFeatureType;
 }
 
-std::unordered_map<std::wstring, FeatureType>& FeatureTypes::GetFeatureType()
+std::unordered_map<std::wstring, FeatureType*>& FeatureTypes::GetFeatureType()
 {
 	return featureType;
 }

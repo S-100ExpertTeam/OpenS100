@@ -11,6 +11,13 @@ F_CCID::F_CCID(void)
 	m_ruin = 0;
 }
 
+F_CCID::F_CCID(RecordName recordName, int RVER, int RUIN)
+{
+	m_name = recordName;
+	m_rver = RVER;
+	m_ruin = RUIN;
+}
+
 F_CCID::~F_CCID(void)
 {
 

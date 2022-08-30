@@ -5,8 +5,6 @@
 
 F_C2IT::F_C2IT()
 {
-	m_ycoo = 0;
-	m_xcoo = 0;
 }
 
 F_C2IT::~F_C2IT()

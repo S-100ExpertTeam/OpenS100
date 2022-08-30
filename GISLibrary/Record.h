@@ -2,6 +2,7 @@
 
 #include "Leader.h"
 #include "Directory.h"
+#include "RecordName.h"
 
 #include <list>
 
@@ -19,6 +20,7 @@ public:
 public:
 	virtual BOOL ReadRecord(DRDirectoryInfo* dir, BYTE*& buf) {	return TRUE; };
 	virtual bool WriteRecord(CFile* file) { return true; };
+	virtual RecordName GetRecordName() { return RecordName(); };
 
 	bool WriteDirectory(CFile* file);
 	void SetLeader(int totalFieldSize, bool adjustEntryMap = true);

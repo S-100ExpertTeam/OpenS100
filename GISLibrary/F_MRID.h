@@ -6,6 +6,7 @@ class F_MRID : Field
 {
 public:
 	F_MRID();
+	F_MRID(RecordName recordName, int RVER = 1, int RUIN = 1);
 	virtual ~F_MRID();
 
 public:

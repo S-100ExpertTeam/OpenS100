@@ -16,7 +16,7 @@ public:
 	
 private:
 	std::vector<FeatureType*> vecFeatureType;
-	std::unordered_map<std::wstring, FeatureType> featureType;
+	std::unordered_map<std::wstring, FeatureType*> featureType;
 	
 public:
 	void GetContents(pugi::xml_node& node);
@@ -24,5 +24,5 @@ public:
 	bool SetAttributeFromSuperType(FeatureType* ft);
 	bool SetAssociationFromSuperType(FeatureType* ft);
 	std::vector<FeatureType*>& GetVecFeatureType();
-    std::unordered_map<std::wstring, FeatureType>& GetFeatureType();
+    std::unordered_map<std::wstring, FeatureType*>& GetFeatureType();
 };

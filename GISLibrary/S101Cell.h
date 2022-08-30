@@ -121,8 +121,7 @@ public:
 	BOOL GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoArr, int ORNT = 1);
 	BOOL GetFullSpatialData(R_SurfaceRecord *r, CArray<GeoPoint> &geoArr);
 
-	SCurve* GetCurveGeometry(R_CurveRecord *r/*, CArray<GeoPoint> &geoArr, unsigned ORNT = 1*/);
-	//BOOL SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList);
+	SCurve* GetCurveGeometry(R_CurveRecord *r);
 
 	// Set R_FeatureRecord::m_curveList from Vector record
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);
@@ -197,6 +196,7 @@ public:
 	CString GetDatasetEdition();
 	std::string GetDatasetEditionToString();
 
+	void InsertRecord(Record* record);
 
 	//============================================================================//
 	void InsertInformationRecord(__int64 key, R_InformationRecord* record);
@@ -293,6 +293,10 @@ public:
 	void GetDrawingPriority(std::vector<__int64>& key, std::vector<int>& priority);
 
 	void Validation();
+
+	int GetCMFX();
+	int GetCMFY();
+	int GetCMFZ();
 
 private:
 	bool UpdateDsgirRecord(S101Cell* cell);

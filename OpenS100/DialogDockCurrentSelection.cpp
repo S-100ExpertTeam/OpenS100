@@ -350,7 +350,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 					}
 					else
 					{
-						FeatureType* ft = &it->second;
+						FeatureType* ft = it->second;
 						m_ListCurrentSelection.SetItemData(0, (LPARAM)ft);
 					}
 				}

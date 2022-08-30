@@ -6,6 +6,7 @@ class F_SRID : Field
 {
 public:
 	F_SRID();
+
 	virtual ~F_SRID();
 
 public:

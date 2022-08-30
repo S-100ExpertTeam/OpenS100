@@ -201,6 +201,11 @@ bool R_CurveRecord::WriteRecord(CFile* file)
 	return true;
 }
 
+RecordName R_CurveRecord::GetRecordName()
+{
+	return m_crid.m_name;
+}
+
 int R_CurveRecord::GetRCID() 
 {
 	return m_crid.m_name.RCID;

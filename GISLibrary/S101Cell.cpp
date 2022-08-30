@@ -39,7 +39,6 @@
 #include "MASK.h"
 #include "F_SECC.h"
 #include "R_DDR.h"
-
 #include "DRDirectoryInfo.h"
 #include "PCOutputSchemaManager.h"
 #include "SENC_SpatialReference.h"
@@ -48,6 +47,7 @@
 #include "SENC_Instruction.h"
 #include "SENC_LineInstruction.h"
 #include "SENC_PointInstruction.h"
+#include "Record.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -211,6 +211,21 @@ void S101Cell::Validation()
 		//	}
 		//}
 	}
+}
+
+int S101Cell::GetCMFX()
+{
+	return m_dsgir.m_dssi.m_cmfx;
+}
+
+int S101Cell::GetCMFY()
+{
+	return m_dsgir.m_dssi.m_cmfy;
+}
+
+int S101Cell::GetCMFZ()
+{
+	return m_dsgir.m_dssi.m_cmfz;
 }
 
 R_DSGIR* S101Cell::GetDatasetGeneralInformationRecord()
@@ -795,35 +810,6 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 
 	return TRUE;
 }
-
-//BOOL S101Cell::SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList)
-//{
-//	for (auto c = inCurveRecordList->begin(); c != inCurveRecordList->end(); c++)
-//	{
-//		OrientedCurveRecord* ocr = &(*c);
-//
-//		__int64 iKey = ((__int64)ocr->m_pCurveRecord->m_crid.m_name.RCNM) << 32 | ocr->m_pCurveRecord->m_crid.m_name.RCID;
-//		auto curveIter = m_curveMap.find(iKey);
-//
-//		bool bOrnt = ocr->m_orient == 1 ? true : false;
-//
-//		if (curveIter != m_curveMap.end())
-//		{
-//			SCurveHasOrient curveHasOrient(bOrnt, curveIter->second);
-//			outSCurveList->push_back(curveHasOrient);
-//		}
-//		else
-//		{
-//			SCurve* pCurve = GetCurveGeometry(ocr->m_pCurveRecord);
-//			pCurve->m_id = iKey;
-//			SCurveHasOrient curveHasOrient(bOrnt, pCurve);
-//			outSCurveList->push_back(curveHasOrient);
-//
-//			m_curveMap.insert({ iKey, pCurve });
-//		}
-//	}
-//	return TRUE;
-//}
 
 // France
 BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
@@ -2148,6 +2134,47 @@ std::string S101Cell::GetDatasetEditionToString()
 std::string S101Cell::GetDatasetFileIdentifierToString()
 {
 	return pugi::as_utf8(std::wstring(GetDatasetFileIdentifier()));
+}
+
+void S101Cell::InsertRecord(Record* record)
+{
+	auto RCNM = record->GetRecordName().RCNM;
+	auto key = record->GetRecordName().GetName();
+	if (100 == RCNM)
+	{
+		auto featureRecord = (R_FeatureRecord*)record;
+		InsertFeatureRecord(key, featureRecord);
+	}
+	else if (110 == RCNM)
+	{
+		auto pointRecord = (R_PointRecord*)record;
+		InsertPointRecord(key, pointRecord);
+	}
+	else if (115 == RCNM)
+	{
+		auto multiPointRecord = (R_MultiPointRecord*)record;
+		InsertMultiPointRecord(key, multiPointRecord);
+	}
+	else if (120 == RCNM)
+	{
+		auto curveRecord = (R_CurveRecord*)record;
+		InsertCurveRecord(key, curveRecord);
+	}
+	else if (125 == RCNM)
+	{
+		auto compositeCurveRecord = (R_CompositeRecord*)record;
+		InsertCompositeCurveRecord(key, compositeCurveRecord);
+	}
+	else if (130 == RCNM)
+	{
+		auto surfaceRecord = (R_SurfaceRecord*)record;
+		InsertSurfaceRecord(key, surfaceRecord);
+	}
+	else if (150 == RCNM)
+	{
+		auto informationRecord = (R_InformationRecord*)record;
+		InsertInformationRecord(key, informationRecord);
+	}
 }
 
 void S101Cell::InsertInformationRecord(__int64 key, R_InformationRecord* record)

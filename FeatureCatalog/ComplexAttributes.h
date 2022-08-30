@@ -13,12 +13,12 @@ public:
 	virtual ~ComplexAttributes(void);
 
 private:
-	std::unordered_map<std::wstring, ComplexAttribute> complexAttribute;
+	std::unordered_map<std::wstring, ComplexAttribute*> complexAttribute;
 
 public:
 	void GetContents(pugi::xml_node& node);
-	void SetComplexAttribute(std::wstring key, ComplexAttribute value);
-	void SetComplexAttribute(std::unordered_map<std::wstring, ComplexAttribute> value);
-	ComplexAttribute GetComplexAttribute(std::wstring key);
-	std::unordered_map<std::wstring, ComplexAttribute>& GetComplexAttributePointer();
+	void SetComplexAttribute(std::wstring key, ComplexAttribute* value);
+	void SetComplexAttribute(std::unordered_map<std::wstring, ComplexAttribute*> value);
+	ComplexAttribute* GetComplexAttribute(std::wstring key);
+	std::unordered_map<std::wstring, ComplexAttribute*>& GetComplexAttributePointer();
 };

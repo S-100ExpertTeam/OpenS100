@@ -60,7 +60,7 @@ ComplexAttribute* FeatureCatalogue::GetComplexAttribute(std::wstring code)
 	if (itor == complexAttributes.GetComplexAttributePointer().end())
 		return NULL; // not found
 	else
-		return &itor->second;
+		return itor->second;
 }
 
 ComplexAttribute* FeatureCatalogue::GetComplexAttributeFromName(std::wstring name)
@@ -69,8 +69,8 @@ ComplexAttribute* FeatureCatalogue::GetComplexAttributeFromName(std::wstring nam
 		i != complexAttributes.GetComplexAttributePointer().end();
 		i++)
 	{
-		if (i->second.GetName().compare(name) == 0)
-			return &i->second;
+		if (i->second->GetName().compare(name) == 0)
+			return i->second;
 	}
 	return nullptr;
 }
@@ -82,7 +82,7 @@ FeatureType* FeatureCatalogue::GetFeatureType(std::wstring code)
 	if (itor == featureTypes.GetFeatureType().end())
 		return NULL; // not found
 	else
-		return &itor->second;
+		return itor->second;
 }
 
 FeatureTypes& FeatureCatalogue::GetFeatureTypes()
@@ -97,9 +97,9 @@ FeatureType* FeatureCatalogue::GetFeatureTypeName(std::wstring name)
 		i != featureTypes.GetFeatureType().end();
 		i++)
 	{
-		if (i->second.GetName().compare(name) == 0)
+		if (i->second->GetName().compare(name) == 0)
 		{
-			return &i->second;
+			return i->second;
 		}
 	}
 	return nullptr;
@@ -114,8 +114,7 @@ FeatureType* FeatureCatalogue::GetFeatureTypeFromIndex(int indexnum)
 		if (num==indexnum)
 		{
 			auto dfsf = &i->second;
-			OutputDebugString(L"");
-			return &i->second;
+			return i->second;
 		}
 		num++;
 	}
@@ -129,7 +128,7 @@ InformationType* FeatureCatalogue::GetInformationType(std::wstring code)
 	if (itor == informationTypes.GetInformationTypePointer().end())
 		return NULL; // not found
 	else
-		return &itor->second;
+		return itor->second;
 }
 
 
@@ -139,8 +138,8 @@ InformationType* FeatureCatalogue::GetInformationTypeFromName(std::wstring name)
 		itor != informationTypes.GetInformationTypePointer().end();
 		itor++)
 	{
-		if (itor->second.GetName().compare(name) == 0)
-			return &itor->second;
+		if (itor->second->GetName().compare(name) == 0)
+			return itor->second;
 	}
 	return NULL;
 }
@@ -152,7 +151,7 @@ FeatureAssociation* FeatureCatalogue::GetFeatureAssociation(std::wstring code)
 	if (itor == featureAssociations.GetFeatureAssociationPointer().end())
 		return NULL; // not found
 	else
-		return &itor->second;
+		return itor->second;
 }
 
 FeatureAssociation* FeatureCatalogue::GetFeatureAssociationFromName(std::wstring name)
@@ -161,8 +160,8 @@ FeatureAssociation* FeatureCatalogue::GetFeatureAssociationFromName(std::wstring
 		itor != featureAssociations.GetFeatureAssociationPointer().end();
 		itor++)
 	{
-		if (itor->second.GetName().compare(name) == 0)
-			return &itor->second;
+		if (itor->second->GetName().compare(name) == 0)
+			return itor->second;
 	}
 	return NULL;
 }
@@ -174,7 +173,7 @@ InformationAssociation* FeatureCatalogue::GetInformationAssociation(std::wstring
 	if (itor == informationAssociations.GetInformationAssociationPointer().end())
 		return NULL; // not found
 	else
-		return &itor->second;
+		return itor->second;
 }
 
 InformationAssociation* FeatureCatalogue::GetInformationAssociationFromName(std::wstring name)
@@ -183,8 +182,8 @@ InformationAssociation* FeatureCatalogue::GetInformationAssociationFromName(std:
 		itor != informationAssociations.GetInformationAssociationPointer().end();
 		itor++)
 	{
-		if (itor->second.GetName().compare(name) == 0)
-			return &itor->second;
+		if (itor->second->GetName().compare(name) == 0)
+			return itor->second;
 	}
 	return NULL;
 }
@@ -311,13 +310,13 @@ void FeatureCatalogue::SetFullAssociations()
 {
 	for (auto itor = featureTypes.GetFeatureType().begin(); itor != featureTypes.GetFeatureType().end(); itor++)
 	{
-		FeatureType *ft = &itor->second;
+		FeatureType *ft = itor->second;
 		SetSubAssociation(ft);
 	}
 
 	for (auto itor = informationTypes.GetInformationTypePointer().begin(); itor != informationTypes.GetInformationTypePointer().end(); itor++)
 	{
-		InformationType *it = &itor->second;
+		InformationType *it = itor->second;
 		SetSubAssociation(it);
 	}
 }
@@ -364,7 +363,7 @@ void FeatureCatalogue::SetFeatureAssociationFromSuperType(FeatureType* ft, std::
 		fti != featureTypes.GetFeatureType().end(); 
 		fti++)
 	{
-		auto currentFeautreType = &fti->second;
+		auto currentFeautreType = fti->second;
 		auto currentFeautreCode = currentFeautreType->GetCodeAsWString();
 
 		if (superTypeName.compare(currentFeautreCode) == 0)
@@ -391,7 +390,7 @@ void FeatureCatalogue::SetInformationAssociationFromSuperType(FeatureType* ft, s
 {
 	for (auto iti = informationTypes.GetInformationTypePointer().begin(); iti != informationTypes.GetInformationTypePointer().end(); iti++)
 	{
-		auto currentInformationType = &iti->second;
+		auto currentInformationType = iti->second;
 		auto currentInformationCode = currentInformationType->GetCodeAsWString();
 		
 		if (superTypeName.compare(currentInformationCode) == 0)
@@ -416,7 +415,7 @@ void FeatureCatalogue::SetInformationAssociationFromSuperType(InformationType* i
 {
 	for (auto iti = informationTypes.GetInformationTypePointer().begin(); iti != informationTypes.GetInformationTypePointer().end(); iti++)
 	{
-		auto currentInformationType = &iti->second;
+		auto currentInformationType = iti->second;
 		auto currentInformationCode = currentInformationType->GetCodeAsWString();
 
 		if (superTypeName.compare(currentInformationCode) == 0)

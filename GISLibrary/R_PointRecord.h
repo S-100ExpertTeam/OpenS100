@@ -25,9 +25,11 @@ public:
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
 	bool WriteRecord(CFile* file);
+	RecordName GetRecordName();
 
 	int GetRCID();
 	std::wstring GetRCIDasWstring();
 	void SetC2IT(F_C2IT* value);
+	void SetC2IT(int x, int y);
 	void SetC3IT(F_C3IT* value);
 };

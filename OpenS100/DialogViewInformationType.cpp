@@ -71,7 +71,7 @@ void CDialogViewInformationType::SetInformationFeatureList(S101Cell* cell)
 		CodeWithNumericCode* nc = itor->second;
 
 		std::wstring codeStr = nc->m_code;
-		InformationType *objIT = &fc->GetInformationTypesPointer().GetInformationTypePointer().find(codeStr)->second;
+		InformationType *objIT = fc->GetInformationTypesPointer().GetInformationTypePointer().find(codeStr)->second;
 
 		// Feature ID
 		CInformationCodeString cs;

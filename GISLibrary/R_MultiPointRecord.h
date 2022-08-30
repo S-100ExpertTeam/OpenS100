@@ -23,7 +23,10 @@ public:
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
 	bool WriteRecord(CFile* file);
+	RecordName GetRecordName();
 
 	int GetRCID();
 	std::wstring GetRCIDasWstring();
+
+	void InsertC3IL(int x, int y, int z);
 };
