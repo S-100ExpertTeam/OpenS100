@@ -509,6 +509,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	PortrayalCatalogue* pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
 
 	theApp.gisLib->InitLibrary(fc, pc);
+
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
 
 	//PointFeatureList();
@@ -1268,10 +1269,10 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				CString csName;
 				CString csAssoCnt;
 
-				double lat = surface->m_pPoints[0].x;
-				double lon = surface->m_pPoints[0].y;
+				double lon = surface->m_pPoints[0].x;
+				double lat = surface->m_pPoints[0].y;
 
-				inverseProjection(lat, lon);
+				inverseProjection(lon, lat);
 
 				std::vector<int>::size_type assoCnt;
 				assoCnt = fr->m_fasc.size() + fr->m_inas.size();
@@ -1330,8 +1331,8 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				double lon = 0;
 				if (compositeCurve->m_listCurveLink.size() > 0)
 				{
-					lat = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].x;
-					lon = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].y;
+					lon = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].x;
+					lat = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].y;
 				}
 
 				inverseProjection(lat, lon);
@@ -1437,8 +1438,8 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 
 						csFoid.Format(_T("%d"), fr->m_foid.FIDN);
 						csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
-						csLat.Format(_T("%f"), geoX);
-						csLon.Format(_T("%f"), geoY);
+						csLat.Format(_T("%f"), geoY);
+						csLon.Format(_T("%f"), geoX);
 						csType.Format(_T("%d"), multiPoint->GetType());
 						csName.Format(_T("%s"), itor->second->m_code);
 						csAssoCnt.Format(_T("%d"), assoCnt);
@@ -1459,8 +1460,8 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 					CString csFoid, csFrid, csLat, csLon, csType, csName, csAssoCnt;
 
 					SPoint* sr = (SPoint*)fr->m_geometry;
-					double lat = sr->x;
-					double lon = sr->y;
+					double lon = sr->x;
+					double lat = sr->y;
 
 					inverseProjection(lat, lon);
 

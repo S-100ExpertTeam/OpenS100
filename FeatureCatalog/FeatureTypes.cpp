@@ -24,7 +24,7 @@ void FeatureTypes::GetContents(pugi::xml_node& node)
 			auto sa = new FeatureType();
 			sa->GetContents(instruction);
 			featureType[sa->GetCodeAsWString()] = sa;
-			vecFeatureType.push_back(featureType[sa->GetCodeAsWString()]);
+			vecFeatureType.push_back(sa);
 
 			if (instruction.attribute("isAbstract"))
 			{

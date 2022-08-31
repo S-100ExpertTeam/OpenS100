@@ -3,7 +3,7 @@
 #include "IntegerCode.h"
 #include "DefinitionReference.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include "../extlibs/pugixml/include/pugixml.hpp"
 
 class ListedValue :
 	public XML_Item
@@ -15,7 +15,7 @@ public:
 private:
 	std::wstring label = L"";
 	std::wstring definition = L"";
-	IntegerCode code;
+	int code;
 	std::wstring remarks = L"";
 	std::list<std::wstring> alias; 
 	DefinitionReference definitionReference; 
@@ -32,7 +32,7 @@ public:
 	const std::wstring& GetRemarks(); 
 	void SetRemarks(std::wstring& value);
 
-	IntegerCode& GetCode();
+	int GetCode();
 
 	std::list<std::wstring>& GetAliasPointer(); 
 

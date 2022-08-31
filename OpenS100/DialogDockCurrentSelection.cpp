@@ -334,8 +334,8 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 				m_ListCurrentSelection.SetItemText(0, 1, frid);
 				m_ListCurrentSelection.SetItemText(0, 2, name);
 				m_ListCurrentSelection.SetItemText(0, 3, type);
-				m_ListCurrentSelection.SetItemText(0, 4, lon);
-				m_ListCurrentSelection.SetItemText(0, 5, lat);
+				m_ListCurrentSelection.SetItemText(0, 4, lat);
+				m_ListCurrentSelection.SetItemText(0, 5, lon);
 				m_ListCurrentSelection.SetItemText(0, 6, assoCnt);
 				m_ListCurrentSelection.SetItemText(0, 7, featureType);
 

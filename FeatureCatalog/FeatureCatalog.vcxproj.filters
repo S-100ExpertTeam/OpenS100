@@ -92,9 +92,6 @@
     <ClCompile Include="NumericRange.cpp">
       <Filter>S100Base</Filter>
     </ClCompile>
-    <ClCompile Include="ListedValues.cpp">
-      <Filter>S100FC</Filter>
-    </ClCompile>
     <ClCompile Include="ListedValue.cpp">
       <Filter>S100FC</Filter>
     </ClCompile>
@@ -291,9 +288,6 @@
     </ClInclude>
     <ClInclude Include="NumericRange.h">
       <Filter>S100Base</Filter>
-    </ClInclude>
-    <ClInclude Include="ListedValues.h">
-      <Filter>S100FC</Filter>
     </ClInclude>
     <ClInclude Include="ListedValue.h">
       <Filter>S100FC</Filter>

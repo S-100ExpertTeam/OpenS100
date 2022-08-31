@@ -129,18 +129,11 @@ LRESULT CDockablePaneEditWindow::OnPropertyChanged(WPARAM wparam, LPARAM lparam)
 					{
 						propValue.erase(propValue.begin(), propValue.begin() + numindex);
 					}
-					for (auto	itor = (*sa->GetListedValuesPointer().begin()).GetListedValuePointer().begin();
-						itor != (*sa->GetListedValuesPointer().begin()).GetListedValuePointer().end();
-						itor++)
-					{
-						ListedValue* lv = &itor->second;
 
-						if (propValue.compare(lv->GetLabel().c_str()) == 0)
-						{
-							char buf[10];
-							_itoa_s(lv->GetCode().GetvalueInteger(), buf, 10);
-							attr->m_atvl = buf;
-						}
+					auto listedValue = sa->GetListedValue(propValue);
+					if (listedValue)
+					{
+						attr->m_atvl = propValue.c_str();
 					}
 				}
 				else
@@ -231,34 +224,19 @@ int CDockablePaneEditWindow::OnCreate(LPCREATESTRUCT lp)
 	return 0;
 }
 
-void CDockablePaneEditWindow::SettingEnumType(std::list<ListedValues> list, CMFCPropertyGridProperty* pSuperProperty)
+void CDockablePaneEditWindow::SettingEnumType(std::vector<ListedValue*> list, CMFCPropertyGridProperty* pSuperProperty)
 {
-	std::list<int>num;
 	for (auto i = list.begin(); i != list.end(); i++)
 	{
-		ListedValues* lvs = &(*i);
-
-		for (auto lvitor = lvs->GetListedValuePointer().begin(); lvitor != lvs->GetListedValuePointer().end(); lvitor++)
-		{
-			num.push_back(lvitor->first);
-		}
-
-		num.sort();
-
-		for each (auto i in num)
-		{
-			ListedValue* lv = &(lvs->GetListedValuePointer()[i]);
-			CString label(lv->GetLabel().c_str());
-			CString namestr;
-			namestr.Format(_T("%d.%s"), i, label);
-			LPCTSTR name = namestr;
-			pSuperProperty->AddOption(name);
-		}
+		ListedValue* lv = *i;
+		CString label(lv->GetLabel().c_str());
+		CString namestr;
+		namestr.Format(_T("%d.%s"), i, label);
+		LPCTSTR name = namestr;
+		pSuperProperty->AddOption(name);
 	}
-
-
 }
-//
+
 unsigned CDockablePaneEditWindow::GetATCS(std::wstring code)
 {
 	unsigned nmcd = 1;
@@ -423,17 +401,14 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 						std::wstring value;
 						if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
 						{
-							auto dfsf = _wtoi(attr->m_atvl);
-							std::unordered_map<int, ListedValue> attributelist = (*sa->GetListedValuesPointer().begin()).GetListedValuePointer();
-							auto itor = attributelist.find(_wtoi(attr->m_atvl));
+							auto attributeValue = _wtoi(attr->m_atvl);
 
-							if (itor != attributelist.end())
+							auto listedValue = sa->GetListedValue(attributeValue);
+							if (listedValue)
 							{
-								ListedValue* plv = &itor->second;
-
 								auto result = attr->m_atvl;
 								result.Append(L".");
-								result.Append(plv->GetLabel().c_str());
+								result.Append(listedValue->GetLabel().c_str());
 								value = result;
 							}
 						}
@@ -469,7 +444,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 
 						if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
 						{
-							SettingEnumType(sa->GetListedValuesPointer(), pAttribute);
+							SettingEnumType(sa->GetListedValuePointer(), pAttribute);
 						}
 					}
 					else  //Add a complex.
@@ -556,14 +531,11 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 						std::wstring value;
 						if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
 						{
-							auto itor = (*sa->GetListedValuesPointer().begin()).GetListedValuePointer().find(_wtoi(attr->m_atvl));
-							if (itor == (*sa->GetListedValuesPointer().begin()).GetListedValuePointer().end())
+							auto listedValue = sa->GetListedValue(std::wstring(attr->m_atvl));
+
+							if (listedValue)
 							{
-							}
-							else
-							{
-								ListedValue* plv = &itor->second;
-								value = plv->GetLabel().c_str();
+								value = listedValue->GetLabel().c_str();
 							}
 						}
 						else
@@ -590,15 +562,12 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 
 						if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
 						{
-							for (auto itor = sa->GetListedValuesPointer().begin(); itor != sa->GetListedValuesPointer().end(); itor++)
+							for (auto itor = sa->GetListedValuePointer().begin(); itor != sa->GetListedValuePointer().end(); itor++)
 							{
-								ListedValues* lvs = &(*itor);
+								ListedValue* lv = *itor;
 
-								for (auto lvitor = lvs->GetListedValuePointer().begin(); lvitor != lvs->GetListedValuePointer().end(); lvitor++)
-								{
-									ListedValue* lv = &(lvitor->second);
-									pAttribute->AddOption(lv->GetLabel().c_str());
-								}
+								pAttribute->AddOption(lv->GetLabel().c_str());
+			
 							}
 						}
 					}

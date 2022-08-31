@@ -268,7 +268,6 @@
     <ClCompile Include="IntervalType.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ListedValue.cpp" />
-    <ClCompile Include="ListedValues.cpp" />
     <ClCompile Include="Multiplicity.cpp" />
     <ClCompile Include="NamedType.cpp" />
     <ClCompile Include="NumericRange.cpp" />
@@ -338,7 +337,6 @@
     <ClInclude Include="IntervalType.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ListedValue.h" />
-    <ClInclude Include="ListedValues.h" />
     <ClInclude Include="Multiplicity.h" />
     <ClInclude Include="NamedType.h" />
     <ClInclude Include="NumericRange.h" />

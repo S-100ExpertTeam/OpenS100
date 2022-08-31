@@ -11,38 +11,51 @@ SimpleAttribute::SimpleAttribute()
 
 SimpleAttribute::~SimpleAttribute()
 {
-
+	for (auto i = listedValue.begin(); i != listedValue.end(); i++)
+	{
+		delete (*i);
+	}
 }
 
 void SimpleAttribute::GetContents(pugi::xml_node& node)
 {
 	((Attribute*)this)->Attribute::GetContents(node);
-	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
+
+	for (auto i = node.first_child(); i; i = i.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const pugi::char_t* instructionName = i.name();
 
 		if (!strcmp(instructionName, "S100FC:valueType"))
 		{
-			std::string value = instruction.child_value();
+			std::string value = i.child_value();
 			valueType = FCD::StringToS100_CD_AttributeValueType(value);
 		}
 		else if (!strcmp(instructionName, "S100FC:uom"))
 		{
-			uom.GetContents(instruction);
+			uom.GetContents(i);
 		}
 		else if (!strcmp(instructionName, "S100FC:quantitySpecification"))
 		{
-			std::string value = instruction.child_value();
+			std::string value = i.child_value();
 			quantitySpecification = FCD::StringToS100_CD_QuantitySpecification(value);
 		}
 		else if (!strcmp(instructionName, "S100FC:constraints"))
 		{
-			constraints.GetContents(instruction);
-		}
+			constraints.GetContents(i);
+		} 
 		else if (!strcmp(instructionName, "S100FC:listedValues"))
 		{
-			listedValues.push_back(ListedValues());
-			listedValues.back().GetContents(instruction);
+			for (auto j = i.first_child(); j; j = j.next_sibling())
+			{
+				const pugi::char_t* instructionName = j.name();
+
+				if (!strcmp(instructionName, "S100FC:listedValue"))
+				{
+					auto lv = new ListedValue();
+					lv->GetContents(j);
+					InsertListedValue(lv);
+				}
+			}
 		}
 	}
 }
@@ -77,7 +90,38 @@ AttributeConstraints& SimpleAttribute::GetConstraintsPointer()
 	return constraints;
 }
 
-std::list<ListedValues>& SimpleAttribute::GetListedValuesPointer()
+std::vector<ListedValue*>& SimpleAttribute::GetListedValuePointer()
 {
-	return listedValues;
+	return listedValue;
+}
+
+void SimpleAttribute::InsertListedValue(ListedValue* item)
+{
+	listedValue.push_back(item);
+	codeMap.insert({ item->GetCode(), item });
+	labelMap.insert({ item->GetLabel(), item });
+}
+
+ListedValue* SimpleAttribute::GetListedValue(std::wstring label)
+{
+	auto item = labelMap.find(label);
+
+	if (item != labelMap.end())
+	{
+		return item->second;
+	}
+
+	return nullptr;
+}
+
+ListedValue* SimpleAttribute::GetListedValue(int code)
+{
+	auto item = codeMap.find(code);
+
+	if (item != codeMap.end())
+	{
+		return item->second;
+	}
+
+	return nullptr;
 }

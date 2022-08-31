@@ -12,7 +12,7 @@ public:
 
 private:
 	std::wstring name;
-	std::unordered_map<std::wstring ,libS100Engine::Item> item;
+	std::unordered_map<std::wstring, libS100Engine::Item> item;
 
 public:
 	void SetName(std::wstring value);

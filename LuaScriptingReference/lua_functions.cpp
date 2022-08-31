@@ -155,7 +155,7 @@ lua_ref_ptr CreateObjectType(lua_session *ls, S100ObjectType *object_type)
 	std::vector<lua_ref_ptr> information_bindings;
 
 	for (auto ib : object_type->GetInformationBindingPointer())
-		information_bindings.push_back(CreateInformationBinding(ls, &ib.second));
+		information_bindings.push_back(CreateInformationBinding(ls, ib.second));
 
 	return ls->call<lua_ref_ptr>("CreateObjectType", { CreateNamedType(ls, object_type), information_bindings });
 }
@@ -182,12 +182,12 @@ lua_ref_ptr CreateFeatureType(lua_session *ls, FeatureType *feature_type)
 	std::vector<std::string> permitted_primitives;
 
 	for (auto pp : feature_type->GetPermittedPrimitivesPointer())
-		permitted_primitives.push_back(std::string(pp.GetValueString().begin(), pp.GetValueString().end())); // E-r??
+		permitted_primitives.push_back(std::string(pp->GetValueString().begin(), pp->GetValueString().end())); // E-r??
 
 	std::vector<lua_ref_ptr> feature_bindings;
 
 	for (auto fb : feature_type->GetFeatureBindingPointer())
-		feature_bindings.push_back(CreateFeatureBinding(ls, &fb.second));
+		feature_bindings.push_back(CreateFeatureBinding(ls, fb.second));
 
 	auto featureUseType = std::string(feature_type->GetFeatureUseTypePointer().GetValueString().begin(), feature_type->GetFeatureUseTypePointer().GetValueString().end());
 
@@ -326,12 +326,9 @@ lua_ref_ptr CreateSimpleAttribute(lua_session *ls, SimpleAttribute *simple_attri
 
 	quantitySpecification = FCD::S100_CD_QuantitySpecificationToString(simple_attribute->GetQuantitySpecification());
 
-	for (auto a : simple_attribute->GetListedValuesPointer())
+	for (auto b = simple_attribute->GetListedValuePointer().begin(); b != simple_attribute->GetListedValuePointer().end(); b++)
 	{
-		for (auto b = a.GetListedValuePointer().begin(); b != a.GetListedValuePointer().end(); b++)
-		{
-			listedValues.push_back(CreateListedValue(ls, &(*b).second));//E-r
-		}
+		listedValues.push_back(CreateListedValue(ls, *b));//E-r
 	}
 
 	lua_ref_ptr attributeContraints = nullptr;
@@ -358,7 +355,7 @@ lua_ref_ptr CreateListedValue(lua_session *ls, ListedValue *listed_value)
 {
 	std::string label = std::string(listed_value->GetLabel().begin(), listed_value->GetLabel().end());
 	std::string definition = std::string(listed_value->GetDefinition().begin(), listed_value->GetDefinition().end());
-	int code = listed_value->GetCode().GetvalueInteger();
+	int code = listed_value->GetCode();
 
 	std::optional<std::string> remarks;
 	if (listed_value->GetRemarks() != L"")
@@ -400,9 +397,9 @@ lua_ref_ptr CreateAttributeBinding(lua_session *ls, AttributeBinding *attribute_
 
 	std::optional<int> muluppvalue;
 
-	if (attribute_binding->GetMultiplicity().GetUpper().Getvalue() != L"")
+	if (attribute_binding->GetMultiplicity().GetUpper().IsInfinite() == false)
 	{
-		muluppvalue = std::stoi(attribute_binding->GetMultiplicity().GetUpper().Getvalue());
+		muluppvalue = attribute_binding->GetMultiplicity().GetUpper().GetIntegerValue();
 	}
 
 	return ls->call<lua_ref_ptr>("CreateAttributeBinding", { referenceCode, attribute_binding->GetMultiplicity().GetLower(), muluppvalue, sequential, permittedValues });
@@ -446,8 +443,10 @@ lua_ref_ptr CreateInformationBinding(lua_session *ls, InformationBinding *inform
 
 	std::optional<int> muluppvalue;
 
-	if (information_binding->GetMultiplicityPointer().GetUpper().Getvalue() != L"")
-		muluppvalue = std::stoi(information_binding->GetMultiplicityPointer().GetUpper().Getvalue());
+	if (information_binding->GetMultiplicityPointer().GetUpper().IsInfinite() == false)
+	{
+		muluppvalue = information_binding->GetMultiplicityPointer().GetUpper().GetIntegerValue();
+	}
 
 	auto roleType = std::string(information_binding->GetRolePointer().Getvalue().begin(), information_binding->GetRolePointer().Getvalue().end());
 
@@ -495,9 +494,10 @@ lua_ref_ptr CreateFeatureBinding(lua_session *ls, FeatureBinding *feature_bindin
 
 	std::optional<int> muluppvalue;
 
-	if (feature_binding->GetMultiplicityPointer().GetUpper().Getvalue()!= L"")
-		muluppvalue = std::stoi(feature_binding->GetMultiplicityPointer().GetUpper().Getvalue());
-
+	if (feature_binding->GetMultiplicityPointer().GetUpper().IsInfinite() == false)
+	{
+		muluppvalue = feature_binding->GetMultiplicityPointer().GetUpper().GetIntegerValue();
+	}
 
 	auto roleType = std::string(feature_binding->GetRolePointer().Getvalue().begin(), feature_binding->GetRolePointer().Getvalue().end());
 

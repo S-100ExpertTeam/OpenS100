@@ -8,7 +8,10 @@ DefinitionSources::DefinitionSources()
 
 DefinitionSources::~DefinitionSources()
 {
-
+	for (auto i = definitionSource.begin(); i != definitionSource.end(); i++)
+	{
+		delete i->second;
+	}
 }
 
 void DefinitionSources::GetContents(pugi::xml_node& node)
@@ -22,9 +25,9 @@ void DefinitionSources::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:S100_FC_definitionSource"))
 		{
-			DefinitionSource definition;
-			definition.GetContents(instruction);
-			definitionSource[definition.Getvalue()] = definition;
+			auto definition = new DefinitionSource();
+			definition->GetContents(instruction);
+			definitionSource[definition->Getvalue()] = definition;
 		}
 		else
 		{
@@ -44,12 +47,12 @@ std::wstring& DefinitionSources::GetSourceIdentifier()
 	return sourceIdentifier;
 }
 
-void DefinitionSources::SetDefinitionSource(std::unordered_map<std::wstring, DefinitionSource> value)
+void DefinitionSources::SetDefinitionSource(std::unordered_map<std::wstring, DefinitionSource*> value)
 {
 	definitionSource = value;
 }
 
-std::unordered_map<std::wstring, DefinitionSource>& DefinitionSources::GetDefinitionSource()
+std::unordered_map<std::wstring, DefinitionSource*>& DefinitionSources::GetDefinitionSource()
 {
 	return definitionSource;
 }

@@ -19,8 +19,8 @@ private:
 	std::wstring superType; 
 	std::list<std::wstring> subType; 
 	FeatureUseType featureUseType;
-	std::unordered_map<std::wstring, FeatureBinding> featureBinding;
-	std::list<SpatialPrimitiveType> permittedPrimitives;
+	std::unordered_map<std::wstring, FeatureBinding*> featureBinding;
+	std::list<SpatialPrimitiveType*> permittedPrimitives;
 
 public:
 	void GetContents(pugi::xml_node& node);
@@ -30,6 +30,7 @@ public:
 
 	std::list<std::wstring>& GetSubTypePointer(); 
 	FeatureUseType& GetFeatureUseTypePointer();
-	std::unordered_map<std::wstring, FeatureBinding>& GetFeatureBindingPointer();
-	std::list<SpatialPrimitiveType>& GetPermittedPrimitivesPointer();
+	std::unordered_map<std::wstring, FeatureBinding*>& GetFeatureBindingPointer();
+	std::list<SpatialPrimitiveType*>& GetPermittedPrimitivesPointer();
+	bool InsertFeatureBinding(FeatureBinding* value);
 };

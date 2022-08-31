@@ -26,7 +26,7 @@ void ListedValue::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:code"))
 		{
-			code.GetContents(instruction);
+			code = instruction.text().as_int();
 		}
 		else if (!strcmp(instructionName, "S100FC:remarks"))
 		{
@@ -63,7 +63,7 @@ void ListedValue::SetDefinition(std::wstring& value)
 	definition = value;
 }
 
-IntegerCode& ListedValue::GetCode()
+int ListedValue::GetCode()
 {
 	return code;
 }

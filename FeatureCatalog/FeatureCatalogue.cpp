@@ -327,7 +327,7 @@ void FeatureCatalogue::SetSubAssociation(FeatureType* ft)
 		fbi != ft->GetFeatureBindingPointer().end();
 		fbi++)
 	{
-		auto fb = &fbi->second;
+		auto fb = fbi->second;
 		auto bindedFeatureName = fb->GetFeatureTypePointer().GetReference();
 		SetFeatureAssociationFromSuperType(ft, bindedFeatureName, fb->GetRolePointer().GetReference(), fb->GetAssociationPointer().GetReference());
 	}
@@ -336,7 +336,7 @@ void FeatureCatalogue::SetSubAssociation(FeatureType* ft)
 		ibi != ft->GetInformationBindingPointer().end();
 		ibi++)
 	{
-		auto ib = &ibi->second;
+		auto ib = ibi->second;
 		auto bindedinformationName = ib->GetInformationTypePointer().GetReference();
 		SetInformationAssociationFromSuperType(ft, bindedinformationName, ib->GetRolePointer().GetReference(), ib->GetAssociationPointer().GetReference());
 	}
@@ -349,7 +349,7 @@ void FeatureCatalogue::SetSubAssociation(InformationType* it)
 		ibi != it->GetInformationBindingPointer().end();
 		ibi++)
 	{
-		auto ib = &ibi->second;
+		auto ib = ibi->second;
 		auto bindedinformationName = ib->GetInformationTypePointer().GetReference();
 		SetInformationAssociationFromSuperType(it, bindedinformationName, ib->GetRolePointer().GetReference(), ib->GetAssociationPointer().GetReference());
 	}
@@ -440,41 +440,32 @@ void FeatureCatalogue::SetInformationAssociationFromSuperType(InformationType* i
 
 void FeatureCatalogue::AddFeatureBinding(FeatureType* ft, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
 {
-	FeatureBinding fb;
-	fb.GetFeatureTypePointer().SetReference(bindedTypeName);
-	fb.GetRolePointer().SetReference(roleName);
-	fb.GetAssociationPointer().SetReference(associationName);
-	
-	ft->GetFeatureBindingPointer().insert(
-		std::unordered_map<std::wstring, FeatureBinding>::value_type(
-			bindedTypeName,
-			fb));
+	auto fb = new FeatureBinding();
+	fb->GetFeatureTypePointer().SetReference(bindedTypeName);
+	fb->GetRolePointer().SetReference(roleName);
+	fb->GetAssociationPointer().SetReference(associationName);
+
+	ft->GetFeatureBindingPointer().insert({ bindedTypeName, fb });
 }
 
 void FeatureCatalogue::AddInformationBinding(FeatureType* ft, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
 {
-	InformationBinding ib;
-	ib.GetInformationTypePointer().SetReference(bindedTypeName);
-	ib.GetRolePointer().SetReference(roleName);
-	ib.GetAssociationPointer().SetReference(associationName);
+	auto ib = new InformationBinding();
+	ib->GetInformationTypePointer().SetReference(bindedTypeName);
+	ib->GetRolePointer().SetReference(roleName);
+	ib->GetAssociationPointer().SetReference(associationName);
 	
-	ft->GetInformationBindingPointer().insert(
-		std::unordered_map<std::wstring, InformationBinding>::value_type(
-			bindedTypeName,
-			ib));
+	ft->GetInformationBindingPointer().insert({ bindedTypeName, ib });
 }
 
 void FeatureCatalogue::AddInformationBinding(InformationType* it, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
 {
-	InformationBinding ib;
-	ib.GetInformationTypePointer().SetReference(bindedTypeName);
-	ib.GetRolePointer().SetReference(roleName);
-	ib.GetAssociationPointer().SetReference(associationName);
+	auto ib = new InformationBinding();
+	ib->GetInformationTypePointer().SetReference(bindedTypeName);
+	ib->GetRolePointer().SetReference(roleName);
+	ib->GetAssociationPointer().SetReference(associationName);
 
-	it->GetInformationBindingPointer().insert(
-		std::unordered_map<std::wstring, InformationBinding>::value_type(
-			bindedTypeName,
-			ib));
+	it->GetInformationBindingPointer().insert({ bindedTypeName, ib });
 }
 
 void FeatureCatalogue::NullCheckFieldOfApplication()
@@ -654,7 +645,7 @@ void FeatureCatalogue::GetPointFeatures(std::vector<FeatureType*>& result)
 
 		for (auto j = primList.begin(); j != primList.end(); j++)
 		{
-			if (j->IsPoint())
+			if ((*j)->IsPoint())
 			{
 				result.push_back(*i);
 			}
@@ -672,7 +663,7 @@ void FeatureCatalogue::GetLineFeatures(std::vector<FeatureType*>& result)
 
 		for (auto j = primList.begin(); j != primList.end(); j++)
 		{
-			if (j->IsLine())
+			if ((*j)->IsLine())
 			{
 				result.push_back(*i);
 			}
@@ -690,7 +681,7 @@ void FeatureCatalogue::GetAreaFeatures(std::vector<FeatureType*>& result)
 
 		for (auto j = primList.begin(); j != primList.end(); j++)
 		{
-			if (j->IsArea())
+			if ((*j)->IsArea())
 			{
 				result.push_back(*i);
 			}

@@ -10,7 +10,7 @@
 #include "PropertyGridDrawingCommands.h"
 #include "MFCTabCtrlMsgToParent.h"
 
-#include "..\\FeatureCatalog\\ListedValues.h"
+#include "../FeatureCatalog/ListedValue.h"
 
 #include <unordered_map>
 #include <list>
@@ -140,7 +140,7 @@ public:
 	void DeleteVectorItems();
 
 	//// Sort and then add the enumtype to the Simple Attribute.
-	void SettingEnumType(std::list<ListedValues> list, CMFCPropertyGridProperty* pSuperProperty);
+	void SettingEnumType(std::vector<ListedValue*> list, CMFCPropertyGridProperty* pSuperProperty);
 	//  
 	unsigned GetATCS(std::wstring code);
 	unsigned GetATIX(unsigned natc, unsigned parentIndex);

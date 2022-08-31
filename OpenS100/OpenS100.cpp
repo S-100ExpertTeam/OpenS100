@@ -57,7 +57,7 @@ COpenS100App::COpenS100App() noexcept
 #ifdef _MANAGED
 	System::Windows::Forms::Application::SetUnhandledExceptionMode(System::Windows::Forms::UnhandledExceptionMode::ThrowException);
 #endif
-
+	//_CrtSetBreakAlloc(256096);
 	SetAppID(_T("OpenS100.AppID.NoVersion"));
 }
 
