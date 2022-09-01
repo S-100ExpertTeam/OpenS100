@@ -74,6 +74,19 @@ void CDialogDockRelation::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CDialogDockRelation::OnSize(UINT nType, int cx, int cy)
 {
+	CRect rectClient;
+	GetClientRect(rectClient);
+
+	CRect rectENCs;
+	if (m_ListRelation.GetSafeHwnd())
+	{
+		rectENCs = CRect(rectClient.left, rectClient.top, rectClient.Size().cx, rectClient.Size().cy);
+		m_ListRelation.MoveWindow(rectENCs);
+		for (int i = 0; i < m_ListRelation.GetHeaderCtrl()->GetItemCount(); ++i)
+		{
+			m_ListRelation.SetColumnWidth(i, LVSCW_AUTOSIZE_USEHEADER);
+		}
+	}
 	CDialog::OnSize(nType, cx, cy);
 }
 

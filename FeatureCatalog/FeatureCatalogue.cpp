@@ -261,14 +261,14 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 				SetProductId(instruction.child_value());
 			}
 		}
-		else if (!strcmp(instructionName, "S100FC:producer"))
-		{
-			producer.GetContents(instruction);
-		}
-		else if (!strcmp(instructionName, "S100FC:S100_FC_definitionSources"))
-		{
-			definitionSources.GetContents(instruction);
-		}
+		//else if (!strcmp(instructionName, "S100FC:producer"))
+		//{
+		//	producer.GetContents(instruction);
+		//}
+		//else if (!strcmp(instructionName, "S100FC:S100_FC_definitionSources"))
+		//{
+		//	definitionSources.GetContents(instruction);
+		//}
 		else if (!strcmp(instructionName, "S100FC:S100_FC_SimpleAttributes"))
 		{
 			simpleAttributes.GetContents(instruction);

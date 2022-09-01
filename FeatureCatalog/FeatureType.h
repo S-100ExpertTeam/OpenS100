@@ -32,5 +32,5 @@ public:
 	FeatureUseType& GetFeatureUseTypePointer();
 	std::unordered_map<std::wstring, FeatureBinding*>& GetFeatureBindingPointer();
 	std::list<SpatialPrimitiveType*>& GetPermittedPrimitivesPointer();
-	bool InsertFeatureBinding(FeatureBinding* value);
+	bool InsertFeatureBinding(std::wstring& key, FeatureBinding* value);
 };

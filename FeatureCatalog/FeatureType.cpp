@@ -51,8 +51,7 @@ void FeatureType::GetContents(pugi::xml_node& node)
 				}
 			}
 
-			InsertFeatureBinding(feature);
-			featureBinding[associatename] = feature;
+			InsertFeatureBinding(associatename, feature);
 		}
 		else if (!strcmp(instructionName, "S100FC:permittedPrimitives"))
 		{
@@ -101,15 +100,14 @@ std::list<SpatialPrimitiveType*>& FeatureType::GetPermittedPrimitivesPointer()
 	return permittedPrimitives;
 }
 
-bool FeatureType::InsertFeatureBinding(FeatureBinding* value)
+bool FeatureType::InsertFeatureBinding(std::wstring& key, FeatureBinding* value)
 {
-	auto key = value->GetFeatureTypePointer().Getvalue();
-
 	if (featureBinding.find(key) == featureBinding.end())
 	{
 		featureBinding.insert({ key, value });
 		return true;
 	}
 
+	delete value;
 	return false;
 }

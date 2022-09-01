@@ -18,6 +18,9 @@ Item::~Item()
 {
 	delete remarks;
 	remarks = nullptr;
+
+	delete definitionReference;
+	definitionReference = nullptr;
 }
 
 void Item::GetContents(pugi::xml_node& node)
@@ -50,7 +53,12 @@ void Item::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:definitionReference"))
 		{
-			definitionReference.GetContents(instruction);
+			if (nullptr == definitionReference)
+			{
+				definitionReference = new DefinitionReference();
+			}
+
+			definitionReference->GetContents(instruction);
 		}
 	}
 }

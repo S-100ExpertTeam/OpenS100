@@ -135,16 +135,15 @@ lua_ref_ptr CreateNamedType(lua_session *ls, NamedType *named_type) // ---------
 	std::vector<lua_ref_ptr> attribute_bindings;
 
 	for (auto ab : named_type->GetAttributeBindingPointer())
-		attribute_bindings.push_back(CreateAttributeBinding(ls, &ab));
+	{
+		attribute_bindings.push_back(CreateAttributeBinding(ls, ab));
+	}
 
 	bool isAbstract = false;
 
-	for (auto a : named_type->GetattributesPointer())
+	if (true == named_type->GetIsAbstract())
 	{
-		if (a.Getname() == L"isAbstract")
-		{
-			isAbstract = named_type->Getvalue() == L"true";
-		}
+		isAbstract = true;
 	}
 
 	return ls->call<lua_ref_ptr>("CreateNamedType", { item, isAbstract, attribute_bindings });

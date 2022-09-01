@@ -23,8 +23,7 @@ void FeatureTypes::GetContents(pugi::xml_node& node)
 		{
 			auto sa = new FeatureType();
 			sa->GetContents(instruction);
-			featureType[sa->GetCodeAsWString()] = sa;
-			vecFeatureType.push_back(sa);
+			InsertFeatureType(sa);
 
 			if (instruction.attribute("isAbstract"))
 			{
@@ -112,4 +111,18 @@ std::vector<FeatureType*>& FeatureTypes::GetVecFeatureType()
 std::unordered_map<std::wstring, FeatureType*>& FeatureTypes::GetFeatureType()
 {
 	return featureType;
+}
+
+bool FeatureTypes::InsertFeatureType(FeatureType* value)
+{
+	auto key = value->GetCodeAsWString();
+	if (featureType.find(key) == featureType.end())
+	{
+		vecFeatureType.push_back(value);
+		featureType.insert({ key, value });
+		return true;
+	}
+
+	delete value;
+	return false;
 }

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "XML_Attribute.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include "../extlibs/pugixml/include/pugixml.hpp"
 
 XML_Attribute::XML_Attribute()
 {

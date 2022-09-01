@@ -43,9 +43,9 @@ private:
 	std::wstring filePath = L"";
 
 	// CI_Responsibility 
-	ResponsibleParty producer; 
+	//ResponsibleParty producer; 
 	// FC_DefinitionSource 
-	DefinitionSources definitionSources; 
+	//DefinitionSources definitionSources; 
 	SimpleAttributes simpleAttributes;
 	ComplexAttributes complexAttributes;
 	Roles roles;

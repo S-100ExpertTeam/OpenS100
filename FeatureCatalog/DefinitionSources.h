@@ -22,4 +22,5 @@ public:
 	std::wstring& GetSourceIdentifier();
 	void SetDefinitionSource(std::unordered_map<std::wstring, DefinitionSource*> value);
 	std::unordered_map<std::wstring, DefinitionSource*>& GetDefinitionSource();
+	bool InsertDefinitionSource(DefinitionSource* value);
 };

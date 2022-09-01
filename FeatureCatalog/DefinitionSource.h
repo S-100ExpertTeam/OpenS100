@@ -4,8 +4,7 @@
 
 #include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
 
-class DefinitionSource :
-	public XML_Item
+class DefinitionSource
 {
 public:
 	DefinitionSource();

@@ -25,4 +25,6 @@ public:
 	bool SetAssociationFromSuperType(FeatureType* ft);
 	std::vector<FeatureType*>& GetVecFeatureType();
     std::unordered_map<std::wstring, FeatureType*>& GetFeatureType();
+
+	bool InsertFeatureType(FeatureType* value);
 };
