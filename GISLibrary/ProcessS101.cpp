@@ -255,7 +255,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					CString str;
 					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					OutputDebugString(str);
+					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 5)
@@ -286,7 +286,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					CString str;
 					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					OutputDebugString(str);
+					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 7)
@@ -352,7 +352,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					CString str;
 					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					OutputDebugString(str);
+					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 11)
@@ -376,7 +376,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					CString str;
 					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					OutputDebugString(str);
+					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 12)
@@ -407,7 +407,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					CString str;
 					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					OutputDebugString(str);
+					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 13)
@@ -428,7 +428,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					CString str;
 					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					OutputDebugString(str);
+					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 14)
@@ -466,7 +466,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					CString str;
 					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					OutputDebugString(str);
+					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 15)
@@ -512,7 +512,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						}
 						else
 						{
-							OutputDebugString(L"Error : Offset Value should have 2 arguments.");
+							//OutputDebugString(L"Error : Offset Value should have 2 arguments.");
 						}
 
 						if (v_TextInstruction.size() > 0)
@@ -697,7 +697,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						}
 						else
 						{
-							OutputDebugString(L"Error : Vector Point Value should have 3 arguments.");
+							//OutputDebugString(L"Error : Vector Point Value should have 3 arguments.");
 						}
 					}
 
@@ -730,7 +730,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					CString str;
 					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					OutputDebugString(str);
+					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 17)
@@ -774,7 +774,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					CString str;
 					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					OutputDebugString(str);
+					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 19)
@@ -788,14 +788,14 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					CString str;
 					str.Format(_T("Lua Parser error - %S(%d)"), tag, sizeForIndex);
-					OutputDebugString(str);
+					//OutputDebugString(str);
 				}
 			}
 			else
 			{
 				CString str;
 				str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-				OutputDebugString(str);
+				//OutputDebugString(str);
 			}
 		}
 	}

@@ -197,7 +197,7 @@ void S101Cell::Validation()
 		//else 
 		if (spasCount > 1)
 		{
-			OutputDebugString(L"Multiple spas field\n");
+			//OutputDebugString(L"Multiple spas field\n");
 		}
 		//else if (spasCount == 1)
 		//{
@@ -720,7 +720,7 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 				}
 				else
 				{
-					OutputDebugString(L"Invalid sub field in point record\n");
+					//OutputDebugString(L"Invalid sub field in point record\n");
 				}
 			}
 		}
@@ -1108,7 +1108,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 
 		if (countPTAS != 1 && countPTAS != 2)
 		{
-			OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
+			//OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
 		}
 
 		auto beginPointKey = r->m_ptas->m_arr.front()->m_name.GetName();
@@ -1137,7 +1137,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 		}
 		else
 		{
-			OutputDebugString(L"Invalied ORNT\n");
+			//OutputDebugString(L"Invalied ORNT\n");
 		}
 
 		// C2IL
@@ -1163,12 +1163,12 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 			}
 			else
 			{
-				OutputDebugString(L"Invalied ORNT\n");
+				//OutputDebugString(L"Invalied ORNT\n");
 			}
 		}
 		else
 		{
-			OutputDebugString(L"Invalied C2IL count\n");
+			//OutputDebugString(L"Invalied C2IL count\n");
 		}
 
 		// PTAS
@@ -1182,7 +1182,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 		}
 		else
 		{
-			OutputDebugString(L"Invalied ORNT\n");
+			//OutputDebugString(L"Invalied ORNT\n");
 		}
 	}
 
@@ -1207,7 +1207,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 
 		if (countPTAS != 1 && countPTAS != 2)
 		{
-			OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
+			//OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
 		}
 
 		auto beginPointKey = r->m_ptas->m_arr.front()->m_name.GetName();
@@ -1236,7 +1236,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		}
 		else
 		{
-			OutputDebugString(L"Invalied ORNT\n");
+			//OutputDebugString(L"Invalied ORNT\n");
 			return FALSE;
 		}
 
@@ -1263,12 +1263,12 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 			}
 			else
 			{
-				OutputDebugString(L"Invalied ORNT\n");
+				//OutputDebugString(L"Invalied ORNT\n");
 			}
 		}
 		else
 		{
-			OutputDebugString(L"Invalied C2IL count\n");
+			//OutputDebugString(L"Invalied C2IL count\n");
 		}
 
 		// PTAS
@@ -1282,7 +1282,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		}
 		else
 		{
-			OutputDebugString(L"Invalied ORNT\n");
+			//OutputDebugString(L"Invalied ORNT\n");
 		}
 
 		curve->SetMultiplicationFactor(m_dsgir.m_dssi.m_cmfx, m_dsgir.m_dssi.m_cmfy);
@@ -1348,7 +1348,7 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 		}
 		else
 		{
-			OutputDebugString(L"Invalid rcnm\n");
+			//OutputDebugString(L"Invalid rcnm\n");
 		}
 	}
 
@@ -1450,7 +1450,7 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoA
 			}
 			else
 			{
-				OutputDebugString(L"Invalid RCNM in CUCO\n");
+				//OutputDebugString(L"Invalid RCNM in CUCO\n");
 				return FALSE;
 			}
 		}
@@ -2555,43 +2555,43 @@ bool S101Cell::Check()
 {
 	if (GetCount_InformationRecord() != GetMetaCount_InformationRecord())
 	{
-		OutputDebugString(L"error - Information Record count\n");
+		//OutputDebugString(L"error - Information Record count\n");
 		return false;
 	}
 
 	if (GetCount_PointRecord() != GetMetaCount_PointRecord())
 	{
-		OutputDebugString(L"error - Point Record count\n");
+		//OutputDebugString(L"error - Point Record count\n");
 		return false;
 	}
 
 	if (GetCount_MultiPointRecord() != GetMetaCount_MultiPointRecord())
 	{
-		OutputDebugString(L"error - Multi Point Record count\n");
+		//OutputDebugString(L"error - Multi Point Record count\n");
 		return false;
 	}
 
 	if (GetCount_CurveRecord() != GetMetaCount_CurveRecord())
 	{
-		OutputDebugString(L"error - Curve Record count\n");
+		//OutputDebugString(L"error - Curve Record count\n");
 		return false;
 	}
 
 	if (GetCount_CompositeCurveRecord() != GetMetaCount_CompositeCurveRecord())
 	{
-		OutputDebugString(L"error - Composite Curve Record count\n");
+		//OutputDebugString(L"error - Composite Curve Record count\n");
 		return false;
 	}
 
 	if (GetCount_SurfaceRecord() != GetMetaCount_SurfaceRecord())
 	{
-		OutputDebugString(L"error - Surface Record count\n");
+		//OutputDebugString(L"error - Surface Record count\n");
 		return false;
 	}
 
 	if (GetCount_FeatureTypeRecord() != GetMetaCount_FeatureTypeRecord())
 	{
-		OutputDebugString(L"error - Feature Type Record count\n");
+		//OutputDebugString(L"error - Feature Type Record count\n");
 		return false;
 	}
 

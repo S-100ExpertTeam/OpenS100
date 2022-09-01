@@ -46,7 +46,7 @@ void S100_Palette::GetContents(pugi::xml_node node)
 			}
 			else
 			{
-				OutputDebugString(_T("items already exist\n"));
+				//OutputDebugString(_T("items already exist\n"));
 				delete item;
 			}
 		}

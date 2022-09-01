@@ -114,7 +114,7 @@ void CConfiguration_4::OnBnClickedButton_initialization()
 			}
 			CString str;
 			str.Format(_T("%s is visible false \n"), name);
-			OutputDebugString(str);
+			//OutputDebugString(str);
 		}
 	}
 	return;

@@ -220,7 +220,7 @@ int R_CurveRecord::GetPointCount()
 
 	if (countPTAS != 1 && countPTAS != 2)
 	{
-		OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
+		//OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
 		return 0;
 	}
 
@@ -234,7 +234,7 @@ int R_CurveRecord::GetPointCount()
 	}
 	else
 	{
-		OutputDebugString(L"Invalied C2IL count\n");
+		//OutputDebugString(L"Invalied C2IL count\n");
 		return 0;
 	}
 

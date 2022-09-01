@@ -1622,7 +1622,7 @@ void COpenS100View::PointFeatureList()
 		std::vector<FeatureType*> features;
 		fc->GetPointFeatures(features);
 
-		OutputDebugString(L"Name, Code, Definition, Alias\n");
+		//OutputDebugString(L"Name, Code, Definition, Alias\n");
 
 		for (auto i = features.begin(); i != features.end(); i++)
 		{
@@ -1645,7 +1645,7 @@ void COpenS100View::PointFeatureList()
 				}
 			}
 
-			OutputDebugString(str + L"\n");
+			//OutputDebugString(str + L"\n");
 		}
 	}
 }
@@ -1658,7 +1658,7 @@ void COpenS100View::LineFeatureList()
 		std::vector<FeatureType*> features;
 		fc->GetLineFeatures(features);
 
-		OutputDebugString(L"Name, Code, Definition, Alias\n");
+		//OutputDebugString(L"Name, Code, Definition, Alias\n");
 
 		for (auto i = features.begin(); i != features.end(); i++)
 		{
@@ -1681,7 +1681,7 @@ void COpenS100View::LineFeatureList()
 				}
 			}
 
-			OutputDebugString(str + L"\n");
+			//OutputDebugString(str + L"\n");
 		}
 	}
 }
@@ -1694,7 +1694,7 @@ void COpenS100View::AreaFeatureList()
 		std::vector<FeatureType*> features;
 		fc->GetAreaFeatures(features);
 
-		OutputDebugString(L"Name, Code, Definition, Alias\n");
+		//OutputDebugString(L"Name, Code, Definition, Alias\n");
 
 		for (auto i = features.begin(); i != features.end(); i++)
 		{
@@ -1717,7 +1717,7 @@ void COpenS100View::AreaFeatureList()
 				}
 			}
 
-			OutputDebugString(str + L"\n");
+			//OutputDebugString(str + L"\n");
 		}
 	}
 }

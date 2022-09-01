@@ -95,7 +95,7 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 
 	if (nullptr == curListCurveLink)
 	{
-		OutputDebugString(L"The spatial information format of the object is invalid.\n");
+		//OutputDebugString(L"The spatial information format of the object is invalid.\n");
 		return;
 	}
 

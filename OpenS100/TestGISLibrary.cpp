@@ -25,7 +25,7 @@ void TestGISLibrary::TestCreateNewCode()
 			numericCode = enc->m_dsgir.GetFeatureTypeCode(featureTypeCode);
 			CString str;
 			str.Format(L"%d\n", numericCode);
-			OutputDebugString(str);
+			//OutputDebugString(str);
 		}
 	}
 }

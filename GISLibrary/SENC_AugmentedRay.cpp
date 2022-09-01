@@ -177,12 +177,12 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 						else
 						{
 							pGeometry = NULL;
-							OutputDebugString(_T("Faield to close ring sink\n"));
+							//OutputDebugString(_T("Faield to close ring sink\n"));
 						}
 					}
 					else
 					{
-						OutputDebugString(_T("Faield to Open Ring Sink\n"));
+						//OutputDebugString(_T("Faield to Open Ring Sink\n"));
 					}
 				}
 

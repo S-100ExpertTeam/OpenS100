@@ -84,7 +84,7 @@ char* LibMFCUtil::ConvertWCtoC(wchar_t* str)
 
 	if (strSize <= 0)
 	{
-		OutputDebugString(_T("Failed to WideCharToMultiByte()\n"));
+		//OutputDebugString(_T("Failed to WideCharToMultiByte()\n"));
 		return nullptr;
 	}
 
@@ -107,7 +107,7 @@ wchar_t* LibMFCUtil::ConvertCtoWC(char* str)
 
 	if (strSize <= 0)
 	{
-		OutputDebugString(_T("Failed to MultiByteToWideChar()\n"));
+		//OutputDebugString(_T("Failed to MultiByteToWideChar()\n"));
 		return nullptr;
 	}
 
@@ -259,11 +259,11 @@ void LibMFCUtil::OutputDebugLongString(CString path)
 	for (int i = 0; i < count; i++)
 	{
 		CString str = path.Mid(i * 4096, 4096);
-		OutputDebugString(str);
+		//OutputDebugString(str);
 	}
 
 	if (mod > 0)
 	{
-		OutputDebugString(path.Mid(count * 4096, mod));
+		//OutputDebugString(path.Mid(count * 4096, mod));
 	}
 }

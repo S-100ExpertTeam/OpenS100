@@ -484,7 +484,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 	{
 		CString errMsg;
 		errMsg.Format(_T("Failed to create IDWriteTextFormat! (%02X)"), hr);
-		OutputDebugString(errMsg);
+		//OutputDebugString(errMsg);
 	}
 
 	auto fsfsf = ENCCommon::DISPLAY_FONT_NAME.c_str();
@@ -509,7 +509,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 	{
 		CString errMsg;
 		errMsg.Format(_T("Failed to create IDWriteTextFormat (for Area)! (%02X)"), hr);
-		OutputDebugString(errMsg);
+		//OutputDebugString(errMsg);
 	}
 }
 

@@ -64,12 +64,12 @@ void S100_Dash::SetFromStartLength(std::string& value)
 	// If you don't have a comma,
 	if (std::string::npos == commaIndex)
 	{
-		OutputDebugString(_T("Failed to parse (Dash:start,length)[1]\n"));
+		//OutputDebugString(_T("Failed to parse (Dash:start,length)[1]\n"));
 		return;
 	}
 	else if (commaIndex >= value.length())
 	{
-		OutputDebugString(_T("Failed to parse (Dash:start,length)[2]\n"));
+		//OutputDebugString(_T("Failed to parse (Dash:start,length)[2]\n"));
 		return;
 	}
 	else

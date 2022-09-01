@@ -84,7 +84,7 @@ void SENC_LineStyleReference::DrawInstruction(
 
 			if (!SUCCEEDED(hr))
 			{
-				OutputDebugString(_T("Failed to create bitmap\n"));
+				//OutputDebugString(_T("Failed to create bitmap\n"));
 			}
 			else
 			{

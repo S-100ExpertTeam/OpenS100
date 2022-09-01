@@ -23,7 +23,7 @@ bool S100ColorProfile::OpenByPugi(char *filePath)
 
 	if (colorProfileNode.empty())
 	{
-		OutputDebugString(_T("Failed to Read xml file in S100ColorProfile::Open()\n"));
+		//OutputDebugString(_T("Failed to Read xml file in S100ColorProfile::Open()\n"));
 		return false;
 	}
 
@@ -61,7 +61,7 @@ D2D1_COLOR_F S100ColorProfile::GetColor(std::wstring _paletteName, std::wstring 
 	{
 		CString errMsg;
 		errMsg.Format(_T("Invalid color name (%s)\n"), _token.c_str());
-		OutputDebugString(errMsg);
+		//OutputDebugString(errMsg);
 
 		return resultColor;
 	}
@@ -294,7 +294,7 @@ char* S100ColorProfile::ConvertWCtoC(wchar_t* str)
 
 	if (strSize <= 0)
 	{
-		OutputDebugString(_T("Failed to WideCharToMultiByte()\n"));
+		//OutputDebugString(_T("Failed to WideCharToMultiByte()\n"));
 		return nullptr;
 	}
 

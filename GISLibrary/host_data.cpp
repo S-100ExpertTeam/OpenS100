@@ -562,25 +562,25 @@ static std::vector<std::string> get_simple_attribute_values(R_FeatureRecord* fr,
 							}
 							else
 							{
-								OutputDebugString(_T("Attribute code error1\n"));
+								//OutputDebugString(_T("Attribute code error1\n"));
 							}
 						}
 					}
 					else
 					{
-						OutputDebugString(_T("Parent index error\n"));
+						//OutputDebugString(_T("Parent index error\n"));
 					}
 				}
 				else
 				{
-					OutputDebugString(_T("ParentIndex Error\n"));
+					//OutputDebugString(_T("ParentIndex Error\n"));
 				}
 			}
 		}
 	}
 	else
 	{
-		OutputDebugString(_T("Attribute path error\n"));
+		//OutputDebugString(_T("Attribute path error\n"));
 	}
 	return attr_values;
 }

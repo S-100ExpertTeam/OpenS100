@@ -114,7 +114,7 @@ namespace simpleUse
 
 		if (strSize <= 0)
 		{
-			OutputDebugString(_T("Failed to WideCharToMultiByte()\n"));
+			//OutputDebugString(_T("Failed to WideCharToMultiByte()\n"));
 			return nullptr;
 		}
 
@@ -263,7 +263,7 @@ bool SVGReader::OpenByPugi(char* path)
 		auto wpath = pugi::as_wide(path);
 		CString errStr;
 		errStr.Format(L"Failed to call load svg in SVGReader::OpenByPugi() %s \n", wpath.c_str());
-		OutputDebugString(errStr);
+		//OutputDebugString(errStr);
 		return false;
 	}
 
@@ -609,17 +609,17 @@ SVGGeometry SVGReader::CreateSVGGeometryFromLine(ID2D1Factory1* m_pDirect2dFacto
 
 			if (!SUCCEEDED(hr))
 			{
-				OutputDebugString(_T("Faield to close sink\n"));
+				//OutputDebugString(_T("Faield to close sink\n"));
 			}
 		}
 		else
 		{
-			OutputDebugString(_T("Faield to Open Sink\n"));
+			//OutputDebugString(_T("Faield to Open Sink\n"));
 		}
 	}
 	else
 	{
-		OutputDebugString(_T("Failed to create geometry\n"));
+		//OutputDebugString(_T("Failed to create geometry\n"));
 	}
 
 	return svgGeometry;
