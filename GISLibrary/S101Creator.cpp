@@ -13,8 +13,12 @@
 #include "F_PTAS.h"
 #include "F_SEGH.h"
 #include "F_C2IL.h"
+#include "F_CUCO.h"
+#include "F_RIAS.h"
 #include "IC2D.h"
 #include "PTAS.h"
+#include "CUCO.h"
+#include "RIAS.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -588,6 +592,67 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 			f_C2IL->m_arr.push_back(C2IL);
 		}
 	}
+
+	enc->InsertRecord(vectorRecord);
+
+	return vectorRecord;
+}
+
+R_CompositeRecord* S101Creator::ConvertInsertVectorRecord(SCompositeCurve* geom)
+{
+	auto vectorRecord = new R_CompositeRecord();
+
+	auto recordName = NewCompositeCurveRecordName();
+	vectorRecord->m_ccid = F_CCID(recordName);
+
+	auto f_CUCO = new F_CUCO();
+	for (auto i = geom->m_listCurveLink.begin(); i != geom->m_listCurveLink.end(); i++)
+	{
+		auto curveRecord = ConvertInsertVectorRecord(*i);
+		auto cuco = new CUCO();
+		cuco->m_name = curveRecord->GetRecordName();
+		cuco->m_ornt = 1;
+		f_CUCO->m_arr.push_back(cuco);
+	}
+	vectorRecord->m_cuco.push_back(f_CUCO);
+
+	enc->InsertRecord(vectorRecord);
+
+	return vectorRecord;
+}
+
+R_SurfaceRecord* S101Creator::ConvertInsertVectorRecord(SSurface* geom)
+{
+	auto vectorRecord = new R_SurfaceRecord();
+
+	auto recordName = NewSurfaceRecordName();
+	vectorRecord->m_srid = F_SRID(recordName);
+
+	auto f_RIAS = new F_RIAS();
+
+	for (auto i = geom->curveList.begin(); i != geom->curveList.end(); i++)
+	{
+		auto curveRecord = ConvertInsertVectorRecord(*i);
+		
+		auto rias = new RIAS();
+		rias->m_name = curveRecord->GetRecordName();
+		rias->m_ornt = 1;
+
+		if (i == geom->curveList.begin())
+		{
+			rias->m_usag = 1;
+		}
+		else
+		{
+			rias->m_usag = 2;
+		}
+		
+		rias->m_raui = 1;
+
+		f_RIAS->m_arr.push_back(rias);
+	}
+
+	vectorRecord->m_rias.push_back(f_RIAS);
 
 	enc->InsertRecord(vectorRecord);
 

@@ -52,6 +52,8 @@ public:
 	R_PointRecord* ConvertInsertVectorRecord(SPoint* geom);
 	R_MultiPointRecord* ConvertInsertVectorRecord(SMultiPoint* geom);
 	R_CurveRecord* ConvertInsertVectorRecord(SCurveHasOrient* geom);
+	R_CompositeRecord* ConvertInsertVectorRecord(SCompositeCurve* geom);
+	R_SurfaceRecord* ConvertInsertVectorRecord(SSurface* geom);
 	
 
 	//std::vector<AttributeBinding> Get

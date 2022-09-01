@@ -6,7 +6,7 @@ class F_SRID : Field
 {
 public:
 	F_SRID();
-
+	F_SRID(RecordName recordName, int RVER = 1, int RUIN = 1);
 	virtual ~F_SRID();
 
 public:

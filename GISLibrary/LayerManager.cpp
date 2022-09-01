@@ -1234,57 +1234,54 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 
 			if (lineInstruction->spatialReference.size() > 0)
 			{
-				//if (lineInstruction->m_listCurveLink.size() == 0)
+				if (featureRecord->m_geometry->type == 3)
 				{
-					if (featureRecord->m_geometry->type == 3)
+					auto surface = (SSurface*)featureRecord->m_geometry;
+
+					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
 					{
-						auto surface = (SSurface*)featureRecord->m_geometry;
+						SENC_SpatialReference* sred = *iterLi;
+						int referencedID = sred->reference;
 
-						for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
+						for (auto k = surface->curveList.begin(); k != surface->curveList.end(); k++)
 						{
-							SENC_SpatialReference* sred = *iterLi;
-							int referencedID = sred->reference;
-
-							for (auto k = surface->curveList.begin(); k != surface->curveList.end(); k++)
+							if ((*k)->GetRCID() == referencedID)
 							{
-								if ((*k)->GetRCID() == referencedID)
-								{
-									curListCurveLink.push_back(*k);
-								}
+								curListCurveLink.push_back(*k);
 							}
 						}
 					}
-					else if (featureRecord->m_geometry->type == 2)
+				}
+				else if (featureRecord->m_geometry->type == 2)
+				{
+					auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
+
+					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
 					{
-						auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
+						SENC_SpatialReference* sred = *iterLi;
+						int referencedID = sred->reference;
 
-						for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
+						for (auto k = compositeCurve->m_listCurveLink.begin(); k != compositeCurve->m_listCurveLink.end(); k++)
 						{
-							SENC_SpatialReference* sred = *iterLi;
-							int referencedID = sred->reference;
-
-							for (auto k = compositeCurve->m_listCurveLink.begin(); k != compositeCurve->m_listCurveLink.end(); k++)
+							if ((*k)->GetRCID() == referencedID)
 							{
-								if ((*k)->GetRCID() == referencedID)
-								{
-									curListCurveLink.push_back(*k);
-								}
+								curListCurveLink.push_back(*k);
 							}
 						}
 					}
-					else if (featureRecord->m_geometry->type == 5)
+				}
+				else if (featureRecord->m_geometry->type == 5)
+				{
+					auto curveHasOrient = (SCurveHasOrient*)featureRecord->m_geometry;
+
+					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
 					{
-						auto curveHasOrient = (SCurveHasOrient*)featureRecord->m_geometry;
+						SENC_SpatialReference* sred = *iterLi;
+						int referencedID = sred->reference;
 
-						for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
+						if (curveHasOrient->GetRCID() == referencedID)
 						{
-							SENC_SpatialReference* sred = *iterLi;
-							int referencedID = sred->reference;
-
-							if (curveHasOrient->GetRCID() == referencedID)
-							{
-								curListCurveLink.push_back(curveHasOrient);
-							}
+							curListCurveLink.push_back(curveHasOrient);
 						}
 					}
 				}
@@ -1297,8 +1294,6 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 				{
 					curListCurveLink.push_back((*i));
 				}
-
-//				curListCurveLink = surface->curveList;
 			}
 			else if (featureRecord->m_geometry->type == 2)
 			{
