@@ -167,7 +167,8 @@ public:
 		float& intersectionX1, float& intersectionY1,
 		float& intersectionX2, float& intersectionY2);
 
-	static const int NewGeometryScale = 70000000;
+	//static const int NewGeometryScale = 70000000;
+	static const int NewGeometryScale = 5000;
 
 	static int intersect_ccw(double p1x, double p1y, double p2x, double p2y, double p3x, double p3y, double p4x, double p4y);
 

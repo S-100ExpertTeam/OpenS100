@@ -12,6 +12,7 @@ class SGeometry;
 class S101Creator
 {
 public:
+	S101Creator();
 	S101Creator(FeatureCatalogue* fc, S101Cell* enc);
 	~S101Creator();
 

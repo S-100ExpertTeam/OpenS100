@@ -37,4 +37,5 @@ public:
 	int GetPointCount();
 
 	GeoPoint GetXY(int index);
+	void SetXY(int index, double x, double y);
 };

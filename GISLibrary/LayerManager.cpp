@@ -863,6 +863,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
 		pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
+		pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
 
 		for (auto dp = drawingPriority.begin(); dp != drawingPriority.end(); dp++)
 		{

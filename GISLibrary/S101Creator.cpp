@@ -30,6 +30,11 @@
 
 #include <set>
 
+S101Creator::S101Creator()
+{
+
+}
+
 S101Creator::S101Creator(FeatureCatalogue* fc, S101Cell* enc)
 {
 	this->fc = fc;
@@ -247,10 +252,18 @@ SGeometry* S101Creator::SetCurveGeometry(R_FeatureRecord* feature, unsigned char
 {
 	if (feature->m_geometry == nullptr)
 	{
-		feature->m_geometry = new SCurve();
+		feature->m_geometry = new SCurveHasOrient();
 	}
 
 	feature->m_geometry->ImportFromWkb(value, size);
+
+	auto geometry = (SCurveHasOrient*)feature->m_geometry;
+
+	auto vectorRecord = ConvertInsertVectorRecord(geometry);
+
+	feature->SetVectorRecord(vectorRecord);
+
+	((SCurveHasOrient*)feature->m_geometry)->SetRCID(vectorRecord->GetRCID());
 
 	return feature->m_geometry;
 }
@@ -264,6 +277,12 @@ SGeometry* S101Creator::SetCompositeCurveGeometry(R_FeatureRecord* feature, unsi
 
 	feature->m_geometry->ImportFromWkb(value, size);
 
+	auto geometry = (SCompositeCurve*)feature->m_geometry;
+
+	auto vectorRecord = ConvertInsertVectorRecord(geometry);
+
+	feature->SetVectorRecord(vectorRecord);
+
 	return feature->m_geometry;
 }
 
@@ -275,6 +294,12 @@ SGeometry* S101Creator::SetSurfaceGeometry(R_FeatureRecord* feature, unsigned ch
 	}
 
 	feature->m_geometry->ImportFromWkb(value, size);
+
+	auto geometry = (SSurface*)feature->m_geometry;
+
+	auto vectorRecord = ConvertInsertVectorRecord(geometry);
+
+	feature->SetVectorRecord(vectorRecord);
 
 	return feature->m_geometry;
 }
@@ -291,7 +316,7 @@ RecordName S101Creator::NewFeatureRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *std::prev(RCIDs.end());
+		auto RCID = *std::prev(RCIDs.end()) + 1;
 		return RecordName(GISLibrary::RCNM::FeatureType, RCID);
 	}
 
@@ -310,7 +335,7 @@ RecordName S101Creator::NewInformationRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *std::prev(RCIDs.end());
+		auto RCID = *std::prev(RCIDs.end()) + 1;
 		return RecordName(GISLibrary::RCNM::InformationType, RCID);
 	}
 
@@ -329,7 +354,7 @@ RecordName S101Creator::NewPointRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *std::prev(RCIDs.end());
+		auto RCID = *std::prev(RCIDs.end()) + 1;
 		return RecordName(GISLibrary::RCNM::Point, RCID);
 	}
 
@@ -348,7 +373,7 @@ RecordName S101Creator::NewMultiPointRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *std::prev(RCIDs.end());
+		auto RCID = *std::prev(RCIDs.end()) + 1;
 		return RecordName(GISLibrary::RCNM::MultiPoint, RCID);
 	}
 
@@ -367,7 +392,7 @@ RecordName S101Creator::NewCurveRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *std::prev(RCIDs.end());
+		auto RCID = *std::prev(RCIDs.end()) + 1;
 		return RecordName(GISLibrary::RCNM::Curve, RCID);
 	}
 
@@ -386,7 +411,7 @@ RecordName S101Creator::NewCompositeCurveRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *std::prev(RCIDs.end());
+		auto RCID = *std::prev(RCIDs.end()) + 1;
 		return RecordName(GISLibrary::RCNM::CompositeCurve, RCID);
 	}
 
@@ -405,7 +430,7 @@ RecordName S101Creator::NewSurfaceRecordName()
 
 	if (RCIDs.size() > 0)
 	{
-		auto RCID = *std::prev(RCIDs.end());
+		auto RCID = *std::prev(RCIDs.end()) + 1;
 		return RecordName(GISLibrary::RCNM::Surface, RCID);
 	}
 
@@ -490,7 +515,16 @@ R_PointRecord* S101Creator::ConvertInsertVectorRecord(SPoint* geom)
 
 	auto recordName = NewPointRecordName();
 	vectorRecord->m_prid = F_PRID(recordName);
-	vectorRecord->SetC2IT(geom->x * enc->GetCMFX(), geom->y * enc->GetCMFY());
+
+	double x = geom->x;
+	double y = geom->y;
+
+	inverseProjection(x, y);
+
+	x *= enc->GetCMFX();
+	y *= enc->GetCMFY();
+
+	vectorRecord->SetC2IT(x, y);
 
 	enc->InsertRecord(vectorRecord);
 
@@ -507,9 +541,15 @@ R_MultiPointRecord* S101Creator::ConvertInsertVectorRecord(SMultiPoint* geom)
 	auto numPoint = geom->GetNumPoints();
 	for (int i = 0; i < numPoint; i++)
 	{
+		double x = geom->GetX(i);
+		double y = geom->GetY(i);
+		inverseProjection(x, y);
+		x *= enc->GetCMFX();
+		y *= enc->GetCMFY();
+
 		vectorRecord->InsertC3IL(
-			geom->GetX(i) * enc->GetCMFX(),
-			geom->GetY(i) * enc->GetCMFY(),
+			x, 
+			y,
 			geom->GetZ(i) * enc->GetCMFZ());
 	}
 
@@ -587,8 +627,15 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 		if (sPoint)
 		{
 			auto C2IL = new IC2D();
-			C2IL->m_xcoo = sPoint->x * enc->GetCMFX();
-			C2IL->m_ycoo = sPoint->y * enc->GetCMFY();
+
+			double x = sPoint->x;
+			double y = sPoint->y;
+			inverseProjection(x, y);
+			x *= enc->GetCMFX();
+			y *= enc->GetCMFY();
+
+			C2IL->m_xcoo = x;
+			C2IL->m_ycoo = y;
 			f_C2IL->m_arr.push_back(C2IL);
 		}
 	}
@@ -613,6 +660,8 @@ R_CompositeRecord* S101Creator::ConvertInsertVectorRecord(SCompositeCurve* geom)
 		cuco->m_name = curveRecord->GetRecordName();
 		cuco->m_ornt = 1;
 		f_CUCO->m_arr.push_back(cuco);
+
+		(*i)->SetRCID(curveRecord->GetRCID());
 	}
 	vectorRecord->m_cuco.push_back(f_CUCO);
 

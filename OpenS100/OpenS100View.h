@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "../GISLibrary/S100EditRender.h"
+
 class COpenS100Doc;
 class Layer;
 class R_FeatureRecord;
@@ -57,6 +59,7 @@ public:
 	CPoint ptPick = { -100, -100 };
 	bool isMoved = false;
 
+	S101Cell* encPick = nullptr;
 	R_FeatureRecord* frPick = nullptr;  // Feature selected on the screen (S-101)
 	double ptPickX = 0.0;
 	double ptPickY = 0.0;
@@ -74,6 +77,8 @@ public:
 	// Modaless dialog
 	CDialogViewNoGeometry* dialogNoGeometry = nullptr;
 	CDialogViewInformationType* dialogInformationType = nullptr;
+
+	S100EditRender s100EditRender;
 
 protected:
 	std::vector<CString> m_systemFontList;
@@ -149,7 +154,7 @@ public:
 	void ClearPickReport();
 	void PickReport(CPoint _point);
 	void PickReport(CPoint _point, int layerIndex);
-	void SetPickReportFeature(R_FeatureRecord* _fr);
+
 
 	// It runs at the end and stores the last location and scale.
 	void SaveLastPosScale();
@@ -159,6 +164,8 @@ public:
 	void LineFeatureList();
 	void AreaFeatureList();
 	void CopyLayer();
+
+	void SetPick(S101Cell* enc = nullptr, R_FeatureRecord* feature = nullptr);
 };
 
 

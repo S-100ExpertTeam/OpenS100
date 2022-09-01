@@ -21,6 +21,7 @@
 #include "../GISLibrary/S101Creator.h"
 #include "../GISLibrary/S101Layer.h"
 #include "../GISLibrary/S101Cell.h"
+#include "../GISLibrary/D2D1Resources.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -234,8 +235,10 @@ void COpenS100View::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 
 void COpenS100View::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
-	ClientToScreen(&point);
-	OnContextMenu(this, point);
+	s100EditRender.SelectByScreen(point.x, point.y);
+	Invalidate();
+	//ClientToScreen(&point);
+	//OnContextMenu(this, point);
 }
 
 void COpenS100View::OnContextMenu(CWnd* /* pWnd */, CPoint point)
@@ -593,6 +596,8 @@ void COpenS100View::OnMButtonDown(UINT nFlags, CPoint point)
 
 void COpenS100View::OnMButtonUp(UINT nFlags, CPoint point)
 {
+	s100EditRender.UpdatePoint(point.x, point.y);
+	MapRefresh();
 	CView::OnMButtonUp(nFlags, point);
 }
 
@@ -657,7 +662,7 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 	{
 		if (isMoved == false)
 		{
-			frPick = nullptr;
+			SetPick();
 			PickReport(calc_point);
 		}
 	}
@@ -1148,11 +1153,20 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		}
 		theApp.gisLib->D2.End();
 	}
+
+	auto hdc = g.GetHDC();
+	CRect rect = theApp.gisLib->GetScaler()->GetScreenRect();
+	theApp.gisLib->D2.Begin(hdc, rect);
+	s100EditRender.Set(encPick, frPick);
+	//s100EditRender.SelectByScreen(0, 0);
+	s100EditRender.ShowPoint();
+	theApp.gisLib->D2.End();
+	g.ReleaseHDC(hdc);
 }
 
 void COpenS100View::ClearPickReport()
 {
-	frPick = nullptr;
+	SetPick();
 }
 
 void COpenS100View::PickReport(CPoint _point)
@@ -1484,20 +1498,20 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, cell, L"0");
 }
 
-void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)
-{
-	frPick = _fr;
-	Layer* l = nullptr;
-
-	l = (Layer*)theApp.gisLib->GetLayer(0);
-
-	if (l == NULL)
-	{
-		CString str;
-		str.Format(_T("Layer (%d) could not be retrieved."), 0);
-		AfxMessageBox(str);
-		return;
-	}
+//void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)
+//{
+//	frPick = _fr;
+//	Layer* l = nullptr;
+//
+//	l = (Layer*)theApp.gisLib->GetLayer(0);
+//
+//	if (l == NULL)
+//	{
+//		CString str;
+//		str.Format(_T("Layer (%d) could not be retrieved."), 0);
+//		AfxMessageBox(str);
+//		return;
+//	}
 
 	// Output WKB string
 	//if (frPick->m_geometry)
@@ -1536,13 +1550,13 @@ void COpenS100View::SetPickReportFeature(R_FeatureRecord* _fr)
 	//		MapRefresh();
 	//	}
 	//}
-
-	Invalidate(FALSE);
-}
+//
+//	Invalidate(FALSE);
+//}
 
 void COpenS100View::ESC()
 {
-	frPick = nullptr;
+	SetPick();
 
 	MapRefresh(); 
 }
@@ -1607,7 +1621,11 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		CopyLayer();
 		break;
 	case VK_F5:
-		TestGISLibrary::TestCreateNewCode();
+		//TestGISLibrary::TestCreateNewCode();
+		TestGISLibrary::TestSave();
+		break;
+	case VK_F6:
+		TestGISLibrary::TestSave();
 		break;
 	}
 
@@ -1752,4 +1770,10 @@ void COpenS100View::CopyLayer()
 	}
 
 	enc1->Save(L"..\\TEMP\\edit.000");
+}
+
+void COpenS100View::SetPick(S101Cell* enc, R_FeatureRecord* feature)
+{
+	encPick = enc;
+	frPick = feature;
 }

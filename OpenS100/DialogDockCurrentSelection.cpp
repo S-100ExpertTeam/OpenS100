@@ -122,7 +122,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					{
 						if (true == layer->IsOn())
 						{
-							theApp.pView->SetPickReportFeature(pFe);
+							theApp.pView->SetPick((S101Cell*)layer->GetSpatialObject(), pFe);
 							theApp.pView->Invalidate(FALSE);
 						}
 					}

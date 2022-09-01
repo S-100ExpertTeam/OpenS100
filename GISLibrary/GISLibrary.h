@@ -2,6 +2,7 @@
 
 #include "LayerManager.h"
 #include "D2D1Resources.h"
+#include "S101Creator.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 
@@ -23,6 +24,7 @@ public:
 	LayerManager* m_pLayerManager = new LayerManager(m_pScaler);
 	GISLibrary::D2D1Resources D2;
 	S100Render s100Render;
+	S101Creator creator;
 
 	// Default FC & PC for S-101
 	FeatureCatalogue* fc = nullptr;

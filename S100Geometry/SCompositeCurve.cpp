@@ -208,3 +208,21 @@ GeoPoint SCompositeCurve::GetXY(int index)
 
 	return result;
 }
+
+void SCompositeCurve::SetXY(int index, double x, double y)
+{
+	int pointCount = 0;
+
+	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
+	{
+		int currentPointCount = (*i)->GetNumPoints();
+		if (index < pointCount + currentPointCount)
+		{
+			int localIndex = index - pointCount;
+			(*i)->Set(localIndex, x, y);
+			return;
+		}
+
+		pointCount += currentPointCount;
+	}
+}

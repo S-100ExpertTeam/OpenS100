@@ -320,6 +320,7 @@
     <ClCompile Include="RIAS.cpp" />
     <ClCompile Include="R_DDR.cpp" />
     <ClCompile Include="R_VectorRecord.cpp" />
+    <ClCompile Include="S100EditRender.cpp" />
     <ClCompile Include="S100Layer.cpp" />
     <ClCompile Include="S100SpatialObject.cpp" />
     <ClCompile Include="S100Utilities.cpp" />
@@ -485,6 +486,7 @@
     <ClInclude Include="RIAS.h" />
     <ClInclude Include="R_DDR.h" />
     <ClInclude Include="R_VectorRecord.h" />
+    <ClInclude Include="S100EditRender.h" />
     <ClInclude Include="S100Layer.h" />
     <ClInclude Include="S100SpatialObject.h" />
     <ClInclude Include="S100Utilities.h" />

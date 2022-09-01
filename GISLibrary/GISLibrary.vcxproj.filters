@@ -501,6 +501,9 @@
     <ClCompile Include="S100SpatialObject.cpp">
       <Filter>S100</Filter>
     </ClCompile>
+    <ClCompile Include="S100EditRender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -988,6 +991,9 @@
     </ClInclude>
     <ClInclude Include="S100SpatialObject.h">
       <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="S100EditRender.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

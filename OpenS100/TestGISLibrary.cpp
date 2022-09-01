@@ -29,3 +29,15 @@ void TestGISLibrary::TestCreateNewCode()
 		}
 	}
 }
+
+void TestGISLibrary::TestSave()
+{
+	auto layer = theApp.gisLib->GetLayer(0);
+	if (layer)
+	{
+		// Get S-101 ENC
+		auto enc = (S101Cell*)layer->GetSpatialObject();
+
+		enc->Save(L"..\\SampleData\\save.000");
+	}
+}

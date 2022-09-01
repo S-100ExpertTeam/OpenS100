@@ -151,6 +151,10 @@ void SSurface::CreateD2Geometry(ID2D1Factory1* factory)
 	}
 }
 
+int SSurface::GetNumPart()
+{
+	return m_numParts;
+}
 
 int SSurface::GetNumPointPerPart(int partIndex)
 {
@@ -524,4 +528,18 @@ GeoPoint SSurface::GetXY(int ringIndex, int pointIndex)
 	}
 
 	return GeoPoint();
+}
+
+void SSurface::SetXY(int ringIndex, int pointIndex, double x, double y)
+{
+	if (ringIndex >= 0 && ringIndex < m_numParts)
+	{
+		int pointCountPerPart = GetNumPointPerPart(ringIndex);
+
+		if (pointIndex >= 0 && pointIndex < pointCountPerPart)
+		{
+			m_pPoints[m_pParts[ringIndex] + pointIndex].x = x;
+			m_pPoints[m_pParts[ringIndex] + pointIndex].y = y;
+		}
+	}
 }
