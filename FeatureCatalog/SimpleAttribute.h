@@ -49,4 +49,7 @@ public:
 	void InsertListedValue(ListedValue* item);
 	ListedValue* GetListedValue(std::wstring label);
 	ListedValue* GetListedValue(int code);
+
+	bool IsSimple();
+	bool IsComplex();
 };

@@ -132,4 +132,6 @@ public:
 	void GetPointFeatures(std::vector<FeatureType*>& result);
 	void GetLineFeatures(std::vector<FeatureType*>& result);
 	void GetAreaFeatures(std::vector<FeatureType*>& result);
+
+	Attribute* GetAttribute(std::wstring code);
 };

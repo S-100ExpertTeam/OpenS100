@@ -125,3 +125,13 @@ ListedValue* SimpleAttribute::GetListedValue(int code)
 
 	return nullptr;
 }
+
+bool SimpleAttribute::IsSimple()
+{
+	return true;
+}
+
+bool SimpleAttribute::IsComplex()
+{
+	return false;
+}

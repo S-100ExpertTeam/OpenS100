@@ -41,6 +41,11 @@ std::list<AttributeBinding*>& NamedType::GetAttributeBindingPointer()
 	return attributeBinding;
 }
 
+std::list<AttributeBinding*>& NamedType::GetAttributeBindingList()
+{
+	return attributeBinding;
+}
+
 void NamedType::SetIsAbstract(bool value)
 {
 	isAbstract = value;

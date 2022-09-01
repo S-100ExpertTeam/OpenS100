@@ -345,7 +345,9 @@ lua_ref_ptr CreateComplexAttribute(lua_session *ls, ComplexAttribute *complex_at
 	std::vector<lua_ref_ptr> attribute_bindings;
 
 	for (auto ab : complex_attribute->GetSubAttributeBindingPointer())
-		attribute_bindings.push_back(CreateAttributeBinding(ls, &ab));
+	{
+		attribute_bindings.push_back(CreateAttributeBinding(ls, ab));
+	}
 
 	return ls->call<lua_ref_ptr>("CreateComplexAttribute", { item, attribute_bindings });
 }
@@ -377,15 +379,9 @@ lua_ref_ptr CreateAttributeBinding(lua_session *ls, AttributeBinding *attribute_
 
 	bool sequential = false;
 
-	for (auto a : attribute_binding->GetAttribute().GetattributesPointer())
-	{
-		if (a.Getname() == L"ref")
-		{
-			referenceCode = a.GetvalueString();
-		}
-	}
+	referenceCode = attribute_binding->GetAttributeCode();
 
-	sequential = attribute_binding->GetAttribute().Getvalue().compare(L"true") == 0;
+	sequential = attribute_binding->IsSequential();
 
 	std::vector<int> permittedValues;
 

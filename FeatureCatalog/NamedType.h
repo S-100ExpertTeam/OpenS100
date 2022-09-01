@@ -18,6 +18,7 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 	std::list<AttributeBinding*>& GetAttributeBindingPointer();
+	std::list<AttributeBinding*>& GetAttributeBindingList();
 
 	void SetIsAbstract(bool value);
 	bool GetIsAbstract();

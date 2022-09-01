@@ -1,25 +1,30 @@
 #pragma once
-#include "Item.h"
+
+#include "Attribute.h"
 #include "AttributeBinding.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include "../extlibs/pugixml/include/pugixml.hpp"
 
 class ComplexAttribute :
-	public Item
+	public Attribute
 {
 public:
 	ComplexAttribute();
 	virtual ~ComplexAttribute();
 
 private:
-	std::list<AttributeBinding> subAttributeBinding;
+	std::list<AttributeBinding*> subAttributeBinding;
 
 public:
 	void GetContents(pugi::xml_node& node);
 
-	void SetSubAttributeBinding(AttributeBinding value);
-	void SetSubAttributeBinding(std::list<AttributeBinding> value);
+	void SetSubAttributeBinding(AttributeBinding* value);
+	void SetSubAttributeBinding(std::list<AttributeBinding*> value);
 
-	AttributeBinding GetSubAttributeBinding(int index);
-	std::list<AttributeBinding>& GetSubAttributeBindingPointer();
+	AttributeBinding* GetSubAttributeBinding(int index);
+	std::list<AttributeBinding*>& GetSubAttributeBindingPointer();
+	std::list<AttributeBinding*>& GetAttributeBindingList();
+
+	bool IsSimple();
+	bool IsComplex();
 };

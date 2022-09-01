@@ -16,7 +16,8 @@ public:
 private:
 	Multiplicity multiplicity;
 	ValueList permittedValues;
-	Reference attribute;
+	std::string attributeCode;
+	bool sequential = false;
 
 public:
 	void GetContents(pugi::xml_node& node);
@@ -27,6 +28,14 @@ public:
 	void SetPermittedValues(ValueList value);
 	ValueList& GetPermittedValues();
 
-	void SetAttribute(Reference value);
-	Reference& GetAttribute();
+	std::string GetAttributeCode();
+	std::wstring GetAttributeCodeAsWstring();
+
+	bool IsSequential();
+
+	bool IsNullable();
+	bool IsInfinite();
+
+	int GetLower();
+	int GetUpper();
 };

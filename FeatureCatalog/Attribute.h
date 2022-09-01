@@ -12,4 +12,7 @@ public:
 
 public:
 	void GetContents(pugi::xml_node& node);
+
+	virtual bool IsSimple() { return false; };
+	virtual bool IsComplex() { return false; };
 };

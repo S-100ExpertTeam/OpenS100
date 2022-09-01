@@ -688,3 +688,20 @@ void FeatureCatalogue::GetAreaFeatures(std::vector<FeatureType*>& result)
 		}
 	}
 }
+
+Attribute* FeatureCatalogue::GetAttribute(std::wstring code)
+{
+	auto simpleAttribute = GetSimpleAttribute(code);
+	if (simpleAttribute)
+	{
+		return simpleAttribute;
+	}
+
+	auto complexAttribute = GetComplexAttribute(code);
+	if (complexAttribute)
+	{
+		return complexAttribute;
+	}
+
+	return nullptr;
+}

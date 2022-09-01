@@ -8,7 +8,10 @@ ComplexAttribute::ComplexAttribute()
 
 ComplexAttribute::~ComplexAttribute()
 {
-
+	for (auto i = subAttributeBinding.begin(); i != subAttributeBinding.end(); i++)
+	{
+		delete* i;
+	}
 }
 
 void ComplexAttribute::GetContents(pugi::xml_node& node)
@@ -19,30 +22,46 @@ void ComplexAttribute::GetContents(pugi::xml_node& node)
 		const pugi::char_t* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:subAttributeBinding"))
 		{
-			subAttributeBinding.push_back(AttributeBinding());
-			subAttributeBinding.back().GetContents(instruction);
+			auto ab = new AttributeBinding();
+			ab->GetContents(instruction);
+			SetSubAttributeBinding(ab);
 		}
 	}
 }
 
-void ComplexAttribute::SetSubAttributeBinding(AttributeBinding value)
+void ComplexAttribute::SetSubAttributeBinding(AttributeBinding* value)
 {
 	subAttributeBinding.push_back(value);
 }
 
-void ComplexAttribute::SetSubAttributeBinding(std::list<AttributeBinding> value)
+void ComplexAttribute::SetSubAttributeBinding(std::list<AttributeBinding*> value)
 {
 	subAttributeBinding = value;
 }
 
-AttributeBinding ComplexAttribute::GetSubAttributeBinding(int index)
+AttributeBinding* ComplexAttribute::GetSubAttributeBinding(int index)
 {
 	auto it = subAttributeBinding.begin();
 	std::advance(it, index);
 	return *it;
 }
 
-std::list<AttributeBinding>& ComplexAttribute::GetSubAttributeBindingPointer()
+std::list<AttributeBinding*>& ComplexAttribute::GetSubAttributeBindingPointer()
 {
 	return subAttributeBinding;
+}
+
+std::list<AttributeBinding*>& ComplexAttribute::GetAttributeBindingList()
+{
+	return subAttributeBinding;
+}
+
+bool ComplexAttribute::IsSimple()
+{
+	return false;
+}
+
+bool ComplexAttribute::IsComplex()
+{
+	return true;
 }
