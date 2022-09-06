@@ -70,6 +70,8 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 				return;
 			}
 
+			nSelectedItem = pNMLV->iItem;
+
 			S101Cell* cell = m_Cell;
 			FeatureCatalogue* fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
 			if (nullptr == fc)
@@ -369,6 +371,32 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 	m_ListCurrentSelection.SetSelectionMark(0);
 	m_ListCurrentSelection.SetItemState(0, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
 	theApp.pView->SetFocus();
+}
+
+long long CDialogDockCurrentSelection::GetSelectedRecordName()
+{
+	if (nSelectedItem >= 0 && nSelectedItem < m_ListCurrentSelection.GetItemCount())
+	{
+		auto strRCID = m_ListCurrentSelection.GetItemText(nSelectedItem, 0);
+		auto strType = m_ListCurrentSelection.GetItemText(nSelectedItem, 7);
+
+		auto rcid = _ttoi(strRCID);
+		int rcnm = 0;
+		if (strType.Compare(L"Feature") == 0)
+		{
+			rcnm = 100;
+			RecordName recordName(rcnm, rcid);
+			return recordName.GetName();
+		}
+		else if (strType.Compare(L"Information") == 0)
+		{
+			rcnm = 150;
+			RecordName recordName(rcnm, rcid);
+			return recordName.GetName();
+		}
+	}
+
+	return -1;
 }
 
 void CDialogDockCurrentSelection::DeleteItem(CString id)

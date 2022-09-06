@@ -15,6 +15,7 @@
 #include "F_C2IL.h"
 #include "F_CUCO.h"
 #include "F_RIAS.h"
+#include "F_FASC.h"
 #include "IC2D.h"
 #include "PTAS.h"
 #include "CUCO.h"
@@ -90,6 +91,37 @@ R_InformationRecord* S101Creator::AddInformation(std::wstring code)
 	}
 
 	return nullptr;
+}
+
+bool S101Creator::DeleteFeature(int rcid)
+{
+	RecordName featureRecordName(100, rcid);
+	auto key = featureRecordName.GetName();
+	auto featureRecord = enc->GetFeatureRecord(key);
+	if (featureRecord)
+	{
+		enc->RemoveFeatureRecord(key);
+
+		auto vecFeature = enc->GetVecFeature();
+		for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+		{
+			auto fr = (*i);
+			for (auto j = fr->m_fasc.begin(); j != fr->m_fasc.end(); )
+			{
+				if (key == (*j)->m_name.GetName())
+				{
+					delete (*j);
+					j = fr->m_fasc.erase(j);
+				}
+				else
+				{
+					j++;
+				}
+			}
+		}
+	}
+
+	return false;
 }
 
 ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, std::wstring code, std::wstring value)

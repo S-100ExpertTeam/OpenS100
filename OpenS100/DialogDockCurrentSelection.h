@@ -54,7 +54,7 @@ public:
 	void OnMenuRemoveAll();
 	void DeleteItem(CString id);
 	void UpdateListTest(CStringArray *csa, S101Cell *cell, CString isCtrlClicked);
-
+	long long GetSelectedRecordName();
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

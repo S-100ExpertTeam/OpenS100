@@ -2442,7 +2442,13 @@ void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
 
 void S101Cell::RemoveFeatureRecord(__int64 key)
 {
-	m_feaMap.RemoveKey(key);
+	auto featureRecord = GetFeatureRecord(key);
+	if (featureRecord)
+	{
+		m_feaMap.RemoveKey(key);
+		vecFeature.erase(std::remove(vecFeature.begin(), vecFeature.end(), featureRecord), vecFeature.end());
+		delete featureRecord;
+	}
 }
 
 R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)

@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "../GISLibrary/S100EditRender.h"
+#include "../GISLibrary/S101Creator.h"
 
 class COpenS100Doc;
 class Layer;
@@ -79,6 +80,7 @@ public:
 	CDialogViewInformationType* dialogInformationType = nullptr;
 
 	S100EditRender s100EditRender;
+	S101Creator s101Creator;
 
 protected:
 	std::vector<CString> m_systemFontList;

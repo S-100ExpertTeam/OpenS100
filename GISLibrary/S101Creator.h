@@ -24,6 +24,8 @@ public:
 	R_FeatureRecord* AddFeature(std::wstring code);
 	R_InformationRecord* AddInformation(std::wstring code);
 
+	bool DeleteFeature(int rcid);
+
 	ATTR* AddSimpleAttribute(R_FeatureRecord* feature, std::wstring code, std::wstring value);
 	ATTR* AddSimpleAttribute(R_InformationRecord* information, std::wstring code, std::wstring value);
 

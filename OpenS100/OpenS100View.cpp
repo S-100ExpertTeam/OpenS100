@@ -12,6 +12,7 @@
 #include "DialogDockLayerManager.h"
 #include "ConfigrationDlg.h"
 #include "CDialogExFeatureInformationList.h"
+#include "DialogDockCurrentSelection.h"
 #include "TestGISLibrary.h"
 
 #include "../GISLibrary/GISLibrary.h"
@@ -1627,6 +1628,15 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VK_F6:
 		TestGISLibrary::TestSave();
 		break;
+	case VK_DELETE:
+		auto key = theApp.m_DockablePaneCurrentSelection.pDlg->GetSelectedRecordName();
+		RecordName selectedRecordName(key);
+		s101Creator.DeleteFeature(selectedRecordName.RCID);
+		theApp.gisLib->S101RebuildPortrayal();
+		theApp.m_DockablePaneCurrentSelection.RemoveAll();
+		SetPick(nullptr, nullptr);
+		MapRefresh();
+		break;
 	}
 
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
@@ -1776,4 +1786,7 @@ void COpenS100View::SetPick(S101Cell* enc, R_FeatureRecord* feature)
 {
 	encPick = enc;
 	frPick = feature;
+
+	s101Creator.fc = theApp.gisLib->GetFC();
+	s101Creator.enc = enc;
 }

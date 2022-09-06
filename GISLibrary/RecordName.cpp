@@ -18,6 +18,12 @@ RecordName::RecordName(enum GISLibrary::RCNM RCNM, int RCID)
 	this->RCID = RCID;
 }
 
+RecordName::RecordName(long long key)
+{
+	this->RCNM = key >> 32;
+	this->RCID = (int)key;
+}
+
 RecordName::~RecordName(void)
 {
 
