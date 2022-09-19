@@ -47,6 +47,12 @@ S101Creator::~S101Creator()
 
 }
 
+void S101Creator::Set(FeatureCatalogue* fc, S101Cell* enc)
+{
+	this->fc = fc;
+	this->enc = enc;
+}
+
 R_FeatureRecord* S101Creator::AddFeature(std::wstring code)
 {
 	auto featureType = fc->GetFeatureType(code);
@@ -738,4 +744,67 @@ R_SurfaceRecord* S101Creator::ConvertInsertVectorRecord(SSurface* geom)
 	enc->InsertRecord(vectorRecord);
 
 	return vectorRecord;
+}
+
+std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* feature)
+{
+	std::list<AttributeBinding*> result;
+
+	if (feature) 
+	{
+		auto featureCode = enc->m_dsgir.GetFeatureCode(feature->GetNumericCode());
+		if (featureCode.IsEmpty() == false)
+		{
+			auto featureType = fc->GetFeatureType(std::wstring(featureCode));
+			if (featureType)
+			{
+				result = featureType->GetAttributeBindingList();
+
+				auto currentAttribute = feature->GetAllAttributes();
+
+				for (auto i = result.begin(); i != result.end(); )
+				{
+					auto currentAttributeBinding = *i;
+
+					auto attributeNumericCode = enc->m_dsgir.GetAttributeCode(currentAttributeBinding->GetAttributeCodeAsWstring());
+
+					auto currentRootAttribute = feature->GetRootAttributes(attributeNumericCode);
+
+					if (
+						currentAttributeBinding->GetMultiplicity().IsInfinite() == false &&
+						currentAttributeBinding->GetMultiplicity().GetUpperCount() <= currentRootAttribute.size())
+					{
+						i = result.erase(i);
+					}
+					else
+					{
+						i++;
+					}
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
+std::list<AttributeBinding*> S101Creator::GetAddableAttributes(ATTR* parentATTR)
+{
+	std::list<AttributeBinding*> result;
+
+	return result;
+}
+
+bool S101Creator::Contain(std::list<AttributeBinding*>& sourceList, std::wstring findCode)
+{
+	for (auto i = sourceList.begin(); i != sourceList.end(); i++)
+	{
+		auto attributeBinding = (*i);
+		if (0 == attributeBinding->GetAttributeCodeAsWstring().compare(findCode))
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
