@@ -553,7 +553,7 @@ void S100EditRender::SelectByScreen(int sx, int sy, SSurface* geom)
 
 void S100EditRender::UpdatePoint(int sx, int sy)
 {
-	if (nullptr == enc || nullptr == feature)
+	if (nullptr == enc || nullptr == feature || pointIndex < 0 || partIndex < 0)
 	{
 		return;
 	}

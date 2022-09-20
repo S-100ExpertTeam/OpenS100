@@ -132,6 +132,14 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 				theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
 				theApp.m_DockablePaneEditWindow.SetFeatureRecord(pFe);
+
+				theApp.gisLib->creator.Set(fc, cell);
+				auto a = theApp.gisLib->creator.GetAddableAttributes(pFe);
+				for (auto i = a.begin(); i != a.end(); i++)
+				{
+					CString str = (*i)->GetAttributeCodeAsWstring().c_str();
+					OutputDebugString(str + L"\n");
+				}
 			}
 			else if (featureType == L"Information")
 			{

@@ -455,7 +455,7 @@ std::vector<ATTR*> R_FeatureRecord::GetChildAttributes(ATTR* parentATTR, int num
 	{
 		if (parentATTR == allAttributes[i])
 		{
-			parentIndex = i;
+			parentIndex = i + 1;
 			break;
 		}
 	}

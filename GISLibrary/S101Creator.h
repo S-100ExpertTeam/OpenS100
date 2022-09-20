@@ -21,6 +21,8 @@ public:
 	S101Cell* enc = nullptr;
 
 public:
+	void Set(FeatureCatalogue* fc, S101Cell* enc);
+
 	R_FeatureRecord* AddFeature(std::wstring code);
 	R_InformationRecord* AddInformation(std::wstring code);
 
@@ -59,6 +61,7 @@ public:
 	R_SurfaceRecord* ConvertInsertVectorRecord(SSurface* geom);
 	
 
-	//std::vector<AttributeBinding> Get
+	std::list<AttributeBinding*> GetAddableAttributes(R_FeatureRecord* feature);
+	std::list<AttributeBinding*> GetAddableAttributes(R_FeatureRecord* feature, ATTR* parentATTR);
 };
 
