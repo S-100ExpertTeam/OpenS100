@@ -62,8 +62,6 @@ public:
 	
 
 	std::list<AttributeBinding*> GetAddableAttributes(R_FeatureRecord* feature);
-	std::list<AttributeBinding*> GetAddableAttributes(ATTR* parentATTR);
-
-	bool Contain(std::list<AttributeBinding*>& sourceList, std::wstring findCode);
+	std::list<AttributeBinding*> GetAddableAttributes(R_FeatureRecord* feature, ATTR* parentATTR);
 };
 

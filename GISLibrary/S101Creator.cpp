@@ -760,8 +760,6 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 			{
 				result = featureType->GetAttributeBindingList();
 
-				auto currentAttribute = feature->GetAllAttributes();
-
 				for (auto i = result.begin(); i != result.end(); )
 				{
 					auto currentAttributeBinding = *i;
@@ -788,23 +786,42 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 	return result;
 }
 
-std::list<AttributeBinding*> S101Creator::GetAddableAttributes(ATTR* parentATTR)
+std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* feature, ATTR* parentATTR)
 {
 	std::list<AttributeBinding*> result;
 
-	return result;
-}
-
-bool S101Creator::Contain(std::list<AttributeBinding*>& sourceList, std::wstring findCode)
-{
-	for (auto i = sourceList.begin(); i != sourceList.end(); i++)
+	if (parentATTR)
 	{
-		auto attributeBinding = (*i);
-		if (0 == attributeBinding->GetAttributeCodeAsWstring().compare(findCode))
+		auto attributeCode = enc->m_dsgir.GetAttributeCode(parentATTR->m_natc);
+		if (attributeCode.IsEmpty() == false)
 		{
-			return true;
+			auto complexAttribute = fc->GetComplexAttribute(std::wstring(attributeCode));
+			if (complexAttribute)
+			{
+				result = complexAttribute->GetAttributeBindingList();
+
+				for (auto i = result.begin(); i != result.end(); )
+				{
+					auto currentAttributeBinding = *i;
+
+					auto attributeNumericCode = enc->m_dsgir.GetAttributeCode(currentAttributeBinding->GetAttributeCodeAsWstring());
+
+					auto currentChildAttributes = feature->GetChildAttributes(parentATTR, attributeNumericCode);
+
+					if (
+						currentAttributeBinding->GetMultiplicity().IsInfinite() == false &&
+						currentAttributeBinding->GetMultiplicity().GetUpperCount() <= currentChildAttributes.size())
+					{
+						i = result.erase(i);
+					}
+					else
+					{
+						i++;
+					}
+				}
+			}
 		}
 	}
 
-	return false;
+	return result;
 }
