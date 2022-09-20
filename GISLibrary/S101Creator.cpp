@@ -119,6 +119,8 @@ bool S101Creator::DeleteFeature(int rcid)
 				}
 			}
 		}
+
+		return true;
 	}
 
 	return false;
