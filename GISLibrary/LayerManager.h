@@ -42,7 +42,10 @@ public:
 	void SetViewMBR(RECT r);
 
 	bool AddBackgroundLayer(CString _filepath);
-	bool AddLayer(CString _filepath);
+
+	// Success : id (> 0)
+	// Fail : -1
+	int AddLayer(CString _filepath);
 	int isUpdate(CString filePath);
 	bool AddLayer(Layer* layer);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
