@@ -34,6 +34,12 @@ public:
 	ATTR* AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code, std::wstring value);
 	ATTR* AddSimpleAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code, std::wstring value);
 
+	ATTR* AddComplexAttribute(R_FeatureRecord* feature, std::wstring code);
+	ATTR* AddComplexAttribute(R_InformationRecord* information, std::wstring code);
+
+	ATTR* AddComplexAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code);
+	ATTR* AddComplexAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code);
+
 	SGeometry* SetPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
 	SGeometry* SetMultiPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
 	SGeometry* SetCurveGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
@@ -63,5 +69,8 @@ public:
 
 	std::list<AttributeBinding*> GetAddableAttributes(R_FeatureRecord* feature);
 	std::list<AttributeBinding*> GetAddableAttributes(R_FeatureRecord* feature, ATTR* parentATTR);
+
+	void AddDefaultChildAttributes(R_FeatureRecord* feature);
+	void AddDefaultChildAttributes(R_FeatureRecord* feature, ATTR* attr);
 };
 

@@ -1619,8 +1619,8 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		AreaFeatureList();
 		break;
 	case VK_F4:
-		//CopyLayer();
-		TestGISLibrary::TestCreateNewCode();
+		CopyLayer();
+		//TestGISLibrary::TestCreateNewCode();
 		break;
 	case VK_F5:
 		TestGISLibrary::TestSave();

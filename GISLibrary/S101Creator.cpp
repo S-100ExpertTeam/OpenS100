@@ -70,6 +70,8 @@ R_FeatureRecord* S101Creator::AddFeature(std::wstring code)
 		F_FOID FOID(280, 1, 1);
 		featureRecord->m_foid = FOID;
 		
+		AddDefaultChildAttributes(featureRecord);
+
 		enc->InsertFeatureRecord(FRID.m_name.GetName(), featureRecord);
 
 		return featureRecord;
@@ -135,6 +137,7 @@ bool S101Creator::DeleteFeature(int rcid)
 ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, std::wstring code, std::wstring value)
 {
 	auto attribute = fc->GetSimpleAttribute(code);
+
 	if (attribute)
 	{
 		if (0 == feature->m_attr.size())
@@ -245,6 +248,127 @@ ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, ATTR* pa
 		attr->m_paix = parentAttributeIndex;
 		attr->m_atin = 1;
 		attr->m_atvl = value.c_str();
+
+		return attr;
+	}
+
+	return nullptr;
+}
+
+ATTR* S101Creator::AddComplexAttribute(R_FeatureRecord* feature, std::wstring code)
+{
+	auto attribute = fc->GetComplexAttribute(code);
+
+	if (attribute)
+	{
+		if (0 == feature->m_attr.size())
+		{
+			feature->m_attr.push_back(new F_ATTR());
+		}
+
+		auto attributeList = feature->m_attr.front();
+
+		auto attr = new ATTR();
+		attributeList->Insert(attr);
+
+		attr->m_natc = enc->m_dsgir.GetAttributeCode(code);
+		attr->m_atix = GetATIXofNewRootAttribute(feature, attr->m_natc);
+		attr->m_paix = 0;
+		attr->m_atin = 1;
+		attr->m_atvl = L"";
+
+		return attr;
+	}
+
+	return nullptr;
+}
+
+ATTR* S101Creator::AddComplexAttribute(R_InformationRecord* information, std::wstring code)
+{
+	auto attribute = fc->GetSimpleAttribute(code);
+	if (attribute)
+	{
+		if (0 == information->m_attr.size())
+		{
+			information->m_attr.push_back(new F_ATTR());
+		}
+
+		auto attributeList = information->m_attr.front();
+
+		auto attr = new ATTR();
+		attributeList->Insert(attr);
+
+		attr->m_natc = enc->m_dsgir.GetAttributeCode(code);
+		attr->m_atix = GetATIXofNewRootAttribute(information, attr->m_natc);
+		attr->m_paix = 0;
+		attr->m_atin = 1;
+		attr->m_atvl = L"";
+
+		return attr;
+	}
+
+	return nullptr;
+}
+
+ATTR* S101Creator::AddComplexAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code)
+{
+	if (parentATTR == nullptr)
+	{
+		return AddComplexAttribute(feature, code);
+	}
+
+	int parentAttributeIndex = feature->GetAttributeIndex(parentATTR);
+	if (parentAttributeIndex == 0)
+	{
+		return nullptr;
+	}
+
+	auto attribute = fc->GetComplexAttribute(code);
+	if (attribute)
+	{
+		auto attributeList = feature->m_attr.front();
+
+		auto attr = new ATTR();
+		attributeList->Insert(attr);
+
+		attr->m_natc = enc->m_dsgir.GetAttributeCode(code);
+		attr->m_atix = GetATIXofNewChildAttribute(feature, parentATTR, attr->m_natc);
+		attr->m_paix = parentAttributeIndex;
+		attr->m_atin = 1;
+		attr->m_atvl = L"";
+
+		return attr;
+	}
+
+	return nullptr;
+}
+
+ATTR* S101Creator::AddComplexAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code)
+{
+	if (parentATTR == nullptr)
+	{
+		return AddComplexAttribute(information, code);
+	}
+
+	int parentAttributeIndex = information->GetAttributeIndex(parentATTR);
+	if (parentAttributeIndex == 0)
+	{
+		return nullptr;
+	}
+
+	auto attribute = fc->GetSimpleAttribute(code);
+	if (attribute)
+	{
+		auto attributeList = information->m_attr.front();
+
+		auto attr = new ATTR();
+		attributeList->Insert(attr);
+
+		attr->m_natc = enc->m_dsgir.GetAttributeCode(code);
+		attr->m_atix = GetATIXofNewChildAttribute(information, parentATTR, attr->m_natc);
+		attr->m_paix = parentAttributeIndex;
+		attr->m_atin = 1;
+		attr->m_atvl = L"";
 
 		return attr;
 	}
@@ -492,7 +616,7 @@ int S101Creator::GetATIXofNewRootAttribute(R_FeatureRecord* feature, int numeric
 		ATIXs.insert((*i)->m_atix);
 	}
 
-	return (*ATIXs.end()) + 1;
+	return *ATIXs.rbegin() + 1;
 }
 
 int S101Creator::GetATIXofNewRootAttribute(R_InformationRecord* information, int numericCode)
@@ -510,7 +634,7 @@ int S101Creator::GetATIXofNewRootAttribute(R_InformationRecord* information, int
 		ATIXs.insert((*i)->m_atix);
 	}
 
-	return (*ATIXs.end()) + 1;
+	return *ATIXs.rbegin() + 1;
 }
 
 int S101Creator::GetATIXofNewChildAttribute(R_FeatureRecord* feature, ATTR* parentATTR, int numericCode)
@@ -826,4 +950,78 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 	}
 
 	return result;
+}
+
+void S101Creator::AddDefaultChildAttributes(R_FeatureRecord* feature)
+{
+	auto featureCode = enc->m_dsgir.GetFeatureCode(feature->GetNumericCode());
+	auto featureType = fc->GetFeatureType(std::wstring(featureCode));
+
+	if (featureType)
+	{
+		auto attributeBindings = featureType->GetAttributeBindingList();
+		for (auto i = attributeBindings.begin(); i != attributeBindings.end(); i++)
+		{
+			auto attributeBinding = *i;
+			if (attributeBinding->GetLower() > 0)
+			{
+				auto attributeCode = attributeBinding->GetAttributeCodeAsWstring();
+
+				auto simpleAttribute = fc->GetSimpleAttribute(attributeCode);
+				if (simpleAttribute)
+				{
+					AddSimpleAttribute(feature, attributeCode, L"");
+				}
+				else
+				{
+					auto complexAttribute = fc->GetComplexAttribute(attributeCode);
+					if (complexAttribute)
+					{
+						auto attr = AddComplexAttribute(feature, attributeCode);
+						if (attr)
+						{
+							AddDefaultChildAttributes(feature, attr);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+void S101Creator::AddDefaultChildAttributes(R_FeatureRecord* feature, ATTR* attr)
+{
+	auto attributeCode = enc->m_dsgir.GetAttributeCode(attr->m_natc);
+	auto complexAttribute = fc->GetComplexAttribute(std::wstring(attributeCode));
+
+	if (complexAttribute)
+	{
+		auto attributeBindings = complexAttribute->GetAttributeBindingList();
+		for (auto i = attributeBindings.begin(); i != attributeBindings.end(); i++)
+		{
+			auto attributeBinding = *i;
+			if (attributeBinding->GetLower() > 0)
+			{
+				auto attributeCode = attributeBinding->GetAttributeCodeAsWstring();
+
+				auto simpleAttribute = fc->GetSimpleAttribute(attributeCode);
+				if (simpleAttribute)
+				{
+					AddSimpleAttribute(feature, attr, attributeCode, L"");
+				}
+				else
+				{
+					auto complexAttribute = fc->GetComplexAttribute(attributeCode);
+					if (complexAttribute)
+					{
+						auto newATTR = AddComplexAttribute(feature, attr, attributeCode);
+						if (newATTR)
+						{
+							AddDefaultChildAttributes(feature, newATTR);
+						}
+					}
+				}
+			}
+		}
+	}
 }
