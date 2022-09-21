@@ -17,7 +17,7 @@ public:
 
 private:
 	FeatureCatalogue* featureCatalogue = nullptr;
-	PortrayalCatalogue *portrayalCatalogue = nullptr;
+	PortrayalCatalogue* portrayalCatalogue = nullptr;
 	bool hasIndividualFC = false;
 	bool hasIndividualPC = false;
 	int productNumber = 100;

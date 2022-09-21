@@ -334,4 +334,6 @@ private:
 	bool FeatureRecordHasSpatialAssociationField();
 	bool FeatureRecordHasFeatureAssociationField();
 	bool FeatureRecordHasMaskedSpatialTypeField();
+
+	void SetAllNumericCode();
 };

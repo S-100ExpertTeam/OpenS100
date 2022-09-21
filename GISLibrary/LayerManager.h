@@ -95,4 +95,6 @@ public:
 	// 4 : S-100 H5
 	static int CheckFileType(CString path, int update);
 	static int CheckFileType(CString path);
+
+	int CreateLayerID();
 };

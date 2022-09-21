@@ -425,47 +425,36 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 				R_PointRecord* r = new R_PointRecord();
 				r->ReadRecord(&drDir, pBuf);
 				auto names = r->m_prid.m_name.GetName();
-
 				InsertPointRecord(r->m_prid.m_name.GetName(), r);
-				//m_vecMap.insert({ r->m_prid.m_name.GetName(), r });
 			}
 			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"MRID"))
 			{
 				R_MultiPointRecord* r = new R_MultiPointRecord();
 				r->ReadRecord(&drDir, pBuf);
-
 				InsertMultiPointRecord(r->m_mrid.m_name.GetName(), r);
-				//m_vecMap.insert({ r->m_mrid.m_name.GetName(), r });
 			}
 			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"CRID"))   // warning and error message-oriented output
 			{
 				R_CurveRecord* r = new R_CurveRecord();
 				r->ReadRecord(&drDir, pBuf);
-
 				InsertCurveRecord(r->m_crid.m_name.GetName(), r);
-				//m_vecMap.insert({ r->m_crid.m_name.GetName(), r });
 			}
 			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"CCID"))
 			{
 				R_CompositeRecord* r = new R_CompositeRecord();
 				r->ReadRecord(&drDir, pBuf);
-
 				InsertCompositeCurveRecord(r->m_ccid.m_name.GetName(), r);
-				//m_vecMap.insert({ r->m_ccid.m_name.GetName(), r });
 			}
 			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"SRID"))
 			{
 				R_SurfaceRecord* r = new R_SurfaceRecord();
 				r->ReadRecord(&drDir, pBuf);
-
 				InsertSurfaceRecord(r->m_srid.m_name.GetName(), r);
-				//m_vecMap.insert({ r->m_srid.m_name.GetName(), r });
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"FRID")) //Feature unit processing.
+			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"FRID"))
 			{
 				R_FeatureRecord* r = new R_FeatureRecord();
 				r->ReadRecord(&drDir, pBuf);
-
 				InsertFeatureRecord(r->m_frid.m_name.GetName(), r);
 			}
 

@@ -1467,8 +1467,26 @@ int LayerManager::CheckFileType(CString path)
 	return ret;
 }
 
-struct ROUTE_FOR_PROCESSING
+int LayerManager::CreateLayerID()
 {
-	int LENGTH;
-	int SPLIT_NUMBER;
-};
+	std::set<int> IDs;
+
+	for (auto i = layers.begin(); i != layers.end(); i++)
+	{
+		auto layer = (*i);
+		auto id = layer->GetID();
+		IDs.insert(id);
+	}
+
+
+
+	if (IDs.size() > 0)
+	{
+		for (int i = 0; i <= INT_MAX && 0 >= 0; i++)
+		{
+			
+		}
+	}
+
+	return 1;
+}

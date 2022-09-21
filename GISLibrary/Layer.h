@@ -15,8 +15,11 @@ public:
 	virtual ~Layer();
 
 public:
-	bool	      On;
-	bool		Info;
+	int id = 0;
+
+	bool On;
+	bool Info;
+
 	// area info
 	MBR			  m_mbr;
 	SpatialObject *m_spatialObject = nullptr;
@@ -57,4 +60,7 @@ public:
 
 	int GetScaleMaximum();
 	void SetScaleMaximum(int value);
+
+	void SetID(int value);
+	int GetID();
 };
