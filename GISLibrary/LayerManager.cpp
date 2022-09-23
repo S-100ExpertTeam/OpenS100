@@ -47,6 +47,8 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <future>
+#include <chrono>
 
 #pragma comment(lib, "winmm")
 
@@ -186,7 +188,7 @@ int LayerManager::isUpdate(CString filePath)
 	return 0;
 }
 
-bool LayerManager::AddLayer(CString _filepath)
+int LayerManager::AddLayer(CString _filepath)
 {
 	CString file_extension = LibMFCUtil::GetExtension(_filepath);
 
@@ -199,7 +201,7 @@ bool LayerManager::AddLayer(CString _filepath)
 		if (layer->Open(_filepath) == false)
 		{
 			delete layer;
-			return false;
+			return -1;
 		}
 	}
 	else if (file_extension.CompareNoCase(_T("000")) == 0)
@@ -220,7 +222,7 @@ bool LayerManager::AddLayer(CString _filepath)
 			if ((S101Layer*)layer->Open(_filepath) == false)
 			{
 				delete layer;
-				return false;
+				return -1;
 			}
 		}
 	}
@@ -233,7 +235,7 @@ bool LayerManager::AddLayer(CString _filepath)
 			delete layer;
 		}
 
-		return false;
+		return -1;
 	}
 
 	//	 ENC, Lua
@@ -245,7 +247,9 @@ bool LayerManager::AddLayer(CString _filepath)
 
 	AddLayer(layer);
 
-	return true;
+	layer->SetID(CreateLayerID());
+
+	return layer->GetID();
 }
 
 bool LayerManager::AddOverlayLayer(CString _filepath)
@@ -282,12 +286,26 @@ bool LayerManager::AddOverlayLayer(CString _filepath)
 	return TRUE;
 }
 
+void a(int a, int b);
+
 void LayerManager::Draw(HDC& hdc, int offset)
 {
 	CDC* pDC = CDC::FromHandle(hdc);
 	CRect rectView = scaler->GetScreenRect();
 
 	DrawBackground(hdc, offset);
+
+	//std::future<void> drawResult = std::async([this, hdc, offset]() {
+	//	this->DrawS100Datasets((HDC&)hdc, offset);
+	//	});
+
+	//std::chrono::milliseconds span(100);
+	//while (drawResult.wait_for(span) != std::future_status::ready)
+	//{
+	//	
+	//}
+
+	//drawResult.wait();
 
 	DrawS100Datasets(hdc, offset);
 
@@ -1479,12 +1497,15 @@ int LayerManager::CreateLayerID()
 	}
 
 
-
 	if (IDs.size() > 0)
 	{
-		for (int i = 0; i <= INT_MAX && 0 >= 0; i++)
+		for (int i = 1; i <= INT_MAX && i >= 0; i++)
 		{
-			
+			auto item = IDs.find(i);
+			if (item == IDs.end())
+			{
+				return i;
+			}
 		}
 	}
 

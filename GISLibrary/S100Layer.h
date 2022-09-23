@@ -15,7 +15,7 @@ public:
 	S100Layer(FeatureCatalogue*fc, PortrayalCatalogue *pc);
 	virtual ~S100Layer();
 
-private:
+protected:
 	FeatureCatalogue* featureCatalogue = nullptr;
 	PortrayalCatalogue* portrayalCatalogue = nullptr;
 	bool hasIndividualFC = false;
