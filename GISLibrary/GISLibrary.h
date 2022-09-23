@@ -30,6 +30,8 @@ public:
 	FeatureCatalogue* fc = nullptr;
 	PortrayalCatalogue* pc = nullptr;
 
+	double s100Scale = -1;
+
 public:
 	Scaler* GetScaler();
 	LayerManager* GetLayerManager();
@@ -107,4 +109,7 @@ public:
 
 	FeatureCatalogue* GetFC();
 	PortrayalCatalogue* GetPC();
+
+	void SetS100Scale(double value);
+	int GetS100Scale();
 };

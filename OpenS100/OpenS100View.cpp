@@ -1620,7 +1620,8 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		break;
 	case VK_F4:
 		//CopyLayer();
-		TestGISLibrary::TestCreateNewCode();
+		//TestGISLibrary::TestCreateNewCode();
+		theApp.gisLib->SetS100Scale(80000);
 		break;
 	case VK_F5:
 		TestGISLibrary::TestSave();

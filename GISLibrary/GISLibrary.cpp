@@ -542,3 +542,20 @@ PortrayalCatalogue* CGISLibraryApp::GetPC()
 {
 	return pc;
 }
+
+void CGISLibraryApp::SetS100Scale(double value)
+{
+	s100Scale = value;
+}
+
+int CGISLibraryApp::GetS100Scale()
+{
+	if (s100Scale > 0)
+	{
+		return (int)s100Scale;
+	}
+
+	auto currentScale = gisLib->GetScaler()->GetCurrentScale();
+
+	return currentScale;
+}
