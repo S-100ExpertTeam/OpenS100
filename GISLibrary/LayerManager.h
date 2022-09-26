@@ -72,14 +72,23 @@ public:
 		std::list<SENC_Instruction*>* text,
 		PortrayalCatalogue *pc = nullptr);
 
-	void DrawInformationLayer(HDC &hDC, int nIndex);
+	void DrawInformationLayer(HDC& hDC, Layer* layer);
+	void DrawInformationLayer(HDC& hDC, int nIndex);
+	void DrawInformationLayerByKey(HDC& hDC, int key);
 
 	Layer* GetLayer(int index);
+	Layer* GetLayerByKey(int key);
 
 	CString GetLayerName(int index);
+	CString GetLayerNameByKey(int key);
+
 	bool IsOn(int index);
+	bool IsOnByKey(int key);
+
 	void DeleteLayer(int index);
 	void DeleteLayer(CString filepath);
+	void DeleteLayerByKey(int key);
+
 	void ReMBR();
 
 	void ChangeS100ColorPalette(GeoMetryLibrary::ColorTable value);
