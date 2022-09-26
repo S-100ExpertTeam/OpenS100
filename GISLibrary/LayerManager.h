@@ -47,7 +47,7 @@ public:
 	// Fail : -1
 	int AddLayer(CString _filepath);
 	int isUpdate(CString filePath);
-	bool AddLayer(Layer* layer);
+	int AddLayer(Layer* layer);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
 	bool AddOverlayLayer(CString _filepath);
 

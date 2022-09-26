@@ -144,12 +144,14 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 	return TRUE;
 }
 
-bool LayerManager::AddLayer(Layer* _layer)
+int LayerManager::AddLayer(Layer* _layer)
 {
 	if (_layer == nullptr)
 	{
 		return false;
 	}
+
+	_layer->SetID(CreateLayerID());
 
 	if (LayerCount() == 0)
 	{
@@ -162,7 +164,7 @@ bool LayerManager::AddLayer(Layer* _layer)
 	
 	layers.push_back(_layer);
 
-	return true;
+	return _layer->GetID();
 }
 
 bool LayerManager::AddUpdateLayer(Layer* Base, Layer* Update)
