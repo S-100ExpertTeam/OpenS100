@@ -163,6 +163,7 @@ int LayerManager::AddLayer(Layer* _layer)
 	}
 	
 	layers.push_back(_layer);
+	mapLayer.insert({ _layer->GetID(), _layer });
 
 	return _layer->GetID();
 }
@@ -983,16 +984,13 @@ Layer* LayerManager::GetLayer(int index)
 
 Layer* LayerManager::GetLayerByKey(int key)
 {
-	for (auto i = layers.begin(); i != layers.end(); i++)
+	auto item = mapLayer.find(key);
+	if (item == mapLayer.end())
 	{
-		auto layer = (*i);
-		if (layer->GetID() == key)
-		{
-			return layer;
-		}
+		return nullptr;
 	}
 
-	return nullptr;
+	return item->second;
 }
 
 CString LayerManager::GetLayerName(int index)
@@ -1054,9 +1052,12 @@ void LayerManager::DeleteLayer(int index)
 
 	std::advance(it, index);
 
+	auto id = (*it)->GetID();
+
 	delete (*it);
 
 	layers.erase(it);
+	mapLayer.erase(id);
 
 	ReMBR();
 
@@ -1070,6 +1071,7 @@ void LayerManager::DeleteLayer(CString filepath)
 		auto layer = *i;
 		if (layer->GetLayerPath().Compare(filepath) == 0)
 		{
+			mapLayer.erase(layer->GetID());
 			delete layer;
 			layer = nullptr;
 			layers.erase(i);
@@ -1086,6 +1088,7 @@ void LayerManager::DeleteLayerByKey(int key)
 		auto layer = (*i);
 		if (layer->GetID() == key)
 		{
+			mapLayer.erase(layer->GetID());
 			delete layer;
 			layer = nullptr;
 			layers.erase(i);

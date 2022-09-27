@@ -32,6 +32,9 @@ public:
 
 	std::list<Layer*> layers;
 
+	// Key : ID
+	std::unordered_map<int, Layer*> mapLayer;
+
 	MBR mbr;
 
 	// RCID of already rendered curveRecords
