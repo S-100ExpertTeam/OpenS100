@@ -49,8 +49,9 @@ public:
 	// Success : id (> 0)
 	// Fail : -1
 	int AddLayer(CString _filepath);
-	int isUpdate(CString filePath);
 	int AddLayer(Layer* layer);
+
+	int isUpdate(CString filePath);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
 	bool AddOverlayLayer(CString _filepath);
 

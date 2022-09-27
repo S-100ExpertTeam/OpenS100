@@ -148,7 +148,7 @@ int LayerManager::AddLayer(Layer* _layer)
 {
 	if (_layer == nullptr)
 	{
-		return false;
+		return -1;
 	}
 
 	_layer->SetID(CreateLayerID());
@@ -249,8 +249,6 @@ int LayerManager::AddLayer(CString _filepath)
 	}
 
 	AddLayer(layer);
-
-	layer->SetID(CreateLayerID());
 
 	return layer->GetID();
 }
