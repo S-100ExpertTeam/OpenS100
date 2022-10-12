@@ -129,6 +129,8 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 bool R_DSGIR::WriteRecord(CFile* file)
 {
+	directory.clear();
+
 	// Set directory
 	int fieldOffset = 0;
 	int fieldLength = m_dsid.GetFieldLength();

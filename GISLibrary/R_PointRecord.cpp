@@ -66,6 +66,8 @@ BOOL R_PointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 bool R_PointRecord::WriteRecord(CFile* file)
 {
+	directory.clear();
+
 	// Set directory
 	int fieldOffset = 0;
 	int fieldLength = m_prid.GetFieldLength();

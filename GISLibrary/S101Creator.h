@@ -23,6 +23,8 @@ public:
 public:
 	void Set(FeatureCatalogue* fc, S101Cell* enc);
 
+	void SetFC(FeatureCatalogue* fc);
+
 	R_FeatureRecord* AddFeature(std::wstring code);
 	R_InformationRecord* AddInformation(std::wstring code);
 

@@ -185,17 +185,23 @@ void COpenS100View::OnDraw(CDC* pDC)
 	{
 		if (m_bMapRefesh) // Re-drawing part with MapRefresh() (Including Invalidate())
 		{
-			std::future<void> drawResult = std::async(std::launch::async, [this, rect]() {
-				DrawFromMapRefresh(&map_dc, (CRect&)rect);
+			//std::future<void> drawResult = std::async(std::launch::async, [this, rect]() {
+			//	DrawFromMapRefresh(&map_dc, (CRect&)rect);
 
-				m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
+			//	m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
 
-				mem_dc.BitBlt(rect.left, rect.top, rect.Width(), rect.Height(), &map_dc, 0, 0, SRCCOPY);
-			});
+			//	mem_dc.BitBlt(rect.left, rect.top, rect.Width(), rect.Height(), &map_dc, 0, 0, SRCCOPY);
+			//});
 
 			//drawResult.get();
-			Invalidate();
+			//Invalidate();
+
+			DrawFromMapRefresh(&map_dc, (CRect&)rect);
+
+			m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
 		}
+
+		mem_dc.BitBlt(rect.left, rect.top, rect.Width(), rect.Height(), &map_dc, 0, 0, SRCCOPY);
 
 		// The part where I draw again with Invalidate.
 		DrawFromInvalidate(&mem_dc, rect);
@@ -966,7 +972,7 @@ void COpenS100View::DrawFromMapRefresh(CDC* pDC, CRect& rect)
 
 	theApp.gisLib->Draw(hdc);
 
-	//theApp.m_pDockablePaneLayerManager.UpdateList();
+	
 
 	m_bMapRefesh = false;
 }

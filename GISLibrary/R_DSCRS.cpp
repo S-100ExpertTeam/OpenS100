@@ -73,6 +73,8 @@ BOOL R_DSCRS::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 bool R_DSCRS::WriteRecord(CFile* file)
 {
+	directory.clear();
+
 	// Set directory
 	int fieldOffset = 0;
 	int fieldLength = m_csid.GetFieldLength();

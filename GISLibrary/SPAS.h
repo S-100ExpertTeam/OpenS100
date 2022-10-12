@@ -5,12 +5,12 @@ struct SPAS {
 public:
 	RecordName m_name;
 	int m_ornt;
-	int m_smin;
-	int m_smax;
+	unsigned int m_smin;
+	unsigned int m_smax;
 	int m_saui;
 
 public:
 	static int GetSize();
 
-	void Set(RecordName recordName, int ORNT = 1, int SMIN = 0, int SMAX = (2 ^ 32) - 1, int SAUI = 1);
+	void Set(RecordName recordName, int ORNT = 1, unsigned int SMIN = 0, unsigned int SMAX = pow(2, 32) - 1, int SAUI = 1);
 };
