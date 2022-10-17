@@ -59,10 +59,7 @@ bool FeatureTypes::SetAttributeFromSuperType(FeatureType* ft)
 		else
 		{
 			FeatureType* sft = itor->second;
-			if (SetAttributeFromSuperType(sft))
-			{
-				ft->GetAttributeBindingPointer().insert(ft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().end());
-			}
+			ft->GetAttributeBindingPointer().insert(ft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().end());
 			return true;
 		}
 
