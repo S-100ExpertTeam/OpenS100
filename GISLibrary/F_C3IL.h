@@ -14,7 +14,7 @@ public:
 	* Format		: b11
 	* Description	: Internal identifier of the Vertical CRS
 	*/
-	int m_vcid;
+	int m_vcid = 2;
 	/*
 	* Attribute Array
 	*/

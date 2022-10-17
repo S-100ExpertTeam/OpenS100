@@ -60,6 +60,8 @@ BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 bool R_SurfaceRecord::WriteRecord(CFile* file)
 {
+	directory.clear();
+
 	// Set directory
 	int fieldOffset = 0;
 	int fieldLength = m_srid.GetFieldLength();

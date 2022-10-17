@@ -122,6 +122,8 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 bool R_CurveRecord::WriteRecord(CFile* file)
 {
+	directory.clear();
+
 	// Set directory
 	int fieldOffset = 0;
 	int fieldLength = m_crid.GetFieldLength();

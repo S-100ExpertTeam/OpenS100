@@ -162,6 +162,8 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 bool R_FeatureRecord::WriteRecord(CFile* file)
 {
+	directory.clear();
+
 	// Set directory
 	int fieldOffset = 0;
 	int fieldLength = m_frid.GetFieldLength();

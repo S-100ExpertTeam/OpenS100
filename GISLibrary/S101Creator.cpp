@@ -20,6 +20,7 @@
 #include "PTAS.h"
 #include "CUCO.h"
 #include "RIAS.h"
+#include "SPAS.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -769,12 +770,12 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 			{
 				auto firstPointPTAS = new PTAS();
 				firstPointPTAS->m_name = firstPointRecord->GetRecordName();
-				firstPointPTAS->m_topi = 3;
+				firstPointPTAS->m_topi = 1;
 				vectorRecord->m_ptas->m_arr.push_back(firstPointPTAS);
 
 				auto lastPointPTAS = new PTAS();
 				lastPointPTAS->m_name = lastPointRecord->GetRecordName();
-				lastPointPTAS->m_topi = 3;
+				lastPointPTAS->m_topi = 2;
 				vectorRecord->m_ptas->m_arr.push_back(lastPointPTAS);
 			}
 		}

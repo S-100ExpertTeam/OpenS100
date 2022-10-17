@@ -2260,9 +2260,19 @@ void S101Cell::InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record)
 	vecMultiPoint.push_back(record);
 }
 
-void S101Cell::RemoveMultiPointRecord(__int64 key, R_MultiPointRecord* record)
+void S101Cell::RemoveMultiPointRecord(__int64 key)
 {
 	m_mpMap.RemoveKey(key);
+
+	for (auto i = vecMultiPoint.begin(); i != vecMultiPoint.end(); i++)
+	{
+		if (key == (*i)->GetRecordName().GetName())
+		{
+			delete (*i);
+			vecMultiPoint.erase(i);
+			return;
+		}
+	}
 }
 
 R_MultiPointRecord* S101Cell::GetMultiPointRecord(__int64 key)
@@ -3133,7 +3143,7 @@ bool S101Cell::UpdateMpMapRecord(S101Cell* cell) //multi point
 
 			if (mission == 2) //Delete
 			{
-				RemoveMultiPointRecord(UpdateName, values);
+				RemoveMultiPointRecord(UpdateName);
 			}
 			else if (mission == 3)  //change
 			{

@@ -221,7 +221,7 @@ public:
 
 
 	void InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record);
-	void RemoveMultiPointRecord(__int64 key, R_MultiPointRecord* record);
+	void RemoveMultiPointRecord(__int64 key);
 	R_MultiPointRecord* GetMultiPointRecord(__int64 key);
 	POSITION GetMultStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_MultiPointRecord*& value);

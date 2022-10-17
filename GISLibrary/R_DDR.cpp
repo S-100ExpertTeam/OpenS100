@@ -15,6 +15,8 @@ R_DDR::~R_DDR()
 
 bool R_DDR::WriteRecord(CFile* file)
 {
+	directory.clear();
+
 	// Set directory
 	int fieldOffset = 0;
 	int fieldLength = f_FieldControlField.GetFieldLength();

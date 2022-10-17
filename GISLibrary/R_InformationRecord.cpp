@@ -82,6 +82,8 @@ BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 bool R_InformationRecord::WriteRecord(CFile* file)
 {
+	directory.clear();
+
 	// Set directory
 	int fieldOffset = 0;
 	int fieldLength = m_irid.GetFieldLength();
