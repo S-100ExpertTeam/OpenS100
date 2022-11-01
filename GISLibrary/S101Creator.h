@@ -20,13 +20,13 @@ public:
 public:
 	FeatureCatalogue* fc = nullptr;
 	S101Cell* enc = nullptr;
+	S101Layer* layer = nullptr;
 
 public:
 	void Set(FeatureCatalogue* fc, S101Cell* enc);
-
 	void SetFC(FeatureCatalogue* fc);
+	void SetENC(S101Cell* enc);
 
-	S101Cell* CreateENC(std::wstring name);
 	S101Layer* CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc);
 
 	R_FeatureRecord* AddFeature(std::wstring code);
@@ -46,6 +46,7 @@ public:
 	ATTR* AddComplexAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code);
 	ATTR* AddComplexAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code);
 
+	SGeometry* SetGeometry(R_FeatureRecord* feature, int type, unsigned char* value, int size);
 	SGeometry* SetPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
 	SGeometry* SetMultiPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
 	SGeometry* SetCurveGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
@@ -78,5 +79,8 @@ public:
 
 	void AddDefaultChildAttributes(R_FeatureRecord* feature);
 	void AddDefaultChildAttributes(R_FeatureRecord* feature, ATTR* attr);
+
+private:
+	S101Cell* CreateENC(std::wstring name);
 };
 

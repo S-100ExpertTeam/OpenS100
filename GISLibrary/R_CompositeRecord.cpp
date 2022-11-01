@@ -31,11 +31,11 @@ BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	int i = 0, j = 0;
 	for(i = 0; i < dir->m_count; i++)
 	{
-		if(dir->GetDirectory(i)->tag == *((unsigned int*)"CCID"))
+		if (strcmp(dir->GetDirectory(i)->tag, "CCID") == 0)
 		{
 			m_ccid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS* inas = new F_INAS();
 
@@ -43,7 +43,7 @@ BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"COCC"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "COCC") == 0)
 		{
 			if (nullptr == m_ccoc)
 			{
@@ -52,7 +52,7 @@ BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_ccoc->ReadField(buf);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"CUCO"))
+		else if(strcmp(dir->GetDirectory(i)->tag, "CUCO") == 0)
 		{
 			F_CUCO* cuco = new F_CUCO();
 			cuco->ReadField(buf);

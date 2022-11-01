@@ -27,32 +27,22 @@ BOOL R_DSCRS::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	USES_CONVERSION;
 	for(unsigned i = 0; i < dir->m_count; i++)
 	{
-		if(dir->GetDirectory(i)->tag == *((unsigned int*)"CSID"))
+		if (strcmp(dir->GetDirectory(i)->tag, "CSID") == 0)
 		{
 			m_csid.ReadField(buf);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"CRSH"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "CRSH") == 0)
 		{
 			F_CRSH *crsh = new F_CRSH();
 			crsh->ReadField(buf);
 			m_crsh.push_back(crsh);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"CSAX"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "CSAX") == 0)
 		{
 			if (!m_csax) m_csax = new F_CSAX();
 			m_csax->ReadField(buf);
 		}
-		//else if (dir->GetDirectory(i)->tag == *((unsigned int*)"PROJ"))
-		//{
-		//	if (!m_proj) m_proj = new F_PROJ();
-		//	m_proj->ReadField(buf);
-		//}
-		//else if (dir->GetDirectory(i)->tag == *((unsigned int*)"GDAT"))
-		//{
-		//	if (!m_gdat) m_gdat = new F_GDAT();
-		//	m_gdat->ReadField(buf);
-		//}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"VDAT"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "VDAT") == 0)
 		{
 			if (!m_vdat) m_vdat = new F_VDAT();
 			m_vdat->ReadField(buf);

@@ -22,6 +22,7 @@
 #include "CUCO.h"
 #include "RIAS.h"
 #include "SPAS.h"
+#include "GISLibrary.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -40,8 +41,7 @@ S101Creator::S101Creator()
 
 S101Creator::S101Creator(FeatureCatalogue* fc, S101Cell* enc)
 {
-	this->fc = fc;
-	this->enc = enc;
+	Set(fc, enc);
 }
 
 S101Creator::~S101Creator()
@@ -51,13 +51,22 @@ S101Creator::~S101Creator()
 
 void S101Creator::Set(FeatureCatalogue* fc, S101Cell* enc)
 {
-	this->fc = fc;
-	this->enc = enc;
+	SetFC(fc);
+	SetENC(enc);
 }
 
 void S101Creator::SetFC(FeatureCatalogue* fc)
 {
 	this->fc = fc;
+}
+
+void S101Creator::SetENC(S101Cell* enc)
+{
+	this->enc = enc;
+	if (enc->m_pLayer)
+	{
+		this->layer = (S101Layer*)enc->m_pLayer;
+	}
 }
 
 S101Cell* S101Creator::CreateENC(std::wstring name)
@@ -67,14 +76,24 @@ S101Cell* S101Creator::CreateENC(std::wstring name)
 
 	enc->m_dsgir.m_dsid.m_dsnm = name.c_str();
 
+	CString strName = name.c_str();
+	result->SetFileName(strName);
+
 	return result;
 }
 
 S101Layer* S101Creator::CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc)
 {
-	auto result = new S101Layer(fc, pc);
+	auto result = new S101Layer(fc, pc);	
 
-	result->m_spatialObject = CreateENC(name);
+	enc = CreateENC(name);
+
+	Set(fc, enc);
+
+	result->m_spatialObject = enc;
+	result->m_spatialObject->m_pLayer = result;
+
+	result->SetAllNumericCode();
 
 	return result;
 }
@@ -102,7 +121,7 @@ R_FeatureRecord* S101Creator::AddFeature(std::wstring code)
 
 		return featureRecord;
 	}
-
+	
 	return nullptr;
 }
 
@@ -397,6 +416,32 @@ ATTR* S101Creator::AddComplexAttribute(R_InformationRecord* information, ATTR* p
 		attr->m_atvl = L"";
 
 		return attr;
+	}
+
+	return nullptr;
+}
+
+SGeometry* S101Creator::SetGeometry(R_FeatureRecord* feature, int type, unsigned char* value, int size)
+{
+	if (type == 1)
+	{
+		return SetPointGeometry(feature, value, size);
+	}
+	else if (type == 2)
+	{
+		return SetCompositeCurveGeometry(feature, value, size);
+	}
+	else if (type == 3)
+	{
+		return SetSurfaceGeometry(feature, value, size);
+	}
+	else if (type == 4)
+	{
+		return SetMultiPointGeometry(feature, value, size);
+	}
+	else if (type == 5)
+	{
+		return SetCurveGeometry(feature, value, size);
 	}
 
 	return nullptr;

@@ -26,30 +26,30 @@ BOOL R_PointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	int i = 0, j = 0;
 	for(i = 0; i < dir->m_count; i++)
 	{
-		if(dir->GetDirectory(i)->tag == *((unsigned int*)"PRID"))
+		if(strcmp(dir->GetDirectory(i)->tag, "PRID") == 0)
 		{
 			m_prid.ReadField(buf);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if(strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS *inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C2IT"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C2IT") == 0)
 		{
 			m_c2it = new F_C2IT();
 			m_c2it->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C3IT"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C3IT") == 0)
 		{
 			m_c3it = new F_C3IT();
 			m_c3it->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C2FT"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C2FT") == 0)
 		{
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C3FT"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C3FT") == 0)
 		{
 		}
 		else

@@ -17,12 +17,11 @@ public:
 public:
 	int id = 0;
 
-	bool On;
-	bool Info;
+	bool On = true;
+	bool Info = false;
 
-	// area info
-	MBR			  m_mbr;
-	SpatialObject *m_spatialObject = nullptr;
+	MBR m_mbr;
+	SpatialObject* m_spatialObject = nullptr;
 	int scaleMinimum = 0;
 	int scaleMaximum = 0;
 

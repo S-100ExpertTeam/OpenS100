@@ -144,6 +144,7 @@ public:
 	void Draw(HDC &hDC, Scaler *scaler, int priority, int instructionType, double offset = 0);
 
 	MBR CalcMBR();
+	MBR ReMBR();
 
 	//void GetDDRFromFile(CString _filepath);
 

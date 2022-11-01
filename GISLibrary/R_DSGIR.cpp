@@ -53,15 +53,15 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	//USES_CONVERSION;
 	for (unsigned i = 0; i < dir->m_count; i++)
 	{
-		if (dir->GetDirectory(i)->tag == *((unsigned int*)"DSID"))
+		if (strcmp(dir->GetDirectory(i)->tag, "DSID") == 0)
 		{
 			m_dsid.ReadField(buf);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"DSSI"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "DSSI") == 0)
 		{
 			m_dssi.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"ATCS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "ATCS") == 0)
 		{
 			if (nullptr == m_atcs)
 			{
@@ -70,7 +70,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_atcs->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"ITCS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "ITCS") == 0)
 		{
 			if (nullptr == m_itcs)
 			{
@@ -79,7 +79,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_itcs->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"FTCS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "FTCS") == 0)
 		{
 			if (nullptr == m_ftcs)
 			{
@@ -88,7 +88,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_ftcs->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"IACS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "IACS") == 0)
 		{
 			if (nullptr == m_iacs)
 			{
@@ -97,7 +97,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_iacs->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"FACS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "FACS") == 0)
 		{
 			if (nullptr == m_facs)
 			{
@@ -106,7 +106,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_facs->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"ARCS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "ARCS") == 0)
 		{
 			if (nullptr == m_arcs)
 			{

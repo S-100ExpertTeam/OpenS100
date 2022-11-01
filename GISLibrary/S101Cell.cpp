@@ -130,6 +130,7 @@ std::string get_information_id_string(int id)
 
 S101Cell::S101Cell() : S100SpatialObject()
 {
+	m_FileType = FILE_S_100_VECTOR;
 }
 
 S101Cell::~S101Cell()
@@ -370,8 +371,6 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 
 		file.Read(pBuf, (unsigned)fileLength);
 
-		m_FileType = FILE_S_100_VECTOR;
-
 		endOfBuf = pBuf + fileLength - 1;
 
 		file.Close();
@@ -404,54 +403,54 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 			{
 			}
 
-			if (drDir.GetDirectory(0)->tag == *((unsigned int*)"DSID"))
+			if (strcmp(drDir.GetDirectory(0)->tag, "DSID") == 0)
 			{
 				m_dsgir.ReadRecord(&drDir, pBuf);
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"CSID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "CSID") == 0)
 			{
 				m_dscrs.ReadRecord(&drDir, pBuf);
 			}
 
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"IRID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "IRID") == 0)
 			{
 				R_InformationRecord* r = new R_InformationRecord();
 				r->ReadRecord(&drDir, pBuf);
 				InsertInformationRecord(r->m_irid.m_name.GetName(), r);
 			}
 
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"PRID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "PRID") == 0)
 			{
 				R_PointRecord* r = new R_PointRecord();
 				r->ReadRecord(&drDir, pBuf);
 				auto names = r->m_prid.m_name.GetName();
 				InsertPointRecord(r->m_prid.m_name.GetName(), r);
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"MRID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "MRID") == 0)
 			{
 				R_MultiPointRecord* r = new R_MultiPointRecord();
 				r->ReadRecord(&drDir, pBuf);
 				InsertMultiPointRecord(r->m_mrid.m_name.GetName(), r);
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"CRID"))   // warning and error message-oriented output
+			else if (strcmp(drDir.GetDirectory(0)->tag, "CRID") == 0)
 			{
 				R_CurveRecord* r = new R_CurveRecord();
 				r->ReadRecord(&drDir, pBuf);
 				InsertCurveRecord(r->m_crid.m_name.GetName(), r);
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"CCID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "CCID") == 0)
 			{
 				R_CompositeRecord* r = new R_CompositeRecord();
 				r->ReadRecord(&drDir, pBuf);
 				InsertCompositeCurveRecord(r->m_ccid.m_name.GetName(), r);
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"SRID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "SRID") == 0)
 			{
 				R_SurfaceRecord* r = new R_SurfaceRecord();
 				r->ReadRecord(&drDir, pBuf);
 				InsertSurfaceRecord(r->m_srid.m_name.GetName(), r);
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"FRID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "FRID") == 0)
 			{
 				R_FeatureRecord* r = new R_FeatureRecord();
 				r->ReadRecord(&drDir, pBuf);
@@ -1822,10 +1821,70 @@ MBR S101Cell::CalcMBR()
 				SPoint *geo = (SPoint *)fr->m_geometry;
 				pMBR->ReMBR(geo->m_mbr);
 			}
+			else if (fr->m_geometry->type == 4)
+			{
+				SMultiPoint* geo = (SMultiPoint*)fr->m_geometry;
+				pMBR->ReMBR(geo->m_mbr);
+			}
+			else if (fr->m_geometry->type == 5)
+			{
+				SCurve* geo = (SCurve*)fr->m_geometry;
+				pMBR->ReMBR(geo->m_mbr);
+			}
 		}
 	}
 
 	return *pMBR;
+}
+
+MBR S101Cell::ReMBR()
+{
+	MBR result;
+	result.InitMBR();
+
+	R_FeatureRecord* fr = nullptr;
+
+	__int64 iKey;
+	POSITION pos = m_feaMap.GetStartPosition();
+	while (pos != NULL)
+	{
+		m_feaMap.GetNextAssoc(pos, iKey, fr);
+		if (fr->m_geometry)
+		{
+			if (fr->m_geometry->type == 3)
+			{
+				SSurface* pSr = (SSurface*)fr->m_geometry;
+				result.ReMBR(pSr->m_mbr);
+			}
+			else if (fr->m_geometry->type == 2)
+			{
+				auto geo = (SCompositeCurve*)fr->m_geometry;
+				result.ReMBR(geo->m_mbr);
+			}
+			else if (fr->m_geometry->type == 1)
+			{
+				SPoint* geo = (SPoint*)fr->m_geometry;
+				result.ReMBR(geo->m_mbr);
+			}
+			else if (fr->m_geometry->type == 4)
+			{
+				SMultiPoint* geo = (SMultiPoint*)fr->m_geometry;
+				result.ReMBR(geo->m_mbr);
+			}
+			else if (fr->m_geometry->type == 5)
+			{
+				SCurve* geo = (SCurve*)fr->m_geometry;
+				result.ReMBR(geo->m_mbr);
+			}
+		}
+	}
+
+	if (m_pLayer)
+	{
+		m_pLayer->SetMBR(result);
+	}
+
+	return result;
 }
 
 // [ Text Placement ]

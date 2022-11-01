@@ -39,17 +39,17 @@ BOOL R_MultiPointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	int i = 0, j = 0, cnt;
 	for(unsigned i = 0; i < dir->m_count; i++)
 	{
-		if(dir->GetDirectory(i)->tag == *((unsigned int*)"MRID"))
+		if(strcmp(dir->GetDirectory(i)->tag, "MRID") == 0)
 		{
 			m_mrid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS *inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"COCC"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "COCC") == 0)
 		{
 			if (!m_cocc)
 			{
@@ -59,14 +59,14 @@ BOOL R_MultiPointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 			cnt = (dir->GetDirectory(i)->length - 1) / F_INAS::GetSize();
 			m_cocc->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C2IL"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C2IL") == 0)
 		{
 			F_C2IL* c2il = new F_C2IL();
 			cnt = (dir->GetDirectory(i)->length - 1) / IC2D::GetSize();
 			c2il->ReadField(buf, cnt);
 			m_c2il.push_back(c2il);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C3IL"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C3IL") == 0)
 		{
 			F_C3IL* c3il = new F_C3IL();
 			cnt = (dir->GetDirectory(i)->length - 1) / C3IL::GetSize();
