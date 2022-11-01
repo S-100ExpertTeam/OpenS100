@@ -4,6 +4,7 @@
 
 #include <vector>
 
+class S101Layer;
 class S101Cell;
 class FeatureCatalogue;
 class R_FeatureRecord;
@@ -24,6 +25,9 @@ public:
 	void Set(FeatureCatalogue* fc, S101Cell* enc);
 
 	void SetFC(FeatureCatalogue* fc);
+
+	S101Cell* CreateENC(std::wstring name);
+	S101Layer* CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc);
 
 	R_FeatureRecord* AddFeature(std::wstring code);
 	R_InformationRecord* AddInformation(std::wstring code);

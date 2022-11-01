@@ -615,29 +615,6 @@ void S101Cell::SetInstructionToFeature(int type, R_FeatureRecord* fe)
 	}
 }
 
-void S101Cell::GetDDRFromFile(CString _filepath)
-{
-	CFile file;
-	if (file.Open(_filepath, CFile::modeRead))
-	{
-		auto size = (int)file.GetLength();
-		m_S101DDR.Allocate(size);
-		file.Read(m_S101DDR.GetContent(), size);
-	}
-}
-
-//void S101Cell::ClearCurveMap()
-//{
-//	for (auto iter = m_curveMap.begin(); iter != m_curveMap.end(); iter++)
-//	{
-//		SCurve* c = iter->second;
-//		delete c;
-//	}
-//
-//	m_curveMap.clear();
-//}
-
-
 BOOL S101Cell::MakeFullSpatialData()
 {
 	//ClearCurveMap();
@@ -4051,8 +4028,6 @@ bool S101Cell::Save(std::wstring path)
 	}
 
 	ddr.WriteRecord(&file);
-
-	//file.Write(m_S101DDR.GetContent(), m_S101DDR.GetSize());
 
 	m_dsgir.m_dssi.SetNumberOfInformationTypeRecords(vecInformation.size());
 	m_dsgir.m_dssi.SetNumberOfPointRecords(vecPoint.size());

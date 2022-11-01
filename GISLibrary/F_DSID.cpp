@@ -5,19 +5,21 @@
 
 F_DSID::F_DSID(void)
 {
-	m_name.RCNM = 0;
-	m_name.RCID = 0;
-	m_ensp = "";
-	m_ened = "";
-	m_prsp = "";
-	m_pred = "";
-	m_prof = "";
-	m_dsnm = "";		
-	m_dstl = "";
-	m_dsrd = "";
-	m_dslg = "";
+	m_name.RCNM = 10;
+	m_name.RCID = 1;
+	m_ensp = "S-100 Part 10a";
+	m_ened = "1.1";
+	m_prsp = "INT.IHO.S-101.1.0";
+	m_pred = "1.0";
+	m_prof = "1";
+	m_dsnm = ""; // 101KR005X01NE.000	
+	m_dstl = ""; // S-101 Test Data Sets in ECDIS
+	m_dsrd = ""; // 20200626
+	m_dslg = "EN";
 	m_dsab = "";
-	m_dsed = "";
+	m_dsed = "1.0";
+	m_dstc.Add(14);
+	m_dstc.Add(18);
 }
 
 F_DSID::~F_DSID(void)
@@ -41,6 +43,8 @@ void F_DSID::ReadField(BYTE *&buf)
 	buf2charArr(m_dslg, buf);
 	buf2charArr(m_dsab, buf);
 	buf2charArr(m_dsed, buf);
+
+	m_dstc.RemoveAll();
 	while(*buf != 0x1E)
 	{
 		m_dstc.Add(*(buf++));

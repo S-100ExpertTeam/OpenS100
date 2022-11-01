@@ -145,7 +145,7 @@ public:
 
 	MBR CalcMBR();
 
-	void GetDDRFromFile(CString _filepath);
+	//void GetDDRFromFile(CString _filepath);
 
 	void ProcessSpatialReference();
 	

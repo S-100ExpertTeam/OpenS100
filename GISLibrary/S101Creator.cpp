@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "S101Creator.h"
 #include "S101Cell.h"
+#include "S101Layer.h"
 #include "R_FeatureRecord.h"
 #include "R_InformationRecord.h"
 #include "R_PointRecord.h"
@@ -52,6 +53,30 @@ void S101Creator::Set(FeatureCatalogue* fc, S101Cell* enc)
 {
 	this->fc = fc;
 	this->enc = enc;
+}
+
+void S101Creator::SetFC(FeatureCatalogue* fc)
+{
+	this->fc = fc;
+}
+
+S101Cell* S101Creator::CreateENC(std::wstring name)
+{
+	auto result = new S101Cell();
+	enc = result;
+
+	enc->m_dsgir.m_dsid.m_dsnm = name.c_str();
+
+	return result;
+}
+
+S101Layer* S101Creator::CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc)
+{
+	auto result = new S101Layer(fc, pc);
+
+	result->m_spatialObject = CreateENC(name);
+
+	return result;
 }
 
 R_FeatureRecord* S101Creator::AddFeature(std::wstring code)

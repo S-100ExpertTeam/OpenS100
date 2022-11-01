@@ -75,12 +75,12 @@ LayerManager::LayerManager(Scaler* scaler) : LayerManager()
 
 LayerManager::~LayerManager()
 {
-	POSITION pos = m_listBackgroundLayer.GetHeadPosition();
+	//POSITION pos = m_listBackgroundLayer.GetHeadPosition();
 
-	while (pos)
-	{
-		delete m_listBackgroundLayer.GetNext(pos);
-	}
+	//while (pos)
+	//{
+	//	delete m_listBackgroundLayer.GetNext(pos);
+	//}
 
 	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
@@ -91,55 +91,25 @@ LayerManager::~LayerManager()
 
 bool LayerManager::AddBackgroundLayer(CString _filepath)
 {
-	CString file_extension = _T("");
+	CString file_extension = LibMFCUtil::GetExtension(_filepath);
 
-	file_extension.AppendChar(_filepath.GetAt(_filepath.GetLength() - 3));
-	file_extension.AppendChar(_filepath.GetAt(_filepath.GetLength() - 2));
-	file_extension.AppendChar(_filepath.GetAt(_filepath.GetLength() - 1));
-
-	Layer* layer;
-
-	if (file_extension.CompareNoCase(_T("SHP")) == 0) {
-		layer = new Layer();
-		if (layer->Open(_filepath) == FALSE)
+	if (file_extension.CompareNoCase(_T("SHP")) == 0) 
+	{
+		if (backgroundLayer.Open(_filepath) == false)
 		{
-			return FALSE;
+			return false;
 		}
 	}
-	if (layer->m_spatialObject == NULL)
-		return FALSE;
 
-	m_listBackgroundLayer.AddTail(layer);
+	double xmin = scaler->mxMinLimit;
+	double xmax = scaler->mxMaxLimit;
+	double ymin = scaler->myMinLimit;
+	double ymax = scaler->myMaxLimit;
 
-	double xmin, ymin, xmax, ymax;
-
-	if (m_listBackgroundLayer.GetCount() == 1)
-	{
-		xmin = scaler->mxMinLimit;
-		xmax = scaler->mxMaxLimit;
-		ymin = scaler->myMinLimit;
-		ymax = scaler->myMaxLimit;
-
-	}
-	else
-	{
-		xmin = layer->m_mbr.xmin;
-		ymin = layer->m_mbr.ymin;
-		xmax = layer->m_mbr.xmax;
-		ymax = layer->m_mbr.ymax;
-	}
 
 	MBR _mbr(xmin, ymin, xmax, ymax);
 	scaler->SetMap(_mbr);
-
-	if (m_listBackgroundLayer.GetCount() <= 2)
-	{
-		mbr.SetMBR(_mbr);
-	}
-	else
-	{
-		mbr.ReMBR(_mbr);
-	}
+	mbr.SetMBR(_mbr);
 
 	return TRUE;
 }
@@ -753,24 +723,13 @@ void LayerManager::DrawBackground(HDC &hDC, int offset)
 {
 	if (m_baseMapOn)
 	{
-		POSITION pos = m_listBackgroundLayer.GetHeadPosition();
-
-		while (pos)
+		if (backgroundLayer.IsOn())
 		{
-			if (m_listBackgroundLayer.GetAt(pos)->IsOn())
+			if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), backgroundLayer.m_mbr))
 			{
-				Layer* layer = m_listBackgroundLayer.GetNext(pos);
-
-				if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
-				{
-					layer->Draw(hDC, scaler, offset - 360);
-					layer->Draw(hDC, scaler, offset);
-					layer->Draw(hDC, scaler, offset + 360);
-				}
-			}
-			else
-			{
-				m_listBackgroundLayer.GetNext(pos);
+				backgroundLayer.Draw(hDC, scaler, offset - 360);
+				backgroundLayer.Draw(hDC, scaler, offset);
+				backgroundLayer.Draw(hDC, scaler, offset + 360);
 			}
 		}
 	}

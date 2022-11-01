@@ -7,7 +7,7 @@ F_CSID::F_CSID(void)
 {
 	m_name.RCNM = 15;
 	m_name.RCID = 1;
-	m_ncrc = 0;
+	m_ncrc = 2;
 }
 
 F_CSID::~F_CSID(void)

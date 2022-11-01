@@ -1,6 +1,7 @@
 #pragma once
 
 #include "S101Cell.h"
+#include "Layer.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -27,8 +28,8 @@ public:
 public:
 	Scaler* scaler = nullptr;
 
-	// Background layer.
-	CList<Layer*, Layer* > m_listBackgroundLayer;
+	// Background layer
+	Layer backgroundLayer;
 
 	std::list<Layer*> layers;
 
