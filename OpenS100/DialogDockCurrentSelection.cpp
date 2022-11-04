@@ -6,17 +6,19 @@
 
 #include <vector>
 
-#include "..\\GISLibrary\\S101Layer.h"
-#include "..\\GISLibrary\\F_FASC.h"
-#include "..\\GISLibrary\\R_FeatureRecord.h"
-#include "..\\GISLibrary\\R_InformationRecord.h"
-#include "..\\GISLibrary\\S101Cell.h"
-#include "..\\GISLibrary\\F_INAS.h"
-#include "..\\GISLibrary\\CodeWithNumericCode.h"
-#include "..\\GISLibrary\\GISLibrary.h"
+#include "../GISLibrary/S101Layer.h"
+#include "../GISLibrary/F_FASC.h"
+#include "../GISLibrary/R_FeatureRecord.h"
+#include "../GISLibrary/R_InformationRecord.h"
+#include "../GISLibrary/S101Cell.h"
+#include "../GISLibrary/F_INAS.h"
+#include "../GISLibrary/CodeWithNumericCode.h"
+#include "../GISLibrary/GISLibrary.h"
 
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\FeatureCatalog\\FeatureType.h"
+#include "../FeatureCatalog/FeatureCatalogue.h"
+#include "../FeatureCatalog/FeatureType.h"
+
+#include "../S100Geometry/SPoint.h"
 
 
 IMPLEMENT_DYNAMIC(CDialogDockCurrentSelection, CDialogEx)
@@ -70,6 +72,8 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 				return;
 			}
 
+			nSelectedItem = pNMLV->iItem;
+
 			S101Cell* cell = m_Cell;
 			FeatureCatalogue* fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
 			if (nullptr == fc)
@@ -122,7 +126,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					{
 						if (true == layer->IsOn())
 						{
-							theApp.pView->SetPickReportFeature(pFe);
+							theApp.pView->SetPick((S101Cell*)layer->GetSpatialObject(), pFe);
 							theApp.pView->Invalidate(FALSE);
 						}
 					}
@@ -130,6 +134,28 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 				theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
 				theApp.m_DockablePaneEditWindow.SetFeatureRecord(pFe);
+
+				theApp.gisLib->creator.Set(fc, cell);
+				auto a = theApp.gisLib->creator.GetAddableAttributes(pFe);
+				for (auto i = a.begin(); i != a.end(); i++)
+				{
+					CString str = (*i)->GetAttributeCodeAsWstring().c_str();
+					OutputDebugString(str + L"\n");
+				}
+				//if (pFe->GetGeometry()->type == 1)
+				//{
+				//	auto newFeature = theApp.gisLib->creator.AddFeature(L"LightSectored");
+				//	unsigned char* wkb = nullptr;
+				//	int size = 0;
+				//	pFe->GetGeometry()->ExportToWkb(&wkb, &size);
+				//	if (newFeature)
+				//	{
+				//		theApp.gisLib->creator.SetPointGeometry(newFeature, wkb, size);
+				//		theApp.gisLib->S101RebuildPortrayal();
+				//		theApp.pView->MapRefresh();
+				//	}
+				//	delete[] wkb;
+				//}
 			}
 			else if (featureType == L"Information")
 			{
@@ -144,7 +170,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 				R_InformationRecord *rfr = m_Cell->GetInformationRecord(key);
 				S101Cell* cell = m_Cell;
 
-				auto itor = cell->m_dsgir.m_itcs->m_arr.find(rfr->m_irid.m_nitc);
+				auto itor = cell->m_dsgir.m_itcs->m_arr.find(rfr->m_irid.NITC());
 
 				m_selectedInformationType = fc->GetInformationType(std::wstring(itor->second->m_code));
 
@@ -334,23 +360,23 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 				m_ListCurrentSelection.SetItemText(0, 1, frid);
 				m_ListCurrentSelection.SetItemText(0, 2, name);
 				m_ListCurrentSelection.SetItemText(0, 3, type);
-				m_ListCurrentSelection.SetItemText(0, 4, lon);
-				m_ListCurrentSelection.SetItemText(0, 5, lat);
+				m_ListCurrentSelection.SetItemText(0, 4, lat);
+				m_ListCurrentSelection.SetItemText(0, 5, lon);
 				m_ListCurrentSelection.SetItemText(0, 6, assoCnt);
 				m_ListCurrentSelection.SetItemText(0, 7, featureType);
 
 				if (featureType == L"Feature")
 				{
 					// Acquired a catalog.
-					auto it = fc->GetFeatureTypesPointer().GetFeatureTypePointer().find(ws_name);
-					if (it == fc->GetFeatureTypesPointer().GetFeatureTypePointer().end())
+					auto it = fc->GetFeatureTypes().GetFeatureType().find(ws_name);
+					if (it == fc->GetFeatureTypes().GetFeatureType().end())
 					{
 						CString msg;
 						msg.Format(L"[%s] Feature not found. -CURRENT SELECTION", name.GetBuffer());
 					}
 					else
 					{
-						FeatureType* ft = &it->second;
+						FeatureType* ft = it->second;
 						m_ListCurrentSelection.SetItemData(0, (LPARAM)ft);
 					}
 				}
@@ -369,6 +395,32 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 	m_ListCurrentSelection.SetSelectionMark(0);
 	m_ListCurrentSelection.SetItemState(0, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
 	theApp.pView->SetFocus();
+}
+
+long long CDialogDockCurrentSelection::GetSelectedRecordName()
+{
+	if (nSelectedItem >= 0 && nSelectedItem < m_ListCurrentSelection.GetItemCount())
+	{
+		auto strRCID = m_ListCurrentSelection.GetItemText(nSelectedItem, 0);
+		auto strType = m_ListCurrentSelection.GetItemText(nSelectedItem, 7);
+
+		auto rcid = _ttoi(strRCID);
+		int rcnm = 0;
+		if (strType.Compare(L"Feature") == 0)
+		{
+			rcnm = 100;
+			RecordName recordName(rcnm, rcid);
+			return recordName.GetName();
+		}
+		else if (strType.Compare(L"Information") == 0)
+		{
+			rcnm = 150;
+			RecordName recordName(rcnm, rcid);
+			return recordName.GetName();
+		}
+	}
+
+	return -1;
 }
 
 void CDialogDockCurrentSelection::DeleteItem(CString id)
@@ -445,7 +497,7 @@ void CDialogDockCurrentSelection::UpdateList()
 			if (0 < inforCount)
 			{
 				auto inas = *rfr->m_inas.begin();
-				int arrCount = (int)inas->m_arr.GetSize();
+				int arrCount = (int)inas->m_arr.size();
 				count = count + arrCount;
 			}
 
@@ -484,7 +536,7 @@ void CDialogDockCurrentSelection::UpdateList()
 			if (0 < inforCount)
 			{
 				auto inas = *rfr->m_inas.begin();
-				int arrCount = (int)inas->m_arr.GetSize();
+				int arrCount = (int)inas->m_arr.size();
 				count = count + arrCount;
 			}
 

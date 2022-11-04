@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "AttributeBinding.h"
 
+#include "../LibMFCUtil/LibMFCUtil.h"
+
 AttributeBinding::AttributeBinding()
 {
 
@@ -15,6 +17,8 @@ void AttributeBinding::GetContents(pugi::xml_node& node)
 {
 	if (node.attribute("sequential")) //Add attribute value
 	{
+		sequential = node.attribute("sequential").as_bool();
+
 		XML_Attribute value;
 		value.Setname("sequential");
 		value.Setvalue((char*)node.attribute("sequential").value());
@@ -35,7 +39,7 @@ void AttributeBinding::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:attribute"))
 		{
-			attribute.GetContents(instruction);
+			attributeCode = instruction.attribute("ref").as_string();
 		}
 	}
 }
@@ -60,12 +64,42 @@ ValueList& AttributeBinding::GetPermittedValues()
 	return permittedValues;
 }
 
-void AttributeBinding::SetAttribute(Reference value)
+std::string AttributeBinding::GetAttributeCode()
 {
-	attribute = value;
+	return attributeCode;
 }
 
-Reference& AttributeBinding::GetAttribute() 
+std::wstring AttributeBinding::GetAttributeCodeAsWstring()
 {
-	return attribute;
+	return pugi::as_wide(attributeCode);
+}
+
+bool AttributeBinding::IsSequential()
+{
+	return sequential;
+}
+
+bool AttributeBinding::IsNullable()
+{
+	if (multiplicity.GetLower() == 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool AttributeBinding::IsInfinite()
+{
+	return multiplicity.IsInfinite();
+}
+
+int AttributeBinding::GetLower()
+{
+	return multiplicity.GetLower();
+}
+
+int AttributeBinding::GetUpper()
+{
+	return multiplicity.GetUpperCount();
 }

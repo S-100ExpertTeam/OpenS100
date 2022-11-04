@@ -30,7 +30,7 @@ SENC_LineInstruction::~SENC_LineInstruction()
 		switch ((*itor)->type)
 		{
 		case 0:
-			delete *itor;
+			delete * itor;
 			break;
 		case 1:
 			delete ((SENC_LineStyle*)*itor);
@@ -69,13 +69,14 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 
 		curListCurveLink = &surface->curveList;
 	}
-	// Curve
+	// Composite Curve
 	else if (fr->m_geometry->type == 2)
 	{
 		auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
 
 		curListCurveLink = &compositeCurve->m_listCurveLink;
 	}
+	// Curve
 	else if (fr->m_geometry->type == 5)
 	{
 		auto curve = (SCurveHasOrient*)fr->m_geometry;
@@ -90,50 +91,92 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 
 			lineStyleBase->DrawInstruction(curve, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
 		}
+		return;
 	}
 
 	if (nullptr == curListCurveLink)
 	{
-		OutputDebugString(L"The spatial information format of the object is invalid..");
+		//OutputDebugString(L"The spatial information format of the object is invalid.\n");
 		return;
 	}
 
-	for (auto i = curListCurveLink->begin(); i != curListCurveLink->end(); i++)
+	if (spatialReference.size() == 0)
 	{
-		auto curve = (*i);
-
-		if ((*i)->GetMasking() || (*i)->GetSuppress())
+		for (auto i = curListCurveLink->begin(); i != curListCurveLink->end(); i++)
 		{
-			continue;
-		}
+			auto curve = (*i);
 
-		// Code for cases where Drawing Instructions has a Special Reference.
-		auto compareCurve = curve;
-		int compareCurveId = compareCurve->m_id & 0x0000FFFF;
-		for (auto it = spatialReference.begin(); it != spatialReference.end(); it++)
-		{
-			curve = nullptr;
-			unsigned ref = (*it)->reference;
-			 
-			if (compareCurveId == ref)
+			if (curve->GetMasking() || curve->GetSuppress())
 			{
-				curve = compareCurve;
+				continue;
+			}
+
+			for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+			{
+				SENC_LineStyleBase* lineStyleBase = *itor;
+				lineStyleBase->DrawInstruction(*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+			}
+		}
+		return;
+	}
+
+	for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
+	{
+		for (auto j = curListCurveLink->begin(); j != curListCurveLink->end(); j++)
+		{
+			if ((*i)->reference == (*j)->GetRCID())
+			{
+				if ((*j)->GetMasking() || (*j)->GetSuppress())
+				{
+					continue;
+				}
+
+				for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+				{
+					SENC_LineStyleBase* lineStyleBase = *itor;
+					lineStyleBase->DrawInstruction(*j, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+				}
 				break;
 			}
 		}
-
-		if (nullptr == curve)
-		{
-			//Case where there is a special reference, but the corresponding curve is not found during the reference.
-			continue;
-		}
-
-		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
-		{
-			SENC_LineStyleBase *lineStyleBase = *itor;
-			lineStyleBase->DrawInstruction(*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
-		}
 	}
+
+	//for (auto i = curListCurveLink->begin(); i != curListCurveLink->end(); i++)
+	//{
+	//	auto curve = (*i);
+
+	//	if ((*i)->GetMasking() || (*i)->GetSuppress())
+	//	{
+	//		continue;
+	//	}
+
+	//	// Code for cases where Drawing Instructions has a Special Reference.
+	//	auto compareCurve = curve;
+	//	int compareCurveId = compareCurve->m_id & 0x0000FFFF;
+	//	for (auto it = spatialReference.begin(); it != spatialReference.end(); it++)
+	//	{
+	//		curve = nullptr;
+	//		unsigned ref = (*it)->reference;
+	//		 
+	//		if (compareCurveId == ref)
+	//		{
+	//			curve = compareCurve;
+	//			break;
+	//		}
+	//	}
+
+	//	if (nullptr == curve)
+	//	{
+	//		//Case where there is a special reference, but the corresponding curve is not found during the reference.
+	//		continue;
+	//	}
+
+	//	for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+	//	{
+	//		SENC_LineStyleBase *lineStyleBase = *itor;
+	//		lineStyleBase->DrawInstruction(*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+	//	}
+	//}
 }
 
 void SENC_LineInstruction::ChangePallete(PortrayalCatalogue *pc)

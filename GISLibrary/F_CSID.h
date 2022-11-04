@@ -14,5 +14,7 @@ public:
 
 public:
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file);
+
 	int GetFieldLength();
 };

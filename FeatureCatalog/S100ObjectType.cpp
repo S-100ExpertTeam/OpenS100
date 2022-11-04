@@ -8,7 +8,10 @@ S100ObjectType::S100ObjectType()
 
 S100ObjectType::~S100ObjectType()
 {
-
+	for (auto i = informationBinding.begin(); i != informationBinding.end(); i++)
+	{
+		delete i->second;
+	}
 }
 
 void S100ObjectType::GetContents(pugi::xml_node& node)
@@ -20,13 +23,13 @@ void S100ObjectType::GetContents(pugi::xml_node& node)
 		const pugi::char_t* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:informationBinding"))
 		{
-			InformationBinding ib;
-			ib.GetContents(instruction);
+			auto ib = new InformationBinding();
+			ib->GetContents(instruction);
 
-			std::wstring associatename = ib.GetInformationTypePointer().Getvalue();
+			std::wstring associatename = ib->GetInformationTypePointer().Getvalue();
 			if (associatename.compare(L"") == 0)
 			{
-				std::list<XML_Attribute> attributeList = ib.GetInformationTypePointer().GetattributesPointer();
+				std::list<XML_Attribute> attributeList = ib->GetInformationTypePointer().GetattributesPointer();
 
 				for (auto itor = attributeList.begin();
 					itor != attributeList.end();
@@ -44,7 +47,7 @@ void S100ObjectType::GetContents(pugi::xml_node& node)
 	}
 }
 
-std::unordered_map<std::wstring, InformationBinding>& S100ObjectType::GetInformationBindingPointer()
+std::unordered_map<std::wstring, InformationBinding*>& S100ObjectType::GetInformationBindingPointer()
 {
 	return informationBinding;
 }

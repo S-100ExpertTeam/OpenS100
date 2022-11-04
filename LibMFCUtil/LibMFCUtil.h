@@ -54,3 +54,4 @@ namespace LibMFCUtil
 
 	extern LIBMFC_API void OutputDebugLongString(CString path);
 }
+

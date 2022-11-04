@@ -56,9 +56,9 @@ void SENC_Rule::OrganizeSearchTable()
 		}
 		else
 		{
-			OutputDebugString(L"Fail to Organized Search Table ( Feature : ");
-			OutputDebugString(t->camelCase.c_str());
-			OutputDebugString(L")\n");
+			//OutputDebugString(L"Fail to Organized Search Table ( Feature : ");
+			//OutputDebugString(t->camelCase.c_str());
+			//OutputDebugString(L")\n");
 			continue;
 		}
 
@@ -104,9 +104,9 @@ SENC_Template* SENC_Rule::FindPortrayalObject(int typeOfGeometry, std::wstring c
 	}
 	else
 	{
-		OutputDebugString(L"Fail to search Feature ( Feature : ");
-		OutputDebugString(camelCase.c_str());
-		OutputDebugString(L")\n");
+		//OutputDebugString(L"Fail to search Feature ( Feature : ");
+		//OutputDebugString(camelCase.c_str());
+		//OutputDebugString(L")\n");
 
 		return 0;
 	}

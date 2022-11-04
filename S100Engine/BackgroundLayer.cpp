@@ -76,7 +76,7 @@ void BackgroundLayer::CreateGeometry(ID2D1Factory1* pD2Factory, BackgroundSHPFil
 
 	if (!SUCCEEDED(hr))
 	{
-		OutputDebugString(_T("Faield to create backgound layer geometry\n"));
+		//OutputDebugString(_T("Faield to create backgound layer geometry\n"));
 	}
 }
 

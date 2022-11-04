@@ -25,8 +25,10 @@ void F_CodeWithNumericCode::ReadField(BYTE *&buf)
 		CodeWithNumericCode *cnc = new CodeWithNumericCode();
 		buf2charArr(cnc->m_code, buf);
 		cnc->m_nmcd = buf2uint(buf, 2);
-		m_arr.insert({ cnc->m_nmcd, cnc });
-		m_arrFindForCode.insert({ std::wstring(cnc->m_code), cnc });
+		//m_arr.insert({ cnc->m_nmcd, cnc });
+		//m_arrFindForCode.insert({ std::wstring(cnc->m_code), cnc });
+
+		InsertCodeNumericCode(cnc);
 	}
 }
 
@@ -37,9 +39,27 @@ void F_CodeWithNumericCode::ReadField(BYTE *&buf, int loopCnt)
 		CodeWithNumericCode *cnc = new CodeWithNumericCode();
 		buf2charArr(cnc->m_code, buf);
 		cnc->m_nmcd = buf2uint(buf, 2);
-		m_arr.insert({ cnc->m_nmcd, cnc });
-		m_arrFindForCode.insert({ std::wstring(cnc->m_code), cnc });
+		//m_arr.insert({ cnc->m_nmcd, cnc });
+		//m_arrFindForCode.insert({ std::wstring(cnc->m_code), cnc });
+
+		InsertCodeNumericCode(cnc);
 	}
+}
+
+bool F_CodeWithNumericCode::WriteField(CFile* file)
+{
+	for (auto i = listCodeWithNumericCode.begin(); i != listCodeWithNumericCode.end(); i++)
+	{
+		CT2CA outputStringCode((*i)->m_code, CP_UTF8);
+		file->Write(outputStringCode, (UINT)::strlen(outputStringCode));
+		file->Write(&NonPrintableCharacter::unitTerminator, 1);
+
+		file->Write(&(*i)->m_nmcd, 2);
+	}
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
 }
 
 int F_CodeWithNumericCode::GetFieldLength()
@@ -77,6 +97,17 @@ int F_CodeWithNumericCode::GetCode(CString numericCode)
 	return 0;
 }
 
+bool F_CodeWithNumericCode::HasCode(std::wstring& code)
+{
+	auto item = m_arrFindForCode.find(code);
+	if (item == m_arrFindForCode.end())
+	{
+		return false;
+	}
+
+	return true;
+}
+
 int F_CodeWithNumericCode::GetCount()
 {
 	return (int)m_arr.size();
@@ -84,6 +115,60 @@ int F_CodeWithNumericCode::GetCount()
 
 void F_CodeWithNumericCode::InsertCodeNumericCode(CodeWithNumericCode* value)
 {
+	listCodeWithNumericCode.push_back(value);
 	m_arr.insert({ value->GetNumericCode(), value });
 	m_arrFindForCode.insert({ value->GetCode(), value });
+}
+
+void F_CodeWithNumericCode::InsertCodeNumericCode(CString& code, int numericCode)
+{
+	auto codeWithNumericCode = new CodeWithNumericCode(code, numericCode);
+	InsertCodeNumericCode(codeWithNumericCode);
+}
+
+int F_CodeWithNumericCode::GetNewNumericCode()
+{
+	int limitNumericCode = 65535;
+	for (int i = 1; i <= limitNumericCode; i++)
+	{
+		if (m_arr.find(i) == m_arr.end())
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+int F_CodeWithNumericCode::AddNewCodeNumericCode(CString& code)
+{
+	int numericCode = GetNewNumericCode();
+	auto codeWithNumericCode = new CodeWithNumericCode(code, numericCode);
+	InsertCodeNumericCode(codeWithNumericCode);
+	return numericCode;
+}
+
+int F_CodeWithNumericCode::AddNewCodeNumericCode(std::wstring& code)
+{
+	CString strCode = code.c_str();
+	return AddNewCodeNumericCode(strCode);
+}
+
+int F_CodeWithNumericCode::GetNumericCode(CString& code)
+{
+	std::wstring wstr(code);
+	return GetNumericCode(wstr);
+}
+
+int F_CodeWithNumericCode::GetNumericCode(std::wstring& code)
+{
+	bool find = HasCode(code);
+	if (find)
+	{
+		auto numericCode = GetCode(code.c_str());
+		return numericCode;
+	}
+
+	int newNumericCode = AddNewCodeNumericCode(code);
+	return newNumericCode;
 }

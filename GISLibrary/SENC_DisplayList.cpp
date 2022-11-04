@@ -11,6 +11,7 @@
 #include "SENC_AugmentedRay.h"
 #include "SENC_AugmentedPath.h"
 #include "SENC_AlertReference.h"
+#include "GISLibrary.h"
 
 #include "..\\S100Geometry\\SGeometry.h"
 #include "..\\GeoMetryLibrary\\Scaler.h"
@@ -75,7 +76,7 @@ SENC_DisplayList::~SENC_DisplayList()
 
 void SENC_DisplayList::GetDrawingInstruction(int priority, int type, Scaler* scaler, std::list<SENC_Instruction*> &itList)
 {
-	auto currentScale = scaler->GetCurrentScale();
+	auto currentScale = gisLib->GetS100Scale();
 	int curViewingGroupLimit = 0;
 
 	if (ENCCommon::DISPLAY_MODE == GeoMetryLibrary::DisplayModeTable::base)
@@ -134,7 +135,7 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, Scaler* sca
 
 void SENC_DisplayList::GetDrawingInstructionByCondition(int priority, int type, Scaler* scaler, std::list<SENC_Instruction*> &itList, int FeatureID_textPlacement)
 {
-	auto currentScale = scaler->GetCurrentScale();
+	auto currentScale = gisLib->GetS100Scale();
 	int curViewingGroupLimit = 0;
 
 	if (ENCCommon::DISPLAY_MODE == GeoMetryLibrary::DisplayModeTable::base)

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "R_FeatureRecord.h"
 #include "F_SPAS.h"
 #include "F_FASC.h"
@@ -10,6 +10,11 @@
 #include "MASK.h"
 #include "SPAS.h"
 #include "DRDirectoryInfo.h"
+#include "R_PointRecord.h"
+#include "R_MultiPointRecord.h"
+#include "R_CurveRecord.h"
+#include "R_CompositeRecord.h"
+#include "R_SurfaceRecord.h"
 
 #include "..\\S100Geometry\\SGeometry.h"
 #include "..\\S100Geometry\\SPoint.h"
@@ -77,15 +82,15 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	unsigned i = 0, j = 0, cnt;
 	for (i = 0; i < dir->m_count; i++)
 	{
-		if (dir->GetDirectory(i)->tag == *((unsigned int*)"FRID"))
+		if (strcmp(dir->GetDirectory(i)->tag, "FRID") == 0)
 		{
 			m_frid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"FOID"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "FOID") == 0)
 		{
 			m_foid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"ATTR"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "ATTR") == 0)
 		{
 			cnt = 0;
 			j = 0;
@@ -112,27 +117,27 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 			attr->ReadField(buf, cnt);
 			m_attr.push_back(attr);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS *inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"SPAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "SPAS") == 0)
 		{
 			F_SPAS* spas = new F_SPAS();
 			cnt = (dir->GetDirectory(i)->length - 1) / SPAS::GetSize();
 			spas->ReadField(buf, cnt);
 			m_spas.push_back(spas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"FASC"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "FASC") == 0)
 		{
 			F_FASC *fasc = new F_FASC();
 			cnt = (dir->GetDirectory(i)->length - 1) / FASC::GetSize();
 			fasc->ReadField(buf, cnt);
 			m_fasc.push_back(fasc);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"MASK"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "MASK") == 0)
 		{
 
 			F_MASK* mask = new F_MASK();
@@ -153,6 +158,109 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 	}
 	return true;
+}
+
+bool R_FeatureRecord::WriteRecord(CFile* file)
+{
+	directory.clear();
+
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_frid.GetFieldLength();
+	Directory dirFRID("FRID", fieldLength, fieldOffset);
+	directory.push_back(dirFRID);
+	fieldOffset += fieldLength;
+
+	fieldLength = m_foid.GetFieldLength();
+	Directory dirFOID("FOID", fieldLength, fieldOffset);
+	directory.push_back(dirFOID);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("ATTR", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("SPAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_fasc.begin(); i != m_fasc.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("FASC", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_mask.begin(); i != m_mask.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("MASK", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_frid.WriteField(file);
+	m_foid.WriteField(file);
+
+	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_fasc.begin(); i != m_fasc.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_mask.begin(); i != m_mask.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
+}
+
+RecordName R_FeatureRecord::GetRecordName()
+{
+	return m_frid.m_name;
 }
 
 void R_FeatureRecord::Draw(HDC &hdc, Scaler *scaler, double offset)
@@ -264,6 +372,130 @@ int R_FeatureRecord::GetSPASCount()
 	return result;
 }
 
+std::vector<ATTR*> R_FeatureRecord::GetAllAttributes()
+{
+	if (m_attr.size() == 0)
+	{
+		return std::vector<ATTR*>();
+	}
+
+	return m_attr.front()->m_arr;
+}
+
+std::vector<ATTR*> R_FeatureRecord::GetRootAttributes()
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+
+	for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+	{
+		if ((*i)->m_paix == 0)
+		{
+			result.push_back(*i);
+		}
+	}
+
+	return result;
+}
+
+std::vector<ATTR*> R_FeatureRecord::GetRootAttributes(int numericCode)
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+
+	for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+	{
+		if ((*i)->m_paix == 0 && (*i)->m_natc == numericCode)
+		{
+			result.push_back(*i);
+		}
+	}
+
+	return result;
+}
+
+std::vector<ATTR*> R_FeatureRecord::GetChildAttributes(ATTR* parentATTR)
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+	int parentIndex = -1;
+
+	for (int i = 0; i < allAttributes.size(); i++)
+	{
+		if (parentATTR == allAttributes[i])
+		{
+			parentIndex = i;
+			break;
+		}
+	}
+
+	if (parentIndex > 0)
+	{
+		for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+		{
+			if ((*i)->m_paix == parentIndex)
+			{
+				result.push_back(*i);
+			}
+		}
+	}
+
+	return result;
+}
+
+std::vector<ATTR*> R_FeatureRecord::GetChildAttributes(ATTR* parentATTR, int numericCode)
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+	int parentIndex = -1;
+
+	for (int i = 0; i < allAttributes.size(); i++)
+	{
+		if (parentATTR == allAttributes[i])
+		{
+			parentIndex = i + 1;
+			break;
+		}
+	}
+
+	if (parentIndex > 0)
+	{
+		for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+		{
+			if ((*i)->m_paix == parentIndex && (*i)->m_natc == numericCode)
+			{
+				result.push_back(*i);
+			}
+		}
+	}
+
+	return result;
+}
+
+int R_FeatureRecord::GetAttributeIndex(ATTR* attr)
+{
+	if (m_attr.size() > 0)
+	{
+		auto ATTRs = m_attr.front();
+		for (
+			int i = 0;
+			i < ATTRs->m_arr.size();
+			i++)
+		{
+			if (ATTRs->m_arr[i] == attr)
+			{
+				return i + 1;
+			}
+		}
+	}
+
+	return 0;
+}
+
 SGeometry* R_FeatureRecord::GetGeometry()
 {
 	return m_geometry;
@@ -282,4 +514,33 @@ SPAS* R_FeatureRecord::GetSPAS()
 	}
 
 	return nullptr;
+}
+
+SPAS* R_FeatureRecord::CreateEmptySPAS()
+{
+	if (m_spas.size() == 0)
+	{
+		m_spas.push_back(new F_SPAS());
+	}
+
+	if (m_spas.front()->m_arr.size() == 0)
+	{
+		m_spas.front()->m_arr.push_back(new SPAS());
+	}
+
+	return GetSPAS();
+}
+
+void R_FeatureRecord::SetVectorRecord(R_VectorRecord* record)
+{
+	auto spas = GetSPAS();
+	if (nullptr == spas)
+	{
+		spas = CreateEmptySPAS();
+	}
+
+	if (spas)
+	{
+		spas->Set(record->GetRecordName());
+	}
 }

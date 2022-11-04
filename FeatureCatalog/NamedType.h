@@ -12,9 +12,14 @@ public:
 	virtual ~NamedType();
 
 private:
-	std::list<AttributeBinding> attributeBinding;
+	bool isAbstract = false;
+	std::list<AttributeBinding*> attributeBinding;
 
 public:
 	void GetContents(pugi::xml_node& node);
-	std::list<AttributeBinding>& GetAttributeBindingPointer();
+	std::list<AttributeBinding*>& GetAttributeBindingPointer();
+	std::list<AttributeBinding*>& GetAttributeBindingList();
+
+	void SetIsAbstract(bool value);
+	bool GetIsAbstract();
 };

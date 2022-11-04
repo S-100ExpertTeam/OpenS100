@@ -9,6 +9,7 @@
 
 S101Layer::S101Layer(FeatureCatalogue* fc, PortrayalCatalogue* pc) : S100Layer(fc, pc)
 {
+	SetProductNumber(101);
 }
 
 S101Layer::~S101Layer()
@@ -34,8 +35,7 @@ bool S101Layer::Open(CString _filepath)
 		return false;
 	}	
 
-	auto cell = (S101Cell*)m_spatialObject;
-	auto vecFe = cell->GetVecFeature();
+	SetAllNumericCode();
 
 	return true;
 }
@@ -119,5 +119,69 @@ std::wstring S101Layer::GetIssueDateAsWstring()
 	else
 	{
 		return std::wstring(Dsrd);
+	}
+}
+
+void S101Layer::SetAllNumericCode()
+{
+	auto enc = (S101Cell*)m_spatialObject;
+
+	if (featureCatalogue)
+	{
+		// Feature Type
+		auto featureTypes = featureCatalogue->GetFeatureTypes().GetVecFeatureType();
+		for (auto i = featureTypes.begin(); i != featureTypes.end(); i++)
+		{
+			auto code = (*i)->GetCodeAsWString();
+			enc->m_dsgir.GetFeatureTypeCode(code);
+		}
+
+		// Information Type
+		auto informationTypes = featureCatalogue->GetInformationTypesPointer().GetInformationTypePointer();;
+		for (auto i = informationTypes.begin(); i != informationTypes.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			enc->m_dsgir.GetInformationTypeCode(code);
+		}
+
+		// Simple Attribute
+		auto simpleAttributes = featureCatalogue->GetSimpleAttributesPointer().GetSimpleAttributePointer();;
+		for (auto i = simpleAttributes.begin(); i != simpleAttributes.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			enc->m_dsgir.GetAttributeCode(code);
+		}
+
+		// Complex Attribute
+		auto complexAttributes = featureCatalogue->GetComplexAttributesPointer().GetComplexAttributePointer();
+		for (auto i = complexAttributes.begin(); i != complexAttributes.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			enc->m_dsgir.GetAttributeCode(code);
+		}
+
+		// Role
+		auto roles = featureCatalogue->GetRolesPointer().GetRolePointer();
+		for (auto i = roles.begin(); i != roles.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			enc->m_dsgir.GetAssociationRoleCode(code);
+		}
+
+		// Information Association
+		auto informationAssociations = featureCatalogue->GetInformationAssociationsPointer().GetInformationAssociationPointer();
+		for (auto i = informationAssociations.begin(); i != informationAssociations.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			enc->m_dsgir.GetInformationAssociationCode(code);
+		}
+
+		// Feature Association
+		auto featureAssociations = featureCatalogue->GetFeatureAssociationsPointer().GetFeatureAssociationPointer();
+		for (auto i = featureAssociations.begin(); i != featureAssociations.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			enc->m_dsgir.GetFeatureAssociationCode(code);
+		}
 	}
 }

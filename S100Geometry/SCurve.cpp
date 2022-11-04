@@ -119,7 +119,7 @@ ID2D1PathGeometry* SCurve::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scal
 	return nullptr;
 }
 
-bool SCurve::ImportFromWkb(char* value, int size)
+bool SCurve::ImportFromWkb(unsigned char* value, int size)
 {
 	if (value == nullptr ||
 		value[0] != 0x01)
@@ -153,12 +153,12 @@ bool SCurve::ImportFromWkb(char* value, int size)
 	return true;
 }
 
-bool SCurve::ExportToWkb(char** value, int* size)
+bool SCurve::ExportToWkb(unsigned char** value, int* size)
 {
 	*size = 9 + (16 * m_numPoints);
 	if (*value == nullptr)
 	{
-		*value = new char[*size];
+		*value = new unsigned char[*size];
 	}
 	memset(*value, 0, *size);
 
@@ -234,4 +234,56 @@ void SCurve::SetMultiplicationFactor(int comfX, int comfY)
 void SCurve::SetRCID(int value)
 {
 	m_id = ((__int64)120) << 32 | value;
+}
+
+bool SCurve::IsClosed()
+{
+	if (GetNumPoints() >= 3)
+	{
+		auto firstPoint = GetFirstPoint();
+		auto lastPoint = GetLastPoint();
+
+		if (firstPoint && lastPoint)
+		{
+			if (*firstPoint == *lastPoint)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+SPoint* SCurve::GetPoint(int index)
+{
+	if (index >= 0 && index < GetNumPoints())
+	{
+		return m_pPoints + index;
+	}
+	
+	return nullptr;
+}
+
+SPoint* SCurve::GetFirstPoint()
+{
+	if (GetNumPoints() > 0)
+	{
+		auto point = GetPoint(0);
+		return point;
+	}
+
+	return nullptr;
+}
+
+SPoint* SCurve::GetLastPoint()
+{
+	int numPoints = GetNumPoints();
+	if (numPoints > 0)
+	{
+		auto point = GetPoint(numPoints - 1);
+		return point;
+	}
+
+	return nullptr;
 }

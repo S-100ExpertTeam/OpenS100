@@ -191,9 +191,9 @@ void CGISLibraryApp::S101RebuildPortrayal()
 	m_pLayerManager->S101RebuildPortrayal();
 }
 
-Layer* CGISLibraryApp::GetLayer()
+Layer* CGISLibraryApp::GetLayer(int index)
 {
-	return m_pLayerManager->GetLayer();
+	return m_pLayerManager->GetLayer(index);
 }
 
 void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale)
@@ -276,17 +276,17 @@ void CGISLibraryApp::DrawScaleBar()
 	}
 }
 
-CString CGISLibraryApp::GetLayerName()
+CString CGISLibraryApp::GetLayerName(int index)
 {
-	return m_pLayerManager->GetLayerName();
+	return m_pLayerManager->GetLayerName(index);
 }
-BOOL CGISLibraryApp::IsOn()
+BOOL CGISLibraryApp::IsOn(int index)
 {
-	return m_pLayerManager->IsOn();
+	return m_pLayerManager->IsOn(index);
 }
-void CGISLibraryApp::DeleteLayer()
+void CGISLibraryApp::DeleteLayer(int index)
 {
-	m_pLayerManager->DeleteLayer();
+	m_pLayerManager->DeleteLayer(index);
 }
 void CGISLibraryApp::DeleteLayer(CString filepath)
 {
@@ -484,7 +484,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 	{
 		CString errMsg;
 		errMsg.Format(_T("Failed to create IDWriteTextFormat! (%02X)"), hr);
-		OutputDebugString(errMsg);
+		//OutputDebugString(errMsg);
 	}
 
 	auto fsfsf = ENCCommon::DISPLAY_FONT_NAME.c_str();
@@ -509,7 +509,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 	{
 		CString errMsg;
 		errMsg.Format(_T("Failed to create IDWriteTextFormat (for Area)! (%02X)"), hr);
-		OutputDebugString(errMsg);
+		//OutputDebugString(errMsg);
 	}
 }
 
@@ -541,4 +541,21 @@ FeatureCatalogue* CGISLibraryApp::GetFC()
 PortrayalCatalogue* CGISLibraryApp::GetPC()
 {
 	return pc;
+}
+
+void CGISLibraryApp::SetS100Scale(double value)
+{
+	s100Scale = value;
+}
+
+int CGISLibraryApp::GetS100Scale()
+{
+	if (s100Scale > 0)
+	{
+		return (int)s100Scale;
+	}
+
+	auto currentScale = gisLib->GetScaler()->GetCurrentScale();
+
+	return currentScale;
 }

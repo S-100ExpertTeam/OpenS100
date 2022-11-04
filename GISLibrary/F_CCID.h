@@ -5,6 +5,7 @@ class F_CCID : Field
 {
 public:
 	F_CCID();
+	F_CCID(RecordName recordName, int RVER = 1, int RUIN = 1);
 	virtual ~F_CCID();
 
 public:
@@ -14,5 +15,7 @@ public:
 
 public:
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file);
+
 	int GetFieldLength();
 };

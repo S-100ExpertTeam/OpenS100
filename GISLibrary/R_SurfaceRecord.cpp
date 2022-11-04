@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "R_SurfaceRecord.h"
 #include "DRDirectoryInfo.h"
 #include "F_INAS.h"
@@ -27,17 +27,17 @@ BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	USES_CONVERSION;
 	for(int i = 0; i < dir->m_count; i++)
 	{
-		if(dir->GetDirectory(i)->tag == *((unsigned int*)"SRID"))
+		if(strcmp(dir->GetDirectory(i)->tag, "SRID") == 0)
 		{
 			m_srid.ReadField(buf);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if(strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS* inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"RIAS"))
+		else if(strcmp(dir->GetDirectory(i)->tag, "RIAS") == 0)
 		{
 			F_RIAS* rias = new F_RIAS();
 			auto cnt = (dir->GetDirectory(i)->length - 1) / RIAS::GetSize();
@@ -56,6 +56,64 @@ BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		}
 	}
 	return TRUE;
+}
+
+bool R_SurfaceRecord::WriteRecord(CFile* file)
+{
+	directory.clear();
+
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_srid.GetFieldLength();
+	Directory dir("SRID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_rias.begin(); i != m_rias.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("RIAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize, false);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_srid.WriteField(file);
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_rias.begin(); i != m_rias.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
+}
+
+RecordName R_SurfaceRecord::GetRecordName()
+{
+	return m_srid.m_name;
 }
 
 int R_SurfaceRecord::GetRCID() 

@@ -6,7 +6,6 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
-#include <windows.h>
 
 #include <GeographicLib/PolygonArea.hpp>
 #include <GeographicLib/Geodesic.hpp>
@@ -119,40 +118,40 @@ void LatLonUtility::RotatePoint(int _x, int _y, int _cx, int _cy, int& _mx, int&
 }
 
 //wchar_t to char.
-char* LatLonUtility::ConvertWCtoC(wchar_t* str)
-{
-	char* pStr = nullptr;
-
-	int strSize = WideCharToMultiByte(CP_ACP, 0, str, -1, NULL, 0, NULL, NULL);
-
-	if (strSize <= 0)
-	{
-		return nullptr;
-	}
-
-	pStr = new char[strSize];
-
-	WideCharToMultiByte(CP_ACP, 0, str, -1, pStr, strSize, 0, 0);
-	return pStr;
-}
-
-
-///////////////////////////////////////////////////////////////////////
-//char to wchar_t
-wchar_t* LatLonUtility::ConvertCtoWC(char* str)
-{
-	wchar_t* pStr = nullptr;
-	int strSize = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, NULL);
-
-	if (strSize <= 0)
-	{
-		return nullptr;
-	}
-
-	pStr = new WCHAR[strSize];
-	MultiByteToWideChar(CP_ACP, 0, str, (int)strlen(str) + 1, pStr, strSize);
-	return pStr;
-}
+//char* LatLonUtility::ConvertWCtoC(wchar_t* str)
+//{
+//	char* pStr = nullptr;
+//
+//	int strSize = WideCharToMultiByte(CP_ACP, 0, str, -1, NULL, 0, NULL, NULL);
+//
+//	if (strSize <= 0)
+//	{
+//		return nullptr;
+//	}
+//
+//	pStr = new char[strSize];
+//
+//	WideCharToMultiByte(CP_ACP, 0, str, -1, pStr, strSize, 0, 0);
+//	return pStr;
+//}
+//
+//
+/////////////////////////////////////////////////////////////////////////
+////char to wchar_t
+//wchar_t* LatLonUtility::ConvertCtoWC(char* str)
+//{
+//	wchar_t* pStr = nullptr;
+//	int strSize = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, NULL);
+//
+//	if (strSize <= 0)
+//	{
+//		return nullptr;
+//	}
+//
+//	pStr = new WCHAR[strSize];
+//	MultiByteToWideChar(CP_ACP, 0, str, (int)strlen(str) + 1, pStr, strSize);
+//	return pStr;
+//}
 
 std::vector<std::string> LatLonUtility::Split(std::string targetStr, std::string token)
 {
@@ -175,14 +174,14 @@ std::vector<std::string> LatLonUtility::Split(std::string targetStr, std::string
 	return ret;
 }
 
-char* LatLonUtility::HexStringToWKB(std::string value)
+unsigned char* LatLonUtility::HexStringToWKB(std::string value)
 {
 	if (value.length() <= 0 || value.length() % 2 != 0)
 	{
 		return nullptr;
 	}
 
-	char* result = new char[value.length() / 2];
+	unsigned char* result = new unsigned char[value.length() / 2];
 
 	for (int i = 0; i < value.length() / 2; i++)
 	{
@@ -219,4 +218,25 @@ char* LatLonUtility::HexStringToWKB(std::string value)
 	}
 
 	return result;
+}
+
+size_t LatLonUtility::countDigits(int n)
+{
+	std::string tmp;
+
+	tmp = std::to_string(n);
+	return tmp.size();
+}
+
+std::string LatLonUtility::replace_all(__in const std::string& message, __in const std::string& pattern, __in const std::string& replace)
+{ 
+	std::string result = message;    
+	std::string::size_type pos = 0;     
+	
+	while ((pos = result.find(pattern)) != std::string::npos) 
+	{ 
+		result.replace(pos, pattern.size(), replace); 
+	}     
+	
+	return result; 
 }

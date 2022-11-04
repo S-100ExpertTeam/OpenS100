@@ -8,19 +8,20 @@ NamedType::NamedType()
 
 NamedType::~NamedType()
 {
-
+	for (auto i = attributeBinding.begin(); i != attributeBinding.end(); i++)
+	{
+		delete (*i);
+	}
 }
 
 void NamedType::GetContents(pugi::xml_node& node)
 {
 	this->Item::GetContents(node);
 
-	if (node.attribute("isAbstract"))
+	if (auto attribute = node.attribute("isAbstract"))
 	{
-		XML_Attribute attr;
-		attr.Setname("isAbstract");
-		attr.Setvalue((char*)node.attribute("isAbstract").value());
-		SetAttributes(attr);
+		auto attributeValue = attribute.as_bool();
+		SetIsAbstract(attributeValue);
 	}
 
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
@@ -28,13 +29,29 @@ void NamedType::GetContents(pugi::xml_node& node)
 		const pugi::char_t* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:attributeBinding"))
 		{
-			attributeBinding.push_back(AttributeBinding());
-			attributeBinding.back().GetContents(instruction);
+			auto attributeBinding = new AttributeBinding();
+			attributeBinding->GetContents(instruction);
+			this->attributeBinding.push_back(attributeBinding);
 		}
 	}
 }
 
-std::list<AttributeBinding>& NamedType::GetAttributeBindingPointer()
+std::list<AttributeBinding*>& NamedType::GetAttributeBindingPointer()
 {
 	return attributeBinding;
+}
+
+std::list<AttributeBinding*>& NamedType::GetAttributeBindingList()
+{
+	return attributeBinding;
+}
+
+void NamedType::SetIsAbstract(bool value)
+{
+	isAbstract = value;
+}
+
+bool NamedType::GetIsAbstract()
+{
+	return isAbstract;
 }

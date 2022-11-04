@@ -1,8 +1,11 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "R_InformationRecord.h"
 #include "DRDirectoryInfo.h"
 #include "F_INAS.h"
 #include "ATTR.h"
+#include "NonPrintableCharacter.h"
+
+#include "../LatLonUtility/LatLonUtility.h"
 
 R_InformationRecord::R_InformationRecord(void)
 {
@@ -29,17 +32,17 @@ BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	int i = 0, j = 0, cnt;
 	for(i = 0; i < dir->m_count; i++)
 	{
-		if(dir->GetDirectory(i)->tag == *((unsigned int*)"IRID"))
+		if(strcmp(dir->GetDirectory(i)->tag, "IRID") == 0)
 		{
 			m_irid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS *inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"ATTR"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "ATTR") == 0)
 		{
 			cnt = 0;
 			j = 0;
@@ -77,6 +80,64 @@ BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return TRUE;
 }
 
+bool R_InformationRecord::WriteRecord(CFile* file)
+{
+	directory.clear();
+
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_irid.GetFieldLength();
+	Directory dir("IRID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("ATTR", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_irid.WriteField(file);
+
+	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
+}
+
+RecordName R_InformationRecord::GetRecordName()
+{
+	return m_irid.m_name;
+}
+
 int R_InformationRecord::GetRCID()
 {
 	return m_irid.m_name.RCID;
@@ -94,5 +155,130 @@ int R_InformationRecord::GetInformationAssociationCount()
 
 int R_InformationRecord::GetNumericCode()
 {
-	return m_irid.m_nitc;
+	return m_irid.NITC();
+}
+
+
+std::vector<ATTR*> R_InformationRecord::GetAllAttributes()
+{
+	if (m_attr.size() == 0)
+	{
+		return std::vector<ATTR*>();
+	}
+
+	return m_attr.front()->m_arr;
+}
+
+std::vector<ATTR*> R_InformationRecord::GetRootAttributes()
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+
+	for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+	{
+		if ((*i)->m_paix == 0)
+		{
+			result.push_back(*i);
+		}
+	}
+
+	return result;
+}
+
+std::vector<ATTR*> R_InformationRecord::GetRootAttributes(int numericCode)
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+
+	for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+	{
+		if ((*i)->m_paix == 0 && (*i)->m_natc == numericCode)
+		{
+			result.push_back(*i);
+		}
+	}
+
+	return result;
+}
+
+std::vector<ATTR*> R_InformationRecord::GetChildAttributes(ATTR* parentATTR)
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+	int parentIndex = -1;
+
+	for (int i = 0; i < allAttributes.size(); i++)
+	{
+		if (parentATTR == allAttributes[i])
+		{
+			parentIndex = i;
+			break;
+		}
+	}
+
+	if (parentIndex > 0)
+	{
+		for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+		{
+			if ((*i)->m_paix == parentIndex)
+			{
+				result.push_back(*i);
+			}
+		}
+	}
+
+	return result;
+}
+
+std::vector<ATTR*> R_InformationRecord::GetChildAttributes(ATTR* parentATTR, int numericCode)
+{
+	auto allAttributes = GetAllAttributes();
+
+	std::vector<ATTR*> result;
+	int parentIndex = -1;
+
+	for (int i = 0; i < allAttributes.size(); i++)
+	{
+		if (parentATTR == allAttributes[i])
+		{
+			parentIndex = i;
+			break;
+		}
+	}
+
+	if (parentIndex > 0)
+	{
+		for (auto i = allAttributes.begin(); i != allAttributes.end(); i++)
+		{
+			if ((*i)->m_paix == parentIndex && (*i)->m_natc == numericCode)
+			{
+				result.push_back(*i);
+			}
+		}
+	}
+
+	return result;
+}
+
+int R_InformationRecord::GetAttributeIndex(ATTR* attr)
+{
+	if (m_attr.size() > 0)
+	{
+		auto ATTRs = m_attr.front();
+		for (
+			int i = 0;
+			i < ATTRs->m_arr.size();
+			i++)
+		{
+			if (ATTRs->m_arr[i] == attr)
+			{
+				return i + 1;
+			}
+		}
+	}
+
+	return 0;
 }

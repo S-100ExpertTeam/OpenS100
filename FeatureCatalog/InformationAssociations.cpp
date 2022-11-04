@@ -8,7 +8,10 @@ InformationAssociations::InformationAssociations()
 
 InformationAssociations::~InformationAssociations()
 {
-
+	for (auto i = informationAssociation.begin(); i != informationAssociation.end(); i++)
+	{
+		delete i->second;
+	}
 }
 
 void InformationAssociations::GetContents(pugi::xml_node& node)
@@ -18,9 +21,9 @@ void InformationAssociations::GetContents(pugi::xml_node& node)
 		const pugi::char_t* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:S100_FC_InformationAssociation"))
 		{
-			InformationAssociation sa;
-			sa.GetContents(instruction);
-			informationAssociation[sa.GetCodeAsWString()] = sa;
+			auto sa = new InformationAssociation();
+			sa->GetContents(instruction);
+			informationAssociation[sa->GetCodeAsWString()] = sa;
 			if (instruction.attribute("isAbstract"))
 			{
 				XML_Attribute value;
@@ -32,7 +35,7 @@ void InformationAssociations::GetContents(pugi::xml_node& node)
 	}
 }
 
-std::unordered_map<std::wstring, InformationAssociation>& InformationAssociations::GetInformationAssociationPointer()
+std::unordered_map<std::wstring, InformationAssociation*>& InformationAssociations::GetInformationAssociationPointer()
 {
 	return informationAssociation;
 }

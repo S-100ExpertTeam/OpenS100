@@ -132,7 +132,7 @@ public:
 	S100_LineStyleBase* GetLineStyles(std::wstring& key);
 	S100_Symbols* GetSymbols();
 	std::unordered_map<std::wstring, S100_LineStyleBase*> GetLineStyles();
-	std::vector<S100_LineStyleBase*>* PortrayalCatalogue::GetLineStylesVector();
+	std::vector<S100_LineStyleBase*>* GetLineStylesVector();
 
 	S100_RuleFile* GetMainRules(std::wstring& key);
 	std::unordered_map<std::wstring, S100_RuleFile*> GetMainRules();

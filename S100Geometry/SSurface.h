@@ -33,6 +33,7 @@ public:
 	ID2D1PathGeometry* pGeometry = nullptr;
 
 public:
+	int GetNumPart();
 
 	int GetNumPointPerPart(int partIndex);
 	void CalculateCenterPoint();
@@ -51,11 +52,12 @@ public:
 
 	void Release();
 
-	bool ImportFromWkb(char* value, int size);
-	bool ExportToWkb(char** value, int* size);
+	bool ImportFromWkb(unsigned char* value, int size);
+	bool ExportToWkb(unsigned char** value, int* size);
 	int WkbSize();
 
 	void SetMBR();
 
 	GeoPoint GetXY(int ringIndex, int pointIndex);
+	void SetXY(int ringIndex, int pointIndex, double x, double y);
 };

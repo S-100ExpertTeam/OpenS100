@@ -1,9 +1,27 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "RecordName.h"
 
 RecordName::RecordName(void)
 {
 
+}
+
+RecordName::RecordName(int RCNM, int RCID)
+{
+	this->RCNM = RCNM;
+	this->RCID = RCID;
+}
+
+RecordName::RecordName(enum GISLibrary::RCNM RCNM, int RCID)
+{
+	this->RCNM = (int)RCNM;
+	this->RCID = RCID;
+}
+
+RecordName::RecordName(long long key)
+{
+	this->RCNM = key >> 32;
+	this->RCID = (int)key;
 }
 
 RecordName::~RecordName(void)

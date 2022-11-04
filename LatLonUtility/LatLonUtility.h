@@ -61,13 +61,17 @@ namespace LatLonUtility {
 	void RotatePoint(int _x, int _y, int _cx, int _cy, int& _mx, int& _my, double _degree, bool radian = false);
 
 	//wchar_t to char
-	char * ConvertWCtoC(wchar_t* str);
+	//char * ConvertWCtoC(wchar_t* str);
 	//char to wchar_t
-	wchar_t* ConvertCtoWC(char* str);
+	//wchar_t* ConvertCtoWC(char* str);
 
 	std::vector<std::string> Split(std::string targetStr, std::string token);
 
 	// value : 0101000000000000000000F03F000000000000F03F
-	char* HexStringToWKB(std::string value);
+	unsigned char* HexStringToWKB(std::string value);
+
+	size_t countDigits(int n);
+
+	std::string replace_all(__in const std::string& message, __in const std::string& pattern, __in const std::string& replace);
 };
 #endif 

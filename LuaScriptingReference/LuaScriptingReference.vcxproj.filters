@@ -30,9 +30,6 @@
     <ClInclude Include="lua_session.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rapidxml.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lua_functions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -40,9 +37,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="portrayal_catalog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="spatial_association.h">
@@ -83,9 +77,6 @@
     <ClCompile Include="LuaScriptingReference.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="host_interface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lua_session.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -98,10 +89,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="portrayal_catalog.cpp">
+    <ClCompile Include="lua_reference.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lua_reference.cpp">
+    <ClCompile Include="context_parameter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

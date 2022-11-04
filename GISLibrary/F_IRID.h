@@ -1,45 +1,15 @@
 #pragma once
-#include "Field.h"
-#include "RecordName.h"
 
-class F_IRID : Field
+#include "F_FRID.h"
+
+class F_IRID : public F_FRID
 {
 
 public:
 	F_IRID();
+	F_IRID(RecordName recordName, int NFTC, int RVER = 1, int RUIN = 1);
 	virtual ~F_IRID();
 
-public:
-	/*
-	* Referenced Record name/identifier
-	*/
-	RecordName m_name;	
-
-	/*
-	* Numeric Information Type Code
-	* Format		: b12
-	* Description	: A valid information type code as defined in the ITCS field of the Dataset General Information Record
-	*/
-	int m_nitc;
-
-	/*
-	* Record version
-	* Format		: b12
-	* Description	: RVER contains the serial number of the record edition
-	*/
-	int m_rver;
-
-	/*
-	* Record update instruction
-	* Format		: b11
-	* {1} - Insert
-	* {2} - Delete
-	* {3} - Modify
-	*/
-	int m_ruin;
-	CString name = L"";
-
-public:
-	void ReadField(BYTE *&buf);
-	int GetFieldLength();
+	int NITC();
+	void NITC(int value);
 };

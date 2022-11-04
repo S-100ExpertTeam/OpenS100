@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "DRReader.h"
 #include "ISO8211Fuc.h"
 

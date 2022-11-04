@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "F_VDAT.h"
 #include "ISO8211Fuc.h"
 #include "NonPrintableCharacter.h"
@@ -22,6 +22,28 @@ void F_VDAT::ReadField(BYTE *&buf)
 	buf2charArr(m_dtid, buf);
 	m_dtsr = *(buf++);
 	buf2charArr(m_scri, buf);
+}
+
+bool F_VDAT::WriteField(CFile* file)
+{
+	CT2CA outputStringDTNM(m_dtnm, CP_UTF8);
+	file->Write(outputStringDTNM, (UINT)::strlen(outputStringDTNM));
+	file->Write(&NonPrintableCharacter::unitTerminator, 1);
+
+	CT2CA outputStringDTID(m_dtid, CP_UTF8);
+	file->Write(outputStringDTID, (UINT)::strlen(outputStringDTID));
+	file->Write(&NonPrintableCharacter::unitTerminator, 1);
+
+	file->Write(&m_dtsr, 1);
+
+	CT2CA outputStringSCRI(m_scri, CP_UTF8);
+	file->Write(outputStringSCRI, (UINT)::strlen(outputStringSCRI));
+	file->Write(&NonPrintableCharacter::unitTerminator, 1);
+
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
 }
 
 int F_VDAT::GetFieldLength()

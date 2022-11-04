@@ -2,6 +2,7 @@
 
 #include "LayerManager.h"
 #include "D2D1Resources.h"
+#include "S101Creator.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 
@@ -23,10 +24,13 @@ public:
 	LayerManager* m_pLayerManager = new LayerManager(m_pScaler);
 	GISLibrary::D2D1Resources D2;
 	S100Render s100Render;
+	S101Creator creator;
 
 	// Default FC & PC for S-101
 	FeatureCatalogue* fc = nullptr;
 	PortrayalCatalogue* pc = nullptr;
+
+	double s100Scale = -1;
 
 public:
 	Scaler* GetScaler();
@@ -39,14 +43,14 @@ public:
 	void Draw(HDC &hDC, int offset = 0);
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal();
-	Layer* GetLayer();
+	Layer* GetLayer(int index);
 
 	void DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale = 5);
 	void DrawScaleBar();
 
-	CString GetLayerName();
-	BOOL IsOn();
-	void DeleteLayer();
+	CString GetLayerName(int index);
+	BOOL IsOn(int index);
+	void DeleteLayer(int index);
 	void DeleteLayer(CString filepath);
 	void ReMBR();
 
@@ -105,4 +109,7 @@ public:
 
 	FeatureCatalogue* GetFC();
 	PortrayalCatalogue* GetPC();
+
+	void SetS100Scale(double value);
+	int GetS100Scale();
 };

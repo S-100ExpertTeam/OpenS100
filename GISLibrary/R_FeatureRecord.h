@@ -66,6 +66,9 @@ public:
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool WriteRecord(CFile* file);
+	RecordName GetRecordName();
+
 	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 	
 	MBR GetMBR();
@@ -87,7 +90,20 @@ public:
 	int GetSPASRCNM();
 	int GetSPASCount();
 
+	std::vector<ATTR*> GetAllAttributes();
+
+	std::vector<ATTR*> GetRootAttributes();
+	std::vector<ATTR*> GetRootAttributes(int numericCode);
+
+	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR);
+	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR, int numericCode);
+
+	int GetAttributeIndex(ATTR* attr);
+
 	SGeometry* GetGeometry();
 
 	SPAS* GetSPAS();
+	SPAS* CreateEmptySPAS();
+
+	void SetVectorRecord(R_VectorRecord* record);
 };

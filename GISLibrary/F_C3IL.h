@@ -14,7 +14,7 @@ public:
 	* Format		: b11
 	* Description	: Internal identifier of the Vertical CRS
 	*/
-	int m_vcid;
+	int m_vcid = 2;
 	/*
 	* Attribute Array
 	*/
@@ -23,5 +23,6 @@ public:
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
+	bool WriteField(CFile* file);
 	int GetFieldLength();
 };

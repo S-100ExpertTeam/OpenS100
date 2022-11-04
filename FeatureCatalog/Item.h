@@ -8,8 +8,7 @@
 #include <string>
 
 // S100_FC_Item
-class Item :
-	public XML_Item
+class Item
 {
 public:
 	Item();
@@ -20,9 +19,9 @@ private:
 	std::wstring name = L"";
 	std::wstring definition = L"";
 	std::wstring code = L"";
-	std::wstring *remarks = nullptr;
+	std::wstring* remarks = nullptr;
 	std::list<std::wstring> alias;
-	DefinitionReference definitionReference; 
+	DefinitionReference* definitionReference = nullptr; 
 
 public:
 	void GetContents(pugi::xml_node& node);
@@ -30,7 +29,7 @@ public:
 	bool CompareCode(std::string& value);
 	bool CompareCode(std::wstring& value);
 
-	std::list<std::wstring>& GetAliasPointer();
+	const std::list<std::wstring>& GetAlias();
 	
 	const std::wstring& GetName();
 	void SetName(std::wstring& value);

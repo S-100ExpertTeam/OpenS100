@@ -4,6 +4,9 @@
 
 #include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
 
+#include <vector>
+#include <map>
+
 class FeatureTypes :
 	public XML_Item
 {
@@ -12,12 +15,16 @@ public:
 	virtual ~FeatureTypes(void);
 	
 private:
-	std::unordered_map<std::wstring, FeatureType> featureType;
+	std::vector<FeatureType*> vecFeatureType;
+	std::unordered_map<std::wstring, FeatureType*> featureType;
 	
 public:
 	void GetContents(pugi::xml_node& node);
 	void ApplySuperType();
 	bool SetAttributeFromSuperType(FeatureType* ft);
 	bool SetAssociationFromSuperType(FeatureType* ft);
-	std::unordered_map<std::wstring, FeatureType>& GetFeatureTypePointer();
+	std::vector<FeatureType*>& GetVecFeatureType();
+    std::unordered_map<std::wstring, FeatureType*>& GetFeatureType();
+
+	bool InsertFeatureType(FeatureType* value);
 };

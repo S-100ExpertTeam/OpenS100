@@ -53,15 +53,15 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	//USES_CONVERSION;
 	for (unsigned i = 0; i < dir->m_count; i++)
 	{
-		if (dir->GetDirectory(i)->tag == *((unsigned int*)"DSID"))
+		if (strcmp(dir->GetDirectory(i)->tag, "DSID") == 0)
 		{
 			m_dsid.ReadField(buf);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"DSSI"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "DSSI") == 0)
 		{
 			m_dssi.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"ATCS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "ATCS") == 0)
 		{
 			if (nullptr == m_atcs)
 			{
@@ -70,7 +70,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_atcs->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"ITCS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "ITCS") == 0)
 		{
 			if (nullptr == m_itcs)
 			{
@@ -79,7 +79,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_itcs->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"FTCS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "FTCS") == 0)
 		{
 			if (nullptr == m_ftcs)
 			{
@@ -88,7 +88,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_ftcs->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"IACS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "IACS") == 0)
 		{
 			if (nullptr == m_iacs)
 			{
@@ -97,7 +97,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_iacs->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"FACS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "FACS") == 0)
 		{
 			if (nullptr == m_facs)
 			{
@@ -106,7 +106,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_facs->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"ARCS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "ARCS") == 0)
 		{
 			if (nullptr == m_arcs)
 			{
@@ -126,6 +126,118 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	}
 	return true;
 }
+
+bool R_DSGIR::WriteRecord(CFile* file)
+{
+	directory.clear();
+
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_dsid.GetFieldLength();
+	Directory dirDSID("DSID", fieldLength, fieldOffset);
+	directory.push_back(dirDSID);
+	fieldOffset += fieldLength;
+
+	fieldLength = m_dssi.GetFieldLength();
+	Directory dirDSSI("DSSI", fieldLength, fieldOffset);
+	directory.push_back(dirDSSI);
+	fieldOffset += fieldLength;
+
+	if (m_atcs)
+	{
+		fieldLength = m_atcs->GetFieldLength();
+		Directory dir("ATCS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_itcs)
+	{
+		fieldLength = m_itcs->GetFieldLength();
+		Directory dir("ITCS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_ftcs)
+	{
+		fieldLength = m_ftcs->GetFieldLength();
+		Directory dir("FTCS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_iacs)
+	{
+		fieldLength = m_iacs->GetFieldLength();
+		Directory dir("IACS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_facs)
+	{
+		fieldLength = m_facs->GetFieldLength();
+		Directory dir("FACS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_arcs)
+	{
+		fieldLength = m_arcs->GetFieldLength();
+		Directory dir("ARCS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_dsid.WriteField(file);
+	m_dssi.WriteField(file);
+
+	if (m_atcs)
+	{
+		m_atcs->WriteField(file);
+	}
+
+	if (m_itcs)
+	{
+		m_itcs->WriteField(file);
+	}
+
+	if (m_ftcs)
+	{
+		m_ftcs->WriteField(file);
+	}
+
+	if (m_iacs)
+	{
+		m_iacs->WriteField(file);
+	}
+
+	if (m_facs)
+	{
+		m_facs->WriteField(file);
+	}
+
+	if (m_arcs)
+	{
+		m_arcs->WriteField(file);
+	}
+
+	return true;
+}
+
 
 CString R_DSGIR::GetFeatureCode(int numericCode)
 {
@@ -196,4 +308,100 @@ CString R_DSGIR::GetAssociationRoleCode(int numericCode)
 		return nc->m_code;
 	}
 	return L"";
+}
+
+int R_DSGIR::GetAttributeCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetAttributeCode(str);
+}
+
+int R_DSGIR::GetAttributeCode(CString& value)
+{
+	if (nullptr == m_atcs)
+	{
+		m_atcs = new F_CodeWithNumericCode();
+	}
+
+	return m_atcs->GetNumericCode(value);
+}
+
+int R_DSGIR::GetInformationTypeCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetInformationTypeCode(str);
+}
+
+int R_DSGIR::GetInformationTypeCode(CString& value)
+{
+	if (nullptr == m_itcs)
+	{
+		m_itcs = new F_CodeWithNumericCode();
+	}
+
+	return m_itcs->GetNumericCode(value);
+}
+
+int R_DSGIR::GetFeatureTypeCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetFeatureTypeCode(str);
+}
+
+int R_DSGIR::GetFeatureTypeCode(CString& value)
+{
+	if (nullptr == m_ftcs)
+	{
+		m_ftcs = new F_CodeWithNumericCode();
+	}
+
+	return m_ftcs->GetNumericCode(value);
+}
+
+int R_DSGIR::GetInformationAssociationCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetInformationAssociationCode(str);
+}
+
+int R_DSGIR::GetInformationAssociationCode(CString& value)
+{
+	if (nullptr == m_iacs)
+	{
+		m_iacs = new F_CodeWithNumericCode();
+	}
+
+	return m_iacs->GetNumericCode(value);
+}
+
+int R_DSGIR::GetFeatureAssociationCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetFeatureAssociationCode(str);
+}
+
+int R_DSGIR::GetFeatureAssociationCode(CString& value)
+{
+	if (nullptr == m_facs)
+	{
+		m_facs = new F_CodeWithNumericCode();
+	}
+
+	return m_facs->GetNumericCode(value);
+}
+
+int R_DSGIR::GetAssociationRoleCode(std::wstring& value)
+{
+	CString str = value.c_str();
+	return GetAssociationRoleCode(str);
+}
+
+int R_DSGIR::GetAssociationRoleCode(CString& value)
+{
+	if (nullptr == m_arcs)
+	{
+		m_arcs = new F_CodeWithNumericCode();
+	}
+
+	return m_arcs->GetNumericCode(value);
 }

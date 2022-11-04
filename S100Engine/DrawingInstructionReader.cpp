@@ -201,7 +201,7 @@ AugmentedPath* DrawingInstructionReader::GetAugmentedPathInstructionBypugixml(pu
 			{
 				CString strErr;
 				strErr.Format(_T("Invalid child of AugmentedPath : %S\n"), child.name());
-				OutputDebugString(strErr);
+				//OutputDebugString(strErr);
 			}
 		}
 	}
@@ -267,7 +267,7 @@ AugmentedRay* DrawingInstructionReader::GetAugmentedRayInstructionBypugixml(pugi
 			{
 				CString strErr;
 				strErr.Format(_T("Invalid child of AugmentedPath : %S\n"), child.name());
-				OutputDebugString(strErr);
+				//OutputDebugString(strErr);
 			}
 		}
 	}
@@ -300,7 +300,7 @@ GraphicBasePackage::CRSType DrawingInstructionReader::GetGraphicBase_CRSTypeBypu
 		{
 			CString strErr;
 			strErr.Format(_T("Invalid value of CRSType : %S\n"), value);
-			OutputDebugString(strErr);
+			//OutputDebugString(strErr);
 		}
 	}
 
@@ -626,7 +626,7 @@ GraphicBasePackage::Path* DrawingInstructionReader::GetGraphicBase_Path(pugi::xm
 	{
 		if (OUTPUT_DEBUG_STRING)
 		{
-			OutputDebugString(_T("Path node has invalid child or hasn't child\n"));
+			//OutputDebugString(_T("Path node has invalid child or hasn't child\n"));
 		}
 	}
 
@@ -720,7 +720,7 @@ GraphicBasePackage::Annulus* DrawingInstructionReader::GetGraphicBase_Annulus(pu
 			{
 				CString strErr;
 				strErr.Format(_T("Invalid child of Annulus : %S\n"), child.name());
-				OutputDebugString(strErr);
+				//OutputDebugString(strErr);
 			}
 		}
 	}

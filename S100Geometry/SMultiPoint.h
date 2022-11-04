@@ -23,8 +23,8 @@ public:
 	void Add(double x, double y, double z);
 	void Set(int index, double x, double y, double z);
 
-	bool ImportFromWkb(char* value, int size);
-	bool ExportToWkb(char** value, int* size);
+	bool ImportFromWkb(unsigned char* value, int size);
+	bool ExportToWkb(unsigned char** value, int* size);
 
 	int GetType();
 };

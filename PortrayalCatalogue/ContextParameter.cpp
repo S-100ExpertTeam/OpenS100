@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "ContextParameter.h"
 
+#include "../LibMFCUtil/LibMFCUtil.h"
+
 namespace Portrayal
 {
 	ContextParameter::ContextParameter()
@@ -13,14 +15,14 @@ namespace Portrayal
 
 	}
 
-	ParameterType* ContextParameter::GetType()
+	ParameterType ContextParameter::GetType()
 	{
-		return &type; 
+		return type; 
 	}
 
-	void ContextParameter::SetType(ParameterType* value)
+	void ContextParameter::SetType(ParameterType value)
 	{
-		type = *value;
+		type = value;
 	}
 
 	void ContextParameter::SetType(std::wstring value)
@@ -53,12 +55,17 @@ namespace Portrayal
 
 	std::wstring ContextParameter::GetDefault() 
 	{
-		return default;
+		return defaultValue;
+	}
+
+	std::string ContextParameter::GetDefaultAsString()
+	{
+		return LibMFCUtil::WStringToString(defaultValue);
 	}
 
 	void ContextParameter::SetDefault(std::wstring& value)
 	{
-		default = value;
+		defaultValue = value;
 	}
 
 	void ContextParameter::GetContents(pugi::xml_node& node)
@@ -87,7 +94,7 @@ namespace Portrayal
 			}
 			else if (!strcmp(instructionName,"default"))
 			{
-				default = pugi::as_wide(instruction.child_value());
+				defaultValue = pugi::as_wide(instruction.child_value());
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Geometry.h"
 
 #include <fstream>
@@ -233,14 +233,14 @@ POINT* Geometry::GetCenterPointOfPolyline(POINT *_p, int _count, CRect *viewPort
 
 bool Geometry::WriteWkb(std::wstring path)
 {
-	char* wkb = nullptr;
+	unsigned char* wkb = nullptr;
 	int size = 0;
 	ExportToWkb(&wkb, &size);
 
 	std::ofstream writeFile(path.data());
 	if (writeFile.is_open())
 	{
-		writeFile.write(wkb, size);
+		writeFile.write((char*)wkb, size);
 		writeFile.close();
 	}
 

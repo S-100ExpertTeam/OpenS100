@@ -95,7 +95,7 @@ ID2D1PathGeometry* S101Dataset::CreatePolylineGeometryFromCurveFeature(ID2D1Fact
 
 	if (points.size() < 2)
 	{
-		OutputDebugString(_T("Faield to GetPoints\n"));
+		//OutputDebugString(_T("Faield to GetPoints\n"));
 		return nullptr;
 	}
 
@@ -128,17 +128,17 @@ ID2D1PathGeometry* S101Dataset::CreatePolylineGeometryFromCurveFeature(ID2D1Fact
 			}
 			else
 			{
-				OutputDebugString(_T("Faield to close sink\n"));
+				//OutputDebugString(_T("Faield to close sink\n"));
 			}
 		}
 		else
 		{
-			OutputDebugString(_T("Faield to Open Sink\n"));
+			//OutputDebugString(_T("Faield to Open Sink\n"));
 		}
 	}
 	else
 	{
-		OutputDebugString(_T("Failed to create direct2d geometry\n"));
+		//OutputDebugString(_T("Failed to create direct2d geometry\n"));
 	}
 	return nullptr;
 }
@@ -155,7 +155,7 @@ ID2D1PathGeometry* S101Dataset::CreatePolylineGeometryFromCompositeCurveFeature(
 
 	if (points.size() < 2)
 	{
-		OutputDebugString(_T("Faield to GetPoints\n"));
+		//OutputDebugString(_T("Faield to GetPoints\n"));
 		return nullptr;
 	}
 
@@ -188,17 +188,17 @@ ID2D1PathGeometry* S101Dataset::CreatePolylineGeometryFromCompositeCurveFeature(
 			}
 			else
 			{
-				OutputDebugString(_T("Faield to close sink\n"));
+				//OutputDebugString(_T("Faield to close sink\n"));
 			}
 		}
 		else
 		{
-			OutputDebugString(_T("Faield to Open Sink\n"));
+			//OutputDebugString(_T("Faield to Open Sink\n"));
 		}
 	}
 	else
 	{
-		OutputDebugString(_T("Failed to create direct2d geometry\n"));
+		//OutputDebugString(_T("Failed to create direct2d geometry\n"));
 	}
 
 	return nullptr;
@@ -249,7 +249,7 @@ ID2D1PathGeometry* S101Dataset::CreatePolygonGeometry(ID2D1Factory1* pDirect2dFa
 						}
 						else
 						{
-							OutputDebugString(_T("Invalied RRNM in RIAS\n"));
+							//OutputDebugString(_T("Invalied RRNM in RIAS\n"));
 						}
 
 						if (points.size() > 0)
@@ -285,17 +285,17 @@ ID2D1PathGeometry* S101Dataset::CreatePolygonGeometry(ID2D1Factory1* pDirect2dFa
 									}
 									else
 									{
-										OutputDebugString(_T("Faield to close ring sink\n"));
+										//OutputDebugString(_T("Faield to close ring sink\n"));
 									}
 								}
 								else
 								{
-									OutputDebugString(_T("Faield to Open Ring Sink\n"));
+									//OutputDebugString(_T("Faield to Open Ring Sink\n"));
 								}
 							}
 							else
 							{
-								OutputDebugString(_T("Failed to create ring geometry\n"));
+								//OutputDebugString(_T("Failed to create ring geometry\n"));
 							}
 						}
 					}
@@ -340,12 +340,12 @@ ID2D1PathGeometry* S101Dataset::CreatePolygonGeometry(ID2D1Factory1* pDirect2dFa
 		}
 		else
 		{
-			OutputDebugString(_T("Faield to open sink\n"));
+			//OutputDebugString(_T("Faield to open sink\n"));
 		}
 	}
 	else
 	{
-		OutputDebugString(_T("Failed to create geometry\n"));
+		//OutputDebugString(_T("Failed to create geometry\n"));
 	}
 
 	return pGeometry;
@@ -482,7 +482,7 @@ void S101Dataset::GetPoints(ST_COMP_CURVE_RECORD* pST_COMP_CURVE_RECORD, std::ve
 						}
 						else
 						{
-							OutputDebugString(_T("Unknown ORNT\n"));
+							//OutputDebugString(_T("Unknown ORNT\n"));
 						}
 					}
 				}
@@ -514,14 +514,14 @@ void S101Dataset::GetPoints(ST_COMP_CURVE_RECORD* pST_COMP_CURVE_RECORD, std::ve
 						}
 						else
 						{
-							OutputDebugString(_T("Unknown ORNT\n"));
+							//OutputDebugString(_T("Unknown ORNT\n"));
 						}
 					}
 				}
 			}
 			else
 			{
-				OutputDebugString(_T("Unknown RRNM\n"));
+				//OutputDebugString(_T("Unknown RRNM\n"));
 			}
 		}
 	}
@@ -545,7 +545,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 
 		if (geomType == 0)
 		{
-			OutputDebugString(_T("There is no feature space type indicated by Drawing Instruction..\n"));
+			//OutputDebugString(_T("There is no feature space type indicated by Drawing Instruction..\n"));
 			continue;
 		}
 
@@ -553,7 +553,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 		{
 			if (geomType != 130)
 			{
-				OutputDebugString(_T("Area Instruction Type and Feature Type are inconsistent.!\n"));
+				//OutputDebugString(_T("Area Instruction Type and Feature Type are inconsistent.!\n"));
 				continue;
 			}
 
@@ -572,7 +572,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 
 				if (!SUCCEEDED(hr))
 				{
-					OutputDebugString(_T("Failed to get bounds\n"));
+					//OutputDebugString(_T("Failed to get bounds\n"));
 				}
 
 				pS100DrawingUnitPolygon->transparency = pAreaInstruction->transparency;
@@ -607,7 +607,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 			{
 				CString strErr;
 				strErr.Format(_T("The space types of Line Instruction Type and Feature Type are inconsistent! (Feature ID : %d, Feature Type : %d)\n"), id, geomType);
-				OutputDebugString(strErr);
+				//OutputDebugString(strErr);
 				continue;
 			}
 
@@ -646,7 +646,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 			{
 				CString strErr;
 				strErr.Format(_T("Space type mismatch between Point Instruction Type and Feature Type (%d)!\n"), geomType);
-				OutputDebugString(strErr);
+				//OutputDebugString(strErr);
 				continue;
 			}
 
@@ -674,7 +674,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 					{
 						CString strErr;
 						strErr.Format(_T("Space type mismatch between TextPoint Instruction Type and Feature Type (%d)!\n"), geomType);
-						OutputDebugString(strErr);
+						//OutputDebugString(strErr);
 						continue;
 					}
 
@@ -734,7 +734,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 				{
 					if (OUTPUT_DEBUG_STRING)
 					{
-						OutputDebugString(_T("Invalid PathSegment Type\n"));
+						//OutputDebugString(_T("Invalid PathSegment Type\n"));
 					}
 				}
 			}
@@ -812,7 +812,7 @@ D2D1_POINT_2F S101Dataset::CreatePointFromSENC(int featureID)
 		resultPoint = CreatePointFromSurfaceFeatureRecordFromSENC(featureID);
 		break;
 	default:
-		OutputDebugString(_T("Unvalied Geometry Type in CS100TestView::CreatePoint()\n"));
+		//OutputDebugString(_T("Unvalied Geometry Type in CS100TestView::CreatePoint()\n"));
 		break;
 	}
 
@@ -880,7 +880,7 @@ ID2D1Geometry* S101Dataset::CreateSurfaceGeometry(ID2D1Factory1* pDirect2dFactor
 					}
 					else
 					{
-						OutputDebugString(_T("Invalied RRNM in RIAS\n"));
+						//OutputDebugString(_T("Invalied RRNM in RIAS\n"));
 					}
 
 					if (points.size() >= 3)
@@ -916,22 +916,22 @@ ID2D1Geometry* S101Dataset::CreateSurfaceGeometry(ID2D1Factory1* pDirect2dFactor
 								}
 								else
 								{
-									OutputDebugString(_T("Faield to close ring sink\n"));
+									//OutputDebugString(_T("Faield to close ring sink\n"));
 								}
 							}
 							else
 							{
-								OutputDebugString(_T("Faield to Open Ring Sink\n"));
+								//OutputDebugString(_T("Faield to Open Ring Sink\n"));
 							}
 						}
 						else
 						{
-							OutputDebugString(_T("Failed to create ring geometry\n"));
+							//OutputDebugString(_T("Failed to create ring geometry\n"));
 						}
 					}
 					else
 					{
-						OutputDebugString(_T("Less point count for Create Surface Geometry\n"));
+						//OutputDebugString(_T("Less point count for Create Surface Geometry\n"));
 					}
 				}
 			}
@@ -946,7 +946,7 @@ ID2D1Geometry* S101Dataset::CreateSurfaceGeometry(ID2D1Factory1* pDirect2dFactor
 
 	if (!SUCCEEDED(hr))
 	{
-		OutputDebugString(_T("Failed to create geometry group\n"));
+		//OutputDebugString(_T("Failed to create geometry group\n"));
 	}
 
 	return pGeometry;
@@ -989,7 +989,7 @@ void S101Dataset::GetPoints(ST_FEATURE_RECORD *pFeatureRecord, std::vector<D2D1_
 							}
 							else
 							{
-								OutputDebugString(_T("Invalied RRNM in RIAS\n"));
+								//OutputDebugString(_T("Invalied RRNM in RIAS\n"));
 							}
 						}
 					}
@@ -1016,7 +1016,7 @@ void S101Dataset::GetPoints(ST_FEATURE_RECORD *pFeatureRecord, std::vector<D2D1_
 		}
 		else
 		{
-			OutputDebugString(_T("Invalied type in GetPoints()\n"));
+			//OutputDebugString(_T("Invalied type in GetPoints()\n"));
 		}
 
 
@@ -1037,7 +1037,7 @@ ID2D1Geometry* S101Dataset::CreatePolyLineGeometry(ID2D1Factory1* pDirect2dFacto
 		{
 			CString strErr;
 			strErr.Format(_T("PolyLine geometry is NULL (Feature ID : %d) from curve\n"), pFeatureRecord->stFRID.nRCID);
-			OutputDebugString(strErr);
+			//OutputDebugString(strErr);
 		}
 	}
 	else if (type == 125)
@@ -1048,7 +1048,7 @@ ID2D1Geometry* S101Dataset::CreatePolyLineGeometry(ID2D1Factory1* pDirect2dFacto
 		{
 			CString strErr;
 			strErr.Format(_T("PolyLine geometry is NULL (Feature ID : %d) from comp curve\n"), pFeatureRecord->stFRID.nRCID);
-			OutputDebugString(strErr);
+			//OutputDebugString(strErr);
 		}
 	}
 	else if (type == 130)
@@ -1059,12 +1059,12 @@ ID2D1Geometry* S101Dataset::CreatePolyLineGeometry(ID2D1Factory1* pDirect2dFacto
 		{
 			CString strErr;
 			strErr.Format(_T("PolyLine geometry is NULL (Feature ID : %d) from surface\n"), pFeatureRecord->stFRID.nRCID);
-			OutputDebugString(strErr);
+			//OutputDebugString(strErr);
 		}
 	}
 	else
 	{
-		OutputDebugString(_T("Invalid Feature Geometry in CreatePolyLineGeometry()\n"));
+		//OutputDebugString(_T("Invalid Feature Geometry in CreatePolyLineGeometry()\n"));
 	}
 
 	return pGeometry;
@@ -1116,27 +1116,27 @@ ID2D1PathGeometry* S101Dataset::CreatePolyLineGeometryFromCurveFeature(ID2D1Fact
 					}
 					else
 					{
-						OutputDebugString(_T("Faield to close ring sink\n"));
+						//OutputDebugString(_T("Faield to close ring sink\n"));
 					}
 				}
 				else
 				{
-					OutputDebugString(_T("Faield to Open Ring Sink\n"));
+					//OutputDebugString(_T("Faield to Open Ring Sink\n"));
 				}
 			}
 			else
 			{
-				OutputDebugString(_T("Failed to create ring geometry\n"));
+				//OutputDebugString(_T("Failed to create ring geometry\n"));
 			}
 		}
 		else
 		{
-			OutputDebugString(_T("Less point count for Polyline\n"));
+			//OutputDebugString(_T("Less point count for Polyline\n"));
 		}
 	}
 	else
 	{
-		OutputDebugString(_T("Invalied RRNM in RIAS\n"));
+		//OutputDebugString(_T("Invalied RRNM in RIAS\n"));
 	}
 
 	return pGeometry;
@@ -1188,27 +1188,27 @@ ID2D1PathGeometry* S101Dataset::CreatePolyLineGeometryFromCompositeCurveFeature(
 					}
 					else
 					{
-						OutputDebugString(_T("Faield to close ring sink\n"));
+						//OutputDebugString(_T("Faield to close ring sink\n"));
 					}
 				}
 				else
 				{
-					OutputDebugString(_T("Faield to Open Ring Sink\n"));
+					//OutputDebugString(_T("Faield to Open Ring Sink\n"));
 				}
 			}
 			else
 			{
-				OutputDebugString(_T("Failed to create ring geometry\n"));
+				//OutputDebugString(_T("Failed to create ring geometry\n"));
 			}
 		}
 		else
 		{
-			OutputDebugString(_T("Less point count for Polyline\n"));
+			//OutputDebugString(_T("Less point count for Polyline\n"));
 		}
 	}
 	else
 	{
-		OutputDebugString(_T("Invalied RRNM in RIAS\n"));
+		//OutputDebugString(_T("Invalied RRNM in RIAS\n"));
 	}
 
 	return pGeometry;
@@ -1252,7 +1252,7 @@ ID2D1PathGeometry* S101Dataset::CreatePolyLineGeometryFromSurfaceFeature(ID2D1Fa
 							}
 							else
 							{
-								OutputDebugString(_T("Invalied RRNM in RIAS\n"));
+								//OutputDebugString(_T("Invalied RRNM in RIAS\n"));
 							}
 
 							if (points.size() >= 3)
@@ -1285,24 +1285,24 @@ ID2D1PathGeometry* S101Dataset::CreatePolyLineGeometryFromSurfaceFeature(ID2D1Fa
 									}
 									else
 									{
-										OutputDebugString(_T("Faield to Open Ring Sink\n"));
+										//OutputDebugString(_T("Faield to Open Ring Sink\n"));
 									}
 								}
 								else
 								{
-									OutputDebugString(_T("Failed to create ring geometry\n"));
+									//OutputDebugString(_T("Failed to create ring geometry\n"));
 								}
 							}
 							else
 							{
-								OutputDebugString(_T("Less point count for Create Surface Geometry\n"));
+								//OutputDebugString(_T("Less point count for Create Surface Geometry\n"));
 							}
 						}
 					}
 				}
 				else
 				{
-					OutputDebugString(_T("Less RRNM in create polyline geometry from surface\n"));
+					//OutputDebugString(_T("Less RRNM in create polyline geometry from surface\n"));
 				}
 			}
 		}
@@ -1332,7 +1332,7 @@ D2D1_POINT_2F S101Dataset::CreatePoint(ST_FEATURE_RECORD* pFeatureRecord)
 		resultPoint = CreatePointFromSurfaceFeatureRecord(pFeatureRecord);
 		break;
 	default:
-		OutputDebugString(_T("Unvalied Geometry Type in CS100TestView::CreatePoint()\n"));
+		//OutputDebugString(_T("Unvalied Geometry Type in CS100TestView::CreatePoint()\n"));
 		break;
 	}
 
@@ -1352,7 +1352,7 @@ D2D1_POINT_2F S101Dataset::CreatePointFromPointFeatureRecord(ST_FEATURE_RECORD* 
 	}
 	else
 	{
-		OutputDebugString(_T("Can't get point record in CreatePointFromPointFeatureRecord()\n"));
+		//OutputDebugString(_T("Can't get point record in CreatePointFromPointFeatureRecord()\n"));
 	}
 
 	return resultPoint;
@@ -1525,7 +1525,7 @@ ID2D1PathGeometry* S101Dataset::CreateGeometryFromArcByRadius(ID2D1Factory1* pDi
 	{
 		if (OUTPUT_DEBUG_STRING)
 		{
-			OutputDebugString(_T("Failed to create geometry in CreateGeometryFromArcByRadius()\n"));
+			//OutputDebugString(_T("Failed to create geometry in CreateGeometryFromArcByRadius()\n"));
 		}
 		return nullptr;
 	}
@@ -1536,7 +1536,7 @@ ID2D1PathGeometry* S101Dataset::CreateGeometryFromArcByRadius(ID2D1Factory1* pDi
 	{
 		if (OUTPUT_DEBUG_STRING)
 		{
-			OutputDebugString(_T("Failed to open sink in CreateGeometryFromArcByRadius()\n"));
+			//OutputDebugString(_T("Failed to open sink in CreateGeometryFromArcByRadius()\n"));
 		}
 		return nullptr;
 	}
@@ -1562,7 +1562,7 @@ ID2D1PathGeometry* S101Dataset::CreateGeometryFromArcByRadius(ID2D1Factory1* pDi
 	{
 		if (OUTPUT_DEBUG_STRING)
 		{
-			OutputDebugString(_T("Failed to close sink in CreateGeometryFromArcByRadius()\n"));
+			//OutputDebugString(_T("Failed to close sink in CreateGeometryFromArcByRadius()\n"));
 		}
 		return nullptr;
 	}

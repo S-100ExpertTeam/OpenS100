@@ -16,5 +16,10 @@ public:
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
+	bool WriteField(CFile* file);
 	int GetFieldLength();
+
+	void Insert(ATTR* attr);
+
+	//int GetNewAttributeIndex(ATTR* attr, int paix);
 };

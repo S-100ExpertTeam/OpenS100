@@ -104,6 +104,8 @@
     <ClInclude Include="PropertyGridVectorModify.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CDialogExFeatureInformationList.h" />
+    <ClInclude Include="TestGISLibrary.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenS100.cpp">
@@ -177,6 +179,12 @@
     </ClCompile>
     <ClCompile Include="Configuration_4.cpp">
       <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="CDialogExFeatureInformationList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGISLibrary.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

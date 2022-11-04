@@ -29,11 +29,17 @@ public:
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
 	void SetMBR();
-	bool ImportFromWkb(char* value, int size);
-	bool ExportToWkb(char** value, int* size);
+	bool ImportFromWkb(unsigned char* value, int size);
+	bool ExportToWkb(unsigned char** value, int* size);
 	int WkbSize();
 
 	void Projection();
 	void SetMultiplicationFactor(int comfX, int comfY);
 	void SetRCID(int value);
+
+	bool IsClosed();
+
+	SPoint* GetPoint(int index);
+	SPoint* GetFirstPoint();
+	SPoint* GetLastPoint();
 };

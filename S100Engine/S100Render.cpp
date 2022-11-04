@@ -246,7 +246,7 @@ void S100Render::Draw(S100DatasetManager& s100DatasetManager, S100PCManager& s10
 
 		CString str;
 		str.Format(_T("%d, %f\n"), screenOffsetY, currentScreenPoint.y);
-		OutputDebugString(str);
+		//OutputDebugString(str);
 	}
 
 	D2D1::Matrix3x2F inverseOfGeometry = geomMatrix;
@@ -287,7 +287,7 @@ void S100Render::Draw(S100DatasetManager& s100DatasetManager, S100PCManager& s10
 			IsIntersect(s101Dataset->xmin, s101Dataset->ymin, s101Dataset->xmax, s101Dataset->ymax, xmin, ymin, xmax, ymax) &&
 			IsVisible(GetCurrentScale(), s101Dataset))
 		{
-			OutputDebugString(s101Dataset->GetFilePath() + _T("\n"));
+			//OutputDebugString(s101Dataset->GetFilePath() + _T("\n"));
 			std::vector<S100DrawingUnit*> drawintUnit = s101Dataset->GetS100DrawingUnit();
 
 			// Area, Line Instruction
@@ -397,7 +397,7 @@ void S100Render::Draw(S100DatasetManager& s100DatasetManager, S100PCManager& s10
 
 							if (!SUCCEEDED(hr))
 							{
-								OutputDebugString(_T("Failed to create bitmap\n"));
+								//OutputDebugString(_T("Failed to create bitmap\n"));
 							}
 							else
 							{
@@ -417,7 +417,7 @@ void S100Render::Draw(S100DatasetManager& s100DatasetManager, S100PCManager& s10
 						{
 							CString strErr;
 							strErr.Format(_T("Failed to find image (%s.xml)\n"), pDrawingUnit->lineStyleReference);
-							OutputDebugString(strErr);
+							//OutputDebugString(strErr);
 						}
 					}
 				}
@@ -682,7 +682,7 @@ void S100Render::GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, CRect& rect, FL
 
 	CString str;
 	str.Format(_T("%f, %f, %f, %f\n"), xmin, ymin, xmax, ymax);
-	OutputDebugString(str);
+	//OutputDebugString(str);
 }
 
 

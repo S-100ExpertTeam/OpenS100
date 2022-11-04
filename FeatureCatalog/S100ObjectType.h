@@ -12,9 +12,9 @@ public:
 	virtual ~S100ObjectType();
 
 private:
-	std::unordered_map<std::wstring, InformationBinding> informationBinding;
+	std::unordered_map<std::wstring, InformationBinding*> informationBinding;
 
 public:
 	void GetContents(pugi::xml_node& node);
-	std::unordered_map<std::wstring, InformationBinding>& GetInformationBindingPointer();
+	std::unordered_map<std::wstring, InformationBinding*>& GetInformationBindingPointer();
 };

@@ -1,12 +1,15 @@
 #pragma once
+
 #include "Attribute.h"
 #include "UnitOfMeasure.h"
 #include "AttributeConstraints.h"
-#include "ListedValues.h"
 #include "S100_CD_AttributeValueType.h"
 #include "S100_CD_QuantitySpecification.h"
+#include "ListedValue.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include "../extlibs/pugixml/include/pugixml.hpp"
+
+#include <vector>
 
 // S100_FC_SimpleAttribute
 class SimpleAttribute : public Attribute
@@ -20,7 +23,14 @@ private:
 	UnitOfMeasure uom; 
 	FCD::S100_CD_QuantitySpecification quantitySpecification;
 	AttributeConstraints constraints; 
-	std::list<ListedValues> listedValues;
+	
+	std::vector<ListedValue*> listedValue;
+
+	// Key : Code
+	// Value : Label
+	std::unordered_map<int, ListedValue*> codeMap;
+	
+	std::unordered_map<std::wstring, ListedValue*> labelMap;
 
 public:
 	void GetContents(pugi::xml_node& node);
@@ -34,5 +44,12 @@ public:
 	void SetQuantitySpecification(FCD::S100_CD_QuantitySpecification value);
 	
 	AttributeConstraints& GetConstraintsPointer(); 
-	std::list<ListedValues>& GetListedValuesPointer();
+	std::vector<ListedValue*>& GetListedValuePointer();
+
+	void InsertListedValue(ListedValue* item);
+	ListedValue* GetListedValue(std::wstring label);
+	ListedValue* GetListedValue(int code);
+
+	bool IsSimple();
+	bool IsComplex();
 };

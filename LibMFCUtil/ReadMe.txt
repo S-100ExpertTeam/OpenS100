@@ -50,9 +50,9 @@ LibMFCUtil.def
 /////////////////////////////////////////////////////////////////////////////
 Other standard files:
 
-StdAfx.h, StdAfx.cpp
+stdafx.h, stdafx.cpp
     These files are used to build a precompiled header (PCH) file
-    named LibMFCUtil.pch and a precompiled types file named StdAfx.obj.
+    named LibMFCUtil.pch and a precompiled types file named stdafx.obj.
 
 Resource.h
     This is the standard header file, which defines new resource IDs.

@@ -11,9 +11,9 @@ public:
 	virtual ~InformationAssociations();
 
 private:
-	std::unordered_map<std::wstring, InformationAssociation> informationAssociation;
+	std::unordered_map<std::wstring, InformationAssociation*> informationAssociation;
 
 public:
 	void GetContents(pugi::xml_node& node);
-	std::unordered_map<std::wstring, InformationAssociation>& GetInformationAssociationPointer();
+	std::unordered_map<std::wstring, InformationAssociation*>& GetInformationAssociationPointer();
 };

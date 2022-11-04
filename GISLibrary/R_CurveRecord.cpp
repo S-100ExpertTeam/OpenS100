@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "R_CurveRecord.h"
 #include "DRDirectoryInfo.h"
 #include "F_PTAS.h"
@@ -33,12 +33,11 @@ R_CurveRecord::~R_CurveRecord()
 	}
 	m_inas.clear();
 
-	for (auto i = m_segh.begin(); i != m_segh.end(); i++)
+	if (m_segh)
 	{
-		delete *i;
-		*i = nullptr;
+		delete m_segh;
+		m_segh = nullptr;
 	}
-	m_segh.clear();
 
 	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++)
 	{
@@ -53,17 +52,17 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 {
 	for (int i = 0; i < dir->m_count; i++)
 	{
-		if (dir->GetDirectory(i)->tag == *((unsigned int*)"CRID"))
+		if (strcmp(dir->GetDirectory(i)->tag, "CRID") == 0)
 		{
 			m_crid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS* inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"PTAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "PTAS") == 0)
 		{
 			if (nullptr == m_ptas)
 			{
@@ -74,7 +73,7 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_ptas->ReadField(buf, cnt);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"SECC"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "SECC") == 0)
 		{
 			if (nullptr == m_secc)
 			{
@@ -83,15 +82,13 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_secc->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"SEGH"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "SEGH") == 0)
 		{
-			F_SEGH* segh = new F_SEGH();
+			m_segh = new F_SEGH();
 
-			segh->ReadField(buf);
-
-			m_segh.push_back(segh);
+			m_segh->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"COCC"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "COCC") == 0)
 		{
 			if (nullptr == m_cocc)
 			{
@@ -100,7 +97,7 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_cocc->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C2IL"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C2IL") == 0)
 		{
 			F_C2IL *c2il = new F_C2IL();
 
@@ -123,6 +120,90 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return true;
 }
 
+bool R_CurveRecord::WriteRecord(CFile* file)
+{
+	directory.clear();
+
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_crid.GetFieldLength();
+	Directory dir("CRID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_ptas)
+	{
+		fieldLength = m_ptas->GetFieldLength();
+		Directory dir("PTAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_segh)
+	{
+		fieldLength = m_segh->GetFieldLength();
+		Directory dir("SEGH", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("C2IL", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize, false);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_crid.WriteField(file);
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	if (m_ptas)
+	{
+		m_ptas->WriteField(file);
+	}
+
+	if (m_segh)
+	{
+		m_segh->WriteField(file);
+	}
+
+	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
+}
+
+RecordName R_CurveRecord::GetRecordName()
+{
+	return m_crid.m_name;
+}
+
 int R_CurveRecord::GetRCID() 
 {
 	return m_crid.m_name.RCID;
@@ -141,7 +222,7 @@ int R_CurveRecord::GetPointCount()
 
 	if (countPTAS != 1 && countPTAS != 2)
 	{
-		OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
+		//OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
 		return 0;
 	}
 
@@ -155,7 +236,7 @@ int R_CurveRecord::GetPointCount()
 	}
 	else
 	{
-		OutputDebugString(L"Invalied C2IL count\n");
+		//OutputDebugString(L"Invalied C2IL count\n");
 		return 0;
 	}
 

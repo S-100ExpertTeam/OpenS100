@@ -1,4 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by OpenS100.rc
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -71,6 +73,7 @@
 #define IDS_EDIT_MENU                   306
 #define IDD_DIALOG_CREATE_AUTO_RELATION 307
 #define IDR_TOOLBAR1                    310
+#define IDD_CDialogExFeatureInformationList 311
 #define IDD_DIALOG_DOCK_LAYERMANEGER    312
 #define IDR_TOOLBAR2                    312
 #define IDD_DIALOG_DOCK_RELATION        313
@@ -122,6 +125,12 @@
 #define IDC_TWO_SHADE                   351
 #define IDC_BTN_LOAD_SETTING            352
 #define IDC_COMBO_SETTING_FONT_NAME     561
+#define IDC_MFCPROPERTYGRID1            1000
+#define IDC_MFCPROPERTYGRID_LAYER       1000
+#define IDC_COMBO_TYPE                  1001
+#define IDC_COMBO_GEOM                  1002
+#define IDC_LIST1                       1003
+#define IDC_LIST                        1003
 #define IDC_RADIO_OTHER                 1036
 #define IDC_COLOR_DUSK_WB               1040
 #define IDC_DPM_STANDARD                1081
@@ -162,9 +171,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        331
+#define _APS_NEXT_RESOURCE_VALUE        333
 #define _APS_NEXT_COMMAND_VALUE         32774
-#define _APS_NEXT_CONTROL_VALUE         1000
-#define _APS_NEXT_SYMED_VALUE           310
+#define _APS_NEXT_CONTROL_VALUE         1004
+#define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif

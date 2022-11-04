@@ -19,10 +19,14 @@ public:
 	F_CSID m_csid;
 	std::list<F_CRSH*> m_crsh;
 	F_CSAX* m_csax = nullptr;
-	F_PROJ* m_proj = nullptr;
-	F_GDAT* m_gdat = nullptr;
+	//F_PROJ* m_proj = nullptr;
+	//F_GDAT* m_gdat = nullptr;
 	F_VDAT* m_vdat = nullptr;
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool WriteRecord(CFile* file);
+
+	void Init();
+	void Release();
 };

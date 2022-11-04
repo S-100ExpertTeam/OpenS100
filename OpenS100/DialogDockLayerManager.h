@@ -23,7 +23,7 @@ public:
 	// Dialog Data
 	enum { IDD = IDD_DIALOG_DOCK_LAYERMANEGER };
 
-	CMFCPropertyGridCtrl m_wndPropList;
+	//CMFCPropertyGridCtrl m_wndPropList;
 	CFont m_fntPropList;
 
 	CDWordArray m_anDragIndexes; // Remember the item you chose.
@@ -33,14 +33,21 @@ public:
 
 public:
 	void AdjustLayout();
+	void InitListCtrl();
 	void InitPropList();
+
+	void RemoveAll();
+	void RemoveAllListCtrl();
 	void RemoveAllPropList();
+
 	void DeleteLayer();
 	void FillPropList(S101Cell*);
 	void SetPropListFont();
 	void UpdateList();
 	void FocusLayerRange();
 	virtual BOOL OnInitDialog();
+
+	int GetSelectedLayerIndex();
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
@@ -50,4 +57,8 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnSizing(UINT fwSide, LPRECT pRect);
 	afx_msg void OnButtonDelete();
+public:
+	CListCtrl listCtrlLayers;
+	CMFCPropertyGridCtrl propertyGridLayer;
+	afx_msg void OnItemchangedListLm(NMHDR* pNMHDR, LRESULT* pResult);
 };

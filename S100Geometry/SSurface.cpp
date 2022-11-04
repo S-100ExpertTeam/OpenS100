@@ -43,8 +43,6 @@ SSurface::SSurface(std::vector<POINT>& points, std::vector<int>& parts)
 {
 	type = 3;
 	Set(points, parts);
-	
-	
 }
 
 SSurface::~SSurface()
@@ -153,6 +151,10 @@ void SSurface::CreateD2Geometry(ID2D1Factory1* factory)
 	}
 }
 
+int SSurface::GetNumPart()
+{
+	return m_numParts;
+}
 
 int SSurface::GetNumPointPerPart(int partIndex)
 {
@@ -326,10 +328,11 @@ void SSurface::Init()
 	delete[] m_pPoints;
 	m_pPoints = nullptr;
 	
-	delete[] m_centerPoint;
+	delete m_centerPoint;
 	m_centerPoint = nullptr;
 
-	curveList.clear();
+	Release();
+	//curveList.clear();
 
 	SafeRelease(&pGeometry);
 }
@@ -380,9 +383,10 @@ void SSurface::Release()
 		SafeRelease(&(*i)->pGeometry);
 		delete (*i);
 	}
+	curveList.clear();
 }
 
-bool SSurface::ImportFromWkb(char* value, int size)
+bool SSurface::ImportFromWkb(unsigned char* value, int size)
 {
 	Init();
 
@@ -417,6 +421,10 @@ bool SSurface::ImportFromWkb(char* value, int size)
 
 		m_pParts[i] = localPointArray.size();
 
+		auto curve = new SCurveHasOrient();
+		curve->Init(numPointPerPart);
+		curveList.push_back(curve);
+
 		for (int j = 0; j < numPointPerPart; j++)
 		{
 			GeoPoint point;
@@ -424,8 +432,10 @@ bool SSurface::ImportFromWkb(char* value, int size)
 			memcpy_s(&point.y, 8, value + 17 + offset, 8);
 			offset += 16;
 
-			projection(point.y, point.y);
+			projection(point.x, point.y);
 			localPointArray.push_back(point);
+
+			curve->Set(j, point.x, point.y);
 		}
 	}
 
@@ -440,12 +450,12 @@ bool SSurface::ImportFromWkb(char* value, int size)
 	return true;
 }
 
-bool SSurface::ExportToWkb(char** value, int* size)
+bool SSurface::ExportToWkb(unsigned char** value, int* size)
 {
 	*size = WkbSize();
 	if (*value == nullptr)
 	{
-		*value = new char[*size];
+		*value = new unsigned char[*size];
 	}
 	memset(*value, 0, *size);
 
@@ -518,4 +528,18 @@ GeoPoint SSurface::GetXY(int ringIndex, int pointIndex)
 	}
 
 	return GeoPoint();
+}
+
+void SSurface::SetXY(int ringIndex, int pointIndex, double x, double y)
+{
+	if (ringIndex >= 0 && ringIndex < m_numParts)
+	{
+		int pointCountPerPart = GetNumPointPerPart(ringIndex);
+
+		if (pointIndex >= 0 && pointIndex < pointCountPerPart)
+		{
+			m_pPoints[m_pParts[ringIndex] + pointIndex].x = x;
+			m_pPoints[m_pParts[ringIndex] + pointIndex].y = y;
+		}
+	}
 }

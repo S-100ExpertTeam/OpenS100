@@ -120,6 +120,20 @@ void CPropertyGridAttributeModify::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CMFCPropertyGridProperty::ClickArea clickArea;
 	CMFCPropertyGridProperty *pProp = HitTest(point, &clickArea);
 
+	// Get addable attributes 
+	if (pProp)
+	{
+			auto md = (MultiData*)pProp->GetData();
+			auto featureRecord = (R_FeatureRecord*)md->data.at(1);
+			auto attr = (ATTR*)md->data.at(2);
+			auto a = theApp.gisLib->creator.GetAddableAttributes(featureRecord, attr);
+			for (auto i = a.begin(); i != a.end(); i++)
+			{
+				CString str = (*i)->GetAttributeCodeAsWstring().c_str();
+				OutputDebugString(str + L"\n");
+			}
+	}
+
 	if (clickArea == CMFCPropertyGridProperty::ClickArea::ClickExpandBox)
 	{
 		CMFCPropertyGridCtrl::OnLButtonDblClk(nFlags, point);

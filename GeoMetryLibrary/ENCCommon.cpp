@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "ENCCommon.h"
 #include "comutil.h"
 
@@ -295,7 +295,7 @@ bool ENCCommon::Open(std::wstring filePath)
 
 	if (!ifs.is_open())
 	{
-		OutputDebugString(_T("Can not load (settings.txt)"));
+		//OutputDebugString(_T("Can not load (settings.txt)"));
 		return false;
 	}
 

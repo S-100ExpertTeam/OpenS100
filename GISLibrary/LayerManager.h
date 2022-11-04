@@ -1,12 +1,14 @@
 #pragma once
 
 #include "S101Cell.h"
+#include "Layer.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
 #include "../GeoMetryLibrary/ENCCommon.h"
 
 #include <vector>
+#include <list>
 #include <functional>
 #include <unordered_map>
 
@@ -24,18 +26,17 @@ public:
 	virtual ~LayerManager();
 
 public:
-	Scaler					*scaler = nullptr;
+	Scaler* scaler = nullptr;
 
-	// Background layer.
-	CList <Layer*, Layer* > m_listBackgroundLayer;
+	// Background layer
+	Layer backgroundLayer;
 
-	/*
-	** Cell Layer
-	*/
-	Layer * layer  = nullptr;
+	std::list<Layer*> layers;
 
-	// Overlay Layer
-	MBR						mbr;
+	// Key : ID
+	std::unordered_map<int, Layer*> mapLayer;
+
+	MBR mbr;
 
 	// RCID of already rendered curveRecords
 	std::set<int> lineSuppressionMap;
@@ -45,16 +46,15 @@ public:
 	void SetViewMBR(RECT r);
 
 	bool AddBackgroundLayer(CString _filepath);
-	bool AddLayer(CString _filepath);
+
+	// Success : id (> 0)
+	// Fail : -1
+	int AddLayer(CString _filepath);
+	int AddLayer(Layer* layer);
+
 	int isUpdate(CString filePath);
-	bool AddLayer(Layer* layer);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
-
-	
-
-	bool AddOverlayLayer(CString _filepath);;
-	// Drawing temporary S-111 files.
-	unsigned m_surfaceCurrentIndex = 0;
+	bool AddOverlayLayer(CString _filepath);
 
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal(/*PORTRAYAL_BUILD_TYPE type = PORTRAYAL_BUILD_TYPE::ALL*/);
@@ -77,15 +77,23 @@ public:
 		std::list<SENC_Instruction*>* text,
 		PortrayalCatalogue *pc = nullptr);
 
+	void DrawInformationLayer(HDC& hDC, Layer* layer);
+	void DrawInformationLayer(HDC& hDC, int nIndex);
+	void DrawInformationLayerByKey(HDC& hDC, int key);
 
-	void DrawInformationLayer(HDC &hDC, int nIndex);
+	Layer* GetLayer(int index);
+	Layer* GetLayerByKey(int key);
 
-	Layer* GetLayer();
+	CString GetLayerName(int index);
+	CString GetLayerNameByKey(int key);
 
-	CString GetLayerName();
-	BOOL IsOn();
-	void DeleteLayer();
+	bool IsOn(int index);
+	bool IsOnByKey(int key);
+
+	void DeleteLayer(int index);
 	void DeleteLayer(CString filepath);
+	void DeleteLayerByKey(int key);
+
 	void ReMBR();
 
 	void ChangeS100ColorPalette(GeoMetryLibrary::ColorTable value);
@@ -95,6 +103,8 @@ public:
 
 	void SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet);
 
+	int LayerCount();
+
 	// Result
 	// 1 : S-57
 	// 2 : S-101
@@ -102,4 +112,6 @@ public:
 	// 4 : S-100 H5
 	static int CheckFileType(CString path, int update);
 	static int CheckFileType(CString path);
+
+	int CreateLayerID();
 };

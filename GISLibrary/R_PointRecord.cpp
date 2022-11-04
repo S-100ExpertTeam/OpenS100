@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "R_PointRecord.h"
 #include "DRDirectoryInfo.h"
 #include "F_C2IT.h"
@@ -26,30 +26,30 @@ BOOL R_PointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	int i = 0, j = 0;
 	for(i = 0; i < dir->m_count; i++)
 	{
-		if(dir->GetDirectory(i)->tag == *((unsigned int*)"PRID"))
+		if(strcmp(dir->GetDirectory(i)->tag, "PRID") == 0)
 		{
 			m_prid.ReadField(buf);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if(strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS *inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C2IT"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C2IT") == 0)
 		{
 			m_c2it = new F_C2IT();
 			m_c2it->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C3IT"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C3IT") == 0)
 		{
 			m_c3it = new F_C3IT();
 			m_c3it->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C2FT"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C2FT") == 0)
 		{
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C3FT"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C3FT") == 0)
 		{
 		}
 		else
@@ -62,6 +62,64 @@ BOOL R_PointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	}
 
 	return TRUE;
+}
+
+bool R_PointRecord::WriteRecord(CFile* file)
+{
+	directory.clear();
+
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_prid.GetFieldLength();
+	Directory dir("PRID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	if (m_c2it)
+	{
+		fieldLength = m_c2it->GetFieldLength();
+		Directory dir("C2IT", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize, false);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_prid.WriteField(file);
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	if (m_c2it)
+	{
+		m_c2it->WriteField(file);
+	}
+
+	return true;
+}
+
+RecordName R_PointRecord::GetRecordName()
+{
+	return m_prid.m_name;
 }
 
 int R_PointRecord::GetRCID()
@@ -77,6 +135,17 @@ std::wstring R_PointRecord::GetRCIDasWstring()
 void R_PointRecord::SetC2IT(F_C2IT* value)
 {
 	m_c2it = value;
+}
+
+void R_PointRecord::SetC2IT(int x, int y)
+{
+	if (m_c2it == nullptr)
+	{
+		m_c2it = new F_C2IT();
+	}
+
+	m_c2it->m_xcoo = x;
+	m_c2it->m_ycoo = y;
 }
 
 void R_PointRecord::SetC3IT(F_C3IT* value) 

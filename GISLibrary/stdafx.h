@@ -9,7 +9,9 @@
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS     
 
 #include <afxwin.h>        
-#include <afxext.h>        
+#include <afxext.h>       
+#include <afxtempl.h>
+#include <comdef.h>
 
 #ifndef _AFX_NO_OLE_SUPPORT
 #include <afxole.h>        
@@ -35,7 +37,10 @@
 #include "resource.h"
 
 #include "Common.h"
-#include <afxcontrolbars.h>
+//#include <afxcontrolbars.h>
+//#include <windef.h>
+#include <windows.h>
+#include <gdiplus.h>
 
 #include <d2d1.h>
 #include <d2d1_1.h>

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "GeoPointZ.h"
 
 #include <sstream>
@@ -48,7 +48,7 @@ void GeoPointZ::DrawGeometry(HDC &hDC, Scaler *scaler, double offset)
 	::TextOut(hDC, point.x - 15, point.y - 30, strVal.c_str(), (int)strVal.size());
 }
 
-bool GeoPointZ::ImportFromWkb(char* value, int size)
+bool GeoPointZ::ImportFromWkb(unsigned char* value, int size)
 {
 	if (value == nullptr || size != 29 ||
 		value[0] != 0x01)
@@ -73,12 +73,12 @@ bool GeoPointZ::ImportFromWkb(char* value, int size)
 	return true;
 }
 
-bool GeoPointZ::ExportToWkb(char** value, int* size)
+bool GeoPointZ::ExportToWkb(unsigned char** value, int* size)
 {
 	*size = 29;
 	if (*value == nullptr)
 	{
-		*value = new char[*size];
+		*value = new unsigned char[*size];
 	}
 	memset(*value, 0, *size);
 

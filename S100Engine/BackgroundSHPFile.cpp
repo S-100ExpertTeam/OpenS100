@@ -40,7 +40,7 @@ bool BackgroundSHPFile::Open(CString path)
 	// Open the SHP file.
 	if (!fdSHP.Open(path, CFile::modeRead, &e))
 	{
-		OutputDebugString(_T("SHP File Open Error!"));
+		//OutputDebugString(_T("SHP File Open Error!"));
 		return false;
 	}
 
@@ -50,7 +50,7 @@ bool BackgroundSHPFile::Open(CString path)
 	// Open the SHX file.
 	if (!fdSHX.Open(ShxFilePath, CFile::modeRead, &e))
 	{
-		OutputDebugString(_T("SHX File Open Error!"));
+		//OutputDebugString(_T("SHX File Open Error!"));
 		return false;
 	}	
 
@@ -72,7 +72,7 @@ bool BackgroundSHPFile::Open(CString path)
 
 	if (shapeType != 5)
 	{
-		OutputDebugString(_T("Invalied shape type\n"));
+		//OutputDebugString(_T("Invalied shape type\n"));
 		return false;
 	}
 

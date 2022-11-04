@@ -16,13 +16,13 @@ class S101Cell;
 void hd_init(S101Cell *c);
 void hd_delete();
 
-std::vector<std::string> hd_get_feature_ids();
+std::vector<std::string>& hd_get_feature_ids();
 std::string hd_get_feature_code(std::string id);
 std::vector<spatial_association> hd_get_feature_spatial_associations(std::string id);
 std::vector<std::string> hd_get_feature_simple_attribute_values(std::string id, std::string path, std::string attribute_code);
 int hd_get_feature_complex_attribute_count(std::string id, std::string path, std::string attribute_code);
 
-std::vector<std::string> hd_get_information_type_ids();
+std::vector<std::string>& hd_get_information_type_ids();
 std::string hd_get_information_type_code(std::string id);
 std::vector<std::string> hd_get_information_type_simple_attribute_values(std::string id, std::string path, std::string attribute_code);
 int hd_get_information_type_complex_attribute_count(std::string id, std::string path, std::string attribute_code);

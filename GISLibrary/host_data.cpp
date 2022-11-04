@@ -28,10 +28,14 @@
 #include "RIAS.h"
 #include "ProcessS101.h"
 
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\LatLonUtility\\LatLonUtility.h"
-#include "..\\LuaScriptingReference\\spatial_association.h"
-#include "..\\LuaScriptingReference\\composite_curve.h"
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../LatLonUtility/LatLonUtility.h"
+
+#include "../LuaScriptingReference/spatial_association.h"
+#include "../LuaScriptingReference/composite_curve.h"
+
+#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <iostream>
 #include <sstream>
@@ -69,7 +73,7 @@ static spatial_association get_spatial_association(RIAS* rias);
 
 static std::string WstringToString(CString& value)
 {
-	auto cValue = LatLonUtility::ConvertWCtoC((wchar_t*)std::wstring(value).c_str());
+	auto cValue = LibMFCUtil::ConvertWCtoC((wchar_t*)std::wstring(value).c_str());
 	std::string result(cValue);
 	delete[] cValue;
 	return result;
@@ -220,96 +224,72 @@ void hd_delete()
 	s_feature_ids.clear();
 }
 
-void hd_init(/*const char *input_schema, */S101Cell *c)
+void hd_init(S101Cell *c)
 {
 	s_feature_ids.clear();
 	s_feature_nodes.clear();
 	s_information_nodes.clear();
 	s_spatial_features.clear();
-	//
-	// Load data from input schema
-	//
+
 	__int64 key = 0;
 	cell = c;
 
-	R_FeatureRecord* fr = NULL;
-	POSITION pos = c->GetFeatureStartPosition();
-
-	while (pos != NULL)
+	auto features = cell->GetVecFeature();
+	for (auto i = features.begin(); i != features.end(); i++)
 	{
-		c->GetNextAssoc(pos, key, fr);
-		int id = fr->m_frid.m_name.RCID;
+		int id = (*i)->GetRCID();
 		std::string sid = std::to_string(id);
 		s_feature_ids.push_back(sid);
-		s_feature_nodes[sid] = fr;
+		s_feature_nodes[sid] = (*i);
 	}
 
-	R_InformationRecord* ir = NULL;
-	pos = cell->GetInfoStartPosition();
-
-	while (pos != NULL)
+	auto informations = cell->GetVecInformation();
+	for (auto i = informations.begin(); i != informations.end(); i++)
 	{
-		c->GetNextAssoc(pos, key, ir);
-		int id = ir->m_irid.m_name.RCID;
+		int id = (*i)->GetRCID();
 		std::string sid = std::to_string(id);
 		s_information_ids.push_back(sid);
-		s_information_nodes[sid] = ir;
+		s_information_nodes[sid] = (*i);
 	}
 
-	R_PointRecord* pr = NULL;
-	pos = cell->GetpointStartPosition();
-	while (pos != NULL)
+	auto points = cell->GetVecPoint();
+	for (auto i = points.begin(); i != points.end(); i++)
 	{
-		cell->GetNextAssoc(pos, key, pr);
-
-		if (pr->m_c2it)
-		{
-			int id = pr->m_prid.m_name.RCID;
-			std::string sid = "Point|" + std::to_string(id);
-			s_spatial_point_nodes[sid] = pr;
-		}
+		int id = (*i)->GetRCID();
+		std::string sid = "Point|" + std::to_string(id);
+		s_spatial_point_nodes[sid] = (*i);
 	}
 
-	R_MultiPointRecord* mpr = NULL;
-	pos = cell->GetMultStartPosition();
-	while (pos != NULL)
+	auto multiPoints = cell->GetVecMultiPoint();
+	for (auto i = multiPoints.begin(); i != multiPoints.end(); i++)
 	{
-		cell->GetNextAssoc(pos, key, mpr);
-		int id = mpr->m_mrid.m_name.RCID;
+		int id = (*i)->GetRCID();
 		std::string sid = "MultiPoint|" + std::to_string(id);
-		s_spatial_mpoint_nodes[sid] = mpr;
+		s_spatial_mpoint_nodes[sid] = (*i);
 	}
 
-	R_CurveRecord* cr = NULL;
-	pos = cell->GetCurStartPosition();
-	while (pos != NULL)
+	auto curves = cell->GetVecCurve();
+	for (auto i = curves.begin(); i != curves.end(); i++)
 	{
-		cell->GetNextAssoc(pos, key, cr);
-		int id = cr->m_crid.m_name.RCID;
+		int id = (*i)->GetRCID();
 		std::string sid = "Curve|" + std::to_string(id);
-		s_spatial_curve_nodes[sid] = cr;
+		s_spatial_curve_nodes[sid] = (*i);
 	}
 
-	R_CompositeRecord* ccr = NULL;
-	pos = cell->GetComStartPosition();
-	while (pos != NULL)
+	auto compositeCurves = cell->GetVecComposite();
+	for (auto i = compositeCurves.begin(); i != compositeCurves.end(); i++)
 	{
-		cell->GetNextAssoc(pos, key, ccr);
-		if(!ccr)
-			continue;
-		int id = ccr->m_ccid.m_name.RCID;
+		int id = (*i)->GetRCID();
 		std::string sid = "CompositeCurve|" + std::to_string(id);
-		s_spatial_ccurve_nodes[sid] = ccr;
+		s_spatial_ccurve_nodes[sid] = (*i);
 	}
 
-	R_SurfaceRecord* sr = NULL;
-	pos = cell->GetSurStartPosition();
-	while (pos != NULL)
+	auto surfaces = cell->GetVecSurface();
+	for (auto i = surfaces.begin(); i != surfaces.end(); i++)
 	{
-		cell->GetNextAssoc(pos, key, sr);
-		int id = sr->m_srid.m_name.RCID;
+		int id = (*i)->GetRCID();
 		std::string sid = "Surface|" + std::to_string(id);
-		s_spatial_surface_nodes[sid] = sr;
+		s_spatial_surface_nodes[sid] = (*i);
 	}
 
 	// Determine which features are referenced by each spatial
@@ -319,11 +299,16 @@ void hd_init(/*const char *input_schema, */S101Cell *c)
 
 		auto spatials = hd_get_feature_spatial_associations(feature_id);
 		for (auto spatial : spatials)
+		{
 			get_referenced_spatials(spatial.spatial_id, &ref_spatials);
+		}
+
 		for (auto spatial : ref_spatials)
 		{
 			if (!s_spatial_features.count(spatial))
+			{
 				s_spatial_features[spatial] = new std::set<std::string>();
+			}
 
 			auto spatial_features = s_spatial_features[spatial];
 			spatial_features->insert(feature_id); 
@@ -331,16 +316,9 @@ void hd_init(/*const char *input_schema, */S101Cell *c)
 	}
 }
 
-std::vector<std::string> hd_get_feature_ids()
+std::vector<std::string>& hd_get_feature_ids()
 {
-	std::vector<std::string> feature_ids;
-
-	for (auto id : s_feature_ids)
-	{
-		feature_ids.push_back(id);
-	}
-
-	return feature_ids;
+	return s_feature_ids;
 }
 
 std::string hd_get_feature_code(std::string id)
@@ -353,10 +331,9 @@ std::string hd_get_feature_code(std::string id)
 		return "";
 	}
 
-	std::wstring s1 =std::wstring( f1->second->m_code);
+	std::wstring s1 = std::wstring(f1->second->m_code);
 	std::string ret;
 	ret.assign(s1.begin(), s1.end());
-	//f1->second->m_code.ReleaseBuffer();
 
 	return ret;
 }
@@ -585,25 +562,25 @@ static std::vector<std::string> get_simple_attribute_values(R_FeatureRecord* fr,
 							}
 							else
 							{
-								OutputDebugString(_T("Attribute code error1\n"));
+								//OutputDebugString(_T("Attribute code error1\n"));
 							}
 						}
 					}
 					else
 					{
-						OutputDebugString(_T("Parent index error\n"));
+						//OutputDebugString(_T("Parent index error\n"));
 					}
 				}
 				else
 				{
-					OutputDebugString(_T("ParentIndex Error\n"));
+					//OutputDebugString(_T("ParentIndex Error\n"));
 				}
 			}
 		}
 	}
 	else
 	{
-		OutputDebugString(_T("Attribute path error\n"));
+		//OutputDebugString(_T("Attribute path error\n"));
 	}
 	return attr_values;
 }
@@ -879,21 +856,22 @@ int hd_get_feature_complex_attribute_count(std::string id, std::string path, std
 	return a;
 }
 
-std::vector<std::string> hd_get_information_type_ids()
+std::vector<std::string>& hd_get_information_type_ids()
 {
-	std::vector<std::string> information_ids1;
+	return s_information_ids;
+	//std::vector<std::string> information_ids1;
 
-	for (auto information : s_information_nodes)
-		information_ids1.push_back(information.first);
+	//for (auto information : s_information_nodes)
+	//	information_ids1.push_back(information.first);
 
-	return information_ids1;
+	//return information_ids1;
 }
 
 std::string hd_get_information_type_code(std::string id)
 {
 	R_InformationRecord* ir = s_information_nodes[id];
 
-	auto i1 = cell->m_dsgir.m_itcs->m_arr.find(ir->m_irid.m_nitc);
+	auto i1 = cell->m_dsgir.m_itcs->m_arr.find(ir->m_irid.NITC());
 	if (i1 == cell->m_dsgir.m_itcs->m_arr.end())
 	{
 		return "";
@@ -938,9 +916,6 @@ std::vector<std::string> hd_get_feature_associated_information_ids(std::string f
 
 			r_asName.assign(asName.begin(), asName.end());
 			r_roleName.assign(roleName.begin(), roleName.end());
-
-			//asitor->second->m_code.ReleaseBuffer();
-			//ritor->second->m_code.ReleaseBuffer();
 
 			if (!role_code.has_value() || r_roleName == role_code.value())
 				information_ids1.push_back(std::to_string(f_inas->m_name.RCID));

@@ -14,16 +14,17 @@ public:
 	* Format		: b24
 	* Description	: Y-coordinate or latitude
 	*/
-	int m_ycoo;
+	int m_ycoo = 0;
 	/*
 	* Coordinate in X axis
 	* Format		: b24
 	* Description	: X-coordinate or longitude
 	*/
-	int m_xcoo;
+	int m_xcoo = 0;
 	static int GetSize();
 
 public:
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file);
 	int GetFieldLength();
 };

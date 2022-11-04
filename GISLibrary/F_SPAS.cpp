@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "F_SPAS.h"
 #include "SPAS.h"
 #include "ISO8211Fuc.h"
@@ -47,6 +47,23 @@ void F_SPAS::ReadField(BYTE *&buf, int loopCnt)
 
 		m_arr.push_back(spas);
 	}
+}
+
+bool F_SPAS::WriteField(CFile* file)
+{
+	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
+	{
+		file->Write(&(*i)->m_name.RCNM, 1);
+		file->Write(&(*i)->m_name.RCID, 4);
+		file->Write(&(*i)->m_ornt, 1);
+		file->Write(&(*i)->m_smin, 4);
+		file->Write(&(*i)->m_smax, 4);
+		file->Write(&(*i)->m_saui, 1);
+	}
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
 }
 
 int F_SPAS::GetFieldLength()

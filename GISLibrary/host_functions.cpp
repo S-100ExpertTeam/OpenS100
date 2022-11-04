@@ -114,9 +114,13 @@ int HostFeatureGetAssociatedFeatureIDs(lua_State *l)
 {
 	auto ls = lua_session::get_session(l);
 
-	assert(false); // TODO: Implement.
+	auto roleCode = ls->pop<std::string>();
+	auto associationCode = ls->pop<std::string>();
+	auto featureID = ls->pop<std::string>();
 
-	return 0;
+	ls->push(hd_get_feature_associated_feature_ids(featureID, associationCode, roleCode));
+
+	return 1;
 }
 
 int HostFeatureGetAssociatedInformationIDs(lua_State *l)
@@ -261,7 +265,7 @@ int HostGetFeatureTypeCodes(lua_State *l)
 +		[8]	"BeaconIsolatedDanger"	std::basic_string<char,std::char_traits<char>,std::allocator<char> >
 	*/
 
-	auto feature_types = pTheFC->GetFeatureTypesPointer().GetFeatureTypePointer();
+	auto feature_types = pTheFC->GetFeatureTypes().GetFeatureType();
 
 	std::vector<std::string> ret_feature_codes;
 
@@ -548,19 +552,12 @@ int HostPortrayalEmit(lua_State *l)
 {
 	auto ls = lua_session::get_session(l);
 
-	auto observedParameters = ls->pop<std::string>();
-	auto drawingInstructions = ls->pop<std::string>();
-	auto featureID = ls->pop<std::string>();
-
 	Result_DrawingInstruction rdi;
-
-	rdi.featureID = featureID;
-	rdi.observedParameters = observedParameters;
-	rdi.drawingInstructions = drawingInstructions;
-
-	int id = std::stoi(rdi.featureID.c_str());
-
 	resultDrawingInstructions.push_back(rdi);
+
+	resultDrawingInstructions.back().observedParameters = ls->pop<std::string>();
+	resultDrawingInstructions.back().drawingInstructions = ls->pop<std::string>();
+	resultDrawingInstructions.back().featureID = ls->pop<std::string>();
 
 	ls->push(true);
 

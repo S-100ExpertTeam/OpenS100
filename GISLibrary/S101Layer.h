@@ -19,4 +19,6 @@ public:
 	std::wstring GetEditionNumberAsWstring();
 	std::wstring GetUpdateNumberAsWstring();
 	std::wstring GetIssueDateAsWstring();
+
+	void SetAllNumericCode();
 };

@@ -87,8 +87,11 @@ public:
 	R_DSGIR* GetDatasetGeneralInformationRecord();
 	void UpdateRemoveAll(void);
 	void RemoveAll(void);
-	void ClearAll(void);
+	void ClearAll(void); 
+
 	bool Open(CString _filepath);
+	bool Save(std::wstring path);
+
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
 	void GetAllFeatureDisplayOptions();
@@ -118,8 +121,7 @@ public:
 	BOOL GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoArr, int ORNT = 1);
 	BOOL GetFullSpatialData(R_SurfaceRecord *r, CArray<GeoPoint> &geoArr);
 
-	SCurve* GetCurveGeometry(R_CurveRecord *r/*, CArray<GeoPoint> &geoArr, unsigned ORNT = 1*/);
-	//BOOL SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList);
+	SCurve* GetCurveGeometry(R_CurveRecord *r);
 
 	// Set R_FeatureRecord::m_curveList from Vector record
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);
@@ -142,8 +144,9 @@ public:
 	void Draw(HDC &hDC, Scaler *scaler, int priority, int instructionType, double offset = 0);
 
 	MBR CalcMBR();
+	MBR ReMBR();
 
-	void GetDDRFromFile(CString _filepath);
+	//void GetDDRFromFile(CString _filepath);
 
 	void ProcessSpatialReference();
 	
@@ -194,6 +197,7 @@ public:
 	CString GetDatasetEdition();
 	std::string GetDatasetEditionToString();
 
+	void InsertRecord(Record* record);
 
 	//============================================================================//
 	void InsertInformationRecord(__int64 key, R_InformationRecord* record);
@@ -204,7 +208,7 @@ public:
 	void RemoveAllInfoRecord();
 	int GetInfoMapCount();
 	//vectorinformation
-	std::vector<R_InformationRecord*>* GetVecInformation();
+	std::vector<R_InformationRecord*>& GetVecInformation();
 
 
 	void InsertPointRecord(__int64 key, R_PointRecord* record);
@@ -214,17 +218,17 @@ public:
 	void GetNextAssoc(POSITION& index, long long& key, R_PointRecord*& value);
 	void RemoveAllPointRecord();
 	//vecpoint
-	std::vector<R_PointRecord*>* GetVecPoint();
+	std::vector<R_PointRecord*>& GetVecPoint();
 
 
 	void InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record);
-	void RemoveMultiPointRecord(__int64 key, R_MultiPointRecord* record);
+	void RemoveMultiPointRecord(__int64 key);
 	R_MultiPointRecord* GetMultiPointRecord(__int64 key);
 	POSITION GetMultStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_MultiPointRecord*& value);
 	void RemoveAllMultRecord();
 	//vecMult
-	std::vector<R_MultiPointRecord*>* GetVecMultiPoint();
+	std::vector<R_MultiPointRecord*>& GetVecMultiPoint();
 
 
 	void InsertCurveRecord(__int64 key, R_CurveRecord* record);
@@ -234,7 +238,7 @@ public:
 	void GetNextAssoc(POSITION& index, long long& key,R_CurveRecord*& value);
 	void RemoveAllCurRecord();
 	//veccurve
-	std::vector<R_CurveRecord*>* GetVecCurve();
+	std::vector<R_CurveRecord*>& GetVecCurve();
 
 
 	void InsertCompositeCurveRecord(__int64 key, R_CompositeRecord* record);
@@ -244,7 +248,7 @@ public:
 	POSITION GetComStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_CompositeRecord*& value);
 	void RemoveAllComRecord();
-	std::vector<R_CompositeRecord*>* GetVecComposite();
+	std::vector<R_CompositeRecord*>& GetVecComposite();
 
 
 	void InsertSurfaceRecord(__int64 key, R_SurfaceRecord* record);
@@ -253,17 +257,17 @@ public:
 	POSITION GetSurStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_SurfaceRecord*& value);
 	void RemoveAllSurRecord();
-	std::vector<R_SurfaceRecord*>* GetVecSurface();
+	std::vector<R_SurfaceRecord*>& GetVecSurface();
 
 	void InsertFeatureRecord(__int64 key, R_FeatureRecord* record);
-	void RemoveFeatureRecord(__int64 key, R_FeatureRecord* record);
+	void RemoveFeatureRecord(__int64 key);
 
 	R_FeatureRecord* GetFeatureRecord(__int64 key);
 	POSITION GetFeatureStartPosition();
 	void GetNextAssoc(POSITION& index,long long& key,R_FeatureRecord*& value);
 	void RemoveFeatureMapKey(long long key);
 	void RemoveAllFeatureRecord();
-	std::vector<R_FeatureRecord*>* GetVecFeature();
+	std::vector<R_FeatureRecord*>& GetVecFeature();
 
 	//============================================================================//
 	int GetCount_InformationRecord();
@@ -291,6 +295,10 @@ public:
 
 	void Validation();
 
+	int GetCMFX();
+	int GetCMFY();
+	int GetCMFZ();
+
 private:
 	bool UpdateDsgirRecord(S101Cell* cell);
 	bool UpdateAttrField(std::list<F_ATTR*> Update, F_CodeWithNumericCode* atcs);
@@ -314,4 +322,17 @@ private:
 	void GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* scaler, std::list<D2D1_POINT_2F>& points);
 
 	void InitCurveSuppression();
+
+	bool InformationRecordHasAttributeField();
+	bool InformationRecordHasInformationAssociationField();
+	bool PointRecordHasInformationAssociationField();
+	bool MultiPointRecordHasInformationAssociationField();
+	bool CurveRecordHasInformationAssociationField();
+	bool CompositeCurveHasInformationAssociationField();
+	bool SurfaceRecordHasInformationAssociationField();
+	bool FeatureRecordHasAttributeField();
+	bool FeatureRecordHasInformationAssociationField();
+	bool FeatureRecordHasSpatialAssociationField();
+	bool FeatureRecordHasFeatureAssociationField();
+	bool FeatureRecordHasMaskedSpatialTypeField();
 };

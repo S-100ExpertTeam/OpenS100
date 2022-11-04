@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SHPFile.h"
 
 SHPFile::SHPFile(void)
@@ -27,7 +27,7 @@ bool SHPFile::Open(CString _filepath)
 	// Open the SHP file.
 	if (!fdSHP.Open(_filepath, CFile::modeRead, &e))
 	{
-		OutputDebugString(_T("SHP File Open Error!"));
+		//OutputDebugString(_T("SHP File Open Error!"));
 		return FALSE;
 	}
 
@@ -45,7 +45,7 @@ bool SHPFile::Open(CString _filepath)
 	// Open the SHX file.
 	if (!fdSHX.Open(ShxFilePath, CFile::modeRead, &e))
 	{
-		OutputDebugString(_T("SHX File Open Error!"));
+		//OutputDebugString(_T("SHX File Open Error!"));
 		return FALSE;
 	}
 
@@ -64,7 +64,7 @@ bool SHPFile::Open(CString _filepath)
 	fdSHP.Read(&m_nShapeType, sizeof(int));
 
 	if (!((m_nShapeType == GEOPOINT) || (m_nShapeType == GEOPOLYLINE) || (m_nShapeType == GEOPOLYGON))) {
-		OutputDebugString(_T("Invalid shape type.\n"));
+		//OutputDebugString(_T("Invalid shape type.\n"));
 		return FALSE;
 	}
 

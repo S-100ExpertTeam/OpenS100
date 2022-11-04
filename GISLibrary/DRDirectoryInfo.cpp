@@ -22,8 +22,14 @@ bool DRDirectoryInfo::ReadDir(DRReader drReader, BYTE*& buf)
 {
 	for (int i = 0; i < m_count; i++)
 	{
-		directories[i].tag = *((unsigned int*)buf);
-		buf+=4;
+		directories[i].tag[0] = (char)buf[0];
+		buf++;
+		directories[i].tag[1] = (char)buf[0];
+		buf++;
+		directories[i].tag[2] = (char)buf[0];
+		buf++;
+		directories[i].tag[3] = (char)buf[0];
+		buf++;
 		directories[i].length = atoi(buf, drReader.m_fieldLength);
 		directories[i].pos = atoi(buf, drReader.m_fieldPosition);
 	}

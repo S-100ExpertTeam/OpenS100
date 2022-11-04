@@ -6,6 +6,11 @@ SCurveHasOrient::SCurveHasOrient()
 
 }
 
+SCurveHasOrient::SCurveHasOrient(int rcid)
+{
+	this->m_id = rcid;
+}
+
 SCurveHasOrient::SCurveHasOrient(bool masking)
 {
 	this->m_masking = masking;

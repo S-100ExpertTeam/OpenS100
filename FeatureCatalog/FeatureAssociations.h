@@ -11,9 +11,9 @@ public:
 	virtual ~FeatureAssociations(void);
 
 private:
-	std::unordered_map<std::wstring, FeatureAssociation> featureAssociation;
+	std::unordered_map<std::wstring, FeatureAssociation*> featureAssociation;
 	
 public:
 	void GetContents(pugi::xml_node& node);
-	std::unordered_map<std::wstring, FeatureAssociation>& GetFeatureAssociationPointer();
+	std::unordered_map<std::wstring, FeatureAssociation*>& GetFeatureAssociationPointer();
 };

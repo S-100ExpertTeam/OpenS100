@@ -76,7 +76,7 @@ bool S100PCManager::OpenS100AreaFills(std::wstring _path)
 			}
 			else
 			{
-				OutputDebugString(_T("Already exist in areaFills\n"));
+				//OutputDebugString(_T("Already exist in areaFills\n"));
 			}
 		}
 	}
@@ -170,7 +170,7 @@ void S100PCManager::DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRender
 		}
 		else
 		{
-			OutputDebugString(_T("invalied linestyle count\n"));
+			//OutputDebugString(_T("invalied linestyle count\n"));
 		}
 	}
 }
@@ -358,7 +358,7 @@ char* S100PCManager::ConvertWCtoC(wchar_t* str)
 
 	if (strSize <= 0)
 	{
-		OutputDebugString(_T("Failed to WideCharToMultiByte()\n"));
+		//OutputDebugString(_T("Failed to WideCharToMultiByte()\n"));
 		return nullptr;
 	}
 
@@ -432,7 +432,7 @@ D2D1_RECT_F S100PCManager::GetLineStyleRect(CString _name, FLOAT scale)
 				}
 				else
 				{
-					OutputDebugString(_T("Null symbol\n"));
+					//OutputDebugString(_T("Null symbol\n"));
 				}
 			}
 
@@ -455,7 +455,7 @@ D2D1_RECT_F S100PCManager::GetLineStyleRect(CString _name, FLOAT scale)
 		}
 		else
 		{
-			OutputDebugString(_T("Invalied line style\n"));
+			//OutputDebugString(_T("Invalied line style\n"));
 		}
 	}
 
@@ -477,7 +477,7 @@ void S100PCManager::CreateLineImage(ID2D1Factory1* pDirect2dFactory, IWICImaging
 
 		if (!SUCCEEDED(hr))
 		{
-			OutputDebugString(_T("FAILED to create bitmap\n"));
+			//OutputDebugString(_T("FAILED to create bitmap\n"));
 		}
 
 		ID2D1RenderTarget* pCurrentRenderTarget = nullptr;
@@ -561,13 +561,13 @@ void S100PCManager::CreateBitmapImage(ID2D1Factory1* pDirect2dFactory, IWICImagi
 				}
 				else
 				{
-					OutputDebugString(L"Failed to create a iwic bitmap in AreaFill\n");
+					//OutputDebugString(L"Failed to create a iwic bitmap in AreaFill\n");
 					delete areaPatternBitmap;
 				}
 			}
 			else
 			{
-				OutputDebugString(L"Failed to create a bitmap in AreaFill\n");
+				//OutputDebugString(L"Failed to create a bitmap in AreaFill\n");
 				delete areaPatternBitmap;
 			}
 		}

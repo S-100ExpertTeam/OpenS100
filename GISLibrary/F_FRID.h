@@ -6,6 +6,7 @@ class F_FRID : Field
 {
 public:
 	F_FRID();
+	F_FRID(RecordName recordName, int NFTC, int RVER = 1, int RUIN = 1);
 	virtual ~F_FRID();
 
 public:
@@ -15,11 +16,12 @@ public:
 	* Format		: b12
 	* Description	: A valid feature type code as defined in the FTCS field of the Dataset General Information Record
 	*/
-	int m_nftc;
-	int m_rver;
-	int m_ruin;
+	int m_nftc = 0;
+	int m_rver = 0;
+	int m_ruin = 0;
 
 public:
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file);
 	int GetFieldLength();
 };

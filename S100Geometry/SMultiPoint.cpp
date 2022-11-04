@@ -91,7 +91,7 @@ void SMultiPoint::Set(int index, double x, double y, double z)
 	}
 }
 
-bool SMultiPoint::ImportFromWkb(char* value, int size)
+bool SMultiPoint::ImportFromWkb(unsigned char* value, int size)
 {
 	if (value == nullptr ||
 		value[0] != 0x01)
@@ -123,13 +123,13 @@ bool SMultiPoint::ImportFromWkb(char* value, int size)
 	return true;
 }
 
-bool SMultiPoint::ExportToWkb(char** value, int* size)
+bool SMultiPoint::ExportToWkb(unsigned char** value, int* size)
 {
 	int numPoints = GetNumPoints();
 	*size = 9 + ((29) * numPoints);
 	if (*value == nullptr)
 	{
-		*value = new char[*size];
+		*value = new unsigned char[*size];
 	}
 	memset(*value, 0, *size);
 

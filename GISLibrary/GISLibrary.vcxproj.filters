@@ -180,9 +180,6 @@
     <ClCompile Include="Record.cpp">
       <Filter>S101\Record</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectName.cpp">
-      <Filter>S101\NameStruct</Filter>
-    </ClCompile>
     <ClCompile Include="RecordName.cpp">
       <Filter>S101\NameStruct</Filter>
     </ClCompile>
@@ -236,9 +233,6 @@
     </ClCompile>
     <ClCompile Include="R_VectorRecord.cpp">
       <Filter>S101\Record</Filter>
-    </ClCompile>
-    <ClCompile Include="S100SpatialObject.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OrientedCurveRecord.cpp">
       <Filter>S101\Record</Filter>
@@ -486,6 +480,30 @@
     <ClCompile Include="Product.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Leader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Directory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F_FieldControlField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="F_DataDescriptiveField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="R_DDR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S101Creator.cpp">
+      <Filter>S101</Filter>
+    </ClCompile>
+    <ClCompile Include="S100SpatialObject.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="S100EditRender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -629,9 +647,6 @@
     <ClInclude Include="Record.h">
       <Filter>S101\Record</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectName.h">
-      <Filter>S101\NameStruct</Filter>
-    </ClInclude>
     <ClInclude Include="RecordName.h">
       <Filter>S101\NameStruct</Filter>
     </ClInclude>
@@ -688,9 +703,6 @@
     </ClInclude>
     <ClInclude Include="R_VectorRecord.h">
       <Filter>S101\Record</Filter>
-    </ClInclude>
-    <ClInclude Include="S100SpatialObject.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OrientedCurveRecord.h">
       <Filter>S101\Record</Filter>
@@ -954,6 +966,33 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Product.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Leader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Directory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F_FieldControlField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="F_DataDescriptiveField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="R_DDR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S101Creator.h">
+      <Filter>S101</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_RCNM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S100SpatialObject.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="S100EditRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

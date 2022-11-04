@@ -34,7 +34,7 @@ void SPoint::SetMBR()
 	m_mbr.CalcMBR(x, y);
 }
 
-bool SPoint::ImportFromWkb(char* value, int size)
+bool SPoint::ImportFromWkb(unsigned char* value, int size)
 {
 	if (value == nullptr || size != 21 ||
 		value[0] != 0x01)
@@ -57,14 +57,16 @@ bool SPoint::ImportFromWkb(char* value, int size)
 	projection(x, y);
 
 	SetMBR();
+
+	return true;
 }
 
-bool SPoint::ExportToWkb(char** value, int* size)
+bool SPoint::ExportToWkb(unsigned char** value, int* size)
 {
 	*size = 21;
 	if (*value == nullptr)
 	{
-		*value = new char[*size];
+		*value = new unsigned char[*size];
 	}
 	memset(*value, 0, *size);
 	
@@ -82,4 +84,14 @@ bool SPoint::ExportToWkb(char** value, int* size)
 	memcpy_s((*value) + 13, 8, &localY, 8);
 
 	return true;
+}
+
+bool SPoint::operator==(const SPoint& point)
+{
+	if (this->x == point.x && this->y == point.y)
+	{
+		return true;
+	}
+
+	return false;
 }

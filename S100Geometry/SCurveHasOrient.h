@@ -6,6 +6,7 @@ class SCurveHasOrient : public SCurve
 {
 public:
 	SCurveHasOrient();
+	SCurveHasOrient(int rcid);
 	SCurveHasOrient(bool masking);
 	virtual ~SCurveHasOrient();
 

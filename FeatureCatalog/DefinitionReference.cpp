@@ -8,7 +8,8 @@ DefinitionReference::DefinitionReference()
 
 DefinitionReference::~DefinitionReference()
 {
-
+	delete sourceIdentifier;
+	sourceIdentifier = nullptr;
 }
 
 void DefinitionReference::GetContents(pugi::xml_node& node) 
@@ -18,7 +19,12 @@ void DefinitionReference::GetContents(pugi::xml_node& node)
 		const pugi::char_t* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:sourceIdentifier"))
 		{
-			sourceIdentifier = pugi::as_wide(instruction.child_value());
+			if (nullptr == sourceIdentifier)
+			{
+				sourceIdentifier = new std::wstring();
+			}
+
+			*sourceIdentifier = pugi::as_wide(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100FC:definitionSource"))
 		{
@@ -29,20 +35,10 @@ void DefinitionReference::GetContents(pugi::xml_node& node)
 
 void DefinitionReference::SetSourceIdentifier(std::wstring value)
 {
-	sourceIdentifier = value;
+	*sourceIdentifier = value;
 }
 
 const std::wstring& DefinitionReference::GetSourceIdentifier()
 {
-	return sourceIdentifier;
-}
-
-void DefinitionReference::SetDefinitionSource(Reference value) 
-{
-	definitionSource = value;
-}
-
-Reference& DefinitionReference::GetDefinitionSource() 
-{
-	return definitionSource;
+	return *sourceIdentifier;
 }

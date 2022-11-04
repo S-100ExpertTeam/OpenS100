@@ -23,6 +23,8 @@ public:
 	void SetPoint(double _x, double _y);
 	void SetMBR();
 
-	bool ImportFromWkb(char* value, int size);
-	bool ExportToWkb(char** value, int* size);
+	bool ImportFromWkb(unsigned char* value, int size);
+	bool ExportToWkb(unsigned char** value, int* size);
+
+	bool operator==(const SPoint& point);
 };

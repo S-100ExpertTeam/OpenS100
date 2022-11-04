@@ -60,7 +60,7 @@ ComplexAttribute* FeatureCatalogue::GetComplexAttribute(std::wstring code)
 	if (itor == complexAttributes.GetComplexAttributePointer().end())
 		return NULL; // not found
 	else
-		return &itor->second;
+		return itor->second;
 }
 
 ComplexAttribute* FeatureCatalogue::GetComplexAttributeFromName(std::wstring name)
@@ -69,35 +69,38 @@ ComplexAttribute* FeatureCatalogue::GetComplexAttributeFromName(std::wstring nam
 		i != complexAttributes.GetComplexAttributePointer().end();
 		i++)
 	{
-		if (i->second.GetName().compare(name) == 0)
-			return &i->second;
+		if (i->second->GetName().compare(name) == 0)
+			return i->second;
 	}
 	return nullptr;
 }
 
 FeatureType* FeatureCatalogue::GetFeatureType(std::wstring code)
 {
-	auto itor = featureTypes.GetFeatureTypePointer().find(code);
+	auto itor = featureTypes.GetFeatureType().find(code);
 
-	if (itor == featureTypes.GetFeatureTypePointer().end())
+	if (itor == featureTypes.GetFeatureType().end())
 		return NULL; // not found
 	else
-		return &itor->second;
+		return itor->second;
 }
 
-FeatureTypes& FeatureCatalogue::GetFeatureTypesPointer()
+FeatureTypes& FeatureCatalogue::GetFeatureTypes()
 {
 	return featureTypes;
 }
 
 FeatureType* FeatureCatalogue::GetFeatureTypeName(std::wstring name)
 {
-	for (auto i = featureTypes.GetFeatureTypePointer().begin();
-		i != featureTypes.GetFeatureTypePointer().end();
+	for (
+		auto i = featureTypes.GetFeatureType().begin();
+		i != featureTypes.GetFeatureType().end();
 		i++)
 	{
-		if (i->second.GetName().compare(name) == 0)
-			return &i->second;
+		if (i->second->GetName().compare(name) == 0)
+		{
+			return i->second;
+		}
 	}
 	return nullptr;
 }
@@ -106,13 +109,12 @@ FeatureType* FeatureCatalogue::GetFeatureTypeName(std::wstring name)
 FeatureType* FeatureCatalogue::GetFeatureTypeFromIndex(int indexnum)
 {
 	int num = 0;
-	for (auto i= featureTypes.GetFeatureTypePointer().begin(); i!=featureTypes.GetFeatureTypePointer().end(); i++)
+	for (auto i= featureTypes.GetFeatureType().begin(); i!=featureTypes.GetFeatureType().end(); i++)
 	{
 		if (num==indexnum)
 		{
 			auto dfsf = &i->second;
-			OutputDebugString(L"");
-			return &i->second;
+			return i->second;
 		}
 		num++;
 	}
@@ -126,7 +128,7 @@ InformationType* FeatureCatalogue::GetInformationType(std::wstring code)
 	if (itor == informationTypes.GetInformationTypePointer().end())
 		return NULL; // not found
 	else
-		return &itor->second;
+		return itor->second;
 }
 
 
@@ -136,8 +138,8 @@ InformationType* FeatureCatalogue::GetInformationTypeFromName(std::wstring name)
 		itor != informationTypes.GetInformationTypePointer().end();
 		itor++)
 	{
-		if (itor->second.GetName().compare(name) == 0)
-			return &itor->second;
+		if (itor->second->GetName().compare(name) == 0)
+			return itor->second;
 	}
 	return NULL;
 }
@@ -149,7 +151,7 @@ FeatureAssociation* FeatureCatalogue::GetFeatureAssociation(std::wstring code)
 	if (itor == featureAssociations.GetFeatureAssociationPointer().end())
 		return NULL; // not found
 	else
-		return &itor->second;
+		return itor->second;
 }
 
 FeatureAssociation* FeatureCatalogue::GetFeatureAssociationFromName(std::wstring name)
@@ -158,8 +160,8 @@ FeatureAssociation* FeatureCatalogue::GetFeatureAssociationFromName(std::wstring
 		itor != featureAssociations.GetFeatureAssociationPointer().end();
 		itor++)
 	{
-		if (itor->second.GetName().compare(name) == 0)
-			return &itor->second;
+		if (itor->second->GetName().compare(name) == 0)
+			return itor->second;
 	}
 	return NULL;
 }
@@ -171,7 +173,7 @@ InformationAssociation* FeatureCatalogue::GetInformationAssociation(std::wstring
 	if (itor == informationAssociations.GetInformationAssociationPointer().end())
 		return NULL; // not found
 	else
-		return &itor->second;
+		return itor->second;
 }
 
 InformationAssociation* FeatureCatalogue::GetInformationAssociationFromName(std::wstring name)
@@ -180,8 +182,8 @@ InformationAssociation* FeatureCatalogue::GetInformationAssociationFromName(std:
 		itor != informationAssociations.GetInformationAssociationPointer().end();
 		itor++)
 	{
-		if (itor->second.GetName().compare(name) == 0)
-			return &itor->second;
+		if (itor->second->GetName().compare(name) == 0)
+			return itor->second;
 	}
 	return NULL;
 }
@@ -259,14 +261,14 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 				SetProductId(instruction.child_value());
 			}
 		}
-		else if (!strcmp(instructionName, "S100FC:producer"))
-		{
-			producer.GetContents(instruction);
-		}
-		else if (!strcmp(instructionName, "S100FC:S100_FC_definitionSources"))
-		{
-			definitionSources.GetContents(instruction);
-		}
+		//else if (!strcmp(instructionName, "S100FC:producer"))
+		//{
+		//	producer.GetContents(instruction);
+		//}
+		//else if (!strcmp(instructionName, "S100FC:S100_FC_definitionSources"))
+		//{
+		//	definitionSources.GetContents(instruction);
+		//}
 		else if (!strcmp(instructionName, "S100FC:S100_FC_SimpleAttributes"))
 		{
 			simpleAttributes.GetContents(instruction);
@@ -306,15 +308,15 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 }
 void FeatureCatalogue::SetFullAssociations()
 {
-	for (auto itor = featureTypes.GetFeatureTypePointer().begin(); itor != featureTypes.GetFeatureTypePointer().end(); itor++)
+	for (auto itor = featureTypes.GetFeatureType().begin(); itor != featureTypes.GetFeatureType().end(); itor++)
 	{
-		FeatureType *ft = &itor->second;
+		FeatureType *ft = itor->second;
 		SetSubAssociation(ft);
 	}
 
 	for (auto itor = informationTypes.GetInformationTypePointer().begin(); itor != informationTypes.GetInformationTypePointer().end(); itor++)
 	{
-		InformationType *it = &itor->second;
+		InformationType *it = itor->second;
 		SetSubAssociation(it);
 	}
 }
@@ -325,7 +327,7 @@ void FeatureCatalogue::SetSubAssociation(FeatureType* ft)
 		fbi != ft->GetFeatureBindingPointer().end();
 		fbi++)
 	{
-		auto fb = &fbi->second;
+		auto fb = fbi->second;
 		auto bindedFeatureName = fb->GetFeatureTypePointer().GetReference();
 		SetFeatureAssociationFromSuperType(ft, bindedFeatureName, fb->GetRolePointer().GetReference(), fb->GetAssociationPointer().GetReference());
 	}
@@ -334,7 +336,7 @@ void FeatureCatalogue::SetSubAssociation(FeatureType* ft)
 		ibi != ft->GetInformationBindingPointer().end();
 		ibi++)
 	{
-		auto ib = &ibi->second;
+		auto ib = ibi->second;
 		auto bindedinformationName = ib->GetInformationTypePointer().GetReference();
 		SetInformationAssociationFromSuperType(ft, bindedinformationName, ib->GetRolePointer().GetReference(), ib->GetAssociationPointer().GetReference());
 	}
@@ -347,7 +349,7 @@ void FeatureCatalogue::SetSubAssociation(InformationType* it)
 		ibi != it->GetInformationBindingPointer().end();
 		ibi++)
 	{
-		auto ib = &ibi->second;
+		auto ib = ibi->second;
 		auto bindedinformationName = ib->GetInformationTypePointer().GetReference();
 		SetInformationAssociationFromSuperType(it, bindedinformationName, ib->GetRolePointer().GetReference(), ib->GetAssociationPointer().GetReference());
 	}
@@ -356,9 +358,12 @@ void FeatureCatalogue::SetSubAssociation(InformationType* it)
 
 void FeatureCatalogue::SetFeatureAssociationFromSuperType(FeatureType* ft, std::wstring superTypeName, std::wstring roleName, std::wstring associationName)
 {
-	for (auto fti = featureTypes.GetFeatureTypePointer().begin(); fti != featureTypes.GetFeatureTypePointer().end(); fti++)
+	for (
+		auto fti = featureTypes.GetFeatureType().begin(); 
+		fti != featureTypes.GetFeatureType().end(); 
+		fti++)
 	{
-		auto currentFeautreType = &fti->second;
+		auto currentFeautreType = fti->second;
 		auto currentFeautreCode = currentFeautreType->GetCodeAsWString();
 
 		if (superTypeName.compare(currentFeautreCode) == 0)
@@ -385,7 +390,7 @@ void FeatureCatalogue::SetInformationAssociationFromSuperType(FeatureType* ft, s
 {
 	for (auto iti = informationTypes.GetInformationTypePointer().begin(); iti != informationTypes.GetInformationTypePointer().end(); iti++)
 	{
-		auto currentInformationType = &iti->second;
+		auto currentInformationType = iti->second;
 		auto currentInformationCode = currentInformationType->GetCodeAsWString();
 		
 		if (superTypeName.compare(currentInformationCode) == 0)
@@ -410,7 +415,7 @@ void FeatureCatalogue::SetInformationAssociationFromSuperType(InformationType* i
 {
 	for (auto iti = informationTypes.GetInformationTypePointer().begin(); iti != informationTypes.GetInformationTypePointer().end(); iti++)
 	{
-		auto currentInformationType = &iti->second;
+		auto currentInformationType = iti->second;
 		auto currentInformationCode = currentInformationType->GetCodeAsWString();
 
 		if (superTypeName.compare(currentInformationCode) == 0)
@@ -435,41 +440,32 @@ void FeatureCatalogue::SetInformationAssociationFromSuperType(InformationType* i
 
 void FeatureCatalogue::AddFeatureBinding(FeatureType* ft, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
 {
-	FeatureBinding fb;
-	fb.GetFeatureTypePointer().SetReference(bindedTypeName);
-	fb.GetRolePointer().SetReference(roleName);
-	fb.GetAssociationPointer().SetReference(associationName);
-	
-	ft->GetFeatureBindingPointer().insert(
-		std::unordered_map<std::wstring, FeatureBinding>::value_type(
-			bindedTypeName,
-			fb));
+	auto fb = new FeatureBinding();
+	fb->GetFeatureTypePointer().SetReference(bindedTypeName);
+	fb->GetRolePointer().SetReference(roleName);
+	fb->GetAssociationPointer().SetReference(associationName);
+
+	ft->GetFeatureBindingPointer().insert({ bindedTypeName, fb });
 }
 
 void FeatureCatalogue::AddInformationBinding(FeatureType* ft, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
 {
-	InformationBinding ib;
-	ib.GetInformationTypePointer().SetReference(bindedTypeName);
-	ib.GetRolePointer().SetReference(roleName);
-	ib.GetAssociationPointer().SetReference(associationName);
+	auto ib = new InformationBinding();
+	ib->GetInformationTypePointer().SetReference(bindedTypeName);
+	ib->GetRolePointer().SetReference(roleName);
+	ib->GetAssociationPointer().SetReference(associationName);
 	
-	ft->GetInformationBindingPointer().insert(
-		std::unordered_map<std::wstring, InformationBinding>::value_type(
-			bindedTypeName,
-			ib));
+	ft->GetInformationBindingPointer().insert({ bindedTypeName, ib });
 }
 
 void FeatureCatalogue::AddInformationBinding(InformationType* it, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
 {
-	InformationBinding ib;
-	ib.GetInformationTypePointer().SetReference(bindedTypeName);
-	ib.GetRolePointer().SetReference(roleName);
-	ib.GetAssociationPointer().SetReference(associationName);
+	auto ib = new InformationBinding();
+	ib->GetInformationTypePointer().SetReference(bindedTypeName);
+	ib->GetRolePointer().SetReference(roleName);
+	ib->GetAssociationPointer().SetReference(associationName);
 
-	it->GetInformationBindingPointer().insert(
-		std::unordered_map<std::wstring, InformationBinding>::value_type(
-			bindedTypeName,
-			ib));
+	it->GetInformationBindingPointer().insert({ bindedTypeName, ib });
 }
 
 void FeatureCatalogue::NullCheckFieldOfApplication()
@@ -637,4 +633,75 @@ void FeatureCatalogue::SetProductId(std::string value)
 void FeatureCatalogue::SetProductId(std::wstring value)
 {
 	productId = value;
+}
+
+void FeatureCatalogue::GetPointFeatures(std::vector<FeatureType*>& result)
+{
+	auto featureMap = featureTypes.GetVecFeatureType();
+
+	for (auto i = featureMap.begin(); i != featureMap.end(); i++)
+	{
+		auto primList = (*i)->GetPermittedPrimitivesPointer();
+
+		for (auto j = primList.begin(); j != primList.end(); j++)
+		{
+			if ((*j)->IsPoint())
+			{
+				result.push_back(*i);
+			}
+		}
+	}
+}
+
+void FeatureCatalogue::GetLineFeatures(std::vector<FeatureType*>& result)
+{
+	auto featureMap = featureTypes.GetVecFeatureType();
+
+	for (auto i = featureMap.begin(); i != featureMap.end(); i++)
+	{
+		auto primList = (*i)->GetPermittedPrimitivesPointer();
+
+		for (auto j = primList.begin(); j != primList.end(); j++)
+		{
+			if ((*j)->IsLine())
+			{
+				result.push_back(*i);
+			}
+		}
+	}
+}
+
+void FeatureCatalogue::GetAreaFeatures(std::vector<FeatureType*>& result)
+{
+	auto featureMap = featureTypes.GetVecFeatureType();
+
+	for (auto i = featureMap.begin(); i != featureMap.end(); i++)
+	{
+		auto primList = (*i)->GetPermittedPrimitivesPointer();
+
+		for (auto j = primList.begin(); j != primList.end(); j++)
+		{
+			if ((*j)->IsArea())
+			{
+				result.push_back(*i);
+			}
+		}
+	}
+}
+
+Attribute* FeatureCatalogue::GetAttribute(std::wstring code)
+{
+	auto simpleAttribute = GetSimpleAttribute(code);
+	if (simpleAttribute)
+	{
+		return simpleAttribute;
+	}
+
+	auto complexAttribute = GetComplexAttribute(code);
+	if (complexAttribute)
+	{
+		return complexAttribute;
+	}
+
+	return nullptr;
 }

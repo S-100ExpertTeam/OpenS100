@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "F_CUCO.h"
 #include "CUCO.h"
 #include "ISO8211Fuc.h"
@@ -38,6 +38,20 @@ void F_CUCO::ReadField(BYTE *&buf, int loopCnt)
 		cuco->m_ornt = *(buf++);
 		m_arr.push_back(cuco);
 	}
+}
+
+bool F_CUCO::WriteField(CFile* file)
+{
+	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
+	{
+		file->Write(&(*i)->m_name.RCNM, 1);
+		file->Write(&(*i)->m_name.RCID, 4);
+		file->Write(&(*i)->m_ornt, 1);
+	}
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
 }
 
 int F_CUCO::GetFieldLength()

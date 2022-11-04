@@ -1,9 +1,14 @@
 ﻿#pragma once
 
+#include "../GISLibrary/S100EditRender.h"
+#include "../GISLibrary/S101Creator.h"
+
 class COpenS100Doc;
 class Layer;
 class R_FeatureRecord;
 class NewFeatureManager;
+class CDialogViewNoGeometry;
+class CDialogViewInformationType;
 
 class COpenS100View : public CView
 {
@@ -55,6 +60,7 @@ public:
 	CPoint ptPick = { -100, -100 };
 	bool isMoved = false;
 
+	S101Cell* encPick = nullptr;
 	R_FeatureRecord* frPick = nullptr;  // Feature selected on the screen (S-101)
 	double ptPickX = 0.0;
 	double ptPickY = 0.0;
@@ -68,6 +74,13 @@ public:
 	CPoint m_ptStartZoomArea;
 	CPoint m_ptEndZoomArea;
 	bool m_bZoomArea = false;
+
+	// Modaless dialog
+	CDialogViewNoGeometry* dialogNoGeometry = nullptr;
+	CDialogViewInformationType* dialogInformationType = nullptr;
+
+	S100EditRender s100EditRender;
+	S101Creator s101Creator;
 
 protected:
 	std::vector<CString> m_systemFontList;
@@ -142,12 +155,20 @@ public:
 	void DrawS101PickReport(Graphics& g, int offsetX = 0, int offsetY = 0);
 	void ClearPickReport();
 	void PickReport(CPoint _point);
-	void SetPickReportFeature(R_FeatureRecord* _fr);
+	void PickReport(CPoint _point, int layerIndex);
+
 
 	// It runs at the end and stores the last location and scale.
 	void SaveLastPosScale();
 	void ESC();
 	
+	void PointFeatureList();
+	void LineFeatureList();
+	void AreaFeatureList();
+	void CopyLayer();
+	void DeleteSelectedFeature();
+
+	void SetPick(S101Cell* enc = nullptr, R_FeatureRecord* feature = nullptr);
 };
 
 

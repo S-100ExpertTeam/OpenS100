@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "S101Cell.h"
 #include "GISLibrary.h"
 #include "S101Layer.h"
@@ -38,7 +38,7 @@
 #include "FASC.h"
 #include "MASK.h"
 #include "F_SECC.h"
-
+#include "R_DDR.h"
 #include "DRDirectoryInfo.h"
 #include "PCOutputSchemaManager.h"
 #include "SENC_SpatialReference.h"
@@ -47,6 +47,7 @@
 #include "SENC_Instruction.h"
 #include "SENC_LineInstruction.h"
 #include "SENC_PointInstruction.h"
+#include "Record.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -129,6 +130,7 @@ std::string get_information_id_string(int id)
 
 S101Cell::S101Cell() : S100SpatialObject()
 {
+	m_FileType = FILE_S_100_VECTOR;
 }
 
 S101Cell::~S101Cell()
@@ -189,26 +191,42 @@ void S101Cell::Validation()
 		auto feature = *i;
 		int spasCount = feature->GetSPASCount();
 
-		if (spasCount == 0)
+		//if (spasCount == 0)
+		//{
+		//	OutputDebugString(L"No geometry\n");
+		//}
+		//else 
+		if (spasCount > 1)
 		{
-			OutputDebugString(L"No geometry\n");
+			//OutputDebugString(L"Multiple spas field\n");
 		}
-		else if (spasCount > 1)
-		{
-			OutputDebugString(L"Multiple spas field\n");
-		}
-		else if (spasCount == 1)
-		{
-			auto spas = feature->GetSPAS();
-			if (spas->m_ornt == 2)
-			{
-				auto featureCode = this->m_dsgir.GetFeatureCode(feature->m_frid.m_nftc);
-				CString str;
-				str.Format(L"ORNT in SPAS is reverse(RCNM : %d, %s(%d))\n", spas->m_name.RCNM, featureCode, feature->m_frid.m_name.RCID);
-				OutputDebugString(str);
-			}
-		}
+		//else if (spasCount == 1)
+		//{
+		//	auto spas = feature->GetSPAS();
+		//	if (spas->m_ornt == 2)
+		//	{
+		//		auto featureCode = this->m_dsgir.GetFeatureCode(feature->m_frid.m_nftc);
+		//		CString str;
+		//		str.Format(L"ORNT in SPAS is reverse(RCNM : %d, %s(%d))\n", spas->m_name.RCNM, featureCode, feature->m_frid.m_name.RCID);
+		//		OutputDebugString(str);
+		//	}
+		//}
 	}
+}
+
+int S101Cell::GetCMFX()
+{
+	return m_dsgir.m_dssi.m_cmfx;
+}
+
+int S101Cell::GetCMFY()
+{
+	return m_dsgir.m_dssi.m_cmfy;
+}
+
+int S101Cell::GetCMFZ()
+{
+	return m_dsgir.m_dssi.m_cmfz;
 }
 
 R_DSGIR* S101Cell::GetDatasetGeneralInformationRecord()
@@ -353,8 +371,6 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 
 		file.Read(pBuf, (unsigned)fileLength);
 
-		m_FileType = FILE_S_100_VECTOR;
-
 		endOfBuf = pBuf + fileLength - 1;
 
 		file.Close();
@@ -387,68 +403,57 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 			{
 			}
 
-			if (drDir.GetDirectory(0)->tag == *((unsigned int*)"DSID"))
+			if (strcmp(drDir.GetDirectory(0)->tag, "DSID") == 0)
 			{
 				m_dsgir.ReadRecord(&drDir, pBuf);
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"CSID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "CSID") == 0)
 			{
 				m_dscrs.ReadRecord(&drDir, pBuf);
 			}
 
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"IRID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "IRID") == 0)
 			{
 				R_InformationRecord* r = new R_InformationRecord();
 				r->ReadRecord(&drDir, pBuf);
 				InsertInformationRecord(r->m_irid.m_name.GetName(), r);
 			}
 
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"PRID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "PRID") == 0)
 			{
 				R_PointRecord* r = new R_PointRecord();
 				r->ReadRecord(&drDir, pBuf);
 				auto names = r->m_prid.m_name.GetName();
-
 				InsertPointRecord(r->m_prid.m_name.GetName(), r);
-				//m_vecMap.insert({ r->m_prid.m_name.GetName(), r });
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"MRID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "MRID") == 0)
 			{
 				R_MultiPointRecord* r = new R_MultiPointRecord();
 				r->ReadRecord(&drDir, pBuf);
-
 				InsertMultiPointRecord(r->m_mrid.m_name.GetName(), r);
-				//m_vecMap.insert({ r->m_mrid.m_name.GetName(), r });
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"CRID"))   // warning and error message-oriented output
+			else if (strcmp(drDir.GetDirectory(0)->tag, "CRID") == 0)
 			{
 				R_CurveRecord* r = new R_CurveRecord();
 				r->ReadRecord(&drDir, pBuf);
-
 				InsertCurveRecord(r->m_crid.m_name.GetName(), r);
-				//m_vecMap.insert({ r->m_crid.m_name.GetName(), r });
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"CCID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "CCID") == 0)
 			{
 				R_CompositeRecord* r = new R_CompositeRecord();
 				r->ReadRecord(&drDir, pBuf);
-
 				InsertCompositeCurveRecord(r->m_ccid.m_name.GetName(), r);
-				//m_vecMap.insert({ r->m_ccid.m_name.GetName(), r });
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"SRID"))
+			else if (strcmp(drDir.GetDirectory(0)->tag, "SRID") == 0)
 			{
 				R_SurfaceRecord* r = new R_SurfaceRecord();
 				r->ReadRecord(&drDir, pBuf);
-
 				InsertSurfaceRecord(r->m_srid.m_name.GetName(), r);
-				//m_vecMap.insert({ r->m_srid.m_name.GetName(), r });
 			}
-			else if (drDir.GetDirectory(0)->tag == *((unsigned int*)"FRID")) //Feature unit processing.
+			else if (strcmp(drDir.GetDirectory(0)->tag, "FRID") == 0)
 			{
 				R_FeatureRecord* r = new R_FeatureRecord();
 				r->ReadRecord(&drDir, pBuf);
-
 				InsertFeatureRecord(r->m_frid.m_name.GetName(), r);
 			}
 
@@ -463,7 +468,6 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 		Check();
 
 		Validation();
-
 		return true;
 	}
 
@@ -610,29 +614,6 @@ void S101Cell::SetInstructionToFeature(int type, R_FeatureRecord* fe)
 	}
 }
 
-void S101Cell::GetDDRFromFile(CString _filepath)
-{
-	CFile file;
-	if (file.Open(_filepath, CFile::modeRead))
-	{
-		auto size = (int)file.GetLength();
-		m_S101DDR.Allocate(size);
-		file.Read(m_S101DDR.GetContent(), size);
-	}
-}
-
-//void S101Cell::ClearCurveMap()
-//{
-//	for (auto iter = m_curveMap.begin(); iter != m_curveMap.end(); iter++)
-//	{
-//		SCurve* c = iter->second;
-//		delete c;
-//	}
-//
-//	m_curveMap.clear();
-//}
-
-
 BOOL S101Cell::MakeFullSpatialData()
 {
 	//ClearCurveMap();
@@ -704,7 +685,7 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 				}
 				else
 				{
-					OutputDebugString(L"Invalid sub field in point record\n");
+					//OutputDebugString(L"Invalid sub field in point record\n");
 				}
 			}
 		}
@@ -794,35 +775,6 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 
 	return TRUE;
 }
-
-//BOOL S101Cell::SetSCurveList(std::list<OrientedCurveRecord>* inCurveRecordList, std::list<SCurveHasOrient>* outSCurveList)
-//{
-//	for (auto c = inCurveRecordList->begin(); c != inCurveRecordList->end(); c++)
-//	{
-//		OrientedCurveRecord* ocr = &(*c);
-//
-//		__int64 iKey = ((__int64)ocr->m_pCurveRecord->m_crid.m_name.RCNM) << 32 | ocr->m_pCurveRecord->m_crid.m_name.RCID;
-//		auto curveIter = m_curveMap.find(iKey);
-//
-//		bool bOrnt = ocr->m_orient == 1 ? true : false;
-//
-//		if (curveIter != m_curveMap.end())
-//		{
-//			SCurveHasOrient curveHasOrient(bOrnt, curveIter->second);
-//			outSCurveList->push_back(curveHasOrient);
-//		}
-//		else
-//		{
-//			SCurve* pCurve = GetCurveGeometry(ocr->m_pCurveRecord);
-//			pCurve->m_id = iKey;
-//			SCurveHasOrient curveHasOrient(bOrnt, pCurve);
-//			outSCurveList->push_back(curveHasOrient);
-//
-//			m_curveMap.insert({ iKey, pCurve });
-//		}
-//	}
-//	return TRUE;
-//}
 
 // France
 BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
@@ -1121,7 +1073,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 
 		if (countPTAS != 1 && countPTAS != 2)
 		{
-			OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
+			//OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
 		}
 
 		auto beginPointKey = r->m_ptas->m_arr.front()->m_name.GetName();
@@ -1150,7 +1102,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 		}
 		else
 		{
-			OutputDebugString(L"Invalied ORNT\n");
+			//OutputDebugString(L"Invalied ORNT\n");
 		}
 
 		// C2IL
@@ -1176,12 +1128,12 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 			}
 			else
 			{
-				OutputDebugString(L"Invalied ORNT\n");
+				//OutputDebugString(L"Invalied ORNT\n");
 			}
 		}
 		else
 		{
-			OutputDebugString(L"Invalied C2IL count\n");
+			//OutputDebugString(L"Invalied C2IL count\n");
 		}
 
 		// PTAS
@@ -1195,7 +1147,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 		}
 		else
 		{
-			OutputDebugString(L"Invalied ORNT\n");
+			//OutputDebugString(L"Invalied ORNT\n");
 		}
 	}
 
@@ -1220,7 +1172,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 
 		if (countPTAS != 1 && countPTAS != 2)
 		{
-			OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
+			//OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
 		}
 
 		auto beginPointKey = r->m_ptas->m_arr.front()->m_name.GetName();
@@ -1249,7 +1201,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		}
 		else
 		{
-			OutputDebugString(L"Invalied ORNT\n");
+			//OutputDebugString(L"Invalied ORNT\n");
 			return FALSE;
 		}
 
@@ -1276,12 +1228,12 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 			}
 			else
 			{
-				OutputDebugString(L"Invalied ORNT\n");
+				//OutputDebugString(L"Invalied ORNT\n");
 			}
 		}
 		else
 		{
-			OutputDebugString(L"Invalied C2IL count\n");
+			//OutputDebugString(L"Invalied C2IL count\n");
 		}
 
 		// PTAS
@@ -1295,7 +1247,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		}
 		else
 		{
-			OutputDebugString(L"Invalied ORNT\n");
+			//OutputDebugString(L"Invalied ORNT\n");
 		}
 
 		curve->SetMultiplicationFactor(m_dsgir.m_dssi.m_cmfx, m_dsgir.m_dssi.m_cmfy);
@@ -1361,7 +1313,7 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 		}
 		else
 		{
-			OutputDebugString(L"Invalid rcnm\n");
+			//OutputDebugString(L"Invalid rcnm\n");
 		}
 	}
 
@@ -1463,7 +1415,7 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoA
 			}
 			else
 			{
-				OutputDebugString(L"Invalid RCNM in CUCO\n");
+				//OutputDebugString(L"Invalid RCNM in CUCO\n");
 				return FALSE;
 			}
 		}
@@ -1869,10 +1821,70 @@ MBR S101Cell::CalcMBR()
 				SPoint *geo = (SPoint *)fr->m_geometry;
 				pMBR->ReMBR(geo->m_mbr);
 			}
+			else if (fr->m_geometry->type == 4)
+			{
+				SMultiPoint* geo = (SMultiPoint*)fr->m_geometry;
+				pMBR->ReMBR(geo->m_mbr);
+			}
+			else if (fr->m_geometry->type == 5)
+			{
+				SCurve* geo = (SCurve*)fr->m_geometry;
+				pMBR->ReMBR(geo->m_mbr);
+			}
 		}
 	}
 
 	return *pMBR;
+}
+
+MBR S101Cell::ReMBR()
+{
+	MBR result;
+	result.InitMBR();
+
+	R_FeatureRecord* fr = nullptr;
+
+	__int64 iKey;
+	POSITION pos = m_feaMap.GetStartPosition();
+	while (pos != NULL)
+	{
+		m_feaMap.GetNextAssoc(pos, iKey, fr);
+		if (fr->m_geometry)
+		{
+			if (fr->m_geometry->type == 3)
+			{
+				SSurface* pSr = (SSurface*)fr->m_geometry;
+				result.ReMBR(pSr->m_mbr);
+			}
+			else if (fr->m_geometry->type == 2)
+			{
+				auto geo = (SCompositeCurve*)fr->m_geometry;
+				result.ReMBR(geo->m_mbr);
+			}
+			else if (fr->m_geometry->type == 1)
+			{
+				SPoint* geo = (SPoint*)fr->m_geometry;
+				result.ReMBR(geo->m_mbr);
+			}
+			else if (fr->m_geometry->type == 4)
+			{
+				SMultiPoint* geo = (SMultiPoint*)fr->m_geometry;
+				result.ReMBR(geo->m_mbr);
+			}
+			else if (fr->m_geometry->type == 5)
+			{
+				SCurve* geo = (SCurve*)fr->m_geometry;
+				result.ReMBR(geo->m_mbr);
+			}
+		}
+	}
+
+	if (m_pLayer)
+	{
+		m_pLayer->SetMBR(result);
+	}
+
+	return result;
 }
 
 // [ Text Placement ]
@@ -2149,6 +2161,47 @@ std::string S101Cell::GetDatasetFileIdentifierToString()
 	return pugi::as_utf8(std::wstring(GetDatasetFileIdentifier()));
 }
 
+void S101Cell::InsertRecord(Record* record)
+{
+	auto RCNM = record->GetRecordName().RCNM;
+	auto key = record->GetRecordName().GetName();
+	if (100 == RCNM)
+	{
+		auto featureRecord = (R_FeatureRecord*)record;
+		InsertFeatureRecord(key, featureRecord);
+	}
+	else if (110 == RCNM)
+	{
+		auto pointRecord = (R_PointRecord*)record;
+		InsertPointRecord(key, pointRecord);
+	}
+	else if (115 == RCNM)
+	{
+		auto multiPointRecord = (R_MultiPointRecord*)record;
+		InsertMultiPointRecord(key, multiPointRecord);
+	}
+	else if (120 == RCNM)
+	{
+		auto curveRecord = (R_CurveRecord*)record;
+		InsertCurveRecord(key, curveRecord);
+	}
+	else if (125 == RCNM)
+	{
+		auto compositeCurveRecord = (R_CompositeRecord*)record;
+		InsertCompositeCurveRecord(key, compositeCurveRecord);
+	}
+	else if (130 == RCNM)
+	{
+		auto surfaceRecord = (R_SurfaceRecord*)record;
+		InsertSurfaceRecord(key, surfaceRecord);
+	}
+	else if (150 == RCNM)
+	{
+		auto informationRecord = (R_InformationRecord*)record;
+		InsertInformationRecord(key, informationRecord);
+	}
+}
+
 void S101Cell::InsertInformationRecord(__int64 key, R_InformationRecord* record)
 {
 	m_infMap.SetAt(key, record);
@@ -2190,9 +2243,9 @@ int S101Cell::GetInfoMapCount()
 	return (int)m_infMap.GetCount();
 }
 
-std::vector<R_InformationRecord*>* S101Cell::GetVecInformation()
+std::vector<R_InformationRecord*>& S101Cell::GetVecInformation()
 {
-	return &vecInformation;
+	return vecInformation;
 }
 
 void S101Cell::InsertPointRecord(__int64 key, R_PointRecord* record)
@@ -2232,9 +2285,9 @@ void S101Cell::RemoveAllPointRecord()
 	m_ptMap.RemoveAll();
 }
 
-std::vector<R_PointRecord*>* S101Cell::GetVecPoint()
+std::vector<R_PointRecord*>& S101Cell::GetVecPoint()
 {
-	return &vecPoint;
+	return vecPoint;
 }
 
 void S101Cell::InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record)
@@ -2243,9 +2296,19 @@ void S101Cell::InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record)
 	vecMultiPoint.push_back(record);
 }
 
-void S101Cell::RemoveMultiPointRecord(__int64 key, R_MultiPointRecord* record)
+void S101Cell::RemoveMultiPointRecord(__int64 key)
 {
 	m_mpMap.RemoveKey(key);
+
+	for (auto i = vecMultiPoint.begin(); i != vecMultiPoint.end(); i++)
+	{
+		if (key == (*i)->GetRecordName().GetName())
+		{
+			delete (*i);
+			vecMultiPoint.erase(i);
+			return;
+		}
+	}
 }
 
 R_MultiPointRecord* S101Cell::GetMultiPointRecord(__int64 key)
@@ -2275,9 +2338,9 @@ void S101Cell::RemoveAllMultRecord()
 	m_mpMap.RemoveAll();
 }
 
-std::vector<R_MultiPointRecord*>* S101Cell::GetVecMultiPoint()
+std::vector<R_MultiPointRecord*>& S101Cell::GetVecMultiPoint()
 {
-	return &vecMultiPoint;
+	return vecMultiPoint;
 }
 
 void S101Cell::InsertCurveRecord(__int64 key, R_CurveRecord* record)
@@ -2317,9 +2380,9 @@ void S101Cell::RemoveAllCurRecord()
 	m_curMap.RemoveAll();
 }
 
-std::vector<R_CurveRecord*>* S101Cell::GetVecCurve()
+std::vector<R_CurveRecord*>& S101Cell::GetVecCurve()
 {
-	return &vecCurve;
+	return vecCurve;
 }
 
 void S101Cell::InsertCompositeCurveRecord(__int64 key, R_CompositeRecord* record)
@@ -2359,9 +2422,9 @@ void S101Cell::RemoveAllComRecord()
 	m_comMap.RemoveAll();
 }
 
-std::vector<R_CompositeRecord*>* S101Cell::GetVecComposite()
+std::vector<R_CompositeRecord*>& S101Cell::GetVecComposite()
 {
-	return &vecComposite;
+	return vecComposite;
 }
 
 void S101Cell::InsertSurfaceRecord(__int64 key, R_SurfaceRecord* record)
@@ -2401,9 +2464,9 @@ void S101Cell::RemoveAllSurRecord()
 	m_surMap.RemoveAll();
 }
 
-std::vector<R_SurfaceRecord*>* S101Cell::GetVecSurface()
+std::vector<R_SurfaceRecord*>& S101Cell::GetVecSurface()
 {
-	return &vecSurface;
+	return vecSurface;
 }
 
 void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
@@ -2412,9 +2475,15 @@ void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
 	vecFeature.push_back(record);
 }
 
-void S101Cell::RemoveFeatureRecord(__int64 key, R_FeatureRecord* record)
+void S101Cell::RemoveFeatureRecord(__int64 key)
 {
-	m_feaMap.RemoveKey(key);
+	auto featureRecord = GetFeatureRecord(key);
+	if (featureRecord)
+	{
+		m_feaMap.RemoveKey(key);
+		vecFeature.erase(std::remove(vecFeature.begin(), vecFeature.end(), featureRecord), vecFeature.end());
+		delete featureRecord;
+	}
 }
 
 R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
@@ -2448,9 +2517,9 @@ void S101Cell::RemoveAllFeatureRecord()
 	m_feaMap.RemoveAll();
 }
 
-std::vector<R_FeatureRecord*>* S101Cell::GetVecFeature()
+std::vector<R_FeatureRecord*>& S101Cell::GetVecFeature()
 {
-	return &vecFeature;
+	return vecFeature;
 }
 
 int S101Cell::GetCount_InformationRecord()
@@ -2527,43 +2596,43 @@ bool S101Cell::Check()
 {
 	if (GetCount_InformationRecord() != GetMetaCount_InformationRecord())
 	{
-		OutputDebugString(L"error - Information Record count\n");
+		//OutputDebugString(L"error - Information Record count\n");
 		return false;
 	}
 
 	if (GetCount_PointRecord() != GetMetaCount_PointRecord())
 	{
-		OutputDebugString(L"error - Point Record count\n");
+		//OutputDebugString(L"error - Point Record count\n");
 		return false;
 	}
 
 	if (GetCount_MultiPointRecord() != GetMetaCount_MultiPointRecord())
 	{
-		OutputDebugString(L"error - Multi Point Record count\n");
+		//OutputDebugString(L"error - Multi Point Record count\n");
 		return false;
 	}
 
 	if (GetCount_CurveRecord() != GetMetaCount_CurveRecord())
 	{
-		OutputDebugString(L"error - Curve Record count\n");
+		//OutputDebugString(L"error - Curve Record count\n");
 		return false;
 	}
 
 	if (GetCount_CompositeCurveRecord() != GetMetaCount_CompositeCurveRecord())
 	{
-		OutputDebugString(L"error - Composite Curve Record count\n");
+		//OutputDebugString(L"error - Composite Curve Record count\n");
 		return false;
 	}
 
 	if (GetCount_SurfaceRecord() != GetMetaCount_SurfaceRecord())
 	{
-		OutputDebugString(L"error - Surface Record count\n");
+		//OutputDebugString(L"error - Surface Record count\n");
 		return false;
 	}
 
 	if (GetCount_FeatureTypeRecord() != GetMetaCount_FeatureTypeRecord())
 	{
-		OutputDebugString(L"error - Feature Type Record count\n");
+		//OutputDebugString(L"error - Feature Type Record count\n");
 		return false;
 	}
 
@@ -2730,9 +2799,9 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 		cell->m_infMap.GetNextAssoc(pos, infokey, ir);
 
 		//change itcs
-		auto updateCode = itcs->GetFeatureCode(ir->m_irid.m_nitc);
+		auto updateCode = itcs->GetFeatureCode(ir->m_irid.NITC());
 		int NewCode = m_dsgir.m_itcs->GetCode(updateCode);
-		ir->m_irid.m_nitc = NewCode;
+		ir->m_irid.NITC(NewCode);
 
 		UpdateAttrField(ir->m_attr, atcs);      //attr
 		UpdateInasField(ir->m_inas, iacs);		//INAS
@@ -2846,10 +2915,9 @@ bool S101Cell::UpdateInasField(std::list<F_INAS*> Update, F_CodeWithNumericCode*
 {
 	for (auto f_inas : Update)
 	{
-		POSITION pos = f_inas->m_arr.GetHeadPosition();
-		while (pos)
+		for (auto i = f_inas->m_arr.begin(); i != f_inas->m_arr.end(); i++)
 		{
-			ATTR* arr = f_inas->m_arr.GetNext(pos);
+			auto arr = (*i);
 			CString updateCode = iacs->GetFeatureCode(arr->m_natc);
 			int NewCode = m_dsgir.m_iacs->GetCode(updateCode);
 
@@ -2894,7 +2962,7 @@ bool S101Cell::UpdateInfMapRecord(S101Cell* cell)
 				//IRID
 				values->m_irid.m_name.RCNM = ir->m_irid.m_name.RCNM;
 				values->m_irid.m_name.RCID = ir->m_irid.m_name.RCID;
-				values->m_irid.m_nitc = ir->m_irid.m_nitc; //I'm going to change the numericcode.
+				values->m_irid.NITC(ir->m_irid.NITC()); //I'm going to change the numericcode.
 				values->m_irid.m_rver = ir->m_irid.m_rver;
 
 				//ATTR
@@ -2989,37 +3057,31 @@ bool S101Cell::UpdateINASRecord(std::list<F_INAS*> Update, std::list<F_INAS*> Ba
 			}
 			auto BaseAttr = (*it);
 
-			//ATTR
-			POSITION pos = f_inas->m_arr.GetHeadPosition();
-			while (pos)
+			for (auto i = f_inas->m_arr.begin(); i != f_inas->m_arr.end(); i++)
 			{
-				ATTR* arr = f_inas->m_arr.GetNext(pos);
+				auto arr = *i;
 				auto UpdateCode = arr->m_atin;
 
 				if (1 == UpdateCode)
 				{
-					BaseAttr->m_arr.AddTail(arr);
+					BaseAttr->m_arr.push_back(arr);
 				}
-
 				else if (2 == UpdateCode) //delte
 				{
-					POSITION BasePos = BaseAttr->m_arr.GetHeadPosition();
-					while (BasePos)
+					for (auto j = BaseAttr->m_arr.begin(); j != BaseAttr->m_arr.end(); j++)
 					{
-						ATTR* basear = BaseAttr->m_arr.GetNext(BasePos);
+						auto basear = *j;
 						if (arr->m_natc == basear->m_natc)
 						{
-							BaseAttr->m_arr.RemoveAt(BasePos);
+							BaseAttr->m_arr.erase(j);
 						}
 					}
 				}
-
 				else if (3 == UpdateCode)//modify
 				{
-					POSITION BasePos = BaseAttr->m_arr.GetHeadPosition();
-					while (BasePos)
+					for (auto j = BaseAttr->m_arr.begin(); j != BaseAttr->m_arr.end(); j++)
 					{
-						ATTR* basear = BaseAttr->m_arr.GetNext(BasePos);
+						auto basear = *j;
 						if (arr->m_natc == basear->m_natc)
 						{
 							basear = arr;
@@ -3117,7 +3179,7 @@ bool S101Cell::UpdateMpMapRecord(S101Cell* cell) //multi point
 
 			if (mission == 2) //Delete
 			{
-				RemoveMultiPointRecord(UpdateName, values);
+				RemoveMultiPointRecord(UpdateName);
 			}
 			else if (mission == 3)  //change
 			{
@@ -3236,9 +3298,9 @@ bool S101Cell::UpdateCurMapRecord(S101Cell* cell) //curve Record.
 				value->m_secc->m_nseg = cur->m_secc->m_nseg;
 
 				//SEGH
-				if (cur->m_segh.size() > 0)
+				if (cur->m_segh)
 				{
-					value->m_segh.begin() = cur->m_segh.begin();
+					value->m_segh = cur->m_segh;
 				}
 
 				//C2IL
@@ -3446,7 +3508,7 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 
 			if (mission == 2)
 			{
-				RemoveFeatureRecord(UpdateName, values);
+				RemoveFeatureRecord(UpdateName);
 			}
 			else if (mission == 3) //change
 			{
@@ -3457,9 +3519,9 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 				values->m_frid.m_rver = fe->m_frid.m_rver;
 
 				//FOID
-				values->m_foid.m_objName.m_agen = fe->m_foid.m_objName.m_agen;
-				values->m_foid.m_objName.m_fidn = fe->m_foid.m_objName.m_fidn;
-				values->m_foid.m_objName.m_fids = fe->m_foid.m_objName.m_fids;
+				values->m_foid.AGEN = fe->m_foid.AGEN;
+				values->m_foid.FIDN = fe->m_foid.FIDN;
+				values->m_foid.FIDS = fe->m_foid.FIDS;
 
 				//need ATTR
 				UpdateAttrRecord(fe->m_attr, values->m_attr);
@@ -3577,6 +3639,7 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 			}
 		}
 	}
+	
 	return true;
 }
 
@@ -3832,4 +3895,400 @@ void S101Cell::InitCurveSuppression()
 			curve->SetSuppress(false);
 		}
 	}
+}
+
+bool S101Cell::Save(std::wstring path)
+{
+	CString filePath(path.c_str());
+
+	CFile file;
+	file.Open(filePath, CFile::modeCreate | CFile::modeWrite);
+
+	// DDR
+	R_DDR ddr;
+	ddr.f_FieldControlField.AddTagPair("DSID", "DSSI");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::DSSI));
+	
+	if (m_dsgir.m_atcs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "ATCS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::ATCS));
+	}
+
+	if (m_dsgir.m_itcs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "ITCS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::ITCS));
+	}
+
+	if (m_dsgir.m_ftcs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "FTCS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FTCS));
+	}
+
+	if (m_dsgir.m_iacs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "IACS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::IACS));
+	}
+
+	if (m_dsgir.m_facs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "FACS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FACS));
+	}
+
+	if (m_dsgir.m_arcs)
+	{
+		ddr.f_FieldControlField.AddTagPair("DSID", "ARCS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::ARCS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("CSID", "CRSH");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CSID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CRSH));
+
+	if (m_dscrs.m_csax)
+	{
+		ddr.f_FieldControlField.AddTagPair("CRSH", "CSAX");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::CRSH));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::CSAX));
+	}
+
+	if (m_dscrs.m_vdat)
+	{
+		ddr.f_FieldControlField.AddTagPair("CRSH", "VDAT");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::CRSH));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::VDAT));
+	}
+
+	if (InformationRecordHasAttributeField())
+	{
+		ddr.f_FieldControlField.AddTagPair("IRID", "ATTR");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::IRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::ATTR));
+	}
+
+	if (InformationRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("IRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::IRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	if (PointRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("PRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::PRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("PRID", "C2IT");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::PRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::C2IT));
+	
+	if (MultiPointRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("MRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::MRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("MRID", "C3IL");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::MRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::C3IL));
+
+	if (CurveRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("CRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::CRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("CRID", "PTAS");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::PTAS));
+
+	ddr.f_FieldControlField.AddTagPair("CRID", "SEGH");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::SEGH));
+
+	ddr.f_FieldControlField.AddTagPair("SEGH", "C2IL");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::SEGH));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::C2IL));
+
+	if (CompositeCurveHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("CCID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::CCID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("CCID", "CUCO");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CCID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::CUCO));
+
+	if (SurfaceRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("SRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::SRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	ddr.f_FieldControlField.AddTagPair("SRID", "RIAS");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::SRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::RIAS));
+
+	ddr.f_FieldControlField.AddTagPair("FRID", "FOID");
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+	ddr.AddDDF(F_DataDescriptiveField(DDFType::FOID));
+
+	if (FeatureRecordHasAttributeField())
+	{
+		ddr.f_FieldControlField.AddTagPair("FRID", "ATTR");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::ATTR));
+	}
+
+	if (FeatureRecordHasInformationAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("FRID", "INAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::INAS));
+	}
+
+	if (FeatureRecordHasSpatialAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("FRID", "SPAS");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::SPAS));
+	}
+
+	if (FeatureRecordHasFeatureAssociationField())
+	{
+		ddr.f_FieldControlField.AddTagPair("FRID", "FASC");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FASC));
+	}
+
+	if (FeatureRecordHasMaskedSpatialTypeField())
+	{
+		ddr.f_FieldControlField.AddTagPair("FRID", "MASK");
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::FRID));
+		ddr.AddDDF(F_DataDescriptiveField(DDFType::MASK));
+	}
+
+	ddr.WriteRecord(&file);
+
+	m_dsgir.m_dssi.SetNumberOfInformationTypeRecords(vecInformation.size());
+	m_dsgir.m_dssi.SetNumberOfPointRecords(vecPoint.size());
+	m_dsgir.m_dssi.SetNumberOfMultiPointRecords(vecMultiPoint.size());
+	m_dsgir.m_dssi.SetNumberOfCurveRecords(vecCurve.size());
+	m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords(vecComposite.size());
+	m_dsgir.m_dssi.SetNumberOfSurfaceRecords(vecSurface.size());
+	m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords(vecFeature.size());
+
+	m_dsgir.WriteRecord(&file);
+	m_dscrs.WriteRecord(&file);
+
+	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
+	{
+		(*i)->WriteRecord(&file);
+	}
+
+	for (auto i = vecPoint.begin(); i != vecPoint.end(); i++)
+	{
+		(*i)->WriteRecord(&file);
+	}
+
+	for (auto i = vecMultiPoint.begin(); i != vecMultiPoint.end(); i++)
+	{
+		(*i)->WriteRecord(&file);
+	}
+
+	for (auto i = vecCurve.begin(); i != vecCurve.end(); i++)
+	{
+		(*i)->WriteRecord(&file);
+	}
+
+	for (auto i = vecComposite.begin(); i != vecComposite.end(); i++)
+	{
+		(*i)->WriteRecord(&file);
+	}
+
+	for (auto i = vecSurface.begin(); i != vecSurface.end(); i++)
+	{
+		(*i)->WriteRecord(&file);
+	}
+
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		(*i)->WriteRecord(&file);
+	}
+
+	return false;
+}
+
+bool S101Cell::InformationRecordHasAttributeField()
+{
+	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
+	{
+		if ((*i)->m_attr.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::InformationRecordHasInformationAssociationField()
+{
+	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::PointRecordHasInformationAssociationField()
+{
+	for (auto i = vecPoint.begin(); i != vecPoint.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::MultiPointRecordHasInformationAssociationField()
+{
+	for (auto i = vecMultiPoint.begin(); i != vecMultiPoint.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::CurveRecordHasInformationAssociationField()
+{
+	for (auto i = vecCurve.begin(); i != vecCurve.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::CompositeCurveHasInformationAssociationField()
+{
+	for (auto i = vecComposite.begin(); i != vecComposite.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::SurfaceRecordHasInformationAssociationField()
+{
+	for (auto i = vecSurface.begin(); i != vecSurface.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::FeatureRecordHasAttributeField()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		if ((*i)->m_attr.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::FeatureRecordHasInformationAssociationField()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		if ((*i)->m_inas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::FeatureRecordHasSpatialAssociationField()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		if ((*i)->m_spas.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::FeatureRecordHasFeatureAssociationField()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		if ((*i)->m_fasc.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool S101Cell::FeatureRecordHasMaskedSpatialTypeField()
+{
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		if ((*i)->m_mask.size() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

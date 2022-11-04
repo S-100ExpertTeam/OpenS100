@@ -4,6 +4,8 @@
 
 #include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
 
+#include <map>
+
 class InformationTypes : public XML_Item
 {
 public:
@@ -11,11 +13,11 @@ public:
 	virtual ~InformationTypes(void);
 
 private:
-	std::unordered_map<std::wstring, InformationType> informationType;
+	std::unordered_map<std::wstring, InformationType*> informationType;
 
 public:
 	void GetContents(pugi::xml_node& node);
 	
-	std::unordered_map<std::wstring, InformationType>& GetInformationTypePointer();
+	std::unordered_map<std::wstring, InformationType*>& GetInformationTypePointer();
 	bool SetAssociationFromSuperType(InformationType* it);
 };

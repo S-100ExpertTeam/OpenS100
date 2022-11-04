@@ -33,7 +33,7 @@ void SCompositeCurve::CreateD2Geometry(ID2D1Factory1* factory)
 	}
 }
 
-bool SCompositeCurve::ImportFromWkb(char* value, int size)
+bool SCompositeCurve::ImportFromWkb(unsigned char* value, int size)
 {
 	Release();
 
@@ -78,12 +78,12 @@ bool SCompositeCurve::ImportFromWkb(char* value, int size)
 	return true;
 }
 
-bool SCompositeCurve::ExportToWkb(char** value, int* size)
+bool SCompositeCurve::ExportToWkb(unsigned char** value, int* size)
 {
 	*size = WkbSize();
 	if (*value == nullptr)
 	{
-		*value = new char[*size];
+		*value = new unsigned char[*size];
 	}
 	memset(*value, 0, *size);
 
@@ -112,12 +112,12 @@ bool SCompositeCurve::ExportToWkb(char** value, int* size)
 	return true;
 }
 
-bool SCompositeCurve::ExportToWkbMultiLineString(char** value, int* size)
+bool SCompositeCurve::ExportToWkbMultiLineString(unsigned char** value, int* size)
 {
 	*size = WkbSize();
 	if (*value == nullptr)
 	{
-		*value = new char[*size];
+		*value = new unsigned char[*size];
 	}
 	memset(*value, 0, *size);
 
@@ -207,4 +207,22 @@ GeoPoint SCompositeCurve::GetXY(int index)
 	}
 
 	return result;
+}
+
+void SCompositeCurve::SetXY(int index, double x, double y)
+{
+	int pointCount = 0;
+
+	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
+	{
+		int currentPointCount = (*i)->GetNumPoints();
+		if (index < pointCount + currentPointCount)
+		{
+			int localIndex = index - pointCount;
+			(*i)->Set(localIndex, x, y);
+			return;
+		}
+
+		pointCount += currentPointCount;
+	}
 }

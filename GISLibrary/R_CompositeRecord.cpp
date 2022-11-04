@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "R_CompositeRecord.h"
 #include "DRDirectoryInfo.h"
 #include "F_CCOC.h"
@@ -31,11 +31,11 @@ BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	int i = 0, j = 0;
 	for(i = 0; i < dir->m_count; i++)
 	{
-		if(dir->GetDirectory(i)->tag == *((unsigned int*)"CCID"))
+		if (strcmp(dir->GetDirectory(i)->tag, "CCID") == 0)
 		{
 			m_ccid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS* inas = new F_INAS();
 
@@ -43,7 +43,7 @@ BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"COCC"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "COCC") == 0)
 		{
 			if (nullptr == m_ccoc)
 			{
@@ -52,7 +52,7 @@ BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_ccoc->ReadField(buf);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"CUCO"))
+		else if(strcmp(dir->GetDirectory(i)->tag, "CUCO") == 0)
 		{
 			F_CUCO* cuco = new F_CUCO();
 			cuco->ReadField(buf);
@@ -69,6 +69,64 @@ BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		}
 	}
 	return TRUE;
+}
+
+bool R_CompositeRecord::WriteRecord(CFile* file)
+{
+	directory.clear();
+
+	// Set directory
+	int fieldOffset = 0;
+	int fieldLength = m_ccid.GetFieldLength();
+	Directory dir("CCID", fieldLength, fieldOffset);
+	directory.push_back(dir);
+	fieldOffset += fieldLength;
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	for (auto i = m_cuco.begin(); i != m_cuco.end(); i++)
+	{
+		fieldLength = (*i)->GetFieldLength();
+		Directory dir("CUCO", fieldLength, fieldOffset);
+		directory.push_back(dir);
+		fieldOffset += fieldLength;
+	}
+
+	int totalFieldSize = fieldOffset;
+
+	// Set leader
+	SetLeader(totalFieldSize, false);
+	leader.SetAsDR();
+	leader.WriteLeader(file);
+
+	// Write directory
+	WriteDirectory(file);
+
+	// Write field area
+	m_ccid.WriteField(file);
+
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	for (auto i = m_cuco.begin(); i != m_cuco.end(); i++)
+	{
+		(*i)->WriteField(file);
+	}
+
+	return true;
+}
+
+RecordName R_CompositeRecord::GetRecordName()
+{
+	return m_ccid.m_name;
 }
 
 int R_CompositeRecord::GetRCID()

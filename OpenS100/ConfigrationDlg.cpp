@@ -170,9 +170,9 @@ void CConfigrationDlg::InitS101FeatureTypes(FeatureCatalogue* fc)
 		return;
 	}
 
-	for (auto fti = fc->GetFeatureTypesPointer().GetFeatureTypePointer().begin(); fti != fc->GetFeatureTypesPointer().GetFeatureTypePointer().end(); fti++)
+	for (auto fti = fc->GetFeatureTypes().GetFeatureType().begin(); fti != fc->GetFeatureTypes().GetFeatureType().end(); fti++)
 	{
-		auto *ft = &fti->second;
+		auto ft = fti->second;
 
 		m_config.featureDisplaySettings.insert({ ft->GetName(), true });
 	}

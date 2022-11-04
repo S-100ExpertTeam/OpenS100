@@ -28,7 +28,7 @@ namespace GISLibrary
 		{
 			CString errMsg;
 			errMsg.Format(_T("Failed to create Direct2D Factory! (%02X)"), hr);
-			OutputDebugString(errMsg);
+			//OutputDebugString(errMsg);
 			return false;
 		}
 		
@@ -52,7 +52,7 @@ namespace GISLibrary
 			{
 				CString errMsg;
 				errMsg.Format(_T("Failed to create stroke line!(User Layer Solid Style) (%02X)"), hr);
-				OutputDebugString(errMsg);
+				//OutputDebugString(errMsg);
 				return false;
 			}
 
@@ -76,7 +76,7 @@ namespace GISLibrary
 			{
 				CString errMsg;
 				errMsg.Format(_T("Failed to create stroke line!(User Layer Dash Style) (%02X)"), hr);
-				OutputDebugString(errMsg);
+				//OutputDebugString(errMsg);
 				return false;
 			}
 
@@ -100,7 +100,7 @@ namespace GISLibrary
 			{
 				CString errMsg;
 				errMsg.Format(_T("Failed to create stroke line!(User Layer Dot Style) (%02X)"), hr);
-				OutputDebugString(errMsg);
+				//OutputDebugString(errMsg);
 				return false;
 			}
 			D2D1StrokeStyleGroup.push_back(pDotStrokeStyle);
@@ -112,7 +112,7 @@ namespace GISLibrary
 			{
 				CString errMsg;
 				errMsg.Format(_T("Failed to create IDWriteFactory! (%02X)"), hr);
-				OutputDebugString(errMsg);
+				//OutputDebugString(errMsg);
 				return false;
 			}
 
@@ -134,7 +134,7 @@ namespace GISLibrary
 			{
 				CString errMsg;
 				errMsg.Format(_T("Failed to create IDWriteTextFormat! (%02X)"), hr);
-				OutputDebugString(errMsg);
+				//OutputDebugString(errMsg);
 				return false;
 			}
 
@@ -158,7 +158,7 @@ namespace GISLibrary
 			{
 				CString errMsg;
 				errMsg.Format(_T("Failed to create IDWriteTextFormat (for Area)! (%02X)"), hr);
-				OutputDebugString(errMsg);
+				//OutputDebugString(errMsg);
 				return false;
 			}
 
@@ -229,7 +229,7 @@ namespace GISLibrary
 				{
 					CString errMsg;
 					errMsg.Format(_T("Failed to create ID2D1SolidColorBrush! (%02X)"), hr);
-					OutputDebugString(errMsg);
+					//OutputDebugString(errMsg);
 					return false;
 				}
 			}
@@ -237,7 +237,7 @@ namespace GISLibrary
 			{
 				CString errMsg;
 				errMsg.Format(_T("Failed to create ID2D1DCRenderTarget! (%02X)"), hr);
-				OutputDebugString(errMsg);
+				//OutputDebugString(errMsg);
 				return false;
 			}
 		}
@@ -272,7 +272,7 @@ namespace GISLibrary
 		{
 			CString errMsg;
 			errMsg.Format(_T("Failed to create IDWriteTextFormat! (%02X)"), result);
-			OutputDebugString(errMsg);
+			//OutputDebugString(errMsg);
 			return false;
 		}
 

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "F_RIAS.h"
 #include "RIAS.h"
 #include "ISO8211Fuc.h"
@@ -43,6 +43,22 @@ void F_RIAS::ReadField(BYTE *&buf, int loopCnt)
 		rias->m_raui = *(buf++);
 		m_arr.push_back(rias);
 	}
+}
+
+bool F_RIAS::WriteField(CFile* file)
+{
+	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
+	{
+		file->Write(&(*i)->m_name.RCNM, 1);
+		file->Write(&(*i)->m_name.RCID, 4);
+		file->Write(&(*i)->m_ornt, 1);
+		file->Write(&(*i)->m_usag, 1);
+		file->Write(&(*i)->m_raui, 1);
+	}
+
+	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
+
+	return true;
 }
 
 int F_RIAS::GetFieldLength()

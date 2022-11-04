@@ -34,6 +34,6 @@ namespace Portrayal
 		//std::unordered_map<std::wstring, ExternalFile*> GetColorProfiles();
 
 		//void SetColorProfile(std::wstring key, S100_ColorProfile* value);
-		std::vector<ExternalFile*>* S100_ColorProfiles::GetColorProfilesVector();
+		std::vector<ExternalFile*>* GetColorProfilesVector();
 	};
 }

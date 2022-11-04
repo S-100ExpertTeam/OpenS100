@@ -180,3 +180,13 @@ S100SpatialObject* S100Layer::GetS100SpatialObject()
 {
 	return (S100SpatialObject*)m_spatialObject;
 }
+
+int S100Layer::GetProductNumber()
+{
+	return productNumber;
+}
+
+void S100Layer::SetProductNumber(int value)
+{
+	productNumber = value;
+}

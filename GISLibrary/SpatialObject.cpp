@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SpatialObject.h"
 
 SpatialObject::SpatialObject(void)

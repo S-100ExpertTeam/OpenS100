@@ -17,13 +17,23 @@ void UnlimitedInteger::GetContents(pugi::xml_node& node)
 {
 	std::wstring name = pugi::as_wide(node.name());
 
-	if (node.attribute("infinite")) 
+	if (auto attributeNode = node.attribute("infinite")) 
 	{
-		XML_Attribute value;
-		value.Setname("infinite");
-		value.Setvalue((char*)node.attribute("infinite").value());
-		
-		SetAttributes(value);
+		infinite = attributeNode.as_bool();
+
+		if (infinite == false)
+		{
+			value = node.text().as_int();
+		}
 	}
-	this->Setvalue(pugi::as_wide(node.child_value()));
+}
+
+int UnlimitedInteger::GetIntegerValue()
+{
+	return value;
+}
+
+bool UnlimitedInteger::IsInfinite()
+{
+	return infinite;
 }

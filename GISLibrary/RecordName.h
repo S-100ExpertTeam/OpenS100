@@ -1,11 +1,17 @@
 #pragma once
 
+#include "Enum_RCNM.h"
+
 #include <string>
 
 class RecordName
 {
 public:
 	RecordName();
+	RecordName(int RCNM, int RCID);
+	RecordName(enum GISLibrary::RCNM RCNM, int RCID);
+	RecordName(long long key);
+	
 	virtual ~RecordName();
 
 public:	

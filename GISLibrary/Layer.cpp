@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Layer.h"
 #include "S100Utilities.h"
 
@@ -269,4 +269,14 @@ void Layer::SetScaleMaximum(int value)
 	{
 		scaleMaximum = 0;
 	}
+}
+
+void Layer::SetID(int value)
+{
+	id = value;
+}
+
+int Layer::GetID()
+{
+	return id;
 }

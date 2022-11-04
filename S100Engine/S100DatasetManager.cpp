@@ -24,7 +24,7 @@ bool S100DatasetManager::OpenS101(CString _path)
 
 	if (!ret)
 	{
-		OutputDebugString(_T("Failed to call LoadBaseCell\n"));
+		//OutputDebugString(_T("Failed to call LoadBaseCell\n"));
 		return false;
 	}
 	this->s101Dataset.push_back(s101Dataset);
@@ -39,7 +39,7 @@ bool S100DatasetManager::OpenS101SENC(CString _path)
 
 	if (!ret)
 	{
-		OutputDebugString(_T("Failed to open S101 SENC\n"));
+		//OutputDebugString(_T("Failed to open S101 SENC\n"));
 		return false;
 	}
 

@@ -181,7 +181,7 @@ bool	CClass_S101_Base::ParsingBaseCell(const BYTE *pData)
 	int nRecordLength = 0;
 	if (Parsing_8211(pData, nRecordLength) == false)
 	{
-		OutputDebugString(_T("File does not appear to have a valid ISO 8211 header!!"));
+		//OutputDebugString(_T("File does not appear to have a valid ISO 8211 header!!"));
 		return false;
 	}
 	else
@@ -2505,7 +2505,7 @@ void CClass_S101_Base::GetPoints(ST_FEATURE_RECORD *pFeatureRecord, std::vector<
 	}
 	else
 	{
-		OutputDebugString(_T("Invalied type in GetPoints()\n"));
+		//OutputDebugString(_T("Invalied type in GetPoints()\n"));
 	}
 }
 
@@ -2636,7 +2636,7 @@ void CClass_S101_Base::GetPoints(ST_SURFACE_RECORD* pST_SURFACE_RECORD, std::vec
 				}
 				else
 				{
-					OutputDebugString(_T("Invalied RRNM in RIAS\n"));
+					//OutputDebugString(_T("Invalied RRNM in RIAS\n"));
 				}
 			}
 		}
@@ -2677,7 +2677,7 @@ void CClass_S101_Base::GetPoints(ST_COMP_CURVE_RECORD* pST_COMP_CURVE_RECORD, st
 						}
 						else
 						{
-							OutputDebugString(_T("Unknown ORNT\n"));
+							//OutputDebugString(_T("Unknown ORNT\n"));
 						}
 					}
 				}
@@ -2709,14 +2709,14 @@ void CClass_S101_Base::GetPoints(ST_COMP_CURVE_RECORD* pST_COMP_CURVE_RECORD, st
 						}
 						else
 						{
-							OutputDebugString(_T("Unknown ORNT\n"));
+							//OutputDebugString(_T("Unknown ORNT\n"));
 						}
 					}
 				}
 			}
 			else
 			{
-				OutputDebugString(_T("Unknown RRNM\n"));
+				//OutputDebugString(_T("Unknown RRNM\n"));
 			}
 		}
 	}
@@ -2779,7 +2779,7 @@ void CClass_S101_Base::GenerateMapForRecord()
 
 void CClass_S101_Base::Output(CString& str)
 {
-	OutputDebugString(str);
+	//OutputDebugString(str);
 	str = _T("");
 }
 
@@ -2865,7 +2865,7 @@ int CClass_S101_Base::GetCodeByAttributeName(CString attributeName)
 		{
 			if (bFind == true)
 			{
-				OutputDebugString(_T("Attribute name id duplicated\n"));
+				//OutputDebugString(_T("Attribute name id duplicated\n"));
 				return -1;
 			}
 
@@ -2889,7 +2889,7 @@ int CClass_S101_Base::GetCodeByFeatureName(CString featureName)
 		{
 			if (bFind == true)
 			{
-				OutputDebugString(_T("Feature name id duplicated\n"));
+				//OutputDebugString(_T("Feature name id duplicated\n"));
 				return -1;
 			}
 
@@ -2913,7 +2913,7 @@ int CClass_S101_Base::GetCodeByInformationName(CString informationName)
 		{
 			if (bFind == true)
 			{
-				OutputDebugString(_T("Information name id duplicated\n"));
+				//OutputDebugString(_T("Information name id duplicated\n"));
 				return -1;
 			}
 
@@ -2939,14 +2939,14 @@ bool CClass_S101_Base::CheckFTCS()
 				{
 					CString strErr;
 					strErr.Format(_T("[%d] Feature Numerical Code is duplicated.\n"), i->nNumeric);
-					OutputDebugString(strErr);
+					//OutputDebugString(strErr);
 					bCheck = false;
 				}
 				else if (!i->strCode.CompareNoCase(j->strCode))
 				{
 					CString strErr;
 					strErr.Format(_T("[%s] Feautre Code duplicates."), i->strCode);
-					OutputDebugString(strErr);
+					//OutputDebugString(strErr);
 					bCheck = false;
 				}
 			}

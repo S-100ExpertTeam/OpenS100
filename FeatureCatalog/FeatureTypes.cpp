@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "FeatureTypes.h"
 
 FeatureTypes::FeatureTypes(void)
@@ -8,7 +8,10 @@ FeatureTypes::FeatureTypes(void)
 
 FeatureTypes::~FeatureTypes(void)
 {
-
+	for (auto i = vecFeatureType.begin(); i != vecFeatureType.end(); i++)
+	{
+		delete (*i);
+	}
 }
 
 void FeatureTypes::GetContents(pugi::xml_node& node)
@@ -18,9 +21,9 @@ void FeatureTypes::GetContents(pugi::xml_node& node)
 		const pugi::char_t* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:S100_FC_FeatureType"))
 		{
-			FeatureType sa;
-			sa.GetContents(instruction);
-			featureType[sa.GetCodeAsWString()] = sa;
+			auto sa = new FeatureType();
+			sa->GetContents(instruction);
+			InsertFeatureType(sa);
 
 			if (instruction.attribute("isAbstract"))
 			{
@@ -38,7 +41,7 @@ void FeatureTypes::ApplySuperType()
 {
 	for (auto itor = featureType.begin(); itor != featureType.end(); itor++)
 	{
-		FeatureType *ft = &itor->second;
+		FeatureType *ft = itor->second;
 		SetAttributeFromSuperType(ft);
 		SetAssociationFromSuperType(ft);
 	}
@@ -55,11 +58,8 @@ bool FeatureTypes::SetAttributeFromSuperType(FeatureType* ft)
 		}
 		else
 		{
-			FeatureType* sft = &itor->second;
-			if (SetAttributeFromSuperType(sft))
-			{
-				ft->GetAttributeBindingPointer().insert(ft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().end());
-			}
+			FeatureType* sft = itor->second;
+			ft->GetAttributeBindingPointer().insert(ft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().end());
 			return true;
 		}
 
@@ -83,7 +83,7 @@ bool FeatureTypes::SetAssociationFromSuperType(FeatureType* ft)
 		}
 		else
 		{
-			FeatureType* sft = &itor->second;
+			FeatureType* sft = itor->second;
 			if (SetAssociationFromSuperType(sft))
 			{
 				ft->GetFeatureBindingPointer().insert(sft->GetFeatureBindingPointer().begin(), sft->GetFeatureBindingPointer().end());
@@ -100,7 +100,26 @@ bool FeatureTypes::SetAssociationFromSuperType(FeatureType* ft)
 
 }
 
-std::unordered_map<std::wstring, FeatureType>& FeatureTypes::GetFeatureTypePointer()
+std::vector<FeatureType*>& FeatureTypes::GetVecFeatureType()
+{
+	return vecFeatureType;
+}
+
+std::unordered_map<std::wstring, FeatureType*>& FeatureTypes::GetFeatureType()
 {
 	return featureType;
+}
+
+bool FeatureTypes::InsertFeatureType(FeatureType* value)
+{
+	auto key = value->GetCodeAsWString();
+	if (featureType.find(key) == featureType.end())
+	{
+		vecFeatureType.push_back(value);
+		featureType.insert({ key, value });
+		return true;
+	}
+
+	delete value;
+	return false;
 }

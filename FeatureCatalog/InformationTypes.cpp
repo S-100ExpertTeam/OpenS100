@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "InformationTypes.h"
 
 InformationTypes::InformationTypes(void)
@@ -8,7 +8,10 @@ InformationTypes::InformationTypes(void)
 
 InformationTypes::~InformationTypes(void)
 {
-
+	for (auto i = informationType.begin(); i != informationType.end(); i++)
+	{
+		delete i->second;
+	}
 }
 
 void InformationTypes::GetContents(pugi::xml_node& node)
@@ -18,9 +21,9 @@ void InformationTypes::GetContents(pugi::xml_node& node)
 		const pugi::char_t* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:S100_FC_InformationType"))
 		{
-			InformationType sa;
-			sa.GetContents(instruction);
-			informationType[sa.GetCodeAsWString()] = sa;
+			auto sa = new InformationType();
+			sa->GetContents(instruction);
+			informationType[sa->GetCodeAsWString()] = sa;
 			if (instruction.attribute("isAbstract"))
 			{
 				XML_Attribute value;
@@ -43,7 +46,7 @@ bool InformationTypes::SetAssociationFromSuperType(InformationType* it)
 		}
 		else
 		{
-			InformationType* sit = &itor->second;
+			InformationType* sit = itor->second;
 			if (SetAssociationFromSuperType(sit))
 			{
 				it->GetInformationBindingPointer().insert(sit->GetInformationBindingPointer().begin(), sit->GetInformationBindingPointer().end());
@@ -59,7 +62,7 @@ bool InformationTypes::SetAssociationFromSuperType(InformationType* it)
 
 }
 
-std::unordered_map<std::wstring, InformationType>& InformationTypes::GetInformationTypePointer()
+std::unordered_map<std::wstring, InformationType*>& InformationTypes::GetInformationTypePointer()
 {
 	return informationType;
 }

@@ -36,7 +36,7 @@ public:
 
 	// B : <1> (1)
 	// U : <0..1> (1)
-	std::list<F_SEGH*> m_segh;
+	F_SEGH* m_segh = nullptr;
 
 	// B : Not used
 	// U : <0..1> (3)
@@ -47,6 +47,9 @@ public:
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool WriteRecord(CFile* file);
+	RecordName GetRecordName();
+
 	int GetRCID();
 	std::wstring GetRCIDasWstring();
 
