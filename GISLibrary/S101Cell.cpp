@@ -4134,7 +4134,7 @@ bool S101Cell::Save(std::wstring path)
 		(*i)->WriteRecord(&file);
 	}
 
-	return false;
+	return true;
 }
 
 bool S101Cell::InformationRecordHasAttributeField()
