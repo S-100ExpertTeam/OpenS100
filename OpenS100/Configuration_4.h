@@ -27,8 +27,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	afx_msg void OnBnClickedButton_initialization();
 	virtual BOOL OnInitDialog();
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	CListCtrl m_viewingGroupList; // express the viewing group that I read on PC.
+	CListCtrl m_viewingGroupList;
+	CComboBox comboBoxProduct;
+	afx_msg void OnBnClickedButtonCheck();
+	afx_msg void OnBnClickedButtonUncheck();
+	virtual void OnCancel();
+	virtual void OnOK();
 };

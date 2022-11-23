@@ -19,7 +19,6 @@ CConfiguration_4::CConfiguration_4(CWnd* pParent /*=nullptr*/)
 
 }
 
-
 CConfiguration_4::~CConfiguration_4()
 {
 
@@ -29,10 +28,12 @@ void CConfiguration_4::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_VIEWINGGROUP, m_viewingGroupList);
+	DDX_Control(pDX, IDC_COMBO_PRODUCT, comboBoxProduct);
 }
 
 BEGIN_MESSAGE_MAP(CConfiguration_4, CDialogEx)
-	ON_BN_CLICKED(IDC_BUTTON1, &CConfiguration_4::OnBnClickedButton_initialization)
+	ON_BN_CLICKED(IDC_BUTTON_CHECK, &CConfiguration_4::OnBnClickedButtonCheck)
+	ON_BN_CLICKED(IDC_BUTTON_UNCHECK, &CConfiguration_4::OnBnClickedButtonUncheck)
 END_MESSAGE_MAP()
 
 BOOL CConfiguration_4::OnInitDialog()
@@ -43,10 +44,10 @@ BOOL CConfiguration_4::OnInitDialog()
 		CRect rect;
 
 		m_viewingGroupList.GetClientRect(rect);
-		m_viewingGroupList.InsertColumn(0, _T("on/off"), LVCFMT_LEFT, 60);
-		m_viewingGroupList.InsertColumn(1, _T("name"), LVCFMT_LEFT, 100);
-		m_viewingGroupList.InsertColumn(2, _T("language"), LVCFMT_LEFT, 40);
-		m_viewingGroupList.InsertColumn(3, _T("description"), LVCFMT_LEFT, rect.Width() - 200);
+		m_viewingGroupList.InsertColumn(0, _T("On/Off"), LVCFMT_LEFT, 60);
+		m_viewingGroupList.InsertColumn(1, _T("Name"), LVCFMT_LEFT, 100);
+		m_viewingGroupList.InsertColumn(2, _T("Code"), LVCFMT_LEFT, 100);
+		m_viewingGroupList.InsertColumn(3, _T("Definition"), LVCFMT_LEFT, rect.Width() - 200);
 
 		m_viewingGroupList.SetExtendedStyle(m_viewingGroupList.GetExtendedStyle() | LVS_EX_CHECKBOXES);
 
@@ -55,37 +56,38 @@ BOOL CConfiguration_4::OnInitDialog()
 			return false;
 		}
 
-		auto pc = theApp.gisLib->GetPC();
-		if (pc == nullptr)
+		auto fc = theApp.gisLib->GetFC();
+		if (fc == nullptr)
 		{
 			return false;
 		}
 
-		CString cs(_T(""));
-		int i = 1;
-		for (auto viewing : *pc->GetViewingGroups()->GetViewingGroup())
+		auto vecFeature = fc->GetFeatureTypes().GetVecFeatureType();
+
+		for (int i = 0; i < vecFeature.size(); i++)
 		{
-			for (S100_Description* dis : *viewing->GetDescription())
-			{
-				std::wstring Name = dis->Getname();
-				std::wstring Lag = dis->Getlanguage();
-				std::wstring Des = dis->Getdescription();
+			auto feature = vecFeature[i];
+			auto name = feature->GetName();
+			auto code = feature->GetCodeAsWString();
+			auto definition = feature->GetDefinition();
 
-				int nItem = m_viewingGroupList.InsertItem(i, cs);
-				m_viewingGroupList.SetItemText(nItem, 1, Name.c_str());
-				m_viewingGroupList.SetItemText(nItem, 2, Lag.c_str());
-				m_viewingGroupList.SetItemText(nItem, 3, Des.c_str());
-
-				viewing_map[Name] = dis;
-				i++;
-			}
+			m_viewingGroupList.InsertItem(i, _T(""));
+			m_viewingGroupList.SetItemText(i, 1, name.c_str());
+			m_viewingGroupList.SetItemText(i, 2, code.c_str());
+			m_viewingGroupList.SetItemText(i, 3, definition.c_str());
 		}
+		
 		//I check all the details.
 		int nCount = m_viewingGroupList.GetItemCount();
 		for (int i = 0; i < nCount; i++)
 		{
 			m_viewingGroupList.SetCheck(i);
 		}
+
+		// Combo box (Product)
+		comboBoxProduct.AddString(L"S-101");
+		comboBoxProduct.SetCurSel(0);
+
 		return true;  // return TRUE unless you set the focus to a control
 	}
 	catch (int exceptionCode)
@@ -95,37 +97,31 @@ BOOL CConfiguration_4::OnInitDialog()
 	}
 }
 
-// In Setting, the value of turning off the viewing group comes in.
-void CConfiguration_4::OnBnClickedButton_initialization()
+void CConfiguration_4::OnBnClickedButtonCheck()
 {
-	int nCount = m_viewingGroupList.GetItemCount();
-	for (int i = 0; i < nCount; i++)
+	int cnt = m_viewingGroupList.GetItemCount();
+	for (int i = 0; i < cnt; i++)
 	{
-		auto click = m_viewingGroupList.GetCheck(i);
-		if (click == false)
-		{
-			CString name = m_viewingGroupList.GetItemText(i, 1);
-			auto isView=viewing_map.find(std::wstring(name));
-			if (isView != viewing_map.end())
-			{
-				S100_Description* viewing = viewing_map[std::wstring(name)];
-				viewing->SetOn(false);
-			
-			}
-			CString str;
-			str.Format(_T("%s is visible false \n"), name);
-			//OutputDebugString(str);
-		}
+		m_viewingGroupList.SetCheck(i);
 	}
-	return;
+}
+
+void CConfiguration_4::OnBnClickedButtonUncheck()
+{
+	int cnt = m_viewingGroupList.GetItemCount();
+	for (int i = 0; i < cnt; i++)
+	{
+		m_viewingGroupList.SetCheck(i, FALSE);
+	}
+}
+
+void CConfiguration_4::OnCancel()
+{
+	m_pParent->OnBnClickedCancel();
 }
 
 
-BOOL CConfiguration_4::PreTranslateMessage(MSG* pMsg) // blocked the ESC button.
+void CConfiguration_4::OnOK()
 {
-	if (pMsg->message == WM_KEYDOWN && (pMsg->wParam == VK_RETURN || pMsg->wParam == VK_ESCAPE))
-	{
-		pMsg->wParam = NULL;
-	}
-	return CDialogEx::PreTranslateMessage(pMsg);
+	m_pParent->OnBnClickedOk();
 }

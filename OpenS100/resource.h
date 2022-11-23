@@ -122,6 +122,7 @@
 #define IDD_DIALOG_CONFIG_4             348
 #define IDC_LIST_VIEWINGGROUP           349
 #define IDC_BUTTON1                     350
+#define IDC_BUTTON_CHECK                350
 #define IDC_TWO_SHADE                   351
 #define IDC_BTN_LOAD_SETTING            352
 #define IDC_COMBO_SETTING_FONT_NAME     561
@@ -131,6 +132,8 @@
 #define IDC_COMBO_GEOM                  1002
 #define IDC_LIST1                       1003
 #define IDC_LIST                        1003
+#define IDC_BUTTON_UNCHECK              1004
+#define IDC_COMBO_PRODUCT               1005
 #define IDC_RADIO_OTHER                 1036
 #define IDC_COLOR_DUSK_WB               1040
 #define IDC_DPM_STANDARD                1081
@@ -173,7 +176,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        333
 #define _APS_NEXT_COMMAND_VALUE         32774
-#define _APS_NEXT_CONTROL_VALUE         1004
+#define _APS_NEXT_CONTROL_VALUE         1006
 #define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif
