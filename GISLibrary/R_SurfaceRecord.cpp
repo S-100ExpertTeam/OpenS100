@@ -27,17 +27,17 @@ BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	USES_CONVERSION;
 	for(int i = 0; i < dir->m_count; i++)
 	{
-		if(dir->GetDirectory(i)->tag == *((unsigned int*)"SRID"))
+		if(strcmp(dir->GetDirectory(i)->tag, "SRID") == 0)
 		{
 			m_srid.ReadField(buf);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if(strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS* inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if(dir->GetDirectory(i)->tag == *((unsigned int*)"RIAS"))
+		else if(strcmp(dir->GetDirectory(i)->tag, "RIAS") == 0)
 		{
 			F_RIAS* rias = new F_RIAS();
 			auto cnt = (dir->GetDirectory(i)->length - 1) / RIAS::GetSize();

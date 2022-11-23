@@ -32,17 +32,17 @@ BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	int i = 0, j = 0, cnt;
 	for(i = 0; i < dir->m_count; i++)
 	{
-		if(dir->GetDirectory(i)->tag == *((unsigned int*)"IRID"))
+		if(strcmp(dir->GetDirectory(i)->tag, "IRID") == 0)
 		{
 			m_irid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS *inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"ATTR"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "ATTR") == 0)
 		{
 			cnt = 0;
 			j = 0;

@@ -1641,12 +1641,17 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		TestGISLibrary::TestSave();
 		break;
 	case VK_DELETE:
-		auto key = theApp.m_DockablePaneCurrentSelection.pDlg->GetSelectedRecordName();
-		RecordName selectedRecordName(key);
-		s101Creator.DeleteFeature(selectedRecordName.RCID);
-		theApp.gisLib->S101RebuildPortrayal();
-		theApp.m_DockablePaneCurrentSelection.RemoveAll();
-		SetPick(nullptr, nullptr);
+		DeleteSelectedFeature();
+		MapRefresh();
+		break;
+	case 'N':
+		TestGISLibrary::CreateNewLayer();
+		theApp.m_pDockablePaneLayerManager.UpdateList();
+		MapRefresh();
+		break;
+	case 'C':
+		TestGISLibrary::CopySelectedFeatureToNewLayer();
+		theApp.m_pDockablePaneLayerManager.UpdateList();
 		MapRefresh();
 		break;
 	}
@@ -1792,6 +1797,16 @@ void COpenS100View::CopyLayer()
 	}
 
 	enc1->Save(L"..\\TEMP\\edit.000");
+}
+
+void COpenS100View::DeleteSelectedFeature()
+{
+	auto key = theApp.m_DockablePaneCurrentSelection.pDlg->GetSelectedRecordName();
+	RecordName selectedRecordName(key);
+	s101Creator.DeleteFeature(selectedRecordName.RCID);
+	theApp.gisLib->S101RebuildPortrayal();
+	theApp.m_DockablePaneCurrentSelection.RemoveAll();
+	SetPick(nullptr, nullptr);
 }
 
 void COpenS100View::SetPick(S101Cell* enc, R_FeatureRecord* feature)

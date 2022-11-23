@@ -82,15 +82,15 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	unsigned i = 0, j = 0, cnt;
 	for (i = 0; i < dir->m_count; i++)
 	{
-		if (dir->GetDirectory(i)->tag == *((unsigned int*)"FRID"))
+		if (strcmp(dir->GetDirectory(i)->tag, "FRID") == 0)
 		{
 			m_frid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"FOID"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "FOID") == 0)
 		{
 			m_foid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"ATTR"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "ATTR") == 0)
 		{
 			cnt = 0;
 			j = 0;
@@ -117,27 +117,27 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 			attr->ReadField(buf, cnt);
 			m_attr.push_back(attr);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS *inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"SPAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "SPAS") == 0)
 		{
 			F_SPAS* spas = new F_SPAS();
 			cnt = (dir->GetDirectory(i)->length - 1) / SPAS::GetSize();
 			spas->ReadField(buf, cnt);
 			m_spas.push_back(spas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"FASC"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "FASC") == 0)
 		{
 			F_FASC *fasc = new F_FASC();
 			cnt = (dir->GetDirectory(i)->length - 1) / FASC::GetSize();
 			fasc->ReadField(buf, cnt);
 			m_fasc.push_back(fasc);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"MASK"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "MASK") == 0)
 		{
 
 			F_MASK* mask = new F_MASK();

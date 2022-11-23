@@ -8,12 +8,12 @@ public:
 	virtual ~F_DSSI();
 
 public:
-	double m_dcox;
-	double m_dcoy;
-	double m_dcoz;
-	int m_cmfx;
-	int m_cmfy;
-	int m_cmfz;
+	double m_dcox = 0.0;
+	double m_dcoy = 0.0;
+	double m_dcoz = 0.0;
+	int m_cmfx = 10000000;
+	int m_cmfy = 10000000;
+	int m_cmfz = 100;
 
 	// Number of Information Type Records
 	int m_noir;

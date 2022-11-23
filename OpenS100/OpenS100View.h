@@ -166,6 +166,7 @@ public:
 	void LineFeatureList();
 	void AreaFeatureList();
 	void CopyLayer();
+	void DeleteSelectedFeature();
 
 	void SetPick(S101Cell* enc = nullptr, R_FeatureRecord* feature = nullptr);
 };

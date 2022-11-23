@@ -10,7 +10,7 @@ F_DSSI::F_DSSI(void)
 	m_dcoz = 0;
 	m_cmfx = 10000000;
 	m_cmfy = 10000000;
-	m_cmfz = 10000000;
+	m_cmfz = 100;
 	m_noir = 0;
 	m_nopn = 0;
 	m_nomn = 0;

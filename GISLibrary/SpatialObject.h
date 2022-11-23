@@ -13,8 +13,7 @@ public:
 
 public:
 	Layer* m_pLayer = nullptr;
-	S100_FileType m_FileType; // file type : SHP, S-57, S-101, GML
-	//S100_FileType m_FileType = FILE_S_100_VECTOR; 
+	S100_FileType m_FileType; 
 
 private:
 	CString m_FilePath; // Full path of file (including name)

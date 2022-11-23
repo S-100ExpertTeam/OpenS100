@@ -52,17 +52,17 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 {
 	for (int i = 0; i < dir->m_count; i++)
 	{
-		if (dir->GetDirectory(i)->tag == *((unsigned int*)"CRID"))
+		if (strcmp(dir->GetDirectory(i)->tag, "CRID") == 0)
 		{
 			m_crid.ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"INAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS* inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"PTAS"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "PTAS") == 0)
 		{
 			if (nullptr == m_ptas)
 			{
@@ -73,7 +73,7 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_ptas->ReadField(buf, cnt);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"SECC"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "SECC") == 0)
 		{
 			if (nullptr == m_secc)
 			{
@@ -82,13 +82,13 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_secc->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"SEGH"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "SEGH") == 0)
 		{
 			m_segh = new F_SEGH();
 
 			m_segh->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"COCC"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "COCC") == 0)
 		{
 			if (nullptr == m_cocc)
 			{
@@ -97,7 +97,7 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 
 			m_cocc->ReadField(buf);
 		}
-		else if (dir->GetDirectory(i)->tag == *((unsigned int*)"C2IL"))
+		else if (strcmp(dir->GetDirectory(i)->tag, "C2IL") == 0)
 		{
 			F_C2IL *c2il = new F_C2IL();
 
