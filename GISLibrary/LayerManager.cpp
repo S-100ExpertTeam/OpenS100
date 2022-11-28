@@ -768,20 +768,11 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 
 	std::set<int> drawingPriority;
 
-	unsigned numeric_number_of_text_placement = 0;
-
 	DrawingSet drawingSet;
 
 	if (false == MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
 	{
 		return;
-	}
-
-	numeric_number_of_text_placement = 0;
-	auto ii = cell->m_dsgir.m_ftcs->m_arrFindForCode.find(L"TextPlacement");
-	if (ii != cell->m_dsgir.m_ftcs->m_arrFindForCode.end())
-	{
-		numeric_number_of_text_placement = ii->second->m_nmcd;
 	}
 
 	std::list<SENC_Instruction*> itList;
@@ -843,7 +834,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		}
 
 		// Text
-		cell->pcManager->displayListSENC->GetDrawingInstructionByCondition(i, 5, scaler, itList, numeric_number_of_text_placement);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 5, scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = drawingSet.GetTextList(i);
@@ -1148,129 +1139,6 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 Scaler* LayerManager::GetScaler()
 {
 	return scaler;
-}
-
-// [Text Placement ]
-float LayerManager::GetTextPlaceBearingValue(S101Cell* c, R_FeatureRecord* fr)
-{
-	int numeric_number_of_bearing = 0;
-	auto ii = c->m_dsgir.m_atcs->m_arrFindForCode.find(L"flipBearing");
-	if (ii != c->m_dsgir.m_atcs->m_arrFindForCode.end())
-	{
-		numeric_number_of_bearing = ii->second->m_nmcd;
-	}
-
-	for (auto itorParent = fr->m_attr.begin(); itorParent != fr->m_attr.end(); itorParent++)
-	{
-		F_ATTR* attr = *itorParent;
-		for (auto aitor = attr->m_arr.begin(); aitor != attr->m_arr.end(); aitor++)
-		{
-			ATTR* attr = *aitor;
-
-			if (attr->m_natc == numeric_number_of_bearing)
-			{
-				return (float)_wtof(attr->m_atvl);
-			}
-		}
-	}
-
-	return 0;
-}
-
-// [Text Placement ]
-void LayerManager::DrawSemiCircle(float x, float y, float radius, float startAngle, float endAngle)
-{
-	// rotate Point
-	if (scaler->GetRotationDegree())
-	{
-		double radian = (180 - scaler->GetRotationDegree()) * DEG2RAD;
-
-		FLOAT tempX = (float)(scaler->soy - y) * (float)sin(radian) + (float)(scaler->sox - x) * (float)cos(radian);
-		FLOAT tempY = (float)(scaler->soy - y) * (float)cos(radian) - (float)(scaler->sox - x) * (float)sin(radian);
-
-		x = tempX + (float)scaler->sox;
-		y = tempY + (float)scaler->soy;
-	}
-
-	ID2D1PathGeometry* pGeometryArc = nullptr;
-	ID2D1PathGeometry* pGeometryLeftLine = nullptr;
-	ID2D1PathGeometry* pGeometryRightLine = nullptr;
-
-	HRESULT hr = gisLib->D2.pD2Factory->CreatePathGeometry(&pGeometryArc);
-	ID2D1PathGeometry* pathGeo = (ID2D1PathGeometry*)pGeometryArc;
-	ID2D1GeometrySink* pSink = nullptr;
-	hr = pathGeo->Open(&pSink);
-
-	FLOAT displayRadius = 150;
-
-	D2D1_POINT_2F centerPoint = { 0.0F, 0.0F };
-	D2D1_POINT_2F startPoint = { 0.0F, displayRadius };
-	D2D1_POINT_2F endPoint = { 0.0F, displayRadius };
-
-	D2D1::Matrix3x2F matrix1 = D2D1::Matrix3x2F::Identity();
-	matrix1 = matrix1.Rotation(startAngle);
-	startPoint = matrix1.TransformPoint(startPoint);
-
-	D2D1::Matrix3x2F matrix2 = D2D1::Matrix3x2F::Identity();
-	matrix2 = matrix2.Rotation(endAngle);
-	endPoint = matrix2.TransformPoint(endPoint);
-
-
-	pSink->BeginFigure(
-		startPoint,
-		D2D1_FIGURE_BEGIN_HOLLOW);
-
-	pSink->AddArc(
-		D2D1::ArcSegment(
-			endPoint,
-			D2D1::SizeF(displayRadius, displayRadius),
-			0,
-			D2D1_SWEEP_DIRECTION_COUNTER_CLOCKWISE,
-			(endAngle - startAngle) > 180 ? D2D1_ARC_SIZE_LARGE : D2D1_ARC_SIZE_SMALL
-		)
-	);
-	pSink->EndFigure(D2D1_FIGURE_END_OPEN);
-	hr = pSink->Close();
-	SafeRelease(&pSink);
-
-	hr = gisLib->D2.pD2Factory->CreatePathGeometry(&pGeometryLeftLine);
-	pathGeo = (ID2D1PathGeometry*)pGeometryLeftLine;
-	pSink = nullptr;
-	hr = pathGeo->Open(&pSink);
-
-	pSink->BeginFigure(
-		centerPoint,
-		D2D1_FIGURE_BEGIN_FILLED);
-	pSink->AddLine(startPoint);
-	pSink->EndFigure(D2D1_FIGURE_END_OPEN);
-	hr = pSink->Close();
-	SafeRelease(&pSink);
-
-
-	hr = gisLib->D2.pD2Factory->CreatePathGeometry(&pGeometryRightLine);
-	pathGeo = (ID2D1PathGeometry*)pGeometryRightLine;
-	pSink = nullptr;
-	hr = pathGeo->Open(&pSink);
-
-	pSink->BeginFigure(
-		centerPoint,
-		D2D1_FIGURE_BEGIN_FILLED);
-	pSink->AddLine(endPoint);
-	pSink->EndFigure(D2D1_FIGURE_END_OPEN);
-	hr = pSink->Close();
-	SafeRelease(&pSink);
-
-	D2D1::Matrix3x2F trans = D2D1::Matrix3x2F::Translation(x, y);
-
-	gisLib->D2.pRT->SetTransform(trans);
-	gisLib->D2.pBrush->SetColor(D2D1::ColorF((FLOAT)(255 / 255.0), (FLOAT)(222 / 255.0), (FLOAT)(100 / 255.0)));
-	gisLib->D2.pRT->DrawGeometry(pGeometryArc, gisLib->D2.pBrush, 2, gisLib->D2.D2D1StrokeStyleGroup[0]);
-	gisLib->D2.pRT->DrawGeometry(pGeometryRightLine, gisLib->D2.pBrush, 2, gisLib->D2.D2D1StrokeStyleGroup[0]);
-	gisLib->D2.pRT->DrawGeometry(pGeometryLeftLine, gisLib->D2.pBrush, 2, gisLib->D2.D2D1StrokeStyleGroup[0]);
-
-	SafeRelease(&pGeometryArc);
-	SafeRelease(&pGeometryRightLine);
-	SafeRelease(&pGeometryLeftLine);
 }
 
 void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet)

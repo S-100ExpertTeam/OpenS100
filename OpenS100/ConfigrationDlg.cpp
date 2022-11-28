@@ -469,8 +469,6 @@ void CConfigrationDlg::OnBnClickedApply()
 		bMapRefresh = true;
 	}
 
-
-
 	if (true == bRebuildPortrayal)
 	{
 		theApp.gisLib->S101RebuildPortrayal();
@@ -480,6 +478,8 @@ void CConfigrationDlg::OnBnClickedApply()
 	{
 		theApp.pView->MapRefresh();
 	}
+
+	s101Tab.Apply();
 
 	theApp.SaveSettings();
 }

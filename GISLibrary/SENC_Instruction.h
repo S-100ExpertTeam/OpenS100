@@ -13,6 +13,7 @@ class SENC_LineStyle;
 class SENC_ArcByRadius;
 class SENC_SpatialReference;
 class S100_Instruction;
+class S100SpatialObject;
 
 class SENC_Instruction
 {
@@ -40,7 +41,10 @@ public:
 	// Instruction Information
 
 	// Feature ID
-	unsigned featureReference;
+	int featureReference;
+
+	// FeatureType code (for performance)
+	std::wstring code;
 	
 	// Vector ID
 	std::list<SENC_SpatialReference*> spatialReference;
@@ -114,7 +118,7 @@ public:
 
 	virtual void FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output) {};
 
-	static SENC_Instruction* S1002SENC(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output);
+	static SENC_Instruction* S1002SENC(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output, S100SpatialObject* so);
 
 	void CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, CRect *_viewPort, Scaler *pScaler);
 

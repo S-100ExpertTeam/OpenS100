@@ -4,11 +4,18 @@
 #include "afxdialogex.h"
 #include "ConfigrationDlg.h"
 #include "DialogDockLayerManager.h"
+#include "OpenS100View.h"
 
 #include "../GISLibrary/LayerManager.h"
 #include "../GISLibrary/GISLibrary.h"
+#include "../GISLibrary/PCOutputSchemaManager.h"
+#include "../GISLibrary/SENC_DisplayList.h"
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
+
+#define COLOUM_INDEX_NAME 1
+#define COLOUM_INDEX_CODE 2
+#define COLOUM_INDEX_DEFINITION 3
 
 // Configuration_4 dialog box
 IMPLEMENT_DYNAMIC(CConfiguration_4, CDialogEx)
@@ -45,9 +52,9 @@ BOOL CConfiguration_4::OnInitDialog()
 
 		m_viewingGroupList.GetClientRect(rect);
 		m_viewingGroupList.InsertColumn(0, _T("On/Off"), LVCFMT_LEFT, 60);
-		m_viewingGroupList.InsertColumn(1, _T("Name"), LVCFMT_LEFT, 100);
-		m_viewingGroupList.InsertColumn(2, _T("Code"), LVCFMT_LEFT, 100);
-		m_viewingGroupList.InsertColumn(3, _T("Definition"), LVCFMT_LEFT, rect.Width() - 200);
+		m_viewingGroupList.InsertColumn(COLOUM_INDEX_NAME, _T("Name"), LVCFMT_LEFT, 100);
+		m_viewingGroupList.InsertColumn(COLOUM_INDEX_CODE, _T("Code"), LVCFMT_LEFT, 100);
+		m_viewingGroupList.InsertColumn(COLOUM_INDEX_DEFINITION, _T("Definition"), LVCFMT_LEFT, rect.Width() - 200);
 
 		m_viewingGroupList.SetExtendedStyle(m_viewingGroupList.GetExtendedStyle() | LVS_EX_CHECKBOXES);
 
@@ -75,15 +82,10 @@ BOOL CConfiguration_4::OnInitDialog()
 			m_viewingGroupList.SetItemText(i, 1, name.c_str());
 			m_viewingGroupList.SetItemText(i, 2, code.c_str());
 			m_viewingGroupList.SetItemText(i, 3, definition.c_str());
-		}
-		
-		//I check all the details.
-		int nCount = m_viewingGroupList.GetItemCount();
-		for (int i = 0; i < nCount; i++)
-		{
-			m_viewingGroupList.SetCheck(i);
-		}
 
+			m_viewingGroupList.SetCheck(i, theApp.gisLib->IsFeatureOn(code));
+		}
+	
 		// Combo box (Product)
 		comboBoxProduct.AddString(L"S-101");
 		comboBoxProduct.SetCurSel(0);
@@ -124,4 +126,18 @@ void CConfiguration_4::OnCancel()
 void CConfiguration_4::OnOK()
 {
 	m_pParent->OnBnClickedOk();
+}
+
+void CConfiguration_4::Apply()
+{
+	auto cnt = m_viewingGroupList.GetItemCount();
+	for (auto j = 0; j < cnt; j++)
+	{
+		std::wstring code = m_viewingGroupList.GetItemText(j, COLOUM_INDEX_CODE);
+		bool on = m_viewingGroupList.GetCheck(j);
+
+		theApp.gisLib->SetFeatureOnOff(code, on);
+	}
+
+	theApp.pView->MapRefresh();
 }

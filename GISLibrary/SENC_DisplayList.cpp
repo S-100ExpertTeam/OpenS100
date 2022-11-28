@@ -13,9 +13,12 @@
 #include "SENC_AlertReference.h"
 #include "GISLibrary.h"
 
-#include "..\\S100Geometry\\SGeometry.h"
-#include "..\\GeoMetryLibrary\\Scaler.h"
-#include "..\\GeoMetryLibrary\\ENCCommon.h"
+#include "../S100Geometry/SGeometry.h"
+
+#include "../GeoMetryLibrary/Scaler.h"
+#include "../GeoMetryLibrary/ENCCommon.h"
+
+#include "../FeatureCatalog/FeatureCatalogue.h"
 
 SENC_DisplayList::SENC_DisplayList()
 {
@@ -105,7 +108,8 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, Scaler* sca
 	{
 		instruction = i->second;
 
-		if (instruction->viewingGroup > curViewingGroupLimit)
+		if ((instruction->viewingGroup > curViewingGroupLimit) || 
+			!gisLib->IsFeatureOn(instruction->code))
 		{
 			continue;
 		}
@@ -132,123 +136,6 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, Scaler* sca
 		}
 	}
 }
-
-void SENC_DisplayList::GetDrawingInstructionByCondition(int priority, int type, Scaler* scaler, std::list<SENC_Instruction*> &itList, int FeatureID_textPlacement)
-{
-	auto currentScale = gisLib->GetS100Scale();
-	int curViewingGroupLimit = 0;
-
-	if (ENCCommon::DISPLAY_MODE == GeoMetryLibrary::DisplayModeTable::base)
-	{
-		curViewingGroupLimit = 19999;
-	}
-	else if (ENCCommon::DISPLAY_MODE == GeoMetryLibrary::DisplayModeTable::standard)
-	{
-		curViewingGroupLimit = 29999;
-	}
-	else if (ENCCommon::DISPLAY_MODE == GeoMetryLibrary::DisplayModeTable::all)
-	{
-		curViewingGroupLimit = 39999;
-	}
-
-	itList.clear();
-
-	for (auto i = displayInstructions.lower_bound(GetKey(priority, type)); i != displayInstructions.upper_bound(GetKey(priority, type)); i++)
-	{
-		auto instruction = i->second;
-
-		if (!instruction->suppressedInstance && 
-			instruction->fr->m_geometry)
-		{
-			if (instruction->viewingGroup > curViewingGroupLimit)
-			{
-				continue;
-			}
-
-			// [ Text Placement ]
-			if (ENCCommon::SHOW_TEXT_PLACEMENT == TRUE)
-			{
-				if (instruction->fr->m_frid.m_nftc == FeatureID_textPlacement)
-				{
-					if (ENCCommon::APPLY_SCALE_MIN == TRUE)
-					{
-						if (
-							(instruction->scaleMinimum == 0 || currentScale <= instruction->scaleMinimum) &&
-							(instruction->scaleMaximum == 0 || currentScale >= instruction->scaleMaximum) &&
-							(MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr)))
-						{
-							itList.push_back(instruction);
-						}
-					}
-					else
-					{
-						if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr))
-						{
-							itList.push_back(instruction);
-						}
-					}
-				}
-				else
-				{
-					if (ENCCommon::APPLY_SCALE_MIN == TRUE)
-					{
-						if ((instruction->scaleMinimum == 0 || currentScale <= instruction->scaleMinimum) &&
-							(instruction->scaleMaximum == 0 || currentScale >= instruction->scaleMaximum) &&
-							(MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr)))
-						{
-							if (instruction->fr->m_hasTextPlacement) 
-							{
-								continue;
-							}
-							else 
-							{
-								itList.push_back(instruction);
-							}
-						}
-					}
-					else
-					{
-						if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr))
-						{
-							if (false == instruction->fr->m_hasTextPlacement) 
-							{
-								itList.push_back(instruction);
-							}
-						}
-					}
-				}
-			}
-			else
-			{
-				if (instruction->fr->m_frid.m_nftc == FeatureID_textPlacement)
-				{
-				}
-				else
-				{
-					if (ENCCommon::APPLY_SCALE_MIN == TRUE)
-					{
-						if ((instruction->scaleMinimum == 0 || currentScale <= instruction->scaleMinimum) &&
-							(instruction->scaleMaximum == 0 || currentScale >= instruction->scaleMaximum) &&
-							(MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr)))
-						{
-							itList.push_back(instruction);
-						}
-					}
-					else
-					{
-						if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr))
-						{
-							itList.push_back(instruction);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	return;
-}
-
 
 void SENC_DisplayList::ChangePallete(PortrayalCatalogue *pc)
 {

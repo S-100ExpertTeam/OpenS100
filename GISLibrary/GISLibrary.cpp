@@ -145,8 +145,8 @@ void CGISLibraryApp::InitLibrary(std::wstring fcPath, std::wstring pcPath)
 	D2.CreateDeviceIndependentResources();
 	D2.CreateDeviceDependentResources();
 		
-	fc = new FeatureCatalogue(fcPath);
-	pc = new PortrayalCatalogue(pcPath);
+	SetFC(new FeatureCatalogue(fcPath));
+	SetPC(new PortrayalCatalogue(pcPath));
 	pc->CreateSVGD2Geometry(D2.pD2Factory);
 	pc->CreatePatternImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
 	pc->CreateLineImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
@@ -157,8 +157,9 @@ void CGISLibraryApp::InitLibrary(FeatureCatalogue* fc, PortrayalCatalogue* pc)
 	D2.CreateDeviceIndependentResources();
 	D2.CreateDeviceDependentResources();
 
-	this->fc = fc;
-	this->pc = pc;
+	SetFC(fc);
+	SetPC(pc);
+
 	pc->CreateSVGD2Geometry(D2.pD2Factory);
 	pc->CreatePatternImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
 	pc->CreateLineImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
@@ -538,9 +539,20 @@ FeatureCatalogue* CGISLibraryApp::GetFC()
 	return fc;
 }
 
+void CGISLibraryApp::SetFC(FeatureCatalogue* fc)
+{
+	this->fc = fc;
+	InitFeatureOnOffMap();
+}
+
 PortrayalCatalogue* CGISLibraryApp::GetPC()
 {
 	return pc;
+}
+
+void CGISLibraryApp::SetPC(PortrayalCatalogue* pc)
+{
+	this->pc = pc;
 }
 
 void CGISLibraryApp::SetS100Scale(double value)
@@ -555,7 +567,47 @@ int CGISLibraryApp::GetS100Scale()
 		return (int)s100Scale;
 	}
 
-	auto currentScale = gisLib->GetScaler()->GetCurrentScale();
+	auto currentScale = m_pScaler->GetCurrentScale();
 
 	return currentScale;
+}
+
+
+void CGISLibraryApp::InitFeatureOnOffMap()
+{
+	auto fc = GetFC();
+	if (fc)
+	{
+		featureOnOffMap.clear();
+
+		auto vector = fc->GetFeatureTypes().GetVecFeatureType();
+		for (auto i = vector.begin(); i != vector.end(); i++)
+		{
+			featureOnOffMap.insert({ (*i)->GetCodeAsWString(), true });
+		}
+	}
+}
+
+void CGISLibraryApp::SetFeatureOnOff(std::wstring code, bool on)
+{
+	auto itor = featureOnOffMap.find(code);
+	if (itor != featureOnOffMap.end())
+	{
+		itor->second = on;
+	}
+	else
+	{
+		featureOnOffMap.insert({ code, on });
+	}
+}
+
+bool CGISLibraryApp::IsFeatureOn(std::wstring& featureTypeCode)
+{
+	auto item = featureOnOffMap.find(featureTypeCode);
+	if (item != featureOnOffMap.end())
+	{
+		return item->second;
+	}
+
+	return true;
 }

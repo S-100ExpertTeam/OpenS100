@@ -19,8 +19,8 @@ public:
 	enum { IDD = IDD_DIALOG_CONFIG_4 };
 	CConfigrationDlg* m_pParent = nullptr;
 
-private :
-	std::unordered_map<std::wstring, S100_Description*> viewing_map;
+public:
+	void Apply();
 	
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
