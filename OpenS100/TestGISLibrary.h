@@ -12,4 +12,5 @@ public:
 	static void TestSave();
 	static void CreateNewLayer();
 	static void CopySelectedFeatureToNewLayer();
+	static void OffFeature();
 };

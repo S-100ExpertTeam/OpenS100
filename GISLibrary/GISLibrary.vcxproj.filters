@@ -995,6 +995,9 @@
     <ClInclude Include="S100EditRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ProductManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GISLibrary.rc">

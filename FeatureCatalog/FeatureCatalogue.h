@@ -28,14 +28,14 @@ public:
 	FeatureCatalogue(std::wstring path);
 	virtual ~FeatureCatalogue();
 
-private:
+protected:
 	std::wstring name = L"";
 	std::wstring scope = L"";
 
-private:
+protected:
 	std::wstring *fieldOfApplication = nullptr;  
 
-private:
+protected:
 	std::wstring versionNumber = L"";
 	std::wstring versionDate = L""; 
 	std::wstring productId = L"";

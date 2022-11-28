@@ -4134,7 +4134,7 @@ bool S101Cell::Save(std::wstring path)
 		(*i)->WriteRecord(&file);
 	}
 
-	return false;
+	return true;
 }
 
 bool S101Cell::InformationRecordHasAttributeField()
@@ -4291,4 +4291,27 @@ bool S101Cell::FeatureRecordHasMaskedSpatialTypeField()
 	}
 
 	return false;
+}
+
+std::wstring S101Cell::GetFeatureTypeCodeByNumericCode(int numericCode)
+{
+	return m_dsgir.GetFeatureCode(numericCode);
+}
+
+std::wstring S101Cell::GetFeatureTypeCodeByID(std::wstring id)
+{
+	int rcid = std::stoi(id);
+	return GetFeatureTypeCodeByID(rcid);
+}
+
+std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
+{
+	RecordName rn(100, id);
+	auto fe = GetFeatureRecord(rn.GetName());
+	if (fe)
+	{
+		return GetFeatureTypeCodeByNumericCode(fe->GetNumericCode());
+	}
+
+	return L"";
 }

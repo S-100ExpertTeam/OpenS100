@@ -1654,6 +1654,10 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		theApp.m_pDockablePaneLayerManager.UpdateList();
 		MapRefresh();
 		break;
+	case 'O':
+		TestGISLibrary::OffFeature();
+		MapRefresh();
+		break;
 	}
 
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
