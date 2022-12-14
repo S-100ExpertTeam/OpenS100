@@ -17,7 +17,6 @@ public:
 	NULL  - If the screen and the surface do not overlap at all (the center of gravity cannot exist).
 	!NULL - Surface containing center of gravity points (unconditionally, there is one part, and all points are center of gravity points).
 	*/
-	//static SSurface* CalculateCenterOfGravityOfSurface(SSurface *_surface, CRect *_viewPort);
 	static void CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, CRect *_viewPort, Scaler *pScaler);
 
 	/*

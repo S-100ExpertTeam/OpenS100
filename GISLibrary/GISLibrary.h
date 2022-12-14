@@ -8,8 +8,6 @@
 
 #include "../S100Engine/S100Render.h"
 
-#include "../extlibs/Clipper/include/clipper.hpp"
-
 #ifndef __AFXWIN_H__
 #endif
 
