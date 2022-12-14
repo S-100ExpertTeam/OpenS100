@@ -3,7 +3,7 @@
 #include "StringCode.h"
 #include "DefinitionReference.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <string>
 

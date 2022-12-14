@@ -2,7 +2,7 @@
 #include "S100_CIE.h"
 #include "S100_SRGB.h"
 
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <string>
 

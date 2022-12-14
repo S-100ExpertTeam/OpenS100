@@ -6,7 +6,7 @@
 #include "InformationBinding.h"
 #include "SpatialPrimitiveType.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class FeatureType :
 	public S100ObjectType

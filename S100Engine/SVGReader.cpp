@@ -2,7 +2,7 @@
 #include "SVGReader.h"
 #include "Rectangle.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

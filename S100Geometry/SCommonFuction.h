@@ -3,7 +3,7 @@
 #include "SCompositeCurve.h"
 #include "SSurface.h"
 
-#include "..\\extlibs\\Clipper\\include\\clipper.hpp"
+#include <polyclipping/clipper.hpp>
 
 class SCommonFuction
 {

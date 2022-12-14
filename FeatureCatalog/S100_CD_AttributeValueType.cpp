@@ -1,7 +1,7 @@
 #include "stdafx.h" 
 #include "S100_CD_AttributeValueType.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 namespace FCD
 {

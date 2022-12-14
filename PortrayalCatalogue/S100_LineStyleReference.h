@@ -1,7 +1,7 @@
 #pragma once
 #include "S100_LineStyleBase.h"
 
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
 
 class S100_LineStyleReference : public S100_LineStyleBase
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include "S100ObjectType.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class InformationType :
 	public S100ObjectType

@@ -4,7 +4,7 @@
 #include "Multiplicity.h"
 #include "Reference.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class AttributeBinding :
 	public XML_Item

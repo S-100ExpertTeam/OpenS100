@@ -3,7 +3,7 @@
 #include "S100_Foreground.h"
 #include "S100_Font.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class S100_Element
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include "Restriction_Item.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class RoleType :
 	public Restriction_Item

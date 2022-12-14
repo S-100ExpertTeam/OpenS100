@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 namespace FCD
 {

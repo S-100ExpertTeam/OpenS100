@@ -3,7 +3,7 @@
 #include "S100_LineStyleReference.h"
 #include "S100_LineStyle.h"
 
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <vector>
 

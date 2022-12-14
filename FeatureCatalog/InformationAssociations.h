@@ -1,7 +1,7 @@
 #pragma once
 #include "InformationAssociation.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class InformationAssociations :
 	public XML_Item

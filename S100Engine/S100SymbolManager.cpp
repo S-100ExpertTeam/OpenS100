@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100SymbolManager.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 S100SymbolManager::S100SymbolManager()
 {

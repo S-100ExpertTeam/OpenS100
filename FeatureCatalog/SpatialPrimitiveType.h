@@ -1,7 +1,7 @@
 #pragma once
 #include "Restriction_Item.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class SpatialPrimitiveType :
 	public Restriction_Item 

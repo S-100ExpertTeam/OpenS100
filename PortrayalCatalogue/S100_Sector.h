@@ -1,5 +1,5 @@
 #pragma once
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class S100_Sector
 {

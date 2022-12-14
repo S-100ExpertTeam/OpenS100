@@ -2,7 +2,7 @@
 #include "XML_Item.h"
 #include "FeatureType.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <vector>
 #include <map>

@@ -4,7 +4,7 @@
 #include "ValueList.h"
 #include "Reference.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class InformationBinding :
 	public XML_Item
