@@ -36,7 +36,7 @@ public:
 	PortrayalCatalogue(std::wstring path);
 	virtual ~PortrayalCatalogue();
 
-private:
+protected:
 	// include PC folder (ex: ..\\ProgramData\\S101_Portrayal\\)
 	std::wstring rootPath;
 

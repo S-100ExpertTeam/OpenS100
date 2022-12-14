@@ -83,6 +83,11 @@ private:
 	std::vector<R_SurfaceRecord*> vecSurface;
 	std::vector<R_FeatureRecord*> vecFeature;
 
+public: // Virtual methods
+	std::wstring GetFeatureTypeCodeByNumericCode(int numericCode);
+	std::wstring GetFeatureTypeCodeByID(std::wstring id);
+	std::wstring GetFeatureTypeCodeByID(int id);
+
 public:
 	R_DSGIR* GetDatasetGeneralInformationRecord();
 	void UpdateRemoveAll(void);

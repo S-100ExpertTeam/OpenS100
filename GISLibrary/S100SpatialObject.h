@@ -1,7 +1,10 @@
 #pragma once
+
 #include "SpatialObject.h"
 
-#include "..\\GeoMetryLibrary\\MBR.h"
+#include "../GeoMetryLibrary/MBR.h"
+
+#include <string>
 
 class PCOutputSchemaManager;
 class S100Layer;
@@ -18,4 +21,8 @@ public:
 	MBR GetMBR();
 	void SetPCOutputManager(PCOutputSchemaManager* value);
 	PCOutputSchemaManager* GetPCOutputManager();
+
+	virtual std::wstring GetFeatureTypeCodeByNumericCode(int numericCode) { return L""; }
+	virtual std::wstring GetFeatureTypeCodeByID(std::wstring id) { return L""; }
+	virtual std::wstring GetFeatureTypeCodeByID(int id) { return L""; }
 };

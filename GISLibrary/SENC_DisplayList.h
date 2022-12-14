@@ -6,6 +6,8 @@
 class SENC_Instruction;
 class SENC_AlertReference;
 class Scaler;
+class FeatureCatalogue;
+
 class SENC_DisplayList
 {
 public:
@@ -32,8 +34,6 @@ public:
 	** 9 : Augmented Area
 	*/
 	void GetDrawingInstruction(int priority, int type, Scaler* scaler, std::list<SENC_Instruction*>& itList);
-
-	void GetDrawingInstructionByCondition(int priority, int type, Scaler* scaler, std::list<SENC_Instruction*> &itList, int FeatureID_textPlacement);
 
 	void ChangePallete(PortrayalCatalogue *pc);
 

@@ -481,6 +481,7 @@
     <ClInclude Include="PCOutputSchemaManager.h" />
     <ClInclude Include="ProcessS101.h" />
     <ClInclude Include="Product.h" />
+    <ClInclude Include="ProductManager.h" />
     <ClInclude Include="PTAS.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RIAS.h" />

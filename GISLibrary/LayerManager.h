@@ -63,14 +63,12 @@ public:
 
 	void DrawS100Datasets(HDC &hDC, int offset = 0);
 	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer);
-	float GetTextPlaceBearingValue(S101Cell* c, R_FeatureRecord* fr);
-	void DrawSemiCircle(float x, float y, float radius, float startAngle, float endAngle);
 	void AddSymbolDrawing(
 		int ,
 		HDC &hdc,
 		int offset,
-		std::list<SENC_Instruction*>*augmentedRay,
-		std::list<SENC_Instruction*>*augmentedPath,
+		std::list<SENC_Instruction*>* augmentedRay,
+		std::list<SENC_Instruction*>* augmentedPath,
 		std::list<SENC_Instruction*>* point,
 		std::list<SENC_Instruction*>* line,
 		std::list<SENC_Instruction*>* area,

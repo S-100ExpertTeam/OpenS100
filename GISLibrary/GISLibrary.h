@@ -23,12 +23,19 @@ public:
 	GISLibrary::D2D1Resources D2;
 	S100Render s100Render;
 	S101Creator creator;
+	
+	double s100Scale = -1;
 
+private:
+	
 	// Default FC & PC for S-101
 	FeatureCatalogue* fc = nullptr;
 	PortrayalCatalogue* pc = nullptr;
 
-	double s100Scale = -1;
+	// S-101 Filter 
+	// Key : FeatureType code
+	// Value : On/Off
+	std::unordered_map<std::wstring, bool> featureOnOffMap;
 
 public:
 	Scaler* GetScaler();
@@ -78,8 +85,8 @@ public:
 
 	// Scale info
 	int GetCurrentScale();
-	void   SetScale(int scale);
-	void   UpdateScale();
+	void SetScale(int scale);
+	void UpdateScale();
 
 	/*
 	** Zoom in & Zoom out.
@@ -104,10 +111,17 @@ public:
 	void ChangeDisplayFont();
 
 	std::wstring GetColorTable();
-
+	
 	FeatureCatalogue* GetFC();
+	void SetFC(FeatureCatalogue* fc);
+	
 	PortrayalCatalogue* GetPC();
+	void SetPC(PortrayalCatalogue* pc);
 
 	void SetS100Scale(double value);
 	int GetS100Scale();
+
+	void InitFeatureOnOffMap();
+	void SetFeatureOnOff(std::wstring code, bool on);
+	bool IsFeatureOn(std::wstring& featureTypeCode);
 };

@@ -160,7 +160,7 @@ void PCOutputSchemaManager::GenerateSENCInstruction(S101Cell* cell, PortrayalCat
 		*/
 		SENC_Instruction* sit = nullptr;
 
-		sit = SENC_Instruction::S1002SENC(it, pc, this);
+		sit = SENC_Instruction::S1002SENC(it, pc, this, cell);
 
 		if (sit)
 		{

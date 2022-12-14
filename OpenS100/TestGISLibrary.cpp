@@ -106,3 +106,14 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 		}
 	}
 }
+
+void TestGISLibrary::OffFeature()
+{
+	// 수심영역 Off
+	theApp.gisLib->SetFeatureOnOff(L"DepthArea", false);
+
+	// 수심 Off
+	theApp.gisLib->SetFeatureOnOff(L"Sounding", false);
+
+	theApp.pView->MapRefresh();
+}

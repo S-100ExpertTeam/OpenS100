@@ -12,6 +12,7 @@
 #include "SENC_AugmentedRay.h"
 #include "SENC_AugmentedPath.h"
 #include "R_FeatureRecord.h"
+#include "S100SpatialObject.h"
 
 #include "..\\PortrayalCatalogue\\S100_Symbol.h"
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
@@ -505,7 +506,7 @@ POINT* SENC_Instruction::GetCenterPointOfPolyline(POINT *_p, int _count, CRect* 
 	return returnValue;
 }
 
-SENC_Instruction* SENC_Instruction::S1002SENC(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output)
+SENC_Instruction* SENC_Instruction::S1002SENC(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output, S100SpatialObject* so)
 {
 	SENC_Instruction *result = nullptr;
 
@@ -543,6 +544,7 @@ SENC_Instruction* SENC_Instruction::S1002SENC(S100_Instruction* s100Instruction,
 	if (nullptr != result)
 	{
 		result->FromS100Instruction(s100Instruction, pc, output);
+		result->code = so->GetFeatureTypeCodeByID(result->featureReference);
 	}
 	return result;
 }

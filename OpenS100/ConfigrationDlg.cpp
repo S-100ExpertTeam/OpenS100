@@ -83,9 +83,10 @@ BOOL CConfigrationDlg::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	CString    strOne = _T("Context Parameter");
-	CString    strS101 = _T("S-101");
+	CString    strS101 = _T("Features");
 
 	m_tab.InsertItem(1, strOne);
+	m_tab.InsertItem(2, strS101);
 
 	CRect r;
 	m_tab.GetWindowRect(&r);
@@ -468,8 +469,6 @@ void CConfigrationDlg::OnBnClickedApply()
 		bMapRefresh = true;
 	}
 
-
-
 	if (true == bRebuildPortrayal)
 	{
 		theApp.gisLib->S101RebuildPortrayal();
@@ -479,6 +478,8 @@ void CConfigrationDlg::OnBnClickedApply()
 	{
 		theApp.pView->MapRefresh();
 	}
+
+	s101Tab.Apply();
 
 	theApp.SaveSettings();
 }
