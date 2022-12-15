@@ -3,7 +3,7 @@
 #include "Address.h"
 #include "OnlineResource.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class ContactInfo :
 	public XML_Item

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Enum_RuleType.h"
 
-#include "../extlibs/pugixml/include/pugixml.hpp"
+#include <pugixml.hpp>
 
 namespace Portrayal
 {

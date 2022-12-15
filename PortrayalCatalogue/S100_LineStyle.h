@@ -5,7 +5,7 @@
 #include "S100_Dash.h"
 #include "S100_LineSymbol.h"
 
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <string>
 #include <list>

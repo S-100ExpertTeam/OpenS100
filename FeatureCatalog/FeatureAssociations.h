@@ -1,7 +1,7 @@
 #pragma once
 #include "FeatureAssociation.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class FeatureAssociations :
 	public XML_Item

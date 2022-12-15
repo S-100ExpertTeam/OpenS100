@@ -2,7 +2,7 @@
 #include "Palette.h"
 #include "Colors.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <vector>
 

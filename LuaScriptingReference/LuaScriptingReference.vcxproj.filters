@@ -15,18 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lauxlib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lua.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="luaconf.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lualib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lua_session.h">
       <Filter>Header Files</Filter>
     </ClInclude>

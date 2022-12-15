@@ -2,8 +2,7 @@
 
 #include <vector>
 
-
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
 
 namespace Portrayal
 {

@@ -3,7 +3,7 @@
 #include "DateExt.h"
 #include "DateTypeCode.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class Date :
 	public XML_Item

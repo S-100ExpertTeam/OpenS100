@@ -2,7 +2,7 @@
 #include "Item.h"
 #include "AttributeBinding.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class NamedType :
 	public Item

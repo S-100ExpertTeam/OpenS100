@@ -2,7 +2,7 @@
 #include "NamedType.h"
 #include "InformationBinding.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class S100ObjectType :
 	public NamedType

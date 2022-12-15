@@ -3,7 +3,7 @@
 #include "S100_VectorPoint.h"
 #include "S100_PatternFill.h"
 
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
 
 class S100_SymbolFill
 	: public S100_PatternFill

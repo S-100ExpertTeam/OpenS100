@@ -2,7 +2,7 @@
 #include "XML_Item.h"
 #include "Citation.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class DefinitionSource
 {

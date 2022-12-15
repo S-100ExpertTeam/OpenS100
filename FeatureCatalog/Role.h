@@ -1,7 +1,7 @@
 #pragma once
 #include "Item.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class Role :
 	public Item

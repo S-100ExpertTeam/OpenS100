@@ -1,7 +1,7 @@
 #pragma once
 #include "XML_Item.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class Series : public XML_Item
 {

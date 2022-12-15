@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "AreaFill.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <vector>
 #include <string>

@@ -2,7 +2,7 @@
 #include "XML_Item.h"
 #include "CI_Organisation.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class Party :
 	public XML_Item

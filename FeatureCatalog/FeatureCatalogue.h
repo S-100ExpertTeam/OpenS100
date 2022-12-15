@@ -12,7 +12,7 @@
 #include "InformationTypes.h"
 #include "FeatureTypes.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <string>
 

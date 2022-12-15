@@ -1,11 +1,6 @@
 #pragma once
 
-extern "C"
-{
-	#include "lua.h"
-	#include "lauxlib.h"
-	#include "lualib.h"
-}
+#include "../extlibs/Lua/include/lua.hpp"
 
 #include "lua_reference.h"
 #include "LuaScriptingReference.h"

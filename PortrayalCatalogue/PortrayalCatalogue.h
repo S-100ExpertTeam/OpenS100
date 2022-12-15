@@ -18,7 +18,7 @@
 #include "DisplayPlane.h"
 #include "ContextParameter.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include "..\\S100Engine\\S100Render.h"
 
