@@ -4,7 +4,7 @@
 #include "RoleCode.h"
 #include "Party.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <string>
 

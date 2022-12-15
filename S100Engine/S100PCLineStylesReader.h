@@ -3,7 +3,7 @@
 #include <string>
 
 #include "LineStylesPackage.h"
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 namespace S100XMLReader
 {

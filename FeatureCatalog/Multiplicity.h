@@ -2,7 +2,7 @@
 #include "XML_Item.h"
 #include "UnlimitedInteger.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class Multiplicity :
 	public XML_Item

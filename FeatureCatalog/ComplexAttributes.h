@@ -1,7 +1,7 @@
 #pragma once
 #include "ComplexAttribute.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <unordered_map>
 

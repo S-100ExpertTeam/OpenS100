@@ -2,7 +2,7 @@
 #include "S100_Color.h"
 
 #include "..\\S100Engine\\Color.h"
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <string>
 

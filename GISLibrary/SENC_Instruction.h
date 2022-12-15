@@ -1,6 +1,6 @@
 #pragma once
 #include "..\\GeoMetryLibrary\\Scaler.h"
-#include "..\\extlibs\\Clipper\\include\\clipper.hpp"
+#include <polyclipping/clipper.hpp>
 
 #include <list>
 

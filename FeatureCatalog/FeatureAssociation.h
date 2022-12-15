@@ -2,7 +2,7 @@
 
 #include "NamedType.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class FeatureAssociation : public NamedType
 {

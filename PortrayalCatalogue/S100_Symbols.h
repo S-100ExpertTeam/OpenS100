@@ -5,7 +5,7 @@
 
 #include "ExternalFile.h"
 
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
 
 namespace Portrayal
 {

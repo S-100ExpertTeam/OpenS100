@@ -3,7 +3,7 @@
 #include "Attribute.h"
 #include "AttributeBinding.h"
 
-#include "../extlibs/pugixml/include/pugixml.hpp"
+#include <pugixml.hpp>
 
 class ComplexAttribute :
 	public Attribute

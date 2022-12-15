@@ -2,7 +2,7 @@
 #include "XML_Item.h"
 #include "SimpleAttribute.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class SimpleAttributes : public XML_Item
 {

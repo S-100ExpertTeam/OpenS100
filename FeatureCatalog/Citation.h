@@ -5,7 +5,7 @@
 #include "ResponsibleParty.h"
 #include "Series.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <string>
 

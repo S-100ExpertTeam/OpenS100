@@ -7,7 +7,7 @@
 #include "S100_CD_QuantitySpecification.h"
 #include "ListedValue.h"
 
-#include "../extlibs/pugixml/include/pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <vector>
 

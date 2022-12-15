@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
  
 class S100_LineSymbol
 {

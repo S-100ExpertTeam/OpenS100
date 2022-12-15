@@ -2,7 +2,7 @@
 #include "XML_Item.h"
 #include "InformationType.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <map>
 

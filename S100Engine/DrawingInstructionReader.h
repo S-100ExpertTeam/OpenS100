@@ -10,7 +10,7 @@
 #include "TextPoint.h"
 #include "TextLine.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class DrawingInstructionReader
 {

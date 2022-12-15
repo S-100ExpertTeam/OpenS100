@@ -4,19 +4,19 @@
     <RESOURCE_FILE>OpenS100.rc</RESOURCE_FILE>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerEnvironment>PATH=..\extlibs\pugixml\bin\$(PlatformTarget)_$(Configuration);..\extlibs\lua\bin\$(PlatformTarget)_$(Configuration);$(PATH)</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>PATH=..\extlibs\Lua\bin\$(PlatformTarget);$(PATH)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerEnvironment>PATH=..\extlibs\pugixml\bin\$(PlatformTarget)_$(Configuration);..\extlibs\lua\bin\$(PlatformTarget)_$(Configuration);$(PATH)</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>PATH=..\extlibs\Lua\bin\$(PlatformTarget);$(PATH)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerEnvironment>PATH=..\extlibs\pugixml\bin\$(PlatformTarget)_$(Configuration);..\extlibs\lua\bin\$(PlatformTarget)_$(Configuration);$(PATH)</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>PATH=..\extlibs\Lua\bin\$(PlatformTarget);$(PATH)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerEnvironment>PATH=..\extlibs\pugixml\bin\$(PlatformTarget)_$(Configuration);..\extlibs\lua\bin\$(PlatformTarget)_$(Configuration);$(PATH)</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>PATH=..\extlibs\Lua\bin\$(PlatformTarget);$(PATH)</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

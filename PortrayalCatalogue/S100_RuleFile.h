@@ -6,7 +6,7 @@
 #include "S100_Description.h"
 #include "Enum_RuleType.h"
 
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
 
 class S100_RuleFile : public Portrayal::ExternalFile
 {

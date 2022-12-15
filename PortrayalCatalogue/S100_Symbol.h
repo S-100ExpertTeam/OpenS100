@@ -4,7 +4,7 @@
 #include "S100_AreaPlacement.h"
 #include "S100_LinePlacement.h"
 
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
 class S100_Description;
 
 class S100_Symbol

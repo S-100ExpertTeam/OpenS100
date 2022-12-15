@@ -1,7 +1,7 @@
 #pragma once
 #include "S100_AreaFillBase.h"
 
-#include "..\\extlibs\\pugixml\\include\\pugixml.hpp"
+#include <pugixml.hpp>
 
 class S100_AreaFillReference : public S100_AreaFillBase
 {

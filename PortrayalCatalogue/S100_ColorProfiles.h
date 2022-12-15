@@ -2,7 +2,7 @@
 
 #include "ExternalFile.h"
 
-#include "..\\extlibs\pugixml\include\pugixml.hpp"
+#include <pugixml.hpp>
 
 #include <unordered_map>
 #include <string>
