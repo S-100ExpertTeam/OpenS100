@@ -1031,7 +1031,7 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 void COpenS100View::DrawPickReport(HDC& _hdc, int offsetX, int offsetY)
 {
 	Graphics gPick(_hdc);
-	if (frPick != nullptr)
+	if (frPick && frPick->m_geometry)
 	{
 		DrawS101PickReport(gPick, offsetX, offsetY);
 	}
