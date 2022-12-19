@@ -15,6 +15,7 @@ Currently only a single S-101 ENC is supported, in the future it will support mu
 - Only support x64.
 
 # Build instructions
+- Install vcpkg packages. ([Manual](vcpkg.md))
 - Open OpenS100.sln.
 - Select a plastform as x64.
 - Set a project(OpenS100) as startup project. 
