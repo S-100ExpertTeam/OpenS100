@@ -13,6 +13,7 @@ Currently only a single S-101 ENC is supported, in the future it will support mu
 - Windows 10 (or later)
 - Visual C++ Redistributable for Visual Studio 2012
 - Only support x64.
+- vcpkg
 
 # Build instructions
 - Install vcpkg packages. ([Manual](vcpkg.md))
