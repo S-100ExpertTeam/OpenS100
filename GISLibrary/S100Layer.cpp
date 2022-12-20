@@ -2,25 +2,59 @@
 #include "S100Layer.h"
 #include "GISLibrary.h"
 
-#include "..\\LibMFCUtil\\LibMFCUtil.h"
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../LibMFCUtil/LibMFCUtil.h"
 
-S100Layer::S100Layer() : Layer()
-{
-	hasIndividualFC = false;
-	hasIndividualPC = false;
-}
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+
+#include <sstream>
+
+//S100Layer::S100Layer() : Layer()
+//{
+//	hasIndividualFC = false;
+//	hasIndividualPC = false;
+//}
 
 S100Layer::S100Layer(FeatureCatalogue*fc, PortrayalCatalogue *pc) : Layer()
 {
 	SetFeatureCatalog(fc);
 	SetPC(pc);
+	SetProductNumber(fc->GetProductId());
 }
 
 S100Layer::~S100Layer()
 {
 	DeleteCatalog();
+}
+
+bool S100Layer::Open(CString _filepath)
+{
+	auto extension = LibMFCUtil::GetExtension(_filepath);
+
+	if (!extension.CompareNoCase(L"000"))
+	{
+		m_spatialObject = new S101Cell();
+		auto enc = (S101Cell*)m_spatialObject;
+
+		enc->SetLayer(this);
+		if (!enc->Open(_filepath))
+		{
+			delete enc;
+			return false;
+		}
+
+		enc->SetAllNumericCode(GetFeatureCatalog());
+		return true;
+	}
+	else if (!extension.CompareNoCase(L"gml"))
+	{
+
+	}
+	else if (!extension.CompareNoCase(L"h5"))
+	{
+		
+	}
 }
 
 void S100Layer::SetFeatureCatalog(FeatureCatalogue* value)
@@ -189,4 +223,22 @@ int S100Layer::GetProductNumber()
 void S100Layer::SetProductNumber(int value)
 {
 	productNumber = value;
+}
+
+void S100Layer::SetProductNumber(std::wstring value)
+{
+	// tokenize value by "-"
+	std::vector<std::wstring> tokens;
+
+	std::wstringstream ss(value);
+	std::wstring token;
+	while (std::getline(ss, token, L'-'))
+	{
+		tokens.push_back(token);
+	}
+
+	if (tokens.size() == 2)
+	{
+		productNumber = std::stoi(tokens.at(1));
+	}
 }

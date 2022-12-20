@@ -91,9 +91,9 @@ S101Layer* S101Creator::CreateLayer(std::wstring name, FeatureCatalogue* fc, Por
 	Set(fc, enc);
 
 	result->m_spatialObject = enc;
-	result->m_spatialObject->m_pLayer = result;
+	enc->m_pLayer = result;
 
-	result->SetAllNumericCode();
+	enc->SetAllNumericCode(fc);
 
 	return result;
 }

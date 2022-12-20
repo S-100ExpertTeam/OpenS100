@@ -229,6 +229,68 @@ int S101Cell::GetCMFZ()
 	return m_dsgir.m_dssi.m_cmfz;
 }
 
+void S101Cell::SetAllNumericCode(FeatureCatalogue* fc)
+{
+	if (fc)
+	{
+		// Feature Type
+		auto featureTypes = fc->GetFeatureTypes().GetVecFeatureType();
+		for (auto i = featureTypes.begin(); i != featureTypes.end(); i++)
+		{
+			auto code = (*i)->GetCodeAsWString();
+			m_dsgir.GetFeatureTypeCode(code);
+		}
+
+		// Information Type
+		auto informationTypes = fc->GetInformationTypesPointer().GetInformationTypePointer();;
+		for (auto i = informationTypes.begin(); i != informationTypes.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			m_dsgir.GetInformationTypeCode(code);
+		}
+
+		// Simple Attribute
+		auto simpleAttributes = fc->GetSimpleAttributesPointer().GetSimpleAttributePointer();;
+		for (auto i = simpleAttributes.begin(); i != simpleAttributes.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			m_dsgir.GetAttributeCode(code);
+		}
+
+		// Complex Attribute
+		auto complexAttributes = fc->GetComplexAttributesPointer().GetComplexAttributePointer();
+		for (auto i = complexAttributes.begin(); i != complexAttributes.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			m_dsgir.GetAttributeCode(code);
+		}
+
+		// Role
+		auto roles = fc->GetRolesPointer().GetRolePointer();
+		for (auto i = roles.begin(); i != roles.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			m_dsgir.GetAssociationRoleCode(code);
+		}
+
+		// Information Association
+		auto informationAssociations = fc->GetInformationAssociationsPointer().GetInformationAssociationPointer();
+		for (auto i = informationAssociations.begin(); i != informationAssociations.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			m_dsgir.GetInformationAssociationCode(code);
+		}
+
+		// Feature Association
+		auto featureAssociations = fc->GetFeatureAssociationsPointer().GetFeatureAssociationPointer();
+		for (auto i = featureAssociations.begin(); i != featureAssociations.end(); i++)
+		{
+			auto code = i->second->GetCodeAsWString();
+			m_dsgir.GetFeatureAssociationCode(code);
+		}
+	}
+}
+
 R_DSGIR* S101Cell::GetDatasetGeneralInformationRecord()
 {
 	return &m_dsgir;

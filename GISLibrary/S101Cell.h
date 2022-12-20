@@ -12,6 +12,7 @@
 #include <set>
 #include <map>
 
+class FeatureCatalogue;
 class GeoPoint;
 class GeoPointZ;
 class Catalog;
@@ -303,6 +304,8 @@ public:
 	int GetCMFX();
 	int GetCMFY();
 	int GetCMFZ();
+
+	void SetAllNumericCode(FeatureCatalogue* fc);
 
 private:
 	bool UpdateDsgirRecord(S101Cell* cell);

@@ -11,7 +11,7 @@ class FeatureCatalogue;
 class S100Layer : public Layer
 {
 public:
-	S100Layer();
+	//S100Layer();
 	S100Layer(FeatureCatalogue*fc, PortrayalCatalogue *pc);
 	virtual ~S100Layer();
 
@@ -23,6 +23,7 @@ protected:
 	int productNumber = 100;
 
 public:
+	bool Open(CString _filepath) override;
 	void SetFeatureCatalog(FeatureCatalogue* value);
 	FeatureCatalogue* GetFeatureCatalog();
 	void SetPC(PortrayalCatalogue *value);
@@ -39,6 +40,9 @@ public:
 	
 	int GetProductNumber();
 	void SetProductNumber(int value);
+
+	// value : S-101, S-102, S-111 etc.
+	void SetProductNumber(std::wstring value);
 
 public: // virtual
 	virtual std::wstring GetChartName() { return L""; }
