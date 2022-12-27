@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "LayerManager.h"
-#include "S101Layer.h"
 #include "BAGLayer.h"
 #include "F_ATTR.h"
 #include "R_FeatureRecord.h"
@@ -23,6 +22,7 @@
 #include "F_FASC.h"
 #include "F_INAS.h"
 #include "R_InformationRecord.h"
+#include "S100Layer.h"
 
 #include "../S100Geometry/SSurface.h"
 #include "../S100Geometry/SMultiPoint.h"
@@ -186,8 +186,8 @@ int LayerManager::AddLayer(CString _filepath)
 		fc = gisLib->GetFC();
 		pc = gisLib->GetPC();
 
-		layer = new S101Layer(fc, pc);
-		if ((S101Layer*)layer->Open(_filepath) == false)
+		layer = new S100Layer(fc, pc);
+		if ((S100Layer*)layer->Open(_filepath) == false)
 		{
 			delete layer;
 			return -1;
@@ -207,7 +207,7 @@ int LayerManager::AddLayer(CString _filepath)
 
 	//	 ENC, Lua
 	if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
-		((S101Layer*)layer)->GetPC()->GetRuleFileFormat() == Portrayal::FileFormat::LUA)
+		((S100Layer*)layer)->GetPC()->GetRuleFileFormat() == Portrayal::FileFormat::LUA)
 	{
 		BuildPortrayalCatalogue(layer);
 	}
@@ -848,7 +848,7 @@ void LayerManager::S101RebuildPortrayal()
 
 void LayerManager::BuildPortrayalCatalogue(Layer* l)
 {
-	auto pc = ((S101Layer*)l)->GetPC();
+	auto pc = ((S100Layer*)l)->GetPC();
 
 	if (l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
 		pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA)
@@ -858,7 +858,7 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 		auto rootPath = pc->GetRootPath();
 		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
-		ProcessS101::ProcessS101_LUA(mainRulePath, (S101Layer*)l);
+		ProcessS101::ProcessS101_LUA(mainRulePath, (S100Layer*)l);
 	}
 }
 
@@ -1291,7 +1291,8 @@ int LayerManager::CheckFileType(CString path)
 		{
 			if (file.GetLength() > 1024)
 			{
-				BYTE *lpBuf, *sBuf;
+				BYTE* lpBuf = nullptr;
+				BYTE* sBuf = nullptr;
 				lpBuf = new BYTE[1024];
 				file.Read(lpBuf, 1024);
 				sBuf = lpBuf;
@@ -1304,13 +1305,14 @@ int LayerManager::CheckFileType(CString path)
 
 				if (tag == *((unsigned int*)"0001"))
 				{
+					delete sBuf;
 					return S100_FileType::FILE_S_57;
 				}
 				else if (tag == *((unsigned int*)"DSID"))
 				{
+					delete sBuf;
 					return S100_FileType::FILE_S_100_VECTOR;
 				}
-				delete sBuf;
 			}
 
 			file.Close();

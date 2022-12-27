@@ -341,4 +341,9 @@ private:
 	bool FeatureRecordHasSpatialAssociationField();
 	bool FeatureRecordHasFeatureAssociationField();
 	bool FeatureRecordHasMaskedSpatialTypeField();
+
+	std::wstring GetChartName();
+	std::wstring GetEditionNumberAsWstring();
+	std::wstring GetUpdateNumberAsWstring();
+	std::wstring GetIssueDateAsWstring();
 };

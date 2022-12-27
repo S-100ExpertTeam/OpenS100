@@ -3,7 +3,7 @@
 #include "DialogDockRelation.h"
 
 #include "..\\GISLibrary\\S101Cell.h"
-#include "..\\GISLibrary\\S101Layer.h"
+#include "..\\GISLibrary\\S100Layer.h"
 #include "..\\GISLibrary\\F_FASC.h"
 #include "..\\GISLibrary\\F_INAS.h"
 #include "..\\GISLibrary\\R_InformationRecord.h"
@@ -162,7 +162,7 @@ void CDialogDockRelation::OnNMClickListLm(NMHDR *pNMHDR, LRESULT *pResult)
 			return;
 		}
 
-		auto fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
+		auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 		if (nullptr == fc)
 		{
 			return;
@@ -196,7 +196,7 @@ void CDialogDockRelation::OnNMClickListLm(NMHDR *pNMHDR, LRESULT *pResult)
 		S101Cell* cell = m_cell;
 
 		auto itor = cell->m_dsgir.m_ftcs->m_arr.find(pFe->m_frid.m_nftc);
-		auto fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
+		auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 		if (nullptr == fc)
 		{
 			return;
@@ -260,7 +260,7 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 	// Erase everything before insertion.
 	m_ListRelation.DeleteAllItems();
 
-	auto fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
+	auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 	if (nullptr == fc)
 	{
 		return;

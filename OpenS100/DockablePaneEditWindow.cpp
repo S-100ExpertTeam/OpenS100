@@ -6,7 +6,7 @@
 #include "OpenS100View.h"
 
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\GISLibrary\\S101Layer.h"
+#include "..\\GISLibrary\\S100Layer.h"
 #include "..\\GISLibrary\\F_CUCO.h"
 #include "..\\GISLibrary\\F_PTAS.h"
 #include "..\\GISLibrary\\F_SPAS.h"
@@ -108,7 +108,7 @@ LRESULT CDockablePaneEditWindow::OnPropertyChanged(WPARAM wparam, LPARAM lparam)
 				return 0;
 			}
 
-			auto fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
+			auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 			if (nullptr == fc)
 			{
 				return 0;
@@ -373,7 +373,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 	if (m_cell->m_FileType == FILE_S_100_VECTOR)
 	{
 		S101Cell* cell = (S101Cell*)m_cell;
-		auto fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
+		auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 		if (nullptr == fc)
 		{
 			return;

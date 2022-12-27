@@ -19,7 +19,7 @@
 #include "../GISLibrary/R_FeatureRecord.h"
 #include "../GISLibrary/CodeWithNumericCode.h"
 #include "../GISLibrary/S101Creator.h"
-#include "../GISLibrary/S101Layer.h"
+#include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/S101Cell.h"
 #include "../GISLibrary/D2D1Resources.h"
 
@@ -1772,8 +1772,8 @@ void COpenS100View::AreaFeatureList()
 
 void COpenS100View::CopyLayer()
 {
-	auto layer1 = (S101Layer*)theApp.gisLib->GetLayer(0);
-	auto layer2 = (S101Layer*)theApp.gisLib->GetLayer(1);
+	auto layer1 = (S100Layer*)theApp.gisLib->GetLayer(0);
+	auto layer2 = (S100Layer*)theApp.gisLib->GetLayer(1);
 
 	auto enc1 = (S101Cell*)layer1->GetSpatialObject();
 	auto enc2 = (S101Cell*)layer2->GetSpatialObject();

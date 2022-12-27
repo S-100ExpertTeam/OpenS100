@@ -54,7 +54,6 @@ public:
 
 	int isUpdate(CString filePath);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
-	bool AddOverlayLayer(CString _filepath);
 
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal(/*PORTRAYAL_BUILD_TYPE type = PORTRAYAL_BUILD_TYPE::ALL*/);

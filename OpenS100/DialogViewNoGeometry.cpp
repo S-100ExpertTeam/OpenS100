@@ -7,7 +7,7 @@
 #include "resource.h"
 
 #include "..\\GISLibrary\\CodeWithNumericCode.h"
-#include "..\\GISLibrary\\S101Layer.h"
+#include "..\\GISLibrary\\S100Layer.h"
 #include "..\\GISLibrary\\S101Cell.h"
 #include "..\\GISLibrary\\R_FeatureRecord.h"
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"
@@ -43,7 +43,7 @@ void CDialogViewNoGeometry::SetNoGeometryFeatureList(S101Cell* cell)
 {
 	ngflist.clear();
 
-	auto fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
+	auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 	if (nullptr == fc)
 	{
 		return;

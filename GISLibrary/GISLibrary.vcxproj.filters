@@ -228,9 +228,6 @@
     <ClCompile Include="F_SECC.cpp">
       <Filter>S101\Field</Filter>
     </ClCompile>
-    <ClCompile Include="S101Layer.cpp">
-      <Filter>S101</Filter>
-    </ClCompile>
     <ClCompile Include="R_VectorRecord.cpp">
       <Filter>S101\Record</Filter>
     </ClCompile>
@@ -694,9 +691,6 @@
     </ClInclude>
     <ClInclude Include="F_SECC.h">
       <Filter>S101\Field</Filter>
-    </ClInclude>
-    <ClInclude Include="S101Layer.h">
-      <Filter>S101</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>

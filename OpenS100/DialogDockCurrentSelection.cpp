@@ -6,7 +6,7 @@
 
 #include <vector>
 
-#include "../GISLibrary/S101Layer.h"
+#include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/F_FASC.h"
 #include "../GISLibrary/R_FeatureRecord.h"
 #include "../GISLibrary/R_InformationRecord.h"
@@ -75,7 +75,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 			nSelectedItem = pNMLV->iItem;
 
 			S101Cell* cell = m_Cell;
-			FeatureCatalogue* fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
+			FeatureCatalogue* fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 			if (nullptr == fc)
 			{
 				return;

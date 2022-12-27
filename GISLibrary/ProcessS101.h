@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-class S101Layer;
+class S100Layer;
 class PCOutputSchemaManager;
 
 class ProcessS101
@@ -19,7 +19,7 @@ public:
 	static std::string g_unknown_attribute_value;
 
 public:
-	static int ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer);
+	static int ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer);
 
 	static bool LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm);
 	static std::wstring LUA_GetPriority(std::string lua_priority);

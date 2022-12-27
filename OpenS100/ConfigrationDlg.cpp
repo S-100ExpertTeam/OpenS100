@@ -7,7 +7,7 @@
 #include "../LibMFCUtil/StringTokenizer.h"
 #include "../LibMFCUtil/LibMFCUtil.h"
 
-#include "../GISLibrary/S101Layer.h"
+#include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/GISLibrary.h"
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"

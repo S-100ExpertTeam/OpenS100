@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ProcessS101.h"
-#include "S101Layer.h"
+#include "S100Layer.h"
 #include "S101Cell.h"
 #include "PCOutputSchemaManager.h"
 #include "SENC_DisplayList.h"
@@ -60,7 +60,7 @@ void dump_com_error(_com_error &e)
 	printf("\a\tDescription = %s\n", (LPCSTR)bstrDescription);
 }
 
-int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S101Layer* layer)
+int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 {
 	try {
 		auto fc = layer->GetFeatureCatalog();

@@ -8,7 +8,7 @@
 #include "../GISLibrary/R_DSGIR.h"
 #include "../GISLibrary/Layer.h"
 #include "../GISLibrary/S101Cell.h"
-#include "../GISLibrary/S101Layer.h"
+#include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/R_FeatureRecord.h"
 #include "../GISLibrary/S101Creator.h"
 

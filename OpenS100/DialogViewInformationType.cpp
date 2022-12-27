@@ -9,7 +9,7 @@
 #include "..\\GISLibrary\\S101Cell.h"
 #include "..\\GISLibrary\\R_InformationRecord.h"
 #include "..\\GISLibrary\\CodeWithNumericCode.h"
-#include "..\\GISLibrary\\S101Layer.h"
+#include "..\\GISLibrary\\S100Layer.h"
 #include "..\\FeatureCatalog\\InformationType.h"
 
 #include <algorithm>
@@ -52,7 +52,7 @@ void CDialogViewInformationType::SetInformationFeatureList(S101Cell* cell)
 {
 	ngflist.clear();
 	POSITION pos = cell->GetInfoStartPosition();
-	auto fc = ((S101Layer*)cell->m_pLayer)->GetFeatureCatalog();
+	auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 	if (nullptr == fc)
 	{
 		return;
@@ -87,7 +87,7 @@ void CDialogViewInformationType::SetInformationFeatureList(S101Cell* cell)
 void CDialogViewInformationType::InitInformationFeatureList() 
 {
 	m_ViewListInformationType.DeleteAllItems();
-	auto fc = ((S101Layer*)m_cell->m_pLayer)->GetFeatureCatalog();
+	auto fc = ((S100Layer*)m_cell->m_pLayer)->GetFeatureCatalog();
 	if (nullptr == fc)
 	{
 		return;

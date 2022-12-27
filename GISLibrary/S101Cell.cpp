@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S101Cell.h"
 #include "GISLibrary.h"
-#include "S101Layer.h"
+#include "S100Layer.h"
 #include "F_CUCO.h"
 #include "F_PTAS.h"
 #include "F_SPAS.h"
@@ -4362,4 +4362,65 @@ std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
 	}
 
 	return L"";
+}
+
+std::wstring S101Cell::GetChartName()
+{
+	// return filename 
+	// ex : 101GB005X01SW.000
+	return std::wstring(GetFileName());
+}
+
+std::wstring S101Cell::GetEditionNumberAsWstring()
+{
+	CString Ened = m_dsgir.m_dsid.m_ened;
+	auto index = Ened.Find(L".");
+	CString result;
+	AfxExtractSubString(result, Ened, 0, '.');
+
+	// The ENED of the DSID contains values in the form of n.m. such as 1.0, 1.1, etc.
+	// n is Edition Number.
+	// m is Update Number.
+	// I'll return the Edition Number here.
+	// e.g. If it's 1.4, return 1
+	return std::wstring(result);
+}
+
+std::wstring S101Cell::GetUpdateNumberAsWstring()
+{
+	auto Ened = m_dsgir.m_dsid.m_dsed;
+
+	CString result;
+	AfxExtractSubString(result, Ened, 1, '.');
+
+	// The ENED of the DSID contains values in the form of n.m. such as 1.0, 1.1, etc.
+	// n is Edition Number.
+	// m is Update Number.
+	// I'll return the Edition Number here.
+	// e.g. If it's 1.4, return 4
+	return std::wstring(result);
+}
+
+std::wstring S101Cell::GetIssueDateAsWstring()
+{
+	CString Dsrd = m_dsgir.m_dsid.m_dsrd;
+
+	// Output DSRD of DSID.
+	// DSRD is in the form of YYYMMDD (e.g., 20210324).
+	// Return Example: 2012-03-24
+	auto index = Dsrd.Find(_T("-"));
+	if (index == -1)
+	{
+		CString year = Dsrd.Left(4);
+		CString month = Dsrd.Mid(4, 2);
+		CString day = Dsrd.Right(2);
+
+		std::wstring result = year + L"-" + month + L"-" + day;
+		return result;
+
+	}
+	else
+	{
+		return std::wstring(Dsrd);
+	}
 }

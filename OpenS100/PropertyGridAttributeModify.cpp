@@ -6,7 +6,7 @@
 #include "OpenS100View.h"
 
 #include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\GISLibrary\\S101Layer.h"
+#include "..\\GISLibrary\\S100Layer.h"
 #include "..\\GISLibrary\\F_ATTR.h"
 #include "..\\GISLibrary\\S101Cell.h"
 #include "..\\GISLibrary\\S100Layer.h"

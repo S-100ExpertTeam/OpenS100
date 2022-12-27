@@ -10,13 +10,7 @@
 
 #include <sstream>
 
-//S100Layer::S100Layer() : Layer()
-//{
-//	hasIndividualFC = false;
-//	hasIndividualPC = false;
-//}
-
-S100Layer::S100Layer(FeatureCatalogue*fc, PortrayalCatalogue *pc) : Layer()
+S100Layer::S100Layer(FeatureCatalogue* fc, PortrayalCatalogue *pc) : Layer()
 {
 	SetFeatureCatalog(fc);
 	SetPC(pc);
@@ -194,14 +188,7 @@ void S100Layer::DrawInfo(HDC &hDC, Scaler *scaler)
 		StringFormat sf;
 
 		CString chatName;
-		chatName.Format(_T("Chart Name : %s \n"), GetChartName().c_str());
-		CString EditionName;
-		EditionName.Format(_T("Edition Number : %s \n"), GetEditionNumberAsWstring().c_str());
-		CString IssueDate;
-		IssueDate.Format(_T("ISSUED DATE : %s \n"), GetIssueDateAsWstring().c_str());
-
-		chatName += EditionName;
-		chatName += IssueDate;
+		chatName.Format(_T("Chart Name : %s \n"), m_spatialObject->GetFileName());
 
 		sf.SetAlignment(StringAlignmentNear);
 		sf.SetLineAlignment(StringAlignmentNear);

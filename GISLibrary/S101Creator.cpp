@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S101Creator.h"
 #include "S101Cell.h"
-#include "S101Layer.h"
+#include "S100Layer.h"
 #include "R_FeatureRecord.h"
 #include "R_InformationRecord.h"
 #include "R_PointRecord.h"
@@ -65,7 +65,7 @@ void S101Creator::SetENC(S101Cell* enc)
 	this->enc = enc;
 	if (enc->m_pLayer)
 	{
-		this->layer = (S101Layer*)enc->m_pLayer;
+		this->layer = (S100Layer*)enc->m_pLayer;
 	}
 }
 
@@ -82,9 +82,9 @@ S101Cell* S101Creator::CreateENC(std::wstring name)
 	return result;
 }
 
-S101Layer* S101Creator::CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc)
+S100Layer* S101Creator::CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc)
 {
-	auto result = new S101Layer(fc, pc);	
+	auto result = new S100Layer(fc, pc);
 
 	enc = CreateENC(name);
 

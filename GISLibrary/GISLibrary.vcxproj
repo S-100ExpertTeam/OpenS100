@@ -325,7 +325,6 @@
     <ClCompile Include="S100SpatialObject.cpp" />
     <ClCompile Include="S100Utilities.cpp" />
     <ClCompile Include="S101Creator.cpp" />
-    <ClCompile Include="S101Layer.cpp" />
     <ClCompile Include="S101LuaScriptingReference.cpp" />
     <ClCompile Include="SENC_AlertReference.cpp" />
     <ClCompile Include="SENC_Annulus.cpp" />
@@ -492,7 +491,6 @@
     <ClInclude Include="S100SpatialObject.h" />
     <ClInclude Include="S100Utilities.h" />
     <ClInclude Include="S101Creator.h" />
-    <ClInclude Include="S101Layer.h" />
     <ClInclude Include="S101LuaScriptingReference.h" />
     <ClInclude Include="SENC_AlertReference.h" />
     <ClInclude Include="SENC_Annulus.h" />

@@ -4,7 +4,7 @@
 
 #include <vector>
 
-class S101Layer;
+class S100Layer;
 class S101Cell;
 class FeatureCatalogue;
 class R_FeatureRecord;
@@ -20,14 +20,14 @@ public:
 public:
 	FeatureCatalogue* fc = nullptr;
 	S101Cell* enc = nullptr;
-	S101Layer* layer = nullptr;
+	S100Layer* layer = nullptr;
 
 public:
 	void Set(FeatureCatalogue* fc, S101Cell* enc);
 	void SetFC(FeatureCatalogue* fc);
 	void SetENC(S101Cell* enc);
 
-	S101Layer* CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc);
+	S100Layer* CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc);
 
 	R_FeatureRecord* AddFeature(std::wstring code);
 	R_InformationRecord* AddInformation(std::wstring code);
