@@ -11,7 +11,6 @@
 #include "DialogViewInformationType.h"
 #include "DialogDockLayerManager.h"
 #include "ConfigrationDlg.h"
-#include "CDialogExFeatureInformationList.h"
 #include "DialogDockCurrentSelection.h"
 #include "TestGISLibrary.h"
 
