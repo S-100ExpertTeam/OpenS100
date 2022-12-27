@@ -160,15 +160,6 @@ bool S101Cell::IsUpdate()
 	}
 }
 
-void S101Cell::InitDrawingInstruction()
-{
-	if (pcManager)
-	{
-		delete pcManager;
-	}
-	pcManager = new PCOutputSchemaManager();
-}
-
 void S101Cell::GetDrawingPriority(std::vector<__int64>& key, std::vector<int>& priority)
 {
 	//priority.clear();

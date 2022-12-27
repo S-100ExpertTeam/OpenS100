@@ -19,8 +19,7 @@ public:
 	PCOutputSchemaManager* pcManager = nullptr;
 
 public:
-	//void SetMBR(MBR& value);
-	//MBR GetMBR();
+	void InitDrawingInstruction();
 	void SetPCOutputManager(PCOutputSchemaManager* value);
 	PCOutputSchemaManager* GetPCOutputManager();
 

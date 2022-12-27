@@ -17,28 +17,19 @@ S100SpatialObject::~S100SpatialObject()
 	}
 }
 
-//void S100SpatialObject::SetMBR(MBR& value)
-//{
-//	if (nullptr != m_pLayer)
-//	{
-//		m_pLayer->SetMBR(value);
-//	}
-//}
-//
-//
-//MBR S100SpatialObject::GetMBR()
-//{
-//	if (nullptr != m_pLayer)
-//	{
-//		return m_pLayer->GetMBR();
-//	}
-//
-//	return MBR();
-//}
-
 void S100SpatialObject::SetPCOutputManager(PCOutputSchemaManager* value)
 {
 	pcManager = value;
+}
+
+void S100SpatialObject::InitDrawingInstruction()
+{
+	if (pcManager)
+	{
+		delete pcManager;
+	}
+
+	pcManager = new PCOutputSchemaManager();
 }
 
 PCOutputSchemaManager* S100SpatialObject::GetPCOutputManager()

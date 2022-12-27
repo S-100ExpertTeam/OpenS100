@@ -294,7 +294,6 @@ public:
 	bool Check();
 	bool Update(S101Cell* cell);
 	bool IsUpdate();
-	void InitDrawingInstruction();
 
 	void GetDrawingPriority(std::vector<__int64>& key, std::vector<int>& priority);
 
