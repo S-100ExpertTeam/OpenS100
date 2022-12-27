@@ -8,6 +8,7 @@
 
 class PCOutputSchemaManager;
 class S100Layer;
+
 class S100SpatialObject : public SpatialObject
 {
 public:
@@ -16,13 +17,13 @@ public:
 
 public:
 	PCOutputSchemaManager* pcManager = nullptr;
+
 public:
 	void SetMBR(MBR& value);
 	MBR GetMBR();
 	void SetPCOutputManager(PCOutputSchemaManager* value);
 	PCOutputSchemaManager* GetPCOutputManager();
 
-	virtual std::wstring GetFeatureTypeCodeByNumericCode(int numericCode) { return L""; }
 	virtual std::wstring GetFeatureTypeCodeByID(std::wstring id) { return L""; }
 	virtual std::wstring GetFeatureTypeCodeByID(int id) { return L""; }
 };

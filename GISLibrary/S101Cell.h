@@ -85,7 +85,6 @@ private:
 	std::vector<R_FeatureRecord*> vecFeature;
 
 public: // Virtual methods
-	std::wstring GetFeatureTypeCodeByNumericCode(int numericCode);
 	std::wstring GetFeatureTypeCodeByID(std::wstring id);
 	std::wstring GetFeatureTypeCodeByID(int id);
 

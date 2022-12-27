@@ -23,6 +23,7 @@ class SENC_AreaInstruction;
 class SENC_TextInstruction;
 class SENC_AugmentedRay;
 class SENC_AugmentedPath;
+
 class PCOutputSchemaManager
 {
 public:

@@ -12,9 +12,6 @@ public:
 	virtual ~S101Layer();
 
 public:
-	//virtual bool Open(CString _filepath) override;
-	/*void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler);*/
-
 	std::wstring GetChartName();
 	std::wstring GetEditionNumberAsWstring();
 	std::wstring GetUpdateNumberAsWstring();

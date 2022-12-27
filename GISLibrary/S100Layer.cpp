@@ -55,6 +55,8 @@ bool S100Layer::Open(CString _filepath)
 	{
 		
 	}
+	
+	return false;
 }
 
 void S100Layer::SetFeatureCatalog(FeatureCatalogue* value)

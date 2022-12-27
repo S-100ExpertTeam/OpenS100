@@ -266,18 +266,6 @@ void LayerManager::Draw(HDC& hdc, int offset)
 
 	DrawBackground(hdc, offset);
 
-	//std::future<void> drawResult = std::async([this, hdc, offset]() {
-	//	this->DrawS100Datasets((HDC&)hdc, offset);
-	//	});
-
-	//std::chrono::milliseconds span(100);
-	//while (drawResult.wait_for(span) != std::future_status::ready)
-	//{
-	//	
-	//}
-
-	//drawResult.wait();
-
 	DrawS100Datasets(hdc, offset);
 
 	gisLib->D2.Begin(hdc, rectView);
