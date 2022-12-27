@@ -163,12 +163,12 @@ int LayerManager::isUpdate(CString filePath)
 
 int LayerManager::AddLayer(CString _filepath)
 {
-	CString file_extension = LibMFCUtil::GetExtension(_filepath);
-
 	Layer* layer = nullptr;
 	size_t fitor = std::wstring::npos;
 
-	if (file_extension.CompareNoCase(_T("SHP")) == 0)
+	int fileType = CheckFileType(_filepath);
+
+	if (fileType == S100_FileType::FILE_Shape)
 	{
 		layer = new Layer();
 		if (layer->Open(_filepath) == false)
@@ -177,26 +177,20 @@ int LayerManager::AddLayer(CString _filepath)
 			return -1;
 		}
 	}
-	else if (file_extension.CompareNoCase(_T("000")) == 0)
+	else if (fileType == S100_FileType::FILE_S_100_VECTOR ||
+		fileType == S100_FileType::FILE_S_100_GRID_H5)
 	{
 		FeatureCatalogue* fc = nullptr;
 		PortrayalCatalogue* pc = nullptr;
-		std::wstring fcName = L"";
 
-		int type = CheckFileType(_filepath);
-		
-		// S-101
-		if (type == 2)
+		fc = gisLib->GetFC();
+		pc = gisLib->GetPC();
+
+		layer = new S101Layer(fc, pc);
+		if ((S101Layer*)layer->Open(_filepath) == false)
 		{
-			fc = gisLib->GetFC();
-			pc = gisLib->GetPC();
-
-			layer = new S101Layer(fc, pc);
-			if ((S101Layer*)layer->Open(_filepath) == false)
-			{
-				delete layer;
-				return -1;
-			}
+			delete layer;
+			return -1;
 		}
 	}
 
@@ -222,42 +216,6 @@ int LayerManager::AddLayer(CString _filepath)
 
 	return layer->GetID();
 }
-
-bool LayerManager::AddOverlayLayer(CString _filepath)
-{
-	CString file_extension = _T("");
-
-	file_extension.AppendChar(_filepath.GetAt(_filepath.GetLength() - 3));
-	file_extension.AppendChar(_filepath.GetAt(_filepath.GetLength() - 2));
-	file_extension.AppendChar(_filepath.GetAt(_filepath.GetLength() - 1));
-
-	Layer* layer;
-
-	if (file_extension.CompareNoCase(_T("SHP")) == 0) {
-		layer = new Layer();
-		if (layer->Open(_filepath) == FALSE) {
-			return FALSE;
-		}
-	}
-
-	if (layer->m_spatialObject == NULL)
-		return FALSE;
-
-
-	double xmin, ymin, xmax, ymax;
-
-	xmin = layer->m_mbr.xmin;
-	ymin = layer->m_mbr.ymin;
-	xmax = layer->m_mbr.xmax;
-	ymax = layer->m_mbr.ymax;
-
-	MBR _mbr(xmin, ymin, xmax, ymax);
-
-	mbr.SetMBR(_mbr);
-	return TRUE;
-}
-
-void a(int a, int b);
 
 void LayerManager::Draw(HDC& hdc, int offset)
 {
@@ -1346,11 +1304,11 @@ int LayerManager::CheckFileType(CString path)
 
 				if (tag == *((unsigned int*)"0001"))
 				{
-					ret = 1; // 57
+					return S100_FileType::FILE_S_57;
 				}
 				else if (tag == *((unsigned int*)"DSID"))
 				{
-					ret = 2; // 101
+					return S100_FileType::FILE_S_100_VECTOR;
 				}
 				delete sBuf;
 			}
@@ -1370,13 +1328,17 @@ int LayerManager::CheckFileType(CString path)
 			if ((nodeName.find(L"DataSet") != std::wstring::npos) ||
 				(nodeName.find(L"Dataset") != std::wstring::npos))
 			{
-				ret = 3;
+				return S100_FileType::FILE_S_100_VECTOR;
 			}
 		}
 	}
 	else if (file_extension.CompareNoCase(_T("h5")) == 0)
 	{
-		ret = 4;
+		return S100_FileType::FILE_S_100_GRID_H5;
+	}
+	else if (file_extension.CompareNoCase(L"SHP") == 0)
+	{
+		return S100_FileType::FILE_Shape;
 	}
 
 	return ret;

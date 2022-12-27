@@ -4358,7 +4358,7 @@ std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
 	auto fe = GetFeatureRecord(rn.GetName());
 	if (fe)
 	{
-		return m_dsgir.GetFeatureCode(fe->GetNumericCode());
+		return std::wstring(m_dsgir.GetFeatureCode(fe->GetNumericCode()));
 	}
 
 	return L"";

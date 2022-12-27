@@ -103,11 +103,7 @@ public:
 
 	int LayerCount();
 
-	// Result
-	// 1 : S-57
-	// 2 : S-101
-	// 3 : S-100 GML
-	// 4 : S-100 H5
+	// Return type : enum S100_FileType
 	static int CheckFileType(CString path, int update);
 	static int CheckFileType(CString path);
 
