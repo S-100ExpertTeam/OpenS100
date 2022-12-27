@@ -17,11 +17,6 @@ S100SpatialObject::~S100SpatialObject()
 	}
 }
 
-void S100SpatialObject::SetPCOutputManager(PCOutputSchemaManager* value)
-{
-	pcManager = value;
-}
-
 void S100SpatialObject::InitDrawingInstruction()
 {
 	if (pcManager)

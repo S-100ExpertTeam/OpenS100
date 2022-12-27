@@ -20,7 +20,6 @@ public:
 
 public:
 	void InitDrawingInstruction();
-	void SetPCOutputManager(PCOutputSchemaManager* value);
 	PCOutputSchemaManager* GetPCOutputManager();
 
 	virtual std::wstring GetFeatureTypeCodeByID(std::wstring id) { return L""; }
