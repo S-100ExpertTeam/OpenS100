@@ -7,7 +7,6 @@
 
 #include <map>
 
-class S101Cell;
 class SGeometry;
 class SENC_Template;
 class R_CurveRecord;

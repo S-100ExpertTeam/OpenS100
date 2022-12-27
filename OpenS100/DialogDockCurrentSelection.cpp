@@ -142,20 +142,6 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					CString str = (*i)->GetAttributeCodeAsWstring().c_str();
 					OutputDebugString(str + L"\n");
 				}
-				//if (pFe->GetGeometry()->type == 1)
-				//{
-				//	auto newFeature = theApp.gisLib->creator.AddFeature(L"LightSectored");
-				//	unsigned char* wkb = nullptr;
-				//	int size = 0;
-				//	pFe->GetGeometry()->ExportToWkb(&wkb, &size);
-				//	if (newFeature)
-				//	{
-				//		theApp.gisLib->creator.SetPointGeometry(newFeature, wkb, size);
-				//		theApp.gisLib->S101RebuildPortrayal();
-				//		theApp.pView->MapRefresh();
-				//	}
-				//	delete[] wkb;
-				//}
 			}
 			else if (featureType == L"Information")
 			{
