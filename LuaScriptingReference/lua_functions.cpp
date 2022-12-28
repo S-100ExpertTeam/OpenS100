@@ -1,15 +1,14 @@
 #include "stdafx.h"
 #include "lua_functions.h"
 
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\FeatureCatalog\\FeatureType.h"
-#include "..\\FeatureCatalog\\InformationType.h"
-#include "..\\FeatureCatalog\\InformationBinding.h"
-#include "..\\FeatureCatalog\\Role.h"
-#include "..\\FeatureCatalog\\InformationAssociation.h"
-#include "..\\FeatureCatalog\\FeatureAssociation.h"
-#include "..\\FeatureCatalog\\SimpleAttribute.h"
-
+#include "../FeatureCatalog/FeatureCatalogue.h"
+#include "../FeatureCatalog/FeatureType.h"
+#include "../FeatureCatalog/InformationType.h"
+#include "../FeatureCatalog/InformationBinding.h"
+#include "../FeatureCatalog/Role.h"
+#include "../FeatureCatalog/InformationAssociation.h"
+#include "../FeatureCatalog/FeatureAssociation.h"
+#include "../FeatureCatalog/SimpleAttribute.h"
 
 FeatureCatalogue *pTheFC = nullptr;
 
