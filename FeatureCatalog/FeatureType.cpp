@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "FeatureType.h"
 
+#include <iostream>
+
 FeatureType::FeatureType()
 {
 
@@ -64,21 +66,21 @@ void FeatureType::SetSuperType(std::wstring value)
 	superType = value;
 }
 
-FeatureBinding* FeatureType::GetFeatureBinding(std::string featureTypeCode)
-{
-	auto item = featureBinding.find(featureTypeCode);
-	if (item != featureBinding.end())
-	{
-		return item->second;
-	}
-
-	return nullptr;
-}
-
-FeatureBinding* FeatureType::GetFeatureBinding(std::wstring featureTypeCode)
-{
-	return GetFeatureBinding(pugi::as_utf8(featureTypeCode));
-}
+//FeatureBinding* FeatureType::GetFeatureBinding(std::string featureTypeCode)
+//{
+//	auto item = featureBinding.find(featureTypeCode);
+//	if (item != featureBinding.end())
+//	{
+//		return item->second;
+//	}
+//
+//	return nullptr;
+//}
+//
+//FeatureBinding* FeatureType::GetFeatureBinding(std::wstring featureTypeCode)
+//{
+//	return GetFeatureBinding(pugi::as_utf8(featureTypeCode));
+//}
 
 std::list<std::wstring>& FeatureType::GetSubTypePointer()
 {
@@ -102,10 +104,5 @@ std::list<SpatialPrimitiveType*>& FeatureType::GetPermittedPrimitivesPointer()
 
 void FeatureType::InsertFeatureBinding(FeatureBinding* value)
 {
-	auto insertedFeatureCode = value->GetFeatureType();
-	if (featureBinding.find(insertedFeatureCode) == featureBinding.end())
-	{
-		vecFeatureBinding.push_back(value);
-		featureBinding.insert({ insertedFeatureCode, value });
-	}
+	vecFeatureBinding.push_back(value);
 }

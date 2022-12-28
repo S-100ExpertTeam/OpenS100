@@ -13,15 +13,8 @@ InformationBinding::~InformationBinding()
 
 void InformationBinding::GetContents(pugi::xml_node& node)
 {
-	auto attribute = node.attribute("roleType");
-	if (attribute)
-	{
-		XML_Attribute value;
-		value.Setname("roleType");
-		value.Setvalue((char*)attribute.value());
+	SetRoleType(node.attribute("roleType").value());
 
-		SetAttributes(value);
-	}
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
 		const pugi::char_t* instructionName = instruction.name();
@@ -31,35 +24,129 @@ void InformationBinding::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:association"))
 		{
-			association.GetContents(instruction);
+			association = instruction.attribute("ref").value();
 		}
 		else if (!strcmp(instructionName, "S100FC:role"))
 		{
-			role.GetContents(instruction);
+			role = instruction.attribute("ref").value();
 		}
 		else if (!strcmp(instructionName, "S100FC:informationType"))
 		{
-			informationType.GetContents(instruction);
+			informationType = instruction.attribute("ref").value();
 		}
 	}
 }
 
-Multiplicity& InformationBinding::GetMultiplicityPointer()
+Multiplicity& InformationBinding::GetMultiplicity()
 {
 	return multiplicity;
 }
 
-Reference& InformationBinding::GetAssociationPointer()
+std::string InformationBinding::GetAssociation()
 {
 	return association;
 }
 
-Reference& InformationBinding::GetRolePointer()
+std::wstring InformationBinding::GetAssociationAsWstring()
+{
+	return pugi::as_wide(association);
+}
+
+void InformationBinding::SetAssociation(std::string value)
+{
+	association = value;
+}
+
+void InformationBinding::SetAssociation(std::wstring value)
+{
+	association = pugi::as_utf8(value);
+}
+
+std::string InformationBinding::GetRole()
 {
 	return role;
 }
 
-Reference& InformationBinding::GetInformationTypePointer()
+std::wstring InformationBinding::GetRoleAsWstring()
+{
+	return pugi::as_wide(role);
+}
+
+void InformationBinding::SetRole(std::string value)
+{
+	role = value;
+}
+
+void InformationBinding::SetRole(std::wstring value)
+{
+	role = pugi::as_utf8(value);
+}
+
+S100_FC_RoleType InformationBinding::GetRoleType()
+{
+	return roleType;
+}
+
+std::string InformationBinding::GetRoleTypeAsString()
+{
+	if (roleType == S100_FC_RoleType::association)
+	{
+		return "association";
+	}
+	else if (roleType == S100_FC_RoleType::aggregation)
+	{
+		return "association";
+	}
+	else if (roleType == S100_FC_RoleType::composition)
+	{
+		return "association";
+	}
+
+	return "";
+}
+
+std::wstring InformationBinding::GetRoleTypeAsWstring()
+{
+	return pugi::as_wide(GetRoleTypeAsString());
+}
+
+void InformationBinding::SetRoleType(S100_FC_RoleType value)
+{
+	roleType = value;
+}
+
+void InformationBinding::SetRoleType(std::string value)
+{
+	if (value.compare("association") == 0)
+	{
+		roleType = S100_FC_RoleType::association;
+	}
+	else if (value.compare("aggregation") == 0)
+	{
+		roleType = S100_FC_RoleType::association;
+	}
+	else if (value.compare("composition") == 0)
+	{
+		roleType = S100_FC_RoleType::association;
+	}
+}
+
+std::string InformationBinding::GetInformationType()
 {
 	return informationType;
+}
+
+std::wstring InformationBinding::GetInformationTypeAsWstring()
+{
+	return pugi::as_wide(informationType);
+}
+
+void InformationBinding::SetInformationType(std::string value)
+{
+	informationType = value;
+}
+
+void InformationBinding::SetInformationType(std::wstring value)
+{
+	informationType = pugi::as_utf8(value);
 }

@@ -154,7 +154,9 @@ lua_ref_ptr CreateObjectType(lua_session *ls, S100ObjectType *object_type)
 	std::vector<lua_ref_ptr> information_bindings;
 
 	for (auto ib : object_type->GetInformationBindingPointer())
-		information_bindings.push_back(CreateInformationBinding(ls, ib.second));
+	{
+		information_bindings.push_back(CreateInformationBinding(ls, ib));
+	}
 
 	return ls->call<lua_ref_ptr>("CreateObjectType", { CreateNamedType(ls, object_type), information_bindings });
 }
@@ -406,99 +408,30 @@ lua_ref_ptr CreateAttributeBinding(lua_session *ls, AttributeBinding *attribute_
 
 lua_ref_ptr CreateInformationBinding(lua_session *ls, InformationBinding *information_binding) // -----------------------------------------------------------------------------------------------------------------------
 {
-	std::string role;
-	std::string information_association;
-
-	std::wstring referenceCode;
-	std::string itreferenceCode;
-
-	for (auto a : information_binding->GetRolePointer().GetattributesPointer())
-	{
-		if (a.Getname() == L"ref")
-		{
-			referenceCode = a.Getvalue();
-		}
-	}
-
-	role = std::string(information_binding->GetRolePointer().Getvalue().begin(), information_binding->GetRolePointer().Getvalue().end());
-
-	for (auto a : information_binding->GetAssociationPointer().GetattributesPointer())
-	{
-		if (a.Getname() == L"ref")
-		{
-			referenceCode = a.Getvalue();
-		}
-	}
-
-	information_association = std::string(information_binding->GetAssociationPointer().Getvalue().begin(), information_binding->GetAssociationPointer().Getvalue().end());
-
-	for (auto a : information_binding->GetInformationTypePointer().GetattributesPointer())
-	{
-		if (a.Getname() == L"ref")
-		{
-			itreferenceCode = a.GetvalueString();
-		}
-	}
-
 	std::optional<int> muluppvalue;
 
-	if (information_binding->GetMultiplicityPointer().GetUpper().IsInfinite() == false)
+	if (information_binding->GetMultiplicity().GetUpper().IsInfinite() == false)
 	{
-		muluppvalue = information_binding->GetMultiplicityPointer().GetUpper().GetIntegerValue();
+		muluppvalue = information_binding->GetMultiplicity().GetUpper().GetIntegerValue();
 	}
 
-	auto roleType = std::string(information_binding->GetRolePointer().Getvalue().begin(), information_binding->GetRolePointer().Getvalue().end());
-
-	return ls->call<lua_ref_ptr>("CreateInformationBinding", { itreferenceCode, information_binding->GetMultiplicityPointer().GetLower(), muluppvalue, roleType, role, information_association });
-
+	return ls->call<lua_ref_ptr>("CreateInformationBinding", { 
+		information_binding->GetInformationType(), 
+		information_binding->GetMultiplicity().GetLower(), 
+		muluppvalue, 
+		information_binding->GetRoleTypeAsString(), 
+		information_binding->GetRole(),
+		information_binding->GetAssociation()});
 }
 
 lua_ref_ptr CreateFeatureBinding(lua_session *ls, FeatureBinding *feature_binding)
 {
-	//std::string role;
-	//std::string feature_association;
-
-	//std::wstring referenceCode;
-	//std::string featureTypeCode;
-
-	//for (auto a : feature_binding->GetRolePointer().GetattributesPointer())
-	//{
-	//	if (a.Getname() == L"ref")
-	//	{
-	//		referenceCode = a.Getvalue();
-	//	}
-	//}
-
-
-
-	//role = feature_binding->GetRole();
-
-	//for (auto a : feature_binding->GetAssociationPointer().GetattributesPointer())
-	//{
-	//	if (a.Getname() == L"ref")
-	//	{
-	//		referenceCode = a.Getvalue();
-	//	}
-	//}
-
-	//feature_association = std::string(feature_binding->GetAssociationPointer().Getvalue().begin(), feature_binding->GetAssociationPointer().Getvalue().end());
-
-	//for (auto a : feature_binding->GetFeatureTypePointer().GetattributesPointer())
-	//{
-	//	if (a.Getname()== L"ref")
-	//	{
-	//		ftreferenceCode = a.GetvalueString();
-	//	}
-	//}
-
 	std::optional<int> muluppvalue;
 
 	if (feature_binding->GetMultiplicity().GetUpper().IsInfinite() == false)
 	{
 		muluppvalue = feature_binding->GetMultiplicity().GetUpper().GetIntegerValue();
 	}
-
-	//auto roleType = std::string(feature_binding->GetRolePointer().Getvalue().begin(), feature_binding->GetRolePointer().Getvalue().end());
 
 	return ls->call<lua_ref_ptr>("CreateFeatureBinding", { 
 		feature_binding->GetFeatureType(), 

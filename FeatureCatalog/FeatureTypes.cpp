@@ -91,7 +91,10 @@ bool FeatureTypes::SetAssociationFromSuperType(FeatureType* ft)
 					sft->GetFeatureBindingPointer().begin(), 
 					sft->GetFeatureBindingPointer().end());
 
-				ft->GetInformationBindingPointer().insert(sft->GetInformationBindingPointer().begin(), sft->GetInformationBindingPointer().end());
+				ft->GetInformationBindingPointer().insert(
+					ft->GetInformationBindingPointer().end(),
+					sft->GetInformationBindingPointer().begin(), 
+					sft->GetInformationBindingPointer().end());
 			}
 			return true;
 		}

@@ -49,7 +49,10 @@ bool InformationTypes::SetAssociationFromSuperType(InformationType* it)
 			InformationType* sit = itor->second;
 			if (SetAssociationFromSuperType(sit))
 			{
-				it->GetInformationBindingPointer().insert(sit->GetInformationBindingPointer().begin(), sit->GetInformationBindingPointer().end());
+				it->GetInformationBindingPointer().insert(
+					it->GetInformationBindingPointer().end(),
+					sit->GetInformationBindingPointer().begin(), 
+					sit->GetInformationBindingPointer().end());
 			}
 			return true;
 		}

@@ -1,5 +1,5 @@
 #pragma once
-#include "XML_Item.h"
+
 #include "Multiplicity.h"
 #include "Reference.h"
 #include "S100_FC_RoleType.h"

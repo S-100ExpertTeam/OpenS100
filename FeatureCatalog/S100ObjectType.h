@@ -4,6 +4,8 @@
 
 #include <pugixml.hpp>
 
+#include <list>
+
 class S100ObjectType :
 	public NamedType
 {
@@ -12,9 +14,9 @@ public:
 	virtual ~S100ObjectType();
 
 private:
-	std::unordered_map<std::wstring, InformationBinding*> informationBinding;
+	std::list<InformationBinding*> informationBinding;
 
 public:
 	void GetContents(pugi::xml_node& node);
-	std::unordered_map<std::wstring, InformationBinding*>& GetInformationBindingPointer();
+	std::list<InformationBinding*>& GetInformationBindingPointer();
 };
