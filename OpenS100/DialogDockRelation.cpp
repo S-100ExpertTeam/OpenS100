@@ -147,6 +147,7 @@ void CDialogDockRelation::OnNMClickListLm(NMHDR *pNMHDR, LRESULT *pResult)
 
 		__int64 fridN = _tcstoui64(frid, NULL, 10);
 		__int64 key = ((__int64)150) << 32 | fridN;
+		auto stringKey = std::to_wstring(key);
 
 		auto infmap = m_cell->GetInformationRecord(key);
 		if (infmap == nullptr)
@@ -171,7 +172,7 @@ void CDialogDockRelation::OnNMClickListLm(NMHDR *pNMHDR, LRESULT *pResult)
 		FeatureType* ft = fc->GetFeatureType(itor->second->m_code.GetBuffer());
 
 		theApp.m_DockablePaneEditWindow.m_cell = cell;
-		theApp.m_DockablePaneEditWindow.SetFeatureRecord(inr);
+		theApp.m_DockablePaneEditWindow.SetInformationType(stringKey);
 	}
 	else if (type == L"Feature")
 	{
@@ -184,6 +185,7 @@ void CDialogDockRelation::OnNMClickListLm(NMHDR *pNMHDR, LRESULT *pResult)
 
 		__int64 fridN = _tcstoui64(frid, NULL, 10);
 		__int64 key = ((__int64)100) << 32 | fridN; // feature
+		auto stringKey = std::to_wstring(key);
 
 		auto feumap = m_cell->GetFeatureRecord(key);
 		R_FeatureRecord *rfr = feumap;
@@ -204,7 +206,7 @@ void CDialogDockRelation::OnNMClickListLm(NMHDR *pNMHDR, LRESULT *pResult)
 
 		FeatureType* ft = fc->GetFeatureType(itor->second->m_code.GetBuffer());
 		theApp.m_DockablePaneEditWindow.m_cell = cell;
-		theApp.m_DockablePaneEditWindow.SetFeatureRecord(pFe);
+		theApp.m_DockablePaneEditWindow.SetFeatureType(stringKey);
 
 	}
 }
@@ -270,49 +272,37 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 	{
 		R_FeatureRecord *orgFr = *ri;	// Feature that needs a relation
 
-		auto orgFtItor = cell->m_dsgir.m_ftcs->m_arr.find(orgFr->m_frid.m_nftc);
-		if (orgFtItor == cell->m_dsgir.m_ftcs->m_arr.end())
+		// feature type code (source)
+		std::wstring orgFeatureTypeCode = cell->m_dsgir.GetFeatureCode(orgFr->GetNumericCode());
+
+		// Feature Type (FC)
+		auto featureType = fc->GetFeatureType(orgFeatureTypeCode);
+		if (featureType == nullptr)
 		{
+			OutputDebugString(L"Failed to find feature type code\n");
 			continue;
 		}
 
-		std::wstring orgFeatureName = orgFtItor->second->m_code;
-
-		auto fit = fc->GetFeatureTypes().GetFeatureType().find(orgFeatureName);
-		if (fit == fc->GetFeatureTypes().GetFeatureType().end())
-		{
-			CString msg;
-			msg.Format(L"[%s] Feature not found. -REALATION", orgFeatureName.c_str());
-			continue;
-		}
-
-		FeatureType *orgFT = fit->second;
 		// fasc
 		int count = (int)orgFr->m_fasc.size();
 		for (auto itt = orgFr->m_fasc.begin(); itt != orgFr->m_fasc.end(); itt++)
 		{
 			F_FASC *fasc = *itt;
-
-			auto orgfaItor = cell->m_dsgir.m_facs->m_arr.find(fasc->m_nfac);
-			if (orgfaItor == cell->m_dsgir.m_facs->m_arr.end())
+			auto featureAssociationCode = cell->m_dsgir.GetFeatureAssociationCode(fasc->m_nfac);
+			if (featureAssociationCode.IsEmpty())
 			{
 				continue;
 			}
 
-			CString faName = orgfaItor->second->m_code;
-
-			auto orgarItor = cell->m_dsgir.m_arcs->m_arr.find(fasc->m_narc);
-			if (orgarItor == cell->m_dsgir.m_arcs->m_arr.end())
+			auto roleCode = cell->m_dsgir.GetAssociationRoleCode(fasc->m_narc);
+			if (roleCode.IsEmpty())
 			{
-
 				continue;
 			}
 
-			CString arName = orgarItor->second->m_code;
-
-			auto orgFBItor = orgFT->GetFeatureBindingPointer().find(orgFeatureName);
-			std::wstring orgAssociationName = faName;
-			std::wstring orgRoleName = arName;
+			//auto orgFBItor = featureType->GetFeatureBindingPointer().find(orgFeatureTypeCode);
+			std::wstring orgAssociationName = featureAssociationCode;
+			std::wstring orgRoleName = roleCode;
 
 			LVITEM firstItem = { 0 };
 			m_ListRelation.InsertItem(&firstItem);  // insert item
@@ -324,8 +314,6 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 			CString colOrgAssociationName = L"";
 			CString colOrgAssociationRole = L"";
 
-
-			////////////////////////////////////////////////////////////////////////////////
 			int n_code = orgFr->m_frid.m_nftc;
 			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(n_code);
 			auto ws_objectCode1 = itor->second->m_code.GetBuffer();
@@ -340,7 +328,7 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 			if (associatedFeature == nullptr)
 			{
 				CString msg;
-				msg.Format(L"[%s] Feature not found. -REALATION", faName);
+				msg.Format(L"[%s] Feature not found. -REALATION", featureAssociationCode);
 				int i = 0;
 				continue;
 			}
@@ -350,24 +338,42 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 			auto ws_objectCode2 = itors->second->m_code.GetBuffer();
 			itors->second->m_code.ReleaseBuffer();
 			auto fc_informationTypeOBJ = fc->GetFeatureType(ws_objectCode2);
-			////////////////////////////////////////////////////////////////////////////////
 
 			if (fc_featureTypeORG)
+			{
 				colOrgFeatureName.Format(_T("%s (%d)"), fc_featureTypeORG->GetName().c_str(), orgFr->m_frid.m_name.RCID);
+			}
 			else
+			{
 				colOrgFeatureName.Format(_T("%s (%d)"), ws_objectCode1, orgFr->m_frid.m_name.RCID);
+			}
+
 			if (fc_featureAssociation)
+			{
 				colOrgAssociationName.Format(_T("%s"), fc_featureAssociation->GetName().c_str());
+			}
 			else
+			{
 				colOrgAssociationName.Format(_T("%s"), orgAssociationName);
+			}
+
 			if (fc_role)
+			{
 				colOrgAssociationRole.Format(_T("%s"), fc_role->GetName().c_str());
+			}
 			else
+			{
 				colOrgAssociationRole.Format(_T("%s"), orgRoleName.c_str());
+			}
+
 			if (fc_informationTypeOBJ)
+			{
 				colAssociationFeatureName.Format(_T("%s (%d)"), fc_informationTypeOBJ->GetName().c_str(), fasc->m_name.RCID);
+			}
 			else
+			{
 				colAssociationFeatureName.Format(_T("%s (%d)"), ws_objectCode2, fasc->m_name.RCID);
+			}
 
 			colOrgFeatureId.Format(_T("%d"), orgFr->m_frid.m_name.RCID);
 			colAssociationFeatureId.Format(_T("%d"), fasc->m_name.RCID);
@@ -385,7 +391,6 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 			m_ListRelation.SetItemText(0, 6, colAssociationFeatureId); // Feature ID
 
 			UpdateData(false);
-
 		}
 
 		// inas

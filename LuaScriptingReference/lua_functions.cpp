@@ -186,7 +186,7 @@ lua_ref_ptr CreateFeatureType(lua_session *ls, FeatureType *feature_type)
 	std::vector<lua_ref_ptr> feature_bindings;
 
 	for (auto fb : feature_type->GetFeatureBindingPointer())
-		feature_bindings.push_back(CreateFeatureBinding(ls, fb.second));
+		feature_bindings.push_back(CreateFeatureBinding(ls, fb));
 
 	auto featureUseType = std::string(feature_type->GetFeatureUseTypePointer().GetValueString().begin(), feature_type->GetFeatureUseTypePointer().GetValueString().end());
 
@@ -451,50 +451,56 @@ lua_ref_ptr CreateInformationBinding(lua_session *ls, InformationBinding *inform
 
 lua_ref_ptr CreateFeatureBinding(lua_session *ls, FeatureBinding *feature_binding)
 {
-	std::string role;
-	std::string feature_association;
+	//std::string role;
+	//std::string feature_association;
 
-	std::wstring referenceCode;
-	std::string ftreferenceCode;
+	//std::wstring referenceCode;
+	//std::string featureTypeCode;
 
-	for (auto a : feature_binding->GetRolePointer().GetattributesPointer())
-	{
-		if (a.Getname() == L"ref")
-		{
-			referenceCode = a.Getvalue();
-		}
-	}
+	//for (auto a : feature_binding->GetRolePointer().GetattributesPointer())
+	//{
+	//	if (a.Getname() == L"ref")
+	//	{
+	//		referenceCode = a.Getvalue();
+	//	}
+	//}
 
 
 
-	role = std::string(feature_binding->GetRolePointer().Getvalue().begin(), feature_binding->GetRolePointer().Getvalue().end());
+	//role = feature_binding->GetRole();
 
-	for (auto a : feature_binding->GetAssociationPointer().GetattributesPointer())
-	{
-		if (a.Getname() == L"ref")
-		{
-			referenceCode = a.Getvalue();
-		}
-	}
+	//for (auto a : feature_binding->GetAssociationPointer().GetattributesPointer())
+	//{
+	//	if (a.Getname() == L"ref")
+	//	{
+	//		referenceCode = a.Getvalue();
+	//	}
+	//}
 
-	feature_association = std::string(feature_binding->GetAssociationPointer().Getvalue().begin(), feature_binding->GetAssociationPointer().Getvalue().end());
+	//feature_association = std::string(feature_binding->GetAssociationPointer().Getvalue().begin(), feature_binding->GetAssociationPointer().Getvalue().end());
 
-	for (auto a : feature_binding->GetFeatureTypePointer().GetattributesPointer())
-	{
-		if (a.Getname()== L"ref")
-		{
-			ftreferenceCode = a.GetvalueString();
-		}
-	}
+	//for (auto a : feature_binding->GetFeatureTypePointer().GetattributesPointer())
+	//{
+	//	if (a.Getname()== L"ref")
+	//	{
+	//		ftreferenceCode = a.GetvalueString();
+	//	}
+	//}
 
 	std::optional<int> muluppvalue;
 
-	if (feature_binding->GetMultiplicityPointer().GetUpper().IsInfinite() == false)
+	if (feature_binding->GetMultiplicity().GetUpper().IsInfinite() == false)
 	{
-		muluppvalue = feature_binding->GetMultiplicityPointer().GetUpper().GetIntegerValue();
+		muluppvalue = feature_binding->GetMultiplicity().GetUpper().GetIntegerValue();
 	}
 
-	auto roleType = std::string(feature_binding->GetRolePointer().Getvalue().begin(), feature_binding->GetRolePointer().Getvalue().end());
+	//auto roleType = std::string(feature_binding->GetRolePointer().Getvalue().begin(), feature_binding->GetRolePointer().Getvalue().end());
 
-	return ls->call<lua_ref_ptr>("CreateFeatureBinding", { ftreferenceCode, feature_binding->GetMultiplicityPointer().GetLower(), muluppvalue, roleType, role, feature_association });
+	return ls->call<lua_ref_ptr>("CreateFeatureBinding", { 
+		feature_binding->GetFeatureType(), 
+		feature_binding->GetMultiplicity().GetLower(), 
+		muluppvalue, 
+		feature_binding->GetRoleTypeAsString(), 
+		feature_binding->GetRole(),
+		feature_binding->GetAssociation()});
 }

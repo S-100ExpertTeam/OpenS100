@@ -70,7 +70,7 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 	if (layer)
 	{
 		auto key = theApp.m_DockablePaneCurrentSelection.pDlg->GetSelectedRecordName();
-		if (auto cell = theApp.m_DockablePaneCurrentSelection.pDlg->m_Cell)
+		if (auto cell = (S101Cell*)theApp.m_DockablePaneCurrentSelection.pDlg->m_Cell)
 		{
 			auto selectedFeature = cell->GetFeatureRecord(key);
 			if (selectedFeature)

@@ -360,6 +360,7 @@
     <ClInclude Include="S100CI.h" />
     <ClInclude Include="S100_CD_AttributeValueType.h" />
     <ClInclude Include="S100_CD_QuantitySpecification.h" />
+    <ClInclude Include="S100_FC_RoleType.h" />
     <ClInclude Include="Series.h" />
     <ClInclude Include="SimpleAttribute.h" />
     <ClInclude Include="SimpleAttributes.h" />

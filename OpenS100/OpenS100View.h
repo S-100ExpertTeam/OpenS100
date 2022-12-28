@@ -61,7 +61,7 @@ public:
 	bool isMoved = false;
 
 	S101Cell* encPick = nullptr;
-	R_FeatureRecord* frPick = nullptr;  // Feature selected on the screen (S-101)
+	std::wstring featurePick; // selected feature ID
 	double ptPickX = 0.0;
 	double ptPickY = 0.0;
 	double ptOldPickX = 0.0;
@@ -168,7 +168,7 @@ public:
 	void CopyLayer();
 	void DeleteSelectedFeature();
 
-	void SetPick(S101Cell* enc = nullptr, R_FeatureRecord* feature = nullptr);
+	void SetPick(S101Cell* enc = nullptr, std::wstring featureID = L"");
 };
 
 

@@ -8,14 +8,14 @@ FeatureType::FeatureType()
 
 FeatureType::~FeatureType()
 {
-	for (auto i = featureBinding.begin(); i != featureBinding.end(); i++)
+	for (auto i = vecFeatureBinding.begin(); i != vecFeatureBinding.end(); i++)
 	{
-		delete i->second;
+		delete *i;
 	}
 
 	for (auto i = permittedPrimitives.begin(); i != permittedPrimitives.end(); i++)
 	{
-		delete (*i);
+		delete *i;
 	}
 }
 
@@ -32,26 +32,10 @@ void FeatureType::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:featureBinding"))
 		{
-			auto feature = new FeatureBinding();
-			feature->GetContents(instruction);
+			auto featureBinding = new FeatureBinding();
+			featureBinding->GetContents(instruction);
 
-			std::wstring associatename = feature->GetFeatureTypePointer().Getvalue();
-			if (associatename.compare(L"") == 0)
-			{
-				auto pointer = feature->GetFeatureTypePointer().GetattributesPointer();
-				for (auto itor = pointer.begin();
-					itor != pointer.end();
-					itor++)
-				{
-					auto attri = &(*itor);
-					if (attri->Getname().compare(L"ref") == 0)
-					{
-						associatename = attri->Getvalue();
-					}
-				}
-			}
-
-			InsertFeatureBinding(associatename, feature);
+			InsertFeatureBinding(featureBinding);
 		}
 		else if (!strcmp(instructionName, "S100FC:permittedPrimitives"))
 		{
@@ -80,6 +64,22 @@ void FeatureType::SetSuperType(std::wstring value)
 	superType = value;
 }
 
+FeatureBinding* FeatureType::GetFeatureBinding(std::string featureTypeCode)
+{
+	auto item = featureBinding.find(featureTypeCode);
+	if (item != featureBinding.end())
+	{
+		return item->second;
+	}
+
+	return nullptr;
+}
+
+FeatureBinding* FeatureType::GetFeatureBinding(std::wstring featureTypeCode)
+{
+	return GetFeatureBinding(pugi::as_utf8(featureTypeCode));
+}
+
 std::list<std::wstring>& FeatureType::GetSubTypePointer()
 {
 	return subType;
@@ -90,9 +90,9 @@ FeatureUseType& FeatureType::GetFeatureUseTypePointer()
 	return featureUseType;
 }
 
-std::unordered_map<std::wstring, FeatureBinding*>& FeatureType::GetFeatureBindingPointer()
+std::list<FeatureBinding*>& FeatureType::GetFeatureBindingPointer()
 {
-	return featureBinding;
+	return vecFeatureBinding;
 }
 
 std::list<SpatialPrimitiveType*>& FeatureType::GetPermittedPrimitivesPointer()
@@ -100,14 +100,12 @@ std::list<SpatialPrimitiveType*>& FeatureType::GetPermittedPrimitivesPointer()
 	return permittedPrimitives;
 }
 
-bool FeatureType::InsertFeatureBinding(std::wstring& key, FeatureBinding* value)
+void FeatureType::InsertFeatureBinding(FeatureBinding* value)
 {
-	if (featureBinding.find(key) == featureBinding.end())
+	auto insertedFeatureCode = value->GetFeatureType();
+	if (featureBinding.find(insertedFeatureCode) == featureBinding.end())
 	{
-		featureBinding.insert({ key, value });
-		return true;
+		vecFeatureBinding.push_back(value);
+		featureBinding.insert({ insertedFeatureCode, value });
 	}
-
-	delete value;
-	return false;
 }

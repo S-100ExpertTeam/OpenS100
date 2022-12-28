@@ -74,7 +74,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 			nSelectedItem = pNMLV->iItem;
 
-			S101Cell* cell = m_Cell;
+			auto cell = m_Cell;
 			FeatureCatalogue* fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 			if (nullptr == fc)
 			{
@@ -105,18 +105,12 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 			{
 				__int64 key = ((__int64)100) << 32 | objIdN;
 
-				R_FeatureRecord *rfr = m_Cell->GetFeatureRecord(key);
-				R_FeatureRecord *pFe = rfr;
-				
+				auto stringKey = std::to_wstring(key);
 				if (cell == nullptr)
 				{
 					return;
 				}
 
-				auto itor = cell->m_dsgir.m_ftcs->m_arr.find(pFe->m_frid.m_nftc);
-
-				// feature type
-				FeatureType* ft = fc->GetFeatureType(itor->second->m_code.GetBuffer());
 				CString geoType = m_ListCurrentSelection.GetItemText(idx, 3);
 
 				if (geoType != L"No geometry")
@@ -126,42 +120,22 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					{
 						if (true == layer->IsOn())
 						{
-							theApp.pView->SetPick((S101Cell*)layer->GetSpatialObject(), pFe);
+							theApp.pView->SetPick((S101Cell*)layer->GetSpatialObject(), stringKey);
 							theApp.pView->Invalidate(FALSE);
 						}
 					}
 				}
 
 				theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
-				theApp.m_DockablePaneEditWindow.SetFeatureRecord(pFe);
-
-				theApp.gisLib->creator.Set(fc, cell);
-				auto a = theApp.gisLib->creator.GetAddableAttributes(pFe);
-				for (auto i = a.begin(); i != a.end(); i++)
-				{
-					CString str = (*i)->GetAttributeCodeAsWstring().c_str();
-					OutputDebugString(str + L"\n");
-				}
+				theApp.m_DockablePaneEditWindow.SetFeatureType(stringKey);
 			}
 			else if (featureType == L"Information")
 			{
 				__int64 key = ((__int64)150) << 32 | objIdN;
-
-				if (m_Cell->GetInfoMapCount() == 0)
-				{
-					int i = 0;
-					return;
-				}
-
-				R_InformationRecord *rfr = m_Cell->GetInformationRecord(key);
-				S101Cell* cell = m_Cell;
-
-				auto itor = cell->m_dsgir.m_itcs->m_arr.find(rfr->m_irid.NITC());
-
-				m_selectedInformationType = fc->GetInformationType(std::wstring(itor->second->m_code));
+				auto stringKey = std::to_wstring(key);
 
 				theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
-				theApp.m_DockablePaneEditWindow.SetFeatureRecord(rfr);
+				theApp.m_DockablePaneEditWindow.SetInformationType(stringKey);
 			}
 
 			pos = m_ListCurrentSelection.GetFirstSelectedItemPosition();
@@ -194,7 +168,8 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					infoList.push_back(ifr);
 				}
 			}
-			theApp.m_DockablePaneRelation.pDlg->SetFeatureList(m_Cell, flist, infoList);
+
+			theApp.m_DockablePaneRelation.pDlg->SetFeatureList(cell, flist, infoList);
 		}
 	}
 	*pResult = 0;

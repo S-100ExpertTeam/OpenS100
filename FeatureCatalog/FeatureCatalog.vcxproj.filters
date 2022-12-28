@@ -412,6 +412,9 @@
     <ClInclude Include="S100_CD_QuantitySpecification.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="S100_FC_RoleType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FeatureCatalog.rc">

@@ -2550,6 +2550,12 @@ R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
 	return nullptr;
 }
 
+R_FeatureRecord* S101Cell::GetFeatureRecord(std::wstring wstringKey)
+{
+	auto key = std::stoi(wstringKey);
+	return GetFeatureRecord(key);
+}
+
 POSITION S101Cell::GetFeatureStartPosition()
 {
 	return m_feaMap.GetStartPosition();

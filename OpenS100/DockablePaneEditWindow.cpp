@@ -5,35 +5,38 @@
 #include "OpenS100.h"
 #include "OpenS100View.h"
 
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\GISLibrary\\S100Layer.h"
-#include "..\\GISLibrary\\F_CUCO.h"
-#include "..\\GISLibrary\\F_PTAS.h"
-#include "..\\GISLibrary\\F_SPAS.h"
-#include "..\\GISLibrary\\F_C3IL.h"
-#include "..\\GISLibrary\\F_C2IL.h"
-#include "..\\GISLibrary\\F_C2IT.h"
-#include "..\\GISLibrary\\F_ATTR.h"
-#include "..\\GISLibrary\\F_RIAS.h"
-#include "..\\GISLibrary\\R_InformationRecord.h"
-#include "..\\GISLibrary\\R_MultiPointRecord.h"
-#include "..\\GISLibrary\\R_CurveRecord.h"
-#include "..\\GISLibrary\\R_CompositeRecord.h"
-#include "..\\GISLibrary\\R_SurfaceRecord.h"
-#include "..\\GISLibrary\\R_FeatureRecord.h"
-#include "..\\GISLibrary\\R_PointRecord.h"
-#include "..\\GISLibrary\\ATTR.h"
-#include "..\\GISLibrary\C3IL.h"
-#include "..\\GISLibrary\\IC2D.h"
-#include "..\\GISLibrary\\CodeWithNumericCode.h"
-#include "..\\GISLibrary\\CUCO.h"
-#include "..\\GISLibrary\\SPAS.h"
-#include "..\\GISLibrary\\PTAS.h"
-#include "..\\GISLibrary\\RIAS.h"
-#include "..\\GISLibrary\\F_INAS.h"
-#include "..\\GISLibrary\\SpatialObject.h"
-#include "..\\GISLibrary\\S101Cell.h"
-#include "..\\GISLibrary\\GISLibrary.h"
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../GISLibrary/S100Layer.h"
+#include "../GISLibrary/F_CUCO.h"
+#include "../GISLibrary/F_PTAS.h"
+#include "../GISLibrary/F_SPAS.h"
+#include "../GISLibrary/F_C3IL.h"
+#include "../GISLibrary/F_C2IL.h"
+#include "../GISLibrary/F_C2IT.h"
+#include "../GISLibrary/F_ATTR.h"
+#include "../GISLibrary/F_RIAS.h"
+#include "../GISLibrary/R_InformationRecord.h"
+#include "../GISLibrary/R_MultiPointRecord.h"
+#include "../GISLibrary/R_CurveRecord.h"
+#include "../GISLibrary/R_CompositeRecord.h"
+#include "../GISLibrary/R_SurfaceRecord.h"
+#include "../GISLibrary/R_FeatureRecord.h"
+#include "../GISLibrary/R_PointRecord.h"
+#include "../GISLibrary/ATTR.h"
+#include "../GISLibrary/C3IL.h"
+#include "../GISLibrary/IC2D.h"
+#include "../GISLibrary/CodeWithNumericCode.h"
+#include "../GISLibrary/CUCO.h"
+#include "../GISLibrary/SPAS.h"
+#include "../GISLibrary/PTAS.h"
+#include "../GISLibrary/RIAS.h"
+#include "../GISLibrary/F_INAS.h"
+#include "../GISLibrary/SpatialObject.h"
+#include "../GISLibrary/S101Cell.h"
+#include "../GISLibrary/GISLibrary.h"
+#include "../GISLibrary/S100SpatialObject.h"
+#include "../GISLibrary/S100Layer.h"
 
 #include <vector>
 #include <sstream>
@@ -53,7 +56,7 @@ IMPLEMENT_DYNAMIC(CDockablePaneEditWindow, CDockablePane)
 
 CDockablePaneEditWindow::CDockablePaneEditWindow()
 {
-	m_pFeature = NULL;
+	
 }
 
 CDockablePaneEditWindow::~CDockablePaneEditWindow()
@@ -237,91 +240,6 @@ void CDockablePaneEditWindow::SettingEnumType(std::vector<ListedValue*> list, CM
 	}
 }
 
-unsigned CDockablePaneEditWindow::GetATCS(std::wstring code)
-{
-	unsigned nmcd = 1;
-	if (m_cell->m_FileType == FILE_S_100_VECTOR)
-	{
-		S101Cell* cell = (S101Cell*)m_cell;
-
-		auto itor = cell->m_dsgir.m_atcs->m_arrFindForCode.find(code);
-
-		if (itor == cell->m_dsgir.m_atcs->m_arrFindForCode.end())
-		{
-			for (unsigned i = 1; i < 65535; i++)
-			{
-				nmcd = i;
-
-				auto itor = cell->m_dsgir.m_atcs->m_arr.find(nmcd);
-
-				if (itor == cell->m_dsgir.m_atcs->m_arr.end())
-				{
-					break;
-				}
-			}
-
-			CodeWithNumericCode *cnc = new CodeWithNumericCode();
-			cnc->m_nmcd = nmcd;
-			cnc->m_code = code.c_str();
-
-			cell->m_dsgir.m_atcs->m_arr.insert(std::unordered_map<int, CodeWithNumericCode*>::value_type(cnc->m_nmcd, cnc));
-			cell->m_dsgir.m_atcs->m_arrFindForCode.insert(std::unordered_map<std::wstring, CodeWithNumericCode*>::value_type(cnc->m_code.GetBuffer(), cnc));
-		}
-	}
-	return nmcd;
-}
-
-unsigned CDockablePaneEditWindow::GetATIX(unsigned natc, unsigned parentIndex)
-{
-	unsigned index = 1;
-
-	//The code is not checked.
-
-	if (m_pFeature != nullptr)
-	{
-		for (auto iATTR = m_pFeature->m_attr.begin(); iATTR != m_pFeature->m_attr.end(); iATTR++)
-		{
-			F_ATTR* fATTR = *iATTR;
-
-			for (auto i = fATTR->m_arr.begin(); i != fATTR->m_arr.end(); i++)
-			{
-				ATTR* attr = *i;
-
-				//In the value added inside, if the parent index is the same as me and the code is the same,
-				if (attr->m_paix == parentIndex && attr->m_natc == natc)
-				{
-					index++;
-				}
-			}
-
-		}
-
-	}
-
-	if (m_pInformation != nullptr)
-	{
-		for (auto iATTR = m_pInformation->m_attr.begin(); iATTR != m_pInformation->m_attr.end(); iATTR++)
-		{
-			F_ATTR* fATTR = *iATTR;
-
-			for (auto i = fATTR->m_arr.begin(); i != fATTR->m_arr.end(); i++)
-			{
-				ATTR* attr = *i;
-
-				//In the value added inside, if the parent index is the same as me and the code is the same,
-				if (attr->m_paix == parentIndex && attr->m_natc == natc)
-				{
-					index++;
-				}
-			}
-
-		}
-	}
-
-	return index;
-}
-
-
 void CDockablePaneEditWindow::OnSize(UINT nType, int cx, int cy)
 {
 	CDockablePane::OnSize(nType, cx, cy);
@@ -339,20 +257,22 @@ BOOL CDockablePaneEditWindow::OnEraseBkgnd(CDC* pDC)
 	return TRUE;
 }
 
-void CDockablePaneEditWindow::SetFeatureRecord(R_FeatureRecord* pFeature)//It came over after I clicked on the dot.
+void CDockablePaneEditWindow::SetFeatureType(std::wstring featureID)
 {
-	m_pFeature = pFeature;
-	m_pInformation = nullptr;
+	selectedFeatureID = featureID;
+	selectedInformationID = L"";
+
 	m_selectedObjectType = L"Feature";
 
 	SetAttributes();
 	SetVectors();
 }
 
-void CDockablePaneEditWindow::SetFeatureRecord(R_InformationRecord* pInformation)
+void CDockablePaneEditWindow::SetInformationType(std::wstring informationID)
 {
-	m_pInformation = pInformation;
-	m_pFeature = nullptr;
+	selectedFeatureID = L"";
+	selectedInformationID = informationID;
+	
 	m_selectedObjectType = L"Information";
 
 	SetAttributes();
@@ -605,61 +525,68 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 
 void CDockablePaneEditWindow::SetVectors()
 {
-	m_wndListVector.ShowWindow(FALSE);
-	DeleteVectorItems();
-
-	std::wstring str;
-	R_PointRecord* pr = NULL;
-	R_MultiPointRecord* mpr = NULL;
-	R_CurveRecord* cr = NULL;
-	R_CompositeRecord* ccr = NULL;
-	R_SurfaceRecord* sr = NULL;
-
-	if (m_cell == nullptr || m_pFeature == nullptr)
+	auto s100Layer = (S100Layer*)m_cell->GetLayer();
+	if (101 == s100Layer->GetProductNumber())
 	{
-		m_wndListVector.ShowWindow(TRUE);
-		return;
-	}
-	if (m_cell->m_FileType == FILE_S_100_VECTOR)
-	{
-		S101Cell* cell = (S101Cell*)m_cell;
+		auto cell = (S101Cell*)m_cell;
+		auto m_pFeature = cell->GetFeatureRecord(selectedFeatureID);
 
-		for (auto itorParent = m_pFeature->m_spas.begin(); itorParent != m_pFeature->m_spas.end(); itorParent++)
+		m_wndListVector.ShowWindow(FALSE);
+		DeleteVectorItems();
+
+		std::wstring str;
+		R_PointRecord* pr = NULL;
+		R_MultiPointRecord* mpr = NULL;
+		R_CurveRecord* cr = NULL;
+		R_CompositeRecord* ccr = NULL;
+		R_SurfaceRecord* sr = NULL;
+
+		if (cell == nullptr || m_pFeature == nullptr)
 		{
-			F_SPAS *spasParent = *itorParent;
+			m_wndListVector.ShowWindow(TRUE);
+			return;
+		}
+		if (m_cell->m_FileType == FILE_S_100_VECTOR)
+		{
+			S101Cell* cell = (S101Cell*)m_cell;
 
-			for (auto itor = spasParent->m_arr.begin(); itor != spasParent->m_arr.end(); itor++)
+			for (auto itorParent = m_pFeature->m_spas.begin(); itorParent != m_pFeature->m_spas.end(); itorParent++)
 			{
-				SPAS* spas = *itor;
+				F_SPAS* spasParent = *itorParent;
 
-				switch (spas->m_name.RCNM)
+				for (auto itor = spasParent->m_arr.begin(); itor != spasParent->m_arr.end(); itor++)
 				{
-				case 110:
-					pr = cell->GetPointRecord(spas->m_name.GetName());
-					SetVector(pr);
-					break;
-				case 115:
-					mpr = cell->GetMultiPointRecord(spas->m_name.GetName());
-					SetVector(mpr);
-					break;
-				case 120:
-					cr = cell->GetCurveRecord(spas->m_name.GetName());
-					SetVector(cr);
-					break;
-				case 125:
-					ccr = cell->GetCompositeCurveRecord(spas->m_name.GetName());
-					SetVector(ccr);
-					break;
-				case 130:
-					sr = cell->GetSurfaceRecord(spas->m_name.GetName());
-					SetVector(sr);
-					break;
+					SPAS* spas = *itor;
+
+					switch (spas->m_name.RCNM)
+					{
+					case 110:
+						pr = cell->GetPointRecord(spas->m_name.GetName());
+						SetVector(pr);
+						break;
+					case 115:
+						mpr = cell->GetMultiPointRecord(spas->m_name.GetName());
+						SetVector(mpr);
+						break;
+					case 120:
+						cr = cell->GetCurveRecord(spas->m_name.GetName());
+						SetVector(cr);
+						break;
+					case 125:
+						ccr = cell->GetCompositeCurveRecord(spas->m_name.GetName());
+						SetVector(ccr);
+						break;
+					case 130:
+						sr = cell->GetSurfaceRecord(spas->m_name.GetName());
+						SetVector(sr);
+						break;
+					}
 				}
 			}
 		}
+		m_wndListVector.ExpandAll(FALSE);
+		m_wndListVector.ShowWindow(TRUE);
 	}
-	m_wndListVector.ExpandAll(FALSE);
-	m_wndListVector.ShowWindow(TRUE);
 }
 
 void CDockablePaneEditWindow::SetVector(int RCNM, R_VectorRecord* r, CMFCPropertyGridProperty *pSuperProperty)

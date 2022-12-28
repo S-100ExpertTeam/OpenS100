@@ -86,7 +86,11 @@ bool FeatureTypes::SetAssociationFromSuperType(FeatureType* ft)
 			FeatureType* sft = itor->second;
 			if (SetAssociationFromSuperType(sft))
 			{
-				ft->GetFeatureBindingPointer().insert(sft->GetFeatureBindingPointer().begin(), sft->GetFeatureBindingPointer().end());
+				ft->GetFeatureBindingPointer().insert(
+					ft->GetFeatureBindingPointer().end(),
+					sft->GetFeatureBindingPointer().begin(), 
+					sft->GetFeatureBindingPointer().end());
+
 				ft->GetInformationBindingPointer().insert(sft->GetInformationBindingPointer().begin(), sft->GetInformationBindingPointer().end());
 			}
 			return true;

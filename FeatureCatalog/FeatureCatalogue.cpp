@@ -304,169 +304,170 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 		}
 	}
 
-	SetFullAssociations();
-}
-void FeatureCatalogue::SetFullAssociations()
-{
-	for (auto itor = featureTypes.GetFeatureType().begin(); itor != featureTypes.GetFeatureType().end(); itor++)
-	{
-		FeatureType *ft = itor->second;
-		SetSubAssociation(ft);
-	}
-
-	for (auto itor = informationTypes.GetInformationTypePointer().begin(); itor != informationTypes.GetInformationTypePointer().end(); itor++)
-	{
-		InformationType *it = itor->second;
-		SetSubAssociation(it);
-	}
+	//SetFullAssociations();
 }
 
-void FeatureCatalogue::SetSubAssociation(FeatureType* ft)
-{
-	for (auto fbi = ft->GetFeatureBindingPointer().begin();
-		fbi != ft->GetFeatureBindingPointer().end();
-		fbi++)
-	{
-		auto fb = fbi->second;
-		auto bindedFeatureName = fb->GetFeatureTypePointer().GetReference();
-		SetFeatureAssociationFromSuperType(ft, bindedFeatureName, fb->GetRolePointer().GetReference(), fb->GetAssociationPointer().GetReference());
-	}
+//void FeatureCatalogue::SetFullAssociations()
+//{
+//	for (auto itor = featureTypes.GetFeatureType().begin(); itor != featureTypes.GetFeatureType().end(); itor++)
+//	{
+//		FeatureType *ft = itor->second;
+//		SetSubAssociation(ft);
+//	}
+//
+//	for (auto itor = informationTypes.GetInformationTypePointer().begin(); itor != informationTypes.GetInformationTypePointer().end(); itor++)
+//	{
+//		InformationType *it = itor->second;
+//		SetSubAssociation(it);
+//	}
+//}
 
-	for (auto ibi = ft->GetInformationBindingPointer().begin();
-		ibi != ft->GetInformationBindingPointer().end();
-		ibi++)
-	{
-		auto ib = ibi->second;
-		auto bindedinformationName = ib->GetInformationTypePointer().GetReference();
-		SetInformationAssociationFromSuperType(ft, bindedinformationName, ib->GetRolePointer().GetReference(), ib->GetAssociationPointer().GetReference());
-	}
-	return;
-}
+//void FeatureCatalogue::SetSubAssociation(FeatureType* ft)
+//{
+//	for (auto fbi = ft->GetFeatureBindingPointer().begin();
+//		fbi != ft->GetFeatureBindingPointer().end();
+//		fbi++)
+//	{
+//		auto fb = *fbi;
+//		auto bindedFeatureName = fb->GetFeatureTypeAsWstring();
+//		SetFeatureAssociationFromSuperType(ft, bindedFeatureName, fb->GetRoleAsWstring(), fb->GetAssociationAsWstring());
+//	}
+//
+//	for (auto ibi = ft->GetInformationBindingPointer().begin();
+//		ibi != ft->GetInformationBindingPointer().end();
+//		ibi++)
+//	{
+//		auto ib = ibi->second;
+//		auto bindedinformationName = ib->GetInformationTypePointer().GetReference();
+//		SetInformationAssociationFromSuperType(ft, bindedinformationName, ib->GetRolePointer().GetReference(), ib->GetAssociationPointer().GetReference());
+//	}
+//	return;
+//}
+//
+//void FeatureCatalogue::SetSubAssociation(InformationType* it)
+//{
+//	for (auto ibi = it->GetInformationBindingPointer().begin();
+//		ibi != it->GetInformationBindingPointer().end();
+//		ibi++)
+//	{
+//		auto ib = ibi->second;
+//		auto bindedinformationName = ib->GetInformationTypePointer().GetReference();
+//		SetInformationAssociationFromSuperType(it, bindedinformationName, ib->GetRolePointer().GetReference(), ib->GetAssociationPointer().GetReference());
+//	}
+//	return;
+//}
 
-void FeatureCatalogue::SetSubAssociation(InformationType* it)
-{
-	for (auto ibi = it->GetInformationBindingPointer().begin();
-		ibi != it->GetInformationBindingPointer().end();
-		ibi++)
-	{
-		auto ib = ibi->second;
-		auto bindedinformationName = ib->GetInformationTypePointer().GetReference();
-		SetInformationAssociationFromSuperType(it, bindedinformationName, ib->GetRolePointer().GetReference(), ib->GetAssociationPointer().GetReference());
-	}
-	return;
-}
+//void FeatureCatalogue::SetFeatureAssociationFromSuperType(FeatureType* ft, std::wstring superTypeName, std::wstring roleName, std::wstring associationName)
+//{
+//	for (
+//		auto fti = featureTypes.GetFeatureType().begin(); 
+//		fti != featureTypes.GetFeatureType().end(); 
+//		fti++)
+//	{
+//		auto currentFeautreType = fti->second;
+//		auto currentFeautreCode = currentFeautreType->GetCodeAsWString();
+//
+//		if (superTypeName.compare(currentFeautreCode) == 0)
+//			continue;
+//
+//		auto duplicationCheckIter = ft->GetFeatureBindingPointer().find(currentFeautreCode);
+//		if (duplicationCheckIter != ft->GetFeatureBindingPointer().end())
+//			continue;
+//
+//		if (superTypeName.compare(currentFeautreType->GetSuperType()) == 0)
+//		{
+//			AddFeatureBinding(ft, currentFeautreType->GetCodeAsWString(), roleName, associationName);
+//
+//			if (currentFeautreType->GetSuperType().size() > 0)
+//			{
+//				SetFeatureAssociationFromSuperType(ft, currentFeautreType->GetSuperType(), roleName, associationName);
+//			}
+//		}
+//	}
+//	return;
+//}
+//
+//void FeatureCatalogue::SetInformationAssociationFromSuperType(FeatureType* ft, std::wstring superTypeName, std::wstring roleName, std::wstring associationName)
+//{
+//	for (auto iti = informationTypes.GetInformationTypePointer().begin(); iti != informationTypes.GetInformationTypePointer().end(); iti++)
+//	{
+//		auto currentInformationType = iti->second;
+//		auto currentInformationCode = currentInformationType->GetCodeAsWString();
+//		
+//		if (superTypeName.compare(currentInformationCode) == 0)
+//			continue;
+//
+//		auto duplicationCheckIter = ft->GetInformationBindingPointer().find(currentInformationCode);
+//		if (duplicationCheckIter != ft->GetInformationBindingPointer().end())
+//			continue;;
+//
+//		if (superTypeName.compare(currentInformationType->GetSuperType()) == 0)
+//		{
+//			AddInformationBinding(ft, currentInformationType->GetCodeAsWString(), roleName, associationName);
+//			if (currentInformationType->GetSuperType().size() > 0)
+//			{
+//				SetInformationAssociationFromSuperType(ft, currentInformationType->GetSuperType(), roleName, associationName);
+//			}
+//		}
+//	}
+//	return;
+//}
+//void FeatureCatalogue::SetInformationAssociationFromSuperType(InformationType* it, std::wstring superTypeName, std::wstring roleName, std::wstring associationName)
+//{
+//	for (auto iti = informationTypes.GetInformationTypePointer().begin(); iti != informationTypes.GetInformationTypePointer().end(); iti++)
+//	{
+//		auto currentInformationType = iti->second;
+//		auto currentInformationCode = currentInformationType->GetCodeAsWString();
+//
+//		if (superTypeName.compare(currentInformationCode) == 0)
+//			continue;
+//
+//		auto duplicationCheckIter = it->GetInformationBindingPointer().find(currentInformationCode);
+//		if (duplicationCheckIter != it->GetInformationBindingPointer().end())
+//			continue;;
+//
+//		if (superTypeName.compare(currentInformationType->GetSuperType()) == 0)
+//		{
+//			AddInformationBinding(it, currentInformationType->GetCodeAsWString(), roleName, associationName);
+//
+//			if (currentInformationType->GetSuperType().size() > 0)
+//			{
+//				SetInformationAssociationFromSuperType(it, currentInformationType->GetSuperType(), roleName, associationName);
+//			}
+//		}
+//	}
+//	return;
+//}
 
-void FeatureCatalogue::SetFeatureAssociationFromSuperType(FeatureType* ft, std::wstring superTypeName, std::wstring roleName, std::wstring associationName)
-{
-	for (
-		auto fti = featureTypes.GetFeatureType().begin(); 
-		fti != featureTypes.GetFeatureType().end(); 
-		fti++)
-	{
-		auto currentFeautreType = fti->second;
-		auto currentFeautreCode = currentFeautreType->GetCodeAsWString();
+//void FeatureCatalogue::AddFeatureBinding(FeatureType* ft, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
+//{
+//	auto fb = new FeatureBinding();
+//	fb->SetFeatureType(bindedTypeName);
+//	fb->GetRolePointer().SetReference(roleName);
+//	fb->GetAssociationPointer().SetReference(associationName);
+//
+//	ft->GetFeatureBindingPointer().insert({ bindedTypeName, fb });
+//}
 
-		if (superTypeName.compare(currentFeautreCode) == 0)
-			continue;
-
-		auto duplicationCheckIter = ft->GetFeatureBindingPointer().find(currentFeautreCode);
-		if (duplicationCheckIter != ft->GetFeatureBindingPointer().end())
-			continue;;
-
-		if (superTypeName.compare(currentFeautreType->GetSuperType()) == 0)
-		{
-			AddFeatureBinding(ft, currentFeautreType->GetCodeAsWString(), roleName, associationName);
-
-			if (currentFeautreType->GetSuperType().size() > 0)
-			{
-				SetFeatureAssociationFromSuperType(ft, currentFeautreType->GetSuperType(), roleName, associationName);
-			}
-		}
-	}
-	return;
-}
-
-void FeatureCatalogue::SetInformationAssociationFromSuperType(FeatureType* ft, std::wstring superTypeName, std::wstring roleName, std::wstring associationName)
-{
-	for (auto iti = informationTypes.GetInformationTypePointer().begin(); iti != informationTypes.GetInformationTypePointer().end(); iti++)
-	{
-		auto currentInformationType = iti->second;
-		auto currentInformationCode = currentInformationType->GetCodeAsWString();
-		
-		if (superTypeName.compare(currentInformationCode) == 0)
-			continue;
-
-		auto duplicationCheckIter = ft->GetInformationBindingPointer().find(currentInformationCode);
-		if (duplicationCheckIter != ft->GetInformationBindingPointer().end())
-			continue;;
-
-		if (superTypeName.compare(currentInformationType->GetSuperType()) == 0)
-		{
-			AddInformationBinding(ft, currentInformationType->GetCodeAsWString(), roleName, associationName);
-			if (currentInformationType->GetSuperType().size() > 0)
-			{
-				SetInformationAssociationFromSuperType(ft, currentInformationType->GetSuperType(), roleName, associationName);
-			}
-		}
-	}
-	return;
-}
-void FeatureCatalogue::SetInformationAssociationFromSuperType(InformationType* it, std::wstring superTypeName, std::wstring roleName, std::wstring associationName)
-{
-	for (auto iti = informationTypes.GetInformationTypePointer().begin(); iti != informationTypes.GetInformationTypePointer().end(); iti++)
-	{
-		auto currentInformationType = iti->second;
-		auto currentInformationCode = currentInformationType->GetCodeAsWString();
-
-		if (superTypeName.compare(currentInformationCode) == 0)
-			continue;
-
-		auto duplicationCheckIter = it->GetInformationBindingPointer().find(currentInformationCode);
-		if (duplicationCheckIter != it->GetInformationBindingPointer().end())
-			continue;;
-
-		if (superTypeName.compare(currentInformationType->GetSuperType()) == 0)
-		{
-			AddInformationBinding(it, currentInformationType->GetCodeAsWString(), roleName, associationName);
-
-			if (currentInformationType->GetSuperType().size() > 0)
-			{
-				SetInformationAssociationFromSuperType(it, currentInformationType->GetSuperType(), roleName, associationName);
-			}
-		}
-	}
-	return;
-}
-
-void FeatureCatalogue::AddFeatureBinding(FeatureType* ft, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
-{
-	auto fb = new FeatureBinding();
-	fb->GetFeatureTypePointer().SetReference(bindedTypeName);
-	fb->GetRolePointer().SetReference(roleName);
-	fb->GetAssociationPointer().SetReference(associationName);
-
-	ft->GetFeatureBindingPointer().insert({ bindedTypeName, fb });
-}
-
-void FeatureCatalogue::AddInformationBinding(FeatureType* ft, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
-{
-	auto ib = new InformationBinding();
-	ib->GetInformationTypePointer().SetReference(bindedTypeName);
-	ib->GetRolePointer().SetReference(roleName);
-	ib->GetAssociationPointer().SetReference(associationName);
-	
-	ft->GetInformationBindingPointer().insert({ bindedTypeName, ib });
-}
-
-void FeatureCatalogue::AddInformationBinding(InformationType* it, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
-{
-	auto ib = new InformationBinding();
-	ib->GetInformationTypePointer().SetReference(bindedTypeName);
-	ib->GetRolePointer().SetReference(roleName);
-	ib->GetAssociationPointer().SetReference(associationName);
-
-	it->GetInformationBindingPointer().insert({ bindedTypeName, ib });
-}
+//void FeatureCatalogue::AddInformationBinding(FeatureType* ft, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
+//{
+//	auto ib = new InformationBinding();
+//	ib->GetInformationTypePointer().SetReference(bindedTypeName);
+//	ib->GetRolePointer().SetReference(roleName);
+//	ib->GetAssociationPointer().SetReference(associationName);
+//	
+//	ft->GetInformationBindingPointer().insert({ bindedTypeName, ib });
+//}
+//
+//void FeatureCatalogue::AddInformationBinding(InformationType* it, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName)
+//{
+//	auto ib = new InformationBinding();
+//	ib->GetInformationTypePointer().SetReference(bindedTypeName);
+//	ib->GetRolePointer().SetReference(roleName);
+//	ib->GetAssociationPointer().SetReference(associationName);
+//
+//	it->GetInformationBindingPointer().insert({ bindedTypeName, ib });
+//}
 
 void FeatureCatalogue::NullCheckFieldOfApplication()
 {

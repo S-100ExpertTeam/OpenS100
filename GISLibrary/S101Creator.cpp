@@ -955,7 +955,7 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 			auto featureType = fc->GetFeatureType(std::wstring(featureCode));
 			if (featureType)
 			{
-				result = featureType->GetAttributeBindingList();
+				result = featureType->GetAttributeBindingPointer();
 
 				for (auto i = result.begin(); i != result.end(); )
 				{
@@ -995,7 +995,7 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 			auto complexAttribute = fc->GetComplexAttribute(std::wstring(attributeCode));
 			if (complexAttribute)
 			{
-				result = complexAttribute->GetAttributeBindingList();
+				result = complexAttribute->GetSubAttributeBindingPointer();
 
 				for (auto i = result.begin(); i != result.end(); )
 				{
@@ -1030,7 +1030,7 @@ void S101Creator::AddDefaultChildAttributes(R_FeatureRecord* feature)
 
 	if (featureType)
 	{
-		auto attributeBindings = featureType->GetAttributeBindingList();
+		auto attributeBindings = featureType->GetAttributeBindingPointer();
 		for (auto i = attributeBindings.begin(); i != attributeBindings.end(); i++)
 		{
 			auto attributeBinding = *i;
@@ -1067,7 +1067,7 @@ void S101Creator::AddDefaultChildAttributes(R_FeatureRecord* feature, ATTR* attr
 
 	if (complexAttribute)
 	{
-		auto attributeBindings = complexAttribute->GetAttributeBindingList();
+		auto attributeBindings = complexAttribute->GetSubAttributeBindingPointer();
 		for (auto i = attributeBindings.begin(); i != attributeBindings.end(); i++)
 		{
 			auto attributeBinding = *i;

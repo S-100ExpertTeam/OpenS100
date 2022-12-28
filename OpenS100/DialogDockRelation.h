@@ -11,6 +11,7 @@ class COpenS100View;
 class R_FeatureRecord;
 class R_InformationRecord;
 class S101Cell;
+
 class CDialogDockRelation : public CDialog
 {
 	DECLARE_DYNAMIC(CDialogDockRelation)

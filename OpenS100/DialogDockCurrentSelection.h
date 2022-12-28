@@ -3,6 +3,8 @@
 #include "afxcmn.h"
 #include "resource.h"
 
+#include "../GISLibrary/S100SpatialObject.h"
+
 #include <vector>
 #include <map> 
 #include <string>
@@ -36,13 +38,11 @@ public:
 	};
 
 	BOOL m_bAscending;
-	FeatureType* m_selectedFeatureType;
-	InformationType* m_selectedInformationType = nullptr;
 	CMenu m_ContextMenu;  
 	int nSelectedItem = -1;
 	CListCtrl m_ListCurrentSelection;
 	int m_SelectedListCount;
-	S101Cell* m_Cell;
+	S100SpatialObject* m_Cell = nullptr;
 	// Attributes
 public:
 	// Adjust column size of list control.

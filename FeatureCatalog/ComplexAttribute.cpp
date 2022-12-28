@@ -51,11 +51,6 @@ std::list<AttributeBinding*>& ComplexAttribute::GetSubAttributeBindingPointer()
 	return subAttributeBinding;
 }
 
-std::list<AttributeBinding*>& ComplexAttribute::GetAttributeBindingList()
-{
-	return subAttributeBinding;
-}
-
 bool ComplexAttribute::IsSimple()
 {
 	return false;

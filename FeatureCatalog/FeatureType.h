@@ -19,7 +19,11 @@ private:
 	std::wstring superType; 
 	std::list<std::wstring> subType; 
 	FeatureUseType featureUseType;
-	std::unordered_map<std::wstring, FeatureBinding*> featureBinding;
+
+	std::list<FeatureBinding*> vecFeatureBinding;
+
+	// Key : Binded feature type code.
+	std::unordered_map<std::string, FeatureBinding*> featureBinding;
 	std::list<SpatialPrimitiveType*> permittedPrimitives;
 
 public:
@@ -28,9 +32,12 @@ public:
 	const std::wstring& GetSuperType();
 	void SetSuperType(std::wstring value);
 
+	FeatureBinding* GetFeatureBinding(std::string featureTypeCode);
+	FeatureBinding* GetFeatureBinding(std::wstring featureTypeCode);
+
 	std::list<std::wstring>& GetSubTypePointer(); 
 	FeatureUseType& GetFeatureUseTypePointer();
-	std::unordered_map<std::wstring, FeatureBinding*>& GetFeatureBindingPointer();
+	std::list<FeatureBinding*>& GetFeatureBindingPointer();
 	std::list<SpatialPrimitiveType*>& GetPermittedPrimitivesPointer();
-	bool InsertFeatureBinding(std::wstring& key, FeatureBinding* value);
+	void InsertFeatureBinding(FeatureBinding* value);
 };

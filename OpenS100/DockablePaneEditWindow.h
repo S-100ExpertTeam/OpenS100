@@ -31,6 +31,7 @@ class SimpleAttribute;
 class ComplexAttribute;
 class EdtVector;
 class Item;
+class S100SpatialObject;
 
 // CFeatureView
 /*
@@ -103,7 +104,7 @@ private:
 	CPropertyGridDrawingCommands		m_wndDrawingCommands;
 
 public:
-	SpatialObject *m_cell = nullptr;
+	S100SpatialObject *m_cell = nullptr;
 	CMFCTabCtrlMsgToParent	m_wndTabs;
 
 	static CPropertyGridAttributeModify		m_wndListAttribute;
@@ -111,8 +112,11 @@ public:
 	int m_vIndex;
 
 	// S-100
-	R_FeatureRecord* m_pFeature;
-	R_InformationRecord* m_pInformation;
+	//R_FeatureRecord* m_pFeature;
+	//R_InformationRecord* m_pInformation;
+	std::wstring selectedFeatureID;
+	std::wstring selectedInformationID;
+
 	MultiData* m_selectedMultiData;
 
 	std::unordered_map<CMFCPropertyGridProperty*, MultiData*> m_propertyAttributeMultiData;
@@ -122,8 +126,8 @@ public:
 	CString m_selectedInformationName;
 
 public:
-	void SetFeatureRecord(R_FeatureRecord* pFeature);
-	void SetFeatureRecord(R_InformationRecord* pInformation);
+	void SetFeatureType(std::wstring featureID);
+	void SetInformationType(std::wstring informationID);
 	void SetAttributes();
 	void SetVectors();
 	void SetVector(int RCNM, R_VectorRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
@@ -141,9 +145,6 @@ public:
 
 	//// Sort and then add the enumtype to the Simple Attribute.
 	void SettingEnumType(std::vector<ListedValue*> list, CMFCPropertyGridProperty* pSuperProperty);
-	//  
-	unsigned GetATCS(std::wstring code);
-	unsigned GetATIX(unsigned natc, unsigned parentIndex);
 
 	void SetSpatialObject(SpatialObject *object);
 	SpatialObject *GetSpatialObject();

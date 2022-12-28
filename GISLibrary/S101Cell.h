@@ -268,6 +268,7 @@ public:
 	void RemoveFeatureRecord(__int64 key);
 
 	R_FeatureRecord* GetFeatureRecord(__int64 key);
+	R_FeatureRecord* GetFeatureRecord(std::wstring wstringKey);
 	POSITION GetFeatureStartPosition();
 	void GetNextAssoc(POSITION& index,long long& key,R_FeatureRecord*& value);
 	void RemoveFeatureMapKey(long long key);

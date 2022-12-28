@@ -23,7 +23,6 @@ public:
 
 	AttributeBinding* GetSubAttributeBinding(int index);
 	std::list<AttributeBinding*>& GetSubAttributeBindingPointer();
-	std::list<AttributeBinding*>& GetAttributeBindingList();
 
 	bool IsSimple();
 	bool IsComplex();
