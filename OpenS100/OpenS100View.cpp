@@ -1029,6 +1029,11 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 
 void COpenS100View::DrawPickReport(HDC& _hdc, int offsetX, int offsetY)
 {
+	if (encPick == nullptr)
+	{
+		return;
+	}
+	
 	Graphics gPick(_hdc);
 	auto frPick = encPick->GetFeatureRecord(featurePick);
 	if (frPick && frPick->m_geometry)

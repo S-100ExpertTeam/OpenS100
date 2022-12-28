@@ -181,12 +181,16 @@ lua_ref_ptr CreateFeatureType(lua_session *ls, FeatureType *feature_type)
 	std::vector<std::string> permitted_primitives;
 
 	for (auto pp : feature_type->GetPermittedPrimitivesPointer())
+	{
 		permitted_primitives.push_back(std::string(pp->GetValueString().begin(), pp->GetValueString().end())); // E-r??
+	}
 
 	std::vector<lua_ref_ptr> feature_bindings;
 
 	for (auto fb : feature_type->GetFeatureBindingPointer())
+	{
 		feature_bindings.push_back(CreateFeatureBinding(ls, fb));
+	}
 
 	auto featureUseType = std::string(feature_type->GetFeatureUseTypePointer().GetValueString().begin(), feature_type->GetFeatureUseTypePointer().GetValueString().end());
 

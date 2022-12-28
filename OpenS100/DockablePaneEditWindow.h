@@ -146,7 +146,7 @@ public:
 	//// Sort and then add the enumtype to the Simple Attribute.
 	void SettingEnumType(std::vector<ListedValue*> list, CMFCPropertyGridProperty* pSuperProperty);
 
-	void SetSpatialObject(SpatialObject *object);
+	void SetSpatialObject(S100SpatialObject *object);
 	SpatialObject *GetSpatialObject();
 	S101Cell* GetS101Cell();
 

@@ -22,6 +22,8 @@ public:
 	void InitDrawingInstruction();
 	PCOutputSchemaManager* GetPCOutputManager();
 
+	int GetProductNumber();
+
 	virtual std::wstring GetFeatureTypeCodeByID(std::wstring id) { return L""; }
 	virtual std::wstring GetFeatureTypeCodeByID(int id) { return L""; }
 };

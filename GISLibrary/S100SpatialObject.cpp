@@ -31,3 +31,14 @@ PCOutputSchemaManager* S100SpatialObject::GetPCOutputManager()
 {
 	return pcManager;
 }
+
+int S100SpatialObject::GetProductNumber()
+{
+	if (m_pLayer)
+	{
+		auto s100Layer = (S100Layer*)m_pLayer;
+		return s100Layer->GetProductNumber();
+	}
+
+	return 0;
+}

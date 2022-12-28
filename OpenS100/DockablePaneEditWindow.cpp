@@ -290,7 +290,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 		return;
 	}
 
-	if (m_cell->m_FileType == FILE_S_100_VECTOR)
+	if (m_cell->GetProductNumber() == 101)
 	{
 		S101Cell* cell = (S101Cell*)m_cell;
 		auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
@@ -301,6 +301,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 
 		if (m_selectedObjectType == L"Feature")
 		{
+			auto m_pFeature = cell->GetFeatureRecord(selectedFeatureID);
 			if (m_pFeature->m_attr.size() == 0)
 			{
 				return;
@@ -423,8 +424,11 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 		}
 		else if (m_selectedObjectType = L"Information")
 		{
+			auto m_pInformation = cell->GetInformationRecord(selectedInformationID);
+
 			// If the size is 0, pass.
-			if (m_pInformation->m_attr.size() == 0)
+			if (m_pInformation == nullptr ||
+				m_pInformation->m_attr.size() == 0)
 			{
 				return;
 			}
@@ -1119,7 +1123,7 @@ MultiData* CDockablePaneEditWindow::InsertPropertyMultiData(
 	return multiData;
 }
 
-void CDockablePaneEditWindow::SetSpatialObject(SpatialObject *object)
+void CDockablePaneEditWindow::SetSpatialObject(S100SpatialObject *object)
 {
 	m_cell = object;
 	m_wndListAttribute.SetSpatialObject(m_cell);

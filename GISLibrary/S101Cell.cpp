@@ -2265,6 +2265,7 @@ void S101Cell::RemoveInformationRecord(__int64 key, R_InformationRecord* record)
 {
 	m_infMap.RemoveKey(key);
 }
+
 R_InformationRecord* S101Cell::GetInformationRecord(__int64 key)
 {
 	R_InformationRecord* item = nullptr;
@@ -2274,6 +2275,12 @@ R_InformationRecord* S101Cell::GetInformationRecord(__int64 key)
 	}
 
 	return nullptr;
+}
+
+R_InformationRecord* S101Cell::GetInformationRecord(std::wstring wstringKey)
+{
+	int rcid = std::stoll(wstringKey);
+	return GetInformationRecord(rcid);
 }
 
 POSITION S101Cell::GetInfoStartPosition()
@@ -2552,7 +2559,7 @@ R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
 
 R_FeatureRecord* S101Cell::GetFeatureRecord(std::wstring wstringKey)
 {
-	auto key = std::stoi(wstringKey);
+	auto key = std::stoll(wstringKey);
 	return GetFeatureRecord(key);
 }
 

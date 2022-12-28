@@ -24,15 +24,15 @@ void FeatureBinding::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:association"))
 		{
-			association = instruction.child_value();
+			association = instruction.attribute("ref").value();
 		}
 		else if (!strcmp(instructionName, "S100FC:role"))
 		{
-			role = instruction.child_value();
+			role = instruction.attribute("ref").value();
 		}
 		else if (!strcmp(instructionName, "S100FC:featureType"))
 		{
-			featureType = instruction.child_value();
+			featureType = instruction.attribute("ref").value(); 
 		}
 	}
 }
@@ -101,6 +101,8 @@ std::string FeatureBinding::GetRoleTypeAsString()
 	{
 		return "association";
 	}
+
+	return "";
 }
 
 std::wstring FeatureBinding::GetRoleTypeAsWstring()
@@ -117,15 +119,15 @@ void FeatureBinding::SetRoleType(std::string value)
 {
 	if (value.compare("association") == 0)
 	{
-		value = S100_FC_RoleType::association;
+		roleType = S100_FC_RoleType::association;
 	}
 	else if (value.compare("aggregation") == 0)
 	{
-		value = S100_FC_RoleType::association;
+		roleType = S100_FC_RoleType::association;
 	}
 	else if (value.compare("composition") == 0)
 	{
-		value = S100_FC_RoleType::association;
+		roleType = S100_FC_RoleType::association;
 	}
 }
 

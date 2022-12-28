@@ -74,102 +74,105 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 			nSelectedItem = pNMLV->iItem;
 
-			auto cell = m_Cell;
-			FeatureCatalogue* fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
-			if (nullptr == fc)
+			if (m_Cell->GetProductNumber() == 101)
 			{
-				return;
-			}
-
-			POSITION pos = m_ListCurrentSelection.GetFirstSelectedItemPosition();
-			int idx = 0;
-
-			// Delete all inverted items.
-			CString objId;
-			CString featureType;
-
-			idx = m_ListCurrentSelection.GetNextSelectedItem(pos);
-			if (idx < 0)
-			{
-				return;
-			}
-
-			// RCID 
-			objId.Format(m_ListCurrentSelection.GetItemText(idx, 1));
-
-			// Feature or Information
-			featureType.Format(m_ListCurrentSelection.GetItemText(idx, 7));
-			__int64 objIdN = _tcstoui64(objId, NULL, 10);
-
-			if (featureType == L"Feature")
-			{
-				__int64 key = ((__int64)100) << 32 | objIdN;
-
-				auto stringKey = std::to_wstring(key);
-				if (cell == nullptr)
+				auto cell = (S101Cell*)m_Cell;
+				FeatureCatalogue* fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
+				if (nullptr == fc)
 				{
 					return;
 				}
 
-				CString geoType = m_ListCurrentSelection.GetItemText(idx, 3);
+				POSITION pos = m_ListCurrentSelection.GetFirstSelectedItemPosition();
+				int idx = 0;
 
-				if (geoType != L"No geometry")
-				{
-					auto layer = cell->GetLayer();
-					if (nullptr != layer)
-					{
-						if (true == layer->IsOn())
-						{
-							theApp.pView->SetPick((S101Cell*)layer->GetSpatialObject(), stringKey);
-							theApp.pView->Invalidate(FALSE);
-						}
-					}
-				}
-
-				theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
-				theApp.m_DockablePaneEditWindow.SetFeatureType(stringKey);
-			}
-			else if (featureType == L"Information")
-			{
-				__int64 key = ((__int64)150) << 32 | objIdN;
-				auto stringKey = std::to_wstring(key);
-
-				theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
-				theApp.m_DockablePaneEditWindow.SetInformationType(stringKey);
-			}
-
-			pos = m_ListCurrentSelection.GetFirstSelectedItemPosition();
-			idx = 0;
-
-			std::list<R_FeatureRecord*> flist;
-			std::list<R_InformationRecord*> infoList;
-
-			while (pos)
-			{
+				// Delete all inverted items.
 				CString objId;
 				CString featureType;
+
 				idx = m_ListCurrentSelection.GetNextSelectedItem(pos);
+				if (idx < 0)
+				{
+					return;
+				}
+
+				// RCID 
 				objId.Format(m_ListCurrentSelection.GetItemText(idx, 1));
-				featureType.Format(m_ListCurrentSelection.GetItemText(idx, 7)); // feature/information type
+
+				// Feature or Information
+				featureType.Format(m_ListCurrentSelection.GetItemText(idx, 7));
 				__int64 objIdN = _tcstoui64(objId, NULL, 10);
-				R_FeatureRecord *rfr;
-				R_InformationRecord *ifr;
 
 				if (featureType == L"Feature")
 				{
 					__int64 key = ((__int64)100) << 32 | objIdN;
-					rfr = m_Cell->GetFeatureRecord(key);
-					flist.push_back(rfr);
+
+					auto stringKey = std::to_wstring(key);
+					if (cell == nullptr)
+					{
+						return;
+					}
+
+					CString geoType = m_ListCurrentSelection.GetItemText(idx, 3);
+
+					if (geoType != L"No geometry")
+					{
+						auto layer = cell->GetLayer();
+						if (nullptr != layer)
+						{
+							if (true == layer->IsOn())
+							{
+								theApp.pView->SetPick((S101Cell*)layer->GetSpatialObject(), stringKey);
+								theApp.pView->Invalidate(FALSE);
+							}
+						}
+					}
+
+					theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
+					theApp.m_DockablePaneEditWindow.SetFeatureType(stringKey);
 				}
 				else if (featureType == L"Information")
 				{
 					__int64 key = ((__int64)150) << 32 | objIdN;
-					ifr = m_Cell->GetInformationRecord(key);
-					infoList.push_back(ifr);
-				}
-			}
+					auto stringKey = std::to_wstring(key);
 
-			theApp.m_DockablePaneRelation.pDlg->SetFeatureList(cell, flist, infoList);
+					theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
+					theApp.m_DockablePaneEditWindow.SetInformationType(stringKey);
+				}
+
+				pos = m_ListCurrentSelection.GetFirstSelectedItemPosition();
+				idx = 0;
+
+				std::list<R_FeatureRecord*> flist;
+				std::list<R_InformationRecord*> infoList;
+
+				while (pos)
+				{
+					CString objId;
+					CString featureType;
+					idx = m_ListCurrentSelection.GetNextSelectedItem(pos);
+					objId.Format(m_ListCurrentSelection.GetItemText(idx, 1));
+					featureType.Format(m_ListCurrentSelection.GetItemText(idx, 7)); // feature/information type
+					__int64 objIdN = _tcstoui64(objId, NULL, 10);
+					R_FeatureRecord* rfr;
+					R_InformationRecord* ifr;
+
+					if (featureType == L"Feature")
+					{
+						__int64 key = ((__int64)100) << 32 | objIdN;
+						rfr = cell->GetFeatureRecord(key);
+						flist.push_back(rfr);
+					}
+					else if (featureType == L"Information")
+					{
+						__int64 key = ((__int64)150) << 32 | objIdN;
+						ifr = cell->GetInformationRecord(key);
+						infoList.push_back(ifr);
+					}
+				}
+
+				theApp.m_DockablePaneRelation.pDlg->SetFeatureList(cell, flist, infoList);
+			}
 		}
 	}
 	*pResult = 0;
@@ -437,7 +440,6 @@ void CDialogDockCurrentSelection::UpdateList()
 	CString objId;
 	CString featureType;
 
-
 	while (idx >= 0)
 	{
 		idx = m_ListCurrentSelection.GetNextSelectedItem(pos);
@@ -446,64 +448,68 @@ void CDialogDockCurrentSelection::UpdateList()
 		featureType.Format(m_ListCurrentSelection.GetItemText(idx, 7));
 		__int64 objIdN = _tcstoui64(objId, NULL, 10);
 
-		if (featureType == L"Feature")
+		if (m_Cell->GetProductNumber() == 101)
 		{
-			__int64 key = ((__int64)100) << 32 | objIdN;
-			R_FeatureRecord *rfr = m_Cell->GetFeatureRecord(key);
-
-			int count = 0;
-
-			int inforCount = (int)rfr->m_inas.size();
-			count += inforCount;
-			if (0 < inforCount)
+			auto cell = (S101Cell*)m_Cell;
+			if (featureType == L"Feature")
 			{
-				auto inas = *rfr->m_inas.begin();
-				int arrCount = (int)inas->m_arr.size();
-				count = count + arrCount;
+				__int64 key = ((__int64)100) << 32 | objIdN;
+				R_FeatureRecord* rfr = cell->GetFeatureRecord(key);
+
+				int count = 0;
+
+				int inforCount = (int)rfr->m_inas.size();
+				count += inforCount;
+				if (0 < inforCount)
+				{
+					auto inas = *rfr->m_inas.begin();
+					int arrCount = (int)inas->m_arr.size();
+					count = count + arrCount;
+				}
+
+
+				int feaCount = (int)rfr->m_fasc.size();
+				count += feaCount;
+
+				if (0 < feaCount)
+				{
+					auto fea = *rfr->m_fasc.begin();
+					int arrCount = (int)fea->m_arr.size();
+					count = count + arrCount;
+				}
+
+				CString Countstring;
+				Countstring.Format(_T("%d"), count);
+				m_ListCurrentSelection.SetItemText(idx, 6, Countstring);
 			}
-
-
-			int feaCount = (int)rfr->m_fasc.size();
-			count += feaCount;
-
-			if (0 < feaCount)
+			else if (featureType == L"Information")
 			{
-				auto fea = *rfr->m_fasc.begin();
-				int arrCount = (int)fea->m_arr.size();
-				count = count + arrCount;
+
+				__int64 key = ((__int64)150) << 32 | objIdN;
+
+				if (cell->GetInfoMapCount() == 0)
+				{
+					int i = 0;
+					return;
+				}
+
+				R_InformationRecord* rfr = cell->GetInformationRecord(key);
+
+				int count = 0;
+				int inforCount = (int)rfr->m_inas.size();
+				count = count + inforCount;
+
+				if (0 < inforCount)
+				{
+					auto inas = *rfr->m_inas.begin();
+					int arrCount = (int)inas->m_arr.size();
+					count = count + arrCount;
+				}
+
+				CString Countstring;
+				Countstring.Format(_T("%d"), inforCount);
+				m_ListCurrentSelection.SetItemText(idx, 6, Countstring);
 			}
-
-			CString Countstring;
-			Countstring.Format(_T("%d"), count);
-			m_ListCurrentSelection.SetItemText(idx, 6, Countstring);
-		}
-		else if (featureType == L"Information")
-		{
-
-			__int64 key = ((__int64)150) << 32 | objIdN;
-
-			if (m_Cell->GetInfoMapCount() == 0)
-			{
-				int i = 0;
-				return;
-			}
-
-			R_InformationRecord *rfr = m_Cell->GetInformationRecord(key);
-
-			int count = 0;
-			int inforCount = (int)rfr->m_inas.size();
-			count = count + inforCount;
-
-			if (0 < inforCount)
-			{
-				auto inas = *rfr->m_inas.begin();
-				int arrCount = (int)inas->m_arr.size();
-				count = count + arrCount;
-			}
-
-			CString Countstring;
-			Countstring.Format(_T("%d"), inforCount);
-			m_ListCurrentSelection.SetItemText(idx, 6, Countstring);
 		}
 	}
 }

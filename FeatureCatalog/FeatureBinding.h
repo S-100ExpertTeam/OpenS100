@@ -14,7 +14,7 @@ private:
 	Multiplicity multiplicity;
 	std::string association;
 	std::string role;
-	S100_FC_RoleType roleType;
+	S100_FC_RoleType roleType = S100_FC_RoleType::none;
 	std::string featureType;
 
 public:

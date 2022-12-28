@@ -208,6 +208,7 @@ public:
 	void InsertInformationRecord(__int64 key, R_InformationRecord* record);
 	void RemoveInformationRecord(__int64 key, R_InformationRecord* record);
 	R_InformationRecord* GetInformationRecord(__int64 key);
+	R_InformationRecord* GetInformationRecord(std::wstring wstringKey);
 	POSITION GetInfoStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_InformationRecord*& value);
 	void RemoveAllInfoRecord();
