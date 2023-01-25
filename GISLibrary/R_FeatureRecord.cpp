@@ -139,12 +139,10 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		}
 		else if (strcmp(dir->GetDirectory(i)->tag, "MASK") == 0)
 		{
-
 			F_MASK* mask = new F_MASK();
 			cnt = (dir->GetDirectory(i)->length - 1) / MASK::GetSize();
 			mask->ReadField(buf, cnt);
 			m_mask.push_back(mask);
-
 		}
 		else
 		{

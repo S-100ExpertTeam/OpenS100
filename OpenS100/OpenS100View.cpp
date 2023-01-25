@@ -525,6 +525,8 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	theApp.gisLib->InitLibrary(fc, pc);
 
+	theApp.gisLib->AddLayer(L"..\\SampleData\\101KR001F0000.000");
+
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
 
 	//PointFeatureList();
