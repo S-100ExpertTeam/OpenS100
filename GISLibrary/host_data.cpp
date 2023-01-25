@@ -86,13 +86,14 @@ static void get_referenced_spatials(std::string spatial_id, std::vector<std::str
 	int findOffset = 0;
 	int splitOffset = 0;
 	std::string token = "|";
+
 	while ((splitOffset = (int)spatial_id.find(token, findOffset)) != std::string::npos)
 	{
 		ret.push_back(spatial_id.substr(findOffset, splitOffset - findOffset));
 		findOffset = splitOffset + (int)token.length();
 	}
+
 	ret.push_back(spatial_id.substr(findOffset, spatial_id.length() - findOffset));
-	//
 
 	std::string spatial_type;
 
@@ -110,8 +111,7 @@ static void get_referenced_spatials(std::string spatial_id, std::vector<std::str
 		spatial_type = ret[0];
 		spatials->push_back(spatial_id);
 	}
-	else 
-	if (ret[0] == "Curve")
+	else if (ret[0] == "Curve")
 	{
 		auto spatial = s_spatial_curve_nodes[spatial_id];
 
@@ -192,7 +192,9 @@ static void get_referenced_spatials(std::string spatial_id, std::vector<std::str
 				else
 				{
 					if (!surface.interior_rings.has_value())
+					{
 						surface.interior_rings = std::vector<spatial_association>();
+					}
 
 					get_referenced_spatials(get_spatial_association(rias).spatial_id, spatials);
 				}
