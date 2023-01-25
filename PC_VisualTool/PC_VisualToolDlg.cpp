@@ -596,7 +596,7 @@ void CPCVisualToolDlg::SetTreeContext(std::vector<ContextParameter*>* vecContext
 			m_TreeCtrl.InsertItem(temp, h_description, NULL);
 		}
 
-		temp.Format(_T("type = %s"), ParameterTypeToString(*value->GetType()).c_str());
+		temp.Format(_T("type = %s"), ParameterTypeToString(value->GetType()));
 		m_TreeCtrl.InsertItem(temp, h_id, NULL);
 
 		temp.Format(_T("default = %s"), value->GetDefault().c_str());
