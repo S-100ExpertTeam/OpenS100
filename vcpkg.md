@@ -9,7 +9,7 @@ vcpkg is a free C/C++ package manager for acquiring and managing libraries. Choo
 - [Get started with vcpkg](https://vcpkg.io/en/getting-started.html)
 
 # Install vcpkg
-Installing vcpkg is a two-step process: first, clone the repo, then run the bootstrapping script to produce the vcpkg binary. The repo can be cloned anywhere, and will include the vcpkg binary after bootstrapping as well as any libraries that are installed from the command line. It is recommended to clone vcpkg as a submodule for CMake projects, but to install it globally for MSBuild projects. If installing globally, we recommend a short install path like: C:\src\vcpkg or C:\dev\vcpkg, since otherwise you may run into path issues for some port build systems.
+Installing vcpkg is a two-step process: first, clone the repo, then run the bootstrapping script to produce the vcpkg binary. The repo can be cloned anywhere, and will include the vcpkg binary after bootstrapping as well as any libraries that are installed from the command line. It is recommended to clone vcpkg as a submodule for CMake projects, but to install it globally for MSBuild projects. If installing globally, we highly recommend a install path: C:\vcpkg.
 
 ## Step 1: Clone the vcpkg repo
 ```cmd
