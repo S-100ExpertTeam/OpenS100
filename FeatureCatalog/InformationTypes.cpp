@@ -23,14 +23,7 @@ void InformationTypes::GetContents(pugi::xml_node& node)
 		{
 			auto sa = new InformationType();
 			sa->GetContents(instruction);
-			informationType[sa->GetCodeAsWString()] = sa;
-			if (instruction.attribute("isAbstract"))
-			{
-				XML_Attribute value;
-				value.Setname("isAbstract");
-				value.Setvalue((char*)instruction.attribute("isAbstract").value());
-				SetAttributes(value);
-			}
+			AddInformationType(sa);
 		}
 	}
 }
@@ -68,4 +61,13 @@ bool InformationTypes::SetAssociationFromSuperType(InformationType* it)
 std::unordered_map<std::wstring, InformationType*>& InformationTypes::GetInformationTypePointer()
 {
 	return informationType;
+}
+
+void InformationTypes::AddInformationType(InformationType* item)
+{
+	if (informationType.end() == informationType.find(item->GetCodeAsWString()))
+	{
+		informationType.insert({ item->GetCodeAsWString(), item });
+		informationTypes.push_back(item);
+	}
 }

@@ -498,6 +498,19 @@ bool FeatureCatalogue::Read(std::wstring path)
 	}
 }
 
+bool FeatureCatalogue::Save(std::wstring filePath)
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(GetFilePath().c_str()); ///Read File
+
+	pugi::xml_node decl = doc.prepend_child(pugi::node_declaration);
+	decl.append_attribute("version") = "1.0";
+	decl.append_attribute("encoding") = "utf-8";
+	
+	doc.save_file(filePath.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
+	return true;
+}
+
 InformationTypes& FeatureCatalogue::GetInformationTypesPointer()
 {
 	return informationTypes;
