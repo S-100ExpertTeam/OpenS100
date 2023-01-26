@@ -30,9 +30,9 @@ Make sure you are in the directory you want the tool installed to before doing t
 > vcpkg install polyclipping:x64-windows
 ```
 OpenS100 uses 3 packages.
-- pugixml
-- geographiclib
-- polyclipping
+- pugixml 1.13.0
+- geographiclib 2.1.2
+- polyclipping 6.4.2
 
 ## Using vcpkg with MSBuild / Visual Studio
 ```cmd

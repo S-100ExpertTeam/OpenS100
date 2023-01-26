@@ -19,6 +19,7 @@
 #include <crtdbg.h>
 #include <direct.h>
 #include <fstream>
+#include <iostream>
 
 #ifdef _DEBUG
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
@@ -57,7 +58,7 @@ COpenS100App::COpenS100App() noexcept
 #ifdef _MANAGED
 	System::Windows::Forms::Application::SetUnhandledExceptionMode(System::Windows::Forms::UnhandledExceptionMode::ThrowException);
 #endif
-	//_CrtSetBreakAlloc(540569);
+	
 	SetAppID(_T("OpenS100.AppID.NoVersion"));
 
 	//_CrtSetBreakAlloc(701554);

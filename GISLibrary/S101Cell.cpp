@@ -838,7 +838,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 		fe->m_geometry = nullptr;
 	}
 
-	R_SurfaceRecord *sr;
+	R_SurfaceRecord *sr = nullptr;
 	__int64 iKey;
 
 	std::vector<POINT> vecPoint;
@@ -1326,15 +1326,14 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 		i++)
 	{
 		auto cuco = *i;
-		auto iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
+		auto iKey = cuco->m_name.GetName();
 
-		if ((*i)->m_name.RCNM == 120)
+		if (cuco->m_name.RCNM == 120)
 		{
 			R_CurveRecord* cr = nullptr;
 			
 			if (m_curMap.Lookup(iKey, cr))
 			{
-				//SCurve* scurve = new SCurve();
 				SCurveHasOrient* scurve = new SCurveHasOrient();
 				int localORNT = cuco->m_ornt;
 				
@@ -1350,11 +1349,22 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 					}
 				}
 
-				GetFullSpatialData(cr, scurve, localORNT);
-				curve->AddCurve(scurve);
+				if (GetFullSpatialData(cr, scurve, localORNT))
+				{
+					curve->AddCurve(scurve);
+				}
+				else
+				{
+					return FALSE;
+				}
+			}
+			else
+			{
+				// Failed to find curve record
+				return FALSE;
 			}
 		}
-		else if ((*i)->m_name.RCNM == 125)
+		else if (cuco->m_name.RCNM == 125)
 		{
 			R_CompositeRecord* ccr = nullptr;
 
@@ -1362,11 +1372,22 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 			{
 				SCompositeCurve scc;// = new SCompositeCurve();
 				GetFullSpatialData(ccr, &scc, cuco->m_ornt);
+
+				for (auto j = scc.m_listCurveLink.begin(); j != scc.m_listCurveLink.end(); j++)
+				{
+					curve->AddCurve(*j);
+				}
+			}
+			else
+			{
+				// Failed to find composite curve record
+				return FALSE;
 			}
 		}
 		else
 		{
-			//OutputDebugString(L"Invalid rcnm\n");
+			// Invalid rcnm
+			return FALSE;
 		}
 	}
 
