@@ -25,5 +25,5 @@ public:
 	std::unordered_map<std::wstring, InformationType*>& GetInformationTypePointer();
 	bool SetAssociationFromSuperType(InformationType* it);
 
-	void AddInformationType(InformationType* item);
+	bool InsertInformationType(InformationType* value);
 };

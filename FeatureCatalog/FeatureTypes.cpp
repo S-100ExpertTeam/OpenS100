@@ -24,14 +24,6 @@ void FeatureTypes::GetContents(pugi::xml_node& node)
 			auto sa = new FeatureType();
 			sa->GetContents(instruction);
 			InsertFeatureType(sa);
-
-			if (instruction.attribute("isAbstract"))
-			{
-				XML_Attribute attr;
-				attr.Setname("isAbstract");
-				attr.Setvalue((char*)instruction.attribute("isAbstract").value());
-				SetAttributes(attr);
-			}
 		}
 	}
 	ApplySuperType();

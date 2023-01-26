@@ -23,7 +23,7 @@ void InformationTypes::GetContents(pugi::xml_node& node)
 		{
 			auto sa = new InformationType();
 			sa->GetContents(instruction);
-			AddInformationType(sa);
+			InsertInformationType(sa);
 		}
 	}
 }
@@ -63,11 +63,16 @@ std::unordered_map<std::wstring, InformationType*>& InformationTypes::GetInforma
 	return informationType;
 }
 
-void InformationTypes::AddInformationType(InformationType* item)
+bool InformationTypes::InsertInformationType(InformationType* value)
 {
-	if (informationType.end() == informationType.find(item->GetCodeAsWString()))
+	auto key = value->GetCodeAsWString();
+	if (informationType.find(key) == informationType.end())
 	{
-		informationType.insert({ item->GetCodeAsWString(), item });
-		informationTypes.push_back(item);
+		informationTypes.push_back(value);
+		informationType.insert({ key, value });
+		return true;
 	}
+
+	delete value;
+	return false;
 }

@@ -7,8 +7,7 @@
 #include <vector>
 #include <map>
 
-class FeatureTypes :
-	public XML_Item
+class FeatureTypes
 {
 public:
 	FeatureTypes(void);
