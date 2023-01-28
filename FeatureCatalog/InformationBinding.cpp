@@ -160,3 +160,25 @@ void InformationBinding::InsertInformationType(std::wstring value)
 {
 	informationTypes.push_back(pugi::as_utf8(value));
 }
+
+bool InformationBinding::IsSameAssociation(InformationBinding& ib)
+{
+	if (multiplicity == ib.GetMultiplicity() &&
+		!association.compare(ib.GetAssociation()) &&
+		!role.compare(ib.GetRole()) &&
+		roleType == ib.GetRoleType())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void InformationBinding::AppendInformationBinding(InformationBinding& ib)
+{
+	int cnt = ib.GetInformationTypeCount();
+	for (int i = 0; i < cnt; i++)
+	{
+		InsertInformationType(ib.GetInformationType(i));
+	}
+}

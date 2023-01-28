@@ -27,6 +27,19 @@ void S100ObjectType::GetContents(pugi::xml_node& node)
 			ib->GetContents(instruction);
 			
 			informationBinding.push_back(ib);
+
+			auto ib = new InformationBinding();
+			ib->GetContents(instruction);
+			if (auto targetIB = CanMerged(*ib))
+			{
+				targetIB->AppendInformationBinding(*ib);
+				delete ib;
+				ib = nullptr;
+			}
+			else
+			{
+				InsertInformationBinding(ib);
+			}
 		}
 	}
 }
@@ -34,4 +47,23 @@ void S100ObjectType::GetContents(pugi::xml_node& node)
 std::list<InformationBinding*>& S100ObjectType::GetInformationBindingPointer()
 {
 	return informationBinding;
+}
+
+void S100ObjectType::InsertInformationBinding(InformationBinding* value)
+{
+	informationBinding.push_back(value);
+}
+
+InformationBinding* S100ObjectType::CanMerged(InformationBinding& ib)
+{
+	for (auto i = informationBinding.begin(); i != informationBinding.end(); i++)
+	{
+		auto currentIB = *i;
+		if (currentIB->IsSameAssociation(ib))
+		{
+			return currentIB;
+		}
+	}
+
+	return nullptr;
 }

@@ -51,4 +51,7 @@ public:
 
 	void InsertInformationType(std::string value);
 	void InsertInformationType(std::wstring value);
+
+	bool IsSameAssociation(InformationBinding& ib);
+	void AppendInformationBinding(InformationBinding& ib);
 };
