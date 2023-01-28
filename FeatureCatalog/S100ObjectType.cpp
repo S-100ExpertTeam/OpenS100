@@ -25,11 +25,6 @@ void S100ObjectType::GetContents(pugi::xml_node& node)
 		{
 			auto ib = new InformationBinding();
 			ib->GetContents(instruction);
-			
-			informationBinding.push_back(ib);
-
-			auto ib = new InformationBinding();
-			ib->GetContents(instruction);
 			if (auto targetIB = CanMerged(*ib))
 			{
 				targetIB->AppendInformationBinding(*ib);
