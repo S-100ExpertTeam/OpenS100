@@ -32,7 +32,7 @@ void FeatureBinding::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:featureType"))
 		{
-			featureType = instruction.attribute("ref").value(); 
+			InsertFeatureType(instruction.attribute("ref").value());
 		}
 	}
 }
@@ -131,22 +131,32 @@ void FeatureBinding::SetRoleType(std::string value)
 	}
 }
 
-std::string FeatureBinding::GetFeatureType()
+int FeatureBinding::GetFeatureTypeCount()
 {
-	return featureType;
+	return featureTypes.size();
 }
 
-std::wstring FeatureBinding::GetFeatureTypeAsWstring()
+std::string FeatureBinding::GetFeatureType(int index)
 {
-	return pugi::as_wide(featureType);
+	if (index < 0 || index >= GetFeatureTypeCount())
+	{
+		return "";
+	}
+
+	return featureTypes.at(index);
 }
 
-void FeatureBinding::SetFeatureType(std::string value)
+std::wstring FeatureBinding::GetFeatureTypeAsWstring(int index)
 {
-	featureType = value;
+	return pugi::as_wide(GetFeatureType(index));
 }
 
-void FeatureBinding::SetFeatureType(std::wstring value)
+void FeatureBinding::InsertFeatureType(std::string value)
 {
-	featureType = pugi::as_utf8(value);
+	featureTypes.push_back(value);
+}
+
+void FeatureBinding::InsertFeatureType(std::wstring value)
+{
+	featureTypes.push_back(pugi::as_utf8(value));
 }

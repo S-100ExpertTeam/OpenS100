@@ -154,7 +154,11 @@ lua_ref_ptr CreateObjectType(lua_session *ls, S100ObjectType *object_type)
 
 	for (auto ib : object_type->GetInformationBindingPointer())
 	{
-		information_bindings.push_back(CreateInformationBinding(ls, ib));
+		auto cnt = ib->GetInformationTypeCount();
+		for (int i = 0; i < cnt; i++)
+		{
+			information_bindings.push_back(CreateInformationBinding(ls, ib, i));
+		}
 	}
 
 	return ls->call<lua_ref_ptr>("CreateObjectType", { CreateNamedType(ls, object_type), information_bindings });
@@ -190,7 +194,11 @@ lua_ref_ptr CreateFeatureType(lua_session *ls, FeatureType *feature_type)
 
 	for (auto fb : feature_type->GetFeatureBindingPointer())
 	{
-		feature_bindings.push_back(CreateFeatureBinding(ls, fb));
+		auto cnt = fb->GetFeatureTypeCount();
+		for (int i = 0; i < cnt; i++)
+		{
+			feature_bindings.push_back(CreateFeatureBinding(ls, fb, i));
+		}
 	}
 
 	auto featureUseType = std::string(feature_type->GetFeatureUseTypePointer().GetValueString().begin(), feature_type->GetFeatureUseTypePointer().GetValueString().end());
@@ -405,7 +413,7 @@ lua_ref_ptr CreateAttributeBinding(lua_session *ls, AttributeBinding *attribute_
 	return ls->call<lua_ref_ptr>("CreateAttributeBinding", { referenceCode, attribute_binding->GetMultiplicity().GetLower(), muluppvalue, sequential, permittedValues });
 }
 
-lua_ref_ptr CreateInformationBinding(lua_session *ls, InformationBinding *information_binding) // -----------------------------------------------------------------------------------------------------------------------
+lua_ref_ptr CreateInformationBinding(lua_session *ls, InformationBinding *information_binding, int informationIndex)
 {
 	std::optional<int> muluppvalue;
 
@@ -415,7 +423,7 @@ lua_ref_ptr CreateInformationBinding(lua_session *ls, InformationBinding *inform
 	}
 
 	return ls->call<lua_ref_ptr>("CreateInformationBinding", { 
-		information_binding->GetInformationType(), 
+		information_binding->GetInformationType(informationIndex),
 		information_binding->GetMultiplicity().GetLower(), 
 		muluppvalue, 
 		information_binding->GetRoleTypeAsString(), 
@@ -423,7 +431,7 @@ lua_ref_ptr CreateInformationBinding(lua_session *ls, InformationBinding *inform
 		information_binding->GetAssociation()});
 }
 
-lua_ref_ptr CreateFeatureBinding(lua_session *ls, FeatureBinding *feature_binding)
+lua_ref_ptr CreateFeatureBinding(lua_session *ls, FeatureBinding *feature_binding, int featureIndex)
 {
 	std::optional<int> muluppvalue;
 
@@ -433,7 +441,7 @@ lua_ref_ptr CreateFeatureBinding(lua_session *ls, FeatureBinding *feature_bindin
 	}
 
 	return ls->call<lua_ref_ptr>("CreateFeatureBinding", { 
-		feature_binding->GetFeatureType(), 
+		feature_binding->GetFeatureType(featureIndex),
 		feature_binding->GetMultiplicity().GetLower(), 
 		muluppvalue, 
 		feature_binding->GetRoleTypeAsString(), 

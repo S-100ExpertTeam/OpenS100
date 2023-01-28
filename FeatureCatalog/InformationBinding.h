@@ -5,6 +5,7 @@
 #include "S100_FC_RoleType.h"
 
 #include <pugixml.hpp>
+#include <vector>
 
 class InformationBinding
 {
@@ -17,7 +18,7 @@ private:
 	std::string association;
 	std::string role;
 	S100_FC_RoleType roleType = S100_FC_RoleType::none;
-	std::string informationType;
+	std::vector<std::string> informationTypes;
 
 public:
 	void GetContents(pugi::xml_node& node);
@@ -43,9 +44,11 @@ public:
 	void SetRoleType(S100_FC_RoleType value);
 	void SetRoleType(std::string value);
 
-	std::string GetInformationType();
-	std::wstring GetInformationTypeAsWstring();
+	int GetInformationTypeCount();
 
-	void SetInformationType(std::string value);
-	void SetInformationType(std::wstring value);
+	std::string GetInformationType(int index);
+	std::wstring GetInformationTypeAsWstring(int index);
+
+	void InsertInformationType(std::string value);
+	void InsertInformationType(std::wstring value);
 };

@@ -4,6 +4,9 @@
 #include "Reference.h"
 #include "S100_FC_RoleType.h"
 
+#include <pugixml.hpp>
+#include <vector>
+
 class FeatureBinding
 {
 public:
@@ -15,7 +18,7 @@ private:
 	std::string association;
 	std::string role;
 	S100_FC_RoleType roleType = S100_FC_RoleType::none;
-	std::string featureType;
+	std::vector<std::string> featureTypes;
 
 public:
 	void GetContents(pugi::xml_node& node);
@@ -41,9 +44,11 @@ public:
 	void SetRoleType(S100_FC_RoleType value);
 	void SetRoleType(std::string value);
 
-	std::string GetFeatureType();
-	std::wstring GetFeatureTypeAsWstring();
+	int GetFeatureTypeCount();
 
-	void SetFeatureType(std::string value);
-	void SetFeatureType(std::wstring value);
+	std::string GetFeatureType(int index);
+	std::wstring GetFeatureTypeAsWstring(int index);
+
+	void InsertFeatureType(std::string value);
+	void InsertFeatureType(std::wstring value);
 };
