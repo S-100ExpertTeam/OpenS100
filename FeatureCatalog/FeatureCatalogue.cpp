@@ -307,6 +307,109 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 	//SetFullAssociations();
 }
 
+void FeatureCatalogue::WriteContents(pugi::xml_node& node)
+{
+	auto features = featureTypes.GetVecFeatureType();
+	for (auto i = features.begin(); i != features.end(); i++)
+	{
+		auto feature = (*i);
+		std::string xpath = "S100FC:S100_FC_FeatureCatalogue/S100FC:S100_FC_FeatureTypes/S100FC:S100_FC_FeatureType/S100FC:code[text()='" + feature->GetCode() + "']";
+		auto featureNode = node.select_node(xpath.c_str()).node().parent();
+		
+		auto fbNodes = featureNode.select_nodes("S100FC:featureBinding");
+		for (auto j = fbNodes.begin(); j != fbNodes.end(); j++)
+		{
+			auto fbNode = (*j).node();
+			featureNode.remove_child(fbNode);
+		}
+
+		auto a = featureNode.child_value("S100FC:name");
+
+		auto featureBindings = feature->GetFeatureBindingPointer();
+		for (auto j = featureBindings.begin(); j != featureBindings.end(); j++)
+		{
+			auto fb = (*j);
+
+			auto node_fb = featureNode.append_child("S100FC:featureBinding");
+			node_fb.append_attribute("roleType").set_value(fb->GetRoleTypeAsString().c_str());
+			auto nodeMultiplicity = node_fb.append_child("S100FC:multiplicity");
+			nodeMultiplicity.append_child("S100Base:lower").text().set(fb->GetMultiplicity().GetLower());
+			auto upperNode = nodeMultiplicity.append_child("S100Base:upper");
+			auto attrNil = upperNode.append_attribute("xsi:nil");
+			auto attrInfinite = upperNode.append_attribute("infinite");
+			
+			if (fb->GetMultiplicity().GetUpper().IsInfinite())
+			{
+				attrNil.set_value("true");
+				attrInfinite.set_value("true");
+			}
+			else
+			{
+				attrNil.set_value("false");
+				attrInfinite.set_value("false");
+				upperNode.text().set(fb->GetMultiplicity().GetUpperCount());
+			}
+
+			node_fb.append_child("S100FC:association").append_attribute("ref").set_value(fb->GetAssociation().c_str());
+			node_fb.append_child("S100FC:role").append_attribute("ref").set_value(fb->GetRole().c_str());
+			
+			auto cnt = fb->GetFeatureTypeCount();
+
+			for (int k = 0; k < cnt; k++)
+			{
+				auto featureType = fb->GetFeatureType(k);
+				node_fb.append_child("S100FC:featureType").append_attribute("ref").set_value(featureType.c_str());
+			}
+		}
+	}
+
+	//auto informations = informationTypes.GetVecInformationType();
+	//for (auto i = informations.begin(); i != informations.end(); i++)
+	//{
+	//	auto information = (*i);
+	//	std::string xpath = "S100FC:S100_FC_FeatureCatalogue/S100FC:S100_FC_InformationTypess/S100FC:S100_FC_InformationTypes/S100FC:code[text()='" + information->GetCode() + "']";
+	//	auto featureNode = node.select_node(xpath.c_str()).node();
+	//	featureNode.remove_child("S100FC:informationBinding");
+
+	//	auto featureBindings = information->GetFeatureBindingPointer();
+	//	for (auto j = featureBindings.begin(); j != featureBindings.end(); j++)
+	//	{
+	//		auto fb = (*j);
+
+	//		auto node_fb = featureNode.append_child("S100FC:featureBinding");
+	//		node_fb.append_attribute("roleType").set_value(fb->GetRoleTypeAsString().c_str());
+	//		auto nodeMultiplicity = node_fb.append_child("S100FC:multiplicity");
+	//		nodeMultiplicity.append_child("S100Base:lower").text().set(fb->GetMultiplicity().GetLower());
+	//		auto upperNode = nodeMultiplicity.append_child("S100Base:upper");
+	//		auto attrNil = upperNode.append_attribute("xsi:nil");
+	//		auto attrInfinite = upperNode.append_attribute("infinite");
+
+	//		if (fb->GetMultiplicity().GetUpper().IsInfinite())
+	//		{
+	//			attrNil.set_value("true");
+	//			attrInfinite.set_value("true");
+	//		}
+	//		else
+	//		{
+	//			attrNil.set_value("false");
+	//			attrInfinite.set_value("false");
+	//			upperNode.text().set(fb->GetMultiplicity().GetUpperCount());
+	//		}
+
+	//		node_fb.append_child("S100FC:association").append_attribute("ref").set_value(fb->GetAssociation().c_str());
+	//		node_fb.append_child("S100FC:role").append_attribute("ref").set_value(fb->GetRole().c_str());
+
+	//		auto cnt = fb->GetFeatureTypeCount();
+
+	//		for (int k = 0; k < cnt; k++)
+	//		{
+	//			auto featureType = fb->GetFeatureType(k);
+	//			node_fb.append_child("S100FC:featureType").append_attribute("ref").set_value(featureType.c_str());
+	//		}
+	//	}
+	//}
+}
+
 //void FeatureCatalogue::SetFullAssociations()
 //{
 //	for (auto itor = featureTypes.GetFeatureType().begin(); itor != featureTypes.GetFeatureType().end(); itor++)
@@ -506,11 +609,9 @@ bool FeatureCatalogue::Save(std::wstring filePath)
 	pugi::xml_node decl = doc.prepend_child(pugi::node_declaration);
 	decl.append_attribute("version") = "1.0";
 	decl.append_attribute("encoding") = "utf-8";
-	
-	auto a = doc.select_node("S100FC:S100_FC_FeatureCatalogue/S100FC:S100_FC_FeatureTypes/S100FC:S100_FC_FeatureType/S100FC:code[text()='LandArea']");
-	auto b = a.node().parent().child("S100FC:code").child_value();
 
-	// Write 
+	// Write
+	WriteContents(doc);
 	doc.save_file(filePath.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
 	return true;
 }

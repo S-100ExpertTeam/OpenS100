@@ -57,7 +57,9 @@ protected:
 public:
 	bool Read(std::wstring filePath);
 	bool Save(std::wstring filePath);
+
 	void GetContents(pugi::xml_node& node);
+	void WriteContents(pugi::xml_node& node);
 
 	const std::wstring& GetName();
 	void SetName(std::string value);

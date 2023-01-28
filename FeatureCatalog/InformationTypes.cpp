@@ -28,6 +28,11 @@ void InformationTypes::GetContents(pugi::xml_node& node)
 	}
 }
 
+std::vector<InformationType*> InformationTypes::GetVecInformationType()
+{
+	return informationTypes;
+}
+
 bool InformationTypes::SetAssociationFromSuperType(InformationType* it)
 {
 	if (it->GetSuperType().size() > 0)

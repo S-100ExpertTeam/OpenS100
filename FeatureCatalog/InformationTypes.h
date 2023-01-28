@@ -22,6 +22,7 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 	
+	std::vector<InformationType*> GetVecInformationType();
 	std::unordered_map<std::wstring, InformationType*>& GetInformationTypePointer();
 	bool SetAssociationFromSuperType(InformationType* it);
 
