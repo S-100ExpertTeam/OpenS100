@@ -32,7 +32,7 @@ void InformationBinding::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:informationType"))
 		{
-			informationType = instruction.attribute("ref").value();
+			InsertInformationType(instruction.attribute("ref").value());
 		}
 	}
 }
@@ -131,22 +131,32 @@ void InformationBinding::SetRoleType(std::string value)
 	}
 }
 
-std::string InformationBinding::GetInformationType()
+int InformationBinding::GetInformationTypeCount()
 {
-	return informationType;
+	return informationTypes.size();
 }
 
-std::wstring InformationBinding::GetInformationTypeAsWstring()
+std::string InformationBinding::GetInformationType(int index)
 {
-	return pugi::as_wide(informationType);
+	if (index < 0 || index >= GetInformationTypeCount())
+	{
+		return "";
+	}
+
+	return informationTypes.at(index);
 }
 
-void InformationBinding::SetInformationType(std::string value)
+std::wstring InformationBinding::GetInformationTypeAsWstring(int index)
 {
-	informationType = value;
+	return pugi::as_wide(GetInformationType(index));
 }
 
-void InformationBinding::SetInformationType(std::wstring value)
+void InformationBinding::InsertInformationType(std::string value)
 {
-	informationType = pugi::as_utf8(value);
+	informationTypes.push_back(value);
+}
+
+void InformationBinding::InsertInformationType(std::wstring value)
+{
+	informationTypes.push_back(pugi::as_utf8(value));
 }

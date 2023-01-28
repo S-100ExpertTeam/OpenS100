@@ -79,6 +79,6 @@ lua_ref_ptr KRS_LUA_SCRIPT_REFERENCE_API CreateListedValue(lua_session *ls, List
 
 lua_ref_ptr KRS_LUA_SCRIPT_REFERENCE_API CreateAttributeBinding(lua_session *ls, AttributeBinding *attribute_binding );
 
-lua_ref_ptr KRS_LUA_SCRIPT_REFERENCE_API CreateInformationBinding(lua_session *ls,  InformationBinding *information_binding);
+lua_ref_ptr KRS_LUA_SCRIPT_REFERENCE_API CreateInformationBinding(lua_session *ls,  InformationBinding *information_binding, int informationIndex);
 
-lua_ref_ptr KRS_LUA_SCRIPT_REFERENCE_API CreateFeatureBinding(lua_session *ls, FeatureBinding *feature_binding);
+lua_ref_ptr KRS_LUA_SCRIPT_REFERENCE_API CreateFeatureBinding(lua_session *ls, FeatureBinding *feature_binding, int featureIndex);
