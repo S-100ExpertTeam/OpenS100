@@ -36,8 +36,16 @@ void FeatureType::GetContents(pugi::xml_node& node)
 		{
 			auto featureBinding = new FeatureBinding();
 			featureBinding->GetContents(instruction);
-
-			InsertFeatureBinding(featureBinding);
+			if (auto targetFB = CanMerged(*featureBinding))
+			{
+				targetFB->AppendFeatureBinding(*featureBinding);
+				delete featureBinding;
+				featureBinding = nullptr;
+			}
+			else
+			{
+				InsertFeatureBinding(featureBinding);
+			}
 		}
 		else if (!strcmp(instructionName, "S100FC:permittedPrimitives"))
 		{
@@ -105,4 +113,18 @@ std::list<SpatialPrimitiveType*>& FeatureType::GetPermittedPrimitivesPointer()
 void FeatureType::InsertFeatureBinding(FeatureBinding* value)
 {
 	vecFeatureBinding.push_back(value);
+}
+
+FeatureBinding* FeatureType::CanMerged(FeatureBinding& fb)
+{
+	for (auto i = vecFeatureBinding.begin(); i != vecFeatureBinding.end(); i++)
+	{
+		auto currentFB = *i;
+		if (currentFB->IsSameAssociation(fb))
+		{
+			return currentFB;
+		}
+	}
+
+	return nullptr;
 }

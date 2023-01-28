@@ -18,4 +18,6 @@ public:
 	int GetIntegerValue();
 
 	bool IsInfinite();
+
+	bool operator==(UnlimitedInteger& item);
 };

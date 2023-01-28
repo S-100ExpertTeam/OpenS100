@@ -160,3 +160,25 @@ void FeatureBinding::InsertFeatureType(std::wstring value)
 {
 	featureTypes.push_back(pugi::as_utf8(value));
 }
+
+bool FeatureBinding::IsSameAssociation(FeatureBinding& fb)
+{
+	if (multiplicity == fb.GetMultiplicity() &&
+		!association.compare(fb.GetAssociation()) &&
+		!role.compare(fb.GetRole()) &&
+		roleType == fb.GetRoleType())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void FeatureBinding::AppendFeatureBinding(FeatureBinding& fb)
+{
+	int cnt = fb.GetFeatureTypeCount();
+	for (int i = 0; i < cnt; i++)
+	{
+		InsertFeatureType(fb.GetFeatureType(i));
+	}
+}

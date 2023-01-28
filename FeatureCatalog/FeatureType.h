@@ -36,4 +36,6 @@ public:
 	std::list<FeatureBinding*>& GetFeatureBindingPointer();
 	std::list<SpatialPrimitiveType*>& GetPermittedPrimitivesPointer();
 	void InsertFeatureBinding(FeatureBinding* value);
+
+	FeatureBinding* CanMerged(FeatureBinding& fb);
 };

@@ -51,4 +51,7 @@ public:
 
 	void InsertFeatureType(std::string value);
 	void InsertFeatureType(std::wstring value);
+	
+	bool IsSameAssociation(FeatureBinding& fb);
+	void AppendFeatureBinding(FeatureBinding& fb);
 };

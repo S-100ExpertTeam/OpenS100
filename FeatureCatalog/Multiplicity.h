@@ -4,8 +4,7 @@
 
 #include <pugixml.hpp>
 
-class Multiplicity :
-	public XML_Item
+class Multiplicity
 {
 public:
 	Multiplicity();
@@ -26,4 +25,6 @@ public:
 
 	bool IsInfinite();
 	int GetUpperCount();
+
+	bool operator==(Multiplicity& item);
 };

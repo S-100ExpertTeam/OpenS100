@@ -507,6 +507,10 @@ bool FeatureCatalogue::Save(std::wstring filePath)
 	decl.append_attribute("version") = "1.0";
 	decl.append_attribute("encoding") = "utf-8";
 	
+	auto a = doc.select_node("S100FC:S100_FC_FeatureCatalogue/S100FC:S100_FC_FeatureTypes/S100FC:S100_FC_FeatureType/S100FC:code[text()='LandArea']");
+	auto b = a.node().parent().child("S100FC:code").child_value();
+
+	// Write 
 	doc.save_file(filePath.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
 	return true;
 }
