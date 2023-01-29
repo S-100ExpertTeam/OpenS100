@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "InformationBinding.h"
 
+#include <algorithm>
+
 InformationBinding::InformationBinding()
 {
 
@@ -181,4 +183,9 @@ void InformationBinding::AppendInformationBinding(InformationBinding& ib)
 	{
 		InsertInformationType(ib.GetInformationType(i));
 	}
+}
+
+void InformationBinding::SortInformationType()
+{
+	std::sort(informationTypes.begin(), informationTypes.end());
 }

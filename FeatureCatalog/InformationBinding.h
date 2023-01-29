@@ -54,4 +54,6 @@ public:
 
 	bool IsSameAssociation(InformationBinding& ib);
 	void AppendInformationBinding(InformationBinding& ib);
+	
+	void SortInformationType();
 };

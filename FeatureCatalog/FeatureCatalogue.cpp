@@ -85,9 +85,9 @@ FeatureType* FeatureCatalogue::GetFeatureType(std::wstring code)
 		return itor->second;
 }
 
-FeatureTypes& FeatureCatalogue::GetFeatureTypes()
+FeatureTypes* FeatureCatalogue::GetFeatureTypes()
 {
-	return featureTypes;
+	return &featureTypes;
 }
 
 FeatureType* FeatureCatalogue::GetFeatureTypeName(std::wstring name)
@@ -310,6 +310,65 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 void FeatureCatalogue::WriteContents(pugi::xml_node& node)
 {
 	auto features = featureTypes.GetVecFeatureType();
+
+	for (auto i = features.begin(); i != features.end(); i++)
+	{
+		auto feature = (*i);
+		std::string xpath = "S100FC:S100_FC_FeatureCatalogue/S100FC:S100_FC_FeatureTypes/S100FC:S100_FC_FeatureType/S100FC:code[text()='" + feature->GetCode() + "']";
+		auto featureNode = node.select_node(xpath.c_str()).node().parent();
+
+		auto ibNodes = featureNode.select_nodes("S100FC:informationBinding");
+		for (auto j = ibNodes.begin(); j != ibNodes.end(); j++)
+		{
+			auto ibNode = (*j).node();
+			featureNode.remove_child(ibNode);
+		}
+
+		auto userTypeNode = featureNode.select_node("S100FC:featureUseType").node();
+
+		auto informationBindings = feature->GetInformationBindingPointer();
+		for (auto j = informationBindings.begin(); j != informationBindings.end(); j++)
+		{
+			auto ib = (*j);
+
+			auto node_ib = featureNode.insert_child_before("S100FC:informationBinding", userTypeNode);
+			node_ib.append_attribute("roleType").set_value(ib->GetRoleTypeAsString().c_str());
+			auto nodeMultiplicity = node_ib.append_child("S100FC:multiplicity");
+			nodeMultiplicity.append_child("S100Base:lower").text().set(ib->GetMultiplicity().GetLower());
+			auto upperNode = nodeMultiplicity.append_child("S100Base:upper");
+			auto attrNil = upperNode.append_attribute("xsi:nil");
+			auto attrInfinite = upperNode.append_attribute("infinite");
+
+			if (ib->GetMultiplicity().GetUpper().IsInfinite())
+			{
+				attrNil.set_value("true");
+				attrInfinite.set_value("true");
+			}
+			else
+			{
+				attrNil.set_value("false");
+				attrInfinite.set_value("false");
+				upperNode.text().set(ib->GetMultiplicity().GetUpperCount());
+			}
+
+			node_ib.append_child("S100FC:association").append_attribute("ref").set_value(ib->GetAssociation().c_str());
+			node_ib.append_child("S100FC:role").append_attribute("ref").set_value(ib->GetRole().c_str());
+
+			auto cnt = ib->GetInformationTypeCount();
+
+			if (cnt > 1)
+			{
+				int a = 0;
+			}
+
+			for (int k = 0; k < cnt; k++)
+			{
+				auto informationType = ib->GetInformationType(k);
+				node_ib.append_child("S100FC:informationType").append_attribute("ref").set_value(informationType.c_str());
+			}
+		}
+	}
+
 	for (auto i = features.begin(); i != features.end(); i++)
 	{
 		auto feature = (*i);
@@ -323,14 +382,14 @@ void FeatureCatalogue::WriteContents(pugi::xml_node& node)
 			featureNode.remove_child(fbNode);
 		}
 
-		auto a = featureNode.child_value("S100FC:name");
+		auto primNode = featureNode.select_node("S100FC:permittedPrimitives").node();
 
 		auto featureBindings = feature->GetFeatureBindingPointer();
 		for (auto j = featureBindings.begin(); j != featureBindings.end(); j++)
 		{
 			auto fb = (*j);
 
-			auto node_fb = featureNode.append_child("S100FC:featureBinding");
+			auto node_fb = featureNode.insert_child_before("S100FC:featureBinding", primNode);
 			node_fb.append_attribute("roleType").set_value(fb->GetRoleTypeAsString().c_str());
 			auto nodeMultiplicity = node_fb.append_child("S100FC:multiplicity");
 			nodeMultiplicity.append_child("S100Base:lower").text().set(fb->GetMultiplicity().GetLower());
@@ -362,6 +421,8 @@ void FeatureCatalogue::WriteContents(pugi::xml_node& node)
 			}
 		}
 	}
+
+	
 
 	//auto informations = informationTypes.GetVecInformationType();
 	//for (auto i = informations.begin(); i != informations.end(); i++)
@@ -616,34 +677,34 @@ bool FeatureCatalogue::Save(std::wstring filePath)
 	return true;
 }
 
-InformationTypes& FeatureCatalogue::GetInformationTypesPointer()
+InformationTypes* FeatureCatalogue::GetInformationTypes()
 {
-	return informationTypes;
+	return &informationTypes;
 }
 
-Roles& FeatureCatalogue::GetRolesPointer()
+Roles* FeatureCatalogue::GetRolesPointer()
 {
-	return roles;
+	return &roles;
 }
 
-SimpleAttributes& FeatureCatalogue::GetSimpleAttributesPointer()
+SimpleAttributes* FeatureCatalogue::GetSimpleAttributes()
 {
-	return simpleAttributes;
+	return &simpleAttributes;
 }
 
-ComplexAttributes& FeatureCatalogue::GetComplexAttributesPointer()
+ComplexAttributes* FeatureCatalogue::GetComplexAttributes()
 {
-	return complexAttributes;
+	return &complexAttributes;
 }
 
-InformationAssociations& FeatureCatalogue::GetInformationAssociationsPointer()
+InformationAssociations* FeatureCatalogue::GetInformationAssociations()
 {
-	return informationAssociations;
+	return &informationAssociations;
 }
 
-FeatureAssociations& FeatureCatalogue::GetFeatureAssociationsPointer()
+FeatureAssociations* FeatureCatalogue::GetFeatureAssociations()
 {
-	return featureAssociations;
+	return &featureAssociations;
 }
 
 

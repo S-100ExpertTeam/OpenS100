@@ -13,7 +13,7 @@ public:
 	FeatureBinding();
 	virtual ~FeatureBinding();
 
-private:
+protected:
 	Multiplicity multiplicity;
 	std::string association;
 	std::string role;
@@ -54,4 +54,6 @@ public:
 	
 	bool IsSameAssociation(FeatureBinding& fb);
 	void AppendFeatureBinding(FeatureBinding& fb);
+
+	void SortFeatureType();
 };

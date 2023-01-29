@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "FeatureBinding.h"
 
+#include <algorithm>
+
 FeatureBinding::FeatureBinding()
 {
 
@@ -181,4 +183,9 @@ void FeatureBinding::AppendFeatureBinding(FeatureBinding& fb)
 	{
 		InsertFeatureType(fb.GetFeatureType(i));
 	}
+}
+
+void FeatureBinding::SortFeatureType()
+{
+	std::sort(featureTypes.begin(), featureTypes.end());
 }
