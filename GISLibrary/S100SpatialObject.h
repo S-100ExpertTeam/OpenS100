@@ -4,6 +4,7 @@
 
 #include "../GeoMetryLibrary/MBR.h"
 
+#include <vector>
 #include <string>
 
 class PCOutputSchemaManager;
@@ -26,4 +27,11 @@ public:
 
 	virtual std::wstring GetFeatureTypeCodeByID(std::wstring id) { return L""; }
 	virtual std::wstring GetFeatureTypeCodeByID(int id) { return L""; }
+
+	// input unit : WGS84
+	virtual std::vector<std::string> Query(MBR mbr) { return {}; };
+	virtual std::vector<std::string> QueryToSurface(MBR mbr) { return {}; };
+	virtual std::vector<std::string> QueryToCurve(MBR mbr) { return {}; };
+	virtual std::vector<std::string> QueryToPoint(MBR mbr) { return {}; };
+	virtual std::vector<std::string> QueryToMultiPoint(MBR mbr) { return {}; };
 };

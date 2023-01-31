@@ -1440,8 +1440,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				double geoX = ((SPoint*)fr->m_geometry)->x;
 				double geoY = ((SPoint*)fr->m_geometry)->y;
 
-				if (((pickMBR.xmin <= geoX) && (geoX <= pickMBR.xmax))
-					&& ((pickMBR.ymin <= geoY) && (geoY <= pickMBR.ymax)))
+				if (pickMBR.PtInMBR(geoX, geoY))
 				{
 					CString csFoid, csFrid, csLat, csLon, csType, csName, csAssoCnt;
 

@@ -58,6 +58,7 @@
 #include "../S100Geometry/SCommonFuction.h"
 #include "../S100Geometry/SCurve.h"
 #include "../S100Geometry/SCurveHasOrient.h"
+#include "../S100Geometry/SGeometricFuc.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -4351,4 +4352,62 @@ std::wstring S101Cell::GetIssueDateAsWstring()
 	{
 		return std::wstring(Dsrd);
 	}
+}
+
+std::vector<std::string> S101Cell::Query(MBR mbr)
+{
+	return {};
+}
+
+std::vector<std::string> S101Cell::QueryToSurface(MBR mbr)
+{
+	std::vector<std::string> result;
+
+	projection(mbr);
+
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		auto fr = *i;
+
+		if (fr->m_geometry == nullptr || 
+			fr->m_geometry->GetType() != SGeometryType::Surface)
+		{
+			continue;
+		}
+
+		SSurface* surface = (SSurface*)fr->m_geometry;
+
+		if (MBR::CheckOverlap(mbr, fr->m_geometry->m_mbr))
+		{
+			int code = fr->m_frid.m_nftc;
+			auto itor = m_dsgir.m_ftcs->m_arr.find(code);
+
+			double centerX = 0;
+			double centerY = 0;
+
+			gisLib->DeviceToWorld(mbr.GetCenterX(), mbr.GetCenterY(), &centerX, &centerY);
+
+			if (SGeometricFuc::inside(centerX, centerY, surface) == 1)
+			{
+				result.push_back(fr->GetID());
+			}
+		}
+	}
+
+	return result;
+}
+
+std::vector<std::string> S101Cell::QueryToCurve(MBR mbr)
+{
+	return {};
+}
+
+std::vector<std::string> S101Cell::QueryToPoint(MBR mbr)
+{
+	return {};
+}
+
+std::vector<std::string> S101Cell::QueryToMultiPoint(MBR mbr)
+{
+	return {};
 }

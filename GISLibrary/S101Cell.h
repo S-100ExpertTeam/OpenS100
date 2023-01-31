@@ -344,4 +344,10 @@ private:
 	std::wstring GetEditionNumberAsWstring();
 	std::wstring GetUpdateNumberAsWstring();
 	std::wstring GetIssueDateAsWstring();
+
+	std::vector<std::string> Query(MBR mbr) override;
+	std::vector<std::string> QueryToSurface(MBR mbr) override;
+	std::vector<std::string> QueryToCurve(MBR mbr) override;
+	std::vector<std::string> QueryToPoint(MBR mbr) override;
+	std::vector<std::string> QueryToMultiPoint(MBR mbr) override;
 };
