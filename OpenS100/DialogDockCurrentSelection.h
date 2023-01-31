@@ -40,7 +40,6 @@ public:
 
 	void StringSplit(std::string strTarget, std::string strTok, std::vector<std::string>& strResult);
 
-	void UpdateList();
 	void OnMenuRemoveAll();
 	void DeleteItem(CString id);
 	void UpdateListTest(CStringArray *csa, S101Cell *cell, CString isCtrlClicked);
