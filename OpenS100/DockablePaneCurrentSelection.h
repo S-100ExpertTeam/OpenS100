@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <map> 
 
@@ -6,17 +7,17 @@ class COpenS100View;
 class CurrentSelection;
 class CDialogDockCurrentSelection;
 class S101Cell;
+
 class CDockablePaneCurrentSelection : public CDockablePane
 {
 	DECLARE_DYNAMIC(CDockablePaneCurrentSelection)
 
 public:
-
 	CDockablePaneCurrentSelection();
 	virtual ~CDockablePaneCurrentSelection();
 
 public:
-	CDialogDockCurrentSelection		*pDlg;
+	CDialogDockCurrentSelection* pDlg = nullptr;
 
 public:
 	BOOL CanBeClosed() const;
@@ -25,7 +26,6 @@ public:
 	BOOL CanAutoHide() const;
 
 public:
-	void UpdateList();
 	void RemoveAll();
 	void UpdateListTest(CStringArray *csa, S101Cell *cell, CString isCtrlClicked);
 	void DeleteItem(CString id);

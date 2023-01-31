@@ -542,3 +542,29 @@ void R_FeatureRecord::SetVectorRecord(R_VectorRecord* record)
 		spas->Set(record->GetRecordName());
 	}
 }
+
+std::string R_FeatureRecord::GetName(S100SpatialObject* so)
+{
+	auto cell = (S101Cell*)so;
+	if (cell)
+	{
+		return pugi::as_utf8(cell->GetFeatureTypeCodeByID(GetRCID()));
+	}
+
+	return "";
+}
+
+std::wstring R_FeatureRecord::GetNameAsWString(S100SpatialObject* so)
+{
+	return pugi::as_wide(GetName(so));
+}
+
+std::string R_FeatureRecord::GetID()
+{
+	return std::to_string(GetRCID());
+}
+
+std::wstring R_FeatureRecord::GetIDAsWString()
+{
+	return std::to_wstring(GetRCID());
+}

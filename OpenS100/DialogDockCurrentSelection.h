@@ -30,20 +30,10 @@ public:
 	// Dialog Data 
 	enum { IDD = IDD_DIALOG_DOCK_CURRENT_SELECTION };
 
-	struct SORTPARAM
-	{
-		int iSortColumn;
-		bool bSortDirect;
-		CListCtrl *pList;
-	};
-
-	BOOL m_bAscending;
-	CMenu m_ContextMenu;  
 	int nSelectedItem = -1;
 	CListCtrl m_ListCurrentSelection;
-	int m_SelectedListCount;
 	S100SpatialObject* m_Cell = nullptr;
-	// Attributes
+
 public:
 	// Adjust column size of list control.
 	void AdjustLayout();

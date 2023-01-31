@@ -20,6 +20,8 @@ public:
 	POINT m_vPoint = {0, 0};
 
 public:
+	SGeometryType GetType() override;
+
 	void SetPoint(double _x, double _y);
 	void SetMBR();
 

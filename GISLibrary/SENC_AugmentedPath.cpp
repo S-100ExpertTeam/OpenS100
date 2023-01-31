@@ -58,7 +58,7 @@ void SENC_AugmentedPath::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1*
 		return;
 	}
 
-	if (fr->m_geometry->type == 1)
+	if (fr->m_geometry->GetType() == SGeometryType::Point)
 	{
 		SPoint* p = (SPoint*)fr->m_geometry;
 		scaler->WorldToDevice(p->x, p->y, &SGeometry::viewPoints[0].x, &SGeometry::viewPoints[0].y);

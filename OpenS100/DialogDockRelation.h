@@ -25,8 +25,6 @@ public:
 	 
 	// Dialog Data 
 	enum { IDD = IDD_DIALOG_DOCK_RELATION };
-	 
-	CMenu m_ContextMenu; 
 
 	int nSelectedItem;
 	S101Cell* m_cell;

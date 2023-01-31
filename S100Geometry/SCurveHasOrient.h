@@ -15,6 +15,8 @@ private:
 	bool suppress = false;
 
 public:
+	SGeometryType GetType() override;
+
 	void SetMasking(bool value);
 	bool GetMasking();
 

@@ -525,7 +525,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	theApp.gisLib->InitLibrary(fc, pc);
 
-	//theApp.gisLib->AddLayer(L"..\\SampleData\\101KR001F0000.000");
+	//theApp.gisLib->AddLayer(L"..\\SampleData\\101KR005X01SE.000");
 
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
 
@@ -652,18 +652,6 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 
 	int dx = point.x - m_sp.x;
 	int dy = point.y - m_sp.y;
-
-	if (theApp.gisLib->GetScaler()->GetRotationDegree())
-	{
-		double radian = (180 + theApp.gisLib->GetScaler()->GetRotationDegree()) * DEG2RAD;
-
-		FLOAT tempX = (float)dy * (float)sin(radian) + (float)dx * (float)cos(radian);
-		FLOAT tempY = (float)dy * (float)cos(radian) - (float)dx * (float)sin(radian);
-
-		dx = (int)-tempX;
-		dy = (int)-tempY;
-
-	}
 
 	calc_point.x = dx + calc_point.x;
 	calc_point.y = dy + calc_point.y;
@@ -1049,7 +1037,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 	auto frPick = encPick->GetFeatureRecord(featurePick);
 
 	// Point
-	if (frPick->m_geometry->IsPoint())
+	if (frPick->m_geometry->GetType() == SGeometryType::Point)
 	{
 		long x = 0;
 		long y = 0;
@@ -1071,7 +1059,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		g.DrawLine(&Pen(Color(255, 0, 0), 4), x + 20, y - 20, x + 8, y - 20);
 
 	}
-	else if (frPick->m_geometry->IsMultiPoint())
+	else if (frPick->m_geometry->GetType() == SGeometryType::MultiPoint)
 	{
 		auto multiPoint = (SMultiPoint*)frPick->m_geometry;
 
@@ -1088,42 +1076,39 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		}
 	}
 	// Line
-	else if (frPick->m_geometry->IsCurve())
+	else if (frPick->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		SolidBrush brush(Color(255, 0, 0));
 
-		if (frPick->m_geometry->type == 2)
+		SCompositeCurve* cc = (SCompositeCurve*)(frPick->m_geometry);
+
+		for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
 		{
-			SCompositeCurve* cc = (SCompositeCurve*)(frPick->m_geometry);
+			//SCurve* c = (*it).GetCurve();
+			SCurve* c = (*it);
+			Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
 
-			for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
+			int pickNumPoints = 0;
+
+			pickNumPoints = c->GetNumPoints();
+
+			for (auto i = 0; i < pickNumPoints; i++)
 			{
-				//SCurve* c = (*it).GetCurve();
-				SCurve* c = (*it);
-				Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
+				pickPoints[i].X = (INT)c->m_pPoints[i].x;
+				pickPoints[i].Y = (INT)c->m_pPoints[i].y;
+				theApp.gisLib->WorldToDevice(c->m_pPoints[i].x, c->m_pPoints[i].y,
+					(long*)(&pickPoints[i].X), (long*)(&pickPoints[i].Y));
 
-				int pickNumPoints = 0;
-
-				pickNumPoints = c->GetNumPoints();
-
-				for (auto i = 0; i < pickNumPoints; i++)
-				{
-					pickPoints[i].X = (INT)c->m_pPoints[i].x;
-					pickPoints[i].Y = (INT)c->m_pPoints[i].y;
-					theApp.gisLib->WorldToDevice(c->m_pPoints[i].x, c->m_pPoints[i].y,
-						(long*)(&pickPoints[i].X), (long*)(&pickPoints[i].Y));
-
-					pickPoints[i].X += offsetX;
-					pickPoints[i].Y += offsetY;
-				}
-
-				g.DrawLines(&Pen(&brush, 4), pickPoints, pickNumPoints);
-
-				delete[] pickPoints;
+				pickPoints[i].X += offsetX;
+				pickPoints[i].Y += offsetY;
 			}
+
+			g.DrawLines(&Pen(&brush, 4), pickPoints, pickNumPoints);
+
+			delete[] pickPoints;
 		}
 	}
-	else if (5 == frPick->m_geometry->type)
+	else if (frPick->m_geometry->GetType() == SGeometryType::CurveHasOrient)
 	{
 		SolidBrush brush(Color(255, 0, 0));
 
@@ -1151,7 +1136,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		delete[] pickPoints;
 	}
 	// Area
-	else if (frPick->m_geometry->IsSurface())
+	else if (frPick->m_geometry->GetType() == SGeometryType::Surface)
 	{
 		auto surface = (SSurface*)frPick->m_geometry;
 		auto geometry = surface->GetNewD2Geometry(theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler());
@@ -1192,14 +1177,23 @@ void COpenS100View::ClearPickReport()
 
 void COpenS100View::PickReport(CPoint _point)
 {
-	auto selectedLayerIndex = theApp.m_pDockablePaneLayerManager.pDlg->GetSelectedLayerIndex();
+	auto layerCount = theApp.gisLib->GetLayerManager()->LayerCount();
 
-	if (selectedLayerIndex < 0 || selectedLayerIndex >> theApp.gisLib->GetLayerManager()->LayerCount())
+	if (1 == layerCount)
 	{
-		return;
+		PickReport(_point, 0);
 	}
+	else
+	{
+		auto selectedLayerIndex = theApp.m_pDockablePaneLayerManager.pDlg->GetSelectedLayerIndex();
 
-	PickReport(_point, selectedLayerIndex);
+		if (selectedLayerIndex < 0 || selectedLayerIndex >> theApp.gisLib->GetLayerManager()->LayerCount())
+		{
+			return;
+		}
+
+		PickReport(_point, selectedLayerIndex);
+	}
 }
 
 void COpenS100View::PickReport(CPoint _point, int layerIndex)
@@ -1216,9 +1210,6 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 		return;
 	}
 
-	theApp.gisLib->DeviceToWorld(_point.x, _point.y, &ptPickX, &ptPickY);
-	ptPick = _point;
-
 	CString featureType = L"Feature";
 	CStringArray csa;
 
@@ -1227,44 +1218,8 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	double xmax = 0;
 	double ymax = 0;
 
-	LONG spt_x = m_ptMDown.x;
-	LONG spt_y = m_ptMDown.y;
-
-	LONG ept_x = m_ptMUp.x;
-	LONG ept_y = m_ptMUp.y;
-
-	// point,
-	if (m_ptMUp.x == 0 || m_sp == m_ep)
-	{
-		theApp.gisLib->DeviceToWorld(_point.x - 5, _point.y + 5, &xmin, &ymin);  // start point
-		theApp.gisLib->DeviceToWorld(_point.x + 5, _point.y - 5, &xmax, &ymax);  // end point
-	}
-	// square
-	else
-	{
-		if (spt_x < ept_x && spt_y > ept_y)
-		{
-			theApp.gisLib->DeviceToWorld(spt_x, ept_y, &xmin, &ymax);
-			theApp.gisLib->DeviceToWorld(ept_x, spt_y, &xmax, &ymin);
-		}
-		else if (spt_x < ept_x && spt_y < ept_y)
-		{
-			theApp.gisLib->DeviceToWorld(spt_x, spt_y, &xmin, &ymax);
-			theApp.gisLib->DeviceToWorld(ept_x, ept_y, &xmax, &ymin);
-		}
-
-		else if (spt_x > ept_x && spt_y > ept_y)
-		{
-			theApp.gisLib->DeviceToWorld(ept_x, ept_y, &xmin, &ymax);
-			theApp.gisLib->DeviceToWorld(spt_x, spt_y, &xmax, &ymin);
-		}
-
-		else if (spt_x > ept_x && spt_y < ept_y)
-		{
-			theApp.gisLib->DeviceToWorld(ept_x, spt_y, &xmin, &ymax);
-			theApp.gisLib->DeviceToWorld(spt_x, ept_y, &xmax, &ymin);
-		}
-	}
+	theApp.gisLib->DeviceToWorld(_point.x - 5, _point.y + 5, &xmin, &ymin);  // start point
+	theApp.gisLib->DeviceToWorld(_point.x + 5, _point.y - 5, &xmax, &ymax);  // end point
 
 	MBR pickMBR(xmin, ymin, xmax, ymax);
 
@@ -1277,7 +1232,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	while (pos != NULL)
 	{
 		cell->GetNextAssoc(pos, key, fr);
-		if (fr->m_geometry == nullptr || fr->m_geometry->type != 3)
+		if (fr->m_geometry == nullptr || fr->m_geometry->GetType() != SGeometryType::Surface)
 		{
 			continue;
 		}
@@ -1304,8 +1259,8 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				CString csName;
 				CString csAssoCnt;
 
-				double lon = surface->m_pPoints[0].x;
-				double lat = surface->m_pPoints[0].y;
+				double lon = surface->GetX();
+				double lat = surface->GetY();
 
 				inverseProjection(lon, lat);
 
@@ -1316,7 +1271,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				csFoid.Format(_T("%d"), fr->m_foid.FIDN);
 				csLat.Format(_T("%f"), lat);
 				csLon.Format(_T("%f"), lon);
-				csType.Format(_T("%d"), surface->type);
+				csType.Format(_T("%d"), surface->GetType());
 				csName.Format(_T("%s"), itor->second->m_code);
 				csAssoCnt.Format(_T("%d"), assoCnt);
 
@@ -1339,7 +1294,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	while (pos != NULL)
 	{
 		cell->GetNextAssoc(pos, key, fr);
-		if (fr->m_geometry == nullptr || fr->m_geometry->type != 2)
+		if (fr->m_geometry == nullptr || fr->m_geometry->GetType() != SGeometryType::CompositeCurve)
 		{
 			continue;
 		}
@@ -1362,13 +1317,8 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				CString csName;
 				CString csAssoCnt;
 
-				double lat = 0;
-				double lon = 0;
-				if (compositeCurve->m_listCurveLink.size() > 0)
-				{
-					lon = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].x;
-					lat = (*compositeCurve->m_listCurveLink.begin())->m_pPoints[0].y;
-				}
+				double lon = compositeCurve->GetX();
+				double lat = compositeCurve->GetY();
 
 				inverseProjection(lat, lon);
 
@@ -1379,7 +1329,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
 				csLat.Format(_T("%f"), lat);
 				csLon.Format(_T("%f"), lon);
-				csType.Format(_T("%d"), compositeCurve->type);
+				csType.Format(_T("%d"), compositeCurve->GetType());
 				csName.Format(_T("%s"), itor->second->m_code);
 				csAssoCnt.Format(_T("%d"), assoCnt);
 				csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
@@ -1392,12 +1342,12 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	while (pos != NULL)
 	{
 		cell->GetNextAssoc(pos, key, fr);
-		if (fr->m_geometry == nullptr || fr->m_geometry->type != 5)
+		if (fr->m_geometry == nullptr || fr->m_geometry->GetType() != SGeometryType::CurveHasOrient)
 		{
 			continue;
 		}
 
-		SCurve* curve = (SCurve*)fr->m_geometry;
+		SCurveHasOrient* curve = (SCurveHasOrient*)fr->m_geometry;
 		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
 		{
 			int code = fr->m_frid.m_nftc;
@@ -1415,8 +1365,8 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				CString csName;
 				CString csAssoCnt;
 
-				double lat = curve->GetY(0);
-				double lon = curve->GetX(0);
+				double lon = curve->GetX();
+				double lat = curve->GetY();
 
 				inverseProjection(lon, lat);
 
@@ -1427,7 +1377,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
 				csLat.Format(_T("%f"), lat);
 				csLon.Format(_T("%f"), lon);
-				csType.Format(_T("%d"), curve->type);
+				csType.Format(_T("%d"), curve->GetType());
 				csName.Format(_T("%s"), itor->second->m_code);
 				csAssoCnt.Format(_T("%d"), assoCnt);
 				csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
@@ -1442,7 +1392,8 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 		__int64 key = 0;
 		R_FeatureRecord* fr = NULL;
 		cell->GetNextAssoc(pos, key, fr);
-		if (fr->m_geometry == nullptr || (fr->m_geometry->type != 1 && fr->m_geometry->type != 4))
+		if (fr->m_geometry == nullptr || 
+			(fr->m_geometry->GetType() != SGeometryType::Point && fr->m_geometry->GetType() != SGeometryType::MultiPoint))
 		{
 			continue;
 		}
@@ -1453,7 +1404,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 			int code = fr->m_frid.m_nftc;
 
 			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
-			if (sgeo->IsMultiPoint())		// Point
+			if (sgeo->GetType() == SGeometryType::MultiPoint)		// Point
 			{
 				auto multiPoint = (SMultiPoint*)fr->m_geometry;
 
@@ -1484,7 +1435,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 					}
 				}
 			}
-			else if (sgeo->IsPoint())
+			else if (sgeo->GetType() == SGeometryType::Point)
 			{
 				double geoX = ((SPoint*)fr->m_geometry)->x;
 				double geoY = ((SPoint*)fr->m_geometry)->y;
@@ -1507,13 +1458,19 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 					csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
 					csLat.Format(_T("%f"), lat);
 					csLon.Format(_T("%f"), lon);
-					csType.Format(_T("%d"), sr->type);
+					csType.Format(_T("%d"), sr->GetType());
 					csName.Format(_T("%s"), itor->second->m_code);
 					csAssoCnt.Format(_T("%d"), assoCnt);
 					csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
 				}
 			}
 		}
+	}
+
+	for (int i = 0; i < csa.GetCount(); i++)
+	{
+		auto str = csa[i];
+		OutputDebugString(str + L"\n");
 	}
 
 	theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, cell, L"0");
@@ -1745,7 +1702,7 @@ void COpenS100View::CopyLayer()
 			int sizeWKB = 0;
 			if (feature->m_geometry->ExportToWkb(&wkb, &sizeWKB))
 			{
-				if (feature->m_geometry->type == 1)
+				if (feature->m_geometry->GetType() == SGeometryType::Point)
 				{
 					creator.SetPointGeometry(newFeature, wkb, sizeWKB);
 				}

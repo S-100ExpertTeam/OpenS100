@@ -36,6 +36,9 @@ public:
 	// Function for memory release outside of deconstructor
 	virtual void Release() {};
 
+	virtual double GetX() { return 0; };
+	virtual double GetY() { return 0; };
+
 public:
 
 	/*

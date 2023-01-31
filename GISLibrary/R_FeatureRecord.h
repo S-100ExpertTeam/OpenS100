@@ -4,6 +4,7 @@
 #include "F_FRID.h"
 #include "F_FOID.h"
 #include "OrientedCurveRecord.h"
+#include "IF_FeatureType.h"
 
 #include <map>
 
@@ -21,7 +22,7 @@ struct ATTR;
 struct SPAS;
 
 // Feature Type Record
-class R_FeatureRecord : Record
+class R_FeatureRecord : public IF::FeatureType, Record
 {
 public:
 	R_FeatureRecord();
@@ -105,4 +106,9 @@ public:
 	SPAS* CreateEmptySPAS();
 
 	void SetVectorRecord(R_VectorRecord* record);
+
+	std::string GetName(S100SpatialObject* so) override;
+	std::wstring GetNameAsWString(S100SpatialObject* so) override;
+	std::string GetID() override;
+	std::wstring GetIDAsWString() override;
 };

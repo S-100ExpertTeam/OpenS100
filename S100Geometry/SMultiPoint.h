@@ -13,6 +13,8 @@ public:
 	std::vector<GeoPointZ> m_pPoints;
 
 public:
+	SGeometryType GetType() override;
+
 	int GetNumPoints();
 	double GetX(int index);
 	double GetY(int index);
@@ -25,6 +27,4 @@ public:
 
 	bool ImportFromWkb(unsigned char* value, int size);
 	bool ExportToWkb(unsigned char** value, int* size);
-
-	int GetType();
 };

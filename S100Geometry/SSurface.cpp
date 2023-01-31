@@ -12,12 +12,11 @@
 
 SSurface::SSurface()
 {
-	type = 3;
+	
 }
 
 SSurface::SSurface(MBR* mbr)
 {
-	type = 3;
 	m_numParts = 1;
 	m_numPoints = 5;
 	m_pParts = new int[1];
@@ -41,7 +40,6 @@ SSurface::SSurface(MBR* mbr)
 
 SSurface::SSurface(std::vector<POINT>& points, std::vector<int>& parts)
 {
-	type = 3;
 	Set(points, parts);
 }
 
@@ -59,6 +57,10 @@ SSurface::~SSurface()
 	SafeRelease(&pGeometry);
 }
 
+SGeometryType SSurface::GetType()
+{
+	return SGeometryType::Surface;
+}
 
 #pragma warning(disable:4244)
 void SSurface::CreateD2Geometry(ID2D1Factory1* factory)
@@ -542,4 +544,14 @@ void SSurface::SetXY(int ringIndex, int pointIndex, double x, double y)
 			m_pPoints[m_pParts[ringIndex] + pointIndex].y = y;
 		}
 	}
+}
+
+double SSurface::GetX()
+{
+	return GetXY(0, 0).GetX();
+}
+
+double SSurface::GetY()
+{
+	return GetXY(0, 0).GetY();
 }

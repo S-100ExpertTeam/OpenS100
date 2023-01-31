@@ -40,6 +40,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="S100\Interface">
+      <UniqueIdentifier>{12f6035f-d7c4-4767-b5d9-51354fa1ab70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -991,6 +994,9 @@
     </ClInclude>
     <ClInclude Include="ProductManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IF_FeatureType.h">
+      <Filter>S100\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

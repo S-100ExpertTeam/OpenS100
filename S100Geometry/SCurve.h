@@ -16,10 +16,14 @@ public:
 	ID2D1PathGeometry* pGeometry = nullptr;
 
 public:
+	SGeometryType GetType() override;
+
 	int GetRCID();
 	int GetNumPoints();
 	double GetX(int i);
 	double GetY(int i);
+	double GetX() override;
+	double GetY() override;
 
 	void Init(int size);
 	void Set(int index, double x, double y);
