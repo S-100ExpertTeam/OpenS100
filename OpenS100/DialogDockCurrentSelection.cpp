@@ -332,8 +332,8 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 				if (featureType == L"Feature")
 				{
 					// Acquired a catalog.
-					auto it = fc->GetFeatureTypes().GetFeatureType().find(ws_name);
-					if (it == fc->GetFeatureTypes().GetFeatureType().end())
+					auto it = fc->GetFeatureTypes()->GetFeatureType().find(ws_name);
+					if (it == fc->GetFeatureTypes()->GetFeatureType().end())
 					{
 						CString msg;
 						msg.Format(L"[%s] Feature not found. -CURRENT SELECTION", name.GetBuffer());

@@ -232,7 +232,7 @@ lua_ref_ptr CreateInformationAssociation(lua_session *ls, InformationAssociation
 			}
 		}
 
-		for (auto s = pTheFC->GetRolesPointer().GetRolePointer().begin(); s != pTheFC->GetRolesPointer().GetRolePointer().end(); s++)
+		for (auto s = pTheFC->GetRoles()->GetRolePointer().begin(); s != pTheFC->GetRoles()->GetRolePointer().end(); s++)
 		{
 			Role* sa = s->second;
 			if (true == sa->CompareCode(referenceCode))
@@ -271,7 +271,7 @@ lua_ref_ptr CreateFeatureAssociation(lua_session *ls, FeatureAssociation *featur
 			}
 		}
 
-		for (auto s = pTheFC->GetRolesPointer().GetRolePointer().begin(); s != pTheFC->GetRolesPointer().GetRolePointer().end(); s++)
+		for (auto s = pTheFC->GetRoles()->GetRolePointer().begin(); s != pTheFC->GetRoles()->GetRolePointer().end(); s++)
 		{
 			Role* role = s->second;
 			if (true == role->CompareCode(referenceCode))

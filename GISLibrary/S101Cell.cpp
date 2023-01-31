@@ -225,7 +225,7 @@ void S101Cell::SetAllNumericCode(FeatureCatalogue* fc)
 	if (fc)
 	{
 		// Feature Type
-		auto featureTypes = fc->GetFeatureTypes().GetVecFeatureType();
+		auto featureTypes = fc->GetFeatureTypes()->GetVecFeatureType();
 		for (auto i = featureTypes.begin(); i != featureTypes.end(); i++)
 		{
 			auto code = (*i)->GetCodeAsWString();
@@ -233,7 +233,7 @@ void S101Cell::SetAllNumericCode(FeatureCatalogue* fc)
 		}
 
 		// Information Type
-		auto informationTypes = fc->GetInformationTypesPointer().GetInformationTypePointer();;
+		auto informationTypes = fc->GetInformationTypes()->GetInformationTypePointer();;
 		for (auto i = informationTypes.begin(); i != informationTypes.end(); i++)
 		{
 			auto code = i->second->GetCodeAsWString();
@@ -241,7 +241,7 @@ void S101Cell::SetAllNumericCode(FeatureCatalogue* fc)
 		}
 
 		// Simple Attribute
-		auto simpleAttributes = fc->GetSimpleAttributesPointer().GetSimpleAttributePointer();;
+		auto simpleAttributes = fc->GetSimpleAttributes()->GetSimpleAttributePointer();;
 		for (auto i = simpleAttributes.begin(); i != simpleAttributes.end(); i++)
 		{
 			auto code = i->second->GetCodeAsWString();
@@ -249,7 +249,7 @@ void S101Cell::SetAllNumericCode(FeatureCatalogue* fc)
 		}
 
 		// Complex Attribute
-		auto complexAttributes = fc->GetComplexAttributesPointer().GetComplexAttributePointer();
+		auto complexAttributes = fc->GetComplexAttributes()->GetComplexAttributePointer();
 		for (auto i = complexAttributes.begin(); i != complexAttributes.end(); i++)
 		{
 			auto code = i->second->GetCodeAsWString();
@@ -257,7 +257,7 @@ void S101Cell::SetAllNumericCode(FeatureCatalogue* fc)
 		}
 
 		// Role
-		auto roles = fc->GetRolesPointer().GetRolePointer();
+		auto roles = fc->GetRoles()->GetRolePointer();
 		for (auto i = roles.begin(); i != roles.end(); i++)
 		{
 			auto code = i->second->GetCodeAsWString();
@@ -265,7 +265,7 @@ void S101Cell::SetAllNumericCode(FeatureCatalogue* fc)
 		}
 
 		// Information Association
-		auto informationAssociations = fc->GetInformationAssociationsPointer().GetInformationAssociationPointer();
+		auto informationAssociations = fc->GetInformationAssociations()->GetInformationAssociationPointer();
 		for (auto i = informationAssociations.begin(); i != informationAssociations.end(); i++)
 		{
 			auto code = i->second->GetCodeAsWString();
@@ -273,7 +273,7 @@ void S101Cell::SetAllNumericCode(FeatureCatalogue* fc)
 		}
 
 		// Feature Association
-		auto featureAssociations = fc->GetFeatureAssociationsPointer().GetFeatureAssociationPointer();
+		auto featureAssociations = fc->GetFeatureAssociations()->GetFeatureAssociationPointer();
 		for (auto i = featureAssociations.begin(); i != featureAssociations.end(); i++)
 		{
 			auto code = i->second->GetCodeAsWString();

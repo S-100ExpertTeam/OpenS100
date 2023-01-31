@@ -99,7 +99,7 @@ public:
 
 	Role* GetRole(std::wstring Code);
 	Role* GetRoleFromName(std::wstring name);
-	Roles* GetRolesPointer();
+	Roles* GetRoles();
 
 	InformationAssociation* GetInformationAssociation(std::wstring Code);
 	InformationAssociation* GetInformationAssociationFromName(std::wstring name);

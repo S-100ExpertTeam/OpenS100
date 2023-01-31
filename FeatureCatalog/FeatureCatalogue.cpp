@@ -682,7 +682,7 @@ InformationTypes* FeatureCatalogue::GetInformationTypes()
 	return &informationTypes;
 }
 
-Roles* FeatureCatalogue::GetRolesPointer()
+Roles* FeatureCatalogue::GetRoles()
 {
 	return &roles;
 }

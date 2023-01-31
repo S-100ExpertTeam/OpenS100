@@ -71,7 +71,7 @@ void CDialogViewInformationType::SetInformationFeatureList(S101Cell* cell)
 		CodeWithNumericCode* nc = itor->second;
 
 		std::wstring codeStr = nc->m_code;
-		InformationType *objIT = fc->GetInformationTypesPointer().GetInformationTypePointer().find(codeStr)->second;
+		InformationType *objIT = fc->GetInformationTypes()->GetInformationTypePointer().find(codeStr)->second;
 
 		// Feature ID
 		CInformationCodeString cs;
@@ -112,8 +112,8 @@ void CDialogViewInformationType::InitInformationFeatureList()
 		// Search the feature catalog again to find the description of the information type.
 		std::wstring csCnt;
 
-		for (auto itor = fc->GetInformationTypesPointer().GetInformationTypePointer().begin();
-			itor != fc->GetInformationTypesPointer().GetInformationTypePointer().end();
+		for (auto itor = fc->GetInformationTypes()->GetInformationTypePointer().begin();
+			itor != fc->GetInformationTypes()->GetInformationTypePointer().end();
 			itor++)
 		{
 			CString tmp;
