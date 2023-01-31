@@ -825,7 +825,7 @@ void FeatureCatalogue::GetPointFeatures(std::vector<FeatureType*>& result)
 
 		for (auto j = primList.begin(); j != primList.end(); j++)
 		{
-			if ((*j)->IsPoint())
+			if (*j == SpatialPrimitiveType::point)
 			{
 				result.push_back(*i);
 			}
@@ -843,7 +843,7 @@ void FeatureCatalogue::GetLineFeatures(std::vector<FeatureType*>& result)
 
 		for (auto j = primList.begin(); j != primList.end(); j++)
 		{
-			if ((*j)->IsLine())
+			if (*j == SpatialPrimitiveType::curve)
 			{
 				result.push_back(*i);
 			}
@@ -861,7 +861,7 @@ void FeatureCatalogue::GetAreaFeatures(std::vector<FeatureType*>& result)
 
 		for (auto j = primList.begin(); j != primList.end(); j++)
 		{
-			if ((*j)->IsArea())
+			if (*j == SpatialPrimitiveType::surface)
 			{
 				result.push_back(*i);
 			}

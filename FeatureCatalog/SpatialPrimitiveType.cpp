@@ -1,39 +1,74 @@
 #include "stdafx.h"
 #include "SpatialPrimitiveType.h"
 
-SpatialPrimitiveType::SpatialPrimitiveType()
+#include <pugixml.hpp>
+
+SpatialPrimitiveType StringToSpatialPrimitiveType(std::string& value)
 {
-	InsertValue(L"noGeometry");
-	InsertValue(L"point");
-	InsertValue(L"pointSet");
-	InsertValue(L"curve");
-	InsertValue(L"surface");
-	InsertValue(L"coverage");
-	InsertValue(L"arcByCenterPoint");
-	InsertValue(L"circleByCenterPoint");
+	if (value.compare("point") == 0)
+	{
+		return SpatialPrimitiveType::point;
+	}
+	else if (value.compare("pointSet") == 0)
+	{
+		return SpatialPrimitiveType::pointSet;
+	}
+	else if (value.compare("curve") == 0)
+	{
+		return SpatialPrimitiveType::curve;
+	}
+	else if (value.compare("surface") == 0)
+	{
+		return SpatialPrimitiveType::surface;
+	}
+	else if (value.compare("coverage") == 0)
+	{
+		return SpatialPrimitiveType::coverage;
+	}
+	else if (value.compare("noGeometry") == 0)
+	{
+		return SpatialPrimitiveType::noGeometry;
+	}
+
+	return SpatialPrimitiveType::none;
 }
 
-SpatialPrimitiveType::~SpatialPrimitiveType()
+SpatialPrimitiveType StringToSpatialPrimitiveType(std::wstring& value)
 {
-
+	return StringToSpatialPrimitiveType(pugi::as_utf8(value));
 }
 
-void SpatialPrimitiveType::GetContents(pugi::xml_node& node)
+std::string SpatialPrimitiveTypeToString(SpatialPrimitiveType value)
 {
-	SetValueString(pugi::as_wide(node.child_value()));
+	if (value == SpatialPrimitiveType::point)
+	{
+		return "point";
+	}
+	else if (value == SpatialPrimitiveType::pointSet)
+	{
+		return "pointSet";
+	}
+	else if (value == SpatialPrimitiveType::curve)
+	{
+		return "curve";
+	}
+	else if (value == SpatialPrimitiveType::surface)
+	{
+		return "surface";
+	}
+	else if (value == SpatialPrimitiveType::coverage)
+	{
+		return "coverage";
+	}
+	else if (value == SpatialPrimitiveType::noGeometry)
+	{
+		return "noGeometry";
+	}
+
+	return "none";
 }
 
-bool SpatialPrimitiveType::IsPoint()
+std::wstring SpatialPrimitiveTypeToWString(SpatialPrimitiveType value)
 {
-	return GetValueString().compare(L"point") == 0;
-}
-
-bool SpatialPrimitiveType::IsLine()
-{
-	return GetValueString().compare(L"curve") == 0;
-}
-
-bool SpatialPrimitiveType::IsArea()
-{
-	return GetValueString().compare(L"surface") == 0;
+	return pugi::as_wide(SpatialPrimitiveTypeToString(value));
 }

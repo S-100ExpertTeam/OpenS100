@@ -3,17 +3,19 @@
 
 #include <pugixml.hpp>
 
-class SpatialPrimitiveType :
-	public Restriction_Item 
+enum class SpatialPrimitiveType
 {
-public:
-	SpatialPrimitiveType();
-	virtual ~SpatialPrimitiveType();
-
-public:
-	void GetContents(pugi::xml_node& node);
-
-	bool IsPoint();
-	bool IsLine();
-	bool IsArea();
+	none = 0,
+	point,
+	pointSet,
+	curve,
+	surface,
+	coverage,
+	noGeometry
 };
+
+SpatialPrimitiveType StringToSpatialPrimitiveType(std::string& value);
+SpatialPrimitiveType StringToSpatialPrimitiveType(std::wstring& value);
+
+std::string SpatialPrimitiveTypeToString(SpatialPrimitiveType value);
+std::wstring SpatialPrimitiveTypeToWString(SpatialPrimitiveType value);

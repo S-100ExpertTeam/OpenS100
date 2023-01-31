@@ -187,7 +187,7 @@ lua_ref_ptr CreateFeatureType(lua_session *ls, FeatureType *feature_type)
 
 	for (auto pp : feature_type->GetPermittedPrimitivesPointer())
 	{
-		permitted_primitives.push_back(std::string(pp->GetValueString().begin(), pp->GetValueString().end())); // E-r??
+		permitted_primitives.push_back(SpatialPrimitiveTypeToString(pp)); 
 	}
 
 	std::vector<lua_ref_ptr> feature_bindings;

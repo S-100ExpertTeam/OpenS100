@@ -14,11 +14,6 @@ FeatureType::~FeatureType()
 	{
 		delete *i;
 	}
-
-	for (auto i = permittedPrimitives.begin(); i != permittedPrimitives.end(); i++)
-	{
-		delete *i;
-	}
 }
 
 void FeatureType::GetContents(pugi::xml_node& node)
@@ -49,9 +44,11 @@ void FeatureType::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:permittedPrimitives"))
 		{
-			auto spatialPrimitiveType = new SpatialPrimitiveType();
-			spatialPrimitiveType->GetContents(instruction);
-			permittedPrimitives.push_back(spatialPrimitiveType);
+			auto strPermittedPrimitive = instruction.child_value();
+
+			auto type = StringToSpatialPrimitiveType(std::string(strPermittedPrimitive));
+
+			permittedPrimitives.push_back(type);
 		}
 		else if (!strcmp(instructionName, "S100FC:superType"))
 		{
@@ -105,7 +102,7 @@ std::list<FeatureBinding*>& FeatureType::GetFeatureBindingPointer()
 	return vecFeatureBinding;
 }
 
-std::list<SpatialPrimitiveType*>& FeatureType::GetPermittedPrimitivesPointer()
+std::list<SpatialPrimitiveType>& FeatureType::GetPermittedPrimitivesPointer()
 {
 	return permittedPrimitives;
 }
