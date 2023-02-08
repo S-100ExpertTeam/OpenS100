@@ -10,6 +10,8 @@ public:
 	virtual ~SCoverage();
 
 public:
+	SGeometryType GetType() override;
+
 	MBR* m_pBoundary = nullptr;
 	int m_xIndex = 0;
 	int m_yIndex = 0;

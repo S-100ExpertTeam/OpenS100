@@ -51,6 +51,9 @@
     <ClInclude Include="SCurveHasOrient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Enum_SGeometryType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SPoint.cpp">

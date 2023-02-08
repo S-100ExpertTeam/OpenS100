@@ -65,7 +65,7 @@ void CDialogViewNoGeometry::SetNoGeometryFeatureList(S101Cell* cell)
 			CodeWithNumericCode* nc = itor->second;
 
 			std::wstring codeStr = nc->m_code;
-			FeatureType *objFT = fc->GetFeatureTypes().GetFeatureType().find(codeStr)->second;
+			FeatureType *objFT = fc->GetFeatureTypes()->GetFeatureType().find(codeStr)->second;
 
 			CFeatureCodeString cs;
 			cs._name = objFT->GetCodeAsWString();

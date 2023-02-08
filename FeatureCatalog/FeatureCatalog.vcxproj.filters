@@ -179,9 +179,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>S100FC</Filter>
     </ClCompile>
-    <ClCompile Include="SpatialPrimitiveType.cpp">
-      <Filter>S100FC</Filter>
-    </ClCompile>
     <ClCompile Include="S100ObjectType.cpp">
       <Filter>S100FC</Filter>
     </ClCompile>
@@ -217,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="S100_CD_QuantitySpecification.cpp">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpatialPrimitiveType.cpp">
+      <Filter>S100FC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

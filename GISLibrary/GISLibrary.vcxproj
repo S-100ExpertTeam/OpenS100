@@ -469,6 +469,7 @@
     <ClInclude Include="host_data.h" />
     <ClInclude Include="host_functions.h" />
     <ClInclude Include="IC2D.h" />
+    <ClInclude Include="IF_FeatureType.h" />
     <ClInclude Include="ISO8211Fuc.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LayerManager.h" />

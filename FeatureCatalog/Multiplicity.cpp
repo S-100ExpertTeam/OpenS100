@@ -57,3 +57,14 @@ int Multiplicity::GetUpperCount()
 {
 	return upper.GetIntegerValue();
 }
+
+bool Multiplicity::operator==(Multiplicity& item)
+{
+	if (lower == item.GetLower() &&
+		upper == item.GetUpper())
+	{
+		return true;
+	}
+
+	return false;
+}

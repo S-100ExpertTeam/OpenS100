@@ -3,7 +3,7 @@
 
 CatalogItem::CatalogItem() 
 {
-	m_catalog = nullptr;
+
 }
 
 CatalogItem::~CatalogItem()

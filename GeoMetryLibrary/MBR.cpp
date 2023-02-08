@@ -83,6 +83,16 @@ double MBR::GetHeight()
 	return ymax - ymin;
 }
 
+double MBR::GetCenterX()
+{
+	return (xmin + xmax) / 2.0;
+}
+
+double MBR::GetCenterY()
+{
+	return (ymin + ymax) / 2.0;
+}
+
 void MBR::ReMBR(MBR newMBR)
 {
 	if (xmin > newMBR.xmin)

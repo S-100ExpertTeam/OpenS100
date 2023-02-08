@@ -20,6 +20,13 @@
 
 #include "../S100Geometry/SPoint.h"
 
+#define COL_INDEX_ID 0 
+#define COL_INDEX_NAME 1
+#define COL_INDEX_GEOMETRY 2
+#define COL_INDEX_LAT 3
+#define COL_INDEX_LON 4
+#define COL_INDEX_RELATION_CNT 5
+#define COL_INDEX_TYPE 6
 
 IMPLEMENT_DYNAMIC(CDialogDockCurrentSelection, CDialogEx)
 
@@ -55,11 +62,10 @@ int CDialogDockCurrentSelection::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CDialog::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-
 	return 0;
 }
 
-//Current Selection item has been selected.
+// Current Selection item has been selected.
 void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
@@ -97,10 +103,10 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 				}
 
 				// RCID 
-				objId.Format(m_ListCurrentSelection.GetItemText(idx, 1));
+				objId.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_ID));
 
 				// Feature or Information
-				featureType.Format(m_ListCurrentSelection.GetItemText(idx, 7));
+				featureType.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_TYPE));
 				__int64 objIdN = _tcstoui64(objId, NULL, 10);
 
 				if (featureType == L"Feature")
@@ -113,7 +119,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 						return;
 					}
 
-					CString geoType = m_ListCurrentSelection.GetItemText(idx, 3);
+					CString geoType = m_ListCurrentSelection.GetItemText(idx, COL_INDEX_GEOMETRY);
 
 					if (geoType != L"No geometry")
 					{
@@ -151,8 +157,8 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					CString objId;
 					CString featureType;
 					idx = m_ListCurrentSelection.GetNextSelectedItem(pos);
-					objId.Format(m_ListCurrentSelection.GetItemText(idx, 1));
-					featureType.Format(m_ListCurrentSelection.GetItemText(idx, 7)); // feature/information type
+					objId.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_ID));
+					featureType.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_TYPE)); // feature/information type
 					__int64 objIdN = _tcstoui64(objId, NULL, 10);
 					R_FeatureRecord* rfr;
 					R_InformationRecord* ifr;
@@ -175,6 +181,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 			}
 		}
 	}
+
 	*pResult = 0;
 }
 
@@ -189,7 +196,7 @@ void CDialogDockCurrentSelection::OnSizing(UINT fwSide, LPRECT pRect)
 	CDialog::OnSizing(fwSide, pRect);
 }
 
-//// current selection
+// current selection
 BOOL CDialogDockCurrentSelection::OnInitDialog()
 {
 	CDialog::OnInitDialog();
@@ -202,14 +209,13 @@ BOOL CDialogDockCurrentSelection::OnInitDialog()
 
 	CRect listRect;
 	m_ListCurrentSelection.GetWindowRect(listRect);
-	m_ListCurrentSelection.InsertColumn(0, _T("Feature ID "), LVCFMT_LEFT, (int)(listRect.Width()*0.10));
-	m_ListCurrentSelection.InsertColumn(1, _T("FrID "), LVCFMT_LEFT, (int)(listRect.Width() * 0));  // invisible
-	m_ListCurrentSelection.InsertColumn(2, _T("Name"), LVCFMT_LEFT, (int)(listRect.Width()*0.30));
-	m_ListCurrentSelection.InsertColumn(3, _T("Geometry"), LVCFMT_LEFT, (int)(listRect.Width()*0.10));
-	m_ListCurrentSelection.InsertColumn(4, _T("Lat"), LVCFMT_CENTER, (int)(listRect.Width()*0.15));
-	m_ListCurrentSelection.InsertColumn(5, _T("Lon"), LVCFMT_CENTER, (int)(listRect.Width()*0.15));
-	m_ListCurrentSelection.InsertColumn(6, _T("Relation Cnt"), LVCFMT_LEFT, (int)(listRect.Width()*0.10));
-	m_ListCurrentSelection.InsertColumn(7, _T("Feature type"), LVCFMT_LEFT, (int)(listRect.Width()*0.10));
+	m_ListCurrentSelection.InsertColumn(COL_INDEX_ID, _T("ID "), LVCFMT_LEFT, (int)(listRect.Width() * 0.10));
+	m_ListCurrentSelection.InsertColumn(COL_INDEX_NAME, _T("Name"), LVCFMT_LEFT, (int)(listRect.Width() * 0.30));
+	m_ListCurrentSelection.InsertColumn(COL_INDEX_GEOMETRY, _T("Geometry"), LVCFMT_LEFT, (int)(listRect.Width() * 0.10));
+	m_ListCurrentSelection.InsertColumn(COL_INDEX_LAT, _T("Lat"), LVCFMT_CENTER, (int)(listRect.Width() * 0.15));
+	m_ListCurrentSelection.InsertColumn(COL_INDEX_LON, _T("Lon"), LVCFMT_CENTER, (int)(listRect.Width() * 0.15));
+	m_ListCurrentSelection.InsertColumn(COL_INDEX_RELATION_CNT, _T("Relation Cnt"), LVCFMT_LEFT, (int)(listRect.Width() * 0.10));
+	m_ListCurrentSelection.InsertColumn(COL_INDEX_TYPE, _T("Type"), LVCFMT_LEFT, (int)(listRect.Width() * 0.10));
 
 	CRect rectDummy;
 	rectDummy.SetRectEmpty();
@@ -281,22 +287,28 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 					name.Format(_T("%s"), ws_name);
 			}
 
-			if (csType == "1") {
+			if (csType == "1")
+			{
 				type = "Point";
 			}
-			else if (csType == "2" || csType == "5") {
+			else if (csType == "2" || csType == "5" || csType == "7")
+			{
 				type = "Curve";
 			}
-			else if (csType == "3") {
+			else if (csType == "3") 
+			{
 				type = "Surface";
 			}
-			else if (csType == "4") {
+			else if (csType == "4")
+			{
 				type = "Multi Point";
 			}
-			else if (csType == "999") {
+			else if (csType == "999") 
+			{
 				type = "No Geometry";
 			}
-			else {
+			else 
+			{
 				type = "-";
 			}
 
@@ -305,7 +317,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 			// duplicate check (frid)
 			for (int j = 0; j < m_ListCurrentSelection.GetItemCount(); j++)
 			{
-				if (frid == m_ListCurrentSelection.GetItemText(j, 0) && featureType == m_ListCurrentSelection.GetItemText(j, 7))
+				if (frid == m_ListCurrentSelection.GetItemText(j, COL_INDEX_ID) && featureType == m_ListCurrentSelection.GetItemText(j, COL_INDEX_TYPE))
 				{
 					isExist = true;
 				}
@@ -320,20 +332,19 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *ce
 				m_ListCurrentSelection.SetFocus();
 		
 				// set text
-				m_ListCurrentSelection.SetItemText(0, 0, frid);
-				m_ListCurrentSelection.SetItemText(0, 1, frid);
-				m_ListCurrentSelection.SetItemText(0, 2, name);
-				m_ListCurrentSelection.SetItemText(0, 3, type);
-				m_ListCurrentSelection.SetItemText(0, 4, lat);
-				m_ListCurrentSelection.SetItemText(0, 5, lon);
-				m_ListCurrentSelection.SetItemText(0, 6, assoCnt);
-				m_ListCurrentSelection.SetItemText(0, 7, featureType);
+				m_ListCurrentSelection.SetItemText(0, COL_INDEX_ID, frid);
+				m_ListCurrentSelection.SetItemText(0, COL_INDEX_NAME, name);
+				m_ListCurrentSelection.SetItemText(0, COL_INDEX_GEOMETRY, type);
+				m_ListCurrentSelection.SetItemText(0, COL_INDEX_LAT, lat);
+				m_ListCurrentSelection.SetItemText(0, COL_INDEX_LON, lon);
+				m_ListCurrentSelection.SetItemText(0, COL_INDEX_RELATION_CNT, assoCnt);
+				m_ListCurrentSelection.SetItemText(0, COL_INDEX_TYPE, featureType);
 
 				if (featureType == L"Feature")
 				{
 					// Acquired a catalog.
-					auto it = fc->GetFeatureTypes().GetFeatureType().find(ws_name);
-					if (it == fc->GetFeatureTypes().GetFeatureType().end())
+					auto it = fc->GetFeatureTypes()->GetFeatureType().find(ws_name);
+					if (it == fc->GetFeatureTypes()->GetFeatureType().end())
 					{
 						CString msg;
 						msg.Format(L"[%s] Feature not found. -CURRENT SELECTION", name.GetBuffer());
@@ -365,8 +376,8 @@ long long CDialogDockCurrentSelection::GetSelectedRecordName()
 {
 	if (nSelectedItem >= 0 && nSelectedItem < m_ListCurrentSelection.GetItemCount())
 	{
-		auto strRCID = m_ListCurrentSelection.GetItemText(nSelectedItem, 0);
-		auto strType = m_ListCurrentSelection.GetItemText(nSelectedItem, 7);
+		auto strRCID = m_ListCurrentSelection.GetItemText(nSelectedItem, COL_INDEX_ID);
+		auto strType = m_ListCurrentSelection.GetItemText(nSelectedItem, COL_INDEX_TYPE);
 
 		auto rcid = _ttoi(strRCID);
 		int rcnm = 0;
@@ -397,7 +408,7 @@ void CDialogDockCurrentSelection::DeleteItem(CString id)
 
 	for (int i = 0; i < count; i++)
 	{
-		auto itemid = m_ListCurrentSelection.GetItemText(i, 0);
+		auto itemid = m_ListCurrentSelection.GetItemText(i, COL_INDEX_ID);
 		if (itemid == id)
 		{
 			m_ListCurrentSelection.DeleteItem(i);
@@ -430,90 +441,6 @@ void CDialogDockCurrentSelection::StringSplit(
 	}
 }
 
-
-void CDialogDockCurrentSelection::UpdateList()
-{
-	int i = 0;
-	POSITION pos = m_ListCurrentSelection.GetFirstSelectedItemPosition();
-	int idx = 0;
-
-	CString objId;
-	CString featureType;
-
-	while (idx >= 0)
-	{
-		idx = m_ListCurrentSelection.GetNextSelectedItem(pos);
-
-		objId.Format(m_ListCurrentSelection.GetItemText(idx, 1));
-		featureType.Format(m_ListCurrentSelection.GetItemText(idx, 7));
-		__int64 objIdN = _tcstoui64(objId, NULL, 10);
-
-		if (m_Cell->GetProductNumber() == 101)
-		{
-			auto cell = (S101Cell*)m_Cell;
-			if (featureType == L"Feature")
-			{
-				__int64 key = ((__int64)100) << 32 | objIdN;
-				R_FeatureRecord* rfr = cell->GetFeatureRecord(key);
-
-				int count = 0;
-
-				int inforCount = (int)rfr->m_inas.size();
-				count += inforCount;
-				if (0 < inforCount)
-				{
-					auto inas = *rfr->m_inas.begin();
-					int arrCount = (int)inas->m_arr.size();
-					count = count + arrCount;
-				}
-
-
-				int feaCount = (int)rfr->m_fasc.size();
-				count += feaCount;
-
-				if (0 < feaCount)
-				{
-					auto fea = *rfr->m_fasc.begin();
-					int arrCount = (int)fea->m_arr.size();
-					count = count + arrCount;
-				}
-
-				CString Countstring;
-				Countstring.Format(_T("%d"), count);
-				m_ListCurrentSelection.SetItemText(idx, 6, Countstring);
-			}
-			else if (featureType == L"Information")
-			{
-
-				__int64 key = ((__int64)150) << 32 | objIdN;
-
-				if (cell->GetInfoMapCount() == 0)
-				{
-					int i = 0;
-					return;
-				}
-
-				R_InformationRecord* rfr = cell->GetInformationRecord(key);
-
-				int count = 0;
-				int inforCount = (int)rfr->m_inas.size();
-				count = count + inforCount;
-
-				if (0 < inforCount)
-				{
-					auto inas = *rfr->m_inas.begin();
-					int arrCount = (int)inas->m_arr.size();
-					count = count + arrCount;
-				}
-
-				CString Countstring;
-				Countstring.Format(_T("%d"), inforCount);
-				m_ListCurrentSelection.SetItemText(idx, 6, Countstring);
-			}
-		}
-	}
-}
-
 void CDialogDockCurrentSelection::AdjustLayout()
 {
 	if (GetSafeHwnd() == NULL)
@@ -533,14 +460,13 @@ void CDialogDockCurrentSelection::AdjustLayout()
 		m_ListCurrentSelection.MoveWindow(rectENCs);
 
 		// width control
-		m_ListCurrentSelection.SetColumnWidth(0, (int)(rectENCs.Width()*0.10));						
-		m_ListCurrentSelection.SetColumnWidth(1, (int)(rectENCs.Width() * 0));						
-		m_ListCurrentSelection.SetColumnWidth(2, (int)(rectENCs.Width()*0.30));						
-		m_ListCurrentSelection.SetColumnWidth(3, (int)(rectENCs.Width()*0.10));						
-		m_ListCurrentSelection.SetColumnWidth(4, (int)(rectENCs.Width()*0.15));						
-		m_ListCurrentSelection.SetColumnWidth(5, (int)(rectENCs.Width()*0.15));						
-		m_ListCurrentSelection.SetColumnWidth(6, (int)(rectENCs.Width()*0.10));						
-		m_ListCurrentSelection.SetColumnWidth(7, (int)(rectENCs.Width()*0.10));
+		m_ListCurrentSelection.SetColumnWidth(COL_INDEX_ID, (int)(rectENCs.Width() * 0.10));
+		m_ListCurrentSelection.SetColumnWidth(COL_INDEX_NAME, (int)(rectENCs.Width() * 0.30));
+		m_ListCurrentSelection.SetColumnWidth(COL_INDEX_GEOMETRY, (int)(rectENCs.Width() * 0.10));
+		m_ListCurrentSelection.SetColumnWidth(COL_INDEX_LAT, (int)(rectENCs.Width() * 0.10));
+		m_ListCurrentSelection.SetColumnWidth(COL_INDEX_LON, (int)(rectENCs.Width() * 0.10));
+		m_ListCurrentSelection.SetColumnWidth(COL_INDEX_RELATION_CNT, (int)(rectENCs.Width() * 0.10));
+		m_ListCurrentSelection.SetColumnWidth(COL_INDEX_TYPE, (int)(rectENCs.Width() * 0.20));
 	}
 }
 

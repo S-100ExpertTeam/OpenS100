@@ -14,11 +14,6 @@ FeatureType::~FeatureType()
 	{
 		delete *i;
 	}
-
-	for (auto i = permittedPrimitives.begin(); i != permittedPrimitives.end(); i++)
-	{
-		delete *i;
-	}
 }
 
 void FeatureType::GetContents(pugi::xml_node& node)
@@ -36,14 +31,24 @@ void FeatureType::GetContents(pugi::xml_node& node)
 		{
 			auto featureBinding = new FeatureBinding();
 			featureBinding->GetContents(instruction);
-
-			InsertFeatureBinding(featureBinding);
+			if (auto targetFB = CanMerged(*featureBinding))
+			{
+				targetFB->AppendFeatureBinding(*featureBinding);
+				delete featureBinding;
+				featureBinding = nullptr;
+			}
+			else
+			{
+				InsertFeatureBinding(featureBinding);
+			}
 		}
 		else if (!strcmp(instructionName, "S100FC:permittedPrimitives"))
 		{
-			auto spatialPrimitiveType = new SpatialPrimitiveType();
-			spatialPrimitiveType->GetContents(instruction);
-			permittedPrimitives.push_back(spatialPrimitiveType);
+			auto strPermittedPrimitive = instruction.child_value();
+
+			auto type = StringToSpatialPrimitiveType(std::string(strPermittedPrimitive));
+
+			permittedPrimitives.push_back(type);
 		}
 		else if (!strcmp(instructionName, "S100FC:superType"))
 		{
@@ -97,7 +102,7 @@ std::list<FeatureBinding*>& FeatureType::GetFeatureBindingPointer()
 	return vecFeatureBinding;
 }
 
-std::list<SpatialPrimitiveType*>& FeatureType::GetPermittedPrimitivesPointer()
+std::list<SpatialPrimitiveType>& FeatureType::GetPermittedPrimitivesPointer()
 {
 	return permittedPrimitives;
 }
@@ -105,4 +110,18 @@ std::list<SpatialPrimitiveType*>& FeatureType::GetPermittedPrimitivesPointer()
 void FeatureType::InsertFeatureBinding(FeatureBinding* value)
 {
 	vecFeatureBinding.push_back(value);
+}
+
+FeatureBinding* FeatureType::CanMerged(FeatureBinding& fb)
+{
+	for (auto i = vecFeatureBinding.begin(); i != vecFeatureBinding.end(); i++)
+	{
+		auto currentFB = *i;
+		if (currentFB->IsSameAssociation(fb))
+		{
+			return currentFB;
+		}
+	}
+
+	return nullptr;
 }

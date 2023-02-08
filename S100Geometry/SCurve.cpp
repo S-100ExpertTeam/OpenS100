@@ -10,7 +10,7 @@
 
 SCurve::SCurve() 
 {
-	type = 5;
+	
 }
 
 SCurve::~SCurve()
@@ -19,6 +19,11 @@ SCurve::~SCurve()
 	m_pPoints = nullptr;
 
 	SafeRelease(&pGeometry);
+}
+
+SGeometryType SCurve::GetType()
+{
+	return SGeometryType::Curve;
 }
 
 int SCurve::GetRCID()
@@ -286,4 +291,14 @@ SPoint* SCurve::GetLastPoint()
 	}
 
 	return nullptr;
+}
+
+double SCurve::GetX()
+{
+	return GetX(0);
+}
+
+double SCurve::GetY()
+{
+	return GetY(0);
 }

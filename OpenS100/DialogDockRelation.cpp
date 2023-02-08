@@ -483,7 +483,7 @@ void CDialogDockRelation::SetFeatureList(S101Cell* cell, std::list<R_FeatureReco
 		if (orgItItor == cell->m_dsgir.m_itcs->m_arr.end())  continue;
 		std::wstring orgFeatureName = orgItItor->second->m_code;
 
-		InformationType *orgIt = fc->GetInformationTypesPointer().GetInformationTypePointer().find(orgFeatureName)->second;
+		InformationType *orgIt = fc->GetInformationTypes()->GetInformationTypePointer().find(orgFeatureName)->second;
 
 		// fasc
 		for (auto itt = orgIr->m_inas.begin(); itt != orgIr->m_inas.end(); itt++)

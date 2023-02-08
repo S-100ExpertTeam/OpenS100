@@ -421,25 +421,25 @@ ATTR* S101Creator::AddComplexAttribute(R_InformationRecord* information, ATTR* p
 	return nullptr;
 }
 
-SGeometry* S101Creator::SetGeometry(R_FeatureRecord* feature, int type, unsigned char* value, int size)
+SGeometry* S101Creator::SetGeometry(R_FeatureRecord* feature, SGeometryType type, unsigned char* value, int size)
 {
-	if (type == 1)
+	if (type == SGeometryType::Point)
 	{
 		return SetPointGeometry(feature, value, size);
 	}
-	else if (type == 2)
+	else if (type == SGeometryType::CompositeCurve)
 	{
 		return SetCompositeCurveGeometry(feature, value, size);
 	}
-	else if (type == 3)
+	else if (type == SGeometryType::Surface)
 	{
 		return SetSurfaceGeometry(feature, value, size);
 	}
-	else if (type == 4)
+	else if (type == SGeometryType::MultiPoint)
 	{
 		return SetMultiPointGeometry(feature, value, size);
 	}
-	else if (type == 5)
+	else if (type == SGeometryType::CurveHasOrient)
 	{
 		return SetCurveGeometry(feature, value, size);
 	}

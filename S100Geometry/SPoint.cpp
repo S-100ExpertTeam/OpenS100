@@ -7,12 +7,11 @@
 
 SPoint::SPoint()
 {
-	type = 1;
+	
 }
 
 SPoint::SPoint(double _x, double _y)
 {
-	type = 1;
 	x = _x;
 	y = _y;
 }
@@ -20,6 +19,11 @@ SPoint::SPoint(double _x, double _y)
 SPoint::~SPoint()
 {
 
+}
+
+SGeometryType SPoint::GetType()
+{
+	return SGeometryType::Point;
 }
 
 void SPoint::SetPoint(double _x, double _y)

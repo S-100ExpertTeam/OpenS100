@@ -7,11 +7,16 @@
 
 SCompositeCurve::SCompositeCurve()
 {
-	type = 2;
+	
 }
 
 SCompositeCurve::~SCompositeCurve()
 {
+}
+
+SGeometryType SCompositeCurve::GetType()
+{
+	return SGeometryType::CompositeCurve;
 }
 
 void SCompositeCurve::SetMBR()
@@ -225,4 +230,24 @@ void SCompositeCurve::SetXY(int index, double x, double y)
 
 		pointCount += currentPointCount;
 	}
+}
+
+double SCompositeCurve::GetX()
+{
+	if (m_listCurveLink.size() > 0)
+	{
+		return m_listCurveLink.front()->GetX();
+	}
+
+	return 0;
+}
+
+double SCompositeCurve::GetY()
+{
+	if (m_listCurveLink.size() > 0)
+	{
+		return m_listCurveLink.front()->GetY();
+	}
+
+	return 0;
 }

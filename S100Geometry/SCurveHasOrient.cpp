@@ -20,6 +20,11 @@ SCurveHasOrient::~SCurveHasOrient()
 {
 }
 
+SGeometryType SCurveHasOrient::GetType()
+{
+	return SGeometryType::CurveHasOrient;
+}
+
 void SCurveHasOrient::SetMasking(bool value)
 {
 	m_masking = value;

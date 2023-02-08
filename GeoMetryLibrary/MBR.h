@@ -31,6 +31,9 @@ public:
 	double GetWidth();
 	double GetHeight();
 
+	double GetCenterX();
+	double GetCenterY();
+
 	/*
 		Description: A new MBR is calculated by comparing the MBR value with the MBR value entered as a factor.
 	*/

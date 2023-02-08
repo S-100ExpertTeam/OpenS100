@@ -86,7 +86,7 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 						int size = 0;
 						if (selectedFeature->m_geometry->ExportToWkb(&buf, &size))
 						{
-							auto geom = theApp.pView->s101Creator.SetGeometry(feature, selectedFeature->m_geometry->type, buf, size);
+							auto geom = theApp.pView->s101Creator.SetGeometry(feature, selectedFeature->m_geometry->GetType(), buf, size);
 							
 							if (geom)
 							{

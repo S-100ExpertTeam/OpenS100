@@ -84,7 +84,8 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 			{
 			}
 			// Curve
-			else if (sr->RCNM == 120 && fr->m_geometry->IsCurve())
+			else if (sr->RCNM == 120 && 
+				fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 			{
 				SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 				for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
@@ -121,9 +122,9 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 					}
 				}
 			}
-			else if (sr->RCNM == 120 && fr->m_geometry->type == 5)
+			else if (sr->RCNM == 120 && 
+				fr->m_geometry->GetType() == SGeometryType::CurveHasOrient)
 			{
-				//SCurve* curve = (SCurve*)fr->m_geometry;
 				SCurveHasOrient* curve = (SCurveHasOrient*)fr->m_geometry;
 				
 				auto rcid = curve->GetRCID();
@@ -155,7 +156,8 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 					screenPoints = nullptr;
 				}
 			}
-			else if (sr->RCNM == 120 && fr->m_geometry->IsSurface())
+			else if (sr->RCNM == 120 && 
+				fr->m_geometry->GetType() == SGeometryType::Surface)
 			{
 				SSurface* geo = (SSurface*)fr->m_geometry;
 
@@ -204,13 +206,13 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 		}
 	}
 	// When the feature is the point type,
-	else if (fr->m_geometry->type == 1)
+	else if (fr->m_geometry->GetType() == SGeometryType::Point)
 	{
 		SPoint* geo = (SPoint*)fr->m_geometry;
 		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
-	else if (fr->m_geometry->type == 2)
+	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
@@ -271,7 +273,7 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 			viewPointNum = 0;
 		}
 	}
-	else if (fr->m_geometry->type == 3)
+	else if (fr->m_geometry->GetType() == SGeometryType::Surface)
 	{
 		SSurface* geo = (SSurface*)fr->m_geometry;
 
@@ -286,7 +288,7 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 			points.push_back(tempPoint);
 		}
 	}
-	else if (fr->m_geometry->type == 5)
+	else if (fr->m_geometry->GetType() == SGeometryType::Curve)
 	{
 		SCurve* c = (SCurve*)fr->m_geometry;
 
@@ -368,7 +370,8 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 			else if (sr->RCNM == 115)
 			{
 			}
-			else if (sr->RCNM == 120 && fr->m_geometry->IsCurve())
+			else if (sr->RCNM == 120 && 
+				fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 			{
 				SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 				for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
@@ -405,7 +408,8 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 					}
 				}
 			}
-			else if (sr->RCNM == 120 && fr->m_geometry->IsSurface())
+			else if (sr->RCNM == 120 && 
+				fr->m_geometry->GetType() == SGeometryType::Surface)
 			{
 				SSurface* geo = (SSurface*)fr->m_geometry;
 
@@ -451,13 +455,13 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 			}
 		}
 	}
-	else if (fr->m_geometry->type == 1)
+	else if (fr->m_geometry->GetType() == SGeometryType::Point)
 	{
 		SPoint* geo = (SPoint*)fr->m_geometry;
 		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
-	else if (fr->m_geometry->type == 2)
+	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 
@@ -511,7 +515,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 			viewPointNum = 0;
 		}
 	}
-	else if (fr->m_geometry->type == 3)
+	else if (fr->m_geometry->GetType() == SGeometryType::Surface)
 	{
 		SSurface* geo = (SSurface*)fr->m_geometry;
 
