@@ -91,6 +91,7 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 					if (geometry)
 					{
 						rt->FillGeometry(geometry, brush);
+						//rt->DrawGeometry(geometry, brush, 1, strokeGroup->at(0));
 					}
 				}
 				else
