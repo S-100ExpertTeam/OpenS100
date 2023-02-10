@@ -6,11 +6,16 @@
 
 SMultiPoint::SMultiPoint()
 {
-	type = 4;
+	
 }
 
 SMultiPoint::~SMultiPoint()
 {
+}
+
+SGeometryType SMultiPoint::GetType()
+{
+	return SGeometryType::MultiPoint;
 }
 
 int SMultiPoint::GetNumPoints()
@@ -152,9 +157,4 @@ bool SMultiPoint::ExportToWkb(unsigned char** value, int* size)
 	}
 
 	return true;
-}
-
-int SMultiPoint::GetType()
-{
-	return 4;
 }

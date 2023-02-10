@@ -67,7 +67,7 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 
 	auto geom = fr->GetGeometry();
 
-	if (geom->IsPoint() == true)
+	if (geom->GetType() == SGeometryType::Point)
 	{
 		auto p = (SPoint*)geom;
 

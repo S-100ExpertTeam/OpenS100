@@ -33,6 +33,8 @@ public:
 	ID2D1PathGeometry* pGeometry = nullptr;
 
 public:
+	SGeometryType GetType() override;
+
 	int GetNumPart();
 
 	int GetNumPointPerPart(int partIndex);
@@ -60,4 +62,7 @@ public:
 
 	GeoPoint GetXY(int ringIndex, int pointIndex);
 	void SetXY(int ringIndex, int pointIndex, double x, double y);
+
+	double GetX() override;
+	double GetY() override;
 };

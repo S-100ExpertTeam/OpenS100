@@ -3,13 +3,8 @@
 
 #include "..\\GeoMetryLibrary\\ENCCommon.h"
 
-int SGeometricFuc::overlap(SCurve *objPoly, SSurface *comPoly, bool applyOption)
+int SGeometricFuc::overlap(SCurve *objPoly, SSurface *comPoly)
 {
-	if (applyOption)
-	{
-		return -1;
-	}
-
 	int ret = -1;
 
 	if (!MBR::CheckOverlap(objPoly->m_mbr, comPoly->m_mbr))
@@ -40,14 +35,8 @@ int SGeometricFuc::overlap(SCurve *objPoly, SSurface *comPoly, bool applyOption)
 	return ret;
 }
 
-int SGeometricFuc::overlap(SCompositeCurve *objPoly, SSurface *comPoly, bool applyOption)
+int SGeometricFuc::overlap(SCompositeCurve *objPoly, SSurface *comPoly)
 {
-
-	if (applyOption)
-	{
-		return -1;
-	}
-
 	int ret = -1;
 
 	if (!MBR::CheckOverlap(objPoly->m_mbr, comPoly->m_mbr))
@@ -61,7 +50,7 @@ int SGeometricFuc::overlap(SCompositeCurve *objPoly, SSurface *comPoly, bool app
 		//SCurve* c = (*it).GetCurve();
 		SCurve* c = (*it);
 
-		int fret = overlap(c, comPoly, applyOption);
+		int fret = overlap(c, comPoly);
 
 		if (fret != -1)
 		{
@@ -72,12 +61,8 @@ int SGeometricFuc::overlap(SCompositeCurve *objPoly, SSurface *comPoly, bool app
 	return ret;
 }
 
-int SGeometricFuc::overlap(SSurface *objPoly, SSurface *comPoly, bool applyOption)
+int SGeometricFuc::overlap(SSurface *objPoly, SSurface *comPoly)
 {
-	if (applyOption)
-	{
-		return -1;
-	}
 	int ret = -1;
 
 	if (!MBR::CheckOverlap(objPoly->m_mbr, comPoly->m_mbr))
@@ -106,12 +91,8 @@ int SGeometricFuc::overlap(SSurface *objPoly, SSurface *comPoly, bool applyOptio
 	return ret;
 }
 
-int SGeometricFuc::overlap(double p1x, double p1y, SCurve *comPoly, bool applyOption)
+int SGeometricFuc::overlap(double p1x, double p1y, SCurve *comPoly)
 {
-	if (applyOption)
-	{
-		return -1;
-	}
 	int r341;
 
 	int ret = -1;
@@ -162,14 +143,8 @@ int SGeometricFuc::overlap(double p1x, double p1y, SCurve *comPoly, bool applyOp
 	return ret;
 }
 
-int SGeometricFuc::overlap(SPoint *objPoint, SCurve *comPoly, bool applyOption)
+int SGeometricFuc::overlap(SPoint *objPoint, SCurve *comPoly)
 {
-
-	if (applyOption)
-	{
-		return -1;
-	}
-
 	unsigned i = 0;
 	int ret = -1;
 
@@ -181,32 +156,15 @@ int SGeometricFuc::overlap(SPoint *objPoint, SCurve *comPoly, bool applyOption)
 	return ret;
 }
 
-int SGeometricFuc::inside(SPoint *point, SSurface *poly, bool applyOption)
+int SGeometricFuc::inside(SPoint *point, SSurface *poly)
 {
-
-	if (applyOption)
-	{
-		return -1;
-	}
-
-	unsigned i = 0, ret = 1;
-
-	if (inside(point->x, point->y, poly) == -1)
-	{
-		ret = -1;
-	}
-	return ret;
+	return inside(point->x, point->y, poly);
 }
 
 //  -1 : outside
 //  1 : inside
-int SGeometricFuc::inside(double x, double y, SSurface *poly, bool applyOption)
+int SGeometricFuc::inside(double x, double y, SSurface *poly)
 {
-	if (applyOption)
-	{
-		return -1;
-	}
-
 	if (poly == NULL)
 		return -1;
 	int i;
@@ -317,24 +275,11 @@ int SGeometricFuc::inside(double x, double y, SSurface *poly, bool applyOption)
 
 double SGeometricFuc::GetAngle(POINT _p1, POINT _p2)
 {
-	POINT p;
-	p.x = _p2.x - _p1.x;
-	p.y = _p2.y - _p1.y;
-
-	double d = sqrt(((double)(p.x) * p.x) + (p.y * p.y));
-	double temp = p.x / d;
-
-	if (p.y < 0)
-	{
-		return (acos(-1.0) * 2) - acos(temp);
-	}
-
-	return acos(temp);
+	return GetAngle(_p1.x, _p1.y, _p2.x, _p2.y);
 }
 
 double SGeometricFuc::GetAngle(double p1x, double p1y, double p2x, double p2y)
 {
-
 	double x = p2x - p1x;
 	double y = p2y - p1y;
 

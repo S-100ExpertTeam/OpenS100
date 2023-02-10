@@ -51,8 +51,6 @@ public:
 	virtual ~S101Cell();
 
 public:
-	DDR m_S101DDR;
-
 	S101Cell* updateInformation = nullptr;
 
 	// only have the base.
@@ -103,7 +101,7 @@ public:
 	void GetFeatureDisplayOption(R_FeatureRecord* pFe);
 	void ProcessCSProcedure();
 	void SetInstructionToFeature();
-	void SetInstructionToFeature(int type, R_FeatureRecord* fe);
+	void SetInstructionToFeature(R_FeatureRecord* fe);
 
 	//void ClearCurveMap();
 
@@ -125,8 +123,6 @@ public:
 	BOOL GetFullSpatialData(R_CompositeRecord *r, CArray<GeoPoint> &geoArr, int ORNT = 1);
 	BOOL GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoArr, int ORNT = 1);
 	BOOL GetFullSpatialData(R_SurfaceRecord *r, CArray<GeoPoint> &geoArr);
-
-	SCurve* GetCurveGeometry(R_CurveRecord *r);
 
 	// Set R_FeatureRecord::m_curveList from Vector record
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);
@@ -348,4 +344,10 @@ private:
 	std::wstring GetEditionNumberAsWstring();
 	std::wstring GetUpdateNumberAsWstring();
 	std::wstring GetIssueDateAsWstring();
+
+	std::vector<std::string> Query(MBR mbr) override;
+	std::vector<std::string> QueryToSurface(MBR mbr) override;
+	std::vector<std::string> QueryToCurve(MBR mbr) override;
+	std::vector<std::string> QueryToPoint(MBR mbr) override;
+	std::vector<std::string> QueryToMultiPoint(MBR mbr) override;
 };

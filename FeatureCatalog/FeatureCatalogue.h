@@ -57,7 +57,9 @@ protected:
 public:
 	bool Read(std::wstring filePath);
 	bool Save(std::wstring filePath);
+
 	void GetContents(pugi::xml_node& node);
+	void WriteContents(pugi::xml_node& node);
 
 	const std::wstring& GetName();
 	void SetName(std::string value);
@@ -89,32 +91,32 @@ public:
 
 	SimpleAttribute* GetSimpleAttribute(std::wstring Code);
 	SimpleAttribute* GetSimpleAttributeFromName(std::wstring name);
-	SimpleAttributes& GetSimpleAttributesPointer();
+	SimpleAttributes* GetSimpleAttributes();
 	
 	ComplexAttribute* GetComplexAttribute(std::wstring Code);
 	ComplexAttribute* GetComplexAttributeFromName(std::wstring name);
-	ComplexAttributes& GetComplexAttributesPointer();
+	ComplexAttributes* GetComplexAttributes();
 
 	Role* GetRole(std::wstring Code);
 	Role* GetRoleFromName(std::wstring name);
-	Roles& GetRolesPointer();
+	Roles* GetRoles();
 
 	InformationAssociation* GetInformationAssociation(std::wstring Code);
 	InformationAssociation* GetInformationAssociationFromName(std::wstring name);
-	InformationAssociations& GetInformationAssociationsPointer();
+	InformationAssociations* GetInformationAssociations();
 
 	FeatureAssociation* GetFeatureAssociation(std::wstring Code);
 	FeatureAssociation* GetFeatureAssociationFromName(std::wstring name);
-	FeatureAssociations& GetFeatureAssociationsPointer();
+	FeatureAssociations* GetFeatureAssociations();
 
 	InformationType* GetInformationType(std::wstring Code);
 	InformationType* GetInformationTypeFromName(std::wstring name);
-	InformationTypes& GetInformationTypesPointer();
+	InformationTypes* GetInformationTypes();
 
 	FeatureType* GetFeatureType(std::wstring Code);
 	FeatureType* GetFeatureTypeName(std::wstring Name);
 	FeatureType* GetFeatureTypeFromIndex(int indexnum);
-	FeatureTypes& GetFeatureTypes();
+	FeatureTypes* GetFeatureTypes();
 
 	//void SetFullAssociations();
 	//void SetSubAssociation(FeatureType* ft);

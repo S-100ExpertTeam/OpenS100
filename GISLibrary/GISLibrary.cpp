@@ -580,7 +580,7 @@ void CGISLibraryApp::InitFeatureOnOffMap()
 	{
 		featureOnOffMap.clear();
 
-		auto vector = fc->GetFeatureTypes().GetVecFeatureType();
+		auto vector = fc->GetFeatureTypes()->GetVecFeatureType();
 		for (auto i = vector.begin(); i != vector.end(); i++)
 		{
 			featureOnOffMap.insert({ (*i)->GetCodeAsWString(), true });

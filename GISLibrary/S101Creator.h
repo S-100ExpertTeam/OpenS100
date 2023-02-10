@@ -2,6 +2,8 @@
 
 #include "../FeatureCatalog/AttributeBinding.h"
 
+#include "../S100Geometry/Enum_SGeometryType.h"
+
 #include <vector>
 
 class S100Layer;
@@ -46,7 +48,7 @@ public:
 	ATTR* AddComplexAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code);
 	ATTR* AddComplexAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code);
 
-	SGeometry* SetGeometry(R_FeatureRecord* feature, int type, unsigned char* value, int size);
+	SGeometry* SetGeometry(R_FeatureRecord* feature, SGeometryType type, unsigned char* value, int size);
 	SGeometry* SetPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
 	SGeometry* SetMultiPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size);
 	SGeometry* SetCurveGeometry(R_FeatureRecord* feature, unsigned char* value, int size);

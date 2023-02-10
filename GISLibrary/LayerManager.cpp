@@ -1108,7 +1108,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 
 			if (lineInstruction->spatialReference.size() > 0)
 			{
-				if (featureRecord->m_geometry->type == 3)
+				if (featureRecord->m_geometry->GetType() == SGeometryType::Surface)
 				{
 					auto surface = (SSurface*)featureRecord->m_geometry;
 
@@ -1126,7 +1126,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						}
 					}
 				}
-				else if (featureRecord->m_geometry->type == 2)
+				else if (featureRecord->m_geometry->GetType() == SGeometryType::CompositeCurve)
 				{
 					auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
 
@@ -1144,7 +1144,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						}
 					}
 				}
-				else if (featureRecord->m_geometry->type == 5)
+				else if (featureRecord->m_geometry->GetType() == SGeometryType::CurveHasOrient)
 				{
 					auto curveHasOrient = (SCurveHasOrient*)featureRecord->m_geometry;
 
@@ -1160,7 +1160,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 					}
 				}
 			}
-			else if (featureRecord->m_geometry->type == 3)
+			else if (featureRecord->m_geometry->GetType() == SGeometryType::Surface)
 			{
 				auto surface = (SSurface*)featureRecord->m_geometry;
 
@@ -1169,7 +1169,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 					curListCurveLink.push_back((*i));
 				}
 			}
-			else if (featureRecord->m_geometry->type == 2)
+			else if (featureRecord->m_geometry->GetType() == SGeometryType::CompositeCurve)
 			{
 				auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
 
@@ -1177,12 +1177,9 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 				{
 					curListCurveLink.push_back((*i));
 				}
-
-				//curListCurveLink = compositeCurve->m_listCurveLink;
 			}
-			else if (featureRecord->m_geometry->type == 5)
+			else if (featureRecord->m_geometry->GetType() == SGeometryType::CurveHasOrient)
 			{
-				//curListCurveLink.push_back((SCurveHasOrient*)featureRecord->m_geometry);
 				curListCurveLink.push_back(((SCurveHasOrient*)featureRecord->m_geometry));
 			}
 

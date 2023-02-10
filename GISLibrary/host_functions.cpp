@@ -265,7 +265,7 @@ int HostGetFeatureTypeCodes(lua_State *l)
 +		[8]	"BeaconIsolatedDanger"	std::basic_string<char,std::char_traits<char>,std::allocator<char> >
 	*/
 
-	auto feature_types = pTheFC->GetFeatureTypes().GetFeatureType();
+	auto feature_types = pTheFC->GetFeatureTypes()->GetFeatureType();
 
 	std::vector<std::string> ret_feature_codes;
 
@@ -298,7 +298,7 @@ int HostGetInformationTypeCodes(lua_State *l)
 +		[4]	"SpatialQuality"	std::basic_string<char,std::char_traits<char>,std::allocator<char> >
 	*/
 
-	auto information_types = pTheFC->GetInformationTypesPointer().GetInformationTypePointer();
+	auto information_types = pTheFC->GetInformationTypes()->GetInformationTypePointer();
 
 	std::vector<std::string> ret_information_codes;
 
@@ -320,7 +320,7 @@ int HostGetSimpleAttributeTypeCodes(lua_State *l)
 {
 	auto ls = lua_session::get_session(l);
 
-	auto simpleattribute_types = pTheFC->GetSimpleAttributesPointer().GetSimpleAttributePointer();
+	auto simpleattribute_types = pTheFC->GetSimpleAttributes()->GetSimpleAttributePointer();
 	std::vector<std::string> ret_simpleattribute_codes;
 	for (auto iit = simpleattribute_types.begin(); iit != simpleattribute_types.end(); iit++)
 	{
@@ -353,7 +353,7 @@ int HostGetComplexAttributeTypeCodes(lua_State *l)
 +		[5]	"horizontalClearanceFixed"	std::basic_string<char,std::char_traits<char>,std::allocator<char> >
 +		[6]	"horizontalClearanceOpen"	std::basic_string<char,std::char_traits<char>,std::allocator<char> >
 	*/
-	auto complexattribute_types = pTheFC->GetComplexAttributesPointer().GetComplexAttributePointer();
+	auto complexattribute_types = pTheFC->GetComplexAttributes()->GetComplexAttributePointer();
 
 	std::vector<std::string> ret_complexattribute_codes;
 
@@ -384,7 +384,7 @@ int HostGetRoleTypeCodes(lua_State *l)
 +		[4]	"defines"	std::basic_string<char,std::char_traits<char>,std::allocator<char> >
 +		[5]	"hasAuxiliary"	std::basic_string<char,std::char_traits<char>,std::allocator<char> >
 	*/
-	auto role_types = pTheFC->GetRolesPointer().GetRolePointer();
+	auto role_types = pTheFC->GetRoles()->GetRolePointer();
 	std::vector<std::string> ret_role_codes;
 	for (auto iit = role_types.begin(); iit != role_types.end(); iit++)
 	{
@@ -414,7 +414,7 @@ int HostGetInformationAssociationTypeCodes(lua_State *l)
 +		[1]	"SpatialAssociation"	std::basic_string<char,std::char_traits<char>,std::allocator<char> >
 	*/
 
-	auto information_association_types = pTheFC->GetInformationAssociationsPointer().GetInformationAssociationPointer();
+	auto information_association_types = pTheFC->GetInformationAssociations()->GetInformationAssociationPointer();
 	std::vector<std::string> ret_information_association_codes;
 	for (auto iit = information_association_types.begin(); iit != information_association_types.end(); iit++)
 	{
@@ -445,7 +445,7 @@ int HostGetFeatureAssociationTypeCodes(lua_State *l)
 +		[4]	"DeepWaterRouteAggregation"	std::basic_string<char,std::char_traits<char>,std::allocator<char> >
 	*/
 
-	auto feature_association_types = pTheFC->GetFeatureAssociationsPointer().GetFeatureAssociationPointer();
+	auto feature_association_types = pTheFC->GetFeatureAssociations()->GetFeatureAssociationPointer();
 	std::vector<std::string> ret_feature_association_codes;
 	for (auto iit = feature_association_types.begin(); iit != feature_association_types.end(); iit++)
 	{

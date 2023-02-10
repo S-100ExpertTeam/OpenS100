@@ -136,12 +136,6 @@ void CDockablePaneCurrentSelection::OnContextMenu(CWnd* /*pWnd*/, CPoint /*point
 	return;
 }
 
-
-void CDockablePaneCurrentSelection::UpdateList()
-{
-	pDlg->UpdateList();
-}
-
 void CDockablePaneCurrentSelection::RemoveAll()
 {
 	pDlg->OnMenuRemoveAll();

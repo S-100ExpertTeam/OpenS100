@@ -1,7 +1,7 @@
 #pragma once
-#include <atlstr.h>
 
 class FeatureCatalogue;
+
 class CatalogItem
 {
 public:
@@ -9,7 +9,7 @@ public:
 	virtual ~CatalogItem();
 	
 public:
-	FeatureCatalogue* m_catalog;
+	FeatureCatalogue* fc = nullptr;
 	CString m_name;
 	CString m_version;
 };

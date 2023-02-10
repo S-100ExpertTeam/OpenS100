@@ -20,7 +20,7 @@ private:
 	std::list<std::wstring> subType; 
 	FeatureUseType featureUseType;
 	std::list<FeatureBinding*> vecFeatureBinding;
-	std::list<SpatialPrimitiveType*> permittedPrimitives;
+	std::list<SpatialPrimitiveType> permittedPrimitives;
 
 public:
 	void GetContents(pugi::xml_node& node);
@@ -34,6 +34,8 @@ public:
 	std::list<std::wstring>& GetSubTypePointer(); 
 	FeatureUseType& GetFeatureUseTypePointer();
 	std::list<FeatureBinding*>& GetFeatureBindingPointer();
-	std::list<SpatialPrimitiveType*>& GetPermittedPrimitivesPointer();
+	std::list<SpatialPrimitiveType>& GetPermittedPrimitivesPointer();
 	void InsertFeatureBinding(FeatureBinding* value);
+
+	FeatureBinding* CanMerged(FeatureBinding& fb);
 };

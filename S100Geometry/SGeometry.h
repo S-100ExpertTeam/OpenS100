@@ -1,6 +1,8 @@
 #pragma once
 
-#include "..\\GeoMetryLibrary\\Geometry.h"
+#include "../GeoMetryLibrary/Geometry.h"
+
+#include "Enum_SGeometryType.h"
 
 #include <unordered_map>
 
@@ -19,23 +21,13 @@ public:
 	static int sizeOfPoint;
 
 	// It also has a CPoint arrangement to minimize memory allocation and recovery.
-	static POINT   *viewPoints;
-
-	// 1 : Point 
-	// 2 : Curve
-	// 3 : Surface
-	// 4 : Multi Point (Sounding)
-	int type;
+	static POINT* viewPoints;
 
 public:
 	// 1 : Point 
-	// 2 : Curve
+	// 2 : SCompositeCurve
 	// 3 : Surface
 	// 4 : Multi Point (Sounding)
-	virtual int GetType() {	return 0; }
-
-	bool IsPoint();
-	bool IsCurve();
-	bool IsSurface();
-	bool IsMultiPoint();
+	// 5 : SCurve
+	virtual SGeometryType GetType() { return SGeometryType::none; }
 };

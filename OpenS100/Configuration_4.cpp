@@ -69,7 +69,7 @@ BOOL CConfiguration_4::OnInitDialog()
 			return false;
 		}
 
-		auto vecFeature = fc->GetFeatureTypes().GetVecFeatureType();
+		auto vecFeature = fc->GetFeatureTypes()->GetVecFeatureType();
 
 		for (int i = 0; i < vecFeature.size(); i++)
 		{

@@ -45,27 +45,16 @@ public:
 	// If the mouse is clicked, TRUE or FALSE.
 	CPoint m_ptCurrent; // OnMouseMove's point Save variable
 
-	CPoint m_ptMDown;   // OnMButtonDown's point Save variables
-	CPoint m_ptMUp;     // OnMButtonUp's point Save variables
-
 	// Use it to mark the scale and latitude.
-	CString m_strScale;
 	CString	m_strLatitude;
 	CString	m_strLongitude;
 	CString m_strFormatedScale;
-	CString m_strFormatedLatitude;
 	CString m_strFormatedLongitude;
 	
-
-	CPoint ptPick = { -100, -100 };
 	bool isMoved = false;
 
 	S101Cell* encPick = nullptr;
 	std::wstring featurePick; // selected feature ID
-	double ptPickX = 0.0;
-	double ptPickY = 0.0;
-	double ptOldPickX = 0.0;
-	double ptOldPickY = 0.0;
 
 	// Variables related to mouse change points.
 	unsigned int modifyWaypointIndex; // The acupuncture point number that's being fixed with the mouse

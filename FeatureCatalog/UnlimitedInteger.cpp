@@ -37,3 +37,14 @@ bool UnlimitedInteger::IsInfinite()
 {
 	return infinite;
 }
+
+bool UnlimitedInteger::operator==(UnlimitedInteger& item)
+{
+	if (infinite == item.infinite &&
+		value == item.value)
+	{
+		return true;
+	}
+
+	return false;
+}

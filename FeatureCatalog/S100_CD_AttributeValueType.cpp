@@ -125,7 +125,7 @@ namespace FCD
 			return "S100_TruncatedDate";
 		}
 
-		return "";
+		return "none";
 	}
 
 	std::wstring S100_CD_AttributeValueTypeToWString(S100_CD_AttributeValueType value)

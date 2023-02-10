@@ -166,6 +166,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Enum_SGeometryType.h" />
     <ClInclude Include="SCommonFuction.h" />
     <ClInclude Include="SCompositeCurve.h" />
     <ClInclude Include="SCoverage.h" />

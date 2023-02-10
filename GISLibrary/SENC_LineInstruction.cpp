@@ -63,21 +63,21 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 	std::list<SCurveHasOrient*>* curListCurveLink = nullptr;
 
 	// Surface
-	if (fr->m_geometry->type == 3)
+	if (fr->m_geometry->GetType() == SGeometryType::Surface)
 	{
 		auto surface = (SSurface*)fr->m_geometry;
 
 		curListCurveLink = &surface->curveList;
 	}
 	// Composite Curve
-	else if (fr->m_geometry->type == 2)
+	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
 
 		curListCurveLink = &compositeCurve->m_listCurveLink;
 	}
 	// Curve
-	else if (fr->m_geometry->type == 5)
+	else if (fr->m_geometry->GetType() == SGeometryType::CurveHasOrient)
 	{
 		auto curve = (SCurveHasOrient*)fr->m_geometry;
 		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
