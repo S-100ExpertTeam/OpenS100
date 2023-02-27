@@ -543,7 +543,7 @@ void R_FeatureRecord::SetVectorRecord(R_VectorRecord* record)
 	}
 }
 
-std::string R_FeatureRecord::GetName(S100SpatialObject* so)
+std::string R_FeatureRecord::GetCode(S100SpatialObject* so)
 {
 	auto cell = (S101Cell*)so;
 	if (cell)
@@ -554,9 +554,9 @@ std::string R_FeatureRecord::GetName(S100SpatialObject* so)
 	return "";
 }
 
-std::wstring R_FeatureRecord::GetNameAsWString(S100SpatialObject* so)
+std::wstring R_FeatureRecord::GetCodeAsWString(S100SpatialObject* so)
 {
-	return pugi::as_wide(GetName(so));
+	return pugi::as_wide(GetCode(so));
 }
 
 std::string R_FeatureRecord::GetID()
@@ -567,4 +567,24 @@ std::string R_FeatureRecord::GetID()
 std::wstring R_FeatureRecord::GetIDAsWString()
 {
 	return std::to_wstring(GetRCID());
+}
+
+int R_FeatureRecord::GetIDAsInteger()
+{
+	return GetRCID();
+}
+
+bool R_FeatureRecord::IsNoGeometry()
+{
+	return GetSPASCount() == 0;
+}
+
+int R_FeatureRecord::GetFeatureRelationCount()
+{
+	return m_fasc.size();
+}
+
+int R_FeatureRecord::GetInformationRelationCount()
+{
+	return m_inas.size();
 }

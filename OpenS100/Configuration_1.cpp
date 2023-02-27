@@ -6,7 +6,7 @@
 #include "afxdialogex.h"
 #include "ConfigrationDlg.h"
 
-#include "..\\GISLibrary\\LayerManager.h"
+#include "../GISLibrary/LayerManager.h"
 
 IMPLEMENT_DYNAMIC(CConfiguration_1, CDialogEx)
 

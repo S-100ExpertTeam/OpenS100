@@ -107,8 +107,13 @@ public:
 
 	void SetVectorRecord(R_VectorRecord* record);
 
-	std::string GetName(S100SpatialObject* so) override;
-	std::wstring GetNameAsWString(S100SpatialObject* so) override;
+public:
+	std::string GetCode(S100SpatialObject* so) override;
+	std::wstring GetCodeAsWString(S100SpatialObject* so) override;
 	std::string GetID() override;
 	std::wstring GetIDAsWString() override;
+	int GetIDAsInteger() override;
+	bool IsNoGeometry() override;
+	int GetFeatureRelationCount() override;
+	int GetInformationRelationCount() override;
 };

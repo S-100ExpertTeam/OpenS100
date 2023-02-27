@@ -80,7 +80,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 			nSelectedItem = pNMLV->iItem;
 
-			if (m_Cell->GetProductNumber() == 101)
+			if (m_Cell && m_Cell->GetProductNumber() == 101)
 			{
 				auto cell = (S101Cell*)m_Cell;
 				FeatureCatalogue* fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();

@@ -1,6 +1,8 @@
 ﻿#pragma once
+
+#include "../GISLibrary/S100SpatialObject.h"
+
 #include "FeatureCodeString.h"
-class S101Cell;
 
 class CDialogViewNoGeometry : public CDialogEx
 {
@@ -15,7 +17,7 @@ public:
 #endif
 
 public:
-	void SetNoGeometryFeatureList(S101Cell* cell);
+	void SetNoGeometryFeatureList(S100SpatialObject* cell);
 	std::vector<CFeatureCodeString> ngflist;
 	void InitNonGeometryList();
 

@@ -82,10 +82,6 @@ private:
 	std::vector<R_SurfaceRecord*> vecSurface;
 	std::vector<R_FeatureRecord*> vecFeature;
 
-public: // Virtual methods
-	std::wstring GetFeatureTypeCodeByID(std::wstring id);
-	std::wstring GetFeatureTypeCodeByID(int id);
-
 public:
 	R_DSGIR* GetDatasetGeneralInformationRecord();
 	void UpdateRemoveAll(void);
@@ -205,6 +201,7 @@ public:
 	void RemoveInformationRecord(__int64 key, R_InformationRecord* record);
 	R_InformationRecord* GetInformationRecord(__int64 key);
 	R_InformationRecord* GetInformationRecord(std::wstring wstringKey);
+	R_InformationRecord* GetInformationRecordByIndex(int index);
 	POSITION GetInfoStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_InformationRecord*& value);
 	void RemoveAllInfoRecord();
@@ -216,6 +213,7 @@ public:
 	void InsertPointRecord(__int64 key, R_PointRecord* record);
 	void RemovePointRecord(__int64 key, R_PointRecord* record);
 	R_PointRecord* GetPointRecord(__int64 key);
+	R_PointRecord* GetPointRecordByIndex(int index);
 	POSITION GetpointStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_PointRecord*& value);
 	void RemoveAllPointRecord();
@@ -226,6 +224,7 @@ public:
 	void InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record);
 	void RemoveMultiPointRecord(__int64 key);
 	R_MultiPointRecord* GetMultiPointRecord(__int64 key);
+	R_MultiPointRecord* GetMultiPointRecordByIndex(int index);
 	POSITION GetMultStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_MultiPointRecord*& value);
 	void RemoveAllMultRecord();
@@ -236,6 +235,7 @@ public:
 	void InsertCurveRecord(__int64 key, R_CurveRecord* record);
 	void RemoveCurveRecord(__int64 key, R_CurveRecord* record);
 	R_CurveRecord* GetCurveRecord(__int64 key);
+	R_CurveRecord* GetCurveRecordByIndex(int index);
 	POSITION GetCurStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key,R_CurveRecord*& value);
 	void RemoveAllCurRecord();
@@ -247,6 +247,7 @@ public:
 	void RemoveCompositeCurveRecord(__int64 key, R_CompositeRecord* record);
 
 	R_CompositeRecord* GetCompositeCurveRecord(__int64 key);
+	R_CompositeRecord* GetCompositeCurveRecordByIndex(int index);
 	POSITION GetComStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_CompositeRecord*& value);
 	void RemoveAllComRecord();
@@ -256,6 +257,7 @@ public:
 	void InsertSurfaceRecord(__int64 key, R_SurfaceRecord* record);
 	void RemoveSurfaceRecord(__int64 key, R_SurfaceRecord* record);
 	R_SurfaceRecord* GetSurfaceRecord(__int64 key);
+	R_SurfaceRecord* GetSurfaceRecordByIndex(int index);
 	POSITION GetSurStartPosition();
 	void GetNextAssoc(POSITION& index, long long& key, R_SurfaceRecord*& value);
 	void RemoveAllSurRecord();
@@ -266,6 +268,7 @@ public:
 
 	R_FeatureRecord* GetFeatureRecord(__int64 key);
 	R_FeatureRecord* GetFeatureRecord(std::wstring wstringKey);
+	R_FeatureRecord* GetFeatureRecordByIndex(int index);
 	POSITION GetFeatureStartPosition();
 	void GetNextAssoc(POSITION& index,long long& key,R_FeatureRecord*& value);
 	void RemoveFeatureMapKey(long long key);
@@ -344,6 +347,14 @@ private:
 	std::wstring GetEditionNumberAsWstring();
 	std::wstring GetUpdateNumberAsWstring();
 	std::wstring GetIssueDateAsWstring();
+
+public:
+	std::wstring GetFeatureTypeCodeByID(std::wstring id) override;
+	std::wstring GetFeatureTypeCodeByID(int id) override;
+
+	int GetFeatureCount() override;
+
+	IF::FeatureType* GetFeatureByIndex(int index) override;
 
 	std::vector<std::string> Query(MBR mbr) override;
 	std::vector<std::string> QueryToSurface(MBR mbr) override;

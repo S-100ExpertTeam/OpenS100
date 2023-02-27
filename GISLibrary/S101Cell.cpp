@@ -2172,8 +2172,12 @@ void S101Cell::InsertRecord(Record* record)
 
 void S101Cell::InsertInformationRecord(__int64 key, R_InformationRecord* record)
 {
-	m_infMap.SetAt(key, record);
-	vecInformation.push_back(record);
+	auto informationRecord = GetInformationRecord(key);
+	if (nullptr == informationRecord)
+	{
+		m_infMap.SetAt(key, record);
+		vecInformation.push_back(record);
+	}
 }
 
 void S101Cell::RemoveInformationRecord(__int64 key, R_InformationRecord* record)
@@ -2196,6 +2200,16 @@ R_InformationRecord* S101Cell::GetInformationRecord(std::wstring wstringKey)
 {
 	int rcid = std::stoll(wstringKey);
 	return GetInformationRecord(rcid);
+}
+
+R_InformationRecord* S101Cell::GetInformationRecordByIndex(int index)
+{
+	if (index >= 0 && index < vecInformation.size())
+	{
+		return vecInformation.at(index);
+	}
+
+	return nullptr;
 }
 
 POSITION S101Cell::GetInfoStartPosition()
@@ -2225,8 +2239,12 @@ std::vector<R_InformationRecord*>& S101Cell::GetVecInformation()
 
 void S101Cell::InsertPointRecord(__int64 key, R_PointRecord* record)
 {
-	m_ptMap.SetAt(key, record);
-	vecPoint.push_back(record);
+	auto pointRecord = GetPointRecord(key);
+	if (nullptr == pointRecord)
+	{
+		m_ptMap.SetAt(key, record);
+		vecPoint.push_back(record);
+	}
 }
 
 void S101Cell::RemovePointRecord(__int64 key, R_PointRecord* record)
@@ -2240,6 +2258,16 @@ R_PointRecord* S101Cell::GetPointRecord(__int64 key)
 	if (TRUE == m_ptMap.Lookup(key, item))
 	{
 		return item;
+	}
+
+	return nullptr;
+}
+
+R_PointRecord* S101Cell::GetPointRecordByIndex(int index)
+{
+	if (index >= 0 && index < vecPoint.size())
+	{
+		return vecPoint.at(index);
 	}
 
 	return nullptr;
@@ -2267,8 +2295,12 @@ std::vector<R_PointRecord*>& S101Cell::GetVecPoint()
 
 void S101Cell::InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record)
 {
-	m_mpMap.SetAt(key, record);
-	vecMultiPoint.push_back(record);
+	auto multiPointRecord = GetMultiPointRecord(key);
+	if (nullptr == multiPointRecord)
+	{
+		m_mpMap.SetAt(key, record);
+		vecMultiPoint.push_back(record);
+	}
 }
 
 void S101Cell::RemoveMultiPointRecord(__int64 key)
@@ -2297,6 +2329,16 @@ R_MultiPointRecord* S101Cell::GetMultiPointRecord(__int64 key)
 	return nullptr;
 }
 
+R_MultiPointRecord* S101Cell::GetMultiPointRecordByIndex(int index)
+{
+	if (index >= 0 && index < vecMultiPoint.size())
+	{
+		return vecMultiPoint.at(index);
+	}
+
+	return nullptr;
+}
+
 POSITION S101Cell::GetMultStartPosition()
 {
 	return m_mpMap.GetStartPosition();
@@ -2320,8 +2362,12 @@ std::vector<R_MultiPointRecord*>& S101Cell::GetVecMultiPoint()
 
 void S101Cell::InsertCurveRecord(__int64 key, R_CurveRecord* record)
 {
-	m_curMap.SetAt(key, record);
-	vecCurve.push_back(record);
+	auto curveRecord = GetCurveRecord(key);
+	if (curveRecord == nullptr)
+	{
+		m_curMap.SetAt(key, record);
+		vecCurve.push_back(record);
+	}
 }
 
 void S101Cell::RemoveCurveRecord(__int64 key, R_CurveRecord* record)
@@ -2335,6 +2381,16 @@ R_CurveRecord* S101Cell::GetCurveRecord(__int64 key)
 	if (TRUE == m_curMap.Lookup(key, item))
 	{
 		return item;
+	}
+
+	return nullptr;
+}
+
+R_CurveRecord* S101Cell::GetCurveRecordByIndex(int index)
+{
+	if (index >= 0 && index < vecCurve.size())
+	{
+		return vecCurve.at(index);
 	}
 
 	return nullptr;
@@ -2362,8 +2418,12 @@ std::vector<R_CurveRecord*>& S101Cell::GetVecCurve()
 
 void S101Cell::InsertCompositeCurveRecord(__int64 key, R_CompositeRecord* record)
 {
-	m_comMap.SetAt(key, record);
-	vecComposite.push_back(record);
+	auto compositeCurveRecord = GetCompositeCurveRecord(key);
+	if (nullptr == compositeCurveRecord)
+	{
+		m_comMap.SetAt(key, record);
+		vecComposite.push_back(record);
+	}
 }
 
 void S101Cell::RemoveCompositeCurveRecord(__int64 key, R_CompositeRecord* record)
@@ -2377,6 +2437,16 @@ R_CompositeRecord* S101Cell::GetCompositeCurveRecord(__int64 key)
 	if (TRUE == m_comMap.Lookup(key, item))
 	{
 		return item;
+	}
+
+	return nullptr;
+}
+
+R_CompositeRecord* S101Cell::GetCompositeCurveRecordByIndex(int index)
+{
+	if (index >= 0 && index < vecComposite.size())
+	{
+		return vecComposite.at(index);
 	}
 
 	return nullptr;
@@ -2404,8 +2474,22 @@ std::vector<R_CompositeRecord*>& S101Cell::GetVecComposite()
 
 void S101Cell::InsertSurfaceRecord(__int64 key, R_SurfaceRecord* record)
 {
-	m_surMap.SetAt(key, record);
-	vecSurface.push_back(record);
+	auto surfaceRecord = GetSurfaceRecord(key);
+	if (nullptr == surfaceRecord)
+	{
+		m_surMap.SetAt(key, record);
+		vecSurface.push_back(record);
+	}
+}
+
+R_SurfaceRecord* S101Cell::GetSurfaceRecordByIndex(int index)
+{
+	if (index >= 0 && index < vecSurface.size())
+	{
+		return vecSurface.at(index);
+	}
+
+	return nullptr;
 }
 
 void S101Cell::RemoveSurfaceRecord(__int64 key, R_SurfaceRecord* record)
@@ -2446,8 +2530,12 @@ std::vector<R_SurfaceRecord*>& S101Cell::GetVecSurface()
 
 void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
 {
-	m_feaMap.SetAt(key, record);
-	vecFeature.push_back(record);
+	auto featureRecord = GetFeatureRecord(key);
+	if (nullptr == featureRecord)
+	{
+		m_feaMap.SetAt(key, record);
+		vecFeature.push_back(record);
+	}
 }
 
 void S101Cell::RemoveFeatureRecord(__int64 key)
@@ -2476,6 +2564,16 @@ R_FeatureRecord* S101Cell::GetFeatureRecord(std::wstring wstringKey)
 {
 	auto key = std::stoll(wstringKey);
 	return GetFeatureRecord(key);
+}
+
+R_FeatureRecord* S101Cell::GetFeatureRecordByIndex(int index)
+{
+	if (index >= 0 && index < vecFeature.size())
+	{
+		return vecFeature.at(index);
+	}
+
+	return nullptr;
 }
 
 POSITION S101Cell::GetFeatureStartPosition()
@@ -4292,6 +4390,16 @@ std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
 	}
 
 	return L"";
+}
+
+int S101Cell::GetFeatureCount()
+{
+	return GetCount_FeatureTypeRecord();
+}
+
+IF::FeatureType* S101Cell::GetFeatureByIndex(int index)
+{
+	return GetFeatureRecordByIndex(index);
 }
 
 std::wstring S101Cell::GetChartName()

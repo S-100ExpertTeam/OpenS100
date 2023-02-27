@@ -1,16 +1,14 @@
-﻿//
-
-#include "pch.h"
+﻿#include "pch.h"
 #include "OpenS100.h"
 #include "DialogViewNoGeometry.h"
 #include "afxdialogex.h"
 #include "resource.h"
 
-#include "..\\GISLibrary\\CodeWithNumericCode.h"
-#include "..\\GISLibrary\\S100Layer.h"
-#include "..\\GISLibrary\\S101Cell.h"
-#include "..\\GISLibrary\\R_FeatureRecord.h"
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
+#include "../GISLibrary/CodeWithNumericCode.h"
+#include "../GISLibrary/S100Layer.h"
+#include "../GISLibrary/IF_FeatureType.h"
+
+#include "../FeatureCatalog/FeatureCatalogue.h"
 
 #include <string>
 #include <algorithm>
@@ -39,7 +37,7 @@ void CDialogViewNoGeometry::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST_NOGEOMETRY, m_ViewListNoGeometry);
 }
 
-void CDialogViewNoGeometry::SetNoGeometryFeatureList(S101Cell* cell)
+void CDialogViewNoGeometry::SetNoGeometryFeatureList(S100SpatialObject* cell)
 {
 	ngflist.clear();
 
@@ -49,29 +47,25 @@ void CDialogViewNoGeometry::SetNoGeometryFeatureList(S101Cell* cell)
 		return;
 	}
 
-	POSITION pos = cell->GetFeatureStartPosition();
-	m_cell = cell;
-	while (pos != NULL)
+	auto cnt = cell->GetFeatureCount();
+	for (int i = 0; i < cnt; i++)
 	{
-		__int64 key = 0;
-		R_FeatureRecord* fr = NULL;
-		cell->GetNextAssoc(pos, key, fr);
+		auto feature = cell->GetFeatureByIndex(i);
 
-		if (fr->m_spas.size() == 0)
+		if (feature && feature->IsNoGeometry())
 		{
-			int code = fr->m_frid.m_nftc;
+			auto code = feature->GetCodeAsWString(cell);
 
-			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
-			CodeWithNumericCode* nc = itor->second;
+			auto featureType = fc->GetFeatureType(code);
 
-			std::wstring codeStr = nc->m_code;
-			FeatureType *objFT = fc->GetFeatureTypes()->GetFeatureType().find(codeStr)->second;
-
-			CFeatureCodeString cs;
-			cs._name = objFT->GetCodeAsWString();
-			cs._id = fr->m_frid.m_name.RCID;
-			cs._fr = fr;
-			ngflist.push_back(cs); 
+			if (featureType)
+			{
+				CFeatureCodeString cs;
+				cs._name = featureType->GetCodeAsWString();
+				cs._id = feature->GetIDAsInteger();
+				cs._fr = feature;
+				ngflist.push_back(cs);
+			}
 		}
 	}
 
@@ -112,7 +106,7 @@ void CDialogViewNoGeometry::InitNonGeometryList()
 		CString id;
 		id.Format(L"%d", cs->_id);
 		int indexItem = m_ViewListNoGeometry.InsertItem(&lvi);
-		std::wstring CntCount = std::to_wstring(cs->_fr->m_fasc.size() + cs->_fr->m_inas.size());
+		std::wstring CntCount = std::to_wstring(cs->_fr->GetFeatureRelationCount() + cs->_fr->GetInformationRelationCount());
 
 		m_ViewListNoGeometry.SetItemText(indexItem, 0, id);
 		m_ViewListNoGeometry.SetItemText(indexItem, 1, cs->_name.c_str());
@@ -120,7 +114,6 @@ void CDialogViewNoGeometry::InitNonGeometryList()
 
 		iItem++;
 	}
-
 }
 
 void CDialogViewNoGeometry::OnBnClickedOk()

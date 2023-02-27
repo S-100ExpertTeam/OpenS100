@@ -2,7 +2,7 @@
 #include "Configuration_1.h"
 #include "Configuration_4.h"
 
-#include "..\\GeoMetryLibrary\\ENCConfiguration.h"
+#include "../GeoMetryLibrary/ENCConfiguration.h"
 
 class CGISViewerView;
 class FeatureCatalogue;

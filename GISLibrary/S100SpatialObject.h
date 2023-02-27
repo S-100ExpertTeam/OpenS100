@@ -10,6 +10,11 @@
 class PCOutputSchemaManager;
 class S100Layer;
 
+namespace IF
+{
+	class FeatureType;
+}
+
 class S100SpatialObject : public SpatialObject
 {
 public:
@@ -27,6 +32,11 @@ public:
 
 	virtual std::wstring GetFeatureTypeCodeByID(std::wstring id) { return L""; }
 	virtual std::wstring GetFeatureTypeCodeByID(int id) { return L""; }
+
+	virtual int GetFeatureCount() { return 0; }
+
+	virtual IF::FeatureType* GetFeature(std::string id) { return nullptr; };
+	virtual IF::FeatureType* GetFeatureByIndex(int index) { return nullptr; };
 
 	// input unit : WGS84
 	virtual std::vector<std::string> Query(MBR mbr) { return {}; };

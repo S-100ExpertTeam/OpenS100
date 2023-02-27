@@ -8,11 +8,12 @@ namespace IF
 {
 	class FeatureType
 	{
-		virtual std::string GetName(S100SpatialObject* so) {
+	public:
+		virtual std::string GetCode(S100SpatialObject* so) {
 			return "";
 		};
 
-		virtual std::wstring GetNameAsWString(S100SpatialObject* so) {
+		virtual std::wstring GetCodeAsWString(S100SpatialObject* so) {
 			return L"";
 		};
 
@@ -22,6 +23,22 @@ namespace IF
 
 		virtual std::wstring GetIDAsWString() {
 			return L"";
+		}
+
+		virtual int GetIDAsInteger() {
+			return 0;
+		}
+
+		virtual bool IsNoGeometry() {
+			return false;
+		}
+
+		virtual int GetFeatureRelationCount() {
+			return 0;
+		}
+
+		virtual int GetInformationRelationCount() {
+			return 0;
 		}
 	};
 }

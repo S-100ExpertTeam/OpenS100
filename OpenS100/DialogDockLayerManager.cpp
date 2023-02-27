@@ -5,8 +5,8 @@
 #include "afxdialogex.h"
 #include "resource.h"
 
-#include "..\\GISLibrary\\Layer.h"
-#include "..\\GISLibrary\\GISLibrary.h"
+#include "../GISLibrary/Layer.h"
+#include "../GISLibrary/GISLibrary.h"
 
 IMPLEMENT_DYNAMIC(CDialogDockLayerManager, CDialog)
 
