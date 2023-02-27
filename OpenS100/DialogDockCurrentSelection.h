@@ -32,6 +32,8 @@ public:
 
 	int nSelectedItem = -1;
 	CListCtrl m_ListCurrentSelection;
+
+private:
 	S100SpatialObject* m_Cell = nullptr;
 
 public:

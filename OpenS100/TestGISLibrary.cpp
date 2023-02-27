@@ -4,6 +4,7 @@
 #include "OpenS100View.h"
 #include "DockablePaneCurrentSelection.h"
 #include "DialogDockCurrentSelection.h"
+#include "DialogDockLayerManager.h"
 
 #include "../GISLibrary/R_DSGIR.h"
 #include "../GISLibrary/Layer.h"
@@ -70,7 +71,7 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 	if (layer)
 	{
 		auto key = theApp.m_DockablePaneCurrentSelection.pDlg->GetSelectedRecordName();
-		if (auto cell = (S101Cell*)theApp.m_DockablePaneCurrentSelection.pDlg->m_Cell)
+		if (auto cell = (S101Cell*)theApp.m_pDockablePaneLayerManager.pDlg->GetSelectedCell())
 		{
 			auto selectedFeature = cell->GetFeatureRecord(key);
 			if (selectedFeature)

@@ -6,6 +6,7 @@
 #include "resource.h"
 
 #include "../GISLibrary/Layer.h"
+#include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/GISLibrary.h"
 
 IMPLEMENT_DYNAMIC(CDialogDockLayerManager, CDialog)
@@ -76,6 +77,13 @@ int CDialogDockLayerManager::GetSelectedLayerIndex()
 {
 	int result = listCtrlLayers.GetNextItem(-1, LVNI_SELECTED);
 	return result;
+}
+
+S101Cell* CDialogDockLayerManager::GetSelectedCell()
+{
+	auto index = GetSelectedLayerIndex();
+	auto layer = (S100Layer*)theApp.gisLib->GetLayer(index);
+	return (S101Cell*)layer->GetSpatialObject();
 }
 
 void CDialogDockLayerManager::OnButtonDelete()  //delete layer

@@ -11,6 +11,7 @@ class COpenS100View;
 class R_FeatureRecord;
 class S101Cell;
 class S413Cell;
+
 class CDialogDockLayerManager : public CDialog
 {
 	DECLARE_DYNAMIC(CDialogDockLayerManager)
@@ -48,6 +49,8 @@ public:
 	virtual BOOL OnInitDialog();
 
 	int GetSelectedLayerIndex();
+
+	S101Cell* GetSelectedCell();
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
