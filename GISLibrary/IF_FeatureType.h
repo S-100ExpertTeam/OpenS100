@@ -1,34 +1,18 @@
 #pragma once
 
-#include "S100SpatialObject.h"
+#include "IF_ObjectType.h"
+
+#include "../FeatureCatalog/SpatialPrimitiveType.h"
+
+#include "../S100Geometry/SGeometry.h"
 
 #include <string>
 
-namespace IF
+namespace S100Interface
 {
-	class FeatureType
+	class FeatureType : public ObjectType
 	{
 	public:
-		virtual std::string GetCode(S100SpatialObject* so) {
-			return "";
-		};
-
-		virtual std::wstring GetCodeAsWString(S100SpatialObject* so) {
-			return L"";
-		};
-
-		virtual std::string GetID() {
-			return "";
-		}
-
-		virtual std::wstring GetIDAsWString() {
-			return L"";
-		}
-
-		virtual int GetIDAsInteger() {
-			return 0;
-		}
-
 		virtual bool IsNoGeometry() {
 			return false;
 		}
@@ -37,8 +21,16 @@ namespace IF
 			return 0;
 		}
 
-		virtual int GetInformationRelationCount() {
-			return 0;
+		virtual std::string GetAssociatedFeatureID(int index) {
+			return "";
+		}
+
+		virtual SpatialPrimitiveType GetSpatialPrimitiveType() {
+			return SpatialPrimitiveType::none;
+		}
+
+		virtual SGeometry* GetGeometry() {
+			return nullptr;
 		}
 	};
 }

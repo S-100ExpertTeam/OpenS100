@@ -494,11 +494,6 @@ int R_FeatureRecord::GetAttributeIndex(ATTR* attr)
 	return 0;
 }
 
-SGeometry* R_FeatureRecord::GetGeometry()
-{
-	return m_geometry;
-}
-
 SPAS* R_FeatureRecord::GetSPAS()
 {
 	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
@@ -543,22 +538,6 @@ void R_FeatureRecord::SetVectorRecord(R_VectorRecord* record)
 	}
 }
 
-std::string R_FeatureRecord::GetCode(S100SpatialObject* so)
-{
-	auto cell = (S101Cell*)so;
-	if (cell)
-	{
-		return pugi::as_utf8(cell->GetFeatureTypeCodeByID(GetRCID()));
-	}
-
-	return "";
-}
-
-std::wstring R_FeatureRecord::GetCodeAsWString(S100SpatialObject* so)
-{
-	return pugi::as_wide(GetCode(so));
-}
-
 std::string R_FeatureRecord::GetID()
 {
 	return std::to_string(GetRCID());
@@ -582,6 +561,62 @@ bool R_FeatureRecord::IsNoGeometry()
 int R_FeatureRecord::GetFeatureRelationCount()
 {
 	return m_fasc.size();
+}
+
+std::string R_FeatureRecord::GetAssociatedFeatureID(int index)
+{
+	if (index >= 0 && index < GetFeatureRelationCount())
+	{
+		auto i = m_fasc.begin();
+		std::advance(i, index);
+		return (*i)->m_name.GetRCIDasString();
+	}
+
+	return "";
+}
+
+std::string R_FeatureRecord::GetAssociatedInformationID(int index)
+{
+	if (index >= 0 && index < GetInformationRelationCount())
+	{
+		auto i = m_inas.begin();
+		std::advance(i, index);
+		return (*i)->m_name.GetRCIDasString();
+	}
+
+	return "";
+}
+
+SpatialPrimitiveType R_FeatureRecord::GetSpatialPrimitiveType()
+{
+	auto rcnm = GetSPASRCNM();
+	if (rcnm == 0)
+	{
+		return SpatialPrimitiveType::noGeometry;
+	}
+	else if (rcnm == 110)
+	{
+		return SpatialPrimitiveType::point;
+	}
+	else if (rcnm == 115)
+	{
+		return SpatialPrimitiveType::pointSet;
+	}
+	else if (rcnm == 120 || rcnm == 125)
+	{
+		return SpatialPrimitiveType::curve;
+	}
+	else if (rcnm == 130)
+	{
+		return SpatialPrimitiveType::surface;
+	}
+
+	return SpatialPrimitiveType::none;
+}
+
+SGeometry* R_FeatureRecord::GetGeometry()
+{
+	return m_geometry;
 }
 
 int R_FeatureRecord::GetInformationRelationCount()

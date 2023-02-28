@@ -282,3 +282,35 @@ int R_InformationRecord::GetAttributeIndex(ATTR* attr)
 
 	return 0;
 }
+
+std::string R_InformationRecord::GetID()
+{
+	return std::to_string(GetRCID());
+}
+
+std::wstring R_InformationRecord::GetIDAsWString()
+{
+	return std::to_wstring(GetRCID());
+}
+
+int R_InformationRecord::GetIDAsInteger()
+{
+	return GetRCID();
+}
+
+int R_InformationRecord::GetInformationRelationCount()
+{
+	return m_inas.size();
+}
+
+std::string R_InformationRecord::GetAssociatedInformationID(int index)
+{
+	if (index >= 0 && index < GetInformationRelationCount())
+	{
+		auto i = m_inas.begin();
+		std::advance(i, index);
+		return (*i)->m_name.GetRCIDasString();
+	}
+
+	return "";
+}

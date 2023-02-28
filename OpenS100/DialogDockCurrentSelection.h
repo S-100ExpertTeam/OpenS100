@@ -44,7 +44,7 @@ public:
 
 	void OnMenuRemoveAll();
 	void DeleteItem(CString id);
-	void UpdateListTest(CStringArray *csa, S101Cell *cell, CString isCtrlClicked);
+	void UpdateListTest(CStringArray *csa, S100SpatialObject* cell, CString isCtrlClicked);
 	long long GetSelectedRecordName();
 
 protected:

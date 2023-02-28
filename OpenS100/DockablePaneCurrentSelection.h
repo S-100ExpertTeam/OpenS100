@@ -1,12 +1,13 @@
 #pragma once
 
+#include "../GISLibrary/S100Interface.h"
+
 #include <string>
 #include <map> 
 
 class COpenS100View;
 class CurrentSelection;
 class CDialogDockCurrentSelection;
-class S101Cell;
 
 class CDockablePaneCurrentSelection : public CDockablePane
 {
@@ -27,7 +28,7 @@ public:
 
 public:
 	void RemoveAll();
-	void UpdateListTest(CStringArray *csa, S101Cell *cell, CString isCtrlClicked);
+	void UpdateListTest(CStringArray *csa, S100SpatialObject* cell, CString isCtrlClicked);
 	void DeleteItem(CString id);
 
 protected:

@@ -6,7 +6,7 @@
 
 #include "../GISLibrary/CodeWithNumericCode.h"
 #include "../GISLibrary/S100Layer.h"
-#include "../GISLibrary/IF_FeatureType.h"
+#include "../GISLibrary/S100Interface.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -50,11 +50,11 @@ void CDialogViewNoGeometry::SetNoGeometryFeatureList(S100SpatialObject* cell)
 	auto cnt = cell->GetFeatureCount();
 	for (int i = 0; i < cnt; i++)
 	{
-		auto feature = cell->GetFeatureByIndex(i);
+		auto feature = cell->GetFeatureTypeByIndex(i);
 
 		if (feature && feature->IsNoGeometry())
 		{
-			auto code = feature->GetCodeAsWString(cell);
+			auto code = cell->GetFeatureTypeCodeByID(feature->GetIDAsInteger());
 
 			auto featureType = fc->GetFeatureType(code);
 

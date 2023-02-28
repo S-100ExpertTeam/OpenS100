@@ -53,7 +53,7 @@ public:
 	
 	bool isMoved = false;
 
-	S101Cell* encPick = nullptr;
+	S100SpatialObject* encPick = nullptr;
 	std::wstring featurePick; // selected feature ID
 
 	// Variables related to mouse change points.
@@ -157,7 +157,7 @@ public:
 	void CopyLayer();
 	void DeleteSelectedFeature();
 
-	void SetPick(S101Cell* enc = nullptr, std::wstring featureID = L"");
+	void SetPick(S100SpatialObject* enc = nullptr, std::wstring featureID = L"");
 };
 
 

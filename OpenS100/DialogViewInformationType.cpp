@@ -49,38 +49,36 @@ BOOL CDialogViewInformationType::OnInitDialog()
 	return true;
 }
 
-void CDialogViewInformationType::SetInformationFeatureList(S101Cell* cell) 
+void CDialogViewInformationType::SetInformationFeatureList(S100SpatialObject* s100Dataset)
 {
+	this->s100Dataset = s100Dataset;
+
 	ngflist.clear();
-	POSITION pos = cell->GetInfoStartPosition();
-	auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
+	auto fc = ((S100Layer*)s100Dataset->m_pLayer)->GetFeatureCatalog();
 	if (nullptr == fc)
 	{
 		return;
 	}
 
-	m_cell = cell;
-	while (pos != NULL)
+	int cnt = s100Dataset->GetInformationCount();
+	for (int i = 0; i < cnt; i++)
 	{
-		__int64 key = 0;
-		R_InformationRecord* ir = NULL;
-		cell->GetNextAssoc(pos, key, ir);
-
-		int code = ir->m_irid.NITC();
-
-		auto itor = cell->m_dsgir.m_itcs->m_arr.find(code);
-		CodeWithNumericCode* nc = itor->second;
-
-		std::wstring codeStr = nc->m_code;
-		InformationType *objIT = fc->GetInformationTypes()->GetInformationTypePointer().find(codeStr)->second;
-
-		// Feature ID
-		CInformationCodeString cs;
-		cs._name = objIT->GetCodeAsWString();
-		cs._id = ir->m_irid.m_name.RCID;
-		cs._ir = ir;
-		ngflist.push_back(cs);
+		auto informationType = s100Dataset->GetInformationTypeByIndex(i);
+		if (informationType)
+		{
+			auto code = s100Dataset->GetInformationTypeCodeByID(informationType->GetIDAsInteger());
+			auto fcInformationType = fc->GetInformationType(code);
+			if (fcInformationType)
+			{
+				CInformationCodeString cs;
+				cs._name = code;
+				cs._id = informationType->GetIDAsInteger();
+				cs._ir = informationType;
+				ngflist.push_back(cs);
+			}
+		}
 	}
+	
 	sort(ngflist.begin(), ngflist.end());
 	InitInformationFeatureList();
 }
@@ -88,7 +86,7 @@ void CDialogViewInformationType::SetInformationFeatureList(S101Cell* cell)
 void CDialogViewInformationType::InitInformationFeatureList() 
 {
 	m_ViewListInformationType.DeleteAllItems();
-	auto fc = ((S100Layer*)m_cell->m_pLayer)->GetFeatureCatalog();
+	auto fc = ((S100Layer*)s100Dataset->m_pLayer)->GetFeatureCatalog();
 	if (nullptr == fc)
 	{
 		return;
@@ -124,7 +122,7 @@ void CDialogViewInformationType::InitInformationFeatureList()
 			tmp1 = cs->_name.c_str();
 		}
 		std::wstring cnt;
-		cnt = std::to_wstring(cs->_ir->m_inas.size());
+		cnt = std::to_wstring(cs->_ir->GetInformationRelationCount());
 
 		m_ViewListInformationType.SetItemText(indexItem, 0, id);
 		m_ViewListInformationType.SetItemText(indexItem, 1, cs->_name.c_str());
@@ -161,7 +159,7 @@ void CDialogViewInformationType::OnBnClickedOk()
 			csCnt.Format(m_ViewListInformationType.GetItemText(idx,2)); //cnt
 			csa.Add(isCtrlClicked + _T("|||") + csFrid + _T("|||") + csFrid + _T("|||") + L"-" + _T("|||") + L"-" + _T("|||") + L"-" + _T("|||") + csFeatureName + _T("|||") + L"0" + _T("|||") + L"Information");
 
-			theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, m_cell, isCtrlClicked);
+			theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, s100Dataset, isCtrlClicked);
 		}
 	}
 	CDialogEx::OnOK();

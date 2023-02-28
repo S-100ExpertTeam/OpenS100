@@ -10,7 +10,6 @@
 #include "../GISLibrary/F_FASC.h"
 #include "../GISLibrary/R_FeatureRecord.h"
 #include "../GISLibrary/R_InformationRecord.h"
-#include "../GISLibrary/S101Cell.h"
 #include "../GISLibrary/F_INAS.h"
 #include "../GISLibrary/CodeWithNumericCode.h"
 #include "../GISLibrary/GISLibrary.h"
@@ -80,9 +79,9 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 			nSelectedItem = pNMLV->iItem;
 
-			if (m_Cell && m_Cell->GetProductNumber() == 101)
+			if (m_Cell)
 			{
-				auto cell = (S101Cell*)m_Cell;
+				auto cell = m_Cell;
 				FeatureCatalogue* fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 				if (nullptr == fc)
 				{
@@ -128,7 +127,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 						{
 							if (true == layer->IsOn())
 							{
-								theApp.pView->SetPick((S101Cell*)layer->GetSpatialObject(), stringKey);
+								theApp.pView->SetPick(cell, stringKey);
 								theApp.pView->Invalidate(FALSE);
 							}
 						}
@@ -149,8 +148,8 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 				pos = m_ListCurrentSelection.GetFirstSelectedItemPosition();
 				idx = 0;
 
-				std::list<R_FeatureRecord*> flist;
-				std::list<R_InformationRecord*> infoList;
+				std::list<S100Interface::FeatureType*> flist;
+				std::list<S100Interface::InformationType*> infoList;
 
 				while (pos)
 				{
@@ -160,20 +159,24 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					objId.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_ID));
 					featureType.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_TYPE)); // feature/information type
 					__int64 objIdN = _tcstoui64(objId, NULL, 10);
-					R_FeatureRecord* rfr;
-					R_InformationRecord* ifr;
 
 					if (featureType == L"Feature")
 					{
 						__int64 key = ((__int64)100) << 32 | objIdN;
-						rfr = cell->GetFeatureRecord(key);
-						flist.push_back(rfr);
+						auto feature = cell->GetFeatureType(std::to_string(key));
+						if (feature)
+						{
+							flist.push_back(feature);
+						}
 					}
 					else if (featureType == L"Information")
 					{
 						__int64 key = ((__int64)150) << 32 | objIdN;
-						ifr = cell->GetInformationRecord(key);
-						infoList.push_back(ifr);
+						auto information = cell->GetInformationType(std::to_string(key));
+						if (information)
+						{
+							infoList.push_back(information);
+						}
 					}
 				}
 
@@ -223,7 +226,7 @@ BOOL CDialogDockCurrentSelection::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
-void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *cell, CString isCtrlClicked)
+void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialObject* cell, CString isCtrlClicked)
 {
 	CString tmp;
 	m_Cell = cell;

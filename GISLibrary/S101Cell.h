@@ -200,6 +200,7 @@ public:
 	void InsertInformationRecord(__int64 key, R_InformationRecord* record);
 	void RemoveInformationRecord(__int64 key, R_InformationRecord* record);
 	R_InformationRecord* GetInformationRecord(__int64 key);
+	R_InformationRecord* GetInformationRecord(std::string key);
 	R_InformationRecord* GetInformationRecord(std::wstring wstringKey);
 	R_InformationRecord* GetInformationRecordByIndex(int index);
 	POSITION GetInfoStartPosition();
@@ -267,6 +268,7 @@ public:
 	void RemoveFeatureRecord(__int64 key);
 
 	R_FeatureRecord* GetFeatureRecord(__int64 key);
+	R_FeatureRecord* GetFeatureRecord(std::string key);
 	R_FeatureRecord* GetFeatureRecord(std::wstring wstringKey);
 	R_FeatureRecord* GetFeatureRecordByIndex(int index);
 	POSITION GetFeatureStartPosition();
@@ -352,9 +354,26 @@ public:
 	std::wstring GetFeatureTypeCodeByID(std::wstring id) override;
 	std::wstring GetFeatureTypeCodeByID(int id) override;
 
-	int GetFeatureCount() override;
+	std::wstring GetInformationTypeCodeByID(std::wstring id) override;
+	std::wstring GetInformationTypeCodeByID(int id) override;
 
-	IF::FeatureType* GetFeatureByIndex(int index) override;
+	int GetFeatureCount() override;
+	int GetInformationCount() override;
+
+	S100Interface::FeatureType* GetFeatureType(std::string id) override;
+	S100Interface::FeatureType* GetFeatureTypeByIndex(int index) override;
+
+	S100Interface::InformationType* GetInformationType(std::string id) override;
+	S100Interface::InformationType* GetInformationTypeByIndex(int index) override;
+
+	std::string GetFeatureAssociationCode(S100Interface::FeatureType* featureType, int index) override;
+	std::string GetFeatureAssociationRoleCode(S100Interface::FeatureType* featureType, int index) override;
+
+	std::string GetInformationAssociationCode(S100Interface::FeatureType* featureType, int index) override;
+	std::string GetInformationAssociationRoleCode(S100Interface::FeatureType* featureType, int index) override;
+
+	std::string GetInformationAssociationCode(S100Interface::InformationType* informationType, int index) override;
+	std::string GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index) override;
 
 	std::vector<std::string> Query(MBR mbr) override;
 	std::vector<std::string> QueryToSurface(MBR mbr) override;

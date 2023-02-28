@@ -1,5 +1,6 @@
 #pragma once
 
+#include "S100Interface.h"
 #include "SpatialObject.h"
 
 #include "../GeoMetryLibrary/MBR.h"
@@ -10,7 +11,7 @@
 class PCOutputSchemaManager;
 class S100Layer;
 
-namespace IF
+namespace S100Interface
 {
 	class FeatureType;
 }
@@ -33,10 +34,26 @@ public:
 	virtual std::wstring GetFeatureTypeCodeByID(std::wstring id) { return L""; }
 	virtual std::wstring GetFeatureTypeCodeByID(int id) { return L""; }
 
-	virtual int GetFeatureCount() { return 0; }
+	virtual std::wstring GetInformationTypeCodeByID(std::wstring id) { return L""; }
+	virtual std::wstring GetInformationTypeCodeByID(int id) { return L""; }
 
-	virtual IF::FeatureType* GetFeature(std::string id) { return nullptr; };
-	virtual IF::FeatureType* GetFeatureByIndex(int index) { return nullptr; };
+	virtual int GetFeatureCount() { return 0; }
+	virtual int GetInformationCount() { return 0; }
+
+	virtual S100Interface::FeatureType* GetFeatureType(std::string id) { return nullptr; };
+	virtual S100Interface::FeatureType* GetFeatureTypeByIndex(int index) { return nullptr; };
+
+	virtual S100Interface::InformationType* GetInformationType(std::string id) { return nullptr; };
+	virtual S100Interface::InformationType* GetInformationTypeByIndex(int index) { return nullptr; };
+
+	virtual std::string GetFeatureAssociationCode(S100Interface::FeatureType* featureType, int index) { return ""; }
+	virtual std::string GetFeatureAssociationRoleCode(S100Interface::FeatureType* featureType, int index) { return ""; }
+
+	virtual std::string GetInformationAssociationCode(S100Interface::FeatureType* featureType, int index) { return ""; }
+	virtual std::string GetInformationAssociationRoleCode(S100Interface::FeatureType* featureType, int index) { return ""; }
+
+	virtual std::string GetInformationAssociationCode(S100Interface::InformationType* informationType, int index) { return ""; }
+	virtual std::string GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index) { return ""; }
 
 	// input unit : WGS84
 	virtual std::vector<std::string> Query(MBR mbr) { return {}; };

@@ -470,6 +470,8 @@
     <ClInclude Include="host_functions.h" />
     <ClInclude Include="IC2D.h" />
     <ClInclude Include="IF_FeatureType.h" />
+    <ClInclude Include="IF_InformationType.h" />
+    <ClInclude Include="IF_ObjectType.h" />
     <ClInclude Include="ISO8211Fuc.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LayerManager.h" />
@@ -488,6 +490,7 @@
     <ClInclude Include="R_DDR.h" />
     <ClInclude Include="R_VectorRecord.h" />
     <ClInclude Include="S100EditRender.h" />
+    <ClInclude Include="S100Interface.h" />
     <ClInclude Include="S100Layer.h" />
     <ClInclude Include="S100SpatialObject.h" />
     <ClInclude Include="S100Utilities.h" />

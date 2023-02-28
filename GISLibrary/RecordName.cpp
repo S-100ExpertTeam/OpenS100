@@ -39,6 +39,11 @@ int RecordName::GetLength()
 	return 5;
 }
 
+std::string RecordName::GetRCIDasString()
+{
+	return std::to_string(RCID);
+}
+
 std::wstring RecordName::GetRCIDasWstring() 
 {
 	return std::to_wstring(RCID);

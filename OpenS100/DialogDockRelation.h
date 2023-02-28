@@ -4,13 +4,14 @@
 #include "afxcmn.h"
 #include "resource.h"
 
+#include "../GISLibrary/S100Interface.h"
+
 #include <list>
 
 class CDialogDockRelation;
 class COpenS100View;
 class R_FeatureRecord;
 class R_InformationRecord;
-class S101Cell;
 
 class CDialogDockRelation : public CDialog
 {
@@ -27,11 +28,11 @@ public:
 	enum { IDD = IDD_DIALOG_DOCK_RELATION };
 
 	int nSelectedItem;
-	S101Cell* m_cell;
+	S100SpatialObject* m_cell;
 
 public:
 	void AdjustLayout();
-	void SetFeatureList(S101Cell* cell, std::list<R_FeatureRecord*> flist, std::list<R_InformationRecord*> infoList);
+	void SetFeatureList(S100SpatialObject* cell, std::list<S100Interface::FeatureType*> flist, std::list<S100Interface::InformationType*> infoList);
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

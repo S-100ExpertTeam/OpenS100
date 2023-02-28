@@ -3,9 +3,10 @@
 #include "afxwin.h"
 #include "InformationCodeString.h"
 
+#include "../GISLibrary/S100SpatialObject.h"
+
 #include <vector>
 
-class S101Cell;
 class CDialogViewInformationType : public CDialogEx
 {
 	DECLARE_DYNAMIC(CDialogViewInformationType)
@@ -18,10 +19,10 @@ public:
 	enum { IDD = IDD_DIALOG_INFORMATIONTYPE };
 #endif
 public:
-	void SetInformationFeatureList(S101Cell* cell);
+	void SetInformationFeatureList(S100SpatialObject* s100Dataset);
 	std::vector<CInformationCodeString> ngflist;
 	void InitInformationFeatureList();
-	S101Cell* m_cell;
+	S100SpatialObject* s100Dataset = nullptr;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);  
 	virtual BOOL OnInitDialog();

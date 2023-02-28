@@ -63,7 +63,7 @@ void S101Creator::SetFC(FeatureCatalogue* fc)
 void S101Creator::SetENC(S101Cell* enc)
 {
 	this->enc = enc;
-	if (enc->m_pLayer)
+	if (enc && enc->m_pLayer)
 	{
 		this->layer = (S100Layer*)enc->m_pLayer;
 	}

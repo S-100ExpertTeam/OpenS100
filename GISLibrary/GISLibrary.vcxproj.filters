@@ -998,6 +998,15 @@
     <ClInclude Include="IF_FeatureType.h">
       <Filter>S100\Interface</Filter>
     </ClInclude>
+    <ClInclude Include="IF_ObjectType.h">
+      <Filter>S100\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="S100Interface.h">
+      <Filter>S100\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IF_InformationType.h">
+      <Filter>S100\Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GISLibrary.rc">

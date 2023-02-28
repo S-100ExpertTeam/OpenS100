@@ -146,7 +146,7 @@ void CDockablePaneCurrentSelection::DeleteItem(CString id)
 	pDlg->DeleteItem(id);
 }
 
-void CDockablePaneCurrentSelection::UpdateListTest(CStringArray *csa, S101Cell *cell, CString isCtrlClicked)
+void CDockablePaneCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialObject* cell, CString isCtrlClicked)
 {
 	pDlg->UpdateListTest(csa, cell, isCtrlClicked);
 }

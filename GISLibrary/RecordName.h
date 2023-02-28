@@ -31,5 +31,6 @@ public:
 public:
 	__int64 GetName();
 	int GetLength();
+	std::string GetRCIDasString();
 	std::wstring GetRCIDasWstring();
 };

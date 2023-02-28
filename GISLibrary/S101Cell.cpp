@@ -2196,9 +2196,15 @@ R_InformationRecord* S101Cell::GetInformationRecord(__int64 key)
 	return nullptr;
 }
 
+R_InformationRecord* S101Cell::GetInformationRecord(std::string key)
+{
+	auto iKey = std::stoll(key);
+	return GetInformationRecord(iKey);
+}
+
 R_InformationRecord* S101Cell::GetInformationRecord(std::wstring wstringKey)
 {
-	int rcid = std::stoll(wstringKey);
+	auto rcid = std::stoll(wstringKey);
 	return GetInformationRecord(rcid);
 }
 
@@ -2558,6 +2564,12 @@ R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
 	}
 
 	return nullptr;
+}
+
+R_FeatureRecord* S101Cell::GetFeatureRecord(std::string key)
+{
+	auto iKey = std::stoll(key);
+	return GetFeatureRecord(iKey);
 }
 
 R_FeatureRecord* S101Cell::GetFeatureRecord(std::wstring wstringKey)
@@ -4392,14 +4404,136 @@ std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
 	return L"";
 }
 
+std::wstring S101Cell::GetInformationTypeCodeByID(std::wstring id)
+{
+	auto key = std::stoi(id);
+	return GetInformationTypeCodeByID(key);
+}
+
+std::wstring S101Cell::GetInformationTypeCodeByID(int id)
+{
+	RecordName rn(150, id);
+	auto ir = GetInformationRecord(rn.GetName());
+	if (ir)
+	{
+		return std::wstring(m_dsgir.GetInformationCode(ir->GetNumericCode()));
+	}
+
+	return L"";
+}
+
 int S101Cell::GetFeatureCount()
 {
 	return GetCount_FeatureTypeRecord();
 }
 
-IF::FeatureType* S101Cell::GetFeatureByIndex(int index)
+int S101Cell::GetInformationCount()
+{
+	return GetCount_InformationRecord();
+}
+
+S100Interface::FeatureType* S101Cell::GetFeatureType(std::string id)
+{
+	return GetFeatureRecord(id);
+}
+
+S100Interface::FeatureType* S101Cell::GetFeatureTypeByIndex(int index)
 {
 	return GetFeatureRecordByIndex(index);
+}
+
+S100Interface::InformationType* S101Cell::GetInformationType(std::string id)
+{
+	return GetInformationRecord(id);
+}
+
+S100Interface::InformationType* S101Cell::GetInformationTypeByIndex(int index)
+{
+	return GetInformationRecordByIndex(index);
+}
+
+std::string S101Cell::GetFeatureAssociationCode(S100Interface::FeatureType* featureType, int index)
+{
+	if (index < 0 || index >= featureType->GetFeatureRelationCount())
+	{
+		return "";
+	}
+
+	auto fr = (R_FeatureRecord*)featureType;
+	
+	auto i = fr->m_fasc.begin();
+	std::advance(i, index);
+	return pugi::as_utf8(std::wstring(m_dsgir.GetFeatureAssociationCode((*i)->m_nfac)).c_str());
+}
+
+std::string S101Cell::GetFeatureAssociationRoleCode(S100Interface::FeatureType* featureType, int index)
+{
+	if (index < 0 || index >= featureType->GetFeatureRelationCount())
+	{
+		return "";
+	}
+
+	auto fr = (R_FeatureRecord*)featureType;
+
+	auto i = fr->m_fasc.begin();
+	std::advance(i, index);
+	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
+}
+
+std::string S101Cell::GetInformationAssociationCode(S100Interface::FeatureType* featureType, int index)
+{
+	if (index < 0 || index >= featureType->GetInformationRelationCount())
+	{
+		return "";
+	}
+
+	auto fr = (R_FeatureRecord*)featureType;
+
+	auto i = fr->m_inas.begin();
+	std::advance(i, index);
+	return pugi::as_utf8(std::wstring(m_dsgir.GetInformationAssociationCode((*i)->m_niac)).c_str());
+}
+
+std::string S101Cell::GetInformationAssociationRoleCode(S100Interface::FeatureType* featureType, int index)
+{
+	if (index < 0 || index >= featureType->GetInformationRelationCount())
+	{
+		return "";
+	}
+
+	auto fr = (R_FeatureRecord*)featureType;
+
+	auto i = fr->m_inas.begin();
+	std::advance(i, index);
+	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
+}
+
+std::string S101Cell::GetInformationAssociationCode(S100Interface::InformationType* informationType, int index)
+{
+	if (index < 0 || index >= informationType->GetInformationRelationCount())
+	{
+		return "";
+	}
+
+	auto fr = (R_InformationRecord*)informationType;
+
+	auto i = fr->m_inas.begin();
+	std::advance(i, index);
+	return pugi::as_utf8(std::wstring(m_dsgir.GetInformationAssociationCode((*i)->m_niac)).c_str());
+}
+
+std::string S101Cell::GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index)
+{
+	if (index < 0 || index >= informationType->GetInformationRelationCount())
+	{
+		return "";
+	}
+
+	auto fr = (R_InformationRecord*)informationType;
+
+	auto i = fr->m_inas.begin();
+	std::advance(i, index);
+	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
 }
 
 std::wstring S101Cell::GetChartName()

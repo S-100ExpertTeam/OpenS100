@@ -22,7 +22,7 @@ struct ATTR;
 struct SPAS;
 
 // Feature Type Record
-class R_FeatureRecord : public IF::FeatureType, Record
+class R_FeatureRecord : public S100Interface::FeatureType, public Record
 {
 public:
 	R_FeatureRecord();
@@ -100,20 +100,23 @@ public:
 
 	int GetAttributeIndex(ATTR* attr);
 
-	SGeometry* GetGeometry();
-
 	SPAS* GetSPAS();
 	SPAS* CreateEmptySPAS();
 
 	void SetVectorRecord(R_VectorRecord* record);
 
 public:
-	std::string GetCode(S100SpatialObject* so) override;
-	std::wstring GetCodeAsWString(S100SpatialObject* so) override;
+	//std::string GetCode(S100SpatialObject* so) override;
+	//std::wstring GetCodeAsWString(S100SpatialObject* so) override;
 	std::string GetID() override;
 	std::wstring GetIDAsWString() override;
 	int GetIDAsInteger() override;
+	int GetInformationRelationCount() override;
+
 	bool IsNoGeometry() override;
 	int GetFeatureRelationCount() override;
-	int GetInformationRelationCount() override;
+	std::string GetAssociatedFeatureID(int index) override;
+	std::string GetAssociatedInformationID(int index) override;
+	SpatialPrimitiveType GetSpatialPrimitiveType() override;
+	SGeometry* GetGeometry() override;
 };

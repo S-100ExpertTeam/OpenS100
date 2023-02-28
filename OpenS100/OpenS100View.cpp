@@ -1025,8 +1025,8 @@ void COpenS100View::DrawPickReport(HDC& _hdc, int offsetX, int offsetY)
 	}
 	
 	Graphics gPick(_hdc);
-	auto frPick = encPick->GetFeatureRecord(featurePick);
-	if (frPick && frPick->m_geometry)
+	auto frPick = encPick->GetFeatureType(pugi::as_utf8(featurePick));
+	if (frPick && !frPick->IsNoGeometry())
 	{
 		DrawS101PickReport(gPick, offsetX, offsetY);
 	}
@@ -1034,15 +1034,17 @@ void COpenS100View::DrawPickReport(HDC& _hdc, int offsetX, int offsetY)
 
 void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 {
-	auto frPick = encPick->GetFeatureRecord(featurePick);
+	auto frPick = encPick->GetFeatureType(pugi::as_utf8(featurePick));
 
 	// Point
-	if (frPick->m_geometry->GetType() == SGeometryType::Point)
+	if (frPick->GetGeometry()->GetType() == SGeometryType::Point)
 	{
+		auto pt = (SPoint*)frPick->GetGeometry();
+
 		long x = 0;
 		long y = 0;
 
-		theApp.gisLib->WorldToDevice(((SPoint*)(frPick->m_geometry))->x, ((SPoint*)(frPick->m_geometry))->y, &x, &y);
+		theApp.gisLib->WorldToDevice(pt->x, pt->y, &x, &y);
 		x += offsetX;
 		y += offsetY;
 
@@ -1059,9 +1061,9 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		g.DrawLine(&Pen(Color(255, 0, 0), 4), x + 20, y - 20, x + 8, y - 20);
 
 	}
-	else if (frPick->m_geometry->GetType() == SGeometryType::MultiPoint)
+	else if (frPick->GetGeometry()->GetType() == SGeometryType::MultiPoint)
 	{
-		auto multiPoint = (SMultiPoint*)frPick->m_geometry;
+		auto multiPoint = (SMultiPoint*)frPick->GetGeometry();
 
 		for (int i = 0; i < multiPoint->GetNumPoints(); i++)
 		{
@@ -1076,11 +1078,11 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		}
 	}
 	// Line
-	else if (frPick->m_geometry->GetType() == SGeometryType::CompositeCurve)
+	else if (frPick->GetGeometry()->GetType() == SGeometryType::CompositeCurve)
 	{
 		SolidBrush brush(Color(255, 0, 0));
 
-		SCompositeCurve* cc = (SCompositeCurve*)(frPick->m_geometry);
+		auto cc = (SCompositeCurve*)(frPick->GetGeometry());
 
 		for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
 		{
@@ -1108,11 +1110,11 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 			delete[] pickPoints;
 		}
 	}
-	else if (frPick->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+	else if (frPick->GetGeometry()->GetType() == SGeometryType::CurveHasOrient)
 	{
 		SolidBrush brush(Color(255, 0, 0));
 
-		SCurve* c = (SCurve*)(frPick->m_geometry);
+		auto c = (SCurve*)(frPick->GetGeometry());
 
 		Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
 
@@ -1136,9 +1138,9 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		delete[] pickPoints;
 	}
 	// Area
-	else if (frPick->m_geometry->GetType() == SGeometryType::Surface)
+	else if (frPick->GetGeometry()->GetType() == SGeometryType::Surface)
 	{
-		auto surface = (SSurface*)frPick->m_geometry;
+		auto surface = (SSurface*)frPick->GetGeometry();
 		auto geometry = surface->GetNewD2Geometry(theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler());
 
 		D2D1_COLOR_F color{};
@@ -1163,9 +1165,12 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 	auto hdc = g.GetHDC();
 	CRect rect = theApp.gisLib->GetScaler()->GetScreenRect();
 	theApp.gisLib->D2.Begin(hdc, rect);
-	s100EditRender.Set(encPick, frPick);
-	//s100EditRender.SelectByScreen(0, 0);
-	s100EditRender.ShowPoint();
+	
+	if (encPick->GetProductNumber() == 101)
+	{
+		s100EditRender.Set((S101Cell*)encPick, (R_FeatureRecord*)frPick);
+		s100EditRender.ShowPoint();
+	}
 	theApp.gisLib->D2.End();
 	g.ReleaseHDC(hdc);
 }
@@ -1722,11 +1727,17 @@ void COpenS100View::DeleteSelectedFeature()
 	SetPick(nullptr, nullptr);
 }
 
-void COpenS100View::SetPick(S101Cell* enc, std::wstring featureID)
+void COpenS100View::SetPick(S100SpatialObject* enc, std::wstring featureID)
 {
 	encPick = enc;
 	featurePick = featureID;
 
-	s101Creator.fc = theApp.gisLib->GetFC();
-	s101Creator.enc = enc;
+	if (enc && enc->GetProductNumber() == 101)
+	{
+		s101Creator.Set(theApp.gisLib->GetFC(), (S101Cell*)enc);
+	}
+	else
+	{
+		s101Creator.Set(nullptr, nullptr);
+	}
 }

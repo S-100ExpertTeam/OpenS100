@@ -12,7 +12,7 @@ public:
 	int _id; 
 	std::wstring _name;
 	//R_FeatureRecord* _fr;
-	IF::FeatureType* _fr = nullptr;
+	S100Interface::FeatureType* _fr = nullptr;
 
 public:
 	//Operator overloading, does not work before sort.
