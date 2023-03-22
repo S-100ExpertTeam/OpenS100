@@ -47,4 +47,6 @@ public:
 	int GetIDAsInteger() override;
 	int GetInformationRelationCount() override;
 	std::string GetAssociatedInformationID(int index) override;
+
+	int GetAttributeCount() override;
 };

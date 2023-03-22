@@ -16,10 +16,12 @@
 #include "R_CompositeRecord.h"
 #include "R_SurfaceRecord.h"
 
-#include "..\\S100Geometry\\SGeometry.h"
-#include "..\\S100Geometry\\SPoint.h"
-#include "..\\S100Geometry\\SSurface.h"
-#include "..\\S100Geometry\\SCurve.h"
+#include "../S100Geometry/SGeometry.h"
+#include "../S100Geometry/SPoint.h"
+#include "../S100Geometry/SSurface.h"
+#include "../S100Geometry/SCurve.h"
+
+#include <pugixml.hpp>
 
 R_FeatureRecord::R_FeatureRecord(void)
 {
@@ -622,4 +624,33 @@ SGeometry* R_FeatureRecord::GetGeometry()
 int R_FeatureRecord::GetInformationRelationCount()
 {
 	return m_inas.size();
+}
+
+int R_FeatureRecord::GetAttributeCount()
+{
+	int size = 0;
+
+	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
+	{
+		auto attr = *i;
+		for (auto j = attr->m_arr.begin(); j != attr->m_arr.end(); j++)
+		{
+			size++;
+		}
+	}
+
+	return size;
+}
+
+std::string R_FeatureRecord::GetAttributeValue(int index)
+{
+	auto attributes = GetAllAttributes();
+	int count = attributes.size();
+
+	if (count > 0 && index < count)
+	{
+		return pugi::as_utf8(std::wstring(attributes.at(index)->m_atvl));
+	}
+
+	return "";
 }

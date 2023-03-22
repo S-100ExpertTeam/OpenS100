@@ -314,3 +314,19 @@ std::string R_InformationRecord::GetAssociatedInformationID(int index)
 
 	return "";
 }
+
+int R_InformationRecord::GetAttributeCount()
+{
+	int size = 0;
+
+	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
+	{
+		auto attr = *i;
+		for (auto j = attr->m_arr.begin(); j != attr->m_arr.end(); j++)
+		{
+			size++;
+		}
+	}
+
+	return size;
+}

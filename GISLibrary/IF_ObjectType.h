@@ -26,5 +26,13 @@ namespace S100Interface
 		virtual std::string GetAssociatedInformationID(int index) {
 			return "";
 		}
+
+		virtual int GetAttributeCount() {
+			return 0;
+		}
+
+		virtual std::string GetAttributeValue(int index) {
+			return "";
+		}
 	};
 }

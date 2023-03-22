@@ -33,7 +33,7 @@
 #include "../GISLibrary/RIAS.h"
 #include "../GISLibrary/F_INAS.h"
 #include "../GISLibrary/SpatialObject.h"
-#include "../GISLibrary/S101Cell.h"
+//#include "../GISLibrary/S101Cell.h"
 #include "../GISLibrary/GISLibrary.h"
 #include "../GISLibrary/S100SpatialObject.h"
 #include "../GISLibrary/S100Layer.h"
@@ -284,6 +284,8 @@ void CDockablePaneEditWindow::SetInformationType(std::wstring informationID)
 
 void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes over here.
 {
+	auto selectedID = pugi::as_utf8(selectedFeatureID);
+
 	DeleteAttributeItems();
 	std::vector<CMFCPropertyGridProperty*> pAttrItemList;
 
@@ -295,7 +297,9 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 	if (m_cell->GetProductNumber() == 101)
 	{
 		S101Cell* cell = (S101Cell*)m_cell;
-		auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
+
+		auto s100Layer = (S100Layer*)m_cell->GetLayer();
+		auto fc = s100Layer->GetFeatureCatalog();
 		if (nullptr == fc)
 		{
 			return;
@@ -303,10 +307,24 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 
 		if (m_selectedObjectType == L"Feature")
 		{
+			auto feature = m_cell->GetFeatureType(selectedID);
+			if (nullptr == feature)
+			{
+				return;
+			}
+
 			auto m_pFeature = cell->GetFeatureRecord(selectedFeatureID);
 			if (m_pFeature->m_attr.size() == 0)
 			{
 				return;
+			}
+
+			int numAttribute = feature->GetAttributeCount();
+			for (int i = 0; i < numAttribute; i++)
+			{
+				auto value = feature->GetAttributeValue(i);
+				OutputDebugString(pugi::as_wide(value).c_str());
+				OutputDebugString(L"\n");
 			}
 
 			for (auto itorParent = m_pFeature->m_attr.begin(); itorParent != m_pFeature->m_attr.end(); itorParent++)
@@ -317,7 +335,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 					ATTR* attr = *itor;
 
 					auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
-					SimpleAttribute* sa = fc->GetSimpleAttribute(aitor->second->m_code.GetBuffer());
+					SimpleAttribute* sa = fc->GetSimpleAttribute(std::wstring(aitor->second->m_code));
 
 					if (sa)
 					{

@@ -119,4 +119,7 @@ public:
 	std::string GetAssociatedInformationID(int index) override;
 	SpatialPrimitiveType GetSpatialPrimitiveType() override;
 	SGeometry* GetGeometry() override;
+	
+	int GetAttributeCount() override;
+	std::string GetAttributeValue(int index) override;
 };
