@@ -5,7 +5,6 @@
  * All permission granted to use this code as long as you retain this notice
  * and refere to orginal Material when part of this code is re-puplished
 */
-#include "PropertyGridAttributeModify.h"
 #include "PropertyGridVectorModify.h"
 #include "PropertyGridDrawingCommands.h"
 #include "MFCTabCtrlMsgToParent.h"

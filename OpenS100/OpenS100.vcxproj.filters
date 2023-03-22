@@ -98,9 +98,6 @@
     <ClInclude Include="InformationCodeString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PropertyGridAttributeModify.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PropertyGridVectorModify.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -159,9 +156,6 @@
       <Filter>Dialog</Filter>
     </ClCompile>
     <ClCompile Include="InformationCodeString.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PropertyGridAttributeModify.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PropertyGridVectorModify.cpp">

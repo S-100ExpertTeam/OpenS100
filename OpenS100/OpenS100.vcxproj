@@ -229,7 +229,6 @@
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MFCTabCtrlMsgToParent.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="PropertyGridAttributeModify.h" />
     <ClInclude Include="PropertyGridDrawingCommands.h" />
     <ClInclude Include="PropertyGridVectorModify.h" />
     <ClInclude Include="resource.h" />
@@ -263,7 +262,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="PropertyGridAttributeModify.cpp" />
     <ClCompile Include="PropertyGridDrawingCommands.cpp" />
     <ClCompile Include="PropertyGridVectorModify.cpp" />
     <ClCompile Include="TestGISLibrary.cpp" />
