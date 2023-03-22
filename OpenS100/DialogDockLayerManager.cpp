@@ -43,8 +43,9 @@ END_MESSAGE_MAP()
 int CDialogDockLayerManager::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDialog::OnCreate(lpCreateStruct) == -1)
+	{
 		return -1;
-
+	}
 
 	return 0;
 }

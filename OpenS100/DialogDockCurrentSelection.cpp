@@ -7,11 +7,6 @@
 #include <vector>
 
 #include "../GISLibrary/S100Layer.h"
-#include "../GISLibrary/F_FASC.h"
-#include "../GISLibrary/R_FeatureRecord.h"
-#include "../GISLibrary/R_InformationRecord.h"
-#include "../GISLibrary/F_INAS.h"
-#include "../GISLibrary/CodeWithNumericCode.h"
 #include "../GISLibrary/GISLibrary.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"

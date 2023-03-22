@@ -107,7 +107,7 @@ public:
 	S100SpatialObject *m_cell = nullptr;
 	CMFCTabCtrlMsgToParent	m_wndTabs;
 
-	static CPropertyGridAttributeModify		m_wndListAttribute;
+	static CPropertyGridVectorModify	m_wndListAttribute;
 
 	int m_vIndex;
 
@@ -147,11 +147,11 @@ public:
 	void SettingEnumType(std::vector<ListedValue*> list, CMFCPropertyGridProperty* pSuperProperty);
 
 	void SetSpatialObject(S100SpatialObject *object);
-	SpatialObject *GetSpatialObject();
-	S101Cell* GetS101Cell();
+	//SpatialObject *GetSpatialObject();
+	//S101Cell* GetS101Cell();
 
-	CString GetActiveTabName();
-	bool IsAttributeTab();
+	//CString GetActiveTabName();
+	//bool IsAttributeTab();
 
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lp);
@@ -167,6 +167,6 @@ public:
 		DWORD_PTR pointer_3 = NULL, 
 		DWORD_PTR pointer_4 = NULL);
 
-	afx_msg LRESULT OnPropertyChanged(WPARAM wparam, LPARAM lparam);
+	//afx_msg LRESULT OnPropertyChanged(WPARAM wparam, LPARAM lparam);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

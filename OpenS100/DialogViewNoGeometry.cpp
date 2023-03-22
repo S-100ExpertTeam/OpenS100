@@ -4,7 +4,6 @@
 #include "afxdialogex.h"
 #include "resource.h"
 
-#include "../GISLibrary/CodeWithNumericCode.h"
 #include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/S100Interface.h"
 

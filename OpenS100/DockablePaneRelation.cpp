@@ -1,5 +1,3 @@
-// DockablePaneRelation.cpp : implementation file
-//
 #include "pch.h"
 #include "DockablePaneRelation.h"
 #include "DialogDockRelation.h"

@@ -1,5 +1,3 @@
-// DockablePaneLayerManager.cpp : implementation file
-//
 #include "pch.h"
 #include "DockablePaneLayerManager.h"
 #include "DialogDockLayerManager.h"

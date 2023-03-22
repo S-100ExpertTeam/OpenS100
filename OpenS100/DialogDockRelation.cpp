@@ -2,14 +2,7 @@
 #include "OpenS100.h"
 #include "DialogDockRelation.h"
 
-#include "../GISLibrary/S101Cell.h"
 #include "../GISLibrary/S100Layer.h"
-#include "../GISLibrary/F_FASC.h"
-#include "../GISLibrary/F_INAS.h"
-#include "../GISLibrary/R_InformationRecord.h"
-#include "../GISLibrary/R_FeatureRecord.h"
-#include "../GISLibrary/CodeWithNumericCode.h"
-
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
 IMPLEMENT_DYNAMIC(CDialogDockRelation, CDialog)

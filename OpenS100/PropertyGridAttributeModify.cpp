@@ -36,7 +36,7 @@ CPropertyGridAttributeModify::~CPropertyGridAttributeModify()
 BEGIN_MESSAGE_MAP(CPropertyGridAttributeModify, CMFCPropertyGridCtrl)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_RBUTTONDOWN()
-	ON_WM_LBUTTONDBLCLK()
+	//ON_WM_LBUTTONDBLCLK()
 END_MESSAGE_MAP()
 
 
@@ -94,49 +94,49 @@ void CPropertyGridAttributeModify::SetSpatialObject(SpatialObject *spatialObject
 {
 	this->spatialObject = spatialObject;
 }
-void CPropertyGridAttributeModify::ComplexAttriIndexnumSet(int num)
-{
-	this->ComplexAttriIndexnum = num;
-}
-int CPropertyGridAttributeModify::ComplexAttriIndexnumGet()
-{
-	return ComplexAttriIndexnum;
-}
-void CPropertyGridAttributeModify::OnAttributeeditOpen()
-{
-	if (pSelectedProperty != nullptr) //If the selected value is not NULL,
-	{
-		CString Value = pSelectedProperty->GetValue();
-		ShellExecute(NULL, _T("open"), _T("iexplore"), NULL, NULL, SW_SHOW); //Open the Explorer.
-	}
-}
-void CPropertyGridAttributeModify::OnAtttributeeditDelete() //delete Attribute
-{
-	OnDeleteAttribute();
-}
+//void CPropertyGridAttributeModify::ComplexAttriIndexnumSet(int num)
+//{
+//	this->ComplexAttriIndexnum = num;
+//}
+//int CPropertyGridAttributeModify::ComplexAttriIndexnumGet()
+//{
+//	return ComplexAttriIndexnum;
+//}
+//void CPropertyGridAttributeModify::OnAttributeeditOpen()
+//{
+//	if (pSelectedProperty != nullptr) //If the selected value is not NULL,
+//	{
+//		CString Value = pSelectedProperty->GetValue();
+//		ShellExecute(NULL, _T("open"), _T("iexplore"), NULL, NULL, SW_SHOW); //Open the Explorer.
+//	}
+//}
+//void CPropertyGridAttributeModify::OnAtttributeeditDelete() //delete Attribute
+//{
+//	OnDeleteAttribute();
+//}
 
-void CPropertyGridAttributeModify::OnLButtonDblClk(UINT nFlags, CPoint point)
-{
-	CMFCPropertyGridProperty::ClickArea clickArea;
-	CMFCPropertyGridProperty *pProp = HitTest(point, &clickArea);
-
-	// Get addable attributes 
-	if (pProp)
-	{
-			auto md = (MultiData*)pProp->GetData();
-			auto featureRecord = (R_FeatureRecord*)md->data.at(1);
-			auto attr = (ATTR*)md->data.at(2);
-			auto a = theApp.gisLib->creator.GetAddableAttributes(featureRecord, attr);
-			for (auto i = a.begin(); i != a.end(); i++)
-			{
-				CString str = (*i)->GetAttributeCodeAsWstring().c_str();
-				OutputDebugString(str + L"\n");
-			}
-	}
-
-	if (clickArea == CMFCPropertyGridProperty::ClickArea::ClickExpandBox)
-	{
-		CMFCPropertyGridCtrl::OnLButtonDblClk(nFlags, point);
-		return;
-	}
-}
+//void CPropertyGridAttributeModify::OnLButtonDblClk(UINT nFlags, CPoint point)
+//{
+//	CMFCPropertyGridProperty::ClickArea clickArea;
+//	CMFCPropertyGridProperty *pProp = HitTest(point, &clickArea);
+//
+//	// Get addable attributes 
+//	if (pProp)
+//	{
+//			auto md = (MultiData*)pProp->GetData();
+//			auto featureRecord = (R_FeatureRecord*)md->data.at(1);
+//			auto attr = (ATTR*)md->data.at(2);
+//			auto a = theApp.gisLib->creator.GetAddableAttributes(featureRecord, attr);
+//			for (auto i = a.begin(); i != a.end(); i++)
+//			{
+//				CString str = (*i)->GetAttributeCodeAsWstring().c_str();
+//				OutputDebugString(str + L"\n");
+//			}
+//	}
+//
+//	if (clickArea == CMFCPropertyGridProperty::ClickArea::ClickExpandBox)
+//	{
+//		CMFCPropertyGridCtrl::OnLButtonDblClk(nFlags, point);
+//		return;
+//	}
+//}

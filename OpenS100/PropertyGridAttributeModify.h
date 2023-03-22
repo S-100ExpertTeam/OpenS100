@@ -36,11 +36,11 @@ public:
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point); 
 	afx_msg void OnDeleteAttribute();
 
-	void ComplexAttriIndexnumSet(int num);
-	int ComplexAttriIndexnumGet();
+	//void ComplexAttriIndexnumSet(int num);
+	//int ComplexAttriIndexnumGet();
 
-	afx_msg void OnAttributeeditOpen();
-	afx_msg void OnAtttributeeditDelete();
+	//afx_msg void OnAttributeeditOpen();
+	//afx_msg void OnAtttributeeditDelete();
 
-	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+	//afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 };

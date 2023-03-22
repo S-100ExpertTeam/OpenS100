@@ -7,10 +7,6 @@
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 #include "../FeatureCatalog/InformationType.h"
-
-#include "../GISLibrary/S101Cell.h"
-#include "../GISLibrary/R_InformationRecord.h"
-#include "../GISLibrary/CodeWithNumericCode.h"
 #include "../GISLibrary/S100Layer.h"
 
 #include <algorithm>

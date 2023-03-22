@@ -48,7 +48,7 @@ const CString tabNameVector = L"Vector";
 
 // CFeatureView
 //
-CPropertyGridAttributeModify	CDockablePaneEditWindow::m_wndListAttribute;
+CPropertyGridVectorModify	CDockablePaneEditWindow::m_wndListAttribute;
 
 
 
@@ -68,89 +68,90 @@ BEGIN_MESSAGE_MAP(CDockablePaneEditWindow, CDockablePane)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_ERASEBKGND()
-	ON_REGISTERED_MESSAGE(AFX_WM_PROPERTY_CHANGED, OnPropertyChanged)
+	//ON_REGISTERED_MESSAGE(AFX_WM_PROPERTY_CHANGED, OnPropertyChanged)
 
 END_MESSAGE_MAP()
 
 // CFeatureView message handlers
-LRESULT CDockablePaneEditWindow::OnPropertyChanged(WPARAM wparam, LPARAM lparam)
-{
-	if (m_cell->m_FileType == FILE_S_100_VECTOR)
-	{
-		S101Cell* cell = (S101Cell*)m_cell;
+//LRESULT CDockablePaneEditWindow::OnPropertyChanged(WPARAM wparam, LPARAM lparam)
+//{
+//	if (m_cell->m_FileType == FILE_S_100_VECTOR)
+//	{
+//		S101Cell* cell = (S101Cell*)m_cell;
+//
+//		UINT nID = (UINT)wparam;
+//		CMFCPropertyGridProperty *pProp = (CMFCPropertyGridProperty*)lparam;
+//
+//		if (!pProp)
+//			return 0;
+//
+//		if (nID == IDC_PROPERTY_GRID_VECTOR)
+//		{
+//			std::wstring name = pProp->GetName();
+//			CString value = pProp->GetValue().bstrVal;
+//
+//			CString xValue, yValue;
+//
+//			AfxExtractSubString(xValue, value, 0, ',');
+//			AfxExtractSubString(yValue, value, 1, ',');
+//
+//			int x = (int)(_wtof(xValue) * cell->m_dsgir.m_dssi.m_cmfx);
+//			int y = (int)(_wtof(yValue) * cell->m_dsgir.m_dssi.m_cmfy);
+//
+//
+//		}
+//		else if (nID == IDC_PROPERTY_GRID_ATTRIBUTE)
+//		{
+//			MultiData* md = (MultiData*)pProp->GetData();
+//			ATTR* attr = (ATTR*)md->data[2];
+//
+//			if (!attr)
+//			{
+//				AfxMessageBox(L"ERROR");
+//				return 0;
+//			}
+//
+//			auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
+//			if (nullptr == fc)
+//			{
+//				return 0;
+//			}
+//
+//			auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
+//
+//			SimpleAttribute* sa = fc->GetSimpleAttribute(aitor->second->m_code.GetBuffer());
+//
+//			if (sa)
+//			{
+//				if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+//				{
+//					std::wstring propValue = pProp->GetValue().bstrVal;
+//
+//					int numindex = (int)(propValue.find('.')) + 1;
+//					if (numindex > 0)
+//					{
+//						propValue.erase(propValue.begin(), propValue.begin() + numindex);
+//					}
+//
+//					auto listedValue = sa->GetListedValue(propValue);
+//					if (listedValue)
+//					{
+//						attr->m_atvl = propValue.c_str();
+//					}
+//				}
+//				else
+//				{
+//					attr->m_atvl = pProp->GetValue().bstrVal;
+//				}
+//			}
+//
+//			theApp.gisLib->BuildPortrayalCatalogue(cell->m_pLayer);
+//			theApp.pView->MapRefresh();
+//		}
+//	}
+//	return 0;
+//}
 
-		UINT nID = (UINT)wparam;
-		CMFCPropertyGridProperty *pProp = (CMFCPropertyGridProperty*)lparam;
-
-		if (!pProp)
-			return 0;
-
-		if (nID == IDC_PROPERTY_GRID_VECTOR)
-		{
-			std::wstring name = pProp->GetName();
-			CString value = pProp->GetValue().bstrVal;
-
-			CString xValue, yValue;
-
-			AfxExtractSubString(xValue, value, 0, ',');
-			AfxExtractSubString(yValue, value, 1, ',');
-
-			int x = (int)(_wtof(xValue) * cell->m_dsgir.m_dssi.m_cmfx);
-			int y = (int)(_wtof(yValue) * cell->m_dsgir.m_dssi.m_cmfy);
-
-
-		}
-		else if (nID == IDC_PROPERTY_GRID_ATTRIBUTE)
-		{
-			MultiData* md = (MultiData*)pProp->GetData();
-			ATTR* attr = (ATTR*)md->data[2];
-
-			if (!attr)
-			{
-				AfxMessageBox(L"ERROR");
-				return 0;
-			}
-
-			auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
-			if (nullptr == fc)
-			{
-				return 0;
-			}
-
-			auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
-
-			SimpleAttribute* sa = fc->GetSimpleAttribute(aitor->second->m_code.GetBuffer());
-
-			if (sa)
-			{
-				if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
-				{
-					std::wstring propValue = pProp->GetValue().bstrVal;
-
-					int numindex = (int)(propValue.find('.')) + 1;
-					if (numindex > 0)
-					{
-						propValue.erase(propValue.begin(), propValue.begin() + numindex);
-					}
-
-					auto listedValue = sa->GetListedValue(propValue);
-					if (listedValue)
-					{
-						attr->m_atvl = propValue.c_str();
-					}
-				}
-				else
-				{
-					attr->m_atvl = pProp->GetValue().bstrVal;
-				}
-			}
-
-			theApp.gisLib->BuildPortrayalCatalogue(cell->m_pLayer);
-			theApp.pView->MapRefresh();
-		}
-	}
-	return 0;
-}
 int CDockablePaneEditWindow::OnCreate(LPCREATESTRUCT lp)
 {
 	if (CDockablePane::OnCreate(lp) == -1)
@@ -224,6 +225,7 @@ int CDockablePaneEditWindow::OnCreate(LPCREATESTRUCT lp)
 	m_wndTabs.AddTab(&m_wndDrawingCommands, L"Drawing Commands", (UINT)0, 0);
 
 	::ShowScrollBar(m_wndDrawingCommands.GetSafeHwnd(), SB_VERT, FALSE);
+
 	return 0;
 }
 
@@ -339,6 +341,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 						}
 
 						CMFCPropertyGridProperty *pAttribute = new CMFCPropertyGridProperty(sa->GetName().c_str(), value.c_str());
+						
 						pAttrItemList.push_back(pAttribute);
 						pAttribute->SetDescription(sa->GetDefinition().c_str());
 						MultiData *multiData = InsertPropertyMultiData(111, pAttribute, (DWORD_PTR)m_pFeature, (DWORD_PTR)attr, 0);
@@ -360,6 +363,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 						}
 						else
 						{
+							pAttribute->AllowEdit(FALSE);
 							m_wndListAttribute.AddProperty(pAttribute);
 						}
 
@@ -374,7 +378,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 						if (ca)
 						{
 							CMFCPropertyGridProperty *pAttribute = new CMFCPropertyGridProperty(ca->GetName().c_str());
-
+							
 							pAttrItemList.push_back(pAttribute);
 							pAttribute->SetDescription(ca->GetDefinition().c_str());
 
@@ -395,6 +399,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 							else
 							{
 								//Simply add attributes.
+								pAttribute->AllowEdit(FALSE);
 								m_wndListAttribute.AddProperty(pAttribute);
 							}
 						}
@@ -404,6 +409,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 							msg.Format(L"[%s] attribute not exist in feature catalog - EDIT WINDOW", aitor->second->m_code);
 
 							CMFCPropertyGridProperty *pAttribute = new CMFCPropertyGridProperty(aitor->second->m_code);
+							
 							pAttrItemList.push_back(pAttribute);
 
 							MultiData *multiData = InsertPropertyMultiData(111, pAttribute, (DWORD_PTR)m_pFeature, (DWORD_PTR)attr, 0);
@@ -415,6 +421,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 							}
 							else
 							{
+								pAttribute->AllowEdit(FALSE);
 								m_wndListAttribute.AddProperty(pAttribute);
 							}
 						}
@@ -468,7 +475,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 						}
 
 						CMFCPropertyGridProperty *pAttribute = new CMFCPropertyGridProperty(sa->GetName().c_str(), value.c_str());
-
+						
 						pAttrItemList.push_back(pAttribute);
 						pAttribute->SetDescription(sa->GetDefinition().c_str());
 
@@ -481,6 +488,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 						}
 						else
 						{
+							pAttribute->AllowEdit(FALSE);
 							m_wndListAttribute.AddProperty(pAttribute);
 						}
 
@@ -490,8 +498,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 							{
 								ListedValue* lv = *itor;
 
-								pAttribute->AddOption(lv->GetLabel().c_str());
-			
+								pAttribute->AddOption(lv->GetLabel().c_str());			
 							}
 						}
 					}
@@ -502,7 +509,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 						if (ca)
 						{
 							CMFCPropertyGridProperty *pAttribute = new CMFCPropertyGridProperty(ca->GetName().c_str());
-
+							
 							pAttrItemList.push_back(pAttribute);
 							pAttribute->SetDescription(ca->GetDefinition().c_str());
 							MultiData *multiData = InsertPropertyMultiData(111, pAttribute, (DWORD_PTR)m_pInformation, (DWORD_PTR)attr, 1);
@@ -514,6 +521,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 							}
 							else
 							{
+								pAttribute->AllowEdit(FALSE);
 								m_wndListAttribute.AddProperty(pAttribute);
 							}
 						}
@@ -529,6 +537,11 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 
 void CDockablePaneEditWindow::SetVectors()
 {
+	if (nullptr == m_cell)
+	{
+		return;
+	}
+
 	auto s100Layer = (S100Layer*)m_cell->GetLayer();
 	if (101 == s100Layer->GetProductNumber())
 	{
@@ -1126,45 +1139,45 @@ MultiData* CDockablePaneEditWindow::InsertPropertyMultiData(
 void CDockablePaneEditWindow::SetSpatialObject(S100SpatialObject *object)
 {
 	m_cell = object;
-	m_wndListAttribute.SetSpatialObject(m_cell);
+	//m_wndListAttribute.SetSpatialObject(m_cell);
 }
 
-SpatialObject *CDockablePaneEditWindow::GetSpatialObject()
-{
-	return m_cell;
-}
+//SpatialObject *CDockablePaneEditWindow::GetSpatialObject()
+//{
+//	return m_cell;
+//}
 
-S101Cell* CDockablePaneEditWindow::GetS101Cell()
-{
-	return (S101Cell*)m_cell;
-}
+//S101Cell* CDockablePaneEditWindow::GetS101Cell()
+//{
+//	return (S101Cell*)m_cell;
+//}
 
-CString CDockablePaneEditWindow::GetActiveTabName()
-{
-	int tabNum = m_wndTabs.GetActiveTab();
+//CString CDockablePaneEditWindow::GetActiveTabName()
+//{
+//	int tabNum = m_wndTabs.GetActiveTab();
+//
+//	CString tabName;
+//
+//	m_wndTabs.GetTabLabel(tabNum, tabName);
+//
+//	return tabName;
+//}
 
-	CString tabName;
-
-	m_wndTabs.GetTabLabel(tabNum, tabName);
-
-	return tabName;
-}
-
-bool CDockablePaneEditWindow::IsAttributeTab()
-{
-	int tabNum = m_wndTabs.GetActiveTab();
-
-	CString tabName;
-
-	m_wndTabs.GetTabLabel(tabNum, tabName);
-
-	if (0 == tabName.Compare(tabNameAttribute))
-	{
-		return true;
-	}
-
-	return false;
-}
+//bool CDockablePaneEditWindow::IsAttributeTab()
+//{
+//	int tabNum = m_wndTabs.GetActiveTab();
+//
+//	CString tabName;
+//
+//	m_wndTabs.GetTabLabel(tabNum, tabName);
+//
+//	if (0 == tabName.Compare(tabNameAttribute))
+//	{
+//		return true;
+//	}
+//
+//	return false;
+//}
 
 void CDockablePaneEditWindow::ClearVector()
 {
