@@ -234,7 +234,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestGISLibrary.h" />
-    <ClInclude Include="TreeCtrlExt.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InformationCodeString.cpp" />
@@ -265,7 +264,6 @@
     <ClCompile Include="PropertyGridDrawingCommands.cpp" />
     <ClCompile Include="PropertyGridVectorModify.cpp" />
     <ClCompile Include="TestGISLibrary.cpp" />
-    <ClCompile Include="TreeCtrlExt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OpenS100.rc" />

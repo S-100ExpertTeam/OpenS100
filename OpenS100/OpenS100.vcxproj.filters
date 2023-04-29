@@ -92,9 +92,6 @@
     <ClInclude Include="Configuration_4.h">
       <Filter>Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="TreeCtrlExt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="InformationCodeString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -159,9 +156,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PropertyGridVectorModify.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TreeCtrlExt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ConfigrationDlg.cpp">
