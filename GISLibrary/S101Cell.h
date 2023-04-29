@@ -88,8 +88,8 @@ public:
 	void RemoveAll(void);
 	void ClearAll(void); 
 
-	bool Open(CString _filepath);
-	bool Save(std::wstring path);
+	bool Open(CString _filepath) override;
+	bool Save(std::wstring path) override;
 
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();

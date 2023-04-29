@@ -1,9 +1,8 @@
-﻿
-//
-#pragma once
+﻿#pragma once
 
 #ifndef __AFXWIN_H__
 #endif
+
 #include "resource.h" 
 #include "DockablePaneLayerManager.h"
 #include "DockablePaneCurrentSelection.h"

@@ -12,11 +12,7 @@
 
 #include <afxwin.h>         
 #include <afxext.h>         
-
-
 #include <afxdisp.h>        
-
-
 
 #ifndef _AFX_NO_OLE_SUPPORT
 #include <afxdtctl.h>          
@@ -27,15 +23,10 @@
 
 #include <afxcontrolbars.h>    
 
-
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC // include Microsoft memory leak detection procedures
 #define _INC_MALLOC      // exclude standard memory alloc procedures
 #endif
-
-
-
-
 
 #include <gdiPlus.h>
 #include <afxcview.h>
@@ -44,9 +35,6 @@ using namespace Gdiplus;
 
 #include "Common.h"
 
-
-
-
 #define ZOOM_FACTOR 30
 
 #define WM_TRANSLATION_MESSAGE_TO_PARENT_DELETE_ATTRIBUTE	80001
@@ -54,7 +42,6 @@ using namespace Gdiplus;
 #define WM_TRANSLATION_MESSAGE_TO_PARENT_DELETE_VECTOR		80102
 #define WM_TRANSLATION_MESSAGE_TO_PARENT_SELECTED_VECTOR	80103
 #define WM_TRANSLATION_MESSAGE_TO_CURRENT_SELECTION_ADD	    80104
-
 
 #ifdef _UNICODE
 #if defined _M_IX86
@@ -65,9 +52,6 @@ using namespace Gdiplus;
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #endif
 #endif
-
-
-
 
 #ifndef D2_SAFE_RELEASE
 #define D2_SAFE_RELEASE
@@ -84,5 +68,3 @@ inline void SafeRelease(Interface **ppInterfaceToRelease)
 }
 
 #endif
-
-

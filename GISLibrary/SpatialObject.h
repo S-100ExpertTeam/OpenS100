@@ -20,7 +20,9 @@ private:
 	CString m_FileName; // File name (including extension)
 
 public:
-	virtual bool Open(CString _filepath);
+	virtual bool Open(CString _filepath) { return true; }
+	virtual bool Save(std::wstring path) { return true; }
+
 	virtual void Draw(CDC *pDC, Scaler *scaler, double offset = 0) {};
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0) {};
 	virtual void Draw(HDC &hDC, Scaler *scaler, int priority, int geoType, double offset = 0) {};

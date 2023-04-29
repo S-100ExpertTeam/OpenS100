@@ -1,5 +1,7 @@
 #pragma once
+
 #include "afxtabctrl.h"
+
 class CMFCTabCtrlMsgToParent :
 	public CMFCTabCtrl
 {

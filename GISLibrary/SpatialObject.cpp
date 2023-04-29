@@ -11,11 +11,6 @@ SpatialObject::~SpatialObject(void)
 
 }
 
-bool SpatialObject::Open(CString _filepath)
-{
-	return true;
-}
-
 void SpatialObject::SetLayer(Layer* value)
 {
 	m_pLayer = value;

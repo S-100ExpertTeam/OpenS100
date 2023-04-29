@@ -1,9 +1,7 @@
 #include "pch.h"
 #include "PropertyGridVectorModify.h"
 #include "resource.h"
-
-#include "../GISLibrary/F_ATTR.h"
-#include "..\\OpenS100\\OpenS100.h"
+#include "OpenS100.h"
 
 // CPropertyModify
 
@@ -24,8 +22,6 @@ BEGIN_MESSAGE_MAP(CPropertyGridVectorModify, CMFCPropertyGridCtrl)
 	ON_WM_RBUTTONDOWN()
 	ON_WM_LBUTTONDBLCLK()
 END_MESSAGE_MAP()
-
-
 
 //This is an event when you click vector information.
 void CPropertyGridVectorModify::OnLButtonDown(UINT nFlags, CPoint point)

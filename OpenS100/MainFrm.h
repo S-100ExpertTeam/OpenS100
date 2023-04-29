@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "DockablePaneLayerManager.h"
 #include "DockablePaneCurrentSelection.h"
 #include "DockablePaneRelation.h"

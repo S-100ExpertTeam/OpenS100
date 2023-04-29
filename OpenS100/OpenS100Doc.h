@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 class COpenS100Doc : public CDocument
 {
 protected:

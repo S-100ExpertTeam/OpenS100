@@ -1,4 +1,5 @@
 #pragma once
+
 class CPropertyGridVectorModify : public CMFCPropertyGridCtrl
 {
 	DECLARE_DYNAMIC(CPropertyGridVectorModify)

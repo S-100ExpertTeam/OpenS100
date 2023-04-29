@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MFCTabCtrlMsgToParent.h"
-#include "..\\OpenS100\\OpenS100.h"
+
+#include "OpenS100.h"
 
 CMFCTabCtrlMsgToParent::CMFCTabCtrlMsgToParent()
 {
