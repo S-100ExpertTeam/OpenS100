@@ -34,5 +34,9 @@ namespace S100Interface
 		virtual std::string GetAttributeValue(int index) {
 			return "";
 		}
+
+		virtual int GetParentAttributeIndex(int index) {
+			return 0;
+		}
 	};
 }

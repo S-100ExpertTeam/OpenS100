@@ -220,6 +220,14 @@ std::string LibMFCUtil::WStringToString(std::wstring str)
 	return result;
 }
 
+std::wstring LibMFCUtil::StringToWString(std::string str)
+{
+	auto wchars = ConvertCtoWC((char*)str.c_str());
+	std::wstring result(wchars);
+	delete[] wchars;
+	return result;
+}
+
 POINT LibMFCUtil::RotatePoint(POINT& pt, double radian, int centerX, int centerY)
 {
 	POINT newPt;

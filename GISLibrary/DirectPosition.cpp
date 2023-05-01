@@ -1,0 +1,77 @@
+#include "stdafx.h"
+#include "DirectPosition.h"
+
+DirectPosition::DirectPosition()
+{
+	coordinates.push_back(0);
+	coordinates.push_back(0);
+	coordinates.push_back(0);
+}
+
+DirectPosition::DirectPosition(double x, double y)
+{
+	coordinates.push_back(x * Factor);
+	coordinates.push_back(y * Factor);
+}
+
+DirectPosition::DirectPosition(double x, double y, double z)
+{
+	coordinates.push_back(x * Factor);
+	coordinates.push_back(y * Factor);
+	coordinates.push_back(z * Factor);
+}
+
+int DirectPosition::GetDimension()
+{
+	return coordinates.size();
+}
+
+double DirectPosition::GetX()
+{
+	return GetXInteger() / Factor;
+}
+
+int DirectPosition::GetXInteger()
+{
+	return coordinates.at(0);
+}
+
+void DirectPosition::SetX(double value)
+{
+	coordinates[0] = value * Factor;
+}
+
+double DirectPosition::GetY()
+{
+	return GetYInteger() / Factor;
+}
+
+int DirectPosition::GetYInteger()
+{
+	return coordinates.at(1);
+}
+
+void DirectPosition::SetY(double value)
+{
+	coordinates[1] = value * Factor;
+}
+
+double DirectPosition::GetZ()
+{
+	return GetZInteger() / Factor;
+}
+
+int DirectPosition::GetZInteger()
+{
+	return coordinates.at(2);
+}
+
+void DirectPosition::SetZ(double value)
+{
+	if (GetDimension() == 2)
+	{
+		coordinates.push_back(value * Factor);
+	}
+	
+	coordinates[2] = value * Factor;
+}

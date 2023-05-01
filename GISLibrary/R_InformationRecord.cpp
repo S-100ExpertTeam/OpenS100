@@ -330,3 +330,27 @@ int R_InformationRecord::GetAttributeCount()
 
 	return size;
 }
+
+std::string R_InformationRecord::GetAttributeValue(int index)
+{
+	auto attributes = GetAllAttributes();
+	int count = attributes.size();
+
+	if (count > 0 && index < count)
+	{
+		return pugi::as_utf8(std::wstring(attributes.at(index)->m_atvl));
+	}
+
+	return "";
+}
+
+int R_InformationRecord::GetParentAttributeIndex(int index)
+{
+	auto attr = GetAllAttributes();
+	if (index >= 0 && index < attr.size())
+	{
+		return attr.at(index)->m_paix;
+	}
+
+	return 0;
+}

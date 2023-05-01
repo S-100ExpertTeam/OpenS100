@@ -654,3 +654,14 @@ std::string R_FeatureRecord::GetAttributeValue(int index)
 
 	return "";
 }
+
+int R_FeatureRecord::GetParentAttributeIndex(int index)
+{
+	auto attr = GetAllAttributes();
+	if (index >= 0 && index < attr.size())
+	{
+		return attr.at(index)->m_paix;
+	}
+
+	return 0;
+}

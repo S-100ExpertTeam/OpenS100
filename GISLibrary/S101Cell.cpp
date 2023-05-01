@@ -4386,6 +4386,21 @@ bool S101Cell::FeatureRecordHasMaskedSpatialTypeField()
 	return false;
 }
 
+S100Interface::ObjectType* S101Cell::GetObjectType(int type, std::string id)
+{
+	if (type == 1)
+	{
+		return GetFeatureType(id);
+	}
+	else if (type == 2)
+	{
+		return GetInformationType(id);
+	}
+
+	return nullptr;
+}
+
+
 std::wstring S101Cell::GetFeatureTypeCodeByID(std::wstring id)
 {
 	int rcid = std::stoi(id);
@@ -4536,23 +4551,37 @@ std::string S101Cell::GetInformationAssociationRoleCode(S100Interface::Informati
 	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
 }
 
-int S101Cell::GetInformationAttributeCount(std::string id)
+std::string S101Cell::GetObjectAttributeCode(int type, std::string id, int index)
 {
-	auto info = GetInformationType(id);
-	if (info)
+	if (type == 1)
 	{
-		return info->GetAttributeCount();
+		return GetFeatureAttributeCode(id, index);
+	}
+	else if (type == 2)
+	{
+		return GetInformationAttributeCode(id, index);
+	}
+
+	return "";
+}
+
+int S101Cell::GetFeatureAttributeCount(std::string id)
+{
+	auto object = GetFeatureType(id);
+	if (object)
+	{
+		return object->GetAttributeCount();
 	}
 
 	return 0;
 }
 
-std::string S101Cell::GetInformationAttributeCode(std::string id, int index)
+std::string S101Cell::GetFeatureAttributeCode(std::string id, int index)
 {
-	auto info = (R_InformationRecord*)GetInformationType(id);
-	if (info)
+	auto object = (R_FeatureRecord*)GetFeatureType(id);
+	if (object)
 	{
-		auto attr = info->GetAllAttributes();
+		auto attr = object->GetAllAttributes();
 
 		if (index >= 0 && index < attr.size())
 		{
@@ -4563,6 +4592,50 @@ std::string S101Cell::GetInformationAttributeCode(std::string id, int index)
 	}
 
 	return "";
+}
+
+int S101Cell::GetInformationAttributeCount(std::string id)
+{
+	auto object = GetInformationType(id);
+	if (object)
+	{
+		return object->GetAttributeCount();
+	}
+
+	return 0;
+}
+
+std::string S101Cell::GetInformationAttributeCode(std::string id, int index)
+{
+	auto object = (R_InformationRecord*)GetInformationType(id);
+	if (object)
+	{
+		auto attr = object->GetAllAttributes();
+
+		if (index >= 0 && index < attr.size())
+		{
+			auto numericCode = attr.at(index)->m_natc;
+			auto code = m_dsgir.GetAttributeCode(numericCode);
+			return pugi::as_utf8(code);
+		}
+	}
+
+	return "";
+}
+
+int S101Cell::CoordinateMultiplicationFactorForX()
+{
+	return m_dsgir.m_dssi.m_cmfx;
+}
+
+int S101Cell::CoordinateMultiplicationFactorForY()
+{
+	return m_dsgir.m_dssi.m_cmfy;
+}
+
+int S101Cell::CoordinateMultiplicationFactorForZ()
+{
+	return m_dsgir.m_dssi.m_cmfz;
 }
 
 std::wstring S101Cell::GetChartName()

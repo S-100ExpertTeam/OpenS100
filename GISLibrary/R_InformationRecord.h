@@ -41,12 +41,15 @@ public:
 	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR, int numericCode);
 
 	int GetAttributeIndex(ATTR* attr);
+	
 
+public: // override ObjectType
 	std::string GetID() override;
 	std::wstring GetIDAsWString() override;
 	int GetIDAsInteger() override;
 	int GetInformationRelationCount() override;
 	std::string GetAssociatedInformationID(int index) override;
-
 	int GetAttributeCount() override;
+	std::string GetAttributeValue(int index) override;
+	int GetParentAttributeIndex(int index) override;
 };

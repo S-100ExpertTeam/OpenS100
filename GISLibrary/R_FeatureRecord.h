@@ -106,20 +106,20 @@ public:
 	void SetVectorRecord(R_VectorRecord* record);
 
 public:
-	//std::string GetCode(S100SpatialObject* so) override;
-	//std::wstring GetCodeAsWString(S100SpatialObject* so) override;
+	bool IsNoGeometry() override;
+	int GetFeatureRelationCount() override;
+	std::string GetAssociatedFeatureID(int index) override;
+	
+	SpatialPrimitiveType GetSpatialPrimitiveType() override;
+	SGeometry* GetGeometry() override;
+
+public: // override ObjectType
 	std::string GetID() override;
 	std::wstring GetIDAsWString() override;
 	int GetIDAsInteger() override;
 	int GetInformationRelationCount() override;
-
-	bool IsNoGeometry() override;
-	int GetFeatureRelationCount() override;
-	std::string GetAssociatedFeatureID(int index) override;
 	std::string GetAssociatedInformationID(int index) override;
-	SpatialPrimitiveType GetSpatialPrimitiveType() override;
-	SGeometry* GetGeometry() override;
-	
 	int GetAttributeCount() override;
 	std::string GetAttributeValue(int index) override;
+	int GetParentAttributeIndex(int index) override;
 };

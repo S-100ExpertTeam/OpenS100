@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IF_ObjectType.h"
+#include "GM_Geometry.h"
 
 #include "../FeatureCatalog/SpatialPrimitiveType.h"
 
@@ -32,5 +33,7 @@ namespace S100Interface
 		virtual SGeometry* GetGeometry() {
 			return nullptr;
 		}
+
+		virtual S100Geometry::Geometry* GetGMGeometry() { return nullptr; }
 	};
 }

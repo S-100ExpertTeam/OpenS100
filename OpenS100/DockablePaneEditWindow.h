@@ -11,6 +11,13 @@
 
 #include "../FeatureCatalog/ListedValue.h"
 
+#include "../GISLibrary/GM_Geometry.h"
+#include "../GISLibrary/GM_Point.h"
+#include "../GISLibrary/GM_MultiPoint.h"
+#include "../GISLibrary/GM_Curve.h"
+#include "../GISLibrary/GM_CompositeCurve.h"
+#include "../GISLibrary/GM_Surface.h"
+
 #include <unordered_map>
 #include <list>
 
@@ -129,12 +136,24 @@ public:
 	void SetInformationType(std::wstring informationID);
 	void SetAttributes();
 	void SetVectors();
+	
 	void SetVector(int RCNM, R_VectorRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
-	void SetVector(R_PointRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
-	void SetVector(R_MultiPointRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
-	void SetVector(R_CurveRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
-	void SetVector(R_CompositeRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
-	void SetVector(R_SurfaceRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
+
+	void SetVector(S100Geometry::Point* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
+	//void SetVector(R_PointRecord* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
+
+	void SetVector(S100Geometry::MultiPoint* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
+	//void SetVector(R_MultiPointRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
+
+	void SetVector(S100Geometry::Curve* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
+	//void SetVector(R_CurveRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
+
+	void SetVector(S100Geometry::CompositeCurve* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
+	//void SetVector(R_CompositeRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
+
+	void SetVector(S100Geometry::Surface* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
+	//void SetVector(R_SurfaceRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
+
 	void ClearVector();
 
 	void SetFeatureList();

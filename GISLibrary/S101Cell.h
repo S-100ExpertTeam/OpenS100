@@ -351,6 +351,8 @@ private:
 	std::wstring GetIssueDateAsWstring();
 
 public:
+	S100Interface::ObjectType* GetObjectType(int type, std::string id) override;
+
 	std::wstring GetFeatureTypeCodeByID(std::wstring id) override;
 	std::wstring GetFeatureTypeCodeByID(int id) override;
 
@@ -375,8 +377,17 @@ public:
 	std::string GetInformationAssociationCode(S100Interface::InformationType* informationType, int index) override;
 	std::string GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index) override;
 
+	std::string GetObjectAttributeCode(int type, std::string id, int index) override;
+
+	int GetFeatureAttributeCount(std::string id) override;
+	std::string GetFeatureAttributeCode(std::string id, int index) override;
+
 	int GetInformationAttributeCount(std::string id) override;
 	std::string GetInformationAttributeCode(std::string id, int index) override;
+
+	int CoordinateMultiplicationFactorForX();
+	int CoordinateMultiplicationFactorForY();
+	int CoordinateMultiplicationFactorForZ();
 
 	std::vector<std::string> Query(MBR mbr) override;
 	std::vector<std::string> QueryToSurface(MBR mbr) override;

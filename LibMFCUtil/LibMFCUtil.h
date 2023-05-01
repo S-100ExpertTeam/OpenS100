@@ -43,6 +43,7 @@ namespace LibMFCUtil
 	extern LIBMFC_API RECT RotateRect(RECT& rect, double radian, int centerX, int centerY);
 
 	extern LIBMFC_API std::string WStringToString(std::wstring str);
+	extern LIBMFC_API std::wstring StringToWString(std::string str);
 
 	// Only extensions are imported from the file path (e.g., txt, jpg).
 	extern LIBMFC_API CString GetExtension(CString path);
