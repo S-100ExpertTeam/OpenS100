@@ -471,6 +471,79 @@ void CDockablePaneEditWindow::SetVector(S100Geometry::Point* r, CMFCPropertyGrid
 	pChildProperty->SetName(L"Point");
 }
 
+void CDockablePaneEditWindow::SetVector(SPoint* geom, CMFCPropertyGridProperty* pSuperProperty)
+{
+	//auto infoCount = r->GetInformationRelationCount();
+
+	//CString strInfoCount;
+	//strInfoCount.Format(L"%d", infoCount);
+
+	//std::wstring pointName = L"Point (ID : " + r->GetIDAsWString() + L", Relation: " + std::wstring(strInfoCount) + L")";
+
+	//CMFCPropertyGridProperty* pProperty = new CMFCPropertyGridProperty(pointName.c_str());
+	//if (pSuperProperty)
+	//{
+	//	pSuperProperty->AddSubItem(pProperty);
+	//}
+	//else
+	//{
+	//	m_wndListVector.AddProperty(pProperty);
+	//}
+
+	//if (infoCount > 0) // If there's even one number,
+	//{
+	//	CMFCPropertyGridProperty* pInasParent = new CMFCPropertyGridProperty(L"INAS");
+
+	//	pProperty->AddSubItem(pInasParent);
+
+	//	for (int i = 0; i < infoCount; i++)
+	//	{
+	//		auto infoID = r->GetAssociatedInformationID(i);
+	//		auto info = m_cell->GetInformationType(infoID);
+	//		if (info)
+	//		{
+	//			std::wstring inasName = L"Information id";
+	//			CMFCPropertyGridProperty* pInas = new CMFCPropertyGridProperty(inasName.c_str(), info->GetIDAsWString().c_str());
+	//			pInasParent->AddSubItem(pInas);
+	//			pInas->SetName(inasName.c_str());
+	//			pInas->AllowEdit(FALSE);
+	//		}
+	//	}
+	//}
+
+	//int precision_x = 0;
+	//int cmf = m_cell->CoordinateMultiplicationFactorForX();
+	//while (cmf >= 10)
+	//{
+	//	cmf /= 10;
+	//	precision_x++;
+	//}
+
+	//int precision_y = 0;
+	//cmf = m_cell->CoordinateMultiplicationFactorForY();
+	//while (cmf >= 10)
+	//{
+	//	cmf /= 10;
+	//	precision_y++;
+	//}
+
+	//std::wstringstream wss;
+	//wss.setf(std::ios::fixed, std::ios::floatfield);
+
+	//double x = r->position.GetX();
+	//wss.precision(precision_x);
+
+	//double y = r->position.GetY();
+	//wss.precision(precision_y);
+
+	//wss << y << L"," << x;
+
+	//CMFCPropertyGridProperty* pChildProperty = new CMFCPropertyGridProperty(L"Position", wss.str().c_str());
+	//pProperty->AddSubItem(pChildProperty);
+
+	//pChildProperty->SetName(L"Point");
+}
+
 //void CDockablePaneEditWindow::SetVector(R_PointRecord* r, CMFCPropertyGridProperty *pSuperProperty)
 //{
 //	int inasCount = (int)r->m_inas.size();

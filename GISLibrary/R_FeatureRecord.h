@@ -5,6 +5,7 @@
 #include "F_FOID.h"
 #include "OrientedCurveRecord.h"
 #include "IF_FeatureType.h"
+#include "GM_Geometry.h"
 
 #include <map>
 
@@ -105,14 +106,6 @@ public:
 
 	void SetVectorRecord(R_VectorRecord* record);
 
-public:
-	bool IsNoGeometry() override;
-	int GetFeatureRelationCount() override;
-	std::string GetAssociatedFeatureID(int index) override;
-	
-	SpatialPrimitiveType GetSpatialPrimitiveType() override;
-	SGeometry* GetGeometry() override;
-
 public: // override ObjectType
 	std::string GetID() override;
 	std::wstring GetIDAsWString() override;
@@ -122,4 +115,12 @@ public: // override ObjectType
 	int GetAttributeCount() override;
 	std::string GetAttributeValue(int index) override;
 	int GetParentAttributeIndex(int index) override;
+
+public: // override FeatureType
+	bool IsNoGeometry() override;
+	int GetFeatureRelationCount() override;
+	std::string GetAssociatedFeatureID(int index) override;
+	SpatialPrimitiveType GetSpatialPrimitiveType() override;
+	SGeometry* GetGeometry() override;
+	S100Geometry::Geometry* GetGMGeometry() override;
 };

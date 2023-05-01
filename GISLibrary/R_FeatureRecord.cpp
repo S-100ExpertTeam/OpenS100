@@ -621,6 +621,11 @@ SGeometry* R_FeatureRecord::GetGeometry()
 	return m_geometry;
 }
 
+S100Geometry::Geometry* R_FeatureRecord::GetGMGeometry()
+{
+	return nullptr;
+}
+
 int R_FeatureRecord::GetInformationRelationCount()
 {
 	return m_inas.size();

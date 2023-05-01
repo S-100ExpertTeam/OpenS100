@@ -34,6 +34,7 @@ namespace S100Interface
 			return nullptr;
 		}
 
+		// Need release by a user.
 		virtual S100Geometry::Geometry* GetGMGeometry() { return nullptr; }
 	};
 }

@@ -140,6 +140,7 @@ public:
 	void SetVector(int RCNM, R_VectorRecord* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
 
 	void SetVector(S100Geometry::Point* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
+	void SetVector(SPoint* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 	//void SetVector(R_PointRecord* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 
 	void SetVector(S100Geometry::MultiPoint* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);

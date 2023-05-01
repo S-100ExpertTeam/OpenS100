@@ -3,8 +3,10 @@
 #include "../GeoMetryLibrary/Geometry.h"
 
 #include "Enum_SGeometryType.h"
+#include "IF_InformationType.h"
 
-#include <unordered_map>
+#include <vector>
+#include <string>
 
 class SSurface;
 class Symbol;
@@ -24,10 +26,13 @@ public:
 	static POINT* viewPoints;
 
 public:
-	// 1 : Point 
-	// 2 : SCompositeCurve
-	// 3 : Surface
-	// 4 : Multi Point (Sounding)
-	// 5 : SCurve
+	std::vector<S100Interface::InformationType*> additionalInformation;
+
+public:
+	void AddInformationType(S100Interface::InformationType* info);
+	int GetInformationTypeCount();
+	S100Interface::InformationType* GetInformationType(int index);
+
+public:
 	virtual SGeometryType GetType() { return SGeometryType::none; }
 };

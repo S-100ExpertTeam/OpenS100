@@ -721,12 +721,9 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 				if (r->m_c2it)
 				{
 					fe->m_geometry = new SPoint();
+					fe->m_geometry->SetID(r->GetRCID());
 					SPoint* geo = (SPoint*)fe->m_geometry;
 					GetFullSpatialData(r, geo);
-				}
-				else
-				{
-					//OutputDebugString(L"Invalid sub field in point record\n");
 				}
 			}
 		}
@@ -759,6 +756,7 @@ BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 			iKey = ((__int64)spas->m_name.RCNM) << 32 | spas->m_name.RCID;
 			if (m_mpMap.Lookup(iKey, r))
 			{
+				geo->SetID(r->GetRCID());
 				GetFullSpatialData(r, geo);
 			}
 		}
@@ -793,6 +791,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 				{
 					auto sc = new SCurveHasOrient();
 					fe->m_geometry = sc;
+					sc->SetID(cr->GetRCID());
 					GetFullSpatialData(cr, sc, spas->m_ornt);
 				}
 			}
@@ -802,6 +801,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 				{
 					SCompositeCurve* scc = new SCompositeCurve();
 					fe->m_geometry = scc;
+					scc->SetID(ccr->GetRCID());
 					GetFullSpatialData(ccr, scc, spas->m_ornt);
 				}
 			}
@@ -847,6 +847,8 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 
 			if (m_surMap.Lookup(iKey, sr))
 			{
+				geo->SetID(sr->GetRCID());
+
 				for (auto k = sr->m_rias.begin(); k != sr->m_rias.end(); k++)
 				{
 					F_RIAS* riasParent = *k;
@@ -862,6 +864,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							if (m_curMap.Lookup(iKey, cr))
 							{
 								SCurveHasOrient* sCurve = new SCurveHasOrient();
+								sCurve->SetID(cr->GetRCID());
 								GetFullSpatialData(cr, sCurve, rias->m_ornt);
 								GetFullSpatialData(cr, vecPoint, rias->m_ornt);
 								geo->AddCurve(sCurve);
@@ -873,6 +876,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							if (m_comMap.Lookup(iKey, ccr))
 							{
 								SCompositeCurve sCompositeCurve;// = new SCompositeCurve();
+								sCompositeCurve.SetID(ccr->GetRCID());
 								GetFullSpatialData(ccr, &sCompositeCurve, rias->m_ornt);
 								GetFullSpatialData(ccr, vecPoint, rias->m_ornt);
 								geo->AddCompositeCurve(&sCompositeCurve);
@@ -910,6 +914,20 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	geo->SetMBR();
 	geo->CreateD2Geometry(gisLib->D2.pD2Factory);
 	geo->CalculateCenterPoint();
+
+	if (sr)
+	{
+		for (auto i = sr->m_inas.begin(); i != sr->m_inas.end(); i++)
+		{
+			auto f_inas = *i;
+			auto infoKey = f_inas->m_name.GetName();
+			auto info = GetInformationRecord(infoKey);
+			if (info)
+			{
+				geo->AddInformationType(info);
+			}
+		}
+	}
 
 	return TRUE;
 }
@@ -952,6 +970,17 @@ BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, SPoint* point)
 
 	projection(point->x, point->y);
 	point->SetMBR();
+
+	for (auto i = r->m_inas.begin(); i != r->m_inas.end(); i++)
+	{
+		auto f_inas = *i;
+		auto infoKey = f_inas->m_name.GetName();
+		auto info = GetInformationRecord(infoKey);
+		if (info)
+		{
+			point->AddInformationType(info);
+		}
+	}
 
 	return TRUE;
 }
@@ -1007,6 +1036,17 @@ BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 		}
 
 		multiPoint->SetMBR();
+
+		for (auto i = r->m_inas.begin(); i != r->m_inas.end(); i++)
+		{
+			auto f_inas = *i;
+			auto infoKey = f_inas->m_name.GetName();
+			auto info = GetInformationRecord(infoKey);
+			if (info)
+			{
+				multiPoint->AddInformationType(info);
+			}
+		}
 
 		return TRUE;
 	}
@@ -1294,6 +1334,17 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		curve->Projection();
 		curve->SetMBR();
 
+		for (auto i = r->m_inas.begin(); i != r->m_inas.end(); i++)
+		{
+			auto f_inas = *i;
+			auto infoKey = f_inas->m_name.GetName();
+			auto info = GetInformationRecord(infoKey);
+			if (info)
+			{
+				curve->AddInformationType(info);
+			}
+		}
+
 		return TRUE;
 	}
 
@@ -1379,6 +1430,17 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 	}
 
 	curve->SetMBR();
+
+	for (auto i = r->m_inas.begin(); i != r->m_inas.end(); i++)
+	{
+		auto f_inas = *i;
+		auto infoKey = f_inas->m_name.GetName();
+		auto info = GetInformationRecord(infoKey);
+		if (info)
+		{
+			curve->AddInformationType(info);
+		}
+	}
 
 	return TRUE;
 }

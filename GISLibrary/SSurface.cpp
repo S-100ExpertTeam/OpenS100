@@ -306,6 +306,17 @@ ID2D1PathGeometry* SSurface::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* sc
 void SSurface::AddCurve(SCurveHasOrient* curve)
 {
 	curveList.push_back(curve);
+
+	for (auto i = r->m_inas.begin(); i != r->m_inas.end(); i++)
+	{
+		auto f_inas = *i;
+		auto infoKey = f_inas->m_name.GetName();
+		auto info = GetInformationRecord(infoKey);
+		if (info)
+		{
+			curve->AddInformationType(info);
+		}
+	}
 }
 
 void SSurface::AddCompositeCurve(SCompositeCurve* compositeCurve)

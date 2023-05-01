@@ -15,3 +15,23 @@ SGeometry::~SGeometry()
 {
 
 }
+
+void SGeometry::AddInformationType(S100Interface::InformationType* info)
+{
+	additionalInformation.push_back(info);
+}
+
+int SGeometry::GetInformationTypeCount()
+{
+	return additionalInformation.size();
+}
+
+S100Interface::InformationType* SGeometry::GetInformationType(int index)
+{
+	if (index >= 0 && index < GetInformationTypeCount())
+	{
+		return additionalInformation.at(index);
+	}
+
+	return nullptr;
+}
