@@ -13,7 +13,7 @@
 #include "SENC_AlertReference.h"
 #include "GISLibrary.h"
 
-#include "../S100Geometry/SGeometry.h"
+#include "SGeometry.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../GeoMetryLibrary/ENCCommon.h"

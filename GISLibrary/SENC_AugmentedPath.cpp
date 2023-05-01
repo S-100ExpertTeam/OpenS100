@@ -8,10 +8,10 @@
 #include "PCOutputSchemaManager.h"
 #include "R_FeatureRecord.h"
 #include "SENC_CommonFuc.h"
+#include "SCommonFuction.h"
 
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\PortrayalCatalogue\\S100_AugmentedPath.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/S100_AugmentedPath.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 SENC_AugmentedPath::SENC_AugmentedPath()
 {

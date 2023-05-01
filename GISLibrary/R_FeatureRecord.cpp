@@ -16,10 +16,10 @@
 #include "R_CompositeRecord.h"
 #include "R_SurfaceRecord.h"
 
-#include "../S100Geometry/SGeometry.h"
-#include "../S100Geometry/SPoint.h"
-#include "../S100Geometry/SSurface.h"
-#include "../S100Geometry/SCurve.h"
+#include "SGeometry.h"
+#include "SPoint.h"
+#include "SSurface.h"
+#include "SCurve.h"
 
 #include <pugixml.hpp>
 

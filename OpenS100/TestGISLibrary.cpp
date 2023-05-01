@@ -12,8 +12,7 @@
 #include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/R_FeatureRecord.h"
 #include "../GISLibrary/S101Creator.h"
-
-#include "../S100Geometry/SGeometry.h"
+#include "../GISLibrary/SGeometry.h"
 
 int TestGISLibrary::layerKey = -1;
 

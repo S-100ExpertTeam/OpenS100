@@ -15,8 +15,8 @@
 
 #include "..\\GISLibrary\\R_FeatureRecord.h"
 
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\S100Geometry\\SCoverage.h"
+#include "SCommonFuction.h"
+#include "SCoverage.h"
 
 SENC_AreaInstruction::SENC_AreaInstruction()
 {

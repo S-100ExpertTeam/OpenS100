@@ -1,12 +1,10 @@
 #include "stdafx.h"
 #include "SCommonFuction.h"
+#include "SPoint.h"
+#include "SCurve.h"
+#include "SSurface.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
-
-#include "../S100Geometry/SPoint.h"
-#include "../S100Geometry/SCurve.h"
-#include "../S100Geometry/SSurface.h"
-
 
 void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, CRect *_viewPort, Scaler *pScaler)
 {

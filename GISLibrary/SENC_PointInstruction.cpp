@@ -3,16 +3,15 @@
 #include "SENC_SpatialReference.h"
 #include "SENC_CommonFuc.h"
 #include "PCOutputSchemaManager.h"
+#include "SCommonFuction.h"
+#include "SCurve.h"
 
-#include "..\\GISLibrary\\R_FeatureRecord.h"
+#include "../GISLibrary/R_FeatureRecord.h"
 
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\S100Geometry\\SCurve.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
 
-#include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
-
-#include "..\\PortrayalCatalogue\\S100_PointInstruction.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/S100_PointInstruction.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 #include <ctime> 
 #include <mmsystem.h> 

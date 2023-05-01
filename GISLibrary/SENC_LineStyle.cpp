@@ -5,9 +5,9 @@
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
-#include "../S100Geometry/SCommonFuction.h"
-#include "../S100Geometry/SCurveHasOrient.h"
-#include "../S100Geometry/SCurve.h"
+#include "SCommonFuction.h"
+#include "SCurveHasOrient.h"
+#include "SCurve.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
 

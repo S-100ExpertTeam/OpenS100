@@ -2,15 +2,17 @@
 #include "SENC_TextInstruction.h"
 #include "SENC_CommonFuc.h"
 #include "PCOutputSchemaManager.h"
+#include "SPoint.h"
+#include "SCompositeCurve.h"
+#include "SCommonFuction.h"
+#include "SCurve.h"
 
-#include "..\\GISLibrary\\R_FeatureRecord.h"
-#include "..\\S100Geometry\\SPoint.h"
-#include "..\\S100Geometry\\SCompositeCurve.h"
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\S100Geometry\\SCurve.h"
-#include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
-#include "..\\PortrayalCatalogue\\S100_TextInstruction.h"
+#include "../GISLibrary/R_FeatureRecord.h"
+
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/S100_TextInstruction.h"
 
 #include <ctime> 
 #include <mmsystem.h> 

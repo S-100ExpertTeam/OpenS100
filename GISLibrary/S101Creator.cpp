@@ -26,11 +26,11 @@
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
-#include "../S100Geometry/SPoint.h"
-#include "../S100Geometry/SMultiPoint.h"
-#include "../S100Geometry/SCurve.h"
-#include "../S100Geometry/SCompositeCurve.h"
-#include "../S100Geometry/SSurface.h"
+#include "SPoint.h"
+#include "SMultiPoint.h"
+#include "SCurve.h"
+#include "SCompositeCurve.h"
+#include "SSurface.h"
 
 #include <set>
 

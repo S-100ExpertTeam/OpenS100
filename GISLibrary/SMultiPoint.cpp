@@ -4,6 +4,8 @@
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
+#include <stdexcept>
+
 SMultiPoint::SMultiPoint()
 {
 	

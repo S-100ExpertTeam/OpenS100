@@ -22,17 +22,16 @@
 #include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/S101Cell.h"
 #include "../GISLibrary/D2D1Resources.h"
+#include "../GISLibrary/SPoint.h"
+#include "../GISLibrary/SMultiPoint.h"
+#include "../GISLibrary/SCompositeCurve.h"
+#include "../GISLibrary/SSurface.h"
+#include "../GISLibrary/SGeometricFuc.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../GeoMetryLibrary/GeoPolyline.h"
-
-#include "../S100Geometry/SPoint.h"
-#include "../S100Geometry/SMultiPoint.h"
-#include "../S100Geometry/SCompositeCurve.h"
-#include "../S100Geometry/SSurface.h"
-#include "../S100Geometry/SGeometricFuc.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
 

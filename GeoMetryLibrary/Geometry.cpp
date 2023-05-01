@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Geometry.h"
 
+#include "../LibMFCUtil/LibMFCUtil.h"
+
 #include <fstream>
 #include <iostream>
 
@@ -17,6 +19,31 @@ Geometry::~Geometry()
 MBR& Geometry::GetMBRRef()
 {
 	return m_mbr;
+}
+
+std::string Geometry::GetID()
+{
+	return id;
+}
+
+std::wstring Geometry::GetIDAsWString()
+{
+	return LibMFCUtil::StringToWString(GetID());
+}
+
+void Geometry::SetID(std::string value)
+{
+	this->id = value;
+}
+
+void Geometry::SetID(std::wstring value)
+{
+	SetID(LibMFCUtil::WStringToString(value));
+}
+
+void Geometry::SetID(int value)
+{
+	SetID(std::to_string(value));
 }
 
 double Geometry::GetDistance(POINT _p1, POINT _p2)

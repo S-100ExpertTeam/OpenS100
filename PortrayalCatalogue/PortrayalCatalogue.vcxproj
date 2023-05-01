@@ -407,9 +407,6 @@
     <ProjectReference Include="..\S100Engine\S100Engine.vcxproj">
       <Project>{e3f7a8cb-3453-4046-a4fc-94bb8769021a}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\S100Geometry\S100Geometry.vcxproj">
-      <Project>{8748cc36-d24a-426b-9ece-fec57a3f80ea}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PortrayalCatalogue.rc" />

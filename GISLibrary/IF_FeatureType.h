@@ -5,7 +5,7 @@
 
 #include "../FeatureCatalog/SpatialPrimitiveType.h"
 
-#include "../S100Geometry/SGeometry.h"
+#include "SGeometry.h"
 
 #include <string>
 

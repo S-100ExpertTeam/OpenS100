@@ -13,13 +13,15 @@
 #include "SENC_AugmentedPath.h"
 #include "R_FeatureRecord.h"
 #include "S100SpatialObject.h"
+#include "SSurface.h"
 
-#include "..\\PortrayalCatalogue\\S100_Symbol.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
-#include "..\\PortrayalCatalogue\\S100_NullInstruction.h"
-#include "..\\GeoMetryLibrary\\GeoPoint.h"
-#include "..\\S100Geometry\\SSurface.h"
-#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "../PortrayalCatalogue/S100_Symbol.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/S100_NullInstruction.h"
+
+#include "../GeoMetryLibrary/GeoPoint.h"
+
+#include "../LatLonUtility/LatLonUtility.h"
 
 SENC_Instruction::SENC_Instruction()
 {

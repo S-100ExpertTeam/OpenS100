@@ -1,12 +1,11 @@
 #include "stdafx.h"
 #include "SCurve.h"
 #include "SPoint.h"
+#include "SPoint.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
-
-#include "../S100Geometry/SPoint.h"
 
 SCurve::SCurve() 
 {

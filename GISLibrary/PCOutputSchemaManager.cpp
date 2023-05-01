@@ -25,25 +25,26 @@
 #include "SENC_AugmentedPath.h"
 #include "SENC_AlertReference.h"
 #include "SENC_ArcByRadius.h"
+#include "SPoint.h"
+#include "SCoverage.h"
 
-#include "..\\PortrayalCatalogue\\S100_ColorFill.h"
-#include "..\\PortrayalCatalogue\\S100_AreaFillReference.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
-#include "..\\PortrayalCatalogue\\S100_DisplayList.h"
-#include "..\\PortrayalCatalogue\\S100_NullInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_PointInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_LineInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_AreaInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_TextInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_AugmentedPath.h"
-#include "..\\PortrayalCatalogue\\S100_AugmentedRay.h"
-#include "..\\PortrayalCatalogue\\S100_AlertReference.h"
-
-#include "..\\S100Geometry\\SPoint.h"
-#include "..\\S100Geometry\\SCoverage.h"
+#include "../PortrayalCatalogue/S100_ColorFill.h"
+#include "../PortrayalCatalogue/S100_AreaFillReference.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/S100_DisplayList.h"
+#include "../PortrayalCatalogue/S100_NullInstruction.h"
+#include "../PortrayalCatalogue/S100_PointInstruction.h"
+#include "../PortrayalCatalogue/S100_LineInstruction.h"
+#include "../PortrayalCatalogue/S100_AreaInstruction.h"
+#include "../PortrayalCatalogue/S100_TextInstruction.h"
+#include "../PortrayalCatalogue/S100_AugmentedPath.h"
+#include "../PortrayalCatalogue/S100_AugmentedRay.h"
+#include "../PortrayalCatalogue/S100_AlertReference.h"
 
 
-#include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
+
+
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
 
 #include <mmsystem.h> 
 

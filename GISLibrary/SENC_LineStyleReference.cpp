@@ -1,14 +1,13 @@
 #include "stdafx.h"
 #include "SENC_LineStyleReference.h"
 #include "GISLibrary.h"
+#include "SCurveHasOrient.h"
+#include "SCurve.h"
 
-#include "..\\PortrayalCatalogue\\S100_LineStyleReference.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/S100_LineStyleReference.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
-#include "..\\S100Geometry\\SCurveHasOrient.h"
-#include "..\\S100Geometry\\SCurve.h"
-
-#include "..\\GeoMetryLibrary\\Scaler.h"
+#include "../GeoMetryLibrary/Scaler.h"
 
 SENC_LineStyleReference::SENC_LineStyleReference()
 {

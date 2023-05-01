@@ -6,11 +6,11 @@
 #include "SPAS.h"
 #include "S101Cell.h"
 
-#include "../S100Geometry/SPoint.h"
-#include "../S100Geometry/SMultiPoint.h"
-#include "../S100Geometry/SCurveHasOrient.h"
-#include "../S100Geometry/SCompositeCurve.h"
-#include "../S100Geometry/SSurface.h"
+#include "SPoint.h"
+#include "SMultiPoint.h"
+#include "SCurveHasOrient.h"
+#include "SCompositeCurve.h"
+#include "SSurface.h"
 
 S100EditRender::S100EditRender()
 {

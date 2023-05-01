@@ -17,9 +17,15 @@ public:
 
 public:
 	MBR m_mbr;
+	std::string id;
 
 public:
 	MBR& GetMBRRef();
+	std::string GetID();
+	std::wstring GetIDAsWString();
+	void SetID(std::string value);
+	void SetID(std::wstring value);
+	void SetID(int value);
 
 public:
 	virtual void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0) {};

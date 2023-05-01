@@ -8,7 +8,7 @@
 
 #include "../GISLibrary/R_FeatureRecord.h"
 
-#include "../S100Geometry/SCommonFuction.h"
+#include "SCommonFuction.h"
 
 #include "../GeoMetryLibrary/ENCCommon.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"

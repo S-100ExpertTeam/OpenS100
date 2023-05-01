@@ -5,15 +5,18 @@
 #include "SENC_CompositeLineStyle.h"
 #include "SENC_SpatialReference.h"
 #include "PCOutputSchemaManager.h"
+#include "SCommonFuction.h"
+#include "SCurveHasOrient.h"
+#include "SCurve.h"
 
-#include "..\\GISLibrary\\R_FeatureRecord.h"
-#include "..\\S100Geometry\\SCommonFuction.h"
-#include "..\\S100Geometry\\SCurveHasOrient.h"
-#include "..\\S100Geometry\\SCurve.h"
-#include "..\\GeoMetryLibrary\\GeoCommonFuc.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
-#include "..\\PortrayalCatalogue\\S100_LineInstruction.h"
-#include "..\\S100Engine\\S100Render.h"
+#include "../GISLibrary/R_FeatureRecord.h"
+
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/S100_LineInstruction.h"
+
+#include "../S100Engine/S100Render.h"
 
 #include <ctime> 
 #include <mmsystem.h> 

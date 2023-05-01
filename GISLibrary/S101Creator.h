@@ -2,7 +2,7 @@
 
 #include "../FeatureCatalog/AttributeBinding.h"
 
-#include "../S100Geometry/Enum_SGeometryType.h"
+#include "Enum_SGeometryType.h"
 
 #include <vector>
 

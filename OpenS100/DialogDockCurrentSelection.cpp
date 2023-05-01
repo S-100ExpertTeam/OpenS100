@@ -8,11 +8,10 @@
 
 #include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/GISLibrary.h"
+#include "../GISLibrary/SPoint.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 #include "../FeatureCatalog/FeatureType.h"
-
-#include "../S100Geometry/SPoint.h"
 
 #define COL_INDEX_ID 0 
 #define COL_INDEX_NAME 1

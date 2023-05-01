@@ -51,14 +51,14 @@
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
-#include "../S100Geometry/SPoint.h"
-#include "../S100Geometry/SMultiPoint.h"
-#include "../S100Geometry/SCompositeCurve.h"
-#include "../S100Geometry/SSurface.h"
-#include "../S100Geometry/SCommonFuction.h"
-#include "../S100Geometry/SCurve.h"
-#include "../S100Geometry/SCurveHasOrient.h"
-#include "../S100Geometry/SGeometricFuc.h"
+#include "SPoint.h"
+#include "SMultiPoint.h"
+#include "SCompositeCurve.h"
+#include "SSurface.h"
+#include "SCommonFuction.h"
+#include "SCurve.h"
+#include "SCurveHasOrient.h"
+#include "SGeometricFuc.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 

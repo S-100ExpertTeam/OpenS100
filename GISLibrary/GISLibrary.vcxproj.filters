@@ -46,6 +46,9 @@
     <Filter Include="S100\Geometry">
       <UniqueIdentifier>{a8cdf6b9-0f56-4f7b-8a0e-178a6af20e45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="S100\SGeometry">
+      <UniqueIdentifier>{910a90eb-6878-40ff-9ccd-572aa15738e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -518,6 +521,36 @@
     </ClCompile>
     <ClCompile Include="GM_Surface.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SCommonFuction.cpp">
+      <Filter>S100\SGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SCompositeCurve.cpp">
+      <Filter>S100\SGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SCoverage.cpp">
+      <Filter>S100\SGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SCurve.cpp">
+      <Filter>S100\SGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SCurveHasOrient.cpp">
+      <Filter>S100\SGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SGeometricFuc.cpp">
+      <Filter>S100\SGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SGeometry.cpp">
+      <Filter>S100\SGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SMultiPoint.cpp">
+      <Filter>S100\SGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SPoint.cpp">
+      <Filter>S100\SGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SSurface.cpp">
+      <Filter>S100\SGeometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1087,6 +1120,39 @@
     </ClInclude>
     <ClInclude Include="GeometryType.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_SGeometryType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SCommonFuction.h">
+      <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SCompositeCurve.h">
+      <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SCoverage.h">
+      <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SCurve.h">
+      <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SCurveHasOrient.h">
+      <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SGeometricFuc.h">
+      <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SGeometry.h">
+      <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SMultiPoint.h">
+      <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SPoint.h">
+      <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SSurface.h">
+      <Filter>S100\SGeometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

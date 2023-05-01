@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "LayerManager.h"
-#include "BAGLayer.h"
 #include "F_ATTR.h"
 #include "R_FeatureRecord.h"
 #include "ATTR.h"
@@ -24,12 +23,12 @@
 #include "R_InformationRecord.h"
 #include "S100Layer.h"
 
-#include "../S100Geometry/SSurface.h"
-#include "../S100Geometry/SMultiPoint.h"
-#include "../S100Geometry/SCompositeCurve.h"
-#include "../S100Geometry/SCurve.h"
-#include "../S100Geometry/SPoint.h"
-#include "../S100Geometry/SCommonFuction.h"
+#include "SSurface.h"
+#include "SMultiPoint.h"
+#include "SCompositeCurve.h"
+#include "SCurve.h"
+#include "SPoint.h"
+#include "SCommonFuction.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
