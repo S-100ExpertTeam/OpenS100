@@ -4536,6 +4536,35 @@ std::string S101Cell::GetInformationAssociationRoleCode(S100Interface::Informati
 	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
 }
 
+int S101Cell::GetInformationAttributeCount(std::string id)
+{
+	auto info = GetInformationType(id);
+	if (info)
+	{
+		return info->GetAttributeCount();
+	}
+
+	return 0;
+}
+
+std::string S101Cell::GetInformationAttributeCode(std::string id, int index)
+{
+	auto info = (R_InformationRecord*)GetInformationType(id);
+	if (info)
+	{
+		auto attr = info->GetAllAttributes();
+
+		if (index >= 0 && index < attr.size())
+		{
+			auto numericCode = attr.at(index)->m_natc;
+			auto code = m_dsgir.GetAttributeCode(numericCode);
+			return pugi::as_utf8(code);
+		}
+	}
+
+	return "";
+}
+
 std::wstring S101Cell::GetChartName()
 {
 	// return filename 

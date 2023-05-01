@@ -25,6 +25,12 @@ FeatureCatalogue::~FeatureCatalogue()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Search infomation */
 
+SimpleAttribute* FeatureCatalogue::GetSimpleAttribute(std::string code)
+{
+	auto wcode = pugi::as_wide(code);
+	return GetSimpleAttribute(wcode);
+}
+
 SimpleAttribute* FeatureCatalogue::GetSimpleAttribute(std::wstring code)
 {
 	auto itor = simpleAttributes.GetSimpleAttributePointer().find(code);
@@ -51,6 +57,12 @@ SimpleAttribute* FeatureCatalogue::GetSimpleAttributeFromName(std::wstring name)
 		}
 	}
 	return nullptr;
+}
+
+ComplexAttribute* FeatureCatalogue::GetComplexAttribute(std::string code)
+{
+	auto wcode = pugi::as_wide(code);
+	return GetComplexAttribute(wcode);
 }
 
 ComplexAttribute* FeatureCatalogue::GetComplexAttribute(std::wstring code)

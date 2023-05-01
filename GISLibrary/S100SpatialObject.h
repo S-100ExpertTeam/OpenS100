@@ -55,6 +55,9 @@ public:
 	virtual std::string GetInformationAssociationCode(S100Interface::InformationType* informationType, int index) { return ""; }
 	virtual std::string GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index) { return ""; }
 
+	virtual int GetInformationAttributeCount(std::string id) { return 0; }
+	virtual std::string GetInformationAttributeCode(std::string, int index) { return ""; }
+
 	// input unit : WGS84
 	virtual std::vector<std::string> Query(MBR mbr) { return {}; };
 	virtual std::vector<std::string> QueryToSurface(MBR mbr) { return {}; };

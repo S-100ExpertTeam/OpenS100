@@ -89,10 +89,12 @@ public:
 	void SetProductId(std::string value);
 	void SetProductId(std::wstring value);
 
+	SimpleAttribute* GetSimpleAttribute(std::string code);
 	SimpleAttribute* GetSimpleAttribute(std::wstring Code);
 	SimpleAttribute* GetSimpleAttributeFromName(std::wstring name);
 	SimpleAttributes* GetSimpleAttributes();
 	
+	ComplexAttribute* GetComplexAttribute(std::string code);
 	ComplexAttribute* GetComplexAttribute(std::wstring Code);
 	ComplexAttribute* GetComplexAttributeFromName(std::wstring name);
 	ComplexAttributes* GetComplexAttributes();

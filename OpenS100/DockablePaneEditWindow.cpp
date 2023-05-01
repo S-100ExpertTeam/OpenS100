@@ -16,7 +16,7 @@
 #include "../GISLibrary/F_C2IT.h"
 #include "../GISLibrary/F_ATTR.h"
 #include "../GISLibrary/F_RIAS.h"
-#include "../GISLibrary/R_InformationRecord.h"
+//#include "../GISLibrary/R_InformationRecord.h"
 #include "../GISLibrary/R_MultiPointRecord.h"
 #include "../GISLibrary/R_CurveRecord.h"
 #include "../GISLibrary/R_CompositeRecord.h"
@@ -448,21 +448,57 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 		}
 		else if (m_selectedObjectType = L"Information")
 		{
-			auto m_pInformation = cell->GetInformationRecord(selectedInformationID);
+			auto id = pugi::as_utf8(selectedInformationID);
 
-			// If the size is 0, pass.
-			if (m_pInformation == nullptr ||
-				m_pInformation->m_attr.size() == 0)
+			auto info = cell->GetInformationType(id);
+
+			if (info)
 			{
-				return;
+				int attrCnt = info->GetAttributeCount();
+				for (int i = 0; i < attrCnt; i++)
+				{
+					auto value = info->GetAttributeValue(i);
+					auto code = cell->GetInformationAttributeCode(id, i);
+
+					auto sa = fc->GetSimpleAttribute(code);
+					if (sa)
+					{
+						if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+						{
+							sa->GetListedValue()
+						}
+						else
+						{
+
+						}
+					}
+					else
+					{
+						auto ca = fc->GetComplexAttribute(code);
+						if (ca)
+						{
+						}
+					}
+				}
 			}
 
-			for (auto itorParent = m_pInformation->m_attr.begin(); itorParent != m_pInformation->m_attr.end(); itorParent++)
-			{
-				F_ATTR* attrParent = *itorParent;
 
-				for (auto itor = attrParent->m_arr.begin(); itor != attrParent->m_arr.end(); itor++)
-				{
+
+			//auto m_pInformation = cell->GetInformationRecord(selectedInformationID);
+
+			// If the size is 0, pass.
+			//if (m_pInformation == nullptr ||
+			//	m_pInformation->m_attr.size() == 0)
+			//{
+			//	return;
+			//}
+
+			//for (auto itorParent = m_pInformation->m_attr.begin(); itorParent != m_pInformation->m_attr.end(); itorParent++)
+			//{
+			//	F_ATTR* attrParent = *itorParent;
+
+			//	for (auto itor = attrParent->m_arr.begin(); itor != attrParent->m_arr.end(); itor++)
+			//	{
 					ATTR* attr = *itor;
 
 					CString value = L"";
@@ -509,15 +545,15 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 							m_wndListAttribute.AddProperty(pAttribute);
 						}
 
-						if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
-						{
-							for (auto itor = sa->GetListedValuePointer().begin(); itor != sa->GetListedValuePointer().end(); itor++)
-							{
-								ListedValue* lv = *itor;
+						//if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+						//{
+						//	for (auto itor = sa->GetListedValuePointer().begin(); itor != sa->GetListedValuePointer().end(); itor++)
+						//	{
+						//		ListedValue* lv = *itor;
 
-								pAttribute->AddOption(lv->GetLabel().c_str());			
-							}
-						}
+						//		pAttribute->AddOption(lv->GetLabel().c_str());			
+						//	}
+						//}
 					}
 					else
 					{
@@ -543,8 +579,8 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 							}
 						}
 					}
-				}
-			}
+			//	}
+			//}
 
 		}
 	}

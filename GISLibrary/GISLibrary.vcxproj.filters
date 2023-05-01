@@ -1007,6 +1007,15 @@
     <ClInclude Include="IF_InformationType.h">
       <Filter>S100\Interface</Filter>
     </ClInclude>
+    <ClInclude Include="IF_Attribute.h">
+      <Filter>S100\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IF_SimpleAttribute.h">
+      <Filter>S100\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IF_ComplexAttribute.h">
+      <Filter>S100\Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GISLibrary.rc">

@@ -375,6 +375,9 @@ public:
 	std::string GetInformationAssociationCode(S100Interface::InformationType* informationType, int index) override;
 	std::string GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index) override;
 
+	int GetInformationAttributeCount(std::string id) override;
+	std::string GetInformationAttributeCode(std::string id, int index) override;
+
 	std::vector<std::string> Query(MBR mbr) override;
 	std::vector<std::string> QueryToSurface(MBR mbr) override;
 	std::vector<std::string> QueryToCurve(MBR mbr) override;

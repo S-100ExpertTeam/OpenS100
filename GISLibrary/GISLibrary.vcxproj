@@ -408,6 +408,7 @@
     <ClInclude Include="C3IL.h" />
     <ClInclude Include="CatalogItem.h" />
     <ClInclude Include="CodeWithNumericCode.h" />
+    <ClInclude Include="IF_ComplexAttribute.h" />
     <ClInclude Include="CSAX.h" />
     <ClInclude Include="CUCO.h" />
     <ClInclude Include="D2D1Resources.h" />
@@ -469,9 +470,11 @@
     <ClInclude Include="host_data.h" />
     <ClInclude Include="host_functions.h" />
     <ClInclude Include="IC2D.h" />
+    <ClInclude Include="IF_Attribute.h" />
     <ClInclude Include="IF_FeatureType.h" />
     <ClInclude Include="IF_InformationType.h" />
     <ClInclude Include="IF_ObjectType.h" />
+    <ClInclude Include="IF_SimpleAttribute.h" />
     <ClInclude Include="ISO8211Fuc.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LayerManager.h" />
