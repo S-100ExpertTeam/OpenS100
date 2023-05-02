@@ -1,4 +1,5 @@
 #pragma once
+
 #include "SGeometry.h"
 
 class SPoint;

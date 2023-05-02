@@ -242,6 +242,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="GISLibrary.def" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
@@ -413,6 +414,7 @@
     <ClCompile Include="SGeometry.cpp" />
     <ClCompile Include="SHPFile.cpp" />
     <ClCompile Include="SMultiPoint.cpp" />
+    <ClCompile Include="SOrientableCurve.cpp" />
     <ClCompile Include="SPAS.cpp" />
     <ClCompile Include="SpatialObject.cpp" />
     <ClCompile Include="SPoint.cpp" />
@@ -628,6 +630,7 @@
     <ClInclude Include="SGeometry.h" />
     <ClInclude Include="SHPFile.h" />
     <ClInclude Include="SMultiPoint.h" />
+    <ClInclude Include="SOrientableCurve.h" />
     <ClInclude Include="SPAS.h" />
     <ClInclude Include="SpatialObject.h" />
     <ClInclude Include="SPoint.h" />

@@ -61,6 +61,7 @@
     <None Include="GISLibrary.def">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GISLibrary.cpp">
@@ -581,6 +582,9 @@
     </ClCompile>
     <ClCompile Include="GF_MaskReference.cpp">
       <Filter>S100\GF</Filter>
+    </ClCompile>
+    <ClCompile Include="SOrientableCurve.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1210,6 +1214,9 @@
     </ClInclude>
     <ClInclude Include="GF_MaskReference.h">
       <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="SOrientableCurve.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -658,8 +658,6 @@ void S101Cell::SetInstructionToFeature(R_FeatureRecord* fe)
 
 BOOL S101Cell::MakeFullSpatialData()
 {
-	//ClearCurveMap();
-
 	POSITION spasPos = NULL;
 	R_FeatureRecord* fr = nullptr;
 
