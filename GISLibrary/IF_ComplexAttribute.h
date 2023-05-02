@@ -12,5 +12,6 @@ namespace S100Interface
 	public:
 		virtual int GetSubAttributeCount() { return 0; }
 		Attribute* GetSubAttribute(int index) { return nullptr; }
+		bool IsSimple() override { return false; }
 	};
 }

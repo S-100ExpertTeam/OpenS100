@@ -8,5 +8,6 @@ namespace S100Interface
 	{
 	public:
 		virtual std::string GetCode() { return ""; }
+		virtual bool IsSimple() { return false; }
 	};
 }

@@ -59,6 +59,7 @@
 #include "SCurve.h"
 #include "SCurveHasOrient.h"
 #include "SGeometricFuc.h"
+#include "GML_Envelop.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -950,10 +951,26 @@ BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, GeoPointZ &geo)
 	return TRUE;
 }
 
+SPoint* S101Cell::ToGeometry(R_PointRecord* r)
+{
+	return nullptr;
+}
+
 BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, SPoint* point)
 {
-	double x = r->m_c2it->m_xcoo;
-	double y = r->m_c2it->m_ycoo;
+	double x = 0; r->m_c2it->m_xcoo;
+	double y = 0; r->m_c2it->m_ycoo;
+
+	if (r->m_c2it)
+	{
+		x = r->m_c2it->m_xcoo;
+		y = r->m_c2it->m_ycoo;
+	}
+	else if (r->m_c3it)
+	{
+		x = r->m_c3it->m_xcoo;
+		y = r->m_c3it->m_ycoo;
+	}
 
 	if (m_dsgir.m_dssi.m_cmfy && m_dsgir.m_dssi.m_cmfx)
 	{
@@ -1273,11 +1290,15 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		// PTAS
 		if (1 == ORNT)
 		{
-			curve->Set(pointIndex++, beginPointRecord->m_c2it->m_xcoo, beginPointRecord->m_c2it->m_ycoo);
+			curve->Set(pointIndex, beginPointRecord->m_c2it->m_xcoo, beginPointRecord->m_c2it->m_ycoo);
+			curve->GetPoint(pointIndex)->SetID(beginPointRecord->GetRCID());
+			pointIndex++;
 		}
 		else if (2 == ORNT)
 		{
-			curve->Set(pointIndex++, endPointRecord->m_c2it->m_xcoo, endPointRecord->m_c2it->m_ycoo);
+			curve->Set(pointIndex, endPointRecord->m_c2it->m_xcoo, endPointRecord->m_c2it->m_ycoo);
+			curve->GetPoint(pointIndex)->SetID(endPointRecord->GetRCID());
+			pointIndex++;
 		}
 		else
 		{
@@ -1319,11 +1340,15 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		// PTAS
 		if (1 == ORNT)
 		{
-			curve->Set(pointIndex++, endPointRecord->m_c2it->m_xcoo, endPointRecord->m_c2it->m_ycoo);
+			curve->Set(pointIndex, endPointRecord->m_c2it->m_xcoo, endPointRecord->m_c2it->m_ycoo);
+			curve->GetPoint(pointIndex)->SetID(endPointRecord->GetRCID());
+			pointIndex++;
 		}
 		else if (2 == ORNT)
 		{
-			curve->Set(pointIndex++, beginPointRecord->m_c2it->m_xcoo, beginPointRecord->m_c2it->m_ycoo);
+			curve->Set(pointIndex, beginPointRecord->m_c2it->m_xcoo, beginPointRecord->m_c2it->m_ycoo);
+			curve->GetPoint(pointIndex)->SetID(beginPointRecord->GetRCID());
+			pointIndex++;
 		}
 		else
 		{
@@ -1373,6 +1398,7 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 			if (m_curMap.Lookup(iKey, cr))
 			{
 				SCurveHasOrient* scurve = new SCurveHasOrient();
+				scurve->SetID(cuco->m_name.RCID);
 				int localORNT = cuco->m_ornt;
 				
 				if (ORNT == 2)
@@ -1409,6 +1435,7 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 			if (m_comMap.Lookup(iKey, ccr))
 			{
 				SCompositeCurve scc;// = new SCompositeCurve();
+				scc.SetID(cuco->m_name.RCID);
 				GetFullSpatialData(ccr, &scc, cuco->m_ornt);
 
 				for (auto j = scc.m_listCurveLink.begin(); j != scc.m_listCurveLink.end(); j++)
@@ -1627,13 +1654,14 @@ BOOL S101Cell::GetFullSpatialData(R_SurfaceRecord *r, CArray<GeoPoint> &geoArr)
 
 BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt)
 {
-	OrientedCurveRecord ocr;
-	ocr.m_pCurveRecord = r;
-	ocr.m_orient = ornt;
+	//OrientedCurveRecord ocr;
+	//ocr.m_pCurveRecord = r;
+	//ocr.m_orient = ornt;
 	//fe->m_curveList.push_back(ocr);
 
 
 	fe->m_geometry = new SCurve;
+	fe->m_geometry->SetID(r->GetRCID());
 
 	if (ornt == 1)
 	{
@@ -4054,6 +4082,21 @@ void S101Cell::InitCurveSuppression()
 
 bool S101Cell::Save(std::wstring path)
 {
+	auto ext = LibMFCUtil::GetExtension(path.c_str());
+	if (ext.CompareNoCase(L"gml") != 0)
+	{
+		return SaveAsENC(path);
+	}
+	else
+	{
+		return SaveAsGML(path);
+	}
+
+	return false;
+}
+
+bool S101Cell::SaveAsENC(std::wstring path)
+{
 	CString filePath(path.c_str());
 
 	CFile file;
@@ -4064,7 +4107,7 @@ bool S101Cell::Save(std::wstring path)
 	ddr.f_FieldControlField.AddTagPair("DSID", "DSSI");
 	ddr.AddDDF(F_DataDescriptiveField(DDFType::DSID));
 	ddr.AddDDF(F_DataDescriptiveField(DDFType::DSSI));
-	
+
 	if (m_dsgir.m_atcs)
 	{
 		ddr.f_FieldControlField.AddTagPair("DSID", "ATCS");
@@ -4149,7 +4192,7 @@ bool S101Cell::Save(std::wstring path)
 	ddr.f_FieldControlField.AddTagPair("PRID", "C2IT");
 	ddr.AddDDF(F_DataDescriptiveField(DDFType::PRID));
 	ddr.AddDDF(F_DataDescriptiveField(DDFType::C2IT));
-	
+
 	if (MultiPointRecordHasInformationAssociationField())
 	{
 		ddr.f_FieldControlField.AddTagPair("MRID", "INAS");
@@ -4288,6 +4331,78 @@ bool S101Cell::Save(std::wstring path)
 	{
 		(*i)->WriteRecord(&file);
 	}
+
+	return true;
+}
+
+bool S101Cell::SaveAsGML(std::wstring path)
+{
+	pugi::xml_document doc;
+
+	auto declarationNode = doc.append_child(pugi::node_declaration);
+	declarationNode.append_attribute("version") = "1.0";
+	declarationNode.append_attribute("encoding") = "UTF-8";
+
+	auto root = doc.append_child("S101:Dataset");
+	root.append_attribute("xmlns:xsi").set_value("http://www.w3.org/2001/XMLSchema-instance");
+	root.append_attribute("xmlns:xlink").set_value("http://www.w3.org/1999/xlink");
+	root.append_attribute("xmlns:gml").set_value("http://www.opengis.net/gml/3.2");
+	root.append_attribute("xmlns:S100").set_value("http://www.iho.int/s100gml/5.0");
+	root.append_attribute("xmlns:S101").set_value("http://www.iho.int/S101/gml/cs0/1.0");
+	root.append_attribute("xmlns").set_value("http://www.iho.int/S101/gml/cs0/1.0");
+	root.append_attribute("gml:id").set_value("ds");
+
+	if (m_pLayer)
+	{
+		S100GML::Envelop env(m_pLayer->m_mbr);
+		env.Write(root);
+	}
+
+	GetDatasetIdentificationInformation().Write(root);
+
+	for (auto i = vecPoint.begin(); i != vecPoint.end(); i++)
+	{
+		auto record = *i;
+		auto node_Point = root.append_child("S100:Point");
+		node_Point.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
+		node_Point.append_attribute("gml:id").set_value(record->GetRCIDasString("p").c_str());
+		auto nodePos = node_Point.append_child("gml:pos");
+
+		SPoint pt;
+		GetFullSpatialData(*i, &pt);
+
+		nodePos.append_child(pugi::node_pcdata).set_value(pt.ToString().c_str());
+	}
+
+	for (auto i = vecMultiPoint.begin(); i != vecMultiPoint.end(); i++)
+	{
+		auto record = *i;
+		auto curNode = root.append_child("S100:MultiPoint");
+		curNode.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
+		curNode.append_attribute("gml:id").set_value(record->GetRCIDasString("mp").c_str());
+		auto nodeMembers = curNode.append_child("gml:pointMembers");
+
+		SMultiPoint mp;
+		GetFullSpatialData(*i, &mp);
+
+		for (int j = 0; j < mp.GetNumPoints(); j++)
+		{
+			auto nodePoint = nodeMembers.append_child("gml:Point");
+
+			auto id = record->GetRCIDasString("mp") + "_p" + std::to_string(j);
+			nodePoint.append_attribute("gml:id").set_value(id.c_str());
+			auto nodePos = nodePoint.append_child("gml:pos");
+
+			nodePos.append_child(pugi::node_pcdata).set_value(mp.m_pPoints.at(j).ToString().c_str());
+		}
+	}
+
+	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
+	{
+
+	}
+
+	doc.save_file(path.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
 
 	return true;
 }
@@ -4722,6 +4837,11 @@ std::wstring S101Cell::GetEditionNumberAsWstring()
 	return std::wstring(result);
 }
 
+std::string S101Cell::GetUpdateNumber()
+{
+	return pugi::as_utf8(GetUpdateNumberAsWstring());
+}
+
 std::wstring S101Cell::GetUpdateNumberAsWstring()
 {
 	auto Ened = m_dsgir.m_dsid.m_dsed;
@@ -4816,4 +4936,47 @@ std::vector<std::string> S101Cell::QueryToPoint(MBR mbr)
 std::vector<std::string> S101Cell::QueryToMultiPoint(MBR mbr)
 {
 	return {};
+}
+
+S100GML::DatasetIdentificationInformation S101Cell::GetDatasetIdentificationInformation()
+{
+	S100GML::DatasetIdentificationInformation result;
+
+	result.encodingSpecification = "S-100 Part 10b";
+	result.encodingSpecificationEdition = "1.0";
+	result.productIdentifier = "INT.IHO.S-101.1.0";
+	result.productEdition = "1.0.0";
+	result.applicationProfile = "1";
+	result.datasetFileIdentifier = LibMFCUtil::WStringToString(std::wstring(GetFileName()));
+	result.datasetTitle = LibMFCUtil::WStringToString(std::wstring(LibMFCUtil::GetFileName(GetFilePath())));
+	
+	if (m_dsgir.m_dsid.m_dsrd.GetLength() >= 8)
+	{
+		CString dsrd = m_dsgir.m_dsid.m_dsrd;
+
+		std::string yyyy = pugi::as_utf8(dsrd.Left(4));
+		std::string mm = pugi::as_utf8(dsrd.Mid(4, 2));
+		std::string dd = pugi::as_utf8(dsrd.Mid(6, 2));
+
+		result.datasetReferenceDate = yyyy + "-" + mm + "-" + dd;
+	}
+
+	result.datasetLanguage = "eng";
+	result.datasetTopicCategory.push_back("oceans");
+	result.datasetTopicCategory.push_back("transportation");
+	result.datasetPurpose = "base";
+	result.updateNumber = GetUpdateNumber();
+
+	return result;
+}
+
+void S101Cell::WritePointRecord(pugi::xml_node& node, R_PointRecord* record)
+{
+	auto curNode = node.append_child("S100:Point");
+	curNode.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
+	curNode.append_attribute("gml:id").set_value("p" + record->GetRCID());
+
+	//GetPoint
+
+	//curNode.append_child("gml:pos").append_child(pugi::node_pcdata).set_value()
 }

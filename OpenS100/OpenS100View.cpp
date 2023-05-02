@@ -290,6 +290,9 @@ void COpenS100View::Load100File()
 		theApp.gisLib->AddLayer(filePath); //Add a layer.
 		theApp.m_pDockablePaneLayerManager.UpdateList();
 		MapRefresh();
+
+		auto enc = theApp.gisLib->GetLayer(theApp.gisLib->GetLayerManager()->LayerCount() - 1);
+		enc->GetSpatialObject()->Save(L"../TEMP/temp.gml");
 	}
 }
 

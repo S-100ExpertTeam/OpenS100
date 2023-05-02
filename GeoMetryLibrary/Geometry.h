@@ -45,6 +45,8 @@ public:
 	virtual double GetX() { return 0; };
 	virtual double GetY() { return 0; };
 
+	virtual std::string ToString() { return ""; }
+
 public:
 
 	/*

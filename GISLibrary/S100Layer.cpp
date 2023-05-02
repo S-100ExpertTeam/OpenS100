@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "S100Layer.h"
 #include "GISLibrary.h"
+#include "S10XGML.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -29,10 +30,11 @@ bool S100Layer::Open(CString _filepath)
 	if (!extension.CompareNoCase(L"000"))
 	{
 		m_spatialObject = new S101Cell();
+		m_spatialObject->SetLayer(this);
+
 		auto enc = (S101Cell*)m_spatialObject;
 
-		enc->SetLayer(this);
-		if (!enc->Open(_filepath))
+		if (!m_spatialObject->Open(_filepath))
 		{
 			delete enc;
 			return false;
@@ -43,7 +45,16 @@ bool S100Layer::Open(CString _filepath)
 	}
 	else if (!extension.CompareNoCase(L"gml"))
 	{
+		m_spatialObject = new S10XGML();
+		m_spatialObject->SetLayer(this);
 
+		if (!m_spatialObject->Open(_filepath))
+		{
+			delete m_spatialObject;
+			return false;
+		}
+		
+		return true;
 	}
 	else if (!extension.CompareNoCase(L"h5"))
 	{

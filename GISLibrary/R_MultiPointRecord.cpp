@@ -150,6 +150,11 @@ int R_MultiPointRecord::GetRCID()
 	return m_mrid.m_name.RCID;
 }
 
+std::string R_MultiPointRecord::GetRCIDasString(std::string prefix)
+{
+	return prefix + pugi::as_utf8(GetRCIDasWstring());
+}
+
 std::wstring R_MultiPointRecord::GetRCIDasWstring()
 {
 	return std::to_wstring(GetRCID());

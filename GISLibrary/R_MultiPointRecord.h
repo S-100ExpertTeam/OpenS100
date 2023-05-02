@@ -26,6 +26,7 @@ public:
 	RecordName GetRecordName();
 
 	int GetRCID();
+	std::string GetRCIDasString(std::string prefix = "");
 	std::wstring GetRCIDasWstring();
 
 	void InsertC3IL(int x, int y, int z);

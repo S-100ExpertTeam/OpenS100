@@ -4,6 +4,7 @@
 #include "F_C2IT.h"
 #include "F_C3IT.h"
 #include "F_INAS.h"
+#include "SPoint.h"
 
 R_PointRecord::R_PointRecord(void)
 {
@@ -125,6 +126,11 @@ RecordName R_PointRecord::GetRecordName()
 int R_PointRecord::GetRCID()
 {
 	return  m_prid.m_name.RCID;
+}
+
+std::string R_PointRecord::GetRCIDasString(std::string prefix)
+{
+	return prefix + pugi::as_utf8(GetRCIDasWstring());
 }
 
 std::wstring R_PointRecord::GetRCIDasWstring() 

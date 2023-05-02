@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IF_ObjectType.h"
+#include "IF_Attribute.h"
 #include "GM_Geometry.h"
 
 #include "../FeatureCatalog/SpatialPrimitiveType.h"

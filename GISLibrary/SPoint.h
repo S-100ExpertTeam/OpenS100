@@ -32,4 +32,7 @@ public:
 
 	double GetX() override;
 	double GetY() override;
+
+	// Y X
+	std::string ToString() override;
 };

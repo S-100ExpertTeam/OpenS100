@@ -2,8 +2,9 @@
 #include "SPoint.h"
 
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
-
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
+
+#include <sstream>
 
 SPoint::SPoint()
 {
@@ -108,4 +109,19 @@ double SPoint::GetX()
 double SPoint::GetY()
 {
 	return y;
+}
+
+std::string SPoint::ToString()
+{
+	std::stringstream ss;
+	ss.precision(7);
+
+	double x = GetX();
+	double y = GetY();
+
+	inverseProjection(x, y);
+
+	ss << y << " " << x;
+
+	return ss.str();
 }

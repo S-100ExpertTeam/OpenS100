@@ -92,3 +92,18 @@ bool GeoPointZ::ExportToWkb(unsigned char** value, int* size)
 	memcpy_s((*value) + 21, 8, &z, 8);
 	return true;
 }
+
+std::string GeoPointZ::ToString()
+{
+	std::stringstream ss;
+	ss.precision(7);
+
+	double x = GetX();
+	double y = GetY();
+
+	inverseProjection(x, y);
+
+	ss << y << " " << x;
+
+	return ss.str();
+}

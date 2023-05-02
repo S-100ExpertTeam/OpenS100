@@ -5,6 +5,7 @@
 #include "R_DSCRS.h"
 #include "F_CodeWithNumericCode.h"
 #include "DDR.h"
+#include "GML_DatasetIdentificationInformation.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 
@@ -91,6 +92,9 @@ public:
 	bool Open(CString _filepath) override;
 	bool Save(std::wstring path) override;
 
+	bool SaveAsENC(std::wstring path);
+	bool SaveAsGML(std::wstring path);
+
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
 	void GetAllFeatureDisplayOptions();
@@ -106,6 +110,9 @@ public:
 	BOOL MakeSoundingData(R_FeatureRecord* fe);
 	BOOL MakeLineData(R_FeatureRecord* fe);
 	BOOL MakeAreaData(R_FeatureRecord* fe);
+
+	// Record -> Geometry
+	SPoint* ToGeometry(R_PointRecord* r);
 
 	// Record -> Geometry
 	BOOL GetFullSpatialData(R_PointRecord *r, SPoint* point);
@@ -347,6 +354,7 @@ private:
 
 	std::wstring GetChartName();
 	std::wstring GetEditionNumberAsWstring();
+	std::string GetUpdateNumber();
 	std::wstring GetUpdateNumberAsWstring();
 	std::wstring GetIssueDateAsWstring();
 
@@ -394,4 +402,8 @@ public:
 	std::vector<std::string> QueryToCurve(MBR mbr) override;
 	std::vector<std::string> QueryToPoint(MBR mbr) override;
 	std::vector<std::string> QueryToMultiPoint(MBR mbr) override;
+
+	// write gml
+	S100GML::DatasetIdentificationInformation GetDatasetIdentificationInformation();
+	void WritePointRecord(pugi::xml_node& node, R_PointRecord* record);
 };

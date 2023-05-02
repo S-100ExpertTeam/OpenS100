@@ -10,5 +10,6 @@ namespace S100Interface
 	{
 	public:
 		virtual std::string GetValue() { return ""; }
+		bool IsSimple() override { return true; }
 	};
 }

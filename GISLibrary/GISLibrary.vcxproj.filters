@@ -49,6 +49,12 @@
     <Filter Include="S100\SGeometry">
       <UniqueIdentifier>{910a90eb-6878-40ff-9ccd-572aa15738e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="S100GML">
+      <UniqueIdentifier>{cc3faf22-c34d-44ce-b02a-68ace052afbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S100\GF">
+      <UniqueIdentifier>{70611c52-0976-4816-bc2f-abbead6d83f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -551,6 +557,30 @@
     </ClCompile>
     <ClCompile Include="SSurface.cpp">
       <Filter>S100\SGeometry</Filter>
+    </ClCompile>
+    <ClCompile Include="S10XGML.cpp">
+      <Filter>S100GML</Filter>
+    </ClCompile>
+    <ClCompile Include="GML_FeatureType.cpp">
+      <Filter>S100GML</Filter>
+    </ClCompile>
+    <ClCompile Include="GML_SimpleAttribute.cpp">
+      <Filter>S100GML</Filter>
+    </ClCompile>
+    <ClCompile Include="IF_ObjectType.cpp">
+      <Filter>S100\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="GML_ComplexAttribute.cpp">
+      <Filter>S100GML</Filter>
+    </ClCompile>
+    <ClCompile Include="GML_DatasetIdentificationInformation.cpp">
+      <Filter>S100GML</Filter>
+    </ClCompile>
+    <ClCompile Include="GML_Envelop.cpp">
+      <Filter>S100GML</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_MaskReference.cpp">
+      <Filter>S100\GF</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1153,6 +1183,33 @@
     </ClInclude>
     <ClInclude Include="SSurface.h">
       <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="S10XGML.h">
+      <Filter>S100GML</Filter>
+    </ClInclude>
+    <ClInclude Include="GML_FeatureType.h">
+      <Filter>S100GML</Filter>
+    </ClInclude>
+    <ClInclude Include="GML_SimpleAttribute.h">
+      <Filter>S100GML</Filter>
+    </ClInclude>
+    <ClInclude Include="GML_ComplexAttribute.h">
+      <Filter>S100GML</Filter>
+    </ClInclude>
+    <ClInclude Include="GML_DatasetIdentificationInformation.h">
+      <Filter>S100GML</Filter>
+    </ClInclude>
+    <ClInclude Include="GML_Envelop.h">
+      <Filter>S100GML</Filter>
+    </ClInclude>
+    <ClInclude Include="GML_Element.h">
+      <Filter>S100GML</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_MaskIndicatorType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_MaskReference.h">
+      <Filter>S100\GF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

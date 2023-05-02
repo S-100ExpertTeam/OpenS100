@@ -9,8 +9,9 @@ class F_INAS;
 class F_C2IT;
 class F_C3IT;
 class DRDirectoryInfo;
-// Point Record
-class R_PointRecord : public R_VectorRecord
+
+class R_PointRecord : 
+	public R_VectorRecord
 {
 public:
 	R_PointRecord();
@@ -28,6 +29,7 @@ public:
 	RecordName GetRecordName();
 
 	int GetRCID();
+	std::string GetRCIDasString(std::string prefix = "");
 	std::wstring GetRCIDasWstring();
 	void SetC2IT(F_C2IT* value);
 	void SetC2IT(int x, int y);
