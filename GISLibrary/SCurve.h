@@ -46,4 +46,6 @@ public:
 	SPoint* GetPoint(int index);
 	SPoint* GetFirstPoint();
 	SPoint* GetLastPoint();
+
+	std::string ToString() override;
 };

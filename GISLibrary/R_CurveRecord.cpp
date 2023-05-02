@@ -209,6 +209,11 @@ int R_CurveRecord::GetRCID()
 	return m_crid.m_name.RCID;
 }
 
+std::string R_CurveRecord::GetRCIDasString(std::string prefix)
+{
+	return prefix + pugi::as_utf8(GetRCIDasWstring());
+}
+
 std::wstring R_CurveRecord::GetRCIDasWstring() 
 {
 	return std::to_wstring(GetRCID());

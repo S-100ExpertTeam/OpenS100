@@ -7,6 +7,8 @@
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
+#include <sstream>
+
 SCurve::SCurve() 
 {
 	
@@ -300,4 +302,25 @@ double SCurve::GetX()
 double SCurve::GetY()
 {
 	return GetY(0);
+}
+
+std::string SCurve::ToString()
+{
+	std::stringstream ss;
+	ss.precision(7);
+
+	for (int i = 0; i < GetNumPoints(); i++)
+	{
+		if (i != 0)
+		{
+			ss << " ";
+		}
+
+		double x = GetX(i);
+		double y = GetY(i);
+		inverseProjection(x, y);
+		ss << y << " " << x;
+	}
+
+	return ss.str();
 }

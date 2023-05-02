@@ -51,6 +51,7 @@ public:
 	RecordName GetRecordName();
 
 	int GetRCID();
+	std::string GetRCIDasString(std::string prefix = "");
 	std::wstring GetRCIDasWstring();
 
 	int GetPointCount();

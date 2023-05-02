@@ -4360,6 +4360,24 @@ bool S101Cell::SaveAsGML(std::wstring path)
 
 	GetDatasetIdentificationInformation().Write(root);
 
+	SavePoint(root);
+	SaveMultiPoint(root);
+	SaveCurve(root);
+	SaveCompositeCurve(root);
+
+	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
+	{
+
+	}
+
+	doc.save_file(path.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
+
+	return true;
+}
+
+bool S101Cell::SavePoint(pugi::xml_node& root)
+{
+
 	for (auto i = vecPoint.begin(); i != vecPoint.end(); i++)
 	{
 		auto record = *i;
@@ -4374,6 +4392,11 @@ bool S101Cell::SaveAsGML(std::wstring path)
 		nodePos.append_child(pugi::node_pcdata).set_value(pt.ToString().c_str());
 	}
 
+	return true;
+}
+
+bool S101Cell::SaveMultiPoint(pugi::xml_node& root)
+{
 	for (auto i = vecMultiPoint.begin(); i != vecMultiPoint.end(); i++)
 	{
 		auto record = *i;
@@ -4397,13 +4420,35 @@ bool S101Cell::SaveAsGML(std::wstring path)
 		}
 	}
 
-	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
-	{
+	return true;
+}
 
+bool S101Cell::SaveCurve(pugi::xml_node& root)
+{
+	for (auto i = vecCurve.begin(); i != vecCurve.end(); i++)
+	{
+		auto record = *i;
+		auto curNode = root.append_child("S100:Curve");
+		curNode.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
+		curNode.append_attribute("gml:id").set_value(record->GetRCIDasString("c").c_str());
+		auto nodePosList = curNode.append_child("gml:Segment").append_child("gml:LineStringSegment").append_child("gml:posList");
+
+		SCurve curve;
+		GetFullSpatialData(*i, &curve);
+
+		nodePosList.append_child(pugi::node_pcdata).set_value(curve.ToString().c_str());
 	}
 
-	doc.save_file(path.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
+	return true;
+}
 
+bool S101Cell::SaveOrientableCurve(pugi::xml_node& node)
+{
+	return true;
+}
+
+bool S101Cell::SaveCompositeCurve(pugi::xml_node& node)
+{
 	return true;
 }
 

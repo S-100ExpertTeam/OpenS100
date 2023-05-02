@@ -94,6 +94,11 @@ public:
 
 	bool SaveAsENC(std::wstring path);
 	bool SaveAsGML(std::wstring path);
+	bool SavePoint(pugi::xml_node& node);
+	bool SaveMultiPoint(pugi::xml_node& node);
+	bool SaveCurve(pugi::xml_node& node);
+	bool SaveOrientableCurve(pugi::xml_node& node);
+	bool SaveCompositeCurve(pugi::xml_node& node);
 
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
