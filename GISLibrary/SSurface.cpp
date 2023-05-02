@@ -555,3 +555,20 @@ double SSurface::GetY()
 {
 	return GetXY(0, 0).GetY();
 }
+
+int SSurface::GetRingCount()
+{
+	return curveList.size();
+}
+
+SCurveHasOrient* SSurface::GetRing(int index)
+{
+	if (index >= 0 && index < GetRingCount())
+	{
+		auto i = curveList.begin();
+		std::advance(i, index);
+		return *i;
+	}
+
+	return nullptr;
+}

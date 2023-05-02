@@ -5,34 +5,36 @@
 #include "OpenS100.h"
 #include "OpenS100View.h"
 
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
+
 #include "../LibMFCUtil/LibMFCUtil.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
 #include "../GISLibrary/S100Layer.h"
-#include "../GISLibrary/F_CUCO.h"
-#include "../GISLibrary/F_PTAS.h"
-#include "../GISLibrary/F_SPAS.h"
-#include "../GISLibrary/F_C3IL.h"
-#include "../GISLibrary/F_C2IL.h"
-#include "../GISLibrary/F_C2IT.h"
-#include "../GISLibrary/F_ATTR.h"
-#include "../GISLibrary/F_RIAS.h"
-#include "../GISLibrary/R_MultiPointRecord.h"
-#include "../GISLibrary/R_CurveRecord.h"
-#include "../GISLibrary/R_CompositeRecord.h"
-#include "../GISLibrary/R_SurfaceRecord.h"
-#include "../GISLibrary/R_FeatureRecord.h"
-#include "../GISLibrary/R_PointRecord.h"
-#include "../GISLibrary/ATTR.h"
-#include "../GISLibrary/C3IL.h"
-#include "../GISLibrary/IC2D.h"
-#include "../GISLibrary/CodeWithNumericCode.h"
-#include "../GISLibrary/CUCO.h"
-#include "../GISLibrary/SPAS.h"
-#include "../GISLibrary/PTAS.h"
-#include "../GISLibrary/RIAS.h"
-#include "../GISLibrary/F_INAS.h"
+//#include "../GISLibrary/F_CUCO.h"
+//#include "../GISLibrary/F_PTAS.h"
+//#include "../GISLibrary/F_SPAS.h"
+//#include "../GISLibrary/F_C3IL.h"
+//#include "../GISLibrary/F_C2IL.h"
+//#include "../GISLibrary/F_C2IT.h"
+//#include "../GISLibrary/F_ATTR.h"
+//#include "../GISLibrary/F_RIAS.h"
+//#include "../GISLibrary/R_MultiPointRecord.h"
+//#include "../GISLibrary/R_CurveRecord.h"
+//#include "../GISLibrary/R_CompositeRecord.h"
+//#include "../GISLibrary/R_SurfaceRecord.h"
+//#include "../GISLibrary/R_FeatureRecord.h"
+//#include "../GISLibrary/R_PointRecord.h"
+//#include "../GISLibrary/ATTR.h"
+//#include "../GISLibrary/C3IL.h"
+//#include "../GISLibrary/IC2D.h"
+//#include "../GISLibrary/CodeWithNumericCode.h"
+//#include "../GISLibrary/CUCO.h"
+//#include "../GISLibrary/SPAS.h"
+//#include "../GISLibrary/PTAS.h"
+//#include "../GISLibrary/RIAS.h"
+//#include "../GISLibrary/F_INAS.h"
 #include "../GISLibrary/SpatialObject.h"
 #include "../GISLibrary/GISLibrary.h"
 #include "../GISLibrary/S100SpatialObject.h"
@@ -40,6 +42,11 @@
 #include "../GISLibrary/GeometryType.h"
 #include "../GISLibrary/GM_SurfacePatch.h"
 #include "../GISLibrary/GM_Polygon.h"
+#include "../GISLibrary/SPoint.h"
+#include "../GISLibrary/SMultiPoint.h"
+#include "../GISLibrary/SCurveHasOrient.h"
+#include "../GISLibrary/SCompositeCurve.h"
+#include "../GISLibrary/SSurface.h"
 
 #include <vector>
 #include <sstream>
@@ -343,7 +350,7 @@ void CDockablePaneEditWindow::SetVectors()
 			auto geom = m_pFeature->GetGeometry();
 			if (geom)
 			{
-				
+				SetVector(geom);
 			}
 
 
@@ -376,8 +383,8 @@ void CDockablePaneEditWindow::SetVectors()
 	}
 }
 
-void CDockablePaneEditWindow::SetVector(int RCNM, R_VectorRecord* r, CMFCPropertyGridProperty *pSuperProperty)
-{
+//void CDockablePaneEditWindow::SetVector(int RCNM, R_VectorRecord* r, CMFCPropertyGridProperty *pSuperProperty)
+//{
 	//switch (RCNM)
 	//{
 	//case 110:
@@ -396,6 +403,31 @@ void CDockablePaneEditWindow::SetVector(int RCNM, R_VectorRecord* r, CMFCPropert
 	//	SetVector((R_SurfaceRecord*)r, pSuperProperty);
 	//	break;
 	//}
+//}
+
+void CDockablePaneEditWindow::SetVector(SGeometry* geom, CMFCPropertyGridProperty* pSuperProperty)
+{
+	auto type = geom->GetType();
+	if (type == SGeometryType::Point)
+	{
+		SetVector((SPoint*)geom, pSuperProperty);
+	}
+	else if (type == SGeometryType::MultiPoint)
+	{
+		SetVector((SMultiPoint*)geom, pSuperProperty);
+	}
+	else if (type == SGeometryType::CurveHasOrient)
+	{
+		SetVector((SCurveHasOrient*)geom, pSuperProperty);
+	}
+	else if (type == SGeometryType::CompositeCurve)
+	{
+		SetVector((SCompositeCurve*)geom, pSuperProperty);
+	}
+	else if (type == SGeometryType::Surface)
+	{
+		SetVector((SSurface*)geom, pSuperProperty);
+	}
 }
 
 void CDockablePaneEditWindow::SetVector(S100Geometry::Point* r, CMFCPropertyGridProperty* pSuperProperty)
@@ -473,75 +505,76 @@ void CDockablePaneEditWindow::SetVector(S100Geometry::Point* r, CMFCPropertyGrid
 
 void CDockablePaneEditWindow::SetVector(SPoint* geom, CMFCPropertyGridProperty* pSuperProperty)
 {
-	//auto infoCount = r->GetInformationRelationCount();
+	auto infoCount = geom->GetInformationTypeCount();
 
-	//CString strInfoCount;
-	//strInfoCount.Format(L"%d", infoCount);
+	CString strInfoCount;
+	strInfoCount.Format(L"%d", infoCount);
 
-	//std::wstring pointName = L"Point (ID : " + r->GetIDAsWString() + L", Relation: " + std::wstring(strInfoCount) + L")";
+	std::wstring pointName = L"Point (ID : " + geom->GetIDAsWString() + L", Relation: " + std::wstring(strInfoCount) + L")";
 
-	//CMFCPropertyGridProperty* pProperty = new CMFCPropertyGridProperty(pointName.c_str());
-	//if (pSuperProperty)
-	//{
-	//	pSuperProperty->AddSubItem(pProperty);
-	//}
-	//else
-	//{
-	//	m_wndListVector.AddProperty(pProperty);
-	//}
+	CMFCPropertyGridProperty* pProperty = new CMFCPropertyGridProperty(pointName.c_str());
+	if (pSuperProperty)
+	{
+		pSuperProperty->AddSubItem(pProperty);
+	}
+	else
+	{
+		m_wndListVector.AddProperty(pProperty);
+	}
 
-	//if (infoCount > 0) // If there's even one number,
-	//{
-	//	CMFCPropertyGridProperty* pInasParent = new CMFCPropertyGridProperty(L"INAS");
+	if (infoCount > 0) // If there's even one number,
+	{
+		CMFCPropertyGridProperty* pInasParent = new CMFCPropertyGridProperty(L"INAS");
 
-	//	pProperty->AddSubItem(pInasParent);
+		pProperty->AddSubItem(pInasParent);
 
-	//	for (int i = 0; i < infoCount; i++)
-	//	{
-	//		auto infoID = r->GetAssociatedInformationID(i);
-	//		auto info = m_cell->GetInformationType(infoID);
-	//		if (info)
-	//		{
-	//			std::wstring inasName = L"Information id";
-	//			CMFCPropertyGridProperty* pInas = new CMFCPropertyGridProperty(inasName.c_str(), info->GetIDAsWString().c_str());
-	//			pInasParent->AddSubItem(pInas);
-	//			pInas->SetName(inasName.c_str());
-	//			pInas->AllowEdit(FALSE);
-	//		}
-	//	}
-	//}
+		for (int i = 0; i < infoCount; i++)
+		{
+			auto info = geom->GetInformationType(i);
+			if (info)
+			{
+				std::wstring inasName = L"Information id";
+				CMFCPropertyGridProperty* pInas = new CMFCPropertyGridProperty(inasName.c_str(), info->GetIDAsWString().c_str());
+				pInasParent->AddSubItem(pInas);
+				pInas->SetName(inasName.c_str());
+				pInas->AllowEdit(FALSE);
+			}
+		}
+	}
 
-	//int precision_x = 0;
-	//int cmf = m_cell->CoordinateMultiplicationFactorForX();
-	//while (cmf >= 10)
-	//{
-	//	cmf /= 10;
-	//	precision_x++;
-	//}
+	int precision_x = 0;
+	int cmf = m_cell->CoordinateMultiplicationFactorForX();
+	while (cmf >= 10)
+	{
+		cmf /= 10;
+		precision_x++;
+	}
 
-	//int precision_y = 0;
-	//cmf = m_cell->CoordinateMultiplicationFactorForY();
-	//while (cmf >= 10)
-	//{
-	//	cmf /= 10;
-	//	precision_y++;
-	//}
+	int precision_y = 0;
+	cmf = m_cell->CoordinateMultiplicationFactorForY();
+	while (cmf >= 10)
+	{
+		cmf /= 10;
+		precision_y++;
+	}
 
-	//std::wstringstream wss;
-	//wss.setf(std::ios::fixed, std::ios::floatfield);
+	std::wstringstream wss;
+	wss.setf(std::ios::fixed, std::ios::floatfield);
 
-	//double x = r->position.GetX();
-	//wss.precision(precision_x);
+	double x = geom->GetX();
+	double y = geom->GetY();
 
-	//double y = r->position.GetY();
-	//wss.precision(precision_y);
+	inverseProjection(x, y);
 
-	//wss << y << L"," << x;
+	wss.precision(precision_x);
+	wss.precision(precision_y);
 
-	//CMFCPropertyGridProperty* pChildProperty = new CMFCPropertyGridProperty(L"Position", wss.str().c_str());
-	//pProperty->AddSubItem(pChildProperty);
+	wss << y << L"," << x;
 
-	//pChildProperty->SetName(L"Point");
+	CMFCPropertyGridProperty* pChildProperty = new CMFCPropertyGridProperty(L"Position", wss.str().c_str());
+	pProperty->AddSubItem(pChildProperty);
+
+	pChildProperty->SetName(L"Point");
 }
 
 //void CDockablePaneEditWindow::SetVector(R_PointRecord* r, CMFCPropertyGridProperty *pSuperProperty)
@@ -698,6 +731,95 @@ void CDockablePaneEditWindow::SetVector(S100Geometry::MultiPoint* r, CMFCPropert
 		pProperty->AddSubItem(pChildProperty);
 
 		pChildProperty->SetName(L"C3IL");
+	}
+}
+
+void CDockablePaneEditWindow::SetVector(SMultiPoint* geom, CMFCPropertyGridProperty* pSuperProperty)
+{
+	int infoCount = geom->GetInformationTypeCount();
+	CString count;
+	count.Format(L"%d", infoCount);
+
+	std::wstring multpointName = L"MultiPoint (RCID : " + geom->GetIDAsWString() + L", Relation: " + std::wstring(count) + L")";
+	CMFCPropertyGridProperty* pProperty = new CMFCPropertyGridProperty(multpointName.c_str());
+	if (pSuperProperty)
+	{
+		pSuperProperty->AddSubItem(pProperty);
+	}
+	else
+	{
+		m_wndListVector.AddProperty(pProperty);
+	}
+
+	if (infoCount > 0) // If there's even one number,
+	{
+		CMFCPropertyGridProperty* pInasParent = new CMFCPropertyGridProperty(L"INAS");
+
+		pProperty->AddSubItem(pInasParent);
+
+		for (int i = 0; i < infoCount; i++)
+		{
+			auto info = geom->GetInformationType(i);
+
+			if (info)
+			{
+				std::wstring inasName = L"Information id";
+				CMFCPropertyGridProperty* pInas = new CMFCPropertyGridProperty(inasName.c_str(), info->GetIDAsWString().c_str());
+				pInasParent->AddSubItem(pInas);
+
+				pInas->SetName(inasName.c_str());
+				pInas->AllowEdit(FALSE);
+			}
+		}
+	}
+
+	int precision_x = 0;
+	int cmf = m_cell->CoordinateMultiplicationFactorForX();
+	while (cmf >= 10)
+	{
+		cmf /= 10;
+		precision_x++;
+	}
+
+	int precision_y = 0;
+	cmf = m_cell->CoordinateMultiplicationFactorForY();
+	while (cmf >= 10)
+	{
+		cmf /= 10;
+		precision_y++;
+	}
+
+	int precision_z = 0;
+	cmf = m_cell->CoordinateMultiplicationFactorForZ();
+	while (cmf >= 10)
+	{
+		cmf /= 10;
+		precision_z++;
+	}
+
+	for (auto i = 0; i < geom->GetNumPoints(); i++)
+	{
+		std::wstringstream wss;
+		wss.setf(std::ios::fixed, std::ios::floatfield);
+		double x = geom->GetX(i);
+		double y = geom->GetY(i);
+		double z = geom->GetZ(i);
+
+		inverseProjection(x, y);
+
+		wss.precision(precision_x);
+		wss << x << L",";
+		
+		wss.precision(precision_y);
+		wss << y << L",";
+		
+		wss.precision(precision_z);
+		wss << z;
+
+		CMFCPropertyGridProperty* pChildProperty = new CMFCPropertyGridProperty(L"Position", wss.str().c_str());
+		pProperty->AddSubItem(pChildProperty);
+
+		pChildProperty->SetName(L"Point");
 	}
 }
 
@@ -874,6 +996,87 @@ void CDockablePaneEditWindow::SetVector(S100Geometry::Curve* r, CMFCPropertyGrid
 	SetVector(&r->boundary.endPoint, pProperty);
 }
 
+void CDockablePaneEditWindow::SetVector(SCurveHasOrient* geom, CMFCPropertyGridProperty* pSuperProperty)
+{
+	int infoCount = geom->GetInformationTypeCount();
+	CString count;
+	count.Format(L"%d", infoCount);
+
+	std::wstring curveName = L"Curve (RCID : " + geom->GetIDAsWString() + L", Relation: " + std::wstring(count) + L")";
+
+	CMFCPropertyGridProperty* pProperty = new CMFCPropertyGridProperty(curveName.c_str());
+
+	if (pSuperProperty)
+	{
+		pSuperProperty->AddSubItem(pProperty);
+	}
+	else
+	{
+		m_wndListVector.AddProperty(pProperty);
+	}
+
+	if (infoCount > 0) // If there's even one number,
+	{
+		CMFCPropertyGridProperty* pInasParent = new CMFCPropertyGridProperty(L"INAS");
+		pProperty->AddSubItem(pInasParent);
+
+		for (int i = 0; i < infoCount; i++)
+		{
+			auto info = geom->GetInformationType(i);
+			
+			if (info)
+			{
+				std::wstring inasName = L"Information id";
+				CMFCPropertyGridProperty* pInas = new CMFCPropertyGridProperty(inasName.c_str(), info->GetIDAsWString().c_str());
+				pInasParent->AddSubItem(pInas);
+
+				pInas->SetName(inasName.c_str());
+				pInas->AllowEdit(FALSE);
+			}
+		}
+	}
+
+	SetVector(geom->GetFirstPoint(), pProperty);
+
+	int precision_x = 0;
+	int cmf = m_cell->CoordinateMultiplicationFactorForX();
+	while (cmf >= 10)
+	{
+		cmf /= 10;
+		precision_x++;
+	}
+
+	int precision_y = 0;
+	cmf = m_cell->CoordinateMultiplicationFactorForY();
+	while (cmf >= 10)
+	{
+		cmf /= 10;
+		precision_y++;
+	}
+
+	for (int i = 1; i < geom->GetNumPoints() - 1; i++)
+	{
+		std::wstringstream wss;
+		wss.setf(std::ios::fixed, std::ios::floatfield);
+
+		double x = geom->GetX(i);
+		double y = geom->GetY(i);
+
+		inverseProjection(x, y);
+
+		wss.precision(precision_x);
+		wss.precision(precision_y);
+
+		wss << y << L"," << x;
+
+		CMFCPropertyGridProperty* pChildProperty = new CMFCPropertyGridProperty(L"Position", wss.str().c_str());
+		pProperty->AddSubItem(pChildProperty);
+		pChildProperty->SetName(L"C2IL");
+	}
+
+	SetVector(geom->GetLastPoint(), pProperty);
+}
+
 //void CDockablePaneEditWindow::SetVector(R_CurveRecord* r, CMFCPropertyGridProperty *pSuperProperty)
 //{
 //	int inasCount = (int)r->m_inas.size();
@@ -1042,6 +1245,59 @@ void CDockablePaneEditWindow::SetVector(S100Geometry::CompositeCurve* r, CMFCPro
 	}
 }
 
+void CDockablePaneEditWindow::SetVector(SCompositeCurve* geom, CMFCPropertyGridProperty* pSuperProperty)
+{
+	int infoCount = (int)geom->GetInformationTypeCount();
+	CString count;
+	count.Format(L"%d", infoCount);
+
+	S101Cell* cell = (S101Cell*)m_cell;
+	std::wstring comName = L"Composite Curve (RCID : " + geom->GetIDAsWString() + L", Relation: " + std::wstring(count) + L")";
+	CMFCPropertyGridProperty* pProperty = new CMFCPropertyGridProperty(comName.c_str());
+	if (pSuperProperty)
+	{
+		pSuperProperty->AddSubItem(pProperty);
+	}
+	else
+	{
+		m_wndListVector.AddProperty(pProperty);
+	}
+
+	if (infoCount > 0) // If there's even one number,
+	{
+		CMFCPropertyGridProperty* pInasParent = new CMFCPropertyGridProperty(L"INAS");
+
+		pProperty->AddSubItem(pInasParent);
+
+		for (int i = 0; i < infoCount; i++)
+		{
+			auto info = geom->GetInformationType(i);
+			if (info)
+			{
+				std::wstring inasName = L"Information id";
+				CMFCPropertyGridProperty* pInas = new CMFCPropertyGridProperty(inasName.c_str(), info->GetIDAsWString().c_str());
+				pInasParent->AddSubItem(pInas);
+
+				pInas->SetName(inasName.c_str());
+				pInas->AllowEdit(FALSE);
+			}
+		}
+	}
+
+	for (int i = 0; i < geom->GetCurveCount(); i++)
+	{
+		auto ring = geom->GetCurve(i);
+		if (ring->GetType() == SGeometryType::CurveHasOrient)
+		{
+			SetVector(ring, pProperty);
+		}
+		else if (ring->GetType() == SGeometryType::CompositeCurve)
+		{
+			SetVector((SCompositeCurve*)ring, pProperty);
+		}
+	}
+}
+
 //void CDockablePaneEditWindow::SetVector(R_CompositeRecord* r, CMFCPropertyGridProperty *pSuperProperty)
 //{
 //	int inasCount = (int)r->m_inas.size();
@@ -1158,6 +1414,64 @@ void CDockablePaneEditWindow::SetVector(S100Geometry::Surface* r, CMFCPropertyGr
 	{
 		auto interiorCompositeCurve = (S100Geometry::CompositeCurve*)&r->GetPolygon()->boundary.interior.at(i);
 		SetVector(interiorCompositeCurve, pProperty);
+	}
+}
+
+void CDockablePaneEditWindow::SetVector(SSurface* geom, CMFCPropertyGridProperty* pSuperProperty)
+{
+	int infoCount = (int)geom->GetInformationTypeCount();
+	CString count;
+	count.Format(L"%d", infoCount);
+
+	std::wstring surName = L"Surface (RCID: " + geom->GetIDAsWString() + L", Relation: " + std::wstring(count) + L")";
+
+	CMFCPropertyGridProperty* pProperty = new CMFCPropertyGridProperty(surName.c_str());
+
+	if (pSuperProperty)
+	{
+		pSuperProperty->AddSubItem(pProperty);
+	}
+	else
+	{
+		m_wndListVector.AddProperty(pProperty);
+	}
+
+	if (infoCount > 0) // If there's even one number,
+	{
+		for (int i = 0; i < infoCount; i++)
+		{
+			auto info = geom->GetInformationType(i);
+
+			if (info)
+			{
+				CMFCPropertyGridProperty* pInasParent = new CMFCPropertyGridProperty(L"INAS");
+
+				pProperty->AddSubItem(pInasParent);
+
+				for (int i = 0; i < infoCount; i++)
+				{
+					std::wstring inasName = L"Information id";
+					CMFCPropertyGridProperty* pInas = new CMFCPropertyGridProperty(inasName.c_str(), info->GetIDAsWString().c_str());
+					pInasParent->AddSubItem(pInas);
+
+					pInas->SetName(inasName.c_str());
+					pInas->AllowEdit(FALSE);
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < geom->GetRingCount(); i++)
+	{
+		auto ring = geom->GetRing(i);
+		if (ring->GetType() == SGeometryType::CurveHasOrient)
+		{
+			SetVector(ring, pProperty);
+		}
+		else if (ring->GetType() == SGeometryType::CompositeCurve)
+		{
+			SetVector((SCompositeCurve*)ring, pProperty);
+		}
 	}
 }
 

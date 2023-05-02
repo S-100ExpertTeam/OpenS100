@@ -1,7 +1,7 @@
 #pragma once
 #include "SGeometry.h"
 
-#include "..\\GeoMetryLibrary\\GeoPoint.h"
+#include "SGeometry.h"
 
 class SPoint : public SGeometry
 {
@@ -29,4 +29,7 @@ public:
 	bool ExportToWkb(unsigned char** value, int* size);
 
 	bool operator==(const SPoint& point);
+
+	double GetX() override;
+	double GetY() override;
 };

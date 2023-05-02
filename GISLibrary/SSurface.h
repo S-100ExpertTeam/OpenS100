@@ -65,4 +65,7 @@ public:
 
 	double GetX() override;
 	double GetY() override;
+
+	int GetRingCount();
+	SCurveHasOrient* GetRing(int index);
 };

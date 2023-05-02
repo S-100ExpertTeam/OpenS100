@@ -43,4 +43,7 @@ public:
 
 	double GetX() override;
 	double GetY() override; 
+
+	int GetCurveCount();
+	SCurveHasOrient* GetCurve(int index);
 };

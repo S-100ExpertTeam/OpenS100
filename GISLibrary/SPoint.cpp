@@ -99,3 +99,13 @@ bool SPoint::operator==(const SPoint& point)
 
 	return false;
 }
+
+double SPoint::GetX()
+{
+	return x;
+}
+
+double SPoint::GetY()
+{
+	return y;
+}

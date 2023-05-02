@@ -251,3 +251,20 @@ double SCompositeCurve::GetY()
 
 	return 0;
 }
+
+int SCompositeCurve::GetCurveCount()
+{
+	return m_listCurveLink.size();
+}
+
+SCurveHasOrient* SCompositeCurve::GetCurve(int index)
+{
+	if (index >= 0 && index < GetCurveCount())
+	{
+		auto i = m_listCurveLink.begin();
+		std::advance(i, index);
+		return *i;
+	}
+
+	return nullptr;
+}
