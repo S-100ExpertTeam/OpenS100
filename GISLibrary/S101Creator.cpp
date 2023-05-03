@@ -888,15 +888,21 @@ R_CompositeRecord* S101Creator::ConvertInsertVectorRecord(SCompositeCurve* geom)
 	vectorRecord->m_ccid = F_CCID(recordName);
 
 	auto f_CUCO = new F_CUCO();
-	for (auto i = geom->m_listCurveLink.begin(); i != geom->m_listCurveLink.end(); i++)
+
+	int curveCnt = geom->GetCurveCount();
+	//for (auto i = geom->m_listCurveLink.begin(); i != geom->m_listCurveLink.end(); i++)
+	for (int i = 0; i < curveCnt; i++)
 	{
-		auto curveRecord = ConvertInsertVectorRecord(*i);
+		auto c = geom->GetCurve(i);
+		//auto curveRecord = ConvertInsertVectorRecord(*i);
+		auto curveRecord = ConvertInsertVectorRecord(c);
 		auto cuco = new CUCO();
 		cuco->m_name = curveRecord->GetRecordName();
 		cuco->m_ornt = 1;
 		f_CUCO->m_arr.push_back(cuco);
 
-		(*i)->SetRCID(curveRecord->GetRCID());
+		//(*i)->SetRCID(curveRecord->GetRCID());
+		c->SetRCID(curveRecord->GetRCID());
 	}
 	vectorRecord->m_cuco.push_back(f_CUCO);
 

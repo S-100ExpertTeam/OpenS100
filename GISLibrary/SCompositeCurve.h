@@ -11,7 +11,7 @@ public:
 	SCompositeCurve();
 	virtual ~SCompositeCurve();
 
-public:
+private:
 	std::list<SCurveHasOrient*> m_listCurveLink;
 
 public:
@@ -46,4 +46,6 @@ public:
 
 	int GetCurveCount();
 	SCurveHasOrient* GetCurve(int index);
+
+	std::list<SCurveHasOrient*> GetCurveList();
 };

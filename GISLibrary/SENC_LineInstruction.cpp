@@ -63,21 +63,24 @@ bool SENC_LineInstruction::GetSuppression()
 #pragma warning(disable:4838)
 void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* pDirect2dFactory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
-	std::list<SCurveHasOrient*>* curListCurveLink = nullptr;
+	//std::list<SCurveHasOrient*>* curListCurveLink = nullptr;
+	std::list<SCurveHasOrient*> curListCurveLink;
 
 	// Surface
 	if (fr->m_geometry->GetType() == SGeometryType::Surface)
 	{
 		auto surface = (SSurface*)fr->m_geometry;
 
-		curListCurveLink = &surface->curveList;
+		//curListCurveLink = &surface->curveList;
+		curListCurveLink = surface->GetCurveList();
 	}
 	// Composite Curve
 	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
 
-		curListCurveLink = &compositeCurve->m_listCurveLink;
+		//curListCurveLink = &compositeCurve->m_listCurveLink;
+		curListCurveLink = compositeCurve->GetCurveList();
 	}
 	// Curve
 	else if (fr->m_geometry->GetType() == SGeometryType::CurveHasOrient)
@@ -97,7 +100,8 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		return;
 	}
 
-	if (nullptr == curListCurveLink)
+	//if (nullptr == curListCurveLink)
+	if (curListCurveLink.size() == 0)
 	{
 		//OutputDebugString(L"The spatial information format of the object is invalid.\n");
 		return;
@@ -105,7 +109,8 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 
 	if (spatialReference.size() == 0)
 	{
-		for (auto i = curListCurveLink->begin(); i != curListCurveLink->end(); i++)
+		//for (auto i = curListCurveLink->begin(); i != curListCurveLink->end(); i++)
+		for (auto i = curListCurveLink.begin(); i != curListCurveLink.end(); i++)
 		{
 			auto curve = (*i);
 
@@ -125,7 +130,8 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 
 	for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
 	{
-		for (auto j = curListCurveLink->begin(); j != curListCurveLink->end(); j++)
+		//for (auto j = curListCurveLink->begin(); j != curListCurveLink->end(); j++)
+		for (auto j = curListCurveLink.begin(); j != curListCurveLink.end(); j++)
 		{
 			if ((*i)->reference == (*j)->GetRCID())
 			{

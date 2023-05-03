@@ -50,11 +50,11 @@ int iDebugCount_TextInstruction[100] = { 0 };
 #pragma warning(disable:4244)
 void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points)
 {
-	if (!fr)
+	if (!fr || !fr->m_geometry)
+	{
 		return;
-	if (!fr->m_geometry)
-		return;
-
+	}
+		
 	double rotation = 0;
 	double scaleFactor = 1;
 	int viewPointNum = 0;
@@ -79,12 +79,16 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 
-		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
+		int curveCnt = geo->GetCurveCount();
+		for (int i = 0; i < curveCnt; i++)
+		//for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
-			SCurve* c = (*lcl);
+			//SCurve* c = (*lcl);
+			auto c = geo->GetCurve(i);
 
-			if (!(*lcl)->GetMasking())
+			//if (!(*lcl)->GetMasking())
+			if (!c->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{
@@ -183,12 +187,16 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 
-		for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
+		int curveCnt = geo->GetCurveCount();
+		for (int i = 0; i < curveCnt; i++)
+		//for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
-			SCurve* c = (*lcl);
+			auto c = geo->GetCurve(i);
+			//SCurve* c = (*lcl);
 
-			if (!(*lcl)->GetMasking())
+			//if (!(*lcl)->GetMasking())
+			if (!c->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{

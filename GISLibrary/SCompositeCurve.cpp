@@ -268,3 +268,8 @@ SCurveHasOrient* SCompositeCurve::GetCurve(int index)
 
 	return nullptr;
 }
+
+std::list<SCurveHasOrient*> SCompositeCurve::GetCurveList()
+{
+	return m_listCurveLink;
+}

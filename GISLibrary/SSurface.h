@@ -68,4 +68,6 @@ public:
 
 	int GetRingCount();
 	SCurveHasOrient* GetRing(int index);
+
+	std::list<SCurveHasOrient*> GetCurveList();
 };

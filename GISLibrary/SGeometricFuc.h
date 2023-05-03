@@ -4,7 +4,7 @@
 #include "SCompositeCurve.h"
 #include "SSurface.h"
 
-#include "..\\GeoMetryLibrary\\GeometricFuc.h"
+#include "../GeoMetryLibrary/GeometricFuc.h"
 
 class SGeometricFuc :
 	public GeometricFuc

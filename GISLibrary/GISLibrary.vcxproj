@@ -242,7 +242,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="GISLibrary.def" />
     <None Include="ReadMe.txt" />
   </ItemGroup>

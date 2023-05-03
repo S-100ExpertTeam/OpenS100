@@ -44,11 +44,13 @@ int SGeometricFuc::overlap(SCompositeCurve *objPoly, SSurface *comPoly)
 		return ret;
 	}
 
-
-	for (auto it = objPoly->m_listCurveLink.begin(); it != objPoly->m_listCurveLink.end(); it++)
+	int curveCnt = objPoly->GetCurveCount();
+	//for (auto it = objPoly->m_listCurveLink.begin(); it != objPoly->m_listCurveLink.end(); it++)
+	for (int i = 0; i < curveCnt; i++)
 	{
 		//SCurve* c = (*it).GetCurve();
-		SCurve* c = (*it);
+		//SCurve* c = (*it);
+		auto c = objPoly->GetCurve(i);
 
 		int fret = overlap(c, comPoly);
 

@@ -611,10 +611,13 @@ double SCommonFuction::GetAngle(double p1x, double p1y, double p2x, double p2y)
 
 int SCommonFuction::overlap(SCompositeCurve* objPoly, SSurface* comPoly, bool applyOption)
 {
-	for (auto i = objPoly->m_listCurveLink.begin(); i != objPoly->m_listCurveLink.end(); i++)
+	int curveCnt = objPoly->GetCurveCount();
+	//for (auto i = objPoly->m_listCurveLink.begin(); i != objPoly->m_listCurveLink.end(); i++)
+	for (int i = 0; i < curveCnt; i++)
 	{
+		auto c = objPoly->GetCurve(i);
 		//SCurve* c = i->GetCurve();
-		SCurve* c = (*i);
+		//SCurve* c = (*i);
 
 		int result = overlap(c, comPoly, applyOption);
 		if (result)

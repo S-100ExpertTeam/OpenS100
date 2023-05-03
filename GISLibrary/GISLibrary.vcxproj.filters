@@ -61,7 +61,6 @@
     <None Include="GISLibrary.def">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GISLibrary.cpp">

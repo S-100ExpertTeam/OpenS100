@@ -591,11 +591,13 @@ void COpenS100View::DeleteDCs()
 		mem_dc.DeleteDC();
 		memBitmap.DeleteObject();
 	}
+
 	if (transDC.GetSafeHdc())
 	{
 		transDC.DeleteDC();
 		transBitmap.DeleteObject();
 	}
+
 	if (map_dc.GetSafeHdc())
 	{
 		map_dc.DeleteDC();
@@ -1086,10 +1088,13 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 
 		auto cc = (SCompositeCurve*)(frPick->GetGeometry());
 
-		for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
+		auto curveCnt = cc->GetCurveCount();
+		//for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
+		for (int i = 0; i < curveCnt; i++)
 		{
 			//SCurve* c = (*it).GetCurve();
-			SCurve* c = (*it);
+			//SCurve* c = (*it);
+			auto c = cc->GetCurve(i);
 			Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
 
 			int pickNumPoints = 0;

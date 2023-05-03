@@ -310,12 +310,15 @@ void SSurface::AddCurve(SCurveHasOrient* curve)
 
 void SSurface::AddCompositeCurve(SCompositeCurve* compositeCurve)
 {
-	for (
-		auto i = compositeCurve->m_listCurveLink.begin();
-		i != compositeCurve->m_listCurveLink.end();
-		i++)
+	int curveCnt = compositeCurve->GetCurveCount();
+	for (int i = 0; i < curveCnt; i++)
+	//for (
+	//	auto i = compositeCurve->m_listCurveLink.begin();
+	//	i != compositeCurve->m_listCurveLink.end();
+	//	i++)
 	{
-		curveList.push_back(*i);
+		auto c = compositeCurve->GetCurve(i);
+		curveList.push_back(c);
 	}
 }
 
@@ -571,4 +574,9 @@ SCurveHasOrient* SSurface::GetRing(int index)
 	}
 
 	return nullptr;
+}
+
+std::list<SCurveHasOrient*> SSurface::GetCurveList()
+{
+	return curveList;
 }
