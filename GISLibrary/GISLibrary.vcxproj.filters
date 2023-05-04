@@ -1103,7 +1103,7 @@
     <ClInclude Include="GM_Point.h">
       <Filter>S100\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="GM_Geometry.h">
+    <ClInclude Include="GM_Object.h">
       <Filter>S100\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="GM_Primitive.h">

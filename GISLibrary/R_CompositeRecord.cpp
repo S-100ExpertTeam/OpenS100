@@ -134,6 +134,11 @@ int R_CompositeRecord::GetRCID()
 	return m_ccid.m_name.RCID;
 }
 
+std::string R_CompositeRecord::GetRCIDasString(std::string prefix)
+{
+	return prefix + pugi::as_utf8(GetRCIDasWstring());
+}
+
 std::wstring R_CompositeRecord::GetRCIDasWstring() 
 {
 	return std::to_wstring(GetRCID());

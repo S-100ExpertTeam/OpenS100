@@ -5,7 +5,7 @@
 #include "F_FOID.h"
 #include "OrientedCurveRecord.h"
 #include "IF_FeatureType.h"
-#include "GM_Geometry.h"
+#include "GM_Object.h"
 
 #include <map>
 
@@ -74,6 +74,7 @@ public:
 	
 	MBR GetMBR();
 	int GetRCID();
+	std::string GetRCIDAsString(std::string prefix = "");
 	int GetAssociationCount();
 	int GetFeatureAssociationCount();
 	int GetInformationAssociationCount();
@@ -122,5 +123,5 @@ public: // override FeatureType
 	std::string GetAssociatedFeatureID(int index) override;
 	SpatialPrimitiveType GetSpatialPrimitiveType() override;
 	SGeometry* GetGeometry() override;
-	S100Geometry::Geometry* GetGMGeometry() override;
+	S100Geometry::Object* GetGMGeometry() override;
 };

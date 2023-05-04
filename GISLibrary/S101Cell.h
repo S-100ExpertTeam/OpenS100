@@ -94,11 +94,16 @@ public:
 
 	bool SaveAsENC(std::wstring path);
 	bool SaveAsGML(std::wstring path);
-	bool SavePoint(pugi::xml_node& node);
-	bool SaveMultiPoint(pugi::xml_node& node);
-	bool SaveCurve(pugi::xml_node& node);
-	bool SaveOrientableCurve(pugi::xml_node& node);
-	bool SaveCompositeCurve(pugi::xml_node& node);
+	bool SavePoint(pugi::xml_node& root);
+	bool SaveMultiPoint(pugi::xml_node& root);
+	bool SaveCurve(pugi::xml_node& root);
+	bool SaveCompositeCurve(pugi::xml_node& root);
+	bool SaveSurface(pugi::xml_node& root);
+	bool SaveMembers(pugi::xml_node& root);
+	bool SaveInfomation(pugi::xml_node& root);
+	bool SaveFeature(pugi::xml_node& root);
+	bool HasOrientableCurve(pugi::xml_node& root, std::string id);
+	void AddOrientableCurve(pugi::xml_node& root, std::string odID, std::string refID);
 
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
@@ -329,7 +334,6 @@ private:
 	bool UpdateInfMapRecord(S101Cell* cell);
 	bool UpdateAttrRecord(std::list<F_ATTR*> Update, std::list<F_ATTR*> Base) ; // To increase utilization, change parameters.
 	bool UpdateINASRecord(std::list<F_INAS*> Update, std::list<F_INAS*> Base);
-
 
 	bool UpdateC2ILRecord(std::list<F_C2IL*> update, std::list<F_C2IL*> base, F_COCC* updatemission);
 	bool UpdateC3ILRecord(std::list<F_C3IL*> update, std::list<F_C3IL*> base);

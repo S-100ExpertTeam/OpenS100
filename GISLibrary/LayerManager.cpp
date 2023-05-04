@@ -49,7 +49,7 @@
 #include <future>
 #include <chrono>
 
-#pragma comment(lib, "winmm")
+//#pragma comment(lib, "winmm")
 
 LayerManager::LayerManager(void)
 {

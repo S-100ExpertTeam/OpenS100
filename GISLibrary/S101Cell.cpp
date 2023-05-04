@@ -48,9 +48,6 @@
 #include "SENC_LineInstruction.h"
 #include "SENC_PointInstruction.h"
 #include "Record.h"
-
-#include "../FeatureCatalog/FeatureCatalogue.h"
-
 #include "SPoint.h"
 #include "SMultiPoint.h"
 #include "SCompositeCurve.h"
@@ -61,6 +58,8 @@
 #include "SGeometricFuc.h"
 #include "GML_Envelop.h"
 
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
 #include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <sstream> 
@@ -68,31 +67,7 @@
 #include <mmsystem.h> 
 #include <unordered_map>
 
-#pragma comment(lib, "winmm")
-
-std::wstring get_wstring_from_coordinate_1(int value)
-{
-	std::wstringstream wss;
-	wss.setf(std::ios::fixed);
-	wss.setf(std::ios::showpoint);
-	wss.precision(7);
-
-	wss << value / 10000000.;
-	return wss.str();
-}
-
-std::wstring get_wstring_from_int_1(int value)
-{
-	std::wstringstream wss;
-	wss.precision(1);
-
-	wss << value / 10;
-	return wss.str();
-}
-
-// Key : Feature ID
-// Value : Feature Element?
-std::unordered_map<std::string, pugi::xml_node*> objectPugiXmlElementMap;
+//#pragma comment(lib, "winmm")
 
 std::wstring get_feature_id(int id, int ENCODING = 0)
 {
@@ -4386,11 +4361,9 @@ bool S101Cell::SaveAsGML(std::wstring path)
 	SaveMultiPoint(root);
 	SaveCurve(root);
 	SaveCompositeCurve(root);
-
-	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
-	{
-
-	}
+	SaveSurface(root);
+	
+	SaveMembers(root);
 
 	doc.save_file(path.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
 
@@ -4464,14 +4437,183 @@ bool S101Cell::SaveCurve(pugi::xml_node& root)
 	return true;
 }
 
-bool S101Cell::SaveOrientableCurve(pugi::xml_node& node)
+bool S101Cell::SaveCompositeCurve(pugi::xml_node& root)
+{
+	for (auto i = vecComposite.begin(); i != vecComposite.end(); i++)
+	{
+		auto record = *i;
+		auto curNode = root.append_child("S100:CompositeCurve");
+		curNode.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
+		curNode.append_attribute("gml:id").set_value(record->GetRCIDasString("cc").c_str());
+
+		for (auto j = record->m_cuco.begin(); j != record->m_cuco.end(); j++)
+		{
+			auto f_cuco = (*j);
+			for (auto k = f_cuco->m_arr.begin(); k != f_cuco->m_arr.end(); k++)
+			{
+				auto node_CurveMember = curNode.append_child("gml:curveMember");
+
+				auto cuco = *k;
+			
+				std::string prefix;
+				if (cuco->IsCurve())
+				{
+					prefix = "c";
+				}
+				else
+				{
+					prefix = "cc";
+				}
+
+				if (cuco->m_ornt == 1) // Forward
+				{
+					node_CurveMember.append_attribute("xlink:href").set_value(cuco->m_name.GetRCIDasString("#" + prefix).c_str());
+				}
+				else if (cuco->m_ornt == 2) // Reverse
+				{
+					auto ocID = cuco->m_name.GetRCIDasString("o" + prefix);
+					auto find = HasOrientableCurve(root, ocID);
+					if (!find)
+					{
+						AddOrientableCurve(root, ocID, cuco->m_name.GetRCIDasString(prefix));
+					}
+					
+					node_CurveMember.append_attribute("xlink:href").set_value(cuco->m_name.GetRCIDasString("#o" + prefix).c_str());
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::SaveSurface(pugi::xml_node& root)
+{
+	for (auto i = vecSurface.begin(); i != vecSurface.end(); i++)
+	{
+		auto record = *i;
+
+		auto node_Surface = root.append_child("S100:Surface");
+		node_Surface.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
+		node_Surface.append_attribute("gml:id").set_value(record->GetRCIDasString("s").c_str());
+
+		auto node_PolygonPatch = node_Surface.append_child("gml:patches")
+			.append_child("gml:PolygonPatch");
+
+		for (auto j = record->m_rias.begin(); j != record->m_rias.end(); j++)
+		{
+			auto f_rias = (*j);
+			for (auto k = f_rias->m_arr.begin(); k != f_rias->m_arr.end(); k++)
+			{
+				auto rias = *k;
+				std::string usageName;
+				if (rias->IsExterior())
+				{
+					usageName = "gml:exterior";
+				}
+				else 
+				{
+					usageName = "gml:interior";
+				}
+
+				std::string curvePrefix;
+				if (rias->IsCurve())
+				{
+					curvePrefix = "c";
+				}
+				else
+				{
+					curvePrefix = "cc";
+				}
+
+				std::string refCurveID;
+				if (rias->IsReverse())
+				{
+					auto ocID = rias->m_name.GetRCIDasString("o" + curvePrefix);
+					if (!HasOrientableCurve(root, ocID))
+					{
+						AddOrientableCurve(root, ocID, rias->m_name.GetRCIDasString(curvePrefix));
+					}
+
+					refCurveID = "#" + ocID;
+				}
+				else
+				{
+					refCurveID = "#" + curvePrefix + rias->m_name.GetRCIDasString();
+				}
+
+				auto node_CurveMember = node_PolygonPatch.append_child(usageName.c_str())
+					.append_child("gml:Ring")
+					.append_child("gml:curveMember")
+					.append_attribute("xlink:href").set_value(refCurveID.c_str());
+			}
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::SaveMembers(pugi::xml_node& root)
+{
+	auto node_members = root.append_child("members");
+
+	SaveInfomation(node_members);
+	SaveFeature(node_members);
+	return true;
+}
+
+bool S101Cell::SaveInfomation(pugi::xml_node& root)
 {
 	return true;
 }
 
-bool S101Cell::SaveCompositeCurve(pugi::xml_node& node)
+bool S101Cell::SaveFeature(pugi::xml_node& root)
 {
+	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+	{
+		auto feature = *i;
+
+		auto code = pugi::as_utf8(GetFeatureTypeCodeByID(feature->GetRCID()));
+		auto node_feature = root.append_child(code.c_str());
+		node_feature.append_attribute("gml:id").set_value(feature->GetRCIDAsString("f").c_str());
+
+		auto attributes = feature->GetAllAttributes();
+
+		std::vector<pugi::xml_node*> attributeNodes;
+
+		for (auto j = attributes.begin(); j != attributes.end(); j++)
+		{
+			auto attr = (*j);
+			auto code = m_dsgir.GetAttributeCode(attr->m_natc);
+			
+		}
+	}
+
 	return true;
+}
+
+bool S101Cell::HasOrientableCurve(pugi::xml_node& root, std::string id)
+{
+	auto findNode = root.find_child_by_attribute("S100:OrientableCurve", "gml:id", id.c_str());
+	
+	if (findNode == nullptr)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+void S101Cell::AddOrientableCurve(pugi::xml_node& root, std::string odID, std::string refID)
+{
+	auto node_oc = root.append_child("S100:OrientableCurve");
+	node_oc.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
+
+	node_oc.append_attribute("gml:id").set_value(odID.c_str());
+	node_oc.append_attribute("orientation").set_value("-");
+
+	auto node_bc = node_oc.append_child("gml:baseCurve");
+	node_bc.append_attribute("xlink:href").set_value(std::string("#" + refID).c_str());
 }
 
 bool S101Cell::InformationRecordHasAttributeField()

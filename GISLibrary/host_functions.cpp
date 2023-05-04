@@ -1,23 +1,25 @@
 #include "stdafx.h"
-#include "stdio.h"
+//#include "stdio.h"
 #include "host_functions.h"
 #include "host_data.h"
 #include "ProcessS101.h"
 
-#include "..\\LuaScriptingReference\\lua_session.h"
-#include "..\\LuaScriptingReference\\lua_functions.h"
-#include "..\\LuaScriptingReference\\Result_DrawingInstruction.h"
+#include "../LuaScriptingReference/lua_session.h"
+#include "../LuaScriptingReference/lua_functions.h"
+#include "../LuaScriptingReference/Result_DrawingInstruction.h"
 
-#include "..\\FeatureCatalog\\FeatureCatalogue.h"
-#include "..\\FeatureCatalog\\FeatureTypes.h"
+#include "../FeatureCatalog/FeatureCatalogue.h"
+#include "../FeatureCatalog/FeatureTypes.h"
 
-#include <iostream>
 #include <algorithm>
-#include <assert.h>
-#include <afxcmn.h>
 
-#include <mmsystem.h>
-#pragma comment(lib, "winmm.lib" )
+//#include <iostream>
+
+//#include <assert.h>
+//#include <afxcmn.h>
+
+//#include <mmsystem.h>
+//#pragma comment(lib, "winmm.lib" )
 
 std::list<Result_DrawingInstruction> resultDrawingInstructions;
 

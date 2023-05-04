@@ -316,71 +316,26 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 
 void CDockablePaneEditWindow::SetVectors()
 {
-	if (nullptr == m_cell)
+	auto m_pFeature = m_cell->GetFeatureType(pugi::as_utf8(selectedFeatureID));
+
+	m_wndListVector.ShowWindow(FALSE);
+	DeleteVectorItems();
+
+	if (m_cell == nullptr || m_pFeature == nullptr)
 	{
+		m_wndListVector.ShowWindow(TRUE);
 		return;
 	}
 
-	auto s100Layer = (S100Layer*)m_cell->GetLayer();
-	//if (101 == s100Layer->GetProductNumber())
+	auto geom = m_pFeature->GetGeometry();
+	if (geom)
 	{
-		auto cell = (S101Cell*)m_cell;
-		auto m_pFeature = cell->GetFeatureType(pugi::as_utf8(selectedFeatureID));
-
-		m_wndListVector.ShowWindow(FALSE);
-		DeleteVectorItems();
-
-		std::wstring str;
-		//R_PointRecord* pr = NULL;
-		//R_MultiPointRecord* mpr = NULL;
-		//R_CurveRecord* cr = NULL;
-		//R_CompositeRecord* ccr = NULL;
-		//R_SurfaceRecord* sr = NULL;
-
-		if (cell == nullptr || m_pFeature == nullptr)
-		{
-			m_wndListVector.ShowWindow(TRUE);
-			return;
-		}
-
-		//if (m_cell->m_FileType == FILE_S_100_VECTOR)
-		{
-			//S101Cell* cell = (S101Cell*)m_cell;
-
-			auto geom = m_pFeature->GetGeometry();
-			if (geom)
-			{
-				SetVector(geom);
-			}
-
-
-					//switch (spas->m_name.RCNM)
-					//{
-					//case 110:
-					//	pr = cell->GetPointRecord(spas->m_name.GetName());
-					//	SetVector(pr);
-					//	break;
-					//case 115:
-					//	mpr = cell->GetMultiPointRecord(spas->m_name.GetName());
-					//	SetVector(mpr);
-					//	break;
-					//case 120:
-					//	cr = cell->GetCurveRecord(spas->m_name.GetName());
-					//	SetVector(cr);
-					//	break;
-					//case 125:
-					//	ccr = cell->GetCompositeCurveRecord(spas->m_name.GetName());
-					//	SetVector(ccr);
-					//	break;
-					//case 130:
-					//	sr = cell->GetSurfaceRecord(spas->m_name.GetName());
-					//	SetVector(sr);
-					//	break;
-		}
-
-		m_wndListVector.ExpandAll(FALSE);
-		m_wndListVector.ShowWindow(TRUE);
+		SetVector(geom);
 	}
+
+	m_wndListVector.ExpandAll(FALSE);
+	m_wndListVector.ShowWindow(TRUE);
+	
 }
 
 //void CDockablePaneEditWindow::SetVector(int RCNM, R_VectorRecord* r, CMFCPropertyGridProperty *pSuperProperty)

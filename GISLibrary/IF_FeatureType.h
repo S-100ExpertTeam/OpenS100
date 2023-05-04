@@ -2,7 +2,7 @@
 
 #include "IF_ObjectType.h"
 #include "IF_Attribute.h"
-#include "GM_Geometry.h"
+#include "GM_Object.h"
 
 #include "../FeatureCatalog/SpatialPrimitiveType.h"
 
@@ -36,6 +36,6 @@ namespace S100Interface
 		}
 
 		// Need release by a user.
-		virtual S100Geometry::Geometry* GetGMGeometry() { return nullptr; }
+		virtual S100Geometry::Object* GetGMGeometry() { return nullptr; }
 	};
 }

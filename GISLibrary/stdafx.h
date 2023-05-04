@@ -37,14 +37,13 @@
 #include "resource.h"
 
 #include "Common.h"
-//#include <afxcontrolbars.h>
-//#include <windef.h>
 #include <windows.h>
 #include <gdiplus.h>
 
 #include <d2d1.h>
 #include <d2d1_1.h>
 #pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "winmm.lib")
 
 #ifndef D2_SAFE_RELEASE
 #define D2_SAFE_RELEASE

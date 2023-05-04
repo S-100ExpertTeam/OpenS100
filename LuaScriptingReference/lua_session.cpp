@@ -5,7 +5,7 @@
 #include <iostream>
 #include <afxcmn.h>
 #include <mmsystem.h>
-#pragma comment(lib, "winmm.lib" )
+//#pragma comment(lib, "winmm.lib" )
 
 std::map<lua_State*, lua_session*> lua_session::m_state_session_map;
 

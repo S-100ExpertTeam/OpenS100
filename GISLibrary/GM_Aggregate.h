@@ -1,10 +1,10 @@
 #pragma once
 
-#include "GM_Geometry.h"
+#include "GM_Object.h"
 
 namespace S100Geometry
 {
-	class Aggregate : public Geometry
+	class Aggregate : public Object
 	{
 	};
 }

@@ -285,6 +285,11 @@ int R_FeatureRecord::GetRCID()
 	return m_frid.m_name.RCID;
 }
 
+std::string R_FeatureRecord::GetRCIDAsString(std::string prefix)
+{
+	return prefix + std::to_string(GetRCID());
+}
+
 int R_FeatureRecord::GetAssociationCount()
 {
 	return GetFeatureAssociationCount() + GetInformationAssociationCount();
@@ -621,7 +626,7 @@ SGeometry* R_FeatureRecord::GetGeometry()
 	return m_geometry;
 }
 
-S100Geometry::Geometry* R_FeatureRecord::GetGMGeometry()
+S100Geometry::Object* R_FeatureRecord::GetGMGeometry()
 {
 	return nullptr;
 }

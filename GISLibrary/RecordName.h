@@ -31,6 +31,6 @@ public:
 public:
 	__int64 GetName();
 	int GetLength();
-	std::string GetRCIDasString();
+	std::string GetRCIDasString(std::string prefix = "");
 	std::wstring GetRCIDasWstring();
 };

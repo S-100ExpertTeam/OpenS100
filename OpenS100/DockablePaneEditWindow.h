@@ -11,7 +11,7 @@
 
 #include "../FeatureCatalog/ListedValue.h"
 
-#include "../GISLibrary/GM_Geometry.h"
+#include "../GISLibrary/GM_Object.h"
 #include "../GISLibrary/GM_Point.h"
 #include "../GISLibrary/GM_MultiPoint.h"
 #include "../GISLibrary/GM_Curve.h"

@@ -520,7 +520,7 @@
     <ClInclude Include="IC2D.h" />
     <ClInclude Include="IF_Attribute.h" />
     <ClInclude Include="IF_FeatureType.h" />
-    <ClInclude Include="GM_Geometry.h" />
+    <ClInclude Include="GM_Object.h" />
     <ClInclude Include="IF_InformationType.h" />
     <ClInclude Include="IF_ObjectType.h" />
     <ClInclude Include="GM_Point.h" />

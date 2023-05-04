@@ -121,6 +121,11 @@ int R_SurfaceRecord::GetRCID()
 	return m_srid.m_name.RCID;
 }
 
+std::string R_SurfaceRecord::GetRCIDasString(std::string prefix)
+{
+	return prefix + pugi::as_utf8(GetRCIDasWstring());
+}
+
 std::wstring R_SurfaceRecord::GetRCIDasWstring() 
 {
 	return std::to_wstring(GetRCID());
