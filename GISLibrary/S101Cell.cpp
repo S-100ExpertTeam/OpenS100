@@ -66,7 +66,7 @@
 #include <iomanip>
 #include <mmsystem.h> 
 #include <unordered_map>
-using namespace S101Cell;
+
 
 S101Cell::S101Cell() : S100SpatialObject()
 {
@@ -4548,7 +4548,8 @@ bool S101Cell::SaveFeature(pugi::xml_node& root)
 
 		auto attributes = feature->GetAllAttributes();
 
-		std::vector<pugi::xml_node*> attributeNodes;
+		std::vector<pugi::xml_node> attributeNodes;
+		attributeNodes.push_back(node_feature);
 
 		for (auto j = attributes.begin(); j != attributes.end(); j++)
 		{
@@ -4558,7 +4559,15 @@ bool S101Cell::SaveFeature(pugi::xml_node& root)
 			auto sa = fc->GetSimpleAttribute(code);
 			auto ca = fc->GetComplexAttribute(code);
 			
-			if (sa && attr->m_paix == 0)
+			auto parentNode = attributeNodes[attr->m_paix];
+
+			if (parentNode == pugi::xml_node(NULL))
+			{
+				attributeNodes.push_back(pugi::xml_node(NULL));
+				continue;
+			}
+
+			if (sa)
 			{
 				std::string value;
 
@@ -4566,18 +4575,36 @@ bool S101Cell::SaveFeature(pugi::xml_node& root)
 				if (type == FCD::S100_CD_AttributeValueType::enumeration)
 				{
 					auto listedValue = sa->GetListedValue(_ttoi(attr->m_atvl));
-					//value = pugi::as_utf8(listedValue->label);
+					if (listedValue)
+					{
+						value = pugi::as_utf8(listedValue->GetLabel());
+					}
+					else
+					{
+						value = "";
+					}
 				}
 				else
 				{
 					value = pugi::as_utf8(attr->m_atvl);
 				}
 
-				//SaveSimpleAttribute(node_feature, code, value);
+				auto sa_node = SaveSimpleAttribute(parentNode, code, value);
+				attributeNodes.push_back(sa_node);
 			}
 			else if (ca)
 			{
-				auto ca_node = SaveComplexAttribute(node_feature, code);
+				if (!code.compare("sectorLimitOne"))
+				{
+					OutputDebugString(L"A");
+				}
+
+				auto ca_node = SaveComplexAttribute(parentNode, code);
+				attributeNodes.push_back(ca_node);
+			}
+			else
+			{
+				attributeNodes.push_back(pugi::xml_node(NULL));
 			}
 		}
 	}
@@ -4585,13 +4612,19 @@ bool S101Cell::SaveFeature(pugi::xml_node& root)
 	return true;
 }
 
-bool S101Cell::SaveSimpleAttribute(pugi::xml_node& root, std::string code, std::string value)
+//bool S101Cell::SaveFeature(pugi::xml_node& root, R_FeatureRecord* feature)
+//{
+//	return true;
+//}
+
+pugi::xml_node S101Cell::SaveSimpleAttribute(pugi::xml_node root, std::string code, std::string value)
 {
-	root.append_child(code.c_str()).append_child(pugi::node_pcdata).set_value(value.c_str());
-	return true;
+	auto sa_node = root.append_child(code.c_str()); 
+	sa_node.append_child(pugi::node_pcdata).set_value(value.c_str());
+	return sa_node;
 }
 
-pugi::xml_node& S101Cell::SaveComplexAttribute(pugi::xml_node& root, std::string code)
+pugi::xml_node S101Cell::SaveComplexAttribute(pugi::xml_node root, std::string code)
 {
 	return root.append_child(code.c_str());
 }

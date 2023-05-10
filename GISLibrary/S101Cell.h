@@ -102,9 +102,9 @@ public:
 	bool SaveMembers(pugi::xml_node& root);
 	bool SaveInfomation(pugi::xml_node& root);
 	bool SaveFeature(pugi::xml_node& root);
-	bool SaveObject(pugi::xml_node& root, R_FeatureRecord);
-	bool SaveSimpleAttribute(pugi::xml_node& root, std::string code, std::string value);
-	pugi::xml_node& SaveComplexAttribute(pugi::xml_node& root, std::string code);
+	bool SaveAttribute(pugi::xml_node& root, R_FeatureRecord* feature);
+	pugi::xml_node SaveSimpleAttribute(pugi::xml_node root, std::string code, std::string value);
+	pugi::xml_node SaveComplexAttribute(pugi::xml_node root, std::string code);
 
 	bool HasOrientableCurve(pugi::xml_node& root, std::string id);
 	void AddOrientableCurve(pugi::xml_node& root, std::string odID, std::string refID);
