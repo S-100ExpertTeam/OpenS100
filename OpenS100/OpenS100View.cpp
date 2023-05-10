@@ -20,7 +20,6 @@
 #include "../GISLibrary/CodeWithNumericCode.h"
 #include "../GISLibrary/S101Creator.h"
 #include "../GISLibrary/S100Layer.h"
-//#include "../GISLibrary/S101Cell.h"
 #include "../GISLibrary/D2D1Resources.h"
 #include "../GISLibrary/SPoint.h"
 #include "../GISLibrary/SMultiPoint.h"

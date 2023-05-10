@@ -66,6 +66,7 @@
 #include <iomanip>
 #include <mmsystem.h> 
 #include <unordered_map>
+using namespace S101Cell;
 
 S101Cell::S101Cell() : S100SpatialObject()
 {
@@ -4531,6 +4532,12 @@ bool S101Cell::SaveInfomation(pugi::xml_node& root)
 
 bool S101Cell::SaveFeature(pugi::xml_node& root)
 {
+	auto fc = GetFC();
+	if (!fc)
+	{
+		return false;
+	}
+
 	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
 	{
 		auto feature = *i;
@@ -4546,12 +4553,47 @@ bool S101Cell::SaveFeature(pugi::xml_node& root)
 		for (auto j = attributes.begin(); j != attributes.end(); j++)
 		{
 			auto attr = (*j);
-			auto code = m_dsgir.GetAttributeCode(attr->m_natc);
 			
+			auto code = pugi::as_utf8(m_dsgir.GetAttributeCode(attr->m_natc));
+			auto sa = fc->GetSimpleAttribute(code);
+			auto ca = fc->GetComplexAttribute(code);
+			
+			if (sa && attr->m_paix == 0)
+			{
+				std::string value;
+
+				auto type = sa->GetValueType();
+				if (type == FCD::S100_CD_AttributeValueType::enumeration)
+				{
+					auto listedValue = sa->GetListedValue(_ttoi(attr->m_atvl));
+					//value = pugi::as_utf8(listedValue->label);
+				}
+				else
+				{
+					value = pugi::as_utf8(attr->m_atvl);
+				}
+
+				//SaveSimpleAttribute(node_feature, code, value);
+			}
+			else if (ca)
+			{
+				auto ca_node = SaveComplexAttribute(node_feature, code);
+			}
 		}
 	}
 
 	return true;
+}
+
+bool S101Cell::SaveSimpleAttribute(pugi::xml_node& root, std::string code, std::string value)
+{
+	root.append_child(code.c_str()).append_child(pugi::node_pcdata).set_value(value.c_str());
+	return true;
+}
+
+pugi::xml_node& S101Cell::SaveComplexAttribute(pugi::xml_node& root, std::string code)
+{
+	return root.append_child(code.c_str());
 }
 
 bool S101Cell::HasOrientableCurve(pugi::xml_node& root, std::string id)
