@@ -300,9 +300,6 @@
     <ClCompile Include="THAS.cpp">
       <Filter>S101\Field</Filter>
     </ClCompile>
-    <ClCompile Include="CatalogItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DrawingSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -841,9 +838,6 @@
     </ClInclude>
     <ClInclude Include="THAS.h">
       <Filter>S101\Field</Filter>
-    </ClInclude>
-    <ClInclude Include="CatalogItem.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DrawingSet.h">
       <Filter>Header Files</Filter>
