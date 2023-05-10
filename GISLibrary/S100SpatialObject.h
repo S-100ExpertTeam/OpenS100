@@ -5,6 +5,10 @@
 
 #include "../GeoMetryLibrary/MBR.h"
 
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+
 #include <vector>
 #include <string>
 
@@ -31,6 +35,10 @@ public:
 
 	int GetProductNumber();
 
+	FeatureCatalogue* GetFC();
+	PortrayalCatalogue* GetPC();
+
+public:
 	// type = 1 : feature type
 	// type = 2 : information type
 	virtual S100Interface::ObjectType* GetObjectType(int type, std::string id) { return nullptr; }

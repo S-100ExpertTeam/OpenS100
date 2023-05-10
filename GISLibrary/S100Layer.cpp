@@ -71,12 +71,12 @@ void S100Layer::SetFeatureCatalog(FeatureCatalogue* value)
 
 FeatureCatalogue* S100Layer::GetFeatureCatalog()
 {
-	if (nullptr == featureCatalogue)
-	{
-		return nullptr;
-	}
-
 	return featureCatalogue;
+}
+
+FeatureCatalogue* S100Layer::GetFC()
+{
+	return GetFeatureCatalog();
 }
 
 void S100Layer::SetPC(PortrayalCatalogue *value)

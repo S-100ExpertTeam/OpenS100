@@ -25,6 +25,7 @@ public:
 	bool Open(CString _filepath) override;
 	void SetFeatureCatalog(FeatureCatalogue* value);
 	FeatureCatalogue* GetFeatureCatalog();
+	FeatureCatalogue* GetFC();
 	void SetPC(PortrayalCatalogue *value);
 	PortrayalCatalogue* GetPC();
 	void SetIndividualFC(bool value);

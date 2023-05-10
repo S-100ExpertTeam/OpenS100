@@ -67,44 +67,6 @@
 #include <mmsystem.h> 
 #include <unordered_map>
 
-//#pragma comment(lib, "winmm")
-
-std::wstring get_feature_id(int id, int ENCODING = 0)
-{
-	wchar_t numChar[5];
-	wsprintf(numChar, L"%04d", id);
-	std::wstringstream wss;
-	wss << L"FEATURE_ID_" << std::setw(4) << numChar;
-	return wss.str();
-}
-
-std::wstring get_information_id(int id, int ENCODING = 0)
-{
-	wchar_t numChar[5];
-	wsprintf(numChar, L"%04d", id);
-	std::wstringstream wss;
-	wss << L"INFO_ID_" << std::setw(4) << numChar;
-	return wss.str();
-}
-
-std::string get_feature_id_string(int id)
-{
-	char numChar[5];
-	sprintf_s(numChar, "%04d", id);
-	std::stringstream ss;
-	ss << "FEATURE_ID_" << std::setw(4) << numChar;
-	return ss.str();
-}
-
-std::string get_information_id_string(int id)
-{
-	char numChar[5];
-	sprintf_s(numChar, "%04d", id);
-	std::stringstream ss;
-	ss << "INFO_ID_" << std::setw(4) << numChar;
-	return ss.str();
-}
-
 S101Cell::S101Cell() : S100SpatialObject()
 {
 	m_FileType = FILE_S_100_VECTOR;

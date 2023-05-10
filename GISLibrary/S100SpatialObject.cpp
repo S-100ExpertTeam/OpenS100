@@ -42,3 +42,25 @@ int S100SpatialObject::GetProductNumber()
 
 	return 0;
 }
+
+FeatureCatalogue* S100SpatialObject::GetFC()
+{
+	auto layer = (S100Layer*)GetLayer();
+	if (layer)
+	{
+		return layer->GetFC();
+	}
+
+	return nullptr;
+}
+
+PortrayalCatalogue* S100SpatialObject::GetPC()
+{
+	auto layer = (S100Layer*)GetLayer();
+	if (layer)
+	{
+		return layer->GetPC();
+	}
+
+	return nullptr;
+}
