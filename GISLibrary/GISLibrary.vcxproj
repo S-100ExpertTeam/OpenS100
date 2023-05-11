@@ -316,6 +316,7 @@
     <ClCompile Include="host_data.cpp" />
     <ClCompile Include="host_functions.cpp" />
     <ClCompile Include="IC2D.cpp" />
+    <ClCompile Include="IF_FeatureAssociationType.cpp" />
     <ClCompile Include="IF_ObjectType.cpp" />
     <ClCompile Include="ISO8211Fuc.cpp" />
     <ClCompile Include="Layer.cpp" />
@@ -517,6 +518,7 @@
     <ClInclude Include="host_functions.h" />
     <ClInclude Include="IC2D.h" />
     <ClInclude Include="IF_Attribute.h" />
+    <ClInclude Include="IF_FeatureAssociationType.h" />
     <ClInclude Include="IF_FeatureType.h" />
     <ClInclude Include="GM_Object.h" />
     <ClInclude Include="IF_InformationType.h" />

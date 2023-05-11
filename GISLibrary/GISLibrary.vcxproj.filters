@@ -582,6 +582,9 @@
     <ClCompile Include="SOrientableCurve.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IF_FeatureAssociationType.cpp">
+      <Filter>S100\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -1210,6 +1213,9 @@
     </ClInclude>
     <ClInclude Include="SOrientableCurve.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IF_FeatureAssociationType.h">
+      <Filter>S100\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

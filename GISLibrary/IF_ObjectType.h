@@ -14,6 +14,8 @@ namespace S100Interface
 		virtual ~ObjectType();
 
 	public:
+		std::string id;
+		std::string code;
 		std::vector<Attribute*> attributes;
 
 	public:
