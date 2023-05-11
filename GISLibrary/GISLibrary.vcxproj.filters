@@ -43,9 +43,6 @@
     <Filter Include="S100\Interface">
       <UniqueIdentifier>{12f6035f-d7c4-4767-b5d9-51354fa1ab70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="S100\Geometry">
-      <UniqueIdentifier>{a8cdf6b9-0f56-4f7b-8a0e-178a6af20e45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="S100\SGeometry">
       <UniqueIdentifier>{910a90eb-6878-40ff-9ccd-572aa15738e6}</UniqueIdentifier>
     </Filter>
@@ -54,6 +51,9 @@
     </Filter>
     <Filter Include="S100\GF">
       <UniqueIdentifier>{70611c52-0976-4816-bc2f-abbead6d83f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S100\GM">
+      <UniqueIdentifier>{a8cdf6b9-0f56-4f7b-8a0e-178a6af20e45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -514,13 +514,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DirectPosition.cpp">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClCompile>
     <ClCompile Include="GM_CompositeCurve.cpp">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClCompile>
     <ClCompile Include="GM_Curve.cpp">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClCompile>
     <ClCompile Include="GM_Surface.cpp">
       <Filter>Source Files</Filter>
@@ -591,11 +591,14 @@
     <ClCompile Include="GF_ThematicAttributeType.cpp">
       <Filter>S100\GF</Filter>
     </ClCompile>
-    <ClCompile Include="GF_ComplexAttributeType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GF_SimpleAttributeType.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>S100\GF</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_ComplexAttributeType.cpp">
+      <Filter>S100\GF</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_SpatialAttributeType.cpp">
+      <Filter>S100\GF</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1094,62 +1097,59 @@
     <ClInclude Include="IF_InformationType.h">
       <Filter>S100\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="GF_ComplexAttributeType.h">
-      <Filter>S100\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="DirectPosition.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_Point.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_Object.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_Primitive.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_Complex.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_Aggregate.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_OrientableCurve.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_MultiPoint.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_Curve.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_CurveBoundary.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_CurveSegment.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_SurfaceBoundary.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_CompositeCurve.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_Ring.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_SurfacePatch.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_Polygon.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_OrientableSurface.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GM_Surface.h">
-      <Filter>S100\Geometry</Filter>
+      <Filter>S100\GM</Filter>
     </ClInclude>
     <ClInclude Include="GeometryType.h">
       <Filter>Header Files</Filter>
@@ -1233,6 +1233,12 @@
       <Filter>S100\GF</Filter>
     </ClInclude>
     <ClInclude Include="GF_SimpleAttributeType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_ComplexAttributeType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_SpatialAttributeType.h">
       <Filter>S100\GF</Filter>
     </ClInclude>
   </ItemGroup>

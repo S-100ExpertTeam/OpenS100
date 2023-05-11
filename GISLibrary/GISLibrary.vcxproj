@@ -307,6 +307,7 @@
     <ClCompile Include="GF_MaskReference.cpp" />
     <ClCompile Include="GF_NamedType.cpp" />
     <ClCompile Include="GF_SimpleAttributeType.cpp" />
+    <ClCompile Include="GF_SpatialAttributeType.cpp" />
     <ClCompile Include="GISLibrary.cpp" />
     <ClCompile Include="GML_ComplexAttribute.cpp" />
     <ClCompile Include="GML_DatasetIdentificationInformation.cpp" />
@@ -440,6 +441,7 @@
     <ClInclude Include="GF_MaskIndicatorType.h" />
     <ClInclude Include="GF_MaskReference.h" />
     <ClInclude Include="GF_NamedType.h" />
+    <ClInclude Include="GF_SpatialAttributeType.h" />
     <ClInclude Include="GML_ComplexAttribute.h" />
     <ClInclude Include="GML_DatasetIdentificationInformation.h" />
     <ClInclude Include="GML_Element.h" />
