@@ -585,6 +585,9 @@
     <ClCompile Include="IF_FeatureAssociationType.cpp">
       <Filter>S100\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="GF_NamedType.cpp">
+      <Filter>S100\GF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -1216,6 +1219,9 @@
     </ClInclude>
     <ClInclude Include="IF_FeatureAssociationType.h">
       <Filter>S100\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_NamedType.h">
+      <Filter>S100\GF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
