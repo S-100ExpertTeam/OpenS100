@@ -481,6 +481,28 @@ std::vector<ATTR*> R_FeatureRecord::GetChildAttributes(ATTR* parentATTR, int num
 	return result;
 }
 
+std::vector<F_INAS*> R_FeatureRecord::GetAllInformationAssociations()
+{
+	std::vector<F_INAS*> result;
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		result.push_back(*i);
+	}
+
+	return result;
+}
+
+std::vector<F_FASC*> R_FeatureRecord::GetAllFeatureAssociations()
+{
+	std::vector<F_FASC*> result;
+	for (auto i = m_fasc.begin(); i != m_fasc.end(); i++)
+	{
+		result.push_back(*i);
+	}
+
+	return result;
+}
+
 int R_FeatureRecord::GetAttributeIndex(ATTR* attr)
 {
 	if (m_attr.size() > 0)

@@ -28,6 +28,7 @@ public:
 	RecordName GetRecordName();
 
 	int GetRCID();
+	std::string GetRCIDAsString(std::string prefix = "");
 	int GetAssociationCount();
 	int GetInformationAssociationCount();
 	int GetNumericCode();	
@@ -39,6 +40,8 @@ public:
 
 	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR);
 	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR, int numericCode);
+
+	std::vector<F_INAS*> GetAllInformationAssociations();
 
 	int GetAttributeIndex(ATTR* attr);
 	

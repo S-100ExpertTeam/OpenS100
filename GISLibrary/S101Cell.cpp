@@ -4527,17 +4527,30 @@ bool S101Cell::SaveMembers(pugi::xml_node& root)
 
 bool S101Cell::SaveInfomation(pugi::xml_node& root)
 {
+	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
+	{
+		auto info = *i;
+
+		auto code = pugi::as_utf8(GetInformationTypeCodeByID(info->GetRCID()));
+		auto node_info = root.append_child(code.c_str());
+		node_info.append_attribute("gml:id").set_value(info->GetRCIDAsString("i").c_str());
+
+		auto attributes = info->GetAllAttributes();
+
+		std::vector<pugi::xml_node> attributeNodes;
+		attributeNodes.push_back(node_info);
+
+		SaveAttribute(node_info, attributes);
+
+		auto inas = info->GetAllInformationAssociations();
+		SaveInformationAssociation(node_info, inas);
+	}
+
 	return true;
 }
 
 bool S101Cell::SaveFeature(pugi::xml_node& root)
 {
-	auto fc = GetFC();
-	if (!fc)
-	{
-		return false;
-	}
-
 	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
 	{
 		auto feature = *i;
@@ -4548,74 +4561,186 @@ bool S101Cell::SaveFeature(pugi::xml_node& root)
 
 		auto attributes = feature->GetAllAttributes();
 
-		std::vector<pugi::xml_node> attributeNodes;
-		attributeNodes.push_back(node_feature);
+		SaveAttribute(node_feature, attributes);
 
-		for (auto j = attributes.begin(); j != attributes.end(); j++)
+		auto inas = feature->GetAllInformationAssociations();
+		SaveInformationAssociation(node_feature, inas);
+
+		auto fasc = feature->GetAllFeatureAssociations();
+		SaveFeatureAssociation(node_feature, fasc);
+
+		auto spas = feature->GetSPAS();
+		SaveGeometry(node_feature, spas);
+	}
+
+	return true;
+}
+
+bool S101Cell::SaveAttribute(pugi::xml_node& root, std::vector<ATTR*> attributes)
+{
+	auto fc = GetFC();
+	if (!fc)
+	{
+		return false;
+	}
+
+	std::vector<pugi::xml_node> attributeNodes;
+	attributeNodes.push_back(root);
+
+	for (auto j = attributes.begin(); j != attributes.end(); j++)
+	{
+		auto attr = (*j);
+
+		auto code = pugi::as_utf8(m_dsgir.GetAttributeCode(attr->m_natc));
+		auto sa = fc->GetSimpleAttribute(code);
+		auto ca = fc->GetComplexAttribute(code);
+
+		auto parentNode = attributeNodes[attr->m_paix];
+
+		if (parentNode == pugi::xml_node(NULL))
 		{
-			auto attr = (*j);
-			
-			auto code = pugi::as_utf8(m_dsgir.GetAttributeCode(attr->m_natc));
-			auto sa = fc->GetSimpleAttribute(code);
-			auto ca = fc->GetComplexAttribute(code);
-			
-			auto parentNode = attributeNodes[attr->m_paix];
+			attributeNodes.push_back(pugi::xml_node(NULL));
+			continue;
+		}
 
-			if (parentNode == pugi::xml_node(NULL))
+		if (sa)
+		{
+			std::string value;
+
+			auto type = sa->GetValueType();
+			if (type == FCD::S100_CD_AttributeValueType::enumeration)
 			{
-				attributeNodes.push_back(pugi::xml_node(NULL));
-				continue;
-			}
-
-			if (sa)
-			{
-				std::string value;
-
-				auto type = sa->GetValueType();
-				if (type == FCD::S100_CD_AttributeValueType::enumeration)
+				auto listedValue = sa->GetListedValue(_ttoi(attr->m_atvl));
+				if (listedValue)
 				{
-					auto listedValue = sa->GetListedValue(_ttoi(attr->m_atvl));
-					if (listedValue)
-					{
-						value = pugi::as_utf8(listedValue->GetLabel());
-					}
-					else
-					{
-						value = "";
-					}
+					value = pugi::as_utf8(listedValue->GetLabel());
 				}
 				else
 				{
-					value = pugi::as_utf8(attr->m_atvl);
+					value = "";
 				}
-
-				auto sa_node = SaveSimpleAttribute(parentNode, code, value);
-				attributeNodes.push_back(sa_node);
-			}
-			else if (ca)
-			{
-				if (!code.compare("sectorLimitOne"))
-				{
-					OutputDebugString(L"A");
-				}
-
-				auto ca_node = SaveComplexAttribute(parentNode, code);
-				attributeNodes.push_back(ca_node);
 			}
 			else
 			{
-				attributeNodes.push_back(pugi::xml_node(NULL));
+				value = pugi::as_utf8(attr->m_atvl);
 			}
+
+			auto sa_node = SaveSimpleAttribute(parentNode, code, value);
+			attributeNodes.push_back(sa_node);
+		}
+		else if (ca)
+		{
+			auto ca_node = SaveComplexAttribute(parentNode, code);
+			attributeNodes.push_back(ca_node);
+		}
+		else
+		{
+			attributeNodes.push_back(pugi::xml_node(NULL));
 		}
 	}
 
 	return true;
 }
 
-//bool S101Cell::SaveFeature(pugi::xml_node& root, R_FeatureRecord* feature)
-//{
-//	return true;
-//}
+bool S101Cell::SaveInformationAssociation(pugi::xml_node& root, std::vector<F_INAS*> inas)
+{
+	auto fc = GetFC();
+	if (nullptr == fc)
+	{
+		return false;
+	}
+
+	for (auto i = inas.begin(); i != inas.end(); i++)
+	{
+		auto curINAS = (*i);
+		auto wIACode = std::wstring(m_dsgir.GetInformationAssociationCode(curINAS->m_niac));
+		auto wRoleCode = std::wstring(m_dsgir.GetAssociationRoleCode(curINAS->m_narc));
+		auto ia = fc->GetInformationAssociation(wIACode);
+		auto role = fc->GetRole(wRoleCode);
+
+		if (ia && role)
+		{
+			auto node_ia = root.append_child(role->GetCode().c_str());
+			node_ia.append_attribute("xlink:href").set_value(curINAS->m_name.GetRCIDasString("#i").c_str());
+			node_ia.append_attribute("xlink:arcrole").set_value(std::string("http://www.iho.net/S-101/roles/" + role->GetCode()).c_str());
+			node_ia.append_attribute("xlink:title").set_value(ia->GetCode().c_str());
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::SaveFeatureAssociation(pugi::xml_node& root, std::vector<F_FASC*> fasc)
+{
+	auto fc = GetFC();
+	if (nullptr == fc)
+	{
+		return false;
+	}
+
+	for (auto i = fasc.begin(); i != fasc.end(); i++)
+	{
+		auto curFASC = (*i);
+		auto wFACode = std::wstring(m_dsgir.GetFeatureAssociationCode(curFASC->m_nfac));
+		auto wRoleCode = std::wstring(m_dsgir.GetAssociationRoleCode(curFASC->m_narc));
+		auto fa = fc->GetFeatureAssociation(wFACode);
+		auto role = fc->GetRole(wRoleCode);
+
+		if (fa && role)
+		{
+			auto node_fa = root.append_child(role->GetCode().c_str());
+			node_fa.append_attribute("xlink:href").set_value(curFASC->m_name.GetRCIDasString("#f").c_str());
+			node_fa.append_attribute("xlink:arcrole").set_value(std::string("http://www.iho.net/S-101/roles/" + role->GetCode()).c_str());
+			node_fa.append_attribute("xlink:title").set_value(fa->GetCode().c_str());
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::SaveGeometry(pugi::xml_node& root, SPAS* spas)
+{
+	if (spas)
+	{
+		auto node_geometry = root.append_child("geometry");
+		if (110 == spas->m_name.RCNM)
+		{
+			node_geometry.append_child("S100:pointProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#p").c_str());
+		}
+		else if (115 == spas->m_name.RCNM)
+		{
+			node_geometry.append_child("S100:multiPointProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#mp").c_str());
+		}
+		else if (120 == spas->m_name.RCNM)
+		{
+			if (2 == spas->m_ornt)
+			{
+				node_geometry.append_child("S100:curveProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#oc").c_str());
+			}
+			else
+			{
+				node_geometry.append_child("S100:curveProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#c").c_str());
+			}
+		}
+		else if (125 == spas->m_name.RCNM)
+		{
+			if (2 == spas->m_ornt)
+			{
+				node_geometry.append_child("S100:compositeCurveProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#occ").c_str());
+			}
+			else
+			{
+				node_geometry.append_child("S100:compositeCurveProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#cc").c_str());
+			}
+		}
+		else if (130 == spas->m_name.RCNM)
+		{
+			node_geometry.append_child("S100:surfaceProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#s").c_str());
+		}
+	}
+
+	return true;
+}
 
 pugi::xml_node S101Cell::SaveSimpleAttribute(pugi::xml_node root, std::string code, std::string value)
 {

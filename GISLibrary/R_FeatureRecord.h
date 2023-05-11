@@ -100,6 +100,9 @@ public:
 	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR);
 	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR, int numericCode);
 
+	std::vector<F_INAS*> GetAllInformationAssociations();
+	std::vector<F_FASC*> GetAllFeatureAssociations();
+
 	int GetAttributeIndex(ATTR* attr);
 
 	SPAS* GetSPAS();

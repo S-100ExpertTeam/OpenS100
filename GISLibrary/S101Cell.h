@@ -34,6 +34,7 @@ class SCompositeCurve;
 class TiXmlElement;
 class OrientedCurveRecord;
 class SCurveHasOrient;
+class F_FASC;
 class F_INAS;
 class F_C2IL;
 class F_C3IL;
@@ -42,6 +43,7 @@ class F_ATTR;
 class SENC_PointInstruction;
 
 struct ATTR;
+struct SPAS;
 
 // Class for saving 000 information.
 // Base and Update save
@@ -102,7 +104,10 @@ public:
 	bool SaveMembers(pugi::xml_node& root);
 	bool SaveInfomation(pugi::xml_node& root);
 	bool SaveFeature(pugi::xml_node& root);
-	bool SaveAttribute(pugi::xml_node& root, R_FeatureRecord* feature);
+	bool SaveAttribute(pugi::xml_node& root, std::vector<ATTR*> attributes);
+	bool SaveInformationAssociation(pugi::xml_node& root, std::vector<F_INAS*> fasc);
+	bool SaveFeatureAssociation(pugi::xml_node& root, std::vector<F_FASC*> inas);
+	bool SaveGeometry(pugi::xml_node& root, SPAS* spas);
 	pugi::xml_node SaveSimpleAttribute(pugi::xml_node root, std::string code, std::string value);
 	pugi::xml_node SaveComplexAttribute(pugi::xml_node root, std::string code);
 
