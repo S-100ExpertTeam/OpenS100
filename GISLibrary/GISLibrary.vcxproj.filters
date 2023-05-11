@@ -564,9 +564,6 @@
     <ClCompile Include="GML_SimpleAttribute.cpp">
       <Filter>S100GML</Filter>
     </ClCompile>
-    <ClCompile Include="IF_ObjectType.cpp">
-      <Filter>S100\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="GML_ComplexAttribute.cpp">
       <Filter>S100GML</Filter>
     </ClCompile>
@@ -587,6 +584,18 @@
     </ClCompile>
     <ClCompile Include="GF_NamedType.cpp">
       <Filter>S100\GF</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_ObjectType.cpp">
+      <Filter>S100\GF</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_ThematicAttributeType.cpp">
+      <Filter>S100\GF</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_ComplexAttributeType.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_SimpleAttributeType.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1079,22 +1088,13 @@
     <ClInclude Include="IF_FeatureType.h">
       <Filter>S100\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="IF_ObjectType.h">
-      <Filter>S100\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="S100Interface.h">
       <Filter>S100\Interface</Filter>
     </ClInclude>
     <ClInclude Include="IF_InformationType.h">
       <Filter>S100\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="IF_Attribute.h">
-      <Filter>S100\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="IF_SimpleAttribute.h">
-      <Filter>S100\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="IF_ComplexAttribute.h">
+    <ClInclude Include="GF_ComplexAttributeType.h">
       <Filter>S100\Interface</Filter>
     </ClInclude>
     <ClInclude Include="DirectPosition.h">
@@ -1221,6 +1221,18 @@
       <Filter>S100\Interface</Filter>
     </ClInclude>
     <ClInclude Include="GF_NamedType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_ObjectType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_AttributeType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_ThematicAttributeType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_SimpleAttributeType.h">
       <Filter>S100\GF</Filter>
     </ClInclude>
   </ItemGroup>

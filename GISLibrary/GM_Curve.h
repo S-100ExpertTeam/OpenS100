@@ -6,7 +6,7 @@
 
 #include <vector>
 
-namespace S100Geometry
+namespace GM
 {
 	class Curve : public OrientableCurve
 	{

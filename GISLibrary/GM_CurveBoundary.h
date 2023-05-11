@@ -2,7 +2,7 @@
 
 #include "GM_Point.h"
 
-namespace S100Geometry
+namespace GM
 {
 	class CurveBoundary
 	{

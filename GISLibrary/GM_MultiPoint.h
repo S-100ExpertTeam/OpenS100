@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace S100Geometry
+namespace GM
 {
 	class MultiPoint : public Object
 	{

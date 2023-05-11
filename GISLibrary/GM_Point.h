@@ -6,7 +6,7 @@
 
 #include <string>
 
-namespace S100Geometry
+namespace GM
 {
 	class Point : public Primitive
 	{

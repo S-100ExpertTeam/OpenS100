@@ -2,7 +2,7 @@
 #include "GM_SurfacePatch.h"
 #include "GM_Polygon.h"
 
-namespace S100Geometry
+namespace GM
 {
 	class Surface : public OrientableSurface
 	{

@@ -2,7 +2,7 @@
 
 #include "GM_CompositeCurve.h"
 
-namespace S100Geometry
+namespace GM
 {
 	class Ring : public CompositeCurve
 	{

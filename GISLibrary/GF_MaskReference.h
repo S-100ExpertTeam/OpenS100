@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GM_Geometry.h"
+#include "GM_Object.h"
 
 namespace GF
 {
@@ -12,6 +12,6 @@ namespace GF
 
 	public:
 
-		S100Geometry::Geometry* geometry = nullptr;
+		GM::Object* geometry = nullptr;
 	};
 }

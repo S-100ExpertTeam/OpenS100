@@ -2,7 +2,7 @@
 
 #include "GM_Object.h"
 
-namespace S100Geometry
+namespace GM
 {
 	class Primitive : public Object
 	{

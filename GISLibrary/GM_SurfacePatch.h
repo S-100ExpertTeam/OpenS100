@@ -1,6 +1,6 @@
 #pragma once
 
-namespace S100Geometry
+namespace GM
 {
 	class SurfacePatch
 	{

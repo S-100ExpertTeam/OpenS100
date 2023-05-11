@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace S100Geometry
+namespace GM
 {
 	class SurfaceBoundary
 	{

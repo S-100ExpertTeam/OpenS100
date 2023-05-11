@@ -1,6 +1,6 @@
 #include "GM_Primitive.h"
 
-namespace S100Geometry
+namespace GM
 {
 	class OrientableSurface : public Primitive
 	{

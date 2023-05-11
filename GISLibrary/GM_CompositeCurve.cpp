@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GM_CompositeCurve.h"
 
-namespace S100Geometry
+namespace GM
 {
 	GeometryType CompositeCurve::GetType()
 	{

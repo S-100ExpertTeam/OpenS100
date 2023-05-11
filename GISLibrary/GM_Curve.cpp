@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GM_Curve.h"
 
-namespace S100Geometry
+namespace GM
 {
 	Curve::Curve()
 	{

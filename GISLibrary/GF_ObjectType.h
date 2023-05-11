@@ -1,13 +1,15 @@
 #pragma once
 
+#include "GF_NamedType.h"
 #include "IF_Attribute.h"
 
 #include <string>
 #include <vector>
 
-namespace S100Interface
+namespace GF
 {
-	class ObjectType
+	class ObjectType : 
+		public NamedType
 	{
 	public:
 		ObjectType();
@@ -15,7 +17,6 @@ namespace S100Interface
 
 	public:
 		std::string id;
-		std::string code;
 		std::vector<Attribute*> attributes;
 
 	public:

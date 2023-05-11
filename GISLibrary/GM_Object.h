@@ -5,10 +5,13 @@
 
 #include <string>
 
-namespace S100Geometry
+namespace GM
 {
 	class Object
 	{
+	public:
+		Object();
+
 	public:
 		virtual std::string GetID() { return ""; }
 		virtual std::wstring GetIDAsWString() { return L""; }

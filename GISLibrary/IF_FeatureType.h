@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IF_ObjectType.h"
+#include "GF_ObjectType.h"
 #include "IF_Attribute.h"
 #include "GM_Object.h"
 

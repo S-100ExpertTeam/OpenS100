@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IF_ObjectType.h"
+#include "GF_ObjectType.h"
 
 namespace S100Interface
 {

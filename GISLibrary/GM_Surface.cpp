@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GM_Surface.h"
 
-namespace S100Geometry
+namespace GM
 {
 	Surface::Surface()
 	{

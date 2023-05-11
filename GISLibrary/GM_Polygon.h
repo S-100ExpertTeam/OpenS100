@@ -3,7 +3,7 @@
 #include "GM_SurfacePatch.h"
 #include "GM_SurfaceBoundary.h"
 
-namespace S100Geometry
+namespace GM
 {
 	class Polygon : public SurfacePatch
 	{

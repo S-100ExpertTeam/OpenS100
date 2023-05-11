@@ -303,8 +303,10 @@
     <ClCompile Include="F_SRID.cpp" />
     <ClCompile Include="F_THAS.cpp" />
     <ClCompile Include="F_VDAT.cpp" />
+    <ClCompile Include="GF_ComplexAttributeType.cpp" />
     <ClCompile Include="GF_MaskReference.cpp" />
     <ClCompile Include="GF_NamedType.cpp" />
+    <ClCompile Include="GF_SimpleAttributeType.cpp" />
     <ClCompile Include="GISLibrary.cpp" />
     <ClCompile Include="GML_ComplexAttribute.cpp" />
     <ClCompile Include="GML_DatasetIdentificationInformation.cpp" />
@@ -318,7 +320,7 @@
     <ClCompile Include="host_functions.cpp" />
     <ClCompile Include="IC2D.cpp" />
     <ClCompile Include="IF_FeatureAssociationType.cpp" />
-    <ClCompile Include="IF_ObjectType.cpp" />
+    <ClCompile Include="GF_ObjectType.cpp" />
     <ClCompile Include="ISO8211Fuc.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LayerManager.cpp" />
@@ -426,6 +428,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="THAS.cpp" />
+    <ClCompile Include="GF_ThematicAttributeType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ATTR.h" />
@@ -457,7 +460,7 @@
     <ClInclude Include="GM_Surface.h" />
     <ClInclude Include="GM_SurfaceBoundary.h" />
     <ClInclude Include="GM_SurfacePatch.h" />
-    <ClInclude Include="IF_ComplexAttribute.h" />
+    <ClInclude Include="GF_ComplexAttributeType.h" />
     <ClInclude Include="CSAX.h" />
     <ClInclude Include="CUCO.h" />
     <ClInclude Include="D2D1Resources.h" />
@@ -519,14 +522,14 @@
     <ClInclude Include="host_data.h" />
     <ClInclude Include="host_functions.h" />
     <ClInclude Include="IC2D.h" />
-    <ClInclude Include="IF_Attribute.h" />
+    <ClInclude Include="GF_AttributeType.h" />
     <ClInclude Include="IF_FeatureAssociationType.h" />
     <ClInclude Include="IF_FeatureType.h" />
     <ClInclude Include="GM_Object.h" />
     <ClInclude Include="IF_InformationType.h" />
-    <ClInclude Include="IF_ObjectType.h" />
+    <ClInclude Include="GF_ObjectType.h" />
     <ClInclude Include="GM_Point.h" />
-    <ClInclude Include="IF_SimpleAttribute.h" />
+    <ClInclude Include="GF_SimpleAttributeType.h" />
     <ClInclude Include="ISO8211Fuc.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="LayerManager.h" />
@@ -639,6 +642,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="THAS.h" />
+    <ClInclude Include="GF_ThematicAttributeType.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GISLibrary.rc" />
