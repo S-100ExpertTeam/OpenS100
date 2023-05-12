@@ -12,6 +12,7 @@ namespace GF
 
 	public:
 
-		GM::Object* geometry = nullptr;
+		//GM::Object* geometry = nullptr;
+		std::string geometryID;
 	};
 }

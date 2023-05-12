@@ -21,7 +21,8 @@ public:
     int scaleMinimum = -1;
     int scaleMaximum = -1;
 
-    GM::Object geometry;
+    //GM::Object geometry;
+    std::string geometryID;
 
     std::vector<MaskReference> maskReference;
 };
