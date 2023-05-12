@@ -648,7 +648,7 @@ SGeometry* R_FeatureRecord::GetGeometry()
 	return m_geometry;
 }
 
-S100Geometry::Object* R_FeatureRecord::GetGMGeometry()
+GM::Object* R_FeatureRecord::GetGMGeometry()
 {
 	return nullptr;
 }

@@ -5,7 +5,7 @@
 #include "resource.h"
 
 #include "../GISLibrary/S100Layer.h"
-#include "../GISLibrary/S100Interface.h"
+#include "../GISLibrary/S100_GF.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 

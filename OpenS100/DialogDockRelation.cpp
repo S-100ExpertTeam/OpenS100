@@ -208,7 +208,7 @@ void CDialogDockRelation::AdjustLayout()
 	}
 }
 
-void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<S100Interface::FeatureType*> flist, std::list<S100Interface::InformationType*> infoList)
+void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::FeatureType*> flist, std::list<GF::InformationType*> infoList)
 {
 	m_cell = cell;
 	// Erase everything before insertion.

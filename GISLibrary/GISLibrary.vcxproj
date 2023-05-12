@@ -320,7 +320,7 @@
     <ClCompile Include="host_data.cpp" />
     <ClCompile Include="host_functions.cpp" />
     <ClCompile Include="IC2D.cpp" />
-    <ClCompile Include="IF_FeatureAssociationType.cpp" />
+    <ClCompile Include="GF_FeatureAssociationType.cpp" />
     <ClCompile Include="GF_ObjectType.cpp" />
     <ClCompile Include="ISO8211Fuc.cpp" />
     <ClCompile Include="Layer.cpp" />
@@ -525,10 +525,10 @@
     <ClInclude Include="host_functions.h" />
     <ClInclude Include="IC2D.h" />
     <ClInclude Include="GF_AttributeType.h" />
-    <ClInclude Include="IF_FeatureAssociationType.h" />
-    <ClInclude Include="IF_FeatureType.h" />
+    <ClInclude Include="GF_FeatureAssociationType.h" />
+    <ClInclude Include="GF_FeatureType.h" />
     <ClInclude Include="GM_Object.h" />
-    <ClInclude Include="IF_InformationType.h" />
+    <ClInclude Include="GF_InformationType.h" />
     <ClInclude Include="GF_ObjectType.h" />
     <ClInclude Include="GM_Point.h" />
     <ClInclude Include="GF_SimpleAttributeType.h" />
@@ -552,7 +552,7 @@
     <ClInclude Include="R_VectorRecord.h" />
     <ClInclude Include="S100EditRender.h" />
     <ClInclude Include="S10XGML.h" />
-    <ClInclude Include="S100Interface.h" />
+    <ClInclude Include="S100_GF.h" />
     <ClInclude Include="S100Layer.h" />
     <ClInclude Include="S100SpatialObject.h" />
     <ClInclude Include="S100Utilities.h" />

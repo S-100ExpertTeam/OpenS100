@@ -16,7 +16,7 @@ namespace GF
 		}
 	}
 
-	Attribute* ObjectType::GetAttribute(int index)
+	AttributeType* ObjectType::GetAttribute(int index)
 	{
 		if (index >= 0 && GetAttributeCount())
 		{

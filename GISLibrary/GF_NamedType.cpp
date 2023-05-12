@@ -3,6 +3,16 @@
 
 namespace GF
 {
+	NamedType::NamedType()
+	{
+
+	}
+
+	NamedType::~NamedType()
+	{
+
+	}
+
 	std::string NamedType::GetCode()
 	{
 		return code;

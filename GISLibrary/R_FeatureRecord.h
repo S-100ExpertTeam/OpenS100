@@ -4,7 +4,7 @@
 #include "F_FRID.h"
 #include "F_FOID.h"
 #include "OrientedCurveRecord.h"
-#include "IF_FeatureType.h"
+#include "GF_FeatureType.h"
 #include "GM_Object.h"
 
 #include <map>
@@ -23,7 +23,7 @@ struct ATTR;
 struct SPAS;
 
 // Feature Type Record
-class R_FeatureRecord : public S100Interface::FeatureType, public Record
+class R_FeatureRecord : public GF::FeatureType, public Record
 {
 public:
 	R_FeatureRecord();
@@ -126,5 +126,5 @@ public: // override FeatureType
 	std::string GetAssociatedFeatureID(int index) override;
 	SpatialPrimitiveType GetSpatialPrimitiveType() override;
 	SGeometry* GetGeometry() override;
-	S100Geometry::Object* GetGMGeometry() override;
+	GM::Object* GetGMGeometry() override;
 };

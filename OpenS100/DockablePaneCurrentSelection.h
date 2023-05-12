@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GISLibrary/S100Interface.h"
+#include "../GISLibrary/S100_GF.h"
 
 #include <string>
 #include <map> 

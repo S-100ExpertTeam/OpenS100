@@ -1,12 +1,12 @@
 #pragma once
 
-#include "IF_FeatureType.h"
+#include "GF_FeatureType.h"
 #include "GML_SimpleAttribute.h"
 #include "GML_ComplexAttribute.h"
 
 namespace S100GML
 {
-	class FeatureType : public S100Interface::FeatureType
+	class FeatureType : public GF::FeatureType
 	{
 	public:
 		FeatureType();

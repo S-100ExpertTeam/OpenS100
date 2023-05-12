@@ -377,7 +377,7 @@ private:
 	std::wstring GetIssueDateAsWstring();
 
 public:
-	S100Interface::ObjectType* GetObjectType(int type, std::string id) override;
+	GF::ObjectType* GetObjectType(int type, std::string id) override;
 
 	std::wstring GetFeatureTypeCodeByID(std::wstring id) override;
 	std::wstring GetFeatureTypeCodeByID(int id) override;
@@ -388,20 +388,20 @@ public:
 	int GetFeatureCount() override;
 	int GetInformationCount() override;
 
-	S100Interface::FeatureType* GetFeatureType(std::string id) override;
-	S100Interface::FeatureType* GetFeatureTypeByIndex(int index) override;
+	GF::FeatureType* GetFeatureType(std::string id) override;
+	GF::FeatureType* GetFeatureTypeByIndex(int index) override;
 
-	S100Interface::InformationType* GetInformationType(std::string id) override;
-	S100Interface::InformationType* GetInformationTypeByIndex(int index) override;
+	GF::InformationType* GetInformationType(std::string id) override;
+	GF::InformationType* GetInformationTypeByIndex(int index) override;
 
-	std::string GetFeatureAssociationCode(S100Interface::FeatureType* featureType, int index) override;
-	std::string GetFeatureAssociationRoleCode(S100Interface::FeatureType* featureType, int index) override;
+	std::string GetFeatureAssociationCode(GF::FeatureType* featureType, int index) override;
+	std::string GetFeatureAssociationRoleCode(GF::FeatureType* featureType, int index) override;
 
-	std::string GetInformationAssociationCode(S100Interface::FeatureType* featureType, int index) override;
-	std::string GetInformationAssociationRoleCode(S100Interface::FeatureType* featureType, int index) override;
+	std::string GetInformationAssociationCode(GF::FeatureType* featureType, int index) override;
+	std::string GetInformationAssociationRoleCode(GF::FeatureType* featureType, int index) override;
 
-	std::string GetInformationAssociationCode(S100Interface::InformationType* informationType, int index) override;
-	std::string GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index) override;
+	std::string GetInformationAssociationCode(GF::InformationType* informationType, int index) override;
+	std::string GetInformationAssociationRoleCode(GF::InformationType* informationType, int index) override;
 
 	std::string GetObjectAttributeCode(int type, std::string id, int index) override;
 

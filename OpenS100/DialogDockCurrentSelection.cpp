@@ -142,8 +142,8 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 				pos = m_ListCurrentSelection.GetFirstSelectedItemPosition();
 				idx = 0;
 
-				std::list<S100Interface::FeatureType*> flist;
-				std::list<S100Interface::InformationType*> infoList;
+				std::list<GF::FeatureType*> flist;
+				std::list<GF::InformationType*> infoList;
 
 				while (pos)
 				{

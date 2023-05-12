@@ -4934,7 +4934,7 @@ bool S101Cell::FeatureRecordHasMaskedSpatialTypeField()
 	return false;
 }
 
-S100Interface::ObjectType* S101Cell::GetObjectType(int type, std::string id)
+GF::ObjectType* S101Cell::GetObjectType(int type, std::string id)
 {
 	if (type == 1)
 	{
@@ -4995,27 +4995,27 @@ int S101Cell::GetInformationCount()
 	return GetCount_InformationRecord();
 }
 
-S100Interface::FeatureType* S101Cell::GetFeatureType(std::string id)
+GF::FeatureType* S101Cell::GetFeatureType(std::string id)
 {
 	return GetFeatureRecord(id);
 }
 
-S100Interface::FeatureType* S101Cell::GetFeatureTypeByIndex(int index)
+GF::FeatureType* S101Cell::GetFeatureTypeByIndex(int index)
 {
 	return GetFeatureRecordByIndex(index);
 }
 
-S100Interface::InformationType* S101Cell::GetInformationType(std::string id)
+GF::InformationType* S101Cell::GetInformationType(std::string id)
 {
 	return GetInformationRecord(id);
 }
 
-S100Interface::InformationType* S101Cell::GetInformationTypeByIndex(int index)
+GF::InformationType* S101Cell::GetInformationTypeByIndex(int index)
 {
 	return GetInformationRecordByIndex(index);
 }
 
-std::string S101Cell::GetFeatureAssociationCode(S100Interface::FeatureType* featureType, int index)
+std::string S101Cell::GetFeatureAssociationCode(GF::FeatureType* featureType, int index)
 {
 	if (index < 0 || index >= featureType->GetFeatureRelationCount())
 	{
@@ -5029,7 +5029,7 @@ std::string S101Cell::GetFeatureAssociationCode(S100Interface::FeatureType* feat
 	return pugi::as_utf8(std::wstring(m_dsgir.GetFeatureAssociationCode((*i)->m_nfac)).c_str());
 }
 
-std::string S101Cell::GetFeatureAssociationRoleCode(S100Interface::FeatureType* featureType, int index)
+std::string S101Cell::GetFeatureAssociationRoleCode(GF::FeatureType* featureType, int index)
 {
 	if (index < 0 || index >= featureType->GetFeatureRelationCount())
 	{
@@ -5043,7 +5043,7 @@ std::string S101Cell::GetFeatureAssociationRoleCode(S100Interface::FeatureType* 
 	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
 }
 
-std::string S101Cell::GetInformationAssociationCode(S100Interface::FeatureType* featureType, int index)
+std::string S101Cell::GetInformationAssociationCode(GF::FeatureType* featureType, int index)
 {
 	if (index < 0 || index >= featureType->GetInformationRelationCount())
 	{
@@ -5057,7 +5057,7 @@ std::string S101Cell::GetInformationAssociationCode(S100Interface::FeatureType* 
 	return pugi::as_utf8(std::wstring(m_dsgir.GetInformationAssociationCode((*i)->m_niac)).c_str());
 }
 
-std::string S101Cell::GetInformationAssociationRoleCode(S100Interface::FeatureType* featureType, int index)
+std::string S101Cell::GetInformationAssociationRoleCode(GF::FeatureType* featureType, int index)
 {
 	if (index < 0 || index >= featureType->GetInformationRelationCount())
 	{
@@ -5071,7 +5071,7 @@ std::string S101Cell::GetInformationAssociationRoleCode(S100Interface::FeatureTy
 	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
 }
 
-std::string S101Cell::GetInformationAssociationCode(S100Interface::InformationType* informationType, int index)
+std::string S101Cell::GetInformationAssociationCode(GF::InformationType* informationType, int index)
 {
 	if (index < 0 || index >= informationType->GetInformationRelationCount())
 	{
@@ -5085,7 +5085,7 @@ std::string S101Cell::GetInformationAssociationCode(S100Interface::InformationTy
 	return pugi::as_utf8(std::wstring(m_dsgir.GetInformationAssociationCode((*i)->m_niac)).c_str());
 }
 
-std::string S101Cell::GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index)
+std::string S101Cell::GetInformationAssociationRoleCode(GF::InformationType* informationType, int index)
 {
 	if (index < 0 || index >= informationType->GetInformationRelationCount())
 	{

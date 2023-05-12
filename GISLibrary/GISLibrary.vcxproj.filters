@@ -579,9 +579,6 @@
     <ClCompile Include="SOrientableCurve.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IF_FeatureAssociationType.cpp">
-      <Filter>S100\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="GF_NamedType.cpp">
       <Filter>S100\GF</Filter>
     </ClCompile>
@@ -598,6 +595,9 @@
       <Filter>S100\GF</Filter>
     </ClCompile>
     <ClCompile Include="GF_SpatialAttributeType.cpp">
+      <Filter>S100\GF</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_FeatureAssociationType.cpp">
       <Filter>S100\GF</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1088,15 +1088,6 @@
     <ClInclude Include="ProductManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IF_FeatureType.h">
-      <Filter>S100\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="S100Interface.h">
-      <Filter>S100\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="IF_InformationType.h">
-      <Filter>S100\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="DirectPosition.h">
       <Filter>S100\GM</Filter>
     </ClInclude>
@@ -1217,9 +1208,6 @@
     <ClInclude Include="SOrientableCurve.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IF_FeatureAssociationType.h">
-      <Filter>S100\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="GF_NamedType.h">
       <Filter>S100\GF</Filter>
     </ClInclude>
@@ -1239,6 +1227,18 @@
       <Filter>S100\GF</Filter>
     </ClInclude>
     <ClInclude Include="GF_SpatialAttributeType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_FeatureType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_FeatureAssociationType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_GF.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_InformationType.h">
       <Filter>S100\GF</Filter>
     </ClInclude>
   </ItemGroup>

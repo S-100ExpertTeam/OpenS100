@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IF_InformationType.h"
+#include "GF_InformationType.h"
 #include "GeometryType.h"
 
 #include <string>
@@ -10,7 +10,8 @@ namespace GM
 	class Object
 	{
 	public:
-		Object();
+		Object() {}
+		virtual ~Object() {}
 
 	public:
 		virtual std::string GetID() { return ""; }

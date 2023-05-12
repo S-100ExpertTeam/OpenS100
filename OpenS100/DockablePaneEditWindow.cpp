@@ -12,29 +12,6 @@
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
 #include "../GISLibrary/S100Layer.h"
-//#include "../GISLibrary/F_CUCO.h"
-//#include "../GISLibrary/F_PTAS.h"
-//#include "../GISLibrary/F_SPAS.h"
-//#include "../GISLibrary/F_C3IL.h"
-//#include "../GISLibrary/F_C2IL.h"
-//#include "../GISLibrary/F_C2IT.h"
-//#include "../GISLibrary/F_ATTR.h"
-//#include "../GISLibrary/F_RIAS.h"
-//#include "../GISLibrary/R_MultiPointRecord.h"
-//#include "../GISLibrary/R_CurveRecord.h"
-//#include "../GISLibrary/R_CompositeRecord.h"
-//#include "../GISLibrary/R_SurfaceRecord.h"
-//#include "../GISLibrary/R_FeatureRecord.h"
-//#include "../GISLibrary/R_PointRecord.h"
-//#include "../GISLibrary/ATTR.h"
-//#include "../GISLibrary/C3IL.h"
-//#include "../GISLibrary/IC2D.h"
-//#include "../GISLibrary/CodeWithNumericCode.h"
-//#include "../GISLibrary/CUCO.h"
-//#include "../GISLibrary/SPAS.h"
-//#include "../GISLibrary/PTAS.h"
-//#include "../GISLibrary/RIAS.h"
-//#include "../GISLibrary/F_INAS.h"
 #include "../GISLibrary/SpatialObject.h"
 #include "../GISLibrary/GISLibrary.h"
 #include "../GISLibrary/S100SpatialObject.h"
@@ -385,7 +362,7 @@ void CDockablePaneEditWindow::SetVector(SGeometry* geom, CMFCPropertyGridPropert
 	}
 }
 
-void CDockablePaneEditWindow::SetVector(S100Geometry::Point* r, CMFCPropertyGridProperty* pSuperProperty)
+void CDockablePaneEditWindow::SetVector(GM::Point* r, CMFCPropertyGridProperty* pSuperProperty)
 {
 	auto infoCount = r->GetInformationRelationCount();
 
@@ -605,7 +582,7 @@ void CDockablePaneEditWindow::SetVector(SPoint* geom, CMFCPropertyGridProperty* 
 //	}
 //}
 
-void CDockablePaneEditWindow::SetVector(S100Geometry::MultiPoint* r, CMFCPropertyGridProperty* pSuperProperty)
+void CDockablePaneEditWindow::SetVector(GM::MultiPoint* r, CMFCPropertyGridProperty* pSuperProperty)
 {
 	int infoCount = r->GetInformationRelationCount();
 	CString count;
@@ -869,7 +846,7 @@ void CDockablePaneEditWindow::SetVector(SMultiPoint* geom, CMFCPropertyGridPrope
 //	}
 //}
 
-void CDockablePaneEditWindow::SetVector(S100Geometry::Curve* r, CMFCPropertyGridProperty* pSuperProperty)
+void CDockablePaneEditWindow::SetVector(GM::Curve* r, CMFCPropertyGridProperty* pSuperProperty)
 {
 	int infoCount = r->GetInformationRelationCount();
 	CString count;
@@ -1147,7 +1124,7 @@ void CDockablePaneEditWindow::SetVector(SCurveHasOrient* geom, CMFCPropertyGridP
 //	SetVector(epr, pProperty);
 //}
 
-void CDockablePaneEditWindow::SetVector(S100Geometry::CompositeCurve* r, CMFCPropertyGridProperty* pSuperProperty)
+void CDockablePaneEditWindow::SetVector(GM::CompositeCurve* r, CMFCPropertyGridProperty* pSuperProperty)
 {
 	int infoCount = (int)r->GetInformationRelationCount();
 	CString count;
@@ -1189,13 +1166,13 @@ void CDockablePaneEditWindow::SetVector(S100Geometry::CompositeCurve* r, CMFCPro
 
 	for (int i = 0; i < r->component.size(); i++)
 	{
-		if (r->component.at(i).GetType() == S100Geometry::GeometryType::Curve)
+		if (r->component.at(i).GetType() == GM::GeometryType::Curve)
 		{
-			SetVector((S100Geometry::Curve*)&r->component.at(i), pProperty);
+			SetVector((GM::Curve*)&r->component.at(i), pProperty);
 		}
-		else if (r->component.at(i).GetType() == S100Geometry::GeometryType::CompositeCurve)
+		else if (r->component.at(i).GetType() == GM::GeometryType::CompositeCurve)
 		{
-			SetVector((S100Geometry::CompositeCurve*)&r->component.at(i), pProperty);
+			SetVector((GM::CompositeCurve*)&r->component.at(i), pProperty);
 		}
 	}
 }
@@ -1317,7 +1294,7 @@ void CDockablePaneEditWindow::SetVector(SCompositeCurve* geom, CMFCPropertyGridP
 //	}
 //}
 
-void CDockablePaneEditWindow::SetVector(S100Geometry::Surface* r, CMFCPropertyGridProperty* pSuperProperty)
+void CDockablePaneEditWindow::SetVector(GM::Surface* r, CMFCPropertyGridProperty* pSuperProperty)
 {
 	int infoCount = (int)r->GetInformationRelationCount();
 	CString count;
@@ -1362,12 +1339,12 @@ void CDockablePaneEditWindow::SetVector(S100Geometry::Surface* r, CMFCPropertyGr
 		}
 	}
 
-	auto exteriorCompositeCurve = (S100Geometry::CompositeCurve*)&r->GetPolygon()->boundary.exterior;
+	auto exteriorCompositeCurve = (GM::CompositeCurve*)&r->GetPolygon()->boundary.exterior;
 	SetVector(exteriorCompositeCurve, pProperty);
 
 	for (int i = 0; i < r->GetPolygon()->boundary.interior.size(); i++)
 	{
-		auto interiorCompositeCurve = (S100Geometry::CompositeCurve*)&r->GetPolygon()->boundary.interior.at(i);
+		auto interiorCompositeCurve = (GM::CompositeCurve*)&r->GetPolygon()->boundary.interior.at(i);
 		SetVector(interiorCompositeCurve, pProperty);
 	}
 }

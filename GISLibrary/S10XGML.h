@@ -1,8 +1,8 @@
 #pragma once
 
 #include "S100SpatialObject.h"
-#include "IF_FeatureType.h"
-#include "IF_InformationType.h"
+#include "GF_FeatureType.h"
+#include "GF_InformationType.h"
 #include "SPoint.h"
 #include "SMultiPoint.h"
 #include "SCurve.h"
@@ -22,8 +22,8 @@ public:
     bool Open(CString _filepath) override;
 
 public:
-    std::vector<S100Interface::FeatureType*> features;
-    std::vector<S100Interface::InformationType*> informations;
+    std::vector<GF::FeatureType*> features;
+    std::vector<GF::InformationType*> informations;
 
     //std::vector<
 };

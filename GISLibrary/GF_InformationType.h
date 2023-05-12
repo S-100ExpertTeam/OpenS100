@@ -2,7 +2,7 @@
 
 #include "GF_ObjectType.h"
 
-namespace S100Interface
+namespace GF
 {
 	class InformationType : public ObjectType
 	{

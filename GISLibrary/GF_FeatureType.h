@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GF_ObjectType.h"
-#include "IF_Attribute.h"
+#include "GF_AttributeType.h"
 #include "GM_Object.h"
 
 #include "../FeatureCatalog/SpatialPrimitiveType.h"
@@ -10,7 +10,7 @@
 
 #include <string>
 
-namespace S100Interface
+namespace GF
 {
 	class FeatureType : public ObjectType
 	{
@@ -36,6 +36,6 @@ namespace S100Interface
 		}
 
 		// Need release by a user.
-		virtual S100Geometry::Object* GetGMGeometry() { return nullptr; }
+		virtual GM::Object* GetGMGeometry() { return nullptr; }
 	};
 }

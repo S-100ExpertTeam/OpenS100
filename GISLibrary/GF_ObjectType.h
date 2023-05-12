@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GF_NamedType.h"
-#include "IF_Attribute.h"
+#include "GF_AttributeType.h"
 
 #include <string>
 #include <vector>
@@ -17,7 +17,7 @@ namespace GF
 
 	public:
 		std::string id;
-		std::vector<Attribute*> attributes;
+		std::vector<AttributeType*> attributes;
 
 	public:
 		virtual std::string GetID() {
@@ -44,7 +44,7 @@ namespace GF
 			return (int)attributes.size();
 		}
 
-		virtual Attribute* GetAttribute(int index);
+		virtual AttributeType* GetAttribute(int index);
 
 		virtual std::string GetAttributeValue(int index) {
 			return "";
