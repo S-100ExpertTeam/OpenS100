@@ -17,8 +17,6 @@ public:
 
 public:
 	//bool Read(char*& buf);
-
-	
 	int GetRecordLength();
 	int GetBaseAddressOfFieldArea();
 	int GetSizeOfFieldLengthField();

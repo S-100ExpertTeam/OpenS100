@@ -94,6 +94,9 @@ public:
 	bool Open(CString _filepath) override;
 	bool Save(std::wstring path) override;
 
+	bool OpenBy000(CString path);
+	bool OpenByGML(CString path);
+
 	bool SaveAsENC(std::wstring path);
 	bool SaveAsGML(std::wstring path);
 	bool SavePoint(pugi::xml_node& root);

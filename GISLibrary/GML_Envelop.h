@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GML_Element.h"
+#include "PugixmlElement.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 
@@ -8,7 +8,7 @@ namespace S100GML
 {
 
 	class Envelop : 
-		public Element
+		public PugixmlElement
 	{
 	public:
 		Envelop();

@@ -344,14 +344,29 @@ void S101Cell::ClearAll(void)
 #pragma warning(disable:4018)
 bool S101Cell::Open(CString _filepath) // Dataset start, read .000 
 {
-	SetFilePath(_filepath);
+	auto extension = LibMFCUtil::GetExtension(_filepath);
+	if (extension.CompareNoCase(L"000") == 0)
+	{
+		return OpenBy000(_filepath);
+	}
+	else if (extension.CompareNoCase(L"gml") == 0)
+	{
+		return OpenByGML(_filepath);
+	}
+
+	return false;
+}
+
+bool S101Cell::OpenBy000(CString path)
+{
+	SetFilePath(path);
 
 	USES_CONVERSION;
 
 	RemoveAll();
 
 	CFile file;
-	if (file.Open(_filepath, CFile::modeRead))
+	if (file.Open(path, CFile::modeRead))
 	{
 		BYTE* pBuf = nullptr;
 		BYTE* sBuf = nullptr;
@@ -465,6 +480,25 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 	}
 
 	return false;
+}
+
+bool S101Cell::OpenByGML(CString path)
+{
+	SetFilePath(path);
+
+	USES_CONVERSION;
+
+	RemoveAll();
+
+	
+
+	MakeFullSpatialData();
+
+	CalcMBR();
+	Check();
+
+	Validation();
+	return true;
 }
 
 BOOL S101Cell::ReadDDR(BYTE*& buf)

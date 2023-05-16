@@ -8,6 +8,8 @@
 #include "SCurve.h"
 #include "SCompositeCurve.h"
 #include "SSurface.h"
+#include "GML_Envelop.h"
+#include "GML_DatasetIdentificationInformation.h"
 
 #include <vector>
 
@@ -19,11 +21,18 @@ public:
     virtual ~S10XGML();
 
 public:
-    bool Open(CString _filepath) override;
+    S100GML::Envelop envelop;
+    S100GML::DatasetIdentificationInformation datasetIdentificationInformation;
 
-public:
     std::vector<GF::FeatureType*> features;
     std::vector<GF::InformationType*> informations;
 
-    //std::vector<
+    std::vector<GM::Object*> geometrys;
+
+public:
+    bool Open(CString _filepath) override;
+    
+    bool ReadMembers(pugi::xml_node& node);
+    bool ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc, FeatureType* featureType);
+    bool ReadInformation(pugi::xml_node& node, FeatureCatalogue* fc, InformationType* informationType);
 };

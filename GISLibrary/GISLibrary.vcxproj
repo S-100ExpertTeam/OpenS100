@@ -303,7 +303,10 @@
     <ClCompile Include="F_SRID.cpp" />
     <ClCompile Include="F_THAS.cpp" />
     <ClCompile Include="F_VDAT.cpp" />
+    <ClCompile Include="GF_AttributeType.cpp" />
     <ClCompile Include="GF_ComplexAttributeType.cpp" />
+    <ClCompile Include="GF_FeatureType.cpp" />
+    <ClCompile Include="GF_InformationType.cpp" />
     <ClCompile Include="GF_MaskReference.cpp" />
     <ClCompile Include="GF_NamedType.cpp" />
     <ClCompile Include="GF_SimpleAttributeType.cpp" />
@@ -331,6 +334,7 @@
     <ClCompile Include="PCOutputSchemaManager.cpp" />
     <ClCompile Include="ProcessS101.cpp" />
     <ClCompile Include="Product.cpp" />
+    <ClCompile Include="GF_PropertyType.cpp" />
     <ClCompile Include="PTAS.cpp" />
     <ClCompile Include="RIAS.cpp" />
     <ClCompile Include="R_DDR.cpp" />
@@ -444,7 +448,7 @@
     <ClInclude Include="GF_SpatialAttributeType.h" />
     <ClInclude Include="GML_ComplexAttribute.h" />
     <ClInclude Include="GML_DatasetIdentificationInformation.h" />
-    <ClInclude Include="GML_Element.h" />
+    <ClInclude Include="PugixmlElement.h" />
     <ClInclude Include="GML_Envelop.h" />
     <ClInclude Include="GML_FeatureType.h" />
     <ClInclude Include="GML_SimpleAttribute.h" />
@@ -545,6 +549,7 @@
     <ClInclude Include="ProcessS101.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="ProductManager.h" />
+    <ClInclude Include="GF_PropertyType.h" />
     <ClInclude Include="PTAS.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RIAS.h" />

@@ -17,7 +17,7 @@ namespace GF
 
 	public:
 		std::string id;
-		std::vector<AttributeType*> attributes;
+		//std::vector<AttributeType*> attributes;
 
 	public:
 		virtual std::string GetID() {
@@ -41,7 +41,8 @@ namespace GF
 		}
 
 		virtual int GetAttributeCount() {
-			return (int)attributes.size();
+			//return (int)attributes.size();
+			return 0;
 		}
 
 		virtual AttributeType* GetAttribute(int index);

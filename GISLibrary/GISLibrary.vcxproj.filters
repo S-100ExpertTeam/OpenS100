@@ -600,6 +600,18 @@
     <ClCompile Include="GF_FeatureAssociationType.cpp">
       <Filter>S100\GF</Filter>
     </ClCompile>
+    <ClCompile Include="GF_PropertyType.cpp">
+      <Filter>S100\GF</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_AttributeType.cpp">
+      <Filter>S100\GF</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_FeatureType.cpp">
+      <Filter>S100\GF</Filter>
+    </ClCompile>
+    <ClCompile Include="GF_InformationType.cpp">
+      <Filter>S100\GF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -1196,9 +1208,6 @@
     <ClInclude Include="GML_Envelop.h">
       <Filter>S100GML</Filter>
     </ClInclude>
-    <ClInclude Include="GML_Element.h">
-      <Filter>S100GML</Filter>
-    </ClInclude>
     <ClInclude Include="GF_MaskIndicatorType.h">
       <Filter>S100\GF</Filter>
     </ClInclude>
@@ -1240,6 +1249,12 @@
     </ClInclude>
     <ClInclude Include="GF_InformationType.h">
       <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="GF_PropertyType.h">
+      <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="PugixmlElement.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,25 @@ namespace S100GML
 
 	void DatasetIdentificationInformation::Read(pugi::xml_node& node)
 	{
+		encodingSpecification = node.child_value("S100:encodingSpecification");
+		encodingSpecificationEdition = node.child_value("S100:encodingSpecificationEdition");
+		productIdentifier = node.child_value("S100:productIdentifier");
+		productEdition = node.child_value("S100:productEdition");
+		applicationProfile = node.child_value("S100:applicationProfile");
+		datasetFileIdentifier = node.child_value("S100:datasetFileIdentifier");
+		datasetTitle = node.child_value("S100:datasetTitle");
+		datasetReferenceDate = node.child_value("S100:datasetReferenceDate");
+		datasetLanguage = node.child_value("S100:datasetLanguage");
 
+		auto node_datasetTopicCategory = node.child("S100:datasetTopicCategory");
+		while (node_datasetTopicCategory)
+		{
+			datasetTopicCategory.push_back(node_datasetTopicCategory.child_value());
+			node_datasetTopicCategory = node_datasetTopicCategory.next_sibling("S100:datasetTopicCategory");
+		}
+
+		datasetPurpose = node.child_value("S100:datasetPurpose");
+		updateNumber = node.child_value("S100:updateNumber");
 	}
 
 	void DatasetIdentificationInformation::Write(pugi::xml_node& node)

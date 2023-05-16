@@ -279,7 +279,7 @@ COpenS100Doc* COpenS100View::GetDocument() const
 void COpenS100View::Load100File()
 {
 	//load file
-	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST, _T("ENC Files (*.000)|*.000"), this);
+	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST, _T("ENC Files (*.000, *.gml)|*.000;*.gml;|"), this);
 
 	if (dlg.DoModal() == IDOK)
 	{
@@ -290,8 +290,8 @@ void COpenS100View::Load100File()
 		theApp.m_pDockablePaneLayerManager.UpdateList();
 		MapRefresh();
 
-		auto enc = theApp.gisLib->GetLayer(theApp.gisLib->GetLayerManager()->LayerCount() - 1);
-		enc->GetSpatialObject()->Save(L"../TEMP/temp.gml");
+		//auto enc = theApp.gisLib->GetLayer(theApp.gisLib->GetLayerManager()->LayerCount() - 1);
+		//enc->GetSpatialObject()->Save(L"../TEMP/temp.gml");
 	}
 }
 

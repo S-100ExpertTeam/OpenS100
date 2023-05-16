@@ -87,6 +87,11 @@ ComplexAttribute* FeatureCatalogue::GetComplexAttributeFromName(std::wstring nam
 	return nullptr;
 }
 
+FeatureType* FeatureCatalogue::GetFeatureType(std::string Code)
+{
+	return GetFeatureType(pugi::as_wide(Code));
+}
+
 FeatureType* FeatureCatalogue::GetFeatureType(std::wstring code)
 {
 	auto itor = featureTypes.GetFeatureType().find(code);
@@ -131,6 +136,11 @@ FeatureType* FeatureCatalogue::GetFeatureTypeFromIndex(int indexnum)
 		num++;
 	}
 	return nullptr;
+}
+
+InformationType* FeatureCatalogue::GetInformationType(std::string Code)
+{
+	return GetInformationType(pugi::as_wide(Code));
 }
 
 InformationType* FeatureCatalogue::GetInformationType(std::wstring code)
@@ -198,6 +208,11 @@ InformationAssociation* FeatureCatalogue::GetInformationAssociationFromName(std:
 			return itor->second;
 	}
 	return NULL;
+}
+
+Role* FeatureCatalogue::GetRole(std::string Code)
+{
+	return GetRole(pugi::as_wide(Code));
 }
 
 Role* FeatureCatalogue::GetRole(std::wstring code)
@@ -879,6 +894,11 @@ void FeatureCatalogue::GetAreaFeatures(std::vector<FeatureType*>& result)
 			}
 		}
 	}
+}
+
+Attribute* FeatureCatalogue::GetAttribute(std::string code)
+{
+	return GetAttribute(pugi::as_wide(code));
 }
 
 Attribute* FeatureCatalogue::GetAttribute(std::wstring code)

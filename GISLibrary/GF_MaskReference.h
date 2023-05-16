@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GM_Object.h"
+#include "GF_MaskIndicatorType.h"
 
 namespace GF
 {
@@ -14,5 +15,6 @@ namespace GF
 
 		//GM::Object* geometry = nullptr;
 		std::string geometryID;
+		MaskIndicatorType maskIndicator;
 	};
 }
