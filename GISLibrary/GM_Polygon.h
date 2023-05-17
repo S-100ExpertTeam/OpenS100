@@ -5,7 +5,9 @@
 
 namespace GM
 {
-	class Polygon : public SurfacePatch
+	class Polygon : 
+		public SurfacePatch,
+		public PugixmlElement
 	{
 	public:
 		SurfaceBoundary boundary;

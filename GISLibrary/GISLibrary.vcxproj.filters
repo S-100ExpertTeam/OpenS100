@@ -612,6 +612,12 @@
     <ClCompile Include="GF_InformationType.cpp">
       <Filter>S100\GF</Filter>
     </ClCompile>
+    <ClCompile Include="GM_Point.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_MultiPoint.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">

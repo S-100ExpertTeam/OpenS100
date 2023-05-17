@@ -27,7 +27,7 @@ public:
     std::vector<GF::FeatureType*> features;
     std::vector<GF::InformationType*> informations;
 
-    std::vector<GM::Object*> geometrys;
+    std::vector<GM::Object*> geometries;
 
 public:
     bool Open(CString _filepath) override;
@@ -35,4 +35,10 @@ public:
     bool ReadMembers(pugi::xml_node& node);
     bool ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc, FeatureType* featureType);
     bool ReadInformation(pugi::xml_node& node, FeatureCatalogue* fc, InformationType* informationType);
+    bool ReadPoint(pugi::xml_node& node);
+    bool ReadMultiPoint(pugi::xml_node& node);
+    bool ReadCurve(pugi::xml_node& node);
+    bool ReadOrientableCurve(pugi::xml_node& node);
+    bool ReadCompositeCurve(pugi::xml_node& node);
+    bool ReadSurface(pugi::xml_node& node);
 };
