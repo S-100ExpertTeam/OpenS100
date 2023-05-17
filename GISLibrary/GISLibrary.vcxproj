@@ -320,6 +320,8 @@
     <ClCompile Include="GM_CompositeCurve.cpp" />
     <ClCompile Include="GM_Curve.cpp" />
     <ClCompile Include="GM_MultiPoint.cpp" />
+    <ClCompile Include="GM_Object.cpp" />
+    <ClCompile Include="GM_OrientableCurve.cpp" />
     <ClCompile Include="GM_Point.cpp" />
     <ClCompile Include="GM_Surface.cpp" />
     <ClCompile Include="host_data.cpp" />

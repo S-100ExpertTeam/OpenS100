@@ -17,4 +17,9 @@ namespace GM
 	{
 		return GeometryType::Curve;
 	}
+
+	void Curve::Add(double x, double y)
+	{
+		segment.front().controlPoints.push_back(DirectPosition(x, y));
+	}
 }

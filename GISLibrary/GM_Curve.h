@@ -20,5 +20,7 @@ namespace GM
 
 	public:
 		GeometryType GetType() override;
+
+		void Add(double x, double y);
 	};
 }

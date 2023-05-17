@@ -10,12 +10,18 @@ namespace GM
 	class Object
 	{
 	public:
-		Object() {}
-		virtual ~Object() {}
+		Object();
+		virtual ~Object();
 
 	public:
-		virtual std::string GetID() { return ""; }
-		virtual std::wstring GetIDAsWString() { return L""; }
+		std::string id;
+
+	public:
+		std::string GetID();
+		std::wstring GetIDAsWString();
+		void SetID(std::string value);
+		void SetID(std::wstring value);
+		void SetID(int value);
 
 		virtual int GetInformationRelationCount() { return 0; }
 		virtual std::string GetAssociatedInformationID(int index) { return ""; }

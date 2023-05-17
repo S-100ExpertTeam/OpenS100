@@ -162,58 +162,100 @@ bool S10XGML::ReadPoint(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
 
-	if (gmlID.length() > 1)
+	auto strPos = node.child_value("gml:pos");
+		
+	auto strPosList = LatLonUtility::Split(strPos, " ");
+
+	if (strPosList.size() != 2)
 	{
-		auto id = std::stoi(gmlID.substr(1));
-
-		auto strPos = node.child_value("gml:pos");
-		
-		auto strPosList = LatLonUtility::Split(strPos, " ");
-
-		if (strPosList.size() != 2)
-		{
-			return false;
-		}
-
-		double lat = std::stod(strPosList.at(0));
-		double lon = std::stod(strPosList.at(1));
-
-		auto object = new GM::Point();
-		object->position.SetX(lon);
-		object->position.SetY(lat);
-
-		geometries.push_back(object);
-		
-		return true;
+		return false;
 	}
 
-	return false;
+	double lat = std::stod(strPosList.at(0));
+	double lon = std::stod(strPosList.at(1));
+
+	auto object = new GM::Point();
+	object->SetID(gmlID);
+	object->position.SetX(lon);
+	object->position.SetY(lat);
+
+	geometries.push_back(object);
+		
+	return true;
 }
 
 bool S10XGML::ReadMultiPoint(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
 
-	if (gmlID.length() > 2)
+	auto strPos = node.child("gml:pointMembers").child("gml:Point").child_value("gml:pos");
+
+	auto strPosList = LatLonUtility::Split(strPos, " ");
+
+	if (strPosList.size() != 3)
 	{
-		auto id = std::stoi(gmlID.substr(2));
-		
-		auto strPos = node.child("gml:pointMembers").child("gml:Point").child_value("gml:pos");
+		return false;
+	}
 
-		auto strPosList = LatLonUtility::Split(strPos, " ");
+	double lat = std::stod(strPosList.at(0));
+	double lon = std::stod(strPosList.at(1));
+	double depth = std::stod(strPosList.at(2));
 
-		if (strPosList.size() != 3)
-		{
-			return false;
-		}
+	auto object = new GM::MultiPoint();
+	object->SetID(gmlID);
+	object->Set(lon, lat, depth);
 
-		double lat = std::stod(strPosList.at(0));
-		double lon = std::stod(strPosList.at(1));
-		double depth = std::stod(strPosList.at(2));
+	geometries.push_back(object);
 
-		auto object = new GM::MultiPoint();
-		object->Set(lon, lat, depth);
+	return true;
+}
 
+bool S10XGML::ReadCurve(pugi::xml_node& node)
+{
+	std::string gmlID = node.attribute("gml:id").value();
+
+	auto strPos = node.child("gml:Segment").child("gml:LineStringSegment").child_value("gml:posList");
+
+	auto strPosList = LatLonUtility::Split(strPos, " ");
+	int posCnt = strPosList.size();
+
+	if (posCnt < 4 && posCnt % 2 != 0)
+	{
+		return false;
+	}
+
+	auto object = new GM::Curve();
+	object->SetID(gmlID);
+	geometries.push_back(object);
+
+	for (int i = 0; i < posCnt; i += 2)
+	{
+		double lat = std::stod(strPosList.at(i));
+		double lon = std::stod(strPosList.at(i + 1));
+		object->Add(lon, lat);
+	}
+
+	return true;
+}
+
+bool S10XGML::ReadOrientableCurve(pugi::xml_node& node)
+{
+	std::string gmlID = node.attribute("gml:id").value();
+	auto strOrientation = node.attribute("orientation").value();
+	if (strcmp(strOrientation, "-") != 0)
+	{
+		return false;
+	}
+
+	std::string baseCurveID = node.child("gml:baseCurve").attribute("xlink:href").value();
+
+	if ((baseCurveID.length() > 1) && 
+		(baseCurveID.at(0) == '#'))
+	{
+		baseCurveID = baseCurveID.substr(1);
+
+		auto object = new GM::OrientableCurve(baseCurveID);
+		object->SetID(gmlID);
 		geometries.push_back(object);
 
 		return true;
@@ -222,22 +264,37 @@ bool S10XGML::ReadMultiPoint(pugi::xml_node& node)
 	return false;
 }
 
-bool S10XGML::ReadCurve(pugi::xml_node& node)
-{
-	return true;
-}
-
-bool S10XGML::ReadOrientableCurve(pugi::xml_node& node)
-{
-	return true;
-}
-
 bool S10XGML::ReadCompositeCurve(pugi::xml_node& node)
 {
+	std::string gmlID = node.attribute("gml:id").value();
+	auto child = node.child("gml:curveMember");
+
+	auto object = new GM::CompositeCurve();
+	object->SetID(gmlID);
+
+	while (child)
+	{
+		std::string curveMemberID = child.attribute("xlink:href").value();
+		if (curveMemberID.length() <= 1 &&
+			curveMemberID.at(0) != '#')
+		{
+			delete object;
+			return false;
+		}
+
+		object->Add(curveMemberID);
+		child = child.next_sibling("gml:curveMember");
+	}
+
+	geometries.push_back(object);
+
 	return true;
 }
 
 bool S10XGML::ReadSurface(pugi::xml_node& node)
 {
+	std::string gmlID = node.attribute("gml:id").value();
+	auto child = node.child("gml:curveMember");
+
 	return true; 
 }
