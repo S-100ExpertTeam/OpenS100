@@ -25,6 +25,10 @@ public:
     std::string geometryID;
 
     std::vector<MaskReference> maskReference;
+
+public:
+    void SetGeometryID(std::string value);
+    std::string GetGeometryID();
 };
 
 }

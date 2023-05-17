@@ -166,6 +166,11 @@ InformationType* FeatureCatalogue::GetInformationTypeFromName(std::wstring name)
 	return NULL;
 }
 
+FeatureAssociation* FeatureCatalogue::GetFeatureAssociation(std::string Code)
+{
+	return GetFeatureAssociation(pugi::as_wide(Code));
+}
+
 FeatureAssociation* FeatureCatalogue::GetFeatureAssociation(std::wstring code)
 {
 	auto itor = featureAssociations.GetFeatureAssociationPointer().find(code);
@@ -186,6 +191,11 @@ FeatureAssociation* FeatureCatalogue::GetFeatureAssociationFromName(std::wstring
 			return itor->second;
 	}
 	return NULL;
+}
+
+InformationAssociation* FeatureCatalogue::GetInformationAssociation(std::string Code)
+{
+	return GetInformationAssociation(pugi::as_wide(Code));
 }
 
 InformationAssociation* FeatureCatalogue::GetInformationAssociation(std::wstring code)

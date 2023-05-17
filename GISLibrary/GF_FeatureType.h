@@ -46,6 +46,8 @@ namespace GF
 			return nullptr;
 		}
 
+		virtual void SetGeometryID(std::string value);
+
 		// Need release by a user.
 		virtual GM::Object* GetGMGeometry() { return nullptr; }
 

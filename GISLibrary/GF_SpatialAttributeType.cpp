@@ -12,4 +12,14 @@ namespace GF
 	{
 
 	}
+
+	void SpatialAttributeType::SetGeometryID(std::string value)
+	{
+		geometryID = value;
+	}
+
+	std::string SpatialAttributeType::GetGeometryID()
+	{
+		return geometryID;
+	}
 }

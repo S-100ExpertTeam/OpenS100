@@ -522,9 +522,6 @@
     <ClCompile Include="GM_Curve.cpp">
       <Filter>S100\GM</Filter>
     </ClCompile>
-    <ClCompile Include="GM_Surface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SCommonFuction.cpp">
       <Filter>S100\SGeometry</Filter>
     </ClCompile>
@@ -621,8 +618,14 @@
     <ClCompile Include="GM_Object.cpp">
       <Filter>S100\GM</Filter>
     </ClCompile>
+    <ClCompile Include="GM_Polygon.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_Surface.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
     <ClCompile Include="GM_OrientableCurve.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>S100\GM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

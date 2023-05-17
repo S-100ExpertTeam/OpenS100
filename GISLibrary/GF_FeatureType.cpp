@@ -17,4 +17,14 @@ namespace GF
 	{
 		return attributes.size();
 	}
+
+	void FeatureType::SetGeometryID(std::string value)
+	{
+		if (nullptr == spatial)
+		{
+			spatial = new SpatialAttributeType();
+		}
+
+		spatial->SetGeometryID(value);
+	}
 }

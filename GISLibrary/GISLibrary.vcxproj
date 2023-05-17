@@ -323,6 +323,7 @@
     <ClCompile Include="GM_Object.cpp" />
     <ClCompile Include="GM_OrientableCurve.cpp" />
     <ClCompile Include="GM_Point.cpp" />
+    <ClCompile Include="GM_Polygon.cpp" />
     <ClCompile Include="GM_Surface.cpp" />
     <ClCompile Include="host_data.cpp" />
     <ClCompile Include="host_functions.cpp" />

@@ -104,10 +104,12 @@ public:
 	Role* GetRoleFromName(std::wstring name);
 	Roles* GetRoles();
 
+	InformationAssociation* GetInformationAssociation(std::string Code);
 	InformationAssociation* GetInformationAssociation(std::wstring Code);
 	InformationAssociation* GetInformationAssociationFromName(std::wstring name);
 	InformationAssociations* GetInformationAssociations();
 
+	FeatureAssociation* GetFeatureAssociation(std::string Code);
 	FeatureAssociation* GetFeatureAssociation(std::wstring Code);
 	FeatureAssociation* GetFeatureAssociationFromName(std::wstring name);
 	FeatureAssociations* GetFeatureAssociations();

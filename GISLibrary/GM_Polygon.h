@@ -10,6 +10,10 @@ namespace GM
 		public PugixmlElement
 	{
 	public:
+		Polygon();
+		virtual ~Polygon();
+
+	public:
 		SurfaceBoundary boundary;
 	};
 }

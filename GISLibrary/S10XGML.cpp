@@ -137,14 +137,36 @@ bool S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc, FeatureTyp
 		}
 		else if (childName.compare("geometry") == 0)
 		{
-			
+			std::string geometryID = child.first_child().attribute("xlink:href").value();
+			if (geometryID.length() > 1)
+			{
+				feature->SetGeometryID(geometryID.substr(1));
+			}
 		}
 		else
 		{
 			auto role = fc->GetRole(childName);
 			if (role)
 			{
+				std::string associatedID = child.attribute("xlink:href").value();
+				if (associatedID.length() > 1)
+				{
+					associatedID = associatedID.substr(1);
+					std::string associationCode = child.attribute("xlink:title").value();
+					auto fa = fc->GetFeatureAssociation(associationCode);
+					if (fa)
+					{
 
+					}
+					else
+					{
+						auto ia = fc->GetInformationAssociation(associationCode);
+						if (ia)
+						{
+
+						}
+					}
+				}
 			}
 		}
 
@@ -293,8 +315,43 @@ bool S10XGML::ReadCompositeCurve(pugi::xml_node& node)
 
 bool S10XGML::ReadSurface(pugi::xml_node& node)
 {
+	std::string exteriorCurveMemberID = node.child("gml:patches").child("gml:PolygonPatch")
+		.child("gml:exterior").child("gml:Ring").child("gml:curveMember").attribute("xlink:href").value();
+
+	if (exteriorCurveMemberID.length() <= 1)
+	{
+		return false;
+	}
+	else
+	{
+		exteriorCurveMemberID = exteriorCurveMemberID.substr(1);
+	}
+
+	auto object = new GM::Surface();
+
 	std::string gmlID = node.attribute("gml:id").value();
-	auto child = node.child("gml:curveMember");
+	object->SetID(gmlID);
+	geometries.push_back(object);
+
+	object->SetExteriorRingID(exteriorCurveMemberID);
+
+	auto nodeInterior = node.child("gml:patches").child("gml:PolygonPatch").child("gml:interior");
+	while (nodeInterior)
+	{
+		std::string interiorCurveMemberID = nodeInterior.child("gml:Ring").child("gml:curveMember").attribute("xlink:href").value();
+
+		if (interiorCurveMemberID.length() > 1)
+		{
+			interiorCurveMemberID = interiorCurveMemberID.substr(1);
+		}
+		else
+		{
+			break;
+		}
+
+		object->AddInteriorRingID(interiorCurveMemberID);
+		nodeInterior = nodeInterior.next_sibling("gml:interior");
+	}
 
 	return true; 
 }

@@ -10,12 +10,22 @@ namespace GM
 
 	Surface::~Surface()
 	{
-		delete patch;
-		patch = nullptr;
 	}
 
-	Polygon* Surface::GetPolygon()
+	Polygon Surface::GetPolygon()
 	{
-		return (Polygon*)patch;
+		return patch;
+	}
+
+	void Surface::SetExteriorRingID(std::string value)
+	{
+		patch.boundary.exterior.SetID(value);
+	}
+
+	void Surface::AddInteriorRingID(std::string value)
+	{
+		Ring ring;
+		ring.SetID(value);
+		patch.boundary.interior.push_back(ring);
 	}
 }

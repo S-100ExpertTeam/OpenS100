@@ -8,6 +8,11 @@ namespace GM
 
 	}
 
+	Object::Object(std::string id)
+	{
+		this->id = id;
+	}
+
 	Object::~Object()
 	{
 

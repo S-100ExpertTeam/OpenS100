@@ -11,6 +11,7 @@ namespace GM
 	{
 	public:
 		Object();
+		Object(std::string id);
 		virtual ~Object();
 
 	public:

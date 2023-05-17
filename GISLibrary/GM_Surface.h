@@ -11,9 +11,12 @@ namespace GM
 		~Surface();
 
 	public:
-		SurfacePatch* patch = new Polygon();
+		Polygon patch;
 
 	public:
-		Polygon* GetPolygon();
+		Polygon GetPolygon();
+		
+		void SetExteriorRingID(std::string value);
+		void AddInteriorRingID(std::string value);
 	};
 }
