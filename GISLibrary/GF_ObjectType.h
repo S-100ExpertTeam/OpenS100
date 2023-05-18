@@ -2,6 +2,8 @@
 
 #include "GF_NamedType.h"
 #include "GF_AttributeType.h"
+#include "GF_InformationAssociationType.h"
+#include "GF_ThematicAttributeType.h"
 
 #include <string>
 #include <vector>
@@ -17,42 +19,33 @@ namespace GF
 
 	public:
 		std::string id;
-		//std::vector<AttributeType*> attributes;
+		std::vector<InformationAssociationType> informationAssociations;
+		std::vector<ThematicAttributeType*> attributes;
 
 	public:
-		virtual std::string GetID() {
-			return "";
-		}
+		virtual std::string GetID();
 
-		virtual std::wstring GetIDAsWString() {
-			return L"";
-		}
+		virtual std::wstring GetIDAsWString();
 
-		virtual int GetIDAsInteger() {
-			return 0;
-		}
+		virtual int GetIDAsInteger();
 
-		virtual int GetInformationRelationCount() {
-			return 0;
-		}
+		virtual int GetInformationRelationCount();
 
-		virtual std::string GetAssociatedInformationID(int index) {
-			return "";
-		}
+		virtual std::string GetAssociatedInformationID(int index);
 
-		virtual int GetAttributeCount() {
-			//return (int)attributes.size();
-			return 0;
-		}
+		virtual int GetAttributeCount();
 
-		virtual AttributeType* GetAttribute(int index);
+		virtual ThematicAttributeType* GetAttribute(int index);
 
-		virtual std::string GetAttributeValue(int index) {
-			return "";
-		}
+		virtual std::string GetAttributeValue(int index);
 
-		virtual int GetParentAttributeIndex(int index) {
-			return 0;
-		}
+		virtual int GetParentAttributeIndex(int index);
+
+		virtual void AddInformationAssociation(
+			std::string informationAssociation,
+			std::string role,
+			std::string informationID);
+
+		virtual void AddSimpleAttribute()
 	};
 }

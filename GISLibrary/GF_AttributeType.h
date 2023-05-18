@@ -23,5 +23,6 @@ namespace GF
 	public:
 		virtual std::string GetCode() { return ""; }
 		virtual bool IsSimple() { return false; }
+		virtual std::string GetValue() { return "";}
 	};
 }

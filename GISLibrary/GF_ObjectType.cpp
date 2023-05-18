@@ -16,13 +16,89 @@ namespace GF
 		//}
 	}
 
-	AttributeType* ObjectType::GetAttribute(int index)
+	//AttributeType* ObjectType::GetAttribute(int index)
+	//{
+	//	//if (index >= 0 && GetAttributeCount())
+	//	//{
+	//	//	return attributes.at(index);
+	//	//}
+
+	//	return nullptr;
+	//}
+
+	std::string ObjectType::GetID() 
 	{
-		//if (index >= 0 && GetAttributeCount())
-		//{
-		//	return attributes.at(index);
-		//}
+		return id;
+	}
+
+	std::wstring ObjectType::GetIDAsWString() 
+	{
+		return pugi::as_wide(id);
+	}
+
+	int ObjectType::GetIDAsInteger() 
+	{
+		return std::atoi(id.c_str());
+	}
+
+	int ObjectType::GetInformationRelationCount() 
+	{
+		return informationAssociations.size();
+	}
+
+	std::string ObjectType::GetAssociatedInformationID(int index) 
+	{
+		if (index >= 0 && index < GetInformationRelationCount())
+		{
+			return informationAssociations.at(index).GetInformationID();
+		}
+
+		return "";
+	}
+
+	int ObjectType::GetAttributeCount() 
+	{
+		return attributes.size();
+	}
+
+	ThematicAttributeType* ObjectType::GetAttribute(int index)
+	{
+		if (index >= 0 && index < GetAttributeCount())
+		{
+			return attributes.at(index);
+		}
 
 		return nullptr;
+	}
+
+	std::string ObjectType::GetAttributeValue(int index) 
+	{
+		auto attr = GetAttribute(index);
+		if (attr)
+		{
+			if (attr->IsSimple())
+			{
+				return attr->GetValue();
+			}
+		}
+
+		return "";
+	}
+
+	int ObjectType::GetParentAttributeIndex(int index) 
+	{
+		return 0;
+	}
+
+	void ObjectType::AddInformationAssociation(
+		std::string informationAssociation,
+		std::string role,
+		std::string informationID)
+	{
+		InformationAssociationType ia;
+		ia.SetCode(informationAssociation);
+		ia.SetRole(role);
+		ia.SetInformationID(informationID);
+		informationAssociations.push_back(ia);
 	}
 }

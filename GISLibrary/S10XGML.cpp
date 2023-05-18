@@ -123,6 +123,10 @@ bool S10XGML::ReadMembers(pugi::xml_node& node)
 bool S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc, FeatureType* featureType)
 {
 	auto feature = new GF::FeatureType();
+
+	feature->id = node.attribute("gml:id").value();
+	feature->code = node.name();
+
 	features.push_back(feature);
 
 	auto child = node.first_child();
@@ -133,41 +137,15 @@ bool S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc, FeatureTyp
 		auto attribute = fc->GetAttribute(childName);
 		if (attribute)
 		{
-
+			ReadFeatureAttribute(child, feature, fc);
 		}
 		else if (childName.compare("geometry") == 0)
 		{
-			std::string geometryID = child.first_child().attribute("xlink:href").value();
-			if (geometryID.length() > 1)
-			{
-				feature->SetGeometryID(geometryID.substr(1));
-			}
+			ReadFeatureGeometry(child, feature);
 		}
 		else
 		{
-			auto role = fc->GetRole(childName);
-			if (role)
-			{
-				std::string associatedID = child.attribute("xlink:href").value();
-				if (associatedID.length() > 1)
-				{
-					associatedID = associatedID.substr(1);
-					std::string associationCode = child.attribute("xlink:title").value();
-					auto fa = fc->GetFeatureAssociation(associationCode);
-					if (fa)
-					{
-
-					}
-					else
-					{
-						auto ia = fc->GetInformationAssociation(associationCode);
-						if (ia)
-						{
-
-						}
-					}
-				}
-			}
+			ReadFeatureRole(child, feature, fc);
 		}
 
 		child = child.next_sibling();
@@ -354,4 +332,65 @@ bool S10XGML::ReadSurface(pugi::xml_node& node)
 	}
 
 	return true; 
+}
+
+bool S10XGML::ReadFeatureAttribute(pugi::xml_node& node, GF::FeatureType* feature, FeatureCatalogue* fc)
+{
+	auto sa = fc->GetSimpleAttribute(node.name());
+	if (sa)
+	{
+		//node.child_value();
+	}
+	else
+	{
+		auto ca = fc->GetComplexAttribute(node.name());
+		if (ca)
+		{
+
+		}
+	}
+
+	return true;
+}
+
+bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature)
+{
+	std::string geometryID = node.first_child().attribute("xlink:href").value();
+	if (geometryID.length() > 1)
+	{
+		feature->SetGeometryID(geometryID.substr(1));
+	}
+
+	return true;
+}
+
+bool S10XGML::ReadFeatureRole(pugi::xml_node& node, GF::FeatureType* feature, FeatureCatalogue* fc)
+{
+	auto role = fc->GetRole(node.name());
+	if (role)
+	{
+		std::string associatedID = node.attribute("xlink:href").value();
+		if (associatedID.length() > 1)
+		{
+			associatedID = associatedID.substr(1);
+			std::string associationCode = node.attribute("xlink:title").value();
+			auto fa = fc->GetFeatureAssociation(associationCode);
+			if (fa)
+			{
+				feature->AddFeatureAssociation(associationCode, node.name(), associatedID);
+				return true;
+			}
+			else
+			{
+				auto ia = fc->GetInformationAssociation(associationCode);
+				if (ia)
+				{
+					feature->AddInformationAssociation(associationCode, node.name(), associatedID);
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
 }

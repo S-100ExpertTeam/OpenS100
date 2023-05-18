@@ -18,6 +18,12 @@ namespace GF
 		std::vector<ThematicAttributeType*> attributes;
 
 	public:
-		virtual int GetAttributeCount() override;
+		//virtual int GetAttributeCount();
+
+		//virtual ThematicAttributeType* GetAttribute(int index);
+
+		//virtual std::string GetAttributeValue(int index);
+
+		//virtual int GetParentAttributeIndex(int index);
 	};
 }

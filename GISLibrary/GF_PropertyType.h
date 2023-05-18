@@ -12,6 +12,11 @@ namespace GF
 	public:
 		//std::string memberName;
 		//std::string definition;
+		std::string code;
+
+	public:
+		std::string GetCode();
+		void SetCode(std::string value);
 	};
 
 }

@@ -41,4 +41,8 @@ public:
     bool ReadOrientableCurve(pugi::xml_node& node);
     bool ReadCompositeCurve(pugi::xml_node& node);
     bool ReadSurface(pugi::xml_node& node);
+
+    bool ReadFeatureAttribute(pugi::xml_node& node, GF::FeatureType* feature, FeatureCatalogue* fc);
+    bool ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature);
+    bool ReadFeatureRole(pugi::xml_node& node, GF::FeatureType* feature, FeatureCatalogue* fc);
 };

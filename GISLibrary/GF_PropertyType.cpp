@@ -12,4 +12,14 @@ namespace GF
 	{
 
 	}
+
+	std::string PropertyType::GetCode()
+	{
+		return code;
+	}
+
+	void PropertyType::SetCode(std::string value)
+	{
+		code = value;
+	}
 }

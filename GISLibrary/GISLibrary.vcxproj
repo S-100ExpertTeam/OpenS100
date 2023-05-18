@@ -303,9 +303,12 @@
     <ClCompile Include="F_SRID.cpp" />
     <ClCompile Include="F_THAS.cpp" />
     <ClCompile Include="F_VDAT.cpp" />
+    <ClCompile Include="GF_AssociationRole.cpp" />
+    <ClCompile Include="GF_AssociationType.cpp" />
     <ClCompile Include="GF_AttributeType.cpp" />
     <ClCompile Include="GF_ComplexAttributeType.cpp" />
     <ClCompile Include="GF_FeatureType.cpp" />
+    <ClCompile Include="GF_InformationAssociationType.cpp" />
     <ClCompile Include="GF_InformationType.cpp" />
     <ClCompile Include="GF_MaskReference.cpp" />
     <ClCompile Include="GF_NamedType.cpp" />
@@ -447,6 +450,9 @@
     <ClInclude Include="DirectPosition.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
     <ClInclude Include="GeometryType.h" />
+    <ClInclude Include="GF_AssociationRole.h" />
+    <ClInclude Include="GF_AssociationType.h" />
+    <ClInclude Include="GF_InformationAssociationType.h" />
     <ClInclude Include="GF_MaskIndicatorType.h" />
     <ClInclude Include="GF_MaskReference.h" />
     <ClInclude Include="GF_NamedType.h" />
