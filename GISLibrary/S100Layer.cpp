@@ -45,7 +45,9 @@ bool S100Layer::Open(CString _filepath)
 	}
 	else if (!extension.CompareNoCase(L"gml"))
 	{
-		m_spatialObject = new S10XGML();
+		//m_spatialObject = new S10XGML();
+		m_spatialObject = new S101Cell(GetFeatureCatalog());
+
 		m_spatialObject->SetLayer(this);
 
 		if (!m_spatialObject->Open(_filepath))

@@ -18,5 +18,7 @@ namespace GM
 		
 		void SetExteriorRingID(std::string value);
 		void AddInteriorRingID(std::string value);
+
+		GeometryType GetType() override;
 	};
 }

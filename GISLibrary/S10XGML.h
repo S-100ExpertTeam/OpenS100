@@ -3,6 +3,7 @@
 #include "S100SpatialObject.h"
 #include "GF_FeatureType.h"
 #include "GF_InformationType.h"
+#include "GF_ComplexAttributeType.h"
 #include "SPoint.h"
 #include "SMultiPoint.h"
 #include "SCurve.h"
@@ -42,7 +43,10 @@ public:
     bool ReadCompositeCurve(pugi::xml_node& node);
     bool ReadSurface(pugi::xml_node& node);
 
-    bool ReadFeatureAttribute(pugi::xml_node& node, GF::FeatureType* feature, FeatureCatalogue* fc);
+    bool ReadObjectAttribute(pugi::xml_node& node, GF::ObjectType* object, FeatureCatalogue* fc);
     bool ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature);
     bool ReadFeatureRole(pugi::xml_node& node, GF::FeatureType* feature, FeatureCatalogue* fc);
+    bool ReadInformationRole(pugi::xml_node& node, GF::InformationType* information, FeatureCatalogue* fc);
+
+    bool AddSubAttribute(pugi::xml_node& node, GF::ComplexAttributeType* complexAttribute, FeatureCatalogue* fc);
 };

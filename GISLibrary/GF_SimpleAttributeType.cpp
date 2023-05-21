@@ -8,6 +8,12 @@ namespace GF
 
 	}
 
+	SimpleAttributeType::SimpleAttributeType(FCD::S100_CD_AttributeValueType valueType, std::string value)
+	{
+		this->valueType = valueType;
+		this->value = value;
+	}
+
 	SimpleAttributeType::~SimpleAttributeType()
 	{
 

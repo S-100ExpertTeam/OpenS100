@@ -18,5 +18,7 @@ namespace GM
 
 	public:
 		void Set(double x, double y, double z);
+
+		GeometryType GetType() override;
 	};
 }

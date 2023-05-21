@@ -17,4 +17,9 @@ namespace GM
 	{
 
 	}
+
+	GeometryType OrientableCurve::GetType()
+	{
+		return GeometryType::OrientableCurve;
+	}
 }

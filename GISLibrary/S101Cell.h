@@ -51,6 +51,7 @@ class S101Cell : public S100SpatialObject
 {
 public:
 	S101Cell();
+	S101Cell(FeatureCatalogue* fc);
 	virtual ~S101Cell();
 
 public:
@@ -96,6 +97,8 @@ public:
 
 	bool OpenBy000(CString path);
 	bool OpenByGML(CString path);
+	
+	bool ConvertFromS101GML(S10XGML& gml);
 
 	bool SaveAsENC(std::wstring path);
 	bool SaveAsGML(std::wstring path);

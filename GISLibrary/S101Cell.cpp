@@ -57,6 +57,7 @@
 #include "SCurveHasOrient.h"
 #include "SGeometricFuc.h"
 #include "GML_Envelop.h"
+#include "S10XGML.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -71,6 +72,12 @@
 S101Cell::S101Cell() : S100SpatialObject()
 {
 	m_FileType = FILE_S_100_VECTOR;
+}
+
+S101Cell::S101Cell(FeatureCatalogue* fc) : S100SpatialObject()
+{
+	m_FileType = FILE_S_100_VECTOR;
+	SetAllNumericCode(fc);
 }
 
 S101Cell::~S101Cell()
@@ -490,7 +497,11 @@ bool S101Cell::OpenByGML(CString path)
 
 	RemoveAll();
 
-	
+	S10XGML gml;
+	gml.SetLayer(GetLayer());
+	gml.Open(path);
+
+	ConvertFromS101GML(gml);
 
 	MakeFullSpatialData();
 
@@ -5384,4 +5395,22 @@ void S101Cell::WritePointRecord(pugi::xml_node& node, R_PointRecord* record)
 	//GetPoint
 
 	//curNode.append_child("gml:pos").append_child(pugi::node_pcdata).set_value()
+}
+
+bool S101Cell::ConvertFromS101GML(S10XGML& gml)
+{
+	for (auto i = gml.informations.begin(); i != gml.informations.end(); i++)
+	{
+
+	}
+
+	for (auto i = gml.geometries.begin(); i != gml.geometries.end(); i++)
+	{
+		auto type = (*i)->GetType();
+		if (type == GM::GeometryType::Point)
+		{
+			auto pr = new R_PointRecord();
+			
+		}
+	}
 }

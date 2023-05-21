@@ -22,4 +22,9 @@ namespace GM
 	{
 
 	}
+
+	GeometryType Point::GetType()
+	{
+		return GeometryType::Point;
+	}
 }

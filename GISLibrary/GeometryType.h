@@ -5,7 +5,11 @@ namespace GM
 	enum class GeometryType
 	{
 		Object,
+		Point,
+		MultiPoint,
 		Curve,
-		CompositeCurve
+		OrientableCurve,
+		CompositeCurve,
+		Surface
 	};
 }

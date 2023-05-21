@@ -4,6 +4,8 @@
 #include "GF_AttributeType.h"
 #include "GF_InformationAssociationType.h"
 #include "GF_ThematicAttributeType.h"
+#include "GF_SimpleAttributeType.h"
+#include "GF_ComplexAttributeType.h"
 
 #include <string>
 #include <vector>
@@ -46,6 +48,8 @@ namespace GF
 			std::string role,
 			std::string informationID);
 
-		virtual void AddSimpleAttribute()
+		virtual void AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string value);
+		virtual void AddComplexAttribute(ComplexAttributeType* ca);
+		virtual ComplexAttributeType* AddComplexAttribute(std::string code);
 	};
 }

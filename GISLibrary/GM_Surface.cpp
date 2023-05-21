@@ -28,4 +28,9 @@ namespace GM
 		ring.SetID(value);
 		patch.boundary.interior.push_back(ring);
 	}
+
+	GeometryType Surface::GetType()
+	{
+		return GeometryType::Surface
+	}
 }

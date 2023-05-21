@@ -17,4 +17,9 @@ namespace GM
 	{
 		position.push_back(DirectPosition(x, y, z));
 	}
+
+	GeometryType MultiPoint::GetType()
+	{
+		return GeometryType::MultiPoint;
+	}
 }

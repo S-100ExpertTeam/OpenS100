@@ -101,4 +101,24 @@ namespace GF
 		ia.SetInformationID(informationID);
 		informationAssociations.push_back(ia);
 	}
+
+	void ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string value)
+	{
+		auto sa = new SimpleAttributeType(valueType, value);
+		
+		attributes.push_back(sa);
+	}
+
+	void ObjectType::AddComplexAttribute(ComplexAttributeType* ca)
+	{
+		attributes.push_back(ca);
+	}
+
+	ComplexAttributeType* ObjectType::AddComplexAttribute(std::string code)
+	{
+		auto ca = new ComplexAttributeType();
+		ca->SetCode(code);
+		attributes.push_back(ca);
+		return ca;
+	}
 }

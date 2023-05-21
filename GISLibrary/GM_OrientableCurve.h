@@ -20,5 +20,8 @@ namespace GM
 		// false : -
 		bool orientation = false; 
 		std::string baseCurveID;
+
+	public:
+		GeometryType GetType() override;
 	};
 }
