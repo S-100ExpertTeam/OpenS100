@@ -61,7 +61,7 @@ namespace GF
 
 	int FeatureType::GetGeometryIDAsInt()
 	{
-		std::string digitID = std::regex_replace(id, std::regex(R"([\D])"), "");
+		std::string digitID = std::regex_replace(GetGeometryID(), std::regex(R"([\D])"), "");
 		return std::stoi(digitID);
 	}
 

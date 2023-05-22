@@ -5428,42 +5428,45 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 		auto feature = (*i);
 		auto code = (*i)->GetCode();
 		
-		auto fr = new R_FeatureRecord();
-		fr->SetRCID(feature->GetIDAsInteger());
-		fr->SetNumericCode(m_dsgir.GetFeatureTypeCode(pugi::as_wide(code)));
-		
 		auto geometryID = feature->GetGeometryID();
-		auto geometryIntID = feature->GetGeometryIDAsInt();
-		if (std::string::npos != geometryID.find("p"))
+		if (geometryID.empty() == false)
 		{
-			fr->SetSPAS(110, geometryIntID, 1);
-		}
-		else if (std::string::npos != geometryID.find("mp"))
-		{
-			fr->SetSPAS(115, geometryIntID, 1);
-		}
-		else if (std::string::npos != geometryID.find("s"))
-		{
-			fr->SetSPAS(130, geometryIntID, 1);
-		}
-		else if (std::string::npos != geometryID.find("occ"))
-		{
-			fr->SetSPAS(125, geometryIntID, 2);
-		}
-		else if (std::string::npos != geometryID.find("cc"))
-		{
-			fr->SetSPAS(125, geometryIntID, 1);
-		}
-		else if (std::string::npos != geometryID.find("oc"))
-		{
-			fr->SetSPAS(120, geometryIntID, 2);
-		}
-		else if (std::string::npos != geometryID.find("c"))
-		{
-			fr->SetSPAS(120, geometryIntID, 1);
-		}
+			auto fr = new R_FeatureRecord();
+			fr->SetRCID(feature->GetIDAsInteger());
+			fr->SetNumericCode(m_dsgir.GetFeatureTypeCode(pugi::as_wide(code)));
 
-		InsertFeatureRecord(fr->GetRecordName().GetName(), fr);
+			auto geometryIntID = feature->GetGeometryIDAsInt();
+			if (std::string::npos != geometryID.find("p"))
+			{
+				fr->SetSPAS(110, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("mp"))
+			{
+				fr->SetSPAS(115, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("s"))
+			{
+				fr->SetSPAS(130, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("occ"))
+			{
+				fr->SetSPAS(125, geometryIntID, 2);
+			}
+			else if (std::string::npos != geometryID.find("cc"))
+			{
+				fr->SetSPAS(125, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("oc"))
+			{
+				fr->SetSPAS(120, geometryIntID, 2);
+			}
+			else if (std::string::npos != geometryID.find("c"))
+			{
+				fr->SetSPAS(120, geometryIntID, 1);
+			}
+
+			InsertFeatureRecord(fr->GetRecordName().GetName(), fr);
+		}
 	}
 
 	for (auto i = gml.geometries.begin(); i != gml.geometries.end(); i++)
@@ -5585,12 +5588,12 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 				sr->InsertRing(120, exteriorIntID, 1, 1);
 			}
 
-			for (auto i = geom->patch.boundary.interior.begin();
-				i != geom->patch.boundary.interior.end();
-				i++)
+			for (auto j = geom->patch.boundary.interior.begin();
+				j != geom->patch.boundary.interior.end();
+				j++)
 			{
-				auto interiorID = i->GetID();
-				int interiorIntID = i->GetIDAsInt();
+				auto interiorID = j->GetID();
+				int interiorIntID = j->GetIDAsInt();
 				if (std::string::npos != interiorID.find("occ"))
 				{
 					sr->InsertRing(125, interiorIntID, 2, 2);
