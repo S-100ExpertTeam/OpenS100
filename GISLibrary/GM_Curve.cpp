@@ -22,4 +22,14 @@ namespace GM
 	{
 		segment.front().controlPoints.push_back(DirectPosition(x, y));
 	}
+
+	bool Curve::IsClosed()
+	{
+		if (segment.front().controlPoints.front() == segment.front().controlPoints.back())
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

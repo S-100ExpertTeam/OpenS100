@@ -31,6 +31,6 @@ namespace GM
 
 	GeometryType Surface::GetType()
 	{
-		return GeometryType::Surface
+		return GeometryType::Surface;
 	}
 }

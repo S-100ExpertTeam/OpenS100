@@ -10,6 +10,8 @@
 #include "IC2D.h"
 #include "PTAS.h"
 
+#include <sstream>
+
 R_CurveRecord::R_CurveRecord()
 {
 	m_crid.m_name.RCNM = 120;
@@ -219,6 +221,11 @@ std::wstring R_CurveRecord::GetRCIDasWstring()
 	return std::to_wstring(GetRCID());
 }
 
+void R_CurveRecord::SetRCID(int rcid)
+{
+	m_crid.m_name.RCID = rcid;
+}
+
 int R_CurveRecord::GetPointCount()
 {
 	int result = 0;
@@ -246,4 +253,82 @@ int R_CurveRecord::GetPointCount()
 	}
 
 	return result;
+}
+
+void R_CurveRecord::SetPTAS(int rcid)
+{
+	delete m_ptas;
+	m_ptas = new F_PTAS();
+	m_ptas->m_arr.push_back(new PTAS(rcid, 3));
+}
+
+void R_CurveRecord::SetPTAS(int begin_rcid, int end_rcid)
+{
+	delete m_ptas;
+	m_ptas = new F_PTAS();
+	m_ptas->m_arr.push_back(new PTAS(begin_rcid, 1));
+	m_ptas->m_arr.push_back(new PTAS(end_rcid, 2));
+}
+
+void R_CurveRecord::InsertC2IL(int x, int y)
+{
+	if (m_c2il.size() == 0)
+	{
+		m_c2il.push_back(new F_C2IL());
+	}
+
+	m_c2il.front()->m_arr.push_back(new IC2D(y, x));
+}
+
+std::string R_CurveRecord::GetBeginningPointRCIDasString(std::string prefix)
+{
+	if (m_ptas)
+	{
+		for (auto i = m_ptas->m_arr.begin(); i != m_ptas->m_arr.end(); i++)
+		{
+			if ((*i)->m_topi == 1 || (*i)->m_topi == 3)
+			{
+				return (*i)->m_name.GetRCIDasString(prefix);
+			}
+		}
+	}
+	
+	return "";
+}
+
+std::string R_CurveRecord::GetEndPointRCIDasString(std::string prefix)
+{
+	if (m_ptas)
+	{
+		for (auto i = m_ptas->m_arr.begin(); i != m_ptas->m_arr.end(); i++)
+		{
+			if ((*i)->m_topi == 2 || (*i)->m_topi == 3)
+			{
+				return (*i)->m_name.GetRCIDasString(prefix);
+			}
+		}
+	}
+
+	return "";
+}
+
+std::string R_CurveRecord::GetC2ILString(int CMFX, int CMFY)
+{
+	std::stringstream ss;
+	ss.precision(7);
+
+	if (m_c2il.size() == 1)
+	{
+		for (auto i = m_c2il.front()->m_arr.begin(); i != m_c2il.front()->m_arr.end(); i++)
+		{
+			if (i != m_c2il.front()->m_arr.begin())
+			{
+				ss << " ";
+			}
+
+			ss << (*i)->m_ycoo / CMFY << " " << (*i)->m_xcoo / CMFX;
+		}
+	}
+
+	return ss.str();
 }

@@ -54,5 +54,16 @@ public:
 	std::string GetRCIDasString(std::string prefix = "");
 	std::wstring GetRCIDasWstring();
 
+	void SetRCID(int rcid);
+
 	int GetPointCount();
+
+	void SetPTAS(int rcid);
+	void SetPTAS(int begin_rcid, int end_rcid);
+	void InsertC2IL(int x, int y);
+
+	std::string GetBeginningPointRCIDasString(std::string prefix = "");
+	std::string GetEndPointRCIDasString(std::string prefix = "");
+	
+	std::string GetC2ILString(int CMFX, int CMFY);
 };

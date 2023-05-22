@@ -11,6 +11,7 @@
 #include "SSurface.h"
 #include "GML_Envelop.h"
 #include "GML_DatasetIdentificationInformation.h"
+#include "GM_Point.h"
 
 #include <vector>
 
@@ -49,4 +50,6 @@ public:
     bool ReadInformationRole(pugi::xml_node& node, GF::InformationType* information, FeatureCatalogue* fc);
 
     bool AddSubAttribute(pugi::xml_node& node, GF::ComplexAttributeType* complexAttribute, FeatureCatalogue* fc);
+
+    GM::Point* GetPoint(int x, int y);
 };

@@ -130,3 +130,18 @@ std::wstring R_SurfaceRecord::GetRCIDasWstring()
 {
 	return std::to_wstring(GetRCID());
 }
+
+void R_SurfaceRecord::SetRCID(int rcid)
+{
+	m_srid.m_name.RCID = rcid;
+}
+
+void R_SurfaceRecord::InsertRing(int rcnm, int rcid, int usag, int ornt)
+{
+	if (m_rias.size() == 0)
+	{
+		m_rias.push_back(new F_RIAS());
+	}
+
+	m_rias.front()->m_arr.push_back(new RIAS(rcnm, rcid, usag, ornt));
+}

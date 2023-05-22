@@ -290,6 +290,11 @@ std::string R_FeatureRecord::GetRCIDAsString(std::string prefix)
 	return prefix + std::to_string(GetRCID());
 }
 
+void R_FeatureRecord::SetRCID(int rcid)
+{
+	m_frid.m_name.RCID = rcid;
+}
+
 int R_FeatureRecord::GetAssociationCount()
 {
 	return GetFeatureAssociationCount() + GetInformationAssociationCount();
@@ -308,6 +313,11 @@ int R_FeatureRecord::GetInformationAssociationCount()
 int R_FeatureRecord::GetNumericCode()
 {
 	return m_frid.m_nftc;
+}
+
+void R_FeatureRecord::SetNumericCode(int numericCode)
+{
+	m_frid.m_nftc = numericCode;
 }
 
 int R_FeatureRecord::MinimumDisplayPriority()
@@ -551,6 +561,17 @@ SPAS* R_FeatureRecord::CreateEmptySPAS()
 	}
 
 	return GetSPAS();
+}
+
+void R_FeatureRecord::SetSPAS(int rcnm, int rcid, int ornt)
+{
+	auto spas = CreateEmptySPAS();
+	if (spas)
+	{
+		spas->m_name.RCNM = rcnm;
+		spas->m_name.RCID = rcid;
+		spas->m_ornt = ornt;
+	}
 }
 
 void R_FeatureRecord::SetVectorRecord(R_VectorRecord* record)

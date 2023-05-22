@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GF_FeatureType.h"
 
+#include <regex>
+
 namespace GF
 {
 	FeatureType::FeatureType()
@@ -55,6 +57,12 @@ namespace GF
 		}
 
 		return "";
+	}
+
+	int FeatureType::GetGeometryIDAsInt()
+	{
+		std::string digitID = std::regex_replace(id, std::regex(R"([\D])"), "");
+		return std::stoi(digitID);
 	}
 
 	void FeatureType::SetGeometryID(std::string value)

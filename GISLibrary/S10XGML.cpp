@@ -477,3 +477,20 @@ bool S10XGML::ReadInformationRole(
 
 	return false;
 }
+
+GM::Point* S10XGML::GetPoint(int x, int y)
+{
+	for (auto i = geometries.begin(); i != geometries.end(); i++)
+	{
+		if ((*i)->GetType() == GM::GeometryType::Point)
+		{
+			auto pt = (GM::Point*)(*i);
+			if (pt->position.GetXInteger() == x && pt->position.GetYInteger())
+			{
+				return pt;
+			}
+		}
+	}
+
+	return nullptr;
+}

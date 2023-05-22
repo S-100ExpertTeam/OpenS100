@@ -41,6 +41,8 @@ namespace GF
 
 		virtual std::string GetGeometryID();
 
+		virtual int GetGeometryIDAsInt();
+
 		virtual void SetGeometryID(std::string value);
 
 		// Need release by a user.

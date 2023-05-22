@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GF_ObjectType.h"
+#include <regex>
 
 namespace GF
 {
@@ -38,7 +39,8 @@ namespace GF
 
 	int ObjectType::GetIDAsInteger() 
 	{
-		return std::atoi(id.c_str());
+		std::string digitID = std::regex_replace(id, std::regex(R"([\D])"), "");
+		return std::stoi(digitID);
 	}
 
 	int ObjectType::GetInformationRelationCount() 

@@ -29,4 +29,6 @@ public:
 	double GetZ();
 	int GetZInteger();
 	void SetZ(double value);
+
+	bool operator==(DirectPosition& item);
 };

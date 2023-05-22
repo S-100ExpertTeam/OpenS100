@@ -3,6 +3,11 @@
 struct IC2D
 {
 public:
+	IC2D();
+	IC2D(int m_ycoo, int m_xcoo);
+	virtual ~IC2D();
+
+public:
 	/*
 	* Coordinate in Y axis
 	* Format		: b24

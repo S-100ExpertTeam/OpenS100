@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GM_Object.h"
 
+#include <regex>
+
 namespace GM
 {
 	Object::Object()
@@ -26,6 +28,12 @@ namespace GM
 	std::wstring Object::GetIDAsWString()
 	{
 		return pugi::as_wide(id);
+	}
+
+	int Object::GetIDAsInt()
+	{
+		std::string digitID = std::regex_replace(id, std::regex(R"([\D])"), "");
+		return std::stoi(digitID);
 	}
 
 	void Object::SetID(std::string value)

@@ -75,10 +75,15 @@ public:
 	MBR GetMBR();
 	int GetRCID();
 	std::string GetRCIDAsString(std::string prefix = "");
+
+	void SetRCID(int rcid);
+
 	int GetAssociationCount();
 	int GetFeatureAssociationCount();
 	int GetInformationAssociationCount();
+	
 	int GetNumericCode();
+	void SetNumericCode(int numericCode);
 
 	int MinimumDisplayPriority();
 	void MinimumDisplayPriority(int value);
@@ -107,6 +112,7 @@ public:
 
 	SPAS* GetSPAS();
 	SPAS* CreateEmptySPAS();
+	void SetSPAS(int rcnm, int rcid, int ornt);
 
 	void SetVectorRecord(R_VectorRecord* record);
 

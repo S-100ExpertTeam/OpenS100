@@ -29,4 +29,8 @@ public:
 	int GetRCID();
 	std::string GetRCIDasString(std::string prefix = "");
 	std::wstring GetRCIDasWstring();
+
+	void SetRCID(int rcid);
+
+	void InsertCurve(int rcnm, int rcid, int ornt);
 };

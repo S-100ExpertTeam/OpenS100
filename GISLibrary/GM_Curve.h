@@ -22,5 +22,7 @@ namespace GM
 		GeometryType GetType() override;
 
 		void Add(double x, double y);
+
+		bool IsClosed();
 	};
 }

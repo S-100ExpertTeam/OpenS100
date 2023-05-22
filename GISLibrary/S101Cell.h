@@ -6,6 +6,7 @@
 #include "F_CodeWithNumericCode.h"
 #include "DDR.h"
 #include "GML_DatasetIdentificationInformation.h"
+#include "S10XGML.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 
