@@ -7,6 +7,9 @@ namespace GF
     class ThematicAttributeType :
         public AttributeType
     {
+    public:
+        ThematicAttributeType();
+        virtual ~ThematicAttributeType();
     };
 
 }

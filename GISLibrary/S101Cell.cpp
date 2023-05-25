@@ -103,7 +103,8 @@ bool S101Cell::IsUpdate()
 	CString filename = GetFileName();
 	CString exten = LibMFCUtil::GetExtension(filename);
 
-	if (exten.Compare(L"000") == 0)
+	if (exten.Compare(L"000") == 0 ||
+		exten.CompareNoCase(L"gml") == 0)
 	{
 		return false;
 	}

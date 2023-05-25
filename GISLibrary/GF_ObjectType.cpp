@@ -11,10 +11,10 @@ namespace GF
 
 	ObjectType::~ObjectType()
 	{
-		//for (auto i = attributes.begin(); i != attributes.end(); i++)
-		//{
-		//	delete (*i);
-		//}
+		for (auto i = attributes.begin(); i != attributes.end(); i++)
+		{
+			delete (*i);
+		}
 	}
 
 	//AttributeType* ObjectType::GetAttribute(int index)

@@ -10,12 +10,12 @@ namespace GF
 
 	InformationType::~InformationType()
 	{
-		for (auto i = attributes.begin(); i != attributes.end(); i++)
-		{
-			delete (*i);
-		}
+		//for (auto i = attributes.begin(); i != attributes.end(); i++)
+		//{
+		//	delete (*i);
+		//}
 
-		attributes.clear();
+		//attributes.clear();
 	}
 
 	//int InformationType::GetAttributeCount()

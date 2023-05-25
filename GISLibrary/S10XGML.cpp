@@ -59,7 +59,7 @@ bool S10XGML::Open(CString _filepath)
 		}
 		else if (strcmp(child.name(), "members") == 0)
 		{
-			//ReadMembers(child);
+			ReadMembers(child);
 		}
 		else if (strcmp(child.name(), "S100:Point") == 0)
 		{
@@ -67,23 +67,23 @@ bool S10XGML::Open(CString _filepath)
 		}
 		else if (strcmp(child.name(), "S100:MultiPoint") == 0)
 		{
-			//ReadMultiPoint(child);
+			ReadMultiPoint(child);
 		}
 		else if (strcmp(child.name(), "S100:Curve") == 0)
 		{
-			//ReadCurve(child);
+			ReadCurve(child);
 		}	
 		else if (strcmp(child.name(), "S100:OrientableCurve") == 0)
 		{
-			//ReadOrientableCurve(child);
+			ReadOrientableCurve(child);
 		}
 		else if (strcmp(child.name(), "S100:CompositeCurve") == 0)
 		{
-			//ReadCompositeCurve(child);
+			ReadCompositeCurve(child);
 		}
 		else if (strcmp(child.name(), "S100:Surface") == 0)
 		{
-			//ReadSurface(child);
+			ReadSurface(child);
 		}
 
 		child = child.next_sibling();

@@ -15,7 +15,7 @@ namespace GF
 		~InformationType();
 
 	public:
-		std::vector<ThematicAttributeType*> attributes;
+		//std::vector<ThematicAttributeType*> attributes;
 
 	public:
 		//virtual int GetAttributeCount();
