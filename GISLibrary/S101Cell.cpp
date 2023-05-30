@@ -5419,6 +5419,8 @@ void S101Cell::WritePointRecord(pugi::xml_node& node, R_PointRecord* record)
 
 bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 {
+	S101Creator creator(GetFC(), this);
+
 	for (auto i = gml.informations.begin(); i != gml.informations.end(); i++)
 	{
 
@@ -5464,6 +5466,22 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 			else if (std::string::npos != geometryID.find("c"))
 			{
 				fr->SetSPAS(120, geometryIntID, 1);
+			}
+
+			auto cntAttr = feature->GetAttributeCount();
+			for (int i = 0; i < cntAttr; i++)
+			{
+				auto attribute = feature->GetAttribute(i);
+				auto code = attribute->GetCode();
+				if (attribute->IsSimple())
+				{
+					auto value = attribute->GetValue();
+					//creator.AddSimpleAttribute(fr, pugi::)
+				}
+				else
+				{
+
+				}
 			}
 
 			InsertFeatureRecord(fr->GetRecordName().GetName(), fr);

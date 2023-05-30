@@ -104,9 +104,10 @@ namespace GF
 		informationAssociations.push_back(ia);
 	}
 
-	void ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string value)
+	void ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value)
 	{
 		auto sa = new SimpleAttributeType(valueType, value);
+		sa->SetCode(code);
 		
 		attributes.push_back(sa);
 	}

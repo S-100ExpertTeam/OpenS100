@@ -365,7 +365,7 @@ bool S10XGML::ReadObjectAttribute(
 	if (sa)
 	{
 		auto value = node.child_value();
-		object->AddSimpleAttribute(sa->GetValueType(), value);
+		object->AddSimpleAttribute(sa->GetValueType(), sa->GetCode(), value);
 	}
 	else
 	{
@@ -485,7 +485,7 @@ GM::Point* S10XGML::GetPoint(int x, int y)
 		if ((*i)->GetType() == GM::GeometryType::Point)
 		{
 			auto pt = (GM::Point*)(*i);
-			if (pt->position.GetXInteger() == x && pt->position.GetYInteger())
+			if (pt->position.GetXInteger() == x && pt->position.GetYInteger() == y)
 			{
 				return pt;
 			}

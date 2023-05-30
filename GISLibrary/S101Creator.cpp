@@ -23,14 +23,15 @@
 #include "RIAS.h"
 #include "SPAS.h"
 #include "GISLibrary.h"
-
-#include "../FeatureCatalog/FeatureCatalogue.h"
-
 #include "SPoint.h"
 #include "SMultiPoint.h"
 #include "SCurve.h"
 #include "SCompositeCurve.h"
 #include "SSurface.h"
+
+#include "../FeatureCatalog/FeatureCatalogue.h"
+
+#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <set>
 
@@ -82,6 +83,12 @@ S101Cell* S101Creator::CreateENC(std::wstring name)
 	return result;
 }
 
+S100Layer* S101Creator::CreateLayer(std::string name, FeatureCatalogue* fc, PortrayalCatalogue* pc)
+{
+	auto wname = pugi::as_wide(name);
+	return CreateLayer(wname, fc, pc);
+}
+
 S100Layer* S101Creator::CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc)
 {
 	auto result = new S100Layer(fc, pc);
@@ -96,6 +103,12 @@ S100Layer* S101Creator::CreateLayer(std::wstring name, FeatureCatalogue* fc, Por
 	enc->SetAllNumericCode(fc);
 
 	return result;
+}
+
+R_FeatureRecord* S101Creator::AddFeature(std::string code)
+{
+	auto wcode = pugi::as_wide(code);
+	return AddFeature(wcode);
 }
 
 R_FeatureRecord* S101Creator::AddFeature(std::wstring code)
@@ -123,6 +136,12 @@ R_FeatureRecord* S101Creator::AddFeature(std::wstring code)
 	}
 	
 	return nullptr;
+}
+
+R_InformationRecord* S101Creator::AddInformation(std::string code)
+{
+	auto wcode = pugi::as_wide(code);
+	return AddInformation(wcode);
 }
 
 R_InformationRecord* S101Creator::AddInformation(std::wstring code)
@@ -179,6 +198,14 @@ bool S101Creator::DeleteFeature(int rcid)
 	return false;
 }
 
+ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, std::string code, std::string value)
+{
+	auto wcode = pugi::as_wide(code);
+	auto wvalue = LibMFCUtil::StringToWString(value);
+
+	return AddSimpleAttribute(feature, wcode, wvalue);
+}
+
 ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, std::wstring code, std::wstring value)
 {
 	auto attribute = fc->GetSimpleAttribute(code);
@@ -207,6 +234,13 @@ ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, std::wstring cod
 	return nullptr;
 }
 
+ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, std::string code, std::string value)
+{
+	auto wcode = pugi::as_wide(code);
+	auto wvalue = LibMFCUtil::StringToWString(value);
+	return AddSimpleAttribute(information, wcode, wvalue);
+}
+
 ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, std::wstring code, std::wstring value)
 {
 	auto attribute = fc->GetSimpleAttribute(code);
@@ -232,6 +266,13 @@ ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, std::wst
 	}
 
 	return nullptr;
+}
+
+ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::string code, std::string value)
+{
+	auto wcode = pugi::as_wide(code);
+	auto wvalue = LibMFCUtil::StringToWString(value);
+	return AddSimpleAttribute(feature, parentATTR, wcode, wvalue);
 }
 
 ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code, std::wstring value)
@@ -267,6 +308,13 @@ ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR
 	return nullptr;
 }
 
+ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, ATTR* parentATTR, std::string code, std::string value)
+{
+	auto wcode = pugi::as_wide(code);
+	auto wvalue = LibMFCUtil::StringToWString(value);
+	return AddSimpleAttribute(information, wcode, wvalue);
+}
+
 ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code, std::wstring value)
 {
 	if (parentATTR == nullptr)
@@ -300,6 +348,12 @@ ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, ATTR* pa
 	return nullptr;
 }
 
+ATTR* S101Creator::AddComplexAttribute(R_FeatureRecord* feature, std::string code)
+{
+	auto wcode = pugi::as_wide(code);
+	return AddComplexAttribute(feature, wcode);
+}
+
 ATTR* S101Creator::AddComplexAttribute(R_FeatureRecord* feature, std::wstring code)
 {
 	auto attribute = fc->GetComplexAttribute(code);
@@ -328,6 +382,12 @@ ATTR* S101Creator::AddComplexAttribute(R_FeatureRecord* feature, std::wstring co
 	return nullptr;
 }
 
+ATTR* S101Creator::AddComplexAttribute(R_InformationRecord* information, std::string code)
+{
+	auto wcode = pugi::as_wide(code);
+	return AddComplexAttribute(information, wcode);
+}
+
 ATTR* S101Creator::AddComplexAttribute(R_InformationRecord* information, std::wstring code)
 {
 	auto attribute = fc->GetSimpleAttribute(code);
@@ -353,6 +413,12 @@ ATTR* S101Creator::AddComplexAttribute(R_InformationRecord* information, std::ws
 	}
 
 	return nullptr;
+}
+
+ATTR* S101Creator::AddComplexAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::string code)
+{
+	auto wcode = pugi::as_wide(code);
+	return AddComplexAttribute(feature, parentATTR, wcode);
 }
 
 ATTR* S101Creator::AddComplexAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code)
@@ -386,6 +452,12 @@ ATTR* S101Creator::AddComplexAttribute(R_FeatureRecord* feature, ATTR* parentATT
 	}
 
 	return nullptr;
+}
+
+ATTR* S101Creator::AddComplexAttribute(R_InformationRecord* information, ATTR* parentATTR, std::string code)
+{
+	auto wcode = pugi::as_wide(code);
+	return AddComplexAttribute(information, parentATTR, wcode);
 }
 
 ATTR* S101Creator::AddComplexAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code)
