@@ -64,6 +64,7 @@
 #include "GM_OrientableCurve.h"
 #include "GM_CompositeCurve.h"
 #include "GM_Surface.h"
+#include "S101Creator.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -5468,21 +5469,7 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 				fr->SetSPAS(120, geometryIntID, 1);
 			}
 
-			auto cntAttr = feature->GetAttributeCount();
-			for (int i = 0; i < cntAttr; i++)
-			{
-				auto attribute = feature->GetAttribute(i);
-				auto code = attribute->GetCode();
-				if (attribute->IsSimple())
-				{
-					auto value = attribute->GetValue();
-					//creator.AddSimpleAttribute(fr, pugi::)
-				}
-				else
-				{
-
-				}
-			}
+			ConvertFromS101GML(&creator, fr, feature);
 
 			InsertFeatureRecord(fr->GetRecordName().GetName(), fr);
 		}
@@ -5632,6 +5619,65 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 			}
 
 			InsertSurfaceRecord(sr->GetRecordName().GetName(), sr);
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType)
+{
+	auto cntAttr = featureType->GetAttributeCount();
+	for (int i = 0; i < cntAttr; i++)
+	{
+		auto attribute = featureType->GetAttribute(i);
+		auto code = attribute->GetCode();
+		if (attribute->IsSimple())
+		{
+			ConvertFromS101GML(creator, featureRecord, (GF::SimpleAttributeType*)attribute);
+		}
+		else
+		{
+			ConvertFromS101GML(creator, featureRecord, nullptr, (GF::ComplexAttributeType*)attribute);
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::SimpleAttributeType* simpleAttribute)
+{
+	creator->AddSimpleAttribute(featureRecord, simpleAttribute->GetCode(), simpleAttribute->GetValue());
+
+	return false;
+}
+
+bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, ATTR* parentATTR, GF::ComplexAttributeType* complexAttribute)
+{
+	ATTR* addedCA = nullptr;
+
+	if (parentATTR == nullptr)
+	{
+		addedCA = creator->AddComplexAttribute(featureRecord, complexAttribute->GetCode());
+	}
+	else
+	{
+		addedCA = creator->AddComplexAttribute(featureRecord, parentATTR, complexAttribute->GetCode());
+	}
+	
+	int cnt = complexAttribute->GetSubAttributeCount();
+
+	for (int i = 0; i < cnt; i++)
+	{
+		auto sa = complexAttribute->GetSubAttribute(i);
+		if (sa->IsSimple())
+		{
+			creator->AddSimpleAttribute(featureRecord, addedCA, sa->GetCode(), sa->GetValue());
+		}
+		else
+		{
+			creator->AddComplexAttribute(featureRecord, addedCA, sa->GetCode());
+			ConvertFromS101GML(creator, featureRecord, addedCA, (GF::ComplexAttributeType*)sa);
 		}
 	}
 

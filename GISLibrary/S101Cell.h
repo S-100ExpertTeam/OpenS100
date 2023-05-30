@@ -42,6 +42,7 @@ class F_C3IL;
 class F_COCC;
 class F_ATTR;
 class SENC_PointInstruction;
+class S101Creator;
 
 struct ATTR;
 struct SPAS;
@@ -100,6 +101,9 @@ public:
 	bool OpenByGML(CString path);
 	
 	bool ConvertFromS101GML(S10XGML& gml);
+	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType);
+	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::SimpleAttributeType* simpleAttribute);
+	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, ATTR* parentATTR, GF::ComplexAttributeType* complexAttribute);
 
 	bool SaveAsENC(std::wstring path);
 	bool SaveAsGML(std::wstring path);

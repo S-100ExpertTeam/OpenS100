@@ -795,7 +795,7 @@ int S101Creator::GetATIXofNewChildAttribute(R_FeatureRecord* feature, ATTR* pare
 		ATIXs.insert((*i)->m_atix);
 	}
 
-	return (*ATIXs.end()) + 1;
+	return (*ATIXs.rbegin()) + 1;
 }
 
 int S101Creator::GetATIXofNewChildAttribute(R_InformationRecord* information, ATTR* parentATTR, int numericCode)
@@ -813,7 +813,7 @@ int S101Creator::GetATIXofNewChildAttribute(R_InformationRecord* information, AT
 		ATIXs.insert((*i)->m_atix);
 	}
 
-	return (*ATIXs.end()) + 1;
+	return (*ATIXs.rbegin()) + 1;
 }
 
 R_PointRecord* S101Creator::ConvertInsertVectorRecord(SPoint* geom)
