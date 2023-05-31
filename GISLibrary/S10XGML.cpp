@@ -212,22 +212,28 @@ bool S10XGML::ReadMultiPoint(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
 
-	auto strPos = node.child("gml:pointMembers").child("gml:Point").child_value("gml:pos");
-
-	auto strPosList = LatLonUtility::Split(strPos, " ");
-
-	if (strPosList.size() != 3)
-	{
-		return false;
-	}
-
-	double lat = std::stod(strPosList.at(0));
-	double lon = std::stod(strPosList.at(1));
-	double depth = std::stod(strPosList.at(2));
+	auto nodePoint = node.child("gml:pointMembers").child("gml:Point");
 
 	auto object = new GM::MultiPoint();
 	object->SetID(gmlID);
-	object->Set(lon, lat, depth);
+
+	while (nodePoint)
+	{
+		auto strPos = nodePoint.child_value("gml:pos");
+
+		auto strPosList = LatLonUtility::Split(strPos, " ");
+
+		if (strPosList.size() == 3)
+		{
+			double lat = std::stod(strPosList.at(0));
+			double lon = std::stod(strPosList.at(1));
+			double depth = std::stod(strPosList.at(2));
+			
+			object->Add(lon, lat, depth);
+		}
+
+		nodePoint = nodePoint.next_sibling();
+	}
 
 	geometries.push_back(object);
 
@@ -392,7 +398,7 @@ bool S10XGML::AddSubAttribute(pugi::xml_node& node, GF::ComplexAttributeType* co
 	if (sa)
 	{
 		auto value = node.child_value();
-		complexAttribute->AddSubSimpleAttribute(sa->GetValueType(), value);
+		complexAttribute->AddSubSimpleAttribute(sa->GetValueType(), sa->GetCode(), value);
 	}
 	else
 	{

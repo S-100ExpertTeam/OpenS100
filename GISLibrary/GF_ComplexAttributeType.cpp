@@ -44,9 +44,10 @@ namespace GF
 	}
 
 	void ComplexAttributeType::AddSubSimpleAttribute(
-		FCD::S100_CD_AttributeValueType valueType, std::string value)
+		FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value)
 	{
 		auto sa = new SimpleAttributeType(valueType, value);
+		sa->SetCode(code);
 		AddSubAttribute(sa);
 	}
 

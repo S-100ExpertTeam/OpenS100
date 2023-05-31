@@ -13,7 +13,7 @@ namespace GM
 
 	}
 
-	void MultiPoint::Set(double x, double y, double z)
+	void MultiPoint::Add(double x, double y, double z)
 	{
 		position.push_back(DirectPosition(x, y, z));
 	}

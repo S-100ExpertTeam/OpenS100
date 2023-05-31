@@ -156,8 +156,6 @@ void R_CompositeRecord::InsertCurve(int rcnm, int rcid, int ornt)
 	{
 		m_cuco.push_back(new F_CUCO);
 	}
-	else
-	{
-		m_cuco.front()->m_arr.push_back(new CUCO(rcnm, rcid, ornt));
-	}
+
+	m_cuco.front()->m_arr.push_back(new CUCO(rcnm, rcid, ornt));
 }

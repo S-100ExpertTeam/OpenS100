@@ -102,6 +102,12 @@ void SimpleAttribute::InsertListedValue(ListedValue* item)
 	labelMap.insert({ item->GetLabel(), item });
 }
 
+ListedValue* SimpleAttribute::GetListedValue(std::string label)
+{
+	auto wlabel = pugi::as_wide(label);
+	return GetListedValue(wlabel);
+}
+
 ListedValue* SimpleAttribute::GetListedValue(std::wstring label)
 {
 	auto item = labelMap.find(label);

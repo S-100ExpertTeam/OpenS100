@@ -10,7 +10,7 @@
 
 R_MultiPointRecord::R_MultiPointRecord(void)
 {
-	m_mrid.m_name.RCID = 115;
+	m_mrid.m_name.RCNM = 115;
 }
 
 R_MultiPointRecord::~R_MultiPointRecord(void)

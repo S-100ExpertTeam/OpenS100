@@ -67,6 +67,7 @@
 #include "S101Creator.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
+#include "../FeatureCatalog/S100_CD_AttributeValueType.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -5440,13 +5441,13 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 			fr->SetNumericCode(m_dsgir.GetFeatureTypeCode(pugi::as_wide(code)));
 
 			auto geometryIntID = feature->GetGeometryIDAsInt();
-			if (std::string::npos != geometryID.find("p"))
-			{
-				fr->SetSPAS(110, geometryIntID, 1);
-			}
-			else if (std::string::npos != geometryID.find("mp"))
+			if (std::string::npos != geometryID.find("mp"))
 			{
 				fr->SetSPAS(115, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("p"))
+			{
+				fr->SetSPAS(110, geometryIntID, 1);
 			}
 			else if (std::string::npos != geometryID.find("s"))
 			{
@@ -5548,22 +5549,22 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 			
 			for (auto i = geom->component.begin(); i != geom->component.end(); i++)
 			{
-				auto id = i->GetID();
+				auto id = i->baseCurveID;
 				if (std::string::npos != id.find("occ"))
 				{
-					ccr->InsertCurve(125, i->GetIDAsInt(), 2);
+					ccr->InsertCurve(125, i->GetBaseCurveIDAsInt(), 2);
 				}
 				else if (std::string::npos != id.find("cc"))
 				{
-					ccr->InsertCurve(125, i->GetIDAsInt(), 1);
+					ccr->InsertCurve(125, i->GetBaseCurveIDAsInt(), 1);
 				}
 				else if (std::string::npos != id.find("oc"))
 				{
-					ccr->InsertCurve(120, i->GetIDAsInt(), 2);
+					ccr->InsertCurve(120, i->GetBaseCurveIDAsInt(), 2);
 				}
 				else if (std::string::npos != id.find("c"))
 				{
-					ccr->InsertCurve(120, i->GetIDAsInt(), 1);
+					ccr->InsertCurve(120, i->GetBaseCurveIDAsInt(), 1);
 				}
 			}
 
@@ -5647,13 +5648,29 @@ bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* feature
 
 bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::SimpleAttributeType* simpleAttribute)
 {
-	creator->AddSimpleAttribute(featureRecord, simpleAttribute->GetCode(), simpleAttribute->GetValue());
+	auto fc = GetFC();
+	auto sa = fc->GetSimpleAttribute(simpleAttribute->GetCode());
+	if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+	{
+		auto listedValue = sa->GetListedValue(simpleAttribute->GetValue());
+		if (listedValue)
+		{
+			creator->AddSimpleAttribute(featureRecord, simpleAttribute->GetCode(), std::to_string(listedValue->GetCode()));
+			return true;
+		}
+	}
+	else
+	{
+		creator->AddSimpleAttribute(featureRecord, simpleAttribute->GetCode(), simpleAttribute->GetValue());
+		return true;
+	}
 
 	return false;
 }
 
 bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, ATTR* parentATTR, GF::ComplexAttributeType* complexAttribute)
 {
+	auto fc = GetFC();
 	ATTR* addedCA = nullptr;
 
 	if (parentATTR == nullptr)
@@ -5669,15 +5686,27 @@ bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* feature
 
 	for (int i = 0; i < cnt; i++)
 	{
-		auto sa = complexAttribute->GetSubAttribute(i);
-		if (sa->IsSimple())
+		auto subAttribute = complexAttribute->GetSubAttribute(i);
+		if (subAttribute->IsSimple())
 		{
-			creator->AddSimpleAttribute(featureRecord, addedCA, sa->GetCode(), sa->GetValue());
+			auto sa = fc->GetSimpleAttribute(subAttribute->GetCode());
+			if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+			{
+				auto listedValue = sa->GetListedValue(subAttribute->GetValue());
+				if (listedValue)
+				{
+					creator->AddSimpleAttribute(featureRecord, addedCA, subAttribute->GetCode(), std::to_string(listedValue->GetCode()));
+				}
+			}
+			else
+			{
+				creator->AddSimpleAttribute(featureRecord, addedCA, subAttribute->GetCode(), subAttribute->GetValue());
+			}
 		}
 		else
 		{
-			creator->AddComplexAttribute(featureRecord, addedCA, sa->GetCode());
-			ConvertFromS101GML(creator, featureRecord, addedCA, (GF::ComplexAttributeType*)sa);
+			//auto addedSubCA = creator->AddComplexAttribute(featureRecord, addedCA, subAttribute->GetCode());
+			ConvertFromS101GML(creator, featureRecord, addedCA, (GF::ComplexAttributeType*)subAttribute);
 		}
 	}
 

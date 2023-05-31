@@ -23,5 +23,7 @@ namespace GM
 
 	public:
 		GeometryType GetType() override;
+
+		int GetBaseCurveIDAsInt();
 	};
 }

@@ -21,7 +21,7 @@ namespace GF
 		virtual ThematicAttributeType* GetSubAttribute(int index);
 		virtual bool IsSimple();
 		virtual void AddSubAttribute(ThematicAttributeType* subAttribute);
-		virtual void AddSubSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string value);
+		virtual void AddSubSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value);
 		virtual ComplexAttributeType* AddComplexAttribute(std::string code);
 	};
 }

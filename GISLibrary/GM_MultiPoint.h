@@ -17,7 +17,7 @@ namespace GM
 		std::vector<DirectPosition> position;
 
 	public:
-		void Set(double x, double y, double z);
+		void Add(double x, double y, double z);
 
 		GeometryType GetType() override;
 	};
