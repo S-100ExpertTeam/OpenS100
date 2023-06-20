@@ -12,6 +12,7 @@
 #include "../FeatureCatalog/FeatureTypes.h"
 
 #include <algorithm>
+#include <cassert>
 
 //#include <iostream>
 
