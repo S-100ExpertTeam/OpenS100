@@ -828,13 +828,13 @@ void COpenS100View::OnMouseMove(UINT nFlags, CPoint point)
 	else {
 		strLat.Format(_T("%2d-%.3lf(S)"), std::abs((int)degree), std::fabs(minute));
 	}
-	m_strFormatedLongitude = strLat;
+	m_strFormatedLatitude = strLat;
 
 
 	
 	
 	CString strFomatedInfo = _T("");
-	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLongitude, m_strFormatedLongitude);
+	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLatitude, m_strFormatedLongitude);
 
 	CMainFrame *frame = (CMainFrame*)AfxGetMainWnd(); 
 	frame->SetMessageText(strFomatedInfo);
@@ -1012,7 +1012,7 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 
 	m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
 	CString strFomatedInfo = _T("");
-	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLongitude, m_strFormatedLongitude);
+	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLatitude, m_strFormatedLongitude);
 
 	CMainFrame* frame = (CMainFrame*)AfxGetMainWnd();
 	frame->SetMessageText(strFomatedInfo);
