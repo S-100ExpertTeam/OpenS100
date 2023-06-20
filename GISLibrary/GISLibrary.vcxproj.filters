@@ -636,6 +636,9 @@
     <ClCompile Include="GF_InformationAssociationType.cpp">
       <Filter>S100\GF</Filter>
     </ClCompile>
+    <ClCompile Include="CatalogManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -1288,6 +1291,9 @@
     </ClInclude>
     <ClInclude Include="GF_InformationAssociationType.h">
       <Filter>S100\GF</Filter>
+    </ClInclude>
+    <ClInclude Include="CatalogManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

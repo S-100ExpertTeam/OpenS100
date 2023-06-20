@@ -20,7 +20,8 @@
 
 #include <pugixml.hpp>
 
-#include "..\\S100Engine\\S100Render.h"
+#include "../S100Engine/S100Render.h"
+#include "../FeatureCatalog/Version.h"
 
 #include <unordered_map>
 #include <string>
@@ -47,7 +48,8 @@ protected:
 	std::wstring product;
 
 	// ex : 1.1.1
-	std::wstring version;
+	//std::wstring version;
+	Version version;
 
 	// Rules 
 	S100_Rules rules;

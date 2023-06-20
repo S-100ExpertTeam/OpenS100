@@ -248,6 +248,7 @@
   <ItemGroup>
     <ClCompile Include="ATTR.cpp" />
     <ClCompile Include="C3IL.cpp" />
+    <ClCompile Include="CatalogManager.cpp" />
     <ClCompile Include="CodeWithNumericCode.cpp" />
     <ClCompile Include="CSAX.cpp" />
     <ClCompile Include="CUCO.cpp" />
@@ -446,6 +447,7 @@
   <ItemGroup>
     <ClInclude Include="ATTR.h" />
     <ClInclude Include="C3IL.h" />
+    <ClInclude Include="CatalogManager.h" />
     <ClInclude Include="CodeWithNumericCode.h" />
     <ClInclude Include="DirectPosition.h" />
     <ClInclude Include="Enum_SGeometryType.h" />

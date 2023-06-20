@@ -1,7 +1,5 @@
 #pragma once
-//#ifndef __AFXWIN_H__
-//#error "include 'stdafx.h' before including this file for PCH."
-//#endif
+
 #include "ResponsibleParty.h"
 #include "DefinitionSources.h"
 #include "SimpleAttributes.h"
@@ -11,6 +9,7 @@
 #include "FeatureAssociations.h"
 #include "InformationTypes.h"
 #include "FeatureTypes.h"
+#include "Version.h"
 
 #include <pugixml.hpp>
 
@@ -20,7 +19,7 @@ class SimpleAttribute;
 class ComplexAttribute;
 class FeatureType;
 class InformationType;
-// S100_FC_FeatureCatalogue
+
 class FeatureCatalogue
 {
 public:
@@ -36,7 +35,8 @@ protected:
 	std::wstring *fieldOfApplication = nullptr;  
 
 protected:
-	std::wstring versionNumber = L"";
+	//std::wstring versionNumber = L"";
+	Version versionNumber;
 	std::wstring versionDate = L""; 
 	std::wstring productId = L"";
 	

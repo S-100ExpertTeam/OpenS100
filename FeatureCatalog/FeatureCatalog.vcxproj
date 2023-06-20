@@ -304,11 +304,13 @@
     <ClCompile Include="UnitOfMeasure.cpp" />
     <ClCompile Include="UnlimitedInteger.cpp" />
     <ClCompile Include="ValueList.cpp" />
+    <ClCompile Include="Version.cpp" />
     <ClCompile Include="XML_Attribute.cpp" />
     <ClCompile Include="XML_Item.cpp" />
     <ClCompile Include="Citation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\GISLibrary\Version.h" />
     <ClInclude Include="Address.h" />
     <ClInclude Include="Attribute.h" />
     <ClInclude Include="AttributeBinding.h" />

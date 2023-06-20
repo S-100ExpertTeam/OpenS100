@@ -218,6 +218,9 @@
     <ClCompile Include="SpatialPrimitiveType.cpp">
       <Filter>S100FC</Filter>
     </ClCompile>
+    <ClCompile Include="Version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -413,6 +416,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="S100_FC_RoleType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GISLibrary\Version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

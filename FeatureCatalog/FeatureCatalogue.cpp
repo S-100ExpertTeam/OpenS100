@@ -281,7 +281,7 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 		{
 			if (instruction.child_value() != nullptr)
 			{
-				versionNumber = pugi::as_wide(instruction.child_value());
+				SetVersionNumber(instruction.child_value());
 			}
 		}
 		else if (!strcmp(instructionName, "S100FC:versionDate"))
@@ -809,17 +809,19 @@ void FeatureCatalogue::SetFieldOfApplication(std::wstring& value)
 
 const std::wstring& FeatureCatalogue::GetVersionNumber()
 {
-	return versionNumber;
+	return pugi::as_wide(versionNumber.getSource());
 }
 
 void FeatureCatalogue::SetVersionNumber(std::string value)
 {
-	versionNumber = pugi::as_wide(value);
+	//versionNumber = pugi::as_wide(value);
+	versionNumber.setSource(value);
 }
 
 void FeatureCatalogue::SetVersionNumber(std::wstring value)
 {
-	versionNumber = value;
+	SetVersionNumber(pugi::as_utf8(value));
+	//versionNumber = value;
 }
 
 const std::wstring& FeatureCatalogue::GetVersionDate()

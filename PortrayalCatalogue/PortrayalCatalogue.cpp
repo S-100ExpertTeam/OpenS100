@@ -86,7 +86,8 @@ bool PortrayalCatalogue::ReadPortrayalCatalogueByPugiXML(std::wstring& path)
 		auto versionId = displayList.attribute("version");
 		if (versionId)
 		{
-			version = pugi::as_wide(versionId.value());
+			//version = pugi::as_wide(versionId.value());
+			version.setSource(versionId.value());
 		}
 
 		GetContents(displayList);
@@ -205,7 +206,8 @@ void PortrayalCatalogue::SetProduct(std::wstring& value)
 }
 void PortrayalCatalogue::SetVersion(std::wstring& value)
 {
-	version = value;
+	version.setSource(pugi::as_utf8(value));
+	//version = value;
 }
 void PortrayalCatalogue::SetRules(S100_Rules* value)
 {
@@ -279,7 +281,7 @@ std::wstring PortrayalCatalogue::GetProduct()
 
 std::wstring PortrayalCatalogue::GetVersion()
 {
-	return version;
+	return pugi::as_wide(version.getSource());
 }
 
 S100_Rules* PortrayalCatalogue::GetRules() 
