@@ -4,6 +4,11 @@
 struct CUCO
 {
 public:
+	CUCO();
+	CUCO(int rcnm, int rcid, int ornt);
+	virtual ~CUCO();
+
+public:
 	RecordName m_name;
 
 	// 1 : Forward

@@ -3,10 +3,16 @@
 #include "GM_SurfacePatch.h"
 #include "GM_SurfaceBoundary.h"
 
-namespace S100Geometry
+namespace GM
 {
-	class Polygon : public SurfacePatch
+	class Polygon : 
+		public SurfacePatch,
+		public PugixmlElement
 	{
+	public:
+		Polygon();
+		virtual ~Polygon();
+
 	public:
 		SurfaceBoundary boundary;
 	};

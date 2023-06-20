@@ -1,6 +1,6 @@
 #pragma once
 
-#include "S100Interface.h"
+#include "S100_GF.h"
 #include "Record.h"
 #include "F_IRID.h"
 
@@ -10,7 +10,7 @@ class F_ATTR;
 class F_INAS;
 class DRDirectoryInfo;
 // Information Record
-class R_InformationRecord : public S100Interface::InformationType, public Record
+class R_InformationRecord : public GF::InformationType, public Record
 {
 public:
 	R_InformationRecord();
@@ -28,6 +28,7 @@ public:
 	RecordName GetRecordName();
 
 	int GetRCID();
+	std::string GetRCIDAsString(std::string prefix = "");
 	int GetAssociationCount();
 	int GetInformationAssociationCount();
 	int GetNumericCode();	
@@ -39,6 +40,8 @@ public:
 
 	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR);
 	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR, int numericCode);
+
+	std::vector<F_INAS*> GetAllInformationAssociations();
 
 	int GetAttributeIndex(ATTR* attr);
 	

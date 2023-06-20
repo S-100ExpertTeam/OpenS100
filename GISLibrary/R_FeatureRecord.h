@@ -4,7 +4,7 @@
 #include "F_FRID.h"
 #include "F_FOID.h"
 #include "OrientedCurveRecord.h"
-#include "IF_FeatureType.h"
+#include "GF_FeatureType.h"
 #include "GM_Object.h"
 
 #include <map>
@@ -23,7 +23,7 @@ struct ATTR;
 struct SPAS;
 
 // Feature Type Record
-class R_FeatureRecord : public S100Interface::FeatureType, public Record
+class R_FeatureRecord : public GF::FeatureType, public Record
 {
 public:
 	R_FeatureRecord();
@@ -75,10 +75,15 @@ public:
 	MBR GetMBR();
 	int GetRCID();
 	std::string GetRCIDAsString(std::string prefix = "");
+
+	void SetRCID(int rcid);
+
 	int GetAssociationCount();
 	int GetFeatureAssociationCount();
 	int GetInformationAssociationCount();
+	
 	int GetNumericCode();
+	void SetNumericCode(int numericCode);
 
 	int MinimumDisplayPriority();
 	void MinimumDisplayPriority(int value);
@@ -100,10 +105,14 @@ public:
 	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR);
 	std::vector<ATTR*> GetChildAttributes(ATTR* parentATTR, int numericCode);
 
+	std::vector<F_INAS*> GetAllInformationAssociations();
+	std::vector<F_FASC*> GetAllFeatureAssociations();
+
 	int GetAttributeIndex(ATTR* attr);
 
 	SPAS* GetSPAS();
 	SPAS* CreateEmptySPAS();
+	void SetSPAS(int rcnm, int rcid, int ornt);
 
 	void SetVectorRecord(R_VectorRecord* record);
 
@@ -123,5 +132,5 @@ public: // override FeatureType
 	std::string GetAssociatedFeatureID(int index) override;
 	SpatialPrimitiveType GetSpatialPrimitiveType() override;
 	SGeometry* GetGeometry() override;
-	S100Geometry::Object* GetGMGeometry() override;
+	GM::Object* GetGMGeometry() override;
 };

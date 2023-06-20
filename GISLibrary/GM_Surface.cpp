@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GM_Surface.h"
 
-namespace S100Geometry
+namespace GM
 {
 	Surface::Surface()
 	{
@@ -10,12 +10,27 @@ namespace S100Geometry
 
 	Surface::~Surface()
 	{
-		delete patch;
-		patch = nullptr;
 	}
 
-	Polygon* Surface::GetPolygon()
+	Polygon Surface::GetPolygon()
 	{
-		return (Polygon*)patch;
+		return patch;
+	}
+
+	void Surface::SetExteriorRingID(std::string value)
+	{
+		patch.boundary.exterior.SetID(value);
+	}
+
+	void Surface::AddInteriorRingID(std::string value)
+	{
+		Ring ring;
+		ring.SetID(value);
+		patch.boundary.interior.push_back(ring);
+	}
+
+	GeometryType Surface::GetType()
+	{
+		return GeometryType::Surface;
 	}
 }

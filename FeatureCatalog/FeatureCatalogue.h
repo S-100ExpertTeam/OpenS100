@@ -99,22 +99,27 @@ public:
 	ComplexAttribute* GetComplexAttributeFromName(std::wstring name);
 	ComplexAttributes* GetComplexAttributes();
 
+	Role* GetRole(std::string Code);
 	Role* GetRole(std::wstring Code);
 	Role* GetRoleFromName(std::wstring name);
 	Roles* GetRoles();
 
+	InformationAssociation* GetInformationAssociation(std::string Code);
 	InformationAssociation* GetInformationAssociation(std::wstring Code);
 	InformationAssociation* GetInformationAssociationFromName(std::wstring name);
 	InformationAssociations* GetInformationAssociations();
 
+	FeatureAssociation* GetFeatureAssociation(std::string Code);
 	FeatureAssociation* GetFeatureAssociation(std::wstring Code);
 	FeatureAssociation* GetFeatureAssociationFromName(std::wstring name);
 	FeatureAssociations* GetFeatureAssociations();
 
+	InformationType* GetInformationType(std::string Code);
 	InformationType* GetInformationType(std::wstring Code);
 	InformationType* GetInformationTypeFromName(std::wstring name);
 	InformationTypes* GetInformationTypes();
 
+	FeatureType* GetFeatureType(std::string Code);
 	FeatureType* GetFeatureType(std::wstring Code);
 	FeatureType* GetFeatureTypeName(std::wstring Name);
 	FeatureType* GetFeatureTypeFromIndex(int indexnum);
@@ -138,5 +143,6 @@ public:
 	void GetLineFeatures(std::vector<FeatureType*>& result);
 	void GetAreaFeatures(std::vector<FeatureType*>& result);
 
+	Attribute* GetAttribute(std::string code);
 	Attribute* GetAttribute(std::wstring code);
 };

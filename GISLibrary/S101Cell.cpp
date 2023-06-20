@@ -57,8 +57,17 @@
 #include "SCurveHasOrient.h"
 #include "SGeometricFuc.h"
 #include "GML_Envelop.h"
+#include "S10XGML.h"
+#include "GM_Point.h"
+#include "GM_MultiPoint.h"
+#include "GM_Curve.h"
+#include "GM_OrientableCurve.h"
+#include "GM_CompositeCurve.h"
+#include "GM_Surface.h"
+#include "S101Creator.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
+#include "../FeatureCatalog/S100_CD_AttributeValueType.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -67,9 +76,16 @@
 #include <mmsystem.h> 
 #include <unordered_map>
 
+
 S101Cell::S101Cell() : S100SpatialObject()
 {
 	m_FileType = FILE_S_100_VECTOR;
+}
+
+S101Cell::S101Cell(FeatureCatalogue* fc) : S100SpatialObject()
+{
+	m_FileType = FILE_S_100_VECTOR;
+	SetAllNumericCode(fc);
 }
 
 S101Cell::~S101Cell()
@@ -89,7 +105,8 @@ bool S101Cell::IsUpdate()
 	CString filename = GetFileName();
 	CString exten = LibMFCUtil::GetExtension(filename);
 
-	if (exten.Compare(L"000") == 0)
+	if (exten.Compare(L"000") == 0 ||
+		exten.CompareNoCase(L"gml") == 0)
 	{
 		return false;
 	}
@@ -343,14 +360,29 @@ void S101Cell::ClearAll(void)
 #pragma warning(disable:4018)
 bool S101Cell::Open(CString _filepath) // Dataset start, read .000 
 {
-	SetFilePath(_filepath);
+	auto extension = LibMFCUtil::GetExtension(_filepath);
+	if (extension.CompareNoCase(L"000") == 0)
+	{
+		return OpenBy000(_filepath);
+	}
+	else if (extension.CompareNoCase(L"gml") == 0)
+	{
+		return OpenByGML(_filepath);
+	}
+
+	return false;
+}
+
+bool S101Cell::OpenBy000(CString path)
+{
+	SetFilePath(path);
 
 	USES_CONVERSION;
 
 	RemoveAll();
 
 	CFile file;
-	if (file.Open(_filepath, CFile::modeRead))
+	if (file.Open(path, CFile::modeRead))
 	{
 		BYTE* pBuf = nullptr;
 		BYTE* sBuf = nullptr;
@@ -464,6 +496,31 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 	}
 
 	return false;
+}
+
+bool S101Cell::OpenByGML(CString path)
+{
+	SetFilePath(path);
+
+	USES_CONVERSION;
+
+	RemoveAll();
+
+	S10XGML gml;
+	gml.SetLayer(GetLayer());
+	gml.Open(path);
+
+	SetAllNumericCode(GetFC());
+
+	ConvertFromS101GML(gml);
+
+	MakeFullSpatialData();
+
+	CalcMBR();
+	Check();
+
+	Validation();
+	return true;
 }
 
 BOOL S101Cell::ReadDDR(BYTE*& buf)
@@ -4390,10 +4447,21 @@ bool S101Cell::SaveCurve(pugi::xml_node& root)
 		curNode.append_attribute("gml:id").set_value(record->GetRCIDasString("c").c_str());
 		auto nodePosList = curNode.append_child("gml:Segment").append_child("gml:LineStringSegment").append_child("gml:posList");
 
+		//auto nodeLineStringSegment = curNode.append_child("gml:Segment").append_child("gml:LineStringSegment");
+
+		//nodeLineStringSegment.append_child("gml:pointProperty")
+		//	.append_attribute("xlink:href")
+		//	.set_value(record->GetBeginningPointRCIDasString("#").c_str());
+
 		SCurve curve;
 		GetFullSpatialData(*i, &curve);
 
 		nodePosList.append_child(pugi::node_pcdata).set_value(curve.ToString().c_str());
+		//nodeLineStringSegment.append_child("gml:pos") record->GetC2ILString(GetCMFX(), GetCMFY());
+
+		//nodeLineStringSegment.append_child("gml:pointProperty")
+		//	.append_attribute("xlink:href")
+		//	.set_value(record->GetEndPointRCIDasString("#").c_str());
 	}
 
 	return true;
@@ -4526,6 +4594,25 @@ bool S101Cell::SaveMembers(pugi::xml_node& root)
 
 bool S101Cell::SaveInfomation(pugi::xml_node& root)
 {
+	for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
+	{
+		auto info = *i;
+
+		auto code = pugi::as_utf8(GetInformationTypeCodeByID(info->GetRCID()));
+		auto node_info = root.append_child(code.c_str());
+		node_info.append_attribute("gml:id").set_value(info->GetRCIDAsString("i").c_str());
+
+		auto attributes = info->GetAllAttributes();
+
+		std::vector<pugi::xml_node> attributeNodes;
+		attributeNodes.push_back(node_info);
+
+		SaveAttribute(node_info, attributes);
+
+		auto inas = info->GetAllInformationAssociations();
+		SaveInformationAssociation(node_info, inas);
+	}
+
 	return true;
 }
 
@@ -4541,17 +4628,197 @@ bool S101Cell::SaveFeature(pugi::xml_node& root)
 
 		auto attributes = feature->GetAllAttributes();
 
-		std::vector<pugi::xml_node*> attributeNodes;
+		SaveAttribute(node_feature, attributes);
 
-		for (auto j = attributes.begin(); j != attributes.end(); j++)
+		auto inas = feature->GetAllInformationAssociations();
+		SaveInformationAssociation(node_feature, inas);
+
+		auto fasc = feature->GetAllFeatureAssociations();
+		SaveFeatureAssociation(node_feature, fasc);
+
+		auto spas = feature->GetSPAS();
+		SaveGeometry(node_feature, spas);
+	}
+
+	return true;
+}
+
+bool S101Cell::SaveAttribute(pugi::xml_node& root, std::vector<ATTR*> attributes)
+{
+	auto fc = GetFC();
+	if (!fc)
+	{
+		return false;
+	}
+
+	std::vector<pugi::xml_node> attributeNodes;
+	attributeNodes.push_back(root);
+
+	for (auto j = attributes.begin(); j != attributes.end(); j++)
+	{
+		auto attr = (*j);
+
+		auto code = pugi::as_utf8(m_dsgir.GetAttributeCode(attr->m_natc));
+		auto sa = fc->GetSimpleAttribute(code);
+		auto ca = fc->GetComplexAttribute(code);
+
+		auto parentNode = attributeNodes[attr->m_paix];
+
+		if (parentNode == pugi::xml_node(NULL))
 		{
-			auto attr = (*j);
-			auto code = m_dsgir.GetAttributeCode(attr->m_natc);
-			
+			attributeNodes.push_back(pugi::xml_node(NULL));
+			continue;
+		}
+
+		if (sa)
+		{
+			std::string value;
+
+			auto type = sa->GetValueType();
+			if (type == FCD::S100_CD_AttributeValueType::enumeration)
+			{
+				auto listedValue = sa->GetListedValue(_ttoi(attr->m_atvl));
+				if (listedValue)
+				{
+					value = pugi::as_utf8(listedValue->GetLabel());
+				}
+				else
+				{
+					value = "";
+				}
+			}
+			else
+			{
+				value = pugi::as_utf8(attr->m_atvl);
+			}
+
+			auto sa_node = SaveSimpleAttribute(parentNode, code, value);
+			attributeNodes.push_back(sa_node);
+		}
+		else if (ca)
+		{
+			auto ca_node = SaveComplexAttribute(parentNode, code);
+			attributeNodes.push_back(ca_node);
+		}
+		else
+		{
+			attributeNodes.push_back(pugi::xml_node(NULL));
 		}
 	}
 
 	return true;
+}
+
+bool S101Cell::SaveInformationAssociation(pugi::xml_node& root, std::vector<F_INAS*> inas)
+{
+	auto fc = GetFC();
+	if (nullptr == fc)
+	{
+		return false;
+	}
+
+	for (auto i = inas.begin(); i != inas.end(); i++)
+	{
+		auto curINAS = (*i);
+		auto wIACode = std::wstring(m_dsgir.GetInformationAssociationCode(curINAS->m_niac));
+		auto wRoleCode = std::wstring(m_dsgir.GetAssociationRoleCode(curINAS->m_narc));
+		auto ia = fc->GetInformationAssociation(wIACode);
+		auto role = fc->GetRole(wRoleCode);
+
+		if (ia && role)
+		{
+			auto node_ia = root.append_child(role->GetCode().c_str());
+			node_ia.append_attribute("xlink:href").set_value(curINAS->m_name.GetRCIDasString("#i").c_str());
+			node_ia.append_attribute("xlink:arcrole").set_value(std::string("http://www.iho.net/S-101/roles/" + role->GetCode()).c_str());
+			node_ia.append_attribute("xlink:title").set_value(ia->GetCode().c_str());
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::SaveFeatureAssociation(pugi::xml_node& root, std::vector<F_FASC*> fasc)
+{
+	auto fc = GetFC();
+	if (nullptr == fc)
+	{
+		return false;
+	}
+
+	for (auto i = fasc.begin(); i != fasc.end(); i++)
+	{
+		auto curFASC = (*i);
+		auto wFACode = std::wstring(m_dsgir.GetFeatureAssociationCode(curFASC->m_nfac));
+		auto wRoleCode = std::wstring(m_dsgir.GetAssociationRoleCode(curFASC->m_narc));
+		auto fa = fc->GetFeatureAssociation(wFACode);
+		auto role = fc->GetRole(wRoleCode);
+
+		if (fa && role)
+		{
+			auto node_fa = root.append_child(role->GetCode().c_str());
+			node_fa.append_attribute("xlink:href").set_value(curFASC->m_name.GetRCIDasString("#f").c_str());
+			node_fa.append_attribute("xlink:arcrole").set_value(std::string("http://www.iho.net/S-101/roles/" + role->GetCode()).c_str());
+			node_fa.append_attribute("xlink:title").set_value(fa->GetCode().c_str());
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::SaveGeometry(pugi::xml_node& root, SPAS* spas)
+{
+	if (spas)
+	{
+		auto node_geometry = root.append_child("geometry");
+		if (110 == spas->m_name.RCNM)
+		{
+			node_geometry.append_child("S100:pointProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#p").c_str());
+		}
+		else if (115 == spas->m_name.RCNM)
+		{
+			node_geometry.append_child("S100:multiPointProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#mp").c_str());
+		}
+		else if (120 == spas->m_name.RCNM)
+		{
+			if (2 == spas->m_ornt)
+			{
+				node_geometry.append_child("S100:curveProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#oc").c_str());
+			}
+			else
+			{
+				node_geometry.append_child("S100:curveProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#c").c_str());
+			}
+		}
+		else if (125 == spas->m_name.RCNM)
+		{
+			if (2 == spas->m_ornt)
+			{
+				node_geometry.append_child("S100:compositeCurveProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#occ").c_str());
+			}
+			else
+			{
+				node_geometry.append_child("S100:compositeCurveProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#cc").c_str());
+			}
+		}
+		else if (130 == spas->m_name.RCNM)
+		{
+			node_geometry.append_child("S100:surfaceProperty").append_attribute("xlink:href").set_value(spas->m_name.GetRCIDasString("#s").c_str());
+		}
+	}
+
+	return true;
+}
+
+pugi::xml_node S101Cell::SaveSimpleAttribute(pugi::xml_node root, std::string code, std::string value)
+{
+	auto sa_node = root.append_child(code.c_str()); 
+	sa_node.append_child(pugi::node_pcdata).set_value(value.c_str());
+	return sa_node;
+}
+
+pugi::xml_node S101Cell::SaveComplexAttribute(pugi::xml_node root, std::string code)
+{
+	return root.append_child(code.c_str());
 }
 
 bool S101Cell::HasOrientableCurve(pugi::xml_node& root, std::string id)
@@ -4734,7 +5001,7 @@ bool S101Cell::FeatureRecordHasMaskedSpatialTypeField()
 	return false;
 }
 
-S100Interface::ObjectType* S101Cell::GetObjectType(int type, std::string id)
+GF::ObjectType* S101Cell::GetObjectType(int type, std::string id)
 {
 	if (type == 1)
 	{
@@ -4795,27 +5062,27 @@ int S101Cell::GetInformationCount()
 	return GetCount_InformationRecord();
 }
 
-S100Interface::FeatureType* S101Cell::GetFeatureType(std::string id)
+GF::FeatureType* S101Cell::GetFeatureType(std::string id)
 {
 	return GetFeatureRecord(id);
 }
 
-S100Interface::FeatureType* S101Cell::GetFeatureTypeByIndex(int index)
+GF::FeatureType* S101Cell::GetFeatureTypeByIndex(int index)
 {
 	return GetFeatureRecordByIndex(index);
 }
 
-S100Interface::InformationType* S101Cell::GetInformationType(std::string id)
+GF::InformationType* S101Cell::GetInformationType(std::string id)
 {
 	return GetInformationRecord(id);
 }
 
-S100Interface::InformationType* S101Cell::GetInformationTypeByIndex(int index)
+GF::InformationType* S101Cell::GetInformationTypeByIndex(int index)
 {
 	return GetInformationRecordByIndex(index);
 }
 
-std::string S101Cell::GetFeatureAssociationCode(S100Interface::FeatureType* featureType, int index)
+std::string S101Cell::GetFeatureAssociationCode(GF::FeatureType* featureType, int index)
 {
 	if (index < 0 || index >= featureType->GetFeatureRelationCount())
 	{
@@ -4829,7 +5096,7 @@ std::string S101Cell::GetFeatureAssociationCode(S100Interface::FeatureType* feat
 	return pugi::as_utf8(std::wstring(m_dsgir.GetFeatureAssociationCode((*i)->m_nfac)).c_str());
 }
 
-std::string S101Cell::GetFeatureAssociationRoleCode(S100Interface::FeatureType* featureType, int index)
+std::string S101Cell::GetFeatureAssociationRoleCode(GF::FeatureType* featureType, int index)
 {
 	if (index < 0 || index >= featureType->GetFeatureRelationCount())
 	{
@@ -4843,7 +5110,7 @@ std::string S101Cell::GetFeatureAssociationRoleCode(S100Interface::FeatureType* 
 	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
 }
 
-std::string S101Cell::GetInformationAssociationCode(S100Interface::FeatureType* featureType, int index)
+std::string S101Cell::GetInformationAssociationCode(GF::FeatureType* featureType, int index)
 {
 	if (index < 0 || index >= featureType->GetInformationRelationCount())
 	{
@@ -4857,7 +5124,7 @@ std::string S101Cell::GetInformationAssociationCode(S100Interface::FeatureType* 
 	return pugi::as_utf8(std::wstring(m_dsgir.GetInformationAssociationCode((*i)->m_niac)).c_str());
 }
 
-std::string S101Cell::GetInformationAssociationRoleCode(S100Interface::FeatureType* featureType, int index)
+std::string S101Cell::GetInformationAssociationRoleCode(GF::FeatureType* featureType, int index)
 {
 	if (index < 0 || index >= featureType->GetInformationRelationCount())
 	{
@@ -4871,7 +5138,7 @@ std::string S101Cell::GetInformationAssociationRoleCode(S100Interface::FeatureTy
 	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
 }
 
-std::string S101Cell::GetInformationAssociationCode(S100Interface::InformationType* informationType, int index)
+std::string S101Cell::GetInformationAssociationCode(GF::InformationType* informationType, int index)
 {
 	if (index < 0 || index >= informationType->GetInformationRelationCount())
 	{
@@ -4885,7 +5152,7 @@ std::string S101Cell::GetInformationAssociationCode(S100Interface::InformationTy
 	return pugi::as_utf8(std::wstring(m_dsgir.GetInformationAssociationCode((*i)->m_niac)).c_str());
 }
 
-std::string S101Cell::GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index)
+std::string S101Cell::GetInformationAssociationRoleCode(GF::InformationType* informationType, int index)
 {
 	if (index < 0 || index >= informationType->GetInformationRelationCount())
 	{
@@ -5150,4 +5417,298 @@ void S101Cell::WritePointRecord(pugi::xml_node& node, R_PointRecord* record)
 	//GetPoint
 
 	//curNode.append_child("gml:pos").append_child(pugi::node_pcdata).set_value()
+}
+
+bool S101Cell::ConvertFromS101GML(S10XGML& gml)
+{
+	S101Creator creator(GetFC(), this);
+
+	for (auto i = gml.informations.begin(); i != gml.informations.end(); i++)
+	{
+
+	}
+
+	for (auto i = gml.features.begin(); i != gml.features.end(); i++)
+	{
+		auto feature = (*i);
+		auto code = (*i)->GetCode();
+		
+		auto geometryID = feature->GetGeometryID();
+		if (geometryID.empty() == false)
+		{
+			auto fr = new R_FeatureRecord();
+			fr->SetRCID(feature->GetIDAsInteger());
+			fr->SetNumericCode(m_dsgir.GetFeatureTypeCode(pugi::as_wide(code)));
+
+			auto geometryIntID = feature->GetGeometryIDAsInt();
+			if (std::string::npos != geometryID.find("mp"))
+			{
+				fr->SetSPAS(115, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("p"))
+			{
+				fr->SetSPAS(110, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("s"))
+			{
+				fr->SetSPAS(130, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("occ"))
+			{
+				fr->SetSPAS(125, geometryIntID, 2);
+			}
+			else if (std::string::npos != geometryID.find("cc"))
+			{
+				fr->SetSPAS(125, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("oc"))
+			{
+				fr->SetSPAS(120, geometryIntID, 2);
+			}
+			else if (std::string::npos != geometryID.find("c"))
+			{
+				fr->SetSPAS(120, geometryIntID, 1);
+			}
+
+			ConvertFromS101GML(&creator, fr, feature);
+
+			InsertFeatureRecord(fr->GetRecordName().GetName(), fr);
+		}
+	}
+
+	for (auto i = gml.geometries.begin(); i != gml.geometries.end(); i++)
+	{
+		auto type = (*i)->GetType();
+		if (type == GM::GeometryType::Point)
+		{
+			auto geom = (GM::Point*)(*i);
+			auto pr = new R_PointRecord();
+			pr->SetRCID(geom->GetIDAsInt());
+			pr->SetC2IT(geom->position.GetXInteger(), geom->position.GetYInteger());
+			InsertPointRecord(pr->GetRecordName().GetName(), pr);
+		}
+		else if (type == GM::GeometryType::MultiPoint)
+		{
+			auto geom = (GM::MultiPoint*)(*i);
+			auto mr = new R_MultiPointRecord();
+			mr->SetRCID(geom->GetIDAsInt());
+			
+			for (auto i = geom->position.begin(); i != geom->position.end(); i++)
+			{
+				mr->InsertC3IL(i->GetXInteger(), i->GetYInteger(), i->GetZ() * GetCMFZ());
+			}
+
+			InsertMultiPointRecord(mr->GetRecordName().GetName(), mr);
+		}
+		else if (type == GM::GeometryType::Curve)
+		{
+			auto geom = (GM::Curve*)(*i);
+
+			auto pt1 = gml.GetPoint(
+				geom->segment.front().controlPoints.front().GetXInteger(),
+				geom->segment.front().controlPoints.front().GetYInteger());
+
+			auto pt2 = gml.GetPoint(
+				geom->segment.front().controlPoints.back().GetXInteger(),
+				geom->segment.front().controlPoints.back().GetYInteger());
+
+			bool isClosed = geom->IsClosed();
+
+			if (pt1 && pt2)
+			{
+				if (geom->segment.size() > 0)
+				{
+					auto cr = new R_CurveRecord();
+					cr->SetRCID(geom->GetIDAsInt());
+
+					if (isClosed)
+					{
+						cr->SetPTAS(pt1->GetIDAsInt());
+					}
+					else
+					{
+						cr->SetPTAS(pt1->GetIDAsInt(), pt2->GetIDAsInt());
+					}
+
+					for (int i = 1; i < geom->segment.front().controlPoints.size() - 2; i++)
+					{
+						cr->InsertC2IL(
+							geom->segment.front().controlPoints.at(i).GetXInteger(),
+							geom->segment.front().controlPoints.at(i).GetYInteger());
+					}
+
+					InsertCurveRecord(cr->GetRecordName().GetName(), cr);
+				}
+			}
+		}
+		else if (type == GM::GeometryType::CompositeCurve)
+		{
+			auto geom = (GM::CompositeCurve*)(*i);
+			auto ccr = new R_CompositeRecord();
+			ccr->SetRCID(geom->GetIDAsInt());
+			
+			for (auto i = geom->component.begin(); i != geom->component.end(); i++)
+			{
+				auto id = i->baseCurveID;
+				if (std::string::npos != id.find("occ"))
+				{
+					ccr->InsertCurve(125, i->GetBaseCurveIDAsInt(), 2);
+				}
+				else if (std::string::npos != id.find("cc"))
+				{
+					ccr->InsertCurve(125, i->GetBaseCurveIDAsInt(), 1);
+				}
+				else if (std::string::npos != id.find("oc"))
+				{
+					ccr->InsertCurve(120, i->GetBaseCurveIDAsInt(), 2);
+				}
+				else if (std::string::npos != id.find("c"))
+				{
+					ccr->InsertCurve(120, i->GetBaseCurveIDAsInt(), 1);
+				}
+			}
+
+			InsertCompositeCurveRecord(ccr->GetRecordName().GetName(), ccr);
+		}
+		else if (type == GM::GeometryType::Surface)
+		{
+			auto geom = (GM::Surface*)(*i);
+			auto sr = new R_SurfaceRecord();
+			sr->SetRCID(geom->GetIDAsInt());
+
+			auto exteriorID = geom->patch.boundary.exterior.GetID();
+			int exteriorIntID = geom->patch.boundary.exterior.GetIDAsInt();
+			if (std::string::npos != exteriorID.find("occ"))
+			{
+				sr->InsertRing(125, exteriorIntID, 1, 2);
+			}
+			else if (std::string::npos != exteriorID.find("cc"))
+			{
+				sr->InsertRing(125, exteriorIntID, 1, 1);
+			}
+			else if (std::string::npos != exteriorID.find("oc"))
+			{
+				sr->InsertRing(120, exteriorIntID, 1, 2);
+			}
+			else if (std::string::npos != exteriorID.find("c"))
+			{
+				sr->InsertRing(120, exteriorIntID, 1, 1);
+			}
+
+			for (auto j = geom->patch.boundary.interior.begin();
+				j != geom->patch.boundary.interior.end();
+				j++)
+			{
+				auto interiorID = j->GetID();
+				int interiorIntID = j->GetIDAsInt();
+				if (std::string::npos != interiorID.find("occ"))
+				{
+					sr->InsertRing(125, interiorIntID, 2, 2);
+				}
+				else if (std::string::npos != interiorID.find("cc"))
+				{
+					sr->InsertRing(125, interiorIntID, 2, 1);
+				}
+				else if (std::string::npos != interiorID.find("oc"))
+				{
+					sr->InsertRing(120, interiorIntID, 2, 2);
+				}
+				else if (std::string::npos != interiorID.find("c"))
+				{
+					sr->InsertRing(120, interiorIntID, 2, 1);
+				}
+			}
+
+			InsertSurfaceRecord(sr->GetRecordName().GetName(), sr);
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType)
+{
+	auto cntAttr = featureType->GetAttributeCount();
+	for (int i = 0; i < cntAttr; i++)
+	{
+		auto attribute = featureType->GetAttribute(i);
+		auto code = attribute->GetCode();
+		if (attribute->IsSimple())
+		{
+			ConvertFromS101GML(creator, featureRecord, (GF::SimpleAttributeType*)attribute);
+		}
+		else
+		{
+			ConvertFromS101GML(creator, featureRecord, nullptr, (GF::ComplexAttributeType*)attribute);
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::SimpleAttributeType* simpleAttribute)
+{
+	auto fc = GetFC();
+	auto sa = fc->GetSimpleAttribute(simpleAttribute->GetCode());
+	if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+	{
+		auto listedValue = sa->GetListedValue(simpleAttribute->GetValue());
+		if (listedValue)
+		{
+			creator->AddSimpleAttribute(featureRecord, simpleAttribute->GetCode(), std::to_string(listedValue->GetCode()));
+			return true;
+		}
+	}
+	else
+	{
+		creator->AddSimpleAttribute(featureRecord, simpleAttribute->GetCode(), simpleAttribute->GetValue());
+		return true;
+	}
+
+	return false;
+}
+
+bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, ATTR* parentATTR, GF::ComplexAttributeType* complexAttribute)
+{
+	auto fc = GetFC();
+	ATTR* addedCA = nullptr;
+
+	if (parentATTR == nullptr)
+	{
+		addedCA = creator->AddComplexAttribute(featureRecord, complexAttribute->GetCode());
+	}
+	else
+	{
+		addedCA = creator->AddComplexAttribute(featureRecord, parentATTR, complexAttribute->GetCode());
+	}
+	
+	int cnt = complexAttribute->GetSubAttributeCount();
+
+	for (int i = 0; i < cnt; i++)
+	{
+		auto subAttribute = complexAttribute->GetSubAttribute(i);
+		if (subAttribute->IsSimple())
+		{
+			auto sa = fc->GetSimpleAttribute(subAttribute->GetCode());
+			if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+			{
+				auto listedValue = sa->GetListedValue(subAttribute->GetValue());
+				if (listedValue)
+				{
+					creator->AddSimpleAttribute(featureRecord, addedCA, subAttribute->GetCode(), std::to_string(listedValue->GetCode()));
+				}
+			}
+			else
+			{
+				creator->AddSimpleAttribute(featureRecord, addedCA, subAttribute->GetCode(), subAttribute->GetValue());
+			}
+		}
+		else
+		{
+			//auto addedSubCA = creator->AddComplexAttribute(featureRecord, addedCA, subAttribute->GetCode());
+			ConvertFromS101GML(creator, featureRecord, addedCA, (GF::ComplexAttributeType*)subAttribute);
+		}
+	}
+
+	return true;
 }

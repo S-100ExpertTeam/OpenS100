@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GM_Curve.h"
 
-namespace S100Geometry
+namespace GM
 {
 	Curve::Curve()
 	{
@@ -16,5 +16,20 @@ namespace S100Geometry
 	GeometryType Curve::GetType()
 	{
 		return GeometryType::Curve;
+	}
+
+	void Curve::Add(double x, double y)
+	{
+		segment.front().controlPoints.push_back(DirectPosition(x, y));
+	}
+
+	bool Curve::IsClosed()
+	{
+		if (segment.front().controlPoints.front() == segment.front().controlPoints.back())
+		{
+			return true;
+		}
+
+		return false;
 	}
 }

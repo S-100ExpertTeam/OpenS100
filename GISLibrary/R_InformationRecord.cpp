@@ -143,6 +143,11 @@ int R_InformationRecord::GetRCID()
 	return m_irid.m_name.RCID;
 }
 
+std::string R_InformationRecord::GetRCIDAsString(std::string prefix)
+{
+	return prefix + std::to_string(GetRCID());
+}
+
 int R_InformationRecord::GetAssociationCount()
 {
 	return 0;
@@ -258,6 +263,17 @@ std::vector<ATTR*> R_InformationRecord::GetChildAttributes(ATTR* parentATTR, int
 				result.push_back(*i);
 			}
 		}
+	}
+
+	return result;
+}
+
+std::vector<F_INAS*> R_InformationRecord::GetAllInformationAssociations()
+{
+	std::vector<F_INAS*> result;
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		result.push_back(*i);
 	}
 
 	return result;

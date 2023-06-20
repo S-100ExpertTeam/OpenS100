@@ -2,7 +2,7 @@
 #include "GM_SurfacePatch.h"
 #include "GM_Polygon.h"
 
-namespace S100Geometry
+namespace GM
 {
 	class Surface : public OrientableSurface
 	{
@@ -11,9 +11,14 @@ namespace S100Geometry
 		~Surface();
 
 	public:
-		SurfacePatch* patch = new Polygon();
+		Polygon patch;
 
 	public:
-		Polygon* GetPolygon();
+		Polygon GetPolygon();
+		
+		void SetExteriorRingID(std::string value);
+		void AddInteriorRingID(std::string value);
+
+		GeometryType GetType() override;
 	};
 }

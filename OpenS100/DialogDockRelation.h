@@ -4,7 +4,7 @@
 #include "afxcmn.h"
 #include "resource.h"
 
-#include "../GISLibrary/S100Interface.h"
+#include "../GISLibrary/S100_GF.h"
 
 #include <list>
 
@@ -32,7 +32,7 @@ public:
 
 public:
 	void AdjustLayout();
-	void SetFeatureList(S100SpatialObject* cell, std::list<S100Interface::FeatureType*> flist, std::list<S100Interface::InformationType*> infoList);
+	void SetFeatureList(S100SpatialObject* cell, std::list<GF::FeatureType*> flist, std::list<GF::InformationType*> infoList);
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support

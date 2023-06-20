@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../GISLibrary/S100Interface.h"
+#include "../GISLibrary/S100_GF.h"
 
 #include <string>
 
@@ -11,7 +11,7 @@ class CInformationCodeString
 public:
 	int _id;
 	std::wstring _name;
-	S100Interface::InformationType* _ir;
+	GF::InformationType* _ir;
 
 public:
 	bool operator < (CInformationCodeString& value);

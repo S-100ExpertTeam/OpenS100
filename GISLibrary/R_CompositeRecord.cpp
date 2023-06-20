@@ -4,6 +4,7 @@
 #include "F_CCOC.h"
 #include "F_CUCO.h"
 #include "F_INAS.h"
+#include "CUCO.h"
 
 R_CompositeRecord::R_CompositeRecord(void)
 {
@@ -142,4 +143,19 @@ std::string R_CompositeRecord::GetRCIDasString(std::string prefix)
 std::wstring R_CompositeRecord::GetRCIDasWstring() 
 {
 	return std::to_wstring(GetRCID());
+}
+
+void R_CompositeRecord::SetRCID(int rcid)
+{
+	m_ccid.m_name.RCID = rcid;
+}
+
+void R_CompositeRecord::InsertCurve(int rcnm, int rcid, int ornt)
+{
+	if (m_cuco.size() == 0)
+	{
+		m_cuco.push_back(new F_CUCO);
+	}
+
+	m_cuco.front()->m_arr.push_back(new CUCO(rcnm, rcid, ornt));
 }

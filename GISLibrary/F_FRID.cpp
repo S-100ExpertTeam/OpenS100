@@ -5,7 +5,7 @@
 
 F_FRID::F_FRID(void)
 {
-	m_name.RCNM = 0;
+	m_name.RCNM = 100;
 	m_name.RCID = 0;
 }
 

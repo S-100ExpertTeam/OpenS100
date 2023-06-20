@@ -1,6 +1,23 @@
 #include "stdafx.h"
 #include "CUCO.h"
 
+CUCO::CUCO()
+{
+
+}
+
+CUCO::CUCO(int rcnm, int rcid, int ornt)
+{
+	m_name.RCNM = rcnm;
+	m_name.RCID = rcid;
+	m_ornt = ornt;
+}
+
+CUCO::~CUCO()
+{
+
+}
+
 int CUCO::GetSize() 
 {
 	return 6;

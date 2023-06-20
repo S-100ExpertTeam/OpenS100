@@ -29,5 +29,7 @@ public:
 	std::string GetRCIDasString(std::string prefix = "");
 	std::wstring GetRCIDasWstring();
 
+	void SetRCID(int rcid);
+
 	void InsertC3IL(int x, int y, int z);
 };

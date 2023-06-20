@@ -1,6 +1,6 @@
 #pragma once
 
-#include "S100Interface.h"
+#include "S100_GF.h"
 #include "SpatialObject.h"
 
 #include "../GeoMetryLibrary/MBR.h"
@@ -41,7 +41,7 @@ public:
 public:
 	// type = 1 : feature type
 	// type = 2 : information type
-	virtual S100Interface::ObjectType* GetObjectType(int type, std::string id) { return nullptr; }
+	virtual GF::ObjectType* GetObjectType(int type, std::string id) { return nullptr; }
 
 	virtual std::wstring GetFeatureTypeCodeByID(std::wstring id) { return L""; }
 	virtual std::wstring GetFeatureTypeCodeByID(int id) { return L""; }
@@ -52,20 +52,20 @@ public:
 	virtual int GetFeatureCount() { return 0; }
 	virtual int GetInformationCount() { return 0; }
 
-	virtual S100Interface::FeatureType* GetFeatureType(std::string id) { return nullptr; };
-	virtual S100Interface::FeatureType* GetFeatureTypeByIndex(int index) { return nullptr; };
+	virtual GF::FeatureType* GetFeatureType(std::string id) { return nullptr; };
+	virtual GF::FeatureType* GetFeatureTypeByIndex(int index) { return nullptr; };
 
-	virtual S100Interface::InformationType* GetInformationType(std::string id) { return nullptr; };
-	virtual S100Interface::InformationType* GetInformationTypeByIndex(int index) { return nullptr; };
+	virtual GF::InformationType* GetInformationType(std::string id) { return nullptr; };
+	virtual GF::InformationType* GetInformationTypeByIndex(int index) { return nullptr; };
 
-	virtual std::string GetFeatureAssociationCode(S100Interface::FeatureType* featureType, int index) { return ""; }
-	virtual std::string GetFeatureAssociationRoleCode(S100Interface::FeatureType* featureType, int index) { return ""; }
+	virtual std::string GetFeatureAssociationCode(GF::FeatureType* featureType, int index) { return ""; }
+	virtual std::string GetFeatureAssociationRoleCode(GF::FeatureType* featureType, int index) { return ""; }
 
-	virtual std::string GetInformationAssociationCode(S100Interface::FeatureType* featureType, int index) { return ""; }
-	virtual std::string GetInformationAssociationRoleCode(S100Interface::FeatureType* featureType, int index) { return ""; }
+	virtual std::string GetInformationAssociationCode(GF::FeatureType* featureType, int index) { return ""; }
+	virtual std::string GetInformationAssociationRoleCode(GF::FeatureType* featureType, int index) { return ""; }
 
-	virtual std::string GetInformationAssociationCode(S100Interface::InformationType* informationType, int index) { return ""; }
-	virtual std::string GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index) { return ""; }
+	virtual std::string GetInformationAssociationCode(GF::InformationType* informationType, int index) { return ""; }
+	virtual std::string GetInformationAssociationRoleCode(GF::InformationType* informationType, int index) { return ""; }
 
 	virtual std::string GetObjectAttributeCode(int type, std::string, int index) { return ""; }
 

@@ -1,6 +1,24 @@
 #include "stdafx.h"
 #include "RIAS.h"
 
+RIAS::RIAS()
+{
+
+}
+
+RIAS::RIAS(int rcnm, int rcid, int usag, int ornt)
+{
+	m_name.RCNM = rcnm;
+	m_name.RCID = rcid;
+	m_usag = usag;
+	m_ornt = ornt;
+}
+
+RIAS::~RIAS()
+{
+
+}
+
 int RIAS::GetSize()
 {
 	return 8;

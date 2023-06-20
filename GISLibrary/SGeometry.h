@@ -3,7 +3,7 @@
 #include "../GeoMetryLibrary/Geometry.h"
 
 #include "Enum_SGeometryType.h"
-#include "IF_InformationType.h"
+#include "GF_InformationType.h"
 
 #include <vector>
 #include <string>
@@ -26,12 +26,12 @@ public:
 	static POINT* viewPoints;
 
 public:
-	std::vector<S100Interface::InformationType*> additionalInformation;
+	std::vector<GF::InformationType*> additionalInformation;
 
 public:
-	void AddInformationType(S100Interface::InformationType* info);
+	void AddInformationType(GF::InformationType* info);
 	int GetInformationTypeCount();
-	S100Interface::InformationType* GetInformationType(int index);
+	GF::InformationType* GetInformationType(int index);
 
 public:
 	virtual SGeometryType GetType() { return SGeometryType::none; }

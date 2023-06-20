@@ -125,7 +125,7 @@ RecordName R_PointRecord::GetRecordName()
 
 int R_PointRecord::GetRCID()
 {
-	return  m_prid.m_name.RCID;
+	return m_prid.m_name.RCID;
 }
 
 std::string R_PointRecord::GetRCIDasString(std::string prefix)
@@ -136,6 +136,11 @@ std::string R_PointRecord::GetRCIDasString(std::string prefix)
 std::wstring R_PointRecord::GetRCIDasWstring() 
 {
 	return std::to_wstring(GetRCID());
+}
+
+void R_PointRecord::SetRCID(int rcid)
+{
+	m_prid.m_name.RCID = rcid;
 }
 
 void R_PointRecord::SetC2IT(F_C2IT* value)

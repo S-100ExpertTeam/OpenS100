@@ -6,6 +6,7 @@
 #include "F_CodeWithNumericCode.h"
 #include "DDR.h"
 #include "GML_DatasetIdentificationInformation.h"
+#include "S10XGML.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 
@@ -34,14 +35,17 @@ class SCompositeCurve;
 class TiXmlElement;
 class OrientedCurveRecord;
 class SCurveHasOrient;
+class F_FASC;
 class F_INAS;
 class F_C2IL;
 class F_C3IL;
 class F_COCC;
 class F_ATTR;
 class SENC_PointInstruction;
+class S101Creator;
 
 struct ATTR;
+struct SPAS;
 
 // Class for saving 000 information.
 // Base and Update save
@@ -49,6 +53,7 @@ class S101Cell : public S100SpatialObject
 {
 public:
 	S101Cell();
+	S101Cell(FeatureCatalogue* fc);
 	virtual ~S101Cell();
 
 public:
@@ -92,6 +97,14 @@ public:
 	bool Open(CString _filepath) override;
 	bool Save(std::wstring path) override;
 
+	bool OpenBy000(CString path);
+	bool OpenByGML(CString path);
+	
+	bool ConvertFromS101GML(S10XGML& gml);
+	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType);
+	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::SimpleAttributeType* simpleAttribute);
+	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, ATTR* parentATTR, GF::ComplexAttributeType* complexAttribute);
+
 	bool SaveAsENC(std::wstring path);
 	bool SaveAsGML(std::wstring path);
 	bool SavePoint(pugi::xml_node& root);
@@ -102,6 +115,13 @@ public:
 	bool SaveMembers(pugi::xml_node& root);
 	bool SaveInfomation(pugi::xml_node& root);
 	bool SaveFeature(pugi::xml_node& root);
+	bool SaveAttribute(pugi::xml_node& root, std::vector<ATTR*> attributes);
+	bool SaveInformationAssociation(pugi::xml_node& root, std::vector<F_INAS*> fasc);
+	bool SaveFeatureAssociation(pugi::xml_node& root, std::vector<F_FASC*> inas);
+	bool SaveGeometry(pugi::xml_node& root, SPAS* spas);
+	pugi::xml_node SaveSimpleAttribute(pugi::xml_node root, std::string code, std::string value);
+	pugi::xml_node SaveComplexAttribute(pugi::xml_node root, std::string code);
+
 	bool HasOrientableCurve(pugi::xml_node& root, std::string id);
 	void AddOrientableCurve(pugi::xml_node& root, std::string odID, std::string refID);
 
@@ -368,7 +388,7 @@ private:
 	std::wstring GetIssueDateAsWstring();
 
 public:
-	S100Interface::ObjectType* GetObjectType(int type, std::string id) override;
+	GF::ObjectType* GetObjectType(int type, std::string id) override;
 
 	std::wstring GetFeatureTypeCodeByID(std::wstring id) override;
 	std::wstring GetFeatureTypeCodeByID(int id) override;
@@ -379,20 +399,20 @@ public:
 	int GetFeatureCount() override;
 	int GetInformationCount() override;
 
-	S100Interface::FeatureType* GetFeatureType(std::string id) override;
-	S100Interface::FeatureType* GetFeatureTypeByIndex(int index) override;
+	GF::FeatureType* GetFeatureType(std::string id) override;
+	GF::FeatureType* GetFeatureTypeByIndex(int index) override;
 
-	S100Interface::InformationType* GetInformationType(std::string id) override;
-	S100Interface::InformationType* GetInformationTypeByIndex(int index) override;
+	GF::InformationType* GetInformationType(std::string id) override;
+	GF::InformationType* GetInformationTypeByIndex(int index) override;
 
-	std::string GetFeatureAssociationCode(S100Interface::FeatureType* featureType, int index) override;
-	std::string GetFeatureAssociationRoleCode(S100Interface::FeatureType* featureType, int index) override;
+	std::string GetFeatureAssociationCode(GF::FeatureType* featureType, int index) override;
+	std::string GetFeatureAssociationRoleCode(GF::FeatureType* featureType, int index) override;
 
-	std::string GetInformationAssociationCode(S100Interface::FeatureType* featureType, int index) override;
-	std::string GetInformationAssociationRoleCode(S100Interface::FeatureType* featureType, int index) override;
+	std::string GetInformationAssociationCode(GF::FeatureType* featureType, int index) override;
+	std::string GetInformationAssociationRoleCode(GF::FeatureType* featureType, int index) override;
 
-	std::string GetInformationAssociationCode(S100Interface::InformationType* informationType, int index) override;
-	std::string GetInformationAssociationRoleCode(S100Interface::InformationType* informationType, int index) override;
+	std::string GetInformationAssociationCode(GF::InformationType* informationType, int index) override;
+	std::string GetInformationAssociationRoleCode(GF::InformationType* informationType, int index) override;
 
 	std::string GetObjectAttributeCode(int type, std::string id, int index) override;
 

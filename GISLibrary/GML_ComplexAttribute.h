@@ -1,11 +1,11 @@
 #pragma once
 
-#include "IF_ComplexAttribute.h"
+#include "GF_ComplexAttributeType.h"
 
 namespace S100GML
 {
 
-	class GML_ComplexAttribute : public S100Interface::ComplexAttribute
+	class GML_ComplexAttribute : public GF::ComplexAttributeType
 	{
 
 	};

@@ -144,19 +144,19 @@ public:
 	
 	void SetVector(SGeometry* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 
-	void SetVector(S100Geometry::Point* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
+	void SetVector(GM::Point* r, CMFCPropertyGridProperty *pSuperProperty = nullptr);
 	void SetVector(SPoint* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 
-	void SetVector(S100Geometry::MultiPoint* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
+	void SetVector(GM::MultiPoint* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 	void SetVector(SMultiPoint* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 
-	void SetVector(S100Geometry::Curve* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
+	void SetVector(GM::Curve* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 	void SetVector(SCurveHasOrient* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 
-	void SetVector(S100Geometry::CompositeCurve* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
+	void SetVector(GM::CompositeCurve* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 	void SetVector(SCompositeCurve* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 
-	void SetVector(S100Geometry::Surface* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
+	void SetVector(GM::Surface* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 	void SetVector(SSurface* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 
 	void ClearVector();

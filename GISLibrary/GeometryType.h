@@ -1,11 +1,15 @@
 #pragma once
 
-namespace S100Geometry
+namespace GM
 {
 	enum class GeometryType
 	{
 		Object,
+		Point,
+		MultiPoint,
 		Curve,
-		CompositeCurve
+		OrientableCurve,
+		CompositeCurve,
+		Surface
 	};
 }

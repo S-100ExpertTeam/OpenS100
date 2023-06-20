@@ -29,23 +29,39 @@ public:
 	void SetFC(FeatureCatalogue* fc);
 	void SetENC(S101Cell* enc);
 
+	S100Layer* CreateLayer(std::string name, FeatureCatalogue* fc, PortrayalCatalogue* pc);
 	S100Layer* CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc);
 
+	R_FeatureRecord* AddFeature(std::string code);
 	R_FeatureRecord* AddFeature(std::wstring code);
+
+	R_InformationRecord* AddInformation(std::string code);
 	R_InformationRecord* AddInformation(std::wstring code);
 
 	bool DeleteFeature(int rcid);
 
+	ATTR* AddSimpleAttribute(R_FeatureRecord* feature, std::string code, std::string value);
 	ATTR* AddSimpleAttribute(R_FeatureRecord* feature, std::wstring code, std::wstring value);
+
+	ATTR* AddSimpleAttribute(R_InformationRecord* information, std::string code, std::string value);
 	ATTR* AddSimpleAttribute(R_InformationRecord* information, std::wstring code, std::wstring value);
 
+	ATTR* AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::string code, std::string value);
 	ATTR* AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code, std::wstring value);
+
+	ATTR* AddSimpleAttribute(R_InformationRecord* information, ATTR* parentATTR, std::string code, std::string value);
 	ATTR* AddSimpleAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code, std::wstring value);
 
+	ATTR* AddComplexAttribute(R_FeatureRecord* feature, std::string code);
 	ATTR* AddComplexAttribute(R_FeatureRecord* feature, std::wstring code);
+
+	ATTR* AddComplexAttribute(R_InformationRecord* information, std::string code);
 	ATTR* AddComplexAttribute(R_InformationRecord* information, std::wstring code);
 
+	ATTR* AddComplexAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::string code);
 	ATTR* AddComplexAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::wstring code);
+
+	ATTR* AddComplexAttribute(R_InformationRecord* information, ATTR* parentATTR, std::string code);
 	ATTR* AddComplexAttribute(R_InformationRecord* information, ATTR* parentATTR, std::wstring code);
 
 	SGeometry* SetGeometry(R_FeatureRecord* feature, SGeometryType type, unsigned char* value, int size);

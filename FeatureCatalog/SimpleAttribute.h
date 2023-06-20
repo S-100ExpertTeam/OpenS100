@@ -47,6 +47,7 @@ public:
 	std::vector<ListedValue*>& GetListedValuePointer();
 
 	void InsertListedValue(ListedValue* item);
+	ListedValue* GetListedValue(std::string label);
 	ListedValue* GetListedValue(std::wstring label);
 	ListedValue* GetListedValue(int code);
 

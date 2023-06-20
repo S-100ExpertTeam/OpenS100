@@ -10,7 +10,7 @@
 
 R_MultiPointRecord::R_MultiPointRecord(void)
 {
-
+	m_mrid.m_name.RCNM = 115;
 }
 
 R_MultiPointRecord::~R_MultiPointRecord(void)
@@ -158,6 +158,11 @@ std::string R_MultiPointRecord::GetRCIDasString(std::string prefix)
 std::wstring R_MultiPointRecord::GetRCIDasWstring()
 {
 	return std::to_wstring(GetRCID());
+}
+
+void R_MultiPointRecord::SetRCID(int rcid)
+{
+	m_mrid.m_name.RCID = rcid;
 }
 
 void R_MultiPointRecord::InsertC3IL(int x, int y, int z)

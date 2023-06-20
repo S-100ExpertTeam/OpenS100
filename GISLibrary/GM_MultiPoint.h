@@ -5,11 +5,20 @@
 
 #include <vector>
 
-namespace S100Geometry
+namespace GM
 {
 	class MultiPoint : public Object
 	{
 	public:
+		MultiPoint();
+		virtual ~MultiPoint();
+
+	public:
 		std::vector<DirectPosition> position;
+
+	public:
+		void Add(double x, double y, double z);
+
+		GeometryType GetType() override;
 	};
 }

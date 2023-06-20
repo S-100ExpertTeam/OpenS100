@@ -4,6 +4,11 @@
 struct PTAS
 {
 public:
+	PTAS();
+	PTAS(int rcid, int topi);
+	virtual ~PTAS();
+
+public:
 	RecordName m_name;
 	/*
 	{1} - Beginning point

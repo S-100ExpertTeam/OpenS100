@@ -6,7 +6,7 @@
 
 #include <vector>
 
-namespace S100Geometry
+namespace GM
 {
 	class Curve : public OrientableCurve
 	{
@@ -20,5 +20,9 @@ namespace S100Geometry
 
 	public:
 		GeometryType GetType() override;
+
+		void Add(double x, double y);
+
+		bool IsClosed();
 	};
 }

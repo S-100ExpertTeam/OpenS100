@@ -24,4 +24,8 @@ public:
 	int GetRCID();
 	std::string GetRCIDasString(std::string prefix = "");
 	std::wstring GetRCIDasWstring();
+	
+	void SetRCID(int rcid);
+
+	void InsertRing(int rcnm, int rcid, int usag, int ornt);
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GML_Element.h"
+#include "PugixmlElement.h"
 
 #include <string>
 #include <vector>
@@ -9,7 +9,7 @@ namespace S100GML
 {
 
 	class DatasetIdentificationInformation :
-		public Element
+		public PugixmlElement
 	{
 	public:
 		DatasetIdentificationInformation();

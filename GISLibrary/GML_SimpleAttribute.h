@@ -1,11 +1,11 @@
 #pragma once
 
-#include "IF_SimpleAttribute.h"
+#include "GF_SimpleAttributeType.h"
 
 namespace S100GML
 {
 
-	class SimpleAttribute : public S100Interface::SimpleAttribute
+	class SimpleAttribute : public GF::SimpleAttributeType
 	{
 
 	};

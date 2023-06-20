@@ -4,6 +4,11 @@
 struct RIAS
 {
 public:
+	RIAS();
+	RIAS(int rcnm, int rcid, int usag, int ornt);
+	virtual ~RIAS();
+
+public:
 	RecordName m_name;
 
 	// 1 : Forward
@@ -15,7 +20,7 @@ public:
 	int m_usag;
 
 	// 1 : Insert
-	int m_raui;
+	int m_raui = 1;
 
 public:
 	static int GetSize();

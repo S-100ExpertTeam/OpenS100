@@ -290,6 +290,11 @@ std::string R_FeatureRecord::GetRCIDAsString(std::string prefix)
 	return prefix + std::to_string(GetRCID());
 }
 
+void R_FeatureRecord::SetRCID(int rcid)
+{
+	m_frid.m_name.RCID = rcid;
+}
+
 int R_FeatureRecord::GetAssociationCount()
 {
 	return GetFeatureAssociationCount() + GetInformationAssociationCount();
@@ -308,6 +313,11 @@ int R_FeatureRecord::GetInformationAssociationCount()
 int R_FeatureRecord::GetNumericCode()
 {
 	return m_frid.m_nftc;
+}
+
+void R_FeatureRecord::SetNumericCode(int numericCode)
+{
+	m_frid.m_nftc = numericCode;
 }
 
 int R_FeatureRecord::MinimumDisplayPriority()
@@ -481,6 +491,28 @@ std::vector<ATTR*> R_FeatureRecord::GetChildAttributes(ATTR* parentATTR, int num
 	return result;
 }
 
+std::vector<F_INAS*> R_FeatureRecord::GetAllInformationAssociations()
+{
+	std::vector<F_INAS*> result;
+	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
+	{
+		result.push_back(*i);
+	}
+
+	return result;
+}
+
+std::vector<F_FASC*> R_FeatureRecord::GetAllFeatureAssociations()
+{
+	std::vector<F_FASC*> result;
+	for (auto i = m_fasc.begin(); i != m_fasc.end(); i++)
+	{
+		result.push_back(*i);
+	}
+
+	return result;
+}
+
 int R_FeatureRecord::GetAttributeIndex(ATTR* attr)
 {
 	if (m_attr.size() > 0)
@@ -529,6 +561,17 @@ SPAS* R_FeatureRecord::CreateEmptySPAS()
 	}
 
 	return GetSPAS();
+}
+
+void R_FeatureRecord::SetSPAS(int rcnm, int rcid, int ornt)
+{
+	auto spas = CreateEmptySPAS();
+	if (spas)
+	{
+		spas->m_name.RCNM = rcnm;
+		spas->m_name.RCID = rcid;
+		spas->m_ornt = ornt;
+	}
 }
 
 void R_FeatureRecord::SetVectorRecord(R_VectorRecord* record)
@@ -626,7 +669,7 @@ SGeometry* R_FeatureRecord::GetGeometry()
 	return m_geometry;
 }
 
-S100Geometry::Object* R_FeatureRecord::GetGMGeometry()
+GM::Object* R_FeatureRecord::GetGMGeometry()
 {
 	return nullptr;
 }

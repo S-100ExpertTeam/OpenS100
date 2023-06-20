@@ -100,10 +100,11 @@ std::string GeoPointZ::ToString()
 
 	double x = GetX();
 	double y = GetY();
+	double z = GetZ();
 
 	inverseProjection(x, y);
 
-	ss << y << " " << x;
+	ss << y << " " << x << " " << z;
 
 	return ss.str();
 }

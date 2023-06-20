@@ -75,3 +75,25 @@ void DirectPosition::SetZ(double value)
 	
 	coordinates[2] = value * Factor;
 }
+
+bool DirectPosition::operator==(DirectPosition& item)
+{
+	if (coordinates.size() == item.coordinates.size())
+	{
+		if (GetXInteger() == item.GetXInteger() &&
+			GetYInteger() == item.GetYInteger())
+		{
+			if (coordinates.size() == 3)
+			{
+				if (GetZInteger() != item.GetZInteger())
+				{
+					return false;
+				}
+			}
+			
+			return true;
+		}
+	}
+
+	return false;
+}
