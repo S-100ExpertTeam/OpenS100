@@ -15,17 +15,10 @@ namespace Portrayal
 
 	void ViewingGroup::GetContents(pugi::xml_node& node) 
 	{
-		auto firstNodeName = node.first_child().name();
-		if (!strcmp(firstNodeName,"")) 
-		{
-			value = std::stoi(node.child_value());
-			return;
-		}
-
 		auto IdAttri = node.attribute("id");
-		if (IdAttri!=nullptr)
+		if (IdAttri != nullptr)
 		{
-			auto value =pugi::as_wide( IdAttri.value());
+			auto value = pugi::as_wide(IdAttri.value());
 			SetId(value);
 		}
 		
