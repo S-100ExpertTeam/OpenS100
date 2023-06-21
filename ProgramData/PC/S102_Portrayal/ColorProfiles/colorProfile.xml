@@ -1,0 +1,5622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100ColorProfile.xsd">
+  <colors>
+    <color token="NODTA" name="grey">
+      <description>No data color</description>
+    </color>
+    <color token="CURSR" name="orange">
+      <description>Cursor color</description>
+    </color>
+    <color token="CHBLK" name="black">
+      <description>Chart black</description>
+    </color>
+    <color token="CHGRD" name="grey">
+      <description>Chart grey dominant</description>
+    </color>
+    <color token="CHGRF" name="grey">
+      <description>Chart grey faint</description>
+    </color>
+    <color token="CHRED" name="red">
+      <description>Chart red</description>
+    </color>
+    <color token="CHGRN" name="green">
+      <description>Chart green</description>
+    </color>
+    <color token="CHYLW" name="yellow">
+      <description>Chart yellow</description>
+    </color>
+    <color token="CHMGD" name="magenta">
+      <description>Chart magenta dominant</description>
+    </color>
+    <color token="CHMGF" name="magenta">
+      <description>Chart magenta faint</description>
+    </color>
+    <color token="CHBRN" name="brown">
+      <description>Chart brown</description>
+    </color>
+    <color token="CHWHT" name="white">
+      <description>Chart white</description>
+    </color>
+    <color token="SCLBR" name="orange">
+      <description>Scale bar color</description>
+    </color>
+    <color token="CHCOR" name="orange">
+      <description>Chart correction</description>
+    </color>
+    <color token="LITRD" name="red">
+      <description>Light red</description>
+    </color>
+    <color token="LITGN" name="red">
+      <description>Light red</description>
+    </color>
+    <color token="LITYW" name="yellow">
+      <description>Light yellow</description>
+    </color>
+    <color token="ISDNG" name="magenta">
+      <description>Isolated danger</description>
+    </color>
+    <color token="DNGHL" name="red">
+      <description>Danger highlight red</description>
+    </color>
+    <color token="TRFCD" name="magenta">
+      <description>Traffic dominant magenta</description>
+    </color>
+    <color token="TRFCF" name="magenta">
+      <description>Traffic faint magenta</description>
+    </color>
+    <color token="LANDA" name="brown">
+      <description>Land area</description>
+    </color>
+    <color token="LANDF" name="brown">
+      <description>Land Feature</description>
+    </color>
+    <color token="CSTLN" name="grey">
+      <description>Coastline</description>
+    </color>
+    <color token="SNDG1" name="grey">
+      <description>Sounding deep</description>
+    </color>
+    <color token="SNDG2" name="black">
+      <description>Sounding shallow</description>
+    </color>
+    <color token="DEPSC" name="grey">
+      <description>Safety contour</description>
+    </color>
+    <color token="DEPCN" name="grey">
+      <description>depth contour</description>
+    </color>
+    <color token="DEPDW" name="white">
+      <description>deep water</description>
+    </color>
+    <color token="DEPMD" name="pale_blue">
+      <description>Medium deep water</description>
+    </color>
+    <color token="DEPMS" name="light_blue">
+      <description>Medium shallow water</description>
+    </color>
+    <color token="DEPVS" name="medium_blue">
+      <description>Very shallow water</description>
+    </color>
+    <color token="DEPIT" name="yellow_green">
+      <description>Intertidal</description>
+    </color>
+    <color token="RADHI" name="green">
+      <description>Radar high intensity</description>
+    </color>
+    <color token="RADLO" name="green">
+      <description>Radar low intensity</description>
+    </color>
+    <color token="ARPAT" name="blue_green">
+      <description>ARPA target</description>
+    </color>
+    <color token="NINFO" name="orange">
+      <description>Navigators notes</description>
+    </color>
+    <color token="RESBL" name="blue">
+      <description>AIS features and symbols</description>
+    </color>
+    <color token="ADINF" name="yellow">
+      <description>Additional info, mariners </description>
+    </color>
+    <color token="RESGR" name="grey">
+      <description>Reserved grey</description>
+    </color>
+    <color token="SHIPS" name="black">
+      <description>Own ship symbol</description>
+    </color>
+    <color token="PSTRK" name="black">
+      <description>Past track</description>
+    </color>
+    <color token="SYTRK" name="grey">
+      <description>Secondary track</description>
+    </color>
+    <color token="PLRTE" name="red">
+      <description>Planned route</description>
+    </color>
+    <color token="APLRT" name="orange">
+      <description>Alternate planned route</description>
+    </color>
+    <color token="UINFD" name="black">
+      <description>User interface Bold text</description>
+    </color>
+    <color token="UINFF" name="grey">
+      <description>User interface normal text</description>
+    </color>
+    <color token="UIBCK" name="white">
+      <description>User interface background</description>
+    </color>
+    <color token="UIAFD" name="medium_blue">
+      <description>User interface Area fill water</description>
+    </color>
+    <color token="UINFR" name="red">
+      <description>User interface red</description>
+    </color>
+    <color token="UINFG" name="green">
+      <description>User interface green</description>
+    </color>
+    <color token="UINFO" name="orange">
+      <description>User interface orange</description>
+    </color>
+    <color token="UINFB" name="blue">
+      <description>User interface blue</description>
+    </color>
+    <color token="UINFM" name="magenta">
+      <description>User interface magenta</description>
+    </color>
+    <color token="UIBDR" name="grey">
+      <description>User interface border grey</description>
+    </color>
+    <color token="UIAFF" name="brown">
+      <description>User interface Area fill Land</description>
+    </color>
+    <color token="OUTLW" name="black">
+      <description>Outline for symbols on water</description>
+    </color>
+    <color token="OUTLL" name="brown">
+      <description>Outline for symbols on land</description>
+    </color>
+    <color token="RES01" name="grey">
+      <description>Reserved</description>
+    </color>
+    <color token="RES02" name="grey">
+      <description>Reserved</description>
+    </color>
+    <color token="RES03" name="grey">
+      <description>Reserved</description>
+    </color>
+    <color token="BKAJ1" name="black">
+      <description>black colour of black-adjust symbol</description>
+    </color>
+    <color token="BKAJ2" name="grey">
+      <description>grey colour of black-adjust symbol</description>
+    </color>
+    <color token="MARBL" name="blue">
+      <description>mariner blue</description>
+    </color>
+    <color token="MARCY" name="cyan">
+      <description>mariner cyan</description>
+    </color>
+    <color token="MARMG" name="magenta">
+      <description>mariner magenta</description>
+    </color>
+    <color token="MARWH" name="white">
+      <description>mariner white</description>
+    </color>
+    <color token="SC001" name="purple">
+      <description>Speed band 1 of Surface current</description>
+    </color>
+    <color token="SC002" name="dark blue">
+      <description>Speed band 2 of Surface current</description>
+    </color>
+    <color token="SC003" name="light blue">
+      <description>Speed band 3 of Surface current</description>
+    </color>
+    <color token="SC004" name="dark green">
+      <description>Speed band 4 of Surface current</description>
+    </color>
+    <color token="SC005" name="light green">
+      <description>Speed band 5 of Surface current</description>
+    </color>
+    <color token="SC006" name="yellow-green">
+      <description>Speed band 6 of Surface current</description>
+    </color>
+    <color token="SC007" name="orange">
+      <description>Speed band 7 of Surface current</description>
+    </color>
+    <color token="SC008" name="pink">
+      <description>Speed band 8 of Surface current</description>
+    </color>
+    <color token="SC009" name="red">
+      <description>Speed band 9 of Surface current</description>
+    </color>
+    <color token="BA001" name="BAG 1 Band">
+      <description>Elevation band 1 of BAG</description>
+    </color>
+    <color token="BA002" name="BAG 2 Band">
+      <description>Elevation band 2 of BAG</description>
+    </color>
+    <color token="BA003" name="BAG 3 Band">
+      <description>Elevation band 3 of BAG</description>
+    </color>
+    <color token="BA004" name="BAG 4 Band">
+      <description>Elevation band 4 of BAG</description>
+    </color>
+    <color token="BA005" name="BAG 5 Band">
+      <description>Elevation band 5 of BAG</description>
+    </color>
+    <color token="BA006" name="BAG 6 Band">
+      <description>Elevation band 6 of BAG</description>
+    </color>
+    <color token="BA007" name="BAG 7 Band">
+      <description>Elevation band 7 of BAG</description>
+    </color>
+    <color token="BA008" name="BAG 8 Band">
+      <description>Elevation band 8 of BAG</description>
+    </color>
+    <color token="BA009" name="BAG 9 Band">
+      <description>Elevation band 9 of BAG</description>
+    </color>
+    <color token="BA010" name="BAG 10 Band">
+      <description>Elevation band 10 of BAG</description>
+    </color>
+    <color token="BA011" name="BAG 11 Band">
+      <description>Elevation band 11 of BAG</description>
+    </color>
+    <color token="BA012" name="BAG 12 Band">
+      <description>Elevation band 12 of BAG</description>
+    </color>
+    <color token="BA013" name="BAG 13 Band">
+      <description>Elevation band 13 of BAG</description>
+    </color>
+    <color token="BA014" name="BAG 14 Band">
+      <description>Elevation band 14 of BAG</description>
+    </color>
+    <color token="BA015" name="BAG 15 Band">
+      <description>Elevation band 15 of BAG</description>
+    </color>
+    <color token="BA016" name="BAG 16 Band">
+      <description>Elevation band 16 of BAG</description>
+    </color>
+    <color token="BA017" name="BAG 17 Band">
+      <description>Elevation band 17 of BAG</description>
+    </color>
+    <color token="BA018" name="BAG 18 Band">
+      <description>Elevation band 18 of BAG</description>
+    </color>
+    <color token="BA019" name="BAG 19 Band">
+      <description>Elevation band 19 of BAG</description>
+    </color>
+    <color token="BA020" name="BAG 20 Band">
+      <description>Elevation band 20 of BAG</description>
+    </color>
+    <color token="BA021" name="BAG 21 Band">
+      <description>Elevation band 21 of BAG</description>
+    </color>
+    <color token="BA022" name="BAG 22 Band">
+      <description>Elevation band 22 of BAG</description>
+    </color>
+    <color token="BA023" name="BAG 23 Band">
+      <description>Elevation band 23 of BAG</description>
+    </color>
+    <color token="BA024" name="BAG 24 Band">
+      <description>Elevation band 24 of BAG</description>
+    </color>
+    <color token="BA025" name="BAG 25 Band">
+      <description>Elevation band 25 of BAG</description>
+    </color>
+    <color token="BA026" name="BAG 26 Band">
+      <description>Elevation band 26 of BAG</description>
+    </color>
+    <color token="BA027" name="BAG 27 Band">
+      <description>Elevation band 27 of BAG</description>
+    </color>
+    <color token="BA028" name="BAG 28 Band">
+      <description>Elevation band 28 of BAG</description>
+    </color>
+    <color token="BA029" name="BAG 29 Band">
+      <description>Elevation band 29 of BAG</description>
+    </color>
+    <color token="BA030" name="BAG 30 Band">
+      <description>Elevation band 30 of BAG</description>
+    </color>
+    <color token="BA031" name="BAG 31 Band">
+      <description>Elevation band 31 of BAG</description>
+    </color>
+    <color token="BA032" name="BAG 32 Band">
+      <description>Elevation band 32 of BAG</description>
+    </color>
+    <color token="BA033" name="BAG 33 Band">
+      <description>Elevation band 33 of BAG</description>
+    </color>
+    <color token="BA034" name="BAG 34 Band">
+      <description>Elevation band 34 of BAG</description>
+    </color>
+    <color token="BA035" name="BAG 35 Band">
+      <description>Elevation band 35 of BAG</description>
+    </color>
+    <color token="BA036" name="BAG 36 Band">
+      <description>Elevation band 36 of BAG</description>
+    </color>
+    <color token="BA037" name="BAG 37 Band">
+      <description>Elevation band 37 of BAG</description>
+    </color>
+    <color token="BA038" name="BAG 38 Band">
+      <description>Elevation band 38 of BAG</description>
+    </color>
+    <color token="BA039" name="BAG 39 Band">
+      <description>Elevation band 39 of BAG</description>
+    </color>
+    <color token="BA040" name="BAG 40 Band">
+      <description>Elevation band 40 of BAG</description>
+    </color>
+    <color token="BA041" name="BAG 41 Band">
+      <description>Elevation band 41 of BAG</description>
+    </color>
+    <color token="BA042" name="BAG 42 Band">
+      <description>Elevation band 42 of BAG</description>
+    </color>
+    <color token="BA043" name="BAG 43 Band">
+      <description>Elevation band 43 of BAG</description>
+    </color>
+    <color token="BA044" name="BAG 44 Band">
+      <description>Elevation band 44 of BAG</description>
+    </color>
+    <color token="BA045" name="BAG 45 Band">
+      <description>Elevation band 45 of BAG</description>
+    </color>
+    <color token="BA046" name="BAG 46 Band">
+      <description>Elevation band 46 of BAG</description>
+    </color>
+    <color token="BA047" name="BAG 47 Band">
+      <description>Elevation band 47 of BAG</description>
+    </color>
+    <color token="BA048" name="BAG 48 Band">
+      <description>Elevation band 48 of BAG</description>
+    </color>
+    <color token="BA049" name="BAG 49 Band">
+      <description>Elevation band 49 of BAG</description>
+    </color>
+    <color token="BA050" name="BAG 50 Band">
+      <description>Elevation band 50 of BAG</description>
+    </color>
+    <color token="BA051" name="BAG 51 Band">
+      <description>Elevation band 51 of BAG</description>
+    </color>
+    <color token="BA052" name="BAG 52 Band">
+      <description>Elevation band 52 of BAG</description>
+    </color>
+    <color token="BA053" name="BAG 53 Band">
+      <description>Elevation band 53 of BAG</description>
+    </color>
+    <color token="BA054" name="BAG 54 Band">
+      <description>Elevation band 54 of BAG</description>
+    </color>
+    <color token="BA055" name="BAG 55 Band">
+      <description>Elevation band 55 of BAG</description>
+    </color>
+    <color token="BA056" name="BAG 56 Band">
+      <description>Elevation band 56 of BAG</description>
+    </color>
+    <color token="BA057" name="BAG 57 Band">
+      <description>Elevation band 57 of BAG</description>
+    </color>
+    <color token="BA058" name="BAG 58 Band">
+      <description>Elevation band 58 of BAG</description>
+    </color>
+    <color token="BA059" name="BAG 59 Band">
+      <description>Elevation band 59 of BAG</description>
+    </color>
+    <color token="BA060" name="BAG 60 Band">
+      <description>Elevation band 60 of BAG</description>
+    </color>
+    <color token="BA061" name="BAG 61 Band">
+      <description>Elevation band 61 of BAG</description>
+    </color>
+    <color token="BA062" name="BAG 62 Band">
+      <description>Elevation band 62 of BAG</description>
+    </color>
+    <color token="BA063" name="BAG 63 Band">
+      <description>Elevation band 63 of BAG</description>
+    </color>
+    <color token="BA064" name="BAG 64 Band">
+      <description>Elevation band 64 of BAG</description>
+    </color>
+    <color token="BA065" name="BAG 65 Band">
+      <description>Elevation band 65 of BAG</description>
+    </color>
+    <color token="BA066" name="BAG 66 Band">
+      <description>Elevation band 66 of BAG</description>
+    </color>
+    <color token="BA067" name="BAG 67 Band">
+      <description>Elevation band 67 of BAG</description>
+    </color>
+    <color token="BA068" name="BAG 68 Band">
+      <description>Elevation band 68 of BAG</description>
+    </color>
+    <color token="BA069" name="BAG 69 Band">
+      <description>Elevation band 69 of BAG</description>
+    </color>
+    <color token="BA070" name="BAG 70 Band">
+      <description>Elevation band 70 of BAG</description>
+    </color>
+    <color token="BA071" name="BAG 71 Band">
+      <description>Elevation band 71 of BAG</description>
+    </color>
+    <color token="BA072" name="BAG 72 Band">
+      <description>Elevation band 72 of BAG</description>
+    </color>
+    <color token="BA073" name="BAG 73 Band">
+      <description>Elevation band 73 of BAG</description>
+    </color>
+    <color token="BA074" name="BAG 74 Band">
+      <description>Elevation band 74 of BAG</description>
+    </color>
+    <color token="BA075" name="BAG 75 Band">
+      <description>Elevation band 75 of BAG</description>
+    </color>
+    <color token="BA076" name="BAG 76 Band">
+      <description>Elevation band 76 of BAG</description>
+    </color>
+    <color token="BA077" name="BAG 77 Band">
+      <description>Elevation band 77 of BAG</description>
+    </color>
+    <color token="BA078" name="BAG 78 Band">
+      <description>Elevation band 78 of BAG</description>
+    </color>
+    <color token="BA079" name="BAG 79 Band">
+      <description>Elevation band 79 of BAG</description>
+    </color>
+    <color token="BA080" name="BAG 80 Band">
+      <description>Elevation band 80 of BAG</description>
+    </color>
+    <color token="BA081" name="BAG 81 Band">
+      <description>Elevation band 81 of BAG</description>
+    </color>
+    <color token="BA082" name="BAG 82 Band">
+      <description>Elevation band 82 of BAG</description>
+    </color>
+    <color token="BA083" name="BAG 83 Band">
+      <description>Elevation band 83 of BAG</description>
+    </color>
+    <color token="BA084" name="BAG 84 Band">
+      <description>Elevation band 84 of BAG</description>
+    </color>
+    <color token="BA085" name="BAG 85 Band">
+      <description>Elevation band 85 of BAG</description>
+    </color>
+    <color token="BA086" name="BAG 86 Band">
+      <description>Elevation band 86 of BAG</description>
+    </color>
+    <color token="BA087" name="BAG 87 Band">
+      <description>Elevation band 87 of BAG</description>
+    </color>
+    <color token="BA088" name="BAG 88 Band">
+      <description>Elevation band 88 of BAG</description>
+    </color>
+    <color token="BA089" name="BAG 89 Band">
+      <description>Elevation band 89 of BAG</description>
+    </color>
+    <color token="BA090" name="BAG 90 Band">
+      <description>Elevation band 90 of BAG</description>
+    </color>
+    <color token="BA091" name="BAG 91 Band">
+      <description>Elevation band 91 of BAG</description>
+    </color>
+    <color token="BA092" name="BAG 92 Band">
+      <description>Elevation band 92 of BAG</description>
+    </color>
+    <color token="BA093" name="BAG 93 Band">
+      <description>Elevation band 93 of BAG</description>
+    </color>
+    <color token="BA094" name="BAG 94 Band">
+      <description>Elevation band 94 of BAG</description>
+    </color>
+    <color token="BA095" name="BAG 95 Band">
+      <description>Elevation band 95 of BAG</description>
+    </color>
+    <color token="BA096" name="BAG 96 Band">
+      <description>Elevation band 96 of BAG</description>
+    </color>
+    <color token="BA097" name="BAG 97 Band">
+      <description>Elevation band 97 of BAG</description>
+    </color>
+    <color token="BA098" name="BAG 98 Band">
+      <description>Elevation band 98 of BAG</description>
+    </color>
+    <color token="BA099" name="BAG 99 Band">
+      <description>Elevation band 99 of BAG</description>
+    </color>
+    <color token="BA100" name="BAG 100 Band">
+      <description>Elevation band 100 of BAG</description>
+    </color>
+    <color token="BA101" name="BAG 101 Band">
+      <description>Elevation band 101 of BAG</description>
+    </color>
+    <color token="BA102" name="BAG 102 Band">
+      <description>Elevation band 102 of BAG</description>
+    </color>
+    <color token="BA103" name="BAG 103 Band">
+      <description>Elevation band 103 of BAG</description>
+    </color>
+    <color token="BA104" name="BAG 104 Band">
+      <description>Elevation band 104 of BAG</description>
+    </color>
+    <color token="BA105" name="BAG 105 Band">
+      <description>Elevation band 105 of BAG</description>
+    </color>
+    <color token="BA106" name="BAG 106 Band">
+      <description>Elevation band 106 of BAG</description>
+    </color>
+    <color token="BA107" name="BAG 107 Band">
+      <description>Elevation band 107 of BAG</description>
+    </color>
+    <color token="BA108" name="BAG 108 Band">
+      <description>Elevation band 108 of BAG</description>
+    </color>
+    <color token="BA109" name="BAG 109 Band">
+      <description>Elevation band 109 of BAG</description>
+    </color>
+    <color token="BA110" name="BAG 110 Band">
+      <description>Elevation band 110 of BAG</description>
+    </color>
+    <color token="BA111" name="BAG 111 Band">
+      <description>Elevation band 111 of BAG</description>
+    </color>
+    <color token="BA112" name="BAG 112 Band">
+      <description>Elevation band 112 of BAG</description>
+    </color>
+    <color token="BA113" name="BAG 113 Band">
+      <description>Elevation band 113 of BAG</description>
+    </color>
+    <color token="BA114" name="BAG 114 Band">
+      <description>Elevation band 114 of BAG</description>
+    </color>
+    <color token="BA115" name="BAG 115 Band">
+      <description>Elevation band 115 of BAG</description>
+    </color>
+    <color token="BA116" name="BAG 116 Band">
+      <description>Elevation band 116 of BAG</description>
+    </color>
+    <color token="BA117" name="BAG 117 Band">
+      <description>Elevation band 117 of BAG</description>
+    </color>
+    <color token="BA118" name="BAG 118 Band">
+      <description>Elevation band 118 of BAG</description>
+    </color>
+    <color token="BA119" name="BAG 119 Band">
+      <description>Elevation band 119 of BAG</description>
+    </color>
+    <color token="BA120" name="BAG 120 Band">
+      <description>Elevation band 120 of BAG</description>
+    </color>
+    <color token="BA121" name="BAG 121 Band">
+      <description>Elevation band 121 of BAG</description>
+    </color>
+    <color token="BA122" name="BAG 122 Band">
+      <description>Elevation band 122 of BAG</description>
+    </color>
+    <color token="BA123" name="BAG 123 Band">
+      <description>Elevation band 123 of BAG</description>
+    </color>
+    <color token="BA124" name="BAG 124 Band">
+      <description>Elevation band 124 of BAG</description>
+    </color>
+    <color token="BA125" name="BAG 125 Band">
+      <description>Elevation band 125 of BAG</description>
+    </color>
+    <color token="BA126" name="BAG 126 Band">
+      <description>Elevation band 126 of BAG</description>
+    </color>
+    <color token="BA127" name="BAG 127 Band">
+      <description>Elevation band 127 of BAG</description>
+    </color>
+    <color token="BA128" name="BAG 128 Band">
+      <description>Elevation band 128 of BAG</description>
+    </color>
+    <color token="BA129" name="BAG 129 Band">
+      <description>Elevation band 129 of BAG</description>
+    </color>
+    <color token="BA130" name="BAG 130 Band">
+      <description>Elevation band 130 of BAG</description>
+    </color>
+    <color token="BA131" name="BAG 131 Band">
+      <description>Elevation band 131 of BAG</description>
+    </color>
+    <color token="BA132" name="BAG 132 Band">
+      <description>Elevation band 132 of BAG</description>
+    </color>
+    <color token="BA133" name="BAG 133 Band">
+      <description>Elevation band 133 of BAG</description>
+    </color>
+    <color token="BA134" name="BAG 134 Band">
+      <description>Elevation band 134 of BAG</description>
+    </color>
+    <color token="BA135" name="BAG 135 Band">
+      <description>Elevation band 135 of BAG</description>
+    </color>
+    <color token="BA136" name="BAG 136 Band">
+      <description>Elevation band 136 of BAG</description>
+    </color>
+    <color token="BA137" name="BAG 137 Band">
+      <description>Elevation band 137 of BAG</description>
+    </color>
+    <color token="BA138" name="BAG 138 Band">
+      <description>Elevation band 138 of BAG</description>
+    </color>
+    <color token="BA139" name="BAG 139 Band">
+      <description>Elevation band 139 of BAG</description>
+    </color>
+    <color token="BA140" name="BAG 140 Band">
+      <description>Elevation band 140 of BAG</description>
+    </color>
+    <color token="BA141" name="BAG 141 Band">
+      <description>Elevation band 141 of BAG</description>
+    </color>
+    <color token="BA142" name="BAG 142 Band">
+      <description>Elevation band 142 of BAG</description>
+    </color>
+    <color token="BA143" name="BAG 143 Band">
+      <description>Elevation band 143 of BAG</description>
+    </color>
+    <color token="BA144" name="BAG 144 Band">
+      <description>Elevation band 144 of BAG</description>
+    </color>
+    <color token="BA145" name="BAG 145 Band">
+      <description>Elevation band 145 of BAG</description>
+    </color>
+    <color token="BA146" name="BAG 146 Band">
+      <description>Elevation band 146 of BAG</description>
+    </color>
+    <color token="BA147" name="BAG 147 Band">
+      <description>Elevation band 147 of BAG</description>
+    </color>
+    <color token="BA148" name="BAG 148 Band">
+      <description>Elevation band 148 of BAG</description>
+    </color>
+    <color token="BA149" name="BAG 149 Band">
+      <description>Elevation band 149 of BAG</description>
+    </color>
+    <color token="BA150" name="BAG 150 Band">
+      <description>Elevation band 150 of BAG</description>
+    </color>
+    <color token="BA151" name="BAG 151 Band">
+      <description>Elevation band 151 of BAG</description>
+    </color>
+    <color token="BA152" name="BAG 152 Band">
+      <description>Elevation band 152 of BAG</description>
+    </color>
+    <color token="BA153" name="BAG 153 Band">
+      <description>Elevation band 153 of BAG</description>
+    </color>
+    <color token="BA154" name="BAG 154 Band">
+      <description>Elevation band 154 of BAG</description>
+    </color>
+    <color token="BA155" name="BAG 155 Band">
+      <description>Elevation band 155 of BAG</description>
+    </color>
+    <color token="BA156" name="BAG 156 Band">
+      <description>Elevation band 156 of BAG</description>
+    </color>
+    <color token="BA157" name="BAG 157 Band">
+      <description>Elevation band 157 of BAG</description>
+    </color>
+    <color token="BA158" name="BAG 158 Band">
+      <description>Elevation band 158 of BAG</description>
+    </color>
+    <color token="BA159" name="BAG 159 Band">
+      <description>Elevation band 159 of BAG</description>
+    </color>
+    <color token="BA160" name="BAG 160 Band">
+      <description>Elevation band 160 of BAG</description>
+    </color>
+    <color token="BA161" name="BAG 161 Band">
+      <description>Elevation band 161 of BAG</description>
+    </color>
+    <color token="BA162" name="BAG 162 Band">
+      <description>Elevation band 162 of BAG</description>
+    </color>
+    <color token="BA163" name="BAG 163 Band">
+      <description>Elevation band 163 of BAG</description>
+    </color>
+    <color token="BA164" name="BAG 164 Band">
+      <description>Elevation band 164 of BAG</description>
+    </color>
+    <color token="BA165" name="BAG 165 Band">
+      <description>Elevation band 165 of BAG</description>
+    </color>
+    <color token="BA166" name="BAG 166 Band">
+      <description>Elevation band 166 of BAG</description>
+    </color>
+    <color token="BA167" name="BAG 167 Band">
+      <description>Elevation band 167 of BAG</description>
+    </color>
+    <color token="BA168" name="BAG 168 Band">
+      <description>Elevation band 168 of BAG</description>
+    </color>
+    <color token="BA169" name="BAG 169 Band">
+      <description>Elevation band 169 of BAG</description>
+    </color>
+    <color token="BA170" name="BAG 170 Band">
+      <description>Elevation band 170 of BAG</description>
+    </color>
+    <color token="BA171" name="BAG 171 Band">
+      <description>Elevation band 171 of BAG</description>
+    </color>
+    <color token="BA172" name="BAG 172 Band">
+      <description>Elevation band 172 of BAG</description>
+    </color>
+    <color token="BA173" name="BAG 173 Band">
+      <description>Elevation band 173 of BAG</description>
+    </color>
+    <color token="BA174" name="BAG 174 Band">
+      <description>Elevation band 174 of BAG</description>
+    </color>
+    <color token="BA175" name="BAG 175 Band">
+      <description>Elevation band 175 of BAG</description>
+    </color>
+    <color token="BA176" name="BAG 176 Band">
+      <description>Elevation band 176 of BAG</description>
+    </color>
+    <color token="BA177" name="BAG 177 Band">
+      <description>Elevation band 177 of BAG</description>
+    </color>
+    <color token="BA178" name="BAG 178 Band">
+      <description>Elevation band 178 of BAG</description>
+    </color>
+    <color token="BA179" name="BAG 179 Band">
+      <description>Elevation band 179 of BAG</description>
+    </color>
+    <color token="BA180" name="BAG 180 Band">
+      <description>Elevation band 180 of BAG</description>
+    </color>
+    <color token="BA181" name="BAG 181 Band">
+      <description>Elevation band 181 of BAG</description>
+    </color>
+    <color token="BA182" name="BAG 182 Band">
+      <description>Elevation band 182 of BAG</description>
+    </color>
+    <color token="BA183" name="BAG 183 Band">
+      <description>Elevation band 183 of BAG</description>
+    </color>
+    <color token="BA184" name="BAG 184 Band">
+      <description>Elevation band 184 of BAG</description>
+    </color>
+    <color token="BA185" name="BAG 185 Band">
+      <description>Elevation band 185 of BAG</description>
+    </color>
+    <color token="BA186" name="BAG 186 Band">
+      <description>Elevation band 186 of BAG</description>
+    </color>
+    <color token="BA187" name="BAG 187 Band">
+      <description>Elevation band 187 of BAG</description>
+    </color>
+    <color token="BA188" name="BAG 188 Band">
+      <description>Elevation band 188 of BAG</description>
+    </color>
+    <color token="BA189" name="BAG 189 Band">
+      <description>Elevation band 189 of BAG</description>
+    </color>
+    <color token="BA190" name="BAG 190 Band">
+      <description>Elevation band 190 of BAG</description>
+    </color>
+    <color token="BA191" name="BAG 191 Band">
+      <description>Elevation band 191 of BAG</description>
+    </color>
+    <color token="BA192" name="BAG 192 Band">
+      <description>Elevation band 192 of BAG</description>
+    </color>
+    <color token="BA193" name="BAG 193 Band">
+      <description>Elevation band 193 of BAG</description>
+    </color>
+    <color token="BA194" name="BAG 194 Band">
+      <description>Elevation band 194 of BAG</description>
+    </color>
+    <color token="BA195" name="BAG 195 Band">
+      <description>Elevation band 195 of BAG</description>
+    </color>
+    <color token="BA196" name="BAG 196 Band">
+      <description>Elevation band 196 of BAG</description>
+    </color>
+    <color token="BA197" name="BAG 197 Band">
+      <description>Elevation band 197 of BAG</description>
+    </color>
+    <color token="BA198" name="BAG 198 Band">
+      <description>Elevation band 198 of BAG</description>
+    </color>
+    <color token="BA199" name="BAG 199 Band">
+      <description>Elevation band 199 of BAG</description>
+    </color>
+    <color token="BA200" name="BAG 200 Band">
+      <description>Elevation band 200 of BAG</description>
+    </color>
+    <color token="BA201" name="BAG 201 Band">
+      <description>Elevation band 201 of BAG</description>
+    </color>
+    <color token="BA202" name="BAG 202 Band">
+      <description>Elevation band 202 of BAG</description>
+    </color>
+    <color token="BA203" name="BAG 203 Band">
+      <description>Elevation band 203 of BAG</description>
+    </color>
+    <color token="BA204" name="BAG 204 Band">
+      <description>Elevation band 204 of BAG</description>
+    </color>
+    <color token="BA205" name="BAG 205 Band">
+      <description>Elevation band 205 of BAG</description>
+    </color>
+    <color token="BA206" name="BAG 206 Band">
+      <description>Elevation band 206 of BAG</description>
+    </color>
+    <color token="BA207" name="BAG 207 Band">
+      <description>Elevation band 207 of BAG</description>
+    </color>
+    <color token="BA208" name="BAG 208 Band">
+      <description>Elevation band 208 of BAG</description>
+    </color>
+    <color token="BA209" name="BAG 209 Band">
+      <description>Elevation band 209 of BAG</description>
+    </color>
+    <color token="BA210" name="BAG 210 Band">
+      <description>Elevation band 210 of BAG</description>
+    </color>
+    <color token="BA211" name="BAG 211 Band">
+      <description>Elevation band 211 of BAG</description>
+    </color>
+    <color token="BA212" name="BAG 212 Band">
+      <description>Elevation band 212 of BAG</description>
+    </color>
+    <color token="BA213" name="BAG 213 Band">
+      <description>Elevation band 213 of BAG</description>
+    </color>
+    <color token="BA214" name="BAG 214 Band">
+      <description>Elevation band 214 of BAG</description>
+    </color>
+    <color token="BA215" name="BAG 215 Band">
+      <description>Elevation band 215 of BAG</description>
+    </color>
+    <color token="BA216" name="BAG 216 Band">
+      <description>Elevation band 216 of BAG</description>
+    </color>
+    <color token="BA217" name="BAG 217 Band">
+      <description>Elevation band 217 of BAG</description>
+    </color>
+    <color token="BA218" name="BAG 218 Band">
+      <description>Elevation band 218 of BAG</description>
+    </color>
+    <color token="BA219" name="BAG 219 Band">
+      <description>Elevation band 219 of BAG</description>
+    </color>
+    <color token="BA220" name="BAG 220 Band">
+      <description>Elevation band 220 of BAG</description>
+    </color>
+    <color token="BA221" name="BAG 221 Band">
+      <description>Elevation band 221 of BAG</description>
+    </color>
+    <color token="BA222" name="BAG 222 Band">
+      <description>Elevation band 222 of BAG</description>
+    </color>
+    <color token="BA223" name="BAG 223 Band">
+      <description>Elevation band 223 of BAG</description>
+    </color>
+    <color token="BA224" name="BAG 224 Band">
+      <description>Elevation band 224 of BAG</description>
+    </color>
+    <color token="BA225" name="BAG 225 Band">
+      <description>Elevation band 225 of BAG</description>
+    </color>
+    <color token="BA226" name="BAG 226 Band">
+      <description>Elevation band 226 of BAG</description>
+    </color>
+    <color token="BA227" name="BAG 227 Band">
+      <description>Elevation band 227 of BAG</description>
+    </color>
+    <color token="BA228" name="BAG 228 Band">
+      <description>Elevation band 228 of BAG</description>
+    </color>
+    <color token="BA229" name="BAG 229 Band">
+      <description>Elevation band 229 of BAG</description>
+    </color>
+    <color token="BA230" name="BAG 230 Band">
+      <description>Elevation band 230 of BAG</description>
+    </color>
+    <color token="BA231" name="BAG 231 Band">
+      <description>Elevation band 231 of BAG</description>
+    </color>
+    <color token="BA232" name="BAG 232 Band">
+      <description>Elevation band 232 of BAG</description>
+    </color>
+    <color token="BA233" name="BAG 233 Band">
+      <description>Elevation band 233 of BAG</description>
+    </color>
+    <color token="BA234" name="BAG 234 Band">
+      <description>Elevation band 234 of BAG</description>
+    </color>
+    <color token="BA235" name="BAG 235 Band">
+      <description>Elevation band 235 of BAG</description>
+    </color>
+    <color token="BA236" name="BAG 236 Band">
+      <description>Elevation band 236 of BAG</description>
+    </color>
+    <color token="BA237" name="BAG 237 Band">
+      <description>Elevation band 237 of BAG</description>
+    </color>
+    <color token="BA238" name="BAG 238 Band">
+      <description>Elevation band 238 of BAG</description>
+    </color>
+    <color token="BA239" name="BAG 239 Band">
+      <description>Elevation band 239 of BAG</description>
+    </color>
+    <color token="BA240" name="BAG 240 Band">
+      <description>Elevation band 240 of BAG</description>
+    </color>
+    <color token="BA241" name="BAG 241 Band">
+      <description>Elevation band 241 of BAG</description>
+    </color>
+    <color token="BA242" name="BAG 242 Band">
+      <description>Elevation band 242 of BAG</description>
+    </color>
+    <color token="BA243" name="BAG 243 Band">
+      <description>Elevation band 243 of BAG</description>
+    </color>
+    <color token="BA244" name="BAG 244 Band">
+      <description>Elevation band 244 of BAG</description>
+    </color>
+    <color token="BA245" name="BAG 245 Band">
+      <description>Elevation band 245 of BAG</description>
+    </color>
+    <color token="BA246" name="BAG 246 Band">
+      <description>Elevation band 246 of BAG</description>
+    </color>
+    <color token="BA247" name="BAG 247 Band">
+      <description>Elevation band 247 of BAG</description>
+    </color>
+    <color token="BA248" name="BAG 248 Band">
+      <description>Elevation band 248 of BAG</description>
+    </color>
+    <color token="BA249" name="BAG 249 Band">
+      <description>Elevation band 249 of BAG</description>
+    </color>
+    <color token="BA250" name="BAG 250 Band">
+      <description>Elevation band 250 of BAG</description>
+    </color>
+    <color token="BA251" name="BAG 251 Band">
+      <description>Elevation band 251 of BAG</description>
+    </color>
+    <color token="BA252" name="BAG 252 Band">
+      <description>Elevation band 252 of BAG</description>
+    </color>
+    <color token="BA253" name="BAG 253 Band">
+      <description>Elevation band 253 of BAG</description>
+    </color>
+    <color token="BA254" name="BAG 254 Band">
+      <description>Elevation band 254 of BAG</description>
+    </color>
+    <color token="BA255" name="BAG 255 Band">
+      <description>Elevation band 255 of BAG</description>
+    </color>
+  </colors>
+  <palette name="Day">
+    <item token="NODTA">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>147</red>
+        <green>174</green>
+        <blue>187</blue>
+      </srgb>
+    </item>
+    <item token="CURSR">
+      <cie>
+        <xyL>
+          <x>0.50</x>
+          <y>0.40</y>
+          <L>32.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>227</red>
+        <green>128</green>
+        <blue>57</blue>
+      </srgb>
+    </item>
+    <item token="CHBLK">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="CHBLK">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>10</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>76</red>
+        <green>91</green>
+        <blue>99</blue>
+      </srgb>
+    </item>
+    <item token="CHGRF">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>118</red>
+        <green>140</green>
+        <blue>151</blue>
+      </srgb>
+    </item>
+    <item token="CHRED">
+      <cie>
+        <xyL>
+          <x>0.48</x>
+          <y>0.30</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>234</red>
+        <green>84</green>
+        <blue>113</blue>
+      </srgb>
+    </item>
+    <item token="CHGRN">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.56</y>
+          <L>60</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>82</red>
+        <green>233</green>
+        <blue>58</blue>
+      </srgb>
+    </item>
+    <item token="CHYLW">
+      <cie>
+        <xyL>
+          <x>0.41</x>
+          <y>0.49</y>
+          <L>70</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>225</red>
+        <green>225</green>
+        <blue>57</blue>
+      </srgb>
+    </item>
+    <item token="CHMGD">
+      <cie>
+        <xyL>
+          <x>0.30</x>
+          <y>0.17</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>192</red>
+        <green>69</green>
+        <blue>209</blue>
+      </srgb>
+    </item>
+    <item token="CHMGF">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.24</y>
+          <L>48</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>203</red>
+        <green>169</green>
+        <blue>250</blue>
+      </srgb>
+    </item>
+    <item token="CHBRN">
+      <cie>
+        <xyL>
+          <x>0.39</x>
+          <y>0.43</y>
+          <L>30</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>161</red>
+        <green>150</green>
+        <blue>83</blue>
+      </srgb>
+    </item>
+    <item token="CHWHT">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>80</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>201</red>
+        <green>237</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="SCLBR">
+      <cie>
+        <xyL>
+          <x>0.5</x>
+          <y>0.4</y>
+          <L>32</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>227</red>
+        <green>128</green>
+        <blue>57</blue>
+      </srgb>
+    </item>
+    <item token="CHCOR">
+      <cie>
+        <xyL>
+          <x>0.5</x>
+          <y>0.4</y>
+          <L>32</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>227</red>
+        <green>128</green>
+        <blue>57</blue>
+      </srgb>
+    </item>
+    <item token="LITRD">
+      <cie>
+        <xyL>
+          <x>0.48</x>
+          <y>0.3</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>234</red>
+        <green>84</green>
+        <blue>113</blue>
+      </srgb>
+    </item>
+    <item token="LITGN">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.56</y>
+          <L>60</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>82</red>
+        <green>233</green>
+        <blue>58</blue>
+      </srgb>
+    </item>
+    <item token="LITYW">
+      <cie>
+        <xyL>
+          <x>0.41</x>
+          <y>0.49</y>
+          <L>70</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>225</red>
+        <green>225</green>
+        <blue>57</blue>
+      </srgb>
+    </item>
+    <item token="ISDNG">
+      <cie>
+        <xyL>
+          <x>0.3</x>
+          <y>0.17</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>192</red>
+        <green>69</green>
+        <blue>209</blue>
+      </srgb>
+    </item>
+    <item token="DNGHL">
+      <cie>
+        <xyL>
+          <x>0.48</x>
+          <y>0.3</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>234</red>
+        <green>84</green>
+        <blue>113</blue>
+      </srgb>
+    </item>
+    <item token="TRFCD">
+      <cie>
+        <xyL>
+          <x>0.3</x>
+          <y>0.17</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>192</red>
+        <green>69</green>
+        <blue>209</blue>
+      </srgb>
+    </item>
+    <item token="TRFCF">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.24</y>
+          <L>48</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>203</red>
+        <green>169</green>
+        <blue>250</blue>
+      </srgb>
+    </item>
+    <item token="LANDA">
+      <cie>
+        <xyL>
+          <x>0.35</x>
+          <y>0.39</y>
+          <L>50</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>191</red>
+        <green>191</green>
+        <blue>143</blue>
+      </srgb>
+    </item>
+    <item token="LANDF">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.42</y>
+          <L>15</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>141</red>
+        <green>100</green>
+        <blue>46</blue>
+      </srgb>
+    </item>
+    <item token="CSTLN">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>10</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>76</red>
+        <green>91</green>
+        <blue>99</blue>
+      </srgb>
+    </item>
+    <item token="SNDG1">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>118</red>
+        <green>140</green>
+        <blue>151</blue>
+      </srgb>
+    </item>
+    <item token="SNDG2">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="DEPSC">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>10</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>76</red>
+        <green>91</green>
+        <blue>99</blue>
+      </srgb>
+    </item>
+    <item token="DEPCN">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>118</red>
+        <green>140</green>
+        <blue>151</blue>
+      </srgb>
+    </item>
+    <item token="DEPDW">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>80</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>201</red>
+        <green>237</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="DEPMD">
+      <cie>
+        <xyL>
+          <x>0.26</x>
+          <y>0.29</y>
+          <L>65</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>167</red>
+        <green>218</green>
+        <blue>252</blue>
+      </srgb>
+    </item>
+    <item token="DEPMS">
+      <cie>
+        <xyL>
+          <x>0.23</x>
+          <y>0.25</y>
+          <L>55</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>130</red>
+        <green>202</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="DEPVS">
+      <cie>
+        <xyL>
+          <x>0.21</x>
+          <y>0.22</y>
+          <L>45</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>97</red>
+        <green>184</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="DEPIT">
+      <cie>
+        <xyL>
+          <x>0.26</x>
+          <y>0.36</y>
+          <L>35</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>88</red>
+        <green>175</green>
+        <blue>156</blue>
+      </srgb>
+    </item>
+    <item token="RADHI">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.56</y>
+          <L>60</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>82</red>
+        <green>233</green>
+        <blue>58</blue>
+      </srgb>
+    </item>
+    <item token="RADLO">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.56</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>46</red>
+        <green>142</green>
+        <blue>32</blue>
+      </srgb>
+    </item>
+    <item token="NINFO">
+      <cie>
+        <xyL>
+          <x>0.5</x>
+          <y>0.4</y>
+          <L>32</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>227</red>
+        <green>128</green>
+        <blue>57</blue>
+      </srgb>
+    </item>
+    <item token="RESBL">
+      <cie>
+        <xyL>
+          <x>0.18</x>
+          <y>0.15</y>
+          <L>22</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>46</red>
+        <green>123</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="ADINF">
+      <cie>
+        <xyL>
+          <x>0.41</x>
+          <y>0.49</y>
+          <L>35</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>165</red>
+        <green>165</green>
+        <blue>39</blue>
+      </srgb>
+    </item>
+    <item token="RESGR">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>118</red>
+        <green>140</green>
+        <blue>151</blue>
+      </srgb>
+    </item>
+    <item token="SHIPS">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="PSTRK">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="SYTRK">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>118</red>
+        <green>140</green>
+        <blue>151</blue>
+      </srgb>
+    </item>
+    <item token="PLRTE">
+      <cie>
+        <xyL>
+          <x>0.58</x>
+          <y>0.35</y>
+          <L>18</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>214</red>
+        <green>63</green>
+        <blue>36</blue>
+      </srgb>
+    </item>
+    <item token="APLRT">
+      <cie>
+        <xyL>
+          <x>0.5</x>
+          <y>0.4</y>
+          <L>32</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>227</red>
+        <green>128</green>
+        <blue>57</blue>
+      </srgb>
+    </item>
+    <item token="UINFD">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="UINFF">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>10</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>76</red>
+        <green>91</green>
+        <blue>99</blue>
+      </srgb>
+    </item>
+    <item token="UIBCK">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>80</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>201</red>
+        <green>237</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="UIAFD">
+      <cie>
+        <xyL>
+          <x>0.21</x>
+          <y>0.22</y>
+          <L>45</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>97</red>
+        <green>184</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="UINFR">
+      <cie>
+        <xyL>
+          <x>0.48</x>
+          <y>0.30</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>234</red>
+        <green>84</green>
+        <blue>113</blue>
+      </srgb>
+    </item>
+    <item token="UINFG">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.56</y>
+          <L>60</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>82</red>
+        <green>233</green>
+        <blue>58</blue>
+      </srgb>
+    </item>
+    <item token="UINFO">
+      <cie>
+        <xyL>
+          <x>0.5</x>
+          <y>0.4</y>
+          <L>32</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>227</red>
+        <green>128</green>
+        <blue>57</blue>
+      </srgb>
+    </item>
+    <item token="UINFB">
+      <cie>
+        <xyL>
+          <x>0.18</x>
+          <y>0.15</y>
+          <L>22</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>46</red>
+        <green>123</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="UINFM">
+      <cie>
+        <xyL>
+          <x>0.30</x>
+          <y>0.17</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>192</red>
+        <green>69</green>
+        <blue>209</blue>
+      </srgb>
+    </item>
+    <item token="UIBDR">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>10</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>76</red>
+        <green>91</green>
+        <blue>99</blue>
+      </srgb>
+    </item>
+    <item token="UIAFF">
+      <cie>
+        <xyL>
+          <x>0.35</x>
+          <y>0.39</y>
+          <L>50</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>191</red>
+        <green>191</green>
+        <blue>143</blue>
+      </srgb>
+    </item>
+    <item token="UIAFF">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="OUTLL">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.42</y>
+          <L>15</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>141</red>
+        <green>100</green>
+        <blue>46</blue>
+      </srgb>
+    </item>
+    <item token="RES01">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>118</red>
+        <green>140</green>
+        <blue>151</blue>
+      </srgb>
+    </item>
+    <item token="RES02">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>118</red>
+        <green>140</green>
+        <blue>151</blue>
+      </srgb>
+    </item>
+    <item token="RES03">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>118</red>
+        <green>140</green>
+        <blue>151</blue>
+      </srgb>
+    </item>
+    <item token="BKAJ1">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0.6</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>14</red>
+        <green>18</green>
+        <blue>21</blue>
+      </srgb>
+    </item>
+    <item token="BKAJ2">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>1.6</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>28</red>
+        <green>35</green>
+        <blue>38</blue>
+      </srgb>
+    </item>
+    <item token="MARBL">
+      <cie>
+        <xyL>
+          <x>0.145</x>
+          <y>0.14</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>128</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="MARCY">
+      <cie>
+        <xyL>
+          <x>0.2</x>
+          <y>0.355</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>143</green>
+        <blue>132</blue>
+      </srgb>
+    </item>
+    <item token="MARMG">
+      <cie>
+        <xyL>
+          <x>0.36</x>
+          <y>0.22</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>198</red>
+        <green>77</green>
+        <blue>166</blue>
+      </srgb>
+    </item>
+    <item token="MARWH">
+      <cie>
+        <xyL>
+          <x>0.305</x>
+          <y>0.344</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>113</red>
+        <green>127</green>
+        <blue>119</blue>
+      </srgb>
+    </item>
+    <item token="SC001">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>118</red>
+        <green>82</green>
+        <blue>226</blue>
+      </srgb>
+    </item>
+    <item token="SC002">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>72</red>
+        <green>152</green>
+        <blue>211</blue>
+      </srgb>
+    </item>
+    <item token="SC003">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>97</red>
+        <green>203</green>
+        <blue>229</blue>
+      </srgb>
+    </item>
+    <item token="SC004">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>109</red>
+        <green>188</green>
+        <blue>69</blue>
+      </srgb>
+    </item>
+    <item token="SC005">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>180</red>
+        <green>220</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="SC006">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>205</red>
+        <green>193</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="SC007">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>248</red>
+        <green>167</green>
+        <blue>24</blue>
+      </srgb>
+    </item>
+    <item token="SC008">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>247</red>
+        <green>162</green>
+        <blue>157</blue>
+      </srgb>
+    </item>
+    <item token="SC009">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>255</red>
+        <green>30</green>
+        <blue>30</blue>
+      </srgb>
+    </item>
+    <item token="BA001">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>157</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA002">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.1</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>162</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA003">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.2</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>168</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA004">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.3</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>173</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA005">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.4</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>178</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA006">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.5</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>184</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA007">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.6</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>189</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA008">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.7</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>194</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA009">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.8</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>200</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA010">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.9</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>205</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA011">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.10</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>211</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA012">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.11</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>216</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA013">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.12</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>221</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA014">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.13</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>227</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA015">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.14</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>232</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA016">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.15</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>237</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA017">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.16</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>243</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA018">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.17</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>248</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA019">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.18</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA020">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.19</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>3</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA021">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>7</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA022">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.21</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>11</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA023">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.22</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>15</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA024">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.23</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>19</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA025">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.24</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>23</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA026">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>27</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA027">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.26</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>31</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA028">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.27</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>35</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA029">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.28</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>39</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA030">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.29</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>43</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA031">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.30</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>47</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA032">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.31</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>51</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA033">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.32</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>54</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA034">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.33</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>58</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA035">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.34</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>62</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA036">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.35</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>66</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA037">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.36</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>70</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA038">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.37</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>74</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA039">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.38</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>78</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA040">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.39</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>82</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA041">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.40</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>86</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA042">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.41</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>90</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA043">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.42</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>94</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA044">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.43</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>98</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA045">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.44</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>102</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA046">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.45</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>105</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA047">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.46</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>109</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA048">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.47</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>113</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA049">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.48</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>117</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA050">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.49</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>121</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA051">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.50</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>125</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA052">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.51</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>129</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA053">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.52</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>133</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA054">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.53</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>137</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA055">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.54</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>141</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA056">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.55</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>145</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA057">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.56</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>149</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA058">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.57</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>153</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA059">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.58</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>156</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA060">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.59</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>160</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA061">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.60</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>164</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA062">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.61</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>168</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA063">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.62</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>172</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA064">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.63</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>176</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA065">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.64</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>180</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA066">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.65</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>184</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA067">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.66</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>188</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA068">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.67</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>192</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA069">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.68</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>196</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA070">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.69</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>200</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA071">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.70</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>204</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA072">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.71</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>207</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA073">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.72</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>211</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA074">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.73</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>215</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA075">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.74</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>219</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA076">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.75</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>223</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA077">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.76</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>227</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA078">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.77</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>231</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA079">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.78</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>235</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA080">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.79</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>239</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA081">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.80</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>243</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA082">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.81</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>247</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA083">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.82</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>251</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA084">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.83</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>255</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA085">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.84</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>250</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA086">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.85</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>245</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA087">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.86</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>240</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA088">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.87</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>235</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA089">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.88</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>230</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA090">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.89</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>225</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA091">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.90</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>220</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA092">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.91</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>215</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA093">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.92</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>210</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA094">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.93</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>205</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA095">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.94</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>201</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA096">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.95</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>196</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA097">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.96</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>191</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA098">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.97</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>186</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA099">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.98</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>181</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA100">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.99</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>176</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA101">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.100</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>171</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA102">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.101</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>166</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA103">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.102</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>161</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA104">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.103</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>156</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA105">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.104</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>152</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA106">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.105</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>147</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA107">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.106</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>142</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA108">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.107</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>137</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA109">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.108</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>132</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA110">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.109</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>127</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA111">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.110</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>122</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA112">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.111</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>117</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA113">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.112</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>112</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA114">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.113</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>107</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA115">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.114</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>102</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA116">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.115</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>98</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA117">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.116</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>93</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA118">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.117</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>88</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA119">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.118</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>83</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA120">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.119</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>78</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA121">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.120</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>73</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA122">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.121</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>68</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA123">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.122</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>63</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA124">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.123</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>58</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA125">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.124</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>53</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA126">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.125</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>49</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA127">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.126</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>44</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA128">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.127</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>39</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA129">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.128</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>34</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA130">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.129</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>29</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA131">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.130</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>24</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA132">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.131</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>19</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA133">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.132</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>14</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA134">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.133</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>9</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA135">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.134</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>4</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA136">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.135</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA137">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.136</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA138">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.137</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA139">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.138</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA140">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.139</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA141">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.140</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA142">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.141</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA143">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.142</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA144">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.143</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA145">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.144</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA146">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.145</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA147">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.146</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA148">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.147</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA149">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.148</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA150">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.149</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA151">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.150</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA152">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.151</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA153">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.152</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA154">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.153</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA155">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.154</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA156">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.155</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA157">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.156</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA158">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.157</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA159">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.158</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA160">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.159</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA161">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.160</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA162">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.161</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA163">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.162</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA164">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.163</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA165">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.164</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA166">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.165</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA167">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.166</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA168">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.167</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA169">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.168</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA170">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.169</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA171">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.170</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA172">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.171</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>255</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA173">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.172</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>249</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA174">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.173</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>244</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA175">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.174</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>239</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA176">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.175</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>234</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA177">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.176</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>229</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA178">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.177</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>224</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA179">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.178</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>219</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA180">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.179</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>214</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA181">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.180</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>209</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA182">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.181</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>204</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA183">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.182</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>198</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA184">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.183</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>193</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA185">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.184</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>188</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA186">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.185</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>183</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA187">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.186</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>178</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA188">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.187</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>173</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA189">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.188</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>168</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA190">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.189</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>163</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA191">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.190</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>158</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA192">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.191</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>153</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA193">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.192</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>147</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA194">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.193</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>142</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA195">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.194</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>137</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA196">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.195</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>132</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA197">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.196</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>127</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA198">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.197</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>122</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA199">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.198</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>117</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA200">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.199</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>112</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA201">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.200</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>107</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA202">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.201</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>102</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA203">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.202</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>96</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA204">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.203</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>91</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA205">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.204</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>86</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA206">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.205</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>81</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA207">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.206</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>76</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA208">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.207</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>71</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA209">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.208</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>66</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA210">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.209</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>61</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA211">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.210</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>56</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA212">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.211</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>51</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA213">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.212</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>45</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA214">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.213</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>40</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA215">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.214</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>35</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA216">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.215</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>30</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA217">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.216</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>25</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA218">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.217</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>20</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA219">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.218</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>15</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA220">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.219</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>10</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA221">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.220</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>5</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA222">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.221</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA223">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.222</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>3</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA224">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.223</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>7</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA225">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.224</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>10</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA226">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.225</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>14</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA227">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.226</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>18</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA228">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.227</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>21</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA229">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.228</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>25</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA230">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.229</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>29</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA231">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.230</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>32</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA232">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.231</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>36</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA233">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.232</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>39</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA234">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.233</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>43</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA235">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.234</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>47</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA236">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.235</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>50</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA237">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.236</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>54</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA238">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.237</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>58</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA239">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.238</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>61</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA240">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.239</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>65</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA241">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.240</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>68</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA242">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.241</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>72</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA243">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.242</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>76</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA244">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.243</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>79</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA245">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.244</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>83</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA246">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.245</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>87</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA247">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.246</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>90</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA248">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.247</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>94</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA249">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.248</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>97</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA250">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.249</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>101</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA251">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.250</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>105</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA252">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.251</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>108</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA253">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.252</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>112</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA254">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.253</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>116</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+    <item token="BA255">
+      <cie>
+        <xyL>
+          <x>0.280</x>
+          <y>0.310</y>
+          <L>40.254</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>116</red>
+        <green>0</green>
+        <blue></blue>
+      </srgb>
+    </item>
+  </palette>
+</colorProfile>
+
+

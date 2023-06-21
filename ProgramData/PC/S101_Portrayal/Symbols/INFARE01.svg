@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.27mm" height="5.27mm" viewBox="-2.51 -2.7 5.27 5.27">
+  <title>INFARE01</title>
+  <desc>information area point</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2022-07-21" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.35" y="-2.54" height="4.95" width="4.95"/>
+  <rect class="svgBox layout" fill="none" x="-2.35" y="-2.54" height="4.95" width="4.95"/>
+  <path d=" M -2.35,2.41 L 2.6,2.41 L 2.6,-2.54 L -2.35,-2.54 L -2.35,2.41" class="sl f0 sCHMGF" style="stroke-width: 0.32;"/>
+  <path d=" M -0.4,-1.87 L -0.4,-1.45" class="sl f0 sCHMGF" style="stroke-width: 0.32;"/>
+  <path d=" M 0,1.5 L 0,-0.84 L -0.92,-0.84" class="sl f0 sCHMGF" style="stroke-width: 0.32;"/>
+  <path d=" M -0.91,1.51 L 0.76,1.51" class="sl f0 sCHMGF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.5"/>
+</svg>

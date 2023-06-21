@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-123" version="1.0.0">
+  <pixmaps/>
+  <colorProfiles>
+    <colorProfile id="colorProfile.xml">
+      <description>
+        <name>Color Profile</name>
+        <description>Color Profile</description>
+        <language>en</language>
+      </description>
+      <fileName>colorProfile.xml</fileName>
+      <fileType>ColorProfile</fileType>
+      <fileFormat>XML</fileFormat>
+    </colorProfile>
+  </colorProfiles>
+  <symbols>
+    <symbol id="CostGuardStattion">
+      <description>
+        <name>CostGuardStattion</name>
+        <description>CostGuardStattion</description>
+        <language>en</language>
+      </description>
+      <fileName>CostGuardStattion.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="GMDSSArea">
+      <description>
+        <name>GMDSSArea</name>
+        <description>GMDSSArea</description>
+        <language>en</language>
+      </description>
+      <fileName>GMDSSArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="NAVTEXStationArea">
+      <description>
+        <name>NAVTEXStationArea</name>
+        <description>NAVTEXStationArea</description>
+        <language>en</language>
+      </description>
+      <fileName>NAVTEXStationArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>object which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RadioStation">
+      <description>
+        <name>RadioStation</name>
+        <description>RadioStation</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioStation.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RadioServiceArea">
+      <description>
+        <name>RadioServiceArea</name>
+        <description>RadioServiceArea</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioServiceArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RSRDEF51">
+      <description>
+        <name>RSRDEF51</name>
+        <description>area in which undefined restrictions exist</description>
+        <language>en</language>
+      </description>
+      <fileName>RSRDEF51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="InmarsatOceanRegionArea">
+      <description>
+        <name>InmarsatOceanRegionArea</name>
+        <description>InmarsatOceanRegionArea</description>
+        <language>en</language>
+      </description>
+      <fileName>InmarsatOceanRegionArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="NavigationalMeteologicalArea">
+      <description>
+        <name>NavigationalMeteologicalArea</name>
+        <description>NavigationalMeteologicalArea</description>
+        <language>en</language>
+      </description>
+      <fileName>NavigationalMeteologicalArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="WeatherForecastWarningArea">
+      <description>
+        <name>WeatherForecastWarningArea</name>
+        <description>WeatherForecastWarningArea</description>
+        <language>en</language>
+      </description>
+      <fileName>WeatherForecastWarningArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+  </symbols>
+  <lineStyles/>
+  <areaFills/>
+  <fonts/>
+  <viewingGroups>
+    <viewingGroup id="1">
+      <description>
+        <name>12310</name>
+        <description/>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+  </viewingGroups>
+  <foundationMode/>
+  <viewingGroupLayers/>
+  <displayModes/>
+  <displayPlane>
+    <displayPlane id="OVERRADAR">
+      <description>
+        <name>OVERRADAR</name>
+        <description>Content displayed on top of Radar image</description>
+        <language>en</language>
+      </description>
+    </displayPlane>
+  </displayPlane>
+  <context/>
+  <rules>
+    <ruleFile id="main.xsl">
+      <description>
+        <name>main</name>
+        <description>main rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="CoastguardSCentertation.xsl">
+      <description>
+        <name>CoastguardStation</name>
+        <description>CoastguardStation</description>
+        <language>en</language>
+      </description>
+      <fileName>CoastguardStation.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="DataCoverage.xsl">
+      <description>
+        <name>DataCoverage</name>
+        <description>DataCoverage</description>
+        <language>en</language>
+      </description>
+      <fileName>DataCoverage.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="Default.xsl">
+      <description>
+        <name>Default</name>
+        <description>Default</description>
+        <language>en</language>
+      </description>
+      <fileName>Default.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="GMDSSArea.xsl">
+      <description>
+        <name>GMDSS Area</name>
+        <description>GMDSS Area rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>GMDSSArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="NavtexStationArea.xsl">
+      <description>
+        <name>Navtex Station Area</name>
+        <description>Navtex Station Area rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>NavtexStationArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="QualityOfNonBathymetricData.xsl">
+      <description>
+        <name>QualityOfNonBathymetricData</name>
+        <description>QualityOfNonBathymetricData</description>
+        <language>en</language>
+      </description>
+      <fileName>QualityOfNonBathymetricData.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="RadioServiceArea.xsl">
+      <description>
+        <name>Radio Service Area</name>
+        <description>Radio Service Area rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioServiceArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="RadioStation.xsl">
+      <description>
+        <name>Radio Station</name>
+        <description>Radio Station rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioStation.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="simpleLineStyle.xsl">
+      <description>
+        <name>simpleLineStyle</name>
+        <description>simpleLineStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>simpleLineStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="textStyle.xsl">
+      <description>
+        <name>textStyle</name>
+        <description>textStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>textStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="InmarsatOceanRegionArea.xsl">
+      <description>
+        <name>InmarsatOceanRegionArea</name>
+        <description>InmarsatOceanRegionArea</description>
+        <language>en</language>
+      </description>
+      <fileName>InmarsatOceanRegionArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="NavigationalMeteorologicalArea.xsl">
+      <description>
+        <name>NavigationalMeteorologicalArea</name>
+        <description>NavigationalMeteorologicalArea</description>
+        <language>en</language>
+      </description>
+      <fileName>NavigationalMeteorologicalArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="WeatherForecastWarningArea.xsl">
+      <description>
+        <name>WeatherForecastWarningArea</name>
+        <description>WeatherForecastWarningArea</description>
+        <language>en</language>
+      </description>
+      <fileName>WeatherForecastWarningArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="attributeRules.xsl">
+      <description>
+        <name>attributeRules</name>
+        <description>attributeRules</description>
+        <language>en</language>
+      </description>
+      <fileName>attributeRules.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

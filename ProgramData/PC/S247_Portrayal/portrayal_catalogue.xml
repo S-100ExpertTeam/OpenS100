@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-246" version="1.0.0">
+  <pixmaps/>
+  <colorProfiles>
+    <colorProfile id="colorProfile.xml">
+      <description>
+        <name>Color Profile</name>
+        <description>Color Profile</description>
+        <language>en</language>
+      </description>
+      <fileName>colorProfile.xml</fileName>
+      <fileType>ColorProfile</fileType>
+      <fileFormat>XML</fileFormat>
+    </colorProfile>
+  </colorProfiles>
+  <symbols>
+    <symbol id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>object which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOWERS15">
+      <description>
+        <name>TOWERS15</name>
+        <description>conspicuous radio, television tower</description>
+        <language>en</language>
+      </description>
+      <fileName>TOWERS15.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+  </symbols>
+  <lineStyles>
+  </lineStyles>
+  <areaFills/>
+  <fonts/>
+  <viewingGroups>
+    <viewingGroup id="1">
+      <description>
+        <name>26010</name>
+        <description/>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+  </viewingGroups>
+  <foundationMode/>
+  <viewingGroupLayers/>
+  <displayModes/>
+  <displayPlane>
+    <displayPlane id="OVERRADAR">
+      <description>
+        <name>OVERRADAR</name>
+        <description>Content displayed on top of Radar image</description>
+        <language>en</language>
+      </description>
+    </displayPlane>
+  </displayPlane>
+  <context/>
+  <rules>
+    <ruleFile id="main.xsl">
+      <description>
+        <name>main</name>
+        <description>main rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="DLoranStation.xsl">
+      <description>
+        <name>DLoranStation</name>
+        <description>DLoranStation</description>
+        <language>en</language>
+      </description>
+      <fileName>DLoranStation.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="Default.xsl">
+      <description>
+        <name>Default</name>
+        <description>Default</description>
+        <language>en</language>
+      </description>
+      <fileName>Default.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="simpleLineStyle.xsl">
+      <description>
+        <name>simpleLineStyle</name>
+        <description>simpleLineStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>simpleLineStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="textStyle.xsl">
+      <description>
+        <name>textStyle</name>
+        <description>textStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>textStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

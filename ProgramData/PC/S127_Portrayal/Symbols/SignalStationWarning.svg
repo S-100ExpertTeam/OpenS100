@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.530001mm" height="6.59mm" viewBox="-4.27 -5.58 8.530001 6.59">
+  <title>SignalStationWarning_v2</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-22" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.27" y="1.01" height="6.59" width="8.530001" />
+  <rect class="svgBox layout" fill="none" x="-4.27" y="-5.58" height="6.59" width="8.530001" />
+  <path d=" M 0.01,-0.27 L 0,-4.58" class="sl f0 sDNGHL" style="stroke-width:0.64;" />
+  <path d=" M 3.23,-3.05 L 1.96,0.01 L -1.95,0.01 L -3.23,-3.05" class="fLITRD" style="stroke-width:0.64;" />
+  <path d=" M 3.23,-3.06 L 1.96,0 L -1.95,0 L -3.23,-3.06" class="sl f0 sTESTA" style="stroke-width:0.32;" />
+  <path d=" M -3.27,-3.06 L 3.26,-3.07" class="sl f0 sTESTA" style="stroke-width:0.32;" />
+  <path d=" M -0.38,-2.34 L -1.39,-2.34 L -1.39,-1.59 L -0.39,-1.57 L -0.38,-0.79 L -1.39,-0.79" class="sl f0 sTESTA" style="stroke-width:0.32;" />
+  <path d=" M 1.33,-2.34 L 0.32,-2.34 L 0.33,-1.58 L 1.34,-1.56 L 1.33,-0.77 L 0.33,-0.77" class="sl f0 sTESTA" style="stroke-width:0.32;" />
+</svg>

@@ -612,7 +612,7 @@ void S100EditRender::UpdatePoint(int sx, int sy, SPoint* geom)
 		int wkbSize = 0;
 		geom->ExportToWkb(&wkb, &wkbSize);
 
-		gisLib->creator.fc = gisLib->GetFC();
+		gisLib->creator.fc = gisLib->catalogManager.getFC("S-101");
 		gisLib->creator.enc = enc;
 		gisLib->creator.SetPointGeometry(feature, wkb, wkbSize);
 
@@ -643,7 +643,7 @@ void S100EditRender::UpdatePoint(int sx, int sy, SMultiPoint* geom)
 		int wkbSize = 0;
 		geom->ExportToWkb(&wkb, &wkbSize);
 
-		gisLib->creator.fc = gisLib->GetFC();
+		gisLib->creator.fc = gisLib->catalogManager.getFC("S-101");
 		gisLib->creator.enc = enc;
 		gisLib->creator.SetMultiPointGeometry(feature, wkb, wkbSize);
 
@@ -671,7 +671,7 @@ void S100EditRender::UpdatePoint(int sx, int sy, SCurveHasOrient* geom)
 		int wkbSize = 0;
 		geom->ExportToWkb(&wkb, &wkbSize);
 
-		gisLib->creator.fc = gisLib->GetFC();
+		gisLib->creator.fc = gisLib->catalogManager.getFC("S-101");
 		gisLib->creator.enc = enc;
 		gisLib->creator.SetCurveGeometry(feature, wkb, wkbSize);
 
@@ -699,7 +699,7 @@ void S100EditRender::UpdatePoint(int sx, int sy, SCompositeCurve* geom)
 		int wkbSize = 0;
 		geom->ExportToWkb(&wkb, &wkbSize);
 
-		gisLib->creator.fc = gisLib->GetFC();
+		gisLib->creator.fc = gisLib->catalogManager.getFC("S-101");
 		gisLib->creator.enc = enc;
 		gisLib->creator.SetCompositeCurveGeometry(feature, wkb, wkbSize);
 
@@ -727,7 +727,7 @@ void S100EditRender::UpdatePoint(int sx, int sy, SSurface* geom)
 		int wkbSize = 0;
 		geom->ExportToWkb(&wkb, &wkbSize);
 
-		gisLib->creator.fc = gisLib->GetFC();
+		gisLib->creator.fc = gisLib->catalogManager.getFC("S-101");
 		gisLib->creator.enc = enc;
 		gisLib->creator.SetSurfaceGeometry(feature, wkb, wkbSize);
 

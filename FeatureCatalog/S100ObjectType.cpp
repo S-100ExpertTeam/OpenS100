@@ -46,6 +46,13 @@ std::list<InformationBinding*>& S100ObjectType::GetInformationBindingPointer()
 
 void S100ObjectType::InsertInformationBinding(InformationBinding* value)
 {
+	for (auto i = informationBinding.begin(); i != informationBinding.end(); i++) {
+		if ((*i)->IsSameAssociation(*value)) {
+			delete value;
+			return;
+		}
+	}
+
 	informationBinding.push_back(value);
 }
 

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.14mm" height="7.98mm" viewBox="-4.07 -3.98 8.14 7.98">
+  <title>TROCYC14</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-08" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.07" y="4" height="7.98" width="8.14" />
+  <rect class="svgBox layout" fill="none" x="-4.07" y="-3.98" height="7.98" width="8.14" />
+  <path d=" M 0.24,-1.48 L 2.35,-3.48 L 3.57,-2.17 L 1.31,-0.01 L 3.57,2.15 L 2.35,3.47 L 0.02,1.24 L -2.36,3.5 L -3.57,2.18 L -1.29,-0.01 L -3.57,-2.17 L -2.36,-3.48 L 0.02,-1.25 L 0.02,-1.28" class="fCHRED" style="stroke-width:0.32;" />
+</svg>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-121" version="1.0">
+   <pixmaps/>
+   <colorProfiles>
+      <colorProfile id="sample1">
+         <description>
+            <name>sample1</name>
+            <description>color profile with day colors for testing</description>
+            <language>en</language>
+         </description>
+         <fileName>colorProfile.xml</fileName>
+         <fileType>ColorProfile</fileType>
+         <fileFormat>XML</fileFormat>
+      </colorProfile>
+   </colorProfiles>
+   <symbols>
+     <symbol id="LNDARE01">
+       <description>
+         <name>LNDARE01</name>
+         <description>LNDARE01</description>
+         <language>en</language>
+       </description>
+       <fileName>LNDARE01.svg</fileName>
+       <fileType>Symbol</fileType>
+       <fileFormat>SVG</fileFormat>
+     </symbol>
+   </symbols>
+   <lineStyles>
+	  <lineStyle id="NAVWAR02">
+         <description>
+            <name>NAVWAR02</name>
+            <description>Navigational Warning Part</description>
+            <language>en</language>
+         </description>
+         <fileName>NAVWAR02.xml</fileName>
+         <fileType>LineStyle</fileType>
+         <fileFormat>XML</fileFormat>
+      </lineStyle>
+      <lineStyle id="PORWAR02">
+         <description>
+            <name>PORWAR02</name>
+            <description>Port Warning Part</description>
+            <language>en</language>
+         </description>
+         <fileName>PORWAR02.xml</fileName>
+         <fileType>LineStyle</fileType>
+         <fileFormat>XML</fileFormat>
+      </lineStyle>
+   </lineStyles>
+   <areaFills/>
+   <fonts/>
+   <viewingGroups>
+      <viewingGroup id="1">
+         <description>
+            <name>40000</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+   </viewingGroups>
+   <foundationMode/>
+   <viewingGroupLayers/>
+   <displayModes/>
+   <displayPlane>
+      <displayPlane id="1">
+         <description>
+            <name>overRadar</name>
+            <description>Content displayed on top of Radar image</description>
+            <language>en</language>
+         </description>
+      </displayPlane>
+      <displayPlane id="2">
+         <description>
+            <name>underRadar</name>
+            <description>Content displayed underneath Radar image</description>
+            <language>en</language>
+         </description>
+      </displayPlane>
+   </displayPlane>
+   <context/>
+   <rules>
+     <ruleFile id="1">
+       <description>
+         <name>NavigationalWarningPart</name>
+         <description>Navigational Warning Part</description>
+         <language>en</language>
+       </description>
+       <fileName>NavigationalWarningPart.xsl</fileName>
+       <fileType>Rule</fileType>
+       <fileFormat>XSLT</fileFormat>
+       <ruleType>SubTemplate</ruleType>
+     </ruleFile>
+     <ruleFile id="2">
+       <description>
+         <name>PortWarningPart</name>
+         <description>Port Warning Part</description>
+         <language>en</language>
+       </description>
+       <fileName>PortWarningPart.xsl</fileName>
+       <fileType>Rule</fileType>
+       <fileFormat>XSLT</fileFormat>
+       <ruleType>SubTemplate</ruleType>
+     </ruleFile>
+     <ruleFile id="3">
+       <description>
+         <name>main_COMMON</name>
+         <description>common chart rules</description>
+         <language>en</language>
+       </description>
+       <fileName>_main_COMMON.xsl</fileName>
+       <fileType>Rule</fileType>
+       <fileFormat>XSLT</fileFormat>
+       <ruleType>TopLevelTemplate</ruleType>
+     </ruleFile>
+     <ruleFile id="4">
+       <description>
+         <name>Default_COMMON</name>
+         <description>default presentation rules</description>
+         <language>en</language>
+       </description>
+       <fileName>_Default_COMMON.xsl</fileName>
+       <fileType>Rule</fileType>
+       <fileFormat>XSLT</fileFormat>
+       <ruleType>SubTemplate</ruleType>
+     </ruleFile>
+     <ruleFile id="5">
+       <description>
+         <name>attributeRules</name>
+         <description>attributeRules</description>
+         <language>en</language>
+       </description>
+       <fileName>attributeRules.xsl</fileName>
+       <fileType>Rule</fileType>
+       <fileFormat>XSLT</fileFormat>
+       <ruleType>SubTemplate</ruleType>
+     </ruleFile>
+     <ruleFile id="6">
+       <description>
+         <name>simpleLineStyle</name>
+         <description>simpleLineStyle</description>
+         <language>en</language>
+       </description>
+       <fileName>simpleLineStyle.xsl</fileName>
+       <fileType>Rule</fileType>
+       <fileFormat>XSLT</fileFormat>
+       <ruleType>SubTemplate</ruleType>
+     </ruleFile>
+     <ruleFile id="7">
+       <description>
+         <name>textStyle</name>
+         <description>textStyle</description>
+         <language>en</language>
+       </description>
+       <fileName>textStyle.xsl</fileName>
+       <fileType>Rule</fileType>
+       <fileFormat>XSLT</fileFormat>
+       <ruleType>SubTemplate</ruleType>
+     </ruleFile>
+     <ruleFile id="8">
+       <description>
+         <name>textStyle</name>
+         <description>textStyle</description>
+         <language>en</language>
+       </description>
+       <fileName>LandArea_COMMON.xsl</fileName>
+       <fileType>Rule</fileType>
+       <fileFormat>XSLT</fileFormat>
+       <ruleType>SubTemplate</ruleType>
+     </ruleFile>
+   </rules>
+</portrayalCatalog>

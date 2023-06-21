@@ -1,19 +1,21 @@
 #include "stdafx.h"
 #include "GISLibrary.h"
 #include "Product.h"
-
-#include "../GeoMetryLibrary/ENCCommon.h"
-
-#include "../PortrayalCatalogue/PortrayalCatalogue.h"
-
 #include "SGeometry.h"
 #include "SPoint.h"
 #include "SMultiPoint.h"
 #include "SCurve.h"
 #include "SCompositeCurve.h"
 #include "SSurface.h"
+#include "S10XGML.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
+
+#include "../LibMFCUtil/LibMFCUtil.h"
+
+#include "../GeoMetryLibrary/ENCCommon.h"
+
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -22,6 +24,7 @@
 CGISLibraryApp::CGISLibraryApp()
 {
 	gisLib = this;
+
 	//SCurve curve;
 	//curve.Init(3);
 	//curve.Set(0, 1, 2);
@@ -120,11 +123,11 @@ CGISLibraryApp::~CGISLibraryApp()
 	delete[] SGeometry::viewPoints;
 	SGeometry::viewPoints = nullptr;
 
-	delete fc;
-	fc = nullptr;
-	
-	delete pc;
-	pc = nullptr;
+	//delete fc;
+	//fc = nullptr;
+	//
+	//delete pc;
+	//pc = nullptr;
 }
 
 //CGISLibraryApp* gisLib = new CGISLibraryApp();
@@ -145,8 +148,11 @@ void CGISLibraryApp::InitLibrary(std::wstring fcPath, std::wstring pcPath)
 	D2.CreateDeviceIndependentResources();
 	D2.CreateDeviceDependentResources();
 		
-	SetFC(new FeatureCatalogue(fcPath));
-	SetPC(new PortrayalCatalogue(pcPath));
+	catalogManager.addFC(fcPath);
+	auto pc = catalogManager.addPC(pcPath);
+
+	//SetFC(new FeatureCatalogue(fcPath));
+	//SetPC(new PortrayalCatalogue(pcPath));
 	pc->CreateSVGD2Geometry(D2.pD2Factory);
 	pc->CreatePatternImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
 	pc->CreateLineImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
@@ -157,12 +163,30 @@ void CGISLibraryApp::InitLibrary(FeatureCatalogue* fc, PortrayalCatalogue* pc)
 	D2.CreateDeviceIndependentResources();
 	D2.CreateDeviceDependentResources();
 
-	SetFC(fc);
-	SetPC(pc);
+	catalogManager.addFC(fc);
+	catalogManager.addPC(pc);
+
+	//SetFC(fc);
+	//SetPC(pc);
 
 	pc->CreateSVGD2Geometry(D2.pD2Factory);
 	pc->CreatePatternImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
 	pc->CreateLineImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
+}
+
+void CGISLibraryApp::addCatalogue(std::string fcPath, std::string pcPath)
+{
+	catalogManager.addFC(fcPath);
+	auto pc = catalogManager.addPC(pcPath);
+
+	pc->CreateSVGD2Geometry(D2.pD2Factory);
+	pc->CreatePatternImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
+	pc->CreateLineImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
+}
+
+void CGISLibraryApp::addCatalogue(std::wstring fcPath, std::wstring pcPath)
+{
+	addCatalogue(LibMFCUtil::WStringToString(fcPath), LibMFCUtil::WStringToString(pcPath));
 }
 
 bool CGISLibraryApp::AddLayer(CString _filepath)
@@ -199,6 +223,7 @@ Layer* CGISLibraryApp::GetLayer(int index)
 
 void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale)
 {
+	auto pc = catalogManager.getPC(productNumber);
 	if (pc)
 	{
 		auto pcManager = pc->GetS100PCManager();
@@ -534,26 +559,26 @@ std::wstring CGISLibraryApp::GetColorTable()
 	}
 }
 
-FeatureCatalogue* CGISLibraryApp::GetFC()
-{
-	return fc;
-}
-
-void CGISLibraryApp::SetFC(FeatureCatalogue* fc)
-{
-	this->fc = fc;
-	InitFeatureOnOffMap();
-}
-
-PortrayalCatalogue* CGISLibraryApp::GetPC()
-{
-	return pc;
-}
-
-void CGISLibraryApp::SetPC(PortrayalCatalogue* pc)
-{
-	this->pc = pc;
-}
+//FeatureCatalogue* CGISLibraryApp::GetFC()
+//{
+//	return fc;
+//}
+//
+//void CGISLibraryApp::SetFC(FeatureCatalogue* fc)
+//{
+//	this->fc = fc;
+//	InitFeatureOnOffMap();
+//}
+//
+//PortrayalCatalogue* CGISLibraryApp::GetPC()
+//{
+//	return pc;
+//}
+//
+//void CGISLibraryApp::SetPC(PortrayalCatalogue* pc)
+//{
+//	this->pc = pc;
+//}
 
 void CGISLibraryApp::SetS100Scale(double value)
 {
@@ -575,7 +600,7 @@ int CGISLibraryApp::GetS100Scale()
 
 void CGISLibraryApp::InitFeatureOnOffMap()
 {
-	auto fc = GetFC();
+	auto fc = catalogManager.getFC("S-101");
 	if (fc)
 	{
 		featureOnOffMap.clear();

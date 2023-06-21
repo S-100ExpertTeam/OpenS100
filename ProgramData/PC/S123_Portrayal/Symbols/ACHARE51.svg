@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="12.61mm" height="13.36mm" viewBox="-6.45 -7.95 12.61 13.36">
+  <title>ACHARE51</title>
+  <desc>anchorage area</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-6.29" y="-7.79" height="13.04" width="12.29"/>
+  <rect class="svgBox layout" fill="none" x="-6.29" y="-7.79" height="13.04" width="12.29"/>
+  <path d=" M -0.57,-7.79 L -0.57,-4.5 L -3.75,-4.5 L -3.75,-3.38 L -0.57,-3.38 L -0.57,3.46 L -2.63,3 L -4.5,1.59 L -6.29,1.59 L -3.75,3.46 L 0,5.25 L 3.46,3.46 L 6,1.59 L 4.5,1.59 L 2.25,3 L 0.18,3.46 L 0.18,-3.38 L 3.46,-3.38 L 3.46,-4.5 L 0.18,-4.5 L 0.18,-7.79 L -0.57,-7.79" class="sl f0 sCHMGF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

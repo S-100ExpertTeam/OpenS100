@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pixmap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="S100Pixmap.xsd">
+<description>Pixmap for a pixmap pattern fill for an area which is not sufficiently described
+to be symbolized, or for which no symbol exists in the symbol library.</description>
+<width>8</width>
+<height>16</height>
+<colorMap>
+<color id="0" transparency="1.0">#000000</color>
+<color id="A">CHMGD</color>
+</colorMap>
+<background>0</background>
+<pixel x="2" y="0">A</pixel>
+<pixel x="3" y="0">A</pixel>
+<pixel x="4" y="0">A</pixel>
+<pixel x="5" y="0">A</pixel>
+<pixel x="1" y="1">A</pixel>
+<pixel x="6" y="1">A</pixel>
+<pixel x="0" y="2">A</pixel>
+<pixel x="7" y="2">A</pixel>
+<pixel x="0" y="3">A</pixel>
+<pixel x="7" y="3">A</pixel>
+<pixel x="7" y="4">A</pixel>
+<pixel x="7" y="5">A</pixel>
+<pixel x="6" y="6">A</pixel>
+<pixel x="5" y="7">A</pixel>
+<pixel x="4" y="8">A</pixel>
+<pixel x="3" y="9">A</pixel>
+<pixel x="3" y="10">A</pixel>
+<pixel x="3" y="11">A</pixel>
+<pixel x="3" y="14">A</pixel>
+<pixel x="3" y="15">A</pixel>
+</pixmap>

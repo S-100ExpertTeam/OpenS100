@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.2mm" height="6.2mm" viewBox="-1.64 -3.08 3.2 6.2">
+  <title>TROCYC13</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-08" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.64" y="3.12" height="6.2" width="3.2" />
+  <rect class="svgBox layout" fill="none" x="-1.64" y="-3.08" height="6.2" width="3.2" />
+  <path d=" M -0.14,-2.58 L -0.44,-2.18 L -0.74,-1.68 L -0.94,-1.08 L -1.14,-0.28 L -1.14,0.02 L -1.14,0.42 L -0.84,0.82 L -0.44,1.02 L 0.06,1.12 L 0.46,1.02 L 0.26,1.72 L -0.04,2.62 L 0.36,2.12 L 0.76,1.32 L 1.06,0.22 L 1.06,-0.08 L 0.96,-0.38 L 0.86,-0.58 L 0.66,-0.88 L 0.16,-1.08 L -0.24,-1.08 L -0.64,-0.98 L -0.34,-1.78 L -0.14,-2.58 L -0.14,-2.58" class="fLITGN" style="stroke-width:0.32;" />
+</svg>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.1mm" height="6.47mm" viewBox="-3.82 -3.22 7.1 6.47">
+  <title>CATREA05</title>
+  <desc>symbol for bird sanctuary as a point</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2017-08-16" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.82" y="3.25" height="6.47" width="7.1" />
+  <rect class="svgBox layout" fill="none" x="-3.82" y="-3.22" height="6.47" width="7.1" />
+  <path d=" M 1.44,-2.72 L 1.16,-2.42 L 1.06,-2.13 L 1.07,-1.74 L 1.14,-1.54 L 1.14,-1.4 L 1.06,-1.24 L -0.58,-0.58 L -1.19,-0.12 L -2.23,0.41 L -3.32,0.39 L -3.26,0.54 L -0.71,1.43 L 0.11,1.44 L 0.13,2.74 L 0.19,2.73 L 0.27,2.69 L 0.26,1.44 L 0.37,1.43 L 0.37,2.75 L 0.52,2.74 L 0.5,1.44 L 0.85,1.37 L 1.42,1.08 L 2.04,0.56 L 2.33,-0.1 L 2.3,-1.02 L 2.25,-1.5 L 2.13,-1.69 L 2.22,-1.89 L 2.78,-1.81 L 2.48,-2.14 L 2.21,-2.22 L 2.15,-2.5 L 1.85,-2.72 L 1.44,-2.71 L 1.44,-2.72" transform="rotate(0)" class="sl f0 fUINFM" style="stroke-width:0.32;stroke-dasharray:0,0;" />
+</svg>

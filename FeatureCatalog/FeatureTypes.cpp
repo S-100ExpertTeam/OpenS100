@@ -51,16 +51,23 @@ bool FeatureTypes::SetAttributeFromSuperType(FeatureType* ft)
 		else
 		{
 			FeatureType* sft = itor->second;
-			ft->GetAttributeBindingPointer().insert(ft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().begin(), sft->GetAttributeBindingPointer().end());
+
+			for (auto i = sft->GetAttributeBindingPointer().begin();
+				i != sft->GetAttributeBindingPointer().end();
+				i++)
+			{
+				auto ab = new AttributeBinding();
+				*ab = *(*i);
+				ft->InsertAttributeBinding(ab);
+			}
+
 			return true;
 		}
-
 	}
 	else
 		return true;
 
 	return false;
-
 }
 
 
@@ -78,15 +85,23 @@ bool FeatureTypes::SetAssociationFromSuperType(FeatureType* ft)
 			FeatureType* sft = itor->second;
 			if (SetAssociationFromSuperType(sft))
 			{
-				ft->GetFeatureBindingPointer().insert(
-					ft->GetFeatureBindingPointer().end(),
-					sft->GetFeatureBindingPointer().begin(), 
-					sft->GetFeatureBindingPointer().end());
+				for (auto i = sft->GetFeatureBindingPointer().begin();
+					i != sft->GetFeatureBindingPointer().end();
+					i++)
+				{
+					auto fb = new FeatureBinding();
+					*fb = *(*i);
+					ft->InsertFeatureBinding(fb);
+				}
 
-				ft->GetInformationBindingPointer().insert(
-					ft->GetInformationBindingPointer().end(),
-					sft->GetInformationBindingPointer().begin(), 
-					sft->GetInformationBindingPointer().end());
+				for (auto i = sft->GetInformationBindingPointer().begin();
+					i != sft->GetInformationBindingPointer().end();
+					i++)
+				{
+					auto ib = new InformationBinding();
+					*ib = *(*i);
+					ft->InsertInformationBinding(ib);
+				}
 			}
 			return true;
 		}

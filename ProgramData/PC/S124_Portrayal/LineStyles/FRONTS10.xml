@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lineStyle offset="0">
+    <intervalLength>6</intervalLength>
+    <pen width="0.3">
+    </pen>  
+    <symbol reference="TRIANG3">
+        <position>1.5</position>
+    </symbol>
+    <symbol reference="SMCIRC2">
+        <position>4.5</position>
+    </symbol>
+</lineStyle>

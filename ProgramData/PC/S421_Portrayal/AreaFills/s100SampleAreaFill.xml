@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<colorFill xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="S100AreaFill.xsd">
+<color transparency="0.5">NODTA</color>
+</colorFill>

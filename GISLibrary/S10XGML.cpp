@@ -41,19 +41,23 @@ bool S10XGML::Open(CString _filepath)
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(path.c_str()); 
 
-	auto productNumber = GetProductNumber();
-	std::string rootName = "S" + std::to_string(productNumber) + ":Dataset";
+	//auto productNumber = GetProductNumber();
+	//std::string rootName = "S" + std::to_string(productNumber) + ":Dataset";
 
-	pugi::xml_node root = doc.child(rootName.c_str());
+	//pugi::xml_node root = doc.child(rootName.c_str());
+	pugi::xml_node root = doc.first_child();
 
 	auto child = root.first_child();
 	while (child)
 	{
+		std::string childName = child.name();
+
 		if (strcmp(child.name(), "gml:boundedBy") == 0)
 		{
 			envelop.Read(child);
 		}
-		else if (strcmp(child.name(), "S100:DatasetIdentificationInformation") == 0)
+		//else if (strcmp(child.name(), "S100:DatasetIdentificationInformation") == 0)
+		else if (childName.find("DatasetIdentificationInformation") != std::string::npos)
 		{
 			datasetIdentificationInformation.Read(child);
 		}
@@ -85,6 +89,14 @@ bool S10XGML::Open(CString _filepath)
 		{
 			ReadSurface(child);
 		}
+		else if (strcmp(child.name(), "imember") == 0)
+		{
+			
+		}
+		else if (strcmp(child.name(), "member") == 0)
+		{
+			ReadMember(child);
+		}
 
 		child = child.next_sibling();
 	}
@@ -103,7 +115,7 @@ bool S10XGML::ReadMembers(pugi::xml_node& node)
 		auto feature = fc->GetFeatureType(code);
 		if (feature)
 		{
-			ReadFeature(child, fc, feature);
+			ReadFeature(child, fc);
 		}
 		else
 		{
@@ -120,7 +132,7 @@ bool S10XGML::ReadMembers(pugi::xml_node& node)
 	return true;
 }
 
-bool S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc, FeatureType* featureType)
+bool S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc)
 {
 	auto feature = new GF::FeatureType();
 
@@ -185,6 +197,7 @@ bool S10XGML::ReadInformation(pugi::xml_node& node, FeatureCatalogue* fc, Inform
 bool S10XGML::ReadPoint(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
+	std::string srsName = node.attribute("srsName").value();
 
 	auto strPos = node.child_value("gml:pos");
 		
@@ -195,8 +208,17 @@ bool S10XGML::ReadPoint(pugi::xml_node& node)
 		return false;
 	}
 
-	double lat = std::stod(strPosList.at(0));
-	double lon = std::stod(strPosList.at(1));
+	int latIndex = 0;
+	int lonIndex = 1;
+
+	if (srsName.length() == 0)
+	{
+		latIndex = 1;
+		lonIndex = 0;
+	}
+
+	double lat = std::stod(strPosList.at(latIndex));
+	double lon = std::stod(strPosList.at(lonIndex));
 
 	auto object = new GM::Point();
 	object->SetID(gmlID);
@@ -364,6 +386,22 @@ bool S10XGML::ReadSurface(pugi::xml_node& node)
 	return true; 
 }
 
+bool S10XGML::ReadMember(pugi::xml_node& node)
+{
+	auto featureNode = node.first_child();
+	std::string nodeName = featureNode.name();
+	auto code = getCodeFromMember(nodeName);
+
+	auto fc = GetFC();
+	auto feature = fc->GetFeatureType(code);
+	if (feature) {
+		ReadFeature(featureNode, fc);
+		return true;
+	}
+
+	return false;
+}
+
 bool S10XGML::ReadObjectAttribute(
 	pugi::xml_node& node, GF::ObjectType* object, FeatureCatalogue* fc)
 {
@@ -425,6 +463,20 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 	if (geometryID.length() > 1)
 	{
 		feature->SetGeometryID(geometryID.substr(1));
+	}
+	else
+	{
+		auto geomNode = node.first_child();
+		std::string nodeName = geomNode.name();
+
+		if (nodeName.find("pointProperty") != std::string::npos)
+		{
+			auto nodePoint = geomNode.first_child();
+			if (ReadPoint(nodePoint)) 
+			{
+				feature->SetGeometryID(geometries.back()->GetID());
+			}
+		}
 	}
 
 	return true;
@@ -499,4 +551,16 @@ GM::Point* S10XGML::GetPoint(int x, int y)
 	}
 
 	return nullptr;
+}
+
+std::string S10XGML::getCodeFromMember(std::string nodeName)
+{
+	auto found = nodeName.find(':');  // ':' 문자 검색
+
+	if (found != std::string::npos) {
+		std::string subStr = nodeName.substr(found + 1);  // ':' 이후의 부분 문자열 추출
+		return subStr;
+	}
+
+	return nodeName;
 }

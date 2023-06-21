@@ -21,4 +21,6 @@ public:
 
 	void SetIsAbstract(bool value);
 	bool GetIsAbstract();
+
+	void InsertAttributeBinding(AttributeBinding* ab);
 };

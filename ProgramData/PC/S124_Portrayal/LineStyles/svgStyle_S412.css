@@ -1,0 +1,20 @@
+.layout {display:inline}  /* used to control visibility of symbolBox, svgBox, pivotPoint (none or inline) */
+.symbolBox {stroke:none;stroke-width:0.32;}  /* show the cover of the symbol graphics */
+.svgBox {stroke:magenta;stroke-width:0.01;}  /* show the entire SVG cover */
+.pivotPoint {stroke:none;stroke-width:0.32;}  /* show the pivot/anchor point, 0,0 */
+.sl {stroke-linecap:round;stroke-linejoin:round} /* default line style elements */
+.f0 {fill:none}  /* no fill */
+.sWXRED {stroke:#FF0000}  /* sRGB line colour for colour token WXRED: Weather Red */
+.fWXRED {fill:#FF0000} /* sRGB fill colour for colour token WXRED: Weather Red*/
+.sWXBLK {stroke:#000000}/* sRGB line colour for colour token WXBLK: Weather Black*/
+.fWXBLK {fill:#000000}/* sRGB fill colour for colour token WXBLK: Weather Black*/
+.sWXBLU {stroke:#0000FF}/* sRGB line colour for colour token WXBLU: Weather Blue*/
+.fWXBLU {fill:#0000FF}/* sRGB fill colour for colour token WXBLU: Weather Blue*/
+.sWXORG {stroke:#FF7F00}/* sRGB line colour for colour token WXORG: Weather Orange*/
+.fWXORG {fill:#FF7F00}/* sRGB fill colour for colour token WXORG: Weather Orange*/
+.sWXYLW {stroke:#FFFF00}/* sRGB line colour for colour token WXYLW: Weather Yellow*/
+.fWXYLW {fill:#FFFF00}/* sRGB fill colour for colour token WXYLW: Weather Yellow*/
+.sWXPRP {stroke:#A020F0}/* sRGB line colour for colour token WXYLW: Weather Purple*/
+.fWXPRP {fill:#A020F0}/* sRGB fill colour for colour token WXYLW: Weather Purple*/
+.sWXDSB {stroke:#00BFFF}/* sRGB line colour for colour token WXYLW: Weather Deep Sky Blue*/
+.fWXDSB {fill:#00BFFF}/* sRGB fill colour for colour token WXYLW: Weather Deep Sky Blue*/

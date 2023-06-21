@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<S100FC:S100_FC_FeatureCatalogue xmlns:S100FC="http://www.iho.int/S100FC" xmlns:S100Base="http://www.iho.int/S100Base" xmlns:S100CI="http://www.iho.int/S100CI" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:S100FD="http://www.iho.int/S100FD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.iho.int/S100FC S100FC.xsd">
+	<S100FC:name>S-111</S100FC:name>
+	<S100FC:scope>Navigationally Significant Surface Current which may be used alone or as an auxiliary layer of data with an ENC.</S100FC:scope>
+	<S100FC:fieldOfApplication>Ocean Navigation</S100FC:fieldOfApplication>
+	<S100FC:versionNumber>1.0</S100FC:versionNumber>
+	<S100FC:versionDate>2018-02-22</S100FC:versionDate>
+	<S100FC:productId>S-111</S100FC:productId>
+	<S100FC:producer>
+    <S100CI:role>pointOfContact</S100CI:role>
+    <S100CI:party>
+      <S100CI:CI_Organisation>
+        <S100CI:name>>IHO</S100CI:name>
+        <S100CI:contactInfo>
+          <S100CI:address>
+            <S100CI:administrativeArea>4b quai Antonie 1er</S100CI:administrativeArea>
+            <S100CI:country>Monaco</S100CI:country>
+            <S100CI:electronicMailAddress>info@iho.int</S100CI:electronicMailAddress>
+          </S100CI:address>
+          <S100CI:onlineResource>
+            <S100CI:linkage>www.iho.int</S100CI:linkage>
+          </S100CI:onlineResource>
+        </S100CI:contactInfo>
+      </S100CI:CI_Organisation>
+    </S100CI:party>
+	</S100FC:producer>
+	<S100FC:classification>unclassified</S100FC:classification>
+	<S100FC:S100_FC_SimpleAttributes>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Surface current direction</S100FC:name>
+			<S100FC:definition>DIRECTION OF CURRENT.</S100FC:definition>
+			<S100FC:code>surfaceCurrentDirection</S100FC:code>
+			<S100FC:remarks>The direction toward which a CURRENT is flowing, called the SET of the CURRENT. Also called current direction.</S100FC:remarks>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Surface current speed</S100FC:name>
+			<S100FC:definition>Rate of motion.</S100FC:definition>
+			<S100FC:code>surfaceCurrentSpeed</S100FC:code>
+			<S100FC:remarks>The terms speed and VELOCITY are often used interchangeably, but speed is a scalar, having magnitude only, while VELOCITY is a vector quantity, having both magnitude and direction. Speed may either be the ship's speed through water, or the SPEED MADE GOOD over ground.</S100FC:remarks>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+	</S100FC:S100_FC_SimpleAttributes>
+	<S100FC:S100_FC_FeatureTypes>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Surface Current</S100FC:name>
+			<S100FC:definition>Water or other fluid in essentially horizontal motion.</S100FC:definition>
+			<S100FC:code>SurfaceCurrent</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="surfaceCurrentSpeed"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="surfaceCurrentDirection"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>coverage</S100FC:permittedPrimitives>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+	</S100FC:S100_FC_FeatureTypes>
+</S100FC:S100_FC_FeatureCatalogue>

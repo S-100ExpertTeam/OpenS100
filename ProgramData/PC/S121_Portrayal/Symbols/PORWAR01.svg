@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.2mm" height="8.2mm" viewBox="-4.1 -4.1 8.2 8.2">
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2017-02-28" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.1" y="4.1" height="8.2" width="8.2" />
+  <rect class="svgBox layout" fill="none" x="-4.1" y="-4.1" height="8.2" width="8.2" />
+  <path d=" M -0.5,-1.7 L -0.4,-2 L -0.3,-2.2 L -0.1,-2.4 L 0.1,-2.4 L 0.3,-2.2 L 0.4,-2 L 0.5,-1.7 L 0.5,-1.4 L 0.2,1.2 L 0.1,1.4 L 0,1.5 L 0,1.5 L -0.1,1.4 L -0.2,1.2 L -0.5,-1.4 L -0.5,-1.7" transform="rotate(0)" class="sl f0 sCHRED" style="stroke-width:0.32;stroke-dasharray:0,0;" />
+  <circle cx="0" cy="2.09" r="0.3" class="sl f0 sCHRED" style="stroke-width:0.32" />
+  <path d=" M -3.1,-3.1 L -0.8,-0.8" class="sl f0 sCHRED" style="stroke-width:0.64;stroke-dasharray:0,0;" />
+  <path d=" M 0.8,-0.8 L 3.1,-3.1" class="sl f0 sCHRED" style="stroke-width:0.64;stroke-dasharray:0,0;" />
+  <path d=" M -0.8,0.8 L -3.1,3.1" class="sl f0 sCHRED" style="stroke-width:0.64;stroke-dasharray:0,0;" />
+  <path d=" M 0.8,0.8 L 3.1,3.1" class="sl f0 sCHRED" style="stroke-width:0.64;stroke-dasharray:0,0;" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

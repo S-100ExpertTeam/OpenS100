@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="9.799999mm" height="5.69mm" viewBox="-4.91 -5.18 9.799999 5.69">
+  <title>FRONTS01</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-08" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.91" y="0.5099998" height="5.69" width="9.799999" />
+  <rect class="svgBox layout" fill="none" x="-4.91" y="-5.18" height="5.69" width="9.799999" />
+  <path d=" M -0.01,-4.68 L -3.91,-0.78 L -4.41,-0.78 L -4.41,0.01 L 4.39,0.01 L 4.39,-0.78 L 3.89,-0.78 L -0.01,-4.68" class="fUINFB" style="stroke-width:0.32;" />
+</svg>

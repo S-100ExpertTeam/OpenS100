@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?pcbinfo name="S-102 Portrayal Catalog" fieldOfApplication="WithNewSyms" scope="Testing" versionDate="2014-07-01T18:56:34+0000" user="Test User" organization="IHO-Test"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-102" version="1.0">
+  <pixmaps/>
+  <colorProfiles>
+    <colorProfile id="sample1">
+      <description>
+        <name>sample1</name>
+        <description>color profile with day colors for testing</description>
+        <language>en</language>
+      </description>
+      <fileName>colorProfile.xml</fileName>
+      <fileType>ColorProfile</fileType>
+      <fileFormat>XML</fileFormat>
+    </colorProfile>
+  </colorProfiles>
+  <symbols/>
+  <lineStyles/>
+  <areaFills/>
+  <font/>
+  <viewingGroups/>
+  <foundationMode/>
+  <viewingGroupLayers/>
+  <displayModes/>
+  <displayPlane/>
+  <context/>
+  <rules>
+    <ruleFile id="1">
+      <description>
+        <name>SurfaceCurrent</name>
+        <description>Surface Current</description>
+        <language>en</language>
+      </description>
+      <fileName>SurfaceCurrent.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="2">
+      <description>
+        <name>select_arrow</name>
+        <description>Surface Current</description>
+        <language>en</language>
+      </description>
+      <fileName>select_arrow.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

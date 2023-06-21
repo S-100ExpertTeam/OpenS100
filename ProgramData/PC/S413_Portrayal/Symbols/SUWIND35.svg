@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.1mm" height="13.1mm" viewBox="-2.1 -6.8 5.1 13.1">
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2017-10-14" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.1" y="-6.8" height="13.1" width="5.1" />
+  <rect class="svgBox layout" fill="none" x="-2.1" y="-6.8" height="13.1" width="5.1" />
+  <title>SUWIND31SUWIND31</title>
+  <path d=" M -1.6,-5.3 L -1.6,5.8 L -1,5.8 L -1,0.8 L -1,0.5 L -1,0.4 L -1,0.1 L -1,-0.6 L 0.3,-0.9 L 0.3,-1.6 L -0.6,-1.4 L -1,-1.3 L -1,-1.7 L -1,-2 L -0.2,-2.2 L 0.6,-2.4 L 2.5,-2.8 L 2.5,-3.4 L -1,-2.7 L -1,-3.4 L 2.5,-4.2 L 2.5,-4.9 L -1,-4.1 L -1,-4.8 L 2.5,-5.6 L 2.5,-6.3 L -1.6,-5.3 L -1.6,-4.7" transform="rotate(0)" class="sl f0 fUINFB" style="stroke-width:0.04" />
+</svg>

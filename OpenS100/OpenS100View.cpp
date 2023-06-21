@@ -404,7 +404,7 @@ void COpenS100View::Setting()
 {
 	CConfigrationDlg dlg(this);
 
-	auto fc = theApp.gisLib->GetFC();
+	auto fc = theApp.gisLib->catalogManager.getFC("S-101");
 	if (fc)
 	{
 		dlg.InitS101FeatureTypes(fc);
@@ -521,10 +521,13 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	FeatureCatalogue* fc = new FeatureCatalogue(L"..\\ProgramData\\xml\\S-101_FC.xml");
-	PortrayalCatalogue* pc = new PortrayalCatalogue(L"..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml");
+	FeatureCatalogue* fc = new FeatureCatalogue(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml");
+	PortrayalCatalogue* pc = new PortrayalCatalogue(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml");
 
 	theApp.gisLib->InitLibrary(fc, pc);
+	theApp.gisLib->addCatalogue(L"..\\ProgramData\\FC\\S-125_FC.xml", L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml");
+
+	//theApp.gisLib->AddLayer(L"..\\TEMP\\125KR00000000.gml");
 
 	//theApp.gisLib->AddLayer(L"..\\SampleData\\101KR005X01SE.000");
 
@@ -1587,7 +1590,7 @@ void COpenS100View::PointFeatureList()
 {
 	if (theApp.gisLib)
 	{
-		auto fc = theApp.gisLib->GetFC();
+		auto fc = theApp.gisLib->catalogManager.getFC("S-101");
 		std::vector<FeatureType*> features;
 		fc->GetPointFeatures(features);
 
@@ -1623,7 +1626,7 @@ void COpenS100View::LineFeatureList()
 {
 	if (theApp.gisLib)
 	{
-		auto fc = theApp.gisLib->GetFC();
+		auto fc = theApp.gisLib->catalogManager.getFC();
 		std::vector<FeatureType*> features;
 		fc->GetLineFeatures(features);
 
@@ -1659,7 +1662,7 @@ void COpenS100View::AreaFeatureList()
 {
 	if (theApp.gisLib)
 	{
-		auto fc = theApp.gisLib->GetFC();
+		auto fc = theApp.gisLib->catalogManager.getFC();
 		std::vector<FeatureType*> features;
 		fc->GetAreaFeatures(features);
 
@@ -1740,7 +1743,7 @@ void COpenS100View::SetPick(S100SpatialObject* enc, std::wstring featureID)
 
 	if (enc && enc->GetProductNumber() == 101)
 	{
-		s101Creator.Set(theApp.gisLib->GetFC(), (S101Cell*)enc);
+		s101Creator.Set(theApp.gisLib->catalogManager.getFC(), (S101Cell*)enc);
 	}
 	else
 	{

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="CHCRDEL1" exposition="this line has been deleted by a manual update"?>
+<lineStyle>
+   <intervalLength>13.4</intervalLength>
+   <pen width="0.32">
+      <color>CHCOR</color>
+   </pen>
+   <symbol reference="CHCRDEL1">
+      <position>5.35</position>
+   </symbol>
+</lineStyle>

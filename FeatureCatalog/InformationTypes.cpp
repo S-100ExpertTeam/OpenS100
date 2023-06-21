@@ -33,6 +33,47 @@ std::vector<InformationType*> InformationTypes::GetVecInformationType()
 	return informationTypes;
 }
 
+void InformationTypes::ApplySuperType()
+{
+	for (auto itor = informationType.begin(); itor != informationType.end(); itor++)
+	{
+		InformationType* it = itor->second;
+		SetAttributeFromSuperType(it);
+		SetAssociationFromSuperType(it);
+	}
+}
+
+bool InformationTypes::SetAttributeFromSuperType(InformationType* it)
+{
+	if (it->GetSuperType().size() > 0)
+	{
+		auto itor = informationType.find(it->GetSuperType());
+		if (itor == informationType.end())
+		{
+			return false;
+		}
+		else
+		{
+			InformationType* sit = itor->second;
+
+			for (auto i = sit->GetAttributeBindingPointer().begin();
+				i != sit->GetAttributeBindingPointer().end();
+				i++)
+			{
+				auto ab = new AttributeBinding();
+				*ab = *(*i);
+				it->InsertAttributeBinding(ab);
+			}
+
+			return true;
+		}
+	}
+	else
+		return true;
+
+	return false;
+}
+
 bool InformationTypes::SetAssociationFromSuperType(InformationType* it)
 {
 	if (it->GetSuperType().size() > 0)
@@ -47,10 +88,14 @@ bool InformationTypes::SetAssociationFromSuperType(InformationType* it)
 			InformationType* sit = itor->second;
 			if (SetAssociationFromSuperType(sit))
 			{
-				it->GetInformationBindingPointer().insert(
-					it->GetInformationBindingPointer().end(),
-					sit->GetInformationBindingPointer().begin(), 
-					sit->GetInformationBindingPointer().end());
+				for (auto i = sit->GetInformationBindingPointer().begin();
+					i != sit->GetInformationBindingPointer().end();
+					i++)
+				{
+					auto ib = new InformationBinding();
+					*ib = *(*i);
+					it->InsertInformationBinding(ib);
+				}
 			}
 			return true;
 		}

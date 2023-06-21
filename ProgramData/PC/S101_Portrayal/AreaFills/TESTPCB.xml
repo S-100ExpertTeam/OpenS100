@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-03"?>
+<?S100Meta name="TESTPCB" exposition="new or adjusted feature objects not covered in S-52new or adjusted feature objects not covered in S-52"?>
+<symbolFill>
+  <areaCRS>GlobalGeometry</areaCRS>
+  <symbol reference="testPCB"/>
+  <v1>
+    <x>32.04</x>
+    <y>0.0</y>
+  </v1>
+  <v2>
+    <x>16.04</x>
+    <y>20.3</y>
+  </v2>
+</symbolFill>

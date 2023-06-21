@@ -1,0 +1,118 @@
+.layout {display:none}  /* used to control visibility of symbolBox, svgBox, pivotPoint (none or inline) */
+.symbolBox {stroke:black;stroke-width:0.32;}  /* show the cover of the symbol graphics */
+.svgBox {stroke:blue;stroke-width:0.32;}  /* show the entire SVG cover */
+.pivotPoint {stroke:red;stroke-width:0.64;}  /* show the pivot/anchor point, 0,0 */
+.sl {stroke-linecap:round;stroke-linejoin:round} /* default line style elements */
+.f0 {fill:none}  /* no fill */
+.sCURSR {stroke:#E38039}  /* sRGB line colour for colour token CURSR */
+.fCURSR{fill:#E38039} /* sRGB fill colour for colour token CURSR*/
+.sCHBLK {stroke:#000000}
+.fCHBLK {fill:#000000}
+.sCHGRD {stroke:#4C5B63}
+.fCHGRD {fill:#4C5B63}
+.sCHGRF {stroke:#768C97}
+.fCHGRF {fill:#768C97}
+.sCHRED {stroke:#EA5471}
+.fCHRED {fill:#EA5471}
+.sCHGRN {stroke:#52E93A}
+.fCHGRN {fill:#52E93A}
+.sCHMGD {stroke:#C045D1}
+.fCHMGD {fill:#C045D1}
+.sCHMGF {stroke:#CBA9FA}
+.fCHMGF {fill:#CBA9FA}
+.sCHBRN {stroke:#A19653}
+.fCHBRN {fill:#A19653}
+.sCHWHT {stroke:#C9EDFF}
+.fCHWHT {fill:#C9EDFF}
+.sSCLBR {stroke:#E38039}
+.fSCLBR {fill:#E38039}
+.sCHCOR {stroke:#E38039}
+.fCHCOR {fill:#E38039}
+.sLITRD {stroke:#EA5471}
+.fLITRD {fill:#EA5471}
+.sLITGN {stroke:#52E93A}
+.fLITGN {fill:#52E93A}
+.sLITYW {stroke:#E1E139}
+.fLITYW {fill:#E1E139}
+.sISDNG {stroke:#C045D1}
+.fISDNG {fill:#C045D1}
+.sDNGHL {stroke:#EA5471}
+.fDNGHL {fill:#EA5471}
+.sTRFCD {stroke:#C045D1}
+.fTRFCD {fill:#C045D1}
+.sTRFCF {stroke:#CBA9FA}
+.fTRFCF {fill:#CBA9FA}
+.sLANDA {stroke:#BFBF8F}
+.fLANDA {fill:#BFBF8F}
+.sLANDF {stroke:#8D642E}
+.fLANDF {fill:#8D642E}
+.sCSTLN {stroke:#4C5B63}
+.fCSTLN {fill:#4C5B63}
+.sSNDG1 {stroke:#768C97}
+.fSNDG1 {fill:#768C97}
+.sSNDG2 {stroke:#000000}
+.fSNDG2 {fill:#000000}
+.sDEPSC {stroke:#4C5B63}
+.fDEPSC {fill:#4C5B63}
+.sDEPCN {stroke:#768C97}
+.fDEPCN {fill:#768C97}
+.sDEPDW {stroke:#C9EDFF}
+.fDEPDW {fill:#C9EDFF}
+.sDEPVS {stroke:#61B8FF}
+.fDEPVS {fill:#61B8FF}
+.sDEPIT {stroke:#58AF9C}
+.fDEPIT {fill:#58AF9C}
+.sARPAT {stroke:#2DA879}
+.fARPAT {fill:#2DA879}
+.sNINFO {stroke:#E38039}
+.fNINFO {fill:#E38039}
+.sADINF {stroke:#A5A527}
+.fADINF {fill:#A5A527}
+.sSHIPS {stroke:#000000}
+.fSHIPS {fill:#000000}
+.sPSTRK {stroke:#000000}
+.fPSTRK {fill:#000000}
+.sSYTRK {stroke:#768C97}
+.fSYTRK {fill:#768C97}
+.sPLRTE {stroke:#D63F24}
+.fAPLRT {fill:#E38039}
+.sAPLRT {stroke:#E38039}
+.fPLRTE {fill:#D63F24}
+.sUINFF {stroke:#4C5B63}
+.fUINFF {fill:#4C5B63}
+.sUINFG {stroke:#52E93A}
+.fUINFG {fill:#52E93A}
+.sUINFB {stroke:#2E7BFF}
+.fUINFB {fill:#2E7BFF}
+.sOUTLW {stroke:#000000}
+.fOUTLW {fill:#000000}
+.sCHYLW {stroke:#E1E139}
+.fCHYLW {fill:#E1E139}
+.sBKAJ1 {stroke:#0E1215}
+.fBKAJ1 {fill:#0E1215}
+.sBKAJ2{stroke:#35002A}
+.fBKAJ2 {fill:#35002A}
+.ssample1{stroke:#7c5823}
+.fsample1 {fill:#7c5823}
+.ssample2{stroke:#007ba4}
+.fsample2 {fill:#007ba4}
+.sTESTA {stroke:#FFFFFF}
+.fTESTA {fill:#FFFFFF}
+.sTESTB {stroke:#607B51}
+.fTESTB {fill:#607B51}
+.sTESTC {stroke:#98A15C}
+.fTESTC {fill:#98A15C}
+.sTESTD {stroke:#E8118C}
+.fTESTD {fill:#E8118C}
+.sTESTE {stroke:#FAC566}
+.fTESTE {fill:#FAC566}
+.sTESTF {stroke:#FED41E}
+.fTESTF {fill:#FED41E}
+.sTESTG {stroke:#7BB7E4}
+.fTESTG {fill:#7BB7E4}
+.sTESTH {stroke:#00B0EA}
+.fTESTH {fill:#00B0EA}
+.sTESTI {stroke:#FF85B7}
+.fTESTI {fill:#FF85B7}
+.sTESTJ {stroke:#E8118C}
+.fTESTJ {fill:#E8118C}

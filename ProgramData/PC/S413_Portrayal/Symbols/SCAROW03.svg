@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S111.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6mm" height="11mm" viewBox="-3 -5.5 6 11">
+<title>SCAROW03</title>
+<desc>Surface Current and Speed Vector Band 3</desc>
+<metadata>
+<iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+<iho:Description iho:publisher="NOAA" iho:creationDate="2018-07-31" iho:source="S-111" iho:format="S100SVG" iho:version="0.1" />
+</iho:S100SVG>
+</metadata>
+<rect class="symbolBox layout" fill="none" x="-3" y="-5.5" height="11" width="6"/>
+<rect class="svgBox layout" fill="none" x="-3" y="-5.5" height="11" width="6"/>
+<path d=" M 0,5 L -0.5,5 L -1.0,-1.5 L -2.0,-1.5 L 0,-5 L 2.0,-1.5 L 1.0,-1.5 L 0.5,5 L 0,5 Z" class="fCHRED"/>
+<path d=" M 0,5 L -0.5,5 L -1.0,-1.5 L -2.0,-1.5 L 0,-5 L 2.0,-1.5 L 1.0,-1.5 L 0.5,5 L 0,5 Z" class="sl f0 sCHBLK" style="stroke-width:0.32;"/>
+<circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

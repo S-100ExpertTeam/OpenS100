@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-411" version="1.0">
+	<pixmaps/>
+	<colorProfiles>
+		<colorProfile id="6">
+			<description>
+				<name>S411SampleColorProfile</name>
+				<description>S-411 sample color profile</description>
+				<language>en</language>
+			</description>
+			<fileName>colorProfile.xml</fileName>
+			<fileType>ColorProfile</fileType>
+			<fileFormat>XML</fileFormat>
+		</colorProfile>
+	</colorProfiles>
+	<symbols>
+		<symbol id="1">
+			<description>
+				<name>FLOBRG01</name>
+				<description>FLOBRG01</description>
+				<language>en</language>
+			</description>
+			<fileName>FLOBRG01.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="2">
+			<description>
+				<name>ICECOM01</name>
+				<description>ICECOM01</description>
+				<language>en</language>
+			</description>
+			<fileName>ICECOM01.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="3">
+			<description>
+				<name>ICEDFT02</name>
+				<description>ICEDFT02</description>
+				<language>en</language>
+			</description>
+			<fileName>ICEDFT02.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="4">
+			<description>
+				<name>ICEDIV01</name>
+				<description>ICEDIV01</description>
+				<language>en</language>
+			</description>
+			<fileName>ICEDIV01.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="5">
+			<description>
+				<name>ICESHR01</name>
+				<description>ICESHR01</description>
+				<language>en</language>
+			</description>
+			<fileName>ICESHR01.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="6">
+			<description>
+				<name>I_RIDG01</name>
+				<description>I_RIDG01</description>
+				<language>en</language>
+			</description>
+			<fileName>I_RIDG01.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+    <symbol id="7">
+      <description>
+        <name>ICELNE01</name>
+        <description>ICELNE01</description>
+        <language>en</language>
+      </description>
+      <fileName>ICELNE01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="8">
+      <description>
+        <name>QUESMRK1</name>
+        <description>QUESMRK1</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+	</symbols>
+	<lineStyles/>
+	<areaFills/>
+	<fonts/>
+	<viewingGroups>
+		<viewingGroup id="1">
+			<description>
+				<name>21010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+	</viewingGroups>
+	<viewingGroupLayers/>
+	<displayModes>
+	</displayModes>
+	<displayPlane>
+		<displayPlane id="2">
+			<description>
+				<name>underRadar</name>
+				<description>Content displayed underneath Radar image</description>
+				<language>en</language>
+			</description>
+		</displayPlane>
+	</displayPlane>
+	<context/>
+	<rules>
+		<ruleFile id="12">
+			<description>
+				<name>IceCompacting</name>
+				<description>IceCompacting</description>
+			</description>
+			<fileName>IceCompacting.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="13">
+			<description>
+				<name>IceLead</name>
+				<description>IceLead</description>
+			</description>
+			<fileName>IceLead.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="15">
+			<description>
+				<name>Floeberg</name>
+				<description>Floeberg</description>
+			</description>
+			<fileName>Floeberg.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="17">
+			<description>
+				<name>IceShear</name>
+				<description>IceShear</description>
+			</description>
+			<fileName>IceShear.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="18">
+			<description>
+				<name>IceDivergence</name>
+				<description>IceDivergence</description>
+			</description>
+			<fileName>IceDivergence.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="19">
+			<description>
+				<name>IceRidgeHummock</name>
+				<description>IceRidgeHummock</description>
+			</description>
+			<fileName>IceRidgeHummock.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+    <ruleFile id="22">
+      <description>
+        <name>IceFracture</name>
+        <description>IceFracture</description>
+      </description>
+      <fileName>IceFracture.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="23">
+      <description>
+        <name>attributeRules</name>
+        <description>attributeRules</description>
+      </description>
+      <fileName>attributeRules.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="24">
+      <description>
+        <name>default</name>
+        <description>default</description>
+      </description>
+      <fileName>default.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="25">
+      <description>
+        <name>simpleLineStyle</name>
+        <description>simpleLineStyle</description>
+      </description>
+      <fileName>simpleLineStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="26">
+      <description>
+        <name>main</name>
+        <description>main</description>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+	</rules>
+</portrayalCatalog>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.58mm" height="8.58mm" viewBox="-4.32 -4.91 8.58 8.58">
+  <title>PlaceOfRefuge</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-21" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.32" y="3.67" height="8.58" width="8.58" />
+  <rect class="svgBox layout" fill="none" x="-4.32" y="-4.91" height="8.58" width="8.58" />
+  <circle cx="-0.03" cy="-0.62" r="3.29" class="fCHBRN" style="stroke-width:0.64" />
+  <path d=" M -0.4,-2.53 L 0.4,-2.53 L 0.4,1.35 L -0.4,1.35 L -0.4,-2.53 L -0.4,-2.53" class="fTESTA" style="stroke-width:0.64;" />
+  <path d=" M -1.96,-0.16 L -1.96,-0.96 L 1.92,-0.96 L 1.92,-0.16 L -1.96,-0.16 L -1.96,-0.16" class="fTESTA" style="stroke-width:0.64;" />
+  <circle cx="-0.03" cy="-0.62" r="3.29" class="sl f0 sTESTA" style="stroke-width:0.64" />
+</svg>

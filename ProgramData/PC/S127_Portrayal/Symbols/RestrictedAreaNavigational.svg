@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.620001mm" height="8.62mm" viewBox="-4.34 -5.03 8.620001 8.62">
+  <title>RestrictedAreaNavigational</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-14" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.34" y="3.59" height="8.62" width="8.620001" />
+  <rect class="svgBox layout" fill="none" x="-4.34" y="-5.03" height="8.62" width="8.620001" />
+  <circle cx="0" cy="-1.95" r="0.72" class="sl f0 sTESTI" style="stroke-width:0.64" />
+  <path d=" M -1.35,-1.13 L 1.36,-1.13" class="sl f0 sTESTI" style="stroke-width:0.64;" />
+  <path d=" M -0.01,-1.09 L -0.03,1.12" class="sl f0 sTESTI" style="stroke-width:0.64;" />
+  <circle cx="-0.03" cy="-0.72" r="3.31" class="sl f0 sTESTI" style="stroke-width:0.64" />
+  <path d=" M -2.33,1.67 L 2.24,-3.13" class="sl f0 sTESTI" style="stroke-width:0.64;" />
+  <path d=" M -1.71,-0.22 L -1.7,-0.16 L -1.69,-0.11 L -1.68,-0.07 L -1.66,0 L -1.65,0.06 L -1.63,0.12 L -1.58,0.21 L -1.54,0.31 L -1.52,0.35 L -1.49,0.39 L -1.46,0.45 L -1.44,0.48 L -1.39,0.55 L -1.35,0.6 L -1.3,0.66 L -1.22,0.74 L -1.14,0.81 L -1.06,0.87 L -0.97,0.94 L -0.84,1.01 L -0.73,1.07 L -0.61,1.11 L -0.51,1.14 L -0.4,1.17 L -0.3,1.19 L -0.17,1.19 L -0.07,1.19 L 0.06,1.19 L 0.17,1.18 L 0.3,1.16 L 0.43,1.13 L 0.54,1.09 L 0.69,1.03 L 0.84,0.94 L 0.96,0.85 L 1.07,0.76 L 1.16,0.66 L 1.24,0.58 L 1.32,0.47 L 1.38,0.38 L 1.43,0.28 L 1.48,0.17 L 1.52,0.05 L 1.57,-0.09 L 1.6,-0.25" class="sl f0 sTESTI" style="stroke-width:0.64;" />
+</svg>

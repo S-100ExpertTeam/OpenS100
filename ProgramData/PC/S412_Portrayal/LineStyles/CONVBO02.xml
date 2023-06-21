@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="CONVBO02" exposition="boundary of an ESSA or PSSA"?>
+<lineStyle>
+  <intervalLength>8</intervalLength>
+  <pen width="0.32">
+    <color>CURSR</color>
+  </pen>
+  <symbol reference="CONVBO02">
+    <position>4</position>
+  </symbol>
+</lineStyle>

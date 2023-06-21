@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100ColorProfile.xsd">
+  <colors>
+    <color token="ORG" name="orange">
+      <description>Orange color for Almost Navigable Area</description>
+    </color>
+    <color token="RED" name="red">
+      <description>Red color for Non Navigable Area</description>
+    </color>
+    <color token="BLK" name="black">
+      <description>Black color for only Text</description>
+    </color>
+    <color token="WHITE" name="white">
+      <description>White color for Text with background</description>
+    </color>
+  </colors>
+
+  <palette name="Day">
+    <item token="ORG">
+      <cie>
+        <xyL>
+          <x>0.5</x>
+          <y>0.4</y>
+          <L>32</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>227</red>
+        <green>128</green>
+        <blue>57</blue>
+      </srgb>
+    </item>
+    <item token="RED">
+      <cie>
+        <xyL>
+          <x>0.48</x>
+          <y>0.30</y>
+          <L>25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>234</red>
+        <green>84</green>
+        <blue>113</blue>
+      </srgb>
+    </item>
+    <item token="BLK">
+     <cie>
+       <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0</L>
+        </xyL>
+      </cie>
+    <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="WHITE">
+      <cie>
+       <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>80</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+  </palette>
+</colorProfile>

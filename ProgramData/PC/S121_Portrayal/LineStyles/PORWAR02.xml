@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<lineStyle>
+   <intervalLength>8.0</intervalLength>
+   <pen width="0.32">
+      <color>CHRED</color>
+   </pen>
+   <dash>
+      <start>2</start>
+      <length>6</length>
+   </dash>
+   <symbol reference="PORWAR01">
+      <position>4</position>
+   </symbol>
+</lineStyle>

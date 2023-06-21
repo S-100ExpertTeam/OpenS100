@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--title>FRONTS CATFRO1 FROLEV1</title>
+  <desc>Fronts: Category of Front Cold: Front level Surface</desc>-->
+<lineStyle offset="0">
+  <intervalLength>32</intervalLength>
+  <pen width="0.32">
+    <color>CHMGD</color>
+  </pen>
+  <dash>
+    <start>0</start>
+    <length>32</length>
+  </dash>
+  <symbol reference="SMCIRC8">
+    <position>8</position>
+  </symbol>
+  <symbol reference="FRONTS14">
+    <position>24</position>
+  </symbol>
+</lineStyle>

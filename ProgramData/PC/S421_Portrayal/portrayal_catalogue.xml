@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="s100PortrayalCatalog.xsd" productId="" version="">
+
+  <pixmaps>
+    <pixmap id="PIXMAP01">
+      <description>
+        <name>PIXMAP01</name>
+        <description>S100 Sample for Pixmaps </description>
+        <language>en</language>
+      </description>
+      <fileName>s100SamplePixmap.xml</fileName>
+      <fileType>Pixmap</fileType>
+      <fileFormat>XML</fileFormat>
+    </pixmap>
+  </pixmaps>
+  <colorProfiles>
+    <colorProfile id="COLOR01">
+      <description>
+        <name>COLOR01</name>
+        <description>color profile with day colors for testing</description>
+        <language>en</language>
+      </description>
+      <fileName>colorProfile.xml</fileName>
+      <fileType>ColorProfile</fileType>
+      <fileFormat>XML</fileFormat>
+    </colorProfile>
+  </colorProfiles>
+
+  <symbols>
+    <symbol id="RTEWPT01">
+      <description>
+        <name>RTEWPT01</name>
+        <description>symbols for waypoint in monitored route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEWPT01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RTEWPT02">
+      <description>
+        <name>RTEWPT02</name>
+        <description> symbols for next waypoint in monitored route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEWPT02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RTEWPT03">
+      <description>
+        <name>RTEWPT03</name>
+        <description>symbols for waypoint in planned route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEWPT03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RTEWOL01">
+      <description>
+        <name>RTEWOL01</name>
+        <description>symbol for RouteLegWOL in monitored route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEWOL01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RTEWOL02">
+      <description>
+        <name>RTEWOL02</name>
+        <description>symbol for RouteLegWOL in planned route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEWOL02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RTEDOT01">
+      <description>
+        <name>RTEDOT01</name>
+        <description>symbol for Route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEDOT01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RTEACTPOT01">
+      <description>
+        <name>RTEACTPOT01</name>
+        <description>symbol for Route ActionPoint in monitored route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEACTPOT01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RTEACTPOT02">
+      <description>
+        <name>RTEACTPOT02</name>
+        <description>symbol for Route ActionPoint in planned route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEACTPOT02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>QUESMRK1</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RSRDEF51">
+      <description>
+        <name>RSRDEF51</name>
+        <description>RSRDEF51</description>
+        <language>en</language>
+      </description>
+      <fileName>RSRDEF51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMQUESM1">
+      <description>
+        <name>EMQUESM1</name>
+        <description>EMQUESM1</description>
+        <language>en</language>
+      </description>
+      <fileName>EMQUESM1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+  </symbols>
+  <lineStyles>
+    <lineStyle id="RTEACTLEGLINE">
+      <description>
+        <name>RTEACTLEGLINE</name>
+        <description>Route  LEG LINE in monitored route </description>
+        <language>en</language>
+      </description>
+      <fileName>RTEACTLEGLINE.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="RTEACTLIMITLINE">
+      <description>
+        <name>RTEACTLIMITLINE</name>
+        <description>Route  LIMIT LINE in monitored route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEACTLIMITLINE.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="RTEACTWOLLINE">
+      <description>
+        <name>RTEACTWOLLINE</name>
+        <description>Route WOL LINE in monitored route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEACTWOLLINE.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="RTEALTLEGLINE">
+      <description>
+        <name>RTEALTLEGLINE</name>
+        <description>Route LEG LINE in planned route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEALTLEGLINE.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="RTEALTLIMITLINE">
+      <description>
+        <name>RTEALTLIMITLINE</name>
+        <description>Route  LIMIT LINE in planned route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEALTLIMITLINE.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="RTEALTWOLLINE">
+      <description>
+        <name>RTEALTLIMITLINE</name>
+        <description>Route  WOL LINE in planned route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEALTWOLLINE.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="RTEACTPOTLINE">
+      <description>
+        <name>RTEACTPOTLINE</name>
+        <description>Action point boundary line for planned route</description>
+        <language>en</language>
+      </description>
+      <fileName>RTEACTPOTLINE.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>QUESMRK1</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+  </lineStyles>
+
+  
+  <areaFills>
+    <areaFill id="AREAFILL01">
+      <description>
+        <name>AREAFILL01</name>
+        <description>S100 Sample for AreaFills </description>
+        <language>en</language>
+      </description>
+      <fileName>s100SampleAreaFill.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+  </areaFills>
+
+  <fonts>
+    <font id="droid">
+      <description>
+        <name>DroidSans</name>
+        <description>Droid sans serif, from http://www.fontsquirrel.com</description>
+        <language>en</language>
+      </description>
+      <fileName>DroidSans.ttf</fileName>
+      <fileType>Font</fileType>
+      <fileFormat>TTF</fileFormat>
+    </font>
+    <font id="droidBold">
+      <description>
+        <name>DroidSansBold</name>
+        <description>Droid sans serif Bold, from http://www.fontsquirrel.com</description>
+        <language>en</language>
+      </description>
+      <fileName>DroidSans-Bold.ttf</fileName>
+      <fileType>Font</fileType>
+      <fileFormat>TTF</fileFormat>
+    </font>
+    <font id="OpenSans">
+      <description>
+        <name>OpenSans</name>
+        <description>Open sans serif, from http://www.fontsquirrel.com</description>
+        <language>en</language>
+      </description>
+      <fileName>OpenSans-Regular.ttf</fileName>
+      <fileType>Font</fileType>
+      <fileFormat>TTF</fileFormat>
+    </font>
+    <font id="OpenSansBold">
+      <description>
+        <name>OpenSansBold</name>
+        <description>Open sans serif Bold, from http://www.fontsquirrel.com</description>
+        <language>en</language>
+      </description>
+      <fileName>OpenSans-Bold.ttf</fileName>
+      <fileType>Font</fileType>
+      <fileFormat>TTF</fileFormat>
+    </font>
+  </fonts>
+
+  <viewingGroups>
+    <viewingGroup id="1">
+      <description>
+        <name>52000</name>
+        <description>Monitored route</description>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="2">
+      <description>
+        <name>52040</name>
+        <description>Monitored route - Legline, waypoints</description>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="3">
+      <description>
+        <name>52050</name>
+        <description>Monitored route - Wheel over line (WOL)</description>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="4">
+      <description>
+        <name>52060</name>
+        <description>Monitored route - Limit line</description>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="5">
+      <description>
+        <name>52070</name>
+        <description>Monitored route - Action point</description>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="6">
+      <description>
+        <name>52000</name>
+        <description>Planned route</description>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="7">
+      <description>
+        <name>52240</name>
+        <description>Planned route - Legline, waypoints</description>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="8">
+      <description>
+        <name>52250</name>
+        <description>Planned route - Wheel over line (WOL)</description>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="9">
+      <description>
+        <name>52260</name>
+        <description>Planned route - Limit line</description>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="10">
+      <description>
+        <name>52270</name>
+        <description>Planned route - Action point</description>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+  </viewingGroups>
+  <foundationMode/>
+  <viewingGroupLayers>
+    <viewingGroupLayer id="1">
+      <description>
+        <name>viewingGroupLayer1</name>
+        <description>Test Viewing Group Layer</description>
+        <language>en</language>
+      </description>
+      <viewingGroup>1</viewingGroup>
+    </viewingGroupLayer>
+    <viewingGroupLayer id="2">
+      <description>
+        <name>viewingGroupLayer2</name>
+        <description>Test Viewing Group Layer</description>
+        <language>en</language>
+      </description>
+      <viewingGroup>2</viewingGroup>
+    </viewingGroupLayer>
+  </viewingGroupLayers>
+
+  <displayModes>
+    <displayMode id="1">
+      <description>
+        <name>Display Base</name>
+        <description>Always on display</description>
+        <language>en</language>
+      </description>
+      <viewingGroupLayer>1</viewingGroupLayer>
+    </displayMode>
+    <displayMode id="2">
+      <description>
+        <name>Standard Display</name>
+        <description>ECDIS default display</description>
+        <language>en</language>
+      </description>
+      <viewingGroupLayer>2</viewingGroupLayer>
+    </displayMode>
+  </displayModes>
+  <displayPlane>
+    <displayPlane id="1">
+      <description>
+        <name>overRadar</name>
+        <description>Content displayed on top of Radar image</description>
+        <language>en</language>
+      </description>
+    </displayPlane>
+    <displayPlane id="2">
+      <description>
+        <name>underRadar</name>
+        <description>Content displayed underneath Radar image</description>
+        <language>en</language>
+      </description>
+    </displayPlane>
+  </displayPlane>
+
+  <context>
+  </context>
+
+  <rules>
+    <ruleFile id="1">
+      <description>
+        <name>attributeRules</name>
+        <description>attributeRules</description>
+        <language>en</language>
+      </description>
+      <fileName>attributeRules.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="2">
+      <description>
+        <name>RouteWaypoint</name>
+        <description>RouteWaypoint</description>
+        <language>en</language>
+      </description>
+      <fileName>RouteWaypoint.xml</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="3">
+      <description>
+        <name>RouteWaypointLeg</name>
+        <description>RouteWaypointLeg</description>
+        <language>en</language>
+      </description>
+      <fileName>RouteWaypointLeg.xml</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="4">
+      <description>
+        <name>RouteActionPoint</name>
+        <description>RouteActionPoint</description>
+        <language>en</language>
+      </description>
+      <fileName>RouteActionPoint.xml</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="5">
+      <description>
+        <name>main_Simplified</name>
+        <description>main_Simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>main_Simplified.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

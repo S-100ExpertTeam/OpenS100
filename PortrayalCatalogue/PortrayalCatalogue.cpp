@@ -279,9 +279,19 @@ std::wstring PortrayalCatalogue::GetProduct()
 	return product;
 }
 
+std::string PortrayalCatalogue::getProduct() const
+{
+	return pugi::as_utf8(product);
+}
+
 std::wstring PortrayalCatalogue::GetVersion()
 {
 	return pugi::as_wide(version.getSource());
+}
+
+Version PortrayalCatalogue::getVersion() const
+{
+	return version;
 }
 
 S100_Rules* PortrayalCatalogue::GetRules() 
@@ -582,4 +592,13 @@ Portrayal::FileFormat PortrayalCatalogue::GetRuleFileFormat()
 std::string PortrayalCatalogue::GetCataloguePathAsString()
 {
 	return LibMFCUtil::WStringToString(catalogPath);
+}
+
+void PortrayalCatalogue::ChangePalette(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke)
+{
+	SetCurrentPaletteName(pugi::as_wide(paletteName));
+	DeletePatternImage();
+	CreatePatternImages(d2Factory, imageFactory, stroke);
+	DeleteLineImages();
+	CreateLineImages(d2Factory, imageFactory, stroke);
 }

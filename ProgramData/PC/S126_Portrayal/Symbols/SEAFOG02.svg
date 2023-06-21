@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10mm" height="10mm" viewBox="-5 -5 10 10">
+	<title>SEAFOG02</title>
+	<desc>must be defined</desc>
+	<metadata>
+  	  <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+  	    <Description iho:publisher="KHOA" iho:creationDate="11/06/2018" iho:format="S100SVG" iho:version="0.1"/>
+  	  </S100SVG>
+    </metadata>
+	<rect class="symbolBox layout" fill="none" x="-5" y="-5" height="10" width="10" />
+    <rect class="svgBox layout" fill="none" x="-5" y="-5" height="10" width="10" />
+
+	<circle class="f0 sl sCHGRD" style="stroke-width: 0.1" cx="0" cy="0" r="4.69"/>
+
+	<path d="M 4.62,-0.49 L 4.64,0.00 L 4.62,0.49 L 4.55,0.97 L 4.43,1.43 L 4.28,1.87 L 4.08,2.29 L 3.85,2.69 L 3.58,3.06 L 3.29,3.40 L 2.96,3.71 L 2.60,3.99 L 2.21,4.23 L 1.81,4.43 L 1.38,4.59 L 0.94,4.71 L 0.47,4.79 L 0.00,4.81 L -0.47,4.79 L -0.94,4.71 L -1.38,4.59 L -1.81,4.43 L -2.21,4.23 L -2.60,3.99 L -2.96,3.71 L -3.29,3.40 L -3.58,3.06 L -3.85,2.69 L -4.08,2.29 L -4.28,1.87 L -4.43,1.43 L -4.55,0.97 L -4.62,0.49 L -4.64,0.00 L -4.62,-0.49 Z" class="fCHGRD"/>
+	
+    <path d="M 1.42,-1.47 L 1.34,-1.72 L 1.20,-1.92 L 0.98,-2.04 L 0.73,-2.10 L 0.68,-2.10 L 0.62,-2.08 L 0.56,-2.08 L 0.51,-2.06 L 0.34,-2.30 L 0.10,-2.48 L -0.17,-2.60 L -0.47,-2.65 L -0.91,-2.56 L -1.26,-2.32 L -1.50,-1.96 L -1.59,-1.52 L -1.59,-1.50 L -1.59,-1.48 L -1.59,-1.45 L -1.58,-1.43 L -1.80,-1.30 L -1.97,-1.13 L -2.08,-0.92 L -2.12,-0.67 L -2.06,-0.35 L -1.89,-0.10 L -1.63,0.08 L -1.31,0.14 L -0.60,0.14 L 0.10,0.14 L 0.81,0.14 L 1.51,0.14 L 1.82,0.08 L 2.06,-0.10 L 2.22,-0.35 L 2.27,-0.67 L 2.20,-0.96 L 2.00,-1.21 L 1.72,-1.39 Z" class="fCHWHT"/>
+	
+    <path d="M 1.41,-1.11 L 1.44,-1.18 L 1.46,-1.25 L 1.48,-1.33 L 1.48,-1.41 L 1.44,-1.66 L 1.30,-1.85 L 1.10,-1.99 L 0.85,-2.04 L 0.69,-2.02 L 0.56,-1.97 L 0.43,-1.88 L 0.33,-1.76" class="sl f0 sCHGRD" style="stroke-width: 0.188"/>
+	<path d="M 0.54,-1.99 L 0.37,-2.25 L 0.14,-2.46 L -0.15,-2.60 L -0.47,-2.65 L -0.90,-2.56 L -1.25,-2.32 L -1.49,-1.97 L -1.57,-1.54 L -1.57,-1.50 L -1.57,-1.45 L -1.56,-1.40 L -1.56,-1.35" class="sl f0 sCHGRD" style="stroke-width: 0.188"/>
+	<path d="M 1.51,-1.35 L 1.81,-1.29 L 2.06,-1.13 L 2.21,-0.89 L 2.27,-0.59 L 2.21,-0.29 L 2.06,-0.06 L 1.81,0.11 L 1.51,0.17 L 0.79,0.17 L 0.06,0.17 L -0.67,0.17 L -1.40,0.17 L -1.70,0.11 L -1.94,-0.06 L -2.10,-0.29 L -2.16,-0.59 L -2.10,-0.89 L -1.94,-1.13 L -1.70,-1.29 L -1.40,-1.35 L -1.10,-1.29 L -0.85,-1.13 L -0.69,-0.89 L -0.64,-0.59" class="sl f0 sCHGRD" style="stroke-width: 0.188"/>
+    
+    <path d="M -1.83,0.97 L 1.94,0.97" class="sl f0 sCHWHT" style="stroke-width: 0.5"/>
+	<path d="M -1.83,1.95 L 1.94,1.95" class="sl f0 sCHWHT" style="stroke-width: 0.5"/>
+</svg>

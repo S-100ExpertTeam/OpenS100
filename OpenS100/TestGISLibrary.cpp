@@ -54,7 +54,7 @@ void TestGISLibrary::TestSave()
 
 void TestGISLibrary::CreateNewLayer()
 {
-	auto layer = theApp.pView->s101Creator.CreateLayer(L"newENC.000", theApp.gisLib->GetFC(), theApp.gisLib->GetPC());
+	auto layer = theApp.pView->s101Creator.CreateLayer(L"newENC.000", theApp.gisLib->catalogManager.getFC(), theApp.gisLib->catalogManager.getPC());
 	if (layer)
 	{
 		layerKey = theApp.gisLib->GetLayerManager()->AddLayer(layer);

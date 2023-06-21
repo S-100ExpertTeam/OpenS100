@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-03"?>
+<?S100Meta name="OVERSC01" exposition="overscale part of a display containing data from more than one navigation purpose"?><symbolFill>
+  <areaCRS>GlobalGeometry</areaCRS>
+  <symbol reference="OVERSC01P"/>
+  <v1>
+    <x>9</x>
+    <y>0.0</y>
+  </v1>
+  <v2>
+    <x>0</x>
+    <y>4</y>
+  </v2>
+</symbolFill>

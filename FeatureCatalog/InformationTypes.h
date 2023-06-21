@@ -24,6 +24,8 @@ public:
 	
 	std::vector<InformationType*> GetVecInformationType();
 	std::unordered_map<std::wstring, InformationType*>& GetInformationTypePointer();
+	void ApplySuperType();
+	bool SetAttributeFromSuperType(InformationType* it);
 	bool SetAssociationFromSuperType(InformationType* it);
 
 	bool InsertInformationType(InformationType* value);

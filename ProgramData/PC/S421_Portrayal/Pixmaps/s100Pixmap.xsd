@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:s100Symbol="http://www.iho.int/S100SymbolDefinition">
+<xs:import namespace="http://www.iho.int/S100SymbolDefinition"
+schemaLocation="../S100SymbolDefinition.xsd"/>
+<xs:simpleType name="ColorId">
+<xs:restriction base="xs:string">
+<xs:minLength value="1"/>
+<xs:maxLength value="3"/>
+<xs:pattern value="[a-zA-Z0-9_]+"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:complexType name="Pixel">
+<xs:simpleContent>
+<xs:extension base="ColorId">
+<xs:attribute name="x" type="xs:nonNegativeInteger" use="required"/>
+<xs:attribute name="y" type="xs:nonNegativeInteger" use="required"/>
+</xs:extension>
+</xs:simpleContent>
+</xs:complexType>
+<xs:complexType name="ColorMapItem">
+<xs:complexContent>
+<xs:extension base="s100Symbol:Color">
+<xs:attribute name="id" type="ColorId" use="required"/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="ColorMap">
+<xs:sequence>
+<xs:element name="color" type="ColorMapItem" minOccurs="1" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pixmap">
+<xs:sequence>
+<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
+<xs:element name="width" type="xs:positiveInteger"/>
+<xs:element name="height" type="xs:positiveInteger"/>
+<xs:element name="colorMap" type="ColorMap">
+<xs:key name="colorKey">
+<xs:selector xpath="color"/>
+<xs:field xpath="@id"/>
+</xs:key>
+</xs:element>
+<xs:element name="background" type="ColorId"/>
+<xs:element name="pixel" type="Pixel" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="pixmap" type="Pixmap">
+<xs:keyref name="pixelRef" refer="colorKey">
+<xs:selector xpath="pixel"/>
+<xs:field xpath="."/>
+</xs:keyref>
+<xs:keyref name="backgroundRef" refer="colorKey">
+<xs:selector xpath="background"/>
+<xs:field xpath="."/>
+</xs:keyref>
+<xs:unique name="positionUnique">
+<xs:selector xpath="pixel"/>
+<xs:field xpath="@x"/>
+<xs:field xpath="@y"/>
+</xs:unique>
+</xs:element>
+</xs:schema>

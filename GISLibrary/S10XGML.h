@@ -35,7 +35,7 @@ public:
     bool Open(CString _filepath) override;
     
     bool ReadMembers(pugi::xml_node& node);
-    bool ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc, FeatureType* featureType);
+    bool ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc);
     bool ReadInformation(pugi::xml_node& node, FeatureCatalogue* fc, InformationType* informationType);
     bool ReadPoint(pugi::xml_node& node);
     bool ReadMultiPoint(pugi::xml_node& node);
@@ -43,6 +43,7 @@ public:
     bool ReadOrientableCurve(pugi::xml_node& node);
     bool ReadCompositeCurve(pugi::xml_node& node);
     bool ReadSurface(pugi::xml_node& node);
+    bool ReadMember(pugi::xml_node& node);
 
     bool ReadObjectAttribute(pugi::xml_node& node, GF::ObjectType* object, FeatureCatalogue* fc);
     bool ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature);
@@ -52,4 +53,7 @@ public:
     bool AddSubAttribute(pugi::xml_node& node, GF::ComplexAttributeType* complexAttribute, FeatureCatalogue* fc);
 
     GM::Point* GetPoint(int x, int y);
+
+private:
+    std::string getCodeFromMember(std::string nodeName);
 };

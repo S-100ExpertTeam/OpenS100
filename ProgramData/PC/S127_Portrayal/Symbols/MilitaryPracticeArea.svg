@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.559999mm" height="8.57mm" viewBox="-4.31 -4.91 8.559999 8.57">
+  <title>MilitaryPracticeArea</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-21" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.31" y="3.66" height="8.57" width="8.559999" />
+  <rect class="svgBox layout" fill="none" x="-4.31" y="-4.91" height="8.57" width="8.559999" />
+  <circle cx="-0.03" cy="-0.62" r="3.28" class="fCHBRN" style="stroke-width:0.64" />
+  <path d=" M -1.9,-0.61 L -1.9,1.09 L 1.28,1.09 L 2.5,-0.61 L -1.9,-0.61" class="fTESTA" style="stroke-width:0.64;" />
+  <path d=" M -1.73,-1.61 L -0.48,-1.61 L -0.48,-0.2 L -1.73,-0.2 L -1.73,-1.61" class="fTESTA" style="stroke-width:0.64;" />
+  <path d=" M -1.98,-1.86 L -0.24,-1.86 L -0.24,-1.44 L -1.11,-1.44 L -1.98,-1.44 L -1.98,-1.86" class="fTESTA" style="stroke-width:0.64;" />
+  <path d=" M 0.17,-1.02 L 1.42,-1.02 L 1.42,0.39 L 0.17,0.39 L 0.17,-1.02" class="fTESTA" style="stroke-width:0.64;" />
+  <path d=" M 0.21,-0.68 L 0.92,-1.16 L 1.63,-1.67 L 1.9,-1.29 L 1.19,-0.81 L 0.47,-0.31 L 0.21,-0.68" class="fTESTA" style="stroke-width:0.64;" />
+  <circle cx="-0.03" cy="-0.63" r="3.28" class="sl f0 sTESTA" style="stroke-width:0.64" />
+</svg>

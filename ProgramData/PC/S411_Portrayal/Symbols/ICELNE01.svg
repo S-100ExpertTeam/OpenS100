@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2017-08-16"?>
+<?S100Meta  name="ICELNE01" exposition="Line Features Ice Edge"?>
+<lineStyle>
+  <intervalLength>6</intervalLength>
+  <pen width="0.32">
+    <color>CHBLK</color>
+  </pen>
+  <dash>
+    <start>0</start>
+    <length>6</length>
+  </dash>
+</lineStyle>

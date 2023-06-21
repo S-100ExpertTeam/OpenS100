@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" 
+xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" 
+width="2.00mm" height="2.00mm" viewBox="-1.00 -1.00 2.00 2.00">
+  <title>ICEDGE01</title>
+  <desc>Freezing spray line symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHB/JCOMM" iho:creationDate="2014-10-29" 
+      iho:source="S412Register" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.00" y="-1.00" height="2.00" width="2.00"/>
+  <rect class="svgBox layout" fill="none" x="-1.00" y="-1.00" height="2.00" width="2.00"/>
+  <circle class="fWXDSB" cx="0" cy="0" r="1"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.5"/>
+</svg>

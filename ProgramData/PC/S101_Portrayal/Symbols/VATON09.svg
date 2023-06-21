@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="19.5mm" height="10mm" viewBox="-5 -5 19.5 10">
+  <title>VATON09</title>
+  <desc>Virtual Aid to Navigation - isolated danger</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2022-03-24" iho:source="SevenCs GmbH" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.8" y="-4.8" height="9.6" width="19.1"/>
+  <rect class="svgBox layout" fill="none" x="-4.8" y="-4.8" height="9.6" width="19.1"/>
+  <circle cx="0" cy="0" r="4.5" class="sl f0 sCHMGD" style="stroke-width: 0.32;" />
+  <circle class="fCHRED" cx="0" cy="-1.59" r="1.1"/>
+  <circle class="fCHRED" cx="-0.02" cy="1.65" r="1.1"/>
+  <circle class="f0 sOUTLW" style="stroke-width: 0.32;" cx="0" cy="-1.59" r="1.1"/>
+  <circle class="f0 sOUTLW" style="stroke-width: 0.32;" cx="-0.02" cy="1.65" r="1.1"/>
+  <path d=" M 5.4,-1.5 L 6.4,1.5 L 7.4,-1.5" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/> <!-- 'V' -->
+  <path d=" M 7.8,0.0 L 8.6,0.0" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/> <!-- '-' -->
+  <path d=" M 9.0,1.5 L 10.0,-1.5 L 11.0,1.5" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/> <!-- 'A' -->
+  <path d=" M 9.4,0.5 L 10.5,0.5" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/> <!-- 'A' -->
+  <path d=" M 11.6,1.5 L 11.6,-1.5" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/> <!-- 'I' -->
+  <path d=" M 13.9,-1.1 L 13.5,-1.5 L 12.7,-1.5 L 12.3,-1.1 L 12.3,-0.4 L 12.7,0.0 L 13.5,0.0 L 13.9,0.4 L 13.9,1.1 L 13.5,1.5 L 12.7,1.5 L 12.3,1.1" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/> <!-- 'S' -->
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+</svg>

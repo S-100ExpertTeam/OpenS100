@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="9.82mm" height="5.39mm" viewBox="-4.9 -4.89 9.82 5.39">
+  <title>SMCIRC7</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-08" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.9" y="0.5" height="5.39" width="9.82" />
+  <rect class="svgBox layout" fill="none" x="-4.9" y="-4.89" height="5.39" width="9.82" />
+  <path d=" M -4.4,0 L -4.38,-0.25 L -4.33,-0.75 L -4.25,-1.2 L -4.07,-1.69 L -3.84,-2.14 L -3.49,-2.7 L -3.08,-3.15 L -2.7,-3.47 L -2.23,-3.78 L -1.78,-4.02 L -1.33,-4.19 L -0.86,-4.32 L -0.31,-4.39 L 0.02,-4.39 L 0.58,-4.36 L 1.03,-4.29 L 1.46,-4.16 L 1.92,-3.97 L 2.31,-3.77 L 2.62,-3.56 L 2.89,-3.34 L 3.14,-3.1 L 3.43,-2.78 L 3.66,-2.48 L 3.85,-2.16 L 4.02,-1.83 L 4.16,-1.47 L 4.27,-1.12 L 4.34,-0.81 L 4.4,-0.48 L 4.42,-0.16 L 4.42,0 L -4.4,0" class="fPLRTE" style="stroke-width:0.32;" />
+</svg>

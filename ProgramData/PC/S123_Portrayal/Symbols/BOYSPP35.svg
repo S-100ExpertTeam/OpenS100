@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.58mm" height="5.32mm" viewBox="-1.85 -2.55 3.58 5.32">
+  <title>BOYSPP35</title>
+  <desc>special purpose ice buoy or spar or pillar shaped buoy, simplified</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.69" y="-2.39" height="5" width="3.26"/>
+  <rect class="svgBox layout" fill="none" x="-1.69" y="-2.39" height="5" width="3.26"/>
+  <path d=" M -1.69,2.61 L 0.12,-2.39 L 1.57,-2.39 L -0.22,2.61 L -1.67,2.61 L -1.69,2.61 Z" class="fCHYLW"/>
+  <path d=" M -1.69,2.61 L 0.12,-2.39 L 1.57,-2.39 L -0.22,2.61 L -1.67,2.61" class="sl f0 sOUTLW" style="stroke-width: 0.32;"/>
+  <circle class="fOUTLW" cx="0.27" cy="0.16" r="0.15"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

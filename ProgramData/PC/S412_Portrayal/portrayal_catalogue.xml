@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-412" version="1.0">
+	<pixmaps/>
+	<colorProfiles>
+		<colorProfile id="837">
+			<description>
+				<name>Color Profile</name>
+				<description>Color Profile</description>
+				<language>en</language>
+			</description>
+			<fileName>colorProfile.xml</fileName>
+			<fileType>ColorProfile</fileType>
+			<fileFormat>XML</fileFormat>
+		</colorProfile>
+	</colorProfiles>
+	<symbols>
+		<symbol id="1">
+			<description>
+				<name>CATREA04</name>
+				<description>CATREA04</description>
+				<language>en</language>
+			</description>
+			<fileName>CATREA04.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="2">
+			<description>
+				<name>CATREA05</name>
+				<description>CATREA05</description>
+				<language>en</language>
+			</description>
+			<fileName>CATREA05.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="3">
+			<description>
+				<name>CATREA07</name>
+				<description>CATREA07</description>
+				<language>en</language>
+			</description>
+			<fileName>CATREA07.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+    <symbol id="4">
+      <description>
+        <name>CATREA20</name>
+        <description>CATREA20</description>
+        <language>en</language>
+      </description>
+      <fileName>CATREA20.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="5">
+      <description>
+        <name>CATREA22</name>
+        <description>CATREA22</description>
+        <language>en</language>
+      </description>
+      <fileName>CATREA22.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="6">
+      <description>
+        <name>CATREA23</name>
+        <description>CATREA23</description>
+        <language>en</language>
+      </description>
+      <fileName>CATREA23.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="7">
+      <description>
+        <name>CATREA29</name>
+        <description>CATREA29</description>
+        <language>en</language>
+      </description>
+      <fileName>CATREA29.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="8">
+      <description>
+        <name>QUESMRK1</name>
+        <description>QUESMRK1</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="9">
+      <description>
+        <name>RIDGES01</name>
+        <description>RIDGES01</description>
+        <language>en</language>
+      </description>
+      <fileName>RIDGES01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="10">
+      <description>
+        <name>ITCZMI01</name>
+        <description>ITCZMI01</description>
+        <language>en</language>
+      </description>
+      <fileName>ITCZMI01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="11">
+      <description>
+        <name>TRIANG01</name>
+        <description>TRIANG01</description>
+        <language>en</language>
+      </description>
+      <fileName>TRIANG01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="12">
+      <description>
+        <name>ESSARE01</name>
+        <description>ESSARE01</description>
+        <language>en</language>
+      </description>
+      <fileName>ESSARE01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="13">
+      <description>
+        <name>FZSPRY01</name>
+        <description>FZSPRY01</description>
+        <language>en</language>
+      </description>
+      <fileName>FZSPRY01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="14">
+      <description>
+        <name>FRONTS01</name>
+        <description>FRONTS01</description>
+        <language>en</language>
+      </description>
+      <fileName>FRONTS01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="15">
+      <description>
+        <name>FRONTS14</name>
+        <description>FRONTS14</description>
+        <language>en</language>
+      </description>
+      <fileName>FRONTS14.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="16">
+      <description>
+        <name>SMCIRC7</name>
+        <description>SMCIRC7</description>
+        <language>en</language>
+      </description>
+      <fileName>SMCIRC7.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="17">
+      <description>
+        <name>SMCIRC8</name>
+        <description>SMCIRC8</description>
+        <language>en</language>
+      </description>
+      <fileName>SMCIRC8.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="18">
+      <description>
+        <name>CONVBO02</name>
+        <description>CONVBO02</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="19">
+      <description>
+        <name>CONVBO03</name>
+        <description>CONVBO03</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="20">
+      <description>
+        <name>CONVBO04</name>
+        <description>CONVBO04</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="21">
+      <description>
+        <name>CONVBO05</name>
+        <description>CONVBO05</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO05.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="22">
+      <description>
+        <name>CONVBO06</name>
+        <description>CONVBO06</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO06.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="23">
+      <description>
+        <name>CONVBO07</name>
+        <description>CONVBO07</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO07.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="24">
+      <description>
+        <name>FRONTS15</name>
+        <description>FRONTS15</description>
+        <language>en</language>
+      </description>
+      <fileName>FRONTS15.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="25">
+      <description>
+        <name>FRONTS16</name>
+        <description>FRONTS16</description>
+        <language>en</language>
+      </description>
+      <fileName>FRONTS16.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="26">
+      <description>
+        <name>SMCIRC9</name>
+        <description>SMCIRC9</description>
+        <language>en</language>
+      </description>
+      <fileName>SMCIRC9.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="27">
+      <description>
+        <name>DIAMOND1P</name>
+        <description>DIAMOND1P</description>
+        <language>en</language>
+      </description>
+      <fileName>DIAMOND1P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+  </symbols>
+  <lineStyles>
+    <lineStyle id="RIDGES01">
+      <description>
+        <name>RIDGES01</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>RIDGES01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="ESSARE01">
+      <description>
+        <name>ESSARE01</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>ESSARE01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CONVBO01">
+      <description>
+        <name>CONVBO01</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="FRONTS01">
+      <description>
+        <name>FRONTS01</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>FRONTS01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="FRONTS02">
+      <description>
+        <name>FRONTS02</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>FRONTS02.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="FRONTS03">
+      <description>
+        <name>FRONTS03</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>FRONTS03.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="FZSPRY01">
+      <description>
+        <name>FZSPRY01</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>FZSPRY01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="AIRPSR01">
+      <description>
+        <name>AIRPSR01</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>AIRPSR01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CONVBO02">
+      <description>
+        <name>CONVBO02</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO02.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CONVBO03">
+      <description>
+        <name>CONVBO03</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO03.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CONVBO04">
+      <description>
+        <name>CONVBO04</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO04.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CONVBO05">
+      <description>
+        <name>CONVBO05</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO05.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CONVBO06">
+      <description>
+        <name>CONVBO06</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO06.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CONVBO07">
+      <description>
+        <name>CONVBO07</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO07.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CONVBO08">
+      <description>
+        <name>CONVBO08</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>CONVBO08.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="FRONTS04">
+      <description>
+        <name>FRONTS04</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>FRONTS04.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="FRONTS05">
+      <description>
+        <name>FRONTS05</name>
+        <description>boundary of an anchorage area</description>
+        <language>en</language>
+      </description>
+      <fileName>FRONTS05.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+  </lineStyles>
+  <areaFills>
+    <areaFill id="DIAMOND1">
+      <description>
+        <name>DIAMOND1</name>
+        <description>pattern of symbols for mangroves</description>
+        <language>en</language>
+      </description>
+      <fileName>DIAMOND1.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+  </areaFills>
+	<fonts/>
+	<viewingGroups>
+		<viewingGroup id="1">
+			<description>
+				<name>21010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+	</viewingGroups>
+	<viewingGroupLayers/>
+	<displayModes>
+	</displayModes>
+	<displayPlane>
+		<displayPlane id="2">
+			<description>
+				<name>underRadar</name>
+				<description>Content displayed underneath Radar image</description>
+				<language>en</language>
+			</description>
+		</displayPlane>
+	</displayPlane>
+	<context/>
+	<rules>
+    <ruleFile id="1">
+      <description>
+        <name>main</name>
+        <description>main</description>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="2">
+      <description>
+        <name>MarineProtectedArea</name>
+        <description>MarineProtectedArea</description>
+      </description>
+      <fileName>MarineProtectedArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="3">
+      <description>
+        <name>S124_NavigationalWarningFeaturePart</name>
+        <description>S124_NavigationalWarningFeaturePart</description>
+      </description>
+      <fileName>S124_NavigationalWarningFeaturePart_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+	</rules>
+</portrayalCatalog>

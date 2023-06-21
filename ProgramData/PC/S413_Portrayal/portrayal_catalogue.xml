@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-413" version="1.0">
+	<pixmaps/>
+	<colorProfiles>
+		<colorProfile id="837">
+			<description>
+				<name>Color Profile</name>
+				<description>Color Profile</description>
+				<language>en</language>
+			</description>
+			<fileName>colorProfile.xml</fileName>
+			<fileType>ColorProfile</fileType>
+			<fileFormat>XML</fileFormat>
+		</colorProfile>
+	</colorProfiles>
+	<symbols>
+		<symbol id="1">
+			<description>
+				<name>SCAROW01</name>
+				<description>SCAROW01</description>
+				<language>en</language>
+			</description>
+			<fileName>SCAROW01.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="2">
+			<description>
+				<name>SCAROW02</name>
+				<description>SCAROW02</description>
+				<language>en</language>
+			</description>
+			<fileName>SCAROW02.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="3">
+			<description>
+				<name>SCAROW09</name>
+				<description>SCAROW09</description>
+				<language>en</language>
+			</description>
+			<fileName>SCAROW09.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+    <symbol id="4">
+      <description>
+        <name>SCVISIBILITY01</name>
+        <description>SCVISIBILITY01</description>
+        <language>en</language>
+      </description>
+      <fileName>SCVISIBILITY01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="5">
+      <description>
+        <name>SCVISIBILITY02</name>
+        <description>SCVISIBILITY02</description>
+        <language>en</language>
+      </description>
+      <fileName>SCVISIBILITY02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="6">
+      <description>
+        <name>SCVISIBILITY03</name>
+        <description>SCVISIBILITY03</description>
+        <language>en</language>
+      </description>
+      <fileName>SCVISIBILITY03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="7">
+      <description>
+        <name>SCVISIBILITY04</name>
+        <description>SCVISIBILITY04</description>
+        <language>en</language>
+      </description>
+      <fileName>SCVISIBILITY04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="8">
+      <description>
+        <name>SCVISIBILITY05</name>
+        <description>SCVISIBILITY05</description>
+        <language>en</language>
+      </description>
+      <fileName>SCVISIBILITY05.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="9">
+      <description>
+        <name>SCVISIBILITY06</name>
+        <description>SCVISIBILITY06</description>
+        <language>en</language>
+      </description>
+      <fileName>SCVISIBILITY06.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="10">
+      <description>
+        <name>WAVEHT01</name>
+        <description>WAVEHT01</description>
+        <language>en</language>
+      </description>
+      <fileName>WAVEHT01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="11">
+      <description>
+        <name>WAVEHT02</name>
+        <description>WAVEHT02</description>
+        <language>en</language>
+      </description>
+      <fileName>WAVEHT02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="12">
+      <description>
+        <name>WAVEHT03</name>
+        <description>WAVEHT03</description>
+        <language>en</language>
+      </description>
+      <fileName>WAVEHT03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    </symbols>
+  <lineStyles>
+   
+  </lineStyles>
+  <areaFills>
+   
+  </areaFills>
+	<fonts/>
+	<viewingGroups>
+		<viewingGroup id="1">
+			<description>
+				<name>21010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+	</viewingGroups>
+	<viewingGroupLayers/>
+	<displayModes>
+	</displayModes>
+	<displayPlane>
+		<displayPlane id="2">
+			<description>
+				<name>underRadar</name>
+				<description>Content displayed underneath Radar image</description>
+				<language>en</language>
+			</description>
+		</displayPlane>
+	</displayPlane>
+	<context/>
+	<rules>
+    <ruleFile id="1">
+      <description>
+        <name>main</name>
+        <description>main</description>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="2">
+      <description>
+        <name>MarineProtectedArea</name>
+        <description>MarineProtectedArea</description>
+      </description>
+      <fileName>MarineProtectedArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="3">
+      <description>
+        <name>S413_AvgWaveDir</name>
+        <description>S413_AvgWaveDir</description>
+      </description>
+      <fileName>S413_AvgWaveDir.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="4">
+      <description>
+        <name>S413_AvgWavePrd</name>
+        <description>S413_AvgWavePrd</description>
+      </description>
+      <fileName>S413_AvgWavePrd.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="5">
+      <description>
+        <name>S413_Humidity</name>
+        <description>S413_Humidity</description>
+      </description>
+      <fileName>S413_Humidity.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="6">
+      <description>
+        <name>S413_HumidityFillcolor</name>
+        <description>S413_HumidityFillcolor</description>
+      </description>
+      <fileName>S413_HumidityFillcolor.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="7">
+      <description>
+        <name>S413_MaxWaveDir</name>
+        <description>S413_MaxWaveDir</description>
+      </description>
+      <fileName>S413_MaxWaveDir.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="8">
+      <description>
+        <name>S413_MaxWpkPrd</name>
+        <description>S413_MaxWpkPrd</description>
+      </description>
+      <fileName>S413_MaxWpkPrd.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="9">
+      <description>
+        <name>S413_NewSnowAmount3hr</name>
+        <description>S413_NewSnowAmount3hr</description>
+      </description>
+      <fileName>S413_NewSnowAmount3hr.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="10">
+      <description>
+        <name>S413_OceanCurrentDirSpd</name>
+        <description>S413_OceanCurrentDirSpd</description>
+      </description>
+      <fileName>S413_OceanCurrentDirSpd.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="11">
+      <description>
+        <name>S413_Pressure</name>
+        <description>S413_Pressure</description>
+      </description>
+      <fileName>S413_Pressure.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="12">
+      <description>
+        <name>S413_RainAmount3hr</name>
+        <description>S413_RainAmount3hr</description>
+      </description>
+      <fileName>S413_RainAmount3hr.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="13">
+      <description>
+        <name>S413_RainProbability</name>
+        <description>S413_RainProbability</description>
+      </description>
+      <fileName>S413_RainProbability.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="14">
+      <description>
+        <name>S413_Temperature3hr</name>
+        <description>S413_Temperature3hr</description>
+      </description>
+      <fileName>S413_Temperature3hr.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="15">
+      <description>
+        <name>S413_Temperature3hrFillcolor</name>
+        <description>S413_Temperature3hrFillcolor</description>
+      </description>
+      <fileName>S413_Temperature3hrFillcolor.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="16">
+      <description>
+        <name>S413_Visibility</name>
+        <description>S413_Visibility</description>
+      </description>
+      <fileName>S413_Visibility.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="17">
+      <description>
+        <name>S413_WaterSalt</name>
+        <description>S413_WaterSalt</description>
+      </description>
+      <fileName>S413_WaterSalt.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="18">
+      <description>
+        <name>S413_WaterSaltFillcolor</name>
+        <description>S413_WaterSaltFillcolor</description>
+      </description>
+      <fileName>S413_WaterSaltFillcolor.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="19">
+      <description>
+        <name>S413_WaterTemperature</name>
+        <description>S413_WaterTemperature</description>
+      </description>
+      <fileName>S413_WaterTemperature.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="20">
+      <description>
+        <name>S413_WaterTemperatureFillcolor</name>
+        <description>S413_WaterTemperatureFillcolor</description>
+      </description>
+      <fileName>S413_WaterTemperatureFillcolor.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="21">
+      <description>
+        <name>S413_WaveHeight</name>
+        <description>S413_WaveHeight</description>
+      </description>
+      <fileName>S413_WaveHeight.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="22">
+      <description>
+        <name>S413_WaveHeightInst</name>
+        <description>S413_WaveHeightInst</description>
+      </description>
+      <fileName>S413_WaveHeightInst.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="23">
+      <description>
+        <name>S413_WaveLength</name>
+        <description>S413_WaveLength</description>
+      </description>
+      <fileName>S413_WaveLength.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="24">
+      <description>
+        <name>S413_WaveWindDirSpd</name>
+        <description>S413_WaveWindDirSpd</description>
+      </description>
+      <fileName>S413_WaveWindDirSpd.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="25">
+      <description>
+        <name>S413_WindDirSpd</name>
+        <description>S413_WindDirSpd</description>
+      </description>
+      <fileName>S413_WindDirSpd.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+	</rules>
+</portrayalCatalog>

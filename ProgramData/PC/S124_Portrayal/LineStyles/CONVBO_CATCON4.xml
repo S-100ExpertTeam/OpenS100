@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<lineStyle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
+<title>CONVBO CATCON4</title>
+  <desc>Convergent boundary: Category of Convergent Boundary: Trough</desc>
+<lineStyle offset="0">
+	<intervalLength>20</intervalLength>
+    <pen width="0.3">
+        <color>sWXBLK</color>
+    </pen>
+    <dash>
+        <start>0.0</start>
+        <length>20.0</length>
+    </dash>
+</lineStyle>

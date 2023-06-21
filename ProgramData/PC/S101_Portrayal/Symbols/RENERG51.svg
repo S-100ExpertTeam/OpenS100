@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="11.96mm" height="11.96mm" viewBox="-5.98 -5.98 11.96 11.96">
+  <title>RENERG51</title>
+  <desc>Renewable Energy farm, centred symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.98" y="-5.98" height="11.96" width="11.96" />
+  <rect class="svgBox layout" fill="none" x="-5.98" y="-5.98" height="11.96" width="11.96" />
+  <path d=" M 0.78,-3.43 L -1.17,-0.37 L 1.17,0.45 L -0.78,3.45" class="sl f0 sCHGRF" style="stroke-width:0.96;" />
+  <circle cx="0" cy="0" r="4.96" class="sl f0 sCHGRF" style="stroke-width:0.64" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+</svg>

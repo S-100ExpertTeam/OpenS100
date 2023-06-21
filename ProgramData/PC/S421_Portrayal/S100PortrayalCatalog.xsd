@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- S-100 Portrayal catalog schema
+      Build 20181015 Updated for post-TSM6 finalization of Part 15 (2018-10-24)
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:s100Symbol="http://www.iho.int/S100SymbolDefinition" version="4.0.0-20181015">
+	<xs:import namespace="http://www.iho.int/S100SymbolDefinition" schemaLocation="S100SymbolDefinition.xsd"/>
+	<!-- Supported type for context parameters -->
+	<xs:simpleType name="ParameterType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Boolean"/>
+			<xs:enumeration value="Integer"/>
+			<xs:enumeration value="Double"/>
+			<xs:enumeration value="String"/>
+			<xs:enumeration value="Date"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- The type of an external file -->
+	<xs:simpleType name="FileType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Font"/>
+			<xs:enumeration value="AreaFill"/>
+			<xs:enumeration value="LineStyle"/>
+			<xs:enumeration value="Symbol"/>
+			<xs:enumeration value="ColorProfile"/>
+			<xs:enumeration value="Pixmap"/>
+			<xs:enumeration value="Rule"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- The format of an external file -->
+	<xs:simpleType name="FileFormat">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="XML"/>
+			<xs:enumeration value="SVG"/>
+			<xs:enumeration value="XSLT"/>
+			<xs:enumeration value="TTF"/>
+			<xs:enumeration value="LUA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- The type of an template -->
+	<xs:simpleType name="RuleType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TopLevelTemplate"/>
+			<xs:enumeration value="SubTemplate"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Class for descriptive information about a catalogue item -->
+	<xs:complexType name="Description">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="description" type="xs:string"/>
+			<xs:element name="language" type="xs:language"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Abstract base class for catalogue items -->
+	<xs:complexType name="CatalogItem" abstract="true">
+		<xs:sequence>
+			<xs:element name="description" type="Description" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="s100Symbol:IdString" use="required"/>
+	</xs:complexType>
+	<!-- catalogue item for an external file -->
+	<xs:complexType name="ExternalFile">
+		<xs:complexContent>
+			<xs:extension base="CatalogItem">
+				<xs:sequence>
+					<xs:element name="fileName" type="xs:anyURI"/>
+					<xs:element name="fileType" type="FileType"/>
+					<xs:element name="fileFormat" type="FileFormat"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- catalogue item for an XSLT rule file -->
+	<xs:complexType name="RuleFile">
+		<xs:complexContent>
+			<xs:extension base="ExternalFile">
+				<xs:sequence>
+					<xs:element name="ruleType" type="RuleType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class for a viewing group -->
+	<xs:complexType name="ViewingGroup">
+		<xs:complexContent>
+			<xs:extension base="CatalogItem"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class for a viewing group layer (an aggregation of viewing groups) -->
+	<xs:complexType name="ViewingGroupLayer">
+		<xs:complexContent>
+			<xs:extension base="CatalogItem">
+				<xs:sequence>
+					<xs:element name="viewingGroup" type="s100Symbol:IdString" minOccurs="1" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class for a display mode (an aggregation of  viewing group layers) -->
+	<xs:complexType name="DisplayMode">
+		<xs:complexContent>
+			<xs:extension base="CatalogItem">
+				<xs:sequence>
+					<xs:element name="viewingGroupLayer" type="s100Symbol:IdString" minOccurs="1" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class for a display plane -->
+	<xs:complexType name="DisplayPlane">
+		<xs:complexContent>
+			<xs:extension base="CatalogItem"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class for a context parameter -->
+	<xs:complexType name="ContextParameter">
+		<xs:complexContent>
+			<xs:extension base="CatalogItem">
+				<xs:sequence>
+					<xs:element name="type" type="ParameterType"/>
+					<xs:element name="default" type="xs:anyType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Pixmaps">
+		<xs:sequence>
+			<xs:element name="pixmap" type="ExternalFile" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ColorProfiles">
+		<xs:sequence>
+			<xs:element name="colorProfile" type="ExternalFile" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Symbols">
+		<xs:sequence>
+			<xs:element name="symbol" type="ExternalFile" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LineStyles">
+		<xs:sequence>
+			<xs:element name="lineStyle" type="ExternalFile" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AreaFills">
+		<xs:sequence>
+			<xs:element name="areaFill" type="ExternalFile" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Fonts">
+		<xs:sequence>
+			<xs:element name="font" type="ExternalFile" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ViewingGroups">
+		<xs:sequence>
+			<xs:element name="viewingGroup" type="ViewingGroup" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ViewingGroupLayers">
+		<xs:sequence>
+			<xs:element name="viewingGroupLayer" type="ViewingGroupLayer" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DisplayModes">
+		<xs:sequence>
+			<xs:element name="displayMode" type="DisplayMode" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DisplayPlanes">
+		<xs:sequence>
+			<xs:element name="displayPlane" type="DisplayPlane" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Context">
+		<xs:sequence>
+			<xs:element name="parameter" type="ContextParameter" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Rules">
+		<xs:sequence>
+			<xs:element name="ruleFile" type="RuleFile" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PortrayalCatalog">
+		<xs:sequence>
+			<xs:element name="pixmaps" type="Pixmaps">
+				<xs:key name="pixmapKey">
+					<xs:selector xpath="pixmap"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="colorProfiles" type="ColorProfiles">
+				<xs:key name="colorProfileKey">
+					<xs:selector xpath="colorProfile"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="symbols" type="Symbols">
+				<xs:key name="symbolKey">
+					<xs:selector xpath="symbol"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="lineStyles" type="LineStyles">
+				<xs:key name="lineStyleKey">
+					<xs:selector xpath="lineStyle"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="areaFills" type="AreaFills">
+				<xs:key name="areaFillKey">
+					<xs:selector xpath="areaFill"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="fonts" type="Fonts">
+				<xs:key name="fontKey">
+					<xs:selector xpath="font"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="viewingGroups" type="ViewingGroups">
+				<xs:key name="viewingGroupKey">
+					<xs:selector xpath="viewingGroup"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="foundationMode">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="viewingGroup" type="s100Symbol:IdString" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="viewingGroupLayers" type="ViewingGroupLayers">
+				<xs:key name="viewingGroupLayerKey">
+					<xs:selector xpath="viewingGroupLayer"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="displayModes" type="DisplayModes">
+				<xs:key name="displayModeKey">
+					<xs:selector xpath="displayMode"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="displayPlane" type="DisplayPlanes">
+				<xs:key name="displayPlaneKey">
+					<xs:selector xpath="displayPlane"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="context" type="Context">
+				<xs:key name="contextKey">
+					<xs:selector xpath="parameter"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="rules" type="Rules">
+				<xs:key name="ruleKey">
+					<xs:selector xpath="ruleFile"/>
+					<xs:field xpath="@id"/>
+				</xs:key>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="productId" type="xs:string" use="required"/>
+		<xs:attribute name="version" type="xs:string" use="required"/>
+	</xs:complexType>
+	<!-- THE ROOT ELEMENT -->
+	<xs:element name="portrayalCatalog" type="PortrayalCatalog">
+		<!-- KEYREF FOR VIEWING GROUPS -->
+		<xs:keyref name="viewingGroupRef" refer="viewingGroupKey">
+			<xs:selector xpath="viewingGroupLayers/viewingGroupLayer/viewingGroup|foundationMode/viewingGroup"/>
+			<xs:field xpath="."/>
+		</xs:keyref>
+		<!-- KEYREF FOR VIEWING GROUP LAYERS -->
+		<xs:keyref name="viewingGroupLayerRef" refer="viewingGroupLayerKey">
+			<xs:selector xpath="displayModes/displayMode/viewingGroupLayer"/>
+			<xs:field xpath="."/>
+		</xs:keyref>
+	</xs:element>
+</xs:schema>

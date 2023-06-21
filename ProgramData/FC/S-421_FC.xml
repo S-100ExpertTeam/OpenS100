@@ -1,0 +1,2310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<S100FC:S100_FC_FeatureCatalogue 
+xmlns:S100FC="http://www.iho.int/S100FC" 
+xmlns:S100Base="http://www.iho.int/S100Base" 
+xmlns:S100CI="http://www.iho.int/S100CI" 
+xmlns:xlink="http://www.w3.org/1999/xlink" 
+xmlns:S100FD="http://www.iho.int/S100FD" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.iho.int/S100FC  ../schemas/S100/4.0.0/S100FC/20180611/xml/S100FC.xsd">
+	
+	<S100FC:name>Route</S100FC:name>
+	<S100FC:scope>Navigation</S100FC:scope>
+	<S100FC:fieldOfApplication>Marine</S100FC:fieldOfApplication>
+	<S100FC:versionNumber>1.0.0</S100FC:versionNumber>
+	<S100FC:versionDate>2019-02-01</S100FC:versionDate>
+	<S100FC:productId>S-421</S100FC:productId>
+	<S100FC:producer>
+		<S100CI:role>pointOfContact</S100CI:role>
+		<S100CI:party>
+		  <S100CI:CI_Organisation>
+			<S100CI:name>IEC</S100CI:name>
+			<S100CI:contactInfo>
+			  <S100CI:address>
+				<S100CI:administrativeArea>3, rue de Varembe, PO Box 131 1211 Geneva 20 Switzerland</S100CI:administrativeArea>
+				<S100CI:country>Geneva</S100CI:country>
+				<S100CI:electronicMailAddress>info@iec.ch</S100CI:electronicMailAddress>
+			  </S100CI:address>
+			  <S100CI:onlineResource>
+				<S100CI:linkage>www.iec.ch</S100CI:linkage>
+			  </S100CI:onlineResource>
+			</S100CI:contactInfo>
+		  </S100CI:CI_Organisation>
+		</S100CI:party>
+	</S100FC:producer>
+
+	<!-- =============================================== -->	
+	<!-- =============================================== -->
+	<!-- Simple Attributes: RouteExtensions   -->
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<S100FC:S100_FC_SimpleAttributes>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteExtensionsManufacturerId</S100FC:name>
+			<S100FC:definition>Unique vendor identifier for the Route extensions</S100FC:definition>
+			<S100FC:code>routeExtensionsManufacturerId</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteExtensionsName</S100FC:name>
+			<S100FC:definition>Route Extensions Name</S100FC:definition>
+			<S100FC:code>routeExtensionsName</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteExtensionsVersion</S100FC:name>
+			<S100FC:definition>Route Extensions Version</S100FC:definition>
+			<S100FC:code>routeExtensionsVersion</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteExtensionsNote</S100FC:name>
+			<S100FC:definition>RouteExtensionsNote</S100FC:definition>
+			<S100FC:code>routeExtensionsNote</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+	<!-- =============================================== -->
+	<!-- Simple Attributes:Route   : Done -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteFormatVersion</S100FC:name>
+			<S100FC:definition>The version of this route format</S100FC:definition>
+			<S100FC:code>routeFormatVersion</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteID</S100FC:name>
+			<S100FC:definition>Unique Route Identifier</S100FC:definition>
+			<S100FC:code>routeID</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteEditionNo</S100FC:name>
+			<S100FC:definition>Route Edition number</S100FC:definition>
+			<S100FC:code>routeEditionNo</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		
+		
+	<!-- =============================================== -->
+	<!-- Simple Attributes:RouteInfo   -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeInfoName</S100FC:name>
+			<S100FC:definition>Name of the route</S100FC:definition>
+			<S100FC:code>routeInfoName</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoAuthor</S100FC:name>
+			<S100FC:definition>Author of the route</S100FC:definition>
+			<S100FC:code>routeInfoAuthor</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoEditionTime</S100FC:name>
+			<S100FC:definition>Time this edition of route plan is edited </S100FC:definition>
+			<S100FC:code>routeInfoEditionTime</S100FC:code>
+			<S100FC:valueType>dateTime</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoDescription</S100FC:name>
+			<S100FC:definition>Additional information for the status of the route </S100FC:definition>
+			<S100FC:code>routeInfoDescription</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoStatus</S100FC:name>
+			<S100FC:definition>Enumerated status value of the  route</S100FC:definition>
+			<S100FC:code>routeInfoStatus</S100FC:code>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>Initial</S100FC:label>
+					<S100FC:definition>Initial</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Planned</S100FC:label>
+					<S100FC:definition>Planned</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Recommended</S100FC:label>
+					<S100FC:definition>Recommended</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Acknowledged</S100FC:label>
+					<S100FC:definition>Acknowledged</S100FC:definition>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Used for Monitoring</S100FC:label>
+					<S100FC:definition>Used for Monitoring</S100FC:definition>
+					<S100FC:code>5</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Terminated</S100FC:label>
+					<S100FC:definition>Terminated</S100FC:definition>
+					<S100FC:code>6</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Errors</S100FC:label>
+					<S100FC:definition>Errors</S100FC:definition>
+					<S100FC:code>7</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Incomplete</S100FC:label>
+					<S100FC:definition>Incomplete</S100FC:definition>
+					<S100FC:code>8</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Route issues</S100FC:label>
+					<S100FC:definition>Route issues</S100FC:definition>
+					<S100FC:code>9</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Service started</S100FC:label>
+					<S100FC:definition>Service started</S100FC:definition>
+					<S100FC:code>10</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Service ended</S100FC:label>
+					<S100FC:definition>Service ended</S100FC:definition>
+					<S100FC:code>11</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoValidityStart</S100FC:name>
+			<S100FC:definition>Start of validity of route plan</S100FC:definition>
+			<S100FC:code>routeInfoValidityStart</S100FC:code>
+			<S100FC:valueType>dateTime</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoValidityEnd</S100FC:name>
+			<S100FC:definition>End of validity of route plan</S100FC:definition>
+			<S100FC:code>routeInfoValidityEnd</S100FC:code>
+			<S100FC:valueType>dateTime</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoDeparturePortID1</S100FC:name>
+			<S100FC:definition>Primary identifier for departure port given by UN/LOCODE</S100FC:definition>
+			<S100FC:code>routeInfoDeparturePortID1</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoDeparturePortID2</S100FC:name>
+			<S100FC:definition>Secondary identifier for departure port given by free text string </S100FC:definition>
+			<S100FC:code>routeInfoDeparturePortID2</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoDeparturePortCall</S100FC:name>
+			<S100FC:definition>Reference to port call identifier in departing port</S100FC:definition>
+			<S100FC:code>routeInfoDeparturePortCall</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoArrivalPortID1</S100FC:name>
+			<S100FC:definition>Primary identifier for arrival port given by UN/LOCODE</S100FC:definition>
+			<S100FC:code>routeInfoArrivalPortID1</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoArrivalPortID2</S100FC:name>
+			<S100FC:definition>Secondary identifier for arrival port given by free text string </S100FC:definition>
+			<S100FC:code>routeInfoArrivalPortID2</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoArrivalPortCall</S100FC:name>
+			<S100FC:definition>Reference to port call identifier in arriving port</S100FC:definition>
+			<S100FC:code>routeInfoArrivalPortCall</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeInfoReferencePrevRoute</S100FC:name>
+			<S100FC:definition>Reference previous route </S100FC:definition>
+			<S100FC:code>routeInfoReferencePrevRoute</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoReferenceNextRoute</S100FC:name>
+			<S100FC:definition>Reference next route</S100FC:definition>
+			<S100FC:code>routeInfoReferenceNextRoute</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoVesselType</S100FC:name>
+			<S100FC:definition>Type of ship</S100FC:definition>
+			<S100FC:code>routeInfoVesselType</S100FC:code>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>Fishing</S100FC:label>
+					<S100FC:definition>Fishing</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Towing</S100FC:label>
+					<S100FC:definition>Towing</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Engaged in dredging or underwater operations</S100FC:label>
+					<S100FC:definition>Engaged in dredging or underwater operations</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Engaged in diving operations</S100FC:label>
+					<S100FC:definition>Engaged in diving operations</S100FC:definition>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Engaged in diving operations 2</S100FC:label>
+					<S100FC:definition>Engaged in diving operations 2</S100FC:definition>
+					<S100FC:code>5</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Sailing</S100FC:label>
+					<S100FC:definition>Sailing</S100FC:definition>
+					<S100FC:code>6</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Pleasure Craft</S100FC:label>
+					<S100FC:definition>Pleasure Craft</S100FC:definition>
+					<S100FC:code>7</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Reserved for future use</S100FC:label>
+					<S100FC:definition>Reserved for future use</S100FC:definition>
+					<S100FC:code>8</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Reserved for future use2</S100FC:label>
+					<S100FC:definition>Reserved for future use2</S100FC:definition>
+					<S100FC:code>9</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>1-Reserved , 0-All ships</S100FC:label>
+					<S100FC:definition>1-Reserved , 0-All ships</S100FC:definition>
+					<S100FC:code>10</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>2-WIG 1-Carrying DG HS MP IMO Hazard Pollutant X(2)</S100FC:label>
+					<S100FC:definition>2-WIG 1-Carrying DG HS MP IMO Hazard Pollutant X(2)</S100FC:definition>
+					<S100FC:code>21</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>3-See right column 2-Carrying DG HS MP IMO Hazard Pollutant Y(2)</S100FC:label>
+					<S100FC:definition>3-See right column 2-Carrying DG HS MP IMO Hazard Pollutant Y(2)</S100FC:definition>
+					<S100FC:code>32</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>4-HSC 3-Carrying DG HS MP IMO Hazard Pollutant Category Z(2)</S100FC:label>
+					<S100FC:definition>4-HSC 3-Carrying DG HS MP IMO Hazard Pollutant Category Z(2)</S100FC:definition>
+					<S100FC:code>43</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Pilot vessel</S100FC:label>
+					<S100FC:definition>Pilot vessel</S100FC:definition>
+					<S100FC:code>50</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Search and Rescue</S100FC:label>
+					<S100FC:definition>Search and Rescue</S100FC:definition>
+					<S100FC:code>51</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Tugs</S100FC:label>
+					<S100FC:definition>Tugs</S100FC:definition>
+					<S100FC:code>52</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Port tenders</S100FC:label>
+					<S100FC:definition>Port tenders</S100FC:definition>
+					<S100FC:code>53</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label> Vessel with anti-pollution facilities and equipment</S100FC:label>
+					<S100FC:definition> Vessel with anti-pollution facilities and equipment</S100FC:definition>
+					<S100FC:code>54</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Law enforcement vessels</S100FC:label>
+					<S100FC:definition>Law enforcement vessels</S100FC:definition>
+					<S100FC:code>55</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label> Spare – for assignments to local vessels</S100FC:label>
+					<S100FC:definition> Spare – for assignments to local vessels</S100FC:definition>
+					<S100FC:code>56</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label> Spare 2– for assignments to local vessels</S100FC:label>
+					<S100FC:definition> Spare 2– for assignments to local vessels</S100FC:definition>
+					<S100FC:code>57</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Medical transports (as defined in the 1949 Geneva Conventions and Additional Protocols)</S100FC:label>
+					<S100FC:definition>Medical transports (as defined in the 1949 Geneva Conventions and Additional Protocols)</S100FC:definition>
+					<S100FC:code>58</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Ships and aircraft of States not parties to an armed conflict</S100FC:label>
+					<S100FC:definition>Ships and aircraft of States not parties to an armed conflict</S100FC:definition>
+					<S100FC:code>59</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>6-Passenger Ships  6-Reserved for future</S100FC:label>
+					<S100FC:definition>6-Passenger Ships  6-Reserved for future</S100FC:definition>
+					<S100FC:code>66</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>7-Cargo Ships  7-Reserved for future</S100FC:label>
+					<S100FC:definition>7-Cargo Ships  7-Reserved for future</S100FC:definition>
+					<S100FC:code>77</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>8-Tankers  8-Reserved for future</S100FC:label>
+					<S100FC:definition>8-Tankers  8-Reserved for future</S100FC:definition>
+					<S100FC:code>88</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>9-Other ships of Ship  9-No additional info</S100FC:label>
+					<S100FC:definition>9-Other ships of Ship  9-No additional info</S100FC:definition>
+					<S100FC:code>99</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoVesselName</S100FC:name>
+			<S100FC:definition>Ship’s name</S100FC:definition>
+			<S100FC:code>routeInfoVesselName</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoVesselMMSI</S100FC:name>
+			<S100FC:definition>Ship’s MMSI </S100FC:definition>
+			<S100FC:code>routeInfoVesselMMSI</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoVesselCallsign</S100FC:name>
+			<S100FC:definition>Ship’s Call sign </S100FC:definition>
+			<S100FC:code>routeInfoVesselCallsign</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoVesselIMO</S100FC:name>
+			<S100FC:definition>Ship’s IMO number </S100FC:definition>
+			<S100FC:code>routeInfoVesselIMO</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoVesselVoyage</S100FC:name>
+			<S100FC:definition>Unique voyage identifier</S100FC:definition>
+			<S100FC:code>routeInfoVesselVoyage</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoVesselHeight</S100FC:name>
+			<S100FC:definition>Vessel height measured from the keel to the masthead</S100FC:definition>
+			<S100FC:code>routeInfoVesselHeight</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoVesselLength</S100FC:name>
+			<S100FC:definition>Vessel length overall (LOA)</S100FC:definition>
+			<S100FC:code>routeInfoVesselLength</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoVesselBeam</S100FC:name>
+			<S100FC:definition>Vessel beam</S100FC:definition>
+			<S100FC:code>routeInfoVesselBeam</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoDraftMax</S100FC:name>
+			<S100FC:definition>Maximum vessel draft </S100FC:definition>
+			<S100FC:code>routeInfoDraftMax</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoAirDraftMax</S100FC:name>
+			<S100FC:definition>Maximum vessel air draft </S100FC:definition>
+			<S100FC:code>routeInfoAirDraftMax</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoBeamMax</S100FC:name>
+			<S100FC:definition>Maximum vessel beam  </S100FC:definition>
+			<S100FC:code>routeInfoBeamMax</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>RouteInfoLengthMax</S100FC:name>
+			<S100FC:definition>Maximum Vessel Length  </S100FC:definition>
+			<S100FC:code>routeInfoLengthMax</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+	<!-- =============================================== -->
+	<!--Simple Attributes: RouteWaypoint   -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointID</S100FC:name>
+			<S100FC:definition>route waypoint identifier</S100FC:definition>
+			<S100FC:code>routeWaypointID</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointName</S100FC:name>
+			<S100FC:definition>Name of waypoint</S100FC:definition>
+			<S100FC:code>routeWaypointName</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointExternalReferenceID</S100FC:name>
+			<S100FC:definition>External reference information related to the waypoint</S100FC:definition>
+			<S100FC:code>routeWaypointExternalReferenceID</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointFixed</S100FC:name>
+			<S100FC:definition>Indicator if the route waypoint is fixed or editable</S100FC:definition>
+			<S100FC:code>routeWaypointFixed</S100FC:code>
+			<S100FC:valueType>boolean</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointTurnRadius</S100FC:name>
+			<S100FC:definition>Turn radius in nautical miles</S100FC:definition>
+			<S100FC:code>routeWaypointTurnRadius</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+	<!-- =============================================== -->
+	<!--Simple Attributes: RouteWaypointLeg   -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegStarboardXTDL</S100FC:name>
+			<S100FC:definition>Starboard cross track distance limit</S100FC:definition>
+			<S100FC:code>routeWaypointLegStarboardXTDL</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegPortXTDL</S100FC:name>
+			<S100FC:definition>Port cross track distance limit</S100FC:definition>
+			<S100FC:code>routeWaypointLegPortXTDL</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegStarboardCL</S100FC:name>
+			<S100FC:definition>Starboard cross track distance check limit</S100FC:definition>
+			<S100FC:code>routeWaypointLegStarboardCL</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegPortCL</S100FC:name>
+			<S100FC:definition>Port cross track distance check limit</S100FC:definition>
+			<S100FC:code>routeWaypointLegPortCL</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegSafetyContour</S100FC:name>
+			<S100FC:definition>Planned safety contour </S100FC:definition>
+			<S100FC:code>routeWaypointLegSafetyContour</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegSafetyDepth</S100FC:name>
+			<S100FC:definition>Planned safety depth  </S100FC:definition>
+			<S100FC:code>routeWaypointLegSafetyDepth</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegGeometryType</S100FC:name>
+			<S100FC:definition>routeWaypointLegGeometryType</S100FC:definition>
+			<S100FC:code>routeWaypointLegGeometryType</S100FC:code>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>Lexodrome</S100FC:label>
+					<S100FC:definition>Lexodrome</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Orthodrome</S100FC:label>
+					<S100FC:definition>Orthodrome</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegSOGMin</S100FC:name>
+			<S100FC:definition>Regulatory lowest speed over ground</S100FC:definition>
+			<S100FC:code>routeWaypointLegSOGMin</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegSOGMax</S100FC:name>
+			<S100FC:definition>Regulatory highest speed over ground</S100FC:definition>
+			<S100FC:code>routeWaypointLegSOGMax</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegSTWMin</S100FC:name>
+			<S100FC:definition>Minimum safe speed through water </S100FC:definition>
+			<S100FC:code>routeWaypointLegSTWMin</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegSTWMax</S100FC:name>
+			<S100FC:definition>Maximum safe speed through water </S100FC:definition>
+			<S100FC:code>routeWaypointLegSTWMax</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegDraft</S100FC:name>
+			<S100FC:definition>Planned static draft, maximum </S100FC:definition>
+			<S100FC:code>routeWaypointLegDraft</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegDraftForward</S100FC:name>
+			<S100FC:definition>Planned static draft Forward </S100FC:definition>
+			<S100FC:code>routeWaypointLegDraftForward</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegDraftAft</S100FC:name>
+			<S100FC:definition>Planned static draft, maximum </S100FC:definition>
+			<S100FC:code>routeWaypointLegDraftAft</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegDraftMax</S100FC:name>
+			<S100FC:definition>Maximum draft of the route waypoint leg for all vessles </S100FC:definition>
+			<S100FC:code>routeWaypointLegDraftMax</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegAirDraftMax</S100FC:name>
+			<S100FC:definition>Maximum air draft of the route waypoint leg for all vessels</S100FC:definition>
+			<S100FC:code>routeWaypointLegAirDraftMax</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegBeamMax</S100FC:name>
+			<S100FC:definition>Maximum vessel beam of the route waypoint leg for all vessels</S100FC:definition>
+			<S100FC:code>routeWaypointLegBeamMax</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegLengthMax</S100FC:name>
+			<S100FC:definition>Maximum vessel length of the route waypoint leg for all vessels</S100FC:definition>
+			<S100FC:code>routeWaypointLegLengthMax</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegStaticUKC</S100FC:name>
+			<S100FC:definition>routeWaypointLegStaticUKC</S100FC:definition>
+			<S100FC:code>routeWaypointLegStaticUKC</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegDynamicUKC</S100FC:name>
+			<S100FC:definition>routeWaypointLegDynamicUKC</S100FC:definition>
+			<S100FC:code>routeWaypointLegDynamicUKC</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegSafetyMargin</S100FC:name>
+			<S100FC:definition>routeWaypointLegSafetyMargin</S100FC:definition>
+			<S100FC:code>routeWaypointLegSafetyMargin</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegNote</S100FC:name>
+			<S100FC:definition>Note for the route waypoint leg </S100FC:definition>
+			<S100FC:code>routeWaypointLegNote</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeWaypointLegIssue</S100FC:name>
+			<S100FC:definition>Safety issue for the route waypoint leg </S100FC:definition>
+			<S100FC:code>routeWaypointLegIssue</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		
+	<!-- =============================================== -->
+	<!-- Simple Attributes: RouteSchedule   -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeScheduleID</S100FC:name>
+			<S100FC:definition>Identifier of the schedule. This identifier is unique in the route</S100FC:definition>
+			<S100FC:code>routeScheduleID</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>	
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeScheduleName</S100FC:name>
+			<S100FC:definition>Name of schedule</S100FC:definition>
+			<S100FC:code>routeScheduleName</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>	
+	<!-- =============================================== -->
+	<!-- Simple Attributes: RouteSchedule  Element -->
+	<!-- =============================================== -->
+		<!-- routeWaypointID is already defined in routeWayppoint -->
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeScheduleElementPlanSOG</S100FC:name>
+			<S100FC:definition>Planned speed over ground</S100FC:definition>
+			<S100FC:code>routeScheduleElementPlanSOG</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>		
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeScheduleElementETD</S100FC:name>
+			<S100FC:definition>Planned  or Recommended Time of departure represented by Estimated Time of departure</S100FC:definition>
+			<S100FC:code>routeScheduleElementETD</S100FC:code>
+			<S100FC:valueType>dateTime</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeScheduleElementETA</S100FC:name>
+			<S100FC:definition>Planned or Recommended Time of arrival represented by Estimated time of arrival </S100FC:definition>
+			<S100FC:code>routeScheduleElementETA</S100FC:code>
+			<S100FC:valueType>dateTime</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeScheduleElementETDWindowBefore</S100FC:name>
+			<S100FC:definition>Describes the period of time before planned or recommended time of departure</S100FC:definition>
+			<S100FC:code>routeScheduleElementETDWindowBefore</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeScheduleElementETDWindowAfter</S100FC:name>
+			<S100FC:definition>Describes the period of time after planned  or recommended time of departure</S100FC:definition>
+			<S100FC:code>routeScheduleElementETDWindowAfter</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeScheduleElementETAWindowBefore</S100FC:name>
+			<S100FC:definition>Describes the period of time before planned or recommended time of arrival</S100FC:definition>
+			<S100FC:code>routeScheduleElementETAWindowBefore</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeScheduleElementETAWindowAfter</S100FC:name>
+			<S100FC:definition>Describes the period of time after planned  or recommended time of arrival</S100FC:definition>
+			<S100FC:code>routeScheduleElementETAWindowAfter</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeScheduleElementNote</S100FC:name>
+			<S100FC:definition>Notes for the route schedule element</S100FC:definition>
+			<S100FC:code>routeScheduleElementNote</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		
+		
+		
+	<!-- =============================================== -->
+	<!-- Simple Attributes: RouteActionPoint   -->
+	<!-- =============================================== -->
+	<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeActionPointID</S100FC:name>
+			<S100FC:definition>Identifier of the action point. The identifier shall be unique in the route</S100FC:definition>
+			<S100FC:code>routeActionPointID</S100FC:code>
+			<S100FC:valueType>integer</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeActionPointName</S100FC:name>
+			<S100FC:definition>Name of action point</S100FC:definition>
+			<S100FC:code>routeActionPointName</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeActionPointExternalReference</S100FC:name>
+			<S100FC:definition>External reference information related to the action point</S100FC:definition>
+			<S100FC:code>routeActionPointExternalReference</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeActionPointRadius</S100FC:name>
+			<S100FC:definition>Distance from the action point within which action must be taken</S100FC:definition>
+			<S100FC:code>routeActionPointRadius</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeActionPointTimetoAct</S100FC:name>
+			<S100FC:definition>Time before or after the action point</S100FC:definition>
+			<S100FC:code>routeActionPointTimetoAct</S100FC:code>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeActionPointRequiredAction</S100FC:name>
+			<S100FC:definition>The action required for this action</S100FC:definition>
+			<S100FC:code>routeActionPointRequiredAction</S100FC:code>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>UserDefined</S100FC:label>
+					<S100FC:definition>UserDefined</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Report</S100FC:label>
+					<S100FC:definition>Report</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>UKCM</S100FC:label>
+					<S100FC:definition>UKCM</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Note</S100FC:label>
+					<S100FC:definition>Note</S100FC:definition>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Reserved</S100FC:label>
+					<S100FC:definition>Reserved</S100FC:definition>
+					<S100FC:code>5</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Reserved2</S100FC:label>
+					<S100FC:definition>Reserved2</S100FC:definition>
+					<S100FC:code>6</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Reserved3</S100FC:label>
+					<S100FC:definition>Reserved3</S100FC:definition>
+					<S100FC:code>7</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Reserved4</S100FC:label>
+					<S100FC:definition>Reserved4</S100FC:definition>
+					<S100FC:code>8</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Reserved5</S100FC:label>
+					<S100FC:definition>Reserved5</S100FC:definition>
+					<S100FC:code>9</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>routeActionPointRequiredActionDescription</S100FC:name>
+			<S100FC:definition>Human readable description of the action required for this action point</S100FC:definition>
+			<S100FC:code>routeActionPointRequiredActionDescription</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+	</S100FC:S100_FC_SimpleAttributes>
+	
+	
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<!-- Complex Attributes   -->
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<!-- RouteExtensions   Complex--> 
+	<!-- =============================================== -->
+	<S100FC:S100_FC_ComplexAttributes>
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteExtensions</S100FC:name>
+			<S100FC:definition>Route Extensions</S100FC:definition>
+			<S100FC:code>routeExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensionsManufacturerId"/>					
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensionsName"/>					
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensionsVersion"/>					
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensionsNote"/>					
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		
+	
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteInfoExtensions</S100FC:name>
+			<S100FC:definition>Route Extensions</S100FC:definition>
+			<S100FC:code>routeInfoExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"/>					
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteWaypointsExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeWaypointsExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteWaypointExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeWaypointExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteWaypointLegExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeWaypointLegExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteSchedulesExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeSchedulesExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteScheduleExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteScheduleManualExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleManualExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteScheduleCalculatedExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleCalculatedExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteScheduleRecommendedExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleRecommendedExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteScheduleElementExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleElementExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteActionPointsExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeActionPointsExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>RouteActionPointExtensions</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeActionPointExtensions</S100FC:code>
+			<S100FC:subAttributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"></S100FC:attribute>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>		
+	</S100FC:S100_FC_ComplexAttributes>
+
+	<!-- =============================================== -->
+	<!-- Others   Complex--> 
+	<!-- =============================================== -->
+	
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<!-- Roles   -->
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<S100FC:S100_FC_Roles>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteInfo Collection</S100FC:name>
+			<S100FC:definition>a pointer to the aggregate in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeInfoCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteInfo</S100FC:name>
+			<S100FC:definition>a pointer to the route clasa.</S100FC:definition>
+			<S100FC:code>routeInfo</S100FC:code>
+		</S100FC:S100_FC_Role>
+		
+		<S100FC:S100_FC_Role>
+			<S100FC:name>route Waypoints Collection</S100FC:name>
+			<S100FC:definition>a pointer to the aggregate in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeWaypointsCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteWaypoints</S100FC:name>
+			<S100FC:definition>a pointer to the routeWaypoint.</S100FC:definition>
+			<S100FC:code>routeWaypoints</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteWaypointCollection</S100FC:name>
+			<S100FC:definition>a pointer to the aggregate in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeWaypointCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteWaypoint</S100FC:name>
+			<S100FC:definition>a pointer to the routeWaypoint.</S100FC:definition>
+			<S100FC:code>routeWaypoint</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteWaypointLeg Collection</S100FC:name>
+			<S100FC:definition>a pointer to the aggregate in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeWaypointLegCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteWaypointLeg</S100FC:name>
+			<S100FC:definition>a pointer to the member in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeWaypointLeg</S100FC:code>
+		</S100FC:S100_FC_Role>
+		
+		<S100FC:S100_FC_Role>
+			<S100FC:name>Route Schedules Collection</S100FC:name>
+			<S100FC:definition>a pointer to the aggregate in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeSchedulesCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>Route Schedules</S100FC:name>
+			<S100FC:definition>a pointer to the member in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeSchedules</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>Route Schedule Collection</S100FC:name>
+			<S100FC:definition>a pointer to the aggregate in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeScheduleCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>Route Schedule</S100FC:name>
+			<S100FC:definition>a pointer to the aggregate in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeSchedule</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteScheduleManual</S100FC:name>
+			<S100FC:definition>a pointer to the member in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeScheduleManual</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteScheduleCalculated</S100FC:name>
+			<S100FC:definition>a pointer to the member class in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeScheduleCalculated</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteScheduleRecommended</S100FC:name>
+			<S100FC:definition>a pointer to the member class in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeScheduleRecommended</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteScheduleElement</S100FC:name>
+			<S100FC:definition>a pointer to the member class in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeScheduleElement</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteScheduleElementManualCollection</S100FC:name>
+			<S100FC:definition>a pointer to  the aggregate  class in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeScheduleElementManualCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteScheduleElementCalculatedCollection</S100FC:name>
+			<S100FC:definition>a pointer to  the aggregate  in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeScheduleElementCalculatedCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteScheduleElementRecommendedCollection</S100FC:name>
+			<S100FC:definition>a pointer to  the aggregate  in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeScheduleElementRecommendedCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+	
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteActionPoints Collection</S100FC:name>
+			<S100FC:definition>a pointer to the aggregate in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeActionPointsCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteActionPoints</S100FC:name>
+			<S100FC:definition>a pointer to the member class in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeActionPoints</S100FC:code>
+		</S100FC:S100_FC_Role>	
+		<S100FC:S100_FC_Role>
+			<S100FC:name>Route Action Point Collection</S100FC:name>
+			<S100FC:definition>a pointer to the aggregate in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeActionPointCollection</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>RouteAction Point</S100FC:name>
+			<S100FC:definition>a pointer to the member class in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>routeActionPoint</S100FC:code>
+		</S100FC:S100_FC_Role>
+	</S100FC:S100_FC_Roles>
+
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<!-- Information Associations   -->
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<S100FC:S100_FC_InformationAssociations>
+		<S100FC:S100_FC_InformationAssociation>
+			<S100FC:name>RouteInfo Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeInfoComposition</S100FC:code>
+			<S100FC:role ref="routeInfoCollection"/>
+			<S100FC:role ref="routeInfo"/>
+		</S100FC:S100_FC_InformationAssociation>
+		<S100FC:S100_FC_InformationAssociation>
+			<S100FC:name>RouteSchedules Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeSchedulesComposition</S100FC:code>
+			<S100FC:role ref="routeSchedulesCollection"/>
+			<S100FC:role ref="routeSchedules"/>
+		</S100FC:S100_FC_InformationAssociation>
+		<S100FC:S100_FC_InformationAssociation>
+			<S100FC:name>RouteSchedule Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleComposition</S100FC:code>
+			<S100FC:role ref="routeScheduleCollection"/>
+			<S100FC:role ref="routeSchedule"/>
+		</S100FC:S100_FC_InformationAssociation>
+		<S100FC:S100_FC_InformationAssociation>
+			<S100FC:name>RouteScheduleManual Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleManualComposition</S100FC:code>
+			<S100FC:role ref="routeScheduleCollection"/>
+			<S100FC:role ref="routeScheduleManual"/>
+		</S100FC:S100_FC_InformationAssociation>
+		<S100FC:S100_FC_InformationAssociation>
+			<S100FC:name>RouteScheduleCalculated Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleCalculatedComposition</S100FC:code>
+			<S100FC:role ref="routeScheduleCollection"/>
+			<S100FC:role ref="routeScheduleCalculated"/>
+		</S100FC:S100_FC_InformationAssociation>
+		<S100FC:S100_FC_InformationAssociation>
+			<S100FC:name>RouteScheduleRecommended Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleRecommendedComposition</S100FC:code>
+			<S100FC:role ref="routeScheduleCollection"/>
+			<S100FC:role ref="routeScheduleRecommended"/>
+		</S100FC:S100_FC_InformationAssociation>
+		<S100FC:S100_FC_InformationAssociation>
+			<S100FC:name>RouteScheduleElementManual Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleElementManualComposition</S100FC:code>
+			<S100FC:role ref="routeScheduleElementManualCollection"/>
+			<S100FC:role ref="routeScheduleElement"/>
+		</S100FC:S100_FC_InformationAssociation>
+		<S100FC:S100_FC_InformationAssociation>
+			<S100FC:name>RouteScheduleElementCalculated Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleElementCalculatedComposition</S100FC:code>
+			<S100FC:role ref="routeScheduleElementCalculatedCollection"/>
+			<S100FC:role ref="routeScheduleElement"/>
+		</S100FC:S100_FC_InformationAssociation>
+		<S100FC:S100_FC_InformationAssociation>
+			<S100FC:name>RouteScheduleElementRecommended Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeScheduleElementRecommendedComposition</S100FC:code>
+			<S100FC:role ref="routeScheduleElementRecommendedCollection"/>
+			<S100FC:role ref="routeScheduleElement"/>
+		</S100FC:S100_FC_InformationAssociation>
+		
+		
+	</S100FC:S100_FC_InformationAssociations>
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<!-- Feature Associations   -->
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<S100FC:S100_FC_FeatureAssociations>
+		<S100FC:S100_FC_FeatureAssociation>
+			<S100FC:name>RouteWaypoints Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeWaypointsComposition</S100FC:code>
+			<S100FC:role ref="routeWaypointsCollection"/>
+			<S100FC:role ref="routeWaypoints"/>
+		</S100FC:S100_FC_FeatureAssociation>
+		<S100FC:S100_FC_FeatureAssociation>
+			<S100FC:name>RouteWaypoint Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeWaypointComposition</S100FC:code>
+			<S100FC:role ref="routeWaypointCollection"/>
+			<S100FC:role ref="routeWaypoint"/>
+		</S100FC:S100_FC_FeatureAssociation>
+		<S100FC:S100_FC_FeatureAssociation>
+			<S100FC:name>RouteWaypointLeg Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeWaypointLegComposition</S100FC:code>
+			<S100FC:role ref="routeWaypointLegCollection"/>
+			<S100FC:role ref="routeWaypointLeg"/>
+		</S100FC:S100_FC_FeatureAssociation>	
+		<S100FC:S100_FC_FeatureAssociation>
+			<S100FC:name>RouteActionPoints Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeActionPointsComposition</S100FC:code>
+			<S100FC:role ref="routeActionPointsCollection"/>
+			<S100FC:role ref="routeActionPoints"/>
+		</S100FC:S100_FC_FeatureAssociation>	
+		<S100FC:S100_FC_FeatureAssociation>
+			<S100FC:name>RouteActionPoint Composition</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>routeActionPointComposition</S100FC:code>
+			<S100FC:role ref="routeActionPointCollection"/>
+			<S100FC:role ref="routeActionPoint"/>
+		</S100FC:S100_FC_FeatureAssociation>	
+	</S100FC:S100_FC_FeatureAssociations>
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<!-- Information Types   -->
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<S100FC:S100_FC_InformationTypes>
+	<!-- =============================================== -->
+	<!-- Information Types : RouteInfo  -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_InformationType>
+			<S100FC:name>Route Info</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>RouteInfo</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoName"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoAuthor"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoEditionTime"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoDescription"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+					<S100FC:value>3</S100FC:value>
+					<S100FC:value>4</S100FC:value>
+					<S100FC:value>5</S100FC:value>
+					<S100FC:value>6</S100FC:value>
+					<S100FC:value>7</S100FC:value>
+					<S100FC:value>8</S100FC:value>
+					<S100FC:value>9</S100FC:value>
+					<S100FC:value>10</S100FC:value>
+					<S100FC:value>11</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="routeInfoStatus"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoValidityStart"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoValidityEnd"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoDeparturePortID1"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoDeparturePortID2"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoDeparturePortCall"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoArrivalPortID1"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoArrivalPortID2"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoArrivalPortCall"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoReferencePrevRoute"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoReferenceNextRoute"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+					<S100FC:value>3</S100FC:value>
+					<S100FC:value>4</S100FC:value>
+					<S100FC:value>5</S100FC:value>
+					<S100FC:value>6</S100FC:value>
+					<S100FC:value>7</S100FC:value>
+					<S100FC:value>8</S100FC:value>
+					<S100FC:value>9</S100FC:value>
+					<S100FC:value>10</S100FC:value>
+					<S100FC:value>21</S100FC:value>
+					<S100FC:value>32</S100FC:value>
+					<S100FC:value>43</S100FC:value>
+					<S100FC:value>50</S100FC:value>
+					<S100FC:value>51</S100FC:value>
+					<S100FC:value>52</S100FC:value>
+					<S100FC:value>53</S100FC:value>
+					<S100FC:value>54</S100FC:value>
+					<S100FC:value>55</S100FC:value>
+					<S100FC:value>56</S100FC:value>
+					<S100FC:value>57</S100FC:value>
+					<S100FC:value>58</S100FC:value>
+					<S100FC:value>59</S100FC:value>
+					<S100FC:value>66</S100FC:value>
+					<S100FC:value>77</S100FC:value>
+					<S100FC:value>88</S100FC:value>
+					<S100FC:value>99</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="routeInfoVesselType"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoVesselName"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoVesselMMSI"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoVesselCallsign"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoVesselIMO"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoVesselVoyage"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoVesselHeight"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoVesselLength"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoVesselBeam"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoDraftMax"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoAirDraftMax"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoBeamMax"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoLengthMax"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeInfoExtensions"/>
+			</S100FC:attributeBinding>
+		</S100FC:S100_FC_InformationType>
+	<!-- =============================================== -->
+	<!-- Information Types : RouteSchedules  -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_InformationType>
+			<S100FC:name>Route Schedules</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>RouteSchedules</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeSchedulesExtensions"/>
+			</S100FC:attributeBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleComposition"/>
+				<S100FC:role ref="routeSchedule"/>
+				<S100FC:informationType ref="RouteSchedule"/>
+			</S100FC:informationBinding>
+		</S100FC:S100_FC_InformationType>		
+	<!-- =============================================== -->
+	<!-- Information Types : RouteSchedule  -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_InformationType>
+			<S100FC:name>Route Schedule</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>RouteSchedule</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleID"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleName"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleExtensions"/>
+			</S100FC:attributeBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleComposition"/>
+				<S100FC:role ref="routeScheduleCollection"/>
+				<S100FC:informationType ref="RouteSchedules"/>
+			</S100FC:informationBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleManualComposition"/>
+				<S100FC:role ref="routeScheduleManual"/>
+				<S100FC:informationType ref="RouteScheduleManual"/>
+			</S100FC:informationBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleCalculatedComposition"/>
+				<S100FC:role ref="routeScheduleCalculated"/>
+				<S100FC:informationType ref="RouteScheduleCalculated"/>
+			</S100FC:informationBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleRecommendedComposition"/>
+				<S100FC:role ref="routeScheduleRecommended"/>
+				<S100FC:informationType ref="RouteScheduleRecommended"/>
+			</S100FC:informationBinding>
+		</S100FC:S100_FC_InformationType>
+	<!-- =============================================== -->
+	<!-- Information Types : RouteScheduleManual  -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_InformationType>
+			<S100FC:name>Route Schedule Manual</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>RouteScheduleManual</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleManualExtensions"/>
+			</S100FC:attributeBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleManualComposition"/>
+				<S100FC:role ref="routeScheduleCollection"/>
+				<S100FC:informationType ref="RouteSchedule"/>
+			</S100FC:informationBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleElementManualComposition"/>
+				<S100FC:role ref="routeScheduleElement"/>
+				<S100FC:informationType ref="RouteScheduleElement"/>
+			</S100FC:informationBinding>
+		</S100FC:S100_FC_InformationType>		
+	
+	<!-- =============================================== -->
+	<!-- Information Types : RouteScheduleCalculated  -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_InformationType>
+			<S100FC:name>Route Schedule Calcualated</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>RouteScheduleCalculated</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleCalculatedExtensions"/>
+			</S100FC:attributeBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleCalculatedComposition"/>
+				<S100FC:role ref="routeScheduleCollection"/>
+				<S100FC:informationType ref="RouteSchedule"/>
+			</S100FC:informationBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleElementCalculatedComposition"/>
+				<S100FC:role ref="routeScheduleElement"/>
+				<S100FC:informationType ref="RouteScheduleElement"/>
+			</S100FC:informationBinding>
+		</S100FC:S100_FC_InformationType>				
+	
+	<!-- =============================================== -->
+	<!-- Information Types : RouteScheduleRecommended  -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_InformationType>
+			<S100FC:name>Route Schedule Recommended</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>RouteScheduleRecommended</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleRecommendedExtensions"/>
+			</S100FC:attributeBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleRecommendedComposition"/>
+				<S100FC:role ref="routeScheduleCollection"/>
+				<S100FC:informationType ref="RouteSchedule"/>
+			</S100FC:informationBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleElementRecommendedComposition"/>
+				<S100FC:role ref="routeScheduleElement"/>
+				<S100FC:informationType ref="RouteScheduleElement"/>
+			</S100FC:informationBinding>
+		</S100FC:S100_FC_InformationType>		
+	<!-- =============================================== -->
+	<!-- Information Types : RouteScheduleElement  -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_InformationType>
+			<S100FC:name>Route Schedule Element</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>RouteScheduleElement</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleElementExtensions"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointID"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleElementPlanSOG"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleElementETD"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleElementETA"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleElementETDWindowBefore"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleElementETDWindowAfter"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleElementETAWindowBefore"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleElementETAWindowAfter"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding>
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeScheduleElementNote"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleElementManualComposition"/>
+				<S100FC:role ref="routeScheduleElementManualCollection"/>
+				<S100FC:informationType ref="RouteScheduleManual"/>
+			</S100FC:informationBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleElementCalculatedComposition"/>
+				<S100FC:role ref="routeScheduleElementCalculatedCollection"/>
+				<S100FC:informationType ref="RouteScheduleCalculated"/>
+			</S100FC:informationBinding>
+			<S100FC:informationBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeScheduleElementRecommendedComposition"/>
+				<S100FC:role ref="routeScheduleElementRecommendedCollection"/>
+				<S100FC:informationType ref="RouteScheduleRecommended"/>
+			</S100FC:informationBinding>
+		</S100FC:S100_FC_InformationType>	
+		
+	</S100FC:S100_FC_InformationTypes>
+	
+	
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<!-- Feature Types   -->
+	<!-- =============================================== -->
+	<!-- =============================================== -->
+	<S100FC:S100_FC_FeatureTypes>
+	<!-- =============================================== -->
+	<!-- Feature Types   : Route -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Route</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>Route</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeFormatVersion"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeID"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeEditionNo"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeExtensions"/>							
+			</S100FC:attributeBinding>
+			<S100FC:informationBinding roleType="composition" >
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeInfoComposition"/>
+				<S100FC:role ref="routeInfo"/>
+				<S100FC:informationType ref="RouteInfo"/>
+			</S100FC:informationBinding>
+			<S100FC:informationBinding roleType="composition" >
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper>1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeSchedulesComposition"/>
+				<S100FC:role ref="routeSchedules"/>
+				<S100FC:informationType ref="RouteSchedules"/>
+			</S100FC:informationBinding>
+			<S100FC:featureUseType>theme</S100FC:featureUseType>
+			<S100FC:featureBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeWaypointsComposition"/>
+				<S100FC:role ref="routeWaypoints"/>
+				<S100FC:featureType ref="RouteWaypoints"/>
+			</S100FC:featureBinding>
+			<S100FC:featureBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeActionPointsComposition"/>
+				<S100FC:role ref="routeActionPoints"/>
+				<S100FC:featureType ref="RouteActionPoints"/>
+			</S100FC:featureBinding>			
+			<S100FC:permittedPrimitives>noGeometry</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+	<!-- =============================================== -->
+	<!-- Feature Types   : RouteWaypoints -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>RouteWaypoints</S100FC:name>
+			<S100FC:definition>RouteWaypoints</S100FC:definition>
+			<S100FC:code>RouteWaypoints</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointsExtensions"/>							
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>theme</S100FC:featureUseType>
+			<S100FC:featureBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeWaypointsComposition"/>
+				<S100FC:role ref="routeWaypointsCollection"/>
+				<S100FC:featureType ref="Route"/>
+			</S100FC:featureBinding>
+			<S100FC:featureBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>2</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeWaypointComposition"/>
+				<S100FC:role ref="routeWaypoint"/>
+				<S100FC:featureType ref="RouteWaypoint"/>
+			</S100FC:featureBinding>
+			<S100FC:permittedPrimitives>noGeometry</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+	<!-- =============================================== -->
+	<!-- Feature Types   : RouteWaypoint -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Route Waypoint</S100FC:name>
+			<S100FC:definition>Route Waypoint</S100FC:definition>
+			<S100FC:code>RouteWaypoint</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointID"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointName"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointExternalReferenceID"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointFixed"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointTurnRadius"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointExtensions"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:featureBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeWaypointComposition"/>
+				<S100FC:role ref="routeWaypointCollection"/>
+				<S100FC:featureType ref="RouteWaypoints"/>
+			</S100FC:featureBinding>
+			<S100FC:featureBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeWaypointLegComposition"/>
+				<S100FC:role ref="routeWaypointLeg"/>
+				<S100FC:featureType ref="RouteWaypointLeg"/>
+			</S100FC:featureBinding>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+	<!-- =============================================== -->
+	<!-- Feature Types   : RouteWaypointLeg -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Route Waypoint Leg</S100FC:name>
+			<S100FC:definition>Route Waypoint Leg</S100FC:definition>
+			<S100FC:code>RouteWaypointLeg</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegAirDraftMax"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegBeamMax"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegDraft"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegDraftAft"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegDraftForward"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegDraftMax"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegDynamicUKC"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="routeWaypointLegGeometryType"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegIssue"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegLengthMax"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegNote"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegPortCL"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegPortXTDL"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegSafetyContour"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegSafetyDepth"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegSafetyMargin"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegSOGMax"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegSOGMin"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegStarboardCL"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegStarboardXTDL"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegStaticUKC"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegSTWMax"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegSTWMin"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeWaypointLegExtensions"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:featureBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>2</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">2</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeWaypointLegComposition"/>
+				<S100FC:role ref="routeWaypointLegCollection"/>
+				<S100FC:featureType ref="RouteWaypoint"/>
+			</S100FC:featureBinding>
+      <S100FC:permittedPrimitives>noGeometry</S100FC:permittedPrimitives>
+			<S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>		
+	<!-- =============================================== -->
+	<!-- Feature Types   : RouteActionPoints -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_FeatureType>
+			<S100FC:name>Route Action Points</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>RouteActionPoints</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeActionPointsExtensions"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>theme</S100FC:featureUseType>	
+			<S100FC:featureBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeActionPointsComposition"/>
+				<S100FC:role ref="routeActionPointsCollection"/>
+				<S100FC:featureType ref="Route"/>
+			</S100FC:featureBinding>
+			<S100FC:featureBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeActionPointComposition"/>
+				<S100FC:role ref="routeActionPoint"/>
+				<S100FC:featureType ref="RouteActionPoint"/>
+			</S100FC:featureBinding>
+			<S100FC:permittedPrimitives>noGeometry</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+	<!-- =============================================== -->
+	<!-- Feature Types   : RouteActionPoint -->
+	<!-- =============================================== -->
+		<S100FC:S100_FC_FeatureType>
+			<S100FC:name>Route Action Point</S100FC:name>
+			<S100FC:definition></S100FC:definition>
+			<S100FC:code>RouteActionPoint</S100FC:code>     
+      <S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeActionPointID"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeActionPointName"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeActionPointExternalReference"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeActionPointRadius"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeActionPointTimetoAct"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+					<S100FC:value>3</S100FC:value>
+					<S100FC:value>4</S100FC:value>
+					<S100FC:value>5</S100FC:value>
+					<S100FC:value>6</S100FC:value>
+					<S100FC:value>7</S100FC:value>
+					<S100FC:value>8</S100FC:value>
+					<S100FC:value>9</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="routeActionPointRequiredAction"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeActionPointRequiredActionDescription"></S100FC:attribute>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"></S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="routeActionPointExtensions"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>	
+			<S100FC:featureBinding roleType="composition">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="routeActionPointComposition"/>
+				<S100FC:role ref="routeActionPointCollection"/>
+				<S100FC:featureType ref="RouteActionPoints"/>
+			</S100FC:featureBinding>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+			<S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+			<S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+	</S100FC:S100_FC_FeatureTypes>
+</S100FC:S100_FC_FeatureCatalogue>

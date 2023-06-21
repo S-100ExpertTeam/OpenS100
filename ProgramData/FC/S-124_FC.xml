@@ -1,0 +1,3795 @@
+<?xml version="1.0" encoding="utf-8"?>
+<S100FC:S100_FC_FeatureCatalogue xmlns:S100Base="http://www.iho.int/S100Base/5.0" xmlns:S100CI="http://www.iho.int/S100CI/5.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:S100FC="http://www.iho.int/S100FC/5.0">
+  <S100FC:name>Navigational Warnings</S100FC:name>
+  <S100FC:scope>Global</S100FC:scope>
+  <S100FC:fieldOfApplication>Marine Navigation</S100FC:fieldOfApplication>
+  <S100FC:versionNumber>1.0</S100FC:versionNumber>
+  <S100FC:versionDate>2023-03-28</S100FC:versionDate>
+  <S100FC:productId>S-124</S100FC:productId>
+  <S100FC:producer>
+    <S100CI:role>contributor</S100CI:role>
+    <S100CI:party>
+      <S100CI:CI_Organisation>
+        <S100CI:name>International Hydrographic Organization</S100CI:name>
+        <S100CI:contactInfo>
+          <S100CI:address>
+            <S100CI:administrativeArea>4b quai Antonie 1er</S100CI:administrativeArea>
+            <S100CI:country>Monaco</S100CI:country>
+            <S100CI:electronicMailAddress>info@iho.int</S100CI:electronicMailAddress>
+          </S100CI:address>
+          <S100CI:onlineResource>
+            <S100CI:linkage>https://iho.int/</S100CI:linkage>
+          </S100CI:onlineResource>
+        </S100CI:contactInfo>
+      </S100CI:CI_Organisation>
+    </S100CI:party>
+  </S100FC:producer>
+  <S100FC:S100_FC_SimpleAttributes>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Display Name</S100FC:name>
+      <S100FC:definition>A statement expressing if a feature name is to be displayed in certain system display settings or not.</S100FC:definition>
+      <S100FC:code>displayName</S100FC:code>
+      <S100FC:remarks>Where it is allowable to encode multiple instances of feature name for a single feature instance, only one feature name instance can indicate that the name is to be displayed (display name set to True).</S100FC:remarks>
+      <S100FC:alias />
+      <S100FC:valueType>boolean</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Language</S100FC:name>
+      <S100FC:definition>The method of human communication, either spoken or written, consisting of the use of words in a structured and conventional way.</S100FC:definition>
+      <S100FC:code>language</S100FC:code>
+      <S100FC:remarks>The language is encoded by a 3 character code following ISO 639-2/T.</S100FC:remarks>
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Name</S100FC:name>
+      <S100FC:definition>The individual name of a feature.</S100FC:definition>
+      <S100FC:code>name</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias>OBJNAM</S100FC:alias>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Feature Identifier</S100FC:name>
+      <S100FC:definition>An identifier referencing an object or feature that is external to the dataset, expressed in Uniform Resource Name (URN) format.</S100FC:definition>
+      <S100FC:code>featureIdentifier</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>URN</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Date Time End</S100FC:name>
+      <S100FC:definition>The end of a time range, expressed in Universal Time Coordinated (UTC).</S100FC:definition>
+      <S100FC:code>dateTimeEnd</S100FC:code>
+      <S100FC:remarks>19850412T183059 denotes 18 hours, 30 minutes, and 59 seconds on 12 April 1985.</S100FC:remarks>
+      <S100FC:alias />
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Date Time Start</S100FC:name>
+      <S100FC:definition>The beginning of a time range, expressed in Universal Time Coordinated (UTC).</S100FC:definition>
+      <S100FC:code>dateTimeStart</S100FC:code>
+      <S100FC:remarks>19850412T183059 denotes 18 hours, 30 minutes, and 59 seconds on 12 April 1985.</S100FC:remarks>
+      <S100FC:alias />
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>AtoN Number</S100FC:name>
+      <S100FC:definition>Identifier from a list of Aids to Navigation publication, such as List of Lights.</S100FC:definition>
+      <S100FC:code>atoNNumber</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Edition Number</S100FC:name>
+      <S100FC:definition>Edition of the ENC being referenced.</S100FC:definition>
+      <S100FC:code>editionNumber</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>ENC Name</S100FC:name>
+      <S100FC:definition>The name of the ENC dataset. This is generally indicated in the dataset metadata (discovery or embedded) and will usually be the same as the name of the dataset file, possibly without the file extension component.</S100FC:definition>
+      <S100FC:code>eNCName</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Feature Object Identifier</S100FC:name>
+      <S100FC:definition>FOID of the referenced ENC object.</S100FC:definition>
+      <S100FC:code>featureObjectIdentifier</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Update Number</S100FC:name>
+      <S100FC:definition>Update number of the ENC being referenced.</S100FC:definition>
+      <S100FC:code>updateNumber</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Date End</S100FC:name>
+      <S100FC:definition>The latest date on which an object (for example a buoy) will be present.</S100FC:definition>
+      <S100FC:code>dateEnd</S100FC:code>
+      <S100FC:remarks>The Date End should be encoded using 4 digits for the calendar year (YYYY), 2 digits for the month (MM) (for example April = 04) and 2 digits for the day (DD). When no specific month and/or day is required/known, indication of the month and/or day is omitted, and replaced with dashes (-). When no specific year is required (that is, the event or date range ends at the same time each year) the following two cases may be considered:- same day each year: ----MMDD- same month each year: ----MM--This conforms to ISO 8601: 2004. Date End indicates the latest date of an event or the end of a date range. It is used to indicate the end of a fixed date range, the end of a periodic date range, or the removal or cancellation of a feature at a specific date in the future.</S100FC:remarks>
+      <S100FC:alias>DATEND</S100FC:alias>
+      <S100FC:valueType>S100_TruncatedDate</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Date Start</S100FC:name>
+      <S100FC:definition>The earliest date on which an object (for example a buoy) will be present.</S100FC:definition>
+      <S100FC:code>dateStart</S100FC:code>
+      <S100FC:remarks>The Date Start should be encoded using 4 digits for the calendar year (YYYY), 2 digits for the month (MM) (for example April = 04) and 2 digits for the day (DD). When no specific month and/or day is required/known, indication of the month and/or day is omitted, and replaced with dashes (-). When no specific year is required (that is, the event or date range ends at the same time each year) the following two cases may be considered:- same day each year: ----MMDD- same month each year: ----MM--This conforms to ISO 8601: 2004. Date Start indicates the earliest date of an event or the start of a date range. It is used to indicate the start of a fixed date range, the start of a periodic date range, or the deployment or implementation of a feature at a specific date in the future.</S100FC:remarks>
+      <S100FC:alias>DATSTA</S100FC:alias>
+      <S100FC:valueType>S100_TruncatedDate</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>File Locator</S100FC:name>
+      <S100FC:definition>The location of a fragment of text or other information in a support file.</S100FC:definition>
+      <S100FC:code>fileLocator</S100FC:code>
+      <S100FC:remarks>Application schemas must describe how the associated file is identified. The associated file will commonly be named in a file reference co-attribute of the same complex attribute. Each DCEG must specify requirements for the format of the associated file and the semantics of file locator. For example, the value of file locator may be an HTML ID in an HTML file, line number in a text file) or a bookmark in a PDF file.</S100FC:remarks>
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>File Reference</S100FC:name>
+      <S100FC:definition>The file name of an externally referenced text file.</S100FC:definition>
+      <S100FC:code>fileReference</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias>TXTDSC</S100FC:alias>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Headline</S100FC:name>
+      <S100FC:definition>Words set at the head of a passage or page to introduce or categorize.</S100FC:definition>
+      <S100FC:code>headline</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Text</S100FC:name>
+      <S100FC:definition>A non-formatted digital text string.</S100FC:definition>
+      <S100FC:code>text</S100FC:code>
+      <S100FC:remarks>Should be used, for example, to hold the information that is for short cautionary or explanatory notes. Therefore, text populated in text must not exceed 300 characters. Text may be in English, or in a national language. No formatting of text is possible within text. If formatted text, or text strings exceeding 300 characters, is required, then an alternate concept should be used.</S100FC:remarks>
+      <S100FC:alias>INFORM; NINFOM</S100FC:alias>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Navwarn Type Details</S100FC:name>
+      <S100FC:definition>Detailed type of a warning or hazard.</S100FC:definition>
+      <S100FC:code>navwarnTypeDetails</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>S100_CodeList</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>Acoustic Recorder</S100FC:label>
+          <S100FC:definition>The temporary or permanent installation of an acoustical instrument in the marine environment for the purpose of tracking the behavior of marine mammals or to monitor their ecosystems.</S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>AIS Temporary Establishment</S100FC:label>
+          <S100FC:definition>A new AIS has been or will be established for a limited period of time.</S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>AIS Transmitter Establishment</S100FC:label>
+          <S100FC:definition>A new AIS site has been or will be established.</S100FC:definition>
+          <S100FC:code>3</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>AIS Transmitter Operating Properly</S100FC:label>
+          <S100FC:definition>The terrestrial AIS transmitter is operating as advertised.</S100FC:definition>
+          <S100FC:code>4</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>AIS Transmitter Out Of Service</S100FC:label>
+          <S100FC:definition>The terrestrial AIS transmitter is inoperative due to a technical issue.</S100FC:definition>
+          <S100FC:code>5</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>AIS Transmitter Removal</S100FC:label>
+          <S100FC:definition>AIS transmitter has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>6</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>AIS Transmitter Temporary Removal</S100FC:label>
+          <S100FC:definition>AIS transmitter has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>7</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>AIS Transmitter Unreliable</S100FC:label>
+          <S100FC:definition>The terrestrial AIS transmitter is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>8</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>All Aids To Navigation Unreliable</S100FC:label>
+          <S100FC:definition>All aids to navigation on a structure or in an area are unreliable due to environmental impact, equipment failure, etc.</S100FC:definition>
+          <S100FC:code>9</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Anti Pollution Exercise</S100FC:label>
+          <S100FC:definition>A large scale activity where multiple vessels, surveillance aircraft, and shore-based personnel practice a response to the discharge of a pollutant from a ship (or shore) into the marine environment, in order to evaluate the effectiveness of response capability.</S100FC:definition>
+          <S100FC:code>10</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Anti Pollution Operation</S100FC:label>
+          <S100FC:definition>A real time response by vessels, surveillance aircraft, and shore-based personnel to resolve the discharge of a pollutant from a ship (or shore) into the marine environment.</S100FC:definition>
+          <S100FC:code>11</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Aquaculture Site</S100FC:label>
+          <S100FC:definition>The installation of infrastructure at a new location where the farming of fish, shellfish and aquatic plants in fresh or salt water is undertaken; and, failures at these locations where the infrastructure is reported damaged and may be adrift.</S100FC:definition>
+          <S100FC:code>12</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>AtoN Operating Properly</S100FC:label>
+          <S100FC:definition>The outage/failure has been corrected and the aids to navigation has resumed normal operation.</S100FC:definition>
+          <S100FC:code>13</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Audible Signal Change</S100FC:label>
+          <S100FC:definition>The characteristics of the audible signal (device activated by e.g. sea state or wind, irrespective of visibility) have been or will be changed.</S100FC:definition>
+          <S100FC:code>14</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Audible Signal Establishment</S100FC:label>
+          <S100FC:definition>A new audible signal (device activated by e.g. sea state or wind, irrespective of visibility) has been or will be established.</S100FC:definition>
+          <S100FC:code>15</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Audible Signal Operating Properly</S100FC:label>
+          <S100FC:definition>The audible signal (device activated by e.g. sea state or wind, irrespective of visibility) is operating as advertised.</S100FC:definition>
+          <S100FC:code>16</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Audible Signal Out Of Service</S100FC:label>
+          <S100FC:definition>The audible signal (device activated by e.g. sea state or wind, irrespective of visibility) is inoperative.</S100FC:definition>
+          <S100FC:code>17</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Audible Signal Removal</S100FC:label>
+          <S100FC:definition>Audible signal (device activated by e.g. sea state or wind, irrespective of visibility) has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>18</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Audible Signal Temporary Change</S100FC:label>
+          <S100FC:definition>The characteristics of the audible signal (device activated by e.g. sea state or wind, irrespective of visibility) have been or will be temporarily changed.</S100FC:definition>
+          <S100FC:code>19</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Audible Signal Temporary Establishment</S100FC:label>
+          <S100FC:definition>A new audible signal has been or will be established for a limited period of time.</S100FC:definition>
+          <S100FC:code>20</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Audible Signal Temporary Removal</S100FC:label>
+          <S100FC:definition>Audible signal (device activated by e.g. sea state or wind, irrespective of visibility) has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>21</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Authorized Ice Routeing Information</S100FC:label>
+          <S100FC:definition>Ice routeing information provided by a recognized authority.</S100FC:definition>
+          <S100FC:code>22</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Change</S100FC:label>
+          <S100FC:definition>The characteristics of the beacon have been or will be changed.</S100FC:definition>
+          <S100FC:code>23</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Damaged</S100FC:label>
+          <S100FC:definition>The beacon has sustained damage due to external factors (wind, sea state, collision with a vessel).</S100FC:definition>
+          <S100FC:code>24</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Daymark Unreliable</S100FC:label>
+          <S100FC:definition>Colour of the beacon daymark is not visible due to damage or fading of colours (out of tolerance with colour recommendations).</S100FC:definition>
+          <S100FC:code>25</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Establishment</S100FC:label>
+          <S100FC:definition>A new beacon has been or will be established.</S100FC:definition>
+          <S100FC:code>26</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Missing</S100FC:label>
+          <S100FC:definition>No beacon at the advertised position.</S100FC:definition>
+          <S100FC:code>27</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Removal</S100FC:label>
+          <S100FC:definition>Beacon has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>28</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Restored To Normal</S100FC:label>
+          <S100FC:definition>The beacon has been restored to normal condition.</S100FC:definition>
+          <S100FC:code>29</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Temporary Change</S100FC:label>
+          <S100FC:definition>The characteristics of the beacon have been or will be temporarily changed.</S100FC:definition>
+          <S100FC:code>30</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Temporary Establishment</S100FC:label>
+          <S100FC:definition>A new beacon has been or will be established for a limited period of time.</S100FC:definition>
+          <S100FC:code>31</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Temporary Removal</S100FC:label>
+          <S100FC:definition>Beacon has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>32</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Topmark Damaged</S100FC:label>
+          <S100FC:definition>The topmark of the beacon is damaged due to external factors (wind, sea state, collision with a vessel).</S100FC:definition>
+          <S100FC:code>33</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Beacon Topmark Missing</S100FC:label>
+          <S100FC:definition>The topmark of the beacon is missing.</S100FC:definition>
+          <S100FC:code>34</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Blasting Operation</S100FC:label>
+          <S100FC:definition>An explosive detonation was observed at sea or blasting operation is scheduled to occur.</S100FC:definition>
+          <S100FC:code>35</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Breakwater Construction</S100FC:label>
+          <S100FC:definition>The construction of a structure protecting a shore area, harbour, or anchorage from waves.</S100FC:definition>
+          <S100FC:code>36</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Bridge Horizontal Clearance Change</S100FC:label>
+          <S100FC:definition>The published horizontal clearance of the fixed or opening bridge has changed.</S100FC:definition>
+          <S100FC:code>37</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Bridge Unable To Close</S100FC:label>
+          <S100FC:definition>The functionality of an opening bridge is compromised. The bridge will remain open.</S100FC:definition>
+          <S100FC:code>38</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Bridge Unable To Open</S100FC:label>
+          <S100FC:definition>The functionality of an opening bridge is compromised. The bridge will remain closed.</S100FC:definition>
+          <S100FC:code>39</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Bridge Vertical Clearance Change</S100FC:label>
+          <S100FC:definition>The published vertical clearance of the fixed or opening bridge has changed.</S100FC:definition>
+          <S100FC:code>40</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Adrift</S100FC:label>
+          <S100FC:definition>The buoy is no longer secured to its moorings and is adrift.</S100FC:definition>
+          <S100FC:code>41</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Change</S100FC:label>
+          <S100FC:definition>The characteristics of the buoy have been or will be changed.</S100FC:definition>
+          <S100FC:code>42</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Commissioned for Navigation Season</S100FC:label>
+          <S100FC:definition>A buoy which was in ice over the winter and has been verified undamaged and in advertised position for the navigational season</S100FC:definition>
+          <S100FC:code>43</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Damaged</S100FC:label>
+          <S100FC:definition>The buoy has been damaged due to external factors (wind, sea state, collision with a vessel).</S100FC:definition>
+          <S100FC:code>44</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Daymark Unreliable</S100FC:label>
+          <S100FC:definition>Colour of the buoy daymark is not visible due to damage or fading of colours (out of tolerance with colour recommendations).</S100FC:definition>
+          <S100FC:code>45</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Decommissioned for Winter</S100FC:label>
+          <S100FC:definition>A buoy which remains in the water over winter but which is declared unreliable (may be impacted by ice movement).</S100FC:definition>
+          <S100FC:code>46</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Destroyed</S100FC:label>
+          <S100FC:definition>The buoy has suffered extensive damage and is not useable.</S100FC:definition>
+          <S100FC:code>47</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Establishment</S100FC:label>
+          <S100FC:definition>A new buoy has been or will be established.</S100FC:definition>
+          <S100FC:code>48</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Missing</S100FC:label>
+          <S100FC:definition>No buoy at its advertised/charted position or in the vicinity.</S100FC:definition>
+          <S100FC:code>49</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Move</S100FC:label>
+          <S100FC:definition>The buoy has been or will be moved intentionally.</S100FC:definition>
+          <S100FC:code>50</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy off Position</S100FC:label>
+          <S100FC:definition>The buoy has been dragged off its advertised position due to wind or current affecting the mooring system.</S100FC:definition>
+          <S100FC:code>51</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Re-established</S100FC:label>
+          <S100FC:definition>The re-establishment of a buoy which was previously announced either destroyed or temporarily removed.</S100FC:definition>
+          <S100FC:code>52</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Removal</S100FC:label>
+          <S100FC:definition>Buoy has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>53</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Replaced by Winter Spar</S100FC:label>
+          <S100FC:definition>A buoy which has been removed and it&amp;apos;s location is now marked by a winter spar buoy.</S100FC:definition>
+          <S100FC:code>54</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Restored to Normal</S100FC:label>
+          <S100FC:definition>The buoy has been restored to normal condition.</S100FC:definition>
+          <S100FC:code>55</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Temporary Change</S100FC:label>
+          <S100FC:definition>The characteristics of the buoy have been or will be temporarily changed.</S100FC:definition>
+          <S100FC:code>56</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Temporary Establishment</S100FC:label>
+          <S100FC:definition>A new buoy has been or will be established for a limited period of time.</S100FC:definition>
+          <S100FC:code>57</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Temporary Removal</S100FC:label>
+          <S100FC:definition>Buoy has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>58</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Topmark Damaged</S100FC:label>
+          <S100FC:definition>The topmark of the buoy is damaged due to external factors (wind, sea state, collision with a vessel).</S100FC:definition>
+          <S100FC:code>59</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Topmark Missing</S100FC:label>
+          <S100FC:definition>The topmark of the buoy is missing.</S100FC:definition>
+          <S100FC:code>60</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Will Be Withdrawn</S100FC:label>
+          <S100FC:definition>The buoy has been scheduled for removal from service for a fixed term.</S100FC:definition>
+          <S100FC:code>61</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Withdrawn</S100FC:label>
+          <S100FC:definition>The buoy has been removed from service for a fixed term.</S100FC:definition>
+          <S100FC:code>62</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Buoy Withdrawn for Winter</S100FC:label>
+          <S100FC:definition>A buoy has been withdrawn for the winter season.</S100FC:definition>
+          <S100FC:code>63</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Cable Laying Operation</S100FC:label>
+          <S100FC:definition>Operations being undertaken to lay wires, fibres, wire rope or chains underwater or to bury them beneath the sea floor.</S100FC:definition>
+          <S100FC:code>64</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Cable Operations</S100FC:label>
+          <S100FC:definition>Underwater operations undertaken to maintain or repair a submarine cable.</S100FC:definition>
+          <S100FC:code>65</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Chayka Operating Properly</S100FC:label>
+          <S100FC:definition>The Chayka station is operating as advertised.</S100FC:definition>
+          <S100FC:code>66</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Chayka Out Of Service</S100FC:label>
+          <S100FC:definition>The Chayka station is inoperative due to a technical issue.</S100FC:definition>
+          <S100FC:code>67</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Chayka Station Removal</S100FC:label>
+          <S100FC:definition>Chayka station has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>68</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Chayka Station Temporary Removal</S100FC:label>
+          <S100FC:definition>Chayka station has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>69</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Chayka Unreliable</S100FC:label>
+          <S100FC:definition>The Chayka station is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>70</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Cluster of Fishing Vessels</S100FC:label>
+          <S100FC:definition>A large concentration of fishing vessels in a small area which may interfere with, hamper, or reduce the ability of another vessel to navigate safely.</S100FC:definition>
+          <S100FC:code>71</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Container Adrift</S100FC:label>
+          <S100FC:definition>A cargo container which has fallen overboard and is reported adrift.</S100FC:definition>
+          <S100FC:code>72</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Dangerous Wreck</S100FC:label>
+          <S100FC:definition>A wreck submerged at such a depth as to be considered dangerous to surface navigation.</S100FC:definition>
+          <S100FC:code>73</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Dead Whale Adrift</S100FC:label>
+          <S100FC:definition>A deceased marine mammal, typically a whale, reported adrift.</S100FC:definition>
+          <S100FC:code>74</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Deadhead Adrift</S100FC:label>
+          <S100FC:definition>A log which, becoming saturated with water, will start to sink at the heavier end, such that it floats vertically or nearly vertically in the water.</S100FC:definition>
+          <S100FC:code>75</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Derelict Vessel Adrift</S100FC:label>
+          <S100FC:definition>Any vessel abandoned at sea of sufficient size as to pose a hazard to safe navigation.</S100FC:definition>
+          <S100FC:code>76</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>DGLONASS Operating Properly</S100FC:label>
+          <S100FC:definition>The DGLONASS station is operating as advertised.</S100FC:definition>
+          <S100FC:code>77</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>DGLONASS Out Of Service</S100FC:label>
+          <S100FC:definition>The DGLONASS station is inoperative due to a technical issue.</S100FC:definition>
+          <S100FC:code>78</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>DGLONASS Station Establishment</S100FC:label>
+          <S100FC:definition>A new DGLONASS station has been or will be established.</S100FC:definition>
+          <S100FC:code>79</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>DGLONASS Unreliable</S100FC:label>
+          <S100FC:definition>The DGLONASS station is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>80</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>DGPS Operating Properly</S100FC:label>
+          <S100FC:definition>The DGPS station is operating as advertised.</S100FC:definition>
+          <S100FC:code>81</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>DGPS Out Of Service</S100FC:label>
+          <S100FC:definition>The DGPS station is inoperative due to a technical issue.</S100FC:definition>
+          <S100FC:code>82</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>DGPS Station Establishment</S100FC:label>
+          <S100FC:definition>A new DGPS station has been or will be established.</S100FC:definition>
+          <S100FC:code>83</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>DGPS Station Removal</S100FC:label>
+          <S100FC:definition>DGPS station has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>84</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>DGPS Station Temporary Removal</S100FC:label>
+          <S100FC:definition>DGPS station has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>85</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>DGPS Unreliable</S100FC:label>
+          <S100FC:definition>The DGPS station is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>86</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Diving Operation</S100FC:label>
+          <S100FC:definition>A location where divers are conducting any type of activity at or below the surface of the water.</S100FC:definition>
+          <S100FC:code>87</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Dock Adrift</S100FC:label>
+          <S100FC:definition>A structure, formerly attached along the shoreline or extending from the shore into a body of water to which vessels moor, which has broken free of its moorings and is adrift.</S100FC:definition>
+          <S100FC:code>88</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Dredging Operation</S100FC:label>
+          <S100FC:definition>Works in order to increase depth.</S100FC:definition>
+          <S100FC:code>89</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Drill Rig Under Tow</S100FC:label>
+          <S100FC:definition>A drill rig is under tow.</S100FC:definition>
+          <S100FC:code>90</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Drilling Site Operations</S100FC:label>
+          <S100FC:definition>A drill rig/drill ship has commenced operations at the specified location offshore.</S100FC:definition>
+          <S100FC:code>91</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>E-Chayka Operating Properly</S100FC:label>
+          <S100FC:definition>The e-Chayka station is operating as advertised.</S100FC:definition>
+          <S100FC:code>92</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>E-Chayka Out Of Service</S100FC:label>
+          <S100FC:definition>The e-Chayka station is inoperative due to a technical issue.</S100FC:definition>
+          <S100FC:code>93</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>E-Chayka Station Establishment</S100FC:label>
+          <S100FC:definition>A new e-Chayka station has been or will be established.</S100FC:definition>
+          <S100FC:code>94</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>E-Chayka Station Removal</S100FC:label>
+          <S100FC:definition>The e-Chayka station has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>95</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>E-Chayka Station Temporary Removal</S100FC:label>
+          <S100FC:definition>The e-Chayka station has been or will be temporarily removed from service</S100FC:definition>
+          <S100FC:code>96</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>E-Chayka Unreliable</S100FC:label>
+          <S100FC:definition>The e-Chayka station is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>97</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>EGC MSI Service</S100FC:label>
+          <S100FC:definition>Any failure or return to operation of an EGC service offered by a recognized mobile satellite service provider.</S100FC:definition>
+          <S100FC:code>98</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>EGNOS Operating Properly</S100FC:label>
+          <S100FC:definition>The EGNOS station is operating as advertised.</S100FC:definition>
+          <S100FC:code>99</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>EGNOS Out Of Service</S100FC:label>
+          <S100FC:definition>The EGNOS station is inoperative due to a technical issue.</S100FC:definition>
+          <S100FC:code>100</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>EGNOS Station Establishment</S100FC:label>
+          <S100FC:definition>A new EGNOS station has been or will be established.</S100FC:definition>
+          <S100FC:code>101</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>EGNOS Station Removal</S100FC:label>
+          <S100FC:definition>EGNOS station has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>102</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>EGNOS Station Temporary Removal</S100FC:label>
+          <S100FC:definition>EGNOS station has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>103</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>EGNOS Unreliable</S100FC:label>
+          <S100FC:definition>The EGNOS station is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>104</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>ELORAN Operating Properly</S100FC:label>
+          <S100FC:definition>The eLORAN station is operating as advertised.</S100FC:definition>
+          <S100FC:code>105</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>ELORAN Out Of Service</S100FC:label>
+          <S100FC:definition>The eLORAN station is inoperative due to a technical issue.</S100FC:definition>
+          <S100FC:code>106</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>ELORAN Station Establishment</S100FC:label>
+          <S100FC:definition>A new eLORAN station has been or will be established.</S100FC:definition>
+          <S100FC:code>107</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>ELORAN Station Removal</S100FC:label>
+          <S100FC:definition>The eLORAN station has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>108</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>ELORAN Station Temporary Removal</S100FC:label>
+          <S100FC:definition>The eLORAN station has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>109</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>ELORAN Unreliable</S100FC:label>
+          <S100FC:definition>The eLORAN station is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>110</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Exclusion Zone</S100FC:label>
+          <S100FC:definition>An established marine area, temporary or permanent in nature, where vessel traffic is prohibited.
+
+A geographical area, within which all other vessels should remain clear unless authorised.</S100FC:definition>
+          <S100FC:code>111</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Explosive Device</S100FC:label>
+          <S100FC:definition>Unexploded explosive devices.</S100FC:definition>
+          <S100FC:code>112</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fairway Marker - Light Not Synchronized</S100FC:label>
+          <S100FC:definition>The light on the fairway marker is no longer synchronized with another light or group of lights.</S100FC:definition>
+          <S100FC:code>113</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fairway Marker - Light Unlit</S100FC:label>
+          <S100FC:definition>The light on the fairway marker is inoperative.</S100FC:definition>
+          <S100FC:code>114</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fairway Marker - Light Unreliable</S100FC:label>
+          <S100FC:definition>The operation of the light on the fairway marker is unreliable due to technical problems.</S100FC:definition>
+          <S100FC:code>115</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fairway Marker Damaged</S100FC:label>
+          <S100FC:definition>The fairway marker has been damaged due to external factors (wind, sea state, collision with a vessel).</S100FC:definition>
+          <S100FC:code>116</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fairway Marker Destroyed</S100FC:label>
+          <S100FC:definition>The fairway marker has suffered extensive damage and is not useable.</S100FC:definition>
+          <S100FC:code>117</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fallout Hazard</S100FC:label>
+          <S100FC:definition>The area of which remains hazardous to life after an explosive detonation or the fallout from a rocket launch or space debris.</S100FC:definition>
+          <S100FC:code>118</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fireworks</S100FC:label>
+          <S100FC:definition>Scheduled public display of pyrotechnics, usually ignited from barges located just offshore, and often accompanied by music.</S100FC:definition>
+          <S100FC:code>119</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Firing Exercise</S100FC:label>
+          <S100FC:definition>An exercise within a defined area which includes the firing of weapon systems during training or testing that may affect safety at sea.</S100FC:definition>
+          <S100FC:code>120</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fish Aggregating Device</S100FC:label>
+          <S100FC:definition>A fish aggregating (or aggregation) device (FAD) is a man-made object used to attract ocean going pelagic fish such as marlin, tuna and mahi-mahi (dolphin fish). They usually consist of buoys or floats tethered to the ocean floor with concrete blocks or adrift.</S100FC:definition>
+          <S100FC:code>121</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias>FAD</S100FC:alias>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fishing Net Adrift</S100FC:label>
+          <S100FC:definition>A fishing net (seine, purse, gill, trawl, bag or other), reported adrift, of sufficient size to pose a hazard to safe navigation.</S100FC:definition>
+          <S100FC:code>122</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Floating Debris</S100FC:label>
+          <S100FC:definition>A concentration of floating objects, which by the nature of their size and material, could pose a hazard to safe navigation.</S100FC:definition>
+          <S100FC:code>123</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Floodlit Beacon - Unlit</S100FC:label>
+          <S100FC:definition>The flood light illuminating the beacon is inoperative.</S100FC:definition>
+          <S100FC:code>124</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fog Signal Change</S100FC:label>
+          <S100FC:definition>The characteristics of the fog signal have been or will be changed.</S100FC:definition>
+          <S100FC:code>125</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fog Signal Establishment</S100FC:label>
+          <S100FC:definition>A new fog signal has been or will be established.</S100FC:definition>
+          <S100FC:code>126</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fog Signal Operating Properly</S100FC:label>
+          <S100FC:definition>The fog signal is operating as advertised.</S100FC:definition>
+          <S100FC:code>127</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fog Signal Out Of Service</S100FC:label>
+          <S100FC:definition>The fog signal is inoperative.</S100FC:definition>
+          <S100FC:code>128</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fog Signal Removal</S100FC:label>
+          <S100FC:definition>Fog signal has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>129</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fog Signal Temporary Change</S100FC:label>
+          <S100FC:definition>The characteristics of the fog signal have been or will be temporarily changed.</S100FC:definition>
+          <S100FC:code>130</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fog Signal Temporary Establishment</S100FC:label>
+          <S100FC:definition>A new fog signal has been or will be established for a limited period of time.</S100FC:definition>
+          <S100FC:code>131</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fog Signal Temporary Removal</S100FC:label>
+          <S100FC:definition>Fog signal has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>132</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Front and Rear Lights out of Synchronization</S100FC:label>
+          <S100FC:definition>The synchronization of the leading lights is abnormal / The synchronization of the range lights is abnormal.</S100FC:definition>
+          <S100FC:code>133</S100FC:code>
+          <S100FC:remarks>The repeat of the full definition for both terms is done to avoid any potential confusion over the word &amp;apos;range&amp;apos; in combination with leading as it could be confused as the range of the leading light.</S100FC:remarks>
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Front Beacon Restored to Normal</S100FC:label>
+          <S100FC:definition>The front leading beacon has been restored to normal condition. / The front range beacon has been restored to normal condition.</S100FC:definition>
+          <S100FC:code>134</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Front Beacon Unreliable</S100FC:label>
+          <S100FC:definition>The front leading beacon is damaged, obscured or missing. / The front range beacon is damaged, obscured or missing.</S100FC:definition>
+          <S100FC:code>135</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Front Light is Operating Properly</S100FC:label>
+          <S100FC:definition>The front leading light is operating as advertised. / The front range light is operating as advertised.</S100FC:definition>
+          <S100FC:code>136</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Front Light Range Reduced</S100FC:label>
+          <S100FC:definition>The nominal range of the front leading light is reduced. / The nominal range of the front range light is reduced.</S100FC:definition>
+          <S100FC:code>137</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Front Light Unlit</S100FC:label>
+          <S100FC:definition>The front leading light is extinguished. / The front range light is extinguished.</S100FC:definition>
+          <S100FC:code>138</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Front Light Unreliable</S100FC:label>
+          <S100FC:definition>The operation of the front leading light is unreliable due to technical problems. / The operation of the front range light is unreliable due to technical problems.</S100FC:definition>
+          <S100FC:code>139</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Front Light Without Rhythm</S100FC:label>
+          <S100FC:definition>Due to technical problems front leading light has no rhythm and is in fixed light mode. / Due to technical problems front range light has no rhythm and is in fixed light mode.</S100FC:definition>
+          <S100FC:code>140</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>GNSS Degradation</S100FC:label>
+          <S100FC:definition>The quality of service of a global navigation satellite system is poor due to an internal or external cause (e.g. jamming, space weather).</S100FC:definition>
+          <S100FC:code>141</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Hazardous Area</S100FC:label>
+          <S100FC:definition>An area which may contain known or unknown navigational hazards which could impact the safe navigation.</S100FC:definition>
+          <S100FC:code>142</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>HF Service</S100FC:label>
+          <S100FC:definition>An outage, or return to operation, of an HF service (radiotelephone, digital selective calling or narrow band directing printing telegraphy).</S100FC:definition>
+          <S100FC:code>143</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>High Water Level</S100FC:label>
+          <S100FC:definition>High water level, potentially over a sustained period of time, such as with extreme weather or river freshet.</S100FC:definition>
+          <S100FC:code>144</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Horizontal Clearance Reduced</S100FC:label>
+          <S100FC:definition>The reduction in the horizontal distance or navigable width of a canal, channel, lock, etc.</S100FC:definition>
+          <S100FC:code>145</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Hydrographic Survey Activity</S100FC:label>
+          <S100FC:definition>Activity of vessels or drones/MASS, restricted in their ability to maneuver, engaged in towing of surface or subsurface scientific instruments to gather data on the measurements of subsurface features.</S100FC:definition>
+          <S100FC:code>146</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Ice Boom - Installation or Removal</S100FC:label>
+          <S100FC:definition>A notice concerning the installation (or removal) of floating barriers, anchored to the bottom, used to deflect the path of floating ice in order to prevent the obstruction of locks, intakes, etc., and to prevent damage to bridge piers and other structures.</S100FC:definition>
+          <S100FC:code>147</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Ice Control Zone In-Force or Deactivated</S100FC:label>
+          <S100FC:definition>Information concerning when a designated ice control zone is in force or deactivated. If in-force, mariners must follow established procedures for safe navigation.</S100FC:definition>
+          <S100FC:code>148</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Iceberg Outside Advertised Limits</S100FC:label>
+          <S100FC:definition>An iceberg which is reported outside of the advertised limits of ice.</S100FC:definition>
+          <S100FC:code>149</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Jamming Exercise</S100FC:label>
+          <S100FC:definition>An exercise in which the signals of radio navigation aids, radars or radio services are disrupted by an intentional cause for training purposes.</S100FC:definition>
+          <S100FC:code>150</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Buoy - Light Damaged</S100FC:label>
+          <S100FC:definition>The light on the buoy is damaged due to external factors (wind, sea state, collision with a vessel).</S100FC:definition>
+          <S100FC:code>151</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Buoy - Light Not Synchronized</S100FC:label>
+          <S100FC:definition>The light on the buoy is no longer synchronized with another light or group of lights.</S100FC:definition>
+          <S100FC:code>152</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Buoy - Light Unlit</S100FC:label>
+          <S100FC:definition>The light on the buoy is extinguished.</S100FC:definition>
+          <S100FC:code>153</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Buoy - Light Unreliable</S100FC:label>
+          <S100FC:definition>The operation of the light on the buoy is unreliable due to technical problems.</S100FC:definition>
+          <S100FC:code>154</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Change</S100FC:label>
+          <S100FC:definition>The characteristics of the light have been or will be changed.</S100FC:definition>
+          <S100FC:code>155</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Daymark Unreliable</S100FC:label>
+          <S100FC:definition>The light daymark is not visible due to damage or fading of colours (out of tolerance with colour recommendations).</S100FC:definition>
+          <S100FC:code>156</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Establishment</S100FC:label>
+          <S100FC:definition>A new light has been or will be established.</S100FC:definition>
+          <S100FC:code>157</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Operating Properly</S100FC:label>
+          <S100FC:definition>The light is operating as advertised</S100FC:definition>
+          <S100FC:code>158</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Out Of Synchronization</S100FC:label>
+          <S100FC:definition>The light is no longer synchronized with another light or group of lights.</S100FC:definition>
+          <S100FC:code>159</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Range Reduced</S100FC:label>
+          <S100FC:definition>The nominal range of the light is less than the advertised range.</S100FC:definition>
+          <S100FC:code>160</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Re-Establishment</S100FC:label>
+          <S100FC:definition>The re-establishment of a light which was previously announced as either destroyed or temporarily removed.</S100FC:definition>
+          <S100FC:code>161</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Removal</S100FC:label>
+          <S100FC:definition>Light has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>162</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Spar Buoy - Light Damaged</S100FC:label>
+          <S100FC:definition>The light on the spar buoy is damaged due to external factors (wind, sea state, collision with a vessel).</S100FC:definition>
+          <S100FC:code>163</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Spar Buoy - Light Not Synchronized</S100FC:label>
+          <S100FC:definition>The light on the spar buoy is no longer synchronized with another light or group of lights.</S100FC:definition>
+          <S100FC:code>164</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Spar Buoy - Light Unlit</S100FC:label>
+          <S100FC:definition>The light on the spar buoy is extinguished.</S100FC:definition>
+          <S100FC:code>165</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Spar Buoy - Light Unreliable</S100FC:label>
+          <S100FC:definition>The operation of the light on the spar buoy is unreliable due to technical problems.</S100FC:definition>
+          <S100FC:code>166</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Temporary Change</S100FC:label>
+          <S100FC:definition>The characteristics of the light have been or will be temporarily changed.</S100FC:definition>
+          <S100FC:code>167</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Temporary Establishment</S100FC:label>
+          <S100FC:definition>A new light has been or will be established for a limited period of time.</S100FC:definition>
+          <S100FC:code>168</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Temporary Removal</S100FC:label>
+          <S100FC:definition>Light has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>169</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Unlit</S100FC:label>
+          <S100FC:definition>The light is extinguished.</S100FC:definition>
+          <S100FC:code>170</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Unreliable</S100FC:label>
+          <S100FC:definition>The light is unreliable due to technical problems.</S100FC:definition>
+          <S100FC:code>171</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Light Without Rhythm</S100FC:label>
+          <S100FC:definition>Due to technical problems the light has no more rhythm and is in fixed light mode.</S100FC:definition>
+          <S100FC:code>172</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Lighted Beacon - Light Damaged</S100FC:label>
+          <S100FC:definition>The light on the beacon is damaged due to external factors (wind, sea state, collision with a vessel).</S100FC:definition>
+          <S100FC:code>173</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Lighted Beacon - Light Not Synchronized</S100FC:label>
+          <S100FC:definition>The light on the beacon is no longer synchronized with another light or group of lights.</S100FC:definition>
+          <S100FC:code>174</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Lighted Beacon - Light Unlit</S100FC:label>
+          <S100FC:definition>The light of the beacon is extinguished.</S100FC:definition>
+          <S100FC:code>175</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Lighted Beacon - Light Unreliable</S100FC:label>
+          <S100FC:definition>The operation of the light on the beacon is unreliable due to technical problems.</S100FC:definition>
+          <S100FC:code>176</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Local Health Authority Notice</S100FC:label>
+          <S100FC:definition>Notice issued by local health authorities to persons ashore or at sea.</S100FC:definition>
+          <S100FC:code>177</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Lock Closed</S100FC:label>
+          <S100FC:definition>Lock operation is compromised. The lock is closed.</S100FC:definition>
+          <S100FC:code>178</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Log Adrift</S100FC:label>
+          <S100FC:definition>A log is a tree, stripped of its branches and roots, which is floating horizontally and barely awash.</S100FC:definition>
+          <S100FC:code>179</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Log Boom Adrift</S100FC:label>
+          <S100FC:definition>One or more sections of a chained log boom has broken free of its tow and is adrift.</S100FC:definition>
+          <S100FC:code>180</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>LORAN C - Operating Properly</S100FC:label>
+          <S100FC:definition>The LORAN C station is operating as advertised.</S100FC:definition>
+          <S100FC:code>181</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>LORAN C - Out Of Service</S100FC:label>
+          <S100FC:definition>The LORAN C station is inoperative due to a technical issue.</S100FC:definition>
+          <S100FC:code>182</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>LORAN C - Unreliable</S100FC:label>
+          <S100FC:definition>The LORAN C station is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>183</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>LORAN C Station Removal</S100FC:label>
+          <S100FC:definition>LORAN C station has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>184</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>LORAN C Station Temporary Removal</S100FC:label>
+          <S100FC:definition>LORAN C station has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>185</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Low Water Level</S100FC:label>
+          <S100FC:definition>Low water level, potentially over a sustained period of time, such as with extreme weather.</S100FC:definition>
+          <S100FC:code>186</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Marine Aids to Navigation Unreliable</S100FC:label>
+          <S100FC:definition>The position or status of Marine Aids to Navigation, over an extensive area, is unreliable due to a natural event (freshet, storm surge, flooding).</S100FC:definition>
+          <S100FC:code>187</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Maritime Security Level Changes</S100FC:label>
+          <S100FC:definition>The raising or lowering of the national, regional or port-specific maritime security level within a country.</S100FC:definition>
+          <S100FC:code>188</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>MF Service</S100FC:label>
+          <S100FC:definition>Any outage or return to operation of a MF service (radiotelephone, digital selective calling or narrow band directing printing).</S100FC:definition>
+          <S100FC:code>189</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Military Exercise</S100FC:label>
+          <S100FC:definition>An exercise comprised of multiple vessels and/or aircraft used to train and asses operational capacity and strategy without actual live combat.</S100FC:definition>
+          <S100FC:code>190</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Military Operation</S100FC:label>
+          <S100FC:definition>A military response to a specific event or situation.</S100FC:definition>
+          <S100FC:code>191</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>MSI Service</S100FC:label>
+          <S100FC:definition>An outage of a maritime safety information broadcast service (satellite or terrestrial system).</S100FC:definition>
+          <S100FC:code>192</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>National Health Authority Notice</S100FC:label>
+          <S100FC:definition>Notice issued by a national health authority to persons ashore or at sea.</S100FC:definition>
+          <S100FC:code>193</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>NAVTEX Service Change</S100FC:label>
+          <S100FC:definition>Any failure or return to service of the International or National NAVTEX broadcast services.</S100FC:definition>
+          <S100FC:code>194</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>New or Amended Regulation</S100FC:label>
+          <S100FC:definition>New or updated maritime regulation which may impact navigation such as changes to navigation lanes or newly established areas to be avoided.</S100FC:definition>
+          <S100FC:code>195</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Numerous Fishing Vessels</S100FC:label>
+          <S100FC:definition>There are many fishing vessels operating in the area.</S100FC:definition>
+          <S100FC:code>196</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Object Adrift</S100FC:label>
+          <S100FC:definition>Object reported adrift and posing a hazard to safe navigation.</S100FC:definition>
+          <S100FC:code>197</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Offshore Rigs or Platform Changes</S100FC:label>
+          <S100FC:definition>Changes to offshore rig/platforms, either fixed or floating, used for oil/gas production, exploration, research, observation, etc.</S100FC:definition>
+          <S100FC:code>198</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Opening or Closing of Harbour</S100FC:label>
+          <S100FC:definition>The temporary or permanent closing or re-opening of a harbour.</S100FC:definition>
+          <S100FC:code>199</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Opening or Closing of Swing Bridge</S100FC:label>
+          <S100FC:definition>The failure, or return to operation, of the opening or closing of swing bridges.</S100FC:definition>
+          <S100FC:code>200</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Opening or Closing of Waters</S100FC:label>
+          <S100FC:definition>The temporary closing or re-opening of waters, e.g. waterway, bay, straits.</S100FC:definition>
+          <S100FC:code>201</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Pipe Laying Operation</S100FC:label>
+          <S100FC:definition>Activity comprised of one or more vessels engaged in the laying of pipe on or beneath the sea floor.</S100FC:definition>
+          <S100FC:code>202</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Pipe Operations</S100FC:label>
+          <S100FC:definition>Underwater operations undertaken to maintain or repair a submarine pipe.</S100FC:definition>
+          <S100FC:code>203</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Presence of Long Fishing Gear</S100FC:label>
+          <S100FC:definition>There are fishing vessels using long fishing gear, such as fishing net and long fishing lines.</S100FC:definition>
+          <S100FC:code>204</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Presence of Marine Mammals</S100FC:label>
+          <S100FC:definition>Presence of marine mammals is expected.</S100FC:definition>
+          <S100FC:code>205</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Presence of Naval Mines</S100FC:label>
+          <S100FC:definition>Self-contained explosive device, either floating or submerged, which could be triggered by the approach or contact with a vessel or submarine.</S100FC:definition>
+          <S100FC:code>206</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Presence of Submerged Fishing Net</S100FC:label>
+          <S100FC:definition>A fishing net (seine, purse, gill, trawl, bag or other), reported submerged, or partially submerged, of sufficient size to pose a hazard to safe navigation.</S100FC:definition>
+          <S100FC:code>207</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Presence of Scientific Equipment</S100FC:label>
+          <S100FC:definition>Presence of a buoy or object deployed to gather scientific information.</S100FC:definition>
+          <S100FC:code>208</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RACON Change</S100FC:label>
+          <S100FC:definition>The characteristics of the RACON have been or will be changed.</S100FC:definition>
+          <S100FC:code>209</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RACON Establishment</S100FC:label>
+          <S100FC:definition>A new RACON has been or will be established.</S100FC:definition>
+          <S100FC:code>210</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RACON Operating Properly</S100FC:label>
+          <S100FC:definition>The RACON is operating as advertised.</S100FC:definition>
+          <S100FC:code>211</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RACON Out Of Service</S100FC:label>
+          <S100FC:definition>The RACON is inoperative.</S100FC:definition>
+          <S100FC:code>212</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RACON Removal</S100FC:label>
+          <S100FC:definition>RACON has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>213</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RACON Temporary Change</S100FC:label>
+          <S100FC:definition>The characteristics of the RACON have been or will be temporarily changed.</S100FC:definition>
+          <S100FC:code>214</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RACON Temporary Establishment</S100FC:label>
+          <S100FC:definition>A new RACON has been or will be established for a limited period of time.</S100FC:definition>
+          <S100FC:code>215</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RACON Temporary Removal</S100FC:label>
+          <S100FC:definition>RACON has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>216</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RACON Unreliable</S100FC:label>
+          <S100FC:definition>The RACON is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>217</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Radar Surveillance System Service Change</S100FC:label>
+          <S100FC:definition>Any failure or return to service of radar in an advertised radar-monitored area which may impact the ability of maritime authorities to track and monitor the movement of vessels.</S100FC:definition>
+          <S100FC:code>218</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RAMARK Change</S100FC:label>
+          <S100FC:definition>The characteristics of the RAMARK have been or will be changed.</S100FC:definition>
+          <S100FC:code>219</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RAMARK Establishment</S100FC:label>
+          <S100FC:definition>A new RAMARK has been or will be established.</S100FC:definition>
+          <S100FC:code>220</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RAMARK Operating Properly</S100FC:label>
+          <S100FC:definition>The RAMARK is operating as advertised.</S100FC:definition>
+          <S100FC:code>221</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RAMARK Out Of Service</S100FC:label>
+          <S100FC:definition>The RAMARK is inoperative.</S100FC:definition>
+          <S100FC:code>222</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RAMARK removal</S100FC:label>
+          <S100FC:definition>RAMARK has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>223</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RAMARK Temporary Change</S100FC:label>
+          <S100FC:definition>The characteristics of the RAMARK have been or will be temporarily changed.</S100FC:definition>
+          <S100FC:code>224</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RAMARK Temporary Establishment</S100FC:label>
+          <S100FC:definition>A new RAMARK has been or will be established for a limited period of time.</S100FC:definition>
+          <S100FC:code>225</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RAMARK Temporary Removal</S100FC:label>
+          <S100FC:definition>RAMARK has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>226</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>RAMARK Unreliable</S100FC:label>
+          <S100FC:definition>The RAMARK is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>227</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Rear Beacon Restored to Normal</S100FC:label>
+          <S100FC:definition>The rear leading beacon has been restored to normal condition. / The rear range beacon has been restored to normal condition.</S100FC:definition>
+          <S100FC:code>228</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Rear Beacon Unreliable</S100FC:label>
+          <S100FC:definition>The rear leading beacon is damaged, obscured or missing. / The rear range beacon is damaged, obscured or missing</S100FC:definition>
+          <S100FC:code>229</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Rear Light is Operating Properly</S100FC:label>
+          <S100FC:definition>The rear leading light is operating as advertised. / The rear range light is operating as advertised.</S100FC:definition>
+          <S100FC:code>230</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Rear Light Range Reduced</S100FC:label>
+          <S100FC:definition>The nominal range of the rear leading light is reduced. / The nominal range of the rear range light is reduced.</S100FC:definition>
+          <S100FC:code>231</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Rear Light Unlit</S100FC:label>
+          <S100FC:definition>The rear leading light is extinguished. / The rear range light is extinguished.</S100FC:definition>
+          <S100FC:code>232</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Rear Light Unreliable</S100FC:label>
+          <S100FC:definition>The operation of the rear leading light is unreliable due to technical problems. / The operation of the rear range light is unreliable due to technical problems.</S100FC:definition>
+          <S100FC:code>233</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Rear Light Without Rhythm</S100FC:label>
+          <S100FC:definition>Due to technical problems, the rear leading light has no rhythm and is in fixed light mode. / Due to technical problems rear range light has no rhythm and is in fixed light mode.</S100FC:definition>
+          <S100FC:code>234</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Regatta or Race</S100FC:label>
+          <S100FC:definition>A short or long race of sail, oar or power craft along a predetermined course which may approach or cross navigation lanes.</S100FC:definition>
+          <S100FC:code>235</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Renewable Energy Device or Farm Change</S100FC:label>
+          <S100FC:definition>The installation, removal, failure or damage of renewable energy devices (Wind turbines/farms, ocean current or wave power plants) which pose a hazard to safe navigation.</S100FC:definition>
+          <S100FC:code>236</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Restricted Area Changes</S100FC:label>
+          <S100FC:definition>A new or revised specified area, temporary or permanent in nature, designated by an appropriate authority within which navigation is restricted in accordance with certain specified conditions.</S100FC:definition>
+          <S100FC:code>237</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Sandspit or Sandbar Change</S100FC:label>
+          <S100FC:definition>Significant changes to the limits or depth of a known sandbar/sandspit, or the discovery of a new sandbar/sandspit, which poses a hazard to safe navigation.</S100FC:definition>
+          <S100FC:code>238</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>SAR Exercise</S100FC:label>
+          <S100FC:definition>A large scale activity where multiple vessels, surveillance aircraft, and shore-based personnel practice search and rescue techniques, in order to evaluate the effectiveness of response capability.</S100FC:definition>
+          <S100FC:code>239</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>SAR Operation</S100FC:label>
+          <S100FC:definition>A real time response by vessels, surveillance aircraft, and shore-based personnel participating in an active search and rescue operation.</S100FC:definition>
+          <S100FC:code>240</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Scientific Buoy Adrift</S100FC:label>
+          <S100FC:definition>A buoy fit for scientific purposes which has broken free of its moorings or has been left free and is adrift.</S100FC:definition>
+          <S100FC:code>241</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Scientific Moorings</S100FC:label>
+          <S100FC:definition>A submerged platform where a scientific instrument is secured and which may or may not be secured to the sea floor by means of an anchor chain.</S100FC:definition>
+          <S100FC:code>242</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Scientific Survey</S100FC:label>
+          <S100FC:definition>An activity where one or more vessels, restricted in their ability to manoeuvre, navigate along a pre-determine grid pattern in order to collect scientific data.</S100FC:definition>
+          <S100FC:code>243</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Sea Trials</S100FC:label>
+          <S100FC:definition>Sea testing phase of a vessel.</S100FC:definition>
+          <S100FC:code>244</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Seaplane Operations</S100FC:label>
+          <S100FC:definition>Activity within a defined area on the water where seaplanes are actively engaged in take-off, landing or taxiing.</S100FC:definition>
+          <S100FC:code>245</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Seasonal Commissioning Complete</S100FC:label>
+          <S100FC:definition>The completion of the process to place summer buoys (and the removal of any winter spar buoys).</S100FC:definition>
+          <S100FC:code>246</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Seasonal Commissioning in Progress</S100FC:label>
+          <S100FC:definition>The commencement of the process to place summer buoys (and the removal of any winter spar buoys).</S100FC:definition>
+          <S100FC:code>247</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Seasonal Decommissioning Complete</S100FC:label>
+          <S100FC:definition>The completion of the process to remove summer buoys (and possibly replace some with winter spar buoys).</S100FC:definition>
+          <S100FC:code>248</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Seasonal Decommissioning in Progress</S100FC:label>
+          <S100FC:definition>The commencement of the process to remove summer buoys (and possibly replace some with winter spar buoys).</S100FC:definition>
+          <S100FC:code>249</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Sector Light - Sector Obscured</S100FC:label>
+          <S100FC:definition>The light sector has been fully or partly obscured.</S100FC:definition>
+          <S100FC:code>250</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Sector Light Change</S100FC:label>
+          <S100FC:definition>The characteristics of the sector light have been or will be changed.</S100FC:definition>
+          <S100FC:code>251</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Sector Light Temporary Change</S100FC:label>
+          <S100FC:definition>The characteristics of the sector light have been or will be temporarily changed.</S100FC:definition>
+          <S100FC:code>252</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Security Regulation Change</S100FC:label>
+          <S100FC:definition>Changes to the national, regional or port-specific maritime security regulations.</S100FC:definition>
+          <S100FC:code>253</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Seismic Survey Operation</S100FC:label>
+          <S100FC:definition>The commencement or cessation of the complex operations of a seismic survey.</S100FC:definition>
+          <S100FC:code>254</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Shallow Depth Confirmed</S100FC:label>
+          <S100FC:definition>Confirmed significant change to the depth or position of a charted sounding/shoal, or the discovery of a new shoal, which poses a hazard to safe navigation.</S100FC:definition>
+          <S100FC:code>255</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Shallow Depth Reported</S100FC:label>
+          <S100FC:definition>Reported significant change to the depth or position of a charted sounding/shoal, or the discovery of a new shoal, which poses a hazard to safe navigation.</S100FC:definition>
+          <S100FC:code>256</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Spar Buoy Adrift</S100FC:label>
+          <S100FC:definition>The spar buoy is no longer secured to its moorings and has gone adrift from its advertised position.</S100FC:definition>
+          <S100FC:code>257</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Spar Buoy Damaged</S100FC:label>
+          <S100FC:definition>The spar buoy has been damaged due to external factors (wind, sea state, collision with a vessel).</S100FC:definition>
+          <S100FC:code>258</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Spar Buoy Destroyed</S100FC:label>
+          <S100FC:definition>The spar buoy has suffered extensive damage and is not useable.</S100FC:definition>
+          <S100FC:code>259</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Spar Buoy Missing</S100FC:label>
+          <S100FC:definition>No spar buoy at its advertised position or in the vicinity.</S100FC:definition>
+          <S100FC:code>260</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Spar Buoy Move</S100FC:label>
+          <S100FC:definition>The spar buoy has been or will be moved intentionally.</S100FC:definition>
+          <S100FC:code>261</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Spar Buoy off Position</S100FC:label>
+          <S100FC:definition>The spar buoy has been dragged off its advertised position due to wind or current affecting the mooring system.</S100FC:definition>
+          <S100FC:code>262</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Spar Buoy Re-established</S100FC:label>
+          <S100FC:definition>The re-establishment of a spar buoy which was previously announced either destroyed or temporarily removed.</S100FC:definition>
+          <S100FC:code>263</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Spar Buoy Restored to Normal</S100FC:label>
+          <S100FC:definition>The spar buoy has been restored to normal condition.</S100FC:definition>
+          <S100FC:code>264</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Spar Buoy Topmark Missing</S100FC:label>
+          <S100FC:definition>The topmark of the spar buoy is missing.</S100FC:definition>
+          <S100FC:code>265</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Spar Buoy Withdrawn</S100FC:label>
+          <S100FC:definition>The spar buoy has been removed from service for a fixed term.</S100FC:definition>
+          <S100FC:code>266</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Storm Surge</S100FC:label>
+          <S100FC:definition>A rise above normal water level on the open coast due only to the action of wind stress on the water surface. Storm surge resulting from a hurricane or other intense storm also includes the rise in level due to atmospheric pressure reduction as well as that due to wind stress. A storm surge is more severe when it occurs in conjunction with a high tide. Also called storm tide, storm wave, tidal wave.</S100FC:definition>
+          <S100FC:code>267</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias>Storm Tide; Storm Wave; Tidal Wave</S100FC:alias>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Submarine Cable Changes</S100FC:label>
+          <S100FC:definition>Change in status, location or depth of a submerged or seabed cable which poses a hazard to safe navigation, anchoring or fishing.</S100FC:definition>
+          <S100FC:code>268</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Submarine Pipeline Changes</S100FC:label>
+          <S100FC:definition>Change in status, location or depth of a submerged or seabed pipeline which poses a hazard to safe navigation, anchoring or fishing.</S100FC:definition>
+          <S100FC:code>269</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Submerged Object</S100FC:label>
+          <S100FC:definition>Any object under water; not showing above water.</S100FC:definition>
+          <S100FC:code>270</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Subsurface Mooring</S100FC:label>
+          <S100FC:definition>A mooring which is under water and which may or may not be secured to the sea floor by means of an anchor chain.</S100FC:definition>
+          <S100FC:code>271</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Swimmers</S100FC:label>
+          <S100FC:definition>A single person or groups of persons will be / are swimming in or near navigation lanes.</S100FC:definition>
+          <S100FC:code>272</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Temporary Buoyage</S100FC:label>
+          <S100FC:definition>The establishment of a buoy or group of buoys for a limited period of time (i.e. during summer season or during marine construction projects).</S100FC:definition>
+          <S100FC:code>273</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Tide Gauge Change</S100FC:label>
+          <S100FC:definition>The installation or removal of a tide gauge.</S100FC:definition>
+          <S100FC:code>274</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Traffic Congestion</S100FC:label>
+          <S100FC:definition>An area is experiencing a significantly high volume of vessel traffic which could potentially impede the progress of a vessel.</S100FC:definition>
+          <S100FC:code>275</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Tsunami Warning</S100FC:label>
+          <S100FC:definition>An alert message concerning strong waves, the widespread inundation of water, due to an earthquake, landslide or volcanic eruption, which is issued when the threat is imminent, expected or occurring.</S100FC:definition>
+          <S100FC:code>276</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Uncharted Rock</S100FC:label>
+          <S100FC:definition>A newly located rock, submerged or partially submerged rock, which had not been previously charted.</S100FC:definition>
+          <S100FC:code>277</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Underwater Operations</S100FC:label>
+          <S100FC:definition>Underwater work to maintain or repair subsurface structures (e.g. drill head).</S100FC:definition>
+          <S100FC:code>278</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Unidentified Radar Target - Possible Iceberg</S100FC:label>
+          <S100FC:definition>An unidentified radar target, within the advertised limits of ice, but not yet visually confirmed as being an iceberg.</S100FC:definition>
+          <S100FC:code>279</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Unwieldy Tow</S100FC:label>
+          <S100FC:definition>A tow, which by the nature of the size, shape or dimensions of the object being towed, is cumbersome to effectively tow regardless of the conditions of the waterway.</S100FC:definition>
+          <S100FC:code>280</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>V-AIS Change</S100FC:label>
+          <S100FC:definition>The characteristics of the V-AIS have been or will be changed.</S100FC:definition>
+          <S100FC:code>281</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>V-AIS Establishment</S100FC:label>
+          <S100FC:definition>A new V-AIS has been or will be established.</S100FC:definition>
+          <S100FC:code>282</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>V-AIS Operating Properly</S100FC:label>
+          <S100FC:definition>Virtual AIS aid to navigation is operating as advertised.</S100FC:definition>
+          <S100FC:code>283</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>V-AIS Out Of Service</S100FC:label>
+          <S100FC:definition>Virtual AIS aid to navigation is extinguished.</S100FC:definition>
+          <S100FC:code>284</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>V-AIS Removal</S100FC:label>
+          <S100FC:definition>V-AIS has been or will be permanently removed from service.</S100FC:definition>
+          <S100FC:code>285</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>V-AIS Temporary Change</S100FC:label>
+          <S100FC:definition>The characteristics of the V-AIS have been or will be temporarily changed.</S100FC:definition>
+          <S100FC:code>286</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>V-AIS Temporary Establishment</S100FC:label>
+          <S100FC:definition>A new V-AIS has been or will be established for a limited period of time.</S100FC:definition>
+          <S100FC:code>287</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>V-AIS Temporary Removal</S100FC:label>
+          <S100FC:definition>V-AIS has been or will be temporarily removed from service.</S100FC:definition>
+          <S100FC:code>288</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>V-AIS Unreliable</S100FC:label>
+          <S100FC:definition>Virtual AIS aid is unreliable due to a technical issue or maintenance.</S100FC:definition>
+          <S100FC:code>289</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Vertical Clearance Reduced</S100FC:label>
+          <S100FC:definition>The reduction in the vertical distance between the air draft of a vessel and the lowest point on a bridge structure, cable or pipeline of which the vessel is intending to pass underneath.</S100FC:definition>
+          <S100FC:code>290</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Vessel Adrift</S100FC:label>
+          <S100FC:definition>A vessel at sea or which has lost mechanical capability and cannot be moored or anchored.</S100FC:definition>
+          <S100FC:code>291</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Vessel Disabled</S100FC:label>
+          <S100FC:definition>A vessel adrift at sea or safely anchored/moored, which has been damaged or has experienced some sort of mechanical or electrical failure so it can no longer sail.</S100FC:definition>
+          <S100FC:code>292</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>VHF Service Change</S100FC:label>
+          <S100FC:definition>Any outage or return to operation of any VHF service (radiotelephone or digital selective calling).</S100FC:definition>
+          <S100FC:code>293</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Volcano Activity</S100FC:label>
+          <S100FC:definition>Volcano activity impacting safe navigation.</S100FC:definition>
+          <S100FC:code>294</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>VTS Change</S100FC:label>
+          <S100FC:definition>Change to an existing vessel traffic service zone limit, procedure and or provision of broadcast service relating to vessels operating within that zone.</S100FC:definition>
+          <S100FC:code>295</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Waterway Recommended or Not Recommended For Shipping</S100FC:label>
+          <S100FC:definition>Temporary or permanent changes to a waterway/fairway which may render it unsafe/safe for marine traffic.</S100FC:definition>
+          <S100FC:code>296</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Wharf Construction</S100FC:label>
+          <S100FC:definition>The commencement or cessation of wharf construction.</S100FC:definition>
+          <S100FC:code>297</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Works in Progress</S100FC:label>
+          <S100FC:definition>An active marine project, either on the surface or under water, which may affect the navigation of vessels.</S100FC:definition>
+          <S100FC:code>298</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>World Health Organization Notice</S100FC:label>
+          <S100FC:definition>Notice issued by World Health Organization to persons ashore or at sea.</S100FC:definition>
+          <S100FC:code>299</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Restriction</S100FC:name>
+      <S100FC:definition>The official legal statute of each kind of restricted area.</S100FC:definition>
+      <S100FC:code>restriction</S100FC:code>
+      <S100FC:remarks>Defines the kind of restriction(s), for example, the restriction for &amp;apos;a game preserve&amp;apos; may be &amp;apos;entry prohibited&amp;apos;, the restriction for an &amp;apos;anchoring prohibition&amp;apos; is &amp;apos;anchoring prohibited&amp;apos;. The complete information about the restriction(s), actually held in handbooks or other publications, may be encoded using an Information type.</S100FC:remarks>
+      <S100FC:alias>RESTRN</S100FC:alias>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>Anchoring Prohibited</S100FC:label>
+          <S100FC:definition>An area within which anchoring is not permitted.</S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Anchoring Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which anchoring is restricted in accordance with certain specified conditions.</S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fishing Prohibited</S100FC:label>
+          <S100FC:definition>An area within which fishing is not permitted.</S100FC:definition>
+          <S100FC:code>3</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Fishing Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which fishing is restricted in accordance with certain specified conditions.</S100FC:definition>
+          <S100FC:code>4</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Trawling Prohibited</S100FC:label>
+          <S100FC:definition>An area within which trawling is not permitted.</S100FC:definition>
+          <S100FC:code>5</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Trawling Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which trawling is restricted in accordance with certain specified conditions.</S100FC:definition>
+          <S100FC:code>6</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Entry Prohibited</S100FC:label>
+          <S100FC:definition>An area within which navigation and/or anchoring is prohibited.</S100FC:definition>
+          <S100FC:code>7</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Entry Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which navigation is restricted in accordance with certain specified conditions.</S100FC:definition>
+          <S100FC:code>8</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Dredging Prohibited</S100FC:label>
+          <S100FC:definition>An area within which dredging is not permitted.</S100FC:definition>
+          <S100FC:code>9</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Dredging Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which dredging is restricted in accordance with certain specified conditions.</S100FC:definition>
+          <S100FC:code>10</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Diving Prohibited</S100FC:label>
+          <S100FC:definition>An area within which diving is not permitted.</S100FC:definition>
+          <S100FC:code>11</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Diving Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which diving is restricted in accordance with certain specified conditions.</S100FC:definition>
+          <S100FC:code>12</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>No Wake</S100FC:label>
+          <S100FC:definition>Mariners must adjust the speed of their vessels to reduce the wave or wash which may cause erosion or disturb moored vessels.</S100FC:definition>
+          <S100FC:code>13</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Area To Be Avoided</S100FC:label>
+          <S100FC:definition>An IMO declared routeing measure comprising an area within defined limits in which either navigation is particularly hazardous or it is exceptionally important to avoid casualties and which should be avoided by all ships, or certain classes of ships.</S100FC:definition>
+          <S100FC:code>14</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias>ATBA</S100FC:alias>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Construction Prohibited</S100FC:label>
+          <S100FC:definition>The erection of permanent or temporary fixed structures or artificial islands is prohibited.</S100FC:definition>
+          <S100FC:code>15</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Discharging Prohibited</S100FC:label>
+          <S100FC:definition>An area within which discharging or dumping is prohibited.</S100FC:definition>
+          <S100FC:code>16</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Discharging Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by an appropriate authority, within which discharging or dumping is restricted in accordance with specified conditions.</S100FC:definition>
+          <S100FC:code>17</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Industrial or Mineral Exploration/Development Prohibited</S100FC:label>
+          <S100FC:definition>An area within which industrial or mineral exploration and development are prohibited.</S100FC:definition>
+          <S100FC:code>18</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Industrial or Mineral Exploration/Development Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by an appropriate authority, within which industrial or mineral exploration and development is restricted in accordance with certain specified conditions.</S100FC:definition>
+          <S100FC:code>19</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Drilling Prohibited</S100FC:label>
+          <S100FC:definition>An area within which excavating a hole on the sea-bottom with a drill is prohibited.</S100FC:definition>
+          <S100FC:code>20</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Drilling Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by an appropriate authority, within which excavating a hole on the sea-bottom with a drill is restricted in accordance with certain specified conditions.</S100FC:definition>
+          <S100FC:code>21</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Removal of Historical Artefacts Prohibited</S100FC:label>
+          <S100FC:definition>An area within which the removal of historical artefacts is prohibited.</S100FC:definition>
+          <S100FC:code>22</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Cargo Transhipment (Lightening) Prohibited</S100FC:label>
+          <S100FC:definition>An area in which cargo transhipment (lightening) is prohibited.</S100FC:definition>
+          <S100FC:code>23</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Dragging Prohibited</S100FC:label>
+          <S100FC:definition>An area in which the dragging of anything along the bottom, e.g. bottom trawling, is prohibited.</S100FC:definition>
+          <S100FC:code>24</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Stopping Prohibited</S100FC:label>
+          <S100FC:definition>An area in which a vessel is prohibited from stopping.</S100FC:definition>
+          <S100FC:code>25</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Landing Prohibited</S100FC:label>
+          <S100FC:definition>An area in which landing is prohibited.</S100FC:definition>
+          <S100FC:code>26</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Speed Restricted</S100FC:label>
+          <S100FC:definition>An area within which speed is restricted.</S100FC:definition>
+          <S100FC:code>27</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Overtaking Prohibited</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which overtaking is generally prohibited.</S100FC:definition>
+          <S100FC:code>28</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Overtaking of Convoys by Convoys Prohibited</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which overtaking between convoys is prohibited.</S100FC:definition>
+          <S100FC:code>29</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Passing or Overtaking Prohibited</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which passing or overtaking is generally prohibited.</S100FC:definition>
+          <S100FC:code>30</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Berthing Prohibited</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which vessels, assemblies of floating material or floating establishments may not berth.</S100FC:definition>
+          <S100FC:code>31</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Berthing Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which berthing is restricted.</S100FC:definition>
+          <S100FC:code>32</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Making Fast Prohibited</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which vessels, assemblies of floating material or floating establishments may not make fast to the bank.</S100FC:definition>
+          <S100FC:code>33</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Making Fast Restricted</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which making fast to the bank is restricted.</S100FC:definition>
+          <S100FC:code>34</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Turning Prohibited</S100FC:label>
+          <S100FC:definition>A specified area designated by appropriate authority, within which all turning is generally prohibited.</S100FC:definition>
+          <S100FC:code>35</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Restricted Fairway Depth</S100FC:label>
+          <S100FC:definition>An area within which the fairway depth is restricted.</S100FC:definition>
+          <S100FC:code>36</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Restricted Fairway Width</S100FC:label>
+          <S100FC:definition>An area within which the fairway width is restricted.</S100FC:definition>
+          <S100FC:code>37</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Use of Spuds Prohibited</S100FC:label>
+          <S100FC:definition>The use of anchoring spuds (telescopic piles) is prohibited.</S100FC:definition>
+          <S100FC:code>38</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Swimming Prohibited</S100FC:label>
+          <S100FC:definition>An area in which swimming is prohibited.</S100FC:definition>
+          <S100FC:code>39</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>SOx Emission Restricted</S100FC:label>
+          <S100FC:definition>An area within which the emission of SOx is restricted.</S100FC:definition>
+          <S100FC:code>40</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>NOx Emission Restricted</S100FC:label>
+          <S100FC:definition>An area within which the emission of NOx is restricted.</S100FC:definition>
+          <S100FC:code>41</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Flip Bearing</S100FC:name>
+      <S100FC:definition>The bearing at which text is re-located to the opposite side of a feature when screen display is oriented away from true north.</S100FC:definition>
+      <S100FC:code>flipBearing</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Scale Minimum</S100FC:name>
+      <S100FC:definition>The minimum scale at which the feature may be used for example for ECDIS presentation.</S100FC:definition>
+      <S100FC:code>scaleMinimum</S100FC:code>
+      <S100FC:remarks>The modulus of the scale is indicated, that is 1:1 250 000 is encoded as 1250000.</S100FC:remarks>
+      <S100FC:alias>SCAMIN</S100FC:alias>
+      <S100FC:valueType>integer</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Text Justification</S100FC:name>
+      <S100FC:definition>The anchor point of a text string.</S100FC:definition>
+      <S100FC:code>textJustification</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>Left</S100FC:label>
+          <S100FC:definition>Of, relating to, or located on or near the side of a person or thing that is turned toward the west when the subject is facing north (opposed to right).</S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Centred</S100FC:label>
+          <S100FC:definition>Equidistant from all bordering or adjacent areas; situated in the centre.</S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Right</S100FC:label>
+          <S100FC:definition>Of, relating to, or located on or near the side of a person or thing that is turned toward the east when the subject is facing north (opposed to left).</S100FC:definition>
+          <S100FC:code>3</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Chart Number</S100FC:name>
+      <S100FC:definition>Chart number. Note, can be either paper chart number or ENC file name.</S100FC:definition>
+      <S100FC:code>chartNumber</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Chart Plan Number</S100FC:name>
+      <S100FC:definition>Plan number when a chart has more than one panel.</S100FC:definition>
+      <S100FC:code>chartPlanNumber</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Edition Date</S100FC:name>
+      <S100FC:definition>Date of publishing for example of a publication, chart, or product.</S100FC:definition>
+      <S100FC:code>editionDate</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>date</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Last Notice Date</S100FC:name>
+      <S100FC:definition>Date of the last notice to mariner, such as was applied to a chart or publication.</S100FC:definition>
+      <S100FC:code>lastNoticeDate</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>date</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Chart Publication Identifier</S100FC:name>
+      <S100FC:definition>Identifier for the chart or publication (using the MRN format).</S100FC:definition>
+      <S100FC:code>chartPublicationIdentifier</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>URN</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>International Chart Affected</S100FC:name>
+      <S100FC:definition>International paper chart number. (Not used if chartAffected carry an ENC name).</S100FC:definition>
+      <S100FC:code>internationalChartAffected</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Publication Affected</S100FC:name>
+      <S100FC:definition>Name of affected publication.</S100FC:definition>
+      <S100FC:code>publicationAffected</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Locality Identifier</S100FC:name>
+      <S100FC:definition>Globally unique identifier for the area or locality in the MRN format.</S100FC:definition>
+      <S100FC:code>localityIdentifier</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>URN</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Agency Responsible for Production</S100FC:name>
+      <S100FC:definition>Identifies the agency which produced the data.</S100FC:definition>
+      <S100FC:code>agencyResponsibleForProduction</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias>AGENCY</S100FC:alias>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Country Name</S100FC:name>
+      <S100FC:definition>The name of a nation.</S100FC:definition>
+      <S100FC:code>countryName</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Name of Series</S100FC:name>
+      <S100FC:definition>The NAVAREA or METAREA. Example: NAVAREA IV. Distinction: generalArea, locality</S100FC:definition>
+      <S100FC:code>nameOfSeries</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Warning Identifier</S100FC:name>
+      <S100FC:definition>Globally unique identifier of a navigational warning in the MRN format.</S100FC:definition>
+      <S100FC:code>warningIdentifier</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>URN</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Warning Number</S100FC:name>
+      <S100FC:definition>The consecutive number re-starts each calendar year at 1 (Leading zeros are not mandatory).</S100FC:definition>
+      <S100FC:code>warningNumber</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>integer</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Warning Type</S100FC:name>
+      <S100FC:definition>The scope of the MSI warning - NAVAREA, sub-area, etc.</S100FC:definition>
+      <S100FC:code>warningType</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>Local Navigational Warning</S100FC:label>
+          <S100FC:definition>Message containing urgent information relevant to safe navigation broadcast to ships in a local area, in accordance with the provisions of the International Convention for the Safety of Life at Sea, 1974, as amended.(Adopted from S-53, 2.2.23)
+
+Local warning means a navigational warning which covers inshore waters, often within the limits of jurisdiction of a harbour or port authority. (Adopted from S-53, 2.2.10)</S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Coastal Navigational Warning</S100FC:label>
+          <S100FC:definition>Message containing urgent information relevant to safe navigation broadcast to ships in a coastal  area, in accordance with the provisions of the International Convention for the Safety of Life at Sea, 1974, as amended.
+
+Coastal warning means a navigational warning promulgated as part of a numbered series by a National Coordinator.</S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Sub-Area Navigational Warning</S100FC:label>
+          <S100FC:definition>Message containing urgent information relevant to safe navigation broadcast to ships in a sub-area, in accordance with the provisions of the International Convention for the Safety of Life at Sea, 1974, as amended.
+
+Sub-area warning means a navigational warning or in-force bulletin promulgated as part of a numbered series by a Sub-area Coordinator.</S100FC:definition>
+          <S100FC:code>3</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>NAVAREA Navigational Warning</S100FC:label>
+          <S100FC:definition>Message containing urgent information relevant to safe navigation broadcast to ships in a NAVAREA, in accordance with the provisions of the International Convention for the Safety of Life at Sea, 1974, as amended.
+
+NAVAREA warning means a navigational warning promulgated as part of a numbered series by a NAVAREA Coordinator.</S100FC:definition>
+          <S100FC:code>4</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>NAVAREA No Warning</S100FC:label>
+          <S100FC:definition>A message that indicates that there are no navigational warnings to be disseminated in the NAVAREA.</S100FC:definition>
+          <S100FC:code>5</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Sub-Area No Warning</S100FC:label>
+          <S100FC:definition>A message that indicates that there are no navigational warnings to be disseminated in the sub-area.</S100FC:definition>
+          <S100FC:code>6</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Coastal No Warning</S100FC:label>
+          <S100FC:definition>A message that indicates that there are no navigational warnings to be disseminated in the coastal area.</S100FC:definition>
+          <S100FC:code>7</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Local No Warning</S100FC:label>
+          <S100FC:definition>A message that indicates that there are no navigational warnings to be disseminated in the local area.</S100FC:definition>
+          <S100FC:code>8</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>NAVAREA In-Force Bulletin</S100FC:label>
+          <S100FC:definition>A list of serial numbers of NAVAREA warnings which are in- force.</S100FC:definition>
+          <S100FC:code>9</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Sub-Area In-Force Bulletin</S100FC:label>
+          <S100FC:definition>A list of serial numbers of sub-area warnings which are in-force.</S100FC:definition>
+          <S100FC:code>10</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Coastal In-Force Bulletin</S100FC:label>
+          <S100FC:definition>A list of serial numbers of coastal warnings which are in- force.</S100FC:definition>
+          <S100FC:code>11</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Local In-Force Bulletin</S100FC:label>
+          <S100FC:definition>A list of serial numbers of local warnings which are in- force.</S100FC:definition>
+          <S100FC:code>12</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Year</S100FC:name>
+      <S100FC:definition>A period of one revolution of the earth around the sun.</S100FC:definition>
+      <S100FC:code>year</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>integer</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Cancellation Date</S100FC:name>
+      <S100FC:definition>Date and time of cancelling a notice or warning.</S100FC:definition>
+      <S100FC:code>cancellationDate</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Int Service</S100FC:name>
+      <S100FC:definition>An indication of an international service, true = yes, false = no.</S100FC:definition>
+      <S100FC:code>intService</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>boolean</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Navwarn Type General</S100FC:name>
+      <S100FC:definition>General type of a navigational warning or navigational hazard.</S100FC:definition>
+      <S100FC:code>navwarnTypeGeneral</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>S100_CodeList</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>Aids to Navigation Changes</S100FC:label>
+          <S100FC:definition>Any casualties to lights, fog signals, buoys and other aids to navigation affecting shipping; establishment of major new aids to navigation or significant changes to existing ones, when such establishment or change might be misleading to shipping.</S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Aquaculture and Fishing Installations</S100FC:label>
+          <S100FC:definition>New or established aquaculture and fishing installations.</S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Drifting Hazards</S100FC:label>
+          <S100FC:definition>Drifting hazards, including derelict ships, containers, other large items, etc.</S100FC:definition>
+          <S100FC:code>3</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>ECDIS Operating Anomalies including Official Data Issues</S100FC:label>
+          <S100FC:definition>Operating anomalies identified within ECDIS, including issues with official data.</S100FC:definition>
+          <S100FC:code>4</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Other Hazards</S100FC:label>
+          <S100FC:definition>Hazards likely to constitute a danger to navigation.</S100FC:definition>
+          <S100FC:code>5</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Health Advisories</S100FC:label>
+          <S100FC:definition>Health advisories or information.</S100FC:definition>
+          <S100FC:code>6</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Ice Information</S100FC:label>
+          <S100FC:definition>Newly discovered icebergs, changes to ice conditions and ice related information likely to impact navigation.</S100FC:definition>
+          <S100FC:code>7</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>In-Force Bulletin</S100FC:label>
+          <S100FC:definition>A list of serial numbers of warnings which are in-force.</S100FC:definition>
+          <S100FC:code>8</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Dangerous Natural Phenomena</S100FC:label>
+          <S100FC:definition>Natural phenomena adversely affecting the marine environment.</S100FC:definition>
+          <S100FC:code>9</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Newly Discovered Dangers</S100FC:label>
+          <S100FC:definition>Newly discovered rocks, shoals, reefs and wrecks likely to constitute a danger to navigation and, if relevant, their markings.</S100FC:definition>
+          <S100FC:code>10</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Offshore Infrastructure</S100FC:label>
+          <S100FC:definition>New or established complex structures situated at sea, including rigs, drilling platforms, offshore wind turbines, cables and pipelines.</S100FC:definition>
+          <S100FC:code>11</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Piracy or Robbery</S100FC:label>
+          <S100FC:definition>Acts of piracy and armed robbery against ships.</S100FC:definition>
+          <S100FC:code>12</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Communication or Broadcast Service Change</S100FC:label>
+          <S100FC:definition>Any failure or return to service of terrestrial or satellite radio services used to determine the position of an object.</S100FC:definition>
+          <S100FC:code>13</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Routeing Change</S100FC:label>
+          <S100FC:definition>Changes to the established navigational routes or specific procedures related to them.</S100FC:definition>
+          <S100FC:code>14</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Scientific Instruments Change</S100FC:label>
+          <S100FC:definition>Deployment or removal of scientific instruments on the surface, subsurface or on the sea floor.</S100FC:definition>
+          <S100FC:code>15</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Security Requirement Change</S100FC:label>
+          <S100FC:definition>Changes to the maritime security levels in a country, a specific region or port. Or, changes to maritime security regulations.</S100FC:definition>
+          <S100FC:code>16</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Special Operations</S100FC:label>
+          <S100FC:definition>Events which might affect the safety of shipping, sometimes over wide areas, e.g. naval exercises, missile firings, space missions, nuclear tests, ordnance dumping zones, etc.</S100FC:definition>
+          <S100FC:code>17</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Towing Operations</S100FC:label>
+          <S100FC:definition>Objects being towed which are impacting navigation of vessels in its vicinity.</S100FC:definition>
+          <S100FC:code>18</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Works</S100FC:label>
+          <S100FC:definition>Works at sea or onshore which might affect navigation.</S100FC:definition>
+          <S100FC:code>19</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Rig List</S100FC:label>
+          <S100FC:definition>An update on the position, movement or status of rigs or drill ships within a defined area.</S100FC:definition>
+          <S100FC:code>20</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Publication Time</S100FC:name>
+      <S100FC:definition>Date and time of publication of the notice or warning.</S100FC:definition>
+      <S100FC:code>publicationTime</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>No Message On Hand</S100FC:name>
+      <S100FC:definition>An indication of no active message.</S100FC:definition>
+      <S100FC:code>noMessageOnHand</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>boolean</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Reference Category</S100FC:name>
+      <S100FC:definition>Category of reference.</S100FC:definition>
+      <S100FC:code>referenceCategory</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>Warning Cancellation</S100FC:label>
+          <S100FC:definition>Cancellation of warning which is no longer valid.</S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Warning Reference</S100FC:label>
+          <S100FC:definition>Reference to relevant warning.</S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>In-Force</S100FC:label>
+          <S100FC:definition>Reference to warnings or notices that are considered in-force.</S100FC:definition>
+          <S100FC:code>3</S100FC:code>
+          <S100FC:remarks />
+          <S100FC:alias />
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+  </S100FC:S100_FC_SimpleAttributes>
+  <S100FC:S100_FC_ComplexAttributes>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Feature Name</S100FC:name>
+      <S100FC:definition>Provides the name of an entity, defines the national language of the name, and provides the option to display the name at various system display settings.</S100FC:definition>
+      <S100FC:code>featureName</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="displayName" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="language" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="name" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Date Time Range</S100FC:name>
+      <S100FC:definition>The range of time a feature is valid for.</S100FC:definition>
+      <S100FC:code>dateTimeRange</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="dateTimeEnd" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="dateTimeStart" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>ENC Feature Reference</S100FC:name>
+      <S100FC:definition>Reference to feature(s) in an ENC dataset.</S100FC:definition>
+      <S100FC:code>eNCFeatureReference</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="editionNumber" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="eNCName" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>99</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="featureObjectIdentifier" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="updateNumber" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Feature Reference</S100FC:name>
+      <S100FC:definition>Reference to an object or feature that is external to the dataset.</S100FC:definition>
+      <S100FC:code>featureReference</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>99</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="featureIdentifier" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="dateTimeRange" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>99</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="atoNNumber" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>99</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="eNCFeatureReference" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Fixed Date Range</S100FC:name>
+      <S100FC:definition>An active period of a single fixed event or occurrence, as the date range between discrete start and end dates.</S100FC:definition>
+      <S100FC:code>fixedDateRange</S100FC:code>
+      <S100FC:remarks>Dates must be encoded in the format YYYYMMDD; using 4 digits for the calendar year (YYYY) and, optionally, 2 digits for the month (MM) (for example April = 04) and 2 digits for the day (DD). When no specific month and/or day is required/known, the values are replaced with dashes (-). The date range of a recurring event or occurrence must be encoded using periodicDateRange.</S100FC:remarks>
+      <S100FC:alias />
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="dateEnd" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="dateStart" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Information</S100FC:name>
+      <S100FC:definition>Textual information about the feature. The information may be provided as a string of text or as a file name of a single external text file that contains the text.</S100FC:definition>
+      <S100FC:code>information</S100FC:code>
+      <S100FC:remarks>At least one of the sub-attributes file reference or text must be populated.The sub-attribute file reference is generally used for long text strings or those that require formatting, however, there is no restriction on the type of text (except for lexical level) that can be held in files referenced by sub-attribute file reference.</S100FC:remarks>
+      <S100FC:alias>INFORM</S100FC:alias>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="fileLocator" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="fileReference" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="headline" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="language" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="text" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Warning Information</S100FC:name>
+      <S100FC:definition>Detailed information about a warning.</S100FC:definition>
+      <S100FC:code>warningInformation</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="information" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>99</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="navwarnTypeDetails" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Chart Affected</S100FC:name>
+      <S100FC:definition>Name or number of affected national paper chart or ENC.</S100FC:definition>
+      <S100FC:code>chartAffected</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="chartNumber" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="chartPlanNumber" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="editionDate" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="lastNoticeDate" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Affected Chart Publications</S100FC:name>
+      <S100FC:definition>Identifies paper charts, ENCs or publications that are affected by the information.</S100FC:definition>
+      <S100FC:code>affectedChartPublications</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="chartAffected" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="chartPublicationIdentifier" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="internationalChartAffected" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="language" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="publicationAffected" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Location Name</S100FC:name>
+      <S100FC:definition>Name of an area locality as defined by a competent authority.</S100FC:definition>
+      <S100FC:code>locationName</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="language" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="text" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>General Area</S100FC:name>
+      <S100FC:definition>The general area used to identify which broad geographic region the message affects. The geographical name which is selected for the general area should be one that can be found on charts and in nautical publications. (S-53, 6).</S100FC:definition>
+      <S100FC:code>generalArea</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="localityIdentifier" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>99</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="locationName" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Locality</S100FC:name>
+      <S100FC:definition>Name and/or identifier of an area locality.</S100FC:definition>
+      <S100FC:code>locality</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="localityIdentifier" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>99</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="locationName" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Message Series Identifier</S100FC:name>
+      <S100FC:definition>Message series identification of the warning or notice.</S100FC:definition>
+      <S100FC:code>messageSeriesIdentifier</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="agencyResponsibleForProduction" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="countryName" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="nameOfSeries" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="warningIdentifier" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="warningNumber" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="warningType" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="year" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>NAVWARN Title</S100FC:name>
+      <S100FC:definition>Title of the navigational warning.</S100FC:definition>
+      <S100FC:code>nAVWARNTitle</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="language" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="text" />
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+  </S100FC:S100_FC_ComplexAttributes>
+  <S100FC:S100_FC_Roles>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>Affects</S100FC:name>
+      <S100FC:definition>TBD</S100FC:definition>
+      <S100FC:code>affects</S100FC:code>
+    </S100FC:S100_FC_Role>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>Affected By</S100FC:name>
+      <S100FC:definition>TBD</S100FC:definition>
+      <S100FC:code>affectedBy</S100FC:code>
+    </S100FC:S100_FC_Role>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>Identifies</S100FC:name>
+      <S100FC:definition>A pointer to a specific feature(s).</S100FC:definition>
+      <S100FC:code>identifies</S100FC:code>
+    </S100FC:S100_FC_Role>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>Positions</S100FC:name>
+      <S100FC:definition>A pointer to a specific cartographically positioned location for text.</S100FC:definition>
+      <S100FC:code>positions</S100FC:code>
+    </S100FC:S100_FC_Role>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>The Warining Part</S100FC:name>
+      <S100FC:definition>TBD</S100FC:definition>
+      <S100FC:code>theWarningPart</S100FC:code>
+    </S100FC:S100_FC_Role>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>Header</S100FC:name>
+      <S100FC:definition>TBD</S100FC:definition>
+      <S100FC:code>header</S100FC:code>
+    </S100FC:S100_FC_Role>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>The Warining</S100FC:name>
+      <S100FC:definition>TBD</S100FC:definition>
+      <S100FC:code>theWarning</S100FC:code>
+    </S100FC:S100_FC_Role>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>The References</S100FC:name>
+      <S100FC:definition>TBD</S100FC:definition>
+      <S100FC:code>theReferences</S100FC:code>
+    </S100FC:S100_FC_Role>
+  </S100FC:S100_FC_Roles>
+  <S100FC:S100_FC_InformationAssociations>
+    <S100FC:S100_FC_InformationAssociation>
+      <S100FC:name>NW Preamble Content</S100FC:name>
+      <S100FC:definition>TBD</S100FC:definition>
+      <S100FC:code>NWPreambleContent</S100FC:code>
+      <S100FC:role ref="theWarningPart" />
+      <S100FC:role ref="header" />
+    </S100FC:S100_FC_InformationAssociation>
+    <S100FC:S100_FC_InformationAssociation>
+      <S100FC:name>NW References</S100FC:name>
+      <S100FC:definition>TBD</S100FC:definition>
+      <S100FC:code>NWReferences</S100FC:code>
+      <S100FC:role ref="theWarning" />
+      <S100FC:role ref="theReferences" />
+    </S100FC:S100_FC_InformationAssociation>
+  </S100FC:S100_FC_InformationAssociations>
+  <S100FC:S100_FC_FeatureAssociations>
+    <S100FC:S100_FC_FeatureAssociation>
+      <S100FC:name>Area Affected Association</S100FC:name>
+      <S100FC:definition>Used to indicate an area outside of the geographic area of the associated feature that can nonetheless be influenced by that feature.</S100FC:definition>
+      <S100FC:code>AreaAffected</S100FC:code>
+      <S100FC:role ref="affects" />
+      <S100FC:role ref="affectedBy" />
+    </S100FC:S100_FC_FeatureAssociation>
+    <S100FC:S100_FC_FeatureAssociation>
+      <S100FC:name>Text association</S100FC:name>
+      <S100FC:definition>A feature association for the binding between a geo feature and the cartographically positioned location for text.</S100FC:definition>
+      <S100FC:code>TextAssociation</S100FC:code>
+      <S100FC:role ref="identifies" />
+      <S100FC:role ref="positions" />
+    </S100FC:S100_FC_FeatureAssociation>
+  </S100FC:S100_FC_FeatureAssociations>
+  <S100FC:S100_FC_InformationTypes>
+    <S100FC:S100_FC_InformationType>
+      <S100FC:name>NAVWARN Preamble</S100FC:name>
+      <S100FC:definition>Preamble information for warnings, notices and other types of messages in a navigational warning scheme.</S100FC:definition>
+      <S100FC:code>NAVWARNPreamble</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="affectedChartPublications" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="generalArea" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="locality" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="messageSeriesIdentifier" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="nAVWARNTitle" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="cancellationDate" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="intService" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="navwarnTypeGeneral" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="publicationTime" />
+      </S100FC:attributeBinding>
+      <S100FC:informationBinding roleType="association">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:association ref="NWReferences" />
+        <S100FC:role ref="theWarning" />
+        <S100FC:informationType ref="References" />
+      </S100FC:informationBinding>
+    </S100FC:S100_FC_InformationType>
+    <S100FC:S100_FC_InformationType>
+      <S100FC:name>References</S100FC:name>
+      <S100FC:definition>References to for example a navigational warning, nautical publication or chart.</S100FC:definition>
+      <S100FC:code>References</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="messageSeriesIdentifier" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="noMessageOnHand" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="referenceCategory" />
+      </S100FC:attributeBinding>
+    </S100FC:S100_FC_InformationType>
+  </S100FC:S100_FC_InformationTypes>
+  <S100FC:S100_FC_FeatureTypes>
+    <S100FC:S100_FC_FeatureType>
+      <S100FC:name>NAVWARN Part</S100FC:name>
+      <S100FC:definition>Navigational warning information that may be geo-located.</S100FC:definition>
+      <S100FC:code>NAVWARNPart</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="featureName" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="featureReference" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="fixedDateRange" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="warningInformation" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>8</S100FC:value>
+          <S100FC:value>7</S100FC:value>
+          <S100FC:value>14</S100FC:value>
+          <S100FC:value>25</S100FC:value>
+          <S100FC:value>27</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="restriction" />
+      </S100FC:attributeBinding>
+      <S100FC:informationBinding roleType="association">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:association ref="NWPreambleContent" />
+        <S100FC:role ref="theWarningPart" />
+        <S100FC:informationType ref="NAVWARNPreamble" />
+      </S100FC:informationBinding>
+      <S100FC:featureUseType>geographic</S100FC:featureUseType>
+      <S100FC:featureBinding roleType="association">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:association ref="AreaAffected" />
+        <S100FC:role ref="affects" />
+        <S100FC:featureType ref="NAVWARNAreaAffected" />
+      </S100FC:featureBinding>
+      <S100FC:featureBinding roleType="association">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:association ref="TextAssociation" />
+        <S100FC:role ref="identifies" />
+        <S100FC:featureType ref="TextPlacement" />
+      </S100FC:featureBinding>
+      <S100FC:permittedPrimitives>noGeometry</S100FC:permittedPrimitives>
+      <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+      <S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+      <S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+    </S100FC:S100_FC_FeatureType>
+    <S100FC:S100_FC_FeatureType>
+      <S100FC:name>NAVWARN Area Affected</S100FC:name>
+      <S100FC:definition>Used to enhance the user’s awareness of an affected area following some incident.</S100FC:definition>
+      <S100FC:code>NAVWARNAreaAffected</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:featureUseType>geographic</S100FC:featureUseType>
+      <S100FC:featureBinding roleType="association">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:association ref="AreaAffected" />
+        <S100FC:role ref="affectedBy" />
+        <S100FC:featureType ref="NAVWARNPart" />
+      </S100FC:featureBinding>
+      <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+      <S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+      <S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+    </S100FC:S100_FC_FeatureType>
+    <S100FC:S100_FC_FeatureType>
+      <S100FC:name>Text Placement</S100FC:name>
+      <S100FC:definition>The Text Placement feature is used in association with the Feature Name attribute or a light description to optimize text positioning in ECDIS.</S100FC:definition>
+      <S100FC:code>TextPlacement</S100FC:code>
+      <S100FC:remarks />
+      <S100FC:alias />
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="flipBearing" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="scaleMinimum" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="true">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="text" />
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding>
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="textJustification" />
+      </S100FC:attributeBinding>
+      <S100FC:featureUseType>cartographic</S100FC:featureUseType>
+      <S100FC:featureBinding roleType="association">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper>1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:association ref="TextAssociation" />
+        <S100FC:role ref="positions" />
+        <S100FC:featureType ref="NAVWARNPart" />
+      </S100FC:featureBinding>
+      <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+    </S100FC:S100_FC_FeatureType>
+  </S100FC:S100_FC_FeatureTypes>
+</S100FC:S100_FC_FeatureCatalogue>

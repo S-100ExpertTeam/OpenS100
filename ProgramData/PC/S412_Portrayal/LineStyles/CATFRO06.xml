@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<lineStyle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
+<!--title>FRONTS CATFRO6</title>
+   <desc>Fronts: Category of Front Dry line</desc>-->
+<lineStyle offset="0">
+    <intervalLength>2</intervalLength>
+    <pen width="0.3">
+        <color>sWXORG</color>
+    </pen>  
+    <symbol reference="SMCIRC5">
+        <position>1.0</position>
+    </symbol>
+</lineStyle>

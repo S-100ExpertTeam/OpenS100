@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.889999mm" height="7.94mm" viewBox="-4.42 -6.88 8.889999 7.94">
+  <title>CautionArea</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-20" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.42" y="1.06" height="7.94" width="8.889999" />
+  <rect class="svgBox layout" fill="none" x="-4.42" y="-6.88" height="7.94" width="8.889999" />
+  <path d=" M -3.33,-0.52 L -0.27,-5.72 L -0.22,-5.79 L -0.16,-5.84 L -0.1,-5.87 L -0.01,-5.88 L 0.1,-5.87 L 0.2,-5.83 L 0.25,-5.79 L 0.3,-5.72 L 3.43,-0.42 L 3.47,-0.31 L 3.46,-0.26 L 3.46,-0.2 L 3.4,-0.09 L 3.31,0 L 3.23,0.04 L 3.17,0.05 L -3.08,0.06 L -3.16,0.04 L -3.21,0.02 L -3.25,0 L -3.3,-0.05 L -3.33,-0.09 L -3.37,-0.16 L -3.39,-0.22 L -3.4,-0.31 L -3.39,-0.39 L -3.36,-0.47" class="fTRFCD" style="stroke-width:0.64;" />
+  <path d=" M -3.39,-0.45 L -0.29,-5.72 L -0.24,-5.79 L -0.18,-5.84 L -0.12,-5.87 L -0.03,-5.88 L 0.08,-5.87 L 0.18,-5.83 L 0.23,-5.79 L 0.28,-5.72 L 3.41,-0.42 L 3.45,-0.31 L 3.44,-0.26 L 3.44,-0.2 L 3.38,-0.09 L 3.29,0 L 3.21,0.04 L 3.15,0.05 L -3.1,0.06 L -3.18,0.04 L -3.23,0.02 L -3.27,0 L -3.32,-0.05 L -3.35,-0.09 L -3.39,-0.16 L -3.41,-0.22 L -3.42,-0.31 L -3.41,-0.39 L -3.38,-0.47" class="sl f0 sTESTA" style="stroke-width:0.64;" />
+  <path d=" M -0.38,-4.58 L 0.42,-4.58 L 0.42,-1.88 L -0.38,-1.88 L -0.38,-4.58 L -0.38,-4.58" class="fTESTA" style="stroke-width:0.64;" />
+  <path d=" M -0.39,-1.57 L 0.41,-1.57 L 0.41,-0.74 L -0.39,-0.74 L -0.39,-1.57 L -0.39,-1.57" class="fTESTA" style="stroke-width:0.64;" />
+</svg>

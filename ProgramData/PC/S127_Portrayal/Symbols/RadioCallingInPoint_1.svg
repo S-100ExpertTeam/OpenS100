@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="11.96mm" height="6.94mm" viewBox="-5.96 -5.94 11.96 6.94">
+  <title>RadioCallingInPoint_b_1</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-14" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.96" y="1" height="6.94" width="11.96" />
+  <rect class="svgBox layout" fill="none" x="-5.96" y="-5.94" height="6.94" width="11.96" />
+  <path d=" M -1.54,-0.57 L -4.96,-2.55 L -1.61,-4.35 L -1.54,-0.57" class="fTESTA" style="stroke-width:0.64;" />
+  <path d=" M -1.52,-0.58 L -4.96,-2.53 L -1.6,-4.33 L -1.53,-0.58" class="sl f0 sLITRD" style="stroke-width:0.64;" />
+  <path d=" M 1.6,-4.4 L 5,-2.35 L 1.6,-0.61 L 1.6,-4.4" class="fTESTA" style="stroke-width:0.64;" />
+  <path d=" M 1.56,-4.37 L 4.96,-2.38 L 1.57,-0.62 L 1.57,-4.38" class="sl f0 sDNGHL" style="stroke-width:0.64;" />
+  <circle cx="0" cy="-2.5" r="2.44" class="fDNGHL" style="stroke-width:0.64" />
+  <circle cx="0" cy="-2.5" r="2.44" class="sl f0 sTESTA" style="stroke-width:0.64" />
+</svg>

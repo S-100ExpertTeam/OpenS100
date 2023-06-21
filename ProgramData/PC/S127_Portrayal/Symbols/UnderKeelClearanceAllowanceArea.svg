@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.530001mm" height="8.25mm" viewBox="-4.27 -5.58 8.530001 8.25">
+  <title>UnderKeelClearanceAllowanceArea</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-21" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.27" y="2.67" height="8.25" width="8.530001" />
+  <rect class="svgBox layout" fill="none" x="-4.27" y="-5.58" height="8.25" width="8.530001" />
+  <path d=" M -2.99,-0.74 L 3.01,-0.73" class="sl f0 sCHBRN" style="stroke-width:0.64;" />
+  <path d=" M 0,-3.08 L 0,-4.58" class="sl f0 sCHBRN" style="stroke-width:0.64;" />
+  <path d=" M 3.23,-3.09 L 1.96,-0.03 L -1.95,-0.03 L -3.23,-3.09" class="sl f0 sCHBRN" style="stroke-width:0.64;" />
+  <path d=" M -3.27,-3.06 L 3.26,-3.07" class="sl f0 sCHBRN" style="stroke-width:0.64;" />
+  <circle cx="-0.02" cy="1.11" r="0.56" class="fCHBRN" style="stroke-width:0.64" />
+</svg>

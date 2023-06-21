@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.6mm" height="0.4mm" viewBox="-3.8 -0.2 7.6 0.4">
+  <title>SYMNAM01</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2015-11-01" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.8" y="-0.2" height="0.4" width="7.6" />
+  <rect class="svgBox layout" fill="none" x="-3.8" y="-0.2" height="0.4" width="7.6" />
+  <path d=" M -3.6,0 L 3.6,0" class="sl f0 sDEPDW" style="stroke-width:0.64" />
+</svg>

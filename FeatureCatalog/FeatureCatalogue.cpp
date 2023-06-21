@@ -824,6 +824,11 @@ void FeatureCatalogue::SetVersionNumber(std::wstring value)
 	//versionNumber = value;
 }
 
+Version FeatureCatalogue::getVersion() const
+{
+	return versionNumber;
+}
+
 const std::wstring& FeatureCatalogue::GetVersionDate()
 {
 	return versionDate;
@@ -837,6 +842,11 @@ void FeatureCatalogue::SetVersionDate(std::string value)
 void FeatureCatalogue::SetVersionDate(std::wstring value)
 {
 	versionDate = value;
+}
+
+std::string FeatureCatalogue::getProductId() const
+{
+	return pugi::as_utf8(productId);
 }
 
 const std::wstring& FeatureCatalogue::GetProductId()

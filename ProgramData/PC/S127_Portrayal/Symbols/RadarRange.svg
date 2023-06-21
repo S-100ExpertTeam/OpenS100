@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="15.82mm" height="7.07mm" viewBox="-7.46 -6.07 15.82 7.07">
+  <title>RadarRange</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-16" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-7.46" y="1" height="7.07" width="15.82" />
+  <rect class="svgBox layout" fill="none" x="-7.46" y="-6.07" height="7.07" width="15.82" />
+  <path d=" M 0.52,-2.75 L 0.6,-2.72 L 0.67,-2.7 L 0.74,-2.68 L 0.8,-2.67 L 0.86,-2.67 L 0.93,-2.67 L 1.04,-2.68 L 1.14,-2.71 L 1.2,-2.73 L 1.27,-2.77 L 1.33,-2.81 L 1.4,-2.85 L 1.45,-2.9 L 1.5,-2.96 L 1.54,-3.02 L 1.58,-3.07 L 1.63,-3.16 L 1.66,-3.22 L 1.67,-3.3 L 1.69,-3.36 L 1.7,-3.42 L 1.7,-3.48 L 1.7,-3.53 L 1.69,-3.59 L 1.68,-3.68 L 1.66,-3.75 L 1.61,-3.85 L 1.57,-3.93 L 1.52,-3.99 L 1.47,-4.06 L 1.38,-4.14 L 1.32,-4.17 L 1.23,-4.23 L 1.16,-4.26 L 1.08,-4.28 L 1.01,-4.3 L 0.93,-4.31 L 0.84,-4.31 L 0.75,-4.3 L 0.61,-4.27 L 0.5,-4.25 L 0.52,-5.06 L 0.63,-5.06 L 0.72,-5.05 L 0.82,-5.05 L 0.91,-5.05 L 1.03,-5.04 L 1.15,-5.03 L 1.26,-5 L 1.35,-4.98 L 1.48,-4.92 L 1.57,-4.88 L 1.66,-4.84 L 1.74,-4.78 L 1.82,-4.73 L 1.89,-4.67 L 1.96,-4.62 L 2.01,-4.56 L 2.05,-4.5 L 2.09,-4.44 L 2.14,-4.4 L 2.18,-4.34 L 2.22,-4.28 L 2.26,-4.21 L 2.29,-4.13 L 2.33,-4.05 L 2.34,-3.98 L 2.36,-3.91 L 2.39,-3.83 L 2.41,-3.76 L 2.42,-3.68 L 2.43,-3.6 L 2.43,-3.52 L 2.43,-3.43 L 2.42,-3.3 L 2.41,-3.22 L 2.39,-3.13 L 2.35,-3.02 L 2.33,-2.94 L 2.29,-2.84 L 2.24,-2.74 L 2.19,-2.65 L 2.14,-2.57 L 2.09,-2.52 L 2.04,-2.45 L 1.97,-2.36 L 1.89,-2.29 L 1.8,-2.23 L 1.73,-2.18 L 1.62,-2.1 L 1.55,-2.07 L 1.46,-2.04 L 1.37,-2.01 L 1.24,-1.96 L 1.16,-1.94 L 1.08,-1.93 L 0.98,-1.92 L 0.86,-1.92 L 0.76,-1.92 L 0.63,-1.94 L 0.52,-1.97 L 0.52,-2.74 L 0.56,-2.74" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M 0.52,-5.07 L -0.47,-5.07 L -0.47,-0.01 L 0.54,0 L 0.52,-5.07 L 0.52,-5.07" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M 4.18,-0.06 L 3.32,-0.05 L 3.93,-2.14 L 6.72,-2.14 L 7.36,-0.05 L 6.48,-0.06 L 6.07,-1.54 L 4.54,-1.53 L 4.21,-0.23 L 4.18,-0.09" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M 5.95,-2.13 L 5.59,-4.04 L 5.11,-4.05 L 4.65,-2.08 L 3.91,-2.07 L 4.8,-5.01 L 6.03,-5 L 6.72,-2.1 L 5.91,-2.1" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M 0.54,-1.97 L 1.61,0 L 2.65,0 L 1.35,-2.13 L 0.54,-1.97" class="fTESTB" style="stroke-width:0.64;" />
+  <circle cx="-4.26" cy="-2.68" r="2.2" class="sl f0 sTESTB" style="stroke-width:0.64" />
+  <circle cx="-4.26" cy="-2.72" r="0.97" class="fTESTB" style="stroke-width:0.64" />
+</svg>

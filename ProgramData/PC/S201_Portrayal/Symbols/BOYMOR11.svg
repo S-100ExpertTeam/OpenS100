@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.23mm" height="4.14mm" viewBox="-4.12 -2.07 8.23 4.14">
+  <title>BOYMOR11</title>
+  <desc>installation buoy and mooring buoy, simplified</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.8" y="-1.75" height="3.5" width="7.59"/>
+  <rect class="svgBox layout" fill="none" x="-3.8" y="-1.75" height="3.5" width="7.59"/>
+  <circle class="fCHBLK" cx="0.07" cy="-1.04" r="0.71"/>
+  <path d=" M -3.8,1.75 L -3.15,-0.22 L 3.12,-0.22 L 3.79,1.75 L -3.8,1.75 Z" class="fCHBLK"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

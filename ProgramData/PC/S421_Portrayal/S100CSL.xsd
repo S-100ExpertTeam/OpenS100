@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iho.int/S100ConceptualSchema" targetNamespace="http://www.iho.int/S100ConceptualSchema">
+<!-- S100 Conceptual Schema Language types -->
+<xs:simpleType name="maxOccurs">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base='xs:nonNegativeInteger'/>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base='xs:string'>
+          <xs:enumeration value='unbounded'/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+<!-- UnlimitedInteger -->
+<xs:simpleType name="UnlimitedInteger">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base='xs:integer'/>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base='xs:string'>
+          <xs:enumeration value='Infinite'/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+
+<!-- Enumeration S100_IntervalType -->
+<xs:simpleType name="S100_IntervalType">
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="openInterval"/>
+		<xs:enumeration value="geLtInterval"/>
+		<xs:enumeration value="gtLeInterval"/>
+		<xs:enumeration value="closedInterval"/>
+		<xs:enumeration value="gtSemiInterval"/>
+		<xs:enumeration value="geSemiInterval"/>
+		<xs:enumeration value="ltSemiInterval"/>
+		<xs:enumeration value="leSemiInterval"/>
+	</xs:restriction>
+</xs:simpleType>
+
+<!-- Enumeration S100_NumericRange -->
+<xs:complexType name ="S100_NumericRange">
+    <xs:attribute name="lower" type="xs:double" />
+    <xs:attribute name="upper" type="xs:double" />
+    <xs:attribute name="closure" type="S100_IntervalType" />
+  </xs:complexType>
+<!-- Enumeration S100_UnitOfMeasure -->
+ <xs:complexType name ="S100_UnitOfMeasure">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="definition" type="xs:string" />
+    <xs:attribute name="symbol" type="xs:string" />
+  </xs:complexType>
+ 
+  </xs:schema>

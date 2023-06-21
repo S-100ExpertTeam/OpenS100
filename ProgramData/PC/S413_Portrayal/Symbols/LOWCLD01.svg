@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.55mm" height="11.18mm" viewBox="-5.18 -6.27 10.55 11.18">
+  <title>LOWCLD01</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-25" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.18" y="4.91" height="11.18" width="10.55" />
+  <rect class="svgBox layout" fill="none" x="-5.18" y="-6.27" height="11.18" width="10.55" />
+  <circle cx="0.09" cy="-0.92" r="2.8" class="fLITYW" style="stroke-width:0.32" />
+  <path d=" M 0.05,-5.77 L -0.35,-5.57 L -0.35,-4.27 L 0.05,-4.07 L 0.45,-4.27 L 0.45,-5.57 L 0.05,-5.77 L 0.05,-5.77" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M 4.87,-0.97 L 4.67,-1.37 L 3.47,-1.37 L 3.27,-0.97 L 3.47,-0.57 L 4.67,-0.57 L 4.87,-0.97 L 4.87,-0.97" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M -4.68,-1.02 L -4.48,-0.62 L -3.28,-0.62 L -3.08,-1.02 L -3.28,-1.42 L -4.48,-1.42 L -4.68,-1.02 L -4.68,-1.02" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M -3.43,-4.29 L -3.55,-3.87 L -2.61,-2.98 L -2.19,-3.14 L -2.07,-3.56 L -3.02,-4.45 L -3.43,-4.29 L -3.43,-4.29" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M 3.4,-4.5 L 2.97,-4.61 L 2.13,-3.63 L 2.3,-3.21 L 2.72,-3.1 L 3.57,-4.08 L 3.4,-4.5 L 3.4,-4.5" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M -2,1.19 L -1.46,0.65 L -0.8,0.25 L 0.08,-0.07 L 0.92,-0.09 L 1.6,0.15 L 2.42,0.71 L 2.8,1.47 L 2.92,2.03 L 3.54,2.05 L 4.04,2.39 L 4.36,2.89 L 4.4,3.43 L 4.02,3.93 L 3.62,4.21 L 3.06,4.41 L -2.78,4.39 L -3.44,4.15 L -3.86,3.85 L -4.12,3.43 L -4.36,3.01 L -4.3,2.45 L -3.94,1.93 L -3.06,1.27 L -2.64,1.19 L -2,1.21 L -2,1.19" class="fCHWHT" style="stroke-width:0.32;" />
+</svg>

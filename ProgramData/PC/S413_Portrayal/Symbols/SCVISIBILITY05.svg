@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.02mm" height="5.43mm" viewBox="-4.01 -2.73 8.02 5.43">
+  <title>SCVISIBILITY05</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-02" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.01" y="2.7" height="5.43" width="8.02" />
+  <rect class="svgBox layout" fill="none" x="-4.01" y="-2.73" height="5.43" width="8.02" />
+  <path d=" M -3.43,-0.24 L -3.22,-0.5 L -2.83,-0.9 L -2.32,-1.33 L -1.84,-1.66 L -1.43,-1.88 L -0.99,-2.09 L -0.63,-2.19 L -0.17,-2.23 L 0.21,-2.23 L 0.63,-2.17 L 1.2,-1.99 L 1.59,-1.82 L 2.02,-1.53 L 2.28,-1.36 L 2.62,-1.05 L 2.95,-0.74 L 3.22,-0.47 L 3.47,-0.18 L 3.51,0.07 L 3.21,0.43 L 2.8,0.88 L 2.28,1.32 L 1.83,1.61 L 1.18,1.97 L 0.52,2.14 L 0.21,2.2 L -0.48,2.17 L -1.22,1.95 L -1.93,1.57 L -2.5,1.14 L -2.99,0.72 L -3.34,0.32 L -3.49,0.1 L -3.51,-0.1 L -3.02,-0.01 L -2.84,-0.22 L -2.6,-0.44 L -1.88,-1.02 L -1.36,-1.35 L -0.81,-1.64 L -0.2,-1.76 L 0.31,-1.75 L 0.86,-1.62 L 1.34,-1.41 L 1.8,-1.11 L 2.22,-0.79 L 2.53,-0.5 L 2.77,-0.24 L 2.98,-0.03 L 2.58,0.42 L 2.05,0.88 L 1.67,1.18 L 1.24,1.43 L 0.48,1.68 L -0.29,1.73 L -0.88,1.59 L -1.51,1.29 L -2.04,0.94 L -2.53,0.49 L -2.82,0.19 L -3.02,-0.01 L -3.51,-0.1" class="fCHBLK" style="stroke-width:0.32;" />
+  <path d=" M -3.01,-0.02 L -2.69,-0.39 L -1.91,-1.03 L -1.44,-1.32 L -0.8,-1.65 L -0.21,-1.76 L 0.31,-1.76 L 0.89,-1.61 L 1.34,-1.42 L 1.73,-1.18 L 2.15,-0.85 L 2.52,-0.51 L 3.01,-0.02 L 2.59,0.41 L 2.28,0.7 L 1.69,1.17 L 1.27,1.42 L 0.48,1.68 L -0.31,1.73 L -0.89,1.58 L -1.5,1.3 L -2.05,0.93 L -2.34,0.72 L -2.55,0.46 L -2.87,0.16 L -3.01,-0.01 L -3.01,-0.02 L -3.01,0" class="fRESBL" style="stroke-width:0.32;" />
+</svg>

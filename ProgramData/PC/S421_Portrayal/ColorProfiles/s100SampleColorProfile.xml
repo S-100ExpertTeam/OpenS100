@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="s100ColorProfile.xsd">
+<colors>
+	<color token="NODTA" name="grey">
+	<description>No data color</description>
+	</color>
+	<color token="CURSR" name="orange"/>
+</colors>
+<palette name="Day">
+	<item token="NODTA">
+		<cie>
+			<xyL>
+			<x>0.280</x>
+			<y>0.310</y>
+			<L>45.0</L>
+			</xyL>
+		</cie>
+		<srgb>
+			<red>171</red>
+			<green>192</green>
+			<blue>177</blue>
+		</srgb>
+	</item>
+	<item token="CURSR">
+		<cie>
+			<xyL>
+			<x>0.52</x>
+			<y>0.39</y>
+			<L>28.0</L>
+			</xyL>
+		</cie>
+		<srgb>
+			<red>230</red>
+			<green>121</green>
+			<blue>56</blue>
+		</srgb>
+	</item>
+</palette>
+<palette name="Dusk">
+	<item token="NODTA">
+		<cie>
+			<xyL>
+			<x>0.28</x>
+			<y>0.31</y>
+			<L>25.0</L>
+			</xyL>
+		</cie>
+			<srgb>
+			<red>136</red>
+			<green>152</green>
+			<blue>139</blue>
+		</srgb>
+	</item>
+	<item token="CURSR">
+		<cie>
+			<xyL>
+			<x>0.52</x>
+			<y>0.39</y>
+			<L>28.0</L>
+		</xyL>
+		</cie>
+			<srgb>
+			<red>230</red>
+			<green>121</green>
+			<blue>56</blue>
+		</srgb>
+	</item>
+</palette>
+<palette name="Night">
+	<item token="NODTA">
+		<cie>
+			<xyL>
+			<x>0.28</x>
+			<y>0.31</y>
+			<L>2.25</L>
+			</xyL>
+		</cie>
+		<srgb>
+			<red>56</red>
+			<green>61</green>
+			<blue>55</blue>
+		</srgb>
+	</item>
+	<item token="CURSR">
+		<cie>
+			<xyL>
+			<x>0.52</x>
+			<y>0.39</y>
+			<L>2.52</L>
+			</xyL>
+		</cie>
+			<srgb>
+			<red>89</red>
+			<green>50</green>
+			<blue>22</blue>
+		</srgb>
+	</item>
+</palette>
+</colorProfile>

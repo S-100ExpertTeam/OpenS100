@@ -63,7 +63,7 @@ BOOL CConfiguration_4::OnInitDialog()
 			return false;
 		}
 
-		auto fc = theApp.gisLib->GetFC();
+		auto fc = theApp.gisLib->catalogManager.getFC("S-101");
 		if (fc == nullptr)
 		{
 			return false;

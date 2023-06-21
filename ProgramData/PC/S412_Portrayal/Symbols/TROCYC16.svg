@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.63mm" height="8.26mm" viewBox="-2.3 -4.24 4.63 8.26">
+  <title>TROCYC16</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-08" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.3" y="4.02" height="8.26" width="4.63" />
+  <rect class="svgBox layout" fill="none" x="-2.3" y="-4.24" height="8.26" width="4.63" />
+  <circle cx="0.01" cy="0" r="1.81" class="fLITGN" style="stroke-width:0.32" />
+  <path d=" M 0.53,-3.74 L 0.28,-3.68 L 0.08,-3.56 L -0.15,-3.39 L -0.41,-3.14 L -0.66,-2.84 L -0.84,-2.6 L -1.05,-2.32 L -1.19,-2.05 L -1.32,-1.77 L -1.48,-1.39 L -1.6,-1.09 L -1.7,-0.74 L -1.77,-0.45 L -0.13,0.02 L -0.22,-1.81 L -0.17,-2.03 L -0.08,-2.31 L -0.01,-2.57 L 0.11,-2.86 L 0.18,-3.05 L 0.29,-3.28 L 0.41,-3.49 L 0.49,-3.64 L 0.57,-3.74 L 0.53,-3.74" class="fLITGN" style="stroke-width:0.32;" />
+  <path d=" M -0.47,3.52 L -0.22,3.46 L -0.02,3.34 L 0.21,3.17 L 0.47,2.92 L 0.72,2.62 L 0.9,2.38 L 1.11,2.1 L 1.25,1.83 L 1.38,1.55 L 1.54,1.17 L 1.66,0.87 L 1.76,0.52 L 1.83,0.23 L 0.19,-0.24 L 0.28,1.59 L 0.23,1.81 L 0.14,2.09 L 0.07,2.35 L -0.05,2.64 L -0.12,2.83 L -0.23,3.06 L -0.35,3.27 L -0.43,3.42 L -0.51,3.52 L -0.47,3.52" class="fLITGN" style="stroke-width:0.32;" />
+</svg>

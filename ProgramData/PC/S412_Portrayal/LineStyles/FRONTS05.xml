@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<!--title>FRONTS CATFRO2 FRODEV1</title>
+  <desc>Fronts: Category of Front Warm: Front development Developing</desc>-->
+<lineStyle offset="0">
+    <intervalLength>28.4</intervalLength>
+    <pen width="0.32">
+        <color>sWXRED</color>
+    </pen>
+  <symbol reference="SMCIRC9">
+    <position>7</position>
+  </symbol>
+  <symbol reference="FRONTS16">
+    <position>21.2</position>
+  </symbol>
+</lineStyle>

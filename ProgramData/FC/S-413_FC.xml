@@ -1,0 +1,556 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<S100FC:S100_FC_FeatureCatalogue xmlns:S100FC="http://www.iho.int/S100FC" xmlns:S100Base="http://www.iho.int/S100Base" xmlns:S100CI="http://www.iho.int/S100CI" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:S100FD="http://www.iho.int/S100FD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.iho.int/S100FC S100FC.xsd">
+	<S100FC:name>S-413</S100FC:name>
+  <S100FC:product>S-413</S100FC:product>
+	<S100FC:scope>Global</S100FC:scope>
+	<S100FC:versionNumber></S100FC:versionNumber>
+	<S100FC:versionDate>2019-08-13</S100FC:versionDate>
+	<S100FC:productId>S-413</S100FC:productId>
+	<S100FC:producer>
+	</S100FC:producer>
+	<S100FC:S100_FC_SimpleAttributes>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Direction</S100FC:name>
+			<S100FC:definition>Direction</S100FC:definition>
+			<S100FC:code>direction</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Sky Status</S100FC:name>
+			<S100FC:definition>Sky Status</S100FC:definition>
+			<S100FC:code>skyStatus</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Speed</S100FC:name>
+			<S100FC:definition>Speed</S100FC:definition>
+			<S100FC:code>speed</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Temperature 3hr</S100FC:name>
+			<S100FC:definition>Temperature 3hr</S100FC:definition>
+			<S100FC:code>temperature3hr</S100FC:code>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>over zero</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>under zero</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Visibility</S100FC:name>
+			<S100FC:definition>Visibility</S100FC:definition>
+			<S100FC:code>visibility</S100FC:code>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>Visibility1</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Visibility2</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Visibility3</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Visibility4</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Visibility5</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>5</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Visibility6</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>6</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Snow Amount 3HR</S100FC:name>
+			<S100FC:definition>Snow Amount 3HR</S100FC:definition>
+			<S100FC:code>snowAmount</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Rain Amount 3HR</S100FC:name>
+			<S100FC:definition>Rain Amount 3HR</S100FC:definition>
+			<S100FC:code>rainAmount3HR</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Rain Probability</S100FC:name>
+			<S100FC:definition>Rain Probability</S100FC:definition>
+			<S100FC:code>rainProbability</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Pressure</S100FC:name>
+			<S100FC:definition>Pressure</S100FC:definition>
+			<S100FC:code>pressure</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Humidity</S100FC:name>
+			<S100FC:definition>Humidity</S100FC:definition>
+			<S100FC:code>humidity</S100FC:code>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>over zero</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>under zero</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Avg Wave Prd</S100FC:name>
+			<S100FC:definition>Avg Wave Prd</S100FC:definition>
+			<S100FC:code>avgWavePrd</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Max Wpk Prd</S100FC:name>
+			<S100FC:definition>Max Wpk Prd</S100FC:definition>
+			<S100FC:code>maxWpkPrd</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Max Wave Dir</S100FC:name>
+			<S100FC:definition>Max Wave Dir</S100FC:definition>
+			<S100FC:code>maxWaveDir</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Wave Length</S100FC:name>
+			<S100FC:definition>Wave Length</S100FC:definition>
+			<S100FC:code>waveLength</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Avg Wave Dir</S100FC:name>
+			<S100FC:definition>Avg Wave Dir</S100FC:definition>
+			<S100FC:code>avgWaveDir</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Wave Height Inst</S100FC:name>
+			<S100FC:definition>Wave Heigtht Inst</S100FC:definition>
+			<S100FC:code>waveHeightInst</S100FC:code>
+			<S100FC:valueType>Text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Water Salt</S100FC:name>
+			<S100FC:definition>Water Salt</S100FC:definition>
+			<S100FC:code>waterSalt</S100FC:code>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>over zero</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>under zero</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Water Temperature</S100FC:name>
+			<S100FC:definition>Water Temperature</S100FC:definition>
+			<S100FC:code>waterTemperature</S100FC:code>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>over zero</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>under zero</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Wave Height</S100FC:name>
+			<S100FC:definition>Wave Height</S100FC:definition>
+			<S100FC:code>waveHeight</S100FC:code>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>waveHeight 1</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>waveHeight 2</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>waveHeight 3</S100FC:label>
+					<S100FC:definition/>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+	</S100FC:S100_FC_SimpleAttributes>
+	<S100FC:S100_FC_FeatureTypes>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Avg Wave Dir</S100FC:name>
+			<S100FC:definition>Avg Wave Dir</S100FC:definition>
+			<S100FC:code>AvgWaveDir</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="avgWaveDir"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Avg Wave Prd</S100FC:name>
+			<S100FC:definition>Avg Wave Prd</S100FC:definition>
+			<S100FC:code>AvgWavePrd</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="avgWavePrd"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Humidity</S100FC:name>
+			<S100FC:definition>Humidity</S100FC:definition>
+			<S100FC:code>Humidity</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="humidity"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Max Wave Dir</S100FC:name>
+			<S100FC:definition>Max Wave Dir</S100FC:definition>
+			<S100FC:code>MaxWaveDir</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="maxWaveDir"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Max Wpk Prd</S100FC:name>
+			<S100FC:definition>Max Wpk Prd</S100FC:definition>
+			<S100FC:code>MaxWpkPrd</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="maxWpkPrd"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>New Snow Amount 3hr</S100FC:name>
+			<S100FC:definition>New Snow Amount 3hr</S100FC:definition>
+			<S100FC:code>SnowAmount</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="snowAmount"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Rain Amount 3hr</S100FC:name>
+			<S100FC:definition>Rain Amount 3hr</S100FC:definition>
+			<S100FC:code>RainAmount3hr</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="rainAmount3HR"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Rain Probability</S100FC:name>
+			<S100FC:definition>Rain Probability</S100FC:definition>
+			<S100FC:code>RainProbability</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="rainProbability"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Temperature 3hr</S100FC:name>
+			<S100FC:definition>Temperature 3hr</S100FC:definition>
+			<S100FC:code>Temperature3hr</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="temperature3hr"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Water Salt</S100FC:name>
+			<S100FC:definition>Water Salt</S100FC:definition>
+			<S100FC:code>WaterSalt</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="waterSalt"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Water Temperature</S100FC:name>
+			<S100FC:definition>Water Temperature</S100FC:definition>
+			<S100FC:code>WaterTemperature</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="waterTemperature"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Wave Height Inst</S100FC:name>
+			<S100FC:definition>Wave Height Inst</S100FC:definition>
+			<S100FC:code>WaveHeightInst</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="waveHeightInst"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Wave Height</S100FC:name>
+			<S100FC:definition>Wave Height</S100FC:definition>
+			<S100FC:code>WaveHeight</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+					<S100FC:value>3</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="waveHeight"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Wave Length</S100FC:name>
+			<S100FC:definition>Wave Length</S100FC:definition>
+			<S100FC:code>WaveLength</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="waveLength"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Wind Dir Spd</S100FC:name>
+			<S100FC:definition>Wind Dir Spd</S100FC:definition>
+			<S100FC:code>WindDirSpd</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="speed"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="direction"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Visibility</S100FC:name>
+			<S100FC:definition>Visibility</S100FC:definition>
+			<S100FC:code>Visibility</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+					<S100FC:value>3</S100FC:value>
+					<S100FC:value>4</S100FC:value>
+					<S100FC:value>5</S100FC:value>
+					<S100FC:value>6</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="visibility"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Wave Wind Dir Spd</S100FC:name>
+			<S100FC:definition>Wave Wind Dir Spd</S100FC:definition>
+			<S100FC:code>WaveWindDirSpd</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="speed"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="direction"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Ocean Current Dir Spd</S100FC:name>
+			<S100FC:definition>Ocean Current Dir Spd</S100FC:definition>
+			<S100FC:code>OceanCurrentDirSpd</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="speed"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="direction"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+    <S100FC:S100_FC_FeatureType isAbstract="false">
+      <S100FC:name>Pressure</S100FC:name>
+      <S100FC:definition>Pressure</S100FC:definition>
+      <S100FC:code>Pressure</S100FC:code>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="pressure"/>
+      </S100FC:attributeBinding>
+      <S100FC:featureUseType>geographic</S100FC:featureUseType>
+      <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+    </S100FC:S100_FC_FeatureType>
+    <S100FC:S100_FC_FeatureType isAbstract="false">
+      <S100FC:name>Sky Status</S100FC:name>
+      <S100FC:definition>Sky Status</S100FC:definition>
+      <S100FC:code>SkyStatus</S100FC:code>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="skyStatus"/>
+      </S100FC:attributeBinding>
+      <S100FC:featureUseType>geographic</S100FC:featureUseType>
+      <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+    </S100FC:S100_FC_FeatureType>
+	</S100FC:S100_FC_FeatureTypes>
+</S100FC:S100_FC_FeatureCatalogue>

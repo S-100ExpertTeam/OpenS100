@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-127" version="1.0.0">
+  <pixmaps/>
+  <colorProfiles>
+    <colorProfile id="colorProfile.xml">
+      <description>
+        <name>Color Profile</name>
+        <description>Color Profile</description>
+        <language>en</language>
+      </description>
+      <fileName>colorProfile.xml</fileName>
+      <fileType>ColorProfile</fileType>
+      <fileFormat>XML</fileFormat>
+    </colorProfile>
+  </colorProfiles>
+  <symbols>
+    <symbol id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>object which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RSRDEF51">
+      <description>
+        <name>RSRDEF51</name>
+        <description>area in which undefined restrictions exist</description>
+        <language>en</language>
+      </description>
+      <fileName>RSRDEF51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CautionArea">
+      <description>
+        <name>CautionArea</name>
+        <description>CautionArea</description>
+        <language>en</language>
+      </description>
+      <fileName>CautionArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="IspscodeSecurityLevel">
+      <description>
+        <name>IspscodeSecurityLevel</name>
+        <description>IspscodeSecurityLevel</description>
+        <language>en</language>
+      </description>
+      <fileName>IspscodeSecurityLevel.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LocalPortServiceArea">
+      <description>
+        <name>LocalPortServiceArea</name>
+        <description>LocalPortServiceArea</description>
+        <language>en</language>
+      </description>
+      <fileName>LocalPortServiceArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MilitaryPracticeArea">
+      <description>
+        <name>MilitaryPracticeArea</name>
+        <description>MilitaryPracticeArea</description>
+        <language>en</language>
+      </description>
+      <fileName>MilitaryPracticeArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="PilotageDistrict">
+      <description>
+        <name>PilotageDistrict</name>
+        <description>PilotageDistrict</description>
+        <language>en</language>
+      </description>
+      <fileName>PilotageDistrict.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="PilotageService">
+      <description>
+        <name>PilotageService</name>
+        <description>PilotageService</description>
+        <language>en</language>
+      </description>
+      <fileName>PilotageService.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="PilotBoardingPlace">
+      <description>
+        <name>PilotBoardingPlace</name>
+        <description>PilotBoardingPlace</description>
+        <language>en</language>
+      </description>
+      <fileName>PilotBoardingPlace.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="PiracyRiskArea">
+      <description>
+        <name>PiracyRiskArea</name>
+        <description>PiracyRiskArea</description>
+        <language>en</language>
+      </description>
+      <fileName>PiracyRiskArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="PlaceOfRefuge">
+      <description>
+        <name>PlaceOfRefuge</name>
+        <description>PlaceOfRefuge</description>
+        <language>en</language>
+      </description>
+      <fileName>PlaceOfRefuge.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RadarRange">
+      <description>
+        <name>RadarRange</name>
+        <description>RadarRange</description>
+        <language>en</language>
+      </description>
+      <fileName>RadarRange.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RadioCallingInPoint_1">
+      <description>
+        <name>RadioCallingInPoint_1</name>
+        <description>RadioCallingInPoint_1</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioCallingInPoint_1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RadioCallingInPoint_2">
+      <description>
+        <name>RadioCallingInPoint_2</name>
+        <description>RadioCallingInPoint_2</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioCallingInPoint_2.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RadioCallingInPoint_3">
+      <description>
+        <name>RadioCallingInPoint_3</name>
+        <description>RadioCallingInPoint_3</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioCallingInPoint_3.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RestrictedAreaNavigational">
+      <description>
+        <name>RestrictedAreaNavigational</name>
+        <description>RestrictedAreaNavigational</description>
+        <language>en</language>
+      </description>
+      <fileName>RestrictedAreaNavigational.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RestrictedAreaRegulatory">
+      <description>
+        <name>RestrictedAreaRegulatory</name>
+        <description>RestrictedAreaRegulatory</description>
+        <language>en</language>
+      </description>
+      <fileName>RestrictedAreaRegulatory.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RouteingMeasure">
+      <description>
+        <name>RouteingMeasure</name>
+        <description>RouteingMeasure</description>
+        <language>en</language>
+      </description>
+      <fileName>RouteingMeasure.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="ShipReportingServiceArea">
+      <description>
+        <name>ShipReportingServiceArea</name>
+        <description>ShipReportingServiceArea</description>
+        <language>en</language>
+      </description>
+      <fileName>ShipReportingServiceArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SignalStationTraffic">
+      <description>
+        <name>SignalStationTraffic</name>
+        <description>SignalStationTraffic</description>
+        <language>en</language>
+      </description>
+      <fileName>SignalStationTraffic.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SignalStationWarning">
+      <description>
+        <name>SignalStationWarning</name>
+        <description>SignalStationWarning</description>
+        <language>en</language>
+      </description>
+      <fileName>SignalStationWarning.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="UnderKeelClearanceAllowanceArea">
+      <description>
+        <name>UnderKeelClearanceAllowanceArea</name>
+        <description>UnderKeelClearanceAllowanceArea</description>
+        <language>en</language>
+      </description>
+      <fileName>UnderKeelClearanceAllowanceArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="VesselTrafficService">
+      <description>
+        <name>VesselTrafficService</name>
+        <description>VesselTrafficService</description>
+        <language>en</language>
+      </description>
+      <fileName>VesselTrafficService.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="WaterwayArea">
+      <description>
+        <name>WaterwayArea</name>
+        <description>WaterwayArea</description>
+        <language>en</language>
+      </description>
+      <fileName>WaterwayArea.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+  </symbols>
+  <lineStyles>
+    <lineStyle id="IspsCodeSecurityLevel">
+      <description>
+        <name>IspsCodeSecurityLevel</name>
+        <description>IspsCodeSecurityLevel</description>
+        <language>en</language>
+      </description>
+      <fileName>IspsCodeSecurityLevel.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="RadioCallingInPoint_1">
+      <description>
+        <name>RadioCallingInPoint_1</name>
+        <description>RadioCallingInPoint_1</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioCallingInPoint_1.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="RadioCallingInPoint_2">
+      <description>
+        <name>RadioCallingInPoint_2</name>
+        <description>RadioCallingInPoint_2</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioCallingInPoint_2.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="RadioCallingInPoint_3">
+      <description>
+        <name>RadioCallingInPoint_3</name>
+        <description>RadioCallingInPoint_3</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioCallingInPoint_3.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+  </lineStyles>
+  <areaFills/>
+  <fonts/>
+  <viewingGroups>
+    <viewingGroup id="1">
+      <description>
+        <name>26010</name>
+        <description/>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+  </viewingGroups>
+  <foundationMode/>
+  <viewingGroupLayers/>
+  <displayModes/>
+  <displayPlane>
+    <displayPlane id="OVERRADAR">
+      <description>
+        <name>OVERRADAR</name>
+        <description>Content displayed on top of Radar image</description>
+        <language>en</language>
+      </description>
+    </displayPlane>
+  </displayPlane>
+  <context/>
+  <rules>
+    <ruleFile id="main.xsl">
+      <description>
+        <name>main</name>
+        <description>main rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="DataCoverage.xsl">
+      <description>
+        <name>DataCoverage</name>
+        <description>DataCoverage</description>
+        <language>en</language>
+      </description>
+      <fileName>DataCoverage.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="attributeRules.xsl">
+      <description>
+        <name>attributeRules</name>
+        <description>attributeRules</description>
+        <language>en</language>
+      </description>
+      <fileName>attributeRules.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="Default.xsl">
+      <description>
+        <name>Default</name>
+        <description>Default</description>
+        <language>en</language>
+      </description>
+      <fileName>Default.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="QualityOfNonBathymetricData.xsl">
+      <description>
+        <name>QualityOfNonBathymetricData</name>
+        <description>QualityOfNonBathymetricData</description>
+        <language>en</language>
+      </description>
+      <fileName>QualityOfNonBathymetricData.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="CautionArea.xsl">
+      <description>
+        <name>Caution Area</name>
+        <description>Caution Area rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>CautionArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="IspsCodeSecurityLevel.xsl">
+      <description>
+        <name>Isps Code Security Level</name>
+        <description>Isps Code Security Level rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>IspsCodeSecurityLevel.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="LocalPortServiceArea.xsl">
+      <description>
+        <name>Local Port Service Area</name>
+        <description>Local Port Service Area rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>LocalPortServiceArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="MilitaryPracticeArea.xsl">
+      <description>
+        <name>Military Practice Areaa</name>
+        <description>Military Practice Area rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>MilitaryPracticeArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="PilotageDistrict.xsl">
+      <description>
+        <name>Pilotage District</name>
+        <description>Pilotage District rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>PilotageDistrict.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="PilotBoardingPlace.xsl">
+      <description>
+        <name>Pilot Boarding Place</name>
+        <description>Pilot Boarding Place rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>PilotBoardingPlace.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="PilotService.xsl">
+      <description>
+        <name>Pilot Service</name>
+        <description>Pilot Service rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>PilotService.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="PiracyRiskArea.xsl">
+      <description>
+        <name>Piracy Risk Area</name>
+        <description>Piracy Risk Area rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>PiracyRiskArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="PlaceOfRefuge.xsl">
+      <description>
+        <name>Place Of Refuge</name>
+        <description>Place Of Refuge rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>PlaceOfRefuge.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="RadarRange.xsl">
+      <description>
+        <name>Radar Range</name>
+        <description>Radar Range rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>RadarRange.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="RadioCallingInPoint.xsl">
+      <description>
+        <name>Radio Calling In Point</name>
+        <description>Radio Calling In Point rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioCallingInPoint.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="RestrictedAreaNavigational.xsl">
+      <description>
+        <name>Restricted Area Navigational</name>
+        <description>Restricted Area Navigational rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>RestrictedAreaNavigational.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="RestrictedAreaRegulatory.xsl">
+      <description>
+        <name>Restricted Area Regulatory</name>
+        <description>Restricted Area Regulatory rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>RestrictedAreaRegulatory.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="RouteingMeasure.xsl">
+      <description>
+        <name>Routeing Measure</name>
+        <description>Routeing Measure rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>RadioStation.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="ShipReportingServiceArea.xsl">
+      <description>
+        <name>Ship Reporting Service Area</name>
+        <description>Ship Reporting Service Area rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>ShipReportingServiceArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="SignalStationTraffic.xsl">
+      <description>
+        <name>Signal StationTraffic Area</name>
+        <description>Signal StationTraffic rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>SignalStationTraffic.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="SignalStationWarning.xsl">
+      <description>
+        <name>Signal Station Warning</name>
+        <description>Signal Station Warning rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>SignalStationWarning.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="simpleLineStyle.xsl">
+      <description>
+        <name>simpleLineStyle</name>
+        <description>simpleLineStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>simpleLineStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="textStyle.xsl">
+      <description>
+        <name>textStyle</name>
+        <description>textStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>textStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="UnderkeelClearanceAllowanceArea.xsl">
+      <description>
+        <name>Underkeel Clearance Allowance Area</name>
+        <description>Underkeel Clearance Allowance Area</description>
+        <language>en</language>
+      </description>
+      <fileName>UnderkeelClearanceAllowanceArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="VesselTrafficServiceArea.xsl">
+      <description>
+        <name>Vessel Traffic Service Area</name>
+        <description>Vessel Traffic Service Area</description>
+        <language>en</language>
+      </description>
+      <fileName>VesselTrafficServiceArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="WaterwayArea.xsl">
+      <description>
+        <name>Waterway Area</name>
+        <description>Waterway Area</description>
+        <language>en</language>
+      </description>
+      <fileName>WaterwayArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

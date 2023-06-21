@@ -3,6 +3,7 @@
 #include "LayerManager.h"
 #include "D2D1Resources.h"
 #include "S101Creator.h"
+#include "CatalogManager.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 
@@ -26,11 +27,14 @@ public:
 	
 	double s100Scale = -1;
 
+	CatalogManager catalogManager;
+
 private:
 	
 	// Default FC & PC for S-101
-	FeatureCatalogue* fc = nullptr;
-	PortrayalCatalogue* pc = nullptr;
+	//FeatureCatalogue* fc = nullptr;
+	//PortrayalCatalogue* pc = nullptr;
+	
 
 	// S-101 Filter 
 	// Key : FeatureType code
@@ -42,6 +46,8 @@ public:
 	LayerManager* GetLayerManager();
 	void InitLibrary(std::wstring fcPath, std::wstring pcPath);
 	void InitLibrary(FeatureCatalogue* fc, PortrayalCatalogue* pc);
+	void addCatalogue(std::string fcPath, std::string pcPath);
+	void addCatalogue(std::wstring fcPath, std::wstring pcPath);
 
 	bool AddBackgroundLayer(CString _filepath);
 	bool AddLayer(CString _filepath);
@@ -112,11 +118,11 @@ public:
 
 	std::wstring GetColorTable();
 	
-	FeatureCatalogue* GetFC();
-	void SetFC(FeatureCatalogue* fc);
-	
-	PortrayalCatalogue* GetPC();
-	void SetPC(PortrayalCatalogue* pc);
+	//FeatureCatalogue* GetFC();
+	//void SetFC(FeatureCatalogue* fc);
+	//
+	//PortrayalCatalogue* GetPC();
+	//void SetPC(PortrayalCatalogue* pc);
 
 	void SetS100Scale(double value);
 	int GetS100Scale();

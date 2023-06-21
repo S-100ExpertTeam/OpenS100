@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="utf-8"?>
+<S100FC:S100_FC_FeatureCatalogue xmlns:S100FC="http://www.iho.int/S100FC" xmlns:S100Base="http://www.iho.int/S100Base" xmlns:S100CI="http://www.iho.int/S100CI" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:S100FD="http://www.iho.int/S100FD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.iho.int/S100FC S100FC.xsd">
+	<S100FC:name>S-246 eLoran Station Almanac Data Model</S100FC:name>
+	<S100FC:scope>none</S100FC:scope>
+	<S100FC:fieldOfApplication>none</S100FC:fieldOfApplication>
+	<S100FC:versionNumber>1.0.0</S100FC:versionNumber>
+	<S100FC:versionDate>2020-03-22</S100FC:versionDate>
+  <S100FC:productId>S-246</S100FC:productId>
+	<S100FC:producer>
+		<S100CI:organisationName>IALA</S100CI:organisationName>
+		<S100CI:contactInfo>
+			<S100CI:phone>
+				<S100CI:voice>+none</S100CI:voice>
+				<S100CI:facsimile>+none</S100CI:facsimile>
+			</S100CI:phone>
+			<S100CI:address>
+				<S100CI:deliveryPoint>via none</S100CI:deliveryPoint>
+				<S100CI:postalCode>none</S100CI:postalCode>
+				<S100CI:country>none</S100CI:country>
+			</S100CI:address>
+			<S100CI:onlineResource>
+				<S100CI:url>www.iala-aism.org/</S100CI:url>
+			</S100CI:onlineResource>
+		</S100CI:contactInfo>
+		<S100CI:role>pointOfContact</S100CI:role>
+	</S100FC:producer>
+	<S100FC:S100_FC_SimpleAttributes>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Issue Number of Data</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>issueNumberOfData</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Date Start</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>dateStart</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>date</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Number of ASF Maps</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>numberOfASFMaps</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>integer</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>ID Numbers of ASF Maps</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>iDNumbersOfASFMaps</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Emission Delay</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>emissionDelay</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Signal Power</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>signalPower</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>integer</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Norminal ECD</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>norminalECD</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>integer</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>lDC Type</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>idcType</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>none</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>tri-state PPM</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>9th Pulse</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>3</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>10th Pulse</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>4</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Pulse Type</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>pulseType</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>eLoran</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Chyka etc</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Dual Rate Flag</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>dualRateFlag</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>single rate</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>dual rate</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Blanking Priority Flag</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>blankingPriorityFlag</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>priority on this rate</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>priority on dual rate</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>alternate blanking</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>3</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>UTC Synchronisation Mode</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>utcSynchronisationMode</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>SAM control</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>TOE control</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Differential Correction Flag</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>differentialCorrectionFlag</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>relative</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>absolute</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Category of Radio Station</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>categoryOfRadioStation</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>dGNSS Station</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>21</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>dLoran Station</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>22</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>eLoran Station</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>23</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Status</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>status</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>permanent</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>occasional</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>recommended</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>3</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>notinuse</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>4</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>periodic/intermittent</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>5</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>reserved</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>6</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>temporary</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>7</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>private</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>8</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>mandatory</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>9</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>planned</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>10</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>manual observation</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>11</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>unknown status</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>12</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>ID Code</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>idCode</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>integer</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Scale Minimum</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>scaleMinimum</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>integer</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>File Locator</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>fileLocator</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>File Reference</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>fileReference</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Headline</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>headline</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Language</S100FC:name>
+      <S100FC:definition>The method of human communication, either spoken or written, consisting of the use of words in a structured and conventional way.</S100FC:definition>
+      <S100FC:code>language</S100FC:code>
+      <S100FC:remarks>The language is encoded by a 3 character code following ISO 639-2/T.</S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Text</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>text</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Prictorial Representation</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>prictorialRepresentation</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Source Date</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>sourceDate</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>date</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Picture Caption</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>pictureCaption</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Picture Information</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>pictureInformation</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Name</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>name</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Title</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>title</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Version</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>version</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Display Name</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>displayName</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>boolean</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Pictorial Representation</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>pictorialRepresentation</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+	</S100FC:S100_FC_SimpleAttributes>
+
+  <S100FC:S100_FC_ComplexAttributes>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Information</S100FC:name>
+      <S100FC:definition>Textual information about the feature. The information may be provided as a string of text or as a file name of a single external text file that contains the text.</S100FC:definition>
+      <S100FC:code>information</S100FC:code>
+      <S100FC:remarks>At least one of the sub-attributes file reference or text must be populated.The sub-attribute file reference is generally used for long text strings or those that require formatting, however, there is no restriction on the type of text (except for lexical level) that can be held in files referenced by sub-attribute file reference.</S100FC:remarks>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="fileLocator"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="fileReference"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="headline"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="language"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true"/>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="text"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Graphic</S100FC:name>
+      <S100FC:definition>Pictorial information such as a photograph, sketch or other graphic, optionally accompanied by descriptive information about the graphic and the location relative to its subject from which it was made.</S100FC:definition>
+      <S100FC:code>graphic</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="pictorialRepresentation"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="sourceDate"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="pictureCaption"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="pictureInformation"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Name of Issuing Organization</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>nameOfIssuingOrganization</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="language"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="name"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Reference Document</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>referenceDocument</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="title"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="version"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Feature Name</S100FC:name>
+      <S100FC:definition>Provides the name of an entity, defines the national language of the name, and provides the option to display the name at various system display settings.</S100FC:definition>
+      <S100FC:code>featureName</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="displayName"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="language"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="name"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+  </S100FC:S100_FC_ComplexAttributes>
+
+  <S100FC:S100_FC_Roles>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>Reference</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>reference</S100FC:code>
+    </S100FC:S100_FC_Role>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>Referenced By</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>referencedBy</S100FC:code>
+    </S100FC:S100_FC_Role>
+  </S100FC:S100_FC_Roles>
+  
+  <S100FC:S100_FC_InformationAssociations>
+    <S100FC:S100_FC_InformationAssociation isAbstract="false">
+      <S100FC:name>Additional Information</S100FC:name>
+      <S100FC:definition>an information association for the binding between at least one instance of a geo feature and an instance of an information type.</S100FC:definition>
+      <S100FC:code>AdditionalInformation</S100FC:code>
+      <S100FC:role ref="reference"/>
+      <S100FC:role ref="referencedBy"/>
+    </S100FC:S100_FC_InformationAssociation>
+  </S100FC:S100_FC_InformationAssociations>
+
+
+  <S100FC:S100_FC_InformationTypes>
+    <S100FC:S100_FC_InformationType isAbstract="false">
+      <S100FC:name>eLoran Station Almanac</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>ELoranStationAlmanac</S100FC:code>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="issueNumberOfData"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="dateStart"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="numberOfASFMaps"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true"/>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="iDNumbersOfASFMaps"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="emissionDelay"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="signalPower"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="norminalECD"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="idcType"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="pulseType"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="dualRateFlag"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="blankingPriorityFlag"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="utcSynchronisationMode"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="differentialCorrectionFlag"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="referenceDocument"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="nameOfIssuingOrganization"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="graphic"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="information"/>
+      </S100FC:attributeBinding>
+    </S100FC:S100_FC_InformationType>
+  </S100FC:S100_FC_InformationTypes>
+  
+	<S100FC:S100_FC_FeatureTypes>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+      <S100FC:name>Radio station</S100FC:name>
+      <S100FC:definition>A place equipped to transmit radio waves.</S100FC:definition>
+      <S100FC:code>RadioStation</S100FC:code>
+      <S100FC:remarks>Such a station may be either stationary or mobile, and may also be provided with a radio receiver. In British terminology, also called 'w/t station'. The transmission of a radio station may serve to provide mariners with a line of position (IHO Chart Specifications, M-4). The object 'radio station' is used to encode the point of transmission of the signal.</S100FC:remarks>
+      <S100FC:alias>RDOSTA</S100FC:alias>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="idCode"/>
+			</S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>21</S100FC:value>
+          <S100FC:value>22</S100FC:value>
+          <S100FC:value>23</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="categoryOfRadioStation"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+          <S100FC:value>5</S100FC:value>
+          <S100FC:value>6</S100FC:value>
+          <S100FC:value>7</S100FC:value>
+          <S100FC:value>8</S100FC:value>
+          <S100FC:value>9</S100FC:value>
+          <S100FC:value>19</S100FC:value>
+          <S100FC:value>35</S100FC:value>
+          <S100FC:value>36</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="status"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="scaleMinimum"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true" />
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="featureName"/>
+      </S100FC:attributeBinding>
+      <S100FC:informationBinding roleType="association">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:association ref="AdditionalInformation" />
+        <S100FC:role ref="referencedBy" />
+        <S100FC:informationType ref="ELoranStationAlmanac" />
+		 </S100FC:informationBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+	</S100FC:S100_FC_FeatureTypes>
+</S100FC:S100_FC_FeatureCatalogue>

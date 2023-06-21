@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--title>FRONTS CATFRO2 FROLEV2</title>
+  <desc>Fronts: Category of Front Warm: Front level Above surface</desc>-->
+<lineStyle offset="0">
+    <intervalLength>3</intervalLength>
+    <pen width="0.3">
+        <color>sWXRED</color>
+    </pen>  
+    <symbol reference="SMCIRC1">
+        <position>1.5</position>
+    </symbol>
+</lineStyle>

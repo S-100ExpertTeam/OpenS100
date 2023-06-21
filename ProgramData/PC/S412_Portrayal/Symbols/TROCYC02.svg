@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.42mm" height="2.45mm" viewBox="-1.21 -1.21 2.42 2.45">
+  <title>TROCYC02</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2015-11-01" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.21" y="-1.21" height="2.45" width="2.42" />
+  <rect class="svgBox layout" fill="none" x="-1.21" y="-1.21" height="2.45" width="2.42" />
+  <path d=" M -0.66,-0.84 L -0.78,-0.75 L -0.87,-0.6 L -0.96,-0.48 L -1.08,-0.24 L -1.11,0 L -1.08,0.42 L -0.81,0.81 L -0.39,1.08 L 0.12,1.14 L 0.57,0.99 L 0.69,0.87 L 0.78,0.78 L 0.87,0.69 L 0.96,0.54 L 1.05,0.39 L 1.11,0.21 L 1.11,-0.03 L 1.08,-0.33 L 0.99,-0.48 L 0.75,-0.84 L 0.3,-1.08 L -0.15,-1.11 L -0.33,-1.05 L -0.51,-0.96 L -0.33,-0.6 L -0.24,-0.63 L 0.12,-0.69 L 0.45,-0.54 L 0.63,-0.27 L 0.72,0.03 L 0.63,0.36 L 0.33,0.63 L -0.03,0.72 L -0.36,0.6 L -0.66,0.27 L -0.66,-0.15 L -0.48,-0.48 L -0.33,-0.6 L -0.51,-0.96 L -0.6,-0.87 L -0.54,-0.93 L -0.57,-0.9 L -0.57,-0.9 L -0.6,-0.87" class="sl f0 fCHRED" style="stroke-width:0.32" />
+</svg>

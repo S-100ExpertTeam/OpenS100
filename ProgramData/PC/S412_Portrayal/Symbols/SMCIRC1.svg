@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" 
+xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" 
+width="3.00mm" height="2.00mm" viewBox="-1.50 -1.00 3.00 2.00">
+  <!--<title>SMCIRC1</title>
+  <desc>SeMi-CIRCle red: warm front above surface symbol element</desc>-->
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHB/JCOMM" iho:creationDate="2014-10-17" 
+      iho:source="S412Register" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.50" y="-1.00" height="2.00" width="3.00"/>
+  <rect class="svgBox layout" fill="none" x="-1.50" y="-1.00" height="2.00" width="3.00"/> 
+  <path class="sl f0 sWXRED fWXRED" style="stroke-width: 0.3" d="M -1.50,0.85 L -1.50,0.85 1.50,0.85"/>
+  <circle class="sl f0 sWXRED" style="stroke-width: 0.3" fill="none" cx="0" cy="0.85" r="1.00"/>
+  <circle class="pivotPoint layout" style="stroke-width: 0.1" fill="none" cx="0" cy="1.00" r="0.75"/>
+</svg>

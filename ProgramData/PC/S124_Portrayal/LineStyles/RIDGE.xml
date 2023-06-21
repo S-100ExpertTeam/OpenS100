@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<lineStyle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
+<title>RIDGE</title>
+  <desc>Ridge line</desc>
+<lineStyle offset="0">
+    <intervalLength>2</intervalLength>
+    <pen width="0.3">
+        <color>sWXYLW</color>
+    </pen>
+    <symbol reference="RIDGE">
+        <position>1</position>
+    </symbol>
+</lineStyle>

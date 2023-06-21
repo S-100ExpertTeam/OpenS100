@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="ICEDGE01" exposition="boundary of a submarine cable area"?>
+
+<lineStyle>
+  <intervalLength>16</intervalLength>
+  <pen width="0.32">
+    <color>CHRED</color>
+  </pen>
+  <dash>
+    <start>0</start>
+    <length>11</length>
+  </dash>
+  <symbol reference="ICEDGE01">
+    <position>13.5</position>
+  </symbol>
+</lineStyle>

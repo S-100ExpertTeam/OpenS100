@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100ColorProfile.xsd">
+  <colors>
+    <color token="CHBLK" name="black">
+      <description>Chart black</description>
+    </color>
+    <color token="CHMGD" name="magenta">
+      <description>Chart magenta dominant</description>
+    </color>
+    <color token="LANDF" name="brown">
+      <description>Land Feature</description>
+    </color>
+    <color token="UINFB" name="blue">
+      <description>User interface blue</description>
+    </color>
+    <color token="TESTA" name="A">
+      <description>#FFFFFF</description>
+    </color>
+    <color token="TESTB" name="B">
+      <description>#E99C77</description>
+    </color>
+    <color token="TESTC" name="C">
+      <description>#EE6D24</description>
+    </color>
+    <color token="TESTD" name="D">
+      <description>#D64999</description>
+    </color>
+  </colors>
+  <palette name="Day">
+    <item token="CHBLK">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="CHMGD">
+      <cie>
+        <xyL>
+          <x>0.3</x>
+          <y>0.17</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>192</red>
+        <green>69</green>
+        <blue>209</blue>
+      </srgb>
+    </item>
+    <item token="LANDF">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.42</y>
+          <L>15</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>141</red>
+        <green>100</green>
+        <blue>46</blue>
+      </srgb>
+    </item>
+    <item token="UINFB">
+      <cie>
+        <xyL>
+          <x>0.18</x>
+          <y>0.15</y>
+          <L>22</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>46</red>
+        <green>123</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="TESTA">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.33</y>
+          <L>100</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="TESTB">
+      <cie>
+        <xyL>
+          <x>0.43</x>
+          <y>0.37</y>
+          <L>42.43</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>233</red>
+        <green>156</green>
+        <blue>119</blue>
+      </srgb>
+    </item>
+    <item token="TESTC">
+      <cie>
+        <xyL>
+          <x>0.54</x>
+          <y>0.39</y>
+          <L>29.25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>238</red>
+        <green>109</green>
+        <blue>36</blue>
+      </srgb>
+    </item>
+    <item token="TESTD">
+      <cie>
+        <xyL>
+          <x>0.40</x>
+          <y>0.24</y>
+          <L>21.37</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>214</red>
+        <green>73</green>
+        <blue>153</blue>
+      </srgb>
+    </item>
+  </palette>
+  <palette name="Dusk">
+    <item token="CHBLK">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="CHMGD">
+      <cie>
+        <xyL>
+          <x>0.3</x>
+          <y>0.17</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>192</red>
+        <green>69</green>
+        <blue>209</blue>
+      </srgb>
+    </item>
+    <item token="LANDF">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.42</y>
+          <L>15</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>141</red>
+        <green>100</green>
+        <blue>46</blue>
+      </srgb>
+    </item>
+    <item token="UINFB">
+      <cie>
+        <xyL>
+          <x>0.18</x>
+          <y>0.15</y>
+          <L>22</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>46</red>
+        <green>123</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="TESTA">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.33</y>
+          <L>100</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="TESTB">
+      <cie>
+        <xyL>
+          <x>0.43</x>
+          <y>0.37</y>
+          <L>42.43</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>233</red>
+        <green>156</green>
+        <blue>119</blue>
+      </srgb>
+    </item>
+    <item token="TESTC">
+      <cie>
+        <xyL>
+          <x>0.54</x>
+          <y>0.39</y>
+          <L>29.25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>238</red>
+        <green>109</green>
+        <blue>36</blue>
+      </srgb>
+    </item>
+    <item token="TESTD">
+      <cie>
+        <xyL>
+          <x>0.40</x>
+          <y>0.24</y>
+          <L>21.37</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>214</red>
+        <green>73</green>
+        <blue>153</blue>
+      </srgb>
+    </item>
+  </palette>
+  <palette name="Night">
+    <item token="CHBLK">
+      <cie>
+        <xyL>
+          <x>0.28</x>
+          <y>0.31</y>
+          <L>0</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+      </srgb>
+    </item>
+    <item token="CHMGD">
+      <cie>
+        <xyL>
+          <x>0.3</x>
+          <y>0.17</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>192</red>
+        <green>69</green>
+        <blue>209</blue>
+      </srgb>
+    </item>
+    <item token="LANDF">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.42</y>
+          <L>15</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>141</red>
+        <green>100</green>
+        <blue>46</blue>
+      </srgb>
+    </item>
+    <item token="UINFB">
+      <cie>
+        <xyL>
+          <x>0.18</x>
+          <y>0.15</y>
+          <L>22</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>46</red>
+        <green>123</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="TESTA">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.33</y>
+          <L>100</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+      </srgb>
+    </item>
+    <item token="TESTB">
+      <cie>
+        <xyL>
+          <x>0.43</x>
+          <y>0.37</y>
+          <L>42.43</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>233</red>
+        <green>156</green>
+        <blue>119</blue>
+      </srgb>
+    </item>
+    <item token="TESTC">
+      <cie>
+        <xyL>
+          <x>0.54</x>
+          <y>0.39</y>
+          <L>29.25</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>238</red>
+        <green>109</green>
+        <blue>36</blue>
+      </srgb>
+    </item>
+    <item token="TESTD">
+      <cie>
+        <xyL>
+          <x>0.40</x>
+          <y>0.24</y>
+          <L>21.37</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>214</red>
+        <green>73</green>
+        <blue>153</blue>
+      </srgb>
+    </item>
+  </palette>
+</colorProfile>

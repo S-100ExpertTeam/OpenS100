@@ -80,11 +80,13 @@ public:
 	const std::wstring& GetVersionNumber();
 	void SetVersionNumber(std::string value);
 	void SetVersionNumber(std::wstring value);
+	Version getVersion() const;
 
 	const std::wstring& GetVersionDate();
 	void SetVersionDate(std::string value);
 	void SetVersionDate(std::wstring value);
 
+	std::string getProductId() const;
 	const std::wstring& GetProductId();
 	void SetProductId(std::string value);
 	void SetProductId(std::wstring value);

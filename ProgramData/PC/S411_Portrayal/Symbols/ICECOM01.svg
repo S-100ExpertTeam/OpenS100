@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.58mm" height="3.2mm" viewBox="-2.95 -1.52 6.58 3.2">
+  <title>ICECOM01</title>
+  <desc>symbol for Ice Compacting as a point</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2017-08-16" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.95" y="1.68" height="3.2" width="6.58" />
+  <rect class="svgBox layout" fill="none" x="-2.95" y="-1.52" height="3.2" width="6.58" />
+  <path d=" M -2.45,-0.3 L -2.44,0.48 L -0.89,0.47 L -0.82,0.48 L -0.81,1.18 L 0.22,0.11 L -0.77,-1.02 L -0.78,-0.31 L -2.44,-0.28 L -2.45,-0.3" transform="rotate(0)" class="sl f0 fSNDG2" style="stroke-width:0.32;stroke-dasharray:0,0;" />
+  <path d=" M 1.33,-0.95 L 0.49,0.08 L 1.33,1.11 L 1.34,0.49 L 3.13,0.47 L 3.13,-0.27 L 1.32,-0.22 L 1.34,-0.94 L 1.33,-0.95" transform="rotate(0)" class="sl f0 fSNDG2" style="stroke-width:0.32;stroke-dasharray:0,0;" />
+</svg>

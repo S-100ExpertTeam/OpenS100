@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.iho.int/S100SymbolDefinition" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:s100CSL="http://www.iho.int/S100ConceptualSchema" targetNamespace="http://www.iho.int/S100SymbolDefinition">
+	<xs:import namespace="http://www.iho.int/S100ConceptualSchema" schemaLocation="S100CSL.xsd"/>
+
+	<!-- THE GRAPHICS BASE PACKAGE -->
+	<!-- A string with at least 1 character starting with an alpha numerical character used as identifier within this catalogue -->
+	<xs:simpleType name="IdString">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:pattern value="[0-9a-zA-Z]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- A color token (either a string starting with an alpha character followed by alpha numeric characters or a hash and thre hex numbers like #AA44A8) -->
+	<xs:simpleType name="ColorToken">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:pattern value="[a-zA-Z][0-9a-zA-Z]*|#[0-9A-Fa-f]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Enumeration CRSType  -->
+	<xs:simpleType name="Interval01">
+		<xs:restriction base="xs:double">
+			<xs:minInclusive value="0.0"/>
+			<xs:maxInclusive value="1.0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Enumeration CRSType -->
+	<xs:simpleType name="CRSType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="GeographicCRS"/>
+			<xs:enumeration value="PortrayalCRS"/>
+			<xs:enumeration value="LocalCRS"/>
+			<xs:enumeration value="LineCRS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--  Class Point -->
+	<xs:complexType name="Point">
+		<xs:sequence>
+			<xs:element name="x" type="xs:double"/>
+			<xs:element name="y" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--  Class Vector -->
+	<xs:complexType name="Vector">
+		<xs:sequence>
+			<xs:element name="x" type="xs:double"/>
+			<xs:element name="y" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--  Class Sector -->
+	<xs:complexType name="Sector">
+		<xs:sequence>
+			<xs:element name="rotationCRS" type="CRSType" minOccurs="0"/>
+			<xs:element name="startAngle" type="xs:double"/>
+			<xs:element name="angularDistance" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Class Color -->
+	<xs:complexType name="Color">
+		<xs:simpleContent>
+			<xs:extension base="ColorToken">
+				<xs:attribute name="transparency" type="Interval01" default="0.0"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!-- Class OverrideColor -->
+	<xs:complexType name="OverrideColor">
+		<xs:sequence>
+			<xs:element name="override" type="Color"/>
+			<xs:element name="color" type="Color"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Class Pen -->
+	<xs:complexType name="Pen">
+		<xs:sequence>
+			<xs:element name="color" type="Color"/>
+		</xs:sequence>
+		<xs:attribute name="width" type="xs:double" use="required"/>
+	</xs:complexType>
+	<!-- Class Pixmap -->
+	<xs:complexType name="Pixmap">
+		<xs:sequence>
+			<xs:element name="overrideAll" type="Color" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="override" type="OverrideColor" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="reference" type="IdString" use="required"/>
+	</xs:complexType>
+	<!-- Class Polyline -->
+	<xs:complexType name="Polyline">
+		<xs:sequence>
+			<xs:element name="point" type="Point" minOccurs="2" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Class Arc3Points -->
+	<xs:complexType name="Arc3Points">
+		<xs:sequence>
+			<xs:element name="startPoint" type="Point"/>
+			<xs:element name="medianPoint" type="Point"/>
+			<xs:element name="endPoint" type="Point"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Class ArcByRadius -->
+	<xs:complexType name="ArcByRadius">
+		<xs:sequence>
+			<xs:element name="center" type="Point"/>
+			<xs:element name="sector" type="Sector" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="radius" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Class Annulus -->
+	<xs:complexType name="Annulus">
+		<xs:sequence>
+			<xs:element name="center" type="Point"/>
+			<xs:element name="innerRadius" type="xs:double" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="outerRadius" type="xs:double"/>
+			<xs:element name="sector" type="Sector" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- group for segments -->
+	<xs:group name="Segment">
+		<xs:choice>
+			<xs:element name="polyline" type="Polyline"/>
+			<xs:element name="arc3Points" type="Arc3Points"/>
+			<xs:element name="arcByRadius" type="ArcByRadius"/>
+			<xs:element name="annulus" type="Annulus"/>
+		</xs:choice>
+	</xs:group>
+	<!-- Class Path -->
+	<xs:complexType name="Path">
+		<xs:sequence>
+			<xs:group ref="Segment" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- THE SYMBOL PACKAGE -->
+	<!-- Enumeration LinePlacementMode -->
+	<xs:simpleType name="LinePlacementMode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Relative"/>
+			<xs:enumeration value="Absolute"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Enumeration AreaPlacementMode -->
+	<xs:simpleType name="AreaPlacementMode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VisibleParts"/>
+			<xs:enumeration value="Geographic"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Class LineSymbolPlacement -->
+	<xs:complexType name="LineSymbolPlacement">
+		<xs:sequence>
+			<xs:element name="offset" type="xs:double"/>
+		</xs:sequence>
+		<xs:attribute name="placementMode" type="LinePlacementMode" use="required"/>
+	</xs:complexType>
+	<!-- Class AreaSymbolPlacement -->
+	<xs:complexType name="AreaSymbolPlacement">
+		<xs:attribute name="placementMode" type="AreaPlacementMode" default="VisibleParts"/>
+	</xs:complexType>
+	<!-- Class Symbol -->
+	<xs:complexType name="Symbol">
+		<xs:sequence>
+			<xs:element name="offset" type="Vector" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="overrideAll" type="Color" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="override" type="OverrideColor" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="linePlacement" type="LineSymbolPlacement" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="areaPlacement" type="AreaSymbolPlacement" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="reference" type="IdString" use="required"/>
+		<xs:attribute name="rotation" type="xs:double" default="0.0"/>
+		<xs:attribute name="rotationCRS" type="CRSType" default="PortrayalCRS"/>
+		<xs:attribute name="scaleFactor" type="xs:double" default="1.0"/>
+	</xs:complexType>
+	<!-- THE LINE STYLES PACKAGE -->
+	<!-- Enumeration JoinStyle -->
+	<xs:simpleType name="JoinStyle">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Bevel"/>
+			<xs:enumeration value="Miter"/>
+			<xs:enumeration value="Round"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Enumeration JoinStyle -->
+	<xs:simpleType name="CapStyle">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Butt"/>
+			<xs:enumeration value="Square"/>
+			<xs:enumeration value="Round"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Class Dash -->
+	<xs:complexType name="Dash">
+		<xs:sequence>
+			<xs:element name="start" type="xs:double"/>
+			<xs:element name="length" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Class LineSymbol -->
+	<xs:complexType name="LineSymbol">
+		<xs:sequence>
+			<xs:element name="position" type="xs:double"/>
+		</xs:sequence>
+		<xs:attribute name="reference" type="IdString" use="required"/>
+		<xs:attribute name="rotation" type="xs:double" default="0.0"/>
+		<xs:attribute name="scaleFactor" type="xs:double" default="1.0"/>
+		<xs:attribute name="crsType" type="CRSType" default="LocalCRS"/>
+	</xs:complexType>
+	<!-- An abstract base class for linestyle -->
+	<!-- To be used as anchor element of an substitution group -->
+	<xs:complexType name="LineStyleBase" abstract="true"/>
+	<!-- Class LineStyle -->
+	<xs:complexType name="LineStyle">
+		<xs:complexContent>
+			<xs:extension base="LineStyleBase">
+				<xs:sequence>
+					<xs:element name="intervalLength" type="xs:double" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="pen" type="Pen"/>
+					<xs:element name="dash" type="Dash" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="symbol" type="LineSymbol" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+				<xs:attribute name="capStyle" type="CapStyle" default="Butt"/>
+				<xs:attribute name="joinStyle" type="JoinStyle" default="Miter"/>
+				<xs:attribute name="offset" type="xs:double" default="0.0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class LineStyleReference -->
+	<xs:complexType name="LineStyleReference">
+		<xs:complexContent>
+			<xs:extension base="LineStyleBase">
+				<xs:attribute name="reference" type="IdString" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class CompositeLineStyle -->
+	<xs:complexType name="CompositeLineStyle">
+		<xs:complexContent>
+			<xs:extension base="LineStyleBase">
+				<xs:sequence>
+					<xs:group ref="LineStyleGroup" minOccurs="1" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Group LineStyle -->
+	<xs:group name="LineStyleGroup">
+		<xs:choice>
+			<xs:element name="lineStyle" type="LineStyle"/>
+			<xs:element name="lineStyleReference" type="LineStyleReference"/>
+			<xs:element name="compositeLineStyle" type="CompositeLineStyle"/>
+		</xs:choice>
+	</xs:group>
+	<!-- THE AREA FILLS PACKAGE -->
+	<!-- Enumeration AreaCRSType -->
+	<xs:simpleType name="AreaCRSType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Global"/>
+			<xs:enumeration value="LocalGeometry"/>
+			<xs:enumeration value="GlobalGeometry"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- An abstract base class for linestyle -->
+	<!-- To be used as anchor element of an substitution group -->
+	<xs:complexType name="AreaFillBase" abstract="true"/>
+	<!-- Class ColorFill -->
+	<xs:complexType name="ColorFill">
+		<xs:complexContent>
+			<xs:extension base="AreaFillBase">
+				<xs:sequence>
+					<xs:element name="color" type="Color"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class AreaFillReference -->
+	<xs:complexType name="AreaFillReference">
+		<xs:complexContent>
+			<xs:extension base="AreaFillBase">
+				<xs:attribute name="reference" type="IdString" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class PatternFill -->
+	<xs:complexType name="PatternFill" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="AreaFillBase">
+				<xs:sequence>
+					<xs:element name="areaCRS" type="AreaCRSType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class PixmapFill -->
+	<xs:complexType name="PixmapFill">
+		<xs:complexContent>
+			<xs:extension base="PatternFill">
+				<xs:sequence>
+					<xs:element name="pixmap" type="Pixmap"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class SymbolFill -->
+	<xs:complexType name="SymbolFill">
+		<xs:complexContent>
+			<xs:extension base="PatternFill">
+				<xs:sequence>
+					<xs:element name="symbol" type="Symbol"/>
+					<xs:element name="v1" type="Vector"/>
+					<xs:element name="v2" type="Vector"/>
+				</xs:sequence>
+				<xs:attribute name="clipSymbols" type="xs:boolean" default="true"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class Hatch -->
+	<xs:complexType name="Hatch">
+		<xs:sequence>
+			<xs:group ref="LineStyleGroup"/>
+			<xs:element name="direction" type="Vector"/>
+			<xs:element name="distance" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Class HatchFill -->
+	<xs:complexType name="HatchFill">
+		<xs:complexContent>
+			<xs:extension base="PatternFill">
+				<xs:sequence>
+					<xs:element name="hatch" type="Hatch" minOccurs="1" maxOccurs="2"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Group AreaFill -->
+	<xs:group name="AreaFillGroup">
+		<xs:choice>
+			<xs:element name="colorFill" type="ColorFill"/>
+			<xs:element name="areaFillReference" type="AreaFillReference"/>
+			<xs:element name="pixmapFill" type="PixmapFill"/>
+			<xs:element name="symbolFill" type="SymbolFill"/>
+			<xs:element name="hatchFill" type="HatchFill"/>
+		</xs:choice>
+	</xs:group>
+	<!-- THE TEXT PACKAGE -->
+	<!-- Enumeration FontProportion -->
+	<xs:simpleType name="FontProportion">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MonoSpaced"/>
+			<xs:enumeration value="Proportional"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Enumeration FontSlant -->
+	<xs:simpleType name="FontSlant">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Upright"/>
+			<xs:enumeration value="Italics"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Enumeration FontWeight -->
+	<xs:simpleType name="FontWeight">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Light"/>
+			<xs:enumeration value="Medium"/>
+			<xs:enumeration value="Bold"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Enumeration TextFlag -->
+	<xs:simpleType name="TextFlag">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UnderLine"/>
+			<xs:enumeration value="StrikeThrough"/>
+			<xs:enumeration value="UpperLine"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Enumeration HorizontalAlignment -->
+	<xs:simpleType name="HorizontalAlignment">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Start"/>
+			<xs:enumeration value="End"/>
+			<xs:enumeration value="Center"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Enumeration VerticalAlignment -->
+	<xs:simpleType name="VerticalAlignment">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Top"/>
+			<xs:enumeration value="Bottom"/>
+			<xs:enumeration value="Center"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Class Font -->
+	<xs:complexType name="Font" abstract="true">
+		<xs:sequence>
+			<xs:element name="weight" type="FontWeight"/>
+			<xs:element name="slant" type="FontSlant"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Class FontCharaceristics -->
+	<xs:complexType name="FontCharacteristics">
+		<xs:complexContent>
+			<xs:extension base="Font">
+				<xs:sequence>
+					<xs:element name="serifs" type="xs:boolean"/>
+					<xs:element name="proportion" type="FontProportion"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class FontReference -->
+	<xs:complexType name="FontReference">
+		<xs:complexContent>
+			<xs:extension base="Font">
+				<xs:attribute name="reference" type="IdString" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Group Font -->
+	<xs:group name="Font">
+		<xs:choice>
+			<xs:element name="fontCharacteristics" type="FontCharacteristics"/>
+			<xs:element name="fontReference" type="FontReference"/>
+		</xs:choice>
+	</xs:group>
+	<!-- Class TextFlags -->
+	<xs:complexType name="TextFlags">
+		<xs:sequence>
+			<xs:element name="flag" type="TextFlag" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Class TextElement -->
+	<xs:complexType name="TextElement">
+		<xs:sequence>
+			<xs:element name="text" type="xs:string"/>
+			<xs:element name="bodySize" type="xs:double"/>
+			<xs:element name="flags" type="TextFlags" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="foreground" type="Color"/>
+			<xs:element name="background" type="Color" minOccurs="0" maxOccurs="1"/>
+			<xs:group ref="Font"/>
+		</xs:sequence>
+		<xs:attribute name="verticalOffset" type="xs:double" default="0.0"/>
+	</xs:complexType>
+	<!-- Class Text -->
+	<xs:complexType name="Text" abstract="true">
+		<xs:sequence>
+			<xs:element name="element" type="TextElement" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="horizontalAlignment" type="HorizontalAlignment" default="Start"/>
+		<xs:attribute name="verticalAlignment" type="VerticalAlignment" default="Bottom"/>
+	</xs:complexType>
+	<!-- Class TextPoint -->
+	<xs:complexType name="TextPoint">
+		<xs:complexContent>
+			<xs:extension base="Text">
+				<xs:sequence>
+					<xs:element name="offset" type="Vector" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="areaPlacement" type="AreaSymbolPlacement" minOccurs="0" maxOccurs="1"/>
+				</xs:sequence>
+				<xs:attribute name="rotation" type="xs:double" default="0.0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Class TextLine -->
+	<xs:complexType name="TextLine">
+		<xs:complexContent>
+			<xs:extension base="Text">
+				<xs:sequence>
+					<xs:element name="startOffset" type="xs:double"/>
+					<xs:element name="endOffset" type="xs:double" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="placementMode" type="LinePlacementMode"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Group Text -->
+	<xs:group name="Text">
+		<xs:choice>
+			<xs:element name="textPoint" type="TextPoint"/>
+			<xs:element name="textLine" type="TextLine"/>
+		</xs:choice>
+	</xs:group>
+	<!-- Enumeration ChampionChoice -->
+	<xs:simpleType name="ChampionChoice">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Smallest"/>
+			<xs:enumeration value="Largest"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Class CoverageColor -->
+	<xs:complexType name="CoverageColor">
+		<xs:sequence>
+			<xs:element name="startColor" type="Color" />
+			<xs:element name="endColor" type="Color" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="penWidth" type="xs:double" />
+	</xs:complexType>
+		<!-- Class NumericAnnotation -->
+	<xs:complexType name="NumericAnnotation">
+		<xs:sequence>
+			<xs:group ref="Font"/>
+			<xs:element name="color" type="Color" />
+		</xs:sequence>
+		<xs:attribute name="decimals" type="xs:int" default="1"/>
+		<xs:attribute name="bodySize" type="xs:double" use="required"/>
+		<xs:attribute name="buffer" type="xs:double" default="0"/>
+		<xs:attribute name="champion" type="ChampionChoice" default="Smallest"/>
+	</xs:complexType>
+		<!-- Class SymbolAnnotation -->
+	<xs:complexType name="SymbolAnnotation">
+		<xs:sequence>
+			<xs:element name="rotationAttribute" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="rotationFactor" type="xs:double" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="scaleAttribute" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="scaleFactor" type="xs:double" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		<xs:attribute name="reference" type="IdString" use="required"/>
+		<xs:attribute name="defaultRotation" type="xs:double" default="0.0"/>
+		<xs:attribute name="rotationCRS" type="CRSType" default="PortrayalCRS"/>
+		<xs:attribute name="defaultScaleFactor" type="xs:double" default="1.0"/>
+	</xs:complexType>
+		<!-- Class LookupEntry -->
+	<xs:complexType name="LookupEntry">
+		<xs:sequence>
+			<xs:element name="label" type="xs:string"/>
+			<xs:element name="range" type="s100CSL:S100_NumericRange" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="color" type="CoverageColor" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="digits" type="NumericAnnotation" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="symbol" type="SymbolAnnotation" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+		<!-- Class CoverageFill -->
+	<xs:complexType name="CoverageFill">
+		<xs:sequence>
+			<xs:element name="attributeCode" type="xs:string"/>
+			<xs:element name="uom" type="s100CSL:S100_UnitOfMeasure" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="lookup" type="LookupEntry" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

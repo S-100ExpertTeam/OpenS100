@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="TIDINF51" exposition="boundary of an area for which there is tidal information"?>
+<lineStyle>
+   <intervalLength>33.3</intervalLength>
+   <pen width="0.32">
+      <color>CHGRD</color>
+   </pen>
+   <dash>
+      <start>2</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>19.2</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>27.3</start>
+      <length>6</length>
+   </dash>
+   <symbol reference="EMAREGR1">
+      <position>5</position>
+   </symbol>
+   <symbol reference="EMTIDIN1">
+      <position>13.6</position>
+   </symbol>
+   <symbol reference="EMAREGR1">
+      <position>22.2</position>
+   </symbol>
+   <symbol reference="EMAREGR1">
+      <position>29.8</position>
+   </symbol>
+</lineStyle>

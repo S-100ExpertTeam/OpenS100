@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="svgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.0" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.28mm" height="4.38mm" viewBox="-3.14 -2.19 6.28 4.38">
+		<title>GMDSS</title>
+		<desc>GMDSS description.</desc>
+		<metadata>
+			<S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+				<Description publisher="KHOA" creationDate="2020-03-01" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+			</S100SVG>
+		</metadata>
+		<rect class="symbolBox layout" fill="none" x="-3.14" y="-2.19" height="4.38" width="6.28" />
+		<rect class="svgBox layout" fill="none" x="-3.14" y="-2.19" height="4.38" width="6.28" />
+		<path d=" M 0,1.01 L -1.05,-0.04 L 0,-1.08 L 1.04,-0.04 L 0,1.01 Z" class="f00014" />
+		<path d=" M -3.14,1.15 L -3.14,1.15 L -3.14,2.19 L -0.3,2.19 L -0.3,1.15 L -3.14,1.15 Z" class="f00014" />
+		<path d=" M 0.3,-2.19 L 0.3,-2.19 L 0.3,-1.15 L 3.14,-1.15 L 3.14,-2.19 L 0.3,-2.19 Z" class="f00014" />
+		<circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.36" />
+	</svg>

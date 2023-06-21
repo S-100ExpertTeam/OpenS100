@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<S100FC:S100_FC_FeatureCatalogue xmlns:S100FC="http://www.iho.int/S100FC" xmlns:S100Base="http://www.iho.int/S100Base" xmlns:S100CI="http://www.iho.int/S100CI" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:S100FD="http://www.iho.int/S100FD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.iho.int/S100FC S100FC.xsd">
+	<S100FC:name>S-126 Physical Environment</S100FC:name>
+    <S100FC:product>S-126</S100FC:product>
+	<S100FC:scope>Global</S100FC:scope>
+	<S100FC:fieldOfApplication>Maritime</S100FC:fieldOfApplication>
+	<S100FC:versionNumber>0.0.1</S100FC:versionNumber>
+	<S100FC:versionDate>2018-11-06</S100FC:versionDate>
+	<S100FC:productId>S-126</S100FC:productId>
+	<S100FC:classification>unclassified</S100FC:classification>
+	<S100FC:S100_FC_SimpleAttributes>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Status of Tidal stream</S100FC:name>
+			<S100FC:definition>Status of Tidal stream</S100FC:definition>
+			<S100FC:code>statusOfTidalStream</S100FC:code>
+			<S100FC:remarks>Status of Tidal stream</S100FC:remarks>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>danger</S100FC:label>
+					<S100FC:definition>Danger</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>warning</S100FC:label>
+					<S100FC:definition>Warning</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>caution</S100FC:label>
+					<S100FC:definition>Caution</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>notice</S100FC:label>
+					<S100FC:definition>Notice</S100FC:definition>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Type of Eddy</S100FC:name>
+			<S100FC:definition>Type of Eddy</S100FC:definition>
+			<S100FC:code>typeOfEddy</S100FC:code>
+			<S100FC:remarks>Type of Eddy</S100FC:remarks>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>warm</S100FC:label>
+					<S100FC:definition>Warm Eddy</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>cold</S100FC:label>
+					<S100FC:definition>Cold Eddy</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Percentage of Visibility</S100FC:name>
+			<S100FC:definition>Percentage of Visibility</S100FC:definition>
+			<S100FC:code>percentageOfVisibility</S100FC:code>
+			<S100FC:remarks>Percentage of Visibility</S100FC:remarks>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Day of Week</S100FC:name>
+			<S100FC:definition>A list of the days of the week</S100FC:definition>
+			<S100FC:code>dayOfWeek</S100FC:code>
+			<S100FC:valueType></S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>Monday</S100FC:label>
+					<S100FC:definition>Unspecified</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Tuesday</S100FC:label>
+					<S100FC:definition>Unspecified</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Wednesday</S100FC:label>
+					<S100FC:definition>Unspecified</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Thursday</S100FC:label>
+					<S100FC:definition>Unspecified</S100FC:definition>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Friday</S100FC:label>
+					<S100FC:definition>Unspecified</S100FC:definition>
+					<S100FC:code>5</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Saturday</S100FC:label>
+					<S100FC:definition>Unspecified</S100FC:definition>
+					<S100FC:code>6</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Sunday</S100FC:label>
+					<S100FC:definition>Unspecified</S100FC:definition>
+					<S100FC:code>7</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+	</S100FC:S100_FC_SimpleAttributes>
+	<S100FC:S100_FC_Roles>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>Component of</S100FC:name>
+			<S100FC:definition>a pointer to a part in a whole-part relationship.</S100FC:definition>
+			<S100FC:code>componentOf</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>Information provided for</S100FC:name>
+			<S100FC:definition>A pointer to a specific feature(s) for which further information is required.</S100FC:definition>
+			<S100FC:code>informationProvidedFor</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
+			<S100FC:name>Provides information</S100FC:name>
+			<S100FC:definition>A pointer to an object that provides more information about the referencing feature or information type.</S100FC:definition>
+			<S100FC:code>providesInformation</S100FC:code>
+		</S100FC:S100_FC_Role>
+	</S100FC:S100_FC_Roles>
+	<S100FC:S100_FC_FeatureAssociations>
+		<S100FC:S100_FC_FeatureAssociation isAbstract="false">
+			<S100FC:name>Additional information</S100FC:name>
+			<S100FC:definition>an information association for the binding between at least one instance of a geo feature and an instance of an information type.</S100FC:definition>
+			<S100FC:code>additionalInformation</S100FC:code>
+			<S100FC:role ref="informationProvidedFor"/>
+			<S100FC:role ref="providesInformation"/>
+		</S100FC:S100_FC_FeatureAssociation>
+	</S100FC:S100_FC_FeatureAssociations>
+	<S100FC:S100_FC_FeatureTypes>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Caution Tidal Stream</S100FC:name>
+			<S100FC:definition>Caution of tidal stream</S100FC:definition>
+			<S100FC:code>CautionTidalStream</S100FC:code>
+			<S100FC:remarks>Caution of tidal stream</S100FC:remarks>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+					<S100FC:value>3</S100FC:value>
+					<S100FC:value>4</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="statusOfTidalStream"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:featureBinding roleType="association">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:association ref="additionalInformation"/>
+				<S100FC:role ref="componentOf"/>
+				<S100FC:featureType ref="TidalStreamFloodEbb"/>
+			</S100FC:featureBinding>
+			<S100FC:featureBinding roleType="association">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:association ref="additionalInformation"/>
+				<S100FC:role ref="componentOf"/>
+				<S100FC:featureType ref="SurfaceCurrent"/>
+			</S100FC:featureBinding>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Caution Sea Fog</S100FC:name>
+			<S100FC:definition>Caution of sea fog</S100FC:definition>
+			<S100FC:code>CautionSeaFog</S100FC:code>
+			<S100FC:remarks>Caution of sea fog</S100FC:remarks>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="percentageOfVisibility"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:featureBinding roleType="association">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:association ref="additionalInformation"/>
+				<S100FC:role ref="componentOf"/>
+				<S100FC:featureType ref="SurfaceVisibility"/>
+			</S100FC:featureBinding>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Caution Eddy</S100FC:name>
+			<S100FC:definition>Caution of eddy</S100FC:definition>
+			<S100FC:code>CautionEddy</S100FC:code>
+			<S100FC:remarks>Caution of eddy</S100FC:remarks>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="typeOfEddy"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:featureBinding roleType="association">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:association ref="additionalInformation"/>
+				<S100FC:role ref="componentOf"/>
+				<S100FC:featureType ref="SurfaceCurrent"/>
+			</S100FC:featureBinding>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+	</S100FC:S100_FC_FeatureTypes>
+</S100FC:S100_FC_FeatureCatalogue>

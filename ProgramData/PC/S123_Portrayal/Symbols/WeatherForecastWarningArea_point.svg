@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="svgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.0" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="15.57mm" height="7.46mm" viewBox="-7.82 -6.83 15.57 7.46">
+		<title>WeatherForecastWarningArea_point</title>
+		<desc>WeatherForecastWarningArea_point description.</desc>
+		<metadata>
+			<S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+				<Description publisher="KHOA" creationDate="2020-03-01" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+			</S100SVG>
+		</metadata>
+		<rect class="symbolBox layout" fill="none" x="-7.55" y="-6.56" height="6.92" width="15.03" />
+		<rect class="svgBox layout" fill="none" x="-7.55" y="-6.56" height="6.92" width="15.03" />
+		<path d=" M -7.55,-6.56 L -7.55,-6.56 L -7.55,-1.19 L 7.48,-1.19 L 7.48,-6.56 L -7.55,-6.56 Z" class="f00011" />
+		<path d=" M 1.19,-1.19 L 0,0 L -1.19,-1.19 L 1.19,-1.19 Z" class="f00011" />
+		<path d=" M -0.45,-5.28 L -2.02,-5.28 L -2.02,-2.38" class="f0 s00015" style="stroke-width:0.54;" />
+		<path d=" M -2.02,-3.93 L -0.61,-3.93" class="f0 s00015" style="stroke-width:0.54;" />
+		<path d=" M -5.82,-5.26 L -6.13,-5.26 L -5.64,-2.66 L -5.34,-2.66 L -4.71,-5.28 L -4.53,-5.28 L -3.86,-2.66 L -3.57,-2.66 L -3.04,-5.26 L -3.32,-5.26" class="f0 s00015" style="stroke-width:0.54;" />
+		<path d=" M 0.5,-5.26 L 0.18,-5.26 L 0.67,-2.66 L 0.97,-2.66 L 1.6,-5.28 L 1.78,-5.28 L 2.46,-2.66 L 2.74,-2.66 L 3.28,-5.26 L 3,-5.26" class="f0 s00015" style="stroke-width:0.54;" />
+		<path d=" M 4.35,-3.67 L 4.48,-4.1 L 4.78,-5.15 L 4.79,-5.15 L 4.79,-5.54 L 4.51,-5.54 L 3.46,-2.38 L 3.97,-2.38 L 4.24,-3.28 L 4.79,-3.28 L 4.79,-3.67 L 4.35,-3.67 Z" class="f00015" />
+		<path d=" M 5.6,-2.38 L 6.13,-2.38 L 5.08,-5.54 L 4.79,-5.54 L 4.79,-5.15 L 4.8,-5.15 L 5.09,-4.1 L 5.22,-3.67 L 4.79,-3.67 L 4.79,-3.28 L 5.34,-3.28 L 5.6,-2.38 Z" class="f00015" />
+		<circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.36" />
+	</svg>

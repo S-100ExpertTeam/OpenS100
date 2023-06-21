@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.32mm" height="8.18mm" viewBox="-3.18 -7.18 6.32 8.18">
+  <title>ShipReportingServiceArea</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-14" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.18" y="1" height="8.18" width="6.32" />
+  <rect class="svgBox layout" fill="none" x="-3.18" y="-7.18" height="8.18" width="6.32" />
+  <path d=" M -2.18,-6.18 L 0.01,-6.18 L 0.54,-6.18 L 0.85,-5.86 L 1.24,-5.47 L 1.74,-4.97 L 2.14,-4.59 L 2.14,-3.3 L 2.14,-0.41 L -2.12,-0.41 L -2.13,-6.04 L -2.13,-6.18" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M 0.52,-6.17 L 2.14,-4.56 L 0.52,-4.56 L 0.52,-5.77 L 0.52,-6.17" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M -1.42,-3.97 L -1.42,-3.58 L 1.1,-3.58 L 1.11,-3.97 L -1.42,-3.97" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M -1.4,-3.12 L -1.4,-2.73 L 0.08,-2.73 L 0.09,-3.12 L -1.4,-3.12" class="fTESTB" style="stroke-width:0.64;" />
+</svg>

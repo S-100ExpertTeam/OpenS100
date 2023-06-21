@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7mm" height="6.5mm" viewBox="-3.5 -5.5 7 6.5">
+  <title>TORII01</title>
+  <desc>Torii</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2022-03-25" iho:source="SevenCs GmbH" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.3" y="-5.3" height="6.1" width="6.6"/>
+  <rect class="svgBox layout" fill="none" x="-3.3" y="-5.3" height="6.1" width="6.6"/>
+  <circle class="f0 sLANDF" style="stroke-width: 0.32;" cx="0" cy="0" r="0.5"/> 
+  <path d=" M 0.5,0.0 L 3.0,0.0" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>    
+  <path d=" M -3.0,0.0 L -0.5,0.0" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -1.6,-0.3 L -1.6,-4.5" class="sl f0 sLANDF" style="stroke-width: 0.48;"/>
+  <path d=" M 1.6,-0.3 L 1.6,-4.5" class="sl f0 sLANDF" style="stroke-width: 0.48;"/>
+  <path d=" M -2.3,-3.5 L 2.3,-3.5" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -2.9,-4.8 L -1.6,-4.5 L 1.6,-4.5 L 2.9,-4.8" class="sl f0 sLANDF" style="stroke-width: 0.64;"/>
+  <path d=" M -0.4,-4.8 L -0.4,-3.5 L 0.4,-3.5 L 0.4,-4.8 Z" class="fLANDF"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+</svg>

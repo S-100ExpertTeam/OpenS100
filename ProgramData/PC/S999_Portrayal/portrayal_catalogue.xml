@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-999" version="1.0">
+	<pixmaps/>
+	<colorProfiles>
+		<colorProfile id="837">
+			<description>
+				<name>Color Profile</name>
+				<description>Color Profile</description>
+				<language>en</language>
+			</description>
+			<fileName>colorProfile.xml </fileName>
+			<fileType>ColorProfile</fileType>
+			<fileFormat>XML</fileFormat>
+		</colorProfile>
+	</colorProfiles>
+	<symbols>
+		<symbol id="1">
+			<description>
+				<name>NavigatoinalWarningFeaturePart</name>
+				<description>NavigatoinalWarningFeaturePart</description>
+				<language>en</language>
+			</description>
+			<fileName>NavigatoinalWarningFeaturePart.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+    <symbol id="2">
+      <description>
+        <name>NavigatoinalWarningFeaturePart_point</name>
+        <description>NavigatoinalWarningFeaturePart_point</description>
+        <language>en</language>
+      </description>
+      <fileName>NavigatoinalWarningFeaturePart_point.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="3">
+      <description>
+        <name>sample1</name>
+        <description>sample1</description>
+        <language>en</language>
+      </description>
+      <fileName>sample1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="4">
+      <description>
+        <name>sample2</name>
+        <description>sample2</description>
+        <language>en</language>
+      </description>
+      <fileName>sample2.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+		<symbol id="5">
+			<description>
+				<name>QUESMRK1</name>
+				<description>QUESMRK1</description>
+				<language>en</language>
+			</description>
+			<fileName>QUESMRK1.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="6">
+			<description>
+				<name>RSRDEF51</name>
+				<description>RSRDEF51</description>
+				<language>en</language>
+			</description>
+			<fileName>RSRDEF51.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+	</symbols>
+  <lineStyles>
+    <lineStyle id="NavigatoinalWarningFeaturePart">
+      <description>
+        <name>NavigatoinalWarningFeaturePart</name>
+        <description>NavigatoinalWarningFeaturePart</description>
+        <language>en</language>
+      </description>
+      <fileName>NavigatoinalWarningFeaturePart.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+  </lineStyles>
+	<areaFills/>
+	<fonts/>
+	<viewingGroups>
+		<viewingGroup id="1">
+			<description>
+				<name>12210</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+	</viewingGroups>
+	<viewingGroupLayers/>
+	<displayModes>
+	</displayModes>
+	<displayPlane>
+    <displayPlane id="1">
+      <description>
+        <name>overRadar</name>
+        <description>overRadar</description>
+        <language>en</language>
+      </description>
+    </displayPlane>
+		<displayPlane id="2">
+			<description>
+				<name>underRadar</name>
+				<description>Content displayed underneath Radar image</description>
+				<language>en</language>
+			</description>
+		</displayPlane>
+	</displayPlane>
+	<context/>
+	<rules>
+    <ruleFile id="1">
+      <description>
+        <name>main</name>
+        <description>main</description>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="2">
+      <description>
+        <name>S124_NavigationalWarningFeaturePart</name>
+        <description>S124_NavigationalWarningFeaturePart</description>
+      </description>
+      <fileName>S124_NavigationalWarningFeaturePart.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+	</rules>
+</portrayalCatalog>

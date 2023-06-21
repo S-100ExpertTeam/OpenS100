@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-03"?>
+<?S100Meta name="FSHFAC04" exposition="pattern of symbols for an area with fish traps, fish weirs, tunny nets"?><symbolFill>
+  <areaCRS>GlobalGeometry</areaCRS>
+  <symbol reference="FSHFAC04P"/>
+  <v1>
+    <x>32.61</x>
+    <y>0.0</y>
+  </v1>
+  <v2>
+    <x>12.61</x>
+    <y>26.65</y>
+  </v2>
+</symbolFill>

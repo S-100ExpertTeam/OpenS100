@@ -1,0 +1,1150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<S100FC:S100_FC_FeatureCatalogue xmlns:S100FC="http://www.iho.int/S100FC" xmlns:S100Base="http://www.iho.int/S100Base" xmlns:S100CI="http://www.iho.int/S100CI" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:S100FD="http://www.iho.int/S100FD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.iho.int/S100FC S100FC.xsd">
+  <S100FC:name>S-414</S100FC:name>
+  <S100FC:scope>S-414 Marine Observation</S100FC:scope>
+  <S100FC:versionNumber>0.1</S100FC:versionNumber>
+  <S100FC:versionDate>2020-11-01</S100FC:versionDate>
+  <S100FC:producer>
+    <S100CI:role>pointOfContact</S100CI:role>
+    <S100CI:party>
+      <S100CI:CI_Organisation>
+        <S100CI:name>>KHOA</S100CI:name>
+        <S100CI:contactInfo>
+          <S100CI:address>
+            <S100CI:administrativeArea>Busan</S100CI:administrativeArea>
+            <S100CI:country>Korea</S100CI:country>
+            <S100CI:electronicMailAddress>izzykim@korea.kr</S100CI:electronicMailAddress>
+          </S100CI:address>
+          <S100CI:onlineResource>
+            <S100CI:linkage>www.khoa.go.kr</S100CI:linkage>
+          </S100CI:onlineResource>
+        </S100CI:contactInfo>
+      </S100CI:CI_Organisation>
+    </S100CI:party>
+  </S100FC:producer>
+  <S100FC:productId>S-414</S100FC:productId>
+  <S100FC:S100_FC_SimpleAttributes>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Azimuth Degrees</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>azimuthDegrees</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Issue Date Time</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>issueDateTime</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Valid Date Time</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>validDateTime</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Station Identifier</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>stationIdentifier</S100FC:code>
+      <S100FC:valueType>int</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Station Name</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>stationName</S100FC:code>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Observation Source</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>observationSource</S100FC:code>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>floating observation station</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>marine vessel</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>satelite</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>3</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>upper air</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>4</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>land-absed station</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>5</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>tide gauge</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>6</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>other observation source</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>7</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Status</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>status</S100FC:code>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>fully operational</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>29</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>partitail operational</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>30</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>drifting</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>31</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>broken</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>32</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>offline</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>33</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>discontinued</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>34</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>manual observation</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>35</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>unknown status</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>36</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Time Units</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>timeUnits</S100FC:code>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>seconds</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>minutes</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>hours</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>3</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>days</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>4</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Height Length Units</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>heightLengthUnits</S100FC:code>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>mitres</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>feet</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Temperature Parameter</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>temperatureParameter</S100FC:code>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>sea surface temperature</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>air temperature</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>dew-point temperature</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>3</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Distance Unit of Measurement</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>distanceUnitOfMeasurement</S100FC:code>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>kilometres</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>3</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>nautical miles</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>5</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Speed Units</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>speedUnits</S100FC:code>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>metres per second</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>kilometres per hour</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>miles per hour</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>3</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>nautial miles per hour(knots)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>4</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Cardinal Direction</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>cardinalDirection</S100FC:code>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>north(N)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>north-northeast(NNE)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>north-east(NE)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>3</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>east-northeast(ENE)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>4</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>east(E)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>5</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>southeast(SE)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>6</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>east-southeast(ESE)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>7</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>south-southeast(SSE)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>8</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>south(S)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>9</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>south-southwest(SSW)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>10</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>southwest(SW)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>11</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>west-southwest(WSW)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>12</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>west(W)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>13</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>west-northwest(WNW)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>14</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>northwest(NW)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>15</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>north-northwest(NNW)</S100FC:label>
+          <S100FC:definition/>
+          <S100FC:code>16</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Period Value</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>periodValue</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Wave Heigth Value</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>waveHeightValue</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Wave Heigth Value Max</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>waveHeightValueMax</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Humidity</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>humidity</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Icing Rate</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>icingRate</S100FC:code>
+      <S100FC:valueType>int</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Thickness of Ice Accretion</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>thicknessOfIceAccretion</S100FC:code>
+      <S100FC:valueType>int</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Value of Atmospheric Pressure</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>valueOfAtmosphericPressure</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Visibility Range</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>visibilityRange</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Value of Wind Speed</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>valueOfWindSpeed</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Value of Temperature</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>valueOfTemperature</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+  </S100FC:S100_FC_SimpleAttributes>
+  
+  <S100FC:S100_FC_ComplexAttributes>
+
+    <!--directionFrom-->
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Wind Direction</S100FC:name> 
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>windDirection</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="azimuthDegrees"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+          <S100FC:value>5</S100FC:value>
+          <S100FC:value>6</S100FC:value>
+          <S100FC:value>7</S100FC:value>
+          <S100FC:value>8</S100FC:value>
+          <S100FC:value>9</S100FC:value>
+          <S100FC:value>10</S100FC:value>
+          <S100FC:value>11</S100FC:value>
+          <S100FC:value>12</S100FC:value>
+          <S100FC:value>13</S100FC:value>
+          <S100FC:value>14</S100FC:value>
+          <S100FC:value>15</S100FC:value>
+          <S100FC:value>16</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="cardinalDirection"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Primary Swell Wave Direction</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>primarySwellWaveDirection</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="azimuthDegrees"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+          <S100FC:value>5</S100FC:value>
+          <S100FC:value>6</S100FC:value>
+          <S100FC:value>7</S100FC:value>
+          <S100FC:value>8</S100FC:value>
+          <S100FC:value>9</S100FC:value>
+          <S100FC:value>10</S100FC:value>
+          <S100FC:value>11</S100FC:value>
+          <S100FC:value>12</S100FC:value>
+          <S100FC:value>13</S100FC:value>
+          <S100FC:value>14</S100FC:value>
+          <S100FC:value>15</S100FC:value>
+          <S100FC:value>16</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="cardinalDirection"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Secondary Swell Wave Direction</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>secondarySwellWaveDirection</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="azimuthDegrees"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+          <S100FC:value>5</S100FC:value>
+          <S100FC:value>6</S100FC:value>
+          <S100FC:value>7</S100FC:value>
+          <S100FC:value>8</S100FC:value>
+          <S100FC:value>9</S100FC:value>
+          <S100FC:value>10</S100FC:value>
+          <S100FC:value>11</S100FC:value>
+          <S100FC:value>12</S100FC:value>
+          <S100FC:value>13</S100FC:value>
+          <S100FC:value>14</S100FC:value>
+          <S100FC:value>15</S100FC:value>
+          <S100FC:value>16</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="cardinalDirection"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Wind Wave Direction</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>windWaveDirection</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="azimuthDegrees"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+          <S100FC:value>5</S100FC:value>
+          <S100FC:value>6</S100FC:value>
+          <S100FC:value>7</S100FC:value>
+          <S100FC:value>8</S100FC:value>
+          <S100FC:value>9</S100FC:value>
+          <S100FC:value>10</S100FC:value>
+          <S100FC:value>11</S100FC:value>
+          <S100FC:value>12</S100FC:value>
+          <S100FC:value>13</S100FC:value>
+          <S100FC:value>14</S100FC:value>
+          <S100FC:value>15</S100FC:value>
+          <S100FC:value>16</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="cardinalDirection"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <!--period-->
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Wind Average Period</S100FC:name> 
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>windAveragePeriod</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="periodValue"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="timeUnits"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Primary Swell Wave Period</S100FC:name> 
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>primarySwellWavePeriod</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="periodValue"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="timeUnits"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Secondary Swell Wave Period</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>secondarySwellWavePeriod</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="periodValue"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="timeUnits"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Wind Wave Period</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>windWavePeriod</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="periodValue"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="timeUnits"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <!--Air Velocity-->
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Gust Velocity</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>gustVelocity</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="windDirection"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="windSpeed"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Wind Velocity</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>windVelocity</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="windDirection"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="windSpeed"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Wind Speed</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>windSpeed</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="speedUnits"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="valueOfWindSpeed"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="windAveragePeriod"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Horizontal Visibility Range</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>horizontalVisibilityRange</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>5</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="distanceUnitOfMeasurement"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="visibilityRange"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+    <!--waveHeight-->
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Primary Swell Wave Height</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>primarySwellWaveHeight</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="heightLengthUnits"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="waveHeightValue"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="waveHeightValueMax"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Secondary Swell Wave Height</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>secondarySwellWaveHeight</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="heightLengthUnits"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="waveHeightValue"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="waveHeightValueMax"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Significant Wave Height</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>significantWaveHeight</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="heightLengthUnits"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="waveHeightValue"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="waveHeightValueMax"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Wind Wave Height</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>windWaveHeight</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="heightLengthUnits"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="waveHeightValue"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="waveHeightValueMax"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+
+
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Temperature</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>temperature</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="temperatureParameter"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="valueOfTemperature"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Meteorological Observation</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>meteorologicalObservation</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="gustVelocity"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="horizontalVisibilityRange"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="humidity"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="icingRate"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="temperature"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="thicknessOfIceAccretion"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="valueOfAtmosphericPressure"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="windVelocity"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Oceanographic Observation</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>oceanographicObservation</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="primarySwellWaveDirection"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="primarySwellWaveHeight"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="primarySwellWavePeriod"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="secondarySwellWaveDirection"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="secondarySwellWaveHeight"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="secondarySwellWavePeriod"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="significantWaveHeight"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="temperature"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="windWaveDirection"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="windWaveHeight"/>
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="windWavePeriod"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    
+
+  </S100FC:S100_FC_ComplexAttributes>
+  <S100FC:S100_FC_Roles>
+  </S100FC:S100_FC_Roles>
+  <S100FC:S100_FC_InformationAssociations>
+  </S100FC:S100_FC_InformationAssociations>
+  <S100FC:S100_FC_FeatureAssociations>
+  </S100FC:S100_FC_FeatureAssociations>
+  <S100FC:S100_FC_InformationTypes>
+  </S100FC:S100_FC_InformationTypes>
+  <S100FC:S100_FC_FeatureTypes>
+    <S100FC:S100_FC_FeatureType isAbstract="false">
+      <S100FC:name>Marine Observation</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>MarineObservation</S100FC:code>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="issueDateTime"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="meteorologicalObservation"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+          <S100FC:value>4</S100FC:value>
+          <S100FC:value>5</S100FC:value>
+          <S100FC:value>6</S100FC:value>
+          <S100FC:value>7</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="observationSource"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="stationIdentifier"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="stationName"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="status"/>
+        <S100FC:permittedValues>
+          <S100FC:value>29</S100FC:value>
+          <S100FC:value>30</S100FC:value>
+          <S100FC:value>31</S100FC:value>
+          <S100FC:value>32</S100FC:value>
+          <S100FC:value>33</S100FC:value>
+          <S100FC:value>34</S100FC:value>
+          <S100FC:value>35</S100FC:value>
+          <S100FC:value>36</S100FC:value>
+        </S100FC:permittedValues>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="validDateTime"/>
+      </S100FC:attributeBinding>
+      <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+    </S100FC:S100_FC_FeatureType>
+  </S100FC:S100_FC_FeatureTypes>
+</S100FC:S100_FC_FeatureCatalogue>

@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="S100ColorProfile.xsd">
+    <colors>
+        <color token="CHBLK" name="black">
+            <description>Chart black</description>
+        </color>
+      <color token="SCBN1" name="purple">
+        <description>S111 Step 1 color</description>
+      </color>
+      <color token="SCBN2" name="dark blue">
+        <description>S111 Step 2 color</description>
+      </color>
+      <color token="SCBN3" name="light blue">
+        <description>S111 Step 3 color</description>
+      </color>
+      <color token="SCBN4" name="dark green">
+        <description>S111 Step 4 color</description>
+      </color>
+      <color token="SCBN5" name="light green">
+        <description>S111 Step 5 color</description>
+      </color>
+      <color token="SCBN6" name="yellow-green">
+        <description>S111 Step 6 color</description>
+      </color>
+      <color token="SCBN7" name="orange">
+        <description>S111 Step 7 color</description>
+      </color>
+      <color token="SCBN8" name="pink">
+        <description>S111 Step 8 color</description>
+      </color>
+      <color token="SCBN9" name="red">
+        <description>S111 Step 9 color</description>
+      </color>
+    </colors>
+    
+    <palette name="Day" css="SVGStyle_S111day.css">
+        <item token="CHBLK">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>0</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+            </srgb>       
+        </item>
+      <item token="SCBN1">
+        <cie>
+          <xyL>
+            <x>0.21</x>
+            <y>0.14</y>
+            <L>15</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>118</red>
+          <green>82</green>
+          <blue>226</blue>
+        </srgb>
+      </item>
+      <item token="SCBN2">
+        <cie>
+          <xyL>
+            <x>0.21</x>
+            <y>0.24</y>
+            <L>29</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>72</red>
+          <green>152</green>
+          <blue>211</blue>
+        </srgb>
+      </item>
+      <item token="SCBN3">
+        <cie>
+          <xyL>
+            <x>0.23</x>
+            <y>0.29</y>
+            <L>51</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>97</red>
+          <green>203</green>
+          <blue>229</blue>
+        </srgb>
+      </item>
+      <item token="SCBN4">
+        <cie>
+          <xyL>
+            <x>0.33</x>
+            <y>0.52</y>
+            <L>40</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>109</red>
+          <green>188</green>
+          <blue>69</blue>
+        </srgb>
+      </item>
+      <item token="SCBN5">
+        <cie>
+          <xyL>
+            <x>0.39</x>
+            <y>0.53</y>
+            <L>61</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>180</red>
+          <green>220</green>
+          <blue>0</blue>
+        </srgb>
+      </item>
+      <item token="SCBN6">
+        <cie>
+          <xyL>
+            <x>0.43</x>
+            <y>0.50</y>
+            <L>51</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>205</red>
+          <green>193</green>
+          <blue>0</blue>
+        </srgb>
+      </item>
+      <item token="SCBN7">
+        <cie>
+          <xyL>
+            <x>0.49</x>
+            <y>0.45</y>
+            <L>48</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>248</red>
+          <green>167</green>
+          <blue>24</blue>
+        </srgb>
+      </item>
+      <item token="SCBN8">
+        <cie>
+          <xyL>
+            <x>0.40</x>
+            <y>0.33</y>
+            <L>48</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>247</red>
+          <green>162</green>
+          <blue>157</blue>
+        </srgb>
+      </item>
+      <item token="SCBN9">
+        <cie>
+          <xyL>
+            <x>0.64</x>
+            <y>0.33</y>
+            <L>21</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>255</red>
+          <green>30</green>
+          <blue>30</blue>
+        </srgb>
+      </item>
+    </palette>
+    <palette name="Dusk" css="SVGStyle_S111dusk.css">
+        
+        
+        <item token="CHBLK">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>20</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>107</red>
+                <green>127</green>
+                <blue>137</blue>
+            </srgb>       
+        </item>
+
+
+      <item token="SCBN1">
+          <cie>
+              <xyL>
+                  <x>0.21</x>
+                  <y>0.14</y>
+                  <L>7</L>
+              </xyL>
+          </cie>
+        <srgb>
+          <red>81</red>
+          <green>55</green>
+          <blue>159</blue>
+        </srgb>
+      </item>
+      <item token="SCBN2">
+          <cie>
+              <xyL>
+                  <x>0.21</x>
+                  <y>0.24</y>
+                  <L>3</L>
+              </xyL>
+          </cie>
+        <srgb>
+          <red>20</red>
+          <green>52</green>
+          <blue>76</blue>
+        </srgb>
+      </item>
+      <item token="SCBN3">
+          <cie>
+              <xyL>
+                  <x>0.23</x>
+                  <y>0.29</y>
+                  <L>3</L>
+              </xyL>
+          </cie>
+        <srgb>
+          <red>19</red>
+          <green>51</green>
+          <blue>58</blue>
+        </srgb>
+      </item>
+      <item token="SCBN4">
+          <cie>
+              <xyL>
+                  <x>0.33</x>
+                  <y>0.52</y>
+                  <L>13</L>
+              </xyL>
+          </cie>
+        <srgb>
+          <red>64</red>
+          <green>114</green>
+          <blue>39</blue>
+        </srgb>
+      </item>
+      <item token="SCBN5">
+          <cie>
+              <xyL>
+                  <x>0.39</x>
+                  <y>0.53</y>
+                  <L>21</L>
+              </xyL>
+          </cie>
+        <srgb>
+          <red>110</red>
+          <green>136</green>
+          <blue>0</blue>
+        </srgb>
+      </item>
+      <item token="SCBN6">
+          <cie>
+              <xyL>
+                  <x>0.43</x>
+                  <y>0.50</y>
+                  <L>18</L>
+              </xyL>
+          </cie>
+        <srgb>
+          <red>126</red>
+          <green>119</green>
+          <blue>0</blue>
+        </srgb>
+      </item>
+      <item token="SCBN7">
+          <cie>
+              <xyL>
+                  <x>0.49</x>
+                  <y>0.45</y>
+                  <L>15</L>
+              </xyL>
+          </cie>
+        <srgb>
+          <red>147</red>
+          <green>97</green>
+          <blue>1</blue>
+        </srgb>
+      </item>
+      <item token="SCBN8">
+          <cie>
+              <xyL>
+                  <x>0.40</x>
+                  <y>0.33</y>
+                  <L>5</L>
+              </xyL>
+          </cie>
+        <srgb>
+          <red>86</red>
+          <green>53</green>
+          <blue>51</blue>
+        </srgb>
+      </item>
+      <item token="SCBN9">
+          <cie>
+              <xyL>
+                  <x>0.64</x>
+                  <y>0.33</y>
+                  <L>9</L>
+              </xyL>
+          </cie>
+        <srgb>
+          <red>178</red>
+          <green>1</green>
+          <blue>1</blue>
+        </srgb>
+      </item>
+    </palette>
+
+<palette name="Night" css="SVGStyle_S111night.css">
+        
+        
+        <item token="CHBLK">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>2.5</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>37</red>
+                <green>45</green>
+                <blue>49</blue>
+            </srgb>       
+        </item>
+
+
+      <item token="SCBN1">
+        <cie>
+          <xyL>
+            <x>0.21</x>
+            <y>0.14</y>
+            <L>1</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>26</red>
+          <green>15</green>
+          <blue>59</blue>
+        </srgb>
+      </item>
+      <item token="SCBN2">
+        <cie>
+          <xyL>
+              <x>0.21</x>
+              <y>0.24</y>
+            <L>1</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>4</red>
+          <green>17</green>
+          <blue>28</blue>
+        </srgb>
+      </item>
+      <item token="SCBN3">
+        <cie>
+          <xyL>
+              <x>0.23</x>
+              <y>0.29</y>
+            <L>0</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>3</red>
+          <green>14</green>
+          <blue>17</blue>
+        </srgb>
+      </item>
+      <item token="SCBN4">
+        <cie>
+          <xyL>
+              <x>0.33</x>
+              <y>0.52</y>
+            <L>2</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>19</red>
+          <green>40</green>
+          <blue>8</blue>
+        </srgb>
+      </item>
+      <item token="SCBN5">
+        <cie>
+          <xyL>
+              <x>0.39</x>
+              <y>0.53</y>
+            <L>3</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>38</red>
+          <green>49</green>
+          <blue>0</blue>
+        </srgb>
+      </item>
+      <item token="SCBN6">
+        <cie>
+          <xyL>
+              <x>0.43</x>
+              <y>0.50</y>
+            <L>2</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>45</red>
+          <green>42</green>
+          <blue>0</blue>
+        </srgb>
+      </item>
+      <item token="SCBN7">
+        <cie>
+          <xyL>
+              <x>0.49</x>
+              <y>0.45</y>
+            <L>2</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>54</red>
+          <green>33</green>
+          <blue>0</blue>
+        </srgb>
+      </item>
+      <item token="SCBN8">
+        <cie>
+          <xyL>
+              <x>0.40</x>
+              <y>0.33</y>
+            <L>1</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>33</red>
+          <green>17</green>
+          <blue>17</blue>
+        </srgb>
+      </item>
+      <item token="SCBN9">
+        <cie>
+          <xyL>
+              <x>0.64</x>
+              <y>0.33</y>
+            <L>1</L>
+          </xyL>
+        </cie>
+        <srgb>
+          <red>63</red>
+          <green>0</green>
+          <blue>0</blue>
+        </srgb>
+      </item>
+    </palette>
+</colorProfile>

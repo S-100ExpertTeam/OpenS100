@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="11.9mm" height="9.08mm" viewBox="-5.72 -4.39 11.9 9.08">
+  <title>CLOUDY01</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-25" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.72" y="4.69" height="9.08" width="11.9" />
+  <rect class="svgBox layout" fill="none" x="-5.72" y="-4.39" height="9.08" width="11.9" />
+  <path d=" M -2.86,0.97 L -2.32,0.43 L -1.66,0.03 L -0.78,-0.29 L 0.06,-0.31 L 0.74,-0.07 L 1.56,0.49 L 1.94,1.25 L 2.06,1.81 L 2.68,1.83 L 3.18,2.17 L 3.5,2.67 L 3.54,3.21 L 3.16,3.71 L 2.76,3.99 L 2.2,4.19 L -3.64,4.17 L -4.3,3.93 L -4.72,3.63 L -4.98,3.21 L -5.22,2.79 L -5.16,2.23 L -4.8,1.71 L -3.92,1.05 L -3.5,0.97 L -2.86,0.99 L -2.86,0.97" class="fSNDG1" style="stroke-width:0.32;" />
+  <path d=" M -0.72,-2.61 L -0.18,-3.15 L 0.48,-3.55 L 1.36,-3.87 L 2.2,-3.89 L 2.88,-3.65 L 3.7,-3.09 L 4.08,-2.33 L 4.2,-1.77 L 4.82,-1.75 L 5.32,-1.41 L 5.64,-0.91 L 5.68,-0.37 L 5.3,0.13 L 4.9,0.41 L 4.34,0.61 L -1.5,0.59 L -2.16,0.35 L -2.58,0.05 L -2.84,-0.37 L -3.08,-0.79 L -3.02,-1.35 L -2.66,-1.87 L -1.78,-2.53 L -1.36,-2.61 L -0.72,-2.59 L -0.72,-2.61" class="fSNDG1" style="stroke-width:0.32;" />
+</svg>

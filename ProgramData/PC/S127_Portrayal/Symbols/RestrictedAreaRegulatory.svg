@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.639999mm" height="8.639999mm" viewBox="-4.35 -5.04 8.639999 8.639999">
+  <title>RestrictedAreaRegulatory_b</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-14" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.35" y="3.599999" height="8.639999" width="8.639999" />
+  <rect class="svgBox layout" fill="none" x="-4.35" y="-5.04" height="8.639999" width="8.639999" />
+  <path d=" M -0.04,-0.72 L -0.03,1.28" class="sl f0 sTESTE" style="stroke-width:0.64;" />
+  <circle cx="-0.03" cy="-0.72" r="3.32" class="sl f0 sTESTE" style="stroke-width:0.64" />
+  <path d=" M -2.33,1.67 L 2.24,-3.13" class="sl f0 sTESTE" style="stroke-width:0.64;" />
+  <path d=" M -1.87,-0.31 L -0.04,-0.71 L 1.82,-0.31 L 1.41,1.25 L -1.45,1.25 L -1.87,-0.31 L -1.87,-0.31 L -0.45,-0.62" class="sl f0 sTESTE" style="stroke-width:0.64;" />
+  <path d=" M -1.31,-0.41 L -1.31,-1.76 L 1.31,-1.77 L 1.31,-0.47" class="sl f0 sTESTE" style="stroke-width:0.64;" />
+  <path d=" M -0.95,-1.8 L -0.95,-2.44 L 0.91,-2.44 L 0.91,-1.84" class="sl f0 sTESTE" style="stroke-width:0.64;" />
+</svg>

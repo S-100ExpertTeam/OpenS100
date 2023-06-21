@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.5mm" height="8.5mm" viewBox="-4.25 -4.25 8.5 8.5">
+  <title>HELIPD02</title>
+  <desc>Symbol for helipad as a point</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-11-29" iho:source="https://github.com/S-101-Portrayal-subWG/Working-Documents/issues/107#issuecomment-1328159330" iho:format="S100SVG" iho:version="1.0"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.25" y="-4.25" height="8.5" width="8.5"/>
+  <rect class="svgBox layout" fill="none" x="-4.25" y="-4.25" height="8.5" width="8.5"/>
+  <circle cx="0" cy="0" r="3.98" class="sl f0 sLANDF" style="stroke-width:0.32" />
+  <path d=" M -1.4,-2.2 L -1.4,2.2" class="f0 sLANDF" style="stroke-width:0.64;" />
+  <path d=" M 1.4,-2.2 L 1.4,2.2" class="f0 sLANDF" style="stroke-width:0.64;" />
+  <path d=" M -1.3,0 L 1.3,0" class="f0 sLANDF" style="stroke-width:0.64;" />
+   <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+</svg>

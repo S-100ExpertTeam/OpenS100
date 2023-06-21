@@ -179,17 +179,21 @@ int LayerManager::AddLayer(CString _filepath)
 	else if (fileType == S100_FileType::FILE_S_100_VECTOR ||
 		fileType == S100_FileType::FILE_S_100_GRID_H5)
 	{
-		FeatureCatalogue* fc = nullptr;
-		PortrayalCatalogue* pc = nullptr;
+		auto productNumber = pathToProductNumber(_filepath);
+		auto fc = gisLib->catalogManager.getFC(productNumber);
+		auto pc = gisLib->catalogManager.getPC(productNumber);
 
-		fc = gisLib->GetFC();
-		pc = gisLib->GetPC();
-
-		layer = new S100Layer(fc, pc);
-		if ((S100Layer*)layer->Open(_filepath) == false)
+		if (fc && pc)
 		{
-			delete layer;
-			return -1;
+			//FeatureCatalogue* fc = nullptr;
+			//PortrayalCatalogue* pc = nullptr;
+
+			layer = new S100Layer(fc, pc);
+			if ((S100Layer*)layer->Open(_filepath) == false)
+			{
+				delete layer;
+				return -1;
+			}
 		}
 	}
 
@@ -1070,15 +1074,7 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 		}
 	}
 
-	auto pc = gisLib->GetPC();
-	if (pc)
-	{
-		pc->SetCurrentPaletteName(paletteName);
-		pc->DeletePatternImage();
-		pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-		pc->DeleteLineImages();
-		pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-	}
+	gisLib->catalogManager.ChangeColorPallete(paletteName, gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
 }
 
 Scaler* LayerManager::GetScaler()
@@ -1379,4 +1375,22 @@ int LayerManager::CreateLayerID()
 	}
 
 	return 1;
+}
+
+int LayerManager::pathToProductNumber(CString path)
+{
+	auto name = LibMFCUtil::GetFileName(path);
+	if (name.GetLength() >= 3)
+	{
+		std::wstring strProductNumber = name.Left(3);
+
+		try {
+			return std::stoi(strProductNumber);
+		}
+		catch (const std::exception& e) {
+
+		}
+	}
+
+	return 0;
 }

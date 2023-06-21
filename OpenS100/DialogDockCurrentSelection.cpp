@@ -231,7 +231,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialO
 		m_ListCurrentSelection.DeleteAllItems();
 	}
 	
-	auto fc = theApp.gisLib->GetFC();
+	auto fc = theApp.gisLib->catalogManager.getFC("S-101");
 	
 	if (nullptr == fc)
 	{

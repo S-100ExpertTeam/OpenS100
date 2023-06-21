@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pcbinfo name="S-130" fieldOfApplication="Marine Navigation" scope="Ocean, Coastal, Ports and Harbors. Excludes Inland waters. Supports QualityOfBathymetricData and 2015 updates to FC model." versionDate="2018-04-05" user="Edward Kuwalek" organization="International Hydrographic Organization"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-130" version="1.9">
+	<pixmaps/>
+	<colorProfiles>
+		<colorProfile id="6">
+			<description>
+				<name>S101SampleColorProfile</name>
+				<description>S-101 sample color profile</description>
+				<language>en</language>
+			</description>
+			<fileName>colorProfile.xml</fileName>
+			<fileType>ColorProfile</fileType>
+			<fileFormat>XML</fileFormat>
+		</colorProfile>
+	</colorProfiles>
+	<symbols>
+    <symbol id="EMADMAR2">
+      <description>
+        <name>EMADMAR2</name>
+        <description>Embedded symbol for Admin area boundary</description>
+        <language>en</language>
+      </description>
+      <fileName>EMADMAR2.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+	</symbols>
+  <lineStyles>
+    <lineStyle id="ADMARE01">
+      <description>
+        <name>ADMARE01</name>
+        <description>jurisdiction boundary</description>
+        <language>en</language>
+      </description>
+      <fileName>ADMARE01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+  </lineStyles>
+	<areaFills/>
+	<fonts/>
+	<viewingGroups>
+		<viewingGroup id="2">
+			<description>
+				<name>26220</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="3">
+			<description>
+				<name>36050</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="4">
+			<description>
+				<name>32240</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="5">
+			<description>
+				<name>22220</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="6">
+			<description>
+				<name>26260</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="7">
+			<description>
+				<name>27020</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="8">
+			<description>
+				<name>32440</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="9">
+			<description>
+				<name>27010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="10">
+			<description>
+				<name>12210</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="11">
+			<description>
+				<name>22240</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="12">
+			<description>
+				<name>32220</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="13">
+			<description>
+				<name>12420</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="14">
+			<description>
+				<name>22010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="15">
+			<description>
+				<name>34030</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="16">
+			<description>
+				<name>34070</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="17">
+			<description>
+				<name>24010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="18">
+			<description>
+				<name>38030</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="19">
+			<description>
+				<name>32410</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="20">
+			<description>
+				<name>12410</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="21">
+			<description>
+				<name>36010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="22">
+			<description>
+				<name>26150</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="23">
+			<description>
+				<name>26050</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="24">
+			<description>
+				<name>32250</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="25">
+			<description>
+				<name>26250</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="26">
+			<description>
+				<name>33060</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="27">
+			<description>
+				<name>36020</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="28">
+			<description>
+				<name>27025</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="29">
+			<description>
+				<name>13030</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="31">
+			<description>
+				<name>27030</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="32">
+			<description>
+				<name>26240</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="33">
+			<description>
+				<name>25010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="34">
+			<description>
+				<name>22210</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="35">
+			<description>
+				<name>25030</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="36">
+			<description>
+				<name>27080</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="37">
+			<description>
+				<name>26210</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="38">
+			<description>
+				<name>36040</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="41">
+			<description>
+				<name>27011</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="42">
+			<description>
+				<name>12010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="43">
+			<description>
+				<name>32010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="44">
+			<description>
+				<name>21060</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="45">
+			<description>
+				<name>31080</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="46">
+			<description>
+				<name>34050</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="47">
+			<description>
+				<name>26040</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="48">
+			<description>
+				<name>14010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="49">
+			<description>
+				<name>31010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="52">
+			<description>
+				<name>27040</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="53">
+			<description>
+				<name>34051</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="54">
+			<description>
+				<name>28010</name>
+				<description/>
+				<language>en</language>
+			</description>
+			</viewingGroup>
+		<viewingGroup id="55">
+			<description>
+				<name>32270</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="56">
+			<description>
+				<name>25040</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="57">
+			<description>
+				<name>27230</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="58">
+			<description>
+				<name>38010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="59">
+			<description>
+				<name>32050</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="60">
+			<description>
+				<name>25020</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="61">
+			<description>
+				<name>25060</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="62">
+			<description>
+				<name>26010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="63">
+			<description>
+				<name>27210</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="64">
+			<description>
+				<name>34010</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="65">
+			<description>
+				<name>28020</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="66">
+			<description>
+				<name>38210</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="68">
+			<description>
+				<name>34020</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="69">
+			<description>
+				<name>23030</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="70">
+			<description>
+				<name>32070</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="72">
+			<description>
+				<name>11050</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="73">
+			<description>
+				<name>32030</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		<viewingGroup id="74">
+			<description>
+				<name>33040</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+		</viewingGroups>
+	<foundationMode/>
+		<viewingGroupLayers/>
+	<displayModes>
+	</displayModes>
+  <displayPlane>
+  </displayPlane>
+  <context/>
+  <rules>
+    <ruleFile id="1">
+      <description>
+        <name>SeaAreaNamedWaterArea</name>
+        <description>SeaAreaNamedWaterArea</description>
+        <language>en</language>
+      </description>
+      <fileName>SeaAreaNamedWaterArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="2">
+      <description>
+        <name>DemarcationPoint</name>
+        <description>DemarcationPoint</description>
+        <language>en</language>
+      </description>
+      <fileName>DemarcationPoint.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="3">
+      <description>
+        <name>textStyle</name>
+        <description>textStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>textStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="4">
+      <description>
+        <name>attributeRules</name>
+        <description>attributeRules</description>
+        <language>en</language>
+      </description>
+      <fileName>attributeRules.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="5">
+      <description>
+        <name>default</name>
+        <description>default</description>
+        <language>en</language>
+      </description>
+      <fileName>default.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="6">
+      <description>
+        <name>simpleLineStyle</name>
+        <description>simpleLineStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>simpleLineStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="7">
+      <description>
+        <name>main</name>
+        <description>main</description>
+        <language>en</language>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

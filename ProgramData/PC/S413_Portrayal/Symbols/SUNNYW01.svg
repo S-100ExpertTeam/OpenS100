@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.55mm" height="10.65mm" viewBox="-5.27 -5.35 10.55 10.65">
+  <title>SUNNYW01</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-25" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.27" y="5.3" height="10.65" width="10.55" />
+  <rect class="svgBox layout" fill="none" x="-5.27" y="-5.35" height="10.65" width="10.55" />
+  <circle cx="0" cy="0" r="2.8" class="fLITYW" style="stroke-width:0.32" />
+  <path d=" M -0.04,-4.85 L -0.44,-4.65 L -0.44,-3.35 L -0.04,-3.15 L 0.36,-3.35 L 0.36,-4.65 L -0.04,-4.85 L -0.04,-4.85" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M 4.78,-0.05 L 4.58,-0.45 L 3.38,-0.45 L 3.18,-0.05 L 3.38,0.35 L 4.58,0.35 L 4.78,-0.05 L 4.78,-0.05" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M -4.77,-0.1 L -4.57,0.3 L -3.37,0.3 L -3.17,-0.1 L -3.37,-0.5 L -4.57,-0.5 L -4.77,-0.1 L -4.77,-0.1" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M -0.1,3.1 L -0.5,3.3 L -0.5,4.6 L -0.1,4.8 L 0.3,4.6 L 0.3,3.3 L -0.1,3.1 L -0.1,3.1" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M -3.52,-3.37 L -3.64,-2.95 L -2.7,-2.06 L -2.28,-2.22 L -2.16,-2.64 L -3.11,-3.53 L -3.52,-3.37 L -3.52,-3.37" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M 3.31,-3.58 L 2.88,-3.69 L 2.04,-2.71 L 2.21,-2.29 L 2.63,-2.18 L 3.48,-3.16 L 3.31,-3.58 L 3.31,-3.58" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M -3.45,3.46 L -3.03,3.61 L -2.12,2.68 L -2.26,2.26 L -2.69,2.12 L -3.59,3.04 L -3.45,3.46 L -3.45,3.46" class="fLITYW" style="stroke-width:0.32;" />
+  <path d=" M 2.26,2.28 L 2.12,2.71 L 3.01,3.64 L 3.44,3.51 L 3.58,3.08 L 2.68,2.15 L 2.26,2.28 L 2.26,2.28" class="fLITYW" style="stroke-width:0.32;" />
+</svg>

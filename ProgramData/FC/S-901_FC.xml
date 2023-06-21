@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<S100FC:S100_FC_FeatureCatalogue 
+  xmlns:S100FC="http://www.iho.int/S100FC" 
+  xmlns:S100Base="http://www.iho.int/S100Base"
+  xmlns:S100CI="http://www.iho.int/S100CI" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:S100FD="http://www.iho.int/S100FD"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.iho.int/S100FC S100FC.xsd">
+
+  <S100FC:name>User Define Feature Catalogue S-901</S100FC:name>
+  <S100FC:product>S-901</S100FC:product>
+  <S100FC:scope>User Define</S100FC:scope>
+  <S100FC:fieldOfApplication>Marine Navigation</S100FC:fieldOfApplication>
+  <S100FC:versionNumber>0.1</S100FC:versionNumber>
+  <S100FC:versionDate>2020-07-20</S100FC:versionDate>
+  <S100FC:productId>S-901</S100FC:productId>
+  <S100FC:producer>
+    <S100CI:individualName>Dongwoo Kang</S100CI:individualName>
+    <S100CI:organisationName>KRISO</S100CI:organisationName>
+    <S100CI:positionName>member</S100CI:positionName>
+    <S100CI:role>research</S100CI:role>
+  </S100FC:producer>
+
+  <S100FC:S100_FC_SimpleAttributes>
+    <!--attributes-->
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Speed</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>speed</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Direction</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>direction</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+  </S100FC:S100_FC_SimpleAttributes>
+
+  <!--attributes - complexAttribute-->
+  <S100FC:S100_FC_ComplexAttributes>
+  </S100FC:S100_FC_ComplexAttributes>
+
+  <!--features-->
+  <S100FC:S100_FC_FeatureTypes>
+    <S100FC:S100_FC_FeatureType>
+      <S100FC:name>Own Ship</S100FC:name>
+      <S100FC:definition>Own Ship at Navigational Chart</S100FC:definition>
+      <S100FC:code>OwnShip</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="speed"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="direction"/>
+      </S100FC:attributeBinding>
+      <S100FC:featureUseType>geographic</S100FC:featureUseType>
+      <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives> <!--nogeometry-->
+    </S100FC:S100_FC_FeatureType>
+  </S100FC:S100_FC_FeatureTypes>  
+  
+</S100FC:S100_FC_FeatureCatalogue>

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.58mm" height="8.54mm" viewBox="-4.32 -5 8.58 8.54">
+  <title>VesselTrafficService_b</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-14" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.32" y="3.54" height="8.54" width="8.58" />
+  <rect class="svgBox layout" fill="none" x="-4.32" y="-5" height="8.54" width="8.58" />
+  <circle cx="0" cy="-0.72" r="2.15" class="sl f0 sTESTG" style="stroke-width:0.64" />
+  <circle cx="0.01" cy="-0.66" r="0.59" class="sl f0 sTESTG" style="stroke-width:0.64" />
+  <path d=" M 0.01,-0.02 L 0,2.54" class="sl f0 sTESTG" style="stroke-width:0.64;" />
+  <path d=" M 0,-1.3 L 0.01,-4" class="sl f0 sTESTG" style="stroke-width:0.64;" />
+  <path d=" M 0.65,-0.68 L 3.26,-0.67" class="sl f0 sTESTG" style="stroke-width:0.64;" />
+  <path d=" M -0.62,-0.68 L -3.32,-0.67" class="sl f0 sTESTG" style="stroke-width:0.64;" />
+  <path d=" M 0.48,-0.23 L 2.3,1.61" class="sl f0 sTESTG" style="stroke-width:0.64;" />
+  <path d=" M 0.44,-1.12 L 2.22,-3.1" class="sl f0 sTESTG" style="stroke-width:0.64;" />
+  <path d=" M -0.42,-0.27 L -2.28,1.65" class="sl f0 sTESTG" style="stroke-width:0.64;" />
+  <path d=" M -0.49,-1.05 L -2.33,-3.05" class="sl f0 sTESTG" style="stroke-width:0.64;" />
+</svg>

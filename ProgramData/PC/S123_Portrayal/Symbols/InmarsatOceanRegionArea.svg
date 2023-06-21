@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="9.63mm" height="8.610001mm" viewBox="-5.01 -7.61 9.63 8.610001">
+  <title>InmarsatOceanRegionArea</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-20" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.01" y="1" height="8.610001" width="9.63" />
+  <rect class="svgBox layout" fill="none" x="-5.01" y="-7.61" height="8.610001" width="9.63" />
+  <path d=" M 0.2,-2.55 L 1.67,-1.61" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M -3.01,-3.91 L -2.3,-4.94" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M -1.88,-5.53 L -1.16,-6.56" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M -4.01,-3.91 L -3.3,-4.94" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M -2.88,-5.58 L -2.17,-6.61" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M 1.56,-4.3 L 1.49,-4.32 L 1.46,-4.33 L 1.4,-4.37 L 1.35,-4.41 L 1.31,-4.44 L 1.28,-4.51 L 1.26,-4.56 L 1.25,-4.61 L 1.24,-4.65 L 1.24,-4.71 L 1.25,-4.76 L 1.26,-4.81 L 1.28,-4.86 L 1.3,-4.91 L 1.35,-4.96 L 1.41,-5.02 L 1.44,-5.04 L 1.44,-5.1 L 1.44,-5.17 L 1.45,-5.24 L 1.47,-5.32 L 1.49,-5.39 L 1.53,-5.48 L 1.58,-5.57 L 1.64,-5.66 L 1.71,-5.73 L 1.79,-5.8 L 1.88,-5.86 L 2.01,-5.91 L 2.09,-5.94 L 2.24,-5.95 L 2.34,-5.94 L 2.47,-5.93 L 2.59,-5.89 L 2.67,-5.85 L 2.77,-5.78 L 2.85,-5.71 L 2.91,-5.64 L 2.97,-5.56 L 3.01,-5.5 L 3.09,-5.49 L 3.15,-5.47 L 3.2,-5.45 L 3.25,-5.43 L 3.3,-5.39 L 3.36,-5.33 L 3.42,-5.27 L 3.48,-5.17 L 3.51,-5.09 L 3.53,-5 L 3.54,-4.94 L 3.54,-4.89 L 3.53,-4.82 L 3.52,-4.73 L 3.49,-4.67 L 3.46,-4.61 L 3.41,-4.54 L 3.34,-4.46 L 3.3,-4.42 L 3.24,-4.38 L 3.14,-4.34 L 3.07,-4.32 L 3,-4.31 L 2.96,-4.3 L 1.54,-4.3 L 1.54,-4.3" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M -1.74,-2.93 L -1,-4.11 L 0.61,-3.12 L -0.11,-1.96 L -1.68,-2.95" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M 0.28,-1.95 L 0.83,-2.83 L 1.72,-2.29 L 1.16,-1.41 L 0.29,-1.95" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M 1.27,-1.04 L 2.01,-2.23 L 3.62,-1.24 L 2.9,-0.08 L 1.33,-1.07" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+</svg>

@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<S100FC:S100_FC_FeatureCatalogue 
+  xmlns:S100FC="http://www.iho.int/S100FC" 
+  xmlns:S100Base="http://www.iho.int/S100Base"
+  xmlns:S100CI="http://www.iho.int/S100CI" 
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:S100FD="http://www.iho.int/S100FD"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.iho.int/S100FC S100FC.xsd">
+
+  <S100FC:name>S-129 Under Keel Clearance</S100FC:name>
+  <S100FC:scope>Under Keel Clearance</S100FC:scope>
+  <S100FC:fieldOfApplication>Marine Navigation</S100FC:fieldOfApplication>
+  <S100FC:versionNumber>1.0</S100FC:versionNumber>
+  <S100FC:versionDate>2018-06-15</S100FC:versionDate>
+  <S100FC:productId>S-129</S100FC:productId>    
+  <S100FC:producer>
+    <S100CI:role>editor</S100CI:role>
+    <S100CI:party>
+      <S100CI:CI_Organisation>
+        <S100CI:name>KMOU</S100CI:name>
+        <S100CI:contactInfo>
+          <S100CI:address>
+            <S100CI:administrativeArea>727 Taejong-ro, Yeongdo-Gu, Busan 49112</S100CI:administrativeArea>
+            <S100CI:country>South Korea</S100CI:country>
+            <S100CI:electronicMailAddress>sjlee@kmou.ac.kr</S100CI:electronicMailAddress>
+          </S100CI:address>
+          <S100CI:onlineResource>
+            <S100CI:linkage>www.kmou.ac.kr</S100CI:linkage>
+          </S100CI:onlineResource>
+        </S100CI:contactInfo>
+      </S100CI:CI_Organisation>
+    </S100CI:party>
+  </S100FC:producer>
+
+  <S100FC:S100_FC_SimpleAttributes>
+    <!--attributes-->
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Scale minimum</S100FC:name>
+      <S100FC:definition>The minimum scale at which the object may be used, e.g., for ECDIS presentation.</S100FC:definition>
+      <S100FC:code>scaleMinimum</S100FC:code>
+      <S100FC:remarks>The modulus of the scale is indicated, that is 1:1 250 000 is encoded as 1250000.</S100FC:remarks>
+      <S100FC:alias>SCAMIN</S100FC:alias>
+      <S100FC:valueType>integer</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Generation Time</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>generationTime</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Vessel ID</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>vesselId</S100FC:code>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Source Route Name</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>sourceRouteName</S100FC:code>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Source Route Version</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>sourceRouteVersion</S100FC:code>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Maximim Draught</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>maximumDraught</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Valid Time Start</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>validTimeStart</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Valid Time End</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>validTimeEnd</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Scale Mimimum</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>scaleMimimum</S100FC:code>
+      <S100FC:valueType>integer</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Name</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>name</S100FC:code>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>ETA</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>ETA</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Time Window Open</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>timeWindowOpen</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Time Window Close</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>timeWindowClose</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Time Window Pass</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>timeWindowPass</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Expected Passing Time</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>expectedPassingTime</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Expected Passing Speed</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>expectedPassingSpeed</S100FC:code>
+      <S100FC:valueType>real</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Time Start</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>timeStart</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Time End</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>timeEnd</S100FC:code>
+      <S100FC:valueType>dateTime</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+	
+	<!-- geometric attributes (temporary) -->
+	<!-- 
+	<S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Geometric Point</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>geoPoint</S100FC:code>
+      <S100FC:valueType></S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+	<S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Geometric Surface</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>geoSurface</S100FC:code>
+      <S100FC:valueType></S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute> 
+	-->
+
+    <!--attributes - enumeration-->
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Under Keel Clearance Purpose Type</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>underKeelClearancePurposeType</S100FC:code> 
+      <S100FC:remarks>remarks</S100FC:remarks>      
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>pre Plan</S100FC:label>
+          <S100FC:definition>           
+          </S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>actual Plan</S100FC:label>
+          <S100FC:definition>
+          </S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>actual Update</S100FC:label>
+          <S100FC:definition>
+          </S100FC:definition>
+          <S100FC:code>3</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>      
+    </S100FC:S100_FC_SimpleAttribute>
+
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Under Keel Clearance Calculation Type</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>underKeelClearanceCalculationType</S100FC:code>
+      <S100FC:remarks>remarks</S100FC:remarks>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>time Window</S100FC:label>
+          <S100FC:definition>
+          </S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>max Draught</S100FC:label>
+          <S100FC:definition>
+          </S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>        
+  </S100FC:S100_FC_SimpleAttributes>
+
+  <!--attributes - complexAttribute-->
+  <S100FC:S100_FC_ComplexAttributes>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Fixed Time Range</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>fixedTimeRange</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="timeStart"/>        
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="timeEnd"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+  </S100FC:S100_FC_ComplexAttributes>
+
+  <!--features-->
+  <S100FC:S100_FC_FeatureTypes>
+    <S100FC:S100_FC_FeatureType>
+      <S100FC:name>Under Keel Clearance Plan</S100FC:name>
+      <S100FC:definition>This feature is MetaFeature of UKCM information</S100FC:definition>
+      <S100FC:code>UnderKeelClearancePlan</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="generationTime"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="vesselId"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="sourceRouteName"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="sourceRouteVersion"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="maximumDraught"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="validTimeStart"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="validTimeEnd"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+          <S100FC:value>3</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="underKeelClearancePurposeType"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>          
+        </S100FC:permittedValues>
+        <S100FC:attribute ref="underKeelClearanceCalculationType"/>
+      </S100FC:attributeBinding>
+      <S100FC:featureUseType>meta</S100FC:featureUseType>
+      <S100FC:permittedPrimitives>noGeometry</S100FC:permittedPrimitives> <!--nogeometry-->
+    </S100FC:S100_FC_FeatureType>
+
+    <S100FC:S100_FC_FeatureType>
+      <S100FC:name>Under Keel Clearance Non Navigable Area</S100FC:name>
+      <S100FC:definition>Non Navigation Area</S100FC:definition>
+      <S100FC:code>UnderKeelClearanceNonNavigableArea</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+	  <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="scaleMinimum"/>
+      </S100FC:attributeBinding>
+      <S100FC:featureUseType>geographic</S100FC:featureUseType>
+      <S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+    </S100FC:S100_FC_FeatureType>
+
+    <S100FC:S100_FC_FeatureType>
+      <S100FC:name>Under Keel Clearance Almost Navigable Area</S100FC:name>
+      <S100FC:definition>Almost Navigable Area</S100FC:definition>
+      <S100FC:code>UnderKeelClearanceAlmostNavigableArea</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="scaleMinimum"/>
+      </S100FC:attributeBinding>
+      <S100FC:featureUseType>geographic</S100FC:featureUseType>
+      <S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+    </S100FC:S100_FC_FeatureType>
+
+    <S100FC:S100_FC_FeatureType>
+      <S100FC:name>Under Keel Clearance Control Point</S100FC:name>
+      <S100FC:definition>UnderKeelClearance ControlPoint</S100FC:definition>
+      <S100FC:code>UnderKeelClearanceControlPoint</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+	  <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="name"/>
+      </S100FC:attributeBinding>
+	  <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="ETA"/>
+      </S100FC:attributeBinding>
+	  <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="expectedPassingTime"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="expectedPassingSpeed"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="timeWindowOpen"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="timeWindowClose"/>
+      </S100FC:attributeBinding>      
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="fixedTimeRange"/>
+      </S100FC:attributeBinding>      
+      <S100FC:featureUseType>geographic</S100FC:featureUseType> 
+      <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+    </S100FC:S100_FC_FeatureType>
+    
+  </S100FC:S100_FC_FeatureTypes>  
+  
+</S100FC:S100_FC_FeatureCatalogue>

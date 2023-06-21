@@ -50,3 +50,15 @@ bool NamedType::GetIsAbstract()
 {
 	return isAbstract;
 }
+
+void NamedType::InsertAttributeBinding(AttributeBinding* ab)
+{
+	for (auto i = attributeBinding.begin(); i != attributeBinding.end(); i++) {
+		if ((*i)->GetAttributeCode().compare(ab->GetAttributeCode()) == 0) {
+			delete ab;
+			return;
+		}
+	}
+
+	attributeBinding.push_back(ab);
+}

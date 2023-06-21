@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <polygon points="0,0 0,30 15,15" />
+      <polygon points="30,0 30,30 15,15"/>
+    </svg>
+  </body>
+</html>

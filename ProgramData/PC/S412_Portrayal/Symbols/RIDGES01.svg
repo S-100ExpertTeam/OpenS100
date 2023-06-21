@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.92mm" height="6.44mm" viewBox="-5.46 -3.8 10.92 6.44">
+  <title>RIDGES01</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-09" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.46" y="2.64" height="6.44" width="10.92" />
+  <rect class="svgBox layout" fill="none" x="-5.46" y="-3.8" height="6.44" width="10.92" />
+  <path d=" M -4.96,2.14 L 0,-3.3 L 4.96,2.14" class="sl f0 sCHYLW" style="stroke-width:0.32;" />
+</svg>

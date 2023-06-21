@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?pcbinfo name="S-111_1.0.0_Surface current Product Specification" fieldOfApplication="Marine navigation" scope="Global" versionDate="2020-09-01" user="S100WG" organization="IHO"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-111" version="1.0.0">
+  <pixmaps/>
+  <colorProfiles>
+    <colorProfile id="sample1">
+      <description>
+        <name>sample1</name>
+        <description>color profile with day colors for testing</description>
+        <language>en</language>
+      </description>
+      <fileName>colorProfile.xml</fileName>
+      <fileType>ColorProfile</fileType>
+      <fileFormat>XML</fileFormat>
+    </colorProfile>
+  </colorProfiles>
+  <symbols>
+    <symbol id="SCAROW01">
+      <description>
+        <name>SCAROW01</name>
+        <description>symbol for surface current arrow</description>
+        <language>en</language>
+      </description>
+      <fileName>SCAROW01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SCAROW02">
+      <description>
+        <name>SCAROW02</name>
+        <description>symbol for surface current arrow</description>
+        <language>en</language>
+      </description>
+      <fileName>SCAROW02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SCAROW03">
+      <description>
+        <name>SCAROW03</name>
+        <description>symbol for surface current arrow</description>
+        <language>en</language>
+      </description>
+      <fileName>SCAROW03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SCAROW04">
+      <description>
+        <name>SCAROW04</name>
+        <description>symbol for surface current arrow</description>
+        <language>en</language>
+      </description>
+      <fileName>SCAROW04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SCAROW05">
+      <description>
+        <name>SCAROW05</name>
+        <description>symbol for surface current arrow</description>
+        <language>en</language>
+      </description>
+      <fileName>SCAROW05.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SCAROW06">
+      <description>
+        <name>SCAROW06</name>
+        <description>symbol for surface current arrow</description>
+        <language>en</language>
+      </description>
+      <fileName>SCAROW06.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SCAROW07">
+      <description>
+        <name>SCAROW07</name>
+        <description>symbol for surface current arrow</description>
+        <language>en</language>
+      </description>
+      <fileName>SCAROW07.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SCAROW08">
+      <description>
+        <name>SCAROW08</name>
+        <description>symbol for surface current arrow</description>
+        <language>en</language>
+      </description>
+      <fileName>SCAROW08.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SCAROW09">
+      <description>
+        <name>SCAROW09</name>
+        <description>symbol for surface current arrow</description>
+        <language>en</language>
+      </description>
+      <fileName>SCAROW09.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+  </symbols>
+  <lineStyles/>
+  <areaFills/>
+  <fonts/>
+  <viewingGroups>
+	<viewingGroup id="13030">
+         <description>
+            <name>All features</name>
+            <description>The only viewing group</description>
+            <language>en</language>
+         </description>
+	</viewingGroup>
+  </viewingGroups>
+  <foundationMode/>
+  <viewingGroupLayers/>
+  <displayModes>
+      <displayMode id="1">
+         <description>
+            <name>Other</name>
+            <description>Displays all features in the SENC</description>
+            <language>en</language>
+         </description>
+         <viewingGroupLayer>1</viewingGroupLayer>
+         <viewingGroupLayer>2</viewingGroupLayer>
+         <viewingGroupLayer>3</viewingGroupLayer>
+         <viewingGroupLayer>3.1</viewingGroupLayer>
+         <viewingGroupLayer>3.2</viewingGroupLayer>
+         <viewingGroupLayer>4</viewingGroupLayer>
+         <viewingGroupLayer>5</viewingGroupLayer>
+         <viewingGroupLayer>6</viewingGroupLayer>
+         <viewingGroupLayer>7</viewingGroupLayer>
+         <viewingGroupLayer>8</viewingGroupLayer>
+         <viewingGroupLayer>9</viewingGroupLayer>
+         <viewingGroupLayer>10</viewingGroupLayer>
+         <viewingGroupLayer>11</viewingGroupLayer>
+         <viewingGroupLayer>12</viewingGroupLayer>
+         <viewingGroupLayer>13</viewingGroupLayer>
+         <viewingGroupLayer>14</viewingGroupLayer>
+         <viewingGroupLayer>15</viewingGroupLayer>
+         <viewingGroupLayer>16</viewingGroupLayer>
+         <viewingGroupLayer>17</viewingGroupLayer>
+         <viewingGroupLayer>18</viewingGroupLayer>
+         <viewingGroupLayer>101</viewingGroupLayer>
+         <viewingGroupLayer>102</viewingGroupLayer>
+         <viewingGroupLayer>102.1</viewingGroupLayer>
+         <viewingGroupLayer>102.2</viewingGroupLayer>
+         <viewingGroupLayer>102.3</viewingGroupLayer>
+      </displayMode>  
+  </displayModes>
+  <displayPlane>
+      <displayPlane id="UNDERRADAR">
+         <description>
+            <name>underRadar</name>
+            <description>Content displayed on underneath of Radar image</description>
+            <language>en</language>
+         </description>
+      </displayPlane>
+  </displayPlane>
+  <context/>
+  <rules>
+  	<ruleFile id="1">
+	 <description>
+		<name>main</name>
+		<description>main</description>
+		<language>en</language>
+	 </description>
+	 <fileName>main.xsl</fileName>
+	 <fileType>Rule</fileType>
+	 <fileFormat>XSLT</fileFormat>
+	 <ruleType>TopLevelTemplate</ruleType>
+  </ruleFile>  
+    <ruleFile id="2">
+      <description>
+        <name>SurfaceCurrent</name>
+        <description>Surface Current</description>
+        <language>en</language>
+      </description>
+      <fileName>SurfaceCurrent.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="3">
+      <description>
+        <name>select_arrow</name>
+        <description>Surface Current</description>
+        <language>en</language>
+      </description>
+      <fileName>select_arrow.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

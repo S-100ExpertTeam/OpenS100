@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.8mm" height="12.1mm" viewBox="-2.3 -5.8 4.8 12.1">
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2017-10-14" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.3" y="-5.8" height="12.1" width="4.8" />
+  <rect class="svgBox layout" fill="none" x="-2.3" y="-5.8" height="12.1" width="4.8" />
+  <title>SUWIND130SUWIND130</title>
+  <path d=" M -1.8,-5.3 L -1.8,5.8 L -1.2,5.8 L -1.2,3.3 L 1.6,2.5 L 1.6,1.7 L -1.2,2.5 L -1.2,1.8 L 1.6,0.9 L 1.6,0.1 L -1.2,0.9 L -1.2,0.2 L 1.6,-0.7 L 1.6,-1.5 L -1.2,-0.7 L -1.2,-1.5 L 1.9,-2.4 L -1.2,-3.2 L -1.2,-3.5 L 2,-4.4 L -1.8,-5.3 L -1.8,-4.7" transform="rotate(0)" class="sl f0 fUINFB" style="stroke-width:0.04" />
+</svg>

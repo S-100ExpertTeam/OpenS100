@@ -109,6 +109,13 @@ std::list<SpatialPrimitiveType>& FeatureType::GetPermittedPrimitivesPointer()
 
 void FeatureType::InsertFeatureBinding(FeatureBinding* value)
 {
+	for (auto i = vecFeatureBinding.begin(); i != vecFeatureBinding.end(); i++) {
+		if ((*i)->IsSameAssociation(*value)) {
+			delete value;
+			return;
+		}
+	}
+
 	vecFeatureBinding.push_back(value);
 }
 

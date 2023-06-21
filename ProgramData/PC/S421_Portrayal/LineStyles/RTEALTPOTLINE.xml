@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="IEC 62288" format="S100Ed2" version="0.1" creationDate="2021-02-28"?>
+<?S100Meta name="RTEACTPOTLINE" exposition="Action point boundary line for planned route?>
+<lineStyle>
+   <intervalLength>3.5</intervalLength>
+   <pen width="0.64">
+      <color>APLRT</color>
+   </pen>
+    <symbol reference="RTEDOT01">
+      <position>1.72</position>
+   </symbol>
+</lineStyle>

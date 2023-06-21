@@ -1,0 +1,1134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100ColorProfile.xsd">
+    <colors>
+        <color token="NODTA" name="grey">
+            <description>No data color</description>
+        </color>
+        <color token="CURSR" name="orange">
+            <description>Cursor color</description>
+        </color>
+        <color token="CHBLK" name="black">
+            <description>Chart black</description>
+        </color>
+        <color token="CHGRD" name="grey">
+            <description>Chart grey dominant</description>
+        </color>
+        <color token="CHGRF" name="grey">
+            <description>Chart grey faint</description>
+        </color>
+        <color token="CHRED" name="red">
+            <description>Chart red</description>
+        </color>
+        <color token="CHGRN" name="green">
+            <description>Chart green</description>
+        </color>
+        <color token="CHYLW" name="yellow">
+            <description>Chart yellow</description>
+        </color>
+        <color token="CHMGD" name="magenta">
+            <description>Chart magenta dominant</description>
+        </color>
+        <color token="CHMGF" name="magenta">
+            <description>Chart magenta faint</description>
+        </color>
+        <color token="CHBRN" name="brown">
+            <description>Chart brown</description>
+        </color>
+        <color token="CHWHT" name="white">
+            <description>Chart white</description>
+        </color>
+        <color token="SCLBR" name="orange">
+            <description>Scale bar color</description>
+        </color>
+        <color token="CHCOR" name="orange">
+            <description>Chart correction</description>
+        </color>
+        <color token="LITRD" name="red">
+            <description>Light red</description>
+        </color>
+        <color token="LITGN" name="red">
+            <description>Light red</description>
+        </color>
+        <color token="LITYW" name="yellow">
+            <description>Light yellow</description>
+        </color>
+        <color token="ISDNG" name="magenta">
+            <description>Isolated danger</description>
+        </color>
+        <color token="DNGHL" name="red">
+            <description>Danger highlight red</description>
+        </color>
+        <color token="TRFCD" name="magenta">
+            <description>Traffic dominant magenta</description>
+        </color>
+        <color token="TRFCF" name="magenta">
+            <description>Traffic faint magenta</description>
+        </color>
+        <color token="LANDA" name="brown">
+            <description>Land area</description>
+        </color>
+        <color token="LANDF" name="brown">
+            <description>Land Feature</description>
+        </color>
+        <color token="CSTLN" name="grey">
+            <description>Coastline</description>
+        </color>
+        <color token="SNDG1" name="grey">
+            <description>Sounding deep</description>
+        </color>
+        <color token="SNDG2" name="black">
+            <description>Sounding shallow</description>
+        </color>
+        <color token="DEPSC" name="grey">
+            <description>Safety contour</description>
+        </color>
+        <color token="DEPCN" name="grey">
+            <description>depth contour</description>
+        </color>
+        <color token="DEPDW" name="white">
+            <description>deep water</description>
+        </color>
+        <color token="DEPMD" name="pale_blue">
+            <description>Medium deep water</description>
+        </color>
+        <color token="DEPMS" name="light_blue">
+            <description>Medium shallow water</description>
+        </color>
+        <color token="DEPVS" name="medium_blue">
+            <description>Very shallow water</description>
+        </color>
+        <color token="DEPIT" name="yellow_green">
+            <description>Intertidal</description>
+        </color>
+        <color token="RADHI" name="green">
+            <description>Radar high intensity</description>
+        </color>
+        <color token="RADLO" name="green">
+            <description>Radar low intensity</description>
+        </color>
+        <color token="ARPAT" name="blue_green">
+            <description>ARPA target</description>
+        </color>
+        <color token="NINFO" name="orange">
+            <description>Navigators notes</description>
+        </color>
+        <color token="RESBL" name="blue">
+            <description>AIS features and symbols</description>
+        </color>
+        <color token="ADINF" name="yellow">
+            <description>Additional info, mariners </description>
+        </color>
+        <color token="RESGR" name="grey">
+            <description>Reserved grey</description>
+        </color>
+        <color token="SHIPS" name="black">
+            <description>Own ship symbol</description>
+        </color>
+        <color token="PSTRK" name="black">
+            <description>Past track</description>
+        </color>
+        <color token="SYTRK" name="grey">
+            <description>Secondary track</description>
+        </color>
+        <color token="PLRTE" name="red">
+            <description>Planned route</description>
+        </color>
+        <color token="APLRT" name="orange">
+            <description>Alternate planned route</description>
+        </color>
+        <color token="UINFD" name="black">
+            <description>User interface Bold text</description>
+        </color>
+        <color token="UINFF" name="grey">
+            <description>User interface normal text</description>
+        </color>
+        <color token="UIBCK" name="white">
+            <description>User interface background</description>
+        </color>
+        <color token="UIAFD" name="medium_blue">
+            <description>User interface Area fill water</description>
+        </color>
+        <color token="UINFR" name="red">
+            <description>User interface red</description>
+        </color>
+        <color token="UINFG" name="green">
+            <description>User interface green</description>
+        </color>
+        <color token="UINFO" name="orange">
+            <description>User interface orange</description>
+        </color>
+        <color token="UINFB" name="blue">
+            <description>User interface blue</description>
+        </color>
+        <color token="UINFM" name="magenta">
+            <description>User interface magenta</description>
+        </color>
+        <color token="UIBDR" name="grey">
+            <description>User interface border grey</description>
+        </color>
+        <color token="UIAFF" name="brown">
+            <description>User interface Area fill Land</description>
+        </color>
+        <color token="OUTLW" name="black">
+            <description>Outline for symbols on water</description>
+        </color>
+        <color token="OUTLL" name="brown">
+            <description>Outline for symbols on land</description>
+        </color>
+        <color token="RES01" name="grey">
+            <description>Reserved</description>
+        </color>
+        <color token="RES02" name="grey">
+            <description>Reserved</description>
+        </color>
+        <color token="RES03" name="grey">
+            <description>Reserved</description>
+        </color>
+        <color token="BKAJ1" name="black">
+            <description>black colour of black-adjust symbol</description>
+        </color>
+        <color token="BKAJ2" name="grey">
+            <description>grey colour of black-adjust symbol</description>
+        </color>
+        <color token="MARBL" name="blue">
+            <description>mariner blue</description>
+        </color>
+        <color token="MARCY" name="cyan">
+            <description>mariner cyan</description>
+        </color>
+        <color token="MARMG" name="magenta">
+            <description>mariner magenta</description>
+        </color>
+        <color token="MARWH" name="white">
+            <description>mariner white</description>
+        </color>
+    </colors>
+    
+    <palette name="Day">
+        <item token="NODTA">
+            <cie>
+                <xyL>
+                    <x>0.280</x>
+                    <y>0.310</y>
+                    <L>40.0</L>
+                </xyL>            
+            </cie>
+            <srgb>
+                <red>147</red>
+                <green>174</green>
+                <blue>187</blue>
+            </srgb>
+        </item>
+        <item token="CURSR">
+            <cie>
+                <xyL>
+                    <x>0.50</x>
+                    <y>0.40</y>
+                    <L>32.0</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>227</red>
+                <green>128</green>
+                <blue>57</blue>
+            </srgb>       
+        </item>
+        <item token="CHBLK">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>0</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+            </srgb>       
+        </item>
+        <item token="CHBLK">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>10</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>76</red>
+                <green>91</green>
+                <blue>99</blue>
+            </srgb>       
+        </item>
+        <item token="CHGRF">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>118</red>
+                <green>140</green>
+                <blue>151</blue>
+            </srgb>       
+        </item>
+        <item token="CHRED">
+            <cie>
+                <xyL>
+                    <x>0.48</x>
+                    <y>0.30</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>234</red>
+                <green>84</green>
+                <blue>113</blue>
+            </srgb>       
+        </item>
+        <item token="CHGRN">
+            <cie>
+                <xyL>
+                    <x>0.31</x>
+                    <y>0.56</y>
+                    <L>60</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>82</red>
+                <green>233</green>
+                <blue>58</blue>
+            </srgb>       
+        </item>
+        <item token="CHYLW">
+            <cie>
+                <xyL>
+                    <x>0.41</x>
+                    <y>0.49</y>
+                    <L>70</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>225</red>
+                <green>225</green>
+                <blue>57</blue>
+            </srgb>       
+        </item>
+        <item token="CHMGD">
+            <cie>
+                <xyL>
+                    <x>0.30</x>
+                    <y>0.17</y>
+                    <L>20</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>192</red>
+                <green>69</green>
+                <blue>209</blue>
+            </srgb>       
+        </item>
+        <item token="CHMGF">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.24</y>
+                    <L>48</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>203</red>
+                <green>169</green>
+                <blue>250</blue>
+            </srgb>       
+        </item>
+        <item token="CHBRN">
+            <cie>
+                <xyL>
+                    <x>0.39</x>
+                    <y>0.43</y>
+                    <L>30</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>161</red>
+                <green>150</green>
+                <blue>83</blue>
+            </srgb>       
+        </item>
+        <item token="CHWHT">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>80</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>201</red>
+                <green>237</green>
+                <blue>255</blue>
+            </srgb>       
+        </item>
+        <item token="SCLBR">
+            <cie>
+                <xyL>
+                    <x>0.5</x>
+                    <y>0.4</y>
+                    <L>32</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>227</red>
+                <green>128</green>
+                <blue>57</blue>
+            </srgb>       
+        </item>
+        <item token="CHCOR">
+            <cie>
+                <xyL>
+                    <x>0.5</x>
+                    <y>0.4</y>
+                    <L>32</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>227</red>
+                <green>128</green>
+                <blue>57</blue>
+            </srgb>       
+        </item>
+        <item token="LITRD">
+            <cie>
+                <xyL>
+                    <x>0.48</x>
+                    <y>0.3</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>234</red>
+                <green>84</green>
+                <blue>113</blue>
+            </srgb>       
+        </item>
+        <item token="LITGN">
+            <cie>
+                <xyL>
+                    <x>0.31</x>
+                    <y>0.56</y>
+                    <L>60</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>82</red>
+                <green>233</green>
+                <blue>58</blue>
+            </srgb>       
+        </item>
+        <item token="LITYW">
+            <cie>
+                <xyL>
+                    <x>0.41</x>
+                    <y>0.49</y>
+                    <L>70</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>225</red>
+                <green>225</green>
+                <blue>57</blue>
+            </srgb>       
+        </item>
+        <item token="ISDNG">
+            <cie>
+                <xyL>
+                    <x>0.3</x>
+                    <y>0.17</y>
+                    <L>20</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>192</red>
+                <green>69</green>
+                <blue>209</blue>
+            </srgb>       
+        </item>
+        <item token="DNGHL">
+            <cie>
+                <xyL>
+                    <x>0.48</x>
+                    <y>0.3</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>234</red>
+                <green>84</green>
+                <blue>113</blue>
+            </srgb>       
+        </item>
+        <item token="TRFCD">
+            <cie>
+                <xyL>
+                    <x>0.3</x>
+                    <y>0.17</y>
+                    <L>20</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>192</red>
+                <green>69</green>
+                <blue>209</blue>
+            </srgb>       
+        </item>
+        <item token="TRFCF">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.24</y>
+                    <L>48</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>203</red>
+                <green>169</green>
+                <blue>250</blue>
+            </srgb>       
+        </item>
+        <item token="LANDA">
+            <cie>
+                <xyL>
+                    <x>0.35</x>
+                    <y>0.39</y>
+                    <L>50</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>191</red>
+                <green>191</green>
+                <blue>143</blue>
+            </srgb>       
+        </item>
+        <item token="LANDF">
+            <cie>
+                <xyL>
+                    <x>0.45</x>
+                    <y>0.42</y>
+                    <L>15</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>141</red>
+                <green>100</green>
+                <blue>46</blue>
+            </srgb>       
+        </item>
+        <item token="CSTLN">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>10</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>76</red>
+                <green>91</green>
+                <blue>99</blue>
+            </srgb>       
+        </item>
+        <item token="SNDG1">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>118</red>
+                <green>140</green>
+                <blue>151</blue>
+            </srgb>       
+        </item>
+        <item token="SNDG2">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>0</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+            </srgb>       
+        </item>
+        <item token="DEPSC">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>10</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>76</red>
+                <green>91</green>
+                <blue>99</blue>
+            </srgb>       
+        </item>
+        <item token="DEPCN">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>118</red>
+                <green>140</green>
+                <blue>151</blue>
+            </srgb>       
+        </item>
+        <item token="DEPDW">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>80</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>201</red>
+                <green>237</green>
+                <blue>255</blue>
+            </srgb>       
+        </item>
+        <item token="DEPMD">
+            <cie>
+                <xyL>
+                    <x>0.26</x>
+                    <y>0.29</y>
+                    <L>65</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>167</red>
+                <green>218</green>
+                <blue>252</blue>
+            </srgb>       
+        </item>
+        <item token="DEPMS">
+            <cie>
+                <xyL>
+                    <x>0.23</x>
+                    <y>0.25</y>
+                    <L>55</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>130</red>
+                <green>202</green>
+                <blue>255</blue>
+            </srgb>       
+        </item>
+        <item token="DEPVS">
+            <cie>
+                <xyL>
+                    <x>0.21</x>
+                    <y>0.22</y>
+                    <L>45</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>97</red>
+                <green>184</green>
+                <blue>255</blue>
+            </srgb>       
+        </item>
+        <item token="DEPIT">
+            <cie>
+                <xyL>
+                    <x>0.26</x>
+                    <y>0.36</y>
+                    <L>35</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>88</red>
+                <green>175</green>
+                <blue>156</blue>
+            </srgb>       
+        </item>
+        <item token="RADHI">
+            <cie>
+                <xyL>
+                    <x>0.31</x>
+                    <y>0.56</y>
+                    <L>60</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>82</red>
+                <green>233</green>
+                <blue>58</blue>
+            </srgb>       
+        </item>
+        <item token="RADLO">
+            <cie>
+                <xyL>
+                    <x>0.31</x>
+                    <y>0.56</y>
+                    <L>20</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>46</red>
+                <green>142</green>
+                <blue>32</blue>
+            </srgb>       
+        </item>
+        <item token="NINFO">
+            <cie>
+                <xyL>
+                    <x>0.5</x>
+                    <y>0.4</y>
+                    <L>32</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>227</red>
+                <green>128</green>
+                <blue>57</blue>
+            </srgb>       
+        </item>
+        <item token="RESBL">
+            <cie>
+                <xyL>
+                    <x>0.18</x>
+                    <y>0.15</y>
+                    <L>22</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>46</red>
+                <green>123</green>
+                <blue>255</blue>
+            </srgb>       
+        </item>
+        <item token="ADINF">
+            <cie>
+                <xyL>
+                    <x>0.41</x>
+                    <y>0.49</y>
+                    <L>35</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>165</red>
+                <green>165</green>
+                <blue>39</blue>
+            </srgb>       
+        </item>
+        <item token="RESGR">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>118</red>
+                <green>140</green>
+                <blue>151</blue>
+            </srgb>       
+        </item>
+        <item token="SHIPS">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>0</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+            </srgb>       
+        </item>
+        <item token="PSTRK">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>0</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+            </srgb>       
+        </item>
+        <item token="SYTRK">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>118</red>
+                <green>140</green>
+                <blue>151</blue>
+            </srgb>       
+        </item>
+        <item token="PLRTE">
+            <cie>
+                <xyL>
+                    <x>0.58</x>
+                    <y>0.35</y>
+                    <L>18</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>214</red>
+                <green>63</green>
+                <blue>36</blue>
+            </srgb>       
+        </item>
+        <item token="APLRT">
+            <cie>
+                <xyL>
+                    <x>0.5</x>
+                    <y>0.4</y>
+                    <L>32</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>227</red>
+                <green>128</green>
+                <blue>57</blue>
+            </srgb>       
+        </item>
+        <item token="UINFD">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>0</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+            </srgb>       
+        </item>
+        <item token="UINFF">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>10</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>76</red>
+                <green>91</green>
+                <blue>99</blue>
+            </srgb>       
+        </item>
+        <item token="UIBCK">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>80</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>201</red>
+                <green>237</green>
+                <blue>255</blue>
+            </srgb>       
+        </item>
+        <item token="UIAFD">
+            <cie>
+                <xyL>
+                    <x>0.21</x>
+                    <y>0.22</y>
+                    <L>45</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>97</red>
+                <green>184</green>
+                <blue>255</blue>
+            </srgb>       
+        </item>
+        <item token="UINFR">
+            <cie>
+                <xyL>
+                    <x>0.48</x>
+                    <y>0.30</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>234</red>
+                <green>84</green>
+                <blue>113</blue>
+            </srgb>       
+        </item>
+        <item token="UINFG">
+            <cie>
+                <xyL>
+                    <x>0.31</x>
+                    <y>0.56</y>
+                    <L>60</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>82</red>
+                <green>233</green>
+                <blue>58</blue>
+            </srgb>       
+        </item>
+        <item token="UINFO">
+            <cie>
+                <xyL>
+                    <x>0.5</x>
+                    <y>0.4</y>
+                    <L>32</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>227</red>
+                <green>128</green>
+                <blue>57</blue>
+            </srgb>       
+        </item>
+        <item token="UINFB">
+            <cie>
+                <xyL>
+                    <x>0.18</x>
+                    <y>0.15</y>
+                    <L>22</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>46</red>
+                <green>123</green>
+                <blue>255</blue>
+            </srgb>       
+        </item>
+        <item token="UINFM">
+            <cie>
+                <xyL>
+                    <x>0.30</x>
+                    <y>0.17</y>
+                    <L>20</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>192</red>
+                <green>69</green>
+                <blue>209</blue>
+            </srgb>       
+        </item>
+        <item token="UIBDR">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>10</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>76</red>
+                <green>91</green>
+                <blue>99</blue>
+            </srgb>       
+        </item>
+        <item token="UIAFF">
+            <cie>
+                <xyL>
+                    <x>0.35</x>
+                    <y>0.39</y>
+                    <L>50</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>191</red>
+                <green>191</green>
+                <blue>143</blue>
+            </srgb>       
+        </item>
+        <item token="UIAFF">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>0</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+            </srgb>       
+        </item>
+        <item token="OUTLL">
+            <cie>
+                <xyL>
+                    <x>0.45</x>
+                    <y>0.42</y>
+                    <L>15</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>141</red>
+                <green>100</green>
+                <blue>46</blue>
+            </srgb>       
+        </item>
+        <item token="RES01">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>118</red>
+                <green>140</green>
+                <blue>151</blue>
+            </srgb>       
+        </item>
+        <item token="RES02">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>118</red>
+                <green>140</green>
+                <blue>151</blue>
+            </srgb>       
+        </item>
+        <item token="RES03">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>25</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>118</red>
+                <green>140</green>
+                <blue>151</blue>
+            </srgb>       
+        </item>
+        <item token="BKAJ1">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>0.6</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>14</red>
+                <green>18</green>
+                <blue>21</blue>
+            </srgb>       
+        </item>
+        <item token="BKAJ2">
+            <cie>
+                <xyL>
+                    <x>0.28</x>
+                    <y>0.31</y>
+                    <L>1.6</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>28</red>
+                <green>35</green>
+                <blue>38</blue>
+            </srgb>       
+        </item>
+        <item token="MARBL">
+            <cie>
+                <xyL>
+                    <x>0.145</x>
+                    <y>0.14</y>
+                    <L>20</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>0</red>
+                <green>128</green>
+                <blue>255</blue>
+            </srgb>       
+        </item>
+        <item token="MARCY">
+            <cie>
+                <xyL>
+                    <x>0.2</x>
+                    <y>0.355</y>
+                    <L>20</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>0</red>
+                <green>143</green>
+                <blue>132</blue>
+            </srgb>       
+        </item>
+        <item token="MARMG">
+            <cie>
+                <xyL>
+                    <x>0.36</x>
+                    <y>0.22</y>
+                    <L>20</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>198</red>
+                <green>77</green>
+                <blue>166</blue>
+            </srgb>       
+        </item>
+        <item token="MARWH">
+            <cie>
+                <xyL>
+                    <x>0.305</x>
+                    <y>0.344</y>
+                    <L>20</L>
+                </xyL>         
+            </cie>
+            <srgb>
+                <red>113</red>
+                <green>127</green>
+                <blue>119</blue>
+            </srgb>       
+        </item>
+    </palette>
+    
+</colorProfile>

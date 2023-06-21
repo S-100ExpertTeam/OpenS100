@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8mm" height="8mm" viewBox="-4 -4 8 8">
+  <title>WAVEHT03</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-02" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4" y="4" height="8" width="8" />
+  <rect class="svgBox layout" fill="none" x="-4" y="-4" height="8" width="8" />
+  <circle cx="0" cy="0" r="3.5" class="sl f0 sCHBLK" style="stroke-width:0.32" />
+  <path d=" M -1.41,-1.01 L -2.39,-1.13 L -3.17,-1.46 L -3.29,-1.2 L -3.39,-0.86 L -3.45,-0.52 L -3.48,-0.23 L -3.48,0.09 L -3.45,0.44 L -3.4,0.74 L -3.31,1.06 L -3.2,1.4 L -2.95,1.86 L -2.54,2.4 L -2.17,2.74 L -1.66,3.07 L -1,3.35 L -0.46,3.46 L 0.03,3.49 L 0.61,3.44 L 1.29,3.24 L 1.83,2.97 L 2.35,2.58 L 2.79,2.1 L 3.06,1.67 L 3.32,1.12 L 3.48,0.35 L 3.48,-0.37 L 3.35,-0.96 L 3.18,-1.46 L 2.65,-1.75 L 2.15,-1.91 L 1.74,-2 L 1.13,-1.94 L 0.53,-1.68 L -0.46,-1.21" class="fMARBL" style="stroke-width:0.32;" />
+  <path d=" M -3.1,-1.44 L -3.17,-1.47 L -2.98,-1.8 L -2.74,-2.16 L -2.39,-2.52 L -2.03,-2.83 L -1.64,-3.07 L -1.19,-3.27 L -0.81,-3.39 L -0.31,-3.47 L 0.28,-3.47 L 0.77,-3.4 L 1.19,-3.27 L 1.65,-3.07 L 1.93,-2.91 L 2.31,-2.62 L 2.6,-2.32 L 2.83,-2.02 L 2.99,-1.77 L 3.19,-1.44 L 2.68,-1.74 L 2.19,-1.89 L 1.73,-2 L 1.08,-1.91 L 0.5,-1.66 L -0.03,-1.4 L -0.49,-1.2 L -1.39,-1 L -2.41,-1.1 L -3.1,-1.44" class="fCHWHT" style="stroke-width:0.32;" />
+</svg>

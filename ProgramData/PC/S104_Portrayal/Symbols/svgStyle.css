@@ -1,0 +1,30 @@
+.layout {display:none}  /* used to control visibility of symbolBox, svgBox, pivotPoint (none or inline) */
+.symbolBox {stroke:black;stroke-width:0.32;}  /* show the cover of the symbol graphics */
+.svgBox {stroke:blue;stroke-width:0.32;}  /* show the entire SVG cover */
+.pivotPoint {stroke:red;stroke-width:0.64;}  /* show the pivot/anchor point, 0,0 */
+.sl {stroke-linecap:round;stroke-linejoin:round} /* default line style elements */
+.f0 {fill:none}  /* no fill */
+.sCHMGD {stroke:#C045D1}
+.fCHMGD {fill:#C045D1}
+.sTESTA {stroke:#499980}
+.fTESTA {fill:#499980}
+.sTESTB {stroke:#7EC67C}
+.fTESTB {fill:#7EC67C}
+.sTESTC {stroke:#FF85B7}
+.fTESTC {fill:#FF85B7}
+.sTESTD {stroke:#E8118C}
+.fTESTD {fill:#E8118C}
+.sTESTE {stroke:#FAC566}
+.fTESTE {fill:#FAC566}
+.sTESTF {stroke:#FED41E}
+.fTESTF {fill:#FED41E}
+.sTESTG {stroke:#7BB7E4}
+.fTESTG {fill:#7BB7E4}
+.sTESTH {stroke:#00B0EA}
+.fTESTH {fill:#00B0EA}
+.sCHYLW {stroke:#E1E139}
+.fCHYLW {fill:#E1E139}
+.sOUTLW {stroke:#000000}
+.fOUTLW {fill:#000000}
+.sCHMGF {stroke:#CBA9FA}
+.fCHMGF {fill:#CBA9FA}

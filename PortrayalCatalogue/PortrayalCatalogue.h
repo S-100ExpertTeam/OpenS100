@@ -121,7 +121,9 @@ public:
 	//get
 	std::wstring GetRootPath();
 	std::wstring GetProduct();
+	std::string getProduct() const;
 	std::wstring GetVersion();
+	Version getVersion() const;
 	S100_Rules* GetRules();
 	ViewingGroups* GetViewingGroups();
 	FoundationMode* GetFoundationMode();
@@ -149,6 +151,8 @@ public:
 	std::wstring GetMainRuleFilePath();
 	
 	std::wstring GetCurrentPaletteName();
+
+	void ChangePalette(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 
 	void CreatePatternImages(ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 	void DeletePatternImage();

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.4mm" height="8.29mm" viewBox="-3.25 -7.29 6.4 8.29">
+  <title>GMDSSArea</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-14" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.25" y="1" height="8.29" width="6.4" />
+  <rect class="svgBox layout" fill="none" x="-3.25" y="-7.29" height="8.29" width="6.4" />
+  <path d=" M -0.11,-6.29 L -0.17,-6.25 L -0.21,-6.09 L -0.31,-5.9 L -0.35,-5.75 L -0.49,-5.59 L -0.64,-5.41 L -0.71,-5.36 L -0.77,-5.26 L -0.9,-5.16 L -0.99,-5.12 L -1.19,-4.99 L -1.35,-4.95 L -1.46,-4.88 L -1.68,-4.84 L -1.83,-4.83 L -2.02,-4.75 L -2.18,-4.75 L -2.25,-4.72 L -2.18,-2.49 L -2.15,-2.26 L -2.14,-2.14 L -2.04,-1.93 L -2.02,-1.8 L -1.95,-1.63 L -1.83,-1.51 L -1.74,-1.33 L -1.64,-1.23 L -1.45,-1.04 L -1.35,-0.94 L -1.19,-0.87 L -1.05,-0.8 L -0.85,-0.69 L -0.71,-0.67 L -0.55,-0.59 L -0.41,-0.5 L -0.32,-0.49 L -0.17,-0.36 L 0.05,-0.45 L 0.1,-0.5 L 0.25,-0.59 L 0.34,-0.61 L 0.52,-0.67 L 0.64,-0.71 L 0.74,-0.8 L 0.88,-0.82 L 0.97,-0.87 L 1.11,-0.98 L 1.26,-1.1 L 1.38,-1.19 L 1.47,-1.33 L 1.58,-1.46 L 1.67,-1.63 L 1.72,-1.73 L 1.76,-1.82 L 1.85,-1.96 L 1.86,-2.07 L 1.9,-2.19 L 1.97,-2.35 L 1.97,-2.47 L 1.97,-2.51 L 2.15,-4.72 L 1.86,-4.75 L 1.76,-4.75 L 1.63,-4.83 L 1.58,-4.84 L 1.47,-4.85 L 1.31,-4.88 L 1.19,-4.95 L 1.08,-4.99 L 0.93,-5.06 L 0.74,-5.16 L 0.58,-5.26 L 0.52,-5.38 L 0.33,-5.51 L 0.2,-5.68 L 0.1,-5.81 L 0.05,-5.99 L -0.02,-6.13 L -0.07,-6.25 L -0.09,-6.29 L -0.11,-6.29 L -0.11,-6.29" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M -0.27,-4.22 L 0.28,-4.22 L 0.28,-1.95 L -0.27,-1.95 L -0.27,-4.22 L -0.27,-4.22" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M -1.13,-2.82 L -1.13,-3.37 L 1.14,-3.37 L 1.14,-2.82 L -1.13,-2.82 L -1.13,-2.82" class="fTESTB" style="stroke-width:0.64;" />
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.3mm" height="6.5mm" viewBox="-2.65 -3.25 5.3 6.5">
+  <title>CENDEP01</title>
+  <desc>Atmospheric Pressure</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="KRISO" iho:creationDate="2015-04-24" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.65" y="-3.25" height="6.5" width="5.3"/>
+  <rect class="svgBox layout" fill="none" x="-2.65" y="-3.25" height="6.5" width="5.3"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+  <path d=" M -2.4,-3 L -0.48,-3 L -0.48,1.08 L 2.4,1.08 L 2.4,3 L -2.4,3 L -2.4,-3" class="sl f0 fWRED1" style="stroke-width: 0.32;"/>
+</svg>

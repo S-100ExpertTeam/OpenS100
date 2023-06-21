@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="17.78mm" height="14.92mm" viewBox="-15.71 -12.83 17.78 14.92">
+  <title>CHNGAC01</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2022-10-26" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-15.71" y="2.09" height="14.92" width="17.78" />
+  <rect class="svgBox layout" fill="none" x="-15.71" y="-12.83" height="14.92" width="17.78" />
+  <path d=" M -14.71,-7.96 L -7.74,-7.96 L -7.74,-11.8 L -14.71,-11.83 L -14.71,-7.96" class="sl f0 sCHMGD" style="stroke-width:0.64;" />
+  <circle cx="-0.01" cy="0.01" r="1.08" class="sl f0 sCHMGD" style="stroke-width:0.64" />
+  <path d=" M -0.85,-0.62 L -7.79,-7.95" class="sl f0 sCHMGD" style="stroke-width:0.64;" />
+  <path d=" M -11.79,-8.89 L -12.53,-11.08 L -13.2,-8.87" class="sl f0 sISDNG" style="stroke-width:0.64;" />
+  <path d=" M -9.65,-10.67 L -9.85,-10.88 L -10.16,-11.05 L -10.52,-11.05 L -10.89,-10.88 L -11.05,-10.67 L -11.2,-10.24 L -11.2,-9.84 L -11.05,-9.41 L -10.89,-9.2 L -10.52,-8.94 L -10.16,-8.94 L -9.85,-9.2 L -9.65,-9.41" class="sl f0 sISDNG" style="stroke-width:0.64;" />
+  <path d=" M -12.9,-10 L -12.2,-10" class="sl f0 sISDNG" style="stroke-width:0.64;" />
+</svg>

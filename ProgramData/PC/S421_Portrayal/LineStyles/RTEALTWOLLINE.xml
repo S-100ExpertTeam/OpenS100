@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="IEC 62288" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="RTEALTWOLLINE" exposition="planned route WOL line"?>
+<lineStyle>
+   <intervalLength>24.2</intervalLength>
+   <pen width="0.64">
+      <color>APLRT</color>
+   </pen>
+   <dash>
+      <start>2.2</start>
+      <length>10</length>
+   </dash>
+   <dash>
+      <start>14.2</start>
+      <length>10</length>
+   </dash>
+</lineStyle>

@@ -1,0 +1,3013 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?pcbinfo name="S-101_0.8_ENC Product Specification_NewSyms" fieldOfApplication="WithNewSyms" scope="Testing" versionDate="2014-07-01T18:56:34+0000" user="Test User" organization="IHO-Test"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-125" version="1.0">
+   <pixmaps/>
+   <colorProfiles>
+      <colorProfile id="sample1">
+         <description>
+            <name>sample1</name>
+            <description>color profile with day colors for testing</description>
+            <language>en</language>
+         </description>
+         <fileName>colorProfile.xml</fileName>
+         <fileType>ColorProfile</fileType>
+         <fileFormat>XML</fileFormat>
+      </colorProfile>
+   </colorProfiles>
+
+  <symbols>
+    <symbol id="BCNCAR01">
+      <description>
+        <name>BCNCAR01</name>
+        <description>cardinal beacon, north, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNCAR01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNCAR02">
+      <description>
+        <name>BCNCAR02</name>
+        <description>cardinal beacon, east, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNCAR02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNCAR03">
+      <description>
+        <name>BCNCAR03</name>
+        <description>cardinal beacon, south, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNCAR03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNCAR04">
+      <description>
+        <name>BCNCAR04</name>
+        <description>cardinal beacon, west, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNCAR04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNDEF13">
+      <description>
+        <name>BCNDEF13</name>
+        <description>default symbol for a beacon, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNDEF13.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNGEN01">
+      <description>
+        <name>BCNGEN01</name>
+        <description>beacon in general, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNGEN01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNGEN03">
+      <description>
+        <name>BCNGEN03</name>
+        <description>default symbol for beacon, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNGEN03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNISD21">
+      <description>
+        <name>BCNISD21</name>
+        <description>isolated danger beacon, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNISD21.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNLAT15">
+      <description>
+        <name>BCNLAT15</name>
+        <description>major lateral beacon, red, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNLAT15.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNLAT16">
+      <description>
+        <name>BCNLAT16</name>
+        <description>major lateral beacon, green, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNLAT16.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNLAT21">
+      <description>
+        <name>BCNLAT21</name>
+        <description>minor lateral beacon, red, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNLAT21.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNLAT22">
+      <description>
+        <name>BCNLAT22</name>
+        <description>minor lateral beacon, green, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNLAT22.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNLTC01">
+      <description>
+        <name>BCNLTC01</name>
+        <description>lattice beacon, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNLTC01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNSAW13">
+      <description>
+        <name>BCNSAW13</name>
+        <description>major safe water beacon, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNSAW13.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNSAW21">
+      <description>
+        <name>BCNSAW21</name>
+        <description>minor safe water beacon, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNSAW21.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNSPP13">
+      <description>
+        <name>BCNSPP13</name>
+        <description>major special purpose beacon, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNSPP13.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNSPP21">
+      <description>
+        <name>BCNSPP21</name>
+        <description>minor special purpose beacon, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNSPP21.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNSTK02">
+      <description>
+        <name>BCNSTK02</name>
+        <description>minor, stake or pole beacon, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNSTK02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BCNTOW01">
+      <description>
+        <name>BCNTOW01</name>
+        <description>beacon tower, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BCNTOW01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYBAR01">
+      <description>
+        <name>BOYBAR01</name>
+        <description>barrel buoy, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYBAR01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYCAN01">
+      <description>
+        <name>BOYCAN01</name>
+        <description>can buoy, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYCAN01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYCAR01">
+      <description>
+        <name>BOYCAR01</name>
+        <description>cardinal buoy, north, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYCAR01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYCAR02">
+      <description>
+        <name>BOYCAR02</name>
+        <description>cardinal buoy, east, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYCAR02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYCAR03">
+      <description>
+        <name>BOYCAR03</name>
+        <description>cardinal buoy, south, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYCAR03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYCAR04">
+      <description>
+        <name>BOYCAR04</name>
+        <description>cardinal buoy, west, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYCAR04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYCON01">
+      <description>
+        <name>BOYCON01</name>
+        <description>conical buoy, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYCON01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYDEF03">
+      <description>
+        <name>BOYDEF03</name>
+        <description>default symbol for buoy, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYDEF03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYGEN03">
+      <description>
+        <name>BOYGEN03</name>
+        <description>default symbol for buoy, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYGEN03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYINB01">
+      <description>
+        <name>BOYINB01</name>
+        <description>installation buoy, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYINB01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYISD12">
+      <description>
+        <name>BOYISD12</name>
+        <description>isolated danger buoy, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYISD12.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYLAT13">
+      <description>
+        <name>BOYLAT13</name>
+        <description>conical lateral buoy, green, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYLAT13.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYLAT14">
+      <description>
+        <name>BOYLAT14</name>
+        <description>conical lateral buoy, red, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYLAT14.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYLAT23">
+      <description>
+        <name>BOYLAT23</name>
+        <description>can shape lateral buoy, green, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYLAT23.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYLAT24">
+      <description>
+        <name>BOYLAT24</name>
+        <description>can shape lateral buoy, red, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYLAT24.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYMOR11">
+      <description>
+        <name>BOYMOR11</name>
+        <description>installation buoy and mooring buoy, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYMOR11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYPIL01">
+      <description>
+        <name>BOYPIL01</name>
+        <description>pillar buoy, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYPIL01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYSAW12">
+      <description>
+        <name>BOYSAW12</name>
+        <description>safe water buoy, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYSAW12.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYSPH01">
+      <description>
+        <name>BOYSPH01</name>
+        <description>spherical buoy, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYSPH01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYSPP11">
+      <description>
+        <name>BOYSPP11</name>
+        <description>special purpose buoy, spherical or barrel shaped, or default symbol for special purpose buoy, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYSPP11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYSPP15">
+      <description>
+        <name>BOYSPP15</name>
+        <description>special purpose TSS buoy marking the starboard side of the traffic lane, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYSPP15.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYSPP25">
+      <description>
+        <name>BOYSPP25</name>
+        <description>special purpose TSS buoy marking the port side of the traffic lane, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYSPP25.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYSPP35">
+      <description>
+        <name>BOYSPP35</name>
+        <description>special purpose ice buoy or spar or pillar shaped buoy, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYSPP35.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYSPR01">
+      <description>
+        <name>BOYSPR01</name>
+        <description>spar buoy, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYSPR01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYSUP01">
+      <description>
+        <name>BOYSUP01</name>
+        <description>super-buoy, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYSUP01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYSUP02">
+      <description>
+        <name>BOYSUP02</name>
+        <description>super-buoy ODAS And LANBY, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYSUP02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYSUP03">
+      <description>
+        <name>BOYSUP03</name>
+        <description>LANBY, super-buoy, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>BOYSUP03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BUIREL01">
+      <description>
+        <name>BUIREL01</name>
+        <description>non-conspicuous religious building, Christian</description>
+        <language>en</language>
+      </description>
+      <fileName>BUIREL01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BUIREL13">
+      <description>
+        <name>BUIREL13</name>
+        <description>conspicuous religious building, Christian</description>
+        <language>en</language>
+      </description>
+      <fileName>BUIREL13.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BUIREL15">
+      <description>
+        <name>BUIREL15</name>
+        <description>conspicuous mosque or minaret</description>
+        <language>en</language>
+      </description>
+      <fileName>BUIREL15.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CAIRNS01">
+      <description>
+        <name>CAIRNS01</name>
+        <description>cairn</description>
+        <language>en</language>
+      </description>
+      <fileName>CAIRNS01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CAIRNS11">
+      <description>
+        <name>CAIRNS11</name>
+        <description>conspicuous cairn</description>
+        <language>en</language>
+      </description>
+      <fileName>CAIRNS11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHIMNY01">
+      <description>
+        <name>CHIMNY01</name>
+        <description>chimney</description>
+        <language>en</language>
+      </description>
+      <fileName>CHIMNY01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHIMNY11">
+      <description>
+        <name>CHIMNY11</name>
+        <description>conspicuous chimney</description>
+        <language>en</language>
+      </description>
+      <fileName>CHIMNY11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CTYARE51">
+      <description>
+        <name>CTYARE51</name>
+        <description>cautionary area (e.g. ferry area) navigate with caution</description>
+        <language>en</language>
+      </description>
+      <fileName>CTYARE51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DAYSQR01">
+      <description>
+        <name>DAYSQR01</name>
+        <description>square or rectangular daymark, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>DAYSQR01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DAYSQR21">
+      <description>
+        <name>DAYSQR21</name>
+        <description>square or rectangular daymark, paper chart</description>
+        <language>en</language>
+      </description>
+      <fileName>DAYSQR21.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DAYTRI01">
+      <description>
+        <name>DAYTRI01</name>
+        <description>triangular daymark, point up, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>DAYTRI01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DAYTRI05">
+      <description>
+        <name>DAYTRI05</name>
+        <description>triangular daymark, point down, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>DAYTRI05.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DAYTRI21">
+      <description>
+        <name>DAYTRI21</name>
+        <description>triangular daymark, point up, paper chart</description>
+        <language>en</language>
+      </description>
+      <fileName>DAYTRI21.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DAYTRI25">
+      <description>
+        <name>DAYTRI25</name>
+        <description>triangular daymark, point down, paper chart</description>
+        <language>en</language>
+      </description>
+      <fileName>DAYTRI25.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DOMES001">
+      <description>
+        <name>DOMES001</name>
+        <description>dome</description>
+        <language>en</language>
+      </description>
+      <fileName>DOMES001.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DOMES011">
+      <description>
+        <name>DOMES011</name>
+        <description>conspicuous dome</description>
+        <language>en</language>
+      </description>
+      <fileName>DOMES011.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DSHAER01">
+      <description>
+        <name>DSHAER01</name>
+        <description>dish aerial</description>
+        <language>en</language>
+      </description>
+      <fileName>DSHAER01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DSHAER11">
+      <description>
+        <name>DSHAER11</name>
+        <description>conspicuous dish aerial</description>
+        <language>en</language>
+      </description>
+      <fileName>DSHAER11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DWRTPT51">
+      <description>
+        <name>DWRTPT51</name>
+        <description>part of deep water route</description>
+        <language>en</language>
+      </description>
+      <fileName>DWRTPT51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DWRUTE51">
+      <description>
+        <name>DWRUTE51</name>
+        <description>reciprocal traffic directions in a two-way part of a deep-water route</description>
+        <language>en</language>
+      </description>
+      <fileName>DWRUTE51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="FLASTK01">
+      <description>
+        <name>FLASTK01</name>
+        <description>flare stack</description>
+        <language>en</language>
+      </description>
+      <fileName>FLASTK01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="FLASTK11">
+      <description>
+        <name>FLASTK11</name>
+        <description>conspicuous flare stack</description>
+        <language>en</language>
+      </description>
+      <fileName>FLASTK11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="FLGSTF01">
+      <description>
+        <name>FLGSTF01</name>
+        <description>flagstaff, flagpole</description>
+        <language>en</language>
+      </description>
+      <fileName>FLGSTF01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="FOGSIG01">
+      <description>
+        <name>FOGSIG01</name>
+        <description>fog signal</description>
+        <language>en</language>
+      </description>
+      <fileName>FOGSIG01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LITFLT01">
+      <description>
+        <name>LITFLT01</name>
+        <description>light float, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>LITFLT01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LITFLT02">
+      <description>
+        <name>LITFLT02</name>
+        <description>light float, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>LITFLT02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LITVES01">
+      <description>
+        <name>LITVES01</name>
+        <description>light vessel, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>LITVES01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LITVES02">
+      <description>
+        <name>LITVES02</name>
+        <description>light vessel, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>LITVES02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MONUMT02">
+      <description>
+        <name>MONUMT02</name>
+        <description>monument</description>
+        <language>en</language>
+      </description>
+      <fileName>MONUMT02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MONUMT12">
+      <description>
+        <name>MONUMT12</name>
+        <description>conspicuous monument</description>
+        <language>en</language>
+      </description>
+      <fileName>MONUMT12.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MSTCON04">
+      <description>
+        <name>MSTCON04</name>
+        <description>mast</description>
+        <language>en</language>
+      </description>
+      <fileName>MSTCON04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MSTCON14">
+      <description>
+        <name>MSTCON14</name>
+        <description>conspicuous mast</description>
+        <language>en</language>
+      </description>
+      <fileName>MSTCON14.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="NOTBRD11">
+      <description>
+        <name>NOTBRD11</name>
+        <description>conspicuous notice board</description>
+        <language>en</language>
+      </description>
+      <fileName>NOTBRD11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="OFSPLF01">
+      <description>
+        <name>OFSPLF01</name>
+        <description>offshore platform</description>
+        <language>en</language>
+      </description>
+      <fileName>OFSPLF01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="PILPNT02">
+      <description>
+        <name>PILPNT02</name>
+        <description>pile or bollard</description>
+        <language>en</language>
+      </description>
+      <fileName>PILPNT02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="POSGEN01">
+      <description>
+        <name>POSGEN01</name>
+        <description>position of a point feature</description>
+        <language>en</language>
+      </description>
+      <fileName>POSGEN01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="POSGEN03">
+      <description>
+        <name>POSGEN03</name>
+        <description>position of a conspicuous point feature</description>
+        <language>en</language>
+      </description>
+      <fileName>POSGEN03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="POSGEN04">
+      <description>
+        <name>POSGEN04</name>
+        <description>position of an elevation or control point</description>
+        <language>en</language>
+      </description>
+      <fileName>POSGEN04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="PRICKE03">
+      <description>
+        <name>PRICKE03</name>
+        <description>withy, port-hand, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>PRICKE03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="PRICKE04">
+      <description>
+        <name>PRICKE04</name>
+        <description>withy, starboard-hand, paper-chart</description>
+        <language>en</language>
+      </description>
+      <fileName>PRICKE04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RADRFL03">
+      <description>
+        <name>RADRFL03</name>
+        <description>radar reflector</description>
+        <language>en</language>
+      </description>
+      <fileName>RADRFL03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RASCAN01">
+      <description>
+        <name>RASCAN01</name>
+        <description>radar scanner</description>
+        <language>en</language>
+      </description>
+      <fileName>RASCAN01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RASCAN11">
+      <description>
+        <name>RASCAN11</name>
+        <description>conspicuous radar scanner</description>
+        <language>en</language>
+      </description>
+      <fileName>RASCAN11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RDOSTA02">
+      <description>
+        <name>RDOSTA02</name>
+        <description>radio station</description>
+        <language>en</language>
+      </description>
+      <fileName>RDOSTA02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RETRFL01">
+      <description>
+        <name>RETRFL01</name>
+        <description>retro reflector, paper chart</description>
+        <language>en</language>
+      </description>
+      <fileName>RETRFL01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RETRFL02">
+      <description>
+        <name>RETRFL02</name>
+        <description>retro reflector, simplified</description>
+        <language>en</language>
+      </description>
+      <fileName>RETRFL02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RTPBCN02">
+      <description>
+        <name>RTPBCN02</name>
+        <description>radar transponder beacon</description>
+        <language>en</language>
+      </description>
+      <fileName>RTPBCN02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SILBUI01">
+      <description>
+        <name>SILBUI01</name>
+        <description>silo</description>
+        <language>en</language>
+      </description>
+      <fileName>SILBUI01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SILBUI11">
+      <description>
+        <name>SILBUI11</name>
+        <description>conspicuous silo</description>
+        <language>en</language>
+      </description>
+      <fileName>SILBUI11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SISTAT02">
+      <description>
+        <name>SISTAT02</name>
+        <description>signal station</description>
+        <language>en</language>
+      </description>
+      <fileName>SISTAT02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TNKCON02">
+      <description>
+        <name>TNKCON02</name>
+        <description>tank</description>
+        <language>en</language>
+      </description>
+      <fileName>TNKCON02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TNKCON12">
+      <description>
+        <name>TNKCON12</name>
+        <description>conspicuous tank</description>
+        <language>en</language>
+      </description>
+      <fileName>TNKCON12.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOWERS01">
+      <description>
+        <name>TOWERS01</name>
+        <description>tower</description>
+        <language>en</language>
+      </description>
+      <fileName>TOWERS01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOWERS02">
+      <description>
+        <name>TOWERS02</name>
+        <description>water tower</description>
+        <language>en</language>
+      </description>
+      <fileName>TOWERS02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOWERS03">
+      <description>
+        <name>TOWERS03</name>
+        <description>conspicuous tower</description>
+        <language>en</language>
+      </description>
+      <fileName>TOWERS03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOWERS05">
+      <description>
+        <name>TOWERS05</name>
+        <description>radio, television tower</description>
+        <language>en</language>
+      </description>
+      <fileName>TOWERS05.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOWERS12">
+      <description>
+        <name>TOWERS12</name>
+        <description>conspicuous water tower</description>
+        <language>en</language>
+      </description>
+      <fileName>TOWERS12.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOWERS15">
+      <description>
+        <name>TOWERS15</name>
+        <description>conspicuous radio, television tower</description>
+        <language>en</language>
+      </description>
+      <fileName>TOWERS15.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TSLDEF51">
+      <description>
+        <name>TSLDEF51</name>
+        <description>one way lane of a traffic separation scheme, with the direction not defined in the data</description>
+        <language>en</language>
+      </description>
+      <fileName>TSLDEF51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TSSLPT51">
+      <description>
+        <name>TSSLPT51</name>
+        <description>traffic direction in a one way lane of a traffic separation scheme</description>
+        <language>en</language>
+      </description>
+      <fileName>TSSLPT51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="WATTUR02">
+      <description>
+        <name>WATTUR02</name>
+        <description>overfalls, eddies and breakers</description>
+        <language>en</language>
+      </description>
+      <fileName>WATTUR02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="WIMCON01">
+      <description>
+        <name>WIMCON01</name>
+        <description>windmotor</description>
+        <language>en</language>
+      </description>
+      <fileName>WIMCON01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="WIMCON11">
+      <description>
+        <name>WIMCON11</name>
+        <description>conspicuous windmotor</description>
+        <language>en</language>
+      </description>
+      <fileName>WIMCON11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="WNDMIL02">
+      <description>
+        <name>WNDMIL02</name>
+        <description>windmill</description>
+        <language>en</language>
+      </description>
+      <fileName>WNDMIL02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="WNDMIL12">
+      <description>
+        <name>WNDMIL12</name>
+        <description>conspicuous windmill</description>
+        <language>en</language>
+      </description>
+      <fileName>WNDMIL12.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>Question Mark</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TMARDEF1">
+      <description>
+        <name>TMARDEF1</name>
+        <description>TMARDEF1</description>
+        <language>en</language>
+      </description>
+      <fileName>TMARDEF1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TMARDEF2">
+      <description>
+        <name>TMARDEF2</name>
+        <description>TMARDEF2</description>
+        <language>en</language>
+      </description>
+      <fileName>TMARDEF2</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LIGHTS11">
+      <description>
+        <name>LIGHTS11</name>
+        <description>light flare, red</description>
+        <language>en</language>
+      </description>
+      <fileName>LIGHTS11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LIGHTS12">
+      <description>
+        <name>LIGHTS12</name>
+        <description>light flare, green</description>
+        <language>en</language>
+      </description>
+      <fileName>LIGHTS12.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LIGHTS13">
+      <description>
+        <name>LIGHTS13</name>
+        <description>light flare, white or yellow</description>
+        <language>en</language>
+      </description>
+      <fileName>LIGHTS13.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LIGHTS81">
+      <description>
+        <name>LIGHTS81</name>
+        <description>strip light</description>
+        <language>en</language>
+      </description>
+      <fileName>LIGHTS81.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LIGHTS82">
+      <description>
+        <name>LIGHTS82</name>
+        <description>floodlight</description>
+        <language>en</language>
+      </description>
+      <fileName>LIGHTS82.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LITDEF11">
+      <description>
+        <name>LITDEF11</name>
+        <description>light flare</description>
+        <language>en</language>
+      </description>
+      <fileName>LITDEF11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+
+
+
+    <symbol id="TOPMAR02">
+      <description>
+        <name>TOPMAR02</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR04">
+      <description>
+        <name>TOPMAR04</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR05">
+      <description>
+        <name>TOPMAR05</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR05.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR06">
+      <description>
+        <name>TOPMAR06</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR06.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR07">
+      <description>
+        <name>TOPMAR07</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR07.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR08">
+      <description>
+        <name>TOPMAR08</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR08.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR10">
+      <description>
+        <name>TOPMAR10</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR10.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR12">
+      <description>
+        <name>TOPMAR12</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR12.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR13">
+      <description>
+        <name>TOPMAR13</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR13.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR14">
+      <description>
+        <name>TOPMAR14</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR14.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR16">
+      <description>
+        <name>TOPMAR16</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR16.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR17">
+      <description>
+        <name>TOPMAR17</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR17.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR18">
+      <description>
+        <name>TOPMAR18</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR18.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR22">
+      <description>
+        <name>TOPMAR22</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR22.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR24">
+      <description>
+        <name>TOPMAR24</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR24.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR25">
+      <description>
+        <name>TOPMAR25</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR25.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR26">
+      <description>
+        <name>TOPMAR26</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR26.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR27">
+      <description>
+        <name>TOPMAR27</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR27.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR28">
+      <description>
+        <name>TOPMAR28</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR28.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR30">
+      <description>
+        <name>TOPMAR30</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR30.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR32">
+      <description>
+        <name>TOPMAR32</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR32.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR33">
+      <description>
+        <name>TOPMAR33</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR33.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR34">
+      <description>
+        <name>TOPMAR34</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR34.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR36">
+      <description>
+        <name>TOPMAR36</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR36.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR65">
+      <description>
+        <name>TOPMAR65</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR65.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR85">
+      <description>
+        <name>TOPMAR85</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR85.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR86">
+      <description>
+        <name>TOPMAR86</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR86.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR87">
+      <description>
+        <name>TOPMAR87</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR87.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR88">
+      <description>
+        <name>TOPMAR88</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR88.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TOPMAR89">
+      <description>
+        <name>TOPMAR89</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>TOPMAR89.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHNGAC01">
+      <description>
+        <name>CHNGAC01</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>CHNGAC01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHNGDC01">
+      <description>
+        <name>CHNGDC01</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>CHNGDC01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHNGPC01">
+      <description>
+        <name>CHNGPC01</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>CHNGPC01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHNGTC01">
+      <description>
+        <name>CHNGTC01</name>
+        <description> </description>
+        <language>en</language>
+      </description>
+      <fileName>CHNGTC01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+  </symbols>
+  <lineStyles>
+    
+  </lineStyles>
+  <areaFills>
+    
+  </areaFills>
+  
+  <fonts>
+    <font id="droid">
+         <description>
+            <name>DroidSans</name>
+            <description>Droid sans serif, from http://www.fontsquirrel.com</description>
+            <language>en</language>
+         </description>
+         <fileName>DroidSans.ttf</fileName>
+         <fileType>Font</fileType>
+         <fileFormat>TTF</fileFormat>
+      </font>
+    <font id="droidBold">
+         <description>
+            <name>DroidSansBold</name>
+            <description>Droid sans serif Bold, from http://www.fontsquirrel.com</description>
+            <language>en</language>
+         </description>
+         <fileName>DroidSans-Bold.ttf</fileName>
+         <fileType>Font</fileType>
+         <fileFormat>TTF</fileFormat>
+      </font>
+    <font id="OpenSans">
+         <description>
+            <name>OpenSans</name>
+            <description>Open sans serif, from http://www.fontsquirrel.com</description>
+            <language>en</language>
+         </description>
+         <fileName>OpenSans-Regular.ttf</fileName>
+         <fileType>Font</fileType>
+         <fileFormat>TTF</fileFormat>
+      </font>
+    <font id="OpenSansBold">
+         <description>
+            <name>OpenSansBold</name>
+            <description>Open sans serif Bold, from http://www.fontsquirrel.com</description>
+            <language>en</language>
+         </description>
+         <fileName>OpenSans-Bold.ttf</fileName>
+         <fileType>Font</fileType>
+         <fileFormat>TTF</fileFormat>
+      </font>
+   </fonts>
+
+   <viewingGroups>
+      <viewingGroup id="1">
+         <description>
+            <name>21010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="2">
+         <description>
+            <name>26220</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="3">
+         <description>
+            <name>36050</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="4">
+         <description>
+            <name>32240</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="5">
+         <description>
+            <name>22220</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="6">
+         <description>
+            <name>26260</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="7">
+         <description>
+            <name>27020</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="8">
+         <description>
+            <name>32440</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="9">
+         <description>
+            <name>27010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="10">
+         <description>
+            <name>12210</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="11">
+         <description>
+            <name>22240</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="12">
+         <description>
+            <name>32220</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="13">
+         <description>
+            <name>12420</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="14">
+         <description>
+            <name>22010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="15">
+         <description>
+            <name>34030</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="16">
+         <description>
+            <name>34070</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="17">
+         <description>
+            <name>24010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="18">
+         <description>
+            <name>38030</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="19">
+         <description>
+            <name>32410</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="20">
+         <description>
+            <name>12410</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="21">
+         <description>
+            <name>36010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="22">
+         <description>
+            <name>26150</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="23">
+         <description>
+            <name>26050</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="24">
+         <description>
+            <name>32250</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="25">
+         <description>
+            <name>26250</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="26">
+         <description>
+            <name>33060</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="27">
+         <description>
+            <name>36020</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="28">
+         <description>
+            <name>27025</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="29">
+         <description>
+            <name>13030</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="30">
+         <description>
+            <name>33020</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="31">
+         <description>
+            <name>27030</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="32">
+         <description>
+            <name>26240</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="33">
+         <description>
+            <name>25010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="34">
+         <description>
+            <name>22210</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="35">
+         <description>
+            <name>25030</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="36">
+         <description>
+            <name>27080</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="37">
+         <description>
+            <name>26210</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="38">
+         <description>
+            <name>36040</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="39">
+         <description>
+            <name>27060</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="40">
+         <description>
+            <name>27070</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="41">
+         <description>
+            <name>27011</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="42">
+         <description>
+            <name>12010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="43">
+         <description>
+            <name>32010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="44">
+         <description>
+            <name>21060</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="45">
+         <description>
+            <name>31080</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="46">
+         <description>
+            <name>34050</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="47">
+         <description>
+            <name>26040</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="48">
+         <description>
+            <name>14010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="49">
+         <description>
+            <name>31010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="50">
+         <description>
+            <name>31040</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="51">
+         <description>
+            <name>31020</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="52">
+         <description>
+            <name>27040</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="53">
+         <description>
+            <name>34051</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="54">
+         <description>
+            <name>28010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="55">
+         <description>
+            <name>32270</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="56">
+         <description>
+            <name>25040</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="57">
+         <description>
+            <name>27230</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="58">
+         <description>
+            <name>38010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="59">
+         <description>
+            <name>32050</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="60">
+         <description>
+            <name>25020</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="61">
+         <description>
+            <name>25060</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="62">
+         <description>
+            <name>26010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="63">
+         <description>
+            <name>27210</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="64">
+         <description>
+            <name>34010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="65">
+         <description>
+            <name>28020</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="66">
+         <description>
+            <name>38210</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="67">
+         <description>
+            <name>33010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="68">
+         <description>
+            <name>34020</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="69">
+         <description>
+            <name>23030</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="70">
+         <description>
+            <name>32070</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="71">
+         <description>
+            <name>33050</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="72">
+         <description>
+            <name>11050</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="73">
+         <description>
+            <name>32030</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="74">
+         <description>
+            <name>33040</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="75">
+         <description>
+            <name>53010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="76">
+         <description>
+            <name>53050</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="77">
+         <description>
+            <name>53040</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="78">
+         <description>
+            <name>53030</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="79">
+         <description>
+            <name>55010</name>
+            <description/>
+            <language>en</language>
+         </description>
+      </viewingGroup>
+   </viewingGroups>
+   <foundationMode/>
+   <viewingGroupLayers>
+      <viewingGroupLayer id="1">
+         <description>
+            <name>viewingGroupLayer1</name>
+            <description>Test Viewing Group Layer</description>
+            <language>en</language>
+         </description>
+         <viewingGroup>1</viewingGroup>
+      </viewingGroupLayer>
+      <viewingGroupLayer id="2">
+         <description>
+            <name>viewingGroupLayer2</name>
+            <description>Test Viewing Group Layer</description>
+            <language>en</language>
+         </description>
+         <viewingGroup>2</viewingGroup>
+      </viewingGroupLayer>
+      <viewingGroupLayer id="3">
+         <description>
+            <name>viewingGroupLayer3</name>
+            <description>Test Viewing Group Layer</description>
+            <language>en</language>
+         </description>
+         <viewingGroup>3</viewingGroup>
+      </viewingGroupLayer>
+      <viewingGroupLayer id="4">
+         <description>
+            <name>viewingGroupLayer4</name>
+            <description>Test Viewing Group Layer</description>
+            <language>en</language>
+         </description>
+         <viewingGroup>4</viewingGroup>
+      </viewingGroupLayer>
+   </viewingGroupLayers>
+   <displayModes>
+      <displayMode id="1">
+         <description>
+            <name>Display Base</name>
+            <description>Always on display</description>
+            <language>en</language>
+         </description>
+         <viewingGroupLayer>1</viewingGroupLayer>
+      </displayMode>
+      <displayMode id="4">
+         <description>
+            <name>Mariners</name>
+            <description>Display Mariner's Objects</description>
+            <language>en</language>
+         </description>
+         <viewingGroupLayer>4</viewingGroupLayer>
+      </displayMode>
+      <displayMode id="3">
+         <description>
+            <name>Other Information</name>
+            <description>All other objects in the SENC</description>
+            <language>en</language>
+         </description>
+         <viewingGroupLayer>3</viewingGroupLayer>
+      </displayMode>
+      <displayMode id="2">
+         <description>
+            <name>Standard Display</name>
+            <description>ECDIS default display</description>
+            <language>en</language>
+         </description>
+         <viewingGroupLayer>2</viewingGroupLayer>
+      </displayMode>
+   </displayModes>
+   <displayPlane>
+      <displayPlane id="1">
+         <description>
+            <name>overRadar</name>
+            <description>Content displayed on top of Radar image</description>
+            <language>en</language>
+         </description>
+      </displayPlane>
+      <displayPlane id="2">
+         <description>
+            <name>underRadar</name>
+            <description>Content displayed underneath Radar image</description>
+            <language>en</language>
+         </description>
+      </displayPlane>
+   </displayPlane>
+   <context>
+      <parameter id="3">
+         <description>
+            <name>SAFETY_CONTOUR</name>
+            <description>selected safety contour (meters)</description>
+            <language>en</language>
+         </description>
+         <type>Double</type>
+         <default>2</default>
+      </parameter>
+      <parameter id="1">
+         <description>
+            <name>SAFETY_DEPTH</name>
+            <description>selected safety depth (meters)</description>
+            <language>en</language>
+         </description>
+         <type>Double</type>
+         <default>30</default>
+      </parameter>
+      <parameter id="2">
+         <description>
+            <name>SHALLOW_CONTOUR</name>
+            <description>selected shallow water contour (meters) (optional)</description>
+            <language>en</language>
+         </description>
+         <type>Double</type>
+         <default>30</default>
+      </parameter>
+      <parameter id="4">
+         <description>
+            <name>TWO_SHADES</name>
+            <description>show two depth shades only, safe vs unsafe</description>
+            <language>en</language>
+         </description>
+         <type>Boolean</type>
+         <default>true</default>
+      </parameter>
+      <parameter id="5">
+         <description>
+            <name>DEEP_CONTOUR</name>
+            <description>selected deep water contour (meters) (optional)</description>
+            <language>en</language>
+         </description>
+         <type>Double</type>
+         <default>30</default>
+      </parameter>
+      <parameter id="6">
+         <description>
+            <name>SHALLOW_PATTERN</name>
+            <description>show the shallow diamond pattern in shallow water</description>
+            <language>en</language>
+         </description>
+         <type>Boolean</type>
+         <default>false</default>
+      </parameter>
+      <parameter id="7">
+         <description>
+            <name>SHOW_ISOLATED_DANGERS_IN_SHALLOW_WATERS</name>
+            <description>show isolated dangers in shallow waters</description>
+            <language>en</language>
+         </description>
+         <type>Boolean</type>
+         <default>false</default>
+      </parameter>
+   </context>
+  <rules>
+    <ruleFile id="1">
+      <description>
+        <name>attributeRules</name>
+        <description>attributeRules</description>
+        <language>en</language>
+      </description>
+      <fileName>attributeRules.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="2">
+      <description>
+        <name>BeaconCardinal_PAPER_CHART</name>
+        <description>BeaconCardinal_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BeaconCardinal_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="3">
+      <description>
+        <name>BeaconIsolatedDanger_PAPER_CHART</name>
+        <description>BeaconIsolatedDanger_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BeaconIsolatedDanger_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="4">
+      <description>
+        <name>BeaconLateral_PAPER_CHART</name>
+        <description>BeaconLateral_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BeaconLateral_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="5">
+      <description>
+        <name>BeaconSafeWater_PAPER_CHART</name>
+        <description>BeaconSafeWater_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BeaconSafeWater_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="6">
+      <description>
+        <name>BeaconSpecialPurposeGeneral_PAPER_CHART</name>
+        <description>BeaconSpecialPurposeGeneral_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BeaconSpecialPurposeGeneral_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="7">
+      <description>
+        <name>BuoyCardinal_PAPER_CHART</name>
+        <description>BuoyCardinal_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BuoyCardinal_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="8">
+      <description>
+        <name>BuoyInstallation_PAPER_CHART</name>
+        <description>BuoyInstallation_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BuoyInstallation_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="9">
+      <description>
+        <name>BuoyIsolatedDanger_PAPER_CHART</name>
+        <description>BuoyIsolatedDanger_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BuoyIsolatedDanger_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="10">
+      <description>
+        <name>BuoyLateral_PAPER_CHART</name>
+        <description>BuoyLateral_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BuoyLateral_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="11">
+      <description>
+        <name>BuoySafeWater_PAPER_CHART</name>
+        <description>BuoySafeWater_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BuoySafeWater_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="12">
+      <description>
+        <name>BuoySpecialPurposeGeneral_PAPER_CHART</name>
+        <description>BuoySpecialPurposeGeneral_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>BuoySpecialPurposeGeneral_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="13">
+      <description>
+        <name>DeepWaterRouteCentreline_COMMON</name>
+        <description>DeepWaterRouteCentreline_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>DeepWaterRouteCentreline_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="14">
+      <description>
+        <name>DeepWaterRoutePart_PLAIN_BOUNDARIES</name>
+        <description>DeepWaterRoutePart_PLAIN_BOUNDARIES</description>
+        <language>en</language>
+      </description>
+      <fileName>DeepWaterRoutePart_PLAIN_BOUNDARIES.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="15">
+      <description>
+        <name>DeepWaterRoutePart_SYMBOLIZED_BOUNDARIES</name>
+        <description>DeepWaterRoutePart_SYMBOLIZED_BOUNDARIES</description>
+        <language>en</language>
+      </description>
+      <fileName>DeepWaterRoutePart_SYMBOLIZED_BOUNDARIES.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="16">
+      <description>
+        <name>Depcnt03</name>
+        <description>Depcnt03</description>
+        <language>en</language>
+      </description>
+      <fileName>Depcnt03.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="17">
+      <description>
+        <name>FloatingDock_COMMON</name>
+        <description>FloatingDock_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>FloatingDock_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="18">
+      <description>
+        <name>FogSignal_COMMON</name>
+        <description>FogSignal_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>FogSignal_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="19">
+      <description>
+        <name>safcon02</name>
+        <description>safcon02</description>
+        <language>en</language>
+      </description>
+      <fileName>safcon02.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="20">
+      <description>
+        <name>Landmark_PAPER_CHART</name>
+        <description>Landmark_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>Landmark_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="21">
+      <description>
+        <name>LightDescription</name>
+        <description>LightDescription</description>
+        <language>en</language>
+      </description>
+      <fileName>LightDescription.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="22">
+      <description>
+        <name>LightFloat_PAPER_CHART</name>
+        <description>LightFloat_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>LightFloat_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="23">
+      <description>
+        <name>Lights</name>
+        <description>Lights</description>
+        <language>en</language>
+      </description>
+      <fileName>Lights.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="24">
+      <description>
+        <name>LightSectored_custom</name>
+        <description>LightSectored_custom</description>
+        <language>en</language>
+      </description>
+      <fileName>LightSectored_custom.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="25">
+      <description>
+        <name>LightVessel_PAPER_CHART</name>
+        <description>LightVessel_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>LightVessel_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="26">
+      <description>
+        <name>main_PaperChart</name>
+        <description>main_PaperChart</description>
+        <language>en</language>
+      </description>
+      <fileName>main_PaperChart.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="27">
+      <description>
+        <name>natsur01</name>
+        <description>natsur01</description>
+        <language>en</language>
+      </description>
+      <fileName>natsur01.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="28">
+      <description>
+        <name>Obstruction_custom</name>
+        <description>Obstruction_custom</description>
+        <language>en</language>
+      </description>
+      <fileName>Obstruction_custom.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="29">
+      <description>
+        <name>OffshorePlatform_COMMON</name>
+        <description>OffshorePlatform_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>OffshorePlatform_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="30">
+      <description>
+        <name>OffshoreProductionArea_PLAIN_BOUNDARIES</name>
+        <description>OffshoreProductionArea_PLAIN_BOUNDARIES</description>
+        <language>en</language>
+      </description>
+      <fileName>OffshoreProductionArea_PLAIN_BOUNDARIES.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="31">
+      <description>
+        <name>OffshoreProductionArea_SYMBOLIZED_BOUNDARIES</name>
+        <description>OffshoreProductionArea_SYMBOLIZED_BOUNDARIES</description>
+        <language>en</language>
+      </description>
+      <fileName>OffshoreProductionArea_SYMBOLIZED_BOUNDARIES.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="32">
+      <description>
+        <name>Pile_COMMON</name>
+        <description>Pile_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>Pile_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="33">
+      <description>
+        <name>qualin03</name>
+        <description>qualin03</description>
+        <language>en</language>
+      </description>
+      <fileName>qualin03.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="34">
+      <description>
+        <name>RadarLine_COMMON</name>
+        <description>RadarLine_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>RadarLine_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="35">
+      <description>
+        <name>RadarRange_COMMON</name>
+        <description>RadarRange_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>RadarRange_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="36">
+      <description>
+        <name>RadarReflector_COMMON</name>
+        <description>RadarReflector_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>RadarReflector_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="37">
+      <description>
+        <name>RadarStation_COMMON</name>
+        <description>RadarStation_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>RadarStation_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="38">
+      <description>
+        <name>RadarTransponderBeacon_COMMON</name>
+        <description>RadarTransponderBeacon_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>RadarTransponderBeacon_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="39">
+      <description>
+        <name>rescsp03</name>
+        <description>rescsp03</description>
+        <language>en</language>
+      </description>
+      <fileName>rescsp03.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="40">
+      <description>
+        <name>RestrictedArea_Custom</name>
+        <description>RestrictedArea_Custom</description>
+        <language>en</language>
+      </description>
+      <fileName>RestrictedArea_Custom.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="41">
+      <description>
+        <name>RetroReflector_PAPER_CHART</name>
+        <description>RetroReflector_PAPER_CHART</description>
+        <language>en</language>
+      </description>
+      <fileName>RetroReflector_PAPER_CHART.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="42">
+      <description>
+        <name>SeaAreaNamedWaterArea_COMMON</name>
+        <description>SeaAreaNamedWaterArea_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>SeaAreaNamedWaterArea_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="43">
+      <description>
+        <name>seabed01</name>
+        <description>seabed01</description>
+        <language>en</language>
+      </description>
+      <fileName>seabed01.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="44">
+      <description>
+        <name>SignalStationTraffic_COMMON</name>
+        <description>SignalStationTraffic_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>SignalStationTraffic_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="45">
+      <description>
+        <name>SignalStationWarning_COMMON</name>
+        <description>SignalStationWarning_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>SignalStationWarning_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="46">
+      <description>
+        <name>SiloTank_COMMON</name>
+        <description>SiloTank_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>SiloTank_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="47">
+      <description>
+        <name>simpleLineStyle</name>
+        <description>simpleLineStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>simpleLineStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="48">
+      <description>
+        <name>slcons04</name>
+        <description>slcons04</description>
+        <language>en</language>
+      </description>
+      <fileName>slcons04.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="49">
+      <description>
+        <name>sndfrm04</name>
+        <description>sndfrm04</description>
+        <language>en</language>
+      </description>
+      <fileName>sndfrm04.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="50">
+      <description>
+        <name>soundg02</name>
+        <description>soundg02</description>
+        <language>en</language>
+      </description>
+      <fileName>soundg02.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="51">
+      <description>
+        <name>SoundingDatum_COMMON</name>
+        <description>SoundingDatum_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>SoundingDatum_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="52">
+      <description>
+        <name>textStyle</name>
+        <description>textStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>textStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="53">
+      <description>
+        <name>topmarks</name>
+        <description>topmarks</description>
+        <language>en</language>
+      </description>
+      <fileName>topmarks.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="54">
+      <description>
+        <name>UnderWaterAwashRock_custom</name>
+        <description>UnderWaterAwashRock_custom</description>
+        <language>en</language>
+      </description>
+      <fileName>UnderWaterAwashRock_custom.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="55">
+      <description>
+        <name>Waterfall_COMMON</name>
+        <description>Waterfall_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>Waterfall_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="56">
+      <description>
+        <name>WaterTurbulence_COMMON</name>
+        <description>WaterTurbulence_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>WaterTurbulence_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="57">
+      <description>
+        <name>Wreck_custom</name>
+        <description>Wreck_custom</description>
+        <language>en</language>
+      </description>
+      <fileName>Wreck_custom.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="58">
+      <description>
+        <name>depare04</name>
+        <description>depare04</description>
+        <language>en</language>
+      </description>
+      <fileName>depare04.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="59">
+      <description>
+        <name>quapnt02</name>
+        <description>quapnt02</description>
+        <language>en</language>
+      </description>
+      <fileName>quapnt02.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="60">
+      <description>
+        <name>DataCoverage_COMMON</name>
+        <description>DataCoverage_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>DataCoverage_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="61">
+      <description>
+        <name>Landmark_COMMON</name>
+        <description>Landmark_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>Landmark_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="62">
+      <description>
+        <name>NavigationalSystemOfMarks_COMMON</name>
+        <description>NavigationalSystemOfMarks_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>NavigationalSystemOfMarks_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="63">
+      <description>
+        <name>Topmark_COMMON</name>
+        <description>Topmark_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>Topmark_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

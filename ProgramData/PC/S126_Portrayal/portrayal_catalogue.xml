@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?pcbinfo name="S-101_0.8_ENC Product Specification_NewSyms" fieldOfApplication="WithNewSyms" scope="Testing" versionDate="2014-07-01T18:56:34+0000" user="Test User" organization="IHO-Test"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-126" version="1.0">
+  <pixmaps/>
+  <colorProfiles>
+    <colorProfile id="sample1">
+      <description>
+        <name>sample1</name>
+        <description>color profile with day colors for testing</description>
+        <language>en</language>
+      </description>
+      <fileName>colorProfile.xml</fileName>
+      <fileType>ColorProfile</fileType>
+      <fileFormat>XML</fileFormat>
+    </colorProfile>
+  </colorProfiles>
+  <symbols>
+    <symbol id="CAUTID01">
+      <description>
+        <name>CAUTID01</name>
+        <description>symbol for test</description>
+        <language>en</language>
+      </description>
+      <fileName>CAUTID01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>           
+    <symbol id="CAUTID02">
+      <description>
+        <name>CAUTID02</name>
+        <description>symbol for test</description>
+        <language>en</language>
+      </description>
+      <fileName>CAUTID02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>  
+    <symbol id="COLDEDD1">
+      <description>
+        <name>COLDEDD1</name>
+        <description>symbol for test</description>
+        <language>en</language>
+      </description>
+      <fileName>COLDEDD1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>  
+    <symbol id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>symbol for test</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>  
+    <symbol id="QUESMRK1P">
+      <description>
+        <name>QUESMRK1P</name>
+        <description>symbol for test</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SEAFOG01">
+      <description>
+        <name>SEAFOG01</name>
+        <description>symbol for test</description>
+        <language>en</language>
+      </description>
+      <fileName>SEAFOG01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SEAFOG02">
+      <description>
+        <name>SEAFOG02</name>
+        <description>symbol for test</description>
+        <language>en</language>
+      </description>
+      <fileName>SEAFOG02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="WARMEDD1">
+      <description>
+        <name>WARMEDD1</name>
+        <description>symbol for test</description>
+        <language>en</language>
+      </description>
+      <fileName>WARMEDD1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="WNDFRM61">
+      <description>
+        <name>WNDFRM61</name>
+        <description>symbol for test</description>
+        <language>en</language>
+      </description>
+      <fileName>WNDFRM61.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol> 
+  </symbols>
+  <lineStyles/>
+  <areaFills/>
+  <font/>
+  <viewingGroups/>
+  <foundationMode/>
+  <viewingGroupLayers/>
+  <displayModes/>
+  <displayPlane/>
+  <context/>
+  <rules>
+    <ruleFile id="1">
+      <description>
+        <name>attributeRules</name>
+        <description>attribute Rules</description>
+        <language>en</language>
+      </description>
+      <fileName>attributeRules.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="2">
+      <description>
+        <name>simpleLineStyle</name>
+        <description>simpleLineStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>simpleLineStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="3">
+      <description>
+        <name>textStyle</name>
+        <description>text Style</description>
+        <language>en</language>
+      </description>
+      <fileName>textStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="4">
+      <description>
+        <name>CurrentNonGravitational</name>
+        <description>CurrentNonGravitational</description>
+        <language>en</language>
+      </description>
+      <fileName>CurrentNonGravitational.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="6">
+      <description>
+        <name>_Default_COMMON</name>
+        <description>_Default_COMMON</description>
+        <language>en</language>
+      </description>
+      <fileName>_Default_COMMON.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="5">
+      <description>
+        <name>main</name>
+        <description>main</description>
+        <language>en</language>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="RECTRC11" exposition="non-regulated recommended one-way track, not based on fixed marks"?>
+<lineStyle>
+   <intervalLength>19.3</intervalLength>
+   <pen width="0.32">
+      <color>CHGRD</color>
+   </pen>
+   <dash>
+      <start>2.1</start>
+      <length>3.3</length>
+   </dash>
+   <dash>
+      <start>7.4</start>
+      <length>3.2</length>
+   </dash>
+   <dash>
+      <start>16</start>
+      <length>3.3</length>
+   </dash>
+   <symbol reference="EMRECTR2">
+      <position>13.3</position>
+   </symbol>
+</lineStyle>

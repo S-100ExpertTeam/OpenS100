@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100ColorProfile.xsd">
+  <colors>
+    <color token="CHMGD" name="magenta">
+      <description>Chart magenta dominant</description>
+    </color>
+    <color token="TESTA" name="A">
+      <description>#499980</description>
+    </color>
+    <color token="TESTB" name="B">
+      <description>#7ec67c</description>
+    </color>
+    <color token="TESTC" name="C">
+      <description>#e185b7</description>
+    </color>
+    <color token="TESTD" name="D">
+      <description>#e8118c</description>
+    </color>
+    <color token="TESTE" name="E">
+      <description>#fac566</description>
+    </color>
+    <color token="TESTF" name="F">
+      <description>#fed41e</description>
+    </color>
+    <color token="TESTG" name="G">
+      <description>#7bb7e4</description>
+    </color>
+    <color token="TESTH" name="H">
+      <description>#00b0ea</description>
+    </color>
+  </colors>
+  <palette name="Day">
+    <item token="CHMGD">
+      <cie>
+        <xyL>
+          <x>0.3</x>
+          <y>0.17</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>192</red>
+        <green>69</green>
+        <blue>209</blue>
+      </srgb>
+    </item>
+    <item token="TESTA">
+      <cie>
+        <xyL>
+          <x>0.26</x>
+          <y>0.38</y>
+          <L>25.76</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>73</red>
+        <green>153</green>
+        <blue>128</blue>
+      </srgb>
+    </item>
+    <item token="TESTB">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.44</y>
+          <L>46.28</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>126</red>
+        <green>198</green>
+        <blue>124</blue>
+      </srgb>
+    </item>
+    <item token="TESTC">
+      <cie>
+        <xyL>
+          <x>0.39</x>
+          <y>0.28</y>
+          <L>41.46</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>255</red>
+        <green>133</green>
+        <blue>183</blue>
+      </srgb>
+    </item>
+    <item token="TESTD">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.23</y>
+          <L>19.46</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>232</red>
+        <green>17</green>
+        <blue>140</blue>
+      </srgb>
+    </item>
+    <item token="TESTE">
+      <cie>
+        <xyL>
+          <x>0.43</x>
+          <y>0.42</y>
+          <L>61.22</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>250</red>
+        <green>197</green>
+        <blue>102</blue>
+      </srgb>
+    </item>
+    <item token="TESTF">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.47</y>
+          <L>68.26</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>212</green>
+        <blue>30</blue>
+      </srgb>
+    </item>
+    <item token="TESTG">
+      <cie>
+        <xyL>
+          <x>0.24</x>
+          <y>0.27</y>
+          <L>43.68</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>123</red>
+        <green>183</green>
+        <blue>228</blue>
+      </srgb>
+    </item>
+    <item token="TESTH">
+      <cie>
+        <xyL>
+          <x>0.20</x>
+          <y>0.25</y>
+          <L>36.99</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>176</green>
+        <blue>234</blue>
+      </srgb>
+    </item>
+  </palette>
+  <palette name="Dusk">
+    <item token="CHMGD">
+      <cie>
+        <xyL>
+          <x>0.3</x>
+          <y>0.17</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>192</red>
+        <green>69</green>
+        <blue>209</blue>
+      </srgb>
+    </item>
+    <item token="TESTA">
+      <cie>
+        <xyL>
+          <x>0.26</x>
+          <y>0.38</y>
+          <L>25.76</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>73</red>
+        <green>153</green>
+        <blue>128</blue>
+      </srgb>
+    </item>
+    <item token="TESTB">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.44</y>
+          <L>46.28</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>126</red>
+        <green>198</green>
+        <blue>124</blue>
+      </srgb>
+    </item>
+    <item token="TESTC">
+      <cie>
+        <xyL>
+          <x>0.39</x>
+          <y>0.28</y>
+          <L>41.46</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>255</red>
+        <green>133</green>
+        <blue>183</blue>
+      </srgb>
+    </item>
+    <item token="TESTD">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.23</y>
+          <L>19.46</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>232</red>
+        <green>17</green>
+        <blue>140</blue>
+      </srgb>
+    </item>
+    <item token="TESTE">
+      <cie>
+        <xyL>
+          <x>0.43</x>
+          <y>0.42</y>
+          <L>61.22</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>250</red>
+        <green>197</green>
+        <blue>102</blue>
+      </srgb>
+    </item>
+    <item token="TESTF">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.47</y>
+          <L>68.26</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>212</green>
+        <blue>30</blue>
+      </srgb>
+    </item>
+    <item token="TESTG">
+      <cie>
+        <xyL>
+          <x>0.24</x>
+          <y>0.27</y>
+          <L>43.68</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>123</red>
+        <green>183</green>
+        <blue>228</blue>
+      </srgb>
+    </item>
+    <item token="TESTH">
+      <cie>
+        <xyL>
+          <x>0.20</x>
+          <y>0.25</y>
+          <L>36.99</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>176</green>
+        <blue>234</blue>
+      </srgb>
+    </item>
+  </palette>
+  <palette name="Night">
+        <item token="CHMGD">
+      <cie>
+        <xyL>
+          <x>0.3</x>
+          <y>0.17</y>
+          <L>20</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>192</red>
+        <green>69</green>
+        <blue>209</blue>
+      </srgb>
+    </item>
+    <item token="TESTA">
+      <cie>
+        <xyL>
+          <x>0.26</x>
+          <y>0.38</y>
+          <L>25.76</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>73</red>
+        <green>153</green>
+        <blue>128</blue>
+      </srgb>
+    </item>
+    <item token="TESTB">
+      <cie>
+        <xyL>
+          <x>0.31</x>
+          <y>0.44</y>
+          <L>46.28</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>126</red>
+        <green>198</green>
+        <blue>124</blue>
+      </srgb>
+    </item>
+    <item token="TESTC">
+      <cie>
+        <xyL>
+          <x>0.39</x>
+          <y>0.28</y>
+          <L>41.46</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>255</red>
+        <green>133</green>
+        <blue>183</blue>
+      </srgb>
+    </item>
+    <item token="TESTD">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.23</y>
+          <L>19.46</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>232</red>
+        <green>17</green>
+        <blue>140</blue>
+      </srgb>
+    </item>
+    <item token="TESTE">
+      <cie>
+        <xyL>
+          <x>0.43</x>
+          <y>0.42</y>
+          <L>61.22</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>250</red>
+        <green>197</green>
+        <blue>102</blue>
+      </srgb>
+    </item>
+    <item token="TESTF">
+      <cie>
+        <xyL>
+          <x>0.45</x>
+          <y>0.47</y>
+          <L>68.26</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>254</red>
+        <green>212</green>
+        <blue>30</blue>
+      </srgb>
+    </item>
+    <item token="TESTG">
+      <cie>
+        <xyL>
+          <x>0.24</x>
+          <y>0.27</y>
+          <L>43.68</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>123</red>
+        <green>183</green>
+        <blue>228</blue>
+      </srgb>
+    </item>
+    <item token="TESTH">
+      <cie>
+        <xyL>
+          <x>0.20</x>
+          <y>0.25</y>
+          <L>36.99</L>
+        </xyL>
+      </cie>
+      <srgb>
+        <red>0</red>
+        <green>176</green>
+        <blue>234</blue>
+      </srgb>
+    </item>
+  </palette>
+</colorProfile>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015 - 03 - 13"?>
+<?S100Meta name="RESARE51" exposition="boundary of a restricted area"?>
+<lineStyle offset="0">
+  <intervalLength>65.988</intervalLength>
+  <pen width="0.32">
+    <color>DNGHL</color>
+  </pen>
+  <dash>
+    <start>0</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>3.764</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>7.528</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>11.292</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>15.056</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>18.82</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>22.584</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>26.348</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>37.64</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>41.404</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>45.168</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>48.932</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>52.696</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>56.46</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>60.224</start>
+    <length>2</length>
+  </dash>
+  <dash>
+    <start>63.988</start>
+    <length>2</length>
+  </dash>
+  <symbol reference="RadioCallingInPoint_3">
+    <position>32.994</position>
+  </symbol>
+</lineStyle>

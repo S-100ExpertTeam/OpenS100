@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.92mm" height="7.73mm" viewBox="-3.47 -6.73 6.92 7.73">
+  <title>IspscodeSecurityLevel</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-20" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.47" y="1" height="7.73" width="6.92" />
+  <rect class="svgBox layout" fill="none" x="-3.47" y="-6.73" height="7.73" width="6.92" />
+  <path d=" M 2.44,-0.08 L -2.47,-0.06 L -2.47,-4.64 L 2.44,-4.64 L 2.44,-0.08" class="fDNGHL" style="stroke-width:0.64;" />
+  <path d=" M 1.56,-3.45 L -1.48,-3.44 L -1.48,-5.73 L 1.56,-5.73 L 1.56,-3.45" class="sl f0 sDNGHL" style="stroke-width:0.64;" />
+  <path d=" M -0.33,-0.98 L -0.33,-2.86 L 0.31,-2.86 L 0.31,-0.98 L -0.32,-0.98 L -0.33,-0.98" class="fTESTA" style="stroke-width:0.64;" />
+  <circle cx="-0.02" cy="-3.25" r="0.66" class="fTESTA" style="stroke-width:0.64" />
+  <path d=" M 2.45,-0.09 L -2.46,-0.07 L -2.46,-4.65 L 2.45,-4.65 L 2.45,-0.09" class="sl f0 sTESTA" style="stroke-width:0.64;" />
+</svg>

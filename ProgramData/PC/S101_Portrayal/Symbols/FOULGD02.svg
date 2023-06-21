@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.05mm" height="7.05mm" viewBox="-3.53 -3.53 7.05 7.05">
+  <title>FOULGD02</title>
+  <desc>Area of foul ground (safe for navigation but not for anchoring) boundary</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2022-03-26" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.53" y="-3.52" height="7.05" width="7.05" />
+  <rect class="svgBox layout" fill="none" x="-3.53" y="-3.53" height="7.05" width="7.05" />
+  <path d=" M -0.25,-1.54 L -1.27,1.46" class="sl f0 sCHGRD" style="stroke-width:0.32;" />
+  <path d=" M 1.27,-1.54 L 0.22,1.45" class="sl f0 sCHGRD" style="stroke-width:0.32;" />
+  <path d=" M -1.59,-0.54 L 1.89,-0.54" class="sl f0 sCHGRD" style="stroke-width:0.32;" />
+  <path d=" M -2.01,0.47 L 1.55,0.47" class="sl f0 sCHGRD" style="stroke-width:0.32;" />
+  <circle cx="-0.01" cy="-0.01" r="3.02" class="sl f0 sCHGRD" style="stroke-width:0.32" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+</svg>

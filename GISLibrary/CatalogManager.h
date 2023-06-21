@@ -17,6 +17,19 @@ public:
 	std::vector<PortrayalCatalogue*> PCs;
 
 public:
-	FeatureCatalogue* AddFC(std::string path);
-	PortrayalCatalogue* AddPC(std::string path);
+	FeatureCatalogue* addFC(std::string path);
+	FeatureCatalogue* addFC(std::wstring path);
+	void addFC(FeatureCatalogue* fc);
+	PortrayalCatalogue* addPC(std::string path);
+	PortrayalCatalogue* addPC(std::wstring path);
+	void addPC(PortrayalCatalogue* pc);
+
+	FeatureCatalogue* getFC(std::string productId = "S-101") const;
+	PortrayalCatalogue* getPC(std::string productId = "S-101") const;
+
+	FeatureCatalogue* getFC(int productId) const;
+	PortrayalCatalogue* getPC(int productId) const;
+
+	void ChangeColorPallete(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
+	void ChangeColorPallete(std::wstring paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 };

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="9.940001mm" height="9.76mm" viewBox="-4.93 -8.2 9.940001 9.76">
+  <title>RadioStation</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-16" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.93" y="1.56" height="9.76" width="9.940001" />
+  <rect class="svgBox layout" fill="none" x="-4.93" y="-8.2" height="9.76" width="9.940001" />
+  <path d=" M -2.01,0.04 L -1.01,-5.2 L 0.99,-5.2 L 1.99,0.04" class="fTESTA" style="stroke-width:0.64;" />
+  <path d=" M -2.95,0 L 2.95,0" class="sl f0 sLANDF" style="stroke-width:0.64;" />
+  <path d=" M -2.01,0 L -1.23,-3.96 L 1.19,-3.96 L 1.99,0" class="fLANDF" style="stroke-width:0.64;" />
+  <path d=" M -2,0.04 L -1,-5.2 L 1,-5.2 L 2,0.04" class="sl f0 sLANDF" style="stroke-width:0.64;" />
+  <circle cx="0" cy="0" r="0.56" class="fTESTA" style="stroke-width:0.64" />
+  <circle cx="0" cy="0" r="0.56" class="sl f0 sLANDF" style="stroke-width:0.64" />
+  <path d=" M -2.1,-4.87 L -2.18,-4.87 L -2.26,-4.88 L -2.33,-4.91 L -2.42,-4.94 L -2.5,-5.01 L -2.57,-5.09 L -2.64,-5.18 L -2.66,-5.23 L -2.7,-5.33 L -2.72,-5.44 L -2.73,-5.49 L -2.71,-5.6 L -2.7,-5.65 L -2.67,-5.73 L -2.63,-5.81 L -2.57,-5.89 L -2.51,-5.97 L -2.42,-6.04 L -2.33,-6.08 L -2.26,-6.11 L -2.18,-6.13 L -2.08,-6.13" class="sl f0 sLANDF" style="stroke-width:0.64;" />
+  <path d=" M -2.98,-4.11 L -3.07,-4.11 L -3.19,-4.13 L -3.31,-4.19 L -3.44,-4.3 L -3.56,-4.42 L -3.68,-4.63 L -3.81,-4.86 L -3.88,-5.08 L -3.91,-5.25 L -3.93,-5.46 L -3.92,-5.75 L -3.9,-5.89 L -3.86,-6.07 L -3.82,-6.24 L -3.76,-6.38 L -3.68,-6.56 L -3.57,-6.77 L -3.44,-6.94 L -3.3,-7.07 L -3.17,-7.15 L -3.03,-7.2 L -2.95,-7.19" class="sl f0 sLANDF" style="stroke-width:0.64;" />
+  <path d=" M 2.03,-6.13 L 2.08,-6.12 L 2.17,-6.12 L 2.25,-6.09 L 2.32,-6.04 L 2.4,-5.98 L 2.47,-5.9 L 2.54,-5.81 L 2.55,-5.76 L 2.59,-5.66 L 2.61,-5.54 L 2.62,-5.49 L 2.59,-5.38 L 2.58,-5.34 L 2.55,-5.26 L 2.5,-5.18 L 2.44,-5.1 L 2.38,-5.02 L 2.29,-4.96 L 2.2,-4.92 L 2.1,-4.89 L 2.04,-4.87 L 1.97,-4.88" class="sl f0 sLANDF" style="stroke-width:0.64;" />
+  <path d=" M 3.08,-7.17 L 3.17,-7.17 L 3.29,-7.16 L 3.41,-7.09 L 3.54,-6.98 L 3.66,-6.85 L 3.77,-6.65 L 3.9,-6.42 L 3.96,-6.2 L 3.99,-6.03 L 4.01,-5.82 L 3.99,-5.57 L 3.97,-5.39 L 3.93,-5.21 L 3.88,-5.04 L 3.82,-4.9 L 3.74,-4.71 L 3.63,-4.51 L 3.54,-4.41 L 3.36,-4.26 L 3.24,-4.19 L 3.12,-4.13 L 3.01,-4.1" class="sl f0 sLANDF" style="stroke-width:0.64;" />
+</svg>

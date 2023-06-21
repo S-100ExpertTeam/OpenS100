@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2017-08-16"?>
+<?S100Meta  name="I_RIDG01" exposition="Line Features Line of Ice Ridge"?>
+<lineStyle>
+  <intervalLength>8</intervalLength>
+  <pen width="0.32">
+    <color>SHIPS</color>
+  </pen>
+  <dash>
+    <start>0</start>
+    <length>8</length>
+  </dash>
+  <symbol reference="I_RIDGE01">
+    <position>4</position>
+  </symbol>
+</lineStyle>

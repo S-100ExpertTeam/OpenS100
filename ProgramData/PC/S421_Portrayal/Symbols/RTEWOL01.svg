@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.48mm" height="3.48mm" viewBox="-1.74 -1.73 3.48 3.48">
+  <title>RTEWOL01</title>
+  <desc>route wheel over point for monitored route</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+	  <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+	</iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.2" y="-1.2" height="2.4" width="2.4"/>
+  <rect class="svgBox layout" fill="none" x="-1.2" y="-1.2" height="2.4" width="2.4"/>
+  <circle class="f0 sPLRTE" style="stroke-width: 0.32;" cx="0" cy="0.01" r="1.3"/>
+  <circle class="pivotPoint layout" fill="white" cx="0" cy="0" r="1"/>
+</svg>

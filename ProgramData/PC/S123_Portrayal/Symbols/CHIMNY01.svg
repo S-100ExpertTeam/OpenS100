@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.1mm" height="7.04mm" viewBox="-1.91 -6.32 5.1 7.04">
+  <title>CHIMNY01</title>
+  <desc>chimney</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.75" y="-6.16" height="6.72" width="4.78"/>
+  <rect class="svgBox layout" fill="none" x="-1.75" y="-6.16" height="6.72" width="4.78"/>
+  <circle class="f0 sLANDF" style="stroke-width: 0.32;" cx="0" cy="0" r="0.56"/>
+  <path d=" M 0.63,0 L 1.75,0" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -0.87,0 L -0.4,-4.6 L 0.32,-4.6 L 0.88,0" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -1.75,0 L -0.62,0" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -0.4,-4.6 L -0.56,-5.13 L -0.53,-5.57 L -0.28,-5.82 L 0.1,-5.97 L 0.69,-5.97 L 0.97,-5.85 L 1.28,-6.04 L 1.82,-6.16 L 2.32,-6.13 L 2.78,-6.1 L 3,-5.88 L 3.03,-5.44 L 2.5,-5.13 L 1.88,-5.1 L 1.85,-4.82 L 1.25,-4.57 L 0.32,-4.57" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

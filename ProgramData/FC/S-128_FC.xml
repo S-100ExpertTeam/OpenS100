@@ -1,0 +1,1302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<S100FC:S100_FC_FeatureCatalogue xmlns:S100FC="http://www.iho.int/S100FC" xmlns:S100Base="http://www.iho.int/S100Base" xmlns:S100CI="http://www.iho.int/S100CI" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:S100FD="http://www.iho.int/S100FD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.iho.int/S100FC S100FC.xsd">
+	<S100FC:name>S-128</S100FC:name>
+  <S100FC:product>S-128</S100FC:product>
+	<S100FC:scope>Ocean, Coastal, Ports and Harbors.</S100FC:scope>
+	<S100FC:fieldOfApplication>Marine Navigation</S100FC:fieldOfApplication>
+	<S100FC:versionNumber>0.1.5</S100FC:versionNumber>
+	<S100FC:versionDate>2017-11-16</S100FC:versionDate>
+	<S100FC:productId>S-128</S100FC:productId>
+	<S100FC:producer>
+		<S100CI:organisationName>IHO</S100CI:organisationName>
+		<S100CI:contactInfo>
+			<S100CI:contactInstructions>via S-100 working group</S100CI:contactInstructions>
+		</S100CI:contactInfo>
+		<S100CI:role>pointOfContact</S100CI:role>
+	</S100FC:producer>
+
+  <S100FC:S100_FC_Roles>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>Component of</S100FC:name>
+      <S100FC:definition>a pointer to a part in a whole-part relationship.</S100FC:definition>
+      <S100FC:code>componentOf</S100FC:code>
+    </S100FC:S100_FC_Role>
+    <S100FC:S100_FC_Role>
+      <S100FC:name>Consists of</S100FC:name>
+      <S100FC:definition>a pointer to the aggregate in a whole-part relationship.</S100FC:definition>
+      <S100FC:code>consistsOf</S100FC:code>
+    </S100FC:S100_FC_Role>
+  </S100FC:S100_FC_Roles>
+
+  <S100FC:S100_FC_FeatureAssociations>
+    <S100FC:S100_FC_FeatureAssociation isAbstract="false">
+      <S100FC:name>Chart/Identifier</S100FC:name>
+      <S100FC:definition>a feature association for the binding between a chart feature and the chart identifier that supports it.</S100FC:definition>
+      <S100FC:code>chartIdentifier</S100FC:code>
+      <S100FC:role ref="supportedBy"/>
+      <S100FC:role ref="supports"/>
+    </S100FC:S100_FC_FeatureAssociation>
+   </S100FC:S100_FC_FeatureAssociations>
+  <S100FC:S100_FC_SimpleAttributes>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Text Place Corner</S100FC:name>
+      <S100FC:definition></S100FC:definition>
+      <S100FC:code>textPlaceCorner</S100FC:code>
+      <S100FC:remarks></S100FC:remarks>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>top</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>bottom</S100FC:label>
+          <S100FC:definition></S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>additional mark</S100FC:name>
+			<S100FC:definition>Shape and position of an additional board on a notice mark</S100FC:definition>
+			<S100FC:code>additionalMark</S100FC:code>
+			<S100FC:remarks>The kind and location of an additional mark at a notice mark</S100FC:remarks>
+			<S100FC:alias>addmrk</S100FC:alias>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>top (board)</S100FC:label>
+					<S100FC:definition>a rectengular board at the top of the main sign</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>bottom (board)</S100FC:label>
+					<S100FC:definition>a rectengular board at the bottom of the main sign</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>right (triangle to the right)</S100FC:label>
+					<S100FC:definition>a triangular board at the right side of the main sign</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>left (triangle to the left)</S100FC:label>
+					<S100FC:definition>a triangular board at the left side of the main sign</S100FC:definition>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>bottom (triangle to the bottom)</S100FC:label>
+					<S100FC:definition>a triangular board at the bottom of the main sign</S100FC:definition>
+					<S100FC:code>5</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>administrative division</S100FC:name>
+			<S100FC:definition>administrativeDivision</S100FC:definition>
+			<S100FC:code>administrativeDivision</S100FC:code>
+			<S100FC:alias>ADMDIV</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>application profile</S100FC:name>
+			<S100FC:definition>applicationProfile</S100FC:definition>
+			<S100FC:code>applicationProfile</S100FC:code>
+			<S100FC:alias>APPPRF</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Area of Fog</S100FC:name>
+			<S100FC:definition>An area where horizontal visibility is degraded by the suspension of very small, usually microscopic water droplets in the air.</S100FC:definition>
+			<S100FC:code>areaOfFog</S100FC:code>
+			<S100FC:alias>AROFOG</S100FC:alias>
+			<S100FC:valueType>boolean</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Area of Gales (8 Beaufort or more)</S100FC:name>
+			<S100FC:definition>Area where winds are Beaufort 8 or higher.</S100FC:definition>
+			<S100FC:code>areaOfGales</S100FC:code>
+			<S100FC:remarks>A ‘true’ value indicates that areas of gale force winds or stronger exist.  A ‘false’ value indicates that areas of gale force winds or stronger do not exist.</S100FC:remarks>
+			<S100FC:alias>ARGALE</S100FC:alias>
+			<S100FC:valueType>boolean</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Category Of Authority</S100FC:name>
+			<S100FC:definition>The type of person, government agency or organisation, corporation, or private or publicly owned company entrusted or invested with powers of managing or controlling access or activity in an area.</S100FC:definition>
+			<S100FC:code>categoryOfAuthority</S100FC:code>
+			<S100FC:alias>CATAUT</S100FC:alias>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>border control</S100FC:label>
+					<S100FC:definition>The administration to prevent or detect and prosecute violations of rules and regulations at international boundaries (adapted from Merriam-Websters online Dictionary 23rd February 2006).</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>police</S100FC:label>
+					<S100FC:definition>The department of government, or civil force, charged with maintaining public order. (Adapted from OED)</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>port</S100FC:label>
+					<S100FC:definition>Person or corporation, owners of, or entrusted with or invested with the power of managing a port. May be called a Harbour Board, Port Trust, Port Commission, Harbour Commission, Marine Department (NP 100 8th Edition 14 Oct 2004)</S100FC:definition>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>immigration</S100FC:label>
+					<S100FC:definition>The authority controlling people entering a country.</S100FC:definition>
+					<S100FC:code>5</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>health</S100FC:label>
+					<S100FC:definition>The authority with responsibility for checking the validity of the health declaration of a vessel and for declaring free pratique.</S100FC:definition>
+					<S100FC:code>6</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>coast guard</S100FC:label>
+					<S100FC:definition>Organisation keeping watch on shipping and coastal waters according to governmental law; normally the authority with responsibility for search and rescue.</S100FC:definition>
+					<S100FC:code>7</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>agricultural</S100FC:label>
+					<S100FC:definition>The authority with responsibility for preventing infection of the agriculture of a country and for the protection of the agricultural interests of a country.</S100FC:definition>
+					<S100FC:code>8</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>military</S100FC:label>
+					<S100FC:definition>A military authority which provides control of access to or approval for transit through designated areas or airspace.</S100FC:definition>
+					<S100FC:code>9</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>private company</S100FC:label>
+					<S100FC:definition>A private or publicly owned company or commercial enterprise which exercises control of facilities, for example a calibration area.</S100FC:definition>
+					<S100FC:code>10</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>maritime police</S100FC:label>
+					<S100FC:definition>A governmental or military force with jurisdiction in territorial waters. Examples could include Gendarmerie Maritime, Carabinierie, and Guardia Civil.</S100FC:definition>
+					<S100FC:code>11</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>environmental</S100FC:label>
+					<S100FC:definition>An authority with responsibility for the protection of the environment.</S100FC:definition>
+					<S100FC:code>12</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>fishery</S100FC:label>
+					<S100FC:definition>An authority with responsibility for the control of fisheries.</S100FC:definition>
+					<S100FC:code>13</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>finance</S100FC:label>
+					<S100FC:definition>an authority with responsibility for the control and movement of money.</S100FC:definition>
+					<S100FC:code>14</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>maritime</S100FC:label>
+					<S100FC:definition>A national or regional authority charged with administration of maritime affairs.</S100FC:definition>
+					<S100FC:code>15</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>city name</S100FC:name>
+			<S100FC:definition>cityName</S100FC:definition>
+			<S100FC:code>cityName</S100FC:code>
+			<S100FC:alias>CITYNM</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>contact instructions</S100FC:name>
+			<S100FC:definition>Instructions provided on how to contact a particular person, organisation or service.</S100FC:definition>
+			<S100FC:code>contactInstructions</S100FC:code>
+			<S100FC:alias>CONINS</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>delivery point</S100FC:name>
+			<S100FC:definition>deliveryPoint</S100FC:definition>
+			<S100FC:code>deliveryPoint</S100FC:code>
+			<S100FC:alias>DELPNT</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>display name</S100FC:name>
+			<S100FC:definition>displayName</S100FC:definition>
+			<S100FC:code>displayName</S100FC:code>
+			<S100FC:valueType>boolean</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>language</S100FC:name>
+			<S100FC:definition>The method of human communication, either spoken or written, consisting of the use of words in a structured and conventional way.</S100FC:definition>
+			<S100FC:code>language</S100FC:code>
+			<S100FC:remarks>The language is encoded by a character code following ISO 639-3.</S100FC:remarks>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>linkage</S100FC:name>
+			<S100FC:definition>location (address) for on-line access using a URL/URI address or similar addressing scheme. (Adapted from ISO 19115:2014.)</S100FC:definition>
+			<S100FC:code>linkage</S100FC:code>
+			<S100FC:alias>LINKGE</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>name</S100FC:name>
+			<S100FC:definition>name</S100FC:definition>
+			<S100FC:code>name</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>name of resource</S100FC:name>
+			<S100FC:definition>nameOfResource</S100FC:definition>
+			<S100FC:code>nameOfResource</S100FC:code>
+			<S100FC:alias>NAMRES</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Online Function</S100FC:name>
+			<S100FC:definition>online function</S100FC:definition>
+			<S100FC:code>onlineFunction</S100FC:code>
+			<S100FC:alias>ONLFUN</S100FC:alias>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>download</S100FC:label>
+					<S100FC:definition>online instructions for transferring data from one storage device or system to another. (ISO 19115:2014)</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>offline access</S100FC:label>
+					<S100FC:definition>online instructions for requesting the resource from the provider (ISO 19115:2014)</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>order</S100FC:label>
+					<S100FC:definition>online order process for obtaining the resource (ISO 19115:2014).</S100FC:definition>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>search</S100FC:label>
+					<S100FC:definition>online search interface for seeking out information about the resource (ISO 19115:2014).</S100FC:definition>
+					<S100FC:code>5</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>complete metadata</S100FC:label>
+					<S100FC:definition>complete metadata provided (ISO 19115:2014).</S100FC:definition>
+					<S100FC:code>6</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>browse graphic</S100FC:label>
+					<S100FC:definition>browse graphic provided (ISO 19115:2014).</S100FC:definition>
+					<S100FC:code>7</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>upload</S100FC:label>
+					<S100FC:definition>online resource upload capability provided (ISO 19115:2014).</S100FC:definition>
+					<S100FC:code>8</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>email service</S100FC:label>
+					<S100FC:definition>online email service provided (ISO 19115:2014)</S100FC:definition>
+					<S100FC:code>9</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>browsing</S100FC:label>
+					<S100FC:definition>online browsing provided (ISO 19115:2014)</S100FC:definition>
+					<S100FC:code>10</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>file access</S100FC:label>
+					<S100FC:definition>online file access provided (ISO 19115:2014).</S100FC:definition>
+					<S100FC:code>11</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>online resource description</S100FC:name>
+			<S100FC:definition>detailed text description of what the online resource is/does (ISO 19115)</S100FC:definition>
+			<S100FC:code>onlineResourceDescription</S100FC:code>
+			<S100FC:alias>OLRDES</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>postal code</S100FC:name>
+			<S100FC:definition>postalCode</S100FC:definition>
+			<S100FC:code>postalCode</S100FC:code>
+			<S100FC:alias>POSCOD</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Producing country</S100FC:name>
+			<S100FC:definition>The country responsible for data production.</S100FC:definition>
+			<S100FC:code>producingCountry</S100FC:code>
+			<S100FC:alias>PRCTRY</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>protocol</S100FC:name>
+			<S100FC:definition>protocol</S100FC:definition>
+			<S100FC:code>protocol</S100FC:code>
+			<S100FC:alias>PROTCL</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>protocol request</S100FC:name>
+			<S100FC:definition>protocolRequest</S100FC:definition>
+			<S100FC:code>protocolRequest</S100FC:code>
+			<S100FC:alias>PROTRQ</S100FC:alias>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Reported Date</S100FC:name>
+			<S100FC:definition>The date that the item was observed, done, or investigated</S100FC:definition>
+			<S100FC:code>reportedDate</S100FC:code>
+			<S100FC:valueType>date</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>source</S100FC:name>
+			<S100FC:definition>source</S100FC:definition>
+			<S100FC:code>source</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Source Type</S100FC:name>
+			<S100FC:definition>type of the source</S100FC:definition>
+			<S100FC:code>sourceType</S100FC:code>
+			<S100FC:alias>SORTYP</S100FC:alias>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>international law</S100FC:label>
+					<S100FC:definition>treaty, convention, or international agreement; or European Union law</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>publication issued by international organisation</S100FC:label>
+					<S100FC:definition>Publication issued by an international administration</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>national law or regulation</S100FC:label>
+					<S100FC:definition>legislation by a national government</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>publication issued by national administration</S100FC:label>
+					<S100FC:definition>publication issued by a national administration</S100FC:definition>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>local law or regulation</S100FC:label>
+					<S100FC:definition>law made by a national sub-division such as a state, province, or local government</S100FC:definition>
+					<S100FC:code>5</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>publication issued by local administration</S100FC:label>
+					<S100FC:definition>publication issued by a local administration, such as local government or port authority</S100FC:definition>
+					<S100FC:code>6</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>mariner report, confirmed</S100FC:label>
+					<S100FC:definition>Reported by mariner(s) and confirmed by another source</S100FC:definition>
+					<S100FC:code>7</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>mariner report, not confirmed</S100FC:label>
+					<S100FC:definition>reported by mariner(s) but not confirmed</S100FC:definition>
+					<S100FC:code>8</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>industry publications and reports</S100FC:label>
+					<S100FC:definition>shipping and other industry publication, including graphics, charts and web sites</S100FC:definition>
+					<S100FC:code>9</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>remotely sensed images</S100FC:label>
+					<S100FC:definition>information obtained from satellite images</S100FC:definition>
+					<S100FC:code>10</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>photographs</S100FC:label>
+					<S100FC:definition>information obtained from photographs</S100FC:definition>
+					<S100FC:code>11</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>products issued by HO services</S100FC:label>
+					<S100FC:definition>information obtained from products issued by Hydrographic Offices</S100FC:definition>
+					<S100FC:code>12</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>news media</S100FC:label>
+					<S100FC:definition>information obtained from news media</S100FC:definition>
+					<S100FC:code>13</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>traffic data</S100FC:label>
+					<S100FC:definition>information obtained from the analysis of traffic data</S100FC:definition>
+					<S100FC:code>14</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>telecommunication identifier</S100FC:name>
+			<S100FC:definition>telecommunicationIdentifier</S100FC:definition>
+			<S100FC:code>telecommunicationIdentifier</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>text</S100FC:name>
+			<S100FC:definition>text</S100FC:definition>
+			<S100FC:code>text</S100FC:code>
+			<S100FC:valueType>text</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Value of Dew-Point Temperature</S100FC:name>
+			<S100FC:definition>Temperature value to which a volume of air must be cooled at constant pressure and constant moisture in order to reach saturation; any further cooling causes condensation.</S100FC:definition>
+			<S100FC:code>valueOfDewPointTemperature</S100FC:code>
+			<S100FC:remarks>Unit: degrees Celsius
+
+Format: sxx.x, s: sign, negative values only
+
+Example: 12.2 for a dew-point temperature of +12.2C, -12.2 for a dew-point temperature of -12.2C</S100FC:remarks>
+			<S100FC:alias>VALTDT</S100FC:alias>
+			<S100FC:valueType>real</S100FC:valueType>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Telecommunication service</S100FC:name>
+			<S100FC:definition>Methods to communicate between involved parties over a distance.</S100FC:definition>
+			<S100FC:code>telecommunicationService</S100FC:code>
+			<S100FC:valueType></S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>Voice</S100FC:label>
+					<S100FC:definition>The transfer or exchange of information by using sounds that are being made by mouth and throat when speaking.</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Facsimile</S100FC:label>
+					<S100FC:definition>A system of transmitting and reproducing graphic matter (as printing or still pictures) by means of signals sent over telephone lines.</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>SMS</S100FC:label>
+					<S100FC:definition>Short Message Service ? a form of text messaging communication on phones and mobile
+
+phones.</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Data</S100FC:label>
+					<S100FC:definition>Facts or information used usually to calculate, analyse, or plan something.</S100FC:definition>
+					<S100FC:code>4</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Streamed data</S100FC:label>
+					<S100FC:definition>Data that is constantly received by and presented to an end-user while being delivered by a provider.</S100FC:definition>
+					<S100FC:code>5</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Telex</S100FC:label>
+					<S100FC:definition>A system of communication in which messages are sent over long distances by using a telephone system and are printed by using a special machine (called a teletypewriter).</S100FC:definition>
+					<S100FC:code>6</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Telegraph</S100FC:label>
+					<S100FC:definition>An apparatus, system or process for communication at a distance by electric transmission
+
+over wire.</S100FC:definition>
+					<S100FC:code>7</S100FC:code>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Email</S100FC:label>
+					<S100FC:definition>Messages and other data exchanged between individuals using computers in a network.</S100FC:definition>
+					<S100FC:code>8</S100FC:code>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+	</S100FC:S100_FC_SimpleAttributes>
+	<S100FC:S100_FC_ComplexAttributes>
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>Dew-Point Temperature</S100FC:name>
+			<S100FC:definition>Indication of the dew-point value and its accuracy</S100FC:definition>
+			<S100FC:code>dewPointTemperature</S100FC:code>
+			<S100FC:alias>DPTEMP</S100FC:alias>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref=""/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="valueOfDewPointTemperature"/>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>feature name</S100FC:name>
+			<S100FC:definition>featureName</S100FC:definition>
+			<S100FC:code>featureName</S100FC:code>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="displayName"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="language"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>1.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="name"/>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>information</S100FC:name>
+			<S100FC:definition>information</S100FC:definition>
+			<S100FC:code>information</S100FC:code>
+			<S100FC:alias>INFORM</S100FC:alias>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="language"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">*</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="text"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="fileLocator"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="fileReference"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="headline"/>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>online resource</S100FC:name>
+			<S100FC:definition>onlineResource</S100FC:definition>
+			<S100FC:code>onlineResource</S100FC:code>
+			<S100FC:alias>ONLRES</S100FC:alias>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="linkage"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="protocol"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="applicationProfile"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="nameOfResource"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">0</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="onlineResourceDescription"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">0</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>3</S100FC:value>
+					<S100FC:value>4</S100FC:value>
+					<S100FC:value>5</S100FC:value>
+					<S100FC:value>6</S100FC:value>
+					<S100FC:value>7</S100FC:value>
+					<S100FC:value>8</S100FC:value>
+					<S100FC:value>9</S100FC:value>
+					<S100FC:value>10</S100FC:value>
+					<S100FC:value>11</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="onlineFunction"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="protocolRequest"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="onlineDescription"/>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>source indication</S100FC:name>
+			<S100FC:definition>sourceIndication</S100FC:definition>
+			<S100FC:code>sourceIndication</S100FC:code>
+			<S100FC:alias>SORIND</S100FC:alias>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>2</S100FC:value>
+					<S100FC:value>3</S100FC:value>
+					<S100FC:value>4</S100FC:value>
+					<S100FC:value>5</S100FC:value>
+					<S100FC:value>6</S100FC:value>
+					<S100FC:value>7</S100FC:value>
+					<S100FC:value>8</S100FC:value>
+					<S100FC:value>9</S100FC:value>
+					<S100FC:value>10</S100FC:value>
+					<S100FC:value>11</S100FC:value>
+					<S100FC:value>12</S100FC:value>
+					<S100FC:value>13</S100FC:value>
+					<S100FC:value>14</S100FC:value>
+					<S100FC:value>15</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="categoryOfAuthority"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">0</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="producingCountry"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="featureName"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">0</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="reportedDate"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="source"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">0</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+					<S100FC:value>3</S100FC:value>
+					<S100FC:value>4</S100FC:value>
+					<S100FC:value>5</S100FC:value>
+					<S100FC:value>6</S100FC:value>
+					<S100FC:value>7</S100FC:value>
+					<S100FC:value>8</S100FC:value>
+					<S100FC:value>9</S100FC:value>
+					<S100FC:value>10</S100FC:value>
+					<S100FC:value>11</S100FC:value>
+					<S100FC:value>12</S100FC:value>
+					<S100FC:value>13</S100FC:value>
+					<S100FC:value>14</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="sourceType"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="country"/>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>telecommunications</S100FC:name>
+			<S100FC:definition>telecommunications</S100FC:definition>
+			<S100FC:code>telecommunications</S100FC:code>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="contactInstructions"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>1.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="telecommunicationIdentifier"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="telecommunicationService"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="categoryOfCommPref"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="contactinstructions"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="telcomCarrier"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="telecommnunicationService"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="scheduleByDoW"/>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+		<S100FC:S100_FC_ComplexAttribute>
+			<S100FC:name>contact address</S100FC:name>
+			<S100FC:definition>contactAddress</S100FC:definition>
+			<S100FC:code>contactAddress</S100FC:code>
+			<S100FC:alias>CONADD</S100FC:alias>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="deliveryPoint"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>1.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="cityName"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="administrativeDivision"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">0</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref=""/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>0.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="postalCode"/>
+			</S100FC:subAttributeBinding>
+			<S100FC:subAttributeBinding sequential="true">
+				<S100FC:multiplicity>
+					<S100Base:lower>1.000000</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1.000000</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="country"/>
+			</S100FC:subAttributeBinding>
+		</S100FC:S100_FC_ComplexAttribute>
+	</S100FC:S100_FC_ComplexAttributes>
+	<S100FC:S100_FC_InformationTypes>
+		<S100FC:S100_FC_InformationType isAbstract="false">
+			<S100FC:name>ContactDetails</S100FC:name>
+			<S100FC:definition>ContactDetails</S100FC:definition>
+			<S100FC:code>ContactDetails</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="contactAddress"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="information"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="onlineResource"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="sourceIndication"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="telecommunications"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="contactInstructions"/>
+			</S100FC:attributeBinding>
+		</S100FC:S100_FC_InformationType>
+	</S100FC:S100_FC_InformationTypes>
+	<S100FC:S100_FC_FeatureTypes>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>CatalogueOfNauticalProduct</S100FC:name>
+			<S100FC:definition>CatalogueOfNauticalProduct</S100FC:definition>
+			<S100FC:code>CatalogueOfNauticalProduct</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="editionNumber"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="issueDate"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="featureName"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="graphic"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>CatalogueElements</S100FC:name>
+			<S100FC:definition>CatalogueElements</S100FC:definition>
+			<S100FC:code>CatalogueElements</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="classification"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="copyright"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="dataTypeVersion"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="issueDate"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="purpose"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1.000000</S100FC:value>
+					<S100FC:value>2.000000</S100FC:value>
+					<S100FC:value>3.000000</S100FC:value>
+					<S100FC:value>4.000000</S100FC:value>
+					<S100FC:value>5.000000</S100FC:value>
+					<S100FC:value>6.000000</S100FC:value>
+					<S100FC:value>7.000000</S100FC:value>
+					<S100FC:value>8.000000</S100FC:value>
+					<S100FC:value>9.000000</S100FC:value>
+					<S100FC:value>10.000000</S100FC:value>
+					<S100FC:value>11.000000</S100FC:value>
+					<S100FC:value>12.000000</S100FC:value>
+					<S100FC:value>13.000000</S100FC:value>
+					<S100FC:value>14.000000</S100FC:value>
+					<S100FC:value>15.000000</S100FC:value>
+					<S100FC:value>16.000000</S100FC:value>
+					<S100FC:value>17.000000</S100FC:value>
+					<S100FC:value>18.000000</S100FC:value>
+					<S100FC:value>19.000000</S100FC:value>
+					<S100FC:value>20.000000</S100FC:value>
+					<S100FC:value>21.000000</S100FC:value>
+					<S100FC:value>22.000000</S100FC:value>
+					<S100FC:value>23.000000</S100FC:value>
+					<S100FC:value>24.000000</S100FC:value>
+					<S100FC:value>25.000000</S100FC:value>
+					<S100FC:value>26.000000</S100FC:value>
+					<S100FC:value>27.000000</S100FC:value>
+					<S100FC:value>28.000000</S100FC:value>
+					<S100FC:value>29.000000</S100FC:value>
+					<S100FC:value>30.000000</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="verticalDatum"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="featureName"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="information"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="price"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="sourceIndication"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="geometry"/>
+			</S100FC:attributeBinding>
+			<S100FC:subType>AbstractChartProducts</S100FC:subType>
+			<S100FC:subType>NauticalProducts</S100FC:subType>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="true">
+			<S100FC:name>AbstractChartProducts</S100FC:name>
+			<S100FC:definition>AbstractChartProducts</S100FC:definition>
+			<S100FC:code>AbstractChartProducts</S100FC:code>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="chartNumber"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="compilationScale"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="editionNumber"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="producerCode"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="producerNation"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>2.000000</S100FC:value>
+					<S100FC:value>1.000000</S100FC:value>
+					<S100FC:value>4.000000</S100FC:value>
+					<S100FC:value>3.000000</S100FC:value>
+					<S100FC:value>5.000000</S100FC:value>
+					<S100FC:value>6.000000</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="specificUsage"/>
+			</S100FC:attributeBinding>
+
+      <!-- KRS -->
+      <S100FC:featureBinding roleType="composition">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">2</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:association ref="chartIdentifier"/>
+        <S100FC:role ref="supportedBy"/>
+        <S100FC:featureType ref="NauticalChartIdentifier"/>
+      </S100FC:featureBinding>
+
+
+      <S100FC:superType>CatalogueElements</S100FC:superType>
+			<S100FC:subType>ElectronicChart</S100FC:subType>
+			<S100FC:subType>PaperChart</S100FC:subType>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+			<S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>NauticalProducts</S100FC:name>
+			<S100FC:definition>NauticalProducts</S100FC:definition>
+			<S100FC:code>NauticalProducts</S100FC:code>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="textPlaceCorner"/>
+      </S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="content"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="productSpecification"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="datasetName"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="publicationNumber"/>
+			</S100FC:attributeBinding>
+			<S100FC:superType>CatalogueElements</S100FC:superType>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>ElectronicChart</S100FC:name>
+			<S100FC:definition>ElectronicChart</S100FC:definition>
+			<S100FC:code>ElectronicChart</S100FC:code>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="textPlaceCorner"/>
+      </S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true"/>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="datasetName"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="updateDate"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="updateNumber"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="productSpecification"/>
+			</S100FC:attributeBinding>
+			<S100FC:superType>AbstractChartProducts</S100FC:superType>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>PaperChart</S100FC:name>
+			<S100FC:definition>PaperChart</S100FC:definition>
+			<S100FC:code>PaperChart</S100FC:code>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="textPlaceCorner"/>
+      </S100FC:attributeBinding>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="frameDimensions"/>
+      </S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="printInformation"/>
+			</S100FC:attributeBinding>
+			<S100FC:superType>AbstractChartProducts</S100FC:superType>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+
+
+    <S100FC:S100_FC_FeatureType isAbstract="false">
+      <S100FC:name>NauticalChartIdentifier</S100FC:name>
+      <S100FC:definition>Nautical Chart Identifier</S100FC:definition>
+      <S100FC:code>NauticalChartIdentifier</S100FC:code>
+      <S100FC:attributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="true" infinite="true"/>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="featureName"/>
+      </S100FC:attributeBinding>
+
+      <!-- KRS -->
+      <S100FC:featureBinding roleType="composition">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:association ref="chartIdentifier"/>
+        <S100FC:role ref="supports"/>
+        <S100FC:featureType ref="AbstractChartProducts"/>
+      </S100FC:featureBinding>
+      
+      <S100FC:featureUseType>geographic</S100FC:featureUseType>
+      <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+    </S100FC:S100_FC_FeatureType>
+    
+	</S100FC:S100_FC_FeatureTypes>
+</S100FC:S100_FC_FeatureCatalogue>

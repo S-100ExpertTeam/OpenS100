@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.1mm" height="7.08mm" viewBox="-4.03 -4.67 8.1 7.08">
+  <title>PiracyRiskArea</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-14" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.03" y="2.41" height="7.08" width="8.1" />
+  <rect class="svgBox layout" fill="none" x="-4.03" y="-4.67" height="7.08" width="8.1" />
+  <path d=" M -0.82,-2.19 L -0.82,-1.36 L 0.83,-1.36 L 0.83,-2.19 L 0,-2.19 L -0.82,-2.19" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M -2.19,-0.96 L 2.19,1.39" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M -3.03,-0.8 L -1.92,-0.8 L -2.43,-1.8 L -3.03,-0.8" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M 1.96,-0.78 L 3.07,-0.78 L 2.56,-1.78 L 1.96,-0.78" class="fTESTB" style="stroke-width:0.64;" />
+  <path d=" M -2.19,1.41 L 2.2,-0.91" class="sl f0 sTESTB" style="stroke-width:0.64;" />
+  <path d=" M -1.57,-2.12 L -1.57,-2.16 L -1.57,-2.2 L -1.56,-2.26 L -1.55,-2.32 L -1.54,-2.38 L -1.53,-2.45 L -1.51,-2.53 L -1.49,-2.59 L -1.46,-2.66 L -1.43,-2.74 L -1.4,-2.8 L -1.37,-2.85 L -1.34,-2.91 L -1.29,-2.99 L -1.23,-3.07 L -1.17,-3.14 L -1.11,-3.2 L -1.05,-3.26 L -0.98,-3.32 L -0.91,-3.37 L -0.83,-3.43 L -0.75,-3.48 L -0.67,-3.52 L -0.58,-3.56 L -0.48,-3.59 L -0.41,-3.61 L -0.3,-3.64 L -0.21,-3.66 L -0.16,-3.67 L -0.04,-3.67 L 0.08,-3.67 L 0.17,-3.66 L 0.28,-3.65 L 0.39,-3.62 L 0.49,-3.6 L 0.61,-3.55 L 0.72,-3.5 L 0.82,-3.45 L 0.91,-3.39 L 1.04,-3.29 L 1.14,-3.2 L 1.25,-3.07 L 1.34,-2.95 L 1.41,-2.82 L 1.47,-2.68 L 1.52,-2.55 L 1.56,-2.4 L 1.58,-2.28 L 1.59,-2.18 L 1.59,-2.11 L -1.58,-2.11 L -1.57,-2.12" class="fTESTB" style="stroke-width:0.64;" />
+</svg>

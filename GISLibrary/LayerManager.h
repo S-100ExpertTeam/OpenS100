@@ -107,4 +107,6 @@ public:
 	static int CheckFileType(CString path);
 
 	int CreateLayerID();
+
+	int pathToProductNumber(CString path);
 };

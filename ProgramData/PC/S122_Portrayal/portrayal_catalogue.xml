@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pcbinfo name="Feature Catalogue for S-122" fieldOfApplication="Marine Navigation" scope="Global coverage of maritime areas" versionDate="2017-05-04" PCBOfVersion="S-100 PCB v0.8.2"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-122" version="1.0.0">
+  <pixmaps/>
+  <colorProfiles>
+    <colorProfile id="colorProfile.xml">
+      <description>
+        <name>Color Profile</name>
+        <description>Color Profile</description>
+        <language>en</language>
+      </description>
+      <fileName>colorProfile.xml</fileName>
+      <fileType>ColorProfile</fileType>
+      <fileFormat>XML</fileFormat>
+    </colorProfile>
+  </colorProfiles>
+  <symbols>
+    <symbol id="MarineProtectedarea_MPA">
+      <description>
+        <name>MarineProtectedarea_MPA</name>
+        <description>MarineProtectedarea_MPA</description>
+        <language>en</language>
+      </description>
+      <fileName>MarineProtectedarea_MPA.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>object which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library</description>
+        <language>en</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RestrictedAreaNavigational">
+      <description>
+        <name>RestrictedAreaNavigational</name>
+        <description>RestrictedAreaNavigational</description>
+        <language>en</language>
+      </description>
+      <fileName>RestrictedAreaNavigational.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RestrictedAreaRegulatory">
+      <description>
+        <name>RestrictedAreaRegulatory</name>
+        <description>RestrictedAreaRegulatory</description>
+        <language>en</language>
+      </description>
+      <fileName>RestrictedAreaRegulatory.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RSRDEF51">
+      <description>
+        <name>RSRDEF51</name>
+        <description>area in which undefined restrictions exist</description>
+        <language>en</language>
+      </description>
+      <fileName>RSRDEF51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="VesselTrafficService">
+      <description>
+        <name>VesselTrafficService</name>
+        <description>VesselTrafficService</description>
+        <language>en</language>
+      </description>
+      <fileName>VesselTrafficService.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+  </symbols>
+  <lineStyles/>
+  <areaFills/>
+  <fonts/>
+  <viewingGroups>
+    <viewingGroup id="1">
+      <description>
+        <name>12210</name>
+        <description/>
+        <language>en</language>
+      </description>
+    </viewingGroup>
+  </viewingGroups>
+  <foundationMode/>
+  <viewingGroupLayers/>
+  <displayModes/>
+  <displayPlane>
+    <displayPlane id="OVERRADAR">
+      <description>
+        <name>OVERRADAR</name>
+        <description>Content displayed on top of Radar image</description>
+        <language>en</language>
+      </description>
+    </displayPlane>
+  </displayPlane>
+  <context/>
+  <rules>
+    <ruleFile id="main.xsl">
+      <description>
+        <name>main</name>
+        <description>main rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="DataCoverage.xsl">
+      <description>
+        <name>DataCoverage</name>
+        <description>DataCoverage</description>
+        <language>en</language>
+      </description>
+      <fileName>DataCoverage.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="Default.xsl">
+      <description>
+        <name>Default</name>
+        <description>Default</description>
+        <language>en</language>
+      </description>
+      <fileName>Default.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="MarineProtectedArea.xsl">
+      <description>
+        <name>Marine Protectedarea</name>
+        <description>Marine Protectedarea rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>MarineProtectedarea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="QualityOfNonBathymetricData.xsl">
+      <description>
+        <name>QualityOfNonBathymetricData</name>
+        <description>QualityOfNonBathymetricData</description>
+        <language>en</language>
+      </description>
+      <fileName>QualityOfNonBathymetricData.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="RestrictedAreaNavigational.xsl">
+      <description>
+        <name>Restricted Area Navigational</name>
+        <description>Restricted Area Navigational rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>RestrictedAreaNavigational.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="RestrictedAreaRegulatory.xsl">
+      <description>
+        <name>Restricted Area Regulatory</name>
+        <description>Restricted Area Regulatory rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>RestrictedAreaRegulatory.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="simpleLineStyle.xsl">
+      <description>
+        <name>simpleLineStyle</name>
+        <description>simpleLineStyle</description>
+        <language>en</language>
+      </description>
+      <fileName>simpleLineStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="VesselTrafficServiceArea.xsl">
+      <description>
+        <name>Vessel Traffic ServiceArea</name>
+        <description>Vessel Traffic ServiceArea rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>VesselTrafficServiceArea.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="9.41mm" height="9.5mm" viewBox="-4.68 -8.44 9.41 9.5">
+  <title>CostGuardStattion</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2019-08-16" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.68" y="1.06" height="9.5" width="9.41" />
+  <rect class="svgBox layout" fill="none" x="-4.68" y="-8.44" height="9.5" width="9.41" />
+  <path d=" M -0.03,-6.05 L -0.01,-1.4" class="sl f0 sUINFB" style="stroke-width:0.64;" />
+  <path d=" M -3.68,-0.1 L -3.68,-3.51 L 3.73,-3.53 L 3.72,0.04 L -3.68,0.06" class="fUINFB" style="stroke-width:0.64;" />
+  <path d=" M -0.08,-6.09 L -0.08,-7.43 L 2.88,-7.43 L 2.87,-6.02 L -0.08,-6.02" class="fUINFB" style="stroke-width:0.64;" />
+  <path d=" M -0.08,-5.95 L -0.08,-7.44 L 2.88,-7.44 L 2.88,-6.01 L -0.12,-6.01" class="sl f0 sUINFB" style="stroke-width:0.64;" />
+</svg>
