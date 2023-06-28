@@ -183,11 +183,8 @@ int LayerManager::AddLayer(CString _filepath)
 		auto fc = gisLib->catalogManager.getFC(productNumber);
 		auto pc = gisLib->catalogManager.getPC(productNumber);
 
-		if (fc && pc)
+		if (fc)
 		{
-			//FeatureCatalogue* fc = nullptr;
-			//PortrayalCatalogue* pc = nullptr;
-
 			layer = new S100Layer(fc, pc);
 			if ((S100Layer*)layer->Open(_filepath) == false)
 			{
@@ -686,17 +683,136 @@ void LayerManager::DrawBackground(HDC &hDC, int offset)
 
 void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 {
-	for (auto i = layers.begin(); i != layers.end(); i++)
+	if (onIC == false)
 	{
-		auto layer = (*i);
-
-		if (layer->IsOn())
+		for (auto i = layers.begin(); i != layers.end(); i++)
 		{
-			if (layer->IsS100Layer())
+			auto layer = (*i);
+
+			if (layer->IsOn())
 			{
-				if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+				if (layer->IsS100Layer())
 				{
-					DrawS100Layer(hdc, offset, (S100Layer*)layer);
+					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+					{
+						DrawS100Layer(hdc, offset, (S100Layer*)layer);
+					}
+					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
+					{
+						DrawInformationLayer(hdc, layer);
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		for (auto i = layers.begin(); i != layers.end(); i++)
+		{
+			auto layer = (*i);
+
+			if (layer->IsOn())
+			{
+				if (layer->IsS100Layer())
+				{
+					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+					{
+						//DrawS100Layer(hdc, offset, (S100Layer*)layer);
+						SetDrawingInstruction((S100Layer*)layer);
+					}
+					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
+					{
+						//DrawInformationLayer(hdc, layer);
+					}
+				}
+			}
+		}
+
+		for (auto i = layers.begin(); i != layers.end(); i++)
+		{
+			auto layer = (*i);
+
+			if (layer->IsOn())
+			{
+				if (layer->IsS100Layer())
+				{
+					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+					{
+						//DrawS100Layer(hdc, offset, (S100Layer*)layer);
+						//SetDrawingInstruction((S100Layer*)layer);
+						DrawS100Layer(hdc, offset, (S100Layer*)layer, 0, 3);
+					}
+					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
+					{
+						//DrawInformationLayer(hdc, layer);
+					}
+				}
+			}
+		}
+
+		for (auto i = layers.begin(); i != layers.end(); i++)
+		{
+			auto layer = (*i);
+
+			if (layer->IsOn())
+			{
+				if (layer->IsS100Layer())
+				{
+					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+					{
+						//DrawS100Layer(hdc, offset, (S100Layer*)layer);
+						//SetDrawingInstruction((S100Layer*)layer);
+						//DrawS100Layer(hdc, offset, (S100Layer*)layer, 4, 100);
+					}
+					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
+					{
+						DrawInformationLayer(hdc, layer);
+					}
+				}
+			}
+		}
+
+		for (auto i = layers.begin(); i != layers.end(); i++)
+		{
+			auto layer = (*i);
+
+			if (layer->IsOn())
+			{
+				if (layer->IsS100Layer())
+				{
+					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+					{
+						//DrawS100Layer(hdc, offset, (S100Layer*)layer);
+						//SetDrawingInstruction((S100Layer*)layer);
+						DrawS100Layer(hdc, offset, (S100Layer*)layer, 4, 100);
+					}
+					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
+					{
+						//DrawInformationLayer(hdc, layer);
+					}
+				}
+			}
+		}
+
+		for (auto i = layers.begin(); i != layers.end(); i++)
+		{
+			auto layer = (*i);
+
+			if (layer->IsOn())
+			{
+				if (layer->IsS100Layer())
+				{
+					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
+					{
+						//DrawS100Layer(hdc, offset, (S100Layer*)layer);
+						//SetDrawingInstruction((S100Layer*)layer);
+						auto s100Layer = (S100Layer*)layer;
+						s100Layer->InitDraw();
+					}
+					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
+					{
+						//DrawInformationLayer(hdc, layer);
+					}
 				}
 			}
 		}
@@ -707,6 +823,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 {
 	auto fc = layer->GetFeatureCatalog();
 	auto pc = layer->GetPC();
+	layer->InitDraw();
 
 	auto cell = (S101Cell*)layer->GetSpatialObject();
 	if (nullptr == cell->pcManager ||
@@ -714,10 +831,6 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 	{
 		return;
 	}
-
-	std::set<int> drawingPriority;
-
-	DrawingSet drawingSet;
 
 	if (false == MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
 	{
@@ -741,7 +854,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, scaler, itList);
 		if (itList.size() > 0)
 		{
-			auto instructionList = drawingSet.GetAugmentedRayList(i);
+			auto instructionList = layer->drawingSet.GetAugmentedRayList(i);
 			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
 			cnt += (int)itList.size();
 		}
@@ -750,7 +863,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, scaler, itList);
 		if (itList.size() > 0)
 		{
-			auto instructionList = drawingSet.GetAugmentedPathList(i);
+			auto instructionList = layer->drawingSet.GetAugmentedPathList(i);
 			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
 			cnt += (int)itList.size();
 		}
@@ -759,7 +872,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, scaler, itList);
 		if (itList.size() > 0)
 		{
-			auto instructionList = drawingSet.GetPointList(i);
+			auto instructionList = layer->drawingSet.GetPointList(i);
 			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
 			cnt += (int)itList.size();
 		}
@@ -768,7 +881,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, scaler, itList);
 		if (itList.size() > 0)
 		{
-			auto instructionList = drawingSet.GetLineList(i);
+			auto instructionList = layer->drawingSet.GetLineList(i);
 			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
 			cnt += (int)itList.size();
 		}
@@ -777,7 +890,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, scaler, itList);
 		if (itList.size() > 0)
 		{
-			auto instructionList = drawingSet.GetAreaList(i);
+			auto instructionList = layer->drawingSet.GetAreaList(i);
 			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
 			cnt += (int)itList.size();
 		}
@@ -786,21 +899,21 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 5, scaler, itList);
 		if (itList.size() > 0)
 		{
-			auto instructionList = drawingSet.GetTextList(i);
+			auto instructionList = layer->drawingSet.GetTextList(i);
 			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
 			cnt += (int)itList.size();
 		}
 
 		if (cnt)
 		{
-			drawingPriority.insert(i);
+			layer->drawingPriority.insert(i);
 		}
 	}
 
 	itList.clear();
 
 	// Line Suppression
-	SuppressS101Lines(drawingPriority, &drawingSet);
+	SuppressS101Lines(layer->drawingPriority, &layer->drawingSet);
 
 	auto rt = gisLib->D2.pRT;
 	rt->BindDC(hDC, scaler->GetScreenRect());
@@ -811,16 +924,145 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 	pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
 	pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
 
-	for (auto dp = drawingPriority.begin(); dp != drawingPriority.end(); dp++)
+	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
 	{
 		AddSymbolDrawing(*dp, hDC, offset,
-			drawingSet.GetAugmentedRayList(),
-			drawingSet.GetAugmentedPathList(),
-			drawingSet.GetPointList(),
-			drawingSet.GetLineList(),
-			drawingSet.GetAreaList(),
-			drawingSet.GetTextList(),
+			layer->drawingSet.GetAugmentedRayList(),
+			layer->drawingSet.GetAugmentedPathList(),
+			layer->drawingSet.GetPointList(),
+			layer->drawingSet.GetLineList(),
+			layer->drawingSet.GetAreaList(),
+			layer->drawingSet.GetTextList(),
 			pc);
+	}
+
+	pc->GetS100PCManager()->DeleteBitmapBrush();
+
+	rt->EndDraw();
+}
+
+void LayerManager::SetDrawingInstruction(S100Layer* layer)
+{
+	auto fc = layer->GetFeatureCatalog();
+	auto pc = layer->GetPC();
+
+	auto cell = (S101Cell*)layer->GetSpatialObject();
+	if (nullptr == cell->pcManager ||
+		nullptr == cell->pcManager->displayListSENC)
+	{
+		return;
+	}
+
+	if (false == MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
+	{
+		return;
+	}
+
+	std::list<SENC_Instruction*> itList;
+	for (int i = 0; i < 100; i++)
+	{
+		/*
+		* Type Of Instruction
+		* 0 : Null Instruction
+		* 1 : Point Instruction
+		* 2 : Line Instruction
+		* 3 : Area Instruction
+		* 4 : Text Instruction
+		*/
+		int cnt = 0;
+
+		// Augmented Ray
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, scaler, itList);
+		if (itList.size() > 0)
+		{
+			auto instructionList = layer->drawingSet.GetAugmentedRayList(i);
+			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+			cnt += (int)itList.size();
+		}
+
+		// Augmented Path
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, scaler, itList);
+		if (itList.size() > 0)
+		{
+			auto instructionList = layer->drawingSet.GetAugmentedPathList(i);
+			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+			cnt += (int)itList.size();
+		}
+
+		// Point
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, scaler, itList);
+		if (itList.size() > 0)
+		{
+			auto instructionList = layer->drawingSet.GetPointList(i);
+			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+			cnt += (int)itList.size();
+		}
+
+		// Line
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, scaler, itList);
+		if (itList.size() > 0)
+		{
+			auto instructionList = layer->drawingSet.GetLineList(i);
+			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+			cnt += (int)itList.size();
+		}
+
+		// Area
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, scaler, itList);
+		if (itList.size() > 0)
+		{
+			auto instructionList = layer->drawingSet.GetAreaList(i);
+			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+			cnt += (int)itList.size();
+		}
+
+		// Text
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 5, scaler, itList);
+		if (itList.size() > 0)
+		{
+			auto instructionList = layer->drawingSet.GetTextList(i);
+			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
+			cnt += (int)itList.size();
+		}
+
+		if (cnt)
+		{
+			layer->drawingPriority.insert(i);
+		}
+	}
+
+	itList.clear();
+
+	// Line Suppression
+	SuppressS101Lines(layer->drawingPriority, &layer->drawingSet);
+}
+
+void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int minPriority, int maxPriority)
+{
+	auto pc = layer->GetPC();
+
+	auto rt = gisLib->D2.pRT;
+	rt->BindDC(hDC, scaler->GetScreenRect());
+	rt->BeginDraw();
+	gisLib->D2.pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+
+	pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
+	pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
+
+	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
+	{
+		if (*dp >= minPriority && *dp <= maxPriority)
+		{
+			AddSymbolDrawing(*dp, hDC, offset,
+				layer->drawingSet.GetAugmentedRayList(),
+				layer->drawingSet.GetAugmentedPathList(),
+				layer->drawingSet.GetPointList(),
+				layer->drawingSet.GetLineList(),
+				layer->drawingSet.GetAreaList(),
+				layer->drawingSet.GetTextList(),
+				pc);
+		}
 	}
 
 	pc->GetS100PCManager()->DeleteBitmapBrush();

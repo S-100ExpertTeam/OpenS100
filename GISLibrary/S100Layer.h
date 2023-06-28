@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Layer.h"
+#include "DrawingSet.h"
+
 #include <string>
 
 class Catalog;
@@ -20,6 +22,10 @@ protected:
 	bool hasIndividualFC = false;
 	bool hasIndividualPC = false;
 	int productNumber = 100;
+
+public: // for draw
+	std::set<int> drawingPriority;
+	DrawingSet drawingSet;
 
 public:
 	bool Open(CString _filepath) override;
@@ -43,4 +49,6 @@ public:
 
 	// value : S-101, S-102, S-111 etc.
 	void SetProductNumber(std::wstring value);
+
+	void InitDraw();
 };

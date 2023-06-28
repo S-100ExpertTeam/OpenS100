@@ -2,6 +2,7 @@
 #include "S100Layer.h"
 #include "GISLibrary.h"
 #include "S10XGML.h"
+#include "S100H5.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -66,7 +67,15 @@ bool S100Layer::Open(CString _filepath)
 	}
 	else if (!extension.CompareNoCase(L"h5"))
 	{
-		
+		m_spatialObject = new S100H5();
+		m_spatialObject->SetLayer(this);
+		if (!m_spatialObject->Open(_filepath))
+		{
+			delete m_spatialObject;
+			return false;
+		}
+
+		return true;
 	}
 	
 	return false;
@@ -249,4 +258,10 @@ void S100Layer::SetProductNumber(std::wstring value)
 	{
 		productNumber = std::stoi(tokens.at(1));
 	}
+}
+
+void S100Layer::InitDraw()
+{
+	drawingPriority.clear();
+	drawingSet.Init();
 }

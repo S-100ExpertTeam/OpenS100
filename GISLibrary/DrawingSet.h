@@ -33,4 +33,7 @@ public:
 	std::list<SENC_Instruction*>* GetLineList();
 	std::list<SENC_Instruction*>* GetAreaList();
 	std::list<SENC_Instruction*>* GetTextList();
+
+public:
+	void Init();
 };

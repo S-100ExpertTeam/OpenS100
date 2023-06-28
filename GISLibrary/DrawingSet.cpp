@@ -100,3 +100,16 @@ std::list<SENC_Instruction*>* DrawingSet::GetTextList()
 { 
 	return &textList[0]; 
 };
+
+void DrawingSet::Init()
+{
+	for (int i = 0; i < 100; i++)
+	{
+		augmentedRayList[i].clear();
+		augmentedPathList[i].clear();
+		pointList[i].clear();
+		lineList[i].clear();
+		areaList[i].clear();
+		textList[i].clear();
+	}
+}

@@ -41,6 +41,7 @@ public:
 	// RCID of already rendered curveRecords
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
+	bool onIC = true;
 
 public:
 	void SetViewMBR(RECT r);
@@ -62,6 +63,8 @@ public:
 
 	void DrawS100Datasets(HDC &hDC, int offset = 0);
 	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer);
+	void SetDrawingInstruction(S100Layer* layer);
+	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int minPriority, int maxPriority);
 	void AddSymbolDrawing(
 		int ,
 		HDC &hdc,

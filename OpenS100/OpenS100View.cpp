@@ -279,7 +279,7 @@ COpenS100Doc* COpenS100View::GetDocument() const
 void COpenS100View::Load100File()
 {
 	//load file
-	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST, _T("ENC Files (*.000, *.gml)|*.000;*.gml;|"), this);
+	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST, _T("S-100 Dataset (*.000, *.gml, *.h5)|*.000;*.gml;*.h5|"), this);
 
 	if (dlg.DoModal() == IDOK)
 	{
@@ -531,6 +531,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//theApp.gisLib->AddLayer(L"..\\TEMP\\125KR00000000.gml");
 
 	//theApp.gisLib->AddLayer(L"..\\SampleData\\101KR005X01SE.000");
+	theApp.gisLib->AddLayer(L"..\\SampleData\\102KR00GB4X0000__.h5");
 
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
 
