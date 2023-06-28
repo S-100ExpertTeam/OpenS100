@@ -189,6 +189,16 @@ void CGISLibraryApp::addCatalogue(std::wstring fcPath, std::wstring pcPath)
 	addCatalogue(LibMFCUtil::WStringToString(fcPath), LibMFCUtil::WStringToString(pcPath));
 }
 
+void CGISLibraryApp::addFC(std::string path)
+{
+	catalogManager.addFC(path);
+}
+
+void CGISLibraryApp::addFC(std::wstring path)
+{
+	catalogManager.addFC(path);
+}
+
 bool CGISLibraryApp::AddLayer(CString _filepath)
 {
 	m_pLayerManager->AddLayer(_filepath);

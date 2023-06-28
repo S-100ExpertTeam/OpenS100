@@ -526,6 +526,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	theApp.gisLib->InitLibrary(fc, pc);
 	theApp.gisLib->addCatalogue(L"..\\ProgramData\\FC\\S-125_FC.xml", L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml");
+	theApp.gisLib->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml");
 
 	//theApp.gisLib->AddLayer(L"..\\TEMP\\125KR00000000.gml");
 
