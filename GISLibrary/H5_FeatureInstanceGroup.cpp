@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "H5_FeatureInstanceGroup.h"
+#include "HDF5Wrapper.h"
 
 H5_FeatureInstanceGroup::H5_FeatureInstanceGroup()
 {
@@ -8,7 +9,11 @@ H5_FeatureInstanceGroup::H5_FeatureInstanceGroup()
 
 H5_FeatureInstanceGroup::~H5_FeatureInstanceGroup()
 {
-
+	delete westBoundLongitude;
+	delete eastBoundLongitude;
+	delete southBoundLatitude;
+	delete northBoundLatitude;
+	delete attribute29;
 }
 
 bool H5_FeatureInstanceGroup::hasWestBoundLongitude() const
@@ -99,5 +104,10 @@ void H5_FeatureInstanceGroup::setNumGRP(const int value)
 
 bool H5_FeatureInstanceGroup::Read(hid_t groupID)
 {
+	double dWestBoundLongitude = 0;
+	//if (HDF5Wrapper::ReadMetadataIntegerAttribute(groupID, "type", iSequencingRuleType)) {
+	//	setSequencingRuleType((CV_SequenceType)iSequencingRuleType);
+	//}
+
 	return true;
 }

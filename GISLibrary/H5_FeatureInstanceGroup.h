@@ -1,5 +1,7 @@
 #pragma once
 
+#include "H5_FI_Attribute29.h"
+
 #include <hdf5.h>
 
 class H5_FeatureInstanceGroup
@@ -14,6 +16,8 @@ public:
 	double* southBoundLatitude = nullptr;
 	double* northBoundLatitude = nullptr;
 	int numGRP = 0;
+
+	H5_FI_Attribute29* attribute29 = nullptr;
 
 public:
 	bool hasWestBoundLongitude() const;
