@@ -1,14 +1,14 @@
 #pragma once
 
-#include "H5_RootMeta.h"
+#include "H5_RootGroup.h"
 #include "S102_GriddingMethod.h"
 
-class S102_RootMeta :
-    public H5_RootMeta
+class S102_RootGroup :
+    public H5_RootGroup
 {
 public:
-    S102_RootMeta();
-    virtual ~S102_RootMeta();
+    S102_RootGroup();
+    virtual ~S102_RootGroup();
 
 public:
     S102_GriddingMethod* griddingMethod = nullptr;

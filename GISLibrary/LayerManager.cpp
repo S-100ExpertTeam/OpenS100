@@ -22,7 +22,6 @@
 #include "F_INAS.h"
 #include "R_InformationRecord.h"
 #include "S100Layer.h"
-
 #include "SSurface.h"
 #include "SMultiPoint.h"
 #include "SCompositeCurve.h"
@@ -48,8 +47,6 @@
 #include <algorithm>
 #include <future>
 #include <chrono>
-
-//#pragma comment(lib, "winmm")
 
 LayerManager::LayerManager(void)
 {

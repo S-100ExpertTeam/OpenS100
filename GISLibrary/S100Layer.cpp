@@ -3,6 +3,7 @@
 #include "GISLibrary.h"
 #include "S10XGML.h"
 #include "S100H5.h"
+#include "S102H5.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -41,12 +42,12 @@ bool S100Layer::Open(CString _filepath)
 			return false;
 		}
 
-		enc->SetAllNumericCode(GetFeatureCatalog());
+		enc->SetAllNumericCode(GetFC());
 		return true;
 	}
 	else if (!extension.CompareNoCase(L"gml"))
 	{
-		if (GetFeatureCatalog()->getProductId().compare("S-101") == 0)
+		if (GetFC()->getProductId().compare("S-101") == 0)
 		{
 			m_spatialObject = new S101Cell(GetFeatureCatalog());
 		}
@@ -67,7 +68,15 @@ bool S100Layer::Open(CString _filepath)
 	}
 	else if (!extension.CompareNoCase(L"h5"))
 	{
-		m_spatialObject = new S100H5();
+		if (GetFC()->getProductId().compare("S-102") == 0)
+		{
+			m_spatialObject = new S102H5();
+		}
+		else
+		{
+			m_spatialObject = new S100H5();
+		}
+
 		m_spatialObject->SetLayer(this);
 		if (!m_spatialObject->Open(_filepath))
 		{

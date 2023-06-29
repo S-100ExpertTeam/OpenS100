@@ -1,13 +1,13 @@
 #include "stdafx.h"
-#include "H5_RootMeta.h"
+#include "H5_RootGroup.h"
 #include "HDF5Wrapper.h"
 
-H5_RootMeta::H5_RootMeta()
+H5_RootGroup::H5_RootGroup()
 {
 
 }
 
-H5_RootMeta::~H5_RootMeta()
+H5_RootGroup::~H5_RootGroup()
 {
 	delete issueTime;
 	delete nameOfHorizontalCRS;
@@ -34,27 +34,27 @@ H5_RootMeta::~H5_RootMeta()
 	delete metaFeatures;
 }
 
-std::string H5_RootMeta::getProductSpecification() const
+std::string H5_RootGroup::getProductSpecification() const
 {
 	return productSpecification;
 }
 
-void H5_RootMeta::setProductSpecification(const std::string& value)
+void H5_RootGroup::setProductSpecification(const std::string& value)
 {
 	productSpecification = value;
 }
 
-bool H5_RootMeta::hasIssueTime() const
+bool H5_RootGroup::hasIssueTime() const
 {
 	return issueTime;
 }
 
-std::string H5_RootMeta::getIssueTime() const
+std::string H5_RootGroup::getIssueTime() const
 {
 	return *issueTime;
 }
 
-void H5_RootMeta::setIssueTime(const std::string& value)
+void H5_RootGroup::setIssueTime(const std::string& value)
 {
 	if (!issueTime)
 	{
@@ -64,37 +64,37 @@ void H5_RootMeta::setIssueTime(const std::string& value)
 	*issueTime = value;
 }
 
-std::string H5_RootMeta::getIssueDate() const
+std::string H5_RootGroup::getIssueDate() const
 {
 	return issueDate;
 }
 
-void H5_RootMeta::setIssueDate(const std::string& value)
+void H5_RootGroup::setIssueDate(const std::string& value)
 {
 	issueDate = value;
 }
 
-int H5_RootMeta::getHorizontalCRS() const
+int H5_RootGroup::getHorizontalCRS() const
 {
 	return horizontalCRS;
 }
 
-void H5_RootMeta::setHorizontalCRS(const int value)
+void H5_RootGroup::setHorizontalCRS(const int value)
 {
 	horizontalCRS = value;
 }
 
-bool H5_RootMeta::hasNameOfHorizontalCRS() const
+bool H5_RootGroup::hasNameOfHorizontalCRS() const
 {
 	return nameOfHorizontalCRS;
 }
 
-std::string H5_RootMeta::getNameOfHorizontalCRS() const
+std::string H5_RootGroup::getNameOfHorizontalCRS() const
 {
 	return *nameOfHorizontalCRS;
 }
 
-void H5_RootMeta::setNameOfHorizontalCRS(const std::string value)
+void H5_RootGroup::setNameOfHorizontalCRS(const std::string value)
 {
 	if (!nameOfHorizontalCRS)
 	{
@@ -104,17 +104,17 @@ void H5_RootMeta::setNameOfHorizontalCRS(const std::string value)
 	*nameOfHorizontalCRS = value;
 }
 
-bool H5_RootMeta::hasTypeOfTheHorizontalCRS() const
+bool H5_RootGroup::hasTypeOfTheHorizontalCRS() const
 {
 	return typeOfTheHorizontalCRS;
 }
 
-TypeOfTheHorizontalCRS H5_RootMeta::getTypeOfTheHorizontalCRS() const
+TypeOfTheHorizontalCRS H5_RootGroup::getTypeOfTheHorizontalCRS() const
 {
 	return *typeOfTheHorizontalCRS;
 }
 
-void H5_RootMeta::setTypeOfTheHorizontalCRS(const TypeOfTheHorizontalCRS value)
+void H5_RootGroup::setTypeOfTheHorizontalCRS(const TypeOfTheHorizontalCRS value)
 {
 	if (!typeOfTheHorizontalCRS)
 	{
@@ -124,17 +124,17 @@ void H5_RootMeta::setTypeOfTheHorizontalCRS(const TypeOfTheHorizontalCRS value)
 	*typeOfTheHorizontalCRS = value;
 }
 
-bool H5_RootMeta::hasHorizontalCS() const
+bool H5_RootGroup::hasHorizontalCS() const
 {
 	return horizontalCS;
 }
 
-int H5_RootMeta::getHorizontalCS() const
+int H5_RootGroup::getHorizontalCS() const
 {
 	return *horizontalCS;
 }
 
-void H5_RootMeta::setHorizontalCS(const int value)
+void H5_RootGroup::setHorizontalCS(const int value)
 {
 	if (!horizontalCS)
 	{
@@ -144,17 +144,17 @@ void H5_RootMeta::setHorizontalCS(const int value)
 	*horizontalCS = value;
 }
 
-bool H5_RootMeta::hasHorizontalDatum() const
+bool H5_RootGroup::hasHorizontalDatum() const
 {
 	return horizontalDatum;
 }
 
-int H5_RootMeta::getHorizontalDatum() const
+int H5_RootGroup::getHorizontalDatum() const
 {
 	return *horizontalDatum;
 }
 
-void H5_RootMeta::setHorizontalDatum(const int value)
+void H5_RootGroup::setHorizontalDatum(const int value)
 {
 	if (!horizontalDatum)
 	{
@@ -164,17 +164,17 @@ void H5_RootMeta::setHorizontalDatum(const int value)
 	*horizontalDatum = value;
 }
 
-bool H5_RootMeta::hasNameOfHorizontalDatum() const
+bool H5_RootGroup::hasNameOfHorizontalDatum() const
 {
 	return nameOfHorizontalDatum;
 }
 
-std::string H5_RootMeta::getNameOfHorizontalDatum() const
+std::string H5_RootGroup::getNameOfHorizontalDatum() const
 {
 	return *nameOfHorizontalDatum;
 }
 
-void H5_RootMeta::setNameOfHorizontalDatum(const std::string value)
+void H5_RootGroup::setNameOfHorizontalDatum(const std::string value)
 {
 	if (!nameOfHorizontalDatum)
 	{
@@ -184,17 +184,17 @@ void H5_RootMeta::setNameOfHorizontalDatum(const std::string value)
 	*nameOfHorizontalDatum = value;
 }
 
-bool H5_RootMeta::hasPrimeMeridian() const
+bool H5_RootGroup::hasPrimeMeridian() const
 {
 	return primeMeridian;
 }
 
-int H5_RootMeta::getPrimeMeridian() const
+int H5_RootGroup::getPrimeMeridian() const
 {
 	return *primeMeridian;
 }
 
-void H5_RootMeta::setPrimeMeridian(const int value)
+void H5_RootGroup::setPrimeMeridian(const int value)
 {
 	if (!primeMeridian)
 	{
@@ -204,17 +204,17 @@ void H5_RootMeta::setPrimeMeridian(const int value)
 	*primeMeridian = value;
 }
 
-bool H5_RootMeta::hasSpheroid() const
+bool H5_RootGroup::hasSpheroid() const
 {
 	return spheroid;
 }
 
-int H5_RootMeta::getSpheroid() const
+int H5_RootGroup::getSpheroid() const
 {
 	return *spheroid;
 }
 
-void H5_RootMeta::setSpheroid(const int value)
+void H5_RootGroup::setSpheroid(const int value)
 {
 	if (!spheroid)
 	{
@@ -224,17 +224,17 @@ void H5_RootMeta::setSpheroid(const int value)
 	*spheroid = value;
 }
 
-bool H5_RootMeta::hasProjectionMethod() const
+bool H5_RootGroup::hasProjectionMethod() const
 {
 	return projectionMethod;
 }
 
-int H5_RootMeta::getProjectionMethod() const
+int H5_RootGroup::getProjectionMethod() const
 {
 	return *projectionMethod;
 }
 
-void H5_RootMeta::setProjectionMethod(const int value)
+void H5_RootGroup::setProjectionMethod(const int value)
 {
 	if (!projectionMethod)
 	{
@@ -244,17 +244,17 @@ void H5_RootMeta::setProjectionMethod(const int value)
 	*projectionMethod = value;
 }
 
-bool H5_RootMeta::hasProjectionParameter1() const
+bool H5_RootGroup::hasProjectionParameter1() const
 {
 	return projectionParameter1;
 }
 
-double H5_RootMeta::getProjectionParameter1() const
+double H5_RootGroup::getProjectionParameter1() const
 {
 	return *projectionParameter1;
 }
 
-void H5_RootMeta::setProjectionParameter1(const double value)
+void H5_RootGroup::setProjectionParameter1(const double value)
 {
 	if (!projectionParameter1)
 	{
@@ -264,17 +264,17 @@ void H5_RootMeta::setProjectionParameter1(const double value)
 	*projectionParameter1 = value;
 }
 
-bool H5_RootMeta::hasProjectionParameter2() const
+bool H5_RootGroup::hasProjectionParameter2() const
 {
 	return projectionParameter2;
 }
 
-double H5_RootMeta::getProjectionParameter2() const
+double H5_RootGroup::getProjectionParameter2() const
 {
 	return *projectionParameter2;
 }
 
-void H5_RootMeta::setProjectionParameter2(const double value)
+void H5_RootGroup::setProjectionParameter2(const double value)
 {
 	if (!projectionParameter2)
 	{
@@ -284,17 +284,17 @@ void H5_RootMeta::setProjectionParameter2(const double value)
 	*projectionParameter2 = value;
 }
 
-bool H5_RootMeta::hasProjectionParameter3() const
+bool H5_RootGroup::hasProjectionParameter3() const
 {
 	return projectionParameter3;
 }
 
-double H5_RootMeta::getProjectionParameter3() const
+double H5_RootGroup::getProjectionParameter3() const
 {
 	return *projectionParameter3;
 }
 
-void H5_RootMeta::setProjectionParameter3(const double value)
+void H5_RootGroup::setProjectionParameter3(const double value)
 {
 	if (!projectionParameter3)
 	{
@@ -304,17 +304,17 @@ void H5_RootMeta::setProjectionParameter3(const double value)
 	*projectionParameter3 = value;
 }
 
-bool H5_RootMeta::hasProjectionParameter4() const
+bool H5_RootGroup::hasProjectionParameter4() const
 {
 	return projectionParameter4;
 }
 
-double H5_RootMeta::getProjectionParameter4() const
+double H5_RootGroup::getProjectionParameter4() const
 {
 	return *projectionParameter4;
 }
 
-void H5_RootMeta::setProjectionParameter4(const double value)
+void H5_RootGroup::setProjectionParameter4(const double value)
 {
 	if (!projectionParameter4)
 	{
@@ -324,17 +324,17 @@ void H5_RootMeta::setProjectionParameter4(const double value)
 	*projectionParameter4 = value;
 }
 
-bool H5_RootMeta::hasProjectionParameter5() const
+bool H5_RootGroup::hasProjectionParameter5() const
 {
 	return projectionParameter5;
 }
 
-double H5_RootMeta::getProjectionParameter5() const
+double H5_RootGroup::getProjectionParameter5() const
 {
 	return *projectionParameter5;
 }
 
-void H5_RootMeta::setProjectionParameter5(const double value)
+void H5_RootGroup::setProjectionParameter5(const double value)
 {
 	if (!projectionParameter5)
 	{
@@ -344,17 +344,17 @@ void H5_RootMeta::setProjectionParameter5(const double value)
 	*projectionParameter5 = value;
 }
 
-bool H5_RootMeta::hasFalseNorthing() const
+bool H5_RootGroup::hasFalseNorthing() const
 {
 	return falseNorthing;
 }
 
-double H5_RootMeta::getFalseNorthing() const
+double H5_RootGroup::getFalseNorthing() const
 {
 	return *falseNorthing;
 }
 
-void H5_RootMeta::setFalseNorthing(const double value)
+void H5_RootGroup::setFalseNorthing(const double value)
 {
 	if (!falseNorthing)
 	{
@@ -364,17 +364,17 @@ void H5_RootMeta::setFalseNorthing(const double value)
 	*falseNorthing = value;
 }
 
-bool H5_RootMeta::hasFalseEasting() const
+bool H5_RootGroup::hasFalseEasting() const
 {
 	return falseEasting;
 }
 
-double H5_RootMeta::getFalseEasting() const
+double H5_RootGroup::getFalseEasting() const
 {
 	return *falseEasting;
 }
 
-void H5_RootMeta::setFalseEasting(const double value)
+void H5_RootGroup::setFalseEasting(const double value)
 {
 	if (!falseEasting)
 	{
@@ -384,17 +384,17 @@ void H5_RootMeta::setFalseEasting(const double value)
 	*falseEasting = value;
 }
 
-bool H5_RootMeta::hasEpoch() const
+bool H5_RootGroup::hasEpoch() const
 {
 	return epoch;
 }
 
-std::string H5_RootMeta::getEpoch() const
+std::string H5_RootGroup::getEpoch() const
 {
 	return *epoch;
 }
 
-void H5_RootMeta::setEpoch(const std::string value)
+void H5_RootGroup::setEpoch(const std::string value)
 {
 	if (!epoch)
 	{
@@ -404,57 +404,57 @@ void H5_RootMeta::setEpoch(const std::string value)
 	*epoch = value;
 }
 
-double H5_RootMeta::getWestBoundLongitude() const
+double H5_RootGroup::getWestBoundLongitude() const
 {
 	return westBoundLongitude;
 }
 
-void H5_RootMeta::setWestBoundLongitude(const double value) 
+void H5_RootGroup::setWestBoundLongitude(const double value) 
 {
 	westBoundLongitude = value;
 }
 
-double H5_RootMeta::getEastBoundLongitude() const
+double H5_RootGroup::getEastBoundLongitude() const
 {
 	return eastBoundLongitude;
 }
 
-void H5_RootMeta::setEastBoundLongitude(const double value)
+void H5_RootGroup::setEastBoundLongitude(const double value)
 {
 	eastBoundLongitude = value;
 }
 
-double H5_RootMeta::getSouthBoundLatitude() const
+double H5_RootGroup::getSouthBoundLatitude() const
 {
 	return southBoundLatitude;
 }
 
-void H5_RootMeta::setSouthBoundLatitude(const double value)
+void H5_RootGroup::setSouthBoundLatitude(const double value)
 {
 	southBoundLatitude = value;
 }
 
-double H5_RootMeta::getNorthBoundLatitude() const
+double H5_RootGroup::getNorthBoundLatitude() const
 {
 	return northBoundLatitude;
 }
 
-void H5_RootMeta::setNorthBoundLatitude(const double value)
+void H5_RootGroup::setNorthBoundLatitude(const double value)
 {
 	northBoundLatitude = value;
 }
 
-bool H5_RootMeta::hasGeographicIdentifier() const
+bool H5_RootGroup::hasGeographicIdentifier() const
 {
 	return geographicIdentifier;
 }
 
-std::string H5_RootMeta::getGeographicIdentifier() const
+std::string H5_RootGroup::getGeographicIdentifier() const
 {
 	return *geographicIdentifier;
 }
 
-void H5_RootMeta::setGeographicIdentifier(const std::string value)
+void H5_RootGroup::setGeographicIdentifier(const std::string value)
 {
 	if (!geographicIdentifier)
 	{
@@ -464,27 +464,27 @@ void H5_RootMeta::setGeographicIdentifier(const std::string value)
 	*geographicIdentifier = value;
 }
 
-std::string H5_RootMeta::getMetadata() const
+std::string H5_RootGroup::getMetadata() const
 {
 	return metadata;
 }
 
-void H5_RootMeta::setMetadata(const std::string value)
+void H5_RootGroup::setMetadata(const std::string value)
 {
 	metadata = value;
 }
 
-bool H5_RootMeta::hasVerticalCS() const
+bool H5_RootGroup::hasVerticalCS() const
 {
 	return verticalCS;
 }
 
-int H5_RootMeta::getVerticalCS() const
+int H5_RootGroup::getVerticalCS() const
 {
 	return *verticalCS;
 }
 
-void H5_RootMeta::setVerticalCS(const int value)
+void H5_RootGroup::setVerticalCS(const int value)
 {
 	if (!verticalCS)
 	{
@@ -494,17 +494,17 @@ void H5_RootMeta::setVerticalCS(const int value)
 	*verticalCS = value;
 }
 
-bool H5_RootMeta::hasVerticalCoordinateBase() const
+bool H5_RootGroup::hasVerticalCoordinateBase() const
 {
 	return verticalCoordinateBase;
 }
 
-VerticalCoordinateBase H5_RootMeta::getVerticalCoordinateBase() const
+VerticalCoordinateBase H5_RootGroup::getVerticalCoordinateBase() const
 {
 	return *verticalCoordinateBase;
 }
 
-void H5_RootMeta::setVerticalCoordinateBase(const VerticalCoordinateBase value)
+void H5_RootGroup::setVerticalCoordinateBase(const VerticalCoordinateBase value)
 {
 	if (!verticalCoordinateBase)
 	{
@@ -514,17 +514,17 @@ void H5_RootMeta::setVerticalCoordinateBase(const VerticalCoordinateBase value)
 	*verticalCoordinateBase = value;
 }
 
-bool H5_RootMeta::hasVerticalDatumReference() const
+bool H5_RootGroup::hasVerticalDatumReference() const
 {
 	return verticalDatumReference;
 }
 
-VerticalDatumReference H5_RootMeta::getVerticalDatumReference() const
+VerticalDatumReference H5_RootGroup::getVerticalDatumReference() const
 {
 	return *verticalDatumReference;
 }
 
-void H5_RootMeta::setVerticalDatumReference(const VerticalDatumReference value)
+void H5_RootGroup::setVerticalDatumReference(const VerticalDatumReference value)
 {
 	if (!verticalDatumReference)
 	{
@@ -534,17 +534,17 @@ void H5_RootMeta::setVerticalDatumReference(const VerticalDatumReference value)
 	*verticalDatumReference = value;
 }
 
-bool H5_RootMeta::hasVerticalDatum() const
+bool H5_RootGroup::hasVerticalDatum() const
 {
 	return verticalDatum;
 }
 
-int H5_RootMeta::getVerticalDatum() const
+int H5_RootGroup::getVerticalDatum() const
 {
 	return *verticalDatum;
 }
 
-void H5_RootMeta::setVerticalDatum(const int value)
+void H5_RootGroup::setVerticalDatum(const int value)
 {
 	if (!verticalDatum)
 	{
@@ -554,17 +554,17 @@ void H5_RootMeta::setVerticalDatum(const int value)
 	*verticalDatum = value;
 }
 
-bool H5_RootMeta::hasMetaFeatures() const
+bool H5_RootGroup::hasMetaFeatures() const
 {
 	return metaFeatures;
 }
 
-std::string H5_RootMeta::getMetaFeatures() const
+std::string H5_RootGroup::getMetaFeatures() const
 {
 	return *metaFeatures;
 }
 
-void H5_RootMeta::setMetaFeatures(const std::string value)
+void H5_RootGroup::setMetaFeatures(const std::string value)
 {
 	if (!metaFeatures)
 	{
@@ -574,7 +574,7 @@ void H5_RootMeta::setMetaFeatures(const std::string value)
 	*metaFeatures = value;
 }
 
-bool H5_RootMeta::Read(hid_t rootID)
+bool H5_RootGroup::Read(hid_t rootID)
 {
 	std::string strPS;
 	if (HDF5Wrapper::ReadMetadataAnyStringAttribute(rootID, "productSpecification", strPS)) {

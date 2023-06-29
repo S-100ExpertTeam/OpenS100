@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "S100H5.h"
-#include "S102_RootMeta.h"
+#include "S102_RootGroup.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -13,7 +13,12 @@ S100H5::S100H5()
 
 S100H5::~S100H5()
 {
-	delete rootMeta;
+	delete rootGroup;
+
+	for (auto i = featureContainer.begin(); i != featureContainer.end(); i++)
+	{
+		delete (*i);
+	}
 }
 
 bool S100H5::Open(CString _filepath)
@@ -26,16 +31,9 @@ bool S100H5::Open(CString _filepath)
 		return false;
 	}
 
-	if (GetFC()->getProductId().compare("S-102") == 0)
-	{
-		rootMeta = new S102_RootMeta();
-	}
-	else
-	{
-		rootMeta = new H5_RootMeta();
-	}
+	rootGroup = new H5_RootGroup();
 	
-	rootMeta->Read(fileID);
+	rootGroup->Read(fileID);
 
 	H5Fclose(fileID);
 
@@ -47,13 +45,13 @@ bool S100H5::Open(CString _filepath)
 void S100H5::SetMBR()
 {
 	auto layer = GetLayer();
-	if (layer && rootMeta)
+	if (layer && rootGroup)
 	{
 		MBR mbr;
-		mbr.SetXMin(rootMeta->getWestBoundLongitude());
-		mbr.SetYMin(rootMeta->getSouthBoundLatitude());
-		mbr.SetXMax(rootMeta->getEastBoundLongitude());
-		mbr.SetYMax(rootMeta->getNorthBoundLatitude());
+		mbr.SetXMin(rootGroup->getWestBoundLongitude());
+		mbr.SetYMin(rootGroup->getSouthBoundLatitude());
+		mbr.SetXMax(rootGroup->getEastBoundLongitude());
+		mbr.SetYMax(rootGroup->getNorthBoundLatitude());
 		projection(mbr);
 		layer->SetMBR(mbr);
 	}

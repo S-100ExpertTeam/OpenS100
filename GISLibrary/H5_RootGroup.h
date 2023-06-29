@@ -6,11 +6,11 @@
 
 #include <hdf5.h>
 
-class H5_RootMeta
+class H5_RootGroup
 {
 public:
-	H5_RootMeta();
-	virtual ~H5_RootMeta();
+	H5_RootGroup();
+	virtual ~H5_RootGroup();
 
 public:
 	std::string productSpecification;

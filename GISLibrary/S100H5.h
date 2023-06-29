@@ -1,7 +1,10 @@
 #pragma once
 
 #include "S100SpatialObject.h"
-#include "H5_RootMeta.h"
+#include "H5_RootGroup.h"
+#include "H5_FeatureContainer.h"
+
+#include <vector>
 
 class S100H5 :
     public S100SpatialObject
@@ -11,7 +14,11 @@ public:
     virtual ~S100H5();
 
 public:
-    H5_RootMeta* rootMeta = nullptr;
+    // Level 1
+    H5_RootGroup* rootGroup = nullptr;
+
+    // Level 2
+    std::vector<H5_FeatureContainer*> featureContainer;
 
 public:
     bool Open(CString _filepath) override;

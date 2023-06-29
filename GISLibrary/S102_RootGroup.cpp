@@ -1,28 +1,28 @@
 #include "stdafx.h"
-#include "S102_RootMeta.h"
+#include "S102_RootGroup.h"
 #include "HDF5Wrapper.h"
 
-S102_RootMeta::S102_RootMeta()
+S102_RootGroup::S102_RootGroup()
 {
 
 }
 
-S102_RootMeta::~S102_RootMeta()
+S102_RootGroup::~S102_RootGroup()
 {
 	delete griddingMethod;
 }
 
-bool S102_RootMeta::hasGriddingMethod() const
+bool S102_RootGroup::hasGriddingMethod() const
 {
 	return griddingMethod;
 }
 
-S102_GriddingMethod S102_RootMeta::getGriddingMethod() const
+S102_GriddingMethod S102_RootGroup::getGriddingMethod() const
 {
 	return *griddingMethod;
 }
 
-void S102_RootMeta::setGriddingMethod(const S102_GriddingMethod value)
+void S102_RootGroup::setGriddingMethod(const S102_GriddingMethod value)
 {
 	if (!griddingMethod)
 	{
@@ -32,9 +32,9 @@ void S102_RootMeta::setGriddingMethod(const S102_GriddingMethod value)
 	*griddingMethod = value;
 }
 
-bool S102_RootMeta::Read(hid_t rootID)
+bool S102_RootGroup::Read(hid_t rootID)
 {
-	H5_RootMeta::Read(rootID);
+	H5_RootGroup::Read(rootID);
 
 	int iGriddingMethod = 0;
 	if (HDF5Wrapper::ReadMetadataIntegerAttribute(rootID, "griddingMethod", iGriddingMethod)) {

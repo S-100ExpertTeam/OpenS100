@@ -648,7 +648,7 @@
     <ClCompile Include="S102H5.cpp">
       <Filter>S100H5</Filter>
     </ClCompile>
-    <ClCompile Include="H5_RootMeta.cpp">
+    <ClCompile Include="H5_RootGroup.cpp">
       <Filter>S100H5</Filter>
     </ClCompile>
     <ClCompile Include="TypeOfTheHorizontalCRS.cpp">
@@ -666,8 +666,35 @@
     <ClCompile Include="S102_GriddingMethod.cpp">
       <Filter>S100H5</Filter>
     </ClCompile>
-    <ClCompile Include="S102_RootMeta.cpp">
+    <ClCompile Include="S102_RootGroup.cpp">
       <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="H5_FeatureContainer.cpp">
+      <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="S102_FC_BathymetryCoverage.cpp">
+      <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="DataOrganizationIndex.cpp">
+      <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="CV_CommonPointRule.cpp">
+      <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="CV_SequenceType.cpp">
+      <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="CV_InterpolationMethod.cpp">
+      <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="H5_FC_Attribute2.cpp">
+      <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="H5_FeatureInstanceGroup.cpp">
+      <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="H5_FI_Attribute29.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1331,7 +1358,7 @@
     <ClInclude Include="S102H5.h">
       <Filter>S100H5</Filter>
     </ClInclude>
-    <ClInclude Include="H5_RootMeta.h">
+    <ClInclude Include="H5_RootGroup.h">
       <Filter>S100H5</Filter>
     </ClInclude>
     <ClInclude Include="TypeOfTheHorizontalCRS.h">
@@ -1349,8 +1376,35 @@
     <ClInclude Include="S102_GriddingMethod.h">
       <Filter>S100H5</Filter>
     </ClInclude>
-    <ClInclude Include="S102_RootMeta.h">
+    <ClInclude Include="S102_RootGroup.h">
       <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="H5_FeatureContainer.h">
+      <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="S102_FC_BathymetryCoverage.h">
+      <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="DataOrganizationIndex.h">
+      <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="CV_CommonPointRule.h">
+      <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="CV_SequenceType.h">
+      <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="CV_InterpolationMethod.h">
+      <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="H5_FC_Attribute2.h">
+      <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="H5_FeatureInstanceGroup.h">
+      <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="H5_FI_Attribute29.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
