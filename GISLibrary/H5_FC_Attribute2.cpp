@@ -49,7 +49,7 @@ bool H5_FC_Attribute2::Read(hid_t groupID)
 		setSequencingRuleType((CV_SequenceType)iSequencingRuleType);
 	}
 
-	std::string strSequencingRuleScanDirection = 0;
+	std::string strSequencingRuleScanDirection;
 	if (HDF5Wrapper::ReadMetadataAnyStringAttribute(groupID, "scanDirection", strSequencingRuleScanDirection)) {
 		setSequencingRuleScanDirection(strSequencingRuleScanDirection);
 	}

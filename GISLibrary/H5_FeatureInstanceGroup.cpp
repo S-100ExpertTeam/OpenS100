@@ -99,5 +99,5 @@ void H5_FeatureInstanceGroup::setNumGRP(const int value)
 
 bool H5_FeatureInstanceGroup::Read(hid_t groupID)
 {
-
+	return true;
 }
