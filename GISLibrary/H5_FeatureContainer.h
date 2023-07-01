@@ -3,6 +3,9 @@
 #include "DataOrganizationIndex.h"
 #include "CV_CommonPointRule.h"
 #include "H5_FC_Attribute2.h"
+#include "H5_FeatureInstanceGroup.h"
+
+#include <vector>
 
 class H5_FeatureContainer
 {
@@ -11,6 +14,8 @@ public:
 	virtual ~H5_FeatureContainer();
 
 public:
+	std::vector<H5_FeatureInstanceGroup*> featureInstanceGroup;
+
 	DataOrganizationIndex dataCodingFormat = DataOrganizationIndex::none;
 	int dimension = 0;
 	CV_CommonPointRule commonPointRule = CV_CommonPointRule::none;
@@ -45,5 +50,5 @@ public:
 	void setNumInstances(const int value);
 
 public:
-	bool Read(hid_t groupID);
+	virtual bool Read(hid_t groupID);
 };

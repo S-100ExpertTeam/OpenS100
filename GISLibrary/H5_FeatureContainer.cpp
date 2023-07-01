@@ -9,6 +9,10 @@ H5_FeatureContainer::H5_FeatureContainer()
 
 H5_FeatureContainer::~H5_FeatureContainer()
 {
+	for (auto i = featureInstanceGroup.begin(); i != featureInstanceGroup.end(); i++) {
+		delete (*i);
+	}
+
 	delete timeUncertainty;
 	delete attribute2;
 }

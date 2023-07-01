@@ -14,6 +14,10 @@ H5_FeatureInstanceGroup::~H5_FeatureInstanceGroup()
 	delete southBoundLatitude;
 	delete northBoundLatitude;
 	delete attribute29;
+
+	for (auto i = valuesGroup.begin(); i != valuesGroup.end(); i++) {
+		delete (*i);
+	}
 }
 
 bool H5_FeatureInstanceGroup::hasWestBoundLongitude() const
@@ -102,12 +106,37 @@ void H5_FeatureInstanceGroup::setNumGRP(const int value)
 	numGRP = value;
 }
 
-bool H5_FeatureInstanceGroup::Read(hid_t groupID)
+bool H5_FeatureInstanceGroup::Read(hid_t groupID, DataOrganizationIndex dataCodingFormat)
 {
 	double dWestBoundLongitude = 0;
-	//if (HDF5Wrapper::ReadMetadataIntegerAttribute(groupID, "type", iSequencingRuleType)) {
-	//	setSequencingRuleType((CV_SequenceType)iSequencingRuleType);
-	//}
+	if (HDF5Wrapper::ReadMetadataDoubleAttribute(groupID, "westBoundLongitude", dWestBoundLongitude)) {
+		setWestBoundLongitude(dWestBoundLongitude);
+	}
+
+	double dEastBoundLongitude = 0;
+	if (HDF5Wrapper::ReadMetadataDoubleAttribute(groupID, "eastBoundLongitude", dEastBoundLongitude)) {
+		setEastBoundLongitude(dEastBoundLongitude);
+	}
+
+	double dSouthBoundLatitude = 0;
+	if (HDF5Wrapper::ReadMetadataDoubleAttribute(groupID, "southBoundLatitude", dSouthBoundLatitude)) {
+		setSouthBoundLatitude(dSouthBoundLatitude);
+	}
+
+	double dNorthBountLatitude = 0;
+	if (HDF5Wrapper::ReadMetadataDoubleAttribute(groupID, "northBoundLatitude", dNorthBountLatitude)) {
+		setNorthBoundLatitude(dNorthBountLatitude);
+	}
+
+	int iNumGRP = 0;
+	if (HDF5Wrapper::ReadMetadataIntegerAttribute(groupID, "numGRP", iNumGRP)) {
+		setNumGRP(iNumGRP);
+	}
+
+	if (dataCodingFormat == DataOrganizationIndex::regularGrid) {
+		attribute29 = new H5_FI_Attribute29();
+		attribute29->Read(groupID);
+	}
 
 	return true;
 }

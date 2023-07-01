@@ -1,8 +1,11 @@
 #pragma once
 
 #include "H5_FI_Attribute29.h"
+#include "DataOrganizationIndex.h"
+#include "H5_ValuesGroup.h"
 
 #include <hdf5.h>
+#include <vector>
 
 class H5_FeatureInstanceGroup
 {
@@ -18,6 +21,8 @@ public:
 	int numGRP = 0;
 
 	H5_FI_Attribute29* attribute29 = nullptr;
+
+	std::vector<H5_ValuesGroup*> valuesGroup;
 
 public:
 	bool hasWestBoundLongitude() const;
@@ -40,5 +45,5 @@ public:
 	void setNumGRP(const int value);
 
 public:
-	bool Read(hid_t groupID);
+	virtual bool Read(hid_t groupID, DataOrganizationIndex dataCodingFormat);
 };

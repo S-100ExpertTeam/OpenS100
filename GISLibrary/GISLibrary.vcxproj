@@ -338,6 +338,7 @@
     <ClCompile Include="H5_FeatureInstanceGroup.cpp" />
     <ClCompile Include="H5_FI_Attribute29.cpp" />
     <ClCompile Include="H5_RootGroup.cpp" />
+    <ClCompile Include="H5_ValuesGroup.cpp" />
     <ClCompile Include="HDF5Wrapper.cpp" />
     <ClCompile Include="host_data.cpp" />
     <ClCompile Include="host_functions.cpp" />
@@ -362,8 +363,10 @@
     <ClCompile Include="S100H5.cpp" />
     <ClCompile Include="S102H5.cpp" />
     <ClCompile Include="S102_FC_BathymetryCoverage.cpp" />
+    <ClCompile Include="S102_FI_BathymetryCoverage.cpp" />
     <ClCompile Include="S102_GriddingMethod.cpp" />
     <ClCompile Include="S102_RootGroup.cpp" />
+    <ClCompile Include="S102_VG_BathymetryCoverage.cpp" />
     <ClCompile Include="S10XGML.cpp" />
     <ClCompile Include="S100Layer.cpp" />
     <ClCompile Include="S100SpatialObject.cpp" />
@@ -488,6 +491,7 @@
     <ClInclude Include="H5_FeatureInstanceGroup.h" />
     <ClInclude Include="H5_FI_Attribute29.h" />
     <ClInclude Include="H5_RootGroup.h" />
+    <ClInclude Include="H5_ValuesGroup.h" />
     <ClInclude Include="HDF5Wrapper.h" />
     <ClInclude Include="PugixmlElement.h" />
     <ClInclude Include="GML_Envelop.h" />
@@ -600,8 +604,10 @@
     <ClInclude Include="S100H5.h" />
     <ClInclude Include="S102H5.h" />
     <ClInclude Include="S102_FC_BathymetryCoverage.h" />
+    <ClInclude Include="S102_FI_BathymetryCoverage.h" />
     <ClInclude Include="S102_GriddingMethod.h" />
     <ClInclude Include="S102_RootGroup.h" />
+    <ClInclude Include="S102_VG_BathymetryCoverage.h" />
     <ClInclude Include="S10XGML.h" />
     <ClInclude Include="S100_GF.h" />
     <ClInclude Include="S100Layer.h" />

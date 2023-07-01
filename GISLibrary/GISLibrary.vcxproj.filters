@@ -693,8 +693,17 @@
     <ClCompile Include="H5_FeatureInstanceGroup.cpp">
       <Filter>S100H5</Filter>
     </ClCompile>
+    <ClCompile Include="H5_ValuesGroup.cpp">
+      <Filter>S100H5</Filter>
+    </ClCompile>
     <ClCompile Include="H5_FI_Attribute29.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="S102_FI_BathymetryCoverage.cpp">
+      <Filter>S100H5</Filter>
+    </ClCompile>
+    <ClCompile Include="S102_VG_BathymetryCoverage.cpp">
+      <Filter>S100H5</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1403,8 +1412,17 @@
     <ClInclude Include="H5_FeatureInstanceGroup.h">
       <Filter>S100H5</Filter>
     </ClInclude>
+    <ClInclude Include="S102_FI_BathymetryCoverage.h">
+      <Filter>S100H5</Filter>
+    </ClInclude>
     <ClInclude Include="H5_FI_Attribute29.h">
-      <Filter>Header Files</Filter>
+      <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="H5_ValuesGroup.h">
+      <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="S102_VG_BathymetryCoverage.h">
+      <Filter>S100H5</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
