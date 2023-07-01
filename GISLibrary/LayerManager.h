@@ -41,7 +41,7 @@ public:
 	// RCID of already rendered curveRecords
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
-	bool onIC = false;
+	bool onIC = true;
 
 public:
 	void SetViewMBR(RECT r);
