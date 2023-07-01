@@ -44,6 +44,15 @@ public:
 	int getNumGRP() const;
 	void setNumGRP(const int value);
 
+	// H5_FI_Attribute29
+	double getGridOriginLongitude() const;
+	double getGridOriginLatitude() const;
+	double getGridSpacingLongitudinal() const;
+	double getGridSpacingLatitudinal() const;
+	int getNumPointsLongitudinal() const;
+	int getNumPointsLatitudinal() const;
+	std::string getStartSequence() const;
+
 public:
 	virtual bool Read(hid_t groupID, DataOrganizationIndex dataCodingFormat);
 };

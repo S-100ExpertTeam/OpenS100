@@ -714,13 +714,8 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				{
 					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
 					{
-						//DrawS100Layer(hdc, offset, (S100Layer*)layer);
 						SetDrawingInstruction((S100Layer*)layer);
 					}
-					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
-					{
-						//DrawInformationLayer(hdc, layer);
-					}
 				}
 			}
 		}
@@ -735,13 +730,23 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				{
 					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
 					{
-						//DrawS100Layer(hdc, offset, (S100Layer*)layer);
-						//SetDrawingInstruction((S100Layer*)layer);
 						DrawS100Layer(hdc, offset, (S100Layer*)layer, 0, 3);
 					}
-					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
+				}
+			}
+		}
+
+		for (auto i = layers.begin(); i != layers.end(); i++)
+		{
+			auto layer = (*i);
+
+			if (layer->IsOn())
+			{
+				if (layer->IsS100Layer())
+				{
+					if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
 					{
-						//DrawInformationLayer(hdc, layer);
+						layer->Draw(hdc, scaler);
 					}
 				}
 			}
@@ -757,36 +762,8 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				{
 					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
 					{
-						//DrawS100Layer(hdc, offset, (S100Layer*)layer);
-						//SetDrawingInstruction((S100Layer*)layer);
-						//DrawS100Layer(hdc, offset, (S100Layer*)layer, 4, 100);
-					}
-					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
-					{
-						DrawInformationLayer(hdc, layer);
-					}
-				}
-			}
-		}
-
-		for (auto i = layers.begin(); i != layers.end(); i++)
-		{
-			auto layer = (*i);
-
-			if (layer->IsOn())
-			{
-				if (layer->IsS100Layer())
-				{
-					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
-					{
-						//DrawS100Layer(hdc, offset, (S100Layer*)layer);
-						//SetDrawingInstruction((S100Layer*)layer);
 						DrawS100Layer(hdc, offset, (S100Layer*)layer, 4, 100);
 					}
-					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
-					{
-						//DrawInformationLayer(hdc, layer);
-					}
 				}
 			}
 		}
@@ -801,14 +778,8 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				{
 					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
 					{
-						//DrawS100Layer(hdc, offset, (S100Layer*)layer);
-						//SetDrawingInstruction((S100Layer*)layer);
 						auto s100Layer = (S100Layer*)layer;
 						s100Layer->InitDraw();
-					}
-					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
-					{
-						//DrawInformationLayer(hdc, layer);
 					}
 				}
 			}

@@ -4,6 +4,7 @@
 #include "D2D1Resources.h"
 #include "S101Creator.h"
 #include "CatalogManager.h"
+#include "S102_Color.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 
@@ -28,6 +29,7 @@ public:
 	double s100Scale = -1;
 
 	CatalogManager catalogManager;
+	S102_Color s102Color;
 
 private:
 	

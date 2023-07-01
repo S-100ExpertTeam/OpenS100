@@ -21,15 +21,13 @@ public:
 	bool OpenByPugi(char* filePath);
 
 	// Current Palette returns the color corresponding to token.
-	D2D1_COLOR_F GetColor(std::wstring& token);
+	D2D1_COLOR_F GetColor(std::wstring token);
+	D2D1_COLOR_F GetColor(std::wstring _paletteName, std::wstring _token);
 
 	// Save palette pointer to current palette according to palette name
 	void ChangePalette(std::wstring paletteName);
 
 private:
-	// not use fuction
-	D2D1_COLOR_F GetColor(std::wstring _paletteName, std::wstring _token);
-
 	void extractionColors(pugi::xml_node node);
 	void extractionPalette(pugi::xml_node node);
 

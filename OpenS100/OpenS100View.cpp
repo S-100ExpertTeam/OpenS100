@@ -531,7 +531,8 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//theApp.gisLib->AddLayer(L"..\\TEMP\\125KR00000000.gml");
 
 	//theApp.gisLib->AddLayer(L"..\\SampleData\\101KR005X01SE.000");
-	theApp.gisLib->AddLayer(L"..\\SampleData\\102KR00GB4X0000__.h5");
+	//theApp.gisLib->AddLayer(L"..\\SampleData\\102KR00GB4X0000__.h5");
+	//theApp.gisLib->AddLayer(L"..\\SampleData\\102KR00H37261404721_2.1.0.h5");
 
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
 

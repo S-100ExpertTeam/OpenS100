@@ -90,6 +90,13 @@ bool S100Layer::Open(CString _filepath)
 	return false;
 }
 
+void S100Layer::Draw(HDC& hDC, Scaler* scaler, double offset)
+{
+	if (GetFileType() == S100_FileType::FILE_S_100_GRID_H5) {
+		m_spatialObject->Draw(hDC, scaler, offset);
+	}
+}
+
 void S100Layer::SetFeatureCatalog(FeatureCatalogue* value)
 {
 	featureCatalogue = value;

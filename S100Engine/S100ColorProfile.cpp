@@ -52,23 +52,20 @@ D2D1_COLOR_F S100ColorProfile::GetColor(std::wstring _paletteName, std::wstring 
 {
 	D2D1_COLOR_F resultColor = D2D1::ColorF(D2D1::ColorF::Crimson);
 
-	ChangePalette(_paletteName); 
-	if (currentPalette!=nullptr) 
-	{
-		return GetColor(_token);
+	for (auto i = palette.begin(); i != palette.end(); i++) {
+		if (i->GetName().compare(_paletteName) == 0) {
+			auto item = i->GetItem(_token);
+			if (item) {
+				return D2D1::ColorF((FLOAT)(item->srgb.red / 255.0), (FLOAT)(item->srgb.green / 255.0), (FLOAT)(item->srgb.blue / 255.0));
+			}
+		}
 	}
-	else
-	{
-		CString errMsg;
-		errMsg.Format(_T("Invalid color name (%s)\n"), _token.c_str());
-		//OutputDebugString(errMsg);
 
-		return resultColor;
-	}
+	return D2D1::ColorF(D2D1::ColorF::Black);
 }
 
 // Current Palette returns the color corresponding to token.
-D2D1_COLOR_F S100ColorProfile::GetColor(std::wstring& token)
+D2D1_COLOR_F S100ColorProfile::GetColor(std::wstring token)
 {
 	if (currentPalette->IsItem(token))
 	{

@@ -29,6 +29,7 @@ public: // for draw
 
 public:
 	bool Open(CString _filepath) override;
+	void Draw(HDC& hDC, Scaler* scaler, double offset = 0) override;
 	void SetFeatureCatalog(FeatureCatalogue* value);
 	FeatureCatalogue* GetFeatureCatalog();
 	FeatureCatalogue* GetFC();

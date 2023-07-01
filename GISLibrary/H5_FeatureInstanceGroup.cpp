@@ -140,3 +140,66 @@ bool H5_FeatureInstanceGroup::Read(hid_t groupID, DataOrganizationIndex dataCodi
 
 	return true;
 }
+
+double H5_FeatureInstanceGroup::getGridOriginLongitude() const
+{
+	if (attribute29) {
+		return attribute29->getGridOriginLongitude();
+	}
+
+	return 0;
+}
+
+double H5_FeatureInstanceGroup::getGridOriginLatitude() const
+{
+	if (attribute29) {
+		return attribute29->getGridOriginLatitude();
+	}
+
+	return 0;
+}
+
+double H5_FeatureInstanceGroup::getGridSpacingLongitudinal() const
+{
+	if (attribute29) {
+		return attribute29->getGridSpacingLongitudinal();
+	}
+
+	return 0;
+}
+
+double H5_FeatureInstanceGroup::getGridSpacingLatitudinal() const
+{
+	if (attribute29) {
+		return attribute29->getGridSpacingLatitudinal();
+	}
+
+	return 0;
+}
+
+int H5_FeatureInstanceGroup::getNumPointsLongitudinal() const
+{
+	if (attribute29) {
+		return attribute29->getNumPointsLongitudinal();
+	}
+
+	return 0;
+}
+
+int H5_FeatureInstanceGroup::getNumPointsLatitudinal() const
+{
+	if (attribute29) {
+		return attribute29->getNumPointsLatitudinal();
+	}
+
+	return 0;
+}
+
+std::string H5_FeatureInstanceGroup::getStartSequence() const
+{
+	if (attribute29) {
+		return attribute29->getStartSequence();
+	}
+
+	return "";
+}

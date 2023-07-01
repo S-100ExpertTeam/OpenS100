@@ -362,6 +362,7 @@
     <ClCompile Include="S100EditRender.cpp" />
     <ClCompile Include="S100H5.cpp" />
     <ClCompile Include="S102H5.cpp" />
+    <ClCompile Include="S102_Color.cpp" />
     <ClCompile Include="S102_FC_BathymetryCoverage.cpp" />
     <ClCompile Include="S102_FI_BathymetryCoverage.cpp" />
     <ClCompile Include="S102_GriddingMethod.cpp" />
@@ -603,6 +604,7 @@
     <ClInclude Include="S100EditRender.h" />
     <ClInclude Include="S100H5.h" />
     <ClInclude Include="S102H5.h" />
+    <ClInclude Include="S102_Color.h" />
     <ClInclude Include="S102_FC_BathymetryCoverage.h" />
     <ClInclude Include="S102_FI_BathymetryCoverage.h" />
     <ClInclude Include="S102_GriddingMethod.h" />
