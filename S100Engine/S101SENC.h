@@ -32,7 +32,7 @@ public:
 		UINT32 RRID;
 	};
 
-	enum SencType
+	enum class SencType
 	{
 		Points,
 		MultiPoint,

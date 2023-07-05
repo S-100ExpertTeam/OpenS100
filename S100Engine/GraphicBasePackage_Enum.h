@@ -2,7 +2,7 @@
 
 namespace GraphicBasePackage
 {
-	enum CRSType
+	enum class CRSType
 	{
 		CRSType_None = 0,
 		geographicCRS = 1,

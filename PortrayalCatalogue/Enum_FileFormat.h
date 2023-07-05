@@ -4,7 +4,7 @@
 
 namespace Portrayal
 {
-	enum FileFormat
+	enum class FileFormat
 	{
 		none = 0,
 		XML = 1,

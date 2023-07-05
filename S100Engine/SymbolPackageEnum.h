@@ -2,13 +2,13 @@
 
 namespace SymbolPackage
 {
-	enum LinePlacementMode
+	enum class LinePlacementMode
 	{
 		relative,
 		absolute
 	};
 
-	enum AreaPlacementMode
+	enum class AreaPlacementMode
 	{
 		visibleParts,
 		geographic

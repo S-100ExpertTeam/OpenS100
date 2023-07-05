@@ -2,7 +2,7 @@
 
 namespace Portrayal
 {
-	enum ParameterType
+	enum class ParameterType
 	{
 		Boolean,
 		Integer,

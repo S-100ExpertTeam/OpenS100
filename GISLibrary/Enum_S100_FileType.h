@@ -1,6 +1,6 @@
 #pragma once
 
-enum S100_FileType
+enum class S100_FileType
 {
 	FILE_NONE = 0,
 	FILE_Shape,

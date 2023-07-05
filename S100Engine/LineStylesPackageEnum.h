@@ -2,7 +2,7 @@
 
 namespace LineStylesPackage
 {
-	enum SubClassTypeOfAbstractLineStyle
+	enum class SubClassTypeOfAbstractLineStyle
 	{
 		eAbstractLineStyle = 0,
 		eLineStyle = 1,
@@ -10,14 +10,14 @@ namespace LineStylesPackage
 		eCompositeLineStyle = 3
 	};
 
-	enum JoinStyle
+	enum class JoinStyle
 	{
 		eJoinStyle_bevel = 1,
 		eJoinStyle_miter = 2,
 		eJoinStyle_round = 3
 	};
 
-	enum CapStyle
+	enum class CapStyle
 	{
 		eCapStyle_butt = 1,
 		eCapStyle_square = 2,

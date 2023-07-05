@@ -3,7 +3,7 @@
 namespace GISLibrary
 {
 
-	enum RCNM
+	enum class RCNM
 	{
 		FeatureType = 100,
 		Point = 110,
