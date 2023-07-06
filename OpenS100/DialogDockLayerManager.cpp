@@ -633,6 +633,9 @@ void CDialogDockLayerManager::OnItemchangedListLm(NMHDR* pNMHDR, LRESULT* pResul
 	auto layer = theApp.gisLib->GetLayer(pNMLV->iItem);
 	if (layer)
 	{
-		FillPropList((S101Cell*)layer->GetSpatialObject());
+		auto s100Layer = (S100Layer*)layer;
+		if (s100Layer->GetProductNumber() == 101) {
+			FillPropList((S101Cell*)layer->GetSpatialObject());
+		}
 	}
 }
