@@ -13,7 +13,7 @@
 
 S10XGML::S10XGML()
 {
-	m_FileType = FILE_S_100_VECTOR;
+	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 }
 
 S10XGML::~S10XGML()

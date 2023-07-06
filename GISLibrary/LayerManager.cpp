@@ -162,7 +162,7 @@ int LayerManager::AddLayer(CString _filepath)
 	Layer* layer = nullptr;
 	size_t fitor = std::wstring::npos;
 
-	int fileType = CheckFileType(_filepath);
+	S100_FileType fileType = CheckFileType(_filepath);
 
 	if (fileType == S100_FileType::FILE_Shape)
 	{
@@ -1491,10 +1491,10 @@ int LayerManager::CheckFileType(CString path, int update)
 	return ret;
 }
 
-int LayerManager::CheckFileType(CString path)
+S100_FileType LayerManager::CheckFileType(CString path)
 {
 	CFile file;
-	int ret = 0;
+	S100_FileType ret = S100_FileType::FILE_NONE;
 
 	CString file_extension = LibMFCUtil::GetExtension(path);
 

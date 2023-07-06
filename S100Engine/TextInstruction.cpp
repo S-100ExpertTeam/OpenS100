@@ -4,7 +4,7 @@
 
 TextInstruction::TextInstruction()
 {
-	m_nTypeOfDrawingInstruction = textInstruction;
+	m_nTypeOfDrawingInstruction = TypeOfDrawingInstruction::textInstruction;
 }
 
 TextInstruction::~TextInstruction()

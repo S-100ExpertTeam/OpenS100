@@ -96,10 +96,10 @@ public:
 
 	static std::wstring DISPLAY_FONT_NAME;
 
-	static int DISPLAY_MODE;
-	static int m_eColorTable;
-	static int UNIT_DISTANCE;
-	static int m_UserMode;
+	static GeoMetryLibrary::DisplayModeTable DISPLAY_MODE;
+	static GeoMetryLibrary::ColorTable m_eColorTable;
+	static GeoMetryLibrary::UnitDistance UNIT_DISTANCE;
+	static GeoMetryLibrary::UserMode m_UserMode;
 
 	static std::unordered_map<int, bool> objectDisplaySettings;
 	static std::unordered_map<std::wstring, bool> featureDisplaySettings;

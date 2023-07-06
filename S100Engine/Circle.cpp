@@ -15,7 +15,7 @@ namespace libS100Engine
 
 	void Circle::initialize()
 	{
-		type = circle;
+		type = FigureType::circle;
 		cx = cy = radius = strokeWidth = rotation = 0;
 	}
 }

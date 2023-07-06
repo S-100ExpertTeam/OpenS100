@@ -60,10 +60,10 @@ public:
 
 	__int64 OVER_GROUP;
 
-	int m_UserMode;
-	int DISPLAY_MODE;
-	int m_eColorTable;
-	int UNIT_DISTANCE;
+	GeoMetryLibrary::UserMode m_UserMode;
+	GeoMetryLibrary::DisplayModeTable DISPLAY_MODE;
+	GeoMetryLibrary::ColorTable m_eColorTable;
+	GeoMetryLibrary::UnitDistance UNIT_DISTANCE;
 
 	std::wstring DISPLAY_FONT_NAME;
 

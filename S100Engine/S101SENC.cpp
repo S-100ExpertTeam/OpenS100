@@ -49,14 +49,14 @@ bool S101SENC::Open(CString path)
 
 		switch (dataType)
 		{
-		case Points:
+		case SencType::Points:
 		{
 			s_Point = new stPoint[itemCount];
 			s_PointCount = itemCount;
 			memcpy(s_Point, p, dataSize);
 			break;
 		}
-		case Curve:
+		case SencType::Curve:
 		{
 			s_Curve = new stPoint*[itemCount];
 			s_CurveCount = itemCount;
@@ -80,7 +80,7 @@ bool S101SENC::Open(CString path)
 			}
 			break;
 		}
-		case CompCurve:
+		case SencType::CompCurve:
 		{
 			s_CompCurve = new stCompCurve*[itemCount];
 			s_CompCurveCount = itemCount;
@@ -104,7 +104,7 @@ bool S101SENC::Open(CString path)
 			}
 			break;
 		}
-		case Surface:
+		case SencType::Surface:
 		{
 			s_Surface = new stSurface*[itemCount];
 			s_SurfaceCount = itemCount;
@@ -128,7 +128,7 @@ bool S101SENC::Open(CString path)
 			}
 			break;
 		}
-		case Feature:
+		case SencType::Feature:
 		{
 			s_Feature = new stFeature[itemCount];
 			s_FeatureCount = itemCount;

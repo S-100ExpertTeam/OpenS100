@@ -8,7 +8,7 @@
 
 S100H5::S100H5()
 {
-	m_FileType = FILE_S_100_GRID_H5;
+	m_FileType = S100_FileType::FILE_S_100_GRID_H5;
 }
 
 S100H5::~S100H5()

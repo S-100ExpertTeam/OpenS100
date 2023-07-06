@@ -17,7 +17,7 @@ PointInstruction* DrawingInstructionReader::GetPointInstructionBypugixml(pugi::x
 {
 	PointInstruction* result = new PointInstruction();
 
-	result->m_nTypeOfDrawingInstruction = pointInstruction;
+	result->m_nTypeOfDrawingInstruction = TypeOfDrawingInstruction::pointInstruction;
 
 	for (pugi::xml_node child = node.first_child(); child; child = child.next_sibling())
 	{
@@ -42,7 +42,7 @@ PointInstruction* DrawingInstructionReader::GetPointInstructionBypugixml(pugi::x
 LineInstruction* DrawingInstructionReader::GetLineInstructionBypugixml(pugi::xml_node& node)
 {
 	LineInstruction* result = new LineInstruction();
-	result->m_nTypeOfDrawingInstruction = lineInstruction;
+	result->m_nTypeOfDrawingInstruction = TypeOfDrawingInstruction::lineInstruction;
 
 	for (pugi::xml_node child = node.first_child(); child; child = child.next_sibling())
 	{
@@ -86,7 +86,7 @@ LineInstruction* DrawingInstructionReader::GetLineInstructionBypugixml(pugi::xml
 AreaInstruction* DrawingInstructionReader::GetAreaInstructionBypugixml(pugi::xml_node& node)
 {
 	AreaInstruction* result = new AreaInstruction();
-	result->m_nTypeOfDrawingInstruction = areaInstruction;
+	result->m_nTypeOfDrawingInstruction = TypeOfDrawingInstruction::areaInstruction;
 
 	for (pugi::xml_node child = node.first_child(); child; child = child.next_sibling())
 	{
@@ -118,7 +118,7 @@ AreaInstruction* DrawingInstructionReader::GetAreaInstructionBypugixml(pugi::xml
 TextInstruction* DrawingInstructionReader::GetTextInstructionBypugixml(pugi::xml_node& node)
 {
 	TextInstruction* result = new TextInstruction();
-	result->m_nTypeOfDrawingInstruction = textInstruction;
+	result->m_nTypeOfDrawingInstruction = TypeOfDrawingInstruction::textInstruction;
 
 	for (pugi::xml_node child = node.first_child(); child; child = child.next_sibling())
 	{
@@ -145,7 +145,7 @@ AugmentedPath* DrawingInstructionReader::GetAugmentedPathInstructionBypugixml(pu
 {
 	AugmentedPath* result = new AugmentedPath();
 
-	result->m_nTypeOfDrawingInstruction = augmentedPath;
+	result->m_nTypeOfDrawingInstruction = TypeOfDrawingInstruction::augmentedPath;
 
 	for (pugi::xml_node child = node.first_child(); child; child = child.next_sibling())
 	{
@@ -213,7 +213,7 @@ AugmentedRay* DrawingInstructionReader::GetAugmentedRayInstructionBypugixml(pugi
 {
 	AugmentedRay* result = new AugmentedRay();
 
-	result->m_nTypeOfDrawingInstruction = augmentedRay;
+	result->m_nTypeOfDrawingInstruction = TypeOfDrawingInstruction::augmentedRay;
 
 	for (pugi::xml_node child = node.first_child(); child; child = child.next_sibling())
 	{

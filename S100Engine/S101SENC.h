@@ -34,7 +34,7 @@ public:
 
 	enum class SencType
 	{
-		Points,
+		Points = 0,
 		MultiPoint,
 		Curve,
 		CompCurve,

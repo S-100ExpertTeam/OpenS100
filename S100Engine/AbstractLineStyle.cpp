@@ -9,7 +9,7 @@ namespace LineStylesPackage
 {
 	AbstractLineStyle::AbstractLineStyle()
 	{
-		subClassType = eAbstractLineStyle;
+		subClassType = SubClassTypeOfAbstractLineStyle::eAbstractLineStyle;
 	}
 
 	AbstractLineStyle::~AbstractLineStyle()

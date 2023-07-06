@@ -79,12 +79,12 @@
 
 S101Cell::S101Cell() : S100SpatialObject()
 {
-	m_FileType = FILE_S_100_VECTOR;
+	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 }
 
 S101Cell::S101Cell(FeatureCatalogue* fc) : S100SpatialObject()
 {
-	m_FileType = FILE_S_100_VECTOR;
+	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 	SetAllNumericCode(fc);
 }
 
