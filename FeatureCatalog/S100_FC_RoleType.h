@@ -1,6 +1,6 @@
 #pragma once
 
-enum S100_FC_RoleType
+enum class S100_FC_RoleType
 {
 	none = 0,
 	association = 1,

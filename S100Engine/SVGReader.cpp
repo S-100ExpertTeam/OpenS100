@@ -481,7 +481,7 @@ bool SVGReader::OpenByPugi(char* path)
 
 			if (!wcscmp(circle->colorName.c_str(), L""))
 			{
-				circle->type = libS100Engine::pivotPoint;
+				circle->type = libS100Engine::FigureType::pivotPoint;
 				figures.push_back(circle);
 			}
 			else
@@ -559,10 +559,10 @@ void SVGReader::CreateSVGGeometry(ID2D1Factory1* m_pDirect2dFactory)
 	{
 		switch (figures[i]->type)
 		{
-		case libS100Engine::line:
+		case libS100Engine::FigureType::line:
 			geometry.push_back(CreateSVGGeometryFromLine(m_pDirect2dFactory, (libS100Engine::Line*)figures[i]));
 			break;
-		case libS100Engine::circle:
+		case libS100Engine::FigureType::circle:
 			geometry.push_back(CreateSVGGeometryFromCircle((libS100Engine::Circle*)figures[i]));
 			break;
 		default:

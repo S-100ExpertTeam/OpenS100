@@ -45,10 +45,10 @@ int   ENCCommon::T_CURRENT_SCALE = 0;
 std::unordered_map<int, bool> ENCCommon::objectDisplaySettings;
 std::unordered_map<std::wstring, bool> ENCCommon::featureDisplaySettings;
 
-int ENCCommon::DISPLAY_MODE = GeoMetryLibrary::DisplayModeTable::all;
-int ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Day; //thema
-int ENCCommon::UNIT_DISTANCE = GeoMetryLibrary::UnitDistance::unitDistance_km;
-int ENCCommon::m_UserMode = GeoMetryLibrary::UserMode::User_Mode;
+GeoMetryLibrary::DisplayModeTable ENCCommon::DISPLAY_MODE = GeoMetryLibrary::DisplayModeTable::all;
+GeoMetryLibrary::ColorTable ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Day; //thema
+GeoMetryLibrary::UnitDistance ENCCommon::UNIT_DISTANCE = GeoMetryLibrary::UnitDistance::unitDistance_km;
+GeoMetryLibrary::UserMode ENCCommon::m_UserMode = GeoMetryLibrary::UserMode::User_Mode;
 
 
 __int64 ENCCommon::OVER_GROUP = 0x7FFFFFFF;

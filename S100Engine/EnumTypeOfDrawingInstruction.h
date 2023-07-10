@@ -1,5 +1,5 @@
 #pragma once
-enum TypeOfDrawingInstruction
+enum class TypeOfDrawingInstruction
 {
 	nullInstruction = 0,
 	pointInstruction = 1,

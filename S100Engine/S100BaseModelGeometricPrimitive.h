@@ -1,6 +1,6 @@
 #pragma once
 
-enum S100BaseModelGeometricPrimitive
+enum class S100BaseModelGeometricPrimitive
 {
 	None       = 1,
 	Point      = 2,

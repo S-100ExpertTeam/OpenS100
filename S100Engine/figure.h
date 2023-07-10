@@ -4,7 +4,7 @@
 
 namespace libS100Engine
 {
-	enum FigureType
+	enum class FigureType
 	{
 		none = 0,
 		line = 1,

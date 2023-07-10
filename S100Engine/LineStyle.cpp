@@ -8,7 +8,7 @@ namespace LineStylesPackage
 	{
 		intervalLength = 0;
 		offset = 0;
-		subClassType = eLineStyle;
+		subClassType = SubClassTypeOfAbstractLineStyle::eLineStyle;
 		pen = nullptr;
 	}
 

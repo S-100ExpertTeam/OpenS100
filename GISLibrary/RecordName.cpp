@@ -12,7 +12,7 @@ RecordName::RecordName(int RCNM, int RCID)
 	this->RCID = RCID;
 }
 
-RecordName::RecordName(enum GISLibrary::RCNM RCNM, int RCID)
+RecordName::RecordName(GISLibrary::RCNM RCNM, int RCID)
 {
 	this->RCNM = (int)RCNM;
 	this->RCID = RCID;

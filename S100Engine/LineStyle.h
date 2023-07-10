@@ -22,7 +22,7 @@ namespace LineStylesPackage
 		std::vector<LineStylesPackage::Dash *> dash;
 		std::vector<LineStylesPackage::LineSymbol *> symbol;
 		GraphicBasePackage::Pen* pen;
-		LineStylesPackage::CapStyle _capStyle = LineStylesPackage::eCapStyle_butt;
-		LineStylesPackage::JoinStyle _joinStyle = LineStylesPackage::eJoinStyle_miter;
+		LineStylesPackage::CapStyle _capStyle = LineStylesPackage::CapStyle::eCapStyle_butt;
+		LineStylesPackage::JoinStyle _joinStyle = LineStylesPackage::JoinStyle::eJoinStyle_miter;
 	};
 }

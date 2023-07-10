@@ -549,7 +549,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 			continue;
 		}
 
-		if ((*i)->m_nTypeOfDrawingInstruction == areaInstruction)
+		if ((*i)->m_nTypeOfDrawingInstruction == TypeOfDrawingInstruction::areaInstruction)
 		{
 			if (geomType != 130)
 			{
@@ -563,7 +563,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 			if (pAreaInstruction->patternName.IsEmpty())
 			{
 				S100DrawingUnitPolygon* pS100DrawingUnitPolygon = new S100DrawingUnitPolygon();
-				pS100DrawingUnitPolygon->type = areaInstruction;
+				pS100DrawingUnitPolygon->type = TypeOfDrawingInstruction::areaInstruction;
 			
 				pS100DrawingUnitPolygon->color = s100PCManager.GetS100ColorProfile()->GetColor(std::wstring(pAreaInstruction->colorName));
 				ST_FEATURE_RECORD* pFeatureRecord = base.GetFeatureRecord(id);
@@ -583,7 +583,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 			else
 			{
 				S100DrawingUnitPatternPolygon* pS100DrawingUnitPolygon = new S100DrawingUnitPatternPolygon();
-				pS100DrawingUnitPolygon->type = patternAreaInstruction;
+				pS100DrawingUnitPolygon->type = TypeOfDrawingInstruction::patternAreaInstruction;
 				pS100DrawingUnitPolygon->pGeometry = CreateSurfaceGeometry(pDirect2dFactory, base.GetFeatureRecord(id));
 
 				auto i = s100PCManager.areaFillInfo.patternMap.find(pAreaInstruction->patternName);
@@ -596,7 +596,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 				s100DrawingUnit.push_back(pS100DrawingUnitPolygon);
 			}
 		}
-		else if ((*i)->m_nTypeOfDrawingInstruction == lineInstruction)
+		else if ((*i)->m_nTypeOfDrawingInstruction == TypeOfDrawingInstruction::lineInstruction)
 		{
 			LineInstruction* pLineInstruction = (LineInstruction*)(*i);
 
@@ -612,7 +612,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 			}
 
 			S100DrawingUnitPolyLine* pS100DrawingUnitPolyLine = new S100DrawingUnitPolyLine();
-			pS100DrawingUnitPolyLine->type = lineInstruction;
+			pS100DrawingUnitPolyLine->type = TypeOfDrawingInstruction::lineInstruction;
 			pS100DrawingUnitPolyLine->color = s100PCManager.GetS100ColorProfile()->GetColor(std::wstring(pLineInstruction->colorName));
 			pS100DrawingUnitPolyLine->width = (FLOAT)(pLineInstruction->width / PIXEL_MM);
 			pS100DrawingUnitPolyLine->hasDash = pLineInstruction->hasDash;
@@ -636,7 +636,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 
 			s100DrawingUnit.push_back(pS100DrawingUnitPolyLine);
 		}
-		else if ((*i)->m_nTypeOfDrawingInstruction == pointInstruction)
+		else if ((*i)->m_nTypeOfDrawingInstruction == TypeOfDrawingInstruction::pointInstruction)
 		{
 			PointInstruction* pPointInstruction = (PointInstruction*)(*i);
 			if (geomType != 110 &&
@@ -651,7 +651,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 			}
 
 			S100DrawingUnitPoint* pS100DrawingUnitPoint = new S100DrawingUnitPoint();
-			pS100DrawingUnitPoint->type = pointInstruction;
+			pS100DrawingUnitPoint->type = TypeOfDrawingInstruction::pointInstruction;
 			pS100DrawingUnitPoint->rotation = pPointInstruction->rotation;
 
 			pS100DrawingUnitPoint->point = CreatePoint(base.GetFeatureRecord(id));
@@ -660,7 +660,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 			pS100DrawingUnitPoint->symbolName = pPointInstruction->symbolName;
 			s100DrawingUnit.push_back(pS100DrawingUnitPoint);
 		}
-		else if ((*i)->m_nTypeOfDrawingInstruction == textInstruction)
+		else if ((*i)->m_nTypeOfDrawingInstruction == TypeOfDrawingInstruction::textInstruction)
 		{
 			TextInstruction* pTextInstruction = (TextInstruction*)(*i);
 			if (pTextInstruction->pText)
@@ -679,7 +679,7 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 					}
 
 					S100DrawingUnitTextPoint* pS100DrawingUnitTextPoint = new S100DrawingUnitTextPoint();
-					pS100DrawingUnitTextPoint->type = textInstruction;
+					pS100DrawingUnitTextPoint->type = TypeOfDrawingInstruction::textInstruction;
 					pS100DrawingUnitTextPoint->rotation = ((TextPackage::TextPoint*)(pTextInstruction->pText))->rotation;
 
 					pS100DrawingUnitTextPoint->point = CreatePoint(base.GetFeatureRecord(id));
@@ -716,11 +716,11 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 				}
 			}
 		}
-		else if ((*i)->m_nTypeOfDrawingInstruction == augmentedPath)
+		else if ((*i)->m_nTypeOfDrawingInstruction == TypeOfDrawingInstruction::augmentedPath)
 		{
 			AugmentedPath* pAugmentedPath = (AugmentedPath*)(*i);
 			S100DrawingUnitAugmentedPath* pS100DrawingUnit = new S100DrawingUnitAugmentedPath();
-			pS100DrawingUnit->type = augmentedPath;
+			pS100DrawingUnit->type = TypeOfDrawingInstruction::augmentedPath;
 			pS100DrawingUnit->_geometryPoint = CreatePoint(base.GetFeatureRecord(id));
 
 			if (pAugmentedPath->_path._segment.size() > 0)
@@ -759,11 +759,11 @@ void S101Dataset::CreateS100DrawingUnit(ID2D1Factory1* pDirect2dFactory, S100PCM
 			
 			s100DrawingUnit.push_back(pS100DrawingUnit);
 		}
-		else if ((*i)->m_nTypeOfDrawingInstruction == augmentedRay)
+		else if ((*i)->m_nTypeOfDrawingInstruction == TypeOfDrawingInstruction::augmentedRay)
 		{
 			AugmentedRay* pAugmentedRay = (AugmentedRay*)(*i);
 			S100DrawingUnitAugmentedRay* pS100DrawingUnit = new S100DrawingUnitAugmentedRay();
-			pS100DrawingUnit->type = augmentedRay;
+			pS100DrawingUnit->type = TypeOfDrawingInstruction::augmentedRay;
 			pS100DrawingUnit->_geometryPoint = CreatePoint(base.GetFeatureRecord(id));
 
 			if (pAugmentedRay->pLineStyle)

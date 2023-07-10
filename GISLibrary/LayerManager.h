@@ -106,8 +106,8 @@ public:
 	int LayerCount();
 
 	// Return type : enum S100_FileType
-	static int CheckFileType(CString path, int update);
-	static int CheckFileType(CString path);
+	static S100_FileType CheckFileType(CString path, int update);
+	static S100_FileType CheckFileType(CString path);
 
 	int CreateLayerID();
 

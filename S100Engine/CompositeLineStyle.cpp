@@ -5,7 +5,7 @@ namespace LineStylesPackage
 {
 	CompositeLineStyle::CompositeLineStyle()
 	{
-		subClassType = eCompositeLineStyle;
+		subClassType = SubClassTypeOfAbstractLineStyle::eCompositeLineStyle;
 	}
 
 	CompositeLineStyle::~CompositeLineStyle()

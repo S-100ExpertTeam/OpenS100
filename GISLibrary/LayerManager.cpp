@@ -162,7 +162,7 @@ int LayerManager::AddLayer(CString _filepath)
 	Layer* layer = nullptr;
 	size_t fitor = std::wstring::npos;
 
-	int fileType = CheckFileType(_filepath);
+	S100_FileType fileType = CheckFileType(_filepath);
 
 	if (fileType == S100_FileType::FILE_Shape)
 	{
@@ -1428,10 +1428,10 @@ int LayerManager::LayerCount()
 	return layers.size();
 }
 
-int LayerManager::CheckFileType(CString path, int update)
+S100_FileType LayerManager::CheckFileType(CString path, int update)
 {
 	CFile file;
-	int ret = 0;
+	S100_FileType ret = S100_FileType::FILE_NONE;
 
 	CString file_extension = LibMFCUtil::GetExtension(path);
 	auto isUpdatFile = update > 0 ? true : false;
@@ -1455,11 +1455,11 @@ int LayerManager::CheckFileType(CString path, int update)
 
 				if (tag == *((unsigned int*)"0001"))
 				{
-					ret = 1; // 57
+					ret = S100_FileType::FILE_S_57;
 				}
 				else if (tag == *((unsigned int*)"DSID"))
 				{
-					ret = 2; // 101
+					ret = S100_FileType::FILE_S_100_VECTOR;
 				}
 				delete sBuf;
 			}
@@ -1479,22 +1479,22 @@ int LayerManager::CheckFileType(CString path, int update)
 			if ((nodeName.find(L"DataSet") != std::wstring::npos) ||
 				(nodeName.find(L"Dataset") != std::wstring::npos))
 			{
-				ret = 3;
+				ret = S100_FileType::FILE_S_100_VECTOR;
 			}
 		}
 	}
 	else if (file_extension.CompareNoCase(_T("h5")) == 0)
 	{
-		ret = 4;
+		ret = S100_FileType::FILE_S_100_GRID_H5;
 	}
 
 	return ret;
 }
 
-int LayerManager::CheckFileType(CString path)
+S100_FileType LayerManager::CheckFileType(CString path)
 {
 	CFile file;
-	int ret = 0;
+	S100_FileType ret = S100_FileType::FILE_NONE;
 
 	CString file_extension = LibMFCUtil::GetExtension(path);
 

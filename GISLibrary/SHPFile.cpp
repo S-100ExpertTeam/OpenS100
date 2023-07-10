@@ -19,7 +19,7 @@ bool SHPFile::Open(CString _filepath)
 {
 	SetFilePath(_filepath);
 
-	m_FileType = FILE_Shape;
+	m_FileType = S100_FileType::FILE_Shape;
 
 	CFile fdSHP, fdSHX;
 	CFileException e;

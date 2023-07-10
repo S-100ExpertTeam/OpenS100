@@ -398,7 +398,7 @@ D2D1_RECT_F S100PCManager::GetLineStyleRect(CString _name, FLOAT scale)
 	auto keyValue = lineStyles.mapLineStyle.find(std::wstring(_name));
 	if (keyValue != lineStyles.mapLineStyle.end())
 	{
-		if (keyValue->second->subClassType == LineStylesPackage::eLineStyle)
+		if (keyValue->second->subClassType == LineStylesPackage::SubClassTypeOfAbstractLineStyle::eLineStyle)
 		{
 			LineStylesPackage::LineStyle *pLineStyle = (LineStylesPackage::LineStyle *)keyValue->second;
 			rect.left = 0;
@@ -442,11 +442,11 @@ D2D1_RECT_F S100PCManager::GetLineStyleRect(CString _name, FLOAT scale)
 				rect.bottom = 100;
 			}
 		}
-		else if (keyValue->second->subClassType == LineStylesPackage::eLineStyleReference)
+		else if (keyValue->second->subClassType == LineStylesPackage::SubClassTypeOfAbstractLineStyle::eLineStyleReference)
 		{
 			// TDB
 		}
-		else if (keyValue->second->subClassType == LineStylesPackage::eCompositeLineStyle)
+		else if (keyValue->second->subClassType == LineStylesPackage::SubClassTypeOfAbstractLineStyle::eCompositeLineStyle)
 		{
 			rect.left = 0;
 			rect.top = 0;

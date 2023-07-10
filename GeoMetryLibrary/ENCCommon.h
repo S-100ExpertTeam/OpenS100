@@ -5,28 +5,28 @@
 
 namespace GeoMetryLibrary
 {
-	enum ColorTable
+	enum class ColorTable
 	{
 		Day = 0,
 		Dusk,
 		Night,
 	};
 
-	enum DisplayModeTable
+	enum class DisplayModeTable
 	{
 		base = 0,
 		standard = 1,
 		all = 2
 	};
 
-	enum UserMode
+	enum class UserMode
 	{
 		User_Mode,
 		Developer_Mode,
 		User_Developer_Mode
 	};
 
-	enum ReportingData
+	enum class ReportingData
 	{
 		None, 
 		PC,
@@ -34,7 +34,7 @@ namespace GeoMetryLibrary
 		DataSet
 	};
 
-	enum UnitDistance
+	enum class UnitDistance
 	{
 		unitDistance_km = 0,
 		unitDistance_nautical_mile = 1,
@@ -96,10 +96,10 @@ public:
 
 	static std::wstring DISPLAY_FONT_NAME;
 
-	static int DISPLAY_MODE;
-	static int m_eColorTable;
-	static int UNIT_DISTANCE;
-	static int m_UserMode;
+	static GeoMetryLibrary::DisplayModeTable DISPLAY_MODE;
+	static GeoMetryLibrary::ColorTable m_eColorTable;
+	static GeoMetryLibrary::UnitDistance UNIT_DISTANCE;
+	static GeoMetryLibrary::UserMode m_UserMode;
 
 	static std::unordered_map<int, bool> objectDisplaySettings;
 	static std::unordered_map<std::wstring, bool> featureDisplaySettings;

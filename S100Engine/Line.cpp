@@ -5,7 +5,7 @@ namespace libS100Engine
 {
 	void Line::initialize()
 	{
-		type = line;
+		type = FigureType::line;
 		strokeWidth = rotation = 0;
 		strokeDasharray = L"";
 		fill = false;

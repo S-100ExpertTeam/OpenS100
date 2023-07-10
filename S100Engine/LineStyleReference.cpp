@@ -5,7 +5,7 @@ namespace LineStylesPackage
 {
 	LineStyleReference::LineStyleReference()
 	{
-		subClassType = eLineStyleReference;
+		subClassType = SubClassTypeOfAbstractLineStyle::eLineStyleReference;
 	}
 
 	LineStyleReference::~LineStyleReference()

@@ -5,8 +5,8 @@ namespace LineStylesPackage
 {
 	LineSymbol::LineSymbol()
 	{
-		capStyle = eCapStyle_butt;
-		joinStyle = eJoinStyle_miter;
+		capStyle = CapStyle::eCapStyle_butt;
+		joinStyle = JoinStyle::eJoinStyle_miter;
 		position = 0;
 	}
 

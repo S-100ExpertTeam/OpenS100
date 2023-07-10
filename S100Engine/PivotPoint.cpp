@@ -15,7 +15,7 @@ namespace libS100Engine
 
 	void PivotPoint::initialize()
 	{
-		type = pivotPoint;
+		type = FigureType::pivotPoint;
 		cx = cy = radius = strokeWidth = rotation = 0;
 	}
 }

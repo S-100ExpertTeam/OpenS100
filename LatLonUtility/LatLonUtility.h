@@ -33,7 +33,7 @@ namespace LatLonUtility {
 		double lat = 0;
 	};
 
-	enum UNIT {
+	enum class UNIT {
 		m = 0,
 		km,
 		nautical_mile
