@@ -252,7 +252,6 @@
     <ClCompile Include="BackgroundLayer.cpp" />
     <ClCompile Include="BackgroundSHPFile.cpp" />
     <ClCompile Include="Circle.cpp" />
-    <ClCompile Include="Class_S101_Base.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Colors.cpp" />
     <ClCompile Include="CompositeLineStyle.cpp" />
@@ -295,7 +294,6 @@
     <ClCompile Include="S100ColorProfile.cpp" />
     <ClCompile Include="S100ColorProfiles.cpp" />
     <ClCompile Include="S100Data.cpp" />
-    <ClCompile Include="S100DatasetManager.cpp" />
     <ClCompile Include="S100DrawingUnit.cpp" />
     <ClCompile Include="S100DrawingUnitAugmentedPath.cpp" />
     <ClCompile Include="S100DrawingUnitAugmentedRay.cpp" />
@@ -309,8 +307,6 @@
     <ClCompile Include="S100PCManager.cpp" />
     <ClCompile Include="S100Render.cpp" />
     <ClCompile Include="S100SymbolManager.cpp" />
-    <ClCompile Include="S101Dataset.cpp" />
-    <ClCompile Include="S101SENC.cpp" />
     <ClCompile Include="SHPPoint.cpp" />
     <ClCompile Include="SHPPolygon.cpp" />
     <ClCompile Include="SpatialReference.cpp" />
@@ -349,7 +345,6 @@
     <ClInclude Include="BackgroundLayer.h" />
     <ClInclude Include="BackgroundSHPFile.h" />
     <ClInclude Include="Circle.h" />
-    <ClInclude Include="Class_S101_Base.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="CompositeLineStyle.h" />
@@ -404,7 +399,6 @@
     <ClInclude Include="S100ColorProfile.h" />
     <ClInclude Include="S100ColorProfiles.h" />
     <ClInclude Include="S100Data.h" />
-    <ClInclude Include="S100DatasetManager.h" />
     <ClInclude Include="S100DrawingUnit.h" />
     <ClInclude Include="S100DrawingUnitAugmentedPath.h" />
     <ClInclude Include="S100DrawingUnitAugmentedRay.h" />
@@ -418,8 +412,6 @@
     <ClInclude Include="S100PCManager.h" />
     <ClInclude Include="S100Render.h" />
     <ClInclude Include="S100SymbolManager.h" />
-    <ClInclude Include="S101Dataset.h" />
-    <ClInclude Include="S101SENC.h" />
     <ClInclude Include="SHPPoint.h" />
     <ClInclude Include="SHPPolygon.h" />
     <ClInclude Include="SpatialReference.h" />

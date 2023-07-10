@@ -2,7 +2,6 @@
 
 #include "AreaFillInfo.h"
 #include "S100PCManager.h"
-#include "S100DatasetManager.h"
 #include "BackgroundSHPFile.h"
 #include "BackgroundLayer.h"
 
@@ -65,7 +64,6 @@ public:
 	bool OverlapLineAndRect(D2D1_POINT_2F point1, D2D1_POINT_2F point2, D2D1_RECT_F rect);
 	bool PointInRect(D2D1_POINT_2F point, D2D1_RECT_F rect);
 
-	void Draw(S100DatasetManager& s100DatasetManager, S100PCManager& s100PCManager, ID2D1Factory1* pDirect2dFactory,  ID2D1DCRenderTarget* pRenderTarget, IDWriteTextFormat* pTextFormat, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyleS101Solid, ID2D1StrokeStyle1* pStrokeStyleS101Dash, AreaFillInfo& areaFillInfo, CRect& rectView);
 	void DrawScale(ID2D1RenderTarget *pRenderTarget, ID2D1SolidColorBrush* pBrush, IDWriteTextFormat* pTextFormat);
 
 	FLOAT GetCurrentScale();
@@ -77,7 +75,6 @@ public:
 
 	void GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, CRect& rect, FLOAT& xmin, FLOAT& ymin, FLOAT& xmax, FLOAT& ymax);
 	bool IsIntersect(FLOAT xmin1, FLOAT ymin1, FLOAT xmax1, FLOAT ymax1, FLOAT xmin2, FLOAT ymin2, FLOAT xmax2, FLOAT ymax2);
-	bool IsVisible(FLOAT currentScale, S101Dataset* s101Dataset);
 
 	void SetViewFactor(double x, double y, long long zoom);
 	void ZoomIn(double f = 1.1);

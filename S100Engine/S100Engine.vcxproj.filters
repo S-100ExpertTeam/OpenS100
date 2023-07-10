@@ -63,9 +63,6 @@
     <ClCompile Include="Circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Class_S101_Base.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -153,9 +150,6 @@
     <ClCompile Include="S100Data.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="S100DatasetManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="S100DrawingUnit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -181,12 +175,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="S100SymbolManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S101Dataset.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S101SENC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SHPPoint.cpp">
@@ -337,9 +325,6 @@
     <ClInclude Include="Circle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Class_S101_Base.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -445,9 +430,6 @@
     <ClInclude Include="S100Data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="S100DatasetManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="S100DrawingUnit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -473,12 +455,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="S100SymbolManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S101Dataset.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S101SENC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SHPPoint.h">
