@@ -29,6 +29,10 @@ PortrayalCatalogue::~PortrayalCatalogue()
 	Delete();
 }
 
+bool PortrayalCatalogue::Read(std::wstring path)
+{
+	return Open(path);
+}
 
 bool PortrayalCatalogue::Open(std::wstring path)
 {

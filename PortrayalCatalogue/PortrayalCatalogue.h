@@ -94,6 +94,7 @@ protected:
 	S100PCManager *s100PCManager = new S100PCManager();
 
 public:
+	bool Read(std::wstring path);
 	bool Open(std::wstring path);
 	void Init();
 	void Delete();
