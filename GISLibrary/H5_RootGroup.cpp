@@ -51,7 +51,11 @@ bool H5_RootGroup::hasIssueTime() const
 
 std::string H5_RootGroup::getIssueTime() const
 {
-	return *issueTime;
+	if (issueTime) {
+		return *issueTime;
+	}
+
+	return "";
 }
 
 void H5_RootGroup::setIssueTime(const std::string& value)
@@ -111,7 +115,11 @@ bool H5_RootGroup::hasTypeOfTheHorizontalCRS() const
 
 TypeOfTheHorizontalCRS H5_RootGroup::getTypeOfTheHorizontalCRS() const
 {
-	return *typeOfTheHorizontalCRS;
+	if (typeOfTheHorizontalCRS) {
+		return *typeOfTheHorizontalCRS;
+	}
+
+	return TypeOfTheHorizontalCRS::none;
 }
 
 void H5_RootGroup::setTypeOfTheHorizontalCRS(const TypeOfTheHorizontalCRS value)
@@ -131,7 +139,11 @@ bool H5_RootGroup::hasHorizontalCS() const
 
 int H5_RootGroup::getHorizontalCS() const
 {
-	return *horizontalCS;
+	if (horizontalCS) {
+		return *horizontalCS;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setHorizontalCS(const int value)
@@ -151,7 +163,11 @@ bool H5_RootGroup::hasHorizontalDatum() const
 
 int H5_RootGroup::getHorizontalDatum() const
 {
-	return *horizontalDatum;
+	if (horizontalDatum) {
+		return *horizontalDatum;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setHorizontalDatum(const int value)
@@ -171,7 +187,11 @@ bool H5_RootGroup::hasNameOfHorizontalDatum() const
 
 std::string H5_RootGroup::getNameOfHorizontalDatum() const
 {
-	return *nameOfHorizontalDatum;
+	if (nameOfHorizontalDatum) {
+		return *nameOfHorizontalDatum;
+	}
+
+	return "";
 }
 
 void H5_RootGroup::setNameOfHorizontalDatum(const std::string value)
@@ -191,7 +211,11 @@ bool H5_RootGroup::hasPrimeMeridian() const
 
 int H5_RootGroup::getPrimeMeridian() const
 {
-	return *primeMeridian;
+	if (primeMeridian) {
+		return *primeMeridian;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setPrimeMeridian(const int value)
@@ -211,7 +235,11 @@ bool H5_RootGroup::hasSpheroid() const
 
 int H5_RootGroup::getSpheroid() const
 {
-	return *spheroid;
+	if (spheroid) {
+		return *spheroid;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setSpheroid(const int value)
@@ -231,7 +259,11 @@ bool H5_RootGroup::hasProjectionMethod() const
 
 int H5_RootGroup::getProjectionMethod() const
 {
-	return *projectionMethod;
+	if (projectionMethod) {
+		return *projectionMethod;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setProjectionMethod(const int value)
@@ -251,7 +283,11 @@ bool H5_RootGroup::hasProjectionParameter1() const
 
 double H5_RootGroup::getProjectionParameter1() const
 {
-	return *projectionParameter1;
+	if (projectionParameter1) {
+		return *projectionParameter1;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setProjectionParameter1(const double value)
@@ -271,7 +307,11 @@ bool H5_RootGroup::hasProjectionParameter2() const
 
 double H5_RootGroup::getProjectionParameter2() const
 {
-	return *projectionParameter2;
+	if (projectionParameter2) {
+		return *projectionParameter2;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setProjectionParameter2(const double value)
@@ -291,7 +331,11 @@ bool H5_RootGroup::hasProjectionParameter3() const
 
 double H5_RootGroup::getProjectionParameter3() const
 {
-	return *projectionParameter3;
+	if (projectionParameter3) {
+		return *projectionParameter3;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setProjectionParameter3(const double value)
@@ -311,7 +355,11 @@ bool H5_RootGroup::hasProjectionParameter4() const
 
 double H5_RootGroup::getProjectionParameter4() const
 {
-	return *projectionParameter4;
+	if (projectionParameter4) {
+		return *projectionParameter4;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setProjectionParameter4(const double value)
@@ -331,7 +379,11 @@ bool H5_RootGroup::hasProjectionParameter5() const
 
 double H5_RootGroup::getProjectionParameter5() const
 {
-	return *projectionParameter5;
+	if (projectionParameter5) {
+		return *projectionParameter5;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setProjectionParameter5(const double value)
@@ -351,7 +403,11 @@ bool H5_RootGroup::hasFalseNorthing() const
 
 double H5_RootGroup::getFalseNorthing() const
 {
-	return *falseNorthing;
+	if (falseNorthing) {
+		return *falseNorthing;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setFalseNorthing(const double value)
@@ -371,7 +427,11 @@ bool H5_RootGroup::hasFalseEasting() const
 
 double H5_RootGroup::getFalseEasting() const
 {
-	return *falseEasting;
+	if (falseEasting) {
+		return *falseEasting;
+	}
+	
+	return 0;
 }
 
 void H5_RootGroup::setFalseEasting(const double value)
@@ -391,7 +451,10 @@ bool H5_RootGroup::hasEpoch() const
 
 std::string H5_RootGroup::getEpoch() const
 {
-	return *epoch;
+	if (epoch) {
+		return *epoch;
+	}
+	return "";
 }
 
 void H5_RootGroup::setEpoch(const std::string value)
@@ -451,7 +514,11 @@ bool H5_RootGroup::hasGeographicIdentifier() const
 
 std::string H5_RootGroup::getGeographicIdentifier() const
 {
-	return *geographicIdentifier;
+	if (geographicIdentifier) {
+		return *geographicIdentifier;
+	}
+
+	return "";
 }
 
 void H5_RootGroup::setGeographicIdentifier(const std::string value)
@@ -481,7 +548,11 @@ bool H5_RootGroup::hasVerticalCS() const
 
 int H5_RootGroup::getVerticalCS() const
 {
-	return *verticalCS;
+	if (verticalCS) {
+		return *verticalCS;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setVerticalCS(const int value)
@@ -501,7 +572,11 @@ bool H5_RootGroup::hasVerticalCoordinateBase() const
 
 VerticalCoordinateBase H5_RootGroup::getVerticalCoordinateBase() const
 {
-	return *verticalCoordinateBase;
+	if (verticalCoordinateBase) {
+		return *verticalCoordinateBase;
+	}
+
+	return VerticalCoordinateBase::none;
 }
 
 void H5_RootGroup::setVerticalCoordinateBase(const VerticalCoordinateBase value)
@@ -521,7 +596,11 @@ bool H5_RootGroup::hasVerticalDatumReference() const
 
 VerticalDatumReference H5_RootGroup::getVerticalDatumReference() const
 {
-	return *verticalDatumReference;
+	if (verticalDatumReference) {
+		return *verticalDatumReference;
+	}
+
+	return VerticalDatumReference::none;
 }
 
 void H5_RootGroup::setVerticalDatumReference(const VerticalDatumReference value)
@@ -541,7 +620,11 @@ bool H5_RootGroup::hasVerticalDatum() const
 
 int H5_RootGroup::getVerticalDatum() const
 {
-	return *verticalDatum;
+	if (verticalDatum) {
+		return *verticalDatum;
+	}
+
+	return 0;
 }
 
 void H5_RootGroup::setVerticalDatum(const int value)
@@ -561,7 +644,11 @@ bool H5_RootGroup::hasMetaFeatures() const
 
 std::string H5_RootGroup::getMetaFeatures() const
 {
-	return *metaFeatures;
+	if (metaFeatures) {
+		return *metaFeatures;
+	}
+
+	return "";
 }
 
 void H5_RootGroup::setMetaFeatures(const std::string value)

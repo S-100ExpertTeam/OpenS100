@@ -27,7 +27,11 @@ bool H5_FeatureInstanceGroup::hasWestBoundLongitude() const
 
 double H5_FeatureInstanceGroup::getWestBoundLongitude() const
 {
-	return *westBoundLongitude;
+	if (westBoundLongitude) {
+		return *westBoundLongitude;
+	}
+
+	return 0;
 }
 
 void H5_FeatureInstanceGroup::setWestBoundLongitude(const double value)
@@ -46,7 +50,11 @@ bool H5_FeatureInstanceGroup::hasEastBoundLongitude() const
 
 double H5_FeatureInstanceGroup::getEastBoundLongitude() const
 {
-	return *eastBoundLongitude;
+	if (eastBoundLongitude) {
+		return *eastBoundLongitude;
+	}
+	
+	return 0;
 }
 
 void H5_FeatureInstanceGroup::setEastBoundLongitude(const double value)
@@ -65,7 +73,9 @@ bool H5_FeatureInstanceGroup::hasSouthBoundLatitude() const
 
 double H5_FeatureInstanceGroup::getSouthBoundLatitude() const
 {
-	return *southBoundLatitude;
+	if (southBoundLatitude) {
+		return *southBoundLatitude;
+	}
 }
 
 void H5_FeatureInstanceGroup::setSouthBoundLatitude(const double value)
@@ -84,7 +94,11 @@ bool H5_FeatureInstanceGroup::hasNorthBoundLatitude() const
 
 double H5_FeatureInstanceGroup::getNorthBoundLatitude() const
 {
-	return *northBoundLatitude;
+	if (northBoundLatitude) {
+		return *northBoundLatitude;
+	}
+
+	return 0;
 }
 
 void H5_FeatureInstanceGroup::setNorthBoundLatitude(const double value)

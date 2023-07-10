@@ -792,7 +792,11 @@ void FeatureCatalogue::SetScope(std::wstring value)
 
 const std::wstring& FeatureCatalogue::GetFieldOfApplication()
 {
-	return *fieldOfApplication;
+	if (fieldOfApplication) {
+		return *fieldOfApplication;
+	}
+
+	return L"";
 }
 
 void FeatureCatalogue::SetFieldOfApplication(std::string& value)

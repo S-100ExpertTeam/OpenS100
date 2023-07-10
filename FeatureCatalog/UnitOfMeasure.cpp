@@ -76,7 +76,11 @@ void UnitOfMeasure::SetDefinition(std::wstring& value)
 
 const std::wstring& UnitOfMeasure::GetDefinition()
 {
-	return *definition;
+	if (definition) {
+		return *definition;
+	}
+
+	return L"";
 }
 
 void UnitOfMeasure::NullCheckSymbol()
@@ -95,5 +99,9 @@ void UnitOfMeasure::SetSymbol(std::wstring& value)
 
 const std::wstring& UnitOfMeasure::GetSymbol()
 {
-	return *symbol;
+	if (symbol) {
+		return *symbol;
+	}
+
+	return L"";
 }

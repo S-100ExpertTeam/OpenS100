@@ -19,7 +19,11 @@ bool S102_RootGroup::hasGriddingMethod() const
 
 S102_GriddingMethod S102_RootGroup::getGriddingMethod() const
 {
-	return *griddingMethod;
+	if (griddingMethod) {
+		return *griddingMethod;
+	}
+
+	return S102_GriddingMethod::none;
 }
 
 void S102_RootGroup::setGriddingMethod(const S102_GriddingMethod value)

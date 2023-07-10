@@ -149,10 +149,10 @@ const std::string Item::GetRemarks()
 
 const std::wstring Item::GetRemarksAsWString()
 {
-	if (nullptr != remarks)
-	{
+	if (remarks) {
 		return *remarks;
 	}
+
 	return L"";
 }
 

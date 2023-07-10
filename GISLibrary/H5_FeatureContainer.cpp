@@ -119,7 +119,11 @@ bool H5_FeatureContainer::hasTimeUncertainty() const
 
 double H5_FeatureContainer::getTimeUncertainty() const
 {
-	return *timeUncertainty;
+	if (timeUncertainty) {
+		return *timeUncertainty;
+	}
+
+	return 0;
 }
 
 void H5_FeatureContainer::setTimeUncertainty(const double value)
