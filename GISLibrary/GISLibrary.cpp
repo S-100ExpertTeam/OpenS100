@@ -117,14 +117,22 @@ CGISLibraryApp::~CGISLibraryApp()
 	D2.DeleteDeviceDependentResources();
 	D2.DeleteDeviceIndependentResources();
 
-	delete m_pScaler;
-	m_pScaler = nullptr;
+	if (m_pScaler) {
+		delete m_pScaler;
+		m_pScaler = nullptr;
+	}
+	
+	if (m_pLayerManager) {
+		delete m_pLayerManager;
+		m_pLayerManager = nullptr;
+	}
 
-	delete m_pLayerManager;
-	m_pLayerManager = nullptr;
+	if (SGeometry::viewPoints) {
+		delete[] SGeometry::viewPoints;
+		SGeometry::viewPoints = nullptr;
+	}
 
-	delete[] SGeometry::viewPoints;
-	SGeometry::viewPoints = nullptr;
+	featureOnOffMap.clear();
 }
 
 //CGISLibraryApp* gisLib = new CGISLibraryApp();
