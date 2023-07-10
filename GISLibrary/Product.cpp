@@ -31,12 +31,13 @@ Product::~Product()
 
 bool Product::OpenFC(std::wstring path)
 {
-	auto fc = new FeatureCatalogue(path);
+	auto fc = new FeatureCatalogue();
+	if (fc->Read(path)) {
 
-	if (this->fc.find(fc->GetVersionNumber()) == this->fc.end())
-	{
-		this->fc.insert({ fc->GetVersionNumber(), fc });
-		return true;
+		if (this->fc.find(fc->GetVersionNumber()) == this->fc.end()) {
+			this->fc.insert({ fc->GetVersionNumber(), fc });
+			return true;
+		}
 	}
 
 	delete fc;
@@ -45,12 +46,13 @@ bool Product::OpenFC(std::wstring path)
 
 bool Product::OpenPC(std::wstring path)
 {
-	auto pc = new PortrayalCatalogue(path);
+	auto pc = new PortrayalCatalogue();
+	if (pc->Open(path)) {
 
-	if (this->pc.find(pc->GetVersion()) == this->pc.end())
-	{
-		this->pc.insert({ pc->GetVersion(), pc });
-		return true;
+		if (this->pc.find(pc->GetVersion()) == this->pc.end()) {
+			this->pc.insert({ pc->GetVersion(), pc });
+			return true;
+		}
 	}
 
 	delete pc;

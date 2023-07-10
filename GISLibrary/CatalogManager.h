@@ -32,4 +32,7 @@ public:
 
 	void ChangeColorPallete(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 	void ChangeColorPallete(std::wstring paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
+
+	const std::set<std::string> getFcProductList();
+	const std::set<std::string> getPcProductList();
 };

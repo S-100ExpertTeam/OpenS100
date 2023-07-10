@@ -475,15 +475,6 @@
     <ClInclude Include="S100SymbolManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="S100Test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100TestDoc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100TestView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="S101Dataset.h">
       <Filter>Header Files</Filter>
     </ClInclude>

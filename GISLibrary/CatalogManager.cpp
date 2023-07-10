@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CatalogManager.h"
+#include "GISLibrary.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -30,14 +31,23 @@ FeatureCatalogue* CatalogManager::addFC(std::string path)
 
 FeatureCatalogue* CatalogManager::addFC(std::wstring path)
 {
-	auto fc = new FeatureCatalogue(path);
-	FCs.push_back(fc);
-	return fc;
+	auto fc = new FeatureCatalogue();
+
+	if (fc->Read(path))
+	{
+		FCs.push_back(fc);
+		return fc;
+	}
+	
+	delete fc;
+	return nullptr;
 }
 
 void CatalogManager::addFC(FeatureCatalogue* fc)
 {
-	FCs.push_back(fc);
+	if (fc) {
+		FCs.push_back(fc);
+	}
 }
 
 PortrayalCatalogue* CatalogManager::addPC(std::string path)
@@ -47,14 +57,32 @@ PortrayalCatalogue* CatalogManager::addPC(std::string path)
 
 PortrayalCatalogue* CatalogManager::addPC(std::wstring path)
 {
-	auto pc = new PortrayalCatalogue(path);
-	PCs.push_back(pc);
-	return pc;
+	auto pc = new PortrayalCatalogue();
+
+	if (pc->Open(path)) {
+		if (pc) {
+			pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
+			pc->CreatePatternImages(gisLib->D2.pD2Factory, 
+				gisLib->D2.pImagingFactory, 
+				gisLib->D2.D2D1StrokeStyleGroup.at(0));
+			pc->CreateLineImages(gisLib->D2.pD2Factory, 
+				gisLib->D2.pImagingFactory, 
+				gisLib->D2.D2D1StrokeStyleGroup.at(0));
+		}
+
+		PCs.push_back(pc);
+		return pc;
+	}
+
+	delete pc;
+	return nullptr;
 }
 
 void CatalogManager::addPC(PortrayalCatalogue* pc)
 {
-	PCs.push_back(pc);
+	if (pc) {
+		PCs.push_back(pc);
+	}
 }
 
 FeatureCatalogue* CatalogManager::getFC(std::string productId) const
@@ -128,4 +156,28 @@ void CatalogManager::ChangeColorPallete(std::string paletteName, ID2D1Factory1* 
 void CatalogManager::ChangeColorPallete(std::wstring paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke)
 {
 	ChangeColorPallete(pugi::as_utf8(paletteName), d2Factory, imageFactory, stroke);
+}
+
+const std::set<std::string> CatalogManager::getFcProductList()
+{
+	std::set<std::string> result;
+
+	for (auto i = FCs.begin(); i != FCs.end(); i++) {
+		auto productId = (*i)->getProductId();
+		result.insert(productId);
+	}
+
+	return result;
+}
+
+const std::set<std::string> CatalogManager::getPcProductList()
+{
+	std::set<std::string> result;
+
+	for (auto i = PCs.begin(); i != PCs.end(); i++) {
+		auto productId = (*i)->getProduct();
+		result.insert(productId);
+	}
+
+	return result;
 }

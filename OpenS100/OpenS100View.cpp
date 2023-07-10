@@ -521,18 +521,28 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	FeatureCatalogue* fc = new FeatureCatalogue(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml");
-	PortrayalCatalogue* pc = new PortrayalCatalogue(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml");
+	//theApp.gisLib->addCatalogue(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml", L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml");
+	//theApp.gisLib->addCatalogue(L"..\\ProgramData\\FC\\S-125_FC.xml", L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml");
+	
+	// catalog manager
+	auto cm = theApp.gisLib->getCatalogManager();
 
-	theApp.gisLib->InitLibrary(fc, pc);
-	theApp.gisLib->addCatalogue(L"..\\ProgramData\\FC\\S-125_FC.xml", L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml");
-	theApp.gisLib->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml");
+	// FC
+	auto fc1 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid(S-101)
+	auto fc2 = cm->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml"); // valid(S-102)
+	auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
+	auto fc4 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid, but duplicated(S-101)
+
+	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
+	auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
+
+	auto fc = cm->getFC(101); // get S-101 FC
+	auto pc = cm->getPC("S-101"); // get S-101 PC
 
 	//theApp.gisLib->AddLayer(L"..\\TEMP\\125KR00000000.gml");
 
 	//theApp.gisLib->AddLayer(L"..\\SampleData\\101KR005X01SE.000");
 	//theApp.gisLib->AddLayer(L"..\\SampleData\\102KR00GB4X0000__.h5");
-	//theApp.gisLib->AddLayer(L"..\\SampleData\\102KR00H37261404721_2.1.0.h5");
 
 	//gisLib->InitLibrary(L"../ProgramData/xml/S-101_FC.xml", L"../ProgramData/S101_Portrayal/portrayal_catalogue.xml");
 
