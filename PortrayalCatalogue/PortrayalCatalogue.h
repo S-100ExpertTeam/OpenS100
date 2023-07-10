@@ -34,7 +34,7 @@ class PortrayalCatalogue
 {
 public:
 	PortrayalCatalogue();
-	PortrayalCatalogue(std::wstring path);
+	//PortrayalCatalogue(std::wstring path);
 	virtual ~PortrayalCatalogue();
 
 protected:
@@ -94,7 +94,7 @@ protected:
 	S100PCManager *s100PCManager = new S100PCManager();
 
 public:
-	void Open(std::wstring& path);
+	bool Open(std::wstring path);
 	void Init();
 	void Delete();
 	bool ReadPortrayalCatalogueByPugiXML(std::wstring& path);	//change pugixml

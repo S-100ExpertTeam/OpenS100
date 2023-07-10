@@ -521,12 +521,15 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	FeatureCatalogue* fc = new FeatureCatalogue(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml");
-	PortrayalCatalogue* pc = new PortrayalCatalogue(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml");
+	//theApp.gisLib->addCatalogue(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml", L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml");
+	//theApp.gisLib->addCatalogue(L"..\\ProgramData\\FC\\S-125_FC.xml", L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml");
+	
+	// FC
+	auto fc1 = theApp.gisLib->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid(S-101)
+	auto fc2 = theApp.gisLib->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml"); // valid(S-102)
+	auto fc3 = theApp.gisLib->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
 
-	theApp.gisLib->InitLibrary(fc, pc);
-	theApp.gisLib->addCatalogue(L"..\\ProgramData\\FC\\S-125_FC.xml", L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml");
-	theApp.gisLib->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml");
+	auto pc1 = theApp.gisLib->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
 
 	//theApp.gisLib->AddLayer(L"..\\TEMP\\125KR00000000.gml");
 

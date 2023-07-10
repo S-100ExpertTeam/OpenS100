@@ -108,28 +108,25 @@ PortrayalCatalogue* S100Layer::GetPC()
 
 bool S100Layer::OpenFC(CString path)
 {
-	try
-	{
-		FeatureCatalogue* fc = new FeatureCatalogue(std::wstring(path));
+	FeatureCatalogue* fc = new FeatureCatalogue();
+	fc->Read(std::wstring(path));
+
+	if (fc) {
 		SetIndividualFC(true);
 		SetFeatureCatalog(fc);
 		return true;
 	}
-	catch (int /*e*/)
-	{
-		SetIndividualFC(false);
-		return false;
-	}
+		
+	SetIndividualFC(false);
+	delete fc;
 	return false;
 }
 
 bool S100Layer::OpenPC(CString path)
 {
-	try
-	{
-		auto filePath = LibMFCUtil::GetFolderPathFromFilePath(path);
-		PortrayalCatalogue* pc = new PortrayalCatalogue(std::wstring(filePath));
+	PortrayalCatalogue* pc = new PortrayalCatalogue();
 
+	if (pc) {
 		pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
 		pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
 		pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
@@ -138,11 +135,9 @@ bool S100Layer::OpenPC(CString path)
 		SetPC(pc);
 		return true;
 	}
-	catch (int /*e*/)
-	{
-		SetIndividualPC(false);
-		return false;
-	}
+
+	SetIndividualPC(false);
+	delete pc;
 	return false;
 }
 

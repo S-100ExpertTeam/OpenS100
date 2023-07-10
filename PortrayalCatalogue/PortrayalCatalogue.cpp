@@ -19,10 +19,10 @@ PortrayalCatalogue::PortrayalCatalogue()
 
 }
 
-PortrayalCatalogue::PortrayalCatalogue(std::wstring path) : PortrayalCatalogue()
-{
-	Open(path);
-}
+//PortrayalCatalogue::PortrayalCatalogue(std::wstring path) : PortrayalCatalogue()
+//{
+//	Open(path);
+//}
 
 PortrayalCatalogue::~PortrayalCatalogue()
 {
@@ -30,14 +30,17 @@ PortrayalCatalogue::~PortrayalCatalogue()
 }
 
 
-void PortrayalCatalogue::Open(std::wstring& path)
+bool PortrayalCatalogue::Open(std::wstring path)
 {
-	ReadPortrayalCatalogueByPugiXML(path);
+	if (ReadPortrayalCatalogueByPugiXML(path)) {
+		OpenSVG();
+		OpenLineStyle();
+		OpenAreaFill();
+		OpenColorProfile();
+		return true;
+	}
 
-	OpenSVG();
-	OpenLineStyle();
-	OpenAreaFill();
-	OpenColorProfile();
+	return false;
 }
 
 

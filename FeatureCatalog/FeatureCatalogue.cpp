@@ -12,10 +12,12 @@ FeatureCatalogue::FeatureCatalogue()
 {
 
 }
-FeatureCatalogue::FeatureCatalogue(std::wstring path)
-{
-	Read(path);
-}
+
+//FeatureCatalogue::FeatureCatalogue(std::wstring path)
+//{
+//	Read(path);
+//}
+
 FeatureCatalogue::~FeatureCatalogue()
 {
 	delete fieldOfApplication;
@@ -684,19 +686,17 @@ bool FeatureCatalogue::Read(std::wstring path)
 	SetFilePath(path);
 
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file(GetFilePath().c_str()); ///Read File
-	pugi::xml_node displayList = doc.child("S100FC:S100_FC_FeatureCatalogue");
+	pugi::xml_parse_result result = doc.load_file(GetFilePath().c_str());
+	pugi::xml_node rootNode = doc.child("S100FC:S100_FC_FeatureCatalogue");
 
-	if (displayList != nullptr)
+	if (rootNode != nullptr)
 	{
-		GetContents(displayList);
+		GetContents(rootNode);
 		// FC (FileName) Loading complete
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+	return false;
 }
 
 bool FeatureCatalogue::Save(std::wstring filePath)

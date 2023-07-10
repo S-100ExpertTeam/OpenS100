@@ -24,7 +24,7 @@ class FeatureCatalogue
 {
 public:
 	FeatureCatalogue();
-	FeatureCatalogue(std::wstring path);
+	//FeatureCatalogue(std::wstring path);
 	virtual ~FeatureCatalogue();
 
 protected:

@@ -44,12 +44,15 @@ private:
 public:
 	Scaler* GetScaler();
 	LayerManager* GetLayerManager();
+
 	void InitLibrary(std::wstring fcPath, std::wstring pcPath);
 	void InitLibrary(FeatureCatalogue* fc, PortrayalCatalogue* pc);
 	void addCatalogue(std::string fcPath, std::string pcPath);
 	void addCatalogue(std::wstring fcPath, std::wstring pcPath);
-	void addFC(std::string path);
-	void addFC(std::wstring path);
+	FeatureCatalogue* addFC(std::string path);
+	FeatureCatalogue* addFC(std::wstring path);
+	PortrayalCatalogue* addPC(std::string path);
+	PortrayalCatalogue* addPC(std::wstring path);
 
 	bool AddBackgroundLayer(CString _filepath);
 	bool AddLayer(CString _filepath);
