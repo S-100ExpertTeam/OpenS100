@@ -42,7 +42,7 @@ bool S100Layer::Open(CString _filepath)
 			return false;
 		}
 
-		enc->SetAllNumericCode(GetFC());
+		//enc->SetAllNumericCode(GetFC());
 		return true;
 	}
 	else if (!extension.CompareNoCase(L"gml"))
