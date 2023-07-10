@@ -418,9 +418,6 @@
     <ClInclude Include="S100PCManager.h" />
     <ClInclude Include="S100Render.h" />
     <ClInclude Include="S100SymbolManager.h" />
-    <ClInclude Include="S100Test.h" />
-    <ClInclude Include="S100TestDoc.h" />
-    <ClInclude Include="S100TestView.h" />
     <ClInclude Include="S101Dataset.h" />
     <ClInclude Include="S101SENC.h" />
     <ClInclude Include="SHPPoint.h" />
