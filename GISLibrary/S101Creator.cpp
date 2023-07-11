@@ -874,12 +874,10 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 
 	vectorRecord->m_ptas = new F_PTAS();
 
-	int numC2IL = 0;
+	int numC2IL = geom->GetNumPoints();
 
 	if (geom->IsClosed())
 	{
-		numC2IL = geom->GetNumPoints() - 1;
-
 		auto firstPoint = geom->GetFirstPoint();
 		
 		if (firstPoint)
@@ -898,8 +896,6 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 	}
 	else
 	{
-		numC2IL = geom->GetNumPoints() - 2;
-
 		auto firstPoint = geom->GetFirstPoint();
 		auto lastPoint = geom->GetLastPoint();
 
@@ -930,7 +926,7 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
 
 	for (int i = 0; i < numC2IL; i++)
 	{
-		auto sPoint = geom->GetPoint(i + 1);
+		auto sPoint = geom->GetPoint(i);
 		if (sPoint)
 		{
 			auto C2IL = new IC2D();
