@@ -692,8 +692,6 @@ bool FeatureCatalogue::Read(std::wstring path)
 	if (rootNode != nullptr)
 	{
 		GetContents(rootNode);
-		// FC (FileName) Loading complete
-		Save(path + L".xml");
 		return true;
 	}
 
