@@ -97,11 +97,11 @@ std::string FeatureBinding::GetRoleTypeAsString()
 	}
 	else if (roleType == S100_FC_RoleType::aggregation)
 	{
-		return "association";
+		return "aggregation";
 	}
 	else if (roleType == S100_FC_RoleType::composition)
 	{
-		return "association";
+		return "composition";
 	}
 
 	return "";
@@ -125,11 +125,11 @@ void FeatureBinding::SetRoleType(std::string value)
 	}
 	else if (value.compare("aggregation") == 0)
 	{
-		roleType = S100_FC_RoleType::association;
+		roleType = S100_FC_RoleType::aggregation;
 	}
 	else if (value.compare("composition") == 0)
 	{
-		roleType = S100_FC_RoleType::association;
+		roleType = S100_FC_RoleType::composition;
 	}
 }
 
