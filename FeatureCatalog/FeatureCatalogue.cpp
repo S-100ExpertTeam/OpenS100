@@ -880,6 +880,26 @@ void FeatureCatalogue::GetPointFeatures(std::vector<FeatureType*>& result)
 			if (*j == SpatialPrimitiveType::point)
 			{
 				result.push_back(*i);
+				break;
+			}
+		}
+	}
+}
+
+void FeatureCatalogue::GetMultiPointFeatures(std::vector<FeatureType*>& result)
+{
+	auto featureMap = featureTypes.GetVecFeatureType();
+
+	for (auto i = featureMap.begin(); i != featureMap.end(); i++)
+	{
+		auto primList = (*i)->GetPermittedPrimitivesPointer();
+
+		for (auto j = primList.begin(); j != primList.end(); j++)
+		{
+			if (*j == SpatialPrimitiveType::pointSet)
+			{
+				result.push_back(*i);
+				break;
 			}
 		}
 	}
@@ -898,6 +918,7 @@ void FeatureCatalogue::GetLineFeatures(std::vector<FeatureType*>& result)
 			if (*j == SpatialPrimitiveType::curve)
 			{
 				result.push_back(*i);
+				break;
 			}
 		}
 	}
@@ -916,6 +937,45 @@ void FeatureCatalogue::GetAreaFeatures(std::vector<FeatureType*>& result)
 			if (*j == SpatialPrimitiveType::surface)
 			{
 				result.push_back(*i);
+				break;
+			}
+		}
+	}
+}
+
+void FeatureCatalogue::GetCoverageFeatures(std::vector<FeatureType*>& result)
+{
+	auto featureMap = featureTypes.GetVecFeatureType();
+
+	for (auto i = featureMap.begin(); i != featureMap.end(); i++)
+	{
+		auto primList = (*i)->GetPermittedPrimitivesPointer();
+
+		for (auto j = primList.begin(); j != primList.end(); j++)
+		{
+			if (*j == SpatialPrimitiveType::coverage)
+			{
+				result.push_back(*i);
+				break;
+			}
+		}
+	}
+}
+
+void FeatureCatalogue::GetNoGeometryFeatures(std::vector<FeatureType*>& result)
+{
+	auto featureMap = featureTypes.GetVecFeatureType();
+
+	for (auto i = featureMap.begin(); i != featureMap.end(); i++)
+	{
+		auto primList = (*i)->GetPermittedPrimitivesPointer();
+
+		for (auto j = primList.begin(); j != primList.end(); j++)
+		{
+			if (*j == SpatialPrimitiveType::noGeometry)
+			{
+				result.push_back(*i);
+				break;
 			}
 		}
 	}
