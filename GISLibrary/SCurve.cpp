@@ -29,8 +29,7 @@ SGeometryType SCurve::GetType()
 
 int SCurve::GetRCID()
 {
-	int res = (int)m_id;
-	return res;
+	return m_id;
 }
 
 int SCurve::GetNumPoints()
@@ -239,7 +238,7 @@ void SCurve::SetMultiplicationFactor(int comfX, int comfY)
 
 void SCurve::SetRCID(int value)
 {
-	m_id = ((__int64)120) << 32 | value;
+	m_id = value;
 }
 
 bool SCurve::IsClosed()
@@ -323,4 +322,34 @@ std::string SCurve::ToString()
 	}
 
 	return ss.str();
+}
+
+void SCurve::SetMasking(bool value)
+{
+	m_masking = value;
+}
+
+bool SCurve::GetMasking()
+{
+	return m_masking;
+}
+
+void SCurve::SetSuppress(bool value)
+{
+	suppress = value;
+}
+
+bool SCurve::GetSuppress()
+{
+	return suppress;
+}
+
+bool SCurve::isDraw()
+{
+	if (GetSuppress() == false &&
+		GetMasking() == false) {
+		return true;
+	}
+
+	return false;
 }

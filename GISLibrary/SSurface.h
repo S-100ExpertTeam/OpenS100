@@ -1,12 +1,11 @@
 #pragma once
 
 #include "SGeometry.h"
-#include "SCurveHasOrient.h"
+#include "SCurve.h"
 
 class Scaler;
 class GeoPoint;
 class MBR;
-class SCurve;
 class SCompositeCurve;
 
 class SSurface : public SGeometry
@@ -18,24 +17,29 @@ public:
 	virtual ~SSurface();
 	
 public:
-	// Area points
+	// Polygon structure in the shp file
 	int m_numParts = 0;
 	int	m_numPoints = 0;
 	int* m_pParts = nullptr;
 
 	GeoPoint* m_pPoints = nullptr;
 	GeoPoint* m_centerPoint = nullptr;
-	
-	// Curve points
-	std::list<SCurveHasOrient*> curveList;
 
 	// AreaD2Geometry
 	ID2D1PathGeometry* pGeometry = nullptr;
+
+private:
+	// All curves that make up the Surface
+	std::list<SCurve*> curveList;
 
 public:
 	SGeometryType GetType() override;
 
 	int GetNumPart();
+	int getNumPoint();
+	int getPart(int index); // if fail, return -1
+
+	int getLastPointIndexOfExterior();
 
 	int GetNumPointPerPart(int partIndex);
 	void CalculateCenterPoint();
@@ -45,8 +49,7 @@ public:
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
 
-	//void AddCurve(SCurve* curve);
-	void AddCurve(SCurveHasOrient* curve);
+	void AddCurve(SCurve* curve);
 	void AddCompositeCurve(SCompositeCurve* compositeCurve);
 	
 	void Init();
@@ -67,7 +70,7 @@ public:
 	double GetY() override;
 
 	int GetRingCount();
-	SCurveHasOrient* GetRing(int index);
+	SCurve* GetRing(int index);
 
-	std::list<SCurveHasOrient*> GetCurveList();
+	std::list<SCurve*> GetCurveList();
 };

@@ -10,11 +10,15 @@ public:
 	virtual ~SCurve();
 	
 public:
-	// RCNM(120) + RCID
-	__int64 m_id = 0;
 	int m_numPoints = 0;
 	SPoint* m_pPoints = nullptr;
 	ID2D1PathGeometry* pGeometry = nullptr;
+
+	bool m_masking = false;
+	bool suppress = false;
+
+private:
+	int m_id = 0;
 
 public:
 	SGeometryType GetType() override;
@@ -49,4 +53,12 @@ public:
 	SPoint* GetLastPoint();
 
 	std::string ToString() override;
+
+	void SetMasking(bool value);
+	bool GetMasking();
+
+	void SetSuppress(bool value);
+	bool GetSuppress();
+
+	bool isDraw();
 };

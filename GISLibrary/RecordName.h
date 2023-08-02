@@ -33,4 +33,7 @@ public:
 	int GetLength();
 	std::string GetRCIDasString(std::string prefix = "");
 	std::wstring GetRCIDasWstring();
+
+public:
+	bool operator==(RecordName& item);
 };

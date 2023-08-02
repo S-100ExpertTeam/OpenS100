@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "SENC_LineStyleReference.h"
 #include "GISLibrary.h"
-#include "SCurveHasOrient.h"
 #include "SCurve.h"
 
 #include "../PortrayalCatalogue/S100_LineStyleReference.h"
@@ -35,7 +34,7 @@ std::wstring SENC_LineStyleReference::GetReference()
 }
 
 void SENC_LineStyleReference::DrawInstruction(
-	SCurveHasOrient* curveHasOrient,
+	SCurve* curveHasOrient,
 	ID2D1DCRenderTarget* rt,
 	ID2D1Factory1* pDirect2dFactory,
 	ID2D1SolidColorBrush* brush,

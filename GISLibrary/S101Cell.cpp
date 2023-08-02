@@ -54,7 +54,7 @@
 #include "SSurface.h"
 #include "SCommonFuction.h"
 #include "SCurve.h"
-#include "SCurveHasOrient.h"
+#include "SCurve.h"
 #include "SGeometricFuc.h"
 #include "GML_Envelop.h"
 #include "S10XGML.h"
@@ -782,7 +782,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 			{
 				if (m_curMap.Lookup(iKey, cr))
 				{
-					auto sc = new SCurveHasOrient();
+					auto sc = new SCurve();
 					fe->m_geometry = sc;
 					sc->SetID(cr->GetRCID());
 					GetFullSpatialData(cr, sc, spas->m_ornt);
@@ -856,11 +856,15 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							R_CurveRecord *cr = nullptr;
 							if (m_curMap.Lookup(iKey, cr))
 							{
-								SCurveHasOrient* sCurve = new SCurveHasOrient();
+								SCurve* sCurve = new SCurve();
 								sCurve->SetID(cr->GetRCID());
 								GetFullSpatialData(cr, sCurve, rias->m_ornt);
 								GetFullSpatialData(cr, vecPoint, rias->m_ornt);
 								geo->AddCurve(sCurve);
+							}
+							else
+							{
+								return FALSE;
 							}
 						}
 						else if (rias->m_name.RCNM == 125)
@@ -868,13 +872,22 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							R_CompositeRecord *ccr = nullptr;
 							if (m_comMap.Lookup(iKey, ccr))
 							{
-								SCompositeCurve sCompositeCurve;// = new SCompositeCurve();
+								SCompositeCurve sCompositeCurve;
 								sCompositeCurve.SetID(ccr->GetRCID());
 								GetFullSpatialData(ccr, &sCompositeCurve, rias->m_ornt);
 								GetFullSpatialData(ccr, vecPoint, rias->m_ornt);
 								geo->AddCompositeCurve(&sCompositeCurve);
 							}
+							else
+							{
+								return FALSE;
+							}
 						}
+						else 
+						{
+							return FALSE;
+						}
+
 
 						int sizet = (int)vecPoint.size();
 
@@ -883,14 +896,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							continue;
 						}
 
-						if (rias->m_usag == 1)
-						{
-							boundaryList.push_back(sizet);
-						}
-						else
-						{
-							boundaryList.push_back(sizet);
-						}
+						boundaryList.push_back(sizet);
 					}
 				}
 			}
@@ -920,24 +926,6 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 				geo->AddInformationType(info);
 			}
 		}
-	}
-
-	return TRUE;
-}
-
-BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, GeoPointZ &geo)
-{
-	double x = r->m_c3it->m_xcoo;
-	double y = r->m_c3it->m_ycoo;
-	double z = r->m_c3it->m_zcoo;
-
-	if (m_dsgir.m_dssi.m_cmfy && m_dsgir.m_dssi.m_cmfx)
-	{
-		geo.SetPoint(x, y, z);
-	}
-	else
-	{
-		geo.SetPoint(x / 10000000.0, y / 10000000.0, z / 100.);
 	}
 
 	return TRUE;
@@ -994,32 +982,6 @@ BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, SPoint* point)
 	return TRUE;
 }
 
-BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord *r, CArray<GeoPointZ> &geoArr)
-{
-	for (auto itor = r->m_c3il.begin(); itor != r->m_c3il.end(); itor++)
-	{
-		F_C3IL *c3il = *itor;
-		for (auto itor = c3il->m_arr.begin(); itor != c3il->m_arr.end(); itor++)
-		{
-			C3IL* unitC3IL = *itor;
-
-			double x = unitC3IL->m_xcoo;
-			double y = unitC3IL->m_ycoo;
-
-			GeoPointZ gpz;
-			gpz.SetPoint(
-				x / (double)m_dsgir.m_dssi.m_cmfx,
-				y / (double)m_dsgir.m_dssi.m_cmfy,
-				(unitC3IL->m_zcoo > 0 ? unitC3IL->m_zcoo + 0.5 : unitC3IL->m_zcoo - 0.5) / (double)m_dsgir.m_dssi.m_cmfz);
-			projection(gpz.x, gpz.y);
-
-			geoArr.Add(gpz);
-		}
-	}
-
-	return TRUE;
-}
-
 BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint)
 {
 	if (r->m_c3il.size() == 1)
@@ -1063,97 +1025,6 @@ BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 	return FALSE;
 }
 
-BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, CArray<GeoPoint> &geoArr, int ORNT)
-{
-	POSITION ptasPos = NULL;
-	PTAS *ptas = NULL;
-	IC2D *c2di = NULL;
-	R_PointRecord *spr, *epr;
-	GeoPoint gp;
-	__int64 iKey;
-
-	for (auto i = r->m_ptas->m_arr.begin(); i != r->m_ptas->m_arr.end(); i++)
-	{
-		auto ptas = *i;
-
-		iKey = ((__int64)ptas->m_name.RCNM) << 32 | ptas->m_name.RCID;
-		if (ptas->m_topi == 1 && ORNT == 1 ||	// Beginning node , forward
-			ptas->m_topi == 2 && ORNT == 2		// End node, reverse
-			)
-		{
-			m_ptMap.Lookup(iKey, spr);
-		}
-		else if (ptas->m_topi == 1 && ORNT == 2 ||	// Beginning node , reverse
-			ptas->m_topi == 2 && ORNT == 1		// End node, forward
-			)
-		{
-			m_ptMap.Lookup(iKey, epr);
-		}
-		else if (ptas->m_topi == 3)
-		{
-			m_ptMap.Lookup(iKey, spr);
-			epr = spr;
-		}
-	}
-
-
-	double x = spr->m_c2it->m_xcoo;
-	double y = spr->m_c2it->m_ycoo;
-
-	gp.SetPoint(x / (double)m_dsgir.m_dssi.m_cmfx,
-		y / (double)m_dsgir.m_dssi.m_cmfy);
-	projection(gp.x, gp.y);
-	geoArr.Add(gp);
-
-	if (ORNT == 1)
-	{
-		for (auto itorParent = r->m_c2il.begin(); itorParent != r->m_c2il.end(); itorParent++)
-		{
-			for (auto itor = (*itorParent)->m_arr.begin(); itor != (*itorParent)->m_arr.end(); itor++)
-			{
-				IC2D* pIC2D = *itor;
-
-				x = pIC2D->m_xcoo;
-				y = pIC2D->m_ycoo;
-
-				gp.SetPoint(x / (double)m_dsgir.m_dssi.m_cmfx,
-					y / (double)m_dsgir.m_dssi.m_cmfy);
-
-				projection(gp.x, gp.y);
-				geoArr.Add(gp);
-			}
-		}
-	}
-	else if (ORNT == 2)
-	{
-		for (auto itorParent = r->m_c2il.begin(); itorParent != r->m_c2il.end(); itorParent++)
-		{
-			for (auto itor = (*itorParent)->m_arr.rbegin(); itor != (*itorParent)->m_arr.rend(); itor++)
-			{
-				IC2D* pIC2D = *itor;
-
-				x = pIC2D->m_xcoo;
-				y = pIC2D->m_ycoo;
-
-				gp.SetPoint(x / (double)m_dsgir.m_dssi.m_cmfx,
-					y / (double)m_dsgir.m_dssi.m_cmfy);
-
-				projection(gp.x, gp.y);
-				geoArr.Add(gp);
-			}
-		}
-	}
-	x = epr->m_c2it->m_xcoo;
-	y = epr->m_c2it->m_ycoo;
-
-	gp.SetPoint(x / (double)m_dsgir.m_dssi.m_cmfx,
-		y / (double)m_dsgir.m_dssi.m_cmfy);
-	projection(gp.x, gp.y);
-	geoArr.Add(gp);
-
-	return TRUE;
-}
-
 BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, int ORNT)
 {
 	if (nullptr != r->m_ptas)
@@ -1162,7 +1033,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 
 		if (countPTAS != 1 && countPTAS != 2)
 		{
-			//OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
+			return FALSE;
 		}
 
 		auto beginPointKey = r->m_ptas->m_arr.front()->m_name.GetName();
@@ -1191,7 +1062,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 		}
 		else
 		{
-			//OutputDebugString(L"Invalied ORNT\n");
+			return FALSE;
 		}
 
 		// C2IL
@@ -1217,12 +1088,12 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 			}
 			else
 			{
-				//OutputDebugString(L"Invalied ORNT\n");
+				return FALSE;
 			}
 		}
 		else
 		{
-			//OutputDebugString(L"Invalied C2IL count\n");
+			return FALSE;
 		}
 
 		// PTAS
@@ -1236,8 +1107,10 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, 
 		}
 		else
 		{
-			//OutputDebugString(L"Invalied ORNT\n");
+			return FALSE;
 		}
+
+		return TRUE;
 	}
 
 	return FALSE;
@@ -1261,7 +1134,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 
 		if (countPTAS != 1 && countPTAS != 2)
 		{
-			//OutputDebugString(L"Invalid count of PTAS of Curve Record\n");
+			return FALSE;
 		}
 
 		auto beginPointKey = r->m_ptas->m_arr.front()->m_name.GetName();
@@ -1294,7 +1167,6 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		}
 		else
 		{
-			//OutputDebugString(L"Invalied ORNT\n");
 			return FALSE;
 		}
 
@@ -1321,12 +1193,12 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 			}
 			else
 			{
-				//OutputDebugString(L"Invalied ORNT\n");
+				return FALSE;
 			}
 		}
 		else
 		{
-			//OutputDebugString(L"Invalied C2IL count\n");
+			return FALSE;
 		}
 
 		// PTAS
@@ -1344,7 +1216,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		}
 		else
 		{
-			//OutputDebugString(L"Invalied ORNT\n");
+			return FALSE;
 		}
 
 		curve->SetMultiplicationFactor(m_dsgir.m_dssi.m_cmfx, m_dsgir.m_dssi.m_cmfy);
@@ -1389,7 +1261,7 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 			
 			if (m_curMap.Lookup(iKey, cr))
 			{
-				SCurveHasOrient* scurve = new SCurveHasOrient();
+				SCurve* scurve = new SCurve();
 				scurve->SetID(cuco->m_name.RCID);
 				int localORNT = cuco->m_ornt;
 				
@@ -1426,16 +1298,14 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 
 			if (m_comMap.Lookup(iKey, ccr))
 			{
-				SCompositeCurve scc;// = new SCompositeCurve();
+				SCompositeCurve scc;
 				scc.SetID(cuco->m_name.RCID);
 				GetFullSpatialData(ccr, &scc, cuco->m_ornt);
 
 				auto curveCnt = scc.GetCurveCount();
 				for (int j = 0; j < curveCnt; j++)
-				//for (auto j = scc.m_listCurveLink.begin(); j != scc.m_listCurveLink.end(); j++)
 				{
 					curve->AddCurve(scc.GetCurve(j));
-					//curve->AddCurve(*j);
 				}
 			}
 			else
@@ -1461,72 +1331,6 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 		if (info)
 		{
 			curve->AddInformationType(info);
-		}
-	}
-
-	return TRUE;
-}
-
-BOOL S101Cell::GetFullSpatialData(R_CompositeRecord *r, CArray<GeoPoint> &geoArr, int ORNT)
-{
-	POSITION cucoPos = NULL;
-	CUCO *cuco = NULL;
-	R_CurveRecord *cr = NULL;
-	R_CompositeRecord *ccr = NULL;
-	__int64 iKey;
-
-	if (ORNT == 1)
-	{
-		for (auto itorParent = r->m_cuco.begin(); itorParent != r->m_cuco.end(); itorParent++)
-		{
-			F_CUCO* cucoParent = *itorParent;
-
-			for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
-			{
-				cuco = *itor;
-				if (cuco->m_name.RCNM == 120)
-				{
-					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-					m_curMap.Lookup(iKey, cr);
-					GetFullSpatialData(cr, geoArr, cuco->m_ornt);
-				}
-				else if (cuco->m_name.RCNM == 125)
-				{
-					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-					m_comMap.Lookup(iKey, ccr);
-					GetFullSpatialData(ccr, geoArr, cuco->m_ornt);
-				}
-			}
-		}
-	}
-	else if (ORNT == 2)
-	{
-		for (auto itorParent = r->m_cuco.begin(); itorParent != r->m_cuco.end(); itorParent++)
-		{
-			F_CUCO* cucoParent = *itorParent;
-
-			for (auto itor = cucoParent->m_arr.rbegin(); itor != cucoParent->m_arr.rend(); itor++)
-			{
-				cuco = *itor;
-				iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-
-				unsigned ornt = 1;
-				if (cuco->m_ornt == 2)
-					ornt = 1;
-				else
-					ornt = 2;
-
-				if (cuco->m_name.RCNM == 120)
-				{
-					m_curMap.Lookup(iKey, cr);
-					GetFullSpatialData(cr, geoArr, ornt);
-				}
-				else if (cuco->m_name.RCNM == 125)
-				{
-					m_comMap.Lookup(iKey, ccr);
-					GetFullSpatialData(ccr, geoArr, ornt);
-				}
-			}
 		}
 	}
 
@@ -1560,7 +1364,6 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoA
 			}
 			else
 			{
-				//OutputDebugString(L"Invalid RCNM in CUCO\n");
 				return FALSE;
 			}
 		}
@@ -1569,92 +1372,8 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoA
 	return TRUE;
 }
 
-BOOL S101Cell::GetFullSpatialData(R_SurfaceRecord *r, CArray<GeoPoint> &geoArr)
-{
-	RIAS *rias = NULL;
-	R_CurveRecord *cr = NULL;
-	R_CompositeRecord *ccr = NULL;
-	__int64 iKey;
-
-	///////////////////////////////
-	// for blank interior area
-	int sp = 0;
-	CList<int> boundaryList;
-	BOOL isExtrior = TRUE;
-	///////////////////////////////
-
-	for (auto itorParent = r->m_rias.begin(); itorParent != r->m_rias.end(); itorParent++)
-	{
-		F_RIAS* riasParent = *itorParent;
-
-		for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
-		{
-			RIAS* rias = *itor;
-			///////////////////////////////
-			// for blank interior area
-			if (sp == -1)
-			{
-				sp = (int)geoArr.GetCount();
-			}
-			//////////////////////////////
-
-			iKey = ((__int64)rias->m_name.RCNM) << 32 | rias->m_name.RCID;
-			if (rias->m_name.RCNM == 120)
-			{
-				m_curMap.Lookup(iKey, cr);
-				GetFullSpatialData(cr, geoArr, rias->m_ornt);
-			}
-			else if (rias->m_name.RCNM == 125)
-			{
-				m_comMap.Lookup(iKey, ccr);
-				GetFullSpatialData(ccr, geoArr, rias->m_ornt);
-			}
-			///////////////////////////////
-			// for blank interior area
-			int sizet = (int)geoArr.GetCount() - 1;
-			if (geoArr[sp].x == geoArr[sizet].x &&
-				geoArr[sp].y == geoArr[sizet].y)
-			{
-				if (isExtrior)
-				{
-					sp = -1;
-					isExtrior = false;
-				}
-				else
-				{
-					sp = -1;
-					boundaryList.AddTail(sizet + 1);
-				}
-			}
-			//////////////////////////////
-			//////////////////////////////////////////////////////////
-		}
-	}
-	///////////////////////////////
-	// for blank interior area
-	int arrIndex = 0;
-	int i = 0;
-	POSITION boundaryPos = boundaryList.GetHeadPosition();
-	int index;
-	int count = 0;
-	while (boundaryPos != NULL)
-	{
-		index = boundaryList.GetNext(boundaryPos) + count;
-		GeoPoint p(geoArr[0].x, geoArr[0].y);
-		geoArr.InsertAt(index, p);
-		count++;
-	}
-	return TRUE;
-}
-
 BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt)
 {
-	//OrientedCurveRecord ocr;
-	//ocr.m_pCurveRecord = r;
-	//ocr.m_orient = ornt;
-	//fe->m_curveList.push_back(ocr);
-
-
 	fe->m_geometry = new SCurve;
 	fe->m_geometry->SetID(r->GetRCID());
 
@@ -1770,8 +1489,7 @@ BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int orn
 
 BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 {
-	//std::list<SCurveHasOrient*>* listCurveLink = nullptr;
-	std::list<SCurveHasOrient*> listCurveLink;
+	std::list<SCurve*> listCurveLink;
 
 	if (fe->m_geometry == nullptr)
 	{
@@ -1782,47 +1500,35 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fe->m_geometry;
 		listCurveLink = geo->GetCurveList();
-		//listCurveLink = &geo->m_listCurveLink;
 	}
 	else if (fe->m_geometry->GetType() == SGeometryType::Surface)
 	{
 		SSurface* geo = (SSurface*)fe->m_geometry;
 		listCurveLink = geo->GetCurveList();
-		//listCurveLink = &geo->curveList;
 	}
-	else if (fe->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+	else if (fe->m_geometry->GetType() == SGeometryType::Curve)
 	{
-		//listCurveLink = new std::list<SCurveHasOrient*>();
-		//listCurveLink->push_back((SCurveHasOrient*)fe->m_geometry);
-		listCurveLink.push_back((SCurveHasOrient*)fe->m_geometry);
+		listCurveLink.push_back((SCurve*)fe->m_geometry);
 	}
 	else
 	{
 		return FALSE;
 	}
 
-	//for (auto iter = listCurveLink->begin(); iter != listCurveLink->end(); iter++)
 	for (auto i = listCurveLink.begin(); i != listCurveLink.end(); i++)
 	{
 		auto c = *i;
-		//SCurve* c = (*iter);
 
 		for (auto itorParent = fe->m_mask.begin(); itorParent != fe->m_mask.end(); itorParent++)
 		{
 			F_MASK *maskParent = *itorParent;
-			auto mi = maskParent->m_arr.find(c->m_id);
-			if (mi != maskParent->m_arr.end())
+			auto mi = maskParent->GetMask(RecordName(120, c->GetRCID()));
+			if (mi)
 			{
-				//(*iter)->SetMasking(true);
 				c->SetMasking(true);
 			}
 		}
 	}
-
-	//if (fe->m_geometry->GetType() == SGeometryType::CurveHasOrient)
-	//{
-	//	delete listCurveLink;
-	//}
 
 	return TRUE;
 }
@@ -3800,22 +3506,21 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 				int i = 0;
 				for (auto f_mask : fe->m_mask)
 				{
-					for (auto mask : f_mask->m_arr)
+					for (auto mask : f_mask->listMask)
 					{
-						auto Key = (__int64)mask.second->m_name.GetName();
-						auto mission = mask.second->m_muin;
+						auto Key = (__int64)mask->m_name.GetName();
+						auto mission = mask->m_muin;
 
 						auto it = values->m_mask.begin();
 						std::advance(it, i);
 
 						if (1 == mission) //insert
 						{
-							(*it)->m_arr.insert({ Key, mask.second });
-
+							(*it)->AddMask(mask);
 						}
 						else //delete
 						{
-							(*it)->m_arr.erase(Key);
+							(*it)->DeleteMask(mask->m_name);
 						}
 					}
 				}
@@ -3874,84 +3579,80 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 			{
 			}
 			// Curve
-			else if (sr->RCNM == 120 && 
-				instruction->fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
+			else if (sr->RCNM == 120)
 			{
-				SCompositeCurve* geo = (SCompositeCurve*)instruction->fr->m_geometry;
-				int curveCnt = geo->GetCurveCount();
-
-				for (int j = 0; j < curveCnt; j++)
-				//for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
+				if (instruction->fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 				{
-					auto curve = geo->GetCurve(j);
-					//auto curve = j->GetCurve();
-					//auto curve = *j;
-					auto rcid = curve->GetRCID();
-					if (rcid == sr->reference)
+					SCompositeCurve* geo = (SCompositeCurve*)instruction->fr->m_geometry;
+					int curveCnt = geo->GetCurveCount();
+
+					for (int j = 0; j < curveCnt; j++)
 					{
-						int numPoints = curve->GetNumPoints();
-
-						POINT* screenPoints = new POINT[numPoints];
-
-						for (int k = 0; k < numPoints; k++)
+						auto curve = geo->GetCurve(j);
+						auto rcid = curve->GetRCID();
+						if (rcid == sr->reference)
 						{
-							scaler->WorldToDevice(
-								curve->GetX(k), curve->GetY(k),
-								&screenPoints[k].x, &screenPoints[k].y);
+							int numPoints = curve->GetNumPoints();
+
+							POINT* screenPoints = new POINT[numPoints];
+
+							for (int k = 0; k < numPoints; k++)
+							{
+								scaler->WorldToDevice(
+									curve->GetX(k), curve->GetY(k),
+									&screenPoints[k].x, &screenPoints[k].y);
+							}
+
+							POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+
+							if (symbolPoint)
+							{
+								D2D1_POINT_2F d2Point;
+								d2Point.x = symbolPoint->x;
+								d2Point.y = symbolPoint->y;
+								delete symbolPoint;
+								points.push_back(d2Point);
+							}
+
+							delete[] screenPoints;
+							screenPoints = nullptr;
 						}
-
-						POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
-
-						if (symbolPoint)
-						{
-							D2D1_POINT_2F d2Point;
-							d2Point.x = symbolPoint->x;
-							d2Point.y = symbolPoint->y;
-							delete symbolPoint;
-							points.push_back(d2Point);
-						}
-
-						delete[] screenPoints;
-						screenPoints = nullptr;
 					}
 				}
-			}
-			else if (sr->RCNM == 120 && 
-				instruction->fr->m_geometry->GetType() == SGeometryType::Surface)
-			{
-				SSurface* geo = (SSurface*)instruction->fr->m_geometry;
-
-				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
-				//for (auto j = geo->compositeCurve->m_listCurveLink.begin(); j != geo->compositeCurve->m_listCurveLink.end(); j++)
+				else if (instruction->fr->m_geometry->GetType() == SGeometryType::Surface)
 				{
-					//auto curve = j->GetCurve();
-					auto curve = *j;
-					auto rcid = curve->GetRCID();
-					if (rcid == sr->reference)
+					SSurface* geo = (SSurface*)instruction->fr->m_geometry;
+
+					for (int j = 0; j < geo->GetRingCount(); j++)
 					{
-						int numPoints = curve->GetNumPoints();
-						POINT* screenPoints = new POINT[numPoints];
-
-						for (int k = 0; k < numPoints; k++)
+						auto curve = geo->GetRing(j);
+						auto rcid = curve->GetRCID();
+						if (rcid == sr->reference)
 						{
-							scaler->WorldToDevice(
-								curve->GetX(k), curve->GetY(k),
-								&screenPoints[k].x, &screenPoints[k].y);
+							int numPoints = curve->GetNumPoints();
+							POINT* screenPoints = new POINT[numPoints];
+
+							for (int k = 0; k < numPoints; k++)
+							{
+								scaler->WorldToDevice(
+									curve->GetX(k), curve->GetY(k),
+									&screenPoints[k].x, &screenPoints[k].y);
+							}
+
+							POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+
+							if (symbolPoint)
+							{
+								D2D1_POINT_2F d2Point;
+								d2Point.x = symbolPoint->x;
+								d2Point.y = symbolPoint->y;
+								delete symbolPoint;
+								points.push_back(d2Point);
+							}
+
+							delete[] screenPoints;
+							screenPoints = nullptr;
 						}
-
-						POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
-
-						if (symbolPoint)
-						{
-							D2D1_POINT_2F d2Point;
-							d2Point.x = symbolPoint->x;
-							d2Point.y = symbolPoint->y;
-							delete symbolPoint;
-							points.push_back(d2Point);
-						}
-
-						delete[] screenPoints;
-						screenPoints = nullptr;
 					}
 				}
 			}
@@ -3977,15 +3678,11 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 		SCompositeCurve* geo = (SCompositeCurve*)instruction->fr->m_geometry;
 
 		int curveCnt = geo->GetCurveCount();
-		//for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		for (int i = 0; i < curveCnt; i++)
 		{
 			bDraw = false;
-			//SCurve* c = (*lcl).GetCurve();
-			//SCurve* c = (*lcl);
 			auto c = geo->GetCurve(i);
 
-			//if (!(*lcl)->GetMasking())
 			if (!c->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
@@ -4067,30 +3764,23 @@ void S101Cell::InitCurveSuppression()
 
 			int curveCnt = compositeCurve->GetCurveCount();
 			for (int j = 0; j < curveCnt; j++)
-			//for (
-			//	auto j = compositeCurve->m_listCurveLink.begin();
-			//	j != compositeCurve->m_listCurveLink.end();
-			//	j++)
 			{
 				auto c = compositeCurve->GetCurve(j);
 				c->SetSuppress(false);
-				//(*j)->SetSuppress(false);
 			}
 		}
 		else if (feature->m_geometry->GetType() == SGeometryType::Surface)
 		{
 			auto surface = (SSurface*)feature->m_geometry;
-			for (
-				auto j = surface->curveList.begin();
-				j != surface->curveList.end();
-				j++)
+			for (int j = 0; j < surface->GetRingCount(); j++)
 			{
-				(*j)->SetSuppress(false);
+				auto curve = surface->GetRing(j);
+				curve->SetSuppress(false);
 			}
 		}
-		else if (feature->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+		else if (feature->m_geometry->GetType() == SGeometryType::Curve)
 		{
-			auto curve = (SCurveHasOrient*)feature->m_geometry;
+			auto curve = (SCurve*)feature->m_geometry;
 			curve->SetSuppress(false);
 		}
 	}
@@ -4447,21 +4137,10 @@ bool S101Cell::SaveCurve(pugi::xml_node& root)
 		curNode.append_attribute("gml:id").set_value(record->GetRCIDasString("c").c_str());
 		auto nodePosList = curNode.append_child("gml:Segment").append_child("gml:LineStringSegment").append_child("gml:posList");
 
-		//auto nodeLineStringSegment = curNode.append_child("gml:Segment").append_child("gml:LineStringSegment");
-
-		//nodeLineStringSegment.append_child("gml:pointProperty")
-		//	.append_attribute("xlink:href")
-		//	.set_value(record->GetBeginningPointRCIDasString("#").c_str());
-
 		SCurve curve;
 		GetFullSpatialData(*i, &curve);
 
 		nodePosList.append_child(pugi::node_pcdata).set_value(curve.ToString().c_str());
-		//nodeLineStringSegment.append_child("gml:pos") record->GetC2ILString(GetCMFX(), GetCMFY());
-
-		//nodeLineStringSegment.append_child("gml:pointProperty")
-		//	.append_attribute("xlink:href")
-		//	.set_value(record->GetEndPointRCIDasString("#").c_str());
 	}
 
 	return true;

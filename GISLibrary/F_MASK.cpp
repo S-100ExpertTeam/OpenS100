@@ -77,5 +77,27 @@ int F_MASK::GetFieldLength()
 void F_MASK::AddMask(MASK* mask)
 {
 	listMask.push_back(mask);
-	m_arr.insert({ (__int64)mask->m_name.GetName(), mask });
+	m_arr.insert({ mask->m_name.GetName(), mask});
+}
+
+void F_MASK::DeleteMask(RecordName recordName)
+{
+	m_arr.erase(recordName.GetName());
+	
+	for (auto i = listMask.begin(); i != listMask.end(); i++) {
+		if ((*i)->m_name == recordName) {
+			listMask.erase(i);
+			break;
+		}
+	}
+}
+
+MASK* F_MASK::GetMask(RecordName recordName)
+{
+	auto item = m_arr.find(recordName.GetName());
+	if (item != m_arr.end()) {
+		return item->second;
+	}
+
+	return nullptr;
 }

@@ -1104,11 +1104,8 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		auto cc = (SCompositeCurve*)(frPick->GetGeometry());
 
 		auto curveCnt = cc->GetCurveCount();
-		//for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
 		for (int i = 0; i < curveCnt; i++)
 		{
-			//SCurve* c = (*it).GetCurve();
-			//SCurve* c = (*it);
 			auto c = cc->GetCurve(i);
 			Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
 
@@ -1132,7 +1129,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 			delete[] pickPoints;
 		}
 	}
-	else if (frPick->GetGeometry()->GetType() == SGeometryType::CurveHasOrient)
+	else if (frPick->GetGeometry()->GetType() == SGeometryType::Curve)
 	{
 		SolidBrush brush(Color(255, 0, 0));
 
@@ -1369,12 +1366,12 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	while (pos != NULL)
 	{
 		cell->GetNextAssoc(pos, key, fr);
-		if (fr->m_geometry == nullptr || fr->m_geometry->GetType() != SGeometryType::CurveHasOrient)
+		if (fr->m_geometry == nullptr || fr->m_geometry->GetType() != SGeometryType::Curve)
 		{
 			continue;
 		}
 
-		SCurveHasOrient* curve = (SCurveHasOrient*)fr->m_geometry;
+		SCurve* curve = (SCurve*)fr->m_geometry;
 		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
 		{
 			int code = fr->m_frid.m_nftc;

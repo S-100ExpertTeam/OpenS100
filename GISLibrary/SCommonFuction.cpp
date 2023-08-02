@@ -10,15 +10,15 @@ void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, S
 {
 	std::vector<POINT> m_pvPoints;
 
-	if (_surface->m_numPoints > SGeometry::sizeOfPoint)
+	if (_surface->getNumPoint() > SGeometry::sizeOfPoint)
 	{
-		SGeometry::sizeOfPoint = _surface->m_numPoints;
+		SGeometry::sizeOfPoint = _surface->getNumPoint();
 
 		delete[] SGeometry::viewPoints;
 		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
 	}
 
-	for (int count = 0; count < _surface->m_numPoints; count++)
+	for (int count = 0; count < _surface->getNumPoint(); count++)
 	{
 		pScaler->WorldToDevice(_surface->m_pPoints[count].x, _surface->m_pPoints[count].y, &SGeometry::viewPoints[count].x, &SGeometry::viewPoints[count].y);
 	}
@@ -89,13 +89,13 @@ ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, CRect *_viewPo
 	// Polygon
 	int part1PointCount;											// Find the number of points for the first part of the polygon.
 	//
-	if (_surface->m_numParts > 1) 									//
+	if (_surface->GetNumPart() > 1) 									//
 	{																//
-		part1PointCount = _surface->m_pParts[1] - _surface->m_pParts[0];	//
+		part1PointCount = _surface->GetNumPointPerPart(0);
 	}																//
 	else 															//
 	{																//
-		part1PointCount = _surface->m_numPoints;						//
+		part1PointCount = _surface->getNumPoint();						//
 	}																//
 
 	for (int i = 0; i < part1PointCount; i++)
@@ -473,15 +473,7 @@ int SCommonFuction::inside(double x, double y, SSurface* poly, bool applyOption)
 	int ic;
 	count = 0;
 
-	int lastExteriorIdx = 0;
-	if (poly->m_numParts > 1)
-	{
-		lastExteriorIdx = poly->m_pParts[1] - 1;
-	}
-	else
-	{
-		lastExteriorIdx = poly->m_numPoints - 1;
-	}
+	int lastExteriorIdx = poly->getLastPointIndexOfExterior();
 
 	int obj2PartIndex = 0;
 
@@ -491,9 +483,9 @@ int SCommonFuction::inside(double x, double y, SSurface* poly, bool applyOption)
 	//
 	int* icList = NULL;
 	static int ticList[100000];
-	if (poly->m_numPoints > 100000)
+	if (poly->getNumPoint() > 100000)
 	{
-		int* ticList = new int[poly->m_numPoints];
+		int* ticList = new int[poly->getNumPoint()];
 		icList = ticList;
 	}
 	else
@@ -504,11 +496,11 @@ int SCommonFuction::inside(double x, double y, SSurface* poly, bool applyOption)
 
 	int listIndex = 0;
 	//
-	for (i = 0; i < poly->m_numPoints - 1; i++)
+	for (i = 0; i < poly->getNumPoint() - 1; i++)
 	{
-		if (poly->m_numParts > obj2PartIndex + 1)
+		if (poly->GetNumPart() > obj2PartIndex + 1)
 		{
-			if (poly->m_pParts[obj2PartIndex + 1] == i + 1)
+			if (poly->getPart(obj2PartIndex + 1) == i + 1)
 			{
 				obj2PartIndex++;
 				continue;
@@ -612,12 +604,9 @@ double SCommonFuction::GetAngle(double p1x, double p1y, double p2x, double p2y)
 int SCommonFuction::overlap(SCompositeCurve* objPoly, SSurface* comPoly, bool applyOption)
 {
 	int curveCnt = objPoly->GetCurveCount();
-	//for (auto i = objPoly->m_listCurveLink.begin(); i != objPoly->m_listCurveLink.end(); i++)
 	for (int i = 0; i < curveCnt; i++)
 	{
 		auto c = objPoly->GetCurve(i);
-		//SCurve* c = i->GetCurve();
-		//SCurve* c = (*i);
 
 		int result = overlap(c, comPoly, applyOption);
 		if (result)
@@ -641,7 +630,7 @@ int SCommonFuction::overlap(SCurve* objPoly, SSurface* comPoly, bool applyOption
 	int i = 0, j = 0;
 	for (i = 0; i < objPoly->m_numPoints - 1 && ret != 1; i++)
 	{
-		for (j = 0; j < comPoly->m_numPoints - 1 && ret != 1; j++)
+		for (j = 0; j < comPoly->getNumPoint() - 1 && ret != 1; j++)
 		{
 			ret = intersect_ccw(objPoly->m_pPoints[i].x, objPoly->m_pPoints[i].y, objPoly->m_pPoints[i + 1].x, objPoly->m_pPoints[i + 1].y,
 				comPoly->m_pPoints[j].x, comPoly->m_pPoints[j].y, comPoly->m_pPoints[j + 1].x, comPoly->m_pPoints[j + 1].y);
@@ -650,7 +639,7 @@ int SCommonFuction::overlap(SCurve* objPoly, SSurface* comPoly, bool applyOption
 
 	if (ret <= 0)
 	{
-		for (j = 0; j < comPoly->m_numPoints - 1 && ret <= 0; j++)
+		for (j = 0; j < comPoly->getNumPoint() - 1 && ret <= 0; j++)
 		{
 			ret = inside(objPoly->m_pPoints[j].x, objPoly->m_pPoints[j].y, comPoly);
 		}
@@ -669,9 +658,9 @@ int SCommonFuction::overlap(SSurface* objPoly, SSurface* comPoly, bool applyOpti
 	}
 
 	int i = 0, j = 0;
-	for (i = 0; i < objPoly->m_numPoints - 1 && ret != 1; i++)
+	for (i = 0; i < objPoly->getNumPoint() - 1 && ret != 1; i++)
 	{
-		for (j = 0; j < comPoly->m_numPoints - 1 && ret != 1; j++)
+		for (j = 0; j < comPoly->getNumPoint() - 1 && ret != 1; j++)
 		{
 			ret = intersect_ccw(objPoly->m_pPoints[i].x, objPoly->m_pPoints[i].y, objPoly->m_pPoints[i + 1].x, objPoly->m_pPoints[i + 1].y,
 				comPoly->m_pPoints[j].x, comPoly->m_pPoints[j].y, comPoly->m_pPoints[j + 1].x, comPoly->m_pPoints[j + 1].y);
@@ -680,7 +669,7 @@ int SCommonFuction::overlap(SSurface* objPoly, SSurface* comPoly, bool applyOpti
 
 	if (ret <= 0)
 	{
-		for (j = 0; j < comPoly->m_numPoints - 1 && ret <= 0; j++)
+		for (j = 0; j < comPoly->getNumPoint() - 1 && ret <= 0; j++)
 		{
 			ret = inside(objPoly->m_pPoints[j].x, objPoly->m_pPoints[j].y, comPoly);
 		}

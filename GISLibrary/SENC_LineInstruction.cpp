@@ -6,7 +6,6 @@
 #include "SENC_SpatialReference.h"
 #include "PCOutputSchemaManager.h"
 #include "SCommonFuction.h"
-#include "SCurveHasOrient.h"
 #include "SCurve.h"
 
 #include "../GISLibrary/R_FeatureRecord.h"
@@ -63,15 +62,13 @@ bool SENC_LineInstruction::GetSuppression()
 #pragma warning(disable:4838)
 void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* pDirect2dFactory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
-	//std::list<SCurveHasOrient*>* curListCurveLink = nullptr;
-	std::list<SCurveHasOrient*> curListCurveLink;
+	std::list<SCurve*> curListCurveLink;
 
 	// Surface
 	if (fr->m_geometry->GetType() == SGeometryType::Surface)
 	{
 		auto surface = (SSurface*)fr->m_geometry;
 
-		//curListCurveLink = &surface->curveList;
 		curListCurveLink = surface->GetCurveList();
 	}
 	// Composite Curve
@@ -79,113 +76,65 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 	{
 		auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
 
-		//curListCurveLink = &compositeCurve->m_listCurveLink;
 		curListCurveLink = compositeCurve->GetCurveList();
 	}
 	// Curve
-	else if (fr->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+	else if (fr->m_geometry->GetType() == SGeometryType::Curve)
 	{
-		auto curve = (SCurveHasOrient*)fr->m_geometry;
+		auto curve = (SCurve*)fr->m_geometry;
 		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
 		{
 			SENC_LineStyleBase* lineStyleBase = *itor;
 
-			if (curve->GetMasking() || curve->GetSuppress())
+			if (curve->isDraw())
 			{
-				break;
+				lineStyleBase->DrawInstruction(curve, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
 			}
-
-			lineStyleBase->DrawInstruction(curve, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+			
 		}
 		return;
 	}
 
-	//if (nullptr == curListCurveLink)
 	if (curListCurveLink.size() == 0)
 	{
-		//OutputDebugString(L"The spatial information format of the object is invalid.\n");
 		return;
 	}
 
 	if (spatialReference.size() == 0)
 	{
-		//for (auto i = curListCurveLink->begin(); i != curListCurveLink->end(); i++)
 		for (auto i = curListCurveLink.begin(); i != curListCurveLink.end(); i++)
 		{
 			auto curve = (*i);
 
-			if (curve->GetMasking() || curve->GetSuppress())
+			if (curve->isDraw())
 			{
-				continue;
-			}
-
-			for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
-			{
-				SENC_LineStyleBase* lineStyleBase = *itor;
-				lineStyleBase->DrawInstruction(*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+				for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+				{
+					SENC_LineStyleBase* lineStyleBase = *itor;
+					lineStyleBase->DrawInstruction(*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+				}
 			}
 		}
-		return;
 	}
 
 	for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
 	{
-		//for (auto j = curListCurveLink->begin(); j != curListCurveLink->end(); j++)
 		for (auto j = curListCurveLink.begin(); j != curListCurveLink.end(); j++)
 		{
 			if ((*i)->reference == (*j)->GetRCID())
 			{
-				if ((*j)->GetMasking() || (*j)->GetSuppress())
+				if ((*j)->isDraw())
 				{
-					continue;
-				}
-
-				for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
-				{
-					SENC_LineStyleBase* lineStyleBase = *itor;
-					lineStyleBase->DrawInstruction(*j, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+					for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+					{
+						SENC_LineStyleBase* lineStyleBase = *itor;
+						lineStyleBase->DrawInstruction(*j, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+					}
 				}
 				break;
 			}
 		}
 	}
-
-	//for (auto i = curListCurveLink->begin(); i != curListCurveLink->end(); i++)
-	//{
-	//	auto curve = (*i);
-
-	//	if ((*i)->GetMasking() || (*i)->GetSuppress())
-	//	{
-	//		continue;
-	//	}
-
-	//	// Code for cases where Drawing Instructions has a Special Reference.
-	//	auto compareCurve = curve;
-	//	int compareCurveId = compareCurve->m_id & 0x0000FFFF;
-	//	for (auto it = spatialReference.begin(); it != spatialReference.end(); it++)
-	//	{
-	//		curve = nullptr;
-	//		unsigned ref = (*it)->reference;
-	//		 
-	//		if (compareCurveId == ref)
-	//		{
-	//			curve = compareCurve;
-	//			break;
-	//		}
-	//	}
-
-	//	if (nullptr == curve)
-	//	{
-	//		//Case where there is a special reference, but the corresponding curve is not found during the reference.
-	//		continue;
-	//	}
-
-	//	for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
-	//	{
-	//		SENC_LineStyleBase *lineStyleBase = *itor;
-	//		lineStyleBase->DrawInstruction(*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
-	//	}
-	//}
 }
 
 void SENC_LineInstruction::ChangePallete(PortrayalCatalogue *pc)

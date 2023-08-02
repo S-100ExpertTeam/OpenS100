@@ -107,15 +107,15 @@ void SENC_Instruction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp,
 {
 	std::vector<POINT> m_pvPoints;
 
-	if (_surface->m_numPoints > SGeometry::sizeOfPoint)
+	if (_surface->getNumPoint() > SGeometry::sizeOfPoint)
 	{
-		SGeometry::sizeOfPoint = _surface->m_numPoints;
+		SGeometry::sizeOfPoint = _surface->getNumPoint();
 
 		delete[] SGeometry::viewPoints; 
 		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
 	}
 
-	for (int count = 0; count < _surface->m_numPoints; count++)
+	for (int count = 0; count < _surface->getNumPoint(); count++)
 	{
 		pScaler->WorldToDevice(_surface->m_pPoints[count].x, _surface->m_pPoints[count].y, &SGeometry::viewPoints[count].x, &SGeometry::viewPoints[count].y);
 	}
@@ -140,7 +140,6 @@ ClipperLib::Paths SENC_Instruction::ClipSurface(SSurface *_surface, CRect *_view
 	ClipperLib::Path  polygon, view;
 	ClipperLib::Paths result;
 	ClipperLib::Clipper  clipper;
-
 	ClipperLib::IntPoint tmp;
 
 	tmp.X = _viewPort->left;   // Specify the coordinates of the View port
@@ -157,13 +156,13 @@ ClipperLib::Paths SENC_Instruction::ClipSurface(SSurface *_surface, CRect *_view
 	view.push_back(tmp);	   
 
 	int part1PointCount;											// Find the number of points for the first part of the polygon.
-	if (_surface->m_numParts > 1) 									
+	if (_surface->GetNumPart() > 1)
 	{																
-		part1PointCount = _surface->m_pParts[1] - _surface->m_pParts[0];	
+		part1PointCount = _surface->GetNumPointPerPart(0);
 	}																
 	else 															
 	{																
-		part1PointCount = _surface->m_numPoints;						
+		part1PointCount = _surface->getNumPoint();
 	}																
 
 	for (int i = 0; i < part1PointCount; i++)

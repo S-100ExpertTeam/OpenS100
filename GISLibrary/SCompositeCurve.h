@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SGeometry.h"
-#include "SCurveHasOrient.h"
+#include "SCurve.h"
 
 #include "../GeoMetryLibrary/GeoPoint.h"
 
@@ -12,7 +12,7 @@ public:
 	virtual ~SCompositeCurve();
 
 private:
-	std::list<SCurveHasOrient*> m_listCurveLink;
+	std::list<SCurve*> m_listCurveLink;
 
 public:
 	SGeometryType GetType() override;
@@ -32,7 +32,7 @@ public:
 	// WKBMultiLineString
 	int WkbSizeMultiLineString();
 
-	void AddCurve(SCurveHasOrient* curve);
+	void AddCurve(SCurve* curve);
 
 	void Release();
 
@@ -45,7 +45,7 @@ public:
 	double GetY() override; 
 
 	int GetCurveCount();
-	SCurveHasOrient* GetCurve(int index);
+	SCurve* GetCurve(int index);
 
-	std::list<SCurveHasOrient*> GetCurveList();
+	std::list<SCurve*> GetCurveList();
 };

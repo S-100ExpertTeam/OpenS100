@@ -2,7 +2,7 @@
 #include <vector>
 
 class PortrayalCatalogue;
-class SCurveHasOrient;
+class SCurve;
 class Scaler;
 
 // AbstractLineStyle
@@ -28,7 +28,7 @@ public:
 	virtual void ChangePallete(PortrayalCatalogue *pc) {};
 
 	virtual void DrawInstruction(
-		SCurveHasOrient* curveHasOrient,
+		SCurve* curveHasOrient,
 		ID2D1DCRenderTarget* rt,
 		ID2D1Factory1* pDirect2dFactory,
 		ID2D1SolidColorBrush* brush,

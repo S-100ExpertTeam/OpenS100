@@ -537,9 +537,6 @@
     <ClCompile Include="SCurve.cpp">
       <Filter>S100\SGeometry</Filter>
     </ClCompile>
-    <ClCompile Include="SCurveHasOrient.cpp">
-      <Filter>S100\SGeometry</Filter>
-    </ClCompile>
     <ClCompile Include="SGeometricFuc.cpp">
       <Filter>S100\SGeometry</Filter>
     </ClCompile>
@@ -1266,9 +1263,6 @@
       <Filter>S100\SGeometry</Filter>
     </ClInclude>
     <ClInclude Include="SCurve.h">
-      <Filter>S100\SGeometry</Filter>
-    </ClInclude>
-    <ClInclude Include="SCurveHasOrient.h">
       <Filter>S100\SGeometry</Filter>
     </ClInclude>
     <ClInclude Include="SGeometricFuc.h">

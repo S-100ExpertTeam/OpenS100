@@ -4,7 +4,6 @@
 #include "SGeometry.h"
 #include "SPoint.h"
 #include "SMultiPoint.h"
-#include "SCurve.h"
 #include "SCompositeCurve.h"
 #include "SSurface.h"
 #include "S10XGML.h"
@@ -37,7 +36,7 @@ CGISLibraryApp::CGISLibraryApp()
 
 	//std::string wkb_string = "010300000003000000050000000000000000003e400000000000002440000000000000244000000000000034405a1663db5d0d1440c1c69400de644540000000000000444000000000000044400000000000003e40000000000000244005000000e0bccaaf2fa62340088b1d196c384340ced595fa90862d40983dcea891d43540f04766949a083b40e07fa56f17a93340ea0954da635a3d403d6dbabf422c4240e0bccaaf2fa62340088b1d196c38434005000000168fd569e8c83f40c07544d9e0784240f0fb5eb0841c3f4023d071607c7b3f4002814e619fe9414084af9186c8004040d1bdba17e4cc4140858293ffcdeb4240168fd569e8c83f40c07544d9e0784240";
 	//SSurface surface;
-	//SCurveHasOrient compCurve;
+	//SCurve compCurve;
 	//auto wkb = LatLonUtility::HexStringToWKB(wkb_string);
 	//surface.ImportFromWkb(wkb, wkb_string.size() / 2);
 	//char* a = nullptr;

@@ -6,7 +6,6 @@
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 #include "SCommonFuction.h"
-#include "SCurveHasOrient.h"
 #include "SCurve.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
@@ -111,7 +110,7 @@ std::wstring SENC_LineStyle::GetLineStyleName()
 }
 
 void SENC_LineStyle::DrawInstruction(
-	SCurveHasOrient* curveHasOrient,
+	SCurve* curveHasOrient,
 	ID2D1DCRenderTarget* rt,
 	ID2D1Factory1* pDirect2dFactory,
 	ID2D1SolidColorBrush* brush,

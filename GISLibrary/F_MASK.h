@@ -14,6 +14,9 @@ public:
 
 public:
 	std::list<MASK*> listMask;
+
+private:
+	// Key : RCNM + RCID
 	std::unordered_map<__int64, MASK*> m_arr;
 
 public:
@@ -23,4 +26,6 @@ public:
 	int GetFieldLength();
 
 	void AddMask(MASK* mask);
+	void DeleteMask(RecordName recordName);
+	MASK* GetMask(RecordName recordName);
 };

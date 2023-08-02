@@ -5,7 +5,7 @@
 #include <vector>
 #include <unordered_map>
 
-class SCurveHasOrient;
+class SCurve;
 class SENC_LineInstruction : public SENC_Instruction
 {
 public:
