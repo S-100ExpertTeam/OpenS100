@@ -617,6 +617,18 @@ int SCommonFuction::overlap(SCompositeCurve* objPoly, SSurface* comPoly, bool ap
 	return -1;
 }
 
+int SCommonFuction::overlap(SAbstractCurve* objPoly, SSurface* comPoly, bool applyOption)
+{
+	if (objPoly->GetType() == SGeometryType::Curve) {
+		auto curve = (SCurve*)objPoly;
+		return overlap(curve, comPoly, applyOption);
+	}
+	else if (objPoly->GetType() == SGeometryType::CompositeCurve) {
+		auto curve = (SCompositeCurve*)objPoly;
+		return overlap(curve, comPoly, applyOption);
+	}
+}
+
 int SCommonFuction::overlap(SCurve* objPoly, SSurface* comPoly, bool applyOption)
 {
 

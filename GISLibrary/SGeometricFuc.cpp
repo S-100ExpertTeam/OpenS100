@@ -3,6 +3,18 @@
 
 #include "..\\GeoMetryLibrary\\ENCCommon.h"
 
+int SGeometricFuc::overlap(SAbstractCurve* objPoly, SSurface* comPoly)
+{
+	if (objPoly->GetType() == SGeometryType::Curve) {
+		auto curve = (SCurve*)objPoly;
+		return overlap(curve, comPoly);
+	}
+	else if (objPoly->GetType() == SGeometryType::CompositeCurve) {
+		auto curve = (SCompositeCurve*)objPoly;
+		return overlap(curve, comPoly);
+	}
+}
+
 int SGeometricFuc::overlap(SCurve *objPoly, SSurface *comPoly)
 {
 	int ret = -1;

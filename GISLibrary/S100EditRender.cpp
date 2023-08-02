@@ -692,7 +692,7 @@ void S100EditRender::UpdatePoint(int sx, int sy, SCompositeCurve* geom)
 
 		scaler->DeviceToWorld(sx, sy, &mx, &my);
 
-		geom->SetXY(pointIndex, mx, my);
+		geom->Set(pointIndex, mx, my);
 		geom->SetMBR();
 
 		unsigned char* wkb = nullptr;

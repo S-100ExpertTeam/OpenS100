@@ -374,6 +374,7 @@
     <ClCompile Include="S100Utilities.cpp" />
     <ClCompile Include="S101Creator.cpp" />
     <ClCompile Include="S101LuaScriptingReference.cpp" />
+    <ClCompile Include="SAbstractCurve.cpp" />
     <ClCompile Include="SCommonFuction.cpp" />
     <ClCompile Include="SCompositeCurve.cpp" />
     <ClCompile Include="SCoverage.cpp" />
@@ -616,6 +617,7 @@
     <ClInclude Include="S100Utilities.h" />
     <ClInclude Include="S101Creator.h" />
     <ClInclude Include="S101LuaScriptingReference.h" />
+    <ClInclude Include="SAbstractCurve.h" />
     <ClInclude Include="SCommonFuction.h" />
     <ClInclude Include="SCompositeCurve.h" />
     <ClInclude Include="SCoverage.h" />

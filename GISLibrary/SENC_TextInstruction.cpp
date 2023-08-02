@@ -42,10 +42,6 @@ void rotate_v(double &nx, double &ny, double tx, double ty, double cx, double cy
 	nx += cx, ny += cy;
 }
 
-
-DWORD dwTimeCheck_TextInstruction[100] = { 0 };
-int iDebugCount_TextInstruction[100] = { 0 };
-
 #pragma warning(disable:4244)
 void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points)
 {
@@ -71,8 +67,6 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 		SPoint* geo = (SPoint*)fr->m_geometry;
 		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
-		dwTimeCheck_TextInstruction[1] += timeGetTime() - dwWorkStart;
-		iDebugCount_TextInstruction[1]++;
 	}
 	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
@@ -127,8 +121,6 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 			}
 			viewPointNum = 0;
 		}
-		dwTimeCheck_TextInstruction[2] += timeGetTime() - dwWorkStart;
-		iDebugCount_TextInstruction[2]++;
 	}
 	else if (fr->m_geometry->GetType() == SGeometryType::Surface)
 	{
@@ -146,9 +138,6 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 
 			break;
 		}
-
-		dwTimeCheck_TextInstruction[3] += timeGetTime() - dwWorkStart;
-		iDebugCount_TextInstruction[3]++;
 	}
 }
 
@@ -176,8 +165,6 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 		SPoint* geo = (SPoint*)fr->m_geometry;
 		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
-		dwTimeCheck_TextInstruction[1] += timeGetTime() - dwWorkStart;
-		iDebugCount_TextInstruction[1]++;
 	}
 	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
@@ -185,13 +172,10 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 
 		int curveCnt = geo->GetCurveCount();
 		for (int i = 0; i < curveCnt; i++)
-		//for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
 			auto c = geo->GetCurve(i);
-			//SCurve* c = (*lcl);
 
-			//if (!(*lcl)->GetMasking())
 			if (!c->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
@@ -235,8 +219,6 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 			}
 			viewPointNum = 0;
 		}
-		dwTimeCheck_TextInstruction[2] += timeGetTime() - dwWorkStart;
-		iDebugCount_TextInstruction[2]++;
 	}
 	else if (fr->m_geometry->GetType() == SGeometryType::Surface)
 	{
@@ -250,9 +232,6 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 		else
 		{
 		}
-
-		dwTimeCheck_TextInstruction[3] += timeGetTime() - dwWorkStart;
-		iDebugCount_TextInstruction[3]++;
 	}
 }
 

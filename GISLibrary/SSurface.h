@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SGeometry.h"
-#include "SCurve.h"
+#include "SAbstractCurve.h"
 
 class Scaler;
 class GeoPoint;
@@ -30,7 +30,7 @@ public:
 
 private:
 	// All curves that make up the Surface
-	std::list<SCurve*> curveList;
+	std::list<SAbstractCurve*> curveList;
 
 public:
 	SGeometryType GetType() override;
@@ -70,7 +70,7 @@ public:
 	double GetY() override;
 
 	int GetRingCount();
-	SCurve* GetRing(int index);
+	SAbstractCurve* GetRing(int index);
 
-	std::list<SCurve*> GetCurveList();
+	std::list<SAbstractCurve*> GetCurveList();
 };

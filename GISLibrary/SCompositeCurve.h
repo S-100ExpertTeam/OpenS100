@@ -1,18 +1,18 @@
 #pragma once
 
-#include "SGeometry.h"
+#include "SAbstractCurve.h"
 #include "SCurve.h"
 
 #include "../GeoMetryLibrary/GeoPoint.h"
 
-class SCompositeCurve : public SGeometry
+class SCompositeCurve : public SAbstractCurve
 {
 public:
 	SCompositeCurve();
 	virtual ~SCompositeCurve();
 
 private:
-	std::list<SCurve*> m_listCurveLink;
+	std::list<SAbstractCurve*> m_listCurveLink;
 
 public:
 	SGeometryType GetType() override;
@@ -32,20 +32,23 @@ public:
 	// WKBMultiLineString
 	int WkbSizeMultiLineString();
 
-	void AddCurve(SCurve* curve);
+	void AddCurve(SAbstractCurve* curve);
 
 	void Release();
 
 	int GetPointCount();
+	int getNumPoint() override;
 
 	GeoPoint GetXY(int index);
-	void SetXY(int index, double x, double y);
+	void Set(int index, double x, double y) override;
 
 	double GetX() override;
 	double GetY() override; 
+	double GetX(int index) override;
+	double GetY(int index) override;
 
 	int GetCurveCount();
-	SCurve* GetCurve(int index);
+	SAbstractCurve* GetCurve(int index);
 
-	std::list<SCurve*> GetCurveList();
+	std::list<SAbstractCurve*> GetCurveList();
 };

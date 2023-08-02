@@ -176,6 +176,7 @@ public:
 	//  1 : clockwise
 	static int ccw(double ax, double ay, double bx, double by, double cx, double cy);
 
+	static int overlap(SAbstractCurve* objPoly, SSurface* comPoly, bool applyOption = false);
 	static int overlap(SCurve* objPoly, SSurface* comPoly, bool applyOption = false);
 	static int overlap(SCompositeCurve* objPoly, SSurface* comPoly, bool applyOption = false);
 	static int overlap(SSurface* objPoly, SSurface* comPoly, bool applyOption = false);

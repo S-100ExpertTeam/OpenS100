@@ -164,16 +164,23 @@ int SCompositeCurve::WkbSizeMultiLineString()
 	return size;
 }
 
-void SCompositeCurve::AddCurve(SCurve* curve)
+void SCompositeCurve::AddCurve(SAbstractCurve* curve)
 {
-	m_listCurveLink.push_back(curve);
+	if (curve->GetType() == SGeometryType::Curve ||
+		curve->GetType() == SGeometryType::CompositeCurve) {
+		m_listCurveLink.push_back(curve);
+	}
 }
 
 void SCompositeCurve::Release()
 {
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
-		SafeRelease(&(*i)->pGeometry);
+		if ((*i)->GetType() == SGeometryType::Curve) {
+			auto curve = (SCurve*)(*i);
+			SafeRelease(&curve->pGeometry);
+		}
+
 		delete (*i);
 	}
 
@@ -182,11 +189,16 @@ void SCompositeCurve::Release()
 
 int SCompositeCurve::GetPointCount()
 {
+	return getNumPoint();
+}
+
+int SCompositeCurve::getNumPoint()
+{
 	int count = 0;
 
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
-		count += (*i)->GetNumPoints();
+		count += (*i)->getNumPoint();
 	}
 
 	return count;
@@ -199,7 +211,7 @@ GeoPoint SCompositeCurve::GetXY(int index)
 
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
-		int currentPointCount = (*i)->GetNumPoints();
+		int currentPointCount = (*i)->getNumPoint();
 		if (index < pointCount + currentPointCount)
 		{
 			int localIndex = index - pointCount;
@@ -214,13 +226,13 @@ GeoPoint SCompositeCurve::GetXY(int index)
 	return result;
 }
 
-void SCompositeCurve::SetXY(int index, double x, double y)
+void SCompositeCurve::Set(int index, double x, double y)
 {
 	int pointCount = 0;
 
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
-		int currentPointCount = (*i)->GetNumPoints();
+		int currentPointCount = (*i)->getNumPoint();
 		if (index < pointCount + currentPointCount)
 		{
 			int localIndex = index - pointCount;
@@ -252,12 +264,22 @@ double SCompositeCurve::GetY()
 	return 0;
 }
 
+double SCompositeCurve::GetX(int index)
+{
+	return GetXY(index).GetX();
+}
+
+double SCompositeCurve::GetY(int index)
+{
+	return GetXY(index).GetY();
+}
+
 int SCompositeCurve::GetCurveCount()
 {
 	return m_listCurveLink.size();
 }
 
-SCurve* SCompositeCurve::GetCurve(int index)
+SAbstractCurve* SCompositeCurve::GetCurve(int index)
 {
 	if (index >= 0 && index < GetCurveCount())
 	{
@@ -269,7 +291,7 @@ SCurve* SCompositeCurve::GetCurve(int index)
 	return nullptr;
 }
 
-std::list<SCurve*> SCompositeCurve::GetCurveList()
+std::list<SAbstractCurve*> SCompositeCurve::GetCurveList()
 {
 	return m_listCurveLink;
 }

@@ -13,6 +13,7 @@ public:
 	// for S101
 	static int overlap(double p1x, double p1y, SCurve *comPoly);
 	static int overlap(SPoint *point, SCurve *comPoly);
+	static int overlap(SAbstractCurve* objPoly, SSurface* comPoly); // Used for curve Pick Report
 	static int overlap(SCurve *objPoly, SSurface *comPoly); // Used for curve Pick Report
 	static int overlap(SCompositeCurve *objPoly, SSurface *comPoly); // Used for composite curve Pick Report
 	static int overlap(SSurface *objPoly, SSurface *comPoly);

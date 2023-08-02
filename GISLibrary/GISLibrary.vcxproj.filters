@@ -705,6 +705,9 @@
     <ClCompile Include="S102_Color.cpp">
       <Filter>S100H5</Filter>
     </ClCompile>
+    <ClCompile Include="SAbstractCurve.cpp">
+      <Filter>S100\SGeometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -1423,6 +1426,9 @@
     </ClInclude>
     <ClInclude Include="S102_Color.h">
       <Filter>S100H5</Filter>
+    </ClInclude>
+    <ClInclude Include="SAbstractCurve.h">
+      <Filter>S100\SGeometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

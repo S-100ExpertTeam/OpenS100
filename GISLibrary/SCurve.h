@@ -1,9 +1,9 @@
 #pragma once
 
-#include "SGeometry.h"
+#include "SAbstractCurve.h"
 
 class SPoint;
-class SCurve : public SGeometry
+class SCurve : public SAbstractCurve
 {
 public:
 	SCurve();
@@ -24,14 +24,17 @@ public:
 	SGeometryType GetType() override;
 
 	int GetRCID();
+	
 	int GetNumPoints();
-	double GetX(int i);
-	double GetY(int i);
+	int getNumPoint() override;
+
+	double GetX(int index) override;
+	double GetY(int index) override;
 	double GetX() override;
 	double GetY() override;
 
 	void Init(int size);
-	void Set(int index, double x, double y);
+	void Set(int index, double x, double y) override;
 	
 public:
 	void CreateD2Geometry(ID2D1Factory1* factory);

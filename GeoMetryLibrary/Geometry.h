@@ -44,8 +44,12 @@ public:
 
 	virtual double GetX() { return 0; };
 	virtual double GetY() { return 0; };
+	virtual double GetX(int index) { return 0; };
+	virtual double GetY(int index) { return 0; };
 
 	virtual std::string ToString() { return ""; }
+
+	virtual int getNumPoint() { return 0; };
 
 public:
 

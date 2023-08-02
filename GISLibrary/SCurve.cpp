@@ -37,12 +37,18 @@ int SCurve::GetNumPoints()
 	return m_numPoints;
 }
 
+int SCurve::getNumPoint()
+{
+	return GetNumPoints();
+}
+
 double SCurve::GetX(int i) 
 {
 	if (m_pPoints == nullptr)
 	{
 		return 0;
 	}
+
 	return (m_pPoints + i)->x;
 }
 

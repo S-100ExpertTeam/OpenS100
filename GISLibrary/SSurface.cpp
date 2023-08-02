@@ -409,7 +409,11 @@ void SSurface::Release()
 {
 	for (auto i = curveList.begin(); i != curveList.end(); i++)
 	{
-		SafeRelease(&(*i)->pGeometry);
+		if ((*i)->GetType() == SGeometryType::Curve) {
+			auto curve = (SCurve*)(*i);
+			SafeRelease(&curve->pGeometry);
+		}
+		
 		delete (*i);
 	}
 	curveList.clear();
@@ -588,7 +592,7 @@ int SSurface::GetRingCount()
 	return curveList.size();
 }
 
-SCurve* SSurface::GetRing(int index)
+SAbstractCurve* SSurface::GetRing(int index)
 {
 	if (index >= 0 && index < GetRingCount())
 	{
@@ -600,7 +604,7 @@ SCurve* SSurface::GetRing(int index)
 	return nullptr;
 }
 
-std::list<SCurve*> SSurface::GetCurveList()
+std::list<SAbstractCurve*> SSurface::GetCurveList()
 {
 	return curveList;
 }
