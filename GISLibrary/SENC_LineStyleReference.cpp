@@ -2,7 +2,6 @@
 #include "SENC_LineStyleReference.h"
 #include "GISLibrary.h"
 #include "SCurveHasOrient.h"
-#include "SCurve.h"
 
 #include "../PortrayalCatalogue/S100_LineStyleReference.h"
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"

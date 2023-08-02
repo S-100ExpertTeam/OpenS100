@@ -25,7 +25,6 @@
 #include "SSurface.h"
 #include "SMultiPoint.h"
 #include "SCompositeCurve.h"
-#include "SCurve.h"
 #include "SPoint.h"
 #include "SCommonFuction.h"
 
@@ -1322,11 +1321,12 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						SENC_SpatialReference* sred = *iterLi;
 						int referencedID = sred->reference;
 
-						for (auto k = surface->curveList.begin(); k != surface->curveList.end(); k++)
+						for (int k = 0; k < surface->GetRingCount(); k++)
 						{
-							if ((*k)->GetRCID() == referencedID)
+							auto curve = surface->GetRing(k);
+							if (curve->GetRCID() == referencedID)
 							{
-								curListCurveLink.push_back(*k);
+								curListCurveLink.push_back(curve);
 							}
 						}
 					}
@@ -1343,14 +1343,11 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						int curveCnt = compositeCurve->GetCurveCount();
 
 						for (int k = 0; k < curveCnt; k++)
-						//for (auto k = compositeCurve->m_listCurveLink.begin(); k != compositeCurve->m_listCurveLink.end(); k++)
 						{
 							auto c = compositeCurve->GetCurve(k);
 
 							if (c->GetRCID() == referencedID)
-							//if ((*k)->GetRCID() == referencedID)
 							{
-								//curListCurveLink.push_back(*k);
 								curListCurveLink.push_back(c);
 							}
 						}
@@ -1376,9 +1373,10 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 			{
 				auto surface = (SSurface*)featureRecord->m_geometry;
 
-				for (auto i = surface->curveList.begin(); i != surface->curveList.end(); i++)
+				for (int i = 0; i < surface->GetRingCount(); i++)
 				{
-					curListCurveLink.push_back((*i));
+					auto curve = surface->GetRing(i);
+					curListCurveLink.push_back(curve);
 				}
 			}
 			else if (featureRecord->m_geometry->GetType() == SGeometryType::CompositeCurve)
@@ -1388,9 +1386,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 				int curveCnt = compositeCurve->GetCurveCount();
 
 				for (int k = 0; k < curveCnt; k++)
-				//for (auto i = compositeCurve->m_listCurveLink.begin(); i != compositeCurve->m_listCurveLink.end(); i++)
 				{
-					//curListCurveLink.push_back((*i));
 					auto c = compositeCurve->GetCurve(k);
 					curListCurveLink.push_back(c);
 				}

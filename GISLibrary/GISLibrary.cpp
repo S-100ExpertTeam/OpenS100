@@ -4,7 +4,6 @@
 #include "SGeometry.h"
 #include "SPoint.h"
 #include "SMultiPoint.h"
-#include "SCurve.h"
 #include "SCompositeCurve.h"
 #include "SSurface.h"
 #include "S10XGML.h"

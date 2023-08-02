@@ -6,7 +6,6 @@
 #include "GF_ComplexAttributeType.h"
 #include "SPoint.h"
 #include "SMultiPoint.h"
-#include "SCurve.h"
 #include "SCompositeCurve.h"
 #include "SSurface.h"
 #include "GML_Envelop.h"

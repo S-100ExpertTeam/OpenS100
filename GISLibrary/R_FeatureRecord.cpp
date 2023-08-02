@@ -19,7 +19,6 @@
 #include "SGeometry.h"
 #include "SPoint.h"
 #include "SSurface.h"
-#include "SCurve.h"
 
 #include <pugixml.hpp>
 

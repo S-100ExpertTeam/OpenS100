@@ -82,25 +82,57 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 			else if (sr->RCNM == 115)
 			{
 			}
-			// Curve
-			else if (sr->RCNM == 120 && 
-				fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
+			else if (sr->RCNM == 120)
 			{
-				SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
-
-				int curveCnt = geo->GetCurveCount();
-				//for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
-				for (int j = 0; j < curveCnt; j++)
+				// Curve
+				if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 				{
-					//auto curve = j->GetCurve();
-					//auto curve = *j;
-					auto curve = geo->GetCurve(j);
+					SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
+
+					int curveCnt = geo->GetCurveCount();
+					for (int j = 0; j < curveCnt; j++)
+					{
+						auto curve = geo->GetCurve(j);
+						auto rcid = curve->GetRCID();
+						if (rcid == sr->reference)
+						{
+							int numPoints = curve->GetNumPoints();
+
+							POINT* screenPoints = new POINT[numPoints];
+
+							for (int k = 0; k < numPoints; k++)
+							{
+								scaler->WorldToDevice(
+									curve->GetX(k), curve->GetY(k),
+									&screenPoints[k].x, &screenPoints[k].y);
+							}
+
+							POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+
+							if (symbolPoint)
+							{
+								D2D1_POINT_2F d2Point;
+								d2Point.x = symbolPoint->x;
+								d2Point.y = symbolPoint->y;
+								delete symbolPoint;
+								points.push_back(d2Point);
+							}
+
+							delete[] screenPoints;
+							screenPoints = nullptr;
+						}
+					}
+				}
+				else if (fr->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+				{
+					SCurveHasOrient* curve = (SCurveHasOrient*)fr->m_geometry;
+
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
 						int numPoints = curve->GetNumPoints();
 
-						POINT *screenPoints = new POINT[numPoints];
+						POINT* screenPoints = new POINT[numPoints];
 
 						for (int k = 0; k < numPoints; k++)
 						{
@@ -109,7 +141,7 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 								&screenPoints[k].x, &screenPoints[k].y);
 						}
 
-						POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+						POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
 
 						if (symbolPoint)
 						{
@@ -124,77 +156,40 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 						screenPoints = nullptr;
 					}
 				}
-			}
-			else if (sr->RCNM == 120 && 
-				fr->m_geometry->GetType() == SGeometryType::CurveHasOrient)
-			{
-				SCurveHasOrient* curve = (SCurveHasOrient*)fr->m_geometry;
-				
-				auto rcid = curve->GetRCID();
-				if (rcid == sr->reference)
+				else if (fr->m_geometry->GetType() == SGeometryType::Surface)
 				{
-					int numPoints = curve->GetNumPoints();
+					SSurface* geo = (SSurface*)fr->m_geometry;
 
-					POINT* screenPoints = new POINT[numPoints];
-
-					for (int k = 0; k < numPoints; k++)
+					for (int j = 0; j < geo->GetRingCount(); j++)
 					{
-						scaler->WorldToDevice(
-							curve->GetX(k), curve->GetY(k),
-							&screenPoints[k].x, &screenPoints[k].y);
-					}
-
-					POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
-
-					if (symbolPoint)
-					{
-						D2D1_POINT_2F d2Point;
-						d2Point.x = symbolPoint->x;
-						d2Point.y = symbolPoint->y;
-						delete symbolPoint;
-						points.push_back(d2Point);
-					}
-
-					delete[] screenPoints;
-					screenPoints = nullptr;
-				}
-			}
-			else if (sr->RCNM == 120 && 
-				fr->m_geometry->GetType() == SGeometryType::Surface)
-			{
-				SSurface* geo = (SSurface*)fr->m_geometry;
-
-				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
-				//for (auto j = geo->compositeCurve->m_listCurveLink.begin(); j != geo->compositeCurve->m_listCurveLink.end(); j++)
-				{
-					//auto curve = j->GetCurve();
-					auto curve = (*j);
-					auto rcid = curve->GetRCID();
-					if (rcid == sr->reference)
-					{
-						int numPoints = curve->GetNumPoints();
-						POINT *screenPoints = new POINT[numPoints];
-
-						for (int k = 0; k < numPoints; k++)
+						auto curve = geo->GetRing(j);
+						auto rcid = curve->GetRCID();
+						if (rcid == sr->reference)
 						{
-							scaler->WorldToDevice(
-								curve->GetX(k), curve->GetY(k),
-								&screenPoints[k].x, &screenPoints[k].y);
+							int numPoints = curve->GetNumPoints();
+							POINT* screenPoints = new POINT[numPoints];
+
+							for (int k = 0; k < numPoints; k++)
+							{
+								scaler->WorldToDevice(
+									curve->GetX(k), curve->GetY(k),
+									&screenPoints[k].x, &screenPoints[k].y);
+							}
+
+							POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+
+							if (symbolPoint)
+							{
+								D2D1_POINT_2F d2Point;
+								d2Point.x = symbolPoint->x;
+								d2Point.y = symbolPoint->y;
+								delete symbolPoint;
+								points.push_back(d2Point);
+							}
+
+							delete[] screenPoints;
+							screenPoints = nullptr;
 						}
-
-						POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
-
-						if (symbolPoint)
-						{
-							D2D1_POINT_2F d2Point;
-							d2Point.x = symbolPoint->x;
-							d2Point.y = symbolPoint->y;
-							delete symbolPoint;
-							points.push_back(d2Point);
-						}
-
-						delete[] screenPoints;
-						screenPoints = nullptr;
 					}
 				}
 			}
@@ -220,15 +215,11 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 
 		int curveCnt = geo->GetCurveCount();
-		//for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		for (int i = 0; i < curveCnt; i++)
 		{
 			bDraw = false;
-			//SCurve* c = (*lcl).GetCurve();
-			//SCurve* c = *lcl;
 			auto c = geo->GetCurve(i);
 			
-			//if (!(*lcl)->GetMasking())
 			if (!c->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
@@ -425,11 +416,9 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 			{
 				SSurface* geo = (SSurface*)fr->m_geometry;
 
-				for (auto j = geo->curveList.begin(); j != geo->curveList.end(); j++)
-				//for (auto j = geo->compositeCurve->m_listCurveLink.begin(); j != geo->compositeCurve->m_listCurveLink.end(); j++)
+				for (int j = 0; j < geo->GetRingCount(); j++)			
 				{
-					//auto curve = j->GetCurve();
-					auto curve = (*j);
+					auto curve = geo->GetRing(j);
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -478,15 +467,11 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 
 		int curveCnt = geo->GetCurveCount();
-		//for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		for (int i = 0; i < curveCnt; i++)
 		{
 			bDraw = false;
-			//SCurve* c = (*lcl).GetCurve();
-			//SCurve* c = (*lcl);
 			auto c = geo->GetCurve(i);
 			
-			//if (!(*lcl)->GetMasking())
 			if (!c->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)

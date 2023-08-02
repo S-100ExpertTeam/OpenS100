@@ -33,11 +33,7 @@ const UINT WM_FILTER_LIST = ::RegisterWindowMessage(_T("WM_FILTER_LIST"));
 const CString tabNameAttribute = L"Attributes";
 const CString tabNameVector = L"Vector";
 
-// CFeatureView
-//
 CPropertyGridVectorModify	CDockablePaneEditWindow::m_wndListAttribute;
-
-
 
 IMPLEMENT_DYNAMIC(CDockablePaneEditWindow, CDockablePane)
 
@@ -315,28 +311,6 @@ void CDockablePaneEditWindow::SetVectors()
 	
 }
 
-//void CDockablePaneEditWindow::SetVector(int RCNM, R_VectorRecord* r, CMFCPropertyGridProperty *pSuperProperty)
-//{
-	//switch (RCNM)
-	//{
-	//case 110:
-	//	SetVector((R_PointRecord*)r, pSuperProperty);
-	//	break;
-	//case 115:
-	//	SetVector((R_MultiPointRecord*)r, pSuperProperty);
-	//	break;
-	//case 120:
-	//	SetVector((R_CurveRecord*)r, pSuperProperty);
-	//	break;
-	//case 125:
-	//	SetVector((R_CompositeRecord*)r, pSuperProperty);
-	//	break;
-	//case 130:
-	//	SetVector((R_SurfaceRecord*)r, pSuperProperty);
-	//	break;
-	//}
-//}
-
 void CDockablePaneEditWindow::SetVector(SGeometry* geom, CMFCPropertyGridProperty* pSuperProperty)
 {
 	auto type = geom->GetType();
@@ -508,79 +482,6 @@ void CDockablePaneEditWindow::SetVector(SPoint* geom, CMFCPropertyGridProperty* 
 
 	pChildProperty->SetName(L"Point");
 }
-
-//void CDockablePaneEditWindow::SetVector(R_PointRecord* r, CMFCPropertyGridProperty *pSuperProperty)
-//{
-//	int inasCount = (int)r->m_inas.size();
-//	CString count;
-//	count.Format(L"%d", inasCount);
-//
-//	std::wstring pointName = L"Point (RCID : " + r->GetRCIDasWstring() + L", Relation: " + std::wstring(count) + L")";
-//	CMFCPropertyGridProperty *pProperty = new CMFCPropertyGridProperty(pointName.c_str());
-//	if (pSuperProperty)
-//	{
-//		pSuperProperty->AddSubItem(pProperty);
-//	}
-//	else
-//	{
-//		m_wndListVector.AddProperty(pProperty);
-//	}
-//
-//	if (inasCount > 0) // If there's even one number,
-//	{
-//		CMFCPropertyGridProperty *pInasParent = new CMFCPropertyGridProperty(L"INAS");
-//
-//		pProperty->AddSubItem(pInasParent);
-//		for (F_INAS* inas : r->m_inas)
-//		{
-//			std::wstring inasName = L"Information id";
-//			CMFCPropertyGridProperty *pInas = new CMFCPropertyGridProperty(inasName.c_str(), inas->m_name.GetRCIDasWstring().c_str());
-//			pInasParent->AddSubItem(pInas);
-//
-//			MultiData *multiData = InsertPropertyMultiData(200, pInasParent, (DWORD_PTR)inas);
-//
-//			pInas->SetName(inasName.c_str());
-//			pInas->SetData((DWORD_PTR)multiData);
-//			pInas->AllowEdit(FALSE);
-//		}
-//	}
-//
-//	S101Cell* cell = (S101Cell*)m_cell;
-//	int precision_x = 0;
-//	int cmf = cell->m_dsgir.m_dssi.m_cmfx;
-//	while (cmf >= 10)
-//	{
-//		cmf /= 10;
-//		precision_x++;
-//	}
-//
-//	int precision_y = 0;
-//	cmf = cell->m_dsgir.m_dssi.m_cmfy;
-//	while (cmf >= 10)
-//	{
-//		cmf /= 10;
-//		precision_y++;
-//	}
-//
-//	if (r->m_c2it)
-//	{
-//		std::wstringstream wss;
-//		wss.setf(std::ios::fixed, std::ios::floatfield);
-//		double x = r->m_c2it->m_xcoo / (double)cell->m_dsgir.m_dssi.m_cmfx;
-//		wss.precision(precision_x);
-//		double y = r->m_c2it->m_ycoo / (double)cell->m_dsgir.m_dssi.m_cmfy;
-//		wss.precision(precision_y);
-//
-//		wss << y << L"," << x;
-//
-//		CMFCPropertyGridProperty *pChildProperty = new CMFCPropertyGridProperty(L"Position", wss.str().c_str());
-//		pProperty->AddSubItem(pChildProperty);
-//
-//		pChildProperty->SetName(L"C2IT");
-//		MultiData *multiData = InsertPropertyMultiData(101, pChildProperty, (DWORD_PTR)r, (DWORD_PTR)r->m_c2it);
-//		pChildProperty->SetData((DWORD_PTR)multiData);
-//	}
-//}
 
 void CDockablePaneEditWindow::SetVector(GM::MultiPoint* r, CMFCPropertyGridProperty* pSuperProperty)
 {
@@ -755,97 +656,6 @@ void CDockablePaneEditWindow::SetVector(SMultiPoint* geom, CMFCPropertyGridPrope
 	}
 }
 
-//void CDockablePaneEditWindow::SetVector(R_MultiPointRecord* r, CMFCPropertyGridProperty *pSuperProperty)
-//{
-//
-//	int inasCount = (int)r->m_inas.size();
-//	CString count;
-//	count.Format(L"%d", inasCount);
-//
-//	std::wstring multpointName = L"MultiPoint (RCID : " + r->GetRCIDasWstring() + L", Relation: " + std::wstring(count) + L")";
-//	CMFCPropertyGridProperty *pProperty = new CMFCPropertyGridProperty(multpointName.c_str());
-//	if (pSuperProperty)
-//	{
-//		pSuperProperty->AddSubItem(pProperty);
-//	}
-//	else
-//	{
-//		m_wndListVector.AddProperty(pProperty);
-//	}
-//
-//	if (inasCount > 0) // If there's even one number,
-//	{
-//		CMFCPropertyGridProperty *pInasParent = new CMFCPropertyGridProperty(L"INAS");
-//
-//		pProperty->AddSubItem(pInasParent);
-//		for (F_INAS* inas : r->m_inas)
-//		{
-//			std::wstring inasName = L"Information id";
-//			CMFCPropertyGridProperty *pInas = new CMFCPropertyGridProperty(inasName.c_str(), inas->m_name.GetRCIDasWstring().c_str());
-//			pInasParent->AddSubItem(pInas);
-//
-//			MultiData *multiData = InsertPropertyMultiData(200, pInasParent, (DWORD_PTR)inas);
-//
-//			pInas->SetName(inasName.c_str());
-//			pInas->SetData((DWORD_PTR)multiData);
-//			pInas->AllowEdit(FALSE);
-//
-//		}
-//	}
-//
-//	S101Cell* cell = (S101Cell*)m_cell;
-//	int precision_x = 0;
-//	int cmf = cell->m_dsgir.m_dssi.m_cmfx;
-//	while (cmf >= 10)
-//	{
-//		cmf /= 10;
-//		precision_x++;
-//	}
-//
-//	int precision_y = 0;
-//	cmf = cell->m_dsgir.m_dssi.m_cmfy;
-//	while (cmf >= 10)
-//	{
-//		cmf /= 10;
-//		precision_y++;
-//	}
-//
-//	int precision_z = 0;
-//	cmf = cell->m_dsgir.m_dssi.m_cmfz;
-//	while (cmf >= 10)
-//	{
-//		cmf /= 10;
-//		precision_z++;
-//	}
-//
-//	for (auto itor = r->m_c3il.begin(); itor != r->m_c3il.end(); itor++)
-//	{
-//		for (auto itor2 = (*itor)->m_arr.begin(); itor2 != (*itor)->m_arr.end(); itor2++)
-//		{
-//			C3IL* c3 = *itor2;
-//			std::wstringstream wss;
-//			wss.setf(std::ios::fixed, std::ios::floatfield);
-//			double x = c3->m_xcoo / (double)cell->m_dsgir.m_dssi.m_cmfx;
-//			wss.precision(precision_x);
-//			wss << x << L",";
-//			double y = c3->m_ycoo / (double)cell->m_dsgir.m_dssi.m_cmfy;
-//			wss.precision(precision_y);
-//			wss << y << L",";
-//			double z = c3->m_zcoo / (double)cell->m_dsgir.m_dssi.m_cmfz;
-//			wss.precision(precision_z);
-//			wss << z;
-//
-//			CMFCPropertyGridProperty *pChildProperty = new CMFCPropertyGridProperty(L"Position", wss.str().c_str());
-//			pProperty->AddSubItem(pChildProperty);
-//
-//			pChildProperty->SetName(L"C3IL");
-//			MultiData *multiData = InsertPropertyMultiData(102, pChildProperty, (DWORD_PTR)r, (DWORD_PTR)c3, (DWORD_PTR)*itor, m_vIndex++);
-//			pChildProperty->SetData((DWORD_PTR)multiData);
-//
-//		}
-//	}
-//}
-
 void CDockablePaneEditWindow::SetVector(GM::Curve* r, CMFCPropertyGridProperty* pSuperProperty)
 {
 	int infoCount = r->GetInformationRelationCount();
@@ -1009,121 +819,6 @@ void CDockablePaneEditWindow::SetVector(SCurveHasOrient* geom, CMFCPropertyGridP
 	SetVector(geom->GetLastPoint(), pProperty);
 }
 
-//void CDockablePaneEditWindow::SetVector(R_CurveRecord* r, CMFCPropertyGridProperty *pSuperProperty)
-//{
-//	int inasCount = (int)r->m_inas.size();
-//	CString count;
-//	count.Format(L"%d", inasCount);
-//
-//	S101Cell* cell = (S101Cell*)m_cell;
-//
-//	std::wstring curveName = L"Curve (RCID : " + r->GetRCIDasWstring() + L", Relation: " + std::wstring(count) + L")";
-//
-//	CMFCPropertyGridProperty *pProperty = new CMFCPropertyGridProperty(curveName.c_str());
-//
-//	if (pSuperProperty)
-//	{
-//		pSuperProperty->AddSubItem(pProperty);
-//	}
-//	else
-//	{
-//		m_wndListVector.AddProperty(pProperty);
-//	}
-//
-//	if (inasCount > 0) // If there's even one number,
-//	{
-//		CMFCPropertyGridProperty *pInasParent = new CMFCPropertyGridProperty(L"INAS");
-//		pProperty->AddSubItem(pInasParent);
-//
-//		for (F_INAS* inas : r->m_inas)
-//		{
-//			std::wstring inasName = L"Information id";
-//			CMFCPropertyGridProperty *pInas = new CMFCPropertyGridProperty(inasName.c_str(), inas->m_name.GetRCIDasWstring().c_str());
-//			pInasParent->AddSubItem(pInas);
-//
-//			MultiData *multiData = InsertPropertyMultiData(200, pInasParent, (DWORD_PTR)inas);
-//
-//			pInas->SetName(inasName.c_str());
-//			pInas->SetData((DWORD_PTR)multiData);
-//			pInas->AllowEdit(FALSE);
-//
-//		}
-//	}
-//
-//	POSITION ptasPos = NULL;
-//	PTAS *ptas = NULL;
-//	R_PointRecord *spr = NULL, *epr = NULL;
-//	__int64 iKey;
-//
-//	for (auto i = r->m_ptas->m_arr.begin(); i != r->m_ptas->m_arr.end(); i++)
-//	{
-//		auto ptas = *i;
-//
-//		iKey = ((__int64)ptas->m_name.RCNM) << 32 | ptas->m_name.RCID;
-//		if (ptas->m_topi == 1 // Beginning node 
-//			)
-//		{
-//			spr = cell->GetPointRecord(iKey);
-//		}
-//		else if (ptas->m_topi == 2 // End node
-//			)
-//		{
-//			epr = cell->GetPointRecord(iKey);
-//		}
-//		else if (ptas->m_topi == 3)
-//		{
-//			spr = cell->GetPointRecord(iKey);
-//			epr = spr;
-//		}
-//	}
-//
-//	SetVector(spr, pProperty);
-//
-//	int precision_x = 0;
-//	int cmf = cell->m_dsgir.m_dssi.m_cmfx;
-//	while (cmf >= 10)
-//	{
-//		cmf /= 10;
-//		precision_x++;
-//	}
-//
-//	int precision_y = 0;
-//	cmf = cell->m_dsgir.m_dssi.m_cmfy;
-//	while (cmf >= 10)
-//	{
-//		cmf /= 10;
-//		precision_y++;
-//	}
-//
-//	for (auto itorParent = r->m_c2il.begin(); itorParent != r->m_c2il.end(); itorParent++)
-//	{
-//		int index = 0;
-//		for (auto itor = (*itorParent)->m_arr.begin(); itor != (*itorParent)->m_arr.end(); itor++)
-//		{
-//			IC2D* ic = *itor;
-//
-//			std::wstringstream wss;
-//			wss.setf(std::ios::fixed, std::ios::floatfield);
-//
-//			double x = ic->m_xcoo / (double)cell->m_dsgir.m_dssi.m_cmfx;
-//			wss.precision(precision_x);
-//
-//			double y = ic->m_ycoo / (double)cell->m_dsgir.m_dssi.m_cmfy;
-//			wss.precision(precision_y);
-//
-//			wss << y << L"," << x;
-//
-//			CMFCPropertyGridProperty *pChildProperty = new CMFCPropertyGridProperty(L"Position", wss.str().c_str());
-//			pProperty->AddSubItem(pChildProperty);
-//			pChildProperty->SetName(L"C2IL");
-//			MultiData *multiData = InsertPropertyMultiData(100, pChildProperty, (DWORD_PTR)r, (DWORD_PTR)ic, (DWORD_PTR)*itorParent, m_vIndex++);
-//			pChildProperty->SetData((DWORD_PTR)multiData);
-//		}
-//	}
-//
-//	SetVector(epr, pProperty);
-//}
-
 void CDockablePaneEditWindow::SetVector(GM::CompositeCurve* r, CMFCPropertyGridProperty* pSuperProperty)
 {
 	int infoCount = (int)r->GetInformationRelationCount();
@@ -1229,70 +924,6 @@ void CDockablePaneEditWindow::SetVector(SCompositeCurve* geom, CMFCPropertyGridP
 		}
 	}
 }
-
-//void CDockablePaneEditWindow::SetVector(R_CompositeRecord* r, CMFCPropertyGridProperty *pSuperProperty)
-//{
-//	int inasCount = (int)r->m_inas.size();
-//	CString count;
-//	count.Format(L"%d", inasCount);
-//
-//	S101Cell* cell = (S101Cell*)m_cell;
-//	std::wstring comName = L"Composite Curve (RCID : " + r->GetRCIDasWstring() + L", Relation: " + std::wstring(count) + L")";
-//	CMFCPropertyGridProperty *pProperty = new CMFCPropertyGridProperty(comName.c_str());
-//	if (pSuperProperty)
-//	{
-//		pSuperProperty->AddSubItem(pProperty);
-//	}
-//	else
-//	{
-//		m_wndListVector.AddProperty(pProperty);
-//	}
-//
-//	if (inasCount > 0) // If there's even one number,
-//	{
-//		CMFCPropertyGridProperty *pInasParent = new CMFCPropertyGridProperty(L"INAS");
-//
-//		pProperty->AddSubItem(pInasParent);
-//		for (F_INAS* inas : r->m_inas)
-//		{
-//			std::wstring inasName = L"Information id";
-//			CMFCPropertyGridProperty *pInas = new CMFCPropertyGridProperty(inasName.c_str(), inas->m_name.GetRCIDasWstring().c_str());
-//			pInasParent->AddSubItem(pInas);
-//
-//			MultiData *multiData = InsertPropertyMultiData(200, pInasParent, (DWORD_PTR)inas);
-//
-//			pInas->SetName(inasName.c_str());
-//			pInas->SetData((DWORD_PTR)multiData);
-//			pInas->AllowEdit(FALSE);
-//
-//		}
-//	}
-//
-//	for (auto itorParent = r->m_cuco.begin(); itorParent != r->m_cuco.end(); itorParent++)
-//	{
-//		F_CUCO* cucoParent = *itorParent;
-//
-//		for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
-//		{
-//			CUCO* cuco = *itor;
-//			R_VectorRecord* vectorRecord = nullptr;
-//
-//			if (120 == cuco->m_name.RCNM)
-//			{
-//				vectorRecord = cell->GetCurveRecord(cuco->m_name.GetName());
-//			}
-//			else if (125 == cuco->m_name.RCNM)
-//			{
-//				vectorRecord = cell->GetCurveRecord(cuco->m_name.GetName());	
-//			}
-//
-//			if (vectorRecord)
-//			{
-//				SetVector(cuco->m_name.RCNM, vectorRecord, pProperty);
-//			}
-//		}
-//	}
-//}
 
 void CDockablePaneEditWindow::SetVector(GM::Surface* r, CMFCPropertyGridProperty* pSuperProperty)
 {
@@ -1407,73 +1038,6 @@ void CDockablePaneEditWindow::SetVector(SSurface* geom, CMFCPropertyGridProperty
 	}
 }
 
-//void CDockablePaneEditWindow::SetVector(R_SurfaceRecord* r, CMFCPropertyGridProperty *pSuperProperty)
-//{
-//	int inasCount = (int)r->m_inas.size();
-//	CString count;
-//	count.Format(L"%d", inasCount);
-//
-//	S101Cell* cell = (S101Cell*)m_cell;
-//	std::wstring surName = L"Surface (RCID: " + r->GetRCIDasWstring() + L", Relation: " + std::wstring(count) + L")";
-//
-//	CMFCPropertyGridProperty *pProperty = new CMFCPropertyGridProperty(surName.c_str());
-//
-//	if (pSuperProperty)
-//	{
-//		pSuperProperty->AddSubItem(pProperty);
-//	}
-//	else
-//	{
-//		m_wndListVector.AddProperty(pProperty);
-//	}
-//
-//	if (inasCount > 0) // If there's even one number,
-//	{
-//		CMFCPropertyGridProperty *pInasParent = new CMFCPropertyGridProperty(L"INAS");
-//
-//		pProperty->AddSubItem(pInasParent);
-//		for (F_INAS* inas : r->m_inas)
-//		{
-//			std::wstring inasName = L"Information id";
-//			CMFCPropertyGridProperty *pInas = new CMFCPropertyGridProperty(inasName.c_str(), inas->m_name.GetRCIDasWstring().c_str());
-//			pInasParent->AddSubItem(pInas);
-//
-//			MultiData *multiData = InsertPropertyMultiData(200, pInasParent, (DWORD_PTR)inas);
-//
-//			pInas->SetName(inasName.c_str());
-//			pInas->SetData((DWORD_PTR)multiData);
-//			pInas->AllowEdit(FALSE);
-//
-//		}
-//	}
-//
-//	for (auto itorParent = r->m_rias.begin(); itorParent != r->m_rias.end(); itorParent++)
-//	{
-//		F_RIAS* riasParent = *itorParent;
-//
-//		for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
-//		{
-//			RIAS* rias = *itor;
-//
-//			R_VectorRecord* vectorRecord = nullptr;
-//
-//			if (120 == rias->m_name.RCNM)
-//			{
-//				vectorRecord = cell->GetCurveRecord(rias->m_name.GetName());
-//			}
-//			else if (125 == rias->m_name.RCNM)
-//			{
-//				vectorRecord = cell->GetCompositeCurveRecord(rias->m_name.GetName());
-//			}
-//
-//			if (vectorRecord)
-//			{
-//				SetVector(rias->m_name.RCNM, vectorRecord, pProperty);
-//			}
-//		}
-//	}
-//}
-
 void CDockablePaneEditWindow::SetFeatureList()
 {
 	DeleteAllItems();
@@ -1525,15 +1089,6 @@ void CDockablePaneEditWindow::DeleteVectorItems()
 
 BOOL CDockablePaneEditWindow::PreTranslateMessage(MSG* pMsg)
 {
-	//HWND thisHandle = this->m_hWnd;
-	//HWND attributeHandle = m_wndListAttribute.m_hWnd;
-
-	//int index = 0;
-	//R_VectorRecord* vr = NULL;
-	//IC2D* ic = NULL;
-	//F_C2IL* fic = NULL;
-	//F_C2IT* it = NULL;
-
 	return CDockablePane::PreTranslateMessage(pMsg);
 }
 
@@ -1575,45 +1130,7 @@ MultiData* CDockablePaneEditWindow::InsertPropertyMultiData(
 void CDockablePaneEditWindow::SetSpatialObject(S100SpatialObject *object)
 {
 	m_cell = object;
-	//m_wndListAttribute.SetSpatialObject(m_cell);
 }
-
-//SpatialObject *CDockablePaneEditWindow::GetSpatialObject()
-//{
-//	return m_cell;
-//}
-
-//S101Cell* CDockablePaneEditWindow::GetS101Cell()
-//{
-//	return (S101Cell*)m_cell;
-//}
-
-//CString CDockablePaneEditWindow::GetActiveTabName()
-//{
-//	int tabNum = m_wndTabs.GetActiveTab();
-//
-//	CString tabName;
-//
-//	m_wndTabs.GetTabLabel(tabNum, tabName);
-//
-//	return tabName;
-//}
-
-//bool CDockablePaneEditWindow::IsAttributeTab()
-//{
-//	int tabNum = m_wndTabs.GetActiveTab();
-//
-//	CString tabName;
-//
-//	m_wndTabs.GetTabLabel(tabNum, tabName);
-//
-//	if (0 == tabName.Compare(tabNameAttribute))
-//	{
-//		return true;
-//	}
-//
-//	return false;
-//}
 
 void CDockablePaneEditWindow::ClearVector()
 {

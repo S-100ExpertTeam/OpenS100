@@ -1104,11 +1104,8 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		auto cc = (SCompositeCurve*)(frPick->GetGeometry());
 
 		auto curveCnt = cc->GetCurveCount();
-		//for (auto it = cc->m_listCurveLink.begin(); it != cc->m_listCurveLink.end(); it++)
 		for (int i = 0; i < curveCnt; i++)
 		{
-			//SCurve* c = (*it).GetCurve();
-			//SCurve* c = (*it);
 			auto c = cc->GetCurve(i);
 			Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
 

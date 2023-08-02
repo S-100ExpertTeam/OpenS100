@@ -7,7 +7,6 @@
 
 #include "SCommonFuction.h"
 #include "SCurveHasOrient.h"
-#include "SCurve.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
 

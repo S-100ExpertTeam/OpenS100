@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "SSurface.h"
 #include "SCommonFuction.h"
-#include "SCurve.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 #include "../GeoMetryLibrary/Scaler.h"
@@ -158,6 +157,35 @@ int SSurface::GetNumPart()
 	return m_numParts;
 }
 
+int SSurface::getNumPoint()
+{
+	return m_numPoints;
+}
+
+int SSurface::getPart(int index)
+{
+	if (index >= 0 && index < GetNumPart()) {
+		return m_pParts[index];
+	}
+
+	return -1;
+}
+
+int SSurface::getLastPointIndexOfExterior()
+{
+	int result = 0;
+	if (GetNumPart() > 1)
+	{
+		result = getPart(1) - 1;
+	}
+	else
+	{
+		result = getNumPoint() - 1;
+	}
+
+	return result;
+}
+
 int SSurface::GetNumPointPerPart(int partIndex)
 {
 	if (partIndex < 0 || partIndex >= m_numParts)
@@ -312,10 +340,6 @@ void SSurface::AddCompositeCurve(SCompositeCurve* compositeCurve)
 {
 	int curveCnt = compositeCurve->GetCurveCount();
 	for (int i = 0; i < curveCnt; i++)
-	//for (
-	//	auto i = compositeCurve->m_listCurveLink.begin();
-	//	i != compositeCurve->m_listCurveLink.end();
-	//	i++)
 	{
 		auto c = compositeCurve->GetCurve(i);
 		curveList.push_back(c);

@@ -25,7 +25,6 @@
 #include "GISLibrary.h"
 #include "SPoint.h"
 #include "SMultiPoint.h"
-#include "SCurve.h"
 #include "SCompositeCurve.h"
 #include "SSurface.h"
 
@@ -988,15 +987,16 @@ R_SurfaceRecord* S101Creator::ConvertInsertVectorRecord(SSurface* geom)
 
 	auto f_RIAS = new F_RIAS();
 
-	for (auto i = geom->curveList.begin(); i != geom->curveList.end(); i++)
+	for (int i = 0; i < geom->GetRingCount(); i++)
 	{
-		auto curveRecord = ConvertInsertVectorRecord(*i);
+		auto curve = geom->GetRing(i);
+		auto curveRecord = ConvertInsertVectorRecord(curve);
 		
 		auto rias = new RIAS();
 		rias->m_name = curveRecord->GetRecordName();
 		rias->m_ornt = 1;
 
-		if (i == geom->curveList.begin())
+		if (i == 0)
 		{
 			rias->m_usag = 1;
 		}

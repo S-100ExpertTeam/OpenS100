@@ -145,17 +145,12 @@ public:
 	SPoint* ToGeometry(R_PointRecord* r);
 
 	// Record -> Geometry
-	BOOL GetFullSpatialData(R_PointRecord *r, SPoint* point);
-	BOOL GetFullSpatialData(R_PointRecord *r, GeoPointZ &geo);
-	BOOL GetFullSpatialData(R_MultiPointRecord *r, CArray<GeoPointZ> &geoArr);
-	BOOL GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint);
-	BOOL GetFullSpatialData(R_CurveRecord *r, CArray<GeoPoint> &geoArr, int ORNT = 1);
-	BOOL GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, int ORNT = 1);
-	BOOL GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT = 1);
-	BOOL GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT = 1);
-	BOOL GetFullSpatialData(R_CompositeRecord *r, CArray<GeoPoint> &geoArr, int ORNT = 1);
-	BOOL GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoArr, int ORNT = 1);
-	BOOL GetFullSpatialData(R_SurfaceRecord *r, CArray<GeoPoint> &geoArr);
+	BOOL GetFullSpatialData(R_PointRecord *r, SPoint* point); // 
+	BOOL GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint); //
+	BOOL GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, int ORNT = 1); // 
+	BOOL GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT = 1); //
+	BOOL GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT = 1); //
+	BOOL GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoArr, int ORNT = 1); // 
 
 	// Set R_FeatureRecord::m_curveList from Vector record
 	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);

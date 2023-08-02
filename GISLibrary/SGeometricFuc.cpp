@@ -15,7 +15,7 @@ int SGeometricFuc::overlap(SCurve *objPoly, SSurface *comPoly)
 	int i = 0, j = 0;
 	for (i = 0; i < objPoly->m_numPoints - 1 && ret != 1; i++)
 	{
-		for (j = 0; j < comPoly->m_numPoints - 1 && ret != 1; j++)
+		for (j = 0; j < comPoly->getNumPoint() - 1 && ret != 1; j++)
 		{
 			auto dsf = objPoly->m_pPoints[i].x;
 
@@ -26,7 +26,7 @@ int SGeometricFuc::overlap(SCurve *objPoly, SSurface *comPoly)
 
 	if (ret <= 0)
 	{
-		for (j = 0; j < comPoly->m_numPoints - 1 && ret <= 0; j++)
+		for (j = 0; j < comPoly->getNumPoint() - 1 && ret <= 0; j++)
 		{
 			ret = inside(objPoly->m_pPoints[j].x, objPoly->m_pPoints[j].y, comPoly);
 		}
@@ -45,11 +45,8 @@ int SGeometricFuc::overlap(SCompositeCurve *objPoly, SSurface *comPoly)
 	}
 
 	int curveCnt = objPoly->GetCurveCount();
-	//for (auto it = objPoly->m_listCurveLink.begin(); it != objPoly->m_listCurveLink.end(); it++)
 	for (int i = 0; i < curveCnt; i++)
 	{
-		//SCurve* c = (*it).GetCurve();
-		//SCurve* c = (*it);
 		auto c = objPoly->GetCurve(i);
 
 		int fret = overlap(c, comPoly);
@@ -73,9 +70,9 @@ int SGeometricFuc::overlap(SSurface *objPoly, SSurface *comPoly)
 	}
 
 	int i = 0, j = 0;
-	for (i = 0; i < objPoly->m_numPoints - 1 && ret != 1; i++)
+	for (i = 0; i < objPoly->getNumPoint() - 1 && ret != 1; i++)
 	{
-		for (j = 0; j < comPoly->m_numPoints - 1 && ret != 1; j++)
+		for (j = 0; j < comPoly->getNumPoint() - 1 && ret != 1; j++)
 		{
 			ret = GeometricFuc::intersect_ccw(objPoly->m_pPoints[i].x, objPoly->m_pPoints[i].y, objPoly->m_pPoints[i + 1].x, objPoly->m_pPoints[i + 1].y,
 				comPoly->m_pPoints[j].x, comPoly->m_pPoints[j].y, comPoly->m_pPoints[j + 1].x, comPoly->m_pPoints[j + 1].y);
@@ -84,7 +81,7 @@ int SGeometricFuc::overlap(SSurface *objPoly, SSurface *comPoly)
 
 	if (ret <= 0)
 	{
-		for (j = 0; j < comPoly->m_numPoints - 1 && ret <= 0; j++)
+		for (j = 0; j < comPoly->getNumPoint() - 1 && ret <= 0; j++)
 		{
 			ret = inside(objPoly->m_pPoints[j].x, objPoly->m_pPoints[j].y, comPoly);
 		}
@@ -174,15 +171,7 @@ int SGeometricFuc::inside(double x, double y, SSurface *poly)
 	int ic;
 	count = 0;
 
-	int lastExteriorIdx = 0;
-	if (poly->m_numParts > 1)
-	{
-		lastExteriorIdx = poly->m_pParts[1] - 1;
-	}
-	else
-	{
-		lastExteriorIdx = poly->m_numPoints - 1;
-	}
+	int lastExteriorIdx = poly->getLastPointIndexOfExterior();
 
 	int obj2PartIndex = 0;
 
@@ -192,9 +181,9 @@ int SGeometricFuc::inside(double x, double y, SSurface *poly)
 	//
 	int *icList = NULL;
 	static int ticList[100000];
-	if (poly->m_numPoints > 100000)
+	if (poly->getNumPoint() > 100000)
 	{
-		int *ticList = new int[poly->m_numPoints];
+		int *ticList = new int[poly->getNumPoint()];
 		icList = ticList;
 	}
 	else
@@ -204,11 +193,11 @@ int SGeometricFuc::inside(double x, double y, SSurface *poly)
 
 
 	int listIndex = 0;
-	for (i = 0; i < poly->m_numPoints - 1; i++)
+	for (i = 0; i < poly->getNumPoint() - 1; i++)
 	{
-		if (poly->m_numParts > obj2PartIndex + 1)
+		if (poly->GetNumPart() > obj2PartIndex + 1)
 		{
-			if (poly->m_pParts[obj2PartIndex + 1] == i + 1)
+			if (poly->getPart(obj2PartIndex + 1) == i + 1)
 			{
 				obj2PartIndex++;
 				continue;

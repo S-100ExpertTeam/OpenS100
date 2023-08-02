@@ -6,7 +6,6 @@
 class Scaler;
 class GeoPoint;
 class MBR;
-class SCurve;
 class SCompositeCurve;
 
 class SSurface : public SGeometry
@@ -18,24 +17,29 @@ public:
 	virtual ~SSurface();
 	
 public:
-	// Area points
+	// Polygon structure in the shp file
 	int m_numParts = 0;
 	int	m_numPoints = 0;
 	int* m_pParts = nullptr;
 
 	GeoPoint* m_pPoints = nullptr;
 	GeoPoint* m_centerPoint = nullptr;
-	
-	// Curve points
-	std::list<SCurveHasOrient*> curveList;
 
 	// AreaD2Geometry
 	ID2D1PathGeometry* pGeometry = nullptr;
+
+private:
+	// All curves that make up the Surface
+	std::list<SCurveHasOrient*> curveList;
 
 public:
 	SGeometryType GetType() override;
 
 	int GetNumPart();
+	int getNumPoint();
+	int getPart(int index); // if fail, return -1
+
+	int getLastPointIndexOfExterior();
 
 	int GetNumPointPerPart(int partIndex);
 	void CalculateCenterPoint();
@@ -45,7 +49,6 @@ public:
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
 
-	//void AddCurve(SCurve* curve);
 	void AddCurve(SCurveHasOrient* curve);
 	void AddCompositeCurve(SCompositeCurve* compositeCurve);
 	

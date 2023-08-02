@@ -5,7 +5,6 @@
 #include "SPoint.h"
 #include "SCompositeCurve.h"
 #include "SCommonFuction.h"
-#include "SCurve.h"
 
 #include "../GISLibrary/R_FeatureRecord.h"
 
@@ -81,13 +80,10 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 
 		int curveCnt = geo->GetCurveCount();
 		for (int i = 0; i < curveCnt; i++)
-		//for (auto lcl = geo->m_listCurveLink.begin(); lcl != geo->m_listCurveLink.end(); lcl++)
 		{
 			bDraw = false;
-			//SCurve* c = (*lcl);
 			auto c = geo->GetCurve(i);
 
-			//if (!(*lcl)->GetMasking())
 			if (!c->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
