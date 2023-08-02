@@ -1522,8 +1522,8 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 		for (auto itorParent = fe->m_mask.begin(); itorParent != fe->m_mask.end(); itorParent++)
 		{
 			F_MASK *maskParent = *itorParent;
-			auto mi = maskParent->m_arr.find(c->m_id);
-			if (mi != maskParent->m_arr.end())
+			auto mi = maskParent->GetMask(RecordName(120, c->GetRCID()));
+			if (mi)
 			{
 				c->SetMasking(true);
 			}
@@ -3506,22 +3506,21 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 				int i = 0;
 				for (auto f_mask : fe->m_mask)
 				{
-					for (auto mask : f_mask->m_arr)
+					for (auto mask : f_mask->listMask)
 					{
-						auto Key = (__int64)mask.second->m_name.GetName();
-						auto mission = mask.second->m_muin;
+						auto Key = (__int64)mask->m_name.GetName();
+						auto mission = mask->m_muin;
 
 						auto it = values->m_mask.begin();
 						std::advance(it, i);
 
 						if (1 == mission) //insert
 						{
-							(*it)->m_arr.insert({ Key, mask.second });
-
+							(*it)->AddMask(mask);
 						}
 						else //delete
 						{
-							(*it)->m_arr.erase(Key);
+							(*it)->DeleteMask(mask->m_name);
 						}
 					}
 				}

@@ -48,3 +48,13 @@ std::wstring RecordName::GetRCIDasWstring()
 {
 	return std::to_wstring(RCID);
 }
+
+bool RecordName::operator==(RecordName& item)
+{
+	if (item.RCNM == RCNM &&
+		item.RCID == RCID) {
+		return true;
+	}
+
+	return false;
+}

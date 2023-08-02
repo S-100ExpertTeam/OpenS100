@@ -10,11 +10,12 @@ public:
 	virtual ~SCurve();
 	
 public:
-	// RCNM(120) + RCID
-	__int64 m_id = 0;
 	int m_numPoints = 0;
 	SPoint* m_pPoints = nullptr;
 	ID2D1PathGeometry* pGeometry = nullptr;
+
+private:
+	int m_id = 0;
 
 public:
 	SGeometryType GetType() override;

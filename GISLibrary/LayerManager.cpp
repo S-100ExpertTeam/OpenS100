@@ -1399,7 +1399,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 			for (auto m = curListCurveLink.begin(); m != curListCurveLink.end(); m++)
 			{
 				auto curve = *m;
-				int id = curve->m_id & 0x0000FFFF;
+				int id = curve->GetRCID();
 
 				auto iterExist = lineSuppressionMap.find(id);
 

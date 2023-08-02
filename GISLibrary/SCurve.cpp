@@ -29,8 +29,7 @@ SGeometryType SCurve::GetType()
 
 int SCurve::GetRCID()
 {
-	int res = (int)m_id;
-	return res;
+	return m_id;
 }
 
 int SCurve::GetNumPoints()
@@ -239,7 +238,7 @@ void SCurve::SetMultiplicationFactor(int comfX, int comfY)
 
 void SCurve::SetRCID(int value)
 {
-	m_id = ((__int64)120) << 32 | value;
+	m_id = value;
 }
 
 bool SCurve::IsClosed()
