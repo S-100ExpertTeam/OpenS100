@@ -123,9 +123,9 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 						}
 					}
 				}
-				else if (fr->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+				else if (fr->m_geometry->GetType() == SGeometryType::Curve)
 				{
-					SCurveHasOrient* curve = (SCurveHasOrient*)fr->m_geometry;
+					SCurve* curve = (SCurve*)fr->m_geometry;
 
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)

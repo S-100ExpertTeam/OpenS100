@@ -34,7 +34,7 @@ class R_VectorRecord;
 class SCompositeCurve;
 class TiXmlElement;
 class OrientedCurveRecord;
-class SCurveHasOrient;
+class SCurve;
 class F_FASC;
 class F_INAS;
 class F_C2IL;

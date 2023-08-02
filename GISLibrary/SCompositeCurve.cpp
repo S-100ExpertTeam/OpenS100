@@ -54,7 +54,7 @@ bool SCompositeCurve::ImportFromWkb(unsigned char* value, int size)
 
 	if (type == (int)WKBGeometryType::wkbLineString)
 	{
-		auto curve = new SCurveHasOrient();
+		auto curve = new SCurve();
 		curve->ImportFromWkb(value, size);
 		AddCurve(curve);
 	}
@@ -67,7 +67,7 @@ bool SCompositeCurve::ImportFromWkb(unsigned char* value, int size)
 		int offset = 0;
 		for (int i = 0; i < numLineStrings; i++)
 		{
-			auto curve = new SCurveHasOrient();
+			auto curve = new SCurve();
 			curve->ImportFromWkb(value + 9 + offset, size - 9 - offset);
 			offset += curve->WkbSize();
 			AddCurve(curve);
@@ -164,7 +164,7 @@ int SCompositeCurve::WkbSizeMultiLineString()
 	return size;
 }
 
-void SCompositeCurve::AddCurve(SCurveHasOrient* curve)
+void SCompositeCurve::AddCurve(SCurve* curve)
 {
 	m_listCurveLink.push_back(curve);
 }
@@ -257,7 +257,7 @@ int SCompositeCurve::GetCurveCount()
 	return m_listCurveLink.size();
 }
 
-SCurveHasOrient* SCompositeCurve::GetCurve(int index)
+SCurve* SCompositeCurve::GetCurve(int index)
 {
 	if (index >= 0 && index < GetCurveCount())
 	{
@@ -269,7 +269,7 @@ SCurveHasOrient* SCompositeCurve::GetCurve(int index)
 	return nullptr;
 }
 
-std::list<SCurveHasOrient*> SCompositeCurve::GetCurveList()
+std::list<SCurve*> SCompositeCurve::GetCurveList()
 {
 	return m_listCurveLink;
 }

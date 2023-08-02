@@ -19,7 +19,7 @@
 #include "../GISLibrary/GM_Surface.h"
 #include "../GISLibrary/SPoint.h"
 #include "../GISLibrary/SMultiPoint.h"
-#include "../GISLibrary/SCurveHasOrient.h"
+#include "../GISLibrary/SCurve.h"
 #include "../GISLibrary/SCompositeCurve.h"
 #include "../GISLibrary/SSurface.h"
 
@@ -151,7 +151,7 @@ public:
 	void SetVector(SMultiPoint* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 
 	void SetVector(GM::Curve* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
-	void SetVector(SCurveHasOrient* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);
+	void SetVector(SCurve* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 
 	void SetVector(GM::CompositeCurve* r, CMFCPropertyGridProperty* pSuperProperty = nullptr);
 	void SetVector(SCompositeCurve* geom, CMFCPropertyGridProperty* pSuperProperty = nullptr);

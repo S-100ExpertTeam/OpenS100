@@ -54,7 +54,7 @@
 #include "SSurface.h"
 #include "SCommonFuction.h"
 #include "SCurve.h"
-#include "SCurveHasOrient.h"
+#include "SCurve.h"
 #include "SGeometricFuc.h"
 #include "GML_Envelop.h"
 #include "S10XGML.h"
@@ -782,7 +782,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 			{
 				if (m_curMap.Lookup(iKey, cr))
 				{
-					auto sc = new SCurveHasOrient();
+					auto sc = new SCurve();
 					fe->m_geometry = sc;
 					sc->SetID(cr->GetRCID());
 					GetFullSpatialData(cr, sc, spas->m_ornt);
@@ -856,7 +856,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							R_CurveRecord *cr = nullptr;
 							if (m_curMap.Lookup(iKey, cr))
 							{
-								SCurveHasOrient* sCurve = new SCurveHasOrient();
+								SCurve* sCurve = new SCurve();
 								sCurve->SetID(cr->GetRCID());
 								GetFullSpatialData(cr, sCurve, rias->m_ornt);
 								GetFullSpatialData(cr, vecPoint, rias->m_ornt);
@@ -1261,7 +1261,7 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 			
 			if (m_curMap.Lookup(iKey, cr))
 			{
-				SCurveHasOrient* scurve = new SCurveHasOrient();
+				SCurve* scurve = new SCurve();
 				scurve->SetID(cuco->m_name.RCID);
 				int localORNT = cuco->m_ornt;
 				
@@ -1489,7 +1489,7 @@ BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int orn
 
 BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 {
-	std::list<SCurveHasOrient*> listCurveLink;
+	std::list<SCurve*> listCurveLink;
 
 	if (fe->m_geometry == nullptr)
 	{
@@ -1506,9 +1506,9 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 		SSurface* geo = (SSurface*)fe->m_geometry;
 		listCurveLink = geo->GetCurveList();
 	}
-	else if (fe->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+	else if (fe->m_geometry->GetType() == SGeometryType::Curve)
 	{
-		listCurveLink.push_back((SCurveHasOrient*)fe->m_geometry);
+		listCurveLink.push_back((SCurve*)fe->m_geometry);
 	}
 	else
 	{
@@ -3778,9 +3778,9 @@ void S101Cell::InitCurveSuppression()
 				curve->SetSuppress(false);
 			}
 		}
-		else if (feature->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+		else if (feature->m_geometry->GetType() == SGeometryType::Curve)
 		{
-			auto curve = (SCurveHasOrient*)feature->m_geometry;
+			auto curve = (SCurve*)feature->m_geometry;
 			curve->SetSuppress(false);
 		}
 	}

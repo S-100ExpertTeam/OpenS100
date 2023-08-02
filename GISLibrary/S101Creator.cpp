@@ -510,7 +510,7 @@ SGeometry* S101Creator::SetGeometry(R_FeatureRecord* feature, SGeometryType type
 	{
 		return SetMultiPointGeometry(feature, value, size);
 	}
-	else if (type == SGeometryType::CurveHasOrient)
+	else if (type == SGeometryType::Curve)
 	{
 		return SetCurveGeometry(feature, value, size);
 	}
@@ -558,18 +558,18 @@ SGeometry* S101Creator::SetCurveGeometry(R_FeatureRecord* feature, unsigned char
 {
 	if (feature->m_geometry == nullptr)
 	{
-		feature->m_geometry = new SCurveHasOrient();
+		feature->m_geometry = new SCurve();
 	}
 
 	feature->m_geometry->ImportFromWkb(value, size);
 
-	auto geometry = (SCurveHasOrient*)feature->m_geometry;
+	auto geometry = (SCurve*)feature->m_geometry;
 
 	auto vectorRecord = ConvertInsertVectorRecord(geometry);
 
 	feature->SetVectorRecord(vectorRecord);
 
-	((SCurveHasOrient*)feature->m_geometry)->SetRCID(vectorRecord->GetRCID());
+	((SCurve*)feature->m_geometry)->SetRCID(vectorRecord->GetRCID());
 
 	return feature->m_geometry;
 }
@@ -864,7 +864,7 @@ R_MultiPointRecord* S101Creator::ConvertInsertVectorRecord(SMultiPoint* geom)
 	return vectorRecord;
 }
 
-R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurveHasOrient* geom)
+R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurve* geom)
 {
 	auto vectorRecord = new R_CurveRecord();
 

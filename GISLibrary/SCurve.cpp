@@ -323,3 +323,33 @@ std::string SCurve::ToString()
 
 	return ss.str();
 }
+
+void SCurve::SetMasking(bool value)
+{
+	m_masking = value;
+}
+
+bool SCurve::GetMasking()
+{
+	return m_masking;
+}
+
+void SCurve::SetSuppress(bool value)
+{
+	suppress = value;
+}
+
+bool SCurve::GetSuppress()
+{
+	return suppress;
+}
+
+bool SCurve::isDraw()
+{
+	if (GetSuppress() == false &&
+		GetMasking() == false) {
+		return true;
+	}
+
+	return false;
+}

@@ -46,7 +46,7 @@ public:
 	std::wstring GetLineStyleName();
 
 	void DrawInstruction(
-		SCurveHasOrient* curveHasOrient,
+		SCurve* curveHasOrient,
 		ID2D1DCRenderTarget* rt,
 		ID2D1Factory1* pDirect2dFactory,
 		ID2D1SolidColorBrush* brush,

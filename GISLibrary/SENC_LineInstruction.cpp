@@ -6,7 +6,7 @@
 #include "SENC_SpatialReference.h"
 #include "PCOutputSchemaManager.h"
 #include "SCommonFuction.h"
-#include "SCurveHasOrient.h"
+#include "SCurve.h"
 
 #include "../GISLibrary/R_FeatureRecord.h"
 
@@ -62,7 +62,7 @@ bool SENC_LineInstruction::GetSuppression()
 #pragma warning(disable:4838)
 void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* pDirect2dFactory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
-	std::list<SCurveHasOrient*> curListCurveLink;
+	std::list<SCurve*> curListCurveLink;
 
 	// Surface
 	if (fr->m_geometry->GetType() == SGeometryType::Surface)
@@ -79,9 +79,9 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		curListCurveLink = compositeCurve->GetCurveList();
 	}
 	// Curve
-	else if (fr->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+	else if (fr->m_geometry->GetType() == SGeometryType::Curve)
 	{
-		auto curve = (SCurveHasOrient*)fr->m_geometry;
+		auto curve = (SCurve*)fr->m_geometry;
 		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
 		{
 			SENC_LineStyleBase* lineStyleBase = *itor;

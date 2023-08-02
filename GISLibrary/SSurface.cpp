@@ -331,7 +331,7 @@ ID2D1PathGeometry* SSurface::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* sc
 	return nullptr;
 }
 
-void SSurface::AddCurve(SCurveHasOrient* curve)
+void SSurface::AddCurve(SCurve* curve)
 {
 	curveList.push_back(curve);
 }
@@ -450,7 +450,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int size)
 
 		m_pParts[i] = localPointArray.size();
 
-		auto curve = new SCurveHasOrient();
+		auto curve = new SCurve();
 		curve->Init(numPointPerPart);
 		curveList.push_back(curve);
 
@@ -588,7 +588,7 @@ int SSurface::GetRingCount()
 	return curveList.size();
 }
 
-SCurveHasOrient* SSurface::GetRing(int index)
+SCurve* SSurface::GetRing(int index)
 {
 	if (index >= 0 && index < GetRingCount())
 	{
@@ -600,7 +600,7 @@ SCurveHasOrient* SSurface::GetRing(int index)
 	return nullptr;
 }
 
-std::list<SCurveHasOrient*> SSurface::GetCurveList()
+std::list<SCurve*> SSurface::GetCurveList()
 {
 	return curveList;
 }

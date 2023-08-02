@@ -8,6 +8,5 @@ enum class SGeometryType
 	Surface,
 	MultiPoint,
 	Curve,
-	Coverage,
-	CurveHasOrient
+	Coverage
 };

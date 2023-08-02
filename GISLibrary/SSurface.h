@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SGeometry.h"
-#include "SCurveHasOrient.h"
+#include "SCurve.h"
 
 class Scaler;
 class GeoPoint;
@@ -30,7 +30,7 @@ public:
 
 private:
 	// All curves that make up the Surface
-	std::list<SCurveHasOrient*> curveList;
+	std::list<SCurve*> curveList;
 
 public:
 	SGeometryType GetType() override;
@@ -49,7 +49,7 @@ public:
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
 
-	void AddCurve(SCurveHasOrient* curve);
+	void AddCurve(SCurve* curve);
 	void AddCompositeCurve(SCompositeCurve* compositeCurve);
 	
 	void Init();
@@ -70,7 +70,7 @@ public:
 	double GetY() override;
 
 	int GetRingCount();
-	SCurveHasOrient* GetRing(int index);
+	SCurve* GetRing(int index);
 
-	std::list<SCurveHasOrient*> GetCurveList();
+	std::list<SCurve*> GetCurveList();
 };

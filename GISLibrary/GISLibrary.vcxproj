@@ -378,7 +378,6 @@
     <ClCompile Include="SCompositeCurve.cpp" />
     <ClCompile Include="SCoverage.cpp" />
     <ClCompile Include="SCurve.cpp" />
-    <ClCompile Include="SCurveHasOrient.cpp" />
     <ClCompile Include="SENC_AlertReference.cpp" />
     <ClCompile Include="SENC_Annulus.cpp" />
     <ClCompile Include="SENC_Arc3Points.cpp" />
@@ -621,7 +620,6 @@
     <ClInclude Include="SCompositeCurve.h" />
     <ClInclude Include="SCoverage.h" />
     <ClInclude Include="SCurve.h" />
-    <ClInclude Include="SCurveHasOrient.h" />
     <ClInclude Include="SENC_AlertReference.h" />
     <ClInclude Include="SENC_Annulus.h" />
     <ClInclude Include="SENC_Arc3Points.h" />

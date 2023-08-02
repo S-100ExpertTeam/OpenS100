@@ -8,7 +8,7 @@
 
 #include "SPoint.h"
 #include "SMultiPoint.h"
-#include "SCurveHasOrient.h"
+#include "SCurve.h"
 #include "SCompositeCurve.h"
 #include "SSurface.h"
 
@@ -63,7 +63,7 @@ void S100EditRender::ShowPoint()
 		}
 		else if (120 == rcnm)
 		{
-			auto curve = (SCurveHasOrient*)feature->m_geometry;
+			auto curve = (SCurve*)feature->m_geometry;
 			ShowPoint(curve);
 		}
 		else if (125 == rcnm)
@@ -161,7 +161,7 @@ void S100EditRender::ShowPoint(SMultiPoint* geom)
 	}
 }
 
-void S100EditRender::ShowPoint(SCurveHasOrient* geom)
+void S100EditRender::ShowPoint(SCurve* geom)
 {
 	if (gisLib->D2.pRT && geom)
 	{
@@ -355,7 +355,7 @@ void S100EditRender::SelectByScreen(int sx, int sy)
 		}
 		else if (120 == rcnm)
 		{
-			auto curve = (SCurveHasOrient*)feature->m_geometry;
+			auto curve = (SCurve*)feature->m_geometry;
 			SelectByScreen(sx, sy, curve);
 		}
 		else if (125 == rcnm)
@@ -419,7 +419,7 @@ void S100EditRender::SelectByScreen(int sx, int sy, SMultiPoint* geom)
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, SCurveHasOrient* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, SCurve* geom)
 {
 	if (geom)
 	{
@@ -577,7 +577,7 @@ void S100EditRender::UpdatePoint(int sx, int sy)
 		}
 		else if (120 == rcnm)
 		{
-			auto curve = (SCurveHasOrient*)feature->m_geometry;
+			auto curve = (SCurve*)feature->m_geometry;
 			UpdatePoint(sx, sy, curve);
 			feature->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
 		}
@@ -654,7 +654,7 @@ void S100EditRender::UpdatePoint(int sx, int sy, SMultiPoint* geom)
 	}
 }
 
-void S100EditRender::UpdatePoint(int sx, int sy, SCurveHasOrient* geom)
+void S100EditRender::UpdatePoint(int sx, int sy, SCurve* geom)
 {
 	if (geom)
 	{

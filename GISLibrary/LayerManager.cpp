@@ -1308,7 +1308,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 
 			auto featureRecord = lineInstruction->fr;
 
-			std::list<SCurveHasOrient*> curListCurveLink;
+			std::list<SCurve*> curListCurveLink;
 
 			if (lineInstruction->spatialReference.size() > 0)
 			{
@@ -1353,9 +1353,9 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						}
 					}
 				}
-				else if (featureRecord->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+				else if (featureRecord->m_geometry->GetType() == SGeometryType::Curve)
 				{
-					auto curveHasOrient = (SCurveHasOrient*)featureRecord->m_geometry;
+					auto curveHasOrient = (SCurve*)featureRecord->m_geometry;
 
 					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
 					{
@@ -1391,9 +1391,9 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 					curListCurveLink.push_back(c);
 				}
 			}
-			else if (featureRecord->m_geometry->GetType() == SGeometryType::CurveHasOrient)
+			else if (featureRecord->m_geometry->GetType() == SGeometryType::Curve)
 			{
-				curListCurveLink.push_back(((SCurveHasOrient*)featureRecord->m_geometry));
+				curListCurveLink.push_back(((SCurve*)featureRecord->m_geometry));
 			}
 
 			for (auto m = curListCurveLink.begin(); m != curListCurveLink.end(); m++)

@@ -21,7 +21,7 @@
 #include "../GISLibrary/GM_Polygon.h"
 #include "../GISLibrary/SPoint.h"
 #include "../GISLibrary/SMultiPoint.h"
-#include "../GISLibrary/SCurveHasOrient.h"
+#include "../GISLibrary/SCurve.h"
 #include "../GISLibrary/SCompositeCurve.h"
 #include "../GISLibrary/SSurface.h"
 
@@ -322,9 +322,9 @@ void CDockablePaneEditWindow::SetVector(SGeometry* geom, CMFCPropertyGridPropert
 	{
 		SetVector((SMultiPoint*)geom, pSuperProperty);
 	}
-	else if (type == SGeometryType::CurveHasOrient)
+	else if (type == SGeometryType::Curve)
 	{
-		SetVector((SCurveHasOrient*)geom, pSuperProperty);
+		SetVector((SCurve*)geom, pSuperProperty);
 	}
 	else if (type == SGeometryType::CompositeCurve)
 	{
@@ -738,7 +738,7 @@ void CDockablePaneEditWindow::SetVector(GM::Curve* r, CMFCPropertyGridProperty* 
 	SetVector(&r->boundary.endPoint, pProperty);
 }
 
-void CDockablePaneEditWindow::SetVector(SCurveHasOrient* geom, CMFCPropertyGridProperty* pSuperProperty)
+void CDockablePaneEditWindow::SetVector(SCurve* geom, CMFCPropertyGridProperty* pSuperProperty)
 {
 	int infoCount = geom->GetInformationTypeCount();
 	CString count;
@@ -914,7 +914,7 @@ void CDockablePaneEditWindow::SetVector(SCompositeCurve* geom, CMFCPropertyGridP
 	for (int i = 0; i < geom->GetCurveCount(); i++)
 	{
 		auto ring = geom->GetCurve(i);
-		if (ring->GetType() == SGeometryType::CurveHasOrient)
+		if (ring->GetType() == SGeometryType::Curve)
 		{
 			SetVector(ring, pProperty);
 		}
@@ -1027,7 +1027,7 @@ void CDockablePaneEditWindow::SetVector(SSurface* geom, CMFCPropertyGridProperty
 	for (int i = 0; i < geom->GetRingCount(); i++)
 	{
 		auto ring = geom->GetRing(i);
-		if (ring->GetType() == SGeometryType::CurveHasOrient)
+		if (ring->GetType() == SGeometryType::Curve)
 		{
 			SetVector(ring, pProperty);
 		}

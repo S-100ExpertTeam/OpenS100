@@ -14,6 +14,9 @@ public:
 	SPoint* m_pPoints = nullptr;
 	ID2D1PathGeometry* pGeometry = nullptr;
 
+	bool m_masking = false;
+	bool suppress = false;
+
 private:
 	int m_id = 0;
 
@@ -50,4 +53,12 @@ public:
 	SPoint* GetLastPoint();
 
 	std::string ToString() override;
+
+	void SetMasking(bool value);
+	bool GetMasking();
+
+	void SetSuppress(bool value);
+	bool GetSuppress();
+
+	bool isDraw();
 };
