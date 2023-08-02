@@ -692,7 +692,6 @@ bool FeatureCatalogue::Read(std::wstring path)
 	if (rootNode != nullptr)
 	{
 		GetContents(rootNode);
-		// FC (FileName) Loading complete
 		return true;
 	}
 
