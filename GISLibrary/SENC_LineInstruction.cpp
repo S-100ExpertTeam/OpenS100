@@ -86,12 +86,11 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		{
 			SENC_LineStyleBase* lineStyleBase = *itor;
 
-			if (curve->GetMasking() || curve->GetSuppress())
+			if (curve->isDraw())
 			{
-				break;
+				lineStyleBase->DrawInstruction(curve, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
 			}
-
-			lineStyleBase->DrawInstruction(curve, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+			
 		}
 		return;
 	}
@@ -107,18 +106,15 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		{
 			auto curve = (*i);
 
-			if (curve->GetMasking() || curve->GetSuppress())
+			if (curve->isDraw())
 			{
-				continue;
-			}
-
-			for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
-			{
-				SENC_LineStyleBase* lineStyleBase = *itor;
-				lineStyleBase->DrawInstruction(*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+				for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+				{
+					SENC_LineStyleBase* lineStyleBase = *itor;
+					lineStyleBase->DrawInstruction(*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+				}
 			}
 		}
-		return;
 	}
 
 	for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
@@ -127,15 +123,13 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		{
 			if ((*i)->reference == (*j)->GetRCID())
 			{
-				if ((*j)->GetMasking() || (*j)->GetSuppress())
+				if ((*j)->isDraw())
 				{
-					continue;
-				}
-
-				for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
-				{
-					SENC_LineStyleBase* lineStyleBase = *itor;
-					lineStyleBase->DrawInstruction(*j, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+					for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+					{
+						SENC_LineStyleBase* lineStyleBase = *itor;
+						lineStyleBase->DrawInstruction(*j, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
+					}
 				}
 				break;
 			}

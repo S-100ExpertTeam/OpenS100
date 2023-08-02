@@ -20,4 +20,6 @@ public:
 
 	void SetSuppress(bool value);
 	bool GetSuppress();
+
+	bool isDraw();
 };

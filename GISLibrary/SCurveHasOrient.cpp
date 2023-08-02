@@ -34,3 +34,13 @@ bool SCurveHasOrient::GetSuppress()
 {
 	return suppress;
 }
+
+bool SCurveHasOrient::isDraw()
+{
+	if (GetSuppress() == false &&
+		GetMasking() == false) {
+		return true;
+	}
+
+	return false;
+}
