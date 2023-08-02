@@ -15,11 +15,6 @@
 class PCOutputSchemaManager;
 class S100Layer;
 
-namespace S100Interface
-{
-	class FeatureType;
-}
-
 class S100SpatialObject : public SpatialObject
 {
 public:
