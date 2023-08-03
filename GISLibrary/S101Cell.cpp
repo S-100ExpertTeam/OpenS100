@@ -1499,12 +1499,14 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 	if (fe->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fe->m_geometry;
-		listCurveLink = geo->GetCurveList();
+		//listCurveLink = geo->GetCurveList();
+		geo->GetCurveList(listCurveLink);
 	}
 	else if (fe->m_geometry->GetType() == SGeometryType::Surface)
 	{
 		SSurface* geo = (SSurface*)fe->m_geometry;
-		listCurveLink = geo->GetCurveList();
+		//listCurveLink = geo->GetCurveList();
+		geo->GetCurveList(listCurveLink);
 	}
 	else if (fe->m_geometry->GetType() == SGeometryType::Curve)
 	{
@@ -3589,10 +3591,12 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 					for (int j = 0; j < curveCnt; j++)
 					{
 						auto curve = geo->GetCurve(j);
-						auto rcid = curve->GetRCID();
+						//auto rcid = curve->GetRCID();
+						auto rcid = curve->GetIDAsInt();
 						if (rcid == sr->reference)
 						{
-							int numPoints = curve->GetNumPoints();
+							//int numPoints = curve->GetNumPoints();
+							int numPoints = curve->getNumPoint();
 
 							POINT* screenPoints = new POINT[numPoints];
 
@@ -3626,10 +3630,12 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 					for (int j = 0; j < geo->GetRingCount(); j++)
 					{
 						auto curve = geo->GetRing(j);
-						auto rcid = curve->GetRCID();
+						//auto rcid = curve->GetRCID();
+						auto rcid = curve->GetIDAsInt();
 						if (rcid == sr->reference)
 						{
-							int numPoints = curve->GetNumPoints();
+							//int numPoints = curve->GetNumPoints();
+							int numPoints = curve->getNumPoint();
 							POINT* screenPoints = new POINT[numPoints];
 
 							for (int k = 0; k < numPoints; k++)
@@ -3676,12 +3682,17 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 	else if (instruction->fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)instruction->fr->m_geometry;
+		std::list<SCurve*> curveList;
+		geo->GetCurveList(curveList);
 
-		int curveCnt = geo->GetCurveCount();
-		for (int i = 0; i < curveCnt; i++)
+		//int curveCnt = geo->GetCurveCount();
+		//for (int i = 0; i < curveCnt; i++)
+		//for (int i = 0; i < curveList.size(); i++)
+		for (auto i = curveList.begin(); i != curveList.end(); i++)
 		{
 			bDraw = false;
-			auto c = geo->GetCurve(i);
+			//auto c = geo->GetCurve(i);
+			auto c = (*i);
 
 			if (!c->GetMasking())
 			{
@@ -3761,22 +3772,24 @@ void S101Cell::InitCurveSuppression()
 		if (feature->m_geometry->GetType() == SGeometryType::CompositeCurve)
 		{
 			auto compositeCurve = (SCompositeCurve*)feature->m_geometry;
+			compositeCurve->setSuppress(false);
 
-			int curveCnt = compositeCurve->GetCurveCount();
-			for (int j = 0; j < curveCnt; j++)
-			{
-				auto c = compositeCurve->GetCurve(j);
-				c->SetSuppress(false);
-			}
+			//int curveCnt = compositeCurve->GetCurveCount();
+			//for (int j = 0; j < curveCnt; j++)
+			//{
+			//	auto c = compositeCurve->GetCurve(j);
+			//	c->SetSuppress(false);
+			//}
 		}
 		else if (feature->m_geometry->GetType() == SGeometryType::Surface)
 		{
 			auto surface = (SSurface*)feature->m_geometry;
-			for (int j = 0; j < surface->GetRingCount(); j++)
-			{
-				auto curve = surface->GetRing(j);
-				curve->SetSuppress(false);
-			}
+			surface->setSuppress(false);
+			//for (int j = 0; j < surface->GetRingCount(); j++)
+			//{
+			//	auto curve = surface->GetRing(j);
+			//	curve->SetSuppress(false);
+			//}
 		}
 		else if (feature->m_geometry->GetType() == SGeometryType::Curve)
 		{

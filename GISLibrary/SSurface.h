@@ -73,4 +73,10 @@ public:
 	SAbstractCurve* GetRing(int index);
 
 	std::list<SAbstractCurve*> GetCurveList();
+
+	SCurve* GetCurve(int rcid);
+
+	void GetCurveList(std::list<SCurve*>& list);
+
+	void setSuppress(bool value);
 };

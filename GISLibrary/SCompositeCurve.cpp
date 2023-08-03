@@ -295,3 +295,48 @@ std::list<SAbstractCurve*> SCompositeCurve::GetCurveList()
 {
 	return m_listCurveLink;
 }
+
+SCurve* SCompositeCurve::GetCurveByRCID(int rcid)
+{
+	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++) {
+		if ((*i)->GetType() == SGeometryType::Curve) {
+			if ((*i)->GetIDAsInt() == rcid) {
+				auto curve = (SCurve*)(*i);
+				return curve;
+			}
+		}
+		else if ((*i)->GetType() == SGeometryType::CompositeCurve) {
+			auto compositeCurve = (SCompositeCurve*)(*i);
+			return compositeCurve->GetCurveByRCID(rcid);
+		}
+	}
+
+	return nullptr;
+}
+
+void SCompositeCurve::GetCurveList(std::list<SCurve*>& list)
+{
+	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++) {
+		if ((*i)->GetType() == SGeometryType::Curve) {
+			list.push_back((SCurve*)(*i));
+		}
+		else if ((*i)->GetType() == SGeometryType::CompositeCurve) {
+			auto compositeCurve = (SCompositeCurve*)(*i);
+			compositeCurve->GetCurveList(list);
+		}
+	}
+}
+
+void SCompositeCurve::setSuppress(bool value)
+{
+	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++) {
+		if ((*i)->GetType() == SGeometryType::Curve) {
+			auto curve = (SCurve*)(*i);
+			curve->SetSuppress(value);
+		}
+		else if ((*i)->GetType() == SGeometryType::CompositeCurve) {
+			auto compositeCurve = (SCompositeCurve*)(*i);
+			compositeCurve->setSuppress(value);
+		}
+	}
+}

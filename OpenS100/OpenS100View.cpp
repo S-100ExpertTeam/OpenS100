@@ -1107,17 +1107,17 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		for (int i = 0; i < curveCnt; i++)
 		{
 			auto c = cc->GetCurve(i);
-			Gdiplus::Point* pickPoints = new Gdiplus::Point[c->m_numPoints];
+			Gdiplus::Point* pickPoints = new Gdiplus::Point[c->getNumPoint()];
 
 			int pickNumPoints = 0;
 
-			pickNumPoints = c->GetNumPoints();
+			pickNumPoints = c->getNumPoint();
 
 			for (auto i = 0; i < pickNumPoints; i++)
 			{
-				pickPoints[i].X = (INT)c->m_pPoints[i].x;
-				pickPoints[i].Y = (INT)c->m_pPoints[i].y;
-				theApp.gisLib->WorldToDevice(c->m_pPoints[i].x, c->m_pPoints[i].y,
+				pickPoints[i].X = (INT)c->GetX(i);
+				pickPoints[i].Y = (INT)c->GetY(i);
+				theApp.gisLib->WorldToDevice(c->GetX(i), c->GetY(i),
 					(long*)(&pickPoints[i].X), (long*)(&pickPoints[i].Y));
 
 				pickPoints[i].X += offsetX;

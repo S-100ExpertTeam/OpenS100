@@ -29,7 +29,7 @@ SGeometryType SCurve::GetType()
 
 int SCurve::GetRCID()
 {
-	return m_id;
+	return std::stoi(GetID());
 }
 
 int SCurve::GetNumPoints()
@@ -203,7 +203,7 @@ void SCurve::Init(int size)
 {
 	SafeRelease(&pGeometry);
 
-	m_id = 0;
+	SetID(0);
 
 	delete[] m_pPoints;
 	m_pPoints = new SPoint[size];
@@ -244,7 +244,7 @@ void SCurve::SetMultiplicationFactor(int comfX, int comfY)
 
 void SCurve::SetRCID(int value)
 {
-	m_id = value;
+	SetID(value);
 }
 
 bool SCurve::IsClosed()

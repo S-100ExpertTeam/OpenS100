@@ -68,15 +68,15 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 	if (fr->m_geometry->GetType() == SGeometryType::Surface)
 	{
 		auto surface = (SSurface*)fr->m_geometry;
-
-		curListCurveLink = surface->GetCurveList();
+		surface->GetCurveList(curListCurveLink);
+		//curListCurveLink = surface->GetCurveList();
 	}
 	// Composite Curve
 	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
-
-		curListCurveLink = compositeCurve->GetCurveList();
+		compositeCurve->GetCurveList(curListCurveLink);
+		//curListCurveLink = compositeCurve->GetCurveList();
 	}
 	// Curve
 	else if (fr->m_geometry->GetType() == SGeometryType::Curve)

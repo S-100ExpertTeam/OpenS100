@@ -18,7 +18,7 @@ public:
 	bool suppress = false;
 
 private:
-	int m_id = 0;
+	//int m_id = 0;
 
 public:
 	SGeometryType GetType() override;

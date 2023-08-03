@@ -51,4 +51,9 @@ public:
 	SAbstractCurve* GetCurve(int index);
 
 	std::list<SAbstractCurve*> GetCurveList();
+
+	SCurve* GetCurveByRCID(int rcid);
+
+	void GetCurveList(std::list<SCurve*>& list);
+	void setSuppress(bool value);
 };

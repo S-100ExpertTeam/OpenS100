@@ -31,6 +31,11 @@ std::wstring Geometry::GetIDAsWString()
 	return LibMFCUtil::StringToWString(GetID());
 }
 
+int Geometry::GetIDAsInt()
+{
+	return std::stoi(GetID());
+}
+
 void Geometry::SetID(std::string value)
 {
 	this->id = value;

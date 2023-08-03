@@ -89,14 +89,19 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 				{
 					SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
 
-					int curveCnt = geo->GetCurveCount();
-					for (int j = 0; j < curveCnt; j++)
+					std::list<SCurve*> curveList;
+					geo->GetCurveList(curveList);
+
+					//int curveCnt = geo->GetCurveCount();
+					//for (int j = 0; j < curveCnt; j++)
+					for (auto j = curveList.begin(); j != curveList.end(); j++)
 					{
-						auto curve = geo->GetCurve(j);
-						auto rcid = curve->GetRCID();
+						//auto curve = geo->GetCurve(j);
+						auto curve = (*j);
+						auto rcid = curve->GetIDAsInt();
 						if (rcid == sr->reference)
 						{
-							int numPoints = curve->GetNumPoints();
+							int numPoints = curve->getNumPoint();
 
 							POINT* screenPoints = new POINT[numPoints];
 
@@ -160,9 +165,14 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 				{
 					SSurface* geo = (SSurface*)fr->m_geometry;
 
-					for (int j = 0; j < geo->GetRingCount(); j++)
+					std::list<SCurve*> curveList;
+					geo->GetCurveList(curveList);
+
+					//for (int j = 0; j < geo->GetRingCount(); j++)
+					for (auto j = curveList.begin(); j != curveList.end(); j++)
 					{
-						auto curve = geo->GetRing(j);
+						auto curve = (*j);
+						//auto curve = geo->GetRing(j);
 						auto rcid = curve->GetRCID();
 						if (rcid == sr->reference)
 						{
@@ -213,13 +223,16 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
+		std::list<SCurve*> curveList;
+		geo->GetCurveList(curveList);
 
-		int curveCnt = geo->GetCurveCount();
-		for (int i = 0; i < curveCnt; i++)
+		//int curveCnt = geo->GetCurveCount();
+		//for (int i = 0; i < curveCnt; i++)
+		for (auto i = curveList.begin(); i != curveList.end(); i++)
 		{
 			bDraw = false;
-			auto c = geo->GetCurve(i);
-			
+			//auto c = geo->GetCurve(i);
+			auto c = (*i);
 			if (!c->GetMasking())
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
@@ -373,14 +386,16 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 				fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 			{
 				SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
-
-				int curveCnt = geo->GetCurveCount();
+				std::list<SCurve*> curveList;
+				geo->GetCurveList(curveList);
+				//int curveCnt = geo->GetCurveCount();
 				//for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
-				for (int j = 0; j < curveCnt; j++)
+				//for (int j = 0; j < curveCnt; j++)
+				for (auto j = curveList.begin(); j != curveList.end(); j++)
 				{
 					//auto curve = j->GetCurve();
-					//auto curve = *j;
-					auto curve = geo->GetCurve(j);
+					auto curve = *j;
+					//auto curve = geo->GetCurve(j);
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -415,10 +430,14 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 				fr->m_geometry->GetType() == SGeometryType::Surface)
 			{
 				SSurface* geo = (SSurface*)fr->m_geometry;
+				std::list<SCurve*> curveList;
+				geo->GetCurveList(curveList);
 
-				for (int j = 0; j < geo->GetRingCount(); j++)			
+				//for (int j = 0; j < geo->GetRingCount(); j++)			
+				for (auto j = curveList.begin(); j != curveList.end(); j++)
 				{
-					auto curve = geo->GetRing(j);
+					//auto curve = geo->GetRing(j);
+					auto curve = (*j);
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -465,12 +484,16 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
+		std::list<SCurve*> curveList;
+		geo->GetCurveList(curveList);
 
-		int curveCnt = geo->GetCurveCount();
-		for (int i = 0; i < curveCnt; i++)
+		//int curveCnt = geo->GetCurveCount();
+		//for (int i = 0; i < curveCnt; i++)
+		for (auto i = curveList.begin(); i != curveList.end(); i++)
 		{
 			bDraw = false;
-			auto c = geo->GetCurve(i);
+			//auto c = geo->GetCurve(i);
+			auto c = (*i);
 			
 			if (!c->GetMasking())
 			{

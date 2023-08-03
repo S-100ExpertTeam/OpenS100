@@ -962,14 +962,30 @@ R_CompositeRecord* S101Creator::ConvertInsertVectorRecord(SCompositeCurve* geom)
 	{
 		auto c = geom->GetCurve(i);
 		//auto curveRecord = ConvertInsertVectorRecord(*i);
-		auto curveRecord = ConvertInsertVectorRecord(c);
-		auto cuco = new CUCO();
-		cuco->m_name = curveRecord->GetRecordName();
-		cuco->m_ornt = 1;
-		f_CUCO->m_arr.push_back(cuco);
+
+		if (c->GetType() == SGeometryType::Curve) {
+			auto curve = (SCurve*)c;
+			auto curveRecord = ConvertInsertVectorRecord(curve);
+			auto cuco = new CUCO();
+			cuco->m_name = curveRecord->GetRecordName();
+			cuco->m_ornt = 1;
+			f_CUCO->m_arr.push_back(cuco);
+			curve->SetID(curveRecord->GetRCID());
+		}
+		else if (c->GetType() == SGeometryType::CompositeCurve) {
+			auto compositeCurve = (SCompositeCurve*)c;
+			auto curveRecord = ConvertInsertVectorRecord(compositeCurve);
+			auto cuco = new CUCO();
+			cuco->m_name = curveRecord->GetRecordName();
+			cuco->m_ornt = 1;
+			f_CUCO->m_arr.push_back(cuco);
+			compositeCurve->SetID(curveRecord->GetRCID());
+		}
+
+
 
 		//(*i)->SetRCID(curveRecord->GetRCID());
-		c->SetRCID(curveRecord->GetRCID());
+		//c->SetRCID(curveRecord->GetRCID());
 	}
 	vectorRecord->m_cuco.push_back(f_CUCO);
 
@@ -989,25 +1005,50 @@ R_SurfaceRecord* S101Creator::ConvertInsertVectorRecord(SSurface* geom)
 
 	for (int i = 0; i < geom->GetRingCount(); i++)
 	{
-		auto curve = geom->GetRing(i);
-		auto curveRecord = ConvertInsertVectorRecord(curve);
-		
-		auto rias = new RIAS();
-		rias->m_name = curveRecord->GetRecordName();
-		rias->m_ornt = 1;
+		auto ring = geom->GetRing(i);
 
-		if (i == 0)
-		{
-			rias->m_usag = 1;
-		}
-		else
-		{
-			rias->m_usag = 2;
-		}
-		
-		rias->m_raui = 1;
+		if (ring->GetType() == SGeometryType::Curve) {
+			auto curve = (SCurve*)ring;
+			auto curveRecord = ConvertInsertVectorRecord(curve);
 
-		f_RIAS->m_arr.push_back(rias);
+			auto rias = new RIAS();
+			rias->m_name = curveRecord->GetRecordName();
+			rias->m_ornt = 1;
+
+			if (i == 0)
+			{
+				rias->m_usag = 1;
+			}
+			else
+			{
+				rias->m_usag = 2;
+			}
+
+			rias->m_raui = 1;
+
+			f_RIAS->m_arr.push_back(rias);
+		}
+		else if (ring->GetType() == SGeometryType::CompositeCurve) {
+			auto compositeCurve = (SCompositeCurve*)ring;
+			auto curveRecord = ConvertInsertVectorRecord(compositeCurve);
+
+			auto rias = new RIAS();
+			rias->m_name = curveRecord->GetRecordName();
+			rias->m_ornt = 1;
+
+			if (i == 0)
+			{
+				rias->m_usag = 1;
+			}
+			else
+			{
+				rias->m_usag = 2;
+			}
+
+			rias->m_raui = 1;
+
+			f_RIAS->m_arr.push_back(rias);
+		}
 	}
 
 	vectorRecord->m_rias.push_back(f_RIAS);

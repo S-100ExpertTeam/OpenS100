@@ -71,12 +71,16 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
+		std::list<SCurve*> curveList;
+		geo->GetCurveList(curveList);
 
-		int curveCnt = geo->GetCurveCount();
-		for (int i = 0; i < curveCnt; i++)
+		//int curveCnt = geo->GetCurveCount();
+		//for (int i = 0; i < curveCnt; i++)
+		for (auto i = curveList.begin(); i != curveList.end(); i++)
 		{
 			bDraw = false;
-			auto c = geo->GetCurve(i);
+			//auto c = geo->GetCurve(i);
+			auto c = (*i);
 
 			if (!c->GetMasking())
 			{
@@ -169,12 +173,16 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
+		std::list<SCurve*> curveList;
+		geo->GetCurveList(curveList);
 
-		int curveCnt = geo->GetCurveCount();
-		for (int i = 0; i < curveCnt; i++)
+		//int curveCnt = geo->GetCurveCount();
+		//for (int i = 0; i < curveCnt; i++)
+		for (auto i = curveList.begin(); i != curveList.end(); i++)
 		{
 			bDraw = false;
-			auto c = geo->GetCurve(i);
+			//auto c = geo->GetCurve(i);
+			auto c = (*i);
 
 			if (!c->GetMasking())
 			{

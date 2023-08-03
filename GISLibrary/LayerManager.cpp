@@ -1321,14 +1321,20 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						SENC_SpatialReference* sred = *iterLi;
 						int referencedID = sred->reference;
 
-						for (int k = 0; k < surface->GetRingCount(); k++)
-						{
-							auto curve = surface->GetRing(k);
-							if (curve->GetRCID() == referencedID)
-							{
-								curListCurveLink.push_back(curve);
-							}
+						auto curve = surface->GetCurve(referencedID);
+						if (curve) {
+							curListCurveLink.push_back(curve);
 						}
+
+						//for (int k = 0; k < surface->GetRingCount(); k++)
+						//{
+						//	auto curve = surface->GetRing(k);
+
+						//	if (curve->GetRCID() == referencedID)
+						//	{
+						//		curListCurveLink.push_back(curve);
+						//	}
+						//}
 					}
 				}
 				else if (featureRecord->m_geometry->GetType() == SGeometryType::CompositeCurve)
@@ -1340,17 +1346,22 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						SENC_SpatialReference* sred = *iterLi;
 						int referencedID = sred->reference;
 
-						int curveCnt = compositeCurve->GetCurveCount();
-
-						for (int k = 0; k < curveCnt; k++)
-						{
-							auto c = compositeCurve->GetCurve(k);
-
-							if (c->GetRCID() == referencedID)
-							{
-								curListCurveLink.push_back(c);
-							}
+						auto curve = compositeCurve->GetCurveByRCID(referencedID);
+						if (curve) {
+							curListCurveLink.push_back(curve);
 						}
+
+						//int curveCnt = compositeCurve->GetCurveCount();
+
+						//for (int k = 0; k < curveCnt; k++)
+						//{
+						//	auto c = compositeCurve->GetCurve(k);
+
+						//	if (c->GetRCID() == referencedID)
+						//	{
+						//		curListCurveLink.push_back(c);
+						//	}
+						//}
 					}
 				}
 				else if (featureRecord->m_geometry->GetType() == SGeometryType::Curve)
@@ -1372,24 +1383,24 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 			else if (featureRecord->m_geometry->GetType() == SGeometryType::Surface)
 			{
 				auto surface = (SSurface*)featureRecord->m_geometry;
-
-				for (int i = 0; i < surface->GetRingCount(); i++)
-				{
-					auto curve = surface->GetRing(i);
-					curListCurveLink.push_back(curve);
-				}
+				surface->GetCurveList(curListCurveLink);
+				//for (int i = 0; i < surface->GetRingCount(); i++)
+				//{
+				//	auto curve = surface->GetRing(i);
+				//	curListCurveLink.push_back(curve);
+				//}
 			}
 			else if (featureRecord->m_geometry->GetType() == SGeometryType::CompositeCurve)
 			{
 				auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
+				compositeCurve->GetCurveList(curListCurveLink);
+				//int curveCnt = compositeCurve->GetCurveCount();
 
-				int curveCnt = compositeCurve->GetCurveCount();
-
-				for (int k = 0; k < curveCnt; k++)
-				{
-					auto c = compositeCurve->GetCurve(k);
-					curListCurveLink.push_back(c);
-				}
+				//for (int k = 0; k < curveCnt; k++)
+				//{
+				//	auto c = compositeCurve->GetCurve(k);
+				//	curListCurveLink.push_back(c);
+				//}
 			}
 			else if (featureRecord->m_geometry->GetType() == SGeometryType::Curve)
 			{

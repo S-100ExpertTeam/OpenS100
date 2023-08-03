@@ -23,6 +23,7 @@ public:
 	MBR& GetMBRRef();
 	std::string GetID();
 	std::wstring GetIDAsWString();
+	int GetIDAsInt();
 	void SetID(std::string value);
 	void SetID(std::wstring value);
 	void SetID(int value);
