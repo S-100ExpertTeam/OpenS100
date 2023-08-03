@@ -1340,18 +1340,6 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						if (curve) {
 							curListCurveLink.push_back(curve);
 						}
-
-						//int curveCnt = compositeCurve->GetCurveCount();
-
-						//for (int k = 0; k < curveCnt; k++)
-						//{
-						//	auto c = compositeCurve->GetCurve(k);
-
-						//	if (c->GetRCID() == referencedID)
-						//	{
-						//		curListCurveLink.push_back(c);
-						//	}
-						//}
 					}
 				}
 				else if (featureRecord->m_geometry->GetType() == SGeometryType::Curve)
@@ -1379,13 +1367,6 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 			{
 				auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
 				compositeCurve->GetCurveList(curListCurveLink);
-				//int curveCnt = compositeCurve->GetCurveCount();
-
-				//for (int k = 0; k < curveCnt; k++)
-				//{
-				//	auto c = compositeCurve->GetCurve(k);
-				//	curListCurveLink.push_back(c);
-				//}
 			}
 			else if (featureRecord->m_geometry->GetType() == SGeometryType::Curve)
 			{
@@ -1395,17 +1376,17 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 			for (auto m = curListCurveLink.begin(); m != curListCurveLink.end(); m++)
 			{
 				auto curve = *m;
-				int id = curve->GetRCID();
-
-				auto iterExist = lineSuppressionMap.find(id);
-
 				if (false == curve->GetMasking())
 				{
-					if (iterExist == lineSuppressionMap.end())
+					int id = curve->GetRCID();
+
+					auto item = lineSuppressionMap.find(id);
+
+					if (item == lineSuppressionMap.end())
 					{
 						lineSuppressionMap.insert(id);
 					}
-					else if (iterExist != lineSuppressionMap.end())
+					else if (item != lineSuppressionMap.end())
 					{
 						curve->SetSuppress(true);
 					}

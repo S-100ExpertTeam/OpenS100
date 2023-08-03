@@ -65,7 +65,7 @@ void Layer::Draw(CDC *pDC, Scaler *scaler, double offset)
 void Layer::Draw(HDC &hDC, Scaler *scaler, double offset)
 {
 	// only draw layers when it's on.
-	if (On)
+	if (On && m_spatialObject)
 	{
 		m_spatialObject->Draw(hDC, scaler, offset);
 	}

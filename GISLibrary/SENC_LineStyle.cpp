@@ -162,7 +162,9 @@ void SENC_LineStyle::DrawInstruction(
 				}
 				else
 				{
-					rt->SetTransform(D2D1::Matrix3x2F::Identity());
+					//D2D1_MATRIX_3X2_F oldMatrix;
+					//rt->GetTransform(&oldMatrix);
+					//rt->SetTransform(D2D1::Matrix3x2F::Identity());
 					// Point rotate
 					if (scaler->GetRotationDegree())
 					{

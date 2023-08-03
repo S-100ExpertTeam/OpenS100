@@ -69,14 +69,12 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 	{
 		auto surface = (SSurface*)fr->m_geometry;
 		surface->GetCurveList(curListCurveLink);
-		//curListCurveLink = surface->GetCurveList();
 	}
 	// Composite Curve
 	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
 		compositeCurve->GetCurveList(curListCurveLink);
-		//curListCurveLink = compositeCurve->GetCurveList();
 	}
 	// Curve
 	else if (fr->m_geometry->GetType() == SGeometryType::Curve)
@@ -117,6 +115,7 @@ void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 		}
 	}
 
+	//rt->SetTransform(scaler->GetMatrix());
 	for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
 	{
 		for (auto j = curListCurveLink.begin(); j != curListCurveLink.end(); j++)

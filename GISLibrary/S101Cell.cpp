@@ -1302,11 +1302,6 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 				scc->SetID(cuco->m_name.RCID);
 				GetFullSpatialData(ccr, scc, cuco->m_ornt);
 				curve->AddCurve(scc);
-				//auto curveCnt = scc.GetCurveCount();
-				//for (int j = 0; j < curveCnt; j++)
-				//{
-				//	curve->AddCurve(scc.GetCurve(j));
-				//}
 			}
 			else
 			{

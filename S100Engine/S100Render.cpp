@@ -37,8 +37,6 @@ void S100Render::DrawBitmapOnLine(
 	D2D1::Matrix3x2F oldMatrix;
 	pRenderTarget->GetTransform(&oldMatrix);
 
-	pRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(rotation, point1));
-
 	FLOAT length = sqrtf(pow((point1.x - point2.x), 2.0f) + pow((point2.y - point1.y), 2.0f));
 
 	if (fmodf(length, bitmapSize.width) == 0.0)
@@ -52,10 +50,11 @@ void S100Render::DrawBitmapOnLine(
 		pRenderTarget->CreateSolidColorBrush(penColor, &pBrush);
 		pRenderTarget->DrawLine(point1, point2, pBrush, 1, stroke);
 		SafeRelease(&pBrush);
-		pRenderTarget->SetTransform(oldMatrix);
+		//pRenderTarget->SetTransform(oldMatrix);
 	}
 	else
 	{
+		pRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(rotation, point1));
 		D2D1_POINT_2F oldPoint1 = point1;
 		FLOAT lastSegmentLength = fmodf(length, bitmapSize.width);
 
@@ -85,8 +84,10 @@ void S100Render::DrawBitmapOnLine(
 			point1.x += bitmapSize.width;
 		}
 
-		pRenderTarget->SetTransform(oldMatrix);
+		//pRenderTarget->SetTransform(oldMatrix);
 	}
+
+	pRenderTarget->SetTransform(oldMatrix);
 }
 
 
@@ -101,9 +102,6 @@ void S100Render::DrawBitmapOnPolyline(
 {
 	for (int i = 1; i < cnt; i++)
 	{
-		D2D1::Matrix3x2F screenMatrix;
-		pRenderTarget->GetTransform(&screenMatrix);
-
 		DrawBitmapOnLine(pRenderTarget, points[i - 1], points[i], pBitmap, penColor, stroke);
 	}
 }
