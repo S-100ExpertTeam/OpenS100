@@ -168,7 +168,6 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 					std::list<SCurve*> curveList;
 					geo->GetCurveList(curveList);
 
-					//for (int j = 0; j < geo->GetRingCount(); j++)
 					for (auto j = curveList.begin(); j != curveList.end(); j++)
 					{
 						auto curve = (*j);
@@ -433,7 +432,6 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 				std::list<SCurve*> curveList;
 				geo->GetCurveList(curveList);
 
-				//for (int j = 0; j < geo->GetRingCount(); j++)			
 				for (auto j = curveList.begin(); j != curveList.end(); j++)
 				{
 					//auto curve = geo->GetRing(j);

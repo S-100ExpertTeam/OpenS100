@@ -792,7 +792,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 			{
 				if (m_comMap.Lookup(iKey, ccr))
 				{
-					SCompositeCurve* scc = new SCompositeCurve();
+					auto scc = new SCompositeCurve();
 					fe->m_geometry = scc;
 					scc->SetID(ccr->GetRCID());
 					GetFullSpatialData(ccr, scc, spas->m_ornt);
@@ -872,11 +872,11 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							R_CompositeRecord *ccr = nullptr;
 							if (m_comMap.Lookup(iKey, ccr))
 							{
-								SCompositeCurve sCompositeCurve;
-								sCompositeCurve.SetID(ccr->GetRCID());
-								GetFullSpatialData(ccr, &sCompositeCurve, rias->m_ornt);
+								auto compositeCurve = new SCompositeCurve();
+								compositeCurve->SetID(ccr->GetRCID());
+								GetFullSpatialData(ccr, compositeCurve, rias->m_ornt);
 								GetFullSpatialData(ccr, vecPoint, rias->m_ornt);
-								geo->AddCompositeCurve(&sCompositeCurve);
+								geo->AddCompositeCurve(compositeCurve);
 							}
 							else
 							{
@@ -1298,15 +1298,15 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 
 			if (m_comMap.Lookup(iKey, ccr))
 			{
-				SCompositeCurve scc;
-				scc.SetID(cuco->m_name.RCID);
-				GetFullSpatialData(ccr, &scc, cuco->m_ornt);
-
-				auto curveCnt = scc.GetCurveCount();
-				for (int j = 0; j < curveCnt; j++)
-				{
-					curve->AddCurve(scc.GetCurve(j));
-				}
+				auto scc = new SCompositeCurve();
+				scc->SetID(cuco->m_name.RCID);
+				GetFullSpatialData(ccr, scc, cuco->m_ornt);
+				curve->AddCurve(scc);
+				//auto curveCnt = scc.GetCurveCount();
+				//for (int j = 0; j < curveCnt; j++)
+				//{
+				//	curve->AddCurve(scc.GetCurve(j));
+				//}
 			}
 			else
 			{
@@ -3785,11 +3785,6 @@ void S101Cell::InitCurveSuppression()
 		{
 			auto surface = (SSurface*)feature->m_geometry;
 			surface->setSuppress(false);
-			//for (int j = 0; j < surface->GetRingCount(); j++)
-			//{
-			//	auto curve = surface->GetRing(j);
-			//	curve->SetSuppress(false);
-			//}
 		}
 		else if (feature->m_geometry->GetType() == SGeometryType::Curve)
 		{

@@ -338,12 +338,13 @@ void SSurface::AddCurve(SCurve* curve)
 
 void SSurface::AddCompositeCurve(SCompositeCurve* compositeCurve)
 {
-	int curveCnt = compositeCurve->GetCurveCount();
-	for (int i = 0; i < curveCnt; i++)
-	{
-		auto c = compositeCurve->GetCurve(i);
-		curveList.push_back(c);
-	}
+	//int curveCnt = compositeCurve->GetCurveCount();
+	//for (int i = 0; i < curveCnt; i++)
+	//{
+	//	auto c = compositeCurve->GetCurve(i);
+	//	curveList.push_back(c);
+	//}
+	curveList.push_back(compositeCurve);
 }
 
 void SSurface::Init()
@@ -414,6 +415,7 @@ void SSurface::Release()
 			SafeRelease(&curve->pGeometry);
 		}
 		
+		(*i)->Release();
 		delete (*i);
 	}
 	curveList.clear();

@@ -1325,16 +1325,6 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						if (curve) {
 							curListCurveLink.push_back(curve);
 						}
-
-						//for (int k = 0; k < surface->GetRingCount(); k++)
-						//{
-						//	auto curve = surface->GetRing(k);
-
-						//	if (curve->GetRCID() == referencedID)
-						//	{
-						//		curListCurveLink.push_back(curve);
-						//	}
-						//}
 					}
 				}
 				else if (featureRecord->m_geometry->GetType() == SGeometryType::CompositeCurve)
@@ -1384,11 +1374,6 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 			{
 				auto surface = (SSurface*)featureRecord->m_geometry;
 				surface->GetCurveList(curListCurveLink);
-				//for (int i = 0; i < surface->GetRingCount(); i++)
-				//{
-				//	auto curve = surface->GetRing(i);
-				//	curListCurveLink.push_back(curve);
-				//}
 			}
 			else if (featureRecord->m_geometry->GetType() == SGeometryType::CompositeCurve)
 			{
