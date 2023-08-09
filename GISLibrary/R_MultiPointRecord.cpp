@@ -5,7 +5,7 @@
 #include "F_COCC.h"
 #include "F_C3IL.h"
 #include "F_INAS.h"
-#include "IC2D.h"
+#include "C2IL.h"
 #include "C3IL.h"
 
 R_MultiPointRecord::R_MultiPointRecord(void)
@@ -62,7 +62,7 @@ BOOL R_MultiPointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		else if (strcmp(dir->GetDirectory(i)->tag, "C2IL") == 0)
 		{
 			F_C2IL* c2il = new F_C2IL();
-			cnt = (dir->GetDirectory(i)->length - 1) / IC2D::GetSize();
+			cnt = (dir->GetDirectory(i)->length - 1) / C2IL::GetSize();
 			c2il->ReadField(buf, cnt);
 			m_c2il.push_back(c2il);
 		}
@@ -173,4 +173,32 @@ void R_MultiPointRecord::InsertC3IL(int x, int y, int z)
 	}
 
 	m_c3il.front()->m_arr.push_back(new C3IL(x, y, z));
+}
+
+std::vector<C2IL*> R_MultiPointRecord::GetAllC2IL()
+{
+	std::vector<C2IL*> result;
+
+	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++) {
+		auto c2il = *i;
+		for (auto j = c2il->m_arr.begin(); j != c2il->m_arr.end(); j++) {
+			result.push_back(*j);
+		}
+	}
+
+	return result;
+}
+
+std::vector<C3IL*> R_MultiPointRecord::GetAll3CIL()
+{
+	std::vector<C3IL*> result;
+	
+	for (auto i = m_c3il.begin(); i != m_c3il.end(); i++) {
+		auto c3il = *i;
+		for (auto j = c3il->m_arr.begin(); j != c3il->m_arr.end(); j++) {
+			result.push_back(*j);
+		}
+	}
+
+	return result;
 }

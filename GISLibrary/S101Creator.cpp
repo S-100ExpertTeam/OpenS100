@@ -17,7 +17,7 @@
 #include "F_CUCO.h"
 #include "F_RIAS.h"
 #include "F_FASC.h"
-#include "IC2D.h"
+#include "C2IL.h"
 #include "PTAS.h"
 #include "CUCO.h"
 #include "RIAS.h"
@@ -928,7 +928,7 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurve* geom)
 		auto sPoint = geom->GetPoint(i);
 		if (sPoint)
 		{
-			auto C2IL = new IC2D();
+			auto c2il = new C2IL();
 
 			double x = sPoint->x;
 			double y = sPoint->y;
@@ -936,9 +936,9 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurve* geom)
 			x *= enc->GetCMFX();
 			y *= enc->GetCMFY();
 
-			C2IL->m_xcoo = x;
-			C2IL->m_ycoo = y;
-			f_C2IL->m_arr.push_back(C2IL);
+			c2il->m_xcoo = x;
+			c2il->m_ycoo = y;
+			f_C2IL->m_arr.push_back(c2il);
 		}
 	}
 
@@ -957,11 +957,9 @@ R_CompositeRecord* S101Creator::ConvertInsertVectorRecord(SCompositeCurve* geom)
 	auto f_CUCO = new F_CUCO();
 
 	int curveCnt = geom->GetCurveCount();
-	//for (auto i = geom->m_listCurveLink.begin(); i != geom->m_listCurveLink.end(); i++)
 	for (int i = 0; i < curveCnt; i++)
 	{
 		auto c = geom->GetCurve(i);
-		//auto curveRecord = ConvertInsertVectorRecord(*i);
 
 		if (c->GetType() == SGeometryType::Curve) {
 			auto curve = (SCurve*)c;

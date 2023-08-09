@@ -1,6 +1,9 @@
 #pragma once
+
 #include "R_VectorRecord.h"
 #include "F_SRID.h"
+
+#include <vector>
 
 class F_INAS;
 class F_RIAS;
@@ -27,4 +30,6 @@ public:
 	void SetRCID(int rcid);
 
 	void InsertRing(int rcnm, int rcid, int usag, int ornt);
+
+	std::vector<RIAS*> GetAllRIAS();
 };

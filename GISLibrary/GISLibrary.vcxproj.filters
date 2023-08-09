@@ -267,7 +267,7 @@
     <ClCompile Include="FC2D.cpp">
       <Filter>S101\Field</Filter>
     </ClCompile>
-    <ClCompile Include="IC2D.cpp">
+    <ClCompile Include="C2IL.cpp">
       <Filter>S101\Field</Filter>
     </ClCompile>
     <ClCompile Include="FC3D.cpp">
@@ -929,7 +929,7 @@
     <ClInclude Include="FC2D.h">
       <Filter>S101\Field</Filter>
     </ClInclude>
-    <ClInclude Include="IC2D.h">
+    <ClInclude Include="C2IL.h">
       <Filter>S101\Field</Filter>
     </ClInclude>
     <ClInclude Include="FC3D.h">

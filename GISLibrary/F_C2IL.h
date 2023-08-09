@@ -1,7 +1,7 @@
 #pragma once
 #include "Field.h"
 
-struct IC2D;
+struct C2IL;
 class F_C2IL : Field
 {
 public:
@@ -12,7 +12,7 @@ public:
 	/*
 	* Attribute Array
 	*/
-	std::list<IC2D*> m_arr;
+	std::list<C2IL*> m_arr;
 
 public:
 	void ReadField(BYTE *&buf);

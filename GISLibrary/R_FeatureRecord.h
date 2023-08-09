@@ -116,6 +116,8 @@ public:
 
 	void SetVectorRecord(R_VectorRecord* record);
 
+	std::vector<MASK*> GetAllMASK();
+
 public: // override ObjectType
 	std::string GetID() override;
 	std::wstring GetIDAsWString() override;

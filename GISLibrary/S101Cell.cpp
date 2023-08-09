@@ -24,7 +24,7 @@
 #include "D2D1Resources.h"
 #include "ATTR.h"
 #include "C3IL.h"
-#include "IC2D.h"
+#include "C2IL.h"
 #include "CUCO.h"
 #include "F_COCC.h"
 #include "CodeWithNumericCode.h"

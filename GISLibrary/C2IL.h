@@ -1,11 +1,11 @@
 #pragma once
 
-struct IC2D
+struct C2IL
 {
 public:
-	IC2D();
-	IC2D(int m_ycoo, int m_xcoo);
-	virtual ~IC2D();
+	C2IL();
+	C2IL(int m_ycoo, int m_xcoo);
+	virtual ~C2IL();
 
 public:
 	/*

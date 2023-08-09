@@ -1,23 +1,23 @@
 #include "stdafx.h"
-#include "IC2D.h"
+#include "C2IL.h"
 
-IC2D::IC2D()
+C2IL::C2IL()
 {
 
 }
 
-IC2D::IC2D(int m_ycoo, int m_xcoo)
+C2IL::C2IL(int m_ycoo, int m_xcoo)
 {
 	this->m_ycoo = m_ycoo;
 	this->m_xcoo = m_xcoo;
 }
 
-IC2D::~IC2D()
+C2IL::~C2IL()
 {
 
 }
 
-int IC2D::GetSize()
+int C2IL::GetSize()
 {
 	return 8;
 }

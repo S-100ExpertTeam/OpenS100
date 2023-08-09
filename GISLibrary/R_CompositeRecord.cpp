@@ -159,3 +159,17 @@ void R_CompositeRecord::InsertCurve(int rcnm, int rcid, int ornt)
 
 	m_cuco.front()->m_arr.push_back(new CUCO(rcnm, rcid, ornt));
 }
+
+std::vector<CUCO*> R_CompositeRecord::GetAllCUCO()
+{
+	std::vector<CUCO*> result;
+
+	for (auto i = m_cuco.begin(); i != m_cuco.end(); i++) {
+		auto cuco = *i;
+		for (auto j = cuco->m_arr.begin(); j != cuco->m_arr.end(); j++) {
+			result.push_back(*j);
+		}
+	}
+
+	return result;
+}

@@ -342,7 +342,7 @@
     <ClCompile Include="HDF5Wrapper.cpp" />
     <ClCompile Include="host_data.cpp" />
     <ClCompile Include="host_functions.cpp" />
-    <ClCompile Include="IC2D.cpp" />
+    <ClCompile Include="C2IL.cpp" />
     <ClCompile Include="GF_FeatureAssociationType.cpp" />
     <ClCompile Include="GF_ObjectType.cpp" />
     <ClCompile Include="ISO8211Fuc.cpp" />
@@ -573,7 +573,7 @@
     <ClInclude Include="GISLibrary.h" />
     <ClInclude Include="host_data.h" />
     <ClInclude Include="host_functions.h" />
-    <ClInclude Include="IC2D.h" />
+    <ClInclude Include="C2IL.h" />
     <ClInclude Include="GF_AttributeType.h" />
     <ClInclude Include="GF_FeatureAssociationType.h" />
     <ClInclude Include="GF_FeatureType.h" />

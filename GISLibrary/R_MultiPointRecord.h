@@ -31,4 +31,7 @@ public:
 	void SetRCID(int rcid);
 
 	void InsertC3IL(int x, int y, int z);
+
+	std::vector<C2IL*> GetAllC2IL();
+	std::vector<C3IL*> GetAll3CIL();
 };

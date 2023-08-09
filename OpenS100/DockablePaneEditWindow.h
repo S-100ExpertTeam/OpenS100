@@ -64,7 +64,7 @@ arg 1 - NATF*
 Type 100
 arg 0 - CMFCPropertyGridProperty *
 arg 1 - R_VectorRecord*
-arg 2 - IC2D*
+arg 2 - C2IL*
 arg 3 - F_C2IL*
 arg 4 - int (index)
 

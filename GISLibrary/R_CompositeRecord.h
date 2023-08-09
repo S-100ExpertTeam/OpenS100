@@ -32,4 +32,6 @@ public:
 	void SetRCID(int rcid);
 
 	void InsertCurve(int rcnm, int rcid, int ornt);
+
+	std::vector<CUCO*> GetAllCUCO();
 };

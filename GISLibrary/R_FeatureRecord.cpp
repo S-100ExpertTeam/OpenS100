@@ -587,6 +587,20 @@ void R_FeatureRecord::SetVectorRecord(R_VectorRecord* record)
 	}
 }
 
+std::vector<MASK*> R_FeatureRecord::GetAllMASK()
+{
+	std::vector<MASK*> result;
+
+	for (auto i = m_mask.begin(); i != m_mask.end(); i++) {
+		auto mask = *i;
+		for (auto j = mask->listMask.begin(); j != mask->listMask.end(); j++) {
+			result.push_back(*j);
+		}
+	}
+
+	return result;
+}
+
 std::string R_FeatureRecord::GetID()
 {
 	return std::to_string(GetRCID());

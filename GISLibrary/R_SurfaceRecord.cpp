@@ -145,3 +145,17 @@ void R_SurfaceRecord::InsertRing(int rcnm, int rcid, int usag, int ornt)
 
 	m_rias.front()->m_arr.push_back(new RIAS(rcnm, rcid, usag, ornt));
 }
+
+std::vector<RIAS*> R_SurfaceRecord::GetAllRIAS()
+{
+	std::vector<RIAS*> result;
+
+	for (auto i = m_rias.begin(); i != m_rias.end(); i++) {
+		auto rias = *i;
+		for (auto j = rias->m_arr.begin(); j != rias->m_arr.end(); j++) {
+			result.push_back(*j);
+		}
+	}
+
+	return result;
+}

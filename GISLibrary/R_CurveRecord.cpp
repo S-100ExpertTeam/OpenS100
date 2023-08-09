@@ -7,7 +7,7 @@
 #include "F_COCC.h"
 #include "F_C2IL.h"
 #include "F_INAS.h"
-#include "IC2D.h"
+#include "C2IL.h"
 #include "PTAS.h"
 
 #include <sstream>
@@ -103,7 +103,7 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		{
 			F_C2IL *c2il = new F_C2IL();
 
-			auto cnt = (dir->GetDirectory(i)->length - 1) / IC2D::GetSize();
+			auto cnt = (dir->GetDirectory(i)->length - 1) / C2IL::GetSize();
 
 			c2il->ReadField(buf, cnt);
 
@@ -277,7 +277,7 @@ void R_CurveRecord::InsertC2IL(int x, int y)
 		m_c2il.push_back(new F_C2IL());
 	}
 
-	m_c2il.front()->m_arr.push_back(new IC2D(y, x));
+	m_c2il.front()->m_arr.push_back(new C2IL(y, x));
 }
 
 std::string R_CurveRecord::GetBeginningPointRCIDasString(std::string prefix)
@@ -331,4 +331,18 @@ std::string R_CurveRecord::GetC2ILString(int CMFX, int CMFY)
 	}
 
 	return ss.str();
+}
+
+std::vector<C2IL*> R_CurveRecord::GetAllC2IL()
+{
+	std::vector<C2IL*> result;
+
+	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++) {
+		auto c2il = *i;
+		for (auto j = c2il->m_arr.begin(); j != c2il->m_arr.end(); j++) {
+			result.push_back(*j);
+		}
+	}
+
+	return result;
 }

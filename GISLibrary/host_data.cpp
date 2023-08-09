@@ -20,7 +20,7 @@
 #include "R_MultiPointRecord.h"
 #include "ATTR.h"
 #include "C3IL.h"
-#include "IC2D.h"
+#include "C2IL.h"
 #include "CodeWithNumericCode.h"
 #include "CUCO.h"
 #include "SPAS.h"
@@ -1292,7 +1292,7 @@ curve hd_get_curve(std::string spatial_id)
 		curve_segment.interpolation = "Loxodromic";
 		for (auto itor = c2il->m_arr.begin(); itor != c2il->m_arr.end(); itor++)
 		{
-			IC2D* ic2d = *itor;
+			C2IL* ic2d = *itor;
 			curve_segment.control_points.push_back({ std::to_string(ic2d->m_xcoo), std::to_string(ic2d->m_ycoo) });
 		}
 
