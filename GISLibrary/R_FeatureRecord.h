@@ -21,6 +21,7 @@ class F_MASK;
 
 struct ATTR;
 struct SPAS;
+struct MASK;
 
 // Feature Type Record
 class R_FeatureRecord : public GF::FeatureType, public Record

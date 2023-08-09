@@ -12,6 +12,8 @@ class F_COCC;
 class F_C2IL;
 class DRDirectoryInfo;
 
+struct C2IL;
+
 // Curve Record
 class R_CurveRecord : public R_VectorRecord
 {

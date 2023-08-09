@@ -8,6 +8,9 @@ class F_CCOC;
 class F_CUCO;
 class F_INAS;
 class DRDirectoryInfo; 
+
+struct CUCO;
+
 // Composite Curve Record
 class R_CompositeRecord : public R_VectorRecord
 {

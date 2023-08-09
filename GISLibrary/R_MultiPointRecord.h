@@ -6,6 +6,10 @@ class F_INAS;
 class F_COCC;
 class F_C2IL;
 class F_C3IL;
+
+struct C2IL;
+struct C3IL;
+
 // Multi Point Record
 class R_MultiPointRecord : public R_VectorRecord
 {

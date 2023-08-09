@@ -7,6 +7,9 @@
 
 class F_INAS;
 class F_RIAS;
+
+struct RIAS;
+
 // Surface Record
 class R_SurfaceRecord : public R_VectorRecord
 {
