@@ -127,22 +127,12 @@ public:
 
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
-	void GetAllFeatureDisplayOptions();
-	void GetFeatureDisplayOption(R_FeatureRecord* pFe);
-	void ProcessCSProcedure();
-	void SetInstructionToFeature();
-	void SetInstructionToFeature(R_FeatureRecord* fe);
-
-	//void ClearCurveMap();
 
 	BOOL MakeFullSpatialData();
 	BOOL MakePointData(R_FeatureRecord* fe); 
 	BOOL MakeSoundingData(R_FeatureRecord* fe);
 	BOOL MakeLineData(R_FeatureRecord* fe);
 	BOOL MakeAreaData(R_FeatureRecord* fe);
-
-	// Record -> Geometry
-	SPoint* ToGeometry(R_PointRecord* r);
 
 	// Record -> Geometry
 	BOOL GetFullSpatialData(R_PointRecord *r, SPoint* point); // 
@@ -153,9 +143,9 @@ public:
 	BOOL GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoArr, int ORNT = 1); // 
 
 	// Set R_FeatureRecord::m_curveList from Vector record
-	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);
-	BOOL GetFullCurveData(R_FeatureRecord* fe, R_CompositeRecord *r, int ornt = 1);
-	BOOL GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int ornt = 1);
+	//BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);
+	//BOOL GetFullCurveData(R_FeatureRecord* fe, R_CompositeRecord *r, int ornt = 1);
+	//BOOL GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int ornt = 1);
 
 	BOOL GetFullMaskData(R_FeatureRecord* fe);
 
@@ -329,10 +319,6 @@ public:
 	bool Check();
 	bool Update(S101Cell* cell);
 	bool IsUpdate();
-
-	void GetDrawingPriority(std::vector<__int64>& key, std::vector<int>& priority);
-
-	void Validation();
 
 	int GetCMFX();
 	int GetCMFY();

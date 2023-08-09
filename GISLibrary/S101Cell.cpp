@@ -76,7 +76,6 @@
 #include <mmsystem.h> 
 #include <unordered_map>
 
-
 S101Cell::S101Cell() : S100SpatialObject()
 {
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
@@ -113,51 +112,6 @@ bool S101Cell::IsUpdate()
 	else
 	{
 		return true;
-	}
-}
-
-void S101Cell::GetDrawingPriority(std::vector<__int64>& key, std::vector<int>& priority)
-{
-	//priority.clear();
-	//std::fill_n(priority, key.size(), -1);
-	//
-	//for (size_t i = 0; i < key.size(); i++)
-	//{
-	//	auto featureRecord = GetFeatureRecord(key.at(i));
-	//	if (featureRecord)
-	//	{
-	//		featureRecord->MinimumDisplayPriority();
-	//	}
-	//}
-}
-
-void S101Cell::Validation()
-{
-	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
-	{
-		auto feature = *i;
-		int spasCount = feature->GetSPASCount();
-
-		//if (spasCount == 0)
-		//{
-		//	OutputDebugString(L"No geometry\n");
-		//}
-		//else 
-		if (spasCount > 1)
-		{
-			//OutputDebugString(L"Multiple spas field\n");
-		}
-		//else if (spasCount == 1)
-		//{
-		//	auto spas = feature->GetSPAS();
-		//	if (spas->m_ornt == 2)
-		//	{
-		//		auto featureCode = this->m_dsgir.GetFeatureCode(feature->m_frid.m_nftc);
-		//		CString str;
-		//		str.Format(L"ORNT in SPAS is reverse(RCNM : %d, %s(%d))\n", spas->m_name.RCNM, featureCode, feature->m_frid.m_name.RCID);
-		//		OutputDebugString(str);
-		//	}
-		//}
 	}
 }
 
@@ -343,17 +297,11 @@ void S101Cell::RemoveAll(void)
 void S101Cell::ClearAll(void)
 {
 	m_infMap.RemoveAll();
-
 	m_ptMap.RemoveAll();
-
 	m_mpMap.RemoveAll();
-
 	m_curMap.RemoveAll();
-
 	m_comMap.RemoveAll();
-
 	m_surMap.RemoveAll();
-
 	m_feaMap.RemoveAll();
 }
 
@@ -490,8 +438,6 @@ bool S101Cell::OpenBy000(CString path)
 
 		CalcMBR();
 		Check();
-
-		Validation();
 		return true;
 	}
 
@@ -518,8 +464,6 @@ bool S101Cell::OpenByGML(CString path)
 
 	CalcMBR();
 	Check();
-
-	Validation();
 	return true;
 }
 
@@ -542,7 +486,6 @@ void S101Cell::SortByFeatureType()
 
 	R_FeatureRecord *fr;
 
-
 	POSITION pos = m_feaMap.GetStartPosition();
 	__int64 iKey;
 
@@ -551,102 +494,6 @@ void S101Cell::SortByFeatureType()
 		m_feaMap.GetNextAssoc(pos, iKey, fr);
 		if (fr->m_spas.size() == 0)
 			continue;
-	}
-}
-
-void S101Cell::GetAllFeatureDisplayOptions()
-{
-	R_FeatureRecord *fr;
-
-	POSITION pos = m_feaMap.GetStartPosition();
-	__int64 iKey;
-
-	while (pos)
-	{
-		m_feaMap.GetNextAssoc(pos, iKey, fr);
-		GetFeatureDisplayOption(fr);
-	}
-}
-
-void S101Cell::GetFeatureDisplayOption(R_FeatureRecord* pFe)
-{
-	//////////////////////////////////////////
-	// CSymbolMap 0 : simpointsymbol.dic
-	// - Symplified point symbol (ENC symbol) = point
-	// CSymbolMap 1 : pacpointsymbol.dic
-	// - Paper chart symbols (Paper)   = point
-	// CSymbolMap 2 : linesymbol.dic
-	// - Line symbole                  = line
-	// CSymbolMap 3 : plainboun.dic
-	// - Plain boundaries (ENC symbol) = area
-	// CSymbolMap 4 : symboun.dic
-	// - Symbolized boundaries (Paper) = area
-	//////////////////////////////////////////
-
-}
-
-void S101Cell::ProcessCSProcedure()
-{
-
-}
-
-void S101Cell::SetInstructionToFeature()
-{
-	POSITION spasPos = NULL;
-
-	R_FeatureRecord *fr;
-
-	POSITION pos = m_feaMap.GetStartPosition();
-	__int64 iKey;
-
-	while (pos)
-	{
-		m_feaMap.GetNextAssoc(pos, iKey, fr);
-
-#ifdef _DEBUG 
-		auto iter = m_dsgir.m_ftcs->m_arr.find(fr->m_frid.m_nftc);
-
-		if (iter != m_dsgir.m_ftcs->m_arr.end())
-		{
-			CString name = iter->second->m_code;
-			if (name.Find(L"Light") == 0)
-			{
-				name = L"";
-			}
-		}
-#endif 
-
-		if (fr->m_geometry)
-		{
-			SetInstructionToFeature(fr);
-		}
-	}
-}
-
-void S101Cell::SetInstructionToFeature(R_FeatureRecord* fe)
-{
-	GeoPoint geoArr;
-	SENC_Attribute* sencAttr = NULL;
-
-	for (auto itorParent = fe->m_attr.begin(); itorParent != fe->m_attr.end(); itorParent++)
-	{
-		F_ATTR* attrParent = *itorParent;
-
-		for (auto itor = attrParent->m_arr.begin(); itor != attrParent->m_arr.end(); itor++)
-		{
-			ATTR* attr = *itor;
-
-			auto aitor = m_dsgir.m_atcs->m_arr.find(attr->m_natc);
-
-			if (aitor != m_dsgir.m_atcs->m_arr.end())
-			{
-				CodeWithNumericCode* nc = aitor->second;
-				sencAttr = new SENC_Attribute();
-				sencAttr->parentIndex = attr->m_paix;
-				sencAttr->camelCase = nc->m_code;
-				sencAttr->value = attr->m_atvl;
-			}
-		}
 	}
 }
 
@@ -818,7 +665,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 		fe->m_geometry = nullptr;
 	}
 
-	R_SurfaceRecord *sr = nullptr;
+	R_SurfaceRecord* sr = nullptr;
 	__int64 iKey;
 
 	std::vector<POINT> vecPoint;
@@ -830,7 +677,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 
 	for (auto i = fe->m_spas.begin(); i != fe->m_spas.end(); i++)
 	{
-		F_SPAS *spasParent = *i;
+		F_SPAS* spasParent = *i;
 
 		for (auto j = spasParent->m_arr.begin(); j != spasParent->m_arr.end(); j++)
 		{
@@ -853,7 +700,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 						auto iKey = rias->m_name.GetName();
 						if (rias->m_name.RCNM == 120)
 						{
-							R_CurveRecord *cr = nullptr;
+							R_CurveRecord* cr = nullptr;
 							if (m_curMap.Lookup(iKey, cr))
 							{
 								SCurve* sCurve = new SCurve();
@@ -869,7 +716,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 						}
 						else if (rias->m_name.RCNM == 125)
 						{
-							R_CompositeRecord *ccr = nullptr;
+							R_CompositeRecord* ccr = nullptr;
 							if (m_comMap.Lookup(iKey, ccr))
 							{
 								auto compositeCurve = new SCompositeCurve();
@@ -883,7 +730,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 								return FALSE;
 							}
 						}
-						else 
+						else
 						{
 							return FALSE;
 						}
@@ -929,11 +776,6 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	}
 
 	return TRUE;
-}
-
-SPoint* S101Cell::ToGeometry(R_PointRecord* r)
-{
-	return nullptr;
 }
 
 BOOL S101Cell::GetFullSpatialData(R_PointRecord *r, SPoint* point)
@@ -1367,120 +1209,120 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoA
 	return TRUE;
 }
 
-BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt)
-{
-	fe->m_geometry = new SCurve;
-	fe->m_geometry->SetID(r->GetRCID());
-
-	if (ornt == 1)
-	{
-
-	}
-	else
-	{
-
-	}
-
-	return TRUE;
-}
-
-BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CompositeRecord *r, int ornt)
-{
-	R_CurveRecord *cr = NULL;
-	R_CompositeRecord *ccr = NULL;
-	__int64 iKey;
-
-	// forward
-	if (1 == ornt)
-	{
-		for (auto i = r->m_cuco.begin(); i != r->m_cuco.end(); i++)
-		{
-			F_CUCO* cucoParent = *i;
-
-			for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
-			{
-				auto cuco = *itor;
-
-				if (cuco->m_name.RCNM == 120)
-				{
-					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-					m_curMap.Lookup(iKey, cr);
-
-					GetFullCurveData(fe, cr, cuco->m_ornt);
-				}
-				else if (cuco->m_name.RCNM == 125)
-				{
-					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-					m_comMap.Lookup(iKey, ccr);
-					GetFullCurveData(fe, ccr, cuco->m_ornt);
-				}
-			}
-		}
-	}
-	else if (2 == ornt)
-	{
-		for (auto i = r->m_cuco.rbegin(); i != r->m_cuco.rend(); i++)
-		{
-			F_CUCO* cucoParent = *i;
-
-			for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
-			{
-				auto cuco = *itor;
-
-				if (cuco->m_name.RCNM == 120)
-				{
-					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-					m_curMap.Lookup(iKey, cr);
-
-					GetFullCurveData(fe, cr, cuco->m_ornt);
-				}
-				else if (cuco->m_name.RCNM == 125)
-				{
-					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-					m_comMap.Lookup(iKey, ccr);
-					GetFullCurveData(fe, ccr, cuco->m_ornt);
-				}
-			}
-		}
-	}
-
-	return TRUE;
-}
-
-BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int ornt)
-{
-	R_CurveRecord *cr = NULL;
-	R_CompositeRecord *ccr = NULL;
-	__int64 iKey;
-
-	for (auto itorParent = r->m_rias.begin(); itorParent != r->m_rias.end(); itorParent++)
-	{
-		F_RIAS* riasParent = *itorParent;
-
-		for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
-		{
-			RIAS* rias = *itor;
-
-			if (rias->m_ornt == 2)
-			{
-				ornt = (ornt == 2) ? 1 : 2;
-			}
-
-			iKey = ((__int64)rias->m_name.RCNM) << 32 | rias->m_name.RCID;
-			if (rias->m_name.RCNM == 120)
-			{
-				m_curMap.Lookup(iKey, cr);
-				GetFullCurveData(fe, cr, ornt);
-			}
-			else if (rias->m_name.RCNM == 125)
-			{
-				m_comMap.Lookup(iKey, ccr);
-				GetFullCurveData(fe, ccr, ornt);
-			}
-		}
-	}
-	return TRUE;
-}
+//BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt)
+//{
+//	fe->m_geometry = new SCurve;
+//	fe->m_geometry->SetID(r->GetRCID());
+//
+//	if (ornt == 1)
+//	{
+//
+//	}
+//	else
+//	{
+//
+//	}
+//
+//	return TRUE;
+//}
+//
+//BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CompositeRecord *r, int ornt)
+//{
+//	R_CurveRecord *cr = NULL;
+//	R_CompositeRecord *ccr = NULL;
+//	__int64 iKey;
+//
+//	// forward
+//	if (1 == ornt)
+//	{
+//		for (auto i = r->m_cuco.begin(); i != r->m_cuco.end(); i++)
+//		{
+//			F_CUCO* cucoParent = *i;
+//
+//			for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
+//			{
+//				auto cuco = *itor;
+//
+//				if (cuco->m_name.RCNM == 120)
+//				{
+//					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
+//					m_curMap.Lookup(iKey, cr);
+//
+//					GetFullCurveData(fe, cr, cuco->m_ornt);
+//				}
+//				else if (cuco->m_name.RCNM == 125)
+//				{
+//					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
+//					m_comMap.Lookup(iKey, ccr);
+//					GetFullCurveData(fe, ccr, cuco->m_ornt);
+//				}
+//			}
+//		}
+//	}
+//	else if (2 == ornt)
+//	{
+//		for (auto i = r->m_cuco.rbegin(); i != r->m_cuco.rend(); i++)
+//		{
+//			F_CUCO* cucoParent = *i;
+//
+//			for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
+//			{
+//				auto cuco = *itor;
+//
+//				if (cuco->m_name.RCNM == 120)
+//				{
+//					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
+//					m_curMap.Lookup(iKey, cr);
+//
+//					GetFullCurveData(fe, cr, cuco->m_ornt);
+//				}
+//				else if (cuco->m_name.RCNM == 125)
+//				{
+//					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
+//					m_comMap.Lookup(iKey, ccr);
+//					GetFullCurveData(fe, ccr, cuco->m_ornt);
+//				}
+//			}
+//		}
+//	}
+//
+//	return TRUE;
+//}
+//
+//BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int ornt)
+//{
+//	R_CurveRecord *cr = NULL;
+//	R_CompositeRecord *ccr = NULL;
+//	__int64 iKey;
+//
+//	for (auto itorParent = r->m_rias.begin(); itorParent != r->m_rias.end(); itorParent++)
+//	{
+//		F_RIAS* riasParent = *itorParent;
+//
+//		for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
+//		{
+//			RIAS* rias = *itor;
+//
+//			if (rias->m_ornt == 2)
+//			{
+//				ornt = (ornt == 2) ? 1 : 2;
+//			}
+//
+//			iKey = ((__int64)rias->m_name.RCNM) << 32 | rias->m_name.RCID;
+//			if (rias->m_name.RCNM == 120)
+//			{
+//				m_curMap.Lookup(iKey, cr);
+//				GetFullCurveData(fe, cr, ornt);
+//			}
+//			else if (rias->m_name.RCNM == 125)
+//			{
+//				m_comMap.Lookup(iKey, ccr);
+//				GetFullCurveData(fe, ccr, ornt);
+//			}
+//		}
+//	}
+//	return TRUE;
+//}
 
 BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 {
@@ -1494,13 +1336,11 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 	if (fe->m_geometry->GetType() == SGeometryType::CompositeCurve)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)fe->m_geometry;
-		//listCurveLink = geo->GetCurveList();
 		geo->GetCurveList(listCurveLink);
 	}
 	else if (fe->m_geometry->GetType() == SGeometryType::Surface)
 	{
 		SSurface* geo = (SSurface*)fe->m_geometry;
-		//listCurveLink = geo->GetCurveList();
 		geo->GetCurveList(listCurveLink);
 	}
 	else if (fe->m_geometry->GetType() == SGeometryType::Curve)
@@ -1530,13 +1370,11 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 	return TRUE;
 }
 
-
 void S101Cell::Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler)
 {
 	auto rt = D2->pRT;
 	rt->FillRectangle(D2D1::RectF(0, 0, 100, 100), D2->pBrush);
 }
-
 
 void S101Cell::Draw(HDC &hDC, Scaler *scaler, double offset)
 {
@@ -2482,43 +2320,36 @@ bool S101Cell::Check()
 {
 	if (GetCount_InformationRecord() != GetMetaCount_InformationRecord())
 	{
-		//OutputDebugString(L"error - Information Record count\n");
 		return false;
 	}
 
 	if (GetCount_PointRecord() != GetMetaCount_PointRecord())
 	{
-		//OutputDebugString(L"error - Point Record count\n");
 		return false;
 	}
 
 	if (GetCount_MultiPointRecord() != GetMetaCount_MultiPointRecord())
 	{
-		//OutputDebugString(L"error - Multi Point Record count\n");
 		return false;
 	}
 
 	if (GetCount_CurveRecord() != GetMetaCount_CurveRecord())
 	{
-		//OutputDebugString(L"error - Curve Record count\n");
 		return false;
 	}
 
 	if (GetCount_CompositeCurveRecord() != GetMetaCount_CompositeCurveRecord())
 	{
-		//OutputDebugString(L"error - Composite Curve Record count\n");
 		return false;
 	}
 
 	if (GetCount_SurfaceRecord() != GetMetaCount_SurfaceRecord())
 	{
-		//OutputDebugString(L"error - Surface Record count\n");
 		return false;
 	}
 
 	if (GetCount_FeatureTypeRecord() != GetMetaCount_FeatureTypeRecord())
 	{
-		//OutputDebugString(L"error - Feature Type Record count\n");
 		return false;
 	}
 
@@ -2530,7 +2361,6 @@ bool S101Cell::Update(S101Cell* cell)
 	updates.push_back(cell);
 	// Update base's dsgir.
 	// Update's nc update
-
 
 	//DSID update
 	m_dsgir.m_dsid.m_ensp = cell->m_dsgir.m_dsid.m_ensp;
@@ -2544,11 +2374,6 @@ bool S101Cell::Update(S101Cell* cell)
 	m_dsgir.m_dsid.m_dslg = cell->m_dsgir.m_dsid.m_dslg;
 	m_dsgir.m_dsid.m_dsab = cell->m_dsgir.m_dsid.m_dsab;
 	m_dsgir.m_dsid.m_dsed = cell->m_dsgir.m_dsid.m_dsed;
-
-
-
-
-
 
 	UpdateDsgirRecord(cell);//fix the table.
 
