@@ -1209,121 +1209,6 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoA
 	return TRUE;
 }
 
-//BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt)
-//{
-//	fe->m_geometry = new SCurve;
-//	fe->m_geometry->SetID(r->GetRCID());
-//
-//	if (ornt == 1)
-//	{
-//
-//	}
-//	else
-//	{
-//
-//	}
-//
-//	return TRUE;
-//}
-//
-//BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_CompositeRecord *r, int ornt)
-//{
-//	R_CurveRecord *cr = NULL;
-//	R_CompositeRecord *ccr = NULL;
-//	__int64 iKey;
-//
-//	// forward
-//	if (1 == ornt)
-//	{
-//		for (auto i = r->m_cuco.begin(); i != r->m_cuco.end(); i++)
-//		{
-//			F_CUCO* cucoParent = *i;
-//
-//			for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
-//			{
-//				auto cuco = *itor;
-//
-//				if (cuco->m_name.RCNM == 120)
-//				{
-//					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-//					m_curMap.Lookup(iKey, cr);
-//
-//					GetFullCurveData(fe, cr, cuco->m_ornt);
-//				}
-//				else if (cuco->m_name.RCNM == 125)
-//				{
-//					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-//					m_comMap.Lookup(iKey, ccr);
-//					GetFullCurveData(fe, ccr, cuco->m_ornt);
-//				}
-//			}
-//		}
-//	}
-//	else if (2 == ornt)
-//	{
-//		for (auto i = r->m_cuco.rbegin(); i != r->m_cuco.rend(); i++)
-//		{
-//			F_CUCO* cucoParent = *i;
-//
-//			for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
-//			{
-//				auto cuco = *itor;
-//
-//				if (cuco->m_name.RCNM == 120)
-//				{
-//					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-//					m_curMap.Lookup(iKey, cr);
-//
-//					GetFullCurveData(fe, cr, cuco->m_ornt);
-//				}
-//				else if (cuco->m_name.RCNM == 125)
-//				{
-//					iKey = ((__int64)cuco->m_name.RCNM) << 32 | cuco->m_name.RCID;
-//					m_comMap.Lookup(iKey, ccr);
-//					GetFullCurveData(fe, ccr, cuco->m_ornt);
-//				}
-//			}
-//		}
-//	}
-//
-//	return TRUE;
-//}
-//
-//BOOL S101Cell::GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int ornt)
-//{
-//	R_CurveRecord *cr = NULL;
-//	R_CompositeRecord *ccr = NULL;
-//	__int64 iKey;
-//
-//	for (auto itorParent = r->m_rias.begin(); itorParent != r->m_rias.end(); itorParent++)
-//	{
-//		F_RIAS* riasParent = *itorParent;
-//
-//		for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
-//		{
-//			RIAS* rias = *itor;
-//
-//			if (rias->m_ornt == 2)
-//			{
-//				ornt = (ornt == 2) ? 1 : 2;
-//			}
-//
-//			iKey = ((__int64)rias->m_name.RCNM) << 32 | rias->m_name.RCID;
-//			if (rias->m_name.RCNM == 120)
-//			{
-//				m_curMap.Lookup(iKey, cr);
-//				GetFullCurveData(fe, cr, ornt);
-//			}
-//			else if (rias->m_name.RCNM == 125)
-//			{
-//				m_comMap.Lookup(iKey, ccr);
-//				GetFullCurveData(fe, ccr, ornt);
-//			}
-//		}
-//	}
-//	return TRUE;
-//}
-
 BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 {
 	std::list<SCurve*> listCurveLink;
@@ -1613,7 +1498,6 @@ std::string S101Cell::GetEncodingSpecificationToString()
 void S101Cell::SetEncodingSpecificationEdition(CString value)
 {
 	m_dsgir.m_dsid.m_ened = value;
-
 }
 
 CString S101Cell::GetEncodingSpecificationEdition()
@@ -2391,8 +2275,6 @@ bool S101Cell::Update(S101Cell* cell)
 //Erase the details of the table and modify the new memory code of the update file.
 bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 {
-
-
 	//ATCS
 	F_CodeWithNumericCode* atcs = cell->m_dsgir.m_atcs;
 	if (atcs != nullptr)
@@ -2407,9 +2289,7 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 				m_dsgir.m_atcs->InsertCodeNumericCode(nc); //Add a value to the base.
 			}
 		}
-
 	}
-
 
 	//ITCS
 	F_CodeWithNumericCode* itcs = cell->m_dsgir.m_itcs;
@@ -2426,7 +2306,6 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 			}
 		}
 	}
-
 
 	//FTCS
 	F_CodeWithNumericCode* ftcs = cell->m_dsgir.m_ftcs;
@@ -2445,7 +2324,6 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 
 	}
 
-
 	//IACS
 	F_CodeWithNumericCode* iacs = cell->m_dsgir.m_iacs;
 	if (iacs != nullptr)
@@ -2462,8 +2340,6 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 		}
 	}
 
-
-
 	//FACS
 	F_CodeWithNumericCode* facs = cell->m_dsgir.m_facs;
 	if (facs != nullptr)
@@ -2479,7 +2355,6 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 			}
 		}
 	}
-
 
 	//ARCS
 	F_CodeWithNumericCode* arcs = cell->m_dsgir.m_arcs;
@@ -2498,11 +2373,8 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 		}
 	}
 
-
-
-
 	//chage Information Record ATTR 
-	_int64 infokey;
+	__int64 infokey;
 	POSITION pos = cell->m_infMap.GetStartPosition(); //change Update Attri to NC
 	while (pos != nullptr)
 	{
@@ -2520,7 +2392,7 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 	}
 
 	//point map
-	_int64 posKey;
+	__int64 posKey;
 	pos = cell->m_ptMap.GetStartPosition();
 	while (pos != nullptr)
 	{
@@ -2531,7 +2403,7 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 	}
 
 	//multi point
-	_int64 muitKey;
+	__int64 muitKey;
 	pos = cell->m_mpMap.GetStartPosition();
 	while (pos != nullptr)
 	{
@@ -2540,7 +2412,7 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 		UpdateInasField(mt->m_inas, iacs);
 	}
 
-	_int64 curKey;
+	__int64 curKey;
 	pos = cell->m_curMap.GetStartPosition();
 	while (pos != nullptr)
 	{
@@ -2550,8 +2422,7 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 		//PATS
 	}
 
-
-	_int64 conpoKey;
+	__int64 conpoKey;
 	pos = cell->m_comMap.GetStartPosition();
 	while (pos != nullptr)
 	{
@@ -2560,8 +2431,7 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 		UpdateInasField(com->m_inas, iacs);
 	}
 
-
-	_int64 surKey;
+	__int64 surKey;
 	pos = cell->m_surMap.GetStartPosition();
 	while (pos != nullptr)
 	{
@@ -2571,7 +2441,7 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 	}
 
 	//change FeatureType Record ATTR
-	_int64 feakey;
+	__int64 feakey;
 	pos = cell->m_feaMap.GetStartPosition(); //change Update Attri to NC
 	while (pos != nullptr)
 	{
@@ -2588,7 +2458,6 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 
 		//INAS
 		UpdateInasField(fe->m_inas, iacs);
-
 
 		//FASC
 		for (auto f_fasc : fe->m_fasc)
@@ -2640,7 +2509,7 @@ bool S101Cell::UpdateInasField(std::list<F_INAS*> Update, F_CodeWithNumericCode*
 
 bool S101Cell::UpdateInfMapRecord(S101Cell* cell)
 {
-	_int64 key;
+	__int64 key;
 	POSITION pos = cell->m_infMap.GetStartPosition();
 
 	while (pos != NULL)
@@ -2809,9 +2678,8 @@ bool S101Cell::UpdateINASRecord(std::list<F_INAS*> Update, std::list<F_INAS*> Ba
 bool S101Cell::UpdatePtMapRecord(S101Cell* cell) //point
 {
 	//change point Record value
-	_int64 key;
+	__int64 key;
 	POSITION pos = cell->m_ptMap.GetStartPosition();
-
 
 	while (pos != NULL)
 	{
@@ -2863,7 +2731,7 @@ bool S101Cell::UpdatePtMapRecord(S101Cell* cell) //point
 
 bool S101Cell::UpdateMpMapRecord(S101Cell* cell) //multi point
 {
-	_int64 key;
+	__int64 key;
 	POSITION pos = cell->m_mpMap.GetStartPosition();
 
 	while (pos != NULL)
@@ -2959,7 +2827,7 @@ bool S101Cell::UpdateC3ILRecord(std::list<F_C3IL*> Updates, std::list<F_C3IL*> b
 
 bool S101Cell::UpdateCurMapRecord(S101Cell* cell) //curve Record.
 {
-	_int64 key;
+	__int64 key;
 	POSITION pos = cell->m_curMap.GetStartPosition();
 
 	while (pos != NULL)
@@ -3024,7 +2892,7 @@ bool S101Cell::UpdateCurMapRecord(S101Cell* cell) //curve Record.
 
 bool S101Cell::UpdateComMapRecord(S101Cell* cell)// Composite Curve
 {
-	_int64 key;
+	__int64 key;
 	POSITION pos = cell->m_comMap.GetStartPosition();
 
 	while (pos != NULL)
@@ -3123,7 +2991,7 @@ bool S101Cell::UpdateComMapRecord(S101Cell* cell)// Composite Curve
 
 bool S101Cell::UpdateSurMapRecord(S101Cell* cell)
 {
-	_int64 key;
+	__int64 key;
 	POSITION pos = cell->m_surMap.GetStartPosition();
 	while (pos != NULL)
 	{
@@ -3192,7 +3060,7 @@ bool S101Cell::UpdateSurMapRecord(S101Cell* cell)
 bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 {
 
-	_int64 key;
+	__int64 key;
 	POSITION pos = cell->m_feaMap.GetStartPosition(); //value that came to change.
 
 	while (pos != NULL)

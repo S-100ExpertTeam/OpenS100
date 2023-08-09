@@ -17,7 +17,6 @@ public:
 
 public:
 	F_CCID             m_ccid;
-	std::list<F_INAS*> m_inas;
 	F_CCOC*            m_ccoc = nullptr;
 	std::list<F_CUCO*> m_cuco;
 

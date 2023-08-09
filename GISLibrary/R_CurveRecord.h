@@ -23,9 +23,6 @@ public:
 	// B, U: <1> (4)
 	F_CRID m_crid;
 
-	// B, U : <0..*> (5\\*5)
-	std::list<F_INAS*> m_inas;
-
 	// B : <1> (*3)
 	// U : <0..1> (*3)
 	F_PTAS* m_ptas = nullptr;

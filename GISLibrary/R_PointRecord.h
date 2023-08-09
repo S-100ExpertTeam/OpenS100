@@ -19,7 +19,6 @@ public:
 
 public:
 	F_PRID m_prid;
-	std::list<F_INAS*> m_inas; 
 	F_C2IT* m_c2it = nullptr;
 	F_C3IT* m_c3it = nullptr;
 

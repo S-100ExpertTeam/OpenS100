@@ -142,11 +142,6 @@ public:
 	BOOL GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT = 1); //
 	BOOL GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoArr, int ORNT = 1); // 
 
-	// Set R_FeatureRecord::m_curveList from Vector record
-	//BOOL GetFullCurveData(R_FeatureRecord* fe, R_CurveRecord *r, int ornt = 1);
-	//BOOL GetFullCurveData(R_FeatureRecord* fe, R_CompositeRecord *r, int ornt = 1);
-	//BOOL GetFullCurveData(R_FeatureRecord* fe, R_SurfaceRecord *r, int ornt = 1);
-
 	BOOL GetFullMaskData(R_FeatureRecord* fe);
 
 	void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler);

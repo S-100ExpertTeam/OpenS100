@@ -13,7 +13,6 @@ public:
 
 public:
 	F_SRID m_srid;
-	std::list<F_INAS*> m_inas;
 	std::list<F_RIAS*> m_rias; 
 
 public:

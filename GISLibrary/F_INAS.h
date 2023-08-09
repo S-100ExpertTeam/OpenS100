@@ -49,5 +49,7 @@ public:
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
+
+	std::vector<ATTR*> GetAllAttributes();
 };
 

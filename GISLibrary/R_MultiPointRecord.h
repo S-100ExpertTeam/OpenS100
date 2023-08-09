@@ -15,7 +15,6 @@ public:
 
 public:
 	F_MRID m_mrid;
-	std::list<F_INAS*> m_inas;
 	F_COCC* m_cocc = nullptr; // Only Update
 	std::list<F_C2IL*> m_c2il;
 	std::list<F_C3IL*> m_c3il;

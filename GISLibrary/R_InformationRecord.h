@@ -44,7 +44,6 @@ public:
 	std::vector<F_INAS*> GetAllInformationAssociations();
 
 	int GetAttributeIndex(ATTR* attr);
-	
 
 public: // override ObjectType
 	std::string GetID() override;

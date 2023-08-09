@@ -112,3 +112,13 @@ int F_INAS::GetFieldLength()
 
 	return ++len;
 }
+
+std::vector<ATTR*> F_INAS::GetAllAttributes()
+{
+	std::vector<ATTR*> result;
+	for (auto i = m_arr.begin(); i != m_arr.end(); i++) {
+		result.push_back(*i);
+	}
+
+	return result;
+}
