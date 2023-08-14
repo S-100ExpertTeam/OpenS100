@@ -21,7 +21,7 @@ Layer* SpatialObject::GetLayer()
 	return m_pLayer;
 }
 
-void SpatialObject::SetFilePath(CString& value)
+void SpatialObject::SetFilePath(CString value)
 {
 	m_FilePath = value;
 	int index= value.ReverseFind('\\');
@@ -35,11 +35,10 @@ CString SpatialObject::GetFilePath()
 	return m_FilePath;
 }
 
-void SpatialObject::SetFileName(CString& value)
+void SpatialObject::SetFileName(CString value)
 {
 	m_FileName = value;
 }
-
 
 CString SpatialObject::GetFileName()
 {

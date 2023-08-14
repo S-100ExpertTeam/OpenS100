@@ -33,10 +33,10 @@ public:
 	void SetLayer(Layer* value);
 	Layer* GetLayer();
 
-	void SetFilePath(CString& value);
+	void SetFilePath(CString value);
 	CString GetFilePath();
 
-	void SetFileName(CString& value);
+	void SetFileName(CString value);
 	CString GetFileName();
 
 	void SetFileType(S100_FileType value);

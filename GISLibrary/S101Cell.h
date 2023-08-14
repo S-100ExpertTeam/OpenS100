@@ -99,6 +99,8 @@ public:
 
 	bool OpenBy000(CString path);
 	bool OpenByGML(CString path);
+
+	bool Read8211(std::wstring path);
 	
 	bool ConvertFromS101GML(S10XGML& gml);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType);

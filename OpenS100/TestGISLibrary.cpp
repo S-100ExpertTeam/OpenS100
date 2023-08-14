@@ -109,11 +109,18 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 
 void TestGISLibrary::OffFeature()
 {
-	// 수심영역 Off
+	// Off "DepthArea" feature
 	theApp.gisLib->SetFeatureOnOff(L"DepthArea", false);
 
-	// 수심 Off
+	// Off "Sounding" feature
 	theApp.gisLib->SetFeatureOnOff(L"Sounding", false);
 
 	theApp.pView->MapRefresh();
+}
+
+void TestGISLibrary::OpenUpdate()
+{
+	S101Cell cell;
+	cell.Read8211(L"..\\SampleData\\101GB00GB5X01SW.001");
+	return;
 }

@@ -321,6 +321,125 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 	return false;
 }
 
+bool S101Cell::Read8211(std::wstring path)
+{
+	SetFilePath(path.c_str());
+
+	USES_CONVERSION;
+
+	RemoveAll();
+
+	CFile file;
+	if (!file.Open(path.c_str(), CFile::modeRead))
+	{
+		return false;
+	}
+
+	BYTE* pBuf = nullptr;
+	BYTE* sBuf = nullptr;
+	BYTE* endOfBuf = nullptr;
+
+	LONGLONG fileLength = file.GetLength();
+
+	pBuf = new BYTE[(unsigned int)fileLength];
+	sBuf = pBuf;
+
+	file.Read(pBuf, (unsigned)fileLength);
+
+	endOfBuf = pBuf + fileLength - 1;
+
+	file.Close();
+
+	ReadDDR(pBuf);
+
+	DRDirectoryInfo drDir;
+
+	int tcnt = 0;
+	while (pBuf < endOfBuf)
+	{
+		auto curRecordAddress = pBuf;
+
+		tcnt++;
+		DRReader drReader;
+		int subFieldCount = 0;
+		drReader.ReadReader(pBuf);
+		subFieldCount = (drReader.m_fieldAreaLoc - DR_LENGTH - 1) / (4 + drReader.m_fieldLength + drReader.m_fieldPosition);
+
+		if (subFieldCount < 1)
+		{
+			continue;
+		}
+
+		drDir.ReAllocateDirectory(subFieldCount);
+
+		drDir.ReadDir(drReader, pBuf);
+
+		if (*(pBuf++) != 0x1E)
+		{
+		}
+
+		if (strcmp(drDir.GetDirectory(0)->tag, "DSID") == 0)
+		{
+			m_dsgir.ReadRecord(&drDir, pBuf);
+		}
+		else if (strcmp(drDir.GetDirectory(0)->tag, "CSID") == 0)
+		{
+			m_dscrs.ReadRecord(&drDir, pBuf);
+		}
+
+		else if (strcmp(drDir.GetDirectory(0)->tag, "IRID") == 0)
+		{
+			R_InformationRecord* r = new R_InformationRecord();
+			r->ReadRecord(&drDir, pBuf);
+			InsertInformationRecord(r->m_irid.m_name.GetName(), r);
+		}
+
+		else if (strcmp(drDir.GetDirectory(0)->tag, "PRID") == 0)
+		{
+			R_PointRecord* r = new R_PointRecord();
+			r->ReadRecord(&drDir, pBuf);
+			auto names = r->m_prid.m_name.GetName();
+			InsertPointRecord(r->m_prid.m_name.GetName(), r);
+		}
+		else if (strcmp(drDir.GetDirectory(0)->tag, "MRID") == 0)
+		{
+			R_MultiPointRecord* r = new R_MultiPointRecord();
+			r->ReadRecord(&drDir, pBuf);
+			InsertMultiPointRecord(r->m_mrid.m_name.GetName(), r);
+		}
+		else if (strcmp(drDir.GetDirectory(0)->tag, "CRID") == 0)
+		{
+			R_CurveRecord* r = new R_CurveRecord();
+			r->ReadRecord(&drDir, pBuf);
+			InsertCurveRecord(r->m_crid.m_name.GetName(), r);
+		}
+		else if (strcmp(drDir.GetDirectory(0)->tag, "CCID") == 0)
+		{
+			R_CompositeRecord* r = new R_CompositeRecord();
+			r->ReadRecord(&drDir, pBuf);
+			InsertCompositeCurveRecord(r->m_ccid.m_name.GetName(), r);
+		}
+		else if (strcmp(drDir.GetDirectory(0)->tag, "SRID") == 0)
+		{
+			R_SurfaceRecord* r = new R_SurfaceRecord();
+			r->ReadRecord(&drDir, pBuf);
+			InsertSurfaceRecord(r->m_srid.m_name.GetName(), r);
+		}
+		else if (strcmp(drDir.GetDirectory(0)->tag, "FRID") == 0)
+		{
+			R_FeatureRecord* r = new R_FeatureRecord();
+			r->ReadRecord(&drDir, pBuf);
+			InsertFeatureRecord(r->m_frid.m_name.GetName(), r);
+		}
+
+		pBuf = curRecordAddress + drReader.m_recordLength;
+	}
+
+	delete[] sBuf;
+
+	return true;
+}
+
 bool S101Cell::OpenBy000(CString path)
 {
 	SetFilePath(path);
@@ -329,111 +448,7 @@ bool S101Cell::OpenBy000(CString path)
 
 	RemoveAll();
 
-	CFile file;
-	if (file.Open(path, CFile::modeRead))
-	{
-		BYTE* pBuf = nullptr;
-		BYTE* sBuf = nullptr;
-		BYTE* endOfBuf = nullptr;
-
-		LONGLONG fileLength = file.GetLength();
-
-		pBuf = new BYTE[(unsigned int)fileLength];
-		sBuf = pBuf;
-
-		file.Read(pBuf, (unsigned)fileLength);
-
-		endOfBuf = pBuf + fileLength - 1;
-
-		file.Close();
-
-		ReadDDR(pBuf);
-
-		DRDirectoryInfo drDir;
-
-		int tcnt = 0;
-		while (pBuf < endOfBuf)
-		{
-			auto curRecordAddress = pBuf;
-
-			tcnt++;
-			DRReader drReader;
-			int subFieldCount = 0;
-			drReader.ReadReader(pBuf);
-			subFieldCount = (drReader.m_fieldAreaLoc - DR_LENGTH - 1) / (4 + drReader.m_fieldLength + drReader.m_fieldPosition);
-
-			if (subFieldCount < 1)
-			{
-				continue;
-			}
-
-			drDir.ReAllocateDirectory(subFieldCount);
-
-			drDir.ReadDir(drReader, pBuf);
-
-			if (*(pBuf++) != 0x1E)
-			{
-			}
-
-			if (strcmp(drDir.GetDirectory(0)->tag, "DSID") == 0)
-			{
-				m_dsgir.ReadRecord(&drDir, pBuf);
-			}
-			else if (strcmp(drDir.GetDirectory(0)->tag, "CSID") == 0)
-			{
-				m_dscrs.ReadRecord(&drDir, pBuf);
-			}
-
-			else if (strcmp(drDir.GetDirectory(0)->tag, "IRID") == 0)
-			{
-				R_InformationRecord* r = new R_InformationRecord();
-				r->ReadRecord(&drDir, pBuf);
-				InsertInformationRecord(r->m_irid.m_name.GetName(), r);
-			}
-
-			else if (strcmp(drDir.GetDirectory(0)->tag, "PRID") == 0)
-			{
-				R_PointRecord* r = new R_PointRecord();
-				r->ReadRecord(&drDir, pBuf);
-				auto names = r->m_prid.m_name.GetName();
-				InsertPointRecord(r->m_prid.m_name.GetName(), r);
-			}
-			else if (strcmp(drDir.GetDirectory(0)->tag, "MRID") == 0)
-			{
-				R_MultiPointRecord* r = new R_MultiPointRecord();
-				r->ReadRecord(&drDir, pBuf);
-				InsertMultiPointRecord(r->m_mrid.m_name.GetName(), r);
-			}
-			else if (strcmp(drDir.GetDirectory(0)->tag, "CRID") == 0)
-			{
-				R_CurveRecord* r = new R_CurveRecord();
-				r->ReadRecord(&drDir, pBuf);
-				InsertCurveRecord(r->m_crid.m_name.GetName(), r);
-			}
-			else if (strcmp(drDir.GetDirectory(0)->tag, "CCID") == 0)
-			{
-				R_CompositeRecord* r = new R_CompositeRecord();
-				r->ReadRecord(&drDir, pBuf);
-				InsertCompositeCurveRecord(r->m_ccid.m_name.GetName(), r);
-			}
-			else if (strcmp(drDir.GetDirectory(0)->tag, "SRID") == 0)
-			{
-				R_SurfaceRecord* r = new R_SurfaceRecord();
-				r->ReadRecord(&drDir, pBuf);
-				InsertSurfaceRecord(r->m_srid.m_name.GetName(), r);
-			}
-			else if (strcmp(drDir.GetDirectory(0)->tag, "FRID") == 0)
-			{
-				R_FeatureRecord* r = new R_FeatureRecord();
-				r->ReadRecord(&drDir, pBuf);
-				InsertFeatureRecord(r->m_frid.m_name.GetName(), r);
-			}
-
-			pBuf = curRecordAddress + drReader.m_recordLength;
-		}
-
-		delete[] sBuf;
-
+	if (Read8211(std::wstring(path))) {
 		MakeFullSpatialData();
 
 		CalcMBR();
