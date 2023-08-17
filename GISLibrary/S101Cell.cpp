@@ -89,29 +89,13 @@ S101Cell::S101Cell(FeatureCatalogue* fc) : S100SpatialObject()
 
 S101Cell::~S101Cell()
 {
-	if (IsUpdate())
+	if (isUpdate())
 	{
 		UpdateRemoveAll();
 	}
 	else //BASE file
 	{
 		RemoveAll();
-	}
-}
-
-bool S101Cell::IsUpdate()
-{
-	CString filename = GetFileName();
-	CString exten = LibMFCUtil::GetExtension(filename);
-
-	if (exten.Compare(L"000") == 0 ||
-		exten.CompareNoCase(L"gml") == 0)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
 	}
 }
 
@@ -438,6 +422,15 @@ bool S101Cell::Read8211(std::wstring path)
 	delete[] sBuf;
 
 	return true;
+}
+
+bool S101Cell::isUpdate()
+{
+	if (!m_dsgir.m_dsid.m_prof.Compare(L"2")) {
+		return true;
+	}
+
+	return false;
 }
 
 bool S101Cell::OpenBy000(CString path)
