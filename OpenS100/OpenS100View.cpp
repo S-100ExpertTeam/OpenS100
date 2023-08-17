@@ -92,7 +92,6 @@ END_MESSAGE_MAP()
 COpenS100View::COpenS100View() 
 {
 	theApp.pView = this;
-	TestGISLibrary::OpenUpdate();
 }
 
 COpenS100View::~COpenS100View()
