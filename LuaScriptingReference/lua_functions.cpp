@@ -304,12 +304,9 @@ lua_ref_ptr CreateAttributeConstraints(lua_session *ls, AttributeConstraints *at
 	std::optional<double> rangeUpper;
 	std::optional<std::string> rangeClosure;
 
-	if (std::string(attribute_constraints->range.Getvalue().begin(), attribute_constraints->range.Getvalue().end()) != "")
-	{
-		rangeLower = attribute_constraints->range.GetLowerBound();
-		rangeUpper = attribute_constraints->range.GetUpperBound();
-		rangeClosure = std::string(attribute_constraints->range.GetIntervalType().GetValueString().begin(), attribute_constraints->range.GetIntervalType().GetValueString().end());
-	}
+	rangeLower = attribute_constraints->range.GetLowerBound();
+	rangeUpper = attribute_constraints->range.GetUpperBound();
+	rangeClosure = IntervalTypeToString(attribute_constraints->range.GetIntervalType());
 
 	std::optional<std::string> textPattern = std::string(attribute_constraints->textPattern.begin(), attribute_constraints->textPattern.end());
 

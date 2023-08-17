@@ -708,6 +708,24 @@
     <ClCompile Include="SAbstractCurve.cpp">
       <Filter>S100\SGeometry</Filter>
     </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="Measure.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="Length.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="Angle.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="indeterminatePosition.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="IndeterminateDate.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -1429,6 +1447,24 @@
     </ClInclude>
     <ClInclude Include="SAbstractCurve.h">
       <Filter>S100\SGeometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="Measure.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="Length.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="Angle.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="indeterminatePosition.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="IndeterminateDate.h">
+      <Filter>S100</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

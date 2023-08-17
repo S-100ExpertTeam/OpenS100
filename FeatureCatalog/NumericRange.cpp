@@ -29,7 +29,7 @@ void NumericRange::GetContents(pugi::xml_node& node)
 
 		else if (!strcmp(instructionName, "S100Base:intervalType"))
 		{
-			intervalType.GetContents(instruction);
+			intervalType = stringToIntervalType(instruction.child_value());
 		}
 	}
 }

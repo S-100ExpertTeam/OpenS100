@@ -246,6 +246,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Angle.cpp" />
     <ClCompile Include="ATTR.cpp" />
     <ClCompile Include="C3IL.cpp" />
     <ClCompile Include="CatalogManager.cpp" />
@@ -345,11 +346,16 @@
     <ClCompile Include="C2IL.cpp" />
     <ClCompile Include="GF_FeatureAssociationType.cpp" />
     <ClCompile Include="GF_ObjectType.cpp" />
+    <ClCompile Include="IndeterminateDate.cpp" />
+    <ClCompile Include="indeterminatePosition.cpp" />
     <ClCompile Include="ISO8211Fuc.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LayerManager.cpp" />
     <ClCompile Include="Leader.cpp" />
+    <ClCompile Include="Length.cpp" />
     <ClCompile Include="MASK.cpp" />
+    <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Measure.cpp" />
     <ClCompile Include="OrientedCurveRecord.cpp" />
     <ClCompile Include="PCOutputSchemaManager.cpp" />
     <ClCompile Include="ProcessS101.cpp" />
@@ -467,6 +473,7 @@
     <ClCompile Include="VerticalDatumReference.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Angle.h" />
     <ClInclude Include="ATTR.h" />
     <ClInclude Include="C3IL.h" />
     <ClInclude Include="CatalogManager.h" />
@@ -494,6 +501,11 @@
     <ClInclude Include="H5_RootGroup.h" />
     <ClInclude Include="H5_ValuesGroup.h" />
     <ClInclude Include="HDF5Wrapper.h" />
+    <ClInclude Include="IndeterminateDate.h" />
+    <ClInclude Include="indeterminatePosition.h" />
+    <ClInclude Include="Length.h" />
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Measure.h" />
     <ClInclude Include="PugixmlElement.h" />
     <ClInclude Include="GML_Envelop.h" />
     <ClInclude Include="GML_FeatureType.h" />
