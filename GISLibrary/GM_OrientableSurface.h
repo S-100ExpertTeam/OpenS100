@@ -1,3 +1,5 @@
+#pragma once
+
 #include "GM_Primitive.h"
 
 namespace GM

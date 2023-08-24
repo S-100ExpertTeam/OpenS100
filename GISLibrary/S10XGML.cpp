@@ -40,11 +40,6 @@ bool S10XGML::Open(CString _filepath)
 
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(path.c_str()); 
-
-	//auto productNumber = GetProductNumber();
-	//std::string rootName = "S" + std::to_string(productNumber) + ":Dataset";
-
-	//pugi::xml_node root = doc.child(rootName.c_str());
 	pugi::xml_node root = doc.first_child();
 
 	auto child = root.first_child();
@@ -56,7 +51,6 @@ bool S10XGML::Open(CString _filepath)
 		{
 			envelop.Read(child);
 		}
-		//else if (strcmp(child.name(), "S100:DatasetIdentificationInformation") == 0)
 		else if (childName.find("DatasetIdentificationInformation") != std::string::npos)
 		{
 			datasetIdentificationInformation.Read(child);
@@ -67,27 +61,45 @@ bool S10XGML::Open(CString _filepath)
 		}
 		else if (strcmp(child.name(), "S100:Point") == 0)
 		{
-			ReadPoint(child);
+			auto point = ReadPoint(child);
+			if (point) {
+				AddGeometry(point);
+			}
 		}
 		else if (strcmp(child.name(), "S100:MultiPoint") == 0)
 		{
-			ReadMultiPoint(child);
+			auto multiPoint = ReadMultiPoint(child);
+			if (multiPoint) {
+				AddGeometry(multiPoint);
+			}
 		}
 		else if (strcmp(child.name(), "S100:Curve") == 0)
 		{
-			ReadCurve(child);
+			auto curve = ReadCurve(child);
+			if (curve) {
+				AddGeometry(curve);
+			}
 		}	
 		else if (strcmp(child.name(), "S100:OrientableCurve") == 0)
 		{
-			ReadOrientableCurve(child);
+			auto orientableCurve = ReadOrientableCurve(child);
+			if (orientableCurve) {
+				AddGeometry(orientableCurve);
+			}
 		}
 		else if (strcmp(child.name(), "S100:CompositeCurve") == 0)
 		{
-			ReadCompositeCurve(child);
+			auto compositeCurve = ReadCompositeCurve(child);
+			if (compositeCurve) {
+				AddGeometry(compositeCurve);
+			}
 		}
 		else if (strcmp(child.name(), "S100:Surface") == 0)
 		{
-			ReadSurface(child);
+			auto surface = ReadSurface(child);
+			if (surface) {
+				AddGeometry(surface);
+			}
 		}
 		else if (strcmp(child.name(), "imember") == 0)
 		{
@@ -102,6 +114,43 @@ bool S10XGML::Open(CString _filepath)
 	}
 
 	return true;
+}
+
+bool S10XGML::SaveToInputXML(std::string path)
+{
+	auto xsd = "S" + std::to_string(GetProductNumber()) + "DataModel.xsd";
+
+	pugi::xml_document doc;
+
+	auto declarationNode = doc.append_child(pugi::node_declaration);
+	declarationNode.append_attribute("version") = "1.0";
+	declarationNode.append_attribute("encoding") = "UTF-8";
+
+	auto root = doc.append_child("Dataset");
+	root.append_attribute("xmlns:xsi").set_value("http://www.w3.org/2001/XMLSchema-instance");
+	root.append_attribute("xmlns:S100").set_value("http://www.iho.int/S100BaseModel");
+	root.append_attribute("xmlns:noNamespaceSchemaLocation").set_value(xsd.c_str());
+
+	auto infomationTypes = root.append_child("InformationTypes");
+	auto featureTypes = root.append_child("Features");
+
+	WriteInputXML_FeatureTypes(featureTypes);
+
+	doc.save_file(path.c_str());
+
+	return true;
+}
+
+GM::Object* S10XGML::GetGeometry(std::string id)
+{
+	for (auto i = geometries.begin(); i != geometries.end(); i++) {
+		auto geometry = (*i);
+		if (!geometry->GetID().compare(id)) {
+			return geometry;
+		}
+	}
+
+	return nullptr;
 }
 
 bool S10XGML::ReadMembers(pugi::xml_node& node)
@@ -122,7 +171,7 @@ bool S10XGML::ReadMembers(pugi::xml_node& node)
 			auto info = fc->GetInformationType(code);
 			if (info)
 			{
-				ReadInformation(child, fc, info);
+				ReadInformation(child, fc);
 			}
 		}
 
@@ -132,12 +181,13 @@ bool S10XGML::ReadMembers(pugi::xml_node& node)
 	return true;
 }
 
-bool S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc)
+GF::FeatureType* S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc)
 {
 	auto feature = new GF::FeatureType();
 
 	feature->id = node.attribute("gml:id").value();
 	feature->code = node.name();
+	feature->code = DeleteXMLNamespace(feature->code);
 
 	features.push_back(feature);
 
@@ -162,10 +212,10 @@ bool S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc)
 
 		child = child.next_sibling();
 	}
-	return true;
+	return feature;
 }
 
-bool S10XGML::ReadInformation(pugi::xml_node& node, FeatureCatalogue* fc, InformationType* informationType)
+GF::InformationType* S10XGML::ReadInformation(pugi::xml_node& node, FeatureCatalogue* fc)
 {
 	auto information = new GF::InformationType();
 
@@ -191,10 +241,10 @@ bool S10XGML::ReadInformation(pugi::xml_node& node, FeatureCatalogue* fc, Inform
 
 		child = child.next_sibling();
 	}
-	return true;
+	return information;
 }
 
-bool S10XGML::ReadPoint(pugi::xml_node& node)
+GM::Point* S10XGML::ReadPoint(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
 	std::string srsName = node.attribute("srsName").value();
@@ -225,12 +275,10 @@ bool S10XGML::ReadPoint(pugi::xml_node& node)
 	object->position.SetX(lon);
 	object->position.SetY(lat);
 
-	geometries.push_back(object);
-		
-	return true;
+	return object;
 }
 
-bool S10XGML::ReadMultiPoint(pugi::xml_node& node)
+GM::MultiPoint* S10XGML::ReadMultiPoint(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
 
@@ -257,12 +305,10 @@ bool S10XGML::ReadMultiPoint(pugi::xml_node& node)
 		nodePoint = nodePoint.next_sibling();
 	}
 
-	geometries.push_back(object);
-
-	return true;
+	return object;
 }
 
-bool S10XGML::ReadCurve(pugi::xml_node& node)
+GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
 
@@ -278,7 +324,6 @@ bool S10XGML::ReadCurve(pugi::xml_node& node)
 
 	auto object = new GM::Curve();
 	object->SetID(gmlID);
-	geometries.push_back(object);
 
 	for (int i = 0; i < posCnt; i += 2)
 	{
@@ -287,10 +332,10 @@ bool S10XGML::ReadCurve(pugi::xml_node& node)
 		object->Add(lon, lat);
 	}
 
-	return true;
+	return object;
 }
 
-bool S10XGML::ReadOrientableCurve(pugi::xml_node& node)
+GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
 	auto strOrientation = node.attribute("orientation").value();
@@ -299,24 +344,54 @@ bool S10XGML::ReadOrientableCurve(pugi::xml_node& node)
 		return false;
 	}
 
-	std::string baseCurveID = node.child("gml:baseCurve").attribute("xlink:href").value();
+	auto node_baseCurve = node.child("gml:baseCurve");
+	auto attr_baseCurve_href = node_baseCurve.attribute("xlink:href");
 
-	if ((baseCurveID.length() > 1) && 
-		(baseCurveID.at(0) == '#'))
-	{
-		baseCurveID = baseCurveID.substr(1);
+	if (attr_baseCurve_href) {
+		std::string baseCurveID = attr_baseCurve_href.value();
 
-		auto object = new GM::OrientableCurve(baseCurveID);
-		object->SetID(gmlID);
-		geometries.push_back(object);
+		if ((baseCurveID.length() > 1) &&
+			(baseCurveID.at(0) == '#'))
+		{
+			baseCurveID = baseCurveID.substr(1);
 
-		return true;
+			auto object = new GM::OrientableCurve(baseCurveID);
+			object->SetID(gmlID);
+
+			return object;
+		}
+	}
+	else {
+		auto node_curve = node_baseCurve.first_child();
+		std::string node_curve_name = node_curve.name();
+
+		if (!node_curve_name.compare("S100:Curve")) {
+			auto curve = ReadCurve(node_curve);
+			if (curve) {
+				AddGeometry(curve);
+				return curve;
+			}
+		}
+		else if (!node_curve_name.compare("S100:CompositeCurve")) {
+			auto compositeCurve = ReadCompositeCurve(node_curve);
+			if (compositeCurve) {
+				AddGeometry(compositeCurve);
+				return compositeCurve;
+			}
+		}
+		else if (!node_curve_name.compare("S100:OrientableCurve")) {
+			auto orientableCurve = ReadOrientableCurve(node_curve);
+			if (orientableCurve) {
+				AddGeometry(orientableCurve);
+				return orientableCurve;
+			}
+		}
 	}
 
-	return false;
+	return nullptr;
 }
 
-bool S10XGML::ReadCompositeCurve(pugi::xml_node& node)
+GM::CompositeCurve* S10XGML::ReadCompositeCurve(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
 	auto child = node.child("gml:curveMember");
@@ -326,64 +401,139 @@ bool S10XGML::ReadCompositeCurve(pugi::xml_node& node)
 
 	while (child)
 	{
-		std::string curveMemberID = child.attribute("xlink:href").value();
-		if (curveMemberID.length() <= 1 &&
-			curveMemberID.at(0) != '#')
-		{
-			delete object;
-			return false;
+		auto attr_href = child.attribute("xlink:href");
+		if (attr_href) {
+			std::string curveMemberID = attr_href.value();
+			if (curveMemberID.length() > 1 &&
+				curveMemberID.at(0) == '#')
+			{
+				object->Add(curveMemberID);
+			}
 		}
-
-		object->Add(curveMemberID);
+		else {
+			auto node_curve = child.first_child();
+			std::string node_curve_name = node_curve.name();
+			if (!node_curve_name.compare("S100:Curve")) {
+				auto curve = ReadCurve(node_curve);
+				if (curve) {
+					object->Add(*curve);
+					AddGeometry(curve);
+				}
+			}
+			else if (!node_curve_name.compare("S100:CompositeCurve")) {
+				auto compositeCurve = ReadCompositeCurve(node_curve);
+				if (compositeCurve) {
+					object->Add(*compositeCurve);
+					AddGeometry(compositeCurve);
+				}
+			}
+			else if (!node_curve_name.compare("S100:OrientableCurve")) {
+				auto orientableCurve = ReadOrientableCurve(node_curve);
+				if (orientableCurve) {
+					object->Add(*orientableCurve);
+					AddGeometry(orientableCurve);
+				}
+			}
+		}
 		child = child.next_sibling("gml:curveMember");
 	}
 
-	geometries.push_back(object);
-
-	return true;
+	return object;
 }
 
-bool S10XGML::ReadSurface(pugi::xml_node& node)
+GM::Surface* S10XGML::ReadSurface(pugi::xml_node& node)
 {
-	std::string exteriorCurveMemberID = node.child("gml:patches").child("gml:PolygonPatch")
-		.child("gml:exterior").child("gml:Ring").child("gml:curveMember").attribute("xlink:href").value();
-
-	if (exteriorCurveMemberID.length() <= 1)
-	{
-		return false;
-	}
-	else
-	{
-		exteriorCurveMemberID = exteriorCurveMemberID.substr(1);
-	}
-
 	auto object = new GM::Surface();
 
 	std::string gmlID = node.attribute("gml:id").value();
+	std::string srsName = node.attribute("srsName").value();
+
 	object->SetID(gmlID);
-	geometries.push_back(object);
 
-	object->SetExteriorRingID(exteriorCurveMemberID);
+	// Exterior
+	auto node_exterior = node.child("gml:patches").child("gml:PolygonPatch").child("gml:exterior");
+	auto node_exterior_curveMember = node_exterior.child("gml:Ring").child("gml:curveMember");
 
-	auto nodeInterior = node.child("gml:patches").child("gml:PolygonPatch").child("gml:interior");
-	while (nodeInterior)
-	{
-		std::string interiorCurveMemberID = nodeInterior.child("gml:Ring").child("gml:curveMember").attribute("xlink:href").value();
-
-		if (interiorCurveMemberID.length() > 1)
+	auto exterior_href = node_exterior_curveMember.attribute("xlink:href");
+	if (exterior_href) {
+		std::string exteriorCurveMemberID = exterior_href.value();
+		if (exteriorCurveMemberID.length() > 1)
 		{
-			interiorCurveMemberID = interiorCurveMemberID.substr(1);
+			exteriorCurveMemberID = exteriorCurveMemberID.substr(1);
+			object->SetExteriorRingID(exteriorCurveMemberID);
 		}
-		else
-		{
-			break;
+	} 
+	else {
+		auto node_curve = node_exterior_curveMember.first_child();
+		std::string node_curve_name = node_curve.name();
+		if (!node_curve_name.compare("S100:Curve")) {
+			auto curve = ReadCurve(node_curve);
+			if (curve) {
+				object->SetExteriorRing(*curve);
+				AddGeometry(curve);
+			}
 		}
-
-		object->AddInteriorRingID(interiorCurveMemberID);
-		nodeInterior = nodeInterior.next_sibling("gml:interior");
+		else if (!node_curve_name.compare("S100:CompositeCurve")) {
+			auto compositeCurve = ReadCompositeCurve(node_curve);
+			if (compositeCurve) {
+				object->SetExteriorRing(*compositeCurve);
+				AddGeometry(compositeCurve);
+			}
+		}
+		else if (!node_curve_name.compare("S100:OrientableCurve")) {
+			auto orientableCurve = ReadOrientableCurve(node_curve);
+			if (orientableCurve) {
+				object->SetExteriorRing(*orientableCurve);
+				AddGeometry(orientableCurve);
+			}
+		}
 	}
 
-	return true; 
+	// Interior
+	auto node_interior = node.child("gml:patches").child("gml:PolygonPatch").child("gml:interior");
+	while (node_interior)
+	{
+		auto node_interior_curveMember = node_interior.child("gml:Ring").child("gml:curveMember");
+		auto interior_href = node_interior_curveMember.attribute("xlink:href");
+
+		if (interior_href) {
+			std::string interiorCurveMemberID = interior_href.value();
+			if (interiorCurveMemberID.length() > 1)
+			{
+				interiorCurveMemberID = interiorCurveMemberID.substr(1);
+				object->AddInteriorRingID(interiorCurveMemberID);
+			}
+		}
+		else {
+			auto node_curve = node_interior_curveMember.first_child();
+			std::string node_curve_name = node_curve.name();
+			if (!node_curve_name.compare("S100:Curve")) {
+				auto curve = ReadCurve(node_curve);
+				if (curve) {
+					object->AddInteriorRing(*curve);
+					AddGeometry(curve);
+				}
+			}
+			else if (!node_curve_name.compare("S100:CompositeCurve")) {
+				auto compositeCurve = ReadCompositeCurve(node_curve);
+				if (compositeCurve) {
+					object->AddInteriorRing(*compositeCurve);
+					AddGeometry(compositeCurve);
+				}
+			}
+			else if (!node_curve_name.compare("S100:OrientableCurve")) {
+				auto orientableCurve = ReadOrientableCurve(node_curve);
+				if (orientableCurve) {
+					object->AddInteriorRing(*orientableCurve);
+					AddGeometry(orientableCurve);
+				}
+			}
+		}
+
+		node_interior = node_interior.next_sibling("gml:interior");
+	}
+
+	return object; 
 }
 
 bool S10XGML::ReadMember(pugi::xml_node& node)
@@ -472,9 +622,21 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 		if (nodeName.find("pointProperty") != std::string::npos)
 		{
 			auto nodePoint = geomNode.first_child();
-			if (ReadPoint(nodePoint)) 
+			auto point = ReadPoint(nodePoint);
+			if (point) 
 			{
-				feature->SetGeometryID(geometries.back()->GetID());
+				AddGeometry(point);
+				feature->SetGeometryID(point->GetID());
+			}
+		}
+		else if (nodeName.find("surfaceProperty") != std::string::npos)
+		{
+			auto nodeSurface = geomNode.first_child();
+			auto surface = ReadSurface(nodeSurface);
+			if (surface)
+			{
+				AddGeometry(surface);
+				feature->SetGeometryID(surface->GetID());
 			}
 		}
 	}
@@ -551,6 +713,76 @@ GM::Point* S10XGML::GetPoint(int x, int y)
 	}
 
 	return nullptr;
+}
+
+void S10XGML::AddGeometry(GM::Object* geometry)
+{
+	if (geometry) {
+		geometries.push_back(geometry);
+	}
+}
+
+bool S10XGML::WriteInputXML_FeatureTypes(pugi::xml_node& node)
+{
+	for (auto i = features.begin(); i != features.end(); i++) {
+		auto feature = *i;
+
+		auto node_feature = node.append_child(feature->GetCode().c_str());
+		node_feature.append_attribute("id").set_value(feature->GetID().c_str());
+
+		auto geom_id = feature->GetGeometryID();
+		auto geometry = GetGeometry(geom_id);
+		if (geometry) {
+			node_feature.append_attribute("primitive").set_value(geometry->GeometricPrimitiveAsString().c_str());
+			node_feature.append_child(geometry->GeometricPrimitiveAsString().c_str()).append_attribute("ref").set_value(geometry->GetID().c_str());
+		}
+
+		for (auto j = feature->attributes.begin(); j != feature->attributes.end(); j++) {
+			auto attr = (*j);
+			if (attr->IsSimple()) {
+				WriteInputXML_FeatureType_SimpleAttribute(node_feature, (GF::SimpleAttributeType*)attr);
+			}
+			else {
+				auto complex_node = node_feature.append_child(attr->GetCode().c_str());
+				WriteInputXML_FeatureType_ComplexAttribute(complex_node, (GF::ComplexAttributeType*)attr);
+			}
+		}
+	}
+
+	return true;
+}
+
+bool S10XGML::WriteInputXML_FeatureType_SimpleAttribute(pugi::xml_node& node, GF::SimpleAttributeType* simpleAttribute)
+{
+	node.append_child(simpleAttribute->GetCode().c_str()).append_child(pugi::node_pcdata).set_value(simpleAttribute->GetValue().c_str());
+
+	return true;
+}
+
+bool S10XGML::WriteInputXML_FeatureType_ComplexAttribute(pugi::xml_node& node, GF::ComplexAttributeType* complexAttribute)
+{
+	for (int i = 0; i < complexAttribute->GetSubAttributeCount(); i++) {
+		auto subAttr = complexAttribute->GetSubAttribute(i);
+		if (subAttr->IsSimple()) {
+			WriteInputXML_FeatureType_SimpleAttribute(node, (GF::SimpleAttributeType*)subAttr);
+		}
+		else {
+			auto complex_node = node.append_child(subAttr->GetCode().c_str());
+			WriteInputXML_FeatureType_ComplexAttribute(complex_node, (GF::ComplexAttributeType*)subAttr);
+		}
+	}
+
+	return true;
+}
+
+std::string S10XGML::DeleteXMLNamespace(std::string value)
+{
+	size_t pos = value.find(':');
+	if (pos != std::string::npos) {
+		value.erase(0, pos + 1);
+	}
+
+	return value;
 }
 
 std::string S10XGML::getCodeFromMember(std::string nodeName)

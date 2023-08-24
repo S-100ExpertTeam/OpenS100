@@ -20,5 +20,6 @@ namespace GM
 		void Add(double x, double y, double z);
 
 		GeometryType GetType() override;
+		std::string GeometricPrimitiveAsString() override;
 	};
 }

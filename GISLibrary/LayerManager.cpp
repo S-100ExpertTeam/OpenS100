@@ -179,7 +179,7 @@ int LayerManager::AddLayer(CString _filepath)
 		auto fc = gisLib->catalogManager.getFC(productNumber);
 		auto pc = gisLib->catalogManager.getPC(productNumber);
 
-		if (fc)
+		if (fc && pc)
 		{
 			layer = new S100Layer(fc, pc);
 			if ((S100Layer*)layer->Open(_filepath) == false)
@@ -187,6 +187,8 @@ int LayerManager::AddLayer(CString _filepath)
 				delete layer;
 				return -1;
 			}
+
+			BuildPortrayalCatalogue(layer);
 		}
 	}
 
@@ -199,13 +201,6 @@ int LayerManager::AddLayer(CString _filepath)
 		}
 
 		return -1;
-	}
-
-	//	 ENC, Lua
-	if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
-		((S100Layer*)layer)->GetPC()->GetRuleFileFormat() == Portrayal::FileFormat::LUA)
-	{
-		BuildPortrayalCatalogue(layer);
 	}
 
 	AddLayer(layer);
@@ -1062,15 +1057,19 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 {
 	auto pc = ((S100Layer*)l)->GetPC();
 
-	if (l->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR &&
-		pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA)
-	{
+	if (l->GetFileType() == S100_FileType::FILE_S_100_VECTOR) {
 		auto mainRuleFile = pc->GetMainRuleFile();
 		auto fileName = mainRuleFile->GetFileName();
 		auto rootPath = pc->GetRootPath();
 		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
-		ProcessS101::ProcessS101_LUA(mainRulePath, (S100Layer*)l);
+		if (pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA) {
+			ProcessS101::ProcessS101_LUA(mainRulePath, (S100Layer*)l);
+		}
+		else if (pc->GetRuleFileFormat() == Portrayal::FileFormat::XSLT) {
+			auto gml = (S10XGML*)l->GetSpatialObject();
+			gml->SaveToInputXML("..\\TEMP\\input.xml");
+		}
 	}
 }
 

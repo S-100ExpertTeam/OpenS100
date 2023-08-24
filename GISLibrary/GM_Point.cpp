@@ -27,4 +27,9 @@ namespace GM
 	{
 		return GeometryType::Point;
 	}
+
+	std::string Point::GeometricPrimitiveAsString()
+	{
+		return "Point";
+	}
 }

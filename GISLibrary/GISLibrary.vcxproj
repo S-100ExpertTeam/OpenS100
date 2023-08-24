@@ -333,6 +333,7 @@
     <ClCompile Include="GM_OrientableCurve.cpp" />
     <ClCompile Include="GM_Point.cpp" />
     <ClCompile Include="GM_Polygon.cpp" />
+    <ClCompile Include="GM_Ring.cpp" />
     <ClCompile Include="GM_Surface.cpp" />
     <ClCompile Include="H5_FC_Attribute2.cpp" />
     <ClCompile Include="H5_FeatureContainer.cpp" />

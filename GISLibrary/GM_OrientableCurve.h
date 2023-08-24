@@ -23,7 +23,10 @@ namespace GM
 
 	public:
 		GeometryType GetType() override;
+		std::string GeometricPrimitiveAsString() override;
 
 		int GetBaseCurveIDAsInt();
+
+		void Read(pugi::xml_node& node);
 	};
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GM_OrientableCurve.h"
+#include "GM_Curve.h"
 
 #include <vector>
 
@@ -19,5 +20,8 @@ namespace GM
 		GeometryType GetType() override;
 
 		void Add(std::string curveMemberID);
+		void Add(GM::OrientableCurve item);
+		void Add(GM::Curve item);
+		void Add(GM::CompositeCurve item);
 	};
 }

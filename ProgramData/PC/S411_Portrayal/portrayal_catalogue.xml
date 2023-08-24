@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-411" version="1.0">
+<?xml version="1.0" encoding="iso-8859-1"?>
+<portrayalCatalog productId="S-411" version="1.0.1" xmlns:xsl="http://www.w3.org/2001/XMLSchema">
 	<pixmaps/>
 	<colorProfiles>
-		<colorProfile id="6">
+		<colorProfile id="iceprofile">
 			<description>
-				<name>S411SampleColorProfile</name>
-				<description>S-411 sample color profile</description>
-				<language>en</language>
+				<name>name</name>
+				<description>Color profile with color palettes</description>
+				<language>eng</language>
 			</description>
 			<fileName>colorProfile.xml</fileName>
 			<fileType>ColorProfile</fileType>
@@ -14,222 +14,1021 @@
 		</colorProfile>
 	</colorProfiles>
 	<symbols>
-		<symbol id="1">
+		<symbol id="brgareSymbol">
 			<description>
-				<name>FLOBRG01</name>
-				<description>FLOBRG01</description>
-				<language>en</language>
+				<name>brgareSymbol</name>
+				<description>Symbol for Iceberg Areas Symbol Fill (brgare)</description>
+				<language>eng</language>
 			</description>
-			<fileName>FLOBRG01.svg</fileName>
+			<svgFileName>brgare.svg</svgFileName>
 			<fileType>Symbol</fileType>
 			<fileFormat>SVG</fileFormat>
 		</symbol>
-		<symbol id="2">
+		<symbol id="brglneSymbol">
 			<description>
-				<name>ICECOM01</name>
-				<description>ICECOM01</description>
-				<language>en</language>
+				<name>brglneSymbol</name>
+				<description>Symbol for Iceberg Limit Line (brglne)</description>
+				<language>eng</language>
 			</description>
-			<fileName>ICECOM01.svg</fileName>
+			<svgFileName>brglne.svg</svgFileName>
 			<fileType>Symbol</fileType>
 			<fileFormat>SVG</fileFormat>
 		</symbol>
-		<symbol id="3">
+		<symbol id="flobrgSymbol">
 			<description>
-				<name>ICEDFT02</name>
-				<description>ICEDFT02</description>
-				<language>en</language>
+				<name>flobrgSymbol</name>
+				<description>Symbol for Floebergs (flobrg)</description>
+				<language>eng</language>
 			</description>
-			<fileName>ICEDFT02.svg</fileName>
+			<svgFileName>flobrg.svg</svgFileName>
 			<fileType>Symbol</fileType>
 			<fileFormat>SVG</fileFormat>
 		</symbol>
-		<symbol id="4">
+		<symbol id="i_cracSymbol">
 			<description>
-				<name>ICEDIV01</name>
-				<description>ICEDIV01</description>
-				<language>en</language>
+				<name>i_cracSymbol</name>
+				<description>Symbol for Line of Ice Crack (i_crac)</description>
+				<language>eng</language>
 			</description>
-			<fileName>ICEDIV01.svg</fileName>
+			<svgFileName>i_crac.svg</svgFileName>
 			<fileType>Symbol</fileType>
 			<fileFormat>SVG</fileFormat>
 		</symbol>
-		<symbol id="5">
+		<symbol id="i_fralSymbol">
 			<description>
-				<name>ICESHR01</name>
-				<description>ICESHR01</description>
-				<language>en</language>
+				<name>i_fralSymbol</name>
+				<description>Symbol for Line of Ice Fracture (i_fral)</description>
+				<language>eng</language>
 			</description>
-			<fileName>ICESHR01.svg</fileName>
+			<svgFileName>i_fral.svg</svgFileName>
 			<fileType>Symbol</fileType>
 			<fileFormat>SVG</fileFormat>
 		</symbol>
-		<symbol id="6">
+		<symbol id="i_grhmSymbol">
 			<description>
-				<name>I_RIDG01</name>
-				<description>I_RIDG01</description>
-				<language>en</language>
+				<name>i_grhmSymbol</name>
+				<description>Symbol for Grounded Hummock (i_grhm)</description>
+				<language>eng</language>
 			</description>
-			<fileName>I_RIDG01.svg</fileName>
+			<svgFileName>i_grhm.svg</svgFileName>
 			<fileType>Symbol</fileType>
 			<fileFormat>SVG</fileFormat>
 		</symbol>
-    <symbol id="7">
-      <description>
-        <name>ICELNE01</name>
-        <description>ICELNE01</description>
-        <language>en</language>
-      </description>
-      <fileName>ICELNE01.svg</fileName>
-      <fileType>Symbol</fileType>
-      <fileFormat>SVG</fileFormat>
-    </symbol>
-    <symbol id="8">
-      <description>
-        <name>QUESMRK1</name>
-        <description>QUESMRK1</description>
-        <language>en</language>
-      </description>
-      <fileName>QUESMRK1.svg</fileName>
-      <fileType>Symbol</fileType>
-      <fileFormat>SVG</fileFormat>
-    </symbol>
+		<symbol id="i_leadSymbol">
+			<description>
+				<name>i_leadSymbol</name>
+				<description>Symbol for Line of Ice Lead (i_lead)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>i_lead.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="i_ridgSymbol">
+			<description>
+				<name>i_ridgSymbol</name>
+				<description>Symbol for Line of Ice Ridge (i_ridg)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>i_ridg.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icebrgIcebsz01Symbol">
+			<description>
+				<name>icebrgIcebsz01Symbol</name>
+				<description>Symbol for Icebergs with iceberg size attribute icebsz=01 - Growler</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icebrg_icebsz_01.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icebrgIcebsz02Symbol">
+			<description>
+				<name>icebrgIcebsz02Symbol</name>
+				<description>Symbol for Icebergs with iceberg size attribute icebsz=02 - Bergy Bit</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icebrg_icebsz_02.svg.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icebrgIcebsz03Symbol">
+			<description>
+				<name>icebrgIcebsz03Symbol</name>
+				<description>Symbol for Icebergs with iceberg size attribute icebsz=03 - Small Iceberg</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icebrg_icebsz_03.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icebrgIcebsz04Symbol">
+			<description>
+				<name>icebrgIcebsz04Symbol</name>
+				<description>Symbol for Icebergs with iceberg size attribute icebsz=04 - Medium Iceberg</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icebrg_icebsz_04.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icebrgIcebsz05Symbol">
+			<description>
+				<name>icebrgIcebsz05Symbol</name>
+				<description>Symbol for Icebergs with iceberg size attribute icebsz=05 - Large Iceberg</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icebrg_icebsz_05.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icebrgIcebsz06Symbol">
+			<description>
+				<name>icebrgIcebsz06Symbol</name>
+				<description>Symbol for Icebergs with iceberg size attribute icebsz=06 - Very Large Iceberg</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icebrg_icebsz_06.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icebrgIcebsz07Symbol">
+			<description>
+				<name>icebrgIcebsz07Symbol</name>
+				<description>Symbol for Icebergs with iceberg size attribute icebsz=07 - Ice Island Fragment</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icebrg_icebsz_07.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icebrgIcebsz08Symbol">
+			<description>
+				<name>icebrgIcebsz08Symbol</name>
+				<description>Symbol for Icebergs with iceberg size attribute icebsz=08 - Ice Island or Very Large Tabular Berg</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icebrg_icebsz_08.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icebrgIcebsz09Symbol">
+			<description>
+				<name>icebrgIcebsz09Symbol</name>
+				<description>Symbol for Icebergs with iceberg size attribute icebsz=09 - Radar Target</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icebrg_icebsz_09.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icebrgIcebsz99Symbol">
+			<description>
+				<name>icebrgIcebsz99Symbol</name>
+				<description>Symbol for Icebergs with iceberg size attribute icebsz=99 - Unknown</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icebrg_icebsz_99.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icecomSymbol">
+			<description>
+				<name>icecomSymbol</name>
+				<description>Symbol for Ice Complacting (icecom)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icecom.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr01Symbol">
+			<description>
+				<name>icedftIceddr01Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=01 - No Ice Motion</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_01.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr02Symbol">
+			<description>
+				<name>icedftIceddr02Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=02 - Ice Drift to NE</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_02.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr03Symbol">
+			<description>
+				<name>icedftIceddr03Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=03 - Ice Drift to E</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_03.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr04Symbol">
+			<description>
+				<name>icedftIceddr04Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=04 - Ice Drift to SE</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_04.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr05Symbol">
+			<description>
+				<name>icedftIceddr05Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=05 - Ice Drift to S</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_05.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr06Symbol">
+			<description>
+				<name>icedftIceddr06Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=06 - Ice Drift to SW</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_06.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr07Symbol">
+			<description>
+				<name>icedftIceddr07Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=07 - Ice Drift to W</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_07.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr08Symbol">
+			<description>
+				<name>icedftIceddr08Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=08 - Ice Drift to NW</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_08.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr09Symbol">
+			<description>
+				<name>icedftIceddr09Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=09 - Ice Drift to N</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_09.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr10Symbol">
+			<description>
+				<name>icedftIceddr10Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=10 - Variable</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_10.svg</svgFileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedftIceddr99Symbol">
+			<description>
+				<name>icedftIceddr99Symbol</name>
+				<description>Symbol for Ice drift with Ice Drift Direction attribute iceddr=99 - Unknown</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icedft_iceddr_99.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icedivSymbol">
+			<description>
+				<name>icedivSymbol</name>
+				<description>Symbol for Ice Divergence (icediv)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icediv.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icefraSymbol">
+			<description>
+				<name>icefraSymbol</name>
+				<description>Symbol for Ice Fracture (icefra)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icefra.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icekelSymbol">
+			<description>
+				<name>icekelSymbol</name>
+				<description>Symbol for Ice Keel / Bummock (icekel)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icekel.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="iceleaSymbol">
+			<description>
+				<name>iceleaSymbol</name>
+				<description>Symbol for Ice Lead (icelea)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icelea.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icerdgSymbol">
+			<description>
+				<name>icerdgSymbol</name>
+				<description>Symbol for Ice Ridg / Hummock (icerdg)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icerdg.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icerftSymbol">
+			<description>
+				<name>icerftSymbol</name>
+				<description>Symbol for Ice Rafting (icerft)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icerft.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="iceshrSymbol">
+			<description>
+				<name>iceshrSymbol</name>
+				<description>Symbol for Ice Shear (iceshr)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>iceshr.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icethkIcetty01Symbol">
+			<description>
+				<name>icethkIcetty01Symbol</name>
+				<description>Symbol for Ice Thickness with Ice Thickness Type attribute icetty=01 - Measured</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icethk_icetty_01.svg</svgFileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icethkIcetty02Symbol">
+			<description>
+				<name>icethkIcetty02Symbol</name>
+				<description>Symbol for Ice Thickness with Ice Thickness Type attribute icetty=02 - Estimated</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icethk_icetty_02.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="icethkIcetty99Symbol">
+			<description>
+				<name>icethkIcetty99Symbol</name>
+				<description>Symbol for Ice Thickness with Ice Thickness Type attribute icetty=99 - Unknown</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>icethk_icetty_99.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="jmdbrrSymbol">
+			<description>
+				<name>jmdbrrSymbol</name>
+				<description>Symbol for Jammed Brash Barrier (jmdbrr)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>jmdbrr.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="laciceUndefinedSymbol">
+			<description>
+				<name>laciceUndefinedSymbol</name>
+				<description>Symbol for Symbol Fill of undefined Lake Ice (lacice)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>lacice_undefined.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="seaiceUndefinedSymbol">
+			<description>
+				<name>seaiceUndefinedSymbol</name>
+				<description>Symbol for Symbol Fill of undefined Sea Ice (seaice)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>seaice_undefined.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="snwcvrSymbol">
+			<description>
+				<name>snwcvrSymbol</name>
+				<description>Symbol for Snow Cover (snwcvr)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>snwcvr.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="stgmltSymbol">
+			<description>
+				<name>stgmltSymbol</name>
+				<description>Symbol for Stage of Melt (sgtmlt)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>stgmlt.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+		<symbol id="strptcSymbol">
+			<description>
+				<name>strptcSymbol</name>
+				<description>Symbol for Strips and Patches (strptc)</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>strptc.svg</svgFileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
 	</symbols>
-	<lineStyles/>
-	<areaFills/>
-	<fonts/>
-	<viewingGroups>
-		<viewingGroup id="1">
+	<styleSheets/>
+	<lineStyles>
+		<!--
+		* line style has extention to xml *
+		<lineStyle id="brglneStyle">
 			<description>
-				<name>21010</name>
-				<description/>
-				<language>en</language>
+				<name>name</name>
+				<description>description</description>
+				<language>eng</language>
+			</description>
+			<svgFileName>http://tempuri.org</svgFileName>
+		</lineStyle>
+		-->
+	</lineStyles>
+	<viewingGroups>
+		<viewingGroup id="IceStandardViewingGroup">
+			<description>
+				<name>IceStandardViewingGroup</name>
+				<description>This group includes all features from a dataset.</description>
+				<language>eng</language>
 			</description>
 		</viewingGroup>
 	</viewingGroups>
-	<viewingGroupLayers/>
-	<displayModes>
-	</displayModes>
-	<displayPlane>
-		<displayPlane id="2">
+	<viewingGroupLayers>
+		<viewingGroupLayer id="1">
 			<description>
-				<name>underRadar</name>
-				<description>Content displayed underneath Radar image</description>
-				<language>en</language>
+				<name>-</name>
+				<description>-</description>
+				<language>eng</language>
+			</description>
+			<viewingGroup>16010</viewingGroup>
+		</viewingGroupLayer>
+	</viewingGroupLayers>
+	<displayModes>
+		<displayMode id="IceNavigationalDisplayMode">
+			<description>
+				<name>IceNavigationalDisplayMode</name>
+				<description>This mode is for Ship Navigators and uses red-yellow-green colors for identification of areas where the ship is allowed to go through.</description>
+				<language>eng</language>
+			</description>
+			<viewingGroupLayer>1</viewingGroupLayer>
+			<!--<category>BaseMode</category>
+			<viewingGroup>IceStandardViewingGroup</viewingGroup>-->
+		</displayMode>
+		
+		
+ 		<displayMode id="IceScientificIceactDisplayMode">
+ 			<description> 
+ 				<name>IceScientificIceactDisplayMode</name> 
+ 				<description>This mode is for ice scientists and uses WMO Color code for display. Display Colors are based on Ice Total Concentration (iceact) attribute.</description> 
+ 				<language>eng</language> 
+ 			</description>
+			<viewingGroupLayer>1</viewingGroupLayer>
+ 			<!--<category>SupplementMode</category> 
+ 			<viewingGroup>IceStandardViewingGroup</viewingGroup>--> 
+ 		</displayMode>
+ 		<displayMode id="IceScientificIcesodDisplayMode"> 
+ 			<description> 
+ 				<name>IceScientificIcesodDisplayMode</name> 
+ 				<description>This mode is for ice scientists and uses WMO Color code for display. Display Colors are based on Ice Stage of Development (icesod) attribute.</description> 
+ 				<language>eng</language> 
+ 			</description>
+			<viewingGroupLayer>1</viewingGroupLayer>
+ 			<!--<category>SupplementMode</category>
+ 			<viewingGroup>IceStandardViewingGroup</viewingGroup>-->
+ 		</displayMode> 
+	</displayModes>
+	<displayPlanes>
+		<displayPlane id="IceUnderLandDisplayPlane" order="1">
+			<description>
+				<name>IceUnderLandDisplayPlane</name>
+				<description>The Features have to be placed under the land area, if displayed with ENC</description>
+				<language>eng</language>
 			</description>
 		</displayPlane>
-	</displayPlane>
-	<context/>
+		<displayPlane id="IceStandardDisplayPlane" order="-1">
+			<description>
+				<name>IceStandardDisplayPlane</name>
+				<description>All features should be portrayed as overlay on ENC or Single View according to drawing order</description>
+				<language>eng</language>
+			</description>
+		</displayPlane>
+	</displayPlanes>
+	<context>
+		<parameter id="iceclass">
+			<description>
+				<name>iceclass</name>
+				<description>Definition of Ice Class</description>
+				<language>eng</language>
+			</description>
+			<type>String</type>
+			<default>3</default>
+		</parameter>
+		<parameter id="encoverlay">
+			<description>
+				<name>encoverlay</name>
+				<description>Shows if Ice should be portrayed as ENC overlay</description>
+				<language>eng</language>
+			</description>
+			<type>Boolean</type>
+			<default>false</default>
+		</parameter>
+	</context>
 	<rules>
-		<ruleFile id="12">
+		<ruleFile id="mainRule">
 			<description>
-				<name>IceCompacting</name>
-				<description>IceCompacting</description>
+				<name>mainRule</name>
+				<description>Main Rules for displaying of ice features.</description>
+				<language>eng</language>
 			</description>
-			<fileName>IceCompacting.xsl</fileName>
+			<fileName>main.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>TopLevelTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="seaiceRule">
+			<description>
+				<name>seaiceRule</name>
+				<description>Rules for displaying of sea ice (seaice) features.</description>
+				<language>eng</language>
+			</description>
+			<fileName>seaice.xsl</fileName>
 			<fileType>Rule</fileType>
 			<fileFormat>XSLT</fileFormat>
 			<ruleType>SubTemplate</ruleType>
 		</ruleFile>
-		<ruleFile id="13">
+		<ruleFile id="seaice_class_1ARule">
 			<description>
-				<name>IceLead</name>
-				<description>IceLead</description>
+				<name>seaice_class_1ARule</name>
+				<description>Rules for displaying of sea ice (seaice) features for Ships of Ice Class 1A.</description>
+				<language>eng</language>
 			</description>
-			<fileName>IceLead.xsl</fileName>
+			<fileName>seaice_class_1A.xsl</fileName>
 			<fileType>Rule</fileType>
 			<fileFormat>XSLT</fileFormat>
 			<ruleType>SubTemplate</ruleType>
 		</ruleFile>
-		<ruleFile id="15">
+		<ruleFile id="seaice_class_1ASRule">
 			<description>
-				<name>Floeberg</name>
-				<description>Floeberg</description>
+				<name>seaice_class_1ASRule</name>
+				<description>Rules for displaying of sea ice (seaice) features  for Ships of Ice Class 1AS.</description>
+				<language>eng</language>
 			</description>
-			<fileName>Floeberg.xsl</fileName>
+			<fileName>seaice_class_1AS.xsl</fileName>
 			<fileType>Rule</fileType>
 			<fileFormat>XSLT</fileFormat>
 			<ruleType>SubTemplate</ruleType>
 		</ruleFile>
-		<ruleFile id="17">
+		<ruleFile id="seaice_class_1BRule">
 			<description>
-				<name>IceShear</name>
-				<description>IceShear</description>
+				<name>seaice_class_1BRule</name>
+				<description>Rules for displaying of sea ice (seaice) features  for Ships of Ice Class 1B.</description>
+				<language>eng</language>
 			</description>
-			<fileName>IceShear.xsl</fileName>
+			<fileName>seaice_class_1B.xsl</fileName>
 			<fileType>Rule</fileType>
 			<fileFormat>XSLT</fileFormat>
 			<ruleType>SubTemplate</ruleType>
 		</ruleFile>
-		<ruleFile id="18">
+		<ruleFile id="seaice_class_1CRule">
 			<description>
-				<name>IceDivergence</name>
-				<description>IceDivergence</description>
+				<name>seaice_class_1CRule</name>
+				<description>Rules for displaying of sea ice (seaice) features for Ships of Ice Class 1C.</description>
+				<language>eng</language>
 			</description>
-			<fileName>IceDivergence.xsl</fileName>
+			<fileName>seaice_class_1C.xsl</fileName>
 			<fileType>Rule</fileType>
 			<fileFormat>XSLT</fileFormat>
 			<ruleType>SubTemplate</ruleType>
 		</ruleFile>
-		<ruleFile id="19">
+		<ruleFile id="seaice_class_IIRule">
 			<description>
-				<name>IceRidgeHummock</name>
-				<description>IceRidgeHummock</description>
+				<name>seaice_class_IIRule</name>
+				<description>Rules for displaying of sea ice (seaice) features  for Ships of Ice Class II.</description>
+				<language>eng</language>
 			</description>
-			<fileName>IceRidgeHummock.xsl</fileName>
+			<fileName>seaice_class_II.xsl</fileName>
 			<fileType>Rule</fileType>
 			<fileFormat>XSLT</fileFormat>
 			<ruleType>SubTemplate</ruleType>
 		</ruleFile>
-    <ruleFile id="22">
-      <description>
-        <name>IceFracture</name>
-        <description>IceFracture</description>
-      </description>
-      <fileName>IceFracture.xsl</fileName>
-      <fileType>Rule</fileType>
-      <fileFormat>XSLT</fileFormat>
-      <ruleType>SubTemplate</ruleType>
-    </ruleFile>
-    <ruleFile id="23">
-      <description>
-        <name>attributeRules</name>
-        <description>attributeRules</description>
-      </description>
-      <fileName>attributeRules.xsl</fileName>
-      <fileType>Rule</fileType>
-      <fileFormat>XSLT</fileFormat>
-      <ruleType>SubTemplate</ruleType>
-    </ruleFile>
-    <ruleFile id="24">
-      <description>
-        <name>default</name>
-        <description>default</description>
-      </description>
-      <fileName>default.xsl</fileName>
-      <fileType>Rule</fileType>
-      <fileFormat>XSLT</fileFormat>
-      <ruleType>SubTemplate</ruleType>
-    </ruleFile>
-    <ruleFile id="25">
-      <description>
-        <name>simpleLineStyle</name>
-        <description>simpleLineStyle</description>
-      </description>
-      <fileName>simpleLineStyle.xsl</fileName>
-      <fileType>Rule</fileType>
-      <fileFormat>XSLT</fileFormat>
-      <ruleType>SubTemplate</ruleType>
-    </ruleFile>
-    <ruleFile id="26">
-      <description>
-        <name>main</name>
-        <description>main</description>
-      </description>
-      <fileName>main.xsl</fileName>
-      <fileType>Rule</fileType>
-      <fileFormat>XSLT</fileFormat>
-      <ruleType>TopLevelTemplate</ruleType>
-    </ruleFile>
+		<ruleFile id="seaice_class_IIIRule">
+			<description>
+				<name>seaice_class_IIIRule</name>
+				<description>Rules for displaying of sea ice (seaice) features  for Ships of Ice Class III.</description>
+				<language>eng</language>
+			</description>
+			<fileName>seaice_class_III.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="laciceRule">
+			<description>
+				<name>laciceRule</name>
+				<description>Rules for displaying of lake ice (lacice) features.</description>
+				<language>eng</language>
+			</description>
+			<fileName>lacice.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="lacice_class_1ARule">
+			<description>
+				<name>lacice_class_1ARule</name>
+				<description>Rules for displaying of lake ice (lacice) features for Ships of Ice Class 1A.</description>
+				<language>eng</language>
+			</description>
+			<fileName>lacice_class_1A.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="lacice_class_1ASRule">
+			<description>
+				<name>lacice_class_1ASRule</name>
+				<description>Rules for displaying of lake ice (lacice) features  for Ships of Ice Class 1AS.</description>
+				<language>eng</language>
+			</description>
+			<fileName>lacice_class_1AS.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="lacice_class_1BRule">
+			<description>
+				<name>lacice_class_1BRule</name>
+				<description>Rules for displaying of lake ice (lacice) features  for Ships of Ice Class 1B.</description>
+				<language>eng</language>
+			</description>
+			<fileName>lacice_class_1B.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="lacice_class_1CRule">
+			<description>
+				<name>lacice_class_1CRule</name>
+				<description>Rules for displaying of lake ice (lacice) features for Ships of Ice Class 1C.</description>
+				<language>eng</language>
+			</description>
+			<fileName>lacice_class_1C.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="lacice_class_IIRule">
+			<description>
+				<name>lacice_class_IIRule</name>
+				<description>Rules for displaying of lake ice (lacice) features  for Ships of Ice Class II.</description>
+				<language>eng</language>
+			</description>
+			<fileName>lacice_class_II.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="lacice_class_IIIRule">
+			<description>
+				<name>lacice_class_IIIRule</name>
+				<description>Rules for displaying of lake ice (lacice) features  for Ships of Ice Class III.</description>
+				<language>eng</language>
+			</description>
+			<fileName>lacice_class_III.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="brgareRule">
+			<description>
+				<name>brgareRule</name>
+				<description>Rules for displaying of Iceberg Areas (brgare).</description>
+				<language>eng</language>
+			</description>
+			<fileName>brgare.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="icelneRule">
+			<description>
+				<name>icelneRule</name>
+				<description>Rules for displaying of Ice Edge (icelene).</description>
+				<language>eng</language>
+			</description>
+			<fileName>icelne.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="brglneRule">
+			<description>
+				<name>brglneRule</name>
+				<description>Rules for displaying of Iceberg Limits (icebrg)</description>
+				<language>eng</language>
+			</description>
+			<fileName>brglne.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="opnlneRule">
+			<description>
+				<name>opnlneRule</name>
+				<description>Rules for displaying of Limit of Open Water (opnlne)</description>
+				<language>eng</language>
+			</description>
+			<fileName>opnlne.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="lkilneRule">
+			<description>
+				<name>lkinleRule</name>
+				<description>Rules for displaying of Limit of All Known Ice (lkilne)</description>
+				<language>eng</language>
+			</description>
+			<fileName>lkilne.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="i_ridgRule">
+			<description>
+				<name>i_ridgRule</name>
+				<description>Rules for displaying of Line of Ice Ridge (i_ridg)</description>
+				<language>eng</language>
+			</description>
+			<fileName>i_ridg.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="i_leadRule">
+			<description>
+				<name>i_leadRule</name>
+				<description>Rules for displaying of Line of Ice Lead (i_lead)</description>
+				<language>eng</language>
+			</description>
+			<fileName>i_lead.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="i_fralRule">
+			<description>
+				<name>i_fralRule</name>
+				<description>Rules for displaying of Line of Ice Fracture (i_fral)</description>
+				<language>eng</language>
+			</description>
+			<fileName>i_fral.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="i_cracRule">
+			<description>
+				<name>i_cracRule</name>
+				<description>Rules for displaying of Line of Ice Crack (i_crac)</description>
+				<language>eng</language>
+			</description>
+			<fileName>i_crac.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="icecomRule">
+			<description>
+				<name>icecomRule</name>
+				<description>Rules for displaying of Ice Compacting (icecom)</description>
+				<language>eng</language>
+			</description>
+			<fileName>icecom.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="iceleaRule">
+			<description>
+				<name>iceleaRule</name>
+				<description>Rules for displaying of Ice Lead</description>
+				<language>eng</language>
+			</description>
+			<fileName>icelea.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="icebrgRule">
+			<description>
+				<name>icebrgRule</name>
+				<description>Rules for displaying of Icebergs (icebrg)</description>
+				<language>eng</language>
+			</description>
+			<fileName>icebrg.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="flobrgRule">
+			<description>
+				<name>flobrgRule</name>
+				<description>Rules for displaying of Floebergs (flobrg)</description>
+				<language>eng</language>
+			</description>
+			<fileName>flobrg.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="icethkRule">
+			<description>
+				<name>icethkRule</name>
+				<description>Rules for displaying of Ice Thickness (icethk)</description>
+				<language>eng</language>
+			</description>
+			<fileName>icethk.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="iceshrRule">
+			<description>
+				<name>iceshrRule</name>
+				<description>Rules for displaying of Ice Shear (iceshr)</description>
+				<language>eng</language>
+			</description>
+			<fileName>iceshr.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="icedivRule">
+			<description>
+				<name>icedivRule</name>
+				<description>Rules for displaying of Ice Divergence (icediv)</description>
+				<language>eng</language>
+			</description>
+			<fileName>icediv.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="icerdgRule">
+			<description>
+				<name>icerdgRule</name>
+				<description>Rules for displaying of Ice Ridges / Hummocks (icerdg)</description>
+				<language>eng</language>
+			</description>
+			<fileName>icerdg.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="icekelRule">
+			<description>
+				<name>icekelRule</name>
+				<description>Rules for displaying of Ice Keels / Bummocks (icekel)</description>
+				<language>eng</language>
+			</description>
+			<fileName>icekel.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="icedftRule">
+			<description>
+				<name>icedftRule</name>
+				<description>Rules for displaying of Ice Drift (icedft)</description>
+				<language>eng</language>
+			</description>
+			<fileName>icedft.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="icefraRule">
+			<description>
+				<name>icefraRule</name>
+				<description>Rules for displaying of Ice Fractures (icefra)</description>
+				<language>eng</language>
+			</description>
+			<fileName>icefra.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="icerftRule">
+			<description>
+				<name>icerftRule</name>
+				<description>Rules for displaying of Ice Rafting (icerft)</description>
+				<language>eng</language>
+			</description>
+			<fileName>icerft.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="jmdbrrRule">
+			<description>
+				<name>jmdbrrRule</name>
+				<description>Rules for displaying of Jammed Brash Barriers (jmdbrr)</description>
+				<language>eng</language>
+			</description>
+			<fileName>jmdbrr.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="stgmltRule">
+			<description>
+				<name>stgmltRule</name>
+				<description>Rules for displaying of Stage of Melt (stgmlt)</description>
+				<language>eng</language>
+			</description>
+			<fileName>stgmlt.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="snwcvrRule">
+			<description>
+				<name>snwcvrRule</name>
+				<description>Rules for displaying of Snow Cover (snwcvr)</description>
+				<language>eng</language>
+			</description>
+			<fileName>snwcvr.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="strptcRule">
+			<description>
+				<name>strptcRule</name>
+				<description>Rules for displaying of Strips and Patches (strptc)</description>
+				<language>eng</language>
+			</description>
+			<fileName>strptc.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="i_grhmRule">
+			<description>
+				<name>i_grhmRule</name>
+				<description>Rules for displaying of Grounded Hummocks (i_grhm)</description>
+				<language>eng</language>
+			</description>
+			<fileName>i_grhm.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
 	</rules>
 </portrayalCatalog>

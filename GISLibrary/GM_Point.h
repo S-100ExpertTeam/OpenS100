@@ -23,5 +23,6 @@ namespace GM
 		void Read(pugi::xml_node& node);
 		void Write(pugi::xml_node& node);
 		GeometryType GetType() override;
+		std::string GeometricPrimitiveAsString() override;
 	};
 }
