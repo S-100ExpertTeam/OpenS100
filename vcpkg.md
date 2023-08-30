@@ -30,7 +30,7 @@ Make sure you are in the directory you want the tool installed to before doing t
 > vcpkg install polyclipping:x64-windows
 > vcpkg install HDF5:x64-windows
 ```
-OpenS100 uses 3 packages.
+OpenS100 uses packages below.
 - pugixml 1.13.0
 - geographiclib 2.1.2
 - polyclipping 6.4.2
