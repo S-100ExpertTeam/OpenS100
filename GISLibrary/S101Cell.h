@@ -167,9 +167,6 @@ public:
 
 	void ProcessSpatialReference();
 	
-	// [ Text Placement ]
-	void CheckHasTextPlacement();
-
 	void SetEncodingSpecification(CString value);
 	CString GetEncodingSpecification();
 	std::string GetEncodingSpecificationToString();

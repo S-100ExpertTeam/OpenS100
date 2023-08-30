@@ -729,6 +729,15 @@
     <ClCompile Include="GM_Ring.cpp">
       <Filter>S100\GM</Filter>
     </ClCompile>
+    <ClCompile Include="ScaleBands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataCoverage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -1468,6 +1477,15 @@
     </ClInclude>
     <ClInclude Include="IndeterminateDate.h">
       <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaleBands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataCoverage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

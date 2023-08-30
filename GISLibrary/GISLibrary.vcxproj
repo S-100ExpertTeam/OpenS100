@@ -257,6 +257,7 @@
     <ClCompile Include="CV_InterpolationMethod.cpp" />
     <ClCompile Include="CV_SequenceType.cpp" />
     <ClCompile Include="D2D1Resources.cpp" />
+    <ClCompile Include="DataCoverage.cpp" />
     <ClCompile Include="DataOrganizationIndex.cpp" />
     <ClCompile Include="DDR.cpp" />
     <ClCompile Include="Directory.cpp" />
@@ -349,6 +350,7 @@
     <ClCompile Include="GF_ObjectType.cpp" />
     <ClCompile Include="IndeterminateDate.cpp" />
     <ClCompile Include="indeterminatePosition.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="ISO8211Fuc.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LayerManager.cpp" />
@@ -382,6 +384,7 @@
     <ClCompile Include="S101Creator.cpp" />
     <ClCompile Include="S101LuaScriptingReference.cpp" />
     <ClCompile Include="SAbstractCurve.cpp" />
+    <ClCompile Include="ScaleBands.cpp" />
     <ClCompile Include="SCommonFuction.cpp" />
     <ClCompile Include="SCompositeCurve.cpp" />
     <ClCompile Include="SCoverage.cpp" />
@@ -482,6 +485,7 @@
     <ClInclude Include="CV_CommonPointRule.h" />
     <ClInclude Include="CV_InterpolationMethod.h" />
     <ClInclude Include="CV_SequenceType.h" />
+    <ClInclude Include="DataCoverage.h" />
     <ClInclude Include="DataOrganizationIndex.h" />
     <ClInclude Include="DirectPosition.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
@@ -504,6 +508,7 @@
     <ClInclude Include="HDF5Wrapper.h" />
     <ClInclude Include="IndeterminateDate.h" />
     <ClInclude Include="indeterminatePosition.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Length.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Measure.h" />
@@ -631,6 +636,7 @@
     <ClInclude Include="S101Creator.h" />
     <ClInclude Include="S101LuaScriptingReference.h" />
     <ClInclude Include="SAbstractCurve.h" />
+    <ClInclude Include="ScaleBands.h" />
     <ClInclude Include="SCommonFuction.h" />
     <ClInclude Include="SCompositeCurve.h" />
     <ClInclude Include="SCoverage.h" />
