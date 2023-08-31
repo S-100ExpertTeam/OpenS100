@@ -20,7 +20,7 @@ namespace GF
 		FCD::S100_CD_AttributeValueType valueType = FCD::S100_CD_AttributeValueType::none;
 		std::string value;
 
-		virtual std::string GetValue() override { return value; }
-		virtual bool IsSimple() override { return true; }
+		virtual std::string GetValue() override;
+		virtual bool IsSimple() override;
 	};
 }

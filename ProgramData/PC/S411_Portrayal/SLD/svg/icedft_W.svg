@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="5mm" height="2.5mm" viewBox="0 0 5 2.5">
+    <polyline points="5,0.5 4,1.25 5,2.5" fill="none" stroke="black" stroke-width="0.5"/>
+    <polyline points="4,1.25 2,1.25" fill="none" stroke="black" stroke-width="0.5"/>
+    <polyline points="2,0 0,1.25 2,2.5"/>
+</svg>

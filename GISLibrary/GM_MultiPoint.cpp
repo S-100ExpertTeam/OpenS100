@@ -22,4 +22,9 @@ namespace GM
 	{
 		return GeometryType::MultiPoint;
 	}
+
+	std::string MultiPoint::GeometricPrimitiveAsString()
+	{
+		return "MultiPoint";
+	}
 }

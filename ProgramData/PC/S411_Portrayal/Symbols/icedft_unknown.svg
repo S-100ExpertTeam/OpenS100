@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="5mm" height="5mm" viewBox="0 0 5 5">
+    <circle r="1" cx="2.5" cy="2.5" fill="none" stroke="black" stroke-width="0.4"/>
+    
+    <polyline points="1.6,1.6 0,0" stroke="black" stroke-width="0.4"/>
+    <polyline points="0.5,1.5 1.8,1.8 1.5,0.5"/>
+    
+    <polyline points="3.5,1.5 5,0"  stroke="black" stroke-width="0.4"/>
+    <polyline points="3.5,0.5 3.2,1.8 4.5,1.5"/>
+    
+    <polyline points="3.5,3.5 5,5"  stroke="black" stroke-width="0.4"/>
+    <polyline points="4.5,3.5 3.2,3.2 3.5,4.5"/>
+    
+    <polyline points="1.5,3.5 0,5"  stroke="black" stroke-width="0.4"/>
+    <polyline points="0.5,3.5 1.8,3.2 1.5,4.5"/>
+</svg>

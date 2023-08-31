@@ -101,6 +101,7 @@ public:
 	bool OpenByGML(CString path);
 
 	bool Read8211(std::wstring path);
+	bool isUpdate();
 	
 	bool ConvertFromS101GML(S10XGML& gml);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType);
@@ -166,9 +167,6 @@ public:
 
 	void ProcessSpatialReference();
 	
-	// [ Text Placement ]
-	void CheckHasTextPlacement();
-
 	void SetEncodingSpecification(CString value);
 	CString GetEncodingSpecification();
 	std::string GetEncodingSpecificationToString();
@@ -315,7 +313,6 @@ public:
 	int GetMetaCount_FeatureTypeRecord();
 	bool Check();
 	bool Update(S101Cell* cell);
-	bool IsUpdate();
 
 	int GetCMFX();
 	int GetCMFY();

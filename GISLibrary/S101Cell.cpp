@@ -89,29 +89,13 @@ S101Cell::S101Cell(FeatureCatalogue* fc) : S100SpatialObject()
 
 S101Cell::~S101Cell()
 {
-	if (IsUpdate())
+	if (isUpdate())
 	{
 		UpdateRemoveAll();
 	}
 	else //BASE file
 	{
 		RemoveAll();
-	}
-}
-
-bool S101Cell::IsUpdate()
-{
-	CString filename = GetFileName();
-	CString exten = LibMFCUtil::GetExtension(filename);
-
-	if (exten.Compare(L"000") == 0 ||
-		exten.CompareNoCase(L"gml") == 0)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
 	}
 }
 
@@ -438,6 +422,15 @@ bool S101Cell::Read8211(std::wstring path)
 	delete[] sBuf;
 
 	return true;
+}
+
+bool S101Cell::isUpdate()
+{
+	if (!m_dsgir.m_dsid.m_prof.Compare(L"2")) {
+		return true;
+	}
+
+	return false;
 }
 
 bool S101Cell::OpenBy000(CString path)
@@ -1386,80 +1379,6 @@ MBR S101Cell::ReMBR()
 	}
 
 	return result;
-}
-
-// [ Text Placement ]
-void S101Cell::CheckHasTextPlacement()
-{
-	POSITION pos = NULL;
-	__int64 iKey;
-
-	R_FeatureRecord *fr;
-	pos = m_feaMap.GetStartPosition();
-
-
-	int numeric_number_of_text_placement = 0;
-	auto ii = m_dsgir.m_ftcs->m_arrFindForCode.find(L"TextPlacement");
-	if (ii != m_dsgir.m_ftcs->m_arrFindForCode.end())
-	{
-		numeric_number_of_text_placement = ii->second->m_nmcd;
-	}
-
-	while (pos != NULL)
-	{
-		m_feaMap.GetNextAssoc(pos, iKey, fr);
-
-		if (fr->m_frid.m_nftc == numeric_number_of_text_placement)
-		{
-			int numeric_number_of_bearing = 0;
-			auto ii = m_dsgir.m_atcs->m_arrFindForCode.find(L"flipBearing");
-			if (ii != m_dsgir.m_atcs->m_arrFindForCode.end())
-			{
-				numeric_number_of_bearing = ii->second->m_nmcd;
-			}
-
-			for (auto itorParent = fr->m_attr.begin(); itorParent != fr->m_attr.end(); itorParent++)
-			{
-				F_ATTR* attr = *itorParent;
-				for (auto aitor = attr->m_arr.begin(); aitor != attr->m_arr.end(); aitor++)
-				{
-					ATTR* attr = *aitor;
-
-					if (attr->m_natc == numeric_number_of_bearing)
-					{
-						fr->m_textBearing = new float((float)_wtof(attr->m_atvl));
-					}
-				}
-			}
-			continue;
-		}
-
-		if (fr->m_fasc.size() == 0)
-		{
-			continue;
-		}
-
-		for (auto iterFasc = fr->m_fasc.begin(); iterFasc != fr->m_fasc.end(); iterFasc++)
-		{
-			F_FASC* f_fasc = *iterFasc;
-			__int64 ikey2 = f_fasc->m_name.GetName();
-			auto feturemap = m_feaMap.PLookup(ikey2);
-			if (feturemap == nullptr)
-			{
-				return;
-			}
-			R_FeatureRecord *rfr = feturemap->value;
-
-			if (rfr->m_frid.m_nftc == numeric_number_of_text_placement)
-			{
-				fr->m_hasTextPlacement = true;
-
-				rfr->m_scaleMin = fr->m_scaleMin;
-				rfr->m_scaleMax = fr->m_scaleMax;
-				break;
-			}
-		}
-	}
 }
 
 void S101Cell::ProcessSpatialReference()

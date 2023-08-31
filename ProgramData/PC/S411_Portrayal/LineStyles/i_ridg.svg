@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="30mm" height="2.5mm" viewBox="0 0 30 2.5">
+    <polyline points="2.5,2.3 7.5,2.3" stroke="black" stroke-width="0.4"/>
+    <polygon  points="2.5,1.8 3.75,0 5,1.8 6.25,0 7.5,1.8"/>
+    
+    <polyline points="12.5,2.3 17.5,2.3" stroke="black" stroke-width="0.4"/>
+    <polygon  points="12.5,1.8 13.75,0 15,1.8 16.25,0 17.5,1.8"/>
+    
+    <polyline points="22.5,2.3 27.5,2.3" stroke="black" stroke-width="0.4"/>
+    <polygon  points="22.5,1.8 23.75,0 25,1.8 26.25,0 27.5,1.8"/>
+    
+    <polyline points="0,1.25 30,1.25" stroke="black" stroke-width="0.4"/>
+</svg>

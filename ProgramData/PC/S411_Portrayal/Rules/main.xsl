@@ -17,8 +17,10 @@
 	<xsl:include href="IceDivergence.xsl"/>
 	<!--Include templates/rules for: IceRidgeHummock-->
 	<xsl:include href="IceRidgeHummock.xsl"/>
-  <!--Include templates/rules for: IceFracture-->
-  <xsl:include href="IceFracture.xsl"/>
+	<!--Include templates/rules for: IceFracture-->
+	<xsl:include href="IceFracture.xsl"/>
+	<!--Include templates/rules for: IceFracture-->
+	<xsl:include href="seaice.xsl"/>
   <!--Include templates/rules for: attributeRules-->
   <xsl:include href="attributeRules.xsl"/>
   <!--Include templates/rules for: simpleLineStyle-->

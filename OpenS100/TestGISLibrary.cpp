@@ -121,6 +121,12 @@ void TestGISLibrary::OffFeature()
 void TestGISLibrary::OpenUpdate()
 {
 	S101Cell cell;
-	cell.Read8211(L"..\\SampleData\\101GB00GB5X01SW.001");
+	cell.Read8211(L"..\\SampleData\\101GB005X01SW.001");
+	if (cell.isUpdate()) {
+		OutputDebugString(L"Update\n");
+	}
+	else {
+		OutputDebugString(L"Base\n");
+	}
 	return;
 }

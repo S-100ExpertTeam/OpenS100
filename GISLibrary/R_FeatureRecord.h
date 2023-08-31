@@ -51,8 +51,6 @@ public:
 	int minimumDisplayPriority = -1;
 	int maximumDisplayPriority = -1;
 
-	bool m_hasTextPlacement = false;
-
 	//	[Text Placement ]
 	float* m_textBearing = nullptr;
 

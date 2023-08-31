@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="5mm" height="5mm" viewBox="0 0 5 5">
+    <g transform="rotate(45,2.5,2.5) translate(-0.9,1.2)">
+        <polyline points="5,0 4,1.25 5,2.5" fill="none" stroke="black" stroke-width="0.5"/>
+        <polyline points="4,1.25 2,1.25" fill="none" stroke="black" stroke-width="0.5"/>
+        <polyline points="2,0 0,1.25 2,2.5"/>
+    </g>
+</svg>

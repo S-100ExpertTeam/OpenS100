@@ -6,7 +6,7 @@
 #include <string>
 
 // S100_UnitOfMeasure
-class UnitOfMeasure : public XML_Item
+class UnitOfMeasure
 {
 public:
 	UnitOfMeasure();

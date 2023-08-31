@@ -18,4 +18,14 @@ namespace GF
 	{
 
 	}
+
+	std::string SimpleAttributeType::GetValue()
+	{
+		return value; 
+	}
+	
+	bool SimpleAttributeType::IsSimple()
+	{
+		return true; 
+	}
 }

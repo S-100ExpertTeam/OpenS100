@@ -25,9 +25,19 @@ namespace GM
 		return GeometryType::OrientableCurve;
 	}
 
+	std::string OrientableCurve::GeometricPrimitiveAsString()
+	{
+		return "Curve";
+	}
+
 	int OrientableCurve::GetBaseCurveIDAsInt()
 	{
 		std::string digitID = std::regex_replace(baseCurveID, std::regex(R"([\D])"), "");
 		return std::stoi(digitID);
+	}
+
+	void OrientableCurve::Read(pugi::xml_node& node)
+	{
+		
 	}
 }

@@ -29,5 +29,7 @@ namespace GM
 		virtual std::string GetAssociatedInformationID(int index) { return ""; }
 
 		virtual GeometryType GetType() { return GeometryType::Object; }
+
+		virtual std::string GeometricPrimitiveAsString() { return "None"; }
 	};
 } 

@@ -4,8 +4,7 @@
 
 #include <pugixml.hpp>
 
-class NumericRange :
-	public XML_Item
+class NumericRange
 {
 public:
 	NumericRange();

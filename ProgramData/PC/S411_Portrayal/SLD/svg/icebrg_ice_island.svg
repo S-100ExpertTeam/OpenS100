@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="10mm" height="5mm" viewBox="0 0 10 5">
+    <defs>
+        <pattern id="Triangle" width="2" height="2" patternUnits="userSpaceOnUse">
+            <polygon points="0,1 1,0 2,1 1,2" fill="none" stroke="black" stroke-width="0.4"/>   
+        </pattern> 
+    </defs>
+    
+    <polygon points="0.4,2.5 2,0.4 8,0.4 9.6,2.5 8,4.6 4.6,4.6 2,4.6" fill="url(#Triangle)" stroke="black" stroke-width="0.8"/>
+</svg>

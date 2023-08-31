@@ -22,4 +22,19 @@ namespace GM
 	{
 		component.push_back(OrientableCurve(curveMemberID));
 	}
+
+	void CompositeCurve::Add(GM::OrientableCurve item)
+	{
+		component.push_back(item);
+	}
+
+	void CompositeCurve::Add(GM::Curve item)
+	{
+		component.push_back(item);
+	}
+
+	void CompositeCurve::Add(GM::CompositeCurve item)
+	{
+		component.push_back(item);
+	}
 }

@@ -246,6 +246,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Angle.cpp" />
     <ClCompile Include="ATTR.cpp" />
     <ClCompile Include="C3IL.cpp" />
     <ClCompile Include="CatalogManager.cpp" />
@@ -256,6 +257,7 @@
     <ClCompile Include="CV_InterpolationMethod.cpp" />
     <ClCompile Include="CV_SequenceType.cpp" />
     <ClCompile Include="D2D1Resources.cpp" />
+    <ClCompile Include="DataCoverage.cpp" />
     <ClCompile Include="DataOrganizationIndex.cpp" />
     <ClCompile Include="DDR.cpp" />
     <ClCompile Include="Directory.cpp" />
@@ -332,6 +334,7 @@
     <ClCompile Include="GM_OrientableCurve.cpp" />
     <ClCompile Include="GM_Point.cpp" />
     <ClCompile Include="GM_Polygon.cpp" />
+    <ClCompile Include="GM_Ring.cpp" />
     <ClCompile Include="GM_Surface.cpp" />
     <ClCompile Include="H5_FC_Attribute2.cpp" />
     <ClCompile Include="H5_FeatureContainer.cpp" />
@@ -345,11 +348,17 @@
     <ClCompile Include="C2IL.cpp" />
     <ClCompile Include="GF_FeatureAssociationType.cpp" />
     <ClCompile Include="GF_ObjectType.cpp" />
+    <ClCompile Include="IndeterminateDate.cpp" />
+    <ClCompile Include="indeterminatePosition.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="ISO8211Fuc.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="LayerManager.cpp" />
     <ClCompile Include="Leader.cpp" />
+    <ClCompile Include="Length.cpp" />
     <ClCompile Include="MASK.cpp" />
+    <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Measure.cpp" />
     <ClCompile Include="OrientedCurveRecord.cpp" />
     <ClCompile Include="PCOutputSchemaManager.cpp" />
     <ClCompile Include="ProcessS101.cpp" />
@@ -375,6 +384,7 @@
     <ClCompile Include="S101Creator.cpp" />
     <ClCompile Include="S101LuaScriptingReference.cpp" />
     <ClCompile Include="SAbstractCurve.cpp" />
+    <ClCompile Include="ScaleBands.cpp" />
     <ClCompile Include="SCommonFuction.cpp" />
     <ClCompile Include="SCompositeCurve.cpp" />
     <ClCompile Include="SCoverage.cpp" />
@@ -467,6 +477,7 @@
     <ClCompile Include="VerticalDatumReference.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Angle.h" />
     <ClInclude Include="ATTR.h" />
     <ClInclude Include="C3IL.h" />
     <ClInclude Include="CatalogManager.h" />
@@ -474,6 +485,7 @@
     <ClInclude Include="CV_CommonPointRule.h" />
     <ClInclude Include="CV_InterpolationMethod.h" />
     <ClInclude Include="CV_SequenceType.h" />
+    <ClInclude Include="DataCoverage.h" />
     <ClInclude Include="DataOrganizationIndex.h" />
     <ClInclude Include="DirectPosition.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
@@ -494,6 +506,12 @@
     <ClInclude Include="H5_RootGroup.h" />
     <ClInclude Include="H5_ValuesGroup.h" />
     <ClInclude Include="HDF5Wrapper.h" />
+    <ClInclude Include="IndeterminateDate.h" />
+    <ClInclude Include="indeterminatePosition.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Length.h" />
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Measure.h" />
     <ClInclude Include="PugixmlElement.h" />
     <ClInclude Include="GML_Envelop.h" />
     <ClInclude Include="GML_FeatureType.h" />
@@ -618,6 +636,7 @@
     <ClInclude Include="S101Creator.h" />
     <ClInclude Include="S101LuaScriptingReference.h" />
     <ClInclude Include="SAbstractCurve.h" />
+    <ClInclude Include="ScaleBands.h" />
     <ClInclude Include="SCommonFuction.h" />
     <ClInclude Include="SCompositeCurve.h" />
     <ClInclude Include="SCoverage.h" />

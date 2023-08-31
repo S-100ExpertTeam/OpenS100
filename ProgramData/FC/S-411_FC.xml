@@ -1,0 +1,3610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<S100FC:S100_FC_FeatureCatalogue xmlns:S100Base="http://www.iho.int/S100Base" xmlns:S100CI="http://www.iho.int/S100CI" xmlns:S100FC="http://www.iho.int/S100FC" xmlns:S100FD="http://www.iho.int/S100FD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.iho.int/S100FC S100FC.xsd http://www.iho.int/S100CI S100CI.xsd http://www.iho.int/S100Base S100Base.xsd http://www.iho.int/S100FD S100FD.xsd ">
+	<S100FC:name>JCOMM S-411 Sea Ice Feature Catalogue</S100FC:name>
+	<S100FC:scope>Ice information for navigation in ice covered areas.</S100FC:scope>
+	<S100FC:fieldOfApplication>Marine Navigation</S100FC:fieldOfApplication>
+	<S100FC:versionNumber>1.1.0</S100FC:versionNumber>
+	<S100FC:versionDate>2023-08-17</S100FC:versionDate>
+	<S100FC:productId>S-411</S100FC:productId>
+	<S100FC:producer>
+		<S100CI:role>pointOfContact</S100CI:role>
+		<S100CI:party>
+			<S100CI:CI_Organisation>
+				<S100CI:name>Alexander Benke</S100CI:name>
+				<S100CI:contactInfo>
+					<S100CI:address>
+						<S100CI:administrativeArea>7bis, avenue de la Paix, Case postale 2300, CH-1211 Geneva 2</S100CI:administrativeArea>
+						<S100CI:country>Switzerland</S100CI:country>
+						<S100CI:electronicMailAddress>wmo@wmo.int</S100CI:electronicMailAddress>
+					</S100CI:address>
+					<S100CI:onlineResource>
+						<S100CI:linkage>https://public.wmo.int/</S100CI:linkage>
+					</S100CI:onlineResource>
+				</S100CI:contactInfo>
+			</S100CI:CI_Organisation>
+		</S100CI:party>
+	</S100FC:producer>
+	<!-- temporary -->
+	<S100FC:S100_FC_DefinitionSources>
+		<S100FC:FC_DefinitionSource id="IHOREG">
+			<S100FC:source>
+				<S100CI:title>IHO GI Registry</S100CI:title>
+				<S100CI:onlineResource>
+					<S100CI:linkage>http://registry.iho.int</S100CI:linkage>
+				</S100CI:onlineResource>
+			</S100FC:source>
+		</S100FC:FC_DefinitionSource>
+	</S100FC:S100_FC_DefinitionSources>
+
+	<S100FC:S100_FC_SimpleAttributes>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Total Concentration</S100FC:name>
+            <S100FC:definition>ICEACT specifies the total concentration of ice in an area.  It represents the ratio expressed in tenths describing the total area of the water surface covered by ice as a fraction of the whole area.</S100FC:definition>
+            <S100FC:code>ICEACT</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Ice Free</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Open Water ( &lt; 1/10 ice)</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Bergy Water</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>1/10 ice</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>1/10 to 2/10 ice</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>13</S100FC:label>
+                <S100FC:definition>1/10 to 3/10 ice</S100FC:definition>
+                <S100FC:code>13</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>2/10 ice</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>2/10 to 3/10 ice</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>24</S100FC:label>
+                <S100FC:definition>2/10 to 4/10 ice</S100FC:definition>
+                <S100FC:code>24</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>3/10 ice</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>34</S100FC:label>
+                <S100FC:definition>3/10 to 4/10 ice</S100FC:definition>
+                <S100FC:code>34</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>35</S100FC:label>
+                <S100FC:definition>3/10 to 5/10 ice</S100FC:definition>
+                <S100FC:code>35</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>40</S100FC:label>
+                <S100FC:definition>4/10 ice</S100FC:definition>
+                <S100FC:code>40</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>45</S100FC:label>
+                <S100FC:definition></S100FC:definition>
+                <S100FC:code>45</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>46</S100FC:label>
+                <S100FC:definition>4/10 to 6/10 ice</S100FC:definition>
+                <S100FC:code>46</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>50</S100FC:label>
+                <S100FC:definition>5/10 ice</S100FC:definition>
+                <S100FC:code>50</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>56</S100FC:label>
+                <S100FC:definition>5/10 to 6/10 ice</S100FC:definition>
+                <S100FC:code>56</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>57</S100FC:label>
+                <S100FC:definition>5/10 to 7/10 ice</S100FC:definition>
+                <S100FC:code>57</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>60</S100FC:label>
+                <S100FC:definition>6/10 ice</S100FC:definition>
+                <S100FC:code>60</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>67</S100FC:label>
+                <S100FC:definition>6/10 to 7/10 ice</S100FC:definition>
+                <S100FC:code>67</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>68</S100FC:label>
+                <S100FC:definition>6/10 to 8/10 ice</S100FC:definition>
+                <S100FC:code>68</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>70</S100FC:label>
+                <S100FC:definition>7/10 ice</S100FC:definition>
+                <S100FC:code>70</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>78</S100FC:label>
+                <S100FC:definition>7/10 to 8/10 ice</S100FC:definition>
+                <S100FC:code>78</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>79</S100FC:label>
+                <S100FC:definition>7/10 to 9/10 ice</S100FC:definition>
+                <S100FC:code>79</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>80</S100FC:label>
+                <S100FC:definition>8/10 ice</S100FC:definition>
+                <S100FC:code>80</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>81</S100FC:label>
+                <S100FC:definition>8/10 to 10/10 ice</S100FC:definition>
+                <S100FC:code>81</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>89</S100FC:label>
+                <S100FC:definition>8/10 to 9/10 ice</S100FC:definition>
+                <S100FC:code>89</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>90</S100FC:label>
+                <S100FC:definition>9/10 ice</S100FC:definition>
+                <S100FC:code>90</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>91</S100FC:label>
+                <S100FC:definition>9/10 to 10/10 ice</S100FC:definition>
+                <S100FC:code>91</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>92</S100FC:label>
+                <S100FC:definition>10/10 ice</S100FC:definition>
+                <S100FC:code>92</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Partial Concentration</S100FC:name>
+            <S100FC:definition>ICEAPC specifies the partial concentrations of ice in an area. (‘Ca, Cband Cc’).</S100FC:definition>
+            <S100FC:code>ICEAPC</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Ice Free</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Open Water ( &lt; 1/10 ice)</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Bergy Water</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>1/10 ice</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>1/10 to 2/10 ice</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>13</S100FC:label>
+                <S100FC:definition>1/10 to 3/10 ice</S100FC:definition>
+                <S100FC:code>13</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>2/10 ice</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>2/10 to 3/10 ice</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>24</S100FC:label>
+                <S100FC:definition>2/10 to 4/10 ice</S100FC:definition>
+                <S100FC:code>24</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>3/10 ice</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>34</S100FC:label>
+                <S100FC:definition>3/10 to 4/10 ice</S100FC:definition>
+                <S100FC:code>34</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>35</S100FC:label>
+                <S100FC:definition>3/10 to 5/10 ice</S100FC:definition>
+                <S100FC:code>35</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>40</S100FC:label>
+                <S100FC:definition>4/10 ice</S100FC:definition>
+                <S100FC:code>40</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>45</S100FC:label>
+                <S100FC:definition></S100FC:definition>
+                <S100FC:code>45</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>46</S100FC:label>
+                <S100FC:definition>4/10 to 6/10 ice</S100FC:definition>
+                <S100FC:code>46</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>50</S100FC:label>
+                <S100FC:definition>5/10 ice</S100FC:definition>
+                <S100FC:code>50</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>56</S100FC:label>
+                <S100FC:definition>5/10 to 6/10 ice</S100FC:definition>
+                <S100FC:code>56</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>57</S100FC:label>
+                <S100FC:definition>5/10 to 7/10 ice</S100FC:definition>
+                <S100FC:code>57</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>60</S100FC:label>
+                <S100FC:definition>6/10 ice</S100FC:definition>
+                <S100FC:code>60</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>67</S100FC:label>
+                <S100FC:definition>6/10 to 7/10 ice</S100FC:definition>
+                <S100FC:code>67</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>68</S100FC:label>
+                <S100FC:definition>6/10 to 8/10 ice</S100FC:definition>
+                <S100FC:code>68</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>70</S100FC:label>
+                <S100FC:definition>7/10 ice</S100FC:definition>
+                <S100FC:code>70</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>78</S100FC:label>
+                <S100FC:definition>7/10 to 8/10 ice</S100FC:definition>
+                <S100FC:code>78</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>79</S100FC:label>
+                <S100FC:definition>7/10 to 9/10 ice</S100FC:definition>
+                <S100FC:code>79</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>80</S100FC:label>
+                <S100FC:definition>8/10 ice</S100FC:definition>
+                <S100FC:code>80</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>81</S100FC:label>
+                <S100FC:definition>8/10 to 10/10 ice</S100FC:definition>
+                <S100FC:code>81</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>89</S100FC:label>
+                <S100FC:definition>8/10 to 9/10 ice</S100FC:definition>
+                <S100FC:code>89</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>90</S100FC:label>
+                <S100FC:definition>9/10 ice</S100FC:definition>
+                <S100FC:code>90</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>91</S100FC:label>
+                <S100FC:definition>9/10 to 10/10 ice</S100FC:definition>
+                <S100FC:code>91</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>92</S100FC:label>
+                <S100FC:definition>10/10 ice</S100FC:definition>
+                <S100FC:code>92</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Stage of Development</S100FC:name>
+            <S100FC:definition>Ice Stage of Development describes the ages and thicknesses of the ice (‘So, Sa, Sb, Sc and Sd’).</S100FC:definition>
+            <S100FC:code>ICESOD</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Ice Free</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>70</S100FC:label>
+                <S100FC:definition>Brash Ice</S100FC:definition>
+                <S100FC:code>70</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>80</S100FC:label>
+                <S100FC:definition>No stage of development</S100FC:definition>
+                <S100FC:code>80</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>81</S100FC:label>
+                <S100FC:definition>New Ice (&lt;10 cm) </S100FC:definition>
+                <S100FC:code>81</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>82</S100FC:label>
+                <S100FC:definition>Nilas Ice Rind (&lt;10 cm)</S100FC:definition>
+                <S100FC:code>82</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>83</S100FC:label>
+                <S100FC:definition>Young Ice (10 to &lt;30 cm)</S100FC:definition>
+                <S100FC:code>83</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>84</S100FC:label>
+                <S100FC:definition>Grey Ice (10 to &lt;15 cm)</S100FC:definition>
+                <S100FC:code>84</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>85</S100FC:label>
+                <S100FC:definition>Grey – White Ice (15 to &lt;30 cm)</S100FC:definition>
+                <S100FC:code>85</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>86</S100FC:label>
+                <S100FC:definition>First Year Ice (30 to 200 cm)</S100FC:definition>
+                <S100FC:code>86</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>87</S100FC:label>
+                <S100FC:definition>Thin First Year Ice (30 to &lt;70 cm)</S100FC:definition>
+                <S100FC:code>87</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>88</S100FC:label>
+                <S100FC:definition>Thin First Year Ice Stage 1 (30 to &lt;50 cm)</S100FC:definition>
+                <S100FC:code>88</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>89</S100FC:label>
+                <S100FC:definition>Thin First Year Ice Stage 2 (50 to &lt;70 cm)</S100FC:definition>
+                <S100FC:code>89</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>90</S100FC:label>
+                <S100FC:definition>Code not currently assigned</S100FC:definition>
+                <S100FC:code>90</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>91</S100FC:label>
+                <S100FC:definition>Medium First Year Ice (70 to 120 cm)</S100FC:definition>
+                <S100FC:code>91</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>92</S100FC:label>
+                <S100FC:definition>Code not currently assigned</S100FC:definition>
+                <S100FC:code>92</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>93</S100FC:label>
+                <S100FC:definition>Thick First Year Ice (&gt;120 cm)</S100FC:definition>
+                <S100FC:code>93</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>94</S100FC:label>
+                <S100FC:definition>Residual Ice</S100FC:definition>
+                <S100FC:code>94</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>95</S100FC:label>
+                <S100FC:definition>Old Ice</S100FC:definition>
+                <S100FC:code>95</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>96</S100FC:label>
+                <S100FC:definition>Second Year Ice</S100FC:definition>
+                <S100FC:code>96</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>97</S100FC:label>
+                <S100FC:definition>Multi-Year Ice</S100FC:definition>
+                <S100FC:code>97</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>Glacier Ice (Icebergs)</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Lake Ice Stage of Development</S100FC:name>
+            <S100FC:definition>Lake Ice Stages of Development describe the ages and thicknesses of lake ice. (‘So, Sa, Sb, Sc and Sd’)</S100FC:definition>
+            <S100FC:code>ICELSO</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>New Lake Ice (&lt;5cms)</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Thin Lake Ice (5-&lt;15cms)</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Medium Lake Ice (15-&lt;30cms)</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>Thick Lake Ice (30-70cms)</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>Very Thick Lake Ice (&gt;70cms)</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>70</S100FC:label>
+                <S100FC:definition>Brash Ice</S100FC:definition>
+                <S100FC:code>70</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Floe Sizes</S100FC:name>
+            <S100FC:definition>Floe Sizes describe the predominate forms of ice floe sizes (Fa, Fb and Fc) corresponding to the ice Stages of Development Sa, Sb and Screspectively.</S100FC:definition>
+            <S100FC:code>ICEFLZ</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Pancake Ice (30 cm to 3m across)</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Shuga/Small Ice Cake; Brash Ice (&lt;2m across)</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Ice Cake (&lt;20m across)</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>Small Floe (20 to &lt;100m across)</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>Medium Floe (100 to 500m)</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>06</S100FC:label>
+                <S100FC:definition>Big Floe (500 to &lt;2000m across)</S100FC:definition>
+                <S100FC:code>06</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>07</S100FC:label>
+                <S100FC:definition>Vast Floe (2000 to10000m across)</S100FC:definition>
+                <S100FC:code>07</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>08</S100FC:label>
+                <S100FC:definition>Giant Floe (&gt;10000m across)</S100FC:definition>
+                <S100FC:code>08</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>09</S100FC:label>
+                <S100FC:definition>Fast Ice</S100FC:definition>
+                <S100FC:code>09</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>Growlers, Floebergs or Floebits</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>11</S100FC:label>
+                <S100FC:definition>Icebergs</S100FC:definition>
+                <S100FC:code>11</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Melt Stage</S100FC:name>
+            <S100FC:definition>The Stage of Melt describes the stages of the melting ice. Puddle: An accumulation of water on ice, mainly due to the melting of snow, but in some more advanced stages also the melting of ice. Thaw Hole: Vertical holes formed in ice when surface puddles melt through to the underlying water. Dried Ice: Ice surface from which water has disappeared after the formation of cracks and thaw holes. During the process of drying the surface whitens. Rotten Ice:                     Ice which has become honey-combed and is in an advanced state of disintegration. Flooded Ice:                   Ice which has been flooded and is heavily loaded by water or water and wet snow. Frozen Puddle: A puddle which has frozen over.</S100FC:definition>
+            <S100FC:code>ICEMLT</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Few Puddles</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Many Puddles</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Flooded Ice</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>Few Thaw Holes</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>Many Thaw Holes</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>06</S100FC:label>
+                <S100FC:definition>Dried Ice</S100FC:definition>
+                <S100FC:code>06</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>07</S100FC:label>
+                <S100FC:definition>Rotten Ice</S100FC:definition>
+                <S100FC:code>07</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>08</S100FC:label>
+                <S100FC:definition>Few Frozen Puddles</S100FC:definition>
+                <S100FC:code>08</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>09</S100FC:label>
+                <S100FC:definition>All Puddles Frozen</S100FC:definition>
+                <S100FC:code>09</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>No Melt</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Concentration of Strips and Patches</S100FC:name>
+            <S100FC:definition>A strip is a long narrow area of floating ice, about 1 kilometre or less in width, usually composed of small fragments detached from the main mass of ice, and run together under the influence of wind, swell or current. If the area of ice becomes more rounded in shape, it is referred to as a patch. ICESPC indicates the concentration in tenths within the area of Strips and Patches.</S100FC:definition>
+            <S100FC:code>ICESPC</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>11</S100FC:label>
+                <S100FC:definition>Strips and Patches (concentrations 1/10)</S100FC:definition>
+                <S100FC:code>11</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>Strips and Patches (concentrations 2/10)</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>13</S100FC:label>
+                <S100FC:definition>Strips and Patches (concentrations 3/10)</S100FC:definition>
+                <S100FC:code>13</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>14</S100FC:label>
+                <S100FC:definition>Strips and Patches (concentrations 4/10)</S100FC:definition>
+                <S100FC:code>14</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>15</S100FC:label>
+                <S100FC:definition>Strips and Patches (concentrations 5/10)</S100FC:definition>
+                <S100FC:code>15</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>16</S100FC:label>
+                <S100FC:definition>Strips and Patches (concentrations 6/10)</S100FC:definition>
+                <S100FC:code>16</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>17</S100FC:label>
+                <S100FC:definition>Strips and Patches (concentrations 7/10)</S100FC:definition>
+                <S100FC:code>17</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>18</S100FC:label>
+                <S100FC:definition>Strips and Patches (concentrations 8/10)</S100FC:definition>
+                <S100FC:code>18</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>19</S100FC:label>
+                <S100FC:definition>Strips and Patches (concentrations 9/10)</S100FC:definition>
+                <S100FC:code>19</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>Strips and Patches (concentrations 10/10)</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Number of Icebergs in Area</S100FC:name>
+            <S100FC:definition>ICEBNM indicates the number of Icebergs within a specified area.</S100FC:definition>
+            <S100FC:code>ICEBNM</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Level Ice</S100FC:name>
+            <S100FC:definition>ICELVL is an indication as to whether or not the ice has been affected by deformation</S100FC:definition>
+            <S100FC:code>ICELVL</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Level(undeformed)</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Deformed</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Compacting Strength</S100FC:name>
+            <S100FC:definition>ICECST is an indication of strength of the compacting of the ice.</S100FC:definition>
+            <S100FC:code>ICECST</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Little compacting</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>Slight compacting</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>Slight to moderate compacting</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>Moderate compacting</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>Moderate to strong compacting</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>Strong compacting</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>Ice divergence</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Fracture Type</S100FC:name>
+            <S100FC:definition>ICEFTY indicates the type of fracture, based upon width.</S100FC:definition>
+            <S100FC:code>ICEFTY</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Crack (0 to 1m wide)</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Very Small Fracture (&gt;1m to 50m wide)</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Small Fracture (&gt;50m to 200m wide)</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>Medium Fracture (&gt;200m to 500m wide)</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>Large Fracture (&gt;500m wide)</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Lead Status</S100FC:name>
+            <S100FC:definition>The Ice Lead Status indicates the surface nature of the lead.</S100FC:definition>
+            <S100FC:code>ICELST</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Open Lead</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Frozen Lead</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Frequency of Leads or Fractures</S100FC:name>
+            <S100FC:definition>ICERFQ indicates the frequency of leads or fractures in number per nautical mile.</S100FC:definition>
+            <S100FC:code>ICELFQ</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Orientation of Leads or Fractures</S100FC:name>
+            <S100FC:definition>ICELOR indicates the predominant orientation of leads and fractures.</S100FC:definition>
+            <S100FC:code>ICELOR</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>No Leads or Fractures</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>NE</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>E</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>SE</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>S</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>06</S100FC:label>
+                <S100FC:definition>SW</S100FC:definition>
+                <S100FC:code>06</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>07</S100FC:label>
+                <S100FC:definition>W</S100FC:definition>
+                <S100FC:code>07</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>08</S100FC:label>
+                <S100FC:definition>NW</S100FC:definition>
+                <S100FC:code>08</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>09</S100FC:label>
+                <S100FC:definition>N</S100FC:definition>
+                <S100FC:code>09</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>Variable</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Lead (or Fracture or Crack) Width</S100FC:name>
+            <S100FC:definition>ICELWD indicates the width of a lead or fracture or crack in metres.</S100FC:definition>
+            <S100FC:code>ICELWD</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Location Information</S100FC:name>
+            <S100FC:definition>ICELOC indicates whether the break is at a specific location, or whether there is a presence in the area.</S100FC:definition>
+            <S100FC:code>ICELOC</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Specific Location</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Presence in Area</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Iceberg Size</S100FC:name>
+            <S100FC:definition>The "Iceberg Size" categorizes the size of an iceberg.</S100FC:definition>
+            <S100FC:code>ICEBSZ</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Growler (&lt;1m asl)</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Bergy Bit (1-&lt;5m asl; 5-&lt;15m length)</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Small Iceberg (5-15m asl; 15-60m length)</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>Medium Iceberg (16-45m asl; 61-120m length)</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>Large Iceberg (46-75m asl; 121-200m length)</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>06</S100FC:label>
+                <S100FC:definition>Very Large Iceberg (&gt;75m asl; &gt;200m length)</S100FC:definition>
+                <S100FC:code>06</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>07</S100FC:label>
+                <S100FC:definition>Ice Island Fragment</S100FC:definition>
+                <S100FC:code>07</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>08</S100FC:label>
+                <S100FC:definition>Ice Island (in the Northern Hemisphere) or Very Large Tabular Berg (in the Southern Ocean)</S100FC:definition>
+                <S100FC:code>08</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>09</S100FC:label>
+                <S100FC:definition>Radar Target</S100FC:definition>
+                <S100FC:code>09</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Drift Direction</S100FC:name>
+            <S100FC:definition>ICEDDR indicates the direction in which an ice mass is drifting.</S100FC:definition>
+            <S100FC:code>ICEDDR</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>No Ice Motion</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Ice Drift to NE</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Ice Drift to E</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>Ice Drift to SE</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>Ice Drift to S</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>06</S100FC:label>
+                <S100FC:definition>Ice Drift to SW</S100FC:definition>
+                <S100FC:code>06</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>07</S100FC:label>
+                <S100FC:definition>Ice Drift to W</S100FC:definition>
+                <S100FC:code>07</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>08</S100FC:label>
+                <S100FC:definition>Ice Drift to NW</S100FC:definition>
+                <S100FC:code>08</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>09</S100FC:label>
+                <S100FC:definition>Ice Drift to N</S100FC:definition>
+                <S100FC:code>09</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>Variable</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Drift Speed</S100FC:name>
+            <S100FC:definition>ICEDSP describes the speed in knots at which an ice mass is traveling.</S100FC:definition>
+            <S100FC:code>ICEDSP</S100FC:code>
+            <S100FC:dataType>real</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Average Thickness</S100FC:name>
+            <S100FC:definition>Ice Average Thickness defines the average thickness of the ice.</S100FC:definition>
+            <S100FC:code>ICETCK</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Maximum Ice Thickness</S100FC:name>
+            <S100FC:definition>ICEMAX specifies the maximum thickness of the ice.</S100FC:definition>
+            <S100FC:code>ICEMAX</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Mimimum Ice Tickness</S100FC:name>
+            <S100FC:definition>ICEMIN specifies the minimum thickness of the ice.</S100FC:definition>
+            <S100FC:code>ICEMIN</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Thickness Type</S100FC:name>
+            <S100FC:definition>ICETTY indicated whether the thickness of the ice was measured or estimated. </S100FC:definition>
+            <S100FC:code>ICETTY</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Measured</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Estimated</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Snow Depth</S100FC:name>
+            <S100FC:definition>ICESCT specifies the depth of snow cover on the ice.</S100FC:definition>
+            <S100FC:code>ICESCT</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Snow Cover Concentration</S100FC:name>
+            <S100FC:definition>ICESCN indicates the concentration (aerial coverage) of snow in tenths.</S100FC:definition>
+            <S100FC:code>ICESCN</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>1/10</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>2/10</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>3/10</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>4/10</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>5/10</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>06</S100FC:label>
+                <S100FC:definition>6/10</S100FC:definition>
+                <S100FC:code>06</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>07</S100FC:label>
+                <S100FC:definition>7/10</S100FC:definition>
+                <S100FC:code>07</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>08</S100FC:label>
+                <S100FC:definition>8/10</S100FC:definition>
+                <S100FC:code>08</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>09</S100FC:label>
+                <S100FC:definition>9/10</S100FC:definition>
+                <S100FC:code>09</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>10/10</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>11</S100FC:label>
+                <S100FC:definition>&lt;1/10</S100FC:definition>
+                <S100FC:code>11</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>No Snow Cover</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Direction of Sastrugi</S100FC:name>
+            <S100FC:definition>ICEDOS indicates the bearing of a sastrugi.  Sastrugi are sharp, irregular ridges formed on a snow surface by wind erosion and deposition. On mobile floating ice the ridges are parallel to the direction of the wind at the time they were formed.</S100FC:definition>
+            <S100FC:code>ICEDOS</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>No Sastrugi</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>NE</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>E</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>SE</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>S</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>06</S100FC:label>
+                <S100FC:definition>SW</S100FC:definition>
+                <S100FC:code>06</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>07</S100FC:label>
+                <S100FC:definition>W</S100FC:definition>
+                <S100FC:code>07</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>08</S100FC:label>
+                <S100FC:definition>NW</S100FC:definition>
+                <S100FC:code>08</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>09</S100FC:label>
+                <S100FC:definition>N</S100FC:definition>
+                <S100FC:code>09</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>Variable</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Ridge Concentration</S100FC:name>
+            <S100FC:definition>ICERCN describes the concentration of hummocked ice in an ice area.  Up to three values may be given in the list to correspond to the partial concentrations in ICEAPC.</S100FC:definition>
+            <S100FC:code>ICERCN</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>0/10 – 1/10</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>1/10</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>1/10 – 2/10</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>2/10</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>2/10 – 3/10</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>3/10</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>34</S100FC:label>
+                <S100FC:definition>3/10 – 4/10</S100FC:definition>
+                <S100FC:code>34</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>40</S100FC:label>
+                <S100FC:definition>4/10</S100FC:definition>
+                <S100FC:code>40</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>45</S100FC:label>
+                <S100FC:definition>4/10 – 5/10</S100FC:definition>
+                <S100FC:code>45</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>50</S100FC:label>
+                <S100FC:definition>5/10</S100FC:definition>
+                <S100FC:code>50</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>56</S100FC:label>
+                <S100FC:definition>5/10 – 6/10</S100FC:definition>
+                <S100FC:code>56</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>60</S100FC:label>
+                <S100FC:definition>6/10</S100FC:definition>
+                <S100FC:code>60</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>67</S100FC:label>
+                <S100FC:definition>6/10 – 7/10</S100FC:definition>
+                <S100FC:code>67</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>70</S100FC:label>
+                <S100FC:definition>7/10</S100FC:definition>
+                <S100FC:code>70</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>78</S100FC:label>
+                <S100FC:definition>7/10 – 8/10</S100FC:definition>
+                <S100FC:code>78</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>80</S100FC:label>
+                <S100FC:definition>8/10</S100FC:definition>
+                <S100FC:code>80</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>89</S100FC:label>
+                <S100FC:definition>8/10 – 9/10</S100FC:definition>
+                <S100FC:code>89</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>90</S100FC:label>
+                <S100FC:definition>9/10</S100FC:definition>
+                <S100FC:code>90</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>91</S100FC:label>
+                <S100FC:definition>9/10 – 10/10</S100FC:definition>
+                <S100FC:code>91</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>92</S100FC:label>
+                <S100FC:definition>10/10</S100FC:definition>
+                <S100FC:code>92</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>No Ridging</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Ridge Classification</S100FC:name>
+            <S100FC:definition>ICERDV describes the predominant type of ice ridge(s) present.</S100FC:definition>
+            <S100FC:code>ICERDV</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>New Ridge</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Weathered Ridge</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Very Weathered Ridge</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>Aged Ridge</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>Consolidated Ridge</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>06</S100FC:label>
+                <S100FC:definition>Ridge</S100FC:definition>
+                <S100FC:code>06</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>07</S100FC:label>
+                <S100FC:definition>Ridged Ice Zone</S100FC:definition>
+                <S100FC:code>07</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>08</S100FC:label>
+                <S100FC:definition>Ridge Barrier</S100FC:definition>
+                <S100FC:code>08</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Ridge Mean Height</S100FC:name>
+            <S100FC:definition>ICERMH indicates the mean height of ice ridge(s) in decimetres.</S100FC:definition>
+            <S100FC:code>ICERMH</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Ridge Frequency</S100FC:name>
+            <S100FC:definition>ICERFQ indicates the frequency of ice ridges in number per nautical mile</S100FC:definition>
+            <S100FC:code>ICERFQ</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Ridge Maximum Height</S100FC:name>
+            <S100FC:definition>ICERMT indicates the maximum height of ice ridge(s) in decimetres.</S100FC:definition>
+            <S100FC:code>ICERXH</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Keel Concentration</S100FC:name>
+            <S100FC:definition>ICEKCN describes the concentration of ice keels beneath an ice area.</S100FC:definition>
+            <S100FC:code>ICEKCN</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>0/10 – 1/10</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>1/10</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>1/10 – 2/10</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>2/10</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>2/10 – 3/10</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>3/10</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>34</S100FC:label>
+                <S100FC:definition>3/10 – 4/10</S100FC:definition>
+                <S100FC:code>34</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>40</S100FC:label>
+                <S100FC:definition>4/10</S100FC:definition>
+                <S100FC:code>40</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>45</S100FC:label>
+                <S100FC:definition>4/10 – 5/10</S100FC:definition>
+                <S100FC:code>45</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>50</S100FC:label>
+                <S100FC:definition>5/10</S100FC:definition>
+                <S100FC:code>50</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>56</S100FC:label>
+                <S100FC:definition>5/10 – 6/10</S100FC:definition>
+                <S100FC:code>56</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>60</S100FC:label>
+                <S100FC:definition>6/10</S100FC:definition>
+                <S100FC:code>60</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>67</S100FC:label>
+                <S100FC:definition>6/10 – 7/10</S100FC:definition>
+                <S100FC:code>67</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>70</S100FC:label>
+                <S100FC:definition>7/10</S100FC:definition>
+                <S100FC:code>70</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>78</S100FC:label>
+                <S100FC:definition>7/10 – 8/10</S100FC:definition>
+                <S100FC:code>78</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>80</S100FC:label>
+                <S100FC:definition>8/10</S100FC:definition>
+                <S100FC:code>80</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>89</S100FC:label>
+                <S100FC:definition>8/10 – 9/10</S100FC:definition>
+                <S100FC:code>89</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>90</S100FC:label>
+                <S100FC:definition>9/10</S100FC:definition>
+                <S100FC:code>90</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>91</S100FC:label>
+                <S100FC:definition>9/10 – 10/10</S100FC:definition>
+                <S100FC:code>91</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>92</S100FC:label>
+                <S100FC:definition>10/10</S100FC:definition>
+                <S100FC:code>92</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>No Keels</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Keel Frequency</S100FC:name>
+            <S100FC:definition>ICERFQ indicates the frequency of ice keels in number per nautical mile</S100FC:definition>
+            <S100FC:code>ICEKFQ</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Keel Mean Depth</S100FC:name>
+            <S100FC:definition>Indicates the mean depth of ice keels in decimetres.</S100FC:definition>
+            <S100FC:code>ICEKMD</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Keel Maximum Depth</S100FC:name>
+            <S100FC:definition>ICERMT indicates the maximum depth of ice keels in decimetres.</S100FC:definition>
+            <S100FC:code>ICEKXD</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Ice Rafting Concentration</S100FC:name>
+            <S100FC:definition>ICEFCN describes the concentration of ice rafting in an ice area.</S100FC:definition>
+            <S100FC:code>ICEFCN</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>0/10 – 1/10</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>1/10</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>1/10 – 2/10</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>2/10</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>2/10 – 3/10</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>3/10</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>34</S100FC:label>
+                <S100FC:definition>3/10 – 4/10</S100FC:definition>
+                <S100FC:code>34</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>40</S100FC:label>
+                <S100FC:definition>4/10</S100FC:definition>
+                <S100FC:code>40</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>45</S100FC:label>
+                <S100FC:definition>4/10 – 5/10</S100FC:definition>
+                <S100FC:code>45</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>50</S100FC:label>
+                <S100FC:definition>5/10</S100FC:definition>
+                <S100FC:code>50</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>56</S100FC:label>
+                <S100FC:definition>5/10 – 6/10</S100FC:definition>
+                <S100FC:code>56</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>60</S100FC:label>
+                <S100FC:definition>6/10</S100FC:definition>
+                <S100FC:code>60</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>67</S100FC:label>
+                <S100FC:definition>6/10 – 7/10</S100FC:definition>
+                <S100FC:code>67</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>70</S100FC:label>
+                <S100FC:definition>7/10</S100FC:definition>
+                <S100FC:code>70</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>78</S100FC:label>
+                <S100FC:definition>7/10 – 8/10</S100FC:definition>
+                <S100FC:code>78</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>80</S100FC:label>
+                <S100FC:definition>8/10</S100FC:definition>
+                <S100FC:code>80</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>89</S100FC:label>
+                <S100FC:definition>8/10 – 9/10</S100FC:definition>
+                <S100FC:code>89</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>90</S100FC:label>
+                <S100FC:definition>9/10</S100FC:definition>
+                <S100FC:code>90</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>91</S100FC:label>
+                <S100FC:definition>9/10 – 10/10</S100FC:definition>
+                <S100FC:code>91</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>92</S100FC:label>
+                <S100FC:definition>10/10</S100FC:definition>
+                <S100FC:code>92</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>No Rafting</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Snow cover</S100FC:name>
+            <S100FC:definition>Snow cover describes the degree of snow cover in an ice area.</S100FC:definition>
+            <S100FC:code>IA_SNG</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Little snow cover</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>Thin snow cover (&lt;5 cm)</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>&lt; 20 cm</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>Medium snow cover (5-20 cm)</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>&gt; 5 cm</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>Thick snow cover (&gt; 20 cm)</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>No snow cover</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Stage of Melting</S100FC:name>
+            <S100FC:definition>IA_MLT describes the stage of melting according to the 5-point Russian national scale</S100FC:definition>
+            <S100FC:code>IA_MLT</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>0/5 - 1/5 or 0/3 - 1/3</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>1/5 or 1/3</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>1/5 - 2/5 or 1/3 - 2/3</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>2/5 or 2/3</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>2/5 – 3/5 or 2/3 – 3/3</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>3/5 or 3/3</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>34</S100FC:label>
+                <S100FC:definition>3/5 – 4/5</S100FC:definition>
+                <S100FC:code>34</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>40</S100FC:label>
+                <S100FC:definition>4/5</S100FC:definition>
+                <S100FC:code>40</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>45</S100FC:label>
+                <S100FC:definition>4/5 – 5/5</S100FC:definition>
+                <S100FC:code>45</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>50</S100FC:label>
+                <S100FC:definition>5/5</S100FC:definition>
+                <S100FC:code>50</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>No Melting</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Contamination</S100FC:name>
+            <S100FC:definition>IA_PLG describes the degree of contamination (aerial coverage) in thirds based on the Russian national 3-point scale.</S100FC:definition>
+            <S100FC:code>IA_PLG</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>No or insignificant Contamination</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>&lt;1/3 of area</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>&lt;2/3 of area</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>1/3 – 2/3 of area</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>&gt;1/3 area</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>&gt;2/3 area</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>No Contamination</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Hills Concentration</S100FC:name>
+            <S100FC:definition>IA_HLG describes the degree of hilling in an ice area (usually multi-year ice).</S100FC:definition>
+            <S100FC:code>IA_HLG</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Few hills</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>Slight concentration of hills</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>Slight to moderate concentration of hills</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>Moderate concentration of hills</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>Moderate to heavy concentration of hills</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>Heavy concentration of hills</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>No hills</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Fractures Concentration</S100FC:name>
+            <S100FC:definition>IA_DUG describes the degree of disunity in an ice area.</S100FC:definition>
+            <S100FC:code>IA_DUG</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>Frequency of Cracks and Leads seldom in 10 km on Route</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>Frequency of Cracks and Leads in 5 – 10 km on Route</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>Frequency of Cracks and Leads in 3 – 5 km on Route </S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>40</S100FC:label>
+                <S100FC:definition>Frequency of Cracks and Leads in 2 – 3 km on Route</S100FC:definition>
+                <S100FC:code>40</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>50</S100FC:label>
+                <S100FC:definition>Frequency of Cracks and Leads often in 2 km on Route</S100FC:definition>
+                <S100FC:code>50</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>60</S100FC:label>
+                <S100FC:definition>Small and Medium Floes – 1/10-3/10; Big Floes – 7/10-10/10 Conc.</S100FC:definition>
+                <S100FC:code>60</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>70</S100FC:label>
+                <S100FC:definition>Small and Medium Floes – 4/10-6/10; Big Floes – 4/10-6/10 Conc.</S100FC:definition>
+                <S100FC:code>70</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>80</S100FC:label>
+                <S100FC:definition>Small and Medium Floes – 7/10-10/10; Big Floes – 1/10-3/10 Conc.</S100FC:definition>
+                <S100FC:code>80</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>90</S100FC:label>
+                <S100FC:definition>Small and Medium Floes Only </S100FC:definition>
+                <S100FC:code>90</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>92</S100FC:label>
+                <S100FC:definition>Small Floes Only</S100FC:definition>
+                <S100FC:code>92</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>No Fractures</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Iceberg Concentration</S100FC:name>
+            <S100FC:definition>IA_BCN specifies the total concentration of icebergs in an area.</S100FC:definition>
+            <S100FC:code>IA_BCN</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>&gt;45 nm between bergs</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>&gt;15 nm between bergs</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>15 - 44 nm between bergs</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>10 - 44 nm between bergs</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>10 - 14 nm between bergs</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>34</S100FC:label>
+                <S100FC:definition>7 - 14 nm between bergs</S100FC:definition>
+                <S100FC:code>34</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>40</S100FC:label>
+                <S100FC:definition>7 - 10 nm between bergs</S100FC:definition>
+                <S100FC:code>40</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>45</S100FC:label>
+                <S100FC:definition>5 - 10 nm between bergs</S100FC:definition>
+                <S100FC:code>45</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>50</S100FC:label>
+                <S100FC:definition>5 - 6 nm between bergs</S100FC:definition>
+                <S100FC:code>50</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>56</S100FC:label>
+                <S100FC:definition>3 - 6 nm between bergs</S100FC:definition>
+                <S100FC:code>56</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>60</S100FC:label>
+                <S100FC:definition>3 - 4 nm between bergs</S100FC:definition>
+                <S100FC:code>60</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>67</S100FC:label>
+                <S100FC:definition>1 - 4 nm between bergs</S100FC:definition>
+                <S100FC:code>67</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>70</S100FC:label>
+                <S100FC:definition>1 - 2 nm between bergs</S100FC:definition>
+                <S100FC:code>70</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>78</S100FC:label>
+                <S100FC:definition>0.5 - 2.0 nm between bergs</S100FC:definition>
+                <S100FC:code>78</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>80</S100FC:label>
+                <S100FC:definition>0.5 - 1.0 nm between bergs</S100FC:definition>
+                <S100FC:code>80</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>89</S100FC:label>
+                <S100FC:definition>&lt;1.0 nm between bergs</S100FC:definition>
+                <S100FC:code>89</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>90</S100FC:label>
+                <S100FC:definition>&lt;0.5 nm between bergs</S100FC:definition>
+                <S100FC:code>90</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>No Icebergs</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Prevailing Iceberg Form</S100FC:name>
+            <S100FC:definition>IA_BFM specifies the prevailing form of icebergs in an area.</S100FC:definition>
+            <S100FC:code>IA_BFM</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Domed</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Tabular</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Sloping</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>Pinnacled</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>Dry-dock</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>06</S100FC:label>
+                <S100FC:definition>Glacier (irregular)</S100FC:definition>
+                <S100FC:code>06</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>07</S100FC:label>
+                <S100FC:definition>Blocky</S100FC:definition>
+                <S100FC:code>07</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>08</S100FC:label>
+                <S100FC:definition>Weathered</S100FC:definition>
+                <S100FC:code>08</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Maximum Height of Above Water Part (iceberg/grounded hummock)</S100FC:name>
+            <S100FC:definition>IA_BUF specifies the maximum height of an iceberg above the waterline in meters.</S100FC:definition>
+            <S100FC:code>IA_BUH</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Number of Ice Objects</S100FC:name>
+            <S100FC:definition>IA_OBN defines the number of ice objects (cracks, leads, fractures, icebergs).</S100FC:definition>
+            <S100FC:code>IA_OBN</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Average Width of Ice Lead (or Fracture or Crack)</S100FC:name>
+            <S100FC:definition>ICEDVW defines the average width of the lead or fracture or crack</S100FC:definition>
+            <S100FC:code>ICEDVW</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Maximum Width of Ice Lead (or Fracture or Crack)</S100FC:name>
+            <S100FC:definition>IA_DXW defines the maximum width of the lead or fracture or crack.</S100FC:definition>
+            <S100FC:code>IA_DXW</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Minimum Width of Ice Lead (or Fracture or Crack)</S100FC:name>
+            <S100FC:definition>IA_DMW defines the minimum width of the lead or fracture or crack.</S100FC:definition>
+            <S100FC:code>IA_DMW</S100FC:code>
+            <S100FC:dataType>integer</S100FC:dataType>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Brash Ice</S100FC:name>
+            <S100FC:definition>ICEBRS specifies the concentrations of very thick brash (“AV”), thick brash (“AK”), medium brash (“AM”) and thin brash ice (“AT”).</S100FC:definition>
+            <S100FC:code>ICEBRS</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>0/10 – 1/10</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>10</S100FC:label>
+                <S100FC:definition>1/10</S100FC:definition>
+                <S100FC:code>10</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>12</S100FC:label>
+                <S100FC:definition>1/10 – 2/10</S100FC:definition>
+                <S100FC:code>12</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>20</S100FC:label>
+                <S100FC:definition>2/10</S100FC:definition>
+                <S100FC:code>20</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>23</S100FC:label>
+                <S100FC:definition>2/10 – 3/10</S100FC:definition>
+                <S100FC:code>23</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>30</S100FC:label>
+                <S100FC:definition>3/10</S100FC:definition>
+                <S100FC:code>30</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>34</S100FC:label>
+                <S100FC:definition>3/10 – 4/10</S100FC:definition>
+                <S100FC:code>34</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>40</S100FC:label>
+                <S100FC:definition>4/10</S100FC:definition>
+                <S100FC:code>40</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>45</S100FC:label>
+                <S100FC:definition>4/10 – 5/10</S100FC:definition>
+                <S100FC:code>45</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>50</S100FC:label>
+                <S100FC:definition>5/10</S100FC:definition>
+                <S100FC:code>50</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>56</S100FC:label>
+                <S100FC:definition>5/10 – 6/10</S100FC:definition>
+                <S100FC:code>56</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>60</S100FC:label>
+                <S100FC:definition>6/10</S100FC:definition>
+                <S100FC:code>60</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>67</S100FC:label>
+                <S100FC:definition>6/10 – 7/10</S100FC:definition>
+                <S100FC:code>67</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>70</S100FC:label>
+                <S100FC:definition>7/10</S100FC:definition>
+                <S100FC:code>70</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>78</S100FC:label>
+                <S100FC:definition>7/10 – 8/10</S100FC:definition>
+                <S100FC:code>78</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>80</S100FC:label>
+                <S100FC:definition>8/10</S100FC:definition>
+                <S100FC:code>80</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>89</S100FC:label>
+                <S100FC:definition>8/10 – 9/10</S100FC:definition>
+                <S100FC:code>89</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>90</S100FC:label>
+                <S100FC:definition>9/10</S100FC:definition>
+                <S100FC:code>90</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>91</S100FC:label>
+                <S100FC:definition>9/10 – 10/10</S100FC:definition>
+                <S100FC:code>91</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>92</S100FC:label>
+                <S100FC:definition>10/10</S100FC:definition>
+                <S100FC:code>92</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>98</S100FC:label>
+                <S100FC:definition>No Brash ice</S100FC:definition>
+                <S100FC:code>98</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Floe Size FF</S100FC:name>
+            <S100FC:definition>Size of ice floes (ff) for ia_sfa, ia_sfb, ia_sfc, ia_ffa, ia_ffb, ia_ffc complex attributes</S100FC:definition>
+            <S100FC:code>FF</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>01</S100FC:label>
+                <S100FC:definition>Pancake Ice (30 cm – 3 m)</S100FC:definition>
+                <S100FC:code>01</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>02</S100FC:label>
+                <S100FC:definition>Shuga/Small Ice Cake; Brash Ice (&lt;2 m)</S100FC:definition>
+                <S100FC:code>02</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>03</S100FC:label>
+                <S100FC:definition>Ice Cake (&lt;20 m)</S100FC:definition>
+                <S100FC:code>03</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>04</S100FC:label>
+                <S100FC:definition>Small Floe (20 – 100 m)</S100FC:definition>
+                <S100FC:code>04</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>05</S100FC:label>
+                <S100FC:definition>Medium Floe (100-500 m)</S100FC:definition>
+                <S100FC:code>05</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>06</S100FC:label>
+                <S100FC:definition>Big Floe (500 – 2000 m)</S100FC:definition>
+                <S100FC:code>06</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>07</S100FC:label>
+                <S100FC:definition>Vast Floe (2 – 10 km)</S100FC:definition>
+                <S100FC:code>07</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>08</S100FC:label>
+                <S100FC:definition>Giant Floe (&gt;10 km)</S100FC:definition>
+                <S100FC:code>08</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>09</S100FC:label>
+                <S100FC:definition>Fast Ice</S100FC:definition>
+                <S100FC:code>09</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+        <S100FC:S100_FC_SimpleAttribute>
+            <S100FC:name>Stage of Development SS</S100FC:name>
+            <S100FC:definition>Stage of develpment (ss) for ia_sfa, ia_sfb, ia_sfc, ia_ffa, ia_ffb, ia_ffc complex attributes</S100FC:definition>
+            <S100FC:code>SS</S100FC:code>
+            <S100FC:dataType>enumeration</S100FC:dataType>
+            <S100FC:listedValue>
+                <S100FC:label>80</S100FC:label>
+                <S100FC:definition>No stage of development</S100FC:definition>
+                <S100FC:code>80</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>81</S100FC:label>
+                <S100FC:definition>New Ice  (&lt;5 cm)</S100FC:definition>
+                <S100FC:code>81</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>82</S100FC:label>
+                <S100FC:definition>Nilas Ice  (&lt;10 cm)</S100FC:definition>
+                <S100FC:code>82</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>83</S100FC:label>
+                <S100FC:definition>Young Ice  (10 to &lt;30 cm)</S100FC:definition>
+                <S100FC:code>83</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>84</S100FC:label>
+                <S100FC:definition>Grey Ice (10 to &lt;15 cm)</S100FC:definition>
+                <S100FC:code>84</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>85</S100FC:label>
+                <S100FC:definition>Grey – White Ice  (15 to &lt;30 cm) </S100FC:definition>
+                <S100FC:code>85</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>86</S100FC:label>
+                <S100FC:definition>First Year Ice  (30 to 200 cm)</S100FC:definition>
+                <S100FC:code>86</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>87</S100FC:label>
+                <S100FC:definition>Thin First Year Ice (30 to &lt;70 cm)</S100FC:definition>
+                <S100FC:code>87</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>88</S100FC:label>
+                <S100FC:definition>Thin First Year Ice Stage 1 (30 to &lt;50 cm)</S100FC:definition>
+                <S100FC:code>88</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>89</S100FC:label>
+                <S100FC:definition>Thin First Year Ice Stage 2 (50 to &lt;70 cm)</S100FC:definition>
+                <S100FC:code>89</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>90</S100FC:label>
+                <S100FC:definition>Code not currently assigned </S100FC:definition>
+                <S100FC:code>90</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>91</S100FC:label>
+                <S100FC:definition>Medium First Year Ice  (70 to 120 cm)</S100FC:definition>
+                <S100FC:code>91</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>92</S100FC:label>
+                <S100FC:definition>Code not currently assigned</S100FC:definition>
+                <S100FC:code>92</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>93</S100FC:label>
+                <S100FC:definition>Thick First Year Ice (&gt;120 cm)</S100FC:definition>
+                <S100FC:code>93</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>94</S100FC:label>
+                <S100FC:definition>Residual Ice</S100FC:definition>
+                <S100FC:code>94</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>95</S100FC:label>
+                <S100FC:definition>Old Ice</S100FC:definition>
+                <S100FC:code>95</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>96</S100FC:label>
+                <S100FC:definition>Second Year Ice</S100FC:definition>
+                <S100FC:code>96</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>97</S100FC:label>
+                <S100FC:definition>Multi-Year Ice</S100FC:definition>
+                <S100FC:code>97</S100FC:code>
+            </S100FC:listedValue>
+            <S100FC:listedValue>
+                <S100FC:label>99</S100FC:label>
+                <S100FC:definition>Undetermined/Unknown</S100FC:definition>
+                <S100FC:code>99</S100FC:code>
+            </S100FC:listedValue>
+        </S100FC:S100_FC_SimpleAttribute>
+    </S100FC:S100_FC_SimpleAttributes>
+    <S100FC:S100_FC_ComplexAttributes>
+        <S100FC:S100_FC_ComplexAttribute>
+            <S100FC:name>Combination Ice Stage of Development and Floe Size for the 1st partial concentration</S100FC:name>
+            <S100FC:definition>IA_SFA describes combination(s) of Ice Stage of Development and Floe Size for the first partial concentration in an ice area.  Up to three (stage of development / form of ice) combinations are allowed to describe the ice in the first partial concentration group.</S100FC:definition>
+            <S100FC:code>IA_SFA</S100FC:code>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="FF"/>
+            </S100FC:subAttributeBinding>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="SS"/>
+            </S100FC:subAttributeBinding>
+        </S100FC:S100_FC_ComplexAttribute>
+        <S100FC:S100_FC_ComplexAttribute>
+            <S100FC:name>Combination Ice Stage of Development and Floe Size for the 2nd partial concentration</S100FC:name>
+            <S100FC:definition>IA_SFB describes combination(s) of Ice Stage of Development and Floe Size for the first partial concentration in an ice area.  Up to three (stage of development / form of ice) combinations are allowed to describe the ice in the first partial concentration group.</S100FC:definition>
+            <S100FC:code>IA_SFB</S100FC:code>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="FF"/>
+            </S100FC:subAttributeBinding>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="SS"/>
+            </S100FC:subAttributeBinding>
+        </S100FC:S100_FC_ComplexAttribute>
+        <S100FC:S100_FC_ComplexAttribute>
+            <S100FC:name>Combination Ice Stage of Development and Floe Size for the 3rd partial concentration</S100FC:name>
+            <S100FC:definition>IA_SFC describes combination(s) of Ice Stage of Development and Floe Size for the first partial concentration in an ice area.  Up to three (stage of development / form of ice) combinations are allowed to describe the ice in the first partial concentration group.</S100FC:definition>
+            <S100FC:code>IA_SFC</S100FC:code>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="FF"/>
+            </S100FC:subAttributeBinding>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="SS"/>
+            </S100FC:subAttributeBinding>
+        </S100FC:S100_FC_ComplexAttribute>
+        <S100FC:S100_FC_ComplexAttribute>
+            <S100FC:name>Ice Breccia for the first partial concentration</S100FC:name>
+            <S100FC:definition>Ice breccia is pieces of ice of different ages frozen together.  IA _FFA describes the combination(s) of Ice Stage of Development and Floe Size for the first partial concentration in an ice area.  Up to three (stage of development / form of ice) combinations plus the age of the younger ice consolidating the main pieces are allowed to describe the ice in the first partial concentration group.</S100FC:definition>
+            <S100FC:code>IA_FFA</S100FC:code>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="FF"/>
+            </S100FC:subAttributeBinding>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="SS"/>
+            </S100FC:subAttributeBinding>
+        </S100FC:S100_FC_ComplexAttribute>
+        <S100FC:S100_FC_ComplexAttribute>
+            <S100FC:name>Ice Breccia for the second partial concentration</S100FC:name>
+            <S100FC:definition>Ice breccia is pieces of ice of different ages frozen together.  IA _FFA describes the combination(s) of Ice Stage of Development and Floe Size for the first partial concentration in an ice area.  Up to three (stage of development / form of ice) combinations plus the age of the younger ice consolidating the main pieces are allowed to describe the ice in the first partial concentration group.</S100FC:definition>
+            <S100FC:code>IA_FFB</S100FC:code>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="FF"/>
+            </S100FC:subAttributeBinding>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="SS"/>
+            </S100FC:subAttributeBinding>
+        </S100FC:S100_FC_ComplexAttribute>
+        <S100FC:S100_FC_ComplexAttribute>
+            <S100FC:name>Ice Breccia for the third partial concentration</S100FC:name>
+            <S100FC:definition>Ice breccia is pieces of ice of different ages frozen together.  IA _FFA describes the combination(s) of Ice Stage of Development and Floe Size for the first partial concentration in an ice area.  Up to three (stage of development / form of ice) combinations plus the age of the younger ice consolidating the main pieces are allowed to describe the ice in the first partial concentration group.</S100FC:definition>
+            <S100FC:code>IA_FFC</S100FC:code>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="FF"/>
+            </S100FC:subAttributeBinding>
+            <S100FC:subAttributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>1</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="SS"/>
+            </S100FC:subAttributeBinding>
+        </S100FC:S100_FC_ComplexAttribute>
+    </S100FC:S100_FC_ComplexAttributes>
+    <S100FC:S100_FC_FeatureTypes>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Sea Ice</S100FC:name>
+            <S100FC:definition>Sea Ice is an area at sea that is covered, in whole or in part, with ice.</S100FC:definition>
+            <S100FC:code>SEAICE</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEACT"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEAPC"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>5</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESOD"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEFLZ"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESPC"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELVL"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICECST"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEFTY"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDSP"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDDR"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERFQ"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERMH"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERXH"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERDV"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEKCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICETCK"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEMAX"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEMIN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICETTY"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEMLT"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESCT"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDOS"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELST"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELFQ"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELOR"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELWD"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_SFA"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_SFB"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_SFC"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_FFA"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_FFB"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_FFC"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_SNG"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_MLT"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_PLG"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_HLG"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_DUG"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Lake Ice</S100FC:name>
+            <S100FC:definition>Lake Ice is an area on a lake that is covered, in whole or in part, with ice.</S100FC:definition>
+            <S100FC:code>LACICE</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEACT"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEAPC"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>5</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELSO"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEFLZ"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESPC"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELVL"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICECST"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEFTY"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDSP"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDDR"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERFQ"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERMH"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERXH"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERDV"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEKCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICETCK"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEMAX"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEMIN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICETTY"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEMLT"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESCT"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDOS"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELST"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELFQ"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELOR"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELWD"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Iceberg Area</S100FC:name>
+            <S100FC:definition>An Iceberg Area is an area at sea in which icebergs, bergy bits, or growlers are present.</S100FC:definition>
+            <S100FC:code>BRGARE</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEBNM"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEBSZ"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_BCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_BFM"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_BUH"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>surface</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Edge</S100FC:name>
+            <S100FC:definition> The demarcation at any given time between the open sea and sea ice of any kind and in any concentration, whether fast or drifting.</S100FC:definition>
+            <S100FC:code>ICELNE</S100FC:code>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Iceberg Limit</S100FC:name>
+            <S100FC:definition>Limit of all known Icebergs.</S100FC:definition>
+            <S100FC:code>BRGLNE</S100FC:code>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Limit of Open Water</S100FC:name>
+            <S100FC:definition>The demarcation at any given time between sea ice and freely navigable water, in which sea ice is present in concentrations less than 1/10.</S100FC:definition>
+            <S100FC:code>OPNLNE</S100FC:code>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Limit of All Known Ice</S100FC:name>
+            <S100FC:definition>The limit of all known ice, including both sea ice of any kind and icebergs.</S100FC:definition>
+            <S100FC:code>LKILNE</S100FC:code>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Line of Ice Ridge</S100FC:name>
+            <S100FC:definition>Line of Ice Ridge is a line or wall of broken ice forced up by pressure processes.</S100FC:definition>
+            <S100FC:code>I_RIDG</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERDV"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERMH"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERXH"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Line of Ice Lead</S100FC:name>
+            <S100FC:definition>Line of Ice Lead identifies any passage-way(s) through ice which is (are) navigable by surface vessels.</S100FC:definition>
+            <S100FC:code>I_LEAD</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>5</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESOD"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_OBN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDVW"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_DMW"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_DXW"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Line of Ice Fracture</S100FC:name>
+            <S100FC:definition>Any break or rupture through the ice cover, or through the single floe, resulting from deformation processes. Length may vary from a few meters to a few kilometers.</S100FC:definition>
+            <S100FC:code>I_FRAL</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>5</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESOD"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_OBN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDVW"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_DMW"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_DXW"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Line of Ice Crac</S100FC:name>
+            <S100FC:definition>Line of Ice Crack identifies any ice breakup, but no passage-way(s) for surface vessels.</S100FC:definition>
+            <S100FC:code>I_CRAC</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>5</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESOD"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_OBN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDVW"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_DMW"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_DXW"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>curve</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Compacting</S100FC:name>
+            <S100FC:definition>Pieces of ice are said to be compacting when they are subjected to a converging motion, which increases ice concentration and/or produces stresses which may result in ice deformation.</S100FC:definition>
+            <S100FC:code>ICECOM</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICECST"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Lead</S100FC:name>
+            <S100FC:definition>Ice Lead identifies any fracture(s) or passage-way(s) through ice which is (are) navigable by surface vessels.</S100FC:definition>
+            <S100FC:code>ICELEA</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELOC"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELST"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELWD"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Iceberg</S100FC:name>
+            <S100FC:definition>An Iceberg is a massive piece of ice, greatly varying in shape and showing more than 5 meters above the sea surface which has broken away from a glacier, and which may be afloat or grounded. This Object Class also includes smaller forms of glacial ice, known as “Bergy Bits” and “Growlers”, which are defined by their size Attribute. ICEBRG can indicate the location of a single iceberg or, if the attribute IA_OBN is specified and is greater than 1, multiple icebergs in the vicinity of a point.</S100FC:definition>
+            <S100FC:code>ICEBRG</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEBSZ"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDSP"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDDR"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_OBN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_BFM"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_BUH"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Floeberg</S100FC:name>
+            <S100FC:definition>A Floeberg is a massive piece of sea ice composed of a hummock or a group of hummocks, frozen together and separated from any ice surroundings. They typically protrude up to 5 meters above the sea surface.</S100FC:definition>
+            <S100FC:code>FLOBRG</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDSP"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDDR"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Thickness</S100FC:name>
+            <S100FC:definition>Ice Thickness provides a measure or estimate of ice thickness.</S100FC:definition>
+            <S100FC:code>ICETHK</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICETCK"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEMAX"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEMIN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICETTY"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Shear</S100FC:name>
+            <S100FC:definition>An area of drift ice is subject to shear when the ice motion varies significantly in the direction normal to the motion, subjecting the ice to rotational forces.</S100FC:definition>
+            <S100FC:code>ICESHR</S100FC:code>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Divergence</S100FC:name>
+            <S100FC:definition>Ice fields or floes in an area are subject to diverging or dispersive motion, thus reducing ice concentration and/or relieving stresses in the ice.</S100FC:definition>
+            <S100FC:code>ICEDIV</S100FC:code>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Ridge/Hummock</S100FC:name>
+            <S100FC:definition>An Ice Ridge is a line or wall of broken ice forced up by pressure. A Hummock is a hillock of broken ice which has been forced upward by pressure.</S100FC:definition>
+            <S100FC:code>ICERDG</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>3</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERFQ"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERMH"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERXH"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICERDV"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Keel/Bummock</S100FC:name>
+            <S100FC:definition>From a submariner’s point of view, a Keel is a downward projecting ridge on the underside of the ice canopy - the counterpart of a Ridge. A Bummock is the counterpart of a hummock on the underside of the ice canopy.</S100FC:definition>
+            <S100FC:code>ICEKEL</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEKCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEKFQ"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEKMD"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEKXD"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Drift</S100FC:name>
+            <S100FC:definition>Motion of an ice field or floe as a result of forces such as wind and currents.</S100FC:definition>
+            <S100FC:code>ICEDFT</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDSP"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDDR"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Fracture</S100FC:name>
+            <S100FC:definition>Any break or rupture through the ice pack, or a single floe, resulting from deformation processes. Length may vary from a few metres to many kilometres.</S100FC:definition>
+            <S100FC:code>ICEFRA</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEFTY"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICELOC"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_OBN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESOD"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>5</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDVW"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_DMW"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_DXW"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Ice Rafting</S100FC:name>
+            <S100FC:definition>Pressure processes whereby one piece of ice overrides another.</S100FC:definition>
+            <S100FC:code>ICERFT</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEFCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Jammed Brash Barrier</S100FC:name>
+            <S100FC:definition>A strip or narrow belt of new, young or brash ice (usually 100-500 metres wide) formed at the edge of either drift or fast ice.</S100FC:definition>
+            <S100FC:code>JMDBRR</S100FC:code>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Stage of Melt</S100FC:name>
+            <S100FC:definition>A description of the stage of melt of the ice; i.e. whether it has formed puddles on the surface and whether these have frozen.</S100FC:definition>
+            <S100FC:code>STGMLT</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEMLT"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Snow Cover</S100FC:name>
+            <S100FC:definition>A description of the amount of snow covering the ice.</S100FC:definition>
+            <S100FC:code>SNWCVR</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESCN"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESCT"/>
+            </S100FC:attributeBinding>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICEDOS"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Strips and Patches</S100FC:name>
+            <S100FC:definition>A strip is a long narrow area of floating ice, about 1 kilometre or less in width, usually composed of small fragments detached from the main mass of ice, and run together under the influence of wind, swell or current. If the area of ice becomes more rounded in shape, it is referred to as a patch.</S100FC:definition>
+            <S100FC:code>STRPTC</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="ICESPC"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+        <S100FC:S100_FC_FeatureType>
+            <S100FC:name>Grounded Hummock</S100FC:name>
+            <S100FC:definition>Grounded Hummock identifies a hummock formation which is stranded.</S100FC:definition>
+            <S100FC:code>I_GRHM</S100FC:code>
+            <S100FC:attributeBinding>
+                <S100FC:multiplicity>
+                    <S100Base:lower>0</S100Base:lower>
+                    <S100Base:upper>1</S100Base:upper>
+                </S100FC:multiplicity>
+                <S100FC:attribute ref="IA_BUH"/>
+            </S100FC:attributeBinding>
+            <S100FC:featureUseType>geographic</S100FC:featureUseType>
+            <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
+        </S100FC:S100_FC_FeatureType>
+    </S100FC:S100_FC_FeatureTypes>
+</S100FC:S100_FC_FeatureCatalogue>
+
+
