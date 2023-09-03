@@ -1985,7 +1985,8 @@ R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
 R_FeatureRecord* S101Cell::GetFeatureRecord(std::string key)
 {
 	auto iKey = std::stoll(key);
-	return GetFeatureRecord(iKey);
+	RecordName recordName(100, iKey);
+	return GetFeatureRecord(recordName.GetName());
 }
 
 R_FeatureRecord* S101Cell::GetFeatureRecord(std::wstring wstringKey)
