@@ -759,3 +759,51 @@ GraphicBasePackage::Sector DrawingInstructionReader::GetGraphicBase_Sector(pugi:
 	}
 	return sector;
 }
+
+DisplayList* DrawingInstructionReader::OpenOutputXMLbypugixml(std::string path)
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(path.c_str());
+
+	if (!result)
+		return nullptr;
+
+	pugi::xml_node displayList = doc.child("displayList");
+
+	if (!displayList)
+		return nullptr;
+
+	DisplayList* pDisplayList = new DisplayList();
+
+	for (pugi::xml_node instruction = displayList.first_child(); instruction; instruction = instruction.next_sibling())
+	{
+		const pugi::char_t* instructionName = instruction.name();
+
+		if (!strcmp(instructionName, "pointInstruction"))
+		{
+			pDisplayList->m_vecInstruction.push_back(DrawingInstructionReader::GetPointInstructionBypugixml(instruction));
+		}
+		else if (!strcmp(instructionName, "lineInstruction"))
+		{
+			pDisplayList->m_vecInstruction.push_back(DrawingInstructionReader::GetLineInstructionBypugixml(instruction));
+		}
+		else if (!strcmp(instructionName, "areaInstruction"))
+		{
+			pDisplayList->m_vecInstruction.push_back(DrawingInstructionReader::GetAreaInstructionBypugixml(instruction));
+		}
+		else if (!strcmp(instructionName, "textInstruction"))
+		{
+			pDisplayList->m_vecInstruction.push_back(DrawingInstructionReader::GetTextInstructionBypugixml(instruction));
+		}
+		else if (!strcmp(instructionName, "augmentedPath"))
+		{
+			pDisplayList->m_vecInstruction.push_back(DrawingInstructionReader::GetAugmentedPathInstructionBypugixml(instruction));
+		}
+		else if (!strcmp(instructionName, "augmentedRay"))
+		{
+			pDisplayList->m_vecInstruction.push_back(DrawingInstructionReader::GetAugmentedRayInstructionBypugixml(instruction));
+		}
+	}
+
+	return pDisplayList;
+}

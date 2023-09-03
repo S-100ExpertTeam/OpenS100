@@ -117,7 +117,7 @@ void PCOutputSchemaManager::GenerateSENCAlertInstruction(S101Cell* cell, Portray
 			
 			if (sit->fr)
 			{
-				sit->fr->m_alertIndicationType = sit->alertType;
+				//sit->fr->m_alertIndicationType = sit->alertType;
 			}
 
 			displayListSENC->AddAlertIndication(sit);
@@ -131,7 +131,7 @@ void PCOutputSchemaManager::InitDisplayList()
 	displayList = nullptr;
 }
 
-void PCOutputSchemaManager::GenerateSENCInstruction(S101Cell* cell, PortrayalCatalogue* pc)
+void PCOutputSchemaManager::GenerateSENCInstruction(S100SpatialObject* s100so, PortrayalCatalogue* pc)
 {
 	if (nullptr == displayListSENC)
 	{
@@ -161,40 +161,44 @@ void PCOutputSchemaManager::GenerateSENCInstruction(S101Cell* cell, PortrayalCat
 		*/
 		SENC_Instruction* sit = nullptr;
 
-		sit = SENC_Instruction::S1002SENC(it, pc, this, cell);
+		sit = SENC_Instruction::S1002SENC(it, pc, this, s100so);
 
 		if (sit)
 		{
 			displayListSENC->AddInstruction(sit);
-
-			__int64 iKey = ((__int64)100) << 32 | sit->featureReference;
-			auto item = cell->GetFeatureRecord(iKey);
-
-			if (nullptr == item)
-			{
-				continue;
-			}
-			else
-			{
-				sit->fr = item;
-
-				auto currentPriority = sit->DrawingPriority();
-				if (currentPriority != 0)
-				{
-					if (currentPriority < sit->fr->MinimumDisplayPriority() || 
-						sit->fr->MinimumDisplayPriority() == -1)
-					{
-						sit->fr->MinimumDisplayPriority(currentPriority);
-					}
-
-					if (currentPriority > sit->fr->MaximumDisplayPriority() ||
-						sit->fr->MaximumDisplayPriority() == -1)
-					{
-						sit->fr->MaximumDisplayPriority(currentPriority);
-					}
-				}
-			}
+			auto featureID = pugi::as_utf8(it->GetFeatureReference());
+			auto featureType = s100so->GetFeatureType(featureID);
+			sit->fr = featureType;
 		}
+
+		//	__int64 iKey = ((__int64)100) << 32 | sit->featureReference;
+		//	auto item = s100so->GetFeatureRecord(iKey);
+
+		//	if (nullptr == item)
+		//	{
+		//		continue;
+		//	}
+		//	else
+		//	{
+		//		sit->fr = item;
+
+		//		auto currentPriority = sit->DrawingPriority();
+		//		//if (currentPriority != 0)
+		//		//{
+		//		//	if (currentPriority < sit->fr->MinimumDisplayPriority() || 
+		//		//		sit->fr->MinimumDisplayPriority() == -1)
+		//		//	{
+		//		//		sit->fr->MinimumDisplayPriority(currentPriority);
+		//		//	}
+
+		//		//	if (currentPriority > sit->fr->MaximumDisplayPriority() ||
+		//		//		sit->fr->MaximumDisplayPriority() == -1)
+		//		//	{
+		//		//		sit->fr->MaximumDisplayPriority(currentPriority);
+		//		//	}
+		//		//}
+		//	}
+		//}
 	}
 }
 

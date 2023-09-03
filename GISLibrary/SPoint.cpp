@@ -15,6 +15,8 @@ SPoint::SPoint(double _x, double _y)
 {
 	x = _x;
 	y = _y;
+
+	SetMBR();
 }
 
 SPoint::~SPoint()

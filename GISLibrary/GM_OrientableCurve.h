@@ -20,13 +20,23 @@ namespace GM
 		// false : -
 		bool orientation = false; 
 		std::string baseCurveID;
+		OrientableCurve* baseCurve = nullptr; // released by dataset, not used
+
+	public:
+		virtual int getPointCount();
+		virtual double getX(int index);
+		virtual double getY(int index);
 
 	public:
 		GeometryType GetType() override;
 		std::string GeometricPrimitiveAsString() override;
 
+		std::string GetBaseCurveID();
 		int GetBaseCurveIDAsInt();
 
 		void Read(pugi::xml_node& node);
+
+		OrientableCurve* getBaseCurve();
+		void setBaseCurve(OrientableCurve* baseCurve);
 	};
 }

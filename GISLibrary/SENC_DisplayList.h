@@ -15,8 +15,11 @@ public:
 	virtual ~SENC_DisplayList();
 
 public:
+	// key : priority + type
 	std::multimap<__int64, SENC_Instruction*> displayInstructions;
-	std::unordered_map<__int64, SENC_AlertReference*> alertInstructions;
+
+	// key : id
+	std::unordered_map<std::string, SENC_AlertReference*> alertInstructions;
 
 public:
 	/*

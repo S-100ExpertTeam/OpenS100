@@ -1,5 +1,7 @@
 #pragma once
-#include "..\\GeoMetryLibrary\\Scaler.h"
+
+#include "../GeoMetryLibrary/Scaler.h"
+
 #include <polyclipping/clipper.hpp>
 
 #include <list>
@@ -77,7 +79,7 @@ public:
 	bool suppressedInstance;
 
 	// For Drawing
-	R_FeatureRecord* fr = nullptr;
+	GF::FeatureType* fr = nullptr;
 
 public:
 	int FeatureReference();
@@ -85,14 +87,6 @@ public:
 
 	// Ensure that Instruction is referring to the Space Reference separately (if referring separately, it should be drawn in the geometry of the information in the corresponding Space Reference).
 	bool HasSpatialReference();
-
-	bool IsEqualPrimitive();
-
-	// 0 : No geometry
-	// 1 : Point
-	// 2 : Line
-	// 3 : Area
-	int GeometryPrimitive();
 
 	virtual void GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points){};
 	virtual void GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points){};

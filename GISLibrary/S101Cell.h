@@ -163,10 +163,6 @@ public:
 	MBR CalcMBR();
 	MBR ReMBR();
 
-	//void GetDDRFromFile(CString _filepath);
-
-	void ProcessSpatialReference();
-	
 	void SetEncodingSpecification(CString value);
 	CString GetEncodingSpecification();
 	std::string GetEncodingSpecificationToString();

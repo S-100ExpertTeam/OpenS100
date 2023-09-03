@@ -18,6 +18,8 @@ private:
 	std::list<S100_Instruction*> alertInstructions;
 
 public:
+	void OpenOutputXML(std::string path);
+
 	void GetContents(pugi::xml_node node);
 	void RemoveInstructions();
 

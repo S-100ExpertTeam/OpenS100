@@ -19,50 +19,62 @@ S100_DisplayList::~S100_DisplayList()
 	RemoveInstructions();
 }
 
+void S100_DisplayList::OpenOutputXML(std::string path)
+{
+	pugi::xml_document doc;
+	auto result = doc.load_file(path.c_str());
+	auto displayListNode = doc.child("displayList");
+
+	for each (auto child in displayListNode)
+	{
+		GetContents(child);
+	}
+}
+
 void S100_DisplayList::GetContents(pugi::xml_node node)
 {
-	auto nodeName = node.name();
+	std::string nodeName = node.name();
 
-	if (nodeName == "nullInstruction")
+	if (!nodeName.compare("nullInstruction"))
 	{
 		S100_NullInstruction *in = new S100_NullInstruction();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
-	else if (nodeName == "pointInstruction")
+	else if (!nodeName.compare("pointInstruction"))
 	{
 		S100_PointInstruction *in = new S100_PointInstruction();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
-	else if (nodeName == "lineInstruction")
+	else if (!nodeName.compare("lineInstruction"))
 	{
 		S100_LineInstruction *in = new S100_LineInstruction();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
-	else if (nodeName == "areaInstruction")
+	else if (!nodeName.compare("areaInstruction"))
 	{
 		S100_AreaInstruction *in = new S100_AreaInstruction();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
-	else if (nodeName == "textInstruction")
+	else if (!nodeName.compare("textInstruction"))
 	{
 		S100_TextInstruction *in = new S100_TextInstruction();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
-	else if (nodeName == "augmentedPoint")
+	else if (!nodeName.compare("augmentedPoint"))
 	{
 	}
-	else if (nodeName == "augmentedRay")
+	else if (!nodeName.compare("augmentedRay"))
 	{
 		S100_AugmentedRay *in = new S100_AugmentedRay();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
-	else if (nodeName == "augmentedPath")
+	else if (!nodeName.compare("augmentedPath"))
 	{
 		S100_AugmentedPath *in = new S100_AugmentedPath();
 		in->GetContents(node);

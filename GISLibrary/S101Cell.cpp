@@ -1381,41 +1381,6 @@ MBR S101Cell::ReMBR()
 	return result;
 }
 
-void S101Cell::ProcessSpatialReference()
-{
-	if (pcManager == nullptr)
-	{
-		return;
-	}
-
-	if (pcManager->displayListSENC == nullptr)
-	{
-		return;
-	}
-
-	for (auto itor = pcManager->displayListSENC->displayInstructions.begin();
-		itor != pcManager->displayListSENC->displayInstructions.end();
-		itor++)
-	{
-		SENC_Instruction* it = itor->second;
-
-		if (it->type == 2)
-		{
-			SENC_LineInstruction* inst = (SENC_LineInstruction*)it;
-
-			if (inst->spatialReference.size() > 0)
-			{
-				R_FeatureRecord* fr = inst->fr;
-
-				for (auto it = inst->spatialReference.begin(); it != inst->spatialReference.end(); it++)
-				{
-					unsigned ref = (*it)->reference;
-				}
-			}
-		}
-	}
-}
-
 void S101Cell::SetEncodingSpecification(CString value)
 {
 	m_dsgir.m_dsid.m_ensp = value;
@@ -3157,10 +3122,12 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 
 void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* scaler, std::list<D2D1_POINT_2F>& points)
 {
-	if (nullptr == instruction ||nullptr == instruction->fr || nullptr == instruction->fr->m_geometry)
+	if (nullptr == instruction ||nullptr == instruction->fr || nullptr == instruction->fr->GetGeometry())
 	{
 		return;
 	}
+
+	auto geom = instruction->fr->GetGeometry();
 
 	double rotation = 0;
 	double scaleFactor = 1;
@@ -3205,9 +3172,9 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 			// Curve
 			else if (sr->RCNM == 120)
 			{
-				if (instruction->fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
+				if (geom->GetType() == SGeometryType::CompositeCurve)
 				{
-					SCompositeCurve* geo = (SCompositeCurve*)instruction->fr->m_geometry;
+					SCompositeCurve* geo = (SCompositeCurve*)geom;
 					int curveCnt = geo->GetCurveCount();
 
 					for (int j = 0; j < curveCnt; j++)
@@ -3245,9 +3212,9 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 						}
 					}
 				}
-				else if (instruction->fr->m_geometry->GetType() == SGeometryType::Surface)
+				else if (geom->GetType() == SGeometryType::Surface)
 				{
-					SSurface* geo = (SSurface*)instruction->fr->m_geometry;
+					SSurface* geo = (SSurface*)geom;
 
 					for (int j = 0; j < geo->GetRingCount(); j++)
 					{
@@ -3295,15 +3262,15 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 		}
 	}
 	// When the feature is the point type,
-	else if (instruction->fr->m_geometry->GetType() == SGeometryType::Point)
+	else if (geom->GetType() == SGeometryType::Point)
 	{
-		SPoint* geo = (SPoint*)instruction->fr->m_geometry;
+		SPoint* geo = (SPoint*)geom;
 		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
-	else if (instruction->fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
+	else if (geom->GetType() == SGeometryType::CompositeCurve)
 	{
-		SCompositeCurve* geo = (SCompositeCurve*)instruction->fr->m_geometry;
+		SCompositeCurve* geo = (SCompositeCurve*)geom;
 		std::list<SCurve*> curveList;
 		geo->GetCurveList(curveList);
 
@@ -3368,9 +3335,9 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 			viewPointNum = 0;
 		}
 	}
-	else if (instruction->fr->m_geometry->GetType() == SGeometryType::Surface)
+	else if (geom->GetType() == SGeometryType::Surface)
 	{
-		SSurface* geo = (SSurface*)instruction->fr->m_geometry;
+		SSurface* geo = (SSurface*)geom;
 
 		// need coordinates that are not clipped.
 		std::vector<POINT> vp;
@@ -3765,7 +3732,7 @@ bool S101Cell::SaveCurve(pugi::xml_node& root)
 		auto curNode = root.append_child("S100:Curve");
 		curNode.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
 		curNode.append_attribute("gml:id").set_value(record->GetRCIDasString("c").c_str());
-		auto nodePosList = curNode.append_child("gml:Segment").append_child("gml:LineStringSegment").append_child("gml:posList");
+		auto nodePosList = curNode.append_child("gml:segments").append_child("gml:LineStringSegment").append_child("gml:posList");
 
 		SCurve curve;
 		GetFullSpatialData(*i, &curve);
@@ -4858,22 +4825,22 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 			
 			for (auto i = geom->component.begin(); i != geom->component.end(); i++)
 			{
-				auto id = i->baseCurveID;
+				auto id = (*i)->baseCurveID;
 				if (std::string::npos != id.find("occ"))
 				{
-					ccr->InsertCurve(125, i->GetBaseCurveIDAsInt(), 2);
+					ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 2);
 				}
 				else if (std::string::npos != id.find("cc"))
 				{
-					ccr->InsertCurve(125, i->GetBaseCurveIDAsInt(), 1);
+					ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 1);
 				}
 				else if (std::string::npos != id.find("oc"))
 				{
-					ccr->InsertCurve(120, i->GetBaseCurveIDAsInt(), 2);
+					ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 2);
 				}
 				else if (std::string::npos != id.find("c"))
 				{
-					ccr->InsertCurve(120, i->GetBaseCurveIDAsInt(), 1);
+					ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 1);
 				}
 			}
 
@@ -4885,8 +4852,8 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 			auto sr = new R_SurfaceRecord();
 			sr->SetRCID(geom->GetIDAsInt());
 
-			auto exteriorID = geom->patch.boundary.exterior.GetID();
-			int exteriorIntID = geom->patch.boundary.exterior.GetIDAsInt();
+			auto exteriorID = geom->patch.boundary.exterior->GetID();
+			int exteriorIntID = geom->patch.boundary.exterior->GetIDAsInt();
 			if (std::string::npos != exteriorID.find("occ"))
 			{
 				sr->InsertRing(125, exteriorIntID, 1, 2);
@@ -4908,8 +4875,8 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 				j != geom->patch.boundary.interior.end();
 				j++)
 			{
-				auto interiorID = j->GetID();
-				int interiorIntID = j->GetIDAsInt();
+				auto interiorID = (*j)->GetID();
+				int interiorIntID = (*j)->GetIDAsInt();
 				if (std::string::npos != interiorID.find("occ"))
 				{
 					sr->InsertRing(125, interiorIntID, 2, 2);

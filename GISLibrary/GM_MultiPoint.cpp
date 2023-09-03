@@ -27,4 +27,21 @@ namespace GM
 	{
 		return "MultiPoint";
 	}
+
+	SGeometry* MultiPoint::createGeometry()
+	{
+		SMultiPoint* result = new SMultiPoint();
+		
+		for (auto i = position.begin(); i != position.end(); i++) {
+			auto x = i->GetX();
+			auto y = i->GetY();
+			auto z = i->GetZ();
+			projection(x, y);
+			result->Add(x, y, z);
+		}
+
+		result->SetMBR();
+
+		return result;
+	}
 }

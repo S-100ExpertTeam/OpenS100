@@ -107,7 +107,12 @@ namespace GF
 
 	SGeometry* FeatureType::GetGeometry()
 	{
-		return nullptr;
+		return geometry;
+	}
+
+	void FeatureType::SetGeometry(SGeometry* value)
+	{
+		geometry = value;
 	}
 
 	GM::Object* FeatureType::GetGMGeometry()

@@ -3,6 +3,8 @@
 #include "GF_InformationType.h"
 #include "GeometryType.h"
 
+#include "../GeoMetryLibrary/MBR.h"
+
 #include <string>
 
 namespace GM

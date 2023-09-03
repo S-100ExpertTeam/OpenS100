@@ -9,7 +9,7 @@ namespace GM
 	class SurfaceBoundary
 	{
 	public:
-		Ring exterior;
-		std::vector<Ring> interior;
+		Ring* exterior = new Ring();
+		std::vector<Ring*> interior;
 	};
 }

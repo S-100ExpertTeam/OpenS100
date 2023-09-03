@@ -19,7 +19,9 @@ namespace GM
 	public:
 		void Add(double x, double y, double z);
 
+	public:
 		GeometryType GetType() override;
 		std::string GeometricPrimitiveAsString() override;
+		SGeometry* createGeometry();
 	};
 }

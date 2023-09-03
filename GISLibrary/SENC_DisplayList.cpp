@@ -114,21 +114,23 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, Scaler* sca
 			continue;
 		}
 
+		auto geom = instruction->fr->GetGeometry();
+
 		if (false == instruction->suppressedInstance &&
-			instruction->fr->m_geometry)
+			geom)
 		{
 			if (ENCCommon::APPLY_SCALE_MIN == TRUE)
 			{
 				if ((instruction->scaleMinimum == 0 || currentScale <= instruction->scaleMinimum) &&
 					(instruction->scaleMaximum == 0 || currentScale >= instruction->scaleMaximum) &&
-					(MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr)))
+					(MBR::CheckOverlap(scaler->GetMapCalcMBR(), geom->m_mbr)))
 				{
 					itList.push_back(instruction);
 				}
 			}
 			else
 			{
-				if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), instruction->fr->m_geometry->m_mbr))
+				if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), geom->m_mbr))
 				{
 					itList.push_back(instruction);
 				}
@@ -177,9 +179,9 @@ void SENC_DisplayList::AddAlertIndication(SENC_Instruction* value)
 	** 9 : Augmented Area
 	*/
 	
-	if (alertInstructions.find(value->fr->m_frid.m_name.GetName()) == alertInstructions.end())
+	if (alertInstructions.find(value->fr->GetID()) == alertInstructions.end())
 	{
-		alertInstructions.insert({ value->fr->m_frid.m_name.GetName(), (SENC_AlertReference*)value });
+		alertInstructions.insert({ value->fr->GetID(), (SENC_AlertReference*)value});
 	}
 	else
 	{

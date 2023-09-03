@@ -33,6 +33,8 @@ public:
 	FeatureCatalogue* GetFC();
 	PortrayalCatalogue* GetPC();
 
+	bool OpenOutputXML(std::string path);
+
 public:
 	// type = 1 : feature type
 	// type = 2 : information type

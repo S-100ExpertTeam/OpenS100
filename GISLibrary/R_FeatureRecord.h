@@ -42,17 +42,11 @@ public:
 
 	SGeometry *m_geometry = nullptr;
 
-	int m_scaleMin = 0;
-	int m_scaleMax = 0;
-
 	// -1은 유효하지 않은 Priority
 	// No geometry이거나 Drawing Instruction이 없는 경우 -1
 	// Feature와 같은 Primitive의 Drawing Instruction의 우선순위만 계산
-	int minimumDisplayPriority = -1;
-	int maximumDisplayPriority = -1;
-
-	//	[Text Placement ]
-	float* m_textBearing = nullptr;
+	//int minimumDisplayPriority = -1;
+	//int maximumDisplayPriority = -1;
 
 	/*
 	0: none
@@ -60,7 +54,7 @@ public:
 	2: Navigational Hazard
 	3: Safety Contour
 	*/
-	int m_alertIndicationType = 0;
+	//int m_alertIndicationType = 0;
 
 	std::list<OrientedCurveRecord> m_curveList;
 
@@ -84,11 +78,11 @@ public:
 	int GetNumericCode();
 	void SetNumericCode(int numericCode);
 
-	int MinimumDisplayPriority();
-	void MinimumDisplayPriority(int value);
+	//int MinimumDisplayPriority();
+	//void MinimumDisplayPriority(int value);
 
-	int MaximumDisplayPriority();
-	void MaximumDisplayPriority(int value);
+	//int MaximumDisplayPriority();
+	//void MaximumDisplayPriority(int value);
 
 	// 0 : No geometry
 	// 110 ~ 130 : normal

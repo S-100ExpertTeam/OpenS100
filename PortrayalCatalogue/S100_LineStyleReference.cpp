@@ -18,16 +18,7 @@ void S100_LineStyleReference::GetContents(pugi::xml_node& node)
 		return;
 	}
 
-
-	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
-	{
-		const pugi::char_t* instructionName = instruction.name();
-
-		if (!strcmp(instructionName, "reference"))
-		{
-			reference = pugi::as_wide(instruction.child_value());
-		}
-	}
+	reference = pugi::as_wide(node.attribute("reference").as_string());
 }
 
 void S100_LineStyleReference::SetReference(std::wstring& value)

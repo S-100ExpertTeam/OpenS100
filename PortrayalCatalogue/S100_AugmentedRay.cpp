@@ -15,7 +15,7 @@ S100_AugmentedRay::~S100_AugmentedRay()
 
 void S100_AugmentedRay::GetContents(pugi::xml_node node)
 {
-	for (auto instruction=node.first_child(); instruction; instruction=instruction)
+	for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
 		auto instructionName = instruction.name();
 

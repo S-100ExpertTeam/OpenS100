@@ -32,6 +32,11 @@
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
+#include <libxml/parser.h>
+#include <libxml/tree.h>
+#include <libxslt/transform.h>
+#include <libxslt/xsltutils.h>
+
 #include <sstream> 
 
 using namespace LatLonUtility;
@@ -133,6 +138,37 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 	{
 		dump_com_error(e);
 	}
+	return 0;
+}
+
+int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRulePath, std::string outputXmlPath, S100Layer* layer)
+{
+	// Initialize the libraries
+	xmlInitParser();
+	LIBXML_TEST_VERSION
+		xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
+	xmlSubstituteEntitiesDefault(1);
+
+	// Load XML and XSL
+	xmlDocPtr doc = xmlParseFile(inputXmlPath.c_str());
+	xsltStylesheetPtr xslt = xsltParseStylesheetFile((const xmlChar*)mainRulePath.c_str());
+
+	// Transform
+	xmlDocPtr result = xsltApplyStylesheet(xslt, doc, nullptr);
+
+	// Output the transformed XML
+	FILE* outFile = fopen(outputXmlPath.c_str(), "wb");
+	xsltSaveResultToFile(outFile, result, xslt);
+	fclose(outFile);
+
+	// Cleanup
+	xsltFreeStylesheet(xslt);
+	xmlFreeDoc(result);
+	xmlFreeDoc(doc);
+
+	xsltCleanupGlobals();
+	xmlCleanupParser();
+
 	return 0;
 }
 

@@ -16,8 +16,7 @@ S100_AugmentedPath::~S100_AugmentedPath()
 
 void S100_AugmentedPath::GetContents(pugi::xml_node node)
 {
-
-	for (auto instruction = node.first_child(); instruction; instruction = instruction)
+	for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
 		auto instructionName = instruction.name();
 

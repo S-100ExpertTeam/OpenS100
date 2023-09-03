@@ -80,7 +80,7 @@ std::wstring S100_LineInstruction::GetSuppression()
 void S100_LineInstruction::GetContents(pugi::xml_node node) 
 {
 	//attri
-	for (auto attri=node.first_attribute(); attri; attri=attri.next_attribute()) 
+	for (auto attri = node.first_attribute(); attri; attri = attri.next_attribute())
 	{
 		auto attriName = attri.name();
 		
@@ -91,7 +91,7 @@ void S100_LineInstruction::GetContents(pugi::xml_node node)
 		}
 	}
 
-	for (auto instruction=node.first_child(); instruction; instruction=instruction.first_child())
+	for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName,"featureReference"))
@@ -120,15 +120,16 @@ void S100_LineInstruction::GetContents(pugi::xml_node node)
 		}
 		else if (!strcmp(instructionName, "lineStyle"))
 		{
-			if (!lineStyle)
-			{
+			if (!lineStyle) {
 				lineStyle = new S100_LineStyle();
 			}
 			lineStyle->GetContents(instruction);
 		}
 		else if (!strcmp(instructionName, "lineStyleReference")) 
 		{
-			if (!lineStyleReference) lineStyleReference = new S100_LineStyleReference();
+			if (!lineStyleReference) {
+				lineStyleReference = new S100_LineStyleReference();
+			}
 			lineStyleReference->GetContents(instruction);
 		}
 		else if (!strcmp(instructionName, "compositeLineStyle"))
