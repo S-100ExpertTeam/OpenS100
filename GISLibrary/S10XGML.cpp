@@ -286,6 +286,7 @@ GM::Point* S10XGML::ReadPoint(pugi::xml_node& node)
 GM::MultiPoint* S10XGML::ReadMultiPoint(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
+	std::string srsName = node.attribute("srsName").value();
 
 	auto nodePoint = node.child("gml:pointMembers").child("gml:Point");
 
@@ -332,8 +333,8 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node)
 
 	for (int i = 0; i < posCnt; i += 2)
 	{
-		double lat = std::stod(strPosList.at(i));
-		double lon = std::stod(strPosList.at(i + 1));
+		double lon = std::stod(strPosList.at(i));
+		double lat = std::stod(strPosList.at(i + 1));
 		object->Add(lon, lat);
 	}
 
