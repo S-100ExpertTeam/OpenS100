@@ -11,6 +11,7 @@ public:
 	static void TestCreateNewCode();
 	static void TestSave();
 	static void CreateNewLayer();
+	static void CreateMemoryLayer();
 	static void CopySelectedFeatureToNewLayer();
 	static void OffFeature();
 	static void OpenUpdate();

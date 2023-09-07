@@ -542,6 +542,8 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	auto fc = cm->getFC(101); // get S-101 FC
 	auto pc = cm->getPC("S-101"); // get S-101 PC
 
+	TestGISLibrary::CreateMemoryLayer();
+
 	return 0;
 }
 

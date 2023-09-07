@@ -61,6 +61,12 @@ void TestGISLibrary::CreateNewLayer()
 	}
 }
 
+void TestGISLibrary::CreateMemoryLayer()
+{
+	auto layer = theApp.pView->s101Creator.CreateLayer(L"MemoryLayer.000", theApp.gisLib->catalogManager.getFC(), theApp.gisLib->catalogManager.getPC());
+	delete layer;
+}
+
 void TestGISLibrary::CopySelectedFeatureToNewLayer()
 {
 	auto lm = theApp.gisLib->GetLayerManager();
