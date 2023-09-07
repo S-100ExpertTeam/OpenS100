@@ -470,6 +470,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="GM_SurfaceBoundary.cpp" />
     <ClCompile Include="THAS.cpp" />
     <ClCompile Include="GF_ThematicAttributeType.cpp" />
     <ClCompile Include="TypeOfTheHorizontalCRS.cpp" />

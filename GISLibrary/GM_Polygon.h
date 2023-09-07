@@ -11,6 +11,7 @@ namespace GM
 	{
 	public:
 		Polygon();
+		Polygon(Polygon& item);
 		virtual ~Polygon();
 
 	public:

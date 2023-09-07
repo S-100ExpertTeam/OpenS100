@@ -10,6 +10,11 @@ namespace GM
 
 	}
 
+	Polygon::Polygon(Polygon& item)
+	{
+		this->boundary = item.boundary;
+	}
+
 	Polygon::~Polygon()
 	{
 

@@ -263,13 +263,13 @@ GM::Point* S10XGML::ReadPoint(pugi::xml_node& node)
 		return false;
 	}
 
-	int latIndex = 0;
-	int lonIndex = 1;
+	int latIndex = 1;
+	int lonIndex = 0;
 
-	if (srsName.length() == 0)
+	if (srsName.find("4326") != std::string::npos)
 	{
-		latIndex = 1;
-		lonIndex = 0;
+		latIndex = 0;
+		lonIndex = 1;
 	}
 
 	double lat = std::stod(strPosList.at(latIndex));
@@ -288,6 +288,15 @@ GM::MultiPoint* S10XGML::ReadMultiPoint(pugi::xml_node& node)
 	std::string gmlID = node.attribute("gml:id").value();
 	std::string srsName = node.attribute("srsName").value();
 
+	int latIndex = 1;
+	int lonIndex = 0;
+
+	if (srsName.find("4326") != std::string::npos)
+	{
+		latIndex = 0;
+		lonIndex = 1;
+	}
+
 	auto nodePoint = node.child("gml:pointMembers").child("gml:Point");
 
 	auto object = new GM::MultiPoint();
@@ -301,8 +310,8 @@ GM::MultiPoint* S10XGML::ReadMultiPoint(pugi::xml_node& node)
 
 		if (strPosList.size() == 3)
 		{
-			double lat = std::stod(strPosList.at(0));
-			double lon = std::stod(strPosList.at(1));
+			double lat = std::stod(strPosList.at(latIndex));
+			double lon = std::stod(strPosList.at(lonIndex));
 			double depth = std::stod(strPosList.at(2));
 			
 			object->Add(lon, lat, depth);
@@ -317,6 +326,16 @@ GM::MultiPoint* S10XGML::ReadMultiPoint(pugi::xml_node& node)
 GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
+	std::string srsName = node.attribute("srsName").value();
+
+	int latIndex = 1;
+	int lonIndex = 0;
+
+	if (srsName.find("4326") != std::string::npos)
+	{
+		latIndex = 0;
+		lonIndex = 1;
+	}
 
 	auto strPos = node.child("gml:segments").child("gml:LineStringSegment").child_value("gml:posList");
 
@@ -333,8 +352,8 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node)
 
 	for (int i = 0; i < posCnt; i += 2)
 	{
-		double lon = std::stod(strPosList.at(i));
-		double lat = std::stod(strPosList.at(i + 1));
+		double lon = std::stod(strPosList.at(i + lonIndex));
+		double lat = std::stod(strPosList.at(i + latIndex));
 		object->Add(lon, lat);
 	}
 
@@ -935,6 +954,11 @@ SMultiPoint* S10XGML::ConvertToSMultiPoint(GM::MultiPoint* multiPoint)
 SAbstractCurve* S10XGML::ConvertToSCurve(GM::OrientableCurve* orientableCurve)
 {
 	auto baseCurveID = orientableCurve->GetBaseCurveID();
+
+	if (baseCurveID.find('#') != std::string::npos) {
+		baseCurveID = baseCurveID.substr(1);
+	}
+
 	auto baseCurve = GetGeometry(baseCurveID);
 	
 	if (baseCurve->GetType() == GM::GeometryType::OrientableCurve) {
@@ -1013,8 +1037,11 @@ SSurface* S10XGML::ConvertToSSurface(GM::Surface* surface)
 
 	parts.push_back(0);
 
-	auto i_begin = surface->GetPolygon().boundary.interior.begin();
-	auto i_end = surface->GetPolygon().boundary.interior.end();
+	auto boundary = surface->GetPolygon().boundary;
+	auto interior = boundary.interior;
+
+	auto i_begin = interior.begin();
+	auto i_end = interior.end();
 
 	for (auto i = i_begin;
 		i != i_end;

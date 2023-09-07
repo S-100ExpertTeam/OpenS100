@@ -443,9 +443,9 @@ bool S101Cell::OpenBy000(CString path)
 
 	if (Read8211(std::wstring(path))) {
 		MakeFullSpatialData();
-
 		CalcMBR();
 		Check();
+
 		return true;
 	}
 
