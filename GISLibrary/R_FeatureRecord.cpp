@@ -69,12 +69,7 @@ R_FeatureRecord::~R_FeatureRecord(void)
 		delete m_geometry;
 		m_geometry = nullptr;
 	}
-
-	//	[Text Placement ]
-	delete m_textBearing;
-	m_textBearing = nullptr;
 }
-
 
 #pragma warning(disable:4018)
 BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
@@ -319,25 +314,25 @@ void R_FeatureRecord::SetNumericCode(int numericCode)
 	m_frid.m_nftc = numericCode;
 }
 
-int R_FeatureRecord::MinimumDisplayPriority()
-{
-	return minimumDisplayPriority;
-}
-
-void R_FeatureRecord::MinimumDisplayPriority(int value)
-{
-	minimumDisplayPriority = value;
-}
-
-int R_FeatureRecord::MaximumDisplayPriority()
-{
-	return maximumDisplayPriority;
-}
-
-void R_FeatureRecord::MaximumDisplayPriority(int value)
-{
-	maximumDisplayPriority = value;
-}
+//int R_FeatureRecord::MinimumDisplayPriority()
+//{
+//	return minimumDisplayPriority;
+//}
+//
+//void R_FeatureRecord::MinimumDisplayPriority(int value)
+//{
+//	minimumDisplayPriority = value;
+//}
+//
+//int R_FeatureRecord::MaximumDisplayPriority()
+//{
+//	return maximumDisplayPriority;
+//}
+//
+//void R_FeatureRecord::MaximumDisplayPriority(int value)
+//{
+//	maximumDisplayPriority = value;
+//}
 
 int R_FeatureRecord::GetSPASRCNM()
 {

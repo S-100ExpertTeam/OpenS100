@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <random>
 
 #include <GeographicLib/PolygonArea.hpp>
 #include <GeographicLib/Geodesic.hpp>
@@ -239,4 +240,24 @@ std::string LatLonUtility::replace_all(__in const std::string& message, __in con
 	}     
 	
 	return result; 
+}
+
+std::string LatLonUtility::generate_uuid() {
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+	static std::uniform_int_distribution<int> dis(0, 15);
+	static const char* v = "0123456789abcdef";
+	std::stringstream ss;
+
+	for (int i = 0; i < 8; i++) ss << v[dis(gen)];
+	ss << "-";
+	for (int i = 0; i < 4; i++) ss << v[dis(gen)];
+	ss << "-";
+	for (int i = 0; i < 4; i++) ss << v[dis(gen)];
+	ss << "-";
+	for (int i = 0; i < 4; i++) ss << v[dis(gen)];
+	ss << "-";
+	for (int i = 0; i < 12; i++) ss << v[dis(gen)];
+
+	return ss.str();
 }

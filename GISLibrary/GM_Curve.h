@@ -12,6 +12,7 @@ namespace GM
 	{
 	public:
 		Curve();
+		Curve(Curve& item);
 		~Curve();
 
 	public:
@@ -24,5 +25,11 @@ namespace GM
 		void Add(double x, double y);
 
 		bool IsClosed();
+		
+		int getPointCount() override;
+		double getX(int index) override;
+		double getY(int index) override;
+
+		SGeometry* createGeometry();
 	};
 }

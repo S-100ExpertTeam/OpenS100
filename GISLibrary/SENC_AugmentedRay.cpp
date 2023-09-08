@@ -60,7 +60,7 @@ int iDebugCount_AumentedRayInstruction[100] = { 0 };
 #pragma warning(disable:4838)
 void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* factory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
-	if (nullptr == fr || nullptr == fr->m_geometry)
+	if (nullptr == fr || nullptr == fr->GetGeometry())
 	{
 		return;
 	}

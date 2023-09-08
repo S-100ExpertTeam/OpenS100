@@ -346,9 +346,12 @@ void CDialogDockLayerManager::UpdateList()
 	{
 		listCtrlLayers.SetItemState(selectedLayerIndex, LVIS_SELECTED, LVIS_SELECTED);
 		auto layer = theApp.gisLib->GetLayer(selectedLayerIndex);
-		if (layer)
+		if (layer->IsS100Layer())
 		{
-			FillPropList((S101Cell*)layer->GetSpatialObject());
+			auto s100Layer = (S100Layer*)layer;
+			if (s100Layer->GetProductNumber() == 101) {
+				FillPropList((S101Cell*)layer->GetSpatialObject());
+			}
 		}
 	}
 }

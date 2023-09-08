@@ -8,6 +8,10 @@ namespace GM
 
 	}
 
+	Ring::Ring(const Ring& item)
+	{
+	}
+
 	Ring::Ring(GM::CompositeCurve& curve)
 	{
 		

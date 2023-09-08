@@ -167,7 +167,7 @@ bool MBR::CheckOverlap(MBR screenMBR, MBR objMBR)
 			return true;
 		}
 	}
-	return false;
+	return true;
 }
 
 bool MBR::operator== (MBR& _mbr)

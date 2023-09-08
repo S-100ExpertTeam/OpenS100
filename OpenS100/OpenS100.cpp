@@ -61,7 +61,7 @@ COpenS100App::COpenS100App() noexcept
 	
 	SetAppID(_T("OpenS100.AppID.NoVersion"));
 
-	//_CrtSetBreakAlloc(1015213);
+	//_CrtSetBreakAlloc(189);
 }
 
 

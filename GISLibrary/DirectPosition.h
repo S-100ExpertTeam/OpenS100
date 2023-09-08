@@ -10,9 +10,6 @@ public:
 	DirectPosition(double x, double y, double z);
 
 public:
-	static const int Factor = 10000000;
-
-public:
 	std::vector<int> coordinates;
 
 public:

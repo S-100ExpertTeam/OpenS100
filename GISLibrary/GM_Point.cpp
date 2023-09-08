@@ -23,6 +23,15 @@ namespace GM
 
 	}
 
+	double Point::getX()
+	{
+		return position.GetX();
+	}
+	double Point::getY()
+	{
+		return position.GetY();
+	}
+
 	GeometryType Point::GetType()
 	{
 		return GeometryType::Point;
@@ -31,5 +40,15 @@ namespace GM
 	std::string Point::GeometricPrimitiveAsString()
 	{
 		return "Point";
+	}
+
+	SGeometry* Point::createGeometry()
+	{
+		auto x = position.GetX();
+		auto y = position.GetY();
+		projection(x, y);
+
+		SPoint* result = new SPoint(x, y);
+		return result;
 	}
 }

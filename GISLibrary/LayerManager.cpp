@@ -38,6 +38,8 @@
 
 #include "../LatLonUtility/LatLonUtility.h"
 
+#include "../S100Engine/DrawingInstructionReader.h"
+
 #include <ctime> 
 #include <mmsystem.h> 
 #include <string>
@@ -179,7 +181,7 @@ int LayerManager::AddLayer(CString _filepath)
 		auto fc = gisLib->catalogManager.getFC(productNumber);
 		auto pc = gisLib->catalogManager.getPC(productNumber);
 
-		if (fc && pc)
+		if (fc)
 		{
 			layer = new S100Layer(fc, pc);
 			if ((S100Layer*)layer->Open(_filepath) == false)
@@ -548,62 +550,44 @@ void LayerManager::AddSymbolDrawing(
 
 					// HJUST 
 					// CENTRE
-					//[ Text Placement ]
-					if (instruction->fr->m_textBearing)
+					if (textPoint->horizontalAlignment == CENTER)
 					{
-						if (*instruction->fr->m_textBearing > 90 && *instruction->fr->m_textBearing <= 270)
-						{
-							offset_x = -width;
-							//XOFFS = -((float)textPoint->offset.x * offsetUnitX);
-							XOFFS = -((float)textPoint->offset.x / 0.32) * 1.358;
-						}
-						else
-						{
-							offset_x = 0;
-						}
+						offset_x = -width / (float)2.;
+					}
+					// RIGHT
+					else if (textPoint->horizontalAlignment == END)
+					{
+						offset_x = -width;
+					}
+					// LEFT
+					else if (textPoint->horizontalAlignment == START)
+					{
+						offset_x = 0;
+					}
+					else
+					{
+						offset_x = 0;
+					}
+
+					// VJUST
+					// BOTTOM
+					if (textPoint->verticalAlignment == BOTTOM)
+					{
+						offset_y = -height;
+					}
+					// CENTRE
+					else if (textPoint->verticalAlignment == CENTER)
+					{
 						offset_y = -height / (float)2.;
 					}
-					else {
-						if (textPoint->horizontalAlignment == CENTER)
-						{
-							offset_x = -width / (float)2.;
-						}
-						// RIGHT
-						else if (textPoint->horizontalAlignment == END)
-						{
-							offset_x = -width;
-						}
-						// LEFT
-						else if (textPoint->horizontalAlignment == START)
-						{
-							offset_x = 0;
-						}
-						else
-						{
-							offset_x = 0;
-						}
-
-						// VJUST
-						// BOTTOM
-						if (textPoint->verticalAlignment == BOTTOM)
-						{
-							offset_y = -height;
-						}
-						// CENTRE
-						else if (textPoint->verticalAlignment == CENTER)
-						{
-							offset_y = -height / (float)2.;
-						}
-						// TOP
-						else if (textPoint->verticalAlignment == TOP)
-						{
-							offset_y = -height;
-						}
-						else
-						{
-							offset_y = -height / (float)2.;
-						}
-
+					// TOP
+					else if (textPoint->verticalAlignment == TOP)
+					{
+						offset_y = -height;
+					}
+					else
+					{
+						offset_y = -height / (float)2.;
 					}
 
 					offset_x += XOFFS;
@@ -908,7 +892,7 @@ void LayerManager::SetDrawingInstruction(S100Layer* layer)
 	auto fc = layer->GetFeatureCatalog();
 	auto pc = layer->GetPC();
 
-	auto cell = (S101Cell*)layer->GetSpatialObject();
+	auto cell = (S100SpatialObject*)layer->GetSpatialObject();
 	if (nullptr == cell->pcManager ||
 		nullptr == cell->pcManager->displayListSENC)
 	{
@@ -1057,7 +1041,8 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 {
 	auto pc = ((S100Layer*)l)->GetPC();
 
-	if (l->GetFileType() == S100_FileType::FILE_S_100_VECTOR) {
+	if (pc &&
+		l->GetFileType() == S100_FileType::FILE_S_100_VECTOR) {
 		auto mainRuleFile = pc->GetMainRuleFile();
 		auto fileName = mainRuleFile->GetFileName();
 		auto rootPath = pc->GetRootPath();
@@ -1069,6 +1054,9 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 		else if (pc->GetRuleFileFormat() == Portrayal::FileFormat::XSLT) {
 			auto gml = (S10XGML*)l->GetSpatialObject();
 			gml->SaveToInputXML("..\\TEMP\\input.xml");
+			ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml", (S100Layer*)l);
+			auto s100so = (S100SpatialObject*)l->GetSpatialObject();
+			s100so->OpenOutputXML("..\\TEMP\\output.xml");
 		}
 	}
 }
@@ -1306,14 +1294,15 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 			auto lineInstruction = (SENC_LineInstruction*)*j;
 
 			auto featureRecord = lineInstruction->fr;
+			auto geom = featureRecord->GetGeometry();
 
 			std::list<SCurve*> curListCurveLink;
 
 			if (lineInstruction->spatialReference.size() > 0)
 			{
-				if (featureRecord->m_geometry->GetType() == SGeometryType::Surface)
+				if (geom->GetType() == SGeometryType::Surface)
 				{
-					auto surface = (SSurface*)featureRecord->m_geometry;
+					auto surface = (SSurface*)geom;
 
 					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
 					{
@@ -1326,9 +1315,9 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						}
 					}
 				}
-				else if (featureRecord->m_geometry->GetType() == SGeometryType::CompositeCurve)
+				else if (geom->GetType() == SGeometryType::CompositeCurve)
 				{
-					auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
+					auto compositeCurve = (SCompositeCurve*)geom;
 
 					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
 					{
@@ -1341,9 +1330,9 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 						}
 					}
 				}
-				else if (featureRecord->m_geometry->GetType() == SGeometryType::Curve)
+				else if (geom->GetType() == SGeometryType::Curve)
 				{
-					auto curveHasOrient = (SCurve*)featureRecord->m_geometry;
+					auto curveHasOrient = (SCurve*)geom;
 
 					for (auto iterLi = lineInstruction->spatialReference.begin(); iterLi != lineInstruction->spatialReference.end(); iterLi++)
 					{
@@ -1357,19 +1346,19 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 					}
 				}
 			}
-			else if (featureRecord->m_geometry->GetType() == SGeometryType::Surface)
+			else if (geom->GetType() == SGeometryType::Surface)
 			{
-				auto surface = (SSurface*)featureRecord->m_geometry;
+				auto surface = (SSurface*)geom;
 				surface->GetCurveList(curListCurveLink);
 			}
-			else if (featureRecord->m_geometry->GetType() == SGeometryType::CompositeCurve)
+			else if (geom->GetType() == SGeometryType::CompositeCurve)
 			{
-				auto compositeCurve = (SCompositeCurve*)featureRecord->m_geometry;
+				auto compositeCurve = (SCompositeCurve*)geom;
 				compositeCurve->GetCurveList(curListCurveLink);
 			}
-			else if (featureRecord->m_geometry->GetType() == SGeometryType::Curve)
+			else if (geom->GetType() == SGeometryType::Curve)
 			{
-				curListCurveLink.push_back(((SCurve*)featureRecord->m_geometry));
+				curListCurveLink.push_back(((SCurve*)geom));
 			}
 
 			for (auto m = curListCurveLink.begin(); m != curListCurveLink.end(); m++)

@@ -8,6 +8,7 @@ namespace GM
 	{
 	public:
 		Ring();
+		Ring(const Ring& item);
 		Ring(GM::CompositeCurve& curve);
 		Ring(GM::OrientableCurve& curve);
 		Ring(GM::Curve& curve);

@@ -45,10 +45,11 @@ void rotate_v(double &nx, double &ny, double tx, double ty, double cx, double cy
 #pragma warning(disable:4244)
 void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points)
 {
-	if (!fr || !fr->m_geometry)
-	{
+	if (!fr || !fr->GetGeometry()) {
 		return;
 	}
+
+	auto geom = fr->GetGeometry();
 		
 	double rotation = 0;
 	double scaleFactor = 1;
@@ -62,24 +63,21 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 
 	DWORD dwWorkStart = timeGetTime();
 
-	if (fr->m_geometry->GetType() == SGeometryType::Point)
+	if (geom->GetType() == SGeometryType::Point)
 	{
-		SPoint* geo = (SPoint*)fr->m_geometry;
+		SPoint* geo = (SPoint*)geom;
 		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
-	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
+	else if (geom->GetType() == SGeometryType::CompositeCurve)
 	{
-		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
+		SCompositeCurve* geo = (SCompositeCurve*)geom;
 		std::list<SCurve*> curveList;
 		geo->GetCurveList(curveList);
 
-		//int curveCnt = geo->GetCurveCount();
-		//for (int i = 0; i < curveCnt; i++)
 		for (auto i = curveList.begin(); i != curveList.end(); i++)
 		{
 			bDraw = false;
-			//auto c = geo->GetCurve(i);
 			auto c = (*i);
 
 			if (!c->GetMasking())
@@ -126,9 +124,9 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 			viewPointNum = 0;
 		}
 	}
-	else if (fr->m_geometry->GetType() == SGeometryType::Surface)
+	else if (geom->GetType() == SGeometryType::Surface)
 	{
-		SSurface* geo = (SSurface*)fr->m_geometry;
+		SSurface* geo = (SSurface*)geom;
 
 		// need coordinates that are not clipped.
 		std::vector<POINT> vp;
@@ -147,10 +145,15 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 
 void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points)
 {
-	if (!fr)
+	if (!fr) {
 		return;
-	if (!fr->m_geometry)
+	}
+
+	auto geom = fr->GetGeometry();
+
+	if (!geom) {
 		return;
+	}
 
 	double rotation = 0;
 	double scaleFactor = 1;
@@ -164,15 +167,15 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 
 	DWORD dwWorkStart = timeGetTime();
 
-	if (fr->m_geometry->GetType() == SGeometryType::Point)
+	if (geom->GetType() == SGeometryType::Point)
 	{
-		SPoint* geo = (SPoint*)fr->m_geometry;
+		SPoint* geo = (SPoint*)geom;
 		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
-	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
+	else if (geom->GetType() == SGeometryType::CompositeCurve)
 	{
-		SCompositeCurve* geo = (SCompositeCurve*)fr->m_geometry;
+		SCompositeCurve* geo = (SCompositeCurve*)geom;
 		std::list<SCurve*> curveList;
 		geo->GetCurveList(curveList);
 
@@ -228,9 +231,9 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 			viewPointNum = 0;
 		}
 	}
-	else if (fr->m_geometry->GetType() == SGeometryType::Surface)
+	else if (geom->GetType() == SGeometryType::Surface)
 	{
-		SSurface* geo = (SSurface*)fr->m_geometry;
+		SSurface* geo = (SSurface*)geom;
 
 		if (geo->m_centerPoint)
 		{

@@ -18,6 +18,11 @@ void S100_Color::GetContents(pugi::xml_node& node)
 		return;
 	}
 
+	auto attribute_transparency = node.attribute("transparency");
+	transparency = pugi::as_wide(attribute_transparency.as_string());
+
+	token = pugi::as_wide(node.child_value());
+
 	for (auto colorNode = node.first_attribute(); colorNode; colorNode = colorNode.next_attribute())
 	{
 		auto colorNodeName = colorNode.name();

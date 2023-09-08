@@ -48,19 +48,23 @@ SENC_AugmentedPath::~SENC_AugmentedPath()
 #pragma warning(disable:4244)
 void SENC_AugmentedPath::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* factory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
-	if (!fr)
-		return;
-	if (!fr->m_geometry)
-		return;
-
-	if (!path)
-	{
+	if (!fr) {
 		return;
 	}
 
-	if (fr->m_geometry->GetType() == SGeometryType::Point)
+	auto geom = fr->GetGeometry();
+
+	if (!fr->GetGeometry()) {
+		return;
+	}
+
+	if (!path) {
+		return;
+	}
+
+	if (geom->GetType() == SGeometryType::Point)
 	{
-		SPoint* p = (SPoint*)fr->m_geometry;
+		SPoint* p = (SPoint*)geom;
 		scaler->WorldToDevice(p->x, p->y, &SGeometry::viewPoints[0].x, &SGeometry::viewPoints[0].y);
 
 		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)

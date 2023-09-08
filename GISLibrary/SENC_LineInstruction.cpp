@@ -62,24 +62,26 @@ bool SENC_LineInstruction::GetSuppression()
 #pragma warning(disable:4838)
 void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* pDirect2dFactory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
+	auto geom = fr->GetGeometry();
+
 	std::list<SCurve*> curListCurveLink;
 
 	// Surface
-	if (fr->m_geometry->GetType() == SGeometryType::Surface)
+	if (geom->GetType() == SGeometryType::Surface)
 	{
-		auto surface = (SSurface*)fr->m_geometry;
+		auto surface = (SSurface*)geom;
 		surface->GetCurveList(curListCurveLink);
 	}
 	// Composite Curve
-	else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
+	else if (geom->GetType() == SGeometryType::CompositeCurve)
 	{
-		auto compositeCurve = (SCompositeCurve*)fr->m_geometry;
+		auto compositeCurve = (SCompositeCurve*)geom;
 		compositeCurve->GetCurveList(curListCurveLink);
 	}
 	// Curve
-	else if (fr->m_geometry->GetType() == SGeometryType::Curve)
+	else if (geom->GetType() == SGeometryType::Curve)
 	{
-		auto curve = (SCurve*)fr->m_geometry;
+		auto curve = (SCurve*)geom;
 		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
 		{
 			SENC_LineStyleBase* lineStyleBase = *itor;

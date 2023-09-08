@@ -10,6 +10,7 @@ namespace GM
 	{
 	public:
 		Surface();
+		Surface(Surface& item);
 		~Surface();
 
 	public:
@@ -19,13 +20,13 @@ namespace GM
 		Polygon GetPolygon();
 		
 		void SetExteriorRingID(std::string value);
-		void SetExteriorRing(GM::OrientableCurve item);
-		void SetExteriorRing(GM::Curve item);
-		void SetExteriorRing(GM::CompositeCurve item);
+		void SetExteriorRing(GM::OrientableCurve* item);
+		void SetExteriorRing(GM::Curve* item);
+		void SetExteriorRing(GM::CompositeCurve* item);
 		void AddInteriorRingID(std::string value);
-		void AddInteriorRing(GM::OrientableCurve item);
-		void AddInteriorRing(GM::Curve item);
-		void AddInteriorRing(GM::CompositeCurve item);
+		void AddInteriorRing(GM::OrientableCurve* item);
+		void AddInteriorRing(GM::Curve* item);
+		void AddInteriorRing(GM::CompositeCurve* item);
 
 		GeometryType GetType() override;
 		std::string GeometricPrimitiveAsString() override;

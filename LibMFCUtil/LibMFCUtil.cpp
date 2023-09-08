@@ -267,11 +267,11 @@ void LibMFCUtil::OutputDebugLongString(CString path)
 	for (int i = 0; i < count; i++)
 	{
 		CString str = path.Mid(i * 4096, 4096);
-		//OutputDebugString(str);
+		OutputDebugString(str);
 	}
 
 	if (mod > 0)
 	{
-		//OutputDebugString(path.Mid(count * 4096, mod));
+		OutputDebugString(path.Mid(count * 4096, mod));
 	}
 }

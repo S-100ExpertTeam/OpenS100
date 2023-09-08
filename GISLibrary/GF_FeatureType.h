@@ -28,6 +28,8 @@ namespace GF
 		std::vector<FeatureAssociationType> featureAssociations;
 		SpatialAttributeType* spatial = nullptr;
 
+		SGeometry* geometry = nullptr;
+
 	public:
 		virtual bool IsNoGeometry();
 
@@ -38,6 +40,7 @@ namespace GF
 		virtual SpatialPrimitiveType GetSpatialPrimitiveType();
 
 		virtual SGeometry* GetGeometry();
+		virtual void SetGeometry(SGeometry* value);
 
 		virtual std::string GetGeometryID();
 

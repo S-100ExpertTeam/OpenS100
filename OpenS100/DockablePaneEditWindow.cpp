@@ -861,11 +861,11 @@ void CDockablePaneEditWindow::SetVector(GM::CompositeCurve* r, CMFCPropertyGridP
 
 	for (int i = 0; i < r->component.size(); i++)
 	{
-		if (r->component.at(i).GetType() == GM::GeometryType::Curve)
+		if (r->component.at(i)->GetType() == GM::GeometryType::Curve)
 		{
 			SetVector((GM::Curve*)&r->component.at(i), pProperty);
 		}
-		else if (r->component.at(i).GetType() == GM::GeometryType::CompositeCurve)
+		else if (r->component.at(i)->GetType() == GM::GeometryType::CompositeCurve)
 		{
 			SetVector((GM::CompositeCurve*)&r->component.at(i), pProperty);
 		}
@@ -971,12 +971,12 @@ void CDockablePaneEditWindow::SetVector(GM::Surface* r, CMFCPropertyGridProperty
 	}
 
 	auto exteriorCompositeCurve = r->GetPolygon().boundary.exterior;
-	SetVector(&exteriorCompositeCurve, pProperty);
+	SetVector(exteriorCompositeCurve, pProperty);
 
 	for (int i = 0; i < r->GetPolygon().boundary.interior.size(); i++)
 	{
 		auto interiorCompositeCurve = r->GetPolygon().boundary.interior.at(i);
-		SetVector(&interiorCompositeCurve, pProperty);
+		SetVector(interiorCompositeCurve, pProperty);
 	}
 }
 

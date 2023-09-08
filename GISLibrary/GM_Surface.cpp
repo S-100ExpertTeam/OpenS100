@@ -8,6 +8,11 @@ namespace GM
 
 	}
 
+	Surface::Surface(Surface& item)
+	{
+		this->patch = item.patch;
+	}
+
 	Surface::~Surface()
 	{
 	}
@@ -19,44 +24,44 @@ namespace GM
 
 	void Surface::SetExteriorRingID(std::string value)
 	{
-		patch.boundary.exterior.SetID(value);
+		patch.boundary.exterior->SetID(value);
 	}
 
-	void Surface::SetExteriorRing(GM::OrientableCurve item)
+	void Surface::SetExteriorRing(GM::OrientableCurve* item)
 	{
-		patch.boundary.exterior = item;
+		patch.boundary.exterior = (GM::Ring*)item;
 	}
 
-	void Surface::SetExteriorRing(GM::Curve item)
+	void Surface::SetExteriorRing(GM::Curve* item)
 	{
-		patch.boundary.exterior = item;
+		patch.boundary.exterior = (GM::Ring*)item;
 	}
 
-	void Surface::SetExteriorRing(GM::CompositeCurve item)
+	void Surface::SetExteriorRing(GM::CompositeCurve* item)
 	{
-		patch.boundary.exterior = item;
+		patch.boundary.exterior = (GM::Ring*)item;
 	}
 
 	void Surface::AddInteriorRingID(std::string value)
 	{
-		Ring ring;
-		ring.SetID(value);
+		Ring* ring = new Ring();
+		ring->SetID(value);
 		patch.boundary.interior.push_back(ring);
 	}
 
-	void Surface::AddInteriorRing(GM::OrientableCurve item)
+	void Surface::AddInteriorRing(GM::OrientableCurve* item)
 	{
-		patch.boundary.interior.push_back(item);
+		patch.boundary.interior.push_back((GM::Ring*)item);
 	}
 
-	void Surface::AddInteriorRing(GM::Curve item)
+	void Surface::AddInteriorRing(GM::Curve* item)
 	{
-		patch.boundary.interior.push_back(item);
+		patch.boundary.interior.push_back((GM::Ring*)item);
 	}
 
-	void Surface::AddInteriorRing(GM::CompositeCurve item)
+	void Surface::AddInteriorRing(GM::CompositeCurve* item)
 	{
-		patch.boundary.interior.push_back(item);
+		patch.boundary.interior.push_back((GM::Ring*)item);
 	}
 
 	GeometryType Surface::GetType()
@@ -66,6 +71,6 @@ namespace GM
 
 	std::string Surface::GeometricPrimitiveAsString()
 	{
-		return "Curve";
+		return "Surface";
 	}
 }

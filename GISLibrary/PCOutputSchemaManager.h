@@ -32,7 +32,7 @@ public:
 	SENC_DisplayList* displayListSENC = nullptr;
 
 public:
-	void GenerateSENCInstruction(S101Cell* cell, PortrayalCatalogue* pc);
+	void GenerateSENCInstruction(S100SpatialObject* s100so, PortrayalCatalogue* pc);
 	void InitDisplayList();
 	void GenerateSENCAlertInstruction(S101Cell* cell, PortrayalCatalogue* pc);
 	void GetSENCFromS100Common(S100_Instruction* tp, SENC_Instruction* si);

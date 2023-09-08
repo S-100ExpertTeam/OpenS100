@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "DirectPosition.h"
 
+const double Factor = 10000000;
+
 DirectPosition::DirectPosition()
 {
 	coordinates.push_back(0);

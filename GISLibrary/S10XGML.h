@@ -39,8 +39,6 @@ public:
     bool Open(CString _filepath) override;
     bool SaveToInputXML(std::string path) override;
 
-    GM::Object* GetGeometry(std::string id) override;
-
     bool ReadMembers(pugi::xml_node& node);
     GF::FeatureType* ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc);
     GF::InformationType* ReadInformation(pugi::xml_node& node, FeatureCatalogue* fc);
@@ -67,7 +65,22 @@ public:
     bool WriteInputXML_FeatureType_SimpleAttribute(pugi::xml_node& node, GF::SimpleAttributeType* simpleAttribute);
     bool WriteInputXML_FeatureType_ComplexAttribute(pugi::xml_node& node, GF::ComplexAttributeType* complexAttribute);
 
+    bool WriteInputXML_InformationTypes(pugi::xml_node& node);
+
+    void CalcMBR();
+
+public:
+    GF::FeatureType* GetFeatureType(std::string id) override;
+    GM::Object* GetGeometry(std::string id) override;
+
 private:
     std::string DeleteXMLNamespace(std::string value);
     std::string getCodeFromMember(std::string nodeName);
+    void SetGeometry();
+    SPoint* ConvertToSPoint(GM::Point* point);
+    SMultiPoint* ConvertToSMultiPoint(GM::MultiPoint* multiPoint);
+    SAbstractCurve* ConvertToSCurve(GM::OrientableCurve* orientableCurve);
+    SCurve* ConvertToSCurve(GM::Curve* curve);
+    SCompositeCurve* ConvertToSCompositeCurve(GM::CompositeCurve* compositeCurve);
+    SSurface* ConvertToSSurface(GM::Surface* surface);
 };

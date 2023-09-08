@@ -9,6 +9,7 @@
 #include "LineStylesPackage.h"
 #include "TextPoint.h"
 #include "TextLine.h"
+#include "DisplayList.h"
 
 #include <pugixml.hpp>
 
@@ -55,4 +56,6 @@ public:
 	static GraphicBasePackage::Annulus* GetGraphicBase_Annulus(pugi::xml_node& annulusNode);
 	static GraphicBasePackage::Point GetGraphicBase_Point(pugi::xml_node& pointNode);
 	static GraphicBasePackage::Sector GetGraphicBase_Sector(pugi::xml_node& sectorNode);
+
+	static DisplayList* OpenOutputXMLbypugixml(std::string path);
 };

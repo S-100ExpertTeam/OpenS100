@@ -21,6 +21,7 @@ public:
 
 public:
 	MBR& GetMBRRef();
+	MBR GetMBR();
 	std::string GetID();
 	std::wstring GetIDAsWString();
 	int GetIDAsInt();

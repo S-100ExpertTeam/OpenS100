@@ -21,6 +21,11 @@ MBR& Geometry::GetMBRRef()
 	return m_mbr;
 }
 
+MBR Geometry::GetMBR()
+{
+	return m_mbr;
+}
+
 std::string Geometry::GetID()
 {
 	return id;

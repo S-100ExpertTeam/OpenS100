@@ -64,3 +64,12 @@ PortrayalCatalogue* S100SpatialObject::GetPC()
 
 	return nullptr;
 }
+
+bool S100SpatialObject::OpenOutputXML(std::string path)
+{
+	InitDrawingInstruction();
+	pcManager->displayList->OpenOutputXML(path);
+	pcManager->GenerateSENCInstruction(this, GetPC());
+
+	return true;
+}

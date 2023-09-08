@@ -20,6 +20,7 @@ public:
 
 public:
 	static int ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer);
+	static int ProcessS100_XSLT(std::string inputXmlPath, std::string mainRulePath, std::string outputXmlPath, S100Layer* layer);
 
 	static bool LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm);
 	static std::wstring LUA_GetPriority(std::string lua_priority);

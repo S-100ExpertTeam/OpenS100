@@ -63,7 +63,7 @@ SENC_AreaFillBase* SENC_AreaInstruction::GetAreaFill()
 // Area Instruction
 void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* pDirect2dFactory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
-	auto surface = (SSurface*)fr->m_geometry;
+	auto surface = (SSurface*)fr->GetGeometry();
 
 	if (areaFill)
 	{
@@ -78,9 +78,6 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 			if (colorFill->color)
 			{
 				D2D1_COLOR_F color = colorFill->color->RGBColor;
-				//color.r = (float)(GetRValue(colorFill->color->RGBColor) / 255.0);
-				//color.g = (float)(GetGValue(colorFill->color->RGBColor) / 255.0);
-				//color.b = (float)(GetBValue(colorFill->color->RGBColor) / 255.0);
 				
 				color.a = 1 - colorFill->color->transparency;
 				brush->SetColor(color);
@@ -91,7 +88,6 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 					if (geometry)
 					{
 						rt->FillGeometry(geometry, brush);
-						//rt->DrawGeometry(geometry, brush, 1, strokeGroup->at(0));
 					}
 				}
 				else
@@ -151,7 +147,7 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 									D2D1::Point2F((float)scaler->sox, (float)scaler->soy))
 							);
 
-							auto featureMBR = fr->GetMBR();
+							auto featureMBR = surface->GetMBR();
 							long sxmin = 0;
 							long symin = 0;
 							scaler->WorldToDevice(featureMBR.xmin, featureMBR.ymax, &sxmin, &symin);
@@ -201,7 +197,7 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 									D2D1::Point2F((float)scaler->sox, (float)scaler->soy))
 							);
 
-							auto featureMBR = fr->GetMBR();
+							auto featureMBR = surface->GetMBR();
 							long sxmin = 0;
 							long symin = 0;
 							scaler->WorldToDevice(featureMBR.xmin, featureMBR.ymax, &sxmin, &symin);
