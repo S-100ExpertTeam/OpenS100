@@ -17,6 +17,11 @@ S100SpatialObject::~S100SpatialObject()
 	}
 }
 
+S100SpatialObjectType S100SpatialObject::getS100SpatialObjectType()
+{
+	return type;
+}
+
 void S100SpatialObject::InitDrawingInstruction()
 {
 	if (pcManager)

@@ -14,6 +14,7 @@
 
 S10XGML::S10XGML()
 {
+	type = S100SpatialObjectType::S10XGML;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 }
 

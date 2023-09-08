@@ -12,6 +12,7 @@
 
 S102H5::S102H5()
 {
+	type = S100SpatialObjectType::S102H5;
 	featureContainer.push_back(new S102_FC_BathymetryCoverage());
 }
 

@@ -8,6 +8,7 @@
 
 S100H5::S100H5()
 {
+	type = S100SpatialObjectType::S100H5;
 	m_FileType = S100_FileType::FILE_S_100_GRID_H5;
 }
 

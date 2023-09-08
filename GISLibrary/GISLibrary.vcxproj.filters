@@ -64,6 +64,9 @@
     <None Include="GISLibrary.def">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="S100SpatialObjectType.h">
+      <Filter>S100</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GISLibrary.cpp">

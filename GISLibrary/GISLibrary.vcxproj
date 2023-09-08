@@ -244,6 +244,7 @@
   <ItemGroup>
     <None Include="GISLibrary.def" />
     <None Include="ReadMe.txt" />
+    <None Include="S100SpatialObjectType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Angle.cpp" />
