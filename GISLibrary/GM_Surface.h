@@ -10,8 +10,8 @@ namespace GM
 	{
 	public:
 		Surface();
-		Surface(Surface& item);
-		~Surface();
+		Surface(const Surface& item);
+		virtual ~Surface();
 
 	public:
 		Polygon patch;

@@ -10,6 +10,23 @@ namespace GM
 
 	}
 
+	OrientableCurve::OrientableCurve(const OrientableCurve& item) : Primitive(item)
+	{
+		this->orientation = item.orientation;
+		this->baseCurveID = item.baseCurveID;
+		if (item.baseCurve) {
+			if (typeid(OrientableCurve) == typeid(*item.baseCurve)) {
+				this->baseCurve = new OrientableCurve(*item.baseCurve);
+			}
+			else if (typeid(Curve) == typeid(*item.baseCurve)) {
+				this->baseCurve = new Curve((Curve&)*item.baseCurve);
+			}
+			else if (typeid(CompositeCurve) == typeid(*item.baseCurve)) {
+				this->baseCurve = new CompositeCurve((CompositeCurve&)*item.baseCurve);
+			}
+		}
+	}
+
 	OrientableCurve::OrientableCurve(std::string baseCurveID)
 	{
 		this->baseCurveID = baseCurveID;

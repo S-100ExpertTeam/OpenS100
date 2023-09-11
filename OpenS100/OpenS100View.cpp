@@ -530,13 +530,15 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
 	auto fc4 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid, but duplicated(S-101)
 	cm->addFC(L"..\\ProgramData\\FC\\S-124_FC.xml");
-	cm->addFC(L"..\\ProgramData\\FC\\S-125_FC.xml"); 
+	cm->addFC(L"..\\ProgramData\\FC\\S-125_FC.xml");
+	cm->addFC(L"..\\ProgramData\\FC\\S-127_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
 
 	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
 	auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
 	cm->addPC(L"..\\ProgramData\\PC\\S124_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml"); 
+	cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S411_Portrayal\\portrayal_catalogue.xml");
 
 	auto fc = cm->getFC(101); // get S-101 FC
@@ -1219,6 +1221,11 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	auto layer = theApp.gisLib->GetLayerManager()->GetLayer(layerIndex);
 	if (nullptr == layer)
 	{
+		return;
+	}
+
+	auto s100layer = (S100Layer*)layer;
+	if (s100layer->GetFC()->getProductId().compare("S-101") != 0) {
 		return;
 	}
 

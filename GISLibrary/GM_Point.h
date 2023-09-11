@@ -9,11 +9,11 @@
 namespace GM
 {
 	class Point : 
-		public Primitive,
-		public PugixmlElement
+		public Primitive
 	{
 	public:
 		Point();
+		Point(const Point& item);
 		virtual ~Point();
 
 	public:

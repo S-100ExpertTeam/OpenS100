@@ -22,6 +22,8 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		return;
 	}
 
+	this->reference = pugi::as_wide(node.attribute("reference").value());
+
 	auto idAttri = node.attribute("id");
 	if (idAttri)
 	{
@@ -53,12 +55,7 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		{
 			fileFormat = pugi::as_wide(instruction.child_value());
 		}
-		//========================================================
-		if (!strcmp(instructionName, "symbolReference"))
-		{
-			reference = pugi::as_wide(instruction.child_value());
-		}
-		else if (!strcmp(instructionName, "rotation"))
+		if (!strcmp(instructionName, "rotation"))
 		{
 			rotation =std::stod(instruction.child_value());
 		}
@@ -87,9 +84,6 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 			}
 		}
 	}
-
-
-
 }
 
 void S100_Symbol::SetReference(std::wstring& value)

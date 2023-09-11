@@ -8,6 +8,11 @@ namespace GM
 
 	}
 
+	Point::Point(const Point& item) : Primitive(item)
+	{
+		this->position = item.position;
+	}
+
 	Point::~Point()
 	{
 

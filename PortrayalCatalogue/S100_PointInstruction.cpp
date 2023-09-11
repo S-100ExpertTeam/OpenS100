@@ -21,7 +21,6 @@ void S100_PointInstruction::GetContents(pugi::xml_node node)
 		return;
 	}
 
-
 	for (auto instruction=node.first_child(); instruction; instruction=instruction.next_sibling()) 
 	{
 		auto instructionName = instruction.name();

@@ -58,7 +58,7 @@ public:
     bool AddSubAttribute(pugi::xml_node& node, GF::ComplexAttributeType* complexAttribute, FeatureCatalogue* fc);
 
     GM::Point* GetPoint(int x, int y);
-    void AddGeometry(GM::Object* geometry);
+    GM::Object* AddGeometry(GM::Object* geometry);
 
     // input xml
     bool WriteInputXML_FeatureTypes(pugi::xml_node& node);

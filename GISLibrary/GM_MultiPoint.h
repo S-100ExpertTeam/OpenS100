@@ -11,6 +11,7 @@ namespace GM
 	{
 	public:
 		MultiPoint();
+		MultiPoint(const MultiPoint& item);
 		virtual ~MultiPoint();
 
 	public:

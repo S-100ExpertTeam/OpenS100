@@ -8,7 +8,7 @@ namespace GM
 		segment.push_back(CurveSegment());
 	}
 
-	Curve::Curve(Curve& item)
+	Curve::Curve(const Curve& item) : OrientableCurve(item)
 	{
 		segment.push_back(CurveSegment());
 		this->boundary = item.boundary;

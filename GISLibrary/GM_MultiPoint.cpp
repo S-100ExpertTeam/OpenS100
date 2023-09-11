@@ -8,6 +8,11 @@ namespace GM
 
 	}
 
+	MultiPoint::MultiPoint(const MultiPoint& item) : Object(item)
+	{
+		this->position = item.position;
+	}
+
 	MultiPoint::~MultiPoint()
 	{
 
