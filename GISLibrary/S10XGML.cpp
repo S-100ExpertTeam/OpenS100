@@ -40,6 +40,8 @@ S10XGML::~S10XGML()
 
 bool S10XGML::Open(CString _filepath)
 {
+	SetFilePath(_filepath);
+
 	std::wstring path = _filepath;
 
 	pugi::xml_document doc;
@@ -486,6 +488,9 @@ GM::Surface* S10XGML::ReadSurface(pugi::xml_node& node)
 
 	// Exterior
 	auto node_exterior = node.child("gml:patches").child("gml:PolygonPatch").child("gml:exterior");
+	auto node_exterior_child = node_exterior.first_child();
+	auto name_node_exterior_child = node_exterior_child.name();
+
 	auto node_exterior_curveMember = node_exterior.child("gml:Ring").child("gml:curveMember");
 
 	auto exterior_href = node_exterior_curveMember.attribute("xlink:href");
@@ -500,7 +505,8 @@ GM::Surface* S10XGML::ReadSurface(pugi::xml_node& node)
 	else {
 		auto node_curve = node_exterior_curveMember.first_child();
 		std::string node_curve_name = node_curve.name();
-		if (!node_curve_name.compare("S100:Curve")) {
+		if (!node_curve_name.compare("S100:Curve") || 
+			!node_curve_name.compare("gml:Curve")) {
 			auto curve = ReadCurve(node_curve);
 			if (curve) {
 				auto addedCurve = AddGeometry(curve);
@@ -509,7 +515,8 @@ GM::Surface* S10XGML::ReadSurface(pugi::xml_node& node)
 				}
 			}
 		}
-		else if (!node_curve_name.compare("S100:CompositeCurve")) {
+		else if (!node_curve_name.compare("S100:CompositeCurve") ||
+			!node_curve_name.compare("gml:CompositeCurve")) {
 			auto compositeCurve = ReadCompositeCurve(node_curve);
 			if (compositeCurve) {
 				auto addedCurve = AddGeometry(compositeCurve);
@@ -518,7 +525,8 @@ GM::Surface* S10XGML::ReadSurface(pugi::xml_node& node)
 				}
 			}
 		}
-		else if (!node_curve_name.compare("S100:OrientableCurve")) {
+		else if (!node_curve_name.compare("S100:OrientableCurve") ||
+			!node_curve_name.compare("gml:OrientableCurve")) {
 			auto orientableCurve = ReadOrientableCurve(node_curve);
 			if (orientableCurve) {
 				auto addedCurve = AddGeometry(orientableCurve);
@@ -665,7 +673,8 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 		auto geomNode = node.first_child();
 		std::string nodeName = geomNode.name();
 
-		if (nodeName.find("pointProperty") != std::string::npos)
+		if ((nodeName.find("pointProperty") != std::string::npos) || 
+			(nodeName.find("S100:pointProperty") != std::string::npos))
 		{
 			auto nodePoint = geomNode.first_child();
 			auto point = ReadPoint(nodePoint);
@@ -677,7 +686,8 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 				}
 			}
 		}
-		else if (nodeName.find("surfaceProperty") != std::string::npos)
+		else if ((nodeName.find("surfaceProperty") != std::string::npos) || 
+			(nodeName.find("S100:surfaceProperty") != std::string::npos))
 		{
 			auto nodeSurface = geomNode.first_child();
 			auto surface = ReadSurface(nodeSurface);
