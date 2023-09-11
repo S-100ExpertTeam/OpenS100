@@ -37,4 +37,8 @@ public:
 	int AddNewCodeNumericCode(std::wstring& code);
 	int GetNumericCode(CString& code);
 	int GetNumericCode(std::wstring& code);
+
+	CodeWithNumericCode* getCodeWithNumericCode(int numericCode);
+	CodeWithNumericCode* getCodeWIthNumericCode(CString code);
+	void setCodeNumericCode(CString code, int numericCode);
 };

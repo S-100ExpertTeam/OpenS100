@@ -6,45 +6,11 @@
 
 R_DSGIR::R_DSGIR()
 {
-	m_atcs = new F_CodeWithNumericCode();
-	m_itcs = new F_CodeWithNumericCode();
-	m_ftcs = new F_CodeWithNumericCode();
-	m_iacs = new F_CodeWithNumericCode();
-	m_facs = new F_CodeWithNumericCode();
-	m_arcs = new F_CodeWithNumericCode();
 }
 
 R_DSGIR::~R_DSGIR()
 {
-	if (m_atcs)
-	{
-		delete m_atcs;
-	}
-
-	if (m_itcs)
-	{
-		delete m_itcs;
-	}
-
-	if (m_ftcs)
-	{
-		delete m_ftcs;
-	}
-
-	if (m_iacs)
-	{
-		delete m_iacs;
-	}
-
-	if (m_facs)
-	{
-		delete m_facs;
-	}
-
-	if (m_arcs)
-	{
-		delete m_arcs;
-	}
+	deleteAll();
 }
 
 #pragma warning(disable:4018)
@@ -404,4 +370,156 @@ int R_DSGIR::GetAssociationRoleCode(CString& value)
 	}
 
 	return m_arcs->GetNumericCode(value);
+}
+
+void R_DSGIR::setAttributeCode(int numericCode, CString code)
+{
+	if (m_atcs) {
+		m_atcs->setCodeNumericCode(code, numericCode);
+	}
+}
+
+void R_DSGIR::setInformationTypeCode(int numericCode, CString code)
+{
+	if(m_itcs) {
+		m_itcs->setCodeNumericCode(code, numericCode);
+	}
+}
+
+void R_DSGIR::setFeatureTypeCode(int numericCode, CString code)
+{
+	if (m_ftcs) {
+		m_ftcs->setCodeNumericCode(code, numericCode);
+	}
+}
+
+void R_DSGIR::setInformationAssociationCode(int numericCode, CString code)
+{
+	if (m_iacs) {
+		m_iacs->setCodeNumericCode(code, numericCode);
+	}
+}
+
+void R_DSGIR::setFeatureAssociationCode(int numericCode, CString code)
+{
+	if (m_facs) {
+		m_facs->setCodeNumericCode(code, numericCode);
+	}
+}
+
+void R_DSGIR::setAssociationRoleCode(int numericCode, CString code)
+{
+	if (m_arcs) {
+		m_arcs->setCodeNumericCode(code, numericCode);
+	}
+}
+
+void R_DSGIR::deleteAll()
+{
+	deleteAttributeCode();
+	deleteInformationTypeCode();
+	deleteFeatureTypeCode();
+	deleteInformationAssociationCode();
+	deleteFeatureAssociationCode();
+	deleteAssociationRoleCode();
+}
+
+void R_DSGIR::deleteAttributeCode()
+{
+	if (m_atcs) {
+		delete m_atcs;
+		m_atcs = nullptr;
+	}
+}
+
+void R_DSGIR::deleteInformationTypeCode()
+{
+	if (m_itcs) {
+		delete m_itcs;
+		m_itcs = nullptr;
+	}
+}
+
+void R_DSGIR::deleteFeatureTypeCode()
+{
+	if (m_ftcs) {
+		delete m_ftcs;
+		m_ftcs = nullptr;
+	}
+}
+
+void R_DSGIR::deleteInformationAssociationCode()
+{
+	if (m_iacs) {
+		delete m_iacs;
+		m_iacs = nullptr;
+	}
+}
+
+void R_DSGIR::deleteFeatureAssociationCode()
+{
+	if (m_facs) {
+		delete m_facs;
+		m_facs = nullptr;
+	}
+}
+
+void R_DSGIR::deleteAssociationRoleCode()
+{
+	if (m_arcs) {
+		delete m_arcs;
+		m_arcs = nullptr;
+	}
+}
+
+void R_DSGIR::init()
+{
+	initAttributeCode();
+	initInformationTypeCode();
+	initFeatureTypeCode();
+	initInformationAssociationCode();
+	initFeatureAssociationCode();
+	initAssociationRoleCode();
+}
+
+void R_DSGIR::initAttributeCode()
+{
+	deleteAttributeCode();
+	
+	m_atcs = new F_CodeWithNumericCode();
+}
+
+void R_DSGIR::initInformationTypeCode()
+{
+	deleteInformationTypeCode();
+
+	m_itcs = new F_CodeWithNumericCode();
+}
+
+void R_DSGIR::initFeatureTypeCode()
+{
+	deleteFeatureTypeCode();
+
+	m_ftcs = new F_CodeWithNumericCode();
+}
+
+void R_DSGIR::initInformationAssociationCode()
+{
+	deleteInformationAssociationCode();
+
+	m_iacs = new F_CodeWithNumericCode();
+}
+
+void R_DSGIR::initFeatureAssociationCode()
+{
+	deleteFeatureAssociationCode();
+
+	m_facs = new F_CodeWithNumericCode();
+}
+
+void R_DSGIR::initAssociationRoleCode()
+{
+	deleteAssociationRoleCode();
+
+	m_arcs = new F_CodeWithNumericCode();
 }

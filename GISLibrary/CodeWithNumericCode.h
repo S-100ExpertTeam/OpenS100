@@ -25,5 +25,8 @@ public:
 	static int GetSize();
 
 	int GetNumericCode();
+	void SetNumericCode(int value);
+
 	std::wstring GetCode();
+	void SetCode(std::wstring value);
 };
