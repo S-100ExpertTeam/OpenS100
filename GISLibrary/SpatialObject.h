@@ -30,6 +30,8 @@ public:
 	virtual void Draw(CDCRenderTarget* pRenderTarget, Scaler *scaler, double offsetX = 0, double offsetY = 0) {};
 	virtual void Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, Scaler *scaler, double offsetX = 0, double offsetY = 0) {};
 
+	virtual int getEPSGNumber() { return 0; }
+
 	void SetLayer(Layer* value);
 	Layer* GetLayer();
 

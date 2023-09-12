@@ -8,7 +8,7 @@ struct KRS_LUA_SCRIPT_REFERENCE_API point
 {
 	point() = default;
 
-	std::string x;
-	std::string y;
+	std::string x = "";
+	std::string y = "";
 	std::optional<std::string> z;
 };

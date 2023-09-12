@@ -861,17 +861,14 @@ int hd_get_feature_complex_attribute_count(std::string id, std::string path, std
 std::vector<std::string>& hd_get_information_type_ids()
 {
 	return s_information_ids;
-	//std::vector<std::string> information_ids1;
-
-	//for (auto information : s_information_nodes)
-	//	information_ids1.push_back(information.first);
-
-	//return information_ids1;
 }
 
 std::string hd_get_information_type_code(std::string id)
 {
 	R_InformationRecord* ir = s_information_nodes[id];
+	if (!ir) {
+		return "";
+	}
 
 	auto i1 = cell->m_dsgir.m_itcs->m_arr.find(ir->m_irid.NITC());
 	if (i1 == cell->m_dsgir.m_itcs->m_arr.end())
@@ -881,7 +878,6 @@ std::string hd_get_information_type_code(std::string id)
 	std::wstring s1 =std::wstring(i1->second->m_code);
 	std::string ret;
 	ret.assign(s1.begin(), s1.end());
-	//i1->second->m_code.ReleaseBuffer();
 
 	return ret;
 }
@@ -902,6 +898,9 @@ std::vector<std::string> hd_get_feature_associated_information_ids(std::string f
 	std::vector<std::string> information_ids1;
 
 	auto feature = s_feature_nodes[feature_id];
+	if (!feature) {
+		return information_ids1;
+	}
 
 	if (feature->m_inas.size() > 0)
 	{
@@ -931,6 +930,9 @@ std::vector<std::string> hd_get_feature_associated_feature_ids(std::string featu
 	std::vector<std::string> feature_ids;
 
 	auto feature = s_feature_nodes[feature_id];
+	if (!feature) {
+		return feature_ids;
+	}
 
 	if (feature->m_inas.size() > 0)
 	{
@@ -948,9 +950,6 @@ std::vector<std::string> hd_get_feature_associated_feature_ids(std::string featu
 			r_asName.assign(asName.begin(), asName.end());
 			r_roleName.assign(roleName.begin(), roleName.end());
 
-			//asitor->second->m_code.ReleaseBuffer();
-			//ritor->second->m_code.ReleaseBuffer();
-
 			if (!role_code.has_value() || r_roleName == role_code.value())
 				feature_ids.push_back(std::to_string(f_inas->m_name.RCID));
 		}
@@ -960,7 +959,6 @@ std::vector<std::string> hd_get_feature_associated_feature_ids(std::string featu
 
 std::vector<std::string> hd_get_spatial_associated_information_ids(std::string spatial_id, std::string association_code, std::optional<std::string> role_code)
 {
-	// spatial type split
 	std::vector<std::string> ret;
 
 	int findOffset = 0;
@@ -976,7 +974,7 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 	if (ret[0] == "Point")
 	{
 		auto spatial = s_spatial_point_nodes[spatial_id];
-		if (spatial->m_inas.size() > 0)
+		if (spatial && spatial->m_inas.size() > 0)
 		{
 			for (auto itorParent = spatial->m_inas.begin(); itorParent != spatial->m_inas.end(); itorParent++)
 			{
@@ -993,9 +991,6 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 				r_asName.assign(asName.begin(), asName.end());
 				r_roleName.assign(roleName.begin(), roleName.end());
 
-				//asitor->second->m_code.ReleaseBuffer();
-				//ritor->second->m_code.ReleaseBuffer();
-
 				if (!role_code.has_value() || r_roleName == role_code.value())
 					information_ids1.push_back(std::to_string(f_inas->m_name.RCID));
 			}
@@ -1004,7 +999,7 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 	else if (ret[0] == "MultiPoint")
 	{
 		auto spatial = s_spatial_mpoint_nodes[spatial_id];
-		if (spatial->m_inas.size() > 0)
+		if (spatial && spatial->m_inas.size() > 0)
 		{
 			for (auto itorParent = spatial->m_inas.begin(); itorParent != spatial->m_inas.end(); itorParent++)
 			{
@@ -1020,9 +1015,6 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 
 				r_asName.assign(asName.begin(), asName.end());
 				r_roleName.assign(roleName.begin(), roleName.end());
-
-				//asitor->second->m_code.ReleaseBuffer();
-				//ritor->second->m_code.ReleaseBuffer();
 
 				if (!role_code.has_value() || r_roleName == role_code.value())
 					information_ids1.push_back(std::to_string(f_inas->m_name.RCID));
@@ -1032,7 +1024,7 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 	else if (ret[0] == "Curve")
 	{
 		auto spatial = s_spatial_curve_nodes[spatial_id];
-		if (spatial->m_inas.size() > 0)
+		if (spatial && spatial->m_inas.size() > 0)
 		{
 			for (auto itorParent = spatial->m_inas.begin(); itorParent != spatial->m_inas.end(); itorParent++)
 			{
@@ -1048,9 +1040,6 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 
 				r_asName.assign(asName.begin(), asName.end());
 				r_roleName.assign(roleName.begin(), roleName.end());
-
-				//asitor->second->m_code.ReleaseBuffer();
-				//ritor->second->m_code.ReleaseBuffer();
 
 				if (!role_code.has_value() || r_roleName == role_code.value())
 					information_ids1.push_back(std::to_string(f_inas->m_name.RCID));
@@ -1062,7 +1051,7 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 	{
 		auto spatial = s_spatial_ccurve_nodes[spatial_id];
 
-		if (spatial->m_inas.size() > 0)
+		if (spatial && spatial->m_inas.size() > 0)
 		{
 			for (auto itorParent = spatial->m_inas.begin(); itorParent != spatial->m_inas.end(); itorParent++)
 			{
@@ -1092,7 +1081,7 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 	{
 		auto spatial = s_spatial_surface_nodes[spatial_id];
 
-		if (spatial->m_inas.size() > 0)
+		if (spatial && spatial->m_inas.size() > 0)
 		{
 			for (auto itorParent = spatial->m_inas.begin(); itorParent != spatial->m_inas.end(); itorParent++)
 			{
@@ -1236,8 +1225,12 @@ static point get_point(C3IL *coordinate)
 point hd_get_point(std::string spatial_id)
 {
 	auto spatial = s_spatial_point_nodes[spatial_id];
-	auto coordinate = spatial->m_c2it;
-	return get_point(coordinate);
+	if (spatial) {
+		auto coordinate = spatial->m_c2it;
+		return get_point(coordinate);
+	}
+	
+	return point();
 }
 
 multipoint hd_get_multipoint(std::string spatial_id)
@@ -1245,13 +1238,15 @@ multipoint hd_get_multipoint(std::string spatial_id)
 	multipoint multipoint;
 	auto spatial = s_spatial_mpoint_nodes[spatial_id];
 
-	for (auto itor = spatial->m_c3il.begin(); itor != spatial->m_c3il.end(); itor++)
-	{
-		F_C3IL *c3il = *itor;
-		for (auto itor = c3il->m_arr.begin(); itor != c3il->m_arr.end(); itor++)
+	if (spatial) {
+		for (auto itor = spatial->m_c3il.begin(); itor != spatial->m_c3il.end(); itor++)
 		{
-			C3IL* c3il = *itor;
-			multipoint.points.push_back(get_point(c3il));
+			F_C3IL* c3il = *itor;
+			for (auto itor = c3il->m_arr.begin(); itor != c3il->m_arr.end(); itor++)
+			{
+				C3IL* c3il = *itor;
+				multipoint.points.push_back(get_point(c3il));
+			}
 		}
 	}
 	return multipoint;
@@ -1264,39 +1259,41 @@ curve hd_get_curve(std::string spatial_id)
 
 	auto spatial = s_spatial_curve_nodes[spatial_id];
 
-	for (auto i = spatial->m_ptas->m_arr.begin(); i != spatial->m_ptas->m_arr.end(); i++)
-	{
-		auto ptas = *i;
-		std::string boundaryType;
-		switch (ptas->m_topi)
+	if (spatial) {
+		for (auto i = spatial->m_ptas->m_arr.begin(); i != spatial->m_ptas->m_arr.end(); i++)
 		{
-		case 1:
-			boundaryType = "Begin";
-			break;
-		case 2:
-			boundaryType = "End";
-			break;
-		}
-		if (boundaryType == "Begin")
-			curve.start_point = get_spatial_association(ptas); 
-		else
-			curve.end_point = get_spatial_association(ptas);
-	}
-
-	for (auto itorParent = spatial->m_c2il.begin(); itorParent != spatial->m_c2il.end(); itorParent++)
-	{
-		F_C2IL* c2il = *itorParent;
-
-		curve_segment curve_segment;
-
-		curve_segment.interpolation = "Loxodromic";
-		for (auto itor = c2il->m_arr.begin(); itor != c2il->m_arr.end(); itor++)
-		{
-			C2IL* ic2d = *itor;
-			curve_segment.control_points.push_back({ std::to_string(ic2d->m_xcoo), std::to_string(ic2d->m_ycoo) });
+			auto ptas = *i;
+			std::string boundaryType;
+			switch (ptas->m_topi)
+			{
+			case 1:
+				boundaryType = "Begin";
+				break;
+			case 2:
+				boundaryType = "End";
+				break;
+			}
+			if (boundaryType == "Begin")
+				curve.start_point = get_spatial_association(ptas);
+			else
+				curve.end_point = get_spatial_association(ptas);
 		}
 
-		curve.segments.push_back(curve_segment);
+		for (auto itorParent = spatial->m_c2il.begin(); itorParent != spatial->m_c2il.end(); itorParent++)
+		{
+			F_C2IL* c2il = *itorParent;
+
+			curve_segment curve_segment;
+
+			curve_segment.interpolation = "Loxodromic";
+			for (auto itor = c2il->m_arr.begin(); itor != c2il->m_arr.end(); itor++)
+			{
+				C2IL* ic2d = *itor;
+				curve_segment.control_points.push_back({ std::to_string(ic2d->m_xcoo), std::to_string(ic2d->m_ycoo) });
+			}
+
+			curve.segments.push_back(curve_segment);
+		}
 	}
 	return curve;
 }
@@ -1308,17 +1305,19 @@ composite_curve hd_get_composite_curve(std::string spatial_id)
 
 	auto spatial = s_spatial_ccurve_nodes[spatial_id];
 
-	for (auto itorParent = spatial->m_cuco.begin(); itorParent != spatial->m_cuco.end(); itorParent++)
-	{
-		F_CUCO* cucoParent = *itorParent;
-
-		std::string spatialType;
-
-		for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
+	if (spatial) {
+		for (auto itorParent = spatial->m_cuco.begin(); itorParent != spatial->m_cuco.end(); itorParent++)
 		{
-			CUCO* cuco = *itor;
+			F_CUCO* cucoParent = *itorParent;
 
-			composite_curve.curve_associations.push_back(get_spatial_association(cuco));
+			std::string spatialType;
+
+			for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
+			{
+				CUCO* cuco = *itor;
+
+				composite_curve.curve_associations.push_back(get_spatial_association(cuco));
+			}
 		}
 	}
 	return composite_curve;
@@ -1330,34 +1329,36 @@ surface hd_get_surface(std::string spatial_id)
 
 	auto spatial = s_spatial_surface_nodes[spatial_id];
 
-	for (auto itorParent = spatial->m_rias.begin(); itorParent != spatial->m_rias.end(); itorParent++)
-	{
-		F_RIAS* riasParent = *itorParent;
-		for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
+	if (spatial) {
+		for (auto itorParent = spatial->m_rias.begin(); itorParent != spatial->m_rias.end(); itorParent++)
 		{
-			RIAS* rias = *itor;
-			std::string usage;
-
-			switch (rias->m_usag)
+			F_RIAS* riasParent = *itorParent;
+			for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
 			{
-			case 1:
-				usage = "Outer";
-				break;
-			case 2:
-				usage = "Inner";
-				break;
-			}
+				RIAS* rias = *itor;
+				std::string usage;
 
-			if (usage == "Outer")
-			{
-				surface.exterior_ring = get_spatial_association(rias);
-			}
-			else
-			{
-				if (!surface.interior_rings.has_value())
-					surface.interior_rings = std::vector<spatial_association>();
+				switch (rias->m_usag)
+				{
+				case 1:
+					usage = "Outer";
+					break;
+				case 2:
+					usage = "Inner";
+					break;
+				}
 
-				surface.interior_rings.value().push_back(get_spatial_association(rias));
+				if (usage == "Outer")
+				{
+					surface.exterior_ring = get_spatial_association(rias);
+				}
+				else
+				{
+					if (!surface.interior_rings.has_value())
+						surface.interior_rings = std::vector<spatial_association>();
+
+					surface.interior_rings.value().push_back(get_spatial_association(rias));
+				}
 			}
 		}
 	}
