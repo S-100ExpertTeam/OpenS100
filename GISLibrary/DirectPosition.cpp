@@ -10,6 +10,11 @@ DirectPosition::DirectPosition()
 	coordinates.push_back(0);
 }
 
+DirectPosition::DirectPosition(const DirectPosition& item)
+{
+	this->coordinates = item.coordinates;
+}
+
 DirectPosition::DirectPosition(double x, double y)
 {
 	coordinates.push_back(x * Factor);

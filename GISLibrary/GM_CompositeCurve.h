@@ -11,7 +11,7 @@ namespace GM
 	{
 	public:
 		CompositeCurve();
-		CompositeCurve(CompositeCurve& item);
+		CompositeCurve(const CompositeCurve& item);
 		virtual ~CompositeCurve();
 
 	public:

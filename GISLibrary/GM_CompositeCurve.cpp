@@ -8,14 +8,26 @@ namespace GM
 
 	}
 
-	CompositeCurve::CompositeCurve(CompositeCurve& item)
+	CompositeCurve::CompositeCurve(const CompositeCurve& item) : OrientableCurve(item)
 	{
-		this->component = item.component;
+		for (auto i = item.component.begin(); i != item.component.end(); i++) {
+			if (typeid(OrientableCurve) == typeid(**i)) {
+				component.push_back(new OrientableCurve((OrientableCurve&)**i));
+			}
+			else if (typeid(Curve) == typeid(**i)) {
+				component.push_back(new Curve((Curve&)**i));
+			}
+			else if (typeid(CompositeCurve) == typeid(**i)) {
+				component.push_back(new CompositeCurve((CompositeCurve&)**i));
+			}
+		}
 	}
 
 	CompositeCurve::~CompositeCurve()
 	{
-		
+		//for (auto i = component.begin(); i != component.end(); i++) {
+		//	delete (*i);
+		//}
 	}
 
 	GeometryType CompositeCurve::GetType()

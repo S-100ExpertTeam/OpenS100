@@ -12,8 +12,8 @@ namespace GM
 	{
 	public:
 		Curve();
-		Curve(Curve& item);
-		~Curve();
+		Curve(const Curve& item);
+		virtual ~Curve();
 
 	public:
 		CurveBoundary boundary;

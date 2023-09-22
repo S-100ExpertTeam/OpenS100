@@ -15,4 +15,5 @@ public:
 	static void CopySelectedFeatureToNewLayer();
 	static void OffFeature();
 	static void OpenUpdate();
+	static void SetCodeNumericCode();
 };

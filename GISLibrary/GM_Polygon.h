@@ -6,11 +6,11 @@
 namespace GM
 {
 	class Polygon : 
-		public SurfacePatch,
-		public PugixmlElement
+		public SurfacePatch
 	{
 	public:
 		Polygon();
+		Polygon(const Polygon& item);
 		virtual ~Polygon();
 
 	public:

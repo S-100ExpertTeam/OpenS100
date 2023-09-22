@@ -64,6 +64,9 @@
     <None Include="GISLibrary.def">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="S100SpatialObjectType.h">
+      <Filter>S100</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GISLibrary.cpp">
@@ -737,6 +740,9 @@
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_SurfaceBoundary.cpp">
+      <Filter>S100\GM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

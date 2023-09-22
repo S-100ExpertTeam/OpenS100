@@ -136,3 +136,15 @@ void TestGISLibrary::OpenUpdate()
 	}
 	return;
 }
+
+void TestGISLibrary::SetCodeNumericCode()
+{
+	S101Cell cell;
+	cell.Read8211(L"..\\SampleData\\101KR004X0000.000");
+	auto dsgir = cell.GetDatasetGeneralInformationRecord();
+	
+	auto oldNumericCode = dsgir->GetFeatureTypeCode(CString(L"LandArea"));
+	dsgir->initFeatureTypeCode();
+	dsgir->setFeatureTypeCode(100, L"LandArea");
+	auto newNemericCode = dsgir->GetFeatureTypeCode(CString(L"LandArea"));
+}

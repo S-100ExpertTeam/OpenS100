@@ -6,5 +6,8 @@ namespace GM
 {
 	class Primitive : public Object
 	{
+	public:
+		Primitive() {};
+		virtual ~Primitive() {};
 	};
 }

@@ -2,6 +2,7 @@
 
 #include "S100_GF.h"
 #include "SpatialObject.h"
+#include "S100SpatialObjectType.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 
@@ -22,9 +23,12 @@ public:
 	virtual ~S100SpatialObject();
 
 public:
+	S100SpatialObjectType type = S100SpatialObjectType::S100SpatialObject;
 	PCOutputSchemaManager* pcManager = nullptr;
 
 public:
+	S100SpatialObjectType getS100SpatialObjectType();
+
 	void InitDrawingInstruction();
 	PCOutputSchemaManager* GetPCOutputManager();
 

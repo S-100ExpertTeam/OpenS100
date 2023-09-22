@@ -8,6 +8,7 @@
 
 S100H5::S100H5()
 {
+	type = S100SpatialObjectType::S100H5;
 	m_FileType = S100_FileType::FILE_S_100_GRID_H5;
 }
 
@@ -26,7 +27,7 @@ bool S100H5::Open(CString _filepath)
 	SetFilePath(_filepath);
 	SetFileName(LibMFCUtil::GetFileName(_filepath));
 
-	auto path = LibMFCUtil::WStringToString(std::wstring(_filepath));
+	auto path = pugi::as_utf8(_filepath);
 
 	auto fileID = H5Fopen(path.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
 	if (fileID < 0)

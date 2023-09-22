@@ -78,11 +78,13 @@
 
 S101Cell::S101Cell() : S100SpatialObject()
 {
+	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 }
 
 S101Cell::S101Cell(FeatureCatalogue* fc) : S100SpatialObject()
 {
+	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 	SetAllNumericCode(fc);
 }
@@ -443,9 +445,9 @@ bool S101Cell::OpenBy000(CString path)
 
 	if (Read8211(std::wstring(path))) {
 		MakeFullSpatialData();
-
 		CalcMBR();
 		Check();
+
 		return true;
 	}
 

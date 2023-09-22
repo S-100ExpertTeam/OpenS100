@@ -17,12 +17,12 @@ public:
 public:
 	F_DSID m_dsid;
 	F_DSSI m_dssi;
-	F_CodeWithNumericCode *m_atcs = nullptr;
-	F_CodeWithNumericCode *m_itcs = nullptr;
-	F_CodeWithNumericCode *m_ftcs = nullptr;
-	F_CodeWithNumericCode *m_iacs = nullptr;
-	F_CodeWithNumericCode *m_facs = nullptr;
-	F_CodeWithNumericCode *m_arcs = nullptr;
+	F_CodeWithNumericCode *m_atcs = new F_CodeWithNumericCode();
+	F_CodeWithNumericCode *m_itcs = new F_CodeWithNumericCode();
+	F_CodeWithNumericCode *m_ftcs = new F_CodeWithNumericCode();
+	F_CodeWithNumericCode *m_iacs = new F_CodeWithNumericCode();
+	F_CodeWithNumericCode *m_facs = new F_CodeWithNumericCode();
+	F_CodeWithNumericCode *m_arcs = new F_CodeWithNumericCode();
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
@@ -52,4 +52,28 @@ public:
 
 	int GetAssociationRoleCode(std::wstring& value);
 	int GetAssociationRoleCode(CString& value);
+
+	void setAttributeCode(int numericCode, CString code);
+	void setInformationTypeCode(int numericCode, CString code);
+	void setFeatureTypeCode(int numericCode, CString code);
+	void setInformationAssociationCode(int numericCode, CString code);
+	void setFeatureAssociationCode(int numericCode, CString code);
+	void setAssociationRoleCode(int numericCode, CString code);
+
+	void init();
+	void initAttributeCode();
+	void initInformationTypeCode();
+	void initFeatureTypeCode();
+	void initInformationAssociationCode();
+	void initFeatureAssociationCode();
+	void initAssociationRoleCode();
+
+private:
+	void deleteAll();
+	void deleteAttributeCode();
+	void deleteInformationTypeCode();
+	void deleteFeatureTypeCode();
+	void deleteInformationAssociationCode();
+	void deleteFeatureAssociationCode();
+	void deleteAssociationRoleCode();
 };

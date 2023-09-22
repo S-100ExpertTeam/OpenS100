@@ -22,7 +22,17 @@ int CodeWithNumericCode::GetNumericCode()
 	return m_nmcd;
 }
 
+void CodeWithNumericCode::SetNumericCode(int value)
+{
+	this->m_nmcd = value;
+}
+
 std::wstring CodeWithNumericCode::GetCode()
 {
 	return std::wstring(m_code);
+}
+
+void CodeWithNumericCode::SetCode(std::wstring value)
+{
+	this->m_code = value.c_str();
 }

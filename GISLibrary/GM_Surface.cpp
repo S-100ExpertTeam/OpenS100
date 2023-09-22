@@ -8,7 +8,7 @@ namespace GM
 
 	}
 
-	Surface::Surface(Surface& item)
+	Surface::Surface(const Surface& item) : OrientableSurface(item)
 	{
 		this->patch = item.patch;
 	}

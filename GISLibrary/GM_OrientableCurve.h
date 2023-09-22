@@ -12,6 +12,7 @@ namespace GM
 	{
 	public:
 		OrientableCurve();
+		OrientableCurve(const OrientableCurve& item);
 		OrientableCurve(std::string baseCurveID);
 		virtual ~OrientableCurve();
 
@@ -20,6 +21,8 @@ namespace GM
 		// false : -
 		bool orientation = false; 
 		std::string baseCurveID;
+
+	private:
 		OrientableCurve* baseCurve = nullptr; // released by dataset, not used
 
 	public:
