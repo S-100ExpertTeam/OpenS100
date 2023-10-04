@@ -9,6 +9,21 @@ namespace GF
 
 	}
 
+	ObjectType::ObjectType(const ObjectType& other)
+		: NamedType(other)
+	{
+		id = other.id;
+		informationAssociations = other.informationAssociations;
+		
+		int cnt = other.GetAttributeCount();
+		for (int i = 0; i < cnt; i++) {
+			auto attribute = other.GetAttribute(i);
+
+			auto clonedAttribute = attribute->clone();
+			attributes.push_back(clonedAttribute);
+		}
+	}
+
 	ObjectType::~ObjectType()
 	{
 		for (auto i = attributes.begin(); i != attributes.end(); i++)
@@ -16,16 +31,6 @@ namespace GF
 			delete (*i);
 		}
 	}
-
-	//AttributeType* ObjectType::GetAttribute(int index)
-	//{
-	//	//if (index >= 0 && GetAttributeCount())
-	//	//{
-	//	//	return attributes.at(index);
-	//	//}
-
-	//	return nullptr;
-	//}
 
 	std::string ObjectType::GetID() 
 	{
@@ -58,12 +63,12 @@ namespace GF
 		return "";
 	}
 
-	int ObjectType::GetAttributeCount() 
+	int ObjectType::GetAttributeCount() const
 	{
 		return attributes.size();
 	}
 
-	ThematicAttributeType* ObjectType::GetAttribute(int index)
+	ThematicAttributeType* ObjectType::GetAttribute(int index) const
 	{
 		if (index >= 0 && index < GetAttributeCount())
 		{
@@ -123,5 +128,10 @@ namespace GF
 		ca->SetCode(code);
 		attributes.push_back(ca);
 		return ca;
+	}
+
+	void ObjectType::AddAttribute(ThematicAttributeType* item)
+	{
+		attributes.push_back(item);
 	}
 }

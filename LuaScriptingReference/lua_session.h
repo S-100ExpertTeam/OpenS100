@@ -140,8 +140,6 @@ private:
 			return std::get<T>(value);
 		T temp = T();
 		return temp;
-
-		exit(5);
 	}
 
 	void specialize();

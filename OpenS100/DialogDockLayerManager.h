@@ -24,13 +24,15 @@ public:
 	// Dialog Data
 	enum { IDD = IDD_DIALOG_DOCK_LAYERMANEGER };
 
-	//CMFCPropertyGridCtrl m_wndPropList;
 	CFont m_fntPropList;
 
 	CDWordArray m_anDragIndexes; // Remember the item you chose.
 	std::vector<CString> SelectdItem;
 
 	bool isclickLayerManager = false; //Layer Manager Property Click Limit
+
+	CListCtrl listCtrlLayers;
+	CMFCPropertyGridCtrl* propertyGridLayer;
 
 public:
 	void AdjustLayout();
@@ -61,7 +63,5 @@ protected:
 	afx_msg void OnSizing(UINT fwSide, LPRECT pRect);
 	afx_msg void OnButtonDelete();
 public:
-	CListCtrl listCtrlLayers;
-	CMFCPropertyGridCtrl propertyGridLayer;
 	afx_msg void OnItemchangedListLm(NMHDR* pNMHDR, LRESULT* pResult);
 };

@@ -10,10 +10,11 @@ class F_MASK : Field
 {
 public:
 	F_MASK();
+	F_MASK(const F_MASK& other);
 	virtual ~F_MASK();
 
 public:
-	std::list<MASK*> listMask;
+	std::vector<MASK*> listMask;
 
 private:
 	// Key : RCNM + RCID
@@ -28,4 +29,7 @@ public:
 	void AddMask(MASK* mask);
 	void DeleteMask(RecordName recordName);
 	MASK* GetMask(RecordName recordName);
+
+	int getCount() const;
+	MASK* getMASKbyIndex(int index) const;
 };

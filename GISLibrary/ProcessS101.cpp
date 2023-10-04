@@ -873,7 +873,6 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 	theInstance.m_lua_session->register_function("HostSpatialGetAssociatedFeatureIDs", HostSpatialGetAssociatedFeatureIDs);
 	theInstance.m_lua_session->register_function("HostInformationTypeGetSimpleAttribute", HostInformationTypeGetSimpleAttribute);
 	theInstance.m_lua_session->register_function("HostInformationTypeGetComplexAttributeCount", HostInformationTypeGetComplexAttributeCount);
-
 	theInstance.m_lua_session->register_function("HostGetFeatureTypeCodes", HostGetFeatureTypeCodes);
 	theInstance.m_lua_session->register_function("HostGetInformationTypeCodes", HostGetInformationTypeCodes);
 	theInstance.m_lua_session->register_function("HostGetSimpleAttributeTypeCodes", HostGetSimpleAttributeTypeCodes);
@@ -885,11 +884,8 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 	theInstance.m_lua_session->register_function("HostGetInformationTypeInfo", HostGetInformationTypeInfo);
 	theInstance.m_lua_session->register_function("HostGetSimpleAttributeTypeInfo", HostGetSimpleAttributeTypeInfo);
 	theInstance.m_lua_session->register_function("HostGetComplexAttributeTypeInfo", HostGetComplexAttributeTypeInfo);
-
 	theInstance.m_lua_session->register_function("HostSpatialRelate", HostSpatialRelate);
-
 	theInstance.m_lua_session->register_function("HostDebuggerEntry", HostDebuggerEntry);
-
 	theInstance.m_lua_session->register_function("HostPortrayalEmit", HostPortrayalEmit);
 
 	// Extract rules path from top level rule file name

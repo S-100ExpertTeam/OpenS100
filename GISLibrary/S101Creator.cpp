@@ -137,6 +137,18 @@ R_FeatureRecord* S101Creator::AddFeature(std::wstring code)
 	return nullptr;
 }
 
+R_FeatureRecord* S101Creator::AddFeature(R_FeatureRecord* feature)
+{
+	if (feature) {
+		auto newFeatureRecord = new R_FeatureRecord(*feature);
+
+		auto newRecordName = NewFeatureRecordName();
+		newFeatureRecord->SetRCID(newRecordName.RCID);
+	}
+
+	return feature;
+}
+
 R_InformationRecord* S101Creator::AddInformation(std::string code)
 {
 	auto wcode = pugi::as_wide(code);
@@ -520,94 +532,94 @@ SGeometry* S101Creator::SetGeometry(R_FeatureRecord* feature, SGeometryType type
 
 SGeometry* S101Creator::SetPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size)
 {
-	if (feature->m_geometry == nullptr)
+	if (feature->geometry == nullptr)
 	{
-		feature->m_geometry = new SPoint();
+		feature->geometry = new SPoint();
 	}
 
-	feature->m_geometry->ImportFromWkb(value, size);
+	feature->geometry->ImportFromWkb(value, size);
 	
-	auto geometry = (SPoint*)feature->m_geometry;
+	auto geometry = (SPoint*)feature->geometry;
 	
 	auto vectorRecord = ConvertInsertVectorRecord(geometry);
 
 	feature->SetVectorRecord(vectorRecord);
 
-	return feature->m_geometry;
+	return feature->geometry;
 }
 
 SGeometry* S101Creator::SetMultiPointGeometry(R_FeatureRecord* feature, unsigned char* value, int size)
 {
-	if (feature->m_geometry == nullptr)
+	if (feature->geometry == nullptr)
 	{
-		feature->m_geometry = new SMultiPoint();
+		feature->geometry = new SMultiPoint();
 	}
 
-	feature->m_geometry->ImportFromWkb(value, size);
+	feature->geometry->ImportFromWkb(value, size);
 
-	auto geometry = (SMultiPoint*)feature->m_geometry;
+	auto geometry = (SMultiPoint*)feature->geometry;
 
 	auto vectorRecord = ConvertInsertVectorRecord(geometry);
 
 	feature->SetVectorRecord(vectorRecord);
 
-	return feature->m_geometry;
+	return feature->geometry;
 }
 
 SGeometry* S101Creator::SetCurveGeometry(R_FeatureRecord* feature, unsigned char* value, int size)
 {
-	if (feature->m_geometry == nullptr)
+	if (feature->geometry == nullptr)
 	{
-		feature->m_geometry = new SCurve();
+		feature->geometry = new SCurve();
 	}
 
-	feature->m_geometry->ImportFromWkb(value, size);
+	feature->geometry->ImportFromWkb(value, size);
 
-	auto geometry = (SCurve*)feature->m_geometry;
+	auto geometry = (SCurve*)feature->geometry;
 
 	auto vectorRecord = ConvertInsertVectorRecord(geometry);
 
 	feature->SetVectorRecord(vectorRecord);
 
-	((SCurve*)feature->m_geometry)->SetRCID(vectorRecord->GetRCID());
+	((SCurve*)feature->geometry)->SetRCID(vectorRecord->GetRCID());
 
-	return feature->m_geometry;
+	return feature->geometry;
 }
 
 SGeometry* S101Creator::SetCompositeCurveGeometry(R_FeatureRecord* feature, unsigned char* value, int size)
 {
-	if (feature->m_geometry == nullptr)
+	if (feature->geometry == nullptr)
 	{
-		feature->m_geometry = new SCompositeCurve();
+		feature->geometry = new SCompositeCurve();
 	}
 
-	feature->m_geometry->ImportFromWkb(value, size);
+	feature->geometry->ImportFromWkb(value, size);
 
-	auto geometry = (SCompositeCurve*)feature->m_geometry;
+	auto geometry = (SCompositeCurve*)feature->geometry;
 
 	auto vectorRecord = ConvertInsertVectorRecord(geometry);
 
 	feature->SetVectorRecord(vectorRecord);
 
-	return feature->m_geometry;
+	return feature->geometry;
 }
 
 SGeometry* S101Creator::SetSurfaceGeometry(R_FeatureRecord* feature, unsigned char* value, int size)
 {
-	if (feature->m_geometry == nullptr)
+	if (feature->geometry == nullptr)
 	{
-		feature->m_geometry = new SSurface();
+		feature->geometry = new SSurface();
 	}
 
-	feature->m_geometry->ImportFromWkb(value, size);
+	feature->geometry->ImportFromWkb(value, size);
 
-	auto geometry = (SSurface*)feature->m_geometry;
+	auto geometry = (SSurface*)feature->geometry;
 
 	auto vectorRecord = ConvertInsertVectorRecord(geometry);
 
 	feature->SetVectorRecord(vectorRecord);
 
-	return feature->m_geometry;
+	return feature->geometry;
 }
 
 RecordName S101Creator::NewFeatureRecordName()

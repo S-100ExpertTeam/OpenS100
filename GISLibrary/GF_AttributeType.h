@@ -16,9 +16,6 @@ namespace GF
 		~AttributeType();
 
 	public:
-		//std::string valueType;
-		//std::string domainOfValues;
-		//Multiplicity multiplicity;
 
 	public:
 		virtual bool IsSimple() { return false; }

@@ -6,7 +6,6 @@
 #include "F_ATTR.h"
 #include "F_INAS.h"
 #include "ATTR.h"
-#include "FASC.h"
 #include "MASK.h"
 #include "SPAS.h"
 #include "DRDirectoryInfo.h"
@@ -24,6 +23,13 @@
 
 R_FeatureRecord::R_FeatureRecord(void)
 {
+}
+
+R_FeatureRecord::R_FeatureRecord(const R_FeatureRecord& other)
+	: Record(other),
+	GF::FeatureType(other)
+{
+
 }
 
 R_FeatureRecord::~R_FeatureRecord(void)
@@ -63,12 +69,12 @@ R_FeatureRecord::~R_FeatureRecord(void)
 	}
 	m_mask.clear();
 
-	if (m_geometry)
-	{
-		m_geometry->Release();
-		delete m_geometry;
-		m_geometry = nullptr;
-	}
+	//if (m_geometry)
+	//{
+	//	m_geometry->Release();
+	//	delete m_geometry;
+	//	m_geometry = nullptr;
+	//}
 }
 
 #pragma warning(disable:4018)
@@ -129,7 +135,7 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		else if (strcmp(dir->GetDirectory(i)->tag, "FASC") == 0)
 		{
 			F_FASC *fasc = new F_FASC();
-			cnt = (dir->GetDirectory(i)->length - 1) / FASC::GetSize();
+			cnt = (dir->GetDirectory(i)->length - 1) / ATTR::GetOffsetToATVL();
 			fasc->ReadField(buf, cnt);
 			m_fasc.push_back(fasc);
 		}
@@ -259,19 +265,19 @@ RecordName R_FeatureRecord::GetRecordName()
 
 void R_FeatureRecord::Draw(HDC &hdc, Scaler *scaler, double offset)
 {
-	if (m_geometry != NULL)
+	if (geometry != NULL)
 	{
-		m_geometry->DrawGeometry(hdc, scaler, offset);
-		m_geometry->DrawTextInfo(hdc, scaler, offset);
+		geometry->DrawGeometry(hdc, scaler, offset);
+		geometry->DrawTextInfo(hdc, scaler, offset);
 	}
 }
 
 MBR R_FeatureRecord::GetMBR()
 {
-	if (!m_geometry)
+	if (!geometry)
 		return MBR(0, 0, 0, 0);
 
-	return m_geometry->m_mbr;
+	return geometry->m_mbr;
 }
 
 int R_FeatureRecord::GetRCID()
@@ -670,11 +676,6 @@ SpatialPrimitiveType R_FeatureRecord::GetSpatialPrimitiveType()
 	}
 
 	return SpatialPrimitiveType::none;
-}
-
-SGeometry* R_FeatureRecord::GetGeometry()
-{
-	return m_geometry;
 }
 
 GM::Object* R_FeatureRecord::GetGMGeometry()

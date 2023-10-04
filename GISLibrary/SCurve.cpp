@@ -2,6 +2,7 @@
 #include "SCurve.h"
 #include "SPoint.h"
 #include "SPoint.h"
+#include "GISLibrary.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
@@ -12,6 +13,22 @@
 SCurve::SCurve() 
 {
 	
+}
+
+SCurve::SCurve(const SCurve& other)
+	: SAbstractCurve(other)
+{
+	m_numPoints = other.m_numPoints;
+
+	m_pPoints = new SPoint[getNumPoint()];
+	for (int i = 0; i < m_numPoints; i++) {
+		m_pPoints[i] = other.m_pPoints[i];
+	}
+
+	m_masking = other.m_masking;
+	suppress = other.suppress;
+
+	CreateD2Geometry(gisLib->D2.Factory());
 }
 
 SCurve::~SCurve()
@@ -32,12 +49,12 @@ int SCurve::GetRCID()
 	return std::stoi(GetID());
 }
 
-int SCurve::GetNumPoints()
+int SCurve::GetNumPoints() const
 {
 	return m_numPoints;
 }
 
-int SCurve::getNumPoint()
+int SCurve::getNumPoint() const
 {
 	return GetNumPoints();
 }
@@ -358,4 +375,9 @@ bool SCurve::isDraw()
 	}
 
 	return false;
+}
+
+SAbstractCurve* SCurve::clone()
+{
+	return new SCurve(*this);
 }

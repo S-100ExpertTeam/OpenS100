@@ -17,11 +17,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Neutral (Default) resources
+// 중립(기본값) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
 LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
-#pragma code_page(1252)
+#pragma code_page(949)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -546,8 +546,6 @@ END
 
 IDC_CUR_GRAB            CURSOR                  "POINTER.cur"
 
-IDC_CUR_PEN             CURSOR                  "res\\cursor1.cur"
-
 IDC_CURSOR_ZOOM_AREA    CURSOR                  "res\\cursor2.cur"
 
 
@@ -746,12 +744,25 @@ BEGIN
     IDS_FIND_TAB            "Find"
 END
 
-#endif    // Neutral (Default) resources
+STRINGTABLE
+BEGIN
+    T1                      "Open a file"
+    T2                      "Unload selected file"
+    T3                      "Zoom in"
+    T4                      "Zoom out"
+    T5                      "Zoom to area"
+    T6                      "Fit the screen to selected file"
+    T7                      "List of features have not a geometry."
+    T8                      "List of information types"
+    T9                      "Setting"
+END
+
+#endif    // 중립(기본값) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
+// 영어(미국) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
@@ -804,7 +815,7 @@ BEGIN
     0
 END
 
-#endif    // English (United States) resources
+#endif    // 영어(미국) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -818,13 +829,13 @@ END
 #define _AFX_NO_TRACKER_RESOURCES
 #define _AFX_NO_PROPERTY_RESOURCES
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
-LANGUAGE 9, 1
-#include "res\OpenS100.rc2" // non-Microsoft Visual C++ edited resources
-#include "afxres.rc"  // Standard components
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
+LANGUAGE 18, 1
+#include "res\OpenS100.rc2"  
+#include "afxres.rc"          
+#include "afxprint.rc"        
 #if !defined(_AFXDLL)
-#include "afxprint.rc" // printing/print preview resources
-#include "afxribbon.rc" // MFC ribbon and control bar resources
+#include "afxribbon.rc"       
 #endif
 #endif
 

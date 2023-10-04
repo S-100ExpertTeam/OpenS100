@@ -27,8 +27,8 @@ public:
 	FeatureCatalogue* getFC(std::string productId = "S-101") const;
 	PortrayalCatalogue* getPC(std::string productId = "S-101") const;
 
-	FeatureCatalogue* getFC(int productId = 101) const;
-	PortrayalCatalogue* getPC(int productId = 101) const;
+	FeatureCatalogue* getFC(int productId) const;
+	PortrayalCatalogue* getPC(int productId) const;
 
 	void ChangeColorPallete(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 	void ChangeColorPallete(std::wstring paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);

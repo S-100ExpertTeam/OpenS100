@@ -18,7 +18,7 @@ namespace GF
 		//std::vector<ThematicAttributeType*> attributes;
 
 	public:
-		//virtual int GetAttributeCount();
+		virtual int GetAttributeCount();
 
 		//virtual ThematicAttributeType* GetAttribute(int index);
 

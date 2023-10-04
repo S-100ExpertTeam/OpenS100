@@ -10,6 +10,7 @@ class F_INAS : Field
 {
 public:
 	F_INAS();
+	F_INAS(const F_INAS& other);
 	virtual ~F_INAS();
 	/*
 	* Referenced Record name/identifier
@@ -21,13 +22,13 @@ public:
 	* Format		: b12
 	* Description	: Record name of the referenced record
 	*/
-	int m_niac;
+	int m_niac = 0;
 	/*
 	* Numeric AssociationRole code
 	* Format		: b12
 	* Description	: Record name of the referenced record
 	*/
-	int m_narc;
+	int m_narc = 0;
 	/*
 	* Information Association Update Instruction
 	* Format		: b11m 
@@ -35,12 +36,12 @@ public:
 	* {2} - Delete
 	* {3} - Modify
 	*/
-	int m_iuin;
+	int m_iuin = 0;
 
 	/*
 	* Attribute Array
 	*/
-	std::list<ATTR*> m_arr;
+	std::vector<ATTR*> m_arr;
 public:
 	static int GetSize();
 
@@ -51,5 +52,9 @@ public:
 	int GetFieldLength();
 
 	std::vector<ATTR*> GetAllAttributes();
+
+	int getATTRCount() const;
+	ATTR* getATTR(int index) const;
+	void addATTR(ATTR* value);
 };
 

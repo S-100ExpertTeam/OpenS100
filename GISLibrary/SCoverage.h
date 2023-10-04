@@ -7,6 +7,7 @@ class SCoverage :
 {
 public:
 	SCoverage();
+	SCoverage(const SCoverage& other);
 	virtual ~SCoverage();
 
 public:

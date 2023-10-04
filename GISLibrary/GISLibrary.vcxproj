@@ -265,7 +265,6 @@
     <ClCompile Include="DirectPosition.cpp" />
     <ClCompile Include="DrawingCommand.cpp" />
     <ClCompile Include="DrawingSet.cpp" />
-    <ClCompile Include="FASC.cpp" />
     <ClCompile Include="FC2D.cpp" />
     <ClCompile Include="FC3D.cpp" />
     <ClCompile Include="F_C2FL.cpp" />
@@ -543,7 +542,6 @@
     <ClInclude Include="DRDirectory.h" />
     <ClInclude Include="Enum_RCNM.h" />
     <ClInclude Include="Enum_S100_FileType.h" />
-    <ClInclude Include="FASC.h" />
     <ClInclude Include="FC2D.h" />
     <ClInclude Include="FC3D.h" />
     <ClInclude Include="F_C2FL.h" />

@@ -10,8 +10,6 @@ namespace GF
 		~PropertyType();
 
 	public:
-		//std::string memberName;
-		//std::string definition;
 		std::string code;
 
 	public:
