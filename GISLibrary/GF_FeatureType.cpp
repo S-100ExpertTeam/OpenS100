@@ -13,6 +13,13 @@ namespace GF
 	FeatureType::~FeatureType()
 	{
 		delete spatial;
+
+		if (geometry)
+		{
+			geometry->Release();
+			delete geometry;
+			geometry = nullptr;
+		}
 	}
 
 	//int FeatureType::GetAttributeCount()

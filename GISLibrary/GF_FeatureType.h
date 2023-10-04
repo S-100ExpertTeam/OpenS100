@@ -21,7 +21,7 @@ namespace GF
 	{
 	public:
 		FeatureType();
-		~FeatureType();
+		virtual ~FeatureType();
 
 	public:
 		//std::vector<ThematicAttributeType*> attributes;
