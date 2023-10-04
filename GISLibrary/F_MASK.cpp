@@ -9,11 +9,20 @@ F_MASK::F_MASK(void)
 
 }
 
+F_MASK::F_MASK(const F_MASK& other)
+{
+	int cnt = other.getCount();
+	for (int i = 0; i < cnt; i++) {
+		auto item = new MASK(*other.getMASKbyIndex(i));
+		AddMask(item);
+	}
+}
+
 F_MASK::~F_MASK(void)
 {
-	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
+	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{
-		MASK *mask = itor->second;
+		MASK *mask = i->second;
 		delete mask;
 	}
 }
@@ -100,4 +109,18 @@ MASK* F_MASK::GetMask(RecordName recordName)
 	}
 
 	return nullptr;
+}
+
+int F_MASK::getCount() const
+{
+	return m_arr.size();
+}
+
+MASK* F_MASK::getMASKbyIndex(int index) const
+{
+	if (index < 0 || index >= getCount()) {
+		return nullptr;
+	}
+
+	return listMask.at(index);
 }

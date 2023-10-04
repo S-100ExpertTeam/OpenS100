@@ -7,6 +7,16 @@ namespace GF
 	{
 
 	}
+
+	ComplexAttributeType::ComplexAttributeType(const ComplexAttributeType& other)
+		: ThematicAttributeType(other)
+	{
+		int cnt = other.GetSubAttributeCount();
+		for (int i = 0; i < cnt; i++) {
+			auto item = new ThematicAttributeType(*other.GetSubAttribute(i));
+			AddSubAttribute(item);
+		}
+	}
 	
 	ComplexAttributeType::~ComplexAttributeType()
 	{
@@ -18,12 +28,12 @@ namespace GF
 		carries.clear();
 	}
 
-	int ComplexAttributeType::GetSubAttributeCount()
+	int ComplexAttributeType::GetSubAttributeCount() const
 	{
 		return carries.size();
 	}
 
-	ThematicAttributeType* ComplexAttributeType::GetSubAttribute(int index)
+	ThematicAttributeType* ComplexAttributeType::GetSubAttribute(int index) const
 	{
 		if (index >= 0 && index < GetSubAttributeCount())
 		{
@@ -57,5 +67,10 @@ namespace GF
 		ca->SetCode(code);
 		carries.push_back(ca);
 		return ca;
+	}
+
+	ThematicAttributeType* ComplexAttributeType::clone()
+	{
+		return new ComplexAttributeType(*this);
 	}
 }

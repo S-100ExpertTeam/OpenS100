@@ -17,6 +17,7 @@ class SGeometry : public Geometry
 {
 public:
 	SGeometry();
+	SGeometry(const SGeometry& other);
 	virtual ~SGeometry();
 
 public:
@@ -30,8 +31,8 @@ public:
 
 public:
 	void AddInformationType(GF::InformationType* info);
-	int GetInformationTypeCount();
-	GF::InformationType* GetInformationType(int index);
+	virtual int GetInformationTypeCount() const;
+	GF::InformationType* GetInformationType(int index) const;
 
 public:
 	virtual SGeometryType GetType() { return SGeometryType::none; }

@@ -8,5 +8,6 @@ public:
     virtual ~SAbstractCurve();
 
 public:
-    virtual void Set(int index, double x, double y) {};
+    virtual void Set(int index, double x, double y);
+    virtual SAbstractCurve* clone();
 };

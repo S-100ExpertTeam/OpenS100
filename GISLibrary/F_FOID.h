@@ -9,8 +9,6 @@ public:
 	virtual ~F_FOID();
 
 public:
-	//ObjectName m_objName;
-
 	// Producing Agency
 	// b12
 	// Agency code	

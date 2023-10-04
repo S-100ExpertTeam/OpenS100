@@ -12,6 +12,7 @@ class SSurface : public SGeometry
 {
 public:
 	SSurface();
+	SSurface(const SSurface& other);
 	SSurface(MBR* mbr);
 	SSurface(std::vector<POINT>& points, std::vector<int>& parts);
 	virtual ~SSurface();
@@ -29,8 +30,8 @@ public:
 	ID2D1PathGeometry* pGeometry = nullptr;
 
 private:
-	// All curves that make up the Surface
-	std::list<SAbstractCurve*> curveList;
+	// Rings
+	std::vector<SAbstractCurve*> curveList;
 
 public:
 	SGeometryType GetType() override;
@@ -49,8 +50,7 @@ public:
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
 
-	void AddCurve(SCurve* curve);
-	void AddCompositeCurve(SCompositeCurve* compositeCurve);
+	void AddCurve(SAbstractCurve* curve);
 	
 	void Init();
 	void Set(std::vector<POINT>& points, std::vector<int>& parts);
@@ -69,13 +69,14 @@ public:
 	double GetX() override;
 	double GetY() override;
 
-	int GetRingCount();
-	SAbstractCurve* GetRing(int index);
+	int GetRingCount() const;
+	SAbstractCurve* GetRing(int index) const;
 
-	std::list<SAbstractCurve*> GetCurveList();
+	//std::vector<SAbstractCurve*> GetCurveList();
 
 	SCurve* GetCurve(int rcid);
 
+	// get all curve components
 	void GetCurveList(std::list<SCurve*>& list);
 
 	void setSuppress(bool value);

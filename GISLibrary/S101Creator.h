@@ -34,6 +34,7 @@ public:
 
 	R_FeatureRecord* AddFeature(std::string code);
 	R_FeatureRecord* AddFeature(std::wstring code);
+	R_FeatureRecord* AddFeature(R_FeatureRecord* feature);
 
 	R_InformationRecord* AddInformation(std::string code);
 	R_InformationRecord* AddInformation(std::wstring code);

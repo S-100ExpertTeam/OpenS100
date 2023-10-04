@@ -10,7 +10,7 @@ namespace GM
 
 	}
 
-	Polygon::Polygon(Polygon& item)
+	Polygon::Polygon(const Polygon& item) : SurfacePatch(item)
 	{
 		this->boundary = item.boundary;
 	}

@@ -172,3 +172,41 @@ int F_CodeWithNumericCode::GetNumericCode(std::wstring& code)
 	int newNumericCode = AddNewCodeNumericCode(code);
 	return newNumericCode;
 }
+
+CodeWithNumericCode* F_CodeWithNumericCode::getCodeWithNumericCode(int numericCode)
+{
+	auto item = m_arr.find(numericCode);
+	if (item != m_arr.end()) {
+		return item->second;
+	}
+
+	return nullptr;
+}
+
+CodeWithNumericCode* F_CodeWithNumericCode::getCodeWIthNumericCode(CString code)
+{
+	auto item = m_arrFindForCode.find(std::wstring(code));
+	if (item != m_arrFindForCode.end()) {
+		return item->second;
+	}
+
+	return nullptr;
+}
+
+void F_CodeWithNumericCode::setCodeNumericCode(CString code, int numericCode)
+{
+	auto item = getCodeWIthNumericCode(code);
+
+	if (!item) { // new
+		InsertCodeNumericCode(code, numericCode);
+	}
+	else { // update
+		auto oldNumericCode = item->GetNumericCode();
+		item->SetNumericCode(numericCode);
+		auto find = m_arr.find(oldNumericCode);
+		if (find != m_arr.end()) {
+			m_arr.erase(find);
+			m_arr.insert({ numericCode, item });
+		}
+	}
+}

@@ -15,6 +15,11 @@ namespace GM
 		this->id = id;
 	}
 
+	Object::Object(const Object& item)
+	{
+		this->id = item.id;
+	}
+
 	Object::~Object()
 	{
 

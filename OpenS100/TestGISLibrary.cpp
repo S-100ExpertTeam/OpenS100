@@ -86,13 +86,13 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 				auto feature = theApp.pView->s101Creator.AddFeature(std::wstring(featureCode));
 				if (feature)
 				{
-					if (selectedFeature->m_geometry)
+					if (selectedFeature->geometry)
 					{
 						unsigned char* buf = nullptr;
 						int size = 0;
-						if (selectedFeature->m_geometry->ExportToWkb(&buf, &size))
+						if (selectedFeature->geometry->ExportToWkb(&buf, &size))
 						{
-							auto geom = theApp.pView->s101Creator.SetGeometry(feature, selectedFeature->m_geometry->GetType(), buf, size);
+							auto geom = theApp.pView->s101Creator.SetGeometry(feature, selectedFeature->geometry->GetType(), buf, size);
 							
 							if (geom)
 							{
@@ -135,4 +135,16 @@ void TestGISLibrary::OpenUpdate()
 		OutputDebugString(L"Base\n");
 	}
 	return;
+}
+
+void TestGISLibrary::SetCodeNumericCode()
+{
+	S101Cell cell;
+	cell.Read8211(L"..\\SampleData\\101KR004X0000.000");
+	auto dsgir = cell.GetDatasetGeneralInformationRecord();
+	
+	auto oldNumericCode = dsgir->GetFeatureTypeCode(CString(L"LandArea"));
+	dsgir->initFeatureTypeCode();
+	dsgir->setFeatureTypeCode(100, L"LandArea");
+	auto newNemericCode = dsgir->GetFeatureTypeCode(CString(L"LandArea"));
 }

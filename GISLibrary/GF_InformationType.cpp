@@ -18,10 +18,10 @@ namespace GF
 		//attributes.clear();
 	}
 
-	//int InformationType::GetAttributeCount()
-	//{
-	//	return attributes.size();
-	//}
+	int InformationType::GetAttributeCount()
+	{
+		return ObjectType::GetAttributeCount();
+	}
 
 	//ThematicAttributeType* InformationType::GetAttribute(int index)
 	//{

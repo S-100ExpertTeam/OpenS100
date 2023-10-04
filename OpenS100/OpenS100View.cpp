@@ -529,20 +529,27 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	auto fc2 = cm->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml"); // valid(S-102)
 	auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
 	auto fc4 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid, but duplicated(S-101)
+	cm->addFC(L"..\\ProgramData\\FC\\S-122_FC.xml");
+	cm->addFC(L"..\\ProgramData\\FC\\S-123_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-124_FC.xml");
-	cm->addFC(L"..\\ProgramData\\FC\\S-125_FC.xml"); 
+	cm->addFC(L"..\\ProgramData\\FC\\S-125_FC.xml");
+	cm->addFC(L"..\\ProgramData\\FC\\S-127_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
 
 	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
 	auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
+	cm->addPC(L"..\\ProgramData\\PC\\S122_Portrayal\\portrayal_catalogue.xml");
+	cm->addPC(L"..\\ProgramData\\PC\\S123_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S124_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml"); 
+	cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S411_Portrayal\\portrayal_catalogue.xml");
 
 	auto fc = cm->getFC(101); // get S-101 FC
 	auto pc = cm->getPC("S-101"); // get S-101 PC
 
 	//TestGISLibrary::CreateMemoryLayer();
+	//TestGISLibrary::SetCodeNumericCode();
 
 	return 0;
 }
@@ -1222,6 +1229,11 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 		return;
 	}
 
+	auto s100layer = (S100Layer*)layer;
+	if (s100layer->GetFC()->getProductId().compare("S-101") != 0) {
+		return;
+	}
+
 	auto cell = (S101Cell*)layer->GetSpatialObject();
 	if (nullptr == cell)
 	{
@@ -1250,14 +1262,14 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	while (pos != NULL)
 	{
 		cell->GetNextAssoc(pos, key, fr);
-		if (fr->m_geometry == nullptr || fr->m_geometry->GetType() != SGeometryType::Surface)
+		if (fr->geometry == nullptr || fr->geometry->GetType() != SGeometryType::Surface)
 		{
 			continue;
 		}
 
-		SSurface* surface = (SSurface*)fr->m_geometry;
+		SSurface* surface = (SSurface*)fr->geometry;
 
-		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
+		if (MBR::CheckOverlap(pickMBR, fr->geometry->m_mbr))
 		{
 			int code = fr->m_frid.m_nftc;
 			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
@@ -1312,13 +1324,13 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	while (pos != NULL)
 	{
 		cell->GetNextAssoc(pos, key, fr);
-		if (fr->m_geometry == nullptr || fr->m_geometry->GetType() != SGeometryType::CompositeCurve)
+		if (fr->geometry == nullptr || fr->geometry->GetType() != SGeometryType::CompositeCurve)
 		{
 			continue;
 		}
 
-		SCompositeCurve* compositeCurve = (SCompositeCurve*)fr->m_geometry;
-		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
+		SCompositeCurve* compositeCurve = (SCompositeCurve*)fr->geometry;
+		if (MBR::CheckOverlap(pickMBR, fr->geometry->m_mbr))
 		{
 			int code = fr->m_frid.m_nftc;
 			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
@@ -1360,13 +1372,13 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	while (pos != NULL)
 	{
 		cell->GetNextAssoc(pos, key, fr);
-		if (fr->m_geometry == nullptr || fr->m_geometry->GetType() != SGeometryType::Curve)
+		if (fr->geometry == nullptr || fr->geometry->GetType() != SGeometryType::Curve)
 		{
 			continue;
 		}
 
-		SCurve* curve = (SCurve*)fr->m_geometry;
-		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
+		SCurve* curve = (SCurve*)fr->geometry;
+		if (MBR::CheckOverlap(pickMBR, fr->geometry->m_mbr))
 		{
 			int code = fr->m_frid.m_nftc;
 			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
@@ -1410,21 +1422,21 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 		__int64 key = 0;
 		R_FeatureRecord* fr = NULL;
 		cell->GetNextAssoc(pos, key, fr);
-		if (fr->m_geometry == nullptr || 
-			(fr->m_geometry->GetType() != SGeometryType::Point && fr->m_geometry->GetType() != SGeometryType::MultiPoint))
+		if (fr->geometry == nullptr || 
+			(fr->geometry->GetType() != SGeometryType::Point && fr->geometry->GetType() != SGeometryType::MultiPoint))
 		{
 			continue;
 		}
 
-		SGeometry* sgeo = (SGeometry*)fr->m_geometry;
-		if (MBR::CheckOverlap(pickMBR, fr->m_geometry->m_mbr))
+		SGeometry* sgeo = (SGeometry*)fr->geometry;
+		if (MBR::CheckOverlap(pickMBR, fr->geometry->m_mbr))
 		{
 			int code = fr->m_frid.m_nftc;
 
 			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
 			if (sgeo->GetType() == SGeometryType::MultiPoint)		// Point
 			{
-				auto multiPoint = (SMultiPoint*)fr->m_geometry;
+				auto multiPoint = (SMultiPoint*)fr->geometry;
 
 				for (int i = 0; i < multiPoint->GetNumPoints(); i++)
 				{
@@ -1455,14 +1467,14 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 			}
 			else if (sgeo->GetType() == SGeometryType::Point)
 			{
-				double geoX = ((SPoint*)fr->m_geometry)->x;
-				double geoY = ((SPoint*)fr->m_geometry)->y;
+				double geoX = ((SPoint*)fr->geometry)->x;
+				double geoY = ((SPoint*)fr->geometry)->y;
 
 				if (pickMBR.PtInMBR(geoX, geoY))
 				{
 					CString csFoid, csFrid, csLat, csLon, csType, csName, csAssoCnt;
 
-					SPoint* sr = (SPoint*)fr->m_geometry;
+					SPoint* sr = (SPoint*)fr->geometry;
 					double lon = sr->x;
 					double lat = sr->y;
 
@@ -1713,13 +1725,13 @@ void COpenS100View::CopyLayer()
 	{
 		auto feature = *i;
 		auto newFeature = creator.AddFeature(std::wstring(enc2->m_dsgir.GetFeatureCode(feature->GetNumericCode())));
-		if (feature->m_geometry)
+		if (feature->geometry)
 		{
 			unsigned char* wkb = nullptr;
 			int sizeWKB = 0;
-			if (feature->m_geometry->ExportToWkb(&wkb, &sizeWKB))
+			if (feature->geometry->ExportToWkb(&wkb, &sizeWKB))
 			{
-				if (feature->m_geometry->GetType() == SGeometryType::Point)
+				if (feature->geometry->GetType() == SGeometryType::Point)
 				{
 					creator.SetPointGeometry(newFeature, wkb, sizeWKB);
 				}

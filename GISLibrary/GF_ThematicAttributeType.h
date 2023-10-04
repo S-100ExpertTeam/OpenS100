@@ -10,6 +10,8 @@ namespace GF
     public:
         ThematicAttributeType();
         virtual ~ThematicAttributeType();
+
+        virtual ThematicAttributeType* clone();
     };
 
 }

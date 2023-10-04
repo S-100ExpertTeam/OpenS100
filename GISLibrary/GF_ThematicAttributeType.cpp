@@ -14,4 +14,8 @@ namespace GF
 		
 	}
 
+	ThematicAttributeType* ThematicAttributeType::clone()
+	{
+		return new ThematicAttributeType(*this);
+	}
 }

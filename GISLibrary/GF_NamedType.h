@@ -11,10 +11,7 @@ namespace GF
 		virtual ~NamedType();
 
 	public:
-		//std::string typeName;
-		//std::string definition;
-		//bool isAbstract = false;
-		std::string code;
+		std::string code = "";
 
 	public:
 		virtual std::string GetCode();

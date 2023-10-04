@@ -6,6 +6,7 @@ class DirectPosition
 {
 public:
 	DirectPosition();
+	DirectPosition(const DirectPosition& item);
 	DirectPosition(double x, double y);
 	DirectPosition(double x, double y, double z);
 

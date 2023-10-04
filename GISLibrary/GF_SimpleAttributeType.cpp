@@ -28,4 +28,9 @@ namespace GF
 	{
 		return true; 
 	}
+
+	ThematicAttributeType* SimpleAttributeType::clone()
+	{
+		return new SimpleAttributeType(*this);
+	}
 }

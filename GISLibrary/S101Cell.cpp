@@ -35,7 +35,7 @@
 #include "F_C2IL.h"
 #include "F_C3IL.h"
 #include "F_CCOC.h"
-#include "FASC.h"
+#include "F_CCOC.h"
 #include "MASK.h"
 #include "F_SECC.h"
 #include "R_DDR.h"
@@ -78,11 +78,13 @@
 
 S101Cell::S101Cell() : S100SpatialObject()
 {
+	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 }
 
 S101Cell::S101Cell(FeatureCatalogue* fc) : S100SpatialObject()
 {
+	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 	SetAllNumericCode(fc);
 }
@@ -547,10 +549,10 @@ BOOL S101Cell::MakeFullSpatialData()
 
 BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 {
-	if (fe->m_geometry)
+	if (fe->geometry)
 	{
-		delete fe->m_geometry;
-		fe->m_geometry = nullptr;
+		delete fe->geometry;
+		fe->geometry = nullptr;
 	}
 
 	R_PointRecord *r = nullptr;
@@ -568,9 +570,9 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 			{
 				if (r->m_c2it)
 				{
-					fe->m_geometry = new SPoint();
-					fe->m_geometry->SetID(r->GetRCID());
-					SPoint* geo = (SPoint*)fe->m_geometry;
+					fe->geometry = new SPoint();
+					fe->geometry->SetID(r->GetRCID());
+					SPoint* geo = (SPoint*)fe->geometry;
 					GetFullSpatialData(r, geo);
 				}
 			}
@@ -585,13 +587,13 @@ BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 	R_MultiPointRecord *r;
 	__int64 iKey;
 
-	if (fe->m_geometry)
+	if (fe->geometry)
 	{
-		delete fe->m_geometry;
+		delete fe->geometry;
 	}
 
-	fe->m_geometry = new SMultiPoint();
-	SMultiPoint* geo = (SMultiPoint*)fe->m_geometry;
+	fe->geometry = new SMultiPoint();
+	SMultiPoint* geo = (SMultiPoint*)fe->geometry;
 
 	for (auto itorParent = fe->m_spas.begin(); itorParent != fe->m_spas.end(); itorParent++)
 	{
@@ -615,10 +617,10 @@ BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 
 BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 {
-	if (fe->m_geometry)
+	if (fe->geometry)
 	{
-		delete fe->m_geometry;
-		fe->m_geometry = nullptr;
+		delete fe->geometry;
+		fe->geometry = nullptr;
 	}
 
 	R_CurveRecord *cr = nullptr;
@@ -638,7 +640,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 				if (m_curMap.Lookup(iKey, cr))
 				{
 					auto sc = new SCurve();
-					fe->m_geometry = sc;
+					fe->geometry = sc;
 					sc->SetID(cr->GetRCID());
 					GetFullSpatialData(cr, sc, spas->m_ornt);
 				}
@@ -648,7 +650,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 				if (m_comMap.Lookup(iKey, ccr))
 				{
 					auto scc = new SCompositeCurve();
-					fe->m_geometry = scc;
+					fe->geometry = scc;
 					scc->SetID(ccr->GetRCID());
 					GetFullSpatialData(ccr, scc, spas->m_ornt);
 				}
@@ -656,9 +658,9 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 		}
 	}
 
-	if (fe->m_geometry)
+	if (fe->geometry)
 	{
-		fe->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
+		fe->geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
 	}
 
 	return TRUE;
@@ -667,10 +669,10 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 // France
 BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 {
-	if (fe->m_geometry)
+	if (fe->geometry)
 	{
-		delete fe->m_geometry;
-		fe->m_geometry = nullptr;
+		delete fe->geometry;
+		fe->geometry = nullptr;
 	}
 
 	R_SurfaceRecord* sr = nullptr;
@@ -679,9 +681,9 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	std::vector<POINT> vecPoint;
 	std::vector<int> boundaryList;
 
-	fe->m_geometry = new SSurface();
+	fe->geometry = new SSurface();
 
-	SSurface* geo = ((SSurface*)fe->m_geometry);
+	SSurface* geo = ((SSurface*)fe->geometry);
 
 	for (auto i = fe->m_spas.begin(); i != fe->m_spas.end(); i++)
 	{
@@ -731,7 +733,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 								compositeCurve->SetID(ccr->GetRCID());
 								GetFullSpatialData(ccr, compositeCurve, rias->m_ornt);
 								GetFullSpatialData(ccr, vecPoint, rias->m_ornt);
-								geo->AddCompositeCurve(compositeCurve);
+								geo->AddCurve(compositeCurve);
 							}
 							else
 							{
@@ -1221,24 +1223,24 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 {
 	std::list<SCurve*> listCurveLink;
 
-	if (fe->m_geometry == nullptr)
+	if (fe->geometry == nullptr)
 	{
 		return FALSE;
 	}
 
-	if (fe->m_geometry->GetType() == SGeometryType::CompositeCurve)
+	if (fe->geometry->GetType() == SGeometryType::CompositeCurve)
 	{
-		SCompositeCurve* geo = (SCompositeCurve*)fe->m_geometry;
+		SCompositeCurve* geo = (SCompositeCurve*)fe->geometry;
 		geo->GetCurveList(listCurveLink);
 	}
-	else if (fe->m_geometry->GetType() == SGeometryType::Surface)
+	else if (fe->geometry->GetType() == SGeometryType::Surface)
 	{
-		SSurface* geo = (SSurface*)fe->m_geometry;
+		SSurface* geo = (SSurface*)fe->geometry;
 		geo->GetCurveList(listCurveLink);
 	}
-	else if (fe->m_geometry->GetType() == SGeometryType::Curve)
+	else if (fe->geometry->GetType() == SGeometryType::Curve)
 	{
-		listCurveLink.push_back((SCurve*)fe->m_geometry);
+		listCurveLink.push_back((SCurve*)fe->geometry);
 	}
 	else
 	{
@@ -1298,31 +1300,31 @@ MBR S101Cell::CalcMBR()
 	while (pos != NULL)
 	{
 		m_feaMap.GetNextAssoc(pos, iKey, fr);
-		if (fr->m_geometry)
+		if (fr->geometry)
 		{
-			if (fr->m_geometry->GetType() == SGeometryType::Surface)
+			if (fr->geometry->GetType() == SGeometryType::Surface)
 			{
-				SSurface *pSr = (SSurface *)fr->m_geometry;
+				SSurface *pSr = (SSurface *)fr->geometry;
 				pMBR->ReMBR(pSr->m_mbr);
 			}
-			else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
+			else if (fr->geometry->GetType() == SGeometryType::CompositeCurve)
 			{
-				auto geo = (SCompositeCurve*)fr->m_geometry;
+				auto geo = (SCompositeCurve*)fr->geometry;
 				pMBR->ReMBR(geo->m_mbr);
 			}
-			else if (fr->m_geometry->GetType() == SGeometryType::Point)
+			else if (fr->geometry->GetType() == SGeometryType::Point)
 			{
-				SPoint *geo = (SPoint *)fr->m_geometry;
+				SPoint *geo = (SPoint *)fr->geometry;
 				pMBR->ReMBR(geo->m_mbr);
 			}
-			else if (fr->m_geometry->GetType() == SGeometryType::MultiPoint)
+			else if (fr->geometry->GetType() == SGeometryType::MultiPoint)
 			{
-				SMultiPoint* geo = (SMultiPoint*)fr->m_geometry;
+				SMultiPoint* geo = (SMultiPoint*)fr->geometry;
 				pMBR->ReMBR(geo->m_mbr);
 			}
-			else if (fr->m_geometry->GetType() == SGeometryType::Curve)
+			else if (fr->geometry->GetType() == SGeometryType::Curve)
 			{
-				SCurve* geo = (SCurve*)fr->m_geometry;
+				SCurve* geo = (SCurve*)fr->geometry;
 				pMBR->ReMBR(geo->m_mbr);
 			}
 		}
@@ -1343,31 +1345,31 @@ MBR S101Cell::ReMBR()
 	while (pos != NULL)
 	{
 		m_feaMap.GetNextAssoc(pos, iKey, fr);
-		if (fr->m_geometry)
+		if (fr->geometry)
 		{
-			if (fr->m_geometry->GetType() == SGeometryType::Surface)
+			if (fr->geometry->GetType() == SGeometryType::Surface)
 			{
-				SSurface* pSr = (SSurface*)fr->m_geometry;
+				SSurface* pSr = (SSurface*)fr->geometry;
 				result.ReMBR(pSr->m_mbr);
 			}
-			else if (fr->m_geometry->GetType() == SGeometryType::CompositeCurve)
+			else if (fr->geometry->GetType() == SGeometryType::CompositeCurve)
 			{
-				auto geo = (SCompositeCurve*)fr->m_geometry;
+				auto geo = (SCompositeCurve*)fr->geometry;
 				result.ReMBR(geo->m_mbr);
 			}
-			else if (fr->m_geometry->GetType() == SGeometryType::Point)
+			else if (fr->geometry->GetType() == SGeometryType::Point)
 			{
-				SPoint* geo = (SPoint*)fr->m_geometry;
+				SPoint* geo = (SPoint*)fr->geometry;
 				result.ReMBR(geo->m_mbr);
 			}
-			else if (fr->m_geometry->GetType() == SGeometryType::MultiPoint)
+			else if (fr->geometry->GetType() == SGeometryType::MultiPoint)
 			{
-				SMultiPoint* geo = (SMultiPoint*)fr->m_geometry;
+				SMultiPoint* geo = (SMultiPoint*)fr->geometry;
 				result.ReMBR(geo->m_mbr);
 			}
-			else if (fr->m_geometry->GetType() == SGeometryType::Curve)
+			else if (fr->geometry->GetType() == SGeometryType::Curve)
 			{
-				SCurve* geo = (SCurve*)fr->m_geometry;
+				SCurve* geo = (SCurve*)fr->geometry;
 				result.ReMBR(geo->m_mbr);
 			}
 		}
@@ -3067,27 +3069,27 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 
 					else if (3 == mission) //modify
 					{
-						for (FASC* fasc : f_fasc->m_arr)
+						for (ATTR* attr : f_fasc->m_arr)
 						{
-							int attriMission = fasc->m_atin;
+							int attriMission = attr->m_atin;
 							auto it = std::find(values->m_fasc.begin(), values->m_fasc.end(), f_fasc);
 
 
 							if (1 == attriMission) //insert
 							{
-								(*it)->m_arr.push_back(fasc);
+								(*it)->m_arr.push_back(attr);
 							}
 
 							else if (2 == attriMission) //delete
 							{
-								auto itor = std::find((*it)->m_arr.begin(), (*it)->m_arr.end(), fasc);
+								auto itor = std::find((*it)->m_arr.begin(), (*it)->m_arr.end(), attr);
 								(*it)->m_arr.erase(itor);
 							}
 
 							else if (3 == attriMission) //modify
 							{
-								auto itor = std::find((*it)->m_arr.begin(), (*it)->m_arr.end(), fasc);
-								*itor = fasc;
+								auto itor = std::find((*it)->m_arr.begin(), (*it)->m_arr.end(), attr);
+								*itor = attr;
 							}
 						}
 					}
@@ -3220,11 +3222,9 @@ void S101Cell::GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* 
 					for (int j = 0; j < geo->GetRingCount(); j++)
 					{
 						auto curve = geo->GetRing(j);
-						//auto rcid = curve->GetRCID();
 						auto rcid = curve->GetIDAsInt();
 						if (rcid == sr->reference)
 						{
-							//int numPoints = curve->GetNumPoints();
 							int numPoints = curve->getNumPoint();
 							POINT* screenPoints = new POINT[numPoints];
 
@@ -3359,9 +3359,9 @@ void S101Cell::InitCurveSuppression()
 	{
 		auto feature = *i;
 		
-		if (feature->m_geometry->GetType() == SGeometryType::CompositeCurve)
+		if (feature->geometry->GetType() == SGeometryType::CompositeCurve)
 		{
-			auto compositeCurve = (SCompositeCurve*)feature->m_geometry;
+			auto compositeCurve = (SCompositeCurve*)feature->geometry;
 			compositeCurve->setSuppress(false);
 
 			//int curveCnt = compositeCurve->GetCurveCount();
@@ -3371,14 +3371,14 @@ void S101Cell::InitCurveSuppression()
 			//	c->SetSuppress(false);
 			//}
 		}
-		else if (feature->m_geometry->GetType() == SGeometryType::Surface)
+		else if (feature->geometry->GetType() == SGeometryType::Surface)
 		{
-			auto surface = (SSurface*)feature->m_geometry;
+			auto surface = (SSurface*)feature->geometry;
 			surface->setSuppress(false);
 		}
-		else if (feature->m_geometry->GetType() == SGeometryType::Curve)
+		else if (feature->geometry->GetType() == SGeometryType::Curve)
 		{
-			auto curve = (SCurve*)feature->m_geometry;
+			auto curve = (SCurve*)feature->geometry;
 			curve->SetSuppress(false);
 		}
 	}
@@ -4610,15 +4610,15 @@ std::vector<std::string> S101Cell::QueryToSurface(MBR mbr)
 	{
 		auto fr = *i;
 
-		if (fr->m_geometry == nullptr || 
-			fr->m_geometry->GetType() != SGeometryType::Surface)
+		if (fr->geometry == nullptr || 
+			fr->geometry->GetType() != SGeometryType::Surface)
 		{
 			continue;
 		}
 
-		SSurface* surface = (SSurface*)fr->m_geometry;
+		SSurface* surface = (SSurface*)fr->geometry;
 
-		if (MBR::CheckOverlap(mbr, fr->m_geometry->m_mbr))
+		if (MBR::CheckOverlap(mbr, fr->geometry->m_mbr))
 		{
 			int code = fr->m_frid.m_nftc;
 			auto itor = m_dsgir.m_ftcs->m_arr.find(code);

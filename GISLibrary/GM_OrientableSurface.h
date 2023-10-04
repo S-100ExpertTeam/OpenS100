@@ -6,6 +6,8 @@ namespace GM
 {
 	class OrientableSurface : public Primitive
 	{
-
+	public:
+		OrientableSurface() {}
+		virtual ~OrientableSurface() {}
 	};
 }
