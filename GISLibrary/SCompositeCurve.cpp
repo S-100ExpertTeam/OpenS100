@@ -25,6 +25,12 @@ SCompositeCurve::SCompositeCurve(const SCompositeCurve& other)
 
 SCompositeCurve::~SCompositeCurve()
 {
+	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++) {
+		delete (*i);
+		*i = nullptr;
+	}
+
+	m_listCurveLink.clear();
 }
 
 SGeometryType SCompositeCurve::GetType()

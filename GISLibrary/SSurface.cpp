@@ -85,6 +85,13 @@ SSurface::~SSurface()
 	m_centerPoint = nullptr;
 
 	SafeRelease(&pGeometry);
+
+	for (auto i = curveList.begin(); i != curveList.end(); i++) {
+		delete (*i);
+		*i = nullptr;
+	}
+
+	curveList.clear();
 }
 
 SGeometryType SSurface::GetType()
