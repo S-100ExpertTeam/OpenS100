@@ -47,6 +47,7 @@ public:
     GM::Curve* ReadCurve(pugi::xml_node& node);
     GM::OrientableCurve* ReadOrientableCurve(pugi::xml_node& node);
     GM::CompositeCurve* ReadCompositeCurve(pugi::xml_node& node);
+    GM::Curve* ReadLinearRing(pugi::xml_node& node);
     GM::Surface* ReadSurface(pugi::xml_node& node);
     bool ReadMember(pugi::xml_node& node);
 
@@ -77,10 +78,10 @@ private:
     std::string DeleteXMLNamespace(std::string value);
     std::string getCodeFromMember(std::string nodeName);
     void SetGeometry();
-    SPoint* ConvertToSPoint(GM::Point* point);
-    SMultiPoint* ConvertToSMultiPoint(GM::MultiPoint* multiPoint);
-    SAbstractCurve* ConvertToSCurve(GM::OrientableCurve* orientableCurve);
-    SCurve* ConvertToSCurve(GM::Curve* curve);
-    SCompositeCurve* ConvertToSCompositeCurve(GM::CompositeCurve* compositeCurve);
-    SSurface* ConvertToSSurface(GM::Surface* surface);
+    SPoint* PointToSPoint(GM::Point* point);
+    SMultiPoint* MultiPointToSMultiPoint(GM::MultiPoint* multiPoint);
+    SAbstractCurve* OrientableCurveToSCurve(GM::OrientableCurve* orientableCurve);
+    SCurve* CurveToSCurve(GM::Curve* curve);
+    SCompositeCurve* CompositeCurveToSCompositeCurve(GM::CompositeCurve* compositeCurve);
+    SSurface* SurfaceToSSurface(GM::Surface* surface);
 };

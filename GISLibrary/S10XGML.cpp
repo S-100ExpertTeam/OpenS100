@@ -365,6 +365,31 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node)
 	return object;
 }
 
+GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
+{
+	auto strPos = node.child_value("gml:LinearRing");
+
+	auto strPosList = LatLonUtility::Split(strPos, " ");
+	int posCnt = strPosList.size();
+
+	if (posCnt < 4 && posCnt % 2 != 0)
+	{
+		return false;
+	}
+
+	auto object = new GM::Curve();
+	//object->SetID(gmlID);
+
+	//for (int i = 0; i < posCnt; i += 2)
+	//{
+	//	double lon = std::stod(strPosList.at(i + lonIndex));
+	//	double lat = std::stod(strPosList.at(i + latIndex));
+	//	object->Add(lon, lat);
+	//}
+
+	return object;
+}
+
 GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node)
 {
 	std::string gmlID = node.attribute("gml:id").value();
@@ -502,6 +527,12 @@ GM::Surface* S10XGML::ReadSurface(pugi::xml_node& node)
 			object->SetExteriorRingID(exteriorCurveMemberID);
 		}
 	} 
+	else if (!strcmp(name_node_exterior_child, "gml:LinearRing")) {
+		auto curve = ReadLinearRing(node_exterior_child);
+		if (curve) {
+			
+		}
+	}
 	else {
 		auto node_curve = node_exterior_curveMember.first_child();
 		std::string node_curve_name = node_curve.name();
@@ -778,8 +809,9 @@ GM::Point* S10XGML::GetPoint(int x, int y)
 GM::Object* S10XGML::AddGeometry(GM::Object* geometry)
 {
 	if (geometry) {
+		auto geometryID = geometry->GetID();
 
-		auto find = GetGeometry(geometry->GetID());
+		auto find = GetGeometry(geometryID);
 		if (find) {
 			GM::Object* newGeometry = nullptr;
 			if (typeid(GM::Point) == typeid(*geometry)) {
@@ -951,32 +983,32 @@ void S10XGML::SetGeometry()
 		auto geometry = GetGeometry(geometryID);
 		if (geometry) {
 			if (geometry->GetType() == GM::GeometryType::Point) {
-				auto sPoint = ConvertToSPoint((GM::Point*)geometry);
+				auto sPoint = PointToSPoint((GM::Point*)geometry);
 				feature->SetGeometry(sPoint);
 				sPoint->CreateD2Geometry(gisLib->D2.Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::MultiPoint) {
-				auto sMultiPoint = ConvertToSMultiPoint((GM::MultiPoint*)geometry);
+				auto sMultiPoint = MultiPointToSMultiPoint((GM::MultiPoint*)geometry);
 				feature->SetGeometry(sMultiPoint);
 				sMultiPoint->CreateD2Geometry(gisLib->D2.Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::OrientableCurve) {
-				auto sCurve = ConvertToSCurve((GM::OrientableCurve*)geometry);
+				auto sCurve = OrientableCurveToSCurve((GM::OrientableCurve*)geometry);
 				feature->SetGeometry(sCurve);
 				sCurve->CreateD2Geometry(gisLib->D2.Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::Curve) {
-				auto sCurve = ConvertToSCurve((GM::Curve*)geometry);
+				auto sCurve = CurveToSCurve((GM::Curve*)geometry);
 				feature->SetGeometry(sCurve);
 				sCurve->CreateD2Geometry(gisLib->D2.Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::CompositeCurve) {
-				auto sCompositeCurve = ConvertToSCompositeCurve((GM::CompositeCurve*)geometry);
+				auto sCompositeCurve = CompositeCurveToSCompositeCurve((GM::CompositeCurve*)geometry);
 				feature->SetGeometry(sCompositeCurve);
 				sCompositeCurve->CreateD2Geometry(gisLib->D2.Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::Surface) {
-				auto sSurface = ConvertToSSurface((GM::Surface*)geometry);
+				auto sSurface = SurfaceToSSurface((GM::Surface*)geometry);
 				feature->SetGeometry(sSurface);
 				sSurface->CreateD2Geometry(gisLib->D2.Factory());
 			}
@@ -984,7 +1016,7 @@ void S10XGML::SetGeometry()
 	}
 }
 
-SPoint* S10XGML::ConvertToSPoint(GM::Point* point)
+SPoint* S10XGML::PointToSPoint(GM::Point* point)
 {
 	auto x = point->position.GetX();
 	auto y = point->position.GetY();
@@ -994,7 +1026,7 @@ SPoint* S10XGML::ConvertToSPoint(GM::Point* point)
 	return result;
 }
 
-SMultiPoint* S10XGML::ConvertToSMultiPoint(GM::MultiPoint* multiPoint)
+SMultiPoint* S10XGML::MultiPointToSMultiPoint(GM::MultiPoint* multiPoint)
 {
 	SMultiPoint* result = new SMultiPoint();
 
@@ -1011,7 +1043,7 @@ SMultiPoint* S10XGML::ConvertToSMultiPoint(GM::MultiPoint* multiPoint)
 	return result;
 }
 
-SAbstractCurve* S10XGML::ConvertToSCurve(GM::OrientableCurve* orientableCurve)
+SAbstractCurve* S10XGML::OrientableCurveToSCurve(GM::OrientableCurve* orientableCurve)
 {
 	auto baseCurveID = orientableCurve->GetBaseCurveID();
 
@@ -1022,19 +1054,19 @@ SAbstractCurve* S10XGML::ConvertToSCurve(GM::OrientableCurve* orientableCurve)
 	auto baseCurve = GetGeometry(baseCurveID);
 	
 	if (baseCurve->GetType() == GM::GeometryType::OrientableCurve) {
-		return ConvertToSCurve((GM::OrientableCurve*)baseCurve);
+		return OrientableCurveToSCurve((GM::OrientableCurve*)baseCurve);
 	}
 	else if (baseCurve->GetType() == GM::GeometryType::Curve) {
-		return ConvertToSCurve((GM::Curve*)baseCurve);
+		return CurveToSCurve((GM::Curve*)baseCurve);
 	}
 	else if (baseCurve->GetType() == GM::GeometryType::CompositeCurve) {
-		return ConvertToSCompositeCurve((GM::CompositeCurve*)baseCurve);
+		return CompositeCurveToSCompositeCurve((GM::CompositeCurve*)baseCurve);
 	}
 
 	return nullptr;
 }
 
-SCurve* S10XGML::ConvertToSCurve(GM::Curve* curve)
+SCurve* S10XGML::CurveToSCurve(GM::Curve* curve)
 {
 	SCurve* result = new SCurve();
 	auto pointCount = curve->getPointCount();
@@ -1051,22 +1083,22 @@ SCurve* S10XGML::ConvertToSCurve(GM::Curve* curve)
 	return result;
 }
 
-SCompositeCurve* S10XGML::ConvertToSCompositeCurve(GM::CompositeCurve* compositeCurve)
+SCompositeCurve* S10XGML::CompositeCurveToSCompositeCurve(GM::CompositeCurve* compositeCurve)
 {
 	SCompositeCurve* result = new SCompositeCurve();
 
 	for (auto i = compositeCurve->component.begin(); i != compositeCurve->component.end(); i++) {
 		auto component = (*i);
 		if (component->GetType() == GM::GeometryType::OrientableCurve) {
-			auto curveSegment = ConvertToSCurve((GM::OrientableCurve*)component);
+			auto curveSegment = OrientableCurveToSCurve((GM::OrientableCurve*)component);
 			result->AddCurve(curveSegment);
 		}
 		else if (component->GetType() == GM::GeometryType::Curve) {
-			auto curveSegment = ConvertToSCurve((GM::Curve*)component);
+			auto curveSegment = CurveToSCurve((GM::Curve*)component);
 			result->AddCurve(curveSegment);
 		}
 		else if (component->GetType() == GM::GeometryType::CompositeCurve) {
-			auto curveSegment = ConvertToSCompositeCurve((GM::CompositeCurve*)component);
+			auto curveSegment = CompositeCurveToSCompositeCurve((GM::CompositeCurve*)component);
 			result->AddCurve(curveSegment);
 		}
 	}
@@ -1074,14 +1106,14 @@ SCompositeCurve* S10XGML::ConvertToSCompositeCurve(GM::CompositeCurve* composite
 	return result;
 }
 
-SSurface* S10XGML::ConvertToSSurface(GM::Surface* surface)
+SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 {
 	std::vector<POINT> points;
 	std::vector<int> parts;
 
 	auto result = new SSurface();
 
-	auto exteriorRing = ConvertToSCompositeCurve(surface->GetPolygon().boundary.exterior);
+	auto exteriorRing = CompositeCurveToSCompositeCurve(surface->GetPolygon().boundary.exterior);
 
 	auto pointCountExteriorRing = exteriorRing->GetPointCount();
 	for (auto i = 0; i < pointCountExteriorRing; i++) {
@@ -1106,7 +1138,7 @@ SSurface* S10XGML::ConvertToSSurface(GM::Surface* surface)
 	for (auto i = i_begin;
 		i != i_end;
 		i++) {
-		auto interiorRing = ConvertToSCompositeCurve(*i);
+		auto interiorRing = CompositeCurveToSCompositeCurve(*i);
 		auto pointCountInteriorRing = interiorRing->GetPointCount();
 		for (auto i = 0; i < pointCountInteriorRing; i++) {
 			auto x = interiorRing->GetX(i);
