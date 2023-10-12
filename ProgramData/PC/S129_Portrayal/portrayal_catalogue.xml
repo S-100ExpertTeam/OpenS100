@@ -123,12 +123,6 @@
       <fileFormat>XSLT</fileFormat>
       <ruleType>SubTemplate</ruleType>
     </ruleFile>
-    <ruleFile id="UnderKeelClearancePlan">
-      <fileName>UnderKeelClearancePlan.xsl</fileName>
-      <fileType>Rule</fileType>
-      <fileFormat>XSLT</fileFormat>
-      <ruleType>SubTemplate</ruleType>
-    </ruleFile>
 
     <!--
     <ruleFile id="simpleline">
