@@ -34,7 +34,8 @@ namespace GM
 	
 	OrientableCurve::~OrientableCurve()
 	{
-
+		delete this->baseCurve;
+		this->baseCurve = nullptr;
 	}
 
 	GeometryType OrientableCurve::GetType()

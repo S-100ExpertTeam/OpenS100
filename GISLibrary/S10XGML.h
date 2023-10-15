@@ -42,13 +42,16 @@ public:
     bool ReadMembers(pugi::xml_node& node);
     GF::FeatureType* ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc);
     GF::InformationType* ReadInformation(pugi::xml_node& node, FeatureCatalogue* fc);
-    GM::Point* ReadPoint(pugi::xml_node& node);
-    GM::MultiPoint* ReadMultiPoint(pugi::xml_node& node);
-    GM::Curve* ReadCurve(pugi::xml_node& node);
-    GM::OrientableCurve* ReadOrientableCurve(pugi::xml_node& node);
-    GM::CompositeCurve* ReadCompositeCurve(pugi::xml_node& node);
+
+    // If node is root of the geometry, id & srsName is null
+    GM::Point* ReadPoint(pugi::xml_node& node, std::string id = "", std::string srsName = "");
+    GM::MultiPoint* ReadMultiPoint(pugi::xml_node& node, std::string id = "", std::string srsName = "");
+    GM::Curve* ReadCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
+    GM::OrientableCurve* ReadOrientableCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
+    GM::CompositeCurve* ReadCompositeCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
     GM::Curve* ReadLinearRing(pugi::xml_node& node);
     GM::Surface* ReadSurface(pugi::xml_node& node);
+    GM::Surface* ReadPolygon(pugi::xml_node& node);
     bool ReadMember(pugi::xml_node& node);
 
     bool ReadObjectAttribute(pugi::xml_node& node, GF::ObjectType* object, FeatureCatalogue* fc);

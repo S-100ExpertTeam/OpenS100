@@ -741,6 +741,9 @@
     <ClCompile Include="Length.cpp">
       <Filter>S100</Filter>
     </ClCompile>
+    <ClCompile Include="GM_CurveBoundary.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">

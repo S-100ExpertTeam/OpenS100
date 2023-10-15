@@ -87,7 +87,7 @@
 	</displayMode>
   </displayModes>  
   <displayPlanes>
-    <displayPlane id="OVERRADAR">
+    <displayPlane id="OVERRADAR" order="1">
       <description>
         <name>Over radar</name>
         <description>Content displayed on top of Radar image</description>

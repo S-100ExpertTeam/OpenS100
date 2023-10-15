@@ -254,10 +254,11 @@ GF::InformationType* S10XGML::ReadInformation(pugi::xml_node& node, FeatureCatal
 	return information;
 }
 
-GM::Point* S10XGML::ReadPoint(pugi::xml_node& node)
+GM::Point* S10XGML::ReadPoint(pugi::xml_node& node, std::string id, std::string srsName)
 {
-	std::string gmlID = node.attribute("gml:id").value();
-	std::string srsName = node.attribute("srsName").value();
+	auto object = new GM::Point();
+	object->setParentIdSrsName(id, srsName);
+	object->readIdSRSName(node);
 
 	auto strPos = node.child_value("gml:pos");
 		
@@ -265,13 +266,14 @@ GM::Point* S10XGML::ReadPoint(pugi::xml_node& node)
 
 	if (strPosList.size() != 2)
 	{
+		delete object;
 		return false;
 	}
 
 	int latIndex = 1;
 	int lonIndex = 0;
 
-	if (srsName.find("4326") != std::string::npos)
+	if (object->getSRSName().find("4326") != std::string::npos)
 	{
 		latIndex = 0;
 		lonIndex = 1;
@@ -280,32 +282,28 @@ GM::Point* S10XGML::ReadPoint(pugi::xml_node& node)
 	double lat = std::stod(strPosList.at(latIndex));
 	double lon = std::stod(strPosList.at(lonIndex));
 
-	auto object = new GM::Point();
-	object->SetID(gmlID);
 	object->position.SetX(lon);
 	object->position.SetY(lat);
 
 	return object;
 }
 
-GM::MultiPoint* S10XGML::ReadMultiPoint(pugi::xml_node& node)
+GM::MultiPoint* S10XGML::ReadMultiPoint(pugi::xml_node& node, std::string id, std::string srsName)
 {
-	std::string gmlID = node.attribute("gml:id").value();
-	std::string srsName = node.attribute("srsName").value();
+	auto object = new GM::MultiPoint();
+	object->setParentIdSrsName(id, srsName);
+	object->readIdSRSName(node);
 
 	int latIndex = 1;
 	int lonIndex = 0;
 
-	if (srsName.find("4326") != std::string::npos)
+	if (object->getSRSName().find("4326") != std::string::npos)
 	{
 		latIndex = 0;
 		lonIndex = 1;
 	}
 
 	auto nodePoint = node.child("gml:pointMembers").child("gml:Point");
-
-	auto object = new GM::MultiPoint();
-	object->SetID(gmlID);
 
 	while (nodePoint)
 	{
@@ -328,15 +326,16 @@ GM::MultiPoint* S10XGML::ReadMultiPoint(pugi::xml_node& node)
 	return object;
 }
 
-GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node)
+GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string srsName)
 {
-	std::string gmlID = node.attribute("gml:id").value();
-	std::string srsName = node.attribute("srsName").value();
+	auto object = new GM::Curve();
+	object->setParentIdSrsName(id, srsName);
+	object->readIdSRSName(node);
 
 	int latIndex = 1;
 	int lonIndex = 0;
 
-	if (srsName.find("4326") != std::string::npos)
+	if (object->getSRSName().find("4326") != std::string::npos)
 	{
 		latIndex = 0;
 		lonIndex = 1;
@@ -349,11 +348,9 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node)
 
 	if (posCnt < 4 && posCnt % 2 != 0)
 	{
+		delete object;
 		return false;
 	}
-
-	auto object = new GM::Curve();
-	object->SetID(gmlID);
 
 	for (int i = 0; i < posCnt; i += 2)
 	{
@@ -367,6 +364,9 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node)
 
 GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 {
+	auto object = new GM::Curve();
+	//object->setParentIdSrsName
+
 	auto strPos = node.child_value("gml:LinearRing");
 
 	auto strPosList = LatLonUtility::Split(strPos, " ");
@@ -377,7 +377,7 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 		return false;
 	}
 
-	auto object = new GM::Curve();
+	
 	//object->SetID(gmlID);
 
 	//for (int i = 0; i < posCnt; i += 2)
@@ -390,15 +390,8 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 	return object;
 }
 
-GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node)
+GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node, std::string id, std::string srsName)
 {
-	std::string gmlID = node.attribute("gml:id").value();
-	auto strOrientation = node.attribute("orientation").value();
-	//if (strcmp(strOrientation, "-") != 0)
-	//{
-	//	return false;
-	//}
-
 	auto node_baseCurve = node.child("gml:baseCurve");
 	auto attr_baseCurve_href = node_baseCurve.attribute("xlink:href");
 
@@ -411,7 +404,8 @@ GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node)
 			baseCurveID = baseCurveID.substr(1);
 
 			auto object = new GM::OrientableCurve(baseCurveID);
-			object->SetID(gmlID);
+			object->setParentIdSrsName(id, srsName);
+			object->readIdSRSName(node);
 
 			return object;
 		}
@@ -423,22 +417,20 @@ GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node)
 		if (!node_curve_name.compare("S100:Curve")) {
 			auto curve = ReadCurve(node_curve);
 			if (curve) {
-				return (GM::OrientableCurve*)AddGeometry(curve);
-				//return curve;
+				//return (GM::OrientableCurve*)AddGeometry(curve);
+				
 			}
 		}
 		else if (!node_curve_name.compare("S100:CompositeCurve")) {
 			auto compositeCurve = ReadCompositeCurve(node_curve);
 			if (compositeCurve) {
 				return (GM::OrientableCurve*)AddGeometry(compositeCurve);
-				//return compositeCurve;
 			}
 		}
 		else if (!node_curve_name.compare("S100:OrientableCurve")) {
 			auto orientableCurve = ReadOrientableCurve(node_curve);
 			if (orientableCurve) {
 				return (GM::OrientableCurve*)AddGeometry(orientableCurve);
-				//return orientableCurve;
 			}
 		}
 	}
@@ -446,13 +438,13 @@ GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node)
 	return nullptr;
 }
 
-GM::CompositeCurve* S10XGML::ReadCompositeCurve(pugi::xml_node& node)
+GM::CompositeCurve* S10XGML::ReadCompositeCurve(pugi::xml_node& node, std::string id, std::string srsName)
 {
-	std::string gmlID = node.attribute("gml:id").value();
-	auto child = node.child("gml:curveMember");
-
 	auto object = new GM::CompositeCurve();
-	object->SetID(gmlID);
+	object->setParentIdSrsName(id, srsName);
+	object->readIdSRSName(node);
+
+	auto child = node.child("gml:curveMember");
 
 	while (child)
 	{
@@ -813,28 +805,31 @@ GM::Object* S10XGML::AddGeometry(GM::Object* geometry)
 
 		auto find = GetGeometry(geometryID);
 		if (find) {
-			GM::Object* newGeometry = nullptr;
-			if (typeid(GM::Point) == typeid(*geometry)) {
-				newGeometry = new GM::Point((GM::Point&)*geometry);
-			}
-			else if (typeid(GM::MultiPoint) == typeid(*geometry)) {
-				newGeometry = new GM::MultiPoint((GM::MultiPoint&)*geometry);
-			}
-			else if (typeid(GM::OrientableCurve) == typeid(*geometry)) {
-				newGeometry = new GM::OrientableCurve((GM::OrientableCurve&)*geometry);
-			}
-			else if (typeid(GM::Curve) == typeid(*geometry)) {
-				newGeometry = new GM::Curve((GM::Curve&)*geometry);
-			}
-			else if (typeid(GM::CompositeCurve) == typeid(*geometry)) {
-				newGeometry = new GM::CompositeCurve((GM::CompositeCurve&)*geometry);
-			}
-			else if (typeid(GM::Surface) == typeid(*geometry)) {
-				newGeometry = new GM::Surface((GM::Surface&)*geometry);
-			}
-			newGeometry->SetID(LatLonUtility::generate_uuid());
-			geometries.push_back(newGeometry);
-			return newGeometry;
+			//GM::Object* newGeometry = nullptr;
+			//if (typeid(GM::Point) == typeid(*geometry)) {
+			//	newGeometry = new GM::Point((GM::Point&)*geometry);
+			//}
+			//else if (typeid(GM::MultiPoint) == typeid(*geometry)) {
+			//	newGeometry = new GM::MultiPoint((GM::MultiPoint&)*geometry);
+			//}
+			//else if (typeid(GM::OrientableCurve) == typeid(*geometry)) {
+			//	newGeometry = new GM::OrientableCurve((GM::OrientableCurve&)*geometry);
+			//}
+			//else if (typeid(GM::Curve) == typeid(*geometry)) {
+			//	newGeometry = new GM::Curve((GM::Curve&)*geometry);
+			//}
+			//else if (typeid(GM::CompositeCurve) == typeid(*geometry)) {
+			//	newGeometry = new GM::CompositeCurve((GM::CompositeCurve&)*geometry);
+			//}
+			//else if (typeid(GM::Surface) == typeid(*geometry)) {
+			//	newGeometry = new GM::Surface((GM::Surface&)*geometry);
+			//}
+			//newGeometry->SetID(LatLonUtility::generate_uuid());
+			//geometries.push_back(newGeometry);
+			//return newGeometry;
+			geometry->SetID(LatLonUtility::generate_uuid());
+			geometries.push_back(geometry);
+			return geometry;
 		}
 		else {
 			geometries.push_back(geometry);

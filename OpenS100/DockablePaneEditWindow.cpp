@@ -696,7 +696,7 @@ void CDockablePaneEditWindow::SetVector(GM::Curve* r, CMFCPropertyGridProperty* 
 		}
 	}
 
-	SetVector(&r->boundary.startPoint, pProperty);
+	SetVector(r->boundary.startPoint, pProperty);
 
 	int precision_x = 0;
 	int cmf = m_cell->CoordinateMultiplicationFactorForX();
@@ -735,7 +735,7 @@ void CDockablePaneEditWindow::SetVector(GM::Curve* r, CMFCPropertyGridProperty* 
 		}
 	}
 
-	SetVector(&r->boundary.endPoint, pProperty);
+	SetVector(r->boundary.endPoint, pProperty);
 }
 
 void CDockablePaneEditWindow::SetVector(SCurve* geom, CMFCPropertyGridProperty* pSuperProperty)

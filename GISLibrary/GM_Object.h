@@ -19,6 +19,7 @@ namespace GM
 
 	public:
 		std::string id;
+		std::string srsName;
 
 	public:
 		std::string GetID();
@@ -28,11 +29,20 @@ namespace GM
 		void SetID(std::wstring value);
 		void SetID(int value);
 
+		std::string getSRSName();
+		void setSRSName(std::string value);
+
+		void setParentIdSrsName(std::string id, std::string srsName);
+
 		virtual int GetInformationRelationCount() { return 0; }
 		virtual std::string GetAssociatedInformationID(int index) { return ""; }
 
 		virtual GeometryType GetType() { return GeometryType::Object; }
 
 		virtual std::string GeometricPrimitiveAsString() { return "None"; }
+
+		void readID(pugi::xml_node& node);
+		void readSRSName(pugi::xml_node& node);
+		void readIdSRSName(pugi::xml_node& node);
 	};
 } 
