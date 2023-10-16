@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Field.h"
 
 #include <vector>
@@ -8,6 +9,7 @@ class F_ATTR : Field
 {
 public:
 	F_ATTR();
+	F_ATTR(const F_ATTR& other);
 	virtual ~F_ATTR();
 
 public:
@@ -20,6 +22,6 @@ public:
 	int GetFieldLength();
 
 	void Insert(ATTR* attr);
-
-	//int GetNewAttributeIndex(ATTR* attr, int paix);
+	ATTR* getATTR(int index) const;
+	int getCount() const;
 };

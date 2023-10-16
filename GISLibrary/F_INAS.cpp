@@ -6,11 +6,21 @@
 
 F_INAS::F_INAS()
 {
-	m_name.RCNM = 0;
-	m_name.RCID = 0;
-	m_niac = 0;
-	m_narc = 0;
-	m_iuin = 0;	
+}
+
+F_INAS::F_INAS(const F_INAS& other)
+{
+	m_name = other.m_name;
+	m_niac = other.m_niac;
+	m_narc = other.m_narc;
+	m_iuin = other.m_iuin;
+
+	auto cnt = other.getATTRCount();
+
+	for (int i = 0; i < cnt; i++) {
+		auto item = new ATTR(*other.getATTR(i));
+		addATTR(item);
+	}
 }
 
 F_INAS::~F_INAS()
@@ -19,14 +29,6 @@ F_INAS::~F_INAS()
 	{
 		delete (*i);
 	}
-
-	//POSITION pos = m_arr.GetHeadPosition();
-
-	//while (pos != NULL)
-	//{
-	//	ATTR* attr = m_arr.GetNext(pos);
-	//	delete attr;
-	//}
 }
 
 int F_INAS::GetSize()
@@ -115,10 +117,24 @@ int F_INAS::GetFieldLength()
 
 std::vector<ATTR*> F_INAS::GetAllAttributes()
 {
-	std::vector<ATTR*> result;
-	for (auto i = m_arr.begin(); i != m_arr.end(); i++) {
-		result.push_back(*i);
+	return m_arr;
+}
+
+int F_INAS::getATTRCount() const
+{
+	return m_arr.size();
+}
+
+ATTR* F_INAS::getATTR(int index) const
+{
+	if (index < 0 || index >= getATTRCount()) {
+		return nullptr;
 	}
 
-	return result;
+	return m_arr.at(index);
+}
+
+void F_INAS::addATTR(ATTR* value)
+{
+	m_arr.push_back(value);
 }

@@ -7,15 +7,17 @@ class SCurve : public SAbstractCurve
 {
 public:
 	SCurve();
+	SCurve(const SCurve& other);
 	virtual ~SCurve();
 	
 public:
 	int m_numPoints = 0;
 	SPoint* m_pPoints = nullptr;
-	ID2D1PathGeometry* pGeometry = nullptr;
-
+	
 	bool m_masking = false;
 	bool suppress = false;
+
+	ID2D1PathGeometry* pGeometry = nullptr;
 
 private:
 	//int m_id = 0;
@@ -25,8 +27,8 @@ public:
 
 	int GetRCID();
 	
-	int GetNumPoints();
-	int getNumPoint() override;
+	int GetNumPoints() const;
+	int getNumPoint() const override;
 
 	double GetX(int index) override;
 	double GetY(int index) override;
@@ -64,4 +66,6 @@ public:
 	bool GetSuppress();
 
 	bool isDraw();
+
+	virtual SAbstractCurve* clone() override;
 };

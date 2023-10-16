@@ -73,6 +73,7 @@ namespace KRS_LUA_SCRIPT_REFERENCE
 
 	std::list<Result_DrawingInstruction>* GetResultDrawingInstructions()
 	{ 
+		//ProcessS101::theInstance.m_lua_session->push(hd_get_feature_ids());
 		ProcessS101::theInstance.m_lua_session->call("PortrayalMain");
 
 		return &resultDrawingInstructions;

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SSurface.h"
 #include "SCommonFuction.h"
+#include "GISLibrary.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 #include "../GeoMetryLibrary/Scaler.h"
@@ -12,6 +13,36 @@
 SSurface::SSurface()
 {
 	
+}
+
+SSurface::SSurface(const SSurface& other)
+	: SGeometry(other)
+{
+	m_numParts = other.m_numParts;
+	m_numPoints = other.m_numPoints;
+
+	if (other.m_pParts) {
+		m_pParts = new int[GetNumPart()];
+		memcpy(m_pParts, other.m_pParts, GetNumPart() * sizeof(int));
+	}
+
+	if (other.m_pPoints) {
+		m_pPoints = new GeoPoint[getNumPoint()];
+		memcpy(m_pPoints, other.m_pPoints, getNumPoint() * sizeof(GeoPoint));
+	}
+
+	if (other.m_centerPoint) {
+		m_centerPoint = new GeoPoint(*other.m_centerPoint);
+	}
+
+	int curveCnt = other.curveList.size();
+	if (curveCnt > 0) {
+		for (int i = 0; i < curveCnt; i++) {
+			AddCurve(other.GetRing(i));
+		}
+	}
+
+	CreateD2Geometry(gisLib->D2.Factory());
 }
 
 SSurface::SSurface(MBR* mbr)
@@ -54,6 +85,13 @@ SSurface::~SSurface()
 	m_centerPoint = nullptr;
 
 	SafeRelease(&pGeometry);
+
+	for (auto i = curveList.begin(); i != curveList.end(); i++) {
+		delete (*i);
+		*i = nullptr;
+	}
+
+	curveList.clear();
 }
 
 SGeometryType SSurface::GetType()
@@ -331,14 +369,9 @@ ID2D1PathGeometry* SSurface::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* sc
 	return nullptr;
 }
 
-void SSurface::AddCurve(SCurve* curve)
+void SSurface::AddCurve(SAbstractCurve* curve)
 {
 	curveList.push_back(curve);
-}
-
-void SSurface::AddCompositeCurve(SCompositeCurve* compositeCurve)
-{
-	curveList.push_back(compositeCurve);
 }
 
 void SSurface::Init()
@@ -583,27 +616,25 @@ double SSurface::GetY()
 	return GetXY(0, 0).GetY();
 }
 
-int SSurface::GetRingCount()
+int SSurface::GetRingCount() const
 {
 	return curveList.size();
 }
 
-SAbstractCurve* SSurface::GetRing(int index)
+SAbstractCurve* SSurface::GetRing(int index) const
 {
 	if (index >= 0 && index < GetRingCount())
 	{
-		auto i = curveList.begin();
-		std::advance(i, index);
-		return *i;
+		return curveList.at(index);
 	}
 
 	return nullptr;
 }
 
-std::list<SAbstractCurve*> SSurface::GetCurveList()
-{
-	return curveList;
-}
+//std::vector<SAbstractCurve*> SSurface::GetCurveList()
+//{
+//	return curveList;
+//}
 
 SCurve* SSurface::GetCurve(int rcid)
 {

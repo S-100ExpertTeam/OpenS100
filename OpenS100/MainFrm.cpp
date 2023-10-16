@@ -34,7 +34,7 @@ static UINT indicators[] =
 // CMainFrame create/destroy
 CMainFrame::CMainFrame() noexcept
 {
-
+	_CrtSetBreakAlloc(190);
 }
 
 CMainFrame::~CMainFrame()

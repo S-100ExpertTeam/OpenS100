@@ -21,10 +21,10 @@ namespace GF
 	{
 	public:
 		FeatureType();
-		~FeatureType();
+		FeatureType(const FeatureType& other);
+		virtual ~FeatureType();
 
 	public:
-		//std::vector<ThematicAttributeType*> attributes;
 		std::vector<FeatureAssociationType> featureAssociations;
 		SpatialAttributeType* spatial = nullptr;
 
@@ -51,7 +51,7 @@ namespace GF
 		// Need release by a user.
 		virtual GM::Object* GetGMGeometry();
 
-		//virtual int GetAttributeCount();
+		virtual int GetAttributeCount();
 
 		//virtual ThematicAttributeType* GetAttribute(int index);
 

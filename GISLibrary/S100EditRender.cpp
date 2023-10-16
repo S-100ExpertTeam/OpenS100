@@ -53,27 +53,27 @@ void S100EditRender::ShowPoint()
 
 		if (110 == rcnm)
 		{
-			auto point = (SPoint*)feature->m_geometry;
+			auto point = (SPoint*)feature->GetGeometry();
 			ShowPoint(point);
 		}
 		else if (115 == rcnm)
 		{
-			auto multiPoint = (SMultiPoint*)feature->m_geometry;
+			auto multiPoint = (SMultiPoint*)feature->GetGeometry();
 			ShowPoint(multiPoint);
 		}
 		else if (120 == rcnm)
 		{
-			auto curve = (SCurve*)feature->m_geometry;
+			auto curve = (SCurve*)feature->GetGeometry();
 			ShowPoint(curve);
 		}
 		else if (125 == rcnm)
 		{
-			auto compositeCurve = (SCompositeCurve*)feature->m_geometry;
+			auto compositeCurve = (SCompositeCurve*)feature->GetGeometry();
 			ShowPoint(compositeCurve);
 		}
 		else if (130 == rcnm)
 		{
-			auto surface = (SSurface*)feature->m_geometry;
+			auto surface = (SSurface*)feature->GetGeometry();
 			ShowPoint(surface);
 		}
 	}
@@ -345,27 +345,27 @@ void S100EditRender::SelectByScreen(int sx, int sy)
 
 		if (110 == rcnm)
 		{
-			auto point = (SPoint*)feature->m_geometry;
+			auto point = (SPoint*)feature->GetGeometry();
 			SelectByScreen(sx, sy, point);
 		}
 		else if (115 == rcnm)
 		{
-			auto multiPoint = (SMultiPoint*)feature->m_geometry;
+			auto multiPoint = (SMultiPoint*)feature->GetGeometry();
 			SelectByScreen(sx, sy, multiPoint);
 		}
 		else if (120 == rcnm)
 		{
-			auto curve = (SCurve*)feature->m_geometry;
+			auto curve = (SCurve*)feature->GetGeometry();
 			SelectByScreen(sx, sy, curve);
 		}
 		else if (125 == rcnm)
 		{
-			auto compositeCurve = (SCompositeCurve*)feature->m_geometry;
+			auto compositeCurve = (SCompositeCurve*)feature->GetGeometry();
 			SelectByScreen(sx, sy, compositeCurve);
 		}
 		else if (130 == rcnm)
 		{
-			auto surface = (SSurface*)feature->m_geometry;
+			auto surface = (SSurface*)feature->GetGeometry();
 			SelectByScreen(sx, sy, surface);
 		}
 	}
@@ -565,33 +565,33 @@ void S100EditRender::UpdatePoint(int sx, int sy)
 
 		if (110 == rcnm)
 		{
-			auto point = (SPoint*)feature->m_geometry;
+			auto point = (SPoint*)feature->GetGeometry();
 			UpdatePoint(sx, sy, point);
-			feature->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
+			point->CreateD2Geometry(gisLib->D2.pD2Factory);
 		}
 		else if (115 == rcnm)
 		{
-			auto multiPoint = (SMultiPoint*)feature->m_geometry;
+			auto multiPoint = (SMultiPoint*)feature->GetGeometry();
 			UpdatePoint(sx, sy, multiPoint);
-			feature->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
+			multiPoint->CreateD2Geometry(gisLib->D2.pD2Factory);
 		}
 		else if (120 == rcnm)
 		{
-			auto curve = (SCurve*)feature->m_geometry;
+			auto curve = (SCurve*)feature->GetGeometry();
 			UpdatePoint(sx, sy, curve);
-			feature->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
+			curve->CreateD2Geometry(gisLib->D2.pD2Factory);
 		}
 		else if (125 == rcnm)
 		{
-			auto compositeCurve = (SCompositeCurve*)feature->m_geometry;
+			auto compositeCurve = (SCompositeCurve*)feature->GetGeometry();
 			UpdatePoint(sx, sy, compositeCurve);
-			feature->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
+			compositeCurve->CreateD2Geometry(gisLib->D2.pD2Factory);
 		}
 		else if (130 == rcnm)
 		{
-			auto surface = (SSurface*)feature->m_geometry;
+			auto surface = (SSurface*)feature->GetGeometry();
 			UpdatePoint(sx, sy, surface);
-			feature->m_geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
+			surface->CreateD2Geometry(gisLib->D2.pD2Factory);
 		}
 	}
 }

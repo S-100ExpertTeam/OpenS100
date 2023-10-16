@@ -9,10 +9,11 @@ class SCompositeCurve : public SAbstractCurve
 {
 public:
 	SCompositeCurve();
+	SCompositeCurve(const SCompositeCurve& other);
 	virtual ~SCompositeCurve();
 
 private:
-	std::list<SAbstractCurve*> m_listCurveLink;
+	std::vector<SAbstractCurve*> m_listCurveLink;
 
 public:
 	SGeometryType GetType() override;
@@ -37,7 +38,7 @@ public:
 	void Release();
 
 	int GetPointCount();
-	int getNumPoint() override;
+	int getNumPoint() const override;
 
 	GeoPoint GetXY(int index);
 	void Set(int index, double x, double y) override;
@@ -47,13 +48,15 @@ public:
 	double GetX(int index) override;
 	double GetY(int index) override;
 
-	int GetCurveCount();
+	int GetCurveCount() const;
 	SAbstractCurve* GetCurve(int index);
 
-	std::list<SAbstractCurve*> GetCurveList();
+	std::vector<SAbstractCurve*> GetCurveList();
 
 	SCurve* GetCurveByRCID(int rcid);
 
 	void GetCurveList(std::list<SCurve*>& list);
 	void setSuppress(bool value);
+
+	virtual SAbstractCurve* clone() override;
 };

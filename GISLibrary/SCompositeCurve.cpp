@@ -10,8 +10,27 @@ SCompositeCurve::SCompositeCurve()
 	
 }
 
+SCompositeCurve::SCompositeCurve(const SCompositeCurve& other)
+	: SAbstractCurve(other)
+{
+	int cnt = GetCurveCount();
+	for (int i = 0; i < cnt; i++) {
+		auto curve = GetCurve(i);
+		if (curve) {
+			auto cloned = curve->clone();
+			AddCurve(cloned);
+		}
+	}
+}
+
 SCompositeCurve::~SCompositeCurve()
 {
+	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++) {
+		delete (*i);
+		*i = nullptr;
+	}
+
+	m_listCurveLink.clear();
 }
 
 SGeometryType SCompositeCurve::GetType()
@@ -192,7 +211,7 @@ int SCompositeCurve::GetPointCount()
 	return getNumPoint();
 }
 
-int SCompositeCurve::getNumPoint()
+int SCompositeCurve::getNumPoint() const
 {
 	int count = 0;
 
@@ -274,7 +293,7 @@ double SCompositeCurve::GetY(int index)
 	return GetXY(index).GetY();
 }
 
-int SCompositeCurve::GetCurveCount()
+int SCompositeCurve::GetCurveCount() const
 {
 	return m_listCurveLink.size();
 }
@@ -291,7 +310,7 @@ SAbstractCurve* SCompositeCurve::GetCurve(int index)
 	return nullptr;
 }
 
-std::list<SAbstractCurve*> SCompositeCurve::GetCurveList()
+std::vector<SAbstractCurve*> SCompositeCurve::GetCurveList()
 {
 	return m_listCurveLink;
 }
@@ -339,4 +358,9 @@ void SCompositeCurve::setSuppress(bool value)
 			compositeCurve->setSuppress(value);
 		}
 	}
+}
+
+SAbstractCurve* SCompositeCurve::clone()
+{
+	return new SCompositeCurve(*this);
 }

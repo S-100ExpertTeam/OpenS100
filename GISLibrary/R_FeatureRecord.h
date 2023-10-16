@@ -28,6 +28,7 @@ class R_FeatureRecord : public GF::FeatureType, public Record
 {
 public:
 	R_FeatureRecord();
+	R_FeatureRecord(const R_FeatureRecord& other);
 	virtual ~R_FeatureRecord();
 
 public:
@@ -40,23 +41,7 @@ public:
 	std::list<F_FASC*> m_fasc;
 	std::list<F_MASK*> m_mask;
 
-	SGeometry *m_geometry = nullptr;
-
-	// -1은 유효하지 않은 Priority
-	// No geometry이거나 Drawing Instruction이 없는 경우 -1
-	// Feature와 같은 Primitive의 Drawing Instruction의 우선순위만 계산
-	//int minimumDisplayPriority = -1;
-	//int maximumDisplayPriority = -1;
-
-	/*
-	0: none
-	1: Prohibited Area
-	2: Navigational Hazard
-	3: Safety Contour
-	*/
-	//int m_alertIndicationType = 0;
-
-	std::list<OrientedCurveRecord> m_curveList;
+	//SGeometry *m_geometry = nullptr;
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
@@ -77,12 +62,6 @@ public:
 	
 	int GetNumericCode();
 	void SetNumericCode(int numericCode);
-
-	//int MinimumDisplayPriority();
-	//void MinimumDisplayPriority(int value);
-
-	//int MaximumDisplayPriority();
-	//void MaximumDisplayPriority(int value);
 
 	// 0 : No geometry
 	// 110 ~ 130 : normal
@@ -126,6 +105,5 @@ public: // override FeatureType
 	int GetFeatureRelationCount() override;
 	std::string GetAssociatedFeatureID(int index) override;
 	SpatialPrimitiveType GetSpatialPrimitiveType() override;
-	SGeometry* GetGeometry() override;
 	GM::Object* GetGMGeometry() override;
 };

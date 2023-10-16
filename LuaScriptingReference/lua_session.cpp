@@ -63,8 +63,6 @@ void lua_session::check_status(int status)
 {
 	if (status != 0 && status != LUA_YIELD)
 	{
-		return;
-
 		const char *message = lua_tostring(m_l, -1);
 
 		std::cerr << message << "\n";

@@ -45,7 +45,6 @@ BEGIN_MESSAGE_MAP(COpenS100App, CWinAppEx)
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
 END_MESSAGE_MAP()
 
-
 COpenS100App::COpenS100App() noexcept
 {
 	m_bHiColorIcons = TRUE;
@@ -57,8 +56,6 @@ COpenS100App::COpenS100App() noexcept
 #endif
 	
 	SetAppID(_T("OpenS100.AppID.NoVersion"));
-
-	//_CrtSetBreakAlloc(189);
 }
 
 

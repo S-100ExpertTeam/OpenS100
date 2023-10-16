@@ -6,7 +6,16 @@
 
 F_ATTR::F_ATTR()
 {
+}
 
+F_ATTR::F_ATTR(const F_ATTR& other)
+{
+	auto cnt = other.getCount();
+
+	for (int i = 0; i < cnt; i++) {
+		auto item = new ATTR(*other.getATTR(i));
+		Insert(item);
+	}
 }
 
 F_ATTR::~F_ATTR()
@@ -88,13 +97,16 @@ void F_ATTR::Insert(ATTR* attr)
 	m_arr.push_back(attr);
 }
 
-//int F_ATTR::GetNewAttributeIndex(ATTR* attr, int paix)
-//{
-//	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
-//	{
-//		auto currentATTR = *i;
-//
-//		//if (attr->m_natc == currentATTR->m_natc && 
-//		//	pait)
-//	}
-//}
+int F_ATTR::getCount() const
+{
+	return m_arr.size();
+}
+
+ATTR* F_ATTR::getATTR(int index) const
+{
+	if (index < 0 || index >= m_arr.size()) {
+		return nullptr;
+	}
+
+	return m_arr.at(index);
+}

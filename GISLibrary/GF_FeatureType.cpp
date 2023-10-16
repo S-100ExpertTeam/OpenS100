@@ -10,15 +10,30 @@ namespace GF
 
 	}
 
+	FeatureType::FeatureType(const FeatureType& other)
+		: ObjectType(other)
+	{
+		featureAssociations = other.featureAssociations;
+		spatial = new SpatialAttributeType(*other.spatial);
+		geometry = new SGeometry(*other.geometry);
+	}
+
 	FeatureType::~FeatureType()
 	{
 		delete spatial;
+
+		if (geometry)
+		{
+			geometry->Release();
+			delete geometry;
+			geometry = nullptr;
+		}
 	}
 
-	//int FeatureType::GetAttributeCount()
-	//{
-	//	return attributes.size();
-	//}
+	int FeatureType::GetAttributeCount()
+	{
+		return ObjectType::GetAttributeCount();
+	}
 
 	//ThematicAttributeType* FeatureType::GetAttribute(int index)
 	//{

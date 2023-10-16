@@ -7,10 +7,11 @@ class F_SPAS : Field
 {
 public:
 	F_SPAS();
+	F_SPAS(const F_SPAS& other);
 	virtual ~F_SPAS();
 
 public:
-	std::list<SPAS*> m_arr;
+	std::vector<SPAS*> m_arr;
 
 public:
 	void ReadField(BYTE *&buf);
@@ -18,4 +19,8 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	int getCount() const;
+	SPAS* getSPAS(int index) const;
+	void addSPAS(SPAS* item);
 };

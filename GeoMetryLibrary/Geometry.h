@@ -51,7 +51,7 @@ public:
 
 	virtual std::string ToString() { return ""; }
 
-	virtual int getNumPoint() { return 0; };
+	virtual int getNumPoint() const { return 0; };
 
 public:
 

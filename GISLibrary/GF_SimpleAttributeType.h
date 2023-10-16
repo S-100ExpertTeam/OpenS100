@@ -22,5 +22,6 @@ namespace GF
 
 		virtual std::string GetValue() override;
 		virtual bool IsSimple() override;
+		virtual ThematicAttributeType* clone() override;
 	};
 }

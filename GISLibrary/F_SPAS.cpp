@@ -9,6 +9,16 @@ F_SPAS::F_SPAS(void)
 
 }
 
+F_SPAS::F_SPAS(const F_SPAS& other)
+{
+	auto cnt = other.getCount();
+
+	for (int i = 0; i < cnt; i++) {
+		auto item = new SPAS(*other.getSPAS(i));
+		addSPAS(item);
+	}
+}
+
 F_SPAS::~F_SPAS(void)
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
@@ -75,4 +85,23 @@ int F_SPAS::GetFieldLength()
 		len += SPAS::GetSize();
 	}
 	return ++len;
+}
+
+int F_SPAS::getCount() const
+{
+	return m_arr.size();
+}
+
+SPAS* F_SPAS::getSPAS(int index) const
+{
+	if (index < 0 || index >= getCount()) {
+		return nullptr;
+	}
+
+	return m_arr.at(index);
+}
+
+void F_SPAS::addSPAS(SPAS* item)
+{
+	m_arr.push_back(item);
 }

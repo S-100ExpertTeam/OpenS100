@@ -285,9 +285,6 @@
     <ClCompile Include="CSAX.cpp">
       <Filter>S101\Field</Filter>
     </ClCompile>
-    <ClCompile Include="FASC.cpp">
-      <Filter>S101\Field</Filter>
-    </ClCompile>
     <ClCompile Include="CUCO.cpp">
       <Filter>S101\Field</Filter>
     </ClCompile>
@@ -717,18 +714,6 @@
     <ClCompile Include="Measure.cpp">
       <Filter>S100</Filter>
     </ClCompile>
-    <ClCompile Include="Length.cpp">
-      <Filter>S100</Filter>
-    </ClCompile>
-    <ClCompile Include="Angle.cpp">
-      <Filter>S100</Filter>
-    </ClCompile>
-    <ClCompile Include="indeterminatePosition.cpp">
-      <Filter>S100</Filter>
-    </ClCompile>
-    <ClCompile Include="IndeterminateDate.cpp">
-      <Filter>S100</Filter>
-    </ClCompile>
     <ClCompile Include="GM_Ring.cpp">
       <Filter>S100\GM</Filter>
     </ClCompile>
@@ -743,6 +728,18 @@
     </ClCompile>
     <ClCompile Include="GM_SurfaceBoundary.cpp">
       <Filter>S100\GM</Filter>
+    </ClCompile>
+    <ClCompile Include="Angle.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="IndeterminateDate.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="indeterminatePosition.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="Length.cpp">
+      <Filter>S100</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -981,9 +978,6 @@
       <Filter>S101\Field</Filter>
     </ClInclude>
     <ClInclude Include="CUCO.h">
-      <Filter>S101\Field</Filter>
-    </ClInclude>
-    <ClInclude Include="FASC.h">
       <Filter>S101\Field</Filter>
     </ClInclude>
     <ClInclude Include="MASK.h">
@@ -1472,18 +1466,6 @@
     <ClInclude Include="Measure.h">
       <Filter>S100</Filter>
     </ClInclude>
-    <ClInclude Include="Length.h">
-      <Filter>S100</Filter>
-    </ClInclude>
-    <ClInclude Include="Angle.h">
-      <Filter>S100</Filter>
-    </ClInclude>
-    <ClInclude Include="indeterminatePosition.h">
-      <Filter>S100</Filter>
-    </ClInclude>
-    <ClInclude Include="IndeterminateDate.h">
-      <Filter>S100</Filter>
-    </ClInclude>
     <ClInclude Include="ScaleBands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1492,6 +1474,18 @@
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Length.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="Angle.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="IndeterminateDate.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="indeterminatePosition.h">
+      <Filter>S100</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
