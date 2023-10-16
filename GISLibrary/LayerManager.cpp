@@ -1048,6 +1048,8 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 		auto rootPath = pc->GetRootPath();
 		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
+		
+
 		if (pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA) {
 			ProcessS101::ProcessS101_LUA(mainRulePath, (S100Layer*)l);
 		}

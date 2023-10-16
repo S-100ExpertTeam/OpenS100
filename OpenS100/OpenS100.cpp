@@ -49,9 +49,6 @@ END_MESSAGE_MAP()
 COpenS100App::COpenS100App() noexcept
 {
 	m_bHiColorIcons = TRUE;
-
-	std::string str = "..\\TEMP"; // read path
-	int mkFlag = _mkdir(str.c_str()); //If it's new, 0, if it exists or if it's not, -1.
 	pView = nullptr;
 
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_ALL_ASPECTS;

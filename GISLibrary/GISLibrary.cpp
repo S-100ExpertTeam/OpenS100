@@ -16,12 +16,17 @@
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
+#include <direct.h>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 CGISLibraryApp::CGISLibraryApp()
 {
+	std::string str = "..\\TEMP"; // read path
+	int mkFlag = _mkdir(str.c_str()); //If it's new, 0, if it exists or if it's not, -1.
+
 	gisLib = this;
 
 	D2.CreateDeviceIndependentResources();
