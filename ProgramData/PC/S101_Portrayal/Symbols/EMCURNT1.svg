@@ -3,7 +3,7 @@
   <title>EMCURNT1</title>
   <desc>non-tidal current</desc>
   <metadata>
-    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
       <iho:Description iho:publisher="IHB" iho:creationDate="2014-03-16" iho:source="new" iho:format="S100SVG" iho:version="0.1"/>
     </iho:S100SVG>
   </metadata>

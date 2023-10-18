@@ -3,7 +3,10 @@
 
 -- Railway main entry point.
 function Railway(feature, featurePortrayal, contextParameters)
+	local viewingGroup
+
 	if feature.PrimitiveType == PrimitiveType.Curve then
+		viewingGroup = 32250
 		if contextParameters.RadarOverlay then
 			featurePortrayal:AddInstructions('ViewingGroup:32250;DrawingPriority:12;DisplayPlane:OverRADAR')
 		else
@@ -14,4 +17,6 @@ function Railway(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
+
+	return viewingGroup
 end

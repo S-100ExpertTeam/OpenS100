@@ -1094,77 +1094,77 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 
 BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT)
 {
-	if (r->m_cuco.size() != 1)
-	{
-		return FALSE;
-	}
+	//if (r->m_cuco.size() != 1)
+	//{
+	//	return FALSE;
+	//}
 
-	for (
-		auto i = r->m_cuco.front()->m_arr.begin();
-		i != r->m_cuco.front()->m_arr.end();
-		i++)
-	{
-		auto cuco = *i;
-		auto iKey = cuco->m_name.GetName();
+	for (auto i = r->m_cuco.begin(); i != r->m_cuco.end(); i++) {
+		auto f_cuco = *i;
+		for (auto j = f_cuco->m_arr.begin(); j != f_cuco->m_arr.end(); j++) {
+			auto cuco = *j;
 
-		if (cuco->m_name.RCNM == 120)
-		{
-			R_CurveRecord* cr = nullptr;
-			
-			if (m_curMap.Lookup(iKey, cr))
+			auto iKey = cuco->m_name.GetName();
+
+			if (cuco->m_name.RCNM == 120)
 			{
-				SCurve* scurve = new SCurve();
-				scurve->SetID(cuco->m_name.RCID);
-				int localORNT = cuco->m_ornt;
-				
-				if (ORNT == 2)
-				{
-					if (cuco->m_ornt == 1)
-					{
-						localORNT = 2;
-					}
-					else if (cuco->m_ornt == 2)
-					{
-						localORNT = 1;
-					}
-				}
+				R_CurveRecord* cr = nullptr;
 
-				if (GetFullSpatialData(cr, scurve, localORNT))
+				if (m_curMap.Lookup(iKey, cr))
 				{
-					curve->AddCurve(scurve);
+					SCurve* scurve = new SCurve();
+					scurve->SetID(cuco->m_name.RCID);
+					int localORNT = cuco->m_ornt;
+
+					if (ORNT == 2)
+					{
+						if (cuco->m_ornt == 1)
+						{
+							localORNT = 2;
+						}
+						else if (cuco->m_ornt == 2)
+						{
+							localORNT = 1;
+						}
+					}
+
+					if (GetFullSpatialData(cr, scurve, localORNT))
+					{
+						curve->AddCurve(scurve);
+					}
+					else
+					{
+						return FALSE;
+					}
 				}
 				else
 				{
+					// Failed to find curve record
+					return FALSE;
+				}
+			}
+			else if (cuco->m_name.RCNM == 125)
+			{
+				R_CompositeRecord* ccr = nullptr;
+
+				if (m_comMap.Lookup(iKey, ccr))
+				{
+					auto scc = new SCompositeCurve();
+					scc->SetID(cuco->m_name.RCID);
+					GetFullSpatialData(ccr, scc, cuco->m_ornt);
+					curve->AddCurve(scc);
+				}
+				else
+				{
+					// Failed to find composite curve record
 					return FALSE;
 				}
 			}
 			else
 			{
-				// Failed to find curve record
+				// Invalid rcnm
 				return FALSE;
 			}
-		}
-		else if (cuco->m_name.RCNM == 125)
-		{
-			R_CompositeRecord* ccr = nullptr;
-
-			if (m_comMap.Lookup(iKey, ccr))
-			{
-				auto scc = new SCompositeCurve();
-				scc->SetID(cuco->m_name.RCID);
-				GetFullSpatialData(ccr, scc, cuco->m_ornt);
-				curve->AddCurve(scc);
-			}
-			else
-			{
-				// Failed to find composite curve record
-				return FALSE;
-			}
-		}
-		else
-		{
-			// Invalid rcnm
-			return FALSE;
 		}
 	}
 
@@ -4826,23 +4826,33 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 			
 			for (auto i = geom->component.begin(); i != geom->component.end(); i++)
 			{
-				auto id = (*i)->baseCurveID;
-				if (std::string::npos != id.find("occ"))
-				{
-					ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 2);
+				//auto id = (*i)->baseCurveID;
+				auto id = (*i)->GetID();
+
+				auto curve = gml.GetOrientableCurve(id);
+				if (curve) {
+					auto type = curve->GetType();
+					if (type == GM::GeometryType::Curve) {
+
+					}
 				}
-				else if (std::string::npos != id.find("cc"))
-				{
-					ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 1);
-				}
-				else if (std::string::npos != id.find("oc"))
-				{
-					ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 2);
-				}
-				else if (std::string::npos != id.find("c"))
-				{
-					ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 1);
-				}
+
+				//if (std::string::npos != id.find("occ"))
+				//{
+				//	ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 2);
+				//}
+				//else if (std::string::npos != id.find("cc"))
+				//{
+				//	ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 1);
+				//}
+				//else if (std::string::npos != id.find("oc"))
+				//{
+				//	ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 2);
+				//}
+				//else if (std::string::npos != id.find("c"))
+				//{
+				//	ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 1);
+				//}
 			}
 
 			InsertCompositeCurveRecord(ccr->GetRecordName().GetName(), ccr);

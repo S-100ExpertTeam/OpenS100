@@ -1,20 +1,34 @@
 -- WRECKS05 conditional symbology rules file.
+-- #72
+-- #89
+-- #90
+-- #119
 
 -- Referenced CSPs.
+require 'DEPVAL02'
 require 'QUAPNT02'
 require 'SNDFRM04'
 require 'UDWHAZ05'
 
 -- Main entry point for CSP.
-function WRECKS05(feature, featurePortrayal, contextParameters)
+function WRECKS05(feature, featurePortrayal, contextParameters, originalViewingGroup)
 	Debug.StartPerformance('Lua Code - WRECKS05')
 
 	local DEPTH_VALUE = feature.valueOfSounding or feature.defaultClearanceDepth
 
 	if not DEPTH_VALUE then
-		if feature.categoryOfWreck == 1 then
+		local LEAST_DEPTH, SEABED_DEPTH = DEPVAL02(feature)
+		if LEAST_DEPTH then
+			DEPTH_VALUE = LEAST_DEPTH
+		elseif feature.categoryOfWreck == 1 then
 			-- non-dangerous wreck
 			DEPTH_VALUE = CreateScaledDecimal(201, 1)
+			if SEABED_DEPTH then
+				LEAST_DEPTH = SEABED_DEPTH - CreateScaledDecimal(66)
+				if LEAST_DEPTH >= CreateScaledDecimal(201, 1) then
+					DEPTH_VALUE = LEAST_DEPTH
+				end
+			end
 		elseif feature.waterLevelEffect == 3 or feature.waterLevelEffect == 5 then
 			-- always under water/submerged OR awash
 			DEPTH_VALUE = scaledDecimalZero
@@ -23,7 +37,7 @@ function WRECKS05(feature, featurePortrayal, contextParameters)
 		end
 	end
 
-	local hazardSymbol = UDWHAZ05(feature, featurePortrayal, contextParameters, DEPTH_VALUE)
+	local hazardSymbol, viewingGroup = UDWHAZ05(feature, featurePortrayal, contextParameters, DEPTH_VALUE, originalViewingGroup)
 	local qualitySymbol = QUAPNT02(feature, featurePortrayal, contextParameters)
 
 	if feature.PrimitiveType == PrimitiveType.Point then
@@ -31,7 +45,7 @@ function WRECKS05(feature, featurePortrayal, contextParameters)
 			featurePortrayal:AddInstructions('PointInstruction:' .. hazardSymbol)
 
 			if qualitySymbol then
-				featurePortrayal:AddInstructions('ViewingGroup:31011;PointInstruction:' .. qualitySymbol)
+				featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31011,accuracy;PointInstruction:' .. qualitySymbol)
 			end
 		else
 			-- Continuation A
@@ -48,12 +62,6 @@ function WRECKS05(feature, featurePortrayal, contextParameters)
 					featurePortrayal:AddInstructions('PointInstruction:' .. symbol)
 				end
 			else
-				if contextParameters.RadarOverlay then
-					featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:OverRADAR')
-				else
-					featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:UnderRADAR')
-				end
-
 				if feature.categoryOfWreck then
 					if feature.categoryOfWreck == 1 and feature.waterLevelEffect == 3 then
 						featurePortrayal:AddInstructions('PointInstruction:WRECKS04')
@@ -70,7 +78,7 @@ function WRECKS05(feature, featurePortrayal, contextParameters)
 			end
 
 			if qualitySymbol then
-				featurePortrayal:AddInstructions('ViewingGroup:31011;PointInstruction:' .. qualitySymbol)
+				featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31011,accuracy;PointInstruction:' .. qualitySymbol)
 			end
 		end
 	else
@@ -95,12 +103,6 @@ function WRECKS05(feature, featurePortrayal, contextParameters)
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
 				end
 			else
-				if contextParameters.RadarOverlay then
-					featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:OverRADAR')
-				else
-					featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:UnderRADAR')
-				end
-
 				if feature.waterLevelEffect == 1 or feature.waterLevelEffect == 2 then
 					featurePortrayal:SimpleLineStyle('solid',0.64,'CSTLN')
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
@@ -141,9 +143,10 @@ function WRECKS05(feature, featurePortrayal, contextParameters)
 		end
 
 		if qualitySymbol then
-			featurePortrayal:AddInstructions('ViewingGroup:31011;PointInstruction:' .. qualitySymbol)
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31011,accuracy;PointInstruction:' .. qualitySymbol)
 		end
 	end
 
 	Debug.StopPerformance('Lua Code - WRECKS05')
+	return viewingGroup
 end

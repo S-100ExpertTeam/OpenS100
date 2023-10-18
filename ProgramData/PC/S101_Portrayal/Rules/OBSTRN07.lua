@@ -1,18 +1,26 @@
 -- OBSTRN07 conditional symbology rules file.
+-- #72
+-- #89
+-- #90
+-- #119
 
 -- Referenced CSPs.
+require 'DEPVAL02'
 require 'QUAPNT02'
 require 'UDWHAZ05'
 require 'SNDFRM04'
 
 -- Main entry point for CSP.
-function OBSTRN07(feature, featurePortrayal, contextParameters)
+function OBSTRN07(feature, featurePortrayal, contextParameters, originalViewingGroup)
 	Debug.StartPerformance('Lua Code - OBSTRN07')
 
 	local DEPTH_VALUE = feature.valueOfSounding or feature.defaultClearanceDepth
 
 	if not DEPTH_VALUE then
-		if feature['!categoryOfObstruction'] == 6 or feature.waterLevelEffect == 3 then
+		local LEAST_DEPTH, SEABED_DEPTH = DEPVAL02(feature)
+		if LEAST_DEPTH then
+			DEPTH_VALUE = LEAST_DEPTH
+		elseif feature['!categoryOfObstruction'] == 6 or feature.waterLevelEffect == 3 then
 			DEPTH_VALUE = CreateScaledDecimal(1, 2)
 		elseif feature.waterLevelEffect == 5 then
 			DEPTH_VALUE = scaledDecimalZero
@@ -21,8 +29,8 @@ function OBSTRN07(feature, featurePortrayal, contextParameters)
 		end
 	end
 
-	local hazardSymbol = UDWHAZ05(feature, featurePortrayal, contextParameters, DEPTH_VALUE)
-
+	local hazardSymbol, viewingGroup = UDWHAZ05(feature, featurePortrayal, contextParameters, DEPTH_VALUE, originalViewingGroup)
+	
 	local valueOfSounding = feature.valueOfSounding
 
 	if feature.PrimitiveType == PrimitiveType.Point then
@@ -33,8 +41,7 @@ function OBSTRN07(feature, featurePortrayal, contextParameters)
 			featurePortrayal:AddInstructions('PointInstruction:' .. hazardSymbol)
 
 			if qualitySymbol then
-				featurePortrayal:AddInstructions('ViewingGroup:31011')
-				featurePortrayal:AddInstructions('PointInstruction:' .. qualitySymbol)
+				featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup ..	',31011,accuracy;PointInstruction:' .. qualitySymbol)
 			end
 		else
 			local sounding = false
@@ -95,8 +102,7 @@ function OBSTRN07(feature, featurePortrayal, contextParameters)
 			end
 
 			if qualitySymbol then
-				featurePortrayal:AddInstructions('ViewingGroup:31011')
-				featurePortrayal:AddInstructions('PointInstruction:' .. qualitySymbol)
+				featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31011,accuracy;PointInstruction:' .. qualitySymbol)
 			end
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Curve then
@@ -118,7 +124,9 @@ function OBSTRN07(feature, featurePortrayal, contextParameters)
 				featurePortrayal:SimpleLineStyle('dot',0.64,'CHBLK')
 				featurePortrayal:AddInstructions('LineInstruction:_simple_')
 			else
-				featurePortrayal:SimpleLineStyle('dash',0.64,'CHBLK')
+				-- #245 changed color from CHBLK to CHGRD for consistency with surface symbolization. ENCWG notified
+				-- about inconsistency in S-52 PL 4.0.3 OBSTRN07 CSP.
+				featurePortrayal:SimpleLineStyle('dash',0.64,'CHGRD')
 				featurePortrayal:AddInstructions('LineInstruction:_simple_')
 			end
 
@@ -127,9 +135,7 @@ function OBSTRN07(feature, featurePortrayal, contextParameters)
 
 		if hazardSymbol then
 			featurePortrayal:AddInstructions('LinePlacement:Relative,0.5;PointInstruction:' .. hazardSymbol)
-		end
-
-		if valueOfSounding then
+		elseif valueOfSounding then
 			local symbols = SNDFRM04(feature, featurePortrayal, contextParameters, nil, valueOfSounding)
 
 			for _, symbol in ipairs(symbols) do
@@ -148,7 +154,8 @@ function OBSTRN07(feature, featurePortrayal, contextParameters)
 				featurePortrayal:SimpleLineStyle('dot',0.64,'CHBLK')
 				featurePortrayal:AddInstructions('LineInstruction:_simple_')
 			else
-				featurePortrayal:SimpleLineStyle('dash',0.64,'CHBLK')
+				-- #245 changed color from CHBLK to CHGRD to match S-52
+				featurePortrayal:SimpleLineStyle('dash',0.64,'CHGRD')
 				featurePortrayal:AddInstructions('LineInstruction:_simple_')
 			end
 
@@ -164,11 +171,13 @@ function OBSTRN07(feature, featurePortrayal, contextParameters)
 				featurePortrayal:AddInstructions('LineInstruction:_simple_')
 			elseif contains(feature.waterLevelEffect, {1, 2}) then
 				featurePortrayal:AddInstructions('ColorFill:CHBRN')
-				featurePortrayal:SimpleLineStyle('solid',0.64,'CHBLK')
+				-- #245 changed color from CHBLK to CSTLN to match S-52
+				featurePortrayal:SimpleLineStyle('solid',0.64,'CSTLN')
 				featurePortrayal:AddInstructions('LineInstruction:_simple_')
 			elseif feature.waterLevelEffect == 4 then
 				featurePortrayal:AddInstructions('ColorFill:DEPIT')
-				featurePortrayal:SimpleLineStyle('dash',0.64,'CHBLK')
+				-- #245 changed color from CHBLK to CSTLN to match S-52
+				featurePortrayal:SimpleLineStyle('dash',0.64,'CSTLN')
 				featurePortrayal:AddInstructions('LineInstruction:_simple_')
 			else
 				featurePortrayal:AddInstructions('ColorFill:DEPVS')
@@ -180,10 +189,10 @@ function OBSTRN07(feature, featurePortrayal, contextParameters)
 		local qualitySymbol = QUAPNT02(feature, featurePortrayal, contextParameters)
 
 		if qualitySymbol then
-			featurePortrayal:AddInstructions('ViewingGroup:31011')
-			featurePortrayal:AddInstructions('PointInstruction:' .. qualitySymbol)
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31011,accuracy;PointInstruction:' .. qualitySymbol)
 		end
 	end
 
 	Debug.StopPerformance('Lua Code - OBSTRN07')
+	return viewingGroup
 end

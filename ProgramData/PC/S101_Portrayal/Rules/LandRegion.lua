@@ -1,8 +1,11 @@
 -- Converter Version: 0.99
 -- Feature Catalogue Version: 1.0.0 (2019/4/9)
+-- #194
 
 -- Land region main entry point.
 function LandRegion(feature, featurePortrayal, contextParameters)
+	local viewingGroup = 21060
+
 	if feature.PrimitiveType == PrimitiveType.Point then
 		-- Simplified and paper chart points use the same symbolization
 		if contextParameters.RadarOverlay then
@@ -12,7 +15,8 @@ function LandRegion(feature, featurePortrayal, contextParameters)
 		end
 		featurePortrayal:AddInstructions('PointInstruction:POSGEN04')
 		if feature.featureName[1] and feature.featureName[1].name then
-			featurePortrayal:AddInstructions('LocalOffset:0,3.51;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10;TextInstruction:' .. EncodeString(GetFeatureName(feature, contextParameters)) .. ',26,24')
+			featurePortrayal:AddInstructions('LocalOffset:0,3.51;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+			featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, 21060, 12)
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Surface and contextParameters.PlainBoundaries then
 		if contains(2, feature.categoryOfLandRegion) then
@@ -24,7 +28,10 @@ function LandRegion(feature, featurePortrayal, contextParameters)
 		else
 			featurePortrayal:AddInstructions('ViewingGroup:21060;DrawingPriority:9;DisplayPlane:UnderRADAR')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10;TextInstruction:' .. EncodeString(GetFeatureName(feature, contextParameters)) .. ',26,24')
+				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, 21060, 9)
+			else
+				featurePortrayal:AddInstructions('NullInstruction')
 			end
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
@@ -37,14 +44,24 @@ function LandRegion(feature, featurePortrayal, contextParameters)
 		else
 			featurePortrayal:AddInstructions('ViewingGroup:21060;DrawingPriority:9;DisplayPlane:UnderRADAR')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10;TextInstruction:' .. EncodeString(GetFeatureName(feature, contextParameters)) .. ',26,24')
+				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, 21060, 9)
+			else
+				featurePortrayal:AddInstructions('NullInstruction')
 			end
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Curve then
-		--TODO: Determine S-101 portrayal for LandRegion curve feature.
-		featurePortrayal:AddInstructions('ViewingGroup:21010;DrawingPriority:15;PointInstruction:testPCB')
-		Debug.Trace('Warning: S-52 does not define portrayal for LandRegion curve features.')
+		-- #235: implement LandRegion curve portrayal
+		featurePortrayal:AddInstructions('ViewingGroup:21060;DrawingPriority:9;DisplayPlane:UnderRADAR')
+		if feature.featureName[1] and feature.featureName[1].name then
+			featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+			featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, 21060, 9)
+		else
+			featurePortrayal:AddInstructions('NullInstruction')
+		end
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
+
+	return viewingGroup
 end

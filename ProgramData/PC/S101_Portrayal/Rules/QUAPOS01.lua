@@ -1,11 +1,13 @@
 -- QUAPOS01 conditional symbology rules file.
+-- #90
+-- #119
 
 -- Referenced CSPs.
 require 'QUAPNT02'
 require 'QUALIN02'
 
 -- Main entry point for CSP.
-function QUAPOS01(feature, featurePortrayal, contextParameters)
+function QUAPOS01(feature, featurePortrayal, contextParameters, viewingGroup)
 	Debug.StartPerformance('Lua Code - QUAPOS01')
 
 	if feature.PrimitiveType == PrimitiveType.Curve then
@@ -14,7 +16,7 @@ function QUAPOS01(feature, featurePortrayal, contextParameters)
 		local symbol = QUAPNT02(feature, featurePortrayal, contextParameters)
 
 		if symbol then
-			featurePortrayal:AddInstructions('ViewingGroup:12210;PointInstruction:' .. symbol)
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup ..	',31011,accuracy;PointInstruction:' .. symbol)
 		end
 	end
 

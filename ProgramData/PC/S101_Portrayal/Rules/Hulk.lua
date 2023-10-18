@@ -3,10 +3,13 @@
 
 -- Hulk main entry point.
 function Hulk(feature, featurePortrayal, contextParameters)
-	featurePortrayal:AddInstructions('AlertReference:SafetyContour,101,101')
+	local viewingGroup
+
+	featurePortrayal:AddInstructions('AlertReference:SafetyContour')
 
 	if feature.PrimitiveType == PrimitiveType.Point then
 		-- Simplified and paper chart points use the same symbolization
+		viewingGroup = 12410
 		if contextParameters.RadarOverlay then
 			featurePortrayal:AddInstructions('ViewingGroup:12410;DrawingPriority:15;DisplayPlane:OverRADAR')
 		else
@@ -15,6 +18,7 @@ function Hulk(feature, featurePortrayal, contextParameters)
 		featurePortrayal:AddInstructions('PointInstruction:HULKES01')
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
+		viewingGroup = 12410
 		featurePortrayal:AddInstructions('ViewingGroup:12410;DrawingPriority:6;DisplayPlane:UnderRADAR')
 		featurePortrayal:AddInstructions('ColorFill:CHBRN')
 		featurePortrayal:SimpleLineStyle('solid',0.64,'CSTLN')
@@ -22,4 +26,6 @@ function Hulk(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
+
+	return viewingGroup
 end

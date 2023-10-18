@@ -76,6 +76,8 @@ public:
 public:
     GF::FeatureType* GetFeatureType(std::string id) override;
     GM::Object* GetGeometry(std::string id) override;
+    
+    GM::OrientableCurve* GetOrientableCurve(std::string id);
 
 private:
     std::string DeleteXMLNamespace(std::string value);

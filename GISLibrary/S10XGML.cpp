@@ -163,6 +163,26 @@ GM::Object* S10XGML::GetGeometry(std::string id)
 	return nullptr;
 }
 
+GM::OrientableCurve* S10XGML::GetOrientableCurve(std::string id)
+{
+	auto geometry = GetGeometry(id);
+
+	if (geometry) {
+		auto type = geometry->GetType();
+		if (type == GM::GeometryType::OrientableCurve) {
+			return (GM::OrientableCurve*)geometry;
+		}
+		else if (type == GM::GeometryType::Curve) {
+			return (GM::Curve*)geometry;
+		}
+		else if (type == GM::GeometryType::CompositeCurve) {
+			return (GM::CompositeCurve*)geometry;
+		}
+	}
+
+	return nullptr;
+}
+
 bool S10XGML::ReadMembers(pugi::xml_node& node)
 {
 	auto fc = GetFC();
@@ -392,6 +412,9 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 
 GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node, std::string id, std::string srsName)
 {
+	auto gmlid = node.attribute("gml:id");
+	auto orientation = node.attribute("orientation");
+
 	auto node_baseCurve = node.child("gml:baseCurve");
 	auto attr_baseCurve_href = node_baseCurve.attribute("xlink:href");
 
@@ -403,11 +426,21 @@ GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node, std::str
 		{
 			baseCurveID = baseCurveID.substr(1);
 
-			auto object = new GM::OrientableCurve(baseCurveID);
-			object->setParentIdSrsName(id, srsName);
-			object->readIdSRSName(node);
+			auto baseCurve = GetGeometry(baseCurveID);
+			if (baseCurve) {
 
-			return object;
+				auto type = baseCurve->GetType();
+				if (type == GM::GeometryType::Curve) {
+					
+				}
+			}
+			return nullptr;
+			/*auto object = new GM::OrientableCurve(baseCurveID);
+			object->setParentIdSrsName(id, srsName);
+			object->readIdSRSName(node);*/
+
+			//return object;
+			
 		}
 	}
 	else {
@@ -454,7 +487,16 @@ GM::CompositeCurve* S10XGML::ReadCompositeCurve(pugi::xml_node& node, std::strin
 			if (curveMemberID.length() > 1 &&
 				curveMemberID.at(0) == '#')
 			{
-				object->Add(curveMemberID);
+				auto orientableCurve = GetOrientableCurve(curveMemberID);
+				if (orientableCurve) {
+					object->Add(orientableCurve);
+				}
+				else {
+					CString str;
+					str.Format(L"Failed to find curve (%S)", curveMemberID);
+					OutputDebugString(str);
+				}
+				//object->Add(curveMemberID);
 			}
 		}
 		else {
@@ -1040,7 +1082,8 @@ SMultiPoint* S10XGML::MultiPointToSMultiPoint(GM::MultiPoint* multiPoint)
 
 SAbstractCurve* S10XGML::OrientableCurveToSCurve(GM::OrientableCurve* orientableCurve)
 {
-	auto baseCurveID = orientableCurve->GetBaseCurveID();
+	//auto baseCurveID = orientableCurve->GetBaseCurveID();
+	auto baseCurveID = orientableCurve->GetID();
 
 	if (baseCurveID.find('#') != std::string::npos) {
 		baseCurveID = baseCurveID.substr(1);

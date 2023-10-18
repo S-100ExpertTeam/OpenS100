@@ -2,6 +2,9 @@
 This file contains the global functions and tables that define the S-100 Lua Scripting Model.
 These functions are intended to be called by the S-100 scripts.
 --]]
+-- #80 - modularize processing of fixed and periodic date ranges
+-- #119
+-- #207
 
 local orig_error = error
 
@@ -28,12 +31,11 @@ function EncodeString(str, fmt)
 end
 
 --
--- Time commands support
+-- Date/Time commands support
 --
 
-function ProcessTimes(feature, featurePortrayal, contextParameters)
+function ProcessPeriodicDateRanges(featurePortrayal, periodicDateRanges)
 	local dateDependent = false
-	local periodicDateRanges = feature['!periodicDateRange']
 
 	if periodicDateRanges and #periodicDateRanges > 0 then
 		for _, periodicDateRange in ipairs(periodicDateRanges) do
@@ -46,8 +48,12 @@ function ProcessTimes(feature, featurePortrayal, contextParameters)
 		dateDependent = true
 	end
 
-	local fixedDateRange = feature['!fixedDateRange']
+	return dateDependent
+end
 
+function ProcessFixedDateRange(featurePortrayal, fixedDateRange)
+	local dateDependent = false
+	
 	if fixedDateRange then
 		local dateStart = fixedDateRange.dateStart
 		local dateEnd = fixedDateRange.dateEnd
@@ -62,59 +68,87 @@ function ProcessTimes(feature, featurePortrayal, contextParameters)
 
 		dateDependent = true
 	end
+	
+	return dateDependent
+end
 
-	if dateDependent then
-		-- Clear any existing transforms and geometries
-		featurePortrayal:AddInstructions('LocalOffset:0,0;LinePlacement:Relative,0.5;AreaPlacement:VisibleParts;AreaCRS:GlobalGeometry;Rotation:PortrayalCRS,0;ScaleFactor:1;ClearGeometry')
+function ProcessFixedAndPeriodicDates(feature, featurePortrayal)
+	local periodicDependent = ProcessPeriodicDateRanges(featurePortrayal, feature['!periodicDateRange'])
+	local fixedDependent = ProcessFixedDateRange(featurePortrayal, feature['!fixedDateRange'])
+	
+	return periodicDependent or fixedDependent
+end
 
-		featurePortrayal:AddInstructions('Parent:main;Hover:true')
+function AddDateDependentSymbol(feature, featurePortrayal, contextParameters, viewingGroup)
+	-- Clear any existing transforms and geometries
+	featurePortrayal:AddInstructions('LocalOffset:0,0;LinePlacement:Relative,0.5;AreaPlacement:VisibleParts;AreaCRS:GlobalGeometry;Rotation:PortrayalCRS,0;ScaleFactor:1;ClearGeometry')
 
-		local displayPlane = contextParameters.RadarOverlay and 'DisplayPlane:OverRADAR' or 'DisplayPlane:UnderRADAR'
+	featurePortrayal:AddInstructions('Hover:true')
 
-		featurePortrayal:AddInstructions(displayPlane)
-		featurePortrayal:AddInstructions('ViewingGroup:31030;DrawingPriority:24;PointInstruction:CHDATD01')
-	end
+	local displayPlane = contextParameters.RadarOverlay and 'DisplayPlane:OverRADAR' or 'DisplayPlane:UnderRADAR'
+
+	featurePortrayal:AddInstructions(displayPlane)
+	featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31032,highlightDateDependent;DrawingPriority:24;PointInstruction:CHDATD01')
 end
 
 --
 -- Nautical information support
 --
 
-function ProcessNauticalInformation(feature, featurePortrayal, contextParameters)
-	local nauticalInformation = feature:GetInformationAssociation('AdditionalInformation', 'providesInformation', 'NauticalInformation')
+function ProcessNauticalInformation(feature, featurePortrayal, contextParameters, viewingGroup)
+	local function GetViewingGroups(container, vg31030, vg31031)
+		if container then
+			if container['!pictorialRepresentation'] then
+				vg31031 = true
+			end
 
-	if nauticalInformation then
-		-- Clear any existing transforms and geometries
-		featurePortrayal:AddInstructions('LocalOffset:0,0;LinePlacement:Relative,0.5;AreaPlacement:VisibleParts;AreaCRS:GlobalGeometry;Rotation:PortrayalCRS,0;ScaleFactor:1;ClearGeometry')
+			if container['!information'] then
+				for _, information in ipairs(container.information) do
+					if information.text then
+						vg31030 = true
+					end
 
-		featurePortrayal:AddInstructions('Parent:main;Hover:true')
+					if information.fileReference then
+						vg31031 = true
+					end
+				end
+			end
 
-		local vg31030, vg31031
-
-		if nauticalInformation.pictorialRepresentation then
-			vg31031 = true
-		end
-
-		for _, information in ipairs(nauticalInformation.information) do
-			if information.text then
+			if container['!shapeInformation'] and next(container.shapeInformation) then
 				vg31030 = true
 			end
 
-			if information.fileReference then
-				vg31031 = true
+			if container['!topmark'] and container.topmark.shapeInformation and next(container.topmark.shapeInformation) then
+				vg31030 = true
 			end
 		end
+
+		return vg31030, vg31031
+	end
+
+	local vg31030, vg31031
+
+	vg31030, vg31031 = GetViewingGroups(feature, vg31030, vg31031)
+	vg31030, vg31031 = GetViewingGroups(feature:GetInformationAssociation('AdditionalInformation', 'providesInformation', 'NauticalInformation'), vg31030, vg31031)
+	vg31030, vg31031 = GetViewingGroups(feature:GetInformationAssociation('AdditionalInformation', 'providesInformation', 'NonStandardWorkingDay'), vg31030, vg31031)
+	vg31030, vg31031 = GetViewingGroups(feature:GetInformationAssociation('AdditionalInformation', 'providesInformation', 'ServiceHours'), vg31030, vg31031)
+
+	if vg31030 or vg31031 then
+		-- Clear any existing transforms and geometries
+		featurePortrayal:AddInstructions('LocalOffset:0,0;LinePlacement:Relative,0.5;AreaPlacement:VisibleParts;AreaCRS:GlobalGeometry;Rotation:PortrayalCRS,0;ScaleFactor:1;ClearGeometry')
+
+		featurePortrayal:AddInstructions('Hover:true')
 
 		local displayPlane = contextParameters.RadarOverlay and 'DisplayPlane:OverRADAR' or 'DisplayPlane:UnderRADAR'
 
 		if vg31030 then
 			featurePortrayal:AddInstructions(displayPlane)
-			featurePortrayal:AddInstructions('ViewingGroup:31030;DrawingPriority:24;PointInstruction:INFORM01')
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31030,highlightInfo;DrawingPriority:24;PointInstruction:INFORM01')
 		end
 
 		if vg31031 then
 			featurePortrayal:AddInstructions(displayPlane)
-			featurePortrayal:AddInstructions('ViewingGroup:31031;DrawingPriority:24;PointInstruction:INFORM01')
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31031,highlightDocument;DrawingPriority:24;PointInstruction:INFORM01')
 		end
 	end
 end
@@ -131,7 +165,7 @@ function ConvertEncodedValue(valueType, value)
 	end
 
 	if not contains(valueType, valueTypes) then
-		error('Invalid parameter type.')
+		error('Invalid parameter type:' .. valueType)
 	end
 
 	if valueType == 'boolean' then
@@ -560,7 +594,9 @@ function GetFeatureTypeInfo(code)
 	local typeInfo = GetTypeInfo()
 
 	if not typeInfo.FeatureTypeInfos[code] then
-		error('Invalid feature code')
+		-- Try to process codes which don't exist in the FC
+		-- error('Invalid feature code')
+		return nil
 	end
 
 	if not typeInfo.FeatureTypeInfos[code].TypeInfo then

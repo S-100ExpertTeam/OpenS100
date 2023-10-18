@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<?pcbinfo name="S-101" fieldOfApplication="Marine Navigation" scope="Ocean, Coastal, Ports and Harbors. Excludes Inland waters. Supports QualityOfBathymetricData and 2015 updates to FC model." versionDate="2018-11-05T00:00:00+0000" user="IHO Testbed" organization="International Hydrographic Organization"?>
-<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-101" version="1.1.1">
+<!-- #51: Virtual AIS Aid to Navigation -->
+<!-- #72: Added DEPVAL02 to rules -->
+<!-- #30: Added MARPOL viewing group 36060, and Viewing Group Layer 18 -->
+<!-- #155: Update context parameters -->
+<!-- #162: Rename BuoyNewDangerMarking to BuoyEmergencyWreckMarking -->
+<!-- #172: Rename TrafficSeparationZone to SeparationZoneOrLine, remove TrafficSeparationLine -->
+<!-- #134: Add Helipad -->
+<!-- #119: Independent Mariner Selections -->
+<!-- #24: added FLGSTF02 symbol -->
+<!-- #61: (temporarily) removed NationalLanguage context parameter -->
+<!-- #196: update viewing group name for 26010 and 26020 -->
+<!-- #197: Undefined parameter TwoShades for ShallowContour and DeepContour -->
+<!-- #199: Remove language independent text -->
+<!-- #198: Viewing Group 27220 missing for "Range System" -->
+<!-- #195: Incorrect portrayal of Signal Station Traffic, removed 2021_SISTAT02_01.svg references  -->
+<!-- #200: Viewing Group 27240 is not included in any Viewing Group Layer, added to 3 -->
+<!-- #213: Case inconsistency between filename and catalog entry for SEAGRASS.svg -->
+<!-- #217: remove DISMAR03.svg and DISMAR04.svg -->
+<!-- #215: Update version number prior to release 1.1.1b to 1.1.1 -->
+<!-- #224: Update main version number to 1.1.2 developmental use towards 1.2.0 -->
+<!-- #158: Remove viewing group 21010 from VGL 3 and 3.1, use in IMS "Unknown" -->
+
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-101" version="1.1.2-DRAFT">
    <alertCatalog id="alertCatalog">
       <description>
          <name>Alert Catalog</name>
@@ -46,7 +67,17 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="ACHARE51">
+	   <symbol id="ACHARE03">
+		   <description>
+			   <name>ACHARE03</name>
+			   <description>reported anchorage</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>ACHARE03.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="ACHARE51">
          <description>
             <name>ACHARE51</name>
             <description>anchorage area</description>
@@ -116,6 +147,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	   <symbol id="AISPHY05">
+		   <description>
+			   <name>AISPHY05</name>
+			   <description>Physical AIS Aid To Navigation</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>AISPHY05.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>	   
       <symbol id="BCNCAR01">
          <description>
             <name>BCNCAR01</name>
@@ -486,7 +527,17 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="BOYMOR03">
+	   <symbol id="BOYMOR02">
+		   <description>
+			   <name>BOYMOR02</name>
+			   <description>Mooring buoy area, point symbol</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>BOYMOR02.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="BOYMOR03">
          <description>
             <name>BOYMOR03</name>
             <description>mooring buoy, can shape, paper-chart</description>
@@ -506,6 +557,26 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	   <symbol id="BOYMOR51">
+		   <description>
+			   <name>BOYMOR51</name>
+			   <description>Centred symbol for mooring buoy area</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>BOYMOR51.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="BOYNDM01">
+		   <description>
+			   <name>BOYNDM01</name>
+			   <description>new danger marking buoy</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>BOYNDM01.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>	   
       <symbol id="BOYPIL01">
          <description>
             <name>BOYPIL01</name>
@@ -576,6 +647,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	  <symbol id="BOYSPP45">
+		   <description>
+			   <name>BOYSPP45</name>
+			   <description>new danger marking buoy</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>BOYSPP45.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	  </symbol>	   
       <symbol id="BOYSPR01">
          <description>
             <name>BOYSPR01</name>
@@ -626,7 +707,17 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="BRTHNO01">
+      <symbol id="BRTHDNG1">
+		 <description>
+			   <name>BRTHDNG1</name>
+			   <description>berth for dangerous or hazardous</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>BRTHDNG1.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="BRTHNO01">
          <description>
             <name>BRTHNO01</name>
             <description>berth number symbol</description>
@@ -926,7 +1017,38 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="CTNARE51">
+	   <symbol id="CRANES03">
+		   <description>
+			   <name>CRANES03</name>
+			   <description>Visually conspicuous point Crane</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>CRANES03.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="CRANES11">
+		   <description>
+			   <name>CRANES11</name>
+			   <description>Crane on a line, the symbol without a circle of the fixed mark position</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>CRANES11.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="CRANES13">
+		   <description>
+			   <name>CRANES13</name>
+			   <description>Visually conspicuous Crane on a line, the symbol without a circle of the fixed mark position</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>CRANES13.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+
+	   <symbol id="CTNARE51">
          <description>
             <name>CTNARE51</name>
             <description>caution area, a specific caution note applies</description>
@@ -1126,23 +1248,13 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="DISMAR03">
+      <symbol id="DISMAR06">
          <description>
-            <name>DISMAR03</name>
-            <description>distance mark</description>
+            <name>DISMAR06</name>
+            <description>distance mark - not physically installed</description>
             <language>eng</language>
          </description>
-         <fileName>DISMAR03.svg</fileName>
-         <fileType>Symbol</fileType>
-         <fileFormat>SVG</fileFormat>
-      </symbol>
-      <symbol id="DISMAR04">
-         <description>
-            <name>DISMAR04</name>
-            <description>distance point with no mark</description>
-            <language>eng</language>
-         </description>
-         <fileName>DISMAR04.svg</fileName>
+         <fileName>DISMAR06.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
@@ -1246,7 +1358,17 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="DRGARE01P">
+	   <symbol id="DRFSTA02">
+		   <description>
+			   <name>DRFSTA02</name>
+			   <description>DGPS reference station</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>DRFSTA02.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="DRGARE01P">
          <description>
             <name>DRGARE01P</name>
             <description>dredged area</description>
@@ -1256,6 +1378,46 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+      <symbol id="DSCWTR01">
+         <description>
+            <name>DSCWTR01</name>
+            <description>Discoloured water, small scale, Ver 1</description>
+            <language>eng</language>
+         </description>
+         <fileName>DSCWTR01.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="DSCWTR02">
+         <description>
+            <name>DSCWTR02</name>
+            <description>Discoloured water, small scale, Ver 2</description>
+            <language>eng</language>
+         </description>
+         <fileName>DSCWTR02.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="DSCWTR03">
+         <description>
+            <name>DSCWTR03</name>
+            <description>Discoloured water, small scale, Ver 3</description>
+            <language>eng</language>
+         </description>
+         <fileName>DSCWTR03.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+     <symbol id="DSCWTR51">
+         <description>
+            <name>DSCWTR51</name>
+            <description>Central symbol of Discoloured Water area</description>
+            <language>eng</language>
+         </description>
+         <fileName>DSCWTR51.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>	   
       <symbol id="DSHAER01">
          <description>
             <name>DSHAER01</name>
@@ -1276,7 +1438,7 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="DWRTPT51">
+	  <symbol id="DWRTPT51">
          <description>
             <name>DWRTPT51</name>
             <description>part of deep water route</description>
@@ -1376,6 +1538,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+      <symbol id="EMAREGR2">
+         <description>
+            <name>EMAREGR2</name>
+            <description>Embedded symbol</description>
+            <language>eng</language>
+         </description>
+         <fileName>EMAREGR2.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
       <symbol id="EMAREMG1">
          <description>
             <name>EMAREMG1</name>
@@ -1436,7 +1608,17 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="EMCTNAR1">
+	   <symbol id="EMCOLREG">
+		   <description>
+			   <name>EMCOLREG</name>
+			   <description>Embedded COLREG limits</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>EMCOLREG.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="EMCTNAR1">
          <description>
             <name>EMCTNAR1</name>
             <description>Embedded symbol</description>
@@ -1476,6 +1658,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+    <symbol id="EMDSCWTR">
+         <description>
+            <name>EMDSCWTR</name>
+            <description>Embedded symbol of Discoloured Water area boundaries</description>
+            <language>eng</language>
+         </description>
+         <fileName>EMDSCWTR.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>	   
       <symbol id="EMDWRTC1">
          <description>
             <name>EMDWRTC1</name>
@@ -1556,6 +1748,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	  <symbol id="EMFOULGD">
+		  <description>
+		       <name>EMFOULGD</name>
+			   <description>Embedded symbol of foul ground curve</description>
+			   <language>eng</language>
+		  </description>
+		  <fileName>EMFOULGD.svg</fileName>
+		  <fileType>Symbol</fileType>
+		  <fileFormat>SVG</fileFormat>
+	  </symbol>
       <symbol id="EMFSHFA1">
          <description>
             <name>EMFSHFA1</name>
@@ -1643,16 +1845,6 @@
             <language>eng</language>
          </description>
          <fileName>EMMARS02.svg</fileName>
-         <fileType>Symbol</fileType>
-         <fileFormat>SVG</fileFormat>
-      </symbol>
-      <symbol id="EMNEWOB1">
-         <description>
-            <name>EMNEWOB1</name>
-            <description>new object</description>
-            <language>eng</language>
-         </description>
-         <fileName>EMNEWOB1.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
@@ -1806,6 +1998,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+      <symbol id="EMVTSARE">
+         <description>
+            <name>EMVTSARE</name>
+            <description>Embedded symbol VTS</description>
+            <language>eng</language>
+         </description>
+         <fileName>EMVTSARE.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>	   
       <symbol id="ENTRES51">
          <description>
             <name>ENTRES51</name>
@@ -1876,7 +2078,27 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="FLASTK01">
+     <symbol id="FERWHL03">
+         <description>
+            <name>FERWHL03</name>
+            <description>observation wheel and visually conspicuous</description>
+            <language>eng</language>
+         </description>
+         <fileName>FERWHL03.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>	   
+     <symbol id="FERWHL04">
+         <description>
+            <name>FERWHL04</name>
+            <description>observation wheel and not visually conspicuous</description>
+            <language>eng</language>
+         </description>
+         <fileName>FERWHL04.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>	
+	   <symbol id="FLASTK01">
          <description>
             <name>FLASTK01</name>
             <description>flare stack</description>
@@ -1913,6 +2135,16 @@
             <language>eng</language>
          </description>
          <fileName>FLGSTF01.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="FLGSTF02">
+         <description>
+            <name>FLGSTF02</name>
+            <description>conspicuous flagstaff, flagpole</description>
+            <language>eng</language>
+         </description>
+         <fileName>FLGSTF02.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
@@ -1966,16 +2198,36 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="FOULGND1">
+      <symbol id="FOULGD02">
          <description>
-            <name>FOULGND1</name>
-            <description>foul area of seabed safe for navigation but not for anchoring</description>
+            <name>FOULGD02</name>
+            <description>Foul area of seabed safe for navigation but not for anchoring, boundary</description>
             <language>eng</language>
          </description>
-         <fileName>FOULGND1.svg</fileName>
+         <fileName>FOULGD02.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	   <symbol id="FOULGD51">
+		   <description>
+			   <name>FOULGD51</name>
+			   <description>Area of foul ground (safe for navigation but not for anchoring), centre symbol</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>FOULGD51.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>	   
+	  <symbol id="FOULGND1">
+		   <description>
+			   <name>FOULGND1</name>
+			   <description>foul area of seabed safe for navigation but not for anchoring</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>FOULGND1.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	  </symbol>	   
       <symbol id="FRYARE51">
          <description>
             <name>FRYARE51</name>
@@ -2116,6 +2368,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+      <symbol id="HELIPD02">
+         <description>
+            <name>HELIPD02</name>
+            <description>Symbol for helipad as a point</description>
+            <language>eng</language>
+         </description>
+         <fileName>HELIPD02.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
       <symbol id="HILTOP01">
          <description>
             <name>HILTOP01</name>
@@ -2173,6 +2435,16 @@
             <language>eng</language>
          </description>
          <fileName>INDHLT01.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="INFARE01">
+         <description>
+            <name>INFARE01</name>
+            <description>Information symbol with pale magenta colour</description>
+            <language>eng</language>
+         </description>
+         <fileName>INFARE01.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
@@ -2396,6 +2668,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+      <symbol id="MARSHE01">
+         <description>
+            <name>MARSHE01</name>
+            <description>pattern of symbols for a reed</description>
+            <language>eng</language>
+         </description>
+         <fileName>MARSHE01.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>	   
       <symbol id="MARSHES1P">
          <description>
             <name>MARSHES1P</name>
@@ -2406,6 +2688,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	   <symbol id="MOIRE01">
+		   <description>
+			   <name>MOIRE01</name>
+			   <description>LightSectored (Moiré Effect)</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>MOIRE01.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
       <symbol id="MONUMT02">
          <description>
             <name>MONUMT02</name>
@@ -2463,16 +2755,6 @@
             <language>eng</language>
          </description>
          <fileName>MSTCON14.svg</fileName>
-         <fileType>Symbol</fileType>
-         <fileFormat>SVG</fileFormat>
-      </symbol>
-      <symbol id="NEWOBJ01">
-         <description>
-            <name>NEWOBJ01</name>
-            <description>new object</description>
-            <language>eng</language>
-         </description>
-         <fileName>NEWOBJ01.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
@@ -2566,16 +2848,26 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="PILBOP02">
+      <symbol id="PILBARE51">
          <description>
-            <name>PILBOP02</name>
-            <description>pilot boarding place</description>
+            <name>PILBARE51</name>
+            <description>pilot boarding place surface</description>
             <language>eng</language>
          </description>
-         <fileName>PILBOP02.svg</fileName>
+         <fileName>PILBARE51.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	   <symbol id="PILBOP02">
+		   <description>
+			   <name>PILBOP02</name>
+			   <description>pilot boarding place point</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>PILBOP02.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>	   
       <symbol id="PILPNT02">
          <description>
             <name>PILPNT02</name>
@@ -2616,6 +2908,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	   <symbol id="POSGEN05">
+		   <description>
+			   <name>POSGEN05</name>
+			   <description>Position of an elevation or control point, not conspicuous</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>POSGEN05.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>	   
       <symbol id="PRCARE12">
          <description>
             <name>PRCARE12</name>
@@ -2886,7 +3188,17 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="RETRFL01">
+      <symbol id="RENERG51">
+		   <description>
+			   <name>RENERG51</name>
+			   <description>Renewable Energy farm</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>RENERG51.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="RETRFL01">
          <description>
             <name>RETRFL01</name>
             <description>retro reflector, paper chart</description>
@@ -3676,6 +3988,306 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+      <symbol id="SAFCON70">
+         <description>
+            <name>SAFCON70</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON70.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON71">
+         <description>
+            <name>SAFCON71</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON71.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON72">
+         <description>
+            <name>SAFCON72</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON72.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON73">
+         <description>
+            <name>SAFCON73</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON73.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON74">
+         <description>
+            <name>SAFCON74</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON74.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON75">
+         <description>
+            <name>SAFCON75</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON75.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON76">
+         <description>
+            <name>SAFCON76</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON76.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON77">
+         <description>
+            <name>SAFCON77</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON77.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON78">
+         <description>
+            <name>SAFCON78</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON78.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON79">
+         <description>
+            <name>SAFCON79</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON79.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON80">
+         <description>
+            <name>SAFCON80</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON80.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON81">
+         <description>
+            <name>SAFCON81</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON81.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON82">
+         <description>
+            <name>SAFCON82</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON82.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON83">
+         <description>
+            <name>SAFCON83</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON83.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON84">
+         <description>
+            <name>SAFCON84</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON84.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON85">
+         <description>
+            <name>SAFCON85</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON85.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON86">
+         <description>
+            <name>SAFCON86</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON86.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON87">
+         <description>
+            <name>SAFCON87</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON87.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON88">
+         <description>
+            <name>SAFCON88</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON88.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON89">
+         <description>
+            <name>SAFCON89</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON89.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON90">
+         <description>
+            <name>SAFCON90</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON90.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON91">
+         <description>
+            <name>SAFCON91</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON91.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON92">
+         <description>
+            <name>SAFCON92</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON92.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON93">
+         <description>
+            <name>SAFCON93</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON93.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON94">
+         <description>
+            <name>SAFCON94</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON94.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON95">
+         <description>
+            <name>SAFCON95</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON95.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON96">
+         <description>
+            <name>SAFCON96</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON96.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON97">
+         <description>
+            <name>SAFCON97</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON97.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON98">
+         <description>
+            <name>SAFCON98</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON98.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="SAFCON99">
+         <description>
+            <name>SAFCON99</name>
+            <description>contour label</description>
+            <language>eng</language>
+         </description>
+         <fileName>SAFCON99.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
       <symbol id="SCALEB10">
          <description>
             <name>SCALEB10</name>
@@ -3696,6 +4308,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	   <symbol id="SEAGRASS">
+		   <description>
+			   <name>SEAGRASS</name>
+			   <description>Seagrass</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>SEAGRASS.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>	   
       <symbol id="SILBUI01">
          <description>
             <name>SILBUI01</name>
@@ -3716,17 +4338,27 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="SISTAT02">
-         <description>
-            <name>SISTAT02</name>
-            <description>signal station</description>
-            <language>eng</language>
-         </description>
-         <fileName>SISTAT02.svg</fileName>
-         <fileType>Symbol</fileType>
-         <fileFormat>SVG</fileFormat>
-      </symbol>
-      <symbol id="SMCFAC02">
+      <symbol id="SISTAT03">
+		   <description>
+			   <name>SISTAT03</name>
+			   <description>signal station traffic</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>SISTAT03.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="SISTAW03">
+		   <description>
+			   <name>SISTAW03</name>
+			   <description>signal station warning</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>SISTAW03.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="SMCFAC02">
          <description>
             <name>SMCFAC02</name>
             <description>yacht harbour, marina</description>
@@ -5006,6 +5638,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	   <symbol id="SOUNDSC3">
+		   <description>
+			   <name>SOUNDSC3</name>
+			   <description>sounding of low accuracy, black</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>SOUNDSC3.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>	   
       <symbol id="SPRING02">
          <description>
             <name>SPRING02</name>
@@ -5115,8 +5757,8 @@
          <fileName>TNKCON02.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
-      </symbol>
-      <symbol id="TNKCON12">
+       </symbol>
+       <symbol id="TNKCON12">
          <description>
             <name>TNKCON12</name>
             <description>conspicuous tank</description>
@@ -5125,8 +5767,18 @@
          <fileName>TNKCON12.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
-      </symbol>
-      <symbol id="TNKFRM01">
+       </symbol>
+	   <symbol id="TNKFRM">
+		   <description>
+			   <name>TNKFRM</name>
+			   <description>Tank Farm, Category of Offshore Production Area</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>TNKFRM.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="TNKFRM01">
          <description>
             <name>TNKFRM01</name>
             <description>tank farm</description>
@@ -5446,7 +6098,27 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="TOWERS01">
+	   <symbol id="TORII01">
+		   <description>
+			   <name>TORII01</name>
+			   <description>Torii</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>TORII01.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="TORII11">
+		   <description>
+			   <name>TORII11</name>
+			   <description>Torii (visually conspicuous)</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>TORII11.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="TOWERS01">
          <description>
             <name>TOWERS01</name>
             <description>tower</description>
@@ -5626,6 +6298,136 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+	   <symbol id="VATON00">
+		   <description>
+			   <name>VATON00</name>
+			   <description>Virtual Aid to Navigation - Unknown</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>VATON00.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+      <symbol id="VATON01">
+         <description>
+            <name>VATON01</name>
+            <description>Virtual Aid to Navigation - north cardinal mark</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON01.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON02">
+         <description>
+            <name>VATON02</name>
+            <description>Virtual Aid to Navigation - east cardinal mark</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON02.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON03">
+         <description>
+            <name>VATON03</name>
+            <description>Virtual Aid to Navigation - south cardinal mark</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON03.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON04">
+         <description>
+            <name>VATON04</name>
+            <description>Virtual Aid to Navigation - west cardinal mark</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON04.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON05">
+         <description>
+            <name>VATON05</name>
+            <description>Virtual Aid to Navigation - port lateral IALA A</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON05.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON06">
+         <description>
+            <name>VATON06</name>
+            <description>Virtual Aid to Navigation - starboard lateral IALA A</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON06.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON07">
+         <description>
+            <name>VATON07</name>
+            <description>Virtual Aid to Navigation - port lateral IALA B</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON07.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON08">
+         <description>
+            <name>VATON08</name>
+            <description>Virtual Aid to Navigation - starboard lateral IALA B</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON08.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON09">
+         <description>
+            <name>VATON09</name>
+            <description>Virtual Aid to Navigation - isolated danger</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON09.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON10">
+         <description>
+            <name>VATON10</name>
+            <description>Virtual Aid to Navigation - safe water</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON10.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON11">
+         <description>
+            <name>VATON11</name>
+            <description>Virtual Aid to Navigation - special purpose</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON11.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="VATON12">
+         <description>
+            <name>VATON12</name>
+            <description>Virtual Aid to Navigation - new danger marking</description>
+            <language>eng</language>
+         </description>
+         <fileName>VATON12.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
       <symbol id="VEGATN03P">
          <description>
             <name>VEGATN03P</name>
@@ -5636,6 +6438,16 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
+     <symbol id="VOLCANO01">
+         <description>
+            <name>VOLCANO01</name>
+            <description>active submarine volcano</description>
+            <language>eng</language>
+         </description>
+         <fileName>VOLCANO01.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>	   
       <symbol id="VEGATN04P">
          <description>
             <name>VEGATN04P</name>
@@ -5696,7 +6508,17 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="WNDFRM61">
+	  <symbol id="WNDFRM52">
+		   <description>
+			   <name>WNDFRM52</name>
+			   <description>Wind farm fixed</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>WNDFRM52.svg</fileName>
+		   <fileType>Symbol</fileType>
+		   <fileFormat>SVG</fileFormat>
+	   </symbol>
+	   <symbol id="WNDFRM61">
          <description>
             <name>WNDFRM61</name>
             <description>conspicuous wind generator farm</description>
@@ -5756,7 +6578,7 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-   </symbols>
+    </symbols>
    <styleSheets>
       <styleSheet id="daySvgStyle">
          <description>
@@ -5785,16 +6607,6 @@
             <language>eng</language>
          </description>
          <fileName>nightSvgStyle.css</fileName>
-         <fileType>StyleSheet</fileType>
-         <fileFormat>XML</fileFormat> <!-- fileFormat will need to be updated when Part 9 is updated to include CSS file format. -->
-      </styleSheet>
-      <styleSheet id="svgStyle">
-         <description>
-            <name>Generic</name>
-            <description>CSS file referenced by symbol files</description>
-            <language>eng</language>
-         </description>
-         <fileName>svgStyle.css</fileName>
          <fileType>StyleSheet</fileType>
          <fileFormat>XML</fileFormat> <!-- fileFormat will need to be updated when Part 9 is updated to include CSS file format. -->
       </styleSheet>
@@ -5910,6 +6722,16 @@
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
+      <lineStyle id="COLREG01">
+         <description>
+            <name>COLREG01</name>
+            <description>Limit of the Collision Regulation</description>
+            <language>eng</language>
+         </description>
+         <fileName>COLREG01.xml</fileName>
+         <fileType>LineStyle</fileType>
+         <fileFormat>XML</fileFormat>
+      </lineStyle>	   
       <lineStyle id="CTNARE51">
          <description>
             <name>CTNARE51</name>
@@ -5940,7 +6762,17 @@
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
-      <lineStyle id="DWLDEF01">
+	   <lineStyle id="DSCWTR51">
+		   <description>
+			   <name>DSCWTR51</name>
+			   <description>boundary of discoloured water area</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>DSCWTR51.xml</fileName>
+		   <fileType>LineStyle</fileType>
+		   <fileFormat>XML</fileFormat>
+	   </lineStyle>
+	   <lineStyle id="DWLDEF01">
          <description>
             <name>DWLDEF01</name>
             <description>deep water route centreline, direction not defined in the data</description>
@@ -6070,13 +6902,33 @@
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
-      <lineStyle id="INDHLT02">
+	   <lineStyle id="FOULGRD1">
+		   <description>
+			   <name>FOULGRD1</name>
+			   <description>Line of Foul Ground safe for navigation but not for anchoring, boundary</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>FOULGRD1.xml</fileName>
+		   <fileType>LineStyle</fileType>
+		   <fileFormat>XML</fileFormat>
+	   </lineStyle>
+	   <lineStyle id="INDHLT02">
          <description>
             <name>INDHLT02</name>
             <description>indication highlight for mariner's use</description>
             <language>eng</language>
          </description>
          <fileName>INDHLT02.xml</fileName>
+         <fileType>LineStyle</fileType>
+         <fileFormat>XML</fileFormat>
+      </lineStyle>
+      <lineStyle id="INFARE51">
+         <description>
+            <name>INFARE51</name>
+            <description>Boundary of an information area</description>
+            <language>eng</language>
+         </description>
+         <fileName>INFARE51.xml</fileName>
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
@@ -6150,16 +7002,16 @@
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
-      <lineStyle id="NEWOBJ01">
-         <description>
-            <name>NEWOBJ01</name>
-            <description>new object</description>
-            <language>eng</language>
-         </description>
-         <fileName>NEWOBJ01.xml</fileName>
-         <fileType>LineStyle</fileType>
-         <fileFormat>XML</fileFormat>
-      </lineStyle>
+	   <lineStyle id="NAVARE52">
+		   <description>
+			   <name>NAVARE52</name>
+			   <description>boundary of a navigation feature anchorage area, small craft mooring</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>NAVARE52.xml</fileName>
+		   <fileType>LineStyle</fileType>
+		   <fileFormat>XML</fileFormat>
+	   </lineStyle>
       <lineStyle id="NONHODAT">
          <description>
             <name>NONHODAT</name>
@@ -6167,6 +7019,26 @@
             <language>eng</language>
          </description>
          <fileName>NONHODAT.xml</fileName>
+         <fileType>LineStyle</fileType>
+         <fileFormat>XML</fileFormat>
+      </lineStyle>
+     <lineStyle id="PILDSTR1">
+         <description>
+            <name>PILDSTR1</name>
+            <description>boundary of an Pilotage District area</description>
+            <language>eng</language>
+         </description>
+         <fileName>PILDSTR1.xml</fileName>
+         <fileType>LineStyle</fileType>
+         <fileFormat>XML</fileFormat>
+      </lineStyle>
+      <lineStyle id="PILPNT01">
+         <description>
+            <name>Piles</name>
+            <description>Area or row of piles</description>
+            <language>eng</language>
+         </description>
+         <fileName>PILPNT01.xml</fileName>
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
@@ -6360,6 +7232,16 @@
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
+      <lineStyle id="VTSARE51">
+         <description>
+            <name>VTSARE51</name>
+            <description>boundary of an area for Vessel Traffic Service Area</description>
+            <language>eng</language>
+         </description>
+         <fileName>VTSARE51.xml</fileName>
+         <fileType>LineStyle</fileType>
+         <fileFormat>XML</fileFormat>
+      </lineStyle>   
    </lineStyles>
    <areaFills>
       <areaFill id="testPCB">
@@ -6783,55 +7665,7 @@
 	  <!-- END CHART INFORMATION - DISPLAY BASE -->
 	  
 	  <!-- MARINERS INFORMATION - DISPLAY BASE -->
-	  <!-- 40000 Reserved for Mariners' information -->
-	  <!-- TOOLS -->
-	  <!-- 41000-41999 na -->
-	  <!-- OWN-SHIP, PLANNED ROUTES, PAST TRACKS -->
-      <viewingGroup id="42000">
-         <description>
-            <name>Own ship</name>
-            <description>Base: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="42010">
-         <description>
-            <name>Own ship (ownship), symbol or scaled version, together with heading line, beam bearing line and course and speed vector</name>
-            <description>Base: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="42200">
-         <description>
-            <name>Selected Planned Route</name>
-            <description>Base: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="42210">
-         <description>
-            <name>legline (leglin, select 1), way points (waypnt, select 1)</name>
-            <description>Base: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="42220">
-         <description>
-            <name>Course to make good for selected leglines</name>
-            <description>Base: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-	  <!-- MARINERS' FEATURES -->
-	  <!-- 43000 na -->
-	  <!-- OTHER VESSELS -->
-	  <!-- 44000 na -->
-	  <!-- MAANUFACTURERS' FEATURES -->
-	  <!-- TODO: add support for 45000-45999 once a way to specify ranges is developed -->
-	  <!-- MARINERS' ASSIGNMENTS TO DISPLAY BASE -->
-	  <!-- TODO: add support for 46000-46999 once a way to specify ranges is developed -->
-	  <!-- RESERVED -->
-	  <!-- 47000-49999 reserved for Mariners' information -->
+	  <!-- See S-98 Annex C / IMO SN_Circ243 -->
 	  <!-- END MARINERS INFORMATION - DISPLAY BASE -->
 	  
 	  <!--********** END BASE DISPLAY ELEMENTS **********-->
@@ -6976,6 +7810,13 @@
             <language>eng</language>
          </description>
       </viewingGroup>
+      <viewingGroup id="25001">
+         <description>
+            <name>Collision Regulations Limit, demarcation line between inland and international navigation rules</name>
+            <description>Standard: M - Traffic routes</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>	   
       <viewingGroup id="25010">
          <description>
             <name>Leading line, clearing line (NAVLNE), traffic lane (TSSLPT), deep water route (DWRTPT), traffic separation area (TSEZNE), traffic separation line (TSELNE), traffic roundabout (TSSRON), traffic crossing (TSSCRS), precautionary area (PRCARE), traffic separation scheme boundary (TSSBND), deep water route centre line (DWRTCL), two way route part (TWRTPT), inshore traffic zone (ISTZNE)</name>
@@ -7021,12 +7862,19 @@
       </viewingGroup>
       <viewingGroup id="26010">
          <description>
-            <name>Restricted area (RESARE)</name>
+            <name>Restricted area, Navigational (RESARE)</name>
             <description>Standard: N - Special areas</description>
             <language>eng</language>
          </description>
       </viewingGroup>
-      <viewingGroup id="26040">
+	  <viewingGroup id="26020">
+		   <description>
+			   <name>Restricted area, Regulatory (RESARE)</name>
+			   <description>Standard: N - Special areas</description>
+			   <language>eng</language>
+		   </description>
+	   </viewingGroup>
+	   <viewingGroup id="26040">
          <description>
             <name>Submarine transit lane (SUBTLN), military practice area (MIPARE), sea plane landing area (SPLARE), offshore production area (OSPARE)</name>
             <description>Standard: N - Special areas</description>
@@ -7181,6 +8029,13 @@
             <language>eng</language>
          </description>
       </viewingGroup>
+      <viewingGroup id="27220">
+         <description>
+            <name>range system (C_AGGR)</name>
+            <description>Standard: P, Q, R, S - Buoys and Beacons, Lights, Fog signals, RADAR</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
       <viewingGroup id="27230">
          <description>
             <name>radar reflector (RADRFL)</name>
@@ -7188,7 +8043,14 @@
             <language>eng</language>
          </description>
       </viewingGroup>
-	  <!-- T, U - SERVICES & SMALL CRAFT FACILITIES -->
+	   <viewingGroup id="27240">
+		   <description>
+			   <name>Physical and Virtual AIS Aids to Navigation</name>
+			   <description>Standard: P, Q, R, S BUOYS and BEACONS, LIGHTS, FOG SIGNALS, RADAR</description>
+			   <language>eng</language>
+		   </description>
+	   </viewingGroup>
+	   <!-- T, U - SERVICES & SMALL CRAFT FACILITIES -->
       <viewingGroup id="28000">
          <description>
             <name>Services</name>
@@ -7213,212 +8075,7 @@
 	  <!-- END CHART INFORMATION - STANDARD DISPLAY -->
 	  
 	  <!-- MARINERS' INFORMATION - STANDARD DISPLAY -->
-	  <!-- RESERVED -->
-	  <!-- 50000 reserved for Mariners' information -->
-      <viewingGroup id="50000">
-         <description>
-            <name>reserved for Mariners' information</name>
-            <description>Standard: Mariners' reserved</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-	  <!-- TOOLS -->
-	  <!-- 51000-51999 na -->
-	  <!-- OWN-SHIP, PLANNED ROUTES, PAST TRACKS -->
-      <viewingGroup id="52000">
-         <description>
-            <name>Notations on Selected Planned Route</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="52010">
-         <description>
-            <name>wheel-over line (wholin), selected route</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="52020">
-         <description>
-            <name>course to make good on leglines (leglin, select 1) of selected route</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="52030">
-         <description>
-            <name>planned position (pinpos), distance to go, and other notations on selected planned route</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="52200">
-         <description>
-            <name>Alternate Planned Route</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="52210">
-         <description>
-            <name>leglin (leglin, select 2), waypoint (waypnt, select 2) of alternate planned route</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <!-- 52220 na -->
-      <viewingGroup id="52230">
-         <description>
-            <name>wheel-over line (wholin), alternate route</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="52240">
-         <description>
-            <name>other notations, alternate route</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="52400">
-         <description>
-            <name>Past Track</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="52410">
-         <description>
-            <name>event (events)</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <!-- 52420 na -->
-      <viewingGroup id="52430">
-         <description>
-            <name>primary past track (pastrk, catpst 1)</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="52440">
-         <description>
-            <name>notations on primary past track</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <!-- 52450 na -->
-      <viewingGroup id="52460">
-         <description>
-            <name>secondary past track (pastrk catpst 2)</name>
-            <description>Standard: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-	  <!-- MARINERS' FEATURES -->
-      <viewingGroup id="53000">
-         <description>
-            <name>Mariners' features</name>
-            <description>Standard: Mariners' Features</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="53010">
-         <description>
-            <name>danger highlight (dnghlt)</name>
-            <description>Standard: Mariners' Features</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="53030">
-         <description>
-            <name>Mariners' information note (marnot catnot 1)</name>
-            <description>Standard: Mariners' Features</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="53040">
-         <description>
-            <name>Mariners' cautionary note (marnot catnot 2)</name>
-            <description>Standard: Mariners' Features</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="53050">
-         <description>
-            <name>Mariners' feature (marfea)</name>
-            <description>Standard: Mariners' Features</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <!-- 53060 na -->
-	  <!-- 53070 na -->
-      <viewingGroup id="53080">
-         <description>
-            <name>tidal current observed (tidcur, catcur 2), tidal current predicted (tidcur, catcur 1)</name>
-            <description>Standard: Mariners' Features</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-	  <!-- OTHER VESSELS -->
-      <viewingGroup id="54000">
-         <description>
-            <name>Other Ships</name>
-            <description>Standard: Other Vessels</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="54010">
-         <description>
-            <name>other ships (vessels) from radar</name>
-            <description>Standard: Other Vessels</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="54020">
-         <description>
-            <name>notations on other ships (acqsta)</name>
-            <description>Standard: Other Vessels</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="54030">
-         <description>
-            <name>other ships from other sources or undefined sources</name>
-            <description>Standard: Other Vessels</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-	  <!-- MANUFACTURERS' FEATURES -->
-      <viewingGroup id="55000">
-         <description>
-            <name>Manufacturers' Features</name>
-            <description>Standard: Manufacturers' Features</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="55010">
-         <description>
-            <name>manufacturers' feature (mnufea, catnot 1)</name>
-            <description>Standard: Manufacturers' Features</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="55020">
-         <description>
-            <name>manufacturers' feature (mnufea, catnot 2)</name>
-            <description>Standard: Manufacturers' Features</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-	  <!-- MARINERS' ASSIGNMENTS TO STANDARD DISPLAY -->
-	  <!-- TODO: add support for 56000-56999 once a way to specify ranges is developed -->
-	  <!-- RESERVED -->
-	  <!-- 57000-59999 reserved for Mariners' information -->
+	  <!-- See S-98 Annex C / IMO SN_Circ243 -->
 	  <!-- END MARINERS' INFORMATION - STANDARD DISPLAY -->
 
 	  <!--********** END STANDARD DISPLAY ELEMENTS **********-->
@@ -7450,7 +8107,7 @@
       </viewingGroup>
       <viewingGroup id="31020">
          <description>
-            <name>nautical publication (M_NPUB)</name>
+            <name>information area or nautical publication (M_NPUB)</name>
             <description>Other: A, B - Information about the chart display</description>
             <language>eng</language>
          </description>
@@ -7466,6 +8123,13 @@
          <description>
             <name>Additional Documents NTXTDS, TXTDSC, PICREP</name>
             <description>Other: A, B - Information about the chart display</description>
+            <language>eng</language>
+         </description>
+      </viewingGroup>
+      <viewingGroup id="31032">
+         <description>
+            <name>Date dependent</name>
+            <description>The object is present only during the indicated period</description>
             <language>eng</language>
          </description>
       </viewingGroup>
@@ -7500,14 +8164,14 @@
       </viewingGroup>
       <viewingGroup id="32030">
          <description>
-            <name>dunes , hills (SLOGRD), ridge, clifftop (SLOTOP), contours and elevation (LNDELV)</name>
+            <name>trees, vegetation, mangrove (VEGATN), marsh (LNDRGN)</name>
             <description>Other: C, D, E, F - Natural and man made features, Port features</description>
             <language>eng</language>
          </description>
       </viewingGroup>
       <viewingGroup id="32050">
          <description>
-            <name>dunes , hills (SLOGRD), ridge, clifftop (SLOTOP), contours and elevation (LNDELV)</name>
+            <name>river (RIVERS) or lake (LAKARE); also rapids (RAPIDS), waterfall (WATFAL)</name>
             <description>Other: C, D, E, F - Natural and man made features, Port features</description>
             <language>eng</language>
          </description>
@@ -7726,6 +8390,14 @@
             <language>eng</language>
          </description>
       </viewingGroup>
+	   <viewingGroup id="36060">
+		   <description>
+			   <name>Marine Pollution Regulations Area (MARPOL)</name>
+			   <description>Other: N - Special areas</description>
+			   <language>eng</language>
+		   </description>
+	   </viewingGroup>
+
 	  <!-- P, Q, R, S - BUOYS & BEACONS, LIGHTS, FOG SIGNALS, RADAR -->
 	  <!-- T, U - SERVICES & SMALL CRAFT FACILITIES -->
       <viewingGroup id="38000">
@@ -7847,401 +8519,171 @@
 	  <!-- END OTHER CHART INFORMATION -->
 	  
 	  <!-- OTHER MARINERS' INFORMATION -->
-	  <!-- RESERVED -->
-	  <!-- 60000 reserved for Mariners' information -->
-	  <!-- TOOLS -->
-      <viewingGroup id="61000">
-         <description>
-            <name>Tools</name>
-            <description>Other: Tools</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="61010">
-         <description>
-            <name>electronic bearing line (ebline), variable range marker (vrmark)</name>
-            <description>Other: Tools</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <!-- 61020 na -->
-      <viewingGroup id="61030">
-         <description>
-            <name>range rings (rngrng)</name>
-            <description>Other: Tools</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="61040">
-         <description>
-            <name>cursor, style B (cursor, cursty2)</name>
-            <description>Other: Tools</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="61050">
-         <description>
-            <name>cursor reference point (refpnt)</name>
-            <description>Other: Tools</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>  
-	  <!-- OWN-SHIP, PLANNED ROUTES, PAST TRACKS -->
-      <viewingGroup id="62000">
-         <description>
-            <name>Position fixes</name>
-            <description>Other: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="62010">
-         <description>
-            <name>position fix (positn)</name>
-            <description>Other: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="62020">
-         <description>
-            <name>position line (poslin)</name>
-            <description>Other: Own-ship, Planned Routes, Past Tracks</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
-	  <!-- MARINERS' FEATURES -->
-	  <!-- 63000-63999 na -->
-	  <!-- OTHER VESSELS -->
-	  <!-- 64000-64999 na -->
-	  <!-- MANUFACTURERS' FEATURES -->
-	  <!-- TODO: add support for 65000-65999 once a way to specify ranges is developed -->
-	  <!-- MARINERS' ASSIGNMENTS TO OTHER INFORMATION -->
-	  <!-- TODO: add support for 66000-66999 once a way to specify ranges is developed -->
-	  <!-- RESERVED -->
-	  <!-- 67000-69999 reserved for Mariners' information -->
-	  <!-- MARINERS TEXT -->
-      <viewingGroup id="50">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="51">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="52">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="53">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="54">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="55">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="56">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="57">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="58">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="59">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="60">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="61">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="62">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="63">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="64">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="65">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="66">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="67">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="68">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="69">
-        <description>
-          <name>Text: Mariners' Text, Including Planned Speed Etc.</name>
-          <description>Other: Mariners' Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-	  <!-- MANUFACTURERS Text -->
-      <viewingGroup id="70">
-        <description>
-          <name>Text: Manufacturer's Text</name>
-          <description>Other: Manufacturer's Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="71">
-        <description>
-          <name>Text: Manufacturer's Text</name>
-          <description>Other: Manufacturer's Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="72">
-        <description>
-          <name>Text: Manufacturer's Text</name>
-          <description>Other: Manufacturer's Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="73">
-        <description>
-          <name>Text: Manufacturer's Text</name>
-          <description>Other: Manufacturer's Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="74">
-        <description>
-          <name>Text: Manufacturer's Text</name>
-          <description>Other: Manufacturer's Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="75">
-        <description>
-          <name>Text: Manufacturer's Text</name>
-          <description>Other: Manufacturer's Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="76">
-        <description>
-          <name>Text: Manufacturer's Text</name>
-          <description>Other: Manufacturer's Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="77">
-        <description>
-          <name>Text: Manufacturer's Text</name>
-          <description>Other: Manufacturer's Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="78">
-        <description>
-          <name>Text: Manufacturer's Text</name>
-          <description>Other: Manufacturer's Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="79">
-        <description>
-          <name>Text: Manufacturer's Text</name>
-          <description>Other: Manufacturer's Text</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
+	  <!-- See S-98 Annex C / IMO SN_Circ243 -->
 	  <!-- END OTHER MARINERS' INFORMATION -->
 	
 	  <!--********** END OTHER DISPLAY ELEMENTS **********-->
 
      <!--********** Alert Catalog Viewing Groups **********-->
-      <viewingGroup id="101">
+      <viewingGroup id="53010">
         <description>
           <name>Safety Contour Highlight</name>
           <description>Used to turn on or off the graphical highlighting of alerts triggered by the safety contour.</description>
           <language>eng</language>
         </description>
       </viewingGroup>
-      <viewingGroup id="102">
-        <description>
-          <name>Traffic Seperation Zone Highlight</name>
-          <description>Alert highlight: Traffic Seperation Zone</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="103">
-        <description>
-          <name>Inshore Traffic Zone Highlight</name>
-          <description>Alert highlight: Inshore Traffic Zone</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="104">
-        <description>
-          <name>Restricted Area Highlight</name>
-          <description>Alert highlight: Restricted Area</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-            <viewingGroup id="105">
-        <description>
-          <name>Caution Area Highlight</name>
-          <description>Alert highlight: Caution area</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="106">
-        <description>
-          <name>Offshore Production Area Highlight</name>
-          <description>Alert highlight: Offshore production area</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="107">
-        <description>
-          <name>Areas to be Avoided Highlight</name>
-          <description>Alert highlight: Areas to be avoided</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>      
-      <viewingGroup id="108">
-        <description>
-          <name>User Defined Areas to be Avoided Highlight</name>
-          <description>Alert highlight: User defined areas to be avoided</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>      
-      <viewingGroup id="109">
-        <description>
-          <name>Military Practice Area Highlight</name>
-          <description>Alert highlight: Military practice area</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="110">
-        <description>
-          <name>Seaplane Landing Area Highlight</name>
-          <description>Alert highlight: Seaplane landing area</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="111">
-        <description>
-          <name>Submarine Transit Lane Highlight</name>
-          <description>Alert highlight: Submarine transit lane</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="112">
-        <description>
-          <name>Anchorage Area Highlight</name>
-          <description>Alert highlight: Anchorage area</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="113">
-        <description>
-          <name>Marine Farm/Aquaculture Highlight</name>
-          <description>Alert highlight: Marine farm/aquaculture</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="114">
-        <description>
-          <name>PSSA (Particularly Sensitive Sea Area) Highlight</name>
-          <description>Alert highlight: PSSA (Particularly Sensitive Sea Area)</description>
-          <language>eng</language>
-        </description>
-      </viewingGroup>
-      <viewingGroup id="115">
+      <viewingGroup id="53011">
         <description>
           <name>Navigational Hazards Highlight</name>
           <description>Used to turn on or off the graphical highlighting of alerts triggered by navigational hazards</description>
           <language>eng</language>
         </description>
       </viewingGroup>
+      <viewingGroup id="53012">
+        <description>
+          <name>Traffic Separation Zone Highlight</name>
+          <description>Alert highlight: Traffic Seperation Zone</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53013">
+        <description>
+          <name>Inshore Traffic Zone Highlight</name>
+          <description>Alert highlight: Inshore Traffic Zone</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53014">
+        <description>
+          <name>Restricted Area Highlight</name>
+          <description>Alert highlight: Restricted Area</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53015">
+        <description>
+          <name>Areas to be Avoided Highlight</name>
+          <description>Alert highlight: Areas to be avoided</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>      
+      <viewingGroup id="53016">
+        <description>
+          <name>PSSA (Particularly Sensitive Sea Area) Highlight</name>
+          <description>Alert highlight: PSSA (Particularly Sensitive Sea Area)</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53017">
+        <description>
+          <name>Caution Area Highlight</name>
+          <description>Alert highlight: Caution area</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53018">
+        <description>
+          <name>Offshore Production Area Highlight</name>
+          <description>Alert highlight: Offshore production area</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53019">
+        <description>
+          <name>User Defined Areas to be Avoided Highlight</name>
+          <description>Alert highlight: User defined areas to be avoided</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>      
+      <viewingGroup id="53020">
+        <description>
+          <name>Military Practice Area Highlight</name>
+          <description>Alert highlight: Military practice area</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53021">
+        <description>
+          <name>Seaplane Landing Area Highlight</name>
+          <description>Alert highlight: Seaplane landing area</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53022">
+        <description>
+          <name>Submarine Transit Lane Highlight</name>
+          <description>Alert highlight: Submarine transit lane</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53023">
+        <description>
+          <name>Anchorage Area Highlight</name>
+          <description>Alert highlight: Anchorage area</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="53024">
+        <description>
+          <name>Marine Farm/Aquaculture Highlight</name>
+          <description>Alert highlight: Marine farm/aquaculture</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
       
    <!--********** END Alert Catalog Viewing Groups **********--> 
+   
+   <!--********** Viewing groups for Independent Mariner Selectors **********-->
+      <viewingGroup id="accuracy">
+        <description>
+          <name>Accuracy</name>
+          <description>zoneOfConfidence and low accuracy symbols</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="contourLabel">
+        <description>
+          <name>Contour label</name>
+          <description>to turn on the display of contour labels (incl. label of safety contour)</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="highlightDateDependent">
+        <description>
+          <name>Highlight date dependent</name>
+         <description>Highlights date dependent features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="highlightDocument">
+        <description>
+          <name>Highlight document</name>
+          <description>Additional documents</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="highlightInfo">
+        <description>
+          <name>Highlight info</name>
+          <description>Additional information</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="shallowPattern">
+        <description>
+          <name>Shallow pattern</name>
+          <description>Shallow Water Pattern</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="updateReview">
+        <description>
+          <name>Update review</name>
+          <description>Review of Updates - This function turns on colour highlighting for the objects which have undergone modification in the process of the latest accepted correction</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+   <!--********** END Viewing groups for Independent Mariner Selectors **********-->    
    </viewingGroups>
    <foundationMode>
          <!-- A, B - CHART FURNITURE -->
@@ -8271,14 +8713,6 @@
          <!-- N - SPECIAL AREAS -->
          <!-- P, Q, R, S - AIDS TO NAVIGATION -->
          <!-- T, U - SERVICES -->
-		 <!-- MARINERS INFORMATION -->
-		 <viewingGroup>42000</viewingGroup>
-		 <viewingGroup>42010</viewingGroup>
-		 <viewingGroup>42200</viewingGroup>
-		 <viewingGroup>42210</viewingGroup>
-		 <viewingGroup>42220</viewingGroup>
-		 <!-- TODO: Add 45000-45999 once a way to add a range is provided -->
-		 <!-- TODO: Add 46000-46999 once a way to add a range is provided -->
    </foundationMode>
    <viewingGroupLayers>
 	  <!-- BASE LAYER GROUPS -->
@@ -8311,11 +8745,6 @@
          <viewingGroup>14000</viewingGroup>
          <viewingGroup>14010</viewingGroup>
 		 <viewingGroup>14050</viewingGroup>
-		 <viewingGroup>42000</viewingGroup>
-		 <viewingGroup>42010</viewingGroup>
-		 <viewingGroup>42200</viewingGroup>
-		 <viewingGroup>42210</viewingGroup>
-		 <viewingGroup>42220</viewingGroup>
          <!-- M - TRACKS AND ROUTES -->
          <!-- N - SPECIAL AREAS -->
          <!-- P, Q, R, S - AIDS TO NAVIGATION -->
@@ -8337,7 +8766,6 @@
             <description>Standard Display elements</description>
             <language>eng</language>
          </description>
-         <viewingGroup>21010</viewingGroup>
          <viewingGroup>21020</viewingGroup>
          <viewingGroup>22200</viewingGroup>
          <viewingGroup>22210</viewingGroup>
@@ -8356,19 +8784,16 @@
          <viewingGroup>27080</viewingGroup>
          <viewingGroup>27200</viewingGroup>
          <viewingGroup>27210</viewingGroup>
-         <viewingGroup>27230</viewingGroup>
-         <viewingGroup>21020</viewingGroup>
-         <viewingGroup>21020</viewingGroup>
-         <viewingGroup>21020</viewingGroup>
-         <viewingGroup>21020</viewingGroup>
+	     <viewingGroup>27220</viewingGroup>
+		 <viewingGroup>27230</viewingGroup>
+         <viewingGroup>27240</viewingGroup>
       </viewingGroupLayer>
-      <viewingGroupLayer id="3a">
+      <viewingGroupLayer id="3a">            <!-- From S-52: 3.1 Buoys, beacons, structures -->
          <description>
             <name>Buoys, beacons, structures</name>
             <description>Standard Display elements</description>
             <language>eng</language>
          </description>
-         <viewingGroup>21010</viewingGroup>
          <viewingGroup>21020</viewingGroup>
          <viewingGroup>22200</viewingGroup>
          <viewingGroup>22210</viewingGroup>
@@ -8388,7 +8813,7 @@
          <viewingGroup>27210</viewingGroup>
          <viewingGroup>27230</viewingGroup>
       </viewingGroupLayer>
-      <viewingGroupLayer id="3b">
+      <viewingGroupLayer id="3b">           <!-- From S-52: 3.2 Lights -->
          <description>
             <name>Lights</name>
             <description>Standard Display elements</description>
@@ -8415,8 +8840,9 @@
             <language>eng</language>
          </description>
          <viewingGroup>26000</viewingGroup>
-         <viewingGroup>26010</viewingGroup>
-         <viewingGroup>26040</viewingGroup>
+		 <viewingGroup>26010</viewingGroup>
+		 <viewingGroup>26020</viewingGroup>
+		 <viewingGroup>26040</viewingGroup>
       </viewingGroupLayer>
       <viewingGroupLayer id="6">
          <description>
@@ -8454,7 +8880,7 @@
          </description>
          <viewingGroup>26260</viewingGroup>
       </viewingGroupLayer>
-      <viewingGroupLayer id="10">
+      <viewingGroupLayer id="10">      <!-- S-52: 10 Miscellaneous (Standard) and 101 Alert Highlights -->
          <description>
             <name>Miscellaneous (Standard)</name>
             <description>Standard Display elements</description>
@@ -8470,57 +8896,30 @@
          <viewingGroup>24020</viewingGroup>
          <viewingGroup>24050</viewingGroup>
          <viewingGroup>25000</viewingGroup>
+         <viewingGroup>25001</viewingGroup>
          <viewingGroup>26200</viewingGroup>
          <viewingGroup>26210</viewingGroup>
          <viewingGroup>28000</viewingGroup>
          <viewingGroup>28010</viewingGroup>
          <viewingGroup>28020</viewingGroup>
-		 <!-- MARINERS INFORMATION -->
-         <viewingGroup>52000</viewingGroup>
-         <viewingGroup>52010</viewingGroup>
-         <viewingGroup>52020</viewingGroup>
-         <viewingGroup>52030</viewingGroup>
-         <viewingGroup>52200</viewingGroup>
-         <viewingGroup>52210</viewingGroup>
-         <viewingGroup>52230</viewingGroup>
-         <viewingGroup>52240</viewingGroup>
-         <viewingGroup>52400</viewingGroup>
-         <viewingGroup>52410</viewingGroup>
-         <viewingGroup>52430</viewingGroup>
-         <viewingGroup>52440</viewingGroup>
-         <viewingGroup>52460</viewingGroup>
-         <viewingGroup>53000</viewingGroup>
-         <viewingGroup>53010</viewingGroup>
-         <viewingGroup>53030</viewingGroup>
-         <viewingGroup>53040</viewingGroup>
-         <viewingGroup>53050</viewingGroup>
-         <viewingGroup>53080</viewingGroup>
-         <viewingGroup>54000</viewingGroup>
-         <viewingGroup>54010</viewingGroup>
-         <viewingGroup>54020</viewingGroup>
-         <viewingGroup>54030</viewingGroup>
-         <viewingGroup>55000</viewingGroup>
-         <viewingGroup>55010</viewingGroup>
-         <viewingGroup>55020</viewingGroup>
 		 <!-- Alert Highlights -->
-		 <viewingGroup>101</viewingGroup>
-		 <viewingGroup>102</viewingGroup>
-		 <viewingGroup>103</viewingGroup>
-		 <viewingGroup>104</viewingGroup>
-		 <viewingGroup>105</viewingGroup>
-		 <viewingGroup>106</viewingGroup>
-		 <viewingGroup>107</viewingGroup>
-		 <viewingGroup>108</viewingGroup>
-		 <viewingGroup>109</viewingGroup>
-		 <viewingGroup>110</viewingGroup>
-		 <viewingGroup>111</viewingGroup>
-		 <viewingGroup>112</viewingGroup>
-		 <viewingGroup>113</viewingGroup>
-		 <viewingGroup>114</viewingGroup>
-		 <viewingGroup>115</viewingGroup>
-		 <!-- TODO: Implement 56000-56999 once a way to specify ranges is provided -->
+		 <viewingGroup>53010</viewingGroup>
+		 <viewingGroup>53011</viewingGroup>
+		 <viewingGroup>53012</viewingGroup>
+		 <viewingGroup>53013</viewingGroup>
+		 <viewingGroup>53014</viewingGroup>
+		 <viewingGroup>53015</viewingGroup>
+		 <viewingGroup>53016</viewingGroup>
+		 <viewingGroup>53017</viewingGroup>
+		 <viewingGroup>53018</viewingGroup>
+		 <viewingGroup>53019</viewingGroup>
+		 <viewingGroup>53020</viewingGroup>
+		 <viewingGroup>53021</viewingGroup>
+		 <viewingGroup>53022</viewingGroup>
+		 <viewingGroup>53023</viewingGroup>
+		 <viewingGroup>53024</viewingGroup>
       </viewingGroupLayer>
-	  <viewingGroupLayer id="10a">
+	  <viewingGroupLayer id="10a">       
          <description>
             <name>Chart (Standard)</name>
             <description>Miscellaneous chart Standard Display elements</description>
@@ -8536,69 +8935,35 @@
          <viewingGroup>24020</viewingGroup>
          <viewingGroup>24050</viewingGroup>
          <viewingGroup>25000</viewingGroup>
+         <viewingGroup>25001</viewingGroup>
          <viewingGroup>26200</viewingGroup>
          <viewingGroup>26210</viewingGroup>
          <viewingGroup>28000</viewingGroup>
          <viewingGroup>28010</viewingGroup>
          <viewingGroup>28020</viewingGroup>
       </viewingGroupLayer>
-	  <viewingGroupLayer id="10b">
-         <description>
-            <name>Mariners (Standard)</name>
-            <description>Miscellaneous Mariners Standard Display elements</description>
-            <language>eng</language>
-         </description>
-		 <!-- MARINERS INFORMATION -->
-         <viewingGroup>52000</viewingGroup>
-         <viewingGroup>52010</viewingGroup>
-         <viewingGroup>52020</viewingGroup>
-         <viewingGroup>52030</viewingGroup>
-         <viewingGroup>52200</viewingGroup>
-         <viewingGroup>52210</viewingGroup>
-         <viewingGroup>52230</viewingGroup>
-         <viewingGroup>52240</viewingGroup>
-         <viewingGroup>52400</viewingGroup>
-         <viewingGroup>52410</viewingGroup>
-         <viewingGroup>52430</viewingGroup>
-         <viewingGroup>52440</viewingGroup>
-         <viewingGroup>52460</viewingGroup>
-         <viewingGroup>53000</viewingGroup>
-         <viewingGroup>53010</viewingGroup>
-         <viewingGroup>53030</viewingGroup>
-         <viewingGroup>53040</viewingGroup>
-         <viewingGroup>53050</viewingGroup>
-         <viewingGroup>53080</viewingGroup>
-         <viewingGroup>54000</viewingGroup>
-         <viewingGroup>54010</viewingGroup>
-         <viewingGroup>54020</viewingGroup>
-         <viewingGroup>54030</viewingGroup>
-         <viewingGroup>55000</viewingGroup>
-         <viewingGroup>55010</viewingGroup>
-         <viewingGroup>55020</viewingGroup>
-	  </viewingGroupLayer>
-	  <viewingGroupLayer id="10c">
+	  <viewingGroupLayer id="10b">      <!-- S-101 Alert Highlights -->
 		<description>
             <name>Alert Highlights (Standard)</name>
             <description>Toggles graphical highlighting of detected alerts</description>
             <language>eng</language>
 		</description>
 		 <!-- Alert Highlights -->
-		 <viewingGroup>101</viewingGroup>
-		 <viewingGroup>102</viewingGroup>
-		 <viewingGroup>103</viewingGroup>
-		 <viewingGroup>104</viewingGroup>
-		 <viewingGroup>105</viewingGroup>
-		 <viewingGroup>106</viewingGroup>
-		 <viewingGroup>107</viewingGroup>
-		 <viewingGroup>108</viewingGroup>
-		 <viewingGroup>109</viewingGroup>
-		 <viewingGroup>110</viewingGroup>
-		 <viewingGroup>111</viewingGroup>
-		 <viewingGroup>112</viewingGroup>
-		 <viewingGroup>113</viewingGroup>
-		 <viewingGroup>114</viewingGroup>
-		 <viewingGroup>115</viewingGroup>
-		 <!-- TODO: Implement 56000-56999 once a way to specify ranges is provided -->
+		 <viewingGroup>53010</viewingGroup>
+		 <viewingGroup>53011</viewingGroup>
+		 <viewingGroup>53012</viewingGroup>
+		 <viewingGroup>53013</viewingGroup>
+		 <viewingGroup>53014</viewingGroup>
+		 <viewingGroup>53015</viewingGroup>
+		 <viewingGroup>53016</viewingGroup>
+		 <viewingGroup>53017</viewingGroup>
+		 <viewingGroup>53018</viewingGroup>
+		 <viewingGroup>53019</viewingGroup>
+		 <viewingGroup>53020</viewingGroup>
+		 <viewingGroup>53021</viewingGroup>
+		 <viewingGroup>53022</viewingGroup>
+		 <viewingGroup>53023</viewingGroup>
+		 <viewingGroup>53024</viewingGroup>
 	  </viewingGroupLayer>
 	  <!-- ********************************************************************************* -->
 	  <!-- END STANDARD LAYER GROUPS -->
@@ -8676,6 +9041,7 @@
          <viewingGroup>31011</viewingGroup>
          <viewingGroup>31030</viewingGroup>
          <viewingGroup>31031</viewingGroup>
+         <viewingGroup>31032</viewingGroup>
          <viewingGroup>31040</viewingGroup>
          <viewingGroup>32000</viewingGroup>
          <viewingGroup>32010</viewingGroup>
@@ -8700,44 +9066,107 @@
          <viewingGroup>36020</viewingGroup>
          <viewingGroup>36040</viewingGroup>
          <viewingGroup>36050</viewingGroup>
+         <viewingGroup>36060</viewingGroup>		  
          <viewingGroup>38000</viewingGroup>
          <viewingGroup>38010</viewingGroup>
          <viewingGroup>38030</viewingGroup>
          <viewingGroup>38200</viewingGroup>
          <viewingGroup>38210</viewingGroup>
-		 <!-- MARINERS INFORMATION -->
-		 <viewingGroup>50000</viewingGroup>
-         <viewingGroup>61000</viewingGroup>
-         <viewingGroup>61010</viewingGroup>
-         <viewingGroup>61030</viewingGroup>
-         <viewingGroup>61040</viewingGroup>
-         <viewingGroup>61050</viewingGroup>
-         <viewingGroup>62000</viewingGroup>
-         <viewingGroup>62010</viewingGroup>
-         <viewingGroup>62020</viewingGroup>
-		 <!-- TODO: Implement 65000-65999 once a way to specify ranges is provided -->
-		 <!-- TODO: Implement 66000-66999 once a way to specify ranges is provided -->
       </viewingGroupLayer>
-      <viewingGroupLayer id="18a">
-         <description>
-            <name>Mariners (Other)</name>
-            <description>Mariners Other Display elements</description>
-            <language>eng</language>
-         </description>
-		 <!-- MARINERS INFORMATION -->
-		 <viewingGroup>50000</viewingGroup>
-         <viewingGroup>61000</viewingGroup>
-         <viewingGroup>61010</viewingGroup>
-         <viewingGroup>61030</viewingGroup>
-         <viewingGroup>61040</viewingGroup>
-         <viewingGroup>61050</viewingGroup>
-         <viewingGroup>62000</viewingGroup>
-         <viewingGroup>62010</viewingGroup>
-         <viewingGroup>62020</viewingGroup>
-		 <!-- TODO: Implement 65000-65999 once a way to specify ranges is provided -->
-		 <!-- TODO: Implement 66000-66999 once a way to specify ranges is provided -->
-      </viewingGroupLayer>
-     <!-- TEXT LAYER GROUPS -->
+     <!-- END OTHER LAYER GROUPS -->
+	 <!-- Independent mariner selectors -->
+     <viewingGroupLayer id="accuracySelector">
+       <description>
+         <name>Accuracy</name>
+         <description>zoneOfConfidence and low accuracy symbols</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>accuracy</viewingGroup>
+     </viewingGroupLayer>
+     <viewingGroupLayer id="contourLabelSelector">
+       <description>
+         <name>Contour label</name>
+         <description>to turn on the display of contour labels (incl. label of safety contour)</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>contourLabel</viewingGroup>
+     </viewingGroupLayer>
+     <viewingGroupLayer id="highlights">
+       <description>
+         <name>Feature highlights</name>
+         <description>Toggles feature highlights</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>highlightDateDependent</viewingGroup>
+       <viewingGroup>highlightDocument</viewingGroup>
+       <viewingGroup>highlightInfo</viewingGroup>
+     </viewingGroupLayer>
+     <viewingGroupLayer id="highlightDateDependentSelector">
+       <description>
+         <name>Highlight date dependent</name>
+         <description>Highlights date dependent features</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>highlightDateDependent</viewingGroup>
+     </viewingGroupLayer>
+     <viewingGroupLayer id="highlightDocumentSelector">
+       <description>
+         <name>Highlight document</name>
+         <description>Additional documents - highlights features associated with text or picture files</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>highlightDocument</viewingGroup>
+     </viewingGroupLayer>
+     <viewingGroupLayer id="highlightInfoSelector">
+       <description>
+         <name>Highlight info</name>
+         <description>Additional information - highlights features which have amplifying text</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>highlightInfo</viewingGroup>
+     </viewingGroupLayer>
+     <viewingGroupLayer id="shallowPatternSelector">
+       <description>
+         <name>Shallow pattern</name>
+         <description>Shallow Water Pattern</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>shallowPattern</viewingGroup>
+     </viewingGroupLayer>
+     <viewingGroupLayer id="unknownSelector">
+       <description>
+         <name>Unknown</name>
+         <description>to turn on the display of features which are not recognized by the portrayal catalogue</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>21010</viewingGroup>
+     </viewingGroupLayer>
+     <viewingGroupLayer id="updateReviewSelector">
+       <description>
+         <name>Update review</name>
+         <description>Review of Updates - This function turns on colour highlighting for the objects which have undergone modification in the process of the latest accepted correction</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>updateReview</viewingGroup>
+     </viewingGroupLayer>
+     <!-- TEXT LAYER GROUPS (not part of a display mode / IMO display category) -->
+     <viewingGroupLayer id="100">
+       <description>
+         <name>Chart text</name>
+         <description>Chart text</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>11</viewingGroup>
+       <viewingGroup>21</viewingGroup>
+       <viewingGroup>23</viewingGroup>
+       <viewingGroup>24</viewingGroup>
+       <viewingGroup>25</viewingGroup>
+       <viewingGroup>26</viewingGroup>
+       <viewingGroup>27</viewingGroup>
+       <viewingGroup>28</viewingGroup>
+       <viewingGroup>29</viewingGroup>
+       <viewingGroup>30</viewingGroup>
+     </viewingGroupLayer>
      <viewingGroupLayer id="101">
        <description>
          <name>Important Text</name>
@@ -8761,38 +9190,6 @@
        <viewingGroup>28</viewingGroup>
        <viewingGroup>29</viewingGroup>
        <viewingGroup>30</viewingGroup>
-       <!-- Mariners Text Groups -->
-       <viewingGroup>50</viewingGroup>
-       <viewingGroup>51</viewingGroup>
-       <viewingGroup>52</viewingGroup>
-       <viewingGroup>53</viewingGroup>
-       <viewingGroup>54</viewingGroup>
-       <viewingGroup>55</viewingGroup>
-       <viewingGroup>56</viewingGroup>
-       <viewingGroup>57</viewingGroup>
-       <viewingGroup>58</viewingGroup>
-       <viewingGroup>59</viewingGroup>
-       <viewingGroup>60</viewingGroup>
-       <viewingGroup>61</viewingGroup>
-       <viewingGroup>62</viewingGroup>
-       <viewingGroup>63</viewingGroup>
-       <viewingGroup>64</viewingGroup>
-       <viewingGroup>65</viewingGroup>
-       <viewingGroup>66</viewingGroup>
-       <viewingGroup>67</viewingGroup>
-       <viewingGroup>68</viewingGroup>
-       <viewingGroup>69</viewingGroup>
-       <!-- Manufacturers Text Groups-->
-       <viewingGroup>70</viewingGroup>
-       <viewingGroup>71</viewingGroup>
-       <viewingGroup>72</viewingGroup>
-       <viewingGroup>73</viewingGroup>
-       <viewingGroup>74</viewingGroup>
-       <viewingGroup>75</viewingGroup>
-       <viewingGroup>76</viewingGroup>
-       <viewingGroup>77</viewingGroup>
-       <viewingGroup>78</viewingGroup>
-       <viewingGroup>79</viewingGroup>
      </viewingGroupLayer>
      <viewingGroupLayer id="102a">
        <description>
@@ -8824,52 +9221,12 @@
        <viewingGroup>28</viewingGroup>
        <viewingGroup>30</viewingGroup>
      </viewingGroupLayer>
-     <viewingGroupLayer id="102d">
-       <description>
-         <name>Mariners text</name>
-         <description>Text added by the manufacturer or mariner</description>
-         <language>eng</language>
-       </description>
-       <!-- Mariners Text Groups -->
-       <viewingGroup>50</viewingGroup>
-       <viewingGroup>51</viewingGroup>
-       <viewingGroup>52</viewingGroup>
-       <viewingGroup>53</viewingGroup>
-       <viewingGroup>54</viewingGroup>
-       <viewingGroup>55</viewingGroup>
-       <viewingGroup>56</viewingGroup>
-       <viewingGroup>57</viewingGroup>
-       <viewingGroup>58</viewingGroup>
-       <viewingGroup>59</viewingGroup>
-       <viewingGroup>60</viewingGroup>
-       <viewingGroup>61</viewingGroup>
-       <viewingGroup>62</viewingGroup>
-       <viewingGroup>63</viewingGroup>
-       <viewingGroup>64</viewingGroup>
-       <viewingGroup>65</viewingGroup>
-       <viewingGroup>66</viewingGroup>
-       <viewingGroup>67</viewingGroup>
-       <viewingGroup>68</viewingGroup>
-       <viewingGroup>69</viewingGroup>
-       <!-- Manufacturers Text Groups-->
-       <viewingGroup>70</viewingGroup>
-       <viewingGroup>71</viewingGroup>
-       <viewingGroup>72</viewingGroup>
-       <viewingGroup>73</viewingGroup>
-       <viewingGroup>74</viewingGroup>
-       <viewingGroup>75</viewingGroup>
-       <viewingGroup>76</viewingGroup>
-       <viewingGroup>77</viewingGroup>
-       <viewingGroup>78</viewingGroup>
-       <viewingGroup>79</viewingGroup>
-     </viewingGroupLayer>
      <!-- END TEXT LAYER GROUPS -->
-     <!-- END OTHER LAYER GROUPS -->
    </viewingGroupLayers>
    <displayModes>
       <displayMode id="1">
          <description>
-            <name>Base</name>
+            <name>Display Base</name>
             <description>Always on display</description>
             <language>eng</language>
          </description>
@@ -8877,7 +9234,7 @@
       </displayMode>
       <displayMode id="2">
          <description>
-            <name>Standard</name>
+            <name>Standard Display</name>
             <description>ECDIS default display</description>
             <language>eng</language>
          </description>
@@ -8895,12 +9252,11 @@
          <viewingGroupLayer>10</viewingGroupLayer>
          <viewingGroupLayer>10a</viewingGroupLayer>
          <viewingGroupLayer>10b</viewingGroupLayer>
-         <viewingGroupLayer>10c</viewingGroupLayer>
       </displayMode>
       <displayMode id="3">
          <description>
-            <name>Other</name>
-            <description>Displays all features in the SENC</description>
+            <name>Other Information</name>
+            <description>All other objects in the SENC</description>
             <language>eng</language>
          </description>
          <viewingGroupLayer>1</viewingGroupLayer>
@@ -8917,7 +9273,6 @@
          <viewingGroupLayer>10</viewingGroupLayer>
          <viewingGroupLayer>10a</viewingGroupLayer>
          <viewingGroupLayer>10b</viewingGroupLayer>
-         <viewingGroupLayer>10c</viewingGroupLayer>
          <viewingGroupLayer>11</viewingGroupLayer>
          <viewingGroupLayer>12</viewingGroupLayer>
          <viewingGroupLayer>13</viewingGroupLayer>
@@ -8926,13 +9281,6 @@
          <viewingGroupLayer>16</viewingGroupLayer>
          <viewingGroupLayer>17</viewingGroupLayer>
          <viewingGroupLayer>18</viewingGroupLayer>
-         <viewingGroupLayer>18a</viewingGroupLayer>
-         <viewingGroupLayer>101</viewingGroupLayer>
-         <viewingGroupLayer>102</viewingGroupLayer>
-         <viewingGroupLayer>102a</viewingGroupLayer>
-         <viewingGroupLayer>102b</viewingGroupLayer>
-         <viewingGroupLayer>102c</viewingGroupLayer>
-         <viewingGroupLayer>102d</viewingGroupLayer>
       </displayMode>
    </displayModes>
    <displayPlanes>
@@ -8955,120 +9303,134 @@
       <parameter id="SafetyDepth">
          <description>
             <name>Safety depth</name>
-            <description>selected safety depth (meters)</description>
+            <description>Selected safety depth</description>
             <language>eng</language>
          </description>
          <type>Double</type>
          <default>30</default>
-      </parameter>
-      <parameter id="ShallowContour">
-         <description>
-            <name>Shallow contour</name>
-            <description>selected shallow water contour (meters) (optional)</description>
-            <language>eng</language>
-         </description>
-         <type>Double</type>
-         <default>2</default>
       </parameter>
       <parameter id="SafetyContour">
          <description>
             <name>Safety contour</name>
-            <description>selected safety contour (meters)</description>
+            <description>Selected safety contour</description>
             <language>eng</language>
          </description>
          <type>Double</type>
          <default>30</default>
       </parameter>
-      <parameter id="TwoShades">
+      <parameter id="FourShades">
          <description>
-            <name>Two shades</name>
-            <description>show two depth shades only, safe vs unsafe</description>
+            <name>Four shades</name>
+            <description>Show depth areas using four colours</description>
+            <language>eng</language>
+         </description>
+         <type>Boolean</type>
+         <default>false</default>
+      </parameter>
+      <parameter id="ShallowContour" enable="//FourShades[1]='true' or //FourShades[1]='1'">
+         <description>
+            <name>Shallow contour</name>
+            <description>Selected shallow water contour</description>
+            <language>eng</language>
+         </description>
+         <type>Double</type>
+         <default>2</default>
+		 <validate>
+			<xpath>//ShallowContour &lt;= //SafetyContour</xpath>
+			<errorMessage>
+				<text>Must be &lt;= safety contour value</text>
+			</errorMessage>
+         </validate>
+      </parameter>
+      <parameter id="DeepContour" enable="//FourShades[1]='true' or //FourShades[1]='1'">
+         <description>
+            <name>Deep contour</name>
+            <description>Selected deep water contour</description>
+            <language>eng</language>
+         </description>
+         <type>Double</type>
+         <default>30</default>
+		 <validate>
+			<xpath>//DeepContour >= //SafetyContour</xpath>
+			<errorMessage>
+				<text>Must be >= safety contour value</text>
+			</errorMessage>
+         </validate>
+      </parameter>
+      <parameter id="ShallowWaterDangers">
+         <description>
+            <name>Shallow water dangers</name>
+            <description>Show isolated dangers in shallow waters</description>
             <language>eng</language>
          </description>
          <type>Boolean</type>
          <default>true</default>
       </parameter>
-      <parameter id="DeepContour">
-         <description>
-            <name>Deep contour</name>
-            <description>selected deep water contour (meters) (optional)</description>
-            <language>eng</language>
-         </description>
-         <type>Double</type>
-         <default>30</default>
-      </parameter>
-      <parameter id="ShallowPattern">
-         <description>
-            <name>Shallow pattern</name>
-            <description>show the shallow diamond pattern in shallow water</description>
-            <language>eng</language>
-         </description>
-         <type>Boolean</type>
-         <default>false</default>
-      </parameter>
-      <parameter id="ShowIsolatedDangersInShallowWaters">
-         <description>
-            <name>Show isolated dangers in shallow waters</name>
-            <description>show isolated dangers in shallow waters</description>
-            <language>eng</language>
-         </description>
-         <type>Boolean</type>
-         <default>false</default>
-      </parameter>
      <parameter id="PlainBoundaries">
        <description>
          <name>Plain boundaries</name>
-         <description>simplify portrayal of lines</description>
-         <language>eng</language>
-       </description>
-       <type>Boolean</type>
-       <default>false</default>
-     </parameter>
-     <parameter id="SimplifiedPoints">
-       <description>
-         <name>Simplified points</name>
-         <description>simplify portrayal of point symbols</description>
-         <language>eng</language>
-       </description>
-       <type>Boolean</type>
-       <default>false</default>
-     </parameter>
-     <parameter id="FullSectors">
-       <description>
-         <name>Full sectors</name>
-         <description>show full light sectors</description>
+         <description>Line symbol style</description>
          <language>eng</language>
        </description>
        <type>Boolean</type>
        <default>true</default>
+     </parameter>
+     <parameter id="SimplifiedSymbols">
+       <description>
+         <name>Simplified symbols</name>
+         <description>Point symbol style</description>
+         <language>eng</language>
+       </description>
+       <type>Boolean</type>
+       <default>false</default>
+     </parameter>
+     <parameter id="FullLightLines">
+       <description>
+         <name>Full light lines</name>
+         <description>Show full length light sector lines</description>
+         <language>eng</language>
+       </description>
+       <type>Boolean</type>
+       <default>false</default>
      </parameter>
      <parameter id="RadarOverlay">
        <description>
          <name>Radar overlay</name>
-         <description>Tells the portrayal whether a RADAR sweep is displayed or not</description>
-         <language>eng</language>
-       </description>
-       <type>Boolean</type>
-       <default>true</default>
-     </parameter>
-     <parameter id="IgnoreScamin">
-       <description>
-         <name>Ignore scamin</name>
-         <description>Ignore the scaleMinimum attribute</description>
+         <description>Should be enabled whenever the RADAR sweep is displayed</description>
          <language>eng</language>
        </description>
        <type>Boolean</type>
        <default>false</default>
      </parameter>
+     <parameter id="IgnoreScamin">
+       <description>
+         <name>Ignore scale minimum</name>
+         <description>Features remain visible regardless of display scale</description>
+         <language>eng</language>
+       </description>
+       <type>Boolean</type>
+       <default>false</default>
+     </parameter>
+	 <!--
+	 
+	 Temporarily removed via #61. Awaiting resolution of https://github.com/iho-ohi/S-101-Documentation-and-FC/issues/60 and https://github.com/S-101-Portrayal-subWG/Working-Documents/issues/104
+	 
      <parameter id="NationalLanguage">
        <description>
          <name>National language</name>
-         <description>Selects which language to use for text (ISO 639-3)</description>
+         <description>3-letter language code. Selects preferred language for chart text.</description>
          <language>eng</language>
        </description>
        <type>String</type>
        <default>eng</default>
+	   <validate>
+		<regex>^[a-z]{3}$</regex>
+		<errorMessage>
+			<text>Must be three lower-case characters</text>
+		</errorMessage>
+	   </validate>
      </parameter>
+	 -->
    </context>
    <rules>
       <ruleFile id="main">
@@ -9144,6 +9506,17 @@
             <language>eng</language>
          </description>
          <fileName>DEPCNT03.lua</fileName>
+         <fileType>Rule</fileType>
+         <fileFormat>LUA</fileFormat>
+         <ruleType>SubTemplate</ruleType>
+      </ruleFile>
+      <ruleFile id="DEPVAL02">
+         <description>
+            <name>DEPVAL02</name>
+            <description>Custom rules DEPVAL02</description>
+            <language>eng</language>
+         </description>
+         <fileName>DEPVAL02.lua</fileName>
          <fileType>Rule</fileType>
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
@@ -9258,7 +9631,18 @@
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
       </ruleFile>
-      <ruleFile id="SLCONS04">
+	   <ruleFile id="Seagrass">
+		   <description>
+			   <name>Seagrass</name>
+			   <description>Seagrass</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>Seagrass.lua</fileName>
+		   <fileType>Rule</fileType>
+		   <fileFormat>LUA</fileFormat>
+		   <ruleType>SubTemplate</ruleType>
+	   </ruleFile>
+	   <ruleFile id="SLCONS04">
          <description>
             <name>SLCONS04</name>
             <description>Custom rules SLCONS04</description>
@@ -9511,17 +9895,6 @@
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
       </ruleFile>
-      <ruleFile id="BuoyEmergencyWreckMarking">
-         <description>
-            <name>BuoyEmergencyWreckMarking</name>
-            <description>Rules for feature type BuoyEmergencyWreckMarking</description>
-            <language>eng</language>
-         </description>
-         <fileName>BuoyEmergencyWreckMarking.lua</fileName>
-         <fileType>Rule</fileType>
-         <fileFormat>LUA</fileFormat>
-         <ruleType>SubTemplate</ruleType>
-      </ruleFile>
       <ruleFile id="BuoyInstallation">
          <description>
             <name>BuoyInstallation</name>
@@ -9555,7 +9928,18 @@
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
       </ruleFile>
-      <ruleFile id="BuoySafeWater">
+	  <ruleFile id="BuoyEmergencyWreckMarking">
+		   <description>
+			   <name>BuoyEmergencyWreckMarking</name>
+			   <description>Rules for feature type BuoyEmergencyWreckMarking</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>BuoyEmergencyWreckMarking.lua</fileName>
+		   <fileType>Rule</fileType>
+		   <fileFormat>LUA</fileFormat>
+		   <ruleType>SubTemplate</ruleType>
+	   </ruleFile>
+	   <ruleFile id="BuoySafeWater">
          <description>
             <name>BuoySafeWater</name>
             <description>Rules for feature type BuoySafeWater</description>
@@ -9665,13 +10049,13 @@
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
       </ruleFile>
-      <ruleFile id="CoastguardStation">
+      <ruleFile id="CoastGuardStation">
          <description>
-            <name>CoastguardStation</name>
-            <description>Rules for feature type CoastguardStation</description>
+            <name>CoastGuardStation</name>
+            <description>Rules for feature type CoastGuardStation</description>
             <language>eng</language>
          </description>
-         <fileName>CoastguardStation.lua</fileName>
+         <fileName>CoastGuardStation.lua</fileName>
          <fileType>Rule</fileType>
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
@@ -10380,6 +10764,17 @@
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
       </ruleFile>
+	  <ruleFile id="MarinePollutionRegulationsArea">
+		   <description>
+			   <name>MarinePollutionRegulationsArea</name>
+			   <description>Rules for feature type MarinePollutionRegulationsArea</description>
+			   <language>eng</language>
+		   </description>
+		   <fileName>MarinePollutionRegulationsArea.lua</fileName>
+		   <fileType>Rule</fileType>
+		   <fileFormat>LUA</fileFormat>
+		   <ruleType>SubTemplate</ruleType>
+	  </ruleFile>	   
       <ruleFile id="MilitaryPracticeArea">
          <description>
             <name>MilitaryPracticeArea</name>
@@ -10886,6 +11281,17 @@
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
       </ruleFile>
+      <ruleFile id="SeparationZoneOrLine">
+         <description>
+            <name>SeparationZoneOrLine</name>
+            <description>Rules for feature type SeparationZoneOrLine</description>
+            <language>eng</language>
+         </description>
+         <fileName>SeparationZoneOrLine.lua</fileName>
+         <fileType>Rule</fileType>
+         <fileFormat>LUA</fileFormat>
+         <ruleType>SubTemplate</ruleType>
+      </ruleFile>
       <ruleFile id="ShorelineConstruction">
          <description>
             <name>ShorelineConstruction</name>
@@ -11117,17 +11523,6 @@
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
       </ruleFile>
-      <ruleFile id="TrafficSeparationLine">
-         <description>
-            <name>TrafficSeparationLine</name>
-            <description>Rules for feature type TrafficSeparationLine</description>
-            <language>eng</language>
-         </description>
-         <fileName>TrafficSeparationLine.lua</fileName>
-         <fileType>Rule</fileType>
-         <fileFormat>LUA</fileFormat>
-         <ruleType>SubTemplate</ruleType>
-      </ruleFile>
       <ruleFile id="TrafficSeparationScheme">
          <description>
             <name>TrafficSeparationScheme</name>
@@ -11179,17 +11574,6 @@
             <language>eng</language>
          </description>
          <fileName>TrafficSeparationSchemeRoundabout.lua</fileName>
-         <fileType>Rule</fileType>
-         <fileFormat>LUA</fileFormat>
-         <ruleType>SubTemplate</ruleType>
-      </ruleFile>
-      <ruleFile id="TrafficSeparationZone">
-         <description>
-            <name>TrafficSeparationZone</name>
-            <description>Rules for feature type TrafficSeparationZone</description>
-            <language>eng</language>
-         </description>
-         <fileName>TrafficSeparationZone.lua</fileName>
          <fileType>Rule</fileType>
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
@@ -11359,5 +11743,5 @@
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>
       </ruleFile>
-   </rules>
+    </rules>
 </portrayalCatalog>

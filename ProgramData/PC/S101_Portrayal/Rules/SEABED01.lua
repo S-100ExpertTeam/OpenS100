@@ -1,4 +1,6 @@
 -- SEABED01 conditional symbology rules file.
+-- #155: Update context parameters
+-- #119: Independent Mariner Selections
 
 -- Main entry point for CSP.
 function SEABED01(feature, featurePortrayal, contextParameters, depthRangeMinimumValue, depthRangeMaximumValue)
@@ -7,7 +9,8 @@ function SEABED01(feature, featurePortrayal, contextParameters, depthRangeMinimu
 	local Colour = 'DEPIT'
 	local Shallow = true
 
-	if (contextParameters.TwoShades) then
+	if (not contextParameters.FourShades) then
+		-- Two shades: DEPVS / DEPDW
 		if (depthRangeMinimumValue >= scaledDecimalZero and (not depthRangeMaximumValue or depthRangeMaximumValue > scaledDecimalZero)) then
 			Colour = 'DEPVS'
 		end
@@ -17,6 +20,7 @@ function SEABED01(feature, featurePortrayal, contextParameters, depthRangeMinimu
 			Shallow = false
 		end
 	else
+		-- Four shades: DEPVS / DEPMS / DEPMD / DEPDW
 		if (depthRangeMinimumValue >= scaledDecimalZero and (not depthRangeMaximumValue or depthRangeMaximumValue > scaledDecimalZero)) then
 			Colour = 'DEPVS'
 		end
@@ -39,13 +43,19 @@ function SEABED01(feature, featurePortrayal, contextParameters, depthRangeMinimu
 	--Debug.Trace('SEABED01: Colour = ' .. Colour .. ' SafetyContour = ' .. contextParameters.SafetyContour .. ' depthRangeMinimumValue = ' .. depthRangeMinimumValue .. ' depthRangeMaximumValue = ' .. depthRangeMaximumValue)
 
 	if Shallow then
-		featurePortrayal:AddInstructions('AlertReference:SafetyContour,101,101')
+		featurePortrayal:AddInstructions('AlertReference:SafetyContour')
 	end
 
 	featurePortrayal:AddInstructions('ColorFill:' .. Colour)
 
-	if (contextParameters.ShallowPattern and Shallow) then
+	if Shallow then
+		-- S-52 10.5.7
+		featurePortrayal:AddInstructions('ViewingGroup:23010,shallowPattern;DrawingPriority:9;DisplayPlane:UnderRADAR')
+
 		featurePortrayal:AddInstructions('AreaFillReference:DIAMOND1')
+
+		-- Restore default viewing and priorities for depth area and dredged area.
+		featurePortrayal:AddInstructions('ViewingGroup:13030;DrawingPriority:3;DisplayPlane:UnderRADAR')
 	end
 
 	if Shallow then

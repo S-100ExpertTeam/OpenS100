@@ -7,7 +7,6 @@ require 'Default'
 function PortrayalMain(featureIDs)
 	Debug.StartPerformance('Lua Code - Total')
 
-	-- portrayalContext is nill if PortrayalInitializeContextParameters() is not called
 	if not portrayalContext then
 		error('Host must call PortrayalInitializeContextParameters() before calling portrayal_main()')
 	end
@@ -33,6 +32,8 @@ function PortrayalMain(featureIDs)
 		local status, err = pcall(function ()
 			Debug.StartPerformance('Lua Code - Rules processing')
 
+			local dateDependent = ProcessFixedAndPeriodicDates(feature, featurePortrayal)
+
 			local scaleMinimum = feature['!scaleMinimum']
 			local scaleMaximum = feature['!scaleMaximum']
 
@@ -44,20 +45,22 @@ function PortrayalMain(featureIDs)
 				featurePortrayal:AddInstructions('ScaleMaximum:' .. scaleMaximum)
 			end
 
-			featurePortrayal:AddInstructions('Id:main')
-
 			require(feature.Code)
-			_G[feature.Code](feature, featurePortrayal, contextParameters)
+			local viewingGroup = _G[feature.Code](feature, featurePortrayal, contextParameters)
 
-			featurePortrayal:AddInstructions('Id:')
+			if not viewingGroup then
+				error('Viewing group not returned')
+			end
 
 			if #featurePortrayal.DrawingInstructions == 0 then
 				error('No drawing instructions were emitted for feature ' .. feature.ID)
 			end
 
-			ProcessTimes(feature, featurePortrayal, contextParameters)
+			ProcessNauticalInformation(feature, featurePortrayal, contextParameters, viewingGroup)
 
-			ProcessNauticalInformation(feature, featurePortrayal, contextParameters)
+			if dateDependent then
+				AddDateDependentSymbol(feature, featurePortrayal, contextParameters, viewingGroup)
+			end
 
 			Debug.StopPerformance('Lua Code - Rules processing')
 		end)
@@ -68,7 +71,12 @@ function PortrayalMain(featureIDs)
 			-- Clear any drawing instructions created up to this point.
 			featurePortrayal = featurePortrayalItem:NewFeaturePortrayal()
 
-			Default(feature, featurePortrayal, contextParameters)
+			local dateDependent = ProcessFixedAndPeriodicDates(feature, featurePortrayal)
+			local viewingGroup = Default(feature, featurePortrayal, contextParameters)
+			ProcessNauticalInformation(feature, featurePortrayal, contextParameters, viewingGroup)
+			if dateDependent then
+				AddDateDependentSymbol(feature, featurePortrayal, contextParameters, viewingGroup)
+			end
 		end
 
 		Debug.StopPerformance('Lua Code - Dataset processing')

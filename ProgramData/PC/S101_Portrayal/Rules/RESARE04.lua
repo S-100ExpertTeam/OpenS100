@@ -1,9 +1,9 @@
 -- RESARE04 conditional symbology rules file.
 
 -- Main entry point for CSP.
-function RESARE04(feature, featurePortrayal, contextParameters)
+function RESARE04(feature, featurePortrayal, contextParameters, viewingGroup)
 	Debug.StartPerformance('Lua Code - RESARE04')
-
+	
 	local restriction = feature.restriction
 	local categoryOfRestrictedArea = feature.categoryOfRestrictedArea
 
@@ -15,11 +15,11 @@ function RESARE04(feature, featurePortrayal, contextParameters)
 
 			if contains(restriction, { 1, 2, 3, 4, 5, 6, 13, 16, 17, 23, 24, 25, 26, 27 }) then
 				featurePortrayal:AddInstructions('PointInstruction:ENTRES61')
-			elseif categoryOfRestrictedArea and contains(categoryOfRestrictedArea, { 1, 8, 9, 12, 14, 18, 19, 21, 24, 25, 26 }) then
+			elseif categoryOfRestrictedArea and contains(categoryOfRestrictedArea, { 1, 8, 9, 12, 14, 18, 19, 21, 24, 25, 26, 29 }) then
 				featurePortrayal:AddInstructions('PointInstruction:ENTRES61')
 			elseif contains(restriction, { 9, 10, 11, 12, 15, 18, 19, 20, 21, 22 }) then
 				featurePortrayal:AddInstructions('PointInstruction:ENTRES71')
-			elseif categoryOfRestrictedArea and contains(categoryOfRestrictedArea, {4, 5, 6, 7, 10, 20, 22, 23 }) then
+			elseif categoryOfRestrictedArea and contains(categoryOfRestrictedArea, {4, 5, 6, 7, 10, 20, 22, 23, 31 }) then -- Issue #53
 				featurePortrayal:AddInstructions('PointInstruction:ENTRES71')
 			else
 				featurePortrayal:AddInstructions('PointInstruction:ENTRES51')
@@ -39,7 +39,7 @@ function RESARE04(feature, featurePortrayal, contextParameters)
 
 			if contains(restriction, { 3, 4, 5, 6, 13, 16, 17, 23, 24, 25, 26, 27 }) then
 				featurePortrayal:AddInstructions('PointInstruction:ACHRES61')
-			elseif categoryOfRestrictedArea and contains(categoryOfRestrictedArea, { 1, 8, 9, 12, 14, 18, 19, 21, 24, 25, 26 }) then
+			elseif categoryOfRestrictedArea and contains(categoryOfRestrictedArea, { 1, 8, 9, 12, 14, 18, 19, 21, 24, 25, 26, 29 }) then
 				featurePortrayal:AddInstructions('PointInstruction:ACHRES61')
 			elseif contains(restriction, { 9, 10, 11, 12, 15, 18, 19, 20, 21, 22 }) then
 				featurePortrayal:AddInstructions('PointInstruction:ACHRES71')
@@ -63,7 +63,7 @@ function RESARE04(feature, featurePortrayal, contextParameters)
 
 			if contains(restriction, { 13, 16, 17, 23, 24, 25, 26, 27 }) then
 				featurePortrayal:AddInstructions('PointInstruction:FSHRES61')
-			elseif categoryOfRestrictedArea and contains(categoryOfRestrictedArea, { 1, 8, 9, 12, 14, 18, 19, 21, 24, 25, 26 }) then
+			elseif categoryOfRestrictedArea and contains(categoryOfRestrictedArea, { 1, 8, 9, 12, 14, 18, 19, 21, 24, 25, 26, 29 }) then
 				featurePortrayal:AddInstructions('PointInstruction:FSHRES61')
 			elseif contains(restriction, { 9, 10, 11, 12, 15, 18, 19, 20, 21, 22 }) then
 				featurePortrayal:AddInstructions('PointInstruction:FSHRES71')
@@ -118,7 +118,7 @@ function RESARE04(feature, featurePortrayal, contextParameters)
 		-- Continuation E.  No restriction applies
 
 		if categoryOfRestrictedArea then
-			if contains(categoryOfRestrictedArea, { 1, 8, 9, 12, 14, 18, 19, 21, 24, 25, 26 }) then
+			if contains(categoryOfRestrictedArea, { 1, 8, 9, 12, 14, 18, 19, 21, 24, 25, 26, 29 }) then
 				if contains(categoryOfRestrictedArea, { 4, 5, 6, 7, 10, 20, 22, 23 }) then
 					featurePortrayal:AddInstructions('PointInstruction:CTYARE71')
 				else

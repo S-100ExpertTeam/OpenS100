@@ -72,10 +72,10 @@ namespace GM
 		return 0;
 	}
 
-	void CompositeCurve::Add(std::string curveMemberID)
-	{
-		component.push_back(new OrientableCurve(curveMemberID));
-	}
+	//void CompositeCurve::Add(std::string curveMemberID)
+	//{
+	//	component.push_back(new OrientableCurve(curveMemberID));
+	//}
 
 	void CompositeCurve::Add(GM::OrientableCurve* item)
 	{

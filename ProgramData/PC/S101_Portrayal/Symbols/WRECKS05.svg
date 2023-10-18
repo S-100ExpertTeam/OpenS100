@@ -3,8 +3,8 @@
   <title>WRECKS05</title>
   <desc>dangerous wreck, depth unknown</desc>
   <metadata>
-    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
-      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2023-05-01" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="1.0"/>
     </iho:S100SVG>
   </metadata>
   <rect class="symbolBox layout" fill="none" x="-2.97" y="-2.1" height="4.1" width="5.9"/>
@@ -14,21 +14,21 @@
   <path d=" M 1.5,-1 L 1.5,1" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
   <path d=" M -2.5,0 L 2.5,0" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
   <path d=" M 0,-1.5 L 0,1.5" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-2.97" cy="-0.5" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-2.38" cy="-1.25" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.5" cy="-1.75" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-0.63" cy="-2" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0.5" cy="-2.1" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.5" cy="-1.75" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="2.31" cy="-1.25" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="2.9" cy="-0.5" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-2.97" cy="0.5" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-2.25" cy="1.15" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.5" cy="1.65" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-0.5" cy="2" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0.5" cy="2" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.5" cy="1.65" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="2.37" cy="1.09" r="0.16"/>
-  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="2.93" cy="0.43" r="0.16"/>
+  <circle class="fCHBLK" cx="-2.97" cy="-0.5" r="0.16"/>
+  <circle class="fCHBLK" cx="-2.38" cy="-1.25" r="0.16"/>
+  <circle class="fCHBLK" cx="-1.5" cy="-1.75" r="0.16"/>
+  <circle class="fCHBLK" cx="-0.63" cy="-2" r="0.16"/>
+  <circle class="fCHBLK" cx="0.5" cy="-2.1" r="0.16"/>
+  <circle class="fCHBLK" cx="1.5" cy="-1.75" r="0.16"/>
+  <circle class="fCHBLK" cx="2.31" cy="-1.25" r="0.16"/>
+  <circle class="fCHBLK" cx="2.9" cy="-0.5" r="0.16"/>
+  <circle class="fCHBLK" cx="-2.97" cy="0.5" r="0.16"/>
+  <circle class="fCHBLK" cx="-2.25" cy="1.15" r="0.16"/>
+  <circle class="fCHBLK" cx="-1.5" cy="1.65" r="0.16"/>
+  <circle class="fCHBLK" cx="-0.5" cy="2" r="0.16"/>
+  <circle class="fCHBLK" cx="0.5" cy="2" r="0.16"/>
+  <circle class="fCHBLK" cx="1.5" cy="1.65" r="0.16"/>
+  <circle class="fCHBLK" cx="2.37" cy="1.09" r="0.16"/>
+  <circle class="fCHBLK" cx="2.93" cy="0.43" r="0.16"/>
   <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
 </svg>

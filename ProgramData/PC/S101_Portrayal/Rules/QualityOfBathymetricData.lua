@@ -1,54 +1,66 @@
 -- QualityOfBathymetricData portrayal rules file.
+-- #80
+-- #119
+-- #178
+
+require 'S100Scripting'
 
 -- Main entry point for feature type.
 function QualityOfBathymetricData(feature, featurePortrayal, contextParameters)
 	if feature.PrimitiveType ~= PrimitiveType.Surface then
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
+	
+	-- Debug.Break()  
 
-	local function DepthAccuracy(a, b)
-		local d = feature.depthRangeMinimumValue
+	local catzoc
+	local zonesOfConfidence = feature.zoneOfConfidence
+	
+	featurePortrayal:AddInstructions('ViewingGroup:31010,accuracy;DrawingPriority:12;DisplayPlane:UnderRADAR')
 
-		if d then
-			local accuracy = a + (b * d) / SD(100)
+	local DRVAL1 = feature.depthRangeMinimumValue
+	local DRVAL2 = feature.depthRangeMaximumValue
+	local intersects = (DRVAL1 == nil or DRVAL1 < contextParameters.SafetyContour) and (DRVAL2 == nil or contextParameters.SafetyContour <= DRVAL2)
+	
+	local dateDependent = false
+	if zonesOfConfidence and #zonesOfConfidence > 0 then
+		for _, zoneOfConfidence in ipairs(zonesOfConfidence) do
+			dateDependent = ProcessFixedDateRange(featurePortrayal, zoneOfConfidence.fixedDateRange) or dateDependent
+			if intersects then
+				if zoneOfConfidence.categoryOfZoneOfConfidenceInData then
+					if (zoneOfConfidence.categoryOfZoneOfConfidenceInData == 1) then
+						catzoc = 'A11'
+					elseif (zoneOfConfidence.categoryOfZoneOfConfidenceInData == 2) then
+						catzoc = 'A21'
+					elseif (zoneOfConfidence.categoryOfZoneOfConfidenceInData == 3) then
+						catzoc = 'B01'
+					elseif (zoneOfConfidence.categoryOfZoneOfConfidenceInData == 4) then
+						catzoc = 'C01'
+					elseif (zoneOfConfidence.categoryOfZoneOfConfidenceInData == 5) then
+						catzoc = 'D01'
+					elseif (zoneOfConfidence.categoryOfZoneOfConfidenceInData == 6) then
+						catzoc = 'U01'
+					end
+					-- CATZOC values defined
+					featurePortrayal:AddInstructions('AreaFillReference:DQUAL' .. catzoc)
+					featurePortrayal:SimpleLineStyle('dash',0.64,'CHGRD')
+					featurePortrayal:AddInstructions('LineInstruction:_simple_')
 
-			return feature.verticalUncertainty.uncertaintyFixed <= accuracy
+				else
+					-- default without CATZOC: "M_QUAL","","AP(NODATA03);LS(DASH,2,CHGRD)","4","S","OTHER","31010" 
+					featurePortrayal:AddInstructions('AreaFillReference:NODATA03')
+					featurePortrayal:SimpleLineStyle('dash',0.64,'CHGRD')
+					featurePortrayal:AddInstructions('LineInstruction:_simple_')
+				end
+			else
+				featurePortrayal:AddInstructions('NullInstruction')
+			end
+			if dateDependent then
+				AddDateDependentSymbol(feature, featurePortrayal, contextParameters, '31010,accuracy')
+				featurePortrayal:AddInstructions('ClearTime')
+			end
 		end
 	end
 
-	-- Determine CATZOC equivalence.  See S-57 Appendix A Chapter 2.
-
-	local scaleFactor = 0.311 -- Scale 16.04mm symbols to 5mm.
-
-	local catzoc = 'U01'
-
-	if (feature.dataAssessment == 1 or feature.dataAssessment == 2) and feature.horizontalPositionUncertainty.uncertaintyFixed and feature.verticalUncertainty.uncertaintyFixed then
-		catzoc = 'D01'
-
-		local hpu = feature.horizontalPositionUncertainty.uncertaintyFixed
-
-		if hpu <= SD(500) and DepthAccuracy(SD(2), SD(5)) then
-			catzoc = 'C01'
-		end
-
-		if hpu <= SD(50) and DepthAccuracy(SD(1), SD(2)) then
-			scaleFactor = 0.294 -- Scale 16.97mm symbols to 5mm.
-			catzoc = 'B01'
-		end
-
-		if feature.fullSeafloorCoverageAchieved and hpu <= SD(20) and DepthAccuracy(SD(1), SD(2)) then
-			scaleFactor = 0.294 -- Scale 16.97mm symbols to 5mm.
-			catzoc = 'A21'
-		end
-
-		if feature.fullSeafloorCoverageAchieved and hpu <= SD(5) and DepthAccuracy(SD(5, 1), SD(1)) then
-			scaleFactor = 0.294 -- Scale 16.97mm symbols to 5mm.
-			catzoc = 'A11'
-		end
-	end
-
-	featurePortrayal:AddInstructions('ViewingGroup:31010;DrawingPriority:12;DisplayPlane:UnderRADAR')
-	featurePortrayal:SimpleLineStyle('dash',0.64,'CHGRD')
-	featurePortrayal:AddInstructions('LineInstruction:_simple_;AreaFillReference:testPCB')
-	--featurePortrayal:AddInstructions('LineInstruction:_simple_;ScaleFactor:' .. scaleFactor .. ';PointInstruction:DQUAL' .. catzoc .. 'P')
+	return '31010,accuracy'
 end
