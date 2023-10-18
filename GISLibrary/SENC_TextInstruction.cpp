@@ -179,12 +179,9 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 		std::list<SCurve*> curveList;
 		geo->GetCurveList(curveList);
 
-		//int curveCnt = geo->GetCurveCount();
-		//for (int i = 0; i < curveCnt; i++)
 		for (auto i = curveList.begin(); i != curveList.end(); i++)
 		{
 			bDraw = false;
-			//auto c = geo->GetCurve(i);
 			auto c = (*i);
 
 			if (!c->GetMasking())
@@ -239,9 +236,6 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 		{
 			scaler->WorldToDevice_F(geo->m_centerPoint->x, geo->m_centerPoint->y, &tempPoint.x, &tempPoint.y);
 			points.push_back(tempPoint);
-		}
-		else
-		{
 		}
 	}
 }

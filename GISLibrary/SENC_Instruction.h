@@ -157,45 +157,6 @@ public:
 	*/
 	double GetDistance(POINT _p1, POINT _p2);
 
-
-	/*
-	** function   : Find the length of the polyline.
-	** factor   :
-	POINT* _p     - Coordinate arrangement of the polyline.
-	int    _count - The number of polyline coordinates.
-	** return value : The length of the polyline.
-	*/
-	double GetDistanceOfPolyline(POINT *_p, int _count);
-
-	/*
-	** function   : Find the line shown on the screen among the polylines.
-	** factor   :
-	POINT* _p     - Coordinate arrangement of the polyline.
-	int    _count - number of polyline coordinates.
-	** return value : Among the polylines, the line you see on the screen.
-	*/
-	void GetViewLineInPolyline(POINT *_p, int _count, CRect* viewPort);
-
-	/*
-	** function   : Find the midpoint at the distance of the polyline.
-	** factor   :
-	POINT* _p     - Coordinate arrangement of the polyline.
-	int    _count - number of polyline coordinates.
-	** return value : The midpoint of the polyline.
-	*/
-	POINT* GetCenterPointOfPolyline(POINT *_p, int _count, CRect* viewPort);
-
-	/*
-	** function   : Check if the two line segments intersect.
-	** factor   :
-	POINT _s1     - starting point of LINE 1.
-	POINT _e1     - end point of LINE 1.
-	POINT _s2     - starting point of LINE 2.
-	POINT _e2     - end point of LINE 2.
-	** return value : Whether the two lines intersect.
-	*/
-	bool IsIntersect(POINT _s1, POINT _e1, POINT _s2, POINT _e2);
-
 	/*
 	** function   :
 	** factor   : Move the starting point of the line from the intersection.

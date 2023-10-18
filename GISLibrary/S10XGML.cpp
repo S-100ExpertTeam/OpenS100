@@ -487,13 +487,15 @@ GM::CompositeCurve* S10XGML::ReadCompositeCurve(pugi::xml_node& node, std::strin
 			if (curveMemberID.length() > 1 &&
 				curveMemberID.at(0) == '#')
 			{
+				curveMemberID = curveMemberID.substr(1);
+
 				auto orientableCurve = GetOrientableCurve(curveMemberID);
 				if (orientableCurve) {
 					object->Add(orientableCurve);
 				}
 				else {
 					CString str;
-					str.Format(L"Failed to find curve (%S)", curveMemberID);
+					str.Format(L"Failed to find curve (%s)\n", pugi::as_wide(curveMemberID).c_str());
 					OutputDebugString(str);
 				}
 				//object->Add(curveMemberID);
