@@ -148,6 +148,11 @@ std::string FeatureBinding::GetFeatureType(int index)
 	return featureTypes.at(index);
 }
 
+std::vector<std::string> FeatureBinding::GetFeatureTypes()
+{
+	return featureTypes;
+}
+
 std::wstring FeatureBinding::GetFeatureTypeAsWstring(int index)
 {
 	return pugi::as_wide(GetFeatureType(index));

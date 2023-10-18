@@ -420,7 +420,8 @@ lua_ref_ptr CreateInformationBinding(lua_session *ls, InformationBinding *inform
 	}
 
 	return ls->call<lua_ref_ptr>("CreateInformationBinding", { 
-		information_binding->GetInformationType(informationIndex),
+		//information_binding->GetInformationType(informationIndex),
+		information_binding->GetInformationTypes(),
 		information_binding->GetMultiplicity().GetLower(), 
 		muluppvalue, 
 		information_binding->GetRoleTypeAsString(), 
@@ -438,7 +439,8 @@ lua_ref_ptr CreateFeatureBinding(lua_session *ls, FeatureBinding *feature_bindin
 	}
 
 	return ls->call<lua_ref_ptr>("CreateFeatureBinding", { 
-		feature_binding->GetFeatureType(featureIndex),
+		//feature_binding->GetFeatureType(featureIndex),
+		feature_binding->GetFeatureTypes(),
 		feature_binding->GetMultiplicity().GetLower(), 
 		muluppvalue, 
 		feature_binding->GetRoleTypeAsString(), 
