@@ -107,6 +107,14 @@ public:
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::SimpleAttributeType* simpleAttribute);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, ATTR* parentATTR, GF::ComplexAttributeType* complexAttribute);
+	bool ConvertFeaturesFromS101GML(S10XGML& gml, S101Creator* creator);
+	bool ConvertInformationsFromS101GML(S10XGML& gml, S101Creator* creator);
+	bool ConvertGeometriesFromS101GML(S10XGML& gml);
+	bool InsertPointRecordFromS101GML(GM::Point* point);
+	bool InsertMultiPointRecordFromS101GML(GM::MultiPoint* point);
+	bool InsertCurveRecordFromS101GML(S10XGML& gml, GM::Curve* curve);
+	bool InsertCompositeCurveRecordFromS101GML(S10XGML& gml, GM::CompositeCurve* curve);
+	bool InsertSurfaceRecordFromS101GML(S10XGML& gml, GM::Surface* curve);
 
 	bool SaveAsENC(std::wstring path);
 	bool SaveAsGML(std::wstring path);
@@ -126,7 +134,7 @@ public:
 	pugi::xml_node SaveComplexAttribute(pugi::xml_node root, std::string code);
 
 	bool HasOrientableCurve(pugi::xml_node& root, std::string id);
-	void AddOrientableCurve(pugi::xml_node& root, std::string odID, std::string refID);
+	void AddOrientableCurve(pugi::xml_node& root, pugi::xml_node& prevNode, std::string odID, std::string refID);
 
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
@@ -246,7 +254,7 @@ public:
 	std::vector<R_MultiPointRecord*>& GetVecMultiPoint();
 
 
-	void InsertCurveRecord(__int64 key, R_CurveRecord* record);
+	bool InsertCurveRecord(__int64 key, R_CurveRecord* record);
 	void RemoveCurveRecord(__int64 key, R_CurveRecord* record);
 	R_CurveRecord* GetCurveRecord(__int64 key);
 	R_CurveRecord* GetCurveRecordByIndex(int index);

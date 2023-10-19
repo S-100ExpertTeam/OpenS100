@@ -6,5 +6,8 @@ namespace GM
 {
 	class Aggregate : public Object
 	{
+	public:
+		Aggregate();
+		virtual ~Aggregate();
 	};
 }

@@ -11,10 +11,11 @@ namespace GM
 	CompositeCurve::CompositeCurve(const CompositeCurve& item) : OrientableCurve(item)
 	{
 		for (auto i = item.component.begin(); i != item.component.end(); i++) {
-			if (typeid(OrientableCurve) == typeid(**i)) {
-				component.push_back(new OrientableCurve((OrientableCurve&)**i));
-			}
-			else if (typeid(Curve) == typeid(**i)) {
+			//if (typeid(OrientableCurve) == typeid(**i)) {
+			//	component.push_back(new OrientableCurve((OrientableCurve&)**i));
+			//}
+			//else 
+			if (typeid(Curve) == typeid(**i)) {
 				component.push_back(new Curve((Curve&)**i));
 			}
 			else if (typeid(CompositeCurve) == typeid(**i)) {

@@ -13,7 +13,7 @@ namespace GF
 	{
 	public:
 		AttributeType();
-		~AttributeType();
+		virtual ~AttributeType();
 
 	public:
 

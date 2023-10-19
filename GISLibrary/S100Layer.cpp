@@ -61,6 +61,7 @@ bool S100Layer::Open(CString _filepath)
 		if (!m_spatialObject->Open(_filepath))
 		{
 			delete m_spatialObject;
+			m_spatialObject = nullptr;
 			return false;
 		}
 		

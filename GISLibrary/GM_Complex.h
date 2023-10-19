@@ -6,6 +6,9 @@ namespace GM
 {
 	class Complex : public Object
 	{
+	public:
+		Complex();
+		virtual ~Complex();
 		//std::string GeometricPrimitiveAsString() override;
 	};
 }

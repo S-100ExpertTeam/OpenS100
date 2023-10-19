@@ -16,6 +16,10 @@ namespace GM
 
 	CurveBoundary::~CurveBoundary()
 	{
+		delete startPoint;
+		startPoint = nullptr;
 
+		delete endPoint;
+		endPoint = nullptr;
 	}
 }

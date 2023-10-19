@@ -327,6 +327,8 @@
     <ClCompile Include="GML_Envelop.cpp" />
     <ClCompile Include="GML_FeatureType.cpp" />
     <ClCompile Include="GML_SimpleAttribute.cpp" />
+    <ClCompile Include="GM_Aggregate.cpp" />
+    <ClCompile Include="GM_Complex.cpp" />
     <ClCompile Include="GM_CompositeCurve.cpp" />
     <ClCompile Include="GM_Curve.cpp" />
     <ClCompile Include="GM_CurveBoundary.cpp" />
@@ -337,6 +339,7 @@
     <ClCompile Include="GM_Polygon.cpp" />
     <ClCompile Include="GM_Ring.cpp" />
     <ClCompile Include="GM_Surface.cpp" />
+    <ClCompile Include="GM_SurfacePatch.cpp" />
     <ClCompile Include="H5_FC_Attribute2.cpp" />
     <ClCompile Include="H5_FeatureContainer.cpp" />
     <ClCompile Include="H5_FeatureInstanceGroup.cpp" />

@@ -448,6 +448,7 @@ bool S101Cell::OpenBy000(CString path)
 		CalcMBR();
 		Check();
 
+		//SaveAsGML(L"..\\TEMP\\101GML3.gml");
 		return true;
 	}
 
@@ -469,6 +470,8 @@ bool S101Cell::OpenByGML(CString path)
 	SetAllNumericCode(GetFC());
 
 	ConvertFromS101GML(gml);
+
+	//return false;
 
 	MakeFullSpatialData();
 
@@ -1784,14 +1787,16 @@ std::vector<R_MultiPointRecord*>& S101Cell::GetVecMultiPoint()
 	return vecMultiPoint;
 }
 
-void S101Cell::InsertCurveRecord(__int64 key, R_CurveRecord* record)
+bool S101Cell::InsertCurveRecord(__int64 key, R_CurveRecord* record)
 {
 	auto curveRecord = GetCurveRecord(key);
-	if (curveRecord == nullptr)
-	{
+	if (curveRecord == nullptr) {
 		m_curMap.SetAt(key, record);
 		vecCurve.push_back(record);
+		return true;
 	}
+
+	return false;
 }
 
 void S101Cell::RemoveCurveRecord(__int64 key, R_CurveRecord* record)
@@ -3520,6 +3525,9 @@ bool S101Cell::SaveCompositeCurve(pugi::xml_node& root)
 	{
 		auto record = *i;
 		auto curNode = root.append_child("S100:CompositeCurve");
+		
+		auto node_prevSibling = curNode.previous_sibling();
+
 		curNode.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
 		curNode.append_attribute("gml:id").set_value(record->GetRCIDasString("cc").c_str());
 
@@ -3552,7 +3560,7 @@ bool S101Cell::SaveCompositeCurve(pugi::xml_node& root)
 					auto find = HasOrientableCurve(root, ocID);
 					if (!find)
 					{
-						AddOrientableCurve(root, ocID, cuco->m_name.GetRCIDasString(prefix));
+						AddOrientableCurve(root, node_prevSibling, ocID, cuco->m_name.GetRCIDasString(prefix));
 					}
 					
 					node_CurveMember.append_attribute("xlink:href").set_value(cuco->m_name.GetRCIDasString("#o" + prefix).c_str());
@@ -3566,11 +3574,15 @@ bool S101Cell::SaveCompositeCurve(pugi::xml_node& root)
 
 bool S101Cell::SaveSurface(pugi::xml_node& root)
 {
+	pugi::xml_node& rootOfOrientableCurve = root;
 	for (auto i = vecSurface.begin(); i != vecSurface.end(); i++)
 	{
 		auto record = *i;
 
 		auto node_Surface = root.append_child("S100:Surface");
+
+		auto node_prevSibling = node_Surface.previous_sibling();
+
 		node_Surface.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
 		node_Surface.append_attribute("gml:id").set_value(record->GetRCIDasString("s").c_str());
 
@@ -3609,7 +3621,7 @@ bool S101Cell::SaveSurface(pugi::xml_node& root)
 					auto ocID = rias->m_name.GetRCIDasString("o" + curvePrefix);
 					if (!HasOrientableCurve(root, ocID))
 					{
-						AddOrientableCurve(root, ocID, rias->m_name.GetRCIDasString(curvePrefix));
+						AddOrientableCurve(root, node_Surface, ocID, rias->m_name.GetRCIDasString(curvePrefix));
 					}
 
 					refCurveID = "#" + ocID;
@@ -3880,9 +3892,9 @@ bool S101Cell::HasOrientableCurve(pugi::xml_node& root, std::string id)
 	return true;
 }
 
-void S101Cell::AddOrientableCurve(pugi::xml_node& root, std::string odID, std::string refID)
+void S101Cell::AddOrientableCurve(pugi::xml_node& root, pugi::xml_node& prevNode, std::string odID, std::string refID)
 {
-	auto node_oc = root.append_child("S100:OrientableCurve");
+	auto node_oc = root.insert_child_after("S100:OrientableCurve", prevNode);
 	node_oc.append_attribute("srsName").set_value("http://www.opengis.net/def/crs/EPSG/0/4326");
 
 	node_oc.append_attribute("gml:id").set_value(odID.c_str());
@@ -4470,215 +4482,9 @@ bool S101Cell::ConvertFromS101GML(S10XGML& gml)
 {
 	S101Creator creator(GetFC(), this);
 
-	for (auto i = gml.informations.begin(); i != gml.informations.end(); i++)
-	{
-
-	}
-
-	for (auto i = gml.features.begin(); i != gml.features.end(); i++)
-	{
-		auto feature = (*i);
-		auto code = (*i)->GetCode();
-		
-		auto geometryID = feature->GetGeometryID();
-		if (geometryID.empty() == false)
-		{
-			auto fr = new R_FeatureRecord();
-			fr->SetRCID(feature->GetIDAsInteger());
-			fr->SetNumericCode(m_dsgir.GetFeatureTypeCode(pugi::as_wide(code)));
-
-			auto geometryIntID = feature->GetGeometryIDAsInt();
-			if (std::string::npos != geometryID.find("mp"))
-			{
-				fr->SetSPAS(115, geometryIntID, 1);
-			}
-			else if (std::string::npos != geometryID.find("p"))
-			{
-				fr->SetSPAS(110, geometryIntID, 1);
-			}
-			else if (std::string::npos != geometryID.find("s"))
-			{
-				fr->SetSPAS(130, geometryIntID, 1);
-			}
-			else if (std::string::npos != geometryID.find("occ"))
-			{
-				fr->SetSPAS(125, geometryIntID, 2);
-			}
-			else if (std::string::npos != geometryID.find("cc"))
-			{
-				fr->SetSPAS(125, geometryIntID, 1);
-			}
-			else if (std::string::npos != geometryID.find("oc"))
-			{
-				fr->SetSPAS(120, geometryIntID, 2);
-			}
-			else if (std::string::npos != geometryID.find("c"))
-			{
-				fr->SetSPAS(120, geometryIntID, 1);
-			}
-
-			ConvertFromS101GML(&creator, fr, feature);
-
-			InsertFeatureRecord(fr->GetRecordName().GetName(), fr);
-		}
-	}
-
-	for (auto i = gml.geometries.begin(); i != gml.geometries.end(); i++)
-	{
-		auto type = (*i)->GetType();
-		if (type == GM::GeometryType::Point)
-		{
-			auto geom = (GM::Point*)(*i);
-			auto pr = new R_PointRecord();
-			pr->SetRCID(geom->GetIDAsInt());
-			pr->SetC2IT(geom->position.GetXInteger(), geom->position.GetYInteger());
-			InsertPointRecord(pr->GetRecordName().GetName(), pr);
-		}
-		else if (type == GM::GeometryType::MultiPoint)
-		{
-			auto geom = (GM::MultiPoint*)(*i);
-			auto mr = new R_MultiPointRecord();
-			mr->SetRCID(geom->GetIDAsInt());
-			
-			for (auto i = geom->position.begin(); i != geom->position.end(); i++)
-			{
-				mr->InsertC3IL(i->GetXInteger(), i->GetYInteger(), i->GetZ() * GetCMFZ());
-			}
-
-			InsertMultiPointRecord(mr->GetRecordName().GetName(), mr);
-		}
-		else if (type == GM::GeometryType::Curve)
-		{
-			auto geom = (GM::Curve*)(*i);
-
-			auto pt1 = gml.GetPoint(
-				geom->segment.front().controlPoints.front().GetXInteger(),
-				geom->segment.front().controlPoints.front().GetYInteger());
-
-			auto pt2 = gml.GetPoint(
-				geom->segment.front().controlPoints.back().GetXInteger(),
-				geom->segment.front().controlPoints.back().GetYInteger());
-
-			bool isClosed = geom->IsClosed();
-
-			if (pt1 && pt2)
-			{
-				if (geom->segment.size() > 0)
-				{
-					auto cr = new R_CurveRecord();
-					cr->SetRCID(geom->GetIDAsInt());
-
-					if (isClosed)
-					{
-						cr->SetPTAS(pt1->GetIDAsInt());
-					}
-					else
-					{
-						cr->SetPTAS(pt1->GetIDAsInt(), pt2->GetIDAsInt());
-					}
-
-					for (int i = 1; i < geom->segment.front().controlPoints.size() - 2; i++)
-					{
-						cr->InsertC2IL(
-							geom->segment.front().controlPoints.at(i).GetXInteger(),
-							geom->segment.front().controlPoints.at(i).GetYInteger());
-					}
-
-					InsertCurveRecord(cr->GetRecordName().GetName(), cr);
-				}
-			}
-		}
-		else if (type == GM::GeometryType::CompositeCurve)
-		{
-			auto geom = (GM::CompositeCurve*)(*i);
-			auto ccr = new R_CompositeRecord();
-			ccr->SetRCID(geom->GetIDAsInt());
-			
-			for (auto i = geom->component.begin(); i != geom->component.end(); i++)
-			{
-				//auto id = (*i)->baseCurveID;
-				auto id = (*i)->GetID();
-
-				auto curve = gml.GetOrientableCurve(id);
-				if (curve) {
-					auto type = curve->GetType();
-					if (type == GM::GeometryType::Curve) {
-
-					}
-				}
-
-				//if (std::string::npos != id.find("occ"))
-				//{
-				//	ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 2);
-				//}
-				//else if (std::string::npos != id.find("cc"))
-				//{
-				//	ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 1);
-				//}
-				//else if (std::string::npos != id.find("oc"))
-				//{
-				//	ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 2);
-				//}
-				//else if (std::string::npos != id.find("c"))
-				//{
-				//	ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 1);
-				//}
-			}
-
-			InsertCompositeCurveRecord(ccr->GetRecordName().GetName(), ccr);
-		}
-		else if (type == GM::GeometryType::Surface)
-		{
-			auto geom = (GM::Surface*)(*i);
-			auto sr = new R_SurfaceRecord();
-			sr->SetRCID(geom->GetIDAsInt());
-
-			auto exteriorID = geom->patch.boundary.exterior->GetID();
-			int exteriorIntID = geom->patch.boundary.exterior->GetIDAsInt();
-			if (std::string::npos != exteriorID.find("occ"))
-			{
-				sr->InsertRing(125, exteriorIntID, 1, 2);
-			}
-			else if (std::string::npos != exteriorID.find("cc"))
-			{
-				sr->InsertRing(125, exteriorIntID, 1, 1);
-			}
-			else if (std::string::npos != exteriorID.find("oc"))
-			{
-				sr->InsertRing(120, exteriorIntID, 1, 2);
-			}
-			else if (std::string::npos != exteriorID.find("c"))
-			{
-				sr->InsertRing(120, exteriorIntID, 1, 1);
-			}
-
-			for (auto j = geom->patch.boundary.interior.begin();
-				j != geom->patch.boundary.interior.end();
-				j++)
-			{
-				auto interiorID = (*j)->GetID();
-				int interiorIntID = (*j)->GetIDAsInt();
-				if (std::string::npos != interiorID.find("occ"))
-				{
-					sr->InsertRing(125, interiorIntID, 2, 2);
-				}
-				else if (std::string::npos != interiorID.find("cc"))
-				{
-					sr->InsertRing(125, interiorIntID, 2, 1);
-				}
-				else if (std::string::npos != interiorID.find("oc"))
-				{
-					sr->InsertRing(120, interiorIntID, 2, 2);
-				}
-				else if (std::string::npos != interiorID.find("c"))
-				{
-					sr->InsertRing(120, interiorIntID, 2, 1);
-				}
-			}
-
-			InsertSurfaceRecord(sr->GetRecordName().GetName(), sr);
-		}
-	}
+	ConvertInformationsFromS101GML(gml, &creator);
+	ConvertFeaturesFromS101GML(gml, &creator);
+	ConvertGeometriesFromS101GML(gml);
 
 	return true;
 }
@@ -4766,6 +4572,279 @@ bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* feature
 			ConvertFromS101GML(creator, featureRecord, addedCA, (GF::ComplexAttributeType*)subAttribute);
 		}
 	}
+
+	return true;
+}
+
+bool S101Cell::ConvertFeaturesFromS101GML(S10XGML& gml, S101Creator* creator)
+{
+	for (auto i = gml.features.begin(); i != gml.features.end(); i++)
+	{
+		auto feature = (*i);
+		auto code = (*i)->GetCode();
+
+		auto geometryID = feature->GetGeometryID();
+		if (geometryID.empty() == false)
+		{
+			auto fr = new R_FeatureRecord();
+			fr->SetRCID(feature->GetIDAsInteger());
+			fr->SetNumericCode(m_dsgir.GetFeatureTypeCode(pugi::as_wide(code)));
+
+			auto geometryIntID = feature->GetGeometryIDAsInt();
+			if (std::string::npos != geometryID.find("mp"))
+			{
+				fr->SetSPAS(115, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("p"))
+			{
+				fr->SetSPAS(110, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("s"))
+			{
+				fr->SetSPAS(130, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("occ"))
+			{
+				fr->SetSPAS(125, geometryIntID, 2);
+			}
+			else if (std::string::npos != geometryID.find("cc"))
+			{
+				fr->SetSPAS(125, geometryIntID, 1);
+			}
+			else if (std::string::npos != geometryID.find("oc"))
+			{
+				fr->SetSPAS(120, geometryIntID, 2);
+			}
+			else if (std::string::npos != geometryID.find("c"))
+			{
+				fr->SetSPAS(120, geometryIntID, 1);
+			}
+
+			ConvertFromS101GML(creator, fr, feature);
+
+			InsertFeatureRecord(fr->GetRecordName().GetName(), fr);
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::ConvertInformationsFromS101GML(S10XGML& gml, S101Creator* creator)
+{
+	for (auto i = gml.informations.begin(); i != gml.informations.end(); i++)
+	{
+
+	}
+
+	return true;
+}
+
+bool S101Cell::ConvertGeometriesFromS101GML(S10XGML& gml)
+{
+	for (auto i = gml.geometries.begin(); i != gml.geometries.end(); i++)
+	{
+		auto type = (*i)->GetType();
+		if (type == GM::GeometryType::Point)
+		{
+			InsertPointRecordFromS101GML((GM::Point*)*i);
+		}
+		else if (type == GM::GeometryType::MultiPoint)
+		{
+			InsertMultiPointRecordFromS101GML((GM::MultiPoint*)*i);
+		}
+		else if (type == GM::GeometryType::Curve)
+		{
+			InsertCurveRecordFromS101GML(gml, (GM::Curve*)*i);
+		}
+		//else if (type == GM::GeometryType::CompositeCurve)
+		//{
+		//	InsertCompositeCurveRecordFromS101GML(gml, (GM::CompositeCurve*)*i);
+		//}
+		//else if (type == GM::GeometryType::Surface)
+		//{
+		//	InsertSurfaceRecordFromS101GML(gml, (GM::Surface*)*i);
+		//}
+	}
+
+	return true;
+}
+
+bool S101Cell::InsertPointRecordFromS101GML(GM::Point* point)
+{
+	auto pr = new R_PointRecord();
+	pr->SetRCID(point->GetIDAsInt());
+	pr->SetC2IT(point->position.GetXInteger(), point->position.GetYInteger());
+	InsertPointRecord(pr->GetRecordName().GetName(), pr);
+
+	return true;
+}
+
+bool S101Cell::InsertMultiPointRecordFromS101GML(GM::MultiPoint* point)
+{
+	auto mr = new R_MultiPointRecord();
+	mr->SetRCID(point->GetIDAsInt());
+
+	for (auto i = point->position.begin(); i != point->position.end(); i++)
+	{
+		mr->InsertC3IL(i->GetXInteger(), i->GetYInteger(), i->GetZ() * GetCMFZ());
+	}
+
+	InsertMultiPointRecord(mr->GetRecordName().GetName(), mr);
+
+	return true;
+}
+
+bool S101Cell::InsertCurveRecordFromS101GML(S10XGML& gml, GM::Curve* curve)
+{
+	auto pt1 = gml.GetPoint(
+		curve->segment.front().controlPoints.front().GetXInteger(),
+		curve->segment.front().controlPoints.front().GetYInteger());
+
+	auto pt2 = gml.GetPoint(
+		curve->segment.front().controlPoints.back().GetXInteger(),
+		curve->segment.front().controlPoints.back().GetYInteger());
+
+	bool isClosed = curve->IsClosed();
+
+	if (pt1 && pt2)
+	{
+		if (curve->segment.size() > 0)
+		{
+			auto cr = new R_CurveRecord();
+			cr->SetRCID(curve->GetIDAsInt());
+
+			if (isClosed)
+			{
+				cr->SetPTAS(pt1->GetIDAsInt());
+			}
+			else
+			{
+				cr->SetPTAS(pt1->GetIDAsInt(), pt2->GetIDAsInt());
+			}
+
+			for (int i = 1; i < curve->segment.front().controlPoints.size() - 2; i++)
+			{
+				cr->InsertC2IL(
+					curve->segment.front().controlPoints.at(i).GetXInteger(),
+					curve->segment.front().controlPoints.at(i).GetYInteger());
+			}
+
+			auto result = InsertCurveRecord(cr->GetRecordName().GetName(), cr);
+			if (!result) {
+				OutputDebugString(L"A");
+				delete cr;
+				cr = nullptr;
+			}
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::InsertCompositeCurveRecordFromS101GML(S10XGML& gml, GM::CompositeCurve* curve)
+{
+	auto ccr = new R_CompositeRecord();
+	ccr->SetRCID(curve->GetIDAsInt());
+
+	for (auto i = curve->component.begin(); i != curve->component.end(); i++)
+	{
+		//auto id = (*i)->baseCurveID;
+		auto id = (*i)->GetID();
+
+		auto curve = gml.GetOrientableCurve(id);
+		if (curve) {
+			if (std::string::npos != id.find("occ"))
+			{
+				ccr->InsertCurve(125, curve->GetIDAsInt(), 2);
+			}
+			else if (std::string::npos != id.find("cc"))
+			{
+				ccr->InsertCurve(125, curve->GetIDAsInt(), 1);
+			}
+			else if (std::string::npos != id.find("oc"))
+			{
+				ccr->InsertCurve(120, curve->GetIDAsInt(), 2);
+			}
+			else if (std::string::npos != id.find("c"))
+			{
+				ccr->InsertCurve(120, curve->GetIDAsInt(), 1);
+			}
+		}
+
+
+
+		//if (std::string::npos != id.find("occ"))
+		//{
+		//	ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 2);
+		//}
+		//else if (std::string::npos != id.find("cc"))
+		//{
+		//	ccr->InsertCurve(125, (*i)->GetBaseCurveIDAsInt(), 1);
+		//}
+		//else if (std::string::npos != id.find("oc"))
+		//{
+		//	ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 2);
+		//}
+		//else if (std::string::npos != id.find("c"))
+		//{
+		//	ccr->InsertCurve(120, (*i)->GetBaseCurveIDAsInt(), 1);
+		//}
+	}
+
+	InsertCompositeCurveRecord(ccr->GetRecordName().GetName(), ccr);
+
+	return true;
+}
+
+bool S101Cell::InsertSurfaceRecordFromS101GML(S10XGML & gml, GM::Surface * curve)
+{
+	auto sr = new R_SurfaceRecord();
+	sr->SetRCID(curve->GetIDAsInt());
+
+	auto exteriorID = curve->patch.boundary.exterior->GetID();
+	int exteriorIntID = curve->patch.boundary.exterior->GetIDAsInt();
+	if (std::string::npos != exteriorID.find("occ"))
+	{
+		sr->InsertRing(125, exteriorIntID, 1, 2);
+	}
+	else if (std::string::npos != exteriorID.find("cc"))
+	{
+		sr->InsertRing(125, exteriorIntID, 1, 1);
+	}
+	else if (std::string::npos != exteriorID.find("oc"))
+	{
+		sr->InsertRing(120, exteriorIntID, 1, 2);
+	}
+	else if (std::string::npos != exteriorID.find("c"))
+	{
+		sr->InsertRing(120, exteriorIntID, 1, 1);
+	}
+
+	for (auto j = curve->patch.boundary.interior.begin();
+		j != curve->patch.boundary.interior.end();
+		j++)
+	{
+		auto interiorID = (*j)->GetID();
+		int interiorIntID = (*j)->GetIDAsInt();
+		if (std::string::npos != interiorID.find("occ"))
+		{
+			sr->InsertRing(125, interiorIntID, 2, 2);
+		}
+		else if (std::string::npos != interiorID.find("cc"))
+		{
+			sr->InsertRing(125, interiorIntID, 2, 1);
+		}
+		else if (std::string::npos != interiorID.find("oc"))
+		{
+			sr->InsertRing(120, interiorIntID, 2, 2);
+		}
+		else if (std::string::npos != interiorID.find("c"))
+		{
+			sr->InsertRing(120, interiorIntID, 2, 1);
+		}
+	}
+
+	InsertSurfaceRecord(sr->GetRecordName().GetName(), sr);
 
 	return true;
 }

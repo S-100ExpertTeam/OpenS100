@@ -119,7 +119,7 @@ bool S10XGML::Open(CString _filepath)
 		child = child.next_sibling();
 	}
 
-	SetGeometry();
+	//SetGeometry();
 	CalcMBR();
 
 	return true;
@@ -412,8 +412,12 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 
 GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node, std::string id, std::string srsName)
 {
-	auto gmlid = node.attribute("gml:id");
-	auto orientation = node.attribute("orientation");
+	auto gmlid = node.attribute("gml:id").value();
+	auto orientation = node.attribute("orientation").value();
+	bool bOrientation = true;
+	if (!strcmp(orientation, "-")) {
+		bOrientation = false;
+	}
 
 	auto node_baseCurve = node.child("gml:baseCurve");
 	auto attr_baseCurve_href = node_baseCurve.attribute("xlink:href");
@@ -431,8 +435,20 @@ GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node, std::str
 
 				auto type = baseCurve->GetType();
 				if (type == GM::GeometryType::Curve) {
-					
+					auto orientableCurve = new GM::Curve(*((GM::Curve*)baseCurve));
+					orientableCurve->SetID(gmlid);
+					orientableCurve->orientation = bOrientation;
+					return orientableCurve;
 				}
+				else if (type == GM::GeometryType::CompositeCurve) {
+					auto orientableCurve = new GM::CompositeCurve(*((GM::CompositeCurve*)baseCurve));
+					orientableCurve->SetID(gmlid);
+					orientableCurve->orientation = bOrientation;
+					return orientableCurve;
+				}
+				//else if (type == GM::GeometryType::OrientableCurve) {
+				//	
+				//}
 			}
 			return nullptr;
 			/*auto object = new GM::OrientableCurve(baseCurveID);

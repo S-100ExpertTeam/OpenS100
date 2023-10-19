@@ -744,6 +744,15 @@
     <ClCompile Include="GM_CurveBoundary.cpp">
       <Filter>S100\GM</Filter>
     </ClCompile>
+    <ClCompile Include="GM_Aggregate.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_Complex.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_SurfacePatch.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
