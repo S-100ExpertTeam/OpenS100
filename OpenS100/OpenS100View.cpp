@@ -551,6 +551,11 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//TestGISLibrary::CreateMemoryLayer();
 	//TestGISLibrary::SetCodeNumericCode();
 
+	//TestGISLibrary::CreateNewLayer();
+	//TestGISLibrary::TestSave();
+	//S101Cell cell;
+	//cell.Read8211(L"..\\SampleData\\save.000");
+
 	return 0;
 }
 
