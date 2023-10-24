@@ -24,3 +24,8 @@ int ATTR::GetOffsetToATVL()
 {
 	return 7;
 }
+
+std::string ATTR::getValueAsString()
+{
+	return pugi::as_utf8(m_atvl);
+}

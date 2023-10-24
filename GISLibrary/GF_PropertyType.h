@@ -7,7 +7,7 @@ namespace GF
 	{
 	public:
 		PropertyType();
-		~PropertyType();
+		virtual ~PropertyType();
 
 	public:
 		std::string code;

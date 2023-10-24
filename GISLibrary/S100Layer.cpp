@@ -61,7 +61,15 @@ bool S100Layer::Open(CString _filepath)
 		if (!m_spatialObject->Open(_filepath))
 		{
 			delete m_spatialObject;
+			m_spatialObject = nullptr;
 			return false;
+		}
+
+		if (GetFC()->getProductId().compare("S-101") != 0)
+		{
+			auto gml = (S10XGML*)m_spatialObject;
+			gml->SetGeometry();
+			gml->CalcMBR();
 		}
 		
 		return true;

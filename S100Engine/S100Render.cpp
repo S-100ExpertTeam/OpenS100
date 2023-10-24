@@ -54,6 +54,7 @@ void S100Render::DrawBitmapOnLine(
 	}
 	else
 	{
+		pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 		pRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(rotation, point1));
 		D2D1_POINT_2F oldPoint1 = point1;
 		FLOAT lastSegmentLength = fmodf(length, bitmapSize.width);

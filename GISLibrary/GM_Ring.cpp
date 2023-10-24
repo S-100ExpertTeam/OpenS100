@@ -14,17 +14,17 @@ namespace GM
 
 	Ring::Ring(GM::CompositeCurve& curve)
 	{
-		
+		this->Add(&curve);
 	}
 
 	Ring::Ring(GM::OrientableCurve& curve)
 	{
-
+		this->Add(&curve);
 	}
 
 	Ring::Ring(GM::Curve& curve)
 	{
-
+		this->Add(&curve);
 	}
 
 	Ring::~Ring()

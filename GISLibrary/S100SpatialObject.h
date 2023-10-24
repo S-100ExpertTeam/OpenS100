@@ -42,12 +42,14 @@ public:
 public:
 	// type = 1 : feature type
 	// type = 2 : information type
-	virtual GF::ObjectType* GetObjectType(int type, std::string id) { return nullptr; }
+	virtual GF::ObjectType* GetObjectType(int type, std::string id);
 
 	virtual std::wstring GetFeatureTypeCodeByID(std::wstring id) { return L""; }
+	virtual std::wstring GetFeatureTypeCodeByID(std::string id) { return L""; }
 	virtual std::wstring GetFeatureTypeCodeByID(int id) { return L""; }
 
 	virtual std::wstring GetInformationTypeCodeByID(std::wstring id) { return L""; }
+	virtual std::wstring GetInformationTypeCodeByID(std::string id) { return L""; }
 	virtual std::wstring GetInformationTypeCodeByID(int id) { return L""; }
 
 	virtual int GetFeatureCount() { return 0; }
@@ -68,13 +70,13 @@ public:
 	virtual std::string GetInformationAssociationCode(GF::InformationType* informationType, int index) { return ""; }
 	virtual std::string GetInformationAssociationRoleCode(GF::InformationType* informationType, int index) { return ""; }
 
-	virtual std::string GetObjectAttributeCode(int type, std::string, int index) { return ""; }
+	virtual std::string GetObjectAttributeCode(int type, std::string id, int index);
 
-	virtual int GetFeatureAttributeCount(std::string id) { return 0; }
-	virtual std::string GetFeatureAttributeCode(std::string, int index) { return ""; }
+	virtual int GetFeatureAttributeCount(std::string id);
+	virtual std::string GetFeatureAttributeCode(std::string id, int index);
 
-	virtual int GetInformationAttributeCount(std::string id) { return 0; }
-	virtual std::string GetInformationAttributeCode(std::string, int index) { return ""; }
+	virtual int GetInformationAttributeCount(std::string id);
+	virtual std::string GetInformationAttributeCode(std::string id, int index);
 
 	virtual GM::Object* GetGeometry(std::string id) { return nullptr; }
 

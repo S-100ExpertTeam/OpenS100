@@ -279,4 +279,5 @@ Redist/**
 *_h.h
 settings.txt
 
-Redist/
+Redist/**
+!Redist/*.bat

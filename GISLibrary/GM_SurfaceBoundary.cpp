@@ -17,15 +17,15 @@ namespace GM
 
 	SurfaceBoundary::~SurfaceBoundary()
 	{
-		//delete exterior;
-		//exterior = nullptr;
+		delete exterior;
+		exterior = nullptr;
 
-		//for (auto i = interior.begin(); i != interior.end(); i++) {
-		//	delete (*i);
-		//	(*i) = nullptr;
-		//}
+		for (auto i = interior.begin(); i != interior.end(); i++) {
+			delete (*i);
+			(*i) = nullptr;
+		}
 
-		//interior.clear();
+		interior.clear();
 	}
 
 }

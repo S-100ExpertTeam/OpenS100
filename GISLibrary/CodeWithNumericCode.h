@@ -28,5 +28,6 @@ public:
 	void SetNumericCode(int value);
 
 	std::wstring GetCode();
+	std::string getCodeAsString();
 	void SetCode(std::wstring value);
 };

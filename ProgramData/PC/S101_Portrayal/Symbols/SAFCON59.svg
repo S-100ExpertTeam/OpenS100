@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
 <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.12mm" height="2.78mm" viewBox="-0.1 -0.1 5.12 2.78">
   <title>SAFCON59</title>
   <desc>pattern of symbol</desc>
   <metadata>
-    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
       <iho:Description iho:publisher="IHB" iho:creationDate="2019-01-30" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
     </iho:S100SVG>
   </metadata>

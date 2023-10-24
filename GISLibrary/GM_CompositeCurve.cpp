@@ -11,10 +11,11 @@ namespace GM
 	CompositeCurve::CompositeCurve(const CompositeCurve& item) : OrientableCurve(item)
 	{
 		for (auto i = item.component.begin(); i != item.component.end(); i++) {
-			if (typeid(OrientableCurve) == typeid(**i)) {
-				component.push_back(new OrientableCurve((OrientableCurve&)**i));
-			}
-			else if (typeid(Curve) == typeid(**i)) {
+			//if (typeid(OrientableCurve) == typeid(**i)) {
+			//	component.push_back(new OrientableCurve((OrientableCurve&)**i));
+			//}
+			//else 
+			if (typeid(Curve) == typeid(**i)) {
 				component.push_back(new Curve((Curve&)**i));
 			}
 			else if (typeid(CompositeCurve) == typeid(**i)) {
@@ -25,9 +26,9 @@ namespace GM
 
 	CompositeCurve::~CompositeCurve()
 	{
-		//for (auto i = component.begin(); i != component.end(); i++) {
-		//	delete (*i);
-		//}
+		for (auto i = component.begin(); i != component.end(); i++) {
+			delete (*i);
+		}
 	}
 
 	GeometryType CompositeCurve::GetType()
@@ -72,23 +73,26 @@ namespace GM
 		return 0;
 	}
 
-	void CompositeCurve::Add(std::string curveMemberID)
-	{
-		component.push_back(new OrientableCurve(curveMemberID));
-	}
+	//void CompositeCurve::Add(std::string curveMemberID)
+	//{
+	//	component.push_back(new OrientableCurve(curveMemberID));
+	//}
 
 	void CompositeCurve::Add(GM::OrientableCurve* item)
 	{
-		component.push_back(item);
+		//component.push_back(item);
+		component.push_back(new GM::OrientableCurve(*item));
 	}
 
 	void CompositeCurve::Add(GM::Curve* item)
 	{
-		component.push_back(item);
+		//component.push_back(item);
+		component.push_back(new GM::Curve(*item));
 	}
 
 	void CompositeCurve::Add(GM::CompositeCurve* item)
 	{
-		component.push_back(item);
+		//component.push_back(item);
+		component.push_back(new GM::CompositeCurve(*item));
 	}
 }

@@ -1,58 +1,37 @@
 -- FoulGround portrayal rules file.
-
 -- UNOFFICIAL:  Rules extracted from S-52 lookup table for OBSTRN where CATOBS = 7.
+--
+-- ISSUES: PC #72, #39, PSWG #65
+-- #166
 
 -- Main entry point for feature type.
 function FoulGround(feature, featurePortrayal, contextParameters)
-	local valueOfSounding = scaledDecimalZero
+	local viewingGroup = 34050
+	local VOS = feature.valueOfSounding
 
-	if feature.valueOfSounding and feature.qualityOfVerticalMeasurement and contains(feature.qualityOfVerticalMeasurement, {1, 6}) then
-		valueOfSounding = feature.valueOfSounding
-	end
-
-	if valueOfSounding <= contextParameters.SafetyContour then
-		featurePortrayal:AddInstructions('AlertReference:NavHazard,115,115')
+	if VOS then
+			viewingGroup = 34051
+			if contextParameters.RadarOverlay then
+				featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:OverRADAR')
+			else
+				featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:UnderRADAR')
+			end
+	else
+		featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:UnderRADAR')
 	end
 
 	if feature.PrimitiveType == PrimitiveType.Point then
-		if feature.valueOfSounding then
-			featurePortrayal:AddInstructions('ViewingGroup:34051;DrawingPriority:12;DisplayPlane:OverRADAR')
-			--featurePortrayal:AddInstructions('PointInstruction:FOULGND1')
-			featurePortrayal:AddInstructions('PointInstruction:testPCB')
-		else
-			featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:OverRADAR')
-			--featurePortrayal:AddInstructions('PointInstruction:FOULGND1')
-			featurePortrayal:AddInstructions('PointInstruction:testPCB')
-		end
-	elseif feature.PrimitiveType == PrimitiveType.Curve then
-		error('Not Implemented: No curve symbology defined in S-52 for FoulGround')
-	elseif feature.PrimitiveType == PrimitiveType.Surface and contextParameters.PlainBoundaries then
-		if feature.valueOfSounding then
-			featurePortrayal:AddInstructions('ViewingGroup:34051;DrawingPriority:12;DisplayPlane:UnderRADAR')
-			--featurePortrayal:AddInstructions('PointInstruction:FOULGND1')
-			featurePortrayal:AddInstructions('PointInstruction:testPCB')
-			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
-			featurePortrayal:AddInstructions('LineInstruction:_simple_')
-		else
-			featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:UnderRADAR')
-			--featurePortrayal:AddInstructions('PointInstruction:FOULGND1')
-			featurePortrayal:AddInstructions('PointInstruction:testPCB')
-			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
-			featurePortrayal:AddInstructions('LineInstruction:_simple_')
-		end
+		featurePortrayal:AddInstructions('PointInstruction:FOULGND1')
+	-- #166: curve geometry removed in FC 1.1.0
+	--elseif feature.PrimitiveType == PrimitiveType.Curve then
+		--featurePortrayal:AddInstructions('LineInstruction:FOULGRD1')
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
-		if feature.valueOfSounding then
-			featurePortrayal:AddInstructions('ViewingGroup:34051;DrawingPriority:12;DisplayPlane:UnderRADAR')
-			--featurePortrayal:AddInstructions('PointInstruction:FOULGND1')
-			featurePortrayal:AddInstructions('PointInstruction:testPCB')
-			featurePortrayal:AddInstructions('LineInstruction:NAVARE51')
-		else
-			featurePortrayal:AddInstructions('ViewingGroup:34050;DrawingPriority:12;DisplayPlane:UnderRADAR')
-			--featurePortrayal:AddInstructions('PointInstruction:FOULGND1')
-			featurePortrayal:AddInstructions('PointInstruction:testPCB')
-			featurePortrayal:AddInstructions('LineInstruction:NAVARE51')
-		end
+		featurePortrayal:AddInstructions('PointInstruction:FOULGD51')
+		featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
+		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
+
+	return viewingGroup
 end

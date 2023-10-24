@@ -1,7 +1,7 @@
 -- 
 -- New Feature Seagrass for S-101 based on Weed/Kelp
 --
--- Issues: PSWG #47, PC #101
+-- Issues: PSWG #47, PC #101, PC #213
 
 -- Seagrass main entry point.
 function Seagrass(feature, featurePortrayal, contextParameters)
@@ -15,7 +15,7 @@ function Seagrass(feature, featurePortrayal, contextParameters)
 		else
 			featurePortrayal:AddInstructions('ViewingGroup:34020;DrawingPriority:9;DisplayPlane:UnderRADAR')
 		end
-		featurePortrayal:AddInstructions('PointInstruction:Seagrass')
+		featurePortrayal:AddInstructions('PointInstruction:SEAGRASS')
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
 		viewingGroup = 34020
@@ -24,7 +24,7 @@ function Seagrass(feature, featurePortrayal, contextParameters)
 		else
 			featurePortrayal:AddInstructions('ViewingGroup:34020;DrawingPriority:9;DisplayPlane:UnderRADAR')
 		end
-		featurePortrayal:AddInstructions('PointInstruction:Seagrass')
+		featurePortrayal:AddInstructions('PointInstruction:SEAGRASS')
 		featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRF')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 	else

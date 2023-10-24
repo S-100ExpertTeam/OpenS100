@@ -107,6 +107,14 @@ public:
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::SimpleAttributeType* simpleAttribute);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, ATTR* parentATTR, GF::ComplexAttributeType* complexAttribute);
+	bool ConvertFeaturesFromS101GML(S10XGML& gml, S101Creator* creator);
+	bool ConvertInformationsFromS101GML(S10XGML& gml, S101Creator* creator);
+	bool ConvertGeometriesFromS101GML(S10XGML& gml);
+	bool InsertPointRecordFromS101GML(GM::Point* point);
+	bool InsertMultiPointRecordFromS101GML(GM::MultiPoint* point);
+	bool InsertCurveRecordFromS101GML(S10XGML& gml, GM::Curve* curve);
+	bool InsertCompositeCurveRecordFromS101GML(S10XGML& gml, GM::CompositeCurve* curve);
+	bool InsertSurfaceRecordFromS101GML(S10XGML& gml, GM::Surface* curve);
 
 	bool SaveAsENC(std::wstring path);
 	bool SaveAsGML(std::wstring path);
@@ -126,7 +134,7 @@ public:
 	pugi::xml_node SaveComplexAttribute(pugi::xml_node root, std::string code);
 
 	bool HasOrientableCurve(pugi::xml_node& root, std::string id);
-	void AddOrientableCurve(pugi::xml_node& root, std::string odID, std::string refID);
+	void AddOrientableCurve(pugi::xml_node& root, pugi::xml_node& prevNode, std::string odID, std::string refID);
 
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
@@ -246,7 +254,7 @@ public:
 	std::vector<R_MultiPointRecord*>& GetVecMultiPoint();
 
 
-	void InsertCurveRecord(__int64 key, R_CurveRecord* record);
+	bool InsertCurveRecord(__int64 key, R_CurveRecord* record);
 	void RemoveCurveRecord(__int64 key, R_CurveRecord* record);
 	R_CurveRecord* GetCurveRecord(__int64 key);
 	R_CurveRecord* GetCurveRecordByIndex(int index);
@@ -335,8 +343,6 @@ private:
 	bool UpdateSurMapRecord(S101Cell* cell);
 	bool UpdateFeaMapRecord(S101Cell* cell);
 
-	void GetDrawPointsDynamic(SENC_PointInstruction* instruction, Scaler* scaler, std::list<D2D1_POINT_2F>& points);
-
 	void InitCurveSuppression();
 
 	bool InformationRecordHasAttributeField();
@@ -362,9 +368,11 @@ public:
 	GF::ObjectType* GetObjectType(int type, std::string id) override;
 
 	std::wstring GetFeatureTypeCodeByID(std::wstring id) override;
+	std::wstring GetFeatureTypeCodeByID(std::string id) override;
 	std::wstring GetFeatureTypeCodeByID(int id) override;
 
 	std::wstring GetInformationTypeCodeByID(std::wstring id) override;
+	std::wstring GetInformationTypeCodeByID(std::string id) override;
 	std::wstring GetInformationTypeCodeByID(int id) override;
 
 	int GetFeatureCount() override;
@@ -385,12 +393,12 @@ public:
 	std::string GetInformationAssociationCode(GF::InformationType* informationType, int index) override;
 	std::string GetInformationAssociationRoleCode(GF::InformationType* informationType, int index) override;
 
-	std::string GetObjectAttributeCode(int type, std::string id, int index) override;
+	//std::string GetObjectAttributeCode(int type, std::string id, int index) override;
 
-	int GetFeatureAttributeCount(std::string id) override;
+	//int GetFeatureAttributeCount(std::string id) override;
 	std::string GetFeatureAttributeCode(std::string id, int index) override;
 
-	int GetInformationAttributeCount(std::string id) override;
+	//int GetInformationAttributeCount(std::string id) override;
 	std::string GetInformationAttributeCode(std::string id, int index) override;
 
 	int CoordinateMultiplicationFactorForX();
@@ -406,4 +414,6 @@ public:
 	// write gml
 	S100GML::DatasetIdentificationInformation GetDatasetIdentificationInformation();
 	void WritePointRecord(pugi::xml_node& node, R_PointRecord* record);
+
+	void ATTRtoAttribute();
 };

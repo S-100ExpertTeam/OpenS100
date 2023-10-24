@@ -42,12 +42,16 @@ public:
     bool ReadMembers(pugi::xml_node& node);
     GF::FeatureType* ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc);
     GF::InformationType* ReadInformation(pugi::xml_node& node, FeatureCatalogue* fc);
-    GM::Point* ReadPoint(pugi::xml_node& node);
-    GM::MultiPoint* ReadMultiPoint(pugi::xml_node& node);
-    GM::Curve* ReadCurve(pugi::xml_node& node);
-    GM::OrientableCurve* ReadOrientableCurve(pugi::xml_node& node);
-    GM::CompositeCurve* ReadCompositeCurve(pugi::xml_node& node);
-    GM::Surface* ReadSurface(pugi::xml_node& node);
+
+    // If node is root of the geometry, id & srsName is null
+    GM::Point* ReadPoint(pugi::xml_node& node, std::string id = "", std::string srsName = "");
+    GM::MultiPoint* ReadMultiPoint(pugi::xml_node& node, std::string id = "", std::string srsName = "");
+    GM::Curve* ReadCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
+    GM::OrientableCurve* ReadOrientableCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
+    GM::CompositeCurve* ReadCompositeCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
+    GM::Curve* ReadLinearRing(pugi::xml_node& node); // read gml:LinearRing
+    GM::Surface* ReadSurface(pugi::xml_node& node); // read S100:Surface
+    GM::Surface* ReadPolygon(pugi::xml_node& node);
     bool ReadMember(pugi::xml_node& node);
 
     bool ReadObjectAttribute(pugi::xml_node& node, GF::ObjectType* object, FeatureCatalogue* fc);
@@ -70,17 +74,53 @@ public:
     void CalcMBR();
 
 public:
+    std::wstring GetFeatureTypeCodeByID(std::wstring id) override;
+    std::wstring GetFeatureTypeCodeByID(std::string id) override;
+    std::wstring GetFeatureTypeCodeByID(int id) override;
+
+    std::wstring GetInformationTypeCodeByID(std::wstring id) override;
+    std::wstring GetInformationTypeCodeByID(std::string id) override;
+    std::wstring GetInformationTypeCodeByID(int id) override;
+	
+    int GetFeatureCount() override;
+    int GetInformationCount() override;
+
     GF::FeatureType* GetFeatureType(std::string id) override;
+    GF::FeatureType* GetFeatureTypeByIndex(int index) override;
+
+    GF::InformationType* GetInformationType(std::string id) override;
+    GF::InformationType* GetInformationTypeByIndex(int index) override;
+
+    std::string GetFeatureAssociationCode(GF::FeatureType* featureType, int index) override;
+    std::string GetFeatureAssociationRoleCode(GF::FeatureType* featureType, int index) override;
+
+    std::string GetInformationAssociationCode(GF::FeatureType* featureType, int index) override;
+    std::string GetInformationAssociationRoleCode(GF::FeatureType* featureType, int index) override;
+
+    std::string GetInformationAssociationCode(GF::InformationType* informationType, int index) override;
+    std::string GetInformationAssociationRoleCode(GF::InformationType* informationType, int index) override;
+
+    //std::string GetObjectAttributeCode(int type, std::string id, int index) override;
+
+    //int GetFeatureAttributeCount(std::string id) override;
+    //std::string GetFeatureAttributeCode(std::string, int index) override;
+	
+    //int GetInformationAttributeCount(std::string id) override;
+    //std::string GetInformationAttributeCode(std::string, int index) override;
+
     GM::Object* GetGeometry(std::string id) override;
+
+    GM::OrientableCurve* GetOrientableCurve(std::string id);
+
+    void SetGeometry();
 
 private:
     std::string DeleteXMLNamespace(std::string value);
     std::string getCodeFromMember(std::string nodeName);
-    void SetGeometry();
-    SPoint* ConvertToSPoint(GM::Point* point);
-    SMultiPoint* ConvertToSMultiPoint(GM::MultiPoint* multiPoint);
-    SAbstractCurve* ConvertToSCurve(GM::OrientableCurve* orientableCurve);
-    SCurve* ConvertToSCurve(GM::Curve* curve);
-    SCompositeCurve* ConvertToSCompositeCurve(GM::CompositeCurve* compositeCurve);
-    SSurface* ConvertToSSurface(GM::Surface* surface);
+    SPoint* PointToSPoint(GM::Point* point);
+    SMultiPoint* MultiPointToSMultiPoint(GM::MultiPoint* multiPoint);
+    SAbstractCurve* OrientableCurveToSCurve(GM::OrientableCurve* orientableCurve);
+    SCurve* CurveToSCurve(GM::Curve* curve);
+    SCompositeCurve* CompositeCurveToSCompositeCurve(GM::CompositeCurve* compositeCurve);
+    SSurface* SurfaceToSSurface(GM::Surface* surface);
 };

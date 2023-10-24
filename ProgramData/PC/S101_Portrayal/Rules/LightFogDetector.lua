@@ -11,5 +11,7 @@ function LightFogDetector(feature, featurePortrayal, contextParameters)
 		featurePortrayal:AddInstructions('ViewingGroup:27070;DrawingPriority:24;DisplayPlane:UnderRADAR;Hover:true')
 	end
 
-	LightFlareAndDescription(feature, featurePortrayal, contextParameters, 7)
+	LightFlareAndDescription(feature, featurePortrayal, contextParameters, 7, 27070, 24)
+
+	return 27070
 end

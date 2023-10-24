@@ -42,4 +42,6 @@ function DepthNoBottomFound(feature, featurePortrayal, contextParameters)
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
+
+	return 33010
 end

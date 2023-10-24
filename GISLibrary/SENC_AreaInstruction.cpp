@@ -85,6 +85,7 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 				if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 				{
 					auto geometry = surface->GetD2Geometry();
+					
 					if (geometry)
 					{
 						rt->FillGeometry(geometry, brush);

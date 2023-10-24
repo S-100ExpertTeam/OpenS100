@@ -32,6 +32,9 @@ CGISLibraryApp::CGISLibraryApp()
 	D2.CreateDeviceIndependentResources();
 	D2.CreateDeviceDependentResources();
 
+	//S101Cell cell;
+	//cell.OpenByGML(L"..\\TEMP\\101GML3.gml");
+
 	//SCurve curve;
 	//curve.Init(3);
 	//curve.Set(0, 1, 2);

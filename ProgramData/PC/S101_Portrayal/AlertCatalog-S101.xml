@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!-- S-101 ALERT CATALOGUE -->
-<alertCatalog version="0.1">
+<alertCatalog version="1.0">
 
     <messages>
 		<!-- Begin messages triggered by an alert for display in alert management or route plan -->
@@ -12,7 +12,6 @@
                 <language>eng</language>
             </description>
             <text>Crossing safety contour</text>
-			<text language="kor">안전 구분선 횡단</text>
         </message>
         <message id="CrossingProhAreMsg" icon="CrossingProhAreIcon">
             <description>
@@ -21,7 +20,6 @@
                 <language>eng</language>
             </description>
             <text>Crossing prohibited or special conditions area</text>
-			<text language="kor">금지 또는 특별한 상황 지역 횡단</text>
         </message>
         <message id="CrossingNavHazardsMsg" icon="CrossingNavHazardsIcon">
             <description>
@@ -30,7 +28,6 @@
                 <language>eng</language>
             </description>
             <text>Crossing navigational hazard</text>
-			<text language="kor">항해 위험 횡단</text>
         </message>
 		<!-- End messages triggered by an alert -->
 		
@@ -42,7 +39,6 @@
                 <language>eng</language>
             </description>
             <text>Indication of crossing safety contour is Off</text>
-			<text language="kor">안전 윤곽선 횡단 표시가 꺼짐</text>
         </message>
         <message id="ProhAreHighlightOffMsg">
             <description>
@@ -59,7 +55,6 @@
                 <language>eng</language>
             </description>
             <text>Indication of navigational hazards is Off</text>
-			<text language="kor">항해 위험 표시가 꺼짐</text>
         </message>
 		<!-- End messages triggered by disabling graphical highlight -->
 		
@@ -71,7 +66,6 @@
                 <language>eng</language>
             </description>
             <text>ProhAre Alert Priority</text>
-			<text language="kor">금지 구역 경보 우선 순위</text>
         </message>
         <message id="NavHazardsPriorityLbl">
             <description>
@@ -80,7 +74,6 @@
                 <language>eng</language>
             </description>
             <text>Nav Hazards Alert Priority</text>
-			<text language="kor">항해 위험 경고 우선 순위</text>
         </message>
 		<!-- End messages used as labels on UI components -->
     </messages>
@@ -92,7 +85,15 @@
                 <description>Used to turn on or off the graphical highlighting of alerts triggered by the safety contour.</description>
                 <language>eng</language>
             </description>
-			<viewingGroup ref="101"/>
+			<viewingGroup ref="53010"/>
+		</highlight>
+		<highlight id="NavHazardsHighlight" optional="true" msg="NavHazardsHighlightOffMsg">
+            <description>
+                <name>Nav Hazards Highlight</name>
+                <description>Used to turn on or off the graphical highlighting of alerts triggered by navigational hazards.</description>
+                <language>eng</language>
+            </description>
+			<viewingGroup ref="53011"/>
 		</highlight>
 		<!-- TODO: Determine if optional attribute should be true. IEC 61174 does not indicate disabling highlight is optional. -->
 		<highlight id="ProhAreHighlight" msg="ProhAreHighlightOffMsg">
@@ -103,41 +104,33 @@
             </description>
 			<!-- Viewing groups used to control the alert highlights
 				ViewingGroup: Feature
-				2: Traffic separation zone
-				3: Inshore traffic zone
-				4: Restricted area
-				5: Caution area
-				6: Offshore production area
-				7: Areas to be avoided
-				8: User defined areas to be avoided
-				9: Military practice area
-				10: Seaplane landing area
-				11: Submarine transit lane
-				12: Anchorage area
-				13: Marine farm/aquaculture
-				14: PSSA (Particularly Sensitive Sea Area)
+				53012: Traffic separation zone
+				53013: Inshore traffic zone
+				53014: Restricted area
+				53015: Areas to be avoided
+				53016: PSSA (Particularly Sensitive Sea Area)
+				53017: Caution area
+				53018: Offshore production area
+				53019: User defined areas to be avoided
+				53020: Military practice area
+				53021: Seaplane landing area
+				53022: Submarine transit lane
+				53023: Anchorage area
+				53024: Marine farm/aquaculture
 			-->
-			<viewingGroup ref="102"/>
-			<viewingGroup ref="103"/>
-			<viewingGroup ref="104"/>
-			<viewingGroup ref="105"/>
-			<viewingGroup ref="106"/>
-			<viewingGroup ref="107"/>
-			<viewingGroup ref="108"/>
-			<viewingGroup ref="109"/>
-			<viewingGroup ref="110"/>
-			<viewingGroup ref="111"/>
-			<viewingGroup ref="112"/>
-			<viewingGroup ref="113"/>
-			<viewingGroup ref="114"/>
-		</highlight>
-		<highlight id="NavHazardsHighlight" optional="true" msg="NavHazardsHighlightOffMsg">
-            <description>
-                <name>Nav Hazards Highlight</name>
-                <description>Used to turn on or off the graphical highlighting of alerts triggered by navigational hazards.</description>
-                <language>eng</language>
-            </description>
-			<viewingGroup ref="115"/>
+			<viewingGroup ref="53012"/>
+			<viewingGroup ref="53013"/>
+			<viewingGroup ref="53014"/>
+			<viewingGroup ref="53015"/>
+			<viewingGroup ref="53016"/>
+			<viewingGroup ref="53017"/>
+			<viewingGroup ref="53018"/>
+			<viewingGroup ref="53019"/>
+			<viewingGroup ref="53020"/>
+			<viewingGroup ref="53021"/>
+			<viewingGroup ref="53022"/>
+			<viewingGroup ref="53023"/>
+			<viewingGroup ref="53024"/>
 		</highlight>
 	</highlights>
 	
@@ -152,7 +145,7 @@
                 <priority>Alarm</priority>
             </routeMonitor>
             <routePlan msg="CrossingSafetyContourMsg" highlight="SafetyContourHighlight">
-                <priority>Indication</priority>
+                <priority>Alarm</priority>
             </routePlan>
         </alert>
         <alert id="ProhAre">

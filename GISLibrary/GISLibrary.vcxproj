@@ -265,6 +265,7 @@
     <ClCompile Include="DirectPosition.cpp" />
     <ClCompile Include="DrawingCommand.cpp" />
     <ClCompile Include="DrawingSet.cpp" />
+    <ClCompile Include="EncodingFormat.cpp" />
     <ClCompile Include="FC2D.cpp" />
     <ClCompile Include="FC3D.cpp" />
     <ClCompile Include="F_C2FL.cpp" />
@@ -327,8 +328,11 @@
     <ClCompile Include="GML_Envelop.cpp" />
     <ClCompile Include="GML_FeatureType.cpp" />
     <ClCompile Include="GML_SimpleAttribute.cpp" />
+    <ClCompile Include="GM_Aggregate.cpp" />
+    <ClCompile Include="GM_Complex.cpp" />
     <ClCompile Include="GM_CompositeCurve.cpp" />
     <ClCompile Include="GM_Curve.cpp" />
+    <ClCompile Include="GM_CurveBoundary.cpp" />
     <ClCompile Include="GM_MultiPoint.cpp" />
     <ClCompile Include="GM_Object.cpp" />
     <ClCompile Include="GM_OrientableCurve.cpp" />
@@ -336,6 +340,7 @@
     <ClCompile Include="GM_Polygon.cpp" />
     <ClCompile Include="GM_Ring.cpp" />
     <ClCompile Include="GM_Surface.cpp" />
+    <ClCompile Include="GM_SurfacePatch.cpp" />
     <ClCompile Include="H5_FC_Attribute2.cpp" />
     <ClCompile Include="H5_FeatureContainer.cpp" />
     <ClCompile Include="H5_FeatureInstanceGroup.cpp" />
@@ -364,6 +369,7 @@
     <ClCompile Include="ProcessS101.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="GF_PropertyType.cpp" />
+    <ClCompile Include="ProtectionScheme.cpp" />
     <ClCompile Include="PTAS.cpp" />
     <ClCompile Include="RIAS.cpp" />
     <ClCompile Include="R_DDR.cpp" />
@@ -471,6 +477,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="GM_SurfaceBoundary.cpp" />
+    <ClCompile Include="SupportFileFormat.cpp" />
     <ClCompile Include="THAS.cpp" />
     <ClCompile Include="GF_ThematicAttributeType.cpp" />
     <ClCompile Include="TypeOfTheHorizontalCRS.cpp" />
@@ -489,6 +496,7 @@
     <ClInclude Include="DataCoverage.h" />
     <ClInclude Include="DataOrganizationIndex.h" />
     <ClInclude Include="DirectPosition.h" />
+    <ClInclude Include="EncodingFormat.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
     <ClInclude Include="GeometryType.h" />
     <ClInclude Include="GF_AssociationRole.h" />
@@ -513,6 +521,7 @@
     <ClInclude Include="Length.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Measure.h" />
+    <ClInclude Include="ProtectionScheme.h" />
     <ClInclude Include="PugixmlElement.h" />
     <ClInclude Include="GML_Envelop.h" />
     <ClInclude Include="GML_FeatureType.h" />
@@ -720,6 +729,7 @@
     <ClInclude Include="SPoint.h" />
     <ClInclude Include="SSurface.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SupportFileFormat.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="THAS.h" />
     <ClInclude Include="GF_ThematicAttributeType.h" />

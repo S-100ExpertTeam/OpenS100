@@ -28,6 +28,11 @@ DirectPosition::DirectPosition(double x, double y, double z)
 	coordinates.push_back(z * Factor);
 }
 
+DirectPosition::~DirectPosition()
+{
+
+}
+
 int DirectPosition::GetDimension()
 {
 	return coordinates.size();

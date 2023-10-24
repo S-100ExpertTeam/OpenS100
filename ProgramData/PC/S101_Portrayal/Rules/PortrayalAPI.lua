@@ -6,11 +6,10 @@ These functions are called by the host program.
 portrayalContext = nil
 
 function PortrayalInitializeContextParameters(contextParameters)
-	-- Debug.StartPerformance('Lua Code - Total')
-	
+	Debug.StartPerformance('Lua Code - Total')
 	CheckType(contextParameters, 'array:ContextParameter')
 
-	-- Debug.StartPerformance('Lua Code - PortrayalInitializeContextParameters')
+	Debug.StartPerformance('Lua Code - PortrayalInitializeContextParameters')
 
 	portrayalContext = PortrayalModel.CreatePortrayalContext()
 
@@ -23,19 +22,35 @@ function PortrayalInitializeContextParameters(contextParameters)
 		pccp._parameterTypes[cp.Name] = cp.ParameterType
 	end
 
-	-- Debug.StopPerformance('Lua Code - PortrayalInitializeContextParameters')
-	-- Debug.StopPerformance('Lua Code - Total')
+	Debug.StopPerformance('Lua Code - PortrayalInitializeContextParameters')
+	Debug.StopPerformance('Lua Code - Total')
 end
 
 function PortrayalCreateContextParameter(contextParameterName, parameterType, defaultValue)
 	CheckType(contextParameterName, 'string')
 	CheckType(parameterType, 'string')
 
-	if parameterType ~= 'boolean' and parameterType ~= 'integer' and parameterType ~= 'real' and parameterType ~= 'text' and parameterType ~= 'date' then
-		error('Invalid parameter type.')
+	-- Case insensitive because the docs show leading capitalization but
+	-- ConvertEncodedValue requires lower, as does S100CD.xsd
+	local cpt = string.lower(parameterType)
+	
+	-- Allow types to be described per 9-13.3.30 ParameterType despite
+	-- 9a-14.1.3 requiring types to be described per S100_CD_AttributeValueType
+	if cpt == 'double' then
+		cpt = 'real'
+	elseif cpt == 'string' then
+		cpt = 'text'
+	end
+	
+	if cpt ~= 'boolean' and
+	   cpt ~= 'integer' and
+	   cpt ~= 'real' and
+	   cpt ~= 'text' and
+	   cpt ~= 'date' then
+		error('Invalid parameter type:' .. cpt)
 	end
 
-	return { Type = 'ContextParameter', Name = contextParameterName, ParameterType = parameterType, DefaultValue = ConvertEncodedValue(parameterType, defaultValue) }
+	return { Type = 'ContextParameter', Name = contextParameterName, ParameterType = cpt, DefaultValue = ConvertEncodedValue(cpt, defaultValue) }
 end
 
 function PortrayalSetContextParameter(contextParameterName, value)
@@ -112,7 +127,7 @@ local function LookupAttributeValue(container, attributeCode, HostGetSimpleAttri
 
 	--Debug.Break()
 
-	if not containerTypeInfo.AttributeBindings[attributeCode] then
+	if containerTypeInfo == nil or not containerTypeInfo.AttributeBindings[attributeCode] then
 		if nilIfMissing then
 			return nil
 		else
@@ -168,7 +183,11 @@ local function LookupAttributeValue(container, attributeCode, HostGetSimpleAttri
 
 		if containerTypeInfo.AttributeBindings[attributeCode].UpperMultiplicity == 1 then
 			-- Single valued
-			local value = ConvertEncodedValue(simpleAttributeTypeInfo.ValueType, values[1])
+			local value
+
+			if #values > 0 then
+				value = ConvertEncodedValue(simpleAttributeTypeInfo.ValueType, values[1])
+			end
 
 			container['@' .. attributeCode] = value
 
@@ -392,30 +411,30 @@ end
 --
 --
 
-function CreateInformationBinding(informationTypeCode, lowerMultiplicity, upperMultiplicity, roleType, role, association)
-	CheckType(informationTypeCode, 'string')
+function CreateInformationBinding(informationTypeCodes, lowerMultiplicity, upperMultiplicity, roleType, role, association)
+	CheckType(informationTypeCodes, 'array:string')
 	CheckType(lowerMultiplicity, 'number')
 	CheckTypeOrNil(upperMultiplicity, 'number')
 	CheckType(roleType, 'string')
 	CheckTypeOrNil(role, 'string')
 	CheckType(association, 'string')
 
-	return { Type = 'InformationBinding', InformationTypeCode = informationTypeCode, LowerMultiplicity = lowerMultiplicity, UpperMultiplicity = upperMultiplicity, RoleType = roleType, Role = role, Association = association }
+	return { Type = 'InformationBinding', InformationTypeCodes = informationTypeCodes, LowerMultiplicity = lowerMultiplicity, UpperMultiplicity = upperMultiplicity, RoleType = roleType, Role = role, Association = association }
 end
 
 --
 --
 --
 
-function CreateFeatureBinding(featureTypeCode, lowerMultiplicity, upperMultiplicity, roleType, role, association)
-	CheckType(featureTypeCode, 'string')
+function CreateFeatureBinding(featureTypeCodes, lowerMultiplicity, upperMultiplicity, roleType, role, association)
+	CheckType(featureTypeCodes, 'array:string')
 	CheckType(lowerMultiplicity, 'number')
 	CheckTypeOrNil(upperMultiplicity, 'number')
 	CheckType(roleType, 'string')
 	CheckType(role, 'string')
 	CheckType(association, 'string')
 
-	return { Type = 'FeatureBinding', FeatureTypeCode = featureTypeCode, LowerMultiplicity = lowerMultiplicity, UpperMultiplicity = upperMultiplicity, RoleType = roleType, Role = role, Association = association }
+	return { Type = 'FeatureBinding', FeatureTypeCodes = featureTypeCodes, LowerMultiplicity = lowerMultiplicity, UpperMultiplicity = upperMultiplicity, RoleType = roleType, Role = role, Association = association }
 end
 
 --
@@ -478,7 +497,7 @@ function CreateFeature(featureID, featureCode)
 		return feature
 	end
 	
-	feature = { Type = 'Feature', ID = featureID, Code = featureCode, InformationAssociations = {} }
+	feature = { Type = 'Feature', ID = featureID, Code = featureCode, InformationAssociations = {}, FeatureAssociations = {} }
 
 	featureCache[featureID] = feature
 
@@ -552,7 +571,7 @@ function CreateFeature(featureID, featureCode)
 
 			for _, featureID in ipairs(featureIDs) do
 				Debug.StopPerformance('Lua Code - Total')
-				local code = HostFeatureTypeGetCode(featureID)
+				local code = HostFeatureGetCode(featureID)
 				Debug.StartPerformance('Lua Code - Total')
 				fas[#fas + 1] = CreateFeature(featureID, code)
 			end

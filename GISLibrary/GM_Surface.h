@@ -15,9 +15,9 @@ namespace GM
 
 	public:
 		Polygon patch;
-
+		
 	public:
-		Polygon GetPolygon();
+		Polygon& GetPolygon();
 		
 		void SetExteriorRingID(std::string value);
 		void SetExteriorRing(GM::OrientableCurve* item);
@@ -30,5 +30,10 @@ namespace GM
 
 		GeometryType GetType() override;
 		std::string GeometricPrimitiveAsString() override;
+
+		GM::Ring* getExteriorRing();
+		
+		int getInteriorRingCount();
+		GM::Ring* getInteriorRing(int n);
 	};
 }

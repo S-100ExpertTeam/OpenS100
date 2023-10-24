@@ -377,6 +377,11 @@ bool SCurve::isDraw()
 	return false;
 }
 
+void SCurve::setCenterPoint()
+{
+
+}
+
 SAbstractCurve* SCurve::clone()
 {
 	return new SCurve(*this);

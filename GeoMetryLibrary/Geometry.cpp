@@ -94,18 +94,6 @@ POINT Geometry::GetOffsetPointOnLine(POINT _p1, POINT _p2, double offset)
 	return returnValue;
 }
 
-double Geometry::GetDistanceOfPolyline(POINT *_p, int _count)
-{
-	double returnValue = 0;
-
-	for (int i = 1; i < _count; i++)
-	{
-		returnValue += GetDistance(_p[i - 1], _p[i]);
-	}
-
-	return returnValue;
-}
-
 inline void swap(int &val1, int &val2)
 {
 	int t = val1;
@@ -127,8 +115,8 @@ bool Geometry::IsIntersect(POINT _s1, POINT _e1, POINT _s2, POINT _e2)
 		// No intersection
 		return false;
 	}
-	else
-		return true;
+	
+	return true;
 }
 
 void Geometry::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, CRect *viewPort)
@@ -173,99 +161,6 @@ void Geometry::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, 
 		_e1.x = (LONG)x;
 		_e1.y = (LONG)y;
 	}
-}
-
-void Geometry::GetViewLineInPolyline(POINT *_p, int _count, CRect *viewPort)
-{
-	POINT p1, p2;
-	p1.x = viewPort->left;
-	p1.y = viewPort->top;
-	p2.x = viewPort->right;
-	p2.y = viewPort->top;
-	if (p1.y > _p[0].y)
-	{
-		CutLineToIntersect(_p[0], _p[1], p1, p2, viewPort);
-	}
-	else if (p1.y > _p[_count - 1].y)
-	{
-		CutLineToIntersect(_p[_count - 1], _p[_count - 2], p1, p2, viewPort);
-	}
-
-	p1.x = viewPort->right;
-	p1.y = viewPort->top;
-	p2.x = viewPort->right;
-	p2.y = viewPort->bottom;
-	if (p1.x < _p[0].x)
-	{
-		CutLineToIntersect(_p[0], _p[1], p1, p2, viewPort);
-	}
-	else if (p1.x < _p[_count - 1].x)
-	{
-		CutLineToIntersect(_p[_count - 1], _p[_count - 2], p1, p2, viewPort);
-	}
-	p1.x = viewPort->left;
-	p1.y = viewPort->bottom;
-	p2.x = viewPort->right;
-	p2.y = viewPort->bottom;
-	if (p1.y < _p[0].y)
-	{
-		CutLineToIntersect(_p[0], _p[1], p1, p2, viewPort);
-	}
-	else if (p1.y < _p[_count - 1].y)
-	{
-		CutLineToIntersect(_p[_count - 1], _p[_count - 2], p1, p2, viewPort);
-	}
-	p1.x = viewPort->left;
-	p1.y = viewPort->top;
-	p2.x = viewPort->left;
-	p2.y = viewPort->bottom;
-
-	if (p1.x > _p[0].x)
-	{
-		CutLineToIntersect(_p[0], _p[1], p1, p2, viewPort);
-	}
-
-	else if (p1.x > _p[_count - 1].x)
-	{
-		CutLineToIntersect(_p[_count - 1], _p[_count - 2], p1, p2, viewPort);
-	}
-
-	return;
-}
-
-POINT* Geometry::GetCenterPointOfPolyline(POINT *_p, int _count, CRect *viewPort)
-{
-	if (_count < 2)
-	{
-		return NULL;
-	}
-	else
-	{
-		GetViewLineInPolyline(_p, _count, viewPort);
-	}
-
-	double centerDistance = GetDistanceOfPolyline(_p, _count) / 2; // The distance from the starting point of the polyline to the middle point of the polyline.
-
-	if (centerDistance == 0)
-	{
-		return NULL;
-	}
-
-	double accumulatedDistance = 0;								   // Accumulated distance.
-	POINT *returnValue = new POINT;
-
-	for (int i = 0; i < (_count - 1); i++)						   // Measure the cumulative distance from the 0th point to the next point.
-	{
-		accumulatedDistance += GetDistance(_p[i], _p[i + 1]);      // Move to the next point and measure the cumulative distance.
-
-		if (accumulatedDistance >= centerDistance)				   // If the cumulative distance is greater than the intermediate distance, it has passed the midpoint.
-		{
-			*returnValue = GetOffsetPointOnLine(_p[i + 1], _p[i], accumulatedDistance - centerDistance); // It goes as far as the distance passed.
-			break;
-		}
-	}
-
-	return returnValue;
 }
 
 bool Geometry::WriteWkb(std::wstring path)

@@ -46,8 +46,8 @@
         <color token="LITRD" name="red">
             <description>Light red</description>
         </color>
-        <color token="LITGN" name="red">
-            <description>Light red</description>
+        <color token="LITGN" name="green">
+            <description>Light green</description>
         </color>
         <color token="LITYW" name="yellow">
             <description>Light yellow</description>
