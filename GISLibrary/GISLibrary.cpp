@@ -32,11 +32,11 @@ CGISLibraryApp::CGISLibraryApp()
 	D2.CreateDeviceIndependentResources();
 	D2.CreateDeviceDependentResources();
 
-	std::string wkb_string = "01040000000200000001010000000000000000405e400000000000003e40010100000000000000008061400000000000004440";
-	SMultiPoint mp;
-	auto wkb = LatLonUtility::HexStringToWKB(wkb_string);
-	mp.ImportFromWkb(wkb, wkb_string.size() / 2);
-	delete[] wkb;
+	//std::string wkb_string = "01040000000200000001010000000000000000405e400000000000003e40010100000000000000008061400000000000004440";
+	//SMultiPoint mp;
+	//auto wkb = LatLonUtility::HexStringToWKB(wkb_string);
+	//mp.ImportFromWkb(wkb, wkb_string.size() / 2);
+	//delete[] wkb;
 	
 	//S101Cellcell;
 	//cell.OpenByGML(L"..\\TEMP\\101GML3.gml");
