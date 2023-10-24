@@ -185,32 +185,29 @@ void CDockablePaneEditWindow::SetInformationType(std::wstring informationID)
 
 void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes over here.
 {
-	auto selectedID = pugi::as_utf8(selectedFeatureID);
+	//auto selectedID = pugi::as_utf8(selectedFeatureID);
 
 	DeleteAttributeItems();
+	
 	std::vector<CMFCPropertyGridProperty*> pAttrItemList;
 
-	if (m_cell == nullptr)
-	{
+	if (m_cell == nullptr) {
 		return;
 	}
 
 	auto s100Layer = (S100Layer*)m_cell->GetLayer();
 	auto fc = s100Layer->GetFeatureCatalog();
-	if (nullptr == fc)
-	{
+	if (nullptr == fc) {
 		return;
 	}
 
 	std::string id = "";
 	int type = 0;
-	if (m_selectedObjectType == L"Feature")
-	{
+	if (m_selectedObjectType == L"Feature") {
 		id = pugi::as_utf8(selectedFeatureID);
 		type = 1;
 	}
-	else if (m_selectedObjectType == L"Information")
-	{
+	else if (m_selectedObjectType == L"Information") {
 		id = pugi::as_utf8(selectedInformationID);
 		type = 2;
 	}
@@ -222,69 +219,172 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 		int attrCnt = object->GetAttributeCount();
 		for (int i = 0; i < attrCnt; i++)
 		{
-			auto value = object->GetAttributeValue(i);
-			auto code = m_cell->GetObjectAttributeCode(type, id, i);
-			CString strValue;
-			CMFCPropertyGridProperty* pAttribute = nullptr;
+			auto thematicAttribute = object->GetAttribute(i);
+			if (thematicAttribute) {
 
-			Attribute* attribute = fc->GetSimpleAttribute(code);
-			bool isSimple = true;
-			if (!attribute)
-			{
-				attribute = fc->GetComplexAttribute(code);
-				isSimple = false;
-				if (!attribute)
-				{
-					continue;
-				}
-			}
-
-			if (isSimple)
-			{
-				auto sa = (SimpleAttribute*)attribute;
-						
-				if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
-				{
-					auto iValue = atoi(value.c_str());
-					auto listedValue = sa->GetListedValue(iValue);
-					if (listedValue)
-					{
-						strValue.Format(L"%d. %s", listedValue->GetCode(), listedValue->GetLabel().c_str());
-					}
-				}
-				else
-				{
-					strValue = LibMFCUtil::StringToWString(value).c_str();
-				}
-
-				pAttribute = new CMFCPropertyGridProperty(sa->GetName().c_str(), strValue);
-			}
-			else
-			{
-				auto ca = (ComplexAttribute*)attribute;
-				if (ca)
-				{
-					pAttribute = new CMFCPropertyGridProperty(ca->GetName().c_str());
-				}
-			}
+				auto code = thematicAttribute->GetCode();
+				//Attribute* attribute = fc->GetSimpleAttribute(code);
+				//if (!attribute) {
+				//	attribute = fc->GetComplexAttribute(code);
+				//	if (!attribute)
+				//	{
+				//		continue;
+				//	}
+				//}
+				
+				if (thematicAttribute->IsSimple()) {
+					addSimpleAttribute(nullptr, thematicAttribute->GetCode(), thematicAttribute->GetValue(), fc);
 					
-			pAttrItemList.push_back(pAttribute);
-			pAttribute->SetDescription(attribute->GetDefinition().c_str());
+					//auto gf_sa = (GF::SimpleAttributeType*)thematicAttribute;
+					//auto value = object->GetAttributeValue(i);
+					//CString strValue;
 
-			auto parentIndex = object->GetParentAttributeIndex(i);
+					//auto sa = (SimpleAttribute*)attribute;
 
-			if (parentIndex != 0)
-			{
-				pAttrItemList[parentIndex - 1]->AddSubItem(pAttribute);
-			}
-			else
-			{
-				m_wndListAttribute.AddProperty(pAttribute);
+					//if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+					//{
+					//	auto iValue = atoi(value.c_str());
+					//	auto listedValue = sa->GetListedValue(iValue);
+					//	if (listedValue)
+					//	{
+					//		strValue.Format(L"%d. %s", listedValue->GetCode(), listedValue->GetLabel().c_str());
+					//	}
+					//}
+					//else
+					//{
+					//	strValue = LibMFCUtil::StringToWString(value).c_str();
+					//}
+
+					//auto pAttribute = new CMFCPropertyGridProperty(sa->GetName().c_str(), strValue);
+					//pAttrItemList.push_back(pAttribute);
+					//pAttribute->SetDescription(attribute->GetDefinition().c_str());
+				}
+				else {
+					//auto gf_ca = (GF::ComplexAttributeType*)thematicAttribute;
+
+					//auto ca = (ComplexAttribute*)attribute;
+					//auto pAttribute = new CMFCPropertyGridProperty(ca->GetName().c_str());
+					//pAttrItemList.push_back(pAttribute);
+					//pAttribute->SetDescription(attribute->GetDefinition().c_str());
+					addComplexAttribute(nullptr, (GF::ComplexAttributeType*)thematicAttribute, fc);
+				}
+				
+				//auto value = object->GetAttributeValue(i);
+				//auto code = m_cell->GetObjectAttributeCode(type, id, i);
+				//CString strValue;
+				//CMFCPropertyGridProperty* pAttribute = nullptr;
+
+				//Attribute* attribute = fc->GetSimpleAttribute(code);
+				//bool isSimple = true;
+				//if (!attribute)
+				//{
+				//	attribute = fc->GetComplexAttribute(code);
+				//	isSimple = false;
+				//	if (!attribute)
+				//	{
+				//		continue;
+				//	}
+				//}
+
+				//if (isSimple)
+				//{
+				//	auto sa = (SimpleAttribute*)attribute;
+
+				//	if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+				//	{
+				//		auto iValue = atoi(value.c_str());
+				//		auto listedValue = sa->GetListedValue(iValue);
+				//		if (listedValue)
+				//		{
+				//			strValue.Format(L"%d. %s", listedValue->GetCode(), listedValue->GetLabel().c_str());
+				//		}
+				//	}
+				//	else
+				//	{
+				//		strValue = LibMFCUtil::StringToWString(value).c_str();
+				//	}
+
+				//	pAttribute = new CMFCPropertyGridProperty(sa->GetName().c_str(), strValue);
+				//}
+				//else
+				//{
+				//	auto ca = (ComplexAttribute*)attribute;
+				//	if (ca)
+				//	{
+				//		pAttribute = new CMFCPropertyGridProperty(ca->GetName().c_str());
+				//	}
+				//}
+
+				//pAttrItemList.push_back(pAttribute);
+				//pAttribute->SetDescription(attribute->GetDefinition().c_str());
+
+				//auto parentIndex = object->GetParentAttributeIndex(i);
+
+				//if (parentIndex != 0)
+				//{
+				//	pAttrItemList[parentIndex - 1]->AddSubItem(pAttribute);
+				//}
+				//else
+				//{
+				//	m_wndListAttribute.AddProperty(pAttribute);
+				//}
 			}
 		}
 	}
 
 	m_wndListAttribute.ExpandAll();
+}
+
+void CDockablePaneEditWindow::addSimpleAttribute(CMFCPropertyGridProperty* parent, std::string code, std::string value, FeatureCatalogue* fc)
+{
+	auto sa = fc->GetSimpleAttribute(code);
+	if (sa) {
+		CString strCode = pugi::as_wide(code).c_str();
+		CString strValue = pugi::as_wide(value).c_str();
+		CString strDescription = sa->GetDefinition().c_str();
+
+		auto child = new CMFCPropertyGridProperty(strCode, strValue);
+		child->SetDescription(strDescription);
+
+		if (parent) {
+			parent->AddSubItem(child);
+		}
+		else {
+			m_wndListAttribute.AddProperty(child);
+		}
+	}
+}
+
+void CDockablePaneEditWindow::addComplexAttribute(CMFCPropertyGridProperty* parent, GF::ComplexAttributeType* complexAttribute, FeatureCatalogue* fc)
+{
+	CString strCode = pugi::as_wide(complexAttribute->GetCode()).c_str();
+
+	auto ca = fc->GetComplexAttribute(complexAttribute->GetCode());
+
+	if (ca) {
+		CString strDescription = ca->GetDefinition().c_str();
+		auto child = new CMFCPropertyGridProperty(strCode);
+		child->SetDescription(strDescription);
+
+		for (int i = 0; i < complexAttribute->GetSubAttributeCount(); i++) {
+			auto subAttribute = complexAttribute->GetSubAttribute(i);
+			if (subAttribute->IsSimple()) {
+				auto code = subAttribute->GetCode();
+				auto value = subAttribute->GetValue();
+				addSimpleAttribute(child, code, value, fc);
+			}
+			else {
+				addComplexAttribute(child, (GF::ComplexAttributeType*)subAttribute, fc);
+			}
+		}
+
+		if (parent) {
+			parent->AddSubItem(child);
+		}
+		else {
+			m_wndListAttribute.AddProperty(child);
+		}
+	}
 }
 
 void CDockablePaneEditWindow::SetVectors()
@@ -1058,14 +1158,6 @@ void CDockablePaneEditWindow::DeleteAttributeItems()
 		CMFCPropertyGridProperty* prop = m_wndListAttribute.GetProperty(0);
 		m_wndListAttribute.DeleteProperty(prop);
 	}
-
-	for (auto itor = m_propertyAttributeMultiData.begin();
-		itor != m_propertyAttributeMultiData.end();
-		itor++)
-	{
-		delete itor->second;
-	}
-	m_propertyAttributeMultiData.clear();
 }
 void CDockablePaneEditWindow::DeleteVectorItems()
 {
@@ -1077,54 +1169,11 @@ void CDockablePaneEditWindow::DeleteVectorItems()
 
 	if (m_wndListVector)
 		m_wndListVector.RemoveAll();
-
-	for (auto itor = m_propertyVectorMultiData.begin();
-		itor != m_propertyVectorMultiData.end();
-		itor++)
-	{
-		delete itor->second;
-	}
-	m_propertyVectorMultiData.clear();
 }
 
 BOOL CDockablePaneEditWindow::PreTranslateMessage(MSG* pMsg)
 {
 	return CDockablePane::PreTranslateMessage(pMsg);
-}
-
-MultiData* CDockablePaneEditWindow::InsertPropertyMultiData(
-	int multidataType,
-	CMFCPropertyGridProperty* pGP,
-	DWORD_PTR pointer_1,
-	DWORD_PTR pointer_2,
-	DWORD_PTR pointer_3,
-	DWORD_PTR pointer_4)
-{
-	MultiData* multiData = new MultiData();
-
-	if (multidataType % 100 > 10)
-	{
-		m_propertyAttributeMultiData.insert
-		(
-			std::unordered_map<CMFCPropertyGridProperty*, MultiData*>::value_type(pGP, multiData)
-		);
-	}
-	else
-	{
-		m_propertyVectorMultiData.insert
-		(
-			std::unordered_map<CMFCPropertyGridProperty*, MultiData*>::value_type(pGP, multiData)
-		);
-	}
-
-	multiData->type = multidataType;
-	multiData->data.push_back((DWORD_PTR)m_cell);
-	multiData->data.push_back((DWORD_PTR)pointer_1);
-	multiData->data.push_back((DWORD_PTR)pointer_2);
-	multiData->data.push_back((DWORD_PTR)pointer_3);
-	multiData->data.push_back((DWORD_PTR)pointer_4);
-
-	return multiData;
 }
 
 void CDockablePaneEditWindow::SetSpatialObject(S100SpatialObject *object)

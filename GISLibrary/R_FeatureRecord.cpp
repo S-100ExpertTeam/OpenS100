@@ -688,7 +688,7 @@ int R_FeatureRecord::GetInformationRelationCount()
 	return m_inas.size();
 }
 
-int R_FeatureRecord::GetAttributeCount()
+int R_FeatureRecord::GetAttributeCount() const
 {
 	int size = 0;
 
@@ -703,6 +703,8 @@ int R_FeatureRecord::GetAttributeCount()
 
 	return size;
 }
+
+
 
 std::string R_FeatureRecord::GetAttributeValue(int index)
 {

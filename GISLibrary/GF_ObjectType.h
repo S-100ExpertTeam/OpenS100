@@ -34,6 +34,8 @@ namespace GF
 
 		virtual int GetInformationRelationCount();
 
+		virtual InformationAssociationType getInformationAssociation(int index);
+
 		virtual std::string GetAssociatedInformationID(int index);
 
 		virtual int GetAttributeCount() const;
@@ -49,7 +51,7 @@ namespace GF
 			std::string role,
 			std::string informationID);
 
-		virtual void AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value);
+		virtual GF::SimpleAttributeType* AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value);
 		virtual void AddComplexAttribute(ComplexAttributeType* ca);
 		virtual ComplexAttributeType* AddComplexAttribute(std::string code);
 

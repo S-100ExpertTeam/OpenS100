@@ -120,21 +120,13 @@ public:
 
 	static CPropertyGridVectorModify	m_wndListAttribute;
 
-	int m_vIndex;
-
 	// S-100
 	//R_FeatureRecord* m_pFeature;
 	//R_InformationRecord* m_pInformation;
 	std::wstring selectedFeatureID;
 	std::wstring selectedInformationID;
 
-	MultiData* m_selectedMultiData;
-
-	std::unordered_map<CMFCPropertyGridProperty*, MultiData*> m_propertyAttributeMultiData;
-	std::unordered_map<CMFCPropertyGridProperty*, MultiData*> m_propertyVectorMultiData;
-
 	CString m_selectedObjectType;
-	CString m_selectedInformationName;
 
 public:
 	void SetFeatureType(std::wstring featureID);
@@ -176,19 +168,14 @@ public:
 	//CString GetActiveTabName();
 	//bool IsAttributeTab();
 
+	void addSimpleAttribute(CMFCPropertyGridProperty* parent, std::string code, std::string value, FeatureCatalogue* fc);
+	void addComplexAttribute(CMFCPropertyGridProperty* parent, GF::ComplexAttributeType* complexAttribute, FeatureCatalogue* fc);
+
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lp);
 	afx_msg void OnSize(UINT nType,int cx,int cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	DECLARE_MESSAGE_MAP();
-
-	MultiData* InsertPropertyMultiData(
-		int multidataType, 
-		CMFCPropertyGridProperty* pGP, 
-		DWORD_PTR pointer_1, 
-		DWORD_PTR pointer_2 = NULL, 
-		DWORD_PTR pointer_3 = NULL, 
-		DWORD_PTR pointer_4 = NULL);
 
 	//afx_msg LRESULT OnPropertyChanged(WPARAM wparam, LPARAM lparam);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);

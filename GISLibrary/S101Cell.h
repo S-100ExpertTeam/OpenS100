@@ -372,6 +372,7 @@ public:
 	std::wstring GetFeatureTypeCodeByID(int id) override;
 
 	std::wstring GetInformationTypeCodeByID(std::wstring id) override;
+	std::wstring GetInformationTypeCodeByID(std::string id) override;
 	std::wstring GetInformationTypeCodeByID(int id) override;
 
 	int GetFeatureCount() override;
@@ -392,12 +393,12 @@ public:
 	std::string GetInformationAssociationCode(GF::InformationType* informationType, int index) override;
 	std::string GetInformationAssociationRoleCode(GF::InformationType* informationType, int index) override;
 
-	std::string GetObjectAttributeCode(int type, std::string id, int index) override;
+	//std::string GetObjectAttributeCode(int type, std::string id, int index) override;
 
-	int GetFeatureAttributeCount(std::string id) override;
+	//int GetFeatureAttributeCount(std::string id) override;
 	std::string GetFeatureAttributeCode(std::string id, int index) override;
 
-	int GetInformationAttributeCount(std::string id) override;
+	//int GetInformationAttributeCount(std::string id) override;
 	std::string GetInformationAttributeCode(std::string id, int index) override;
 
 	int CoordinateMultiplicationFactorForX();
@@ -413,4 +414,6 @@ public:
 	// write gml
 	S100GML::DatasetIdentificationInformation GetDatasetIdentificationInformation();
 	void WritePointRecord(pugi::xml_node& node, R_PointRecord* record);
+
+	void ATTRtoAttribute();
 };

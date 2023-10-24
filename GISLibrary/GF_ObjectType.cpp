@@ -29,7 +29,10 @@ namespace GF
 		for (auto i = attributes.begin(); i != attributes.end(); i++)
 		{
 			delete (*i);
+			(*i) = nullptr;
 		}
+
+		attributes.clear();
 	}
 
 	std::string ObjectType::GetID() 
@@ -51,6 +54,15 @@ namespace GF
 	int ObjectType::GetInformationRelationCount() 
 	{
 		return informationAssociations.size();
+	}
+
+	InformationAssociationType ObjectType::getInformationAssociation(int index)
+	{
+		if (index < 0 || index >= informationAssociations.size()) {
+			return InformationAssociationType();
+		}
+
+		return informationAssociations.at(index);
 	}
 
 	std::string ObjectType::GetAssociatedInformationID(int index) 
@@ -109,12 +121,14 @@ namespace GF
 		informationAssociations.push_back(ia);
 	}
 
-	void ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value)
+	GF::SimpleAttributeType* ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value)
 	{
 		auto sa = new SimpleAttributeType(valueType, value);
 		sa->SetCode(code);
 		
 		attributes.push_back(sa);
+
+		return sa;
 	}
 
 	void ObjectType::AddComplexAttribute(ComplexAttributeType* ca)

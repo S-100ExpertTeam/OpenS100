@@ -163,6 +163,21 @@ GM::Object* S10XGML::GetGeometry(std::string id)
 	return nullptr;
 }
 
+int S10XGML::GetFeatureCount()
+{
+	return features.size();
+}
+
+int S10XGML::GetInformationCount()
+{
+	return informations.size();
+}
+
+std::wstring S10XGML::GetFeatureTypeCodeByID(std::wstring id)
+{
+	return GetFeatureTypeCodeByID(pugi::as_utf8(id));
+}
+
 std::wstring S10XGML::GetFeatureTypeCodeByID(std::string id)
 {
 	auto featureType = GetFeatureType(id);
@@ -170,7 +185,32 @@ std::wstring S10XGML::GetFeatureTypeCodeByID(std::string id)
 		return pugi::as_wide(featureType->GetCode());
 	}
 
-	return L"";
+	return std::wstring(L"");
+}
+
+std::wstring S10XGML::GetFeatureTypeCodeByID(int id)
+{
+	return GetFeatureTypeCodeByID(std::to_string(id));
+}
+
+std::wstring S10XGML::GetInformationTypeCodeByID(std::wstring id)
+{
+	return GetInformationTypeCodeByID(pugi::as_utf8(id));
+}
+
+std::wstring S10XGML::GetInformationTypeCodeByID(std::string id)
+{
+	auto informationType = GetInformationType(id);
+	if (informationType) {
+		return pugi::as_wide(informationType->GetCode());
+	}
+
+	return std::wstring(L"");
+}
+
+std::wstring S10XGML::GetInformationTypeCodeByID(int id)
+{
+	return GetInformationTypeCodeByID(std::to_string(id));
 }
 
 GM::OrientableCurve* S10XGML::GetOrientableCurve(std::string id)
@@ -1019,6 +1059,154 @@ GF::FeatureType* S10XGML::GetFeatureType(std::string id)
 
 	return nullptr;
 }
+
+GF::FeatureType* S10XGML::GetFeatureTypeByIndex(int index)
+{
+	if (index < 0 || index >= features.size()) {
+		return nullptr;
+	}
+
+	return features.at(index);
+}
+
+GF::InformationType* S10XGML::GetInformationType(std::string id)
+{
+	for (auto i = informations.begin(); i != informations.end(); i++) {
+		auto information = (*i);
+		if (!information->GetID().compare(id)) {
+			return information;
+		}
+	}
+
+	return nullptr;
+}
+
+GF::InformationType* S10XGML::GetInformationTypeByIndex(int index)
+{
+	if (index < 0 || index >= informations.size()) {
+		return nullptr;
+	}
+
+	return informations.at(index);
+}
+
+std::string S10XGML::GetFeatureAssociationCode(GF::FeatureType* featureType, int index)
+{
+	if (index < 0 || index >= featureType->GetFeatureRelationCount()) {
+		return std::string("");
+	}
+	
+	auto fa = featureType->getFeatureAssociation(index);
+	if (!fa.GetFeatureID().empty()) {
+		return fa.GetCode();
+	}
+
+	return std::string("");
+}
+
+std::string S10XGML::GetFeatureAssociationRoleCode(GF::FeatureType* featureType, int index)
+{
+	if (index < 0 || index >= featureType->GetFeatureRelationCount()) {
+		return std::string("");
+	}
+	
+	auto fa = featureType->getFeatureAssociation(index);
+	if (!fa.GetFeatureID().empty()) {
+		return fa.GetRole();
+	}
+
+	return std::string("");
+}
+
+std::string S10XGML::GetInformationAssociationCode(GF::FeatureType* featureType, int index)
+{
+	if (index < 0 || index >= featureType->GetInformationRelationCount()) {
+		return std::string("");
+	}
+
+	auto fa = featureType->getInformationAssociation(index);
+	if (!fa.GetInformationID().empty()) {
+		return fa.GetCode();
+	}
+
+	return std::string("");
+}
+
+std::string S10XGML::GetInformationAssociationRoleCode(GF::FeatureType* featureType, int index)
+{
+	if (index < 0 || index >= featureType->GetInformationRelationCount()) {
+		return std::string("");
+	}
+
+	auto fa = featureType->getInformationAssociation(index);
+	if (!fa.GetInformationID().empty()) {
+		return fa.GetRole();
+	}
+
+	return std::string("");
+}
+
+std::string S10XGML::GetInformationAssociationCode(GF::InformationType* informationType, int index)
+{
+	if (index < 0 || index >= informationType->GetInformationRelationCount()) {
+		return std::string("");
+	}
+
+	auto fa = informationType->getInformationAssociation(index);
+	if (!fa.GetInformationID().empty()) {
+		return fa.GetCode();
+	}
+
+	return std::string("");
+}
+
+std::string S10XGML::GetInformationAssociationRoleCode(GF::InformationType* informationType, int index)
+{
+	if (index < 0 || index >= informationType->GetInformationRelationCount()) {
+		return std::string("");
+	}
+
+	auto fa = informationType->getInformationAssociation(index);
+	if (!fa.GetInformationID().empty()) {
+		return fa.GetRole();
+	}
+
+	return std::string("");
+}
+
+//std::string S10XGML::GetObjectAttributeCode(int type, std::string id, int index)
+//{
+//	if (type == 1)
+//	{
+//		return GetFeatureAttributeCode(id, index);
+//	}
+//	else if (type == 2)
+//	{
+//		return GetInformationAttributeCode(id, index);
+//	}
+//
+//	return "";
+//}
+
+//int S10XGML::GetFeatureAttributeCount(std::string id)
+//{
+//	
+//}
+
+//std::string S10XGML::GetFeatureAttributeCode(std::string, int index)
+//{
+//	
+//}
+
+//int S10XGML::GetInformationAttributeCount(std::string id)
+//{
+//	
+//}
+
+//std::string S10XGML::GetInformationAttributeCode(std::string, int index)
+//{
+//	
+//}
 
 std::string S10XGML::DeleteXMLNamespace(std::string value)
 {

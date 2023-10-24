@@ -448,6 +448,8 @@ bool S101Cell::OpenBy000(CString path)
 		CalcMBR();
 		Check();
 
+		ATTRtoAttribute();
+
 		//SaveAsGML(L"..\\TEMP\\101GML3.gml");
 		return true;
 	}
@@ -4103,6 +4105,11 @@ std::wstring S101Cell::GetInformationTypeCodeByID(std::wstring id)
 	return GetInformationTypeCodeByID(key);
 }
 
+std::wstring S101Cell::GetInformationTypeCodeByID(std::string id)
+{
+	return GetInformationTypeCodeByID(pugi::as_wide(id));
+}
+
 std::wstring S101Cell::GetInformationTypeCodeByID(int id)
 {
 	RecordName rn(150, id);
@@ -4229,30 +4236,30 @@ std::string S101Cell::GetInformationAssociationRoleCode(GF::InformationType* inf
 	return pugi::as_utf8(std::wstring(m_dsgir.GetAssociationRoleCode((*i)->m_narc)).c_str());
 }
 
-std::string S101Cell::GetObjectAttributeCode(int type, std::string id, int index)
-{
-	if (type == 1)
-	{
-		return GetFeatureAttributeCode(id, index);
-	}
-	else if (type == 2)
-	{
-		return GetInformationAttributeCode(id, index);
-	}
+//std::string S101Cell::GetObjectAttributeCode(int type, std::string id, int index)
+//{
+//	if (type == 1)
+//	{
+//		return GetFeatureAttributeCode(id, index);
+//	}
+//	else if (type == 2)
+//	{
+//		return GetInformationAttributeCode(id, index);
+//	}
+//
+//	return "";
+//}
 
-	return "";
-}
-
-int S101Cell::GetFeatureAttributeCount(std::string id)
-{
-	auto object = GetFeatureType(id);
-	if (object)
-	{
-		return object->GetAttributeCount();
-	}
-
-	return 0;
-}
+//int S101Cell::GetFeatureAttributeCount(std::string id)
+//{
+//	auto object = GetFeatureType(id);
+//	if (object)
+//	{
+//		return object->GetAttributeCount();
+//	}
+//
+//	return 0;
+//}
 
 std::string S101Cell::GetFeatureAttributeCode(std::string id, int index)
 {
@@ -4272,16 +4279,16 @@ std::string S101Cell::GetFeatureAttributeCode(std::string id, int index)
 	return "";
 }
 
-int S101Cell::GetInformationAttributeCount(std::string id)
-{
-	auto object = GetInformationType(id);
-	if (object)
-	{
-		return object->GetAttributeCount();
-	}
-
-	return 0;
-}
+//int S101Cell::GetInformationAttributeCount(std::string id)
+//{
+//	auto object = GetInformationType(id);
+//	if (object)
+//	{
+//		return object->GetAttributeCount();
+//	}
+//
+//	return 0;
+//}
 
 std::string S101Cell::GetInformationAttributeCode(std::string id, int index)
 {
@@ -4851,4 +4858,56 @@ bool S101Cell::InsertSurfaceRecordFromS101GML(S10XGML & gml, GM::Surface * curve
 	InsertSurfaceRecord(sr->GetRecordName().GetName(), sr);
 
 	return true;
+}
+
+void S101Cell::ATTRtoAttribute()
+{
+	auto fc = GetFC();
+	int cntFeature = GetFeatureCount();
+
+	for (int i = 0; i < cntFeature; i++) {
+		std::vector<GF::ThematicAttributeType*> addedAttributes;
+		auto fr = GetFeatureRecordByIndex(i);
+		auto ATTRs = fr->GetAllAttributes();
+		for (auto j = ATTRs.begin(); j != ATTRs.end(); j++) {
+			auto ATTR = (*j);
+			auto strCode = m_dsgir.GetAttributeCode(ATTR->m_natc);
+			auto code = pugi::as_utf8(strCode);
+			auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
+			if (sa) {
+				auto value = ATTR->getValueAsString();
+				CString strValue;
+
+				if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+				{
+					auto iValue = atoi(value.c_str());
+					auto listedValue = sa->GetListedValue(iValue);
+					if (listedValue)
+					{
+						strValue.Format(L"%d. %s", listedValue->GetCode(), listedValue->GetLabel().c_str());
+					}
+				}
+				else
+				{
+					strValue = LibMFCUtil::StringToWString(value).c_str();
+				}
+				
+				auto addedSA = fr->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+				addedAttributes.push_back(addedSA);
+				if (ATTR->m_paix > 0) {
+					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+					parentCA->AddSubAttribute(addedSA->clone());
+				}
+			}
+			else {
+				auto ca = fc->GetComplexAttribute(std::wstring(strCode));
+				auto addedCA = fr->AddComplexAttribute(code);
+				addedAttributes.push_back(addedCA);
+				if (ATTR->m_paix > 0) {
+					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+					parentCA->AddSubAttribute(addedCA->clone());
+				}
+			}
+		}
+	}
 }

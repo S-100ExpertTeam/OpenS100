@@ -105,6 +105,16 @@ namespace GF
 		return featureAssociations.size();
 	}
 
+	FeatureAssociationType FeatureType::getFeatureAssociation(int index)
+	{
+		if (index < 0 || index >= featureAssociations.size())
+		{
+			return FeatureAssociationType();
+		}
+
+		return featureAssociations.at(index);
+	}
+
 	std::string FeatureType::GetAssociatedFeatureID(int index)
 	{
 		if (index >= 0 && index < GetFeatureRelationCount())

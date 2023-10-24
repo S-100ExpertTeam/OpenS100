@@ -77,7 +77,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 			{
 				auto cell = m_Cell;
 				FeatureCatalogue* fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
-				if (nullptr == fc)
+				if (nullptr == fc || nullptr == cell)
 				{
 					return;
 				}
@@ -100,17 +100,13 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 				// Feature or Information
 				featureType.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_TYPE));
-				__int64 objIdN = _tcstoui64(objId, NULL, 10);
+				//__int64 objIdN = _tcstoui64(objId, NULL, 10);
 
 				if (featureType == L"Feature")
 				{
-					__int64 key = ((__int64)100) << 32 | objIdN;
+					//__int64 key = ((__int64)100) << 32 | objIdN;
 
-					auto stringKey = std::to_wstring(key);
-					if (cell == nullptr)
-					{
-						return;
-					}
+					//auto stringKey = std::to_wstring(key);
 
 					CString geoType = m_ListCurrentSelection.GetItemText(idx, COL_INDEX_GEOMETRY);
 
@@ -121,22 +117,25 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 						{
 							if (true == layer->IsOn())
 							{
-								theApp.pView->SetPick(cell, stringKey);
+								//theApp.pView->SetPick(cell, stringKey);
+								theApp.pView->SetPick(cell, std::wstring(objId));
 								theApp.pView->Invalidate(FALSE);
 							}
 						}
 					}
 
 					theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
-					theApp.m_DockablePaneEditWindow.SetFeatureType(stringKey);
+					//theApp.m_DockablePaneEditWindow.SetFeatureType(stringKey);
+					theApp.m_DockablePaneEditWindow.SetFeatureType(std::wstring(objId));
 				}
 				else if (featureType == L"Information")
 				{
-					__int64 key = ((__int64)150) << 32 | objIdN;
-					auto stringKey = std::to_wstring(key);
+					//__int64 key = ((__int64)150) << 32 | objIdN;
+					//auto stringKey = std::to_wstring(key);
 
 					theApp.m_DockablePaneEditWindow.SetSpatialObject(cell);
-					theApp.m_DockablePaneEditWindow.SetInformationType(stringKey);
+					//theApp.m_DockablePaneEditWindow.SetInformationType(stringKey);
+					theApp.m_DockablePaneEditWindow.SetInformationType(std::wstring(objId));
 				}
 
 				pos = m_ListCurrentSelection.GetFirstSelectedItemPosition();
@@ -152,12 +151,13 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					idx = m_ListCurrentSelection.GetNextSelectedItem(pos);
 					objId.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_ID));
 					featureType.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_TYPE)); // feature/information type
-					__int64 objIdN = _tcstoui64(objId, NULL, 10);
+					//__int64 objIdN = _tcstoui64(objId, NULL, 10);
 
 					if (featureType == L"Feature")
 					{
-						__int64 key = ((__int64)100) << 32 | objIdN;
-						auto feature = cell->GetFeatureType(std::to_string(key));
+						//__int64 key = ((__int64)100) << 32 | objIdN;
+						//auto feature = cell->GetFeatureType(std::to_string(key));
+						auto feature = cell->GetFeatureType(pugi::as_utf8(std::wstring(objId)));
 						if (feature)
 						{
 							flist.push_back(feature);
@@ -165,8 +165,9 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					}
 					else if (featureType == L"Information")
 					{
-						__int64 key = ((__int64)150) << 32 | objIdN;
-						auto information = cell->GetInformationType(std::to_string(key));
+						//__int64 key = ((__int64)150) << 32 | objIdN;
+						//auto information = cell->GetInformationType(std::to_string(key));
+						auto information = cell->GetInformationType(pugi::as_utf8(std::wstring(objId)));
 						if (information)
 						{
 							infoList.push_back(information);
@@ -231,7 +232,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialO
 		m_ListCurrentSelection.DeleteAllItems();
 	}
 	
-	auto fc = theApp.gisLib->catalogManager.getFC("S-101");
+	auto fc = cell->GetFC();
 	
 	if (nullptr == fc)
 	{

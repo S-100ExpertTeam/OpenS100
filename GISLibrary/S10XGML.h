@@ -74,10 +74,41 @@ public:
     void CalcMBR();
 
 public:
-    GF::FeatureType* GetFeatureType(std::string id) override;
-    GM::Object* GetGeometry(std::string id) override;
-   
+    std::wstring GetFeatureTypeCodeByID(std::wstring id) override;
     std::wstring GetFeatureTypeCodeByID(std::string id) override;
+    std::wstring GetFeatureTypeCodeByID(int id) override;
+
+    std::wstring GetInformationTypeCodeByID(std::wstring id) override;
+    std::wstring GetInformationTypeCodeByID(std::string id) override;
+    std::wstring GetInformationTypeCodeByID(int id) override;
+	
+    int GetFeatureCount() override;
+    int GetInformationCount() override;
+
+    GF::FeatureType* GetFeatureType(std::string id) override;
+    GF::FeatureType* GetFeatureTypeByIndex(int index) override;
+
+    GF::InformationType* GetInformationType(std::string id) override;
+    GF::InformationType* GetInformationTypeByIndex(int index) override;
+
+    std::string GetFeatureAssociationCode(GF::FeatureType* featureType, int index) override;
+    std::string GetFeatureAssociationRoleCode(GF::FeatureType* featureType, int index) override;
+
+    std::string GetInformationAssociationCode(GF::FeatureType* featureType, int index) override;
+    std::string GetInformationAssociationRoleCode(GF::FeatureType* featureType, int index) override;
+
+    std::string GetInformationAssociationCode(GF::InformationType* informationType, int index) override;
+    std::string GetInformationAssociationRoleCode(GF::InformationType* informationType, int index) override;
+
+    //std::string GetObjectAttributeCode(int type, std::string id, int index) override;
+
+    //int GetFeatureAttributeCount(std::string id) override;
+    //std::string GetFeatureAttributeCode(std::string, int index) override;
+	
+    //int GetInformationAttributeCount(std::string id) override;
+    //std::string GetInformationAttributeCode(std::string, int index) override;
+
+    GM::Object* GetGeometry(std::string id) override;
 
     GM::OrientableCurve* GetOrientableCurve(std::string id);
 

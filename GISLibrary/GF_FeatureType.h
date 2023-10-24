@@ -35,6 +35,8 @@ namespace GF
 
 		virtual int GetFeatureRelationCount();
 
+		virtual FeatureAssociationType getFeatureAssociation(int index);
+
 		virtual std::string GetAssociatedFeatureID(int index);
 
 		virtual SpatialPrimitiveType GetSpatialPrimitiveType();

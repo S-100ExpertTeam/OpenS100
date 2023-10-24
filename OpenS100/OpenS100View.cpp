@@ -1232,11 +1232,8 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	}
 
 	auto s100layer = (S100Layer*)layer;
-	if (s100layer->GetFC()->getProductId().compare("S-101") != 0) {
-		return;
-	}
 
-	auto cell = (S101Cell*)layer->GetSpatialObject();
+	auto cell = s100layer->GetS100SpatialObject();
 	if (nullptr == cell)
 	{
 		return;
@@ -1258,12 +1255,9 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	__int64 key = 0;
 	R_FeatureRecord* fr = nullptr;
 
-	POSITION pos = cell->GetFeatureStartPosition();
-
-	// Area Type search
-	while (pos != NULL)
-	{
-		cell->GetNextAssoc(pos, key, fr);
+	auto featureCount = cell->GetFeatureCount();
+	for (int i = 0; i < featureCount; i++) {
+		auto fr = cell->GetFeatureTypeByIndex(i);
 		if (fr->geometry == nullptr || fr->geometry->GetType() != SGeometryType::Surface)
 		{
 			continue;
@@ -1273,9 +1267,6 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 
 		if (MBR::CheckOverlap(pickMBR, fr->geometry->m_mbr))
 		{
-			int code = fr->m_frid.m_nftc;
-			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
-
 			double centerX = 0;
 			double centerY = 0;
 
@@ -1297,14 +1288,14 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				inverseProjection(lon, lat);
 
 				std::vector<int>::size_type assoCnt;
-				assoCnt = fr->m_fasc.size() + fr->m_inas.size();
+				assoCnt = fr->GetFeatureRelationCount() + fr->GetInformationRelationCount();
 
-				csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
-				csFoid.Format(_T("%d"), fr->m_foid.FIDN);
+				csFrid.Format(_T("%s"), fr->GetIDAsWString().c_str());
+				csFoid.Format(_T("%d"), 0);
 				csLat.Format(_T("%f"), lat);
 				csLon.Format(_T("%f"), lon);
 				csType.Format(_T("%d"), surface->GetType());
-				csName.Format(_T("%s"), itor->second->m_code);
+				csName.Format(_T("%s"), cell->GetFeatureTypeCodeByID(fr->GetID()).c_str());
 				csAssoCnt.Format(_T("%d"), assoCnt);
 
 				csa.Add(
@@ -1322,10 +1313,8 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	}
 
 	// Composite curve
-	pos = cell->GetFeatureStartPosition();
-	while (pos != NULL)
-	{
-		cell->GetNextAssoc(pos, key, fr);
+	for (int i = 0; i < featureCount; i++) {
+		auto fr = cell->GetFeatureTypeByIndex(i);
 		if (fr->geometry == nullptr || fr->geometry->GetType() != SGeometryType::CompositeCurve)
 		{
 			continue;
@@ -1334,9 +1323,6 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 		SCompositeCurve* compositeCurve = (SCompositeCurve*)fr->geometry;
 		if (MBR::CheckOverlap(pickMBR, fr->geometry->m_mbr))
 		{
-			int code = fr->m_frid.m_nftc;
-			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
-
 			SSurface mbrArea(&pickMBR);
 
 			if (SGeometricFuc::overlap(compositeCurve, &mbrArea) == 1)
@@ -1355,25 +1341,33 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				inverseProjection(lat, lon);
 
 				std::vector<int>::size_type assoCnt;
-				assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
+				assoCnt = fr->GetFeatureRelationCount() + fr->GetInformationRelationCount();
 
-				csFoid.Format(_T("%d"), fr->m_foid.FIDN);
-				csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
+				csFrid.Format(_T("%s"), fr->GetIDAsWString().c_str());
+				csFoid.Format(_T("%d"), 0);
 				csLat.Format(_T("%f"), lat);
 				csLon.Format(_T("%f"), lon);
 				csType.Format(_T("%d"), compositeCurve->GetType());
-				csName.Format(_T("%s"), itor->second->m_code);
+				csName.Format(_T("%s"), cell->GetFeatureTypeCodeByID(fr->GetID()).c_str());
 				csAssoCnt.Format(_T("%d"), assoCnt);
-				csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+
+				csa.Add(
+					_T("0|||") +
+					csFoid + _T("|||") +
+					csFrid + _T("|||") +
+					csLat + _T("|||") +
+					csLon + _T("|||") +
+					csType + _T("|||") +
+					csName + _T("|||") +
+					csAssoCnt + _T("|||") +
+					featureType);
 			}
 		}
 	}
 
 	// Curve
-	pos = cell->GetFeatureStartPosition();
-	while (pos != NULL)
-	{
-		cell->GetNextAssoc(pos, key, fr);
+	for (int i = 0; i < featureCount; i++) {
+		auto fr = cell->GetFeatureTypeByIndex(i);
 		if (fr->geometry == nullptr || fr->geometry->GetType() != SGeometryType::Curve)
 		{
 			continue;
@@ -1382,9 +1376,6 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 		SCurve* curve = (SCurve*)fr->geometry;
 		if (MBR::CheckOverlap(pickMBR, fr->geometry->m_mbr))
 		{
-			int code = fr->m_frid.m_nftc;
-			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
-
 			SSurface mbrArea(&pickMBR);
 
 			if (SGeometricFuc::overlap(curve, &mbrArea) == 1)
@@ -1403,27 +1394,33 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 				inverseProjection(lon, lat);
 
 				std::vector<int>::size_type assoCnt;
-				assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
+				assoCnt = fr->GetFeatureRelationCount() + fr->GetInformationRelationCount();
 
-				csFoid.Format(_T("%d"), fr->m_foid.FIDN);
-				csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
+				csFrid.Format(_T("%s"), fr->GetIDAsWString().c_str());
+				csFoid.Format(_T("%d"), 0);
 				csLat.Format(_T("%f"), lat);
 				csLon.Format(_T("%f"), lon);
 				csType.Format(_T("%d"), curve->GetType());
-				csName.Format(_T("%s"), itor->second->m_code);
+				csName.Format(_T("%s"), cell->GetFeatureTypeCodeByID(fr->GetID()).c_str());
 				csAssoCnt.Format(_T("%d"), assoCnt);
-				csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+
+				csa.Add(
+					_T("0|||") +
+					csFoid + _T("|||") +
+					csFrid + _T("|||") +
+					csLat + _T("|||") +
+					csLon + _T("|||") +
+					csType + _T("|||") +
+					csName + _T("|||") +
+					csAssoCnt + _T("|||") +
+					featureType);
 			}
 		}
 	}
 
 	// Point or Multi point
-	pos = cell->GetFeatureStartPosition();
-	while (pos != NULL)
-	{
-		__int64 key = 0;
-		R_FeatureRecord* fr = NULL;
-		cell->GetNextAssoc(pos, key, fr);
+	for (int i = 0; i < featureCount; i++) {
+		auto fr = cell->GetFeatureTypeByIndex(i);
 		if (fr->geometry == nullptr || 
 			(fr->geometry->GetType() != SGeometryType::Point && fr->geometry->GetType() != SGeometryType::MultiPoint))
 		{
@@ -1433,9 +1430,6 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 		SGeometry* sgeo = (SGeometry*)fr->geometry;
 		if (MBR::CheckOverlap(pickMBR, fr->geometry->m_mbr))
 		{
-			int code = fr->m_frid.m_nftc;
-
-			auto itor = cell->m_dsgir.m_ftcs->m_arr.find(code);
 			if (sgeo->GetType() == SGeometryType::MultiPoint)		// Point
 			{
 				auto multiPoint = (SMultiPoint*)fr->geometry;
@@ -1452,16 +1446,26 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 						inverseProjection(geoX, geoY);
 
 						std::vector<int>::size_type assoCnt;
-						assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
+						assoCnt = fr->GetFeatureRelationCount() + fr->GetInformationRelationCount();
 
-						csFoid.Format(_T("%d"), fr->m_foid.FIDN);
-						csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
+						csFrid.Format(_T("%s"), fr->GetIDAsWString().c_str());
+						csFoid.Format(_T("%d"), 0);
 						csLat.Format(_T("%f"), geoY);
 						csLon.Format(_T("%f"), geoX);
 						csType.Format(_T("%d"), multiPoint->GetType());
-						csName.Format(_T("%s"), itor->second->m_code);
+						csName.Format(_T("%s"), cell->GetFeatureTypeCodeByID(fr->GetID()).c_str());
 						csAssoCnt.Format(_T("%d"), assoCnt);
-						csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+
+						csa.Add(
+							_T("0|||") +
+							csFoid + _T("|||") +
+							csFrid + _T("|||") +
+							csLat + _T("|||") +
+							csLon + _T("|||") +
+							csType + _T("|||") +
+							csName + _T("|||") +
+							csAssoCnt + _T("|||") +
+							featureType);
 
 						break;
 					}
@@ -1483,16 +1487,26 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 					inverseProjection(lat, lon);
 
 					std::vector<int>::size_type assoCnt;
-					assoCnt = fr->m_fasc.size() + fr->m_inas.size();;
+					assoCnt = fr->GetFeatureRelationCount() + fr->GetInformationRelationCount();
 
-					csFoid.Format(_T("%d"), fr->m_foid.FIDN);
-					csFrid.Format(_T("%d"), fr->m_frid.m_name.RCID);
+					csFrid.Format(_T("%s"), fr->GetIDAsWString().c_str());
+					csFoid.Format(_T("%d"), 0);
 					csLat.Format(_T("%f"), lat);
 					csLon.Format(_T("%f"), lon);
 					csType.Format(_T("%d"), sr->GetType());
-					csName.Format(_T("%s"), itor->second->m_code);
+					csName.Format(_T("%s"), cell->GetFeatureTypeCodeByID(fr->GetID()).c_str());
 					csAssoCnt.Format(_T("%d"), assoCnt);
-					csa.Add(_T("0|||") + csFoid + _T("|||") + csFrid + _T("|||") + csLat + _T("|||") + csLon + _T("|||") + csType + _T("|||") + csName + _T("|||") + csAssoCnt + _T("|||") + featureType);
+
+					csa.Add(
+						_T("0|||") +
+						csFoid + _T("|||") +
+						csFrid + _T("|||") +
+						csLat + _T("|||") +
+						csLon + _T("|||") +
+						csType + _T("|||") +
+						csName + _T("|||") +
+						csAssoCnt + _T("|||") +
+						featureType);
 				}
 			}
 		}
