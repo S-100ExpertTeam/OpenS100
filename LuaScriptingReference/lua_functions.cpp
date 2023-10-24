@@ -10,7 +10,7 @@
 #include "../FeatureCatalog/FeatureAssociation.h"
 #include "../FeatureCatalog/SimpleAttribute.h"
 
-FeatureCatalogue *pTheFC = nullptr;
+FeatureCatalogue* pTheFC = nullptr;
 
 static lua_variant NullIfEmpty(std::string s)
 {
@@ -28,17 +28,17 @@ static lua_variant NullIfEmpty(std::wstring s)
 		return std::string(s.begin(), s.end());
 }
 
-lua_ref_ptr CreateSpatialAssociation(lua_session *ls, spatial_association *spatial_association)
+lua_ref_ptr CreateSpatialAssociation(lua_session* ls, spatial_association* spatial_association)
 {
 	return ls->call<lua_ref_ptr>("CreateSpatialAssociation", { spatial_association->spatial_type, spatial_association->spatial_id, spatial_association->orientation, spatial_association->scale_minimum, spatial_association->scale_maximum });
 }
 
-lua_ref_ptr CreatePoint(lua_session *ls, point point)
+lua_ref_ptr CreatePoint(lua_session* ls, point point)
 {
 	return ls->call<lua_ref_ptr>("CreatePoint", { point.x, point.y, point.z });
 }
 
-lua_ref_ptr CreateMultiPoint(lua_session *ls, multipoint multipoint)
+lua_ref_ptr CreateMultiPoint(lua_session* ls, multipoint multipoint)
 {
 	std::vector<lua_ref_ptr> points;
 
@@ -48,7 +48,7 @@ lua_ref_ptr CreateMultiPoint(lua_session *ls, multipoint multipoint)
 	return ls->call<lua_ref_ptr>("CreateMultiPoint", { points });
 }
 
-lua_ref_ptr CreateCurveSegment(lua_session *ls, curve_segment curve_segment)
+lua_ref_ptr CreateCurveSegment(lua_session* ls, curve_segment curve_segment)
 {
 	std::vector<lua_ref_ptr> control_points;
 
@@ -58,7 +58,7 @@ lua_ref_ptr CreateCurveSegment(lua_session *ls, curve_segment curve_segment)
 	return ls->call<lua_ref_ptr>("CreateCurveSegment", { control_points, curve_segment.interpolation });
 }
 
-lua_ref_ptr CreateCurve(lua_session *ls, curve curve)
+lua_ref_ptr CreateCurve(lua_session* ls, curve curve)
 {
 	std::vector<lua_ref_ptr> segments;
 
@@ -68,7 +68,7 @@ lua_ref_ptr CreateCurve(lua_session *ls, curve curve)
 	return ls->call<lua_ref_ptr>("CreateCurve", { CreateSpatialAssociation(ls, &curve.start_point), CreateSpatialAssociation(ls, &curve.end_point), segments });
 }
 
-lua_ref_ptr CreateCompositeCurve(lua_session *ls, composite_curve composite_curve)
+lua_ref_ptr CreateCompositeCurve(lua_session* ls, composite_curve composite_curve)
 {
 	std::vector<lua_ref_ptr> curve_associations;
 
@@ -78,7 +78,7 @@ lua_ref_ptr CreateCompositeCurve(lua_session *ls, composite_curve composite_curv
 	return ls->call<lua_ref_ptr>("CreateCompositeCurve", { curve_associations });
 }
 
-lua_ref_ptr CreateSurface(lua_session *ls, surface surface)
+lua_ref_ptr CreateSurface(lua_session* ls, surface surface)
 {
 	if (surface.interior_rings.has_value())
 	{

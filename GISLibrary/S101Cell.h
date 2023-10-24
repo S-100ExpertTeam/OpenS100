@@ -368,6 +368,7 @@ public:
 	GF::ObjectType* GetObjectType(int type, std::string id) override;
 
 	std::wstring GetFeatureTypeCodeByID(std::wstring id) override;
+	std::wstring GetFeatureTypeCodeByID(std::string id) override;
 	std::wstring GetFeatureTypeCodeByID(int id) override;
 
 	std::wstring GetInformationTypeCodeByID(std::wstring id) override;

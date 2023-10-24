@@ -26,9 +26,9 @@ namespace GM
 
 	CompositeCurve::~CompositeCurve()
 	{
-		//for (auto i = component.begin(); i != component.end(); i++) {
-		//	delete (*i);
-		//}
+		for (auto i = component.begin(); i != component.end(); i++) {
+			delete (*i);
+		}
 	}
 
 	GeometryType CompositeCurve::GetType()
@@ -80,16 +80,19 @@ namespace GM
 
 	void CompositeCurve::Add(GM::OrientableCurve* item)
 	{
-		component.push_back(item);
+		//component.push_back(item);
+		component.push_back(new GM::OrientableCurve(*item));
 	}
 
 	void CompositeCurve::Add(GM::Curve* item)
 	{
-		component.push_back(item);
+		//component.push_back(item);
+		component.push_back(new GM::Curve(*item));
 	}
 
 	void CompositeCurve::Add(GM::CompositeCurve* item)
 	{
-		component.push_back(item);
+		//component.push_back(item);
+		component.push_back(new GM::CompositeCurve(*item));
 	}
 }

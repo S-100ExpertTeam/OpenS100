@@ -49,8 +49,8 @@ public:
     GM::Curve* ReadCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
     GM::OrientableCurve* ReadOrientableCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
     GM::CompositeCurve* ReadCompositeCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
-    GM::Curve* ReadLinearRing(pugi::xml_node& node);
-    GM::Surface* ReadSurface(pugi::xml_node& node);
+    GM::Curve* ReadLinearRing(pugi::xml_node& node); // read gml:LinearRing
+    GM::Surface* ReadSurface(pugi::xml_node& node); // read S100:Surface
     GM::Surface* ReadPolygon(pugi::xml_node& node);
     bool ReadMember(pugi::xml_node& node);
 
@@ -76,13 +76,16 @@ public:
 public:
     GF::FeatureType* GetFeatureType(std::string id) override;
     GM::Object* GetGeometry(std::string id) override;
-    
+   
+    std::wstring GetFeatureTypeCodeByID(std::string id) override;
+
     GM::OrientableCurve* GetOrientableCurve(std::string id);
+
+    void SetGeometry();
 
 private:
     std::string DeleteXMLNamespace(std::string value);
     std::string getCodeFromMember(std::string nodeName);
-    void SetGeometry();
     SPoint* PointToSPoint(GM::Point* point);
     SMultiPoint* MultiPointToSMultiPoint(GM::MultiPoint* multiPoint);
     SAbstractCurve* OrientableCurveToSCurve(GM::OrientableCurve* orientableCurve);

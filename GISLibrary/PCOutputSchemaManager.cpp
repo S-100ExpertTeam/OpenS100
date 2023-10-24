@@ -103,24 +103,29 @@ void PCOutputSchemaManager::GenerateSENCAlertInstruction(S101Cell* cell, Portray
 
 		if (sit)
 		{
-			__int64 iKey = ((__int64)100) << 32 | sit->featureReference;
-			auto item = cell->GetFeatureRecord(iKey);
+			auto feature = cell->GetFeatureType(sit->featureReference);
+			if (feature) {
+				auto id = feature->GetIDAsInteger();
 
-			if (nullptr == item)
-			{
-				continue;
-			}
-			else
-			{
-				sit->fr = item;
-			}
-			
-			if (sit->fr)
-			{
-				//sit->fr->m_alertIndicationType = sit->alertType;
-			}
+				__int64 iKey = ((__int64)100) << 32 | id;
+				auto item = cell->GetFeatureRecord(iKey);
 
-			displayListSENC->AddAlertIndication(sit);
+				if (nullptr == item)
+				{
+					continue;
+				}
+				else
+				{
+					sit->fr = item;
+				}
+
+				if (sit->fr)
+				{
+					//sit->fr->m_alertIndicationType = sit->alertType;
+				}
+
+				displayListSENC->AddAlertIndication(sit);
+			}
 		}
 	}
 }
@@ -207,7 +212,7 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 	si->displayPlane = tp->GetDisplayPlane().compare(L"UNDERRADAR") == 0 ? 0 : 1;
 	si->drawingPriority = _wtoi(tp->GetDrawingProiority().c_str());
 	si->viewingGroup = _wtoi(tp->GetViewingGroup().c_str());
-	si->featureReference = _wtoi(tp->GetFeatureReference().c_str());
+	si->featureReference = pugi::as_utf8(tp->GetFeatureReference());
 	si->scaleMinimum = _wtoi(tp->GetScaleMinimum().c_str());
 	si->scaleMaximum = _wtoi(tp->GetScaleMaximum().c_str());
 

@@ -120,7 +120,7 @@ bool S10XGML::Open(CString _filepath)
 	}
 
 	//SetGeometry();
-	CalcMBR();
+	//CalcMBR();
 
 	return true;
 }
@@ -161,6 +161,16 @@ GM::Object* S10XGML::GetGeometry(std::string id)
 	}
 
 	return nullptr;
+}
+
+std::wstring S10XGML::GetFeatureTypeCodeByID(std::string id)
+{
+	auto featureType = GetFeatureType(id);
+	if (featureType) {
+		return pugi::as_wide(featureType->GetCode());
+	}
+
+	return L"";
 }
 
 GM::OrientableCurve* S10XGML::GetOrientableCurve(std::string id)
@@ -387,7 +397,7 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 	auto object = new GM::Curve();
 	//object->setParentIdSrsName
 
-	auto strPos = node.child_value("gml:LinearRing");
+	auto strPos = node.child_value("gml:posList");
 
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 	int posCnt = strPosList.size();
@@ -396,16 +406,15 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 	{
 		return false;
 	}
-
 	
 	//object->SetID(gmlID);
 
-	//for (int i = 0; i < posCnt; i += 2)
-	//{
-	//	double lon = std::stod(strPosList.at(i + lonIndex));
-	//	double lat = std::stod(strPosList.at(i + latIndex));
-	//	object->Add(lon, lat);
-	//}
+	for (int i = 0; i < posCnt; i += 2)
+	{
+		double lon = std::stod(strPosList.at(i));
+		double lat = std::stod(strPosList.at(i + 1));
+		object->Add(lon, lat);
+	}
 
 	return object;
 }
@@ -582,7 +591,9 @@ GM::Surface* S10XGML::ReadSurface(pugi::xml_node& node)
 	else if (!strcmp(name_node_exterior_child, "gml:LinearRing")) {
 		auto curve = ReadLinearRing(node_exterior_child);
 		if (curve) {
-			
+			object->SetExteriorRing(curve);
+			delete curve;
+			curve = nullptr;
 		}
 	}
 	else {
@@ -626,6 +637,7 @@ GM::Surface* S10XGML::ReadSurface(pugi::xml_node& node)
 	{
 		auto node_interior_curveMember = node_interior.child("gml:Ring").child("gml:curveMember");
 		auto interior_href = node_interior_curveMember.attribute("xlink:href");
+		auto name_first_child = node_interior.first_child().name();
 
 		if (interior_href) {
 			std::string interiorCurveMemberID = interior_href.value();
@@ -633,6 +645,14 @@ GM::Surface* S10XGML::ReadSurface(pugi::xml_node& node)
 			{
 				interiorCurveMemberID = interiorCurveMemberID.substr(1);
 				object->AddInteriorRingID(interiorCurveMemberID);
+			}
+		}
+		else if (!strcmp(name_first_child, "gml:LinearRing")) {
+			auto curve = ReadLinearRing(node_interior.first_child());
+			if (curve) {
+				object->AddInteriorRing(curve);
+				delete curve;
+				curve = nullptr;
 			}
 		}
 		else {
@@ -766,6 +786,18 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 				auto addedPoint = AddGeometry(point);
 				if (addedPoint) {
 					feature->SetGeometryID(addedPoint->GetID());
+				}
+			}
+		}
+		else if ((nodeName.find("curvePropert") != std::string::npos) ||
+			(nodeName.find("S100:curvePropert") != std::string::npos)) 
+		{
+			auto nodeCurve = geomNode.first_child();
+			auto curve = ReadCurve(nodeCurve);
+			if (curve) {
+				auto addedCurve = AddGeometry(curve);
+				if (addedCurve) {
+					feature->SetGeometryID(addedCurve->GetID());
 				}
 			}
 		}
@@ -1169,7 +1201,7 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 
 	auto result = new SSurface();
 
-	auto exteriorRing = CompositeCurveToSCompositeCurve(surface->GetPolygon().boundary.exterior);
+	auto exteriorRing = CompositeCurveToSCompositeCurve(surface->getExteriorRing());
 
 	auto pointCountExteriorRing = exteriorRing->GetPointCount();
 	for (auto i = 0; i < pointCountExteriorRing; i++) {
@@ -1183,32 +1215,62 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 		points.push_back(pt);
 	}
 
-	parts.push_back(0);
+	parts.push_back(points.size());
+	delete exteriorRing;
+	exteriorRing = nullptr;
 
-	auto boundary = surface->GetPolygon().boundary;
-	auto interior = boundary.interior;
+	auto numInteriorRing = surface->getInteriorRingCount();
+	for (int i = 0; i < numInteriorRing; i++) {
+		auto currentInteriorRing = surface->getInteriorRing(i);
 
-	auto i_begin = interior.begin();
-	auto i_end = interior.end();
+		if (currentInteriorRing) {
 
-	for (auto i = i_begin;
-		i != i_end;
-		i++) {
-		auto interiorRing = CompositeCurveToSCompositeCurve(*i);
-		auto pointCountInteriorRing = interiorRing->GetPointCount();
-		for (auto i = 0; i < pointCountInteriorRing; i++) {
-			auto x = interiorRing->GetX(i);
-			auto y = interiorRing->GetY(i);
+			auto interiorRing = CompositeCurveToSCompositeCurve(currentInteriorRing);
+			auto pointCountInteriorRing = interiorRing->GetPointCount();
+			
+			
 
-			inverseProjection(x, y);
+			for (auto i = 0; i < pointCountInteriorRing; i++) {
+				auto x = interiorRing->GetX(i);
+				auto y = interiorRing->GetY(i);
 
-			POINT pt = { x * 10000000, y * 10000000 };
+				inverseProjection(x, y);
 
-			points.push_back(pt);
+				POINT pt = { x * 10000000, y * 10000000 };
+
+				points.push_back(pt);
+			}
+			
+			parts.push_back(points.size());
+			delete interiorRing;
+			interiorRing = nullptr;
 		}
-
-		parts.push_back(pointCountInteriorRing);
 	}
+
+	//auto boundary = surface->GetPolygon().boundary;
+	//auto interior = boundary.interior;
+
+	//auto i_begin = interior.begin();
+	//auto i_end = interior.end();
+
+	//for (auto i = i_begin;
+	//	i != i_end;
+	//	i++) {
+	//	auto interiorRing = CompositeCurveToSCompositeCurve(*i);
+	//	auto pointCountInteriorRing = interiorRing->GetPointCount();
+	//	for (auto i = 0; i < pointCountInteriorRing; i++) {
+	//		auto x = interiorRing->GetX(i);
+	//		auto y = interiorRing->GetY(i);
+
+	//		inverseProjection(x, y);
+
+	//		POINT pt = { x * 10000000, y * 10000000 };
+
+	//		points.push_back(pt);
+	//	}
+
+	//	parts.push_back(pointCountInteriorRing);
+	//}
 
 	result->Set(points, parts);
 

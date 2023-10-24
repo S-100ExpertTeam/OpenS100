@@ -471,8 +471,6 @@ bool S101Cell::OpenByGML(CString path)
 
 	ConvertFromS101GML(gml);
 
-	//return false;
-
 	MakeFullSpatialData();
 
 	CalcMBR();
@@ -4081,6 +4079,12 @@ std::wstring S101Cell::GetFeatureTypeCodeByID(std::wstring id)
 	return GetFeatureTypeCodeByID(rcid);
 }
 
+std::wstring S101Cell::GetFeatureTypeCodeByID(std::string id)
+{
+	int rcid = std::stoi(id);
+	return GetFeatureTypeCodeByID(rcid);
+}
+
 std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
 {
 	RecordName rn(100, id);
@@ -4656,14 +4660,14 @@ bool S101Cell::ConvertGeometriesFromS101GML(S10XGML& gml)
 		{
 			InsertCurveRecordFromS101GML(gml, (GM::Curve*)*i);
 		}
-		//else if (type == GM::GeometryType::CompositeCurve)
-		//{
-		//	InsertCompositeCurveRecordFromS101GML(gml, (GM::CompositeCurve*)*i);
-		//}
-		//else if (type == GM::GeometryType::Surface)
-		//{
-		//	InsertSurfaceRecordFromS101GML(gml, (GM::Surface*)*i);
-		//}
+		else if (type == GM::GeometryType::CompositeCurve)
+		{
+			InsertCompositeCurveRecordFromS101GML(gml, (GM::CompositeCurve*)*i);
+		}
+		else if (type == GM::GeometryType::Surface)
+		{
+			InsertSurfaceRecordFromS101GML(gml, (GM::Surface*)*i);
+		}
 	}
 
 	return true;
@@ -4731,7 +4735,7 @@ bool S101Cell::InsertCurveRecordFromS101GML(S10XGML& gml, GM::Curve* curve)
 
 			auto result = InsertCurveRecord(cr->GetRecordName().GetName(), cr);
 			if (!result) {
-				OutputDebugString(L"A");
+				OutputDebugString(L"A\n");
 				delete cr;
 				cr = nullptr;
 			}

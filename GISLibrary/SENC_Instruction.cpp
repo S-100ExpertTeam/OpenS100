@@ -25,13 +25,13 @@
 
 SENC_Instruction::SENC_Instruction()
 {
-	featureReference = 0;
+	featureReference = "";
 
 	type = 0;
 	suppressedInstance = false;
 }
 
-int SENC_Instruction::FeatureReference()
+std::string SENC_Instruction::FeatureReference()
 {
 	return featureReference;
 }

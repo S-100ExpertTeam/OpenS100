@@ -43,7 +43,7 @@ public:
 	// Instruction Information
 
 	// Feature ID
-	int featureReference;
+	std::string featureReference;
 
 	// FeatureType code (for performance)
 	std::wstring code;
@@ -82,7 +82,7 @@ public:
 	GF::FeatureType* fr = nullptr;
 
 public:
-	int FeatureReference();
+	std::string FeatureReference();
 	int DrawingPriority();
 
 	// Ensure that Instruction is referring to the Space Reference separately (if referring separately, it should be drawn in the geometry of the information in the corresponding Space Reference).

@@ -45,6 +45,7 @@ public:
 	virtual GF::ObjectType* GetObjectType(int type, std::string id) { return nullptr; }
 
 	virtual std::wstring GetFeatureTypeCodeByID(std::wstring id) { return L""; }
+	virtual std::wstring GetFeatureTypeCodeByID(std::string id) { return L""; }
 	virtual std::wstring GetFeatureTypeCodeByID(int id) { return L""; }
 
 	virtual std::wstring GetInformationTypeCodeByID(std::wstring id) { return L""; }

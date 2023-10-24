@@ -980,7 +980,9 @@ void LayerManager::SetDrawingInstruction(S100Layer* layer)
 	itList.clear();
 
 	// Line Suppression
-	SuppressS101Lines(layer->drawingPriority, &layer->drawingSet);
+	if (101 == layer->GetProductNumber()) {
+		SuppressS101Lines(layer->drawingPriority, &layer->drawingSet);
+	}
 }
 
 void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int minPriority, int maxPriority)
