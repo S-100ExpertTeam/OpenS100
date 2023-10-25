@@ -53,6 +53,7 @@ public:
     GM::Surface* ReadSurface(pugi::xml_node& node); // read S100:Surface
     GM::Surface* ReadPolygon(pugi::xml_node& node);
     bool ReadMember(pugi::xml_node& node);
+    bool ReadIMember(pugi::xml_node& node);
 
     bool ReadObjectAttribute(pugi::xml_node& node, GF::ObjectType* object, FeatureCatalogue* fc);
     bool ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature);
