@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="16.65mm" height="16.62mm" viewBox="-1.45 -15.37 16.65 16.62">
+  <title>INFORM01</title>
+  <desc>this object has additional information available by cursor query</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.13" y="-15.05" height="15.98" width="16.01"/>
+  <rect class="svgBox layout" fill="none" x="-1.13" y="-15.05" height="15.98" width="16.01"/>
+  <path d=" M 9.93,-10.1 L 14.88,-10.1 L 14.88,-15.05 L 9.93,-15.05 L 9.93,-10.1" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <path d=" M 12.24,-14.38 L 12.24,-13.96" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <path d=" M 12.38,-11.01 L 12.38,-13.35 L 11.46,-13.36" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <path d=" M 11.37,-11 L 13.04,-11" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <circle class="f0 sCHMGD" style="stroke-width: 0.64;" cx="-0.05" cy="-0.15" r="1.08"/>
+  <path d=" M 9.87,-10.12 L 0.67,-0.93" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

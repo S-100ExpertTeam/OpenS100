@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.38mm" height="6.42mm" viewBox="-3.2 -3.21 6.38 6.42">
+  <title>RACNSP01</title>
+  <desc>symbol indicating this object is radar conspicuous</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.04" y="-3.05" height="6.1" width="6.06"/>
+  <rect class="svgBox layout" fill="none" x="-3.04" y="-3.05" height="6.1" width="6.06"/>
+  <circle class="f0 sCHMGD" style="stroke-width: 0.32;" cx="0.02" cy="0.02" r="1.49"/>
+  <path d=" M 0.03,-1.47 L 0.03,-3.05" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.02,1.52 L 0.02,3.05" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 1.52,-0.01 L 3.02,-0.01" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.48,0 L -3.04,0" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 1.06,1.06 L 2.16,2.16" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 2.14,-2.09 L 1.05,-0.99" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.06,1.07 L -2.16,2.17" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -2.12,-2.1 L -1.03,-1" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

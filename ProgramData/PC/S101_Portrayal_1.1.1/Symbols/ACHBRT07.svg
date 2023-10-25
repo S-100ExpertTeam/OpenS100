@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.38mm" height="5.38mm" viewBox="-2.7 -2.95 5.38 5.38">
+  <title>ACHBRT07</title>
+  <desc>designated anchor berth for a single vessel</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.54" y="-2.79" height="5.06" width="5.06"/>
+  <rect class="svgBox layout" fill="none" x="-2.54" y="-2.79" height="5.06" width="5.06"/>
+  <path d=" M -0.02,-2.79 L -0.02,-0.58" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -0.02,2.27 L -0.02,1.45" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 2.52,0.73 L 1,2.25 L -0.97,2.25 L -2.54,0.7" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="f0 sCHMGD" style="stroke-width: 0.32;" cx="-0.03" cy="0.39" r="1.01"/>
+  <path d=" M -1.57,-1.25 L 1.6,-1.25" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

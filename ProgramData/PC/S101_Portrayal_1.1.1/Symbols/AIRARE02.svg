@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.28mm" height="8.28mm" viewBox="-4.14 -4.14 8.28 8.28">
+  <title>AIRARE02</title>
+  <desc>symbol for airport as a point</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.98" y="-3.98" height="7.96" width="7.96"/>
+  <rect class="svgBox layout" fill="none" x="-3.98" y="-3.98" height="7.96" width="7.96"/>
+  <circle class="f0 sLANDF" style="stroke-width: 0.32;" cx="0" cy="0" r="3.98"/>
+  <path d=" M -1.26,2.3 L 1.1,2.3 L 0.41,1.51 L 0.41,0.51 L 3.04,0.51 L 0.61,-1.12 L 0.61,-2.34 L 0.02,-2.98 L -0.69,-2.34 L -0.69,-1.12 L -3.14,0.45 L -0.65,0.47 L -0.65,1.57 L -1.26,2.3" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

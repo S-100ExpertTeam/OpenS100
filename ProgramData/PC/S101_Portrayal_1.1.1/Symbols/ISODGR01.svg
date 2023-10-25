@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.32mm" height="7.32mm" viewBox="-3.66 -3.66 7.32 7.32">
+  <title>ISODGR01</title>
+  <desc>isolated underwater danger of depth less than the safety contour</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.5" y="-3.5" height="7" width="7"/>
+  <rect class="svgBox layout" fill="none" x="-3.5" y="-3.5" height="7" width="7"/>
+  <path d=" M 0,-3.5 L 2.5,-2.5 L 3.5,0 L 2.5,2.5 L 0,3.5 L -2.5,2.5 L -3.5,0 L -2.5,-2.5 L 0,-3.5 L 0,-0.75 L 1.37,-2.13 L 2.12,-1.38 L 0.75,0 L 2.12,1.37 L 1.37,2.12 L 0,0.75 L -1.38,2.12 L -2.13,1.37 L -0.75,0 L -2.13,-1.38 L -1.38,-2.13 L 0,-0.75 L 0,-3.5 Z" class="fISDNG"/>
+  <path d=" M -3.5,0 L -2.5,-2.5 L 0,-3.5 L 2.5,-2.5 L 3.5,0 L 2.5,2.5 L 0,3.5 L -2.5,2.5 L -3.5,0" class="sl f0 sISDNG" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

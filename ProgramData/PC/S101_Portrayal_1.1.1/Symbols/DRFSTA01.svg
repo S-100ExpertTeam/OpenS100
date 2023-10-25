@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="11.07mm" height="6.32mm" viewBox="-3.16 -3.16 11.07 6.32">
+  <title>DRFSTA01</title>
+  <desc>DGPS reference station</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3" y="-3" height="6" width="10.75"/>
+  <rect class="svgBox layout" fill="none" x="-3" y="-3" height="6" width="10.75"/>
+  <circle class="f0 sCHMGD" style="stroke-width: 0.32;" cx="0" cy="0" r="2.95"/>
+  <path d=" M 3.3,1.2 L 3.95,1.2 L 4.2,1.45 L 4.2,2.65 L 3.95,2.9 L 3.3,2.9 L 3.3,1.2" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 4.5,1.45 L 4.75,1.2 L 5.15,1.2 L 5.4,1.45" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 4.5,1.45 L 4.5,2.65 L 4.75,2.9 L 5.15,2.9 L 5.4,2.65 L 5.4,2.16 L 4.92,2.16" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 5.7,2.9 L 5.7,1.35 L 5.85,1.2 L 6.35,1.2 L 6.6,1.45 L 6.59,1.87 L 6.36,2.09 L 5.7,2.1" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 7.75,1.45 L 7.5,1.2 L 7.1,1.2 L 6.9,1.45 L 6.9,1.85 L 7.1,2.1 L 7.5,2.1 L 7.75,2.3 L 7.75,2.7 L 7.5,2.9 L 7.1,2.9 L 6.9,2.7" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

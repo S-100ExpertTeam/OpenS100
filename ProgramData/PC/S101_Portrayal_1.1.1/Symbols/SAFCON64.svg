@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.36mm" height="3.94mm" viewBox="-0.48 -0.73 4.36 3.94">
+  <title>SAFCON64</title>
+  <desc>contour label</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="1.85" y="-0.25" height="2.98" width="1.55"/>
+  <rect class="svgBox layout" fill="none" x="0" y="-0.25" height="2.98" width="3.4"/>
+  <path d=" M 3.1,2.73 L 3.1,-0.25 L 1.84,1.49 L 3.39,1.49" class="sl f0 sDEPDW" style="stroke-width: 0.96;"/>
+  <path d=" M 3.1,2.73 L 3.1,-0.25 L 1.84,1.49 L 3.39,1.49" class="sl f0 sSNDG2" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

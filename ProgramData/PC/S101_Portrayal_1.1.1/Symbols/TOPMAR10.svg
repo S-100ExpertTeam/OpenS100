@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.47mm" height="7.27mm" viewBox="-0.16 -7.11 2.47 7.27">
+  <title>TOPMAR10</title>
+  <desc>topmark for buoys, sphere, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="0.35" y="-6.95" height="1.8" width="1.8"/>
+  <rect class="svgBox layout" fill="none" x="0" y="-6.95" height="6.95" width="2.15"/>
+  <circle class="fCHBLK" cx="1.25" cy="-6.05" r="0.9"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

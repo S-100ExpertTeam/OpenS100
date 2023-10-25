@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="13.44mm" height="30.75mm" viewBox="-6.66 -30.59 13.44 30.75">
+  <title>DIRBOYA1</title>
+  <desc>direction and color of buoyage for approaching harbour in IALA region A (red to port)</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-6.5" y="-30.43" height="8.27" width="13.12"/>
+  <rect class="svgBox layout" fill="none" x="-6.5" y="-30.43" height="30.43" width="13.12"/>
+  <path d=" M -3,-24.15 L -5.99,-24.15 L 0.05,-30.17 L 6.03,-24.15 L 3.01,-24.15 L 3.01,-22.16 L -3,-22.16 L -3,-24.15" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="f0 sCHRED" style="stroke-width: 0.64;" cx="-4.98" cy="-28.91" r="1.52"/>
+  <circle class="f0 sCHGRN" style="stroke-width: 0.64;" cx="5.13" cy="-28.91" r="1.49"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

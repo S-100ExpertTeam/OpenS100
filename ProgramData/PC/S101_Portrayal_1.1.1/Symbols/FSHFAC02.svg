@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.43mm" height="4.7mm" viewBox="-2.96 -2.31 5.43 4.7">
+  <title>FSHFAC02</title>
+  <desc>fish trap, fish weir, tunny net</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.8" y="-2.15" height="4.38" width="5.11"/>
+  <rect class="svgBox layout" fill="none" x="-2.8" y="-2.15" height="4.38" width="5.11"/>
+  <path d=" M -2.8,2.23 L 2.31,2.23 L 2.31,0.01 L -2.78,0.01 L -2.78,2.22" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -2.14,-2.15 L 0.04,0.03" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

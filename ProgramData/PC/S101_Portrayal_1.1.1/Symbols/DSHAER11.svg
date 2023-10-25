@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.82mm" height="5.63mm" viewBox="-1.82 -5.07 3.82 5.63">
+  <title>DSHAER11</title>
+  <desc>conspicuous dish aerial</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.66" y="-4.91" height="5.31" width="3.5"/>
+  <rect class="svgBox layout" fill="none" x="-1.66" y="-4.91" height="5.31" width="3.5"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0" cy="0" r="0.4"/>
+  <path d=" M -1.66,0 L -0.5,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 0.4,0 L 1.5,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -0.91,-4.85 L 1.84,-3.16" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 0,-3.7 L 1.25,-4.91" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -0.25,-2.6 L -0.85,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 0.31,-2.44 L 0.95,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -0.91,-4.91 L -1.1,-4.5 L -1.16,-3.85 L -1.04,-3.32 L -0.66,-2.82 L -0.25,-2.6 L 0.31,-2.44 L 0.68,-2.44 L 1.15,-2.5 L 1.59,-2.75 L 1.84,-3.16" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

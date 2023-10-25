@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.39mm" height="8.68mm" viewBox="-5.24 -4.55 10.39 8.68">
+  <title>HILTOP01</title>
+  <desc>hill or mountain top</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.08" y="-4.39" height="8.36" width="10.07"/>
+  <rect class="svgBox layout" fill="none" x="-5.08" y="-4.39" height="8.36" width="10.07"/>
+  <path d=" M 2.63,-0.77 L 2.87,0.08 L 4.99,-1.01 L 2.63,-0.77 Z" class="fLANDF"/>
+  <path d=" M 2.63,0.52 L 2.09,1.21 L 4.3,2.36 L 2.63,0.52 Z" class="fLANDF"/>
+  <path d=" M -1.97,1.32 L -2.52,0.62 L -4.14,2.52 L -1.97,1.32 Z" class="fLANDF"/>
+  <path d=" M -0.28,1.84 L -1.11,1.54 L -1.61,3.97 L -0.28,1.84 Z" class="fLANDF"/>
+  <path d=" M 1.36,1.33 L 0.54,1.74 L 2.03,3.75 L 1.36,1.33 Z" class="fLANDF"/>
+  <path d=" M 1.4,-1.8 L 2.1,-1.24 L 3.26,-3.44 L 1.43,-1.79 L 1.4,-1.8 Z" class="fLANDF"/>
+  <path d=" M -2.82,0.01 L -2.58,-0.87 L -5.08,-1.11 L -2.82,0.01 Z" class="fLANDF"/>
+  <path d=" M -0.38,-1.83 L 0.53,-1.99 L -0.36,-4.39 L -0.4,-1.82 L -0.38,-1.83 Z" class="fLANDF"/>
+  <path d=" M -1.97,-1.12 L -1.24,-1.62 L -3.05,-3.42 L -1.98,-1.13 L -1.97,-1.12 Z" class="fLANDF"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

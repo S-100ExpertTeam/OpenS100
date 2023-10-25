@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="9.64mm" height="7.34mm" viewBox="-4.82 -6.32 9.64 7.34">
+  <title>LITVES01</title>
+  <desc>light vessel, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.5" y="-6" height="6.7" width="9"/>
+  <rect class="svgBox layout" fill="none" x="-4.5" y="-6" height="6.7" width="9"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.64;" cx="0" cy="0" r="0.7"/>
+  <path d=" M -4.5,0 L -1,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -3,0 L -4,-2.5" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 3,0 L 4,-2.5" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 0,-1.75 L 0,-4.5" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -2,-1.75 L -2,-3.55" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 2,-1.75 L 2,-3.5" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 0,-4.5 L 0,-6" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -1,-5.5 L 1,-4.5" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -1,-4.5 L 1,-5.5" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -3.4,-1 L -1.75,-1" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 1.75,-1 L 3.4,-1" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -4,-2.5 L -2.03,-1.75 L 0,-1.75 L 2,-1.75 L 4,-2.5" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 1,0 L 4.5,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

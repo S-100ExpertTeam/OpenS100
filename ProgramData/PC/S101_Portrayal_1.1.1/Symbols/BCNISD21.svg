@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.54mm" height="5.76mm" viewBox="-1.28 -2.85 2.54 5.76">
+  <title>BCNISD21</title>
+  <desc>isolated danger beacon, simplified</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.12" y="-2.69" height="5.44" width="2.22"/>
+  <rect class="svgBox layout" fill="none" x="-1.12" y="-2.69" height="5.44" width="2.22"/>
+  <circle class="fCHRED" cx="0" cy="-1.59" r="1.1"/>
+  <circle class="fCHRED" cx="-0.02" cy="1.65" r="1.1"/>
+  <circle class="f0 sOUTLW" style="stroke-width: 0.32;" cx="0" cy="-1.59" r="1.1"/>
+  <circle class="f0 sOUTLW" style="stroke-width: 0.32;" cx="-0.02" cy="1.65" r="1.1"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

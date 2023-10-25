@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="0.32mm" height="2.15mm" viewBox="-0.16 -1.69 0.32 2.15">
+  <title>EMFSHFA1</title>
+  <desc>Embedded symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="0" y="-1.53" height="1.83" width="0"/>
+  <rect class="svgBox layout" fill="none" x="0" y="-1.53" height="1.83" width="0"/>
+  <path d=" M 0,-1.53 L 0,0.3" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

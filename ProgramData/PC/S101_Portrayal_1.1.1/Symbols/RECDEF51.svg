@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="17.63mm" height="4.75mm" viewBox="-8.9 -2.5 17.63 4.75">
+  <title>RECDEF51</title>
+  <desc>recommended track as an area, direction not defined in data</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-8.74" y="-2.34" height="4.43" width="17.31"/>
+  <rect class="svgBox layout" fill="none" x="-8.74" y="-2.34" height="4.43" width="17.31"/>
+  <path d=" M -8.74,0.02 L -5.49,0.02" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 5.32,0.02 L 8.57,0.02" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.12,-1.38 L -0.99,-1.66 L -0.86,-1.91 L -0.69,-2.08 L -0.52,-2.25 L -0.26,-2.34 L -0.03,-2.32 L 0.27,-2.23 L 0.55,-2.17 L 0.78,-1.83 L 0.96,-1.64 L 1.08,-1.42 L 1.08,-1.17 L 0.96,-0.93 L 0.83,-0.72 L 0.63,-0.48 L 0.4,-0.23 L 0.19,0.03 L 0.06,0.22 L -0.05,0.39 L -0.07,0.61 L -0.07,0.84 L -0.07,1.01 L -0.05,1.23 L -0.05,1.25" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -0.26,2.09 L 0.27,2.09" class="sl f0 sCHGRD" style="stroke-width: 0.64;"/>
+  <path d=" M -2.16,1.57 L -4.21,0.02 L -2.16,-1.53" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 1.9,1.53 L 3.95,-0.02 L 1.9,-1.57" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

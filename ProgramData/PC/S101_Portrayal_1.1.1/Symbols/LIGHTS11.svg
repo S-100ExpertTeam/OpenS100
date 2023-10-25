@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.64mm" height="7.37mm" viewBox="-1.36 -7.21 2.64 7.37">
+  <title>LIGHTS11</title>
+  <desc>light flare, red</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.2" y="-7.05" height="7.05" width="2.32"/>
+  <rect class="svgBox layout" fill="none" x="-1.2" y="-7.05" height="7.05" width="2.32"/>
+  <path d=" M 0,0 L -1.2,-5.63 L -1.2,-5.85 L -1.2,-6.23 L -1.05,-6.6 L -0.83,-6.75 L -0.53,-6.98 L -0.08,-7.05 L 0.3,-6.98 L 0.6,-6.9 L 0.9,-6.68 L 1.05,-6.3 L 1.12,-6 L 1.12,-5.7 L 0,0 Z" class="fLITRD" style="fill-opacity:0.5;"/>
+  <path d=" M 0,0 L -1.2,-5.63 L -1.2,-5.85 L -1.2,-6.23 L -1.05,-6.6 L -0.83,-6.75 L -0.53,-6.98 L -0.08,-7.05 L 0.3,-6.98 L 0.6,-6.9 L 0.9,-6.68 L 1.05,-6.3 L 1.12,-6 L 1.12,-5.7 L 0,0" class="sl f0 sOUTLW" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

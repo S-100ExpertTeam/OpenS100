@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5mm" height="6.5mm" viewBox="-2.5 -6.5 5.0 6.5">
+  <title>SEAGRS01</title>
+  <desc>Seagrass (draft)</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2022-05-16" iho:source="dKartOffice" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.5" y="-6" height="6.0" width="5.5"/>
+  <rect class="svgBox layout" fill="none" x="-2.5" y="-6" height="6.0" width="5.0"/>
+  <path class="fCHGRD" d="M -1.35,0 L -1.38,-0.63 L -1.52,-1.42 L -1.79,-2.15 L -2.11,-2.72 L -2.5,-3.24 L -1.99,-2.97 L -1.64,-2.62 L -1.12,-1.9 L -0.81,-1.18 L -0.68,-0.65 L -0.62,0 Z"/>
+  <path class="fCHGRD" d="M -0.37,0 L -0.43,-1.29 L -0.59,-2.38 L -0.93,-3.54 L -1.33,-4.32 L -1.88,-5 L -1.27,-4.63 L -0.71,-3.99 L -0.19,-3.01 L 0.17,-1.86 L 0.3,-0.96 L 0.36,0 Z"/>
+  <path class="fCHGRD" d="M 0.38,-2.66 L 0.67,-3.27 L 1.06,-3.78 L 1.38,-4.04 L 1.74,-4.17 L 1.38,-3.79 L 0.95,-3.06 L 0.69,-2.3 L 0.58,-1.73 Z"/>
+  <path class="fCHGRD" d="M 0.8,0 L 0.85,-0.74 L 1.17,-1.7 L 1.61,-2.5 L 2.07,-3.05 L 2.5,-3.26 L 2.23,-2.84 L 1.9,-2.17 L 1.64,-1.27 L 1.55,-0.59 L 1.52,0 Z"/>
+  <path class="fCHGRD" d=" M -2.5,-5.5 L -1.7,-5.9  L -1.25,-6  L -0.7,-5.9 L 0,-5.72 L 0.8,-5.45 L 1.25,-5.4 L 1.8,-5.45 L 2.5,-5.5  L 1.7,-5.1 L 1.25,-5 L 0.7,-5.1 L 0,-5.28 L -0.8,-5.55 L -1.25,-5.6 L -1.8,-5.55 Z"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.29mm" height="5.55mm" viewBox="-3.1 -4.7 6.29 5.55">
+  <title>BOYSPH01</title>
+  <desc>spherical buoy, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.78" y="-4.38" height="4.91" width="5.65"/>
+  <rect class="svgBox layout" fill="none" x="-2.78" y="-4.38" height="4.91" width="5.65"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.64;" cx="0" cy="0" r="0.53"/>
+  <path d=" M 0.56,0 L 2.87,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -2.19,0 L -2.47,-0.69 L -2.56,-1.25 L -2.63,-1.85 L -2.5,-2.5 L -2.31,-2.97 L -1.97,-3.41 L -1.59,-3.79 L -1.13,-4.1 L -0.69,-4.25 L -0.16,-4.38 L 0.41,-4.38 L 0.97,-4.25 L 1.59,-3.97 L 2,-3.66 L 2.28,-3.25 L 2.62,-2.72 L 2.81,-2.19 L 2.84,-1.6 L 2.78,-0.88 L 2.56,-0.38 L 2.37,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -2.78,0 L -0.53,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

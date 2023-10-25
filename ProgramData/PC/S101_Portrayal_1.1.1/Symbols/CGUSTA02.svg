@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.34mm" height="5.01mm" viewBox="-0.45 -4.52 7.34 5.01">
+  <title>CGUSTA02</title>
+  <desc>coastguard station</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-0.29" y="-4.36" height="4.69" width="7.02"/>
+  <rect class="svgBox layout" fill="none" x="-0.29" y="-4.36" height="4.69" width="7.02"/>
+  <circle class="fLANDF" cx="0.02" cy="0.02" r="0.31"/>
+  <path d=" M 0.73,-4.36 L 6.73,-4.36 L 6.73,-0.61 L 0.73,-0.61 L 0.73,-4.36 Z" class="fCHWHT"/>
+  <path d=" M 0.73,-4.36 L 6.73,-4.36 L 6.73,-0.61 L 0.73,-0.61 L 0.73,-4.36" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 2.98,-3.11 L 2.48,-3.36 L 2.01,-3.36 L 1.48,-3.08" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 1.48,-1.86 L 1.98,-1.36 L 2.48,-1.36 L 2.98,-1.77" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 5.48,-3.11 L 4.98,-3.36 L 4.51,-3.36 L 3.98,-3.08 L 3.98,-1.86 L 4.54,-1.36 L 4.98,-1.36 L 5.48,-1.61 L 5.48,-2.33 L 4.98,-2.33" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 1.48,-3.08 L 1.48,-1.86" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

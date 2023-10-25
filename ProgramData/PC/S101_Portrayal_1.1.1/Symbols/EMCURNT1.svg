@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.82mm" height="2.32mm" viewBox="-2.66 -1.16 2.82 2.32">
+  <title>EMCURNT1</title>
+  <desc>non-tidal current</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-03-16" iho:source="new" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.5" y="-1" height="2" width="2.5"/>
+  <rect class="svgBox layout" fill="none" x="-2.5" y="-1" height="2" width="2.5"/>
+  <path d=" M -2.5,-1 L 0,0 L -2.5,1" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

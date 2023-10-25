@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed5" version="0.1" creationDate="2015-03-03"?>
+<?S100Meta name="NODATA03" exposition="area of no chart data"?><symbolFill>
+  <areaCRS>GlobalGeometry</areaCRS>
+  <symbol reference="NODATA03P"/>
+  <v1>
+    <x>7.02</x>
+    <y>0.0</y>
+  </v1>
+  <v2>
+    <x>3.51</x>
+    <y>4.96</y>
+  </v2>
+</symbolFill>

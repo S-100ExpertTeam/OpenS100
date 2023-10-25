@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="18.81mm" height="16.9mm" viewBox="-18.33 -0.48 18.81 16.9">
+  <title>CTNARE51</title>
+  <desc>caution area, a specific caution note applies</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-17.85" y="6" height="9.94" width="9.94"/>
+  <rect class="svgBox layout" fill="none" x="-17.85" y="0" height="15.94" width="17.85"/>
+  <path d=" M -12.86,12.25 L -12.86,7.6" class="sl f0 sTRFCF" style="stroke-width: 0.96;"/>
+  <path d=" M -13.53,14.05 L -12.1,14.05" class="sl f0 sTRFCF" style="stroke-width: 0.64;"/>
+  <circle class="f0 sTRFCF" style="stroke-width: 0.64;" cx="-12.88" cy="10.97" r="4.97"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

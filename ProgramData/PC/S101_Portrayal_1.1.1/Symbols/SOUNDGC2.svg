@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.86mm" height="8.86mm" viewBox="-4.43 -4.43 8.86 8.86">
+  <title>SOUNDGC2</title>
+  <desc>sounding of low accuracy</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.27" y="-4.27" height="8.54" width="8.54"/>
+  <rect class="svgBox layout" fill="none" x="-4.270000000000001" y="-4.270000000000001" height="8.54" width="8.54"/>
+  <circle class="f0 sSNDG1" style="stroke-width: 0.32;" cx="0" cy="0" r="4.270000000000001"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

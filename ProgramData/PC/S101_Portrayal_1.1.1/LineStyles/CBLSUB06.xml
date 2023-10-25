@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="CBLSUB06" exposition="submarine cable"?>
+<lineStyle>
+   <intervalLength>30.9</intervalLength>
+   <pen width="0.32">
+      <color>CHMGD</color>
+   </pen>
+   <dash>
+      <start>0.6</start>
+      <length>2</length>
+   </dash>
+   <dash>
+      <start>23.8</start>
+      <length>2</length>
+   </dash>
+   <symbol reference="EMCBLSU1">
+      <position>7.7</position>
+   </symbol>
+   <symbol reference="EMCBLAR1">
+      <position>13.8</position>
+   </symbol>
+   <symbol reference="EMCBLSU1">
+      <position>19.5</position>
+   </symbol>
+</lineStyle>

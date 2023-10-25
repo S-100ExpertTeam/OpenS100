@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="15.5mm" height="3.43mm" viewBox="-8.66 -1.65 15.5 3.43">
+  <title>WATTUR02</title>
+  <desc>overfalls, eddies and breakers</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-8.5" y="-1.49" height="3.11" width="15.18"/>
+  <rect class="svgBox layout" fill="none" x="-8.5" y="-1.49" height="3.11" width="15.18"/>
+  <path d=" M -8.5,1.52 L -7.57,1.25 L -6.5,0.47 L -5.47,-0.98 L -4.46,-1.49 L -3.34,-1.39 L -4.46,-0.39 L -4.46,0.59 L -3.31,1.62 L -2.33,1.23 L -1.43,0.64 L -0.37,-0.98 L 0.75,-1.47 L 1.66,-1.42 L 0.61,-0.39 L 0.56,0.69 L 1.76,1.62 L 2.76,1.18 L 3.62,0.64 L 4.67,-0.91 L 5.82,-1.44 L 6.68,-1.37 L 5.65,-0.07 L 5.7,0.69 L 6.63,1.62" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

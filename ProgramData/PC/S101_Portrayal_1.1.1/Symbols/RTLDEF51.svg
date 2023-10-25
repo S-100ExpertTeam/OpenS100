@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="12.73mm" height="14.86mm" viewBox="-6.66 -7.42 12.73 14.86">
+  <title>RTLDEF51</title>
+  <desc>recommended route between parts of a traffic separation scheme, or for ships not needing a deep water route, with the direction not specified in the data</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-6.18" y="-6.94" height="13.9" width="11.77"/>
+  <rect class="svgBox layout" fill="none" x="-6.18" y="-6.94" height="13.9" width="11.77"/>
+  <path d=" M -1.23,-5.32 L 0,-6.94 L 1.23,-5.32" class="sl f0 sTRFCD" style="stroke-width: 0.96;"/>
+  <path d=" M -2.14,-4.16 L -2.97,-3 L -1.49,-3" class="sl f0 sTRFCD" style="stroke-width: 0.96;"/>
+  <path d=" M 1.37,-3.04 L 3,-3.04 L 2.06,-4.27" class="sl f0 sTRFCD" style="stroke-width: 0.96;"/>
+  <path d=" M -1.53,5.08 L -1.53,6.96 L 1.51,6.96 L 1.51,5.11" class="sl f0 sTRFCD" style="stroke-width: 0.96;"/>
+  <path d=" M -1.53,3.58 L -1.53,2.01" class="sl f0 sTRFCD" style="stroke-width: 0.96;"/>
+  <path d=" M -1.53,-1.4 L -1.53,0.1" class="sl f0 sTRFCD" style="stroke-width: 0.96;"/>
+  <path d=" M 1.66,-1.48 L 1.66,-0.02" class="sl f0 sTRFCD" style="stroke-width: 0.96;"/>
+  <path d=" M 1.62,1.93 L 1.62,3.45" class="sl f0 sTRFCD" style="stroke-width: 0.96;"/>
+  <path d=" M -6.18,0.27 L -6.05,-0.01 L -5.92,-0.26 L -5.75,-0.43 L -5.58,-0.6 L -5.32,-0.69 L -5.09,-0.67 L -4.79,-0.58 L -4.51,-0.52 L -4.28,-0.18 L -4.1,0.01 L -3.98,0.23 L -3.98,0.48 L -4.1,0.72 L -4.23,0.93 L -4.43,1.17 L -4.66,1.42 L -4.87,1.68 L -5,1.87 L -5.11,2.04 L -5.13,2.26 L -5.13,2.49 L -5.13,2.66 L -5.11,2.88 L -5.11,2.9" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -5.32,3.74 L -4.79,3.74" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <path d=" M 3.39,0.25 L 3.52,-0.03 L 3.65,-0.28 L 3.82,-0.45 L 3.99,-0.62 L 4.25,-0.71 L 4.48,-0.69 L 4.78,-0.6 L 5.06,-0.54 L 5.29,-0.2 L 5.47,-0.01 L 5.59,0.21 L 5.59,0.46 L 5.47,0.7 L 5.34,0.91 L 5.14,1.15 L 4.91,1.4 L 4.7,1.66 L 4.57,1.85 L 4.46,2.02 L 4.44,2.24 L 4.44,2.47 L 4.44,2.64 L 4.46,2.86 L 4.46,2.88" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 4.25,3.72 L 4.78,3.72" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

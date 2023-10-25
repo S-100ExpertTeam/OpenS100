@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2022-02-24"?>
+<?S100Meta name="DWRTCL05" exposition="dKart style, two-way deep water route centreline, not based on fixed marks"?>
+<lineStyle>
+   <intervalLength>25.4</intervalLength>
+   <pen width="0.32">
+      <color>TRFCD</color>
+   </pen>
+   <dash>
+      <start>0</start>
+      <length>4</length>
+   </dash>
+   <dash>
+      <start>6.2</start>
+      <length>4.1</length>
+   </dash>
+   <dash>
+      <start>12.6</start>
+      <length>4</length>
+   </dash>
+   <symbol reference="EMDWRTC1">
+      <position>6</position>
+   </symbol>
+   <symbol reference="EMDWRTC2">
+      <position>10.6</position>
+   </symbol>
+   <symbol reference="EMDWRUT2">
+      <position>21</position>
+   </symbol>
+</lineStyle>

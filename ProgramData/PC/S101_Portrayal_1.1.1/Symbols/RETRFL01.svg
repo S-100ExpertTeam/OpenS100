@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.37mm" height="3.79mm" viewBox="-0.16 -3.61 5.37 3.79">
+  <title>RETRFL01</title>
+  <desc>retro reflector, paper chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="3.02" y="-3.45" height="3.47" width="2.03"/>
+  <rect class="svgBox layout" fill="none" x="0" y="-3.45" height="3.47" width="5.05"/>
+  <path d=" M 3.03,-2.85 L 5.05,-2.85" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 3.02,-0.62 L 5.04,-0.62" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 3.03,-1.76 L 5.05,-1.76" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 3.02,-3.45 L 3.02,0.02" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

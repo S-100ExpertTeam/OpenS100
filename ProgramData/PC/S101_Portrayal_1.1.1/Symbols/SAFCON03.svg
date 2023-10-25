@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.21mm" height="3.46mm" viewBox="-1.13 -1.73 2.21 3.46">
+  <title>SAFCON03</title>
+  <desc>contour label</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-0.65" y="-1.25" height="2.5" width="1.25"/>
+  <rect class="svgBox layout" fill="none" x="-0.65" y="-1.25" height="2.5" width="1.25"/>
+  <path d=" M 0.35,-0.19 L -0.4,-0.19" class="sl f0 sDEPDW" style="stroke-width: 0.96;"/>
+  <path d=" M 0.35,-0.19 L 0.6,0.06 L 0.6,1 L 0.35,1.25 L -0.4,1.25 L -0.65,1" class="sl f0 sDEPDW" style="stroke-width: 0.96;"/>
+  <path d=" M -0.4,-1.25 L 0.35,-1.25 L 0.6,-1 L 0.6,-0.44 L 0.35,-0.19" class="sl f0 sDEPDW" style="stroke-width: 0.96;"/>
+  <path d=" M -0.65,-1 L -0.4,-1.25" class="sl f0 sDEPDW" style="stroke-width: 0.96;"/>
+  <path d=" M 0.35,-0.19 L -0.4,-0.19" class="sl f0 sSNDG2" style="stroke-width: 0.32;"/>
+  <path d=" M 0.35,-0.19 L 0.6,0.06 L 0.6,1 L 0.35,1.25 L -0.4,1.25 L -0.65,1" class="sl f0 sSNDG2" style="stroke-width: 0.32;"/>
+  <path d=" M -0.4,-1.25 L 0.35,-1.25 L 0.6,-1 L 0.6,-0.44 L 0.35,-0.19" class="sl f0 sSNDG2" style="stroke-width: 0.32;"/>
+  <path d=" M -0.65,-1 L -0.4,-1.25" class="sl f0 sSNDG2" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

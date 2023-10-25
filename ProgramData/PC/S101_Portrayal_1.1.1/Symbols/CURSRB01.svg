@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.97mm" height="10.97mm" viewBox="-5.47 -5.5 10.97 10.97">
+  <title>CURSRB01</title>
+  <desc>cursor with open centre</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.99" y="-5.02" height="10.01" width="10.01"/>
+  <rect class="svgBox layout" fill="none" x="-4.99" y="-5.020000000000001" height="10.01" width="10.01"/>
+  <path d=" M -4.99,-0.02 L -0.99,-0.02" class="sl f0 sCURSR" style="stroke-width: 0.96;"/>
+  <path d=" M 1.02,-0.02 L 5.02,-0.02" class="sl f0 sCURSR" style="stroke-width: 0.96;"/>
+  <path d=" M -0.02,-5.02 L -0.02,-1.02" class="sl f0 sCURSR" style="stroke-width: 0.96;"/>
+  <path d=" M -0.01,0.99 L -0.01,4.99" class="sl f0 sCURSR" style="stroke-width: 0.96;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

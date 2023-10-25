@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.7mm" height="12.08mm" viewBox="-2.19 -6.14 4.7 12.08">
+  <title>CBLARE51</title>
+  <desc>cable area</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.71" y="-5.66" height="11.12" width="3.74"/>
+  <rect class="svgBox layout" fill="none" x="-1.71" y="-5.66" height="11.12" width="3.74"/>
+  <path d=" M 1.45,-5.66 L -1.71,-0.64 L 2.03,0.68 L -0.96,5.46" class="sl f0 sCHMGF" style="stroke-width: 0.96;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

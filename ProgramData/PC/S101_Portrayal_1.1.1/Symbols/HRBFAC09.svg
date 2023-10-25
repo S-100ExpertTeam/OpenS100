@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.16mm" height="6.16mm" viewBox="-3.13 -3.07 6.16 6.16">
+  <title>HRBFAC09</title>
+  <desc>fishing harbour</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.97" y="-2.91" height="5.84" width="5.84"/>
+  <rect class="svgBox layout" fill="none" x="-2.97" y="-2.91" height="5.84" width="5.84"/>
+  <path d=" M -1.97,0 L -1.72,-0.25 L -1.38,-0.57 L -1.07,-0.75 L -0.75,-0.91 L -0.38,-1.07 L -0.13,-1.13 L 0.25,-1.16 L 0.53,-1.16 L 0.87,-1.16 L 1.28,-1.07 L 1.59,-0.97 L 1.93,-0.82 L 2.28,-0.63 L 2.53,-0.41 L 2.75,-0.22 L 2.87,0 L 2.59,0.25 L 2.25,0.59 L 1.84,0.78 L 1.53,0.93 L 1.12,1.03 L 0.78,1.09 L 0.53,1.09 L 0.18,1.09 L -0.13,1.03 L -0.38,1 L -0.57,0.93 L -0.91,0.78 L -1.22,0.59 L -1.47,0.37 L -1.72,0.25 L -1.82,0.12 L -1.97,0" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.97,0 L -2.88,0.87 L -2.91,0.59 L -2.97,0.25 L -2.97,-0.07 L -2.97,-0.47 L -2.88,-0.88 L -2.75,-1.07 L -1.97,0" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -2.1,-2 L -1.66,-2.38 L -1.38,-2.57 L -0.94,-2.75 L -0.35,-2.88 L 0.25,-2.91 L 0.81,-2.82 L 1.25,-2.66 L 1.65,-2.41 L 2.09,-2 L 2.43,-1.6 L 2.53,-1.47" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -2.16,1.96 L -1.69,2.4 L -1.19,2.65 L -0.82,2.81 L -0.44,2.9 L 0.06,2.93 L 0.37,2.93 L 0.78,2.84 L 1.21,2.68 L 1.62,2.43 L 1.93,2.18 L 2.21,1.93 L 2.56,1.5" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="15.79mm" height="13.7mm" viewBox="-0.16 -13.54 15.79 13.7">
+  <title>RCKLDG01P</title>
+  <desc>rock or coral drying ledges</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2015-03-04" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="0.06" y="-13.38" height="13.32" width="15.41"/>
+  <rect class="svgBox layout" fill="none" x="0" y="-13.38" height="13.38" width="15.47"/>
+  <path d=" M 2.4,-0.06 L 4.56,-1.74" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 1.71,-11.22 L 2.74,-8.15" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 7.83,-7.4 L 6.23,-5.1" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 6.34,-10.93 L 7.09,-13.37" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 8.75,-3.55 L 9.25,-0.66" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 14.32,-3.91 L 15.47,-6.46" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 14.49,-9.92 L 11.99,-10.73" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 2.74,-8.21 L 0.06,-9.59" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 6.32,-5.12 L 6.05,-7.78" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 2.35,-0.06 L 2.64,-2.63" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 8.78,-3.55 L 10.9,-1.85" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 15.4,-6.45 L 12.76,-5.34" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 12.03,-10.69 L 14.08,-12.04" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 7.09,-13.38 L 8.19,-11.03" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="11.97mm" height="4.04mm" viewBox="-6.08 -3.56 11.97 4.04">
+  <title>SWPARE51</title>
+  <desc>swept area</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.6" y="-3.08" height="3.04" width="11.01"/>
+  <rect class="svgBox layout" fill="none" x="-5.600000000000001" y="-3.08" height="3.08" width="11.01"/>
+  <path d=" M -5.6,-3.05 L -5.6,-0.04 L 5.41,-0.04 L 5.41,-3.08" class="sl f0 sCHGRF" style="stroke-width: 0.96;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

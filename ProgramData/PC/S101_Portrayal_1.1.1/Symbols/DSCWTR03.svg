@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.8mm" height="4.8mm" viewBox="-2.4 -2.4 4.8 4.8">
+  <title>DSCWTR03</title>
+  <desc>Discoloured water, small scale</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2022-03-30" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.4" y="2.4" height="4.8" width="4.8" />
+  <rect class="svgBox layout" fill="none" x="-2.4" y="-2.4" height="4.8" width="4.8" />
+  <circle cx="0" cy="0" r="2.04" class="fDEPVS" style="stroke-width:0" />
+  <circle cx="0" cy="-2" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="0" cy="2" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="2" cy="0" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="-2" cy="0" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="0.78" cy="-1.89" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="1.45" cy="-1.45" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="1.9" cy="-0.79" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="1.86" cy="0.79" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="1.4" cy="1.4" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="0.81" cy="1.88" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="-0.79" cy="1.86" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="-1.45" cy="1.45" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="-1.9" cy="0.83" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="-1.9" cy="-0.81" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="-1.45" cy="-1.45" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle cx="-0.78" cy="-1.89" r="0.3" class="fCHGRD" style="stroke-width:0" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+</svg>

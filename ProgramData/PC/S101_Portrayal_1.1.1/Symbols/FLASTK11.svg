@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.32mm" height="6.39mm" viewBox="-1.66 -5.73 3.32 6.39">
+  <title>FLASTK11</title>
+  <desc>conspicuous flare stack</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.5" y="-5.57" height="6.07" width="3"/>
+  <rect class="svgBox layout" fill="none" x="-1.5" y="-5.57" height="6.07" width="3"/>
+  <path d=" M -0.5,0 L -0.5,-3.25 L 0.5,-3.25 L 0.5,0 L 0.37,-0.38 L 0,-0.5 L -0.32,-0.38 L -0.5,0 Z" class="fCHBLK"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0" cy="0" r="0.5"/>
+  <path d=" M 0.5,0 L 1.5,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -0.5,0 L -1.5,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 0.56,-5.57 L 0.25,-5.38 L -0.07,-5.19 L -0.32,-4.88 L -0.5,-4.5 L -0.5,-4.13 L -0.44,-3.94 L -0.19,-3.82 L 0.12,-3.82 L 0.31,-3.94 L 0.43,-4.19 L 0.37,-4.5 L 0.25,-4.63 L 0.25,-4.88 L 0.25,-5.13 L 0.43,-5.32 L 0.56,-5.57" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

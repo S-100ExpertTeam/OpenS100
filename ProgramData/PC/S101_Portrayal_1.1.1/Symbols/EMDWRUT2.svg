@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.56mm" height="4.84mm" viewBox="-3.2 -1.73 6.56 4.84">
+  <title>EMDWRUT2</title>
+  <desc>Embedded symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.04" y="-1.57" height="4.52" width="6.24"/>
+  <rect class="svgBox layout" fill="none" x="-3.04" y="-1.57" height="4.52" width="6.24"/>
+  <path d=" M -3.04,-1.53 L -3.04,1.51 L -2,1.51 L -1,1.06 L -1,-1.1 L -2.03,-1.53 L -3.04,-1.53" class="sl f0 sTRFCD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.21,-1.57 L 0.97,1.52 L 1.68,-1.57 L 2.54,1.48 L 3.2,-1.57" class="sl f0 sTRFCD" style="stroke-width: 0.32;"/>
+  <path d=" M -2.08,2.95 L 1.96,2.95" class="sl f0 sTRFCD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

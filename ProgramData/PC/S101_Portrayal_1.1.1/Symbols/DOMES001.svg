@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.35mm" height="4.53mm" viewBox="-2.65 -3.96 5.35 4.53">
+  <title>DOMES001</title>
+  <desc>dome</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.49" y="-3.8" height="4.21" width="5.03"/>
+  <rect class="svgBox layout" fill="none" x="-2.49" y="-3.8" height="4.21" width="5.03"/>
+  <circle class="f0 sLANDF" style="stroke-width: 0.32;" cx="-0.02" cy="-0.02" r="0.43"/>
+  <path d=" M -0.44,-0.06 L -2.08,-0.06" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -2.09,-0.05 L -2.19,-0.21 L -2.33,-0.55 L -2.45,-0.9 L -2.49,-1.2 L -2.49,-1.6 L -2.39,-2.02 L -2.21,-2.5 L -2.05,-2.8 L -1.77,-3.1 L -1.47,-3.36 L -1.19,-3.5 L -0.71,-3.68 L -0.31,-3.76 L 0.13,-3.8 L 0.62,-3.72 L 1.08,-3.58 L 1.54,-3.28 L 1.96,-2.88 L 2.18,-2.56 L 2.4,-2.14 L 2.52,-1.62 L 2.54,-1 L 2.44,-0.59 L 2.3,-0.25 L 2.16,-0.09" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 0.4,-0.06 L 2.14,-0.06 L 2.17,-0.14" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

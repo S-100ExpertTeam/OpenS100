@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.34mm" height="9.47mm" viewBox="-1.17 -4.64 2.34 9.47">
+  <title>FLDSTR01</title>
+  <desc>flood stream, rate at spring tides</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.01" y="-4.48" height="9.15" width="2.02"/>
+  <rect class="svgBox layout" fill="none" x="-1.01" y="-4.48" height="9.15" width="2.02"/>
+  <path d=" M -0,-4.48 L -0,4.67" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.01,-1.99 L 0.01,-4.46 L 1.01,-1.99" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.02,0.84 L 1.01,2.89" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.02,2.69 L 1.01,4.67" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -0,2.93 L -0,3.51" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

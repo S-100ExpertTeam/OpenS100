@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.7mm" height="2.7mm" viewBox="-1.35 -1.35 2.7 2.7">
+  <title>LNDARE01</title>
+  <desc>land as a point at small scale</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.03" y="-1.03" height="2.06" width="2.06"/>
+  <rect class="svgBox layout" fill="none" x="-1.03" y="-1.03" height="2.06" width="2.06"/>
+  <circle class="fLANDA" cx="0" cy="0" r="0.93"/>
+  <circle class="f0 sCSTLN" style="stroke-width: 0.64;" cx="0" cy="0" r="1.03"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

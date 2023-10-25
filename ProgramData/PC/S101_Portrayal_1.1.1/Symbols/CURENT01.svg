@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.34mm" height="9.4mm" viewBox="-1.17 -4.64 2.34 9.4">
+  <title>CURENT01</title>
+  <desc>non-tidal current</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.01" y="-4.48" height="9.08" width="2.02"/>
+  <rect class="svgBox layout" fill="none" x="-1.01" y="-4.48" height="9.08" width="2.02"/>
+  <path d=" M -1,4.47 L -0,2.48 L 0.99,4.47" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -1,2.63 L -0,0.64 L 0.99,2.63" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -0,-4.48 L -0,4.6" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.01,-1.99 L 0.01,-4.46 L 1.01,-1.99" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

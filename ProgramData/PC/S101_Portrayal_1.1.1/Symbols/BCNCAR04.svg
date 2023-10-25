@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.32mm" height="6.42mm" viewBox="-2.16 -3.21 4.32 6.42">
+  <title>BCNCAR04</title>
+  <desc>cardinal beacon, west, simplified</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2" y="-3.05" height="6.1" width="4"/>
+  <rect class="svgBox layout" fill="none" x="-2" y="-3.05" height="6.1" width="4"/>
+  <path d=" M 0,0.3 L -1.98,3.05 L 1.97,3.05 L 0,0.3 Z" class="fCHYLW"/>
+  <path d=" M -1.65,-3.05 L 1.97,-3.05 L 0,-0.3 L -2,-3.05 Z" class="fCHYLW"/>
+  <path d=" M -2,3.05 L 2,3.05 L 0,0.3 L -2,3.05" class="sl f0 sOUTLW" style="stroke-width: 0.32;"/>
+  <path d=" M 0,-0.3 L -2,-3.05 L 2,-3.05 L 0,-0.3" class="sl f0 sOUTLW" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

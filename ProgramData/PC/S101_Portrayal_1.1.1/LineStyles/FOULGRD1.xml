@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="dKartOffice" format="S100Ed2" version="0.1" creationDate="2022-08-16"?>
+<?S100Meta name="FOULGRD1" exposition="Foul Ground"?>
+<lineStyle>
+   <intervalLength>32</intervalLength>
+   <pen width="0.32">
+      <color>CHGRD</color>
+   </pen>
+   <dash>
+      <start>0</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>5</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>17</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>22</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>27</start>
+      <length>3</length>
+   </dash>
+   <symbol reference="EMFOULGD">
+      <position>12.5</position>
+   </symbol>
+</lineStyle>

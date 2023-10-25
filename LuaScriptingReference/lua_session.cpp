@@ -69,7 +69,8 @@ void lua_session::check_status(int status)
 
 		assert(false);
 
-		exit(3);
+		//exit(3);
+		return;
 	}
 }
 

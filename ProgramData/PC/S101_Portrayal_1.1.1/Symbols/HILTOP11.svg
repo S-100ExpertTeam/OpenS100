@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.39mm" height="8.68mm" viewBox="-5.24 -4.55 10.39 8.68">
+  <title>HILTOP11</title>
+  <desc>conspicuous hill or mountain top</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.08" y="-4.39" height="8.36" width="10.07"/>
+  <rect class="svgBox layout" fill="none" x="-5.08" y="-4.39" height="8.36" width="10.07"/>
+  <path d=" M 2.33,-1.07 L 2.57,0.38 L 5.29,-0.71 L 2.33,-1.07 Z" class="fCHBLK"/>
+  <path d=" M 2.33,0.22 L 2.39,1.51 L 4.6,2.66 L 2.33,0.22 Z" class="fCHBLK"/>
+  <path d=" M -1.67,1.62 L -2.22,0.32 L -4.44,2.82 L -1.67,1.62 Z" class="fCHBLK"/>
+  <path d=" M 0.02,1.54 L -1.41,1.24 L -1.91,4.27 L 0.02,1.54 Z" class="fCHBLK"/>
+  <path d=" M 1.66,1.03 L 0.24,1.44 L 2.33,4.05 L 1.66,1.03 Z" class="fCHBLK"/>
+  <path d=" M 1.1,-1.5 L 2.4,-0.94 L 3.56,-3.74 L 1.13,-2.09 L 1.1,-1.5 Z" class="fCHBLK"/>
+  <path d=" M -2.52,0.31 L -2.28,-1.17 L -5.38,-1.11 L -2.52,0.31 Z" class="fCHBLK"/>
+  <path d=" M -0.68,-1.53 L 0.93,-1.69 L -0.36,-4.69 L -0.68,-1.53 Z" class="fCHBLK"/>
+  <path d=" M -2.27,-0.82 L -0.94,-1.32 L -3.35,-3.72 L -2.27,-0.82 Z" class="fCHBLK"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

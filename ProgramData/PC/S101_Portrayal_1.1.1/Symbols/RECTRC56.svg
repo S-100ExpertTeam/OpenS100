@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.42mm" height="15.18mm" viewBox="-1.68 -7.61 3.42 15.18">
+  <title>RECTRC56</title>
+  <desc>recommended two-way track as an area, based on fixed marks</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.52" y="-7.45" height="14.86" width="3.1"/>
+  <rect class="svgBox layout" fill="none" x="-1.52" y="-7.45" height="14.86" width="3.1"/>
+  <path d=" M 1.57,1.6 L 0.02,3.64 L -1.52,1.6" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 1.58,-1.64 L 0.03,-3.69 L -1.52,-1.64" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.01,-7.45 L 0.01,7.41" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.74mm" height="6.44mm" viewBox="-3.77 -5.52 6.74 6.44">
+  <title>BOYMOR01</title>
+  <desc>mooring buoy, barrel shape, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.45" y="-5.2" height="5.8" width="6.1"/>
+  <rect class="svgBox layout" fill="none" x="-3.45" y="-5.2" height="5.8" width="6.1"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.64;" cx="0" cy="0" r="0.6"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.64;" cx="-0.45" cy="-4.55" r="0.65"/>
+  <path d=" M 0.5,0 L 2.65,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -0.65,0 L -3.45,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 2.1,0 L 2.1,-1.3" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -3,0 L -3,-1.3 L -2.95,-1.8 L -2.75,-2.4 L -2.45,-2.9 L -2.2,-3.15 L -1.83,-3.48 L -1.4,-3.68 L -0.98,-3.8 L -0.45,-3.88 L 0.02,-3.83 L 0.55,-3.65 L 1.07,-3.38 L 1.45,-3.03 L 1.8,-2.53 L 2,-2.03 L 2.1,-1.55 L 2.1,-1.3" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -2.2,-3.15 L -1.83,-2.6" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -1.38,-1.7 L -1.18,-0.88 L -1.13,-0.38 L -1.1,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -1.83,-2.6 L -1.38,-1.7" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

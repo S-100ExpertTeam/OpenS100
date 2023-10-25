@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="12.41mm" height="13.82mm" viewBox="-6.19 -7.66 12.41 13.82">
+  <title>TSLDEF51</title>
+  <desc>one way lane of a traffic separation scheme, with the direction not defined in the data</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-6.03" y="-7.5" height="13.5" width="12.09"/>
+  <rect class="svgBox layout" fill="none" x="-6.03" y="-7.5" height="13.5" width="12.09"/>
+  <path d=" M -3,-3 L 0,-7.5 L 3,-3 L 1.5,-3 L 1.5,6 L -1.5,6 L -1.5,-3 L -3,-3 Z" class="fTRFCD" style="fill-opacity:0.25;"/>
+  <path d=" M -1.5,6 L -1.5,-3 L -3,-3 L 0,-7.5 L 3,-3 L 1.5,-3 L 1.5,6 L -1.5,6" class="sl f0 sTRFCD" style="stroke-width: 0.32;"/>
+  <path d=" M -6.03,-0.18 L -5.9,-0.46 L -5.77,-0.71 L -5.6,-0.88 L -5.43,-1.05 L -5.17,-1.14 L -4.94,-1.12 L -4.64,-1.03 L -4.36,-0.97 L -4.13,-0.63 L -3.95,-0.44 L -3.83,-0.22 L -3.83,0.03 L -3.95,0.27 L -4.08,0.48 L -4.28,0.72 L -4.51,0.97 L -4.72,1.23 L -4.85,1.42 L -4.96,1.59 L -4.98,1.81 L -4.98,2.04 L -4.98,2.21 L -4.96,2.43 L -4.96,2.45" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -5.17,3.29 L -4.64,3.29" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <path d=" M 3.86,-0.18 L 3.99,-0.46 L 4.12,-0.71 L 4.29,-0.88 L 4.46,-1.05 L 4.72,-1.14 L 4.95,-1.12 L 5.25,-1.03 L 5.53,-0.97 L 5.76,-0.63 L 5.94,-0.44 L 6.06,-0.22 L 6.06,0.03 L 5.94,0.27 L 5.81,0.48 L 5.61,0.72 L 5.38,0.97 L 5.17,1.23 L 5.04,1.42 L 4.93,1.59 L 4.91,1.81 L 4.91,2.04 L 4.91,2.21 L 4.93,2.43 L 4.93,2.45" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 4.72,3.29 L 5.25,3.29" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.2mm" height="2.2mm" viewBox="-1.1 -1.1 2.2 2.2">
+  <title>DISMAR06</title>
+  <desc>Distance mark - not phyically installed</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="SevenCs GmbH" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1" y="-1" height="2.0" width="2.0"/>
+  <rect class="svgBox layout" fill="none" x="-1" y="-1" height="2.0" width="2.0"/>
+  <circle class="sl f0 sCHMGD" style="stroke-width: 0.32;" cx="0" cy="0" r="0.8"/>
+  <circle class="fCHMGD" cx="0" cy="0" r="0.2"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+</svg>

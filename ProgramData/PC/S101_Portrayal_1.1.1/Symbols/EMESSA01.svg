@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="0.32mm" height="1.82mm" viewBox="-0.16 -0.16 0.32 1.82">
+  <title>EMESSA01</title>
+  <desc>Embedded symbol for boundary of an ESSA or PSSA</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2015-03-16" iho:source="new" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="0" y="0" height="1.5" width="0"/>
+  <rect class="svgBox layout" fill="none" x="0" y="0" height="1.5" width="0"/>
+  <path d=" M 0,0 L 0,1.5" class="sl f0 sCHMGF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

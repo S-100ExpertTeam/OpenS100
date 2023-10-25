@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="12.41mm" height="10.69mm" viewBox="-6.23 -5.33 12.41 10.69">
+  <title>RCLDEF01</title>
+  <desc>radio calling-in point whose direction is not known</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-6.07" y="-5.17" height="10.37" width="12.09"/>
+  <rect class="svgBox layout" fill="none" x="-6.07" y="-5.17" height="10.37" width="12.09"/>
+  <path d=" M -6.07,-0.97 L -5.94,-1.25 L -5.81,-1.5 L -5.64,-1.67 L -5.47,-1.84 L -5.21,-1.93 L -4.98,-1.91 L -4.68,-1.82 L -4.4,-1.76 L -4.17,-1.42 L -3.99,-1.23 L -3.87,-1.01 L -3.87,-0.76 L -3.99,-0.52 L -4.12,-0.31 L -4.32,-0.07 L -4.55,0.18 L -4.76,0.44 L -4.89,0.63 L -5,0.8 L -5.02,1.02 L -5.02,1.25 L -5.02,1.42 L -5,1.64 L -5,1.66" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -5.21,2.5 L -4.68,2.5" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <path d=" M 3.82,-0.97 L 3.95,-1.25 L 4.08,-1.5 L 4.25,-1.67 L 4.42,-1.84 L 4.68,-1.93 L 4.91,-1.91 L 5.21,-1.82 L 5.49,-1.76 L 5.72,-1.42 L 5.9,-1.23 L 6.02,-1.01 L 6.02,-0.76 L 5.9,-0.52 L 5.77,-0.31 L 5.57,-0.07 L 5.34,0.18 L 5.13,0.44 L 5,0.63 L 4.89,0.8 L 4.87,1.02 L 4.87,1.25 L 4.87,1.42 L 4.89,1.64 L 4.89,1.66" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 4.68,2.5 L 5.21,2.5" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <circle class="f0 sCHMGD" style="stroke-width: 0.32;" cx="-0.01" cy="0.02" r="2.18"/>
+  <path d=" M -1.71,-1.59 L 0.01,-5.17 L 1.72,-1.59" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 1.69,1.66 L -0.09,5.2 L -1.71,1.63" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="20.75mm" height="10.9mm" viewBox="-20.27 -9.32 20.75 10.9">
+  <title>RSRDEF51</title>
+  <desc>area in which undefined restrictions exist</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-19.79" y="-8.84" height="9.94" width="13.19"/>
+  <rect class="svgBox layout" fill="none" x="-19.79" y="-8.84" height="9.94" width="19.79"/>
+  <path d=" M -14.8,-2.59 L -14.8,-7.24" class="sl f0 sTRFCF" style="stroke-width: 0.96;"/>
+  <path d=" M -15.47,-0.79 L -14.04,-0.79" class="sl f0 sTRFCF" style="stroke-width: 0.64;"/>
+  <circle class="f0 sTRFCF" style="stroke-width: 0.64;" cx="-14.82" cy="-3.87" r="4.97"/>
+  <path d=" M -8.8,-2.37 L -8.67,-2.65 L -8.54,-2.9 L -8.37,-3.07 L -8.2,-3.24 L -7.94,-3.33 L -7.71,-3.31 L -7.41,-3.22 L -7.13,-3.16 L -6.9,-2.82 L -6.72,-2.63 L -6.6,-2.41 L -6.6,-2.16 L -6.72,-1.92 L -6.85,-1.71 L -7.05,-1.47 L -7.28,-1.22 L -7.49,-0.96 L -7.62,-0.77 L -7.73,-0.6 L -7.75,-0.38 L -7.75,-0.15 L -7.75,0.02 L -7.73,0.24 L -7.73,0.26" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -7.94,1.1 L -7.41,1.1" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

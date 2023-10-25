@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.49mm" height="4.85mm" viewBox="-5.17 -0.32 5.49 4.85">
+  <title>FOGSIG01</title>
+  <desc>fog signal</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.85" y="0.21" height="4" width="3.63"/>
+  <rect class="svgBox layout" fill="none" x="-4.850000000000001" y="0" height="4.21" width="4.85"/>
+  <path d=" M -4.85,0.37 L -4.66,1.4 L -4.22,2.4 L -3.72,3.12 L -3.04,3.75 L -2.38,4.21" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M -3.63,0.31 L -3.44,1.09 L -3.04,1.84 L -2.63,2.5 L -2.13,2.93 L -1.79,3.09" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M -2.41,0.21 L -2.25,1 L -1.82,1.62 L -1.41,1.96 L -1.22,2.12" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

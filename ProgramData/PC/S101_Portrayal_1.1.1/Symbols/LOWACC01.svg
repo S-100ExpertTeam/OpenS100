@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="12.62mm" height="13.62mm" viewBox="-12.46 -13.46 12.62 13.62">
+  <title>LOWACC01</title>
+  <desc>point feature or area of low accuracy</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-12.3" y="-13.3" height="12.35" width="11.29"/>
+  <rect class="svgBox layout" fill="none" x="-12.3" y="-13.3" height="13.3" width="12.3"/>
+  <path d=" M -11.38,-9.51 L -10.85,-9.51" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M -11.19,-10.42 L -11.2,-11.01 L -11.19,-11.2 L -11.02,-11.4 L -10.89,-11.58 L -10.63,-11.84 L -10.52,-12.09 L -10.46,-12.38 L -10.53,-12.69 L -10.63,-12.89 L -10.84,-13.08 L -11.07,-13.24 L -11.27,-13.27 L -11.5,-13.3 L -11.73,-13.24 L -11.94,-13.14 L -12.14,-12.94 L -12.24,-12.74 L -12.3,-12.55 L -12.3,-12.37 L -12.25,-12.2 L -12.2,-12.15" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M -10.45,-10.39 L -1.01,-0.95" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

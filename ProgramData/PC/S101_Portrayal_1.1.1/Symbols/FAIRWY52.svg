@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.33mm" height="13.83mm" viewBox="-3.18 -7.67 6.33 13.83">
+  <title>FAIRWY52</title>
+  <desc>fairway with two-way traffic</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.02" y="-7.51" height="13.51" width="6.01"/>
+  <rect class="svgBox layout" fill="none" x="-3.02" y="-7.51" height="13.51" width="6.01"/>
+  <path d=" M 1.53,1.47 L 2.99,1.47 L 0.01,6 L -2.97,1.47 L -1.48,1.47" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.53,1.46 L -1.53,-3.01 L -3.02,-3.01 L 0,-7.51 L 2.94,-3.01 L 1.49,-3.01 L 1.49,1.46" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

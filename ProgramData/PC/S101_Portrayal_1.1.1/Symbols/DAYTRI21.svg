@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.32mm" height="7.59mm" viewBox="-2.64 -6.79 5.32 7.59">
+  <title>DAYTRI21</title>
+  <desc>triangular daymark, point up, paper chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.48" y="-6.63" height="7.27" width="5"/>
+  <rect class="svgBox layout" fill="none" x="-2.48" y="-6.63" height="7.27" width="5"/>
+  <path d=" M -2.48,-2.61 L 2.52,-2.61 L 0.03,-6.63 L -2.48,-2.61" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.01,-2.6 L 0.01,-0.62" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="f0 sCHMGD" style="stroke-width: 0.32;" cx="0.01" cy="-0.01" r="0.65"/>
+  <path d=" M -1.47,-0.03 L -0.63,-0.03" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.66,-0.03 L 1.51,-0.03" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

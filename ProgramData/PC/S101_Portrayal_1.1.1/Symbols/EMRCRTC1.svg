@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.39mm" height="2.77mm" viewBox="-0.17 -2.61 8.39 2.77">
+  <title>EMRCRTC1</title>
+  <desc>Embedded symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-0.01" y="-2.45" height="1.68" width="8.07"/>
+  <rect class="svgBox layout" fill="none" x="-0.01" y="-2.45" height="2.45" width="8.07"/>
+  <path d=" M 1.51,-2.45 L -0.01,-1.61 L 1.66,-0.77" class="sl f0 sTRFCD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.06,-1.63 L 2.05,-1.63" class="sl f0 sTRFCD" style="stroke-width: 0.32;"/>
+  <path d=" M 3,-1.63 L 5.06,-1.63" class="sl f0 sTRFCD" style="stroke-width: 0.32;"/>
+  <path d=" M 6.05,-1.63 L 8.06,-1.63" class="sl f0 sTRFCD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

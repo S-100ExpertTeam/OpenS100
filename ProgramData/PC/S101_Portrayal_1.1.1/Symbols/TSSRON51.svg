@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="9.59mm" height="9.79mm" viewBox="-4.79 -4.89 9.59 9.79">
+  <title>TSSRON51</title>
+  <desc>traffic roundabout</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.47" y="-4.57" height="9.15" width="8.95"/>
+  <rect class="svgBox layout" fill="none" x="-4.47" y="-4.57" height="9.15" width="8.95"/>
+  <path d=" M -4.47,0.52 L -4.21,1.43 L -3.82,2.39 L -3.25,3.16 L -2.36,3.83 L -1.33,4.39 L -0.18,4.58 L 0.74,4.53 L 1.72,4.24 L 2.73,3.71 L 3.52,2.9 L 4.14,1.84 L 4.48,0.71 L 4.48,-0.53 L 4.14,-1.81 L 3.5,-2.89 L 2.56,-3.68 L 1.43,-4.28 L 0.16,-4.47 L -1.28,-4.28 L -2.31,-3.77 L -3.2,-3.17 L -1.5,-1.47 L -4.47,-1.47 L -4.47,-4.57 L -3.15,-3.17" class="sl f0 sTRFCF" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

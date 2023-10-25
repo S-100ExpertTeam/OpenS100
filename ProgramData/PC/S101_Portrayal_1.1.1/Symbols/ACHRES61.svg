@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="21.07mm" height="18.49mm" viewBox="-0.16 -0.16 21.07 18.49">
+  <title>ACHRES61</title>
+  <desc>area where anchoring is prohibited or restricted, with other cautions</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="6.4" y="5.13" height="13.04" width="14.35"/>
+  <rect class="svgBox layout" fill="none" x="0" y="0" height="18.17" width="20.75"/>
+  <path d=" M 12.12,5.13 L 12.12,8.42 L 8.94,8.42 L 8.94,9.54 L 12.12,9.54 L 12.12,16.38 L 10.06,15.92 L 8.19,14.51 L 6.4,14.51 L 8.94,16.38 L 12.69,18.17 L 16.15,16.38 L 18.69,14.51 L 17.19,14.51 L 14.94,15.92 L 12.87,16.38 L 12.87,9.54 L 16.15,9.54 L 16.15,8.42 L 12.87,8.42 L 12.87,5.13 L 12.12,5.13" class="sl f0 sCHMGF" style="stroke-width: 0.32;"/>
+  <path d=" M 17.22,7.13 L 7.2,17.21" class="sl f0 sCHMGF" style="stroke-width: 0.96;"/>
+  <path d=" M 20.2,18.17 L 20.75,18.17" class="sl f0 sCHMGD" style="stroke-width: 0.96;"/>
+  <path d=" M 20.38,13.67 L 20.38,17.13" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

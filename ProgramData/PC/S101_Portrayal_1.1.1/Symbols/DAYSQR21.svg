@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.33mm" height="7.15mm" viewBox="-2.14 -6.36 4.33 7.15">
+  <title>DAYSQR21</title>
+  <desc>square or rectangular daymark, paper chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.98" y="-6.2" height="6.83" width="4.01"/>
+  <rect class="svgBox layout" fill="none" x="-1.98" y="-6.2" height="6.83" width="4.01"/>
+  <path d=" M -1.98,-6.2 L -1.98,-2.19 L 2.03,-2.19 L 2.03,-6.2 L -1.98,-6.2" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.03,-2.19 L 0.03,-0.66" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="f0 sCHMGD" style="stroke-width: 0.32;" cx="0.04" cy="-0.02" r="0.65"/>
+  <path d=" M -1.44,-0.02 L -0.6,-0.02" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.69,-0.02 L 1.54,-0.02" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

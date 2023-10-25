@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.34mm" height="5.35mm" viewBox="-2.22 -2.79 4.34 5.35">
+  <title>ACHARE02</title>
+  <desc>anchorage area as a point at small scale, or anchor points of mooring trot at large scale</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.06" y="-2.63" height="5.03" width="4.02"/>
+  <rect class="svgBox layout" fill="none" x="-2.06" y="-2.63" height="5.03" width="4.02"/>
+  <path d=" M -0.03,-2.63 L -0.03,2.39" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.59,-1.14 L 1.45,-1.14" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -2.06,1.36 L -1,2.4 L 0.98,2.4 L 1.96,1.39" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.96mm" height="10.96mm" viewBox="-5.57 -5.4 10.96 10.96">
+  <title>CURSRA01</title>
+  <desc>ordinary cursor</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5.09" y="-4.92" height="10" width="10"/>
+  <rect class="svgBox layout" fill="none" x="-5.09" y="-4.92" height="10" width="10"/>
+  <path d=" M -0.05,-4.92 L -0.05,5.08" class="sl f0 sCURSR" style="stroke-width: 0.96;"/>
+  <path d=" M -5.09,0.03 L 4.91,0.03" class="sl f0 sCURSR" style="stroke-width: 0.96;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

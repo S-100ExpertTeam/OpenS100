@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.3mm" height="5.76mm" viewBox="-2.18 -5.1 4.3 5.76">
+  <title>RASCAN01</title>
+  <desc>radar scanner</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.02" y="-4.94" height="5.44" width="3.98"/>
+  <rect class="svgBox layout" fill="none" x="-2.02" y="-4.94" height="5.44" width="3.98"/>
+  <circle class="f0 sLANDF" style="stroke-width: 0.32;" cx="0.02" cy="0" r="0.5"/>
+  <path d=" M -1.13,-0.03 L -1.13,-3.55" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 1.03,-0.05 L 1.03,-3.55 L -0.7,-3.55" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -0.45,-0.02 L -1.8,-0.02" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 0.52,-0.04 L 1.88,-0.04" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -0.67,-3.55 L -1.13,-3.55" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -0.06,-3.59 L -0.06,-4.93" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -2.02,-4.94 L 1.96,-4.94" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

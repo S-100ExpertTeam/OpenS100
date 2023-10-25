@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.12mm" height="2.69mm" viewBox="-0.1 -0.1 5.12 2.69">
+  <title>SAFCON55</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2019-01-30" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-0.1" y="2.59" height="2.69" width="5.12" />
+  <rect class="svgBox layout" fill="none" x="-0.1" y="-0.1" height="2.69" width="5.12" />
+  <path d=" M 4.92,0 L 3.69,0 L 3.69,1.08 L 4.68,1.08 L 4.92,1.32 L 4.92,2.25 L 4.68,2.49 L 3.93,2.49 L 3.69,2.25" class="sl f0 sDEPDW" style="stroke-width:0.96;" />
+  <path d=" M 4.92,0 L 3.69,0 L 3.69,1.08 L 4.68,1.08 L 4.92,1.32 L 4.92,2.25 L 4.68,2.49 L 3.93,2.49 L 3.69,2.25" class="sl f0 sSNDG2" style="stroke-width:0.32;" />
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="1.62mm" height="1.11mm" viewBox="-0.81 -0.555 1.62 1.11">
+  <title>EMLOWAC11</title>
+  <desc>embedded symbol for safety contour of low accuracy in position</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2015-03-16" iho:source="new" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-0.65" y="-0.395" height="0.79" width="1.3"/>
+  <rect class="svgBox layout" fill="none" x="-0.65" y="-0.395" height="0.79" width="1.3"/>
+  <rect class="sl f0 sDEPCN" fill="none" style="stroke-width: 0.32;" x="-0.65" y="-0.395" height="0.79" width="1.3"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

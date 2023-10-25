@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.98mm" height="5.92mm" viewBox="-2.96 -2.97 5.98 5.92">
+  <title>TIDSTR01</title>
+  <desc>point or area for which a tidal stream table is available</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.8" y="-2.81" height="5.6" width="5.66"/>
+  <rect class="svgBox layout" fill="none" x="-2.8" y="-2.81" height="5.6" width="5.66"/>
+  <path d=" M -2.8,0.02 L 0.03,-2.81 L 2.86,0.02 L 0.01,2.79 L -2.8,0.02" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="20.85mm" height="11.15mm" viewBox="-20.37 -9.23 20.85 11.15">
+  <title>ENTRES61</title>
+  <desc>area where entry is prohibited or restricted or "to be avoided", with other cautions</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-19.89" y="-8.75" height="10.19" width="11.71"/>
+  <rect class="svgBox layout" fill="none" x="-19.89" y="-8.75" height="10.19" width="19.89"/>
+  <path d=" M -12.45,-3.77 L -17.07,-3.77" class="sl f0 sTRFCF" style="stroke-width: 0.96;"/>
+  <circle class="f0 sTRFCF" style="stroke-width: 0.64;" cx="-14.92" cy="-3.78" r="4.97"/>
+  <path d=" M -8.73,1.44 L -8.18,1.44" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -8.6,-2.42 L -8.6,0.93" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

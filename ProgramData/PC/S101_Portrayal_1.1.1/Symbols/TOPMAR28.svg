@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.52mm" height="9.72mm" viewBox="-1.26 -9.56 2.52 9.72">
+  <title>TOPMAR28</title>
+  <desc>topmark for beacons, 2 cones point to point, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.1" y="-9.4" height="3.9" width="2.2"/>
+  <rect class="svgBox layout" fill="none" x="-1.1" y="-9.4" height="9.4" width="2.2"/>
+  <path d=" M -1.1,-9.4 L 1.1,-9.4 L 0,-7.7 L -1.1,-9.4 Z" class="fCHBLK"/>
+  <path d=" M 0,-7.25 L -1.1,-5.5 L 1.1,-5.5 L 0,-7.25 Z" class="fCHBLK"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.94mm" height="4.33mm" viewBox="-1.92 -4.17 3.94 4.33">
+  <title>TREPNT04</title>
+  <desc>general symbol for a tree</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.76" y="-4.01" height="3.99" width="3.62"/>
+  <rect class="svgBox layout" fill="none" x="-1.76" y="-4.01" height="4.01" width="3.62"/>
+  <path d=" M 0,-0.02 L 0,-3.99" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -1.76,-3.02 L 1.86,-3.02" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -1.09,-2.04 L 1.08,-2.04" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -0.66,-4.01 L 0.64,-4.01" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -0.55,-0.02 L 0.65,-0.02" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -1.12,-3.53 L 1.08,-3.53" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M -1.29,-2.55 L 1.33,-2.55" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

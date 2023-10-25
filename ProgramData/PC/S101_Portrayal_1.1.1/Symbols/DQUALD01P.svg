@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="16.36mm" height="4.62mm" viewBox="-8.18 -2.51 16.36 4.62">
+  <title>DQUALD01P</title>
+  <desc>pattern of symbols for an unreliable chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2015-03-04" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-8.02" y="-2.35" height="4.3" width="16.04"/>
+  <rect class="svgBox layout" fill="none" x="-8.02" y="-2.35" height="4.3" width="16.04"/>
+  <path d=" M 4.71,-1.36 L 2.9,1.04" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 2.91,-1.36 L 4.71,1.03" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -2.98,-1.26 L -4.79,1.14" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -4.78,-1.26 L -2.98,1.13" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -6.1,-2.35 L -6.55,-2.21 L -6.9,-2.07 L -7.25,-1.82 L -7.53,-1.47 L -7.78,-1.05 L -7.92,-0.67 L -8.02,-0.18 L -7.95,0.34 L -7.85,0.76 L -7.67,1.22 L -7.22,1.6 L -6.66,1.85 L -6.17,1.95" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -6.24,-2.31 L 6.31,-2.31 L 6.73,-2.17 L 7.25,-1.89 L 7.57,-1.58 L 7.85,-1.19 L 7.92,-0.91 L 7.99,-0.53 L 8.02,-0.18 L 7.99,0.27 L 7.92,0.69 L 7.74,1.11 L 7.57,1.36 L 7.18,1.71 L 6.9,1.88 L 6.66,1.95 L 6.31,1.92 L -6.2,1.92" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -5.34,-0.09 L -2.34,-0.11" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 2.25,-0.14 L 5.47,-0.14" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

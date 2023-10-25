@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.07mm" height="2.82mm" viewBox="-0.16 -1.41 2.07 2.82">
+  <title>SOUNDG06</title>
+  <desc>for deep soundings, greater than safety depth</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="0.5" y="-1.25" height="2.5" width="1.25"/>
+  <rect class="svgBox layout" fill="none" x="0" y="-1.25" height="2.5" width="1.75"/>
+  <path d=" M 1.5,-1.25 L 0.75,-1.25 L 0.5,-1 L 0.5,1 L 0.75,1.25 L 1.5,1.25 L 1.75,1 L 1.75,0.09 L 1.5,-0.16 L 0.75,-0.16 L 0.5,0.09" class="sl f0 sSNDG1" style="stroke-width: 0.32;"/>
+  <path d=" M 1.5,-1.25 L 1.68,-1.07" class="sl f0 sSNDG1" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

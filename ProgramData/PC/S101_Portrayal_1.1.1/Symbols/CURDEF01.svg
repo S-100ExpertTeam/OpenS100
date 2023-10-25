@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.41mm" height="9.4mm" viewBox="-5.04 -4.64 10.41 9.4">
+  <title>CURDEF01</title>
+  <desc>current or tidal stream whose direction is not known</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.88" y="-4.48" height="9.08" width="10.09"/>
+  <rect class="svgBox layout" fill="none" x="-4.88" y="-4.48" height="9.08" width="10.09"/>
+  <path d=" M -1,4.47 L -0,2.48 L 0.99,4.47" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -1,2.63 L -0,0.64 L 0.99,2.63" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -0,-4.48 L -0,4.6" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.01,-1.99 L 0.01,-4.46 L 1.01,-1.99" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -4.88,-1 L -4.75,-1.28 L -4.62,-1.53 L -4.45,-1.7 L -4.28,-1.87 L -4.02,-1.96 L -3.79,-1.94 L -3.49,-1.85 L -3.21,-1.79 L -2.98,-1.45 L -2.8,-1.26 L -2.68,-1.04 L -2.68,-0.79 L -2.8,-0.55 L -2.93,-0.34 L -3.13,-0.1 L -3.36,0.15 L -3.57,0.41 L -3.7,0.6 L -3.81,0.77 L -3.83,0.99 L -3.83,1.22 L -3.83,1.39 L -3.81,1.61 L -3.81,1.63" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -4.02,2.47 L -3.49,2.47" class="sl f0 sCHGRD" style="stroke-width: 0.64;"/>
+  <path d=" M 3.01,-1.06 L 3.14,-1.34 L 3.27,-1.59 L 3.44,-1.76 L 3.61,-1.93 L 3.87,-2.02 L 4.1,-2 L 4.4,-1.91 L 4.68,-1.85 L 4.91,-1.51 L 5.09,-1.32 L 5.21,-1.1 L 5.21,-0.85 L 5.09,-0.61 L 4.96,-0.4 L 4.76,-0.16 L 4.53,0.09 L 4.32,0.35 L 4.19,0.54 L 4.08,0.71 L 4.06,0.93 L 4.06,1.16 L 4.06,1.33 L 4.08,1.55 L 4.08,1.57" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 3.87,2.41 L 4.4,2.41" class="sl f0 sCHGRD" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

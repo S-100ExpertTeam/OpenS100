@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.85mm" height="4.76mm" viewBox="-1.57 -4.6 2.85 4.76">
+  <title>PRICKE04</title>
+  <desc>withy, starboard-hand, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.41" y="-4.44" height="4.44" width="2.53"/>
+  <rect class="svgBox layout" fill="none" x="-1.41" y="-4.44" height="4.44" width="2.53"/>
+  <path d=" M -1,0 L 1.09,0" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M 0,0 L 0,-2" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M -1.41,-1.22 L -0.75,-1.91 L 0,-2.1 L 0.59,-2 L 1.12,-1.44" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M -0.82,-3.13 L -0.22,-3.63 L 0.18,-3.66 L 0.68,-3.44 L 1.06,-2.91" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M 0.5,-4.44 L 0.18,-3.69 L 0.03,-3 L 0,-2" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

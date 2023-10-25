@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.13mm" height="9.65mm" viewBox="-1.3 -4.85 2.13 9.65">
+  <title>LOCMAG01</title>
+  <desc>cursor pick site for a magnetic anomaly at a point</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.14" y="-4.69" height="9.33" width="1.81"/>
+  <rect class="svgBox layout" fill="none" x="-1.14" y="-4.69" height="9.33" width="1.81"/>
+  <path d=" M 0.67,1.99 L 0.67,4.64" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 0.67,2.27 L 0.67,-4.69 L -1.14,0.57 L -0.79,0.68 L -0.51,0.83 L -0.28,1.02 L -0.1,1.22 L 0.09,1.41 L 0.31,1.71 L 0.48,1.97 L 0.65,2.23" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

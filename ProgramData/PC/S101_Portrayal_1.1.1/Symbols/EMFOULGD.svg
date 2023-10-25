@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.42mm" height="7.42mm" viewBox="-3.51 -3.51 7.42 7.42">
+  <title>EMFOULGD</title>
+  <desc>Embedded symbol of foul ground curve</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="dKartOffice" iho:creationDate="2022-08-16" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.35" y="-3.35" height="7.1" width="7.1"/>
+  <rect class="svgBox layout" fill="none" x="-3.35" y="-3.35" height="7.1" width="7.1"/>
+  <path d=" M -0.25,-1.55 L -1.27,1.55" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 1.27,-1.55 L 0.25,1.55" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.55,-0.6 L 1.9,-0.6" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -1.9,0.6 L 1.55,0.6" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="sl f0 sCHGRD" style="stroke-width: 0.32" cx="0.2" cy="0.2" r="3.55"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

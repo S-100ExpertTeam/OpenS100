@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="15.97mm" height="14.67mm" viewBox="-0.16 -14.51 15.97 14.67">
+  <title>ICEARE04P</title>
+  <desc>continuous pattern for an ice area (glacier, etc.)</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2015-03-04" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="1.31" y="-14.35" height="13.31" width="14.34"/>
+  <rect class="svgBox layout" fill="none" x="0" y="-14.35" height="14.35" width="15.65"/>
+  <path d=" M 3.09,-1.04 L 5.25,-2.72" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 1.31,-10.97 L 3.46,-8.54" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 7.31,-7.13 L 10.03,-6.47" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 7.03,-11.91 L 7.78,-14.35" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 8.81,-2.07 L 11.62,-2.91" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 14.15,-6.57 L 14.81,-3.85" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M 13.03,-11.25 L 15.65,-11.44" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

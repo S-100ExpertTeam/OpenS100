@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="15.22mm" height="3.52mm" viewBox="-15.06 -1.51 15.22 3.52">
+  <title>FSHHAV02P</title>
+  <desc>pattern of symbols for a fish haven</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2015-03-04" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-14.9" y="-1.35" height="3.2" width="7.9"/>
+  <rect class="svgBox layout" fill="none" x="-14.9" y="-1.35" height="3.2" width="14.9"/>
+  <path d=" M -13.65,0.2 L -14.75,-1.15" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -13.65,0.3 L -14.9,1.55" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -13.65,0.3 L -13.1,-0.3 L -12.4,-0.8 L -11.5,-1.2 L -10.5,-1.35 L -9.6,-1.3 L -8.6,-1.1 L -7.75,-0.7 L -7.15,-0.25 L -7,0.05" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -13.6,0.25 L -12.75,0.95 L -11.7,1.55 L -10.6,1.8 L -9.8,1.85 L -8.95,1.7 L -8.15,1.4 L -7.5,0.8 L -7,0.1" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -8.35,-0.9 L -8.6,-0.25 L -8.6,0.65 L -8.15,1.3" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

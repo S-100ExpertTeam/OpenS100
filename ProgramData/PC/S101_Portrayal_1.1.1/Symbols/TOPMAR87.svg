@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.91mm" height="8.52mm" viewBox="-1.4 -8.36 2.91 8.52">
+  <title>TOPMAR87</title>
+  <desc>topmark for beacons, besom point down, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.24" y="-8.2" height="3.01" width="2.59"/>
+  <rect class="svgBox layout" fill="none" x="-1.24" y="-8.199999999999999" height="8.2" width="2.59"/>
+  <path d=" M 0.03,-8.19 L 0.02,-5.2" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M -1.24,-5.19 L -0.42,-8.2" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M 1.35,-5.2 L 0.44,-8.2" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

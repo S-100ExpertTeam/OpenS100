@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.46mm" height="4.46mm" viewBox="-3.98 -3.48 7.46 4.46">
+  <title>WRECKS01</title>
+  <desc>wreck showing any portion of hull or superstructure at level of chart datum</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.5" y="-3" height="3.5" width="6.5"/>
+  <rect class="svgBox layout" fill="none" x="-3.5" y="-3" height="3.5" width="6.5"/>
+  <path d=" M -2,0 L -3.5,-2 L 3,0 L 0.5,0 L 0.5,-0.1 L 0.45,-0.2 L 0.4,-0.3 L 0.3,-0.4 L 0.2,-0.5 L 0.1,-0.5 L -0.05,-0.5 L -0.15,-0.5 L -0.3,-0.45 L -0.45,-0.3 L -0.5,-0.15 L -0.5,-0.1 L -0.5,0 L -2,0 L -2,0 Z" class="fCHGRD"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.96;" cx="0" cy="0" r="0.5"/>
+  <path d=" M -3.5,0 L -0.5,0" class="sl f0 sCHGRD" style="stroke-width: 0.96;"/>
+  <path d=" M 0.5,0 L 3,0" class="sl f0 sCHGRD" style="stroke-width: 0.96;"/>
+  <path d=" M -0.1,-1 L 0.5,-3" class="sl f0 sCHGRD" style="stroke-width: 0.96;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

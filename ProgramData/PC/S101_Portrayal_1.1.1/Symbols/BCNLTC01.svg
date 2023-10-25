@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.64mm" height="5.82mm" viewBox="-2.82 -4.82 5.64 5.82">
+  <title>BCNLTC01</title>
+  <desc>lattice beacon, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.5" y="-4.5" height="5.18" width="5"/>
+  <rect class="svgBox layout" fill="none" x="-2.5" y="-4.5" height="5.18" width="5"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.64;" cx="0" cy="0" r="0.68"/>
+  <path d=" M -2.5,0 L -0.72,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 0.62,0 L 2.5,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -2,0 L -1,-4.5 L 1,-4.5 L 2,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -1.88,-0.75 L 1.53,-2.07" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -1.54,-2.07 L 1.81,-0.79" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -1.1,-4.07 L 1.34,-2.85" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 1,-4 L -1.41,-2.82" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

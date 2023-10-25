@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="21.33mm" height="10.79mm" viewBox="-0.32 -10.47 21.33 10.79">
+  <title>FSHRES51</title>
+  <desc>area where fishing or trawling is prohibited or restricted</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="10.48" y="-10.15" height="6.02" width="10.21"/>
+  <rect class="svgBox layout" fill="none" x="0" y="-10.15" height="10.15" width="20.69"/>
+  <path d=" M 10.48,-5.52 L 12.3,-7.04 L 13.06,-7.89 L 13.95,-8.46 L 14.88,-8.82 L 15.76,-9.07 L 16.73,-9.07 L 17.54,-8.98 L 18.51,-8.65 L 19.4,-8.25 L 20.2,-7.65 L 20.69,-7.04 L 20.09,-6.49 L 19.52,-5.99 L 18.8,-5.63 L 17.87,-5.27 L 16.94,-5.1 L 15.89,-5.1 L 14.88,-5.27 L 13.91,-5.63 L 13.06,-6.2 L 12.49,-6.68" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 12.16,-7.09 L 10.87,-8.75" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 12.54,-6.67 L 12.14,-7.14" class="sl f0 sCHMGF" style="stroke-width: 0.96;"/>
+  <path d=" M 19.8,-10.15 L 13.78,-4.13" class="sl f0 sCHMGF" style="stroke-width: 0.96;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

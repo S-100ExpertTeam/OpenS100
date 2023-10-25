@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.59mm" height="4.78mm" viewBox="-1.19 -2.34 5.59 4.78">
+  <title>BCNDEF13</title>
+  <desc>default symbol for a beacon, simplified</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.03" y="-2.18" height="4.46" width="5.27"/>
+  <rect class="svgBox layout" fill="none" x="-1.03" y="-2.18" height="4.46" width="5.27"/>
+  <path d=" M 2.04,-1.23 L 2.17,-1.51 L 2.3,-1.76 L 2.48,-1.92 L 2.65,-2.09 L 2.91,-2.18 L 3.14,-2.15 L 3.44,-2.06 L 3.72,-1.99 L 3.94,-1.65 L 4.12,-1.46 L 4.24,-1.23 L 4.23,-0.98 L 4.11,-0.75 L 3.97,-0.54 L 3.77,-0.3 L 3.53,-0.06 L 3.32,0.2 L 3.19,0.39 L 3.08,0.56 L 3.05,0.77 L 3.04,1 L 3.04,1.16 L 3.05,1.38 L 3.05,1.39" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 2.8,2.28 L 3.32,2.28" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <path d=" M -1.03,-2.02 L -1.03,1.97 L 0.97,1.97 L 0.97,-2.01 L -1.03,-2.02 Z" class="fCHGRD"/>
+  <path d=" M -1.03,-2.02 L -1.03,1.97 L 0.97,1.97 L 0.97,-2.01 L -1.03,-2.02" class="sl f0 sOUTLW" style="stroke-width: 0.32;"/>
+  <circle class="fOUTLW" cx="0" cy="0" r="0.15"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

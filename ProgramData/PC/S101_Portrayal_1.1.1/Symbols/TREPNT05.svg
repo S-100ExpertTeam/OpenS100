@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.32mm" height="3.32mm" viewBox="-2.16 -3.16 4.32 3.32">
+  <title>TREPNT05</title>
+  <desc>mangrove</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2" y="-3" height="3" width="4"/>
+  <rect class="svgBox layout" fill="none" x="-2" y="-3" height="3" width="4"/>
+  <circle class="f0 sLANDF" style="stroke-width: 0.32;" cx="0" cy="-1.5" r="1.5"/>
+  <path d=" M -2,0 L 2,0" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 0,-0.02 L 0,-1.63" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

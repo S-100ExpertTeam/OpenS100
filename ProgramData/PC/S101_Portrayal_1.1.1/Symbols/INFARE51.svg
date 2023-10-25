@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="22.64mm" height="8.69mm" viewBox="-0.32 -2.87 22.64 8.69">
+  <title>INFARE51</title>
+  <desc>area with minor restrictions or information notices</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="13.96" y="-2.55" height="8.05" width="8.04"/>
+  <rect class="svgBox layout" fill="none" x="0" y="-2.55" height="8.05" width="22"/>
+  <path d=" M 16.25,4.27 L 20.66,4.27" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 17.42,-1.99 L 17.49,-1.04" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 13.96,5.5 L 22,5.5 L 21.97,-2.54" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 13.98,5.45 L 13.98,-2.55 L 21.93,-2.55" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 18.4,4.26 L 18.4,0.13 L 16.61,0.13" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

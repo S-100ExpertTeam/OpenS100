@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="9mm" height="9mm" viewBox="-4.5 -4.5 9 9">
+  <title>BRTHDNG1</title>
+  <desc>Dangerous cargo berth without number</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2023-01-10" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.5" y="-4.5" height="9" width="9" />
+  <rect class="svgBox layout" fill="none" x="-4.5" y="-4.5" height="9" width="9" />
+  <circle cx="0" cy="2.8" r="0.3" class="sl f0 sCHMGD" style="stroke-width:0.64" />
+  <circle cx="0" cy="0" r="3.5" class="sl f0 sCHMGD" style="stroke-width:0.32" />
+  <path d=" M 0,-2.9 L 0.1,-2 L 0.4,-1.1" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <path d=" M 0.4,-1.1 L 0.8,-0.4 L 1.3,0.2 L 1.4,0.8 L 1.1,1.5" class="sl f0 sCHMGD" style="stroke-width:0.64;" />
+  <path d=" M -1,1.6 L -0.6,2 L 0,2.2 L 0.6,2 L 1.1,1.5" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <path d=" M -1,1.6 L -1.3,1 L -1.4,0.6 L -1.2,-0.4" class="sl f0 sCHMGD" style="stroke-width:0.64;" />
+  <path d=" M -1.2,-0.4 L -1,-1 L 0.1,-3.2" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <path d=" M 0.1,1.7 L 0.4,1.1" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <path d=" M -0.4,-1.6 L -0.3,-0.4" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <path d=" M -0.3,-0.4 L -0.1,0.1 L 0.3,0.7 L 0.4,1.1" class="sl f0 sCHMGD" style="stroke-width:0.64;" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+</svg>

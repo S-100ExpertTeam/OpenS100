@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.19mm" height="15.64mm" viewBox="-2.25 -8.57 4.19 15.64">
+  <title>NORTHAR1</title>
+  <desc>north arrow</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.93" y="-8.25" height="15" width="3.55"/>
+  <rect class="svgBox layout" fill="none" x="-1.93" y="-8.25" height="15" width="3.55"/>
+  <path d=" M 0,6.75 L 0,-8.25" class="sl f0 sSCLBR" style="stroke-width: 0.64;"/>
+  <path d=" M -1.75,1.62 L -1.75,-1.69 L 1.62,1.62 L 1.62,-1.63" class="sl f0 sSCLBR" style="stroke-width: 0.64;"/>
+  <path d=" M -1.93,-4.3 L 1.62,-4.3 L -0.05,-8.22 L -1.93,-4.3 Z" class="fSCLBR"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

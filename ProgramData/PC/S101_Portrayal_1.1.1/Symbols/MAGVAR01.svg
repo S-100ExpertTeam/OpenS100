@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.13mm" height="9.47mm" viewBox="-1.24 -4.63 2.13 9.47">
+  <title>MAGVAR01</title>
+  <desc>cursor pick site for magnetic variation at a point</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.08" y="-4.47" height="9.15" width="1.81"/>
+  <rect class="svgBox layout" fill="none" x="-1.08" y="-4.47" height="9.15" width="1.81"/>
+  <path d=" M 0.73,2.49 L 0.73,-4.47 L -1.08,0.79 L -0.73,0.9 L -0.45,1.05 L -0.22,1.24 L -0.04,1.44 L 0.15,1.63 L 0.37,1.93 L 0.54,2.19 L 0.71,2.45 L 0.73,2.49 Z" class="fCHMGD"/>
+  <path d=" M 0.67,-4.46 L 0.67,4.68" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.8mm" height="6.8mm" viewBox="-3.4 -3.36 6.8 6.8">
+  <title>FLTHAZ02</title>
+  <desc>Floating hazard to navigation</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.24" y="-3.2" height="6.48" width="6.48"/>
+  <rect class="svgBox layout" fill="none" x="-3.24" y="-3.2" height="6.48" width="6.48"/>
+  <path d=" M -1.89,-1.95 L 2.24,-0.1" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 1.94,-1.98 L -2.01,-0.13" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="f0 sCHMGD" style="stroke-width: 0.32;" cx="0" cy="0.04" r="3.24"/>
+  <path d=" M -2.21,1.97 L -1.83,1.85 L -1.39,1.54 L -0.94,0.91 L -0.48,0.67 L -0.02,0.71 L -0.48,1.13 L -0.48,1.58 L 0.01,2.01 L 0.44,1.83 L 0.8,1.58 L 1.24,0.89 L 1.74,0.67 L 2.12,0.71 L 1.7,1.13 L 1.67,1.62 L 2.18,2.02" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

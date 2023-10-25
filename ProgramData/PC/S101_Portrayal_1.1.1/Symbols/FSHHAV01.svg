@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.48mm" height="6.8mm" viewBox="-6.57 -3.42 10.48 6.8">
+  <title>FSHHAV01</title>
+  <desc>fish haven</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-6.25" y="-3.1" height="6.16" width="9.84"/>
+  <rect class="svgBox layout" fill="none" x="-6.25" y="-3.1" height="6.16" width="9.84"/>
+  <path d=" M -4.91,1.18 L -3.5,0 L -2.91,-0.66 L -2.22,-1.1 L -1.5,-1.38 L -0.82,-1.57 L -0.07,-1.57 L 0.56,-1.5 L 1.31,-1.25 L 2,-0.94 L 2.62,-0.47 L 3,0 L 2.53,0.43 L 2.09,0.81 L 1.53,1.09 L 0.81,1.37 L 0.09,1.5 L -0.72,1.5 L -1.5,1.37 L -2.25,1.09 L -2.91,0.65 L -3.35,0.28" class="sl f0 sCHGRD" style="stroke-width: 0.64;"/>
+  <path d=" M -3.75,-0.19 L -4.75,-1.47" class="sl f0 sCHGRD" style="stroke-width: 0.64;"/>
+  <path d=" M 1.43,-1.22 L 1.25,-0.88 L 1.12,-0.41 L 1.09,-0.1 L 1.09,0.15 L 1.18,0.59 L 1.37,1.15" class="sl f0 sCHGRD" style="stroke-width: 0.64;"/>
+  <path d=" M -3.35,0.28 L -3.75,-0.19" class="sl f0 sCHGRD" style="stroke-width: 0.64;"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-1.25" cy="-3.1" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-1.25" cy="3.06" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="3.59" cy="0" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-6.25" cy="0" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-4.1" cy="-2.5" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="1.4" cy="-2.5" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="1.5" cy="2.5" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-5.66" cy="1.5" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-5.66" cy="-1.6" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="3" cy="-1.6" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="3" cy="1.5" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-4.85" cy="-2.16" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-6.1" cy="-1" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-6" cy="1" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="3.4" cy="1" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="3.34" cy="-1" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="2.31" cy="-2" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="2.4" cy="2" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-5.1" cy="2" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-3.1" cy="-2.85" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-2.1" cy="-3" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-0.6" cy="-3" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="0.4" cy="-2.91" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="0.4" cy="2.81" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-0.6" cy="3" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-2.1" cy="3" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-3.1" cy="2.81" r="0.16"/>
+  <circle class="f0 sCHGRD" style="stroke-width: 0.64;" cx="-4.1" cy="2.5" r="0.16"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

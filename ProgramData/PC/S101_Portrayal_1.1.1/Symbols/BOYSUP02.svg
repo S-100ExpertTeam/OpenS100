@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.31mm" height="5.39mm" viewBox="-4.16 -2.7 8.31 5.39">
+  <title>BOYSUP02</title>
+  <desc>super-buoy ODAS And LANBY, simplified</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.84" y="-2.38" height="4.75" width="7.67"/>
+  <rect class="svgBox layout" fill="none" x="-3.84" y="-2.38" height="4.75" width="7.67"/>
+  <path d=" M -3.81,2.37 L -2.84,-0.48 L 2.85,-0.48 L 3.82,2.37" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 0.01,-0.48 L 0.01,-2.38" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -3.84,2.34 L -2.85,-0.51 L 2.87,-0.48 L 3.83,2.34 L -3.84,2.34 Z" class="fCHBLK"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="9.54mm" height="9.54mm" viewBox="-4.77 -4.77 9.54 9.54">
+  <title>SOUNDSC3</title>
+  <desc>sounding of low accuracy, black</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2023-02-16" iho:source="https://github.com/S-101-Portrayal-subWG/Working-Documents/issues/118" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.77" y="-4.77" height="9.54" width="9.54" />
+  <rect class="svgBox layout" fill="none" x="-4.77" y="-4.77" height="9.54" width="9.54" />
+  <circle cx="0" cy="0" r="4.27" class="sl f0 sSNDG2" style="stroke-width:0.32" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+  </svg>

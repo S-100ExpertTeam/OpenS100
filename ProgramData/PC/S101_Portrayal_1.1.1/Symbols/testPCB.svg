@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.0mm" height="4.0mm" viewBox="-2 -2 4 4">
+  <title>testPCB</title>
+  <desc>Embedded symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2018-11-06" iho:source="PCB" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <circle class="sl f0 fCHYLW" style="fill-opacity: 0.25" cx="0" cy="0" r="1.8"/>
+  <circle class="sl f0 sCHBLK" style="stroke-width: 0.2" cx="0" cy="0" r="1.8"/>
+  <circle class="sl f0 fCHBLK" cx="-0.7" cy="-0.4" r="0.4"/>
+  <circle class="sl f0 fCHBLK" cx="0.7" cy="-0.4" r="0.4"/>
+  <path class="sl f0 sCHBLK" style="stroke-width: 0.2" d="M -0.95,0.95 L -0.5,0.5 L 0.5,0.5 L 0.95,0.95"/>
+</svg>

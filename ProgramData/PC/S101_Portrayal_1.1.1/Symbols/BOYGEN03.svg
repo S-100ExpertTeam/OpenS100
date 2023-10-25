@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.97mm" height="5.06mm" viewBox="-2.82 -4.37 7.97 5.06">
+  <title>BOYGEN03</title>
+  <desc>default symbol for buoy, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.66" y="-4.21" height="4.74" width="7.65"/>
+  <rect class="svgBox layout" fill="none" x="-2.66" y="-4.21" height="4.74" width="7.65"/>
+  <path d=" M 2.79,-3.25 L 2.92,-3.53 L 3.05,-3.78 L 3.22,-3.95 L 3.39,-4.12 L 3.65,-4.21 L 3.88,-4.19 L 4.18,-4.1 L 4.46,-4.04 L 4.69,-3.7 L 4.87,-3.51 L 4.99,-3.29 L 4.99,-3.04 L 4.87,-2.8 L 4.74,-2.59 L 4.54,-2.35 L 4.31,-2.1 L 4.1,-1.84 L 3.97,-1.65 L 3.86,-1.48 L 3.84,-1.26 L 3.84,-1.03 L 3.84,-0.86 L 3.86,-0.64 L 3.86,-0.62" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 3.65,0.22 L 4.18,0.22" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.64;" cx="-0.05" cy="-2.31" r="1.73"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.64;" cx="-0.03" cy="-0.02" r="0.55"/>
+  <path d=" M 0.52,-0.02 L 2.59,-0.02" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M -2.66,-0.02 L -0.6,-0.02" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

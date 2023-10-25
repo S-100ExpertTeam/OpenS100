@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.37mm" height="8.37mm" viewBox="-4.25 -4.17 8.37 8.37">
+  <title>CHCRDEL1</title>
+  <desc>this object has been manually deleted or modified</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.09" y="-4.01" height="8.05" width="8.05"/>
+  <rect class="svgBox layout" fill="none" x="-4.09" y="-4.01" height="8.05" width="8.05"/>
+  <path d=" M -4.09,4.04 L 3.96,-4.01" class="sl f0 sCHCOR" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

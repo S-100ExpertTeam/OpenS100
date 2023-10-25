@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed5" version="0.1" creationDate="2022-04-01"?>
+<?S100Meta name="VEGATN04" exposition="pattern of symbols for mangroves"?><symbolFill>
+  <areaCRS>GlobalGeometry</areaCRS>
+  <symbol reference="VEGATN04P"/>
+  <v1>
+    <x>14</x>
+    <y>0.0</y>
+  </v1>
+  <v2>
+    <x>7</x>
+    <y>13</y>
+  </v2>
+</symbolFill>

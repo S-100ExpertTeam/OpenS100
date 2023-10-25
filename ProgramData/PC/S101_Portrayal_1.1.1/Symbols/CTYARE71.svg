@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="21.22mm" height="16.9mm" viewBox="-20.74 -0.48 21.22 16.9">
+  <title>CTYARE71</title>
+  <desc>cautionary area with further information</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-20.26" y="6" height="9.94" width="12.35"/>
+  <rect class="svgBox layout" fill="none" x="-20.26" y="0" height="15.94" width="20.26"/>
+  <path d=" M -12.86,12.25 L -12.86,7.6" class="sl f0 sTRFCF" style="stroke-width: 0.96;"/>
+  <path d=" M -13.53,14.05 L -12.1,14.05" class="sl f0 sTRFCF" style="stroke-width: 0.64;"/>
+  <circle class="f0 sTRFCF" style="stroke-width: 0.64;" cx="-12.88" cy="10.97" r="4.97"/>
+  <path d=" M -19.34,15.81 L -19.34,13.47 L -20.26,13.46" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -20.25,15.82 L -18.38,15.82" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -19.8,12.28 L -19.77,12.68" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

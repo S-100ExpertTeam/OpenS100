@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.41mm" height="5.96mm" viewBox="-1.82 -5.1 6.41 5.96">
+  <title>BCNGEN03</title>
+  <desc>default symbol for beacon, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2023-02-12" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.2"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.66" y="-4.94" height="5.64" width="6.09"/>
+  <rect class="svgBox layout" fill="none" x="-1.66" y="-4.94" height="5.64" width="6.09"/>
+  <path d=" M 2.23,-3.32 L 2.36,-3.6 L 2.49,-3.85 L 2.66,-4.02 L 2.83,-4.19 L 3.09,-4.28 L 3.32,-4.26 L 3.62,-4.17 L 3.9,-4.11 L 4.13,-3.77 L 4.31,-3.58 L 4.43,-3.36 L 4.43,-3.11 L 4.31,-2.87 L 4.18,-2.66 L 3.98,-2.42 L 3.75,-2.17 L 3.54,-1.91 L 3.41,-1.72 L 3.3,-1.55 L 3.28,-1.33 L 3.28,-1.1 L 3.28,-0.93 L 3.3,-0.71 L 3.3,-0.69" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M 3.09,0.18 L 3.62,0.18" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <path d=" M -1.5,-0.57 L 1.68,-0.58" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.64;" cx="0" cy="0" r="0.54"/>
+  <path d=" M -0.01,-0.59 L -0.04,-4.46" class="sl f0 sCHBLK" style="stroke-width: 1.28;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.16"/>
+</svg>

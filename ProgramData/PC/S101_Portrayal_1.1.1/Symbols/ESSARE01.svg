@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="13.34mm" height="8.14mm" viewBox="-6.67 -0.32 13.34 8.14">
+  <title>ESSARE01</title>
+  <desc>ESSA - centred symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-6.35" y="2.5" height="5" width="12.7"/>
+  <rect class="svgBox layout" fill="none" x="-6.350000000000001" y="0" height="7.5" width="12.7"/>
+  <path d=" M -6.35,7.5 L -6.35,2.5 L -4.25,2.5" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M -2.95,7.1 L -2.55,7.5 L -1.25,7.5 L -0.85,7.1 L -0.85,5.51 L -1.25,5.11 L -2.65,5.11 L -3.05,4.71 L -3.05,2.9 L -2.65,2.5 L -1.25,2.5 L -0.85,2.9" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 3.55,7.5 L 4.95,2.5 L 6.35,7.5" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 5.82,5.6 L 4.08,5.6" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M 2.65,2.9 L 2.25,2.5 L 0.95,2.5 L 0.55,2.9 L 0.55,4.7 L 0.95,5.1 L 2.25,5.1 L 2.65,5.5 L 2.65,7.1 L 2.25,7.5 L 0.95,7.5 L 0.55,7.1" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M -4.25,5.1 L -6.35,5.1" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <path d=" M -4.25,7.5 L -6.35,7.5" class="sl f0 sCHMGF" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

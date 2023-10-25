@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="20.25mm" height="6.34mm" viewBox="-20.09 -0.16 20.25 6.34">
+  <title>MARCUL02P</title>
+  <desc>pattern of symbols for a marine farm</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2015-03-04" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-19.93" y="1.99" height="4.03" width="7.05"/>
+  <rect class="svgBox layout" fill="none" x="-19.93" y="0" height="6.02" width="19.93"/>
+  <path d=" M -19.04,4.78 L -17.68,3.56 L -16.95,3.15 L -16.38,2.99 L -15.87,2.93 L -15.27,3.04 L -14.65,3.24 L -14.25,3.48 L -13.91,3.75 L -13.7,4.05 L -14.05,4.34 L -14.41,4.62 L -14.95,4.86 L -15.38,5 L -15.9,5.02 L -16.46,5 L -17,4.88 L -17.39,4.66 L -19.04,3.29" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -19.93,3 L -19.93,2.01 L -12.92,2.01 L -12.92,2.97" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -19.93,5.02 L -19.93,6.02 L -12.89,6.02 L -12.88,5.02" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -18.45,5.02 L -18.45,6.02" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -14.44,5.02 L -14.44,6.02" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -16.44,5.01 L -16.44,5.99" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -18.45,2.02 L -18.45,3.03" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -14.44,2 L -14.44,3.01" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <path d=" M -16.45,1.99 L -16.45,2.99" class="sl f0 sCHGRD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

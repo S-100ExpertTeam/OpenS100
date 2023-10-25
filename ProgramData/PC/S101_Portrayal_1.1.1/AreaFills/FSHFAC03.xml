@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-03"?>
+<?S100Meta name="FSHFAC03" exposition="pattern of symbols for an area with fishing stakes"?><symbolFill>
+  <areaCRS>GlobalGeometry</areaCRS>
+  <symbol reference="FSHFAC03P"/>
+  <v1>
+    <x>35.08</x>
+    <y>0.0</y>
+  </v1>
+  <v2>
+    <x>15.08</x>
+    <y>21.56</y>
+  </v2>
+</symbolFill>

@@ -525,9 +525,9 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	auto cm = theApp.gisLib->getCatalogManager();
 
 	// FC
-	auto fc1 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
+	//auto fc1 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
 	auto fc2 = cm->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml"); // valid(S-102)
-	auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
+	//auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
 	auto fc4 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid, but duplicated(S-101)
 	cm->addFC(L"..\\ProgramData\\FC\\S-122_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-123_FC.xml");
@@ -537,8 +537,9 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addFC(L"..\\ProgramData\\FC\\S-128_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
 
-	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
-	auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
+	//auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
+	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal_1.1.1\\portrayal_catalogue.xml"); // valid(S-101)
+	//auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
 	cm->addPC(L"..\\ProgramData\\PC\\S122_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S123_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S124_Portrayal\\portrayal_catalogue.xml");

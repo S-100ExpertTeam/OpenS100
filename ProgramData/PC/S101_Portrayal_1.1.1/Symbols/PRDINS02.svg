@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.69mm" height="4.84mm" viewBox="-2.87 -3.07 5.69 4.84">
+  <title>PRDINS02</title>
+  <desc>mine, quarry</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.55" y="-2.75" height="4.2" width="5.05"/>
+  <rect class="svgBox layout" fill="none" x="-2.55" y="-2.75" height="4.2" width="5.05"/>
+  <path d=" M -0.85,-1.95 L -2.3,-0.5 L -2.55,-0.75 L -2.55,-1.85 L -1.65,-2.75 L -0.85,-1.95 Z" class="fCHBRN"/>
+  <path d=" M 0.8,-1.9 L 1.6,-2.75 L 2.5,-1.85 L 2.5,-0.8 L 2.2,-0.5 L 0.8,-1.9 Z" class="fCHBRN"/>
+  <path d=" M -1.35,-1.35 L 1.45,1.45" class="sl f0 sLANDF" style="stroke-width: 0.64;"/>
+  <path d=" M 1.35,-1.35 L -1.45,1.45" class="sl f0 sLANDF" style="stroke-width: 0.64;"/>
+  <path d=" M -1.65,-2.75 L -0.85,-1.95 L -2.3,-0.5 L -2.55,-0.75 L -2.55,-1.85 L -1.65,-2.75" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <path d=" M 1.6,-2.75 L 2.5,-1.85 L 2.5,-0.8 L 2.2,-0.5 L 0.8,-1.9 L 1.6,-2.75" class="sl f0 sLANDF" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

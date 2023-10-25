@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.64mm" height="5.79mm" viewBox="-1.82 -4.82 3.64 5.79">
+  <title>BCNGEN01</title>
+  <desc>beacon in general, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.5" y="-4.5" height="5.15" width="3"/>
+  <rect class="svgBox layout" fill="none" x="-1.5" y="-4.5" height="5.15" width="3"/>
+  <path d=" M -0.75,-0.07 L -0.75,-4.5 L 0.68,-4.5 L 0.68,0 L 0.59,-0.25 L 0.56,-0.44 L 0.5,-0.5 L 0.28,-0.6 L 0.09,-0.66 L 0.03,-0.69 L -0.16,-0.66 L -0.25,-0.66 L -0.38,-0.6 L -0.47,-0.47 L -0.57,-0.32 L -0.69,-0.25 L -0.75,-0.1 L -0.75,0 Z" class="fCHBLK"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.64;" cx="0" cy="0" r="0.65"/>
+  <path d=" M -1.5,0 L -0.66,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <path d=" M 0.65,0 L 1.5,0" class="sl f0 sCHBLK" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

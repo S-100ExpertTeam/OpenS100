@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.52mm" height="4.75mm" viewBox="-1.24 -2.9 2.52 4.75">
+  <title>QUESMRK1P</title>
+  <desc>pattern of symbols for an area which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2015-03-04" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-1.08" y="-2.74" height="4.43" width="2.2"/>
+  <rect class="svgBox layout" fill="none" x="-1.08" y="-2.74" height="4.43" width="2.2"/>
+  <path d=" M -1.08,-1.78 L -0.95,-2.06 L -0.82,-2.31 L -0.65,-2.48 L -0.48,-2.65 L -0.22,-2.74 L 0.01,-2.72 L 0.31,-2.63 L 0.59,-2.57 L 0.82,-2.23 L 1,-2.04 L 1.12,-1.82 L 1.12,-1.57 L 1,-1.33 L 0.87,-1.12 L 0.67,-0.88 L 0.44,-0.63 L 0.23,-0.37 L 0.1,-0.18 L -0.01,-0.01 L -0.03,0.21 L -0.03,0.44 L -0.03,0.61 L -0.01,0.83 L -0.01,0.85" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -0.22,1.69 L 0.31,1.69" class="sl f0 sCHMGD" style="stroke-width: 0.64;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

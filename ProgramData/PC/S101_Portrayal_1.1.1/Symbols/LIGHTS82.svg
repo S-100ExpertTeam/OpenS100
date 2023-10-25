@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.7mm" height="4.13mm" viewBox="-7.54 -3.97 7.7 4.13">
+  <title>LIGHTS82</title>
+  <desc>floodlight</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-7.38" y="-3.81" height="3.02" width="5.84"/>
+  <rect class="svgBox layout" fill="none" x="-7.38" y="-3.81" height="3.81" width="7.38"/>
+  <circle class="f0 sCHMGD" style="stroke-width: 0.32;" cx="-6.22" cy="-1.95" r="1.16"/>
+  <path d=" M -4.67,-0.92 L -2.54,-0.84" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -4.98,-3.06 L -2.13,-3.81" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <path d=" M -4.49,-2 L -1.54,-2.3" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

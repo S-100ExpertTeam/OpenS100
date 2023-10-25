@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="dKartOffice" format="S100Ed2" version="1.0.2" creationDate="2022-08-23"?>
+<?S100Meta name="PILDSTR1" exposition="boundary of an Pilotage District area"?>
+<lineStyle>
+   <intervalLength>38</intervalLength>
+   <pen width="0.32">
+      <color>TRFCF</color>
+   </pen>
+   <dash>
+      <start>2</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>16</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>24</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>32</start>
+      <length>6</length>
+   </dash>
+   <symbol reference="PILBOP02" scaleFactor="0.8">
+      <position>12</position>
+   </symbol>
+</lineStyle>

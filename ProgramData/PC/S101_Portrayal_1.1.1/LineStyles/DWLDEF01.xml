@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2022-02-24"?>
+<?S100Meta name="DWLDEF01" exposition="dKart style, deep water route centreline, direction not defined in the data"?>
+<lineStyle>
+   <intervalLength>26</intervalLength>
+   <pen width="0.32">
+      <color>TRFCD</color>
+   </pen>
+   <dash>
+      <start>0</start>
+      <length>3.3</length>
+   </dash>
+   <dash>
+      <start>14.1</start>
+      <length>3.3</length>
+   </dash>
+   <symbol reference="EMDWRTC1">
+      <position>6</position>
+   </symbol>
+   <symbol reference="EMQUESM1">
+      <position>8.7</position>
+   </symbol>
+   <symbol reference="EMDWRTC2">
+      <position>11.4</position>
+   </symbol>
+   <symbol reference="EMDWRUT2">
+      <position>21.5</position>
+   </symbol>
+</lineStyle>

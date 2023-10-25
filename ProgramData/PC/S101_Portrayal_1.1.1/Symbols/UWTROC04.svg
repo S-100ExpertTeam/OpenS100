@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.32mm" height="3.57mm" viewBox="-2.19 -1.8 4.32 3.57">
+  <title>UWTROC04</title>
+  <desc>rock which covers and uncovers or is awash at low water</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.03" y="-1.64" height="3.25" width="4"/>
+  <rect class="svgBox layout" fill="none" x="-2.03" y="-1.64" height="3.25" width="4"/>
+  <path d=" M 1.97,0 L -2.03,0" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M 1.14,-1.63 L -1.21,1.61" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M 1.14,1.55 L -1.26,-1.64" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>
