@@ -109,6 +109,15 @@ FeatureTypes* FeatureCatalogue::GetFeatureTypes()
 	return &featureTypes;
 }
 
+FCD::S100_CD_AttributeValueType FeatureCatalogue::getSimpleAttributeType(std::string code)
+{
+	auto sa = GetSimpleAttribute(code);
+	if (sa) {
+		return sa->GetValueType();
+	}
+	return FCD::S100_CD_AttributeValueType::none;
+}
+
 FeatureType* FeatureCatalogue::GetFeatureTypeName(std::wstring name)
 {
 	for (

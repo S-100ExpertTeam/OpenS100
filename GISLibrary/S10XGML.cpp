@@ -109,7 +109,7 @@ bool S10XGML::Open(CString _filepath)
 		}
 		else if (strcmp(child.name(), "imember") == 0)
 		{
-			
+			ReadIMember(child);
 		}
 		else if (strcmp(child.name(), "member") == 0)
 		{
@@ -272,21 +272,19 @@ GF::FeatureType* S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc
 	features.push_back(feature);
 
 	auto child = node.first_child();
-	while (child)
-	{
+	while (child) {
 		std::string childName = child.name();
 
 		auto attribute = fc->GetAttribute(childName);
-		if (attribute)
-		{
+		auto role = fc->GetRole(childName);
+
+		if (attribute) {
 			ReadObjectAttribute(child, feature, fc);
 		}
-		else if (childName.compare("geometry") == 0)
-		{
+		else if (childName.compare("geometry") == 0) {
 			ReadFeatureGeometry(child, feature);
 		}
-		else
-		{
+		else {// if (role) {
 			ReadFeatureRole(child, feature, fc);
 		}
 
@@ -301,6 +299,7 @@ GF::InformationType* S10XGML::ReadInformation(pugi::xml_node& node, FeatureCatal
 
 	information->id = node.attribute("gml:id").value();
 	information->code = node.name();
+	information->code = DeleteXMLNamespace(information->code);
 
 	informations.push_back(information);
 
@@ -749,6 +748,22 @@ bool S10XGML::ReadMember(pugi::xml_node& node)
 	return false;
 }
 
+bool S10XGML::ReadIMember(pugi::xml_node& node)
+{
+	auto informationNode = node.first_child();
+	std::string nodeName = informationNode.name();
+	auto code = getCodeFromMember(nodeName);
+
+	auto fc = GetFC();
+	auto information = fc->GetInformationType(code);
+	if (information) {
+		ReadInformation(informationNode, fc);
+		return true;
+	}
+
+	return false;
+}
+
 bool S10XGML::ReadObjectAttribute(
 	pugi::xml_node& node, GF::ObjectType* object, FeatureCatalogue* fc)
 {
@@ -861,8 +876,8 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 
 bool S10XGML::ReadFeatureRole(pugi::xml_node& node, GF::FeatureType* feature, FeatureCatalogue* fc)
 {
-	auto role = fc->GetRole(node.name());
-	if (role)
+	//auto role = fc->GetRole(node.name());
+	//if (role)
 	{
 		std::string associatedID = node.attribute("xlink:href").value();
 		if (associatedID.length() > 1)
@@ -997,6 +1012,17 @@ bool S10XGML::WriteInputXML_FeatureTypes(pugi::xml_node& node)
 				WriteInputXML_FeatureType_ComplexAttribute(complex_node, (GF::ComplexAttributeType*)attr);
 			}
 		}
+
+		auto cntInformationAssociation = feature->GetInformationRelationCount();
+		for (int i = 0; i < cntInformationAssociation; i++) {
+			auto informationAssociation = feature->getInformationAssociation(i);
+			auto informationAssociationCode = informationAssociation.GetCode();
+			if (!informationAssociationCode.empty()) {
+				auto node_association = node_feature.append_child(informationAssociationCode.c_str()); 
+				node_association.append_attribute("role").set_value(informationAssociation.GetRole().c_str());
+				node_association.append_attribute("informationRef").set_value(informationAssociation.GetInformationID().c_str());
+			}
+		}
 	}
 
 	return true;
@@ -1027,7 +1053,31 @@ bool S10XGML::WriteInputXML_InformationTypes(pugi::xml_node& node)
 
 bool S10XGML::WriteInputXML_FeatureType_SimpleAttribute(pugi::xml_node& node, GF::SimpleAttributeType* simpleAttribute)
 {
-	node.append_child(simpleAttribute->GetCode().c_str()).append_child(pugi::node_pcdata).set_value(simpleAttribute->GetValue().c_str());
+	auto fc = GetFC();
+	if (!fc) return false;
+
+	auto code = simpleAttribute->GetCode();
+
+	auto type = fc->getSimpleAttributeType(code);
+	if (type == FCD::S100_CD_AttributeValueType::none) {
+		return false;
+	}
+	else if (type == FCD::S100_CD_AttributeValueType::enumeration) {
+		auto sa = fc->GetSimpleAttribute(code);
+		if (sa) {
+			auto lv = sa->GetListedValue(simpleAttribute->GetValue());
+			if (lv) {
+				auto value = lv->GetCode();
+				node.append_child(code.c_str()).append_child(pugi::node_pcdata).set_value(std::to_string(value).c_str());
+			}
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		node.append_child(code.c_str()).append_child(pugi::node_pcdata).set_value(simpleAttribute->GetValue().c_str());
+	}
 
 	return true;
 }
