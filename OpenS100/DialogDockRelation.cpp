@@ -225,7 +225,8 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 		auto srcFeature = *ri;
 
 		// feature type code (source)
-		std::wstring srcFeatureTypeCode = cell->GetFeatureTypeCodeByID(srcFeature->GetIDAsInteger());
+		//std::wstring srcFeatureTypeCode = cell->GetFeatureTypeCodeByID(srcFeature->GetIDAsInteger());
+		std::wstring srcFeatureTypeCode = cell->GetFeatureTypeCodeByID(srcFeature->GetID());
 
 		// Feature Type (FC)
 		auto featureType = fc->GetFeatureType(srcFeatureTypeCode);
