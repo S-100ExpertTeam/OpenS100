@@ -225,7 +225,6 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 		auto srcFeature = *ri;
 
 		// feature type code (source)
-		//std::wstring srcFeatureTypeCode = cell->GetFeatureTypeCodeByID(srcFeature->GetIDAsInteger());
 		std::wstring srcFeatureTypeCode = cell->GetFeatureTypeCodeByID(srcFeature->GetID());
 
 		// Feature Type (FC)
@@ -242,7 +241,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 		{
 			auto associatedFeatureTypeID = srcFeature->GetAssociatedFeatureID(i);
 			auto associatedFeature = cell->GetFeatureType(associatedFeatureTypeID);
-			auto associatedFeatureCode = cell->GetFeatureTypeCodeByID(std::stoi(associatedFeatureTypeID));
+			auto associatedFeatureCode = cell->GetFeatureTypeCodeByID(associatedFeatureTypeID);
 			auto featureAssociationCode = cell->GetFeatureAssociationCode(srcFeature, i);
 			auto roleCode = cell->GetFeatureAssociationRoleCode(srcFeature,i );
 
@@ -259,11 +258,11 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (featureType)
 			{
-				colSrcFeatureName.Format(_T("%s (%d)"), featureType->GetName().c_str(), srcFeature->GetIDAsInteger());
+				colSrcFeatureName.Format(_T("%s (%s)"), featureType->GetName().c_str(), srcFeature->GetIDAsWString().c_str());
 			}
 			else
 			{
-				colSrcFeatureName.Format(_T("%s (%d)"), srcFeatureTypeCode, srcFeature->GetIDAsInteger());
+				colSrcFeatureName.Format(_T("%s (%s)"), srcFeatureTypeCode, srcFeature->GetIDAsWString().c_str());
 			}
 
 			if (fc_featureAssociation)
@@ -293,7 +292,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 				colAssociationFeatureName.Format(_T("%s (%s)"), associatedFeatureCode, pugi::as_wide(associatedFeatureTypeID).c_str());
 			}
 
-			colSrcFeatureId.Format(_T("%d"), srcFeature->GetIDAsInteger());
+			colSrcFeatureId.Format(_T("%s"), srcFeature->GetIDAsWString().c_str());
 			colAssociationFeatureId.Format(_T("%s"), pugi::as_wide(associatedFeatureTypeID).c_str());
 
 
@@ -317,7 +316,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 		{
 			auto associatedInformationTypeID = srcFeature->GetAssociatedInformationID(i);
 			auto associatedInformationType = cell->GetInformationType(associatedInformationTypeID);
-			auto associatedInformationTypeCode = cell->GetInformationTypeCodeByID(std::stoi(associatedInformationTypeID));
+			auto associatedInformationTypeCode = cell->GetInformationTypeCodeByID(associatedInformationTypeID);
 			auto informationAssociationCode = cell->GetInformationAssociationCode(srcFeature, i);
 			auto roleCode = cell->GetInformationAssociationRoleCode(srcFeature, i);
 
@@ -334,11 +333,11 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (featureType)
 			{
-				colSrcFeatureName.Format(_T("%s (%d)"), featureType->GetName().c_str(), srcFeature->GetIDAsInteger());
+				colSrcFeatureName.Format(_T("%s (%s)"), featureType->GetName().c_str(), srcFeature->GetIDAsWString().c_str());
 			}
 			else
 			{
-				colSrcFeatureName.Format(_T("%s (%d)"), srcFeatureTypeCode, srcFeature->GetIDAsInteger());
+				colSrcFeatureName.Format(_T("%s (%s)"), srcFeatureTypeCode, srcFeature->GetIDAsWString().c_str());
 			}
 
 			if (fc_informationAssociation)
@@ -368,7 +367,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 				colAssociationFeatureName.Format(_T("%s (%s)"), associatedInformationTypeCode, pugi::as_wide(associatedInformationTypeID).c_str());
 			}
 
-			colSrcFeatureId.Format(_T("%d"), srcFeature->GetIDAsInteger());
+			colSrcFeatureId.Format(_T("%s"), srcFeature->GetIDAsWString().c_str());
 			colAssociationFeatureId.Format(_T("%s"), pugi::as_wide(associatedInformationTypeID).c_str());
 
 			// set text
@@ -389,7 +388,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 	{
 		auto srcInformation = *ri;
 
-		std::wstring srcInformationTypeCode = cell->GetInformationTypeCodeByID(srcInformation->GetIDAsInteger());
+		std::wstring srcInformationTypeCode = cell->GetInformationTypeCodeByID(srcInformation->GetID());
 
 		auto informationType = fc->GetInformationType(srcInformationTypeCode);
 		if (informationType == nullptr)
@@ -404,7 +403,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 		{
 			auto associatedInformationTypeID = srcInformation->GetAssociatedInformationID(i);
 			auto associatedInformationType = cell->GetInformationType(associatedInformationTypeID);
-			auto associatedInformationTypeCode = cell->GetInformationTypeCodeByID(std::stoi(associatedInformationTypeID));
+			auto associatedInformationTypeCode = cell->GetInformationTypeCodeByID(associatedInformationTypeID);
 			auto informationAssociationCode = cell->GetInformationAssociationCode(srcInformation, i);
 			auto roleCode = cell->GetInformationAssociationRoleCode(srcInformation, i);
 
@@ -421,11 +420,11 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (informationType)
 			{
-				colSrcFeatureName.Format(_T("%s (%d)"), informationType->GetName().c_str(), srcInformation->GetIDAsInteger());
+				colSrcFeatureName.Format(_T("%s (%s)"), informationType->GetName().c_str(), srcInformation->GetIDAsWString().c_str());
 			}
 			else
 			{
-				colSrcFeatureName.Format(_T("%s (%d)"), srcInformationTypeCode, srcInformation->GetIDAsInteger());
+				colSrcFeatureName.Format(_T("%s (%s)"), srcInformationTypeCode, srcInformation->GetIDAsWString().c_str());
 			}
 
 			if (fc_informationAssociation)
@@ -455,7 +454,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 				colAssociationFeatureName.Format(_T("%s (%s)"), associatedInformationTypeCode, pugi::as_wide(associatedInformationTypeID).c_str());
 			}
 
-			colSrcFeatureId.Format(_T("%d"), srcInformation->GetIDAsInteger());
+			colSrcFeatureId.Format(_T("%s"), srcInformation->GetIDAsWString().c_str());
 			colAssociationFeatureId.Format(_T("%s"), pugi::as_wide(associatedInformationTypeID).c_str());
 
 			// set text
