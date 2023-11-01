@@ -130,7 +130,10 @@ PortrayalCatalogue* CatalogManager::getPC(std::string productId) const
 		return pc.back();
 	}
 
-	return nullptr;
+	// Failed to find PC, return S-100 PC
+	return getPC("S-100");
+
+	//return nullptr;
 }
 
 FeatureCatalogue* CatalogManager::getFC(int productId) const
