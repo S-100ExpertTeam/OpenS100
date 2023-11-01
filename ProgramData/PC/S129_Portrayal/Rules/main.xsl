@@ -7,7 +7,6 @@
   <xsl:include href="NonNavigableArea.xsl"/>
   <xsl:include href="ControlPoint.xsl"/>
   <xsl:include href="InformationBox.xsl"/>
-  <xsl:include href="UnderKeelClearancePlan.xsl"/>
 
   <xsl:template match="/">
     <displayList>
