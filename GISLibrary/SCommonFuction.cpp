@@ -12,10 +12,10 @@ void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, S
 
 	if (_surface->getNumPoint() > SGeometry::sizeOfPoint)
 	{
-		SGeometry::sizeOfPoint = _surface->getNumPoint();
+		SGeometry::sizeOfPoint = _surface->getNumPoint() * 1.5;
 
 		delete[] SGeometry::viewPoints;
-		SGeometry::viewPoints = new CPoint[int(SGeometry::sizeOfPoint * 1.5)];
+		SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
 	}
 
 	for (int count = 0; count < _surface->getNumPoint(); count++)
@@ -235,24 +235,6 @@ inline void swap(int &val1, int &val2)
 	int t = val1;
 	val1 = val2;
 	val2 = t;
-}
-
-bool SCommonFuction::IsIntersect(POINT _s1, POINT _e1, POINT _s2, POINT _e2)
-{
-	float x12 = (float)(_s1.x - _e1.x);
-	float x34 = (float)(_s2.x - _e2.x);
-	float y12 = (float)(_s1.y - _e1.y);
-	float y34 = (float)(_s2.y - _e2.y);
-
-	float c = x12 * y34 - y12 * x34;
-
-	if (fabs(c) < 0.01)
-	{
-		// No intersection
-		return false;
-	}
-	else
-		return true;
 }
 
 void SCommonFuction::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, CRect* viewPort)

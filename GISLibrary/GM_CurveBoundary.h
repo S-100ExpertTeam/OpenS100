@@ -7,7 +7,12 @@ namespace GM
 	class CurveBoundary
 	{
 	public:
-		Point startPoint;
-		Point endPoint;
+		CurveBoundary();
+		CurveBoundary(CurveBoundary& item);
+		virtual ~CurveBoundary();
+
+	public:
+		Point* startPoint = nullptr;
+		Point* endPoint = nullptr;
 	};
 }

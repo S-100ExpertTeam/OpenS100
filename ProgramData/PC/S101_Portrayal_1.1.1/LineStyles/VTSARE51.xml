@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2022-04-07"?>
+<?S100Meta name="VTSARE51" exposition="Vessel Traffic Service Area"?>
+<lineStyle>
+   <intervalLength>32.3</intervalLength>
+   <pen width="0.32">
+      <color>CHMGD</color>
+   </pen>
+   <dash>
+      <start>2</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>18.2</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>26.2</start>
+      <length>6</length>
+   </dash>
+   <symbol reference="EMAREMG1">
+      <position>5</position>
+   </symbol>
+   <symbol reference="EMVTSARE">
+      <position>13.1</position>
+   </symbol>
+   <symbol reference="EMAREMG1">
+      <position>21.2</position>
+   </symbol>
+   <symbol reference="EMAREMG1">
+      <position>29.3</position>
+   </symbol>
+</lineStyle>

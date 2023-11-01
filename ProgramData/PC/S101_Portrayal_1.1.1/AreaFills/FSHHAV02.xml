@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-03"?>
+<?S100Meta name="FSHHAV02" exposition="pattern of symbols for a fish haven"?><symbolFill>
+  <areaCRS>GlobalGeometry</areaCRS>
+  <symbol reference="FSHHAV02P"/>
+  <v1>
+    <x>34.9</x>
+    <y>0.0</y>
+  </v1>
+  <v2>
+    <x>14.9</x>
+    <y>23.2</y>
+  </v2>
+</symbolFill>

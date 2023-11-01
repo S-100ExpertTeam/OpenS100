@@ -47,6 +47,7 @@ public:
 	int GetInformationTypeCount();
 
 	std::string GetInformationType(int index);
+	std::vector<std::string> GetInformationTypes();
 	std::wstring GetInformationTypeAsWstring(int index);
 
 	void InsertInformationType(std::string value);

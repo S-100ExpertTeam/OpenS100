@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-16"?>
+<?S100Meta name="MARSYS51" exposition="boundary between IALA-A and IALA-B systems of lateral buoys and beacons"?>
+<lineStyle>
+   <intervalLength>25.5</intervalLength>
+   <pen width="0.32">
+      <color>CHGRD</color>
+   </pen>
+   <dash>
+      <start>2</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>10</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>15.2</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>22.5</start>
+      <length>3</length>
+   </dash>
+   <symbol reference="EMMARS01">
+      <position>7.31</position>
+   </symbol>
+   <symbol reference="EMMARS02">
+      <position>20.44</position>
+   </symbol>
+</lineStyle>

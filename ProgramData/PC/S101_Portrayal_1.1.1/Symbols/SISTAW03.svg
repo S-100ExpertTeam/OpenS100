@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.37mm" height="5.37mm" viewBox="-0.4 -0.4 8.37 5.37">
+  <title>2022_SISTAW03</title>
+  <desc>Signal Station Warning</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2022-05-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-0.4" y="-0.4" width="8.37" height="5.37"/>
+  <rect class="svgBox layout" fill="none" x="-0.4" y="-0.4" width="8.37" height="5.37"/>
+  
+  <rect class="fCHWHT" style="stroke-width:0.64" x="0.65" y="0.65" width="7" height="4"/>
+  <rect class="sl f0 sCHMGF" style="stroke-width:0.64" x="0.65" y="0.65" width="7" height="4"/>
+  <circle class="fLANDF" cx="0" cy="0" r="0.4"/>
+  <path class="sl f0 sCHMGF" style="stroke-width:0.64" d="M 5.16,1.61 L 5.59,3.69 L 6.01,1.61 L 6.44,3.69 L 6.87,1.61"/>
+  <path class="sl f0 sCHMGF" style="stroke-width:0.64" d="M 4.49,1.85 L 4.24,1.61 L 3.74,1.61 L 3.49,1.85 L 3.49,2.36 L 3.74,2.61 L 4.14,2.61 L 4.49,2.86 L 4.49,3.36 L 4.24,3.69 L 3.58,3.69 L 3.3,3.38"/>
+  <path class="sl f0 sCHMGF" style="stroke-width:0.64" d="M 2.62,1.85 L 2.37,1.61 L 1.87,1.61 L 1.62,1.85 L 1.62,2.36 L 1.87,2.61 L 2.27,2.61 L 2.62,2.86 L 2.62,3.36 L 2.37,3.69 L 1.71,3.69 L 1.43,3.38"/>
+
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

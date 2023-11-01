@@ -14,7 +14,7 @@ F_DSID::F_DSID(void)
 	m_prof = "1";
 	m_dsnm = ""; // 101KR005X01NE.000	
 	m_dstl = ""; // S-101 Test Data Sets in ECDIS
-	m_dsrd = ""; // 20200626
+	m_dsrd = "20231019"; // 20200626
 	m_dslg = "EN";
 	m_dsab = "";
 	m_dsed = "1.0";

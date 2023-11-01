@@ -16,16 +16,30 @@
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
+#include <direct.h>
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 CGISLibraryApp::CGISLibraryApp()
 {
+	std::string str = "..\\TEMP"; // read path
+	int mkFlag = _mkdir(str.c_str()); //If it's new, 0, if it exists or if it's not, -1.
+
 	gisLib = this;
 
 	D2.CreateDeviceIndependentResources();
 	D2.CreateDeviceDependentResources();
+
+	//std::string wkb_string = "01040000000200000001010000000000000000405e400000000000003e40010100000000000000008061400000000000004440";
+	//SMultiPoint mp;
+	//auto wkb = LatLonUtility::HexStringToWKB(wkb_string);
+	//mp.ImportFromWkb(wkb, wkb_string.size() / 2);
+	//delete[] wkb;
+	
+	//S101Cellcell;
+	//cell.OpenByGML(L"..\\TEMP\\101GML3.gml");
 
 	//SCurve curve;
 	//curve.Init(3);

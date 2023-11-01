@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.34mm" height="4.34mm" viewBox="-2.17 -2.17 4.34 4.34">
+  <title>UWTROC03</title>
+  <desc>dangerous underwater rock of uncertain depth</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.01" y="-2.01" height="4.02" width="4.02"/>
+  <rect class="svgBox layout" fill="none" x="-2.01" y="-2.01" height="4.02" width="4.02"/>
+  <circle class="fDEPVS" cx="0" cy="0" r="2.01"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0" cy="-2" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0" cy="2" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="2" cy="0" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-2" cy="0" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0.8" cy="-1.9" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.4" cy="-1.4" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.85" cy="-0.75" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.75" cy="0.85" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.4" cy="1.4" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0.75" cy="1.8" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-0.8" cy="1.8" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.4" cy="1.35" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.85" cy="0.7" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.8" cy="-0.8" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.45" cy="-1.45" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-0.8" cy="-1.85" r="0.16"/>
+  <path d=" M 0.02,-1.29 L 0.02,1.48" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <path d=" M -1.36,0.05 L 1.37,0.06" class="sl f0 sCHBLK" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -32,6 +32,11 @@ std::wstring CodeWithNumericCode::GetCode()
 	return std::wstring(m_code);
 }
 
+std::string CodeWithNumericCode::getCodeAsString()
+{
+	return pugi::as_utf8(m_code);
+}
+
 void CodeWithNumericCode::SetCode(std::wstring value)
 {
 	this->m_code = value.c_str();

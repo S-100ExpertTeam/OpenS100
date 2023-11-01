@@ -101,60 +101,73 @@ static void get_referenced_spatials(std::string spatial_id, std::vector<std::str
 	{
 		auto spatial = s_spatial_point_nodes[spatial_id];
 
-		spatial_type = ret[0];
-		spatials->push_back(spatial_id);
+		if (spatial) {
+
+			spatial_type = ret[0];
+			spatials->push_back(spatial_id);
+
+		}
 	}
 	else if (ret[0] == "MultiPoint")
 	{
 		auto spatial = s_spatial_mpoint_nodes[spatial_id];
 
-		spatial_type = ret[0];
-		spatials->push_back(spatial_id);
+		if (spatial) {
+
+			spatial_type = ret[0];
+			spatials->push_back(spatial_id);
+
+		}
 	}
 	else if (ret[0] == "Curve")
 	{
 		auto spatial = s_spatial_curve_nodes[spatial_id];
+		
+		if (spatial) {
 
-		spatial_type = ret[0];
-		spatials->push_back(spatial_id);
+			spatial_type = ret[0];
+			spatials->push_back(spatial_id);
 
-		for (auto i = spatial->m_ptas->m_arr.begin(); i != spatial->m_ptas->m_arr.end(); i++)
-		{
-			auto ptas = *i;
-			std::string boundaryType;
-			switch (ptas->m_topi)
+			for (auto i = spatial->m_ptas->m_arr.begin(); i != spatial->m_ptas->m_arr.end(); i++)
 			{
-			case 1:
-				boundaryType = "Begin";
-				break;
-			case 2:
-				boundaryType = "End";
-				break;
+				auto ptas = *i;
+				std::string boundaryType;
+				switch (ptas->m_topi)
+				{
+				case 1:
+					boundaryType = "Begin";
+					break;
+				case 2:
+					boundaryType = "End";
+					break;
+				}
+				if (boundaryType == "Begin")
+					spatials->push_back(get_spatial_association(ptas).spatial_type); // (1, ptas) => 1="Point"
+				else
+					spatials->push_back(get_spatial_association(ptas).spatial_type);
 			}
-			if (boundaryType == "Begin")
-				spatials->push_back(get_spatial_association(ptas).spatial_type); // (1, ptas) => 1="Point"
-			else
-				spatials->push_back(get_spatial_association(ptas).spatial_type);
 		}
 	}
 	else if (ret[0] == "CompositeCurve")
 	{
 		auto spatial = s_spatial_ccurve_nodes[spatial_id];
 
-		spatial_type = ret[0];
-		spatials->push_back(spatial_id);
+		if (spatial) {
+			spatial_type = ret[0];
+			spatials->push_back(spatial_id);
 
-		composite_curve composite_curve;
+			composite_curve composite_curve;
 
-		for (auto itorParent = spatial->m_cuco.begin(); itorParent != spatial->m_cuco.end(); itorParent++)
-		{
-			F_CUCO* cucoParent = *itorParent;
-
-			for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
+			for (auto itorParent = spatial->m_cuco.begin(); itorParent != spatial->m_cuco.end(); itorParent++)
 			{
-				CUCO* cuco = *itor;
+				F_CUCO* cucoParent = *itorParent;
 
-				get_referenced_spatials(get_spatial_association(cuco).spatial_id, spatials);
+				for (auto itor = cucoParent->m_arr.begin(); itor != cucoParent->m_arr.end(); itor++)
+				{
+					CUCO* cuco = *itor;
+
+					get_referenced_spatials(get_spatial_association(cuco).spatial_id, spatials);
+				}
 			}
 		}
 	}
@@ -162,41 +175,44 @@ static void get_referenced_spatials(std::string spatial_id, std::vector<std::str
 	{
 		auto spatial = s_spatial_surface_nodes[spatial_id];
 
-		spatial_type = ret[0];
-		spatials->push_back(spatial_id);
+		if (spatial) {
 
-		surface surface;
+			spatial_type = ret[0];
+			spatials->push_back(spatial_id);
 
-		for (auto itorParent = spatial->m_rias.begin(); itorParent != spatial->m_rias.end(); itorParent++)
-		{
-			F_RIAS* riasParent = *itorParent;
-			for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
+			surface surface;
+
+			for (auto itorParent = spatial->m_rias.begin(); itorParent != spatial->m_rias.end(); itorParent++)
 			{
-				RIAS* rias = *itor;
-				std::string usage;
+				F_RIAS* riasParent = *itorParent;
+				for (auto itor = riasParent->m_arr.begin(); itor != riasParent->m_arr.end(); itor++)
+				{
+					RIAS* rias = *itor;
+					std::string usage;
 
-				switch (rias->m_usag)
-				{
-				case 1:
-					usage = "Outer";
-					break;
-				case 2:
-					usage = "Inner";
-					break;
-				}
-
-				if (usage == "Outer")
-				{
-					get_referenced_spatials(get_spatial_association(rias).spatial_id, spatials);
-				}
-				else
-				{
-					if (!surface.interior_rings.has_value())
+					switch (rias->m_usag)
 					{
-						surface.interior_rings = std::vector<spatial_association>();
+					case 1:
+						usage = "Outer";
+						break;
+					case 2:
+						usage = "Inner";
+						break;
 					}
 
-					get_referenced_spatials(get_spatial_association(rias).spatial_id, spatials);
+					if (usage == "Outer")
+					{
+						get_referenced_spatials(get_spatial_association(rias).spatial_id, spatials);
+					}
+					else
+					{
+						if (!surface.interior_rings.has_value())
+						{
+							surface.interior_rings = std::vector<spatial_association>();
+						}
+
+						get_referenced_spatials(get_spatial_association(rias).spatial_id, spatials);
+					}
 				}
 			}
 		}
@@ -616,19 +632,13 @@ static std::vector<std::string> get_simple_attribute_values(R_InformationRecord*
 			auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
 			if (aitor != cell->m_dsgir.m_atcs->m_arr.end())
 			{
-				std::wstring code =std::wstring( aitor->second->m_code);
-				std::string attributeAcronym;
-				attributeAcronym.assign(code.begin(), code.end());
-				//aitor->second->m_code.ReleaseBuffer();
+				std::string attributeAcronym = aitor->second->getCodeAsString();
 
 				if (attributeAcronym.compare(attribute_code) == 0)
 				{
 					if (offset != 0)
 					{
-						std::wstring value =std::wstring( attr->m_atvl);
-						std::string r_value;
-						r_value.assign(value.begin(), value.end());
-						//attr->m_atvl.ReleaseBuffer();
+						std::string r_value = attr->getValueAsString();
 
 						std::string parent_name = *path_items.begin();
 						auto split = parent_name.find(':', 0);
@@ -639,10 +649,7 @@ static std::vector<std::string> get_simple_attribute_values(R_InformationRecord*
 						auto paitor = cell->m_dsgir.m_atcs->m_arr.find(parent_attribute->m_natc);
 						if (paitor != cell->m_dsgir.m_atcs->m_arr.end())
 						{
-							std::wstring parent_code = std::wstring( paitor->second->m_code);
-							std::string parent_attributeAcronym;
-							parent_attributeAcronym.assign(parent_code.begin(), parent_code.end());
-							//paitor->second->m_code.ReleaseBuffer();
+							std::string parent_attributeAcronym = paitor->second->getCodeAsString();
 
 							if (parent_code_in_path.compare(parent_attributeAcronym) == 0)
 							{
@@ -659,10 +666,7 @@ static std::vector<std::string> get_simple_attribute_values(R_InformationRecord*
 					{
 						if(attr->m_atvl.GetLength() > 0)
 						{
-							std::wstring value =std::wstring(attr->m_atvl);
-							std::string r_value;
-							r_value.assign(value.begin(), value.end());
-							//attr->m_atvl.ReleaseBuffer();
+							std::string r_value = attr->getValueAsString();
 						}
 						else
 						{
@@ -710,19 +714,13 @@ static int get_complex_attribute_count(R_FeatureRecord* fr, std::string path, st
 			auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
 			if (aitor != cell->m_dsgir.m_atcs->m_arr.end())
 			{
-				std::wstring code = std::wstring( aitor->second->m_code);
-				std::string attributeAcronym;
-				attributeAcronym.assign(code.begin(), code.end());
-				//aitor->second->m_code.ReleaseBuffer();
+				std::string attributeAcronym = aitor->second->getCodeAsString();
 
 				if (attributeAcronym.compare(attribute_code) == 0)
 				{
 					if (offset != 0)
 					{
-						std::wstring value = std::wstring( attr->m_atvl);
-						std::string r_value;
-						r_value.assign(value.begin(), value.end());
-						//attr->m_atvl.ReleaseBuffer();
+						std::string r_value = attr->getValueAsString();
 
 						std::string parent_name = *path_items.rbegin();
 						auto split = parent_name.find(':', 0);
@@ -735,10 +733,7 @@ static int get_complex_attribute_count(R_FeatureRecord* fr, std::string path, st
 						auto paitor = cell->m_dsgir.m_atcs->m_arr.find(parent_attribute->m_natc);
 						if (paitor != cell->m_dsgir.m_atcs->m_arr.end())
 						{
-							std::wstring parent_code =std::wstring( paitor->second->m_code);
-							std::string parent_attributeAcronym;
-							parent_attributeAcronym.assign(parent_code.begin(), parent_code.end());
-							//paitor->second->m_code.ReleaseBuffer();
+							std::string parent_attributeAcronym = paitor->second->getCodeAsString();
 
 							if (parent_code_in_path.compare(parent_attributeAcronym) == 0 &&
 								n_parent_sequence_in_path == parent_attribute->m_atix)
@@ -749,10 +744,7 @@ static int get_complex_attribute_count(R_FeatureRecord* fr, std::string path, st
 					}
 					else
 					{
-						std::wstring value =std::wstring( attr->m_atvl);
-						std::string r_value;
-						r_value.assign(value.begin(), value.end());
-						//attr->m_atvl.ReleaseBuffer();
+						std::string r_value = attr->getValueAsString();
 
 						attr_count++;
 					}
@@ -796,20 +788,13 @@ static int get_complex_attribute_count(R_InformationRecord* Ir, std::string path
 			auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
 			if (aitor != cell->m_dsgir.m_atcs->m_arr.end())
 			{
-				std::wstring code =std::wstring( aitor->second->m_code);
-				std::string attributeAcronym;
-				attributeAcronym.assign(code.begin(), code.end());
-				//aitor->second->m_code.ReleaseBuffer();
+				std::string attributeAcronym = aitor->second->getCodeAsString();
 
 				if (attributeAcronym.compare(attribute_code) == 0)
 				{
 					if (offset != 0)
 					{
-						std::wstring value =std::wstring( attr->m_atvl);
-						std::string r_value;
-						r_value.assign(value.begin(), value.end());
-						//attr->m_atvl.ReleaseBuffer();
-
+						std::string r_value = attr->getValueAsString();
 
 						std::string parent_name = *path_items.begin();
 						auto split = parent_name.find(':', 0);
@@ -820,10 +805,7 @@ static int get_complex_attribute_count(R_InformationRecord* Ir, std::string path
 						auto paitor = cell->m_dsgir.m_atcs->m_arr.find(parent_attribute->m_natc);
 						if (paitor != cell->m_dsgir.m_atcs->m_arr.end())
 						{
-							std::wstring parent_code =std::wstring( paitor->second->m_code);
-							std::string parent_attributeAcronym;
-							parent_attributeAcronym.assign(parent_code.begin(), parent_code.end());
-							//paitor->second->m_code.ReleaseBuffer();
+							std::string parent_attributeAcronym = paitor->second->getCodeAsString();
 
 							if (parent_code_in_path.compare(parent_attributeAcronym) == 0)
 							{
@@ -833,11 +815,7 @@ static int get_complex_attribute_count(R_InformationRecord* Ir, std::string path
 					}
 					else
 					{
-						std::wstring value =std::wstring( attr->m_atvl);
-						std::string r_value;
-						r_value.assign(value.begin(), value.end());
-						//attr->m_atvl.ReleaseBuffer();
-
+						std::string r_value = attr->getValueAsString();
 						attr_count++;
 					}
 				}
@@ -867,14 +845,15 @@ std::string hd_get_information_type_code(std::string id)
 {
 	R_InformationRecord* ir = s_information_nodes[id];
 	if (!ir) {
-		return "";
+		return std::string("");
 	}
 
 	auto i1 = cell->m_dsgir.m_itcs->m_arr.find(ir->m_irid.NITC());
 	if (i1 == cell->m_dsgir.m_itcs->m_arr.end())
 	{
-		return "";
+		return std::string("");
 	}
+	
 	std::wstring s1 =std::wstring(i1->second->m_code);
 	std::string ret;
 	ret.assign(s1.begin(), s1.end());
@@ -910,13 +889,8 @@ std::vector<std::string> hd_get_feature_associated_information_ids(std::string f
 			auto asitor = cell->m_dsgir.m_iacs->m_arr.find(f_inas->m_niac);
 			auto ritor = cell->m_dsgir.m_arcs->m_arr.find(f_inas->m_narc);
 
-			std::wstring asName = std::wstring(asitor->second->m_code);
-			std::wstring roleName =std::wstring( ritor->second->m_code);
-
-			std::string r_asName, r_roleName;
-
-			r_asName.assign(asName.begin(), asName.end());
-			r_roleName.assign(roleName.begin(), roleName.end());
+			auto r_asName = asitor->second->getCodeAsString();
+			auto r_roleName = ritor->second->getCodeAsString();
 
 			if (!role_code.has_value() || r_roleName == role_code.value())
 				information_ids1.push_back(std::to_string(f_inas->m_name.RCID));
@@ -942,13 +916,8 @@ std::vector<std::string> hd_get_feature_associated_feature_ids(std::string featu
 			auto asitor = cell->m_dsgir.m_iacs->m_arr.find(f_inas->m_niac);
 			auto ritor = cell->m_dsgir.m_arcs->m_arr.find(f_inas->m_narc);
 
-			std::wstring asName =std::wstring( asitor->second->m_code);
-			std::wstring roleName =std::wstring( ritor->second->m_code);
-
-			std::string r_asName, r_roleName;
-
-			r_asName.assign(asName.begin(), asName.end());
-			r_roleName.assign(roleName.begin(), roleName.end());
+			auto r_asName = asitor->second->getCodeAsString();
+			auto r_roleName = ritor->second->getCodeAsString();
 
 			if (!role_code.has_value() || r_roleName == role_code.value())
 				feature_ids.push_back(std::to_string(f_inas->m_name.RCID));
@@ -983,13 +952,8 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 				auto asitor = cell->m_dsgir.m_iacs->m_arr.find(f_inas->m_niac);
 				auto ritor = cell->m_dsgir.m_arcs->m_arr.find(f_inas->m_narc);
 
-				std::wstring asName =std::wstring( asitor->second->m_code);
-				std::wstring roleName =std::wstring( ritor->second->m_code);
-
-				std::string r_asName, r_roleName;
-
-				r_asName.assign(asName.begin(), asName.end());
-				r_roleName.assign(roleName.begin(), roleName.end());
+				auto r_asName = asitor->second->getCodeAsString();
+				auto r_roleName = ritor->second->getCodeAsString();
 
 				if (!role_code.has_value() || r_roleName == role_code.value())
 					information_ids1.push_back(std::to_string(f_inas->m_name.RCID));
@@ -1008,13 +972,8 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 				auto asitor = cell->m_dsgir.m_iacs->m_arr.find(f_inas->m_niac);
 				auto ritor = cell->m_dsgir.m_arcs->m_arr.find(f_inas->m_narc);
 
-				std::wstring asName = std::wstring(asitor->second->m_code);
-				std::wstring roleName = std::wstring(ritor->second->m_code);
-
-				std::string r_asName, r_roleName;
-
-				r_asName.assign(asName.begin(), asName.end());
-				r_roleName.assign(roleName.begin(), roleName.end());
+				auto r_asName = asitor->second->getCodeAsString();
+				auto r_roleName = ritor->second->getCodeAsString();
 
 				if (!role_code.has_value() || r_roleName == role_code.value())
 					information_ids1.push_back(std::to_string(f_inas->m_name.RCID));
@@ -1033,13 +992,8 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 				auto asitor = cell->m_dsgir.m_iacs->m_arr.find(f_inas->m_niac);
 				auto ritor = cell->m_dsgir.m_arcs->m_arr.find(f_inas->m_narc);
 
-				std::wstring asName = std::wstring(asitor->second->m_code);
-				std::wstring roleName = std::wstring(ritor->second->m_code);
-
-				std::string r_asName, r_roleName;
-
-				r_asName.assign(asName.begin(), asName.end());
-				r_roleName.assign(roleName.begin(), roleName.end());
+				auto r_asName = asitor->second->getCodeAsString();
+				auto r_roleName = ritor->second->getCodeAsString();
 
 				if (!role_code.has_value() || r_roleName == role_code.value())
 					information_ids1.push_back(std::to_string(f_inas->m_name.RCID));
@@ -1060,19 +1014,12 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 				auto asitor = cell->m_dsgir.m_iacs->m_arr.find(f_inas->m_niac);
 				auto ritor = cell->m_dsgir.m_arcs->m_arr.find(f_inas->m_narc);
 
-				std::wstring asName = std::wstring(asitor->second->m_code);
-				std::wstring roleName = std::wstring(ritor->second->m_code);
+				auto r_asName = asitor->second->getCodeAsString();
+				auto r_roleName = ritor->second->getCodeAsString();
 
-				std::string r_asName, r_roleName;
-
-				r_asName.assign(asName.begin(), asName.end());
-				r_roleName.assign(roleName.begin(), roleName.end());
-
-				//asitor->second->m_code.ReleaseBuffer();
-				//ritor->second->m_code.ReleaseBuffer();
-
-				if (!role_code.has_value() || r_roleName == role_code.value())
+				if (!role_code.has_value() || r_roleName == role_code.value()) {
 					information_ids1.push_back(std::to_string(f_inas->m_name.RCID));
+				}
 			}
 		}
 	}
@@ -1090,19 +1037,12 @@ std::vector<std::string> hd_get_spatial_associated_information_ids(std::string s
 				auto asitor = cell->m_dsgir.m_iacs->m_arr.find(f_inas->m_niac);
 				auto ritor = cell->m_dsgir.m_arcs->m_arr.find(f_inas->m_narc);
 
-				std::wstring asName =std::wstring(asitor->second->m_code);
-				std::wstring roleName = std::wstring(ritor->second->m_code);
+				auto r_asName = asitor->second->getCodeAsString();
+				auto r_roleName = ritor->second->getCodeAsString();
 
-				std::string r_asName, r_roleName;
-
-				r_asName.assign(asName.begin(), asName.end());
-				r_roleName.assign(roleName.begin(), roleName.end());
-
-				//asitor->second->m_code.ReleaseBuffer();
-				//ritor->second->m_code.ReleaseBuffer();
-
-				if (!role_code.has_value() || r_roleName == role_code.value())
+				if (!role_code.has_value() || r_roleName == role_code.value()) {
 					information_ids1.push_back(std::to_string(f_inas->m_name.RCID));
+				}
 			}
 		}
 	}
@@ -1252,7 +1192,6 @@ multipoint hd_get_multipoint(std::string spatial_id)
 	return multipoint;
 }
  
-///SGJ
 curve hd_get_curve(std::string spatial_id)
 {
 	curve curve;
@@ -1298,7 +1237,6 @@ curve hd_get_curve(std::string spatial_id)
 	return curve;
 }
 
-///SGJ
 composite_curve hd_get_composite_curve(std::string spatial_id)
 {
 	composite_curve composite_curve;

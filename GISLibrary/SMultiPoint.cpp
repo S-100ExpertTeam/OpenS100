@@ -110,19 +110,31 @@ bool SMultiPoint::ImportFromWkb(unsigned char* value, int size)
 
 	memcpy_s(&type, 4, value + 1, 4);
 
-	if (type != (int)WKBGeometryType::wkbMultiPointZ)
+	if (type == (int)WKBGeometryType::wkbMultiPointZ)
+	{
+		int numPoints = 0;
+		memcpy_s(&numPoints, 4, value + 5, 4);
+
+		m_pPoints.resize(numPoints);
+
+		for (int i = 0; i < numPoints; i++) {
+			m_pPoints.at(i).ImportFromWkb(value + (9 + (29 * i)), 29);
+		}
+	}
+	else if (type == (int)WKBGeometryType::wkbMultiPoint)
+	{
+		int numPoints = 0;
+		memcpy_s(&numPoints, 4, value + 5, 4);
+		
+		m_pPoints.resize(numPoints);
+
+		for (int i = 0; i < numPoints; i++) {
+			m_pPoints.at(i).ImportFromWkb(value + (9 + (21 * i)), 21);
+		}
+	}
+	else
 	{
 		return false;
-	}
-
-	int numPoints = 0;
-	memcpy_s(&numPoints, 4, value + 5, 4);
-
-	m_pPoints.resize(numPoints);
-
-	for (int i = 0; i < numPoints; i++)
-	{
-		m_pPoints.at(i).ImportFromWkb(value + (9 + (29 * i)), 29);
 	}
 
 	SetMBR();

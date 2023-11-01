@@ -9,6 +9,7 @@ public:
 	DirectPosition(const DirectPosition& item);
 	DirectPosition(double x, double y);
 	DirectPosition(double x, double y, double z);
+	virtual ~DirectPosition();
 
 public:
 	std::vector<int> coordinates;

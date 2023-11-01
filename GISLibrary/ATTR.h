@@ -49,4 +49,6 @@ public:
 
 public:
 	static int GetOffsetToATVL();
+	
+	std::string getValueAsString();
 };

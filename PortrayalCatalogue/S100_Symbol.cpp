@@ -30,6 +30,7 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		id = pugi::as_wide(idAttri.value());
 	}
 
+	SetRotation(node.attribute("rotation").as_double());
 
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
@@ -55,6 +56,7 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		{
 			fileFormat = pugi::as_wide(instruction.child_value());
 		}
+		
 		if (!strcmp(instructionName, "rotation"))
 		{
 			rotation =std::stod(instruction.child_value());

@@ -89,17 +89,6 @@ public:
 	static POINT* GetCenterPointOfCurve(POINT *_p, int _count, CRect* viewPort);
 
 	/*
-	** function   : Check if the two line segments intersect.
-	** factor   :
-	POINT _s1     - The starting point of LINE 1.
-	POINT _e1     - The end point of Line 1.
-	POINT _s2     - The starting point of Line 2.
-	POINT _e2     - The end point of Line 2.
-	** return value : Whether the two lines intersect.
-	*/
-	static bool IsIntersect(POINT _s1, POINT _e1, POINT _s2, POINT _e2);
-
-	/*
 	** function   :
 	** factor   : Move the starting point of the line from the intersection.
 	POINT _s1     - The starting point of LINE 1.

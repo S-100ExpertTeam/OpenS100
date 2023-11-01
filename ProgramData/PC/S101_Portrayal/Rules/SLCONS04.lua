@@ -1,10 +1,13 @@
 -- SLCONS04 conditional symbology rules file.
+-- #78
+-- #90
+-- #119
 
 -- Referenced CSPs.
 require 'QUAPNT02'
 
 -- Main entry point for CSP.
-function SLCONS04(feature, featurePortrayal, contextParameters)
+function SLCONS04(feature, featurePortrayal, contextParameters, viewingGroup)
 	Debug.StartPerformance('Lua Code - SLCONS04')
 
 	if feature.PrimitiveType == PrimitiveType.Point then
@@ -14,7 +17,7 @@ function SLCONS04(feature, featurePortrayal, contextParameters)
 
 		if symbol then
 			--Debug.Break()
-			featurePortrayal:AddInstructions('ViewingGroup:31011;PointInstruction:' .. symbol)
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31011,accuracy;PointInstruction:' .. symbol)
 		end
 	else
 		Debug.StopPerformance('Lua Code - SLCONS04')
@@ -34,10 +37,10 @@ function SLCONS04(feature, featurePortrayal, contextParameters)
 				local categoryOfShorelineConstruction = feature.categoryOfShorelineConstruction
 				local waterLevelEffect = feature.waterLevelEffect
 
-				if condition == 1 and contains(condition, {1, 2}) then
+				if contains(condition, {1, 2}) then
 					featurePortrayal:SimpleLineStyle('dash',0.32,'CSTLN')
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
-				elseif contains(categoryOfShorelineConstruction, {6, 15, 16}) then
+				elseif contains(categoryOfShorelineConstruction, {6, 15, 16, 22}) then
 					featurePortrayal:SimpleLineStyle('solid',1.28,'CSTLN')
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
 				elseif contains(waterLevelEffect, {3, 4}) then

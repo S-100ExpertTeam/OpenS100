@@ -25,7 +25,7 @@ namespace GM
 		double getY(int index) override;
 
 	public:
-		void Add(std::string curveMemberID);
+		//void Add(std::string curveMemberID);
 		void Add(GM::OrientableCurve* item);
 		void Add(GM::Curve* item);
 		void Add(GM::CompositeCurve* item);

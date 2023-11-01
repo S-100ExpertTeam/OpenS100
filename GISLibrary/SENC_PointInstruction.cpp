@@ -349,9 +349,6 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 	int viewPointNum = 0;
 	int partsIndex = 1;
 	int lastPointIndex = -1;
-	unsigned preLoc = -1, curLoc = 0;
-	D2D1_POINT_2F tempPoint;
-
 	bool bDraw;
 
 	if (symbol)
@@ -360,14 +357,13 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 		scaleFactor = symbol->scaleFactor;
 	}
 
-
-	DWORD dwWorkStart = timeGetTime();
 	if (vectorPoint)
 	{
 		SPoint geo;
 		geo.x = vectorPoint->x;
 		geo.y = vectorPoint->y;
 		projection(geo.x, geo.y);
+		D2D1_POINT_2F tempPoint;
 		scaler->WorldToDevice_F(geo.x, geo.y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
@@ -388,14 +384,9 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 				SCompositeCurve* geo = (SCompositeCurve*)geom;
 				std::list<SCurve*> curveList;
 				geo->GetCurveList(curveList);
-				//int curveCnt = geo->GetCurveCount();
-				//for (auto j = geo->m_listCurveLink.begin(); j != geo->m_listCurveLink.end(); j++)
-				//for (int j = 0; j < curveCnt; j++)
 				for (auto j = curveList.begin(); j != curveList.end(); j++)
 				{
-					//auto curve = j->GetCurve();
 					auto curve = *j;
-					//auto curve = geo->GetCurve(j);
 					auto rcid = curve->GetRCID();
 					if (rcid == sr->reference)
 					{
@@ -475,7 +466,8 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 	}
 	else if (geom->GetType() == SGeometryType::Point)
 	{
-		SPoint* geo = (SPoint*)geom;
+		auto geo = (SPoint*)geom;
+		D2D1_POINT_2F tempPoint;
 		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
@@ -485,12 +477,9 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 		std::list<SCurve*> curveList;
 		geo->GetCurveList(curveList);
 
-		//int curveCnt = geo->GetCurveCount();
-		//for (int i = 0; i < curveCnt; i++)
 		for (auto i = curveList.begin(); i != curveList.end(); i++)
 		{
 			bDraw = false;
-			//auto c = geo->GetCurve(i);
 			auto c = (*i);
 			
 			if (!c->GetMasking())
@@ -513,6 +502,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 				POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
 				if (symbolPoint)
 				{
+					D2D1_POINT_2F tempPoint;
 					tempPoint.x = (float)symbolPoint[0].x;
 					tempPoint.y = (float)symbolPoint[0].y;
 					points.push_back(tempPoint);
@@ -528,6 +518,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 			POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
 			if (symbolPoint)
 			{
+				D2D1_POINT_2F tempPoint;
 				tempPoint.x = (float)symbolPoint[0].x;
 				tempPoint.y = (float)symbolPoint[0].y;
 				points.push_back(tempPoint);
@@ -543,11 +534,9 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 
 		if (geo->m_centerPoint)
 		{
+			D2D1_POINT_2F tempPoint;
 			scaler->WorldToDevice_F(geo->m_centerPoint->x, geo->m_centerPoint->y, &tempPoint.x, &tempPoint.y);
 			points.push_back(tempPoint);
-		}
-		else
-		{
 		}
 	}
 }

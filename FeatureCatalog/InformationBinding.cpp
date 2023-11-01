@@ -148,6 +148,11 @@ std::string InformationBinding::GetInformationType(int index)
 	return informationTypes.at(index);
 }
 
+std::vector<std::string> InformationBinding::GetInformationTypes()
+{
+	return informationTypes;
+}
+
 std::wstring InformationBinding::GetInformationTypeAsWstring(int index)
 {
 	return pugi::as_wide(GetInformationType(index));

@@ -58,6 +58,9 @@
     <Filter Include="S100H5">
       <UniqueIdentifier>{399c35f9-b4da-4bcb-b464-25d5ff0e3aeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="S100\ExchangeSetCatalogue">
+      <UniqueIdentifier>{d8f34b82-59aa-416a-89b3-dbe8d8688e83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -740,6 +743,27 @@
     </ClCompile>
     <ClCompile Include="Length.cpp">
       <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_CurveBoundary.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_Aggregate.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_Complex.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
+    <ClCompile Include="GM_SurfacePatch.cpp">
+      <Filter>S100\GM</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportFileFormat.cpp">
+      <Filter>S100\ExchangeSetCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtectionScheme.cpp">
+      <Filter>S100\ExchangeSetCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="EncodingFormat.cpp">
+      <Filter>S100\ExchangeSetCatalogue</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1486,6 +1510,15 @@
     </ClInclude>
     <ClInclude Include="indeterminatePosition.h">
       <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportFileFormat.h">
+      <Filter>S100\ExchangeSetCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtectionScheme.h">
+      <Filter>S100\ExchangeSetCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="EncodingFormat.h">
+      <Filter>S100\ExchangeSetCatalogue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

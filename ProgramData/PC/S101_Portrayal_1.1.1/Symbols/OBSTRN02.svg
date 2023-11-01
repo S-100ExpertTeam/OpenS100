@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.32mm" height="4.32mm" viewBox="-2.16 -2.16 4.32 4.32">
+  <title>OBSTRN02</title>
+  <desc>obstruction in the intertidal area</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2" y="-2" height="4" width="4"/>
+  <rect class="svgBox layout" fill="none" x="-2" y="-2" height="4" width="4"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0" cy="-2" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0" cy="2" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="2" cy="0" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-2" cy="0" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0.8" cy="-1.9" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.4" cy="-1.4" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.85" cy="-0.75" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.75" cy="0.85" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.4" cy="1.4" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0.75" cy="1.8" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-0.8" cy="1.8" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.4" cy="1.35" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.85" cy="0.7" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.8" cy="-0.8" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.45" cy="-1.45" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-0.8" cy="-1.85" r="0.16"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

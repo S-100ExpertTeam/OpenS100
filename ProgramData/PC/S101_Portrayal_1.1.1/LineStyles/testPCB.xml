@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="TESTPCB" exposition="new or adjusted feature objects not covered in S-52"?>
+<lineStyle>
+   <intervalLength>17.5</intervalLength>
+   <pen width="0.64">
+      <color>CHMGD</color>
+   </pen>
+   <dash>
+      <start>2</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>7</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>14.6</start>
+      <length>3</length>
+   </dash>
+   <symbol reference="testPCB">
+      <position>11.4</position>
+   </symbol>
+</lineStyle>

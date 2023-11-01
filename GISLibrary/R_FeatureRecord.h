@@ -96,7 +96,8 @@ public: // override ObjectType
 	int GetIDAsInteger() override;
 	int GetInformationRelationCount() override;
 	std::string GetAssociatedInformationID(int index) override;
-	int GetAttributeCount() override;
+	int GetAttributeCount() const override;
+	
 	std::string GetAttributeValue(int index) override;
 	int GetParentAttributeIndex(int index) override;
 

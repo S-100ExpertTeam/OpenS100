@@ -127,6 +127,8 @@ public:
 	FeatureType* GetFeatureTypeFromIndex(int indexnum);
 	FeatureTypes* GetFeatureTypes();
 
+	FCD::S100_CD_AttributeValueType getSimpleAttributeType(std::string code);
+
 	//void SetFullAssociations();
 	//void SetSubAssociation(FeatureType* ft);
 	//void SetSubAssociation(InformationType* it);

@@ -50,23 +50,26 @@ void GeoPointZ::DrawGeometry(HDC &hDC, Scaler *scaler, double offset)
 
 bool GeoPointZ::ImportFromWkb(unsigned char* value, int size)
 {
-	if (value == nullptr || size != 29 ||
-		value[0] != 0x01)
-	{
+	if (value == nullptr || value[0] != 0x01) {
 		return false;
 	}
 
 	int type = 0;
 	memcpy_s(&type, 4, value + 1, 4);
 
-	if (type != (int)WKBGeometryType::wkbPointZ)
-	{
+	if (size == 29 && type == (int)WKBGeometryType::wkbPointZ) {
+		memcpy_s(&x, 8, value + 5, 8);
+		memcpy_s(&y, 8, value + 13, 8);
+		memcpy_s(&z, 8, value + 21, 8);
+	} 
+	else if (size == 21 && type == (int)WKBGeometryType::wkbPoint) {
+		memcpy_s(&x, 8, value + 5, 8);
+		memcpy_s(&y, 8, value + 13, 8);
+		z = 0;
+	}
+	else {
 		return false;
 	}
-
-	memcpy_s(&x, 8, value + 5, 8);
-	memcpy_s(&y, 8, value + 13, 8);
-	memcpy_s(&z, 8, value + 21, 8);
 
 	projection(x, y);
 

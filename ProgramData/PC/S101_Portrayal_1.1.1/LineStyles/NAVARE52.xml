@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2022-09-16"?>
+<?S100Meta name="NAVARE52" exposition="boundary of anchor area with small craft moorings"?>
+<lineStyle>
+   <intervalLength>8.6</intervalLength>
+   <pen width="0.32">
+      <color>CHGRF</color>
+   </pen>
+   <dash>
+      <start>1</start>
+      <length>6</length>
+   </dash>
+   <symbol reference="EMAREGR2">
+      <position>4</position>
+   </symbol>
+</lineStyle>

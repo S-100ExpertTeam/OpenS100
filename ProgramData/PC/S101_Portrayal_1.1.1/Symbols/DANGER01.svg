@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.32mm" height="6.64mm" viewBox="-4.11 -3.34 8.32 6.64">
+  <title>DANGER01</title>
+  <desc>underwater hazard with a defined depth</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2014-06-09" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.95" y="-3.18" height="6.32" width="8"/>
+  <rect class="svgBox layout" fill="none" x="-3.95" y="-3.18" height="6.32" width="8"/>
+  <path d=" M -3.86,-0.83 L -3.2,-1.77 L -2.33,-2.58 L -1.61,-2.89 L -0.67,-3.18 L 0.86,-3.18 L 1.86,-2.89 L 2.89,-2.3 L 3.55,-1.52 L 4.05,-0.52 L 4.05,0.67 L 3.39,1.61 L 2.61,2.36 L 1.64,2.86 L 0.61,3.14 L -0.8,3.11 L -1.8,2.73 L -2.7,2.14 L -3.45,1.36 L -3.95,0.36 L -3.86,-0.83 Z" class="fDEPVS"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-2.33" cy="-2.58" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-3.2" cy="-1.77" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-3.86" cy="-0.83" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-3.95" cy="0.36" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-3.45" cy="1.36" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-2.7" cy="2.14" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.8" cy="2.73" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-0.8" cy="3.11" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0.61" cy="3.14" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.64" cy="2.86" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="2.61" cy="2.36" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="3.39" cy="1.61" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="4.05" cy="0.67" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="4.05" cy="-0.52" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="3.55" cy="-1.52" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="2.86" cy="-2.3" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="1.89" cy="-2.86" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="0.86" cy="-3.14" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-0.67" cy="-3.14" r="0.16"/>
+  <circle class="f0 sCHBLK" style="stroke-width: 0.32;" cx="-1.61" cy="-2.89" r="0.16"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

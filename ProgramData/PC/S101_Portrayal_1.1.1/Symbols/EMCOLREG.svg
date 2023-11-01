@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="15.52mm" height="3.32mm" viewBox="-7.76 -1.61 15.52 3.32">
+  <title>EMCOLREG</title>
+  <desc>Embedded COLREG limits</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+      <iho:Description iho:publisher="dKart" iho:creationDate="2022-05-25" iho:source="new" iho:format="S100SVG" iho:version="1.0"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-7.6" y="-1.45" height="3" width="15.2"/>
+  <rect class="svgBox layout" fill="none" x="-7.6" y="-1.45" height="3" width="15.2"/>
+<!-- C -->
+  <path d=" M -5.8,1.15 L -6.6,1.56 L -7.1,1.56 L -7.6,1.0 L -7.4,0 L -6.8,-1.1 L -6.1,-1.45 L -5.6,-1.45 L -5.1,-1.0 " class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+<!-- O -->
+  <path d=" M -3.1,1.15 L -3.9,1.56 L -4.4,1.56 L -4.9,1.0 L -4.7,0 L -4.1,-1.1 L -3.4,-1.45 L -2.9,-1.45 L -2.4,-1.0 L -2.6,0 L -3.1,1.15 " class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+<!-- L -->
+  <path d=" M -0.8,1.56 L -2.3,1.56 L -1.3,-1.45" class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+<!-- R -->
+  <path d=" M 0,1.56 L 1,-1.45 L 2,-1.45 L 2.4,-1.0 L 2.25,-0.5 L 1.5,0 L 0.5,0 M 1.5,0 L 1.75,1.55 " class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+<!-- E -->
+  <path d=" M 4,1.56 L 2.5, 1.56 L 3.5,-1.45 L 5,-1.45 M 3,0 L 4.3,0 " class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+<!-- G -->
+  <path d=" M 6.6,0 L 7.4,0 L 6.9,1.15 L 6.1,1.56 L 5.6,1.56 L 5.1,1.0 L 5.3,0 L 5.9,-1.1 L 6.6,-1.45 L 7.1,-1.45 L 7.6,-1.0 " class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

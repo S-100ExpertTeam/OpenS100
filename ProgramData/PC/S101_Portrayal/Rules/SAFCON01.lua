@@ -36,9 +36,21 @@ function SAFCON01(contextParameters, depthValue)
 	elseif idepth < 100 then
 		add(2 .. string.sub(depth, 1, 1))
 		add(1 .. string.sub(depth, 2, 2))
-	--[[ Manufacturer optional.  No SVGs available for this section
-	elseif ...
-	--]]
+	elseif idepth < 1000 then
+		add(8 .. string.sub(depth, 1, 1))
+		add(0 .. string.sub(depth, 2, 2))
+		add(9 .. string.sub(depth, 3, 3))
+	elseif idepth < 10000 then
+		add(3 .. string.sub(depth, 1, 1))
+		add(2 .. string.sub(depth, 2, 2))
+		add(1 .. string.sub(depth, 3, 3))
+		add(7 .. string.sub(depth, 4, 4))
+	elseif idepth < 100000 then
+		add(4 .. string.sub(depth, 1, 1))
+		add(3 .. string.sub(depth, 2, 2))
+		add(2 .. string.sub(depth, 3, 3))
+		add(1 .. string.sub(depth, 4, 4))
+		add(7 .. string.sub(depth, 5, 5))
 	end
 
 	Debug.StopPerformance('Lua Code - SAFCON01')

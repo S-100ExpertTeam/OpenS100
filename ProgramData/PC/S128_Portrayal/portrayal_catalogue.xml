@@ -1,791 +1,196 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-
-<?pcbinfo name="S-101_0.8_ENC Product Specification_NewSyms" fieldOfApplication="WithNewSyms" scope="Testing" versionDate="2014-07-01T18:56:34+0000" user="Test User" organization="IHO-Test"?>
-<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-128" version="0.7.5">
-   <pixmaps/>
-   <colorProfiles>
-      <colorProfile id="sample1">
-         <description>
-            <name>sample1</name>
-            <description>color profile with day colors for testing</description>
-            <language>en</language>
-         </description>
-         <fileName>colorProfile.xml</fileName>
-         <fileType>ColorProfile</fileType>
-         <fileFormat>XML</fileFormat>
-      </colorProfile>
-   </colorProfiles>
-<Symbols/> 
-<lineStyles/>
-<areaFills/>
-
-  <fonts>
-    <font id="droid">
-         <description>
-            <name>DroidSans</name>
-            <description>Droid sans serif, from http://www.fontsquirrel.com</description>
-            <language>en</language>
-         </description>
-         <fileName>DroidSans.ttf</fileName>
-         <fileType>Font</fileType>
-         <fileFormat>TTF</fileFormat>
-      </font>
-    <font id="droidBold">
-         <description>
-            <name>DroidSansBold</name>
-            <description>Droid sans serif Bold, from http://www.fontsquirrel.com</description>
-            <language>en</language>
-         </description>
-         <fileName>DroidSans-Bold.ttf</fileName>
-         <fileType>Font</fileType>
-         <fileFormat>TTF</fileFormat>
-      </font>
-    <font id="OpenSans">
-         <description>
-            <name>OpenSans</name>
-            <description>Open sans serif, from http://www.fontsquirrel.com</description>
-            <language>en</language>
-         </description>
-         <fileName>OpenSans-Regular.ttf</fileName>
-         <fileType>Font</fileType>
-         <fileFormat>TTF</fileFormat>
-      </font>
-    <font id="OpenSansBold">
-         <description>
-            <name>OpenSansBold</name>
-            <description>Open sans serif Bold, from http://www.fontsquirrel.com</description>
-            <language>en</language>
-         </description>
-         <fileName>OpenSans-Bold.ttf</fileName>
-         <fileType>Font</fileType>
-         <fileFormat>TTF</fileFormat>
-      </font>
-   </fonts>
-
-   <viewingGroups>
-      <viewingGroup id="1">
-         <description>
-            <name>21010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="2">
-         <description>
-            <name>26220</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="3">
-         <description>
-            <name>36050</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="4">
-         <description>
-            <name>32240</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="5">
-         <description>
-            <name>22220</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="6">
-         <description>
-            <name>26260</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="7">
-         <description>
-            <name>27020</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="8">
-         <description>
-            <name>32440</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="9">
-         <description>
-            <name>27010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="10">
-         <description>
-            <name>12210</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="11">
-         <description>
-            <name>22240</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="12">
-         <description>
-            <name>32220</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="13">
-         <description>
-            <name>12420</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="14">
-         <description>
-            <name>22010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="15">
-         <description>
-            <name>34030</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="16">
-         <description>
-            <name>34070</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="17">
-         <description>
-            <name>24010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="18">
-         <description>
-            <name>38030</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="19">
-         <description>
-            <name>32410</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="20">
-         <description>
-            <name>12410</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="21">
-         <description>
-            <name>36010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="22">
-         <description>
-            <name>26150</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="23">
-         <description>
-            <name>26050</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="24">
-         <description>
-            <name>32250</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="25">
-         <description>
-            <name>26250</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="26">
-         <description>
-            <name>33060</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="27">
-         <description>
-            <name>36020</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="28">
-         <description>
-            <name>27025</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="29">
-         <description>
-            <name>13030</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="30">
-         <description>
-            <name>33020</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="31">
-         <description>
-            <name>27030</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="32">
-         <description>
-            <name>26240</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="33">
-         <description>
-            <name>25010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="34">
-         <description>
-            <name>22210</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="35">
-         <description>
-            <name>25030</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="36">
-         <description>
-            <name>27080</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="37">
-         <description>
-            <name>26210</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="38">
-         <description>
-            <name>36040</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="39">
-         <description>
-            <name>27060</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="40">
-         <description>
-            <name>27070</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="41">
-         <description>
-            <name>27011</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="42">
-         <description>
-            <name>12010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="43">
-         <description>
-            <name>32010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="44">
-         <description>
-            <name>21060</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="45">
-         <description>
-            <name>31080</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="46">
-         <description>
-            <name>34050</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="47">
-         <description>
-            <name>26040</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="48">
-         <description>
-            <name>14010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="49">
-         <description>
-            <name>31010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="50">
-         <description>
-            <name>31040</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="51">
-         <description>
-            <name>31020</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="52">
-         <description>
-            <name>27040</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="53">
-         <description>
-            <name>34051</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="54">
-         <description>
-            <name>28010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="55">
-         <description>
-            <name>32270</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="56">
-         <description>
-            <name>25040</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="57">
-         <description>
-            <name>27230</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="58">
-         <description>
-            <name>38010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="59">
-         <description>
-            <name>32050</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="60">
-         <description>
-            <name>25020</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="61">
-         <description>
-            <name>25060</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="62">
-         <description>
-            <name>26010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="63">
-         <description>
-            <name>27210</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="64">
-         <description>
-            <name>34010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="65">
-         <description>
-            <name>28020</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="66">
-         <description>
-            <name>38210</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="67">
-         <description>
-            <name>33010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="68">
-         <description>
-            <name>34020</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="69">
-         <description>
-            <name>23030</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="70">
-         <description>
-            <name>32070</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="71">
-         <description>
-            <name>33050</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="72">
-         <description>
-            <name>11050</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="73">
-         <description>
-            <name>32030</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="74">
-         <description>
-            <name>33040</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="75">
-         <description>
-            <name>53010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="76">
-         <description>
-            <name>53050</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="77">
-         <description>
-            <name>53040</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="78">
-         <description>
-            <name>53030</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-      <viewingGroup id="79">
-         <description>
-            <name>55010</name>
-            <description/>
-            <language>en</language>
-         </description>
-      </viewingGroup>
-   </viewingGroups>
-   <foundationMode/>
-   <viewingGroupLayers>
-      <viewingGroupLayer id="1">
-         <description>
-            <name>viewingGroupLayer1</name>
-            <description>Test Viewing Group Layer</description>
-            <language>en</language>
-         </description>
-         <viewingGroup>1</viewingGroup>
-      </viewingGroupLayer>
-      <viewingGroupLayer id="2">
-         <description>
-            <name>viewingGroupLayer2</name>
-            <description>Test Viewing Group Layer</description>
-            <language>en</language>
-         </description>
-         <viewingGroup>2</viewingGroup>
-      </viewingGroupLayer>
-      <viewingGroupLayer id="3">
-         <description>
-            <name>viewingGroupLayer3</name>
-            <description>Test Viewing Group Layer</description>
-            <language>en</language>
-         </description>
-         <viewingGroup>3</viewingGroup>
-      </viewingGroupLayer>
-      <viewingGroupLayer id="4">
-         <description>
-            <name>viewingGroupLayer4</name>
-            <description>Test Viewing Group Layer</description>
-            <language>en</language>
-         </description>
-         <viewingGroup>4</viewingGroup>
-      </viewingGroupLayer>
-   </viewingGroupLayers>
-   <displayModes>
-      <displayMode id="1">
-         <description>
-            <name>Display Base</name>
-            <description>Always on display</description>
-            <language>en</language>
-         </description>
-         <viewingGroupLayer>1</viewingGroupLayer>
-      </displayMode>
-      <displayMode id="4">
-         <description>
-            <name>Mariners</name>
-            <description>Display Mariner's Objects</description>
-            <language>en</language>
-         </description>
-         <viewingGroupLayer>4</viewingGroupLayer>
-      </displayMode>
-      <displayMode id="3">
-         <description>
-            <name>Other Information</name>
-            <description>All other objects in the SENC</description>
-            <language>en</language>
-         </description>
-         <viewingGroupLayer>3</viewingGroupLayer>
-      </displayMode>
-      <displayMode id="2">
-         <description>
-            <name>Standard Display</name>
-            <description>ECDIS default display</description>
-            <language>en</language>
-         </description>
-         <viewingGroupLayer>2</viewingGroupLayer>
-      </displayMode>
-   </displayModes>
-   <displayPlane>
-      <displayPlane id="1">
-         <description>
-            <name>overRadar</name>
-            <description>Content displayed on top of Radar image</description>
-            <language>en</language>
-         </description>
-      </displayPlane>
-      <displayPlane id="2">
-         <description>
-            <name>underRadar</name>
-            <description>Content displayed underneath Radar image</description>
-            <language>en</language>
-         </description>
-      </displayPlane>
-   </displayPlane>
-   <context>
-   </context>
-   <rules>
-      <ruleFile id="1">
-         <description>
-            <name>attributeRules</name>
-            <description>attributeRules</description>
-            <language>en</language>
-         </description>
-         <fileName>attributeRules.xsl</fileName>
-         <fileType>Rule</fileType>
-         <fileFormat>XSLT</fileFormat>
-         <ruleType>SubTemplate</ruleType>
-      </ruleFile>
-      
-       <ruleFile id="2">
-         <description>
-            <name>ElectronicChart_COMMON</name>
-            <description>ElectronicChart_COMMON</description>
-            <language>en</language>
-         </description>
-         <fileName>ElectronicChart_COMMON.xsl</fileName>
-         <fileType>Rule</fileType>
-         <fileFormat>XSLT</fileFormat>
-         <ruleType>SubTemplate</ruleType>
-      </ruleFile>
-      
-             <ruleFile id="3">
-         <description>
-            <name>main_PaperChart</name>
-            <description>main_PaperChart</description>
-            <language>en</language>
-         </description>
-         <fileName>main_PaperChart.xsl</fileName>
-         <fileType>Rule</fileType>
-         <fileFormat>XSLT</fileFormat>
-         <ruleType>TopLevelTemplate</ruleType>
-      </ruleFile>
-      
-             <ruleFile id="4">
-         <description>
-            <name>NauticalProduct_COMMON</name>
-            <description>NauticalProducts_COMMON</description>
-            <language>en</language>
-         </description>
-         <fileName>NauticalProducts_COMMON.xsl</fileName>
-         <fileType>Rule</fileType>
-         <fileFormat>XSLT</fileFormat>
-         <ruleType>SubTemplate</ruleType>
-      </ruleFile>
-      
-             <ruleFile id="5">
-         <description>
-            <name>PaperChart_COMMON</name>
-            <description>PaperChart_COMMON</description>
-            <language>en</language>
-         </description>
-         <fileName>PaperChart_COMMON.xsl</fileName>
-         <fileType>Rule</fileType>
-         <fileFormat>XSLT</fileFormat>
-         <ruleType>SubTemplate</ruleType>
-      </ruleFile>
-      
-             <ruleFile id="6">
-         <description>
-            <name>simpleLineStyle</name>
-            <description>simpleLineStyle</description>
-            <language>en</language>
-         </description>
-         <fileName>simpleLineStyle.xsl</fileName>
-         <fileType>Rule</fileType>
-         <fileFormat>XSLT</fileFormat>
-         <ruleType>SubTemplate</ruleType>
-      </ruleFile>
-                   <ruleFile id="7">
-         <description>
-            <name>textStyle</name>
-            <description>textStyle</description>
-            <language>en</language>
-         </description>
-         <fileName>textStyle.xsl</fileName>
-         <fileType>Rule</fileType>
-         <fileFormat>XSLT</fileFormat>
-         <ruleType>SubTemplate</ruleType>
-      </ruleFile>
-   </rules>
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-128" version="0.1.0">
+  <pixmaps/>  
+  <colorProfiles>
+    <colorProfile id="colorProfile.xml">
+      <description>
+        <name>Color Profile</name>
+        <description>Color Profile</description>
+        <language>en</language>
+      </description>
+      <fileName>colorProfile.xml</fileName>
+      <fileType>ColorProfile</fileType>
+      <fileFormat>XML</fileFormat>
+    </colorProfile>
+  </colorProfiles>  
+  <symbols/>  
+  <lineStyles>
+	<lineStyle id="ElectronicChart01">
+      <description>
+        <name>ElectronicChart01</name>
+        <description>ElectronicChart01</description>
+        <language>en</language>
+      </description>
+      <fileName>ElectronicChart01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+	<lineStyle id="NauticalProduct01">
+      <description>
+        <name>NauticalProduct01</name>
+        <description>NauticalProduct01</description>
+        <language>en</language>
+      </description>
+      <fileName>NauticalProduct01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+	<lineStyle id="PaperChart01">
+      <description>
+        <name>PaperChart01</name>
+        <description>PaperChart01</description>
+        <language>en</language>
+      </description>
+      <fileName>PaperChart01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>	
+  </lineStyles>
+  <areaFills/>
+  <fonts/>  
+  <viewingGroups>
+    <viewingGroup id="31000">
+	 <description>
+		<name>Information about the Chart Display</name>
+		<description>Other: A, B - Information about the chart display</description>
+		<language>eng</language>
+	 </description>
+	</viewingGroup>
+	<viewingGroup id="31020">
+	 <description>
+		<name>nautical publication (M_NPUB)</name>
+		<description>Other: A, B - Information about the chart display</description>
+		<language>eng</language>
+	 </description>
+	</viewingGroup>
+  </viewingGroups>  
+  <foundationMode/>  
+  <viewingGroupLayers>
+   <viewingGroupLayer id="18">
+	 <description>
+		<name>Miscellaneous (Other)</name>
+		<description>Other Display elements</description>
+		<language>eng</language>
+	 </description>
+	 <viewingGroup>31000</viewingGroup>
+	 <viewingGroup>31020</viewingGroup>
+   </viewingGroupLayer>
+  </viewingGroupLayers>
+  <displayModes>
+	<displayMode id="3">
+	 <description>
+		<name>Other Information</name>
+		<description>All other objects in the SENC</description>
+		<language>eng</language>
+	 </description>
+	 <viewingGroupLayer>18</viewingGroupLayer>
+	</displayMode>
+  </displayModes>  
+  <displayPlanes>
+    <displayPlane id="OVERRADAR" order="1">
+      <description>
+        <name>Over radar</name>
+        <description>Content displayed on top of Radar image</description>
+        <language>en</language>
+      </description>
+    </displayPlane>
+	  <displayPlane id="UnderRADAR" order="-1">
+      <description>
+          <name>Under radar</name>
+          <description>Content displayed underneath Radar image</description>
+          <language>en</language>
+      </description> 
+    </displayPlane>   
+  </displayPlanes>
+  <context/>  
+  <rules>
+    <ruleFile id="main.xsl">
+      <description>
+        <name>main</name>
+        <description>main rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>main.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+	<ruleFile id="Default.xsl">
+      <description>
+        <name>Default</name>
+        <description>Default</description>
+        <language>en</language>
+      </description>
+      <fileName>Default.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+	<ruleFile id="simpleLineStyle.xsl">
+      <description>
+        <name>simpleLineStyle</name>
+        <description>simple Line Style rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>simpleLineStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+	<ruleFile id="textStyle.xsl">
+      <description>
+        <name>textStyle</name>
+        <description>text Style rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>textStyle.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+	<ruleFile id="CatalogueOfNauticalProduct.xsl">
+      <description>
+        <name>Catalogue Of Nautical Product</name>
+        <description>Catalogue Of Nautical Product rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>CatalogueOfNauticalProduct.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+	<ruleFile id="NauticalProduct.xsl">
+      <description>
+        <name>Nautical Product</name>
+        <description>Nautical Product rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>NauticalProduct.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+	<ruleFile id="ElectronicChart.xsl">
+      <description>
+        <name>Electronic Chart</name>
+        <description>Electronic Chart rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>ElectronicChart.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+	<ruleFile id="PaperChart.xsl">
+      <description>
+        <name>Paper Chart</name>
+        <description>Paper Chart rule file</description>
+        <language>en</language>
+      </description>
+      <fileName>Paper Chart.xsl</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>XSLT</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>	
+  </rules>  
 </portrayalCatalog>

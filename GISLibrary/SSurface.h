@@ -21,7 +21,7 @@ public:
 	// Polygon structure in the shp file
 	int m_numParts = 0;
 	int	m_numPoints = 0;
-	int* m_pParts = nullptr;
+	int* m_pParts = nullptr; // start index of part
 
 	GeoPoint* m_pPoints = nullptr;
 	GeoPoint* m_centerPoint = nullptr;
@@ -53,7 +53,7 @@ public:
 	void AddCurve(SAbstractCurve* curve);
 	
 	void Init();
-	void Set(std::vector<POINT>& points, std::vector<int>& parts);
+	void Set(std::vector<POINT>& points, std::vector<int>& parts); // parts : start index of next part
 
 	void Release();
 

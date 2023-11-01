@@ -13,7 +13,9 @@ public:
 public:
 	int m_numPoints = 0;
 	SPoint* m_pPoints = nullptr;
-	
+
+	GeoPoint* centerPoint = nullptr;
+
 	bool m_masking = false;
 	bool suppress = false;
 
@@ -66,6 +68,8 @@ public:
 	bool GetSuppress();
 
 	bool isDraw();
+
+	void setCenterPoint();
 
 	virtual SAbstractCurve* clone() override;
 };

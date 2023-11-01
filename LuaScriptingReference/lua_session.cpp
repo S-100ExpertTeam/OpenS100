@@ -67,9 +67,10 @@ void lua_session::check_status(int status)
 
 		std::cerr << message << "\n";
 
-		assert(false);
+		//assert(false);
 
-		exit(3);
+		//exit(3);
+		return;
 	}
 }
 

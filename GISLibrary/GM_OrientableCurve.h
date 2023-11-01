@@ -13,17 +13,17 @@ namespace GM
 	public:
 		OrientableCurve();
 		OrientableCurve(const OrientableCurve& item);
-		OrientableCurve(std::string baseCurveID);
+		//OrientableCurve(std::string baseCurveID);
 		virtual ~OrientableCurve();
 
 	public:
 		// true : +
 		// false : -
 		bool orientation = false; 
-		std::string baseCurveID;
+		//std::string baseCurveID;
 
 	private:
-		OrientableCurve* baseCurve = nullptr; // released by dataset, not used
+		//OrientableCurve* baseCurve = nullptr; // released by dataset, not used
 
 	public:
 		virtual int getPointCount();
@@ -34,12 +34,12 @@ namespace GM
 		GeometryType GetType() override;
 		std::string GeometricPrimitiveAsString() override;
 
-		std::string GetBaseCurveID();
-		int GetBaseCurveIDAsInt();
+		//std::string GetBaseCurveID();
+		//int GetBaseCurveIDAsInt();
 
 		void Read(pugi::xml_node& node);
 
-		OrientableCurve* getBaseCurve();
-		void setBaseCurve(OrientableCurve* baseCurve);
+		//OrientableCurve* getBaseCurve();
+		//void setBaseCurve(OrientableCurve* baseCurve);
 	};
 }

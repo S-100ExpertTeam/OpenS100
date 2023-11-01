@@ -47,6 +47,7 @@ public:
 	int GetFeatureTypeCount();
 
 	std::string GetFeatureType(int index);
+	std::vector<std::string> GetFeatureTypes();
 	std::wstring GetFeatureTypeAsWstring(int index);
 
 	void InsertFeatureType(std::string value);
