@@ -540,11 +540,12 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
 	//auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal_1.1.1\\portrayal_catalogue.xml"); // valid(S-101)
 	//auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
+	cm->addPC(L"..\\ProgramData\\PC\\S100_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S122_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S123_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S124_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml"); 
-	cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
+	//cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S128_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S411_Portrayal\\portrayal_catalogue.xml");
 
