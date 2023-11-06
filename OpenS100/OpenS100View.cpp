@@ -27,6 +27,8 @@
 #include "../GISLibrary/SSurface.h"
 #include "../GISLibrary/SGeometricFuc.h"
 
+#include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
+
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 #include "../GeoMetryLibrary/Scaler.h"
@@ -92,6 +94,10 @@ END_MESSAGE_MAP()
 COpenS100View::COpenS100View() 
 {
 	theApp.pView = this;
+
+
+	S100_IC_InteroperabilityCatalogue* item = new S100_IC_InteroperabilityCatalogue();
+	item->Open("../Sample_of_IC_level_2_5.0.0-for S-101, S-102, S-111.xml");
 }
 
 COpenS100View::~COpenS100View()
