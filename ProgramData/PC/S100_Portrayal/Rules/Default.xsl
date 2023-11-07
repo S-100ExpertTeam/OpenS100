@@ -51,31 +51,81 @@
 				<xsl:with-param name="colour">CHGRF</xsl:with-param>
 			</xsl:call-template>
 		</lineInstruction>
+		<xsl:if test="featureName!= ''">
+			<textInstruction>
+				<featureReference>
+					<xsl:value-of select="@id"/>
+				</featureReference>
+				<viewingGroup>26</viewingGroup>
+				<displayPlane>UNDERRADAR</displayPlane>
+				<drawingPriority>12</drawingPriority>
+				<textPoint horizontalAlignment="Right" verticalAlignment="Center">
+					<element>
+						<text>
+							<xsl:apply-templates select="featureName" mode="text"/>
+						</text>
+						<xsl:call-template name="textStyle">
+							<xsl:with-param name="style">default</xsl:with-param>
+						</xsl:call-template>
+					</element>
+					<offset>
+						<x>2</x>
+						<y>0</y>
+					</offset>
+					<areaPlacement placementMode="VisibleParts"/>
+				</textPoint>
+			</textInstruction>
+		</xsl:if>
 	</xsl:template>
 	<xsl:template match="*[@primitive='Surface']">
 		<areaInstruction>
-         <featureReference>
-            <xsl:value-of select="@id"/>
-         </featureReference>
-         <viewingGroup>53010</viewingGroup>
-         <displayPlane>OVERRADAR</displayPlane>
-         <drawingPriority>24</drawingPriority>
-         <colorFill>
-            <color transparency="0.75">DNGHL</color>
-         </colorFill>
-      </areaInstruction>
-      <lineInstruction>
-         <featureReference>
-            <xsl:value-of select="@id"/>
-         </featureReference>
-         <viewingGroup>53010</viewingGroup>
-         <displayPlane>OVERRADAR</displayPlane>
-         <drawingPriority>24</drawingPriority>
-         <xsl:call-template name="simpleLineStyle">
-            <xsl:with-param name="style">dash</xsl:with-param>
-            <xsl:with-param name="width">0.32</xsl:with-param>
-            <xsl:with-param name="colour">DNGHL</xsl:with-param>
-         </xsl:call-template>
-      </lineInstruction>
+			<featureReference>
+				<xsl:value-of select="@id"/>
+			</featureReference>
+			<viewingGroup>53010</viewingGroup>
+			<displayPlane>OVERRADAR</displayPlane>
+			<drawingPriority>24</drawingPriority>
+			<colorFill>
+				<color transparency="0.75">DNGHL</color>
+			</colorFill>
+		</areaInstruction>
+		<lineInstruction>
+			<featureReference>
+				<xsl:value-of select="@id"/>
+			</featureReference>
+			<viewingGroup>53010</viewingGroup>
+			<displayPlane>OVERRADAR</displayPlane>
+			<drawingPriority>24</drawingPriority>
+			<xsl:call-template name="simpleLineStyle">
+				<xsl:with-param name="style">dash</xsl:with-param>
+				<xsl:with-param name="width">0.32</xsl:with-param>
+				<xsl:with-param name="colour">DNGHL</xsl:with-param>
+			</xsl:call-template>
+		</lineInstruction>
+		<xsl:if test="featureName!= ''">
+			<textInstruction>
+				<featureReference>
+					<xsl:value-of select="@id"/>
+				</featureReference>
+				<viewingGroup>26</viewingGroup>
+				<displayPlane>UNDERRADAR</displayPlane>
+				<drawingPriority>12</drawingPriority>
+				<textPoint horizontalAlignment="Right" verticalAlignment="Center">
+					<element>
+						<text>
+							<xsl:apply-templates select="featureName" mode="text"/>
+						</text>
+						<xsl:call-template name="textStyle">
+							<xsl:with-param name="style">default</xsl:with-param>
+						</xsl:call-template>
+					</element>
+					<offset>
+						<x>2</x>
+						<y>0</y>
+					</offset>
+					<areaPlacement placementMode="VisibleParts"/>
+				</textPoint>
+			</textInstruction>
+		</xsl:if>
 	</xsl:template>
 </xsl:transform>
