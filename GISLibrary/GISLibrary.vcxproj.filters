@@ -64,6 +64,15 @@
     <Filter Include="S100\IC">
       <UniqueIdentifier>{66913738-d110-4b58-8823-f71ab536d91b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="S100\CL">
+      <UniqueIdentifier>{9d89ebed-9f8b-46f1-a893-404f3b35bb50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S100\MD">
+      <UniqueIdentifier>{67be55af-1888-4647-9b1e-77f93d4cabf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="S100\IC\TempClass">
+      <UniqueIdentifier>{d190f21b-02fb-4c9f-8539-a6fe7b2c6a36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -769,45 +778,6 @@
       <Filter>S100\ExchangeSetCatalogue</Filter>
     </ClCompile>
     <ClCompile Include="S100_IC_InteroperabilityCatalogue.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_DisplayPlane.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_DrawingInstruction.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_Feature.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_SuppressedFeatureLayer.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_FeatureDerivation.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_PredefinedCombination.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_SuppressedFeatureInstance.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_CompleteRule.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_HybridFeature.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_HybridFeatureCreationRule.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_SimpleRule.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_IC_ThematicRule.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
-    <ClCompile Include="FeatureSelector.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1607,11 +1577,35 @@
     <ClInclude Include="S100_IC_ThematicRule.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
+    <ClInclude Include="CT_Catalogue.h">
+      <Filter>S100\IC</Filter>
+    </ClInclude>
+    <ClInclude Include="PT_Locale.h">
+      <Filter>S100\CL</Filter>
+    </ClInclude>
+    <ClInclude Include="MD_CharacterSetCode.h">
+      <Filter>S100\MD</Filter>
+    </ClInclude>
     <ClInclude Include="FeatureSelector.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="CT_Catalogue.h">
+    <ClInclude Include="LanguageCode.h">
+      <Filter>S100\IC\TempClass</Filter>
+    </ClInclude>
+    <ClInclude Include="CountryCode.h">
+      <Filter>S100\IC\TempClass</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_IC_HybridPC.h">
       <Filter>S100\IC</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_IC_HybridFC.h">
+      <Filter>S100\IC</Filter>
+    </ClInclude>
+    <ClInclude Include="dataProduct.h">
+      <Filter>S100\IC\TempClass</Filter>
+    </ClInclude>
+    <ClInclude Include="XML_Collection.h">
+      <Filter>S100\IC\TempClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

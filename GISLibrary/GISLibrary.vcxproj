@@ -271,7 +271,6 @@
     <ClCompile Include="EncodingFormat.cpp" />
     <ClCompile Include="FC2D.cpp" />
     <ClCompile Include="FC3D.cpp" />
-    <ClCompile Include="FeatureSelector.cpp" />
     <ClCompile Include="F_C2FL.cpp" />
     <ClCompile Include="F_C2IL.cpp" />
     <ClCompile Include="DRDirectoryInfo.cpp" />
@@ -380,19 +379,7 @@
     <ClCompile Include="R_VectorRecord.cpp" />
     <ClCompile Include="S100EditRender.cpp" />
     <ClCompile Include="S100H5.cpp" />
-    <ClCompile Include="S100_IC_CompleteRule.cpp" />
-    <ClCompile Include="S100_IC_DisplayPlane.cpp" />
-    <ClCompile Include="S100_IC_DrawingInstruction.cpp" />
-    <ClCompile Include="S100_IC_Feature.cpp" />
-    <ClCompile Include="S100_IC_FeatureDerivation.cpp" />
-    <ClCompile Include="S100_IC_HybridFeature.cpp" />
-    <ClCompile Include="S100_IC_HybridFeatureCreationRule.cpp" />
     <ClCompile Include="S100_IC_InteroperabilityCatalogue.cpp" />
-    <ClCompile Include="S100_IC_PredefinedCombination.cpp" />
-    <ClCompile Include="S100_IC_SimpleRule.cpp" />
-    <ClCompile Include="S100_IC_SuppressedFeatureInstance.cpp" />
-    <ClCompile Include="S100_IC_SuppressedFeatureLayer.cpp" />
-    <ClCompile Include="S100_IC_ThematicRule.cpp" />
     <ClCompile Include="S102H5.cpp" />
     <ClCompile Include="S102_Color.cpp" />
     <ClCompile Include="S102_FC_BathymetryCoverage.cpp" />
@@ -513,6 +500,7 @@
     <ClInclude Include="CV_SequenceType.h" />
     <ClInclude Include="DataCoverage.h" />
     <ClInclude Include="DataOrganizationIndex.h" />
+    <ClInclude Include="dataProduct.h" />
     <ClInclude Include="DirectPosition.h" />
     <ClInclude Include="EncodingFormat.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
@@ -537,10 +525,13 @@
     <ClInclude Include="IndeterminateDate.h" />
     <ClInclude Include="indeterminatePosition.h" />
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="LanguageCode.h" />
     <ClInclude Include="Length.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="MD_CharacterSetCode.h" />
     <ClInclude Include="Measure.h" />
     <ClInclude Include="ProtectionScheme.h" />
+    <ClInclude Include="PT_Locale.h" />
     <ClInclude Include="PugixmlElement.h" />
     <ClInclude Include="GML_Envelop.h" />
     <ClInclude Include="GML_FeatureType.h" />
@@ -655,8 +646,10 @@
     <ClInclude Include="S100_IC_DrawingInstruction.h" />
     <ClInclude Include="S100_IC_Feature.h" />
     <ClInclude Include="S100_IC_FeatureDerivation.h" />
+    <ClInclude Include="S100_IC_HybridFC.h" />
     <ClInclude Include="S100_IC_HybridFeature.h" />
     <ClInclude Include="S100_IC_HybridFeatureCreationRule.h" />
+    <ClInclude Include="S100_IC_HybridPC.h" />
     <ClInclude Include="S100_IC_InteroperabilityCatalogue.h" />
     <ClInclude Include="S100_IC_PredefinedCombination.h" />
     <ClInclude Include="S100_IC_SimpleRule.h" />
@@ -769,6 +762,8 @@
     <ClInclude Include="TypeOfTheHorizontalCRS.h" />
     <ClInclude Include="VerticalCoordinateBase.h" />
     <ClInclude Include="VerticalDatumReference.h" />
+    <ClInclude Include="CountryCode.h" />
+    <ClInclude Include="XML_Collection.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GISLibrary.rc" />

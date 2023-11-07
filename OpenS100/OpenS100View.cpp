@@ -96,7 +96,7 @@ COpenS100View::COpenS100View()
 	theApp.pView = this;
 
 
-	S100_IC_InteroperabilityCatalogue* item = new S100_IC_InteroperabilityCatalogue();
+	S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
 	item->Open("../Sample_of_IC_level_2_5.0.0-for S-101, S-102, S-111.xml");
 }
 

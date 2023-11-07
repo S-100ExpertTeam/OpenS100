@@ -4,9 +4,11 @@
 #include "S100_IC_DisplayPlane.h"
 #include "S100_IC_PredefinedCombination.h"
 #include "S100_IC_HybridFeatureCreationRule.h"
+#include "dataProduct.h"
+#include "XML_Collection.h"
+
 namespace S100
 {
-	//@1
 	class S100_IC_InteroperabilityCatalogue : public CT_Catalogue
 	{
 	public:
@@ -15,11 +17,11 @@ namespace S100
 		int* InteroperabilityLevel = nullptr;
 		requirementType RequirementType;
 		std::string RequirementDescription;
-		//ProductCovered;
+		std::vector<dataProduct> ProductCovered;
 
-		std::vector<S100_IC_DisplayPlane*> DisplayPlanes;
-		S100_IC_PredefinedCombination* PredefinedProductCombinations;
-		S100_IC_HybridFeatureCreationRule* HybridizationRules;
+		XmlCollection<S100_IC_DisplayPlane> DisplayPlanes;
+		XmlCollection<S100_IC_PredefinedCombination> PredefinedProductCombinations;
+		std::vector<S100_IC_HybridFeatureCreationRule> HybridizationRules;
 		std::vector<std::string> HybridFC;
 		std::vector<std::string> HybridPC;
 
@@ -30,9 +32,35 @@ namespace S100
 		void GetContents(pugi::xml_node& node);
 
 		//√ ±‚»≠
-		void SetName(char* value);
-		std::string GetName();
+		void SetDescription(std::string value);
+		std::string GetDescription();
 
+		void SetComment(std::string value);
+		std::string* GetComment();
+
+		void SetInteroperabilityLevel(std::string value);
+		int* GetInteroperabilityLevel();
+
+		void SetRequirementType(requirementType Type);
+		requirementType GetRequirementType();
+
+		void SetRequirementDescription(std::string value);
+		std::string GetRequirementDescription();
+
+		void SetDisplayPlanes(pugi::xml_node& node);
+		XmlCollection<S100_IC_DisplayPlane> GetDisplayPlanes();
+
+		void SetPredefinedProductCombinations(pugi::xml_node& node);
+		XmlCollection<S100_IC_PredefinedCombination> GetPredefinedProductCombinations();
+
+		void SetHybridizationRules(pugi::xml_node& node);
+		std::vector<S100_IC_HybridFeatureCreationRule> GetHybridizationRules();
+
+		void SetHybridFC(pugi::xml_node& node);
+		std::vector<std::string> GetHybridFC();
+
+		void SetHybridPC(pugi::xml_node& node);
+		std::vector<std::string> GetHybridPC();
 	};
 }
 

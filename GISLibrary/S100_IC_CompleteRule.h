@@ -1,6 +1,9 @@
 #pragma once
-class S100_IC_CompleteRule
+#include "S100_IC_HybridFeatureCreationRule.h"
+namespace S100 
 {
-	//@11
-};
+	class S100_IC_CompleteRule : public  S100_IC_HybridFeatureCreationRule
+	{
+	};
+}
 
