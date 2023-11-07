@@ -22,7 +22,7 @@
 				<textPoint horizontalAlignment="Right" verticalAlignment="Center">
 					<element>
 						<text>
-							<xsl:apply-templates select="text" mode="text"/>
+							<xsl:apply-templates select="featureName" mode="text"/>
 						</text>
 						<xsl:call-template name="textStyle">
 							<xsl:with-param name="style">default</xsl:with-param>

@@ -27,6 +27,8 @@ void S100_Text::GetContents(pugi::xml_node node)
 			break;
 		}
 	}
+
+	value = pugi::as_wide(node.child_value());
 }
 
 void S100_Text::SetValue(std::wstring& _value)
