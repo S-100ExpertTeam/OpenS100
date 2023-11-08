@@ -36,24 +36,26 @@ void CDialogViewNoGeometry::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST_NOGEOMETRY, m_ViewListNoGeometry);
 }
 
-void CDialogViewNoGeometry::SetNoGeometryFeatureList(S100SpatialObject* cell)
+void CDialogViewNoGeometry::SetNoGeometryFeatureList(S100SpatialObject* s100so)
 {
+	this->s100so = s100so;
+
 	ngflist.clear();
 
-	auto fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
+	auto fc = ((S100Layer*)s100so->m_pLayer)->GetFeatureCatalog();
 	if (nullptr == fc)
 	{
 		return;
 	}
 
-	auto cnt = cell->GetFeatureCount();
+	auto cnt = s100so->GetFeatureCount();
 	for (int i = 0; i < cnt; i++)
 	{
-		auto feature = cell->GetFeatureTypeByIndex(i);
+		auto feature = s100so->GetFeatureTypeByIndex(i);
 
 		if (feature && feature->IsNoGeometry())
 		{
-			auto code = cell->GetFeatureTypeCodeByID(feature->GetIDAsInteger());
+			auto code = s100so->GetFeatureTypeCodeByID(feature->GetIDAsInteger());
 
 			auto featureType = fc->GetFeatureType(code);
 
@@ -61,7 +63,7 @@ void CDialogViewNoGeometry::SetNoGeometryFeatureList(S100SpatialObject* cell)
 			{
 				CFeatureCodeString cs;
 				cs._name = featureType->GetCodeAsWString();
-				cs._id = feature->GetIDAsInteger();
+				cs._id = feature->GetIDAsWString().c_str();
 				cs._fr = feature;
 				ngflist.push_back(cs);
 			}
@@ -102,8 +104,7 @@ void CDialogViewNoGeometry::InitNonGeometryList()
 		lvi.lParam = (LPARAM)cs->_fr;
 		BOOL ret = 0;
 
-		CString id;
-		id.Format(L"%d", cs->_id);
+		CString id = cs->_id;
 		int indexItem = m_ViewListNoGeometry.InsertItem(&lvi);
 		std::wstring CntCount = std::to_wstring(cs->_fr->GetFeatureRelationCount() + cs->_fr->GetInformationRelationCount());
 
@@ -137,7 +138,7 @@ void CDialogViewNoGeometry::OnBnClickedOk()
 
 			csa.Add(isCtrlClicked + _T("|||") + csFrid + _T("|||") + csFrid + _T("|||") + L"-" + _T("|||") + L"-" + _T("|||") + L"999" + _T("|||") + csFeatureName + _T("|||") + csCnt + _T("|||") + L"Feature");
 
-			theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, m_cell, isCtrlClicked);
+			theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, s100so, isCtrlClicked);
 		}
 	}
 	CDialogEx::OnOK();

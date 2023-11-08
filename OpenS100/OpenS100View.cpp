@@ -388,7 +388,7 @@ void COpenS100View::NoGeometryInfo()
 		return;
 	}
 
-	S101Cell* cell = (S101Cell*)layer->m_spatialObject;
+	auto s100so = (S100SpatialObject*)layer->m_spatialObject;
 
 	if (nullptr == dialogInformationType)
 	{
@@ -396,7 +396,7 @@ void COpenS100View::NoGeometryInfo()
 		dialogInformationType->Create(IDD_DIALOG_INFORMATIONTYPE);
 	}
 
-	dialogInformationType->SetInformationFeatureList(cell);
+	dialogInformationType->SetInformationFeatureList(s100so);
 	dialogInformationType->ShowWindow(SW_SHOW);
 }
 
@@ -413,21 +413,19 @@ void COpenS100View::Setting()
 	if (m_systemFontList.size() == 0)
 	{
 		// <FONT LIST>
-		HRESULT hr;
 		IDWriteFactory* pDWriteFactory = theApp.gisLib->D2.pDWriteFactory;
 		IDWriteFontCollection* pFontCollection = NULL;
 
 		// Get the system font collection.
-		//if (SUCCEEDED(hr))
-		{
-			hr = pDWriteFactory->GetSystemFontCollection(&pFontCollection);
-		}
+		HRESULT hr = pDWriteFactory->GetSystemFontCollection(&pFontCollection);
 		UINT32 familyCount = 0;
+		
 		// Get the number of font families in the collection.
 		if (SUCCEEDED(hr))
 		{
 			familyCount = pFontCollection->GetFontFamilyCount();
 		}
+		
 		for (UINT32 i = 0; i < familyCount; ++i)
 		{
 			IDWriteFontFamily* pFontFamily = NULL;
@@ -456,6 +454,7 @@ void COpenS100View::Setting()
 						{
 							hr = pFamilyNames->FindLocaleName(localeName, &index, &exists);
 						}
+						
 						if (SUCCEEDED(hr) && !exists) // if the above find did not find a match, retry with US English
 						{
 							hr = pFamilyNames->FindLocaleName(L"en-us", &index, &exists);
@@ -484,10 +483,9 @@ void COpenS100View::Setting()
 							m_systemFontList.push_back(name);
 						}
 
-						delete name;
+						delete[] name;
 					}
-
-
+					
 					// If the specified locale doesn't exist, select the first on the list.
 					if (!exists)
 						index = 0;
