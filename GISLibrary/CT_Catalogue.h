@@ -1,6 +1,9 @@
 #pragma once
+
 #include "PT_Locale.h"
 #include "MD_CharacterSetCode.h"
+
+#include <memory>
 
 namespace S100
 {

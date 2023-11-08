@@ -1,7 +1,10 @@
 #pragma once
+
 #include "S100_IC_DrawingInstruction.h"
 #include "S100_IC_Feature.h"
 #include "XML_Collection.h"
+
+#include <memory>
 
 namespace S100
 {
