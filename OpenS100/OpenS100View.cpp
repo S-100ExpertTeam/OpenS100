@@ -549,7 +549,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addPC(L"..\\ProgramData\\PC\\S123_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S124_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml"); 
-	//cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
+	cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S128_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S411_Portrayal\\portrayal_catalogue.xml");
 
