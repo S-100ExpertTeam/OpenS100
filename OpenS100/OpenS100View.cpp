@@ -541,9 +541,6 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addFC(L"..\\ProgramData\\FC\\S-128_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
 
-	cm->addFC(L"C:\\Users\\jogm\\Downloads\\초안 - 목포대교\\Dynamic Over Head Clearance.xml");
-	cm->addPC(L"C:\\Users\\jogm\\Downloads\\초안 - 목포대교\\Dynamic Over Head Clearance\\portrayal_catalogue.xml");
-
 	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
 	//auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal_1.1.1\\portrayal_catalogue.xml"); // valid(S-101)
 	//auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
