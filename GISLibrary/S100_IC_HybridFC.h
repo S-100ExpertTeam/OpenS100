@@ -16,7 +16,7 @@ namespace S100
 			{
 				const pugi::char_t* instructionName = instruction.name();
 
-				if (!strcmp(instructionName, "lan:CountryCode"))
+				if (!strcmp(instructionName, "S100_IC_HybridFC"))
 				{
 					*this = std::string(instruction.child_value());
 				}

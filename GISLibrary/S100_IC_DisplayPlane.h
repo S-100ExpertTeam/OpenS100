@@ -12,7 +12,7 @@ namespace S100
 		std::string Name;
 		int Order;
 		std::string Description;
-		int* InteroperabilityLevel;
+		std::shared_ptr<int> InteroperabilityLevel;
 		XmlCollection<S100_IC_Feature> Features;
 		XmlCollection<S100_IC_DrawingInstruction> DrawingInstructions;
 
@@ -40,7 +40,7 @@ namespace S100
 				}
 				else if (!strcmp(instructionName, "interoperabilityLevel"))
 				{
-					InteroperabilityLevel = new int(atoi(instruction.child_value()));
+					InteroperabilityLevel = std::make_shared<int>(atoi(instruction.child_value()));
 				}
 				else if (!strcmp(instructionName, "features"))
 				{

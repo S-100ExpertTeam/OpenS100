@@ -21,18 +21,19 @@ namespace S100
 
 	class CT_Catalogue
 	{
-	private:
+	
+	public:
 		std::string Name;
-		std::string* Scope = nullptr;
+		std::shared_ptr<std::string> Scope;
 		std::vector<std::string> FieldOfApplication;
 		std::string VersionNumber;
 		time_t VersionDate;
-		std::string* Language;
-		std::vector<PT_Locale*> Locale;
-		MD_CharacterSetCode* CharacterSet;
+		std::shared_ptr<std::string>  Language;
+		std::vector<std::shared_ptr<PT_Locale>> Locale;
+		MD_CharacterSetCode CharacterSet;
 
-	public:
-
+	
+	/*
 		std::string getName() {
 			return Name;
 		}
@@ -41,12 +42,12 @@ namespace S100
 			Name = name;
 		}
 
-		std::string* getScope() {
+		std::shared_ptr<std::string> getScope() {
 			return Scope;
 		}
 
-		void setScope(std::string scope) {
-			Scope = new std::string(scope);
+		void setScope(const std::string& scope) {
+			Scope = std::make_shared<std::string>(scope);
 		}
 
 		std::vector<std::string> getFieldOfApplication() {
@@ -63,9 +64,9 @@ namespace S100
 
 		void setVersionNumber(std::string versionNumber) {
 			VersionNumber = versionNumber;
-		}
+		}*/
 
-		time_t getVersionDate() {
+		/*time_t getVersionDate() {
 			return VersionDate;
 		}
 
@@ -89,26 +90,27 @@ namespace S100
 					VersionDate = mktime(&tmDateTime);
 				}
 			}
-		}
+		}*/
 
-		std::string* getLanguage() {
+		std::shared_ptr<std::string>  getLanguage() {
 			return Language;
 		}
 
 		void setLanguage(std::string language) {
-			Language = new std::string(language);
+			Language = std::make_shared<std::string>(language);
 		}
 
 
-		std::vector<PT_Locale*> getLocale() {
+		std::vector<std::shared_ptr<PT_Locale>> getLocale() {
 			return Locale;
 		}
 
 		void setLocale(pugi::xml_node& node) {
-			PT_Locale* loc = new PT_Locale();
+			auto loc = std::make_shared<PT_Locale>();
 			loc->GetContents(node);
 			Locale.push_back(loc);
 		}
+		
 
 
 

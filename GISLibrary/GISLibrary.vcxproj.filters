@@ -777,9 +777,6 @@
     <ClCompile Include="EncodingFormat.cpp">
       <Filter>S100\ExchangeSetCatalogue</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_InteroperabilityCatalogue.cpp">
-      <Filter>S100\IC</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">

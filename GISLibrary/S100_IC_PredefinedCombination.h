@@ -14,7 +14,7 @@ namespace S100 {
 		std::string Name;
 		std::string Description;
 		std::string UseConditions;
-		int* InteroperabilityLevel;
+		std::shared_ptr<int> InteroperabilityLevel;
 		std::vector<dataProduct> IncludedProduct;
 		XmlCollection<S100_IC_DisplayPlane> DisplayPlaneRef;
 		XmlCollection<S100_IC_FeatureDerivation> DerivedFeatures;
@@ -45,7 +45,7 @@ namespace S100 {
 				}
 				else if (!strcmp(instructionName, "interoperabilityLevel"))
 				{
-					InteroperabilityLevel = new int(atoi(instruction.child_value()));
+					InteroperabilityLevel = std::make_shared<int>(atoi(instruction.child_value()));
 				}
 				else if (!strcmp(instructionName, "includedProduct"))
 				{

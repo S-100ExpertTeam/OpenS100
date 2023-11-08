@@ -11,13 +11,13 @@ namespace S100
 		std::string Identifier;
 		dataProduct PrimaryProduct;
 		std::string PrimaryFeatureCode;
-		FeatureSelector* PrimarySelector;
+		std::shared_ptr<FeatureSelector> PrimarySelector;
 		dataProduct SecondaryProduct;
 		std::string SecondaryFeatureCode;
-		FeatureSelector* SecondarySelector;
+		std::shared_ptr<FeatureSelector> SecondarySelector;
 		dataProduct OutputProduct;
 		std::string OutputFeatureCode;
-		S100_IC_Feature* FeatureRef;
+		std::shared_ptr<S100_IC_Feature> FeatureRef;
 
 		inline void GetContents(pugi::xml_node& node) override
 		{
@@ -39,7 +39,7 @@ namespace S100
 				}
 				else if (!strcmp(instructionName, "primarySelector"))
 				{
-					PrimarySelector = new FeatureSelector(instruction.child_value());
+					PrimarySelector = std::make_shared<FeatureSelector>(instruction.child_value());
 				}
 				else if (!strcmp(instructionName, "secondaryProduct"))
 				{
@@ -51,7 +51,7 @@ namespace S100
 				}
 				else if (!strcmp(instructionName, "secondarySelector"))
 				{
-					SecondarySelector = new FeatureSelector(instruction.child_value());
+					SecondarySelector = std::make_shared<FeatureSelector>(instruction.child_value());
 				}
 				else if (!strcmp(instructionName, "outputProduct"))
 				{
@@ -63,7 +63,7 @@ namespace S100
 				}
 				else if (!strcmp(instructionName, "featureRef"))
 				{
-					FeatureRef = new S100_IC_Feature();
+					FeatureRef = std::make_shared<S100_IC_Feature>();
 					FeatureRef->GetContents (instruction);
 				}
 				else
