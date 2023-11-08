@@ -467,7 +467,7 @@ std::vector<spatial_association> hd_get_feature_spatial_associations(std::string
 
 	std::vector<spatial_association> sas;
 
-	for (auto i = feature-)
+	for (auto i = feature->getg)
 
 	for (auto spatial = feature->m_spas.begin(); spatial != feature->m_spas.end(); spatial++)
 	{
