@@ -1,16 +1,15 @@
 #pragma once
 #include "XML_Collection.h"
-#include "S100_IC_SimpleRule.h"
 
 namespace S100 
 {
 	class S100_IC_HybridFeatureCreationRule
 	{
 	public:
-		int* InteroperabilityLevel;
+		std::shared_ptr<int> InteroperabilityLevel;
 		std::string  RuleIdentifier;
 
-		inline void GetContents(pugi::xml_node& node)
+		inline void GetContents(pugi::xml_node& node) 
 		{
 			for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 			{
@@ -18,7 +17,7 @@ namespace S100
 
 				if (!strcmp(instructionName, "interoperabilityLevel"))
 				{
-					InteroperabilityLevel = new int(atoi(instruction.child_value()));
+					InteroperabilityLevel = std::make_shared<int>(atoi(instruction.child_value()));
 				}
 				else if (!strcmp(instructionName, "ruleIdentifier"))
 				{
