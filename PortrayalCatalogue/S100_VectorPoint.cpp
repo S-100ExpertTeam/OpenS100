@@ -16,7 +16,7 @@ void S100_VectorPoint::GetContents(pugi::xml_node& node)
 	if (!node)
 		return;
 	SetX(node.child("x").text().as_double());
-	SetX(node.child("y").text().as_double());
+	SetY(node.child("y").text().as_double());
 
 }
 
