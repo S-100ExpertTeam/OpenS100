@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SpatialPrimitiveType.h"
 
+
 #include <pugixml.hpp>
 
 SpatialPrimitiveType StringToSpatialPrimitiveType(std::string& value)
