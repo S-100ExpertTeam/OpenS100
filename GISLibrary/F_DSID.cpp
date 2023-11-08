@@ -39,6 +39,8 @@ void F_DSID::ReadField(BYTE *&buf)
 	buf2charArr(m_prof, buf);
 	buf2charArr(m_dsnm, buf);			
 	buf2charArr(m_dstl, buf);
+
+	m_dsrd.Empty();
 	buf2charArr(m_dsrd, buf, 8);
 	buf2charArr(m_dslg, buf);
 	buf2charArr(m_dsab, buf);
