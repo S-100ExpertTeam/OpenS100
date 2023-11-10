@@ -148,78 +148,15 @@ CGISLibraryApp::~CGISLibraryApp()
 	featureOnOffMap.clear();
 }
 
-//CGISLibraryApp* gisLib = new CGISLibraryApp();
-
 Scaler* CGISLibraryApp::GetScaler()
 {
 	return m_pScaler;
 }
 
-//void CGISLibraryApp::InitLibrary(std::wstring fcPath, std::wstring pcPath)
-//{		
-//	catalogManager.addFC(fcPath);
-//	auto pc = catalogManager.addPC(pcPath);
-//
-//	if (pc) {
-//		pc->CreateSVGD2Geometry(D2.pD2Factory);
-//		pc->CreatePatternImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
-//		pc->CreateLineImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
-//	}
-//}
-//
-//void CGISLibraryApp::InitLibrary(FeatureCatalogue* fc, PortrayalCatalogue* pc)
-//{
-//	catalogManager.addFC(fc);
-//	catalogManager.addPC(pc);
-//
-//	if (pc) {
-//		pc->CreateSVGD2Geometry(D2.pD2Factory);
-//		pc->CreatePatternImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
-//		pc->CreateLineImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
-//	}
-//}
-//
-//void CGISLibraryApp::addCatalogue(std::string fcPath, std::string pcPath)
-//{
-//	catalogManager.addFC(fcPath);
-//	auto pc = catalogManager.addPC(pcPath);
-//
-//	if (pc) {
-//		pc->CreateSVGD2Geometry(D2.pD2Factory);
-//		pc->CreatePatternImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
-//		pc->CreateLineImages(D2.pD2Factory, D2.pImagingFactory, D2.D2D1StrokeStyleGroup.at(0));
-//	}
-//}
-//
-//void CGISLibraryApp::addCatalogue(std::wstring fcPath, std::wstring pcPath)
-//{
-//	addCatalogue(LibMFCUtil::WStringToString(fcPath), LibMFCUtil::WStringToString(pcPath));
-//}
-
 CatalogManager* CGISLibraryApp::getCatalogManager()
 {
 	return &catalogManager;
 }
-
-//FeatureCatalogue* CGISLibraryApp::addFC(std::string path)
-//{
-//	return catalogManager.addFC(path);
-//}
-//
-//FeatureCatalogue* CGISLibraryApp::addFC(std::wstring path)
-//{
-//	return catalogManager.addFC(path);
-//}
-//
-//PortrayalCatalogue* CGISLibraryApp::addPC(std::string path)
-//{
-//	return catalogManager.addPC(path);
-//}
-//
-//PortrayalCatalogue* CGISLibraryApp::addPC(std::wstring path)
-//{
-//	return catalogManager.addPC(path);
-//}
 
 bool CGISLibraryApp::AddLayer(CString _filepath)
 {
