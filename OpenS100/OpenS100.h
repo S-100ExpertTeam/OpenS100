@@ -31,6 +31,7 @@ public:
 	BOOL  m_bHiColorIcons;
 
 	CGISLibraryApp* gisLib = new CGISLibraryApp();
+	CGISLibraryApp* gisLib2 = new CGISLibraryApp();
 
 public:
 	virtual BOOL InitInstance();

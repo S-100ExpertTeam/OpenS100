@@ -37,6 +37,8 @@ public:
 	// screen movement is calculated based on the center point.
 	double moveMX = 0.0;
 	double moveMY = 0.0;
+	double moveMX2 = 0.0;
+	double moveMY2 = 0.0;
 
 	// starting and ending points used for the screen movement function.
 	CPoint m_sp;

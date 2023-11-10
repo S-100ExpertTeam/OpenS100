@@ -171,6 +171,9 @@ void COpenS100View::OnDraw(CDC* pDC)
 	CRect rect;
 	GetClientRect(&rect);
 	theApp.gisLib->SetViewMBR(rect);
+	if (theApp.gisLib2) {
+		theApp.gisLib2->SetViewMBR(rect);
+	}
 
 	CreateDCs(pDC, rect);
 
@@ -223,6 +226,12 @@ void COpenS100View::OnSize(UINT nType, int cx, int cy)
 	theApp.gisLib->SetScreen(viewRect);
 	theApp.gisLib->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
 	theApp.gisLib->UpdateScale();
+	
+	if (theApp.gisLib2) {
+		theApp.gisLib2->SetScreen(viewRect);
+		theApp.gisLib2->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
+		theApp.gisLib2->UpdateScale();
+	}
 
 	DeleteDCs();
 
@@ -564,6 +573,15 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//S101Cell cell;
 	//cell.Read8211(L"..\\SampleData\\save.000");
 
+	if (theApp.gisLib2) {
+		auto cm2 = theApp.gisLib2->getCatalogManager();
+
+		// FC
+		cm2->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
+		cm2->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
+		theApp.gisLib2->AddLayer(L"..\\SampleData\\101KR005X01NE.000");
+	}
+
 	return 0;
 }
 
@@ -656,6 +674,9 @@ void COpenS100View::OnLButtonDown(UINT nFlags, CPoint point)
 	CRect cr;
 	GetClientRect(&cr);
 	theApp.gisLib->DeviceToWorld(cr.Width() / 2, cr.Height() / 2, &moveMX, &moveMY);
+	if (theApp.gisLib2) {
+		theApp.gisLib2->DeviceToWorld(cr.Width() / 2, cr.Height() / 2, &moveMX2, &moveMY2);
+	}
 
 	m_sp = point;
 	m_ep = point;
@@ -706,6 +727,11 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 	{
 		::SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
 		theApp.gisLib->MoveMap(cr.Width() / 2 + dx, cr.Height() / 2 + dy, moveMX, moveMY);
+		
+		if (theApp.gisLib2) {
+			theApp.gisLib2->MoveMap(cr.Width() / 2 + dx, cr.Height() / 2 + dy, moveMX2, moveMY2);
+		}
+
 		MapRefresh();
 	}
 	else
@@ -994,7 +1020,9 @@ void COpenS100View::DrawFromMapRefresh(CDC* pDC, CRect& rect)
 
 	theApp.gisLib->Draw(hdc);
 
-	
+	if (theApp.gisLib2) {
+		theApp.gisLib2->Draw(hdc);
+	}
 
 	m_bMapRefesh = false;
 }
@@ -1031,11 +1059,17 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	if (zDelta > 0)
 	{
 		theApp.gisLib->ZoomIn(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+		if (theApp.gisLib2) {
+			theApp.gisLib2->ZoomIn(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+		}
 	}
 	// When you lower the mouse wheel => Zoom out.
 	else
 	{
 		theApp.gisLib->ZoomOut(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+		if (theApp.gisLib2) {
+			theApp.gisLib2->ZoomOut(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+		}
 	}
 
 	MapRefresh();

@@ -122,7 +122,7 @@ CGISLibraryApp::CGISLibraryApp()
 	//p.ExportToWkb(&a, &size);
 	//delete[] a;
 
-	m_pLayerManager->scaler = m_pScaler;
+	//m_pLayerManager->scaler = m_pScaler;
 }
 
 CGISLibraryApp::~CGISLibraryApp()
