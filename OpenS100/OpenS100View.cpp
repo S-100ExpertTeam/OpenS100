@@ -168,6 +168,11 @@ void COpenS100View::OnDraw(CDC* pDC)
 		return;
 	}
 
+	if (!pDC->GetSafeHdc())
+	{
+		return;
+	}
+
 	CRect rect;
 	GetClientRect(&rect);
 	theApp.gisLib->SetViewMBR(rect);
@@ -224,13 +229,9 @@ void COpenS100View::OnSize(UINT nType, int cx, int cy)
 	GetClientRect(viewRect);
 
 	theApp.gisLib->SetScreen(viewRect);
-	theApp.gisLib->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
-	theApp.gisLib->UpdateScale();
 	
 	if (theApp.gisLib2) {
 		theApp.gisLib2->SetScreen(viewRect);
-		theApp.gisLib2->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
-		theApp.gisLib2->UpdateScale();
 	}
 
 	DeleteDCs();
@@ -333,6 +334,9 @@ void COpenS100View::MapPlus()
 	CRect rect;
 	GetClientRect(rect);
 	theApp.gisLib->ZoomIn(ZOOM_FACTOR, rect.Width() / 2, rect.Height() / 2);
+	if (theApp.gisLib2) {
+		theApp.gisLib2->ZoomIn(ZOOM_FACTOR, rect.Width() / 2, rect.Height() / 2);
+	}
 	MapRefresh();
 }
 
@@ -341,6 +345,9 @@ void COpenS100View::MapMinus()
 	CRect rect;
 	GetClientRect(rect);
 	theApp.gisLib->ZoomOut(ZOOM_FACTOR, rect.Width() / 2, rect.Height() / 2);
+	if (theApp.gisLib2) {
+		theApp.gisLib2->ZoomOut(ZOOM_FACTOR, rect.Width() / 2, rect.Height() / 2);
+	}
 	MapRefresh();
 }
 
@@ -369,8 +376,12 @@ void COpenS100View::MapFill()
 
 	auto layerMBR = layer->GetMBR();
 
-	lm->GetScaler()->SetMap(layerMBR);
-	theApp.MapRefresh();
+	theApp.gisLib->SetMap(layerMBR);
+	if (theApp.gisLib2) {
+		theApp.gisLib2->SetMap(layerMBR);
+	}
+
+	MapRefresh();
 }
 
 void COpenS100View::NoGeometry()
@@ -1059,16 +1070,20 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	if (zDelta > 0)
 	{
 		theApp.gisLib->ZoomIn(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+		theApp.gisLib->AdjustScreenMap();
 		if (theApp.gisLib2) {
 			theApp.gisLib2->ZoomIn(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+			theApp.gisLib2->AdjustScreenMap();
 		}
 	}
 	// When you lower the mouse wheel => Zoom out.
 	else
 	{
 		theApp.gisLib->ZoomOut(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+		theApp.gisLib->AdjustScreenMap();
 		if (theApp.gisLib2) {
 			theApp.gisLib2->ZoomOut(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+			theApp.gisLib2->AdjustScreenMap();
 		}
 	}
 

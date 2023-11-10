@@ -115,7 +115,7 @@ int LayerManager::AddLayer(Layer* _layer)
 	if (LayerCount() == 0)
 	{
 		mbr.SetMBR(_layer->m_mbr);
-		scaler->SetMap(mbr);
+		//scaler->SetMap(mbr);
 	}
 	else
 	{
@@ -225,7 +225,7 @@ void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
 		return;
 	}
 
-	if (false == MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
+	if (false == MBR::CheckOverlap(scaler->GetMap(), layer->m_mbr))
 	{
 		return;
 	}
@@ -644,7 +644,7 @@ void LayerManager::DrawBackground(HDC &hDC, int offset)
 	{
 		if (backgroundLayer.IsOn())
 		{
-			if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), backgroundLayer.m_mbr))
+			if (MBR::CheckOverlap(scaler->GetMap(), backgroundLayer.m_mbr))
 			{
 				backgroundLayer.Draw(hDC, scaler, offset - 360);
 				backgroundLayer.Draw(hDC, scaler, offset);
@@ -776,7 +776,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		return;
 	}
 
-	if (false == MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
+	if (false == MBR::CheckOverlap(scaler->GetMap(), layer->m_mbr))
 	{
 		return;
 	}
@@ -897,7 +897,7 @@ void LayerManager::SetDrawingInstruction(S100Layer* layer)
 		return;
 	}
 
-	if (false == MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
+	if (false == MBR::CheckOverlap(scaler->GetMap(), layer->m_mbr))
 	{
 		return;
 	}
@@ -985,7 +985,7 @@ void LayerManager::SetDrawingInstruction(S100Layer* layer)
 
 void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int minPriority, int maxPriority)
 {
-	if (false == MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr)) {
+	if (false == MBR::CheckOverlap(scaler->GetMap(), layer->m_mbr)) {
 		return;
 	}
 
