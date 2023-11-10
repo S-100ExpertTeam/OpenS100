@@ -171,6 +171,7 @@ void COpenS100View::OnDraw(CDC* pDC)
 	CRect rect;
 	GetClientRect(&rect);
 	theApp.gisLib->SetViewMBR(rect);
+	theApp.gisLib2->SetViewMBR(rect);
 
 	CreateDCs(pDC, rect);
 
@@ -223,6 +224,10 @@ void COpenS100View::OnSize(UINT nType, int cx, int cy)
 	theApp.gisLib->SetScreen(viewRect);
 	theApp.gisLib->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
 	theApp.gisLib->UpdateScale();
+
+	theApp.gisLib2->SetScreen(viewRect);
+	theApp.gisLib2->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
+	theApp.gisLib2->UpdateScale();
 
 	DeleteDCs();
 
@@ -516,6 +521,7 @@ void COpenS100View::MapRefresh()
 void COpenS100View::OpenWorldMap()
 {
 	theApp.gisLib->AddBackgroundLayer(_T("../ProgramData/World/World.shp"));
+	//theApp.gisLib2->AddBackgroundLayer(_T("../ProgramData/World/World.shp"));
 
 	MapRefresh();
 }
@@ -527,10 +533,12 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// catalog manager
 	auto cm = theApp.gisLib->getCatalogManager();
+	auto cm2 = theApp.gisLib2->getCatalogManager();
 
 	// FC
 	auto fc1 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
 	auto fc2 = cm->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml"); // valid(S-102)
+	cm2->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml");
 	//auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
 	//auto fc4 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid, but duplicated(S-101)
 	cm->addFC(L"..\\ProgramData\\FC\\S-122_FC.xml");
@@ -542,6 +550,8 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
 
 	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
+	cm2->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml");
+
 	//auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal_1.1.1\\portrayal_catalogue.xml"); // valid(S-101)
 	//auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
 	cm->addPC(L"..\\ProgramData\\PC\\S100_Portrayal\\portrayal_catalogue.xml");
@@ -563,6 +573,9 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//TestGISLibrary::TestSave();
 	//S101Cell cell;
 	//cell.Read8211(L"..\\SampleData\\save.000");
+
+	theApp.gisLib->AddLayer(L"..\\SampleData\\101GB005X01SW.000");
+	theApp.gisLib2->AddLayer(L"..\\SampleData\\101KR005X01NE.000");
 
 	return 0;
 }
@@ -656,6 +669,7 @@ void COpenS100View::OnLButtonDown(UINT nFlags, CPoint point)
 	CRect cr;
 	GetClientRect(&cr);
 	theApp.gisLib->DeviceToWorld(cr.Width() / 2, cr.Height() / 2, &moveMX, &moveMY);
+	theApp.gisLib2->DeviceToWorld(cr.Width() / 2, cr.Height() / 2, &moveMX2, &moveMY2);
 
 	m_sp = point;
 	m_ep = point;
@@ -706,6 +720,7 @@ void COpenS100View::OnLButtonUp(UINT nFlags, CPoint point)
 	{
 		::SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
 		theApp.gisLib->MoveMap(cr.Width() / 2 + dx, cr.Height() / 2 + dy, moveMX, moveMY);
+		theApp.gisLib2->MoveMap(cr.Width() / 2 + dx, cr.Height() / 2 + dy, moveMX2, moveMY2);
 		MapRefresh();
 	}
 	else
@@ -993,8 +1008,7 @@ void COpenS100View::DrawFromMapRefresh(CDC* pDC, CRect& rect)
 	HDC hdc = pDC->GetSafeHdc();
 
 	theApp.gisLib->Draw(hdc);
-
-	
+	theApp.gisLib2->Draw(hdc);
 
 	m_bMapRefesh = false;
 }
@@ -1031,11 +1045,13 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	if (zDelta > 0)
 	{
 		theApp.gisLib->ZoomIn(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+		theApp.gisLib2->ZoomIn(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
 	}
 	// When you lower the mouse wheel => Zoom out.
 	else
 	{
 		theApp.gisLib->ZoomOut(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
+		theApp.gisLib2->ZoomOut(ZOOM_FACTOR, m_ptCurrent.x, m_ptCurrent.y);
 	}
 
 	MapRefresh();

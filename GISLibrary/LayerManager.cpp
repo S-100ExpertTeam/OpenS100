@@ -115,6 +115,7 @@ int LayerManager::AddLayer(Layer* _layer)
 	if (LayerCount() == 0)
 	{
 		mbr.SetMBR(_layer->m_mbr);
+		scaler->SetMap(mbr);
 	}
 	else
 	{

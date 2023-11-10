@@ -33,9 +33,22 @@ void Scaler::DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate
 		return;
 	}
 
+	double mxWidth = mxMax - mxMin;
+	double myHeight = myMax - myMin;
+	double sxWidth = sxMax - sxMin;
+	double syHeight = syMax - syMin;
+
+	double epsilon = std::numeric_limits<double>::epsilon();
+	if (std::fabs(mxWidth) < epsilon ||
+		std::fabs(myHeight) < epsilon ||
+		std::fabs(sxWidth) < epsilon ||
+		std::fabs(syHeight) < epsilon) {
+		return;
+	}
+
 	double currentRatio = 0;
-	double currentXRatio = (mxMax - mxMin) / (sxMax - sxMin);
-	double currentYRatio = (myMax - myMin) / (syMax - syMin);
+	double currentXRatio = mxWidth / sxWidth;
+	double currentYRatio = myHeight / syHeight;
 
 	if (currentXRatio > currentYRatio)
 	{
@@ -69,10 +82,23 @@ void Scaler::WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate
 		return;
 	}
 
-	double currentXRatio = (mxMax - mxMin) / (sxMax - sxMin);
-	double currentYRatio = (myMax - myMin) / (syMax - syMin);
+	double mxWidth = mxMax - mxMin;
+	double myHeight = myMax - myMin;
+	double sxWidth = sxMax - sxMin;
+	double syHeight = syMax - syMin;
+
+	double epsilon = std::numeric_limits<double>::epsilon();
+	if (std::fabs(mxWidth) < epsilon ||
+		std::fabs(myHeight) < epsilon ||
+		std::fabs(sxWidth) < epsilon ||
+		std::fabs(syHeight) < epsilon) {
+		return;
+	}
 
 	double currentRatio = 0;
+	double currentXRatio = mxWidth / sxWidth;
+	double currentYRatio = myHeight / syHeight;
+	
 	if (currentXRatio > currentYRatio)
 	{
 		currentRatio = currentXRatio;
@@ -106,9 +132,22 @@ void Scaler::WorldToDevice_F(double mx, double my, float *sx, float *sy, bool ro
 		return;
 	}
 
+	double mxWidth = mxMax - mxMin;
+	double myHeight = myMax - myMin;
+	double sxWidth = sxMax - sxMin;
+	double syHeight = syMax - syMin;
+
+	double epsilon = std::numeric_limits<double>::epsilon();
+	if (std::fabs(mxWidth) < epsilon ||
+		std::fabs(myHeight) < epsilon ||
+		std::fabs(sxWidth) < epsilon ||
+		std::fabs(syHeight) < epsilon) {
+		return;
+	}
+
 	double currentRatio = 0;
-	double currentXRatio = (mxMax - mxMin) / (sxMax - sxMin);
-	double currentYRatio = (myMax - myMin) / (syMax - syMin);
+	double currentXRatio = mxWidth / sxWidth;
+	double currentYRatio = myHeight / syHeight;
 
 	if (currentXRatio > currentYRatio)
 	{
@@ -474,7 +513,8 @@ void Scaler::ZoomOut(double value)
 
 void Scaler::ZoomOut(double value, int x, int y)
 {
-	double oldMx, oldMy;
+	double oldMx = 0;
+	double oldMy = 0;
 
 	DeviceToWorld(x, y, &oldMx, &oldMy);
 
