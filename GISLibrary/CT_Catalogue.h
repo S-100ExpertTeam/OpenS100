@@ -10,6 +10,8 @@
 
 
 
+#include <memory>
+
 namespace S100
 {
 	inline std::string CharacterString(pugi::xml_node& node)

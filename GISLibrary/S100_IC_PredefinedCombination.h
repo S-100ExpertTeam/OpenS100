@@ -1,10 +1,13 @@
 #pragma once
-#include <string>
+
 #include "S100_IC_DisplayPlane.h"
 #include "S100_IC_SuppressedFeatureLayer.h"
 #include "dataProduct.h"
 #include "S100_IC_FeatureDerivation.h"
 #include "XML_Collection.h"
+
+#include <string>
+#include <memory>
 
 namespace S100 {
 	class S100_IC_PredefinedCombination : public xmlParseable
