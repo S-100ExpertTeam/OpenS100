@@ -27,7 +27,8 @@
 #include "../GISLibrary/SSurface.h"
 #include "../GISLibrary/SGeometricFuc.h"
 
-#include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
+//#include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
+#include "../GISLibrary/S100_ExchangeCatalogue.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -95,9 +96,20 @@ COpenS100View::COpenS100View()
 {
 	theApp.pView = this;
 
-	S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
-	item->Open("../Sample_of_IC_level_2_5.0.0-for S-101, S-102, S-111.xml");
-	delete item;
+
+	//S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
+	//item->Open("../ic.xml");
+
+
+	//auto pc = new PortrayalCatalogue();
+	//pc->Open(L"../pc.xml");
+
+	S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
+	ex->Open("../CATALOG_Read.txt");
+
+	//Base64String str("MEQCIEW75Fe5latHslBU8oHYmILBqKWv7taRQ0z1VS+FAJXCAiAmLtAZcXJUp9t6yuNrVSk2TWLNCn6UvuAW8guohfPKpg==");
+	//Base64String dd = str.Decode();
+	
 }
 
 COpenS100View::~COpenS100View()
