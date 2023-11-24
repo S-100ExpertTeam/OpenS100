@@ -102,14 +102,37 @@ void LogCallback(const std::string& message, LogLevel level) {
 
 COpenS100View::COpenS100View() 
 {
-	Logger::GetInstance().Subscribe(LogLevel::Error, LogCallback, "Error1");
-	Logger::GetInstance().Subscribe(LogLevel::Debug, LogCallback, "Debug1");
-	Logger::GetInstance().Subscribe(LogLevel::General, LogCallback, "General1");
+	// Logger 인스턴스 얻기
+	Logger& logger = Logger::GetInstance();
+
+	// 콜백 구독
+	logger.Subscribe(LogLevel::Error, LogCallback, "Error1");
+	//logger.Subscribe(LogLevel::Error, LogCallback, "Error2");
+	//logger.Subscribe(LogLevel::Error, LogCallback, "Error3");
+	logger.Subscribe(LogLevel::Debug, LogCallback, "Debug1");
+	//logger.Subscribe(LogLevel::Debug, LogCallback, "Debug2");
+	//logger.Subscribe(LogLevel::Debug, LogCallback, "Debug3");
+	logger.Subscribe(LogLevel::General, LogCallback, "General1");
+	//logger.Subscribe(LogLevel::Debug, LogCallback, "General2");
+	//logger.Subscribe(LogLevel::Debug, LogCallback, "General3");
+
+	for (int i = 0; i < 10; i++)
+	{
+		LOG_ERROR("This is an error message");
+		
+		LOG_DEBUG("Debug message");
+
+		LOG("General message");
+	}
+	
+
 
 	theApp.pView = this;
 
+
 	//S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
 	//item->Open("../ic.xml");
+
 
 	//auto pc = new PortrayalCatalogue();
 	//pc->Open(L"../pc.xml");
@@ -117,6 +140,9 @@ COpenS100View::COpenS100View()
 	//S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
 	//ex->Open("../CATALOG_Read.txt");
 
+
+	
+	
 }
 
 COpenS100View::~COpenS100View()
