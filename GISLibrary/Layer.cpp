@@ -19,7 +19,7 @@ Layer::~Layer(void)
 	}
 }
 
-bool Layer::Open(CString _filepath)
+bool Layer::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
 
@@ -50,7 +50,8 @@ bool Layer::Open(CString _filepath)
 		}
 		strFolderPath.Append(TEXT("\\") + _filepath);
 	}
-	return m_spatialObject->Open(strFolderPath);
+
+	return m_spatialObject->Open(strFolderPath, d2d1);
 }
 
 void Layer::Draw(CDC *pDC, Scaler *scaler, double offset)

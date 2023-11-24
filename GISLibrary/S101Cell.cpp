@@ -292,16 +292,16 @@ void S101Cell::ClearAll(void)
 }
 
 #pragma warning(disable:4018)
-bool S101Cell::Open(CString _filepath) // Dataset start, read .000 
+bool S101Cell::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1) // Dataset start, read .000 
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
 	if (extension.CompareNoCase(L"000") == 0)
 	{
-		return OpenBy000(_filepath);
+		return OpenBy000(_filepath, d2d1);
 	}
 	else if (extension.CompareNoCase(L"gml") == 0)
 	{
-		return OpenByGML(_filepath);
+		return OpenByGML(_filepath, d2d1);
 	}
 
 	return false;
@@ -435,7 +435,7 @@ bool S101Cell::isUpdate()
 	return false;
 }
 
-bool S101Cell::OpenBy000(CString path)
+bool S101Cell::OpenBy000(CString path, GISLibrary::D2D1Resources* d2d1)
 {
 	SetFilePath(path);
 
@@ -444,11 +444,13 @@ bool S101Cell::OpenBy000(CString path)
 	RemoveAll();
 
 	if (Read8211(std::wstring(path))) {
-		MakeFullSpatialData();
+		MakeFullSpatialData(d2d1);
 		CalcMBR();
 		Check();
 
 		ATTRtoAttribute();
+
+		D2 = d2d1;
 
 		//SaveAsGML(L"..\\TEMP\\101GML3.gml");
 		return true;
@@ -457,7 +459,7 @@ bool S101Cell::OpenBy000(CString path)
 	return false;
 }
 
-bool S101Cell::OpenByGML(CString path)
+bool S101Cell::OpenByGML(CString path, GISLibrary::D2D1Resources* d2d1)
 {
 	SetFilePath(path);
 
@@ -467,16 +469,19 @@ bool S101Cell::OpenByGML(CString path)
 
 	S10XGML gml;
 	gml.SetLayer(GetLayer());
-	gml.Open(path);
+	gml.Open(path, d2d1);
 
 	SetAllNumericCode(GetFC());
 
 	ConvertFromS101GML(gml);
 
-	MakeFullSpatialData();
+	MakeFullSpatialData(d2d1);
 
 	CalcMBR();
 	Check();
+
+	D2 = d2d1;
+
 	return true;
 }
 
@@ -510,7 +515,7 @@ void S101Cell::SortByFeatureType()
 	}
 }
 
-BOOL S101Cell::MakeFullSpatialData()
+BOOL S101Cell::MakeFullSpatialData(GISLibrary::D2D1Resources* d2d1)
 {
 	POSITION spasPos = NULL;
 	R_FeatureRecord* fr = nullptr;
@@ -529,19 +534,19 @@ BOOL S101Cell::MakeFullSpatialData()
 		auto rcnm = fr->GetSPASRCNM();
 		if (rcnm == 110)
 		{
-			MakePointData(fr);
+			MakePointData(fr, d2d1);
 		}
 		else if (rcnm == 115)
 		{
-			MakeSoundingData(fr);
+			MakeSoundingData(fr, d2d1);
 		}
 		else if (rcnm == 120 || rcnm == 125)
 		{
-			MakeLineData(fr);
+			MakeLineData(fr, d2d1);
 		}
 		else if (rcnm == 130)
 		{
-			MakeAreaData(fr);
+			MakeAreaData(fr, d2d1);
 		}
 
 		GetFullMaskData(fr);
@@ -550,7 +555,7 @@ BOOL S101Cell::MakeFullSpatialData()
 	return TRUE;
 }
 
-BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
+BOOL S101Cell::MakePointData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1)
 {
 	if (fe->geometry)
 	{
@@ -585,7 +590,7 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 	return TRUE;
 }
 
-BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
+BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1)
 {
 	R_MultiPointRecord *r;
 	__int64 iKey;
@@ -618,7 +623,7 @@ BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 	return TRUE;
 }
 
-BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
+BOOL S101Cell::MakeLineData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1)
 {
 	if (fe->geometry)
 	{
@@ -663,14 +668,14 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 
 	if (fe->geometry)
 	{
-		fe->geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
+		fe->geometry->CreateD2Geometry(d2d1->pD2Factory);
 	}
 
 	return TRUE;
 }
 
 // France
-BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
+BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1)
 {
 	if (fe->geometry)
 	{
@@ -765,13 +770,13 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 
 	geo->Set(vecPoint, boundaryList);
 
-	if (gisLib == nullptr)
+	if (d2d1 == nullptr)
 	{
 		return false;
 	}
 
 	geo->SetMBR();
-	geo->CreateD2Geometry(gisLib->D2.pD2Factory);
+	geo->CreateD2Geometry(d2d1->pD2Factory);
 	geo->CalculateCenterPoint();
 
 	if (sr)
@@ -4395,40 +4400,7 @@ std::vector<std::string> S101Cell::Query(MBR mbr)
 
 std::vector<std::string> S101Cell::QueryToSurface(MBR mbr)
 {
-	std::vector<std::string> result;
-
-	projection(mbr);
-
-	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
-	{
-		auto fr = *i;
-
-		if (fr->geometry == nullptr || 
-			fr->geometry->GetType() != SGeometryType::Surface)
-		{
-			continue;
-		}
-
-		SSurface* surface = (SSurface*)fr->geometry;
-
-		if (MBR::CheckOverlap(mbr, fr->geometry->m_mbr))
-		{
-			int code = fr->m_frid.m_nftc;
-			auto itor = m_dsgir.m_ftcs->m_arr.find(code);
-
-			double centerX = 0;
-			double centerY = 0;
-
-			gisLib->DeviceToWorld(mbr.GetCenterX(), mbr.GetCenterY(), &centerX, &centerY);
-
-			if (SGeometricFuc::inside(centerX, centerY, surface) == 1)
-			{
-				result.push_back(fr->GetID());
-			}
-		}
-	}
-
-	return result;
+	return {};
 }
 
 std::vector<std::string> S101Cell::QueryToCurve(MBR mbr)

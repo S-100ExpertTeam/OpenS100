@@ -113,7 +113,7 @@ MASK* F_MASK::GetMask(RecordName recordName)
 
 int F_MASK::getCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 MASK* F_MASK::getMASKbyIndex(int index) const

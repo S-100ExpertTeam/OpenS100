@@ -53,7 +53,7 @@ namespace GF
 
 	int ObjectType::GetInformationRelationCount() 
 	{
-		return informationAssociations.size();
+		return (int)informationAssociations.size();
 	}
 
 	InformationAssociationType ObjectType::getInformationAssociation(int index)
@@ -77,7 +77,7 @@ namespace GF
 
 	int ObjectType::GetAttributeCount() const
 	{
-		return attributes.size();
+		return (int)attributes.size();
 	}
 
 	ThematicAttributeType* ObjectType::GetAttribute(int index) const

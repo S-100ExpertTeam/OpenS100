@@ -26,7 +26,7 @@ public:
 	int scaleMaximum = 0;
 
 public:
-	virtual bool Open(CString _filepath);
+	virtual bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1);
 	virtual void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler) {};
 	void Draw(CDC *pDC, Scaler *scaler, double offset = 0);
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0);

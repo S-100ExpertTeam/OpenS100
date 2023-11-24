@@ -102,7 +102,7 @@ namespace GF
 
 	int FeatureType::GetFeatureRelationCount()
 	{
-		return featureAssociations.size();
+		return (int)featureAssociations.size();
 	}
 
 	FeatureAssociationType FeatureType::getFeatureAssociation(int index)

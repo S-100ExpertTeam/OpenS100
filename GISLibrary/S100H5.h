@@ -21,7 +21,7 @@ public:
     std::vector<H5_FeatureContainer*> featureContainer;
 
 public:
-    bool Open(CString _filepath) override;
+    bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1) override;
 
     void SetMBR();
 };

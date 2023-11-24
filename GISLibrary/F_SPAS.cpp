@@ -89,7 +89,7 @@ int F_SPAS::GetFieldLength()
 
 int F_SPAS::getCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 SPAS* F_SPAS::getSPAS(int index) const

@@ -99,7 +99,7 @@ void F_ATTR::Insert(ATTR* attr)
 
 int F_ATTR::getCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 ATTR* F_ATTR::getATTR(int index) const

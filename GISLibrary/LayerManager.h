@@ -17,16 +17,20 @@ class ENCCell;
 class PortrayalCatalogue;
 class SENC_Instruction;
 class DrawingSet;
+class CatalogManager;
 
 class LayerManager
 {
 public:
 	LayerManager();
-	LayerManager(Scaler* scaler);
+	LayerManager(Scaler* scaler, CatalogManager* catalogManager);
 	virtual ~LayerManager();
 
 public:
 	Scaler* scaler = nullptr;
+	CatalogManager* catalogManager = nullptr;
+	S101Creator* creator = nullptr;
+	GISLibrary::D2D1Resources* d2d1 = nullptr;
 
 	// Background layer
 	Layer backgroundLayer;
@@ -42,6 +46,14 @@ public:
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
 	bool onIC = true;
+
+private:
+	// S-101 Filter 
+	// Key : FeatureType code
+	// Value : On/Off
+	std::unordered_map<std::wstring, bool> featureOnOffMap;
+
+	double s100Scale = -1;
 
 public:
 	void SetViewMBR(RECT r);
@@ -100,6 +112,7 @@ public:
 	void ChangeS100ColorPalette(std::wstring paletteName);
 
 	Scaler* GetScaler();
+	GISLibrary::D2D1Resources* GetD2D1Resources();
 
 	void SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet);
 
@@ -112,4 +125,11 @@ public:
 	int CreateLayerID();
 
 	int pathToProductNumber(CString path);
+
+	void SetS100Scale(double value);
+	int GetS100Scale();
+
+	void InitFeatureOnOffMap();
+	void SetFeatureOnOff(std::wstring code, bool on);
+	bool IsFeatureOn(std::wstring& featureTypeCode);
 };

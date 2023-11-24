@@ -25,7 +25,7 @@ S100Layer::~S100Layer()
 	DeleteCatalog();
 }
 
-bool S100Layer::Open(CString _filepath)
+bool S100Layer::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
 
@@ -36,7 +36,7 @@ bool S100Layer::Open(CString _filepath)
 
 		auto enc = (S101Cell*)m_spatialObject;
 
-		if (!m_spatialObject->Open(_filepath))
+		if (!m_spatialObject->Open(_filepath, d2d1))
 		{
 			delete enc;
 			return false;
@@ -58,7 +58,7 @@ bool S100Layer::Open(CString _filepath)
 
 		m_spatialObject->SetLayer(this);
 
-		if (!m_spatialObject->Open(_filepath))
+		if (!m_spatialObject->Open(_filepath, d2d1))
 		{
 			delete m_spatialObject;
 			m_spatialObject = nullptr;
@@ -78,7 +78,7 @@ bool S100Layer::Open(CString _filepath)
 	{
 		if (GetFC()->getProductId().compare("S-102") == 0)
 		{
-			m_spatialObject = new S102H5();
+			m_spatialObject = new S102H5(GetPC());
 		}
 		else
 		{
@@ -86,7 +86,7 @@ bool S100Layer::Open(CString _filepath)
 		}
 
 		m_spatialObject->SetLayer(this);
-		if (!m_spatialObject->Open(_filepath))
+		if (!m_spatialObject->Open(_filepath, d2d1))
 		{
 			delete m_spatialObject;
 			m_spatialObject = nullptr;
@@ -135,7 +135,7 @@ bool S100Layer::OpenFC(CString path)
 {
 	FeatureCatalogue* fc = new FeatureCatalogue();
 	fc->Read(std::wstring(path));
-
+	
 	if (fc) {
 		SetIndividualFC(true);
 		SetFeatureCatalog(fc);
@@ -147,14 +147,14 @@ bool S100Layer::OpenFC(CString path)
 	return false;
 }
 
-bool S100Layer::OpenPC(CString path)
+bool S100Layer::OpenPC(CString path, GISLibrary::D2D1Resources* d2d1)
 {
 	PortrayalCatalogue* pc = new PortrayalCatalogue();
 
 	if (pc) {
-		pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
-		pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-		pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+		pc->CreateSVGD2Geometry(d2d1->pD2Factory);
+		pc->CreatePatternImages(d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
+		pc->CreateLineImages(d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
 
 		SetIndividualPC(true);
 		SetPC(pc);
@@ -285,3 +285,4 @@ void S100Layer::InitDraw()
 	drawingPriority.clear();
 	drawingSet.Init();
 }
+

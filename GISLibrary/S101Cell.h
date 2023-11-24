@@ -94,11 +94,11 @@ public:
 	void RemoveAll(void);
 	void ClearAll(void); 
 
-	bool Open(CString _filepath) override;
+	bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1) override;
 	bool Save(std::wstring path) override;
 
-	bool OpenBy000(CString path);
-	bool OpenByGML(CString path);
+	bool OpenBy000(CString path, GISLibrary::D2D1Resources* d2d1);
+	bool OpenByGML(CString path, GISLibrary::D2D1Resources* d2d1);
 
 	bool Read8211(std::wstring path);
 	bool isUpdate();
@@ -139,11 +139,11 @@ public:
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
 
-	BOOL MakeFullSpatialData();
-	BOOL MakePointData(R_FeatureRecord* fe); 
-	BOOL MakeSoundingData(R_FeatureRecord* fe);
-	BOOL MakeLineData(R_FeatureRecord* fe);
-	BOOL MakeAreaData(R_FeatureRecord* fe);
+	BOOL MakeFullSpatialData(GISLibrary::D2D1Resources* d2d1);
+	BOOL MakePointData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1);
+	BOOL MakeSoundingData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1);
+	BOOL MakeLineData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1);
+	BOOL MakeAreaData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1);
 
 	// Record -> Geometry
 	BOOL GetFullSpatialData(R_PointRecord *r, SPoint* point); // 

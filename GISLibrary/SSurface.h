@@ -12,7 +12,6 @@ class SSurface : public SGeometry
 {
 public:
 	SSurface();
-	SSurface(const SSurface& other);
 	SSurface(MBR* mbr);
 	SSurface(std::vector<POINT>& points, std::vector<int>& parts);
 	virtual ~SSurface();

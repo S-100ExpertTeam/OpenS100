@@ -10,10 +10,14 @@
 
 #include <hdf5.h>
 
-S102H5::S102H5()
+S102H5::S102H5(PortrayalCatalogue* pc)
 {
 	type = S100SpatialObjectType::S102H5;
 	featureContainer.push_back(new S102_FC_BathymetryCoverage());
+
+	if (!s102Color.isSet()) {
+		s102Color.setColor(pc);
+	}
 }
 
 S102H5::~S102H5()
@@ -21,7 +25,7 @@ S102H5::~S102H5()
 	DeleteBitmap();
 }
 
-bool S102H5::Open(CString _filepath)
+bool S102H5::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 {
 	SetFilePath(_filepath);
 	SetFileName(LibMFCUtil::GetFileName(_filepath));
@@ -63,6 +67,8 @@ bool S102H5::Open(CString _filepath)
 
 	SetMBR();
 
+	D2 = d2d1;
+
 	return true;
 }
 
@@ -73,7 +79,7 @@ void S102H5::Draw(HDC& hDC, Scaler* scaler, double offset)
 	}
 
 	if (pWICBitmap) {
-		auto rt = gisLib->D2.RenderTarget();
+		auto rt = D2->RenderTarget();
 
 		ID2D1Bitmap* pBitmap = nullptr;
 		auto hr = rt->CreateBitmapFromWicBitmap(pWICBitmap, &pBitmap);
@@ -132,10 +138,11 @@ S102_FC_BathymetryCoverage* S102H5::GetBathymetryCoverage()
 
 void S102H5::CreateBitmap()
 {
-	if (!gisLib->s102Color.isSet()) {
-		gisLib->s102Color.setColor();
+	/*
+	if (!s102Color.isSet()) {
+		s102Color.setColor();
 	}
-
+	*/
 	auto featureContainer = GetBathymetryCoverage();
 	auto featureInstance = featureContainer->GetBathymetryCoverage();
 	auto valuesGroup = featureInstance->GetBathymetryCoverage();
@@ -143,10 +150,10 @@ void S102H5::CreateBitmap()
 	auto width = featureInstance->getNumPointsLongitudinal();
 	auto height = featureInstance->getNumPointsLatitudinal();
 
-	HRESULT hr = gisLib->D2.pImagingFactory->CreateBitmap(width, height, GUID_WICPixelFormat32bppPRGBA, WICBitmapCacheOnDemand, &pWICBitmap);
+	HRESULT hr = D2->pImagingFactory->CreateBitmap(width, height, GUID_WICPixelFormat32bppPRGBA, WICBitmapCacheOnDemand, &pWICBitmap);
 	if (SUCCEEDED(hr)) {
 		ID2D1RenderTarget* rt = nullptr;
-		hr = gisLib->D2.pD2Factory->CreateWicBitmapRenderTarget(
+		hr = D2->pD2Factory->CreateWicBitmapRenderTarget(
 			pWICBitmap, 
 			D2D1::RenderTargetProperties(), 
 			&rt);
@@ -187,93 +194,6 @@ void S102H5::CreateBitmap()
 
 		SafeRelease(&rt);
 	}
-
-	//auto regularGrid = s102->GetRegularGrid(0);
-	//if (regularGrid)
-	//{
-	//	auto featureValue = regularGrid->GetRegularGridFeatureValues(0);
-	//	auto gridInfo = regularGrid->GetRegularGridInformation();
-	//	if (gridInfo && featureValue)
-	//	{
-	//		auto floatValue = featureValue->GetFloatValues(0);
-	//		if (!floatValue)
-	//		{
-	//			return;
-	//		}
-
-	//		float* values = floatValue->GetValues();
-
-	//		int ncols = gridInfo->GetNumPointLongitudinal();
-	//		int nrows = gridInfo->GetNumPointLatitudinal();
-
-	//		if (bmpGrid.GetSafeHandle())
-	//		{
-	//			dc.DeleteDC();
-	//			bmpGrid.DeleteObject();
-	//			bBMP = false;
-	//		}
-
-	//		if (!bBMP)
-	//		{
-	//			if (bmpGrid.CreateBitmap(ncols, nrows, 1, 32, NULL) == 0)
-	//			{
-	//				return;
-	//			}
-
-	//			dc.CreateCompatibleDC(pDC);
-	//			dc.SelectObject(bmpGrid);
-
-	//			BITMAP pBitmap;
-	//			bmpGrid.GetBitmap(&pBitmap);
-
-	//			int* bmpBuffer = new int[pBitmap.bmWidth * pBitmap.bmHeight];
-	//			memset(bmpBuffer, 0, sizeof(int) * (pBitmap.bmWidth * pBitmap.bmHeight));
-
-	//			float gridOriginX = gridInfo->GetGridOgirinLongitude();
-	//			float gridOriginY = gridInfo->GetGridOriginLatitude();
-	//			float dx = gridInfo->GetGridSpacingLongitudinal();
-	//			float dy = gridInfo->GetGridSpacingLatitudinal();
-
-	//			for (int irow = 0; irow < nrows; irow++)
-	//			{
-	//				for (int icol = 0; icol < ncols; icol++)
-	//				{
-	//					int index = (nrows - 1 - irow) * ncols + icol;
-
-	//					if (values[(irow * ncols) + icol] == 1000000.0 ||
-	//						values[(irow * ncols) + icol] == -1000000.0)
-	//					{
-	//						bmpBuffer[index] = RGB(255, 255, 255);
-
-	//						continue;
-	//					}
-
-	//					double elevation = values[(irow * ncols) + icol];
-
-	//					if (elevation > 100000)
-	//					{
-	//						int a = 0;
-	//					}
-
-	//					if (APPLY_TIDE)
-	//					{
-	//						elevation += (TIDAL / 100.0);
-	//					}
-
-	//					bmpBuffer[index] = GetColour(elevation);
-	//				}
-	//			}
-
-	//			bmpGrid.SetBitmapBits(pBitmap.bmWidthBytes * pBitmap.bmHeight, bmpBuffer);
-
-	//			delete[] bmpBuffer;
-
-	//			bBMP = true;
-	//		}
-	//	}
-	//}
-
-	//Close();
 }
 
 void S102H5::DeleteBitmap()
@@ -284,19 +204,19 @@ void S102H5::DeleteBitmap()
 D2D1_COLOR_F S102H5::getColor(float depth)
 {
 	if (depth > ENCCommon::DEEP_CONTOUR) {
-		return gisLib->s102Color.DEPDW[0];
+		return s102Color.DEPDW[0];
 	}
 	else if (depth > ENCCommon::SAFETY_CONTOUR) {
-		return gisLib->s102Color.DEPMD[0];
+		return s102Color.DEPMD[0];
 	}
 	else if (depth > ENCCommon::SHALLOW_CONTOUR) {
-		return gisLib->s102Color.DEPMS[0];
+		return s102Color.DEPMS[0];
 	}
 	else if (depth > 0) {
-		return gisLib->s102Color.DEPVS[0];
+		return s102Color.DEPVS[0];
 	}
 	else {
-		return gisLib->s102Color.DEPIT[0];
+		return s102Color.DEPIT[0];
 	}
 
 	return D2D1::ColorF(D2D1::ColorF::Black);

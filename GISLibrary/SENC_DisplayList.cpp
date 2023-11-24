@@ -77,9 +77,8 @@ SENC_DisplayList::~SENC_DisplayList()
 	alertInstructions.clear();
 }
 
-void SENC_DisplayList::GetDrawingInstruction(int priority, int type, Scaler* scaler, std::list<SENC_Instruction*> &itList)
+void SENC_DisplayList::GetDrawingInstruction(int priority, int type, int currentScale, Scaler* scaler, std::list<SENC_Instruction*> &itList)
 {
-	auto currentScale = gisLib->GetS100Scale();
 	int curViewingGroupLimit = 0;
 
 	if (ENCCommon::DISPLAY_MODE == GeoMetryLibrary::DisplayModeTable::base)
@@ -108,8 +107,15 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, Scaler* sca
 	{
 		instruction = i->second;
 
+		/*
 		if ((instruction->viewingGroup > curViewingGroupLimit) || 
 			!gisLib->IsFeatureOn(instruction->code))
+		{
+			continue;
+		}
+		*/
+
+		if (instruction->viewingGroup > curViewingGroupLimit)
 		{
 			continue;
 		}

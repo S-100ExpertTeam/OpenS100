@@ -38,7 +38,7 @@ S10XGML::~S10XGML()
 	}
 }
 
-bool S10XGML::Open(CString _filepath)
+bool S10XGML::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 {
 	SetFilePath(_filepath);
 
@@ -118,6 +118,8 @@ bool S10XGML::Open(CString _filepath)
 
 		child = child.next_sibling();
 	}
+
+	D2 = d2d1;
 
 	//SetGeometry();
 	//CalcMBR();
@@ -1310,32 +1312,32 @@ void S10XGML::SetGeometry()
 			if (geometry->GetType() == GM::GeometryType::Point) {
 				auto sPoint = PointToSPoint((GM::Point*)geometry);
 				feature->SetGeometry(sPoint);
-				sPoint->CreateD2Geometry(gisLib->D2.Factory());
+				sPoint->CreateD2Geometry(D2->Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::MultiPoint) {
 				auto sMultiPoint = MultiPointToSMultiPoint((GM::MultiPoint*)geometry);
 				feature->SetGeometry(sMultiPoint);
-				sMultiPoint->CreateD2Geometry(gisLib->D2.Factory());
+				sMultiPoint->CreateD2Geometry(D2->Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::OrientableCurve) {
 				auto sCurve = OrientableCurveToSCurve((GM::OrientableCurve*)geometry);
 				feature->SetGeometry(sCurve);
-				sCurve->CreateD2Geometry(gisLib->D2.Factory());
+				sCurve->CreateD2Geometry(D2->Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::Curve) {
 				auto sCurve = CurveToSCurve((GM::Curve*)geometry);
 				feature->SetGeometry(sCurve);
-				sCurve->CreateD2Geometry(gisLib->D2.Factory());
+				sCurve->CreateD2Geometry(D2->Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::CompositeCurve) {
 				auto sCompositeCurve = CompositeCurveToSCompositeCurve((GM::CompositeCurve*)geometry);
 				feature->SetGeometry(sCompositeCurve);
-				sCompositeCurve->CreateD2Geometry(gisLib->D2.Factory());
+				sCompositeCurve->CreateD2Geometry(D2->Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::Surface) {
 				auto sSurface = SurfaceToSSurface((GM::Surface*)geometry);
 				feature->SetGeometry(sSurface);
-				sSurface->CreateD2Geometry(gisLib->D2.Factory());
+				sSurface->CreateD2Geometry(D2->Factory());
 
 				auto surface = (GM::Surface*)geometry;
 				auto exteriorRing = surface->getExteriorRing();
@@ -1351,12 +1353,12 @@ void S10XGML::SetGeometry()
 					auto ring = rings[j];
 					if (ring->GetType() == GM::GeometryType::Curve) {
 						auto sCurve = CurveToSCurve((GM::Curve*)ring);
-						sCurve->CreateD2Geometry(gisLib->D2.Factory());
+						sCurve->CreateD2Geometry(D2->Factory());
 						sSurface->AddCurve(sCurve);
 					}
 					else if (ring->GetType() == GM::GeometryType::CompositeCurve) {
 						auto sCompositeCurve = CompositeCurveToSCompositeCurve((GM::CompositeCurve*)ring);
-						sCompositeCurve->CreateD2Geometry(gisLib->D2.Factory());
+						sCompositeCurve->CreateD2Geometry(D2->Factory());
 						sSurface->AddCurve(sCompositeCurve);
 					}
 				}

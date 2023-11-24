@@ -21,40 +21,13 @@ public:
 
 public:
 	Scaler* m_pScaler = new Scaler();
-	LayerManager* m_pLayerManager = new LayerManager(m_pScaler);
-	GISLibrary::D2D1Resources D2;
-	S100Render s100Render;
-	S101Creator creator;
-	
-	double s100Scale = -1;
-
-	CatalogManager catalogManager;
-	S102_Color s102Color;
-
-private:
-	
-	// Default FC & PC for S-101
-	//FeatureCatalogue* fc = nullptr;
-	//PortrayalCatalogue* pc = nullptr;
-	
-
-	// S-101 Filter 
-	// Key : FeatureType code
-	// Value : On/Off
-	std::unordered_map<std::wstring, bool> featureOnOffMap;
+	CatalogManager* m_pCatalogManager = new CatalogManager();
+	LayerManager* m_pLayerManager = new LayerManager(m_pScaler, m_pCatalogManager);
 
 public:
 	Scaler* GetScaler();
 	LayerManager* GetLayerManager();
 
-	//void InitLibrary(std::wstring fcPath, std::wstring pcPath);
-	//void InitLibrary(FeatureCatalogue* fc, PortrayalCatalogue* pc);
-	//void addCatalogue(std::string fcPath, std::string pcPath);
-	//void addCatalogue(std::wstring fcPath, std::wstring pcPath);
-	//FeatureCatalogue* addFC(std::string path);
-	//FeatureCatalogue* addFC(std::wstring path);
-	//PortrayalCatalogue* addPC(std::string path);
-	//PortrayalCatalogue* addPC(std::wstring path);
 	CatalogManager* getCatalogManager();
 
 	bool AddBackgroundLayer(CString _filepath);
@@ -125,17 +98,4 @@ public:
 	void ChangeDisplayFont();
 
 	std::wstring GetColorTable();
-	
-	//FeatureCatalogue* GetFC();
-	//void SetFC(FeatureCatalogue* fc);
-	//
-	//PortrayalCatalogue* GetPC();
-	//void SetPC(PortrayalCatalogue* pc);
-
-	void SetS100Scale(double value);
-	int GetS100Scale();
-
-	void InitFeatureOnOffMap();
-	void SetFeatureOnOff(std::wstring code, bool on);
-	bool IsFeatureOn(std::wstring& featureTypeCode);
 };

@@ -15,36 +15,6 @@ SSurface::SSurface()
 	
 }
 
-SSurface::SSurface(const SSurface& other)
-	: SGeometry(other)
-{
-	m_numParts = other.m_numParts;
-	m_numPoints = other.m_numPoints;
-
-	if (other.m_pParts) {
-		m_pParts = new int[GetNumPart()];
-		memcpy(m_pParts, other.m_pParts, GetNumPart() * sizeof(int));
-	}
-
-	if (other.m_pPoints) {
-		m_pPoints = new GeoPoint[getNumPoint()];
-		memcpy(m_pPoints, other.m_pPoints, getNumPoint() * sizeof(GeoPoint));
-	}
-
-	if (other.m_centerPoint) {
-		m_centerPoint = new GeoPoint(*other.m_centerPoint);
-	}
-
-	int curveCnt = other.curveList.size();
-	if (curveCnt > 0) {
-		for (int i = 0; i < curveCnt; i++) {
-			AddCurve(other.GetRing(i));
-		}
-	}
-
-	CreateD2Geometry(gisLib->D2.Factory());
-}
-
 SSurface::SSurface(MBR* mbr)
 {
 	m_numParts = 1;

@@ -50,24 +50,24 @@ void CatalogManager::addFC(FeatureCatalogue* fc)
 	}
 }
 
-PortrayalCatalogue* CatalogManager::addPC(std::string path)
+PortrayalCatalogue* CatalogManager::addPC(std::string path, GISLibrary::D2D1Resources* d2d1)
 {
-	return addPC(LibMFCUtil::StringToWString(path));
+	return addPC(LibMFCUtil::StringToWString(path), d2d1);
 }
 
-PortrayalCatalogue* CatalogManager::addPC(std::wstring path)
+PortrayalCatalogue* CatalogManager::addPC(std::wstring path, GISLibrary::D2D1Resources* d2d1)
 {
 	auto pc = new PortrayalCatalogue();
 
 	if (pc->Open(path)) {
-		if (pc) {
-			pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
-			pc->CreatePatternImages(gisLib->D2.pD2Factory, 
-				gisLib->D2.pImagingFactory, 
-				gisLib->D2.D2D1StrokeStyleGroup.at(0));
-			pc->CreateLineImages(gisLib->D2.pD2Factory, 
-				gisLib->D2.pImagingFactory, 
-				gisLib->D2.D2D1StrokeStyleGroup.at(0));
+		if (pc && d2d1) {
+			pc->CreateSVGD2Geometry(d2d1->pD2Factory);
+			pc->CreatePatternImages(d2d1->pD2Factory, 
+				d2d1->pImagingFactory, 
+				d2d1->D2D1StrokeStyleGroup.at(0));
+			pc->CreateLineImages(d2d1->pD2Factory,
+				d2d1->pImagingFactory, 
+				d2d1->D2D1StrokeStyleGroup.at(0));
 		}
 
 		PCs.push_back(pc);

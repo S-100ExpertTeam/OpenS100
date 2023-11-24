@@ -63,11 +63,24 @@ LayerManager::LayerManager(void)
 			if (ch == '\\') break;
 		}
 	}
+
+	creator = new S101Creator();
+
+	d2d1 = new GISLibrary::D2D1Resources();
+	d2d1->CreateDeviceIndependentResources();
+	d2d1->CreateDeviceDependentResources();
 }
 
-LayerManager::LayerManager(Scaler* scaler) : LayerManager()
+LayerManager::LayerManager(Scaler* scaler, CatalogManager* catalogManager) : LayerManager()
 {
 	this->scaler = scaler;
+	this->catalogManager = catalogManager;
+
+	creator = new S101Creator();
+
+	d2d1 = new GISLibrary::D2D1Resources();
+	d2d1->CreateDeviceIndependentResources();
+	d2d1->CreateDeviceDependentResources();
 }
 
 LayerManager::~LayerManager()
@@ -77,6 +90,22 @@ LayerManager::~LayerManager()
 		delete* i;
 	}
 	layers.clear();
+
+	if (creator)
+	{
+		delete creator;
+		creator = nullptr;
+	}
+
+	if (d2d1)
+	{
+		d2d1->DeleteDeviceDependentResources();
+		d2d1->DeleteDeviceIndependentResources();
+		delete d2d1;
+		d2d1 = nullptr;
+	}
+
+	featureOnOffMap.clear();
 }
 
 bool LayerManager::AddBackgroundLayer(CString _filepath)
@@ -85,7 +114,7 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 
 	if (file_extension.CompareNoCase(_T("SHP")) == 0) 
 	{
-		if (backgroundLayer.Open(_filepath) == false)
+		if (backgroundLayer.Open(_filepath, d2d1) == false)
 		{
 			return false;
 		}
@@ -161,7 +190,7 @@ int LayerManager::AddLayer(CString _filepath)
 	if (fileType == S100_FileType::FILE_Shape)
 	{
 		layer = new Layer();
-		if (layer->Open(_filepath) == false)
+		if (layer->Open(_filepath, d2d1) == false)
 		{
 			delete layer;
 			return -1;
@@ -171,13 +200,13 @@ int LayerManager::AddLayer(CString _filepath)
 		fileType == S100_FileType::FILE_S_100_GRID_H5)
 	{
 		auto productNumber = pathToProductNumber(_filepath);
-		auto fc = gisLib->catalogManager.getFC(productNumber);
-		auto pc = gisLib->catalogManager.getPC(productNumber);
+		auto fc = catalogManager->getFC(productNumber);
+		auto pc = catalogManager->getPC(productNumber);
 
 		if (fc)
 		{
 			layer = new S100Layer(fc, pc);
-			if ((S100Layer*)layer->Open(_filepath) == false)
+			if ((S100Layer*)layer->Open(_filepath, d2d1) == false)
 			{
 				delete layer;
 				return -1;
@@ -205,17 +234,9 @@ int LayerManager::AddLayer(CString _filepath)
 
 void LayerManager::Draw(HDC& hdc, int offset)
 {
-	CDC* pDC = CDC::FromHandle(hdc);
-	CRect rectView = scaler->GetScreenRect();
-
 	DrawBackground(hdc, offset);
 
 	DrawS100Datasets(hdc, offset);
-
-	gisLib->D2.Begin(hdc, rectView);
-	gisLib->DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
-	gisLib->DrawScaleBar();
-	gisLib->D2.End();
 }
 
 void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
@@ -313,19 +334,19 @@ void LayerManager::AddSymbolDrawing(
 {
 	std::list<D2D1_POINT_2F> points;
 
-	gisLib->D2.pRT->SetTransform(scaler->GetMatrix());
+	d2d1->pRT->SetTransform(scaler->GetMatrix());
 
 	// Area
 	for (auto i = area[drawingPrioriy].begin(); i != area[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
 
-		gisLib->D2.pBrush->SetOpacity(1.0f);
+		d2d1->pBrush->SetOpacity(1.0f);
 		instruction->DrawInstruction(
-			gisLib->D2.pRT,
-			gisLib->D2.pD2Factory,
-			gisLib->D2.pBrush,
-			&gisLib->D2.D2D1StrokeStyleGroup,
+			d2d1->pRT,
+			d2d1->pD2Factory,
+			d2d1->pBrush,
+			&d2d1->D2D1StrokeStyleGroup,
 			scaler,
 			pc);
 	}
@@ -335,28 +356,28 @@ void LayerManager::AddSymbolDrawing(
 	{
 		auto instruction = *i;
 		instruction->DrawInstruction(
-			gisLib->D2.pRT,
-			gisLib->D2.pD2Factory,
-			gisLib->D2.pBrush,
-			&gisLib->D2.D2D1StrokeStyleGroup,
+			d2d1->pRT,
+			d2d1->pD2Factory,
+			d2d1->pBrush,
+			&d2d1->D2D1StrokeStyleGroup,
 			scaler,
 			pc);
 	}
 
-	gisLib->D2.pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+	d2d1->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 
 	// AugmentedRay
 	for (auto i = augmentedRay[drawingPrioriy].begin(); i != augmentedRay[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(gisLib->D2.pRT, gisLib->D2.pD2Factory, gisLib->D2.pBrush, &gisLib->D2.D2D1StrokeStyleGroup, scaler, pc);
+		instruction->DrawInstruction(d2d1->pRT, d2d1->pD2Factory, d2d1->pBrush, &d2d1->D2D1StrokeStyleGroup, scaler, pc);
 	}
 
 	// AugmentedPath
 	for (auto i = augmentedPath[drawingPrioriy].begin(); i != augmentedPath[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(gisLib->D2.pRT, gisLib->D2.pD2Factory, gisLib->D2.pBrush, &gisLib->D2.D2D1StrokeStyleGroup, scaler, pc);
+		instruction->DrawInstruction(d2d1->pRT, d2d1->pD2Factory, d2d1->pBrush, &d2d1->D2D1StrokeStyleGroup, scaler, pc);
 	}
 
 	// Point
@@ -403,7 +424,7 @@ void LayerManager::AddSymbolDrawing(
 				auto s100PCManager = pc->GetS100PCManager();
 				if (s100PCManager)
 				{
-					auto pRenderTarget = gisLib->D2.RenderTarget();
+					auto pRenderTarget = d2d1->RenderTarget();
 
 					D2D1::Matrix3x2F oldTransform;
 					pRenderTarget->GetTransform(&oldTransform);
@@ -411,8 +432,8 @@ void LayerManager::AddSymbolDrawing(
 					s100PCManager->Draw(
 						instruction->symbol->reference,
 						pRenderTarget,
-						gisLib->D2.SolidColorBrush(),
-						gisLib->D2.SolidStrokeStyle(),
+						d2d1->SolidColorBrush(),
+						d2d1->SolidStrokeStyle(),
 						D2D1::Point2F(pi->x, pi->y),
 						rotation,
 						5);
@@ -426,8 +447,8 @@ void LayerManager::AddSymbolDrawing(
 	// Text
 	if (ENCCommon::TEXTOUT)
 	{
-		gisLib->D2.pBrush->SetOpacity(1.0f);
-		gisLib->D2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
+		d2d1->pBrush->SetOpacity(1.0f);
+		d2d1->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
 		if (text[drawingPrioriy].size() > 0)
 		{
 			HWND hWnd = ::GetActiveWindow();
@@ -436,7 +457,7 @@ void LayerManager::AddSymbolDrawing(
 			int dpiX = GetDeviceCaps(hdc, LOGPIXELSX);    // Monitor x axis dpi.
 			int dpiY = GetDeviceCaps(hdc, LOGPIXELSY);    // Monitor y axis dpi.
 			::ReleaseDC(hWnd, hdc);
-			D2D1_SIZE_F renderTargetSize = gisLib->D2.pRT->GetSize();
+			D2D1_SIZE_F renderTargetSize = d2d1->pRT->GetSize();
 
 			for (auto i = text[drawingPrioriy].begin(); i != text[drawingPrioriy].end(); i++)
 			{
@@ -469,17 +490,17 @@ void LayerManager::AddSymbolDrawing(
 						radian = -angle / 180. * M_PI;
 					}
 
-					int bodySize = element->bodySize * (float)1.358;
+					int bodySize = (int)(element->bodySize * (float)1.358);
 
 					IDWriteTextFormat* useWTF = NULL;
 					if (bodySize != 15)
 					{
-						auto sizedFontIter = gisLib->D2.writeTextFormatListByFontSize.find(bodySize);
+						auto sizedFontIter = d2d1->writeTextFormatListByFontSize.find(bodySize);
 
-						if (sizedFontIter == gisLib->D2.writeTextFormatListByFontSize.end())
+						if (sizedFontIter == d2d1->writeTextFormatListByFontSize.end())
 						{
 							IDWriteTextFormat* newWriteTextFormat = NULL;
-							HRESULT hr = gisLib->D2.pDWriteFactory->CreateTextFormat(
+							HRESULT hr = d2d1->pDWriteFactory->CreateTextFormat(
 								ENCCommon::DISPLAY_FONT_NAME.c_str(),
 								NULL,
 								DWRITE_FONT_WEIGHT_NORMAL,
@@ -490,7 +511,7 @@ void LayerManager::AddSymbolDrawing(
 								&newWriteTextFormat
 							);
 
-							gisLib->D2.writeTextFormatListByFontSize.insert(std::make_pair(bodySize, newWriteTextFormat));
+							d2d1->writeTextFormatListByFontSize.insert(std::make_pair(bodySize, newWriteTextFormat));
 
 							useWTF = newWriteTextFormat;
 
@@ -502,7 +523,7 @@ void LayerManager::AddSymbolDrawing(
 					}
 					else
 					{
-						useWTF = gisLib->D2.pDWriteTextFormat;
+						useWTF = d2d1->pDWriteTextFormat;
 					}
 
 					useWTF->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
@@ -515,7 +536,7 @@ void LayerManager::AddSymbolDrawing(
 
 						const wchar_t* vText = element->text.value.c_str();
 						int vTextSize = (int)element->text.value.size();
-						gisLib->D2.pDWriteFactory->CreateTextLayout(
+						d2d1->pDWriteFactory->CreateTextLayout(
 							vText,
 							vTextSize,
 							useWTF,
@@ -543,8 +564,8 @@ void LayerManager::AddSymbolDrawing(
 					// Determine the size of the Offset
 					//float XOFFS = ((float)textPoint->offset.x * offsetUnitX);
 					//float YOFFS = -((float)textPoint->offset.y * offsetUnitY);
-					float XOFFS = ((float)textPoint->offset.x / 0.32) * 1.358;
-					float YOFFS = -((float)textPoint->offset.y / 0.32) * 1.358;
+					float XOFFS = (float)(((float)textPoint->offset.x / 0.32) * 1.358);
+					float YOFFS = (float)(-((float)textPoint->offset.y / 0.32) * 1.358);
 
 					// HJUST 
 					// CENTRE
@@ -593,7 +614,7 @@ void LayerManager::AddSymbolDrawing(
 
 					if (element->pColor)
 					{
-						gisLib->D2.pBrush->SetColor(element->pColor);
+						d2d1->pBrush->SetColor(element->pColor);
 					}
 
 					for (auto itor = points.begin(); itor != points.end(); itor++)
@@ -622,13 +643,13 @@ void LayerManager::AddSymbolDrawing(
 							y = tempY + (float)scaler->soy;
 						}
 
-						gisLib->D2.pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-						gisLib->D2.pRT->DrawText(
+						d2d1->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+						d2d1->pRT->DrawText(
 							vText,
 							vTextSize,
 							useWTF,
 							D2D1::RectF(x, y, x + width, y + height),
-							gisLib->D2.pBrush
+							d2d1->pBrush
 						);
 					}
 				}
@@ -795,57 +816,87 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		int cnt = 0;
 
 		// Augmented Ray
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetAugmentedRayList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		// Augmented Path
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetAugmentedPathList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		// Point
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetPointList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		// Line
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetLineList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		// Area
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetAreaList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		// Text
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 5, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 5, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetTextList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		if (cnt)
@@ -859,13 +910,13 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 	// Line Suppression
 	SuppressS101Lines(layer->drawingPriority, &layer->drawingSet);
 
-	auto rt = gisLib->D2.pRT;
+	auto rt = d2d1->pRT;
 	rt->BindDC(hDC, scaler->GetScreenRect());
 	rt->BeginDraw();
-	gisLib->D2.pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	d2d1->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	d2d1->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
-	pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
+	pc->GetS100PCManager()->CreateBitmapBrush(d2d1->pRT);
 	pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
 
 	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
@@ -916,57 +967,87 @@ void LayerManager::SetDrawingInstruction(S100Layer* layer)
 		int cnt = 0;
 
 		// Augmented Ray
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 7, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetAugmentedRayList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		// Augmented Path
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 8, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetAugmentedPathList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		// Point
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 1, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetPointList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		// Line
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 2, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetLineList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		// Area
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 3, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetAreaList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		// Text
-		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 5, scaler, itList);
+		cell->pcManager->displayListSENC->GetDrawingInstruction(i, 5, GetS100Scale(), scaler, itList);
 		if (itList.size() > 0)
 		{
 			auto instructionList = layer->drawingSet.GetTextList(i);
-			instructionList->insert(instructionList->begin(), itList.begin(), itList.end());
-			cnt += (int)itList.size();
+			for (const auto& iter : itList)
+			{
+				if (!IsFeatureOn(iter->code))
+					continue;
+				instructionList->push_back(iter);
+				cnt++;
+			}
 		}
 
 		if (cnt)
@@ -991,13 +1072,13 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int min
 
 	auto pc = layer->GetPC();
 
-	auto rt = gisLib->D2.pRT;
+	auto rt = d2d1->pRT;
 	rt->BindDC(hDC, scaler->GetScreenRect());
 	rt->BeginDraw();
-	gisLib->D2.pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	d2d1->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	d2d1->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
-	pc->GetS100PCManager()->CreateBitmapBrush(gisLib->D2.pRT);
+	pc->GetS100PCManager()->CreateBitmapBrush(d2d1->pRT);
 	pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
 
 	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
@@ -1259,9 +1340,9 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 			{
 				pc->SetCurrentPaletteName(paletteName);
 				pc->DeletePatternImage();
-				pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+				pc->CreatePatternImages(d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
 				pc->DeleteLineImages();
-				pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+				pc->CreateLineImages(d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
 			}
 
 			auto s100so = (S100SpatialObject*)layer->GetSpatialObject();
@@ -1276,12 +1357,17 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 		}
 	}
 
-	gisLib->catalogManager.ChangeColorPallete(paletteName, gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+	catalogManager->ChangeColorPallete(paletteName, d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
 }
 
 Scaler* LayerManager::GetScaler()
 {
 	return scaler;
+}
+
+GISLibrary::D2D1Resources* LayerManager::GetD2D1Resources()
+{
+	return d2d1;
 }
 
 void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet)
@@ -1392,7 +1478,7 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 
 int LayerManager::LayerCount()
 {
-	return layers.size();
+	return (int)layers.size();
 }
 
 S100_FileType LayerManager::CheckFileType(CString path, int update)
@@ -1571,3 +1657,60 @@ int LayerManager::pathToProductNumber(CString path)
 
 	return 0;
 }
+
+void LayerManager::SetS100Scale(double value)
+{
+	s100Scale = value;
+}
+
+int LayerManager::GetS100Scale()
+{
+	if (s100Scale > 0)
+	{
+		return (int)s100Scale;
+	}
+
+	auto currentScale = scaler->GetCurrentScale();
+
+	return currentScale;
+}
+
+void LayerManager::InitFeatureOnOffMap()
+{
+	auto fc = catalogManager->getFC("S-101");
+	if (fc)
+	{
+		featureOnOffMap.clear();
+
+		auto vector = fc->GetFeatureTypes()->GetVecFeatureType();
+		for (auto i = vector.begin(); i != vector.end(); i++)
+		{
+			featureOnOffMap.insert({ (*i)->GetCodeAsWString(), true });
+		}
+	}
+}
+
+void LayerManager::SetFeatureOnOff(std::wstring code, bool on)
+{
+	auto itor = featureOnOffMap.find(code);
+	if (itor != featureOnOffMap.end())
+	{
+		itor->second = on;
+	}
+	else
+	{
+		featureOnOffMap.insert({ code, on });
+	}
+}
+
+bool LayerManager::IsFeatureOn(std::wstring& featureTypeCode)
+{
+	auto item = featureOnOffMap.find(featureTypeCode);
+	if (item != featureOnOffMap.end())
+	{
+		return item->second;
+	}
+
+	return true;
+}
+

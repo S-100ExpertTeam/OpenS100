@@ -22,7 +22,7 @@ S100H5::~S100H5()
 	}
 }
 
-bool S100H5::Open(CString _filepath)
+bool S100H5::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 {
 	SetFilePath(_filepath);
 	SetFileName(LibMFCUtil::GetFileName(_filepath));
@@ -42,6 +42,8 @@ bool S100H5::Open(CString _filepath)
 	H5Fclose(fileID);
 
 	SetMBR();
+
+	D2 = d2d1;
 
 	return true;
 }

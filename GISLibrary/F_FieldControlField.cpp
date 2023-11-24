@@ -46,5 +46,5 @@ void F_FieldControlField::AddTagPair(char tag1[5], char tag2[5])
 
 int F_FieldControlField::GetFieldLength()
 {
-	return 10 + (tagPairs.size() * 8) + 1;
+	return (int)(10 + (tagPairs.size() * 8) + 1);
 }

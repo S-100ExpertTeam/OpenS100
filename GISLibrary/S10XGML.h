@@ -36,7 +36,7 @@ public:
     std::vector<GM::Object*> geometries;
 
 public:
-    bool Open(CString _filepath) override;
+    bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1) override;
     bool SaveToInputXML(std::string path) override;
 
     bool ReadMembers(pugi::xml_node& node);

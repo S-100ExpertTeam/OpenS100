@@ -54,7 +54,7 @@ void TestGISLibrary::TestSave()
 
 void TestGISLibrary::CreateNewLayer()
 {
-	auto layer = theApp.pView->s101Creator.CreateLayer(L"newENC.000", theApp.gisLib->catalogManager.getFC(), theApp.gisLib->catalogManager.getPC());
+	auto layer = theApp.pView->s101Creator.CreateLayer(L"newENC.000", theApp.gisLib->getCatalogManager()->getFC(), theApp.gisLib->getCatalogManager()->getPC());
 	if (layer)
 	{
 		layerKey = theApp.gisLib->GetLayerManager()->AddLayer(layer);
@@ -63,7 +63,7 @@ void TestGISLibrary::CreateNewLayer()
 
 void TestGISLibrary::CreateMemoryLayer()
 {
-	auto layer = theApp.pView->s101Creator.CreateLayer(L"MemoryLayer.000", theApp.gisLib->catalogManager.getFC(), theApp.gisLib->catalogManager.getPC());
+	auto layer = theApp.pView->s101Creator.CreateLayer(L"MemoryLayer.000", theApp.gisLib->getCatalogManager()->getFC(), theApp.gisLib->getCatalogManager()->getPC());
 	delete layer;
 }
 
@@ -96,7 +96,7 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 							
 							if (geom)
 							{
-								geom->CreateD2Geometry(theApp.gisLib->D2.Factory());
+								geom->CreateD2Geometry(theApp.gisLib->GetLayerManager()->GetD2D1Resources()->Factory());
 								geom->SetMBR();
 								theApp.pView->s101Creator.enc->ReMBR();
 								theApp.gisLib->GetLayerManager()->ReMBR();
@@ -116,10 +116,10 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 void TestGISLibrary::OffFeature()
 {
 	// Off "DepthArea" feature
-	theApp.gisLib->SetFeatureOnOff(L"DepthArea", false);
+	theApp.gisLib->GetLayerManager()->SetFeatureOnOff(L"DepthArea", false);
 
 	// Off "Sounding" feature
-	theApp.gisLib->SetFeatureOnOff(L"Sounding", false);
+	theApp.gisLib->GetLayerManager()->SetFeatureOnOff(L"Sounding", false);
 
 	theApp.pView->MapRefresh();
 }

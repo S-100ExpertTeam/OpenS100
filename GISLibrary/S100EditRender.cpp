@@ -39,7 +39,7 @@ void S100EditRender::Set(S101Cell* enc, R_FeatureRecord* feature)
 	}
 }
 
-void S100EditRender::ShowPoint()
+void S100EditRender::ShowPoint(LayerManager* layerManager)
 {
 	if (nullptr == enc || nullptr == feature)
 	{
@@ -54,44 +54,46 @@ void S100EditRender::ShowPoint()
 		if (110 == rcnm)
 		{
 			auto point = (SPoint*)feature->GetGeometry();
-			ShowPoint(point);
+			ShowPoint(layerManager, point);
 		}
 		else if (115 == rcnm)
 		{
 			auto multiPoint = (SMultiPoint*)feature->GetGeometry();
-			ShowPoint(multiPoint);
+			ShowPoint(layerManager, multiPoint);
 		}
 		else if (120 == rcnm)
 		{
 			auto curve = (SCurve*)feature->GetGeometry();
-			ShowPoint(curve);
+			ShowPoint(layerManager, curve);
 		}
 		else if (125 == rcnm)
 		{
 			auto compositeCurve = (SCompositeCurve*)feature->GetGeometry();
-			ShowPoint(compositeCurve);
+			ShowPoint(layerManager, compositeCurve);
 		}
 		else if (130 == rcnm)
 		{
 			auto surface = (SSurface*)feature->GetGeometry();
-			ShowPoint(surface);
+			ShowPoint(layerManager, surface);
 		}
 	}
 }
 
-void S100EditRender::ShowPoint(SPoint* geom)
+void S100EditRender::ShowPoint(LayerManager* layerManager, SPoint* geom)
 {
-	if (gisLib->D2.pRT && geom)
-	{
-		auto scaler = gisLib->GetScaler();
+	if (!layerManager || !geom)
+		return;
 
+	auto d2 = layerManager->GetD2D1Resources();
+	auto scaler = layerManager->GetScaler();
+
+	if (d2->pRT)
+	{
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
 
-		auto d2 = gisLib->D2;
+		d2->pBrush->SetOpacity(1);
 
-		d2.pBrush->SetOpacity(1);
-
-		d2.pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+		d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		auto mx = geom->x;
 		auto my = geom->y;
@@ -100,37 +102,39 @@ void S100EditRender::ShowPoint(SPoint* geom)
 
 		scaler->WorldToDevice(mx, my, &sx, &sy);
 
-		d2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
+		d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
 
-		d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-		d2.pRT->FillRectangle(rect, d2.pBrush);
+		d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
+		d2->pRT->FillRectangle(rect, d2->pBrush);
 
 		if (pointIndex == 0 && partIndex == 0)
 		{
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-			d2.pRT->DrawRectangle(rect, d2.pBrush, 3, d2.SolidStrokeStyle());
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
+			d2->pRT->DrawRectangle(rect, d2->pBrush, 3, d2->SolidStrokeStyle());
 		}
 		else
 		{
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-			d2.pRT->DrawRectangle(rect, d2.pBrush, 1, d2.SolidStrokeStyle());
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
+			d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
 		}
 	}
 }
 
-void S100EditRender::ShowPoint(SMultiPoint* geom)
+void S100EditRender::ShowPoint(LayerManager* layerManager, SMultiPoint* geom)
 {
-	if (gisLib->D2.pRT && geom)
-	{
-		auto scaler = gisLib->GetScaler();
+	if (!layerManager || !geom)
+		return;
 
+	auto d2 = layerManager->GetD2D1Resources();
+	auto scaler = layerManager->GetScaler();
+
+	if (d2->pRT)
+	{
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
 
-		auto d2 = gisLib->D2;
+		d2->pBrush->SetOpacity(1);
 
-		d2.pBrush->SetOpacity(1);
-
-		d2.pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+		d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		auto numPoint = geom->GetNumPoints();
 		for (int i = 0; i < numPoint; i++)
@@ -142,41 +146,43 @@ void S100EditRender::ShowPoint(SMultiPoint* geom)
 
 			scaler->WorldToDevice(mx, my, &sx, &sy);
 
-			d2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
 
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2.pRT->FillRectangle(rect, d2.pBrush);
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
+			d2->pRT->FillRectangle(rect, d2->pBrush);
 
 			if (pointIndex == i && partIndex == 0)
 			{
-				d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-				d2.pRT->DrawRectangle(rect, d2.pBrush, 3, d2.SolidStrokeStyle());
+				d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
+				d2->pRT->DrawRectangle(rect, d2->pBrush, 3, d2->SolidStrokeStyle());
 			}
 			else
 			{
-				d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-				d2.pRT->DrawRectangle(rect, d2.pBrush, 1, d2.SolidStrokeStyle());
+				d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
+				d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
 			}
 		}
 	}
 }
 
-void S100EditRender::ShowPoint(SCurve* geom)
+void S100EditRender::ShowPoint(LayerManager* layerManager, SCurve* geom)
 {
-	if (gisLib->D2.pRT && geom)
+	if (!layerManager || !geom)
+		return;
+
+	auto d2 = layerManager->GetD2D1Resources();
+	auto scaler = layerManager->GetScaler();
+
+	if (d2->pRT)
 	{
 		long selectedSX = 0;
 		long selectedSY = 0;
 
-		auto scaler = gisLib->GetScaler();
-
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
 
-		auto d2 = gisLib->D2;
+		d2->pBrush->SetOpacity(1);
 
-		d2.pBrush->SetOpacity(1);
-
-		d2.pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+		d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		auto numPoint = geom->GetNumPoints();
 		for (int i = 0; i < numPoint; i++)
@@ -188,10 +194,10 @@ void S100EditRender::ShowPoint(SCurve* geom)
 
 			scaler->WorldToDevice(mx, my, &sx, &sy);
 
-			d2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
 
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2.pRT->FillRectangle(rect, d2.pBrush);
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
+			d2->pRT->FillRectangle(rect, d2->pBrush);
 
 			if (pointIndex == i && partIndex == 0)
 			{
@@ -199,39 +205,41 @@ void S100EditRender::ShowPoint(SCurve* geom)
 				selectedSY = sy;
 			}
 		
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-			d2.pRT->DrawRectangle(rect, d2.pBrush, 1, d2.SolidStrokeStyle());
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
+			d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
 		}
 
 		if (pointIndex >= 0 && partIndex == 0)
 		{
-			d2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(selectedSX, selectedSY));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(selectedSX, selectedSY));
 
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2.pRT->FillRectangle(rect, d2.pBrush);
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
+			d2->pRT->FillRectangle(rect, d2->pBrush);
 
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-			d2.pRT->DrawRectangle(rect, d2.pBrush, 2, d2.SolidStrokeStyle());
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
+			d2->pRT->DrawRectangle(rect, d2->pBrush, 2, d2->SolidStrokeStyle());
 		}
 	}
 }
 
-void S100EditRender::ShowPoint(SCompositeCurve* geom)
+void S100EditRender::ShowPoint(LayerManager* layerManager, SCompositeCurve* geom)
 {
-	if (gisLib->D2.pRT && geom)
+	if (!layerManager || !geom)
+		return;
+
+	auto d2 = layerManager->GetD2D1Resources();
+	auto scaler = layerManager->GetScaler();
+
+	if (d2->pRT)
 	{
 		long selectedSX = 0;
 		long selectedSY = 0;
 
-		auto scaler = gisLib->GetScaler();
-
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
 
-		auto d2 = gisLib->D2;
+		d2->pBrush->SetOpacity(1);
 
-		d2.pBrush->SetOpacity(1);
-
-		d2.pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+		d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		auto numPoint = geom->GetPointCount();
 		for (int i = 0; i < numPoint; i++)
@@ -242,10 +250,10 @@ void S100EditRender::ShowPoint(SCompositeCurve* geom)
 
 			scaler->WorldToDevice(mp.x, mp.y, &sx, &sy);
 
-			d2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
 
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2.pRT->FillRectangle(rect, d2.pBrush);
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
+			d2->pRT->FillRectangle(rect, d2->pBrush);
 
 			if (pointIndex == i && partIndex == 0)
 			{
@@ -253,39 +261,41 @@ void S100EditRender::ShowPoint(SCompositeCurve* geom)
 				selectedSY = sy;
 			}
 	
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-			d2.pRT->DrawRectangle(rect, d2.pBrush, 1, d2.SolidStrokeStyle());
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
+			d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
 		}
 
 		if (pointIndex >= 0 && partIndex == 0)
 		{
-			d2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(selectedSX, selectedSY));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(selectedSX, selectedSY));
 
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2.pRT->FillRectangle(rect, d2.pBrush);
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
+			d2->pRT->FillRectangle(rect, d2->pBrush);
 
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-			d2.pRT->DrawRectangle(rect, d2.pBrush, 2, d2.SolidStrokeStyle());
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
+			d2->pRT->DrawRectangle(rect, d2->pBrush, 2, d2->SolidStrokeStyle());
 		}
 	}
 }
 
-void S100EditRender::ShowPoint(SSurface* geom)
+void S100EditRender::ShowPoint(LayerManager* layerManager, SSurface* geom)
 {
-	if (gisLib->D2.pRT && geom)
+	if (!layerManager || !geom)
+		return;
+
+	auto d2 = layerManager->GetD2D1Resources();
+	auto scaler = layerManager->GetScaler();
+
+	if (d2->pRT)
 	{
 		long selectedSX = 0;
 		long selectedSY = 0;
 
-		auto scaler = gisLib->GetScaler();
-
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
 
-		auto d2 = gisLib->D2;
+		d2->pBrush->SetOpacity(1);
 
-		d2.pBrush->SetOpacity(1);
-
-		d2.pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+		d2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		auto numPart = geom->GetNumPart();
 
@@ -300,10 +310,10 @@ void S100EditRender::ShowPoint(SSurface* geom)
 
 				scaler->WorldToDevice(mp.x, mp.y, &sx, &sy);
 
-				d2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
+				d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
 
-				d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-				d2.pRT->FillRectangle(rect, d2.pBrush);
+				d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
+				d2->pRT->FillRectangle(rect, d2->pBrush);
 
 				if (pointIndex == j && partIndex == i)
 				{
@@ -312,26 +322,26 @@ void S100EditRender::ShowPoint(SSurface* geom)
 				}
 				else
 				{
-					d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-					d2.pRT->DrawRectangle(rect, d2.pBrush, 1, d2.SolidStrokeStyle());
+					d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
+					d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
 				}
 			}
 		}
 
 		if (pointIndex >= 0 && partIndex >= 0)
 		{
-			d2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(selectedSX, selectedSY));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(selectedSX, selectedSY));
 
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-			d2.pRT->FillRectangle(rect, d2.pBrush);
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
+			d2->pRT->FillRectangle(rect, d2->pBrush);
 
-			d2.pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-			d2.pRT->DrawRectangle(rect, d2.pBrush, 2, d2.SolidStrokeStyle());
+			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
+			d2->pRT->DrawRectangle(rect, d2->pBrush, 2, d2->SolidStrokeStyle());
 		}
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy)
+void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager)
 {
 	if (nullptr == enc || nullptr == feature)
 	{
@@ -346,46 +356,45 @@ void S100EditRender::SelectByScreen(int sx, int sy)
 		if (110 == rcnm)
 		{
 			auto point = (SPoint*)feature->GetGeometry();
-			SelectByScreen(sx, sy, point);
+			SelectByScreen(sx, sy, layerManager, point);
 		}
 		else if (115 == rcnm)
 		{
 			auto multiPoint = (SMultiPoint*)feature->GetGeometry();
-			SelectByScreen(sx, sy, multiPoint);
+			SelectByScreen(sx, sy, layerManager, multiPoint);
 		}
 		else if (120 == rcnm)
 		{
 			auto curve = (SCurve*)feature->GetGeometry();
-			SelectByScreen(sx, sy, curve);
+			SelectByScreen(sx, sy, layerManager, curve);
 		}
 		else if (125 == rcnm)
 		{
 			auto compositeCurve = (SCompositeCurve*)feature->GetGeometry();
-			SelectByScreen(sx, sy, compositeCurve);
+			SelectByScreen(sx, sy, layerManager, compositeCurve);
 		}
 		else if (130 == rcnm)
 		{
 			auto surface = (SSurface*)feature->GetGeometry();
-			SelectByScreen(sx, sy, surface);
+			SelectByScreen(sx, sy, layerManager, surface);
 		}
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, SPoint* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, SPoint* geom)
 {
 	pointIndex = 0;
 	partIndex = 0;
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, SMultiPoint* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, SMultiPoint* geom)
 {
-	if (geom)
+	if (layerManager && geom)
 	{
-		auto scaler = gisLib->GetScaler();
-
 		double mx = 0;
 		double my = 0;
 
+		auto scaler = layerManager->GetScaler();
 		scaler->DeviceToWorld(sx, sy, &mx, &my);
 
 		double shortestDistance = 0;
@@ -419,15 +428,14 @@ void S100EditRender::SelectByScreen(int sx, int sy, SMultiPoint* geom)
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, SCurve* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, SCurve* geom)
 {
-	if (geom)
+	if (layerManager && geom)
 	{
-		auto scaler = gisLib->GetScaler();
-
 		double mx = 0;
 		double my = 0;
 
+		auto scaler = layerManager->GetScaler();
 		scaler->DeviceToWorld(sx, sy, &mx, &my);
 
 		double shortestDistance = 0;
@@ -461,15 +469,14 @@ void S100EditRender::SelectByScreen(int sx, int sy, SCurve* geom)
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, SCompositeCurve* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, SCompositeCurve* geom)
 {
-	if (geom)
+	if (layerManager && geom)
 	{
-		auto scaler = gisLib->GetScaler();
-
 		double mx = 0;
 		double my = 0;
 
+		auto scaler = layerManager->GetScaler();
 		scaler->DeviceToWorld(sx, sy, &mx, &my);
 
 		double shortestDistance = 0;
@@ -502,15 +509,14 @@ void S100EditRender::SelectByScreen(int sx, int sy, SCompositeCurve* geom)
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, SSurface* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, SSurface* geom)
 {
-	if (geom)
+	if (layerManager && geom)
 	{
-		auto scaler = gisLib->GetScaler();
-
 		double mx = 0;
 		double my = 0;
 
+		auto scaler = layerManager->GetScaler();
 		scaler->DeviceToWorld(sx, sy, &mx, &my);
 
 		double shortestDistance = 0;
@@ -551,7 +557,7 @@ void S100EditRender::SelectByScreen(int sx, int sy, SSurface* geom)
 	}
 }
 
-void S100EditRender::UpdatePoint(int sx, int sy)
+void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager)
 {
 	if (nullptr == enc || nullptr == feature || pointIndex < 0 || partIndex < 0)
 	{
@@ -566,41 +572,41 @@ void S100EditRender::UpdatePoint(int sx, int sy)
 		if (110 == rcnm)
 		{
 			auto point = (SPoint*)feature->GetGeometry();
-			UpdatePoint(sx, sy, point);
-			point->CreateD2Geometry(gisLib->D2.pD2Factory);
+			UpdatePoint(sx, sy, layerManager, point);
+			point->CreateD2Geometry(layerManager->GetD2D1Resources()->pD2Factory);
 		}
 		else if (115 == rcnm)
 		{
 			auto multiPoint = (SMultiPoint*)feature->GetGeometry();
-			UpdatePoint(sx, sy, multiPoint);
-			multiPoint->CreateD2Geometry(gisLib->D2.pD2Factory);
+			UpdatePoint(sx, sy, layerManager, multiPoint);
+			multiPoint->CreateD2Geometry(layerManager->GetD2D1Resources()->pD2Factory);
 		}
 		else if (120 == rcnm)
 		{
 			auto curve = (SCurve*)feature->GetGeometry();
-			UpdatePoint(sx, sy, curve);
-			curve->CreateD2Geometry(gisLib->D2.pD2Factory);
+			UpdatePoint(sx, sy, layerManager, curve);
+			curve->CreateD2Geometry(layerManager->GetD2D1Resources()->pD2Factory);
 		}
 		else if (125 == rcnm)
 		{
 			auto compositeCurve = (SCompositeCurve*)feature->GetGeometry();
-			UpdatePoint(sx, sy, compositeCurve);
-			compositeCurve->CreateD2Geometry(gisLib->D2.pD2Factory);
+			UpdatePoint(sx, sy, layerManager, compositeCurve);
+			compositeCurve->CreateD2Geometry(layerManager->GetD2D1Resources()->pD2Factory);
 		}
 		else if (130 == rcnm)
 		{
 			auto surface = (SSurface*)feature->GetGeometry();
-			UpdatePoint(sx, sy, surface);
-			surface->CreateD2Geometry(gisLib->D2.pD2Factory);
+			UpdatePoint(sx, sy, layerManager, surface);
+			surface->CreateD2Geometry(layerManager->GetD2D1Resources()->pD2Factory);
 		}
 	}
 }
 
-void S100EditRender::UpdatePoint(int sx, int sy, SPoint* geom)
+void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager, SPoint* geom)
 {
-	if (geom)
+	if (layerManager && geom)
 	{
-		auto scaler = gisLib->GetScaler();
+		auto scaler = layerManager->GetScaler();
 		double mx = 0;
 		double my = 0;
 
@@ -612,22 +618,22 @@ void S100EditRender::UpdatePoint(int sx, int sy, SPoint* geom)
 		int wkbSize = 0;
 		geom->ExportToWkb(&wkb, &wkbSize);
 
-		gisLib->creator.fc = gisLib->catalogManager.getFC("S-101");
-		gisLib->creator.enc = enc;
-		gisLib->creator.SetPointGeometry(feature, wkb, wkbSize);
+		layerManager->creator->fc = layerManager->catalogManager->getFC("S-101");
+		layerManager->creator->enc = enc;
+		layerManager->creator->SetPointGeometry(feature, wkb, wkbSize);
 
 		delete[] wkb;
 		wkb = nullptr;
 
-		gisLib->S101RebuildPortrayal();
+		layerManager->S101RebuildPortrayal();
 	}
 }
 
-void S100EditRender::UpdatePoint(int sx, int sy, SMultiPoint* geom)
+void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager, SMultiPoint* geom)
 {
-	if (geom)
+	if (layerManager && geom)
 	{
-		auto scaler = gisLib->GetScaler();
+		auto scaler = layerManager->GetScaler();
 		double mx = 0;
 		double my = 0;
 		double mz = 0;
@@ -643,22 +649,22 @@ void S100EditRender::UpdatePoint(int sx, int sy, SMultiPoint* geom)
 		int wkbSize = 0;
 		geom->ExportToWkb(&wkb, &wkbSize);
 
-		gisLib->creator.fc = gisLib->catalogManager.getFC("S-101");
-		gisLib->creator.enc = enc;
-		gisLib->creator.SetMultiPointGeometry(feature, wkb, wkbSize);
+		layerManager->creator->fc = layerManager->catalogManager->getFC("S-101");
+		layerManager->creator->enc = enc;
+		layerManager->creator->SetPointGeometry(feature, wkb, wkbSize);
 
 		delete[] wkb;
 		wkb = nullptr;
 
-		gisLib->S101RebuildPortrayal();
+		layerManager->S101RebuildPortrayal();
 	}
 }
 
-void S100EditRender::UpdatePoint(int sx, int sy, SCurve* geom)
+void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager, SCurve* geom)
 {
-	if (geom)
+	if (layerManager && geom)
 	{
-		auto scaler = gisLib->GetScaler();
+		auto scaler = layerManager->GetScaler();
 		double mx = 0;
 		double my = 0;
 
@@ -671,22 +677,22 @@ void S100EditRender::UpdatePoint(int sx, int sy, SCurve* geom)
 		int wkbSize = 0;
 		geom->ExportToWkb(&wkb, &wkbSize);
 
-		gisLib->creator.fc = gisLib->catalogManager.getFC("S-101");
-		gisLib->creator.enc = enc;
-		gisLib->creator.SetCurveGeometry(feature, wkb, wkbSize);
+		layerManager->creator->fc = layerManager->catalogManager->getFC("S-101");
+		layerManager->creator->enc = enc;
+		layerManager->creator->SetPointGeometry(feature, wkb, wkbSize);
 
 		delete[] wkb;
 		wkb = nullptr;
 
-		gisLib->S101RebuildPortrayal();
+		layerManager->S101RebuildPortrayal();
 	}
 }
 
-void S100EditRender::UpdatePoint(int sx, int sy, SCompositeCurve* geom)
+void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager, SCompositeCurve* geom)
 {
-	if (geom)
+	if (layerManager && geom)
 	{
-		auto scaler = gisLib->GetScaler();
+		auto scaler = layerManager->GetScaler();
 		double mx = 0;
 		double my = 0;
 
@@ -699,22 +705,22 @@ void S100EditRender::UpdatePoint(int sx, int sy, SCompositeCurve* geom)
 		int wkbSize = 0;
 		geom->ExportToWkb(&wkb, &wkbSize);
 
-		gisLib->creator.fc = gisLib->catalogManager.getFC("S-101");
-		gisLib->creator.enc = enc;
-		gisLib->creator.SetCompositeCurveGeometry(feature, wkb, wkbSize);
+		layerManager->creator->fc = layerManager->catalogManager->getFC("S-101");
+		layerManager->creator->enc = enc;
+		layerManager->creator->SetPointGeometry(feature, wkb, wkbSize);
 
 		delete[] wkb;
 		wkb = nullptr;
 
-		gisLib->S101RebuildPortrayal();
+		layerManager->S101RebuildPortrayal();
 	}
 }
 
-void S100EditRender::UpdatePoint(int sx, int sy, SSurface* geom)
+void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager, SSurface* geom)
 {
-	if (geom)
+	if (layerManager && geom)
 	{
-		auto scaler = gisLib->GetScaler();
+		auto scaler = layerManager->GetScaler();
 		double mx = 0;
 		double my = 0;
 
@@ -727,14 +733,14 @@ void S100EditRender::UpdatePoint(int sx, int sy, SSurface* geom)
 		int wkbSize = 0;
 		geom->ExportToWkb(&wkb, &wkbSize);
 
-		gisLib->creator.fc = gisLib->catalogManager.getFC("S-101");
-		gisLib->creator.enc = enc;
-		gisLib->creator.SetSurfaceGeometry(feature, wkb, wkbSize);
+		layerManager->creator->fc = layerManager->catalogManager->getFC("S-101");
+		layerManager->creator->enc = enc;
+		layerManager->creator->SetPointGeometry(feature, wkb, wkbSize);
 
 		delete[] wkb;
 		wkb = nullptr;
 
-		gisLib->S101RebuildPortrayal();
+		layerManager->S101RebuildPortrayal();
 	}
 }
 

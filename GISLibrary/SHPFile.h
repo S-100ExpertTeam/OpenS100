@@ -20,7 +20,7 @@ public:
 	/*
 	** Description: Read the file and store the data in the layer.
 	*/
-	bool Open(CString _filepath);
+	bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1);
 
 	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 

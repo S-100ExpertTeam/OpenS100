@@ -87,7 +87,7 @@ void SENC_LineStyleReference::DrawInstruction(
 			else
 			{
 				//pc->GetS100Render().DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
-				gisLib->s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
+				s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
 				SafeRelease(&pBitmap);
 			}
 		}
