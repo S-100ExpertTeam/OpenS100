@@ -1,32 +1,31 @@
 #pragma once
-#include "MD_CharacterSetCode.h"
 #include "LanguageCode.h"
 #include "CountryCode.h"
-#include "CT_Catalogue.h"
-#include "CT_Catalogue.h"
+#include "pugixml.hpp"
+#include "MD_CharacterSetCode.h"
+
 
 namespace S100
 {
 	class PT_Locale
 	{
+	public:
 		LanguageCode Language;
 		CountryCode* Country;
 		MD_CharacterSetCode CharacterEncoding;
 
-	public:
-
-		void setLanguage(pugi::xml_node& node)
+		inline void setLanguage(pugi::xml_node& node)
 		{
 			Language.GetContents(node);
 		}
 
-		void setCountry(pugi::xml_node& node)
+		inline void setCountry(pugi::xml_node& node)
 		{
 			Country = new CountryCode();
 			Country->GetContents(node);
 		}
 
-		void setCharacterEncoding(pugi::xml_node& node)
+		inline void setCharacterEncoding(pugi::xml_node& node)
 		{
  			CharacterEncoding = parseMD_CharacterSetCode(node);
 		}

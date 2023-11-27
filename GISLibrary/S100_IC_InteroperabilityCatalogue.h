@@ -12,6 +12,7 @@
 #include "S100_IC_SimpleRule.h"
 #include "S100_IC_ThematicRule.h"
 #include "S100_IC_CompleteRule.h"
+#include "S100_Date.h"
 
 
 namespace S100
@@ -71,30 +72,11 @@ namespace S100
 				}
 				else if (!strcmp(instructionName, "cat:versionNumber"))
 				{
-
 					VersionNumber = CharacterString(instruction);
 				}
 				else if (!strcmp(instructionName, "cat:versionDate"))
 				{
-					CString cstrDate((CharacterString(instruction)).c_str());
-					COleDateTime oleDateTime;
-					if (oleDateTime.ParseDateTime(cstrDate, VAR_DATEVALUEONLY))
-					{
-						SYSTEMTIME st;
-						if (oleDateTime.GetAsSystemTime(st))
-						{
-							tm tmDateTime;
-							tmDateTime.tm_year = st.wYear - 1900;
-							tmDateTime.tm_mon = st.wMonth - 1;
-							tmDateTime.tm_mday = st.wDay;
-							tmDateTime.tm_hour = st.wHour;
-							tmDateTime.tm_min = st.wMinute;
-							tmDateTime.tm_sec = st.wSecond;
-							tmDateTime.tm_isdst = -1;
-
-							VersionDate = mktime(&tmDateTime);
-						}
-					}
+					VersionDate = S100_Date(CharacterString(instruction));
 				}
 				else if (!strcmp(instructionName, "cat:language"))
 				{
@@ -199,4 +181,3 @@ namespace S100
 		}
 	};
 }
-
