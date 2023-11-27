@@ -29,7 +29,6 @@ public:
 public:
 	Scaler* scaler = nullptr;
 	CatalogManager* catalogManager = nullptr;
-	S101Creator* creator = nullptr;
 	GISLibrary::D2D1Resources* D2 = nullptr;
 
 	// Background layer

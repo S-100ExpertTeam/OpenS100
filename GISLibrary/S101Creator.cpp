@@ -34,15 +34,19 @@
 
 #include <set>
 
-S101Creator::S101Creator(GISLibrary::D2D1Resources* d2d1)
+S101Creator::S101Creator()
 {
-	D2 = d2d1;
+
 }
 
-S101Creator::S101Creator(FeatureCatalogue* fc, S101Cell* enc, GISLibrary::D2D1Resources* d2d1)
+S101Creator::S101Creator(S101Cell* enc)
+{
+	Set(enc->GetFC(), enc);
+}
+
+S101Creator::S101Creator(FeatureCatalogue* fc, S101Cell* enc)
 {
 	Set(fc, enc);
-	D2 = d2d1;
 }
 
 S101Creator::~S101Creator()
@@ -67,6 +71,10 @@ void S101Creator::SetENC(S101Cell* enc)
 	if (enc && enc->m_pLayer)
 	{
 		this->layer = (S100Layer*)enc->m_pLayer;
+	}
+	if (enc && enc->D2)
+	{
+		this->D2 = D2;
 	}
 }
 

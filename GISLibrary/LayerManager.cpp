@@ -65,7 +65,6 @@ LayerManager::LayerManager(GISLibrary::D2D1Resources* d2d1)
 	}
 
 	D2 = d2d1;
-	creator = new S101Creator(D2);
 }
 
 LayerManager::LayerManager(Scaler* scaler, CatalogManager* catalogManager, GISLibrary::D2D1Resources* d2d1) : LayerManager(d2d1)
@@ -81,12 +80,6 @@ LayerManager::~LayerManager()
 		delete* i;
 	}
 	layers.clear();
-
-	if (creator)
-	{
-		delete creator;
-		creator = nullptr;
-	}
 
 	featureOnOffMap.clear();
 }

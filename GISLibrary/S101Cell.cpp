@@ -4465,7 +4465,7 @@ void S101Cell::WritePointRecord(pugi::xml_node& node, R_PointRecord* record)
 
 bool S101Cell::ConvertFromS101GML(S10XGML* gml)
 {
-	S101Creator creator(GetFC(), this, D2);
+	S101Creator creator(this);
 
 	ConvertInformationsFromS101GML(gml, &creator);
 	ConvertFeaturesFromS101GML(gml, &creator);
