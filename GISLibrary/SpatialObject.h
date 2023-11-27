@@ -20,7 +20,7 @@ private:
 	CString m_FileName; // File name (including extension)
 
 public:
-	virtual bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1) = 0;
+	virtual bool Open(CString _filepath) = 0;
 	virtual bool Save(std::wstring path) { return true; }
 
 	virtual void Draw(CDC *pDC, Scaler *scaler, double offset = 0) {};

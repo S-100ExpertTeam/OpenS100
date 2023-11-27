@@ -12,7 +12,7 @@
 
 #include "../LatLonUtility/LatLonUtility.h"
 
-S10XGML::S10XGML()
+S10XGML::S10XGML(GISLibrary::D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S10XGML;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
@@ -38,7 +38,7 @@ S10XGML::~S10XGML()
 	}
 }
 
-bool S10XGML::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
+bool S10XGML::Open(CString _filepath)
 {
 	SetFilePath(_filepath);
 
@@ -118,8 +118,6 @@ bool S10XGML::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 
 		child = child.next_sibling();
 	}
-
-	D2 = d2d1;
 
 	//SetGeometry();
 	//CalcMBR();

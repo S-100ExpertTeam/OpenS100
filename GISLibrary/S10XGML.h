@@ -23,7 +23,7 @@ class S10XGML :
     public S100SpatialObject
 {
 public:
-    S10XGML();
+    S10XGML(GISLibrary::D2D1Resources* d2d1);
     virtual ~S10XGML();
 
 public:
@@ -36,7 +36,7 @@ public:
     std::vector<GM::Object*> geometries;
 
 public:
-    bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1) override;
+    bool Open(CString _filepath) override;
     bool SaveToInputXML(std::string path) override;
 
     bool ReadMembers(pugi::xml_node& node);

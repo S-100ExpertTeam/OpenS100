@@ -8,7 +8,7 @@ class S102H5 :
 	public S100H5
 {
 public:
-	S102H5(PortrayalCatalogue* pc);
+	S102H5(PortrayalCatalogue* pc, GISLibrary::D2D1Resources* d2d1);
 	virtual ~S102H5();
 
 public:
@@ -17,7 +17,7 @@ public:
 	S102_Color s102Color;
 
 public:
-	bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1) override;
+	bool Open(CString _filepath) override;
 	void Draw(HDC& hDC, Scaler* scaler, double offset = 0) override;
 
 	S102_FC_BathymetryCoverage* GetBathymetryCoverage();

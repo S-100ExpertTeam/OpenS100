@@ -34,14 +34,15 @@
 
 #include <set>
 
-S101Creator::S101Creator()
+S101Creator::S101Creator(GISLibrary::D2D1Resources* d2d1)
 {
-
+	D2 = d2d1;
 }
 
-S101Creator::S101Creator(FeatureCatalogue* fc, S101Cell* enc)
+S101Creator::S101Creator(FeatureCatalogue* fc, S101Cell* enc, GISLibrary::D2D1Resources* d2d1)
 {
 	Set(fc, enc);
+	D2 = d2d1;
 }
 
 S101Creator::~S101Creator()
@@ -71,7 +72,7 @@ void S101Creator::SetENC(S101Cell* enc)
 
 S101Cell* S101Creator::CreateENC(std::wstring name)
 {
-	auto result = new S101Cell();
+	auto result = new S101Cell(D2);
 	enc = result;
 
 	enc->m_dsgir.m_dsid.m_dsnm = name.c_str();

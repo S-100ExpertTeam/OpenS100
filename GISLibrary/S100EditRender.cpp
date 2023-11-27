@@ -17,19 +17,21 @@ S100EditRender::S100EditRender()
 
 }
 
-S100EditRender::S100EditRender(S101Cell* enc)
+S100EditRender::S100EditRender(S101Cell* enc, Scaler* scaler)
 {
 	this->enc = enc;
+	this->scaler = scaler;
 }
 
 S100EditRender::~S100EditRender()
 {
 
-} 
+}
 
-void S100EditRender::Set(S101Cell* enc, R_FeatureRecord* feature)
-{	
+void S100EditRender::Set(S101Cell* enc, Scaler* scaler, R_FeatureRecord* feature)
+{
 	this->enc = enc;
+	this->scaler = scaler;
 	this->feature = feature;
 
 	if (enc == nullptr && feature == nullptr)
@@ -39,7 +41,7 @@ void S100EditRender::Set(S101Cell* enc, R_FeatureRecord* feature)
 	}
 }
 
-void S100EditRender::ShowPoint(LayerManager* layerManager)
+void S100EditRender::ShowPoint()
 {
 	if (nullptr == enc || nullptr == feature)
 	{
@@ -54,39 +56,39 @@ void S100EditRender::ShowPoint(LayerManager* layerManager)
 		if (110 == rcnm)
 		{
 			auto point = (SPoint*)feature->GetGeometry();
-			ShowPoint(layerManager, point);
+			ShowPoint(point);
 		}
 		else if (115 == rcnm)
 		{
 			auto multiPoint = (SMultiPoint*)feature->GetGeometry();
-			ShowPoint(layerManager, multiPoint);
+			ShowPoint(multiPoint);
 		}
 		else if (120 == rcnm)
 		{
 			auto curve = (SCurve*)feature->GetGeometry();
-			ShowPoint(layerManager, curve);
+			ShowPoint(curve);
 		}
 		else if (125 == rcnm)
 		{
 			auto compositeCurve = (SCompositeCurve*)feature->GetGeometry();
-			ShowPoint(layerManager, compositeCurve);
+			ShowPoint(compositeCurve);
 		}
 		else if (130 == rcnm)
 		{
 			auto surface = (SSurface*)feature->GetGeometry();
-			ShowPoint(layerManager, surface);
+			ShowPoint(surface);
 		}
 	}
 }
 
-void S100EditRender::ShowPoint(LayerManager* layerManager, SPoint* geom)
+void S100EditRender::ShowPoint(SPoint* geom)
 {
-	if (!layerManager || !geom)
+	if ((enc == nullptr) ||
+		(scaler == nullptr) ||
+		(geom == nullptr))
 		return;
 
-	auto d2 = layerManager->GetD2D1Resources();
-	auto scaler = layerManager->GetScaler();
-
+	auto d2 = enc->D2;
 	if (d2->pRT)
 	{
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
@@ -120,14 +122,14 @@ void S100EditRender::ShowPoint(LayerManager* layerManager, SPoint* geom)
 	}
 }
 
-void S100EditRender::ShowPoint(LayerManager* layerManager, SMultiPoint* geom)
+void S100EditRender::ShowPoint(SMultiPoint* geom)
 {
-	if (!layerManager || !geom)
+	if ((enc == nullptr) ||
+		(scaler == nullptr) ||
+		(geom == nullptr))
 		return;
 
-	auto d2 = layerManager->GetD2D1Resources();
-	auto scaler = layerManager->GetScaler();
-
+	auto d2 = enc->D2;
 	if (d2->pRT)
 	{
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
@@ -165,14 +167,14 @@ void S100EditRender::ShowPoint(LayerManager* layerManager, SMultiPoint* geom)
 	}
 }
 
-void S100EditRender::ShowPoint(LayerManager* layerManager, SCurve* geom)
+void S100EditRender::ShowPoint(SCurve* geom)
 {
-	if (!layerManager || !geom)
+	if ((enc == nullptr) ||
+		(scaler == nullptr) ||
+		(geom == nullptr))
 		return;
 
-	auto d2 = layerManager->GetD2D1Resources();
-	auto scaler = layerManager->GetScaler();
-
+	auto d2 = enc->D2;
 	if (d2->pRT)
 	{
 		long selectedSX = 0;
@@ -204,7 +206,7 @@ void S100EditRender::ShowPoint(LayerManager* layerManager, SCurve* geom)
 				selectedSX = sx;
 				selectedSY = sy;
 			}
-		
+
 			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
 			d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
 		}
@@ -222,14 +224,14 @@ void S100EditRender::ShowPoint(LayerManager* layerManager, SCurve* geom)
 	}
 }
 
-void S100EditRender::ShowPoint(LayerManager* layerManager, SCompositeCurve* geom)
+void S100EditRender::ShowPoint(SCompositeCurve* geom)
 {
-	if (!layerManager || !geom)
+	if ((enc == nullptr) ||
+		(scaler == nullptr) ||
+		(geom == nullptr))
 		return;
 
-	auto d2 = layerManager->GetD2D1Resources();
-	auto scaler = layerManager->GetScaler();
-
+	auto d2 = enc->D2;
 	if (d2->pRT)
 	{
 		long selectedSX = 0;
@@ -260,7 +262,7 @@ void S100EditRender::ShowPoint(LayerManager* layerManager, SCompositeCurve* geom
 				selectedSX = sx;
 				selectedSY = sy;
 			}
-	
+
 			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
 			d2->pRT->DrawRectangle(rect, d2->pBrush, 1, d2->SolidStrokeStyle());
 		}
@@ -278,14 +280,14 @@ void S100EditRender::ShowPoint(LayerManager* layerManager, SCompositeCurve* geom
 	}
 }
 
-void S100EditRender::ShowPoint(LayerManager* layerManager, SSurface* geom)
+void S100EditRender::ShowPoint(SSurface* geom)
 {
-	if (!layerManager || !geom)
+	if ((enc == nullptr) ||
+		(scaler == nullptr) ||
+		(geom == nullptr))
 		return;
 
-	auto d2 = layerManager->GetD2D1Resources();
-	auto scaler = layerManager->GetScaler();
-
+	auto d2 = enc->D2;
 	if (d2->pRT)
 	{
 		long selectedSX = 0;
@@ -341,7 +343,7 @@ void S100EditRender::ShowPoint(LayerManager* layerManager, SSurface* geom)
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager)
+void S100EditRender::SelectByScreen(int sx, int sy)
 {
 	if (nullptr == enc || nullptr == feature)
 	{
@@ -356,45 +358,44 @@ void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager)
 		if (110 == rcnm)
 		{
 			auto point = (SPoint*)feature->GetGeometry();
-			SelectByScreen(sx, sy, layerManager, point);
+			SelectByScreen(sx, sy, point);
 		}
 		else if (115 == rcnm)
 		{
 			auto multiPoint = (SMultiPoint*)feature->GetGeometry();
-			SelectByScreen(sx, sy, layerManager, multiPoint);
+			SelectByScreen(sx, sy, multiPoint);
 		}
 		else if (120 == rcnm)
 		{
 			auto curve = (SCurve*)feature->GetGeometry();
-			SelectByScreen(sx, sy, layerManager, curve);
+			SelectByScreen(sx, sy, curve);
 		}
 		else if (125 == rcnm)
 		{
 			auto compositeCurve = (SCompositeCurve*)feature->GetGeometry();
-			SelectByScreen(sx, sy, layerManager, compositeCurve);
+			SelectByScreen(sx, sy, compositeCurve);
 		}
 		else if (130 == rcnm)
 		{
 			auto surface = (SSurface*)feature->GetGeometry();
-			SelectByScreen(sx, sy, layerManager, surface);
+			SelectByScreen(sx, sy, surface);
 		}
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, SPoint* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, SPoint* geom)
 {
 	pointIndex = 0;
 	partIndex = 0;
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, SMultiPoint* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, SMultiPoint* geom)
 {
-	if (layerManager && geom)
+	if (scaler && geom)
 	{
 		double mx = 0;
 		double my = 0;
 
-		auto scaler = layerManager->GetScaler();
 		scaler->DeviceToWorld(sx, sy, &mx, &my);
 
 		double shortestDistance = 0;
@@ -428,14 +429,13 @@ void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, 
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, SCurve* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, SCurve* geom)
 {
-	if (layerManager && geom)
+	if (scaler && geom)
 	{
 		double mx = 0;
 		double my = 0;
 
-		auto scaler = layerManager->GetScaler();
 		scaler->DeviceToWorld(sx, sy, &mx, &my);
 
 		double shortestDistance = 0;
@@ -446,7 +446,7 @@ void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, 
 		{
 			auto curMX = geom->GetX(i);
 			auto curMY = geom->GetY(i);
-			
+
 			auto curDistance = GetSimpleDistance(mx, my, curMX, curMY);
 
 			if (0 == i)
@@ -469,14 +469,13 @@ void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, 
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, SCompositeCurve* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, SCompositeCurve* geom)
 {
-	if (layerManager && geom)
+	if (scaler && geom)
 	{
 		double mx = 0;
 		double my = 0;
 
-		auto scaler = layerManager->GetScaler();
 		scaler->DeviceToWorld(sx, sy, &mx, &my);
 
 		double shortestDistance = 0;
@@ -509,14 +508,13 @@ void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, 
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, SSurface* geom)
+void S100EditRender::SelectByScreen(int sx, int sy, SSurface* geom)
 {
-	if (layerManager && geom)
+	if (scaler && geom)
 	{
 		double mx = 0;
 		double my = 0;
 
-		auto scaler = layerManager->GetScaler();
 		scaler->DeviceToWorld(sx, sy, &mx, &my);
 
 		double shortestDistance = 0;
@@ -554,193 +552,6 @@ void S100EditRender::SelectByScreen(int sx, int sy, LayerManager* layerManager, 
 
 		pointIndex = shortestIndex;
 		partIndex = shortestPart;
-	}
-}
-
-void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager)
-{
-	if (nullptr == enc || nullptr == feature || pointIndex < 0 || partIndex < 0)
-	{
-		return;
-	}
-
-	auto spas = feature->GetSPAS();
-	if (spas)
-	{
-		auto rcnm = spas->m_name.RCNM;
-
-		if (110 == rcnm)
-		{
-			auto point = (SPoint*)feature->GetGeometry();
-			UpdatePoint(sx, sy, layerManager, point);
-			point->CreateD2Geometry(layerManager->GetD2D1Resources()->pD2Factory);
-		}
-		else if (115 == rcnm)
-		{
-			auto multiPoint = (SMultiPoint*)feature->GetGeometry();
-			UpdatePoint(sx, sy, layerManager, multiPoint);
-			multiPoint->CreateD2Geometry(layerManager->GetD2D1Resources()->pD2Factory);
-		}
-		else if (120 == rcnm)
-		{
-			auto curve = (SCurve*)feature->GetGeometry();
-			UpdatePoint(sx, sy, layerManager, curve);
-			curve->CreateD2Geometry(layerManager->GetD2D1Resources()->pD2Factory);
-		}
-		else if (125 == rcnm)
-		{
-			auto compositeCurve = (SCompositeCurve*)feature->GetGeometry();
-			UpdatePoint(sx, sy, layerManager, compositeCurve);
-			compositeCurve->CreateD2Geometry(layerManager->GetD2D1Resources()->pD2Factory);
-		}
-		else if (130 == rcnm)
-		{
-			auto surface = (SSurface*)feature->GetGeometry();
-			UpdatePoint(sx, sy, layerManager, surface);
-			surface->CreateD2Geometry(layerManager->GetD2D1Resources()->pD2Factory);
-		}
-	}
-}
-
-void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager, SPoint* geom)
-{
-	if (layerManager && geom)
-	{
-		auto scaler = layerManager->GetScaler();
-		double mx = 0;
-		double my = 0;
-
-		scaler->DeviceToWorld(sx, sy, &mx, &my);
-		geom->SetPoint(mx, my);
-		geom->SetMBR();
-
-		unsigned char* wkb = nullptr;
-		int wkbSize = 0;
-		geom->ExportToWkb(&wkb, &wkbSize);
-
-		layerManager->creator->fc = layerManager->catalogManager->getFC("S-101");
-		layerManager->creator->enc = enc;
-		layerManager->creator->SetPointGeometry(feature, wkb, wkbSize);
-
-		delete[] wkb;
-		wkb = nullptr;
-
-		layerManager->S101RebuildPortrayal();
-	}
-}
-
-void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager, SMultiPoint* geom)
-{
-	if (layerManager && geom)
-	{
-		auto scaler = layerManager->GetScaler();
-		double mx = 0;
-		double my = 0;
-		double mz = 0;
-
-		scaler->DeviceToWorld(sx, sy, &mx, &my);
-
-		mz = geom->GetZ(pointIndex);
-
-		geom->Set(pointIndex, mx, my, mz);
-		geom->SetMBR();
-
-		unsigned char* wkb = nullptr;
-		int wkbSize = 0;
-		geom->ExportToWkb(&wkb, &wkbSize);
-
-		layerManager->creator->fc = layerManager->catalogManager->getFC("S-101");
-		layerManager->creator->enc = enc;
-		layerManager->creator->SetPointGeometry(feature, wkb, wkbSize);
-
-		delete[] wkb;
-		wkb = nullptr;
-
-		layerManager->S101RebuildPortrayal();
-	}
-}
-
-void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager, SCurve* geom)
-{
-	if (layerManager && geom)
-	{
-		auto scaler = layerManager->GetScaler();
-		double mx = 0;
-		double my = 0;
-
-		scaler->DeviceToWorld(sx, sy, &mx, &my);
-
-		geom->Set(pointIndex, mx, my);
-		geom->SetMBR();
-
-		unsigned char* wkb = nullptr;
-		int wkbSize = 0;
-		geom->ExportToWkb(&wkb, &wkbSize);
-
-		layerManager->creator->fc = layerManager->catalogManager->getFC("S-101");
-		layerManager->creator->enc = enc;
-		layerManager->creator->SetPointGeometry(feature, wkb, wkbSize);
-
-		delete[] wkb;
-		wkb = nullptr;
-
-		layerManager->S101RebuildPortrayal();
-	}
-}
-
-void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager, SCompositeCurve* geom)
-{
-	if (layerManager && geom)
-	{
-		auto scaler = layerManager->GetScaler();
-		double mx = 0;
-		double my = 0;
-
-		scaler->DeviceToWorld(sx, sy, &mx, &my);
-
-		geom->Set(pointIndex, mx, my);
-		geom->SetMBR();
-
-		unsigned char* wkb = nullptr;
-		int wkbSize = 0;
-		geom->ExportToWkb(&wkb, &wkbSize);
-
-		layerManager->creator->fc = layerManager->catalogManager->getFC("S-101");
-		layerManager->creator->enc = enc;
-		layerManager->creator->SetPointGeometry(feature, wkb, wkbSize);
-
-		delete[] wkb;
-		wkb = nullptr;
-
-		layerManager->S101RebuildPortrayal();
-	}
-}
-
-void S100EditRender::UpdatePoint(int sx, int sy, LayerManager* layerManager, SSurface* geom)
-{
-	if (layerManager && geom)
-	{
-		auto scaler = layerManager->GetScaler();
-		double mx = 0;
-		double my = 0;
-
-		scaler->DeviceToWorld(sx, sy, &mx, &my);
-
-		geom->SetXY(partIndex, pointIndex, mx, my);
-		geom->SetMBR();
-
-		unsigned char* wkb = nullptr;
-		int wkbSize = 0;
-		geom->ExportToWkb(&wkb, &wkbSize);
-
-		layerManager->creator->fc = layerManager->catalogManager->getFC("S-101");
-		layerManager->creator->enc = enc;
-		layerManager->creator->SetPointGeometry(feature, wkb, wkbSize);
-
-		delete[] wkb;
-		wkb = nullptr;
-
-		layerManager->S101RebuildPortrayal();
 	}
 }
 

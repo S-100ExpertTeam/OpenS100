@@ -17,7 +17,7 @@ SHPFile::~SHPFile(void)
 }
 
 // Read the file and store the data in the layer.
-bool SHPFile::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
+bool SHPFile::Open(CString _filepath)
 {
 	SetFilePath(_filepath);
 

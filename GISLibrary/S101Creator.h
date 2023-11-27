@@ -15,14 +15,15 @@ class SGeometry;
 class S101Creator
 {
 public:
-	S101Creator();
-	S101Creator(FeatureCatalogue* fc, S101Cell* enc);
+	S101Creator(GISLibrary::D2D1Resources* d2d1);
+	S101Creator(FeatureCatalogue* fc, S101Cell* enc, GISLibrary::D2D1Resources* d2d1);
 	~S101Creator();
 
 public:
 	FeatureCatalogue* fc = nullptr;
 	S101Cell* enc = nullptr;
 	S100Layer* layer = nullptr;
+	GISLibrary::D2D1Resources* D2 = nullptr;
 
 public:
 	void Set(FeatureCatalogue* fc, S101Cell* enc);

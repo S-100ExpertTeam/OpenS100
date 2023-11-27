@@ -98,6 +98,8 @@ COpenS100View::COpenS100View()
 	S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
 	item->Open("../Sample_of_IC_level_2_5.0.0-for S-101, S-102, S-111.xml");
 	delete item;
+
+	s101Creator = new S101Creator(theApp.gisLib->D2);
 }
 
 COpenS100View::~COpenS100View()
@@ -119,6 +121,12 @@ COpenS100View::~COpenS100View()
 	{
 		delete dialogInformationType;
 		dialogInformationType = nullptr;
+	}
+
+	if (s101Creator)
+	{
+		delete s101Creator;
+		s101Creator = nullptr;
 	}
 }
 
@@ -261,7 +269,7 @@ void COpenS100View::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 
 void COpenS100View::OnRButtonUp(UINT /* nFlags */, CPoint point)
 {
-	s100EditRender.SelectByScreen(point.x, point.y, theApp.gisLib->GetLayerManager());
+	s100EditRender.SelectByScreen(point.x, point.y);
 	Invalidate();
 	//ClientToScreen(&point);
 	//OnContextMenu(this, point);
@@ -439,7 +447,7 @@ void COpenS100View::Setting()
 	if (m_systemFontList.size() == 0)
 	{
 		// <FONT LIST>
-		IDWriteFactory* pDWriteFactory = theApp.gisLib->GetLayerManager()->GetD2D1Resources()->pDWriteFactory;
+		IDWriteFactory* pDWriteFactory = theApp.gisLib->D2->pDWriteFactory;
 		IDWriteFontCollection* pFontCollection = NULL;
 
 		// Get the system font collection.
@@ -561,17 +569,17 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addFC(L"..\\ProgramData\\FC\\S-128_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
 
-	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml", theApp.gisLib->GetLayerManager()->GetD2D1Resources()); // valid(S-101)
+	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
 	//auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal_1.1.1\\portrayal_catalogue.xml"); // valid(S-101)
 	//auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
-	cm->addPC(L"..\\ProgramData\\PC\\S100_Portrayal\\portrayal_catalogue.xml", theApp.gisLib->GetLayerManager()->GetD2D1Resources());
-	cm->addPC(L"..\\ProgramData\\PC\\S122_Portrayal\\portrayal_catalogue.xml", theApp.gisLib->GetLayerManager()->GetD2D1Resources());
-	cm->addPC(L"..\\ProgramData\\PC\\S123_Portrayal\\portrayal_catalogue.xml", theApp.gisLib->GetLayerManager()->GetD2D1Resources());
-	cm->addPC(L"..\\ProgramData\\PC\\S124_Portrayal\\portrayal_catalogue.xml", theApp.gisLib->GetLayerManager()->GetD2D1Resources());
-	cm->addPC(L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml", theApp.gisLib->GetLayerManager()->GetD2D1Resources()); 
-	cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml", theApp.gisLib->GetLayerManager()->GetD2D1Resources());
-	cm->addPC(L"..\\ProgramData\\PC\\S128_Portrayal\\portrayal_catalogue.xml", theApp.gisLib->GetLayerManager()->GetD2D1Resources());
-	cm->addPC(L"..\\ProgramData\\PC\\S411_Portrayal\\portrayal_catalogue.xml", theApp.gisLib->GetLayerManager()->GetD2D1Resources());
+	cm->addPC(L"..\\ProgramData\\PC\\S100_Portrayal\\portrayal_catalogue.xml");
+	cm->addPC(L"..\\ProgramData\\PC\\S122_Portrayal\\portrayal_catalogue.xml");
+	cm->addPC(L"..\\ProgramData\\PC\\S123_Portrayal\\portrayal_catalogue.xml");
+	cm->addPC(L"..\\ProgramData\\PC\\S124_Portrayal\\portrayal_catalogue.xml");
+	cm->addPC(L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml"); 
+	cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
+	cm->addPC(L"..\\ProgramData\\PC\\S128_Portrayal\\portrayal_catalogue.xml");
+	cm->addPC(L"..\\ProgramData\\PC\\S411_Portrayal\\portrayal_catalogue.xml");
 
 	auto fc = cm->getFC(101); // get S-101 FC
 	auto pc = cm->getPC("S-101"); // get S-101 PC
@@ -589,7 +597,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		// FC
 		cm2->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
-		cm2->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml", theApp.gisLib->GetLayerManager()->GetD2D1Resources()); // valid(S-101)
+		cm2->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
 		theApp.gisLib2->AddLayer(L"..\\SampleData\\101KR005X01NE.000");
 	}
 
@@ -672,7 +680,7 @@ void COpenS100View::OnMButtonDown(UINT nFlags, CPoint point)
 
 void COpenS100View::OnMButtonUp(UINT nFlags, CPoint point)
 {
-	s100EditRender.UpdatePoint(point.x, point.y, theApp.gisLib->GetLayerManager());
+	//s100EditRender.UpdatePoint(point.x, point.y, theApp.gisLib->GetLayerManager());
 	MapRefresh();
 	CView::OnMButtonUp(nFlags, point);
 }
@@ -1223,7 +1231,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 	else if (frPick->GetGeometry()->GetType() == SGeometryType::Surface)
 	{
 		auto surface = (SSurface*)frPick->GetGeometry();
-		auto geometry = surface->GetNewD2Geometry(theApp.gisLib->GetLayerManager()->GetD2D1Resources()->pD2Factory, theApp.gisLib->GetScaler());
+		auto geometry = surface->GetNewD2Geometry(theApp.gisLib->D2->pD2Factory, theApp.gisLib->GetScaler());
 
 		D2D1_COLOR_F color{};
 		color.r = 255 / float(255.0);
@@ -1232,28 +1240,28 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		color.a = float(0.7);
 
 		HDC hdc = g.GetHDC();
-		theApp.gisLib->GetLayerManager()->GetD2D1Resources()->Begin(hdc, theApp.gisLib->GetScaler()->GetScreenRect());
+		theApp.gisLib->D2->Begin(hdc, theApp.gisLib->GetScaler()->GetScreenRect());
 		if (geometry)
 		{
-			theApp.gisLib->GetLayerManager()->GetD2D1Resources()->pRT->SetTransform(D2D1::Matrix3x2F::Translation(float(offsetX), float(offsetY)));
-			theApp.gisLib->GetLayerManager()->GetD2D1Resources()->pBrush->SetColor(color);
-			theApp.gisLib->GetLayerManager()->GetD2D1Resources()->pBrush->SetOpacity(float(0.7));
-			theApp.gisLib->GetLayerManager()->GetD2D1Resources()->pRT->FillGeometry(geometry, theApp.gisLib->GetLayerManager()->GetD2D1Resources()->pBrush);
+			theApp.gisLib->D2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(float(offsetX), float(offsetY)));
+			theApp.gisLib->D2->pBrush->SetColor(color);
+			theApp.gisLib->D2->pBrush->SetOpacity(float(0.7));
+			theApp.gisLib->D2->pRT->FillGeometry(geometry, theApp.gisLib->D2->pBrush);
 			SafeRelease(&geometry);
 		}
-		theApp.gisLib->GetLayerManager()->GetD2D1Resources()->End();
+		theApp.gisLib->D2->End();
 	}
 
 	auto hdc = g.GetHDC();
 	CRect rect = theApp.gisLib->GetScaler()->GetScreenRect();
-	theApp.gisLib->GetLayerManager()->GetD2D1Resources()->Begin(hdc, rect);
+	theApp.gisLib->D2->Begin(hdc, rect);
 	
 	if (encPick->GetProductNumber() == 101)
 	{
-		s100EditRender.Set((S101Cell*)encPick, (R_FeatureRecord*)frPick);
-		s100EditRender.ShowPoint(theApp.gisLib->GetLayerManager());
+		s100EditRender.Set((S101Cell*)encPick, theApp.gisLib->GetScaler(), (R_FeatureRecord*)frPick);
+		s100EditRender.ShowPoint();
 	}
-	theApp.gisLib->GetLayerManager()->GetD2D1Resources()->End();
+	theApp.gisLib->D2->End();
 	g.ReleaseHDC(hdc);
 }
 
@@ -1794,7 +1802,7 @@ void COpenS100View::CopyLayer()
 	auto enc1 = (S101Cell*)layer1->GetSpatialObject();
 	auto enc2 = (S101Cell*)layer2->GetSpatialObject();
 
-	S101Creator creator(layer1->GetFeatureCatalog(), enc1);
+	S101Creator creator(layer1->GetFeatureCatalog(), enc1, theApp.gisLib->D2);
 
 	auto enc2Features = enc2->GetVecFeature();
 	for (auto i = enc2Features.begin(); i != enc2Features.end(); i++)
@@ -1822,7 +1830,7 @@ void COpenS100View::DeleteSelectedFeature()
 {
 	auto key = theApp.m_DockablePaneCurrentSelection.pDlg->GetSelectedRecordName();
 	RecordName selectedRecordName(key);
-	s101Creator.DeleteFeature(selectedRecordName.RCID);
+	s101Creator->DeleteFeature(selectedRecordName.RCID);
 	theApp.gisLib->S101RebuildPortrayal();
 	theApp.m_DockablePaneCurrentSelection.RemoveAll();
 	SetPick(nullptr, nullptr);
@@ -1835,10 +1843,10 @@ void COpenS100View::SetPick(S100SpatialObject* enc, std::wstring featureID)
 
 	if (enc && enc->GetProductNumber() == 101)
 	{
-		s101Creator.Set(theApp.gisLib->getCatalogManager()->getFC(), (S101Cell*)enc);
+		s101Creator->Set(theApp.gisLib->getCatalogManager()->getFC(), (S101Cell*)enc);
 	}
 	else
 	{
-		s101Creator.Set(nullptr, nullptr);
+		s101Creator->Set(nullptr, nullptr);
 	}
 }

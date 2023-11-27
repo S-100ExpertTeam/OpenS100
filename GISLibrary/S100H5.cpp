@@ -6,7 +6,7 @@
 
 #include <hdf5.h>
 
-S100H5::S100H5()
+S100H5::S100H5(GISLibrary::D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S100H5;
 	m_FileType = S100_FileType::FILE_S_100_GRID_H5;
@@ -22,7 +22,7 @@ S100H5::~S100H5()
 	}
 }
 
-bool S100H5::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
+bool S100H5::Open(CString _filepath)
 {
 	SetFilePath(_filepath);
 	SetFileName(LibMFCUtil::GetFileName(_filepath));
@@ -42,8 +42,6 @@ bool S100H5::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 	H5Fclose(fileID);
 
 	SetMBR();
-
-	D2 = d2d1;
 
 	return true;
 }

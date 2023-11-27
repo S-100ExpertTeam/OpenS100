@@ -52,8 +52,8 @@ struct SPAS;
 class S101Cell : public S100SpatialObject
 {
 public:
-	S101Cell();
-	S101Cell(FeatureCatalogue* fc);
+	S101Cell(GISLibrary::D2D1Resources* d2d1);
+	S101Cell(FeatureCatalogue* fc, GISLibrary::D2D1Resources* d2d1);
 	virtual ~S101Cell();
 
 public:
@@ -94,27 +94,27 @@ public:
 	void RemoveAll(void);
 	void ClearAll(void); 
 
-	bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1) override;
+	bool Open(CString _filepath) override;
 	bool Save(std::wstring path) override;
 
-	bool OpenBy000(CString path, GISLibrary::D2D1Resources* d2d1);
-	bool OpenByGML(CString path, GISLibrary::D2D1Resources* d2d1);
+	bool OpenBy000(CString path);
+	bool OpenByGML(CString path);
 
 	bool Read8211(std::wstring path);
 	bool isUpdate();
 	
-	bool ConvertFromS101GML(S10XGML& gml);
+	bool ConvertFromS101GML(S10XGML* gml);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::SimpleAttributeType* simpleAttribute);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, ATTR* parentATTR, GF::ComplexAttributeType* complexAttribute);
-	bool ConvertFeaturesFromS101GML(S10XGML& gml, S101Creator* creator);
-	bool ConvertInformationsFromS101GML(S10XGML& gml, S101Creator* creator);
-	bool ConvertGeometriesFromS101GML(S10XGML& gml);
+	bool ConvertFeaturesFromS101GML(S10XGML* gml, S101Creator* creator);
+	bool ConvertInformationsFromS101GML(S10XGML* gml, S101Creator* creator);
+	bool ConvertGeometriesFromS101GML(S10XGML* gml);
 	bool InsertPointRecordFromS101GML(GM::Point* point);
 	bool InsertMultiPointRecordFromS101GML(GM::MultiPoint* point);
-	bool InsertCurveRecordFromS101GML(S10XGML& gml, GM::Curve* curve);
-	bool InsertCompositeCurveRecordFromS101GML(S10XGML& gml, GM::CompositeCurve* curve);
-	bool InsertSurfaceRecordFromS101GML(S10XGML& gml, GM::Surface* curve);
+	bool InsertCurveRecordFromS101GML(S10XGML* gml, GM::Curve* curve);
+	bool InsertCompositeCurveRecordFromS101GML(S10XGML* gml, GM::CompositeCurve* curve);
+	bool InsertSurfaceRecordFromS101GML(S10XGML* gml, GM::Surface* curve);
 
 	bool SaveAsENC(std::wstring path);
 	bool SaveAsGML(std::wstring path);
@@ -139,11 +139,11 @@ public:
 	BOOL ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
 
-	BOOL MakeFullSpatialData(GISLibrary::D2D1Resources* d2d1);
-	BOOL MakePointData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1);
-	BOOL MakeSoundingData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1);
-	BOOL MakeLineData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1);
-	BOOL MakeAreaData(R_FeatureRecord* fe, GISLibrary::D2D1Resources* d2d1);
+	BOOL MakeFullSpatialData();
+	BOOL MakePointData(R_FeatureRecord* fe);
+	BOOL MakeSoundingData(R_FeatureRecord* fe);
+	BOOL MakeLineData(R_FeatureRecord* fe);
+	BOOL MakeAreaData(R_FeatureRecord* fe);
 
 	// Record -> Geometry
 	BOOL GetFullSpatialData(R_PointRecord *r, SPoint* point); // 

@@ -22,15 +22,15 @@ class CatalogManager;
 class LayerManager
 {
 public:
-	LayerManager();
-	LayerManager(Scaler* scaler, CatalogManager* catalogManager);
+	LayerManager(GISLibrary::D2D1Resources* d2d1);
+	LayerManager(Scaler* scaler, CatalogManager* catalogManager, GISLibrary::D2D1Resources* d2d1);
 	virtual ~LayerManager();
 
 public:
 	Scaler* scaler = nullptr;
 	CatalogManager* catalogManager = nullptr;
 	S101Creator* creator = nullptr;
-	GISLibrary::D2D1Resources* d2d1 = nullptr;
+	GISLibrary::D2D1Resources* D2 = nullptr;
 
 	// Background layer
 	Layer backgroundLayer;
@@ -112,7 +112,7 @@ public:
 	void ChangeS100ColorPalette(std::wstring paletteName);
 
 	Scaler* GetScaler();
-	GISLibrary::D2D1Resources* GetD2D1Resources();
+	//GISLibrary::D2D1Resources* GetD2D1Resources();
 
 	void SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet);
 

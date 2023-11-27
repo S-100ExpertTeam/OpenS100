@@ -26,6 +26,14 @@ CGISLibraryApp::CGISLibraryApp()
 {
 	std::string str = "..\\TEMP"; // read path
 	int mkFlag = _mkdir(str.c_str()); //If it's new, 0, if it exists or if it's not, -1.
+
+	D2 = new GISLibrary::D2D1Resources();
+	D2->CreateDeviceIndependentResources();
+	D2->CreateDeviceDependentResources();
+
+	m_pScaler = new Scaler();
+	m_pCatalogManager = new CatalogManager(D2);
+	m_pLayerManager = new LayerManager(m_pScaler, m_pCatalogManager, D2);
 }
 
 CGISLibraryApp::~CGISLibraryApp()
@@ -43,6 +51,14 @@ CGISLibraryApp::~CGISLibraryApp()
 	if (m_pLayerManager) {
 		delete m_pLayerManager;
 		m_pLayerManager = nullptr;
+	}
+
+	if (D2)
+	{
+		D2->DeleteDeviceDependentResources();
+		D2->DeleteDeviceIndependentResources();
+		delete D2;
+		D2 = nullptr;
 	}
 
 	if (SGeometry::viewPoints) {
@@ -76,8 +92,7 @@ bool CGISLibraryApp::AddBackgroundLayer(CString _filepath)
 void CGISLibraryApp::Draw(HDC& hDC, int offset)
 {
 	m_pLayerManager->Draw(hDC, offset);
-
-	auto D2 = m_pLayerManager->GetD2D1Resources();
+		
 	if (D2)
 	{
 		CRect rectView = m_pScaler->GetScreenRect();
@@ -106,15 +121,15 @@ Layer* CGISLibraryApp::GetLayer(int index)
 void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale)
 {
 	auto pc = m_pCatalogManager->getPC(productNumber);
-	auto d2 = m_pLayerManager->GetD2D1Resources();
-	if (pc && d2)
+	
+	if (pc && D2)
 	{
 		auto pcManager = pc->GetS100PCManager();
 		if (pcManager)
 		{
-			auto rt = d2->RenderTarget();
-			auto brush = d2->SolidColorBrush();
-			auto stroke = d2->SolidStrokeStyle();
+			auto rt = D2->RenderTarget();
+			auto brush = D2->SolidColorBrush();
+			auto stroke = D2->SolidStrokeStyle();
 
 			D2D1::Matrix3x2F oldTransform;
 			rt->GetTransform(&oldTransform);
@@ -371,16 +386,15 @@ LayerManager* CGISLibraryApp::GetLayerManager()
 
 
 void CGISLibraryApp::ChangeDisplayFont()
-{
-	auto d2 = m_pLayerManager->GetD2D1Resources();
-	if (!d2)
+{	
+	if (!D2)
 		return;
 
-	SafeRelease(&d2->pDWriteTextFormat);
-	SafeRelease(&d2->pDWriteTextFormatArea);
+	SafeRelease(&D2->pDWriteTextFormat);
+	SafeRelease(&D2->pDWriteTextFormatArea);
 
 	// Create a DirectWrite text format object.
-	HRESULT hr = d2->pDWriteFactory->CreateTextFormat(
+	HRESULT hr = D2->pDWriteFactory->CreateTextFormat(
 		ENCCommon::DISPLAY_FONT_NAME.c_str(),
 		NULL,
 		DWRITE_FONT_WEIGHT_NORMAL,
@@ -388,12 +402,12 @@ void CGISLibraryApp::ChangeDisplayFont()
 		DWRITE_FONT_STRETCH_NORMAL,
 		(float)ENCCommon::DISPLAY_FONT_SIZE,
 		L"", //locale
-		&d2->pDWriteTextFormat
+		&D2->pDWriteTextFormat
 	);
 
-	d2->pDWriteTextFormat->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
+	D2->pDWriteTextFormat->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
 
-	if (!d2->pDWriteTextFormat)
+	if (!D2->pDWriteTextFormat)
 	{
 		CString errMsg;
 		errMsg.Format(_T("Failed to create IDWriteTextFormat! (%02X)"), hr);
@@ -403,7 +417,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 	auto fsfsf = ENCCommon::DISPLAY_FONT_NAME.c_str();
 
 	// Create a DirectWrite text format object.
-	hr = d2->pDWriteFactory->CreateTextFormat(
+	hr = D2->pDWriteFactory->CreateTextFormat(
 		ENCCommon::DISPLAY_FONT_NAME.c_str(),
 		NULL,
 		DWRITE_FONT_WEIGHT_BOLD,
@@ -411,14 +425,14 @@ void CGISLibraryApp::ChangeDisplayFont()
 		DWRITE_FONT_STRETCH_NORMAL,
 		(float)ENCCommon::DISPLAY_FONT_SIZE,
 		L"", //locale
-		&d2->pDWriteTextFormatArea
+		&D2->pDWriteTextFormatArea
 	);
 
-	d2->pDWriteTextFormatArea->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	d2->pDWriteTextFormatArea->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-	d2->pDWriteTextFormatArea->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
+	D2->pDWriteTextFormatArea->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	D2->pDWriteTextFormatArea->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	D2->pDWriteTextFormatArea->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
 
-	if (!d2->pDWriteTextFormatArea)
+	if (!D2->pDWriteTextFormatArea)
 	{
 		CString errMsg;
 		errMsg.Format(_T("Failed to create IDWriteTextFormat (for Area)! (%02X)"), hr);

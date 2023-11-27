@@ -14,7 +14,7 @@
 #include <sstream>
 
 S100Layer::S100Layer(FeatureCatalogue* fc, PortrayalCatalogue *pc) : Layer()
-{
+{	
 	SetFeatureCatalog(fc);
 	SetPC(pc);
 	SetProductNumber(fc->GetProductId());
@@ -31,12 +31,12 @@ bool S100Layer::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 
 	if (!extension.CompareNoCase(L"000"))
 	{
-		m_spatialObject = new S101Cell();
+		m_spatialObject = new S101Cell(d2d1);
 		m_spatialObject->SetLayer(this);
 
 		auto enc = (S101Cell*)m_spatialObject;
 
-		if (!m_spatialObject->Open(_filepath, d2d1))
+		if (!m_spatialObject->Open(_filepath))
 		{
 			delete enc;
 			return false;
@@ -49,16 +49,16 @@ bool S100Layer::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 	{
 		if (GetFC()->getProductId().compare("S-101") == 0)
 		{
-			m_spatialObject = new S101Cell(GetFeatureCatalog());
+			m_spatialObject = new S101Cell(GetFeatureCatalog(), d2d1);
 		}
 		else
 		{
-			m_spatialObject = new S10XGML();
+			m_spatialObject = new S10XGML(d2d1);
 		}
 
 		m_spatialObject->SetLayer(this);
 
-		if (!m_spatialObject->Open(_filepath, d2d1))
+		if (!m_spatialObject->Open(_filepath))
 		{
 			delete m_spatialObject;
 			m_spatialObject = nullptr;
@@ -78,15 +78,15 @@ bool S100Layer::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 	{
 		if (GetFC()->getProductId().compare("S-102") == 0)
 		{
-			m_spatialObject = new S102H5(GetPC());
+			m_spatialObject = new S102H5(GetPC(), d2d1);
 		}
 		else
 		{
-			m_spatialObject = new S100H5();
+			m_spatialObject = new S100H5(d2d1);
 		}
 
 		m_spatialObject->SetLayer(this);
-		if (!m_spatialObject->Open(_filepath, d2d1))
+		if (!m_spatialObject->Open(_filepath))
 		{
 			delete m_spatialObject;
 			m_spatialObject = nullptr;

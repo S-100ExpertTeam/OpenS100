@@ -51,7 +51,7 @@ bool Layer::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
 		strFolderPath.Append(TEXT("\\") + _filepath);
 	}
 
-	return m_spatialObject->Open(strFolderPath, d2d1);
+	return m_spatialObject->Open(strFolderPath);
 }
 
 void Layer::Draw(CDC *pDC, Scaler *scaler, double offset)

@@ -49,7 +49,7 @@
 #include <future>
 #include <chrono>
 
-LayerManager::LayerManager(void)
+LayerManager::LayerManager(GISLibrary::D2D1Resources* d2d1)
 {
 	CString strFolderPath;
 	::GetModuleFileName(NULL, strFolderPath.GetBuffer(MAX_PATH), MAX_PATH);
@@ -64,23 +64,14 @@ LayerManager::LayerManager(void)
 		}
 	}
 
-	creator = new S101Creator();
-
-	d2d1 = new GISLibrary::D2D1Resources();
-	d2d1->CreateDeviceIndependentResources();
-	d2d1->CreateDeviceDependentResources();
+	D2 = d2d1;
+	creator = new S101Creator(D2);
 }
 
-LayerManager::LayerManager(Scaler* scaler, CatalogManager* catalogManager) : LayerManager()
+LayerManager::LayerManager(Scaler* scaler, CatalogManager* catalogManager, GISLibrary::D2D1Resources* d2d1) : LayerManager(d2d1)
 {
 	this->scaler = scaler;
 	this->catalogManager = catalogManager;
-
-	creator = new S101Creator();
-
-	d2d1 = new GISLibrary::D2D1Resources();
-	d2d1->CreateDeviceIndependentResources();
-	d2d1->CreateDeviceDependentResources();
 }
 
 LayerManager::~LayerManager()
@@ -97,14 +88,6 @@ LayerManager::~LayerManager()
 		creator = nullptr;
 	}
 
-	if (d2d1)
-	{
-		d2d1->DeleteDeviceDependentResources();
-		d2d1->DeleteDeviceIndependentResources();
-		delete d2d1;
-		d2d1 = nullptr;
-	}
-
 	featureOnOffMap.clear();
 }
 
@@ -114,7 +97,7 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 
 	if (file_extension.CompareNoCase(_T("SHP")) == 0) 
 	{
-		if (backgroundLayer.Open(_filepath, d2d1) == false)
+		if (backgroundLayer.Open(_filepath, D2) == false)
 		{
 			return false;
 		}
@@ -190,7 +173,7 @@ int LayerManager::AddLayer(CString _filepath)
 	if (fileType == S100_FileType::FILE_Shape)
 	{
 		layer = new Layer();
-		if (layer->Open(_filepath, d2d1) == false)
+		if (layer->Open(_filepath, D2) == false)
 		{
 			delete layer;
 			return -1;
@@ -206,7 +189,7 @@ int LayerManager::AddLayer(CString _filepath)
 		if (fc)
 		{
 			layer = new S100Layer(fc, pc);
-			if ((S100Layer*)layer->Open(_filepath, d2d1) == false)
+			if ((S100Layer*)layer->Open(_filepath, D2) == false)
 			{
 				delete layer;
 				return -1;
@@ -334,19 +317,19 @@ void LayerManager::AddSymbolDrawing(
 {
 	std::list<D2D1_POINT_2F> points;
 
-	d2d1->pRT->SetTransform(scaler->GetMatrix());
+	D2->pRT->SetTransform(scaler->GetMatrix());
 
 	// Area
 	for (auto i = area[drawingPrioriy].begin(); i != area[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
 
-		d2d1->pBrush->SetOpacity(1.0f);
+		D2->pBrush->SetOpacity(1.0f);
 		instruction->DrawInstruction(
-			d2d1->pRT,
-			d2d1->pD2Factory,
-			d2d1->pBrush,
-			&d2d1->D2D1StrokeStyleGroup,
+			D2->pRT,
+			D2->pD2Factory,
+			D2->pBrush,
+			&D2->D2D1StrokeStyleGroup,
 			scaler,
 			pc);
 	}
@@ -356,28 +339,28 @@ void LayerManager::AddSymbolDrawing(
 	{
 		auto instruction = *i;
 		instruction->DrawInstruction(
-			d2d1->pRT,
-			d2d1->pD2Factory,
-			d2d1->pBrush,
-			&d2d1->D2D1StrokeStyleGroup,
+			D2->pRT,
+			D2->pD2Factory,
+			D2->pBrush,
+			&D2->D2D1StrokeStyleGroup,
 			scaler,
 			pc);
 	}
 
-	d2d1->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+	D2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 
 	// AugmentedRay
 	for (auto i = augmentedRay[drawingPrioriy].begin(); i != augmentedRay[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(d2d1->pRT, d2d1->pD2Factory, d2d1->pBrush, &d2d1->D2D1StrokeStyleGroup, scaler, pc);
+		instruction->DrawInstruction(D2->pRT, D2->pD2Factory, D2->pBrush, &D2->D2D1StrokeStyleGroup, scaler, pc);
 	}
 
 	// AugmentedPath
 	for (auto i = augmentedPath[drawingPrioriy].begin(); i != augmentedPath[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(d2d1->pRT, d2d1->pD2Factory, d2d1->pBrush, &d2d1->D2D1StrokeStyleGroup, scaler, pc);
+		instruction->DrawInstruction(D2->pRT, D2->pD2Factory, D2->pBrush, &D2->D2D1StrokeStyleGroup, scaler, pc);
 	}
 
 	// Point
@@ -424,7 +407,7 @@ void LayerManager::AddSymbolDrawing(
 				auto s100PCManager = pc->GetS100PCManager();
 				if (s100PCManager)
 				{
-					auto pRenderTarget = d2d1->RenderTarget();
+					auto pRenderTarget = D2->RenderTarget();
 
 					D2D1::Matrix3x2F oldTransform;
 					pRenderTarget->GetTransform(&oldTransform);
@@ -432,8 +415,8 @@ void LayerManager::AddSymbolDrawing(
 					s100PCManager->Draw(
 						instruction->symbol->reference,
 						pRenderTarget,
-						d2d1->SolidColorBrush(),
-						d2d1->SolidStrokeStyle(),
+						D2->SolidColorBrush(),
+						D2->SolidStrokeStyle(),
 						D2D1::Point2F(pi->x, pi->y),
 						rotation,
 						5);
@@ -447,8 +430,8 @@ void LayerManager::AddSymbolDrawing(
 	// Text
 	if (ENCCommon::TEXTOUT)
 	{
-		d2d1->pBrush->SetOpacity(1.0f);
-		d2d1->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
+		D2->pBrush->SetOpacity(1.0f);
+		D2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
 		if (text[drawingPrioriy].size() > 0)
 		{
 			HWND hWnd = ::GetActiveWindow();
@@ -457,7 +440,7 @@ void LayerManager::AddSymbolDrawing(
 			int dpiX = GetDeviceCaps(hdc, LOGPIXELSX);    // Monitor x axis dpi.
 			int dpiY = GetDeviceCaps(hdc, LOGPIXELSY);    // Monitor y axis dpi.
 			::ReleaseDC(hWnd, hdc);
-			D2D1_SIZE_F renderTargetSize = d2d1->pRT->GetSize();
+			D2D1_SIZE_F renderTargetSize = D2->pRT->GetSize();
 
 			for (auto i = text[drawingPrioriy].begin(); i != text[drawingPrioriy].end(); i++)
 			{
@@ -495,12 +478,12 @@ void LayerManager::AddSymbolDrawing(
 					IDWriteTextFormat* useWTF = NULL;
 					if (bodySize != 15)
 					{
-						auto sizedFontIter = d2d1->writeTextFormatListByFontSize.find(bodySize);
+						auto sizedFontIter = D2->writeTextFormatListByFontSize.find(bodySize);
 
-						if (sizedFontIter == d2d1->writeTextFormatListByFontSize.end())
+						if (sizedFontIter == D2->writeTextFormatListByFontSize.end())
 						{
 							IDWriteTextFormat* newWriteTextFormat = NULL;
-							HRESULT hr = d2d1->pDWriteFactory->CreateTextFormat(
+							HRESULT hr = D2->pDWriteFactory->CreateTextFormat(
 								ENCCommon::DISPLAY_FONT_NAME.c_str(),
 								NULL,
 								DWRITE_FONT_WEIGHT_NORMAL,
@@ -511,7 +494,7 @@ void LayerManager::AddSymbolDrawing(
 								&newWriteTextFormat
 							);
 
-							d2d1->writeTextFormatListByFontSize.insert(std::make_pair(bodySize, newWriteTextFormat));
+							D2->writeTextFormatListByFontSize.insert(std::make_pair(bodySize, newWriteTextFormat));
 
 							useWTF = newWriteTextFormat;
 
@@ -523,7 +506,7 @@ void LayerManager::AddSymbolDrawing(
 					}
 					else
 					{
-						useWTF = d2d1->pDWriteTextFormat;
+						useWTF = D2->pDWriteTextFormat;
 					}
 
 					useWTF->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
@@ -536,7 +519,7 @@ void LayerManager::AddSymbolDrawing(
 
 						const wchar_t* vText = element->text.value.c_str();
 						int vTextSize = (int)element->text.value.size();
-						d2d1->pDWriteFactory->CreateTextLayout(
+						D2->pDWriteFactory->CreateTextLayout(
 							vText,
 							vTextSize,
 							useWTF,
@@ -614,7 +597,7 @@ void LayerManager::AddSymbolDrawing(
 
 					if (element->pColor)
 					{
-						d2d1->pBrush->SetColor(element->pColor);
+						D2->pBrush->SetColor(element->pColor);
 					}
 
 					for (auto itor = points.begin(); itor != points.end(); itor++)
@@ -643,13 +626,13 @@ void LayerManager::AddSymbolDrawing(
 							y = tempY + (float)scaler->soy;
 						}
 
-						d2d1->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-						d2d1->pRT->DrawText(
+						D2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+						D2->pRT->DrawText(
 							vText,
 							vTextSize,
 							useWTF,
 							D2D1::RectF(x, y, x + width, y + height),
-							d2d1->pBrush
+							D2->pBrush
 						);
 					}
 				}
@@ -910,13 +893,13 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 	// Line Suppression
 	SuppressS101Lines(layer->drawingPriority, &layer->drawingSet);
 
-	auto rt = d2d1->pRT;
+	auto rt = D2->pRT;
 	rt->BindDC(hDC, scaler->GetScreenRect());
 	rt->BeginDraw();
-	d2d1->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	d2d1->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
-	pc->GetS100PCManager()->CreateBitmapBrush(d2d1->pRT);
+	pc->GetS100PCManager()->CreateBitmapBrush(D2->pRT);
 	pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
 
 	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
@@ -1072,13 +1055,13 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int min
 
 	auto pc = layer->GetPC();
 
-	auto rt = d2d1->pRT;
+	auto rt = D2->pRT;
 	rt->BindDC(hDC, scaler->GetScreenRect());
 	rt->BeginDraw();
-	d2d1->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	d2d1->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
-	pc->GetS100PCManager()->CreateBitmapBrush(d2d1->pRT);
+	pc->GetS100PCManager()->CreateBitmapBrush(D2->pRT);
 	pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
 
 	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
@@ -1340,9 +1323,9 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 			{
 				pc->SetCurrentPaletteName(paletteName);
 				pc->DeletePatternImage();
-				pc->CreatePatternImages(d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
+				pc->CreatePatternImages(D2->pD2Factory, D2->pImagingFactory, D2->D2D1StrokeStyleGroup.at(0));
 				pc->DeleteLineImages();
-				pc->CreateLineImages(d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
+				pc->CreateLineImages(D2->pD2Factory, D2->pImagingFactory, D2->D2D1StrokeStyleGroup.at(0));
 			}
 
 			auto s100so = (S100SpatialObject*)layer->GetSpatialObject();
@@ -1357,19 +1340,19 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 		}
 	}
 
-	catalogManager->ChangeColorPallete(paletteName, d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
+	catalogManager->ChangeColorPallete(paletteName, D2->pD2Factory, D2->pImagingFactory, D2->D2D1StrokeStyleGroup.at(0));
 }
 
 Scaler* LayerManager::GetScaler()
 {
 	return scaler;
 }
-
+/*
 GISLibrary::D2D1Resources* LayerManager::GetD2D1Resources()
 {
-	return d2d1;
+	return D2;
 }
-
+*/
 void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet)
 {
 	lineSuppressionMap.clear();

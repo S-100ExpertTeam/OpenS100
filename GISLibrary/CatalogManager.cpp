@@ -6,9 +6,9 @@
 
 #include <algorithm>
 
-CatalogManager::CatalogManager()
+CatalogManager::CatalogManager(GISLibrary::D2D1Resources* d2d1)
 {
-
+	D2 = d2d1;
 }
 
 CatalogManager::~CatalogManager()
@@ -50,24 +50,24 @@ void CatalogManager::addFC(FeatureCatalogue* fc)
 	}
 }
 
-PortrayalCatalogue* CatalogManager::addPC(std::string path, GISLibrary::D2D1Resources* d2d1)
+PortrayalCatalogue* CatalogManager::addPC(std::string path)
 {
-	return addPC(LibMFCUtil::StringToWString(path), d2d1);
+	return addPC(LibMFCUtil::StringToWString(path));
 }
 
-PortrayalCatalogue* CatalogManager::addPC(std::wstring path, GISLibrary::D2D1Resources* d2d1)
+PortrayalCatalogue* CatalogManager::addPC(std::wstring path)
 {
 	auto pc = new PortrayalCatalogue();
 
 	if (pc->Open(path)) {
-		if (pc && d2d1) {
-			pc->CreateSVGD2Geometry(d2d1->pD2Factory);
-			pc->CreatePatternImages(d2d1->pD2Factory, 
-				d2d1->pImagingFactory, 
-				d2d1->D2D1StrokeStyleGroup.at(0));
-			pc->CreateLineImages(d2d1->pD2Factory,
-				d2d1->pImagingFactory, 
-				d2d1->D2D1StrokeStyleGroup.at(0));
+		if (pc && D2) {
+			pc->CreateSVGD2Geometry(D2->pD2Factory);
+			pc->CreatePatternImages(D2->pD2Factory,
+				D2->pImagingFactory,
+				D2->D2D1StrokeStyleGroup.at(0));
+			pc->CreateLineImages(D2->pD2Factory,
+				D2->pImagingFactory,
+				D2->D2D1StrokeStyleGroup.at(0));
 		}
 
 		PCs.push_back(pc);

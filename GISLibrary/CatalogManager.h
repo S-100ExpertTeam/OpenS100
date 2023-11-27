@@ -9,19 +9,20 @@
 class CatalogManager
 {
 public:
-	CatalogManager();
+	CatalogManager(GISLibrary::D2D1Resources* d2d1);
 	virtual ~CatalogManager();
 
 public:
 	std::vector<FeatureCatalogue*> FCs;
 	std::vector<PortrayalCatalogue*> PCs;
+	GISLibrary::D2D1Resources* D2;
 
 public:
 	FeatureCatalogue* addFC(std::string path);
 	FeatureCatalogue* addFC(std::wstring path);
 	void addFC(FeatureCatalogue* fc);
-	PortrayalCatalogue* addPC(std::string path, GISLibrary::D2D1Resources* d2d1);
-	PortrayalCatalogue* addPC(std::wstring path, GISLibrary::D2D1Resources* d2d1);
+	PortrayalCatalogue* addPC(std::string path);
+	PortrayalCatalogue* addPC(std::wstring path);
 	void addPC(PortrayalCatalogue* pc);
 
 	FeatureCatalogue* getFC(std::string productId = "S-101") const;

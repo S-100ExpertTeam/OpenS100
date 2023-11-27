@@ -10,7 +10,7 @@ class S100H5 :
     public S100SpatialObject
 {
 public:
-    S100H5();
+    S100H5(GISLibrary::D2D1Resources* d2d1);
     virtual ~S100H5();
 
 public:
@@ -21,7 +21,7 @@ public:
     std::vector<H5_FeatureContainer*> featureContainer;
 
 public:
-    bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1) override;
+    bool Open(CString _filepath) override;
 
     void SetMBR();
 };

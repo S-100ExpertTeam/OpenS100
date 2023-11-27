@@ -54,7 +54,7 @@ void TestGISLibrary::TestSave()
 
 void TestGISLibrary::CreateNewLayer()
 {
-	auto layer = theApp.pView->s101Creator.CreateLayer(L"newENC.000", theApp.gisLib->getCatalogManager()->getFC(), theApp.gisLib->getCatalogManager()->getPC());
+	auto layer = theApp.pView->s101Creator->CreateLayer(L"newENC.000", theApp.gisLib->getCatalogManager()->getFC(), theApp.gisLib->getCatalogManager()->getPC());
 	if (layer)
 	{
 		layerKey = theApp.gisLib->GetLayerManager()->AddLayer(layer);
@@ -63,7 +63,7 @@ void TestGISLibrary::CreateNewLayer()
 
 void TestGISLibrary::CreateMemoryLayer()
 {
-	auto layer = theApp.pView->s101Creator.CreateLayer(L"MemoryLayer.000", theApp.gisLib->getCatalogManager()->getFC(), theApp.gisLib->getCatalogManager()->getPC());
+	auto layer = theApp.pView->s101Creator->CreateLayer(L"MemoryLayer.000", theApp.gisLib->getCatalogManager()->getFC(), theApp.gisLib->getCatalogManager()->getPC());
 	delete layer;
 }
 
@@ -71,7 +71,7 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 {
 	auto lm = theApp.gisLib->GetLayerManager();
 	auto layer = lm->GetLayerByKey(layerKey);
-	theApp.pView->s101Creator.SetENC((S101Cell*)layer->GetSpatialObject());
+	theApp.pView->s101Creator->SetENC((S101Cell*)layer->GetSpatialObject());
 
 	if (layer)
 	{
@@ -83,7 +83,7 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 			{
 				auto featureCode = cell->m_dsgir.GetFeatureCode(selectedFeature->GetNumericCode());
 
-				auto feature = theApp.pView->s101Creator.AddFeature(std::wstring(featureCode));
+				auto feature = theApp.pView->s101Creator->AddFeature(std::wstring(featureCode));
 				if (feature)
 				{
 					if (selectedFeature->geometry)
@@ -92,13 +92,13 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 						int size = 0;
 						if (selectedFeature->geometry->ExportToWkb(&buf, &size))
 						{
-							auto geom = theApp.pView->s101Creator.SetGeometry(feature, selectedFeature->geometry->GetType(), buf, size);
+							auto geom = theApp.pView->s101Creator->SetGeometry(feature, selectedFeature->geometry->GetType(), buf, size);
 							
 							if (geom)
 							{
-								geom->CreateD2Geometry(theApp.gisLib->GetLayerManager()->GetD2D1Resources()->Factory());
+								geom->CreateD2Geometry(theApp.gisLib->D2->Factory());
 								geom->SetMBR();
-								theApp.pView->s101Creator.enc->ReMBR();
+								theApp.pView->s101Creator->enc->ReMBR();
 								theApp.gisLib->GetLayerManager()->ReMBR();
 								theApp.gisLib->S101RebuildPortrayal();
 							}
@@ -125,8 +125,8 @@ void TestGISLibrary::OffFeature()
 }
 
 void TestGISLibrary::OpenUpdate()
-{
-	S101Cell cell;
+{	
+	S101Cell cell(theApp.gisLib->D2);
 	cell.Read8211(L"..\\SampleData\\101GB005X01SW.001");
 	if (cell.isUpdate()) {
 		OutputDebugString(L"Update\n");
@@ -134,12 +134,13 @@ void TestGISLibrary::OpenUpdate()
 	else {
 		OutputDebugString(L"Base\n");
 	}
+
 	return;
 }
 
 void TestGISLibrary::SetCodeNumericCode()
-{
-	S101Cell cell;
+{	
+	S101Cell cell(theApp.gisLib->D2);
 	cell.Read8211(L"..\\SampleData\\101KR004X0000.000");
 	auto dsgir = cell.GetDatasetGeneralInformationRecord();
 	
