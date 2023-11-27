@@ -801,6 +801,9 @@
     <ClCompile Include="EncodingFormat.cpp">
       <Filter>S100\ExchangeSetCatalogue</Filter>
     </ClCompile>
+    <ClCompile Include="S100_ExchangeCatalogue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">

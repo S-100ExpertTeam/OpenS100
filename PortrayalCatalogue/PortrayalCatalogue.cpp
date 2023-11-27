@@ -271,11 +271,6 @@ void PortrayalCatalogue::SetS100PCManager(S100PCManager* value)
 	s100PCManager = value;
 }
 
-//void PortrayalCatalogue::SetS100Render(S100Render* value)
-//{
-//	s100Render = *value;
-//}
-
 std::wstring PortrayalCatalogue::GetRootPath()
 {
 	return rootPath;
