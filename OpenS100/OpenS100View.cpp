@@ -26,8 +26,10 @@
 #include "../GISLibrary/SCompositeCurve.h"
 #include "../GISLibrary/SSurface.h"
 #include "../GISLibrary/SGeometricFuc.h"
+#include "../GISLibrary/S100_ExchangeCatalogue.h"
 
-#include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
+//#include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
+#include "../GISLibrary/S100_ExchangeCatalogue.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -54,6 +56,8 @@
 #include <future>
 
 #include "../LatLonUtility/LatLonUtility.h"
+
+#include "../LatLonUtility/Logger.h"
 #pragma comment(lib, "d2d1.lib")
 
 using namespace LatLonUtility;
@@ -91,13 +95,30 @@ BEGIN_MESSAGE_MAP(COpenS100View, CView)
 	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
+
+
+void LogCallback(const std::string& message, LogLevel level) {
+	OutputDebugStringA(message.c_str());
+}
+
 COpenS100View::COpenS100View() 
 {
+	Logger::GetInstance().Subscribe(LogLevel::Error, LogCallback, "Error1");
+	Logger::GetInstance().Subscribe(LogLevel::Debug, LogCallback, "Debug1");
+	Logger::GetInstance().Subscribe(LogLevel::General, LogCallback, "General1");
+
 	theApp.pView = this;
 
-	S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
-	item->Open("../Sample_of_IC_level_2_5.0.0-for S-101, S-102, S-111.xml");
-	delete item;
+	//S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
+	//item->Open("../ic.xml");
+
+	//auto pc = new PortrayalCatalogue();
+	//pc->Open(L"../pc.xml");
+
+	//S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
+	//ex->Open("../CATALOG_Read.txt");
+	S100::S100_ExchangeCatalogue ec;
+	ec.Open("..\\SampleData\\CATALOG.xml");
 }
 
 COpenS100View::~COpenS100View()

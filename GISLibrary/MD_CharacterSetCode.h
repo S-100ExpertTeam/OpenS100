@@ -1,4 +1,7 @@
 #pragma once
+#include <map>
+#include <string>
+#include "pugixml.hpp"
 
 namespace S100
 {

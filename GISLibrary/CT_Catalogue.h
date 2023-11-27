@@ -1,7 +1,14 @@
 #pragma once
 
-#include "PT_Locale.h"
 #include "MD_CharacterSetCode.h"
+#include "PT_Locale.h"
+
+#include <memory>
+#include <string>
+#include "pugixml.hpp"
+
+
+
 
 #include <memory>
 
@@ -21,20 +28,17 @@ namespace S100
 		return "";
 	}
 
-
 	class CT_Catalogue
 	{
-	
 	public:
 		std::string Name;
 		std::shared_ptr<std::string> Scope;
 		std::vector<std::string> FieldOfApplication;
 		std::string VersionNumber;
-		time_t VersionDate;
+		S100_Date VersionDate;
 		std::shared_ptr<std::string>  Language;
 		std::vector<std::shared_ptr<PT_Locale>> Locale;
 		MD_CharacterSetCode CharacterSet;
-
 	
 	/*
 		std::string getName() {
@@ -95,29 +99,23 @@ namespace S100
 			}
 		}*/
 
-		std::shared_ptr<std::string>  getLanguage() {
+		inline std::shared_ptr<std::string>  getLanguage() {
 			return Language;
 		}
 
-		void setLanguage(std::string language) {
+		inline void setLanguage(std::string language) {
 			Language = std::make_shared<std::string>(language);
 		}
 
 
-		std::vector<std::shared_ptr<PT_Locale>> getLocale() {
+		inline std::vector<std::shared_ptr<PT_Locale>> getLocale() {
 			return Locale;
 		}
 
-		void setLocale(pugi::xml_node& node) {
+		inline void setLocale(pugi::xml_node& node) {
 			auto loc = std::make_shared<PT_Locale>();
 			loc->GetContents(node);
 			Locale.push_back(loc);
 		}
-		
-
-
-
 	};
-
 }
-
