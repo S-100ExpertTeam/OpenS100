@@ -128,14 +128,12 @@ namespace S100
 		 * Get the number of items in DatasetDiscoveryMetadata.
 		 * @return the number of items in DatasetDiscoveryMetadata.
 		 */
-		 */
 		int getCountDatasetDiscoveryMetadata();
 
 		 /**
 		  * Get path(S100XC:fileName) in DatasetDiscoveryMetadata.
 		  * @return path(S100XC:fileName) in DatasetDiscoveryMetadata.
 		  */
-		 */
 		std::string getDatasetPath(int index);
 	};
 }
