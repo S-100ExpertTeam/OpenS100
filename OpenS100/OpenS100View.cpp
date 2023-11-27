@@ -26,6 +26,7 @@
 #include "../GISLibrary/SCompositeCurve.h"
 #include "../GISLibrary/SSurface.h"
 #include "../GISLibrary/SGeometricFuc.h"
+#include "../GISLibrary/S100_ExchangeCatalogue.h"
 
 //#include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
 #include "../GISLibrary/S100_ExchangeCatalogue.h"
@@ -116,7 +117,8 @@ COpenS100View::COpenS100View()
 
 	//S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
 	//ex->Open("../CATALOG_Read.txt");
-
+	S100::S100_ExchangeCatalogue ec;
+	ec.Open("..\\SampleData\\CATALOG.xml");
 }
 
 COpenS100View::~COpenS100View()

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "S100_ExchangeCatalogueIdentifier.h"
 #include "S100_ProductSpecification.h"
 #include "S100_SE_CertificateContainerType.h"
@@ -124,8 +123,19 @@ namespace S100
 			}
 		}
 
+	public:
+		/**
+		 * Get the number of items in DatasetDiscoveryMetadata.
+		 * @return the number of items in DatasetDiscoveryMetadata.
+		 */
+		 */
+		int getCountDatasetDiscoveryMetadata();
 
-
+		 /**
+		  * Get path(S100XC:fileName) in DatasetDiscoveryMetadata.
+		  * @return path(S100XC:fileName) in DatasetDiscoveryMetadata.
+		  */
+		 */
+		std::string getDatasetPath(int index);
 	};
-
 }
