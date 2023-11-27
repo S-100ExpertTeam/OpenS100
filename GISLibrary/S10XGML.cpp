@@ -1430,6 +1430,8 @@ SCurve* S10XGML::CurveToSCurve(GM::Curve* curve)
 		result->Set(i, x, y);
 	}
 
+	result->SetMBR();
+
 	return result;
 }
 
@@ -1452,6 +1454,8 @@ SCompositeCurve* S10XGML::CompositeCurveToSCompositeCurve(GM::CompositeCurve* co
 			result->AddCurve(curveSegment);
 		}
 	}
+
+	result->SetMBR();
 
 	return result;
 }
