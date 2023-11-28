@@ -54,7 +54,7 @@ void TestGISLibrary::TestSave()
 
 void TestGISLibrary::CreateNewLayer()
 {
-	S101Creator creator;
+	S101Creator creator(theApp.gisLib->GetLayerManager()->D2);
 	auto layer = creator.CreateLayer(L"newENC.000", theApp.gisLib->getCatalogManager()->getFC(), theApp.gisLib->getCatalogManager()->getPC());
 	if (layer)
 	{
@@ -64,7 +64,7 @@ void TestGISLibrary::CreateNewLayer()
 
 void TestGISLibrary::CreateMemoryLayer()
 {
-	S101Creator creator;
+	S101Creator creator(theApp.gisLib->GetLayerManager()->D2);
 	auto layer = creator.CreateLayer(L"MemoryLayer.000", theApp.gisLib->getCatalogManager()->getFC(), theApp.gisLib->getCatalogManager()->getPC());
 	delete layer;
 }

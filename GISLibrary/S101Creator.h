@@ -15,7 +15,7 @@ class SGeometry;
 class S101Creator
 {
 public:
-	S101Creator();
+	S101Creator(GISLibrary::D2D1Resources* D2);
 	S101Creator(S101Cell* enc);
 	S101Creator(FeatureCatalogue* fc, S101Cell* enc);
 	~S101Creator();

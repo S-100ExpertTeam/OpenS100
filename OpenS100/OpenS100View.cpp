@@ -98,6 +98,8 @@ COpenS100View::COpenS100View()
 	S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
 	item->Open("../Sample_of_IC_level_2_5.0.0-for S-101, S-102, S-111.xml");
 	delete item;
+
+	s101Creator = new S101Creator(theApp.gisLib->GetLayerManager()->D2);
 }
 
 COpenS100View::~COpenS100View()
@@ -119,6 +121,12 @@ COpenS100View::~COpenS100View()
 	{
 		delete dialogInformationType;
 		dialogInformationType = nullptr;
+	}
+
+	if (s101Creator)
+	{
+		delete s101Creator;
+		s101Creator = nullptr;
 	}
 }
 
@@ -1822,7 +1830,7 @@ void COpenS100View::DeleteSelectedFeature()
 {
 	auto key = theApp.m_DockablePaneCurrentSelection.pDlg->GetSelectedRecordName();
 	RecordName selectedRecordName(key);
-	s101Creator.DeleteFeature(selectedRecordName.RCID);
+	s101Creator->DeleteFeature(selectedRecordName.RCID);
 	theApp.gisLib->S101RebuildPortrayal();
 	theApp.m_DockablePaneCurrentSelection.RemoveAll();
 	SetPick(nullptr, nullptr);
@@ -1835,10 +1843,10 @@ void COpenS100View::SetPick(S100SpatialObject* enc, std::wstring featureID)
 
 	if (enc && enc->GetProductNumber() == 101)
 	{
-		s101Creator.Set(theApp.gisLib->getCatalogManager()->getFC(), (S101Cell*)enc);
+		s101Creator->Set(theApp.gisLib->getCatalogManager()->getFC(), (S101Cell*)enc);
 	}
 	else
 	{
-		s101Creator.Set(nullptr, nullptr);
+		s101Creator->Set(nullptr, nullptr);
 	}
 }

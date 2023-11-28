@@ -34,9 +34,9 @@
 
 #include <set>
 
-S101Creator::S101Creator()
+S101Creator::S101Creator(GISLibrary::D2D1Resources* D2)
 {
-
+	this->D2 = D2;
 }
 
 S101Creator::S101Creator(S101Cell* enc)
