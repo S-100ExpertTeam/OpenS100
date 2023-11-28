@@ -27,7 +27,9 @@ void S100_Element::GetContents(pugi::xml_node node)
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName, "text"))
 		{
-			if (!text) text = new S100_Text();
+			if (!text) {
+				text = new S100_Text();
+			}
 			text->GetContents(instruction);
 		}
 		else if (!strcmp(instructionName, "bodySize"))

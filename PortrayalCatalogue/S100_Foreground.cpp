@@ -31,6 +31,8 @@ void S100_Foreground::GetContents(pugi::xml_node node)
 			transparency = pugi::as_wide(instruction.child_value());
 		}
 	}
+
+	token = pugi::as_wide(node.child_value());
 }
 
 void S100_Foreground::SetToken(std::wstring& value)

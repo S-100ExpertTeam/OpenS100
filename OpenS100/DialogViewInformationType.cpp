@@ -62,13 +62,13 @@ void CDialogViewInformationType::SetInformationFeatureList(S100SpatialObject* s1
 		auto informationType = s100Dataset->GetInformationTypeByIndex(i);
 		if (informationType)
 		{
-			auto code = s100Dataset->GetInformationTypeCodeByID(informationType->GetIDAsInteger());
+			auto code = s100Dataset->GetInformationTypeCodeByID(informationType->GetID());
 			auto fcInformationType = fc->GetInformationType(code);
 			if (fcInformationType)
 			{
 				CInformationCodeString cs;
 				cs._name = code;
-				cs._id = informationType->GetIDAsInteger();
+				cs._id = informationType->GetIDAsWString().c_str();
 				cs._ir = informationType;
 				ngflist.push_back(cs);
 			}
@@ -100,8 +100,7 @@ void CDialogViewInformationType::InitInformationFeatureList()
 		lvi.lParam = (LPARAM)cs->_ir;
 		BOOL ret = 0;
 
-		CString id;
-		id.Format(L"%d", cs->_id);
+		CString id = cs->_id;
 		int indexItem = m_ViewListInformationType.InsertItem(&lvi);
 
 		// Search the feature catalog again to find the description of the information type.

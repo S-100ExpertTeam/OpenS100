@@ -9,7 +9,7 @@ class R_InformationRecord;
 class CInformationCodeString
 {
 public:
-	int _id;
+	CString _id;
 	std::wstring _name;
 	GF::InformationType* _ir;
 

@@ -17,14 +17,14 @@ public:
 #endif
 
 public:
-	void SetNoGeometryFeatureList(S100SpatialObject* cell);
+	void SetNoGeometryFeatureList(S100SpatialObject* s100so);
 	std::vector<CFeatureCodeString> ngflist;
 	void InitNonGeometryList();
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    
 	virtual BOOL OnInitDialog();
-	S101Cell* m_cell;
+	S100SpatialObject* s100so = nullptr;
 
 	DECLARE_MESSAGE_MAP()
 public:

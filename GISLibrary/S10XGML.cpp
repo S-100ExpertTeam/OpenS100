@@ -1336,6 +1336,30 @@ void S10XGML::SetGeometry()
 				auto sSurface = SurfaceToSSurface((GM::Surface*)geometry);
 				feature->SetGeometry(sSurface);
 				sSurface->CreateD2Geometry(gisLib->D2.Factory());
+
+				auto surface = (GM::Surface*)geometry;
+				auto exteriorRing = surface->getExteriorRing();
+				std::vector<GM::Ring*> rings;
+				rings.push_back(exteriorRing);
+
+				for (int j = 0; j < surface->getInteriorRingCount(); j++) {
+					auto interiorRing = surface->getInteriorRing(j);
+					rings.push_back(interiorRing);
+				}
+
+				for (int j = 0; j < rings.size(); j++) {
+					auto ring = rings[j];
+					if (ring->GetType() == GM::GeometryType::Curve) {
+						auto sCurve = CurveToSCurve((GM::Curve*)ring);
+						sCurve->CreateD2Geometry(gisLib->D2.Factory());
+						sSurface->AddCurve(sCurve);
+					}
+					else if (ring->GetType() == GM::GeometryType::CompositeCurve) {
+						auto sCompositeCurve = CompositeCurveToSCompositeCurve((GM::CompositeCurve*)ring);
+						sCompositeCurve->CreateD2Geometry(gisLib->D2.Factory());
+						sSurface->AddCurve(sCompositeCurve);
+					}
+				}
 			}
 		}
 	}

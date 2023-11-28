@@ -236,7 +236,7 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 			{
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{
-					if (scaler->GetMapCalcMBR().PtInMBR(c->m_pPoints[index].x, c->m_pPoints[index].y))
+					if (scaler->GetMap().PtInMBR(c->m_pPoints[index].x, c->m_pPoints[index].y))
 					{
 						if(viewPointNum == 0 && index > 1)
 						{
@@ -305,7 +305,7 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 
 		for (auto index = 0; index < c->GetNumPoints(); index++)
 		{
-			if (scaler->GetMapCalcMBR().PtInMBR(c->m_pPoints[index].x, c->m_pPoints[index].y))
+			if (scaler->GetMap().PtInMBR(c->m_pPoints[index].x, c->m_pPoints[index].y))
 			{
 				if (viewPointNum == 0 && index > 1)
 				{

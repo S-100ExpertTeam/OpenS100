@@ -72,13 +72,6 @@ LayerManager::LayerManager(Scaler* scaler) : LayerManager()
 
 LayerManager::~LayerManager()
 {
-	//POSITION pos = m_listBackgroundLayer.GetHeadPosition();
-
-	//while (pos)
-	//{
-	//	delete m_listBackgroundLayer.GetNext(pos);
-	//}
-
 	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
 		delete* i;
@@ -103,7 +96,6 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 	double ymin = scaler->myMinLimit;
 	double ymax = scaler->myMaxLimit;
 
-
 	MBR _mbr(xmin, ymin, xmax, ymax);
 	scaler->SetMap(_mbr);
 	mbr.SetMBR(_mbr);
@@ -123,6 +115,7 @@ int LayerManager::AddLayer(Layer* _layer)
 	if (LayerCount() == 0)
 	{
 		mbr.SetMBR(_layer->m_mbr);
+		//scaler->SetMap(mbr);
 	}
 	else
 	{
@@ -228,6 +221,11 @@ void LayerManager::Draw(HDC& hdc, int offset)
 void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
 {
 	if (nullptr == layer)
+	{
+		return;
+	}
+
+	if (false == MBR::CheckOverlap(scaler->GetMap(), layer->m_mbr))
 	{
 		return;
 	}
@@ -646,7 +644,7 @@ void LayerManager::DrawBackground(HDC &hDC, int offset)
 	{
 		if (backgroundLayer.IsOn())
 		{
-			if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), backgroundLayer.m_mbr))
+			if (MBR::CheckOverlap(scaler->GetMap(), backgroundLayer.m_mbr))
 			{
 				backgroundLayer.Draw(hDC, scaler, offset - 360);
 				backgroundLayer.Draw(hDC, scaler, offset);
@@ -778,7 +776,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 		return;
 	}
 
-	if (false == MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
+	if (false == MBR::CheckOverlap(scaler->GetMap(), layer->m_mbr))
 	{
 		return;
 	}
@@ -899,7 +897,7 @@ void LayerManager::SetDrawingInstruction(S100Layer* layer)
 		return;
 	}
 
-	if (false == MBR::CheckOverlap(scaler->GetMapCalcMBR(), layer->m_mbr))
+	if (false == MBR::CheckOverlap(scaler->GetMap(), layer->m_mbr))
 	{
 		return;
 	}
@@ -987,6 +985,10 @@ void LayerManager::SetDrawingInstruction(S100Layer* layer)
 
 void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int minPriority, int maxPriority)
 {
+	if (false == MBR::CheckOverlap(scaler->GetMap(), layer->m_mbr)) {
+		return;
+	}
+
 	auto pc = layer->GetPC();
 
 	auto rt = gisLib->D2.pRT;

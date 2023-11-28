@@ -63,6 +63,11 @@ COpenS100App::~COpenS100App()
 {
 	delete gisLib;
 	gisLib = nullptr;
+
+	if (gisLib2) {
+		delete gisLib2;
+		gisLib2 = nullptr;
+	}
 }
 
 COpenS100App theApp;
@@ -219,6 +224,11 @@ void COpenS100App::LoadSettings()
 	ENCCommon::Open(L"..\\ProgramData\\data\\settings.txt");
 	gisLib->ChangeDisplayFont();
 	gisLib->GetLayerManager()->ChangeS100ColorPalette((GeoMetryLibrary::ColorTable)ENCCommon::m_eColorTable);
+
+	if (gisLib2) {
+		gisLib2->ChangeDisplayFont();
+		gisLib2->GetLayerManager()->ChangeS100ColorPalette((GeoMetryLibrary::ColorTable)ENCCommon::m_eColorTable);
+	}
 	
 	return;
 }
@@ -253,7 +263,13 @@ void COpenS100App::InitStartingLocation()
 	gisLib->SetScale((int)scale);
 	projection(mox, moy);
 	gisLib->MoveMap(rect.Width() / 2, rect.Height() / 2, mox, moy);
-	gisLib->AdjustScreenMap();
+	//gisLib->AdjustScreenMap();
+
+	if (gisLib2) {
+		gisLib2->SetScale((int)scale);
+		gisLib2->MoveMap(rect.Width() / 2, rect.Height() / 2, mox, moy);
+		//gisLib2->AdjustScreenMap();
+	}
 }
 
 void COpenS100App::MapRefresh()

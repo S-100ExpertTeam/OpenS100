@@ -12,6 +12,11 @@ Scaler::Scaler(void)
 {
 	projection(mxMinLimit, myMinLimit);
 	projection(mxMaxLimit, myMaxLimit);
+
+	mxMin = mxMinLimit;
+	myMin = myMinLimit;
+	mxMax = mxMaxLimit;
+	myMax = myMaxLimit;
 }
 
 Scaler::~Scaler(void)
@@ -22,20 +27,22 @@ Scaler::~Scaler(void)
 #pragma warning(disable:4244)
 void Scaler::DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate)
 {
-	if (XYtoSP)
-	{
-		int _mx = 0;
-		int _my = 0;
-		XYtoSP(sx, sy, _my, _mx, false, false);
-		*mx = _mx;
-		*my = _my;
+	double mxWidth = mxMax - mxMin;
+	double myHeight = myMax - myMin;
+	double sxWidth = sxMax - sxMin;
+	double syHeight = syMax - syMin;
 
+	double epsilon = std::numeric_limits<double>::epsilon();
+	if (std::fabs(mxWidth) < epsilon ||
+		std::fabs(myHeight) < epsilon ||
+		std::fabs(sxWidth) < epsilon ||
+		std::fabs(syHeight) < epsilon) {
 		return;
 	}
 
 	double currentRatio = 0;
-	double currentXRatio = (mxMax - mxMin) / (sxMax - sxMin);
-	double currentYRatio = (myMax - myMin) / (syMax - syMin);
+	double currentXRatio = mxWidth / sxWidth;
+	double currentYRatio = myHeight / syHeight;
 
 	if (currentXRatio > currentYRatio)
 	{
@@ -58,21 +65,23 @@ void Scaler::DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate
 #pragma warning(disable:4244)
 void Scaler::WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate)
 {
-	if (SPtoXY)
-	{
-		int _sx = 0;
-		int _sy = 0;
-		SPtoXY(my, mx, _sx, _sy, false, false);
-		*sx = _sx;
-		*sy = _sy;
+	double mxWidth = mxMax - mxMin;
+	double myHeight = myMax - myMin;
+	double sxWidth = sxMax - sxMin;
+	double syHeight = syMax - syMin;
 
+	double epsilon = std::numeric_limits<double>::epsilon();
+	if (std::fabs(mxWidth) < epsilon ||
+		std::fabs(myHeight) < epsilon ||
+		std::fabs(sxWidth) < epsilon ||
+		std::fabs(syHeight) < epsilon) {
 		return;
 	}
 
-	double currentXRatio = (mxMax - mxMin) / (sxMax - sxMin);
-	double currentYRatio = (myMax - myMin) / (syMax - syMin);
-
 	double currentRatio = 0;
+	double currentXRatio = mxWidth / sxWidth;
+	double currentYRatio = myHeight / syHeight;
+	
 	if (currentXRatio > currentYRatio)
 	{
 		currentRatio = currentXRatio;
@@ -95,20 +104,22 @@ void Scaler::WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate
 #pragma warning(disable:4244)
 void Scaler::WorldToDevice_F(double mx, double my, float *sx, float *sy, bool rotate)
 {
-	if (SPtoXY)
-	{
-		int _sx = 0;
-		int _sy = 0;
-		SPtoXY(my, mx, _sx, _sy, false, false);
-		*sx = _sx;
-		*sy = _sy;
+	double mxWidth = mxMax - mxMin;
+	double myHeight = myMax - myMin;
+	double sxWidth = sxMax - sxMin;
+	double syHeight = syMax - syMin;
 
+	double epsilon = std::numeric_limits<double>::epsilon();
+	if (std::fabs(mxWidth) < epsilon ||
+		std::fabs(myHeight) < epsilon ||
+		std::fabs(sxWidth) < epsilon ||
+		std::fabs(syHeight) < epsilon) {
 		return;
 	}
 
 	double currentRatio = 0;
-	double currentXRatio = (mxMax - mxMin) / (sxMax - sxMin);
-	double currentYRatio = (myMax - myMin) / (syMax - syMin);
+	double currentXRatio = mxWidth / sxWidth;
+	double currentYRatio = myHeight / syHeight;
 
 	if (currentXRatio > currentYRatio)
 	{
@@ -156,74 +167,6 @@ void Scaler::SetMap(double xmin, double ymin, double xmax, double ymax)
 
 	mox = (mxMin + mxMax) / 2;
 	moy = (myMin + myMax) / 2;
-
-	if (rotateDegree)
-	{
-		Gdiplus::PointF l_u(mxMin - mox, myMax - moy);
-		Gdiplus::PointF l_d(mxMin - mox, myMin - moy);
-		Gdiplus::PointF r_u(mxMax - mox, myMax - moy);
-		Gdiplus::PointF r_d(mxMax - mox, myMin - moy);
-
-		double radian = (rotateDegree)* DEG2RAD;
-		double sinValue = sin(radian);
-		double cosValue = cos(radian);
-
-		FLOAT tempX = l_u.Y * sinValue + l_u.X * cosValue;
-		FLOAT tempY = l_u.Y * cosValue - l_u.X * sinValue;
-
-		l_u.X = tempX;
-		l_u.Y = tempY;
-
-		tempX = l_d.Y * sinValue + l_d.X * cosValue;
-		tempY = l_d.Y * cosValue - l_d.X * sinValue;
-
-		l_d.X = tempX;
-		l_d.Y = tempY;
-
-		tempX = r_u.Y * sinValue + r_u.X * cosValue;
-		tempY = r_u.Y * cosValue - r_u.X * sinValue;
-
-		r_u.X = tempX;
-		r_u.Y = tempY;
-
-		tempX = r_d.Y * sinValue + r_d.X * cosValue;
-		tempY = r_d.Y * cosValue - r_d.X * sinValue;
-
-		r_d.X = tempX;
-		r_d.Y = tempY;
-
-		mxMinCalcMBR = l_u.X;
-		mxMaxCalcMBR = l_u.X;
-		myMinCalcMBR = l_u.Y;
-		myMaxCalcMBR = l_u.Y;
-
-		mxMinCalcMBR = l_d.X < mxMinCalcMBR ? l_d.X : mxMinCalcMBR;
-		mxMaxCalcMBR = l_d.X > mxMaxCalcMBR ? l_d.X : mxMaxCalcMBR;
-		myMinCalcMBR = l_d.Y < myMinCalcMBR ? l_d.Y : myMinCalcMBR;
-		myMaxCalcMBR = l_d.Y > myMaxCalcMBR ? l_d.Y : myMaxCalcMBR;
-
-		mxMinCalcMBR = r_u.X < mxMinCalcMBR ? r_u.X : mxMinCalcMBR;
-		mxMaxCalcMBR = r_u.X > mxMaxCalcMBR ? r_u.X : mxMaxCalcMBR;
-		myMinCalcMBR = r_u.Y < myMinCalcMBR ? r_u.Y : myMinCalcMBR;
-		myMaxCalcMBR = r_u.Y > myMaxCalcMBR ? r_u.Y : myMaxCalcMBR;
-
-		mxMinCalcMBR = r_d.X < mxMinCalcMBR ? r_d.X : mxMinCalcMBR;
-		mxMaxCalcMBR = r_d.X > mxMaxCalcMBR ? r_d.X : mxMaxCalcMBR;
-		myMinCalcMBR = r_d.Y < myMinCalcMBR ? r_d.Y : myMinCalcMBR;
-		myMaxCalcMBR = r_d.Y > myMaxCalcMBR ? r_d.Y : myMaxCalcMBR;
-
-		mxMinCalcMBR += mox;
-		mxMaxCalcMBR += mox;
-		myMinCalcMBR += moy;
-		myMaxCalcMBR += moy;
-	}
-	else
-	{
-		mxMinCalcMBR = mxMin;
-		mxMaxCalcMBR = mxMax;
-		myMinCalcMBR = myMin;
-		myMaxCalcMBR = myMax;
-	}
 
 	UpdateScale();
 }
@@ -474,7 +417,8 @@ void Scaler::ZoomOut(double value)
 
 void Scaler::ZoomOut(double value, int x, int y)
 {
-	double oldMx, oldMy;
+	double oldMx = 0;
+	double oldMy = 0;
 
 	DeviceToWorld(x, y, &oldMx, &oldMy);
 
@@ -578,10 +522,6 @@ void Scaler::PrivateMoveMap(int sx, int sy, double mx, double my)
 void Scaler::AdjustScreenMap()
 {
 	AdjustScreenMap_Internal();
-	AdjustScreenMap_Internal();
-	AdjustScreenMap_Internal();
-	AdjustScreenMap_Internal();
-	AdjustScreenMap_Internal();
 }
 
 #pragma warning(disable:4244)
@@ -676,16 +616,70 @@ void Scaler::GetMap(MBR *mbr)
 
 MBR Scaler::GetMap()
 {
-	MBR mbr(mxMin, myMin, mxMax, myMax);
+	if (rotateDegree == 0) {
+		return MBR (mxMin, myMin, mxMax, myMax);
+	}
+	else {
+		Gdiplus::PointF l_u(mxMin - mox, myMax - moy);
+		Gdiplus::PointF l_d(mxMin - mox, myMin - moy);
+		Gdiplus::PointF r_u(mxMax - mox, myMax - moy);
+		Gdiplus::PointF r_d(mxMax - mox, myMin - moy);
 
-	return mbr;
-}
+		double radian = (rotateDegree)*DEG2RAD;
+		double sinValue = sin(radian);
+		double cosValue = cos(radian);
 
-MBR Scaler::GetMapCalcMBR()
-{
-	MBR mbr(mxMinCalcMBR, myMinCalcMBR, mxMaxCalcMBR, myMaxCalcMBR);
+		FLOAT tempX = l_u.Y * sinValue + l_u.X * cosValue;
+		FLOAT tempY = l_u.Y * cosValue - l_u.X * sinValue;
 
-	return mbr;
+		l_u.X = tempX;
+		l_u.Y = tempY;
+
+		tempX = l_d.Y * sinValue + l_d.X * cosValue;
+		tempY = l_d.Y * cosValue - l_d.X * sinValue;
+
+		l_d.X = tempX;
+		l_d.Y = tempY;
+
+		tempX = r_u.Y * sinValue + r_u.X * cosValue;
+		tempY = r_u.Y * cosValue - r_u.X * sinValue;
+
+		r_u.X = tempX;
+		r_u.Y = tempY;
+
+		tempX = r_d.Y * sinValue + r_d.X * cosValue;
+		tempY = r_d.Y * cosValue - r_d.X * sinValue;
+
+		r_d.X = tempX;
+		r_d.Y = tempY;
+
+		double mxMinCalcMBR = l_u.X;
+		double mxMaxCalcMBR = l_u.X;
+		double myMinCalcMBR = l_u.Y;
+		double myMaxCalcMBR = l_u.Y;
+
+		mxMinCalcMBR = l_d.X < mxMinCalcMBR ? l_d.X : mxMinCalcMBR;
+		mxMaxCalcMBR = l_d.X > mxMaxCalcMBR ? l_d.X : mxMaxCalcMBR;
+		myMinCalcMBR = l_d.Y < myMinCalcMBR ? l_d.Y : myMinCalcMBR;
+		myMaxCalcMBR = l_d.Y > myMaxCalcMBR ? l_d.Y : myMaxCalcMBR;
+
+		mxMinCalcMBR = r_u.X < mxMinCalcMBR ? r_u.X : mxMinCalcMBR;
+		mxMaxCalcMBR = r_u.X > mxMaxCalcMBR ? r_u.X : mxMaxCalcMBR;
+		myMinCalcMBR = r_u.Y < myMinCalcMBR ? r_u.Y : myMinCalcMBR;
+		myMaxCalcMBR = r_u.Y > myMaxCalcMBR ? r_u.Y : myMaxCalcMBR;
+
+		mxMinCalcMBR = r_d.X < mxMinCalcMBR ? r_d.X : mxMinCalcMBR;
+		mxMaxCalcMBR = r_d.X > mxMaxCalcMBR ? r_d.X : mxMaxCalcMBR;
+		myMinCalcMBR = r_d.Y < myMinCalcMBR ? r_d.Y : myMinCalcMBR;
+		myMaxCalcMBR = r_d.Y > myMaxCalcMBR ? r_d.Y : myMaxCalcMBR;
+
+		mxMinCalcMBR += mox;
+		mxMaxCalcMBR += mox;
+		myMinCalcMBR += moy;
+		myMaxCalcMBR += moy;
+
+		return MBR(mxMinCalcMBR, myMinCalcMBR, mxMaxCalcMBR, myMaxCalcMBR);
+	}
 }
 
 double Scaler::GetScreenWidthKM()

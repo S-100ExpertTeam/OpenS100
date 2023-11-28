@@ -307,6 +307,15 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 			{
 				e2->foreground.token = e1->GetForground()->GetToken();
 				e2->foreground.transparency = (int)(_wtof(e1->GetForground()->GetTransparency().c_str()) * 100);
+				
+				auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
+
+				if (colorProfile)
+				{
+					auto color = colorProfile->GetColor(e2->foreground.token);
+					e2->pColor = new D2D1_COLOR_F();
+					*e2->pColor = color;
+				}
 			}
 			if (e1->GetText())
 			{

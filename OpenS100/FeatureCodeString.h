@@ -9,7 +9,7 @@ class R_FeatureRecord;
 class CFeatureCodeString
 {
 public:
-	int _id; 
+	CString _id; 
 	std::wstring _name;
 	//R_FeatureRecord* _fr;
 	GF::FeatureType* _fr = nullptr;
