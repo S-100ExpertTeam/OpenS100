@@ -6,6 +6,7 @@
 
 namespace S100 {
     S100_Date::S100_Date(const std::string& date) {
+        if (date == "") return;
         std::string normalizedDate = NormalizeDate(date);
         std::istringstream ss(normalizedDate);
         ss >> std::get_time(&tm, "%Y-%m-%d");

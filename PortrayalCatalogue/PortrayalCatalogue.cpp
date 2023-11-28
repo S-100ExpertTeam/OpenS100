@@ -122,7 +122,6 @@ void PortrayalCatalogue::GetContents(pugi::xml_node& node)
 
 		if (!strcmp(instructionName, "pixmaps")) 
 		{
-			//구조없음
 		}
 
 		else if (!strcmp(instructionName, "colorProfiles")) // read color
@@ -137,7 +136,6 @@ void PortrayalCatalogue::GetContents(pugi::xml_node& node)
 
 		else if ((!strcmp(instructionName, "styleSheets"))) 
 		{
-			//문서에 없습니다
 		}
 
 		else if (!strcmp(instructionName, "lineStyles"))
@@ -152,7 +150,6 @@ void PortrayalCatalogue::GetContents(pugi::xml_node& node)
 
 		else if (!strcmp(instructionName, "fonts"))
 		{
-			//구조없음
 		}
 
 		else if (!strcmp(instructionName, "viewingGroups"))
@@ -170,7 +167,7 @@ void PortrayalCatalogue::GetContents(pugi::xml_node& node)
 			viewingGroupLayers.GetContents(instruction);
 		}
 
-		else if (!strcmp(instructionName, "displayModes")) //진행중
+		else if (!strcmp(instructionName, "displayModes")) 
 		{
 			displayModes.GetContents(instruction);
 		}

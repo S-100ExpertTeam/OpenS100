@@ -114,8 +114,12 @@ COpenS100View::COpenS100View()
 	//auto pc = new PortrayalCatalogue();
 	//pc->Open(L"../pc.xml");
 
+	delete item;
+
 	S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
 	ex->Open("../CATALOG_Read.txt");
+
+	delete ex;
 
 }
 
