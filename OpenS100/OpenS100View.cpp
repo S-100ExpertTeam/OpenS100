@@ -27,7 +27,7 @@
 #include "../GISLibrary/SSurface.h"
 #include "../GISLibrary/SGeometricFuc.h"
 
-//#include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
+#include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
 #include "../GISLibrary/S100_ExchangeCatalogue.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
@@ -108,14 +108,14 @@ COpenS100View::COpenS100View()
 
 	theApp.pView = this;
 
-	//S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
-	//item->Open("../ic.xml");
+	S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
+	item->Open("../ic.xml");
 
 	//auto pc = new PortrayalCatalogue();
 	//pc->Open(L"../pc.xml");
 
-	//S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
-	//ex->Open("../CATALOG_Read.txt");
+	S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
+	ex->Open("../CATALOG_Read.txt");
 
 }
 

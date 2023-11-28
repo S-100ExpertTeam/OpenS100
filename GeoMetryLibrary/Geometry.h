@@ -28,6 +28,7 @@ public:
 	void SetID(std::string value);
 	void SetID(std::wstring value);
 	void SetID(int value);
+	void swap(int& val1, int& val2);
 
 public:
 	virtual void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0) {};
