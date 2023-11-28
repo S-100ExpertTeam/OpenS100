@@ -777,6 +777,12 @@
     <ClCompile Include="EncodingFormat.cpp">
       <Filter>S100\ExchangeSetCatalogue</Filter>
     </ClCompile>
+    <ClCompile Include="S101GeometryFactory.cpp">
+      <Filter>S101</Filter>
+    </ClCompile>
+    <ClCompile Include="S101GeometryUtil.cpp">
+      <Filter>S101</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">

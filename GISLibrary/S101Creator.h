@@ -6,6 +6,14 @@
 
 #include <vector>
 
+#define DB2_V72_FIX_BYTE_ORDER(x) ((((x)&0x31) == (x)) ? ((x)&0x1) : (x))
+
+typedef enum
+{
+	wkbXDR = 0, /**< MSB/Sun/Motorola: Most Significant Byte First   */
+	wkbNDR = 1  /**< LSB/Intel/Vax: Least Significant Byte First      */
+} wkbByteOrder;
+
 class S100Layer;
 class S101Cell;
 class FeatureCatalogue;
@@ -93,7 +101,7 @@ public:
 	R_CurveRecord* ConvertInsertVectorRecord(SCurve* geom);
 	R_CompositeRecord* ConvertInsertVectorRecord(SCompositeCurve* geom);
 	R_SurfaceRecord* ConvertInsertVectorRecord(SSurface* geom);
-	
+
 
 	std::list<AttributeBinding*> GetAddableAttributes(R_FeatureRecord* feature);
 	std::list<AttributeBinding*> GetAddableAttributes(R_FeatureRecord* feature, ATTR* parentATTR);
@@ -105,3 +113,19 @@ private:
 	S101Cell* CreateENC(std::wstring name);
 };
 
+class S101GeometryFactory
+{
+public:
+	static SGeometry* createFromWkb(void *, size_t = static_cast<size_t>(-1));
+	static SGeometry* createGeometry(SGeometryType);
+	static void destroyGeometry(SGeometry *);
+
+	static Record* createRecord(GISLibrary::RCNM);
+	static void destroyRecord(Record *);
+};
+
+class S101GeometryUtil
+{
+public:
+	static SGeometryType ReadWKBGeometryType(const unsigned char *);
+};

@@ -379,6 +379,8 @@
     <ClCompile Include="R_VectorRecord.cpp" />
     <ClCompile Include="S100EditRender.cpp" />
     <ClCompile Include="S100H5.cpp" />
+    <ClCompile Include="S101GeometryFactory.cpp" />
+    <ClCompile Include="S101GeometryUtil.cpp" />
     <ClCompile Include="S102H5.cpp" />
     <ClCompile Include="S102_Color.cpp" />
     <ClCompile Include="S102_FC_BathymetryCoverage.cpp" />
