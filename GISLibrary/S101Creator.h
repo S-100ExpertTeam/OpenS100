@@ -7,14 +7,6 @@
 
 #include <vector>
 
-#define DB2_V72_FIX_BYTE_ORDER(x) ((((x)&0x31) == (x)) ? ((x)&0x1) : (x))
-
-typedef enum
-{
-	wkbXDR = 0, /**< MSB/Sun/Motorola: Most Significant Byte First   */
-	wkbNDR = 1  /**< LSB/Intel/Vax: Least Significant Byte First      */
-} wkbByteOrder;
-
 class S100Layer;
 class S101Cell;
 class FeatureCatalogue;
