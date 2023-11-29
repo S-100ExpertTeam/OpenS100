@@ -25,7 +25,7 @@ SGeometry* S101GeometryFactory::createFromWkb(void* pabyData, size_t nBytes)
 		return ppoReturn;
 
 	const int nByteOrder = DB2_V72_FIX_BYTE_ORDER(*l_pabyData);
-	if (nByteOrder != wkbXDR && nByteOrder != wkbNDR)
+	if (nByteOrder != XDR && nByteOrder != NDR)
 		return ppoReturn;
 
 	SGeometryType eGeometryType = S101GeometryUtil::ReadWKBGeometryType(l_pabyData);

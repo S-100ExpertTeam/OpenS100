@@ -3,6 +3,10 @@
 
 SGeometryType S101GeometryUtil::ReadWKBGeometryType(const unsigned char* pabyData)
 {
+	int nByteOrder = DB2_V72_FIX_BYTE_ORDER(*pabyData);
+	if (!(nByteOrder == XDR || nByteOrder == NDR))
+		return SGeometryType::none;
+
 	int iRawType = 0;
 	memcpy(&iRawType, pabyData + 1, 4);
 
