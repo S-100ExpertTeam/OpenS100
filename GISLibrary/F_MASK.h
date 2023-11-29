@@ -27,6 +27,7 @@ public:
 	int GetFieldLength();
 
 	void AddMask(MASK* mask);
+	void AddMask(RecordName recordName, int mind = 0, int muin = 0);
 	void DeleteMask(RecordName recordName);
 	MASK* GetMask(RecordName recordName);
 

@@ -105,3 +105,10 @@ void F_SPAS::addSPAS(SPAS* item)
 {
 	m_arr.push_back(item);
 }
+
+void F_SPAS::addSPAS(RecordName recordName, int ornt, unsigned int smin, unsigned int smax, int saui)
+{
+	SPAS* item = new SPAS();
+	item->Set(recordName, ornt, smin, smax, saui);
+	m_arr.push_back(item);
+}

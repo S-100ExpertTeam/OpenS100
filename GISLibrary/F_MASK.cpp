@@ -89,6 +89,17 @@ void F_MASK::AddMask(MASK* mask)
 	m_arr.insert({ mask->m_name.GetName(), mask});
 }
 
+void F_MASK::AddMask(RecordName recordName, int mind, int muin)
+{
+	MASK* mask = new MASK();
+	mask->m_name = recordName;
+	mask->m_mind = mind;
+	mask->m_muin = muin;
+
+	listMask.push_back(mask);
+	m_arr.insert({ mask->m_name.GetName(), mask });
+}
+
 void F_MASK::DeleteMask(RecordName recordName)
 {
 	m_arr.erase(recordName.GetName());
