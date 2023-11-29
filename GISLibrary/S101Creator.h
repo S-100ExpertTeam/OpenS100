@@ -3,6 +3,7 @@
 #include "../FeatureCatalog/AttributeBinding.h"
 
 #include "Enum_SGeometryType.h"
+#include "R_FeatureRecord.h"
 
 #include <vector>
 
@@ -116,16 +117,31 @@ private:
 class S101GeometryFactory
 {
 public:
-	static SGeometry* createFromWkb(void *, size_t = static_cast<size_t>(-1));
+	static SGeometry* createFromWkb(void*, size_t = static_cast<size_t>(-1));
 	static SGeometry* createGeometry(SGeometryType);
-	static void destroyGeometry(SGeometry *);
+	static void destroyGeometry(SGeometry*);
 
 	static Record* createRecord(GISLibrary::RCNM);
-	static void destroyRecord(Record *);
+	static void destroyRecord(Record*);
+};
+
+class S101FieldFactory
+{
+public:
+	static F_ATTR* createAttribute();
+	static void destoryAttribute(F_ATTR*);
+	static F_INAS* createInformationAssociation();
+	static void destoryInformationAssociation(F_INAS*);
+	static F_SPAS* createSpatialAssociation();
+	static void destorySpatialAssociation(F_SPAS*);
+	static F_FASC* createFeatureAssociation();
+	static void destoryFeatureAssociation(F_FASC*);
+	static F_MASK* createMaskedSpatialType();
+	static void destoryMaskedSpatialType(F_MASK*);
 };
 
 class S101GeometryUtil
 {
 public:
-	static SGeometryType ReadWKBGeometryType(const unsigned char *);
+	static SGeometryType ReadWKBGeometryType(const unsigned char*);
 };
