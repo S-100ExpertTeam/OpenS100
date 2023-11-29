@@ -14,6 +14,7 @@
 
 R_CurveRecord::R_CurveRecord()
 {
+	m_crid.m_name.RCID = -1;
 	m_crid.m_name.RCNM = 120;
 }
 
@@ -244,7 +245,7 @@ int R_CurveRecord::GetPointCount()
 	// C2IL
 	if (m_c2il.size() == 1)
 	{
-		result += m_c2il.front()->m_arr.size();
+		result += (int)m_c2il.front()->m_arr.size();
 	}
 	else
 	{
@@ -270,6 +271,26 @@ void R_CurveRecord::SetPTAS(int begin_rcid, int end_rcid)
 	m_ptas->m_arr.push_back(new PTAS(end_rcid, 2));
 }
 
+void R_CurveRecord::SetSEGH(int intp, int circ, double ycoo, double xcoo, double dist, int disu, double sbrg, double angl)
+{
+	if (m_segh)
+	{
+		delete m_segh;
+		m_segh = nullptr;
+	}
+
+	m_segh = new F_SEGH();
+
+	m_segh->m_intp = intp;
+	m_segh->m_circ = circ;
+	m_segh->m_ycoo = ycoo;
+	m_segh->m_xcoo = xcoo;
+	m_segh->m_dist = dist;
+	m_segh->m_disu = disu;
+	m_segh->m_sbrg = sbrg;
+	m_segh->m_angl = angl;
+}
+
 void R_CurveRecord::InsertC2IL(int x, int y)
 {
 	if (m_c2il.size() == 0)
@@ -278,6 +299,40 @@ void R_CurveRecord::InsertC2IL(int x, int y)
 	}
 
 	m_c2il.front()->m_arr.push_back(new C2IL(y, x));
+}
+
+void R_CurveRecord::InsertC2IL(SAFEARRAY* xcoo, SAFEARRAY* ycoo, int cmfx, int cmfy)
+{
+	if (xcoo == nullptr || xcoo->cDims != 1 ||
+		ycoo == nullptr || ycoo->cDims != 1)
+		return;
+
+	if (m_c2il.size() == 0)
+	{
+		m_c2il.push_back(new F_C2IL());
+	}
+
+	LONG lBound, uBound;
+	SafeArrayGetLBound(xcoo, 1, &lBound);
+	SafeArrayGetUBound(xcoo, 1, &uBound);
+
+	double* pxData = nullptr;
+	SafeArrayAccessData(xcoo, reinterpret_cast<void**>(&pxData));
+	double* pyData = nullptr;
+	SafeArrayAccessData(ycoo, reinterpret_cast<void**>(&pyData));
+
+	for (LONG i = lBound; i <= uBound; ++i)
+	{
+		double x = pxData[i] * cmfx;
+		double y = pyData[i] * cmfy;
+
+		m_c2il.front()->m_arr.push_back(new C2IL(y, x));
+	}
+
+	SafeArrayUnaccessData(xcoo);
+	SafeArrayUnaccessData(ycoo);
+
+	return;
 }
 
 std::string R_CurveRecord::GetBeginningPointRCIDasString(std::string prefix)

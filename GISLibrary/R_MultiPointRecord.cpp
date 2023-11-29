@@ -10,6 +10,7 @@
 
 R_MultiPointRecord::R_MultiPointRecord(void)
 {
+	m_mrid.m_name.RCID = -1;
 	m_mrid.m_name.RCNM = 115;
 }
 
@@ -165,6 +166,18 @@ void R_MultiPointRecord::SetRCID(int rcid)
 	m_mrid.m_name.RCID = rcid;
 }
 
+void R_MultiPointRecord::SetCOCC(int coui, int coix, int ncor)
+{
+	if (!m_cocc)
+	{
+		m_cocc = new F_COCC();
+	}
+
+	m_cocc->m_coui = coui;
+	m_cocc->m_coix = coix;
+	m_cocc->m_ncor = ncor;
+}
+
 void R_MultiPointRecord::InsertC3IL(int x, int y, int z)
 {
 	if (m_c3il.size() == 0)
@@ -173,6 +186,45 @@ void R_MultiPointRecord::InsertC3IL(int x, int y, int z)
 	}
 
 	m_c3il.front()->m_arr.push_back(new C3IL(x, y, z));
+}
+
+void R_MultiPointRecord::InsertC3IL(SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo, int cmfx, int cmfy, int cmfz)
+{
+	if (xcoo == nullptr || xcoo->cDims != 1 ||
+		ycoo == nullptr || ycoo->cDims != 1 ||
+		zcoo == nullptr || zcoo->cDims != 1)
+		return;
+
+	if (m_c3il.size() == 0)
+	{
+		m_c3il.push_back(new F_C3IL());
+	}
+
+	LONG lBound, uBound;
+	SafeArrayGetLBound(xcoo, 1, &lBound);
+	SafeArrayGetUBound(xcoo, 1, &uBound);
+
+	double* pxData = nullptr;
+	SafeArrayAccessData(xcoo, reinterpret_cast<void**>(&pxData));
+	double* pyData = nullptr;
+	SafeArrayAccessData(ycoo, reinterpret_cast<void**>(&pyData));
+	double* pzData = nullptr;
+	SafeArrayAccessData(zcoo, reinterpret_cast<void**>(&pzData));
+
+	for (LONG i = lBound; i <= uBound; ++i)
+	{
+		double x = pxData[i] * cmfx;
+		double y = pyData[i] * cmfy;
+		double z = pzData[i] * cmfz;
+
+		m_c3il.front()->m_arr.push_back(new C3IL(x, y, z));
+	}
+
+	SafeArrayUnaccessData(xcoo);
+	SafeArrayUnaccessData(ycoo);
+	SafeArrayUnaccessData(zcoo);
+
+	return;
 }
 
 std::vector<C2IL*> R_MultiPointRecord::GetAllC2IL()

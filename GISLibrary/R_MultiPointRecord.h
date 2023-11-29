@@ -33,8 +33,10 @@ public:
 	std::wstring GetRCIDasWstring();
 
 	void SetRCID(int rcid);
+	void SetCOCC(int coui, int coix, int ncor);
 
 	void InsertC3IL(int x, int y, int z);
+	void InsertC3IL(SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo, int cmfx, int cmfy, int cmfz);
 
 	std::vector<C2IL*> GetAllC2IL();
 	std::vector<C3IL*> GetAll3CIL();
