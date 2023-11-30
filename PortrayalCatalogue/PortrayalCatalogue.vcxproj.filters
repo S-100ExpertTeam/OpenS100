@@ -653,6 +653,42 @@
     <ClCompile Include="Enum_RuleType.cpp">
       <Filter>Enum</Filter>
     </ClCompile>
+    <ClCompile Include="AlertCatalog.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="AlertInfo.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="AlertItem.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="AlertPriorities.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="AlertPrioritySelection.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="Alerts.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicalHighlighting.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="Highlights.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageItem.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="Messages.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewingGroupReference.cpp">
+      <Filter>AlertCatalogue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PortrayalCatalogue.rc">

@@ -24,7 +24,6 @@ namespace S100
 
         void Open(std::string filePath);
 
-    private:
         std::shared_ptr<S100_ExchangeCatalogueIdentifier> Identifier;
         std::shared_ptr<S100_CataloguePointofContact> Contact;
         std::vector<S100_ProductSpecification> ProductSpecification;

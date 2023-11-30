@@ -117,8 +117,10 @@ COpenS100View::COpenS100View()
 
 	//delete item;
 
-	//S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
-	//ex->Open("../CATALOG_Read.txt");
+	S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
+	ex->Open("../CATALOG_Read.txt");
+
+	
 
 	//delete ex;
 

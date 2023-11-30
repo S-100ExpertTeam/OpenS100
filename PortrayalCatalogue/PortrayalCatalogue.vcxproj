@@ -295,6 +295,12 @@
     <ClInclude Include="ViewingGroups.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlertCatalog.cpp" />
+    <ClCompile Include="AlertInfo.cpp" />
+    <ClCompile Include="AlertItem.cpp" />
+    <ClCompile Include="AlertPriorities.cpp" />
+    <ClCompile Include="AlertPrioritySelection.cpp" />
+    <ClCompile Include="Alerts.cpp" />
     <ClCompile Include="CatalogItem.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="ContextParameter.cpp" />
@@ -311,6 +317,10 @@
     <ClCompile Include="FoundationMode.cpp" />
     <ClCompile Include="Enum_GeometricPrimitive.cpp" />
     <ClCompile Include="Enum_Orientation.cpp" />
+    <ClCompile Include="GraphicalHighlighting.cpp" />
+    <ClCompile Include="Highlights.cpp" />
+    <ClCompile Include="MessageItem.cpp" />
+    <ClCompile Include="Messages.cpp" />
     <ClCompile Include="S100_AlertReference.cpp" />
     <ClCompile Include="S100_Annulus.cpp" />
     <ClCompile Include="S100_Arc3Points.cpp" />
@@ -400,9 +410,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="ViewingGroup.cpp" />
     <ClCompile Include="ViewingGroupLayer.cpp" />
     <ClCompile Include="ViewingGroupLayers.cpp" />
+    <ClCompile Include="ViewingGroupReference.cpp" />
     <ClCompile Include="ViewingGroups.cpp" />
   </ItemGroup>
   <ItemGroup>
