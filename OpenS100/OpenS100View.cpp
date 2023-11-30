@@ -57,6 +57,7 @@
 #include "../LatLonUtility/LatLonUtility.h"
 
 #include "../LatLonUtility/Logger.h"
+#include "../PortrayalCatalogue/AlertCatalog.h"
 #pragma comment(lib, "d2d1.lib")
 
 using namespace LatLonUtility;
@@ -108,18 +109,21 @@ COpenS100View::COpenS100View()
 
 	theApp.pView = this;
 
-	S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
-	item->Open("../ic.xml");
+	//S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
+	//item->Open("../ic.xml");
 
-	//auto pc = new PortrayalCatalogue();
-	//pc->Open(L"../pc.xml");
+	////auto pc = new PortrayalCatalogue();
+	////pc->Open(L"../pc.xml");
 
-	delete item;
+	//delete item;
 
-	S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
-	ex->Open("../CATALOG_Read.txt");
+	//S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
+	//ex->Open("../CATALOG_Read.txt");
 
-	delete ex;
+	//delete ex;
+
+	//S100::AlertCatalog* alt = new S100::AlertCatalog();
+	//alt->Open("../AlertCatalog-S101.xml");
 
 }
 

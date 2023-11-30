@@ -46,6 +46,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="AlertCatalogue">
+      <UniqueIdentifier>{ca2948a0-e403-4dc4-9146-52771ffcb9a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AlertCatalogue\Enum">
+      <UniqueIdentifier>{d51d597f-098a-45cc-88ad-8e31cf33e0cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -329,6 +335,48 @@
     </ClInclude>
     <ClInclude Include="Enum_RuleType.h">
       <Filter>Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="AlertCatalog.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="AlertInfo.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="AlertItem.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="AlertPriorities.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="AlertPrioritySelection.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="Alerts.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicalHighlighting.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="Highlights.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageItem.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="Messages.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewingGroupReference.h">
+      <Filter>AlertCatalogue</Filter>
+    </ClInclude>
+    <ClInclude Include="AlertPriority.h">
+      <Filter>AlertCatalogue\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="HighlightStyle.h">
+      <Filter>AlertCatalogue\Enum</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

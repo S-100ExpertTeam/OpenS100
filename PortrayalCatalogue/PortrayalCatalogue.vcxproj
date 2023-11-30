@@ -186,6 +186,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlertCatalog.h" />
+    <ClInclude Include="AlertInfo.h" />
+    <ClInclude Include="AlertItem.h" />
+    <ClInclude Include="AlertPriorities.h" />
+    <ClInclude Include="AlertPriority.h" />
+    <ClInclude Include="AlertPrioritySelection.h" />
+    <ClInclude Include="Alerts.h" />
     <ClInclude Include="CatalogItem.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="ContextParameter.h" />
@@ -203,6 +210,11 @@
     <ClInclude Include="ExternalFile.h" />
     <ClInclude Include="FoundationMode.h" />
     <ClInclude Include="Enum_Orientation.h" />
+    <ClInclude Include="GraphicalHighlighting.h" />
+    <ClInclude Include="Highlights.h" />
+    <ClInclude Include="HighlightStyle.h" />
+    <ClInclude Include="MessageItem.h" />
+    <ClInclude Include="Messages.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="S100_AlertReference.h" />
     <ClInclude Include="S100_Annulus.h" />
@@ -275,9 +287,11 @@
     <ClInclude Include="S100_WithParam.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="ViewingGroup.h" />
     <ClInclude Include="ViewingGroupLayer.h" />
     <ClInclude Include="ViewingGroupLayers.h" />
+    <ClInclude Include="ViewingGroupReference.h" />
     <ClInclude Include="ViewingGroups.h" />
   </ItemGroup>
   <ItemGroup>
