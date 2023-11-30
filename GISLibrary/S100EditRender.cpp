@@ -104,7 +104,7 @@ void S100EditRender::ShowPoint(SPoint* geom)
 
 		scaler->WorldToDevice(mx, my, &sx, &sy);
 
-		d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
+		d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)sx, (float)sy));
 
 		d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
 		d2->pRT->FillRectangle(rect, d2->pBrush);
@@ -148,7 +148,7 @@ void S100EditRender::ShowPoint(SMultiPoint* geom)
 
 			scaler->WorldToDevice(mx, my, &sx, &sy);
 
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)sx, (float)sy));
 
 			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
 			d2->pRT->FillRectangle(rect, d2->pBrush);
@@ -196,7 +196,7 @@ void S100EditRender::ShowPoint(SCurve* geom)
 
 			scaler->WorldToDevice(mx, my, &sx, &sy);
 
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)sx, (float)sy));
 
 			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
 			d2->pRT->FillRectangle(rect, d2->pBrush);
@@ -213,7 +213,7 @@ void S100EditRender::ShowPoint(SCurve* geom)
 
 		if (pointIndex >= 0 && partIndex == 0)
 		{
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(selectedSX, selectedSY));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)selectedSX, (float)selectedSY));
 
 			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
 			d2->pRT->FillRectangle(rect, d2->pBrush);
@@ -252,7 +252,7 @@ void S100EditRender::ShowPoint(SCompositeCurve* geom)
 
 			scaler->WorldToDevice(mp.x, mp.y, &sx, &sy);
 
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)sx, (float)sy));
 
 			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
 			d2->pRT->FillRectangle(rect, d2->pBrush);
@@ -269,7 +269,7 @@ void S100EditRender::ShowPoint(SCompositeCurve* geom)
 
 		if (pointIndex >= 0 && partIndex == 0)
 		{
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(selectedSX, selectedSY));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)selectedSX, (float)selectedSY));
 
 			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
 			d2->pRT->FillRectangle(rect, d2->pBrush);
@@ -312,7 +312,7 @@ void S100EditRender::ShowPoint(SSurface* geom)
 
 				scaler->WorldToDevice(mp.x, mp.y, &sx, &sy);
 
-				d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(sx, sy));
+				d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)sx, (float)sy));
 
 				d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
 				d2->pRT->FillRectangle(rect, d2->pBrush);
@@ -332,7 +332,7 @@ void S100EditRender::ShowPoint(SSurface* geom)
 
 		if (pointIndex >= 0 && partIndex >= 0)
 		{
-			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation(selectedSX, selectedSY));
+			d2->pRT->SetTransform(D2D1::Matrix3x2F::Translation((float)selectedSX, (float)selectedSY));
 
 			d2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
 			d2->pRT->FillRectangle(rect, d2->pBrush);

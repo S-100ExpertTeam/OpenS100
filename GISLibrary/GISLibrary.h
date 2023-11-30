@@ -13,6 +13,8 @@
 #ifndef __AFXWIN_H__
 #endif
 
+using namespace GISLibrary;
+
 class CGISLibraryApp
 {
 public:
@@ -23,7 +25,7 @@ public:
 	Scaler* m_pScaler = nullptr;
 	CatalogManager* m_pCatalogManager = nullptr;
 	LayerManager* m_pLayerManager = nullptr;
-	GISLibrary::D2D1Resources* D2 = nullptr;
+	D2D1Resources* D2 = nullptr;
 
 public:
 	Scaler* GetScaler();

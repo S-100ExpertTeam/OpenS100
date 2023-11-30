@@ -2,7 +2,7 @@
 #include "Field.h"
 
 struct C2IL;
-class F_C2IL : Field
+class F_C2IL : public Field
 {
 public:
 	F_C2IL();

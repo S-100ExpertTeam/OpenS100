@@ -28,7 +28,7 @@ public: // for draw
 	DrawingSet drawingSet;
 
 public:
-	bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1) override;
+	bool Open(CString _filepath, D2D1Resources* d2d1) override;
 	void Draw(HDC& hDC, Scaler* scaler, double offset = 0) override;
 	void SetFeatureCatalog(FeatureCatalogue* value);
 	FeatureCatalogue* GetFeatureCatalog();
@@ -40,7 +40,7 @@ public:
 	void SetIndividualPC(bool value);
 	bool GetIndividualPC();
 	bool OpenFC(CString path);
-	bool OpenPC(CString path, GISLibrary::D2D1Resources* d2d1);
+	bool OpenPC(CString path, D2D1Resources* d2d1);
 	void DeleteCatalog();
 	void DrawInfo(HDC& hDC, Scaler* scaler);
 	S100SpatialObject* GetS100SpatialObject();

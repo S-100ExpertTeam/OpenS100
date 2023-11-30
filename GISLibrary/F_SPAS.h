@@ -3,7 +3,7 @@
 #include "RecordName.h"
 
 struct SPAS;
-class F_SPAS : Field
+class F_SPAS : public Field
 {
 public:
 	F_SPAS();

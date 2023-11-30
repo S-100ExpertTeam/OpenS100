@@ -12,6 +12,8 @@
 #include <functional>
 #include <unordered_map>
 
+using namespace GISLibrary;
+
 class Scaler;
 class ENCCell;
 class PortrayalCatalogue;
@@ -22,14 +24,14 @@ class CatalogManager;
 class LayerManager
 {
 public:
-	LayerManager(GISLibrary::D2D1Resources* d2d1);
-	LayerManager(Scaler* scaler, CatalogManager* catalogManager, GISLibrary::D2D1Resources* d2d1);
+	LayerManager(D2D1Resources* d2d1);
+	LayerManager(Scaler* scaler, CatalogManager* catalogManager, D2D1Resources* d2d1);
 	virtual ~LayerManager();
 
 public:
 	Scaler* scaler = nullptr;
 	CatalogManager* catalogManager = nullptr;
-	GISLibrary::D2D1Resources* D2 = nullptr;
+	D2D1Resources* D2 = nullptr;
 
 	// Background layer
 	Layer backgroundLayer;
@@ -111,7 +113,7 @@ public:
 	void ChangeS100ColorPalette(std::wstring paletteName);
 
 	Scaler* GetScaler();
-	//GISLibrary::D2D1Resources* GetD2D1Resources();
+	//D2D1Resources* GetD2D1Resources();
 
 	void SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet* drawingSet);
 

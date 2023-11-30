@@ -12,6 +12,9 @@
 #include "ATTR.h"
 #include "F_ATTR.h"
 #include "F_PTAS.h"
+#include "F_SPAS.h"
+#include "F_FASC.h"
+#include "F_MASK.h"
 #include "F_SEGH.h"
 #include "F_C2IL.h"
 #include "F_CUCO.h"
@@ -34,7 +37,7 @@
 
 #include <set>
 
-S101Creator::S101Creator(GISLibrary::D2D1Resources* D2)
+S101Creator::S101Creator(D2D1Resources* D2)
 {
 	this->D2 = D2;
 }
@@ -851,7 +854,7 @@ R_PointRecord* S101Creator::ConvertInsertVectorRecord(SPoint* geom)
 	x *= enc->GetCMFX();
 	y *= enc->GetCMFY();
 
-	vectorRecord->SetC2IT(x, y);
+	vectorRecord->SetC2IT((int)x, (int)y);
 
 	enc->InsertRecord(vectorRecord);
 
@@ -875,9 +878,9 @@ R_MultiPointRecord* S101Creator::ConvertInsertVectorRecord(SMultiPoint* geom)
 		y *= enc->GetCMFY();
 
 		vectorRecord->InsertC3IL(
-			x, 
-			y,
-			geom->GetZ(i) * enc->GetCMFZ());
+			(int)x,
+			(int)y,
+			(int)(geom->GetZ(i) * enc->GetCMFZ()));
 	}
 
 	enc->InsertRecord(vectorRecord);
@@ -957,8 +960,8 @@ R_CurveRecord* S101Creator::ConvertInsertVectorRecord(SCurve* geom)
 			x *= enc->GetCMFX();
 			y *= enc->GetCMFY();
 
-			c2il->m_xcoo = x;
-			c2il->m_ycoo = y;
+			c2il->m_xcoo = (int)x;
+			c2il->m_ycoo = (int)y;
 			f_C2IL->m_arr.push_back(c2il);
 		}
 	}

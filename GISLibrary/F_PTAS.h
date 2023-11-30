@@ -5,7 +5,7 @@
 #include <vector>
 
 struct PTAS;
-class F_PTAS : Field
+class F_PTAS : public Field
 {
 public:
 	F_PTAS();

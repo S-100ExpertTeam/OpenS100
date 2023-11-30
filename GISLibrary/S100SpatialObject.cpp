@@ -3,7 +3,7 @@
 #include "PCOutputSchemaManager.h"
 #include "S100Layer.h"
 
-S100SpatialObject::S100SpatialObject(GISLibrary::D2D1Resources* d2d1)
+S100SpatialObject::S100SpatialObject(D2D1Resources* d2d1)
 {
 	this->D2 = d2d1;
 }

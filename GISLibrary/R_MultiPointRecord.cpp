@@ -217,7 +217,7 @@ void R_MultiPointRecord::InsertC3IL(SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY*
 		double y = pyData[i] * cmfy;
 		double z = pzData[i] * cmfz;
 
-		m_c3il.front()->m_arr.push_back(new C3IL(x, y, z));
+		m_c3il.front()->m_arr.push_back(new C3IL((int)x, (int)y, (int)z));
 	}
 
 	SafeArrayUnaccessData(xcoo);

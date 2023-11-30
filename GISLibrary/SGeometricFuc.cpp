@@ -13,6 +13,8 @@ int SGeometricFuc::overlap(SAbstractCurve* objPoly, SSurface* comPoly)
 		auto curve = (SCompositeCurve*)objPoly;
 		return overlap(curve, comPoly);
 	}
+
+	return -1;
 }
 
 int SGeometricFuc::overlap(SCurve *objPoly, SSurface *comPoly)

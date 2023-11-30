@@ -76,6 +76,8 @@ double H5_FeatureInstanceGroup::getSouthBoundLatitude() const
 	if (southBoundLatitude) {
 		return *southBoundLatitude;
 	}
+
+	return 0.0;
 }
 
 void H5_FeatureInstanceGroup::setSouthBoundLatitude(const double value)

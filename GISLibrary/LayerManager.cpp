@@ -49,7 +49,7 @@
 #include <future>
 #include <chrono>
 
-LayerManager::LayerManager(GISLibrary::D2D1Resources* d2d1)
+LayerManager::LayerManager(D2D1Resources* d2d1)
 {
 	CString strFolderPath;
 	::GetModuleFileName(NULL, strFolderPath.GetBuffer(MAX_PATH), MAX_PATH);
@@ -67,7 +67,7 @@ LayerManager::LayerManager(GISLibrary::D2D1Resources* d2d1)
 	D2 = d2d1;
 }
 
-LayerManager::LayerManager(Scaler* scaler, CatalogManager* catalogManager, GISLibrary::D2D1Resources* d2d1) : LayerManager(d2d1)
+LayerManager::LayerManager(Scaler* scaler, CatalogManager* catalogManager, D2D1Resources* d2d1) : LayerManager(d2d1)
 {
 	this->scaler = scaler;
 	this->catalogManager = catalogManager;
@@ -1341,7 +1341,7 @@ Scaler* LayerManager::GetScaler()
 	return scaler;
 }
 /*
-GISLibrary::D2D1Resources* LayerManager::GetD2D1Resources()
+D2D1Resources* LayerManager::GetD2D1Resources()
 {
 	return D2;
 }

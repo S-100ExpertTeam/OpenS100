@@ -1,7 +1,7 @@
 #pragma once
 #include "Field.h"
 #include "RecordName.h"
-class F_CCID : Field
+class F_CCID : public Field
 {
 public:
 	F_CCID();

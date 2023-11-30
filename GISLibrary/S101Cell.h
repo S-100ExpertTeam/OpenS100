@@ -52,8 +52,8 @@ struct SPAS;
 class S101Cell : public S100SpatialObject
 {
 public:
-	S101Cell(GISLibrary::D2D1Resources* d2d1);
-	S101Cell(FeatureCatalogue* fc, GISLibrary::D2D1Resources* d2d1);
+	S101Cell(D2D1Resources* d2d1);
+	S101Cell(FeatureCatalogue* fc, D2D1Resources* d2d1);
 	virtual ~S101Cell();
 
 public:
@@ -155,7 +155,7 @@ public:
 
 	BOOL GetFullMaskData(R_FeatureRecord* fe);
 
-	void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler);
+	void Draw(D2D1Resources* D2, Scaler* scaler);
 	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 
 	/*

@@ -127,8 +127,8 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, int current
 		{
 			if (ENCCommon::APPLY_SCALE_MIN == TRUE)
 			{
-				if ((instruction->scaleMinimum == 0 || currentScale <= instruction->scaleMinimum) &&
-					(instruction->scaleMaximum == 0 || currentScale >= instruction->scaleMaximum) &&
+				if ((instruction->scaleMinimum == 0 || currentScale <= (int)instruction->scaleMinimum) &&
+					(instruction->scaleMaximum == 0 || currentScale >= (int)instruction->scaleMaximum) &&
 					(MBR::CheckOverlap(scaler->GetMap(), geom->m_mbr)))
 				{
 					itList.push_back(instruction);

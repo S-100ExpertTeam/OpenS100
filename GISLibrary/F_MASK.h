@@ -6,7 +6,7 @@
 #include <unordered_map>
 
 struct MASK;
-class F_MASK : Field
+class F_MASK : public Field
 {
 public:
 	F_MASK();

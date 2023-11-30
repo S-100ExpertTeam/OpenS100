@@ -19,7 +19,7 @@ Layer::~Layer(void)
 	}
 }
 
-bool Layer::Open(CString _filepath, GISLibrary::D2D1Resources* d2d1)
+bool Layer::Open(CString _filepath, D2D1Resources* d2d1)
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
 

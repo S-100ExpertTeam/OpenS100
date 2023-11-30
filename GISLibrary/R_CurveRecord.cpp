@@ -326,7 +326,7 @@ void R_CurveRecord::InsertC2IL(SAFEARRAY* xcoo, SAFEARRAY* ycoo, int cmfx, int c
 		double x = pxData[i] * cmfx;
 		double y = pyData[i] * cmfy;
 
-		m_c2il.front()->m_arr.push_back(new C2IL(y, x));
+		m_c2il.front()->m_arr.push_back(new C2IL((int)y, (int)x));
 	}
 
 	SafeArrayUnaccessData(xcoo);

@@ -5,7 +5,7 @@
 #include <vector>
 
 struct ATTR;
-class F_ATTR : Field
+class F_ATTR : public Field
 {
 public:
 	F_ATTR();

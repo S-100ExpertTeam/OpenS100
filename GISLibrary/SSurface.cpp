@@ -451,7 +451,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int size)
 		memcpy_s(&numPointPerPart, 4, value + 9 + offset, 4);
 		offset += 4;
 
-		m_pParts[i] = localPointArray.size();
+		m_pParts[i] = (int)localPointArray.size();
 
 		auto curve = new SCurve();
 		curve->Init(numPointPerPart);
@@ -471,7 +471,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int size)
 		}
 	}
 
-	m_numPoints = localPointArray.size();
+	m_numPoints = (int)localPointArray.size();
 
 	m_pPoints = new GeoPoint[m_numPoints];
 	std::copy(localPointArray.begin(), localPointArray.end(), m_pPoints);
@@ -588,7 +588,7 @@ double SSurface::GetY()
 
 int SSurface::GetRingCount() const
 {
-	return curveList.size();
+	return (int)curveList.size();
 }
 
 SAbstractCurve* SSurface::GetRing(int index) const

@@ -8,7 +8,7 @@ class S102H5 :
 	public S100H5
 {
 public:
-	S102H5(PortrayalCatalogue* pc, GISLibrary::D2D1Resources* d2d1);
+	S102H5(PortrayalCatalogue* pc, D2D1Resources* d2d1);
 	virtual ~S102H5();
 
 public:

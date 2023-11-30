@@ -135,7 +135,7 @@ void FeatureBinding::SetRoleType(std::string value)
 
 int FeatureBinding::GetFeatureTypeCount()
 {
-	return featureTypes.size();
+	return (int)featureTypes.size();
 }
 
 std::string FeatureBinding::GetFeatureType(int index)

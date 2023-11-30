@@ -2,7 +2,7 @@
 #include "Field.h"
 
 struct FC3D;
-class F_C3FL : Field
+class F_C3FL : public Field
 {
 public:
 	F_C3FL();

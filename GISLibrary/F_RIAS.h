@@ -3,7 +3,7 @@
 #include "RecordName.h"
 
 struct RIAS;
-class F_RIAS : Field
+class F_RIAS : public Field
 {
 public:
 	F_RIAS();

@@ -6,7 +6,7 @@
 
 struct CSAX;
 
-class F_CSAX : Field
+class F_CSAX : public Field
 {
 public:
 	F_CSAX();

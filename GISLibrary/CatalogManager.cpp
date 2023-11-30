@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-CatalogManager::CatalogManager(GISLibrary::D2D1Resources* d2d1)
+CatalogManager::CatalogManager(D2D1Resources* d2d1)
 {
 	D2 = d2d1;
 }

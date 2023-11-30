@@ -3,28 +3,15 @@
 #include "../FeatureCatalog/AttributeBinding.h"
 
 #include "Enum_SGeometryType.h"
-#include "R_FeatureRecord.h"
 
 #include <vector>
 
-#define DB2_V72_FIX_BYTE_ORDER(x) ((((x)&0x31) == (x)) ? ((x)&0x1) : (x))
-
-typedef enum
-{
-	XDR = 0, /**< MSB/Sun/Motorola: Most Significant Byte First   */
-	NDR = 1  /**< LSB/Intel/Vax: Least Significant Byte First      */
-} ByteOrder;
-
-class S100Layer;
-class S101Cell;
-class FeatureCatalogue;
-class R_FeatureRecord;
-class SGeometry;
+using namespace GISLibrary;
 
 class S101Creator
 {
 public:
-	S101Creator(GISLibrary::D2D1Resources* D2);
+	S101Creator(D2D1Resources* D2);
 	S101Creator(S101Cell* enc);
 	S101Creator(FeatureCatalogue* fc, S101Cell* enc);
 	~S101Creator();
@@ -33,7 +20,7 @@ public:
 	FeatureCatalogue* fc = nullptr;
 	S101Cell* enc = nullptr;
 	S100Layer* layer = nullptr;
-	GISLibrary::D2D1Resources* D2 = nullptr;
+	D2D1Resources* D2 = nullptr;
 
 public:
 	void Set(FeatureCatalogue* fc, S101Cell* enc);
@@ -112,36 +99,4 @@ public:
 
 private:
 	S101Cell* CreateENC(std::wstring name);
-};
-
-class S101GeometryFactory
-{
-public:
-	static SGeometry* createFromWkb(void*, size_t = static_cast<size_t>(-1));
-	static SGeometry* createGeometry(SGeometryType);
-	static void destroyGeometry(SGeometry*);
-
-	static Record* createRecord(GISLibrary::RCNM);
-	static void destroyRecord(Record*);
-};
-
-class S101FieldFactory
-{
-public:
-	static F_ATTR* createAttribute();
-	static void destoryAttribute(F_ATTR*);
-	static F_INAS* createInformationAssociation();
-	static void destoryInformationAssociation(F_INAS*);
-	static F_SPAS* createSpatialAssociation();
-	static void destorySpatialAssociation(F_SPAS*);
-	static F_FASC* createFeatureAssociation();
-	static void destoryFeatureAssociation(F_FASC*);
-	static F_MASK* createMaskedSpatialType();
-	static void destoryMaskedSpatialType(F_MASK*);
-};
-
-class S101GeometryUtil
-{
-public:
-	static SGeometryType ReadWKBGeometryType(const unsigned char*);
 };

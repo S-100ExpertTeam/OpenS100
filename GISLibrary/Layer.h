@@ -4,6 +4,8 @@
 
 #include "..\\GeoMetryLibrary\\MBR.h"
 
+using namespace GISLibrary;
+
 class SpatialObject;
 class Scaler;
 //Class to save information for layers.
@@ -26,8 +28,8 @@ public:
 	int scaleMaximum = 0;
 
 public:
-	virtual bool Open(CString _filepath, GISLibrary::D2D1Resources* d2d1);
-	virtual void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler) {};
+	virtual bool Open(CString _filepath, D2D1Resources* d2d1);
+	virtual void Draw(D2D1Resources* D2, Scaler* scaler) {};
 	void Draw(CDC *pDC, Scaler *scaler, double offset = 0);
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 	void Draw(HDC &hDC, Scaler *scaler, int priority, int geoType, double offset);

@@ -777,13 +777,7 @@
     <ClCompile Include="EncodingFormat.cpp">
       <Filter>S100\ExchangeSetCatalogue</Filter>
     </ClCompile>
-    <ClCompile Include="S101GeometryFactory.cpp">
-      <Filter>S101</Filter>
-    </ClCompile>
-    <ClCompile Include="S101GeometryUtil.cpp">
-      <Filter>S101</Filter>
-    </ClCompile>
-    <ClCompile Include="S101FieldFactory.cpp">
+    <ClCompile Include="S101Factory.cpp">
       <Filter>S101</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1612,6 +1606,9 @@
     </ClInclude>
     <ClInclude Include="XML_Collection.h">
       <Filter>S100\IC\TempClass</Filter>
+    </ClInclude>
+    <ClInclude Include="S101Factory.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

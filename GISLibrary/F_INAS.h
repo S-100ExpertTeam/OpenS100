@@ -6,7 +6,7 @@
 
 #include <list>
 
-class F_INAS : Field
+class F_INAS : public Field
 {
 public:
 	F_INAS();

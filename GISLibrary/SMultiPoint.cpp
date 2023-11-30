@@ -22,7 +22,7 @@ SGeometryType SMultiPoint::GetType()
 
 int SMultiPoint::GetNumPoints()
 {
-	return m_pPoints.size();
+	return (int)m_pPoints.size();
 }
 
 double SMultiPoint::GetX(int index)

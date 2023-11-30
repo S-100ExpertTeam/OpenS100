@@ -60,7 +60,7 @@ void SENC_Instruction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp,
 
 	if (_surface->getNumPoint() > SGeometry::sizeOfPoint)
 	{
-		SGeometry::sizeOfPoint = _surface->getNumPoint() * 1.5;
+		SGeometry::sizeOfPoint = (int)(_surface->getNumPoint() * 1.5);
 
 		delete[] SGeometry::viewPoints; 
 		SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];

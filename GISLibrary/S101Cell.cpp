@@ -76,13 +76,13 @@
 #include <mmsystem.h> 
 #include <unordered_map>
 
-S101Cell::S101Cell(GISLibrary::D2D1Resources* d2d1) : S100SpatialObject(d2d1)
+S101Cell::S101Cell(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 }
 
-S101Cell::S101Cell(FeatureCatalogue* fc, GISLibrary::D2D1Resources* d2d1) : S100SpatialObject(d2d1)
+S101Cell::S101Cell(FeatureCatalogue* fc, D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
@@ -851,7 +851,7 @@ BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 		F_C3IL* c3il = r->m_c3il.front();
 
 		auto size = c3il->m_arr.size();
-		multiPoint->SetSize(size);
+		multiPoint->SetSize((int)size);
 
 		int index = 0;
 		for (auto itor = c3il->m_arr.begin(); itor != c3il->m_arr.end(); itor++)
@@ -1275,7 +1275,7 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 	return TRUE;
 }
 
-void S101Cell::Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler)
+void S101Cell::Draw(D2D1Resources* D2, Scaler* scaler)
 {
 	auto rt = D2->pRT;
 	rt->FillRectangle(D2D1::RectF(0, 0, 100, 100), D2->pBrush);
@@ -1999,7 +1999,7 @@ R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
 R_FeatureRecord* S101Cell::GetFeatureRecord(std::string key)
 {
 	auto iKey = std::stoll(key);
-	RecordName recordName(100, iKey);
+	RecordName recordName(100, (int)iKey);
 	return GetFeatureRecord(recordName.GetName());
 }
 
@@ -3372,13 +3372,13 @@ bool S101Cell::SaveAsENC(std::wstring path)
 
 	ddr.WriteRecord(&file);
 
-	m_dsgir.m_dssi.SetNumberOfInformationTypeRecords(vecInformation.size());
-	m_dsgir.m_dssi.SetNumberOfPointRecords(vecPoint.size());
-	m_dsgir.m_dssi.SetNumberOfMultiPointRecords(vecMultiPoint.size());
-	m_dsgir.m_dssi.SetNumberOfCurveRecords(vecCurve.size());
-	m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords(vecComposite.size());
-	m_dsgir.m_dssi.SetNumberOfSurfaceRecords(vecSurface.size());
-	m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords(vecFeature.size());
+	m_dsgir.m_dssi.SetNumberOfInformationTypeRecords((int)vecInformation.size());
+	m_dsgir.m_dssi.SetNumberOfPointRecords((int)vecPoint.size());
+	m_dsgir.m_dssi.SetNumberOfMultiPointRecords((int)vecMultiPoint.size());
+	m_dsgir.m_dssi.SetNumberOfCurveRecords((int)vecCurve.size());
+	m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords((int)vecComposite.size());
+	m_dsgir.m_dssi.SetNumberOfSurfaceRecords((int)vecSurface.size());
+	m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords((int)vecFeature.size());
 
 	m_dsgir.WriteRecord(&file);
 	m_dscrs.WriteRecord(&file);
@@ -4671,7 +4671,7 @@ bool S101Cell::InsertMultiPointRecordFromS101GML(GM::MultiPoint* point)
 
 	for (auto i = point->position.begin(); i != point->position.end(); i++)
 	{
-		mr->InsertC3IL(i->GetXInteger(), i->GetYInteger(), i->GetZ() * GetCMFZ());
+		mr->InsertC3IL(i->GetXInteger(), i->GetYInteger(), (int)(i->GetZ() * GetCMFZ()));
 	}
 
 	InsertMultiPointRecord(mr->GetRecordName().GetName(), mr);

@@ -624,7 +624,7 @@ bool R_FeatureRecord::IsNoGeometry()
 
 int R_FeatureRecord::GetFeatureRelationCount()
 {
-	return m_fasc.size();
+	return (int)m_fasc.size();
 }
 
 std::string R_FeatureRecord::GetAssociatedFeatureID(int index)
@@ -685,7 +685,7 @@ GM::Object* R_FeatureRecord::GetGMGeometry()
 
 int R_FeatureRecord::GetInformationRelationCount()
 {
-	return m_inas.size();
+	return (int)m_inas.size();
 }
 
 int R_FeatureRecord::GetAttributeCount() const
@@ -709,7 +709,7 @@ int R_FeatureRecord::GetAttributeCount() const
 std::string R_FeatureRecord::GetAttributeValue(int index)
 {
 	auto attributes = GetAllAttributes();
-	int count = attributes.size();
+	int count = (int)attributes.size();
 
 	if (count > 0 && index < count)
 	{

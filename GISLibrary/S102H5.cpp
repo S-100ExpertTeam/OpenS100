@@ -10,7 +10,7 @@
 
 #include <hdf5.h>
 
-S102H5::S102H5(PortrayalCatalogue* pc, GISLibrary::D2D1Resources* d2d1) : S100H5(d2d1)
+S102H5::S102H5(PortrayalCatalogue* pc, D2D1Resources* d2d1) : S100H5(d2d1)
 {
 	type = S100SpatialObjectType::S102H5;
 	featureContainer.push_back(new S102_FC_BathymetryCoverage());
@@ -111,7 +111,7 @@ void S102H5::Draw(HDC& hDC, Scaler* scaler, double offset)
 		scaler->WorldToDevice(mbr.xmin, mbr.ymin, &sxmin, &symax);
 		scaler->WorldToDevice(mbr.xmax, mbr.ymax, &sxmax, &symin);
 
-		rt->DrawBitmap(pBitmap, D2D1::RectF(sxmin, symin, sxmax, symax), 1, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+		rt->DrawBitmap(pBitmap, D2D1::RectF((float)sxmin, (float)symin, (float)sxmax, (float)symax), 1, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
 
 		if (!std::isnan(map.xmin)) {
 			MBR clippedMBR;
@@ -177,7 +177,7 @@ void S102H5::CreateBitmap()
 				if (value != 1000000) {
 
 					rt->SetTransform(D2D1::Matrix3x2F::Identity());
-					rt->SetTransform(D2D1::Matrix3x2F::Translation(xIndex, yIndex));
+					rt->SetTransform(D2D1::Matrix3x2F::Translation((float)xIndex, (float)yIndex));
 
 					brush->SetColor(getColor(value));
 
