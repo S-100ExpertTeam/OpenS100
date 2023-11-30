@@ -1608,7 +1608,7 @@
       <Filter>S100\IC\TempClass</Filter>
     </ClInclude>
     <ClInclude Include="S101Factory.h">
-      <Filter>Header Files</Filter>
+      <Filter>S101</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

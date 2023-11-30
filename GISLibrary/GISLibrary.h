@@ -21,7 +21,7 @@ public:
 	CGISLibraryApp();
 	virtual ~CGISLibraryApp();
 
-public:
+private:
 	Scaler* m_pScaler = nullptr;
 	CatalogManager* m_pCatalogManager = nullptr;
 	LayerManager* m_pLayerManager = nullptr;
@@ -30,7 +30,8 @@ public:
 public:
 	Scaler* GetScaler();
 	LayerManager* GetLayerManager();
-	CatalogManager* getCatalogManager();
+	CatalogManager* GetCatalogManager();
+	D2D1Resources* GetD2D1Resources();
 
 	bool AddBackgroundLayer(CString _filepath);
 	bool AddLayer(CString _filepath);

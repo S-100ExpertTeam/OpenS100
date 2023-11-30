@@ -26,7 +26,7 @@
 #include "F_FASC.h"
 #include "F_MASK.h"
 
-SGeometry* S101GeometryFactory::createFromWkb(void* pabyData, size_t nBytes)
+SGeometry* S101GeometryFactory::CreateFromWkb(void* pabyData, size_t nBytes)
 {
 	unsigned char* l_pabyData = static_cast<unsigned char*>(pabyData);
 	SGeometry* ppoReturn = nullptr;
@@ -42,7 +42,7 @@ SGeometry* S101GeometryFactory::createFromWkb(void* pabyData, size_t nBytes)
 	if (eGeometryType == SGeometryType::none)
 		return ppoReturn;
 
-	SGeometry* poGeom = createGeometry(eGeometryType);
+	SGeometry* poGeom = CreateGeometry(eGeometryType);
 	if (poGeom == nullptr)
 		return ppoReturn;
 
@@ -51,7 +51,7 @@ SGeometry* S101GeometryFactory::createFromWkb(void* pabyData, size_t nBytes)
 	return ppoReturn;
 }
 
-SGeometry* S101GeometryFactory::createGeometry(SGeometryType eGeometryType)
+SGeometry* S101GeometryFactory::CreateGeometry(SGeometryType eGeometryType)
 {
 	SGeometry* poGeom = nullptr;
 	switch (eGeometryType)
@@ -81,7 +81,7 @@ SGeometry* S101GeometryFactory::createGeometry(SGeometryType eGeometryType)
 	return poGeom;
 }
 
-void S101GeometryFactory::destroyGeometry(SGeometry* poGeom)
+void S101GeometryFactory::DestroyGeometry(SGeometry* poGeom)
 {
 	if (poGeom)
 	{
@@ -90,7 +90,7 @@ void S101GeometryFactory::destroyGeometry(SGeometry* poGeom)
 	}
 }
 
-Record* S101GeometryFactory::createRecord(RCNM eRCNM)
+Record* S101GeometryFactory::CreateRecord(RCNM eRCNM)
 {
 	Record* poRecord = nullptr;
 	switch (eRCNM)
@@ -123,7 +123,7 @@ Record* S101GeometryFactory::createRecord(RCNM eRCNM)
 	return poRecord;
 }
 
-void S101GeometryFactory::destroyRecord(Record* poRecord)
+void S101GeometryFactory::DestroyRecord(Record* poRecord)
 {
 	if (poRecord)
 	{
@@ -132,7 +132,7 @@ void S101GeometryFactory::destroyRecord(Record* poRecord)
 	}
 }
 
-Field* S101FieldFactory::createField(S101FieldType FieldType)
+Field* S101FieldFactory::CreateField(S101FieldType FieldType)
 {
 	Field* poField = nullptr;
 	
@@ -194,7 +194,7 @@ Field* S101FieldFactory::createField(S101FieldType FieldType)
 	return poField;
 }
 
-void S101FieldFactory::destoryField(Field* poField)
+void S101FieldFactory::DestoryField(Field* poField)
 {
 	if (poField)
 	{

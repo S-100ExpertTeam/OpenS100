@@ -72,9 +72,19 @@ Scaler* CGISLibraryApp::GetScaler()
 	return m_pScaler;
 }
 
-CatalogManager* CGISLibraryApp::getCatalogManager()
+LayerManager* CGISLibraryApp::GetLayerManager()
+{
+	return m_pLayerManager;
+}
+
+CatalogManager* CGISLibraryApp::GetCatalogManager()
 {
 	return m_pCatalogManager;
+}
+
+D2D1Resources* CGISLibraryApp::GetD2D1Resources()
+{
+	return D2;
 }
 
 bool CGISLibraryApp::AddLayer(CString _filepath)
@@ -378,12 +388,6 @@ bool CGISLibraryApp::PtInMap(double _x, double _y)
 {
 	return m_pScaler->PtInMap(_x, _y);
 }
-
-LayerManager* CGISLibraryApp::GetLayerManager()
-{
-	return m_pLayerManager;
-}
-
 
 void CGISLibraryApp::ChangeDisplayFont()
 {	

@@ -25,6 +25,8 @@ public:
 public:
 	S100SpatialObjectType type = S100SpatialObjectType::S100SpatialObject;
 	PCOutputSchemaManager* pcManager = nullptr;
+	
+protected:
 	D2D1Resources* D2 = nullptr;
 
 public:
@@ -37,6 +39,7 @@ public:
 
 	FeatureCatalogue* GetFC();
 	PortrayalCatalogue* GetPC();
+	D2D1Resources* GetD2() const;
 
 	bool OpenOutputXML(std::string path);
 

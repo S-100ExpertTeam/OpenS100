@@ -37,9 +37,9 @@
 
 #include <set>
 
-S101Creator::S101Creator(D2D1Resources* D2)
+S101Creator::S101Creator(D2D1Resources* d2d1)
 {
-	this->D2 = D2;
+	this->D2 = d2d1;
 }
 
 S101Creator::S101Creator(S101Cell* enc)
@@ -75,9 +75,9 @@ void S101Creator::SetENC(S101Cell* enc)
 	{
 		this->layer = (S100Layer*)enc->m_pLayer;
 	}
-	if (enc && enc->D2)
+	if (enc && enc->GetD2())
 	{
-		this->D2 = D2;
+		this->D2 = enc->GetD2();
 	}
 }
 

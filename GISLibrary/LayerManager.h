@@ -31,7 +31,6 @@ public:
 public:
 	Scaler* scaler = nullptr;
 	CatalogManager* catalogManager = nullptr;
-	D2D1Resources* D2 = nullptr;
 
 	// Background layer
 	Layer backgroundLayer;
@@ -47,6 +46,9 @@ public:
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
 	bool onIC = true;
+
+protected:
+	D2D1Resources* D2 = nullptr;
 
 private:
 	// S-101 Filter 

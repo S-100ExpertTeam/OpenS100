@@ -88,7 +88,7 @@ void S100EditRender::ShowPoint(SPoint* geom)
 		(geom == nullptr))
 		return;
 
-	auto d2 = enc->D2;
+	auto d2 = enc->GetD2();
 	if (d2->pRT)
 	{
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
@@ -129,7 +129,7 @@ void S100EditRender::ShowPoint(SMultiPoint* geom)
 		(geom == nullptr))
 		return;
 
-	auto d2 = enc->D2;
+	auto d2 = enc->GetD2();
 	if (d2->pRT)
 	{
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
@@ -174,7 +174,7 @@ void S100EditRender::ShowPoint(SCurve* geom)
 		(geom == nullptr))
 		return;
 
-	auto d2 = enc->D2;
+	auto d2 = enc->GetD2();
 	if (d2->pRT)
 	{
 		long selectedSX = 0;
@@ -231,7 +231,7 @@ void S100EditRender::ShowPoint(SCompositeCurve* geom)
 		(geom == nullptr))
 		return;
 
-	auto d2 = enc->D2;
+	auto d2 = enc->GetD2();
 	if (d2->pRT)
 	{
 		long selectedSX = 0;
@@ -287,7 +287,7 @@ void S100EditRender::ShowPoint(SSurface* geom)
 		(geom == nullptr))
 		return;
 
-	auto d2 = enc->D2;
+	auto d2 = enc->GetD2();
 	if (d2->pRT)
 	{
 		long selectedSX = 0;

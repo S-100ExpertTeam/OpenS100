@@ -70,6 +70,11 @@ PortrayalCatalogue* S100SpatialObject::GetPC()
 	return nullptr;
 }
 
+D2D1Resources* S100SpatialObject::GetD2() const
+{
+	return D2;
+}
+
 bool S100SpatialObject::OpenOutputXML(std::string path)
 {
 	InitDrawingInstruction();

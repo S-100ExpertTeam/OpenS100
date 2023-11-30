@@ -54,8 +54,8 @@ void TestGISLibrary::TestSave()
 
 void TestGISLibrary::CreateNewLayer()
 {
-	S101Creator creator(theApp.gisLib->GetLayerManager()->D2);
-	auto layer = creator.CreateLayer(L"newENC.000", theApp.gisLib->getCatalogManager()->getFC(), theApp.gisLib->getCatalogManager()->getPC());
+	S101Creator creator(theApp.gisLib->GetD2D1Resources());
+	auto layer = creator.CreateLayer(L"newENC.000", theApp.gisLib->GetCatalogManager()->getFC(), theApp.gisLib->GetCatalogManager()->getPC());
 	if (layer)
 	{
 		layerKey = theApp.gisLib->GetLayerManager()->AddLayer(layer);
@@ -64,8 +64,8 @@ void TestGISLibrary::CreateNewLayer()
 
 void TestGISLibrary::CreateMemoryLayer()
 {
-	S101Creator creator(theApp.gisLib->GetLayerManager()->D2);
-	auto layer = creator.CreateLayer(L"MemoryLayer.000", theApp.gisLib->getCatalogManager()->getFC(), theApp.gisLib->getCatalogManager()->getPC());
+	S101Creator creator(theApp.gisLib->GetD2D1Resources());
+	auto layer = creator.CreateLayer(L"MemoryLayer.000", theApp.gisLib->GetCatalogManager()->getFC(), theApp.gisLib->GetCatalogManager()->getPC());
 	delete layer;
 }
 
@@ -98,7 +98,7 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 							
 							if (geom)
 							{
-								geom->CreateD2Geometry(theApp.gisLib->D2->Factory());
+								geom->CreateD2Geometry(theApp.gisLib->GetD2D1Resources()->Factory());
 								geom->SetMBR();
 								creator.enc->ReMBR();
 								theApp.gisLib->GetLayerManager()->ReMBR();
@@ -128,7 +128,7 @@ void TestGISLibrary::OffFeature()
 
 void TestGISLibrary::OpenUpdate()
 {	
-	S101Cell cell(theApp.gisLib->D2);
+	S101Cell cell(theApp.gisLib->GetD2D1Resources());
 	cell.Read8211(L"..\\SampleData\\101GB005X01SW.001");
 	if (cell.isUpdate()) {
 		OutputDebugString(L"Update\n");
@@ -142,7 +142,7 @@ void TestGISLibrary::OpenUpdate()
 
 void TestGISLibrary::SetCodeNumericCode()
 {	
-	S101Cell cell(theApp.gisLib->D2);
+	S101Cell cell(theApp.gisLib->GetD2D1Resources());
 	cell.Read8211(L"..\\SampleData\\101KR004X0000.000");
 	auto dsgir = cell.GetDatasetGeneralInformationRecord();
 	

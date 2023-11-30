@@ -37,19 +37,19 @@ using namespace GISLibrary;
 class S101GeometryFactory
 {
 public:
-	static SGeometry* createFromWkb(void*, size_t = static_cast<size_t>(-1));
-	static SGeometry* createGeometry(SGeometryType);
-	static void destroyGeometry(SGeometry*);
+	static SGeometry* CreateFromWkb(void*, size_t = static_cast<size_t>(-1));
+	static SGeometry* CreateGeometry(SGeometryType);
+	static void DestroyGeometry(SGeometry*);
 
-	static Record* createRecord(RCNM);
-	static void destroyRecord(Record*);
+	static Record* CreateRecord(RCNM);
+	static void DestroyRecord(Record*);
 };
 
 class S101FieldFactory
 {
 public:
-	static Field* createField(S101FieldType FieldType);
-	static void destoryField(Field*);
+	static Field* CreateField(S101FieldType FieldType);
+	static void DestoryField(Field*);
 };
 
 class S101GeometryUtil
