@@ -69,3 +69,30 @@ int F_PTAS::GetFieldLength()
 		
 	return ++len;
 }
+
+void F_PTAS::Insert(RecordName name, int topi)
+{
+	PTAS* ptas = new PTAS();
+	ptas->m_name = name;
+	ptas->m_topi = topi;
+	m_arr.push_back(ptas);
+}
+
+void F_PTAS::Insert(int rcnm, int rcid, int topi)
+{
+	PTAS* ptas = new PTAS();
+	ptas->m_name.RCNM = rcnm;
+	ptas->m_name.RCID = rcid;
+	ptas->m_topi = topi;
+	m_arr.push_back(ptas);
+}
+
+void F_PTAS::Insert(GISLibrary::RCNM rcnm, int rcid, int topi)
+{
+	PTAS* ptas = new PTAS();
+	ptas->m_name.RCNM = (int)rcnm;
+	ptas->m_name.RCID = rcid;
+	ptas->m_topi = topi;
+	m_arr.push_back(ptas);
+}
+

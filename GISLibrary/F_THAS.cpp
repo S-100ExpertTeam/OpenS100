@@ -53,3 +53,30 @@ int F_THAS::GetFieldLength()
 	}
 	return ++len;
 }
+
+void F_THAS::Insert(RecordName name, int taui)
+{
+	THAS* thas = new THAS();
+	thas->m_name = name;
+	thas->m_taui = taui;
+	m_arr.AddTail(thas);
+}
+
+void F_THAS::Insert(int rcnm, int rcid, int taui)
+{
+	THAS* thas = new THAS();
+	thas->m_name.RCNM = rcnm;
+	thas->m_name.RCID = rcid;
+	thas->m_taui = taui;
+	m_arr.AddTail(thas);
+}
+
+void F_THAS::Insert(GISLibrary::RCNM rcnm, int rcid, int taui)
+{
+	THAS* thas = new THAS();
+	thas->m_name.RCNM = (int)rcnm;
+	thas->m_name.RCID = rcid;
+	thas->m_taui = taui;
+	m_arr.AddTail(thas);
+}
+

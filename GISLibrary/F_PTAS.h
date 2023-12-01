@@ -19,4 +19,8 @@ public:
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
+
+	void Insert(RecordName name, int topi);
+	void Insert(int rcnm, int rcid, int topi);
+	void Insert(GISLibrary::RCNM rcnm, int rcid, int topi);
 };

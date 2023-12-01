@@ -17,4 +17,8 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	void Insert(RecordName name, int ornt);
+	void Insert(int rcnm, int rcid, int ornt);
+	void Insert(GISLibrary::RCNM rcnm, int rcid, int ornt);
 };

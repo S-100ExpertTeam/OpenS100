@@ -16,4 +16,6 @@ public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	int GetFieldLength();
+
+	void Insert(int xcoo, int ycoo);
 };

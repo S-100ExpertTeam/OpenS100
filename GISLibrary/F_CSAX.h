@@ -21,4 +21,6 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	void Insert(int axty, int axum);
 };

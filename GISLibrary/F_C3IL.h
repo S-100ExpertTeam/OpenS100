@@ -25,4 +25,6 @@ public:
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
+
+	void Insert(int xcoo, int ycoo, int zcoo);
 };

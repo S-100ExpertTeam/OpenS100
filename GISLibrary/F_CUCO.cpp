@@ -65,3 +65,30 @@ int F_CUCO::GetFieldLength()
 	}
 	return ++len;
 }
+
+void F_CUCO::Insert(RecordName name, int ornt)
+{
+	CUCO* cuco = new CUCO();
+	cuco->m_name = name;
+	cuco->m_ornt = ornt;
+	m_arr.push_back(cuco);
+}
+
+void F_CUCO::Insert(int rcnm, int rcid, int ornt)
+{
+	CUCO* cuco = new CUCO();
+	cuco->m_name.RCNM = rcnm;
+	cuco->m_name.RCID = rcid;
+	cuco->m_ornt = ornt;
+	m_arr.push_back(cuco);
+}
+
+void F_CUCO::Insert(GISLibrary::RCNM rcnm, int rcid, int ornt)
+{
+	CUCO* cuco = new CUCO();
+	cuco->m_name.RCNM = (int)rcnm;
+	cuco->m_name.RCID = rcid;
+	cuco->m_ornt = ornt;
+	m_arr.push_back(cuco);
+}
+

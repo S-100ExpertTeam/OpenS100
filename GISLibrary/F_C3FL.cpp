@@ -53,3 +53,14 @@ int F_C3FL::GetFieldLength()
 	}
 	return ++len;
 }
+
+void F_C3FL::Insert(int xcoo, int ycoo, int zcoo)
+{
+	FC3D* cont = new FC3D();
+	cont->m_ycoo = ycoo;
+	cont->m_xcoo = xcoo;
+	cont->m_zcoo = zcoo;
+
+	m_arr.push_back(cont);
+}
+
