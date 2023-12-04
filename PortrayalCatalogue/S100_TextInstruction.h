@@ -10,7 +10,7 @@ public:
 	virtual ~S100_TextInstruction();
 
 private:
-	S100_TextPoint* textPoint;
+	S100_TextPoint* textPoint = nullptr;
 
 public:
 	void GetContents(pugi::xml_node node);
