@@ -261,3 +261,14 @@ std::string LatLonUtility::generate_uuid() {
 
 	return ss.str();
 }
+
+
+std::string LatLonUtility::TrimRight(std::string& str)
+{
+	size_t endpos = str.find_last_not_of(" \t");
+
+	if (std::string::npos != endpos)
+		str = str.substr(0, endpos + 1);
+
+	return str;
+}

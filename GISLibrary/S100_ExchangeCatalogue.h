@@ -38,5 +38,7 @@ namespace S100
         XmlCollection<S100_SupportFileDiscoveryMetadata> SupportFileDiscoveryMetadata;
 
         void GetContents(pugi::xml_node& node);
+
+        void DrawCoverage(ID2D1RenderTarget* pRenderTarget, ID2D1Factory* pDXFactory, Scaler* scaler, double offsetX = 0, double offsetY = 0);
     };
 }

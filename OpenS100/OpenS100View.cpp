@@ -28,7 +28,7 @@
 #include "../GISLibrary/SGeometricFuc.h"
 
 #include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
-#include "../GISLibrary/S100_ExchangeCatalogue.h"
+//#include "../GISLibrary/S100_ExchangeCatalogue.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -103,9 +103,9 @@ void LogCallback(const std::string& message, LogLevel level) {
 
 COpenS100View::COpenS100View() 
 {
-	Logger::GetInstance().Subscribe(LogLevel::Error, LogCallback, "Error1");
-	Logger::GetInstance().Subscribe(LogLevel::Debug, LogCallback, "Debug1");
-	Logger::GetInstance().Subscribe(LogLevel::General, LogCallback, "General1");
+	//Logger::GetInstance().Subscribe(LogLevel::Error, LogCallback, "Error1");
+	//Logger::GetInstance().Subscribe(LogLevel::Debug, LogCallback, "Debug1");
+	//Logger::GetInstance().Subscribe(LogLevel::General, LogCallback, "General1");
 
 	theApp.pView = this;
 
@@ -116,11 +116,10 @@ COpenS100View::COpenS100View()
 	////pc->Open(L"../pc.xml");
 
 	//delete item;
-
-	S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
-	ex->Open("../CATALOG_Read.txt");
-
+	m_Ex = new S100::S100_ExchangeCatalogue();
+	m_Ex->Open("../CATALOG_Read.txt");
 	
+
 
 	//delete ex;
 
@@ -236,7 +235,11 @@ void COpenS100View::OnDraw(CDC* pDC)
 			//drawResult.get();
 			//Invalidate();
 
+			
+
 			DrawFromMapRefresh(&map_dc, (CRect&)rect);
+
+			m_Ex->DrawCoverage(theApp.gisLib->D2.pRT, theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler(), 0, 0);
 
 			m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
 		}
@@ -1073,6 +1076,8 @@ void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
 
 	DrawZoomArea(pDC);
 	DrawPickReport(hdc);
+
+	
 }
 
 Layer* COpenS100View::GetCurrentLayer()

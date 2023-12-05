@@ -15,7 +15,7 @@ namespace S100 {
             }
 
             if (!strcmp(words[1].c_str(), "point") || !strcmp(words[1].c_str(), "multiPoint") ||
-                !strcmp(words[1].c_str(), "lineString") || !strcmp(words[1].c_str(), "curve") ||
+                !strcmp(words[1].c_str(), "LineString") || !strcmp(words[1].c_str(), "curve") ||
                 !strcmp(words[1].c_str(), "multiCurve")) {
                 Geom.push_back(GetGeoms(instruction));
             }
