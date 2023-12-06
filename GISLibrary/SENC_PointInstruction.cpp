@@ -372,13 +372,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 		for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
 		{
 			auto sr = *i;
-			if (sr->RCNM == 110)
-			{
-			}
-			else if (sr->RCNM == 115)
-			{
-			}
-			else if (sr->RCNM == 120 && 
+			if (sr->RCNM == 120 && 
 				geom->GetType() == SGeometryType::CompositeCurve)
 			{
 				SCompositeCurve* geo = (SCompositeCurve*)geom;
