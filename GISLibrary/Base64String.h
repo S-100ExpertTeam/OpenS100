@@ -1,5 +1,5 @@
 #pragma once
-#include <afx.h>
+//#include <afx.h>
 #include <openssl/evp.h>
 #include <openssl/dsa.h>
 #include <openssl/pem.h>
