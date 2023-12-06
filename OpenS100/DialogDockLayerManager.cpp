@@ -118,9 +118,9 @@ void CDialogDockLayerManager::AdjustLayout()
 	if (listCtrlLayers.GetSafeHwnd())
 	{
 		rectENCs = CRect(rectClient.left, rectClient.top, rectClient.Size().cx, rectClient.Size().cy / 2);
-		listCtrlLayers.MoveWindow(rectENCs);						// ListCtrl의 크기 조정
-		listCtrlLayers.SetColumnWidth(0, 40);						// Column 0의 넓이 조정
-		listCtrlLayers.SetColumnWidth(1, rectENCs.Width() - 130);						// Column 1의 넓이 조정
+		listCtrlLayers.MoveWindow(rectENCs);						
+		listCtrlLayers.SetColumnWidth(0, 40);						
+		listCtrlLayers.SetColumnWidth(1, rectENCs.Width() - 130);	
 	}
 
 	if (propertyGridLayer->GetSafeHwnd())

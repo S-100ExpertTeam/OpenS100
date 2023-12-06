@@ -123,14 +123,14 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, Scaler* sca
 			{
 				if ((instruction->scaleMinimum == 0 || currentScale <= instruction->scaleMinimum) &&
 					(instruction->scaleMaximum == 0 || currentScale >= instruction->scaleMaximum) &&
-					(MBR::CheckOverlap(scaler->GetMapCalcMBR(), geom->m_mbr)))
+					(MBR::CheckOverlap(scaler->GetMap(), geom->m_mbr)))
 				{
 					itList.push_back(instruction);
 				}
 			}
 			else
 			{
-				if (MBR::CheckOverlap(scaler->GetMapCalcMBR(), geom->m_mbr))
+				if (MBR::CheckOverlap(scaler->GetMap(), geom->m_mbr))
 				{
 					itList.push_back(instruction);
 				}

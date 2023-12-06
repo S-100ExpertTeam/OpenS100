@@ -118,42 +118,6 @@ void LatLonUtility::RotatePoint(int _x, int _y, int _cx, int _cy, int& _mx, int&
 	_my = (int)(((_x - _cx) * sin(_degree) + (_y - _cy) * cos(_degree)) + _cy);
 }
 
-//wchar_t to char.
-//char* LatLonUtility::ConvertWCtoC(wchar_t* str)
-//{
-//	char* pStr = nullptr;
-//
-//	int strSize = WideCharToMultiByte(CP_ACP, 0, str, -1, NULL, 0, NULL, NULL);
-//
-//	if (strSize <= 0)
-//	{
-//		return nullptr;
-//	}
-//
-//	pStr = new char[strSize];
-//
-//	WideCharToMultiByte(CP_ACP, 0, str, -1, pStr, strSize, 0, 0);
-//	return pStr;
-//}
-//
-//
-/////////////////////////////////////////////////////////////////////////
-////char to wchar_t
-//wchar_t* LatLonUtility::ConvertCtoWC(char* str)
-//{
-//	wchar_t* pStr = nullptr;
-//	int strSize = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, NULL);
-//
-//	if (strSize <= 0)
-//	{
-//		return nullptr;
-//	}
-//
-//	pStr = new WCHAR[strSize];
-//	MultiByteToWideChar(CP_ACP, 0, str, (int)strlen(str) + 1, pStr, strSize);
-//	return pStr;
-//}
-
 std::vector<std::string> LatLonUtility::Split(std::string targetStr, std::string token)
 {
 	// Check parameters
@@ -260,4 +224,14 @@ std::string LatLonUtility::generate_uuid() {
 	for (int i = 0; i < 12; i++) ss << v[dis(gen)];
 
 	return ss.str();
+}
+
+std::string LatLonUtility::TrimRight(std::string& str)
+{
+	size_t endpos = str.find_last_not_of(" \t");
+
+	if (std::string::npos != endpos)
+		str = str.substr(0, endpos + 1);
+
+	return str;
 }

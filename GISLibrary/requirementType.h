@@ -1,21 +1,22 @@
 #pragma once
 
-namespace S100
-{
-	enum class requirementType
-	{
-		IHO = 1,
-		OEM = 2,
-		national = 3,
-		local = 4,
-		port = 5,
-		company = 6,
-		pilot = 7,
-		master = 8,
-		other = 9
-	};
+#include <string>
+#include <map>
 
-    const std::map<std::string, requirementType> RequirementTypeCodeMap = {
+namespace S100 {
+    enum class requirementType {
+        IHO = 1,
+        OEM = 2,
+        national = 3,
+        local = 4,
+        port = 5,
+        company = 6,
+        pilot = 7,
+        master = 8,
+        other = 9
+    };
+
+    const std::map<std::string, requirementType> RequiremetnTypeCodeMap = {
     {"IHO", requirementType::IHO},
     {"OEM", requirementType::OEM},
     {"national", requirementType::national},
@@ -27,12 +28,5 @@ namespace S100
     {"other", requirementType::other}
     };
 
-    inline requirementType  stringTorequirementType(std::string codeName) {
-        auto it = RequirementTypeCodeMap.find(codeName);
-        if (it != RequirementTypeCodeMap.end()) {
-            return it->second;
-        }
-        return requirementType::other;
-    }
-
+    requirementType stringTorequirementType(std::string codeName);
 }

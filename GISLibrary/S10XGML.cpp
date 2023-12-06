@@ -844,8 +844,8 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 				}
 			}
 		}
-		else if ((nodeName.find("curvePropert") != std::string::npos) ||
-			(nodeName.find("S100:curvePropert") != std::string::npos)) 
+		else if ((nodeName.find("curveProperty") != std::string::npos) ||
+			(nodeName.find("S100:curveProperty") != std::string::npos)) 
 		{
 			auto nodeCurve = geomNode.first_child();
 			auto curve = ReadCurve(nodeCurve);
@@ -1270,10 +1270,10 @@ std::string S10XGML::DeleteXMLNamespace(std::string value)
 
 std::string S10XGML::getCodeFromMember(std::string nodeName)
 {
-	auto found = nodeName.find(':');  // ':' 문자 검색
+	auto found = nodeName.find(':');
 
 	if (found != std::string::npos) {
-		std::string subStr = nodeName.substr(found + 1);  // ':' 이후의 부분 문자열 추출
+		std::string subStr = nodeName.substr(found + 1);  
 		return subStr;
 	}
 
@@ -1430,6 +1430,8 @@ SCurve* S10XGML::CurveToSCurve(GM::Curve* curve)
 		result->Set(i, x, y);
 	}
 
+	result->SetMBR();
+
 	return result;
 }
 
@@ -1452,6 +1454,8 @@ SCompositeCurve* S10XGML::CompositeCurveToSCompositeCurve(GM::CompositeCurve* co
 			result->AddCurve(curveSegment);
 		}
 	}
+
+	result->SetMBR();
 
 	return result;
 }

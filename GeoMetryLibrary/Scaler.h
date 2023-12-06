@@ -24,12 +24,6 @@ public:
 	double mxMax = 0;
 	double myMax = 0;
 
-	// Information for calculating MBR when rotated.
-	double mxMinCalcMBR = 0;
-	double myMinCalcMBR = 0;
-	double mxMaxCalcMBR = 0;
-	double myMaxCalcMBR = 0;
-
 	// center of screen
 	double sox = 0;
 	double soy = 0;
@@ -81,7 +75,6 @@ public:
 	double GetMapHeight();
 	void GetMap(MBR *mbr);
 	MBR GetMap();
-	MBR GetMapCalcMBR();
 	
 	/*
 	** Scale info
@@ -137,6 +130,4 @@ public:
 	double GetMapXMax();
 	double GetMapYMax();
 	long long GetCOMF();
-	void(*XYtoSP) (int nX, int nY, int &nLat, int &nLon, bool bPluse, bool bDirect) = nullptr;
-	void(*SPtoXY) (int nX, int nY, int &nLat, int &nLon, bool bPluse, bool bDirect) = nullptr;
 };
