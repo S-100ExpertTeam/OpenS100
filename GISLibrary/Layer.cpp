@@ -80,24 +80,6 @@ void Layer::Draw(HDC &hDC, Scaler *scaler, int priority, int geoType, double off
 	}
 }
 
-void Layer::Draw(CDCRenderTarget* pRenderTarget, Scaler *scaler, double offsetX, double offsetY)
-{
-	// only draw layers when it's on.
-	if (On == TRUE)
-	{
-		m_spatialObject->Draw(pRenderTarget, scaler, offsetX, offsetY);
-	}
-}
-
-void Layer::Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, Scaler *scaler, double offsetX, double offsetY)
-{
-	// only draw layers when it's on.
-	if (On == TRUE)
-	{
-		m_spatialObject->Draw(pRenderTarget, pDXFactory, scaler, offsetX, offsetY);
-	}
-}
-
 bool Layer::IsOn()
 {
 	return On;

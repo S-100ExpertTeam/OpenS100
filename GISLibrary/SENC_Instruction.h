@@ -90,13 +90,6 @@ public:
 
 	virtual void GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points){};
 	virtual void GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points){};
-
-	virtual void DrawInstruction(
-		ID2D1DCRenderTarget* rt, 
-		ID2D1SolidColorBrush* brush, 
-		std::vector<ID2D1StrokeStyle1*>* strokeGroup, 
-		Scaler *scaler, 
-		PortrayalCatalogue* pc = nullptr) {};
 	
 	virtual void DrawInstruction(
 		ID2D1DCRenderTarget* rt, 
@@ -105,8 +98,6 @@ public:
 		std::vector<ID2D1StrokeStyle1*>* strokeGroup, 
 		Scaler *scaler, 
 		PortrayalCatalogue* pc = nullptr) {};
-	
-	virtual void DrawInstruction(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, Scaler *scaler){};
 
 	virtual void ChangePallete(PortrayalCatalogue *pc) {};
 

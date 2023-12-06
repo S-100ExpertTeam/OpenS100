@@ -31,8 +31,6 @@ public:
 	void Draw(CDC *pDC, Scaler *scaler, double offset = 0);
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 	void Draw(HDC &hDC, Scaler *scaler, int priority, int geoType, double offset);
-	void Draw(CDCRenderTarget* pRenderTarget, Scaler *scaler, double offsetX = 0, double offsetY = 0);
-	void Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, Scaler *scaler, double offsetX = 0, double offsetY = 0);
 	bool IsOn();
 	bool IsOn(int scale);
 	bool InfoOn();
