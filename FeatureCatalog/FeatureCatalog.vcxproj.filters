@@ -28,9 +28,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="AlertCatalogue">
-      <UniqueIdentifier>{b63e602b-286f-4fce-99b1-6768e67d383d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="FeatureCatalog.def">

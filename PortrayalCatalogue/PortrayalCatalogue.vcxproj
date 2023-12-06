@@ -186,6 +186,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlertCatalog.h" />
+    <ClInclude Include="AlertInfo.h" />
+    <ClInclude Include="AlertItem.h" />
+    <ClInclude Include="AlertPriorities.h" />
+    <ClInclude Include="AlertPriority.h" />
+    <ClInclude Include="AlertPrioritySelection.h" />
+    <ClInclude Include="Alerts.h" />
     <ClInclude Include="CatalogItem.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="ContextParameter.h" />
@@ -203,6 +210,11 @@
     <ClInclude Include="ExternalFile.h" />
     <ClInclude Include="FoundationMode.h" />
     <ClInclude Include="Enum_Orientation.h" />
+    <ClInclude Include="GraphicalHighlighting.h" />
+    <ClInclude Include="Highlights.h" />
+    <ClInclude Include="HighlightStyle.h" />
+    <ClInclude Include="MessageItem.h" />
+    <ClInclude Include="Messages.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="S100_AlertReference.h" />
     <ClInclude Include="S100_Annulus.h" />
@@ -275,12 +287,20 @@
     <ClInclude Include="S100_WithParam.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="ViewingGroup.h" />
     <ClInclude Include="ViewingGroupLayer.h" />
     <ClInclude Include="ViewingGroupLayers.h" />
+    <ClInclude Include="ViewingGroupReference.h" />
     <ClInclude Include="ViewingGroups.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlertCatalog.cpp" />
+    <ClCompile Include="AlertInfo.cpp" />
+    <ClCompile Include="AlertItem.cpp" />
+    <ClCompile Include="AlertPriorities.cpp" />
+    <ClCompile Include="AlertPrioritySelection.cpp" />
+    <ClCompile Include="Alerts.cpp" />
     <ClCompile Include="CatalogItem.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="ContextParameter.cpp" />
@@ -297,6 +317,10 @@
     <ClCompile Include="FoundationMode.cpp" />
     <ClCompile Include="Enum_GeometricPrimitive.cpp" />
     <ClCompile Include="Enum_Orientation.cpp" />
+    <ClCompile Include="GraphicalHighlighting.cpp" />
+    <ClCompile Include="Highlights.cpp" />
+    <ClCompile Include="MessageItem.cpp" />
+    <ClCompile Include="Messages.cpp" />
     <ClCompile Include="S100_AlertReference.cpp" />
     <ClCompile Include="S100_Annulus.cpp" />
     <ClCompile Include="S100_Arc3Points.cpp" />
@@ -386,9 +410,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="ViewingGroup.cpp" />
     <ClCompile Include="ViewingGroupLayer.cpp" />
     <ClCompile Include="ViewingGroupLayers.cpp" />
+    <ClCompile Include="ViewingGroupReference.cpp" />
     <ClCompile Include="ViewingGroups.cpp" />
   </ItemGroup>
   <ItemGroup>

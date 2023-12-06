@@ -115,6 +115,9 @@ public:
 
     void SetGeometry();
 
+
+    SSurface* SurfaceToSSurface(GM::Surface* surface);
+
 private:
     std::string DeleteXMLNamespace(std::string value);
     std::string getCodeFromMember(std::string nodeName);
@@ -123,5 +126,5 @@ private:
     SAbstractCurve* OrientableCurveToSCurve(GM::OrientableCurve* orientableCurve);
     SCurve* CurveToSCurve(GM::Curve* curve);
     SCompositeCurve* CompositeCurveToSCompositeCurve(GM::CompositeCurve* compositeCurve);
-    SSurface* SurfaceToSSurface(GM::Surface* surface);
+    
 };

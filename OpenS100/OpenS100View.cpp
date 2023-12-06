@@ -28,8 +28,8 @@
 #include "../GISLibrary/SGeometricFuc.h"
 #include "../GISLibrary/S100_ExchangeCatalogue.h"
 
-//#include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
-#include "../GISLibrary/S100_ExchangeCatalogue.h"
+#include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
+//#include "../GISLibrary/S100_ExchangeCatalogue.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -58,6 +58,7 @@
 #include "../LatLonUtility/LatLonUtility.h"
 
 #include "../LatLonUtility/Logger.h"
+#include "../PortrayalCatalogue/AlertCatalog.h"
 #pragma comment(lib, "d2d1.lib")
 
 using namespace LatLonUtility;
@@ -103,22 +104,29 @@ void LogCallback(const std::string& message, LogLevel level) {
 
 COpenS100View::COpenS100View() 
 {
-	Logger::GetInstance().Subscribe(LogLevel::Error, LogCallback, "Error1");
-	Logger::GetInstance().Subscribe(LogLevel::Debug, LogCallback, "Debug1");
-	Logger::GetInstance().Subscribe(LogLevel::General, LogCallback, "General1");
+	//Logger::GetInstance().Subscribe(LogLevel::Error, LogCallback, "Error1");
+	//Logger::GetInstance().Subscribe(LogLevel::Debug, LogCallback, "Debug1");
+	//Logger::GetInstance().Subscribe(LogLevel::General, LogCallback, "General1");
 
 	theApp.pView = this;
 
 	//S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
 	//item->Open("../ic.xml");
 
-	//auto pc = new PortrayalCatalogue();
-	//pc->Open(L"../pc.xml");
+	////auto pc = new PortrayalCatalogue();
+	////pc->Open(L"../pc.xml");
 
-	//S100::S100_ExchangeCatalogue* ex = new S100::S100_ExchangeCatalogue();
-	//ex->Open("../CATALOG_Read.txt");
-	S100::S100_ExchangeCatalogue ec;
-	ec.Open("..\\SampleData\\CATALOG.xml");
+	//delete item;
+	m_Ex = new S100::S100_ExchangeCatalogue();
+	m_Ex->Open("../CATALOG_Read.txt");
+	
+
+
+	//delete ex;
+
+	//S100::AlertCatalog* alt = new S100::AlertCatalog();
+	//alt->Open("../AlertCatalog-S101.xml");
+
 }
 
 COpenS100View::~COpenS100View()
@@ -228,7 +236,11 @@ void COpenS100View::OnDraw(CDC* pDC)
 			//drawResult.get();
 			//Invalidate();
 
+			
+
 			DrawFromMapRefresh(&map_dc, (CRect&)rect);
+
+			m_Ex->DrawCoverage(theApp.gisLib->D2.pRT, theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler(), 0, 0);
 
 			m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
 		}
@@ -1069,6 +1081,8 @@ void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
 
 	DrawZoomArea(pDC);
 	DrawPickReport(hdc);
+
+	
 }
 
 Layer* COpenS100View::GetCurrentLayer()

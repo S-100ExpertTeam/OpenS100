@@ -21,7 +21,7 @@ namespace Portrayal
 
 	void ViewingGroupLayer::GetContents(pugi::xml_node& node)
 	{
-		auto ischild = node.child_value();//displayMode안에 있는 viewingGroupLayer 일 경우
+		auto ischild = node.child_value();
 		if (strcmp(ischild, ""))
 		{
 			value = pugi::as_wide(node.child_value());

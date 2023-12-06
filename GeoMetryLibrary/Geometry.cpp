@@ -94,7 +94,7 @@ POINT Geometry::GetOffsetPointOnLine(POINT _p1, POINT _p2, double offset)
 	return returnValue;
 }
 
-inline void swap(int &val1, int &val2)
+void Geometry::swap(int &val1, int &val2)
 {
 	int t = val1;
 	val1 = val2;

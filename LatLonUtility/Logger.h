@@ -116,6 +116,7 @@ private:
                         buffer.push_back(std::move(logQueue.front()));
                         logQueue.pop();
                     }
+                    return;
                 }
 
                 for (const auto& [message, level] : buffer) {
