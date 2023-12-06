@@ -844,8 +844,8 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 				}
 			}
 		}
-		else if ((nodeName.find("curvePropert") != std::string::npos) ||
-			(nodeName.find("S100:curvePropert") != std::string::npos)) 
+		else if ((nodeName.find("curveProperty") != std::string::npos) ||
+			(nodeName.find("S100:curveProperty") != std::string::npos)) 
 		{
 			auto nodeCurve = geomNode.first_child();
 			auto curve = ReadCurve(nodeCurve);
