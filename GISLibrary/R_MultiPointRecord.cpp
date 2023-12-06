@@ -188,7 +188,7 @@ void R_MultiPointRecord::InsertC3IL(int x, int y, int z)
 	m_c3il.front()->m_arr.push_back(new C3IL(x, y, z));
 }
 
-void R_MultiPointRecord::InsertC3IL(SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo, int cmfx, int cmfy, int cmfz)
+void R_MultiPointRecord::InsertC3IL(int cmfx, int cmfy, int cmfz, SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo)
 {
 	if (xcoo == nullptr || xcoo->cDims != 1 ||
 		ycoo == nullptr || ycoo->cDims != 1 ||
@@ -227,6 +227,44 @@ void R_MultiPointRecord::InsertC3IL(SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY*
 	return;
 }
 
+void R_MultiPointRecord::GetC3IL(double cmfx, double cmfy, double cmfz, SAFEARRAY** xcoo, SAFEARRAY** ycoo, SAFEARRAY** zcoo)
+{
+	if ((!xcoo) ||
+		(!ycoo) ||
+		(!zcoo))
+		return;
+
+	CComSafeArray<double> xArray;
+	CComSafeArray<double> yArray;
+	CComSafeArray<double> zArray;
+
+	const int arraySize = (int)m_c3il.size();
+	xArray.Create(arraySize);
+	yArray.Create(arraySize);
+	zArray.Create(arraySize);
+	int i = 0;
+	for (const auto& f_c3il : m_c3il)
+	{
+		xArray.Resize(xArray.GetCount() + (int)f_c3il->m_arr.size());
+		yArray.Resize(yArray.GetCount() + (int)f_c3il->m_arr.size());
+		zArray.Resize(zArray.GetCount() + (int)f_c3il->m_arr.size());
+
+		for (const auto& c3il : f_c3il->m_arr)
+		{
+			xArray.SetAt(i, static_cast<double>(c3il->m_xcoo / cmfx));
+			yArray.SetAt(i, static_cast<double>(c3il->m_ycoo / cmfy));
+			zArray.SetAt(i, static_cast<double>(c3il->m_zcoo / cmfz));
+			i++;
+		}
+	}
+
+	*xcoo = xArray.Detach();
+	*ycoo = yArray.Detach();
+	*zcoo = zArray.Detach();
+
+	return;
+}
+
 std::vector<C2IL*> R_MultiPointRecord::GetAllC2IL()
 {
 	std::vector<C2IL*> result;
@@ -241,7 +279,7 @@ std::vector<C2IL*> R_MultiPointRecord::GetAllC2IL()
 	return result;
 }
 
-std::vector<C3IL*> R_MultiPointRecord::GetAll3CIL()
+std::vector<C3IL*> R_MultiPointRecord::GetAllC3IL()
 {
 	std::vector<C3IL*> result;
 	

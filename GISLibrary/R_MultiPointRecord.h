@@ -36,8 +36,10 @@ public:
 	void SetCOCC(int coui, int coix, int ncor);
 
 	void InsertC3IL(int x, int y, int z);
-	void InsertC3IL(SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo, int cmfx, int cmfy, int cmfz);
+	void InsertC3IL(int cmfx, int cmfy, int cmfz, SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo);
+
+	void GetC3IL(double cmfx, double cmfy, double cmfz, SAFEARRAY** xcoo, SAFEARRAY** ycoo, SAFEARRAY** zcoo);
 
 	std::vector<C2IL*> GetAllC2IL();
-	std::vector<C3IL*> GetAll3CIL();
+	std::vector<C3IL*> GetAllC3IL();
 };
