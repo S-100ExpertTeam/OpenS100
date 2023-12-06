@@ -113,8 +113,6 @@ ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, CRect *_viewPo
 
 	clipper.Execute(ClipperLib::ctIntersection, result, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
 	
-
-
 	return result;
 }
 
@@ -228,13 +226,6 @@ double SCommonFuction::GetDistanceOfCurve(POINT *_p, int _count)
 	}
 
 	return returnValue;
-}
-
-inline void swap(int &val1, int &val2)
-{
-	int t = val1;
-	val1 = val2;
-	val2 = t;
 }
 
 void SCommonFuction::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, CRect* viewPort)

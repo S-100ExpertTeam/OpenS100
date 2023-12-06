@@ -195,7 +195,7 @@ int SSurface::GetNumPart()
 	return m_numParts;
 }
 
-int SSurface::getNumPoint()
+int SSurface::getNumPoint() const
 {
 	return m_numPoints;
 }
@@ -614,6 +614,24 @@ double SSurface::GetX()
 double SSurface::GetY()
 {
 	return GetXY(0, 0).GetY();
+}
+
+double SSurface::GetX(int index)
+{
+	if (index < 0 || index >= getNumPoint()) {
+		return 0;
+	}
+
+	return m_pPoints[index].GetX();
+}
+
+double SSurface::GetY(int index)
+{
+	if (index < 0 || index >= getNumPoint()) {
+		return 0;
+	}
+
+	return m_pPoints[index].GetY();
 }
 
 int SSurface::GetRingCount() const
