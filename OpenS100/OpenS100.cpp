@@ -261,15 +261,12 @@ void COpenS100App::InitStartingLocation()
 	double moy = _wtof(strMoy);
 
 	gisLib->SetScale((int)scale);
-	gisLib2->SetScale((int)scale);
 	projection(mox, moy);
 	gisLib->MoveMap(rect.Width() / 2, rect.Height() / 2, mox, moy);
-	//gisLib->AdjustScreenMap();
 
 	if (gisLib2) {
 		gisLib2->SetScale((int)scale);
 		gisLib2->MoveMap(rect.Width() / 2, rect.Height() / 2, mox, moy);
-		//gisLib2->AdjustScreenMap();
 	}
 }
 

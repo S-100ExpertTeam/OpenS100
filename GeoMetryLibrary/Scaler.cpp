@@ -40,19 +40,6 @@ void Scaler::DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate
 		return;
 	}
 
-	double mxWidth = mxMax - mxMin;
-	double myHeight = myMax - myMin;
-	double sxWidth = sxMax - sxMin;
-	double syHeight = syMax - syMin;
-
-	double epsilon = std::numeric_limits<double>::epsilon();
-	if (std::fabs(mxWidth) < epsilon ||
-		std::fabs(myHeight) < epsilon ||
-		std::fabs(sxWidth) < epsilon ||
-		std::fabs(syHeight) < epsilon) {
-		return;
-	}
-
 	double currentRatio = 0;
 	double currentXRatio = mxWidth / sxWidth;
 	double currentYRatio = myHeight / syHeight;

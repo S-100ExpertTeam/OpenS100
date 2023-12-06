@@ -271,10 +271,6 @@ void COpenS100View::OnSize(UINT nType, int cx, int cy)
 		theApp.gisLib2->SetScreen(viewRect);
 	}
 
-	theApp.gisLib2->SetScreen(viewRect);
-	theApp.gisLib2->ZoomOut(0, viewRect.Width() / 2, viewRect.Height() / 2);
-	theApp.gisLib2->UpdateScale();
-
 	DeleteDCs();
 
 	m_bMapRefesh = true;
@@ -589,12 +585,11 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// catalog manager
 	auto cm = theApp.gisLib->getCatalogManager();
-	auto cm2 = theApp.gisLib2->getCatalogManager();
 
 	// FC
 	auto fc1 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
 	auto fc2 = cm->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml"); // valid(S-102)
-	cm2->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml");
+	
 	//auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
 	//auto fc4 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid, but duplicated(S-101)
 	cm->addFC(L"..\\ProgramData\\FC\\S-122_FC.xml");
@@ -609,7 +604,6 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addPC(L"C:\\Users\\jogm\\Downloads\\[2023.11.20] 초안 - 목포대교\\초안 - 목포대교\\Dynamic Over Head Clearance\\portrayal_catalogue.xml");
 
 	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
-	cm2->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml");
 
 	//auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal_1.1.1\\portrayal_catalogue.xml"); // valid(S-101)
 	//auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
