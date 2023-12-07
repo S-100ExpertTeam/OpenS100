@@ -110,9 +110,9 @@ COpenS100View::COpenS100View()
 
 	theApp.pView = this;
 
-	S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
-	item->Open("../Sample_of_IC_level_2_5.0.0-for S-101, S-102, S-111.xml");
-	delete item;
+	//S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
+	//item->Open("../Sample_of_IC_level_2_5.0.0-for S-101, S-102, S-111.xml");
+	//delete item;
 }
 
 COpenS100View::~COpenS100View()
@@ -233,7 +233,7 @@ void COpenS100View::OnDraw(CDC* pDC)
 			DrawFromMapRefresh(&map_dc, (CRect&)rect);
 
 			if (m_Ex) {
-				m_Ex->DrawCoverage(theApp.gisLib->D2.pRT, theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler(), 0, 0);
+				m_Ex->DrawCoverage(theApp.gisLib->GetD2D1Resources(), theApp.gisLib->GetScaler(), 0, 0);
 			}
 
 			m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();

@@ -221,7 +221,10 @@ void COpenS100App::SaveCustomState()
 
 void COpenS100App::LoadSettings()
 {
-	ENCCommon::Open(L"..\\ProgramData\\data\\settings.txt");
+	bool bOpen = ENCCommon::Open(L"..\\ProgramData\\data\\settings.txt");
+	if (bOpen == false)
+		return;
+
 	gisLib->ChangeDisplayFont();
 	gisLib->GetLayerManager()->ChangeS100ColorPalette((GeoMetryLibrary::ColorTable)ENCCommon::m_eColorTable);
 
