@@ -559,6 +559,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addFC(L"..\\ProgramData\\FC\\S-125_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-127_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-128_FC.xml");
+	cm->addFC(L"..\\ProgramData\\FC\\S-130_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
 
 	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
