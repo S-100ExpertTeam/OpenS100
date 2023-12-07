@@ -102,8 +102,8 @@ bool AreaFill::ReadByPugi(std::wstring path)
 		{
 			v.push_back(strBuffer);
 		}
-		_name = v[1];
-		_exposition = v[3];
+		_name = v.at(1);
+		_exposition = v.at(3);
 
 
 		auto list = doc.child("symbolFill");
@@ -132,6 +132,9 @@ bool AreaFill::ReadByPugi(std::wstring path)
 	}
 	catch (std::exception e)
 	{
+		return false;
+	}
+	catch (std::out_of_range e) {
 		return false;
 	}
 	return true;

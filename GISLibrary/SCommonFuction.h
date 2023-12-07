@@ -30,17 +30,6 @@ public:
 	*/
 	static ClipperLib::Paths ClipSurface(SSurface *_polygon, CRect *_viewPort);
 
-
-	/*
-	** function   : Find the center of gravity of a given polygon.
-	** factor   :
-	POINT* _p     - The arrangement with the coordinates of polygon.
-	int    _count - The number of polygon coordinates.
-	** return value : The center of gravity.
-	*/
-	static POINT CalculateCenterOfGravityOfSurface(POINT *_p, int _count);
-
-
 	/*
 	** function   : Find the center of gravity of a given polygon.
 	** factor   :
@@ -120,41 +109,6 @@ public:
 	*/
 	static POINT GetOffsetPointOnLine(POINT _p1, POINT _p2, double offset);
 
-
-	///*
-	//** function : Draw a composite line on the line.
-	//** factor :
-	//CDC*   pDC     - DC for drawing.
-	//POINT _p1      - The starting point of the line.
-	//POINT _p2      - The end point of the line.
-	//Symbol _symbol - CompositeLine
-	//*/
-	//static void DrawCompositeLineOnLine(CDC *pDC, POINT _p1, POINT _p2, Symbol _symbol);
-
-
-	///*
-	//** function : Draw the composite line on the curve.
-	//** factor :
-	//CDC*   pDC     - DC for drawing.
-	//POINT  _p1     - The starting point of the line.
-	//POINT  _p2     - The end point of the line.
-	//Symbol _symbol - CompositeLine
-	//*/
-	//static void DrawCompositeLineOnCurve(CDC *pDC, POINT *_p, int _count, Symbol _symbol);
-
-	// line & line
-	static bool Intersect(
-		float x1, float y1, float x2, float y2,
-		float x3, float y3, float x4, float y4,
-		float* intersectionX, float* intersectionY);
-
-	// line & rect
-	static bool Intersect(
-		float xmin, float ymin, float xmax, float ymax,
-		float x1, float y1, float x2, float y2,
-		float& intersectionX1, float& intersectionY1,
-		float& intersectionX2, float& intersectionY2);
-
 	//static const int NewGeometryScale = 70000000;
 	static const int NewGeometryScale = 5000;
 
@@ -170,7 +124,5 @@ public:
 	static int overlap(SCompositeCurve* objPoly, SSurface* comPoly, bool applyOption = false);
 	static int overlap(SSurface* objPoly, SSurface* comPoly, bool applyOption = false);
 	// for S101
-	static int inside(SPoint* point, SSurface* poly, bool applyOption = false);
 	static int inside(double x, double y, SSurface* poly, bool applyOption = false);
-	static double GetAngle(double p1x, double p1y, double p2x, double p2y);
 };

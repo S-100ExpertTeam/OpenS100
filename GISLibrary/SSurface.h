@@ -32,19 +32,35 @@ private:
 	// Rings
 	std::vector<SAbstractCurve*> curveList;
 
-public:
+public: // override from Geometry
+	bool ImportFromWkb(unsigned char* value, int size) override;
+	bool ExportToWkb(unsigned char** value, int* size) override;
+	int WkbSize() override;
+
+	void SetMBR() override;
+	void CreateD2Geometry(ID2D1Factory1* factory) override;
+
+	void Release() override;
+
+	double GetX() override;
+	double GetY() override;
+	double GetX(int index) override; 
+	double GetY(int index) override;
+
+	int getNumPoint() const override;
+
+public: // override from SGeometry
 	SGeometryType GetType() override;
 
+public:
 	int GetNumPart();
-	int getNumPoint();
+	
 	int getPart(int index); // if fail, return -1
 
 	int getLastPointIndexOfExterior();
 
 	int GetNumPointPerPart(int partIndex);
 	void CalculateCenterPoint();
-	
-	void CreateD2Geometry(ID2D1Factory1* factory);
 	
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
@@ -53,25 +69,13 @@ public:
 	
 	void Init();
 	void Set(std::vector<POINT>& points, std::vector<int>& parts); // parts : start index of next part
-
-	void Release();
-
-	bool ImportFromWkb(unsigned char* value, int size);
-	bool ExportToWkb(unsigned char** value, int* size);
-	int WkbSize();
-
-	void SetMBR();
+	//void Set(std::vector<GeoPoint> points, std::vector<int> partSize);
 
 	GeoPoint GetXY(int ringIndex, int pointIndex);
 	void SetXY(int ringIndex, int pointIndex, double x, double y);
 
-	double GetX() override;
-	double GetY() override;
-
 	int GetRingCount() const;
 	SAbstractCurve* GetRing(int index) const;
-
-	//std::vector<SAbstractCurve*> GetCurveList();
 
 	SCurve* GetCurve(int rcid);
 

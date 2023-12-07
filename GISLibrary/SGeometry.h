@@ -31,10 +31,10 @@ public:
 	std::vector<GF::InformationType*> additionalInformation;
 
 public:
-	void AddInformationType(GF::InformationType* info);
-	virtual int GetInformationTypeCount() const;
-	GF::InformationType* GetInformationType(int index) const;
-
-public:
 	virtual SGeometryType GetType() { return SGeometryType::none; }
+	
+public:
+	int GetInformationTypeCount() const;
+	void AddInformationType(GF::InformationType* info);
+	GF::InformationType* GetInformationType(int index) const;
 };

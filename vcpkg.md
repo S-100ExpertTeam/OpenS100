@@ -30,6 +30,7 @@ Make sure you are in the directory you want the tool installed to before doing t
 > vcpkg install polyclipping:x64-windows
 > vcpkg install HDF5:x64-windows
 > vcpkg install libxslt:x64-windows
+> vcpkg install openssl:x64-windows
 ```
 OpenS100 uses packages below.
 - pugixml 1.13.0
@@ -37,6 +38,7 @@ OpenS100 uses packages below.
 - polyclipping 6.4.2
 - hdf5 1.14.0
 - libxslt 1.1.37
+- openssl 3.1.3
 
 ## Using vcpkg with MSBuild / Visual Studio
 ```cmd

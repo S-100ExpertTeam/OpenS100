@@ -75,9 +75,6 @@ public:
 
 	void GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, CRect& rect, FLOAT& xmin, FLOAT& ymin, FLOAT& xmax, FLOAT& ymax);
 	
-	// Check intersect between rects
-	bool IsIntersect(FLOAT xmin1, FLOAT ymin1, FLOAT xmax1, FLOAT ymax1, FLOAT xmin2, FLOAT ymin2, FLOAT xmax2, FLOAT ymax2);
-
 	void SetViewFactor(double x, double y, long long zoom);
 	void ZoomIn(double f = 1.1);
 	void ZoomOut(double f = 0.9);

@@ -45,7 +45,7 @@ void S100_Element::GetContents(pugi::xml_node node)
 			if (!foreground) foreground = new S100_Foreground();
 			foreground->GetContents(instruction);
 		}
-		else if (!strcmp(instructionName, "font"))
+		else if (!strcmp(instructionName, "fontCharacteristics"))
 		{
 			if (!font) font = new S100_Font();
 			font->GetContents(instruction);

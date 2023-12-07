@@ -35,7 +35,6 @@ class PortrayalCatalogue
 {
 public:
 	PortrayalCatalogue();
-	//PortrayalCatalogue(std::wstring path);
 	virtual ~PortrayalCatalogue();
 
 protected:

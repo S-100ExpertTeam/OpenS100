@@ -177,16 +177,10 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 						else
 						{
 							pGeometry = NULL;
-							//OutputDebugString(_T("Faield to close ring sink\n"));
 						}
 					}
-					else
-					{
-						//OutputDebugString(_T("Faield to Open Ring Sink\n"));
-					}
 				}
-
-				//brush->SetColor(D2D1::ColorF((FLOAT)((PEN_COLOR >> 16) & 0xff) / 255.0, ((PEN_COLOR >> 8) & 0xff) / 255.0, ((PEN_COLOR >> 0) & 0xff) / 255.0));
+				
 				brush->SetColor(ls->pen_color);
 
 				if (ls->dashes.size() > 0 || ls->symbols.size() > 0)

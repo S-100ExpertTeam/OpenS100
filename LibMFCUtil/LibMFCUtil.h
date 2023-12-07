@@ -54,5 +54,7 @@ namespace LibMFCUtil
 	extern LIBMFC_API CString GetFolderPathFromFilePath(CString path);
 
 	extern LIBMFC_API void OutputDebugLongString(CString path);
+
+	extern LIBMFC_API COLORREF RandomColor(float minRange, float maxRange);
 }
 

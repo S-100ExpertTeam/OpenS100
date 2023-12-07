@@ -19,6 +19,7 @@ public:
 	void SetReference(std::wstring& value);
 	std::wstring GetReference();
 
+public: // ovveride from SENC_LineStyleBase
 	void DrawInstruction(
 		SCurve* curveHasOrient,
 		ID2D1DCRenderTarget* rt,
@@ -26,5 +27,5 @@ public:
 		ID2D1SolidColorBrush* brush,
 		std::vector<ID2D1StrokeStyle1*>* strokeGroup,
 		Scaler *scaler,
-		PortrayalCatalogue* pc = nullptr);
+		PortrayalCatalogue* pc = nullptr) override;
 };
