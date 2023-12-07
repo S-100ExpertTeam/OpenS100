@@ -410,7 +410,10 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 		lonIndex = 1;
 	}
 
-	auto strPos = node.child("gml:segments").child("gml:LineStringSegment").child_value("gml:posList");
+	std::string strPos = node.child("gml:segments").child("gml:LineStringSegment").child_value("gml:posList");
+	if (strPos.empty()) {
+		strPos = node.child("gml:segments").child("gml:LineString").child_value("gml:posList");
+	}
 
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 	int posCnt = strPosList.size();

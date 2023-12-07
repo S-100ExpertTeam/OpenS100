@@ -82,6 +82,11 @@ bool PortrayalCatalogue::ReadPortrayalCatalogueByPugiXML(std::wstring& path)
 
 		pugi::xml_document doc;
 		pugi::xml_parse_result result = doc.load_file(path.c_str()); /// read file
+
+		if (pugi::status_ok != result.status) {
+			return false;
+		}
+
 		pugi::xml_node displayList = doc.child("portrayalCatalog");
 
 		auto productId = displayList.attribute("productId");
