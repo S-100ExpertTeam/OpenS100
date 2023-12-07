@@ -8,6 +8,8 @@
 #include <regex>
 #include <gdiplus.h>
 
+#include <random>
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -274,4 +276,16 @@ void LibMFCUtil::OutputDebugLongString(CString path)
 	{
 		OutputDebugString(path.Mid(count * 4096, mod));
 	}
+}
+
+COLORREF LibMFCUtil::RandomColor(float minRange, float maxRange) {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<float> dis(minRange, maxRange);
+
+	float r = dis(gen);  // Red
+	float g = dis(gen);  // Green
+	float b = dis(gen);  // Blue
+
+	return RGB(r, g, b);
 }

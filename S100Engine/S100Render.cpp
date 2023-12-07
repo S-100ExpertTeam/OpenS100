@@ -335,20 +335,6 @@ void S100Render::GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, CRect& rect, FL
 	//OutputDebugString(str);
 }
 
-
-bool S100Render::IsIntersect(FLOAT xmin1, FLOAT ymin1, FLOAT xmax1, FLOAT ymax1, FLOAT xmin2, FLOAT ymin2, FLOAT xmax2, FLOAT ymax2)
-{
-	if (xmax1 < xmin2 ||
-		xmin1 > xmax2 ||
-		ymax1 < ymin2 ||
-		ymin1 > ymax2)
-	{
-		return false;
-	}
-
-	return true;
-}
-
 #pragma warning(disable:4244)
 void S100Render::SetViewFactor(double x, double y, long long zoom)
 {

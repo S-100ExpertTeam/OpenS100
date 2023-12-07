@@ -113,46 +113,7 @@ ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, CRect *_viewPo
 
 	clipper.Execute(ClipperLib::ctIntersection, result, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
 	
-
-
 	return result;
-}
-
-POINT SCommonFuction::CalculateCenterOfGravityOfSurface(POINT *_p, int _count)
-{
-	int j = 0;
-	double area = 0;
-	double centerX = 0.0;
-	double centerY = 0.0;
-
-	double x1, y1, x2, y2, tmpArea;
-
-	for (int i = 0; i < _count; i++)
-	{
-		j = (i + 1) % _count;
-
-		x1 = _p[i].x;
-		y1 = _p[i].y;
-		x2 = _p[j].x;
-		y2 = _p[j].y;
-
-		tmpArea = ((x1 * y2) - (x2 * y1));
-
-		centerX += ((x1 + x2) * tmpArea);
-		centerY += ((y1 + y2) * tmpArea);
-		area += tmpArea;
-	}
-
-	area *= 0.5;
-
-	centerX = centerX / (6.0 * area);
-	centerY = centerY / (6.0 * area);
-
-	POINT returnValue;
-	returnValue.x = (LONG)centerX;
-	returnValue.y = (LONG)centerY;
-
-	return returnValue;
 }
 
 POINT SCommonFuction::CalculateCenterOfGravityOfSurface(ClipperLib::Path polygon)
@@ -228,13 +189,6 @@ double SCommonFuction::GetDistanceOfCurve(POINT *_p, int _count)
 	}
 
 	return returnValue;
-}
-
-inline void swap(int &val1, int &val2)
-{
-	int t = val1;
-	val1 = val2;
-	val2 = t;
 }
 
 void SCommonFuction::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, CRect* viewPort)
@@ -372,78 +326,6 @@ POINT* SCommonFuction::GetCenterPointOfCurve(POINT *_p, int _count, CRect* viewP
 	return returnValue;
 }
 
-bool SCommonFuction::Intersect(
-	float x1, float y1, float x2, float y2,
-	float x3, float y3, float x4, float y4,
-	float* intersectionX, float* intersectionY)
-{
-	// calculate the direction of the lines
-	float uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-	float uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-
-	// if uA and uB are between 0-1, lines are colliding
-	if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
-
-		// optionally, draw a circle where the lines meet
-		*intersectionX = x1 + (uA * (x2 - x1));
-		*intersectionY = y1 + (uA * (y2 - y1));
-		return true;
-	}
-	return false;
-}
-
-
-bool SCommonFuction::Intersect(
-	float xmin, float ymin, float xmax, float ymax,
-	float x1, float y1, float x2, float y2,
-	float& intersectionX1, float& intersectionY1,
-	float& intersectionX2, float& intersectionY2)
-{
-	float intersectionX[4] = { 0 };
-	float intersectionY[4] = { 0 };
-	bool intersect[4] = { false };
-
-	intersect[0] = Intersect(
-		xmin, ymin, xmin, ymax, 
-		x1, y1, x2, y2,
-		&intersectionX[0], &intersectionY[0]);
-
-	intersect[1] = Intersect(
-		xmin, ymin, xmax, ymin,
-		x1, y1, x2, y2,
-		&intersectionX[1], &intersectionY[1]);
-
-	intersect[2] = Intersect(
-		xmin, ymax, xmax, ymax,
-		x1, y1, x2, y2,
-		&intersectionX[2], &intersectionY[2]);
-
-	intersect[3] = Intersect(
-		xmax, ymin, xmax, ymax,
-		x1, y1, x2, y2,
-		&intersectionX[3], &intersectionY[3]);
-
-	if (intersect[0] || intersect[1] || intersect[2] || intersect[3])
-	{
-		return true;
-	}
-
-	return false;
-}
-
-
-//  -1 : outside
-//  1 : inside
-int SCommonFuction::inside(SPoint* point, SSurface* poly, bool applyOption)
-{
-	unsigned i = 0, ret = 1;
-
-	if (inside(point->x, point->y, poly) == -1)
-	{
-		ret = -1;
-	}
-	return ret;
-}
 //  -1 : outside
 //  1 : inside
 int SCommonFuction::inside(double x, double y, SSurface* poly, bool applyOption)
@@ -559,23 +441,6 @@ double SCommonFuction::GetAngle(POINT _p1, POINT _p2)
 	double temp = p.x / d;
 
 	if (p.y < 0)
-	{
-		return (acos(-1.0) * 2) - acos(temp);
-	}
-
-	return acos(temp);
-}
-
-double SCommonFuction::GetAngle(double p1x, double p1y, double p2x, double p2y)
-{
-
-	double x = p2x - p1x;
-	double y = p2y - p1y;
-
-	double d = sqrt(((double)(x)*x) + (y * y));
-	double temp = x / d;
-
-	if (y < 0)
 	{
 		return (acos(-1.0) * 2) - acos(temp);
 	}

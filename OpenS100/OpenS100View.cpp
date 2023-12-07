@@ -26,8 +26,10 @@
 #include "../GISLibrary/SCompositeCurve.h"
 #include "../GISLibrary/SSurface.h"
 #include "../GISLibrary/SGeometricFuc.h"
+#include "../GISLibrary/S100_ExchangeCatalogue.h"
 
 #include "../GISLibrary/S100_IC_InteroperabilityCatalogue.h"
+//#include "../GISLibrary/S100_ExchangeCatalogue.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -54,6 +56,9 @@
 #include <future>
 
 #include "../LatLonUtility/LatLonUtility.h"
+
+#include "../LatLonUtility/Logger.h"
+#include "../PortrayalCatalogue/AlertCatalog.h"
 #pragma comment(lib, "d2d1.lib")
 
 using namespace LatLonUtility;
@@ -91,13 +96,39 @@ BEGIN_MESSAGE_MAP(COpenS100View, CView)
 	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
+
+
+void LogCallback(const std::string& message, LogLevel level) {
+	OutputDebugStringA(message.c_str());
+}
+
 COpenS100View::COpenS100View() 
 {
+	//Logger::GetInstance().Subscribe(LogLevel::Error, LogCallback, "Error1");
+	//Logger::GetInstance().Subscribe(LogLevel::Debug, LogCallback, "Debug1");
+	//Logger::GetInstance().Subscribe(LogLevel::General, LogCallback, "General1");
+
 	theApp.pView = this;
 
-	S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
-	item->Open("../Sample_of_IC_level_2_5.0.0-for S-101, S-102, S-111.xml");
-	delete item;
+	//S100::S100_IC_InteroperabilityCatalogue* item = new S100::S100_IC_InteroperabilityCatalogue();
+	//item->Open("../ic.xml");
+
+	////auto pc = new PortrayalCatalogue();
+	////pc->Open(L"../pc.xml");
+
+	//delete item;
+	//m_Ex = new S100::S100_ExchangeCatalogue();
+	if (m_Ex) {
+		m_Ex->Open("../CATALOG_Read.txt");
+	}
+	
+
+
+	//delete ex;
+
+	//S100::AlertCatalog* alt = new S100::AlertCatalog();
+	//alt->Open("../AlertCatalog-S101.xml");
+
 }
 
 COpenS100View::~COpenS100View()
@@ -207,7 +238,13 @@ void COpenS100View::OnDraw(CDC* pDC)
 			//drawResult.get();
 			//Invalidate();
 
+			
+
 			DrawFromMapRefresh(&map_dc, (CRect&)rect);
+
+			if (m_Ex) {
+				m_Ex->DrawCoverage(theApp.gisLib->D2.pRT, theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler(), 0, 0);
+			}
 
 			m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
 		}
@@ -536,6 +573,7 @@ void COpenS100View::MapRefresh()
 void COpenS100View::OpenWorldMap()
 {
 	theApp.gisLib->AddBackgroundLayer(_T("../ProgramData/World/World.shp"));
+	//theApp.gisLib2->AddBackgroundLayer(_T("../ProgramData/World/World.shp"));
 
 	MapRefresh();
 }
@@ -551,6 +589,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// FC
 	auto fc1 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
 	auto fc2 = cm->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml"); // valid(S-102)
+	
 	//auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
 	//auto fc4 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid, but duplicated(S-101)
 	cm->addFC(L"..\\ProgramData\\FC\\S-122_FC.xml");
@@ -561,8 +600,12 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addFC(L"..\\ProgramData\\FC\\S-128_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-130_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
+	cm->addFC(L"..\\ProgramData\\FC\\S-421_FC.xml");
+	cm->addFC(L"C:\\Users\\jogm\\Downloads\\[2023.11.20] 초안 - 목포대교\\초안 - 목포대교\\Dynamic Over Head Clearance.xml");
+	cm->addPC(L"C:\\Users\\jogm\\Downloads\\[2023.11.20] 초안 - 목포대교\\초안 - 목포대교\\Dynamic Over Head Clearance\\portrayal_catalogue.xml");
 
 	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
+
 	//auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal_1.1.1\\portrayal_catalogue.xml"); // valid(S-101)
 	//auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
 	cm->addPC(L"..\\ProgramData\\PC\\S100_Portrayal\\portrayal_catalogue.xml");
@@ -573,6 +616,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S128_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S411_Portrayal\\portrayal_catalogue.xml");
+	//cm->addPC(L"..\\ProgramData\\PC\\S421_Portrayal\\portrayal_catalogue.xml");
 
 	auto fc = cm->getFC(101); // get S-101 FC
 	auto pc = cm->getPC("S-101"); // get S-101 PC
@@ -1045,6 +1089,8 @@ void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
 
 	DrawZoomArea(pDC);
 	DrawPickReport(hdc);
+
+	
 }
 
 Layer* COpenS100View::GetCurrentLayer()

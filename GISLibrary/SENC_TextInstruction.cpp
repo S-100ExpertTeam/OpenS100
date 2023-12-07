@@ -51,12 +51,7 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 
 	auto geom = fr->GetGeometry();
 		
-	double rotation = 0;
-	double scaleFactor = 1;
 	int viewPointNum = 0;
-	int partsIndex = 1;
-	int lastPointIndex = -1;
-	unsigned preLoc = -1, curLoc = 0;
 	D2D1_POINT_2F tempPoint;
 
 	bool bDraw;
