@@ -15,22 +15,6 @@ SCurve::SCurve()
 	
 }
 
-SCurve::SCurve(const SCurve& other)
-	: SAbstractCurve(other)
-{
-	m_numPoints = other.m_numPoints;
-
-	m_pPoints = new SPoint[getNumPoint()];
-	for (int i = 0; i < m_numPoints; i++) {
-		m_pPoints[i] = other.m_pPoints[i];
-	}
-
-	m_masking = other.m_masking;
-	suppress = other.suppress;
-
-	CreateD2Geometry(gisLib->D2.Factory());
-}
-
 SCurve::~SCurve()
 {
 	delete[] m_pPoints;

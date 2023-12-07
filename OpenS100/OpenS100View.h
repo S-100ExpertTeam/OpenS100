@@ -73,7 +73,7 @@ public:
 	CDialogViewInformationType* dialogInformationType = nullptr;
 
 	S100EditRender s100EditRender;
-	S101Creator s101Creator;
+	S101Creator* s101Creator = nullptr;
 
 	S100::S100_ExchangeCatalogue* m_Ex = nullptr;
 

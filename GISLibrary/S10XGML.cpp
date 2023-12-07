@@ -12,7 +12,7 @@
 
 #include "../LatLonUtility/LatLonUtility.h"
 
-S10XGML::S10XGML()
+S10XGML::S10XGML(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S10XGML;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
@@ -165,12 +165,12 @@ GM::Object* S10XGML::GetGeometry(std::string id)
 
 int S10XGML::GetFeatureCount()
 {
-	return features.size();
+	return (int)features.size();
 }
 
 int S10XGML::GetInformationCount()
 {
-	return informations.size();
+	return (int)informations.size();
 }
 
 std::wstring S10XGML::GetFeatureTypeCodeByID(std::wstring id)
@@ -416,7 +416,7 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 	}
 
 	auto strPosList = LatLonUtility::Split(strPos, " ");
-	int posCnt = strPosList.size();
+	int posCnt = (int)strPosList.size();
 
 	if (posCnt < 4 && posCnt % 2 != 0)
 	{
@@ -442,7 +442,7 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 	auto strPos = node.child_value("gml:posList");
 
 	auto strPosList = LatLonUtility::Split(strPos, " ");
-	int posCnt = strPosList.size();
+	int posCnt = (int)strPosList.size();
 
 	if (posCnt < 4 || posCnt % 2 != 0)
 	{
@@ -1313,32 +1313,32 @@ void S10XGML::SetGeometry()
 			if (geometry->GetType() == GM::GeometryType::Point) {
 				auto sPoint = PointToSPoint((GM::Point*)geometry);
 				feature->SetGeometry(sPoint);
-				sPoint->CreateD2Geometry(gisLib->D2.Factory());
+				sPoint->CreateD2Geometry(D2->Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::MultiPoint) {
 				auto sMultiPoint = MultiPointToSMultiPoint((GM::MultiPoint*)geometry);
 				feature->SetGeometry(sMultiPoint);
-				sMultiPoint->CreateD2Geometry(gisLib->D2.Factory());
+				sMultiPoint->CreateD2Geometry(D2->Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::OrientableCurve) {
 				auto sCurve = OrientableCurveToSCurve((GM::OrientableCurve*)geometry);
 				feature->SetGeometry(sCurve);
-				sCurve->CreateD2Geometry(gisLib->D2.Factory());
+				sCurve->CreateD2Geometry(D2->Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::Curve) {
 				auto sCurve = CurveToSCurve((GM::Curve*)geometry);
 				feature->SetGeometry(sCurve);
-				sCurve->CreateD2Geometry(gisLib->D2.Factory());
+				sCurve->CreateD2Geometry(D2->Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::CompositeCurve) {
 				auto sCompositeCurve = CompositeCurveToSCompositeCurve((GM::CompositeCurve*)geometry);
 				feature->SetGeometry(sCompositeCurve);
-				sCompositeCurve->CreateD2Geometry(gisLib->D2.Factory());
+				sCompositeCurve->CreateD2Geometry(D2->Factory());
 			}
 			else if (geometry->GetType() == GM::GeometryType::Surface) {
 				auto sSurface = SurfaceToSSurface((GM::Surface*)geometry);
 				feature->SetGeometry(sSurface);
-				sSurface->CreateD2Geometry(gisLib->D2.Factory());
+				sSurface->CreateD2Geometry(D2->Factory());
 
 				auto surface = (GM::Surface*)geometry;
 				auto exteriorRing = surface->getExteriorRing();
@@ -1354,12 +1354,12 @@ void S10XGML::SetGeometry()
 					auto ring = rings[j];
 					if (ring->GetType() == GM::GeometryType::Curve) {
 						auto sCurve = CurveToSCurve((GM::Curve*)ring);
-						sCurve->CreateD2Geometry(gisLib->D2.Factory());
+						sCurve->CreateD2Geometry(D2->Factory());
 						sSurface->AddCurve(sCurve);
 					}
 					else if (ring->GetType() == GM::GeometryType::CompositeCurve) {
 						auto sCompositeCurve = CompositeCurveToSCompositeCurve((GM::CompositeCurve*)ring);
-						sCompositeCurve->CreateD2Geometry(gisLib->D2.Factory());
+						sCompositeCurve->CreateD2Geometry(D2->Factory());
 						sSurface->AddCurve(sCompositeCurve);
 					}
 				}
@@ -1479,12 +1479,12 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 		
 		inverseProjection(x, y);
 
-		POINT pt = { x * 10000000, y * 10000000 };
+		POINT pt = { (LONG)(x * 10000000), (LONG)(y * 10000000) };
 
 		points.push_back(pt);
 	}
 
-	parts.push_back(points.size());
+	parts.push_back((int)points.size());
 	delete exteriorRing;
 	exteriorRing = nullptr;
 
@@ -1505,12 +1505,12 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 
 				inverseProjection(x, y);
 
-				POINT pt = { x * 10000000, y * 10000000 };
+				POINT pt = { (LONG)(x * 10000000), (LONG)(y * 10000000) };
 
 				points.push_back(pt);
 			}
 			
-			parts.push_back(points.size());
+			parts.push_back((int)points.size());
 			delete interiorRing;
 			interiorRing = nullptr;
 		}

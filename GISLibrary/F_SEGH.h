@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Field.h"
 
-class F_SEGH : Field
+class F_SEGH : public Field
 {
 public:
 	F_SEGH();

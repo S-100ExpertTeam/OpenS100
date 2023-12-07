@@ -19,7 +19,7 @@ Layer::~Layer(void)
 	}
 }
 
-bool Layer::Open(CString _filepath)
+bool Layer::Open(CString _filepath, D2D1Resources* d2d1)
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
 
@@ -50,6 +50,7 @@ bool Layer::Open(CString _filepath)
 		}
 		strFolderPath.Append(TEXT("\\") + _filepath);
 	}
+
 	return m_spatialObject->Open(strFolderPath);
 }
 

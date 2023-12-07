@@ -71,3 +71,36 @@ int F_RIAS::GetFieldLength()
 	}
 	return ++len;
 }
+
+void F_RIAS::Insert(RecordName name, int ornt, int usag, int raui)
+{
+	RIAS* rias = new RIAS();
+	rias->m_name = name;
+	rias->m_ornt = ornt;
+	rias->m_usag = usag;
+	rias->m_raui = raui;
+	m_arr.push_back(rias);
+}
+
+void F_RIAS::Insert(int rcnm, int rcid, int ornt, int usag, int raui)
+{
+	RIAS* rias = new RIAS();
+	rias->m_name.RCNM = rcnm;
+	rias->m_name.RCID = rcid;
+	rias->m_ornt = ornt;
+	rias->m_usag = usag;
+	rias->m_raui = raui;
+	m_arr.push_back(rias);
+}
+
+void F_RIAS::Insert(GISLibrary::RCNM rcnm, int rcid, int ornt, int usag, int raui)
+{
+	RIAS* rias = new RIAS();
+	rias->m_name.RCNM = (int)rcnm;
+	rias->m_name.RCID = rcid;
+	rias->m_ornt = ornt;
+	rias->m_usag = usag;
+	rias->m_raui = raui;
+	m_arr.push_back(rias);
+}
+

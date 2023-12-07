@@ -3,9 +3,9 @@
 #include "PCOutputSchemaManager.h"
 #include "S100Layer.h"
 
-S100SpatialObject::S100SpatialObject()
+S100SpatialObject::S100SpatialObject(D2D1Resources* d2d1)
 {
-
+	this->D2 = d2d1;
 }
 
 S100SpatialObject::~S100SpatialObject()
@@ -68,6 +68,11 @@ PortrayalCatalogue* S100SpatialObject::GetPC()
 	}
 
 	return nullptr;
+}
+
+D2D1Resources* S100SpatialObject::GetD2() const
+{
+	return D2;
 }
 
 bool S100SpatialObject::OpenOutputXML(std::string path)

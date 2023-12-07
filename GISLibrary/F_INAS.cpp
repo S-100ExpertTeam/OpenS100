@@ -122,7 +122,7 @@ std::vector<ATTR*> F_INAS::GetAllAttributes()
 
 int F_INAS::getATTRCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 ATTR* F_INAS::getATTR(int index) const

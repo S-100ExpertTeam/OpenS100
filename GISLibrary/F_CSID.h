@@ -2,7 +2,7 @@
 #include "Field.h"
 #include "RecordName.h"
 
-class F_CSID : Field
+class F_CSID : public Field
 {
 public:
 	F_CSID();

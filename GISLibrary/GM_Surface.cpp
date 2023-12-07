@@ -91,7 +91,7 @@ namespace GM
 
 	int Surface::getInteriorRingCount()
 	{
-		return patch.boundary.interior.size();
+		return (int)patch.boundary.interior.size();
 	}
 
 	GM::Ring* Surface::getInteriorRing(int n)

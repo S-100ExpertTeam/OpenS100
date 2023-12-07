@@ -2,7 +2,7 @@
 #include "Field.h"
 
 struct FC3D;
-class F_C3FL : Field
+class F_C3FL : public Field
 {
 public:
 	F_C3FL();
@@ -24,4 +24,6 @@ public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	int GetFieldLength();
+
+	void Insert(int xcoo, int ycoo, int zcoo);
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include "Field.h"
 
-class F_DSSI : Field
+class F_DSSI : public Field
 {
 public:
 	F_DSSI();

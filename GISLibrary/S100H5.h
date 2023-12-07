@@ -10,7 +10,7 @@ class S100H5 :
     public S100SpatialObject
 {
 public:
-    S100H5();
+    S100H5(D2D1Resources* d2d1);
     virtual ~S100H5();
 
 public:

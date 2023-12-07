@@ -97,9 +97,15 @@ void F_ATTR::Insert(ATTR* attr)
 	m_arr.push_back(attr);
 }
 
+void F_ATTR::Insert(int natc, int atix, int paix, int atin, CString atvl)
+{
+	ATTR* attr = new ATTR(natc, atix, paix, atin, atvl);
+	m_arr.push_back(attr);
+}
+
 int F_ATTR::getCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 ATTR* F_ATTR::getATTR(int index) const

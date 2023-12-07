@@ -27,125 +27,44 @@ CGISLibraryApp::CGISLibraryApp()
 	std::string str = "..\\TEMP"; // read path
 	int mkFlag = _mkdir(str.c_str()); //If it's new, 0, if it exists or if it's not, -1.
 
-	gisLib = this;
+	D2 = new GISLibrary::D2D1Resources();
+	D2->CreateDeviceIndependentResources();
+	D2->CreateDeviceDependentResources();
 
-	D2.CreateDeviceIndependentResources();
-	D2.CreateDeviceDependentResources();
-
-	//std::string wkb_string = "01040000000200000001010000000000000000405e400000000000003e40010100000000000000008061400000000000004440";
-	//SMultiPoint mp;
-	//auto wkb = LatLonUtility::HexStringToWKB(wkb_string);
-	//mp.ImportFromWkb(wkb, wkb_string.size() / 2);
-	//delete[] wkb;
-	
-	//S101Cellcell;
-	//cell.OpenByGML(L"..\\TEMP\\101GML3.gml");
-
-	//SCurve curve;
-	//curve.Init(3);
-	//curve.Set(0, 1, 2);
-	//curve.Set(1, 2, 3);
-	//curve.Set(2, 3, 4);
-	//
-
-	//std::string wkb_string = "010300000003000000050000000000000000003e400000000000002440000000000000244000000000000034405a1663db5d0d1440c1c69400de644540000000000000444000000000000044400000000000003e40000000000000244005000000e0bccaaf2fa62340088b1d196c384340ced595fa90862d40983dcea891d43540f04766949a083b40e07fa56f17a93340ea0954da635a3d403d6dbabf422c4240e0bccaaf2fa62340088b1d196c38434005000000168fd569e8c83f40c07544d9e0784240f0fb5eb0841c3f4023d071607c7b3f4002814e619fe9414084af9186c8004040d1bdba17e4cc4140858293ffcdeb4240168fd569e8c83f40c07544d9e0784240";
-	//SSurface surface;
-	//SCurve compCurve;
-	//auto wkb = LatLonUtility::HexStringToWKB(wkb_string);
-	//surface.ImportFromWkb(wkb, wkb_string.size() / 2);
-	//char* a = nullptr;
-	//int size = 0;
-	//surface.ExportToWkb(&a, &size);
-
-	//CString str;
-	//for (int i = 0; i < size; i++)
-	//{
-	//	str.AppendFormat(_T("%02X"), a[i] & 0xff);
-	//}
-	//OutputDebugString(str);
-
-	//delete[] wkb;
-	//compCurve.Release();
-	//SMultiPoint mp;
-	//mp.Add(1, 2, 3);
-	//mp.Add(4, 5, 6);
-	//mp.Add(7, 8, 9);
-
-	//
-
-	////SPoint p;
-	////p.SetPoint(123, 456);
-	//char* a = nullptr;
-	//int size = 0;
-
-	//GeoPointZ p;
-	//p.SetPoint(123, 456, 789);
-
-	//curve.ExportToWkb(&a, &size);
-	//curve.WriteWkb(L"G:\\TDS\\WKBLineString.wkb");
-
-	//CString str;
-	//for (int i = 0; i < size; i++)
-	//{
-	//	str.AppendFormat(_T("%02X"), a[i] & 0xff);
-	//}
-	//OutputDebugString(str);
-
-
-	//mp.ExportToWkb(&a, &size);
-	//mp.WriteWkb(L"G:\\TDS\\a.wkb");
-	//auto wkb_mp = LatLonUtility::HexStringToWKB(wkb_string);
-
-
-	//for (int i = 0; i < size; i++)
-	//{
-	//	str.AppendFormat(_T("%02X"), a[i] & 0xff);
-	//}
-	//OutputDebugString(str);
-
-	//p.ExportToWkb(&a, &size);
-
-	//for (int i = 0; i < size; i++)
-	//{
-	//	str.AppendFormat(_T("%02X"), a[i] & 0xff);
-	//}
-	//OutputDebugString(str);
-
-
-	//delete[] a;
-
-
-	//auto wkb = LatLonUtility::HexStringToWKB(wkb_string);
-	//p.ImportFromWkb(wkb, 21);
-	//delete[] wkb;
-
-	//p.ExportToWkb(&a, &size);
-	//delete[] a;
-
-	//m_pLayerManager->scaler = m_pScaler;
+	m_pScaler = new Scaler();
+	m_pCatalogManager = new CatalogManager(D2);
+	m_pLayerManager = new LayerManager(m_pScaler, m_pCatalogManager, D2);
 }
 
 CGISLibraryApp::~CGISLibraryApp()
 {
-	D2.DeleteDeviceDependentResources();
-	D2.DeleteDeviceIndependentResources();
-
 	if (m_pScaler) {
 		delete m_pScaler;
 		m_pScaler = nullptr;
 	}
-	
+
+	if (m_pCatalogManager) {
+		delete m_pCatalogManager;
+		m_pCatalogManager = nullptr;
+	}
+
 	if (m_pLayerManager) {
 		delete m_pLayerManager;
 		m_pLayerManager = nullptr;
+	}
+
+	if (D2)
+	{
+		D2->DeleteDeviceDependentResources();
+		D2->DeleteDeviceIndependentResources();
+		delete D2;
+		D2 = nullptr;
 	}
 
 	if (SGeometry::viewPoints) {
 		delete[] SGeometry::viewPoints;
 		SGeometry::viewPoints = nullptr;
 	}
-
-	featureOnOffMap.clear();
 }
 
 Scaler* CGISLibraryApp::GetScaler()
@@ -153,9 +72,19 @@ Scaler* CGISLibraryApp::GetScaler()
 	return m_pScaler;
 }
 
-CatalogManager* CGISLibraryApp::getCatalogManager()
+LayerManager* CGISLibraryApp::GetLayerManager()
 {
-	return &catalogManager;
+	return m_pLayerManager;
+}
+
+CatalogManager* CGISLibraryApp::GetCatalogManager()
+{
+	return m_pCatalogManager;
+}
+
+D2D1Resources* CGISLibraryApp::GetD2D1Resources()
+{
+	return D2;
 }
 
 bool CGISLibraryApp::AddLayer(CString _filepath)
@@ -170,9 +99,18 @@ bool CGISLibraryApp::AddBackgroundLayer(CString _filepath)
 	return m_pLayerManager->AddBackgroundLayer(_filepath);
 }
 
-void CGISLibraryApp::Draw(HDC &hDC, int offset)
+void CGISLibraryApp::Draw(HDC& hDC, int offset)
 {
 	m_pLayerManager->Draw(hDC, offset);
+		
+	if (D2)
+	{
+		CRect rectView = m_pScaler->GetScreenRect();
+		D2->Begin(hDC, rectView);
+		DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
+		DrawScaleBar();
+		D2->End();
+	}
 }
 
 void CGISLibraryApp::BuildPortrayalCatalogue(Layer* l)
@@ -192,15 +130,16 @@ Layer* CGISLibraryApp::GetLayer(int index)
 
 void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale)
 {
-	auto pc = catalogManager.getPC(productNumber);
-	if (pc)
+	auto pc = m_pCatalogManager->getPC(productNumber);
+	
+	if (pc && D2)
 	{
 		auto pcManager = pc->GetS100PCManager();
 		if (pcManager)
 		{
-			auto rt = D2.RenderTarget();
-			auto brush = D2.SolidColorBrush();
-			auto stroke = D2.SolidStrokeStyle();
+			auto rt = D2->RenderTarget();
+			auto brush = D2->SolidColorBrush();
+			auto stroke = D2->SolidStrokeStyle();
 
 			D2D1::Matrix3x2F oldTransform;
 			rt->GetTransform(&oldTransform);
@@ -306,12 +245,12 @@ MBR* CGISLibraryApp::GetMBR()
 /*
 ** points change.
 */
-void CGISLibraryApp::DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate)
+void CGISLibraryApp::DeviceToWorld(long sx, long sy, double* mx, double* my, bool rotate)
 {
 	m_pScaler->DeviceToWorld(sx, sy, mx, my, rotate);
 }
 
-void CGISLibraryApp::WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate)
+void CGISLibraryApp::WorldToDevice(double mx, double my, long* sx, long* sy, bool rotate)
 {
 	m_pScaler->WorldToDevice(mx, my, sx, sy, rotate);
 }
@@ -339,7 +278,7 @@ void CGISLibraryApp::DeviceToWorld(D2D1_POINT_2F& p)
 /*
 ** screen setting
 */
-void CGISLibraryApp::SetScreen(RECT *rect)
+void CGISLibraryApp::SetScreen(RECT* rect)
 {
 	if (rect == nullptr) return;
 	m_pScaler->SetScreen(rect);
@@ -383,7 +322,7 @@ double CGISLibraryApp::GetMapHeight()
 	return m_pScaler->GetMapHeight();
 }
 
-void CGISLibraryApp::GetMap(MBR *mbr)
+void CGISLibraryApp::GetMap(MBR* mbr)
 {
 	m_pScaler->GetMap(mbr);
 }
@@ -431,7 +370,7 @@ void CGISLibraryApp::AdjustScreenMap()
 }
 
 /*
-** move screen 
+** move screen
 */
 // Use it to move as many pixels as you want
 void CGISLibraryApp::MoveMap(int x, int y)
@@ -450,19 +389,16 @@ bool CGISLibraryApp::PtInMap(double _x, double _y)
 	return m_pScaler->PtInMap(_x, _y);
 }
 
-LayerManager* CGISLibraryApp::GetLayerManager()
-{
-	return m_pLayerManager;
-}
-
-
 void CGISLibraryApp::ChangeDisplayFont()
-{
-	SafeRelease(&D2.pDWriteTextFormat);
-	SafeRelease(&D2.pDWriteTextFormatArea);
+{	
+	if (!D2)
+		return;
+
+	SafeRelease(&D2->pDWriteTextFormat);
+	SafeRelease(&D2->pDWriteTextFormatArea);
 
 	// Create a DirectWrite text format object.
-	HRESULT hr = D2.pDWriteFactory->CreateTextFormat(
+	HRESULT hr = D2->pDWriteFactory->CreateTextFormat(
 		ENCCommon::DISPLAY_FONT_NAME.c_str(),
 		NULL,
 		DWRITE_FONT_WEIGHT_NORMAL,
@@ -470,12 +406,12 @@ void CGISLibraryApp::ChangeDisplayFont()
 		DWRITE_FONT_STRETCH_NORMAL,
 		(float)ENCCommon::DISPLAY_FONT_SIZE,
 		L"", //locale
-		&D2.pDWriteTextFormat
+		&D2->pDWriteTextFormat
 	);
 
-	D2.pDWriteTextFormat->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
+	D2->pDWriteTextFormat->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
 
-	if (!D2.pDWriteTextFormat)
+	if (!D2->pDWriteTextFormat)
 	{
 		CString errMsg;
 		errMsg.Format(_T("Failed to create IDWriteTextFormat! (%02X)"), hr);
@@ -483,7 +419,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 	}
 
 	// Create a DirectWrite text format object.
-	hr = D2.pDWriteFactory->CreateTextFormat(
+	hr = D2->pDWriteFactory->CreateTextFormat(
 		ENCCommon::DISPLAY_FONT_NAME.c_str(),
 		NULL,
 		DWRITE_FONT_WEIGHT_BOLD,
@@ -491,14 +427,14 @@ void CGISLibraryApp::ChangeDisplayFont()
 		DWRITE_FONT_STRETCH_NORMAL,
 		(float)ENCCommon::DISPLAY_FONT_SIZE,
 		L"", //locale
-		&D2.pDWriteTextFormatArea
+		&D2->pDWriteTextFormatArea
 	);
 
-	D2.pDWriteTextFormatArea->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
-	D2.pDWriteTextFormatArea->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-	D2.pDWriteTextFormatArea->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
+	D2->pDWriteTextFormatArea->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	D2->pDWriteTextFormatArea->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+	D2->pDWriteTextFormatArea->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
 
-	if (!D2.pDWriteTextFormatArea)
+	if (!D2->pDWriteTextFormatArea)
 	{
 		CString errMsg;
 		errMsg.Format(_T("Failed to create IDWriteTextFormat (for Area)! (%02X)"), hr);
@@ -508,7 +444,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 
 std::wstring CGISLibraryApp::GetColorTable()
 {
-	if (ENCCommon::m_eColorTable == GeoMetryLibrary ::ColorTable::Day)
+	if (ENCCommon::m_eColorTable == GeoMetryLibrary::ColorTable::Day)
 	{
 		return L"Day";
 	}
@@ -526,80 +462,3 @@ std::wstring CGISLibraryApp::GetColorTable()
 	}
 }
 
-//FeatureCatalogue* CGISLibraryApp::GetFC()
-//{
-//	return fc;
-//}
-//
-//void CGISLibraryApp::SetFC(FeatureCatalogue* fc)
-//{
-//	this->fc = fc;
-//	InitFeatureOnOffMap();
-//}
-//
-//PortrayalCatalogue* CGISLibraryApp::GetPC()
-//{
-//	return pc;
-//}
-//
-//void CGISLibraryApp::SetPC(PortrayalCatalogue* pc)
-//{
-//	this->pc = pc;
-//}
-
-void CGISLibraryApp::SetS100Scale(double value)
-{
-	s100Scale = value;
-}
-
-int CGISLibraryApp::GetS100Scale()
-{
-	if (s100Scale > 0)
-	{
-		return (int)s100Scale;
-	}
-
-	auto currentScale = m_pScaler->GetCurrentScale();
-
-	return currentScale;
-}
-
-
-void CGISLibraryApp::InitFeatureOnOffMap()
-{
-	auto fc = catalogManager.getFC("S-101");
-	if (fc)
-	{
-		featureOnOffMap.clear();
-
-		auto vector = fc->GetFeatureTypes()->GetVecFeatureType();
-		for (auto i = vector.begin(); i != vector.end(); i++)
-		{
-			featureOnOffMap.insert({ (*i)->GetCodeAsWString(), true });
-		}
-	}
-}
-
-void CGISLibraryApp::SetFeatureOnOff(std::wstring code, bool on)
-{
-	auto itor = featureOnOffMap.find(code);
-	if (itor != featureOnOffMap.end())
-	{
-		itor->second = on;
-	}
-	else
-	{
-		featureOnOffMap.insert({ code, on });
-	}
-}
-
-bool CGISLibraryApp::IsFeatureOn(std::wstring& featureTypeCode)
-{
-	auto item = featureOnOffMap.find(featureTypeCode);
-	if (item != featureOnOffMap.end())
-	{
-		return item->second;
-	}
-
-	return true;
-}

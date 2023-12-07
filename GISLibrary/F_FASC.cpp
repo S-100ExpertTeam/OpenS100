@@ -88,7 +88,7 @@ int F_FASC::GetFieldLength()
 
 int F_FASC::getATTRCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 ATTR* F_FASC::getATTR(int index) const

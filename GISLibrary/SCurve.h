@@ -7,7 +7,6 @@ class SCurve : public SAbstractCurve
 {
 public:
 	SCurve();
-	SCurve(const SCurve& other);
 	virtual ~SCurve();
 	
 public:

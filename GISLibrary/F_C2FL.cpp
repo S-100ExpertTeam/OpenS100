@@ -47,3 +47,12 @@ int F_C2FL::GetFieldLength()
 	}
 	return ++len;
 }
+
+void F_C2FL::Insert(int xcoo, int ycoo)
+{
+	FC2D* cont = new FC2D();
+	cont->m_ycoo = ycoo;
+	cont->m_xcoo = xcoo;
+	m_arr.push_back(cont);
+}
+
