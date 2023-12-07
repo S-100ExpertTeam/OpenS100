@@ -117,7 +117,7 @@ COpenS100View::COpenS100View()
 	////pc->Open(L"../pc.xml");
 
 	//delete item;
-	//m_Ex = new S100::S100_ExchangeCatalogue();
+	m_Ex = new S100::S100_ExchangeCatalogue();
 	if (m_Ex) {
 		m_Ex->Open("../CATALOG_Read.txt");
 	}
@@ -332,7 +332,7 @@ COpenS100Doc* COpenS100View::GetDocument() const
 void COpenS100View::Load100File()
 {
 	//load file
-	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST, _T("S-100 Dataset (*.000, *.gml, *.h5)|*.000;*.gml;*.h5|"), this);
+	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST, _T("All supported files (*.000, *.gml, *.h5, *.shp, *.xml)|*.000;*.gml;*.h5;*.shp;*.xml|"), this);
 
 	if (dlg.DoModal() == IDOK)
 	{
@@ -1333,7 +1333,7 @@ void COpenS100View::PickReport(CPoint _point)
 void COpenS100View::PickReport(CPoint _point, int layerIndex)
 {
 	auto layer = theApp.gisLib->GetLayerManager()->GetLayer(layerIndex);
-	if (nullptr == layer)
+	if (nullptr == layer || !layer->IsS100Layer())
 	{
 		return;
 	}

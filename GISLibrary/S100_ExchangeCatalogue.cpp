@@ -111,13 +111,15 @@ namespace S100
         double Width = gisLib->GetScaler()->GetScreenWidth();
         double Height = gisLib->GetScaler()->GetScreenWidth();
 
+        gisLib->D2.pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+        gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+
         for (int i = 0; i < DatasetDiscoveryMetadata.size(); i++)
         {
             pRenderTarget->BeginDraw();
             auto textformat = gisLib->D2.pDWriteTextFormat;
             auto brush = gisLib->D2.pBrush;
             auto ddm = DatasetDiscoveryMetadata[i];
-
 
             auto object = new GM::Surface();
             auto curve = new GM::Curve();
@@ -165,13 +167,11 @@ namespace S100
             brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
             pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
   
-            pRenderTarget->DrawTextW(fileName, fileName.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, Width, Height), brush);
+            pRenderTarget->DrawTextW(fileName, fileName.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, pt.x + 5, pt.y + 5), brush);
 
             //Datacorverage
             for (int j = 0; j < ddm.DataCoverage.size(); j++)
             {
-                
-
                 gisLib->D2.pRT->SetTransform(scaler->GetMatrix());
 
                  auto dc = ddm.DataCoverage[j]; 
@@ -215,14 +215,14 @@ namespace S100
                  if (dc.MaximumDisplayScale != nullptr)
                  {
                      CString str(std::to_string(*dc.MaximumDisplayScale).c_str());
-                     maximumDisplayScale = L"MaxDisplayScale : " + str;
+                     maximumDisplayScale = L"MaximumDisplayScale : " + str;
                  }
                  else
-                     maximumDisplayScale = L"MaxDisplayScale : - ";
+                     maximumDisplayScale = L"MaximumDisplayScale : - ";
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
                  brush->SetOpacity(1);
                  pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-                 pRenderTarget->DrawTextW(maximumDisplayScale, maximumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, Width, Height), brush);
+                 pRenderTarget->DrawTextW(maximumDisplayScale, maximumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, pt.x + 5, pt.y + 5), brush);
                  
                  pt.y += 15;
                 ////minimumDisplayScale 
@@ -236,8 +236,7 @@ namespace S100
                     minimumDisplayScale = L"MinimumDisplayScale : - ";
                 brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
                 pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-                pRenderTarget->DrawTextW(minimumDisplayScale, minimumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, Width, Height), brush);
-
+                pRenderTarget->DrawTextW(minimumDisplayScale, minimumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, pt.x + 5, pt.y + 5), brush);
 
                 pt.y += 15;
             }

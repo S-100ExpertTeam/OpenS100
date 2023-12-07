@@ -158,7 +158,8 @@ int LayerManager::AddLayer(CString _filepath)
 
 	S100_FileType fileType = CheckFileType(_filepath);
 
-	if (fileType == S100_FileType::FILE_Shape)
+	if (fileType == S100_FileType::FILE_Shape ||
+		fileType == S100_FileType::FILE_ETC)
 	{
 		layer = new Layer();
 		if (layer->Open(_filepath) == false)
@@ -211,6 +212,8 @@ void LayerManager::Draw(HDC& hdc, int offset)
 	DrawBackground(hdc, offset);
 
 	DrawS100Datasets(hdc, offset);
+
+	DrawNonS100Datasets(hdc, offset);
 
 	gisLib->D2.Begin(hdc, rectView);
 	gisLib->DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
@@ -758,6 +761,22 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 						s100Layer->InitDraw();
 					}
 				}
+			}
+		}
+	}
+}
+
+void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)
+{
+	for (auto i = layers.begin(); i != layers.end(); i++)
+	{
+		auto layer = (*i);
+
+		if (layer->IsOn())
+		{
+			if (!layer->IsS100Layer())
+			{
+				layer->Draw(hDC, scaler, offset);
 			}
 		}
 	}
@@ -1512,6 +1531,10 @@ S100_FileType LayerManager::CheckFileType(CString path)
 				(nodeName.find(L"Dataset") != std::wstring::npos))
 			{
 				return S100_FileType::FILE_S_100_VECTOR;
+			}
+			else
+			{
+				return S100_FileType::FILE_ETC;
 			}
 		}
 	}
