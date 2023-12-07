@@ -316,7 +316,7 @@ int R_InformationRecord::GetIDAsInteger()
 
 int R_InformationRecord::GetInformationRelationCount()
 {
-	return m_inas.size();
+	return (int)m_inas.size();
 }
 
 std::string R_InformationRecord::GetAssociatedInformationID(int index)
@@ -350,7 +350,7 @@ int R_InformationRecord::GetAttributeCount()
 std::string R_InformationRecord::GetAttributeValue(int index)
 {
 	auto attributes = GetAllAttributes();
-	int count = attributes.size();
+	int count = (int)attributes.size();
 
 	if (count > 0 && index < count)
 	{

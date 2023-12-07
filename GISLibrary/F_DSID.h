@@ -3,7 +3,7 @@
 #include "RecordName.h"
 
 // Dataset Identification Field
-class F_DSID : Field
+class F_DSID : public Field
 {
 public:
 	F_DSID();

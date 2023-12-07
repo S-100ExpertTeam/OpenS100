@@ -2,7 +2,7 @@
 #include "Field.h"
 #include "RecordName.h"
 
-class F_SRID : Field
+class F_SRID : public Field
 {
 public:
 	F_SRID();

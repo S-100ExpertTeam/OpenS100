@@ -2,7 +2,7 @@
 #include "Field.h"
 
 struct C3IL;
-class F_C3IL : Field
+class F_C3IL : public Field
 {
 public:
 	F_C3IL();
@@ -25,4 +25,6 @@ public:
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
+
+	void Insert(int xcoo, int ycoo, int zcoo);
 };

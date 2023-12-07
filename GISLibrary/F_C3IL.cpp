@@ -68,3 +68,12 @@ int F_C3IL::GetFieldLength()
 	}
 	return ++len;
 }
+
+void F_C3IL::Insert(int xcoo, int ycoo, int zcoo)
+{
+	C3IL* cont = new C3IL();
+	cont->m_ycoo = ycoo;
+	cont->m_xcoo = xcoo;
+	cont->m_zcoo = zcoo;
+	m_arr.push_back(cont);
+}

@@ -65,3 +65,12 @@ int F_CSAX::GetFieldLength()
 
 	return ++len;
 }
+
+void F_CSAX::Insert(int axty, int axum)
+{
+	CSAX* csax = new CSAX();
+	csax->m_axty = axty;
+	csax->m_axum = axum;
+	m_arr.push_back(csax);
+}
+

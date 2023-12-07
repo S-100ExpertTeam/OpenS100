@@ -135,7 +135,7 @@ void InformationBinding::SetRoleType(std::string value)
 
 int InformationBinding::GetInformationTypeCount()
 {
-	return informationTypes.size();
+	return (int)informationTypes.size();
 }
 
 std::string InformationBinding::GetInformationType(int index)

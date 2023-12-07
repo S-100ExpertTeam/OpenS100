@@ -4,7 +4,7 @@
 
 // Feature Association field
 struct FASC;
-class F_FASC : Field
+class F_FASC : public Field
 {
 
 public:

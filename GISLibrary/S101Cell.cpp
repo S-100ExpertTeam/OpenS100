@@ -76,13 +76,13 @@
 #include <mmsystem.h> 
 #include <unordered_map>
 
-S101Cell::S101Cell() : S100SpatialObject()
+S101Cell::S101Cell(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 }
 
-S101Cell::S101Cell(FeatureCatalogue* fc) : S100SpatialObject()
+S101Cell::S101Cell(FeatureCatalogue* fc, D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
@@ -465,9 +465,9 @@ bool S101Cell::OpenByGML(CString path)
 
 	RemoveAll();
 
-	S10XGML gml;
-	gml.SetLayer(GetLayer());
-	gml.Open(path);
+	S10XGML* gml = new S10XGML(D2);
+	gml->SetLayer(GetLayer());
+	gml->Open(path);
 
 	SetAllNumericCode(GetFC());
 
@@ -477,6 +477,13 @@ bool S101Cell::OpenByGML(CString path)
 
 	CalcMBR();
 	Check();
+
+	if (gml)
+	{
+		delete gml;
+		gml = nullptr;
+	}
+
 	return true;
 }
 
@@ -663,7 +670,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 
 	if (fe->geometry)
 	{
-		fe->geometry->CreateD2Geometry(gisLib->D2.pD2Factory);
+		fe->geometry->CreateD2Geometry(D2->pD2Factory);
 	}
 
 	return TRUE;
@@ -765,13 +772,13 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 
 	geo->Set(vecPoint, boundaryList);
 
-	if (gisLib == nullptr)
+	if (D2 == nullptr)
 	{
 		return false;
 	}
 
 	geo->SetMBR();
-	geo->CreateD2Geometry(gisLib->D2.pD2Factory);
+	geo->CreateD2Geometry(D2->pD2Factory);
 	geo->CalculateCenterPoint();
 
 	if (sr)
@@ -844,7 +851,7 @@ BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 		F_C3IL* c3il = r->m_c3il.front();
 
 		auto size = c3il->m_arr.size();
-		multiPoint->SetSize(size);
+		multiPoint->SetSize((int)size);
 
 		int index = 0;
 		for (auto itor = c3il->m_arr.begin(); itor != c3il->m_arr.end(); itor++)
@@ -1268,7 +1275,7 @@ BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 	return TRUE;
 }
 
-void S101Cell::Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler)
+void S101Cell::Draw(D2D1Resources* D2, Scaler* scaler)
 {
 	auto rt = D2->pRT;
 	rt->FillRectangle(D2D1::RectF(0, 0, 100, 100), D2->pBrush);
@@ -1992,7 +1999,7 @@ R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
 R_FeatureRecord* S101Cell::GetFeatureRecord(std::string key)
 {
 	auto iKey = std::stoll(key);
-	RecordName recordName(100, iKey);
+	RecordName recordName(100, (int)iKey);
 	return GetFeatureRecord(recordName.GetName());
 }
 
@@ -3365,13 +3372,13 @@ bool S101Cell::SaveAsENC(std::wstring path)
 
 	ddr.WriteRecord(&file);
 
-	m_dsgir.m_dssi.SetNumberOfInformationTypeRecords(vecInformation.size());
-	m_dsgir.m_dssi.SetNumberOfPointRecords(vecPoint.size());
-	m_dsgir.m_dssi.SetNumberOfMultiPointRecords(vecMultiPoint.size());
-	m_dsgir.m_dssi.SetNumberOfCurveRecords(vecCurve.size());
-	m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords(vecComposite.size());
-	m_dsgir.m_dssi.SetNumberOfSurfaceRecords(vecSurface.size());
-	m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords(vecFeature.size());
+	m_dsgir.m_dssi.SetNumberOfInformationTypeRecords((int)vecInformation.size());
+	m_dsgir.m_dssi.SetNumberOfPointRecords((int)vecPoint.size());
+	m_dsgir.m_dssi.SetNumberOfMultiPointRecords((int)vecMultiPoint.size());
+	m_dsgir.m_dssi.SetNumberOfCurveRecords((int)vecCurve.size());
+	m_dsgir.m_dssi.SetNumberOfCompositeCurveRecords((int)vecComposite.size());
+	m_dsgir.m_dssi.SetNumberOfSurfaceRecords((int)vecSurface.size());
+	m_dsgir.m_dssi.SetNumberOfFeatureTypeRecords((int)vecFeature.size());
 
 	m_dsgir.WriteRecord(&file);
 	m_dscrs.WriteRecord(&file);
@@ -4395,40 +4402,7 @@ std::vector<std::string> S101Cell::Query(MBR mbr)
 
 std::vector<std::string> S101Cell::QueryToSurface(MBR mbr)
 {
-	std::vector<std::string> result;
-
-	projection(mbr);
-
-	for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
-	{
-		auto fr = *i;
-
-		if (fr->geometry == nullptr || 
-			fr->geometry->GetType() != SGeometryType::Surface)
-		{
-			continue;
-		}
-
-		SSurface* surface = (SSurface*)fr->geometry;
-
-		if (MBR::CheckOverlap(mbr, fr->geometry->m_mbr))
-		{
-			int code = fr->m_frid.m_nftc;
-			auto itor = m_dsgir.m_ftcs->m_arr.find(code);
-
-			double centerX = 0;
-			double centerY = 0;
-
-			gisLib->DeviceToWorld(mbr.GetCenterX(), mbr.GetCenterY(), &centerX, &centerY);
-
-			if (SGeometricFuc::inside(centerX, centerY, surface) == 1)
-			{
-				result.push_back(fr->GetID());
-			}
-		}
-	}
-
-	return result;
+	return {};
 }
 
 std::vector<std::string> S101Cell::QueryToCurve(MBR mbr)
@@ -4489,9 +4463,9 @@ void S101Cell::WritePointRecord(pugi::xml_node& node, R_PointRecord* record)
 	//curNode.append_child("gml:pos").append_child(pugi::node_pcdata).set_value()
 }
 
-bool S101Cell::ConvertFromS101GML(S10XGML& gml)
+bool S101Cell::ConvertFromS101GML(S10XGML* gml)
 {
-	S101Creator creator(GetFC(), this);
+	S101Creator creator(this);
 
 	ConvertInformationsFromS101GML(gml, &creator);
 	ConvertFeaturesFromS101GML(gml, &creator);
@@ -4587,9 +4561,9 @@ bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* feature
 	return true;
 }
 
-bool S101Cell::ConvertFeaturesFromS101GML(S10XGML& gml, S101Creator* creator)
+bool S101Cell::ConvertFeaturesFromS101GML(S10XGML* gml, S101Creator* creator)
 {
-	for (auto i = gml.features.begin(); i != gml.features.end(); i++)
+	for (auto i = gml->features.begin(); i != gml->features.end(); i++)
 	{
 		auto feature = (*i);
 		auto code = (*i)->GetCode();
@@ -4640,9 +4614,9 @@ bool S101Cell::ConvertFeaturesFromS101GML(S10XGML& gml, S101Creator* creator)
 	return true;
 }
 
-bool S101Cell::ConvertInformationsFromS101GML(S10XGML& gml, S101Creator* creator)
+bool S101Cell::ConvertInformationsFromS101GML(S10XGML* gml, S101Creator* creator)
 {
-	for (auto i = gml.informations.begin(); i != gml.informations.end(); i++)
+	for (auto i = gml->informations.begin(); i != gml->informations.end(); i++)
 	{
 
 	}
@@ -4650,9 +4624,9 @@ bool S101Cell::ConvertInformationsFromS101GML(S10XGML& gml, S101Creator* creator
 	return true;
 }
 
-bool S101Cell::ConvertGeometriesFromS101GML(S10XGML& gml)
+bool S101Cell::ConvertGeometriesFromS101GML(S10XGML* gml)
 {
-	for (auto i = gml.geometries.begin(); i != gml.geometries.end(); i++)
+	for (auto i = gml->geometries.begin(); i != gml->geometries.end(); i++)
 	{
 		auto type = (*i)->GetType();
 		if (type == GM::GeometryType::Point)
@@ -4697,7 +4671,7 @@ bool S101Cell::InsertMultiPointRecordFromS101GML(GM::MultiPoint* point)
 
 	for (auto i = point->position.begin(); i != point->position.end(); i++)
 	{
-		mr->InsertC3IL(i->GetXInteger(), i->GetYInteger(), i->GetZ() * GetCMFZ());
+		mr->InsertC3IL(i->GetXInteger(), i->GetYInteger(), (int)(i->GetZ() * GetCMFZ()));
 	}
 
 	InsertMultiPointRecord(mr->GetRecordName().GetName(), mr);
@@ -4705,13 +4679,13 @@ bool S101Cell::InsertMultiPointRecordFromS101GML(GM::MultiPoint* point)
 	return true;
 }
 
-bool S101Cell::InsertCurveRecordFromS101GML(S10XGML& gml, GM::Curve* curve)
+bool S101Cell::InsertCurveRecordFromS101GML(S10XGML* gml, GM::Curve* curve)
 {
-	auto pt1 = gml.GetPoint(
+	auto pt1 = gml->GetPoint(
 		curve->segment.front().controlPoints.front().GetXInteger(),
 		curve->segment.front().controlPoints.front().GetYInteger());
 
-	auto pt2 = gml.GetPoint(
+	auto pt2 = gml->GetPoint(
 		curve->segment.front().controlPoints.back().GetXInteger(),
 		curve->segment.front().controlPoints.back().GetYInteger());
 
@@ -4752,7 +4726,7 @@ bool S101Cell::InsertCurveRecordFromS101GML(S10XGML& gml, GM::Curve* curve)
 	return true;
 }
 
-bool S101Cell::InsertCompositeCurveRecordFromS101GML(S10XGML& gml, GM::CompositeCurve* curve)
+bool S101Cell::InsertCompositeCurveRecordFromS101GML(S10XGML* gml, GM::CompositeCurve* curve)
 {
 	auto ccr = new R_CompositeRecord();
 	ccr->SetRCID(curve->GetIDAsInt());
@@ -4762,7 +4736,7 @@ bool S101Cell::InsertCompositeCurveRecordFromS101GML(S10XGML& gml, GM::Composite
 		//auto id = (*i)->baseCurveID;
 		auto id = (*i)->GetID();
 
-		auto curve = gml.GetOrientableCurve(id);
+		auto curve = gml->GetOrientableCurve(id);
 		if (curve) {
 			if (std::string::npos != id.find("occ"))
 			{
@@ -4807,7 +4781,7 @@ bool S101Cell::InsertCompositeCurveRecordFromS101GML(S10XGML& gml, GM::Composite
 	return true;
 }
 
-bool S101Cell::InsertSurfaceRecordFromS101GML(S10XGML & gml, GM::Surface * curve)
+bool S101Cell::InsertSurfaceRecordFromS101GML(S10XGML* gml, GM::Surface * curve)
 {
 	auto sr = new R_SurfaceRecord();
 	sr->SetRCID(curve->GetIDAsInt());

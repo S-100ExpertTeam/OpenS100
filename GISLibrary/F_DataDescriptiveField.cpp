@@ -142,7 +142,7 @@ bool F_DataDescriptiveField::WriteField(CFile* file)
 
 	ddf = Replace(ddf);
 
-	file->Write(ddf.data(), ddf.size());
+	file->Write(ddf.data(), (UINT)ddf.size());
 
 	return true;
 }
@@ -153,7 +153,7 @@ int F_DataDescriptiveField::GetFieldLength()
 
 	ddf = Replace(ddf);
 
-	return ddf.length();
+	return (int)ddf.length();
 }
 
 std::string F_DataDescriptiveField::GetTagName()

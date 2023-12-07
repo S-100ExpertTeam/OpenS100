@@ -2,7 +2,7 @@
 #include "Field.h"
 
 struct  THAS;
-class F_THAS : Field
+class F_THAS : public Field
 {
 public:
 	F_THAS();
@@ -14,4 +14,8 @@ public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	int GetFieldLength();
+
+	void Insert(RecordName name, int taui);
+	void Insert(int rcnm, int rcid, int taui);
+	void Insert(GISLibrary::RCNM rcnm, int rcid, int taui);
 };

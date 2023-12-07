@@ -59,7 +59,16 @@ public:
 
 	void SetPTAS(int rcid);
 	void SetPTAS(int begin_rcid, int end_rcid);
+	void AddPTAS(int rcid, int topi);
+	void SetSEGH(int intp = 4, int circ = 0, double ycoo = 0, double xcoo = 0, double dist = 0, int disu = 0, double sbrg = 0, double angl = 0);
+
 	void InsertC2IL(int x, int y);
+	void InsertC2IL(int cmfx, int cmfy, SAFEARRAY* xcoo, SAFEARRAY* ycoo);
+
+	void GetC2IL(double cmfx, double cmfy, SAFEARRAY** xcoo, SAFEARRAY** ycoo);
+
+	int GetBeginningPointRCID();
+	int GetEndPointRCID();
 
 	std::string GetBeginningPointRCIDasString(std::string prefix = "");
 	std::string GetEndPointRCIDasString(std::string prefix = "");

@@ -6,9 +6,9 @@
 
 #include <algorithm>
 
-CatalogManager::CatalogManager()
+CatalogManager::CatalogManager(D2D1Resources* d2d1)
 {
-
+	D2 = d2d1;
 }
 
 CatalogManager::~CatalogManager()
@@ -60,14 +60,14 @@ PortrayalCatalogue* CatalogManager::addPC(std::wstring path)
 	auto pc = new PortrayalCatalogue();
 
 	if (pc->Open(path)) {
-		if (pc) {
-			pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
-			pc->CreatePatternImages(gisLib->D2.pD2Factory, 
-				gisLib->D2.pImagingFactory, 
-				gisLib->D2.D2D1StrokeStyleGroup.at(0));
-			pc->CreateLineImages(gisLib->D2.pD2Factory, 
-				gisLib->D2.pImagingFactory, 
-				gisLib->D2.D2D1StrokeStyleGroup.at(0));
+		if (pc && D2) {
+			pc->CreateSVGD2Geometry(D2->pD2Factory);
+			pc->CreatePatternImages(D2->pD2Factory,
+				D2->pImagingFactory,
+				D2->D2D1StrokeStyleGroup.at(0));
+			pc->CreateLineImages(D2->pD2Factory,
+				D2->pImagingFactory,
+				D2->D2D1StrokeStyleGroup.at(0));
 		}
 
 		PCs.push_back(pc);

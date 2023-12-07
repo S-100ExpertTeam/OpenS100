@@ -89,7 +89,7 @@ int F_SPAS::GetFieldLength()
 
 int F_SPAS::getCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 SPAS* F_SPAS::getSPAS(int index) const
@@ -103,5 +103,12 @@ SPAS* F_SPAS::getSPAS(int index) const
 
 void F_SPAS::addSPAS(SPAS* item)
 {
+	m_arr.push_back(item);
+}
+
+void F_SPAS::addSPAS(RecordName recordName, int ornt, unsigned int smin, unsigned int smax, int saui)
+{
+	SPAS* item = new SPAS();
+	item->Set(recordName, ornt, smin, smax, saui);
 	m_arr.push_back(item);
 }

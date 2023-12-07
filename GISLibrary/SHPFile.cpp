@@ -3,7 +3,9 @@
 
 SHPFile::SHPFile(void)
 {
-
+	m_nRecords = 0;
+	m_nShapeType = 0;
+	m_pSHPObject = nullptr;
 }
 
 SHPFile::~SHPFile(void)

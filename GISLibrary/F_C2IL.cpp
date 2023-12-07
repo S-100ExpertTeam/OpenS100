@@ -62,3 +62,12 @@ int F_C2IL::GetFieldLength()
 	}
 	return ++len;
 }
+
+void F_C2IL::Insert(int xcoo, int ycoo)
+{
+	C2IL* cont = new C2IL();
+	cont->m_ycoo = ycoo;
+	cont->m_xcoo = xcoo;
+	m_arr.push_back(cont);
+}
+

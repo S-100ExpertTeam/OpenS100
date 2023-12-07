@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <string>
+#include <atlsafe.h>
 
 class SSurface;
 class Symbol;

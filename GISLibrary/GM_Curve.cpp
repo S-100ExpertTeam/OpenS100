@@ -42,7 +42,7 @@ namespace GM
 
 	int Curve::getPointCount()
 	{
-		return segment.front().controlPoints.size();
+		return (int)segment.front().controlPoints.size();
 	}
 
 	double Curve::getX(int index)

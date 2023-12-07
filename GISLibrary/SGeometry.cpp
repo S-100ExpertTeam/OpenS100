@@ -33,7 +33,7 @@ void SGeometry::AddInformationType(GF::InformationType* info)
 
 int SGeometry::GetInformationTypeCount() const
 {
-	return additionalInformation.size();
+	return (int)additionalInformation.size();
 }
 
 GF::InformationType* SGeometry::GetInformationType(int index) const

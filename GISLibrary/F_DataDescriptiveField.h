@@ -78,6 +78,7 @@ public:
 
 public:
 	std::string Replace(std::string text);
+	void ReadField(BYTE*& buf) {};
 	bool WriteField(CFile* file);
 	int GetFieldLength();
 	std::string GetTagName();

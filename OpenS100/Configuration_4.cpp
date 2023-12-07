@@ -63,7 +63,7 @@ BOOL CConfiguration_4::OnInitDialog()
 			return false;
 		}
 
-		auto fc = theApp.gisLib->catalogManager.getFC("S-101");
+		auto fc = theApp.gisLib->GetCatalogManager()->getFC("S-101");
 		if (fc == nullptr)
 		{
 			return false;
@@ -83,9 +83,9 @@ BOOL CConfiguration_4::OnInitDialog()
 			m_viewingGroupList.SetItemText(i, 2, code.c_str());
 			m_viewingGroupList.SetItemText(i, 3, definition.c_str());
 
-			m_viewingGroupList.SetCheck(i, theApp.gisLib->IsFeatureOn(code));
+			m_viewingGroupList.SetCheck(i, theApp.gisLib->GetLayerManager()->IsFeatureOn(code));
 		}
-	
+
 		// Combo box (Product)
 		comboBoxProduct.AddString(L"S-101");
 		comboBoxProduct.SetCurSel(0);
@@ -135,8 +135,7 @@ void CConfiguration_4::Apply()
 	{
 		std::wstring code = m_viewingGroupList.GetItemText(j, COLOUM_INDEX_CODE);
 		bool on = m_viewingGroupList.GetCheck(j);
-
-		theApp.gisLib->SetFeatureOnOff(code, on);
+		theApp.gisLib->GetLayerManager()->SetFeatureOnOff(code, on);
 	}
 
 	theApp.pView->MapRefresh();
