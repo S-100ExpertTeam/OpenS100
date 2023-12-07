@@ -52,4 +52,6 @@ public:
 	void SetProductNumber(std::wstring value);
 
 	void InitDraw();
+
+	void BuildPortrayalCatalogue();
 };

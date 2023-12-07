@@ -59,6 +59,7 @@ public:
 
 	void SetPTAS(int rcid);
 	void SetPTAS(int begin_rcid, int end_rcid);
+	void AddPTAS(int rcid, int topi);
 	void SetSEGH(int intp = 4, int circ = 0, double ycoo = 0, double xcoo = 0, double dist = 0, int disu = 0, double sbrg = 0, double angl = 0);
 
 	void InsertC2IL(int x, int y);

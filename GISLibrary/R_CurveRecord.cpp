@@ -271,6 +271,14 @@ void R_CurveRecord::SetPTAS(int begin_rcid, int end_rcid)
 	m_ptas->m_arr.push_back(new PTAS(end_rcid, 2));
 }
 
+void R_CurveRecord::AddPTAS(int rcid, int topi)
+{
+	if (!m_ptas)
+		m_ptas = new F_PTAS();
+
+	m_ptas->m_arr.push_back(new PTAS(rcid, topi));
+}
+
 void R_CurveRecord::SetSEGH(int intp, int circ, double ycoo, double xcoo, double dist, int disu, double sbrg, double angl)
 {
 	if (m_segh)

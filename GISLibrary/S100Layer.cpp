@@ -4,6 +4,7 @@
 #include "S10XGML.h"
 #include "S100H5.h"
 #include "S102H5.h"
+#include "ProcessS101.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -286,3 +287,31 @@ void S100Layer::InitDraw()
 	drawingSet.Init();
 }
 
+void S100Layer::BuildPortrayalCatalogue()
+{
+	if ((portrayalCatalogue == nullptr) ||
+		(m_spatialObject == nullptr))
+		return;
+
+	if (m_spatialObject->m_FileType != S100_FileType::FILE_S_100_VECTOR)
+		return;
+
+	auto mainRuleFile = portrayalCatalogue->GetMainRuleFile();
+	auto RulefileFormat = portrayalCatalogue->GetRuleFileFormat();
+	auto fileName = mainRuleFile->GetFileName();
+	auto rootPath = portrayalCatalogue->GetRootPath();
+	auto mainRulePath = rootPath + L"Rules\\" + fileName;
+	
+	if (RulefileFormat == Portrayal::FileFormat::LUA)
+		ProcessS101::ProcessS101_LUA(mainRulePath, this);
+	else if (RulefileFormat == Portrayal::FileFormat::XSLT)
+	{
+		auto gml = (S10XGML*)m_spatialObject;
+		gml->SaveToInputXML("..\\TEMP\\input.xml");
+		ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml", this);
+		auto s100so = (S100SpatialObject*)m_spatialObject;
+		s100so->OpenOutputXML("..\\TEMP\\output.xml");
+	}
+
+	return;
+}
