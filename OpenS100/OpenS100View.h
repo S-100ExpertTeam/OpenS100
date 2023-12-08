@@ -75,7 +75,7 @@ public:
 	S100EditRender s100EditRender;
 	S101Creator s101Creator;
 
-	S100::S100_ExchangeCatalogue* m_Ex;
+	std::shared_ptr<S100::S100_ExchangeCatalogue> m_Ex;
 
 protected:
 	std::vector<CString> m_systemFontList;

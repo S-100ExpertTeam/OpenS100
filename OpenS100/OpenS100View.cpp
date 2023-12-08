@@ -116,7 +116,7 @@ COpenS100View::COpenS100View()
 	////pc->Open(L"../pc.xml");
 
 	//delete item;
-	m_Ex = new S100::S100_ExchangeCatalogue();
+	m_Ex = std::make_shared<S100::S100_ExchangeCatalogue>();
 	m_Ex->Open("../CATALOG_Read.txt");
 	
 

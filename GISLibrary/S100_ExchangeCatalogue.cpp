@@ -151,6 +151,8 @@ namespace S100
 
             delete object;
             delete cls;
+            delete curve;
+            delete sSurface;
 
             D2D1_POINT_2F pt;
             pt.x = bb->WestBoundLongitude;
@@ -194,6 +196,8 @@ namespace S100
                          curve->Add(lon, lat);
                      }
                      object->SetExteriorRing(curve);
+
+                     delete curve;
                  }
 
                  S10XGML* cls = new S10XGML();
@@ -208,6 +212,7 @@ namespace S100
 
                  delete object;
                  delete cls;
+                 delete sSurface;
 
                  pt.y += 15;
                  ////maximumDisplayScale 
