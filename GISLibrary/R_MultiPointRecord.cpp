@@ -227,6 +227,52 @@ void R_MultiPointRecord::InsertC3IL(int cmfx, int cmfy, int cmfz, SAFEARRAY* xco
 	return;
 }
 
+void R_MultiPointRecord::SetC3IL(int cmfx, int cmfy, int cmfz, SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo)
+{
+	if (xcoo == nullptr || xcoo->cDims != 1 ||
+		ycoo == nullptr || ycoo->cDims != 1 ||
+		zcoo == nullptr || zcoo->cDims != 1)
+		return;
+
+	for (auto iter : m_c3il)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_c3il.clear();
+
+	m_c3il.push_back(new F_C3IL());
+
+	LONG lBound, uBound;
+	SafeArrayGetLBound(xcoo, 1, &lBound);
+	SafeArrayGetUBound(xcoo, 1, &uBound);
+
+	double* pxData = nullptr;
+	SafeArrayAccessData(xcoo, reinterpret_cast<void**>(&pxData));
+	double* pyData = nullptr;
+	SafeArrayAccessData(ycoo, reinterpret_cast<void**>(&pyData));
+	double* pzData = nullptr;
+	SafeArrayAccessData(zcoo, reinterpret_cast<void**>(&pzData));
+
+	for (LONG i = lBound; i <= uBound; ++i)
+	{
+		double x = pxData[i] * cmfx;
+		double y = pyData[i] * cmfy;
+		double z = pzData[i] * cmfz;
+
+		m_c3il.front()->m_arr.push_back(new C3IL((int)x, (int)y, (int)z));
+	}
+
+	SafeArrayUnaccessData(xcoo);
+	SafeArrayUnaccessData(ycoo);
+	SafeArrayUnaccessData(zcoo);
+
+	return;
+}
+
 void R_MultiPointRecord::GetC3IL(double cmfx, double cmfy, double cmfz, SAFEARRAY** xcoo, SAFEARRAY** ycoo, SAFEARRAY** zcoo)
 {
 	if ((!xcoo) ||
