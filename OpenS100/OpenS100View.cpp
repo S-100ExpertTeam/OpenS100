@@ -117,7 +117,7 @@ COpenS100View::COpenS100View()
 	////pc->Open(L"../pc.xml");
 
 	//delete item;
-	m_Ex = new S100::S100_ExchangeCatalogue();
+	//m_Ex = new S100::S100_ExchangeCatalogue();
 	if (m_Ex) {
 		m_Ex->Open("../CATALOG_Read.txt");
 	}
@@ -332,16 +332,27 @@ COpenS100Doc* COpenS100View::GetDocument() const
 void COpenS100View::Load100File()
 {
 	//load file
-	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST, _T("All supported files (*.000, *.gml, *.h5, *.shp, *.xml)|*.000;*.gml;*.h5;*.shp;*.xml|"), this);
+	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT, 
+		_T("All supported files (*.000, *.gml, *.h5, *.shp, *.xml)|*.000;*.gml;*.h5;*.shp;*.xml|"), this);
 
 	if (dlg.DoModal() == IDOK)
 	{
-		CString filePath = dlg.GetPathName();
+		POSITION pos = dlg.GetStartPosition();
+		while (pos)
+		{
+			CString filePath = dlg.GetNextPathName(pos);
+			// filePath를 사용한 처리
+			theApp.gisLib->AddLayer(filePath); //Add a layer.
+			theApp.m_pDockablePaneLayerManager.UpdateList();
+			
+		}
+
+		MapRefresh();
+
+		//CString filePath = dlg.GetPathName();
 
 		//RemoveLoadFile(); //Delete the existing history.
-		theApp.gisLib->AddLayer(filePath); //Add a layer.
-		theApp.m_pDockablePaneLayerManager.UpdateList();
-		MapRefresh();
+		
 
 		//auto enc = theApp.gisLib->GetLayer(theApp.gisLib->GetLayerManager()->LayerCount() - 1);
 		//enc->GetSpatialObject()->Save(L"../TEMP/temp.gml");
