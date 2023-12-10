@@ -39,8 +39,6 @@ public:
 
 
 
-
-
    /* Base64String Encode() {
         DWORD encodedLen = 0;
         if (!CryptBinaryToStringA(

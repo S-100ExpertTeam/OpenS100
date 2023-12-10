@@ -2,7 +2,6 @@
 
 #include "ScaleBands.h"
 #include "DataCoverage.h"
-#include "Inventory.h"
 #include "../GeoMetryLibrary/MBR.h"
 
 #include <string>
@@ -16,6 +15,6 @@ public:
 	static ScaleBands scaleBands[15];
 
 	static int GetScaleBand(int scale);
-	static std::vector<int> GetScaleBands(DataCoverage dataCoverage);
-	static std::vector<Inventory> SelectDataCoverages(std::vector<Inventory>, int scale, MBR viewport);
+	//static std::vector<int> GetScaleBands(DataCoverage dataCoverage);
+	//static std::vector<Inventory> SelectDataCoverages(std::vector<Inventory>, int scale, MBR viewport);
 };

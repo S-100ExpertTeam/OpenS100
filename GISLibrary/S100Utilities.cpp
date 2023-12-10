@@ -54,33 +54,33 @@ int S100Utilities::GetScaleBand(int scale)
 
 	return 15;
 }
-
-std::vector<int> S100Utilities::GetScaleBands(DataCoverage dataCoverage)
-{
-	int minDS = dataCoverage.getMinDS();
-	int maxDS = dataCoverage.getMaxDS();
-	std::vector<int> S;
-
-	if (minDS < scaleBands[0].maximumScale) {
-		S.push_back(0);
-	}
-
-	for (int i = 1; i <= 14; i++) {
-		if (max(minDS, scaleBands[i].minimumScale) < min(maxDS, scaleBands[i].maximumScale)) {
-			S.push_back(i);
-		}
-	}
-
-	return S;
-}
-
-std::vector<Inventory> S100Utilities::SelectDataCoverages(std::vector<Inventory>, int scale, MBR viewport)
-{
-	std::vector<Inventory> S;
-
-	int SB = GetScaleBand(scale);
-
-	
-
-	return S;
-}
+//
+//std::vector<int> S100Utilities::GetScaleBands(DataCoverage dataCoverage)
+//{
+//	int minDS = dataCoverage.getMinDS();
+//	int maxDS = dataCoverage.getMaxDS();
+//	std::vector<int> S;
+//
+//	if (minDS < scaleBands[0].maximumScale) {
+//		S.push_back(0);
+//	}
+//
+//	for (int i = 1; i <= 14; i++) {
+//		if (max(minDS, scaleBands[i].minimumScale) < min(maxDS, scaleBands[i].maximumScale)) {
+//			S.push_back(i);
+//		}
+//	}
+//
+//	return S;
+//}
+//
+//std::vector<Inventory> S100Utilities::SelectDataCoverages(std::vector<Inventory>, int scale, MBR viewport)
+//{
+//	std::vector<Inventory> S;
+//
+//	int SB = GetScaleBand(scale);
+//
+//	
+//
+//	return S;
+//}

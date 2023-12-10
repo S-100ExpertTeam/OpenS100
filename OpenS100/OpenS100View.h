@@ -2,7 +2,7 @@
 
 #include "../GISLibrary/S100EditRender.h"
 #include "../GISLibrary/S101Creator.h"
-#include "../GISLibrary/S100_ExchangeCatalogue.h"
+#include "../GISLibrary/ExchangeCatalogue.h"
 
 class COpenS100Doc;
 class Layer;
@@ -75,7 +75,7 @@ public:
 	S100EditRender s100EditRender;
 	S101Creator s101Creator;
 
-	std::shared_ptr<S100::S100_ExchangeCatalogue> m_Ex;
+	std::shared_ptr<S100::ExchangeCatalogue> m_Ex;
 
 protected:
 	std::vector<CString> m_systemFontList;

@@ -759,12 +759,6 @@
     <ClCompile Include="ScaleBands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DataCoverage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GM_SurfaceBoundary.cpp">
       <Filter>S100\GM</Filter>
     </ClCompile>
@@ -791,15 +785,6 @@
     </ClCompile>
     <ClCompile Include="GM_SurfacePatch.cpp">
       <Filter>S100\GM</Filter>
-    </ClCompile>
-    <ClCompile Include="SupportFileFormat.cpp">
-      <Filter>S100\ExchangeSetCatalogue</Filter>
-    </ClCompile>
-    <ClCompile Include="ProtectionScheme.cpp">
-      <Filter>S100\ExchangeSetCatalogue</Filter>
-    </ClCompile>
-    <ClCompile Include="EncodingFormat.cpp">
-      <Filter>S100\ExchangeSetCatalogue</Filter>
     </ClCompile>
     <ClCompile Include="CI_Address.cpp">
       <Filter>S100\CI</Filter>
@@ -879,31 +864,28 @@
     <ClCompile Include="requirementType.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_CatalogueScope.cpp">
+    <ClCompile Include="CatalogueScope.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
-    <ClCompile Include="S100_CompliancyCategory.cpp">
+    <ClCompile Include="CompliancyCategory.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
-    <ClCompile Include="S100_EncodingFormat.cpp">
+    <ClCompile Include="EncodingFormat.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
-    <ClCompile Include="S100_NavigationPurpose.cpp">
+    <ClCompile Include="NavigationPurpose.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
-    <ClCompile Include="S100_ProtectionScheme.cpp">
+    <ClCompile Include="ProtectionScheme.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
-    <ClCompile Include="S100_Purpose.cpp">
+    <ClCompile Include="Purpose.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
-    <ClCompile Include="S100_ResourcePurpose.cpp">
+    <ClCompile Include="ResourcePurpose.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
-    <ClCompile Include="S100_SupportFileFormat.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_SupportFileRevisionStatus.cpp">
+    <ClCompile Include="SupportFileRevisionStatus.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
     <ClCompile Include="S100_Date.cpp">
@@ -915,64 +897,64 @@
     <ClCompile Include="S100_Time.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\TempClass</Filter>
     </ClCompile>
-    <ClCompile Include="S100_CatalogueDiscoveryMetadata.cpp">
+    <ClCompile Include="CatalogueDiscoveryMetadata.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
-    <ClCompile Include="S100_CataloguePointofContact.cpp">
+    <ClCompile Include="CataloguePointofContact.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
-    <ClCompile Include="S100_DataCoverage.cpp">
+    <ClCompile Include="DataCoverage.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
-    <ClCompile Include="S100_DatasetDiscoveryMetadata.cpp">
+    <ClCompile Include="DatasetDiscoveryMetadata.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
-    <ClCompile Include="S100_ExchangeCatalogue.cpp">
+    <ClCompile Include="ExchangeCatalogue.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
-    <ClCompile Include="S100_ExchangeCatalogueIdentifier.cpp">
+    <ClCompile Include="ExchangeCatalogueIdentifier.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
-    <ClCompile Include="S100_ProductSpecification.cpp">
+    <ClCompile Include="ProductSpecification.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
-    <ClCompile Include="S100_SupportFileDiscoveryMetadata.cpp">
+    <ClCompile Include="SupportFileDiscoveryMetadata.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
-    <ClCompile Include="S100_SupportFileSpecification.cpp">
+    <ClCompile Include="SupportFileSpecification.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
-    <ClCompile Include="S100_TemporalExtent.cpp">
+    <ClCompile Include="TemporalExtent.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_DisplayPlane.cpp">
+    <ClCompile Include="IC_DisplayPlane.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_DrawingInstruction.cpp">
+    <ClCompile Include="IC_DrawingInstruction.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_Feature.cpp">
+    <ClCompile Include="IC_Feature.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_FeatureDerivation.cpp">
+    <ClCompile Include="IC_FeatureDerivation.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_HybridFC.cpp">
+    <ClCompile Include="IC_HybridFC.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_HybridFeatureCreationRule.cpp">
+    <ClCompile Include="IC_HybridFeatureCreationRule.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_HybridPC.cpp">
+    <ClCompile Include="IC_HybridPC.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_InteroperabilityCatalogue.cpp">
+    <ClCompile Include="IC_InteroperabilityCatalogue.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_PredefinedCombination.cpp">
+    <ClCompile Include="IC_PredefinedCombination.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_IC_SuppressedFeatureLayer.cpp">
+    <ClCompile Include="IC_SuppressedFeatureLayer.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
     <ClCompile Include="S100_SE_DigitalSignature.cpp">
@@ -989,6 +971,12 @@
     </ClCompile>
     <ClCompile Include="S100_SE_CertificateContainerType.cpp">
       <Filter>S100\DataProtection</Filter>
+    </ClCompile>
+    <ClCompile Include="S100ExchangeCatalogue.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportFileFormat.cpp">
+      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1718,12 +1706,6 @@
     <ClInclude Include="ScaleBands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataCoverage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Inventory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Length.h">
       <Filter>S100</Filter>
     </ClInclude>
@@ -1736,55 +1718,46 @@
     <ClInclude Include="indeterminatePosition.h">
       <Filter>S100</Filter>
     </ClInclude>
-    <ClInclude Include="SupportFileFormat.h">
-      <Filter>S100\ExchangeSetCatalogue</Filter>
-    </ClInclude>
-    <ClInclude Include="ProtectionScheme.h">
-      <Filter>S100\ExchangeSetCatalogue</Filter>
-    </ClInclude>
-    <ClInclude Include="EncodingFormat.h">
-      <Filter>S100\ExchangeSetCatalogue</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_IC_InteroperabilityCatalogue.h">
+    <ClInclude Include="IC_InteroperabilityCatalogue.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_DisplayPlane.h">
+    <ClInclude Include="IC_DisplayPlane.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_DrawingInstruction.h">
+    <ClInclude Include="IC_DrawingInstruction.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_Feature.h">
+    <ClInclude Include="IC_Feature.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_SuppressedFeatureLayer.h">
+    <ClInclude Include="IC_SuppressedFeatureLayer.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_FeatureDerivation.h">
+    <ClInclude Include="IC_FeatureDerivation.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_PredefinedCombination.h">
+    <ClInclude Include="IC_PredefinedCombination.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_SuppressedFeatureInstance.h">
+    <ClInclude Include="IC_SuppressedFeatureInstance.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
     <ClInclude Include="requirementType.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_CompleteRule.h">
+    <ClInclude Include="IC_CompleteRule.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_HybridFeature.h">
+    <ClInclude Include="IC_HybridFeature.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_SimpleRule.h">
+    <ClInclude Include="IC_SimpleRule.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_HybridFeatureCreationRule.h">
+    <ClInclude Include="IC_HybridFeatureCreationRule.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_ThematicRule.h">
+    <ClInclude Include="IC_ThematicRule.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
     <ClInclude Include="CT_Catalogue.h">
@@ -1805,10 +1778,10 @@
     <ClInclude Include="CountryCode.h">
       <Filter>S100\IC\TempClass</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_HybridPC.h">
+    <ClInclude Include="IC_HybridPC.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
-    <ClInclude Include="S100_IC_HybridFC.h">
+    <ClInclude Include="IC_HybridFC.h">
       <Filter>S100\IC</Filter>
     </ClInclude>
     <ClInclude Include="dataProduct.h">
@@ -1817,34 +1790,34 @@
     <ClInclude Include="XML_Collection.h">
       <Filter>S100\IC\TempClass</Filter>
     </ClInclude>
-    <ClInclude Include="S100_ExchangeCatalogue.h">
+    <ClInclude Include="ExchangeCatalogue.h">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClInclude>
-    <ClInclude Include="S100_ExchangeCatalogueIdentifier.h">
+    <ClInclude Include="ExchangeCatalogueIdentifier.h">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClInclude>
-    <ClInclude Include="S100_CataloguePointofContact.h">
+    <ClInclude Include="CataloguePointofContact.h">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClInclude>
-    <ClInclude Include="S100_DatasetDiscoveryMetadata.h">
+    <ClInclude Include="DatasetDiscoveryMetadata.h">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClInclude>
-    <ClInclude Include="S100_DataCoverage.h">
+    <ClInclude Include="DataCoverage.h">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClInclude>
-    <ClInclude Include="S100_TemporalExtent.h">
+    <ClInclude Include="TemporalExtent.h">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClInclude>
-    <ClInclude Include="S100_ProductSpecification.h">
+    <ClInclude Include="ProductSpecification.h">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClInclude>
-    <ClInclude Include="S100_SupportFileDiscoveryMetadata.h">
+    <ClInclude Include="SupportFileDiscoveryMetadata.h">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClInclude>
-    <ClInclude Include="S100_SupportFileSpecification.h">
+    <ClInclude Include="SupportFileSpecification.h">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClInclude>
-    <ClInclude Include="S100_CatalogueDiscoveryMetadata.h">
+    <ClInclude Include="CatalogueDiscoveryMetadata.h">
       <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClInclude>
     <ClInclude Include="MD_MaintenanceInformation.h">
@@ -1853,25 +1826,22 @@
     <ClInclude Include="MD_MaintenanceFrequencyCode.h">
       <Filter>S100\MD</Filter>
     </ClInclude>
-    <ClInclude Include="S100_CatalogueScope.h">
+    <ClInclude Include="CatalogueScope.h">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClInclude>
-    <ClInclude Include="S100_CompliancyCategory.h">
+    <ClInclude Include="CompliancyCategory.h">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClInclude>
-    <ClInclude Include="S100_EncodingFormat.h">
+    <ClInclude Include="EncodingFormat.h">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClInclude>
-    <ClInclude Include="S100_ProtectionScheme.h">
+    <ClInclude Include="ProtectionScheme.h">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClInclude>
-    <ClInclude Include="S100_ResourcePurpose.h">
+    <ClInclude Include="ResourcePurpose.h">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClInclude>
-    <ClInclude Include="S100_SupportFileFormat.h">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_SupportFileRevisionStatus.h">
+    <ClInclude Include="SupportFileRevisionStatus.h">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClInclude>
     <ClInclude Include="URI.h">
@@ -1883,10 +1853,10 @@
     <ClInclude Include="URN.h">
       <Filter>S100\ExchangeSetCatalogue\Model\TempClass</Filter>
     </ClInclude>
-    <ClInclude Include="S100_NavigationPurpose.h">
+    <ClInclude Include="NavigationPurpose.h">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClInclude>
-    <ClInclude Include="S100_Purpose.h">
+    <ClInclude Include="Purpose.h">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClInclude>
     <ClInclude Include="S100_SE_CertificateContainerType.h">
@@ -1969,6 +1939,12 @@
     </ClInclude>
     <ClInclude Include="CI_DateTypeCode.h">
       <Filter>S100\CI</Filter>
+    </ClInclude>
+    <ClInclude Include="S100ExchangeCatalogue.h">
+      <Filter>S100</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportFileFormat.h">
+      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
