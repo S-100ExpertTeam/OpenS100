@@ -82,6 +82,11 @@ bool PortrayalCatalogue::ReadPortrayalCatalogueByPugiXML(std::wstring& path)
 
 		pugi::xml_document doc;
 		pugi::xml_parse_result result = doc.load_file(path.c_str()); /// read file
+
+		if (pugi::status_ok != result.status) {
+			return false;
+		}
+
 		pugi::xml_node displayList = doc.child("portrayalCatalog");
 
 		auto productId = displayList.attribute("productId");
@@ -267,11 +272,6 @@ void PortrayalCatalogue::SetS100PCManager(S100PCManager* value)
 {
 	s100PCManager = value;
 }
-
-//void PortrayalCatalogue::SetS100Render(S100Render* value)
-//{
-//	s100Render = *value;
-//}
 
 std::wstring PortrayalCatalogue::GetRootPath()
 {

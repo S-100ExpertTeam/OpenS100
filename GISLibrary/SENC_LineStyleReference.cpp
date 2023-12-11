@@ -42,7 +42,6 @@ void SENC_LineStyleReference::DrawInstruction(
 	Scaler *scaler,
 	PortrayalCatalogue* pc)
 {
-	//auto curve = curveHasOrient->GetCurve();
 	auto curve = curveHasOrient;
 
 	auto numPoints = curve->GetNumPoints();
@@ -80,13 +79,8 @@ void SENC_LineStyleReference::DrawInstruction(
 			ID2D1Bitmap* pBitmap = nullptr;
 			HRESULT hr = rt->CreateBitmapFromWicBitmap(pIWICBitmap, &pBitmap);
 
-			if (!SUCCEEDED(hr))
+			if (SUCCEEDED(hr))
 			{
-				//OutputDebugString(_T("Failed to create bitmap\n"));
-			}
-			else
-			{
-				//pc->GetS100Render().DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
 				gisLib->s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
 				SafeRelease(&pBitmap);
 			}

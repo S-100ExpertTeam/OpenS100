@@ -45,7 +45,7 @@ void SCompositeCurve::SetMBR()
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
 		(*i)->SetMBR();
-		m_mbr.CalcMBR((*i)->GetMBRRef());
+		m_mbr.CalcMBR((*i)->GetMBR());
 	}
 }
 

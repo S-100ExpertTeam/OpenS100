@@ -26,8 +26,6 @@ private:
 
 public:
 	SGeometryType GetType() override;
-
-	int GetRCID();
 	
 	int GetNumPoints() const;
 	int getNumPoint() const override;
@@ -36,11 +34,12 @@ public:
 	double GetY(int index) override;
 	double GetX() override;
 	double GetY() override;
-
-	void Init(int size);
 	void Set(int index, double x, double y) override;
-	
-public:
+	virtual SAbstractCurve* clone() override;
+
+	int GetRCID();
+	void Init(int size);
+
 	void CreateD2Geometry(ID2D1Factory1* factory);
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
@@ -70,6 +69,4 @@ public:
 	bool isDraw();
 
 	void setCenterPoint();
-
-	virtual SAbstractCurve* clone() override;
 };

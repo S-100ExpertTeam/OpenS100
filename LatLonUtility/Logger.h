@@ -78,7 +78,7 @@ public:
 
 private:
     Logger() : exitFlag(false), newLogAdded(false) {
-        workerThread = std::thread(&Logger::ProcessLogs, this);
+        //workerThread = std::thread(&Logger::ProcessLogs, this);
     }
 
     ~Logger() {

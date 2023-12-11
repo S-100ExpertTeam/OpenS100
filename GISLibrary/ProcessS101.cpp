@@ -215,7 +215,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 	// Text Style
 	std::string v_FontColor;
-	std::string v_FontSize;
+	std::string v_FontSize = "10";
 	std::string v_FontProportion;
 	std::string v_FontWeight;
 	std::string v_FontSlant;

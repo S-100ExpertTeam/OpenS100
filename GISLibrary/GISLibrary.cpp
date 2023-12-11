@@ -482,8 +482,6 @@ void CGISLibraryApp::ChangeDisplayFont()
 		//OutputDebugString(errMsg);
 	}
 
-	auto fsfsf = ENCCommon::DISPLAY_FONT_NAME.c_str();
-
 	// Create a DirectWrite text format object.
 	hr = D2.pDWriteFactory->CreateTextFormat(
 		ENCCommon::DISPLAY_FONT_NAME.c_str(),

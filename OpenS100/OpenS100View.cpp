@@ -26,6 +26,7 @@
 #include "../GISLibrary/SCompositeCurve.h"
 #include "../GISLibrary/SSurface.h"
 #include "../GISLibrary/SGeometricFuc.h"
+#include "../GISLibrary/S100_ExchangeCatalogue.h"
 
 #include "../GISLibrary/IC_InteroperabilityCatalogue.h"
 //#include "../GISLibrary/ExchangeCatalogue.h"
@@ -116,8 +117,10 @@ COpenS100View::COpenS100View()
 	////pc->Open(L"../pc.xml");
 
 	//delete item;
-	m_Ex = std::make_shared<S100::ExchangeCatalogue>();
-	m_Ex->Open("../CATALOG_Read.txt");
+	//m_Ex = new S100::S100_ExchangeCatalogue();
+	if (m_Ex) {
+		m_Ex->Open("../CATALOG_Read.txt");
+	}
 	
 
 
@@ -239,7 +242,9 @@ void COpenS100View::OnDraw(CDC* pDC)
 
 			DrawFromMapRefresh(&map_dc, (CRect&)rect);
 
-			m_Ex->DrawCoverage(theApp.gisLib->D2.pRT, theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler(), 0, 0);
+			if (m_Ex) {
+				m_Ex->DrawCoverage(theApp.gisLib->D2.pRT, theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler(), 0, 0);
+			}
 
 			m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
 		}
@@ -327,16 +332,27 @@ COpenS100Doc* COpenS100View::GetDocument() const
 void COpenS100View::Load100File()
 {
 	//load file
-	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST, _T("S-100 Dataset (*.000, *.gml, *.h5)|*.000;*.gml;*.h5|"), this);
+	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT, 
+		_T("All supported files (*.000, *.gml, *.h5, *.shp, *.xml)|*.000;*.gml;*.h5;*.shp;*.xml|"), this);
 
 	if (dlg.DoModal() == IDOK)
 	{
-		CString filePath = dlg.GetPathName();
+		POSITION pos = dlg.GetStartPosition();
+		while (pos)
+		{
+			CString filePath = dlg.GetNextPathName(pos);
+			// filePath를 사용한 처리
+			theApp.gisLib->AddLayer(filePath); //Add a layer.
+			theApp.m_pDockablePaneLayerManager.UpdateList();
+			
+		}
+
+		MapRefresh();
+
+		//CString filePath = dlg.GetPathName();
 
 		//RemoveLoadFile(); //Delete the existing history.
-		theApp.gisLib->AddLayer(filePath); //Add a layer.
-		theApp.m_pDockablePaneLayerManager.UpdateList();
-		MapRefresh();
+		
 
 		//auto enc = theApp.gisLib->GetLayer(theApp.gisLib->GetLayerManager()->LayerCount() - 1);
 		//enc->GetSpatialObject()->Save(L"../TEMP/temp.gml");
@@ -568,6 +584,7 @@ void COpenS100View::MapRefresh()
 void COpenS100View::OpenWorldMap()
 {
 	theApp.gisLib->AddBackgroundLayer(_T("../ProgramData/World/World.shp"));
+	//theApp.gisLib2->AddBackgroundLayer(_T("../ProgramData/World/World.shp"));
 
 	MapRefresh();
 }
@@ -583,6 +600,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// FC
 	auto fc1 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
 	auto fc2 = cm->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml"); // valid(S-102)
+	
 	//auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
 	//auto fc4 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid, but duplicated(S-101)
 	cm->addFC(L"..\\ProgramData\\FC\\S-122_FC.xml");
@@ -591,9 +609,14 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addFC(L"..\\ProgramData\\FC\\S-125_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-127_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-128_FC.xml");
+	cm->addFC(L"..\\ProgramData\\FC\\S-130_FC.xml");
 	cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
+	cm->addFC(L"..\\ProgramData\\FC\\S-421_FC.xml");
+	cm->addFC(L"C:\\Users\\jogm\\Downloads\\[2023.11.20] 초안 - 목포대교\\초안 - 목포대교\\Dynamic Over Head Clearance.xml");
+	cm->addPC(L"C:\\Users\\jogm\\Downloads\\[2023.11.20] 초안 - 목포대교\\초안 - 목포대교\\Dynamic Over Head Clearance\\portrayal_catalogue.xml");
 
 	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
+
 	//auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal_1.1.1\\portrayal_catalogue.xml"); // valid(S-101)
 	//auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
 	cm->addPC(L"..\\ProgramData\\PC\\S100_Portrayal\\portrayal_catalogue.xml");
@@ -604,6 +627,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S128_Portrayal\\portrayal_catalogue.xml");
 	cm->addPC(L"..\\ProgramData\\PC\\S411_Portrayal\\portrayal_catalogue.xml");
+	//cm->addPC(L"..\\ProgramData\\PC\\S421_Portrayal\\portrayal_catalogue.xml");
 
 	auto fc = cm->getFC(101); // get S-101 FC
 	auto pc = cm->getPC("S-101"); // get S-101 PC
@@ -1320,7 +1344,7 @@ void COpenS100View::PickReport(CPoint _point)
 void COpenS100View::PickReport(CPoint _point, int layerIndex)
 {
 	auto layer = theApp.gisLib->GetLayerManager()->GetLayer(layerIndex);
-	if (nullptr == layer)
+	if (nullptr == layer || !layer->IsS100Layer())
 	{
 		return;
 	}
