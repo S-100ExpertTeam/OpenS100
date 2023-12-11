@@ -252,6 +252,7 @@
   <ItemGroup>
     <ClCompile Include="Angle.cpp" />
     <ClCompile Include="ATTR.cpp" />
+    <ClCompile Include="Base64String.cpp" />
     <ClCompile Include="C3IL.cpp" />
     <ClCompile Include="CatalogManager.cpp" />
     <ClCompile Include="CI_Address.cpp" />

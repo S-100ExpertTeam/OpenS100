@@ -978,6 +978,9 @@
     <ClCompile Include="SupportFileFormat.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
+    <ClCompile Include="Base64String.cpp">
+      <Filter>S100\DataProtection\TempClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">

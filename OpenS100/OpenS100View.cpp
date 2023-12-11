@@ -26,7 +26,7 @@
 #include "../GISLibrary/SCompositeCurve.h"
 #include "../GISLibrary/SSurface.h"
 #include "../GISLibrary/SGeometricFuc.h"
-#include "../GISLibrary/S100_ExchangeCatalogue.h"
+#include "../GISLibrary/ExchangeCatalogue.h"
 
 #include "../GISLibrary/IC_InteroperabilityCatalogue.h"
 //#include "../GISLibrary/ExchangeCatalogue.h"
@@ -117,11 +117,7 @@ COpenS100View::COpenS100View()
 	////pc->Open(L"../pc.xml");
 
 	//delete item;
-	//m_Ex = new S100::S100_ExchangeCatalogue();
-	if (m_Ex) {
-		m_Ex->Open("../CATALOG_Read.txt");
-	}
-	
+
 
 
 	//delete ex;
@@ -242,9 +238,9 @@ void COpenS100View::OnDraw(CDC* pDC)
 
 			DrawFromMapRefresh(&map_dc, (CRect&)rect);
 
-			if (m_Ex) {
+		/*	if (m_Ex) {
 				m_Ex->DrawCoverage(theApp.gisLib->D2.pRT, theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler(), 0, 0);
-			}
+			}*/
 
 			m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
 		}

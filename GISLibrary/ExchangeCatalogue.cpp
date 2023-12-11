@@ -22,7 +22,7 @@ namespace S100
         pugi::xml_node nodeList = doc.first_child();
 
         const pugi::char_t* instructionName = nodeList.name();
-        if (!strcmp(instructionName, "S100XC:ExchangeCatalogue"))
+        if (!strcmp(instructionName, "S100XC:S100_ExchangeCatalogue"))
         {
             GetContents(nodeList);
         }
@@ -88,15 +88,15 @@ namespace S100
             }
             else if (!strcmp(instructionName, "S100XC:datasetDiscoveryMetadata"))
             {
-                DatasetDiscoveryMetadata.parseXmlNode(instruction, "S100XC:DatasetDiscoveryMetadata");
+                DatasetDiscoveryMetadata.parseXmlNode(instruction, "S100XC:S100_DatasetDiscoveryMetadata");
             }
             else if (!strcmp(instructionName, "S100XC:catalogueDiscoveryMetadata"))
             {
-                CatalogueDiscoveryMetadata.parseXmlNode(instruction, "S100XC:CatalogueDiscoveryMetadata");
+                CatalogueDiscoveryMetadata.parseXmlNode(instruction, "S100XC:S100_CatalogueDiscoveryMetadata");
             }
             else if (!strcmp(instructionName, "S100XC:supportFileDiscoveryMetadata"))
             {
-                SupportFileDiscoveryMetadata.parseXmlNode(instruction, "S100XC:SupportFileDiscoveryMetadata");
+                SupportFileDiscoveryMetadata.parseXmlNode(instruction, "S100XC:S100_SupportFileDiscoveryMetadata");
             }
             else
             {

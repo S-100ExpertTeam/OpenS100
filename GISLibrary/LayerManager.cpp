@@ -772,12 +772,9 @@ void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)
 	{
 		auto layer = (*i);
 
-		if (layer->IsOn())
+		if (!layer->IsS100Layer())
 		{
-			if (!layer->IsS100Layer())
-			{
-				layer->Draw(hDC, scaler, offset);
-			}
+			layer->Draw(hDC, scaler, offset);
 		}
 	}
 }

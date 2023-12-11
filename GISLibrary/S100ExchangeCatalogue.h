@@ -4,6 +4,8 @@
 
 #include <memory>
 
+using namespace S100;
+
 class Geometry;
 class Scaler;
 
@@ -17,8 +19,7 @@ public:
 public:
 	unsigned int m_nRecords;					// The number of records
 	unsigned int m_nShapeType;					// Shape Type
-	Geometry** m_pSHPObject;
-	std::shared_prt<ExchangeCatalogue> 
+	shared_ptr<ExchangeCatalogue>  m_DataPtr;	//
 
 public:
 	/*
@@ -26,5 +27,5 @@ public:
 	*/
 	bool Open(CString _filepath) override;
 
-	void Draw(HDC& hDC, Scaler* scaler, double offset = 0) override;
-}
+	void Draw(HDC& hDC, Scaler* scaler, double offset) override;
+};
