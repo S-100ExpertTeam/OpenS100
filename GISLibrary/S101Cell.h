@@ -219,7 +219,7 @@ public:
 
 	//============================================================================//
 	void InsertInformationRecord(__int64 key, R_InformationRecord* record);
-	void RemoveInformationRecord(__int64 key, R_InformationRecord* record);
+	void RemoveInformationRecord(__int64 key);
 	R_InformationRecord* GetInformationRecord(__int64 key);
 	R_InformationRecord* GetInformationRecord(std::string key);
 	R_InformationRecord* GetInformationRecord(std::wstring wstringKey);
