@@ -7,6 +7,12 @@ F_C2IT::F_C2IT()
 {
 }
 
+F_C2IT::F_C2IT(const F_C2IT& other)
+{
+	m_xcoo = other.m_xcoo;
+	m_ycoo = other.m_ycoo;
+}
+
 F_C2IT::~F_C2IT()
 {
 

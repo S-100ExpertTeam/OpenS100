@@ -9,6 +9,14 @@ F_FRID::F_FRID(void)
 	m_name.RCID = 0;
 }
 
+F_FRID::F_FRID(const F_FRID& other)
+{
+	m_name = other.m_name;
+	m_nftc = other.m_nftc;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+}
+
 F_FRID::F_FRID(RecordName recordName, int NFTC, int RVER, int RUIN)
 {
 	m_name = recordName;
@@ -22,7 +30,7 @@ F_FRID::~F_FRID(void)
 
 }
 
-void F_FRID::ReadField(BYTE *&buf)
+void F_FRID::ReadField(BYTE*& buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);

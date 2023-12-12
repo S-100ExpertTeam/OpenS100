@@ -5,6 +5,7 @@ class F_FOID : public Field
 {
 public:
 	F_FOID();
+	F_FOID(const F_FOID& other);
 	F_FOID(int AGEN, int FIDN, int FIDS);
 	virtual ~F_FOID();
 

@@ -5,6 +5,7 @@ class F_CRSH : public Field
 {
 public:
 	F_CRSH();
+	F_CRSH(const F_CRSH& other);
 	virtual ~F_CRSH();
 public:
 	/*

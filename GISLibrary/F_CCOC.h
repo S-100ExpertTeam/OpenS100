@@ -6,6 +6,7 @@ class F_CCOC :
 {
 public:
 	F_CCOC();
+	F_CCOC(const F_CCOC& other);
 	virtual ~F_CCOC();
 
 public:

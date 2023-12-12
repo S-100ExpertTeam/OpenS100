@@ -5,6 +5,7 @@ class F_C2FT :
 {
 public:
 	F_C2FT();
+	F_C2FT(const F_C2FT& other);
 	virtual ~F_C2FT();
 public:
 	/*

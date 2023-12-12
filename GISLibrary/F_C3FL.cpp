@@ -9,6 +9,14 @@ F_C3FL::F_C3FL()
 
 }
 
+F_C3FL::F_C3FL(const F_C3FL& other)
+{
+	for (const auto& iter : other.m_arr)
+		Insert(iter->m_xcoo, iter->m_ycoo, iter->m_zcoo);
+
+	m_vcid = other.m_vcid;
+}
+
 F_C3FL::~F_C3FL()
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)

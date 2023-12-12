@@ -9,6 +9,12 @@ F_C2FL::F_C2FL()
 
 }
 
+F_C2FL::F_C2FL(const F_C2FL& other)
+{
+	for (const auto& iter : other.m_arr)
+		Insert(iter->m_xcoo, iter->m_ycoo);
+}
+
 F_C2FL::~F_C2FL()
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)

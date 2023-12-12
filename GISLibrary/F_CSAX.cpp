@@ -8,6 +8,12 @@ F_CSAX::F_CSAX(void)
 
 }
 
+F_CSAX::F_CSAX(const F_CSAX& other)
+{
+	for (const auto& iter : other.m_arr)
+		Insert(iter->m_axty, iter->m_axum);
+}
+
 F_CSAX::~F_CSAX(void)
 {
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)

@@ -11,12 +11,20 @@ F_VDAT::F_VDAT()
 	m_scri = "";
 }
 
+F_VDAT::F_VDAT(const F_VDAT& other)
+{
+	m_dtnm = other.m_dtnm;
+	m_dtid = other.m_dtid;
+	m_dtsr = other.m_dtsr;
+	m_scri = other.m_scri;
+}
+
 F_VDAT::~F_VDAT()
 {
 
 }
 
-void F_VDAT::ReadField(BYTE *&buf)
+void F_VDAT::ReadField(BYTE*& buf)
 {
 	buf2charArr(m_dtnm, buf);
 	buf2charArr(m_dtid, buf);
@@ -49,9 +57,9 @@ bool F_VDAT::WriteField(CFile* file)
 int F_VDAT::GetFieldLength()
 {
 	int len = 0;
-	len += m_dtnm.GetLength()+1;
-	len += m_dtid.GetLength()+1;
+	len += m_dtnm.GetLength() + 1;
+	len += m_dtid.GetLength() + 1;
 	len++;
-	len += m_scri.GetLength()+1;
+	len += m_scri.GetLength() + 1;
 	return ++len;
 }

@@ -6,6 +6,7 @@ class F_SECC :
 {
 public:
 	F_SECC();
+	F_SECC(const F_SECC& other);
 	virtual ~F_SECC();
 
 public:
@@ -16,19 +17,19 @@ public:
 	* {2} - Delete
 	* {3} - Modify
 	*/
-	int *m_seui;
+	int m_seui;
 	/*
 	* Segment index
 	* Format		: b12
 	* Index (position) of the addressed segment in the target record
 	*/
-	int *m_seix;
+	int m_seix;
 	/*
 	* Number of segments
 	* Format		: b12
 	* Number of segments in the update record
 	*/
-	int *m_nseg;
+	int m_nseg;
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);

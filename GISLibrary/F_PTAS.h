@@ -9,6 +9,7 @@ class F_PTAS : public Field
 {
 public:
 	F_PTAS();
+	F_PTAS(const F_PTAS& other);
 	virtual ~F_PTAS();
 
 public:

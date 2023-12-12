@@ -11,6 +11,13 @@ F_SRID::F_SRID(void)
 	m_ruin = 0;
 }
 
+F_SRID::F_SRID(const F_SRID& other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+}
+
 F_SRID::F_SRID(RecordName recordName, int RVER, int RUIN)
 {
 	m_name = recordName;

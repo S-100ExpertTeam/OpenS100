@@ -5,7 +5,17 @@
 
 F_C3FT::F_C3FT()
 {
+	m_ycoo = 0.0;
+	m_xcoo = 0.0;
+	m_zcoo = 0.0;
+}
 
+F_C3FT::F_C3FT(const F_C3FT& other)
+{
+	m_vcid = other.m_vcid;
+	m_ycoo = other.m_ycoo;
+	m_xcoo = other.m_xcoo;
+	m_zcoo = other.m_zcoo;
 }
 
 F_C3FT::~F_C3FT()

@@ -5,6 +5,7 @@ class F_VDAT : public Field
 {
 public:
 	F_VDAT();
+	F_VDAT(const F_VDAT& other);
 	virtual ~F_VDAT();
 
 public:

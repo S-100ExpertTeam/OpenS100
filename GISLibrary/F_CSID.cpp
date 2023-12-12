@@ -10,6 +10,12 @@ F_CSID::F_CSID(void)
 	m_ncrc = 2;
 }
 
+F_CSID::F_CSID(const F_CSID& other)
+{
+	m_name = other.m_name;
+	m_ncrc = other.m_ncrc;
+}
+
 F_CSID::~F_CSID(void)
 {
 

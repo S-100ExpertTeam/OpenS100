@@ -7,6 +7,7 @@ class F_DSID : public Field
 {
 public:
 	F_DSID();
+	F_DSID(const F_DSID& other);
 	virtual ~F_DSID();
 
 public:

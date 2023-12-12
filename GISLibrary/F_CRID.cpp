@@ -11,6 +11,13 @@ F_CRID::F_CRID(void)
 	m_ruin = 0;
 }
 
+F_CRID::F_CRID(const F_CRID& other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+}
+
 F_CRID::F_CRID(RecordName recordName, int RVER, int RUIN)
 {
 	m_name = recordName;

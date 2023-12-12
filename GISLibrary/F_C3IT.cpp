@@ -5,7 +5,17 @@
 
 F_C3IT::F_C3IT()
 {
+	m_ycoo = 0.0;
+	m_xcoo = 0.0;
+	m_zcoo = 0.0;
+}
 
+F_C3IT::F_C3IT(const F_C3IT& other)
+{
+	m_vcid = other.m_vcid;
+	m_ycoo = other.m_ycoo;
+	m_xcoo = other.m_xcoo;
+	m_zcoo = other.m_zcoo;
 }
 
 F_C3IT::~F_C3IT()

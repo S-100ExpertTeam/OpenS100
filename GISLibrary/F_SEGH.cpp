@@ -6,6 +6,18 @@ F_SEGH::F_SEGH(void)
 {
 }
 
+F_SEGH::F_SEGH(const F_SEGH& other)
+{
+	m_intp = other.m_intp;
+	m_circ = other.m_circ;
+	m_ycoo = other.m_ycoo;
+	m_xcoo = other.m_xcoo;
+	m_dist = other.m_dist;
+	m_disu = other.m_disu;
+	m_sbrg = other.m_sbrg;
+	m_angl = other.m_angl;
+}
+
 F_SEGH::~F_SEGH(void)
 {
 

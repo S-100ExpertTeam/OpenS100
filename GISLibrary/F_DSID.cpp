@@ -22,13 +22,31 @@ F_DSID::F_DSID(void)
 	m_dstc.Add(18);
 }
 
+F_DSID::F_DSID(const F_DSID& other)
+{
+	m_name = other.m_name;
+	m_ensp = other.m_ensp;
+	m_ened = other.m_ened;
+	m_prsp = other.m_prsp;
+	m_pred = other.m_pred;
+	m_prof = other.m_prof;
+	m_dsnm = other.m_dsnm;
+	m_dstl = other.m_dstl;
+	m_dsrd = other.m_dsrd;
+	m_dslg = other.m_dslg;
+	m_dsab = other.m_dsab;
+	m_dsed = other.m_dsed;
+	for (int i = 0; i < other.m_dstc.GetSize(); i++)
+		m_dstc.Add(other.m_dstc[i]);
+}
+
 F_DSID::~F_DSID(void)
 {
 	m_dstc.RemoveAll();
 
 }
 
-void F_DSID::ReadField(BYTE *&buf)
+void F_DSID::ReadField(BYTE*& buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);
@@ -37,7 +55,7 @@ void F_DSID::ReadField(BYTE *&buf)
 	buf2charArr(m_prsp, buf);
 	buf2charArr(m_pred, buf);
 	buf2charArr(m_prof, buf);
-	buf2charArr(m_dsnm, buf);			
+	buf2charArr(m_dsnm, buf);
 	buf2charArr(m_dstl, buf);
 
 	m_dsrd.Empty();
@@ -47,7 +65,7 @@ void F_DSID::ReadField(BYTE *&buf)
 	buf2charArr(m_dsed, buf);
 
 	m_dstc.RemoveAll();
-	while(*buf != 0x1E)
+	while (*buf != 0x1E)
 	{
 		m_dstc.Add(*(buf++));
 	}
@@ -113,17 +131,17 @@ int F_DSID::GetFieldLength()
 {
 	int len = 0;
 	len += m_name.GetLength();
-	len += m_ensp.GetLength()+1;
-	len += m_ened.GetLength()+1;
-	len += m_prsp.GetLength()+1;
-	len += m_pred.GetLength()+1;
-	len += m_prof.GetLength()+1;
-	len += m_dsnm.GetLength()+1;
-	len += m_dstl.GetLength()+1;
+	len += m_ensp.GetLength() + 1;
+	len += m_ened.GetLength() + 1;
+	len += m_prsp.GetLength() + 1;
+	len += m_pred.GetLength() + 1;
+	len += m_prof.GetLength() + 1;
+	len += m_dsnm.GetLength() + 1;
+	len += m_dstl.GetLength() + 1;
 	len += m_dsrd.GetLength();
-	len += m_dslg.GetLength()+1;
-	len += m_dsab.GetLength()+1;
-	len += m_dsed.GetLength()+1;
+	len += m_dslg.GetLength() + 1;
+	len += m_dsab.GetLength() + 1;
+	len += m_dsed.GetLength() + 1;
 	len += (int)m_dstc.GetCount();
 	return ++len;
 }

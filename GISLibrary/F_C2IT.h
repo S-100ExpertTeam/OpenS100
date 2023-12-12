@@ -6,6 +6,7 @@ class F_C2IT :
 {
 public:
 	F_C2IT();
+	F_C2IT(const F_C2IT& other);
 	virtual ~F_C2IT();
 
 public:

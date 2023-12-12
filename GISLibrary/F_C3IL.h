@@ -6,6 +6,7 @@ class F_C3IL : public Field
 {
 public:
 	F_C3IL();
+	F_C3IL(const F_C3IL& other);
 	virtual ~F_C3IL();
 
 public:

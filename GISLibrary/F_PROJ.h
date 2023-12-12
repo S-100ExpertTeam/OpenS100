@@ -9,6 +9,7 @@ class F_PROJ :
 {
 public:
 	F_PROJ();
+	F_PROJ(const F_PROJ& other);
 	virtual ~F_PROJ();
 
 public:

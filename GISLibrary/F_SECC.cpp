@@ -5,9 +5,16 @@
 
 F_SECC::F_SECC()
 {
-	m_seui = new int();
-	m_seix = new int();
-	m_nseg = new int();
+	m_seui = 1;
+	m_seix = 0;
+	m_nseg = 0;
+}
+
+F_SECC::F_SECC(const F_SECC& other)
+{
+	m_seui = other.m_seui;
+	m_seix = other.m_seix;
+	m_nseg = other.m_nseg;
 }
 
 F_SECC::~F_SECC()
@@ -17,16 +24,16 @@ F_SECC::~F_SECC()
 
 void F_SECC::ReadField(BYTE *&buf)
 {
-	*m_seui = *(buf++);
-	*m_seix = buf2uint(buf, 2);
-	*m_nseg = buf2uint(buf, 2);
+	m_seui = *(buf++);
+	m_seix = buf2uint(buf, 2);
+	m_nseg = buf2uint(buf, 2);
 }
 
 void F_SECC::ReadField(BYTE *&buf, int loopCnt)
 {
-	*m_seui = *(buf++);
-	*m_seix = buf2uint(buf, 2);
-	*m_nseg = buf2uint(buf, 2);
+	m_seui = *(buf++);
+	m_seix = buf2uint(buf, 2);
+	m_nseg = buf2uint(buf, 2);
 }
 
 int F_SECC::GetFieldLength()

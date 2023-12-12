@@ -5,7 +5,14 @@
 
 F_C2FT::F_C2FT()
 {
+	m_xcoo = 0.0;
+	m_ycoo = 0.0;
+}
 
+F_C2FT::F_C2FT(const F_C2FT& other)
+{
+	m_xcoo = other.m_xcoo;
+	m_ycoo = other.m_ycoo;
 }
 
 F_C2FT::~F_C2FT()

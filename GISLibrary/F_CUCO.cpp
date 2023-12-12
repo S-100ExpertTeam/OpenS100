@@ -9,6 +9,12 @@ F_CUCO::F_CUCO(void)
 
 }
 
+F_CUCO::F_CUCO(const F_CUCO& other)
+{
+	for (const auto& iter : other.m_arr)
+		Insert(iter->m_name, iter->m_ornt);
+}
+
 F_CUCO::~F_CUCO(void)
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)

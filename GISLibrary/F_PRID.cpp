@@ -11,6 +11,13 @@ F_PRID::F_PRID(void)
 	m_ruin = 0;
 }
 
+F_PRID::F_PRID(const F_PRID& other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+}
+
 F_PRID::~F_PRID(void)
 {
 

@@ -5,7 +5,16 @@
 
 F_CCOC::F_CCOC()
 {
+	m_ccui = 1;
+	m_ccix = 0;
+	m_ncco = 0;
+}
 
+F_CCOC::F_CCOC(const F_CCOC& other)
+{
+	m_ccui = other.m_ccui;
+	m_ccix = other.m_ccix;
+	m_ncco = other.m_ncco;
 }
 
 F_CCOC::~F_CCOC()

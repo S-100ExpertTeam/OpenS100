@@ -6,9 +6,10 @@ class F_THAS : public Field
 {
 public:
 	F_THAS();
+	F_THAS(const F_THAS& other);
 	virtual ~F_THAS();
 
-	CList<THAS*> m_arr;
+	std::vector<THAS*> m_arr;
 
 public:
 	void ReadField(BYTE *&buf);

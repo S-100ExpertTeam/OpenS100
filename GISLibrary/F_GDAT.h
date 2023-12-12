@@ -6,6 +6,7 @@ class F_GDAT :
 {
 public:
 	F_GDAT();
+	F_GDAT(const F_GDAT& other);
 	virtual ~F_GDAT();
 
 public:

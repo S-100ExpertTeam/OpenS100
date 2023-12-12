@@ -6,6 +6,7 @@ class F_CUCO : public Field
 {
 public:
 	F_CUCO();
+	F_CUCO(const F_CUCO& other);
 	virtual ~F_CUCO();
 	
 public:

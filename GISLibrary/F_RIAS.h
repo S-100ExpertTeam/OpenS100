@@ -7,6 +7,7 @@ class F_RIAS : public Field
 {
 public:
 	F_RIAS();
+	F_RIAS(const F_RIAS& other);
 	virtual ~F_RIAS();
 	
 public:

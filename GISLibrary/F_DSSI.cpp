@@ -20,6 +20,23 @@ F_DSSI::F_DSSI(void)
 	m_nofr = 0;
 }
 
+F_DSSI::F_DSSI(const F_DSSI& other)
+{
+	m_dcox = other.m_dcox;
+	m_dcoy = other.m_dcoy;
+	m_dcoz = other.m_dcoz;
+	m_cmfx = other.m_cmfx;
+	m_cmfy = other.m_cmfy;
+	m_cmfz = other.m_cmfz;
+	m_noir = other.m_noir;
+	m_nopn = other.m_nopn;
+	m_nomn = other.m_nomn;
+	m_nocn = other.m_nocn;
+	m_noxn = other.m_noxn;
+	m_nosn = other.m_nosn;
+	m_nofr = other.m_nofr;
+}
+
 F_DSSI::~F_DSSI(void)
 {
 

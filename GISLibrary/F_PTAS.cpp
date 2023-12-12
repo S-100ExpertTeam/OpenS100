@@ -9,6 +9,12 @@ F_PTAS::F_PTAS()
 
 }
 
+F_PTAS::F_PTAS(const F_PTAS& other)
+{
+	for (const auto& iter : other.m_arr)
+		Insert(iter->m_name, iter->m_topi);
+}
+
 F_PTAS::~F_PTAS()
 {
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)

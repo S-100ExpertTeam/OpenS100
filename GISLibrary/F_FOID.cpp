@@ -7,6 +7,13 @@ F_FOID::F_FOID(void)
 {
 }
 
+F_FOID::F_FOID(const F_FOID& other)
+{
+	AGEN = other.AGEN;
+	FIDN = other.FIDN;
+	FIDS = other.FIDS;
+}
+
 F_FOID::F_FOID(int AGEN, int FIDN, int FIDS)
 {
 	this->AGEN = AGEN;
