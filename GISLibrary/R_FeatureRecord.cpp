@@ -668,6 +668,8 @@ R_FeatureRecord* R_FeatureRecord::Clone() const
 		F_MASK* f_mask = (!iter) ? nullptr : iter->Clone();
 		fr->m_mask.push_back(f_mask);
 	}
+
+	return fr;
 }
 
 std::string R_FeatureRecord::GetID()
