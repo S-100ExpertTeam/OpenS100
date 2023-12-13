@@ -46,3 +46,12 @@ int F_C2IT::GetFieldLength()
 
 	return ++len;
 }
+
+F_C2IT* F_C2IT::Clone() const
+{
+	F_C2IT* f_c2it = new F_C2IT();
+	f_c2it->m_ycoo = m_ycoo;
+	f_c2it->m_xcoo = m_xcoo;
+
+	return f_c2it;
+}

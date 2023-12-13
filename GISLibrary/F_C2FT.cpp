@@ -37,3 +37,12 @@ int  F_C2FT::GetFieldLength()
 	len += F_C2FT::GetSize();
 	return ++len;
 }
+
+F_C2FT* F_C2FT::Clone() const
+{
+	F_C2FT* f_c2ft = new F_C2FT();
+	f_c2ft->m_ycoo = m_ycoo;
+	f_c2ft->m_xcoo = m_xcoo;
+
+	return f_c2ft;
+}

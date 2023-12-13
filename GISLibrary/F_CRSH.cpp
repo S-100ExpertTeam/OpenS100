@@ -79,3 +79,17 @@ int F_CRSH::GetFieldLength()
 	len += m_scri.GetLength() + 1;
 	return ++len;
 }
+
+F_CRSH* F_CRSH::Clone() const
+{
+	F_CRSH* f_crsh = new F_CRSH();
+	f_crsh->m_crix = m_crix;
+	f_crsh->m_crst = m_crst;
+	f_crsh->m_csty = m_csty;
+	f_crsh->m_crnm = m_crnm;
+	f_crsh->m_crsi = m_crsi;
+	f_crsh->m_crss = m_crss;
+	f_crsh->m_scri = m_scri;
+
+	return f_crsh;
+}

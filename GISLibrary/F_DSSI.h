@@ -62,4 +62,6 @@ public:
 
 	int GetNumberOfFeatureTypeRecords();
 	void SetNumberOfFeatureTypeRecords(int value);
+
+	virtual F_DSSI* Clone() const;
 };

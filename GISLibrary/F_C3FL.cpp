@@ -72,3 +72,21 @@ void F_C3FL::Insert(int xcoo, int ycoo, int zcoo)
 	m_arr.push_back(cont);
 }
 
+F_C3FL* F_C3FL::Clone() const
+{
+	F_C3FL* f_c3fl = new F_C3FL();
+	f_c3fl->m_vcid = m_vcid;
+
+	for (const auto& iter : m_arr)
+	{
+		FC3D* fc3d = new FC3D();
+		fc3d->m_ycoo = iter->m_ycoo;
+		fc3d->m_xcoo = iter->m_xcoo;
+		fc3d->m_zcoo = iter->m_zcoo;
+
+		f_c3fl->m_arr.push_back(fc3d);
+	}
+
+	return f_c3fl;
+}
+

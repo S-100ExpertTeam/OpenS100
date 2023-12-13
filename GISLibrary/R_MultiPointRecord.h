@@ -43,4 +43,6 @@ public:
 
 	std::vector<C2IL*> GetAllC2IL();
 	std::vector<C3IL*> GetAllC3IL();
+
+	R_MultiPointRecord* Clone() const;
 };

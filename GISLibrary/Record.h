@@ -12,6 +12,7 @@ class Record
 {
 public:
 	Record();
+	Record(const Record& other);
 	virtual ~Record();
 
 	Leader leader;

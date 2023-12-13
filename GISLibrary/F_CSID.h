@@ -18,4 +18,6 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	virtual F_CSID* Clone() const;
 };

@@ -473,3 +473,29 @@ std::vector<C2IL*> R_CurveRecord::GetAllC2IL()
 
 	return result;
 }
+
+R_CurveRecord* R_CurveRecord::Clone() const
+{
+	R_CurveRecord* cr = new R_CurveRecord();
+
+	cr->m_crid = m_crid;
+	cr->m_ptas = m_ptas;
+	cr->m_secc = m_secc;
+	cr->m_segh = m_segh;
+	cr->m_cocc = m_cocc;
+	for (const auto& iter : m_c2il)
+	{
+		F_C2IL* c2il = iter;
+		cr->m_c2il.push_back(c2il);
+	}
+
+	for (const auto& iter : m_inas)
+	{
+		F_INAS* inas = iter;
+		cr->m_inas.push_back(inas);
+	}
+
+	return cr;
+}
+
+

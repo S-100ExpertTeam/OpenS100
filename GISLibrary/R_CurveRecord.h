@@ -76,4 +76,6 @@ public:
 	std::string GetC2ILString(int CMFX, int CMFY);
 
 	std::vector<C2IL*> GetAllC2IL();
+
+	R_CurveRecord* Clone() const;
 };

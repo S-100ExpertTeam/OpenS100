@@ -35,4 +35,6 @@ public:
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file) { return true; };
 	int GetFieldLength();
+
+	virtual F_SECC* Clone() const;
 };

@@ -24,4 +24,6 @@ public:
 	int GetFieldLength();
 
 	void Insert(int axty, int axum);
+
+	virtual F_CSAX* Clone() const;
 };

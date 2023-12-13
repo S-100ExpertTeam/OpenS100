@@ -98,3 +98,16 @@ void F_CUCO::Insert(GISLibrary::RCNM rcnm, int rcid, int ornt)
 	m_arr.push_back(cuco);
 }
 
+F_CUCO* F_CUCO::Clone() const
+{
+	F_CUCO* f_cuco = new F_CUCO();
+	for (const auto& iter : m_arr)
+	{
+		CUCO* cuco = new CUCO();
+		cuco->m_name = iter->m_name;
+		cuco->m_ornt = iter->m_ornt;
+		f_cuco->m_arr.push_back(cuco);
+	}
+
+	return f_cuco;
+}

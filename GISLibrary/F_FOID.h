@@ -32,4 +32,6 @@ public:
 	int GetFieldLength();
 
 	__int64 GetName();
+
+	virtual F_FOID* Clone() const;
 };

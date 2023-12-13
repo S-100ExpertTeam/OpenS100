@@ -87,4 +87,6 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	virtual F_SEGH* Clone() const;
 };

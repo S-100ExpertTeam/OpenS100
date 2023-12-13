@@ -23,4 +23,6 @@ public:
 	void Insert(RecordName name, int ornt, int usag, int raui);
 	void Insert(int rcnm, int rcid, int ornt, int usag, int raui);
 	void Insert(GISLibrary::RCNM rcnm, int rcid, int ornt, int usag, int raui);
+
+	virtual F_RIAS* Clone() const;
 };

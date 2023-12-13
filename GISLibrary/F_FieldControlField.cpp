@@ -48,3 +48,22 @@ int F_FieldControlField::GetFieldLength()
 {
 	return (int)(10 + (tagPairs.size() * 8) + 1);
 }
+
+F_FieldControlField* F_FieldControlField::Clone() const
+{
+	F_FieldControlField* fcf = new F_FieldControlField();
+	memset(fcf->byte, 0x00, 10);
+	memcpy(fcf->byte, byte, 10);
+	for (const auto& iter : tagPairs)
+	{
+		TagPair tagPair;
+		memset(&tagPair.tag1, 0x00, 5);
+		memcpy(&tagPair.tag1, iter.tag1, 5);
+		memset(&tagPair.tag2, 0x00, 5);
+		memcpy(&tagPair.tag2, iter.tag2, 5);
+		fcf->tagPairs.push_back(tagPair);
+	}
+
+	return fcf;
+}
+

@@ -14,9 +14,12 @@ public:
 	std::list<FC2D*> m_arr;
 
 public:
-	void ReadField(BYTE *&buf);
-	void ReadField(BYTE *&buf, int loopCnt);
+	void ReadField(BYTE*& buf);
+	void ReadField(BYTE*& buf, int loopCnt);
+	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
 
 	void Insert(int xcoo, int ycoo);
+
+	virtual F_C2FL* Clone() const;
 };

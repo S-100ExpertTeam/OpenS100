@@ -145,3 +145,25 @@ int F_DSID::GetFieldLength()
 	len += (int)m_dstc.GetCount();
 	return ++len;
 }
+
+F_DSID* F_DSID::Clone() const
+{
+	F_DSID* f_dsid = new F_DSID();
+	f_dsid->m_name = m_name;
+	f_dsid->m_ensp = m_ensp;
+	f_dsid->m_ened = m_ened;
+	f_dsid->m_prsp = m_prsp;
+	f_dsid->m_pred = m_pred;
+	f_dsid->m_prof = m_prof;
+	f_dsid->m_dsnm = m_dsnm;
+	f_dsid->m_dstl = m_dstl;
+	f_dsid->m_dsrd = m_dsrd;
+	f_dsid->m_dslg = m_dslg;
+	f_dsid->m_dsab = m_dsab;
+	f_dsid->m_dsed = m_dsed;
+	for (int i = 0; i < m_dstc.GetSize(); i++)
+		f_dsid->m_dstc.Add(m_dstc[i]);
+
+	return f_dsid;
+}
+

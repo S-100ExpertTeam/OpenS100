@@ -14,6 +14,7 @@ class R_InformationRecord : public GF::InformationType, public Record
 {
 public:
 	R_InformationRecord();
+	R_InformationRecord(const R_InformationRecord& other);
 	virtual ~R_InformationRecord();
 
 public:

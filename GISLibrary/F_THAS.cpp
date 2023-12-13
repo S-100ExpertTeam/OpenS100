@@ -82,3 +82,16 @@ void F_THAS::Insert(GISLibrary::RCNM rcnm, int rcid, int taui)
 	m_arr.push_back(thas);
 }
 
+F_THAS* F_THAS::Clone() const
+{
+	F_THAS* f_thas = new F_THAS();
+	for (const auto& iter : m_arr)
+	{
+		THAS* thas = new THAS();
+		thas->m_name = iter->m_name;
+		thas->m_taui = iter->m_taui;
+		f_thas->m_arr.push_back(thas);
+	}
+
+	return f_thas;
+}

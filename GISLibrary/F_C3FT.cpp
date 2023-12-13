@@ -41,3 +41,14 @@ int F_C3FT::GetFieldLength()
 	len += F_C3FT::GetSize();
 	return ++len;
 }
+
+F_C3FT* F_C3FT::Clone() const
+{
+	F_C3FT* f_c3ft = new F_C3FT();
+	f_c3ft->m_vcid = m_vcid;
+	f_c3ft->m_ycoo = m_ycoo;
+	f_c3ft->m_xcoo = m_xcoo;
+	f_c3ft->m_zcoo = m_zcoo;
+
+	return f_c3ft;
+}

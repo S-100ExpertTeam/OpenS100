@@ -27,7 +27,7 @@ int F_CCOC::GetSize()
 	return 5;
 }
 
-void F_CCOC::ReadField(BYTE *&buf)
+void F_CCOC::ReadField(BYTE*& buf)
 {
 	m_ccui = buf2uint(buf, 1);
 	m_ccix = buf2uint(buf, 2);
@@ -42,3 +42,14 @@ int F_CCOC::GetFieldLength()
 	len += 2;
 	return ++len;
 }
+
+F_CCOC* F_CCOC::Clone() const
+{
+	F_CCOC* f_ccoc = new F_CCOC();
+	f_ccoc->m_ccui = m_ccui;
+	f_ccoc->m_ccix = m_ccix;
+	f_ccoc->m_ncco = m_ncco;
+
+	return f_ccoc;
+}
+

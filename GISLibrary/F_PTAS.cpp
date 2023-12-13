@@ -102,3 +102,17 @@ void F_PTAS::Insert(GISLibrary::RCNM rcnm, int rcid, int topi)
 	m_arr.push_back(ptas);
 }
 
+F_PTAS* F_PTAS::Clone() const
+{
+	F_PTAS* f_ptas = new F_PTAS();
+	for (const auto& iter : m_arr)
+	{
+		PTAS* ptas = new PTAS();
+		ptas->m_name = iter->m_name;
+		ptas->m_topi = iter->m_topi;
+		f_ptas->m_arr.push_back(ptas);
+	}
+
+	return f_ptas;
+}
+

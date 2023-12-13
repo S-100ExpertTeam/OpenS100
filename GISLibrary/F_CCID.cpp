@@ -58,3 +58,14 @@ int F_CCID::GetFieldLength()
 	len += 1;
 	return ++len;
 }
+
+F_CCID* F_CCID::Clone() const
+{
+	F_CCID* f_ccid = new F_CCID();
+	f_ccid->m_name = m_name;
+	f_ccid->m_rver = m_rver;
+	f_ccid->m_ruin = m_ruin;
+
+	return f_ccid;
+}
+

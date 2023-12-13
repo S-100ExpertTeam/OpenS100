@@ -58,3 +58,13 @@ int F_SRID::GetFieldLength()
 	len += 1;
 	return ++len;
 }
+
+F_SRID* F_SRID::Clone() const
+{
+	F_SRID* f_srid = new F_SRID();
+	f_srid->m_name = m_name;
+	f_srid->m_rver = m_rver;
+	f_srid->m_ruin = m_ruin;
+
+	return f_srid;
+}

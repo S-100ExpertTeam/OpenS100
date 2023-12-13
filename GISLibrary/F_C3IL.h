@@ -28,4 +28,6 @@ public:
 	int GetFieldLength();
 
 	void Insert(int xcoo, int ycoo, int zcoo);
+
+	virtual F_C3IL* Clone() const;
 };

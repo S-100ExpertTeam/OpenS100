@@ -189,3 +189,19 @@ void R_PointRecord::SetC3IT(int x, int y, int z)
 	m_c3it->m_zcoo = z;
 }
 
+R_PointRecord* R_PointRecord::Clone() const
+{
+	R_PointRecord* pr = new R_PointRecord();
+	pr->m_prid = m_prid;
+	pr->m_c2it = m_c2it;
+	pr->m_c3it = m_c3it;
+
+	for (const auto& iter : m_inas)
+	{
+		F_INAS* inas = iter;
+		pr->m_inas.push_back(inas);
+	}
+
+	return pr;
+}
+

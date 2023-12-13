@@ -38,5 +38,8 @@ public:
 public:
 	static int GetSize();
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
+
+	virtual F_C3FT* Clone() const;
 };

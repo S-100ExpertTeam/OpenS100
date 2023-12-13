@@ -63,3 +63,14 @@ int F_VDAT::GetFieldLength()
 	len += m_scri.GetLength() + 1;
 	return ++len;
 }
+
+F_VDAT* F_VDAT::Clone() const
+{
+	F_VDAT* f_vdat = new F_VDAT();
+	f_vdat->m_dtnm = m_dtnm;
+	f_vdat->m_dtid = m_dtid;
+	f_vdat->m_dtsr = m_dtsr;
+	f_vdat->m_scri = m_scri;
+
+	return f_vdat;
+}

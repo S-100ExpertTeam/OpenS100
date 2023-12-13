@@ -5,6 +5,7 @@ struct ATTR
 {
 public:
 	ATTR();
+	ATTR(const ATTR& other);
 	ATTR(int NATC, int ATIX, int PAIX, int ATIN, CString& ATVL);
 	virtual ~ATTR();
 

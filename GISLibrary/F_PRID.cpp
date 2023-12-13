@@ -58,3 +58,14 @@ int F_PRID::GetFieldLength()
 	len += 1;
 	return ++len;
 }
+
+F_PRID* F_PRID::Clone() const
+{
+	F_PRID* f_prid = new F_PRID();
+	f_prid->m_name = m_name;
+	f_prid->m_rver = m_rver;
+	f_prid->m_ruin = m_ruin;
+
+	return f_prid;
+}
+

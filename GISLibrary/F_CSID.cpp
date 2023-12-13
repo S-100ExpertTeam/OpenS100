@@ -46,3 +46,12 @@ int F_CSID::GetFieldLength()
 	len += 1;
 	return ++len;
 }
+
+F_CSID* F_CSID::Clone() const
+{
+	F_CSID* f_csid = new F_CSID();
+	f_csid->m_name = m_name;
+	f_csid->m_ncrc = m_ncrc;
+
+	return f_csid;
+}

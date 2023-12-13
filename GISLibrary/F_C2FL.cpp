@@ -62,3 +62,17 @@ void F_C2FL::Insert(int xcoo, int ycoo)
 	m_arr.push_back(cont);
 }
 
+F_C2FL* F_C2FL::Clone() const
+{
+	F_C2FL* f_c2fl = new F_C2FL();
+	for (const auto& iter : m_arr)
+	{
+		FC2D* fc2d = new FC2D();
+		fc2d->m_ycoo = iter->m_ycoo;
+		fc2d->m_xcoo = iter->m_xcoo;
+		f_c2fl->m_arr.push_back(fc2d);
+	}
+
+	return f_c2fl;
+}
+

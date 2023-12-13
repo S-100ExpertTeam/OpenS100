@@ -6,6 +6,15 @@ R_VectorRecord::R_VectorRecord()
 
 }
 
+R_VectorRecord::R_VectorRecord(const R_VectorRecord& other)
+{
+	for (const auto& iter : other.m_inas)
+	{
+		F_INAS* inas = iter;
+		m_inas.push_back(inas);
+	}
+}
+
 R_VectorRecord::~R_VectorRecord()
 {
 

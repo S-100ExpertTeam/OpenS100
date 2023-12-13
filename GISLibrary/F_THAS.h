@@ -14,9 +14,12 @@ public:
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
+	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
 
 	void Insert(RecordName name, int taui);
 	void Insert(int rcnm, int rcid, int taui);
 	void Insert(GISLibrary::RCNM rcnm, int rcid, int taui);
+
+	virtual F_THAS* Clone() const;
 };

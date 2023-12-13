@@ -338,3 +338,30 @@ std::vector<C3IL*> R_MultiPointRecord::GetAllC3IL()
 
 	return result;
 }
+
+R_MultiPointRecord* R_MultiPointRecord::Clone() const
+{
+	R_MultiPointRecord* mpr = new R_MultiPointRecord();
+	mpr->m_mrid = m_mrid;
+	mpr->m_cocc = m_cocc;
+
+	for (const auto& iter : m_c2il)
+	{
+		F_C2IL* c2il = iter;
+		mpr->m_c2il.push_back(c2il);
+	}
+
+	for (const auto& iter : m_c3il)
+	{
+		F_C3IL* c3il = iter;
+		mpr->m_c3il.push_back(c3il);
+	}
+
+	for (const auto& iter : m_inas)
+	{
+		F_INAS* inas = iter;
+		mpr->m_inas.push_back(inas);
+	}
+
+	return mpr;
+}

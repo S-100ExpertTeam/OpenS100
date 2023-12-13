@@ -29,7 +29,38 @@ R_FeatureRecord::R_FeatureRecord(const R_FeatureRecord& other)
 	: Record(other),
 	GF::FeatureType(other)
 {
+	m_frid = other.m_frid;
+	m_foid = other.m_foid;
 
+	for (const auto& iter : other.m_attr)
+	{
+		F_ATTR* attr = iter;
+		m_attr.push_back(attr);
+	}
+
+	for (const auto& iter : other.m_inas)
+	{
+		F_INAS* inas = iter;
+		m_inas.push_back(inas);
+	}
+
+	for (const auto& iter : other.m_spas)
+	{
+		F_SPAS* spas = iter;
+		m_spas.push_back(spas);
+	}
+
+	for (const auto& iter : other.m_fasc)
+	{
+		F_FASC* fasc = iter;
+		m_fasc.push_back(fasc);
+	}
+
+	for (const auto& iter : other.m_mask)
+	{
+		F_MASK* mask = iter;
+		m_mask.push_back(mask);
+	}
 }
 
 R_FeatureRecord::~R_FeatureRecord(void)

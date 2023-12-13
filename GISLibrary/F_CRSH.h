@@ -63,5 +63,7 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	virtual F_CRSH* Clone() const;
 };
 

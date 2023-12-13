@@ -159,3 +159,23 @@ std::vector<RIAS*> R_SurfaceRecord::GetAllRIAS()
 
 	return result;
 }
+
+R_SurfaceRecord* R_SurfaceRecord::Clone() const
+{
+	R_SurfaceRecord* sr = new R_SurfaceRecord();
+
+	sr->m_srid = m_srid;
+	for (const auto& iter : m_rias)
+	{
+		F_RIAS* rias = iter;
+		sr->m_rias.push_back(rias);
+	}
+
+	for (const auto& iter : m_inas)
+	{
+		F_INAS* inas = iter;
+		sr->m_inas.push_back(inas);
+	}
+
+	return sr;
+}

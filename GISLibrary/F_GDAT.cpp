@@ -90,3 +90,17 @@ int F_GDAT::GetFieldLength()
 
 	return ++len;
 }
+
+F_GDAT* F_GDAT::Clone() const
+{
+	F_GDAT* f_gdat = new F_GDAT();
+	f_gdat->m_dtnm = m_dtnm;
+	f_gdat->m_elnm = m_elnm;
+	f_gdat->m_esma = m_esma;
+	f_gdat->m_espt = m_espt;
+	f_gdat->m_espm = m_espm;
+	f_gdat->m_cmnm = m_cmnm;
+	f_gdat->m_cmgl = m_cmgl;
+
+	return f_gdat;
+}

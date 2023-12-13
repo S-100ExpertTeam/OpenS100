@@ -25,4 +25,6 @@ public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
+
+	virtual F_FRID* Clone() const;
 };

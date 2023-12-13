@@ -116,3 +116,16 @@ ATTR* F_ATTR::getATTR(int index) const
 
 	return m_arr.at(index);
 }
+
+F_ATTR* F_ATTR::Clone() const
+{
+	F_ATTR* f_attr = new F_ATTR();
+	for (const auto& iter : m_arr)
+	{
+		ATTR* attr = new ATTR(iter->m_natc, iter->m_atix, iter->m_paix, iter->m_atin, iter->m_atvl);
+		f_attr->m_arr.push_back(attr);
+	}
+
+	return f_attr;
+}
+

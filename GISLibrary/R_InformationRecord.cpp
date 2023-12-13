@@ -12,6 +12,23 @@ R_InformationRecord::R_InformationRecord(void)
 
 }
 
+R_InformationRecord::R_InformationRecord(const R_InformationRecord& other) : GF::InformationType(other), Record(other)
+{
+	m_irid = other.m_irid;
+
+	for (const auto& iter : other.m_attr)
+	{
+		F_ATTR* attr = iter;
+		m_attr.push_back(attr);
+	}
+
+	for (const auto& iter : other.m_inas)
+	{
+		F_INAS* inas = iter;
+		m_inas.push_back(inas);
+	}
+}
+
 R_InformationRecord::~R_InformationRecord(void)
 {
 	for (auto itor = m_inas.begin(); itor != m_inas.end(); itor++)

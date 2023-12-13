@@ -59,3 +59,14 @@ int F_MRID::GetFieldLength()
 	len += 1;
 	return ++len;
 }
+
+F_MRID* F_MRID::Clone() const
+{
+	F_MRID* f_mrid = new F_MRID();
+	f_mrid->m_name = m_name;
+	f_mrid->m_rver = m_rver;
+	f_mrid->m_ruin = m_ruin;
+
+	return f_mrid;
+}
+

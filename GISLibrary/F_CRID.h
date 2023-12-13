@@ -20,4 +20,6 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	virtual F_CRID* Clone() const;
 };
