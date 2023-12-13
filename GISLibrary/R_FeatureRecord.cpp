@@ -633,6 +633,43 @@ std::vector<MASK*> R_FeatureRecord::GetAllMASK()
 	return result;
 }
 
+R_FeatureRecord* R_FeatureRecord::Clone() const
+{
+	R_FeatureRecord* fr = new R_FeatureRecord();
+	fr->m_frid = m_frid;
+	fr->m_foid = m_foid;
+
+	for (const auto& iter : m_attr)
+	{
+		F_ATTR* f_attr = iter->Clone();
+		fr->m_attr.push_back(f_attr);
+	}
+
+	for (const auto& iter : m_inas)
+	{
+		F_INAS* f_inas = iter->Clone();
+		fr->m_inas.push_back(f_inas);
+	}
+
+	for (const auto& iter : m_spas)
+	{
+		F_SPAS* f_spas = iter->Clone();
+		fr->m_spas.push_back(f_spas);
+	}
+
+	for (const auto& iter : m_fasc)
+	{
+		F_FASC* f_fasc = iter->Clone();
+		fr->m_fasc.push_back(f_fasc);
+	}
+
+	for (const auto& iter : m_mask)
+	{
+		F_MASK* f_mask = iter->Clone();
+		fr->m_mask.push_back(f_mask);
+	}
+}
+
 std::string R_FeatureRecord::GetID()
 {
 	return std::to_string(GetRCID());

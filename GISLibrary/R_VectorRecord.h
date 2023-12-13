@@ -16,4 +16,6 @@ public:
 
 public:
 	std::vector<F_INAS*> GetAllInformationAssociations();
+
+	virtual Record* Clone() const = 0;
 };

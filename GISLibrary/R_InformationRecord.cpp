@@ -232,7 +232,7 @@ std::vector<ATTR*> R_InformationRecord::GetChildAttributes(ATTR* parentATTR)
 	std::vector<ATTR*> result;
 	int parentIndex = -1;
 
-	for (int i = 0; i < allAttributes.size(); i++)
+	for (int i = 0; i < (int)allAttributes.size(); i++)
 	{
 		if (parentATTR == allAttributes[i])
 		{
@@ -262,7 +262,7 @@ std::vector<ATTR*> R_InformationRecord::GetChildAttributes(ATTR* parentATTR, int
 	std::vector<ATTR*> result;
 	int parentIndex = -1;
 
-	for (int i = 0; i < allAttributes.size(); i++)
+	for (int i = 0; i < (int)allAttributes.size(); i++)
 	{
 		if (parentATTR == allAttributes[i])
 		{
@@ -303,7 +303,7 @@ int R_InformationRecord::GetAttributeIndex(ATTR* attr)
 		auto ATTRs = m_attr.front();
 		for (
 			int i = 0;
-			i < ATTRs->m_arr.size();
+			i < (int)ATTRs->m_arr.size();
 			i++)
 		{
 			if (ATTRs->m_arr[i] == attr)
@@ -314,6 +314,26 @@ int R_InformationRecord::GetAttributeIndex(ATTR* attr)
 	}
 
 	return 0;
+}
+
+R_InformationRecord* R_InformationRecord::Clone() const
+{
+	R_InformationRecord* ir = new R_InformationRecord();
+	ir->m_irid = m_irid;
+
+	for (const auto& iter : m_attr)
+	{
+		F_ATTR* f_attr = iter->Clone();
+		ir->m_attr.push_back(f_attr);
+	}
+
+	for (const auto& iter : m_inas)
+	{
+		F_INAS* f_inas = iter->Clone();
+		ir->m_inas.push_back(f_inas);
+	}
+
+	return ir;
 }
 
 std::string R_InformationRecord::GetID()
@@ -380,7 +400,7 @@ std::string R_InformationRecord::GetAttributeValue(int index)
 int R_InformationRecord::GetParentAttributeIndex(int index)
 {
 	auto attr = GetAllAttributes();
-	if (index >= 0 && index < attr.size())
+	if (index >= 0 && index < (int)attr.size())
 	{
 		return attr.at(index)->m_paix;
 	}

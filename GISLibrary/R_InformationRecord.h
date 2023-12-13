@@ -46,6 +46,8 @@ public:
 
 	int GetAttributeIndex(ATTR* attr);
 
+	virtual R_InformationRecord* Clone() const;
+
 public: // override ObjectType
 	std::string GetID() override;
 	std::wstring GetIDAsWString() override;
