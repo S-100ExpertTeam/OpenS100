@@ -190,7 +190,7 @@ R_DSCRS* R_DSCRS::Clone() const
 
 	for (const auto& iter : m_crsh)
 	{
-		F_CRSH* f_crsh = iter->Clone();
+		F_CRSH* f_crsh = (!iter) ? nullptr : iter->Clone();
 		r_dscrs->m_crsh.push_back(f_crsh);
 	}
 	r_dscrs->m_csax = (!m_csax) ? nullptr : m_csax->Clone();

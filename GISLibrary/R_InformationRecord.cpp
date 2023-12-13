@@ -323,13 +323,13 @@ R_InformationRecord* R_InformationRecord::Clone() const
 
 	for (const auto& iter : m_attr)
 	{
-		F_ATTR* f_attr = iter->Clone();
+		F_ATTR* f_attr = (!iter) ? nullptr : iter->Clone();
 		ir->m_attr.push_back(f_attr);
 	}
 
 	for (const auto& iter : m_inas)
 	{
-		F_INAS* f_inas = iter->Clone();
+		F_INAS* f_inas = (!iter) ? nullptr : iter->Clone();
 		ir->m_inas.push_back(f_inas);
 	}
 

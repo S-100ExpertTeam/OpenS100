@@ -182,13 +182,13 @@ R_CompositeRecord* R_CompositeRecord::Clone() const
 	ccr->m_ccoc = m_ccoc;
 	for (const auto& iter : m_cuco)
 	{
-		F_CUCO* cuco = iter;
+		F_CUCO* cuco = (!iter) ? nullptr : iter->Clone();
 		ccr->m_cuco.push_back(cuco);
 	}
 
 	for (const auto& iter : m_inas)
 	{
-		F_INAS* inas = iter;
+		F_INAS* inas = (!iter) ? nullptr : iter->Clone();
 		ccr->m_inas.push_back(inas);
 	}
 

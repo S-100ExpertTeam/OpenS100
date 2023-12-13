@@ -198,7 +198,7 @@ R_PointRecord* R_PointRecord::Clone() const
 
 	for (const auto& iter : m_inas)
 	{
-		F_INAS* inas = iter;
+		F_INAS* inas = (!iter) ? nullptr : iter->Clone();
 		pr->m_inas.push_back(inas);
 	}
 

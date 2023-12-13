@@ -19,34 +19,34 @@ R_MultiPointRecord::~R_MultiPointRecord(void)
 	delete m_cocc;
 	for (auto itor = m_inas.begin(); itor != m_inas.end(); itor++)
 	{
-		delete *itor;
+		delete* itor;
 	}
 
 	for (auto itor = m_c3il.begin(); itor != m_c3il.end(); itor++)
 	{
-		delete *itor;
+		delete* itor;
 	}
 
 	for (auto itor = m_c2il.begin(); itor != m_c2il.end(); itor++)
 	{
-		delete *itor;
+		delete* itor;
 	}
 }
 
 #pragma warning(disable:4018)
-BOOL R_MultiPointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
+BOOL R_MultiPointRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
 	USES_CONVERSION;
 	int i = 0, j = 0, cnt;
-	for(unsigned i = 0; i < dir->m_count; i++)
+	for (unsigned i = 0; i < dir->m_count; i++)
 	{
-		if(strcmp(dir->GetDirectory(i)->tag, "MRID") == 0)
+		if (strcmp(dir->GetDirectory(i)->tag, "MRID") == 0)
 		{
 			m_mrid.ReadField(buf);
 		}
 		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
-			F_INAS *inas = new F_INAS();
+			F_INAS* inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
@@ -78,7 +78,7 @@ BOOL R_MultiPointRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		{
 			buf += dir->GetDirectory(i)->length;
 		}
-		
+
 		if (*(buf++) != 0x1E)
 		{
 
@@ -328,7 +328,7 @@ std::vector<C2IL*> R_MultiPointRecord::GetAllC2IL()
 std::vector<C3IL*> R_MultiPointRecord::GetAllC3IL()
 {
 	std::vector<C3IL*> result;
-	
+
 	for (auto i = m_c3il.begin(); i != m_c3il.end(); i++) {
 		auto c3il = *i;
 		for (auto j = c3il->m_arr.begin(); j != c3il->m_arr.end(); j++) {
@@ -343,23 +343,23 @@ R_MultiPointRecord* R_MultiPointRecord::Clone() const
 {
 	R_MultiPointRecord* mpr = new R_MultiPointRecord();
 	mpr->m_mrid = m_mrid;
-	mpr->m_cocc = m_cocc;
+	mpr->m_cocc = (!m_cocc) ? nullptr : m_cocc->Clone();
 
 	for (const auto& iter : m_c2il)
 	{
-		F_C2IL* c2il = iter;
+		F_C2IL* c2il = (!iter) ? nullptr : iter->Clone();
 		mpr->m_c2il.push_back(c2il);
 	}
 
 	for (const auto& iter : m_c3il)
 	{
-		F_C3IL* c3il = iter;
+		F_C3IL* c3il = (!iter) ? nullptr : iter->Clone();
 		mpr->m_c3il.push_back(c3il);
 	}
 
 	for (const auto& iter : m_inas)
 	{
-		F_INAS* inas = iter;
+		F_INAS* inas = (!iter) ? nullptr : iter->Clone();
 		mpr->m_inas.push_back(inas);
 	}
 
