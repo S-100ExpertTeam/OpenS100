@@ -47,7 +47,7 @@ namespace GM
 
 	double CompositeCurve::getX(int index)
 	{
-		for (int i = 0; i < component.size(); i++) {
+		for (int i = 0; i < (int)component.size(); i++) {
 			if (index < component.at(i)->getPointCount()) {
 				return component.at(i)->getX(index);
 			}
@@ -61,7 +61,7 @@ namespace GM
 
 	double CompositeCurve::getY(int index)
 	{
-		for (int i = 0; i < component.size(); i++) {
+		for (int i = 0; i < (int)component.size(); i++) {
 			if (index < component.at(i)->getPointCount()) {
 				return component.at(i)->getY(index);
 			}

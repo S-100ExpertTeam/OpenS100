@@ -96,7 +96,7 @@ namespace GM
 
 	GM::Ring* Surface::getInteriorRing(int n)
 	{
-		if (n < 0 || n >= patch.boundary.interior.size())
+		if (n < 0 || n >= (int)patch.boundary.interior.size())
 		{
 			return nullptr;
 		}

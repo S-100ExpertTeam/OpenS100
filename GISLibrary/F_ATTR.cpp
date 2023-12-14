@@ -110,7 +110,7 @@ int F_ATTR::getCount() const
 
 ATTR* F_ATTR::getATTR(int index) const
 {
-	if (index < 0 || index >= m_arr.size()) {
+	if (index < 0 || index >= (int)m_arr.size()) {
 		return nullptr;
 	}
 
