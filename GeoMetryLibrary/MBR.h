@@ -45,8 +45,12 @@ public:
 	void Scale(double Scale);
 	bool operator== (MBR& _mbr);
 
+	bool Intersects(MBR _mbr);
+	bool Overlap(MBR _mbr);
+
 	// static 
 public:
+	static bool CheckIntersects(MBR _mbr1, MBR _mbr2);
 	static bool CheckOverlap(MBR screenMBR, MBR objMBR);
 	static bool IntersectMBR(const MBR& _mbr1, const MBR& _mbr2, MBR& _intersectMBR);
 };
