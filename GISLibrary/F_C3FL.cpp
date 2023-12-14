@@ -12,7 +12,14 @@ F_C3FL::F_C3FL()
 F_C3FL::F_C3FL(const F_C3FL& other)
 {
 	for (const auto& iter : other.m_arr)
-		Insert(iter->m_xcoo, iter->m_ycoo, iter->m_zcoo);
+	{
+		FC3D* cont = new FC3D();
+		cont->m_ycoo = iter->m_ycoo;
+		cont->m_xcoo = iter->m_xcoo;
+		cont->m_zcoo = iter->m_zcoo;
+
+		m_arr.push_back(cont);
+	}
 
 	m_vcid = other.m_vcid;
 }

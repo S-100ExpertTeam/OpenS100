@@ -12,7 +12,12 @@ F_C2FL::F_C2FL()
 F_C2FL::F_C2FL(const F_C2FL& other)
 {
 	for (const auto& iter : other.m_arr)
-		Insert(iter->m_xcoo, iter->m_ycoo);
+	{
+		FC2D* cont = new FC2D();
+		cont->m_ycoo = iter->m_ycoo;
+		cont->m_xcoo = iter->m_xcoo;
+		m_arr.push_back(cont);
+	}
 }
 
 F_C2FL::~F_C2FL()
