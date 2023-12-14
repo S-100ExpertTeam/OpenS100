@@ -88,6 +88,7 @@ private:
 	std::vector<R_SurfaceRecord*> vecSurface;
 	std::vector<R_FeatureRecord*> vecFeature;
 
+	std::vector<__int64> m_feaMatchingKeys;
 public:
 	R_DSGIR* GetDatasetGeneralInformationRecord();
 	void UpdateRemoveAll(void);
@@ -297,6 +298,12 @@ public:
 	void RemoveFeatureMapKey(long long key);
 	void RemoveAllFeatureRecord();
 	std::vector<R_FeatureRecord*>& GetVecFeature();
+
+	void InsertFeatureFilter(__int64 key);
+	void InsertFeatureFilter(std::string key);
+	void InsertFeatureFilter(std::wstring wstringKey);
+	void RemoveFeatureFilter();
+	std::vector<__int64>& GetFeatureFilter();
 
 	//============================================================================//
 	int GetCount_InformationRecord();
