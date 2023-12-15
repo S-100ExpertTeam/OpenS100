@@ -2089,7 +2089,7 @@ std::vector<R_FeatureRecord*>& S101Cell::GetVecFeature()
 
 void S101Cell::InsertFeatureFilter(__int64 key)
 {
-	m_feaMatchingKeys.push_back(key);
+	m_feaMatchingKeys.insert(key);
 }
 
 void S101Cell::InsertFeatureFilter(std::string key)
@@ -2110,7 +2110,7 @@ void S101Cell::RemoveFeatureFilter()
 	m_feaMatchingKeys.clear();
 }
 
-std::vector<__int64>& S101Cell::GetFeatureFilter()
+std::set<__int64>& S101Cell::GetFeatureFilter()
 {
 	return m_feaMatchingKeys;
 }
