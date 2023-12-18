@@ -6,6 +6,17 @@ Leader::Leader()
 
 }
 
+Leader::Leader(const Leader& other)
+{
+	recordLength = other.recordLength;
+	baseAddressOfFieldArea = other.baseAddressOfFieldArea;
+		
+	sizeOfFieldLengthField = other.sizeOfFieldLengthField;
+	sizeOfFieldPositionField = other.sizeOfFieldPositionField;
+
+	memcpy(byte, other.byte, 24);
+}
+
 Leader::~Leader()
 {
 

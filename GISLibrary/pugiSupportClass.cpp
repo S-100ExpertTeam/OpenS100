@@ -50,6 +50,8 @@ namespace S100 {
                 return instruction.child_value();
             }
         }
+
+        return nullptr;
     }
 
     void GetContentItemVector(pugi::xml_node& node, std::string nodeName, std::vector<std::string>& item, std::string nodeNameSpace)

@@ -1865,13 +1865,15 @@ void COpenS100View::SetPick(S100SpatialObject* enc, std::wstring featureID)
 {
 	encPick = enc;
 	featurePick = featureID;
-
+	
 	if (enc && enc->GetProductNumber() == 101)
 	{
+		if (s101Creator == nullptr)
+			s101Creator = new S101Creator((S101Cell*)enc);
 		s101Creator->Set(theApp.gisLib->GetCatalogManager()->getFC(), (S101Cell*)enc);
 	}
-	else
-	{
-		s101Creator->Set(nullptr, nullptr);
-	}
+	//else
+	//{
+	//	s101Creator->Set(nullptr, nullptr);
+	//}
 }

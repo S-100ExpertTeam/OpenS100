@@ -400,7 +400,7 @@ void PortrayalCatalogue::GetLineStylesByPugiXml()
 					lineStyle->GetContents(instruction);
 
 					std::vector<S100_Description*>* vecDescription = lineStyleFile->GetDescription();
-					for (int i = 0; i < vecDescription->size(); i++)
+					for (int i = 0; i < (int)vecDescription->size(); i++)
 						s100_lineStyles[vecDescription->at(i)->Getname()] = lineStyle;
 				}
 				else if (!strcmp(instructionName, "compositeLineStyle"))
@@ -409,7 +409,7 @@ void PortrayalCatalogue::GetLineStylesByPugiXml()
 					cls->GetContents(instruction);
 
 					std::vector<S100_Description*>* vecDescription = lineStyleFile->GetDescription();
-					for (int i = 0; i < vecDescription->size(); i++)
+					for (int i = 0; i < (int)vecDescription->size(); i++)
 						s100_lineStyles[vecDescription->at(i)->Getname()] = cls;
 				}
 			}

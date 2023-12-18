@@ -6,6 +6,7 @@ class F_CSID : public Field
 {
 public:
 	F_CSID();
+	F_CSID(const F_CSID& other);
 	virtual ~F_CSID();
 
 public:
@@ -17,4 +18,6 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	virtual F_CSID* Clone() const;
 };

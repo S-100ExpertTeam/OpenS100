@@ -20,6 +20,23 @@ F_DSSI::F_DSSI(void)
 	m_nofr = 0;
 }
 
+F_DSSI::F_DSSI(const F_DSSI& other)
+{
+	m_dcox = other.m_dcox;
+	m_dcoy = other.m_dcoy;
+	m_dcoz = other.m_dcoz;
+	m_cmfx = other.m_cmfx;
+	m_cmfy = other.m_cmfy;
+	m_cmfz = other.m_cmfz;
+	m_noir = other.m_noir;
+	m_nopn = other.m_nopn;
+	m_nomn = other.m_nomn;
+	m_nocn = other.m_nocn;
+	m_noxn = other.m_noxn;
+	m_nosn = other.m_nosn;
+	m_nofr = other.m_nofr;
+}
+
 F_DSSI::~F_DSSI(void)
 {
 
@@ -151,3 +168,25 @@ void F_DSSI::SetNumberOfFeatureTypeRecords(int value)
 {
 	m_nofr = value;
 }
+
+F_DSSI* F_DSSI::Clone() const
+{
+	F_DSSI* f_dssi = new F_DSSI();
+
+	f_dssi->m_dcox = m_dcox;
+	f_dssi->m_dcoy = m_dcoy;
+	f_dssi->m_dcoz = m_dcoz;
+	f_dssi->m_cmfx = m_cmfx;
+	f_dssi->m_cmfy = m_cmfy;
+	f_dssi->m_cmfz = m_cmfz;
+	f_dssi->m_noir = m_noir;
+	f_dssi->m_nopn = m_nopn;
+	f_dssi->m_nomn = m_nomn;
+	f_dssi->m_nocn = m_nocn;
+	f_dssi->m_noxn = m_noxn;
+	f_dssi->m_nosn = m_nosn;
+	f_dssi->m_nofr = m_nofr;
+
+	return f_dssi;
+}
+

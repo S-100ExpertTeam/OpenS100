@@ -5,6 +5,7 @@ class F_FOID : public Field
 {
 public:
 	F_FOID();
+	F_FOID(const F_FOID& other);
 	F_FOID(int AGEN, int FIDN, int FIDS);
 	virtual ~F_FOID();
 
@@ -31,4 +32,6 @@ public:
 	int GetFieldLength();
 
 	__int64 GetName();
+
+	virtual F_FOID* Clone() const;
 };

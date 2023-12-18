@@ -153,8 +153,8 @@ namespace S100
             delete cls;
 
             D2D1_POINT_2F pt;
-            pt.x = bb->WestBoundLongitude;
-            pt.y = bb->NorthBoundLatitude;
+            pt.x = (FLOAT)bb->WestBoundLongitude;
+            pt.y = (FLOAT)bb->NorthBoundLatitude;
 
             projection(pt.x,pt.y);
 
@@ -170,7 +170,7 @@ namespace S100
             brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
             pD2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
   
-            pD2->pRT->DrawTextW(fileName, fileName.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, Width, Height), brush);
+            pD2->pRT->DrawTextW(fileName, fileName.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
 
             //Datacorverage
             for (int j = 0; j < ddm.DataCoverage.size(); j++)
@@ -185,7 +185,7 @@ namespace S100
                      auto curve = new GM::Curve();
                      
                      auto strPosList = LatLonUtility::Split(LatLonUtility::TrimRight(dc.BoundingPolygon.Polygon.Geom[geoms]), " ");
-                     int posCnt = strPosList.size();
+                     int posCnt = (int)strPosList.size();
 
                      if (posCnt < 4 && posCnt % 2 != 0)
                          break;
@@ -203,7 +203,7 @@ namespace S100
                  auto sSurface = cls->SurfaceToSSurface(object);
                  sSurface->CreateD2Geometry(pD2->Factory());
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-                 brush->SetOpacity(0.3);
+                 brush->SetOpacity((FLOAT)0.3);
                  pD2->pRT->FillGeometry(sSurface->GetD2Geometry(), brush);
 
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Blue));
@@ -225,7 +225,7 @@ namespace S100
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
                  brush->SetOpacity(1);
                  pD2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-                 pD2->pRT->DrawTextW(maximumDisplayScale, maximumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, Width, Height), brush);
+                 pD2->pRT->DrawTextW(maximumDisplayScale, maximumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
                  
                  pt.y += 15;
                 ////minimumDisplayScale 
@@ -239,7 +239,7 @@ namespace S100
                     minimumDisplayScale = L"MinimumDisplayScale : - ";
                 brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
                 pD2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-                pD2->pRT->DrawTextW(minimumDisplayScale, minimumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, Width, Height), brush);
+                pD2->pRT->DrawTextW(minimumDisplayScale, minimumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
 
 
                 pt.y += 15;

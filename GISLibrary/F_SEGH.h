@@ -5,6 +5,7 @@ class F_SEGH : public Field
 {
 public:
 	F_SEGH();
+	F_SEGH(const F_SEGH& other);
 	virtual ~F_SEGH();
 
 public:
@@ -86,4 +87,6 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	virtual F_SEGH* Clone() const;
 };

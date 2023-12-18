@@ -37,4 +37,6 @@ public:
 	void InsertCurve(int rcnm, int rcid, int ornt);
 
 	std::vector<CUCO*> GetAllCUCO();
+
+	R_CompositeRecord* Clone() const;
 };

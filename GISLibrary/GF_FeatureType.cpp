@@ -107,7 +107,7 @@ namespace GF
 
 	FeatureAssociationType FeatureType::getFeatureAssociation(int index)
 	{
-		if (index < 0 || index >= featureAssociations.size())
+		if (index < 0 || index >= (int)featureAssociations.size())
 		{
 			return FeatureAssociationType();
 		}

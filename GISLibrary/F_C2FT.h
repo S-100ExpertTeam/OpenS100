@@ -5,6 +5,7 @@ class F_C2FT :
 {
 public:
 	F_C2FT();
+	F_C2FT(const F_C2FT& other);
 	virtual ~F_C2FT();
 public:
 	/*
@@ -23,5 +24,8 @@ public:
 
 public:
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
+
+	virtual F_C2FT* Clone() const;
 };

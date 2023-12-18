@@ -7,6 +7,7 @@ class F_IRID : public F_FRID
 
 public:
 	F_IRID();
+	F_IRID(const F_IRID& other);
 	F_IRID(RecordName recordName, int NFTC, int RVER = 1, int RUIN = 1);
 	virtual ~F_IRID();
 

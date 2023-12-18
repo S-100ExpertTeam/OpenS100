@@ -5,6 +5,7 @@ class F_VDAT : public Field
 {
 public:
 	F_VDAT();
+	F_VDAT(const F_VDAT& other);
 	virtual ~F_VDAT();
 
 public:
@@ -17,4 +18,6 @@ public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
+
+	virtual F_VDAT* Clone() const;
 };

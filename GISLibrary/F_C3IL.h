@@ -6,6 +6,7 @@ class F_C3IL : public Field
 {
 public:
 	F_C3IL();
+	F_C3IL(const F_C3IL& other);
 	virtual ~F_C3IL();
 
 public:
@@ -27,4 +28,6 @@ public:
 	int GetFieldLength();
 
 	void Insert(int xcoo, int ycoo, int zcoo);
+
+	virtual F_C3IL* Clone() const;
 };

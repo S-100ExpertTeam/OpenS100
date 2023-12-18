@@ -21,5 +21,7 @@ public:
     bool WriteRecord(CFile* file);
 
     void AddDDF(F_DataDescriptiveField ddf);
+
+    virtual R_DDR* Clone() const;
 };
 

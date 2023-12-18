@@ -23,13 +23,13 @@ F_SPAS::~F_SPAS(void)
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 	{
-		delete *itor;
+		delete* itor;
 	}
 }
 
-void F_SPAS::ReadField(BYTE *&buf)
+void F_SPAS::ReadField(BYTE*& buf)
 {
-	while(*buf != 0x1E)
+	while (*buf != 0x1E)
 	{
 		SPAS* spas = new SPAS();
 		spas->m_name.RCNM = *(buf++);
@@ -43,9 +43,9 @@ void F_SPAS::ReadField(BYTE *&buf)
 	}
 }
 
-void F_SPAS::ReadField(BYTE *&buf, int loopCnt)
+void F_SPAS::ReadField(BYTE*& buf, int loopCnt)
 {
-	for(int i = 0; i < loopCnt; i++)
+	for (int i = 0; i < loopCnt; i++)
 	{
 		SPAS* spas = new SPAS();
 		spas->m_name.RCNM = *(buf++);
@@ -81,7 +81,7 @@ int F_SPAS::GetFieldLength()
 	int len = 0;
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 	{
-		SPAS *spas = *itor;
+		SPAS* spas = *itor;
 		len += SPAS::GetSize();
 	}
 	return ++len;
@@ -111,4 +111,21 @@ void F_SPAS::addSPAS(RecordName recordName, int ornt, unsigned int smin, unsigne
 	SPAS* item = new SPAS();
 	item->Set(recordName, ornt, smin, smax, saui);
 	m_arr.push_back(item);
+}
+
+F_SPAS* F_SPAS::Clone() const
+{
+	F_SPAS* f_spas = new F_SPAS();
+	for (const auto& iter : m_arr)
+	{
+		SPAS* spas = new SPAS();
+		spas->m_name = iter->m_name;
+		spas->m_ornt = iter->m_ornt;
+		spas->m_smin = iter->m_smin;
+		spas->m_smax = iter->m_smax;
+		spas->m_saui = iter->m_saui;
+		f_spas->m_arr.push_back(spas);
+	}
+
+	return f_spas;
 }

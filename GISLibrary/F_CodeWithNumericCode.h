@@ -41,4 +41,6 @@ public:
 	CodeWithNumericCode* getCodeWithNumericCode(int numericCode);
 	CodeWithNumericCode* getCodeWIthNumericCode(CString code);
 	void setCodeNumericCode(CString code, int numericCode);
+
+	virtual F_CodeWithNumericCode* Clone() const;
 };

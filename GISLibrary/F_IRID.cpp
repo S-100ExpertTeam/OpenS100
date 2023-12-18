@@ -5,7 +5,15 @@
 
 F_IRID::F_IRID(void)
 {
-	
+
+}
+
+F_IRID::F_IRID(const F_IRID& other) : F_FRID(other)
+{
+	m_name = other.m_name;
+	m_nftc = other.m_nftc;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
 }
 
 F_IRID::F_IRID(RecordName recordName, int NFTC, int RVER, int RUIN)

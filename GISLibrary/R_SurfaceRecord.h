@@ -35,4 +35,6 @@ public:
 	void InsertRing(int rcnm, int rcid, int usag, int ornt);
 
 	std::vector<RIAS*> GetAllRIAS();
+
+	R_SurfaceRecord* Clone() const;
 };
