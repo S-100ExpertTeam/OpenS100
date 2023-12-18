@@ -89,6 +89,7 @@ private:
 	std::vector<R_FeatureRecord*> vecFeature;
 
 	std::set<__int64> m_feaMatchingKeys;
+	std::set<__int64> m_infMatchingKeys;
 public:
 	R_DSGIR* GetDatasetGeneralInformationRecord();
 	void UpdateRemoveAll(void);
@@ -232,6 +233,11 @@ public:
 	//vectorinformation
 	std::vector<R_InformationRecord*>& GetVecInformation();
 
+	void InsertInformationFilter(__int64 key);
+	void InsertInformationFilter(std::string key);
+	void InsertInformationFilter(std::wstring wstringKey);
+	void RemoveInformationFilter();
+	std::set<__int64>& GetInformationFilter();
 
 	void InsertPointRecord(__int64 key, R_PointRecord* record);
 	void RemovePointRecord(__int64 key, R_PointRecord* record);
