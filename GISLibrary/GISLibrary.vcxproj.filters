@@ -106,6 +106,7 @@
     <None Include="S100SpatialObjectType.h">
       <Filter>S100</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GISLibrary.cpp">

@@ -3,6 +3,7 @@
 #include "SPoint.h"
 #include "SCurve.h"
 #include "SSurface.h"
+#include "GISLibrary.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 
@@ -60,6 +61,121 @@ void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, S
 	return;
 }
 
+ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPaths, const ClipperLib::Paths& itemPolygonPath) {
+	ClipperLib::Clipper c;
+	ClipperLib::Paths solution;
+
+	c.AddPaths(viewportPaths, ClipperLib::ptSubject, true);
+	c.AddPaths(itemPolygonPath, ClipperLib::ptClip, true);
+
+	c.Execute(ClipperLib::ctDifference, solution, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
+
+	return solution;
+}
+
+
+ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPaths, std::vector<D2D1_POINT_2F>& itemPolygonPath) {
+	ClipperLib::Clipper c;
+	ClipperLib::Paths solution;
+	ClipperLib::Path  polygon;
+	ClipperLib::Paths polygonPaths;
+	ClipperLib::IntPoint tmp;
+
+
+	int part1PointCount = itemPolygonPath.size();											// Find the number of points for the first part of the polygon.
+	//
+	long x, y;
+	
+	for (int i = 0; i < part1PointCount; i++)
+	{
+		gisLib->GetScaler()->WorldToDevice(itemPolygonPath[i].x, itemPolygonPath[i].y, &x, &y);
+		tmp.X = x;
+		tmp.Y = y;
+		polygon.push_back(tmp);
+	}
+
+	polygonPaths.push_back(polygon);
+
+	c.AddPaths(viewportPaths, ClipperLib::ptSubject, true);
+	c.AddPaths(polygonPaths, ClipperLib::ptClip, true);
+
+	c.Execute(ClipperLib::ctDifference, solution, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
+
+	return solution;
+}
+
+
+
+ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPaths, SSurface* itemPolygonPath) {
+	ClipperLib::Clipper clipper;
+	ClipperLib::Path  polygon;
+	ClipperLib::Paths solution;
+	ClipperLib::Paths polygonPaths;
+
+	ClipperLib::IntPoint tmp;
+
+	// Polygon
+	int part1PointCount;											// Find the number of points for the first part of the polygon.
+	//
+	if (itemPolygonPath->GetNumPart() > 1) 									//
+	{																//
+		part1PointCount = itemPolygonPath->GetNumPointPerPart(0);
+	}																//
+	else 															//
+	{																//
+		part1PointCount = itemPolygonPath->getNumPoint();						//
+	}																//
+
+	for (int i = 0; i < part1PointCount; i++)
+	{
+		tmp.X = itemPolygonPath->m_pPoints[i].x;
+		tmp.Y = itemPolygonPath->m_pPoints[i].y;
+		polygon.push_back(tmp);
+	}
+
+	polygonPaths.push_back(polygon);
+
+	clipper.AddPaths(viewportPaths, ClipperLib::ptSubject, true);
+	clipper.AddPaths(polygonPaths, ClipperLib::ptClip, true);
+
+	clipper.Execute(ClipperLib::ctDifference, solution, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
+
+	return solution;
+}
+
+bool SCommonFuction::IntersectionPaths(ClipperLib::Paths& viewport, std::vector<D2D1_POINT_2F>& polygon)
+{
+	ClipperLib::Clipper clipper;
+	ClipperLib::Paths solution;
+	ClipperLib::Path  polygonpath;
+	ClipperLib::Paths polygonPaths;
+	ClipperLib::IntPoint tmp;
+
+
+	int part1PointCount = polygon.size();											// Find the number of points for the first part of the polygon.
+	long x, y;
+
+	for (int i = 0; i < part1PointCount; i++)
+	{
+		gisLib->GetScaler()->WorldToDevice(polygon[i].x, polygon[i].y, &x, &y);
+		tmp.X = x;
+		tmp.Y = y;
+		polygonpath.push_back(tmp);
+	}
+
+	polygonPaths.push_back(polygonpath);
+
+
+	clipper.AddPaths(viewport, ClipperLib::ptSubject, true);
+	clipper.AddPaths(polygonPaths, ClipperLib::ptClip, true);
+
+	// 교차 연산 실행
+	clipper.Execute(ClipperLib::ctIntersection, solution, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
+
+	// 교차 결과가 비어 있지 않은지 확인
+	return !solution.empty();
+}
+
 ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, CRect *_viewPort)
 {
 	ClipperLib::Path  polygon, view;
@@ -115,6 +231,67 @@ ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, CRect *_viewPo
 	
 	return result;
 }
+
+
+
+
+ClipperLib::Paths SCommonFuction::ClipSurface(SSurface* _surface, SSurface* _viewPort)
+{
+	ClipperLib::Path  polygon, view;
+	ClipperLib::Paths polygonPaths, viewPaths;
+	ClipperLib::Paths result;
+	ClipperLib::Clipper clipper;
+
+	ClipperLib::IntPoint tmp;
+
+	int part1PointCount;											// Find the number of points for the first part of the polygon.
+
+	// View port
+	if (_viewPort->GetNumPart() > 1) 									
+	{																
+		part1PointCount = _viewPort->GetNumPointPerPart(0);
+	}																
+	else 															
+	{																
+		part1PointCount = _viewPort->getNumPoint();					
+	}																
+
+	for (int i = 0; i < part1PointCount; i++)
+	{
+		tmp.X = _viewPort->SGeometry::viewPoints[i].x;
+		tmp.Y = _viewPort->SGeometry::viewPoints[i].y;
+		view.push_back(tmp);
+	}
+
+	// Polygon
+	if (_surface->GetNumPart() > 1) 									
+	{																
+		part1PointCount = _surface->GetNumPointPerPart(0);
+	}																
+	else 															
+	{																
+		part1PointCount = _surface->getNumPoint();					
+	}																
+
+	for (int i = 0; i < part1PointCount; i++)
+	{
+		tmp.X = _surface->SGeometry::viewPoints[i].x;
+		tmp.Y = _surface->SGeometry::viewPoints[i].y;
+		polygon.push_back(tmp);
+	}
+
+	polygonPaths.push_back(polygon);
+	viewPaths.push_back(view);
+
+	clipper.AddPaths(polygonPaths, ClipperLib::ptSubject, true);
+	clipper.AddPaths(viewPaths, ClipperLib::ptClip, true);
+
+	clipper.Execute(ClipperLib::ctIntersection, result, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
+
+	return result;
+}
+
+
 
 POINT SCommonFuction::CalculateCenterOfGravityOfSurface(ClipperLib::Path polygon)
 {
