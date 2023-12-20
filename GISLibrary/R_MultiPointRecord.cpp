@@ -285,9 +285,9 @@ void R_MultiPointRecord::GetC3IL(double cmfx, double cmfy, double cmfz, SAFEARRA
 	CComSafeArray<double> zArray;
 
 	const int arraySize = (int)m_c3il.size();
-	xArray.Create(arraySize);
-	yArray.Create(arraySize);
-	zArray.Create(arraySize);
+	xArray.Create();
+	yArray.Create();
+	zArray.Create();
 	int i = 0;
 	for (const auto& f_c3il : m_c3il)
 	{

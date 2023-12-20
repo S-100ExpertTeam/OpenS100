@@ -390,8 +390,13 @@ void SSurface::Set(std::vector<POINT>& points, std::vector<int>& parts)
 
 	if (m_numPoints > SGeometry::sizeOfPoint)
 	{
-		SGeometry::sizeOfPoint = m_numPoints * 1.5;
 		delete[] SGeometry::viewPoints;
+		SGeometry::viewPoints = nullptr;
+	}
+
+	if (SGeometry::viewPoints == nullptr)
+	{
+		SGeometry::sizeOfPoint = m_numPoints * 1.5;
 		SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
 	}
 
