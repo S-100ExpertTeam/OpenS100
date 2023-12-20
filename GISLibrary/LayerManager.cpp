@@ -79,6 +79,25 @@ LayerManager::~LayerManager()
 	layers.clear();
 }
 
+void LayerManager::MoveLayerFromList(int from, int to) {
+	if (from == to) return;
+
+	auto fromIt = std::next(layers.begin(), from);
+	auto toIt = std::next(layers.begin(), to);
+
+	layers.splice(toIt, layers, fromIt);
+}
+
+bool LayerManager::IsContainFilePathToLayer(CString _filepath)
+{
+	for (auto layer : layers) {
+		if (layer->GetLayerPath().Compare(_filepath) == 0) {
+			return true;
+		}
+	}
+	return false;
+}
+
 bool LayerManager::AddBackgroundLayer(CString _filepath)
 {
 	CString file_extension = LibMFCUtil::GetExtension(_filepath);
@@ -97,7 +116,8 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 	double ymax = scaler->myMaxLimit;
 
 	MBR _mbr(xmin, ymin, xmax, ymax);
-	scaler->SetMap(_mbr);
+	if (m_isScreenFitEnabled)
+		scaler->SetMap(_mbr);
 	mbr.SetMBR(_mbr);
 
 	return TRUE;
@@ -115,7 +135,8 @@ int LayerManager::AddLayer(Layer* _layer)
 	if (LayerCount() == 0)
 	{
 		mbr.SetMBR(_layer->m_mbr);
-		scaler->SetMap(mbr);
+		if (m_isScreenFitEnabled)
+			scaler->SetMap(mbr);
 	}
 	else
 	{

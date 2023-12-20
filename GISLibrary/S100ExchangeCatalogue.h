@@ -10,6 +10,7 @@ using namespace S100;
 class Geometry;
 class Scaler;
 class Inventory;
+class InventoryItem;
 class ScaleRange;
 
 
@@ -27,6 +28,10 @@ public:
 
 	std::vector<shared_ptr<Inventory>> m_vecInventory;
 
+	LayerManager* m_pLayerManager;
+
+	
+
 
 public:
 	/*
@@ -39,4 +44,12 @@ public:
 	void DrawEx(HDC& hDC, Scaler* scaler, double offset);
 
 	void DrawFiles(HDC& hDC, Scaler* scaler, double offset);
+	
+	bool containsFile(const std::vector<std::shared_ptr<InventoryItem>>& files, const CString& targetFile);
+
+	bool CompareByFileName(const CString& a, const CString& b);
+
+	bool CompareByLayer(const Layer* a, const Layer* b);
+
+	CString FixFileName(string str);
 };

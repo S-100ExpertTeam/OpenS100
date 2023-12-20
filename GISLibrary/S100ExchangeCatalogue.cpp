@@ -7,14 +7,20 @@
 
 S100ExchangeCatalogue::S100ExchangeCatalogue(void)
 {
-
+    m_pLayerManager = new LayerManager(gisLib->m_pScaler);
+    m_pLayerManager->onIC = false;
+    m_pLayerManager->m_isScreenFitEnabled = false;
 }
 
 
 S100ExchangeCatalogue::~S100ExchangeCatalogue(void)
 {
-
+    if (m_pLayerManager) {
+        delete m_pLayerManager;
+        m_pLayerManager = nullptr;
+    }
 }
+
 
 
 bool S100ExchangeCatalogue::Open(CString _filepath)
@@ -41,6 +47,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
         inv->mbrBoundingBox = MBR(bound->WestBoundLongitude, bound->NorthBoundLatitude, bound->EastBoundLongitude, bound->SouthBoundLatitude);
         projection(inv->mbrBoundingBox);
         inv->strFileName = DDM[i].FileName;
+        inv->strFilePath = FixFileName(DDM[i].FileName);
 
         auto dataCoverages = DDM[i].dataCoverage;
         for (int idx = 0; idx < dataCoverages.size(); idx++)
@@ -52,12 +59,8 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
 
             inv->vecScaleRange.push_back(sr);
 
-
-            //auto object = new GM::Surface();
             for (int geoms = 0; geoms < dataCoverages[idx].BoundingPolygon.Polygon.Geom.size(); geoms++)
             {
-                //auto curve = new GM::Curve();
-
                 auto strPosList = LatLonUtility::Split(LatLonUtility::TrimRight(dataCoverages[idx].BoundingPolygon.Polygon.Geom[geoms]), " ");
                 int posCnt = strPosList.size();
 
@@ -71,10 +74,23 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
                     projection(lon, lat);
                     
                     point.push_back(D2D1::Point2F(lon, lat));
-
                 }
             }
             inv->vecBoundingPolygon.push_back(point);
+            
+            //is First
+            if (idx == 0)
+            {
+                inv->totalScaleBand = sr;
+            }
+            else
+            {
+                ScaleBand sb;
+                sb.MaxDisplayScale = min(inv->totalScaleBand.MaxDisplayScale, sr.MaxDisplayScale);
+                sb.MinDisplayScale = min(inv->totalScaleBand.MinDisplayScale, sr.MinDisplayScale);
+                inv->totalScaleBand = sb;
+            }
+
         }
         m_vecInventory.push_back(inv);
     }
@@ -82,34 +98,110 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
 	return true;
 }
 
+
+bool S100ExchangeCatalogue::CompareByLayer(const Layer* a, const Layer* b)
+{
+    return CompareByFileName(a->m_spatialObject->GetFilePath(), b->m_spatialObject->GetFilePath());
+}
+
+bool S100ExchangeCatalogue::CompareByFileName(const CString& a, const CString& b) 
+{
+    shared_ptr<Inventory> invA,invB;
+    S100Utilities util;
+
+    for (auto inventory : m_vecInventory)
+    {
+        if (inventory->strFilePath == a)
+            invA = inventory;
+
+        if (inventory->strFilePath == b)
+            invB = inventory;
+    }
+    return ScaleBand::CompareByScale(invA->totalScaleBand, invB->totalScaleBand);
+}
+
+CString S100ExchangeCatalogue::FixFileName(string str)
+{
+    string catalogueFolderPath;
+    CT2CA pszConvertedAnsiString(GetFilePath());
+    string CatalogFilePath(pszConvertedAnsiString);
+
+    size_t lastBackslashPos = CatalogFilePath.find_last_of("\\");
+    if (lastBackslashPos != std::string::npos) {
+        catalogueFolderPath = CatalogFilePath.substr(0, lastBackslashPos + 1);
+    }
+
+    std::string file = str;
+    std::string toRemove = "file:/";
+    std::string result;
+
+
+    size_t pos = file.find(toRemove);
+    if (pos != std::string::npos) {
+        result = file.substr(pos + toRemove.length());
+    }
+
+    //change '/' => '\\'
+    for (char& c : result) {
+        if (c == '/') {
+            c = '\\';
+        }
+    }
+
+    std::string filePath = catalogueFolderPath + result;
+
+    CString temp(filePath.c_str());
+    return temp;
+}
+
+bool S100ExchangeCatalogue::containsFile(const std::vector<std::shared_ptr<InventoryItem>>& files, const CString& targetFile) {
+    for (auto file : files) {
+        if (file->strFilePath.Compare(targetFile) == 0) { 
+            return true; 
+        }
+    }
+    return false; 
+}
+
 void S100ExchangeCatalogue::DrawFiles(HDC& hDC, Scaler* scaler, double offset)
 {
+    string catalogueFolderPath;
     MBR mbr;
     S100Utilities util;
+
     gisLib->GetMap(&mbr);
     std::vector<std::shared_ptr<InventoryItem>> item = util.SelectDataCoverages(m_vecInventory, scaler->GetCurrentScale(), mbr);
 
     auto pRenderTarget = gisLib->D2.pRT;
     pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-
-    //Revers vector item 
-    for (int i = item.size() -1; i >= 0 ; i --)
-    {
-        std::string file = item[i]->strFileName;
-        std::string toRemove = "file:";
-        std::string result;
-
-        size_t pos = file.find(toRemove);
-        if (pos != std::string::npos) {
-            result = file.substr(pos + toRemove.length());
+    
+    // check Remove LayerItem 
+    std::vector<CString> pathsToDelete;
+    for (auto layer : m_pLayerManager->layers) {
+        if (!containsFile(item, layer->GetLayerPath())) {
+            pathsToDelete.push_back(layer->GetLayerPath());
         }
-
-        CString CatalogFilePath = GetFilePath();
-
-
-        //gisLib->AddLayer();
-
     }
+    // Remove LayerItem 
+    for (const auto& path : pathsToDelete) {
+        m_pLayerManager->DeleteLayer(path);
+    }
+
+
+    // add Layer
+    for (auto temp : item)
+    {
+        if (m_pLayerManager->IsContainFilePathToLayer(temp->strFilePath) == false)
+            m_pLayerManager->AddLayer(temp->strFilePath);
+    }
+
+    auto ptr = this; 
+
+    // Sort DataCoverage List
+    m_pLayerManager->layers.sort([this](const Layer* a, const Layer* b){
+        return CompareByFileName(a->m_spatialObject->GetFilePath(), b->m_spatialObject->GetFilePath());;
+        });
+
 }
 
 void S100ExchangeCatalogue::DrawEx(HDC& hDC, Scaler* scaler, double offset)
@@ -136,9 +228,6 @@ void S100ExchangeCatalogue::DrawEx(HDC& hDC, Scaler* scaler, double offset)
         ID2D1GeometrySink* pSink = nullptr;
         pPathGeometry->Open(&pSink);
 
-
-        
-
         for (int geoms = 0; geoms < item[i]->BoundingPolygon.size(); geoms++)
         {
 
@@ -163,15 +252,18 @@ void S100ExchangeCatalogue::DrawEx(HDC& hDC, Scaler* scaler, double offset)
 
         pSink->Release();
         pPathGeometry->Release();
-
-
     }
-
 }
 
 
 void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 {
+
+    DrawFiles(hDC, scaler, offset);
+    //DrawEx(hDC, scaler, offset);
+
+    m_pLayerManager->Draw(hDC, offset);
+
     double Width = gisLib->GetScaler()->GetScreenWidth();
     double Height = gisLib->GetScaler()->GetScreenWidth();
 
@@ -316,7 +408,5 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
     }
 
 
-    //DrawFiles(hDC, scaler, offset);
-    DrawEx(hDC, scaler, offset);
 }
 

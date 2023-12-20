@@ -42,8 +42,13 @@ public:
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
 	bool onIC = true;
+	bool m_isScreenFitEnabled = true;
 
 public:
+	void MoveLayerFromList(int from, int to);
+	bool IsContainFilePathToLayer(CString _filepath);
+
+
 	void SetViewMBR(RECT r);
 
 	bool AddBackgroundLayer(CString _filepath);

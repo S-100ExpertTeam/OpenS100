@@ -36,6 +36,13 @@ public:
 		else
 			return false;
 	}
+
+	static bool CompareByScale(const ScaleBand& a, const ScaleBand& b) {
+		if (a.MinDisplayScale == b.MinDisplayScale) {
+			return a.MaxDisplayScale > b.MaxDisplayScale;
+		}
+		return a.MinDisplayScale > b.MinDisplayScale;
+	}
 };
 
 class Inventory {
@@ -45,7 +52,10 @@ public:
 	MBR mbrBoundingBox;
 	//std::vector<SSurface*> vecBoundingPolygon;
 	std::vector< std::vector<D2D1_POINT_2F>> vecBoundingPolygon;
-	std::vector<ScaleBand> vecScaleRange;
+	std::vector<ScaleBand> vecScaleRange; 
+
+	ScaleBand totalScaleBand;
+	CString strFilePath;
 };
 
 
@@ -56,6 +66,8 @@ public:
 	MBR mbrBoundingBox;
 	std::vector<D2D1_POINT_2F> BoundingPolygon;
 	ScaleBand ScaleRange;
+
+	CString strFilePath;
 };
 
 
@@ -70,5 +82,7 @@ public:
 
 	static int GetScaleBand(int scale);
 	static std::vector<int> GetScaleBands(S100::DataCoverage dataCoverage);
+	static std::vector<int> GetScaleBands(ScaleBand sb);
 	static std::vector<std::shared_ptr<InventoryItem>> SelectDataCoverages(std::vector<std::shared_ptr<Inventory>> INV, int scale, MBR viewport);
+
 };

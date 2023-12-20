@@ -105,6 +105,24 @@ std::vector<int> S100Utilities::GetScaleBands(S100::DataCoverage dataCoverage)
 }
 
 
+std::vector<int> S100Utilities::GetScaleBands(ScaleBand sb)
+{
+	int minDS = sb.MinDisplayScale;
+	int maxDS = sb.MaxDisplayScale;
+	std::vector<int> S;
+
+	if (minDS < scaleBands[0].maximumScale) {
+		S.push_back(0);
+	}
+
+	for (int i = 1; i <= 14; i++) {
+		if (max(minDS, scaleBands[i].minimumScale) < min(maxDS, scaleBands[i].maximumScale)) {
+			S.push_back(i);
+		}
+	}
+	return S;
+}
+
 std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(std::vector<std::shared_ptr<Inventory>> INV, int scale, MBR viewport)
 {
 	bool first = true;
@@ -201,6 +219,7 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 							inventoryitem->mbrBoundingBox = item->mbrBoundingBox;
 							inventoryitem->BoundingPolygon = item->vecBoundingPolygon[i];
 							inventoryitem->ScaleRange = item->vecScaleRange[i];
+							inventoryitem->strFilePath = item->strFilePath;
 
 							S.push_back(inventoryitem);
 							viewPaths = SCommonFuction::ClipPaths(viewPaths, item->vecBoundingPolygon[i]);
