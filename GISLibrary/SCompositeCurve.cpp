@@ -17,7 +17,7 @@ SCompositeCurve::SCompositeCurve(const SCompositeCurve& other)
 	for (int i = 0; i < cnt; i++) {
 		auto curve = GetCurve(i);
 		if (curve) {
-			auto cloned = curve->clone();
+			auto cloned = curve->Clone();
 			AddCurve(cloned);
 		}
 	}
@@ -360,7 +360,39 @@ void SCompositeCurve::setSuppress(bool value)
 	}
 }
 
-SAbstractCurve* SCompositeCurve::clone()
+SCompositeCurve* SCompositeCurve::Clone() const
 {
-	return new SCompositeCurve(*this);
+	SCompositeCurve* cc = new SCompositeCurve();
+
+	//Geometry
+	cc->id = id;
+
+	cc->m_mbr.xmin = m_mbr.xmin;
+	cc->m_mbr.ymin = m_mbr.ymin;
+	cc->m_mbr.xmax = m_mbr.xmax;
+	cc->m_mbr.ymax = m_mbr.xmax;
+
+	//SGeometry
+	if (sizeOfPoint > 0)
+	{
+		if (cc->viewPoints)
+		{
+			delete[] cc->viewPoints;
+			cc->viewPoints = nullptr;
+		}
+
+		cc->sizeOfPoint = sizeOfPoint;
+		cc->viewPoints = new POINT[sizeOfPoint];
+		memcpy(cc->viewPoints, viewPoints, sizeof(POINT) * sizeOfPoint);
+		memset(cc->viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
+	}
+
+	//SCompositeCurve
+	for (const auto& iter : m_listCurveLink)
+	{
+		cc->m_listCurveLink.push_back(iter->Clone());
+	}
+
+	return cc;
 }
+

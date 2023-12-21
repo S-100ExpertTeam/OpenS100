@@ -18,4 +18,6 @@ public:
 
 public:
 	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
+
+	virtual GeoPolygon* Clone() const;
 };

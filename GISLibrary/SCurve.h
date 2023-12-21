@@ -34,7 +34,7 @@ public:
 	double GetX() override;
 	double GetY() override;
 	void Set(int index, double x, double y) override;
-	virtual SAbstractCurve* clone() override;
+	virtual SCurve* Clone() const;
 
 	int GetRCID();
 	void Init(int size);

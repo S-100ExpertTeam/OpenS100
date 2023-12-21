@@ -83,4 +83,6 @@ public:
 	void GetCurveList(std::list<SCurve*>& list);
 
 	void setSuppress(bool value);
+
+	virtual SSurface* Clone() const;
 };

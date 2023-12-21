@@ -35,4 +35,6 @@ public:
 
 	// Y X
 	std::string ToString() override;
+
+	virtual SPoint* Clone() const;
 };

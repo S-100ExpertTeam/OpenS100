@@ -172,3 +172,44 @@ bool SMultiPoint::ExportToWkb(unsigned char** value, int* size)
 
 	return true;
 }
+
+SMultiPoint* SMultiPoint::Clone() const
+{
+	SMultiPoint* mpt = new SMultiPoint();
+
+	//Geometry
+	mpt->id = id;
+
+	mpt->m_mbr.xmin = m_mbr.xmin;
+	mpt->m_mbr.ymin = m_mbr.ymin;
+	mpt->m_mbr.xmax = m_mbr.xmax;
+	mpt->m_mbr.ymax = m_mbr.xmax;
+
+	//SGeometry
+	if (sizeOfPoint > 0)
+	{
+		if (mpt->viewPoints)
+		{
+			delete[] mpt->viewPoints;
+			mpt->viewPoints = nullptr;
+		}
+
+		mpt->sizeOfPoint = sizeOfPoint;
+		mpt->viewPoints = new POINT[sizeOfPoint];
+		memset(mpt->viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
+		memcpy(mpt->viewPoints, viewPoints, sizeof(POINT) * sizeOfPoint);
+	}
+
+	//SMultiPoint
+	for (const auto& iter : m_pPoints)
+	{
+		GeoPointZ pt;
+		pt.x = iter.x;
+		pt.y = iter.y;
+		pt.z = iter.z;
+		mpt->m_pPoints.push_back(pt);
+	}
+
+	return mpt;
+}
+

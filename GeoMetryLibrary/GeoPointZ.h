@@ -21,4 +21,6 @@ public:
 
 	// Y X
 	std::string ToString() override;
+
+	virtual GeoPointZ* Clone() const;
 };

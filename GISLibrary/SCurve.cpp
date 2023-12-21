@@ -366,7 +366,57 @@ void SCurve::setCenterPoint()
 
 }
 
-SAbstractCurve* SCurve::clone()
+SCurve* SCurve::Clone() const
 {
-	return new SCurve(*this);
+	SCurve* c = new SCurve();
+
+	//Geometry
+	c->id = id;
+
+	c->m_mbr.xmin = m_mbr.xmin;
+	c->m_mbr.ymin = m_mbr.ymin;
+	c->m_mbr.xmax = m_mbr.xmax;
+	c->m_mbr.ymax = m_mbr.xmax;
+
+	//SGeometry
+	if (sizeOfPoint > 0)
+	{
+		if (c->viewPoints)
+		{
+			delete[] c->viewPoints;
+			c->viewPoints = nullptr;
+		}
+
+		c->sizeOfPoint = sizeOfPoint;
+		c->viewPoints = new POINT[sizeOfPoint];
+		memset(c->viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
+		memcpy(c->viewPoints, viewPoints, sizeof(POINT) * sizeOfPoint);
+	}
+
+	//SCurve
+	c->m_masking = m_masking;
+	c->suppress = suppress;
+	if (m_numPoints == 0)
+		return c;
+
+	c->m_pPoints = new SPoint[m_numPoints];
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		c->m_pPoints[i].id = m_pPoints[i].id;
+
+		c->m_mbr.xmin = m_mbr.xmin;
+		c->m_mbr.ymin = m_mbr.ymin;
+		c->m_mbr.xmax = m_mbr.xmax;
+		c->m_mbr.ymax = m_mbr.ymax;
+
+		c->m_pPoints[i].x = m_pPoints[i].x;
+		c->m_pPoints[i].y = m_pPoints[i].y;
+
+		c->m_pPoints[i].m_vPoint = m_pPoints[i].m_vPoint;
+	}
+
+	if (centerPoint)
+		c->centerPoint = centerPoint->Clone();
+
+	return c;
 }

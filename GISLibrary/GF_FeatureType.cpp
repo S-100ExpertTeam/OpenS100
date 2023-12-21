@@ -15,7 +15,7 @@ namespace GF
 	{
 		featureAssociations = other.featureAssociations;
 		spatial = new SpatialAttributeType(*other.spatial);
-		geometry = new SGeometry(*other.geometry);
+		geometry = other.geometry->Clone();
 	}
 
 	FeatureType::~FeatureType()

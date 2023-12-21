@@ -88,3 +88,43 @@ void GeoPolyline::DrawGeometry(HDC &hDC, Scaler *scaler, double offset)
 		}
 	}
 }
+
+GeoPolyline* GeoPolyline::Clone() const
+{
+	GeoPolyline* gp = new GeoPolyline();
+
+	gp->NumPoints = NumPoints;
+	if (NumPoints == 0)
+		return gp;
+
+	gp->Points = new GeoPoint[NumPoints];
+	gp->CPoints = new POINT[NumPoints];
+	for (int i = 0; i < NumPoints; i++)
+	{
+		gp->Points[i].id = Points[i].id;
+
+		gp->m_mbr.xmin = m_mbr.xmin;
+		gp->m_mbr.ymin = m_mbr.ymin;
+		gp->m_mbr.xmax = m_mbr.xmax;
+		gp->m_mbr.ymax = m_mbr.ymax;
+
+		gp->Points[i].x = Points[i].x;
+		gp->Points[i].y = Points[i].y;
+
+		gp->CPoints[i].x = CPoints[i].x;
+		gp->CPoints[i].y = CPoints[i].y;
+	}
+
+	gp->NumParts = NumParts;
+	if (NumParts == 0)
+		return gp;
+	gp->Parts = new int[NumParts];
+	for (int i = 0; i < NumParts; i++)
+	{
+		gp->Parts[i] = Parts[i];
+	}
+
+	return gp;
+}
+
+

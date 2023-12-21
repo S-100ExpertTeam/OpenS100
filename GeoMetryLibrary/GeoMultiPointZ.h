@@ -20,4 +20,6 @@ public:
 public:
 	void SetPoint(int index, double _x, double _y, double _z);
 	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
+
+	virtual GeoMultiPointZ* Clone() const;
 };

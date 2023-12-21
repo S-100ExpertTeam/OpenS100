@@ -1,15 +1,17 @@
 #pragma once
 #include "SGeometry.h"
 class SOrientableCurve :
-    public SGeometry
+	public SGeometry
 {
 public:
-    SOrientableCurve();
-    virtual ~SOrientableCurve();
+	SOrientableCurve();
+	virtual ~SOrientableCurve();
 
 public:
-    // + : true
-    // - : false
-    bool orientation = true; 
+	// + : true
+	// - : false
+	bool orientation = true;
+
+	virtual SOrientableCurve* Clone() const;
 };
 

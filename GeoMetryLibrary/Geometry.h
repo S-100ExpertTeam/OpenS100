@@ -51,6 +51,8 @@ public:
 
 	virtual int getNumPoint() const { return 0; };
 
+	virtual Geometry* Clone() const = 0;
+
 public:
 	bool WriteWkb(std::wstring path);
 };

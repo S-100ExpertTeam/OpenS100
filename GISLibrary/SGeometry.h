@@ -32,6 +32,8 @@ public:
 
 public:
 	virtual SGeometryType GetType() { return SGeometryType::none; }
+
+	virtual SGeometry* Clone() const = 0;
 	
 public:
 	int GetInformationTypeCount() const;

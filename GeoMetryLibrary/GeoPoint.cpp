@@ -50,3 +50,13 @@ bool GeoPoint::operator == (GeoPoint& p)
 
 	return false;
 }
+
+GeoPoint* GeoPoint::Clone() const
+{
+	GeoPoint* pt = new GeoPoint();
+
+	pt->x = x;
+	pt->y = y;
+
+	return pt;
+}

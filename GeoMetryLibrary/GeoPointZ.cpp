@@ -111,3 +111,15 @@ std::string GeoPointZ::ToString()
 
 	return ss.str();
 }
+
+GeoPointZ* GeoPointZ::Clone() const
+{
+	GeoPointZ* pt = new GeoPointZ();
+
+	pt->x = x;
+	pt->y = y;
+	pt->z = z;
+
+	return pt;
+}
+

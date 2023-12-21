@@ -9,5 +9,5 @@ public:
 
 public:
     virtual void Set(int index, double x, double y);
-    virtual SAbstractCurve* clone();
+    virtual SAbstractCurve* Clone() const;
 };

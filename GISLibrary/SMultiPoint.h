@@ -27,4 +27,6 @@ public:
 
 	bool ImportFromWkb(unsigned char* value, int size);
 	bool ExportToWkb(unsigned char** value, int* size);
+
+	virtual SMultiPoint* Clone() const;
 };

@@ -62,3 +62,22 @@ void GeoMultiPointZ::DrawGeometry(HDC &hDC, Scaler *scaler, double offset)
 		::FillRect(hDC, &r, m_hBrush);
 	}
 }
+
+GeoMultiPointZ* GeoMultiPointZ::Clone() const
+{
+	GeoMultiPointZ* mpt = new GeoMultiPointZ();
+
+	mpt->m_numPoints = m_numPoints;
+	if (m_numPoints == 0)
+		return mpt;
+
+	mpt->m_pPoints = new GeoPointZ[m_numPoints];
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		mpt->m_pPoints[i].x = m_pPoints[i].x;
+		mpt->m_pPoints[i].y = m_pPoints[i].y;
+		mpt->m_pPoints[i].z = m_pPoints[i].z;
+	}
+
+	return mpt;
+}

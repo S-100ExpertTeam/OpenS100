@@ -127,3 +127,39 @@ std::string SPoint::ToString()
 
 	return ss.str();
 }
+
+SPoint* SPoint::Clone() const
+{
+	SPoint* pt = new SPoint();
+
+	//Geometry
+	pt->id = id;
+
+	pt->m_mbr.xmin = m_mbr.xmin;
+	pt->m_mbr.ymin = m_mbr.ymin;
+	pt->m_mbr.xmax = m_mbr.xmax;
+	pt->m_mbr.ymax = m_mbr.xmax;
+
+	//SGeometry
+	if (sizeOfPoint > 0)
+	{
+		if (pt->viewPoints)
+		{
+			delete[] pt->viewPoints;
+			pt->viewPoints = nullptr;
+		}
+
+		pt->sizeOfPoint = sizeOfPoint;		
+		pt->viewPoints = new POINT[sizeOfPoint];
+		memset(pt->viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
+		memcpy(pt->viewPoints, viewPoints, sizeof(POINT) * sizeOfPoint);
+	}
+
+	//SPoint
+	pt->x = x;
+	pt->y = y;
+
+	pt->m_vPoint = m_vPoint;
+
+	return pt;
+}

@@ -16,4 +16,6 @@ public:
 	MBR* m_pBoundary = nullptr;
 	int m_xIndex = 0;
 	int m_yIndex = 0;
+
+	virtual SCoverage* Clone() const;
 };
