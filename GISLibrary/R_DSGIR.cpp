@@ -8,6 +8,55 @@ R_DSGIR::R_DSGIR()
 {
 }
 
+R_DSGIR::R_DSGIR(const R_DSGIR& other)
+{
+	if (m_atcs)
+	{
+		delete m_atcs;
+		m_atcs = nullptr;
+	}
+
+	if (m_itcs)
+	{
+		delete m_itcs;
+		m_itcs = nullptr;
+	}
+
+	if (m_ftcs)
+	{
+		delete m_ftcs;
+		m_ftcs = nullptr;
+	}
+
+	if (m_iacs)
+	{
+		delete m_iacs;
+		m_iacs = nullptr;
+	}
+
+	if (m_facs)
+	{
+		delete m_facs;
+		m_facs = nullptr;
+	}
+
+	if (m_arcs)
+	{
+		delete m_arcs;
+		m_arcs = nullptr;
+	}
+
+	m_dsid = other.m_dsid;
+	m_dssi = other.m_dssi;
+
+	m_atcs = (other.m_atcs) ? other.m_atcs->Clone() : nullptr;
+	m_itcs = (other.m_atcs) ? other.m_atcs->Clone() : nullptr;
+	m_ftcs = (other.m_atcs) ? other.m_atcs->Clone() : nullptr;
+	m_iacs = (other.m_atcs) ? other.m_atcs->Clone() : nullptr;
+	m_facs = (other.m_atcs) ? other.m_atcs->Clone() : nullptr;
+	m_arcs = (other.m_atcs) ? other.m_atcs->Clone() : nullptr;
+}
+
 R_DSGIR::~R_DSGIR()
 {
 	deleteAll();
@@ -564,41 +613,14 @@ R_DSGIR* R_DSGIR::Clone() const
 		r_dsgir->m_arcs = nullptr;
 	}
 
-	r_dsgir->m_dsid.m_name = m_dsid.m_name;
-	r_dsgir->m_dsid.m_ensp = m_dsid.m_ensp;
-	r_dsgir->m_dsid.m_ened = m_dsid.m_ened;
-	r_dsgir->m_dsid.m_prsp = m_dsid.m_prsp;
-	r_dsgir->m_dsid.m_pred = m_dsid.m_pred;
-	r_dsgir->m_dsid.m_prof = m_dsid.m_prof;
-	r_dsgir->m_dsid.m_dsnm = m_dsid.m_dsnm;
-	r_dsgir->m_dsid.m_dstl = m_dsid.m_dstl;
-	r_dsgir->m_dsid.m_dsrd = m_dsid.m_dsrd;
-	r_dsgir->m_dsid.m_dslg = m_dsid.m_dslg;
-	r_dsgir->m_dsid.m_dsab = m_dsid.m_dsab;
-	r_dsgir->m_dsid.m_dsed = m_dsid.m_dsed;
-	for (int i = 0; i < m_dsid.m_dstc.GetSize(); i++)
-		r_dsgir->m_dsid.m_dstc.Add(m_dsid.m_dstc[i]);
-
-	r_dsgir->m_dssi.m_dcox = m_dssi.m_dcox;
-	r_dsgir->m_dssi.m_dcoy = m_dssi.m_dcoy;
-	r_dsgir->m_dssi.m_dcoz = m_dssi.m_dcoz;
-	r_dsgir->m_dssi.m_cmfx = m_dssi.m_cmfx;
-	r_dsgir->m_dssi.m_cmfy = m_dssi.m_cmfy;
-	r_dsgir->m_dssi.m_cmfz = m_dssi.m_cmfz;
-	r_dsgir->m_dssi.m_noir = m_dssi.m_noir;
-	r_dsgir->m_dssi.m_nopn = m_dssi.m_nopn;
-	r_dsgir->m_dssi.m_nomn = m_dssi.m_nomn;
-	r_dsgir->m_dssi.m_nocn = m_dssi.m_nocn;
-	r_dsgir->m_dssi.m_noxn = m_dssi.m_noxn;
-	r_dsgir->m_dssi.m_nosn = m_dssi.m_nosn;
-	r_dsgir->m_dssi.m_nofr = m_dssi.m_nofr;
-
-	r_dsgir->m_atcs = (!m_atcs) ? nullptr : m_atcs->Clone();
-	r_dsgir->m_itcs = (!m_atcs) ? nullptr : m_atcs->Clone();
-	r_dsgir->m_ftcs = (!m_atcs) ? nullptr : m_atcs->Clone();
-	r_dsgir->m_iacs = (!m_atcs) ? nullptr : m_atcs->Clone();
-	r_dsgir->m_facs = (!m_atcs) ? nullptr : m_atcs->Clone();
-	r_dsgir->m_arcs = (!m_atcs) ? nullptr : m_atcs->Clone();
+	r_dsgir->m_dsid = m_dsid;
+	r_dsgir->m_dssi = m_dssi;
+	r_dsgir->m_atcs = (m_atcs) ? m_atcs->Clone() : nullptr;
+	r_dsgir->m_itcs = (m_atcs) ? m_atcs->Clone() : nullptr;
+	r_dsgir->m_ftcs = (m_atcs) ? m_atcs->Clone() : nullptr;
+	r_dsgir->m_iacs = (m_atcs) ? m_atcs->Clone() : nullptr;
+	r_dsgir->m_facs = (m_atcs) ? m_atcs->Clone() : nullptr;
+	r_dsgir->m_arcs = (m_atcs) ? m_atcs->Clone() : nullptr;
 
 	return r_dsgir;
 }

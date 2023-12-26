@@ -12,6 +12,7 @@ class R_DSGIR : Record
 {
 public:
 	R_DSGIR();
+	R_DSGIR(const R_DSGIR& other);
 	virtual ~R_DSGIR();
 
 public:

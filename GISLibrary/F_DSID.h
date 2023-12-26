@@ -7,7 +7,6 @@ class F_DSID : public Field
 {
 public:
 	F_DSID();
-	F_DSID(const F_DSID& other);
 	virtual ~F_DSID();
 
 public:
@@ -24,6 +23,9 @@ public:
 	CString m_dsab; //datasetAbstract
 	CString m_dsed; //dataset Edition
 	CArray<int> m_dstc;
+
+public:
+	virtual F_DSID& operator=(const F_DSID& other);
 
 public:
 	void ReadField(BYTE *&buf);
