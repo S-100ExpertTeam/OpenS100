@@ -117,6 +117,17 @@ F_DataDescriptiveField::F_DataDescriptiveField()
 
 }
 
+F_DataDescriptiveField::F_DataDescriptiveField(const F_DataDescriptiveField& other)
+{
+	spaceOld = other.spaceOld;
+	spaceNew = other.spaceNew;
+	UTOld = other.UTOld;
+	UTNew = other.UTNew;
+	FTOld = other.FTOld;
+	FTNew = other.FTNew;
+	type = other.type;
+}
+
 F_DataDescriptiveField::F_DataDescriptiveField(DDFType type)
 {
 	this->type = (int)type;

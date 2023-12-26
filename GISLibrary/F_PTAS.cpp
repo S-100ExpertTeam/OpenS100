@@ -12,7 +12,12 @@ F_PTAS::F_PTAS()
 F_PTAS::F_PTAS(const F_PTAS& other)
 {
 	for (const auto& iter : other.m_arr)
-		Insert(iter->m_name, iter->m_topi);
+	{
+		PTAS* ptas = new PTAS();
+		ptas->m_name = iter->m_name;
+		ptas->m_topi = iter->m_topi;
+		m_arr.push_back(ptas);
+	}
 }
 
 F_PTAS::~F_PTAS()

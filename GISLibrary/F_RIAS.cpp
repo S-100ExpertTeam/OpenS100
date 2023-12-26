@@ -12,7 +12,14 @@ F_RIAS::F_RIAS(void)
 F_RIAS::F_RIAS(const F_RIAS& other)
 {
 	for (const auto& iter : other.m_arr)
-		Insert(iter->m_name, iter->m_ornt, iter->m_usag, iter->m_raui);
+	{
+		RIAS* rias = new RIAS();
+		rias->m_name = iter->m_name;
+		rias->m_ornt = iter->m_ornt;
+		rias->m_usag = iter->m_usag;
+		rias->m_raui = iter->m_raui;
+		m_arr.push_back(rias);
+	}
 }
 
 F_RIAS::~F_RIAS(void)

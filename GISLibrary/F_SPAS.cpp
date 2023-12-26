@@ -11,11 +11,15 @@ F_SPAS::F_SPAS(void)
 
 F_SPAS::F_SPAS(const F_SPAS& other)
 {
-	auto cnt = other.getCount();
-
-	for (int i = 0; i < cnt; i++) {
-		auto item = new SPAS(*other.getSPAS(i));
-		addSPAS(item);
+	for (const auto& iter : other.m_arr)
+	{
+		SPAS* spas = new SPAS();
+		spas->m_name = iter->m_name;
+		spas->m_ornt = iter->m_ornt;
+		spas->m_smin = iter->m_smin;
+		spas->m_smax = iter->m_smax;
+		spas->m_saui = iter->m_saui;
+		m_arr.push_back(spas);
 	}
 }
 

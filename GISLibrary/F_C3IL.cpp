@@ -12,7 +12,13 @@ F_C3IL::F_C3IL()
 F_C3IL::F_C3IL(const F_C3IL& other)
 {
 	for (const auto& iter : other.m_arr)
-		Insert(iter->m_xcoo, iter->m_ycoo, iter->m_zcoo);
+	{
+		C3IL* c3il = new C3IL();
+		c3il->m_ycoo = iter->m_ycoo;
+		c3il->m_xcoo = iter->m_xcoo;
+		c3il->m_zcoo = iter->m_zcoo;
+		m_arr.push_back(c3il);
+	}
 
 	m_vcid = other.m_vcid;
 }

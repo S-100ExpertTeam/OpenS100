@@ -61,6 +61,7 @@ class F_DataDescriptiveField :
 {
 public:
 	F_DataDescriptiveField();
+	F_DataDescriptiveField(const F_DataDescriptiveField& other);
 	F_DataDescriptiveField(DDFType type);
 	virtual ~F_DataDescriptiveField();
 

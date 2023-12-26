@@ -10,12 +10,12 @@ F_ATTR::F_ATTR()
 
 F_ATTR::F_ATTR(const F_ATTR& other)
 {
-	auto cnt = other.getCount();
-
-	for (int i = 0; i < cnt; i++) {
-		auto item = new ATTR(*other.getATTR(i));
-		Insert(item);
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(iter->m_natc, iter->m_atix, iter->m_paix, iter->m_atin, iter->m_atvl);
+		m_arr.push_back(attr);
 	}
+
 }
 
 F_ATTR::~F_ATTR()

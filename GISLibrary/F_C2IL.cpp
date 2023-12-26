@@ -12,7 +12,12 @@ F_C2IL::F_C2IL()
 F_C2IL::F_C2IL(const F_C2IL& other)
 {
 	for (const auto& iter : other.m_arr)
-		Insert(iter->m_xcoo, iter->m_ycoo);
+	{
+		C2IL* c2il = new C2IL();
+		c2il->m_ycoo = iter->m_ycoo;
+		c2il->m_xcoo = iter->m_xcoo;
+		m_arr.push_back(c2il);
+	}
 }
 
 F_C2IL::~F_C2IL()

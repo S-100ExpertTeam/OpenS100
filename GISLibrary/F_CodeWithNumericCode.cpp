@@ -9,6 +9,17 @@ F_CodeWithNumericCode::F_CodeWithNumericCode()
 
 }
 
+F_CodeWithNumericCode::F_CodeWithNumericCode(const F_CodeWithNumericCode& other)
+{
+	for (const auto& iter : other.listCodeWithNumericCode)
+	{
+		auto value = new CodeWithNumericCode(iter->m_code, iter->m_nmcd);
+		listCodeWithNumericCode.push_back(value);
+		m_arr.insert({ value->GetNumericCode(), value });
+		m_arrFindForCode.insert({ value->GetCode(), value });
+	}
+}
+
 F_CodeWithNumericCode::~F_CodeWithNumericCode()
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)

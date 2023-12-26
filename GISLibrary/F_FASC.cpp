@@ -16,9 +16,10 @@ F_FASC::F_FASC(const F_FASC& other)
 	m_narc = other.m_narc;
 	m_faui = other.m_faui;
 
-	for (auto i = other.m_arr.begin(); i != other.m_arr.end(); i++) {
-		auto item = new ATTR(**i);
-		m_arr.push_back(item);
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(iter->m_natc, iter->m_atix, iter->m_paix, iter->m_atin, iter->m_atvl);
+		m_arr.push_back(attr);
 	}
 }
 

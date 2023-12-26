@@ -12,7 +12,12 @@ F_THAS::F_THAS(void)
 F_THAS::F_THAS(const F_THAS& other)
 {
 	for (const auto& iter : other.m_arr)
-		Insert(iter->m_name, iter->m_taui);
+	{
+		THAS* thas = new THAS();
+		thas->m_name = iter->m_name;
+		thas->m_taui = iter->m_taui;
+		m_arr.push_back(thas);
+	}
 }
 
 F_THAS::~F_THAS(void)

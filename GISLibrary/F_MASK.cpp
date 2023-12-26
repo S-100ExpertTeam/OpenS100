@@ -11,10 +11,13 @@ F_MASK::F_MASK(void)
 
 F_MASK::F_MASK(const F_MASK& other)
 {
-	int cnt = other.getCount();
-	for (int i = 0; i < cnt; i++) {
-		auto item = new MASK(*other.getMASKbyIndex(i));
-		AddMask(item);
+	for (const auto& iter : other.listMask)
+	{
+		MASK* mask = new MASK();
+		mask->m_name = iter->m_name;
+		mask->m_mind = iter->m_mind;
+		mask->m_muin = iter->m_muin;
+		listMask.push_back(mask);
 	}
 }
 

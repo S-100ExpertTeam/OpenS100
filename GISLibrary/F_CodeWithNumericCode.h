@@ -13,6 +13,7 @@ class F_CodeWithNumericCode : public Field
 { 
 public:
 	F_CodeWithNumericCode();
+	F_CodeWithNumericCode(const F_CodeWithNumericCode& other);
 	virtual ~F_CodeWithNumericCode();
 
 public:
