@@ -4,6 +4,12 @@
 #include "Record.h"
 #include "Field.h"
 
+#include "SHPFile.h"
+#include "S100SpatialObject.h"
+#include "S10XGML.h"
+#include "S100H5.h"
+#include "S102H5.h"
+
 #define DB2_V72_FIX_BYTE_ORDER(x) ((((x)&0x31) == (x)) ? ((x)&0x1) : (x))
 
 typedef enum
@@ -56,4 +62,18 @@ class S101GeometryUtil
 {
 public:
 	static SGeometryType ReadWKBGeometryType(const unsigned char*);
+};
+
+class S100LayerFactory
+{
+private:
+	static SHPFile* CopySHPFile(SHPFile*, CString newName);
+	static S101Cell* CopyS101Cell(S101Cell*, CString newName);
+	static S10XGML* CopyS10XGML(S10XGML*, CString newName);
+	static S100H5* CopyS100H5(S100H5*, CString newName);
+	static S102H5* CopyS102H5(S102H5*, CString newName);
+
+public:
+	static Layer* CopyLayer(Layer*, CString NewName);
+	static void DestoryLayer(Layer*);
 };

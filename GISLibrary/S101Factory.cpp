@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "S101Factory.h"
 
+#include "S100Layer.h"
+
 #include "SPoint.h"
 #include "SMultiPoint.h"
 #include "SCurve.h"
@@ -135,7 +137,7 @@ void S101GeometryFactory::DestroyRecord(Record* poRecord)
 Field* S101FieldFactory::CreateField(S101FieldType FieldType)
 {
 	Field* poField = nullptr;
-	
+
 	switch (FieldType)
 	{
 	case Field_DSID:
@@ -239,3 +241,163 @@ SGeometryType S101GeometryUtil::ReadWKBGeometryType(const unsigned char* pabyDat
 
 	return SGeometryType::none;
 }
+
+SHPFile* S100LayerFactory::CopySHPFile(SHPFile* enc, CString newName)
+{
+	if (!enc)
+		return nullptr;
+
+	SHPFile* shpFile = new SHPFile();
+	shpFile->SetFilePath(newName);
+
+	shpFile->m_pLayer->m_mbr.xmin = enc->m_pLayer->m_mbr.xmin;
+	shpFile->m_pLayer->m_mbr.ymin = enc->m_pLayer->m_mbr.ymin;
+	shpFile->m_pLayer->m_mbr.xmax = enc->m_pLayer->m_mbr.xmax;
+	shpFile->m_pLayer->m_mbr.ymax = enc->m_pLayer->m_mbr.ymax;
+
+	shpFile->m_nRecords = enc->m_nRecords;
+	shpFile->m_pSHPObject = new Geometry * [shpFile->m_nRecords];
+	for (unsigned int i = 0; i < enc->m_nRecords; i++)
+		shpFile->m_pSHPObject[i] = enc->m_pSHPObject[i]->Clone();
+
+	return shpFile;
+}
+
+S101Cell* S100LayerFactory::CopyS101Cell(S101Cell* enc, CString newName)
+{
+	if (!enc)
+		return nullptr;
+
+	S101Cell* cell = new S101Cell(enc->GetD2());
+	cell->SetFilePath(newName);
+
+	cell->m_dsgir = enc->m_dsgir;
+	cell->m_dscrs = enc->m_dscrs;
+
+	for (const auto& iter : enc->GetVecInformation())
+	{
+		cell->InsertInformationRecord(iter->m_irid.m_name.GetName(), iter);
+	}
+
+	for (const auto& iter : enc->GetVecPoint())
+	{
+		cell->InsertPointRecord(iter->m_prid.m_name.GetName(), iter);
+	}
+
+	for (const auto& iter : enc->GetVecMultiPoint())
+	{
+		cell->InsertMultiPointRecord(iter->m_mrid.m_name.GetName(), iter);
+	}
+
+	for (const auto& iter : enc->GetVecCurve())
+	{
+		cell->InsertCurveRecord(iter->m_crid.m_name.GetName(), iter);
+	}
+
+	for (const auto& iter : enc->GetVecComposite())
+	{
+		cell->InsertCompositeCurveRecord(iter->m_ccid.m_name.GetName(), iter);
+	}
+
+	for (const auto& iter : enc->GetVecSurface())
+	{
+		cell->InsertSurfaceRecord(iter->m_srid.m_name.GetName(), iter);
+	}
+
+	for (const auto& iter : enc->GetVecFeature())
+	{
+		cell->InsertFeatureRecord(iter->m_frid.m_name.GetName(), iter);
+	}
+
+	cell->MakeFullSpatialData();
+	cell->CalcMBR();
+	cell->Check();
+
+	cell->ATTRtoAttribute();
+
+	return cell;
+}
+
+S10XGML* S100LayerFactory::CopyS10XGML(S10XGML* enc, CString newName)
+{
+	if (!enc)
+		return nullptr;
+
+	S10XGML* gml = new S10XGML(enc->GetD2());
+	gml->SetFilePath(newName);
+
+	gml->envelop.mbr = enc->envelop.mbr;
+	gml->datasetIdentificationInformation = enc->datasetIdentificationInformation;
+	for (const auto& iter : enc->features)
+	{
+
+	}
+	
+}
+
+S100H5* S100LayerFactory::CopyS100H5(S100H5* enc, CString newName)
+{
+
+}
+
+S102H5* S100LayerFactory::CopyS102H5(S102H5* enc, CString newName)
+{
+
+}
+
+Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, CString newName)
+{
+	Layer* dscLayer = nullptr;
+
+	if ((!srcLayer) ||
+		(!srcLayer->m_spatialObject))
+		return dscLayer;
+
+	S100_FileType fileType = srcLayer->m_spatialObject->m_FileType;
+
+	if (fileType == S100_FileType::FILE_Shape)
+	{
+		SHPFile* dscObject = S100LayerFactory::CopySHPFile((SHPFile*)srcLayer->m_spatialObject, newName);
+		if (dscObject)
+		{
+			dscLayer = new Layer();
+			dscLayer->m_spatialObject = dscObject;
+			dscObject->m_pLayer = dscLayer;
+		}
+	}
+	else if (fileType == S100_FileType::FILE_S_100_VECTOR)
+	{
+		S100SpatialObjectType objType = ((S100SpatialObject*)srcLayer->m_spatialObject)->type;
+		if (objType == S100SpatialObjectType::S101Cell)
+		{
+			S101Cell* dscObject = S100LayerFactory::CopyS101Cell((S101Cell*)srcLayer->m_spatialObject, newName);
+			if (dscObject)
+			{
+				auto fc = ((S100Layer*)srcLayer)->GetFC();
+				auto pc = ((S100Layer*)srcLayer)->GetPC();
+				dscLayer = new S100Layer(fc, pc);
+				dscLayer->m_spatialObject = dscObject;
+				dscObject->m_pLayer = dscLayer;
+				dscObject->SetAllNumericCode(fc);
+
+				((S100Layer*)dscLayer)->BuildPortrayalCatalogue();
+			}
+		}
+		else if (objType == S100SpatialObjectType::S10XGML)
+		{
+			
+		}
+	}
+
+	return dscLayer;
+}
+
+void S100LayerFactory::DestoryLayer(Layer* pLayer)
+{
+	if (pLayer)
+	{
+		delete pLayer;
+		pLayer = nullptr;
+	}
+}
+
