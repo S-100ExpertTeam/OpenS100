@@ -402,7 +402,6 @@ Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, CString newName)
 				dscLayer = new S100Layer(fc, pc);
 				dscLayer->m_spatialObject = dscObject;
 				dscObject->m_pLayer = dscLayer;
-				dscObject->SetAllNumericCode(fc);
 
 				((S100Layer*)dscLayer)->BuildPortrayalCatalogue();
 			}
