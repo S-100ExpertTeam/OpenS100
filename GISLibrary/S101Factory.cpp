@@ -358,15 +358,15 @@ S100H5* S100LayerFactory::CopyS100H5(S100H5* enc, CString newName)
 	if (!enc)
 		return nullptr;
 
-	S100H5* h5 = new S100H5(enc->GetD2());
-	h5->SetFilePath(newName);
-
-
+	return nullptr;
 }
 
 S102H5* S100LayerFactory::CopyS102H5(S102H5* enc, CString newName)
 {
+	if (!enc)
+		return nullptr;
 
+	return nullptr;
 }
 
 Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, CString newName)
