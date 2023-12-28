@@ -9,6 +9,7 @@ namespace GF
 	{
 	public:
 		MaskReference();
+		MaskReference(const MaskReference& other);
 		virtual ~MaskReference();
 
 	public:

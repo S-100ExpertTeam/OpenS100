@@ -27,6 +27,9 @@ public:
     std::vector<MaskReference> maskReference;
 
 public:
+    virtual SpatialAttributeType* Clone() const;
+
+public:
     void SetGeometryID(std::string value);
     std::string GetGeometryID();
 };

@@ -328,15 +328,39 @@ S10XGML* S100LayerFactory::CopyS10XGML(S10XGML* enc, CString newName)
 
 	gml->envelop.mbr = enc->envelop.mbr;
 	gml->datasetIdentificationInformation = enc->datasetIdentificationInformation;
+
 	for (const auto& iter : enc->features)
 	{
-
+		GF::FeatureType* ft = iter->Clone();
+		gml->features.push_back(ft);
 	}
-	
+
+	for (const auto& iter : enc->informations)
+	{
+		GF::InformationType* it = iter->Clone();
+		gml->informations.push_back(it);
+	}
+
+	for (const auto& iter : enc->geometries)
+	{
+		GM::Object* o = iter->Clone();
+		gml->geometries.push_back(o);
+	}
+
+	gml->SetGeometry();
+	gml->CalcMBR();
+
+	return gml;
 }
 
 S100H5* S100LayerFactory::CopyS100H5(S100H5* enc, CString newName)
 {
+	if (!enc)
+		return nullptr;
+
+	S100H5* h5 = new S100H5(enc->GetD2());
+	h5->SetFilePath(newName);
+
 
 }
 
@@ -385,7 +409,25 @@ Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, CString newName)
 		}
 		else if (objType == S100SpatialObjectType::S10XGML)
 		{
-			
+			S10XGML* dscObject = S100LayerFactory::CopyS10XGML((S10XGML*)srcLayer->m_spatialObject, newName);
+			if (dscObject)
+			{
+				auto fc = ((S100Layer*)srcLayer)->GetFC();
+				auto pc = ((S100Layer*)srcLayer)->GetPC();
+				dscLayer = new S100Layer(fc, pc);
+				dscLayer->m_spatialObject = dscObject;
+				dscObject->m_pLayer = dscLayer;
+
+				((S100Layer*)dscLayer)->BuildPortrayalCatalogue();
+			}
+		}
+		else if (objType == S100SpatialObjectType::S100H5)
+		{
+
+		}
+		else if (objType == S100SpatialObjectType::S102H5)
+		{
+
 		}
 	}
 

@@ -22,6 +22,9 @@ namespace GM
 		std::string srsName;
 
 	public:
+		virtual Object* Clone() const;
+
+	public:
 		std::string GetID();
 		std::wstring GetIDAsWString();
 		int GetIDAsInt();

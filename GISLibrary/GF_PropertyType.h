@@ -7,6 +7,7 @@ namespace GF
 	{
 	public:
 		PropertyType();
+		PropertyType(const PropertyType& other);
 		virtual ~PropertyType();
 
 	public:

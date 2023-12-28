@@ -90,6 +90,39 @@ namespace GF
 		spatial->SetGeometryID(value);
 	}
 
+	FeatureType* FeatureType::Clone() const
+	{
+		FeatureType* ft = new FeatureType();
+
+		// NamedType
+		ft->code = code;
+
+		//ObjectType
+		ft->id = id;
+		for (const auto& iter : informationAssociations)
+		{
+			InformationAssociationType iat = iter;
+			ft->informationAssociations.push_back(iat);
+		}
+		for (const auto& iter : attributes)
+		{
+			ThematicAttributeType* tat = iter->clone();
+			ft->attributes.push_back(tat);
+		}
+
+		//FeatureType
+		for (const auto& iter : featureAssociations)
+		{
+			FeatureAssociationType fat = iter;
+			ft->featureAssociations.push_back(fat);
+		}
+
+		ft->spatial = (spatial) ? spatial->Clone() : nullptr;
+		ft->geometry = (geometry) ? geometry->Clone() : nullptr;
+
+		return ft;
+	}
+
 	bool FeatureType::IsNoGeometry()
 	{
 		if (false == spatial)

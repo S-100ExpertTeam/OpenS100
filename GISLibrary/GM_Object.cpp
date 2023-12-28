@@ -25,6 +25,16 @@ namespace GM
 
 	}
 
+	Object* Object::Clone() const
+	{
+		Object* o = new Object();
+
+		o->id = id;
+		o->srsName = srsName;
+
+		return o;
+	}
+
 	std::string Object::GetID()
 	{
 		return id;

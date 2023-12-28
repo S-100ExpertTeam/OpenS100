@@ -10,6 +10,7 @@ namespace GF
 	{
 	public:
 		FeatureAssociationType();
+		FeatureAssociationType(const FeatureAssociationType& other);
 		virtual ~FeatureAssociationType();
 
 	public:

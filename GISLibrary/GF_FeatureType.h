@@ -31,6 +31,9 @@ namespace GF
 		SGeometry* geometry = nullptr;
 
 	public:
+		virtual FeatureType* Clone() const;
+
+	public:
 		virtual bool IsNoGeometry();
 
 		virtual int GetFeatureRelationCount();

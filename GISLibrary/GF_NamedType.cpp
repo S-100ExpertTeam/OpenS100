@@ -8,6 +8,11 @@ namespace GF
 
 	}
 
+	NamedType::NamedType(const NamedType& other)
+	{
+		code = other.code;
+	}
+
 	NamedType::~NamedType()
 	{
 

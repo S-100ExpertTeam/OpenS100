@@ -13,6 +13,7 @@ namespace GF
 	{
 	public:
 		AttributeType();
+		AttributeType(const AttributeType& other) : PropertyType(other) {};
 		virtual ~AttributeType();
 
 	public:

@@ -10,6 +10,7 @@ namespace GF
 	{
 	public:
 		AssociationType();
+		AssociationType(const AssociationType& other);
 		virtual ~AssociationType();
 
 	public:

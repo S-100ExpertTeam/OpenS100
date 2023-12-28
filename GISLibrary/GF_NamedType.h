@@ -8,6 +8,7 @@ namespace GF
 	{
 	public:
 		NamedType();
+		NamedType(const NamedType& other);
 		virtual ~NamedType();
 
 	public:

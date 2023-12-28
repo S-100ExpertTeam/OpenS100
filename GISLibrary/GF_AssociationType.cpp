@@ -8,6 +8,11 @@ namespace GF
 
 	}
 
+	AssociationType::AssociationType(const AssociationType& other) : NamedType(other)
+	{
+		role = other.role;
+	}
+
 	AssociationType::~AssociationType()
 	{
 

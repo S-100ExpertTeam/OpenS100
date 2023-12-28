@@ -8,6 +8,11 @@ namespace GF
 
 	}
 
+	PropertyType::PropertyType(const PropertyType& other)
+	{
+		code = other.code;
+	}
+
 	PropertyType::~PropertyType()
 	{
 

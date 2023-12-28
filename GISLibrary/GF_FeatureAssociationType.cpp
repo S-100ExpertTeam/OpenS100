@@ -8,6 +8,11 @@ namespace GF
 
 	}
 
+	FeatureAssociationType::FeatureAssociationType(const FeatureAssociationType& other) : AssociationType(other)
+	{
+		featureID = other.featureID;
+	}
+
 	FeatureAssociationType::~FeatureAssociationType()
 	{
 
