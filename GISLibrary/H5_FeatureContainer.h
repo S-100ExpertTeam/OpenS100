@@ -11,6 +11,7 @@ class H5_FeatureContainer
 {
 public:
 	H5_FeatureContainer();
+	H5_FeatureContainer(const H5_FeatureContainer& other);
 	virtual ~H5_FeatureContainer();
 
 public:
@@ -25,6 +26,9 @@ public:
 	int numInstances = 0;
 
 	H5_FC_Attribute2* attribute2 = nullptr;
+
+public:
+	virtual H5_FeatureContainer operator=(const H5_FeatureContainer& other);
 
 public:
 	DataOrganizationIndex getDataCodingFormat() const;

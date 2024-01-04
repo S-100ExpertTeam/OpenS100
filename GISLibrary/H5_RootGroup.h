@@ -10,6 +10,7 @@ class H5_RootGroup
 {
 public:
 	H5_RootGroup();
+	H5_RootGroup(const H5_RootGroup& other);
 	virtual ~H5_RootGroup();
 
 public:
@@ -44,6 +45,9 @@ public:
 	VerticalDatumReference* verticalDatumReference = nullptr;
 	int* verticalDatum = nullptr;
 	std::string* metaFeatures = nullptr;
+
+public:
+	virtual H5_RootGroup operator=(const H5_RootGroup& other);
 
 public:
 	std::string getProductSpecification() const;

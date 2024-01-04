@@ -3,6 +3,8 @@
 
 #include "S100Layer.h"
 
+#include "S102_RootGroup.h"
+
 #include "SPoint.h"
 #include "SMultiPoint.h"
 #include "SCurve.h"
@@ -411,13 +413,44 @@ S100H5* S100LayerFactory::CopyS100H5(Layer* layer, CString newName)
 	if (!layer)
 		return nullptr;
 
-	return nullptr;
+	S100H5* enc = (S100H5*)layer->GetSpatialObject();
+	if (!enc)
+		return nullptr;
+
+	S100H5* h5 = new S100H5(enc->GetD2());
+	h5->SetFilePath(newName);
+	h5->m_pLayer = layer;
+
+	h5->rootGroup = new H5_RootGroup(*enc->rootGroup);
+	h5->SetMBR();
+
+	return h5;
 }
 
 S102H5* S100LayerFactory::CopyS102H5(Layer* layer, CString newName)
 {
 	if (!layer)
 		return nullptr;
+
+	S102H5* enc = (S102H5*)layer->GetSpatialObject();
+	if (!enc)
+		return nullptr;
+
+	S102H5* h5 = new S102H5(enc->GetPC(), enc->GetD2());
+
+	h5->SetFilePath(newName);
+	h5->m_pLayer = layer;
+
+	S102_RootGroup* roopGroup = (S102_RootGroup*)enc->rootGroup;
+	h5->rootGroup = new S102_RootGroup(*roopGroup);
+
+	for (const auto& iter : enc->featureContainer)
+	{
+		H5_FeatureContainer* container = new H5_FeatureContainer(*iter);
+		h5->featureContainer.push_back(container);
+	}
+
+	h5->SetMBR();
 
 	return nullptr;
 }
@@ -472,11 +505,11 @@ Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, CString newName)
 		}
 		else if (objType == S100SpatialObjectType::S100H5)
 		{
-
+			S100H5* dscObject = S100LayerFactory::CopyS100H5(srcLayer, newName);
 		}
 		else if (objType == S100SpatialObjectType::S102H5)
 		{
-
+			S102H5* dscObject = S100LayerFactory::CopyS102H5(srcLayer, newName);
 		}
 	}
 

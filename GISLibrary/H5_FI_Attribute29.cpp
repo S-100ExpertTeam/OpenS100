@@ -7,9 +7,33 @@ H5_FI_Attribute29::H5_FI_Attribute29()
 
 }
 
+H5_FI_Attribute29::H5_FI_Attribute29(const H5_FI_Attribute29& other)
+{
+	gridOriginLongitude = other.gridOriginLongitude;
+	gridOriginLatitude = other.gridOriginLatitude;
+	gridSpacingLongitudinal = other.gridSpacingLongitudinal;
+	gridSpacingLatitudinal = other.gridSpacingLatitudinal;
+	numPointsLongitudinal = other.numPointsLongitudinal;
+	numPointsLatitudinal = other.numPointsLatitudinal;
+	startSequence = other.startSequence;
+}
+
 H5_FI_Attribute29::~H5_FI_Attribute29()
 {
 
+}
+
+H5_FI_Attribute29 H5_FI_Attribute29::operator=(const H5_FI_Attribute29& other)
+{
+	gridOriginLongitude = other.gridOriginLongitude;
+	gridOriginLatitude = other.gridOriginLatitude;
+	gridSpacingLongitudinal = other.gridSpacingLongitudinal;
+	gridSpacingLatitudinal = other.gridSpacingLatitudinal;
+	numPointsLongitudinal = other.numPointsLongitudinal;
+	numPointsLatitudinal = other.numPointsLatitudinal;
+	startSequence = other.startSequence;
+
+	return *this;
 }
 
 double H5_FI_Attribute29::getGridOriginLongitude() const
