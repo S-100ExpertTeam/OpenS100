@@ -12,6 +12,9 @@ public:
 	std::vector<THAS*> m_arr;
 
 public:
+	virtual F_THAS operator=(const F_THAS& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file) { return true; }
@@ -20,6 +23,4 @@ public:
 	void Insert(RecordName name, int taui);
 	void Insert(int rcnm, int rcid, int taui);
 	void Insert(GISLibrary::RCNM rcnm, int rcid, int taui);
-
-	virtual F_THAS* Clone() const;
 };

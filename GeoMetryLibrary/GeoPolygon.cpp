@@ -11,6 +11,41 @@ GeoPolygon::GeoPolygon(void)
 	CPoints = NULL;
 }
 
+GeoPolygon::GeoPolygon(const GeoPolygon& other) : Geometry(other)
+{
+	NumPoints = other.NumPoints;
+	if (NumPoints == 0)
+		return;
+
+	Points = new GeoPoint[NumPoints];
+	CPoints = new POINT[NumPoints];
+	for (int i = 0; i < NumPoints; i++)
+	{
+		Points[i].id = other.Points[i].id;
+
+		m_mbr.xmin = other.m_mbr.xmin;
+		m_mbr.ymin = other.m_mbr.ymin;
+		m_mbr.xmax = other.m_mbr.xmax;
+		m_mbr.ymax = other.m_mbr.ymax;
+
+		Points[i].x = other.Points[i].x;
+		Points[i].y = other.Points[i].y;
+
+		CPoints[i].x = other.CPoints[i].x;
+		CPoints[i].y = other.CPoints[i].y;
+	}
+
+	NumParts = other.NumParts;
+	if (NumParts == 0)
+		return;
+
+	Parts = new int[NumParts];
+	for (int i = 0; i < NumParts; i++)
+	{
+		Parts[i] = other.Parts[i];
+	}
+}
+
 GeoPolygon::~GeoPolygon(void)
 {
 	if (Parts != NULL)
@@ -19,6 +54,63 @@ GeoPolygon::~GeoPolygon(void)
 		delete[] Points;
 	if (CPoints != NULL)
 		delete[] CPoints;
+}
+
+GeoPolygon GeoPolygon::operator=(const GeoPolygon& other)
+{
+	if (Parts)
+	{
+		delete[] Parts;
+		Parts = nullptr;
+	}
+		
+	if (Points)
+	{
+		delete[] Points;
+		Points = nullptr;
+	}
+		
+	if (CPoints)
+	{
+		delete[] CPoints;
+		CPoints = nullptr;
+	}	
+
+	Geometry::operator=(other);
+
+	NumPoints = other.NumPoints;
+	if (NumPoints == 0)
+		return *this;
+
+	Points = new GeoPoint[NumPoints];
+	CPoints = new POINT[NumPoints];
+	for (int i = 0; i < NumPoints; i++)
+	{
+		Points[i].id = other.Points[i].id;
+
+		m_mbr.xmin = other.m_mbr.xmin;
+		m_mbr.ymin = other.m_mbr.ymin;
+		m_mbr.xmax = other.m_mbr.xmax;
+		m_mbr.ymax = other.m_mbr.ymax;
+
+		Points[i].x = other.Points[i].x;
+		Points[i].y = other.Points[i].y;
+
+		CPoints[i].x = other.CPoints[i].x;
+		CPoints[i].y = other.CPoints[i].y;
+	}
+
+	NumParts = other.NumParts;
+	if (NumParts == 0)
+		return *this;
+
+	Parts = new int[NumParts];
+	for (int i = 0; i < NumParts; i++)
+	{
+		Parts[i] = other.Parts[i];
+	}
+
+	return *this;
 }
 
 void GeoPolygon::DrawGeometry(HDC& hDC, Scaler* scaler, double offset)
@@ -55,42 +147,4 @@ void GeoPolygon::DrawGeometry(HDC& hDC, Scaler* scaler, double offset)
 		DeleteObject(hrgn);
 
 	}
-}
-
-GeoPolygon* GeoPolygon::Clone() const
-{
-	GeoPolygon* gp = new GeoPolygon();
-
-	gp->NumPoints = NumPoints;
-	if (NumPoints == 0)
-		return gp;
-
-	gp->Points = new GeoPoint[NumPoints];
-	gp->CPoints = new POINT[NumPoints];
-	for (int i = 0; i < NumPoints; i++)
-	{
-		gp->Points[i].id = Points[i].id;
-
-		gp->m_mbr.xmin = m_mbr.xmin;
-		gp->m_mbr.ymin = m_mbr.ymin;
-		gp->m_mbr.xmax = m_mbr.xmax;
-		gp->m_mbr.ymax = m_mbr.ymax;
-
-		gp->Points[i].x = Points[i].x;
-		gp->Points[i].y = Points[i].y;
-
-		gp->CPoints[i].x = CPoints[i].x;
-		gp->CPoints[i].y = CPoints[i].y;
-	}
-
-	gp->NumParts = NumParts;
-	if (NumParts == 0)
-		return gp;
-	gp->Parts = new int[NumParts];
-	for (int i = 0; i < NumParts; i++)
-	{
-		gp->Parts[i] = Parts[i];
-	}
-
-	return gp;
 }

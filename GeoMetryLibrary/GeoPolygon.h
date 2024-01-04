@@ -6,6 +6,7 @@ class GeoPolygon : public Geometry
 {
 public:
 	GeoPolygon();
+	GeoPolygon(const GeoPolygon& other);
 	virtual ~GeoPolygon();
 
 public:
@@ -17,7 +18,8 @@ public:
 	POINT* CPoints = nullptr;
 
 public:
-	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
+	virtual GeoPolygon operator=(const GeoPolygon& other);
 
-	virtual GeoPolygon* Clone() const;
+public:
+	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
 };

@@ -14,6 +14,9 @@ namespace GF
 		std::string code;
 
 	public:
+		virtual PropertyType operator=(const PropertyType& other);
+
+	public:
 		std::string GetCode();
 		void SetCode(std::string value);
 	};

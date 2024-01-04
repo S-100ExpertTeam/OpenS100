@@ -6,6 +6,7 @@ class GeoPolyline : public Geometry
 {
 public:
 	GeoPolyline();
+	GeoPolyline(const GeoPolyline& other);
 	virtual ~GeoPolyline();
 
 public:
@@ -17,7 +18,8 @@ public:
 	POINT* CPoints = nullptr;
 
 public:
-	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
+	virtual GeoPolyline operator=(const GeoPolyline& other);
 
-	virtual GeoPolyline* Clone() const;
+public:
+	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
 };

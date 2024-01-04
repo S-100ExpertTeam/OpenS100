@@ -8,9 +8,23 @@ namespace GF
 
 	}
 
+	InformationAssociationType::InformationAssociationType(const InformationAssociationType& other) :AssociationType(other)
+	{
+		informationID = other.informationID;
+	}
+
 	InformationAssociationType::~InformationAssociationType()
 	{
 
+	}
+
+	InformationAssociationType InformationAssociationType::operator=(const InformationAssociationType& other)
+	{
+		AssociationType::operator=(other);
+
+		informationID = other.informationID;
+
+		return *this;
 	}
 
 	std::string InformationAssociationType::GetInformationID()

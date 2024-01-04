@@ -10,14 +10,15 @@ namespace GM
 
 	}
 
+	Object::Object(const Object& other)
+	{
+		id = other.id;
+		srsName = other.srsName;
+	}
+
 	Object::Object(std::string id)
 	{
 		this->id = id;
-	}
-
-	Object::Object(const Object& item)
-	{
-		this->id = item.id;
 	}
 
 	Object::~Object()
@@ -25,14 +26,12 @@ namespace GM
 
 	}
 
-	Object* Object::Clone() const
+	Object Object::operator=(const Object& other)
 	{
-		Object* o = new Object();
+		id = other.id;
+		srsName = other.srsName;
 
-		o->id = id;
-		o->srsName = srsName;
-
-		return o;
+		return *this;
 	}
 
 	std::string Object::GetID()

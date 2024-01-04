@@ -26,6 +26,9 @@ public:
 	F_CodeWithNumericCode *m_arcs = new F_CodeWithNumericCode();
 
 public:
+	virtual R_DSGIR operator=(const R_DSGIR& other);
+
+public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
 	bool WriteRecord(CFile* file);
 	// function to get the code with the new memory code.
@@ -69,7 +72,6 @@ public:
 	void initFeatureAssociationCode();
 	void initAssociationRoleCode();
 
-	virtual R_DSGIR* Clone() const;
 private:
 	void deleteAll();
 	void deleteAttributeCode();

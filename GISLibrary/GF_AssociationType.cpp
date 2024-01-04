@@ -18,6 +18,15 @@ namespace GF
 
 	}
 
+	AssociationType AssociationType::operator=(const AssociationType& other)
+	{
+		NamedType::operator=(other);
+
+		role = other.role;
+
+		return *this;
+	}
+
 	std::string AssociationType::GetRole()
 	{
 		return role.GetCode();

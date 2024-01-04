@@ -22,6 +22,15 @@ F_CCOC::~F_CCOC()
 
 }
 
+F_CCOC F_CCOC::operator=(const F_CCOC& other)
+{
+	m_ccui = other.m_ccui;
+	m_ccix = other.m_ccix;
+	m_ncco = other.m_ncco;
+
+	return *this;
+}
+
 int F_CCOC::GetSize()
 {
 	return 5;
@@ -41,15 +50,5 @@ int F_CCOC::GetFieldLength()
 	len += 2;
 	len += 2;
 	return ++len;
-}
-
-F_CCOC* F_CCOC::Clone() const
-{
-	F_CCOC* f_ccoc = new F_CCOC();
-	f_ccoc->m_ccui = m_ccui;
-	f_ccoc->m_ccix = m_ccix;
-	f_ccoc->m_ncco = m_ncco;
-
-	return f_ccoc;
 }
 

@@ -5,6 +5,14 @@ MBR::MBR(void)
 {
 }
 
+MBR::MBR(const MBR& other)
+{
+	xmin = other.xmin;
+	ymin = other.ymin;
+	xmax = other.xmax;
+	ymax = other.ymax;
+}
+
 MBR::MBR(double _xmin, double _ymin, double _xmax, double _ymax)
 {
 	xmin = _xmin;
@@ -15,6 +23,27 @@ MBR::MBR(double _xmin, double _ymin, double _xmax, double _ymax)
 
 MBR::~MBR(void)
 {
+}
+
+MBR MBR::operator=(const MBR& other)
+{
+	xmin = other.xmin;
+	ymin = other.ymin;
+	xmax = other.xmax;
+	ymax = other.ymax;
+
+	return *this;
+}
+
+bool MBR::operator==(const MBR& other)
+{
+	if ((xmin == other.xmin) &&
+		(ymin == other.ymin) &&
+		(xmax == other.xmax) &&
+		(ymax == other.ymax))
+		return true;
+
+	return false;
 }
 
 void MBR::SetXMin(double value)

@@ -7,6 +7,7 @@ class SCurve : public SAbstractCurve
 {
 public:
 	SCurve();
+	SCurve(const SCurve& other);
 	virtual ~SCurve();
 	
 public:
@@ -24,6 +25,9 @@ private:
 	//int m_id = 0;
 
 public:
+	virtual SCurve operator=(const SCurve& other);
+
+public:
 	SGeometryType GetType() override;
 	
 	int GetNumPoints() const;
@@ -34,7 +38,6 @@ public:
 	double GetX() override;
 	double GetY() override;
 	void Set(int index, double x, double y) override;
-	virtual SCurve* Clone() const;
 
 	int GetRCID();
 	void Init(int size);

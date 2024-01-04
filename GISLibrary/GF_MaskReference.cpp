@@ -18,4 +18,12 @@ namespace GF
 	{
 
 	}
+
+	MaskReference MaskReference::operator=(const MaskReference& other)
+	{
+		geometryID = other.geometryID;
+		maskIndicator = other.maskIndicator;
+
+		return *this;
+	}
 }

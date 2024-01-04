@@ -18,6 +18,15 @@ namespace GF
 
 	}
 
+	FeatureAssociationType FeatureAssociationType::operator=(const FeatureAssociationType& other)
+	{
+		AssociationType::operator=(other);
+
+		featureID = other.featureID;
+
+		return *this;
+	}
+
 	std::string FeatureAssociationType::GetFeatureID()
 	{
 		return featureID;

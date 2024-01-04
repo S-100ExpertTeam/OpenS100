@@ -17,6 +17,9 @@ namespace GF
 		std::string featureID;
 
 	public:
+		virtual FeatureAssociationType operator=(const FeatureAssociationType& other);
+
+	public:
 		std::string GetFeatureID();
 		void SetFeatureID(std::string value);
 	};

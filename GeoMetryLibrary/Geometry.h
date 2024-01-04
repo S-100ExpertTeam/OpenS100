@@ -13,11 +13,15 @@ class Geometry
 {
 public:
 	Geometry();
+	Geometry(const Geometry& other);
 	virtual ~Geometry();
 
 public:
 	MBR m_mbr;
 	std::string id;
+
+public:
+	virtual Geometry operator=(const Geometry& other);
 
 public:
 	MBR GetMBR();
@@ -50,8 +54,6 @@ public:
 	virtual std::string ToString() { return ""; }
 
 	virtual int getNumPoint() const { return 0; };
-
-	virtual Geometry* Clone() const = 0;
 
 public:
 	bool WriteWkb(std::wstring path);

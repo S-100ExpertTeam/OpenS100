@@ -84,8 +84,8 @@ public:
 	int GetFieldLength();
 	std::string GetTagName();
 
-	virtual F_DataDescriptiveField* Clone() const;
 public:
+	virtual F_DataDescriptiveField operator=(const F_DataDescriptiveField& other);
 	bool operator==(const F_DataDescriptiveField& other) const;
 	//bool operator<(const F_DataDescriptiveField& other) const;
 };

@@ -13,15 +13,17 @@ class R_DSCRS : Record
 {
 public:
 	R_DSCRS();
+	R_DSCRS(const R_DSCRS& other);
 	virtual ~R_DSCRS();
 
 public:
 	F_CSID m_csid;
 	std::list<F_CRSH*> m_crsh;
 	F_CSAX* m_csax = nullptr;
-	//F_PROJ* m_proj = nullptr;
-	//F_GDAT* m_gdat = nullptr;
 	F_VDAT* m_vdat = nullptr;
+
+public:
+	virtual R_DSCRS operator=(const R_DSCRS& other);
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
@@ -29,6 +31,4 @@ public:
 
 	void Init();
 	void Release();
-
-	virtual R_DSCRS* Clone() const;
 };

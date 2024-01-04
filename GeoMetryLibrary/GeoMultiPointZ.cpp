@@ -8,6 +8,21 @@ GeoMultiPointZ::GeoMultiPointZ()
 
 }
 
+GeoMultiPointZ::GeoMultiPointZ(const GeoMultiPointZ& other) : Geometry(other)
+{
+	m_numPoints = other.m_numPoints;
+	if (m_numPoints == 0)
+		return;
+
+	m_pPoints = new GeoPointZ[m_numPoints];
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		m_pPoints[i].x = other.m_pPoints[i].x;
+		m_pPoints[i].y = other.m_pPoints[i].y;
+		m_pPoints[i].z = other.m_pPoints[i].z;
+	}
+}
+
 GeoMultiPointZ::GeoMultiPointZ(int size)
 {
 	m_numPoints = size;
@@ -38,6 +53,31 @@ GeoMultiPointZ::~GeoMultiPointZ()
 	m_pPoints = nullptr;
 }
 
+GeoMultiPointZ GeoMultiPointZ::operator=(const GeoMultiPointZ& other)
+{
+	if (m_pPoints)
+	{
+		delete[] m_pPoints;
+		m_pPoints = nullptr;
+	}
+
+	Geometry::operator=(other);
+
+	m_numPoints = other.m_numPoints;
+	if (m_numPoints == 0)
+		return *this;
+
+	m_pPoints = new GeoPointZ[m_numPoints];
+	for (int i = 0; i < m_numPoints; i++)
+	{
+		m_pPoints[i].x = other.m_pPoints[i].x;
+		m_pPoints[i].y = other.m_pPoints[i].y;
+		m_pPoints[i].z = other.m_pPoints[i].z;
+	}
+
+	return *this;
+}
+
 void GeoMultiPointZ::SetPoint(int index, double _x, double _y, double _z)
 {
 	m_pPoints[index].SetPoint(_x, _y, _z);
@@ -63,21 +103,3 @@ void GeoMultiPointZ::DrawGeometry(HDC &hDC, Scaler *scaler, double offset)
 	}
 }
 
-GeoMultiPointZ* GeoMultiPointZ::Clone() const
-{
-	GeoMultiPointZ* mpt = new GeoMultiPointZ();
-
-	mpt->m_numPoints = m_numPoints;
-	if (m_numPoints == 0)
-		return mpt;
-
-	mpt->m_pPoints = new GeoPointZ[m_numPoints];
-	for (int i = 0; i < m_numPoints; i++)
-	{
-		mpt->m_pPoints[i].x = m_pPoints[i].x;
-		mpt->m_pPoints[i].y = m_pPoints[i].y;
-		mpt->m_pPoints[i].z = m_pPoints[i].z;
-	}
-
-	return mpt;
-}

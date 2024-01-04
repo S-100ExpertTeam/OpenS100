@@ -15,6 +15,9 @@ namespace GF
 		std::string code = "";
 
 	public:
+		virtual NamedType operator=(const NamedType& other);
+
+	public:
 		virtual std::string GetCode();
 		virtual void SetCode(std::string& value);
 	};

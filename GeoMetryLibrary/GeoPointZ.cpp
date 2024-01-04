@@ -13,6 +13,13 @@ GeoPointZ::GeoPointZ(void)
 
 }
 
+GeoPointZ::GeoPointZ(const GeoPointZ& other)
+{
+	x = other.x;
+	y = other.y;
+	z = other.z;
+}
+
 GeoPointZ::GeoPointZ(double _x, double _y, double _z)
 {
 	x = _x;
@@ -23,6 +30,15 @@ GeoPointZ::GeoPointZ(double _x, double _y, double _z)
 GeoPointZ::~GeoPointZ(void)
 {
 
+}
+
+GeoPointZ GeoPointZ::operator=(const GeoPointZ& other)
+{
+	x = other.x;
+	y = other.y;
+	z = other.z;
+
+	return *this;
 }
 
 void GeoPointZ::SetPoint(double _x, double _y, double _z)
@@ -110,16 +126,5 @@ std::string GeoPointZ::ToString()
 	ss << y << " " << x << " " << z;
 
 	return ss.str();
-}
-
-GeoPointZ* GeoPointZ::Clone() const
-{
-	GeoPointZ* pt = new GeoPointZ();
-
-	pt->x = x;
-	pt->y = y;
-	pt->z = z;
-
-	return pt;
 }
 

@@ -67,11 +67,11 @@ public:
 class S100LayerFactory
 {
 private:
-	static SHPFile* CopySHPFile(SHPFile*, CString newName);
-	static S101Cell* CopyS101Cell(S101Cell*, CString newName);
-	static S10XGML* CopyS10XGML(S10XGML*, CString newName);
-	static S100H5* CopyS100H5(S100H5*, CString newName);
-	static S102H5* CopyS102H5(S102H5*, CString newName);
+	static SHPFile* CopySHPFile(Layer*, CString newName);
+	static S101Cell* CopyS101Cell(Layer*, CString newName);
+	static S10XGML* CopyS10XGML(Layer*, CString newName);
+	static S100H5* CopyS100H5(Layer*, CString newName);
+	static S102H5* CopyS102H5(Layer*, CString newName);
 
 public:
 	static Layer* CopyLayer(Layer*, CString NewName);

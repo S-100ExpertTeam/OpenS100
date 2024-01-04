@@ -12,10 +12,9 @@ F_ATTR::F_ATTR(const F_ATTR& other)
 {
 	for (const auto& iter : other.m_arr)
 	{
-		ATTR* attr = new ATTR(iter->m_natc, iter->m_atix, iter->m_paix, iter->m_atin, iter->m_atvl);
+		ATTR* attr = new ATTR(*iter);
 		m_arr.push_back(attr);
 	}
-
 }
 
 F_ATTR::~F_ATTR()
@@ -24,6 +23,27 @@ F_ATTR::~F_ATTR()
 	{
 		delete* itor;
 	}
+}
+
+F_ATTR F_ATTR::operator=(const F_ATTR& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(*iter);
+		m_arr.push_back(attr);
+	}
+
+	return *this;
 }
 
 void F_ATTR::ReadField(BYTE *&buf)
@@ -115,17 +135,5 @@ ATTR* F_ATTR::getATTR(int index) const
 	}
 
 	return m_arr.at(index);
-}
-
-F_ATTR* F_ATTR::Clone() const
-{
-	F_ATTR* f_attr = new F_ATTR();
-	for (const auto& iter : m_arr)
-	{
-		ATTR* attr = new ATTR(iter->m_natc, iter->m_atix, iter->m_paix, iter->m_atin, iter->m_atvl);
-		f_attr->m_arr.push_back(attr);
-	}
-
-	return f_attr;
 }
 

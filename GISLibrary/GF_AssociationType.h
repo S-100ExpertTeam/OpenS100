@@ -17,6 +17,9 @@ namespace GF
 		AssociationRole role;
 
 	public:
+		virtual AssociationType operator=(const AssociationType& other);
+
+	public:
 		std::string GetRole();
 		void SetRole(std::string code);
 	};

@@ -17,9 +17,14 @@ namespace GF
 		virtual ~AttributeType();
 
 	public:
+		virtual AttributeType operator=(const AttributeType& other) {
+			PropertyType::operator=(other);
+
+			return *this;
+		}
 
 	public:
 		virtual bool IsSimple() { return false; }
-		virtual std::string GetValue() { return "";}
+		virtual std::string GetValue() { return ""; }
 	};
 }

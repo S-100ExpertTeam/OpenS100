@@ -22,6 +22,9 @@ public:
 	std::unordered_map<std::wstring, CodeWithNumericCode*> m_arrFindForCode;
 
 public:
+	virtual F_CodeWithNumericCode operator=(const F_CodeWithNumericCode& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
@@ -42,6 +45,4 @@ public:
 	CodeWithNumericCode* getCodeWithNumericCode(int numericCode);
 	CodeWithNumericCode* getCodeWIthNumericCode(CString code);
 	void setCodeNumericCode(CString code, int numericCode);
-
-	virtual F_CodeWithNumericCode* Clone() const;
 };

@@ -5,6 +5,7 @@ class SOrientableCurve :
 {
 public:
 	SOrientableCurve();
+	SOrientableCurve(const SOrientableCurve& other);
 	virtual ~SOrientableCurve();
 
 public:
@@ -12,6 +13,7 @@ public:
 	// - : false
 	bool orientation = true;
 
-	virtual SOrientableCurve* Clone() const;
+public:
+	virtual SOrientableCurve operator=(const SOrientableCurve& other);
 };
 

@@ -18,6 +18,13 @@ namespace GF
 
 	}
 
+	PropertyType PropertyType::operator=(const PropertyType& other)
+	{
+		code = other.code;
+
+		return *this;
+	}
+
 	std::string PropertyType::GetCode()
 	{
 		return code;

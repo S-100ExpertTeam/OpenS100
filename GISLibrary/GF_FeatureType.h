@@ -31,7 +31,7 @@ namespace GF
 		SGeometry* geometry = nullptr;
 
 	public:
-		virtual FeatureType* Clone() const;
+		virtual FeatureType operator=(const FeatureType& other);
 
 	public:
 		virtual bool IsNoGeometry();

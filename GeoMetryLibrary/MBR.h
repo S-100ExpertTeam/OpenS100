@@ -3,6 +3,7 @@ class MBR
 {
 public:
 	MBR();
+	MBR(const MBR& other);
 	MBR(double _xmin, double _ymin, double _xmax, double _ymax);
 	virtual ~MBR();
 
@@ -11,6 +12,10 @@ public:
 	double ymin = DBL_MAX;
 	double xmax = -DBL_MAX;
 	double ymax = -DBL_MAX;
+
+public:
+	virtual MBR operator=(const MBR& other);
+	virtual bool operator==(const MBR& other);
 
 public:
 	void SetXMin(double value);

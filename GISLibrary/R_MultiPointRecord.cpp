@@ -14,6 +14,26 @@ R_MultiPointRecord::R_MultiPointRecord(void)
 	m_mrid.m_name.RCNM = 115;
 }
 
+R_MultiPointRecord::R_MultiPointRecord(const R_MultiPointRecord& other) : R_VectorRecord(other)
+{
+	m_mrid = other.m_mrid;
+
+	if (other.m_cocc)
+		m_cocc = new F_COCC(*other.m_cocc);
+
+	for (const auto& iter : other.m_c2il)
+	{
+		F_C2IL* cont = new F_C2IL(*iter);
+		m_c2il.push_back(cont);
+	}
+
+	for (const auto& iter : other.m_c3il)
+	{
+		F_C3IL* cont = new F_C3IL(*iter);
+		m_c3il.push_back(cont);
+	}
+}
+
 R_MultiPointRecord::~R_MultiPointRecord(void)
 {
 	delete m_cocc;
@@ -31,6 +51,56 @@ R_MultiPointRecord::~R_MultiPointRecord(void)
 	{
 		delete* itor;
 	}
+}
+
+R_MultiPointRecord R_MultiPointRecord::operator=(const R_MultiPointRecord& other)
+{
+	if (m_cocc)
+	{
+		delete m_cocc;
+		m_cocc = nullptr;
+	}
+
+	for (auto& iter : m_c2il)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_c2il.clear();
+
+	for (auto& iter : m_c3il)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_c3il.clear();
+
+	R_VectorRecord::operator=(other);
+
+	m_mrid = other.m_mrid;
+
+	if (other.m_cocc)
+		m_cocc = new F_COCC(*other.m_cocc);
+
+	for (const auto& iter : other.m_c2il)
+	{
+		F_C2IL* cont = new F_C2IL(*iter);
+		m_c2il.push_back(cont);
+	}
+
+	for (const auto& iter : other.m_c3il)
+	{
+		F_C3IL* cont = new F_C3IL(*iter);
+		m_c3il.push_back(cont);
+	}
+
+	return *this;
 }
 
 #pragma warning(disable:4018)
@@ -339,29 +409,4 @@ std::vector<C3IL*> R_MultiPointRecord::GetAllC3IL()
 	return result;
 }
 
-R_MultiPointRecord* R_MultiPointRecord::Clone() const
-{
-	R_MultiPointRecord* mpr = new R_MultiPointRecord();
-	mpr->m_mrid = m_mrid;
-	mpr->m_cocc = (!m_cocc) ? nullptr : m_cocc->Clone();
 
-	for (const auto& iter : m_c2il)
-	{
-		F_C2IL* c2il = (!iter) ? nullptr : iter->Clone();
-		mpr->m_c2il.push_back(c2il);
-	}
-
-	for (const auto& iter : m_c3il)
-	{
-		F_C3IL* c3il = (!iter) ? nullptr : iter->Clone();
-		mpr->m_c3il.push_back(c3il);
-	}
-
-	for (const auto& iter : m_inas)
-	{
-		F_INAS* inas = (!iter) ? nullptr : iter->Clone();
-		mpr->m_inas.push_back(inas);
-	}
-
-	return mpr;
-}

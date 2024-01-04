@@ -8,6 +8,11 @@ namespace GF
 
 	}
 
+	InformationType::InformationType(const InformationType& other) : ObjectType(other)
+	{
+
+	}
+
 	InformationType::~InformationType()
 	{
 		//for (auto i = attributes.begin(); i != attributes.end(); i++)
@@ -18,27 +23,11 @@ namespace GF
 		//attributes.clear();
 	}
 
-	InformationType* InformationType::Clone() const
+	InformationType InformationType::operator=(const InformationType& other)
 	{
-		InformationType* it = new InformationType();
+		ObjectType::operator=(other);
 
-		//NamedType
-		it->code = code;
-
-		//ObjectType
-		it->id = id;
-		for (const auto& iter : informationAssociations)
-		{
-			InformationAssociationType iat = iter;
-			it->informationAssociations.push_back(iat);
-		}
-		for (const auto& iter : attributes)
-		{
-			ThematicAttributeType* tat = iter->clone();
-			it->attributes.push_back(tat);
-		}
-
-		return it;
+		return *this;
 	}
 
 	int InformationType::GetAttributeCount()

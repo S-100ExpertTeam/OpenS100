@@ -38,6 +38,9 @@ public:
 	int m_nofr;
 
 public:
+	virtual F_DSSI operator=(const F_DSSI& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
@@ -62,6 +65,4 @@ public:
 
 	int GetNumberOfFeatureTypeRecords();
 	void SetNumberOfFeatureTypeRecords(int value);
-
-	virtual F_DSSI* Clone() const;
 };

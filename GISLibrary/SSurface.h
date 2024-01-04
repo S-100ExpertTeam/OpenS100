@@ -12,6 +12,7 @@ class SSurface : public SGeometry
 {
 public:
 	SSurface();
+	SSurface(const SSurface& other);
 	SSurface(MBR* mbr);
 	SSurface(std::vector<POINT>& points, std::vector<int>& parts);
 	virtual ~SSurface();
@@ -31,6 +32,9 @@ public:
 private:
 	// Rings
 	std::vector<SAbstractCurve*> curveList;
+
+public:
+	virtual SSurface operator=(const SSurface& other);
 
 public: // override from Geometry
 	bool ImportFromWkb(unsigned char* value, int size) override;
@@ -83,6 +87,4 @@ public:
 	void GetCurveList(std::list<SCurve*>& list);
 
 	void setSuppress(bool value);
-
-	virtual SSurface* Clone() const;
 };

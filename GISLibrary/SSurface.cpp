@@ -15,6 +15,39 @@ SSurface::SSurface()
 	
 }
 
+SSurface::SSurface(const SSurface& other) : SGeometry(other)
+{
+	m_numPoints = other.m_numPoints;
+
+	if (m_numPoints > 0)
+	{
+		m_pPoints = new GeoPoint[m_numPoints];
+		for (int i = 0; i < m_numPoints; i++)
+		{
+			m_pPoints[i] = other.m_pPoints[i];
+		}
+	}
+	
+	for (const auto& iter : other.curveList)
+	{
+		SAbstractCurve* ac = new SAbstractCurve(*iter);
+		curveList.push_back(ac);
+	}
+
+	if (m_centerPoint)
+		m_centerPoint = new GeoPoint(*m_centerPoint);
+
+	m_numParts = other.m_numParts;
+	if (m_numParts > 0)
+	{
+		m_pParts = new int[m_numParts];
+		for (int i = 0; i < m_numParts; i++)
+		{
+			m_pParts[i] = other.m_pParts[i];
+		}
+	}
+}
+
 SSurface::SSurface(MBR* mbr)
 {
 	m_numParts = 1;
@@ -423,6 +456,72 @@ void SSurface::Release()
 	curveList.clear();
 }
 
+SSurface SSurface::operator=(const SSurface& other)
+{
+	if (m_pPoints)
+	{
+		delete[] m_pPoints;
+		m_pPoints = nullptr;
+	}
+
+	if (m_pParts)
+	{
+		delete[] m_pParts;
+		m_pParts = nullptr;
+	}
+
+	if (m_centerPoint)
+	{
+		delete m_centerPoint;
+		m_centerPoint = nullptr;
+	}
+
+	if (pGeometry)
+		SafeRelease(&pGeometry);
+
+	for (auto& iter : curveList)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	curveList.clear();
+
+	m_numPoints = other.m_numPoints;
+
+	if (m_numPoints > 0)
+	{
+		m_pPoints = new GeoPoint[m_numPoints];
+		for (int i = 0; i < m_numPoints; i++)
+		{
+			m_pPoints[i] = other.m_pPoints[i];
+		}
+	}
+
+	for (const auto& iter : other.curveList)
+	{
+		SAbstractCurve* ac = new SAbstractCurve(*iter);
+		curveList.push_back(ac);
+	}
+
+	if (m_centerPoint)
+		m_centerPoint = new GeoPoint(*m_centerPoint);
+
+	m_numParts = other.m_numParts;
+	if (m_numParts > 0)
+	{
+		m_pParts = new int[m_numParts];
+		for (int i = 0; i < m_numParts; i++)
+		{
+			m_pParts[i] = other.m_pParts[i];
+		}
+	}
+
+	return *this;
+}
+
 bool SSurface::ImportFromWkb(unsigned char* value, int size)
 {
 	Init();
@@ -673,71 +772,5 @@ void SSurface::setSuppress(bool value)
 			compositeCurve->setSuppress(value);
 		}
 	}
-}
-
-SSurface* SSurface::Clone() const
-{
-	SSurface* sf = new SSurface();
-
-	//Geometry
-	sf->id = id;
-
-	sf->m_mbr.xmin = m_mbr.xmin;
-	sf->m_mbr.ymin = m_mbr.ymin;
-	sf->m_mbr.xmax = m_mbr.xmax;
-	sf->m_mbr.ymax = m_mbr.xmax;
-
-	//SGeometry
-	if (sizeOfPoint > 0)
-	{
-		if (sf->viewPoints)
-		{
-			delete[] sf->viewPoints;
-			sf->viewPoints = nullptr;
-		}
-
-		sf->sizeOfPoint = sizeOfPoint;
-		sf->viewPoints = new POINT[sizeOfPoint];
-		memset(sf->viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
-		memcpy(sf->viewPoints, viewPoints, sizeof(POINT) * sizeOfPoint);
-	}
-
-	//SSurface
-	sf->m_numPoints = m_numPoints;
-	if (m_numPoints == 0)
-		return sf;
-
-	sf->m_pPoints = new GeoPoint[m_numPoints];
-	for (int i = 0; i < m_numPoints; i++)
-	{
-		sf->m_pPoints[i].id = m_pPoints[i].id;
-
-		sf->m_mbr.xmin = m_mbr.xmin;
-		sf->m_mbr.ymin = m_mbr.ymin;
-		sf->m_mbr.xmax = m_mbr.xmax;
-		sf->m_mbr.ymax = m_mbr.ymax;
-
-		sf->m_pPoints[i].x = m_pPoints[i].x;
-		sf->m_pPoints[i].y = m_pPoints[i].y;
-	}
-
-	for (const auto& iter : curveList)
-	{
-		sf->curveList.push_back(iter->Clone());
-	}
-
-	if (m_centerPoint)
-		sf->m_centerPoint = m_centerPoint->Clone();
-
-	sf->m_numParts = m_numParts;
-	if (m_numParts == 0)
-		return sf;
-	sf->m_pParts = new int[m_numParts];
-	for (int i = 0; i < m_numParts; i++)
-	{
-		sf->m_pParts[i] = m_pParts[i];
-	}
-
-	return sf;
 }
 

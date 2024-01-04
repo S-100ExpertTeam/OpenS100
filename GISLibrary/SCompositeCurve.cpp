@@ -13,13 +13,10 @@ SCompositeCurve::SCompositeCurve()
 SCompositeCurve::SCompositeCurve(const SCompositeCurve& other)
 	: SAbstractCurve(other)
 {
-	int cnt = GetCurveCount();
-	for (int i = 0; i < cnt; i++) {
-		auto curve = GetCurve(i);
-		if (curve) {
-			auto cloned = curve->Clone();
-			AddCurve(cloned);
-		}
+	for (const auto& iter : m_listCurveLink)
+	{
+		SAbstractCurve* curve = new SAbstractCurve(*iter);
+		AddCurve(curve);
 	}
 }
 
@@ -31,6 +28,35 @@ SCompositeCurve::~SCompositeCurve()
 	}
 
 	m_listCurveLink.clear();
+}
+
+SCompositeCurve SCompositeCurve::operator=(const SCompositeCurve& other)
+{
+	//Geometry
+	id = other.id;
+
+	m_mbr.xmin = other.m_mbr.xmin;
+	m_mbr.ymin = other.m_mbr.ymin;
+	m_mbr.xmax = other.m_mbr.xmax;
+	m_mbr.ymax = other.m_mbr.xmax;
+
+	//SGeometry
+	if (other.sizeOfPoint > 0)
+	{
+		sizeOfPoint = other.sizeOfPoint;
+		viewPoints = new POINT[sizeOfPoint];
+		memset(viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
+		memcpy(viewPoints, other.viewPoints, sizeof(POINT) * sizeOfPoint);
+	}
+
+	//SCompositeCurve
+	for (const auto& iter : m_listCurveLink)
+	{
+		SAbstractCurve* curve = new SAbstractCurve(*iter);
+		AddCurve(curve);
+	}
+
+	return *this;
 }
 
 SGeometryType SCompositeCurve::GetType()
@@ -358,41 +384,5 @@ void SCompositeCurve::setSuppress(bool value)
 			compositeCurve->setSuppress(value);
 		}
 	}
-}
-
-SCompositeCurve* SCompositeCurve::Clone() const
-{
-	SCompositeCurve* cc = new SCompositeCurve();
-
-	//Geometry
-	cc->id = id;
-
-	cc->m_mbr.xmin = m_mbr.xmin;
-	cc->m_mbr.ymin = m_mbr.ymin;
-	cc->m_mbr.xmax = m_mbr.xmax;
-	cc->m_mbr.ymax = m_mbr.xmax;
-
-	//SGeometry
-	if (sizeOfPoint > 0)
-	{
-		if (cc->viewPoints)
-		{
-			delete[] cc->viewPoints;
-			cc->viewPoints = nullptr;
-		}
-
-		cc->sizeOfPoint = sizeOfPoint;
-		cc->viewPoints = new POINT[sizeOfPoint];
-		memcpy(cc->viewPoints, viewPoints, sizeof(POINT) * sizeOfPoint);
-		memset(cc->viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
-	}
-
-	//SCompositeCurve
-	for (const auto& iter : m_listCurveLink)
-	{
-		cc->m_listCurveLink.push_back(iter->Clone());
-	}
-
-	return cc;
 }
 

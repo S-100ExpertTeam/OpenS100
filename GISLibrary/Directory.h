@@ -14,5 +14,8 @@ public:
 	int fieldPosition = 0;
 
 public:
+	virtual Directory operator=(const Directory& other);
+
+public:
 	bool WriteDirectory(CFile* file, int sizeOfFieldLengthField, int sizeOfFieldPositionField);
 };

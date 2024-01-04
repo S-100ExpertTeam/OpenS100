@@ -7,6 +7,7 @@ class SPoint : public SGeometry
 {
 public:
 	SPoint();
+	SPoint(const SPoint& other);
 	SPoint(double _x, double _y);
 	virtual ~SPoint();
 
@@ -18,6 +19,9 @@ public:
 
 	// It also has a CPoint arrangement to minimize memory allocation and recovery.
 	POINT m_vPoint = {0, 0};
+
+public:
+	virtual SPoint operator=(const SPoint& other);
 
 public:
 	SGeometryType GetType() override;
@@ -35,6 +39,4 @@ public:
 
 	// Y X
 	std::string ToString() override;
-
-	virtual SPoint* Clone() const;
 };

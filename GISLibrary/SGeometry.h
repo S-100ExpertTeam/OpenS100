@@ -31,9 +31,10 @@ public:
 	std::vector<GF::InformationType*> additionalInformation;
 
 public:
-	virtual SGeometryType GetType() { return SGeometryType::none; }
+	virtual SGeometry operator=(const SGeometry& other);
 
-	virtual SGeometry* Clone() const = 0;
+public:
+	virtual SGeometryType GetType() { return SGeometryType::none; }
 	
 public:
 	int GetInformationTypeCount() const;

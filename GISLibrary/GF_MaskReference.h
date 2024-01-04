@@ -17,5 +17,8 @@ namespace GF
 		//GM::Object* geometry = nullptr;
 		std::string geometryID;
 		MaskIndicatorType maskIndicator;
+
+	public:
+		virtual MaskReference operator=(const MaskReference& other);
 	};
 }

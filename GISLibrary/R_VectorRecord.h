@@ -15,7 +15,8 @@ public:
 	std::list<F_INAS*> m_inas;
 
 public:
-	std::vector<F_INAS*> GetAllInformationAssociations();
+	virtual R_VectorRecord operator=(const R_VectorRecord& other);
 
-	virtual Record* Clone() const = 0;
+public:
+	std::vector<F_INAS*> GetAllInformationAssociations();
 };

@@ -9,13 +9,11 @@ F_THAS::F_THAS(void)
 
 }
 
-F_THAS::F_THAS(const F_THAS& other)
+F_THAS::F_THAS(const F_THAS& other) : Field(other)
 {
 	for (const auto& iter : other.m_arr)
 	{
-		THAS* thas = new THAS();
-		thas->m_name = iter->m_name;
-		thas->m_taui = iter->m_taui;
+		THAS* thas = new THAS(*iter);
 		m_arr.push_back(thas);
 	}
 }
@@ -26,6 +24,27 @@ F_THAS::~F_THAS(void)
 	{
 		delete* itor;
 	}
+}
+
+F_THAS F_THAS::operator=(const F_THAS& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		THAS* thas = new THAS(*iter);
+		m_arr.push_back(thas);
+	}
+
+	return *this;
 }
 
 void F_THAS::ReadField(BYTE *&buf)
@@ -87,16 +106,3 @@ void F_THAS::Insert(GISLibrary::RCNM rcnm, int rcid, int taui)
 	m_arr.push_back(thas);
 }
 
-F_THAS* F_THAS::Clone() const
-{
-	F_THAS* f_thas = new F_THAS();
-	for (const auto& iter : m_arr)
-	{
-		THAS* thas = new THAS();
-		thas->m_name = iter->m_name;
-		thas->m_taui = iter->m_taui;
-		f_thas->m_arr.push_back(thas);
-	}
-
-	return f_thas;
-}
