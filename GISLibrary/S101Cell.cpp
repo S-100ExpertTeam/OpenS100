@@ -1696,7 +1696,7 @@ void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_InformationRecord
 				return;
 
 			auto iter = std::find(m_infMatchingKeys.begin(), m_infMatchingKeys.end(), key);
-			if (iter == m_infMatchingKeys.end())
+			if (iter != m_infMatchingKeys.end())
 				return;
 		}
 	}
@@ -2129,7 +2129,7 @@ void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_FeatureRecord*& v
 				return;
 
 			auto iter = std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key);
-			if (iter == m_feaMatchingKeys.end())
+			if (iter != m_feaMatchingKeys.end())
 				return;
 		}
 	}
