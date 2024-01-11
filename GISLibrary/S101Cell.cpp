@@ -1693,7 +1693,11 @@ void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_InformationRecord
 		{
 			m_infMap.GetNextAssoc(index, key, value);
 			if (index == nullptr)
+			{
+				key = -1;
+				value = nullptr;
 				return;
+			}	
 
 			auto iter = std::find(m_infMatchingKeys.begin(), m_infMatchingKeys.end(), key);
 			if (iter != m_infMatchingKeys.end())
@@ -2126,7 +2130,11 @@ void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_FeatureRecord*& v
 		{
 			m_feaMap.GetNextAssoc(index, key, value);
 			if (index == nullptr)
+			{
+				key = -1;
+				value = nullptr;
 				return;
+			}	
 
 			auto iter = std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key);
 			if (iter != m_feaMatchingKeys.end())
