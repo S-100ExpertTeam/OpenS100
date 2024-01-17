@@ -61,7 +61,7 @@ bool S10XGML::Open(CString _filepath)
 		{
 			datasetIdentificationInformation.Read(child);
 		}
-		else if (strcmp(child.name(), "members") == 0)
+		else if (childName.find("members") != std::string::npos)
 		{
 			ReadMembers(child);
 		}
@@ -410,7 +410,10 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 		lonIndex = 1;
 	}
 
-	auto strPos = node.child("gml:segments").child("gml:LineStringSegment").child_value("gml:posList");
+	std::string strPos = node.child("gml:segments").child("gml:LineStringSegment").child_value("gml:posList");
+	if (strPos.empty()) {
+		strPos = node.child("gml:segments").child("gml:LineString").child_value("gml:posList");
+	}
 
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 	int posCnt = (int)strPosList.size();
@@ -441,7 +444,7 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 	int posCnt = (int)strPosList.size();
 
-	if (posCnt < 4 && posCnt % 2 != 0)
+	if (posCnt < 4 || posCnt % 2 != 0)
 	{
 		return false;
 	}

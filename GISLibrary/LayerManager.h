@@ -46,6 +46,7 @@ public:
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
 	bool onIC = true;
+	bool m_isScreenFitEnabled = true;
 
 protected:
 	D2D1Resources* D2 = nullptr;
@@ -59,6 +60,10 @@ private:
 	double s100Scale = -1;
 
 public:
+	void MoveLayerFromList(int from, int to);
+	bool IsContainFilePathToLayer(CString _filepath);
+
+
 	void SetViewMBR(RECT r);
 
 	bool AddBackgroundLayer(CString _filepath);
@@ -77,6 +82,7 @@ public:
 	void DrawBackground(HDC &hDC, int offset = 0);
 
 	void DrawS100Datasets(HDC &hDC, int offset = 0);
+	void DrawNonS100Datasets(HDC &hDC, int offset = 0);
 	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer);
 	void SetDrawingInstruction(S100Layer* layer);
 	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int minPriority, int maxPriority);

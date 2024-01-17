@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Layer.h"
 #include "S100Utilities.h"
+#include "S100ExchangeCatalogue.h"
 
 #include "..\\LibMFCUtil\\LibMFCUtil.h"
 
@@ -25,7 +26,12 @@ bool Layer::Open(CString _filepath, D2D1Resources* d2d1)
 
 	if (nullptr == m_spatialObject)
 	{
-		m_spatialObject = new SHPFile();
+		if (!extension.CompareNoCase(L"SHP")) {
+			m_spatialObject = new SHPFile();
+		}
+		else if (!extension.CompareNoCase(L"XML")) {
+			m_spatialObject = new S100ExchangeCatalogue();
+		}
 	}
 
 	m_spatialObject->m_pLayer = this;

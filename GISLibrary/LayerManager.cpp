@@ -84,6 +84,25 @@ LayerManager::~LayerManager()
 	featureOnOffMap.clear();
 }
 
+void LayerManager::MoveLayerFromList(int from, int to) {
+	if (from == to) return;
+
+	auto fromIt = std::next(layers.begin(), from);
+	auto toIt = std::next(layers.begin(), to);
+
+	layers.splice(toIt, layers, fromIt);
+}
+
+bool LayerManager::IsContainFilePathToLayer(CString _filepath)
+{
+	for (auto layer : layers) {
+		if (layer->GetLayerPath().Compare(_filepath) == 0) {
+			return true;
+		}
+	}
+	return false;
+}
+
 bool LayerManager::AddBackgroundLayer(CString _filepath)
 {
 	CString file_extension = LibMFCUtil::GetExtension(_filepath);
@@ -102,7 +121,8 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 	double ymax = scaler->myMaxLimit;
 
 	MBR _mbr(xmin, ymin, xmax, ymax);
-	scaler->SetMap(_mbr);
+	if (m_isScreenFitEnabled)
+		scaler->SetMap(_mbr);
 	mbr.SetMBR(_mbr);
 
 	return TRUE;
@@ -120,7 +140,8 @@ int LayerManager::AddLayer(Layer* _layer)
 	if (LayerCount() == 0)
 	{
 		mbr.SetMBR(_layer->m_mbr);
-		//scaler->SetMap(mbr);
+		if (m_isScreenFitEnabled)
+			scaler->SetMap(mbr);
 	}
 	else
 	{
@@ -163,7 +184,8 @@ int LayerManager::AddLayer(CString _filepath)
 
 	S100_FileType fileType = CheckFileType(_filepath);
 
-	if (fileType == S100_FileType::FILE_Shape)
+	if (fileType == S100_FileType::FILE_Shape ||
+		fileType == S100_FileType::FILE_ETC)
 	{
 		layer = new Layer();
 		if (layer->Open(_filepath, D2) == false)
@@ -213,6 +235,13 @@ void LayerManager::Draw(HDC& hdc, int offset)
 	DrawBackground(hdc, offset);
 
 	DrawS100Datasets(hdc, offset);
+
+	DrawNonS100Datasets(hdc, offset);
+
+	//gisLib->D2.Begin(hdc, rectView);
+	//gisLib->DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
+	//gisLib->DrawScaleBar();
+	//gisLib->D2.End();
 }
 
 void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
@@ -756,6 +785,19 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 					}
 				}
 			}
+		}
+	}
+}
+
+void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)
+{
+	for (auto i = layers.begin(); i != layers.end(); i++)
+	{
+		auto layer = (*i);
+
+		if (!layer->IsS100Layer())
+		{
+			layer->Draw(hDC, scaler, offset);
 		}
 	}
 }
@@ -1574,6 +1616,10 @@ S100_FileType LayerManager::CheckFileType(CString path)
 				(nodeName.find(L"Dataset") != std::wstring::npos))
 			{
 				return S100_FileType::FILE_S_100_VECTOR;
+			}
+			else
+			{
+				return S100_FileType::FILE_ETC;
 			}
 		}
 	}

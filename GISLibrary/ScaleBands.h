@@ -3,7 +3,7 @@ class ScaleBands
 {
 public:
 	ScaleBands();
-	ScaleBands(int minimumScale, int maximumScale);
+	ScaleBands(int maximumScale, int minimumScale);
 	virtual ~ScaleBands();
 
 public:
