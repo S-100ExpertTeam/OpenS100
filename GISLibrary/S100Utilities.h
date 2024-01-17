@@ -3,6 +3,7 @@
 #include "ScaleBands.h"
 #include "DataCoverage.h"
 #include "../GeoMetryLibrary/MBR.h"
+#include "../GeoMetryLibrary/Scaler.h"
 
 #include <string>
 #include <vector>
@@ -83,6 +84,6 @@ public:
 	static int GetScaleBand(int scale);
 	static std::vector<int> GetScaleBands(S100::DataCoverage dataCoverage);
 	static std::vector<int> GetScaleBands(ScaleBand sb);
-	static std::vector<std::shared_ptr<InventoryItem>> SelectDataCoverages(std::vector<std::shared_ptr<Inventory>> INV, int scale, MBR viewport);
+	static std::vector<std::shared_ptr<InventoryItem>> SelectDataCoverages(std::vector<std::shared_ptr<Inventory>> INV, Scaler* scaler, MBR viewport);
 
 };

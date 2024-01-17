@@ -188,7 +188,7 @@ int LayerManager::AddLayer(CString _filepath)
 		fileType == S100_FileType::FILE_ETC)
 	{
 		layer = new Layer();
-		if (layer->Open(_filepath, D2) == false)
+		if (layer->Open(_filepath, D2, this) == false)
 		{
 			delete layer;
 			return -1;
@@ -204,7 +204,7 @@ int LayerManager::AddLayer(CString _filepath)
 		if (fc)
 		{
 			layer = new S100Layer(fc, pc);
-			if ((S100Layer*)layer->Open(_filepath, D2) == false)
+			if ((S100Layer*)layer->Open(_filepath, D2, this) == false)
 			{
 				delete layer;
 				return -1;

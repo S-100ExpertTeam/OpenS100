@@ -18,7 +18,7 @@ class S100ExchangeCatalogue :
 	public SpatialObject
 {
 public:
-	S100ExchangeCatalogue();
+	S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1);
 	virtual ~S100ExchangeCatalogue();
 
 public:

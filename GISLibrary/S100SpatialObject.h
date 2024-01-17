@@ -25,9 +25,6 @@ public:
 public:
 	S100SpatialObjectType type = S100SpatialObjectType::S100SpatialObject;
 	PCOutputSchemaManager* pcManager = nullptr;
-	
-protected:
-	D2D1Resources* D2 = nullptr;
 
 public:
 	S100SpatialObjectType getS100SpatialObjectType();

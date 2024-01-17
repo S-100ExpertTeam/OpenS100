@@ -28,7 +28,7 @@ public: // for draw
 	DrawingSet drawingSet;
 
 public:
-	bool Open(CString _filepath, D2D1Resources* d2d1) override;
+	bool Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm = nullptr) override;
 	void Draw(HDC& hDC, Scaler* scaler, double offset = 0) override;
 	void SetFeatureCatalog(FeatureCatalogue* value);
 	FeatureCatalogue* GetFeatureCatalog();

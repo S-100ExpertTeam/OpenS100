@@ -5,9 +5,9 @@
 #include "S100Utilities.h"
 
 
-S100ExchangeCatalogue::S100ExchangeCatalogue(void)
+S100ExchangeCatalogue::S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1) : SpatialObject(d2d1)
 {
-    m_pLayerManager = new LayerManager(gisLib->m_pScaler);
+    m_pLayerManager = new LayerManager(scaler, cm, d2d1);
     m_pLayerManager->onIC = false;
     m_pLayerManager->m_isScreenFitEnabled = false;
 }
@@ -169,10 +169,11 @@ void S100ExchangeCatalogue::DrawFiles(HDC& hDC, Scaler* scaler, double offset)
     MBR mbr;
     S100Utilities util;
 
-    gisLib->GetMap(&mbr);
-    std::vector<std::shared_ptr<InventoryItem>> item = util.SelectDataCoverages(m_vecInventory, scaler->GetCurrentScale(), mbr);
+    scaler->GetMap(&mbr);
 
-    auto pRenderTarget = gisLib->D2.pRT;
+    std::vector<std::shared_ptr<InventoryItem>> item = util.SelectDataCoverages(m_vecInventory, scaler, mbr);
+
+    auto pRenderTarget = D2->pRT;
     pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
     
     // check Remove LayerItem 
@@ -208,22 +209,22 @@ void S100ExchangeCatalogue::DrawEx(HDC& hDC, Scaler* scaler, double offset)
 {
     MBR mbr;
     S100Utilities util;
-    gisLib->GetMap(&mbr);
-    std::vector<std::shared_ptr<InventoryItem>> item = util.SelectDataCoverages(m_vecInventory, scaler->GetCurrentScale(), mbr);
+    scaler->GetMap(&mbr);
+    std::vector<std::shared_ptr<InventoryItem>> item = util.SelectDataCoverages(m_vecInventory, scaler, mbr);
 
-    auto pRenderTarget = gisLib->D2.pRT;
+    auto pRenderTarget = D2->pRT;
     //pRenderTarget->SetTransform(scaler->GetMatrix());
     pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 
     for (int i = 0 ; i < item.size() ; i++)
     {
-        auto brush = gisLib->D2.pBrush;
+        auto brush = D2->pBrush;
 
         long x;
         long y;
 
         ID2D1PathGeometry* pPathGeometry = nullptr;
-        gisLib->D2.Factory()->CreatePathGeometry(&pPathGeometry);
+        D2->Factory()->CreatePathGeometry(&pPathGeometry);
 
         ID2D1GeometrySink* pSink = nullptr;
         pPathGeometry->Open(&pSink);
@@ -231,7 +232,7 @@ void S100ExchangeCatalogue::DrawEx(HDC& hDC, Scaler* scaler, double offset)
         for (int geoms = 0; geoms < item[i]->BoundingPolygon.size(); geoms++)
         {
 
-            gisLib->GetScaler()->WorldToDevice(item[i]->BoundingPolygon[geoms].x, item[i]->BoundingPolygon[geoms].y, &x, &y);
+            scaler->WorldToDevice(item[i]->BoundingPolygon[geoms].x, item[i]->BoundingPolygon[geoms].y, &x, &y);
             if( geoms ==0)
                 pSink->BeginFigure(D2D1::Point2F(x, y), D2D1_FIGURE_BEGIN_FILLED);
             else
@@ -247,7 +248,7 @@ void S100ExchangeCatalogue::DrawEx(HDC& hDC, Scaler* scaler, double offset)
         pRenderTarget->FillGeometry(pPathGeometry, brush);
 
         brush->SetColor(D2D1::ColorF(util.GetColorNum(i)));
-        pRenderTarget->DrawGeometry(pPathGeometry, brush, 1.0, gisLib->D2.SolidStrokeStyle());
+        pRenderTarget->DrawGeometry(pPathGeometry, brush, 1.0, D2->SolidStrokeStyle());
         pRenderTarget->EndDraw();
 
         pSink->Release();
@@ -264,19 +265,19 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
     m_pLayerManager->Draw(hDC, offset);
 
-    double Width = gisLib->GetScaler()->GetScreenWidth();
-    double Height = gisLib->GetScaler()->GetScreenWidth();
+    double Width = scaler->GetScreenWidth();
+    double Height = scaler->GetScreenWidth();
 
-    gisLib->D2.pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-    gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+    D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+    D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
-    auto pRenderTarget = gisLib->D2.pRT;
+    auto pRenderTarget = D2->pRT;
          
     for (int i = 0; i < m_DataPtr->DatasetDiscoveryMetadata.size(); i++)
     {
         pRenderTarget->BeginDraw();
-        auto textformat = gisLib->D2.pDWriteTextFormat;
-        auto brush = gisLib->D2.pBrush;
+        auto textformat = D2->pDWriteTextFormat;
+        auto brush = D2->pBrush;
         auto ddm = m_DataPtr->DatasetDiscoveryMetadata[i];
 
         auto object = new GM::Surface();
@@ -302,12 +303,12 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
         object->SetExteriorRing(curve);
 
-        S10XGML* cls = new S10XGML();
+        S10XGML* cls = new S10XGML(D2);
         auto sSurface = cls->SurfaceToSSurface(object);
-        sSurface->CreateD2Geometry(gisLib->D2.Factory());
+        sSurface->CreateD2Geometry(D2->Factory());
         brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
         pRenderTarget->SetTransform(scaler->GetMatrix());
-        pRenderTarget->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, gisLib->D2.SolidStrokeStyle());
+        pRenderTarget->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, D2->SolidStrokeStyle());
 
         delete object;
         delete cls;
@@ -320,7 +321,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
         projection(pt.x, pt.y);
 
-        gisLib->WorldToDevice(pt);
+        scaler->WorldToDevice(pt);
 
         CString cstrFileName = CString(ddm.FileName.c_str());
         CString fileName = L"FileName : " + cstrFileName;
@@ -332,7 +333,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
         //Datacorverage
         for (int j = 0; j < ddm.dataCoverage.size(); j++)
         {
-            gisLib->D2.pRT->SetTransform(scaler->GetMatrix());
+            D2->pRT->SetTransform(scaler->GetMatrix());
 
             auto dc = ddm.dataCoverage[j];
             auto object = new GM::Surface();
@@ -358,15 +359,15 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                 delete curve;
             }
 
-            S10XGML* cls = new S10XGML();
+            S10XGML* cls = new S10XGML(D2);
             auto sSurface = cls->SurfaceToSSurface(object);
-            sSurface->CreateD2Geometry(gisLib->D2.Factory());
+            sSurface->CreateD2Geometry(D2->Factory());
             //brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
             //brush->SetOpacity(0.3);
             //pRenderTarget->FillGeometry(sSurface->GetD2Geometry(), brush);
 
             brush->SetColor(D2D1::ColorF(D2D1::ColorF::Blue));
-            pRenderTarget->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, gisLib->D2.SolidStrokeStyle());
+            pRenderTarget->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, D2->SolidStrokeStyle());
 
             delete object;
             delete cls;

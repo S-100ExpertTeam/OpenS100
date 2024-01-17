@@ -74,7 +74,7 @@ ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPat
 }
 
 
-ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPaths, std::vector<D2D1_POINT_2F>& itemPolygonPath) {
+ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPaths, std::vector<D2D1_POINT_2F>& itemPolygonPath, Scaler* scaler) {
 	ClipperLib::Clipper c;
 	ClipperLib::Paths solution;
 	ClipperLib::Path  polygon;
@@ -88,7 +88,7 @@ ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPat
 	
 	for (int i = 0; i < part1PointCount; i++)
 	{
-		gisLib->GetScaler()->WorldToDevice(itemPolygonPath[i].x, itemPolygonPath[i].y, &x, &y);
+		scaler->WorldToDevice(itemPolygonPath[i].x, itemPolygonPath[i].y, &x, &y);
 		tmp.X = x;
 		tmp.Y = y;
 		polygon.push_back(tmp);
@@ -143,7 +143,7 @@ ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPat
 	return solution;
 }
 
-bool SCommonFuction::IntersectionPaths(ClipperLib::Paths& viewport, std::vector<D2D1_POINT_2F>& polygon)
+bool SCommonFuction::IntersectionPaths(ClipperLib::Paths& viewport, std::vector<D2D1_POINT_2F>& polygon, Scaler* scaler)
 {
 	ClipperLib::Clipper clipper;
 	ClipperLib::Paths solution;
@@ -157,7 +157,7 @@ bool SCommonFuction::IntersectionPaths(ClipperLib::Paths& viewport, std::vector<
 
 	for (int i = 0; i < part1PointCount; i++)
 	{
-		gisLib->GetScaler()->WorldToDevice(polygon[i].x, polygon[i].y, &x, &y);
+		scaler->WorldToDevice(polygon[i].x, polygon[i].y, &x, &y);
 		tmp.X = x;
 		tmp.Y = y;
 		polygonpath.push_back(tmp);

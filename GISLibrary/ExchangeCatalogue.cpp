@@ -106,13 +106,13 @@ namespace S100
         }
     }
 
-    void S100_ExchangeCatalogue::DrawCoverage(D2D1Resources* pD2, Scaler* scaler, double offsetX, double offsetY)
+    void ExchangeCatalogue::DrawCoverage(D2D1Resources* pD2, Scaler* scaler, double offsetX, double offsetY)
     {
         double Width = scaler->GetScreenWidth();
         double Height = scaler->GetScreenWidth();
 
-        gisLib->D2.pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-        gisLib->D2.pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+        pD2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+        pD2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
         for (int i = 0; i < DatasetDiscoveryMetadata.size(); i++)
         {            
@@ -181,7 +181,7 @@ namespace S100
             {
                 pD2->pRT->SetTransform(scaler->GetMatrix());
 
-                 auto dc = ddm.DataCoverage[j]; 
+                 auto dc = ddm.dataCoverage[j]; 
                  auto object = new GM::Surface();
                
                  for (int geoms = 0; geoms < dc.BoundingPolygon.Polygon.Geom.size(); geoms++)
