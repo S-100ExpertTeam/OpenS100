@@ -6,7 +6,7 @@
 #include <unordered_map>
 
 struct MASK;
-class F_MASK : Field
+class F_MASK : public Field
 {
 public:
 	F_MASK();
@@ -21,12 +21,16 @@ private:
 	std::unordered_map<__int64, MASK*> m_arr;
 
 public:
+	virtual F_MASK operator=(const F_MASK& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
 
 	void AddMask(MASK* mask);
+	void AddMask(RecordName recordName, int mind = 0, int muin = 0);
 	void DeleteMask(RecordName recordName);
 	MASK* GetMask(RecordName recordName);
 

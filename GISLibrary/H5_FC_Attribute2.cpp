@@ -7,9 +7,25 @@ H5_FC_Attribute2::H5_FC_Attribute2()
 
 }
 
+H5_FC_Attribute2::H5_FC_Attribute2(const H5_FC_Attribute2& other)
+{
+	sequencingRuleType = other.sequencingRuleType;
+	sequencingRuleScanDirection = other.sequencingRuleScanDirection;
+	interpolationMethod = other.interpolationMethod;
+}
+
 H5_FC_Attribute2::~H5_FC_Attribute2()
 {
 
+}
+
+H5_FC_Attribute2 H5_FC_Attribute2::operator=(const H5_FC_Attribute2& other)
+{
+	sequencingRuleType = other.sequencingRuleType;
+	sequencingRuleScanDirection = other.sequencingRuleScanDirection;
+	interpolationMethod = other.interpolationMethod;
+
+	return *this;
 }
 
 CV_SequenceType H5_FC_Attribute2::getSequencingRuleType() const

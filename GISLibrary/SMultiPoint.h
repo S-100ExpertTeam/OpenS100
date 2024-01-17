@@ -7,10 +7,14 @@ class SMultiPoint : public SGeometry
 {
 public:
 	SMultiPoint();
+	SMultiPoint(const SMultiPoint& other);
 	virtual ~SMultiPoint();
 
 public:
 	std::vector<GeoPointZ> m_pPoints;
+
+public:
+	virtual SMultiPoint operator=(const SMultiPoint& other);
 
 public:
 	SGeometryType GetType() override;

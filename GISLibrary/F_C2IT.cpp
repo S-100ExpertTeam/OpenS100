@@ -7,6 +7,12 @@ F_C2IT::F_C2IT()
 {
 }
 
+F_C2IT::F_C2IT(const F_C2IT& other)
+{
+	m_xcoo = other.m_xcoo;
+	m_ycoo = other.m_ycoo;
+}
+
 F_C2IT::~F_C2IT()
 {
 
@@ -15,6 +21,14 @@ F_C2IT::~F_C2IT()
 int F_C2IT::GetSize()
 {
 	return 8;
+}
+
+F_C2IT F_C2IT::operator=(const F_C2IT& other)
+{
+	m_xcoo = other.m_xcoo;
+	m_ycoo = other.m_ycoo;
+
+	return *this;
 }
 
 void F_C2IT::ReadField(BYTE *&buf)
@@ -40,3 +54,4 @@ int F_C2IT::GetFieldLength()
 
 	return ++len;
 }
+

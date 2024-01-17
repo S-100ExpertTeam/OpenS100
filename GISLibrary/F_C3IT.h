@@ -6,6 +6,7 @@ class F_C3IT :
 {
 public:
 	F_C3IT();
+	F_C3IT(const F_C3IT& other);
 	virtual ~F_C3IT();
 
 public:
@@ -36,6 +37,10 @@ public:
 	static int GetSize();
 
 public:
+	virtual F_C3IT operator=(const F_C3IT& other);
+
+public:
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file) { return true; };
 	int GetFieldLength();
 };

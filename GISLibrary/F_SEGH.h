@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include "Field.h"
 
-class F_SEGH : Field
+class F_SEGH : public Field
 {
 public:
 	F_SEGH();
+	F_SEGH(const F_SEGH& other);
 	virtual ~F_SEGH();
 
 public:
@@ -80,6 +81,9 @@ public:
 	*					Omitted for other values of INTP
 	*/
 	double m_angl = 0;
+
+public:
+	virtual F_SEGH operator=(const F_SEGH& other);
 
 public:
 	void ReadField(BYTE *&buf);

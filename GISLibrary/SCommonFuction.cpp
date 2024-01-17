@@ -12,15 +12,22 @@ void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, S
 
 	if (_surface->getNumPoint() > SGeometry::sizeOfPoint)
 	{
-		SGeometry::sizeOfPoint = _surface->getNumPoint() * 1.5;
-
 		delete[] SGeometry::viewPoints;
+		SGeometry::viewPoints = nullptr;
+	}
+
+	if (SGeometry::viewPoints == nullptr)
+	{
+		SGeometry::sizeOfPoint = (int)(_surface->getNumPoint() * 1.5);
 		SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
 	}
 
 	for (int count = 0; count < _surface->getNumPoint(); count++)
 	{
-		pScaler->WorldToDevice(_surface->m_pPoints[count].x, _surface->m_pPoints[count].y, &SGeometry::viewPoints[count].x, &SGeometry::viewPoints[count].y);
+		LONG x = 0, y = 0;
+		pScaler->WorldToDevice(_surface->m_pPoints[count].x, _surface->m_pPoints[count].y, &x, &y);
+		SGeometry::viewPoints[count].x = x;
+		SGeometry::viewPoints[count].y = y;
 	}
 
 	ClipperLib::Paths clipedPolygon = ClipSurface(_surface, _viewPort); // result of clipping the polygon that came as a factor,
@@ -474,6 +481,8 @@ int SCommonFuction::overlap(SAbstractCurve* objPoly, SSurface* comPoly, bool app
 		auto curve = (SCompositeCurve*)objPoly;
 		return overlap(curve, comPoly, applyOption);
 	}
+
+	return -1;
 }
 
 int SCommonFuction::overlap(SCurve* objPoly, SSurface* comPoly, bool applyOption)

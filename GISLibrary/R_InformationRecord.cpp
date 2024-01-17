@@ -12,6 +12,23 @@ R_InformationRecord::R_InformationRecord(void)
 
 }
 
+R_InformationRecord::R_InformationRecord(const R_InformationRecord& other) : GF::InformationType(other), Record(other)
+{
+	m_irid = other.m_irid;
+
+	for (const auto& iter : other.m_attr)
+	{
+		F_ATTR* attr = new F_ATTR(*iter);
+		m_attr.push_back(attr);
+	}
+
+	for (const auto& iter : other.m_inas)
+	{
+		F_INAS* inas = new F_INAS(*iter);
+		m_inas.push_back(inas);
+	}
+}
+
 R_InformationRecord::~R_InformationRecord(void)
 {
 	for (auto itor = m_inas.begin(); itor != m_inas.end(); itor++)
@@ -24,6 +41,48 @@ R_InformationRecord::~R_InformationRecord(void)
 		delete *itor;
 	}
 	m_attr.clear();
+}
+
+R_InformationRecord R_InformationRecord::operator=(const R_InformationRecord& other)
+{
+	for (auto& iter : m_attr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_attr.clear();
+
+	for (auto& iter : m_inas)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_inas.clear();
+
+	GF::InformationType::operator=(other);
+	Record::operator=(other);
+
+	m_irid = other.m_irid;
+
+	for (const auto& iter : other.m_attr)
+	{
+		F_ATTR* attr = new F_ATTR(*iter);
+		m_attr.push_back(attr);
+	}
+
+	for (const auto& iter : other.m_inas)
+	{
+		F_INAS* inas = new F_INAS(*iter);
+		m_inas.push_back(inas);
+	}
+
+	return *this;
 }
 
 BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
@@ -215,7 +274,7 @@ std::vector<ATTR*> R_InformationRecord::GetChildAttributes(ATTR* parentATTR)
 	std::vector<ATTR*> result;
 	int parentIndex = -1;
 
-	for (int i = 0; i < allAttributes.size(); i++)
+	for (int i = 0; i < (int)allAttributes.size(); i++)
 	{
 		if (parentATTR == allAttributes[i])
 		{
@@ -245,7 +304,7 @@ std::vector<ATTR*> R_InformationRecord::GetChildAttributes(ATTR* parentATTR, int
 	std::vector<ATTR*> result;
 	int parentIndex = -1;
 
-	for (int i = 0; i < allAttributes.size(); i++)
+	for (int i = 0; i < (int)allAttributes.size(); i++)
 	{
 		if (parentATTR == allAttributes[i])
 		{
@@ -286,7 +345,7 @@ int R_InformationRecord::GetAttributeIndex(ATTR* attr)
 		auto ATTRs = m_attr.front();
 		for (
 			int i = 0;
-			i < ATTRs->m_arr.size();
+			i < (int)ATTRs->m_arr.size();
 			i++)
 		{
 			if (ATTRs->m_arr[i] == attr)
@@ -316,7 +375,7 @@ int R_InformationRecord::GetIDAsInteger()
 
 int R_InformationRecord::GetInformationRelationCount()
 {
-	return m_inas.size();
+	return (int)m_inas.size();
 }
 
 std::string R_InformationRecord::GetAssociatedInformationID(int index)
@@ -350,7 +409,7 @@ int R_InformationRecord::GetAttributeCount()
 std::string R_InformationRecord::GetAttributeValue(int index)
 {
 	auto attributes = GetAllAttributes();
-	int count = attributes.size();
+	int count = (int)attributes.size();
 
 	if (count > 0 && index < count)
 	{
@@ -363,7 +422,7 @@ std::string R_InformationRecord::GetAttributeValue(int index)
 int R_InformationRecord::GetParentAttributeIndex(int index)
 {
 	auto attr = GetAllAttributes();
-	if (index >= 0 && index < attr.size())
+	if (index >= 0 && index < (int)attr.size())
 	{
 		return attr.at(index)->m_paix;
 	}

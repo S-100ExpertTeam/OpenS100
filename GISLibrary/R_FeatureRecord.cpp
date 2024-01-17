@@ -29,7 +29,38 @@ R_FeatureRecord::R_FeatureRecord(const R_FeatureRecord& other)
 	: Record(other),
 	GF::FeatureType(other)
 {
+	m_frid = other.m_frid;
+	m_foid = other.m_foid;
 
+	for (const auto& iter : other.m_attr)
+	{
+		F_ATTR* attr = new F_ATTR(*iter);
+		m_attr.push_back(attr);
+	}
+
+	for (const auto& iter : other.m_inas)
+	{
+		F_INAS* inas = new F_INAS(*iter);
+		m_inas.push_back(inas);
+	}
+
+	for (const auto& iter : other.m_spas)
+	{
+		F_SPAS* spas = new F_SPAS(*iter);
+		m_spas.push_back(spas);
+	}
+
+	for (const auto& iter : other.m_fasc)
+	{
+		F_FASC* fasc = new F_FASC(*iter);
+		m_fasc.push_back(fasc);
+	}
+
+	for (const auto& iter : other.m_mask)
+	{
+		F_MASK* mask = new F_MASK(*iter);
+		m_mask.push_back(mask);
+	}
 }
 
 R_FeatureRecord::~R_FeatureRecord(void)
@@ -75,6 +106,97 @@ R_FeatureRecord::~R_FeatureRecord(void)
 	//	delete m_geometry;
 	//	m_geometry = nullptr;
 	//}
+}
+
+R_FeatureRecord R_FeatureRecord::operator=(const R_FeatureRecord& other)
+{
+	for (auto& iter : m_attr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_attr.clear();
+
+	for (auto& iter : m_inas)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_inas.clear();
+
+	for (auto& iter : m_spas)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_spas.clear();
+
+	for (auto& iter : m_fasc)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_fasc.clear();
+
+	for (auto& iter : m_mask)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_mask.clear();
+
+	Record::operator=(other);
+	GF::FeatureType::operator=(other);
+
+	m_frid = other.m_frid;
+	m_foid = other.m_foid;
+
+	for (const auto& iter : other.m_attr)
+	{
+		F_ATTR* attr = new F_ATTR(*iter);
+		m_attr.push_back(attr);
+	}
+
+	for (const auto& iter : other.m_inas)
+	{
+		F_INAS* inas = new F_INAS(*iter);
+		m_inas.push_back(inas);
+	}
+
+	for (const auto& iter : other.m_spas)
+	{
+		F_SPAS* spas = new F_SPAS(*iter);
+		m_spas.push_back(spas);
+	}
+
+	for (const auto& iter : other.m_fasc)
+	{
+		F_FASC* fasc = new F_FASC(*iter);
+		m_fasc.push_back(fasc);
+	}
+
+	for (const auto& iter : other.m_mask)
+	{
+		F_MASK* mask = new F_MASK(*iter);
+		m_mask.push_back(mask);
+	}
+
+	return *this;
 }
 
 #pragma warning(disable:4018)
@@ -624,7 +746,7 @@ bool R_FeatureRecord::IsNoGeometry()
 
 int R_FeatureRecord::GetFeatureRelationCount()
 {
-	return m_fasc.size();
+	return (int)m_fasc.size();
 }
 
 std::string R_FeatureRecord::GetAssociatedFeatureID(int index)
@@ -685,7 +807,7 @@ GM::Object* R_FeatureRecord::GetGMGeometry()
 
 int R_FeatureRecord::GetInformationRelationCount()
 {
-	return m_inas.size();
+	return (int)m_inas.size();
 }
 
 int R_FeatureRecord::GetAttributeCount() const
@@ -709,7 +831,7 @@ int R_FeatureRecord::GetAttributeCount() const
 std::string R_FeatureRecord::GetAttributeValue(int index)
 {
 	auto attributes = GetAllAttributes();
-	int count = attributes.size();
+	int count = (int)attributes.size();
 
 	if (count > 0 && index < count)
 	{

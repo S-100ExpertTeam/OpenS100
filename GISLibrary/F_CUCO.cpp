@@ -9,6 +9,15 @@ F_CUCO::F_CUCO(void)
 
 }
 
+F_CUCO::F_CUCO(const F_CUCO& other)
+{
+	for (const auto& iter : other.m_arr)
+	{
+		CUCO* cuco = new CUCO(*iter);
+		m_arr.push_back(cuco);
+	}
+}
+
 F_CUCO::~F_CUCO(void)
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
@@ -16,6 +25,27 @@ F_CUCO::~F_CUCO(void)
 		CUCO *cuco = *itor;
 		delete cuco;
 	}
+}
+
+F_CUCO F_CUCO::operator=(const F_CUCO& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		CUCO* cuco = new CUCO(*iter);
+		m_arr.push_back(cuco);
+	}
+
+	return *this;
 }
 
 void F_CUCO::ReadField(BYTE *&buf)
@@ -65,3 +95,31 @@ int F_CUCO::GetFieldLength()
 	}
 	return ++len;
 }
+
+void F_CUCO::Insert(RecordName name, int ornt)
+{
+	CUCO* cuco = new CUCO();
+	cuco->m_name = name;
+	cuco->m_ornt = ornt;
+	m_arr.push_back(cuco);
+}
+
+void F_CUCO::Insert(int rcnm, int rcid, int ornt)
+{
+	CUCO* cuco = new CUCO();
+	cuco->m_name.RCNM = rcnm;
+	cuco->m_name.RCID = rcid;
+	cuco->m_ornt = ornt;
+	m_arr.push_back(cuco);
+}
+
+void F_CUCO::Insert(GISLibrary::RCNM rcnm, int rcid, int ornt)
+{
+	CUCO* cuco = new CUCO();
+	cuco->m_name.RCNM = (int)rcnm;
+	cuco->m_name.RCID = rcid;
+	cuco->m_ornt = ornt;
+	m_arr.push_back(cuco);
+}
+
+

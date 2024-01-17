@@ -10,34 +10,68 @@ R_SurfaceRecord::R_SurfaceRecord(void)
 	m_srid.m_name.RCNM = 130;
 }
 
+R_SurfaceRecord::R_SurfaceRecord(const R_SurfaceRecord& other) : R_VectorRecord(other)
+{
+	m_srid = other.m_srid;
+	for (const auto& iter : other.m_rias)
+	{
+		F_RIAS* cont = new F_RIAS(*iter);
+		m_rias.push_back(cont);
+	}
+}
+
 R_SurfaceRecord::~R_SurfaceRecord(void)
 {
 	for (auto itor = m_inas.begin(); itor != m_inas.end(); itor++)
 	{
-		delete *itor;
+		delete* itor;
 	}
 	for (auto itor = m_rias.begin(); itor != m_rias.end(); itor++)
 	{
-		delete *itor;
+		delete* itor;
 	}
 }
 
-BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
+R_SurfaceRecord R_SurfaceRecord::operator=(const R_SurfaceRecord& other)
+{
+	for (auto& iter : m_rias)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_rias.clear();
+
+	R_VectorRecord::operator=(other);
+
+	m_srid = other.m_srid;
+	for (const auto& iter : other.m_rias)
+	{
+		F_RIAS* cont = new F_RIAS(*iter);
+		m_rias.push_back(cont);
+	}
+
+	return *this;
+}
+
+BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
 	USES_CONVERSION;
-	for(int i = 0; i < dir->m_count; i++)
+	for (int i = 0; i < dir->m_count; i++)
 	{
-		if(strcmp(dir->GetDirectory(i)->tag, "SRID") == 0)
+		if (strcmp(dir->GetDirectory(i)->tag, "SRID") == 0)
 		{
 			m_srid.ReadField(buf);
 		}
-		else if(strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
+		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
 			F_INAS* inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
-		else if(strcmp(dir->GetDirectory(i)->tag, "RIAS") == 0)
+		else if (strcmp(dir->GetDirectory(i)->tag, "RIAS") == 0)
 		{
 			F_RIAS* rias = new F_RIAS();
 			auto cnt = (dir->GetDirectory(i)->length - 1) / RIAS::GetSize();
@@ -48,7 +82,7 @@ BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		{
 			buf += dir->GetDirectory(i)->length;
 		}
-		
+
 
 		if (*(buf++) != 0x1E)
 		{
@@ -116,7 +150,7 @@ RecordName R_SurfaceRecord::GetRecordName()
 	return m_srid.m_name;
 }
 
-int R_SurfaceRecord::GetRCID() 
+int R_SurfaceRecord::GetRCID()
 {
 	return m_srid.m_name.RCID;
 }
@@ -126,7 +160,7 @@ std::string R_SurfaceRecord::GetRCIDasString(std::string prefix)
 	return prefix + pugi::as_utf8(GetRCIDasWstring());
 }
 
-std::wstring R_SurfaceRecord::GetRCIDasWstring() 
+std::wstring R_SurfaceRecord::GetRCIDasWstring()
 {
 	return std::to_wstring(GetRCID());
 }
@@ -159,3 +193,4 @@ std::vector<RIAS*> R_SurfaceRecord::GetAllRIAS()
 
 	return result;
 }
+

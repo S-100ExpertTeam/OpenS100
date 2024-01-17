@@ -11,9 +11,31 @@ Geometry::Geometry()
 
 }
 
+Geometry::Geometry(const Geometry& other)
+{
+	id = other.id;
+
+	m_mbr.xmin = other.m_mbr.xmin;
+	m_mbr.ymin = other.m_mbr.ymin;
+	m_mbr.xmax = other.m_mbr.xmax;
+	m_mbr.ymax = other.m_mbr.xmax;
+}
+
 Geometry::~Geometry()
 {
 
+}
+
+Geometry Geometry::operator=(const Geometry& other)
+{
+	id = other.id;
+
+	m_mbr.xmin = other.m_mbr.xmin;
+	m_mbr.ymin = other.m_mbr.ymin;
+	m_mbr.xmax = other.m_mbr.xmax;
+	m_mbr.ymax = other.m_mbr.xmax;
+
+	return *this;
 }
 
 MBR Geometry::GetMBR()

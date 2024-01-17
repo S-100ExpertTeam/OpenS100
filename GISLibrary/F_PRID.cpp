@@ -11,6 +11,13 @@ F_PRID::F_PRID(void)
 	m_ruin = 0;
 }
 
+F_PRID::F_PRID(const F_PRID& other) : Field(other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+}
+
 F_PRID::~F_PRID(void)
 {
 
@@ -21,6 +28,15 @@ F_PRID::F_PRID(RecordName recordName, int RVER, int RUIN)
 	m_name = recordName;
 	m_rver = RVER;
 	m_ruin = RUIN;
+}
+
+F_PRID F_PRID::operator=(const F_PRID& other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+
+	return *this;
 }
 
 void F_PRID::ReadField(BYTE *&buf)
@@ -51,3 +67,4 @@ int F_PRID::GetFieldLength()
 	len += 1;
 	return ++len;
 }
+

@@ -9,14 +9,42 @@ F_THAS::F_THAS(void)
 
 }
 
+F_THAS::F_THAS(const F_THAS& other) : Field(other)
+{
+	for (const auto& iter : other.m_arr)
+	{
+		THAS* thas = new THAS(*iter);
+		m_arr.push_back(thas);
+	}
+}
+
 F_THAS::~F_THAS(void)
 {
-	POSITION pos = m_arr.GetHeadPosition();
-	while(pos!=NULL)
+	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 	{
-		THAS *thas = m_arr.GetNext(pos);
-		delete thas;
+		delete* itor;
 	}
+}
+
+F_THAS F_THAS::operator=(const F_THAS& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		THAS* thas = new THAS(*iter);
+		m_arr.push_back(thas);
+	}
+
+	return *this;
 }
 
 void F_THAS::ReadField(BYTE *&buf)
@@ -44,12 +72,37 @@ void F_THAS::ReadField(BYTE *&buf, int loopCnt)
 int F_THAS::GetFieldLength()
 {
 	int len = 0;
-
-	POSITION pos = m_arr.GetHeadPosition();
-	while(pos!=NULL)
+	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 	{
-		THAS *thas = m_arr.GetNext(pos);
+		THAS* thas = *itor;
 		len += THAS::GetSize();
 	}
 	return ++len;
 }
+
+void F_THAS::Insert(RecordName name, int taui)
+{
+	THAS* thas = new THAS();
+	thas->m_name = name;
+	thas->m_taui = taui;
+	m_arr.push_back(thas);
+}
+
+void F_THAS::Insert(int rcnm, int rcid, int taui)
+{
+	THAS* thas = new THAS();
+	thas->m_name.RCNM = rcnm;
+	thas->m_name.RCID = rcid;
+	thas->m_taui = taui;
+	m_arr.push_back(thas);
+}
+
+void F_THAS::Insert(GISLibrary::RCNM rcnm, int rcid, int taui)
+{
+	THAS* thas = new THAS();
+	thas->m_name.RCNM = (int)rcnm;
+	thas->m_name.RCID = rcid;
+	thas->m_taui = taui;
+	m_arr.push_back(thas);
+}
+

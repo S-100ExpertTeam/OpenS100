@@ -4,6 +4,7 @@
 #include "S10XGML.h"
 #include "S100H5.h"
 #include "S102H5.h"
+#include "ProcessS101.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -14,7 +15,7 @@
 #include <sstream>
 
 S100Layer::S100Layer(FeatureCatalogue* fc, PortrayalCatalogue *pc) : Layer()
-{
+{	
 	SetFeatureCatalog(fc);
 	SetPC(pc);
 	SetProductNumber(fc->GetProductId());
@@ -25,13 +26,13 @@ S100Layer::~S100Layer()
 	DeleteCatalog();
 }
 
-bool S100Layer::Open(CString _filepath)
+bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1)
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
 
 	if (!extension.CompareNoCase(L"000"))
 	{
-		m_spatialObject = new S101Cell();
+		m_spatialObject = new S101Cell(d2d1);
 		m_spatialObject->SetLayer(this);
 
 		auto enc = (S101Cell*)m_spatialObject;
@@ -49,11 +50,11 @@ bool S100Layer::Open(CString _filepath)
 	{
 		if (GetFC()->getProductId().compare("S-101") == 0)
 		{
-			m_spatialObject = new S101Cell(GetFeatureCatalog());
+			m_spatialObject = new S101Cell(d2d1);
 		}
 		else
 		{
-			m_spatialObject = new S10XGML();
+			m_spatialObject = new S10XGML(d2d1);
 		}
 
 		m_spatialObject->SetLayer(this);
@@ -78,11 +79,11 @@ bool S100Layer::Open(CString _filepath)
 	{
 		if (GetFC()->getProductId().compare("S-102") == 0)
 		{
-			m_spatialObject = new S102H5();
+			m_spatialObject = new S102H5(GetPC(), d2d1);
 		}
 		else
 		{
-			m_spatialObject = new S100H5();
+			m_spatialObject = new S100H5(d2d1);
 		}
 
 		m_spatialObject->SetLayer(this);
@@ -135,7 +136,7 @@ bool S100Layer::OpenFC(CString path)
 {
 	FeatureCatalogue* fc = new FeatureCatalogue();
 	fc->Read(std::wstring(path));
-
+	
 	if (fc) {
 		SetIndividualFC(true);
 		SetFeatureCatalog(fc);
@@ -147,14 +148,14 @@ bool S100Layer::OpenFC(CString path)
 	return false;
 }
 
-bool S100Layer::OpenPC(CString path)
+bool S100Layer::OpenPC(CString path, D2D1Resources* d2d1)
 {
 	PortrayalCatalogue* pc = new PortrayalCatalogue();
 
 	if (pc) {
-		pc->CreateSVGD2Geometry(gisLib->D2.pD2Factory);
-		pc->CreatePatternImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
-		pc->CreateLineImages(gisLib->D2.pD2Factory, gisLib->D2.pImagingFactory, gisLib->D2.D2D1StrokeStyleGroup.at(0));
+		pc->CreateSVGD2Geometry(d2d1->pD2Factory);
+		pc->CreatePatternImages(d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
+		pc->CreateLineImages(d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
 
 		SetIndividualPC(true);
 		SetPC(pc);
@@ -284,4 +285,33 @@ void S100Layer::InitDraw()
 {
 	drawingPriority.clear();
 	drawingSet.Init();
+}
+
+void S100Layer::BuildPortrayalCatalogue()
+{
+	if ((portrayalCatalogue == nullptr) ||
+		(m_spatialObject == nullptr))
+		return;
+
+	if (m_spatialObject->m_FileType != S100_FileType::FILE_S_100_VECTOR)
+		return;
+
+	auto mainRuleFile = portrayalCatalogue->GetMainRuleFile();
+	auto RulefileFormat = portrayalCatalogue->GetRuleFileFormat();
+	auto fileName = mainRuleFile->GetFileName();
+	auto rootPath = portrayalCatalogue->GetRootPath();
+	auto mainRulePath = rootPath + L"Rules\\" + fileName;
+	
+	if (RulefileFormat == Portrayal::FileFormat::LUA)
+		ProcessS101::ProcessS101_LUA(mainRulePath, this);
+	else if (RulefileFormat == Portrayal::FileFormat::XSLT)
+	{
+		auto gml = (S10XGML*)m_spatialObject;
+		gml->SaveToInputXML("..\\TEMP\\input.xml");
+		ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml", this);
+		auto s100so = (S100SpatialObject*)m_spatialObject;
+		s100so->OpenOutputXML("..\\TEMP\\output.xml");
+	}
+
+	return;
 }

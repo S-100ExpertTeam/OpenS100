@@ -4,6 +4,7 @@ struct C2IL
 {
 public:
 	C2IL();
+	C2IL(const C2IL& other);
 	C2IL(int m_ycoo, int m_xcoo);
 	virtual ~C2IL();
 
@@ -20,6 +21,9 @@ public:
 	* Description	: X-coordinate or longitude
 	*/
 	int m_xcoo;
+
+public:
+	virtual C2IL operator=(const C2IL& other);
 
 public:
 	static int GetSize();

@@ -13,19 +13,67 @@ R_DSCRS::R_DSCRS()
 	Init();
 }
 
+R_DSCRS::R_DSCRS(const R_DSCRS& other) : Record(other)
+{
+	m_csid = other.m_csid;
+	for (const auto& iter : other.m_crsh)
+	{
+		F_CRSH* crsh = new F_CRSH(*iter);
+		m_crsh.push_back(crsh);
+	}
+	m_csax = (other.m_csax) ? new F_CSAX(*other.m_csax) : nullptr;
+	m_vdat = (other.m_vdat) ? new F_VDAT(*other.m_vdat) : nullptr;
+}
+
 R_DSCRS::~R_DSCRS()
 {
 	Release();
 }
 
+R_DSCRS R_DSCRS::operator=(const R_DSCRS& other)
+{
+	for (auto& iter : m_crsh)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_crsh.clear();
+	if (m_csax)
+	{
+		delete m_csax;
+		m_csax = nullptr;
+	}
+	if (m_vdat)
+	{
+		delete m_vdat;
+		m_vdat = nullptr;
+	}
+
+	Record::operator=(other);
+
+	m_csid = other.m_csid;
+	for (const auto& iter : other.m_crsh)
+	{
+		F_CRSH* crsh = new F_CRSH(*iter);
+		m_crsh.push_back(crsh);
+	}
+	m_csax = (other.m_csax) ? new F_CSAX(*other.m_csax) : nullptr;
+	m_vdat = (other.m_vdat) ? new F_VDAT(*other.m_vdat) : nullptr;
+
+	return *this;
+}
+
 #pragma warning(disable:4244)
 #pragma warning(disable:4018)
-BOOL R_DSCRS::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
+BOOL R_DSCRS::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
 	Release();
 
 	USES_CONVERSION;
-	for(unsigned i = 0; i < dir->m_count; i++)
+	for (unsigned i = 0; i < dir->m_count; i++)
 	{
 		if (strcmp(dir->GetDirectory(i)->tag, "CSID") == 0)
 		{
@@ -33,7 +81,7 @@ BOOL R_DSCRS::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		}
 		else if (strcmp(dir->GetDirectory(i)->tag, "CRSH") == 0)
 		{
-			F_CRSH *crsh = new F_CRSH();
+			F_CRSH* crsh = new F_CRSH();
 			crsh->ReadField(buf);
 			m_crsh.push_back(crsh);
 		}
@@ -143,7 +191,7 @@ void R_DSCRS::Init()
 	crsh_vertical->m_crix = 2;
 	crsh_vertical->m_crst = 5;
 	crsh_vertical->m_csty = 3;
-	crsh_vertical->m_crnm = L"meanHighWaterSprings"; 
+	crsh_vertical->m_crnm = L"meanHighWaterSprings";
 	crsh_vertical->m_crsi = L"";
 	crsh_vertical->m_crss = 255;
 	crsh_vertical->m_scri = L"";
@@ -154,7 +202,7 @@ void R_DSCRS::Init()
 	csax->m_axty = 12;
 	csax->m_axum = 4;
 	m_csax->m_arr.push_back(csax);
-	
+
 	m_vdat = new F_VDAT();
 	m_vdat->m_dtnm = L"meanHighWaterSprings";
 	m_vdat->m_dtid = L"17";
@@ -182,3 +230,4 @@ void R_DSCRS::Release()
 	delete m_vdat;
 	m_vdat = nullptr;
 }
+

@@ -6,6 +6,13 @@ RIAS::RIAS()
 
 }
 
+RIAS::RIAS(const RIAS& other)
+{
+	m_name = other.m_name;
+	m_usag = other.m_usag;
+	m_ornt = other.m_ornt;
+}
+
 RIAS::RIAS(int rcnm, int rcid, int usag, int ornt)
 {
 	m_name.RCNM = rcnm;
@@ -17,6 +24,15 @@ RIAS::RIAS(int rcnm, int rcid, int usag, int ornt)
 RIAS::~RIAS()
 {
 
+}
+
+RIAS RIAS::operator=(const RIAS& other)
+{
+	m_name = other.m_name;
+	m_usag = other.m_usag;
+	m_ornt = other.m_ornt;
+
+	return *this;
 }
 
 int RIAS::GetSize()

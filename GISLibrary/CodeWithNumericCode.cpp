@@ -6,10 +6,24 @@ CodeWithNumericCode::CodeWithNumericCode()
 
 }
 
+CodeWithNumericCode::CodeWithNumericCode(const CodeWithNumericCode& other)
+{
+	m_code = other.m_code;
+	m_nmcd = other.m_nmcd;
+}
+
 CodeWithNumericCode::CodeWithNumericCode(CString& code, int numericCode)
 {
 	this->m_code = code;
 	this->m_nmcd = numericCode;
+}
+
+CodeWithNumericCode CodeWithNumericCode::operator=(const CodeWithNumericCode& other)
+{
+	m_code = other.m_code;
+	m_nmcd = other.m_nmcd;
+
+	return *this;
 }
 
 int CodeWithNumericCode::GetSize()

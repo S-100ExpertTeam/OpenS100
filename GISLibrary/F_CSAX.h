@@ -6,14 +6,18 @@
 
 struct CSAX;
 
-class F_CSAX : Field
+class F_CSAX : public Field
 {
 public:
 	F_CSAX();
+	F_CSAX(const F_CSAX& other);
 	virtual ~F_CSAX();
 
 public:
 	std::list<CSAX*> m_arr;
+
+public:
+	virtual F_CSAX operator=(const F_CSAX& other);
 
 public:
 	void ReadField(BYTE *&buf);
@@ -21,4 +25,6 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	void Insert(int axty, int axum);
 };

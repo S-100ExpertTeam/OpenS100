@@ -9,13 +9,12 @@ F_SPAS::F_SPAS(void)
 
 }
 
-F_SPAS::F_SPAS(const F_SPAS& other)
+F_SPAS::F_SPAS(const F_SPAS& other) : Field(other)
 {
-	auto cnt = other.getCount();
-
-	for (int i = 0; i < cnt; i++) {
-		auto item = new SPAS(*other.getSPAS(i));
-		addSPAS(item);
+	for (const auto& iter : other.m_arr)
+	{
+		SPAS* spas = new SPAS(*iter);
+		m_arr.push_back(spas);
 	}
 }
 
@@ -23,13 +22,34 @@ F_SPAS::~F_SPAS(void)
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 	{
-		delete *itor;
+		delete* itor;
 	}
 }
 
-void F_SPAS::ReadField(BYTE *&buf)
+F_SPAS F_SPAS::operator=(const F_SPAS& other)
 {
-	while(*buf != 0x1E)
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		SPAS* spas = new SPAS(*iter);
+		m_arr.push_back(spas);
+	}
+
+	return *this;
+}
+
+void F_SPAS::ReadField(BYTE*& buf)
+{
+	while (*buf != 0x1E)
 	{
 		SPAS* spas = new SPAS();
 		spas->m_name.RCNM = *(buf++);
@@ -43,9 +63,9 @@ void F_SPAS::ReadField(BYTE *&buf)
 	}
 }
 
-void F_SPAS::ReadField(BYTE *&buf, int loopCnt)
+void F_SPAS::ReadField(BYTE*& buf, int loopCnt)
 {
-	for(int i = 0; i < loopCnt; i++)
+	for (int i = 0; i < loopCnt; i++)
 	{
 		SPAS* spas = new SPAS();
 		spas->m_name.RCNM = *(buf++);
@@ -81,7 +101,7 @@ int F_SPAS::GetFieldLength()
 	int len = 0;
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 	{
-		SPAS *spas = *itor;
+		SPAS* spas = *itor;
 		len += SPAS::GetSize();
 	}
 	return ++len;
@@ -89,7 +109,7 @@ int F_SPAS::GetFieldLength()
 
 int F_SPAS::getCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 SPAS* F_SPAS::getSPAS(int index) const
@@ -105,3 +125,11 @@ void F_SPAS::addSPAS(SPAS* item)
 {
 	m_arr.push_back(item);
 }
+
+void F_SPAS::addSPAS(RecordName recordName, int ornt, unsigned int smin, unsigned int smax, int saui)
+{
+	SPAS* item = new SPAS();
+	item->Set(recordName, ornt, smin, smax, saui);
+	m_arr.push_back(item);
+}
+

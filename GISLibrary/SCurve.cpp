@@ -15,28 +15,78 @@ SCurve::SCurve()
 	
 }
 
-SCurve::SCurve(const SCurve& other)
-	: SAbstractCurve(other)
+SCurve::SCurve(const SCurve& other) : SAbstractCurve(other)
 {
-	m_numPoints = other.m_numPoints;
-
-	m_pPoints = new SPoint[getNumPoint()];
-	for (int i = 0; i < m_numPoints; i++) {
-		m_pPoints[i] = other.m_pPoints[i];
-	}
-
 	m_masking = other.m_masking;
 	suppress = other.suppress;
 
-	CreateD2Geometry(gisLib->D2.Factory());
+	m_numPoints = other.m_numPoints;
+	if (m_numPoints > 0)
+	{
+		m_pPoints = new SPoint[m_numPoints];
+		for (int i = 0; i < m_numPoints; i++)
+		{
+			m_pPoints[i] = other.m_pPoints[i];
+		}
+	}
+
+	if (other.centerPoint)
+		centerPoint = new GeoPoint(*other.centerPoint);
 }
 
 SCurve::~SCurve()
 {
-	delete[] m_pPoints;
-	m_pPoints = nullptr;
+	if (m_pPoints)
+	{
+		delete[] m_pPoints;
+		m_pPoints = nullptr;
+	}
+
+	if (centerPoint)
+	{
+		delete centerPoint;
+		centerPoint = nullptr;
+	}
 
 	SafeRelease(&pGeometry);
+}
+
+SCurve SCurve::operator=(const SCurve& other)
+{
+	if (m_pPoints)
+	{
+		delete[] m_pPoints;
+		m_pPoints = nullptr;
+	}
+
+	if (centerPoint)
+	{
+		delete centerPoint;
+		centerPoint = nullptr;
+	}
+
+	if (pGeometry)
+		SafeRelease(&pGeometry);
+
+	SAbstractCurve::operator=(other);
+
+	m_masking = other.m_masking;
+	suppress = other.suppress;
+
+	m_numPoints = other.m_numPoints;
+	if (m_numPoints > 0)
+	{
+		m_pPoints = new SPoint[m_numPoints];
+		for (int i = 0; i < m_numPoints; i++)
+		{
+			m_pPoints[i] = other.m_pPoints[i];
+		}
+	}
+
+	if (other.centerPoint)
+		centerPoint = new GeoPoint(*other.centerPoint);
+
+	return *this;
 }
 
 SGeometryType SCurve::GetType()
@@ -382,7 +432,3 @@ void SCurve::setCenterPoint()
 
 }
 
-SAbstractCurve* SCurve::clone()
-{
-	return new SCurve(*this);
-}

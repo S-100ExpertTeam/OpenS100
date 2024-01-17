@@ -204,7 +204,7 @@ void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory
 							scaler->WorldToDevice(featureMBR.xmin, featureMBR.ymax, &sxmin, &symin);
 
 							i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Identity());
-							i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Rotation(-scaler->GetRotationDegree()));
+							i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Rotation((FLOAT)(- scaler->GetRotationDegree())));
 							rt->FillGeometry(geometry, i->second->pBitmapBrush);
 							rt->SetTransform(oldMatrix);
 							SafeRelease(&geometry);

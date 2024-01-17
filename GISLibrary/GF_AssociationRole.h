@@ -9,6 +9,10 @@ namespace GF
     {
     public:
         AssociationRole();
+        AssociationRole(const AssociationRole& other) : PropertyType(other) {};
         virtual ~AssociationRole();
+
+    public:
+        virtual AssociationRole operator=(const AssociationRole& other);
     };
 }

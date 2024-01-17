@@ -11,6 +11,13 @@ F_SRID::F_SRID(void)
 	m_ruin = 0;
 }
 
+F_SRID::F_SRID(const F_SRID& other) : Field(other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+}
+
 F_SRID::F_SRID(RecordName recordName, int RVER, int RUIN)
 {
 	m_name = recordName;
@@ -21,6 +28,15 @@ F_SRID::F_SRID(RecordName recordName, int RVER, int RUIN)
 F_SRID::~F_SRID(void)
 {
 
+}
+
+F_SRID F_SRID::operator=(const F_SRID& other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+
+	return *this;
 }
 
 void F_SRID::ReadField(BYTE *&buf)
@@ -51,3 +67,4 @@ int F_SRID::GetFieldLength()
 	len += 1;
 	return ++len;
 }
+

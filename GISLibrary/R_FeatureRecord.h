@@ -44,6 +44,9 @@ public:
 	//SGeometry *m_geometry = nullptr;
 
 public:
+	virtual R_FeatureRecord operator=(const R_FeatureRecord& other);
+
+public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
 	bool WriteRecord(CFile* file);
 	RecordName GetRecordName();

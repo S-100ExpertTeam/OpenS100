@@ -16,6 +16,9 @@ private:
 	std::vector<SAbstractCurve*> m_listCurveLink;
 
 public:
+	virtual SCompositeCurve operator=(const SCompositeCurve& other);
+
+public:
 	SGeometryType GetType() override;
 
 	void SetMBR();
@@ -57,6 +60,4 @@ public:
 
 	void GetCurveList(std::list<SCurve*>& list);
 	void setSuppress(bool value);
-
-	virtual SAbstractCurve* clone() override;
 };

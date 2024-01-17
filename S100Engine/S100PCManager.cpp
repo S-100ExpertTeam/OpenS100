@@ -164,7 +164,7 @@ void S100PCManager::DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRender
 					pSymbol.x = (FLOAT)((*k)->position / 0.32)*2;
 					pSymbol.y = (rect.bottom - rect.top) / 2;
 
-					Draw((*k)->reference, pRenderTarget, pBrush, pStrokeStyle, pSymbol, (*k)->_rotation, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
+					Draw((*k)->reference, pRenderTarget, pBrush, pStrokeStyle, pSymbol, (FLOAT)((*k)->_rotation), ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
 				}
 			}
 		}

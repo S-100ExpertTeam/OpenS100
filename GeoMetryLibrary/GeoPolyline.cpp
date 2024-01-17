@@ -9,6 +9,41 @@ GeoPolyline::GeoPolyline()
 
 }
 
+GeoPolyline::GeoPolyline(const GeoPolyline& other) : Geometry(other)
+{
+	NumPoints = other.NumPoints;
+	if (NumPoints == 0)
+		return;
+
+	Points = new GeoPoint[NumPoints];
+	CPoints = new POINT[NumPoints];
+	for (int i = 0; i < NumPoints; i++)
+	{
+		Points[i].id = other.Points[i].id;
+
+		m_mbr.xmin = other.m_mbr.xmin;
+		m_mbr.ymin = other.m_mbr.ymin;
+		m_mbr.xmax = other.m_mbr.xmax;
+		m_mbr.ymax = other.m_mbr.ymax;
+
+		Points[i].x = other.Points[i].x;
+		Points[i].y = other.Points[i].y;
+
+		CPoints[i].x = other.CPoints[i].x;
+		CPoints[i].y = other.CPoints[i].y;
+	}
+
+	NumParts = other.NumParts;
+	if (NumParts == 0)
+		return;
+
+	Parts = new int[NumParts];
+	for (int i = 0; i < NumParts; i++)
+	{
+		Parts[i] = other.Parts[i];
+	}
+}
+
 GeoPolyline::~GeoPolyline()
 {
 	delete[] Parts;
@@ -19,6 +54,63 @@ GeoPolyline::~GeoPolyline()
 	
 	delete[] CPoints;
 	CPoints = nullptr;
+}
+
+GeoPolyline GeoPolyline::operator=(const GeoPolyline& other)
+{
+	if (Parts)
+	{
+		delete[] Parts;
+		Parts = nullptr;
+	}
+
+	if (Points)
+	{
+		delete[] Points;
+		Points = nullptr;
+	}
+	
+	if (CPoints)
+	{
+		delete[] CPoints;
+		CPoints = nullptr;
+	}
+
+	Geometry::operator=(other);
+
+	NumPoints = other.NumPoints;
+	if (NumPoints == 0)
+		return *this;
+
+	Points = new GeoPoint[NumPoints];
+	CPoints = new POINT[NumPoints];
+	for (int i = 0; i < NumPoints; i++)
+	{
+		Points[i].id = other.Points[i].id;
+
+		m_mbr.xmin = other.m_mbr.xmin;
+		m_mbr.ymin = other.m_mbr.ymin;
+		m_mbr.xmax = other.m_mbr.xmax;
+		m_mbr.ymax = other.m_mbr.ymax;
+
+		Points[i].x = other.Points[i].x;
+		Points[i].y = other.Points[i].y;
+
+		CPoints[i].x = other.CPoints[i].x;
+		CPoints[i].y = other.CPoints[i].y;
+	}
+
+	NumParts = other.NumParts;
+	if (NumParts == 0)
+		return *this;
+
+	Parts = new int[NumParts];
+	for (int i = 0; i < NumParts; i++)
+	{
+		Parts[i] = other.Parts[i];
+	}
+
+	return *this;
 }
 
 void GeoPolyline::DrawGeometry(HDC &hDC, Scaler *scaler, double offset)

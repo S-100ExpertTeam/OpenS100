@@ -1,6 +1,13 @@
 #include "stdafx.h"
 #include "GF_FeatureType.h"
 
+#include "SPoint.h"
+#include "SCompositeCurve.h"
+#include "SSurface.h"
+#include "SMultiPoint.h"
+#include "SCurve.h"
+#include "SCoverage.h"
+
 #include <regex>
 
 namespace GF
@@ -13,9 +20,59 @@ namespace GF
 	FeatureType::FeatureType(const FeatureType& other)
 		: ObjectType(other)
 	{
-		featureAssociations = other.featureAssociations;
-		spatial = new SpatialAttributeType(*other.spatial);
-		geometry = new SGeometry(*other.geometry);
+		for (const auto& iter : other.featureAssociations)
+		{
+			FeatureAssociationType fat = iter;
+			featureAssociations.push_back(fat);
+		}
+
+		if (other.spatial)
+			spatial = new SpatialAttributeType(*other.spatial);
+
+		if (other.geometry)
+		{
+			switch (other.geometry->GetType())
+			{
+			case SGeometryType::Point:
+			{
+				SPoint* pt = (SPoint*)other.geometry;
+				geometry = (pt) ? new SPoint(*pt) : nullptr;
+			}
+			break;
+			case SGeometryType::CompositeCurve:
+			{
+				SCompositeCurve* cc = (SCompositeCurve*)other.geometry;
+				geometry = (cc) ? new SCompositeCurve(*cc) : nullptr;
+			}
+			break;
+			case SGeometryType::Surface:
+			{
+				SSurface* sf = (SSurface*)other.geometry;
+				geometry = (sf) ? new SSurface(*sf) : nullptr;
+			}
+			break;
+			case SGeometryType::MultiPoint:
+			{
+				SMultiPoint* mp = (SMultiPoint*)other.geometry;
+				geometry = (mp) ? new SMultiPoint(*mp) : nullptr;
+			}
+			break;
+			case SGeometryType::Curve:
+			{
+				SCurve* cv = (SCurve*)other.geometry;
+				geometry = (cv) ? new SCurve(*cv) : nullptr;
+			}
+			break;
+			case SGeometryType::Coverage:
+			{
+				SCoverage* cr = (SCoverage*)other.geometry;
+				geometry = (cr) ? new SCoverage(*cr) : nullptr;
+			}
+			break;
+			default:
+				break;
+			}
+		}
 	}
 
 	FeatureType::~FeatureType()
@@ -90,24 +147,98 @@ namespace GF
 		spatial->SetGeometryID(value);
 	}
 
+	FeatureType FeatureType::operator=(const FeatureType& other)
+	{
+		featureAssociations.clear();
+		if (spatial)
+		{
+			delete spatial;
+			spatial = nullptr;
+		}
+
+		if (geometry)
+		{
+			delete geometry;
+			geometry = nullptr;
+		}
+
+		ObjectType::operator=(other);
+
+		for (const auto& iter : other.featureAssociations)
+		{
+			FeatureAssociationType fat = iter;
+			featureAssociations.push_back(fat);
+		}
+
+		if (other.spatial)
+			spatial = new SpatialAttributeType(*other.spatial);
+
+		if (other.geometry)
+		{
+			switch (other.geometry->GetType())
+			{
+			case SGeometryType::Point:
+			{
+				SPoint* pt = (SPoint*)other.geometry;
+				geometry = (pt) ? new SPoint(*pt) : nullptr;
+			}
+			break;
+			case SGeometryType::CompositeCurve:
+			{
+				SCompositeCurve* cc = (SCompositeCurve*)other.geometry;
+				geometry = (cc) ? new SCompositeCurve(*cc) : nullptr;
+			}
+			break;
+			case SGeometryType::Surface:
+			{
+				SSurface* sf = (SSurface*)other.geometry;
+				geometry = (sf) ? new SSurface(*sf) : nullptr;
+			}
+			break;
+			case SGeometryType::MultiPoint:
+			{
+				SMultiPoint* mp = (SMultiPoint*)other.geometry;
+				geometry = (mp) ? new SMultiPoint(*mp) : nullptr;
+			}
+			break;
+			case SGeometryType::Curve:
+			{
+				SCurve* cv = (SCurve*)other.geometry;
+				geometry = (cv) ? new SCurve(*cv) : nullptr;
+			}
+			break;
+			case SGeometryType::Coverage:
+			{
+				SCoverage* cr = (SCoverage*)other.geometry;
+				geometry = (cr) ? new SCoverage(*cr) : nullptr;
+			}
+			break;
+			default:
+				break;
+			}
+		}
+
+		return *this;
+	}
+
 	bool FeatureType::IsNoGeometry()
 	{
 		if (false == spatial)
 		{
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	int FeatureType::GetFeatureRelationCount()
 	{
-		return featureAssociations.size();
+		return (int)featureAssociations.size();
 	}
 
 	FeatureAssociationType FeatureType::getFeatureAssociation(int index)
 	{
-		if (index < 0 || index >= featureAssociations.size())
+		if (index < 0 || index >= (int)featureAssociations.size())
 		{
 			return FeatureAssociationType();
 		}
@@ -142,7 +273,7 @@ namespace GF
 
 	GM::Object* FeatureType::GetGMGeometry()
 	{
-		return nullptr; 
+		return nullptr;
 	}
 
 	void FeatureType::AddFeatureAssociation(

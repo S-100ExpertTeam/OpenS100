@@ -2,10 +2,11 @@
 #include "Field.h"
 
 struct FC2D;
-class F_C2FL : Field
+class F_C2FL : public Field
 {
 public:
 	F_C2FL();
+	F_C2FL(const F_C2FL& other);
 	virtual ~F_C2FL();
 	/*
 	* Attribute Array
@@ -13,7 +14,13 @@ public:
 	std::list<FC2D*> m_arr;
 
 public:
-	void ReadField(BYTE *&buf);
-	void ReadField(BYTE *&buf, int loopCnt);
+	virtual F_C2FL operator=(const F_C2FL& other);
+
+public:
+	void ReadField(BYTE*& buf);
+	void ReadField(BYTE*& buf, int loopCnt);
+	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
+
+	void Insert(int xcoo, int ycoo);
 };

@@ -8,9 +8,35 @@ R_DDR::R_DDR()
 
 }
 
+R_DDR::R_DDR(const R_DDR& other) : Record(other)
+{
+	f_FieldControlField = other.f_FieldControlField;
+	for (const auto& iter : other.f_DataDescriptiveField)
+	{
+		F_DataDescriptiveField ddf = iter;
+		f_DataDescriptiveField.push_back(ddf);
+	}
+}
+
 R_DDR::~R_DDR()
 {
 
+}
+
+R_DDR R_DDR::operator=(const R_DDR& other)
+{
+	f_DataDescriptiveField.clear();
+
+	Record::operator=(other);
+
+	f_FieldControlField = other.f_FieldControlField;
+	for (const auto& iter : other.f_DataDescriptiveField)
+	{
+		F_DataDescriptiveField ddf = iter;
+		f_DataDescriptiveField.push_back(ddf);
+	}
+
+	return *this;
 }
 
 bool R_DDR::WriteRecord(CFile* file)
@@ -67,3 +93,5 @@ void R_DDR::AddDDF(F_DataDescriptiveField ddf)
 
 	f_DataDescriptiveField.push_back(ddf);
 }
+
+

@@ -16,9 +16,41 @@ F_FieldControlField::F_FieldControlField()
 	byte[9] = 0x1F;
 }
 
+F_FieldControlField::F_FieldControlField(const F_FieldControlField& other)
+{
+	memset(byte, 0x00, 10);
+	memcpy(byte, other.byte, 10);
+	for (const auto& iter : other.tagPairs)
+	{
+		TagPair tagPair;
+		memset(&tagPair.tag1, 0x00, 5);
+		memcpy(&tagPair.tag1, iter.tag1, 5);
+		memset(&tagPair.tag2, 0x00, 5);
+		memcpy(&tagPair.tag2, iter.tag2, 5);
+		tagPairs.push_back(tagPair);
+	}
+}
+
 F_FieldControlField::~F_FieldControlField()
 {
 
+}
+
+F_FieldControlField F_FieldControlField::operator=(const F_FieldControlField& other)
+{
+	memset(byte, 0x00, 10);
+	memcpy(byte, other.byte, 10);
+	for (const auto& iter : other.tagPairs)
+	{
+		TagPair tagPair;
+		memset(&tagPair.tag1, 0x00, 5);
+		memcpy(&tagPair.tag1, iter.tag1, 5);
+		memset(&tagPair.tag2, 0x00, 5);
+		memcpy(&tagPair.tag2, iter.tag2, 5);
+		tagPairs.push_back(tagPair);
+	}
+
+	return *this;
 }
 
 bool F_FieldControlField::WriteField(CFile* file)
@@ -46,5 +78,8 @@ void F_FieldControlField::AddTagPair(char tag1[5], char tag2[5])
 
 int F_FieldControlField::GetFieldLength()
 {
-	return 10 + (tagPairs.size() * 8) + 1;
+	return (int)(10 + (tagPairs.size() * 8) + 1);
 }
+
+
+

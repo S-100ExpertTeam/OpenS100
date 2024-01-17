@@ -31,6 +31,9 @@ namespace GF
 		SGeometry* geometry = nullptr;
 
 	public:
+		virtual FeatureType operator=(const FeatureType& other);
+
+	public:
 		virtual bool IsNoGeometry();
 
 		virtual int GetFeatureRelationCount();

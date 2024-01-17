@@ -14,9 +14,33 @@ F_CRSH::F_CRSH(void)
 	m_scri = "";
 }
 
+F_CRSH::F_CRSH(const F_CRSH& other) : Field(other)
+{
+	m_crix = other.m_crix;
+	m_crst = other.m_crst;
+	m_csty = other.m_csty;
+	m_crnm = other.m_crnm;
+	m_crsi = other.m_crsi;
+	m_crss = other.m_crss;
+	m_scri = other.m_scri;
+}
+
 F_CRSH::~F_CRSH(void)
 {
 
+}
+
+F_CRSH F_CRSH::operator=(const F_CRSH& other)
+{
+	m_crix = other.m_crix;
+	m_crst = other.m_crst;
+	m_csty = other.m_csty;
+	m_crnm = other.m_crnm;
+	m_crsi = other.m_crsi;
+	m_crss = other.m_crss;
+	m_scri = other.m_scri;
+
+	return *this;
 }
 
 void F_CRSH::ReadField(BYTE *&buf)
@@ -68,3 +92,5 @@ int F_CRSH::GetFieldLength()
 	len += m_scri.GetLength() + 1;
 	return ++len;
 }
+
+

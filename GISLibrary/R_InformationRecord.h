@@ -14,6 +14,7 @@ class R_InformationRecord : public GF::InformationType, public Record
 {
 public:
 	R_InformationRecord();
+	R_InformationRecord(const R_InformationRecord& other);
 	virtual ~R_InformationRecord();
 
 public:
@@ -21,6 +22,9 @@ public:
 	F_IRID m_irid;
 	std::list<F_ATTR*> m_attr;
 	std::list<F_INAS*> m_inas;
+
+public:
+	virtual R_InformationRecord operator=(const R_InformationRecord& other);
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);

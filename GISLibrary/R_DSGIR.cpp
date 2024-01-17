@@ -8,13 +8,115 @@ R_DSGIR::R_DSGIR()
 {
 }
 
+R_DSGIR::R_DSGIR(const R_DSGIR& other) : Record(other)
+{
+	if (m_atcs)
+	{
+		delete m_atcs;
+		m_atcs = nullptr;
+	}
+
+	if (m_itcs)
+	{
+		delete m_itcs;
+		m_itcs = nullptr;
+	}
+
+	if (m_ftcs)
+	{
+		delete m_ftcs;
+		m_ftcs = nullptr;
+	}
+
+	if (m_iacs)
+	{
+		delete m_iacs;
+		m_iacs = nullptr;
+	}
+
+	if (m_facs)
+	{
+		delete m_facs;
+		m_facs = nullptr;
+	}
+
+	if (m_arcs)
+	{
+		delete m_arcs;
+		m_arcs = nullptr;
+	}
+
+	m_dsid = other.m_dsid;
+	m_dssi = other.m_dssi;
+
+	m_atcs = (other.m_atcs) ? new F_CodeWithNumericCode(*other.m_atcs) : new F_CodeWithNumericCode();
+	m_itcs = (other.m_itcs) ? new F_CodeWithNumericCode(*other.m_itcs) : new F_CodeWithNumericCode();
+	m_ftcs = (other.m_ftcs) ? new F_CodeWithNumericCode(*other.m_ftcs) : new F_CodeWithNumericCode();
+	m_iacs = (other.m_iacs) ? new F_CodeWithNumericCode(*other.m_iacs) : new F_CodeWithNumericCode();
+	m_facs = (other.m_facs) ? new F_CodeWithNumericCode(*other.m_facs) : new F_CodeWithNumericCode();
+	m_arcs = (other.m_arcs) ? new F_CodeWithNumericCode(*other.m_arcs) : new F_CodeWithNumericCode();
+}
+
 R_DSGIR::~R_DSGIR()
 {
 	deleteAll();
 }
 
+R_DSGIR R_DSGIR::operator=(const R_DSGIR& other)
+{
+	if (m_atcs)
+	{
+		delete m_atcs;
+		m_atcs = nullptr;
+	}
+
+	if (m_itcs)
+	{
+		delete m_itcs;
+		m_itcs = nullptr;
+	}
+
+	if (m_ftcs)
+	{
+		delete m_ftcs;
+		m_ftcs = nullptr;
+	}
+
+	if (m_iacs)
+	{
+		delete m_iacs;
+		m_iacs = nullptr;
+	}
+
+	if (m_facs)
+	{
+		delete m_facs;
+		m_facs = nullptr;
+	}
+
+	if (m_arcs)
+	{
+		delete m_arcs;
+		m_arcs = nullptr;
+	}
+
+	Record::operator=(other);
+
+	m_dsid = other.m_dsid;
+	m_dssi = other.m_dssi;
+
+	m_atcs = (other.m_atcs) ? new F_CodeWithNumericCode(*other.m_atcs) : new F_CodeWithNumericCode();
+	m_itcs = (other.m_itcs) ? new F_CodeWithNumericCode(*other.m_itcs) : new F_CodeWithNumericCode();
+	m_ftcs = (other.m_ftcs) ? new F_CodeWithNumericCode(*other.m_ftcs) : new F_CodeWithNumericCode();
+	m_iacs = (other.m_iacs) ? new F_CodeWithNumericCode(*other.m_iacs) : new F_CodeWithNumericCode();
+	m_facs = (other.m_facs) ? new F_CodeWithNumericCode(*other.m_facs) : new F_CodeWithNumericCode();
+	m_arcs = (other.m_arcs) ? new F_CodeWithNumericCode(*other.m_arcs) : new F_CodeWithNumericCode();
+
+	return *this;
+}
+
 #pragma warning(disable:4018)
-BOOL R_DSGIR::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
+BOOL R_DSGIR::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
 	//USES_CONVERSION;
 	for (unsigned i = 0; i < dir->m_count; i++)
@@ -381,7 +483,7 @@ void R_DSGIR::setAttributeCode(int numericCode, CString code)
 
 void R_DSGIR::setInformationTypeCode(int numericCode, CString code)
 {
-	if(m_itcs) {
+	if (m_itcs) {
 		m_itcs->setCodeNumericCode(code, numericCode);
 	}
 }
@@ -485,7 +587,7 @@ void R_DSGIR::init()
 void R_DSGIR::initAttributeCode()
 {
 	deleteAttributeCode();
-	
+
 	m_atcs = new F_CodeWithNumericCode();
 }
 

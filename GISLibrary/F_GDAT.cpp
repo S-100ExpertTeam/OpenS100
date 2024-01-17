@@ -49,10 +49,33 @@ F_GDAT::F_GDAT()
 	m_cmgl = 0;
 }
 
+F_GDAT::F_GDAT(const F_GDAT& other)
+{
+	m_dtnm = other.m_dtnm;
+	m_elnm = other.m_elnm;
+	m_esma = other.m_esma;
+	m_espt = other.m_espt;
+	m_espm = other.m_espm;
+	m_cmnm = other.m_cmnm;
+	m_cmgl = other.m_cmgl;
+}
 
 F_GDAT::~F_GDAT()
 {
 
+}
+
+F_GDAT F_GDAT::operator=(const F_GDAT& other)
+{
+	m_dtnm = other.m_dtnm;
+	m_elnm = other.m_elnm;
+	m_esma = other.m_esma;
+	m_espt = other.m_espt;
+	m_espm = other.m_espm;
+	m_cmnm = other.m_cmnm;
+	m_cmgl = other.m_cmgl;
+
+	return *this;
 }
 
 void F_GDAT::ReadField(BYTE *&buf)
@@ -80,3 +103,4 @@ int F_GDAT::GetFieldLength()
 
 	return ++len;
 }
+

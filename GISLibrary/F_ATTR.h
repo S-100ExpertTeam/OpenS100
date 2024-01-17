@@ -5,7 +5,7 @@
 #include <vector>
 
 struct ATTR;
-class F_ATTR : Field
+class F_ATTR : public Field
 {
 public:
 	F_ATTR();
@@ -16,12 +16,16 @@ public:
 	std::vector<ATTR*> m_arr;
 
 public:
+	virtual F_ATTR operator=(const F_ATTR& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
 
 	void Insert(ATTR* attr);
+	void Insert(int natc, int atix, int paix, int atin, CString atvl);
 	ATTR* getATTR(int index) const;
 	int getCount() const;
 };

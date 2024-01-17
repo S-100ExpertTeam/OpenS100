@@ -61,6 +61,7 @@ class F_DataDescriptiveField :
 {
 public:
 	F_DataDescriptiveField();
+	F_DataDescriptiveField(const F_DataDescriptiveField& other);
 	F_DataDescriptiveField(DDFType type);
 	virtual ~F_DataDescriptiveField();
 
@@ -78,11 +79,13 @@ public:
 
 public:
 	std::string Replace(std::string text);
+	void ReadField(BYTE*& buf) {};
 	bool WriteField(CFile* file);
 	int GetFieldLength();
 	std::string GetTagName();
 
 public:
+	virtual F_DataDescriptiveField operator=(const F_DataDescriptiveField& other);
 	bool operator==(const F_DataDescriptiveField& other) const;
 	//bool operator<(const F_DataDescriptiveField& other) const;
 };

@@ -15,11 +15,10 @@ F_INAS::F_INAS(const F_INAS& other)
 	m_narc = other.m_narc;
 	m_iuin = other.m_iuin;
 
-	auto cnt = other.getATTRCount();
-
-	for (int i = 0; i < cnt; i++) {
-		auto item = new ATTR(*other.getATTR(i));
-		addATTR(item);
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(*iter);
+		m_arr.push_back(attr);
 	}
 }
 
@@ -29,6 +28,32 @@ F_INAS::~F_INAS()
 	{
 		delete (*i);
 	}
+}
+
+F_INAS F_INAS::operator=(const F_INAS& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	m_name = other.m_name;
+	m_niac = other.m_niac;
+	m_narc = other.m_narc;
+	m_iuin = other.m_iuin;
+
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(*iter);
+		m_arr.push_back(attr);
+	}
+
+	return *this;
 }
 
 int F_INAS::GetSize()
@@ -122,7 +147,7 @@ std::vector<ATTR*> F_INAS::GetAllAttributes()
 
 int F_INAS::getATTRCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 ATTR* F_INAS::getATTR(int index) const
@@ -138,3 +163,4 @@ void F_INAS::addATTR(ATTR* value)
 {
 	m_arr.push_back(value);
 }
+

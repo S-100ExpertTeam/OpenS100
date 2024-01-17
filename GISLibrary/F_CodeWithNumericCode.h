@@ -13,12 +13,16 @@ class F_CodeWithNumericCode : public Field
 { 
 public:
 	F_CodeWithNumericCode();
+	F_CodeWithNumericCode(const F_CodeWithNumericCode& other);
 	virtual ~F_CodeWithNumericCode();
 
 public:
 	std::list<CodeWithNumericCode*> listCodeWithNumericCode;
 	std::unordered_map<int, CodeWithNumericCode*> m_arr;
 	std::unordered_map<std::wstring, CodeWithNumericCode*> m_arrFindForCode;
+
+public:
+	virtual F_CodeWithNumericCode operator=(const F_CodeWithNumericCode& other);
 
 public:
 	void ReadField(BYTE *&buf);

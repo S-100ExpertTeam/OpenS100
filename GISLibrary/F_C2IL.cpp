@@ -9,6 +9,15 @@ F_C2IL::F_C2IL()
 
 }
 
+F_C2IL::F_C2IL(const F_C2IL& other)
+{
+	for (const auto& iter : other.m_arr)
+	{
+		C2IL* cont = new C2IL(*iter);
+		m_arr.push_back(cont);
+	}
+}
+
 F_C2IL::~F_C2IL()
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
@@ -16,6 +25,27 @@ F_C2IL::~F_C2IL()
 		delete *itor;
 	}
 	m_arr.clear();
+}
+
+F_C2IL F_C2IL::operator=(const F_C2IL& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		C2IL* cont = new C2IL(*iter);
+		m_arr.push_back(cont);
+	}
+
+	return *this;
 }
 
 void F_C2IL::ReadField(BYTE *&buf)
@@ -61,4 +91,12 @@ int F_C2IL::GetFieldLength()
 		len += C2IL::GetSize();
 	}
 	return ++len;
+}
+
+void F_C2IL::Insert(int xcoo, int ycoo)
+{
+	C2IL* cont = new C2IL();
+	cont->m_ycoo = ycoo;
+	cont->m_xcoo = xcoo;
+	m_arr.push_back(cont);
 }

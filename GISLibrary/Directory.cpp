@@ -6,6 +6,13 @@ Directory::Directory()
 
 }
 
+Directory::Directory(const Directory& other)
+{
+	memcpy(fieldTag, other.fieldTag, 4);
+	fieldLength = other.fieldLength;
+	fieldPosition = other.fieldPosition;
+}
+
 Directory::Directory(char fieldTag[5], int fieldLength, int fieldPosition)
 {
 	memcpy(this->fieldTag, fieldTag, 4);
@@ -16,6 +23,16 @@ Directory::Directory(char fieldTag[5], int fieldLength, int fieldPosition)
 Directory::~Directory()
 {
 
+}
+
+Directory Directory::operator=(const Directory& other)
+{
+	memset(fieldTag, 0x00, 4);
+	memcpy(fieldTag, other.fieldTag, 4);
+	fieldLength = other.fieldLength;
+	fieldPosition = other.fieldPosition;
+
+	return *this;
 }
 
 bool Directory::WriteDirectory(CFile* file, int sizeOfFieldLengthField, int sizeOfFieldPositionField)

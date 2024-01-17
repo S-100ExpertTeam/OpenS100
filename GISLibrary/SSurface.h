@@ -33,6 +33,9 @@ private:
 	// Rings
 	std::vector<SAbstractCurve*> curveList;
 
+public:
+	virtual SSurface operator=(const SSurface& other);
+
 public: // override from Geometry
 	bool ImportFromWkb(unsigned char* value, int size) override;
 	bool ExportToWkb(unsigned char** value, int* size) override;

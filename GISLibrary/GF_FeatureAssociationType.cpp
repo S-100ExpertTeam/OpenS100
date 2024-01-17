@@ -8,9 +8,23 @@ namespace GF
 
 	}
 
+	FeatureAssociationType::FeatureAssociationType(const FeatureAssociationType& other) : AssociationType(other)
+	{
+		featureID = other.featureID;
+	}
+
 	FeatureAssociationType::~FeatureAssociationType()
 	{
 
+	}
+
+	FeatureAssociationType FeatureAssociationType::operator=(const FeatureAssociationType& other)
+	{
+		AssociationType::operator=(other);
+
+		featureID = other.featureID;
+
+		return *this;
 	}
 
 	std::string FeatureAssociationType::GetFeatureID()

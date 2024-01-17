@@ -7,6 +7,21 @@ H5_FeatureInstanceGroup::H5_FeatureInstanceGroup()
 
 }
 
+H5_FeatureInstanceGroup::H5_FeatureInstanceGroup(const H5_FeatureInstanceGroup& other)
+{
+	if (other.westBoundLongitude) setWestBoundLongitude(*other.westBoundLongitude);
+	if (other.eastBoundLongitude) setEastBoundLongitude(*other.eastBoundLongitude);
+	if (other.southBoundLatitude) setSouthBoundLatitude(*other.southBoundLatitude);
+	if (other.northBoundLatitude) setNorthBoundLatitude(*other.northBoundLatitude);
+	setNumGRP(other.numGRP);
+	if (other.attribute29) attribute29 = new H5_FI_Attribute29(*other.attribute29);
+	for (const auto& iter : other.valuesGroup)
+	{
+		H5_ValuesGroup* value = new H5_ValuesGroup(*iter);
+		valuesGroup.push_back(value);
+	}
+}
+
 H5_FeatureInstanceGroup::~H5_FeatureInstanceGroup()
 {
 	delete westBoundLongitude;
@@ -18,6 +33,39 @@ H5_FeatureInstanceGroup::~H5_FeatureInstanceGroup()
 	for (auto i = valuesGroup.begin(); i != valuesGroup.end(); i++) {
 		delete (*i);
 	}
+}
+
+H5_FeatureInstanceGroup H5_FeatureInstanceGroup::operator=(const H5_FeatureInstanceGroup& other)
+{
+	if (attribute29)
+	{
+		delete attribute29;
+		attribute29 = nullptr;
+	}
+
+	for (auto& iter : valuesGroup)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	valuesGroup.clear();
+
+	if (other.westBoundLongitude) setWestBoundLongitude(*other.westBoundLongitude);
+	if (other.eastBoundLongitude) setEastBoundLongitude(*other.eastBoundLongitude);
+	if (other.southBoundLatitude) setSouthBoundLatitude(*other.southBoundLatitude);
+	if (other.northBoundLatitude) setNorthBoundLatitude(*other.northBoundLatitude);
+	setNumGRP(other.numGRP);
+	if (other.attribute29) attribute29 = new H5_FI_Attribute29(*other.attribute29);
+	for (const auto& iter : other.valuesGroup)
+	{
+		H5_ValuesGroup* value = new H5_ValuesGroup(*iter);
+		valuesGroup.push_back(value);
+	}
+
+	return *this;
 }
 
 bool H5_FeatureInstanceGroup::hasWestBoundLongitude() const
@@ -76,6 +124,8 @@ double H5_FeatureInstanceGroup::getSouthBoundLatitude() const
 	if (southBoundLatitude) {
 		return *southBoundLatitude;
 	}
+
+	return 0.0;
 }
 
 void H5_FeatureInstanceGroup::setSouthBoundLatitude(const double value)

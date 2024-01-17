@@ -11,8 +11,32 @@ SMultiPoint::SMultiPoint()
 	
 }
 
+SMultiPoint::SMultiPoint(const SMultiPoint& other) : SGeometry(other)
+{
+	for (const auto& iter : other.m_pPoints)
+	{
+		GeoPointZ gp = iter;
+		m_pPoints.push_back(gp);
+	}
+}
+
 SMultiPoint::~SMultiPoint()
 {
+}
+
+SMultiPoint SMultiPoint::operator=(const SMultiPoint& other)
+{
+	m_pPoints.clear();
+
+	SGeometry::operator=(other);
+
+	for (const auto& iter : other.m_pPoints)
+	{
+		GeoPointZ gp = iter;
+		m_pPoints.push_back(gp);
+	}
+
+	return *this;
 }
 
 SGeometryType SMultiPoint::GetType()
@@ -22,7 +46,7 @@ SGeometryType SMultiPoint::GetType()
 
 int SMultiPoint::GetNumPoints()
 {
-	return m_pPoints.size();
+	return (int)m_pPoints.size();
 }
 
 double SMultiPoint::GetX(int index)
@@ -172,3 +196,5 @@ bool SMultiPoint::ExportToWkb(unsigned char** value, int* size)
 
 	return true;
 }
+
+

@@ -8,12 +8,42 @@ F_CSAX::F_CSAX(void)
 
 }
 
+F_CSAX::F_CSAX(const F_CSAX& other)
+{
+	for (const auto& iter : other.m_arr)
+	{
+		CSAX* cont = new CSAX(*iter);
+		m_arr.push_back(cont);
+	}
+}
+
 F_CSAX::~F_CSAX(void)
 {
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{
 		delete* i;
 	}
+}
+
+F_CSAX F_CSAX::operator=(const F_CSAX& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		CSAX* cont = new CSAX(*iter);
+		m_arr.push_back(cont);
+	}
+
+	return *this;
 }
 
 void F_CSAX::ReadField(BYTE *&buf)
@@ -65,3 +95,12 @@ int F_CSAX::GetFieldLength()
 
 	return ++len;
 }
+
+void F_CSAX::Insert(int axty, int axum)
+{
+	CSAX* csax = new CSAX();
+	csax->m_axty = axty;
+	csax->m_axum = axum;
+	m_arr.push_back(csax);
+}
+

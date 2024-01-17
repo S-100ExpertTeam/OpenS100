@@ -11,6 +11,13 @@ F_MRID::F_MRID(void)
 	m_ruin = 0;
 }
 
+F_MRID::F_MRID(const F_MRID& other) : Field(other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+}
+
 F_MRID::F_MRID(RecordName recordName, int RVER, int RUIN)
 {
 	m_name = recordName;
@@ -23,7 +30,16 @@ F_MRID::~F_MRID(void)
 
 }
 
-void F_MRID::ReadField(BYTE *&buf)
+F_MRID F_MRID::operator=(const F_MRID& other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+
+	return *this;
+}
+
+void F_MRID::ReadField(BYTE*& buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);
@@ -52,3 +68,5 @@ int F_MRID::GetFieldLength()
 	len += 1;
 	return ++len;
 }
+
+

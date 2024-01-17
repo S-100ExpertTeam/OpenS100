@@ -1,10 +1,11 @@
 #pragma once
 #include "Field.h"
 
-class F_CRSH : Field
+class F_CRSH : public Field
 {
 public:
 	F_CRSH();
+	F_CRSH(const F_CRSH& other);
 	virtual ~F_CRSH();
 public:
 	/*
@@ -56,6 +57,9 @@ public:
 	* Information about the CRS source if CRSS = ¡®Other Source¡¯
 	*/
 	CString m_scri;
+
+public:
+	virtual F_CRSH operator=(const F_CRSH& other);
 
 public:
 	void ReadField(BYTE *&buf);

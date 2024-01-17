@@ -6,6 +6,7 @@ class F_GDAT :
 {
 public:
 	F_GDAT();
+	F_GDAT(const F_GDAT& other);
 	virtual ~F_GDAT();
 
 public:
@@ -54,6 +55,10 @@ public:
 	double m_cmgl;
 
 public:
+	virtual F_GDAT operator=(const F_GDAT& other);
+
+public:
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
 };

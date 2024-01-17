@@ -15,9 +15,35 @@ F_PROJ::F_PROJ()
 	m_fnor = 0;
 }
 
+F_PROJ::F_PROJ(const F_PROJ& other)
+{
+	m_prom = other.m_prom;
+	m_prp1 = other.m_prp1;
+	m_prp2 = other.m_prp2;
+	m_prp3 = other.m_prp3;
+	m_prp4 = other.m_prp4;
+	m_prp5 = other.m_prp5;
+	m_feas = other.m_feas;
+	m_fnor = other.m_fnor;
+}
+
 F_PROJ::~F_PROJ()
 {
 
+}
+
+F_PROJ F_PROJ::operator=(const F_PROJ& other)
+{
+	m_prom = other.m_prom;
+	m_prp1 = other.m_prp1;
+	m_prp2 = other.m_prp2;
+	m_prp3 = other.m_prp3;
+	m_prp4 = other.m_prp4;
+	m_prp5 = other.m_prp5;
+	m_feas = other.m_feas;
+	m_fnor = other.m_fnor;
+
+	return *this;
 }
 
 void F_PROJ::ReadField(BYTE *&buf)
@@ -55,3 +81,5 @@ int F_PROJ::GetSize()
 {
 	return 57;
 }
+
+

@@ -3,6 +3,7 @@ class Leader
 {
 public:
 	Leader();
+	Leader(const Leader& other);
 	virtual ~Leader();
 
 public:
@@ -14,6 +15,9 @@ public:
 	int sizeOfFieldPositionField = 0;
 
 	char byte[24] = { 0, };
+
+public:
+	virtual Leader operator=(const Leader& other);
 
 public:
 	//bool Read(char*& buf);

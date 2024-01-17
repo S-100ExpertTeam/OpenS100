@@ -11,6 +11,7 @@ class H5_FeatureInstanceGroup
 {
 public:
 	H5_FeatureInstanceGroup();
+	H5_FeatureInstanceGroup(const H5_FeatureInstanceGroup& other);
 	virtual ~H5_FeatureInstanceGroup();
 
 public:
@@ -23,6 +24,9 @@ public:
 	H5_FI_Attribute29* attribute29 = nullptr;
 
 	std::vector<H5_ValuesGroup*> valuesGroup;
+
+public:
+	virtual H5_FeatureInstanceGroup operator=(const H5_FeatureInstanceGroup& other);
 
 public:
 	bool hasWestBoundLongitude() const;

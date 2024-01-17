@@ -30,7 +30,7 @@ namespace GF
 
 	int ComplexAttributeType::GetSubAttributeCount() const
 	{
-		return carries.size();
+		return (int)carries.size();
 	}
 
 	ThematicAttributeType* ComplexAttributeType::GetSubAttribute(int index) const

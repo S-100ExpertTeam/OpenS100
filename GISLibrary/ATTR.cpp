@@ -6,6 +6,15 @@ ATTR::ATTR()
 
 }
 
+ATTR::ATTR(const ATTR& other)
+{
+	m_natc = other.m_natc;
+	m_atix = other.m_atix;
+	m_paix = other.m_paix;
+	m_atin = other.m_atin;
+	m_atvl = other.m_atvl;
+}
+
 ATTR::ATTR(int NATC, int ATIX, int PAIX, int ATIN, CString& ATVL)
 {
 	m_natc = NATC;
@@ -18,6 +27,17 @@ ATTR::ATTR(int NATC, int ATIX, int PAIX, int ATIN, CString& ATVL)
 ATTR::~ATTR()
 {
 
+}
+
+ATTR ATTR::operator=(const ATTR& other)
+{
+	m_natc = other.m_natc;
+	m_atix = other.m_atix;
+	m_paix = other.m_paix;
+	m_atin = other.m_atin;
+	m_atvl = other.m_atvl;
+
+	return *this;
 }
 
 int ATTR::GetOffsetToATVL()

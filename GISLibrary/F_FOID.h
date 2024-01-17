@@ -1,10 +1,11 @@
 #pragma once
 #include "Field.h"
 
-class F_FOID : Field
+class F_FOID : public Field
 {
 public:
 	F_FOID();
+	F_FOID(const F_FOID& other);
 	F_FOID(int AGEN, int FIDN, int FIDS);
 	virtual ~F_FOID();
 
@@ -23,6 +24,9 @@ public:
 	// b12
 	// Range : 1 to 2^32 - 2
 	int FIDS = 0;
+
+public:
+	virtual F_FOID operator=(const F_FOID& other);
 
 public:
 	void ReadField(BYTE *&buf);

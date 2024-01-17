@@ -15,34 +15,37 @@ SSurface::SSurface()
 	
 }
 
-SSurface::SSurface(const SSurface& other)
-	: SGeometry(other)
+SSurface::SSurface(const SSurface& other) : SGeometry(other)
 {
-	m_numParts = other.m_numParts;
 	m_numPoints = other.m_numPoints;
 
-	if (other.m_pParts) {
-		m_pParts = new int[GetNumPart()];
-		memcpy(m_pParts, other.m_pParts, GetNumPart() * sizeof(int));
-	}
-
-	if (other.m_pPoints) {
-		m_pPoints = new GeoPoint[getNumPoint()];
-		memcpy(m_pPoints, other.m_pPoints, getNumPoint() * sizeof(GeoPoint));
-	}
-
-	if (other.m_centerPoint) {
-		m_centerPoint = new GeoPoint(*other.m_centerPoint);
-	}
-
-	int curveCnt = other.curveList.size();
-	if (curveCnt > 0) {
-		for (int i = 0; i < curveCnt; i++) {
-			AddCurve(other.GetRing(i));
+	if (m_numPoints > 0)
+	{
+		m_pPoints = new GeoPoint[m_numPoints];
+		for (int i = 0; i < m_numPoints; i++)
+		{
+			m_pPoints[i] = other.m_pPoints[i];
 		}
 	}
+	
+	for (const auto& iter : other.curveList)
+	{
+		SAbstractCurve* ac = new SAbstractCurve(*iter);
+		curveList.push_back(ac);
+	}
 
-	CreateD2Geometry(gisLib->D2.Factory());
+	if (m_centerPoint)
+		m_centerPoint = new GeoPoint(*m_centerPoint);
+
+	m_numParts = other.m_numParts;
+	if (m_numParts > 0)
+	{
+		m_pParts = new int[m_numParts];
+		for (int i = 0; i < m_numParts; i++)
+		{
+			m_pParts[i] = other.m_pParts[i];
+		}
+	}
 }
 
 SSurface::SSurface(MBR* mbr)
@@ -420,8 +423,13 @@ void SSurface::Set(std::vector<POINT>& points, std::vector<int>& parts)
 
 	if (m_numPoints > SGeometry::sizeOfPoint)
 	{
-		SGeometry::sizeOfPoint = m_numPoints * 1.5;
 		delete[] SGeometry::viewPoints;
+		SGeometry::viewPoints = nullptr;
+	}
+
+	if (SGeometry::viewPoints == nullptr)
+	{
+		SGeometry::sizeOfPoint = m_numPoints * 1.5;
 		SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
 	}
 
@@ -446,6 +454,72 @@ void SSurface::Release()
 		delete (*i);
 	}
 	curveList.clear();
+}
+
+SSurface SSurface::operator=(const SSurface& other)
+{
+	if (m_pPoints)
+	{
+		delete[] m_pPoints;
+		m_pPoints = nullptr;
+	}
+
+	if (m_pParts)
+	{
+		delete[] m_pParts;
+		m_pParts = nullptr;
+	}
+
+	if (m_centerPoint)
+	{
+		delete m_centerPoint;
+		m_centerPoint = nullptr;
+	}
+
+	if (pGeometry)
+		SafeRelease(&pGeometry);
+
+	for (auto& iter : curveList)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	curveList.clear();
+
+	m_numPoints = other.m_numPoints;
+
+	if (m_numPoints > 0)
+	{
+		m_pPoints = new GeoPoint[m_numPoints];
+		for (int i = 0; i < m_numPoints; i++)
+		{
+			m_pPoints[i] = other.m_pPoints[i];
+		}
+	}
+
+	for (const auto& iter : other.curveList)
+	{
+		SAbstractCurve* ac = new SAbstractCurve(*iter);
+		curveList.push_back(ac);
+	}
+
+	if (m_centerPoint)
+		m_centerPoint = new GeoPoint(*m_centerPoint);
+
+	m_numParts = other.m_numParts;
+	if (m_numParts > 0)
+	{
+		m_pParts = new int[m_numParts];
+		for (int i = 0; i < m_numParts; i++)
+		{
+			m_pParts[i] = other.m_pParts[i];
+		}
+	}
+
+	return *this;
 }
 
 bool SSurface::ImportFromWkb(unsigned char* value, int size)
@@ -481,7 +555,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int size)
 		memcpy_s(&numPointPerPart, 4, value + 9 + offset, 4);
 		offset += 4;
 
-		m_pParts[i] = localPointArray.size();
+		m_pParts[i] = (int)localPointArray.size();
 
 		auto curve = new SCurve();
 		curve->Init(numPointPerPart);
@@ -501,7 +575,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int size)
 		}
 	}
 
-	m_numPoints = localPointArray.size();
+	m_numPoints = (int)localPointArray.size();
 
 	m_pPoints = new GeoPoint[m_numPoints];
 	std::copy(localPointArray.begin(), localPointArray.end(), m_pPoints);
@@ -636,7 +710,7 @@ double SSurface::GetY(int index)
 
 int SSurface::GetRingCount() const
 {
-	return curveList.size();
+	return (int)curveList.size();
 }
 
 SAbstractCurve* SSurface::GetRing(int index) const
@@ -699,3 +773,4 @@ void SSurface::setSuppress(bool value)
 		}
 	}
 }
+

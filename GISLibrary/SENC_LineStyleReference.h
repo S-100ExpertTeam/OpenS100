@@ -11,6 +11,7 @@ public:
 
 public:
 	std::wstring reference;
+	S100Render s100Render;
 
 public:
 	void GetStyleFromS100(S100_LineStyleReference* lineStyle);

@@ -16,9 +16,10 @@ F_FASC::F_FASC(const F_FASC& other)
 	m_narc = other.m_narc;
 	m_faui = other.m_faui;
 
-	for (auto i = other.m_arr.begin(); i != other.m_arr.end(); i++) {
-		auto item = new ATTR(**i);
-		m_arr.push_back(item);
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(*iter);
+		m_arr.push_back(attr);
 	}
 }
 
@@ -27,6 +28,32 @@ F_FASC::~F_FASC(void)
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++) {
 		delete (*i);
 	}
+}
+
+F_FASC F_FASC::operator=(const F_FASC& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	m_name = other.m_name;
+	m_nfac = other.m_nfac;
+	m_narc = other.m_narc;
+	m_faui = other.m_faui;
+
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(*iter);
+		m_arr.push_back(attr);
+	}
+
+	return *this;
 }
 
 void F_FASC::ReadField(BYTE *&buf)
@@ -88,7 +115,7 @@ int F_FASC::GetFieldLength()
 
 int F_FASC::getATTRCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 ATTR* F_FASC::getATTR(int index) const
@@ -104,3 +131,5 @@ void F_FASC::addATTR(ATTR* value)
 {
 	m_arr.push_back(value);
 }
+
+

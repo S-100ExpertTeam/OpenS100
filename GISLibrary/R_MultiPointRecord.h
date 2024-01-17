@@ -15,6 +15,7 @@ class R_MultiPointRecord : public R_VectorRecord
 {
 public:
 	R_MultiPointRecord();
+	R_MultiPointRecord(const R_MultiPointRecord& other);
 	virtual ~R_MultiPointRecord();
 
 public:
@@ -22,6 +23,9 @@ public:
 	F_COCC* m_cocc = nullptr; // Only Update
 	std::list<F_C2IL*> m_c2il;
 	std::list<F_C3IL*> m_c3il;
+
+public:
+	virtual R_MultiPointRecord operator=(const R_MultiPointRecord& other);
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
@@ -33,9 +37,14 @@ public:
 	std::wstring GetRCIDasWstring();
 
 	void SetRCID(int rcid);
+	void SetCOCC(int coui, int coix, int ncor);
 
 	void InsertC3IL(int x, int y, int z);
+	void InsertC3IL(int cmfx, int cmfy, int cmfz, SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo);
+
+	void SetC3IL(int cmfx, int cmfy, int cmfz, SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo);
+	void GetC3IL(double cmfx, double cmfy, double cmfz, SAFEARRAY** xcoo, SAFEARRAY** ycoo, SAFEARRAY** zcoo);
 
 	std::vector<C2IL*> GetAllC2IL();
-	std::vector<C3IL*> GetAll3CIL();
+	std::vector<C3IL*> GetAllC3IL();
 };

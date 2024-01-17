@@ -6,7 +6,7 @@
 
 #include <list>
 
-class F_INAS : Field
+class F_INAS : public Field
 {
 public:
 	F_INAS();
@@ -42,6 +42,10 @@ public:
 	* Attribute Array
 	*/
 	std::vector<ATTR*> m_arr;
+
+public:
+	virtual F_INAS operator=(const F_INAS& other);
+
 public:
 	static int GetSize();
 

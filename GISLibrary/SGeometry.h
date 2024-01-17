@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <string>
+#include <atlsafe.h>
 
 class SSurface;
 class Symbol;
@@ -28,6 +29,9 @@ public:
 
 public:
 	std::vector<GF::InformationType*> additionalInformation;
+
+public:
+	virtual SGeometry operator=(const SGeometry& other);
 
 public:
 	virtual SGeometryType GetType() { return SGeometryType::none; }

@@ -13,13 +13,16 @@ namespace GM
 	{
 	public:
 		Object();
+		Object(const Object& other);
 		Object(std::string id);
-		Object(const Object& item);
 		virtual ~Object();
 
 	public:
 		std::string id;
 		std::string srsName;
+
+	public:
+		virtual Object operator=(const Object& other);
 
 	public:
 		std::string GetID();

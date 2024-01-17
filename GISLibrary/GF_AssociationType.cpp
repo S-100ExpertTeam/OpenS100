@@ -8,9 +8,23 @@ namespace GF
 
 	}
 
+	AssociationType::AssociationType(const AssociationType& other) : NamedType(other)
+	{
+		role = other.role;
+	}
+
 	AssociationType::~AssociationType()
 	{
 
+	}
+
+	AssociationType AssociationType::operator=(const AssociationType& other)
+	{
+		NamedType::operator=(other);
+
+		role = other.role;
+
+		return *this;
 	}
 
 	std::string AssociationType::GetRole()

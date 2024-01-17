@@ -14,6 +14,7 @@ class SpatialAttributeType :
 {
 public:
     SpatialAttributeType();
+    SpatialAttributeType(const SpatialAttributeType& other);
     virtual ~SpatialAttributeType();
 
 public:
@@ -25,6 +26,9 @@ public:
     std::string geometryID;
 
     std::vector<MaskReference> maskReference;
+
+public:
+    virtual SpatialAttributeType operator=(const SpatialAttributeType& other);
 
 public:
     void SetGeometryID(std::string value);

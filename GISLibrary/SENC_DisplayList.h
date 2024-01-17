@@ -2,6 +2,7 @@
 
 #include <list>
 #include <map>
+#include <set>
 
 class SENC_Instruction;
 class SENC_AlertReference;
@@ -21,6 +22,8 @@ public:
 	// key : id
 	std::unordered_map<std::string, SENC_AlertReference*> alertInstructions;
 
+	std::set<std::wstring> offFeatureCode;
+
 public:
 	/*
 	* Arg 02 discription
@@ -36,7 +39,7 @@ public:
 	** 8 : Augmented Path
 	** 9 : Augmented Area
 	*/
-	void GetDrawingInstruction(int priority, int type, Scaler* scaler, std::list<SENC_Instruction*>& itList);
+	void GetDrawingInstruction(int priority, int type, int currentScale, Scaler* scaler, std::list<SENC_Instruction*>& itList);
 
 	void ChangePallete(PortrayalCatalogue *pc);
 

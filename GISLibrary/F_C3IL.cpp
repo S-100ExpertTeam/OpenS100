@@ -9,10 +9,44 @@ F_C3IL::F_C3IL()
 
 }
 
+F_C3IL::F_C3IL(const F_C3IL& other) :Field(other)
+{
+	for (const auto& iter : other.m_arr)
+	{
+		C3IL* cont = new C3IL(*iter);
+		m_arr.push_back(cont);
+	}
+
+	m_vcid = other.m_vcid;
+}
+
 F_C3IL::~F_C3IL()
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 		delete *itor;
+}
+
+F_C3IL F_C3IL::operator=(const F_C3IL& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		C3IL* cont = new C3IL(*iter);
+		m_arr.push_back(cont);
+	}
+
+	m_vcid = other.m_vcid;
+
+	return *this;
 }
 
 void F_C3IL::ReadField(BYTE *&buf)
@@ -67,4 +101,13 @@ int F_C3IL::GetFieldLength()
 		len += C3IL::GetSize();
 	}
 	return ++len;
+}
+
+void F_C3IL::Insert(int xcoo, int ycoo, int zcoo)
+{
+	C3IL* cont = new C3IL();
+	cont->m_ycoo = ycoo;
+	cont->m_xcoo = xcoo;
+	cont->m_zcoo = zcoo;
+	m_arr.push_back(cont);
 }

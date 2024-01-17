@@ -5,7 +5,16 @@
 
 F_COCC::F_COCC()
 {
+	m_coui = 1;
+	m_coix = 0;
+	m_ncor = 0;
+}
 
+F_COCC::F_COCC(const F_COCC& other)
+{
+	m_coui = other.m_coui;
+	m_coix = other.m_coix;
+	m_ncor = other.m_ncor;
 }
 
 F_COCC::~F_COCC()
@@ -13,7 +22,16 @@ F_COCC::~F_COCC()
 
 }
 
-void F_COCC::ReadField(BYTE *&buf)
+F_COCC F_COCC::operator=(const F_COCC& other)
+{
+	m_coui = other.m_coui;
+	m_coix = other.m_coix;
+	m_ncor = other.m_ncor;
+
+	return *this;
+}
+
+void F_COCC::ReadField(BYTE*& buf)
 {
 	m_coui = buf2uint(buf, 1);
 	m_coix = buf2uint(buf, 2);
@@ -28,3 +46,4 @@ int F_COCC::GetFieldLength()
 	len += 2;
 	return ++len;
 }
+

@@ -3,6 +3,8 @@
 #include "Enum_S100_FileType.h"
 #include "Namespace_GISLibrary.h"
 
+using namespace GISLibrary;
+
 class Layer;
 class Scaler;
 class SpatialObject
@@ -20,13 +22,15 @@ private:
 	CString m_FileName; // File name (including extension)
 
 public:
-	virtual bool Open(CString _filepath) { return true; }
+	virtual bool Open(CString _filepath) = 0;
 	virtual bool Save(std::wstring path) { return true; }
 
 	virtual void Draw(CDC *pDC, Scaler *scaler, double offset = 0) {};
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0) {};
 	virtual void Draw(HDC &hDC, Scaler *scaler, int priority, int geoType, double offset = 0) {};
-	virtual void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler) {};
+	virtual void Draw(D2D1Resources* D2, Scaler* scaler) {};
+	virtual void Draw(CDCRenderTarget* pRenderTarget, Scaler *scaler, double offsetX = 0, double offsetY = 0) {};
+	virtual void Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, Scaler *scaler, double offsetX = 0, double offsetY = 0) {};
 
 	virtual int getEPSGNumber() { return 0; }
 

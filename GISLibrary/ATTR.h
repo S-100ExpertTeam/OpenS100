@@ -5,6 +5,7 @@ struct ATTR
 {
 public:
 	ATTR();
+	ATTR(const ATTR& other);
 	ATTR(int NATC, int ATIX, int PAIX, int ATIN, CString& ATVL);
 	virtual ~ATTR();
 
@@ -48,7 +49,12 @@ public:
 	CString m_atvl = L"";
 
 public:
+	virtual ATTR operator=(const ATTR& other);
+
+public:
 	static int GetOffsetToATVL();
 	
 	std::string getValueAsString();
+
+
 };

@@ -7,6 +7,41 @@ H5_RootGroup::H5_RootGroup()
 
 }
 
+H5_RootGroup::H5_RootGroup(const H5_RootGroup& other)
+{
+	setProductSpecification(other.productSpecification);
+	if (other.issueTime) setIssueTime(*other.issueTime);
+	setIssueDate(other.issueDate);
+	setHorizontalCRS(other.horizontalCRS);
+	if (other.nameOfHorizontalCRS) setNameOfHorizontalCRS(*other.nameOfHorizontalCRS);
+	if (other.typeOfTheHorizontalCRS) setTypeOfTheHorizontalCRS(*other.typeOfTheHorizontalCRS);
+	if (other.horizontalCS) setHorizontalCS(*other.horizontalCS);
+	if (other.horizontalDatum) setHorizontalDatum(*other.horizontalDatum);
+	if (other.nameOfHorizontalDatum) setNameOfHorizontalDatum(*other.nameOfHorizontalDatum);
+	if (other.primeMeridian) setPrimeMeridian(*other.primeMeridian);
+	if (other.spheroid) setSpheroid(*other.spheroid);
+	if (other.projectionMethod) setProjectionMethod(*other.projectionMethod);
+	if (other.projectionParameter1) setProjectionParameter1(*other.projectionParameter1);
+	if (other.projectionParameter2) setProjectionParameter2(*other.projectionParameter2);
+	if (other.projectionParameter3) setProjectionParameter3(*other.projectionParameter3);
+	if (other.projectionParameter4) setProjectionParameter4(*other.projectionParameter4);
+	if (other.projectionParameter5) setProjectionParameter5(*other.projectionParameter5);
+	if (other.falseNorthing) setFalseNorthing(*other.falseNorthing);
+	if (other.falseEasting) setFalseEasting(*other.falseEasting);
+	if (other.epoch) setEpoch(*other.epoch);
+	setWestBoundLongitude(other.westBoundLongitude);
+	setEastBoundLongitude(other.eastBoundLongitude);
+	setSouthBoundLatitude(other.southBoundLatitude);
+	setNorthBoundLatitude(other.northBoundLatitude);
+	if (other.geographicIdentifier) setGeographicIdentifier(*other.geographicIdentifier);
+	setMetadata(other.metadata);
+	if (other.verticalCS) setVerticalCS(*other.verticalCS);
+	if (other.verticalCoordinateBase) setVerticalCoordinateBase(*other.verticalCoordinateBase);
+	if (other.verticalDatumReference) setVerticalDatumReference(*other.verticalDatumReference);
+	if (other.verticalDatum) setVerticalDatum(*other.verticalDatum);
+	if (other.metaFeatures) setMetaFeatures(*other.metaFeatures);
+}
+
 H5_RootGroup::~H5_RootGroup()
 {
 	delete issueTime;
@@ -32,6 +67,43 @@ H5_RootGroup::~H5_RootGroup()
 	delete verticalDatumReference;
 	delete verticalDatum;
 	delete metaFeatures;
+}
+
+H5_RootGroup H5_RootGroup::operator=(const H5_RootGroup& other)
+{
+	setProductSpecification(other.productSpecification);
+	if (other.issueTime) setIssueTime(*other.issueTime);
+	setIssueDate(other.issueDate);
+	setHorizontalCRS(other.horizontalCRS);
+	if (other.nameOfHorizontalCRS) setNameOfHorizontalCRS(*other.nameOfHorizontalCRS);
+	if (other.typeOfTheHorizontalCRS) setTypeOfTheHorizontalCRS(*other.typeOfTheHorizontalCRS);
+	if (other.horizontalCS) setHorizontalCS(*other.horizontalCS);
+	if (other.horizontalDatum) setHorizontalDatum(*other.horizontalDatum);
+	if (other.nameOfHorizontalDatum) setNameOfHorizontalDatum(*other.nameOfHorizontalDatum);
+	if (other.primeMeridian) setPrimeMeridian(*other.primeMeridian);
+	if (other.spheroid) setSpheroid(*other.spheroid);
+	if (other.projectionMethod) setProjectionMethod(*other.projectionMethod);
+	if (other.projectionParameter1) setProjectionParameter1(*other.projectionParameter1);
+	if (other.projectionParameter2) setProjectionParameter2(*other.projectionParameter2);
+	if (other.projectionParameter3) setProjectionParameter3(*other.projectionParameter3);
+	if (other.projectionParameter4) setProjectionParameter4(*other.projectionParameter4);
+	if (other.projectionParameter5) setProjectionParameter5(*other.projectionParameter5);
+	if (other.falseNorthing) setFalseNorthing(*other.falseNorthing);
+	if (other.falseEasting) setFalseEasting(*other.falseEasting);
+	if (other.epoch) setEpoch(*other.epoch);
+	setWestBoundLongitude(other.westBoundLongitude);
+	setEastBoundLongitude(other.eastBoundLongitude);
+	setSouthBoundLatitude(other.southBoundLatitude);
+	setNorthBoundLatitude(other.northBoundLatitude);
+	if (other.geographicIdentifier) setGeographicIdentifier(*other.geographicIdentifier);
+	setMetadata(other.metadata);
+	if (other.verticalCS) setVerticalCS(*other.verticalCS);
+	if (other.verticalCoordinateBase) setVerticalCoordinateBase(*other.verticalCoordinateBase);
+	if (other.verticalDatumReference) setVerticalDatumReference(*other.verticalDatumReference);
+	if (other.verticalDatum) setVerticalDatum(*other.verticalDatum);
+	if (other.metaFeatures) setMetaFeatures(*other.metaFeatures);
+
+	return *this;
 }
 
 std::string H5_RootGroup::getProductSpecification() const

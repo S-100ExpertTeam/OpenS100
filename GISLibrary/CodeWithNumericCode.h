@@ -4,6 +4,7 @@ class CodeWithNumericCode
 {
 public:
 	CodeWithNumericCode();
+	CodeWithNumericCode(const CodeWithNumericCode& other);
 	CodeWithNumericCode(CString& code, int numericCode);
 
 public:
@@ -20,6 +21,9 @@ public:
 	* Description	: The code used within the subfield which using numeric code value
 	*/
 	int m_nmcd = 0;
+
+public:
+	virtual CodeWithNumericCode operator=(const CodeWithNumericCode& other);
 
 public:
 	static int GetSize();

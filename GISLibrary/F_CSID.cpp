@@ -10,9 +10,23 @@ F_CSID::F_CSID(void)
 	m_ncrc = 2;
 }
 
+F_CSID::F_CSID(const F_CSID& other) : Field(other)
+{
+	m_name = other.m_name;
+	m_ncrc = other.m_ncrc;
+}
+
 F_CSID::~F_CSID(void)
 {
 
+}
+
+F_CSID F_CSID::operator=(const F_CSID& other)
+{
+	m_name = other.m_name;
+	m_ncrc = other.m_ncrc;
+
+	return *this;
 }
 
 void F_CSID::ReadField(BYTE *&buf)
@@ -40,3 +54,4 @@ int F_CSID::GetFieldLength()
 	len += 1;
 	return ++len;
 }
+

@@ -25,6 +25,9 @@ private:
 	//int m_id = 0;
 
 public:
+	virtual SCurve operator=(const SCurve& other);
+
+public:
 	SGeometryType GetType() override;
 	
 	int GetNumPoints() const;
@@ -35,7 +38,6 @@ public:
 	double GetX() override;
 	double GetY() override;
 	void Set(int index, double x, double y) override;
-	virtual SAbstractCurve* clone() override;
 
 	int GetRCID();
 	void Init(int size);

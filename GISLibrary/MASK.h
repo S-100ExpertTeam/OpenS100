@@ -2,6 +2,13 @@
 
 struct MASK
 {
+
+public:
+	MASK();
+	MASK(const MASK& other);
+	MASK(RecordName name, int mind, int muin);
+	virtual ~MASK();
+
 public:
 	RecordName m_name;
 	/*
@@ -19,6 +26,9 @@ public:
 	*/
 	int m_muin = 0;
 	
+public:
+	virtual MASK operator=(const MASK& other);
+
 public:
 	static int GetSize();
 };

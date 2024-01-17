@@ -19,6 +19,7 @@ class R_CurveRecord : public R_VectorRecord
 {
 public:
 	R_CurveRecord();
+	R_CurveRecord(const R_CurveRecord& other);
 	virtual ~R_CurveRecord();
 
 public:
@@ -45,6 +46,9 @@ public:
 	std::list<F_C2IL*> m_c2il;
 
 public:
+	virtual R_CurveRecord operator=(const R_CurveRecord& other);
+
+public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
 	bool WriteRecord(CFile* file);
 	RecordName GetRecordName();
@@ -59,7 +63,16 @@ public:
 
 	void SetPTAS(int rcid);
 	void SetPTAS(int begin_rcid, int end_rcid);
+	void AddPTAS(int rcid, int topi);
+	void SetSEGH(int intp = 4, int circ = 0, double ycoo = 0, double xcoo = 0, double dist = 0, int disu = 0, double sbrg = 0, double angl = 0);
+
 	void InsertC2IL(int x, int y);
+	void InsertC2IL(int cmfx, int cmfy, SAFEARRAY* xcoo, SAFEARRAY* ycoo);
+
+	void GetC2IL(double cmfx, double cmfy, SAFEARRAY** xcoo, SAFEARRAY** ycoo);
+
+	int GetBeginningPointRCID();
+	int GetEndPointRCID();
 
 	std::string GetBeginningPointRCIDasString(std::string prefix = "");
 	std::string GetEndPointRCIDasString(std::string prefix = "");

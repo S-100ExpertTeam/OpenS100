@@ -6,6 +6,13 @@ C3IL::C3IL()
 
 }
 
+C3IL::C3IL(const C3IL& other)
+{
+	m_ycoo = other.m_ycoo;
+	m_xcoo = other.m_xcoo;
+	m_zcoo = other.m_zcoo;
+}
+
 C3IL::C3IL(int x, int y, int z)
 {
 	m_ycoo = y;
@@ -16,6 +23,15 @@ C3IL::C3IL(int x, int y, int z)
 C3IL::~C3IL()
 {
 
+}
+
+C3IL C3IL::operator=(const C3IL& other)
+{
+	m_ycoo = other.m_ycoo;
+	m_xcoo = other.m_xcoo;
+	m_zcoo = other.m_zcoo;
+
+	return *this;
 }
 
 int C3IL::GetSize()

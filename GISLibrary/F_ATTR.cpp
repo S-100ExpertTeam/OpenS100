@@ -10,11 +10,10 @@ F_ATTR::F_ATTR()
 
 F_ATTR::F_ATTR(const F_ATTR& other)
 {
-	auto cnt = other.getCount();
-
-	for (int i = 0; i < cnt; i++) {
-		auto item = new ATTR(*other.getATTR(i));
-		Insert(item);
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(*iter);
+		m_arr.push_back(attr);
 	}
 }
 
@@ -24,6 +23,27 @@ F_ATTR::~F_ATTR()
 	{
 		delete* itor;
 	}
+}
+
+F_ATTR F_ATTR::operator=(const F_ATTR& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(*iter);
+		m_arr.push_back(attr);
+	}
+
+	return *this;
 }
 
 void F_ATTR::ReadField(BYTE *&buf)
@@ -97,16 +117,23 @@ void F_ATTR::Insert(ATTR* attr)
 	m_arr.push_back(attr);
 }
 
+void F_ATTR::Insert(int natc, int atix, int paix, int atin, CString atvl)
+{
+	ATTR* attr = new ATTR(natc, atix, paix, atin, atvl);
+	m_arr.push_back(attr);
+}
+
 int F_ATTR::getCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 ATTR* F_ATTR::getATTR(int index) const
 {
-	if (index < 0 || index >= m_arr.size()) {
+	if (index < 0 || index >= (int)m_arr.size()) {
 		return nullptr;
 	}
 
 	return m_arr.at(index);
 }
+

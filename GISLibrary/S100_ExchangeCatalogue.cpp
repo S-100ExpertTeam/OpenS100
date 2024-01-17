@@ -106,16 +106,16 @@ namespace S100
         }
     }
 
-    void S100_ExchangeCatalogue::DrawCoverage(ID2D1RenderTarget* pRenderTarget, ID2D1Factory* pDXFactory, Scaler* scaler, double offsetX, double offsetY)
+    void S100_ExchangeCatalogue::DrawCoverage(D2D1Resources* pD2, Scaler* scaler, double offsetX, double offsetY)
     {
-        double Width = gisLib->GetScaler()->GetScreenWidth();
-        double Height = gisLib->GetScaler()->GetScreenWidth();
+        double Width = scaler->GetScreenWidth();
+        double Height = scaler->GetScreenWidth();
 
         for (int i = 0; i < DatasetDiscoveryMetadata.size(); i++)
-        {
-            pRenderTarget->BeginDraw();
-            auto textformat = gisLib->D2.pDWriteTextFormat;
-            auto brush = gisLib->D2.pBrush;
+        {            
+            pD2->pRT->BeginDraw();
+            auto textformat = pD2->pDWriteTextFormat;
+            auto brush = pD2->pBrush;
             auto ddm = DatasetDiscoveryMetadata[i];
 
 
@@ -142,37 +142,40 @@ namespace S100
      
             object->SetExteriorRing(curve);
 
-            S10XGML* cls = new S10XGML();
+            S10XGML* cls = new S10XGML(pD2);
             auto sSurface = cls->SurfaceToSSurface(object);
-            sSurface->CreateD2Geometry(gisLib->D2.Factory());
+            sSurface->CreateD2Geometry(pD2->Factory());
             brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-            pRenderTarget->SetTransform(scaler->GetMatrix());
-            pRenderTarget->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, gisLib->D2.SolidStrokeStyle());
+            pD2->pRT->SetTransform(scaler->GetMatrix());
+            pD2->pRT->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, pD2->SolidStrokeStyle());
 
             delete object;
             delete cls;
 
             D2D1_POINT_2F pt;
-            pt.x = bb->WestBoundLongitude;
-            pt.y = bb->NorthBoundLatitude;
+            pt.x = (FLOAT)bb->WestBoundLongitude;
+            pt.y = (FLOAT)bb->NorthBoundLatitude;
 
             projection(pt.x,pt.y);
 
-            gisLib->WorldToDevice(pt);
+            long sx = 0;
+            long sy = 0;
+            scaler->WorldToDevice(pt.x, pt.y, &sx, &sy);
+
+            pt.x = (float)sx;
+            pt.y = (float)sy;
 
             CString cstrFileName = CString(ddm.FileName.c_str());
             CString fileName = L"FileName : " + cstrFileName;
             brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-            pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+            pD2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
   
-            pRenderTarget->DrawTextW(fileName, fileName.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, Width, Height), brush);
+            pD2->pRT->DrawTextW(fileName, fileName.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
 
             //Datacorverage
             for (int j = 0; j < ddm.DataCoverage.size(); j++)
             {
-                
-
-                gisLib->D2.pRT->SetTransform(scaler->GetMatrix());
+                pD2->pRT->SetTransform(scaler->GetMatrix());
 
                  auto dc = ddm.DataCoverage[j]; 
                  auto object = new GM::Surface();
@@ -182,7 +185,7 @@ namespace S100
                      auto curve = new GM::Curve();
                      
                      auto strPosList = LatLonUtility::Split(LatLonUtility::TrimRight(dc.BoundingPolygon.Polygon.Geom[geoms]), " ");
-                     int posCnt = strPosList.size();
+                     int posCnt = (int)strPosList.size();
 
                      if (posCnt < 4 && posCnt % 2 != 0)
                          break;
@@ -196,15 +199,15 @@ namespace S100
                      object->SetExteriorRing(curve);
                  }
 
-                 S10XGML* cls = new S10XGML();
+                 S10XGML* cls = new S10XGML(pD2);
                  auto sSurface = cls->SurfaceToSSurface(object);
-                 sSurface->CreateD2Geometry(gisLib->D2.Factory());
+                 sSurface->CreateD2Geometry(pD2->Factory());
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-                 brush->SetOpacity(0.3);
-                 pRenderTarget->FillGeometry(sSurface->GetD2Geometry(), brush);
+                 brush->SetOpacity((FLOAT)0.3);
+                 pD2->pRT->FillGeometry(sSurface->GetD2Geometry(), brush);
 
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Blue));
-                 pRenderTarget->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, gisLib->D2.SolidStrokeStyle());
+                 pD2->pRT->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, pD2->SolidStrokeStyle());
 
                  delete object;
                  delete cls;
@@ -221,8 +224,8 @@ namespace S100
                      maximumDisplayScale = L"MaxDisplayScale : - ";
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
                  brush->SetOpacity(1);
-                 pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-                 pRenderTarget->DrawTextW(maximumDisplayScale, maximumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, Width, Height), brush);
+                 pD2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+                 pD2->pRT->DrawTextW(maximumDisplayScale, maximumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
                  
                  pt.y += 15;
                 ////minimumDisplayScale 
@@ -235,14 +238,14 @@ namespace S100
                 else
                     minimumDisplayScale = L"MinimumDisplayScale : - ";
                 brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-                pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-                pRenderTarget->DrawTextW(minimumDisplayScale, minimumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, Width, Height), brush);
+                pD2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
+                pD2->pRT->DrawTextW(minimumDisplayScale, minimumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
 
 
                 pt.y += 15;
             }
 
-            pRenderTarget->EndDraw();
+            pD2->pRT->EndDraw();
         }
     }
 }

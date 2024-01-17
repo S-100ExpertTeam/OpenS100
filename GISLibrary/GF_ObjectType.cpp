@@ -13,14 +13,17 @@ namespace GF
 		: NamedType(other)
 	{
 		id = other.id;
-		informationAssociations = other.informationAssociations;
-		
-		int cnt = other.GetAttributeCount();
-		for (int i = 0; i < cnt; i++) {
-			auto attribute = other.GetAttribute(i);
 
-			auto clonedAttribute = attribute->clone();
-			attributes.push_back(clonedAttribute);
+		for (const auto& iter : other.informationAssociations)
+		{
+			InformationAssociationType iat = iter;
+			informationAssociations.push_back(iat);
+		}
+
+		for (const auto& iter : other.attributes)
+		{
+			ThematicAttributeType* tat = new ThematicAttributeType(*iter);
+			attributes.push_back(tat);
 		}
 	}
 
@@ -33,6 +36,38 @@ namespace GF
 		}
 
 		attributes.clear();
+	}
+
+	ObjectType ObjectType::operator=(const ObjectType& other)
+	{
+		informationAssociations.clear();
+		for (auto& iter : attributes)
+		{
+			if (iter)
+			{
+				delete iter;
+				iter = nullptr;
+			}
+		}
+		attributes.clear();
+
+		NamedType::operator=(other);
+		
+		id = other.id;
+
+		for (const auto& iter : other.informationAssociations)
+		{
+			InformationAssociationType iat = iter;
+			informationAssociations.push_back(iat);
+		}
+
+		for (const auto& iter : other.attributes)
+		{
+			ThematicAttributeType* tat = new ThematicAttributeType(*iter);
+			attributes.push_back(tat);
+		}
+
+		return *this;
 	}
 
 	std::string ObjectType::GetID() 
@@ -53,7 +88,7 @@ namespace GF
 
 	int ObjectType::GetInformationRelationCount() 
 	{
-		return informationAssociations.size();
+		return (int)informationAssociations.size();
 	}
 
 	InformationAssociationType ObjectType::getInformationAssociation(int index)
@@ -77,7 +112,7 @@ namespace GF
 
 	int ObjectType::GetAttributeCount() const
 	{
-		return attributes.size();
+		return (int)attributes.size();
 	}
 
 	ThematicAttributeType* ObjectType::GetAttribute(int index) const

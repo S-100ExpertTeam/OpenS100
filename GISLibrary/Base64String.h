@@ -25,7 +25,7 @@ public:
 
         BIO_set_flags(bio, BIO_FLAGS_BASE64_NO_NL);
 
-        BIO_write(bio, this->c_str(), this->length());
+        BIO_write(bio, this->c_str(), (int)this->length());
         BIO_flush(bio);
         BIO_get_mem_ptr(bio, &bufferPtr);
         BIO_set_close(bio, BIO_NOCLOSE); 

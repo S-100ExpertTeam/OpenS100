@@ -9,9 +9,31 @@ Record::Record(void)
 
 }
 
+Record::Record(const Record& other)
+{
+	leader = other.leader;
+	for (const auto& iter : other.directory)
+	{
+		Directory dir = iter;
+		directory.push_back(dir);
+	}
+}
+
 Record::~Record(void)
 {
 
+}
+
+Record Record::operator=(const Record& other)
+{
+	leader = other.leader;
+	for (const auto& iter : other.directory)
+	{
+		Directory dir = iter;
+		directory.push_back(dir);
+	}
+
+	return *this;
 }
 
 bool Record::WriteDirectory(CFile* file)
@@ -44,8 +66,8 @@ void Record::SetLeader(int totalFieldSize, bool adjustEntryMap)
 		}
 	}
 
-	leader.sizeOfFieldLengthField = LatLonUtility::countDigits(maxFieldLength);
-	leader.sizeOfFieldPositionField = LatLonUtility::countDigits(maxFieldPosition);
+	leader.sizeOfFieldLengthField = (int)LatLonUtility::countDigits(maxFieldLength);
+	leader.sizeOfFieldPositionField = (int)LatLonUtility::countDigits(maxFieldPosition);
 
 	if (adjustEntryMap)
 	{
@@ -73,5 +95,5 @@ void Record::SetLeader(int totalFieldSize, bool adjustEntryMap)
 
 int Record::DirectoryLength(int sizeOfFieldLengthField, int sizeOfFieldPositionField)
 {
-	return directory.size() * (4 + sizeOfFieldLengthField + sizeOfFieldPositionField) + 1;
+	return (int)(directory.size() * (4 + sizeOfFieldLengthField + sizeOfFieldPositionField) + 1);
 }

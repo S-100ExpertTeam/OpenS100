@@ -4,7 +4,7 @@
 
 // Feature Association field
 struct FASC;
-class F_FASC : Field
+class F_FASC : public Field
 {
 
 public:
@@ -37,6 +37,10 @@ public:
 	int m_faui = 0;
 
 	std::vector<ATTR*> m_arr;
+
+public:
+	virtual F_FASC operator=(const F_FASC& other);
+
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);

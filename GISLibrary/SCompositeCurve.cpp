@@ -13,13 +13,10 @@ SCompositeCurve::SCompositeCurve()
 SCompositeCurve::SCompositeCurve(const SCompositeCurve& other)
 	: SAbstractCurve(other)
 {
-	int cnt = GetCurveCount();
-	for (int i = 0; i < cnt; i++) {
-		auto curve = GetCurve(i);
-		if (curve) {
-			auto cloned = curve->clone();
-			AddCurve(cloned);
-		}
+	for (const auto& iter : m_listCurveLink)
+	{
+		SAbstractCurve* curve = new SAbstractCurve(*iter);
+		AddCurve(curve);
 	}
 }
 
@@ -31,6 +28,35 @@ SCompositeCurve::~SCompositeCurve()
 	}
 
 	m_listCurveLink.clear();
+}
+
+SCompositeCurve SCompositeCurve::operator=(const SCompositeCurve& other)
+{
+	//Geometry
+	id = other.id;
+
+	m_mbr.xmin = other.m_mbr.xmin;
+	m_mbr.ymin = other.m_mbr.ymin;
+	m_mbr.xmax = other.m_mbr.xmax;
+	m_mbr.ymax = other.m_mbr.xmax;
+
+	//SGeometry
+	if (other.sizeOfPoint > 0)
+	{
+		sizeOfPoint = other.sizeOfPoint;
+		viewPoints = new POINT[sizeOfPoint];
+		memset(viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
+		memcpy(viewPoints, other.viewPoints, sizeof(POINT) * sizeOfPoint);
+	}
+
+	//SCompositeCurve
+	for (const auto& iter : m_listCurveLink)
+	{
+		SAbstractCurve* curve = new SAbstractCurve(*iter);
+		AddCurve(curve);
+	}
+
+	return *this;
 }
 
 SGeometryType SCompositeCurve::GetType()
@@ -151,7 +177,7 @@ bool SCompositeCurve::ExportToWkbMultiLineString(unsigned char** value, int* siz
 
 	memcpy_s((*value) + 1, 4, &type, 4);
 
-	int numLineStrings = m_listCurveLink.size();
+	int numLineStrings = (int)m_listCurveLink.size();
 	memcpy_s((*value) + 5, 4, &numLineStrings, 4);
 
 	int offset = 0;
@@ -295,7 +321,7 @@ double SCompositeCurve::GetY(int index)
 
 int SCompositeCurve::GetCurveCount() const
 {
-	return m_listCurveLink.size();
+	return (int)m_listCurveLink.size();
 }
 
 SAbstractCurve* SCompositeCurve::GetCurve(int index)
@@ -360,7 +386,3 @@ void SCompositeCurve::setSuppress(bool value)
 	}
 }
 
-SAbstractCurve* SCompositeCurve::clone()
-{
-	return new SCompositeCurve(*this);
-}
