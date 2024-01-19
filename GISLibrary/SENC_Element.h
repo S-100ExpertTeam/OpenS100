@@ -12,7 +12,7 @@ public:
 
 public:
 	SENC_Text text;
-	int bodySize;
+	int bodySize = 10;
 	float verticalOffset;
 	SENC_Foreground foreground;
 	SENC_Font font;

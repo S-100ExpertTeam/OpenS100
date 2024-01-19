@@ -50,6 +50,7 @@ public:
 	*/
 	void DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate = TRUE);
 	void WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate = TRUE);
+	void WorldToDevice(D2D1_POINT_2F& p);
 	void WorldToDevice_F(double mx, double my, float *sx, float *sy, bool rotate = TRUE);
 
 	/*
