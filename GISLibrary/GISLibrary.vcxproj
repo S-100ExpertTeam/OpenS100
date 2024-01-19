@@ -577,6 +577,7 @@
     <ClInclude Include="DataStatus.h" />
     <ClInclude Include="DirectPosition.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
+    <ClInclude Include="ExchangeCatalogueNameSpace.h" />
     <ClInclude Include="EX_BoundingPolygon.h" />
     <ClInclude Include="EX_GeographicBoundingBox.h" />
     <ClInclude Include="FeatureSelector.h" />

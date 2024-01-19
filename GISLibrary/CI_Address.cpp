@@ -55,27 +55,27 @@ namespace S100
             }
             if (!City.empty())
             {
-                auto child = Node.append_child("cit::city");
+                auto child = Node.append_child("cit:city");
                 SaveCharacterString(child, City);
             }
             if (!Administrativearea.empty())
             {
-                auto child = Node.append_child("cit::Administrativearea");
+                auto child = Node.append_child("cit:Administrativearea");
                 SaveCharacterString(child, Administrativearea);
             }
             if (!Postalcode.empty())
             {
-                auto child = Node.append_child("cit::Postalcode");
+                auto child = Node.append_child("cit:Postalcode");
                 SaveCharacterString(child, Postalcode);
             }
             if (!Country.empty())
             {
-                auto child = Node.append_child("cit::Country");
+                auto child = Node.append_child("cit:Country");
                 SaveCharacterString(child, Country);
             }
             if (!Electronicmailaddress.empty())
             {
-                auto child = Node.append_child("cit::electronicMailAddress");
+                auto child = Node.append_child("cit:electronicMailAddress");
                 for (auto item : Electronicmailaddress)
                     SaveCharacterString(child, item);
             }

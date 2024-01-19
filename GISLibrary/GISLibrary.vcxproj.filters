@@ -850,28 +850,10 @@
     <ClCompile Include="requirementType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CatalogueScope.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClCompile>
-    <ClCompile Include="CompliancyCategory.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClCompile>
     <ClCompile Include="EncodingFormat.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
-    <ClCompile Include="NavigationPurpose.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClCompile>
     <ClCompile Include="ProtectionScheme.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClCompile>
-    <ClCompile Include="Purpose.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourcePurpose.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClCompile>
-    <ClCompile Include="SupportFileRevisionStatus.cpp">
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
     <ClCompile Include="S100_Date.cpp">
@@ -879,39 +861,6 @@
     </ClCompile>
     <ClCompile Include="S100_DateTime.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_EncodingFormat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CatalogueDiscoveryMetadata.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="CataloguePointofContact.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="DataCoverage.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="DatasetDiscoveryMetadata.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="ExchangeCatalogue.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="ExchangeCatalogueIdentifier.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="ProductSpecification.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="SupportFileDiscoveryMetadata.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="SupportFileSpecification.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="TemporalExtent.cpp">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
     </ClCompile>
     <ClCompile Include="IC_DisplayPlane.cpp">
       <Filter>S100\IC</Filter>
@@ -943,21 +892,6 @@
     <ClCompile Include="IC_SuppressedFeatureLayer.cpp">
       <Filter>S100\IC</Filter>
     </ClCompile>
-    <ClCompile Include="S100_NavigationPurpose.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_ProductSpecification.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_ProtectionScheme.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_Purpose.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_ResourcePurpose.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="S100_SE_CertificateContainerType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -973,21 +907,6 @@
     <ClCompile Include="S100_SE_SignatureOnSignature.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="S100_SupportFileDiscoveryMetadata.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_SupportFileFormat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_SupportFileRevisionStatus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_SupportFileSpecification.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100_TemporalExtent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="S100_Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -998,7 +917,58 @@
       <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
     </ClCompile>
     <ClCompile Include="Base64String.cpp">
-      <Filter>S100\DataProtection\TempClass</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CatalogueDiscoveryMetadata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CataloguePointofContact.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CatalogueScope.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CompliancyCategory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataCoverage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DatasetDiscoveryMetadata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExchangeCatalogue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExchangeCatalogueIdentifier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NavigationPurpose.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ProductSpecification.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Purpose.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourcePurpose.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportFileDiscoveryMetadata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportFileRevisionStatus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SupportFileSpecification.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TemporalExtent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="S101Factory.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1812,109 +1782,19 @@
     <ClInclude Include="XML_Collection.h">
       <Filter>S100\IC\TempClass</Filter>
     </ClInclude>
-    <ClInclude Include="ExchangeCatalogue.h">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="ExchangeCatalogueIdentifier.h">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="CataloguePointofContact.h">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="DatasetDiscoveryMetadata.h">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="DataCoverage.h">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="TemporalExtent.h">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="ProductSpecification.h">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="SupportFileDiscoveryMetadata.h">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="SupportFileSpecification.h">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="CatalogueDiscoveryMetadata.h">
-      <Filter>S100\ExchangeSetCatalogue\Model</Filter>
-    </ClInclude>
     <ClInclude Include="CI_RoleCode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CI_Telephone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CatalogueScope.h">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClInclude>
-    <ClInclude Include="CompliancyCategory.h">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClInclude>
-    <ClInclude Include="EncodingFormat.h">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClInclude>
-    <ClInclude Include="ProtectionScheme.h">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourcePurpose.h">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClInclude>
-    <ClInclude Include="SupportFileRevisionStatus.h">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClInclude>
     <ClInclude Include="pugiSupportClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_CatalogueDiscoveryMetadata.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_CataloguePointofContact.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NavigationPurpose.h">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClInclude>
-    <ClInclude Include="Purpose.h">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_DataCoverage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_DatasetDiscoveryMetadata.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="S100_Date.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="S100_DateTime.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_EncodingFormat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_ExchangeCatalogue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_ExchangeCatalogueIdentifier.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_NavigationPurpose.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_ProductSpecification.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_ProtectionScheme.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_Purpose.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_ResourcePurpose.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="S100_SE_CertificateContainerType.h">
@@ -1930,21 +1810,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="S100_SE_SignatureOnSignature.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_SupportFileDiscoveryMetadata.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_SupportFileFormat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_SupportFileRevisionStatus.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_SupportFileSpecification.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100_TemporalExtent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="S100_Time.h">
@@ -1965,8 +1830,122 @@
     <ClInclude Include="S100ExchangeCatalogue.h">
       <Filter>S100</Filter>
     </ClInclude>
+    <ClInclude Include="Base64String.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_Address.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_Contact.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_Date.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_DateTypeCode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_Individual.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_OnLineFunctionCode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_OnlineResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_Organisation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_Party.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CI_Responsibility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EX_BoundingPolygon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EX_GeographicBoundingBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GM_Object_New.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MD_ClassificationCode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MD_MaintenanceFrequencyCode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MD_MaintenanceInformation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CatalogueDiscoveryMetadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CataloguePointofContact.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CatalogueScope.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CompliancyCategory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataCoverage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DatasetDiscoveryMetadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EncodingFormat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExchangeCatalogue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExchangeCatalogueIdentifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NavigationPurpose.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProductSpecification.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtectionScheme.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Purpose.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourcePurpose.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportFileDiscoveryMetadata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportFileRevisionStatus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SupportFileSpecification.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TemporalExtent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S101Factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="SupportFileFormat.h">
-      <Filter>S100\ExchangeSetCatalogue\Model\enum</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExchangeCatalogueNameSpace.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

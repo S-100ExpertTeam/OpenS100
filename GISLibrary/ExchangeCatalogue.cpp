@@ -4,6 +4,8 @@
 #include "../LatLonUtility/LatLonUtility.h"
 #include "../LibMFCUtil/LibMFCUtil.h"
 #include "S10XGML.h"
+#include "ExchangeCatalogueNameSpace.h"
+
 #include <filesystem>
 
 namespace S100
@@ -47,7 +49,14 @@ namespace S100
             return false;
 
         pugi::xml_document doc;
+        //doc.append_attribute("encoding").set_value("UTF-8");
+
         auto child = doc.append_child("S100XC:S100_ExchangeCatalogue");
+
+        for (auto item : ExchangeCatalogueNameSpaceMap)
+            child.append_attribute(item.first.c_str()).set_value(item.second.c_str());
+
+
         if (Identifier)
         {
             auto item = child.append_child("S100XC:identifier");
