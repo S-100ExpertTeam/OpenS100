@@ -796,8 +796,8 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 		{
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
-			R_InformationRecord* info = nullptr;
-			if (TRUE == m_infMap.Lookup(infoKey, info))
+			auto info = GetInformationRecord(infoKey);
+			if (info)
 			{
 				geo->AddInformationType(info);
 			}
@@ -843,8 +843,8 @@ BOOL S101Cell::GetFullSpatialData(R_PointRecord* r, SPoint* point)
 	{
 		auto f_inas = *i;
 		auto infoKey = f_inas->m_name.GetName();
-		R_InformationRecord* info = nullptr;
-		if (TRUE == m_infMap.Lookup(infoKey, info))
+		auto info = GetInformationRecord(infoKey);
+		if (info)
 		{
 			point->AddInformationType(info);
 		}
@@ -883,8 +883,8 @@ BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 		{
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
-			R_InformationRecord* info = nullptr;
-			if (TRUE == m_infMap.Lookup(infoKey, info))
+			auto info = GetInformationRecord(infoKey);
+			if (info)
 			{
 				multiPoint->AddInformationType(info);
 			}
@@ -1098,8 +1098,8 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		{
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
-			R_InformationRecord* info = nullptr;
-			if (TRUE == m_infMap.Lookup(infoKey, info))
+			auto info = GetInformationRecord(infoKey);
+			if (info)
 			{
 				curve->AddInformationType(info);
 			}
@@ -1193,8 +1193,8 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 	{
 		auto f_inas = *i;
 		auto infoKey = f_inas->m_name.GetName();
-		R_InformationRecord* info = nullptr;
-		if (TRUE == m_infMap.Lookup(infoKey, info))
+		auto info = GetInformationRecord(infoKey);
+		if (info)
 		{
 			curve->AddInformationType(info);
 		}
@@ -1609,16 +1609,8 @@ void S101Cell::InsertRecord(Record* record)
 
 void S101Cell::InsertInformationRecord(__int64 key, R_InformationRecord* record)
 {
-	R_InformationRecord* informationRecord = nullptr;
-	if (TRUE == m_infMap.Lookup(key, informationRecord))
-	{
-		if (!informationRecord)
-		{
-			m_infMap.SetAt(key, record);
-			vecInformation.push_back(record);
-		}
-	}
-	else
+	auto informationRecord = GetInformationRecord(key);
+	if (nullptr == informationRecord)
 	{
 		m_infMap.SetAt(key, record);
 		vecInformation.push_back(record);
@@ -1627,28 +1619,18 @@ void S101Cell::InsertInformationRecord(__int64 key, R_InformationRecord* record)
 
 void S101Cell::RemoveInformationRecord(__int64 key)
 {
-	R_InformationRecord* informationRecord = nullptr;
-	if (TRUE == m_infMap.Lookup(key, informationRecord))
+	auto informationRecord = GetInformationRecord(key);
+	if (informationRecord)
 	{
-		if (informationRecord)
-		{
-			m_infMap.RemoveKey(key);
-			vecInformation.erase(std::remove(vecInformation.begin(), vecInformation.end(), informationRecord), vecInformation.end());
+		m_infMap.RemoveKey(key);
+		vecInformation.erase(std::remove(vecInformation.begin(), vecInformation.end(), informationRecord), vecInformation.end());
 
-			delete informationRecord;
-		}
+		delete informationRecord;
 	}
 }
 
 R_InformationRecord* S101Cell::GetInformationRecord(__int64 key)
 {
-	if (m_infMatchingKeys.size() > 0)
-	{
-		auto iter = std::find(m_infMatchingKeys.begin(), m_infMatchingKeys.end(), key);
-		if (iter == m_infMatchingKeys.end())
-			return nullptr;
-	}
-
 	R_InformationRecord* item = nullptr;
 	if (TRUE == m_infMap.Lookup(key, item))
 	{
@@ -2046,16 +2028,8 @@ std::vector<R_SurfaceRecord*>& S101Cell::GetVecSurface()
 
 void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
 {
-	R_FeatureRecord* featureRecord = nullptr;
-	if (TRUE == m_feaMap.Lookup(key, featureRecord))
-	{
-		if (!featureRecord)
-		{
-			m_feaMap.SetAt(key, record);
-			vecFeature.push_back(record);
-		}
-	}
-	else
+	auto featureRecord = GetFeatureRecord(key);
+	if (nullptr == featureRecord)
 	{
 		m_feaMap.SetAt(key, record);
 		vecFeature.push_back(record);
@@ -2064,27 +2038,17 @@ void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
 
 void S101Cell::RemoveFeatureRecord(__int64 key)
 {
-	R_FeatureRecord* featureRecord = nullptr;
-	if (TRUE == m_feaMap.Lookup(key, featureRecord))
+	auto featureRecord = GetFeatureRecord(key);
+	if (featureRecord)
 	{
-		if (featureRecord)
-		{
-			m_feaMap.RemoveKey(key);
-			vecFeature.erase(std::remove(vecFeature.begin(), vecFeature.end(), featureRecord), vecFeature.end());
-			delete featureRecord;
-		}
+		m_feaMap.RemoveKey(key);
+		vecFeature.erase(std::remove(vecFeature.begin(), vecFeature.end(), featureRecord), vecFeature.end());
+		delete featureRecord;
 	}
 }
 
 R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
 {
-	if (m_feaMatchingKeys.size() > 0)
-	{
-		auto iter = std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key);
-		if (iter == m_feaMatchingKeys.end())
-			return nullptr;
-	}
-
 	R_FeatureRecord* item = nullptr;
 	if (TRUE == m_feaMap.Lookup(key, item))
 	{
@@ -4241,14 +4205,10 @@ std::wstring S101Cell::GetFeatureTypeCodeByID(std::string id)
 std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
 {
 	RecordName rn(100, id);
-
-	R_FeatureRecord* fe = nullptr;
-	if (TRUE == m_feaMap.Lookup(rn.GetName(), fe))
+	auto fe = GetFeatureRecord(rn.GetName());
+	if (fe)
 	{
-		if (fe)
-		{
-			return std::wstring(m_dsgir.GetFeatureCode(fe->GetNumericCode()));
-		}
+		return std::wstring(m_dsgir.GetFeatureCode(fe->GetNumericCode()));
 	}
 
 	return L"";
@@ -4268,13 +4228,10 @@ std::wstring S101Cell::GetInformationTypeCodeByID(std::string id)
 std::wstring S101Cell::GetInformationTypeCodeByID(int id)
 {
 	RecordName rn(150, id);
-	R_InformationRecord* ir = nullptr;
-	if (TRUE == m_infMap.Lookup(rn.GetName(), ir))
+	auto ir = GetInformationRecord(rn.GetName());
+	if (ir)
 	{
-		if (ir)
-		{
-			return std::wstring(m_dsgir.GetFeatureCode(ir->GetNumericCode()));
-		}
+		return std::wstring(m_dsgir.GetInformationCode(ir->GetNumericCode()));
 	}
 
 	return L"";
@@ -4292,15 +4249,7 @@ int S101Cell::GetInformationCount()
 
 GF::FeatureType* S101Cell::GetFeatureType(std::string id)
 {
-	auto iKey = std::stoll(id);
-	RecordName recordName(100, (int)iKey);
-	R_FeatureRecord* item = nullptr;
-	if (TRUE == m_feaMap.Lookup(recordName.GetName(), item))
-	{
-		return item;
-	}
-
-	return nullptr;
+	return GetFeatureRecord(id);
 }
 
 GF::FeatureType* S101Cell::GetFeatureTypeByIndex(int index)
