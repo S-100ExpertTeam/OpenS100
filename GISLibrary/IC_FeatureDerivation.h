@@ -23,5 +23,6 @@ namespace S100
         std::shared_ptr<IC_Feature> FeatureRef;
 
         void GetContents(pugi::xml_node& node) override;
+        void SaveXmlNode(pugi::xml_node& node) override;
     };
 }

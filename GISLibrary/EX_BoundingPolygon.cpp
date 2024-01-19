@@ -8,7 +8,7 @@ namespace S100 {
             const pugi::char_t* instructionName = instruction.name();
 
             if (!strcmp(instructionName, "gex:extentTypeCode")) {
-                ExtentTypeCode = ParseStr2Bool(instruction.child_value());
+                ExtentTypeCode =std::make_shared<bool>(ParseStr2Bool(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "gex:polygon")) {
                 GM_Object go;
@@ -16,6 +16,20 @@ namespace S100 {
                 Polygon = go;
             }
             else {
+            }
+        }
+    }
+
+    void EX_BoundingPolygon::Save(pugi::xml_node& node) {
+        {
+            if(ExtentTypeCode)
+            {
+                auto child = node.append_child("gex:extentTypeCode");
+                child.text().set(ParseBool2Str(*ExtentTypeCode).c_str());
+            }
+            {
+                auto child = node.append_child("gex:polygon");
+                Polygon.Save(child);
             }
         }
     }

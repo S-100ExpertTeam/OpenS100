@@ -24,4 +24,18 @@ namespace S100 {
             }
         }
     }
+
+    void ExchangeCatalogueIdentifier::Save(pugi::xml_node& node)
+    {
+        if (Identifier != "")
+        {
+            auto item = node.append_child("S100XC:identifier");
+             item.text().set(Identifier.c_str());
+        }
+        {
+            auto item = node.append_child("S100XC:dateTime");
+            DateTime.Save(item);
+        }
+        
+    }
 }

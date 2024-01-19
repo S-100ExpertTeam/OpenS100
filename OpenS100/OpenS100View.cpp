@@ -124,6 +124,13 @@ COpenS100View::COpenS100View()
 
 	//S100::AlertCatalog* alt = new S100::AlertCatalog();
 	//alt->Open("../AlertCatalog-S101.xml");
+	// 
+	// 
+	// 
+	/*S100::ExchangeCatalogue* ex = new S100::ExchangeCatalogue();
+	ex->Open("C:/Users/isbaek/Desktop/S100TestSet/S-101-Test-Datasets-main/S100_ROOT/CATALOG.XML");
+	ex->Save("C:/Users/isbaek/Desktop/S100TestSet/S-101-Test-Datasets-main/S100_ROOT/CATALOG1.XML");*/
+	
 
 }
 

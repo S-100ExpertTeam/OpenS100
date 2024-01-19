@@ -57,7 +57,7 @@ namespace S100
             }
             else if (!strcmp(instructionName, "cat:characterEncoding"))
             {
-                CharacterSet = parseMD_CharacterSetCode(instruction);
+                CharacterSet = std::make_shared<MD_CharacterSetCode>(MD_CharacterSetCodeFromString(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "description"))
             {

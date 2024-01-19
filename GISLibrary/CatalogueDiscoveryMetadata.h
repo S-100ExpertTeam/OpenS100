@@ -32,5 +32,6 @@ namespace S100 {
         std::vector<PT_Locale> OtherLocale;
 
         void GetContents(pugi::xml_node& node) override;
+        void SaveXmlNode(pugi::xml_node& node) override;
     };
 }

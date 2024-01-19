@@ -15,6 +15,7 @@ namespace S100 {
         std::vector<Base64String> Certificate;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
     };
 
 }

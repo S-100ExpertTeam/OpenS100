@@ -22,4 +22,25 @@ namespace S100 {
             }
         }
     }
+
+
+    void S100_SE_CertificateContainerType::Save(pugi::xml_node& node)
+    {
+        if (SchemeAdministrator || !Certificate.empty())
+        {
+            if (SchemeAdministrator)
+            {
+                auto child = node.append_child("S100SE:schemeAdministrator");
+                child.text().set(SchemeAdministrator->c_str());
+            }
+            if (!Certificate.empty())
+            {
+                for (int i = 0; i < Certificate.size(); i++)
+                {
+                    auto child = node.append_child("S100SE:certificate");
+                    child.text().set(Certificate[i].c_str());
+                }
+            }
+        }
+    }
 }

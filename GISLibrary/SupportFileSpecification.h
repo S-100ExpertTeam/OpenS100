@@ -13,5 +13,6 @@ namespace S100 {
         std::shared_ptr<S100_Date> Date;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
     };
 }

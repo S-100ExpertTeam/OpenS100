@@ -47,4 +47,9 @@ namespace S100 {
             }
         }
     }
+
+    void IC_DrawingInstruction::SaveXmlNode(pugi::xml_node& node)
+    {
+
+    }
 }

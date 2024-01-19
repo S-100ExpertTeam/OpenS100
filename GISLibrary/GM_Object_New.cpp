@@ -46,4 +46,11 @@ namespace S100 {
         }
         return "";
     }
+
+    void GM_Object::Save(pugi::xml_node& node)
+    {
+        auto child = node.append_child("gml:LineString");
+        auto temp = child.append_child("gml:posList");
+        temp.text().set(Geom[0].c_str());
+    }
 }

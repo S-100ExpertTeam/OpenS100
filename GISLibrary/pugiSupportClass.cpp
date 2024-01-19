@@ -12,6 +12,11 @@ namespace S100 {
         }
     }
 
+    std::string ParseBool2Str(bool value)
+    {
+        return value ? "true" : "false";
+    }
+
     pugi::xml_node& GetContentNode(pugi::xml_node& node, std::string nodeName, std::string nodeNameSpace)
     {
         std::string nodeNameTemp = "";

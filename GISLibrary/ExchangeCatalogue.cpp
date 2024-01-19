@@ -4,6 +4,7 @@
 #include "../LatLonUtility/LatLonUtility.h"
 #include "../LibMFCUtil/LibMFCUtil.h"
 #include "S10XGML.h"
+#include <filesystem>
 
 namespace S100
 {
@@ -32,6 +33,100 @@ namespace S100
         }
     }
 
+    bool ExchangeCatalogue::Save(std::string filePath)
+    {
+        std::filesystem::path pathObj(filePath);
+        std::filesystem::path dirPath = pathObj.parent_path();
+
+        //폴더 없으면 반환  
+        if (!std::filesystem::exists(dirPath))
+            return false;
+
+        //파일 있으면 반환
+        if (std::filesystem::exists(filePath)) 
+            return false;
+
+        pugi::xml_document doc;
+        auto child = doc.append_child("S100XC:S100_ExchangeCatalogue");
+        if (Identifier)
+        {
+            auto item = child.append_child("S100XC:identifier");
+            Identifier->Save(item);
+        }
+        if (Contact)
+        {
+            auto item = child.append_child("S100XC:contact");
+            Contact->Save(item);
+        }
+        if (productSpecification)
+        {
+            auto item = child.append_child("S100XC:productSpecification");
+            productSpecification->Save(item);
+        }
+        if (DefaultLocale)
+        {
+            auto item = child.append_child("S100XC:defaultLocale");
+            DefaultLocale->Save(item);
+        }
+        if (!OtherLocale.empty())
+        {
+            auto temp = child.append_child("S100XC:otherLocale");
+            for (int i = 0; i < OtherLocale.size(); i++)
+                OtherLocale[i].Save(temp);
+        }
+        if (ExchangeCatalogueDescription)
+        {
+            auto item = child.append_child("S100XC:exchangeCatalogueDescription");
+            item.text().set(ExchangeCatalogueDescription->c_str());
+        }
+        if (ExchangeCatalogueComment)
+        {
+            auto item = child.append_child("S100XC:exchangeCatalogueComment");
+            item.text().set(ExchangeCatalogueComment->c_str());
+        }
+        if (!Certificates.empty())
+        {
+            auto temp = child.append_child("S100XC:certificates");
+            for (int i = 0; i < Certificates.size(); i++)
+                Certificates[i].Save(temp);
+        }
+        if (DataServerIdentifier)
+        {
+            auto item = child.append_child("S100XC:dataServerIdentifier");
+            item.text().set(DataServerIdentifier->c_str());
+        }
+        if (DatasetDiscoveryMetadata.size() != 0)
+        {
+            auto item = child.append_child("S100XC:datasetDiscoveryMetadata");
+            DatasetDiscoveryMetadata.SaveXmlNode(item,"S100XC:S100_DatasetDiscoveryMetadata");
+        }
+        if (CatalogueDiscoveryMetadata.size() != 0)
+        {
+            auto item = child.append_child("S100XC:catalogueDiscoveryMetadata");
+            CatalogueDiscoveryMetadata.SaveXmlNode(item, "S100XC:S100_CatalogueDiscoveryMetadata");
+        }
+        if (SupportFileDiscoveryMetadata.size() != 0)
+        {
+            auto item = child.append_child("S100XC:supportFileDiscoveryMetadata");
+            SupportFileDiscoveryMetadata.SaveXmlNode(item, "S100XC:S100_SupportFileDiscoveryMetadata");
+        }
+
+        // 파일에 XML 문서 저장
+        bool saveSucceeded = doc.save_file(filePath.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
+        if (saveSucceeded) {
+            //std::cout << "XML 파일이 성공적으로 저장되었습니다." << std::endl;
+        }
+        else {
+            //std::cout << "XML 파일 저장 실패." << std::endl;
+        }
+
+     /*   if (!doc.save_file(filePath.c_str())) {
+            return false;
+        }*/
+
+        return true;
+    }
+
     void ExchangeCatalogue::GetContents(pugi::xml_node& node)
     {
         for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
@@ -54,7 +149,7 @@ namespace S100
             {
                 ProductSpecification ps;
                 ps.GetContents(instruction);
-                productSpecification.push_back(ps);
+                productSpecification = std::make_shared<ProductSpecification>(ps);
             }
             else if (!strcmp(instructionName, "S100XC:defaultLocale"))
             {

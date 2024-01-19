@@ -35,7 +35,7 @@ namespace S100
             }
             else if (!strcmp(instructionName, "S100XC:digitalSignatureReference"))
             {
-                DigitalSignatureReference = S100_SE_DigitalSignatureReferenceFromString(instruction.child_value());
+                DigitalSignatureReference = make_shared<S100_SE_DigitalSignatureReference>(S100_SE_DigitalSignatureReferenceFromString(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:digitalSignatureValue"))
             {
@@ -176,4 +176,184 @@ namespace S100
             }
         }
     }
-}  
+
+    void DatasetDiscoveryMetadata::SaveXmlNode(pugi::xml_node& node)
+    {
+            if (!FileName.empty())
+            {
+                auto child = node.append_child("S100XC:fileName");
+                child.text().set(FileName.c_str());
+            }
+            if (Description)
+            {
+                auto child = node.append_child("S100XC:description");
+                child.text().set(Description->c_str());
+            }
+            if (DatasetID)
+            {
+                auto child = node.append_child("S100XC:datasetID");
+                child.text().set(DatasetID->c_str());
+            }
+            auto CompressionFlagNode = node.append_child("S100XC:compressionFlag");
+            CompressionFlagNode.text().set(ParseBool2Str(CompressionFlag).c_str());
+
+            auto DataProtectionNode = node.append_child("S100XC:dataProtection");
+            DataProtectionNode.text().set(ParseBool2Str(DataProtection).c_str());
+            if (protectionScheme)
+            {
+                auto child = node.append_child("S100XC:protectionScheme");
+                child.text().set(S100_ProtectionSchemeToString(*protectionScheme).c_str());
+            }
+            if (DigitalSignatureReference)
+            {
+                auto child = node.append_child("S100XC:digitalSignatureReference");
+                child.text().set(S100_SE_DigitalSignatureReferenceToString(*DigitalSignatureReference).c_str());
+            }
+            if (!DigitalSignatureValue.empty())
+            {
+                for (int i = 0; i < DigitalSignatureValue.size(); i++)
+                {
+                    auto child = node.append_child("S100XC:digitalSignatureValue");
+                    DigitalSignatureValue[i].Save(child);
+                }
+            }
+            auto copyrightNode = node.append_child("S100XC:copyright");
+            copyrightNode.text().set(ParseBool2Str(Copyright).c_str());
+
+            if (Classification)
+            {
+                auto child = node.append_child("S100XC:classification");
+                child.text().set(MD_ClassificationCodeToString(*Classification).c_str());
+            }
+            if (purpose)
+            {
+                auto child = node.append_child("S100XC:purpose");
+                child.text().set(S100_PurposeToString(*purpose).c_str());
+            }
+            auto notForNavigationNode = node.append_child("S100XC:notForNavigation");
+            notForNavigationNode.text().set(ParseBool2Str(NotForNavigation).c_str());
+            if (SpecificUsage)
+            {
+                auto child = node.append_child("S100XC:specificUsage");
+                child.text().set(SpecificUsage->c_str());
+            }
+            if (EditionNumber)
+            {
+                auto child = node.append_child("S100XC:editionNumber");
+                child.text().set(std::to_string(*EditionNumber).c_str());
+            }
+            if (UpdateNumber)
+            {
+                auto child = node.append_child("S100XC:updateNumber");
+                child.text().set(std::to_string(*UpdateNumber).c_str());
+            }
+            if (UpdateApplicationDate)
+            {
+                auto child = node.append_child("S100XC:updateApplicationDate");
+                child.text().set(UpdateApplicationDate->ToString().c_str());
+            }
+            if (ReferenceID)
+            {
+                auto child = node.append_child("S100XC:specificUsage");
+                child.text().set(ReferenceID->c_str());
+            }
+            auto issueDateNode = node.append_child("S100XC:issueDate");
+            issueDateNode.text().set(IssueDate.ToString().c_str());
+            if (IssueTime)
+            {
+                auto child = node.append_child("S100XC:issueTime");
+                child.text().set(IssueTime->ToString().c_str());
+            }
+            if (BoundingBox)
+            {
+                auto child = node.append_child("S100XC:boundingBox");
+                BoundingBox->Save(child);
+            }
+            if (temporalExtent)
+            {
+                auto child = node.append_child("S100XC:temporalExtent");
+                temporalExtent->Save(child);
+            }
+            {
+                auto child = node.append_child("S100XC:productSpecification");
+                productSpecification.Save(child);
+            }
+            {
+                auto child = node.append_child("S100XC:producingAgency");
+                ProducingAgency.Save(child);
+            }
+            if (ProducerCode)
+            {
+                auto child = node.append_child("S100XC:producerCode");
+                child.text().set(ProducerCode->c_str());
+            }
+            {
+                auto child = node.append_child("S100XC:encodingFormat");
+                child.text().set(S100_EncodingFormatToString(EncodingFormat).c_str());
+            }
+            if (!dataCoverage.empty())
+            {
+                for (int i = 0; i < dataCoverage.size(); i++)
+                {
+                    auto child = node.append_child("S100XC:dataCoverage");
+                    dataCoverage[i].Save(child);
+                }
+            }
+            if (Comment)
+            {
+                auto child = node.append_child("S100XC:comment");
+                child.text().set(Comment->c_str());
+            }
+            if (DefaultLocale)
+            {
+                auto child = node.append_child("S100XC:defaultLocale");
+                DefaultLocale->Save(child);
+            }
+            if (!OtherLocale.empty())
+            {
+                for (int i = 0; i < OtherLocale.size(); i++)
+                {
+                    auto child = node.append_child("S100XC:otherLocale");
+                    OtherLocale[i].Save(child);
+
+                }
+            }
+            if (MetadataPointOfContact)
+            {
+                auto child = node.append_child("S100XC:metadataPointOfContact");
+                MetadataPointOfContact->Save(child);
+            }
+            if (MetadataDateStamp)
+            {
+                auto child = node.append_child("S100XC:metadataDateStamp");
+                child.text().set(MetadataDateStamp->ToString().c_str());
+            }
+            if (ReplacedData)
+            {
+                auto child = node.append_child("S100XC:replacedData");
+                child.text().set(ParseBool2Str(*ReplacedData).c_str());
+            }
+            if (!DataReplacement.empty())
+            {
+                for (int i = 0; i < DataReplacement.size(); i++)
+                {
+                    auto child = node.append_child("S100XC:dataReplacement");
+                    child.text().set(DataReplacement[i].c_str());
+                }
+            }
+            if (!NavigationPurpose.empty())
+            {
+                for (int i = 0; i < NavigationPurpose.size(); i++)
+                {
+                    auto child = node.append_child("S100XC:navigationPurpose");
+                    child.text().set(S100_NavigationPurposeToString(NavigationPurpose[i]).c_str());
+                }
+            }
+            if (ResourceMaintenance)
+            {
+                auto child = node.append_child("S100XC:resourceMaintenance");
+                ResourceMaintenance->Save(child);
+            }
+        
+    }
+}

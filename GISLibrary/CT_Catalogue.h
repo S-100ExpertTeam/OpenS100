@@ -13,6 +13,7 @@
 
 namespace S100 {
     std::string CharacterString(pugi::xml_node& node);
+    void SaveCharacterString(pugi::xml_node& node, std::string str);
 
     class CT_Catalogue {
     public:
@@ -23,7 +24,7 @@ namespace S100 {
         S100_Date VersionDate;
         std::shared_ptr<std::string> Language;
         std::vector<std::shared_ptr<PT_Locale>> Locale;
-        MD_CharacterSetCode CharacterSet;
+        std::shared_ptr<MD_CharacterSetCode> CharacterSet;
 
         std::shared_ptr<std::string> getLanguage();
         void setLanguage(std::string language);

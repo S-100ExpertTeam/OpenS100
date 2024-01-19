@@ -12,5 +12,6 @@ namespace S100 {
         S100_DateTime DateTime;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
     };
 }

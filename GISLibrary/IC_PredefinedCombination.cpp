@@ -51,4 +51,9 @@ namespace S100 {
             }
         }
     }
+
+    void IC_PredefinedCombination::SaveXmlNode(pugi::xml_node& node)
+    {
+
+    }
 }

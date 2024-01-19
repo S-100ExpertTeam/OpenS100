@@ -18,4 +18,19 @@ namespace S100 {
             }
         }
     }
+
+    void TemporalExtent::Save(pugi::xml_node& node)
+    {
+        if(TimeInstantBegin)
+        {
+            auto child = node.append_child("timeInstantBegin");
+            child.text().set(TimeInstantBegin->ToString().c_str());
+        }
+        if (TimeInstantEnd)
+        {
+            auto child = node.append_child("timeInstantEnd");
+            child.text().set(TimeInstantEnd->ToString().c_str());
+        }
+    }
 }
+

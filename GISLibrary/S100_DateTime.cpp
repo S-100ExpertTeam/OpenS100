@@ -15,6 +15,11 @@ S100_DateTime::S100_DateTime(const std::string& dateTime) {
     ProcessUtcOffset(dateTime);
 }
 
+void S100_DateTime::Save(pugi::xml_node& node)
+{
+    node.text().set(ToString().c_str());
+}
+
 std::tm S100_DateTime::GetTm() const {
     return tm;
 }

@@ -18,5 +18,6 @@ namespace S100 {
         std::string* SubstituteSymbolization;
 
         void GetContents(pugi::xml_node& node) override;
+        void SaveXmlNode(pugi::xml_node& node) override;
     };
 }

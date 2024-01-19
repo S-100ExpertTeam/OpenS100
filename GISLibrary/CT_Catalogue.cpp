@@ -13,6 +13,17 @@ namespace S100 {
         return "";
     }
 
+
+    void SaveCharacterString(pugi::xml_node& node , std::string str) {
+        if (!str.empty())
+        {
+            auto child = node.append_child("gco:CharacterString");
+            child.text().set(str.c_str());
+        }
+    }
+
+
+
     std::shared_ptr<std::string> CT_Catalogue::getLanguage() {
         return Language;
     }

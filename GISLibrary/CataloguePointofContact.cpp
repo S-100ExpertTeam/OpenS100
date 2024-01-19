@@ -32,4 +32,15 @@ namespace S100 {
             }
         }
     }
+
+    void CataloguePointOfContact::Save(pugi::xml_node& node)
+    {
+        if (Organization != "")
+        {
+            auto item = node.append_child("S100XC:organization");
+            SaveCharacterString(item, Organization.c_str());
+        }
+        Phone.Save(node, "S100XC:phone");
+        Address.Save(node, "S100XC:address");
+    }
 }

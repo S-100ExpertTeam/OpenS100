@@ -34,5 +34,6 @@ namespace S100 {
         std::shared_ptr<ResourcePurpose>  resourcePurpose;
 
         void GetContents(pugi::xml_node& node) override;
+        void SaveXmlNode(pugi::xml_node& node) override;
     };
 }

@@ -16,5 +16,6 @@ namespace S100
         std::vector<std::string> PositionName;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
     };
 }

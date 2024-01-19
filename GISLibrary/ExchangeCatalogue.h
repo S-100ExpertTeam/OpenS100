@@ -21,12 +21,12 @@ namespace S100
     public:
         ExchangeCatalogue();
         ~ExchangeCatalogue();
-
         void Open(std::string filePath);
+        bool Save(std::string filePath);
 
         std::shared_ptr<ExchangeCatalogueIdentifier> Identifier;
         std::shared_ptr<CataloguePointOfContact> Contact;
-        std::vector<ProductSpecification> productSpecification;
+        std::shared_ptr<ProductSpecification> productSpecification;
         std::shared_ptr<PT_Locale> DefaultLocale;
         std::vector<PT_Locale> OtherLocale;
         std::shared_ptr<std::string> ExchangeCatalogueDescription;
