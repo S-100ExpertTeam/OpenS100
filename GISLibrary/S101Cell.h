@@ -52,8 +52,8 @@ struct SPAS;
 class S101Cell : public S100SpatialObject
 {
 public:
-	S101Cell();
-	S101Cell(FeatureCatalogue* fc);
+	S101Cell(D2D1Resources* d2d1);
+	S101Cell(FeatureCatalogue* fc, D2D1Resources* d2d1);
 	virtual ~S101Cell();
 
 public:
@@ -88,6 +88,7 @@ private:
 	std::vector<R_SurfaceRecord*> vecSurface;
 	std::vector<R_FeatureRecord*> vecFeature;
 
+	std::vector<__int64> m_feaMatchingKeys;
 public:
 	R_DSGIR* GetDatasetGeneralInformationRecord();
 	void UpdateRemoveAll(void);
@@ -103,18 +104,18 @@ public:
 	bool Read8211(std::wstring path);
 	bool isUpdate();
 	
-	bool ConvertFromS101GML(S10XGML& gml);
+	bool ConvertFromS101GML(S10XGML* gml);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::SimpleAttributeType* simpleAttribute);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, ATTR* parentATTR, GF::ComplexAttributeType* complexAttribute);
-	bool ConvertFeaturesFromS101GML(S10XGML& gml, S101Creator* creator);
-	bool ConvertInformationsFromS101GML(S10XGML& gml, S101Creator* creator);
-	bool ConvertGeometriesFromS101GML(S10XGML& gml);
+	bool ConvertFeaturesFromS101GML(S10XGML* gml, S101Creator* creator);
+	bool ConvertInformationsFromS101GML(S10XGML* gml, S101Creator* creator);
+	bool ConvertGeometriesFromS101GML(S10XGML* gml);
 	bool InsertPointRecordFromS101GML(GM::Point* point);
 	bool InsertMultiPointRecordFromS101GML(GM::MultiPoint* point);
-	bool InsertCurveRecordFromS101GML(S10XGML& gml, GM::Curve* curve);
-	bool InsertCompositeCurveRecordFromS101GML(S10XGML& gml, GM::CompositeCurve* curve);
-	bool InsertSurfaceRecordFromS101GML(S10XGML& gml, GM::Surface* curve);
+	bool InsertCurveRecordFromS101GML(S10XGML* gml, GM::Curve* curve);
+	bool InsertCompositeCurveRecordFromS101GML(S10XGML* gml, GM::CompositeCurve* curve);
+	bool InsertSurfaceRecordFromS101GML(S10XGML* gml, GM::Surface* curve);
 
 	bool SaveAsENC(std::wstring path);
 	bool SaveAsGML(std::wstring path);
@@ -140,7 +141,7 @@ public:
 	void SortByFeatureType();
 
 	BOOL MakeFullSpatialData();
-	BOOL MakePointData(R_FeatureRecord* fe); 
+	BOOL MakePointData(R_FeatureRecord* fe);
 	BOOL MakeSoundingData(R_FeatureRecord* fe);
 	BOOL MakeLineData(R_FeatureRecord* fe);
 	BOOL MakeAreaData(R_FeatureRecord* fe);
@@ -155,7 +156,7 @@ public:
 
 	BOOL GetFullMaskData(R_FeatureRecord* fe);
 
-	void Draw(GISLibrary::D2D1Resources* D2, Scaler* scaler);
+	void Draw(D2D1Resources* D2, Scaler* scaler);
 	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 
 	/*
@@ -219,7 +220,7 @@ public:
 
 	//============================================================================//
 	void InsertInformationRecord(__int64 key, R_InformationRecord* record);
-	void RemoveInformationRecord(__int64 key, R_InformationRecord* record);
+	void RemoveInformationRecord(__int64 key);
 	R_InformationRecord* GetInformationRecord(__int64 key);
 	R_InformationRecord* GetInformationRecord(std::string key);
 	R_InformationRecord* GetInformationRecord(std::wstring wstringKey);
@@ -297,6 +298,12 @@ public:
 	void RemoveFeatureMapKey(long long key);
 	void RemoveAllFeatureRecord();
 	std::vector<R_FeatureRecord*>& GetVecFeature();
+
+	void InsertFeatureFilter(__int64 key);
+	void InsertFeatureFilter(std::string key);
+	void InsertFeatureFilter(std::wstring wstringKey);
+	void RemoveFeatureFilter();
+	std::vector<__int64>& GetFeatureFilter();
 
 	//============================================================================//
 	int GetCount_InformationRecord();

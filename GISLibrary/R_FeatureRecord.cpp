@@ -29,7 +29,38 @@ R_FeatureRecord::R_FeatureRecord(const R_FeatureRecord& other)
 	: Record(other),
 	GF::FeatureType(other)
 {
+	m_frid = other.m_frid;
+	m_foid = other.m_foid;
 
+	for (const auto& iter : other.m_attr)
+	{
+		F_ATTR* attr = iter;
+		m_attr.push_back(attr);
+	}
+
+	for (const auto& iter : other.m_inas)
+	{
+		F_INAS* inas = iter;
+		m_inas.push_back(inas);
+	}
+
+	for (const auto& iter : other.m_spas)
+	{
+		F_SPAS* spas = iter;
+		m_spas.push_back(spas);
+	}
+
+	for (const auto& iter : other.m_fasc)
+	{
+		F_FASC* fasc = iter;
+		m_fasc.push_back(fasc);
+	}
+
+	for (const auto& iter : other.m_mask)
+	{
+		F_MASK* mask = iter;
+		m_mask.push_back(mask);
+	}
 }
 
 R_FeatureRecord::~R_FeatureRecord(void)
@@ -602,6 +633,45 @@ std::vector<MASK*> R_FeatureRecord::GetAllMASK()
 	return result;
 }
 
+R_FeatureRecord* R_FeatureRecord::Clone() const
+{
+	R_FeatureRecord* fr = new R_FeatureRecord();
+	fr->m_frid = m_frid;
+	fr->m_foid = m_foid;
+
+	for (const auto& iter : m_attr)
+	{
+		F_ATTR* f_attr = (!iter) ? nullptr : iter->Clone();
+		fr->m_attr.push_back(f_attr);
+	}
+
+	for (const auto& iter : m_inas)
+	{
+		F_INAS* f_inas = (!iter) ? nullptr : iter->Clone();
+		fr->m_inas.push_back(f_inas);
+	}
+
+	for (const auto& iter : m_spas)
+	{
+		F_SPAS* f_spas = (!iter) ? nullptr : iter->Clone();
+		fr->m_spas.push_back(f_spas);
+	}
+
+	for (const auto& iter : m_fasc)
+	{
+		F_FASC* f_fasc = (!iter) ? nullptr : iter->Clone();
+		fr->m_fasc.push_back(f_fasc);
+	}
+
+	for (const auto& iter : m_mask)
+	{
+		F_MASK* f_mask = (!iter) ? nullptr : iter->Clone();
+		fr->m_mask.push_back(f_mask);
+	}
+
+	return fr;
+}
+
 std::string R_FeatureRecord::GetID()
 {
 	return std::to_string(GetRCID());
@@ -624,7 +694,7 @@ bool R_FeatureRecord::IsNoGeometry()
 
 int R_FeatureRecord::GetFeatureRelationCount()
 {
-	return m_fasc.size();
+	return (int)m_fasc.size();
 }
 
 std::string R_FeatureRecord::GetAssociatedFeatureID(int index)
@@ -685,7 +755,7 @@ GM::Object* R_FeatureRecord::GetGMGeometry()
 
 int R_FeatureRecord::GetInformationRelationCount()
 {
-	return m_inas.size();
+	return (int)m_inas.size();
 }
 
 int R_FeatureRecord::GetAttributeCount() const
@@ -709,7 +779,7 @@ int R_FeatureRecord::GetAttributeCount() const
 std::string R_FeatureRecord::GetAttributeValue(int index)
 {
 	auto attributes = GetAllAttributes();
-	int count = attributes.size();
+	int count = (int)attributes.size();
 
 	if (count > 0 && index < count)
 	{

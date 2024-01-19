@@ -144,7 +144,7 @@ void SENC_AugmentedPath::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1*
 							(float)(ls->intervalLength - ls->dashes.front()->length + 0.01) / (float)0.32
 						};
 						ID2D1StrokeStyle1* dash = nullptr;
-						gisLib->D2.pD2Factory->CreateStrokeStyle(
+						factory->CreateStrokeStyle(
 							D2D1::StrokeStyleProperties1(
 								D2D1_CAP_STYLE_FLAT,
 								D2D1_CAP_STYLE_FLAT,

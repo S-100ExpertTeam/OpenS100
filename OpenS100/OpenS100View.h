@@ -73,7 +73,7 @@ public:
 	CDialogViewInformationType* dialogInformationType = nullptr;
 
 	S100EditRender s100EditRender;
-	S101Creator s101Creator;
+	S101Creator* s101Creator = nullptr;
 
 protected:
 	std::vector<CString> m_systemFontList;

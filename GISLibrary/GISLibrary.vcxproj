@@ -440,6 +440,7 @@
     <ClCompile Include="SupportFileSpecification.cpp" />
     <ClCompile Include="TemporalExtent.cpp" />
     <ClCompile Include="S100_Time.cpp" />
+    <ClCompile Include="S101Factory.cpp" />
     <ClCompile Include="S102H5.cpp" />
     <ClCompile Include="S102_Color.cpp" />
     <ClCompile Include="S102_FC_BathymetryCoverage.cpp" />
@@ -753,12 +754,14 @@
     <ClInclude Include="S100_SE_CertificateContainerType.h" />
     <ClInclude Include="S100_SE_DigitalSignature.h" />
     <ClInclude Include="S100_SE_DigitalSignatureReference.h" />
+    <ClInclude Include="S100_SE_SignatureOnData.h" />
     <ClInclude Include="S100_SE_SignatureOnSignature.h" />
     <ClInclude Include="SupportFileDiscoveryMetadata.h" />
     <ClInclude Include="SupportFileRevisionStatus.h" />
     <ClInclude Include="SupportFileSpecification.h" />
     <ClInclude Include="TemporalExtent.h" />
     <ClInclude Include="S100_Time.h" />
+    <ClInclude Include="S101Factory.h" />
     <ClInclude Include="S102H5.h" />
     <ClInclude Include="S102_Color.h" />
     <ClInclude Include="S102_FC_BathymetryCoverage.h" />
@@ -866,11 +869,11 @@
     <ClInclude Include="URI.h" />
     <ClInclude Include="URL.h" />
     <ClInclude Include="URN.h" />
+    <ClInclude Include="Version.h" />
     <ClInclude Include="VerticalCoordinateBase.h" />
     <ClInclude Include="VerticalDatumReference.h" />
     <ClInclude Include="CountryCode.h" />
     <ClInclude Include="XML_Collection.h" />
-    <ClInclude Include="S100_SE_SignatureOnData.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GISLibrary.rc" />

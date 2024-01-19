@@ -29,4 +29,6 @@ public:
 
 	void Init();
 	void Release();
+
+	virtual R_DSCRS* Clone() const;
 };

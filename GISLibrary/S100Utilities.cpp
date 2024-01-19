@@ -123,7 +123,7 @@ std::vector<int> S100Utilities::GetScaleBands(ScaleBand sb)
 	return S;
 }
 
-std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(std::vector<std::shared_ptr<Inventory>> INV, int scale, MBR viewport)
+std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(std::vector<std::shared_ptr<Inventory>> INV, Scaler* scaler, MBR viewport)
 {
 	bool first = true;
 
@@ -147,28 +147,28 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 	// View port
 	double lon = viewport.GetXMin();
 	double lat = viewport.GetYMin();
-	gisLib->GetScaler()->WorldToDevice(lon, lat, &lonTemp, &latTemp);
+	scaler->WorldToDevice(lon, lat, &lonTemp, &latTemp);
 	tmp.X = lonTemp;  
 	tmp.Y = latTemp;
 	view.push_back(tmp);
 	
 	lon = viewport.GetXMax();
 	lat = viewport.GetYMin();
-	gisLib->GetScaler()->WorldToDevice(lon, lat, &lonTemp, &latTemp);
+	scaler->WorldToDevice(lon, lat, &lonTemp, &latTemp);
 	tmp.X = lonTemp;   
 	tmp.Y = latTemp;
 	view.push_back(tmp);
 	
 	lon = viewport.GetXMax();
 	lat = viewport.GetYMax();
-	gisLib->GetScaler()->WorldToDevice(lon, lat, &lonTemp, &latTemp);
+	scaler->WorldToDevice(lon, lat, &lonTemp, &latTemp);
 	tmp.X = lonTemp;   
 	tmp.Y = latTemp;
 	view.push_back(tmp);
 
 	lon = viewport.GetXMin();
 	lat = viewport.GetYMax();
-	gisLib->GetScaler()->WorldToDevice(lon, lat, &lonTemp, &latTemp);
+	scaler->WorldToDevice(lon, lat, &lonTemp, &latTemp);
 	tmp.X = lonTemp;  
 	tmp.Y = latTemp;
 	view.push_back(tmp);
@@ -176,7 +176,7 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 	viewPaths.push_back(view);
 
 	
-	int SB = GetScaleBand(scale);
+	int SB = GetScaleBand(scaler->GetCurrentScale());
 
 	while (viewPaths.size() != 0)
 	{
@@ -186,7 +186,7 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 			{
 				if (item->vecScaleRange[i].isIntersection(scaleBands[SB].minimumScale, scaleBands[SB].maximumScale))
 				{
-					if (SCommonFuction::IntersectionPaths(viewPaths, item->vecBoundingPolygon[i]))
+					if (SCommonFuction::IntersectionPaths(viewPaths, item->vecBoundingPolygon[i], scaler))
 					{
 						// Set DataCoverage Log
 						if (first)
@@ -222,7 +222,7 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 							inventoryitem->strFilePath = item->strFilePath;
 
 							S.push_back(inventoryitem);
-							viewPaths = SCommonFuction::ClipPaths(viewPaths, item->vecBoundingPolygon[i]);
+							viewPaths = SCommonFuction::ClipPaths(viewPaths, item->vecBoundingPolygon[i], scaler);
 					}
 				}
 			}

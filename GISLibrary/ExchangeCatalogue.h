@@ -39,6 +39,6 @@ namespace S100
 
         void GetContents(pugi::xml_node& node);
 
-        void DrawCoverage(ID2D1RenderTarget* pRenderTarget, ID2D1Factory* pDXFactory, Scaler* scaler, double offsetX = 0, double offsetY = 0);
+        void DrawCoverage(D2D1Resources* pD2, Scaler* scaler, double offsetX = 0, double offsetY = 0);
     };
 }

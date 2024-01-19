@@ -9,6 +9,7 @@ class F_PROJ :
 {
 public:
 	F_PROJ();
+	F_PROJ(const F_PROJ& other);
 	virtual ~F_PROJ();
 
 public:
@@ -64,6 +65,9 @@ public:
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
+	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
 	static int GetSize();
+
+	virtual F_PROJ* Clone() const;
 };

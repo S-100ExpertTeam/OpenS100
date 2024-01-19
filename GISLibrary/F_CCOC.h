@@ -6,6 +6,7 @@ class F_CCOC :
 {
 public:
 	F_CCOC();
+	F_CCOC(const F_CCOC& other);
 	virtual ~F_CCOC();
 
 public:
@@ -33,5 +34,8 @@ public:
 
 public:
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file) { return true; };
 	int GetFieldLength();
+
+	virtual F_CCOC* Clone() const;
 };

@@ -9,7 +9,8 @@ public:
 	virtual ~Field();
 
 public:
-	virtual void ReadField(BYTE *&buf) {};
-	virtual bool WriteField(CFile* file) { return true; };
-	virtual int GetFieldLength() { return 0; };
+	virtual void ReadField(BYTE *&buf) = 0;
+	virtual bool WriteField(CFile* file) = 0;
+	virtual int GetFieldLength() = 0;
+	virtual Field* Clone() const = 0;
 };

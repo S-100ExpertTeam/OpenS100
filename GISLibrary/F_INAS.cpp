@@ -122,7 +122,7 @@ std::vector<ATTR*> F_INAS::GetAllAttributes()
 
 int F_INAS::getATTRCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 ATTR* F_INAS::getATTR(int index) const
@@ -137,4 +137,20 @@ ATTR* F_INAS::getATTR(int index) const
 void F_INAS::addATTR(ATTR* value)
 {
 	m_arr.push_back(value);
+}
+
+F_INAS* F_INAS::Clone() const
+{
+	F_INAS* f_inas = new F_INAS();
+	f_inas->m_name = m_name;
+	f_inas->m_niac = m_niac;
+	f_inas->m_narc = m_narc;
+	f_inas->m_iuin = m_iuin;
+	for (const auto& iter : m_arr)
+	{
+		ATTR* attr = new ATTR(iter->m_natc, iter->m_atix, iter->m_paix, iter->m_atin, iter->m_atvl);
+		f_inas->m_arr.push_back(attr);
+	}
+
+	return f_inas;
 }

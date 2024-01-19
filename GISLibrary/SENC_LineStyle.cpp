@@ -181,7 +181,7 @@ void SENC_LineStyle::DrawInstruction(
 						}
 					}
 
-					gisLib->s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect(), GetPenColor(), strokeGroup->at(1));
+					s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect(), GetPenColor(), strokeGroup->at(1));
 					SafeRelease(&pBitmap);
 				}
 			}

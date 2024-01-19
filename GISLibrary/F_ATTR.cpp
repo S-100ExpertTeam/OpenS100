@@ -97,16 +97,35 @@ void F_ATTR::Insert(ATTR* attr)
 	m_arr.push_back(attr);
 }
 
+void F_ATTR::Insert(int natc, int atix, int paix, int atin, CString atvl)
+{
+	ATTR* attr = new ATTR(natc, atix, paix, atin, atvl);
+	m_arr.push_back(attr);
+}
+
 int F_ATTR::getCount() const
 {
-	return m_arr.size();
+	return (int)m_arr.size();
 }
 
 ATTR* F_ATTR::getATTR(int index) const
 {
-	if (index < 0 || index >= m_arr.size()) {
+	if (index < 0 || index >= (int)m_arr.size()) {
 		return nullptr;
 	}
 
 	return m_arr.at(index);
 }
+
+F_ATTR* F_ATTR::Clone() const
+{
+	F_ATTR* f_attr = new F_ATTR();
+	for (const auto& iter : m_arr)
+	{
+		ATTR* attr = new ATTR(iter->m_natc, iter->m_atix, iter->m_paix, iter->m_atin, iter->m_atvl);
+		f_attr->m_arr.push_back(attr);
+	}
+
+	return f_attr;
+}
+

@@ -154,6 +154,12 @@ COpenS100View::~COpenS100View()
 		delete dialogInformationType;
 		dialogInformationType = nullptr;
 	}
+
+	if (s101Creator)
+	{
+		delete s101Creator;
+		s101Creator = nullptr;
+	}
 }
 
 void COpenS100View::SaveLastPosScale()
@@ -481,7 +487,7 @@ void COpenS100View::Setting()
 {
 	CConfigrationDlg dlg(this);
 
-	auto fc = theApp.gisLib->catalogManager.getFC("S-101");
+	auto fc = theApp.gisLib->GetCatalogManager()->getFC("S-101");
 	if (fc)
 	{
 		dlg.InitS101FeatureTypes(fc);
@@ -490,7 +496,7 @@ void COpenS100View::Setting()
 	if (m_systemFontList.size() == 0)
 	{
 		// <FONT LIST>
-		IDWriteFactory* pDWriteFactory = theApp.gisLib->D2.pDWriteFactory;
+		IDWriteFactory* pDWriteFactory = theApp.gisLib->GetD2D1Resources()->pDWriteFactory;
 		IDWriteFontCollection* pFontCollection = NULL;
 
 		// Get the system font collection.
@@ -598,7 +604,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	// catalog manager
-	auto cm = theApp.gisLib->getCatalogManager();
+	auto cm = theApp.gisLib->GetCatalogManager();
 
 	// FC
 	auto fc1 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
@@ -644,7 +650,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//cell.Read8211(L"..\\SampleData\\save.000");
 
 	if (theApp.gisLib2) {
-		auto cm2 = theApp.gisLib2->getCatalogManager();
+		auto cm2 = theApp.gisLib2->GetCatalogManager();
 
 		// FC
 		cm2->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
@@ -731,7 +737,7 @@ void COpenS100View::OnMButtonDown(UINT nFlags, CPoint point)
 
 void COpenS100View::OnMButtonUp(UINT nFlags, CPoint point)
 {
-	s100EditRender.UpdatePoint(point.x, point.y);
+	//s100EditRender.UpdatePoint(point.x, point.y, theApp.gisLib->GetLayerManager());
 	MapRefresh();
 	CView::OnMButtonUp(nFlags, point);
 }
@@ -1284,7 +1290,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 	else if (frPick->GetGeometry()->GetType() == SGeometryType::Surface)
 	{
 		auto surface = (SSurface*)frPick->GetGeometry();
-		auto geometry = surface->GetNewD2Geometry(theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler());
+		auto geometry = surface->GetNewD2Geometry(theApp.gisLib->GetD2D1Resources()->pD2Factory, theApp.gisLib->GetScaler());
 
 		D2D1_COLOR_F color{};
 		color.r = 255 / float(255.0);
@@ -1293,28 +1299,28 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		color.a = float(0.7);
 
 		HDC hdc = g.GetHDC();
-		theApp.gisLib->D2.Begin(hdc, theApp.gisLib->GetScaler()->GetScreenRect());
+		theApp.gisLib->GetD2D1Resources()->Begin(hdc, theApp.gisLib->GetScaler()->GetScreenRect());
 		if (geometry)
 		{
-			theApp.gisLib->D2.pRT->SetTransform(D2D1::Matrix3x2F::Translation(float(offsetX), float(offsetY)));
-			theApp.gisLib->D2.pBrush->SetColor(color);
-			theApp.gisLib->D2.pBrush->SetOpacity(float(0.7));
-			theApp.gisLib->D2.pRT->FillGeometry(geometry, theApp.gisLib->D2.pBrush);
+			theApp.gisLib->GetD2D1Resources()->pRT->SetTransform(D2D1::Matrix3x2F::Translation(float(offsetX), float(offsetY)));
+			theApp.gisLib->GetD2D1Resources()->pBrush->SetColor(color);
+			theApp.gisLib->GetD2D1Resources()->pBrush->SetOpacity(float(0.7));
+			theApp.gisLib->GetD2D1Resources()->pRT->FillGeometry(geometry, theApp.gisLib->GetD2D1Resources()->pBrush);
 			SafeRelease(&geometry);
 		}
-		theApp.gisLib->D2.End();
+		theApp.gisLib->GetD2D1Resources()->End();
 	}
 
 	auto hdc = g.GetHDC();
 	CRect rect = theApp.gisLib->GetScaler()->GetScreenRect();
-	theApp.gisLib->D2.Begin(hdc, rect);
+	theApp.gisLib->GetD2D1Resources()->Begin(hdc, rect);
 	
 	if (encPick->GetProductNumber() == 101)
 	{
-		s100EditRender.Set((S101Cell*)encPick, (R_FeatureRecord*)frPick);
+		s100EditRender.Set((S101Cell*)encPick, theApp.gisLib->GetScaler(), (R_FeatureRecord*)frPick);
 		s100EditRender.ShowPoint();
 	}
-	theApp.gisLib->D2.End();
+	theApp.gisLib->GetD2D1Resources()->End();
 	g.ReleaseHDC(hdc);
 }
 
@@ -1708,7 +1714,7 @@ void COpenS100View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VK_F4:
 		//CopyLayer();
 		//TestGISLibrary::TestCreateNewCode();
-		theApp.gisLib->SetS100Scale(80000);
+		theApp.gisLib->GetLayerManager()->SetS100Scale(80000);
 		break;
 	case VK_F5:
 		TestGISLibrary::TestSave();
@@ -1743,7 +1749,7 @@ void COpenS100View::PointFeatureList()
 {
 	if (theApp.gisLib)
 	{
-		auto fc = theApp.gisLib->catalogManager.getFC("S-101");
+		auto fc = theApp.gisLib->GetCatalogManager()->getFC("S-101");
 		std::vector<FeatureType*> features;
 		fc->GetPointFeatures(features);
 
@@ -1779,7 +1785,7 @@ void COpenS100View::LineFeatureList()
 {
 	if (theApp.gisLib)
 	{
-		auto fc = theApp.gisLib->catalogManager.getFC();
+		auto fc = theApp.gisLib->GetCatalogManager()->getFC();
 		std::vector<FeatureType*> features;
 		fc->GetLineFeatures(features);
 
@@ -1815,7 +1821,7 @@ void COpenS100View::AreaFeatureList()
 {
 	if (theApp.gisLib)
 	{
-		auto fc = theApp.gisLib->catalogManager.getFC();
+		auto fc = theApp.gisLib->GetCatalogManager()->getFC();
 		std::vector<FeatureType*> features;
 		fc->GetAreaFeatures(features);
 
@@ -1883,7 +1889,7 @@ void COpenS100View::DeleteSelectedFeature()
 {
 	auto key = theApp.m_DockablePaneCurrentSelection.pDlg->GetSelectedRecordName();
 	RecordName selectedRecordName(key);
-	s101Creator.DeleteFeature(selectedRecordName.RCID);
+	s101Creator->DeleteFeature(selectedRecordName.RCID);
 	theApp.gisLib->S101RebuildPortrayal();
 	theApp.m_DockablePaneCurrentSelection.RemoveAll();
 	SetPick(nullptr, nullptr);
@@ -1893,13 +1899,15 @@ void COpenS100View::SetPick(S100SpatialObject* enc, std::wstring featureID)
 {
 	encPick = enc;
 	featurePick = featureID;
-
+	
 	if (enc && enc->GetProductNumber() == 101)
 	{
-		s101Creator.Set(theApp.gisLib->catalogManager.getFC(), (S101Cell*)enc);
+		if (s101Creator == nullptr)
+			s101Creator = new S101Creator((S101Cell*)enc);
+		s101Creator->Set(theApp.gisLib->GetCatalogManager()->getFC(), (S101Cell*)enc);
 	}
-	else
-	{
-		s101Creator.Set(nullptr, nullptr);
-	}
+	//else
+	//{
+	//	s101Creator->Set(nullptr, nullptr);
+	//}
 }

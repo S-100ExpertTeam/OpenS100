@@ -23,8 +23,11 @@ public:
     std::list<TagPair> tagPairs;
     
 public:
+    void ReadField(BYTE*& buf) {};
     bool WriteField(CFile* file);
     void AddTagPair(char tag1[5], char tag2[5]);
     int GetFieldLength();
+
+    virtual F_FieldControlField* Clone() const;
 };
 

@@ -6,10 +6,11 @@
 
 struct CSAX;
 
-class F_CSAX : Field
+class F_CSAX : public Field
 {
 public:
 	F_CSAX();
+	F_CSAX(const F_CSAX& other);
 	virtual ~F_CSAX();
 
 public:
@@ -21,4 +22,8 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	void Insert(int axty, int axum);
+
+	virtual F_CSAX* Clone() const;
 };

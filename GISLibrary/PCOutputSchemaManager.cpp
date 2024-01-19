@@ -167,43 +167,15 @@ void PCOutputSchemaManager::GenerateSENCInstruction(S100SpatialObject* s100so, P
 		SENC_Instruction* sit = nullptr;
 
 		sit = SENC_Instruction::S1002SENC(it, pc, this, s100so);
+		auto featureID = pugi::as_utf8(it->GetFeatureReference());
+		auto featureType = s100so->GetFeatureType(featureID);
 
-		if (sit)
+		if ((sit) &&
+			(featureType))
 		{
-			displayListSENC->AddInstruction(sit);
-			auto featureID = pugi::as_utf8(it->GetFeatureReference());
-			auto featureType = s100so->GetFeatureType(featureID);
+			displayListSENC->AddInstruction(sit);			
 			sit->fr = featureType;
 		}
-
-		//	__int64 iKey = ((__int64)100) << 32 | sit->featureReference;
-		//	auto item = s100so->GetFeatureRecord(iKey);
-
-		//	if (nullptr == item)
-		//	{
-		//		continue;
-		//	}
-		//	else
-		//	{
-		//		sit->fr = item;
-
-		//		auto currentPriority = sit->DrawingPriority();
-		//		//if (currentPriority != 0)
-		//		//{
-		//		//	if (currentPriority < sit->fr->MinimumDisplayPriority() || 
-		//		//		sit->fr->MinimumDisplayPriority() == -1)
-		//		//	{
-		//		//		sit->fr->MinimumDisplayPriority(currentPriority);
-		//		//	}
-
-		//		//	if (currentPriority > sit->fr->MaximumDisplayPriority() ||
-		//		//		sit->fr->MaximumDisplayPriority() == -1)
-		//		//	{
-		//		//		sit->fr->MaximumDisplayPriority(currentPriority);
-		//		//	}
-		//		//}
-		//	}
-		//}
 	}
 }
 

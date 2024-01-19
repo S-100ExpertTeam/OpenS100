@@ -20,7 +20,7 @@ bool HDF5Wrapper::ReadMetadataIntegerAttribute(__int64 id, char* attributeName, 
 	{
 		long long int64Value = 0;
 		auto result = ReadMetadataInteger64Attribute(id, attributeName, int64Value);
-		attributeValue = int64Value;
+		attributeValue = (int)int64Value;
 		return result;
 	}
 
@@ -99,7 +99,7 @@ bool HDF5Wrapper::ReadMetadataFloatAttribute(__int64 id, char* attributeName, fl
 	{
 		double doubleValue = 0;
 		auto result = ReadMetadataDoubleAttribute(id, attributeName, doubleValue);
-		attributeValue = doubleValue;
+		attributeValue = (float)doubleValue;
 		return result;
 	}
 
