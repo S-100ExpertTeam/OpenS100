@@ -11,24 +11,39 @@ namespace GF
 	ComplexAttributeType::ComplexAttributeType(const ComplexAttributeType& other)
 		: ThematicAttributeType(other)
 	{
-		for (const auto& iter : carries)
+		for (const auto& iter : other.carries)
 		{
-			SimpleAttributeType* sa = (SimpleAttributeType*)iter;
-			if (sa)
+			if (iter->IsSimple())
 			{
-				SimpleAttributeType* attribute = new SimpleAttributeType(*sa);
-				carries.push_back(attribute);
+				SimpleAttributeType* sa = dynamic_cast<SimpleAttributeType*>(iter);
+				if (sa)
+				{
+					SimpleAttributeType* attribute = new SimpleAttributeType(*sa);
+					carries.push_back(attribute);
+				}
+				else
+				{
+					ThematicAttributeType* attribute = new ThematicAttributeType(*iter);
+					carries.push_back(attribute);
+				}
 			}
-
-			ComplexAttributeType* ca = (ComplexAttributeType*)iter;
-			if (ca)
+			else
 			{
-				ComplexAttributeType* attribute = new ComplexAttributeType(*ca);
-				carries.push_back(attribute);
+				ComplexAttributeType* ca = dynamic_cast<ComplexAttributeType*>(iter);
+				if (ca)
+				{
+					ComplexAttributeType* attribute = new ComplexAttributeType(*ca);
+					carries.push_back(attribute);
+				}
+				else
+				{
+					ThematicAttributeType* attribute = new ThematicAttributeType(*iter);
+					carries.push_back(attribute);
+				}
 			}
 		}
 	}
-	
+
 	ComplexAttributeType::~ComplexAttributeType()
 	{
 		for (auto i = carries.begin(); i != carries.end(); i++)
