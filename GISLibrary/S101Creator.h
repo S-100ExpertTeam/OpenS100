@@ -6,16 +6,13 @@
 
 #include <vector>
 
-class S100Layer;
-class S101Cell;
-class FeatureCatalogue;
-class R_FeatureRecord;
-class SGeometry;
+using namespace GISLibrary;
 
 class S101Creator
 {
 public:
-	S101Creator();
+	S101Creator(D2D1Resources* d2d1);
+	S101Creator(S101Cell* enc);
 	S101Creator(FeatureCatalogue* fc, S101Cell* enc);
 	~S101Creator();
 
@@ -23,6 +20,9 @@ public:
 	FeatureCatalogue* fc = nullptr;
 	S101Cell* enc = nullptr;
 	S100Layer* layer = nullptr;
+
+protected:
+	D2D1Resources* D2 = nullptr;
 
 public:
 	void Set(FeatureCatalogue* fc, S101Cell* enc);
@@ -91,7 +91,7 @@ public:
 	R_CurveRecord* ConvertInsertVectorRecord(SCurve* geom);
 	R_CompositeRecord* ConvertInsertVectorRecord(SCompositeCurve* geom);
 	R_SurfaceRecord* ConvertInsertVectorRecord(SSurface* geom);
-	
+
 
 	std::list<AttributeBinding*> GetAddableAttributes(R_FeatureRecord* feature);
 	std::list<AttributeBinding*> GetAddableAttributes(R_FeatureRecord* feature, ATTR* parentATTR);
@@ -102,4 +102,3 @@ public:
 private:
 	S101Cell* CreateENC(std::wstring name);
 };
-

@@ -101,6 +101,16 @@ void Scaler::WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate
 
 }
 
+void Scaler::WorldToDevice(D2D1_POINT_2F& p)
+{
+	long sx = 0;
+	long sy = 0;
+	WorldToDevice(p.x, p.y, &sx, &sy);
+
+	p.x = (float)sx;
+	p.y = (float)sy;
+}
+
 #pragma warning(disable:4244)
 void Scaler::WorldToDevice_F(double mx, double my, float *sx, float *sy, bool rotate)
 {

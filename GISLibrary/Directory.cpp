@@ -6,6 +6,13 @@ Directory::Directory()
 
 }
 
+Directory::Directory(const Directory& other)
+{
+	memcpy(fieldTag, other.fieldTag, 4);
+	fieldLength = other.fieldLength;
+	fieldPosition = other.fieldPosition;
+}
+
 Directory::Directory(char fieldTag[5], int fieldLength, int fieldPosition)
 {
 	memcpy(this->fieldTag, fieldTag, 4);

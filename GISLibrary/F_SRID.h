@@ -2,10 +2,11 @@
 #include "Field.h"
 #include "RecordName.h"
 
-class F_SRID : Field
+class F_SRID : public Field
 {
 public:
 	F_SRID();
+	F_SRID(const F_SRID& other);
 	F_SRID(RecordName recordName, int RVER = 1, int RUIN = 1);
 	virtual ~F_SRID();
 
@@ -19,4 +20,6 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	virtual F_SRID* Clone() const;
 };

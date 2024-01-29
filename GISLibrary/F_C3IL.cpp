@@ -9,6 +9,14 @@ F_C3IL::F_C3IL()
 
 }
 
+F_C3IL::F_C3IL(const F_C3IL& other)
+{
+	for (const auto& iter : other.m_arr)
+		Insert(iter->m_xcoo, iter->m_ycoo, iter->m_zcoo);
+
+	m_vcid = other.m_vcid;
+}
+
 F_C3IL::~F_C3IL()
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
@@ -67,4 +75,29 @@ int F_C3IL::GetFieldLength()
 		len += C3IL::GetSize();
 	}
 	return ++len;
+}
+
+void F_C3IL::Insert(int xcoo, int ycoo, int zcoo)
+{
+	C3IL* cont = new C3IL();
+	cont->m_ycoo = ycoo;
+	cont->m_xcoo = xcoo;
+	cont->m_zcoo = zcoo;
+	m_arr.push_back(cont);
+}
+
+F_C3IL* F_C3IL::Clone() const
+{
+	F_C3IL* f_c3il = new F_C3IL();
+	f_c3il->m_vcid = m_vcid;
+	for (const auto& iter : m_arr)
+	{
+		C3IL* c3il = new C3IL();
+		c3il->m_ycoo = iter->m_ycoo;
+		c3il->m_xcoo = iter->m_xcoo;
+		c3il->m_zcoo = iter->m_zcoo;
+		f_c3il->m_arr.push_back(c3il);
+	}
+
+	return f_c3il;
 }

@@ -142,7 +142,7 @@ bool F_DataDescriptiveField::WriteField(CFile* file)
 
 	ddf = Replace(ddf);
 
-	file->Write(ddf.data(), ddf.size());
+	file->Write(ddf.data(), (UINT)ddf.size());
 
 	return true;
 }
@@ -153,12 +153,27 @@ int F_DataDescriptiveField::GetFieldLength()
 
 	ddf = Replace(ddf);
 
-	return ddf.length();
+	return (int)ddf.length();
 }
 
 std::string F_DataDescriptiveField::GetTagName()
 {
 	return DDFTagName[type].substr(0, 4);
+}
+
+F_DataDescriptiveField* F_DataDescriptiveField::Clone() const
+{
+	F_DataDescriptiveField* ddf = new F_DataDescriptiveField();
+
+	ddf->spaceOld = spaceOld;
+	ddf->spaceNew = spaceNew;
+	ddf->UTOld = UTOld;
+	ddf->UTNew = UTNew;
+	ddf->FTOld = FTOld;
+	ddf->FTNew = FTNew;
+	ddf->type = type;
+
+	return ddf;
 }
 
 bool F_DataDescriptiveField::operator==(const F_DataDescriptiveField& other) const

@@ -9,6 +9,12 @@ F_C2IL::F_C2IL()
 
 }
 
+F_C2IL::F_C2IL(const F_C2IL& other)
+{
+	for (const auto& iter : other.m_arr)
+		Insert(iter->m_xcoo, iter->m_ycoo);
+}
+
 F_C2IL::~F_C2IL()
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
@@ -61,4 +67,26 @@ int F_C2IL::GetFieldLength()
 		len += C2IL::GetSize();
 	}
 	return ++len;
+}
+
+void F_C2IL::Insert(int xcoo, int ycoo)
+{
+	C2IL* cont = new C2IL();
+	cont->m_ycoo = ycoo;
+	cont->m_xcoo = xcoo;
+	m_arr.push_back(cont);
+}
+
+F_C2IL* F_C2IL::Clone() const
+{
+	F_C2IL* f_c2il = new F_C2IL();
+	for (const auto& iter : m_arr)
+	{
+		C2IL* c2il = new C2IL();
+		c2il->m_ycoo = iter->m_ycoo;
+		c2il->m_xcoo = iter->m_xcoo;
+		f_c2il->m_arr.push_back(c2il);
+	}
+
+	return f_c2il;
 }

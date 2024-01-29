@@ -60,6 +60,3 @@ inline void SafeRelease(Interface **ppInterfaceToRelease)
 }
 
 #endif
-
-class CGISLibraryApp;
-extern CGISLibraryApp* gisLib;

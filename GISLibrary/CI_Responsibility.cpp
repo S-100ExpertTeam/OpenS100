@@ -21,4 +21,22 @@ namespace S100
             }
         }
     }
+
+    void CI_Responsibility::Save(pugi::xml_node& node)
+    {
+        auto Node = node.append_child("cit:CI_Responsibility");
+        {
+            auto child = Node.append_child("cit:role");
+            auto temp = child.append_child("cit:CI_RoleCode");
+            temp.text().set(CI_RoleCodeToString(role).c_str());
+        }
+        if(!party.empty())
+        {
+            for(int i = 0 ; i< party.size(); i++)
+            {
+                auto child = Node.append_child("cit:party");
+                party[i].Save(child);
+            }
+        }
+    }
 }

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Layer.h"
 #include "S100Utilities.h"
+#include "S100ExchangeCatalogue.h"
 
 #include "..\\LibMFCUtil\\LibMFCUtil.h"
 
@@ -19,13 +20,18 @@ Layer::~Layer(void)
 	}
 }
 
-bool Layer::Open(CString _filepath)
+bool Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
 
 	if (nullptr == m_spatialObject)
 	{
-		m_spatialObject = new SHPFile();
+		if (!extension.CompareNoCase(L"SHP")) {
+			m_spatialObject = new SHPFile();
+		}
+		else if (!extension.CompareNoCase(L"XML")) {
+			m_spatialObject = new S100ExchangeCatalogue(lm->GetScaler(), lm->catalogManager, d2d1);
+		}
 	}
 
 	m_spatialObject->m_pLayer = this;
@@ -50,6 +56,7 @@ bool Layer::Open(CString _filepath)
 		}
 		strFolderPath.Append(TEXT("\\") + _filepath);
 	}
+
 	return m_spatialObject->Open(strFolderPath);
 }
 

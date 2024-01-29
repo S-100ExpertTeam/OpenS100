@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "SHPFile.h"
 
-SHPFile::SHPFile(void)
+SHPFile::SHPFile(void) : SpatialObject(nullptr)
 {
-
+	m_nRecords = 0;
+	m_nShapeType = 0;
+	m_pSHPObject = nullptr;
 }
 
 SHPFile::~SHPFile(void)

@@ -90,6 +90,8 @@ public:
 
 	std::vector<MASK*> GetAllMASK();
 
+	virtual R_FeatureRecord* Clone() const;
+
 public: // override ObjectType
 	std::string GetID() override;
 	std::wstring GetIDAsWString() override;

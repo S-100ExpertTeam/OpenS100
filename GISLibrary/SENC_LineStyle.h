@@ -31,6 +31,7 @@ public:
 	std::wstring colorToken = L"";
 	std::wstring lineStyleName = L"";
 
+	S100Render s100Render;
 public:
 	void SetPenColor(D2D1_COLOR_F value);
 	D2D1_COLOR_F GetPenColor();

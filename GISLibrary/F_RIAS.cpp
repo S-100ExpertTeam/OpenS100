@@ -9,6 +9,12 @@ F_RIAS::F_RIAS(void)
 
 }
 
+F_RIAS::F_RIAS(const F_RIAS& other)
+{
+	for (const auto& iter : other.m_arr)
+		Insert(iter->m_name, iter->m_ornt, iter->m_usag, iter->m_raui);
+}
+
 F_RIAS::~F_RIAS(void)
 {
 	for (auto itorParent = m_arr.begin(); itorParent != m_arr.end(); itorParent++)
@@ -70,4 +76,52 @@ int F_RIAS::GetFieldLength()
 		len += rias->GetSize();
 	}
 	return ++len;
+}
+
+void F_RIAS::Insert(RecordName name, int ornt, int usag, int raui)
+{
+	RIAS* rias = new RIAS();
+	rias->m_name = name;
+	rias->m_ornt = ornt;
+	rias->m_usag = usag;
+	rias->m_raui = raui;
+	m_arr.push_back(rias);
+}
+
+void F_RIAS::Insert(int rcnm, int rcid, int ornt, int usag, int raui)
+{
+	RIAS* rias = new RIAS();
+	rias->m_name.RCNM = rcnm;
+	rias->m_name.RCID = rcid;
+	rias->m_ornt = ornt;
+	rias->m_usag = usag;
+	rias->m_raui = raui;
+	m_arr.push_back(rias);
+}
+
+void F_RIAS::Insert(GISLibrary::RCNM rcnm, int rcid, int ornt, int usag, int raui)
+{
+	RIAS* rias = new RIAS();
+	rias->m_name.RCNM = (int)rcnm;
+	rias->m_name.RCID = rcid;
+	rias->m_ornt = ornt;
+	rias->m_usag = usag;
+	rias->m_raui = raui;
+	m_arr.push_back(rias);
+}
+
+F_RIAS* F_RIAS::Clone() const
+{
+	F_RIAS* f_rias = new F_RIAS();
+	for (const auto& iter : m_arr)
+	{
+		RIAS* rias = new RIAS();
+		rias->m_name = iter->m_name;
+		rias->m_ornt = iter->m_ornt;
+		rias->m_usag = iter->m_usag;
+		rias->m_raui = iter->m_raui;
+		f_rias->m_arr.push_back(rias);
+	}
+
+	return f_rias;
 }

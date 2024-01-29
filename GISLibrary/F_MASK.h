@@ -6,7 +6,7 @@
 #include <unordered_map>
 
 struct MASK;
-class F_MASK : Field
+class F_MASK : public Field
 {
 public:
 	F_MASK();
@@ -27,9 +27,12 @@ public:
 	int GetFieldLength();
 
 	void AddMask(MASK* mask);
+	void AddMask(RecordName recordName, int mind = 0, int muin = 0);
 	void DeleteMask(RecordName recordName);
 	MASK* GetMask(RecordName recordName);
 
 	int getCount() const;
 	MASK* getMASKbyIndex(int index) const;
+
+	virtual F_MASK* Clone() const;
 };

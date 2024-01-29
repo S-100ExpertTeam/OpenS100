@@ -151,7 +151,7 @@ bool SCompositeCurve::ExportToWkbMultiLineString(unsigned char** value, int* siz
 
 	memcpy_s((*value) + 1, 4, &type, 4);
 
-	int numLineStrings = m_listCurveLink.size();
+	int numLineStrings = (int)m_listCurveLink.size();
 	memcpy_s((*value) + 5, 4, &numLineStrings, 4);
 
 	int offset = 0;
@@ -295,7 +295,7 @@ double SCompositeCurve::GetY(int index)
 
 int SCompositeCurve::GetCurveCount() const
 {
-	return m_listCurveLink.size();
+	return (int)m_listCurveLink.size();
 }
 
 SAbstractCurve* SCompositeCurve::GetCurve(int index)

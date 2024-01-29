@@ -78,10 +78,12 @@ public:
 
 public:
 	std::string Replace(std::string text);
+	void ReadField(BYTE*& buf) {};
 	bool WriteField(CFile* file);
 	int GetFieldLength();
 	std::string GetTagName();
 
+	virtual F_DataDescriptiveField* Clone() const;
 public:
 	bool operator==(const F_DataDescriptiveField& other) const;
 	//bool operator<(const F_DataDescriptiveField& other) const;

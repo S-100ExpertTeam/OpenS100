@@ -20,12 +20,12 @@ R_DSCRS::~R_DSCRS()
 
 #pragma warning(disable:4244)
 #pragma warning(disable:4018)
-BOOL R_DSCRS::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
+BOOL R_DSCRS::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
 	Release();
 
 	USES_CONVERSION;
-	for(unsigned i = 0; i < dir->m_count; i++)
+	for (unsigned i = 0; i < dir->m_count; i++)
 	{
 		if (strcmp(dir->GetDirectory(i)->tag, "CSID") == 0)
 		{
@@ -33,7 +33,7 @@ BOOL R_DSCRS::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		}
 		else if (strcmp(dir->GetDirectory(i)->tag, "CRSH") == 0)
 		{
-			F_CRSH *crsh = new F_CRSH();
+			F_CRSH* crsh = new F_CRSH();
 			crsh->ReadField(buf);
 			m_crsh.push_back(crsh);
 		}
@@ -143,7 +143,7 @@ void R_DSCRS::Init()
 	crsh_vertical->m_crix = 2;
 	crsh_vertical->m_crst = 5;
 	crsh_vertical->m_csty = 3;
-	crsh_vertical->m_crnm = L"meanHighWaterSprings"; 
+	crsh_vertical->m_crnm = L"meanHighWaterSprings";
 	crsh_vertical->m_crsi = L"";
 	crsh_vertical->m_crss = 255;
 	crsh_vertical->m_scri = L"";
@@ -154,7 +154,7 @@ void R_DSCRS::Init()
 	csax->m_axty = 12;
 	csax->m_axum = 4;
 	m_csax->m_arr.push_back(csax);
-	
+
 	m_vdat = new F_VDAT();
 	m_vdat->m_dtnm = L"meanHighWaterSprings";
 	m_vdat->m_dtid = L"17";
@@ -182,3 +182,20 @@ void R_DSCRS::Release()
 	delete m_vdat;
 	m_vdat = nullptr;
 }
+
+R_DSCRS* R_DSCRS::Clone() const
+{
+	R_DSCRS* r_dscrs = new R_DSCRS();
+	r_dscrs->m_csid = m_csid;
+
+	for (const auto& iter : m_crsh)
+	{
+		F_CRSH* f_crsh = (!iter) ? nullptr : iter->Clone();
+		r_dscrs->m_crsh.push_back(f_crsh);
+	}
+	r_dscrs->m_csax = (!m_csax) ? nullptr : m_csax->Clone();
+	r_dscrs->m_vdat = (!m_vdat) ? nullptr : m_vdat->Clone();
+
+	return r_dscrs;
+}
+

@@ -16,6 +16,6 @@ private:
 	bool bSet = false;
 	
 public:
-	void setColor();
+	void setColor(PortrayalCatalogue* s101PC);
 	bool isSet();
 };

@@ -11,11 +11,12 @@ namespace S100 {
     public:
         LanguageCode Language;
         CountryCode* Country;
-        MD_CharacterSetCode CharacterEncoding;
+        std::shared_ptr<MD_CharacterSetCode> CharacterEncoding;
 
         void setLanguage(pugi::xml_node& node);
         void setCountry(pugi::xml_node& node);
         void setCharacterEncoding(pugi::xml_node& node);
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
     };
 }

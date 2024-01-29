@@ -3,10 +3,11 @@
 #include "RecordName.h"
 
 // Dataset Identification Field
-class F_DSID : Field
+class F_DSID : public Field
 {
 public:
 	F_DSID();
+	F_DSID(const F_DSID& other);
 	virtual ~F_DSID();
 
 public:
@@ -28,4 +29,6 @@ public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
+
+	virtual F_DSID* Clone() const;
 };

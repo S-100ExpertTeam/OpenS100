@@ -7,6 +7,12 @@ F_C2IT::F_C2IT()
 {
 }
 
+F_C2IT::F_C2IT(const F_C2IT& other)
+{
+	m_xcoo = other.m_xcoo;
+	m_ycoo = other.m_ycoo;
+}
+
 F_C2IT::~F_C2IT()
 {
 
@@ -39,4 +45,13 @@ int F_C2IT::GetFieldLength()
 	len += F_C2IT::GetSize();
 
 	return ++len;
+}
+
+F_C2IT* F_C2IT::Clone() const
+{
+	F_C2IT* f_c2it = new F_C2IT();
+	f_c2it->m_ycoo = m_ycoo;
+	f_c2it->m_xcoo = m_xcoo;
+
+	return f_c2it;
 }

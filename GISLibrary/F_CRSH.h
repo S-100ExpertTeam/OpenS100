@@ -1,10 +1,11 @@
 #pragma once
 #include "Field.h"
 
-class F_CRSH : Field
+class F_CRSH : public Field
 {
 public:
 	F_CRSH();
+	F_CRSH(const F_CRSH& other);
 	virtual ~F_CRSH();
 public:
 	/*
@@ -62,5 +63,7 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	virtual F_CRSH* Clone() const;
 };
 

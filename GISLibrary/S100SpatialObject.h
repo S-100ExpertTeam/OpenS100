@@ -19,7 +19,7 @@ class S100Layer;
 class S100SpatialObject : public SpatialObject
 {
 public:
-	S100SpatialObject();
+	S100SpatialObject(D2D1Resources* d2d1);
 	virtual ~S100SpatialObject();
 
 public:
@@ -36,6 +36,7 @@ public:
 
 	FeatureCatalogue* GetFC();
 	PortrayalCatalogue* GetPC();
+	D2D1Resources* GetD2() const;
 
 	bool OpenOutputXML(std::string path);
 

@@ -11,6 +11,13 @@ F_CCID::F_CCID(void)
 	m_ruin = 0;
 }
 
+F_CCID::F_CCID(const F_CCID& other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+}
+
 F_CCID::F_CCID(RecordName recordName, int RVER, int RUIN)
 {
 	m_name = recordName;
@@ -51,3 +58,14 @@ int F_CCID::GetFieldLength()
 	len += 1;
 	return ++len;
 }
+
+F_CCID* F_CCID::Clone() const
+{
+	F_CCID* f_ccid = new F_CCID();
+	f_ccid->m_name = m_name;
+	f_ccid->m_rver = m_rver;
+	f_ccid->m_ruin = m_ruin;
+
+	return f_ccid;
+}
+

@@ -15,6 +15,18 @@ F_PROJ::F_PROJ()
 	m_fnor = 0;
 }
 
+F_PROJ::F_PROJ(const F_PROJ& other)
+{
+	m_prom = other.m_prom;
+	m_prp1 = other.m_prp1;
+	m_prp2 = other.m_prp2;
+	m_prp3 = other.m_prp3;
+	m_prp4 = other.m_prp4;
+	m_prp5 = other.m_prp5;
+	m_feas = other.m_feas;
+	m_fnor = other.m_fnor;
+}
+
 F_PROJ::~F_PROJ()
 {
 
@@ -54,4 +66,19 @@ int F_PROJ::GetFieldLength()
 int F_PROJ::GetSize()
 {
 	return 57;
+}
+
+F_PROJ* F_PROJ::Clone() const
+{
+	F_PROJ* f_proj = new F_PROJ();
+	f_proj->m_prom = m_prom;
+	f_proj->m_prp1 = m_prp1;
+	f_proj->m_prp2 = m_prp2;
+	f_proj->m_prp3 = m_prp3;
+	f_proj->m_prp4 = m_prp4;
+	f_proj->m_prp5 = m_prp5;
+	f_proj->m_feas = m_feas;
+	f_proj->m_fnor = m_fnor;
+
+	return f_proj;
 }

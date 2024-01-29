@@ -5,7 +5,7 @@
 #include <vector>
 
 struct ATTR;
-class F_ATTR : Field
+class F_ATTR : public Field
 {
 public:
 	F_ATTR();
@@ -22,6 +22,9 @@ public:
 	int GetFieldLength();
 
 	void Insert(ATTR* attr);
+	void Insert(int natc, int atix, int paix, int atin, CString atvl);
 	ATTR* getATTR(int index) const;
 	int getCount() const;
+
+	virtual F_ATTR* Clone() const;
 };

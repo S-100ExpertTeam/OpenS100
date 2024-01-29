@@ -3,22 +3,8 @@
 
 namespace S100
 {
-	SupportFileFormat stringToSupportFileFormat(const std::string value)
-	{
-		if (value == "ASCII") return SupportFileFormat::ASCII;
-		else if (value == "JPEG2000") return SupportFileFormat::JPEG2000;
-		else if (value == "HTML") return SupportFileFormat::HTML;
-		else if (value == "XML") return SupportFileFormat::XML;
-		else if (value == "XSLT") return SupportFileFormat::XSLT;
-		else if (value == "VIDEO") return SupportFileFormat::VIDEO;
-		else if (value == "TIFF") return SupportFileFormat::TIFF;
-		else if (value == "PDF/AorUA") return SupportFileFormat::PDF_AorUA;
-		else if (value == "LUA") return SupportFileFormat::LUA;
-		else if (value == "none") return SupportFileFormat::other;
-		else return SupportFileFormat::none;
-	}
 
-	std::string supportFileFormatToString(SupportFileFormat value)
+	std::string SupportFileFormatToString(SupportFileFormat value)
 	{
 		switch (value)
 		{
@@ -33,7 +19,23 @@ namespace S100
 		case SupportFileFormat::PDF_AorUA: return "PDF/AorUA";
 		case SupportFileFormat::LUA: return "LUA";
 		case SupportFileFormat::other: return "other";
-		default: return "";  
+		default: return "";
 		}
 	}
+
+	SupportFileFormat SupportFileFormatFromString(const std::string value)
+	{
+		if (value == "ASCII") return SupportFileFormat::ASCII;
+		else if (value == "JPEG2000") return SupportFileFormat::JPEG2000;
+		else if (value == "HTML") return SupportFileFormat::HTML;
+		else if (value == "XML") return SupportFileFormat::XML;
+		else if (value == "XSLT") return SupportFileFormat::XSLT;
+		else if (value == "VIDEO") return SupportFileFormat::VIDEO;
+		else if (value == "TIFF") return SupportFileFormat::TIFF;
+		else if (value == "PDF/AorUA") return SupportFileFormat::PDF_AorUA;
+		else if (value == "LUA") return SupportFileFormat::LUA;
+		else if (value == "none") return SupportFileFormat::other;
+		else return SupportFileFormat::none;
+	}
+
 }

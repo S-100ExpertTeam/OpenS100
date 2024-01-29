@@ -18,6 +18,7 @@ namespace S100 {
         std::vector<std::string> Geom;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
 
     private:
         std::string GetGeoms(pugi::xml_node& node);

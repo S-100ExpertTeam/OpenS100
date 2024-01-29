@@ -6,6 +6,7 @@ class F_GDAT :
 {
 public:
 	F_GDAT();
+	F_GDAT(const F_GDAT& other);
 	virtual ~F_GDAT();
 
 public:
@@ -55,5 +56,8 @@ public:
 
 public:
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
+
+	virtual F_GDAT* Clone() const;
 };

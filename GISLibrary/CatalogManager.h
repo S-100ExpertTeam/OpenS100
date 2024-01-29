@@ -9,12 +9,13 @@
 class CatalogManager
 {
 public:
-	CatalogManager();
+	CatalogManager(D2D1Resources* d2d1);
 	virtual ~CatalogManager();
 
 public:
 	std::vector<FeatureCatalogue*> FCs;
 	std::vector<PortrayalCatalogue*> PCs;
+	D2D1Resources* D2;
 
 public:
 	FeatureCatalogue* addFC(std::string path);

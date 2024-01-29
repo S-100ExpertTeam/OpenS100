@@ -10,6 +10,7 @@ public:
 
     std::tm GetTm() const;
     std::string ToString() const;
+    void Save(pugi::xml_node& node);
 
 private:
     std::tm tm = {};

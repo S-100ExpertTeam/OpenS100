@@ -8,6 +8,7 @@
 
 R_PointRecord::R_PointRecord(void)
 {
+	m_prid.m_name.RCID = -1;
 	m_prid.m_name.RCNM = 110;
 }
 
@@ -150,6 +151,12 @@ void R_PointRecord::SetC2IT(F_C2IT* value)
 
 void R_PointRecord::SetC2IT(int x, int y)
 {
+	if (m_c3it)
+	{
+		delete m_c3it;
+		m_c3it = nullptr;
+	}
+
 	if (m_c2it == nullptr)
 	{
 		m_c2it = new F_C2IT();
@@ -163,3 +170,38 @@ void R_PointRecord::SetC3IT(F_C3IT* value)
 {
 	m_c3it = value;
 }
+
+void R_PointRecord::SetC3IT(int x, int y, int z)
+{
+	if (m_c2it)
+	{
+		delete m_c2it;
+		m_c2it = nullptr;
+	}
+
+	if (m_c3it == nullptr)
+	{
+		m_c3it = new F_C3IT();
+	}
+
+	m_c3it->m_xcoo = x;
+	m_c3it->m_ycoo = y;
+	m_c3it->m_zcoo = z;
+}
+
+R_PointRecord* R_PointRecord::Clone() const
+{
+	R_PointRecord* pr = new R_PointRecord();
+	pr->m_prid = m_prid;
+	pr->m_c2it = m_c2it;
+	pr->m_c3it = m_c3it;
+
+	for (const auto& iter : m_inas)
+	{
+		F_INAS* inas = (!iter) ? nullptr : iter->Clone();
+		pr->m_inas.push_back(inas);
+	}
+
+	return pr;
+}
+

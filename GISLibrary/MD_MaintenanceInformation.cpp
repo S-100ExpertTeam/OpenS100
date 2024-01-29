@@ -20,4 +20,17 @@ namespace S100 {
             }
         }
     }
+    void MD_MaintenanceInformation::Save(pugi::xml_node& node)
+    {
+        if (MaintenanceAndUpdateFrequency)
+        {
+            auto child = node.append_child("mmi:userDefinedMaintenanceFrequency");
+            child.text().set(MD_MaintenanceFrequencyCodeToString(*MaintenanceAndUpdateFrequency).c_str());
+        }
+        if (MaintenanceDate)
+        {
+            auto child = node.append_child("mmi:maintenanceDate");
+            MaintenanceDate->Save(child);
+        }
+    }
 }

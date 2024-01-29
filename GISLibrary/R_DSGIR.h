@@ -68,6 +68,7 @@ public:
 	void initFeatureAssociationCode();
 	void initAssociationRoleCode();
 
+	virtual R_DSGIR* Clone() const;
 private:
 	void deleteAll();
 	void deleteAttributeCode();

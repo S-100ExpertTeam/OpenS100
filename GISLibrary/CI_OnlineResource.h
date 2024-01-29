@@ -20,5 +20,6 @@ namespace S100
         std::shared_ptr<std::string> ProtocolRequest;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node, std::string  nodeName);
     };
 }

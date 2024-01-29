@@ -7,6 +7,13 @@ F_FOID::F_FOID(void)
 {
 }
 
+F_FOID::F_FOID(const F_FOID& other)
+{
+	AGEN = other.AGEN;
+	FIDN = other.FIDN;
+	FIDS = other.FIDS;
+}
+
 F_FOID::F_FOID(int AGEN, int FIDN, int FIDS)
 {
 	this->AGEN = AGEN;
@@ -46,3 +53,14 @@ __int64 F_FOID::GetName()
 {
 	return ((__int64)AGEN) << 48 | ((__int64)FIDN) << 16 | FIDS;
 }
+
+F_FOID* F_FOID::Clone() const
+{
+	F_FOID* f_foid = new F_FOID();
+	f_foid->AGEN = AGEN;
+	f_foid->FIDN = FIDN;
+	f_foid->FIDS = FIDS;
+
+	return f_foid;
+}
+

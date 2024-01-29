@@ -2,10 +2,11 @@
 #include "Field.h"
 
 struct C2IL;
-class F_C2IL : Field
+class F_C2IL : public Field
 {
 public:
 	F_C2IL();
+	F_C2IL(const F_C2IL& other);
 	virtual ~F_C2IL();
 
 public:
@@ -20,4 +21,8 @@ public:
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
+
+	void Insert(int xcoo, int ycoo);
+
+	virtual F_C2IL* Clone() const;
 };

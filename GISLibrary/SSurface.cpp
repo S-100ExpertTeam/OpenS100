@@ -15,36 +15,6 @@ SSurface::SSurface()
 	
 }
 
-SSurface::SSurface(const SSurface& other)
-	: SGeometry(other)
-{
-	m_numParts = other.m_numParts;
-	m_numPoints = other.m_numPoints;
-
-	if (other.m_pParts) {
-		m_pParts = new int[GetNumPart()];
-		memcpy(m_pParts, other.m_pParts, GetNumPart() * sizeof(int));
-	}
-
-	if (other.m_pPoints) {
-		m_pPoints = new GeoPoint[getNumPoint()];
-		memcpy(m_pPoints, other.m_pPoints, getNumPoint() * sizeof(GeoPoint));
-	}
-
-	if (other.m_centerPoint) {
-		m_centerPoint = new GeoPoint(*other.m_centerPoint);
-	}
-
-	int curveCnt = other.curveList.size();
-	if (curveCnt > 0) {
-		for (int i = 0; i < curveCnt; i++) {
-			AddCurve(other.GetRing(i));
-		}
-	}
-
-	CreateD2Geometry(gisLib->D2.Factory());
-}
-
 SSurface::SSurface(MBR* mbr)
 {
 	m_numParts = 1;
@@ -481,7 +451,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int size)
 		memcpy_s(&numPointPerPart, 4, value + 9 + offset, 4);
 		offset += 4;
 
-		m_pParts[i] = localPointArray.size();
+		m_pParts[i] = (int)localPointArray.size();
 
 		auto curve = new SCurve();
 		curve->Init(numPointPerPart);
@@ -501,7 +471,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int size)
 		}
 	}
 
-	m_numPoints = localPointArray.size();
+	m_numPoints = (int)localPointArray.size();
 
 	m_pPoints = new GeoPoint[m_numPoints];
 	std::copy(localPointArray.begin(), localPointArray.end(), m_pPoints);
@@ -636,7 +606,7 @@ double SSurface::GetY(int index)
 
 int SSurface::GetRingCount() const
 {
-	return curveList.size();
+	return (int)curveList.size();
 }
 
 SAbstractCurve* SSurface::GetRing(int index) const

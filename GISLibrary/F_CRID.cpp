@@ -4,11 +4,18 @@
 #include "NonPrintableCharacter.h"
 
 F_CRID::F_CRID(void)
-{	
+{
 	m_name.RCNM = 0;
 	m_name.RCID = 0;
 	m_rver = 0;
 	m_ruin = 0;
+}
+
+F_CRID::F_CRID(const F_CRID& other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
 }
 
 F_CRID::F_CRID(RecordName recordName, int RVER, int RUIN)
@@ -23,7 +30,7 @@ F_CRID::~F_CRID(void)
 
 }
 
-void F_CRID::ReadField(BYTE *&buf)
+void F_CRID::ReadField(BYTE*& buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);
@@ -50,4 +57,14 @@ int F_CRID::GetFieldLength()
 	len += 2;
 	len += 1;
 	return ++len;
+}
+
+F_CRID* F_CRID::Clone() const
+{
+	F_CRID* f_crid = new F_CRID();
+	f_crid->m_name = m_name;
+	f_crid->m_rver = m_rver;
+	f_crid->m_ruin = m_ruin;
+
+	return f_crid;
 }

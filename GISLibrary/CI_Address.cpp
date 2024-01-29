@@ -41,4 +41,44 @@ namespace S100
             }
         }
     }
+
+    void CI_Address::Save(pugi::xml_node& node, std::string nodeName)
+    {
+        if (!Deliverypoint.empty()|| !City.empty()|| !Administrativearea.empty()|| !Postalcode.empty()|| !Country.empty() || !Electronicmailaddress.empty())
+        {
+            auto Node = node.append_child(nodeName.c_str());
+            
+            if (!Deliverypoint.empty())
+            {
+                auto child = Node.append_child("cit:deliveryPoint");
+                SaveCharacterString(child, Deliverypoint);
+            }
+            if (!City.empty())
+            {
+                auto child = Node.append_child("cit:city");
+                SaveCharacterString(child, City);
+            }
+            if (!Administrativearea.empty())
+            {
+                auto child = Node.append_child("cit:Administrativearea");
+                SaveCharacterString(child, Administrativearea);
+            }
+            if (!Postalcode.empty())
+            {
+                auto child = Node.append_child("cit:Postalcode");
+                SaveCharacterString(child, Postalcode);
+            }
+            if (!Country.empty())
+            {
+                auto child = Node.append_child("cit:Country");
+                SaveCharacterString(child, Country);
+            }
+            if (!Electronicmailaddress.empty())
+            {
+                auto child = Node.append_child("cit:electronicMailAddress");
+                for (auto item : Electronicmailaddress)
+                    SaveCharacterString(child, item);
+            }
+        }
+    }
 }
