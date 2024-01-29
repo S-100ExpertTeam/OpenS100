@@ -3,8 +3,8 @@
 	<S100FC:name>S-130 Polygonal Demarcations of Global Sea Areas</S100FC:name>
 	<S100FC:scope>global</S100FC:scope>
 	<S100FC:fieldOfApplication>none</S100FC:fieldOfApplication>
-	<S100FC:versionNumber>1.0.0</S100FC:versionNumber>
-	<S100FC:versionDate>2023-03-16</S100FC:versionDate>
+	<S100FC:versionNumber>1.1.0</S100FC:versionNumber>
+	<S100FC:versionDate>2023-12-06</S100FC:versionDate>
 	<S100FC:productId>S-130</S100FC:productId>
 	<S100FC:producer>
 		<S100CI:role>author</S100CI:role>
@@ -13,13 +13,13 @@
 				<S100CI:name>International Hydrographic Organization</S100CI:name>
 				<S100CI:contactInfo>
 					<S100CI:address>
-						<S100CI:city>Frome</S100CI:city>
-						<S100CI:administrativeArea>Somerset</S100CI:administrativeArea>
-						<S100CI:country>UK</S100CI:country>
-						<S100CI:electronicMailAddress>jp@jpsworldoffun.com</S100CI:electronicMailAddress>
+						<S100CI:city>Monaco</S100CI:city>
+						<S100CI:administrativeArea>4b quai Antonie 1er</S100CI:administrativeArea>
+						<S100CI:country>Monaco</S100CI:country>
+						<S100CI:electronicMailAddress>info@iho.int</S100CI:electronicMailAddress>
 					</S100CI:address>
 					<S100CI:onlineResource>
-						<S100CI:linkage>www.iictechnologies.com</S100CI:linkage>
+						<S100CI:linkage>www.iho.int</S100CI:linkage>
 					</S100CI:onlineResource>
 				</S100CI:contactInfo>
 			</S100CI:CI_Organisation>
@@ -83,7 +83,7 @@
 			<S100FC:valueType>integer</S100FC:valueType>
 		</S100FC:S100_FC_SimpleAttribute>
 		<S100FC:S100_FC_SimpleAttribute>
-			<S100FC:name>minimumDisplayScale</S100FC:name>
+			<S100FC:name>Minimum Display Scale</S100FC:name>
 			<S100FC:definition>The smallest intended viewing scale for the data.</S100FC:definition>
 			<S100FC:code>minimumDisplayScale</S100FC:code>
 			<S100FC:definitionReference>
@@ -138,7 +138,7 @@
 		</S100FC:S100_FC_SimpleAttribute>
 		<S100FC:S100_FC_SimpleAttribute>
 			<S100FC:name>Version</S100FC:name>
-			<S100FC:definition>Identification of a specific form or variation of a feature instance.</S100FC:definition>
+			<S100FC:definition>Identification of a specific form or variation of an entity.</S100FC:definition>
 			<S100FC:code>version</S100FC:code>
 			<S100FC:valueType>text</S100FC:valueType>
 		</S100FC:S100_FC_SimpleAttribute>
@@ -192,7 +192,7 @@
 		</S100FC:S100_FC_SimpleAttribute>
 		<S100FC:S100_FC_SimpleAttribute>
 			<S100FC:name>Line Type</S100FC:name>
-			<S100FC:definition>Associated with a line segment, indicating the nature of the path between two points</S100FC:definition>
+			<S100FC:definition>Indication of the nature of the path between two points, associated with a line segment.</S100FC:definition>
 			<S100FC:code>lineType</S100FC:code>
 			<S100FC:valueType>enumeration</S100FC:valueType>
 			<S100FC:listedValues>
@@ -202,14 +202,18 @@
 					<S100FC:code>1</S100FC:code>
 				</S100FC:listedValue>
 				<S100FC:listedValue>
-					<S100FC:label>Greate Circle</S100FC:label>
+					<S100FC:label>Great Circle</S100FC:label>
 					<S100FC:definition>The intersection of a sphere and a plane through its center. See also Orthodrome</S100FC:definition>
 					<S100FC:code>2</S100FC:code>
 				</S100FC:listedValue>
 				<S100FC:listedValue>
 					<S100FC:label>Undetermined/Unknown</S100FC:label>
-					<S100FC:definition/>
+					<S100FC:definition>Having an unknown value.</S100FC:definition>
 					<S100FC:code>3</S100FC:code>
+					<S100FC:definitionReference>
+						<S100FC:sourceIdentifier>1772</S100FC:sourceIdentifier>
+						<S100FC:definitionSource ref="IHOREG"/>
+					</S100FC:definitionReference>
 				</S100FC:listedValue>
 			</S100FC:listedValues>
 		</S100FC:S100_FC_SimpleAttribute>
@@ -217,6 +221,10 @@
 			<S100FC:name>Feature Identifier</S100FC:name>
 			<S100FC:definition>An identifier referencing an object or feature that is external to the dataset, expressed in Uniform Resource Name (URN) format.</S100FC:definition>
 			<S100FC:code>featureIdentifier</S100FC:code>
+			<S100FC:definitionReference>
+				<S100FC:sourceIdentifier>485</S100FC:sourceIdentifier>
+				<S100FC:definitionSource ref="IHOREG"/>
+			</S100FC:definitionReference>
 			<S100FC:valueType>URN</S100FC:valueType>
 		</S100FC:S100_FC_SimpleAttribute>
 	</S100FC:S100_FC_SimpleAttributes>
@@ -520,22 +528,8 @@
 		</S100FC:S100_FC_FeatureType>
 		<S100FC:S100_FC_FeatureType isAbstract="false">
 			<S100FC:name>Global Sea Area</S100FC:name>
-			<S100FC:definition>An area demarcating the limits of global seas and oceans.</S100FC:definition>
+			<S100FC:definition>An area describing the extents of global seas and oceans.</S100FC:definition>
 			<S100FC:code>GlobalSeaArea</S100FC:code>
-			<S100FC:attributeBinding sequential="false">
-				<S100FC:multiplicity>
-					<S100Base:lower>1</S100Base:lower>
-					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-				</S100FC:multiplicity>
-				<S100FC:attribute ref="maximumDisplayScale"/>
-			</S100FC:attributeBinding>
-			<S100FC:attributeBinding sequential="false">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-				</S100FC:multiplicity>
-				<S100FC:attribute ref="minimumDisplayScale"/>
-			</S100FC:attributeBinding>
 			<S100FC:attributeBinding sequential="false">
 				<S100FC:multiplicity>
 					<S100Base:lower>1</S100Base:lower>
@@ -557,24 +551,6 @@
 				</S100FC:multiplicity>
 				<S100FC:attribute ref="fixedDateRange"/>
 			</S100FC:attributeBinding>
-			<S100FC:informationBinding roleType="association">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="true" infinite="true"/>
-				</S100FC:multiplicity>
-				<S100FC:association ref="AdditionalInformation"/>
-				<S100FC:role ref="providesInformation"/>
-				<S100FC:informationType ref="AdditionalSpatialInformation"/>
-			</S100FC:informationBinding>
-			<S100FC:informationBinding roleType="association">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="true" infinite="true"/>
-				</S100FC:multiplicity>
-				<S100FC:association ref="FeatureTypeSource"/>
-				<S100FC:role ref="theSource"/>
-				<S100FC:informationType ref="SourceIndicator"/>
-			</S100FC:informationBinding>
 			<S100FC:superType>FeatureType</S100FC:superType>
 			<S100FC:featureUseType>geographic</S100FC:featureUseType>
 			<S100FC:featureBinding roleType="aggregation">
@@ -620,20 +596,6 @@
 			<S100FC:name>Construction Line</S100FC:name>
 			<S100FC:definition>An arc used for constructing Limit or Boundary features typically linking to a Contributing Point.</S100FC:definition>
 			<S100FC:code>ConstructionLine</S100FC:code>
-			<S100FC:attributeBinding sequential="false">
-				<S100FC:multiplicity>
-					<S100Base:lower>1</S100Base:lower>
-					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-				</S100FC:multiplicity>
-				<S100FC:attribute ref="maximumDisplayScale"/>
-			</S100FC:attributeBinding>
-			<S100FC:attributeBinding sequential="false">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-				</S100FC:multiplicity>
-				<S100FC:attribute ref="minimumDisplayScale"/>
-			</S100FC:attributeBinding>
 			<S100FC:attributeBinding>
 				<S100FC:multiplicity>
 					<S100Base:lower>1</S100Base:lower>
@@ -646,24 +608,6 @@
 				</S100FC:permittedValues>
 				<S100FC:attribute ref="lineType"/>
 			</S100FC:attributeBinding>
-			<S100FC:informationBinding roleType="association">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="true" infinite="true"/>
-				</S100FC:multiplicity>
-				<S100FC:association ref="AdditionalInformation"/>
-				<S100FC:role ref="providesInformation"/>
-				<S100FC:informationType ref="AdditionalSpatialInformation"/>
-			</S100FC:informationBinding>
-			<S100FC:informationBinding roleType="association">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="true" infinite="true"/>
-				</S100FC:multiplicity>
-				<S100FC:association ref="FeatureTypeSource"/>
-				<S100FC:role ref="theSource"/>
-				<S100FC:informationType ref="SourceIndicator"/>
-			</S100FC:informationBinding>
 			<S100FC:superType>FeatureType</S100FC:superType>
 			<S100FC:featureUseType>geographic</S100FC:featureUseType>
 			<S100FC:featureBinding roleType="association">
@@ -690,38 +634,6 @@
 			<S100FC:name>Contributing Point</S100FC:name>
 			<S100FC:definition>A point, typically on a Baseline, used for the computation of a maritime Limit or Boundary feature.</S100FC:definition>
 			<S100FC:code>ContributingPoint</S100FC:code>
-			<S100FC:attributeBinding sequential="false">
-				<S100FC:multiplicity>
-					<S100Base:lower>1</S100Base:lower>
-					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-				</S100FC:multiplicity>
-				<S100FC:attribute ref="maximumDisplayScale"/>
-			</S100FC:attributeBinding>
-			<S100FC:attributeBinding sequential="false">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-				</S100FC:multiplicity>
-				<S100FC:attribute ref="minimumDisplayScale"/>
-			</S100FC:attributeBinding>
-			<S100FC:informationBinding roleType="association">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="true" infinite="true"/>
-				</S100FC:multiplicity>
-				<S100FC:association ref="AdditionalInformation"/>
-				<S100FC:role ref="providesInformation"/>
-				<S100FC:informationType ref="AdditionalSpatialInformation"/>
-			</S100FC:informationBinding>
-			<S100FC:informationBinding roleType="association">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="true" infinite="true"/>
-				</S100FC:multiplicity>
-				<S100FC:association ref="FeatureTypeSource"/>
-				<S100FC:role ref="theSource"/>
-				<S100FC:informationType ref="SourceIndicator"/>
-			</S100FC:informationBinding>
 			<S100FC:superType>FeatureType</S100FC:superType>
 			<S100FC:featureUseType>geographic</S100FC:featureUseType>
 			<S100FC:featureBinding roleType="association">

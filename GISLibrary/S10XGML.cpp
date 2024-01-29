@@ -61,7 +61,8 @@ bool S10XGML::Open(CString _filepath)
 		{
 			datasetIdentificationInformation.Read(child);
 		}
-		else if (childName.find("members") != std::string::npos)
+		else if (childName.find("members") != std::string::npos &&
+			childName.find("imembers") == std::string::npos)
 		{
 			ReadMembers(child);
 		}
@@ -241,6 +242,7 @@ bool S10XGML::ReadMembers(pugi::xml_node& node)
 	while (child)
 	{
 		std::string code = child.name();
+		code = DeleteXMLNamespace(code);
 		auto feature = fc->GetFeatureType(code);
 		if (feature)
 		{
@@ -274,17 +276,17 @@ GF::FeatureType* S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc
 	auto child = node.first_child();
 	while (child) {
 		std::string childName = child.name();
-
+		childName = DeleteXMLNamespace(childName);
 		auto attribute = fc->GetAttribute(childName);
 		auto role = fc->GetRole(childName);
 
 		if (attribute) {
 			ReadObjectAttribute(child, feature, fc);
 		}
-		else if (childName.compare("geometry") == 0) {
+		if (childName.find("geometry") != std::string::npos) {
 			ReadFeatureGeometry(child, feature);
 		}
-		else {// if (role) {
+		else if (role) {
 			ReadFeatureRole(child, feature, fc);
 		}
 
@@ -329,7 +331,10 @@ GM::Point* S10XGML::ReadPoint(pugi::xml_node& node, std::string id, std::string 
 	object->setParentIdSrsName(id, srsName);
 	object->readIdSRSName(node);
 
-	auto strPos = node.child_value("gml:pos");
+	std::string strPos = node.child_value("gml:pos");
+	if (strPos.empty()) {
+		strPos = node.child_value("gml:posList");
+	}
 		
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 
@@ -770,7 +775,9 @@ bool S10XGML::ReadIMember(pugi::xml_node& node)
 bool S10XGML::ReadObjectAttribute(
 	pugi::xml_node& node, GF::ObjectType* object, FeatureCatalogue* fc)
 {
-	auto sa = fc->GetSimpleAttribute(node.name());
+	std::string attributeName = node.name();
+	attributeName = DeleteXMLNamespace(attributeName);
+	auto sa = fc->GetSimpleAttribute(attributeName);
 	if (sa)
 	{
 		auto value = node.child_value();
@@ -778,10 +785,10 @@ bool S10XGML::ReadObjectAttribute(
 	}
 	else
 	{
-		auto ca = fc->GetComplexAttribute(node.name());
+		auto ca = fc->GetComplexAttribute(attributeName);
 		if (ca)
 		{
-			auto addedCA = object->AddComplexAttribute(node.name());
+			auto addedCA = object->AddComplexAttribute(attributeName);
 
 			auto child = node.first_child();
 			while (child)

@@ -17,6 +17,7 @@ namespace S100GML
 
 	public:
 		MBR mbr; // unit : WGS84
+		std::string srsName;
 
 	public:
 		void Read(pugi::xml_node& node) override;
@@ -24,6 +25,12 @@ namespace S100GML
 
 		std::string GetLowerCornerString();
 		std::string GetUpperCornerString();
+
+		void setSrsName(std::string& srsName);
+		std::string getSrsName();
+
+		bool isXYSequence();
+		bool isYXSequence();
 	};
 
 }
