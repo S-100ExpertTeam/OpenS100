@@ -423,13 +423,13 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 	int posCnt = (int)strPosList.size();
 
-	if (posCnt < 4 && posCnt % 2 != 0)
+	if (posCnt < 4)
 	{
 		delete object;
 		return false;
 	}
 
-	for (int i = 0; i < posCnt; i += 2)
+	for (int i = 0; (i + 1) < posCnt; i += 2)
 	{
 		double lon = std::stod(strPosList.at(i + lonIndex));
 		double lat = std::stod(strPosList.at(i + latIndex));
@@ -448,7 +448,7 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 	int posCnt = (int)strPosList.size();
 
-	if (posCnt < 4 || posCnt % 2 != 0)
+	if (posCnt < 4)
 	{
 		return false;
 	}
@@ -463,7 +463,7 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 		lonIndex = 1;
 	}
 
-	for (int i = 0; i < posCnt; i += 2)
+	for (int i = 0; (i + 1) < posCnt; i += 2)
 	{
 		double lon = std::stod(strPosList.at(i + lonIndex));
 		double lat = std::stod(strPosList.at(i + latIndex));
