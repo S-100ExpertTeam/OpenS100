@@ -281,3 +281,4 @@ settings.txt
 
 Redist/**
 !Redist/*.bat
+/OpenS100/DatasetManager.db
