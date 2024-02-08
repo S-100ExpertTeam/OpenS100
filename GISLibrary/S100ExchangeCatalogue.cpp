@@ -59,6 +59,11 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
 
             inv->vecScaleRange.push_back(sr);
 
+            bool reverse = false;
+            if (dataCoverages[idx].BoundingPolygon.Polygon.srsName.find("4326") != std::string::npos)
+                reverse = true;
+
+
             for (int geoms = 0; geoms < dataCoverages[idx].BoundingPolygon.Polygon.Geom.size(); geoms++)
             {
                 auto strPosList = LatLonUtility::Split(LatLonUtility::TrimRight(dataCoverages[idx].BoundingPolygon.Polygon.Geom[geoms]), " ");
@@ -71,9 +76,17 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
                 {
                     double lon = std::stod(strPosList.at(i));
                     double lat = std::stod(strPosList.at(i + 1));
-                    projection(lon, lat);
-                    
-                    point.push_back(D2D1::Point2F(lon, lat));
+
+                    if(reverse)
+                    {
+                        projection(lat, lon);
+                        point.push_back(D2D1::Point2F(lat, lon));
+                    }
+                    else
+                    {
+                        projection(lon, lat);
+                        point.push_back(D2D1::Point2F(lon, lat));
+                    }
                 }
             }
             inv->vecBoundingPolygon.push_back(point);
@@ -338,6 +351,11 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
             auto dc = ddm.dataCoverage[j];
             auto object = new GM::Surface();
 
+            bool reverse = false;
+
+            if (dc.BoundingPolygon.Polygon.srsName.find("4326") != std::string::npos)
+                reverse = true;
+
             for (int geoms = 0; geoms < dc.BoundingPolygon.Polygon.Geom.size(); geoms++)
             {
                 auto curve = new GM::Curve();
@@ -352,7 +370,11 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                 {
                     double lon = std::stod(strPosList.at(i));
                     double lat = std::stod(strPosList.at(i + 1));
-                    curve->Add(lon, lat);
+
+                    if(reverse)
+                        curve->Add(lat, lon);
+                    else
+                        curve->Add(lon, lat);
                 }
                 object->SetExteriorRing(curve);
 

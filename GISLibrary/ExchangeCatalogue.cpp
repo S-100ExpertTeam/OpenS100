@@ -25,7 +25,7 @@ namespace S100
         pugi::xml_node nodeList = doc.first_child();
 
         const pugi::char_t* instructionName = nodeList.name();
-        if (!strcmp(instructionName, "S100XC:S100_ExchangeCatalogue"))
+        if (!strcmp(instructionName, "S100XC:S100_ExchangeCatalogue") || !strcmp(instructionName, "S100XC:S-101_ExchangeCatalogue"))
         {
             GetContents(nodeList);
         }
@@ -40,11 +40,9 @@ namespace S100
         std::filesystem::path pathObj(filePath);
         std::filesystem::path dirPath = pathObj.parent_path();
 
-        //폴더 없으면 반환  
         if (!std::filesystem::exists(dirPath))
             return false;
 
-        //파일 있으면 반환
         if (std::filesystem::exists(filePath)) 
             return false;
 
@@ -120,13 +118,10 @@ namespace S100
             SupportFileDiscoveryMetadata.SaveXmlNode(item, "S100XC:S100_SupportFileDiscoveryMetadata");
         }
 
-        // 파일에 XML 문서 저장
         bool saveSucceeded = doc.save_file(filePath.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
         if (saveSucceeded) {
-            //std::cout << "XML 파일이 성공적으로 저장되었습니다." << std::endl;
         }
         else {
-            //std::cout << "XML 파일 저장 실패." << std::endl;
         }
 
      /*   if (!doc.save_file(filePath.c_str())) {

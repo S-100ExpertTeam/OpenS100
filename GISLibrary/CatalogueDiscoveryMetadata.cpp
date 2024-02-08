@@ -15,7 +15,8 @@ namespace S100 {
             }
             else if (!strcmp(instructionName, "S100XC:Purpose"))
             {
-                purpose = std::make_shared<Purpose>(S100_PurposeFromString(instruction.child_value()));
+                if(!std::string(instruction.child_value()).empty())
+                    purpose = std::make_shared<Purpose>(S100_PurposeFromString(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:EditionNumber"))
             {
@@ -23,7 +24,8 @@ namespace S100 {
             }
             else if (!strcmp(instructionName, "S100XC:Scope"))
             {
-                Scope = S100_CatalogueScopeFromString(instruction.child_value());
+                if (!std::string(instruction.child_value()).empty())
+                    Scope = S100_CatalogueScopeFromString(instruction.child_value());
             }
             else if (!strcmp(instructionName, "S100XC:VersionNumber"))
             {
@@ -41,7 +43,8 @@ namespace S100 {
             }
             else if (!strcmp(instructionName, "S100XC:DigitalSignatureReference"))
             {
-                DigitalSignatureReference = S100_SE_DigitalSignatureReferenceFromString(instruction.child_value());
+                if(!std::string(instruction.child_value()).empty())
+                    DigitalSignatureReference = S100_SE_DigitalSignatureReferenceFromString(instruction.child_value());
             }
             else if (!strcmp(instructionName, "S100XC:DigitalSignatureValue"))
             {
@@ -51,7 +54,7 @@ namespace S100 {
             }
             else if (!strcmp(instructionName, "S100XC:CompressionFlag"))
             {
-                CompressionFlag = ParseStr2Bool(instruction.child_value());
+                CompressionFlag = ExXmlSupport().ParseStr2Bool(instruction.child_value());
             }
             else if (!strcmp(instructionName, "S100XC:DefaultLocale"))
             {
@@ -117,7 +120,7 @@ namespace S100 {
         }
         {
             auto child = node.append_child("S100XC:CompressionFlag");
-            child.text().set(ParseBool2Str(CompressionFlag).c_str());
+            child.text().set(ExXmlSupport().ParseBool2Str(CompressionFlag).c_str());
         }
         if (DefaultLocale)
         {

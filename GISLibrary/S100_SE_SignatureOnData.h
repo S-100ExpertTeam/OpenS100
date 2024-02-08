@@ -12,5 +12,7 @@ namespace S100 {
         DataStatus DataStatus;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
     };
+
 }

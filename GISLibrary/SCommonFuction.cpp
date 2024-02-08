@@ -169,10 +169,8 @@ bool SCommonFuction::IntersectionPaths(ClipperLib::Paths& viewport, std::vector<
 	clipper.AddPaths(viewport, ClipperLib::ptSubject, true);
 	clipper.AddPaths(polygonPaths, ClipperLib::ptClip, true);
 
-	// 교차 연산 실행
 	clipper.Execute(ClipperLib::ctIntersection, solution, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
 
-	// 교차 결과가 비어 있지 않은지 확인
 	return !solution.empty();
 }
 

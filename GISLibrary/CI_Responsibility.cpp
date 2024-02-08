@@ -11,7 +11,9 @@ namespace S100
 
             if (!strcmp(instructionName, "cit:role"))
             {
-                role = CI_RoleCodeFromString(GetContentNode(instruction, "CI_RoleCode", "cit").child_value());
+                 auto temp = ExXmlSupport().GetContentNode(instruction, "CI_RoleCode", "cit").child_value();
+                 if (strcmp(temp, "") != 0)
+                     role = CI_RoleCodeFromString(temp);
             }
             else if (!strcmp(instructionName, "cit:party"))
             {

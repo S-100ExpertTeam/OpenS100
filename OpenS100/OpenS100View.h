@@ -115,6 +115,7 @@ public:
 	afx_msg void NoGeometryInfo();
 
 	afx_msg void Setting();
+	afx_msg void DatasetManager();
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 
@@ -162,6 +163,7 @@ public:
 	void DeleteSelectedFeature();
 
 	void SetPick(S100SpatialObject* enc = nullptr, std::wstring featureID = L"");
+	virtual void OnInitialUpdate();
 };
 
 

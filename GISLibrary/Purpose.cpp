@@ -10,17 +10,20 @@ namespace S100 {
         case Purpose::reissue: return "reissue";
         case Purpose::cancellation: return "cancellation";
         case Purpose::delta: return "delta";
+        case Purpose::forNavigation: return "For Navigation";
         default: throw std::invalid_argument("Unknown category");
         }
     }
 
     Purpose S100_PurposeFromString(const std::string& categoryName) {
         if (categoryName == "newDataset") return Purpose::newDataset;
+        if (categoryName == "new") return Purpose::newDataset;
         if (categoryName == "newEdition") return Purpose::newEdition;
         if (categoryName == "update") return Purpose::update;
         if (categoryName == "reissue") return Purpose::reissue;
         if (categoryName == "cancellation") return Purpose::cancellation;
         if (categoryName == "delta") return Purpose::delta;
+        if (categoryName == "For Navigation") return Purpose::forNavigation;
         throw std::invalid_argument("Unknown category name");
     }
 }

@@ -212,6 +212,10 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DataSetManagerSupport.h" />
+    <ClInclude Include="DATASET_SUPPORTdlg.h" />
+    <ClInclude Include="DialogDatasetManager.h" />
+    <ClInclude Include="FC_PCSelectdlg.h" />
     <ClInclude Include="FeatureCodeString.h" />
     <ClInclude Include="InformationCodeString.h" />
     <ClInclude Include="Common.h" />
@@ -241,6 +245,10 @@
     <ClInclude Include="TestGISLibrary.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DataSetManagerSupport.cpp" />
+    <ClCompile Include="DATASET_SUPPORTdlg.cpp" />
+    <ClCompile Include="DialogDatasetManager.cpp" />
+    <ClCompile Include="FC_PCSelectdlg.cpp" />
     <ClCompile Include="InformationCodeString.cpp" />
     <ClCompile Include="ConfigrationDlg.cpp" />
     <ClCompile Include="Configuration_1.cpp" />

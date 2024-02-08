@@ -9,6 +9,8 @@
 #include "PT_Locale.h"
 #include "CataloguePointOfContact.h"
 #include "pugiSupportClass.h"
+#include "../GISLibrary/D2D1Resources.h"
+#include "../GeoMetryLibrary/Scaler.h"
 
 #include <string>
 #include <memory>
@@ -39,6 +41,6 @@ namespace S100
 
         void GetContents(pugi::xml_node& node);
 
-        void DrawCoverage(D2D1Resources* pD2, Scaler* scaler, double offsetX = 0, double offsetY = 0);
+        void DrawCoverage(GISLibrary::D2D1Resources* pD2, Scaler* scaler, double offsetX = 0, double offsetY = 0);
     };
 }

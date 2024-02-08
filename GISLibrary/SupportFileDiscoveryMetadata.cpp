@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SupportFileDiscoveryMetadata.h"
+#include "S100_SE_SignatureOnData.h"
 
 namespace S100 {
     void SupportFileDiscoveryMetadata::GetContents(pugi::xml_node& node)
@@ -44,7 +45,7 @@ namespace S100 {
             }
             else if (!strcmp(instructionName, "S100XC:compressionFlag"))
             {
-                CompressionFlag = ParseStr2Bool(instruction.child_value());
+                CompressionFlag = ExXmlSupport().ParseStr2Bool(instruction.child_value());
             }
             else if (!strcmp(instructionName, "S100XC:digitalSignatureReference"))
             {
@@ -52,10 +53,23 @@ namespace S100 {
             }
             else if (!strcmp(instructionName, "S100XC:digitalSignatureValue"))
             {
-                S100_SE_DigitalSignature ds;
-                auto temp = GetContentNode(instruction, "S100_SE_SignatureOnData", "S100SE");
-                ds.GetContents(temp);
-                DigitalSignatureValue.push_back(ds);
+                auto childNode = instruction.first_child();
+                auto childName = childNode.name();
+                if (childName == "S100SE:S100_SE_SignatureOnData")
+                {
+                    S100_SE_SignatureOnData ds;
+                    auto temp = ExXmlSupport().GetContentNode(instruction, "S100_SE_SignatureOnData", "S100SE");
+                    ds.GetContents(temp);
+                    DigitalSignatureValue.push_back(ds);
+
+                }
+                else if (childName == "S100SE:S100_SE_DigitalSignature")
+                {
+                    S100_SE_DigitalSignature ds;
+                    auto temp = ExXmlSupport().GetContentNode(instruction, "S100_SE_SignatureOnData", "S100SE");
+                    ds.GetContents(temp);
+                    DigitalSignatureValue.push_back(ds);
+                }
             }
             else if (!strcmp(instructionName, "S100XC:defaultLocale"))
             {
@@ -119,7 +133,7 @@ namespace S100 {
         }
         {
             auto child = node.append_child("S100XC:compressionFlag");
-            child.text().set(ParseBool2Str(CompressionFlag).c_str());
+            child.text().set(ExXmlSupport().ParseBool2Str(CompressionFlag).c_str());
         }
         {
             auto child = node.append_child("S100XC:digitalSignatureReference");

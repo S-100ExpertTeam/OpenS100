@@ -32,7 +32,7 @@ namespace S100 {
             {
                 MinimumDisplayScale = std::make_shared<int>(atoi(instruction.child_value()));
             }
-            else if (!strcmp(instructionName, "S100XC:approximateGridResolution"))
+            else if (!strcmp(instructionName, "S100XC:apsproximateGridResolution"))
             {
                 ApproximateGridResolution.push_back(atof(instruction.child_value()));
             }
