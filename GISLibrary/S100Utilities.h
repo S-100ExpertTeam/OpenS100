@@ -19,7 +19,7 @@ public:
 
 	bool isOverlap(int scale)
 	{
-		return MaxDisplayScale < scale&& scale < MinDisplayScale ? true : false;
+		return MaxDisplayScale < scale && scale < MinDisplayScale ? true : false;
 	}
 
 	bool isIntersection(int minimumScale, int maximumScale)
@@ -50,7 +50,7 @@ class Inventory {
 public:
 	//EX : 10100AA_X0000.000
 	std::string strFileName;
-	MBR mbrBoundingBox;
+	std::shared_ptr<MBR> mbrBoundingBox;
 	//std::vector<SSurface*> vecBoundingPolygon;
 	std::vector< std::vector<D2D1_POINT_2F>> vecBoundingPolygon;
 	std::vector<ScaleBand> vecScaleRange; 
@@ -64,7 +64,7 @@ class InventoryItem {
 public:
 	//EX : 10100AA_X0000.000
 	std::string strFileName;
-	MBR mbrBoundingBox;
+	std::shared_ptr<MBR> mbrBoundingBox;
 	std::vector<D2D1_POINT_2F> BoundingPolygon;
 	ScaleBand ScaleRange;
 
@@ -86,4 +86,6 @@ public:
 	static std::vector<int> GetScaleBands(ScaleBand sb);
 	static std::vector<std::shared_ptr<InventoryItem>> SelectDataCoverages(std::vector<std::shared_ptr<Inventory>> INV, Scaler* scaler, MBR viewport);
 
+
+	ScaleBands GetLegacyScaleband(int scale);
 };

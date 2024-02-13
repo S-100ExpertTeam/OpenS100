@@ -36,6 +36,12 @@ namespace S100 {
             {
                 ApproximateGridResolution.push_back(atof(instruction.child_value()));
             }
+            else if (!strcmp(instructionName, "S100XC:boundingBox"))
+            {
+                EX_GeographicBoundingBox gb;
+                gb.GetContents(instruction);
+                BoundingBox = std::make_shared<EX_GeographicBoundingBox>(gb);
+            }
             else
             {
             }
