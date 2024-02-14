@@ -440,7 +440,7 @@ void DataSetManagerSupport::ConnectDB()
 	char* errMsg = 0;
 	int rc;
 
-	rc = sqlite3_open("DatasetManager.db", &m_db);
+	rc = sqlite3_open("..\\TEMP\\DatasetManager.db", &m_db);
 	if (rc) {
 		TRACE("Fail Connect Database: %s\n", sqlite3_errmsg(m_db));
 	}
