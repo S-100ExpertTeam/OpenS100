@@ -18,7 +18,7 @@ class S100ExchangeCatalogue :
 	public SpatialObject
 {
 public:
-	S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1);
+	S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1, LayerManager* parent);
 	virtual ~S100ExchangeCatalogue();
 
 public:
@@ -31,6 +31,8 @@ public:
 	std::vector<shared_ptr<Inventory>> m_vecInventory;
 
 	LayerManager* m_pLayerManager;
+
+	LayerManager* m_pParentLayerManager;
 
 	
 

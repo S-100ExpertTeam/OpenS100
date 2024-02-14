@@ -877,7 +877,7 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 			(nodeName.find("S100:pointProperty") != std::string::npos))
 		{
 			auto nodePoint = geomNode.first_child();
-			auto point = ReadPoint(nodePoint);
+			auto point = ReadPoint(nodePoint, "", envelop.getSrsName());
 			if (point) 
 			{
 				auto addedPoint = AddGeometry(point);
@@ -890,7 +890,7 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 			(nodeName.find("S100:curveProperty") != std::string::npos)) 
 		{
 			auto nodeCurve = geomNode.first_child();
-			auto curve = ReadCurve(nodeCurve);
+			auto curve = ReadCurve(nodeCurve, "", envelop.getSrsName());
 			if (curve) {
 				auto addedCurve = AddGeometry(curve);
 				if (addedCurve) {
