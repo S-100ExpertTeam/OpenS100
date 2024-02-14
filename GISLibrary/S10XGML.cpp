@@ -61,7 +61,8 @@ bool S10XGML::Open(CString _filepath)
 		{
 			datasetIdentificationInformation.Read(child);
 		}
-		else if (childName.find("members") != std::string::npos)
+		else if (childName.find("members") != std::string::npos &&
+			childName.find("imembers") == std::string::npos)
 		{
 			ReadMembers(child);
 		}
@@ -241,6 +242,7 @@ bool S10XGML::ReadMembers(pugi::xml_node& node)
 	while (child)
 	{
 		std::string code = child.name();
+		code = DeleteXMLNamespace(code);
 		auto feature = fc->GetFeatureType(code);
 		if (feature)
 		{
@@ -274,17 +276,17 @@ GF::FeatureType* S10XGML::ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc
 	auto child = node.first_child();
 	while (child) {
 		std::string childName = child.name();
-
+		childName = DeleteXMLNamespace(childName);
 		auto attribute = fc->GetAttribute(childName);
 		auto role = fc->GetRole(childName);
 
 		if (attribute) {
 			ReadObjectAttribute(child, feature, fc);
 		}
-		else if (childName.compare("geometry") == 0) {
+		if (childName.find("geometry") != std::string::npos) {
 			ReadFeatureGeometry(child, feature);
 		}
-		else {// if (role) {
+		else if (role) {
 			ReadFeatureRole(child, feature, fc);
 		}
 
@@ -329,7 +331,10 @@ GM::Point* S10XGML::ReadPoint(pugi::xml_node& node, std::string id, std::string 
 	object->setParentIdSrsName(id, srsName);
 	object->readIdSRSName(node);
 
-	auto strPos = node.child_value("gml:pos");
+	std::string strPos = node.child_value("gml:pos");
+	if (strPos.empty()) {
+		strPos = node.child_value("gml:posList");
+	}
 		
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 
@@ -342,8 +347,8 @@ GM::Point* S10XGML::ReadPoint(pugi::xml_node& node, std::string id, std::string 
 	int latIndex = 1;
 	int lonIndex = 0;
 
-	if (object->getSRSName().find("4326") != std::string::npos)
-	{
+	if ((object->getSRSName().find("4326") != std::string::npos) ||
+		(object->getSRSName().empty() && envelop.isYXSequence())) {
 		latIndex = 0;
 		lonIndex = 1;
 	}
@@ -418,13 +423,13 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 	int posCnt = (int)strPosList.size();
 
-	if (posCnt < 4 && posCnt % 2 != 0)
+	if (posCnt < 4)
 	{
 		delete object;
 		return false;
 	}
 
-	for (int i = 0; i < posCnt; i += 2)
+	for (int i = 0; (i + 1) < posCnt; i += 2)
 	{
 		double lon = std::stod(strPosList.at(i + lonIndex));
 		double lat = std::stod(strPosList.at(i + latIndex));
@@ -437,24 +442,31 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 {
 	auto object = new GM::Curve();
-	//object->setParentIdSrsName
 
 	auto strPos = node.child_value("gml:posList");
 
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 	int posCnt = (int)strPosList.size();
 
-	if (posCnt < 4 || posCnt % 2 != 0)
+	if (posCnt < 4)
 	{
 		return false;
 	}
 	
-	//object->SetID(gmlID);
+	int latIndex = 1;
+	int lonIndex = 0;
 
-	for (int i = 0; i < posCnt; i += 2)
+	if (object->getSRSName().find("4326") != std::string::npos || 
+		envelop.isYXSequence())
 	{
-		double lon = std::stod(strPosList.at(i));
-		double lat = std::stod(strPosList.at(i + 1));
+		latIndex = 0;
+		lonIndex = 1;
+	}
+
+	for (int i = 0; (i + 1) < posCnt; i += 2)
+	{
+		double lon = std::stod(strPosList.at(i + lonIndex));
+		double lat = std::stod(strPosList.at(i + latIndex));
 		object->Add(lon, lat);
 	}
 
@@ -735,6 +747,31 @@ GM::Surface* S10XGML::ReadSurface(pugi::xml_node& node)
 	return object; 
 }
 
+GM::Surface* S10XGML::ReadPolygon(pugi::xml_node& node)
+{
+	auto object = new GM::Surface();
+
+	std::string gmlID = node.attribute("gml:id").value();
+	std::string srsName = node.attribute("srsName").value();
+
+	object->SetID(gmlID);
+
+	// Exterior
+	auto xpath_node_LinearRing = node.select_node(".//gml:LinearRing");
+	auto node_LinearRing = xpath_node_LinearRing.node();
+
+	if (node_LinearRing) {
+		auto curve = ReadLinearRing(node_LinearRing);
+		if (curve) {
+			object->SetExteriorRing(curve);
+			delete curve;
+			curve = nullptr;
+		}
+	}
+
+	return object;
+}
+
 bool S10XGML::ReadMember(pugi::xml_node& node)
 {
 	auto featureNode = node.first_child();
@@ -770,7 +807,9 @@ bool S10XGML::ReadIMember(pugi::xml_node& node)
 bool S10XGML::ReadObjectAttribute(
 	pugi::xml_node& node, GF::ObjectType* object, FeatureCatalogue* fc)
 {
-	auto sa = fc->GetSimpleAttribute(node.name());
+	std::string attributeName = node.name();
+	attributeName = DeleteXMLNamespace(attributeName);
+	auto sa = fc->GetSimpleAttribute(attributeName);
 	if (sa)
 	{
 		auto value = node.child_value();
@@ -778,10 +817,10 @@ bool S10XGML::ReadObjectAttribute(
 	}
 	else
 	{
-		auto ca = fc->GetComplexAttribute(node.name());
+		auto ca = fc->GetComplexAttribute(attributeName);
 		if (ca)
 		{
-			auto addedCA = object->AddComplexAttribute(node.name());
+			auto addedCA = object->AddComplexAttribute(attributeName);
 
 			auto child = node.first_child();
 			while (child)
@@ -863,9 +902,20 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 			(nodeName.find("S100:surfaceProperty") != std::string::npos))
 		{
 			auto nodeSurface = geomNode.first_child();
-			auto surface = ReadSurface(nodeSurface);
-			if (surface)
-			{
+
+			std::string nodeSurfaceName = nodeSurface.name();
+			nodeSurfaceName = DeleteXMLNamespace(nodeSurfaceName);
+
+			GM::Surface* surface = nullptr;
+
+			if (nodeSurfaceName.find("Surface") != std::string::npos) {
+				surface = ReadSurface(nodeSurface);
+			}
+			else if (nodeSurfaceName.find("Polygon") != std::string::npos) {
+				surface = ReadPolygon(nodeSurface);
+			}
+
+			if (surface) {
 				auto addedSurface = AddGeometry(surface);
 				if (addedSurface) {
 					feature->SetGeometryID(addedSurface->GetID());

@@ -443,6 +443,10 @@ void COpenS100View::MapFill()
 	}
 
 	auto layerMBR = layer->GetMBR();
+	if (layerMBR.IsEmpty())
+	{
+		layerMBR.Extent(0.001);
+	}
 
 	theApp.gisLib->SetMap(layerMBR);
 	if (theApp.gisLib2) {

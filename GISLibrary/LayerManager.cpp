@@ -139,7 +139,13 @@ int LayerManager::AddLayer(Layer* _layer)
 
 	if (LayerCount() == 0)
 	{
-		mbr.SetMBR(_layer->m_mbr);
+		MBR newMBR = _layer->GetMBR();
+		if (newMBR.IsEmpty())
+		{
+			newMBR.Extent(0.001);
+		}
+
+		mbr.SetMBR(newMBR);
 		if (m_isScreenFitEnabled)
 			scaler->SetMap(mbr);
 	}

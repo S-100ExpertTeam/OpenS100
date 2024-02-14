@@ -51,6 +51,8 @@ public:
     GM::CompositeCurve* ReadCompositeCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
     GM::Curve* ReadLinearRing(pugi::xml_node& node); // read gml:LinearRing
     GM::Surface* ReadSurface(pugi::xml_node& node); // read S100:Surface
+    
+    // node : Polygon node
     GM::Surface* ReadPolygon(pugi::xml_node& node);
     bool ReadMember(pugi::xml_node& node);
     bool ReadIMember(pugi::xml_node& node);

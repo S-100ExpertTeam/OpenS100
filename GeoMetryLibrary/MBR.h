@@ -43,6 +43,10 @@ public:
 	void InitMBR();
 	bool PtInMBR(double x, double y);
 	void Scale(double Scale);
+	
+	bool IsEmpty();
+	void Extent(double value);
+	
 	bool operator== (MBR& _mbr);
 
 	// static 

@@ -5,6 +5,8 @@
 #include "MD_CharacterSetCode.h"
 #include "pugixml.hpp"
 
+#include <memory>
+
 namespace S100 {
     class PT_Locale
     {
