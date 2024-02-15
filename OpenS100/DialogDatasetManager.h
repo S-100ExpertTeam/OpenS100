@@ -23,6 +23,8 @@ public:
 
 	CTabCtrl m_tab;
 
+	CatalogManager* ct;
+
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);   

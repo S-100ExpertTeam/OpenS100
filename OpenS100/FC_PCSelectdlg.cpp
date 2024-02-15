@@ -400,7 +400,6 @@ BOOL FC_PCSelectdlg::PreTranslateMessage(MSG* pMsg)
 
 void FC_PCSelectdlg::OnDestroy() 
 {
-
 	DataSetManagerSupport::GetInstance().deleteAllDataFromTable("FeatureCatalogue");
 	DataSetManagerSupport::GetInstance().deleteAllDataFromTable("PortrayalCatalogue");
 
@@ -408,6 +407,7 @@ void FC_PCSelectdlg::OnDestroy()
 	{
 		DataSetManagerSupport::GetInstance().insertData("FeatureCatalogue", m_vecFC[i]->fileName, m_vecFC[i]->filePath
 			, m_vecFC[i]->product, m_vecFC[i]->version);
+		ct->addFC(m_vecFC[i]->filePath);
 	}
 
 
@@ -415,7 +415,11 @@ void FC_PCSelectdlg::OnDestroy()
 	{
 		DataSetManagerSupport::GetInstance().insertData("PortrayalCatalogue", m_vecPC[i]->fileName, m_vecPC[i]->filePath
 			, m_vecPC[i]->product, m_vecPC[i]->version);
+		ct->addPC(m_vecPC[i]->filePath);
 	}
+
+	 auto list = ct->getFcProductList();
+	 
 
 
 	CDialogEx::OnDestroy();

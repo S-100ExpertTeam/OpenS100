@@ -236,10 +236,26 @@ void DATASET_SUPPORTdlg::OnDestroy()
 	DataSetManagerSupport::GetInstance().deleteAllDataFromTable("SupportFiles");
 
 	for (int i = 0; i < m_vecDS.size(); i++)
+	{
 		DataSetManagerSupport::GetInstance().insertData("DatasetFiles", m_vecDS[i]->fileName, m_vecDS[i]->filePath);
+
+		auto layers = theApp.gisLib->GetLayerManager()->layers;
+		bool isEnable = false;
+		for (auto iter = layers.begin(); iter != layers.end(); iter++)
+		{
+			auto layer = *iter;
+			if (layer->GetLayerPath().Compare(LibMFCUtil::StringToWString(m_vecDS[i]->filePath).c_str()) == 0)
+				isEnable = true;
+		}
+		if (!isEnable)
+			theApp.gisLib->GetLayerManager()->AddLayer(LibMFCUtil::StringToWString(m_vecDS[i]->filePath).c_str());
+	}
+	theApp.m_pDockablePaneLayerManager.UpdateList();
 
 	for (int i = 0; i < m_vecSP.size(); i++)
 		DataSetManagerSupport::GetInstance().insertData("SupportFiles", m_vecSP[i]->fileName, m_vecSP[i]->filePath);
+
+
 
 	CDialogEx::OnDestroy();
 }

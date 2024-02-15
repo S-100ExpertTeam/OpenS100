@@ -26,6 +26,9 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+
+	CatalogManager* ct;
+
 	CListCtrl m_list1;
 	CListCtrl m_list2;
 

@@ -11,7 +11,7 @@ IMPLEMENT_DYNAMIC(DialogDatasetManager, CDialogEx)
 DialogDatasetManager::DialogDatasetManager(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_DATASET_MANAGER, pParent)
 {
-
+	
 }
 
 DialogDatasetManager::~DialogDatasetManager()
@@ -49,6 +49,7 @@ BOOL DialogDatasetManager::OnInitDialog()
 	
 	// Main
 	mainTab.Create(IDD_DIALOG_FC_PC, &m_tab);
+	mainTab.ct = ct;
 	mainTab.ShowWindow(SW_SHOW);
 	mainTab.GetWindowRect(&r);
 	mainTab.MoveWindow(5, 25, r.Width(), r.Height());

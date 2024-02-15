@@ -58,4 +58,6 @@ public:
 	CString FixFileName(string str);
 
 	CString FixLegacyFileName(string str);
+
+	CString GetFirstLayerFilePath();
 };

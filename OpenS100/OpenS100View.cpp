@@ -603,6 +603,7 @@ void COpenS100View::DatasetManager()
 {
 	//AfxMessageBox(L"fdsafa");
 	DialogDatasetManager dlg;
+	dlg.ct = theApp.gisLib->GetCatalogManager();
 	dlg.DoModal();
 }
 
@@ -639,7 +640,6 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	for (auto item : pclist)
 		cm->addPC(item);
 
-	
 	
 	if (fclist.empty())
 	{
@@ -1961,7 +1961,8 @@ void COpenS100View::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
 
-
 	for (auto item : DataSetManagerSupport::GetInstance().initDataFileList())
 		theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());
+
+	theApp.m_pDockablePaneLayerManager.UpdateList();
 }

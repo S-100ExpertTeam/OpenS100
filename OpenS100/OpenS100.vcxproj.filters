@@ -104,9 +104,15 @@
     <ClInclude Include="DialogDatasetManager.h">
       <Filter>Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="FC_PCSelectdlg.h" />
-    <ClInclude Include="DataSetManagerSupport.h" />
-    <ClInclude Include="DATASET_SUPPORTdlg.h" />
+    <ClInclude Include="DATASET_SUPPORTdlg.h">
+      <Filter>Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="FC_PCSelectdlg.h">
+      <Filter>Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DataSetManagerSupport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenS100.cpp">
@@ -181,14 +187,14 @@
     <ClCompile Include="DialogDatasetManager.cpp">
       <Filter>Dialog</Filter>
     </ClCompile>
-    <ClCompile Include="FC_PCSelectdlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DataSetManagerSupport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DATASET_SUPPORTdlg.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="FC_PCSelectdlg.cpp">
+      <Filter>Dialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
