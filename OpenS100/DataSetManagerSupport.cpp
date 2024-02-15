@@ -28,6 +28,14 @@ DataSetManagerSupport::DataSetManagerSupport()
 	CreateSPTable();
 }
 
+DataSetManagerSupport::~DataSetManagerSupport()
+{
+	if (m_db) {
+		DisConnectDB();
+		m_db = nullptr;
+	}
+}
+
 
 void DataSetManagerSupport::OpenFolder(const CString& path)
 {

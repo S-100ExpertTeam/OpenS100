@@ -39,6 +39,8 @@ private:
 
 public:
 
+	~DataSetManagerSupport();
+
 	static DataSetManagerSupport& GetInstance() {
 		if (!instance) {
 			instance = std::unique_ptr<DataSetManagerSupport>(new DataSetManagerSupport());
