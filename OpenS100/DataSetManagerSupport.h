@@ -4,6 +4,12 @@
 #include <sqlite3.h>
 #include <vector>
 
+namespace S100
+{
+	class ExchangeCatalogue;
+}
+
+
 class FC_PC_DatasetClass
 {
 public:
@@ -57,12 +63,18 @@ public:
 	std::shared_ptr<FC_PC_DatasetClass> FC_PC_LoadFile(std::string filepath);
 	std::vector<std::shared_ptr<DatasetClass>> Dataset_LoadFile(std::string filepath);
 
-	//init
+	// init
 	std::vector<std::string> initFCList();
 	std::vector<std::string> initPCList();
 	std::vector<std::string> initDataFileList();
 
-	//DB
+	// Catalogue.xml
+	void CreateCatalogueFile(std::string filePath, S100::ExchangeCatalogue& ec);
+	bool tryDeleteFile(const std::string& filePath, int maxAttempts = 3, int delaySeconds = 5);
+
+
+
+	// DB
 	std::vector<std::shared_ptr<FC_PC_DatasetClass>>  LoadFC_PC_DB();
 
 	void ConnectDB();

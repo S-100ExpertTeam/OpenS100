@@ -4,17 +4,23 @@
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 #include "../LibMFCUtil/LibMFCUtil.h"
 
+#include "../GISLibrary/ExchangeCatalogue.h"
+
 #include <string>
 #include <pugixml.hpp>
-#include "../GISLibrary/ExchangeCatalogue.h"
+
 
 #include <afxwin.h>  // MFC core and standard components
 #include <afxdlgs.h> // MFC standard dialog boxes
 #include <algorithm>
+#include <fstream>
+#include <filesystem>
+#include <thread>
+
+
+namespace fs = std::filesystem;
 
 std::unique_ptr<DataSetManagerSupport> DataSetManagerSupport::instance = nullptr;
-
-
 
 DataSetManagerSupport::DataSetManagerSupport()
 {
@@ -36,6 +42,43 @@ DataSetManagerSupport::~DataSetManagerSupport()
 	}
 }
 
+void DataSetManagerSupport::CreateCatalogueFile(std::string filePath, S100::ExchangeCatalogue& ec)
+{
+	fs::path pathObj(filePath);
+	fs::path dirPath = pathObj.parent_path();
+
+	if (!dirPath.empty() && !fs::exists(dirPath)) {
+		fs::create_directories(dirPath);
+	}
+
+	if (fs::exists(filePath)) {
+		if (tryDeleteFile(filePath))
+		{
+			std::ofstream file(filePath);
+			if (file.is_open()) {
+				file.close();
+			}
+		}
+	}
+}
+
+
+bool DataSetManagerSupport::tryDeleteFile(const std::string& filePath, int maxAttempts, int delaySeconds) {
+	for (int attempt = 1; attempt <= maxAttempts; ++attempt) {
+		
+		if (fs::remove(filePath)) {
+			return true;
+		}
+		else {
+			if (attempt < maxAttempts) {
+				std::this_thread::sleep_for(std::chrono::seconds(delaySeconds));
+			}
+		}
+	}
+	return false;
+}
+
+
 
 void DataSetManagerSupport::OpenFolder(const CString& path)
 {
@@ -53,6 +96,7 @@ void DataSetManagerSupport::OpenFolder(const CString& path)
 		AfxMessageBox(errorMessage, MB_ICONERROR);
 	}
 }
+
 
 
 void DataSetManagerSupport::ExtractFileNameAndPath(const std::string& fullPath, std::string& outFileName, std::string& outFilePath) {
