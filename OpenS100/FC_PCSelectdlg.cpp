@@ -400,27 +400,57 @@ BOOL FC_PCSelectdlg::PreTranslateMessage(MSG* pMsg)
 
 void FC_PCSelectdlg::OnDestroy() 
 {
+ 	auto FcList = ct->getFcProductList();
+	auto PcList = ct->getPcProductList();
+
+
 	DataSetManagerSupport::GetInstance().deleteAllDataFromTable("FeatureCatalogue");
 	DataSetManagerSupport::GetInstance().deleteAllDataFromTable("PortrayalCatalogue");
 
 	for (int i = 0; i < m_vecFC.size(); i++)
 	{
+		bool enable = false;
+		for (auto fc : FcList)
+		{
+			if (fc == "")
+			{
+			}
+			else if(std::string::npos != m_vecFC[i]->product.find(fc))
+			{
+				enable = true;
+				break;
+			}
+		}
+
+		if (!enable)
+			ct->addFC(m_vecFC[i]->filePath);
+
 		DataSetManagerSupport::GetInstance().insertData("FeatureCatalogue", m_vecFC[i]->fileName, m_vecFC[i]->filePath
 			, m_vecFC[i]->product, m_vecFC[i]->version);
-		ct->addFC(m_vecFC[i]->filePath);
 	}
 
 
 	for (int i = 0; i < m_vecPC.size(); i++)
 	{
+		bool enable = false;
+		for (auto pc : PcList)
+		{
+			if (pc == "")
+			{
+			}
+			else if (std::string::npos != m_vecPC[i]->product.find(pc))
+			{
+				enable = true;
+				break;
+			}
+		}
+
+		if (!enable)
+			ct->addPC(m_vecPC[i]->filePath);
+
 		DataSetManagerSupport::GetInstance().insertData("PortrayalCatalogue", m_vecPC[i]->fileName, m_vecPC[i]->filePath
 			, m_vecPC[i]->product, m_vecPC[i]->version);
-		ct->addPC(m_vecPC[i]->filePath);
 	}
-
-	 auto list = ct->getFcProductList();
-	 
-
 
 	CDialogEx::OnDestroy();
 }

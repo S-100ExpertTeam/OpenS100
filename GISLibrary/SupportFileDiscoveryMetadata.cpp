@@ -15,11 +15,11 @@ namespace S100 {
             }
             else if (!strcmp(instructionName, "S100XC:revisionStatus"))
             {
-                RevisionStatus = S100_SupportFileRevisionStatusFromString(instruction.child_value());
+                RevisionStatus = std::make_shared<SupportFileRevisionStatus>(S100_SupportFileRevisionStatusFromString(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:editionNumber"))
             {
-                EditionNumber = atoi(instruction.child_value());
+                EditionNumber = std::make_shared<int>(atoi(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:issueDate"))
             {
@@ -33,7 +33,7 @@ namespace S100 {
             }
             else if (!strcmp(instructionName, "S100XC:dataType"))
             {
-                DataType = SupportFileFormatFromString(instruction.child_value());
+                DataType = std::make_shared<SupportFileFormat>(SupportFileFormatFromString(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:otherDataTypeDescription"))
             {
@@ -45,11 +45,11 @@ namespace S100 {
             }
             else if (!strcmp(instructionName, "S100XC:compressionFlag"))
             {
-                CompressionFlag = ExXmlSupport().ParseStr2Bool(instruction.child_value());
+                CompressionFlag = std::make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:digitalSignatureReference"))
             {
-                DigitalSignatureReference = S100_SE_DigitalSignatureReferenceFromString(instruction.child_value());
+                DigitalSignatureReference = std::make_shared<S100_SE_DigitalSignatureReference>(S100_SE_DigitalSignatureReferenceFromString(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:digitalSignatureValue"))
             {
@@ -98,13 +98,15 @@ namespace S100 {
             auto child = node.append_child("S100XC:fileName");
             child.text().set(FileName.c_str());
         }
+        if (RevisionStatus)
         {
             auto child = node.append_child("S100XC:revisionStatus");
-            child.text().set(S100_SupportFileRevisionStatusToString(RevisionStatus).c_str());
+            child.text().set(S100_SupportFileRevisionStatusToString(*RevisionStatus).c_str());
         }
+        if (EditionNumber)
         {
             auto child = node.append_child("S100XC:editionNumber");
-            child.text().set(std::to_string(EditionNumber).c_str());
+            child.text().set(std::to_string(*EditionNumber).c_str());
         }
         if (IssueDate)
         {
@@ -116,9 +118,10 @@ namespace S100 {
             auto child = node.append_child("S100XC:supportFileSpecification");
             supportFileSpecification->Save(child);
         }
+        if (DataType)
         {
             auto child = node.append_child("S100XC:dataType");
-            child.text().set(SupportFileFormatToString(DataType).c_str());
+            child.text().set(SupportFileFormatToString(*DataType).c_str());
         }
         if (OtherDataTypeDescription)
         {
@@ -131,13 +134,15 @@ namespace S100 {
             auto child = node.append_child("S100XC:comment");
             child.text().set(Comment->c_str());
         }
+        if (CompressionFlag)
         {
             auto child = node.append_child("S100XC:compressionFlag");
-            child.text().set(ExXmlSupport().ParseBool2Str(CompressionFlag).c_str());
+            child.text().set(ExXmlSupport().ParseBool2Str(*CompressionFlag).c_str());
         }
+        if (DigitalSignatureReference)
         {
             auto child = node.append_child("S100XC:digitalSignatureReference");
-            child.text().set(S100_SE_DigitalSignatureReferenceToString(DigitalSignatureReference).c_str());
+            child.text().set(S100_SE_DigitalSignatureReferenceToString(*DigitalSignatureReference).c_str());
         }
         if (!DigitalSignatureValue.empty())
         {

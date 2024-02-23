@@ -215,6 +215,39 @@ int LayerManager::AddLayer(Layer* _layer)
 	return _layer->GetID();
 }
 
+
+int LayerManager::AddLayerFront(Layer* _layer)
+{
+	if (_layer == nullptr)
+	{
+		return -1;
+	}
+
+	_layer->SetID(CreateLayerID());
+
+	if (LayerCount() == 0)
+	{
+		MBR newMBR = _layer->GetMBR();
+		if (newMBR.IsEmpty())
+		{
+			newMBR.Extent(0.001);
+		}
+
+		mbr.SetMBR(newMBR);
+		if (m_isScreenFitEnabled)
+			scaler->SetMap(mbr);
+	}
+	else
+	{
+		mbr.CalcMBR(_layer->m_mbr);
+	}
+
+	layers.push_front(_layer);
+	mapLayer.insert({ _layer->GetID(), _layer });
+
+	return _layer->GetID();
+}
+
 bool LayerManager::AddUpdateLayer(Layer* Base, Layer* Update)
 {
 
@@ -297,6 +330,62 @@ int LayerManager::AddLayer(CString _filepath)
 
 	return layer->GetID();
 }
+
+
+int LayerManager::AddLayerFront(CString _filepath)
+{
+	Layer* layer = nullptr;
+	size_t fitor = std::wstring::npos;
+
+	S100_FileType fileType = CheckFileType(_filepath);
+
+	if (fileType == S100_FileType::FILE_Shape ||
+		fileType == S100_FileType::FILE_ETC)
+	{
+		layer = new Layer();
+		if (layer->Open(_filepath, D2, this) == false)
+		{
+			delete layer;
+			return -1;
+		}
+	}
+	else if (fileType == S100_FileType::FILE_S_100_VECTOR ||
+		fileType == S100_FileType::FILE_S_100_GRID_H5)
+	{
+		auto productNumber = pathToProductNumber(_filepath);
+		auto fc = catalogManager->getFC(productNumber);
+		auto pc = catalogManager->getPC(productNumber);
+
+		if (fc)
+		{
+			layer = new S100Layer(fc, pc);
+			if ((S100Layer*)layer->Open(_filepath, D2, this) == false)
+			{
+				delete layer;
+				return -1;
+			}
+
+			BuildPortrayalCatalogue(layer);
+		}
+	}
+
+	if (!layer ||
+		!layer->m_spatialObject)
+	{
+		if (layer)
+		{
+			delete layer;
+		}
+
+		return -1;
+	}
+
+
+	AddLayerFront(layer);
+
+	return layer->GetID();
+}
+
 
 void LayerManager::Draw(HDC& hdc, int offset)
 {
@@ -1328,6 +1417,23 @@ void LayerManager::DeleteLayer(int index)
 	ReMBR();
 
 	return;
+}
+
+void LayerManager::FindPathDeleteLayer(CString FindLayerPath)
+{
+	for (auto i = layers.begin(); i != layers.end(); i++)
+	{
+		auto layer = *i;
+		if(std::string::npos != layer->GetLayerPath().Find(FindLayerPath))
+		{
+			mapLayer.erase(layer->GetID());
+			delete layer;
+			layer = nullptr;
+			layers.erase(i);
+			ReMBR();
+			return;
+		}
+	}
 }
 
 void LayerManager::DeleteLayer(CString filepath)

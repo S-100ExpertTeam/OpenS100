@@ -5,8 +5,12 @@
 #include "DATASET_SUPPORTdlg.h"
 #include "../LibMFCUtil/LibMFCUtil.h"
 #include "DataSetManagerSupport.h"
+#include "../GISLibrary/ExchangeCatalogue.h"
 
+#include <fstream>
+#include <filesystem>
 
+namespace fs = std::filesystem;
 
 IMPLEMENT_DYNAMIC(DATASET_SUPPORTdlg, CDialogEx)
 
@@ -64,27 +68,29 @@ BOOL DATASET_SUPPORTdlg::OnInitDialog()
 	m_list2.SetExtendedStyle(m_list2.GetExtendedStyle()| LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
 
 
+	CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath + DataSetManagerSupport::GetInstance().m_FileName;
+	LoadFile(filepath);
 
-	// Get Files
-	auto DSItems = DataSetManagerSupport::GetInstance().selectAllDataDS_SP("DatasetFiles");
-	for each (auto var in DSItems)
-	{
-		if (var)
-		{
-			m_vecDS.push_back(var);
-			Set_Item(var);
-		}
-	}
+	//// Get Files
+	//auto DSItems = DataSetManagerSupport::GetInstance().selectAllDataDS_SP("DatasetFiles");
+	//for each (auto var in DSItems)
+	//{
+	//	if (var)
+	//	{
+	//		m_vecDS.push_back(var);
+	//		Set_Item(var);
+	//	}
+	//}
 
-	auto SPItems = DataSetManagerSupport::GetInstance().selectAllDataDS_SP("SupportFiles");
-	for each (auto var in SPItems)
-	{
-		if (var)
-		{
-			m_vecSP.push_back(var);
-			Set_Item(var);
-		}
-	}
+	//auto SPItems = DataSetManagerSupport::GetInstance().selectAllDataDS_SP("SupportFiles");
+	//for each (auto var in SPItems)
+	//{
+	//	if (var)
+	//	{
+	//		m_vecSP.push_back(var);
+	//		Set_Item(var);
+	//	}
+	//}
 
 	return TRUE;
 }
@@ -234,29 +240,81 @@ void DATASET_SUPPORTdlg::OnDestroy()
 {
 	DataSetManagerSupport::GetInstance().deleteAllDataFromTable("DatasetFiles");
 	DataSetManagerSupport::GetInstance().deleteAllDataFromTable("SupportFiles");
+	
+	std::vector<CString> dsFilePathVec;
+	std::vector<CString> spFilePathVec;
+
+	S100::ExchangeCatalogue* ec = new S100::ExchangeCatalogue();
 
 	for (int i = 0; i < m_vecDS.size(); i++)
 	{
 		DataSetManagerSupport::GetInstance().insertData("DatasetFiles", m_vecDS[i]->fileName, m_vecDS[i]->filePath);
+		S100::DatasetDiscoveryMetadata ddm;
 
-		auto layers = theApp.gisLib->GetLayerManager()->layers;
-		bool isEnable = false;
-		for (auto iter = layers.begin(); iter != layers.end(); iter++)
-		{
-			auto layer = *iter;
-			if (layer->GetLayerPath().Compare(LibMFCUtil::StringToWString(m_vecDS[i]->filePath).c_str()) == 0)
-				isEnable = true;
-		}
-		if (!isEnable)
-			theApp.gisLib->GetLayerManager()->AddLayer(LibMFCUtil::StringToWString(m_vecDS[i]->filePath).c_str());
+		ddm.FileName = m_vecDS[i]->Name;
+		ddm.dataCoverage = m_vecDS[i]->datacoverage;
+		ddm.productSpecification = m_vecDS[i]->productSpecification;
+		ddm.BoundingBox = m_vecDS[i]->BoundingBox;
+		ec->DatasetDiscoveryMetadata.push_back(ddm);
+
+		CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath;
+		filepath += LibMFCUtil::StringToWString(m_vecDS[i]->commonfilePath).c_str();
+		dsFilePathVec.push_back(filepath);
+		DataSetManagerSupport::GetInstance().CopyFileWithChecks(LibMFCUtil::StringToWString(m_vecDS[i]->filePath).c_str(),
+			filepath);
 	}
-	theApp.m_pDockablePaneLayerManager.UpdateList();
 
 	for (int i = 0; i < m_vecSP.size(); i++)
+	{
 		DataSetManagerSupport::GetInstance().insertData("SupportFiles", m_vecSP[i]->fileName, m_vecSP[i]->filePath);
+		S100::SupportFileDiscoveryMetadata sfd;
 
+		sfd.FileName = m_vecSP[i]->Name;
 
+		ec->SupportFileDiscoveryMetadata.push_back(sfd);
 
+		CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath;
+		filepath += LibMFCUtil::StringToWString(m_vecSP[i]->commonfilePath).c_str();
+		spFilePathVec.push_back(filepath);
+		DataSetManagerSupport::GetInstance().CopyFileWithChecks(LibMFCUtil::StringToWString(m_vecSP[i]->filePath).c_str(),
+			filepath);
+	}
+
+	CString filePath = DataSetManagerSupport::GetInstance().m_FolderPath;
+	filePath += DataSetManagerSupport::GetInstance().m_FileName;
+
+	std::string stfilePath = LibMFCUtil::WStringToString(filePath.GetBuffer());
+
+	if (fs::exists(stfilePath)) {
+		if (DataSetManagerSupport::GetInstance().tryDeleteFile(stfilePath))
+			ec->Save(stfilePath);
+	}
+	else
+		ec->Save(stfilePath);
+
+	
+	bool blayercreate = true;
+	auto layers = theApp.gisLib->GetLayerManager()->layers;
+	for (auto layer : layers)
+	{
+		if (std::string::npos != layer->GetLayerPath().Find(filePath))
+		{
+			int id = layer->GetID();
+
+			theApp.gisLib->GetLayerManager()->AddLayerFront(filePath);
+			theApp.gisLib->GetLayerManager()->DeleteLayerByKey(id);
+
+			blayercreate = false;
+			break;
+		}
+	}
+
+	if(blayercreate)
+		theApp.gisLib->GetLayerManager()->AddLayerFront(filePath);
+	
+	theApp.m_pDockablePaneLayerManager.UpdateList();
+
+	delete ec;
 	CDialogEx::OnDestroy();
 }
 

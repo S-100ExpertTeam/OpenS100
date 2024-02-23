@@ -1961,8 +1961,12 @@ void COpenS100View::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
 
-	for (auto item : DataSetManagerSupport::GetInstance().initDataFileList())
-		theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());
+	CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath + DataSetManagerSupport::GetInstance().m_FileName;
+	theApp.gisLib->AddLayer(filepath);
+	
+
+	/*for (auto item : DataSetManagerSupport::GetInstance().initDataFileList())
+		theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());*/
 
 	theApp.m_pDockablePaneLayerManager.UpdateList();
 }

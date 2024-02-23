@@ -29,7 +29,7 @@ CString S100ExchangeCatalogue::GetFirstLayerFilePath()
 
     for (int i = 0; i < ddm.size(); i++)
     {
-        if (std::string::npos == ddm[i].productSpecification.ProductIdentifier.find("101") && ddm[i].productSpecification.Number != 101)
+        if (std::string::npos == ddm[i].productSpecification->ProductIdentifier.find("101") && ddm[i].productSpecification->Number != 101)
         {
             CString strFilePath = FixFileName(ddm[i].FileName);
             return strFilePath;
@@ -66,7 +66,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
     {
         for (int i = 0; i < DDM.size(); i++)
         {
-            if (std::string::npos != DDM[i].productSpecification.ProductIdentifier.find("101") || DDM[i].productSpecification.Number == 101)
+            if (std::string::npos != DDM[i].productSpecification->ProductIdentifier.find("101") || DDM[i].productSpecification->Number == 101)
             {
                 //add Inventory ptr
                 shared_ptr<Inventory> inv = make_shared<Inventory>();
@@ -151,7 +151,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
 
         for (int i = 0; i < DDM.size(); i++)
         {
-            if (std::string::npos != DDM[i].productSpecification.ProductIdentifier.find("101") || DDM[i].productSpecification.Number == 101)
+            if (std::string::npos != DDM[i].productSpecification->ProductIdentifier.find("101") || DDM[i].productSpecification->Number == 101)
             {
                 //add Inventory ptr
                 shared_ptr<Inventory> inv = make_shared<Inventory>();
@@ -615,7 +615,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
         pRenderTarget->BeginDraw();
         for (int i = 0; i < m_DataPtr->DatasetDiscoveryMetadata.size(); i++)
         {
-            if (std::string::npos != m_DataPtr->DatasetDiscoveryMetadata[i].productSpecification.ProductIdentifier.find("101"))
+            if (std::string::npos != m_DataPtr->DatasetDiscoveryMetadata[i].productSpecification->ProductIdentifier.find("101"))
             {
 
                 auto textformat = D2->pDWriteTextFormat;

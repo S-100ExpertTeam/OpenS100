@@ -19,15 +19,15 @@ namespace S100 {
     {
     public:
         URI FileName;
-        SupportFileRevisionStatus RevisionStatus;
-        int EditionNumber;
+        std::shared_ptr<SupportFileRevisionStatus> RevisionStatus;
+        std::shared_ptr<int> EditionNumber;
         std::shared_ptr<S100_Date> IssueDate;
         std::shared_ptr<SupportFileSpecification> supportFileSpecification;
-        SupportFileFormat DataType;
+        std::shared_ptr<SupportFileFormat> DataType;
         std::shared_ptr<std::string> OtherDataTypeDescription;
         std::shared_ptr<std::string> Comment;
-        bool CompressionFlag;
-        S100_SE_DigitalSignatureReference DigitalSignatureReference;
+        std::shared_ptr<bool> CompressionFlag;
+        std::shared_ptr<S100_SE_DigitalSignatureReference> DigitalSignatureReference;
         std::vector<S100_SE_DigitalSignature> DigitalSignatureValue;
         std::shared_ptr<PT_Locale> DefaultLocale;
         std::vector<std::string> SupportedResource;

@@ -24,11 +24,11 @@ namespace S100
             }
             else if (!strcmp(instructionName, "S100XC:compressionFlag"))
             {
-                CompressionFlag = ExXmlSupport().ParseStr2Bool(instruction.child_value());
+                CompressionFlag = make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:dataProtection"))
             {
-                DataProtection = ExXmlSupport().ParseStr2Bool(instruction.child_value());
+                DataProtection = make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:protectionScheme"))
             {
@@ -60,7 +60,7 @@ namespace S100
             }
             else if (!strcmp(instructionName, "S100XC:copyright"))
             {
-                Copyright = ExXmlSupport().ParseStr2Bool(instruction.child_value());
+                Copyright = make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:classification"))
             {
@@ -74,7 +74,7 @@ namespace S100
             }
             else if (!strcmp(instructionName, "S100XC:notForNavigation"))
             {
-                NotForNavigation = ExXmlSupport().ParseStr2Bool(instruction.child_value());;
+                NotForNavigation = make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:specificUsage"))
             {
@@ -98,7 +98,7 @@ namespace S100
             }
             else if (!strcmp(instructionName, "S100XC:issueDate"))
             {
-                IssueDate = S100_Date(instruction.child_value());
+                IssueDate = make_shared<S100_Date>(instruction.child_value());
             }
             else if (!strcmp(instructionName, "S100XC:issueTime"))
             {
@@ -120,14 +120,14 @@ namespace S100
             {
                 ProductSpecification ps;
                 ps.GetContents(instruction);
-                productSpecification = ps;
+                productSpecification = make_shared<ProductSpecification>(ps);
             }
             else if (!strcmp(instructionName, "S100XC:producingAgency"))
             {
                 CI_Responsibility os;
                 auto temp = ExXmlSupport().GetContentNode(instruction, "CI_Responsibility", "cit");
                 os.GetContents(temp);
-                ProducingAgency = os;
+                ProducingAgency = make_shared<CI_Responsibility>(os);
             }
             else if (!strcmp(instructionName, "S100XC:producerCode"))
             {
@@ -136,7 +136,7 @@ namespace S100
             else if (!strcmp(instructionName, "S100XC:encodingFormat"))
             {
                 if (!string(instruction.child_value()).empty())
-                    EncodingFormat = S100_EncodingFormatFromString(instruction.child_value());
+                    EncodingFormat = make_shared<S100::EncodingFormat>(S100_EncodingFormatFromString(instruction.child_value()));
             }
             else if (!strcmp(instructionName, "S100XC:dataCoverage"))
             {
@@ -212,11 +212,16 @@ namespace S100
                 auto child = node.append_child("S100XC:datasetID");
                 child.text().set(DatasetID->c_str());
             }
-            auto CompressionFlagNode = node.append_child("S100XC:compressionFlag");
-            CompressionFlagNode.text().set(ExXmlSupport().ParseBool2Str(CompressionFlag).c_str());
-
-            auto DataProtectionNode = node.append_child("S100XC:dataProtection");
-            DataProtectionNode.text().set(ExXmlSupport().ParseBool2Str(DataProtection).c_str());
+            if (CompressionFlag)
+            {
+                auto CompressionFlagNode = node.append_child("S100XC:compressionFlag");
+                CompressionFlagNode.text().set(ExXmlSupport().ParseBool2Str(*CompressionFlag).c_str());
+            }
+            if (DataProtection)
+            {
+                auto DataProtectionNode = node.append_child("S100XC:dataProtection");
+                DataProtectionNode.text().set(ExXmlSupport().ParseBool2Str(*DataProtection).c_str());
+            }
             if (protectionScheme)
             {
                 auto child = node.append_child("S100XC:protectionScheme");
@@ -235,9 +240,11 @@ namespace S100
                     DigitalSignatureValue[i].Save(child);
                 }
             }
-            auto copyrightNode = node.append_child("S100XC:copyright");
-            copyrightNode.text().set(ExXmlSupport().ParseBool2Str(Copyright).c_str());
-
+            if (Copyright)
+            {
+                auto copyrightNode = node.append_child("S100XC:copyright");
+                copyrightNode.text().set(ExXmlSupport().ParseBool2Str(*Copyright).c_str());
+            }
             if (Classification)
             {
                 auto child = node.append_child("S100XC:classification");
@@ -248,8 +255,11 @@ namespace S100
                 auto child = node.append_child("S100XC:purpose");
                 child.text().set(S100_PurposeToString(*purpose).c_str());
             }
-            auto notForNavigationNode = node.append_child("S100XC:notForNavigation");
-            notForNavigationNode.text().set(ExXmlSupport().ParseBool2Str(NotForNavigation).c_str());
+            if (NotForNavigation)
+            {
+                auto notForNavigationNode = node.append_child("S100XC:notForNavigation");
+                notForNavigationNode.text().set(ExXmlSupport().ParseBool2Str(*NotForNavigation).c_str());
+            }
             if (SpecificUsage)
             {
                 auto child = node.append_child("S100XC:specificUsage");
@@ -275,8 +285,11 @@ namespace S100
                 auto child = node.append_child("S100XC:specificUsage");
                 child.text().set(ReferenceID->c_str());
             }
-            auto issueDateNode = node.append_child("S100XC:issueDate");
-            issueDateNode.text().set(IssueDate.ToString().c_str());
+            if(IssueDate)
+            {
+                auto issueDateNode = node.append_child("S100XC:issueDate");
+                issueDateNode.text().set(IssueDate->ToString().c_str());
+            }
             if (IssueTime)
             {
                 auto child = node.append_child("S100XC:issueTime");
@@ -292,22 +305,25 @@ namespace S100
                 auto child = node.append_child("S100XC:temporalExtent");
                 temporalExtent->Save(child);
             }
+            if(productSpecification)
             {
                 auto child = node.append_child("S100XC:productSpecification");
-                productSpecification.Save(child);
+                productSpecification->Save(child);
             }
+            if(ProducingAgency)
             {
                 auto child = node.append_child("S100XC:producingAgency");
-                ProducingAgency.Save(child);
+                ProducingAgency->Save(child);
             }
             if (ProducerCode)
             {
                 auto child = node.append_child("S100XC:producerCode");
                 child.text().set(ProducerCode->c_str());
             }
+            if(EncodingFormat)
             {
                 auto child = node.append_child("S100XC:encodingFormat");
-                child.text().set(S100_EncodingFormatToString(EncodingFormat).c_str());
+                child.text().set(S100_EncodingFormatToString(*EncodingFormat).c_str());
             }
             if (!dataCoverage.empty())
             {

@@ -30,7 +30,6 @@ namespace S100 {
                     srsName = temp.attribute("srsName").value();
 
                 Geom.push_back(GetGeom(temp));
-
             }
         }
     }
@@ -78,8 +77,13 @@ namespace S100 {
 
     void GM_Object::Save(pugi::xml_node& node)
     {
+ 
+
         auto child = node.append_child("gml:LineString");
         auto temp = child.append_child("gml:posList");
         temp.text().set(Geom[0].c_str());
+
+        if (!srsName.empty())
+            temp.append_attribute("srsName") = srsName.c_str();
     }
 }

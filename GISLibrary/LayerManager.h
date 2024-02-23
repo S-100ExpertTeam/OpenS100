@@ -74,6 +74,9 @@ public:
 	int AddLayer(Layer* layer);
 	int AddLayer(Layer* _layer, CString FilePath, bool InsertBack = true);
 
+	int AddLayerFront(CString _filepath);
+	int AddLayerFront(Layer* _layer);
+
 	int isUpdate(CString filePath);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
 
@@ -115,6 +118,7 @@ public:
 	void DeleteLayer(int index);
 	void DeleteLayer(CString filepath);
 	void DeleteLayerByKey(int key);
+	void FindPathDeleteLayer(CString FindLayerPath);
 
 	void ReMBR();
 

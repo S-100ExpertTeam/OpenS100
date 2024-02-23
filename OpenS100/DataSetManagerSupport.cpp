@@ -10,12 +10,15 @@
 #include <pugixml.hpp>
 
 
-#include <afxwin.h>  // MFC core and standard components
-#include <afxdlgs.h> // MFC standard dialog boxes
+#include <afxwin.h> 
+#include <afxdlgs.h>
 #include <algorithm>
 #include <fstream>
 #include <filesystem>
 #include <thread>
+
+#include <Shlwapi.h>
+#pragma comment(lib, "Shlwapi.lib")
 
 
 namespace fs = std::filesystem;
@@ -42,8 +45,91 @@ DataSetManagerSupport::~DataSetManagerSupport()
 	}
 }
 
-void DataSetManagerSupport::CreateCatalogueFile(std::string filePath, S100::ExchangeCatalogue& ec)
+
+
+void DataSetManagerSupport::mkdirs(const CString directory) {
+
+	CString tmpDirectory = directory;
+	tmpDirectory.Replace(_T('/'), _T('\\'));
+	if (directory.Right(1).Compare(_T("\\")))
+		tmpDirectory += (CString)_T('\\');
+
+	CString preDirectory;
+	int nStart = 0;
+	int nEnd;
+	while ((nEnd = tmpDirectory.Find('\\', nStart)) >= 0)
+	{
+		CString csToken = directory.Mid(nStart, nEnd - nStart);
+		CreateDirectory(preDirectory + csToken, NULL);
+		preDirectory += csToken;
+		preDirectory += _T('\\');
+		nStart = nEnd + 1;
+	}
+}
+
+bool DataSetManagerSupport::CopyFileWithChecks(const CString& sourcePath, const CString& targetPath) {
+	if (PathFileExists(targetPath)) {
+		return false; 
+	}
+
+	CString targetDir = targetPath.Left(targetPath.ReverseFind('\\'));
+	mkdirs(targetDir);
+	if (!PathFileExists(targetDir) || !PathIsDirectory(targetDir)) {
+		return false; 
+	}
+
+	if (!CopyFile(sourcePath, targetPath, FALSE)) {
+		return false;
+	}
+
+	return true;
+}
+
+
+void DataSetManagerSupport::DeleteUnlistedFilesAndFolders(const CString& baseFolderPath, const std::vector<CString>& keepRelativePaths) {
+	std::vector<CString> keepPaths;
+	for (const auto& relPath : keepRelativePaths) {
+		CString fullPath = baseFolderPath + _T("\\") + relPath;
+		fullPath.Replace(_T("/"), _T("\\")); 
+		keepPaths.push_back(fullPath);
+	}
+
+	DeleteContents(baseFolderPath, keepPaths);
+}
+
+void DataSetManagerSupport::DeleteContents(const CString& folderPath, const std::vector<CString>& keepPaths) {
+	CFileFind finder;
+	BOOL bWorking = finder.FindFile(folderPath + _T("\\*.*"));
+
+	while (bWorking) {
+		bWorking = finder.FindNextFile();
+		if (finder.IsDots()) continue;
+
+		CString itemPath = finder.GetFilePath();
+
+		bool keepItem = std::find(keepPaths.begin(), keepPaths.end(), itemPath) != keepPaths.end();
+
+		if (!keepItem) {
+			if (finder.IsDirectory()) {
+				DeleteContents(itemPath, keepPaths);
+				RemoveDirectory(itemPath);
+			}
+			else {
+				DeleteFile(itemPath);
+			}
+		}
+		else {
+			if (finder.IsDirectory()) {
+				DeleteContents(itemPath, keepPaths);
+			}
+		}
+	}
+	finder.Close();
+}
+ 
+void DataSetManagerSupport::CreateCatalogueFile(std::string folderPath, S100::ExchangeCatalogue& ec)
 {
+	std::string filePath = folderPath + "Ini_Catalogue.xml";
 	fs::path pathObj(filePath);
 	fs::path dirPath = pathObj.parent_path();
 
@@ -54,10 +140,12 @@ void DataSetManagerSupport::CreateCatalogueFile(std::string filePath, S100::Exch
 	if (fs::exists(filePath)) {
 		if (tryDeleteFile(filePath))
 		{
-			std::ofstream file(filePath);
+			ec.Save(filePath);
+
+			/*std::ofstream file(filePath);
 			if (file.is_open()) {
 				file.close();
-			}
+			}*/
 		}
 	}
 }
@@ -172,7 +260,12 @@ std::vector<std::shared_ptr<DatasetClass>> DataSetManagerSupport::Dataset_LoadFi
 
 			dc.fileName = file;
 			dc.filePath = folderPath + "\\" + adjustedRelativePath;
+			dc.commonfilePath = adjustedRelativePath;
 			dc.DS_SP = false;
+			dc.datacoverage = ex.DatasetDiscoveryMetadata[i].dataCoverage;
+			dc.productSpecification = ex.DatasetDiscoveryMetadata[i].productSpecification;
+			dc.BoundingBox = ex.DatasetDiscoveryMetadata[i].BoundingBox;
+			dc.Name= ex.DatasetDiscoveryMetadata[i].FileName;
 
 			vec.push_back(make_shared<DatasetClass>(dc));
 		}
@@ -198,6 +291,8 @@ std::vector<std::shared_ptr<DatasetClass>> DataSetManagerSupport::Dataset_LoadFi
 			dc.fileName = file;
 			dc.filePath = folderPath + "\\" + adjustedRelativePath;
 			dc.DS_SP = true;
+			dc.commonfilePath = adjustedRelativePath;
+			dc.Name = ex.SupportFileDiscoveryMetadata[i].FileName;
 
 			vec.push_back(make_shared<DatasetClass>(dc));
 		}

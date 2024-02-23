@@ -7,6 +7,9 @@
 namespace S100
 {
 	class ExchangeCatalogue;
+	class DataCoverage;
+	class ProductSpecification;
+	class EX_GeographicBoundingBox;
 }
 
 
@@ -31,7 +34,26 @@ public:
 	std::string filePath;
 	bool DS_SP;
 	bool ExistPath;
+
+	std::string Name;
+	std::string commonfilePath;
+	std::vector<S100::DataCoverage> datacoverage;
+	std::shared_ptr <S100::ProductSpecification> productSpecification;
+	std::shared_ptr<S100::EX_GeographicBoundingBox> BoundingBox;
+	
 };
+
+//class DatasetFileClass : public DatasetClass
+//{
+//public:
+//	
+//};
+//
+//class SupportFileClass : public DatasetClass
+//{
+//public :
+//};
+
 
 class DataSetManagerSupport
 {
@@ -53,6 +75,11 @@ public:
 		}
 		return *instance;
 	}
+	//Path
+	CString m_FolderPath = L"..\\TEMP\\";
+	CString m_FileName = L"IniCatalog.XML";
+
+
 
 	std::string RemoveFileName(const std::string& path);
 	void OpenFolder(const CString& folderPath);
@@ -69,8 +96,14 @@ public:
 	std::vector<std::string> initDataFileList();
 
 	// Catalogue.xml
-	void CreateCatalogueFile(std::string filePath, S100::ExchangeCatalogue& ec);
+	void CreateCatalogueFile(std::string folderPath, S100::ExchangeCatalogue& ec);
 	bool tryDeleteFile(const std::string& filePath, int maxAttempts = 3, int delaySeconds = 5);
+
+	void DeleteUnlistedFilesAndFolders(const CString& baseFolderPath, const std::vector<CString>& keepRelativePaths);
+	void DeleteContents(const CString& folderPath, const std::vector<CString>& keepPaths);
+	bool CopyFileWithChecks(const CString& sourcePath, const CString& targetPath);
+	bool CreateNestedDirectory(const CString& directoryPath);
+	void mkdirs(const CString directory);
 
 
 

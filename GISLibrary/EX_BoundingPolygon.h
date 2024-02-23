@@ -8,6 +8,7 @@ namespace S100 {
     public:
         std::shared_ptr<bool> ExtentTypeCode;
         GM_Object Polygon;
+        
 
         void GetContents(pugi::xml_node& node);
         void Save(pugi::xml_node& node);
