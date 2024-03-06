@@ -16,9 +16,10 @@ F_FASC::F_FASC(const F_FASC& other)
 	m_narc = other.m_narc;
 	m_faui = other.m_faui;
 
-	for (auto i = other.m_arr.begin(); i != other.m_arr.end(); i++) {
-		auto item = new ATTR(**i);
-		m_arr.push_back(item);
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(*iter);
+		m_arr.push_back(attr);
 	}
 }
 
@@ -27,6 +28,32 @@ F_FASC::~F_FASC(void)
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++) {
 		delete (*i);
 	}
+}
+
+F_FASC F_FASC::operator=(const F_FASC& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	m_name = other.m_name;
+	m_nfac = other.m_nfac;
+	m_narc = other.m_narc;
+	m_faui = other.m_faui;
+
+	for (const auto& iter : other.m_arr)
+	{
+		ATTR* attr = new ATTR(*iter);
+		m_arr.push_back(attr);
+	}
+
+	return *this;
 }
 
 void F_FASC::ReadField(BYTE *&buf)
@@ -105,19 +132,4 @@ void F_FASC::addATTR(ATTR* value)
 	m_arr.push_back(value);
 }
 
-F_FASC* F_FASC::Clone() const
-{
-	F_FASC* f_fasc = new F_FASC();
-	f_fasc->m_name = m_name;
-	f_fasc->m_nfac = m_nfac;
-	f_fasc->m_narc = m_narc;
-	f_fasc->m_faui = m_faui;
 
-	for (const auto& iter : m_arr)
-	{
-		ATTR* attr = new ATTR(iter->m_natc, iter->m_atix, iter->m_paix, iter->m_atin, iter->m_atvl);
-		f_fasc->m_arr.push_back(attr);
-	}
-
-	return f_fasc;
-}

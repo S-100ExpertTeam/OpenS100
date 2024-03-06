@@ -1,6 +1,45 @@
 #include "stdafx.h"
 #include "SPAS.h"
 
+SPAS::SPAS()
+{
+
+}
+
+SPAS::SPAS(const SPAS& other)
+{
+	m_name = other.m_name;
+	m_ornt = other.m_ornt;
+	m_smin = other.m_smin;
+	m_smax = other.m_smax;
+	m_saui = other.m_saui;
+}
+
+SPAS::SPAS(RecordName name, int ornt, UINT smin, UINT smax, int saui)
+{
+	m_name = name;
+	m_ornt = ornt;
+	m_smin = smin;
+	m_smax = smax;
+	m_saui = saui;
+}
+
+SPAS::~SPAS()
+{
+
+}
+
+SPAS SPAS::operator=(const SPAS& other)
+{
+	m_name = other.m_name;
+	m_ornt = other.m_ornt;
+	m_smin = other.m_smin;
+	m_smax = other.m_smax;
+	m_saui = other.m_saui;
+
+	return *this;
+}
+
 int SPAS::GetSize()
 {
 	return 15;

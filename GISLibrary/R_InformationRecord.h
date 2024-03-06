@@ -24,6 +24,9 @@ public:
 	std::list<F_INAS*> m_inas;
 
 public:
+	virtual R_InformationRecord operator=(const R_InformationRecord& other);
+
+public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
 	bool WriteRecord(CFile* file);
 	RecordName GetRecordName();
@@ -45,8 +48,6 @@ public:
 	std::vector<F_INAS*> GetAllInformationAssociations();
 
 	int GetAttributeIndex(ATTR* attr);
-
-	virtual R_InformationRecord* Clone() const;
 
 public: // override ObjectType
 	std::string GetID() override;

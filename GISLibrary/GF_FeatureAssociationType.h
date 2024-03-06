@@ -10,10 +10,14 @@ namespace GF
 	{
 	public:
 		FeatureAssociationType();
+		FeatureAssociationType(const FeatureAssociationType& other);
 		virtual ~FeatureAssociationType();
 
 	public:
 		std::string featureID;
+
+	public:
+		virtual FeatureAssociationType operator=(const FeatureAssociationType& other);
 
 	public:
 		std::string GetFeatureID();

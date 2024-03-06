@@ -3,11 +3,20 @@
 
 struct SPAS {
 public:
+	SPAS();
+	SPAS(const SPAS& other);
+	SPAS(RecordName name, int ornt, UINT smin, UINT smax, int saui);
+	virtual ~SPAS();
+
+public:
 	RecordName m_name;
 	int m_ornt = 0;
 	unsigned int m_smin = 0;
 	unsigned int m_smax = UINT32_MAX;
 	int m_saui = 0;
+
+public:
+	virtual SPAS operator=(const SPAS& other);
 
 public:
 	static int GetSize();

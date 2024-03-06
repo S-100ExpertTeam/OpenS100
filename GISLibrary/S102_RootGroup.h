@@ -8,10 +8,14 @@ class S102_RootGroup :
 {
 public:
     S102_RootGroup();
+    S102_RootGroup(const S102_RootGroup& other);
     virtual ~S102_RootGroup();
 
 public:
     S102_GriddingMethod* griddingMethod = nullptr;
+
+public:
+    virtual S102_RootGroup operator=(const S102_RootGroup& other);
 
 public:
     bool hasGriddingMethod() const;

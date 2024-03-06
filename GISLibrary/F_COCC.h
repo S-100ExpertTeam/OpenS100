@@ -32,9 +32,11 @@ public:
 	int m_ncor;
 
 public:
+	virtual F_COCC operator=(const F_COCC& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file) { return true; };
 	int GetFieldLength();
-
-	virtual F_COCC* Clone() const;
 };
+

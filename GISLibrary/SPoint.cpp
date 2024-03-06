@@ -11,6 +11,13 @@ SPoint::SPoint()
 	
 }
 
+SPoint::SPoint(const SPoint& other) : SGeometry(other)
+{
+	x = other.x;
+	y = other.y;
+	m_vPoint = other.m_vPoint;
+}
+
 SPoint::SPoint(double _x, double _y)
 {
 	x = _x;
@@ -22,6 +29,15 @@ SPoint::SPoint(double _x, double _y)
 SPoint::~SPoint()
 {
 
+}
+
+SPoint SPoint::operator=(const SPoint& other)
+{
+	x = other.x;
+	y = other.y;
+	m_vPoint = other.m_vPoint;
+
+	return *this;
 }
 
 SGeometryType SPoint::GetType()
@@ -127,3 +143,4 @@ std::string SPoint::ToString()
 
 	return ss.str();
 }
+

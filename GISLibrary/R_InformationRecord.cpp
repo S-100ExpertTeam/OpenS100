@@ -18,13 +18,13 @@ R_InformationRecord::R_InformationRecord(const R_InformationRecord& other) : GF:
 
 	for (const auto& iter : other.m_attr)
 	{
-		F_ATTR* attr = iter;
+		F_ATTR* attr = new F_ATTR(*iter);
 		m_attr.push_back(attr);
 	}
 
 	for (const auto& iter : other.m_inas)
 	{
-		F_INAS* inas = iter;
+		F_INAS* inas = new F_INAS(*iter);
 		m_inas.push_back(inas);
 	}
 }
@@ -41,6 +41,48 @@ R_InformationRecord::~R_InformationRecord(void)
 		delete *itor;
 	}
 	m_attr.clear();
+}
+
+R_InformationRecord R_InformationRecord::operator=(const R_InformationRecord& other)
+{
+	for (auto& iter : m_attr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_attr.clear();
+
+	for (auto& iter : m_inas)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_inas.clear();
+
+	GF::InformationType::operator=(other);
+	Record::operator=(other);
+
+	m_irid = other.m_irid;
+
+	for (const auto& iter : other.m_attr)
+	{
+		F_ATTR* attr = new F_ATTR(*iter);
+		m_attr.push_back(attr);
+	}
+
+	for (const auto& iter : other.m_inas)
+	{
+		F_INAS* inas = new F_INAS(*iter);
+		m_inas.push_back(inas);
+	}
+
+	return *this;
 }
 
 BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
@@ -314,26 +356,6 @@ int R_InformationRecord::GetAttributeIndex(ATTR* attr)
 	}
 
 	return 0;
-}
-
-R_InformationRecord* R_InformationRecord::Clone() const
-{
-	R_InformationRecord* ir = new R_InformationRecord();
-	ir->m_irid = m_irid;
-
-	for (const auto& iter : m_attr)
-	{
-		F_ATTR* f_attr = (!iter) ? nullptr : iter->Clone();
-		ir->m_attr.push_back(f_attr);
-	}
-
-	for (const auto& iter : m_inas)
-	{
-		F_INAS* f_inas = (!iter) ? nullptr : iter->Clone();
-		ir->m_inas.push_back(f_inas);
-	}
-
-	return ir;
 }
 
 std::string R_InformationRecord::GetID()

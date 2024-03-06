@@ -15,10 +15,11 @@ public:
 	int m_ruin;
 
 public:
+	virtual F_CCID operator=(const F_CCID& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
-
-	virtual F_CCID* Clone() const;
 };

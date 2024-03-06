@@ -8,6 +8,11 @@ namespace GF
 
 	}
 
+	InformationType::InformationType(const InformationType& other) : ObjectType(other)
+	{
+
+	}
+
 	InformationType::~InformationType()
 	{
 		//for (auto i = attributes.begin(); i != attributes.end(); i++)
@@ -16,6 +21,13 @@ namespace GF
 		//}
 
 		//attributes.clear();
+	}
+
+	InformationType InformationType::operator=(const InformationType& other)
+	{
+		ObjectType::operator=(other);
+
+		return *this;
 	}
 
 	int InformationType::GetAttributeCount()

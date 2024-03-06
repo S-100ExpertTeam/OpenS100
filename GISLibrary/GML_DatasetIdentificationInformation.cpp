@@ -9,6 +9,23 @@ namespace S100GML
 
 	}
 
+	DatasetIdentificationInformation::DatasetIdentificationInformation(const DatasetIdentificationInformation& dii)
+	{
+		encodingSpecification = dii.encodingSpecification;
+		encodingSpecificationEdition = dii.encodingSpecificationEdition;
+		productIdentifier = dii.productIdentifier;
+		productEdition = dii.productEdition;
+		applicationProfile = dii.applicationProfile;
+		datasetFileIdentifier = dii.datasetFileIdentifier;
+		datasetTitle = dii.datasetTitle;
+		datasetReferenceDate = dii.datasetReferenceDate;
+		datasetLanguage = dii.datasetLanguage;
+		for (const auto& iter : dii.datasetTopicCategory)
+			datasetTopicCategory.push_back(iter);
+		datasetPurpose = dii.datasetPurpose;
+		updateNumber = dii.updateNumber;
+	}
+
 	DatasetIdentificationInformation::~DatasetIdentificationInformation()
 	{
 

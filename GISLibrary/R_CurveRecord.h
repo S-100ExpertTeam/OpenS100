@@ -19,6 +19,7 @@ class R_CurveRecord : public R_VectorRecord
 {
 public:
 	R_CurveRecord();
+	R_CurveRecord(const R_CurveRecord& other);
 	virtual ~R_CurveRecord();
 
 public:
@@ -43,6 +44,9 @@ public:
 
 	// B, U : <1..*> (*2)
 	std::list<F_C2IL*> m_c2il;
+
+public:
+	virtual R_CurveRecord operator=(const R_CurveRecord& other);
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
@@ -76,6 +80,4 @@ public:
 	std::string GetC2ILString(int CMFX, int CMFY);
 
 	std::vector<C2IL*> GetAllC2IL();
-
-	R_CurveRecord* Clone() const;
 };

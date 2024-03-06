@@ -30,11 +30,13 @@ public:
 	* Number of segments in the update record
 	*/
 	int m_nseg;
+
+public:
+	virtual F_SECC operator=(const F_SECC& other);
+
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file) { return true; };
 	int GetFieldLength();
-
-	virtual F_SECC* Clone() const;
 };

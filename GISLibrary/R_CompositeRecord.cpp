@@ -11,6 +11,18 @@ R_CompositeRecord::R_CompositeRecord(void)
 	m_ccid.m_name.RCNM = 125;
 }
 
+R_CompositeRecord::R_CompositeRecord(const R_CompositeRecord& other) : R_VectorRecord(other)
+{
+	m_ccid = other.m_ccid;
+	if (other.m_ccoc)
+		m_ccoc = new F_CCOC(*other.m_ccoc);
+	for (const auto& iter : other.m_cuco)
+	{
+		F_CUCO* cont = new F_CUCO(*iter);
+		m_cuco.push_back(cont);
+	}
+}
+
 R_CompositeRecord::~R_CompositeRecord(void)
 {
 	delete m_ccoc;
@@ -24,6 +36,38 @@ R_CompositeRecord::~R_CompositeRecord(void)
 	{
 		delete *itor;
 	}
+}
+
+R_CompositeRecord R_CompositeRecord::operator=(const R_CompositeRecord& other)
+{
+	if (m_ccoc)
+	{
+		delete m_ccoc;
+		m_ccoc = nullptr;
+	}
+
+	for (auto& iter : m_cuco)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_cuco.clear();
+
+	R_VectorRecord::operator=(other);
+
+	m_ccid = other.m_ccid;
+	if (other.m_ccoc)
+		m_ccoc = new F_CCOC(*other.m_ccoc);
+	for (const auto& iter : other.m_cuco)
+	{
+		F_CUCO* cont = new F_CUCO(*iter);
+		m_cuco.push_back(cont);
+	}
+
+	return *this;
 }
 
 BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
@@ -172,26 +216,5 @@ std::vector<CUCO*> R_CompositeRecord::GetAllCUCO()
 	}
 
 	return result;
-}
-
-R_CompositeRecord* R_CompositeRecord::Clone() const
-{
-	R_CompositeRecord* ccr = new R_CompositeRecord();
-
-	ccr->m_ccid = m_ccid;
-	ccr->m_ccoc = m_ccoc;
-	for (const auto& iter : m_cuco)
-	{
-		F_CUCO* cuco = (!iter) ? nullptr : iter->Clone();
-		ccr->m_cuco.push_back(cuco);
-	}
-
-	for (const auto& iter : m_inas)
-	{
-		F_INAS* inas = (!iter) ? nullptr : iter->Clone();
-		ccr->m_inas.push_back(inas);
-	}
-
-	return ccr;
 }
 

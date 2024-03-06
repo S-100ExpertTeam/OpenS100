@@ -30,6 +30,16 @@ F_FRID::~F_FRID(void)
 
 }
 
+F_FRID F_FRID::operator=(const F_FRID& other)
+{
+	m_name = other.m_name;
+	m_nftc = other.m_nftc;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+
+	return *this;
+}
+
 void F_FRID::ReadField(BYTE*& buf)
 {
 	m_name.RCNM = *(buf++);
@@ -60,16 +70,5 @@ int F_FRID::GetFieldLength()
 	len += 2;
 	len += 1;
 	return ++len;
-}
-
-F_FRID* F_FRID::Clone() const
-{
-	F_FRID* f_frid = new F_FRID();
-	f_frid->m_name = m_name;
-	f_frid->m_nftc = m_nftc;
-	f_frid->m_rver = m_rver;
-	f_frid->m_ruin = m_ruin;
-
-	return f_frid;
 }
 

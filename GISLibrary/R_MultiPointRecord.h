@@ -15,6 +15,7 @@ class R_MultiPointRecord : public R_VectorRecord
 {
 public:
 	R_MultiPointRecord();
+	R_MultiPointRecord(const R_MultiPointRecord& other);
 	virtual ~R_MultiPointRecord();
 
 public:
@@ -22,6 +23,9 @@ public:
 	F_COCC* m_cocc = nullptr; // Only Update
 	std::list<F_C2IL*> m_c2il;
 	std::list<F_C3IL*> m_c3il;
+
+public:
+	virtual R_MultiPointRecord operator=(const R_MultiPointRecord& other);
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
@@ -43,6 +47,4 @@ public:
 
 	std::vector<C2IL*> GetAllC2IL();
 	std::vector<C3IL*> GetAllC3IL();
-
-	R_MultiPointRecord* Clone() const;
 };

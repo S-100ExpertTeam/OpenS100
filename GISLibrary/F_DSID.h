@@ -26,9 +26,10 @@ public:
 	CArray<int> m_dstc;
 
 public:
+	virtual F_DSID& operator=(const F_DSID& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
-
-	virtual F_DSID* Clone() const;
 };

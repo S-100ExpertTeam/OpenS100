@@ -9,13 +9,11 @@ F_C2FL::F_C2FL()
 
 }
 
-F_C2FL::F_C2FL(const F_C2FL& other)
+F_C2FL::F_C2FL(const F_C2FL& other) :Field(other)
 {
 	for (const auto& iter : other.m_arr)
 	{
-		FC2D* cont = new FC2D();
-		cont->m_ycoo = iter->m_ycoo;
-		cont->m_xcoo = iter->m_xcoo;
+		FC2D* cont = new FC2D(*iter);
 		m_arr.push_back(cont);
 	}
 }
@@ -24,6 +22,27 @@ F_C2FL::~F_C2FL()
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 		delete *itor;
+}
+
+F_C2FL F_C2FL::operator=(const F_C2FL& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		FC2D* cont = new FC2D(*iter);
+		m_arr.push_back(cont);
+	}
+
+	return *this;
 }
 
 void F_C2FL::ReadField(BYTE *&buf)
@@ -66,18 +85,3 @@ void F_C2FL::Insert(int xcoo, int ycoo)
 	cont->m_xcoo = xcoo;
 	m_arr.push_back(cont);
 }
-
-F_C2FL* F_C2FL::Clone() const
-{
-	F_C2FL* f_c2fl = new F_C2FL();
-	for (const auto& iter : m_arr)
-	{
-		FC2D* fc2d = new FC2D();
-		fc2d->m_ycoo = iter->m_ycoo;
-		fc2d->m_xcoo = iter->m_xcoo;
-		f_c2fl->m_arr.push_back(fc2d);
-	}
-
-	return f_c2fl;
-}
-

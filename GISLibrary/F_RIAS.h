@@ -14,6 +14,9 @@ public:
 	std::list<RIAS*> m_arr;
 
 public:
+	virtual F_RIAS operator=(const F_RIAS& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
@@ -23,6 +26,4 @@ public:
 	void Insert(RecordName name, int ornt, int usag, int raui);
 	void Insert(int rcnm, int rcid, int ornt, int usag, int raui);
 	void Insert(GISLibrary::RCNM rcnm, int rcid, int ornt, int usag, int raui);
-
-	virtual F_RIAS* Clone() const;
 };

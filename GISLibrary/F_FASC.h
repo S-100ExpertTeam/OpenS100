@@ -37,6 +37,10 @@ public:
 	int m_faui = 0;
 
 	std::vector<ATTR*> m_arr;
+
+public:
+	virtual F_FASC operator=(const F_FASC& other);
+
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
@@ -46,6 +50,4 @@ public:
 	int getATTRCount() const;
 	ATTR* getATTR(int index) const;
 	void addATTR(ATTR* value);
-
-	virtual F_FASC* Clone() const;
 };
