@@ -640,6 +640,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	for (auto item : pclist)
 		cm->addPC(item);
 
+	cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.1.working.xml");
 	
 	if (fclist.empty())
 	{

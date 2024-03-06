@@ -221,6 +221,9 @@
     <ClCompile Include="Version.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AttributeVisibility.cpp">
+      <Filter>S100FC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -420,6 +423,9 @@
     </ClInclude>
     <ClInclude Include="..\GISLibrary\Version.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AttributeVisibility.h">
+      <Filter>S100FC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
