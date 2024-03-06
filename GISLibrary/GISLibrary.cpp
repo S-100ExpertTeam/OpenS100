@@ -106,10 +106,10 @@ void CGISLibraryApp::Draw(HDC& hDC, int offset)
 	if (D2)
 	{
 		CRect rectView = m_pScaler->GetScreenRect();
-		D2->Begin(hDC, rectView);
-		DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
-		DrawScaleBar();
-		D2->End();
+		//D2->Begin(hDC, rectView);
+		//DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
+		//DrawScaleBar();
+		//D2->End();
 	}
 }
 
