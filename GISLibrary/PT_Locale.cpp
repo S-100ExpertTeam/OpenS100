@@ -15,7 +15,13 @@ namespace S100 {
 
     void PT_Locale::setCharacterEncoding(pugi::xml_node& node)
     {
-        CharacterEncoding = parseMD_CharacterSetCode(node);
+        for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling()) {
+            const pugi::char_t* instructionName = instruction.name();
+
+            if (!strcmp(instructionName, "lan:MD_CharacterSetCode")) {
+                CharacterEncoding = std::make_shared<MD_CharacterSetCode>(MD_CharacterSetCodeFromString(instruction.child_value()));
+            }
+        }
     }
 
     void PT_Locale::GetContents(pugi::xml_node& node)
@@ -42,5 +48,28 @@ namespace S100 {
                 content.append(L"is another data");
             }
         }
+    }
+
+    void PT_Locale::Save(pugi::xml_node& node)
+    {
+        if (!Language.empty() || !Country->empty() || !CharacterEncoding)
+        {
+            if (!Language.empty())
+            {
+                auto child = node.append_child("lan:language");
+                child.text().set(Language.c_str());
+            }
+            if (!Country->empty())
+            {
+                auto child = node.append_child("lan:country");
+                child.text().set(Country->c_str());
+            }
+            if (!CharacterEncoding)
+            {
+                auto child = node.append_child("lan:characterEncoding");
+                child.text().set(MD_CharacterSetCodeToString(*CharacterEncoding).c_str());
+            }
+        }
+      
     }
 }

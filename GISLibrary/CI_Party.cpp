@@ -23,4 +23,17 @@ namespace S100
             }
         }
     }
+
+    void CI_Party::Save(pugi::xml_node& node)
+    {
+        {
+            auto child = node.append_child("cit:CI_Organisation");
+            Organisation.Save(child);
+        }
+        {
+            auto child = node.append_child("cit:certificateRef");
+            Individual.Save(child);
+        }
+
+    }
 }

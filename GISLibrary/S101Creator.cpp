@@ -1104,7 +1104,7 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 
 					if (
 						currentAttributeBinding->GetMultiplicity().IsInfinite() == false &&
-						currentAttributeBinding->GetMultiplicity().GetUpperCount() <= currentRootAttribute.size())
+						currentAttributeBinding->GetMultiplicity().GetUpperCount() <= (int)currentRootAttribute.size())
 					{
 						i = result.erase(i);
 					}
@@ -1144,7 +1144,7 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 
 					if (
 						currentAttributeBinding->GetMultiplicity().IsInfinite() == false &&
-						currentAttributeBinding->GetMultiplicity().GetUpperCount() <= currentChildAttributes.size())
+						currentAttributeBinding->GetMultiplicity().GetUpperCount() <= (int)currentChildAttributes.size())
 					{
 						i = result.erase(i);
 					}

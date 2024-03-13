@@ -46,6 +46,7 @@ public:
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
 	bool onIC = true;
+	bool m_isScreenFitEnabled = true;
 
 protected:
 	D2D1Resources* D2 = nullptr;
@@ -59,6 +60,10 @@ private:
 	double s100Scale = -1;
 
 public:
+	void MoveLayerFromList(int from, int to);
+	bool IsContainFilePathToLayer(CString _filepath);
+
+
 	void SetViewMBR(RECT r);
 
 	bool AddBackgroundLayer(CString _filepath);
@@ -67,6 +72,7 @@ public:
 	// Fail : -1
 	int AddLayer(CString _filepath);
 	int AddLayer(Layer* layer);
+	int AddLayer(Layer* _layer, CString FilePath, bool InsertBack = true);
 
 	int isUpdate(CString filePath);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);

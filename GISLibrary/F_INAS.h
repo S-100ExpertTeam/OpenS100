@@ -56,5 +56,7 @@ public:
 	int getATTRCount() const;
 	ATTR* getATTR(int index) const;
 	void addATTR(ATTR* value);
+
+	virtual F_INAS* Clone() const;
 };
 

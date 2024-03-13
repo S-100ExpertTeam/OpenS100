@@ -18,4 +18,16 @@ namespace S100
             }
         }
     }
+
+    void CI_Date::Save(pugi::xml_node& node)
+    {
+        {
+            auto child= node.append_child("cit:date");
+            child.text().set(date.ToString().c_str());
+        }
+        {
+            auto child = node.append_child("cit:dateType");
+            child.text().set(CI_DateTypeCodeToString(dateType).c_str());
+        }
+    }
 }

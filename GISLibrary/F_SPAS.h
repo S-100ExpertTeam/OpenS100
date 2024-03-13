@@ -24,4 +24,6 @@ public:
 	SPAS* getSPAS(int index) const;
 	void addSPAS(SPAS* item);
 	void addSPAS(RecordName recordName, int ornt = 1, unsigned int smin = 0, unsigned int smax = UINT32_MAX, int saui = 1);
+
+	virtual F_SPAS* Clone() const;
 };

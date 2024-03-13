@@ -10,6 +10,7 @@ class F_CSAX : public Field
 {
 public:
 	F_CSAX();
+	F_CSAX(const F_CSAX& other);
 	virtual ~F_CSAX();
 
 public:
@@ -23,4 +24,6 @@ public:
 	int GetFieldLength();
 
 	void Insert(int axty, int axum);
+
+	virtual F_CSAX* Clone() const;
 };

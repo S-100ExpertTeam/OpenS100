@@ -2,7 +2,7 @@
 
 #include "../GISLibrary/S100EditRender.h"
 #include "../GISLibrary/S101Creator.h"
-#include "../GISLibrary/S100_ExchangeCatalogue.h"
+#include "../GISLibrary/ExchangeCatalogue.h"
 
 class COpenS100Doc;
 class Layer;
@@ -75,8 +75,6 @@ public:
 	S100EditRender s100EditRender;
 	S101Creator* s101Creator = nullptr;
 
-	S100::S100_ExchangeCatalogue* m_Ex = nullptr;
-
 protected:
 	std::vector<CString> m_systemFontList;
 	// Generated message map functions
@@ -117,6 +115,7 @@ public:
 	afx_msg void NoGeometryInfo();
 
 	afx_msg void Setting();
+	afx_msg void DatasetManager();
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 
@@ -164,6 +163,7 @@ public:
 	void DeleteSelectedFeature();
 
 	void SetPick(S100SpatialObject* enc = nullptr, std::wstring featureID = L"");
+	virtual void OnInitialUpdate();
 };
 
 

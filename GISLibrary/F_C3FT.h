@@ -6,6 +6,7 @@ class F_C3FT :
 {
 public:
 	F_C3FT();
+	F_C3FT(const F_C3FT& other);
 	virtual ~F_C3FT();
 
 public:
@@ -37,5 +38,8 @@ public:
 public:
 	static int GetSize();
 	void ReadField(BYTE *&buf);
+	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
+
+	virtual F_C3FT* Clone() const;
 };

@@ -8,6 +8,7 @@ using namespace GISLibrary;
 
 class SpatialObject;
 class Scaler;
+class LayerManager;
 //Class to save information for layers.
 class Layer
 {
@@ -28,7 +29,7 @@ public:
 	int scaleMaximum = 0;
 
 public:
-	virtual bool Open(CString _filepath, D2D1Resources* d2d1);
+	virtual bool Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm = nullptr);
 	virtual void Draw(D2D1Resources* D2, Scaler* scaler) {};
 	void Draw(CDC *pDC, Scaler *scaler, double offset = 0);
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0);

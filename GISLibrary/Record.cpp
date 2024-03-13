@@ -9,6 +9,16 @@ Record::Record(void)
 
 }
 
+Record::Record(const Record& other)
+{
+	leader = other.leader;
+	for (const auto& iter : other.directory)
+	{
+		Directory dir = iter;
+		directory.push_back(dir);
+	}
+}
+
 Record::~Record(void)
 {
 

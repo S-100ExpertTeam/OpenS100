@@ -6,6 +6,7 @@ class F_C2IT :
 {
 public:
 	F_C2IT();
+	F_C2IT(const F_C2IT& other);
 	virtual ~F_C2IT();
 
 public:
@@ -27,4 +28,6 @@ public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
+
+	virtual F_C2IT* Clone() const;
 };

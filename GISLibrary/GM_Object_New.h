@@ -15,11 +15,14 @@ namespace S100 {
 
         std::string Type;
 
+        std::string srsName;
         std::vector<std::string> Geom;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
 
     private:
+        std::string GetGeom(pugi::xml_node& node);
         std::string GetGeoms(pugi::xml_node& node);
     };
 }

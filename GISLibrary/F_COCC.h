@@ -6,6 +6,7 @@ class F_COCC :
 {
 public:
 	F_COCC();
+	F_COCC(const F_COCC& other);
 	virtual ~F_COCC();
 
 public:
@@ -34,4 +35,6 @@ public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file) { return true; };
 	int GetFieldLength();
+
+	virtual F_COCC* Clone() const;
 };

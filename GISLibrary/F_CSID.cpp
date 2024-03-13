@@ -10,6 +10,12 @@ F_CSID::F_CSID(void)
 	m_ncrc = 2;
 }
 
+F_CSID::F_CSID(const F_CSID& other)
+{
+	m_name = other.m_name;
+	m_ncrc = other.m_ncrc;
+}
+
 F_CSID::~F_CSID(void)
 {
 
@@ -39,4 +45,13 @@ int F_CSID::GetFieldLength()
 	len += m_name.GetLength();
 	len += 1;
 	return ++len;
+}
+
+F_CSID* F_CSID::Clone() const
+{
+	F_CSID* f_csid = new F_CSID();
+	f_csid->m_name = m_name;
+	f_csid->m_ncrc = m_ncrc;
+
+	return f_csid;
 }

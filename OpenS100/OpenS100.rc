@@ -17,6 +17,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
+//
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
 LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
@@ -51,12 +52,12 @@ BEGIN
     "\r\n"
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)\r\n"
     "LANGUAGE 18, 1\r\n"
-    "#include ""res\\OpenS100.rc2\r\n"
-    """  #include ""afxres.rc\r\n"
-    """          #include ""afxprint.rc\r\n"
-    """        #if !defined(_AFXDLL)\r\n"
-    "#include ""afxribbon.rc\r\n"
-    """       #endif\r\n"
+    "#include ""res\\\\OpenS100.rc2""\r\n"
+    "#include ""afxres.rc""\r\n"
+    "#include ""afxprint.rc""\r\n"
+    "#if !defined(_AFXDLL)\r\n"
+    "#include ""afxribbon.rc""\r\n"
+    "#endif\r\n"
     "#endif\r\n"
     "\0"
 END
@@ -209,6 +210,8 @@ BEGIN
     BUTTON      T8
     SEPARATOR
     BUTTON      T9
+    SEPARATOR
+    BUTTON      T10
 END
 
 
@@ -754,13 +757,135 @@ BEGIN
     T7                      "List of features have not a geometry."
     T8                      "List of information types"
     T9                      "Setting"
+    T10                     "Dataset Manager"
 END
 
-#endif  
+#endif    
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
+// 
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
+LANGUAGE LANG_KOREAN, SUBLANG_DEFAULT
+#pragma code_page(949)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_POPUP_DATASET_MANAGER MENU
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "Load",                        ID_FILE_LOAD
+        MENUITEM "Open Folder",                 ID_FILE_OPENFOLDER
+        MENUITEM SEPARATOR
+        MENUITEM "Delete",                      ID_FILE_DELETE32778
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_DATASET_MANAGER DIALOGEX 0, 0, 605, 403
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dataset Manager"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_CONFIG_TAB,"SysTabControl32",0x0,7,7,591,362
+    DEFPUSHBUTTON   "OK",IDOK,548,381,50,14
+END
+
+IDD_DIALOG_FC_PC DIALOGEX 0, 0, 582, 340
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_BORDER | WS_SYSMENU
+EXSTYLE WS_EX_ACCEPTFILES
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,22,281,311
+    CONTROL         "",IDC_LIST2,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,294,22,281,311
+    LTEXT           "Feature Catalogues",IDC_STATIC,7,7,116,12
+    LTEXT           "Portrayal Catalogues",IDC_STATIC,293,7,135,13
+END
+
+IDD_DIALOG_DATASET_SUPPORT DIALOGEX 0, 0, 582, 340
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_BORDER | WS_SYSMENU
+EXSTYLE WS_EX_ACCEPTFILES
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,22,281,311
+    CONTROL         "",IDC_LIST2,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,294,22,281,311
+    LTEXT           "Datasets",IDC_STATIC,7,7,116,12
+    LTEXT           "Support Files",IDC_STATIC,293,7,135,13
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_DIALOG_DATASET_MANAGER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 598
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 395
+    END
+
+    IDD_DIALOG_FC_PC, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 575
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 333
+    END
+
+    IDD_DIALOG_DATASET_SUPPORT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 366
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_DIALOG_DATASET_MANAGER AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_FC_PC AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_DATASET_SUPPORT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+#endif    
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
@@ -829,11 +954,11 @@ END
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
 LANGUAGE 18, 1
-#include "res\OpenS100.rc2"  
-#include "afxres.rc"          
-#include "afxprint.rc"        
+#include "res\\OpenS100.rc2"
+#include "afxres.rc"
+#include "afxprint.rc"
 #if !defined(_AFXDLL)
-#include "afxribbon.rc"       
+#include "afxribbon.rc"
 #endif
 #endif
 

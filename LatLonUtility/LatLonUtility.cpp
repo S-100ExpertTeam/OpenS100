@@ -148,7 +148,7 @@ unsigned char* LatLonUtility::HexStringToWKB(std::string value)
 
 	unsigned char* result = new unsigned char[value.length() / 2];
 
-	for (int i = 0; i < value.length() / 2; i++)
+	for (int i = 0; i < (int)value.length() / 2; i++)
 	{
 		char first = value[i * 2];
 		char second = value[i * 2 + 1];

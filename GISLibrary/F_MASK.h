@@ -33,4 +33,6 @@ public:
 
 	int getCount() const;
 	MASK* getMASKbyIndex(int index) const;
+
+	virtual F_MASK* Clone() const;
 };

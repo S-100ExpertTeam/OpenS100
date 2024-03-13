@@ -5,6 +5,7 @@ class xmlParseable {
 public:
     virtual ~xmlParseable() = default;
     virtual void GetContents(pugi::xml_node& node) = 0;
+    virtual void SaveXmlNode(pugi::xml_node& node) = 0;
 };
 
 
@@ -63,6 +64,12 @@ public:
             }
         }
     }
-    
 
+    void SaveXmlNode(pugi::xml_node& node, std::string nodeName) {
+        for (int i = 0; i < items.size(); i++)
+        {
+            auto temp = node.append_child(nodeName.c_str());
+            items[i].SaveXmlNode(temp);
+        }
+    }
 };

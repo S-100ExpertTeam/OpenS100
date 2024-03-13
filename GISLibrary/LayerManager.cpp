@@ -48,6 +48,7 @@
 #include <algorithm>
 #include <future>
 #include <chrono>
+#include "S100ExchangeCatalogue.h"
 
 LayerManager::LayerManager(D2D1Resources* d2d1)
 {
@@ -84,6 +85,25 @@ LayerManager::~LayerManager()
 	featureOnOffMap.clear();
 }
 
+void LayerManager::MoveLayerFromList(int from, int to) {
+	if (from == to) return;
+
+	auto fromIt = std::next(layers.begin(), from);
+	auto toIt = std::next(layers.begin(), to);
+
+	layers.splice(toIt, layers, fromIt);
+}
+
+bool LayerManager::IsContainFilePathToLayer(CString _filepath)
+{
+	for (auto layer : layers) {
+		if (layer->GetLayerPath().Compare(_filepath) == 0) {
+			return true;
+		}
+	}
+	return false;
+}
+
 bool LayerManager::AddBackgroundLayer(CString _filepath)
 {
 	CString file_extension = LibMFCUtil::GetExtension(_filepath);
@@ -102,10 +122,65 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 	double ymax = scaler->myMaxLimit;
 
 	MBR _mbr(xmin, ymin, xmax, ymax);
-	scaler->SetMap(_mbr);
+	if (m_isScreenFitEnabled)
+		scaler->SetMap(_mbr);
 	mbr.SetMBR(_mbr);
 
 	return TRUE;
+}
+
+int LayerManager::AddLayer(Layer* _layer , CString FilePath, bool InsertBack)
+{
+	if (_layer == nullptr)
+	{
+		return -1;
+	}
+
+	_layer->SetID(CreateLayerID());
+
+	if (LayerCount() == 0)
+	{
+		MBR newMBR = _layer->GetMBR();
+		if (newMBR.IsEmpty())
+		{
+			newMBR.Extent(0.001);
+		}
+
+		mbr.SetMBR(newMBR);
+		if (m_isScreenFitEnabled)
+			scaler->SetMap(mbr);
+	}
+	else
+	{
+		mbr.CalcMBR(_layer->m_mbr);
+	}
+
+	if (FilePath == "")
+		layers.push_back(_layer);
+	else
+	{
+		for (auto it = layers.begin(); it != layers.end(); ++it) {
+			if ((*it)->GetLayerPath() == FilePath)
+			{
+				if (InsertBack) {
+					it++;
+					layers.insert(it, _layer);
+					break;
+				}
+				else
+				{
+					layers.insert(it, _layer);
+					break;
+				}
+
+			}
+		}
+	}
+
+
+	mapLayer.insert({ _layer->GetID(), _layer });
+
+	return _layer->GetID();
 }
 
 int LayerManager::AddLayer(Layer* _layer)
@@ -119,8 +194,15 @@ int LayerManager::AddLayer(Layer* _layer)
 
 	if (LayerCount() == 0)
 	{
-		mbr.SetMBR(_layer->m_mbr);
-		scaler->SetMap(mbr);
+		MBR newMBR = _layer->GetMBR();
+		if (newMBR.IsEmpty())
+		{
+			newMBR.Extent(0.001);
+		}
+
+		mbr.SetMBR(newMBR);
+		if (m_isScreenFitEnabled)
+			scaler->SetMap(mbr);
 	}
 	else
 	{
@@ -167,7 +249,7 @@ int LayerManager::AddLayer(CString _filepath)
 		fileType == S100_FileType::FILE_ETC)
 	{
 		layer = new Layer();
-		if (layer->Open(_filepath, D2) == false)
+		if (layer->Open(_filepath, D2, this) == false)
 		{
 			delete layer;
 			return -1;
@@ -183,7 +265,7 @@ int LayerManager::AddLayer(CString _filepath)
 		if (fc)
 		{
 			layer = new S100Layer(fc, pc);
-			if ((S100Layer*)layer->Open(_filepath, D2) == false)
+			if ((S100Layer*)layer->Open(_filepath, D2, this) == false)
 			{
 				delete layer;
 				return -1;
@@ -204,7 +286,14 @@ int LayerManager::AddLayer(CString _filepath)
 		return -1;
 	}
 
-	AddLayer(layer);
+	auto tempTypePtr = dynamic_cast<S100ExchangeCatalogue*>(layer->m_spatialObject);
+	if (tempTypePtr != nullptr)
+	{
+		CString firstlayerfilepath = tempTypePtr->GetFirstLayerFilePath();
+		AddLayer(layer, firstlayerfilepath, false);
+	}
+	else
+		AddLayer(layer);
 
 	return layer->GetID();
 }
@@ -214,6 +303,13 @@ void LayerManager::Draw(HDC& hdc, int offset)
 	DrawBackground(hdc, offset);
 
 	DrawS100Datasets(hdc, offset);
+
+	DrawNonS100Datasets(hdc, offset);
+
+	//gisLib->D2.Begin(hdc, rectView);
+	//gisLib->DrawS100Symbol(101, L"NORTHAR1", 30, 50, 0);
+	//gisLib->DrawScaleBar();
+	//gisLib->D2.End();
 }
 
 void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
@@ -767,12 +863,9 @@ void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)
 	{
 		auto layer = (*i);
 
-		if (layer->IsOn())
+		if (!layer->IsS100Layer())
 		{
-			if (!layer->IsS100Layer())
-			{
-				layer->Draw(hDC, scaler, offset);
-			}
+			layer->Draw(hDC, scaler, offset);
 		}
 	}
 }

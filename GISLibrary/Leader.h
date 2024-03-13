@@ -3,6 +3,7 @@ class Leader
 {
 public:
 	Leader();
+	Leader(const Leader& other);
 	virtual ~Leader();
 
 public:

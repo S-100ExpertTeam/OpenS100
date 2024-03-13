@@ -7,6 +7,7 @@ class F_RIAS : public Field
 {
 public:
 	F_RIAS();
+	F_RIAS(const F_RIAS& other);
 	virtual ~F_RIAS();
 	
 public:
@@ -22,4 +23,6 @@ public:
 	void Insert(RecordName name, int ornt, int usag, int raui);
 	void Insert(int rcnm, int rcid, int ornt, int usag, int raui);
 	void Insert(GISLibrary::RCNM rcnm, int rcid, int ornt, int usag, int raui);
+
+	virtual F_RIAS* Clone() const;
 };

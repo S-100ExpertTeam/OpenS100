@@ -5,6 +5,7 @@ class F_DSSI : public Field
 {
 public:
 	F_DSSI();
+	F_DSSI(const F_DSSI& other);
 	virtual ~F_DSSI();
 
 public:
@@ -61,4 +62,6 @@ public:
 
 	int GetNumberOfFeatureTypeRecords();
 	void SetNumberOfFeatureTypeRecords(int value);
+
+	virtual F_DSSI* Clone() const;
 };
