@@ -633,53 +633,16 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//import FC
 	auto fclist = DataSetManagerSupport::GetInstance().initFCList();
 	for (auto item : fclist)
+	{
 		cm->addFC(item);
+	}
 
 	//import PC
 	auto pclist = DataSetManagerSupport::GetInstance().initPCList();
 	for (auto item : pclist)
+	{
 		cm->addPC(item);
-
-	cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.1.working.xml");
-	
-	if (fclist.empty())
-	{
-		 /*FC*/
-		auto fc1 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
-		auto fc2 = cm->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml"); // valid(S-102)
-	
-		//auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
-		//auto fc4 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid, but duplicated(S-101)
-		cm->addFC(L"..\\ProgramData\\FC\\S-122_FC.xml");
-		cm->addFC(L"..\\ProgramData\\FC\\S-123_FC.xml");
-		cm->addFC(L"..\\ProgramData\\FC\\S-124_FC.xml");
-		cm->addFC(L"..\\ProgramData\\FC\\S-125_FC.xml");
-		cm->addFC(L"..\\ProgramData\\FC\\S-127_FC.xml");
-		cm->addFC(L"..\\ProgramData\\FC\\S-128_FC.xml");
-		cm->addFC(L"..\\ProgramData\\FC\\S-130_FC.xml");
-		cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
-		cm->addFC(L"..\\ProgramData\\FC\\S-421_FC.xml");
-		cm->addFC(L"C:\\Users\\jogm\\Downloads\\[2023.11.20] 초안 - 목포대교\\초안 - 목포대교\\Dynamic Over Head Clearance.xml");
-		cm->addPC(L"C:\\Users\\jogm\\Downloads\\[2023.11.20] 초안 - 목포대교\\초안 - 목포대교\\Dynamic Over Head Clearance\\portrayal_catalogue.xml");
 	}
-
-	if (pclist.empty())
-	{
-		auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
-
-		//auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal_1.1.1\\portrayal_catalogue.xml"); // valid(S-101)
-		//auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
-		cm->addPC(L"..\\ProgramData\\PC\\S100_Portrayal\\portrayal_catalogue.xml");
-		cm->addPC(L"..\\ProgramData\\PC\\S122_Portrayal\\portrayal_catalogue.xml");
-		cm->addPC(L"..\\ProgramData\\PC\\S123_Portrayal\\portrayal_catalogue.xml");
-		cm->addPC(L"..\\ProgramData\\PC\\S124_Portrayal\\portrayal_catalogue.xml");
-		cm->addPC(L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml"); 
-		cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
-		cm->addPC(L"..\\ProgramData\\PC\\S128_Portrayal\\portrayal_catalogue.xml");
-		cm->addPC(L"..\\ProgramData\\PC\\S411_Portrayal\\portrayal_catalogue.xml");
-		//cm->addPC(L"..\\ProgramData\\PC\\S421_Portrayal\\portrayal_catalogue.xml");
-	}
-
 
 	//TestGISLibrary::CreateMemoryLayer();
 	//TestGISLibrary::SetCodeNumericCode();
@@ -690,8 +653,8 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//cell.Read8211(L"..\\SampleData\\save.000");
 
 
-	auto fc = cm->getFC(101); // get S-101 FC
-	auto pc = cm->getPC("S-101"); // get S-101 PC
+	//auto fc = cm->getFC(101); // get S-101 FC
+	//auto pc = cm->getPC("S-101"); // get S-101 PC
 
 	if (theApp.gisLib2) {
 		auto cm2 = theApp.gisLib2->GetCatalogManager();
