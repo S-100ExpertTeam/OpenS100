@@ -4,8 +4,10 @@
 #include <pugixml.hpp>
 #include <vector>
 
-namespace S100 {
-    static class ExXmlSupport {
+namespace S100 
+{
+    class ExXmlSupport
+    {
     public:
         static bool ParseStr2Bool(std::string value);
         static std::string ParseBool2Str(bool value);

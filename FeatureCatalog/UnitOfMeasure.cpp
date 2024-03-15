@@ -74,13 +74,14 @@ void UnitOfMeasure::SetDefinition(std::wstring& value)
 	*definition = tmp;
 }
 
-const std::wstring& UnitOfMeasure::GetDefinition()
+const std::wstring* UnitOfMeasure::GetDefinition()
 {
-	if (definition) {
-		return *definition;
+	if (definition) 
+	{
+		return definition;
 	}
 
-	return L"";
+	return nullptr;
 }
 
 void UnitOfMeasure::NullCheckSymbol()
@@ -97,11 +98,12 @@ void UnitOfMeasure::SetSymbol(std::wstring& value)
 	*symbol = value;
 }
 
-const std::wstring& UnitOfMeasure::GetSymbol()
+const std::wstring* UnitOfMeasure::GetSymbol()
 {
-	if (symbol) {
-		return *symbol;
+	if (symbol) 
+	{
+		return symbol;
 	}
 
-	return L"";
+	return nullptr;
 }

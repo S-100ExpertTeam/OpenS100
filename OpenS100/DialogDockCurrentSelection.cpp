@@ -175,7 +175,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					}
 				}
 
-				theApp.m_DockablePaneRelation.pDlg->SetFeatureList(cell, flist, infoList);
+				theApp.m_DockablePaneRelation.SetFeatureList(cell, flist, infoList);
 			}
 		}
 	}

@@ -26,9 +26,9 @@ public:
 
 	void NullCheckDefinition();
 	void SetDefinition(std::wstring& value);
-	const std::wstring& GetDefinition();
+	const std::wstring* GetDefinition();
 
 	void NullCheckSymbol();
 	void SetSymbol(std::wstring& value);
-	const std::wstring& GetSymbol();
+	const std::wstring* GetSymbol();
 };

@@ -1,15 +1,21 @@
 #pragma once
 
+#include "../GISLibrary/S100SpatialObject.h"
+#include "../GISLibrary/GF_FeatureType.h"
+#include "../GISLibrary/GF_InformationType.h"
+
 class CDialogDockRelation;
 
 class CDockablePaneRelation : public CDockablePane
 {
 	DECLARE_DYNAMIC(CDockablePaneRelation)
 
+private:
+	CDialogDockRelation* pDlg = nullptr;
+
 public:
 	void UpdateList();
-
-	CDialogDockRelation		*pDlg;
+	void SetFeatureList(S100SpatialObject* cell, std::list<GF::FeatureType*> flist, std::list<GF::InformationType*> infoList);
 
 	BOOL CanBeClosed() const;
 	BOOL CanBeResized() const;

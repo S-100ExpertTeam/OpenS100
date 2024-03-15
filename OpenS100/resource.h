@@ -1,4 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by OpenS100.rc
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -76,14 +78,10 @@
 #define IDR_TOOLBAR2                    312
 #define IDD_DIALOG_DOCK_RELATION        313
 #define IDD_DIALOG_DOCK_CURRENT_SELECTION 314
-#define IDD_DIALOG_DOCK_LOGGER          315
 #define IDC_LIST_RELATION               316
 #define IDR_HELP_MENU                   317
 #define IDC_LIST_CURRENT_SELECTION      318
-#define IDC_BUTTON_LISTCLEAR            319
-#define IDC_COMBO_LOG_TYPE              320
 #define IDB_PNG1                        320
-#define IDC_LIST_LOGGER                 321
 #define T1                              322
 #define T2                              323
 #define T3                              324
