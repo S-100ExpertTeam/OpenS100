@@ -77,5 +77,7 @@ namespace LatLonUtility {
 	std::string generate_uuid();
 
 	std::string TrimRight(std::string& str);
+
+	std::string DeleteXMLNamespace(std::string value);
 };
 #endif 
