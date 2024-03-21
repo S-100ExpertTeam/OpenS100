@@ -334,8 +334,10 @@ COpenS100Doc* COpenS100View::GetDocument() const
 void COpenS100View::Load100File()
 {
 	//load file
+	TCHAR BASED_CODE szFilter[] = _T("All supported files (*.000, *.gml, *.h5, *.shp, *.xml)|*.000;*.gml;*.h5;*.shp;*.xml|")
+		_T("All Files (*.*)|*.*||");
 	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT, 
-		_T("All supported files (*.000, *.gml, *.h5, *.shp, *.xml)|*.000;*.gml;*.h5;*.shp;*.xml|"), this);
+		szFilter, this);
 
 	if (dlg.DoModal() == IDOK)
 	{

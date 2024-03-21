@@ -304,7 +304,8 @@ void S101Cell::ClearAll(void)
 bool S101Cell::Open(CString _filepath) // Dataset start, read .000 
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
-	if (extension.CompareNoCase(L"000") == 0)
+	if ((extension.CompareNoCase(L"000") >= 0) &&
+		(extension.CompareNoCase(L"999") <= 0))
 	{
 		return OpenBy000(_filepath);
 	}
