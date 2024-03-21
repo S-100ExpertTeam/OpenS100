@@ -1,5 +1,6 @@
 #pragma once
 
+#include "S100GML_NameSpace.h"
 #include "S100SpatialObject.h"
 #include "GF_FeatureType.h"
 #include "GF_InformationType.h"
@@ -17,7 +18,9 @@
 #include "GM_CompositeCurve.h"
 #include "GM_Surface.h"
 
+
 #include <vector>
+#include <unordered_map>
 
 class S10XGML :
     public S100SpatialObject
@@ -35,6 +38,7 @@ public:
 
     std::vector<GM::Object*> geometries;
 
+    S100GML_NameSpace s100namespace;
 public:
     bool Open(CString _filepath) override;
     bool SaveToInputXML(std::string path) override;
@@ -127,4 +131,6 @@ private:
     SCurve* CurveToSCurve(GM::Curve* curve);
     SCompositeCurve* CompositeCurveToSCompositeCurve(GM::CompositeCurve* compositeCurve);
     
+    // for namespace name
+    bool GetNameSpaceName(pugi::xml_attribute, std::string& name);
 };

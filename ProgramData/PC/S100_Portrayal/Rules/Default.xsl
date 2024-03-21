@@ -8,7 +8,7 @@
 			</featureReference>
 			<viewingGroup>21010</viewingGroup>
 			<displayPlane>OVERRADAR</displayPlane>
-			<drawingPriority>15</drawingPriority>
+			<drawingPriority>24</drawingPriority>
 			<symbol reference="USRPNT01"/>
 		</pointInstruction>
 		<xsl:if test="featureName!= ''">
@@ -18,7 +18,7 @@
 				</featureReference>
 				<viewingGroup>26</viewingGroup>
 				<displayPlane>UNDERRADAR</displayPlane>
-				<drawingPriority>12</drawingPriority>
+				<drawingPriority>24</drawingPriority>
 				<textPoint horizontalAlignment="Right" verticalAlignment="Center">
 					<element>
 						<text>
@@ -44,7 +44,7 @@
 			</featureReference>
 			<viewingGroup>36050</viewingGroup>
 			<displayPlane>UNDERRADAR</displayPlane>
-			<drawingPriority>6</drawingPriority>
+			<drawingPriority>21</drawingPriority>
 			<xsl:call-template name="simpleLineStyle">
 				<xsl:with-param name="style">solid</xsl:with-param>
 				<xsl:with-param name="width">0.32</xsl:with-param>
@@ -58,8 +58,8 @@
 				</featureReference>
 				<viewingGroup>26</viewingGroup>
 				<displayPlane>UNDERRADAR</displayPlane>
-				<drawingPriority>12</drawingPriority>
-				<textPoint horizontalAlignment="Right" verticalAlignment="Center">
+				<drawingPriority>24</drawingPriority>
+				<textPoint horizontalAlignment="Center" verticalAlignment="Center">
 					<element>
 						<text>
 							<xsl:apply-templates select="featureName" mode="text"/>
@@ -84,7 +84,7 @@
 			</featureReference>
 			<viewingGroup>53010</viewingGroup>
 			<displayPlane>OVERRADAR</displayPlane>
-			<drawingPriority>24</drawingPriority>
+			<drawingPriority>12</drawingPriority>
 			<colorFill>
 				<color transparency="0.75">DNGHL</color>
 			</colorFill>
@@ -95,7 +95,7 @@
 			</featureReference>
 			<viewingGroup>53010</viewingGroup>
 			<displayPlane>OVERRADAR</displayPlane>
-			<drawingPriority>24</drawingPriority>
+			<drawingPriority>21</drawingPriority>
 			<xsl:call-template name="simpleLineStyle">
 				<xsl:with-param name="style">dash</xsl:with-param>
 				<xsl:with-param name="width">0.32</xsl:with-param>
@@ -109,8 +109,8 @@
 				</featureReference>
 				<viewingGroup>26</viewingGroup>
 				<displayPlane>UNDERRADAR</displayPlane>
-				<drawingPriority>12</drawingPriority>
-				<textPoint horizontalAlignment="Right" verticalAlignment="Center">
+				<drawingPriority>24</drawingPriority>
+				<textPoint horizontalAlignment="Center" verticalAlignment="Center">
 					<element>
 						<text>
 							<xsl:apply-templates select="featureName" mode="text"/>

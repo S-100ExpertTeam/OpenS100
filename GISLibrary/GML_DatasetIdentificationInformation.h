@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PugixmlElement.h"
+#include "S100GML_NameSpace.h"
 
 #include <string>
 #include <vector>
@@ -32,6 +33,11 @@ namespace S100GML
 	public:
 		void Read(pugi::xml_node& node) override;
 		void Write(pugi::xml_node& node) override;
+
+		// for gml namespace
+		void SetNamespace(S100GML_NameSpace ns);
+	private:
+		S100GML_NameSpace s100namespace;
 	};
 
 }

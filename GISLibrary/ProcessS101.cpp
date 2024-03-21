@@ -371,7 +371,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						cf->GetColor()->SetToken(std::wstring(v_splited[0].begin(), v_splited[0].end()));
 						cf->GetColor()->SetName(std::wstring(v_splited[0].begin(), v_splited[0].end()));
 
-						if (v_splited.size() > 2)
+						if (v_splited.size() > 1)
 						{
 							cf->GetColor()->SetTransparency(std::wstring(v_splited[1].begin(), v_splited[1].end()));
 						}

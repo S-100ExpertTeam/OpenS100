@@ -969,6 +969,9 @@
     <ClCompile Include="S100_Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="S100GML_NameSpace.cpp">
+      <Filter>S100GML</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -1954,6 +1957,9 @@
     </ClInclude>
     <ClInclude Include="Version.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S100GML_NameSpace.h">
+      <Filter>S100GML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
