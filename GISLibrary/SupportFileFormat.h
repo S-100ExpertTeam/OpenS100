@@ -20,6 +20,7 @@ namespace S100
 		other = 100
 	};
 
-	SupportFileFormat stringToSupportFileFormat(std::string value);
-	std::string supportFileFormatToString(SupportFileFormat value);
+	
+	std::string SupportFileFormatToString(SupportFileFormat value);
+	SupportFileFormat SupportFileFormatFromString(std::string value);
 }

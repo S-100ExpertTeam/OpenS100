@@ -20,9 +20,9 @@ public:
 	/*
 	** Description: Read the file and store the data in the layer.
 	*/
-	bool Open(CString _filepath);
+	bool Open(CString _filepath) override;
 
-	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
+	void Draw(HDC &hDC, Scaler *scaler, double offset = 0) override;
 
 	/*
 	** Description: Translate Big Endian and Little Endian into each other.

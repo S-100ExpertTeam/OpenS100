@@ -110,7 +110,7 @@ bool S10XGML::Open(CString _filepath)
 		{
 			datasetIdentificationInformation.Read(child);
 		}
-		else if (strcmp(childName.c_str(), "members") == 0)
+		else if (childName.find("members") != std::string::npos)
 		{
 			ReadMembers(child);
 		}
@@ -515,7 +515,7 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 	auto strPosList = LatLonUtility::Split(strPos, " ");
 	int posCnt = (int)strPosList.size();
 
-	if (posCnt < 4 && posCnt % 2 != 0)
+	if (posCnt < 4 || posCnt % 2 != 0)
 	{
 		return false;
 	}

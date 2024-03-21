@@ -19,6 +19,12 @@ public:
 	*/
 	static void CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, CRect *_viewPort, Scaler *pScaler);
 
+	static ClipperLib::Paths ClipPaths(const ClipperLib::Paths& viewportPaths, const ClipperLib::Paths& itemPolygonPath);
+	static ClipperLib::Paths ClipPaths(const ClipperLib::Paths& viewportPaths, std::vector<D2D1_POINT_2F>& itemPolygonPath, Scaler* scaler);
+	static ClipperLib::Paths ClipPaths(const ClipperLib::Paths& viewportPaths, SSurface* itemPolygonPath);
+	
+	static bool IntersectionPaths(ClipperLib::Paths& viewport, std::vector<D2D1_POINT_2F>& polygon, Scaler* scaler);
+
 	/*
 	** function   : Clips the given AREA to fit the screen area.
 	** factor   :
@@ -29,6 +35,17 @@ public:
 	!NULL - As a result of clipping, it may be a multi-part.
 	*/
 	static ClipperLib::Paths ClipSurface(SSurface *_polygon, CRect *_viewPort);
+
+	/*
+	** function   : Clips the given AREA to fit the screen area.
+	** factor   :
+	SSurface* _polygon  - Area to clip.
+	SSurface*   _viewPort - Screen area.
+	** return value :
+	NULL  - If the screen area and AREA do not overlap at all,
+	!NULL - As a result of clipping, it may be a multi-part.
+	*/
+	static ClipperLib::Paths ClipSurface(SSurface* _surface, SSurface* _viewPort);
 
 	/*
 	** function   : Find the center of gravity of a given polygon.
