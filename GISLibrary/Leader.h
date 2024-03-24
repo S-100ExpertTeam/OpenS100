@@ -17,6 +17,9 @@ public:
 	char byte[24] = { 0, };
 
 public:
+	virtual Leader operator=(const Leader& other);
+
+public:
 	//bool Read(char*& buf);
 	int GetRecordLength();
 	int GetBaseAddressOfFieldArea();

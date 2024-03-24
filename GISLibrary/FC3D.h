@@ -1,6 +1,13 @@
 #pragma once
 struct FC3D
 {
+public:
+	FC3D();
+	FC3D(const FC3D& other);
+	FC3D(double ycoo, double xcoo, double zcoo);
+	virtual ~FC3D();
+
+public:
 	/*
 	* Coordinate in Y axis
 	* Format		: b48
@@ -19,5 +26,10 @@ struct FC3D
 	* Description	: Z-coordinate (depth or height)
 	*/
 	double m_zcoo;
+
+public:
+	virtual FC3D operator=(const FC3D& other);
+
+public:
 	static int GetSize();
 };

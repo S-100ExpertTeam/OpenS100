@@ -14,10 +14,11 @@ public:
 	int m_ncrc;
 
 public:
+	virtual F_CSID operator=(const F_CSID& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
-
-	virtual F_CSID* Clone() const;
 };

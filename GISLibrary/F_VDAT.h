@@ -15,9 +15,10 @@ public:
 	CString m_scri;
 
 public:
+	virtual F_VDAT operator=(const F_VDAT& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
-
-	virtual F_VDAT* Clone() const;
 };

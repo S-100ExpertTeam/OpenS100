@@ -11,7 +11,7 @@ F_SRID::F_SRID(void)
 	m_ruin = 0;
 }
 
-F_SRID::F_SRID(const F_SRID& other)
+F_SRID::F_SRID(const F_SRID& other) : Field(other)
 {
 	m_name = other.m_name;
 	m_rver = other.m_rver;
@@ -28,6 +28,15 @@ F_SRID::F_SRID(RecordName recordName, int RVER, int RUIN)
 F_SRID::~F_SRID(void)
 {
 
+}
+
+F_SRID F_SRID::operator=(const F_SRID& other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+
+	return *this;
 }
 
 void F_SRID::ReadField(BYTE *&buf)
@@ -59,12 +68,3 @@ int F_SRID::GetFieldLength()
 	return ++len;
 }
 
-F_SRID* F_SRID::Clone() const
-{
-	F_SRID* f_srid = new F_SRID();
-	f_srid->m_name = m_name;
-	f_srid->m_rver = m_rver;
-	f_srid->m_ruin = m_ruin;
-
-	return f_srid;
-}

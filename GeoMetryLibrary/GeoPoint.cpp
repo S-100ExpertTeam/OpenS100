@@ -7,6 +7,12 @@ GeoPoint::GeoPoint()
 
 }
 
+GeoPoint::GeoPoint(const GeoPoint& other) : Geometry(other)
+{
+	x = other.x;
+	y = other.y;
+}
+
 GeoPoint::GeoPoint(double _x, double _y)
 {
 	x = _x;
@@ -16,6 +22,16 @@ GeoPoint::GeoPoint(double _x, double _y)
 GeoPoint::~GeoPoint()
 {
 
+}
+
+GeoPoint GeoPoint::operator=(const GeoPoint& other)
+{
+	Geometry::operator=(other);
+
+	x = other.x;
+	y = other.y;
+
+	return *this;
 }
 
 void GeoPoint::SetPoint(double _x, double _y)
@@ -50,3 +66,4 @@ bool GeoPoint::operator == (GeoPoint& p)
 
 	return false;
 }
+

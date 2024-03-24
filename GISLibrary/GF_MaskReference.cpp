@@ -8,8 +8,22 @@ namespace GF
 
 	}
 
+	MaskReference::MaskReference(const MaskReference& other)
+	{
+		geometryID = other.geometryID;
+		maskIndicator = other.maskIndicator;
+	}
+
 	MaskReference::~MaskReference()
 	{
 
+	}
+
+	MaskReference MaskReference::operator=(const MaskReference& other)
+	{
+		geometryID = other.geometryID;
+		maskIndicator = other.maskIndicator;
+
+		return *this;
 	}
 }

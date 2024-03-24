@@ -5,6 +5,7 @@ struct RIAS
 {
 public:
 	RIAS();
+	RIAS(const RIAS& other);
 	RIAS(int rcnm, int rcid, int usag, int ornt);
 	virtual ~RIAS();
 
@@ -21,6 +22,9 @@ public:
 
 	// 1 : Insert
 	int m_raui = 1;
+
+public:
+	virtual RIAS operator=(const RIAS& other);
 
 public:
 	static int GetSize();

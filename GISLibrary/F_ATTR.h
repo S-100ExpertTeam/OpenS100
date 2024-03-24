@@ -16,6 +16,9 @@ public:
 	std::vector<ATTR*> m_arr;
 
 public:
+	virtual F_ATTR operator=(const F_ATTR& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
@@ -25,6 +28,4 @@ public:
 	void Insert(int natc, int atix, int paix, int atin, CString atvl);
 	ATTR* getATTR(int index) const;
 	int getCount() const;
-
-	virtual F_ATTR* Clone() const;
 };

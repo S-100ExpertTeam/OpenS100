@@ -8,9 +8,43 @@ namespace GF
 
 	}
 
+	SpatialAttributeType::SpatialAttributeType(const SpatialAttributeType& other) :AttributeType(other)
+	{
+		scaleMinimum = other.scaleMinimum;
+		scaleMaximum = other.scaleMaximum;
+
+		//GM::Object geometry;
+		geometryID = other.geometryID;
+
+		for (const auto& iter : other.maskReference)
+		{
+			MaskReference mr = iter;
+			maskReference.push_back(mr);
+		}
+	}
+
 	SpatialAttributeType::~SpatialAttributeType()
 	{
 
+	}
+
+	SpatialAttributeType SpatialAttributeType::operator=(const SpatialAttributeType& other)
+	{
+		AttributeType::operator=(other);
+
+		scaleMinimum = other.scaleMinimum;
+		scaleMaximum = other.scaleMaximum;
+
+		//GM::Object geometry;
+		geometryID = other.geometryID;
+
+		for (const auto& iter : other.maskReference)
+		{
+			MaskReference mr = iter;
+			maskReference.push_back(mr);
+		}
+
+		return *this;
 	}
 
 	void SpatialAttributeType::SetGeometryID(std::string value)

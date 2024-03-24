@@ -63,11 +63,12 @@ public:
 	double m_fnor;
 
 public:
+	virtual F_PROJ operator=(const F_PROJ& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
 	static int GetSize();
-
-	virtual F_PROJ* Clone() const;
 };

@@ -35,5 +35,6 @@ public:
 	std::wstring GetRCIDasWstring();
 
 public:
+	virtual RecordName operator=(const RecordName& other);
 	bool operator==(RecordName& item);
 };

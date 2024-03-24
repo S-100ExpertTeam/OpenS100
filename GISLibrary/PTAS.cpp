@@ -6,6 +6,12 @@ PTAS::PTAS()
 	m_name.RCNM = 110;
 }
 
+PTAS::PTAS(const PTAS& other)
+{
+	m_name = other.m_name;
+	m_topi = other.m_topi;
+}
+
 PTAS::PTAS(int rcid, int topi)
 {
 	m_name.RCNM = 110;
@@ -16,6 +22,14 @@ PTAS::PTAS(int rcid, int topi)
 PTAS::~PTAS()
 {
 
+}
+
+PTAS PTAS::operator=(const PTAS& other)
+{
+	m_name = other.m_name;
+	m_topi = other.m_topi;
+
+	return *this;
 }
 
 int PTAS::GetSize()

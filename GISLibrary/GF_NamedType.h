@@ -8,10 +8,14 @@ namespace GF
 	{
 	public:
 		NamedType();
+		NamedType(const NamedType& other);
 		virtual ~NamedType();
 
 	public:
 		std::string code = "";
+
+	public:
+		virtual NamedType operator=(const NamedType& other);
 
 	public:
 		virtual std::string GetCode();

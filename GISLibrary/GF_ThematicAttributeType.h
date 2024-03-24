@@ -9,8 +9,11 @@ namespace GF
     {
     public:
         ThematicAttributeType();
+        ThematicAttributeType(const ThematicAttributeType& other);
         virtual ~ThematicAttributeType();
 
+    public:
+        virtual ThematicAttributeType operator=(const ThematicAttributeType& other);
         virtual ThematicAttributeType* clone();
     };
 

@@ -83,10 +83,11 @@ public:
 	double m_angl = 0;
 
 public:
+	virtual F_SEGH operator=(const F_SEGH& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
-
-	virtual F_SEGH* Clone() const;
 };

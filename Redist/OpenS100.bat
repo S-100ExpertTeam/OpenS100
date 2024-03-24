@@ -12,5 +12,3 @@ xcopy /q /e /y ..\vcpkg\installed\x64-windows\bin\*.dll "OpenS100\bin\"
 xcopy /q /e /y ..\extlibs\Lua\bin\x64\*.dll "OpenS100\bin\"
 
 xcopy /q /e /y "..\ProgramData\*" "OpenS100\ProgramData\"
-
-xcopy /q /e /y "..\TEMP\*" "OpenS100\TEMP\"

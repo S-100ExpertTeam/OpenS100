@@ -36,10 +36,11 @@ public:
 	double m_zcoo;
 
 public:
+	virtual F_C3FT operator=(const F_C3FT& other);
+
+public:
 	static int GetSize();
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
-
-	virtual F_C3FT* Clone() const;
 };

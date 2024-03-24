@@ -16,6 +16,9 @@ public:
 	std::vector<PTAS*> m_arr;
 
 public:
+	virtual F_PTAS operator=(const F_PTAS& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
@@ -24,6 +27,4 @@ public:
 	void Insert(RecordName name, int topi);
 	void Insert(int rcnm, int rcid, int topi);
 	void Insert(GISLibrary::RCNM rcnm, int rcid, int topi);
-
-	virtual F_PTAS* Clone() const;
 };

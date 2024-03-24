@@ -25,6 +25,16 @@ Directory::~Directory()
 
 }
 
+Directory Directory::operator=(const Directory& other)
+{
+	memset(fieldTag, 0x00, 4);
+	memcpy(fieldTag, other.fieldTag, 4);
+	fieldLength = other.fieldLength;
+	fieldPosition = other.fieldPosition;
+
+	return *this;
+}
+
 bool Directory::WriteDirectory(CFile* file, int sizeOfFieldLengthField, int sizeOfFieldPositionField)
 {
 	file->Write(fieldTag, 4);

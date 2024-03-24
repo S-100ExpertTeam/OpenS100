@@ -59,11 +59,12 @@ public:
 	CString m_scri;
 
 public:
+	virtual F_CRSH operator=(const F_CRSH& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
-
-	virtual F_CRSH* Clone() const;
 };
 

@@ -7,6 +7,23 @@ H5_FeatureContainer::H5_FeatureContainer()
 
 }
 
+H5_FeatureContainer::H5_FeatureContainer(const H5_FeatureContainer& other)
+{
+	for (const auto& iter : other.featureInstanceGroup)
+	{
+		H5_FeatureInstanceGroup* group = new H5_FeatureInstanceGroup(*iter);
+		featureInstanceGroup.push_back(group);
+	}
+	dataCodingFormat = other.dataCodingFormat;
+	dimension = other.dimension;
+	commonPointRule = other.commonPointRule;
+	horizontalPositionUncertainty = other.horizontalPositionUncertainty;
+	verticalUncertainty = other.verticalUncertainty;
+	if (other.timeUncertainty) setTimeUncertainty(*other.timeUncertainty);
+	numInstances = other.numInstances;
+	attribute2 = new H5_FC_Attribute2(*other.attribute2);
+}
+
 H5_FeatureContainer::~H5_FeatureContainer()
 {
 	for (auto i = featureInstanceGroup.begin(); i != featureInstanceGroup.end(); i++) {
@@ -60,6 +77,31 @@ bool H5_FeatureContainer::Read(hid_t groupID)
 	}
 
 	return true;
+}
+
+H5_FeatureContainer H5_FeatureContainer::operator=(const H5_FeatureContainer& other)
+{
+	if (attribute2)
+	{
+		delete attribute2;
+		attribute2 = nullptr;
+	}
+
+	for (const auto& iter : other.featureInstanceGroup)
+	{
+		H5_FeatureInstanceGroup* group = new H5_FeatureInstanceGroup(*iter);
+		featureInstanceGroup.push_back(group);
+	}
+	dataCodingFormat = other.dataCodingFormat;
+	dimension = other.dimension;
+	commonPointRule = other.commonPointRule;
+	horizontalPositionUncertainty = other.horizontalPositionUncertainty;
+	verticalUncertainty = other.verticalUncertainty;
+	if (other.timeUncertainty) setTimeUncertainty(*other.timeUncertainty);
+	numInstances = other.numInstances;
+	attribute2 = new H5_FC_Attribute2(*other.attribute2);
+
+	return *this;
 }
 
 DataOrganizationIndex H5_FeatureContainer::getDataCodingFormat() const

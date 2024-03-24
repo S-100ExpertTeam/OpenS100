@@ -6,6 +6,7 @@ class H5_FI_Attribute29
 {
 public:
 	H5_FI_Attribute29();
+	H5_FI_Attribute29(const H5_FI_Attribute29& other);
 	virtual ~H5_FI_Attribute29();
 
 public:
@@ -16,6 +17,9 @@ public:
 	int numPointsLongitudinal = 0;
 	int numPointsLatitudinal = 0;
 	std::string startSequence;
+
+public:
+	virtual H5_FI_Attribute29 operator=(const H5_FI_Attribute29& other);
 
 public:
 	double getGridOriginLongitude() const;
