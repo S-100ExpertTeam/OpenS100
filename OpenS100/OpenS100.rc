@@ -17,7 +17,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-//
+// Neutral (Default) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
 LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
@@ -347,15 +347,6 @@ BEGIN
     CONTROL         "",IDC_LIST_CURRENT_SELECTION,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,193,131
 END
 
-IDD_DIALOG_DOCK_LOGGER DIALOGEX 0, 0, 334, 363
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    CONTROL         "",IDC_LIST_LOGGER,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,17,31,193,131
-    COMBOBOX        IDC_COMBO_LOG_TYPE,14,5,185,30,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "Clear",IDC_BUTTON_LISTCLEAR,223,5,50,14,WS_GROUP
-END
-
 IDD_DIALOG_NOGEOMETRY DIALOGEX 0, 0, 309, 176
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "No Geometry"
@@ -459,10 +450,6 @@ BEGIN
     END
 
     IDD_DIALOG_DOCK_CURRENT_SELECTION, DIALOG
-    BEGIN
-    END
-
-    IDD_DIALOG_DOCK_LOGGER, DIALOG
     BEGIN
     END
 
@@ -760,12 +747,12 @@ BEGIN
     T10                     "Dataset Manager"
 END
 
-#endif    
+#endif    // Neutral (Default) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// 
+// Korean (Korea) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
 LANGUAGE LANG_KOREAN, SUBLANG_DEFAULT
@@ -880,12 +867,12 @@ BEGIN
     0
 END
 
-#endif    
+#endif    // Korean (Korea) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// 
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
@@ -938,7 +925,7 @@ BEGIN
     0
 END
 
-#endif    
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

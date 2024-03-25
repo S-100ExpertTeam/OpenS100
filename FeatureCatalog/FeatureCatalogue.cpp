@@ -588,13 +588,14 @@ void FeatureCatalogue::SetScope(std::wstring value)
 	scope = value;
 }
 
-const std::wstring& FeatureCatalogue::GetFieldOfApplication()
+const std::wstring* FeatureCatalogue::GetFieldOfApplication()
 {
-	if (fieldOfApplication) {
-		return *fieldOfApplication;
+	if (fieldOfApplication) 
+	{
+		return fieldOfApplication;
 	}
 
-	return L"";
+	return nullptr;
 }
 
 void FeatureCatalogue::SetFieldOfApplication(std::string& value)

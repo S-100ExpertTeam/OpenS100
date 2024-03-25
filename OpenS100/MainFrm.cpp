@@ -170,7 +170,7 @@ BOOL CMainFrame::CreateDockingWindows()
 		return FALSE;
 	}
 
-	if (!theApp.m_DockablePaneRelation.Create(_T("Relation"), this, CRect(0, 0, 300, 250), TRUE, IDD_DIALOG_DOCK_LOGGER, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
+	if (!theApp.m_DockablePaneRelation.Create(_T("Relation"), this, CRect(0, 0, 300, 250), TRUE, IDD_DIALOG_DOCK_RELATION, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
 	{
 		TRACE0("I couldn't make a Relation\n");
 		return FALSE;

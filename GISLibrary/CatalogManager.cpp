@@ -111,6 +111,7 @@ FeatureCatalogue* CatalogManager::getFC(std::string productId) const
 
 PortrayalCatalogue* CatalogManager::getPC(std::string productId) const
 {
+	PortrayalCatalogue* bpc = nullptr;
 	std::vector<PortrayalCatalogue*> pc;
 
 	for (auto i = PCs.begin(); i != PCs.end(); i++)
@@ -118,6 +119,10 @@ PortrayalCatalogue* CatalogManager::getPC(std::string productId) const
 		if (productId.compare((*i)->getProduct()) == 0)
 		{
 			pc.push_back((*i));
+		}
+		else if ((*i)->getProduct().compare("S-100") == 0)
+		{
+			bpc = (*i);
 		}
 	}
 
@@ -130,10 +135,12 @@ PortrayalCatalogue* CatalogManager::getPC(std::string productId) const
 		return pc.back();
 	}
 
-	// Failed to find PC, return S-100 PC
-	return getPC("S-100");
+	if (bpc)
+	{
+		return bpc;
+	}
 
-	//return nullptr;
+	return nullptr;
 }
 
 FeatureCatalogue* CatalogManager::getFC(int productId) const

@@ -1741,7 +1741,6 @@ int LayerManager::pathToProductNumber(CString path)
 			return std::stoi(strProductNumber);
 		}
 		catch (const std::exception& e) {
-
 		}
 	}
 

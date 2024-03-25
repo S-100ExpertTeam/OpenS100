@@ -38,11 +38,12 @@ void DefinitionReference::SetSourceIdentifier(std::wstring value)
 	*sourceIdentifier = value;
 }
 
-const std::wstring& DefinitionReference::GetSourceIdentifier()
+const std::wstring* DefinitionReference::GetSourceIdentifier()
 {
-	if (sourceIdentifier) {
-		return *sourceIdentifier;
+	if (sourceIdentifier) 
+	{
+		return sourceIdentifier;
 	}
 	
-	return L"";
+	return nullptr;
 }

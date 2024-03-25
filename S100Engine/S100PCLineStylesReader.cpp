@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "S100PCLineStylesReader.h"
 
+#include "../LatLonUtility/LatLonUtility.h"
+
 #include <iostream>
 #include <filesystem>
 
@@ -60,18 +62,22 @@ namespace S100XMLReader
 		pugi::xml_node displayList = doc.first_child();
 		if (displayList != nullptr)
 		{
-			SetLineStyle(displayList, &pLineStyle);
+			return false;
 		}
 
-		displayList = doc.child("compositeLineStyle");
-		if (displayList != nullptr)
-		{
-			SetLineStyle(displayList, &pLineStyle);
-		}
+		std::string nodeName = firstNode.name();
 
-		displayList = doc.child("lineStyleReference");
-		if (displayList)
+		if (nodeName.find("lineStyle") != std::string::npos)
 		{
+			SetLineStyle(firstNode, &pLineStyle);
+		}
+		else if (nodeName.find("compositeLineStyle") != std::string::npos)
+		{
+			SetLineStyle(firstNode, &pLineStyle);
+		}
+		else if (nodeName.find("lineStyleReference") != std::string::npos)
+		{
+			//SetLineStyleReference(firstNode, pLineStyle, pLineStyles);
 		}
 
 		if (nullptr != pLineStyle)
@@ -93,11 +99,11 @@ namespace S100XMLReader
 	{
 		auto name = node.name();
 		LineStylesPackage::AbstractLineStyle* pLineStyle;
-		if (!strcmp(name, "compositeLineStyle"))
+		if (LatLonUtility::DeleteXMLNamespace(name).compare("compositeLineStyle") == 0)
 		{
 			pLineStyle = new LineStylesPackage::CompositeLineStyle();
 		}
-		else if (!strcmp(name, "lineStyle"))
+		else if (LatLonUtility::DeleteXMLNamespace(name).compare("lineStyle") == 0)
 		{
 			pLineStyle = new LineStylesPackage::LineStyle();
 		}
@@ -159,45 +165,48 @@ namespace S100XMLReader
 			return false;
 		}
 
-		for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
+		if (pLineStyle)
 		{
-			auto instructionName = instruction.name();
-			if (!strcmp(instructionName, "intervalLength"))
+			for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 			{
-				((LineStylesPackage::LineStyle*)*pLineStyle)->intervalLength = std::stod(instruction.child_value());
-			}
-			else if (!strcmp(instructionName, "pen"))
-			{
-				((LineStylesPackage::LineStyle*)*pLineStyle)->pen = new GraphicBasePackage::Pen();
-				SetPen(instruction, ((LineStylesPackage::LineStyle*)*pLineStyle)->pen);
-			}
-			else if (!strcmp(instructionName, "dash"))
-			{
-				LineStylesPackage::Dash* pDash = new LineStylesPackage::Dash();
-				((LineStylesPackage::LineStyle*)*pLineStyle)->dash.push_back(pDash);
-				SetDash(instruction, pDash);
-			}
-			else if (!strcmp(instructionName, "symbol"))
-			{
-				LineStylesPackage::LineSymbol* pSymbol = new LineStylesPackage::LineSymbol();
-				((LineStylesPackage::LineStyle*)*pLineStyle)->symbol.push_back(pSymbol);
-				SetSymbol(instruction, pSymbol);
-			}
-			else if (!strcmp(instructionName, "lineStyle"))
-			{
-				LineStylesPackage::LineStyle* pLS = nullptr;
-				SetLineStyle(instruction, (LineStylesPackage::AbstractLineStyle **)&pLS);
-
-				for (auto attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
+				auto instructionName = instruction.name();
+				if (!strcmp(instructionName, "intervalLength"))
 				{
-					auto attriName = attri.name();
-					if (!strcmp(attriName, "offset"))
-					{
-						pLS->offset = std::stod(attri.value());
-					}
+					((LineStylesPackage::LineStyle*)*pLineStyle)->intervalLength = std::stod(instruction.child_value());
 				}
+				else if (!strcmp(instructionName, "pen"))
+				{
+					((LineStylesPackage::LineStyle*)*pLineStyle)->pen = new GraphicBasePackage::Pen();
+					SetPen(instruction, ((LineStylesPackage::LineStyle*)*pLineStyle)->pen);
+				}
+				else if (!strcmp(instructionName, "dash"))
+				{
+					LineStylesPackage::Dash* pDash = new LineStylesPackage::Dash();
+					((LineStylesPackage::LineStyle*)*pLineStyle)->dash.push_back(pDash);
+					SetDash(instruction, pDash);
+				}
+				else if (!strcmp(instructionName, "symbol"))
+				{
+					LineStylesPackage::LineSymbol* pSymbol = new LineStylesPackage::LineSymbol();
+					((LineStylesPackage::LineStyle*)*pLineStyle)->symbol.push_back(pSymbol);
+					SetSymbol(instruction, pSymbol);
+				}
+				else if (!strcmp(instructionName, "lineStyle"))
+				{
+					LineStylesPackage::LineStyle* pLS = nullptr;
+					SetLineStyle(instruction, (LineStylesPackage::AbstractLineStyle**)&pLS);
 
-				((LineStylesPackage::CompositeLineStyle *)(*pLineStyle))->component.push_back(pLS);
+					for (auto attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
+					{
+						auto attriName = attri.name();
+						if (!strcmp(attriName, "offset"))
+						{
+							pLS->offset = std::stod(attri.value());
+						}
+					}
+
+					((LineStylesPackage::CompositeLineStyle*)(*pLineStyle))->component.push_back(pLS);
+				}
 			}
 		}
 

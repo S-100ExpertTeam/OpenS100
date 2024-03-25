@@ -235,3 +235,13 @@ std::string LatLonUtility::TrimRight(std::string& str)
 
 	return str;
 }
+
+std::string LatLonUtility::DeleteXMLNamespace(std::string value)
+{
+	size_t pos = value.find(':');
+	if (pos != std::string::npos) {
+		value.erase(0, pos + 1);
+	}
+
+	return value;
+}
