@@ -39,6 +39,7 @@ void S100_LineStyle::GetContents(pugi::xml_node& node)
 			offset = pugi::as_wide(attri.value());
 		}
 	}
+	
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
 		const pugi::char_t* instructionName = instruction.name();

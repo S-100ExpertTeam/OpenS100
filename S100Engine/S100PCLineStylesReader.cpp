@@ -40,34 +40,6 @@ namespace S100XMLReader
 				if (!filePath.IsEmpty())
 				{
 					AddByPugi(path, pLineStyles);
-
-					/*LineStylesPackage::AbstractLineStyle *pLineStyle = nullptr;
-					pugi::xml_document doc;
-					pugi::xml_parse_result result = doc.load_file(filePath);
-
-					pugi::xml_node displayList = doc.child("lineStyle");
-					if (displayList != nullptr)
-					{
-						SetLineStyle(displayList, &pLineStyle);
-					}
-
-					displayList = doc.child("compositeLineStyle");
-					if (displayList != nullptr)
-					{
-						SetLineStyle(displayList, &pLineStyle);
-					}
-
-					displayList = doc.child("lineStyleReference");
-					if (displayList)
-
-					{
-					}
-
-					if (nullptr != pLineStyle)
-					{
-						pLineStyle->name = findFileData.cFileName;
-						pLineStyles->mapLineStyle.insert({ findFileData.cFileName, pLineStyle });
-					}*/
 				}
 			}
 		} while (FindNextFile(hFind, &findFileData));
@@ -85,7 +57,7 @@ namespace S100XMLReader
 		pugi::xml_document doc;
 		pugi::xml_parse_result result = doc.load_file(path.c_str());
 
-		pugi::xml_node displayList = doc.child("lineStyle");
+		pugi::xml_node displayList = doc.first_child();
 		if (displayList != nullptr)
 		{
 			SetLineStyle(displayList, &pLineStyle);
@@ -172,15 +144,19 @@ namespace S100XMLReader
 
 	bool S100PCLineStylesReader::SetLineStyle(pugi::xml_node node, LineStylesPackage::AbstractLineStyle **pLineStyle)
 	{
-		auto name = node.name();
+		std::string name = node.name();
 
-		if (!strcmp(name, "compositeLineStyle"))
+		if (name.find("compositeLineStyle") != std::string::npos)
 		{
 			*pLineStyle = new LineStylesPackage::CompositeLineStyle();
 		}
-		else if (!strcmp(name, "lineStyle"))
+		else if (name.find("lineStyle") != std::string::npos)
 		{
 			*pLineStyle = new LineStylesPackage::LineStyle();
+		}
+		else
+		{
+			return false;
 		}
 
 		for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
