@@ -60,20 +60,20 @@ namespace S100XMLReader
 		pugi::xml_parse_result result = doc.load_file(path.c_str());
 
 		pugi::xml_node displayList = doc.first_child();
-		if (displayList != nullptr)
+		if (displayList  == nullptr)
 		{
 			return false;
 		}
 
-		std::string nodeName = firstNode.name();
+		std::string nodeName = displayList.name();
 
 		if (nodeName.find("lineStyle") != std::string::npos)
 		{
-			SetLineStyle(firstNode, &pLineStyle);
+			SetLineStyle(displayList, &pLineStyle);
 		}
 		else if (nodeName.find("compositeLineStyle") != std::string::npos)
 		{
-			SetLineStyle(firstNode, &pLineStyle);
+			SetLineStyle(displayList, &pLineStyle);
 		}
 		else if (nodeName.find("lineStyleReference") != std::string::npos)
 		{
@@ -230,6 +230,7 @@ namespace S100XMLReader
 			if (!strcmp(instructionName, "color"))
 			{
 				pPen->color.SetToken(pugi::as_wide(instruction.child_value()));
+				pPen->color.SetTransparency(instruction.attribute("transparency").as_double());
 			}
 		}
 	}
