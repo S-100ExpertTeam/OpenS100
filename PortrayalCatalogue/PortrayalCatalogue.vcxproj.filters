@@ -28,9 +28,6 @@
     <Filter Include="Enum">
       <UniqueIdentifier>{289ca82f-03bf-43cd-9845-00e02a0a797f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ProcessingPortrayalSchema">
-      <UniqueIdentifier>{e8c335d5-d54b-4982-a721-0be4f9ed0251}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BASE">
       <UniqueIdentifier>{875946ea-2a91-436f-9cf1-b9889d3a98e6}</UniqueIdentifier>
     </Filter>

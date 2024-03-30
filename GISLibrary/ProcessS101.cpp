@@ -112,21 +112,6 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 			}
 		}
 
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SafetyDepth", safety_depth.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShallowContour", sallow_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SafetyContour", safety_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("TwoShades", two_shades.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("DeepContour", deep_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShallowPattern", shallow_pattern.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShowIsolatedDangersInShallowWaters",
-		//	show_isolated_dangers_in_shallow_waters.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("PlainBoundaries", plain_boundaries.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SimplifiedPoints", simplified_points.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("FullSectors", full_sector.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("RadarOverlay", radar_overlay.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("IgnoreScamin", ignore_scamin.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("NationalLanguage", national_language.c_str());
-
 		std::list<Result_DrawingInstruction>* drawingInstructionResult = KRS_LUA_SCRIPT_REFERENCE::GetResultDrawingInstructions();
 
 		int t = (int)drawingInstructionResult->size();
