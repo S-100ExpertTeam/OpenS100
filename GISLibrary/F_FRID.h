@@ -22,9 +22,10 @@ public:
 	int m_ruin = 0;
 
 public:
+	virtual F_FRID operator=(const F_FRID& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
-
-	virtual F_FRID* Clone() const;
 };

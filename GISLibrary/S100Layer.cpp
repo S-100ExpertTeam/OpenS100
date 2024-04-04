@@ -30,7 +30,8 @@ bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
 
-	if (!extension.CompareNoCase(L"000"))
+	if ((extension.CompareNoCase(L"000") >= 0) &&
+		(extension.CompareNoCase(L"999") <= 0))
 	{
 		m_spatialObject = new S101Cell(d2d1);
 		m_spatialObject->SetLayer(this);
@@ -50,7 +51,7 @@ bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 	{
 		if (GetFC()->getProductId().compare("S-101") == 0)
 		{
-			m_spatialObject = new S101Cell(GetFeatureCatalog(), d2d1);
+			m_spatialObject = new S101Cell(d2d1);
 		}
 		else
 		{

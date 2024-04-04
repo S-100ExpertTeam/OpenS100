@@ -17,6 +17,9 @@ public:
 	std::list<CSAX*> m_arr;
 
 public:
+	virtual F_CSAX operator=(const F_CSAX& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
@@ -24,6 +27,4 @@ public:
 	int GetFieldLength();
 
 	void Insert(int axty, int axum);
-
-	virtual F_CSAX* Clone() const;
 };

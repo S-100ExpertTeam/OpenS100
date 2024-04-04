@@ -13,9 +13,57 @@ R_DSCRS::R_DSCRS()
 	Init();
 }
 
+R_DSCRS::R_DSCRS(const R_DSCRS& other) : Record(other)
+{
+	m_csid = other.m_csid;
+	for (const auto& iter : other.m_crsh)
+	{
+		F_CRSH* crsh = new F_CRSH(*iter);
+		m_crsh.push_back(crsh);
+	}
+	m_csax = (other.m_csax) ? new F_CSAX(*other.m_csax) : nullptr;
+	m_vdat = (other.m_vdat) ? new F_VDAT(*other.m_vdat) : nullptr;
+}
+
 R_DSCRS::~R_DSCRS()
 {
 	Release();
+}
+
+R_DSCRS R_DSCRS::operator=(const R_DSCRS& other)
+{
+	for (auto& iter : m_crsh)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_crsh.clear();
+	if (m_csax)
+	{
+		delete m_csax;
+		m_csax = nullptr;
+	}
+	if (m_vdat)
+	{
+		delete m_vdat;
+		m_vdat = nullptr;
+	}
+
+	Record::operator=(other);
+
+	m_csid = other.m_csid;
+	for (const auto& iter : other.m_crsh)
+	{
+		F_CRSH* crsh = new F_CRSH(*iter);
+		m_crsh.push_back(crsh);
+	}
+	m_csax = (other.m_csax) ? new F_CSAX(*other.m_csax) : nullptr;
+	m_vdat = (other.m_vdat) ? new F_VDAT(*other.m_vdat) : nullptr;
+
+	return *this;
 }
 
 #pragma warning(disable:4244)
@@ -181,21 +229,5 @@ void R_DSCRS::Release()
 
 	delete m_vdat;
 	m_vdat = nullptr;
-}
-
-R_DSCRS* R_DSCRS::Clone() const
-{
-	R_DSCRS* r_dscrs = new R_DSCRS();
-	r_dscrs->m_csid = m_csid;
-
-	for (const auto& iter : m_crsh)
-	{
-		F_CRSH* f_crsh = (!iter) ? nullptr : iter->Clone();
-		r_dscrs->m_crsh.push_back(f_crsh);
-	}
-	r_dscrs->m_csax = (!m_csax) ? nullptr : m_csax->Clone();
-	r_dscrs->m_vdat = (!m_vdat) ? nullptr : m_vdat->Clone();
-
-	return r_dscrs;
 }
 

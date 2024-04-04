@@ -14,6 +14,7 @@ namespace S100GML
 	{
 	public:
 		DatasetIdentificationInformation();
+		DatasetIdentificationInformation(const DatasetIdentificationInformation& dii);
 		virtual ~DatasetIdentificationInformation();
 
 	public:

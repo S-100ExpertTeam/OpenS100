@@ -26,6 +26,9 @@ namespace GF
 		std::vector<ThematicAttributeType*> attributes;
 
 	public:
+		virtual ObjectType operator=(const ObjectType& other);
+
+	public:
 		virtual std::string GetID();
 
 		virtual std::wstring GetIDAsWString();

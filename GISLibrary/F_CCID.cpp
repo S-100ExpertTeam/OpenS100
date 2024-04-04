@@ -11,7 +11,7 @@ F_CCID::F_CCID(void)
 	m_ruin = 0;
 }
 
-F_CCID::F_CCID(const F_CCID& other)
+F_CCID::F_CCID(const F_CCID& other) : Field(other)
 {
 	m_name = other.m_name;
 	m_rver = other.m_rver;
@@ -28,6 +28,15 @@ F_CCID::F_CCID(RecordName recordName, int RVER, int RUIN)
 F_CCID::~F_CCID(void)
 {
 
+}
+
+F_CCID F_CCID::operator=(const F_CCID& other)
+{
+	m_name = other.m_name;
+	m_rver = other.m_rver;
+	m_ruin = other.m_ruin;
+
+	return *this;
 }
 
 void F_CCID::ReadField(BYTE *&buf)
@@ -57,15 +66,5 @@ int F_CCID::GetFieldLength()
 	len += 2;
 	len += 1;
 	return ++len;
-}
-
-F_CCID* F_CCID::Clone() const
-{
-	F_CCID* f_ccid = new F_CCID();
-	f_ccid->m_name = m_name;
-	f_ccid->m_rver = m_rver;
-	f_ccid->m_ruin = m_ruin;
-
-	return f_ccid;
 }
 

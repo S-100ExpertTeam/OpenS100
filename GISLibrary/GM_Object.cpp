@@ -10,19 +10,28 @@ namespace GM
 
 	}
 
+	Object::Object(const Object& other)
+	{
+		id = other.id;
+		srsName = other.srsName;
+	}
+
 	Object::Object(std::string id)
 	{
 		this->id = id;
 	}
 
-	Object::Object(const Object& item)
-	{
-		this->id = item.id;
-	}
-
 	Object::~Object()
 	{
 
+	}
+
+	Object Object::operator=(const Object& other)
+	{
+		id = other.id;
+		srsName = other.srsName;
+
+		return *this;
 	}
 
 	std::string Object::GetID()

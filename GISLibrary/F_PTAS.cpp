@@ -9,10 +9,13 @@ F_PTAS::F_PTAS()
 
 }
 
-F_PTAS::F_PTAS(const F_PTAS& other)
+F_PTAS::F_PTAS(const F_PTAS& other) : Field(other)
 {
 	for (const auto& iter : other.m_arr)
-		Insert(iter->m_name, iter->m_topi);
+	{
+		PTAS* ptas = new PTAS(*iter);
+		m_arr.push_back(ptas);
+	}
 }
 
 F_PTAS::~F_PTAS()
@@ -22,6 +25,27 @@ F_PTAS::~F_PTAS()
 		auto ptas = *i;
 		delete ptas;
 	}
+}
+
+F_PTAS F_PTAS::operator=(const F_PTAS& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		PTAS* ptas = new PTAS(*iter);
+		m_arr.push_back(ptas);
+	}
+
+	return *this;
 }
 
 void F_PTAS::ReadField(BYTE *&buf)
@@ -102,17 +126,4 @@ void F_PTAS::Insert(GISLibrary::RCNM rcnm, int rcid, int topi)
 	m_arr.push_back(ptas);
 }
 
-F_PTAS* F_PTAS::Clone() const
-{
-	F_PTAS* f_ptas = new F_PTAS();
-	for (const auto& iter : m_arr)
-	{
-		PTAS* ptas = new PTAS();
-		ptas->m_name = iter->m_name;
-		ptas->m_topi = iter->m_topi;
-		f_ptas->m_arr.push_back(ptas);
-	}
-
-	return f_ptas;
-}
 

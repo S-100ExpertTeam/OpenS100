@@ -7,9 +7,23 @@ S102_RootGroup::S102_RootGroup()
 
 }
 
+S102_RootGroup::S102_RootGroup(const S102_RootGroup& other) : H5_RootGroup(other)
+{
+	setGriddingMethod(*other.griddingMethod);
+}
+
 S102_RootGroup::~S102_RootGroup()
 {
 	delete griddingMethod;
+}
+
+S102_RootGroup S102_RootGroup::operator=(const S102_RootGroup& other)
+{
+	H5_RootGroup::operator=(other);
+
+	setGriddingMethod(*other.griddingMethod);
+
+	return *this;
 }
 
 bool S102_RootGroup::hasGriddingMethod() const

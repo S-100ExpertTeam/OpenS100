@@ -15,12 +15,16 @@ class R_PointRecord :
 {
 public:
 	R_PointRecord();
+	R_PointRecord(const R_PointRecord& other);
 	virtual ~R_PointRecord();
 
 public:
 	F_PRID m_prid;
 	F_C2IT* m_c2it = nullptr;
 	F_C3IT* m_c3it = nullptr;
+
+public:
+	virtual R_PointRecord operator=(const R_PointRecord& other);
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
@@ -37,6 +41,4 @@ public:
 	void SetC2IT(int x, int y);
 	void SetC3IT(F_C3IT* value);
 	void SetC3IT(int x, int y, int z);
-
-	R_PointRecord* Clone() const;
 };

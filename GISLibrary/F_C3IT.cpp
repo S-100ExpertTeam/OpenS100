@@ -28,6 +28,16 @@ int F_C3IT::GetSize()
 	return 13;
 }
 
+F_C3IT F_C3IT::operator=(const F_C3IT& other)
+{
+	m_vcid = other.m_vcid;
+	m_ycoo = other.m_ycoo;
+	m_xcoo = other.m_xcoo;
+	m_zcoo = other.m_zcoo;
+
+	return *this;
+}
+
 void F_C3IT::ReadField(BYTE*& buf)
 {
 	m_vcid = *(buf++);
@@ -43,13 +53,4 @@ int F_C3IT::GetFieldLength()
 	return ++len;
 }
 
-F_C3IT* F_C3IT::Clone() const
-{
-	F_C3IT* f_c3it = new F_C3IT();
-	f_c3it->m_vcid = m_vcid;
-	f_c3it->m_ycoo = m_ycoo;
-	f_c3it->m_xcoo = m_xcoo;
-	f_c3it->m_zcoo = m_zcoo;
 
-	return f_c3it;
-}

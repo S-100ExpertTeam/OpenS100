@@ -8,6 +8,12 @@ namespace GF
 
 	}
 
+	SimpleAttributeType::SimpleAttributeType(const SimpleAttributeType& other) : ThematicAttributeType(other)
+	{
+		valueType = other.valueType;
+		value = other.value;
+	}
+
 	SimpleAttributeType::SimpleAttributeType(FCD::S100_CD_AttributeValueType valueType, std::string value)
 	{
 		this->valueType = valueType;

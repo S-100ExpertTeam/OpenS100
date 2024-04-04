@@ -13,11 +13,15 @@ class Geometry
 {
 public:
 	Geometry();
+	Geometry(const Geometry& other);
 	virtual ~Geometry();
 
 public:
 	MBR m_mbr;
 	std::string id;
+
+public:
+	virtual Geometry operator=(const Geometry& other);
 
 public:
 	MBR GetMBR();

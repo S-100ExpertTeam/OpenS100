@@ -12,6 +12,7 @@ class R_DSGIR : Record
 {
 public:
 	R_DSGIR();
+	R_DSGIR(const R_DSGIR& other);
 	virtual ~R_DSGIR();
 
 public:
@@ -23,6 +24,9 @@ public:
 	F_CodeWithNumericCode *m_iacs = new F_CodeWithNumericCode();
 	F_CodeWithNumericCode *m_facs = new F_CodeWithNumericCode();
 	F_CodeWithNumericCode *m_arcs = new F_CodeWithNumericCode();
+
+public:
+	virtual R_DSGIR operator=(const R_DSGIR& other);
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
@@ -68,7 +72,6 @@ public:
 	void initFeatureAssociationCode();
 	void initAssociationRoleCode();
 
-	virtual R_DSGIR* Clone() const;
 private:
 	void deleteAll();
 	void deleteAttributeCode();

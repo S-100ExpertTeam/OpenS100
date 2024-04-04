@@ -22,6 +22,15 @@ F_SECC::~F_SECC()
 
 }
 
+F_SECC F_SECC::operator=(const F_SECC& other)
+{
+	m_seui = other.m_seui;
+	m_seix = other.m_seix;
+	m_nseg = other.m_nseg;
+
+	return *this;
+}
+
 void F_SECC::ReadField(BYTE *&buf)
 {
 	m_seui = *(buf++);
@@ -43,15 +52,5 @@ int F_SECC::GetFieldLength()
 	len += 2;
 	len += 2;
 	return ++len;
-}
-
-F_SECC* F_SECC::Clone() const
-{
-	F_SECC* f_secc = new F_SECC();
-	f_secc->m_seui = m_seui;
-	f_secc->m_seix = m_seix;
-	f_secc->m_nseg = m_nseg;
-
-	return f_secc;
 }
 

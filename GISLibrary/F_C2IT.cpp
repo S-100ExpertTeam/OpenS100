@@ -23,6 +23,14 @@ int F_C2IT::GetSize()
 	return 8;
 }
 
+F_C2IT F_C2IT::operator=(const F_C2IT& other)
+{
+	m_xcoo = other.m_xcoo;
+	m_ycoo = other.m_ycoo;
+
+	return *this;
+}
+
 void F_C2IT::ReadField(BYTE *&buf)
 {
 	m_ycoo = buf2int(buf, 4);
@@ -47,11 +55,3 @@ int F_C2IT::GetFieldLength()
 	return ++len;
 }
 
-F_C2IT* F_C2IT::Clone() const
-{
-	F_C2IT* f_c2it = new F_C2IT();
-	f_c2it->m_ycoo = m_ycoo;
-	f_c2it->m_xcoo = m_xcoo;
-
-	return f_c2it;
-}

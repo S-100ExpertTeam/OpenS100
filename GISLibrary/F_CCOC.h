@@ -33,9 +33,11 @@ public:
 	static int GetSize();
 
 public:
+	virtual F_CCOC operator=(const F_CCOC& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file) { return true; };
 	int GetFieldLength();
-
-	virtual F_CCOC* Clone() const;
 };
+

@@ -23,9 +23,10 @@ public:
 	static int GetSize();
 
 public:
+	virtual F_C2FT operator=(const F_C2FT& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
-
-	virtual F_C2FT* Clone() const;
 };

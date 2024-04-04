@@ -55,9 +55,10 @@ public:
 	double m_cmgl;
 
 public:
+	virtual F_GDAT operator=(const F_GDAT& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file) { return true; }
 	int GetFieldLength();
-
-	virtual F_GDAT* Clone() const;
 };

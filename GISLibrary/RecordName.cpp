@@ -49,6 +49,14 @@ std::wstring RecordName::GetRCIDasWstring()
 	return std::to_wstring(RCID);
 }
 
+RecordName RecordName::operator=(const RecordName& other)
+{
+	RCNM = other.RCNM;
+	RCID = other.RCID;
+
+	return *this;
+}
+
 bool RecordName::operator==(RecordName& item)
 {
 	if (item.RCNM == RCNM &&

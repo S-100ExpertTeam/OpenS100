@@ -15,11 +15,15 @@ class R_SurfaceRecord : public R_VectorRecord
 {
 public:
 	R_SurfaceRecord();
+	R_SurfaceRecord(const R_SurfaceRecord& other);
 	virtual ~R_SurfaceRecord();
 
 public:
 	F_SRID m_srid;
 	std::list<F_RIAS*> m_rias; 
+
+public:
+	virtual R_SurfaceRecord operator=(const R_SurfaceRecord& other);
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
@@ -35,6 +39,4 @@ public:
 	void InsertRing(int rcnm, int rcid, int usag, int ornt);
 
 	std::vector<RIAS*> GetAllRIAS();
-
-	R_SurfaceRecord* Clone() const;
 };

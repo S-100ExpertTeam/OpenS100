@@ -12,10 +12,14 @@ namespace GF
 	{
 	public:
 		InformationType();
+		InformationType(const InformationType& other);
 		~InformationType();
 
 	public:
 		//std::vector<ThematicAttributeType*> attributes;
+
+	public:
+		virtual InformationType operator=(const InformationType& other);
 
 	public:
 		virtual int GetAttributeCount();

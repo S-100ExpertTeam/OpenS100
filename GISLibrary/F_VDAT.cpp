@@ -11,7 +11,7 @@ F_VDAT::F_VDAT()
 	m_scri = "";
 }
 
-F_VDAT::F_VDAT(const F_VDAT& other)
+F_VDAT::F_VDAT(const F_VDAT& other) : Field(other)
 {
 	m_dtnm = other.m_dtnm;
 	m_dtid = other.m_dtid;
@@ -22,6 +22,16 @@ F_VDAT::F_VDAT(const F_VDAT& other)
 F_VDAT::~F_VDAT()
 {
 
+}
+
+F_VDAT F_VDAT::operator=(const F_VDAT& other)
+{
+	m_dtnm = other.m_dtnm;
+	m_dtid = other.m_dtid;
+	m_dtsr = other.m_dtsr;
+	m_scri = other.m_scri;
+
+	return *this;
 }
 
 void F_VDAT::ReadField(BYTE*& buf)
@@ -64,13 +74,3 @@ int F_VDAT::GetFieldLength()
 	return ++len;
 }
 
-F_VDAT* F_VDAT::Clone() const
-{
-	F_VDAT* f_vdat = new F_VDAT();
-	f_vdat->m_dtnm = m_dtnm;
-	f_vdat->m_dtid = m_dtid;
-	f_vdat->m_dtsr = m_dtsr;
-	f_vdat->m_scri = m_scri;
-
-	return f_vdat;
-}

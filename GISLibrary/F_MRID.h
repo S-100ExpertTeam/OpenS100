@@ -16,9 +16,10 @@ public:
 	int m_ruin;
 
 public:
+	virtual F_MRID operator=(const F_MRID& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 	int GetFieldLength();
-
-	virtual F_MRID* Clone() const;
 };

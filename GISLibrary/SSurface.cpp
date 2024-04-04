@@ -15,6 +15,39 @@ SSurface::SSurface()
 	
 }
 
+SSurface::SSurface(const SSurface& other) : SGeometry(other)
+{
+	m_numPoints = other.m_numPoints;
+
+	if (m_numPoints > 0)
+	{
+		m_pPoints = new GeoPoint[m_numPoints];
+		for (int i = 0; i < m_numPoints; i++)
+		{
+			m_pPoints[i] = other.m_pPoints[i];
+		}
+	}
+	
+	for (const auto& iter : other.curveList)
+	{
+		SAbstractCurve* ac = new SAbstractCurve(*iter);
+		curveList.push_back(ac);
+	}
+
+	if (m_centerPoint)
+		m_centerPoint = new GeoPoint(*m_centerPoint);
+
+	m_numParts = other.m_numParts;
+	if (m_numParts > 0)
+	{
+		m_pParts = new int[m_numParts];
+		for (int i = 0; i < m_numParts; i++)
+		{
+			m_pParts[i] = other.m_pParts[i];
+		}
+	}
+}
+
 SSurface::SSurface(MBR* mbr)
 {
 	m_numParts = 1;
@@ -390,8 +423,13 @@ void SSurface::Set(std::vector<POINT>& points, std::vector<int>& parts)
 
 	if (m_numPoints > SGeometry::sizeOfPoint)
 	{
-		SGeometry::sizeOfPoint = m_numPoints * 1.5;
 		delete[] SGeometry::viewPoints;
+		SGeometry::viewPoints = nullptr;
+	}
+
+	if (SGeometry::viewPoints == nullptr)
+	{
+		SGeometry::sizeOfPoint = m_numPoints * 1.5;
 		SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
 	}
 
@@ -416,6 +454,72 @@ void SSurface::Release()
 		delete (*i);
 	}
 	curveList.clear();
+}
+
+SSurface SSurface::operator=(const SSurface& other)
+{
+	if (m_pPoints)
+	{
+		delete[] m_pPoints;
+		m_pPoints = nullptr;
+	}
+
+	if (m_pParts)
+	{
+		delete[] m_pParts;
+		m_pParts = nullptr;
+	}
+
+	if (m_centerPoint)
+	{
+		delete m_centerPoint;
+		m_centerPoint = nullptr;
+	}
+
+	if (pGeometry)
+		SafeRelease(&pGeometry);
+
+	for (auto& iter : curveList)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	curveList.clear();
+
+	m_numPoints = other.m_numPoints;
+
+	if (m_numPoints > 0)
+	{
+		m_pPoints = new GeoPoint[m_numPoints];
+		for (int i = 0; i < m_numPoints; i++)
+		{
+			m_pPoints[i] = other.m_pPoints[i];
+		}
+	}
+
+	for (const auto& iter : other.curveList)
+	{
+		SAbstractCurve* ac = new SAbstractCurve(*iter);
+		curveList.push_back(ac);
+	}
+
+	if (m_centerPoint)
+		m_centerPoint = new GeoPoint(*m_centerPoint);
+
+	m_numParts = other.m_numParts;
+	if (m_numParts > 0)
+	{
+		m_pParts = new int[m_numParts];
+		for (int i = 0; i < m_numParts; i++)
+		{
+			m_pParts[i] = other.m_pParts[i];
+		}
+	}
+
+	return *this;
 }
 
 bool SSurface::ImportFromWkb(unsigned char* value, int size)
@@ -669,3 +773,4 @@ void SSurface::setSuppress(bool value)
 		}
 	}
 }
+

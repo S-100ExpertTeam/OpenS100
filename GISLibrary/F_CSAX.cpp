@@ -11,7 +11,10 @@ F_CSAX::F_CSAX(void)
 F_CSAX::F_CSAX(const F_CSAX& other)
 {
 	for (const auto& iter : other.m_arr)
-		Insert(iter->m_axty, iter->m_axum);
+	{
+		CSAX* cont = new CSAX(*iter);
+		m_arr.push_back(cont);
+	}
 }
 
 F_CSAX::~F_CSAX(void)
@@ -20,6 +23,27 @@ F_CSAX::~F_CSAX(void)
 	{
 		delete* i;
 	}
+}
+
+F_CSAX F_CSAX::operator=(const F_CSAX& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		CSAX* cont = new CSAX(*iter);
+		m_arr.push_back(cont);
+	}
+
+	return *this;
 }
 
 void F_CSAX::ReadField(BYTE *&buf)
@@ -80,16 +104,3 @@ void F_CSAX::Insert(int axty, int axum)
 	m_arr.push_back(csax);
 }
 
-F_CSAX* F_CSAX::Clone() const
-{
-	F_CSAX* f_csax = new F_CSAX();
-	for (const auto& iter : m_arr)
-	{
-		CSAX* csax = new CSAX();
-		csax->m_axty = iter->m_axty;
-		csax->m_axum = iter->m_axum;
-		f_csax->m_arr.push_back(csax);
-	}
-
-	return f_csax;
-}
