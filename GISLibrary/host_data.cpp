@@ -123,7 +123,8 @@ static void get_referenced_spatials(std::string spatial_id, std::vector<std::str
 	{
 		auto spatial = s_spatial_curve_nodes[spatial_id];
 		
-		if (spatial) {
+		if ((spatial) &&
+			(spatial->m_ptas)) {
 
 			spatial_type = ret[0];
 			spatials->push_back(spatial_id);

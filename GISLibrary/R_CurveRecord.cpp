@@ -305,6 +305,9 @@ int R_CurveRecord::GetPointCount()
 {
 	int result = 0;
 
+	if (m_ptas == nullptr)
+		return result;
+
 	auto countPTAS = m_ptas->m_arr.size();
 
 	if (countPTAS != 1 && countPTAS != 2)
