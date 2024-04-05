@@ -238,15 +238,6 @@ bool GetDouble(char* attributeContent, double& dataSpace)
 
 SVGReader::SVGReader()
 {
-	bounding_x = 0;
-	bounding_y = 0;
-	bounding_width = 0;
-	bounding_height = 0;
-
-	svgBox_x = 0;
-	svgBox_y = 0;
-	svgBox_width = 0;
-	svgBox_height = 0;
 }
 
 bool SVGReader::OpenByPugi(char* path)
@@ -514,15 +505,6 @@ bool SVGReader::OpenByPugi(char* path)
 
 SVGReader::SVGReader(char* path)
 {
-	bounding_x = 0;
-	bounding_y = 0;
-	bounding_width = 0;
-	bounding_height = 0;
-
-	svgBox_x = 0;
-	svgBox_y = 0;
-	svgBox_width = 0;
-	svgBox_height = 0;
 }
 
 SVGReader::~SVGReader()

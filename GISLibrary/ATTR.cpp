@@ -49,3 +49,8 @@ std::string ATTR::getValueAsString()
 {
 	return pugi::as_utf8(m_atvl);
 }
+
+std::wstring ATTR::getValueAsWString()
+{
+	return m_atvl;
+}
