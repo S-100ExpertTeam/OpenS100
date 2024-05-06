@@ -17,5 +17,5 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 	void SetSourceIdentifier(std::wstring value);
-	const std::wstring& GetSourceIdentifier();
+	const std::wstring* GetSourceIdentifier();
 };

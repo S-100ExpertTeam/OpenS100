@@ -55,6 +55,6 @@ public:
 	static int GetOffsetToATVL();
 	
 	std::string getValueAsString();
-
+	std::wstring getValueAsWString();
 
 };

@@ -26,6 +26,7 @@ namespace S100
     {
         if (categoryName == "RSA") return S100_SE_DigitalSignatureReference::RSA;
         if (categoryName == "DSA") return S100_SE_DigitalSignatureReference::DSA;
+        if (categoryName == "dsa") return S100_SE_DigitalSignatureReference::DSA;
         if (categoryName == "ECDSA") return S100_SE_DigitalSignatureReference::ECDSA;
         if (categoryName == "ECDSA-224-SHA2-224") return S100_SE_DigitalSignatureReference::ECDSA_224_SHA2_224;
         if (categoryName == "ECDSA-224-SHA3-224") return S100_SE_DigitalSignatureReference::ECDSA_224_SHA3_224;

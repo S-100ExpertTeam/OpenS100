@@ -13,7 +13,7 @@ IMPLEMENT_DYNAMIC(CDockablePaneCurrentSelection, CDockablePane)
 
 CDockablePaneCurrentSelection::CDockablePaneCurrentSelection()
 {
-	EnableAutomation();
+	//EnableAutomation();
 	pDlg = nullptr;
 }
 

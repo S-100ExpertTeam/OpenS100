@@ -72,6 +72,7 @@ public:
 	// Fail : -1
 	int AddLayer(CString _filepath);
 	int AddLayer(Layer* layer);
+	int AddLayer(Layer* _layer, CString FilePath, bool InsertBack = true);
 
 	int isUpdate(CString filePath);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);

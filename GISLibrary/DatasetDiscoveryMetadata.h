@@ -35,7 +35,7 @@ namespace S100
         bool CompressionFlag;
         bool DataProtection;
         std::shared_ptr<ProtectionScheme> protectionScheme;
-        S100_SE_DigitalSignatureReference DigitalSignatureReference;
+        std::shared_ptr<S100_SE_DigitalSignatureReference> DigitalSignatureReference;
         std::vector<S100_SE_DigitalSignature> DigitalSignatureValue;
         bool Copyright;
         std::shared_ptr<MD_ClassificationCode> Classification;
@@ -66,6 +66,7 @@ namespace S100
         std::shared_ptr<MD_MaintenanceInformation> ResourceMaintenance;
 
         void GetContents(pugi::xml_node& node) override;
+        void SaveXmlNode(pugi::xml_node& node) override;
     };
 
 }

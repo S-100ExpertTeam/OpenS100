@@ -14,9 +14,10 @@ namespace S100 {
         std::shared_ptr<std::string> Version;
         std::shared_ptr<S100_Date> Date;
         std::string ProductIdentifier;
-        int Number;
+        int Number = -1;
         std::shared_ptr<CompliancyCategory> compliancyCategory;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
     };
 }

@@ -279,6 +279,8 @@
     <ClCompile Include="D2D1Resources.cpp" />
     <ClCompile Include="DataOrganizationIndex.cpp" />
     <ClCompile Include="dataProduct.cpp" />
+    <ClCompile Include="DatasetPermit.cpp" />
+    <ClCompile Include="DataStatus.cpp" />
     <ClCompile Include="DDR.cpp" />
     <ClCompile Include="Directory.cpp" />
     <ClCompile Include="DirectPosition.cpp" />
@@ -391,9 +393,13 @@
     <ClCompile Include="Measure.cpp" />
     <ClCompile Include="OrientedCurveRecord.cpp" />
     <ClCompile Include="PCOutputSchemaManager.cpp" />
+    <ClCompile Include="Permit.cpp" />
+    <ClCompile Include="PermitHeader.cpp" />
     <ClCompile Include="ProcessS101.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="GF_PropertyType.cpp" />
+    <ClCompile Include="ProductPermit.cpp" />
+    <ClCompile Include="ProductsPermit.cpp" />
     <ClCompile Include="PTAS.cpp" />
     <ClCompile Include="PT_Locale.cpp" />
     <ClCompile Include="pugiSupportClass.cpp" />
@@ -574,9 +580,11 @@
     <ClInclude Include="CV_SequenceType.h" />
     <ClInclude Include="DataOrganizationIndex.h" />
     <ClInclude Include="dataProduct.h" />
+    <ClInclude Include="DatasetPermit.h" />
     <ClInclude Include="DataStatus.h" />
     <ClInclude Include="DirectPosition.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
+    <ClInclude Include="ExchangeCatalogueNameSpace.h" />
     <ClInclude Include="EX_BoundingPolygon.h" />
     <ClInclude Include="EX_GeographicBoundingBox.h" />
     <ClInclude Include="FeatureSelector.h" />
@@ -608,6 +616,10 @@
     <ClInclude Include="MD_MaintenanceFrequencyCode.h" />
     <ClInclude Include="MD_MaintenanceInformation.h" />
     <ClInclude Include="Measure.h" />
+    <ClInclude Include="Permit.h" />
+    <ClInclude Include="PermitHeader.h" />
+    <ClInclude Include="ProductPermit.h" />
+    <ClInclude Include="ProductsPermit.h" />
     <ClInclude Include="PT_Locale.h" />
     <ClInclude Include="pugiSupportClass.h" />
     <ClInclude Include="PugixmlElement.h" />

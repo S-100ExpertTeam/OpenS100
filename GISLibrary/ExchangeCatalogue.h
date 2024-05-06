@@ -9,6 +9,8 @@
 #include "PT_Locale.h"
 #include "CataloguePointOfContact.h"
 #include "pugiSupportClass.h"
+#include "../GISLibrary/D2D1Resources.h"
+#include "../GeoMetryLibrary/Scaler.h"
 
 #include <string>
 #include <memory>
@@ -21,12 +23,12 @@ namespace S100
     public:
         ExchangeCatalogue();
         ~ExchangeCatalogue();
-
         void Open(std::string filePath);
+        bool Save(std::string filePath);
 
         std::shared_ptr<ExchangeCatalogueIdentifier> Identifier;
         std::shared_ptr<CataloguePointOfContact> Contact;
-        std::vector<ProductSpecification> productSpecification;
+        std::shared_ptr<ProductSpecification> productSpecification;
         std::shared_ptr<PT_Locale> DefaultLocale;
         std::vector<PT_Locale> OtherLocale;
         std::shared_ptr<std::string> ExchangeCatalogueDescription;
@@ -39,6 +41,6 @@ namespace S100
 
         void GetContents(pugi::xml_node& node);
 
-        void DrawCoverage(D2D1Resources* pD2, Scaler* scaler, double offsetX = 0, double offsetY = 0);
+        void DrawCoverage(GISLibrary::D2D1Resources* pD2, Scaler* scaler, double offsetX = 0, double offsetY = 0);
     };
 }

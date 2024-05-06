@@ -4,7 +4,7 @@
 namespace S100
 {
 
-	std::string supportFileFormatToString(SupportFileFormat value)
+	std::string SupportFileFormatToString(SupportFileFormat value)
 	{
 		switch (value)
 		{

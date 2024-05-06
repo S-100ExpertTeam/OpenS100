@@ -59,6 +59,14 @@
 
 #include "../LatLonUtility/Logger.h"
 #include "../PortrayalCatalogue/AlertCatalog.h"
+#include "sqlite3.h"
+
+
+#include "../GISLibrary/Permit.h"
+#include "DialogDatasetManager.h"
+
+#include "DataSetManagerSupport.h"
+
 #pragma comment(lib, "d2d1.lib")
 
 using namespace LatLonUtility;
@@ -82,7 +90,8 @@ BEGIN_MESSAGE_MAP(COpenS100View, CView)
 	ON_COMMAND(T7, NoGeometry)
 	ON_COMMAND(T8, NoGeometryInfo)
 	ON_COMMAND(T9, Setting)
-	ON_COMMAND(T10, &COpenS100App::OnAppAbout)
+	ON_COMMAND(T10, DatasetManager)
+	//ON_COMMAND(T10, &COpenS100App::OnAppAbout)
 	ON_WM_CREATE()
 	ON_WM_MBUTTONDOWN()
 	ON_WM_MBUTTONUP()
@@ -117,13 +126,23 @@ COpenS100View::COpenS100View()
 	////pc->Open(L"../pc.xml");
 
 	//delete item;
-
-
-
 	//delete ex;
 
 	//S100::AlertCatalog* alt = new S100::AlertCatalog();
 	//alt->Open("../AlertCatalog-S101.xml");
+
+
+	//S100::ExchangeCatalogue* ex = new S100::ExchangeCatalogue();
+	//ex->Open("C:/Users/isbaek/Desktop/S100TestSet/S-101-Test-Datasets-main/S100_ROOT/CATALOG.XML");
+	//ex->Save("C:/Users/isbaek/Desktop/S100TestSet/S-101-Test-Datasets-main/S100_ROOT/CATALOG1.XML");
+
+
+	//S100::Permit* pm = new S100::Permit();
+	//pm->Open("../PERMIT.XML");
+	//delete pm;
+	
+
+
 
 }
 
@@ -345,7 +364,6 @@ void COpenS100View::Load100File()
 		while (pos)
 		{
 			CString filePath = dlg.GetNextPathName(pos);
-			// filePath를 사용한 처리
 			theApp.gisLib->AddLayer(filePath); //Add a layer.
 			theApp.m_pDockablePaneLayerManager.UpdateList();
 			
@@ -427,6 +445,10 @@ void COpenS100View::MapFill()
 	}
 
 	auto layerMBR = layer->GetMBR();
+	if (layerMBR.IsEmpty())
+	{
+		layerMBR.Extent(0.001);
+	}
 
 	theApp.gisLib->SetMap(layerMBR);
 	if (theApp.gisLib2) {
@@ -579,6 +601,15 @@ void COpenS100View::Setting()
 }
 
 
+void COpenS100View::DatasetManager()
+{
+	//AfxMessageBox(L"fdsafa");
+	DialogDatasetManager dlg;
+	dlg.ct = theApp.gisLib->GetCatalogManager();
+	dlg.DoModal();
+}
+
+
 void COpenS100View::MapRefresh()
 {
 	m_bMapRefesh = true;
@@ -601,57 +632,17 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// catalog manager
 	auto cm = theApp.gisLib->GetCatalogManager();
 
-	// FC
-	auto fc1 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
-	auto fc2 = cm->addFC("..\\ProgramData\\FC\\S-102 Ed 2.2.0.20230411.xml"); // valid(S-102)
-	
-	//auto fc3 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.0.0.xml"); // invalid(S-101)
-	//auto fc4 = cm->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.1.0.xml"); // valid, but duplicated(S-101)
-	cm->addFC(L"..\\ProgramData\\FC\\S-122_FC.xml");
-	cm->addFC(L"..\\ProgramData\\FC\\S-123_FC.xml");
-	cm->addFC(L"..\\ProgramData\\FC\\S-124_FC.xml");
-	cm->addFC(L"..\\ProgramData\\FC\\S-125_FC.xml");
-	cm->addFC(L"..\\ProgramData\\FC\\S-127_FC.xml");
-	cm->addFC(L"..\\ProgramData\\FC\\S-128_FC.xml");
-	cm->addFC(L"..\\ProgramData\\FC\\S-130_FC.xml");
-	cm->addFC(L"..\\ProgramData\\FC\\S-411_FC.xml");
-	cm->addFC(L"..\\ProgramData\\FC\\S-421_FC.xml");
-	cm->addFC(L"C:\\Users\\jogm\\Downloads\\[2023.11.20] 초안 - 목포대교\\초안 - 목포대교\\Dynamic Over Head Clearance.xml");
-	cm->addPC(L"C:\\Users\\jogm\\Downloads\\[2023.11.20] 초안 - 목포대교\\초안 - 목포대교\\Dynamic Over Head Clearance\\portrayal_catalogue.xml");
-
-	auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
-
-	//auto pc1 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal_1.1.1\\portrayal_catalogue.xml"); // valid(S-101)
-	//auto pc2 = cm->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid, but duplicated(S-101)
-	cm->addPC(L"..\\ProgramData\\PC\\S100_Portrayal\\portrayal_catalogue.xml");
-	cm->addPC(L"..\\ProgramData\\PC\\S122_Portrayal\\portrayal_catalogue.xml");
-	cm->addPC(L"..\\ProgramData\\PC\\S123_Portrayal\\portrayal_catalogue.xml");
-	cm->addPC(L"..\\ProgramData\\PC\\S124_Portrayal\\portrayal_catalogue.xml");
-	cm->addPC(L"..\\ProgramData\\PC\\S125_Portrayal\\portrayal_catalogue.xml"); 
-	cm->addPC(L"..\\ProgramData\\PC\\S127_Portrayal\\portrayal_catalogue.xml");
-	cm->addPC(L"..\\ProgramData\\PC\\S128_Portrayal\\portrayal_catalogue.xml");
-	cm->addPC(L"..\\ProgramData\\PC\\S411_Portrayal\\portrayal_catalogue.xml");
-	//cm->addPC(L"..\\ProgramData\\PC\\S421_Portrayal\\portrayal_catalogue.xml");
-
-	auto fc = cm->getFC(101); // get S-101 FC
-	auto pc = cm->getPC("S-101"); // get S-101 PC
-
-	//TestGISLibrary::CreateMemoryLayer();
-	//TestGISLibrary::SetCodeNumericCode();
-
-	//TestGISLibrary::CreateNewLayer();
-	//TestGISLibrary::TestSave();
-	//S101Cell cell;
-	//cell.Read8211(L"..\\SampleData\\save.000");
-
-	if (theApp.gisLib2) {
-		auto cm2 = theApp.gisLib2->GetCatalogManager();
-
-		// FC
-		cm2->addFC(L"..\\ProgramData\\FC\\S-101_FC_1.2.0.working.xml"); // valid(S-101)
-		cm2->addPC(L"..\\ProgramData\\PC\\S101_Portrayal\\portrayal_catalogue.xml"); // valid(S-101)
-		theApp.gisLib2->AddLayer(L"..\\SampleData\\101KR005X01NE.000");
+	//import FC
+	auto fclist = DataSetManagerSupport::GetInstance().initFCList();
+	for (auto item : fclist)
+	{
+		cm->addFC(item);
 	}
+
+	//import PC
+	auto pclist = DataSetManagerSupport::GetInstance().initPCList();
+	for (auto item : pclist)
+		cm->addPC(item);
 
 	return 0;
 }
@@ -1905,4 +1896,14 @@ void COpenS100View::SetPick(S100SpatialObject* enc, std::wstring featureID)
 	//{
 	//	s101Creator->Set(nullptr, nullptr);
 	//}
+}
+
+void COpenS100View::OnInitialUpdate()
+{
+	CView::OnInitialUpdate();
+
+	for (auto item : DataSetManagerSupport::GetInstance().initDataFileList())
+		theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());
+
+	theApp.m_pDockablePaneLayerManager.UpdateList();
 }

@@ -305,3 +305,26 @@ void MBR::Scale(double scale)
 	SetXMax(GetXMax() + marginX);
 	SetYMax(GetYMax() + marginY);
 }
+
+bool MBR::IsEmpty()
+{
+	if (GetWidth() <= DBL_MIN)
+	{
+		return true;
+	}
+
+	if (GetHeight() < DBL_MIN)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void MBR::Extent(double value)
+{
+	xmin -= value;
+	xmax += value;
+	ymin -= value;
+	ymax += value;
+}

@@ -10,7 +10,8 @@ namespace S100 {
         update,
         reissue,
         cancellation,
-        delta
+        delta,
+        forNavigation
     };
 
     std::string S100_PurposeToString(Purpose category);

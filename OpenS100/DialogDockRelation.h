@@ -29,6 +29,7 @@ public:
 
 	int nSelectedItem;
 	S100SpatialObject* m_cell;
+	CListCtrl m_ListRelation;
 
 public:
 	void AdjustLayout();
@@ -47,5 +48,4 @@ public:
 	afx_msg void OnSizing(UINT fwSide, LPRECT pRect);
 	afx_msg void OnNMClickListLm(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMDblclkListLm(NMHDR *pNMHDR, LRESULT *pResult);
-	CListCtrl m_ListRelation;
 };

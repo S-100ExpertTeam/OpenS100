@@ -1,4 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
+// Microsoft Visual C++ generated include file.
+// Used by OpenS100.rc
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -76,14 +78,10 @@
 #define IDR_TOOLBAR2                    312
 #define IDD_DIALOG_DOCK_RELATION        313
 #define IDD_DIALOG_DOCK_CURRENT_SELECTION 314
-#define IDD_DIALOG_DOCK_LOGGER          315
 #define IDC_LIST_RELATION               316
 #define IDR_HELP_MENU                   317
 #define IDC_LIST_CURRENT_SELECTION      318
-#define IDC_BUTTON_LISTCLEAR            319
-#define IDC_COMBO_LOG_TYPE              320
 #define IDB_PNG1                        320
-#define IDC_LIST_LOGGER                 321
 #define T1                              322
 #define T2                              323
 #define T3                              324
@@ -122,6 +120,14 @@
 #define IDB_PNG2                        358
 #define IDB_PICK_ARROW_PNG              359
 #define IDC_BUTTON_CHECK                360
+#define IDD_DIALOG_DATASET_MANAGER      361
+#define IDD_DIALOG2                     365
+#define IDD_DIALOG_FC_PC                365
+#define IDR_MENU1                       367
+#define IDR_POPUP_                      367
+#define IDR_POPUP_DATASET_MANAGER       367
+#define IDD_DIALOG_                     368
+#define IDD_DIALOG_DATASET_SUPPORT      368
 #define IDC_COMBO_SETTING_FONT_NAME     561
 #define IDC_MFCPROPERTYGRID1            1000
 #define IDC_MFCPROPERTYGRID_LAYER       1000
@@ -130,7 +136,9 @@
 #define IDC_LIST1                       1003
 #define IDC_LIST                        1003
 #define IDC_BUTTON_UNCHECK              1004
+#define IDC_LIST2                       1004
 #define IDC_COMBO_PRODUCT               1005
+#define IDC_TAB1                        1006
 #define IDC_RADIO_OTHER                 1036
 #define IDC_COLOR_DUSK_WB               1040
 #define IDC_DPM_STANDARD                1081
@@ -166,14 +174,19 @@
 #define IDC_RADIO_IMPORTANT             1384
 #define ID_BUTTON32771                  32771
 #define ID_BUTTON32772                  32772
+#define ID_BUTTON32775                  32775
+#define ID_FILE_DELETE                  32776
+#define ID_FILE_LOAD                    32777
+#define ID_FILE_DELETE32778             32778
+#define ID_FILE_OPENFOLDER              32779
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        361
-#define _APS_NEXT_COMMAND_VALUE         32774
-#define _APS_NEXT_CONTROL_VALUE         1006
+#define _APS_NEXT_RESOURCE_VALUE        370
+#define _APS_NEXT_COMMAND_VALUE         32780
+#define _APS_NEXT_CONTROL_VALUE         1007
 #define _APS_NEXT_SYMED_VALUE           312
 #endif
 #endif

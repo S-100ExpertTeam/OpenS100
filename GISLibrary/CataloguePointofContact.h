@@ -13,5 +13,6 @@ namespace S100 {
         CI_Address Address;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
     };
 }

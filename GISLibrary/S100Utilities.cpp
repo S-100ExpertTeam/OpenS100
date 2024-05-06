@@ -25,6 +25,9 @@ ScaleBands S100Utilities::scaleBands[15] = {
 		ScaleBands(2000, 1000)
 };
 
+
+
+
 D2D1::ColorF S100Utilities::GetColorNum(int num)
 {
 	std::vector<D2D1::ColorF> colors;
@@ -51,6 +54,29 @@ D2D1::ColorF S100Utilities::GetColorNum(int num)
 		return D2D1::ColorF::Black;
 }
 
+
+
+
+ScaleBands S100Utilities::GetLegacyScaleband(int scale) 
+{
+	switch (scale)
+	{
+	case 1:
+		return ScaleBands(300000, 5000000);
+	case 2:
+		return ScaleBands(150000, 300000);
+	case 3:
+		return ScaleBands(50000, 150000);
+	case 4:
+		return ScaleBands(20000, 50000);
+	case 5:
+		return ScaleBands(5000, 20000);
+	case 6:
+		return ScaleBands(2000, 5000);
+	default:
+		return ScaleBands(0, 0);
+	}
+};
 
 
 int S100Utilities::GetLevel(std::wstring path)

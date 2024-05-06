@@ -22,6 +22,7 @@ namespace S100 {
         _8859part9,
         _8859part10,
         _8859part11,
+        _8859part12,
         _8859part13,
         _8859part14,
         _8859part15,
@@ -36,7 +37,10 @@ namespace S100 {
         GB2312,
     };
 
-    const std::map<std::string, MD_CharacterSetCode> stringToCodeMap = {
+    std::string MD_CharacterSetCodeToString(MD_CharacterSetCode category);
+    MD_CharacterSetCode MD_CharacterSetCodeFromString(const std::string& categoryName);
+
+    /*const std::map<std::string, MD_CharacterSetCode> stringToCodeMap = {
      {"ucs2", MD_CharacterSetCode::ucs2},
      {"ucs4", MD_CharacterSetCode::ucs4},
      {"utf7", MD_CharacterSetCode::utf7},
@@ -69,5 +73,5 @@ namespace S100 {
 
 
     MD_CharacterSetCode stringToMD_CharacterSetCode(const std::string& codeName);
-    MD_CharacterSetCode parseMD_CharacterSetCode(pugi::xml_node& node);
+    MD_CharacterSetCode parseMD_CharacterSetCode(pugi::xml_node& node);*/
 }

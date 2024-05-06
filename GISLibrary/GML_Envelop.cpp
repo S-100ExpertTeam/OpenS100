@@ -43,6 +43,9 @@ namespace S100GML
 			mbr.SetYMax(std::stod(upperCornerItem.at(0)));
 			mbr.SetXMax(std::stod(upperCornerItem.at(1)));
 		}
+
+		std::string srsName = node_Envelpe.attribute("srsName").as_string();
+		setSrsName(srsName);
 	}
 
 	void Envelop::Write(pugi::xml_node& node)
@@ -64,5 +67,29 @@ namespace S100GML
 	std::string Envelop::GetUpperCornerString()
 	{
 		return std::to_string(mbr.GetYMax()) + " " + std::to_string(mbr.GetXMax());
+	}
+
+	void Envelop::setSrsName(std::string& srsName)
+	{
+		this->srsName = srsName;
+	}
+	
+	std::string Envelop::getSrsName()
+	{
+		return srsName;
+	}
+
+	bool Envelop::isXYSequence()
+	{
+		if (srsName.find("4326") != std::string::npos) {
+			return false;
+		}
+		
+		return true;
+	}
+
+	bool Envelop::isYXSequence()
+	{
+		return !isXYSequence();
 	}
 }

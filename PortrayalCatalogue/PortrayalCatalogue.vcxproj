@@ -299,6 +299,7 @@
     <ClCompile Include="AlertInfo.cpp" />
     <ClCompile Include="AlertItem.cpp" />
     <ClCompile Include="AlertPriorities.cpp" />
+    <ClCompile Include="AlertPriority.cpp" />
     <ClCompile Include="AlertPrioritySelection.cpp" />
     <ClCompile Include="Alerts.cpp" />
     <ClCompile Include="CatalogItem.cpp" />
@@ -319,6 +320,7 @@
     <ClCompile Include="Enum_Orientation.cpp" />
     <ClCompile Include="GraphicalHighlighting.cpp" />
     <ClCompile Include="Highlights.cpp" />
+    <ClCompile Include="HighlightStyle.cpp" />
     <ClCompile Include="MessageItem.cpp" />
     <ClCompile Include="Messages.cpp" />
     <ClCompile Include="S100_AlertReference.cpp" />

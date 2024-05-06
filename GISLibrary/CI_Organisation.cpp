@@ -21,4 +21,22 @@ namespace S100
             }
         }
     }
+
+    void CI_Organisation::Save(pugi::xml_node& node)
+    {
+        if (Name)
+        {
+            auto child = node.append_child("cit:name");
+            child.text().set(Name->c_str());
+        }
+        if (!ContactInfo.empty())
+        {
+            for (int i = 0; i < ContactInfo.size(); i++)
+            {
+                auto child = node.append_child("cit:CI_Contact");
+                ContactInfo[i].Save(child);
+            }
+        }
+    }
 }
+

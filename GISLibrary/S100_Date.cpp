@@ -7,8 +7,12 @@
 namespace S100 {
     S100_Date::S100_Date(const std::string& date) {
         if (date == "") return;
+        
+        //tm = std::tm();
+
         std::string normalizedDate = NormalizeDate(date);
         std::istringstream ss(normalizedDate);
+
         ss >> std::get_time(&tm, "%Y-%m-%d");
         if (ss.fail()) {
             throw std::runtime_error("Failed to parse the date string.");

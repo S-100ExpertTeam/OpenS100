@@ -4,6 +4,9 @@
 #include "../LatLonUtility/LatLonUtility.h"
 #include "../LibMFCUtil/LibMFCUtil.h"
 #include "S10XGML.h"
+#include "ExchangeCatalogueNameSpace.h"
+
+#include <filesystem>
 
 namespace S100
 {
@@ -22,7 +25,7 @@ namespace S100
         pugi::xml_node nodeList = doc.first_child();
 
         const pugi::char_t* instructionName = nodeList.name();
-        if (!strcmp(instructionName, "S100XC:S100_ExchangeCatalogue"))
+        if (!strcmp(instructionName, "S100XC:S100_ExchangeCatalogue") || !strcmp(instructionName, "S100XC:S-101_ExchangeCatalogue"))
         {
             GetContents(nodeList);
         }
@@ -30,6 +33,102 @@ namespace S100
         {
 
         }
+    }
+
+    bool ExchangeCatalogue::Save(std::string filePath)
+    {
+        std::filesystem::path pathObj(filePath);
+        std::filesystem::path dirPath = pathObj.parent_path();
+
+        if (!std::filesystem::exists(dirPath))
+            return false;
+
+        if (std::filesystem::exists(filePath)) 
+            return false;
+
+        pugi::xml_document doc;
+        //doc.append_attribute("encoding").set_value("UTF-8");
+
+        auto child = doc.append_child("S100XC:S100_ExchangeCatalogue");
+
+        for (auto item : ExchangeCatalogueNameSpaceMap)
+            child.append_attribute(item.first.c_str()).set_value(item.second.c_str());
+
+
+        if (Identifier)
+        {
+            auto item = child.append_child("S100XC:identifier");
+            Identifier->Save(item);
+        }
+        if (Contact)
+        {
+            auto item = child.append_child("S100XC:contact");
+            Contact->Save(item);
+        }
+        if (productSpecification)
+        {
+            auto item = child.append_child("S100XC:productSpecification");
+            productSpecification->Save(item);
+        }
+        if (DefaultLocale)
+        {
+            auto item = child.append_child("S100XC:defaultLocale");
+            DefaultLocale->Save(item);
+        }
+        if (!OtherLocale.empty())
+        {
+            auto temp = child.append_child("S100XC:otherLocale");
+            for (int i = 0; i < OtherLocale.size(); i++)
+                OtherLocale[i].Save(temp);
+        }
+        if (ExchangeCatalogueDescription)
+        {
+            auto item = child.append_child("S100XC:exchangeCatalogueDescription");
+            item.text().set(ExchangeCatalogueDescription->c_str());
+        }
+        if (ExchangeCatalogueComment)
+        {
+            auto item = child.append_child("S100XC:exchangeCatalogueComment");
+            item.text().set(ExchangeCatalogueComment->c_str());
+        }
+        if (!Certificates.empty())
+        {
+            auto temp = child.append_child("S100XC:certificates");
+            for (int i = 0; i < Certificates.size(); i++)
+                Certificates[i].Save(temp);
+        }
+        if (DataServerIdentifier)
+        {
+            auto item = child.append_child("S100XC:dataServerIdentifier");
+            item.text().set(DataServerIdentifier->c_str());
+        }
+        if (DatasetDiscoveryMetadata.size() != 0)
+        {
+            auto item = child.append_child("S100XC:datasetDiscoveryMetadata");
+            DatasetDiscoveryMetadata.SaveXmlNode(item,"S100XC:S100_DatasetDiscoveryMetadata");
+        }
+        if (CatalogueDiscoveryMetadata.size() != 0)
+        {
+            auto item = child.append_child("S100XC:catalogueDiscoveryMetadata");
+            CatalogueDiscoveryMetadata.SaveXmlNode(item, "S100XC:S100_CatalogueDiscoveryMetadata");
+        }
+        if (SupportFileDiscoveryMetadata.size() != 0)
+        {
+            auto item = child.append_child("S100XC:supportFileDiscoveryMetadata");
+            SupportFileDiscoveryMetadata.SaveXmlNode(item, "S100XC:S100_SupportFileDiscoveryMetadata");
+        }
+
+        bool saveSucceeded = doc.save_file(filePath.c_str(), "\t", pugi::format_default, pugi::encoding_utf8);
+        if (saveSucceeded) {
+        }
+        else {
+        }
+
+     /*   if (!doc.save_file(filePath.c_str())) {
+            return false;
+        }*/
+
+        return true;
     }
 
     void ExchangeCatalogue::GetContents(pugi::xml_node& node)
@@ -54,7 +153,7 @@ namespace S100
             {
                 ProductSpecification ps;
                 ps.GetContents(instruction);
-                productSpecification.push_back(ps);
+                productSpecification = std::make_shared<ProductSpecification>(ps);
             }
             else if (!strcmp(instructionName, "S100XC:defaultLocale"))
             {

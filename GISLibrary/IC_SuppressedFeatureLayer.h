@@ -14,5 +14,6 @@ namespace S100 {
         XmlCollection<IC_DrawingInstruction> DrawingInstructionRef;
 
         void GetContents(pugi::xml_node& node) override;
+        void SaveXmlNode(pugi::xml_node& node) override;
     };
 }

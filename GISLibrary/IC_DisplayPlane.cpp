@@ -44,4 +44,9 @@ namespace S100
             }
         }
     }
+
+    void IC_DisplayPlane::SaveXmlNode(pugi::xml_node& node)
+    {
+
+    }
 }

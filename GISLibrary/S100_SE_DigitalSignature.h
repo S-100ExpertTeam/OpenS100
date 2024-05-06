@@ -11,5 +11,6 @@ namespace S100 {
         std::string Value;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
     };
 }

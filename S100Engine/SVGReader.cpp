@@ -201,7 +201,7 @@ bool GetRotation(char* attributeContent, int& rotation)
 bool GetStyle(char* attributeContent, double& strokeWidth, std::wstring& strokeDasharray, float& alpha)
 {
 	std::vector<std::wstring> wsVecTemp;
-	simpleUse::split<std::wstring>(std::wstring(attributeContent, attributeContent + strlen(attributeContent)), L":;", wsVecTemp);
+	simpleUse::split<std::wstring>(std::wstring(attributeContent, attributeContent + strlen(attributeContent)), L":; ", wsVecTemp);
 	for (int i = 0; i < (int)wsVecTemp.size(); i += 2)
 	{
 		const wchar_t* a = wsVecTemp[i].c_str();
@@ -209,20 +209,17 @@ bool GetStyle(char* attributeContent, double& strokeWidth, std::wstring& strokeD
 		if (!wcscmp(wsVecTemp[i].c_str(), L"stroke-width") && (&strokeWidth != nullptr))
 		{
 			strokeWidth = _wtof(wsVecTemp[i + 1].c_str());
-			return true;
 		}
 		else if (!wcscmp(wsVecTemp[i].c_str(), L"stroke-dasharray") && (&strokeDasharray != nullptr))
 		{
 			strokeDasharray = wsVecTemp[i + 1];
-			return true;
 		}
-		else if (!wcscmp(wsVecTemp[i].c_str(), L"fill-opacity") && (&strokeDasharray != nullptr))
+		else if (wsVecTemp[i].compare(L"fill-opacity") == 0)
 		{
 			alpha = _wtof(wsVecTemp[i + 1].c_str());
-			return true;
 		}
 	}
-	return false;
+	return true;
 }
 
 bool GetDouble(char* attributeContent, double& dataSpace)
@@ -241,15 +238,6 @@ bool GetDouble(char* attributeContent, double& dataSpace)
 
 SVGReader::SVGReader()
 {
-	bounding_x = 0;
-	bounding_y = 0;
-	bounding_width = 0;
-	bounding_height = 0;
-
-	svgBox_x = 0;
-	svgBox_y = 0;
-	svgBox_width = 0;
-	svgBox_height = 0;
 }
 
 bool SVGReader::OpenByPugi(char* path)
@@ -517,15 +505,6 @@ bool SVGReader::OpenByPugi(char* path)
 
 SVGReader::SVGReader(char* path)
 {
-	bounding_x = 0;
-	bounding_y = 0;
-	bounding_width = 0;
-	bounding_height = 0;
-
-	svgBox_x = 0;
-	svgBox_y = 0;
-	svgBox_width = 0;
-	svgBox_height = 0;
 }
 
 SVGReader::~SVGReader()

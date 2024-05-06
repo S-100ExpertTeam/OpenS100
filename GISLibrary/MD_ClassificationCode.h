@@ -13,7 +13,7 @@ namespace S100 {
         SBU,
         secret,
         topSecret,
-        unclassified
+        unclassified,
     };
 
     std::string MD_ClassificationCodeToString(MD_ClassificationCode category);

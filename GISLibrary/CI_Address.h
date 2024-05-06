@@ -16,5 +16,6 @@ namespace S100
         std::vector<std::string> Electronicmailaddress;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node, std::string nodeName);
     };
 }

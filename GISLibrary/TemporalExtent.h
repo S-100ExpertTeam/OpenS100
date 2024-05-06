@@ -11,5 +11,6 @@ namespace S100 {
         std::shared_ptr<S100_DateTime> TimeInstantEnd;
 
         void GetContents(pugi::xml_node& node);
+        void Save(pugi::xml_node& node);
     };
 }

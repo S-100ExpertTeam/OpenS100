@@ -24,5 +24,6 @@ namespace S100 {
         XmlCollection<IC_SuppressedFeatureLayer> SuppressedFeatureLayers;
 
         void GetContents(pugi::xml_node& node) override;
+        void SaveXmlNode(pugi::xml_node& node) override;
     };
 }

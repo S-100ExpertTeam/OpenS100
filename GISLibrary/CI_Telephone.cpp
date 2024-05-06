@@ -24,4 +24,20 @@ namespace S100 {
             }
         }
     }
+
+    void CI_Telephone::Save(pugi::xml_node& node, std::string nodeName)
+    {
+        if (Number != "")
+        {
+            auto Node = node.append_child(nodeName.c_str());
+            auto child = Node.append_child("cit:number");
+            child.text().set(Number.c_str());
+
+            if (Numbertype != "")
+            {
+                child = Node.append_child("cit::numbertype");
+                child.text().set(Numbertype.c_str());
+            }
+        }
+    }
 }

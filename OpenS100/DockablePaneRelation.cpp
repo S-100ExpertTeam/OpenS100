@@ -6,8 +6,7 @@ IMPLEMENT_DYNAMIC(CDockablePaneRelation, CDockablePane)
 
 CDockablePaneRelation::CDockablePaneRelation()
 {
-	EnableAutomation();
-	pDlg = nullptr;
+	//EnableAutomation();
 }
 
 CDockablePaneRelation::~CDockablePaneRelation()
@@ -131,4 +130,9 @@ void CDockablePaneRelation::OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/)
 void CDockablePaneRelation::UpdateList()
 {
 	pDlg->UpdateList();
+}
+
+void CDockablePaneRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::FeatureType*> flist, std::list<GF::InformationType*> infoList)
+{
+	pDlg->SetFeatureList(cell, flist, infoList);
 }

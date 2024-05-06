@@ -32,7 +32,7 @@ protected:
 	std::wstring scope = L"";
 
 protected:
-	std::wstring *fieldOfApplication = nullptr;  
+	std::wstring* fieldOfApplication = nullptr;  
 
 protected:
 	//std::wstring versionNumber = L"";
@@ -73,7 +73,7 @@ public:
 	void SetScope(std::string value);
 	void SetScope(std::wstring value);
 
-	const std::wstring& GetFieldOfApplication();
+	const std::wstring* GetFieldOfApplication();
 	void SetFieldOfApplication(std::string& value);
 	void SetFieldOfApplication(std::wstring& value);
 

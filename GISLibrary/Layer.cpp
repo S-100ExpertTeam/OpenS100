@@ -31,7 +31,7 @@ bool Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 			m_spatialObject = new SHPFile();
 		}
 		else if (!extension.CompareNoCase(L"XML")) {
-			m_spatialObject = new S100ExchangeCatalogue(lm->GetScaler(), lm->catalogManager, d2d1);
+			m_spatialObject = new S100ExchangeCatalogue(lm->GetScaler(), lm->catalogManager, d2d1,lm);
 		}
 	}
 

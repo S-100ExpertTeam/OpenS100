@@ -18,10 +18,12 @@ class S100ExchangeCatalogue :
 	public SpatialObject
 {
 public:
-	S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1);
+	S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1, LayerManager* parent);
 	virtual ~S100ExchangeCatalogue();
 
 public:
+	bool m_IsLegacy;
+
 	unsigned int m_nRecords;					// The number of records
 	unsigned int m_nShapeType;					// Shape Type
 	shared_ptr<ExchangeCatalogue>  m_DataPtr;	//
@@ -29,6 +31,8 @@ public:
 	std::vector<shared_ptr<Inventory>> m_vecInventory;
 
 	LayerManager* m_pLayerManager;
+
+	LayerManager* m_pParentLayerManager;
 
 	
 
@@ -52,4 +56,8 @@ public:
 	bool CompareByLayer(const Layer* a, const Layer* b);
 
 	CString FixFileName(string str);
+
+	CString FixLegacyFileName(string str);
+
+	CString GetFirstLayerFilePath();
 };

@@ -7,6 +7,8 @@
 #include <atlconv.h>
 #include <algorithm>
 #include <bitset> // Convert the 32-bit binary encoding into hexadecimal
+#include <locale>
+#include <codecvt>
 
 BYTE tBYTEArr[1024];
 void buf2charArr(CString &dest, BYTE*& buf)
@@ -24,7 +26,9 @@ void buf2charArr(CString &dest, BYTE*& buf)
 		tBYTEArr[i] = *(buf++);
 	}
 	tBYTEArr[i] = NULL;
-	dest = CA2W((char*)tBYTEArr, CP_UTF8);
+
+	dest = pugi::as_wide((const char*)tBYTEArr).c_str();
+
 	buf++;
 }
 

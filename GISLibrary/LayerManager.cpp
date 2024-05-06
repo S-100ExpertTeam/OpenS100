@@ -48,6 +48,7 @@
 #include <algorithm>
 #include <future>
 #include <chrono>
+#include "S100ExchangeCatalogue.h"
 
 LayerManager::LayerManager(D2D1Resources* d2d1)
 {
@@ -128,6 +129,60 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 	return TRUE;
 }
 
+int LayerManager::AddLayer(Layer* _layer , CString FilePath, bool InsertBack)
+{
+	if (_layer == nullptr)
+	{
+		return -1;
+	}
+
+	_layer->SetID(CreateLayerID());
+
+	if (LayerCount() == 0)
+	{
+		MBR newMBR = _layer->GetMBR();
+		if (newMBR.IsEmpty())
+		{
+			newMBR.Extent(0.001);
+		}
+
+		mbr.SetMBR(newMBR);
+		if (m_isScreenFitEnabled)
+			scaler->SetMap(mbr);
+	}
+	else
+	{
+		mbr.CalcMBR(_layer->m_mbr);
+	}
+
+	if (FilePath == "")
+		layers.push_back(_layer);
+	else
+	{
+		for (auto it = layers.begin(); it != layers.end(); ++it) {
+			if ((*it)->GetLayerPath() == FilePath)
+			{
+				if (InsertBack) {
+					it++;
+					layers.insert(it, _layer);
+					break;
+				}
+				else
+				{
+					layers.insert(it, _layer);
+					break;
+				}
+
+			}
+		}
+	}
+
+
+	mapLayer.insert({ _layer->GetID(), _layer });
+
+	return _layer->GetID();
+}
+
 int LayerManager::AddLayer(Layer* _layer)
 {
 	if (_layer == nullptr)
@@ -139,7 +194,13 @@ int LayerManager::AddLayer(Layer* _layer)
 
 	if (LayerCount() == 0)
 	{
-		mbr.SetMBR(_layer->m_mbr);
+		MBR newMBR = _layer->GetMBR();
+		if (newMBR.IsEmpty())
+		{
+			newMBR.Extent(0.001);
+		}
+
+		mbr.SetMBR(newMBR);
 		if (m_isScreenFitEnabled)
 			scaler->SetMap(mbr);
 	}
@@ -225,7 +286,14 @@ int LayerManager::AddLayer(CString _filepath)
 		return -1;
 	}
 
-	AddLayer(layer);
+	auto tempTypePtr = dynamic_cast<S100ExchangeCatalogue*>(layer->m_spatialObject);
+	if (tempTypePtr != nullptr)
+	{
+		CString firstlayerfilepath = tempTypePtr->GetFirstLayerFilePath();
+		AddLayer(layer, firstlayerfilepath, false);
+	}
+	else
+		AddLayer(layer);
 
 	return layer->GetID();
 }
@@ -1674,7 +1742,6 @@ int LayerManager::pathToProductNumber(CString path)
 			return std::stoi(strProductNumber);
 		}
 		catch (const std::exception& e) {
-
 		}
 	}
 

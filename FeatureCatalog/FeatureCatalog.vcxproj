@@ -245,6 +245,7 @@
     <ClCompile Include="Attribute.cpp" />
     <ClCompile Include="AttributeBinding.cpp" />
     <ClCompile Include="AttributeConstraints.cpp" />
+    <ClCompile Include="AttributeVisibility.cpp" />
     <ClCompile Include="CI_Organisation.cpp" />
     <ClCompile Include="ComplexAttribute.cpp" />
     <ClCompile Include="ComplexAttributes.cpp" />
@@ -315,6 +316,7 @@
     <ClInclude Include="Attribute.h" />
     <ClInclude Include="AttributeBinding.h" />
     <ClInclude Include="AttributeConstraints.h" />
+    <ClInclude Include="AttributeVisibility.h" />
     <ClInclude Include="Citation.h" />
     <ClInclude Include="CI_Organisation.h" />
     <ClInclude Include="ComplexAttribute.h" />
