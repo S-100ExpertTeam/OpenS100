@@ -262,11 +262,51 @@ bool SVGReader::OpenByPugi(char* path)
 			return false;
 		}
 
-		const pugi::char_t* instructionName = instruction.name();
-		if (!strcmp(instructionName, "rect"))
+		std::string instructionName = instruction.name();
+
+		if (!instructionName.compare("path"))
+		{
+			libS100Engine::Line* line = new libS100Engine::Line();
+			std::vector<std::wstring> wsVecTemp;
+			for (pugi::xml_attribute attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
+			{
+				auto attriName = attri.name();
+				auto attriValue = attri.value();
+				std::wstring wsAttributeContent = std::wstring(attriValue, attriValue + strlen(attriValue));
+				wsVecTemp.clear();
+
+				if (!strcmp(attriName, "d"))
+				{
+					simpleUse::split<std::wstring>(wsAttributeContent, L" ,ML", wsVecTemp);
+					line->m_points.clear();
+					line->AddPoints(wsVecTemp);
+				}
+				else if (!strcmp(attriName, "class"))
+				{
+					char* value = (char*)attriValue;
+					GetClass(value, line->fill, line->colorName);
+				}
+				else if (!strcmp(attriName, "style"))
+				{
+					char* value = (char*)attriValue;
+					GetStyle(value, line->strokeWidth, line->strokeDasharray, line->alpha);
+				}
+				else if (!strcmp(attriName, "transform"))
+				{
+					char* value = (char*)attriValue;
+					GetRotation(value, line->rotation);
+				}
+			}
+			figures.push_back(line);
+		}
+		else if (!instructionName.compare("line"))
+		{
+
+		}
+		else if (!instructionName.compare("rect"))
 		{
 			bool bSymbolBoxLayout = false;
-			libS100Engine::Line *line = nullptr;
+			libS100Engine::Line* line = nullptr;
 			double x = 0;
 			double y = 0;
 			double width = 0;
@@ -290,6 +330,7 @@ bool SVGReader::OpenByPugi(char* path)
 				}
 			}
 
+			// read attributes
 			for (pugi::xml_attribute attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
 			{
 				auto attriName = attri.name();
@@ -357,7 +398,7 @@ bool SVGReader::OpenByPugi(char* path)
 				GetClass((char*)classValue.c_str(), line->fill, line->colorName);
 				GetStyle((char*)styleValue.c_str(), line->strokeWidth, line->strokeDasharray, line->alpha);
 				POINTF points[5];
-				
+
 				points[0].x = x;
 				points[0].y = y;
 
@@ -382,42 +423,7 @@ bool SVGReader::OpenByPugi(char* path)
 				figures.push_back(line);
 			}
 		}
-		else if (!strcmp(instructionName, "path"))
-		{
-			libS100Engine::Line* line = new libS100Engine::Line();
-			std::vector<std::wstring> wsVecTemp;
-			for (pugi::xml_attribute attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
-			{
-				auto attriName = attri.name();
-				auto attriValue = attri.value();
-				std::wstring wsAttributeContent = std::wstring(attriValue, attriValue + strlen(attriValue));
-				wsVecTemp.clear();
-
-				if (!strcmp(attriName, "d"))
-				{
-					simpleUse::split<std::wstring>(wsAttributeContent, L" ,ML", wsVecTemp);
-					line->m_points.clear();
-					line->AddPoints(wsVecTemp);
-				}
-				else if (!strcmp(attriName, "class"))
-				{
-					char* value = (char*)attriValue;
-					GetClass(value, line->fill, line->colorName);
-				}
-				else if (!strcmp(attriName, "style"))
-				{
-					char* value = (char*)attriValue;
-					GetStyle(value, line->strokeWidth, line->strokeDasharray, line->alpha);
-				}
-				else if (!strcmp(attriName, "transform"))
-				{
-					char* value = (char*)attriValue;
-					GetRotation(value, line->rotation);
-				}
-			}
-			figures.push_back(line);
-		}
-		else if (!strcmp(instructionName, "circle"))
+		else if (!instructionName.compare("circle"))
 		{
 			libS100Engine::Circle* circle = new libS100Engine::Circle();
 			std::vector<std::wstring> wsVecTemp;
@@ -430,22 +436,22 @@ bool SVGReader::OpenByPugi(char* path)
 
 				if (!strcmp(attriName, "cx"))
 				{
-					char * value = (char*)attriValue;
+					char* value = (char*)attriValue;
 					GetDouble(value, circle->cx);
 				}
 				else if (!strcmp(attriName, "cy"))
 				{
-					char * value = (char*)attriValue;
+					char* value = (char*)attriValue;
 					GetDouble(value, circle->cy);
 				}
 				else if (!strcmp(attriName, "r"))
 				{
-					char * value = (char*)attriValue;
+					char* value = (char*)attriValue;
 					GetDouble(value, circle->radius);
 				}
 				else if (!strcmp(attriName, "class"))
 				{
-					char * value = (char*)attriValue;
+					char* value = (char*)attriValue;
 					if (!strcmp(value, "pivotPoint layout"))
 					{
 
@@ -457,12 +463,12 @@ bool SVGReader::OpenByPugi(char* path)
 				}
 				else if (!strcmp(attriName, "style"))
 				{
-					char * value = (char*)attriValue;
+					char* value = (char*)attriValue;
 					GetStyle(value, circle->strokeWidth, circle->strokeDasharray, circle->alpha);
 				}
 				else if (!strcmp(attriName, "transform"))
 				{
-					char * value = (char*)attriValue;
+					char* value = (char*)attriValue;
 					GetRotation(value, circle->rotation);
 				}
 			}
@@ -477,29 +483,27 @@ bool SVGReader::OpenByPugi(char* path)
 				figures.push_back(circle);
 			}
 		}
+		else if (!instructionName.compare("ellipse"))
+		{
 
+		}
+		else if (!instructionName.compare("polyline"))
+		{
+
+		}
+		else if (!instructionName.compare("polygon"))
+		{
+
+		}
 	}
-
+	
+	// Get the name of the file without ext.
 	auto wPath = LibMFCUtil::ConvertCtoWC(path);
 	CString cpath(wPath);
 	delete[] wPath;
 
+	name = LibMFCUtil::GetFileName(cpath);
 
-	int length = cpath.GetLength();
-	if (length <= 0)
-	{
-		return true;
-	}
-
-	int indexOfLastReverseSlash = cpath.ReverseFind('\\');
-	if (indexOfLastReverseSlash >= 0)
-	{
-		int indexOfLastDot = cpath.ReverseFind('.');
-		if (indexOfLastDot >= 0)
-		{
-			name = cpath.Mid(indexOfLastReverseSlash + 1, indexOfLastDot - indexOfLastReverseSlash - 1);
-		}
-	}
 	return true;
 }
 

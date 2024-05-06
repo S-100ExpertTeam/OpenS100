@@ -27,6 +27,7 @@ public:
 	std::vector<libS100Engine::Figure*> figures;
 	std::wstring name;
 
+	// Resources used for svg drawing using direct2d.
 	std::vector<SVGGeometry> geometry;
 	
 	// svgBox 
