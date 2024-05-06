@@ -9,6 +9,7 @@ Layer::Layer(void)
 {
 	On = true;
 	Info = false;
+	m_spatialObject = nullptr;
 }
 
 Layer::~Layer(void)

@@ -304,7 +304,8 @@ void S101Cell::ClearAll(void)
 bool S101Cell::Open(CString _filepath) // Dataset start, read .000 
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
-	if (extension.CompareNoCase(L"000") == 0)
+	if ((extension.CompareNoCase(L"000") >= 0) &&
+		(extension.CompareNoCase(L"999") <= 0))
 	{
 		return OpenBy000(_filepath);
 	}
@@ -2046,16 +2047,8 @@ std::vector<R_SurfaceRecord*>& S101Cell::GetVecSurface()
 
 void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
 {
-	R_FeatureRecord* featureRecord = nullptr;
-	if (TRUE == m_feaMap.Lookup(key, featureRecord))
-	{
-		if (!featureRecord)
-		{
-			m_feaMap.SetAt(key, record);
-			vecFeature.push_back(record);
-		}
-	}
-	else
+	auto featureRecord = GetFeatureRecord(key);
+	if (nullptr == featureRecord)
 	{
 		m_feaMap.SetAt(key, record);
 		vecFeature.push_back(record);
@@ -2064,27 +2057,17 @@ void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
 
 void S101Cell::RemoveFeatureRecord(__int64 key)
 {
-	R_FeatureRecord* featureRecord = nullptr;
-	if (TRUE == m_feaMap.Lookup(key, featureRecord))
+	auto featureRecord = GetFeatureRecord(key);
+	if (featureRecord)
 	{
-		if (featureRecord)
-		{
-			m_feaMap.RemoveKey(key);
-			vecFeature.erase(std::remove(vecFeature.begin(), vecFeature.end(), featureRecord), vecFeature.end());
-			delete featureRecord;
-		}
+		m_feaMap.RemoveKey(key);
+		vecFeature.erase(std::remove(vecFeature.begin(), vecFeature.end(), featureRecord), vecFeature.end());
+		delete featureRecord;
 	}
 }
 
 R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
 {
-	if (m_feaMatchingKeys.size() > 0)
-	{
-		auto iter = std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key);
-		if (iter == m_feaMatchingKeys.end())
-			return nullptr;
-	}
-
 	R_FeatureRecord* item = nullptr;
 	if (TRUE == m_feaMap.Lookup(key, item))
 	{
@@ -4241,14 +4224,10 @@ std::wstring S101Cell::GetFeatureTypeCodeByID(std::string id)
 std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
 {
 	RecordName rn(100, id);
-
-	R_FeatureRecord* fe = nullptr;
-	if (TRUE == m_feaMap.Lookup(rn.GetName(), fe))
+	auto fe = GetFeatureRecord(rn.GetName());
+	if (fe)
 	{
-		if (fe)
-		{
-			return std::wstring(m_dsgir.GetFeatureCode(fe->GetNumericCode()));
-		}
+		return std::wstring(m_dsgir.GetFeatureCode(fe->GetNumericCode()));
 	}
 
 	return L"";
@@ -4292,15 +4271,7 @@ int S101Cell::GetInformationCount()
 
 GF::FeatureType* S101Cell::GetFeatureType(std::string id)
 {
-	auto iKey = std::stoll(id);
-	RecordName recordName(100, (int)iKey);
-	R_FeatureRecord* item = nullptr;
-	if (TRUE == m_feaMap.Lookup(recordName.GetName(), item))
-	{
-		return item;
-	}
-
-	return nullptr;
+	return GetFeatureRecord(id);
 }
 
 GF::FeatureType* S101Cell::GetFeatureTypeByIndex(int index)

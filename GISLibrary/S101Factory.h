@@ -75,5 +75,6 @@ private:
 
 public:
 	static Layer* CopyLayer(Layer*, CString NewName);
+	static Layer* CopyLayerWithoutPC(Layer*, CString NewName);
 	static void DestoryLayer(Layer*);
 };

@@ -144,6 +144,10 @@ void SSurface::CreateD2Geometry(ID2D1Factory1* factory)
 			for (int i = 0; i < m_numParts; i++)
 			{
 				auto result = factory->CreatePathGeometry(&segGeometry[i]);
+
+				if (GetNumPointPerPart(i) - 1 <= 0)
+					continue;
+
 				if (SUCCEEDED(result))
 				{
 					ID2D1GeometrySink *pSink = nullptr;

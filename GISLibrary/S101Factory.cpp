@@ -516,6 +516,63 @@ Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, CString newName)
 	return dscLayer;
 }
 
+Layer* S100LayerFactory::CopyLayerWithoutPC(Layer* srcLayer, CString newName)
+{
+	Layer* dscLayer = nullptr;
+
+	if ((!srcLayer) ||
+		(!srcLayer->m_spatialObject))
+		return dscLayer;
+
+	S100_FileType fileType = srcLayer->m_spatialObject->m_FileType;
+
+	if (fileType == S100_FileType::FILE_Shape)
+	{
+		SHPFile* dscObject = S100LayerFactory::CopySHPFile(srcLayer, newName);
+		if (dscObject)
+		{
+			dscLayer = new Layer();
+			dscLayer->m_spatialObject = dscObject;
+		}
+	}
+	else if (fileType == S100_FileType::FILE_S_100_VECTOR)
+	{
+		S100SpatialObjectType objType = ((S100SpatialObject*)srcLayer->m_spatialObject)->type;
+		if (objType == S100SpatialObjectType::S101Cell)
+		{
+			S101Cell* dscObject = S100LayerFactory::CopyS101Cell(srcLayer, newName);
+			if (dscObject)
+			{
+				auto fc = ((S100Layer*)srcLayer)->GetFC();
+				auto pc = ((S100Layer*)srcLayer)->GetPC();
+				dscLayer = new S100Layer(fc, pc);
+				dscLayer->m_spatialObject = dscObject;
+			}
+		}
+		else if (objType == S100SpatialObjectType::S10XGML)
+		{
+			S10XGML* dscObject = S100LayerFactory::CopyS10XGML(srcLayer, newName);
+			if (dscObject)
+			{
+				auto fc = ((S100Layer*)srcLayer)->GetFC();
+				auto pc = ((S100Layer*)srcLayer)->GetPC();
+				dscLayer = new S100Layer(fc, pc);
+				dscLayer->m_spatialObject = dscObject;
+			}
+		}
+		else if (objType == S100SpatialObjectType::S100H5)
+		{
+			S100H5* dscObject = S100LayerFactory::CopyS100H5(srcLayer, newName);
+		}
+		else if (objType == S100SpatialObjectType::S102H5)
+		{
+			S102H5* dscObject = S100LayerFactory::CopyS102H5(srcLayer, newName);
+		}
+	}
+
+	return dscLayer;
+}
+
 void S100LayerFactory::DestoryLayer(Layer* pLayer)
 {
 	if (pLayer)
