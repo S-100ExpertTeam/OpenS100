@@ -3,6 +3,7 @@ class MBR
 {
 public:
 	MBR();
+	MBR(const MBR& other);
 	MBR(double _xmin, double _ymin, double _xmax, double _ymax);
 	virtual ~MBR();
 
@@ -11,6 +12,10 @@ public:
 	double ymin = DBL_MAX;
 	double xmax = -DBL_MAX;
 	double ymax = -DBL_MAX;
+
+public:
+	virtual MBR operator=(const MBR& other);
+	virtual bool operator==(const MBR& other);
 
 public:
 	void SetXMin(double value);
@@ -49,8 +54,12 @@ public:
 	
 	bool operator== (MBR& _mbr);
 
+	bool Intersects(MBR _mbr);
+	bool Overlap(MBR _mbr);
+
 	// static 
 public:
+	static bool CheckIntersects(MBR _mbr1, MBR _mbr2);
 	static bool CheckOverlap(MBR screenMBR, MBR objMBR);
 	static bool IntersectMBR(const MBR& _mbr1, const MBR& _mbr2, MBR& _intersectMBR);
 };

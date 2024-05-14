@@ -5,6 +5,14 @@ MBR::MBR(void)
 {
 }
 
+MBR::MBR(const MBR& other)
+{
+	xmin = other.xmin;
+	ymin = other.ymin;
+	xmax = other.xmax;
+	ymax = other.ymax;
+}
+
 MBR::MBR(double _xmin, double _ymin, double _xmax, double _ymax)
 {
 	xmin = _xmin;
@@ -15,6 +23,27 @@ MBR::MBR(double _xmin, double _ymin, double _xmax, double _ymax)
 
 MBR::~MBR(void)
 {
+}
+
+MBR MBR::operator=(const MBR& other)
+{
+	xmin = other.xmin;
+	ymin = other.ymin;
+	xmax = other.xmax;
+	ymax = other.ymax;
+
+	return *this;
+}
+
+bool MBR::operator==(const MBR& other)
+{
+	if ((xmin == other.xmin) &&
+		(ymin == other.ymin) &&
+		(xmax == other.xmax) &&
+		(ymax == other.ymax))
+		return true;
+
+	return false;
 }
 
 void MBR::SetXMin(double value)
@@ -150,6 +179,34 @@ void MBR::CalcMBR(MBR& mbr)
 	CalcMBR(mbr.GetXMin(), mbr.GetYMax());
 	CalcMBR(mbr.GetXMax(), mbr.GetYMax());
 	CalcMBR(mbr.GetXMax(), mbr.GetYMin());
+}
+
+bool MBR::Intersects(MBR _mbr)
+{
+	return !((_mbr.xmax < xmin) || (_mbr.ymax < ymin) || (_mbr.xmin > xmax) || (_mbr.ymin > ymax));
+}
+
+bool MBR::Overlap(MBR _mbr)
+{
+	if ((_mbr.ymin >= ymin && _mbr.ymin <= ymax) ||
+		(_mbr.ymax >= ymin && _mbr.ymax <= ymax) ||
+		(_mbr.ymin <= ymin && _mbr.ymax >= ymax)
+		)
+	{
+		if ((_mbr.xmin >= xmin && _mbr.xmin <= xmax) ||
+			(_mbr.xmax >= xmin && _mbr.xmax <= xmax) ||
+			(_mbr.xmin <= xmin && _mbr.xmax >= xmax)
+			)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool MBR::CheckIntersects(MBR _mbr1, MBR _mbr2)
+{
+	return !((_mbr2.xmax < _mbr1.xmin) || (_mbr2.ymax < _mbr1.ymin) || (_mbr2.xmin > _mbr1.xmax) || (_mbr2.ymin > _mbr1.ymax));
 }
 
 bool MBR::CheckOverlap(MBR screenMBR, MBR objMBR)

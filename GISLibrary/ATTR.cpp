@@ -29,6 +29,17 @@ ATTR::~ATTR()
 
 }
 
+ATTR ATTR::operator=(const ATTR& other)
+{
+	m_natc = other.m_natc;
+	m_atix = other.m_atix;
+	m_paix = other.m_paix;
+	m_atin = other.m_atin;
+	m_atvl = other.m_atvl;
+
+	return *this;
+}
+
 int ATTR::GetOffsetToATVL()
 {
 	return 7;
@@ -37,4 +48,9 @@ int ATTR::GetOffsetToATVL()
 std::string ATTR::getValueAsString()
 {
 	return pugi::as_utf8(m_atvl);
+}
+
+std::wstring ATTR::getValueAsWString()
+{
+	return m_atvl;
 }

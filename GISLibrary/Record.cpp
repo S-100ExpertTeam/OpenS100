@@ -24,6 +24,18 @@ Record::~Record(void)
 
 }
 
+Record Record::operator=(const Record& other)
+{
+	leader = other.leader;
+	for (const auto& iter : other.directory)
+	{
+		Directory dir = iter;
+		directory.push_back(dir);
+	}
+
+	return *this;
+}
+
 bool Record::WriteDirectory(CFile* file)
 {
 	for (auto i = directory.begin(); i != directory.end(); i++)

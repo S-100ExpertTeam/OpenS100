@@ -686,6 +686,12 @@
     <ClCompile Include="ViewingGroupReference.cpp">
       <Filter>AlertCatalogue</Filter>
     </ClCompile>
+    <ClCompile Include="AlertPriority.cpp">
+      <Filter>AlertCatalogue\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="HighlightStyle.cpp">
+      <Filter>AlertCatalogue\Enum</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PortrayalCatalogue.rc">

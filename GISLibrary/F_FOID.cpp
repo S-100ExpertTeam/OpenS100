@@ -7,7 +7,7 @@ F_FOID::F_FOID(void)
 {
 }
 
-F_FOID::F_FOID(const F_FOID& other)
+F_FOID::F_FOID(const F_FOID& other) : Field(other)
 {
 	AGEN = other.AGEN;
 	FIDN = other.FIDN;
@@ -26,7 +26,16 @@ F_FOID::~F_FOID(void)
 
 }
 
-void F_FOID::ReadField(BYTE *&buf)
+F_FOID F_FOID::operator=(const F_FOID& other)
+{
+	AGEN = other.AGEN;
+	FIDN = other.FIDN;
+	FIDS = other.FIDS;
+
+	return *this;
+}
+
+void F_FOID::ReadField(BYTE*& buf)
 {
 	AGEN = buf2uint(buf, 2);
 	FIDN = buf2uint(buf, 4);
@@ -54,13 +63,4 @@ __int64 F_FOID::GetName()
 	return ((__int64)AGEN) << 48 | ((__int64)FIDN) << 16 | FIDS;
 }
 
-F_FOID* F_FOID::Clone() const
-{
-	F_FOID* f_foid = new F_FOID();
-	f_foid->AGEN = AGEN;
-	f_foid->FIDN = FIDN;
-	f_foid->FIDS = FIDS;
-
-	return f_foid;
-}
 

@@ -31,11 +31,9 @@ bool S100_SymbolFill::ReadFileByPugiXml(std::wstring& path)
 	
 	if (!path.empty())
 	{
-		 LibMFCUtil::GetFileName(path.c_str());
-
 		pugi::xml_document doc;
 		pugi::xml_parse_result result = doc.load_file(path.c_str());
-		pugi::xml_node displayList = doc.child("symbolFill");
+		pugi::xml_node displayList = doc.first_child();
 
 		if (displayList)
 		{

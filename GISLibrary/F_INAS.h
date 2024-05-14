@@ -42,6 +42,10 @@ public:
 	* Attribute Array
 	*/
 	std::vector<ATTR*> m_arr;
+
+public:
+	virtual F_INAS operator=(const F_INAS& other);
+
 public:
 	static int GetSize();
 
@@ -56,7 +60,5 @@ public:
 	int getATTRCount() const;
 	ATTR* getATTR(int index) const;
 	void addATTR(ATTR* value);
-
-	virtual F_INAS* Clone() const;
 };
 

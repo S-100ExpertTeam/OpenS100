@@ -21,6 +21,9 @@ private:
 	std::unordered_map<__int64, MASK*> m_arr;
 
 public:
+	virtual F_MASK operator=(const F_MASK& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
@@ -33,6 +36,4 @@ public:
 
 	int getCount() const;
 	MASK* getMASKbyIndex(int index) const;
-
-	virtual F_MASK* Clone() const;
 };

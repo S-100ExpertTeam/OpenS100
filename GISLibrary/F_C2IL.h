@@ -16,6 +16,9 @@ public:
 	std::list<C2IL*> m_arr;
 
 public:
+	virtual F_C2IL operator=(const F_C2IL& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
 	bool WriteField(CFile* file);
@@ -23,6 +26,4 @@ public:
 	int GetFieldLength();
 
 	void Insert(int xcoo, int ycoo);
-
-	virtual F_C2IL* Clone() const;
 };

@@ -3,6 +3,12 @@
 struct CSAX
 {
 public:
+	CSAX();
+	CSAX(const CSAX& other);
+	CSAX(int axty, int axum);
+	virtual ~CSAX();
+
+public:
 	/*
 	* Axis Type
 	* Format		: b11
@@ -21,6 +27,9 @@ public:
 	* {6} - US survey foot
 	*/
 	int m_axum;
+
+public:
+	virtual CSAX operator=(const CSAX& other);
 
 public:
 	static int GetSize();

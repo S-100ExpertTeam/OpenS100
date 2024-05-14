@@ -41,6 +41,10 @@ void AttributeBinding::GetContents(pugi::xml_node& node)
 		{
 			attributeCode = instruction.attribute("ref").as_string();
 		}
+		else if (!strcmp(instructionName, "S100FC:attributeVisibility"))
+		{
+			attributeVisibility = stringToAttributeVisibility(instruction.child_value());
+		}
 	}
 }
 

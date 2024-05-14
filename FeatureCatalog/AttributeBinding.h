@@ -3,6 +3,7 @@
 #include "ValueList.h"
 #include "Multiplicity.h"
 #include "Reference.h"
+#include "AttributeVisibility.h"
 
 #include <pugixml.hpp>
 
@@ -14,6 +15,7 @@ public:
 	virtual ~AttributeBinding();
 	
 private:
+	AttributeVisibility attributeVisibility = AttributeVisibility::none;
 	Multiplicity multiplicity;
 	ValueList permittedValues;
 	std::string attributeCode;

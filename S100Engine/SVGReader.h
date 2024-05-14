@@ -27,17 +27,12 @@ public:
 	std::vector<libS100Engine::Figure*> figures;
 	std::wstring name;
 
+	// Resources used for svg drawing using direct2d.
 	std::vector<SVGGeometry> geometry;
 	
 	// svgBox 
-	float bounding_x;
-	float bounding_y;
-	float bounding_width;
-	float bounding_height;
-
-	// not used
-	float svgBox_x;
-	float svgBox_y;
-	float svgBox_width;
-	float svgBox_height;
+	float bounding_x = 0;
+	float bounding_y = 0;
+	float bounding_width = 0;
+	float bounding_height = 0;
 };

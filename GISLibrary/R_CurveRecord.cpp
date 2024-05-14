@@ -18,6 +18,24 @@ R_CurveRecord::R_CurveRecord()
 	m_crid.m_name.RCNM = 120;
 }
 
+R_CurveRecord::R_CurveRecord(const R_CurveRecord& other) : R_VectorRecord(other)
+{
+	m_crid = other.m_crid;
+	if (other.m_ptas)
+		m_ptas = new F_PTAS(*other.m_ptas);
+	if (other.m_secc)
+		m_secc = new F_SECC(*other.m_secc);
+	if (other.m_segh)
+		m_segh = new F_SEGH(*other.m_segh);
+	if (other.m_cocc)
+		m_cocc = new F_COCC(*other.m_cocc);
+	for (const auto& iter : other.m_c2il)
+	{
+		F_C2IL* cont = new F_C2IL(*iter);
+		m_c2il.push_back(cont);
+	}
+}
+
 R_CurveRecord::~R_CurveRecord()
 {
 	delete m_ptas;
@@ -48,6 +66,62 @@ R_CurveRecord::~R_CurveRecord()
 		*i = nullptr;
 	}
 	m_c2il.clear();
+}
+
+R_CurveRecord R_CurveRecord::operator=(const R_CurveRecord& other)
+{
+	if (m_ptas)
+	{
+		delete m_ptas;
+		m_ptas = nullptr;
+	}
+
+	if (m_secc)
+	{
+		delete m_secc;
+		m_secc = nullptr;
+	}
+
+	if (m_segh)
+	{
+		delete m_segh;
+		m_segh = nullptr;
+	}
+
+	if (m_cocc)
+	{
+		delete m_cocc;
+		m_cocc = nullptr;
+	}
+
+	for (auto& iter : m_c2il)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_c2il.clear();
+
+	R_VectorRecord::operator=(other);
+
+	m_crid = other.m_crid;
+	if (other.m_ptas)
+		m_ptas = new F_PTAS(*other.m_ptas);
+	if (other.m_secc)
+		m_secc = new F_SECC(*other.m_secc);
+	if (other.m_segh)
+		m_segh = new F_SEGH(*other.m_segh);
+	if (other.m_cocc)
+		m_cocc = new F_COCC(*other.m_cocc);
+	for (const auto& iter : other.m_c2il)
+	{
+		F_C2IL* cont = new F_C2IL(*iter);
+		m_c2il.push_back(cont);
+	}
+
+	return *this;
 }
 
 #pragma warning(disable:4018)
@@ -230,6 +304,9 @@ void R_CurveRecord::SetRCID(int rcid)
 int R_CurveRecord::GetPointCount()
 {
 	int result = 0;
+
+	if (m_ptas == nullptr)
+		return result;
 
 	auto countPTAS = m_ptas->m_arr.size();
 
@@ -472,30 +549,6 @@ std::vector<C2IL*> R_CurveRecord::GetAllC2IL()
 	}
 
 	return result;
-}
-
-R_CurveRecord* R_CurveRecord::Clone() const
-{
-	R_CurveRecord* cr = new R_CurveRecord();
-
-	cr->m_crid = m_crid;
-	cr->m_ptas = (!m_ptas) ? nullptr : m_ptas->Clone();
-	cr->m_secc = (!m_secc) ? nullptr : m_secc->Clone();
-	cr->m_segh = (!m_segh) ? nullptr : m_segh->Clone();
-	cr->m_cocc = (!m_cocc) ? nullptr : m_cocc->Clone();
-	for (const auto& iter : m_c2il)
-	{
-		F_C2IL* c2il = (!iter) ? nullptr : iter->Clone();
-		cr->m_c2il.push_back(c2il);
-	}
-
-	for (const auto& iter : m_inas)
-	{
-		F_INAS* inas = (!iter) ? nullptr : iter->Clone();
-		cr->m_inas.push_back(inas);
-	}
-
-	return cr;
 }
 
 

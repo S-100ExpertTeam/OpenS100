@@ -10,6 +10,16 @@ R_SurfaceRecord::R_SurfaceRecord(void)
 	m_srid.m_name.RCNM = 130;
 }
 
+R_SurfaceRecord::R_SurfaceRecord(const R_SurfaceRecord& other) : R_VectorRecord(other)
+{
+	m_srid = other.m_srid;
+	for (const auto& iter : other.m_rias)
+	{
+		F_RIAS* cont = new F_RIAS(*iter);
+		m_rias.push_back(cont);
+	}
+}
+
 R_SurfaceRecord::~R_SurfaceRecord(void)
 {
 	for (auto itor = m_inas.begin(); itor != m_inas.end(); itor++)
@@ -20,6 +30,30 @@ R_SurfaceRecord::~R_SurfaceRecord(void)
 	{
 		delete* itor;
 	}
+}
+
+R_SurfaceRecord R_SurfaceRecord::operator=(const R_SurfaceRecord& other)
+{
+	for (auto& iter : m_rias)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_rias.clear();
+
+	R_VectorRecord::operator=(other);
+
+	m_srid = other.m_srid;
+	for (const auto& iter : other.m_rias)
+	{
+		F_RIAS* cont = new F_RIAS(*iter);
+		m_rias.push_back(cont);
+	}
+
+	return *this;
 }
 
 BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
@@ -160,22 +194,3 @@ std::vector<RIAS*> R_SurfaceRecord::GetAllRIAS()
 	return result;
 }
 
-R_SurfaceRecord* R_SurfaceRecord::Clone() const
-{
-	R_SurfaceRecord* sr = new R_SurfaceRecord();
-
-	sr->m_srid = m_srid;
-	for (const auto& iter : m_rias)
-	{
-		F_RIAS* rias = (!iter) ? nullptr : iter->Clone();
-		sr->m_rias.push_back(rias);
-	}
-
-	for (const auto& iter : m_inas)
-	{
-		F_INAS* inas = (!iter) ? nullptr : iter->Clone();
-		sr->m_inas.push_back(inas);
-	}
-
-	return sr;
-}

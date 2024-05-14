@@ -10,10 +10,14 @@ namespace GF
     {
     public:
         InformationAssociationType();
+        InformationAssociationType(const InformationAssociationType& other);
         virtual ~InformationAssociationType();
 
     public:
         std::string informationID = "";
+
+    public:
+        virtual InformationAssociationType operator=(const InformationAssociationType& other);
 
     public:
         std::string GetInformationID();

@@ -22,7 +22,7 @@ F_DSID::F_DSID(void)
 	m_dstc.Add(18);
 }
 
-F_DSID::F_DSID(const F_DSID& other)
+F_DSID::F_DSID(const F_DSID& other) : Field(other)
 {
 	m_name = other.m_name;
 	m_ensp = other.m_ensp;
@@ -36,14 +36,32 @@ F_DSID::F_DSID(const F_DSID& other)
 	m_dslg = other.m_dslg;
 	m_dsab = other.m_dsab;
 	m_dsed = other.m_dsed;
-	for (int i = 0; i < other.m_dstc.GetSize(); i++)
-		m_dstc.Add(other.m_dstc[i]);
+	m_dstc.Copy(other.m_dstc);
 }
 
 F_DSID::~F_DSID(void)
 {
 	m_dstc.RemoveAll();
 
+}
+
+F_DSID& F_DSID::operator=(const F_DSID& other)
+{
+	m_name = other.m_name;
+	m_ensp = other.m_ensp;
+	m_ened = other.m_ened;
+	m_prsp = other.m_prsp;
+	m_pred = other.m_pred;
+	m_prof = other.m_prof;
+	m_dsnm = other.m_dsnm;
+	m_dstl = other.m_dstl;
+	m_dsrd = other.m_dsrd;
+	m_dslg = other.m_dslg;
+	m_dsab = other.m_dsab;
+	m_dsed = other.m_dsed;
+	m_dstc.Copy(other.m_dstc);
+
+	return *this;
 }
 
 void F_DSID::ReadField(BYTE*& buf)
@@ -146,24 +164,4 @@ int F_DSID::GetFieldLength()
 	return ++len;
 }
 
-F_DSID* F_DSID::Clone() const
-{
-	F_DSID* f_dsid = new F_DSID();
-	f_dsid->m_name = m_name;
-	f_dsid->m_ensp = m_ensp;
-	f_dsid->m_ened = m_ened;
-	f_dsid->m_prsp = m_prsp;
-	f_dsid->m_pred = m_pred;
-	f_dsid->m_prof = m_prof;
-	f_dsid->m_dsnm = m_dsnm;
-	f_dsid->m_dstl = m_dstl;
-	f_dsid->m_dsrd = m_dsrd;
-	f_dsid->m_dslg = m_dslg;
-	f_dsid->m_dsab = m_dsab;
-	f_dsid->m_dsed = m_dsed;
-	for (int i = 0; i < m_dstc.GetSize(); i++)
-		f_dsid->m_dstc.Add(m_dstc[i]);
-
-	return f_dsid;
-}
 

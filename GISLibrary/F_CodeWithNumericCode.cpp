@@ -9,6 +9,17 @@ F_CodeWithNumericCode::F_CodeWithNumericCode()
 
 }
 
+F_CodeWithNumericCode::F_CodeWithNumericCode(const F_CodeWithNumericCode& other) : Field(other)
+{
+	for (const auto& iter : other.listCodeWithNumericCode)
+	{
+		auto value = new CodeWithNumericCode(*iter);
+		listCodeWithNumericCode.push_back(value);
+		m_arr.insert({ value->GetNumericCode(), value });
+		m_arrFindForCode.insert({ value->GetCode(), value });
+	}
+}
+
 F_CodeWithNumericCode::~F_CodeWithNumericCode()
 {
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
@@ -16,6 +27,31 @@ F_CodeWithNumericCode::~F_CodeWithNumericCode()
 		CodeWithNumericCode* attr = itor->second;
 		delete attr;
 	}
+}
+
+F_CodeWithNumericCode F_CodeWithNumericCode::operator=(const F_CodeWithNumericCode& other)
+{
+	for (auto& iter : listCodeWithNumericCode)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	listCodeWithNumericCode.clear();
+	m_arr.clear();
+	m_arrFindForCode.clear();
+
+	for (const auto& iter : other.listCodeWithNumericCode)
+	{
+		auto value = new CodeWithNumericCode(*iter);
+		listCodeWithNumericCode.push_back(value);
+		m_arr.insert({ value->GetNumericCode(), value });
+		m_arrFindForCode.insert({ value->GetCode(), value });
+	}
+
+	return *this;
 }
 
 void F_CodeWithNumericCode::ReadField(BYTE *&buf)
@@ -211,17 +247,3 @@ void F_CodeWithNumericCode::setCodeNumericCode(CString code, int numericCode)
 	}
 }
 
-F_CodeWithNumericCode* F_CodeWithNumericCode::Clone() const
-{
-	F_CodeWithNumericCode* code = new F_CodeWithNumericCode();
-
-	for (const auto& iter : listCodeWithNumericCode)
-	{
-		auto value = new CodeWithNumericCode(iter->m_code, iter->m_nmcd);
-		code->listCodeWithNumericCode.push_back(value);
-		code->m_arr.insert({ value->GetNumericCode(), value });
-		code->m_arrFindForCode.insert({ value->GetCode(), value });
-	}
-
-	return code;
-}

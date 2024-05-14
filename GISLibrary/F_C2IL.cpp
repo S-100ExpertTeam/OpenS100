@@ -12,7 +12,10 @@ F_C2IL::F_C2IL()
 F_C2IL::F_C2IL(const F_C2IL& other)
 {
 	for (const auto& iter : other.m_arr)
-		Insert(iter->m_xcoo, iter->m_ycoo);
+	{
+		C2IL* cont = new C2IL(*iter);
+		m_arr.push_back(cont);
+	}
 }
 
 F_C2IL::~F_C2IL()
@@ -22,6 +25,27 @@ F_C2IL::~F_C2IL()
 		delete *itor;
 	}
 	m_arr.clear();
+}
+
+F_C2IL F_C2IL::operator=(const F_C2IL& other)
+{
+	for (auto& iter : m_arr)
+	{
+		if (iter)
+		{
+			delete iter;
+			iter = nullptr;
+		}
+	}
+	m_arr.clear();
+
+	for (const auto& iter : other.m_arr)
+	{
+		C2IL* cont = new C2IL(*iter);
+		m_arr.push_back(cont);
+	}
+
+	return *this;
 }
 
 void F_C2IL::ReadField(BYTE *&buf)
@@ -75,18 +99,4 @@ void F_C2IL::Insert(int xcoo, int ycoo)
 	cont->m_ycoo = ycoo;
 	cont->m_xcoo = xcoo;
 	m_arr.push_back(cont);
-}
-
-F_C2IL* F_C2IL::Clone() const
-{
-	F_C2IL* f_c2il = new F_C2IL();
-	for (const auto& iter : m_arr)
-	{
-		C2IL* c2il = new C2IL();
-		c2il->m_ycoo = iter->m_ycoo;
-		c2il->m_xcoo = iter->m_xcoo;
-		f_c2il->m_arr.push_back(c2il);
-	}
-
-	return f_c2il;
 }

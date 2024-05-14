@@ -1744,7 +1744,8 @@ S100_FileType LayerManager::CheckFileType(CString path)
 	CString file_extension = LibMFCUtil::GetExtension(path);
 
 
-	if (file_extension.CompareNoCase(_T("000")) == 0)
+	if ((file_extension.CompareNoCase(_T("000")) >= 0) &&
+		(file_extension.CompareNoCase(_T("999")) <= 0))
 	{
 		if (file.Open(path, CFile::modeRead))
 		{
@@ -1847,7 +1848,6 @@ int LayerManager::pathToProductNumber(CString path)
 			return std::stoi(strProductNumber);
 		}
 		catch (const std::exception& e) {
-
 		}
 	}
 

@@ -7,7 +7,7 @@ IMPLEMENT_DYNAMIC(CDockablePaneLayerManager, CDockablePane)
 
 CDockablePaneLayerManager::CDockablePaneLayerManager()
 {
-	EnableAutomation();
+	//EnableAutomation();
 	pDlg = nullptr;
 }
 

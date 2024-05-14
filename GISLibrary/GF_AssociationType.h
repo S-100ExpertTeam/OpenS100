@@ -10,10 +10,14 @@ namespace GF
 	{
 	public:
 		AssociationType();
+		AssociationType(const AssociationType& other);
 		virtual ~AssociationType();
 
 	public:
 		AssociationRole role;
+
+	public:
+		virtual AssociationType operator=(const AssociationType& other);
 
 	public:
 		std::string GetRole();

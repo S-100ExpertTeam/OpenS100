@@ -7,12 +7,13 @@ namespace libS100Engine
 	enum class FigureType
 	{
 		none = 0,
-		line = 1,
+		line = 1, 
 		circle = 2,
 		rect = 3,
 		pivotPoint = 4
 	};
 
+	// Base class for all SVG Drawing Elements. 
 	class Figure
 	{
 	public:

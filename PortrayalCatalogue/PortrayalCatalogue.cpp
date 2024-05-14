@@ -87,7 +87,7 @@ bool PortrayalCatalogue::ReadPortrayalCatalogueByPugiXML(std::wstring& path)
 			return false;
 		}
 
-		pugi::xml_node displayList = doc.child("portrayalCatalog");
+		pugi::xml_node displayList = doc.first_child();
 
 		auto productId = displayList.attribute("productId");
 		if (productId)
@@ -397,9 +397,9 @@ void PortrayalCatalogue::GetLineStylesByPugiXml()
 
 			for (pugi::xml_node instruction = doc.first_child(); instruction; instruction = instruction.next_sibling())
 			{
-				const pugi::char_t* instructionName = instruction.name();
+				std::string instructionName = instruction.name();
 
-				if (!strcmp(instructionName, "lineStyle"))
+				if (instructionName.find("lineStyle") != std::string::npos)
 				{
 					S100_LineStyle* lineStyle = new S100_LineStyle();
 					lineStyle->GetContents(instruction);
@@ -408,7 +408,7 @@ void PortrayalCatalogue::GetLineStylesByPugiXml()
 					for (int i = 0; i < (int)vecDescription->size(); i++)
 						s100_lineStyles[vecDescription->at(i)->Getname()] = lineStyle;
 				}
-				else if (!strcmp(instructionName, "compositeLineStyle"))
+				else if (instructionName.find("compositeLineStyle") != std::string::npos)
 				{
 					S100_CompositeLineStyle* cls = new S100_CompositeLineStyle();
 					cls->GetContents(instruction);

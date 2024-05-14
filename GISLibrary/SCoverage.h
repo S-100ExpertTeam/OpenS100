@@ -11,6 +11,9 @@ public:
 	virtual ~SCoverage();
 
 public:
+	virtual SCoverage operator=(const SCoverage& other);
+
+public:
 	SGeometryType GetType() override;
 
 	MBR* m_pBoundary = nullptr;

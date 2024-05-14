@@ -19,7 +19,7 @@ bool S100ColorProfile::OpenByPugi(char *filePath)
 {
 	pugi::xml_document xmldoc;
 	auto result = xmldoc.load_file(filePath);
-	auto colorProfileNode = xmldoc.child("colorProfile");
+	auto colorProfileNode = xmldoc.first_child();
 
 	if (colorProfileNode.empty())
 	{

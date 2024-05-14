@@ -26,12 +26,13 @@ public:
 	int FIDS = 0;
 
 public:
+	virtual F_FOID operator=(const F_FOID& other);
+
+public:
 	void ReadField(BYTE *&buf);
 	bool WriteField(CFile* file);
 
 	int GetFieldLength();
 
 	__int64 GetName();
-
-	virtual F_FOID* Clone() const;
 };

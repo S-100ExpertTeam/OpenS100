@@ -49,9 +49,12 @@ public:
 	CString m_atvl = L"";
 
 public:
+	virtual ATTR operator=(const ATTR& other);
+
+public:
 	static int GetOffsetToATVL();
 	
 	std::string getValueAsString();
-
+	std::wstring getValueAsWString();
 
 };

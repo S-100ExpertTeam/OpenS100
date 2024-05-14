@@ -199,6 +199,7 @@ void S101Cell::UpdateRemoveAll(void)
 	updates.clear();
 
 	m_feaMatchingKeys.clear();
+	m_infMatchingKeys.clear();
 }
 
 void S101Cell::RemoveAll(void)
@@ -282,6 +283,7 @@ void S101Cell::RemoveAll(void)
 	m_feaMap.RemoveAll();
 
 	m_feaMatchingKeys.clear();
+	m_infMatchingKeys.clear();
 }
 
 void S101Cell::ClearAll(void)
@@ -293,13 +295,17 @@ void S101Cell::ClearAll(void)
 	m_comMap.RemoveAll();
 	m_surMap.RemoveAll();
 	m_feaMap.RemoveAll();
+
+	m_feaMatchingKeys.clear();
+	m_infMatchingKeys.clear();
 }
 
 #pragma warning(disable:4018)
 bool S101Cell::Open(CString _filepath) // Dataset start, read .000 
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
-	if (extension.CompareNoCase(L"000") == 0)
+	if ((extension.CompareNoCase(L"000") >= 0) &&
+		(extension.CompareNoCase(L"999") <= 0))
 	{
 		return OpenBy000(_filepath);
 	}
@@ -791,8 +797,8 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 		{
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
-			auto info = GetInformationRecord(infoKey);
-			if (info)
+			R_InformationRecord* info = nullptr;
+			if (TRUE == m_infMap.Lookup(infoKey, info))
 			{
 				geo->AddInformationType(info);
 			}
@@ -838,8 +844,8 @@ BOOL S101Cell::GetFullSpatialData(R_PointRecord* r, SPoint* point)
 	{
 		auto f_inas = *i;
 		auto infoKey = f_inas->m_name.GetName();
-		auto info = GetInformationRecord(infoKey);
-		if (info)
+		R_InformationRecord* info = nullptr;
+		if (TRUE == m_infMap.Lookup(infoKey, info))
 		{
 			point->AddInformationType(info);
 		}
@@ -878,8 +884,8 @@ BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 		{
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
-			auto info = GetInformationRecord(infoKey);
-			if (info)
+			R_InformationRecord* info = nullptr;
+			if (TRUE == m_infMap.Lookup(infoKey, info))
 			{
 				multiPoint->AddInformationType(info);
 			}
@@ -1093,8 +1099,8 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		{
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
-			auto info = GetInformationRecord(infoKey);
-			if (info)
+			R_InformationRecord* info = nullptr;
+			if (TRUE == m_infMap.Lookup(infoKey, info))
 			{
 				curve->AddInformationType(info);
 			}
@@ -1188,8 +1194,8 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 	{
 		auto f_inas = *i;
 		auto infoKey = f_inas->m_name.GetName();
-		auto info = GetInformationRecord(infoKey);
-		if (info)
+		R_InformationRecord* info = nullptr;
+		if (TRUE == m_infMap.Lookup(infoKey, info))
 		{
 			curve->AddInformationType(info);
 		}
@@ -1604,8 +1610,16 @@ void S101Cell::InsertRecord(Record* record)
 
 void S101Cell::InsertInformationRecord(__int64 key, R_InformationRecord* record)
 {
-	auto informationRecord = GetInformationRecord(key);
-	if (nullptr == informationRecord)
+	R_InformationRecord* informationRecord = nullptr;
+	if (TRUE == m_infMap.Lookup(key, informationRecord))
+	{
+		if (!informationRecord)
+		{
+			m_infMap.SetAt(key, record);
+			vecInformation.push_back(record);
+		}
+	}
+	else
 	{
 		m_infMap.SetAt(key, record);
 		vecInformation.push_back(record);
@@ -1614,18 +1628,28 @@ void S101Cell::InsertInformationRecord(__int64 key, R_InformationRecord* record)
 
 void S101Cell::RemoveInformationRecord(__int64 key)
 {
-	auto informationRecord = GetInformationRecord(key);
-	if (informationRecord)
+	R_InformationRecord* informationRecord = nullptr;
+	if (TRUE == m_infMap.Lookup(key, informationRecord))
 	{
-		m_infMap.RemoveKey(key);
-		vecInformation.erase(std::remove(vecInformation.begin(), vecInformation.end(), informationRecord), vecInformation.end());
+		if (informationRecord)
+		{
+			m_infMap.RemoveKey(key);
+			vecInformation.erase(std::remove(vecInformation.begin(), vecInformation.end(), informationRecord), vecInformation.end());
 
-		delete informationRecord;
+			delete informationRecord;
+		}
 	}
 }
 
 R_InformationRecord* S101Cell::GetInformationRecord(__int64 key)
 {
+	if (m_infMatchingKeys.size() > 0)
+	{
+		auto iter = std::find(m_infMatchingKeys.begin(), m_infMatchingKeys.end(), key);
+		if (iter == m_infMatchingKeys.end())
+			return nullptr;
+	}
+
 	R_InformationRecord* item = nullptr;
 	if (TRUE == m_infMap.Lookup(key, item))
 	{
@@ -1664,7 +1688,25 @@ POSITION S101Cell::GetInfoStartPosition()
 
 void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_InformationRecord*& value)
 {
-	m_infMap.GetNextAssoc(index, key, value);
+	if (m_infMatchingKeys.size() > 0)
+	{
+		while (true)
+		{
+			m_infMap.GetNextAssoc(index, key, value);
+			if (index == nullptr)
+			{
+				key = -1;
+				value = nullptr;
+				return;
+			}	
+
+			auto iter = std::find(m_infMatchingKeys.begin(), m_infMatchingKeys.end(), key);
+			if (iter != m_infMatchingKeys.end())
+				return;
+		}
+	}
+	else
+		m_infMap.GetNextAssoc(index, key, value);
 }
 
 void S101Cell::RemoveAllInfoRecord()
@@ -1680,6 +1722,34 @@ int S101Cell::GetInfoMapCount()
 std::vector<R_InformationRecord*>& S101Cell::GetVecInformation()
 {
 	return vecInformation;
+}
+
+void S101Cell::InsertInformationFilter(__int64 key)
+{
+	m_infMatchingKeys.insert(key);
+}
+
+void S101Cell::InsertInformationFilter(std::string key)
+{
+	auto iKey = std::stoll(key);
+	RecordName recordName(RCNM::InformationType, (int)iKey);
+	return InsertInformationFilter(recordName.GetName());
+}
+
+void S101Cell::InsertInformationFilter(std::wstring wstringKey)
+{
+	auto key = std::stoll(wstringKey);
+	return InsertInformationFilter(key);
+}
+
+void S101Cell::RemoveInformationFilter()
+{
+	m_infMatchingKeys.clear();
+}
+
+std::set<__int64>& S101Cell::GetInformationFilter()
+{
+	return m_infMatchingKeys;
 }
 
 void S101Cell::InsertPointRecord(__int64 key, R_PointRecord* record)
@@ -1977,16 +2047,8 @@ std::vector<R_SurfaceRecord*>& S101Cell::GetVecSurface()
 
 void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
 {
-	R_FeatureRecord* featureRecord = nullptr;
-	if (TRUE == m_feaMap.Lookup(key, featureRecord))
-	{
-		if (!featureRecord)
-		{
-			m_feaMap.SetAt(key, record);
-			vecFeature.push_back(record);
-		}
-	}
-	else
+	auto featureRecord = GetFeatureRecord(key);
+	if (nullptr == featureRecord)
 	{
 		m_feaMap.SetAt(key, record);
 		vecFeature.push_back(record);
@@ -1995,27 +2057,17 @@ void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
 
 void S101Cell::RemoveFeatureRecord(__int64 key)
 {
-	R_FeatureRecord* featureRecord = nullptr;
-	if (TRUE == m_feaMap.Lookup(key, featureRecord))
+	auto featureRecord = GetFeatureRecord(key);
+	if (featureRecord)
 	{
-		if (featureRecord)
-		{
-			m_feaMap.RemoveKey(key);
-			vecFeature.erase(std::remove(vecFeature.begin(), vecFeature.end(), featureRecord), vecFeature.end());
-			delete featureRecord;
-		}
+		m_feaMap.RemoveKey(key);
+		vecFeature.erase(std::remove(vecFeature.begin(), vecFeature.end(), featureRecord), vecFeature.end());
+		delete featureRecord;
 	}
 }
 
 R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
 {
-	if (m_feaMatchingKeys.size() > 0)
-	{
-		auto iter = std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key);
-		if (iter == m_feaMatchingKeys.end())
-			return nullptr;
-	}
-
 	R_FeatureRecord* item = nullptr;
 	if (TRUE == m_feaMap.Lookup(key, item))
 	{
@@ -2061,10 +2113,14 @@ void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_FeatureRecord*& v
 		{
 			m_feaMap.GetNextAssoc(index, key, value);
 			if (index == nullptr)
+			{
+				key = -1;
+				value = nullptr;
 				return;
+			}	
 
 			auto iter = std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key);
-			if (iter == m_feaMatchingKeys.end())
+			if (iter != m_feaMatchingKeys.end())
 				return;
 		}
 	}
@@ -2089,13 +2145,13 @@ std::vector<R_FeatureRecord*>& S101Cell::GetVecFeature()
 
 void S101Cell::InsertFeatureFilter(__int64 key)
 {
-	m_feaMatchingKeys.push_back(key);
+	m_feaMatchingKeys.insert(key);
 }
 
 void S101Cell::InsertFeatureFilter(std::string key)
 {
 	auto iKey = std::stoll(key);
-	RecordName recordName(100, (int)iKey);
+	RecordName recordName(RCNM::FeatureType, (int)iKey);
 	return InsertFeatureFilter(recordName.GetName());
 }
 
@@ -2110,7 +2166,7 @@ void S101Cell::RemoveFeatureFilter()
 	m_feaMatchingKeys.clear();
 }
 
-std::vector<__int64>& S101Cell::GetFeatureFilter()
+std::set<__int64>& S101Cell::GetFeatureFilter()
 {
 	return m_feaMatchingKeys;
 }
@@ -4168,14 +4224,10 @@ std::wstring S101Cell::GetFeatureTypeCodeByID(std::string id)
 std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
 {
 	RecordName rn(100, id);
-
-	R_FeatureRecord* fe = nullptr;
-	if (TRUE == m_feaMap.Lookup(rn.GetName(), fe))
+	auto fe = GetFeatureRecord(rn.GetName());
+	if (fe)
 	{
-		if (fe)
-		{
-			return std::wstring(m_dsgir.GetFeatureCode(fe->GetNumericCode()));
-		}
+		return std::wstring(m_dsgir.GetFeatureCode(fe->GetNumericCode()));
 	}
 
 	return L"";
@@ -4195,10 +4247,13 @@ std::wstring S101Cell::GetInformationTypeCodeByID(std::string id)
 std::wstring S101Cell::GetInformationTypeCodeByID(int id)
 {
 	RecordName rn(150, id);
-	auto ir = GetInformationRecord(rn.GetName());
-	if (ir)
+	R_InformationRecord* ir = nullptr;
+	if (TRUE == m_infMap.Lookup(rn.GetName(), ir))
 	{
-		return std::wstring(m_dsgir.GetInformationCode(ir->GetNumericCode()));
+		if (ir)
+		{
+			return std::wstring(m_dsgir.GetFeatureCode(ir->GetNumericCode()));
+		}
 	}
 
 	return L"";
@@ -4216,15 +4271,7 @@ int S101Cell::GetInformationCount()
 
 GF::FeatureType* S101Cell::GetFeatureType(std::string id)
 {
-	auto iKey = std::stoll(id);
-	RecordName recordName(100, (int)iKey);
-	R_FeatureRecord* item = nullptr;
-	if (TRUE == m_feaMap.Lookup(recordName.GetName(), item))
-	{
-		return item;
-	}
-
-	return nullptr;
+	return GetFeatureRecord(id);
 }
 
 GF::FeatureType* S101Cell::GetFeatureTypeByIndex(int index)

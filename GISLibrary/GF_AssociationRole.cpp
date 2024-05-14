@@ -13,4 +13,11 @@ namespace GF
 	{
 
 	}
+
+	AssociationRole AssociationRole::operator=(const AssociationRole& other)
+	{
+		PropertyType::operator=(other);
+
+		return *this;
+	}
 }
