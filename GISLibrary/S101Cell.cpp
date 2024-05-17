@@ -282,6 +282,14 @@ void S101Cell::RemoveAll(void)
 	}
 	m_feaMap.RemoveAll();
 
+	vecInformation.clear();
+	vecPoint.clear();
+	vecMultiPoint.clear();
+	vecCurve.clear();
+	vecComposite.clear();
+	vecSurface.clear();
+	vecFeature.clear();
+
 	m_feaMatchingKeys.clear();
 	m_infMatchingKeys.clear();
 }
@@ -295,6 +303,14 @@ void S101Cell::ClearAll(void)
 	m_comMap.RemoveAll();
 	m_surMap.RemoveAll();
 	m_feaMap.RemoveAll();
+
+	vecInformation.clear();
+	vecPoint.clear();
+	vecMultiPoint.clear();
+	vecCurve.clear();
+	vecComposite.clear();
+	vecSurface.clear();
+	vecFeature.clear();
 
 	m_feaMatchingKeys.clear();
 	m_infMatchingKeys.clear();
