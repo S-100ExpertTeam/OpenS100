@@ -92,7 +92,7 @@ SENC_Instruction* SENC_Instruction::S1002SENC(S100_Instruction* s100Instruction,
 	if (nullptr != result)
 	{
 		result->FromS100Instruction(s100Instruction, pc, output);
-		result->code = so->GetFeatureTypeCodeByID(result->featureReference);
+		//result->code = so->GetFeatureTypeCodeByID(result->featureReference);
 	}
 	return result;
 }

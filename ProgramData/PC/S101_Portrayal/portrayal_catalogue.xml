@@ -6568,16 +6568,26 @@
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
-      <symbol id="WRECKS05">
-         <description>
-            <name>WRECKS05</name>
-            <description>dangerous wreck, depth unknown</description>
-            <language>eng</language>
-         </description>
-         <fileName>WRECKS05.svg</fileName>
-         <fileType>Symbol</fileType>
-         <fileFormat>SVG</fileFormat>
-      </symbol>
+     <symbol id="WRECKS05">
+       <description>
+         <name>WRECKS05</name>
+         <description>dangerous wreck, depth unknown</description>
+         <language>eng</language>
+       </description>
+       <fileName>WRECKS05.svg</fileName>
+       <fileType>Symbol</fileType>
+       <fileFormat>SVG</fileFormat>
+     </symbol>
+     <symbol id="USRPNT01">
+       <description>
+         <name>Small Circle</name>
+         <description>Small circle symbol for point drawing instruction.</description>
+         <language>en</language>
+       </description>
+       <fileName>USRPNT01.svg</fileName>
+       <fileType>Symbol</fileType>
+       <fileFormat>SVG</fileFormat>
+     </symbol>
     </symbols>
    <styleSheets>
       <styleSheet id="daySvgStyle">

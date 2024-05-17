@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PugixmlElement.h"
+#include "S100GML_NameSpace.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 
@@ -24,6 +25,13 @@ namespace S100GML
 
 		std::string GetLowerCornerString();
 		std::string GetUpperCornerString();
+
+
+	// for gml namespace
+		void SetNamespace(S100GML_NameSpace ns);
+
+	private:
+		S100GML_NameSpace s100namespace;
 	};
 
 }

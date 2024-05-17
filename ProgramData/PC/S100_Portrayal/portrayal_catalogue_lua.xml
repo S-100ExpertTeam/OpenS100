@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-100" version="1.0">
+	<pixmaps/>
+	<colorProfiles>
+		<colorProfile id="837">
+			<description>
+				<name>Color Profile</name>
+				<description>Color Profile</description>
+				<language>en</language>
+			</description>
+			<fileName>colorProfile.xml </fileName>
+			<fileType>ColorProfile</fileType>
+			<fileFormat>XML</fileFormat>
+		</colorProfile>
+	</colorProfiles>
+	<symbols>
+		<symbol id="1">
+			<description>
+				<name>Small Circle</name>
+				<description>Small circle symbol for point drawing instruction.</description>
+				<language>en</language>
+			</description>
+			<fileName>USRPNT01.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+	</symbols>
+	<lineStyles>
+	</lineStyles>
+	<areaFills/>
+	<fonts/>
+	<viewingGroups>
+		<viewingGroup id="1">
+			<description>
+				<name>12210</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+	</viewingGroups>
+	<viewingGroupLayers/>
+	<displayModes>
+	</displayModes>
+	<displayPlane>
+		<displayPlane id="1">
+			<description>
+				<name>overRadar</name>
+				<description>overRadar</description>
+				<language>en</language>
+			</description>
+		</displayPlane>
+		<displayPlane id="2">
+			<description>
+				<name>underRadar</name>
+				<description>Content displayed underneath Radar image</description>
+				<language>en</language>
+			</description>
+		</displayPlane>
+	</displayPlane>
+	<context/>
+	<rules>
+    <ruleFile id="main">
+      <description>
+        <name>main</name>
+        <description>Top level rule</description>
+        <language>eng</language>
+      </description>
+      <fileName>main.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="Default">
+      <description>
+        <name>Default</name>
+        <description>Default portrayal rules</description>
+        <language>eng</language>
+      </description>
+      <fileName>Default.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="S100Scripting">
+      <description>
+        <name>S100Scripting</name>
+        <description>Scripting support</description>
+        <language>eng</language>
+      </description>
+      <fileName>S100Scripting.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="PortrayalAPI">
+      <description>
+        <name>PortrayalAPI</name>
+        <description>Portrayal API</description>
+        <language>eng</language>
+      </description>
+      <fileName>PortrayalAPI.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="PortrayalModel">
+      <description>
+        <name>PortrayalModel</name>
+        <description>Portrayal Model</description>
+        <language>eng</language>
+      </description>
+      <fileName>PortrayalModel.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+	</rules>
+</portrayalCatalog>
