@@ -140,10 +140,6 @@ COpenS100View::COpenS100View()
 	//S100::Permit* pm = new S100::Permit();
 	//pm->Open("../PERMIT.XML");
 	//delete pm;
-	
-
-
-
 }
 
 COpenS100View::~COpenS100View()
