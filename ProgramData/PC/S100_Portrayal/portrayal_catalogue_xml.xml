@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-130" version="1.0">
+	<pixmaps/>
+	<colorProfiles>
+		<colorProfile id="837">
+			<description>
+				<name>Color Profile</name>
+				<description>Color Profile</description>
+				<language>en</language>
+			</description>
+			<fileName>colorProfile.xml </fileName>
+			<fileType>ColorProfile</fileType>
+			<fileFormat>XML</fileFormat>
+		</colorProfile>
+	</colorProfiles>
+	<symbols>
+		<symbol id="1">
+			<description>
+				<name>Small Circle</name>
+				<description>Small circle symbol for point drawing instruction.</description>
+				<language>en</language>
+			</description>
+			<fileName>USRPNT01.svg</fileName>
+			<fileType>Symbol</fileType>
+			<fileFormat>SVG</fileFormat>
+		</symbol>
+	</symbols>
+	<lineStyles>
+	</lineStyles>
+	<areaFills/>
+	<fonts/>
+	<viewingGroups>
+		<viewingGroup id="1">
+			<description>
+				<name>12210</name>
+				<description/>
+				<language>en</language>
+			</description>
+		</viewingGroup>
+	</viewingGroups>
+	<viewingGroupLayers/>
+	<displayModes>
+	</displayModes>
+	<displayPlane>
+		<displayPlane id="1">
+			<description>
+				<name>overRadar</name>
+				<description>overRadar</description>
+				<language>en</language>
+			</description>
+		</displayPlane>
+		<displayPlane id="2">
+			<description>
+				<name>underRadar</name>
+				<description>Content displayed underneath Radar image</description>
+				<language>en</language>
+			</description>
+		</displayPlane>
+	</displayPlane>
+	<context/>
+	<rules>
+		<ruleFile id="1">
+			<description>
+				<name>main</name>
+				<description>main</description>
+			</description>
+			<fileName>main.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>TopLevelTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="2">
+			<description>
+				<name>attributeRules</name>
+				<description>attributeRules</description>
+			</description>
+			<fileName>attributeRules.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="3">
+			<description>
+				<name>simpleLineStyle</name>
+				<description>simpleLineStyle</description>
+			</description>
+			<fileName>simpleLineStyle.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="4">
+			<description>
+				<name>textStyle</name>
+				<description>textStyle</description>
+			</description>
+			<fileName>textStyle.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+		<ruleFile id="5">
+			<description>
+				<name>Default</name>
+				<description>Default</description>
+			</description>
+			<fileName>Default.xsl</fileName>
+			<fileType>Rule</fileType>
+			<fileFormat>XSLT</fileFormat>
+			<ruleType>SubTemplate</ruleType>
+		</ruleFile>
+	</rules>
+</portrayalCatalog>

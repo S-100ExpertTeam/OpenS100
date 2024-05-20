@@ -642,7 +642,9 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//import PC
 	auto pclist = DataSetManagerSupport::GetInstance().initPCList();
 	for (auto item : pclist)
+	{
 		cm->addPC(item);
+	}
 
 	return 0;
 }

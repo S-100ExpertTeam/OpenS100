@@ -145,7 +145,7 @@ void PCOutputSchemaManager::GenerateSENCInstruction(S100SpatialObject* s100so, P
 
 	auto displayInstructions = displayList->GetDisplayInstructions();
 
-	for (auto itor = displayInstructions.begin();
+ 	for (auto itor = displayInstructions.begin();
 		itor != displayInstructions.end();
 		itor++)
 	{
