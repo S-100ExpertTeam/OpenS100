@@ -30,6 +30,7 @@
 
 #include "../GISLibrary/IC_InteroperabilityCatalogue.h"
 //#include "../GISLibrary/ExchangeCatalogue.h"
+#include "../GISLibrary/TranslationPackageType.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -1910,4 +1911,8 @@ void COpenS100View::OnInitialUpdate()
 		theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());*/
 
 	theApp.m_pDockablePaneLayerManager.UpdateList();
+
+
+	TranslationPackageType* translationPackage = new TranslationPackageType;
+	translationPackage->LoadFromFile("..\\pizza_fc_de.xml");
 }
