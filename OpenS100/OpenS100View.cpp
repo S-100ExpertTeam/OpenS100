@@ -30,6 +30,7 @@
 
 #include "../GISLibrary/IC_InteroperabilityCatalogue.h"
 //#include "../GISLibrary/ExchangeCatalogue.h"
+#include "../GISLibrary/TranslationPackageType.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
@@ -1896,6 +1897,72 @@ void COpenS100View::SetPick(S100SpatialObject* enc, std::wstring featureID)
 	//}
 }
 
+
+std::wstring COpenS100View::utf8_to_wstring(const std::string& str) {
+#ifdef _WIN32
+	int size_needed = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), (int)str.size(), NULL, 0);
+	std::wstring wstrTo(size_needed, 0);
+	MultiByteToWideChar(CP_UTF8, 0, str.c_str(), (int)str.size(), &wstrTo[0], size_needed);
+	return wstrTo;
+#else
+	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+	return converter.from_bytes(str);
+#endif
+}
+
+std::string COpenS100View::wstring_to_utf8(const std::wstring& wstr) {
+#ifdef _WIN32
+	int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), (int)wstr.size(), NULL, 0, NULL, NULL);
+	std::string strTo(size_needed, 0);
+	WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), (int)wstr.size(), &strTo[0], size_needed, NULL, NULL);
+	return strTo;
+#else
+	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+	return converter.to_bytes(wstr);
+#endif
+}
+
+void COpenS100View::print_utf8(const std::string& str) {
+#ifdef _WIN32
+	// Windows console doesn't handle UTF-8 well by default, so we convert to wide string
+	std::wcout << utf8_to_wstring(str);
+#else
+	// On Unix-like systems, UTF-8 output is usually well supported
+	std::cout << str;
+#endif
+}
+
+void COpenS100View::debug_print_utf8(const std::string& str) {
+#ifdef _WIN32
+	// Windows console doesn't handle UTF-8 well by default, so we convert to wide string
+	OutputDebugStringW(utf8_to_wstring(str).c_str());
+#else
+	// On Unix-like systems, UTF-8 output is usually well supported
+	std::cerr << str;
+#endif
+}
+
+//std::wstring COpenS100View::utf8_to_wstring(const std::string& str) {
+//	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+//	return converter.from_bytes(str);
+//}
+//
+//std::string COpenS100View::wstring_to_utf8(const std::wstring& wstr) {
+//	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+//	return converter.to_bytes(wstr);
+//}
+//
+//void COpenS100View::print_utf8(const std::string& str) {
+//#ifdef _WIN32
+//	// Windows console doesn't handle UTF-8 well by default, so we convert to wide string
+//	std::wcout << utf8_to_wstring(str);
+//#else
+//	// On Unix-like systems, UTF-8 output is usually well supported
+//	std::cout << str;
+//#endif
+//}
+
+
 void COpenS100View::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
@@ -1908,4 +1975,31 @@ void COpenS100View::OnInitialUpdate()
 		theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());*/
 
 	theApp.m_pDockablePaneLayerManager.UpdateList();
+
+
+	TranslationPackageType* translationPackage = new TranslationPackageType;
+	if (translationPackage->LoadFromFile("..\\pizza_fc_de.xml"))
+	{
+		debug_print_utf8("Language: " + translationPackage->Language + "\n");
+		debug_print_utf8("Issue Date: " + translationPackage->IssueDate + "\n");
+		debug_print_utf8("Issue Time: " + translationPackage->IssueTime + "\n");
+		/*print_utf8("Responsible Party: " + translationPackage->ResponsibleParty + "\n");*/
+
+		for (const auto& sourceFile : translationPackage->SourceFiles) {
+			debug_print_utf8("Source File Identifier: " + sourceFile.Header.ResourceIdentifier + "\n");
+			for (const auto& id : sourceFile.Header.Identifications) {
+				debug_print_utf8("  Path: " + id.Path + ", Value: " + id.Value + "\n");
+			}
+			for (const auto& item : sourceFile.TranslationItems) {
+				debug_print_utf8("  Translation Item Path: " + item.Path + "\n");
+				debug_print_utf8("    Original: " + item.Original + "\n");
+				debug_print_utf8("    Status: " + item.ItemStatus.toString() + "\n");
+				debug_print_utf8("    Translation: " + item.Translation + "\n");
+			}
+		}
+	}
+	else {
+		debug_print_utf8("Failed to load language pack.\n");
+	}
+
 }
