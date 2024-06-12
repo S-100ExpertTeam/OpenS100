@@ -41,6 +41,12 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 		return;
 	}
 
+	if (SGeometry::viewPoints == nullptr)
+	{
+		SGeometry::sizeOfPoint = 10;
+		SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
+	}
+
 	auto geom = fr->GetGeometry();
 
 	double rotation = 0;
