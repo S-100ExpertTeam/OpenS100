@@ -15,24 +15,24 @@ SGeometry::SGeometry(const SGeometry& other)
 	: Geometry(other)
 {
 	sizeOfPoint = other.sizeOfPoint;
-
+	
 	if (sizeOfPoint > 0)
 	{
+		if (viewPoints)
+			delete[] viewPoints, viewPoints = nullptr;
+
 		viewPoints = new POINT[sizeOfPoint];
 		memset(viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
 		memcpy(viewPoints, other.viewPoints, sizeof(POINT) * sizeOfPoint);
-	}
-
-	for (const auto& iter : other.additionalInformation)
-	{
-		GF::InformationType* it = new GF::InformationType(*iter);
-		additionalInformation.push_back(it);
 	}
 }
 
 SGeometry::~SGeometry()
 {
+	if (viewPoints)
+		delete[] viewPoints, viewPoints = nullptr;
 
+	additionalInformation.clear();
 }
 
 SGeometry SGeometry::operator=(const SGeometry& other)
