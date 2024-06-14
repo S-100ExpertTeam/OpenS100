@@ -32,7 +32,7 @@ OpenS100 is released under the MPLv2 (Mozilla Public License version 2.0)
 * [Korea Hydrographic and Oceanographic Agency (KHOA)](https://www.khoa.go.kr/eng/)
 * [Korea Research Institute of Ships and Ocean (KRISO)](https://www.kriso.re.kr/eng/)
 * THE PROST Inc. (~ 2021)
-* BLUEMAP Inc. (2022 ~ )
+* BLUEMAP Inc. (2022 ~ )[https://bluemap.kr]
 
 # References
 * [Digital Incubator](https://digitalincubator.maritimeconnectivity.net/framework/)
