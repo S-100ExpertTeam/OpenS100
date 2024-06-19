@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "VisibilityCommands.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
     VisibilityCommands::~VisibilityCommands() {
         delete viewingGroup;
@@ -54,7 +54,7 @@ namespace DrawingInstruction
         this->hover = new Hover(hover);
     }
 
-    void VisibilityCommands::executeCommands() const
+    void VisibilityCommands::execute() const
     {
         if (viewingGroup) viewingGroup->execute();
         if (displayPlane) displayPlane->execute();

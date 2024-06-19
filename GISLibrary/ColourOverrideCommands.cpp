@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ColourOverrideCommands.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
 	ColourOverrideCommands::~ColourOverrideCommands()
 	{
@@ -42,7 +42,7 @@ namespace DrawingInstruction
 		}
 	}
 
-	void ColourOverrideCommands::executeCommands() const
+	void ColourOverrideCommands::execute() const
 	{
 		if (overrideColor) overrideColor->execute();
 		if (overrideAll) overrideAll->execute();

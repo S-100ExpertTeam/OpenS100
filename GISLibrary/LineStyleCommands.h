@@ -1,7 +1,7 @@
 #pragma once
 #include "StateCommand.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
     class LineStyle : public StateCommand {
     public:
@@ -62,7 +62,7 @@ namespace DrawingInstruction
 
 
         void parse(const std::string& key, std::string value);
-        void executeCommands() const;
+        void execute() const;
     private:
           //Line Style
         LineStyle* lineStyle = nullptr;

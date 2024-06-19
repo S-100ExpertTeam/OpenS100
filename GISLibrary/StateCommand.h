@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
     class StateCommand {
     public:

@@ -2,7 +2,7 @@
 #include "GeometryCommands.h"
 
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
 	GeometryCommands::~GeometryCommands()
 	{
@@ -119,7 +119,7 @@ namespace DrawingInstruction
 			//setClearGeometry();
 		}
 	}
-	void GeometryCommands::executeCommands() const
+	void GeometryCommands::execute() const
 	{
 		if (spatialReference) spatialReference->execute();
 		if (augmentedPoint) augmentedPoint->execute();

@@ -1,7 +1,7 @@
 #pragma once
 #include "StateCommand.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
 
     // NumericAnnotation Class
@@ -88,7 +88,7 @@ namespace DrawingInstruction
 
 
         void parse(const std::string& key, std::string value);
-        void executeCommands() const;
+        void execute() const;
 
     private:
         //Coverage commands

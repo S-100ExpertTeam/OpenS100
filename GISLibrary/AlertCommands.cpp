@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "AlertCommands.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
 	AlertCommands::~AlertCommands()
 	{
@@ -22,7 +22,7 @@ namespace DrawingInstruction
 		}
 	}
 
-	void AlertCommands::executeCommands() const
+	void AlertCommands::execute() const
 	{
 		if (alertReference) alertReference->execute();
 	}

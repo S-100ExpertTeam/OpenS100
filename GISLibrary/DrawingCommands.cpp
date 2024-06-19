@@ -2,7 +2,7 @@
 #include "DrawingCommands.h"
 
 
-namespace DrawingCommands
+namespace DrawingInstructions
 {
     // PointInstruction class implementation
     PointInstruction::PointInstruction(const std::string& symbol) : symbol(symbol) {}
@@ -211,7 +211,7 @@ namespace DrawingCommands
 			nullInstruction->parse(key);
     }
 
-    void DrawingCommands::executeCommands() const {
+    void DrawingCommands::execute() const {
         if (pointInstruction) pointInstruction->execute();
         if (lineInstruction) lineInstruction->execute();
         if (lineInstructionUnsuppressed) lineInstructionUnsuppressed->execute();

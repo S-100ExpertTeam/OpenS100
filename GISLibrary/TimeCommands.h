@@ -1,6 +1,6 @@
 #pragma once
 #include "StateCommand.h"
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
     class Date : public StateCommand {
     public:
@@ -69,11 +69,11 @@ namespace DrawingInstruction
 		void clearTime();
 
         void parse(const std::string& key, std::string value);
-		void executeCommands() const;
+		void execute() const;
 
     private:
         //Time Commands
-        DrawingInstruction::Date* date = nullptr;
+        DrawingInstructions::Date* date = nullptr;
 		Time* time = nullptr;
 		DateTime* dateTime = nullptr;
 		TimeValid* timeValid = nullptr;

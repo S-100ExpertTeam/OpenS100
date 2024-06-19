@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TextStyleCommands.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
     TextStyleCommands::~TextStyleCommands()
     {
@@ -167,7 +167,7 @@ namespace DrawingInstruction
 
 	}
 
-	void TextStyleCommands::executeCommands() const
+	void TextStyleCommands::execute() const
 	{
         if (fontColor) fontColor->execute();
 		if (fontSize) fontSize->execute();

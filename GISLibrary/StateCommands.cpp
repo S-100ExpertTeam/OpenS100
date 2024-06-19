@@ -4,7 +4,7 @@
 
 
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
     // StateCommands class implementation
     StateCommands::~StateCommands() {
@@ -69,15 +69,15 @@ namespace DrawingInstruction
         }
     }
 
-    void StateCommands::executeCommands() {
-		if (visibilityCommands)visibilityCommands->executeCommands();
-		if (transformCommands)transformCommands->executeCommands();
-        if (lineStyleCommands)lineStyleCommands->executeCommands();
-        if (textStyleCommands)textStyleCommands->executeCommands();
-        if (colourOverrideCommands)colourOverrideCommands->executeCommands();
-        if (geometryCommands)geometryCommands->executeCommands();
-        if (coverageCommands)coverageCommands->executeCommands();
-        if (timeCommands)timeCommands->executeCommands();
-        if (alertCommands)alertCommands->executeCommands();
+    void StateCommands::execute() {
+		if (visibilityCommands)visibilityCommands->execute();
+		if (transformCommands)transformCommands->execute();
+        if (lineStyleCommands)lineStyleCommands->execute();
+        if (textStyleCommands)textStyleCommands->execute();
+        if (colourOverrideCommands)colourOverrideCommands->execute();
+        if (geometryCommands)geometryCommands->execute();
+        if (coverageCommands)coverageCommands->execute();
+        if (timeCommands)timeCommands->execute();
+        if (alertCommands)alertCommands->execute();
     }
 }

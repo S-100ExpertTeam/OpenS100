@@ -2,11 +2,26 @@
 #include <string>
 #include <memory>
 
-class DrawingInstruction
+
+namespace DrawingInstructions
 {
-public:
-    virtual void execute() const = 0;
-    static std::shared_ptr<DrawingInstruction> parse(const std::string& input);
-};
+	class DrawingInstruction
+	{
+	public:
+		DrawingInstruction() = default;
+		DrawingInstruction(const DrawingInstruction&) = delete;
+		DrawingInstruction& operator=(const DrawingInstruction&) = delete;
+		virtual ~DrawingInstruction();
+
+		void execute();
+		void parse(const std::string& key ,std::string value);
+
+	private:
+		DrawingInstructions::DrawingCommands* drawingCommand = nullptr;
+		DrawingInstructions::StateCommands* stateCommands = nullptr;
+
+	};
+
+}
 
 

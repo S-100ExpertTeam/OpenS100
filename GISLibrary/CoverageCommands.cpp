@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CoverageCommands.h"
 
-namespace DrawingInstruction {
+namespace DrawingInstructions {
 	CoverageCommands::~CoverageCommands()
 	{
 		delete numericAnnotation;
@@ -60,7 +60,7 @@ namespace DrawingInstruction {
 		}
 	}
 
-	void CoverageCommands::executeCommands() const
+	void CoverageCommands::execute() const
 	{
 		if (numericAnnotation) numericAnnotation->execute();
 		if (symbolAnnotation) symbolAnnotation->execute();

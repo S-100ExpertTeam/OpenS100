@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "LineStyleCommands.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
 	LineStyleCommands::~LineStyleCommands()
 	{
@@ -47,7 +47,7 @@ namespace DrawingInstruction
 		}
 	}
 
-	void LineStyleCommands::executeCommands() const
+	void LineStyleCommands::execute() const
 	{
 		if (lineStyle) lineStyle->execute();
 		if (lineSymbol) lineSymbol->execute();

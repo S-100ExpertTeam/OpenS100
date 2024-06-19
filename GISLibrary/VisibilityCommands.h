@@ -1,7 +1,7 @@
 #pragma once
 #include "StateCommand.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
     class ViewingGroup : public StateCommand {
     public:
@@ -107,13 +107,13 @@ namespace DrawingInstruction
 
 
         void parse(const std::string& key, std::string value);
-		void executeCommands() const;
+		void execute() const;
         
 
     private:
         //Visibility commands
-        DrawingInstruction::ViewingGroup* viewingGroup = nullptr;
-        DrawingInstruction::DisplayPlane* displayPlane = nullptr;
+        DrawingInstructions::ViewingGroup* viewingGroup = nullptr;
+        DrawingInstructions::DisplayPlane* displayPlane = nullptr;
         DrawingPriority* drawingPriority = nullptr;
         ScaleMinimum* scaleMinimum = nullptr;
         ScaleMaximum* scaleMaximum = nullptr;

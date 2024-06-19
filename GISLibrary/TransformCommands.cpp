@@ -4,7 +4,7 @@
 
 
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
 	TransformCommands::~TransformCommands() {
 		delete localOffset;
@@ -45,7 +45,7 @@ namespace DrawingInstruction
 		this->scaleFactor = new ScaleFactor(scaleFactor);
 	}
 
-	void TransformCommands::executeCommands() const
+	void TransformCommands::execute() const
 	{
 		if (localOffset) localOffset->execute();
 		if (linePlacement) linePlacement->execute();

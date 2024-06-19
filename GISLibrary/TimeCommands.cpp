@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "TimeCommands.h"
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
 	TimeCommands::~TimeCommands()
 	{
@@ -69,7 +69,7 @@ namespace DrawingInstruction
 		}
 	}
 
-	void TimeCommands::executeCommands() const
+	void TimeCommands::execute() const
 	{
 		if (date) date->execute();
 		if (time) time->execute();

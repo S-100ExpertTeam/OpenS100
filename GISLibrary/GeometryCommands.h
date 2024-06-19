@@ -1,7 +1,7 @@
 #pragma once
 #include "StateCommand.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
 
 
@@ -151,7 +151,7 @@ namespace DrawingInstruction
         void setClearGeometry();
 
         void parse(const std::string& key, std::string value);
-		void executeCommands() const;
+		void execute() const;
 	private:
 		//Geometry Commands
 		SpatialReference* spatialReference = nullptr;

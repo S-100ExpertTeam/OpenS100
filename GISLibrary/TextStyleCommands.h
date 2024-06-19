@@ -1,7 +1,7 @@
 #pragma once
 #include "StateCommand.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
     class FontColor : public StateCommand {
     public:
@@ -174,7 +174,7 @@ namespace DrawingInstruction
         void setTextVerticalOffset(double verticalOffset);
 
         void parse(const std::string& key, std::string value);
-        void executeCommands() const;
+        void execute() const;
 
     private:
         FontColor* fontColor = nullptr;

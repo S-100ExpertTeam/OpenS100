@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-namespace DrawingCommands
+namespace DrawingInstructions
 {
     // Base class for all drawing commands
     class DrawingCommand {
@@ -144,7 +144,7 @@ namespace DrawingCommands
         void setNullInstruction();
 
         void parse(const std::string& key, std::string value);
-        void executeCommands() const;
+        void execute() const;
 
     private:
         PointInstruction* pointInstruction = nullptr;

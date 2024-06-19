@@ -11,7 +11,7 @@
 #include "TimeCommands.h"
 #include "AlertCommands.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
   
 
@@ -21,7 +21,7 @@ namespace DrawingInstruction
         ~StateCommands();
 
         void parse(const std::string& key, std::string value);
-        void executeCommands();
+        void execute();
 
     private:
         VisibilityCommands* visibilityCommands = nullptr;

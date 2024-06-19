@@ -1,7 +1,7 @@
 #pragma once
 #include "StateCommand.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
 
 
@@ -90,7 +90,7 @@ public:
 
 
     void parse(const std::string& key, std::string value);
-    void executeCommands() const;
+    void execute() const;
 
 
 private:

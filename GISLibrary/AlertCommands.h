@@ -1,7 +1,7 @@
 #pragma once
 #include "StateCommand.h"
 
-namespace DrawingInstruction
+namespace DrawingInstructions
 {
 	class AlertReference : public StateCommand {
 	public:
@@ -27,7 +27,7 @@ namespace DrawingInstruction
 		void setAlertReference(const std::string& alertReference, const std::string& plan, const std::string& monitor);
 
 		void parse(const std::string& key, std::string value);
-		void executeCommands() const;
+		void execute() const;
 	private:
 		//Alert Commands
 		AlertReference* alertReference = nullptr;
