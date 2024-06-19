@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "DrawingInstruction.h"
-#include "DrawingCommands.h"
-#include "StateCommands.h"
+
 
 
 

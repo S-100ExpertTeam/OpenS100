@@ -2,6 +2,9 @@
 #include <string>
 #include <memory>
 
+#include "DrawingCommands.h"
+#include "StateCommands.h"
+
 
 namespace DrawingInstructions
 {
