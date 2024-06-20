@@ -10,6 +10,6 @@ public:
 
 public:
 	indeterminatePosition *indeterminatePosition = nullptr;
-
+	time_t dateValue = 0;
 };
 
