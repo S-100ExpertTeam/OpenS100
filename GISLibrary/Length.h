@@ -1,5 +1,8 @@
 #pragma once
-class Length
+
+#include "Measure.h"
+
+class Length : public Measure
 {
 public:
 	Length();
