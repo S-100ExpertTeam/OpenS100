@@ -183,7 +183,7 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 {
 	si->displayPlane = tp->GetDisplayPlane().compare(L"UNDERRADAR") == 0 ? 0 : 1;
 	si->drawingPriority = _wtoi(tp->GetDrawingProiority().c_str());
-	si->viewingGroup = _wtoi(tp->GetViewingGroup().c_str());
+	si->viewingGroup = _wtoi(tp->GetViewingGroup(0).c_str());
 	si->featureReference = pugi::as_utf8(tp->GetFeatureReference());
 	si->scaleMinimum = _wtoi(tp->GetScaleMinimum().c_str());
 	si->scaleMaximum = _wtoi(tp->GetScaleMaximum().c_str());

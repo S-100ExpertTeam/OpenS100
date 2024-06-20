@@ -11,11 +11,11 @@ namespace S100 {
 
             if (!strcmp(instructionName, "cit:number"))
             {
-                Number = CharacterString(instruction);
+                Number = GetCharacterString(instruction);
             }
             else if (!strcmp(instructionName, "cit::numbertype"))
             {
-                Numbertype = CharacterString(instruction);
+                Numbertype = GetCharacterString(instruction);
             }
             else
             {

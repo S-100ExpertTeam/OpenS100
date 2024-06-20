@@ -3,7 +3,11 @@
 #include "S100_SpatialReference.h"
 #include "S100_LineStyle.h"
 
+#include "../FeatureCatalog/PrimitiveTypes.h"
+
 #include <string>
+#include <optional>
+#include <vector>
 
 class PCOutputSchemaManager;
 class PortrayalCatalogue;
@@ -32,12 +36,18 @@ private:
 	int type;
 
 	std::wstring featureReference;
+	std::optional<S100::CharacterString> id;
+	std::optional<S100::CharacterString> parentId;
+	std::optional<S100::Boolean> hover;
+
 	std::list<S100_SpatialReference*> spatialReference;
-	std::wstring viewingGroup;
 	std::wstring displayPlane;
 	std::wstring drawingPriority;
 	std::wstring scaleMinimum;
 	std::wstring scaleMaximum;
+
+protected:
+	std::vector<std::wstring> viewingGroup;
 
 public:
 	void GetContents(pugi::xml_node node);
@@ -56,7 +66,8 @@ public:
 	const std::wstring& GetFeatureReference();
 	S100_SpatialReference* GetSpatialReference(int index);
 	std::list<S100_SpatialReference*> GetSpatialReference();
-	std::wstring GetViewingGroup();
+	std::wstring GetViewingGroup(int index);
+	int getViewingGroupCount();
 	std::wstring GetDisplayPlane();
 	std::wstring GetDrawingProiority();
 	std::wstring GetScaleMinimum();

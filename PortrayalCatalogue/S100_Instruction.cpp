@@ -41,7 +41,7 @@ void S100_Instruction::SetSpatialReference(std::list<S100_SpatialReference*> val
 
 void S100_Instruction::SetViewingGroup(std::wstring& value)
 {
-	viewingGroup = value;
+	viewingGroup.push_back(value);
 }
 
 void S100_Instruction::SetDisplayPlane(std::wstring& value)
@@ -81,10 +81,22 @@ std::list<S100_SpatialReference*> S100_Instruction::GetSpatialReference()
 {
 	return spatialReference;
 }
-std::wstring S100_Instruction::GetViewingGroup() 
+
+std::wstring S100_Instruction::GetViewingGroup(int index) 
 {
-	return viewingGroup;
+	if (index >= 0 && index < viewingGroup.size())
+	{
+		return viewingGroup[index];
+	}
+
+	return L"";
 }
+
+int S100_Instruction::getViewingGroupCount()
+{
+	return viewingGroup.size();
+}
+
 std::wstring S100_Instruction::GetDisplayPlane()
 {
 	return displayPlane;
