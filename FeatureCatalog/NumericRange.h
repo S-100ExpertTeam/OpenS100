@@ -4,6 +4,8 @@
 
 #include <pugixml.hpp>
 
+#include <optional>
+
 class NumericRange
 {
 public:
@@ -11,18 +13,20 @@ public:
 	virtual ~NumericRange();
 
 private:
-	double lowerBound = 0.;
-	double upperBound = 0.;
-	IntervalType intervalType;
+	std::optional<double> lowerBound;
+	std::optional<double> upperBound;
+	IntervalType intervalType = IntervalType::none;
 
 public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetLowerBound(double value);
 	const double GetLowerBound();
+	bool hasLowerBound();
 
 	void SetUpperBound(double value);
 	const double GetUpperBound();
+	bool hasUpperBound();
 
 	void SetIntervalType(IntervalType value);
 	IntervalType& GetIntervalType();
