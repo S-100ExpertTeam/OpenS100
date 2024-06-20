@@ -103,8 +103,6 @@ void S102H5::Draw(HDC& hDC, Scaler* scaler, double offset)
 		long symin = 0;
 		long symax = 0;
 
-		//rt->FillRectangle(rect, brush);
-
 		auto mbr = GetLayer()->GetMBR();
 		auto map = scaler->GetMap();
 
@@ -112,15 +110,6 @@ void S102H5::Draw(HDC& hDC, Scaler* scaler, double offset)
 		scaler->WorldToDevice(mbr.xmax, mbr.ymax, &sxmax, &symin);
 
 		rt->DrawBitmap(pBitmap, D2D1::RectF((float)sxmin, (float)symin, (float)sxmax, (float)symax), 1, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
-
-		if (!std::isnan(map.xmin)) {
-			MBR clippedMBR;
-			if (MBR::IntersectMBR(mbr, map, clippedMBR)) {
-				clippedMBR.xmin = 0;
-			}
-		}
-
-		//rt->FillRectangle(rect, gisLib->D2.pBrush);
 
 		hr = rt->EndDraw();
 
@@ -136,11 +125,6 @@ S102_FC_BathymetryCoverage* S102H5::GetBathymetryCoverage()
 
 void S102H5::CreateBitmap()
 {
-	/*
-	if (!s102Color.isSet()) {
-		s102Color.setColor();
-	}
-	*/
 	auto featureContainer = GetBathymetryCoverage();
 	auto featureInstance = featureContainer->GetBathymetryCoverage();
 	auto valuesGroup = featureInstance->GetBathymetryCoverage();
@@ -180,6 +164,7 @@ void S102H5::CreateBitmap()
 					rt->SetTransform(D2D1::Matrix3x2F::Translation((float)xIndex, (float)yIndex));
 
 					brush->SetColor(getColor(value));
+					brush->SetOpacity(1);
 
 					rt->FillRectangle(rect, brush);
 				}

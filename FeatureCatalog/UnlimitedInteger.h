@@ -1,5 +1,4 @@
 #pragma once
-#include "XML_Item.h"
 
 #include <pugixml.hpp>
 
