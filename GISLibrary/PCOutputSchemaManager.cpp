@@ -185,8 +185,8 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 	si->drawingPriority = tp->GetDrawingProiority();
 	si->viewingGroup = _wtoi(tp->GetViewingGroup(0).c_str());
 	si->featureReference = pugi::as_utf8(tp->GetFeatureReference());
-	si->scaleMinimum = _wtoi(tp->GetScaleMinimum().c_str());
-	si->scaleMaximum = _wtoi(tp->GetScaleMaximum().c_str());
+	si->scaleMinimum = tp->GetScaleMinimum();
+	si->scaleMaximum = tp->GetScaleMaximum();
 
 	auto spatialReference = tp->GetSpatialReference();
 	for (auto itor = spatialReference.begin(); itor != spatialReference.end(); itor++)
