@@ -196,7 +196,7 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 
 		ssr->SetRCNM(sr->GetType());
 		ssr->reference = _wtoi(sr->GetReference().c_str());
-		ssr->bForward = sr->GetForward().compare(L"true") == 0 ? true : false;
+		ssr->bForward = sr->isForward();
 
 		si->spatialReference.push_back(ssr);
 	}
