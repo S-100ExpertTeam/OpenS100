@@ -49,10 +49,16 @@ void S100_Instruction::SetDisplayPlane(std::wstring& value)
 	displayPlane = value;
 }
 
-void S100_Instruction::SetDrawingProiority(std::wstring& value)
+void S100_Instruction::SetDrawingPriority(std::wstring& value)
+{
+	drawingPriority = std::stoi(value);
+}
+
+void S100_Instruction::SetDrawingPriority(int value)
 {
 	drawingPriority = value;
 }
+
 void S100_Instruction::SetScaleMinimum(std::wstring& value)
 {
 	scaleMinimum = value;
@@ -101,10 +107,12 @@ std::wstring S100_Instruction::GetDisplayPlane()
 {
 	return displayPlane;
 }
-std::wstring S100_Instruction::GetDrawingProiority()
+
+int S100_Instruction::GetDrawingProiority()
 {
 	return drawingPriority;
 }
+
 std::wstring S100_Instruction::GetScaleMinimum()
 {
 	return scaleMinimum;

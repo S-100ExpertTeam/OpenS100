@@ -355,7 +355,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
 					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-					in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
+					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
 					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
 					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
@@ -533,7 +533,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
 					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-					in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
+					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
 					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
 					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
@@ -602,7 +602,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
 						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-						in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
+						in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
 						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
 						in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
@@ -628,7 +628,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
 						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-						in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
+						in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
 						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
 						in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
@@ -667,7 +667,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
 						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-						in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
+						in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
 						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
 						in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
@@ -716,7 +716,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
 					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-					in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
+					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
 					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
 					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
@@ -797,7 +797,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
 					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-					in->SetDrawingProiority(LUA_GetPriority(v_DrawingPriority));
+					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
 					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
 					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
 					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));

@@ -42,7 +42,7 @@ private:
 
 	std::list<S100_SpatialReference*> spatialReference;
 	std::wstring displayPlane;
-	std::wstring drawingPriority;
+	S100::Integer drawingPriority;
 	std::wstring scaleMinimum;
 	std::wstring scaleMaximum;
 
@@ -58,7 +58,8 @@ public:
 	void SetSpatialReference(std::list<S100_SpatialReference*> value);
 	void SetViewingGroup(std::wstring& value);
 	void SetDisplayPlane(std::wstring& value);
-	void SetDrawingProiority(std::wstring& value);
+	void SetDrawingPriority(std::wstring& value);
+	void SetDrawingPriority(int value);
 	void SetScaleMinimum(std::wstring& value);
 	void SetScaleMaximum(std::wstring& value);
 
@@ -69,7 +70,7 @@ public:
 	std::wstring GetViewingGroup(int index);
 	int getViewingGroupCount();
 	std::wstring GetDisplayPlane();
-	std::wstring GetDrawingProiority();
+	int GetDrawingProiority();
 	std::wstring GetScaleMinimum();
 	std::wstring GetScaleMaximum();
 };
