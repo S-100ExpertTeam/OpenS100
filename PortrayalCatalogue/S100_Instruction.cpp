@@ -115,6 +115,11 @@ void S100_Instruction::SetScaleMaximum(int value)
 	scaleMaximum = value;
 }
 
+void S100_Instruction::setAlertReference(S100_AlertReference value)
+{
+	alertReference = value;
+}
+
 int S100_Instruction::GetType() 
 {
 	return type;
@@ -208,4 +213,19 @@ int S100_Instruction::GetScaleMaximum()
 	}
 
 	return 0;
+}
+
+bool S100_Instruction::hasAlertReference()
+{
+	return alertReference.has_value();
+}
+
+S100_AlertReference S100_Instruction::getAlertReference()
+{
+	if (alertReference.has_value())
+	{
+		return alertReference.value();
+	}
+
+	return S100_AlertReference();
 }

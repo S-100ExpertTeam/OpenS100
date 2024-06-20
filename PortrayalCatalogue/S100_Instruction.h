@@ -2,6 +2,7 @@
 
 #include "S100_SpatialReference.h"
 #include "S100_LineStyle.h"
+#include "S100_AlertReference.h"
 
 #include "../FeatureCatalog/PrimitiveTypes.h"
 
@@ -45,6 +46,7 @@ protected:
 	S100::Integer drawingPriority = 0;
 	std::optional<S100::Integer> scaleMinimum = 0;
 	std::optional<S100::Integer> scaleMaximum = 0;
+	std::optional<S100_AlertReference> alertReference;
 
 
 public:
@@ -67,6 +69,7 @@ public:
 	void SetScaleMinimum(int value);
 	void SetScaleMaximum(std::wstring& value);
 	void SetScaleMaximum(int value);
+	void setAlertReference(S100_AlertReference value);
 
 	int GetType();
 	const std::wstring& GetFeatureReference();
@@ -81,4 +84,6 @@ public:
 	int GetDrawingProiority();
 	int GetScaleMinimum();
 	int GetScaleMaximum();
+	bool hasAlertReference();
+	S100_AlertReference getAlertReference();
 };

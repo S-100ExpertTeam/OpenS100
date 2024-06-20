@@ -488,28 +488,30 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				}
 				else if (tag.compare("AlertReference") == 0)
 				{
-					v_AlertReference = value;
+					// !Don't parsing AlertReference util new model of drawingCommands is completed... 
+					
+					//v_AlertReference = value;
 
-					S100_AlertReference* in = new S100_AlertReference();
-					pcm->displayList->AddAlertInstruction((S100_Instruction*)in);
+					//S100_AlertReference* in = new S100_AlertReference();
+					//pcm->displayList->AddAlertInstruction((S100_Instruction*)in);
 
-					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+					//in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
 
-					std::vector<std::string> v_splited = Split(v_AlertReference, ",");
-					if (v_splited.size() > 0)
-					{
-						in->alertType = std::wstring(v_splited[0].begin(), v_splited[0].end());
-					}
-					if (v_splited.size() > 1)
-					{
-						in->plan = std::wstring(v_splited[1].begin(), v_splited[1].end());
-					}
-					if (v_splited.size() > 2)
-					{
-						in->monitor = std::wstring(v_splited[2].begin(), v_splited[2].end());
-					}
+					//std::vector<std::string> v_splited = Split(v_AlertReference, ",");
+					//if (v_splited.size() > 0)
+					//{
+					//	in->alertType = std::wstring(v_splited[0].begin(), v_splited[0].end());
+					//}
+					//if (v_splited.size() > 1)
+					//{
+					//	in->plan = std::wstring(v_splited[1].begin(), v_splited[1].end());
+					//}
+					//if (v_splited.size() > 2)
+					//{
+					//	in->monitor = std::wstring(v_splited[2].begin(), v_splited[2].end());
+					//}
 
-					v_AlertReference = "";
+					//v_AlertReference = "";
 				}
 				else
 				{
