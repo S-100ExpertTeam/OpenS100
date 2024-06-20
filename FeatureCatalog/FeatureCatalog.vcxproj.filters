@@ -224,6 +224,9 @@
     <ClCompile Include="AttributeVisibility.cpp">
       <Filter>S100FC</Filter>
     </ClCompile>
+    <ClCompile Include="S100_TM_Instant.cpp">
+      <Filter>S100Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -426,6 +429,12 @@
     </ClInclude>
     <ClInclude Include="AttributeVisibility.h">
       <Filter>S100FC</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimitiveTypes.h">
+      <Filter>S100Base</Filter>
+    </ClInclude>
+    <ClInclude Include="S100_TM_Instant.h">
+      <Filter>S100Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

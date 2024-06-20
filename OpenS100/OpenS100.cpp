@@ -14,6 +14,8 @@
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
+#include "../FeatureCatalog/S100_TM_Instant.h"
+
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
 #include <crtdbg.h>
@@ -75,8 +77,6 @@ COpenS100App theApp;
 
 BOOL COpenS100App::InitInstance()
 {
-
-
 	GdiplusStartupInput GdiplusStartupInput;
 	if (::GdiplusStartup(&gdiplusToken, &GdiplusStartupInput, NULL) != Ok)
 	{
