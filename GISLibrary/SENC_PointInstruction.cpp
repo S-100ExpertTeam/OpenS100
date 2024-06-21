@@ -240,6 +240,13 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 			auto c = (*i);
 			if (!c->GetMasking())
 			{
+				if (c->GetNumPoints() > 0)
+				{
+					if (SGeometry::viewPoints)
+						delete[] SGeometry::viewPoints, SGeometry::viewPoints = nullptr;
+					SGeometry::viewPoints = new CPoint[c->GetNumPoints()];
+				}
+
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{
 					if (scaler->GetMap().PtInMBR(c->m_pPoints[index].x, c->m_pPoints[index].y))
@@ -308,6 +315,13 @@ void SENC_PointInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_
 	else if (geom->GetType() == SGeometryType::Curve)
 	{
 		SCurve* c = (SCurve*)geom;
+
+		if (c->GetNumPoints() > 0)
+		{
+			if (SGeometry::viewPoints)
+				delete[] SGeometry::viewPoints, SGeometry::viewPoints = nullptr;
+			SGeometry::viewPoints = new CPoint[c->GetNumPoints()];
+		}
 
 		for (auto index = 0; index < c->GetNumPoints(); index++)
 		{
@@ -484,6 +498,13 @@ void SENC_PointInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2
 			
 			if (!c->GetMasking())
 			{
+				if (c->GetNumPoints() > 0)
+				{
+					if (SGeometry::viewPoints)
+						delete[] SGeometry::viewPoints, SGeometry::viewPoints = nullptr;
+					SGeometry::viewPoints = new CPoint[c->GetNumPoints()];
+				}
+
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{
 					scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,

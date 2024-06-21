@@ -11,17 +11,11 @@ void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, S
 {
 	std::vector<POINT> m_pvPoints;
 
-	if (_surface->getNumPoint() > SGeometry::sizeOfPoint)
+	if (_surface->getNumPoint() > 0)
 	{
-		delete[] SGeometry::viewPoints;
-		SGeometry::viewPoints = nullptr;
-		SGeometry::sizeOfPoint = (int)(_surface->getNumPoint() * 1.5);
-		SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
-	}
-	else if (SGeometry::viewPoints == nullptr)
-	{
-		SGeometry::sizeOfPoint = 10;
-		SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
+		if (SGeometry::viewPoints)
+			delete[] SGeometry::viewPoints, SGeometry::viewPoints = nullptr;
+		SGeometry::viewPoints = new CPoint[_surface->getNumPoint()];
 	}
 
 	for (int count = 0; count < _surface->getNumPoint(); count++)
@@ -262,7 +256,7 @@ ClipperLib::Paths SCommonFuction::ClipSurface(SSurface* _surface, SSurface* _vie
 	else 															
 	{																
 		part1PointCount = _viewPort->getNumPoint();					
-	}																
+	}
 
 	for (int i = 0; i < part1PointCount; i++)
 	{

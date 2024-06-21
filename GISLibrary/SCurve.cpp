@@ -48,7 +48,7 @@ SCurve::~SCurve()
 		centerPoint = nullptr;
 	}
 
-	SafeRelease(&pGeometry);
+	SafeRelease(&pGeometry), pGeometry = nullptr;
 }
 
 SCurve SCurve::operator=(const SCurve& other)
@@ -66,7 +66,7 @@ SCurve SCurve::operator=(const SCurve& other)
 	}
 
 	if (pGeometry)
-		SafeRelease(&pGeometry);
+		SafeRelease(&pGeometry), pGeometry = nullptr;
 
 	SAbstractCurve::operator=(other);
 
@@ -133,7 +133,7 @@ void SCurve::CreateD2Geometry(ID2D1Factory1* factory)
 {
 	if (pGeometry)
 	{
-		SafeRelease(&pGeometry);
+		SafeRelease(&pGeometry), pGeometry = nullptr;
 	}
 
 	if (m_numPoints > 1)
@@ -145,13 +145,14 @@ void SCurve::CreateD2Geometry(ID2D1Factory1* factory)
 			points[i].y = -m_pPoints[i].y;
 		}
 
-		factory->CreatePathGeometry(&pGeometry);
+		HRESULT hr = S_OK;
+		hr = factory->CreatePathGeometry(&pGeometry);
 		ID2D1GeometrySink *pSink = nullptr;
-		pGeometry->Open(&pSink);
+		hr = pGeometry->Open(&pSink);
 		pSink->BeginFigure(points[0], D2D1_FIGURE_BEGIN_HOLLOW);
 		pSink->AddLines(points + 1, m_numPoints - 1);
 		pSink->EndFigure(D2D1_FIGURE_END_OPEN);
-		pSink->Close();
+		hr = pSink->Close();
 		SafeRelease(&pSink);
 
 		delete[] points;
@@ -268,7 +269,7 @@ int SCurve::WkbSize()
 
 void SCurve::Init(int size)
 {
-	SafeRelease(&pGeometry);
+	SafeRelease(&pGeometry), pGeometry = nullptr;
 
 	SetID(0);
 
