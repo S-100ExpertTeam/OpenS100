@@ -21,7 +21,7 @@ Record::Record(const Record& other)
 
 Record::~Record(void)
 {
-
+	directory.clear();
 }
 
 Record Record::operator=(const Record& other)

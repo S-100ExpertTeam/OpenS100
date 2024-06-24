@@ -3,8 +3,8 @@
 
 
 int SGeometry::sizeOfPoint = 10;
-// It also has a CPoint arrangement to minimize memory allocation and recovery.
-POINT* SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
+//// It also has a CPoint arrangement to minimize memory allocation and recovery.
+POINT* SGeometry::viewPoints = nullptr;// new CPoint[SGeometry::sizeOfPoint];
 
 SGeometry::SGeometry()
 {
@@ -14,35 +14,20 @@ SGeometry::SGeometry()
 SGeometry::SGeometry(const SGeometry& other)
 	: Geometry(other)
 {
-	sizeOfPoint = other.sizeOfPoint;
-
-	if (sizeOfPoint > 0)
-	{
-		viewPoints = new POINT[sizeOfPoint];
-		memset(viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
-		memcpy(viewPoints, other.viewPoints, sizeof(POINT) * sizeOfPoint);
-	}
-
-	for (const auto& iter : other.additionalInformation)
-	{
-		GF::InformationType* it = new GF::InformationType(*iter);
-		additionalInformation.push_back(it);
+	int cnt = other.GetInformationTypeCount();
+	for (int i = 0; i < cnt; i++) {
+		auto item = new GF::InformationType(*other.GetInformationType(i));
+		AddInformationType(item);
 	}
 }
 
 SGeometry::~SGeometry()
 {
-
+	additionalInformation.clear();
 }
 
 SGeometry SGeometry::operator=(const SGeometry& other)
 {
-	if (viewPoints)
-	{
-		delete[] viewPoints;
-		viewPoints = nullptr;
-	}
-
 	for (auto& iter : additionalInformation)
 	{
 		if (iter)
@@ -54,15 +39,6 @@ SGeometry SGeometry::operator=(const SGeometry& other)
 	additionalInformation.clear();
 
 	Geometry::operator=(other);
-
-	sizeOfPoint = other.sizeOfPoint;
-
-	if (sizeOfPoint > 0)
-	{
-		viewPoints = new POINT[sizeOfPoint];
-		memset(viewPoints, 0x00, sizeof(POINT) * sizeOfPoint);
-		memcpy(viewPoints, other.viewPoints, sizeof(POINT) * sizeOfPoint);
-	}
 
 	for (const auto& iter : other.additionalInformation)
 	{

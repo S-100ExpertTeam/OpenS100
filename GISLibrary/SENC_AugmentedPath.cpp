@@ -62,6 +62,10 @@ void SENC_AugmentedPath::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1*
 		return;
 	}
 
+	if (SGeometry::viewPoints)
+		delete[] SGeometry::viewPoints, SGeometry::viewPoints = nullptr;
+	SGeometry::viewPoints = new CPoint[1];
+
 	if (geom->GetType() == SGeometryType::Point)
 	{
 		SPoint* p = (SPoint*)geom;

@@ -69,6 +69,10 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 
 	if (geom->GetType() == SGeometryType::Point)
 	{
+		if (SGeometry::viewPoints)
+			delete[] SGeometry::viewPoints, SGeometry::viewPoints = nullptr;
+		SGeometry::viewPoints = new CPoint[1];
+
 		auto p = (SPoint*)geom;
 
 		scaler->WorldToDevice(
@@ -181,35 +185,38 @@ void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* 
 					}
 				}
 				
-				brush->SetColor(ls->pen_color);
-
-				if (ls->dashes.size() > 0 || ls->symbols.size() > 0)
+				if (pGeometry)
 				{
-					float dashes[] = { (ls->dashes.front()->length + 0.01) / (0.32 * PEN_WIDTH), (ls->intervalLength - ls->dashes.front()->length + 0.01) / (0.32 * PEN_WIDTH) };
-					ID2D1StrokeStyle1* dash = nullptr;
-					factory->CreateStrokeStyle(
-						D2D1::StrokeStyleProperties1(
-							D2D1_CAP_STYLE_FLAT,
-							D2D1_CAP_STYLE_FLAT,
-							D2D1_CAP_STYLE_ROUND,
-							D2D1_LINE_JOIN_MITER,
-							10.0f,
-							D2D1_DASH_STYLE_CUSTOM,
-							0.0f
-						),
-						dashes,
-						ARRAYSIZE(dashes),
-						&dash
-					);
-					rt->DrawGeometry(pGeometry, brush, PEN_WIDTH, dash);
-					SafeRelease(&dash);
-				}
-				else
-				{
-					rt->DrawGeometry(pGeometry, brush, PEN_WIDTH, (*strokeGroup)[0]);
-				}
+					brush->SetColor(ls->pen_color);
 
-				SafeRelease(&pGeometry);
+					if (ls->dashes.size() > 0 || ls->symbols.size() > 0)
+					{
+						float dashes[] = { (ls->dashes.front()->length + 0.01) / (0.32 * PEN_WIDTH), (ls->intervalLength - ls->dashes.front()->length + 0.01) / (0.32 * PEN_WIDTH) };
+						ID2D1StrokeStyle1* dash = nullptr;
+						factory->CreateStrokeStyle(
+							D2D1::StrokeStyleProperties1(
+								D2D1_CAP_STYLE_FLAT,
+								D2D1_CAP_STYLE_FLAT,
+								D2D1_CAP_STYLE_ROUND,
+								D2D1_LINE_JOIN_MITER,
+								10.0f,
+								D2D1_DASH_STYLE_CUSTOM,
+								0.0f
+							),
+							dashes,
+							ARRAYSIZE(dashes),
+							&dash
+						);
+						rt->DrawGeometry(pGeometry, brush, PEN_WIDTH, dash);
+						SafeRelease(&dash);
+					}
+					else
+					{
+						rt->DrawGeometry(pGeometry, brush, PEN_WIDTH, (*strokeGroup)[0]);
+					}
+
+					SafeRelease(&pGeometry), pGeometry = nullptr;
+				}				
 			}
 			else if (lineStyle->IsLineStyleReference() == true)
 			{

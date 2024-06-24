@@ -77,6 +77,13 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 
 			if (!c->GetMasking())
 			{
+				if (c->GetNumPoints() > 0)					
+				{
+					if ((SGeometry::viewPoints))
+						delete[] SGeometry::viewPoints,	SGeometry::viewPoints = nullptr;
+					SGeometry::viewPoints = new CPoint[c->GetNumPoints()];
+				}
+
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{
 					scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,
@@ -181,6 +188,13 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 
 			if (!c->GetMasking())
 			{
+				if (c->GetNumPoints() > 0)
+				{					
+					if ((SGeometry::viewPoints))
+						delete[] SGeometry::viewPoints, SGeometry::viewPoints = nullptr;
+					SGeometry::viewPoints = new CPoint[c->GetNumPoints()];
+				}
+
 				for (auto index = 0; index < c->GetNumPoints(); index++)
 				{
 					scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,

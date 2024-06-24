@@ -28,6 +28,7 @@ F_INAS::~F_INAS()
 	{
 		delete (*i);
 	}
+	m_arr.clear();
 }
 
 F_INAS F_INAS::operator=(const F_INAS& other)

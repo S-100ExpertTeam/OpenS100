@@ -19,20 +19,20 @@ namespace GF
 
 	FeatureType::FeatureType(const FeatureType& other)
 		: ObjectType(other)
-	{
+	{		
 		for (const auto& iter : other.featureAssociations)
 		{
 			FeatureAssociationType fat = iter;
 			featureAssociations.push_back(fat);
 		}
-
+		
 		if (other.spatial)
 			spatial = new SpatialAttributeType(*other.spatial);
-
+		
 		if (other.geometry)
 		{
 			switch (other.geometry->GetType())
-			{
+			{				
 			case SGeometryType::Point:
 			{
 				SPoint* pt = (SPoint*)other.geometry;
@@ -77,6 +77,7 @@ namespace GF
 
 	FeatureType::~FeatureType()
 	{
+		featureAssociations.clear();
 		delete spatial;
 
 		if (geometry)

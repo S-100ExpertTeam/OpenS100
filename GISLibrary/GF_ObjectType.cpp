@@ -29,6 +29,8 @@ namespace GF
 
 	ObjectType::~ObjectType()
 	{
+		informationAssociations.clear();
+
 		for (auto i = attributes.begin(); i != attributes.end(); i++)
 		{
 			delete (*i);

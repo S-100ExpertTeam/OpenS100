@@ -34,6 +34,9 @@ CGISLibraryApp::CGISLibraryApp()
 	m_pScaler = new Scaler();
 	m_pCatalogManager = new CatalogManager(D2);
 	m_pLayerManager = new LayerManager(m_pScaler, m_pCatalogManager, D2);
+
+	SGeometry::sizeOfPoint = 10;
+	SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
 }
 
 CGISLibraryApp::~CGISLibraryApp()
