@@ -37,15 +37,17 @@ namespace GM
 
 		void setParentIdSrsName(std::string id, std::string srsName);
 
+		void readID(pugi::xml_node& node);
+		void readSRSName(pugi::xml_node& node);
+		void readIdSRSName(pugi::xml_node& node);
+	
+	public:
 		virtual int GetInformationRelationCount() { return 0; }
 		virtual std::string GetAssociatedInformationID(int index) { return ""; }
 
 		virtual GeometryType GetType() { return GeometryType::Object; }
 
 		virtual std::string GeometricPrimitiveAsString() { return "None"; }
-
-		void readID(pugi::xml_node& node);
-		void readSRSName(pugi::xml_node& node);
-		void readIdSRSName(pugi::xml_node& node);
+		virtual bool isForward() { return true; }
 	};
 } 

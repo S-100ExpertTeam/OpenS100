@@ -183,4 +183,22 @@ namespace GF
 	{
 		attributes.push_back(item);
 	}
+
+	std::optional<ThematicAttributeType*> ObjectType::getThematicAttribute(std::string code, int index)
+	{
+		int num = 0;
+		for (auto iter : attributes)
+		{
+			if (iter->GetCode() == code)
+			{
+				if (num == index)
+				{
+					return iter;
+				}
+				num++;
+			}
+		}
+
+		return std::nullopt;
+	}
 }

@@ -4,7 +4,13 @@
 #include "GF_MaskReference.h"
 #include "GM_Object.h"
 
+#include "../FeatureCatalog/SpatialPrimitiveType.h"
+
+#include "../LuaScriptingReference/spatial_association.h"
+
 #include <vector>
+#include <optional>
+#include <memory>
 
 namespace GF
 { 
@@ -18,12 +24,11 @@ public:
     virtual ~SpatialAttributeType();
 
 public:
-    // if value = -1, it doesn't exist
-    int scaleMinimum = -1;
-    int scaleMaximum = -1;
+    std::optional<int> scaleMinimum;
+    std::optional<int> scaleMaximum;
 
-    //GM::Object geometry;
-    std::string geometryID;
+    std::unique_ptr<GM::Object> geometry;
+    //std::string geometryID;
 
     std::vector<MaskReference> maskReference;
 
@@ -33,6 +38,16 @@ public:
 public:
     void SetGeometryID(std::string value);
     std::string GetGeometryID();
+
+    std::optional<int> getScaleMinimum();
+    std::optional<std::string> getScaleMinimumAsString();
+    void setScaleMinimum(int value);
+
+    std::optional<int> getScaleMaximum();
+    std::optional<std::string> getScaleMaximumAsString();
+    void setScaleMaximum(int value);
+    SpatialPrimitiveType getSpatialPrimitiveType();
+    spatial_association getLuaSpatialAssociation();
 };
 
 }

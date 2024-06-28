@@ -59,5 +59,7 @@ namespace GF
 		virtual ComplexAttributeType* AddComplexAttribute(std::string code);
 
 		void AddAttribute(ThematicAttributeType* item);
+
+		std::optional<ThematicAttributeType*> getThematicAttribute(std::string code, int index);
 	};
 }

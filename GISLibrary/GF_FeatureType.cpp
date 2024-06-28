@@ -258,6 +258,11 @@ namespace GF
 
 	SpatialPrimitiveType FeatureType::GetSpatialPrimitiveType()
 	{
+		if (spatial)
+		{
+			return spatial->getSpatialPrimitiveType();
+		}
+
 		return SpatialPrimitiveType::none;
 	}
 
@@ -286,5 +291,16 @@ namespace GF
 		fa.SetRole(role);
 		fa.SetFeatureID(featureID);
 		featureAssociations.push_back(fa);
+	}
+
+	spatial_association FeatureType::getLuaSpatialAssociation()
+	{
+		if (spatial)
+		{
+			return spatial->getLuaSpatialAssociation();
+		}
+
+		spatial_association sa;
+		return sa;
 	}
 }

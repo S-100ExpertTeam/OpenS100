@@ -466,13 +466,8 @@ std::vector<spatial_association> hd_get_feature_spatial_associations(std::string
 
 	std::vector<spatial_association> sas;
 
-	sas.push_back(feature->GetGeometryID());
+	sas.push_back(feature->getLuaSpatialAssociation());
 
-	for (auto spatial = feature->m_spas.begin(); spatial != feature->m_spas.end(); spatial++)
-	{
-		spatial_association a = get_spatial_association(*spatial);
-		sas.push_back(a);
-	}
 	return sas;
 }
 

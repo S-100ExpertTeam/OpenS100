@@ -41,5 +41,7 @@ namespace GM
 
 		//OrientableCurve* getBaseCurve();
 		//void setBaseCurve(OrientableCurve* baseCurve);
+
+		bool isForward() override;
 	};
 }

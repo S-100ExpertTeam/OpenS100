@@ -364,6 +364,7 @@
     <ClCompile Include="GM_Object.cpp" />
     <ClCompile Include="GM_Object_New.cpp" />
     <ClCompile Include="GM_OrientableCurve.cpp" />
+    <ClCompile Include="GM_OrientableSurface.cpp" />
     <ClCompile Include="GM_Point.cpp" />
     <ClCompile Include="GM_Polygon.cpp" />
     <ClCompile Include="GM_Ring.cpp" />
