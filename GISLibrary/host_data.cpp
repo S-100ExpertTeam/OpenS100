@@ -57,7 +57,7 @@ static FeatureCatalogue *feature_catalog;
 static std::vector<std::string> s_feature_ids; // Process in input schema order.  Not strictly necessary but can aid in debugging.
 static std::vector<std::string> s_information_ids;
 
-static std::map<std::string, R_FeatureRecord*> s_feature_nodes;
+static std::map<std::string, GF::FeatureType*> s_feature_nodes;
 static std::map<std::string, R_InformationRecord*> s_information_nodes;
 static std::map<std::string, R_PointRecord*> s_spatial_point_nodes;
 static std::map<std::string, R_MultiPointRecord*> s_spatial_mpoint_nodes;
@@ -342,19 +342,22 @@ std::vector<std::string>& hd_get_feature_ids()
 
 std::string hd_get_feature_code(std::string id)
 {
-	R_FeatureRecord* fr = s_feature_nodes[id];
+	//R_FeatureRecord* fr = s_feature_nodes[id];
+	auto fr = s_feature_nodes[id];
 
-	auto f1 = cell->m_dsgir.m_ftcs->m_arr.find(fr->m_frid.m_nftc);
-	if (f1 == cell->m_dsgir.m_ftcs->m_arr.end())
-	{
-		return "";
-	}
+	//auto f1 = cell->m_dsgir.m_ftcs->m_arr.find(fr->m_frid.m_nftc);
+	//if (f1 == cell->m_dsgir.m_ftcs->m_arr.end())
+	//{
+	//	return "";
+	//}
 
-	std::wstring s1 = std::wstring(f1->second->m_code);
-	std::string ret;
-	ret.assign(s1.begin(), s1.end());
+	return fr->GetCode();
 
-	return ret;
+	//std::wstring s1 = std::wstring(f1->second->m_code);
+	//std::string ret;
+	//ret.assign(s1.begin(), s1.end());
+
+	//return ret;
 }
 
 static spatial_association get_spatial_association(F_SPAS* spatial)
@@ -464,6 +467,9 @@ std::vector<spatial_association> hd_get_feature_spatial_associations(std::string
 	auto feature = s_feature_nodes[id];
 
 	std::vector<spatial_association> sas;
+
+	for (auto i = feature->getg)
+
 	for (auto spatial = feature->m_spas.begin(); spatial != feature->m_spas.end(); spatial++)
 	{
 		spatial_association a = get_spatial_association(*spatial);
