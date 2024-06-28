@@ -41,7 +41,12 @@ void NumericRange::SetLowerBound(double value)
 
 const double NumericRange::GetLowerBound() 
 {
-	return lowerBound;
+	return lowerBound.value();
+}
+
+bool NumericRange::hasLowerBound()
+{
+	return lowerBound.has_value();
 }
 
 void NumericRange::SetUpperBound(double value)
@@ -51,7 +56,12 @@ void NumericRange::SetUpperBound(double value)
 
 const double NumericRange::GetUpperBound() 
 {
-	return upperBound;
+	return upperBound.value();
+}
+
+bool NumericRange::hasUpperBound()
+{
+	return upperBound.has_value();
 }
 
 void NumericRange::SetIntervalType(IntervalType value)

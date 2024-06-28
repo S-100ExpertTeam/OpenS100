@@ -1,4 +1,7 @@
 #pragma once
+
+#include "../FeatureCatalog/UnitOfMeasure.h"
+
 class Measure
 {
 public:
@@ -7,4 +10,5 @@ public:
 
 public:
 	double value = 0;
+	UnitOfMeasure unitOfMeasure;
 };

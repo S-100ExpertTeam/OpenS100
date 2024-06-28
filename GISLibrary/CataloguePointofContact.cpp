@@ -11,7 +11,7 @@ namespace S100 {
 
             if (!strcmp(instructionName, "S100XC:organization"))
             {
-                Organization = CharacterString(instruction);
+                Organization = GetCharacterString(instruction);
             }
             else if (!strcmp(instructionName, "S100XC:phone"))
             {

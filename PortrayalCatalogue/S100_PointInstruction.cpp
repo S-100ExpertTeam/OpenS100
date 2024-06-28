@@ -38,7 +38,7 @@ void S100_PointInstruction::GetContents(pugi::xml_node node)
 		}
 		else if (!strcmp(instructionName, "drawingPriority"))
 		{
-			SetDrawingProiority(pugi::as_wide(instruction.child_value()));
+			SetDrawingPriority(pugi::as_wide(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMinimum"))
 		{

@@ -251,6 +251,7 @@
     <None Include="S100SpatialObjectType.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlertCommands.cpp" />
     <ClCompile Include="Angle.cpp" />
     <ClCompile Include="ATTR.cpp" />
     <ClCompile Include="Base64String.cpp" />
@@ -269,7 +270,9 @@
     <ClCompile Include="CI_RoleCode.cpp" />
     <ClCompile Include="CI_Telephone.cpp" />
     <ClCompile Include="CodeWithNumericCode.cpp" />
+    <ClCompile Include="ColourOverrideCommands.cpp" />
     <ClCompile Include="CountryCode.cpp" />
+    <ClCompile Include="CoverageCommands.cpp" />
     <ClCompile Include="CSAX.cpp" />
     <ClCompile Include="CT_Catalogue.cpp" />
     <ClCompile Include="CUCO.cpp" />
@@ -284,7 +287,8 @@
     <ClCompile Include="DDR.cpp" />
     <ClCompile Include="Directory.cpp" />
     <ClCompile Include="DirectPosition.cpp" />
-    <ClCompile Include="DrawingCommand.cpp" />
+    <ClCompile Include="DrawingCommands.cpp" />
+    <ClCompile Include="DrawingInstruction.cpp" />
     <ClCompile Include="DrawingSet.cpp" />
     <ClCompile Include="EX_BoundingPolygon.cpp" />
     <ClCompile Include="EX_GeographicBoundingBox.cpp" />
@@ -333,6 +337,7 @@
     <ClCompile Include="F_SRID.cpp" />
     <ClCompile Include="F_THAS.cpp" />
     <ClCompile Include="F_VDAT.cpp" />
+    <ClCompile Include="GeometryCommands.cpp" />
     <ClCompile Include="GF_AssociationRole.cpp" />
     <ClCompile Include="GF_AssociationType.cpp" />
     <ClCompile Include="GF_AttributeType.cpp" />
@@ -384,6 +389,7 @@
     <ClCompile Include="LayerManager.cpp" />
     <ClCompile Include="Leader.cpp" />
     <ClCompile Include="Length.cpp" />
+    <ClCompile Include="LineStyleCommands.cpp" />
     <ClCompile Include="MASK.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MD_CharacterSetCode.cpp" />
@@ -445,6 +451,7 @@
     <ClCompile Include="S100_SE_SignatureOnSignature.cpp" />
     <ClCompile Include="SourceFileType.cpp" />
     <ClCompile Include="SourceHeaderType.cpp" />
+    <ClCompile Include="StateCommands.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="SupportFileDiscoveryMetadata.cpp" />
     <ClCompile Include="SupportFileRevisionStatus.cpp" />
@@ -554,15 +561,20 @@
     </ClCompile>
     <ClCompile Include="GM_SurfaceBoundary.cpp" />
     <ClCompile Include="SupportFileFormat.cpp" />
+    <ClCompile Include="TextStyleCommands.cpp" />
     <ClCompile Include="THAS.cpp" />
     <ClCompile Include="GF_ThematicAttributeType.cpp" />
+    <ClCompile Include="TimeCommands.cpp" />
+    <ClCompile Include="TransformCommands.cpp" />
     <ClCompile Include="TranslationItemType.cpp" />
     <ClCompile Include="TranslationPackageType.cpp" />
     <ClCompile Include="TypeOfTheHorizontalCRS.cpp" />
     <ClCompile Include="VerticalCoordinateBase.cpp" />
     <ClCompile Include="VerticalDatumReference.cpp" />
+    <ClCompile Include="VisibilityCommands.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlertCommands.h" />
     <ClInclude Include="Angle.h" />
     <ClInclude Include="ATTR.h" />
     <ClInclude Include="Base64String.h" />
@@ -581,6 +593,8 @@
     <ClInclude Include="CI_RoleCode.h" />
     <ClInclude Include="CI_Telephone.h" />
     <ClInclude Include="CodeWithNumericCode.h" />
+    <ClInclude Include="ColourOverrideCommands.h" />
+    <ClInclude Include="CoverageCommands.h" />
     <ClInclude Include="CT_Catalogue.h" />
     <ClInclude Include="CV_CommonPointRule.h" />
     <ClInclude Include="CV_InterpolationMethod.h" />
@@ -590,11 +604,13 @@
     <ClInclude Include="DatasetPermit.h" />
     <ClInclude Include="DataStatus.h" />
     <ClInclude Include="DirectPosition.h" />
+    <ClInclude Include="DrawingInstruction.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
     <ClInclude Include="ExchangeCatalogueNameSpace.h" />
     <ClInclude Include="EX_BoundingPolygon.h" />
     <ClInclude Include="EX_GeographicBoundingBox.h" />
     <ClInclude Include="FeatureSelector.h" />
+    <ClInclude Include="GeometryCommands.h" />
     <ClInclude Include="GeometryType.h" />
     <ClInclude Include="GF_AssociationRole.h" />
     <ClInclude Include="GF_AssociationType.h" />
@@ -617,6 +633,7 @@
     <ClInclude Include="indeterminatePosition.h" />
     <ClInclude Include="LanguageCode.h" />
     <ClInclude Include="Length.h" />
+    <ClInclude Include="LineStyleCommands.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MD_CharacterSetCode.h" />
     <ClInclude Include="MD_ClassificationCode.h" />
@@ -653,7 +670,7 @@
     <ClInclude Include="D2D1Resources.h" />
     <ClInclude Include="DDR.h" />
     <ClInclude Include="Directory.h" />
-    <ClInclude Include="DrawingCommand.h" />
+    <ClInclude Include="DrawingCommands.h" />
     <ClInclude Include="DrawingSet.h" />
     <ClInclude Include="DRDirectory.h" />
     <ClInclude Include="Enum_RCNM.h" />
@@ -779,6 +796,8 @@
     <ClInclude Include="S100_SE_SignatureOnSignature.h" />
     <ClInclude Include="SourceFileType.h" />
     <ClInclude Include="SourceHeaderType.h" />
+    <ClInclude Include="StateCommand.h" />
+    <ClInclude Include="StateCommands.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="SupportFileDiscoveryMetadata.h" />
     <ClInclude Include="SupportFileRevisionStatus.h" />
@@ -887,8 +906,11 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SupportFileFormat.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TextStyleCommands.h" />
     <ClInclude Include="THAS.h" />
     <ClInclude Include="GF_ThematicAttributeType.h" />
+    <ClInclude Include="TimeCommands.h" />
+    <ClInclude Include="TransformCommands.h" />
     <ClInclude Include="TranslationItemType.h" />
     <ClInclude Include="TranslationPackageType.h" />
     <ClInclude Include="TypeOfTheHorizontalCRS.h" />
@@ -899,6 +921,7 @@
     <ClInclude Include="VerticalCoordinateBase.h" />
     <ClInclude Include="VerticalDatumReference.h" />
     <ClInclude Include="CountryCode.h" />
+    <ClInclude Include="VisibilityCommands.h" />
     <ClInclude Include="XML_Collection.h" />
   </ItemGroup>
   <ItemGroup>

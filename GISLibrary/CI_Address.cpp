@@ -12,27 +12,27 @@ namespace S100
 
             if (!strcmp(instructionName, "cit:deliveryPoint"))
             {
-                Deliverypoint = CharacterString(instruction);
+                Deliverypoint = GetCharacterString(instruction);
             }
             else if (!strcmp(instructionName, "cit:city"))
             {
-                City = CharacterString(instruction);
+                City = GetCharacterString(instruction);
             }
             else if (!strcmp(instructionName, "cit:administrativeArea"))
             {
-                Administrativearea = CharacterString(instruction);
+                Administrativearea = GetCharacterString(instruction);
             }
             else if (!strcmp(instructionName, "cit:postalCode"))
             {
-                Postalcode = CharacterString(instruction);
+                Postalcode = GetCharacterString(instruction);
             }
             else if (!strcmp(instructionName, "cit:country"))
             {
-                Country = CharacterString(instruction);
+                Country = GetCharacterString(instruction);
             }
             else if (!strcmp(instructionName, "cit:electronicMailAddress"))
             {
-                Electronicmailaddress.push_back(CharacterString(instruction));
+                Electronicmailaddress.push_back(GetCharacterString(instruction));
             }
             else
             {

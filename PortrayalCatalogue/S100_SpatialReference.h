@@ -1,4 +1,7 @@
 #pragma once
+
+#include "../FeatureCatalog/PrimitiveTypes.h"
+
 #include <string>
 
 class S100_SpatialReference
@@ -9,17 +12,21 @@ public:
 private:
 	// ex : Curve
 	std::wstring type;
+
 	// ex : 3 
 	// Curve RCID
 	std::wstring reference;
+
 	// boolean
-	std::wstring forward;
+	S100::Boolean forward = true;
 public:
 	void SetType(std::string &value);
 	void SetReference(std::string &value);
-	void SetForward(std::string &value);
+	void SetForward();
+	void SetBackward();
 
 	std::wstring GetType();
 	std::wstring GetReference();
-	std::wstring GetForward();
+	bool isForward();
+	bool isBackward();
 };

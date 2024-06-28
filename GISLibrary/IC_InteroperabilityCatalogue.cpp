@@ -27,27 +27,27 @@ namespace S100
 
             if (!strcmp(instructionName, "cat:name"))
             {
-                Name = CharacterString(instruction);
+                Name = GetCharacterString(instruction);
             }
             else if (!strcmp(instructionName, "cat:scope"))
             {
-                Scope = std::make_shared<std::string>(CharacterString(instruction));
+                Scope = std::make_shared<std::string>(GetCharacterString(instruction));
             }
             else if (!strcmp(instructionName, "cat:fieldOfApplication"))
             {
-                FieldOfApplication.push_back(CharacterString(instruction));
+                FieldOfApplication.push_back(GetCharacterString(instruction));
             }
             else if (!strcmp(instructionName, "cat:versionNumber"))
             {
-                VersionNumber = CharacterString(instruction);
+                VersionNumber = GetCharacterString(instruction);
             }
             else if (!strcmp(instructionName, "cat:versionDate"))
             {
-                VersionDate = S100_Date(CharacterString(instruction));
+                VersionDate = S100_Date(GetCharacterString(instruction));
             }
             else if (!strcmp(instructionName, "cat:language"))
             {
-                Language = std::make_shared<std::string>(CharacterString(instruction));
+                Language = std::make_shared<std::string>(GetCharacterString(instruction));
             }
             else if (!strcmp(instructionName, "cat:locale"))
             {
