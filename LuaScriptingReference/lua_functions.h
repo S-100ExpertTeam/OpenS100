@@ -24,14 +24,6 @@
 #include "../FeatureCatalog/FeatureType.h"
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
-class S100_FC_Item;
-class S100_FC_NamedType;
-class S100_FC_ObjectType;
-class S100_FC_ListedValue;
-class S100_FC_AttributeBinding;
-class S100_FC_InformationBinding;
-class S100_FC_FeatureBinding;
-
 //extern S100_FC theFC;
 extern KRS_LUA_SCRIPT_REFERENCE_API FeatureCatalogue *pTheFC;
 
