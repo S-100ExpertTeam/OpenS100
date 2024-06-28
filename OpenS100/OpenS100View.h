@@ -164,6 +164,12 @@ public:
 
 	void SetPick(S100SpatialObject* enc = nullptr, std::wstring featureID = L"");
 	virtual void OnInitialUpdate();
+
+
+	std::wstring utf8_to_wstring(const std::string& str);
+	std::string wstring_to_utf8(const std::wstring& wstr);
+	void print_utf8(const std::string& str);
+	void debug_print_utf8(const std::string& str);
 };
 
 
