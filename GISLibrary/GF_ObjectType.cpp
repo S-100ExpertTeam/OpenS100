@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "GF_ObjectType.h"
+#include "GF_SimpleAttributeType.h"
+#include "GF_ComplexAttributeType.h"
+
 #include <regex>
+#include <sstream>
 
 namespace GF
 {
@@ -200,5 +204,54 @@ namespace GF
 		}
 
 		return std::nullopt;
+	}
+
+	std::vector<std::string> ObjectType::getAttributeValues(std::string path, std::string code)
+	{
+		std::vector<std::string> path_items;
+		std::vector<int> atixs;
+
+		size_t offset = 0;
+
+		if (!path.empty())
+			path += ";";
+
+		std::istringstream iss(path);
+		std::string token;
+		while (std::getline(iss, token, ';'))
+		{
+			auto colonIndex = token.find_first_of(':');
+
+			if (colonIndex >= 0 && colonIndex < token.length() - 1)
+			{
+				int atixIndex = (int)colonIndex + 1;
+				auto strAtix = token.substr(atixIndex, token.length() - atixIndex);
+				auto atix = atoi(strAtix.c_str());
+				atixs.push_back(atix - 1);
+
+				auto code = token.substr(0, colonIndex);
+				path_items.push_back(code);
+			}
+		}
+
+		ComplexAttributeType* previousComplexType = nullptr;
+		for (int i = 0; i < path_items.size(); i++)
+		{
+			auto code = path_items[i];
+			auto atix = atixs[i];
+
+			auto attr = getThematicAttribute(code, atix);
+			if (attr.has_value())
+			{
+				previousComplexType = (ComplexAttributeType*)attr.value();
+			}
+		}
+
+		if (previousComplexType)
+		{
+			return previousComplexType->getAttributeValues(code);
+		}
+
+		return std::vector<std::string>();
 	}
 }

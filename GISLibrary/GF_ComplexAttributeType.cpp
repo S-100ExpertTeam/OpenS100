@@ -117,4 +117,18 @@ namespace GF
 
 		return std::nullopt;
 	}
+
+	std::vector<std::string> ComplexAttributeType::getAttributeValues(std::string code)
+	{
+		std::vector<std::string> values;
+		for (auto iter : carries)
+		{
+			if (iter->GetCode() == code && iter->IsSimple())
+			{
+				values.push_back(iter->GetValue());
+			}
+		}
+
+		return values;
+	}
 }

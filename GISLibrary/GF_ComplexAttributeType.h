@@ -20,6 +20,7 @@ namespace GF
 
 	public:
 		std::optional<ThematicAttributeType*> getThematicAttribute(std::string code, int index);
+		std::vector<std::string> getAttributeValues(std::string code);
 
 	public:
 		virtual int GetSubAttributeCount() const;
