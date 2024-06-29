@@ -473,7 +473,7 @@ std::vector<spatial_association> hd_get_feature_spatial_associations(std::string
 
 static std::vector<std::string> get_simple_attribute_values(GF::ObjectType* objectType, std::string path, std::string attribute_code)
 {
-	return objectType->getAttributeValues(path, attribute_code);
+	return objectType->getSimpleAttributeValues(path, attribute_code);
 
 	//std::vector<std::string> attr_values;
 	//std::vector<std::string> path_items;
@@ -684,6 +684,7 @@ static std::vector<std::string> get_simple_attribute_values(R_InformationRecord*
 
 
 //static int get_complex_attribute_count(R_FeatureRecord* fr, std::string path, std::string attribute_code)
+// attribute_code : complex attribute
 static int get_complex_attribute_count(GF::FeatureType* fr, std::string path, std::string attribute_code)
 {
 	int attr_count = 0;

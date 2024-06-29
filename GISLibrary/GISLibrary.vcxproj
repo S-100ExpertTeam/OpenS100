@@ -391,6 +391,7 @@
     <ClCompile Include="Leader.cpp" />
     <ClCompile Include="Length.cpp" />
     <ClCompile Include="LineStyleCommands.cpp" />
+    <ClCompile Include="LuaAttributePathItem.cpp" />
     <ClCompile Include="MASK.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MD_CharacterSetCode.cpp" />
@@ -635,6 +636,7 @@
     <ClInclude Include="LanguageCode.h" />
     <ClInclude Include="Length.h" />
     <ClInclude Include="LineStyleCommands.h" />
+    <ClInclude Include="LuaAttributePathItem.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MD_CharacterSetCode.h" />
     <ClInclude Include="MD_ClassificationCode.h" />

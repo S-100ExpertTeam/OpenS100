@@ -1057,6 +1057,9 @@
     <ClCompile Include="GM_OrientableSurface.cpp">
       <Filter>S100\GM</Filter>
     </ClCompile>
+    <ClCompile Include="LuaAttributePathItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -2105,6 +2108,9 @@
     </ClInclude>
     <ClInclude Include="StateCommand.h">
       <Filter>S100\DrawingInstructions\StateCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaAttributePathItem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

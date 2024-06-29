@@ -206,7 +206,7 @@ namespace GF
 		return std::nullopt;
 	}
 
-	std::vector<std::string> ObjectType::getAttributeValues(std::string path, std::string code)
+	std::vector<std::string> ObjectType::getSimpleAttributeValues(std::string path, std::string code)
 	{
 		std::vector<std::string> path_items;
 		std::vector<int> atixs;
@@ -253,5 +253,10 @@ namespace GF
 		}
 
 		return std::vector<std::string>();
+	}
+
+	int ObjectType::getComplexAttributeCount(std::string path)
+	{
+
 	}
 }

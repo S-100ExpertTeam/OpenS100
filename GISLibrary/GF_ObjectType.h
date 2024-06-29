@@ -26,11 +26,6 @@ namespace GF
 		std::vector<ThematicAttributeType*> attributes;
 
 	public:
-		void AddAttribute(ThematicAttributeType* item);
-		std::optional<ThematicAttributeType*> getThematicAttribute(std::string code, int index);
-		std::vector<std::string> getAttributeValues(std::string path, std::string code);
-
-	public:
 		virtual ObjectType operator=(const ObjectType& other);
 
 	public:
@@ -62,5 +57,10 @@ namespace GF
 		virtual GF::SimpleAttributeType* AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value);
 		virtual void AddComplexAttribute(ComplexAttributeType* ca);
 		virtual ComplexAttributeType* AddComplexAttribute(std::string code);
+
+		virtual void AddAttribute(ThematicAttributeType* item);
+		virtual std::optional<ThematicAttributeType*> getThematicAttribute(std::string code, int index);
+		virtual std::vector<std::string> getSimpleAttributeValues(std::string path, std::string code);
+		virtual int getComplexAttributeCount(std::string path);
 	};
 }
