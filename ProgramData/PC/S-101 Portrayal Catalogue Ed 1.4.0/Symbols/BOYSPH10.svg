@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.97mm" height="5.23mm" viewBox="-2.95 -4.54 5.97 5.23">
+  <title>BOYSPH10</title>
+  <desc>spherical buoy, lateral, red, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2023-01-23" iho:source="7Cs" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.79" y="-4.38" height="4.91" width="5.65"/>
+  <rect class="svgBox layout" fill="none" x="-2.79" y="-4.38" height="4.91" width="5.65"/>
+  <path d=" M -2.2,0 L -2.48,-0.69 L -2.57,-1.25 L -2.64,-1.85 L -2.51,-2.5 L -2.32,-2.97 L -1.98,-3.41 L -1.6,-3.79 L -1.14,-4.1 L -0.7,-4.25 L -0.17,-4.38 L 0.4,-4.38 L 0.96,-4.25 L 1.58,-3.97 L 1.99,-3.66 L 2.27,-3.25 L 2.61,-2.72 L 2.8,-2.19 L 2.83,-1.6 L 2.77,-0.88 L 2.55,-0.38 L 2.36,0 Z" class="fCHRED"/>
+  <circle class="f0 sOUTLW" stroke-width="0.32"  cx="-0.01" cy="0" r="0.53"/>
+  <path d=" M 0.55,0 L 2.86,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M -2.2,0 L -2.48,-0.69 L -2.57,-1.25 L -2.64,-1.85 L -2.51,-2.5 L -2.32,-2.97 L -1.98,-3.41 L -1.6,-3.79 L -1.14,-4.1 L -0.7,-4.25 L -0.17,-4.38 L 0.4,-4.38 L 0.96,-4.25 L 1.58,-3.97 L 1.99,-3.66 L 2.27,-3.25 L 2.61,-2.72 L 2.8,-2.19 L 2.83,-1.6 L 2.77,-0.88 L 2.55,-0.38 L 2.36,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M -2.79,0 L -0.54,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <circle class="fDEPDW" cx="-0.01" cy="0" r="0.45"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.2"/>
+</svg>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.07mm" height="5.26mm" viewBox="-3.04 -4.54 6.07 5.26">
+  <title>BOYCON30</title>
+  <desc>conical buoy, lateral rgr, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2023-01-23" iho:source="7Cs" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.88" y="-4.38" height="4.94" width="5.75"/>
+  <rect class="svgBox layout" fill="none" x="-2.88" y="-4.38" height="4.94" width="5.75"/>
+  <path d=" M -2.25,0 L -2.13,-0.91 L -1.94,-1.66 L -1.66,-2.22 L -1.25,-2.82 L -0.91,-3.25 L -0.41,-3.69 L 0.25,-4.07 L 0.75,-4.38 L 0.93,-4.07 L 1.34,-3.35 L 1.75,-2.41 L 1.9,-1.75 L 2.03,-0.91 L 2.09,0 Z" class="fCHRED"/>
+  <path d=" M -1.9,-1.5 L 2,-1.5 L 1.6,-2.8 L -1.3,-2.8 L -1.9,-1.5 Z" class="fCHGRN"/>
+  <circle class="f0 sOUTLW" stroke-width="0.32"  cx="0" cy="0" r="0.56"/>
+  <path d=" M -2.25,0 L -2.13,-0.91 L -1.94,-1.66 L -1.66,-2.22 L -1.25,-2.82 L -0.91,-3.25 L -0.41,-3.69 L 0.25,-4.07 L 0.75,-4.38 L 0.93,-4.07 L 1.34,-3.35 L 1.75,-2.41 L 1.9,-1.75" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M -2.88,0 L -0.54,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M 1.9,-1.75 L 2.03,-0.91 L 2.09,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M 0.5,0 L 2.87,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <circle class="fDEPDW" cx="0" cy="0" r="0.45"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.2"/>
+</svg>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.0mm" height="4.0mm" viewBox="-.5 -1.3 6.0 4.0">
+  <title>SAFCON50</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2024-02-21" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="1.0" />
+    </iho:S100SVG>
+  </metadata>
+  <circle class="pivotPoint layout" fill="none" cx="0.00" cy="0.00" r="0.1" />
+  <rect class="symbolBox layout" fill="none" x="-.5" y="-1.3" height="4.0" width="6.0" />
+  <rect class="svgBox layout" fill="none" x="-.5" y="-1.3" height="4.0" width="6.0" />
+  <path d=" M 3.77,-0.6 L 3.53,-0.36 L 3.53,1.65 L 3.77,1.89 L 4.52,1.89 L 4.76,1.65 L 4.76,-0.36 L 4.52,-0.6 L 3.77,-0.6" class="sl f0 sDEPDW" stroke-width="0.96"  />
+  <path d=" M 3.77,-0.59 L 3.53,-0.35 L 3.53,1.66 L 3.77,1.9 L 4.52,1.9 L 4.76,1.66 L 4.76,-0.35 L 4.52,-0.59 L 3.77,-0.59" class="sl f0 sSNDG2" stroke-width="0.32"  />
+</svg>
