@@ -58,6 +58,9 @@ namespace GF
 		virtual void AddComplexAttribute(ComplexAttributeType* ca);
 		virtual ComplexAttributeType* AddComplexAttribute(std::string code);
 
-		void AddAttribute(ThematicAttributeType* item);
+		virtual void AddAttribute(ThematicAttributeType* item);
+		virtual std::optional<ThematicAttributeType*> getThematicAttribute(std::string code, int index);
+		virtual std::vector<std::string> getSimpleAttributeValues(std::string path, std::string code);
+		virtual int getComplexAttributeCount(std::string path);
 	};
 }

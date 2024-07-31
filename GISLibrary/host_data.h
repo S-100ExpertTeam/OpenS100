@@ -1,11 +1,11 @@
 #pragma once
-#include "..\\LuaScriptingReference\\spatial_association.h"
-#include "..\\LuaScriptingReference\\spatial_type.h"
-#include "..\\LuaScriptingReference\\point.h"
-#include "..\\LuaScriptingReference\\multipoint.h"
-#include "..\\LuaScriptingReference\\curve.h"
-#include "..\\LuaScriptingReference\\composite_curve.h"
-#include "..\\LuaScriptingReference\\surface.h"
+#include "../LuaScriptingReference/spatial_association.h"
+#include "../LuaScriptingReference/spatial_type.h"
+#include "../LuaScriptingReference/point.h"
+#include "../LuaScriptingReference/multipoint.h"
+#include "../LuaScriptingReference/curve.h"
+#include "../LuaScriptingReference/composite_curve.h"
+#include "../LuaScriptingReference/surface.h"
 
 #include <vector>
 #include <optional>

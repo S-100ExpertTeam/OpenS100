@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <optional>
 
 namespace GF
 {
@@ -16,6 +17,10 @@ namespace GF
 
 	public:
 		std::vector<ThematicAttributeType*> carries;
+
+	public:
+		std::optional<ThematicAttributeType*> getThematicAttribute(std::string code, int index);
+		std::vector<std::string> getAttributeValues(std::string code);
 
 	public:
 		virtual int GetSubAttributeCount() const;

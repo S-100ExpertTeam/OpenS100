@@ -112,4 +112,9 @@ namespace GM
 
 		return 0;
 	}
+
+	bool OrientableCurve::isForward()
+	{
+		return orientation;
+	}
 }

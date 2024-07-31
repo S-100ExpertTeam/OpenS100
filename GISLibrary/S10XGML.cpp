@@ -1054,38 +1054,19 @@ GM::Point* S10XGML::GetPoint(int x, int y)
 
 GM::Object* S10XGML::AddGeometry(GM::Object* geometry)
 {
-	if (geometry) {
+	if (geometry) 
+	{
 		auto geometryID = geometry->GetID();
 
 		auto find = GetGeometry(geometryID);
-		if (find) {
-			//GM::Object* newGeometry = nullptr;
-			//if (typeid(GM::Point) == typeid(*geometry)) {
-			//	newGeometry = new GM::Point((GM::Point&)*geometry);
-			//}
-			//else if (typeid(GM::MultiPoint) == typeid(*geometry)) {
-			//	newGeometry = new GM::MultiPoint((GM::MultiPoint&)*geometry);
-			//}
-			//else if (typeid(GM::OrientableCurve) == typeid(*geometry)) {
-			//	newGeometry = new GM::OrientableCurve((GM::OrientableCurve&)*geometry);
-			//}
-			//else if (typeid(GM::Curve) == typeid(*geometry)) {
-			//	newGeometry = new GM::Curve((GM::Curve&)*geometry);
-			//}
-			//else if (typeid(GM::CompositeCurve) == typeid(*geometry)) {
-			//	newGeometry = new GM::CompositeCurve((GM::CompositeCurve&)*geometry);
-			//}
-			//else if (typeid(GM::Surface) == typeid(*geometry)) {
-			//	newGeometry = new GM::Surface((GM::Surface&)*geometry);
-			//}
-			//newGeometry->SetID(LatLonUtility::generate_uuid());
-			//geometries.push_back(newGeometry);
-			//return newGeometry;
+		if (find) 
+		{
 			geometry->SetID(LatLonUtility::generate_uuid());
 			geometries.push_back(geometry);
 			return geometry;
 		}
-		else {
+		else 
+		{
 			geometries.push_back(geometry);
 			return geometry;
 		}

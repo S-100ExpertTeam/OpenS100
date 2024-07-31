@@ -7,9 +7,12 @@
 #include "GF_SpatialAttributeType.h"
 #include "GF_FeatureAssociationType.h"
 
+#include "SGeometry.h"
+
 #include "../FeatureCatalog/SpatialPrimitiveType.h"
 
-#include "SGeometry.h"
+#include "../LuaScriptingReference/spatial_association.h"
+
 
 #include <string>
 #include <vector>
@@ -68,5 +71,7 @@ namespace GF
 			std::string featureAssociation, 
 			std::string role, 
 			std::string featureID);
+
+		virtual spatial_association getLuaSpatialAssociation();
 	};
 }

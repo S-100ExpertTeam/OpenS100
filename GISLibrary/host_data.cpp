@@ -57,8 +57,8 @@ static FeatureCatalogue *feature_catalog;
 static std::vector<std::string> s_feature_ids; // Process in input schema order.  Not strictly necessary but can aid in debugging.
 static std::vector<std::string> s_information_ids;
 
-static std::map<std::string, R_FeatureRecord*> s_feature_nodes;
-static std::map<std::string, R_InformationRecord*> s_information_nodes;
+static std::map<std::string, GF::FeatureType*> s_feature_nodes;
+static std::map<std::string, GF::InformationType*> s_information_nodes;
 static std::map<std::string, R_PointRecord*> s_spatial_point_nodes;
 static std::map<std::string, R_MultiPointRecord*> s_spatial_mpoint_nodes;
 static std::map<std::string, R_CurveRecord*> s_spatial_curve_nodes;
@@ -342,19 +342,22 @@ std::vector<std::string>& hd_get_feature_ids()
 
 std::string hd_get_feature_code(std::string id)
 {
-	R_FeatureRecord* fr = s_feature_nodes[id];
+	//R_FeatureRecord* fr = s_feature_nodes[id];
+	auto fr = s_feature_nodes[id];
 
-	auto f1 = cell->m_dsgir.m_ftcs->m_arr.find(fr->m_frid.m_nftc);
-	if (f1 == cell->m_dsgir.m_ftcs->m_arr.end())
-	{
-		return "";
-	}
+	//auto f1 = cell->m_dsgir.m_ftcs->m_arr.find(fr->m_frid.m_nftc);
+	//if (f1 == cell->m_dsgir.m_ftcs->m_arr.end())
+	//{
+	//	return "";
+	//}
 
-	std::wstring s1 = std::wstring(f1->second->m_code);
-	std::string ret;
-	ret.assign(s1.begin(), s1.end());
+	return fr->GetCode();
 
-	return ret;
+	//std::wstring s1 = std::wstring(f1->second->m_code);
+	//std::string ret;
+	//ret.assign(s1.begin(), s1.end());
+
+	//return ret;
 }
 
 static spatial_association get_spatial_association(F_SPAS* spatial)
@@ -394,7 +397,6 @@ static spatial_association get_spatial_association(F_SPAS* spatial)
 	return sa;
 }
 
-///SGJ
 static spatial_association get_spatial_association(PTAS* ptas)
 {
 	spatial_association sa;
@@ -458,150 +460,148 @@ static spatial_association get_spatial_association(RIAS* rias)
 	return sa;
 }
 
-///SGJ
 std::vector<spatial_association> hd_get_feature_spatial_associations(std::string id)
 {
 	auto feature = s_feature_nodes[id];
 
 	std::vector<spatial_association> sas;
-	for (auto spatial = feature->m_spas.begin(); spatial != feature->m_spas.end(); spatial++)
-	{
-		spatial_association a = get_spatial_association(*spatial);
-		sas.push_back(a);
-	}
+
+	sas.push_back(feature->getLuaSpatialAssociation());
+
 	return sas;
 }
 
-static std::vector<std::string> get_simple_attribute_values(R_FeatureRecord* fr, std::string path, std::string attribute_code)
+static std::vector<std::string> get_simple_attribute_values(GF::ObjectType* objectType, std::string path, std::string attribute_code)
 {
-	std::vector<std::string> attr_values;
-	std::vector<std::string> path_items;
-	std::vector<int> atixs;
+	return objectType->getSimpleAttributeValues(path, attribute_code);
 
-	size_t offset = 0;
+	//std::vector<std::string> attr_values;
+	//std::vector<std::string> path_items;
+	//std::vector<int> atixs;
 
-	if (!path.empty())
-		path += ";";
+	//size_t offset = 0;
 
-	std::istringstream iss(path);
-	std::string token;
-	while (std::getline(iss, token, ';'))
-	{
-		auto colonIndex = token.find_first_of(':');
+	//if (!path.empty())
+	//	path += ";";
 
-		if (colonIndex >= 0 && colonIndex < token.length() - 1)
-		{
-			int atixIndex = (int)colonIndex + 1;
-			auto strAtix = token.substr(atixIndex, token.length() - atixIndex);
-			auto atix = atoi(strAtix.c_str());
-			atixs.push_back(atix);
+	//std::istringstream iss(path);
+	//std::string token;
+	//while (std::getline(iss, token, ';'))
+	//{
+	//	auto colonIndex = token.find_first_of(':');
 
-			auto code = token.substr(0, colonIndex);
-			path_items.push_back(code);
-		}
-	}
+	//	if (colonIndex >= 0 && colonIndex < token.length() - 1)
+	//	{
+	//		int atixIndex = (int)colonIndex + 1;
+	//		auto strAtix = token.substr(atixIndex, token.length() - atixIndex);
+	//		auto atix = atoi(strAtix.c_str());
+	//		atixs.push_back(atix);
 
-	if (atixs.size() == path_items.size())
-	{
-		int cnt = (int)atixs.size();
+	//		auto code = token.substr(0, colonIndex);
+	//		path_items.push_back(code);
+	//	}
+	//}
 
-		bool find = false;
-		int currentAtix = 0;
-		int currentPaix = 0;
-		if (fr->m_attr.size() > 0)
-		{
-			auto fattr = fr->m_attr.front();
-			if (fattr->m_arr.size() > 0)
-			{
-				int parentIndex = -1;
-				for (int i = 0; i < cnt; i++)
-				{
-					for (auto j = parentIndex > 0? parentIndex : 0; j < (int)fattr->m_arr.size(); j++)
-					{
-						auto attr = fattr->m_arr.at(j);
+	//if (atixs.size() == path_items.size())
+	//{
 
-						auto item = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
-						if (item != cell->m_dsgir.m_atcs->m_arr.end())
-						{
-							auto code = WstringToString(item->second->m_code);
-							auto atix = attr->m_atix;
-							if (path_items.at(i) == code && atixs.at(i) == atix)
-							{
-								parentIndex = j;
-								break;
-							}
-						}
-					}
-				}
 
-				parentIndex++;
-				if (parentIndex != -1 || cnt == 0)
-				{
-					if (cnt == 0)
-					{
-						parentIndex = 0;
-					}
+	//	int cnt = (int)atixs.size();
 
-					if (parentIndex <= (int)fattr->m_arr.size())
-					{
-						for (int i = 0; i < (int)fattr->m_arr.size(); i++)
-						{
-							auto attr = fattr->m_arr.at(i);
+	//	bool find = false;
+	//	int currentAtix = 0;
+	//	int currentPaix = 0;
+	//	
+	//	if (objectType->GetAttributeCount() > 0)
+	//	{
+	//		int parentIndex = -1;
+	//		for (int i = 0; i < cnt; i++)
+	//		{
+	//			for (auto j = parentIndex > 0? parentIndex : 0; j < (int)fattr->m_arr.size(); j++)
+	//			{
+	//				auto attr = fattr->m_arr.at(j);
 
-							auto item = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
-							if (item != cell->m_dsgir.m_atcs->m_arr.end())
-							{
-								auto code = WstringToString(item->second->m_code);
-								if (parentIndex == 0)
-								{
-									if (code == attribute_code && attr->m_paix == 0)
-									{
-										auto value = WstringToString(attr->m_atvl);
-										if (value.compare("") == 0)
-										{
-											value = ProcessS101::g_unknown_attribute_value;
-										}
-										attr_values.push_back(value);
-										continue;
-									}
-								}
-								else
-								{
-									if (code == attribute_code && attr->m_paix == parentIndex)
-									{
-										auto value = WstringToString(attr->m_atvl);
-										if (value.compare("") == 0)
-										{
-											value = ProcessS101::g_unknown_attribute_value;
-										}
-										attr_values.push_back(value);
-										continue;
-									}
-								}
-							}
-							else
-							{
-								//OutputDebugString(_T("Attribute code error1\n"));
-							}
-						}
-					}
-					else
-					{
-						//OutputDebugString(_T("Parent index error\n"));
-					}
-				}
-				else
-				{
-					//OutputDebugString(_T("ParentIndex Error\n"));
-				}
-			}
-		}
-	}
-	else
-	{
-		//OutputDebugString(_T("Attribute path error\n"));
-	}
-	return attr_values;
+	//				auto item = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
+	//				if (item != cell->m_dsgir.m_atcs->m_arr.end())
+	//				{
+	//					auto code = WstringToString(item->second->m_code);
+	//					auto atix = attr->m_atix;
+	//					if (path_items.at(i) == code && atixs.at(i) == atix)
+	//					{
+	//						parentIndex = j;
+	//						break;
+	//					}
+	//				}
+	//			}
+	//		}
+
+	//		parentIndex++;
+	//		if (parentIndex != -1 || cnt == 0)
+	//		{
+	//			if (cnt == 0)
+	//			{
+	//				parentIndex = 0;
+	//			}
+
+	//			if (parentIndex <= (int)fattr->m_arr.size())
+	//			{
+	//				for (int i = 0; i < (int)fattr->m_arr.size(); i++)
+	//				{
+	//					auto attr = fattr->m_arr.at(i);
+
+	//					auto item = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
+	//					if (item != cell->m_dsgir.m_atcs->m_arr.end())
+	//					{
+	//						auto code = WstringToString(item->second->m_code);
+	//						if (parentIndex == 0)
+	//						{
+	//							if (code == attribute_code && attr->m_paix == 0)
+	//							{
+	//								auto value = WstringToString(attr->m_atvl);
+	//								if (value.compare("") == 0)
+	//								{
+	//									value = ProcessS101::g_unknown_attribute_value;
+	//								}
+	//								attr_values.push_back(value);
+	//								continue;
+	//							}
+	//						}
+	//						else
+	//						{
+	//							if (code == attribute_code && attr->m_paix == parentIndex)
+	//							{
+	//								auto value = WstringToString(attr->m_atvl);
+	//								if (value.compare("") == 0)
+	//								{
+	//									value = ProcessS101::g_unknown_attribute_value;
+	//								}
+	//								attr_values.push_back(value);
+	//								continue;
+	//							}
+	//						}
+	//					}
+	//					else
+	//					{
+	//						//OutputDebugString(_T("Attribute code error1\n"));
+	//					}
+	//				}
+	//			}
+	//			else
+	//			{
+	//				//OutputDebugString(_T("Parent index error\n"));
+	//			}
+	//		}
+	//		else
+	//		{
+	//			//OutputDebugString(_T("ParentIndex Error\n"));
+	//		}
+	//	}
+	//}
+	//else
+	//{
+	//	//OutputDebugString(_T("Attribute path error\n"));
+	//}
+	//return attr_values;
 }
 
 static std::vector<std::string> get_simple_attribute_values(R_InformationRecord* Ir, std::string path, std::string attribute_code)
@@ -683,7 +683,9 @@ static std::vector<std::string> get_simple_attribute_values(R_InformationRecord*
 }
 
 
-static int get_complex_attribute_count(R_FeatureRecord* fr, std::string path, std::string attribute_code)
+//static int get_complex_attribute_count(R_FeatureRecord* fr, std::string path, std::string attribute_code)
+// attribute_code : complex attribute
+static int get_complex_attribute_count(GF::FeatureType* fr, std::string path, std::string attribute_code)
 {
 	int attr_count = 0;
 
@@ -833,8 +835,7 @@ std::vector<std::string> hd_get_feature_simple_attribute_values(std::string id, 
 
 int hd_get_feature_complex_attribute_count(std::string id, std::string path, std::string attribute_code)
 {
-	int a = get_complex_attribute_count(s_feature_nodes[id], path, attribute_code);
-	return a;
+	return get_complex_attribute_count(s_feature_nodes[id], path, attribute_code);
 }
 
 std::vector<std::string>& hd_get_information_type_ids()
@@ -844,22 +845,30 @@ std::vector<std::string>& hd_get_information_type_ids()
 
 std::string hd_get_information_type_code(std::string id)
 {
-	R_InformationRecord* ir = s_information_nodes[id];
-	if (!ir) {
-		return std::string("");
-	}
-
-	auto i1 = cell->m_dsgir.m_itcs->m_arr.find(ir->m_irid.NITC());
-	if (i1 == cell->m_dsgir.m_itcs->m_arr.end())
+	auto info = s_information_nodes[id];
+	if (info)
 	{
-		return std::string("");
+		info->GetCode();
 	}
-	
-	std::wstring s1 =std::wstring(i1->second->m_code);
-	std::string ret;
-	ret.assign(s1.begin(), s1.end());
 
-	return ret;
+	return "";
+
+	//R_InformationRecord* ir = s_information_nodes[id];
+	//if (!ir) {
+	//	return std::string("");
+	//}
+
+	//auto i1 = cell->m_dsgir.m_itcs->m_arr.find(ir->m_irid.NITC());
+	//if (i1 == cell->m_dsgir.m_itcs->m_arr.end())
+	//{
+	//	return std::string("");
+	//}
+	//
+	//std::wstring s1 =std::wstring(i1->second->m_code);
+	//std::string ret;
+	//ret.assign(s1.begin(), s1.end());
+
+	//return ret;
 }
 
 std::vector<std::string> hd_get_information_type_simple_attribute_values(std::string id, std::string path, std::string attribute_code)
@@ -872,32 +881,38 @@ int hd_get_information_type_complex_attribute_count(std::string id, std::string 
 	return get_complex_attribute_count(s_information_nodes[id], path, attribute_code);
 }
 
-///SGJ
 std::vector<std::string> hd_get_feature_associated_information_ids(std::string feature_id, std::string association_code, std::optional<std::string> role_code)
 {
-	std::vector<std::string> information_ids1;
+	std::vector<std::string> information_ids;
 
 	auto feature = s_feature_nodes[feature_id];
-	if (!feature) {
-		return information_ids1;
+	if (!feature) 
+	{
+		return information_ids;
 	}
 
-	if (feature->m_inas.size() > 0)
+	auto iaCnt = feature->GetInformationRelationCount(); // information association count
+	if (iaCnt > 0)
 	{
-		for (auto itorParent = feature->m_inas.begin(); itorParent != feature->m_inas.end(); itorParent++)
+		for (int i = 0; i < iaCnt; i++)
 		{
-			F_INAS* f_inas = *itorParent;
-			auto asitor = cell->m_dsgir.m_iacs->m_arr.find(f_inas->m_niac);
-			auto ritor = cell->m_dsgir.m_arcs->m_arr.find(f_inas->m_narc);
+			auto ia = feature->getInformationAssociation(i);
 
-			auto r_asName = asitor->second->getCodeAsString();
-			auto r_roleName = ritor->second->getCodeAsString();
-
-			if (!role_code.has_value() || r_roleName == role_code.value())
-				information_ids1.push_back(std::to_string(f_inas->m_name.RCID));
+			if (0 == ia.GetCode().compare(association_code))
+			{
+				if (role_code.has_value() == true && 
+					0 == role_code.value().compare(ia.GetRole()))
+				{
+					information_ids.push_back(ia.GetInformationID());
+				}
+				else if (role_code.has_value() == false)
+				{
+					information_ids.push_back(ia.GetInformationID());
+				}
+			}
 		}
 	}
-	return information_ids1;
+	return information_ids;
 }
 
 std::vector<std::string> hd_get_feature_associated_feature_ids(std::string feature_id, std::string association_code, std::optional<std::string> role_code)
@@ -905,23 +920,30 @@ std::vector<std::string> hd_get_feature_associated_feature_ids(std::string featu
 	std::vector<std::string> feature_ids;
 
 	auto feature = s_feature_nodes[feature_id];
-	if (!feature) {
+	if (!feature) 
+	{
 		return feature_ids;
 	}
 
-	if (feature->m_inas.size() > 0)
+	auto faCnt = feature->GetFeatureRelationCount(); // feature association count
+	if (faCnt > 0)
 	{
-		for (auto itorParent = feature->m_inas.begin(); itorParent != feature->m_inas.end(); itorParent++)
+		for (int i = 0; i < faCnt; i++)
 		{
-			F_INAS* f_inas = *itorParent;
-			auto asitor = cell->m_dsgir.m_iacs->m_arr.find(f_inas->m_niac);
-			auto ritor = cell->m_dsgir.m_arcs->m_arr.find(f_inas->m_narc);
+			auto fa = feature->getFeatureAssociation(i);
 
-			auto r_asName = asitor->second->getCodeAsString();
-			auto r_roleName = ritor->second->getCodeAsString();
-
-			if (!role_code.has_value() || r_roleName == role_code.value())
-				feature_ids.push_back(std::to_string(f_inas->m_name.RCID));
+			if (0 == fa.GetCode().compare(association_code))
+			{
+				if (role_code.has_value() == true &&
+					0 == role_code.value().compare(fa.GetRole()))
+				{
+					feature_ids.push_back(fa.GetFeatureID());
+				}
+				else if (role_code.has_value() == false)
+				{
+					feature_ids.push_back(fa.GetFeatureID());
+				}
+			}
 		}
 	}
 	return feature_ids;
