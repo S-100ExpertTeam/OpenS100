@@ -685,148 +685,166 @@ static std::vector<std::string> get_simple_attribute_values(R_InformationRecord*
 
 //static int get_complex_attribute_count(R_FeatureRecord* fr, std::string path, std::string attribute_code)
 // attribute_code : complex attribute
-static int get_complex_attribute_count(GF::FeatureType* fr, std::string path, std::string attribute_code)
+
+// example 
+/*
+sectorCharacteristics:1;, lightSector
+sectorCharacteristics:1;lightSector:1;, sectorInformation
+sectorCharacteristics:1;lightSector:1;, sectorLimit
+sectorCharacteristics:1;lightSector:1;sectorLimit:1;, sectorLimitOne
+sectorCharacteristics:1;lightSector:1;sectorLimit:1;, sectorLimitTwo
+sectorCharacteristics:1;lightSector:2;, sectorInformation
+sectorCharacteristics:1;lightSector:2;, sectorLimit
+sectorCharacteristics:1;lightSector:2;sectorLimit:1;, sectorLimitOne
+sectorCharacteristics:1;lightSector:2;sectorLimit:1;, sectorLimitTwo
+*/
+
+static int get_complex_attribute_count(GF::ObjectType* fr, std::string path, std::string attribute_code)
 {
-	int attr_count = 0;
+	return fr->getComplexAttributeCount(path, attribute_code);
 
-	std::vector<std::string> attr_values;
-	std::vector<std::string> path_items;
+	//int attr_count = 0;
 
-	size_t offset = 0;
-	size_t found;
+	//std::vector<std::string> attr_values;
+	//std::vector<std::string> path_items;
 
-	if (!path.empty())
-		path += ";";
+	//size_t offset = 0;
+	//size_t found;
 
-	while ((found = path.find_first_of(';', offset)) != std::string::npos)
-	{
-		auto path_item = path.substr(offset, found - offset);
+	//if (!path.empty())
+	//	path += ";";
 
-		path_items.push_back(path_item);
+	//while ((found = path.find_first_of(';', offset)) != std::string::npos)
+	//{
+	//	auto path_item = path.substr(offset, found - offset);
 
-		offset = found + 1;
-	}
+	//	path_items.push_back(path_item);
 
-	for (auto itorParent = fr->m_attr.begin(); itorParent != fr->m_attr.end(); itorParent++)
-	{
-		F_ATTR* attrParent = *itorParent;
-		for (auto itor = attrParent->m_arr.begin(); itor != attrParent->m_arr.end(); itor++)
-		{
-			ATTR* attr = *itor;
+	//	offset = found + 1;
+	//}
 
-			auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
-			if (aitor != cell->m_dsgir.m_atcs->m_arr.end())
-			{
-				std::string attributeAcronym = aitor->second->getCodeAsString();
+	//fr->getComplexAttributeCount
 
-				if (attributeAcronym.compare(attribute_code) == 0)
-				{
-					if (offset != 0)
-					{
-						std::string r_value = attr->getValueAsString();
+	//for (auto itorParent = fr->m_attr.begin(); itorParent != fr->m_attr.end(); itorParent++)
+	//{
+	//	F_ATTR* attrParent = *itorParent;
+	//	for (auto itor = attrParent->m_arr.begin(); itor != attrParent->m_arr.end(); itor++)
+	//	{
+	//		ATTR* attr = *itor;
 
-						std::string parent_name = *path_items.rbegin();
-						auto split = parent_name.find(':', 0);
-						auto parent_code_in_path = parent_name.substr(0, split);
-						auto parent_sequence_in_path = parent_name.substr(split+1, parent_name.size() - split-1);
-						auto n_parent_sequence_in_path = atoi(parent_sequence_in_path.c_str());
+	//		auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
+	//		if (aitor != cell->m_dsgir.m_atcs->m_arr.end())
+	//		{
+	//			std::string attributeAcronym = aitor->second->getCodeAsString();
 
-						ATTR* parent_attribute = attrParent->m_arr[attr->m_paix - 1];
+	//			if (attributeAcronym.compare(attribute_code) == 0)
+	//			{
+	//				if (offset != 0)
+	//				{
+	//					std::string r_value = attr->getValueAsString();
 
-						auto paitor = cell->m_dsgir.m_atcs->m_arr.find(parent_attribute->m_natc);
-						if (paitor != cell->m_dsgir.m_atcs->m_arr.end())
-						{
-							std::string parent_attributeAcronym = paitor->second->getCodeAsString();
+	//					std::string parent_name = *path_items.rbegin();
+	//					auto split = parent_name.find(':', 0);
+	//					auto parent_code_in_path = parent_name.substr(0, split);
+	//					auto parent_sequence_in_path = parent_name.substr(split+1, parent_name.size() - split-1);
+	//					auto n_parent_sequence_in_path = atoi(parent_sequence_in_path.c_str());
 
-							if (parent_code_in_path.compare(parent_attributeAcronym) == 0 &&
-								n_parent_sequence_in_path == parent_attribute->m_atix)
-							{
-								attr_count++;
-							}
-						}
-					}
-					else
-					{
-						std::string r_value = attr->getValueAsString();
+	//					ATTR* parent_attribute = attrParent->m_arr[attr->m_paix - 1];
 
-						attr_count++;
-					}
-				}
-			}
-		}
-	}
-	return attr_count;
+	//					auto paitor = cell->m_dsgir.m_atcs->m_arr.find(parent_attribute->m_natc);
+	//					if (paitor != cell->m_dsgir.m_atcs->m_arr.end())
+	//					{
+	//						std::string parent_attributeAcronym = paitor->second->getCodeAsString();
+
+	//						if (parent_code_in_path.compare(parent_attributeAcronym) == 0 &&
+	//							n_parent_sequence_in_path == parent_attribute->m_atix)
+	//						{
+	//							attr_count++;
+	//						}
+	//					}
+	//				}
+	//				else
+	//				{
+	//					std::string r_value = attr->getValueAsString();
+
+	//					attr_count++;
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
+	//return attr_count;
 }
 
-static int get_complex_attribute_count(R_InformationRecord* Ir, std::string path, std::string attribute_code)
-{
-	int attr_count = 0;
-
-	std::vector<std::string> attr_values;
-	std::vector<std::string> path_items;
-
-	size_t offset = 0;
-	size_t found;
-
-	if (!path.empty())
-		path += ";";
-
-	while ((found = path.find_first_of(';', offset)) != std::string::npos)
-	{
-		auto path_item = path.substr(offset, found - offset);
-
-		path_items.push_back(path_item);
-
-		offset = found + 1;
-	}
-
-	for (auto itorParent = Ir->m_attr.begin(); itorParent != Ir->m_attr.end(); itorParent++)
-	{
-		F_ATTR* attrParent = *itorParent;
-
-		for (auto itor = attrParent->m_arr.begin(); itor != attrParent->m_arr.end(); itor++)
-		{
-			ATTR* attr = *itor;
-
-			auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
-			if (aitor != cell->m_dsgir.m_atcs->m_arr.end())
-			{
-				std::string attributeAcronym = aitor->second->getCodeAsString();
-
-				if (attributeAcronym.compare(attribute_code) == 0)
-				{
-					if (offset != 0)
-					{
-						std::string r_value = attr->getValueAsString();
-
-						std::string parent_name = *path_items.begin();
-						auto split = parent_name.find(':', 0);
-						auto parent_code_in_path = parent_name.substr(0, split);
-
-						ATTR* parent_attribute = attrParent->m_arr[attr->m_paix - 1];
-
-						auto paitor = cell->m_dsgir.m_atcs->m_arr.find(parent_attribute->m_natc);
-						if (paitor != cell->m_dsgir.m_atcs->m_arr.end())
-						{
-							std::string parent_attributeAcronym = paitor->second->getCodeAsString();
-
-							if (parent_code_in_path.compare(parent_attributeAcronym) == 0)
-							{
-								attr_count++;
-							}
-						}
-					}
-					else
-					{
-						std::string r_value = attr->getValueAsString();
-						attr_count++;
-					}
-				}
-			}
-		}
-	}
-	return attr_count;
-}
+//static int get_complex_attribute_count(GF::ObjectType* Ir, std::string path, std::string attribute_code)
+//{
+//	int attr_count = 0;
+//
+//	std::vector<std::string> attr_values;
+//	std::vector<std::string> path_items;
+//
+//	size_t offset = 0;
+//	size_t found;
+//
+//	if (!path.empty())
+//		path += ";";
+//
+//	while ((found = path.find_first_of(';', offset)) != std::string::npos)
+//	{
+//		auto path_item = path.substr(offset, found - offset);
+//
+//		path_items.push_back(path_item);
+//
+//		offset = found + 1;
+//	}
+//
+//	for (auto itorParent = Ir->m_attr.begin(); itorParent != Ir->m_attr.end(); itorParent++)
+//	{
+//		F_ATTR* attrParent = *itorParent;
+//
+//		for (auto itor = attrParent->m_arr.begin(); itor != attrParent->m_arr.end(); itor++)
+//		{
+//			ATTR* attr = *itor;
+//
+//			auto aitor = cell->m_dsgir.m_atcs->m_arr.find(attr->m_natc);
+//			if (aitor != cell->m_dsgir.m_atcs->m_arr.end())
+//			{
+//				std::string attributeAcronym = aitor->second->getCodeAsString();
+//
+//				if (attributeAcronym.compare(attribute_code) == 0)
+//				{
+//					if (offset != 0)
+//					{
+//						std::string r_value = attr->getValueAsString();
+//
+//						std::string parent_name = *path_items.begin();
+//						auto split = parent_name.find(':', 0);
+//						auto parent_code_in_path = parent_name.substr(0, split);
+//
+//						ATTR* parent_attribute = attrParent->m_arr[attr->m_paix - 1];
+//
+//						auto paitor = cell->m_dsgir.m_atcs->m_arr.find(parent_attribute->m_natc);
+//						if (paitor != cell->m_dsgir.m_atcs->m_arr.end())
+//						{
+//							std::string parent_attributeAcronym = paitor->second->getCodeAsString();
+//
+//							if (parent_code_in_path.compare(parent_attributeAcronym) == 0)
+//							{
+//								attr_count++;
+//							}
+//						}
+//					}
+//					else
+//					{
+//						std::string r_value = attr->getValueAsString();
+//						attr_count++;
+//					}
+//				}
+//			}
+//		}
+//	}
+//	return attr_count;
+//}
 
 std::vector<std::string> hd_get_feature_simple_attribute_values(std::string id, std::string path, std::string attribute_code)
 {

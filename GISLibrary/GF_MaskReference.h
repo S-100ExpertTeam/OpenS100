@@ -14,7 +14,6 @@ namespace GF
 
 	public:
 
-		//GM::Object* geometry = nullptr;
 		std::string geometryID;
 		MaskIndicatorType maskIndicator;
 

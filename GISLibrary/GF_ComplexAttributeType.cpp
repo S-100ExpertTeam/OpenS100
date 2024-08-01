@@ -59,6 +59,20 @@ namespace GF
 		return (int)carries.size();
 	}
 
+	int ComplexAttributeType::GetSubAttributeCount(std::string code) const
+	{
+		int count = 0;
+		for (auto iter : carries)
+		{
+			if (iter->GetCode() == code)
+			{
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	ThematicAttributeType* ComplexAttributeType::GetSubAttribute(int index) const
 	{
 		if (index >= 0 && index < GetSubAttributeCount())
@@ -110,6 +124,24 @@ namespace GF
 				if (num == index)
 				{
 					return iter;
+				}
+				num++;
+			}
+		}
+
+		return std::nullopt;
+	}
+
+	std::optional<ComplexAttributeType*> ComplexAttributeType::getComplexAttribute(std::string code, int index)
+	{
+		int num = 0;
+		for (auto iter : carries)
+		{
+			if (iter->IsSimple() == false && iter->GetCode() == code)
+			{
+				if (num == index)
+				{
+					return (ComplexAttributeType*)iter;
 				}
 				num++;
 			}

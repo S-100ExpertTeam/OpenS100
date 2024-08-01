@@ -178,6 +178,30 @@ void S101Cell::SetAllNumericCode(FeatureCatalogue* fc)
 	}
 }
 
+void S101Cell::SetAllCode(FeatureCatalogue* fc)
+{
+	if (fc)
+	{
+		for (auto i = vecFeature.begin(); i != vecFeature.end(); i++)
+		{
+			auto feature = (*i);
+			feature->SetCode(GetFeatureTypeCodeByID(feature->GetIDAsInteger()));
+		}
+
+		for (auto i = vecInformation.begin(); i != vecInformation.end(); i++)
+		{
+			auto information = (*i);
+			information->SetCode(GetInformationTypeCodeByID(information->GetIDAsInteger()));
+		}
+	}
+}
+
+void S101Cell::SetAllCode()
+{
+	auto fc = GetFC();
+	SetAllCode(fc);
+}
+
 R_DSGIR* S101Cell::GetDatasetGeneralInformationRecord()
 {
 	return &m_dsgir;
@@ -461,6 +485,8 @@ bool S101Cell::OpenBy000(CString path)
 		ATTRtoAttribute();
 
 		//SaveAsGML(L"..\\TEMP\\101GML3.gml");
+		SetAllCode();
+
 		return true;
 	}
 

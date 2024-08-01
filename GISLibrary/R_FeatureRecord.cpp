@@ -805,6 +805,46 @@ GM::Object* R_FeatureRecord::GetGMGeometry()
 	return nullptr;
 }
 
+spatial_association R_FeatureRecord::getLuaSpatialAssociation()
+{
+	spatial_association sa;
+
+	auto SPAS = GetSPAS();
+
+	if (SPAS)
+	{
+		// Leave scaleMin/Max unset since Part 9 input schema doesn't define it.
+		///SGJ
+		std::string primitive1;
+		switch (SPAS->m_name.RCNM)
+		{
+		case 110: primitive1 = "Point"; break;
+		case 115: primitive1 = "MultiPoint"; break;
+		case 120: primitive1 = "Curve"; break;
+		case 125: primitive1 = "CompositeCurve"; break;
+		case 130: primitive1 = "Surface"; break;
+		default: //Err  
+			break;
+		}
+		std::string orientation = "Forward";
+		if (SPAS->m_name.RCNM == 120 || SPAS->m_name.RCNM == 125)
+		{
+			switch (SPAS->m_ornt)
+			{
+			case 1:
+				orientation = "Forward";
+				break;
+			case 2:
+				orientation = "Reverse";
+				break;
+			}
+		}
+		sa = { primitive1, primitive1 + "|" + std::to_string(SPAS->m_name.RCID), orientation };
+	}
+
+	return sa;
+}
+
 int R_FeatureRecord::GetInformationRelationCount()
 {
 	return (int)m_inas.size();

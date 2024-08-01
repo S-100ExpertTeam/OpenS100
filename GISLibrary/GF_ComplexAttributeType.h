@@ -20,10 +20,12 @@ namespace GF
 
 	public:
 		std::optional<ThematicAttributeType*> getThematicAttribute(std::string code, int index);
+		std::optional<ComplexAttributeType*> getComplexAttribute(std::string code, int index);
 		std::vector<std::string> getAttributeValues(std::string code);
 
 	public:
 		virtual int GetSubAttributeCount() const;
+		virtual int GetSubAttributeCount(std::string code) const;
 		virtual ThematicAttributeType* GetSubAttribute(int index) const;
 		virtual bool IsSimple();
 		virtual void AddSubAttribute(ThematicAttributeType* subAttribute);
