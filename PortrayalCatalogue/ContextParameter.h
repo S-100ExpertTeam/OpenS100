@@ -16,6 +16,7 @@ namespace Portrayal
 	private:
 		ParameterType type;
 		std::wstring defaultValue;
+		std::wstring value;
 
 	public:
 		ParameterType GetType();
@@ -25,6 +26,10 @@ namespace Portrayal
 		std::wstring GetDefault();
 		std::string GetDefaultAsString();
 		void SetDefault(std::wstring& value);
+
+		std::wstring getValue();
+		std::string getValueAsString();
+		void setValue(std::wstring& value);
 
 		void GetContents(pugi::xml_node& node);
 	};
