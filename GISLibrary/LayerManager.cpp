@@ -1302,18 +1302,19 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 	auto pc = ((S100Layer*)l)->GetPC();
 
 	if (pc &&
-		l->GetFileType() == S100_FileType::FILE_S_100_VECTOR) {
+		l->GetFileType() == S100_FileType::FILE_S_100_VECTOR) 
+	{
 		auto mainRuleFile = pc->GetMainRuleFile();
 		auto fileName = mainRuleFile->GetFileName();
 		auto rootPath = pc->GetRootPath();
 		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
-		
-
-		if (pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA) {
+		if (pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA) 
+		{
 			ProcessS101::ProcessS101_LUA(mainRulePath, (S100Layer*)l);
 		}
-		else if (pc->GetRuleFileFormat() == Portrayal::FileFormat::XSLT) {
+		else if (pc->GetRuleFileFormat() == Portrayal::FileFormat::XSLT) 
+		{
 			auto gml = (S10XGML*)l->GetSpatialObject();
 			gml->SaveToInputXML("..\\TEMP\\input.xml");
 			ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml", (S100Layer*)l);
