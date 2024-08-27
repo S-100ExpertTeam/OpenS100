@@ -8,6 +8,6 @@ public:
 	~SENC_Foreground();
 
 public:
-	std::wstring token;
-	int transparency;
+	std::wstring token = L"";
+	double transparency = 0;
 };

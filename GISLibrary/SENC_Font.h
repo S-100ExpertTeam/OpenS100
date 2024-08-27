@@ -9,6 +9,15 @@ public:
 public:
 	boolean serifs;
 	int weight;
-	int slant;
+	int slant; // 0 : Upright, 1 : Italics
 	int proportion;
+
+public:
+	void setUpright();
+	bool isUpright();
+
+	void setItalics();
+	bool isItalics();
+
+	DWRITE_FONT_STYLE getFontStyle();
 };

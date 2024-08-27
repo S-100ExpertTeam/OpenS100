@@ -49,6 +49,10 @@ namespace GF
 
 	void SpatialAttributeType::SetGeometryID(std::string value)
 	{
+		if (geometry.get() == nullptr)
+		{
+			geometry = std::make_unique<GM::Object>();
+		}
 		geometry->SetID(value);
 		//geometryID = value;
 	}

@@ -29,4 +29,6 @@ public:
 
 	void SetProportion(std::wstring& value);
 	std::wstring GetProportion();
+
+	bool isUpright();
 };

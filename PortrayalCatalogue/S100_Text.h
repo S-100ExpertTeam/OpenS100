@@ -11,6 +11,8 @@ public:
 
 private:
 	std::wstring value;
+	
+	// Not used
 	std::wstring useValueOf;
 
 public:

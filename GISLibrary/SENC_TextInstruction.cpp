@@ -294,7 +294,17 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 			{
 				e2->font.proportion = SENC_CommonFuc::GetFontProportion(e1->GetFont()->GetProportion());
 				e2->font.serifs = _wtoi(e1->GetFont()->GetSerifs().c_str()) != 0 ? true : false;
-				e2->font.slant = _wtoi(e1->GetFont()->GetSlant().c_str());
+
+				if (true == e1->GetFont()->isUpright())
+				{
+					e2->font.setUpright();
+				}
+				else
+				{
+					e2->font.setItalics();
+				}
+
+				//e2->font.slant = _wtoi(e1->GetFont()->GetSlant().c_str());
 				e2->font.weight = _wtoi(e1->GetFont()->GetWeight().c_str());
 			}
 
@@ -312,6 +322,7 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 					*e2->pColor = color;
 				}
 			}
+
 			if (e1->GetText())
 			{
 				e2->text.value = e1->GetText()->GetValue();

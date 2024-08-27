@@ -19,4 +19,6 @@ public:
 
 	void SetTransparency(std::wstring& value);
 	std::wstring GetTransparency();
+
+	void fromDrawingCommand(std::string_view drawingCommand);
 };

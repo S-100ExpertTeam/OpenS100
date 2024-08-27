@@ -586,10 +586,22 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						{
 							element->SetBodySize(std::wstring(v_FontSize.begin(), v_FontSize.end()));
 						}
-						if (v_FontSize.size() > 0)
+
+						if (v_FontSlant.size() > 0)
 						{
-							if (!element->GetFont()) element->SetFont(new S100_Font());
+							if (!element->GetFont())
+							{
+								element->SetFont(new S100_Font());
+							}
+
 							element->GetFont()->SetSlant(std::wstring(v_FontSlant.begin(), v_FontSlant.end()));
+						}
+
+						if (v_FontColor.size() > 0)
+						{
+							auto fontColor = new S100_Foreground();
+							fontColor->fromDrawingCommand(v_FontColor);
+							element->SetForground(fontColor);
 						}
 					}
 

@@ -654,38 +654,15 @@ void LayerManager::AddSymbolDrawing(
 
 					int bodySize = (int)(element->bodySize * (float)1.358);
 
-					IDWriteTextFormat* useWTF = NULL;
-					if (bodySize != 15)
+					IDWriteTextFormat* useWTF = nullptr;
+					
+					if (element->font.isUpright())
 					{
-						auto sizedFontIter = D2->writeTextFormatListByFontSize.find(bodySize);
-
-						if (sizedFontIter == D2->writeTextFormatListByFontSize.end())
-						{
-							IDWriteTextFormat* newWriteTextFormat = NULL;
-							HRESULT hr = D2->pDWriteFactory->CreateTextFormat(
-								ENCCommon::DISPLAY_FONT_NAME.c_str(),
-								NULL,
-								DWRITE_FONT_WEIGHT_NORMAL,
-								DWRITE_FONT_STYLE_NORMAL,
-								DWRITE_FONT_STRETCH_NORMAL,
-								(float)bodySize,
-								L"", //locale
-								&newWriteTextFormat
-							);
-
-							D2->writeTextFormatListByFontSize.insert(std::make_pair(bodySize, newWriteTextFormat));
-
-							useWTF = newWriteTextFormat;
-
-						}
-						else
-						{
-							useWTF = sizedFontIter->second;
-						}
+						useWTF = D2->getWriteTextFormat(bodySize);
 					}
 					else
 					{
-						useWTF = D2->pDWriteTextFormat;
+						useWTF = D2->getSlantWriteTextFormat(bodySize);
 					}
 
 					useWTF->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
@@ -777,6 +754,7 @@ void LayerManager::AddSymbolDrawing(
 					if (element->pColor)
 					{
 						D2->pBrush->SetColor(element->pColor);
+						D2->pBrush->SetOpacity(1 - element->foreground.transparency);
 					}
 
 					for (auto itor = points.begin(); itor != points.end(); itor++)
