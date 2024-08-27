@@ -296,6 +296,10 @@ bool SVGReader::OpenByPugi(char* path)
 					char* value = (char*)attriValue;
 					GetRotation(value, line->rotation);
 				}
+				else if (!strcmp(attriName, "stroke-width"))
+				{
+					line->SetStrokeWidth(attri.as_double());
+				}
 			}
 			figures.push_back(line);
 		}
@@ -391,6 +395,10 @@ bool SVGReader::OpenByPugi(char* path)
 				{
 					styleValue = attriValue;
 				}
+				else if (0 == strcmp(attriName, "stroke-width"))
+				{
+					line->strokeWidth = attri.as_double();
+				}
 			}
 
 			if (nullptr != line)
@@ -470,6 +478,10 @@ bool SVGReader::OpenByPugi(char* path)
 				{
 					char* value = (char*)attriValue;
 					GetRotation(value, circle->rotation);
+				}
+				else if (!strcmp(attriName, "stroke-width"))
+				{
+					 circle->strokeWidth = attri.as_double();
 				}
 			}
 

@@ -143,7 +143,7 @@ void S100PCManager::DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRender
 			if (pLineStyle)
 			{
 				pBrush->SetColor(GetS100ColorProfile()->GetColor(pLineStyle->pen->color.GetToken()));
-				pBrush->SetOpacity(pLineStyle->pen->color.GetTransparency());
+				pBrush->SetOpacity(1 - pLineStyle->pen->color.GetTransparency());
 				D2D1_RECT_F rect = GetLineStyleRect(_name.c_str(), 2);
 
 				for (auto j = pLineStyle->dash.begin(); j != pLineStyle->dash.end(); j++)
