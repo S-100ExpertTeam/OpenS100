@@ -565,33 +565,34 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						{
 							//OutputDebugString(L"Error : Offset Value should have 2 arguments.");
 						}
+					}
 
-						if (v_TextInstruction.size() > 0)
+					if (v_TextInstruction.size() > 0)
+					{
+						S100_Element* element = new S100_Element();
+
+						in->GetTextPoint()->SetElement(element);
+
+						if (!element->GetText()) element->SetText(new S100_Text());
+
+						std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
+
+						auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_splited_text[0].c_str());
+						std::wstring wstrValue = wValue;
+						delete[] wValue;
+						element->GetText()->SetValue(wstrValue);
+
+						if (v_FontSize.size() > 0)
 						{
-							S100_Element *element = new S100_Element();
-
-							in->GetTextPoint()->SetElement(element);
-
-							if (!element->GetText()) element->SetText(new S100_Text());
-
-							std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
-
-							auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_splited_text[0].c_str());
-							std::wstring wstrValue = wValue;
-							delete[] wValue;
-							element->GetText()->SetValue(wstrValue);
-
-							if (v_FontSize.size() > 0)
-							{
-								element->SetBodySize(std::wstring(v_FontSize.begin(), v_FontSize.end()));
-							}
-							if (v_FontSize.size() > 0)
-							{
-								if (!element->GetFont()) element->SetFont(new S100_Font());
-								element->GetFont()->SetSlant(std::wstring(v_FontSlant.begin(), v_FontSlant.end()));
-							}
+							element->SetBodySize(std::wstring(v_FontSize.begin(), v_FontSize.end()));
+						}
+						if (v_FontSize.size() > 0)
+						{
+							if (!element->GetFont()) element->SetFont(new S100_Font());
+							element->GetFont()->SetSlant(std::wstring(v_FontSlant.begin(), v_FontSlant.end()));
 						}
 					}
+
 					v_TextInstruction = "";
 				}
 				else if (tag.compare("LineInstruction") == 0)

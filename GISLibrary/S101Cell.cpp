@@ -1724,7 +1724,7 @@ void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_InformationRecord
 				key = -1;
 				value = nullptr;
 				return;
-			}	
+			}
 
 			auto iter = std::find(m_infMatchingKeys.begin(), m_infMatchingKeys.end(), key);
 			if (iter != m_infMatchingKeys.end())
@@ -2143,7 +2143,7 @@ void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_FeatureRecord*& v
 				key = -1;
 				value = nullptr;
 				return;
-			}	
+			}
 
 			auto iter = std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key);
 			if (iter != m_feaMatchingKeys.end())
@@ -5004,36 +5004,45 @@ void S101Cell::ATTRtoAttribute()
 			auto strCode = m_dsgir.GetAttributeCode(ATTR->m_natc);
 			auto code = pugi::as_utf8(strCode);
 			auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
-			if (sa) {
+			if (sa)
+			{
 				auto value = ATTR->getValueAsString();
 				CString strValue;
 
-				if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
-				{
-					auto iValue = atoi(value.c_str());
-					auto listedValue = sa->GetListedValue(iValue);
-					if (listedValue)
-					{
-						strValue.Format(L"%d. %s", listedValue->GetCode(), listedValue->GetLabel().c_str());
-					}
-				}
-				else
-				{
-					strValue = LibMFCUtil::StringToWString(value).c_str();
-				}
+				//if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
+				//{
+				//	auto iValue = atoi(value.c_str());
+				//	auto listedValue = sa->GetListedValue(iValue);
+				//	if (listedValue)
+				//	{
+				//		strValue.Format(L"%d. %s", listedValue->GetCode(), listedValue->GetLabel().c_str());
+				//	}
+				//}
+				//else
+				//{
+				//	strValue = LibMFCUtil::StringToWString(value).c_str();
+				//}
+				strValue = LibMFCUtil::StringToWString(value).c_str();
 
-				auto addedSA = fr->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
-				addedAttributes.push_back(addedSA);
-				if (ATTR->m_paix > 0) {
+				if (ATTR->m_paix > 0)
+				{
 					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
-					parentCA->AddSubAttribute(addedSA->clone());
+					auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+					addedAttributes.push_back((GF::ThematicAttributeType * )addedSA);
+				}
+				else // top level
+				{
+					auto addedSA = fr->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+					addedAttributes.push_back(addedSA);
 				}
 			}
-			else {
+			else
+			{
 				auto ca = fc->GetComplexAttribute(std::wstring(strCode));
 				auto addedCA = fr->AddComplexAttribute(code);
 				addedAttributes.push_back(addedCA);
-				if (ATTR->m_paix > 0) {
+				if (ATTR->m_paix > 0)
+				{
 					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
 					parentCA->AddSubAttribute(addedCA->clone());
 				}

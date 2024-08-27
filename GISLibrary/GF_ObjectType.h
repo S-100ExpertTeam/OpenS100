@@ -66,5 +66,6 @@ namespace GF
 		virtual std::vector<std::string> getSimpleAttributeValues(std::string path, std::string code);
 		virtual std::vector<std::string> getSimpleAttributeValues(std::string code);
 		virtual int getComplexAttributeCount(std::string path, std::string code);
+		virtual int getAttributeCount(std::string code);
 	};
 }

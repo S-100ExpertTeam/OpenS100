@@ -2,6 +2,7 @@
 #include "GF_ObjectType.h"
 #include "GF_SimpleAttributeType.h"
 #include "GF_ComplexAttributeType.h"
+#include "ProcessS101.h"
 
 #include <regex>
 #include <sstream>
@@ -121,7 +122,7 @@ namespace GF
 
 	ThematicAttributeType* ObjectType::GetAttribute(int index) const
 	{
-		if (index >= 0 && index < GetAttributeCount())
+		if (index >= 0 && index < attributes.size())
 		{
 			return attributes.at(index);
 		}
@@ -299,7 +300,14 @@ namespace GF
 		{
 			if (iter->IsSimple() && iter->GetCode() == code)
 			{
-				values.push_back(iter->GetValue());
+				if (iter->GetValue().empty() == true)
+				{
+					values.push_back(ProcessS101::g_unknown_attribute_value);
+				}
+				else
+				{
+					values.push_back(iter->GetValue());
+				}
 			}
 		}
 
@@ -364,7 +372,25 @@ namespace GF
 		{
 			return previousComplexType->GetSubAttributeCount(code);
 		}
+		else
+		{
+			return getAttributeCount(code);
+		}
 
 		return 0;
+	}
+
+	int ObjectType::getAttributeCount(std::string code)
+	{
+		int count = 0;
+		for (auto iter : attributes)
+		{
+			if (iter->GetCode() == code)
+			{
+				count++;
+			}
+		}
+
+		return count;
 	}
 }

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GF_ComplexAttributeType.h"
+#include "GF_SimpleAttributeType.h"
 
 namespace GF
 {
@@ -88,17 +89,18 @@ namespace GF
 		return false;
 	}
 
-	void ComplexAttributeType::AddSubAttribute(ThematicAttributeType* subAttribute)
+	ThematicAttributeType* ComplexAttributeType::AddSubAttribute(ThematicAttributeType* subAttribute)
 	{
 		carries.push_back(subAttribute);
+		return subAttribute;
 	}
 
-	void ComplexAttributeType::AddSubSimpleAttribute(
+	SimpleAttribute* ComplexAttributeType::AddSubSimpleAttribute(
 		FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value)
 	{
 		auto sa = new SimpleAttributeType(valueType, value);
 		sa->SetCode(code);
-		AddSubAttribute(sa);
+		return (SimpleAttribute*)AddSubAttribute(sa);
 	}
 
 	ComplexAttributeType* ComplexAttributeType::AddComplexAttribute(std::string code)
