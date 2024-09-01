@@ -23,6 +23,7 @@ F_ATTR::~F_ATTR()
 	{
 		delete* itor;
 	}
+	m_arr.clear();
 }
 
 F_ATTR F_ATTR::operator=(const F_ATTR& other)

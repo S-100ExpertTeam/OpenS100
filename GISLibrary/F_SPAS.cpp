@@ -24,6 +24,7 @@ F_SPAS::~F_SPAS(void)
 	{
 		delete* itor;
 	}
+	m_arr.clear();
 }
 
 F_SPAS F_SPAS::operator=(const F_SPAS& other)
