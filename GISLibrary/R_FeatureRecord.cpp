@@ -31,31 +31,31 @@ R_FeatureRecord::R_FeatureRecord(const R_FeatureRecord& other)
 {
 	m_frid = other.m_frid;
 	m_foid = other.m_foid;
-
+	
 	for (const auto& iter : other.m_attr)
 	{
 		F_ATTR* attr = new F_ATTR(*iter);
 		m_attr.push_back(attr);
 	}
-
+	
 	for (const auto& iter : other.m_inas)
 	{
 		F_INAS* inas = new F_INAS(*iter);
 		m_inas.push_back(inas);
 	}
-
+	
 	for (const auto& iter : other.m_spas)
 	{
 		F_SPAS* spas = new F_SPAS(*iter);
 		m_spas.push_back(spas);
 	}
-
+	
 	for (const auto& iter : other.m_fasc)
 	{
 		F_FASC* fasc = new F_FASC(*iter);
 		m_fasc.push_back(fasc);
 	}
-
+	
 	for (const auto& iter : other.m_mask)
 	{
 		F_MASK* mask = new F_MASK(*iter);
@@ -67,35 +67,35 @@ R_FeatureRecord::~R_FeatureRecord(void)
 {
 	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
 	{
-		delete *i;
+		delete* i;
 		*i = nullptr;
 	}
 	m_attr.clear();
 
 	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
 	{
-		delete *i;
+		delete* i;
 		*i = nullptr;
 	}
 	m_inas.clear();
 
 	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
 	{
-		delete *i;
+		delete* i;
 		*i = nullptr;
 	}
 	m_spas.clear();
 
 	for (auto i = m_fasc.begin(); i != m_fasc.end(); i++)
 	{
-		delete *i;
+		delete* i;
 		*i = nullptr;
 	}
 	m_fasc.clear();
 
 	for (auto i = m_mask.begin(); i != m_mask.end(); i++)
 	{
-		delete *i;
+		delete* i;
 		*i = nullptr;
 	}
 	m_mask.clear();
@@ -200,7 +200,7 @@ R_FeatureRecord R_FeatureRecord::operator=(const R_FeatureRecord& other)
 }
 
 #pragma warning(disable:4018)
-BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
+BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
 	USES_CONVERSION;
 	unsigned i = 0, j = 0, cnt;
@@ -218,7 +218,7 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		{
 			cnt = 0;
 			j = 0;
-			BYTE *sIndex = buf;
+			BYTE* sIndex = buf;
 
 			unsigned head = 0;
 			for (j = 1; j < dir->GetDirectory(i)->length; j++)
@@ -243,7 +243,7 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		}
 		else if (strcmp(dir->GetDirectory(i)->tag, "INAS") == 0)
 		{
-			F_INAS *inas = new F_INAS();
+			F_INAS* inas = new F_INAS();
 			inas->ReadField(buf);
 			m_inas.push_back(inas);
 		}
@@ -256,7 +256,7 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		}
 		else if (strcmp(dir->GetDirectory(i)->tag, "FASC") == 0)
 		{
-			F_FASC *fasc = new F_FASC();
+			F_FASC* fasc = new F_FASC();
 			cnt = (dir->GetDirectory(i)->length - 1) / ATTR::GetOffsetToATVL();
 			fasc->ReadField(buf, cnt);
 			m_fasc.push_back(fasc);
@@ -385,7 +385,7 @@ RecordName R_FeatureRecord::GetRecordName()
 	return m_frid.m_name;
 }
 
-void R_FeatureRecord::Draw(HDC &hdc, Scaler *scaler, double offset)
+void R_FeatureRecord::Draw(HDC& hdc, Scaler* scaler, double offset)
 {
 	if (geometry != NULL)
 	{
@@ -471,7 +471,7 @@ int R_FeatureRecord::GetSPASRCNM()
 
 	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
 	{
-		F_SPAS *spasParent = *i;
+		F_SPAS* spasParent = *i;
 
 		for (auto j = spasParent->m_arr.begin(); j != spasParent->m_arr.end(); j++)
 		{

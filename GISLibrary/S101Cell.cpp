@@ -282,6 +282,14 @@ void S101Cell::RemoveAll(void)
 	}
 	m_feaMap.RemoveAll();
 
+	vecInformation.clear();
+	vecPoint.clear();
+	vecMultiPoint.clear();
+	vecCurve.clear();
+	vecComposite.clear();
+	vecSurface.clear();
+	vecFeature.clear();
+
 	m_feaMatchingKeys.clear();
 	m_infMatchingKeys.clear();
 }
@@ -295,6 +303,14 @@ void S101Cell::ClearAll(void)
 	m_comMap.RemoveAll();
 	m_surMap.RemoveAll();
 	m_feaMap.RemoveAll();
+
+	vecInformation.clear();
+	vecPoint.clear();
+	vecMultiPoint.clear();
+	vecCurve.clear();
+	vecComposite.clear();
+	vecSurface.clear();
+	vecFeature.clear();
 
 	m_feaMatchingKeys.clear();
 	m_infMatchingKeys.clear();
@@ -1674,14 +1690,14 @@ void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_InformationRecord
 	{
 		while (true)
 		{
-			m_infMap.GetNextAssoc(index, key, value);
 			if (index == nullptr)
 			{
 				key = -1;
 				value = nullptr;
 				return;
-			}	
+			}
 
+			m_infMap.GetNextAssoc(index, key, value);
 			auto iter = std::find(m_infMatchingKeys.begin(), m_infMatchingKeys.end(), key);
 			if (iter != m_infMatchingKeys.end())
 				return;
@@ -2093,14 +2109,14 @@ void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_FeatureRecord*& v
 	{
 		while (true)
 		{
-			m_feaMap.GetNextAssoc(index, key, value);
 			if (index == nullptr)
 			{
 				key = -1;
 				value = nullptr;
 				return;
-			}	
+			}
 
+			m_feaMap.GetNextAssoc(index, key, value);
 			auto iter = std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key);
 			if (iter != m_feaMatchingKeys.end())
 				return;
