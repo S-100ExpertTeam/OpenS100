@@ -505,10 +505,7 @@ void LayerManager::AddSymbolDrawing(
 
 		D2->pBrush->SetOpacity(1.0f);
 		instruction->DrawInstruction(
-			D2->pRT,
-			D2->pD2Factory,
-			D2->pBrush,
-			&D2->D2D1StrokeStyleGroup,
+			D2,
 			scaler,
 			pc);
 	}
@@ -518,10 +515,7 @@ void LayerManager::AddSymbolDrawing(
 	{
 		auto instruction = *i;
 		instruction->DrawInstruction(
-			D2->pRT,
-			D2->pD2Factory,
-			D2->pBrush,
-			&D2->D2D1StrokeStyleGroup,
+			D2,
 			scaler,
 			pc);
 	}
@@ -532,14 +526,14 @@ void LayerManager::AddSymbolDrawing(
 	for (auto i = augmentedRay[drawingPrioriy].begin(); i != augmentedRay[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(D2->pRT, D2->pD2Factory, D2->pBrush, &D2->D2D1StrokeStyleGroup, scaler, pc);
+		instruction->DrawInstruction(D2, scaler, pc);
 	}
 
 	// AugmentedPath
 	for (auto i = augmentedPath[drawingPrioriy].begin(); i != augmentedPath[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(D2->pRT, D2->pD2Factory, D2->pBrush, &D2->D2D1StrokeStyleGroup, scaler, pc);
+		instruction->DrawInstruction(D2, scaler, pc);
 	}
 
 	// Point

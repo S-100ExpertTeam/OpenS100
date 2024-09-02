@@ -91,9 +91,9 @@
 .sSYTRK {stroke:#768C97}
 .fSYTRK {fill:#768C97}
 .sPLRTE {stroke:#D63F24}
-.fAPLRT {fill:#E38039}
-.sAPLRT {stroke:#E38039}
 .fPLRTE {fill:#D63F24}
+.sAPLRT {stroke:#E38039}
+.fAPLRT {fill:#E38039}
 .sUINFD {stroke:#000000}
 .fUINFD {fill:#000000}
 .sUINFF {stroke:#4C5B63}
@@ -144,3 +144,5 @@
 .fBLK {fill:#000000}
 .sWHITE{stroke:#FFFFFF}
 .fWHITE{fill:#FFFFFF}
+.sGOLDN {stroke:#ffd700}
+.fGOLDN {fill:#ffd700}

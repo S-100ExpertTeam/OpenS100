@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.23mm" height="4.23mm" viewBox="-2.12 -2.12 4.23 4.23">
+  <title>UKCCONPT</title>
+  <desc>Symbol for Under Keel Clearance Control Point</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2018-09-12" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.11" y="-2.11" height="4.22" width="4.22" />
+  <rect class="svgBox layout" fill="none" x="-2.11" y="-2.11" height="4.22" width="4.22" />
+  <circle class="f0 sSNDG2" fill="none" style="stroke-width: 0.32; stroke-opacity: 0.5;" cx="0" cy="0" r="2.11"/>
+  <path d=" M -1.7,-1.1 L -1.7,1.1 L 1.7,-1.1 L 1.7,1.1 L -1.7,-1.1 L -1.7,-1.1" class="fSNDG2" style="stroke-width:0.32; fill-opacity: 0.5;" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.2" />
+</svg>

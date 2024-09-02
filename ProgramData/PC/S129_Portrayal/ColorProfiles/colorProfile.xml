@@ -1,76 +1,417 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100ColorProfile.xsd">
-  <colors>
-    <color token="ORG" name="orange">
-      <description>Orange color for Almost Navigable Area</description>
-    </color>
-    <color token="RED" name="red">
-      <description>Red color for Non Navigable Area</description>
-    </color>
-    <color token="BLK" name="black">
-      <description>Black color for only Text</description>
-    </color>
-    <color token="WHITE" name="white">
-      <description>White color for Text with background</description>
-    </color>
-  </colors>
-
-  <palette name="Day">
-    <item token="ORG">
-      <cie>
-        <xyL>
-          <x>0.5</x>
-          <y>0.4</y>
-          <L>32</L>
-        </xyL>
-      </cie>
-      <srgb>
-        <red>227</red>
-        <green>128</green>
-        <blue>57</blue>
-      </srgb>
-    </item>
-    <item token="RED">
-      <cie>
-        <xyL>
-          <x>0.48</x>
-          <y>0.30</y>
-          <L>25</L>
-        </xyL>
-      </cie>
-      <srgb>
-        <red>234</red>
-        <green>84</green>
-        <blue>113</blue>
-      </srgb>
-    </item>
-    <item token="BLK">
-     <cie>
-       <xyL>
-          <x>0.28</x>
-          <y>0.31</y>
-          <L>0</L>
-        </xyL>
-      </cie>
-    <srgb>
-        <red>0</red>
-        <green>0</green>
-        <blue>0</blue>
-      </srgb>
-    </item>
-    <item token="WHITE">
-      <cie>
-       <xyL>
-          <x>0.28</x>
-          <y>0.31</y>
-          <L>80</L>
-        </xyL>
-      </cie>
-      <srgb>
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
-      </srgb>
-    </item>
-  </palette>
-</colorProfile>
+<?xml version="1.0" encoding="utf-8"?>
+<cp:colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:cp="http://www.iho.int/S100ColorProfile/5.1">
+	<colors>
+		<color token="GOLDN" name="gold">
+			<description>Golden color for Almost Non Navigable Area</description>
+		</color>
+		<color token="RED" name="red">
+			<description>Red color for Non Navigable Area</description>
+		</color>
+		<color token="BLK" name="black">
+			<description>Black color for only Text</description>
+		</color>
+		<color token="WHITE" name="white">
+			<description>White color for Text with background</description>
+		</color>
+		<color token="CHMGD" name="magenta">
+			<description>Chart magenta dominant</description>
+		</color>
+		<color token="SNDG2" name="black">
+			<description>Sounding shallow</description>
+		</color>
+		<color token="PLRTE" name="red">
+			<description>Planned route</description>
+		</color>
+		<color token="ORG" name="orange">
+			<description>Orange color</description>
+		</color>
+		<color token="DEPCN" name="grey">
+			<description>depth contour</description>
+		</color>
+	</colors>
+	<palette name="Day" css="daySvgStyle.css">
+		<item token="ORG">
+			<cie>
+				<xyL>
+					<x>0.5</x>
+					<y>0.4</y>
+					<L>32</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>227</red>
+				<green>128</green>
+				<blue>57</blue>
+			</srgb>
+		</item>
+		<item token="RED">
+			<cie>
+				<xyL>
+					<x>0.48</x>
+					<y>0.30</y>
+					<L>25</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>234</red>
+				<green>84</green>
+				<blue>113</blue>
+			</srgb>
+		</item>
+		<item token="BLK">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>0</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>0</red>
+				<green>0</green>
+				<blue>0</blue>
+			</srgb>
+		</item>
+		<item token="WHITE">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>80</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>201</red>
+				<green>237</green>
+				<blue>255</blue>
+			</srgb>
+		</item>
+		<item token="CHMGD">
+			<cie>
+				<xyL>
+					<x>0.3</x>
+					<y>0.17</y>
+					<L>20</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>192</red>
+				<green>69</green>
+				<blue>209</blue>
+			</srgb>
+		</item>
+		<item token="SNDG2">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>0</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>0</red>
+				<green>0</green>
+				<blue>0</blue>
+			</srgb>
+		</item>
+		<item token="GOLDN">
+			<cie>
+				<xyL>
+					<x>0.45</x>
+					<y>0.48</y>
+					<L>70</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>255</red>
+				<green>215</green>
+				<blue>0</blue>
+			</srgb>
+		</item>
+		<item token="PLRTE">
+			<cie>
+				<xyL>
+					<x>0.58</x>
+					<y>0.35</y>
+					<L>18</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>214</red>
+				<green>63</green>
+				<blue>36</blue>
+			</srgb>
+		</item>
+		<item token="DEPCN">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>25</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>118</red>
+				<green>140</green>
+				<blue>151</blue>
+			</srgb>
+		</item>
+	</palette>
+	<palette name="Dusk" css="duskSvgStyle.css">
+		<item token="ORG">
+			<cie>
+				<xyL>
+					<x>0.5</x>
+					<y>0.4</y>
+					<L>10</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>134</red>
+				<green>73</green>
+				<blue>30</blue>
+			</srgb>
+		</item>
+		<item token="RED">
+			<cie>
+				<xyL>
+					<x>0.48</x>
+					<y>0.3</y>
+					<L>10</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>155</red>
+				<green>53</green>
+				<blue>73</blue>
+			</srgb>
+		</item>
+		<item token="BLK">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>20</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>107</red>
+				<green>127</green>
+				<blue>137</blue>
+			</srgb>
+		</item>
+		<item token="WHITE">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>36</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>140</red>
+				<green>166</green>
+				<blue>179</blue>
+			</srgb>
+		</item>
+		<item token="CHMGD">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.24</y>
+					<L>18</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>130</red>
+				<green>108</green>
+				<blue>161</blue>
+			</srgb>
+		</item>
+		<item token="SNDG2">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>36</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>140</red>
+				<green>166</green>
+				<blue>179</blue>
+			</srgb>
+		</item>
+		<item token="GOLDN">
+			<cie>
+				<xyL>
+					<x>0.45</x>
+					<y>0.48</y>
+					<L>24</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>158</red>
+				<green>133</green>
+				<blue>2</blue>
+			</srgb>
+		</item>
+		<item token="PLRTE">
+			<cie>
+				<xyL>
+					<x>0.58</x>
+					<y>0.35</y>
+					<L>8</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>149</red>
+				<green>41</green>
+				<blue>22</blue>
+			</srgb>
+		</item>
+		<item token="DEPCN">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>10</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>76</red>
+				<green>91</green>
+				<blue>99</blue>
+			</srgb>
+		</item>
+	</palette>
+	<palette name="Night" css="nightSvgStyle.css">
+		<item token="ORG">
+			<cie>
+				<xyL>
+					<x>0.5</x>
+					<y>0.4</y>
+					<L>1.25</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>48</red>
+				<green>23</green>
+				<blue>5</blue>
+			</srgb>
+		</item>
+		<item token="RED">
+			<cie>
+				<xyL>
+					<x>0.48</x>
+					<y>0.3</y>
+					<L>1.25</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>57</red>
+				<green>14</green>
+				<blue>22</blue>
+			</srgb>
+		</item>
+		<item token="BLK">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>2.5</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>37</red>
+				<green>45</green>
+				<blue>49</blue>
+			</srgb>
+		</item>
+		<item token="WHITE">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>5</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>54</red>
+				<green>65</green>
+				<blue>71</blue>
+			</srgb>
+		</item>
+		<item token="CHMGD">
+			<cie>
+				<xyL>
+					<x>0.3</x>
+					<y>0.17</y>
+					<L>2</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>65</red>
+				<green>18</green>
+				<blue>71</blue>
+			</srgb>
+		</item>
+		<item token="SNDG2">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>5</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>54</red>
+				<green>65</green>
+				<blue>71</blue>
+			</srgb>
+		</item>
+		<item token="GOLDN">
+			<cie>
+				<xyL>
+					<x>0.45</x>
+					<y>0.48</y>
+					<L>3</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>58</red>
+				<green>48</green>
+				<blue>0</blue>
+			</srgb>
+		</item>
+		<item token="PLRTE">
+			<cie>
+				<xyL>
+					<x>0.58</x>
+					<y>0.35</y>
+					<L>0.9</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>51</red>
+				<green>8</green>
+				<blue>3</blue>
+			</srgb>
+		</item>
+		<item token="DEPCN">
+			<cie>
+				<xyL>
+					<x>0.28</x>
+					<y>0.31</y>
+					<L>1.25</L>
+				</xyL>
+			</cie>
+			<srgb>
+				<red>24</red>
+				<green>30</green>
+				<blue>33</blue>
+			</srgb>
+		</item>
+	</palette>
+</cp:colorProfile>

@@ -218,6 +218,10 @@ bool GetStyle(char* attributeContent, double& strokeWidth, std::wstring& strokeD
 		{
 			alpha = _wtof(wsVecTemp[i + 1].c_str());
 		}
+		else if (wsVecTemp[i].compare(L"stroke-opacity") == 0)
+		{
+			alpha = _wtof(wsVecTemp[i + 1].c_str());
+		}
 	}
 	return true;
 }

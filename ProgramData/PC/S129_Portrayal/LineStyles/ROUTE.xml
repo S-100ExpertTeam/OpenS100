@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<lineStyle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
+<ls:lineStyle xmlns:ls="http://www.iho.int/S100LineStyle/5.2">
   <intervalLength>6</intervalLength>
   <pen width="0.3">
-    <color>ORG</color>
+    <color>PLRTE</color>
   </pen>
   <dash>
     <start>0</start>
@@ -16,4 +15,4 @@ xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
   <symbol reference="bla">
     <position>3.5</position>
   </symbol>
-</lineStyle>
+</ls:lineStyle>

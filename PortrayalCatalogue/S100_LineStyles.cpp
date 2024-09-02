@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "S100_LineStyles.h"
 
+#include <string>
 
 namespace Portrayal
 {
@@ -21,8 +22,8 @@ namespace Portrayal
 	{
 		for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 		{
-			const pugi::char_t* instructionName = instruction.name();
-			if (!strcmp(instructionName, "lineStyle"))
+			std::string instructionName = instruction.name();
+			if (instructionName.find("lineStyle") != std::string::npos)
 			{
 				ExternalFile* lineStyle = new ExternalFile();
 				lineStyle->GetContents(instruction);
