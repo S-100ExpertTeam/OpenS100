@@ -309,7 +309,7 @@ void S100Layer::BuildPortrayalCatalogue()
 	{
 		auto gml = (S10XGML*)m_spatialObject;
 		gml->SaveToInputXML("..\\TEMP\\input.xml");
-		ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml", this);
+		ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml");
 		auto s100so = (S100SpatialObject*)m_spatialObject;
 		s100so->OpenOutputXML("..\\TEMP\\output.xml");
 	}
