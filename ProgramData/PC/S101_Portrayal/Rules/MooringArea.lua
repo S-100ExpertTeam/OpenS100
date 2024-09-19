@@ -4,6 +4,7 @@ require 'RESTRN01'
 	--
 	-- #309
 	-- #344 bug fix against #309
+	-- #433 bug fix
 	--
 
 function MooringArea(feature, featurePortrayal, contextParameters)
@@ -39,7 +40,7 @@ function MooringArea(feature, featurePortrayal, contextParameters)
 		if contextParameters.RadarOverlay then
 			featurePortrayal:AddInstructions('ViewingGroup:26220;DrawingPriority:18;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:26220;DrawingPriority:18;DisplayPlane:OverRadar')
+			featurePortrayal:AddInstructions('ViewingGroup:26220;DrawingPriority:18;DisplayPlane:UnderRadar')
 		end
 
 		featurePortrayal:AddInstructions('PointInstruction:BOYMOR02')

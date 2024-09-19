@@ -3,8 +3,8 @@
 	<S100FC:name>Electronic Navigational Chart</S100FC:name>
 	<S100FC:scope>Ocean, Coastal, Ports and Harbors. Excludes Inland waters.</S100FC:scope>
 	<S100FC:fieldOfApplication>Marine Navigation</S100FC:fieldOfApplication>
-	<S100FC:versionNumber>1.4.1</S100FC:versionNumber>
-	<S100FC:versionDate>2024-07-22</S100FC:versionDate>
+	<S100FC:versionNumber>1.5.0</S100FC:versionNumber>
+	<S100FC:versionDate>2024-09-09</S100FC:versionDate>
 	<S100FC:productId>S-101</S100FC:productId>
 	<S100FC:producer>
 		<S100CI:role>pointOfContact</S100CI:role>
@@ -13867,6 +13867,11 @@
 			<S100FC:code>theQualityInformation</S100FC:code>
 		</S100FC:S100_FC_Role>
 		<S100FC:S100_FC_Role>
+			<S100FC:name>The Roofed Structure</S100FC:name>
+			<S100FC:definition>A pointer to a supported roofed structure.</S100FC:definition>
+			<S100FC:code>theRoofedStructure</S100FC:code>
+		</S100FC:S100_FC_Role>
+		<S100FC:S100_FC_Role>
 			<S100FC:name>The Structure</S100FC:name>
 			<S100FC:definition>A pointer to the feature that equipment feature(s) are supported by.</S100FC:definition>
 			<S100FC:code>theStructure</S100FC:code>
@@ -14045,7 +14050,7 @@
 			<S100FC:name>Roofed Structure Aggregation</S100FC:name>
 			<S100FC:definition>A feature association for the binding between a roofed structure over navigable water and its supporting features.</S100FC:definition>
 			<S100FC:code>RoofedStructureAggregation</S100FC:code>
-			<S100FC:role ref="theStructure" />
+			<S100FC:role ref="theRoofedStructure" />
 			<S100FC:role ref="theSupport" />
 		</S100FC:S100_FC_FeatureAssociation>
 		<S100FC:S100_FC_FeatureAssociation isAbstract="false">
@@ -19410,7 +19415,7 @@
 					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
 				</S100FC:multiplicity>
 				<S100FC:association ref="RoofedStructureAggregation" />
-				<S100FC:role ref="theStructure" />
+				<S100FC:role ref="theRoofedStructure" />
 				<S100FC:featureType ref="StructureOverNavigableWater" />
 			</S100FC:featureBinding>
 			<S100FC:featureBinding roleType="association">
@@ -24125,7 +24130,7 @@
 			<S100FC:attributeBinding sequential="false">
 				<S100FC:multiplicity>
 					<S100Base:lower>1</S100Base:lower>
-					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+					<S100Base:upper xsi:nil="true" infinite="true" />
 				</S100FC:multiplicity>
 				<S100FC:permittedValues>
 					<S100FC:value>1</S100FC:value>
@@ -28428,22 +28433,6 @@
 				</S100FC:multiplicity>
 				<S100FC:attribute ref="information" />
 			</S100FC:attributeBinding>
-			<S100FC:attributeBinding sequential="false">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-				</S100FC:multiplicity>
-				<S100FC:attributeVisibility>privateVisibility</S100FC:attributeVisibility>
-				<S100FC:attribute ref="defaultClearanceDepth" />
-			</S100FC:attributeBinding>
-			<S100FC:attributeBinding sequential="false">
-				<S100FC:multiplicity>
-					<S100Base:lower>1</S100Base:lower>
-					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-				</S100FC:multiplicity>
-				<S100FC:attributeVisibility>privateVisibility</S100FC:attributeVisibility>
-				<S100FC:attribute ref="surroundingDepth" />
-			</S100FC:attributeBinding>
 			<S100FC:informationBinding roleType="association">
 				<S100FC:multiplicity>
 					<S100Base:lower>0</S100Base:lower>
@@ -29144,7 +29133,6 @@
 					<S100FC:value>24</S100FC:value>
 					<S100FC:value>25</S100FC:value>
 					<S100FC:value>26</S100FC:value>
-					<S100FC:value>27</S100FC:value>
 					<S100FC:value>39</S100FC:value>
 				</S100FC:permittedValues>
 				<S100FC:attribute ref="restriction" />
@@ -29161,13 +29149,6 @@
 					<S100FC:value>12</S100FC:value>
 				</S100FC:permittedValues>
 				<S100FC:attribute ref="status" />
-			</S100FC:attributeBinding>
-			<S100FC:attributeBinding sequential="false">
-				<S100FC:multiplicity>
-					<S100Base:lower>0</S100Base:lower>
-					<S100Base:upper xsi:nil="true" infinite="true" />
-				</S100FC:multiplicity>
-				<S100FC:attribute ref="vesselSpeedLimit" />
 			</S100FC:attributeBinding>
 			<S100FC:attributeBinding sequential="false">
 				<S100FC:multiplicity>
@@ -29314,6 +29295,7 @@
 					<S100FC:value>24</S100FC:value>
 					<S100FC:value>25</S100FC:value>
 					<S100FC:value>26</S100FC:value>
+					<S100FC:value>27</S100FC:value>
 					<S100FC:value>39</S100FC:value>
 				</S100FC:permittedValues>
 				<S100FC:attribute ref="restriction" />
@@ -29329,6 +29311,13 @@
 					<S100FC:value>7</S100FC:value>
 				</S100FC:permittedValues>
 				<S100FC:attribute ref="status" />
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="true" infinite="true" />
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="vesselSpeedLimit" />
 			</S100FC:attributeBinding>
 			<S100FC:attributeBinding sequential="false">
 				<S100FC:multiplicity>
