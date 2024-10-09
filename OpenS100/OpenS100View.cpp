@@ -600,7 +600,6 @@ void COpenS100View::Setting()
 
 void COpenS100View::DatasetManager()
 {
-	//AfxMessageBox(L"fdsafa");
 	DialogDatasetManager dlg;
 	dlg.ct = theApp.gisLib->GetCatalogManager();
 	dlg.DoModal();
