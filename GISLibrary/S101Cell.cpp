@@ -80,12 +80,14 @@ S101Cell::S101Cell(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
+	m_ObejctType = SpatialObjectType::S101Cell;
 }
 
 S101Cell::S101Cell(FeatureCatalogue* fc, D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
+	m_ObejctType = SpatialObjectType::S101Cell;
 	//SetAllNumericCode(fc);
 }
 
