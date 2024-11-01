@@ -357,6 +357,16 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 
 void FeatureCatalogue::WriteContents(pugi::xml_node& node)
 {
+	auto sa = simpleAttributes.GetSimpleAttributePointer();
+	for (auto i = sa.begin(); i != sa.end(); i++)
+	{
+		auto simple = i->second;
+		std::string xpath = "S100FC:S100_FC_FeatureCatalogue/S100FC:S100_FC_SimpleAttributes/S100FC:S100_FC_SimpleAttribute/S100FC:code[text()='" + simple->GetCode() + "']";
+		auto simpleNode = node.select_node(xpath.c_str()).node().parent();
+		auto node_dr = simpleNode.select_node("S100FC:definitionReference/S100FC:sourceIdentifier").node().text().set(simple->getSourceIdentifier().c_str());
+		
+	}
+
 	auto features = featureTypes.GetVecFeatureType();
 
 	for (auto i = features.begin(); i != features.end(); i++)
@@ -373,6 +383,8 @@ void FeatureCatalogue::WriteContents(pugi::xml_node& node)
 		}
 
 		auto userTypeNode = featureNode.select_node("S100FC:featureUseType").node();
+
+		auto node_dr = featureNode.select_node("S100FC:definitionReference/S100FC:sourceIdentifier").node().text().set(feature->getSourceIdentifier().c_str());
 
 		auto informationBindings = feature->GetInformationBindingPointer();
 		for (auto j = informationBindings.begin(); j != informationBindings.end(); j++)

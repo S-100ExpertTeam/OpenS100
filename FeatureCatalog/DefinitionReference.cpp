@@ -35,6 +35,11 @@ void DefinitionReference::GetContents(pugi::xml_node& node)
 
 void DefinitionReference::SetSourceIdentifier(std::wstring value)
 {
+	if (nullptr == sourceIdentifier)
+	{
+		sourceIdentifier = new std::wstring();
+	}
+	
 	*sourceIdentifier = value;
 }
 
