@@ -110,4 +110,5 @@ public: // override FeatureType
 	std::string GetAssociatedFeatureID(int index) override;
 	SpatialPrimitiveType GetSpatialPrimitiveType() override;
 	GM::Object* GetGMGeometry() override;
+	spatial_association getLuaSpatialAssociation() override;
 };

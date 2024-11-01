@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 
 -- Referenced portrayal rules.
 require 'DEPCNT03'
@@ -11,9 +9,9 @@ function DepthContour(feature, featurePortrayal, contextParameters)
 	if feature.PrimitiveType == PrimitiveType.Curve then
 		viewingGroup = 33020
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:33020;DrawingPriority:15;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:33020;DrawingPriority:15;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:33020;DrawingPriority:15;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:33020;DrawingPriority:15;DisplayPlane:UnderRadar')
 		end
 		DEPCNT03(feature, featurePortrayal, contextParameters, viewingGroup)
 	else

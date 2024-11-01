@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 -- #155
 
 -- Fishing facility main entry point.
@@ -12,41 +10,41 @@ function FishingFacility(feature, featurePortrayal, contextParameters)
 		if feature.categoryOfFishingFacility == 1 then
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC03')
 		elseif feature.categoryOfFishingFacility == 2 then
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC02')
 		elseif feature.categoryOfFishingFacility == 3 then
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC02')
 		elseif feature.categoryOfFishingFacility == 4 then
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC02')
 		else
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:FSHHAV01')
 		end
@@ -54,41 +52,41 @@ function FishingFacility(feature, featurePortrayal, contextParameters)
 		if feature.categoryOfFishingFacility == 1 then
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC03')
 		elseif feature.categoryOfFishingFacility == 2 then
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC02')
 		elseif feature.categoryOfFishingFacility == 3 then
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC02')
 		elseif feature.categoryOfFishingFacility == 4 then
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC02')
 		else
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:FSHHAV01')
 		end
@@ -96,17 +94,17 @@ function FishingFacility(feature, featurePortrayal, contextParameters)
 		if feature.categoryOfFishingFacility == 1 then
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('LineInstruction:FSHFAC02')
 		else
 			viewingGroup = 26210
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:SimpleLineStyle('dash',0.64,'CHGRD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
@@ -114,31 +112,31 @@ function FishingFacility(feature, featurePortrayal, contextParameters)
 	elseif feature.PrimitiveType == PrimitiveType.Surface and contextParameters.PlainBoundaries then
 		if feature.categoryOfFishingFacility == 1 then
 			viewingGroup = 26210
-			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			featurePortrayal:AddInstructions('AreaFillReference:FSHFAC03')
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
 		elseif feature.categoryOfFishingFacility == 2 then
 			viewingGroup = 26210
-			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			featurePortrayal:AddInstructions('AreaFillReference:FSHFAC04')
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
 		elseif feature.categoryOfFishingFacility == 3 then
 			viewingGroup = 26210
-			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			featurePortrayal:AddInstructions('AreaFillReference:FSHFAC04')
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
 		elseif feature.categoryOfFishingFacility == 4 then
 			viewingGroup = 26210
-			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			featurePortrayal:AddInstructions('AreaFillReference:FSHFAC04')
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
 		else
 			viewingGroup = 26210
-			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			featurePortrayal:AddInstructions('AreaFillReference:FSHHAV02')
 			featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 			featurePortrayal:AddInstructions('LineInstruction:_simple_')
@@ -146,27 +144,27 @@ function FishingFacility(feature, featurePortrayal, contextParameters)
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		if feature.categoryOfFishingFacility == 1 then
 			viewingGroup = 26210
-			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC03')
 			featurePortrayal:AddInstructions('LineInstruction:NAVARE51')
 		elseif feature.categoryOfFishingFacility == 2 then
 			viewingGroup = 26210
-			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC02')
 			featurePortrayal:AddInstructions('LineInstruction:NAVARE51')
 		elseif feature.categoryOfFishingFacility == 3 then
 			viewingGroup = 26210
-			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC02')
 			featurePortrayal:AddInstructions('LineInstruction:NAVARE51')
 		elseif feature.categoryOfFishingFacility == 4 then
 			viewingGroup = 26210
-			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC02')
 			featurePortrayal:AddInstructions('LineInstruction:NAVARE51')
 		else
 			viewingGroup = 26210
-			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26210;DrawingPriority:12;DisplayPlane:UnderRadar')
 			featurePortrayal:AddInstructions('PointInstruction:FSHFAC02')
 			featurePortrayal:AddInstructions('LineInstruction:NAVARE51')
 		end

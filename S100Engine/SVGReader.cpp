@@ -104,7 +104,7 @@ namespace simpleUse
 	}
 
 	//wchar_t to char.
-	char * ConvertWCtoC(wchar_t* str)
+	char* ConvertWCtoC(wchar_t* str)
 	{
 		//Declare the char* variable to return
 		char* pStr = nullptr;
@@ -218,6 +218,10 @@ bool GetStyle(char* attributeContent, double& strokeWidth, std::wstring& strokeD
 		{
 			alpha = _wtof(wsVecTemp[i + 1].c_str());
 		}
+		else if (wsVecTemp[i].compare(L"stroke-opacity") == 0)
+		{
+			alpha = _wtof(wsVecTemp[i + 1].c_str());
+		}
 	}
 	return true;
 }
@@ -295,6 +299,14 @@ bool SVGReader::OpenByPugi(char* path)
 				{
 					char* value = (char*)attriValue;
 					GetRotation(value, line->rotation);
+				}
+				else if (!strcmp(attriName, "stroke-width"))
+				{
+					line->SetStrokeWidth(attri.as_double());
+				}
+				else if (!strcmp(attriName, "fill-opacity"))
+				{
+					line->alpha = attri.as_double();
 				}
 			}
 			figures.push_back(line);
@@ -391,6 +403,14 @@ bool SVGReader::OpenByPugi(char* path)
 				{
 					styleValue = attriValue;
 				}
+				else if (0 == strcmp(attriName, "stroke-width"))
+				{
+					line->strokeWidth = attri.as_double();
+				}
+				else if (!strcmp(attriName, "fill-opacity"))
+				{
+					line->alpha = attri.as_double();
+				}
 			}
 
 			if (nullptr != line)
@@ -471,6 +491,14 @@ bool SVGReader::OpenByPugi(char* path)
 					char* value = (char*)attriValue;
 					GetRotation(value, circle->rotation);
 				}
+				else if (!strcmp(attriName, "stroke-width"))
+				{
+					circle->strokeWidth = attri.as_double();
+				}
+				else if (!strcmp(attriName, "fill-opacity"))
+				{
+					circle->alpha = attri.as_double();
+				}
 			}
 
 			if (!wcscmp(circle->colorName.c_str(), L""))
@@ -496,7 +524,7 @@ bool SVGReader::OpenByPugi(char* path)
 
 		}
 	}
-	
+
 	// Get the name of the file without ext.
 	auto wPath = LibMFCUtil::ConvertCtoWC(path);
 	CString cpath(wPath);
@@ -569,7 +597,7 @@ SVGGeometry SVGReader::CreateSVGGeometryFromLine(ID2D1Factory1* m_pDirect2dFacto
 
 	if (SUCCEEDED(hr))
 	{
-		ID2D1GeometrySink *pSink = nullptr;
+		ID2D1GeometrySink* pSink = nullptr;
 
 		hr = svgGeometry.pGeometry->Open(&pSink);
 

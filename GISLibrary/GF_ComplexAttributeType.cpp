@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GF_ComplexAttributeType.h"
+#include "GF_SimpleAttributeType.h"
 
 namespace GF
 {
@@ -59,6 +60,20 @@ namespace GF
 		return (int)carries.size();
 	}
 
+	int ComplexAttributeType::GetSubAttributeCount(std::string code) const
+	{
+		int count = 0;
+		for (auto iter : carries)
+		{
+			if (iter->GetCode() == code)
+			{
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	ThematicAttributeType* ComplexAttributeType::GetSubAttribute(int index) const
 	{
 		if (index >= 0 && index < GetSubAttributeCount())
@@ -74,17 +89,18 @@ namespace GF
 		return false;
 	}
 
-	void ComplexAttributeType::AddSubAttribute(ThematicAttributeType* subAttribute)
+	ThematicAttributeType* ComplexAttributeType::AddSubAttribute(ThematicAttributeType* subAttribute)
 	{
 		carries.push_back(subAttribute);
+		return subAttribute;
 	}
 
-	void ComplexAttributeType::AddSubSimpleAttribute(
+	SimpleAttribute* ComplexAttributeType::AddSubSimpleAttribute(
 		FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value)
 	{
 		auto sa = new SimpleAttributeType(valueType, value);
 		sa->SetCode(code);
-		AddSubAttribute(sa);
+		return (SimpleAttribute*)AddSubAttribute(sa);
 	}
 
 	ComplexAttributeType* ComplexAttributeType::AddComplexAttribute(std::string code)
@@ -110,6 +126,24 @@ namespace GF
 				if (num == index)
 				{
 					return iter;
+				}
+				num++;
+			}
+		}
+
+		return std::nullopt;
+	}
+
+	std::optional<ComplexAttributeType*> ComplexAttributeType::getComplexAttribute(std::string code, int index)
+	{
+		int num = 0;
+		for (auto iter : carries)
+		{
+			if (iter->IsSimple() == false && iter->GetCode() == code)
+			{
+				if (num == index)
+				{
+					return (ComplexAttributeType*)iter;
 				}
 				num++;
 			}

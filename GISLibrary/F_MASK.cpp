@@ -15,16 +15,19 @@ F_MASK::F_MASK(const F_MASK& other) : Field(other)
 	{
 		MASK* mask = new MASK(*iter);
 		listMask.push_back(mask);
+		m_arr.insert({ mask->m_name.GetName(), mask });
 	}
 }
 
 F_MASK::~F_MASK(void)
-{
+{	
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{
 		MASK* mask = i->second;
 		delete mask;
 	}
+	listMask.clear();
+	m_arr.clear();
 }
 
 F_MASK F_MASK::operator=(const F_MASK& other)

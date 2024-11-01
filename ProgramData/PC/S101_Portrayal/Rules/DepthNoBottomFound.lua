@@ -9,9 +9,9 @@ require 'SNDFRM04'
 function DepthNoBottomFound(feature, featurePortrayal, contextParameters)
 	if feature.PrimitiveType == PrimitiveType.MultiPoint then
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:33010;DrawingPriority:18;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:33010;DrawingPriority:18;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:33010;DrawingPriority:18;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:33010;DrawingPriority:18;DisplayPlane:UnderRadar')
 		end
 		local points = feature.MultiPoint.Points
 
@@ -24,21 +24,7 @@ function DepthNoBottomFound(feature, featurePortrayal, contextParameters)
 				featurePortrayal:AddInstructions('PointInstruction:' .. symbol)
 			end
 		end
-	elseif feature.PrimitiveType == PrimitiveType.Point then
-		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:33010;DrawingPriority:18;DisplayPlane:OverRADAR')
-		else
-			featurePortrayal:AddInstructions('ViewingGroup:33010;DrawingPriority:18;DisplayPlane:UnderRADAR')
-		end
-		local point = feature.Point
-
-		local symbols = SNDFRM04(feature, featurePortrayal, contextParameters, point, point.ScaledZ)
-
-		featurePortrayal:AddInstructions('AugmentedPoint:GeographicCRS,' .. point.X .. ',' .. point.Y)
-
-		for j, symbol in ipairs(symbols) do
-			featurePortrayal:AddInstructions('PointInstruction:' .. symbol)
-		end
+		featurePortrayal:AddInstructions('ClearGeometry')
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end

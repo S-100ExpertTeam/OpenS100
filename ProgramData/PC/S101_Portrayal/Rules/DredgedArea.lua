@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 --
 -- ISSUES: PC #56, PSWG #23 
 
@@ -13,11 +11,11 @@ function DredgedArea(feature, featurePortrayal, contextParameters)
 	if feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
 		viewingGroup = 13030
-		featurePortrayal:AddInstructions('ViewingGroup:13030;DrawingPriority:3;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:13030;DrawingPriority:3;DisplayPlane:UnderRadar')
 		DEPARE03(feature, featurePortrayal, contextParameters, viewingGroup)
 
 		-- Dredged Date (row 47 main) #56
-		featurePortrayal:AddInstructions('LocalOffset:0,-3.51;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10;FontSlant:Italics')
+		featurePortrayal:AddInstructions('LocalOffset:0,-3.51;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10;FontSlant:Italics;FontColor:CHBLK')
 
 		local drmv = ''
 		local date = ''
@@ -29,7 +27,9 @@ function DredgedArea(feature, featurePortrayal, contextParameters)
 		-- END DEBUG
 
 		if feature.depthRangeMinimumValue ~= nil then
-			drmv = EncodeString(feature.depthRangeMinimumValue, 'dredged to %0.1fm')
+			-- #262 precision of numeric values
+			-- #438 removed text 'dredged to' before dredge depth value
+			drmv = EncodeString(feature.depthRangeMinimumValue, '%gm')
 			
 			if feature.dredgedDate then 
 				date = EncodeString(feature.dredgedDate, ' (%s)')

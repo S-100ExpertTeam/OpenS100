@@ -1,5 +1,6 @@
 -- RESARE04 conditional symbology rules file.
-
+--
+-- #304
 -- Main entry point for CSP.
 function RESARE04(feature, featurePortrayal, contextParameters, viewingGroup)
 	Debug.StartPerformance('Lua Code - RESARE04')
@@ -13,7 +14,7 @@ function RESARE04(feature, featurePortrayal, contextParameters, viewingGroup)
 
 			featurePortrayal:AddInstructions('DrawingPriority:18')
 
-			if contains(restriction, { 1, 2, 3, 4, 5, 6, 13, 16, 17, 23, 24, 25, 26, 27 }) then
+			if contains(restriction, { 1, 2, 3, 4, 5, 6, 13, 16, 17, 23, 24, 25, 26, 27, 42 }) then
 				featurePortrayal:AddInstructions('PointInstruction:ENTRES61')
 			elseif categoryOfRestrictedArea and contains(categoryOfRestrictedArea, { 1, 8, 9, 12, 14, 18, 19, 21, 24, 25, 26, 29 }) then
 				featurePortrayal:AddInstructions('PointInstruction:ENTRES61')

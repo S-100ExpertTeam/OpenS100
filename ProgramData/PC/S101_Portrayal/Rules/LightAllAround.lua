@@ -9,9 +9,9 @@ require 'LITDSN02'
 -- Main entry point for feature type.
 function LightAllAround(feature, featurePortrayal, contextParameters)
 	if contextParameters.RadarOverlay then
-		featurePortrayal:AddInstructions('ViewingGroup:27070;DrawingPriority:24;DisplayPlane:OverRADAR;Hover:true')
+		featurePortrayal:AddInstructions('ViewingGroup:27070;DrawingPriority:24;DisplayPlane:OverRadar;Hover:true')
 	else
-		featurePortrayal:AddInstructions('ViewingGroup:27070;DrawingPriority:24;DisplayPlane:UnderRADAR;Hover:true')
+		featurePortrayal:AddInstructions('ViewingGroup:27070;DrawingPriority:24;DisplayPlane:UnderRadar;Hover:true')
 	end
 
 	local valueOfNominalRange = 9.0
@@ -62,16 +62,19 @@ function LightAllAround(feature, featurePortrayal, contextParameters)
 		featurePortrayal:SimpleLineStyle('solid',0.64,sectorColourToken)
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 
-		featurePortrayal:AddInstructions('ClearGeometry;Rotation:PortrayalCRS,0;FontSize:10;FontColor:CHBLK')
+		featurePortrayal:AddInstructions('ClearGeometry;FontColor:CHBLK')
 		featurePortrayal:AddInstructions('LocalOffset:7.02,0;TextAlignHorizontal:Start;TextAlignVertical:Center')
 
 		local description = LITDSN02(categoryOfLight, feature.rhythmOfLight, feature.colour, feature.height, feature['!valueOfNominalRange'], feature.status)
 		if contains(feature.signalGeneration, {5,6})
 		then
-			featurePortrayal:AddTextInstruction(description .. '(man)', 23, 24, 27070, 21)
-		else
-			featurePortrayal:AddTextInstruction(description, 23, 24, 27070, 21)
+			description = description .. '(man)'
 		end
+		local textOffsetLines = featurePortrayal:GetColocatedTextCount()	-- lines of text output by co-located features
+		if textOffsetLines > 0 then
+			featurePortrayal:AddInstructions('TextVerticalOffset:' .. textOffsetLines * -3.51)
+		end
+		featurePortrayal:AddTextInstruction(description, 23, 24, 27070, 21, true)
 	else
 		LightFlareAndDescription(feature, featurePortrayal, contextParameters, feature.categoryOfLight[1], 27070, 21)
 	end

@@ -348,4 +348,54 @@ namespace GISLibrary
 		pRT->DrawRectangle(rect, pBrush);
 		pRT->SetTransform(oldMatrix);
 	}
+
+	IDWriteTextFormat* D2D1Resources::getWriteTextFormat(int fontSize)
+	{
+		auto item = writeTextFormatListByFontSize.find(fontSize);
+
+		if (item == writeTextFormatListByFontSize.end())
+		{
+			IDWriteTextFormat* newWriteTextFormat = NULL;
+			HRESULT hr = pDWriteFactory->CreateTextFormat(
+				ENCCommon::DISPLAY_FONT_NAME.c_str(),
+				NULL,
+				DWRITE_FONT_WEIGHT_NORMAL,
+				DWRITE_FONT_STYLE_NORMAL,
+				DWRITE_FONT_STRETCH_NORMAL,
+				(float)fontSize,
+				L"", //locale
+				&newWriteTextFormat
+			);
+
+			writeTextFormatListByFontSize.insert(std::make_pair(fontSize, newWriteTextFormat));
+			return newWriteTextFormat;
+		}
+
+		return item->second;
+	}
+
+	IDWriteTextFormat* D2D1Resources::getSlantWriteTextFormat(int fontSize)
+	{
+		auto item = slantTextFormatListByFontSize.find(fontSize);
+
+		if (item == slantTextFormatListByFontSize.end())
+		{
+			IDWriteTextFormat* newWriteTextFormat = NULL;
+			HRESULT hr = pDWriteFactory->CreateTextFormat(
+				ENCCommon::DISPLAY_FONT_NAME.c_str(),
+				NULL,
+				DWRITE_FONT_WEIGHT_NORMAL,
+				DWRITE_FONT_STYLE_ITALIC,
+				DWRITE_FONT_STRETCH_NORMAL,
+				(float)fontSize,
+				L"", //locale
+				&newWriteTextFormat
+			);
+
+			slantTextFormatListByFontSize.insert(std::make_pair(fontSize, newWriteTextFormat));
+			return newWriteTextFormat;
+		}
+
+		return item->second;
+	}
 }

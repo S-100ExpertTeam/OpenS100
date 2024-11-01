@@ -18,9 +18,9 @@ function UDWHAZ05(feature, featurePortrayal, contextParameters, DEPTH_VALUE, ori
 			else
 				viewingGroup = 14010
 				if contextParameters.RadarOverlay then
-					featurePortrayal:AddInstructions('ViewingGroup:14010;DrawingPriority:24;DisplayPlane:OverRADAR;ScaleMinimum:'..scaminInfinite)
+					featurePortrayal:AddInstructions('ViewingGroup:14010;DrawingPriority:24;DisplayPlane:OverRadar;ScaleMinimum:'..scaminInfinite)
 				else
-					featurePortrayal:AddInstructions('ViewingGroup:14010;DrawingPriority:24;DisplayPlane:UnderRADAR;ScaleMinimum:'..scaminInfinite)
+					featurePortrayal:AddInstructions('ViewingGroup:14010;DrawingPriority:24;DisplayPlane:UnderRadar;ScaleMinimum:'..scaminInfinite)
 				end
 				Debug.StopPerformance('Lua Code - UDWHAZ05')
 				return 'ISODGR01', viewingGroup
@@ -32,9 +32,9 @@ function UDWHAZ05(feature, featurePortrayal, contextParameters, DEPTH_VALUE, ori
 			else
 				viewingGroup = 24020
 				if contextParameters.RadarOverlay then
-					featurePortrayal:AddInstructions('ViewingGroup:24020;DrawingPriority:24;DisplayPlane:OverRADAR')
+					featurePortrayal:AddInstructions('ViewingGroup:24020;DrawingPriority:24;DisplayPlane:OverRadar')
 				else
-					featurePortrayal:AddInstructions('ViewingGroup:24020;DrawingPriority:24;DisplayPlane:UnderRADAR')
+					featurePortrayal:AddInstructions('ViewingGroup:24020;DrawingPriority:24;DisplayPlane:UnderRadar')
 				end
 				Debug.StopPerformance('Lua Code - UDWHAZ05')
 				return 'ISODGR01', viewingGroup

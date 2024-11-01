@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2022-09-01"?>
 <?S100Meta name="INFARE51" exposition="curve or boundary of information area"?>
-<lineStyle>
+<ls:lineStyle xmlns:ls="http://www.iho.int/S100LineStyle/5.2">
    <intervalLength>32.3</intervalLength>
    <pen width="0.32">
       <color>CHMGF</color>
@@ -22,4 +22,4 @@
    <symbol reference="INFARE01">
       <position>13.1</position>
    </symbol>
-</lineStyle>
+</ls:lineStyle>

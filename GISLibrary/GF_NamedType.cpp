@@ -34,4 +34,9 @@ namespace GF
 	{
 		code = value;
 	}
+
+	void NamedType::SetCode(std::wstring value)
+	{
+		code = pugi::as_utf8(value);
+	}
 }

@@ -7,6 +7,8 @@
 
 //#include "..\\S100_SVG_D2D1_DLL\SVG.h"
 
+#include "..\\S100Engine\\SVGReader.h"
+
 class SENC_Symbol
 {
 public:
@@ -14,6 +16,9 @@ public:
 	virtual ~SENC_Symbol();
 
 public:
+
+	SVGReader* pSvg = nullptr;
+
 	// element
 	SENC_VectorPoint offset;
 	SENC_Color overrideAll;

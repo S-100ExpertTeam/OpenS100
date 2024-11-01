@@ -7,27 +7,27 @@ function Default(feature, featurePortrayal, contextParameters)
 	if (feature.PrimitiveType == PrimitiveType.Point or feature.PrimitiveType == PrimitiveType.MultiPoint) then
 		-- Simplified and paper chart points use the same symbolization
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:AddInstructions('ViewingGroup:21010;DrawingPriority:15')
 		featurePortrayal:AddInstructions('PointInstruction:QUESMRK1')
 	elseif (feature.PrimitiveType == PrimitiveType.Curve) then
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:AddInstructions('ViewingGroup:21010;DrawingPriority:15')
 		featurePortrayal:AddInstructions('LineInstruction:QUESMRK1')
 	elseif (feature.PrimitiveType == PrimitiveType.Surface and contextParameters.PlainBoundaries) then
-		featurePortrayal:AddInstructions('ViewingGroup:21010;DrawingPriority:15;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:21010;DrawingPriority:15;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('PointInstruction:QUESMRK1')
 		featurePortrayal:SimpleLineStyle('dash',0.32,'CHMGD')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 	elseif (feature.PrimitiveType == PrimitiveType.Surface) then
-		featurePortrayal:AddInstructions('ViewingGroup:21010;DrawingPriority:15;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:21010;DrawingPriority:15;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('PointInstruction:QUESMRK1')
 		featurePortrayal:AddInstructions('LineInstruction:QUESMRK1')
 	end

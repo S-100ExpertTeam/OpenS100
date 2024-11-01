@@ -26,7 +26,7 @@
     <xsl:call-template name="textTemplate">
       <xsl:with-param name="featureReference" select="@id"/>
       <xsl:with-param name="viewingGroup" select="33021"/>
-      <xsl:with-param name="displayPlane" select="'UNDERRADAR'"/>
+      <xsl:with-param name="displayPlane" select="'UnderRadar'"/>
       <xsl:with-param name="drawingPriority" select="8"/>
 
       <xsl:with-param name="text" select="$temp"/>       

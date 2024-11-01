@@ -41,6 +41,7 @@ namespace GISLibrary
 		IWICImagingFactory* pImagingFactory = nullptr;
 
 		std::unordered_map<int, IDWriteTextFormat*> writeTextFormatListByFontSize;
+		std::unordered_map<int, IDWriteTextFormat*> slantTextFormatListByFontSize;
 
 		// Device Dependent Resources
 		ID2D1DCRenderTarget *pRT = nullptr; // direct 2D
@@ -65,8 +66,10 @@ namespace GISLibrary
 		void Begin(HDC& hdc, CRect& rect);
 		void End();
 
-	public:
 		void DrawCRect(CRect& rect);
 		void DrawD2Rect(D2D1_RECT_F& rect);
+
+		IDWriteTextFormat* getWriteTextFormat(int fontSize);
+		IDWriteTextFormat* getSlantWriteTextFormat(int fontSize);
 	};
 }

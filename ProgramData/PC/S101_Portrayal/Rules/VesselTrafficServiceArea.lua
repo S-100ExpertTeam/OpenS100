@@ -9,11 +9,11 @@ function VesselTrafficServiceArea(feature, featurePortrayal, contextParameters)
 	local viewingGroup = 36050
 
 	if feature.PrimitiveType == PrimitiveType.Surface and contextParameters.PlainBoundaries then
-		featurePortrayal:AddInstructions('ViewingGroup:36050;DrawingPriority:6;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:36050;DrawingPriority:6;DisplayPlane:UnderRadar')
 		featurePortrayal:SimpleLineStyle('dash',0.64,'CHMGD')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
-		featurePortrayal:AddInstructions('ViewingGroup:36050;DrawingPriority:6;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:36050;DrawingPriority:6;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('LineInstruction:VTSARE51')
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')

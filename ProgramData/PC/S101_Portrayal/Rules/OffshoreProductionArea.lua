@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 
 -- Issues PC #114, PSWG #63, #55, #67, #67, #54, extensively reworked from converter auto-generated
 
@@ -16,7 +14,7 @@ function OffshoreProductionArea(feature, featurePortrayal, contextParameters)
 
 	featurePortrayal:AddInstructions('AlertReference:ProhAre,53018,53018')
 
-	featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:UnderRADAR')
+	featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:UnderRadar')
 
 	if feature.PrimitiveType == PrimitiveType.Surface and contextParameters.PlainBoundaries then
 		featurePortrayal:SimpleLineStyle('dash',0.64,'CHGRD')

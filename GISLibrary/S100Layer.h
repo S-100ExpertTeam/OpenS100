@@ -4,6 +4,7 @@
 #include "DrawingSet.h"
 
 #include <string>
+#include <set>
 
 class Catalog;
 class PortrayalCatalogue;

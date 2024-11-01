@@ -5,11 +5,11 @@
   <xsl:template match="UnderKeelClearanceControlPoint">
     <xsl:call-template name="pointSimpleSymbolTemplate">
       <xsl:with-param name="featureReference" select="@id"/>
-      <xsl:with-param name="viewingGroup" select="33021"/>
-      <xsl:with-param name="displayPlane" select="'UNDERRADAR'"/>
-      <xsl:with-param name="drawingPriority" select="6"/>
+      <xsl:with-param name="viewingGroup" select="99993"/>
+      <xsl:with-param name="displayPlane" select="'UnderRadar'"/>
+      <xsl:with-param name="drawingPriority" select="21"/>
       
-      <xsl:with-param name="symbolReference" select="'CP'"/>
+      <xsl:with-param name="symbolReference" select="'UKCCONPT'"/>
       <xsl:with-param name="rotation" select="0"/>
       <xsl:with-param name="rotationCRS" select="'portrayalCRS'"/>
       <xsl:with-param name="scaleFactor" select="1"/>

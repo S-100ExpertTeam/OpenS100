@@ -46,8 +46,17 @@ SENC_AugmentedPath::~SENC_AugmentedPath()
 }
 
 #pragma warning(disable:4244)
-void SENC_AugmentedPath::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* factory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
+void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc)
 {
+	auto factory = d2->Factory();
+	auto rt = d2->RenderTarget();
+	auto brush = d2->SolidColorBrush();
+	auto stroke = d2->SolidStrokeStyle();
+	if (!factory || !rt || !brush || !stroke)
+	{
+		return;
+	}
+
 	if (!fr) {
 		return;
 	}
@@ -164,7 +173,7 @@ void SENC_AugmentedPath::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1*
 					}
 					else
 					{
-						rt->DrawGeometry(pGeometry, brush, ls->pen_width / 0.32, (*strokeGroup)[0]);
+						rt->DrawGeometry(pGeometry, brush, ls->pen_width / 0.32, stroke);
 					}
 				}
 			}

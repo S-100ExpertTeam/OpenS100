@@ -220,7 +220,8 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 		for (int i = 0; i < attrCnt; i++)
 		{
 			auto thematicAttribute = object->GetAttribute(i);
-			if (thematicAttribute) {
+			if (thematicAttribute) 
+			{
 
 				auto code = thematicAttribute->GetCode();
 				//Attribute* attribute = fc->GetSimpleAttribute(code);
@@ -232,7 +233,8 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 				//	}
 				//}
 				
-				if (thematicAttribute->IsSimple()) {
+				if (thematicAttribute->IsSimple()) 
+				{
 					addSimpleAttribute(nullptr, thematicAttribute->GetCode(), thematicAttribute->GetValue(), fc);
 					
 					//auto gf_sa = (GF::SimpleAttributeType*)thematicAttribute;
@@ -259,7 +261,8 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 					//pAttrItemList.push_back(pAttribute);
 					//pAttribute->SetDescription(attribute->GetDefinition().c_str());
 				}
-				else {
+				else 
+				{
 					//auto gf_ca = (GF::ComplexAttributeType*)thematicAttribute;
 
 					//auto ca = (ComplexAttribute*)attribute;
@@ -361,27 +364,33 @@ void CDockablePaneEditWindow::addComplexAttribute(CMFCPropertyGridProperty* pare
 
 	auto ca = fc->GetComplexAttribute(complexAttribute->GetCode());
 
-	if (ca) {
+	if (ca) 
+	{
 		CString strDescription = ca->GetDefinition().c_str();
 		auto child = new CMFCPropertyGridProperty(strCode);
 		child->SetDescription(strDescription);
 
-		for (int i = 0; i < complexAttribute->GetSubAttributeCount(); i++) {
+		for (int i = 0; i < complexAttribute->GetSubAttributeCount(); i++) 
+		{
 			auto subAttribute = complexAttribute->GetSubAttribute(i);
-			if (subAttribute->IsSimple()) {
+			if (subAttribute->IsSimple()) 
+			{
 				auto code = subAttribute->GetCode();
 				auto value = subAttribute->GetValue();
 				addSimpleAttribute(child, code, value, fc);
 			}
-			else {
+			else 
+			{
 				addComplexAttribute(child, (GF::ComplexAttributeType*)subAttribute, fc);
 			}
 		}
 
-		if (parent) {
+		if (parent) 
+		{
 			parent->AddSubItem(child);
 		}
-		else {
+		else 
+		{
 			m_wndListAttribute.AddProperty(child);
 		}
 	}

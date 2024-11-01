@@ -9,6 +9,8 @@ function WindTurbine(feature, featurePortrayal, contextParameters)
 		if feature.inTheWater then
 			viewingGroup = 12200
 			featurePortrayal:AddInstructions('ViewingGroup:12200')
+			-- #365
+			featurePortrayal:AddInstructions('AlertReference:NavHazard')
 		elseif feature.visualProminence == 1 then
 			viewingGroup = 22200
 			featurePortrayal:AddInstructions('ViewingGroup:22220')
@@ -18,9 +20,9 @@ function WindTurbine(feature, featurePortrayal, contextParameters)
 		end
 
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('DrawingPriority:18;DisplayPlane:OverRADAR;Hover:true')
+			featurePortrayal:AddInstructions('DrawingPriority:18;DisplayPlane:OverRadar;Hover:true')
 		else
-			featurePortrayal:AddInstructions('DrawingPriority:18;DisplayPlane:UnderRADAR;Hover:true')
+			featurePortrayal:AddInstructions('DrawingPriority:18;DisplayPlane:UnderRadar;Hover:true')
 		end
 
 		if feature.visualProminence == 1 then

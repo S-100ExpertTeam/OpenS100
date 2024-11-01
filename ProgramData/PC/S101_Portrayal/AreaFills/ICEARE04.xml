@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-03"?>
-<?S100Meta name="ICEARE04" exposition="continuous pattern for an ice area (glacier, etc.)"?><symbolFill>
+<?S100Meta name="ICEARE04" exposition="continuous pattern for an ice area (glacier, etc.)"?><af:symbolFill xmlns:af="http://www.iho.int/S100AreaFill/5.2">
   <areaCRS>GlobalGeometry</areaCRS>
   <symbol reference="ICEARE04P"/>
   <v1>
@@ -11,4 +11,4 @@
     <x>0</x>
     <y>14.35</y>
   </v2>
-</symbolFill>
+</af:symbolFill>

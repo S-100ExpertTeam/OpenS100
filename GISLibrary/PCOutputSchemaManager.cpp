@@ -65,69 +65,70 @@ PCOutputSchemaManager::~PCOutputSchemaManager()
 
 void PCOutputSchemaManager::GenerateSENCAlertInstruction(S101Cell* cell, PortrayalCatalogue* pc)
 {
+	// Don't run until the model of drawingCommands is completed
 
-	if (nullptr == displayListSENC)
-	{
-		displayListSENC = new SENC_DisplayList();
-	}
+	//if (nullptr == displayListSENC)
+	//{
+	//	displayListSENC = new SENC_DisplayList();
+	//}
 
-	auto alertInstructions = displayList->GetAlertInstructions();
+	//auto alertInstructions = displayList->GetAlertInstructions();
 
-	for (auto itor = alertInstructions.begin();
-		itor != alertInstructions.end();
-		itor++)
-	{
-		S100_AlertReference* it = (S100_AlertReference*)*itor;
-		SENC_AlertReference* sit = nullptr;
-		sit = new SENC_AlertReference();
+	//for (auto itor = alertInstructions.begin();
+	//	itor != alertInstructions.end();
+	//	itor++)
+	//{
+	//	S100_AlertReference* it = (S100_AlertReference*)*itor;
+	//	SENC_AlertReference* sit = nullptr;
+	//	sit = new SENC_AlertReference();
 
-		GetSENCFromS100Common((S100_Instruction*)it, sit);
+	//	GetSENCFromS100Common((S100_Instruction*)it, sit);
 
-		if (it->alertType.size() > 0)
-		{
-			if (it->alertType.compare(L"ProhAre") == 0)
-			{
-				sit->alertType = 1;
-			}
-			else if (it->alertType.compare(L"SafetyContour") == 0)
-			{
-				sit->alertType = 2;
-			}
-			else if (it->alertType.compare(L"NavHazard") == 0)
-			{
-				sit->alertType = 3;
-			}
-		}
-		sit->plan = it->plan;
-		sit->monitor = it->monitor;
+	//	if (it->alertType.size() > 0)
+	//	{
+	//		if (it->alertType.compare(L"ProhAre") == 0)
+	//		{
+	//			sit->alertType = 1;
+	//		}
+	//		else if (it->alertType.compare(L"SafetyContour") == 0)
+	//		{
+	//			sit->alertType = 2;
+	//		}
+	//		else if (it->alertType.compare(L"NavHazard") == 0)
+	//		{
+	//			sit->alertType = 3;
+	//		}
+	//	}
+	//	sit->plan = it->plan;
+	//	sit->monitor = it->monitor;
 
-		if (sit)
-		{
-			auto feature = cell->GetFeatureType(sit->featureReference);
-			if (feature) {
-				auto id = feature->GetIDAsInteger();
+	//	if (sit)
+	//	{
+	//		auto feature = cell->GetFeatureType(sit->featureReference);
+	//		if (feature) {
+	//			auto id = feature->GetIDAsInteger();
 
-				__int64 iKey = ((__int64)100) << 32 | id;
-				auto item = cell->GetFeatureRecord(iKey);
+	//			__int64 iKey = ((__int64)100) << 32 | id;
+	//			auto item = cell->GetFeatureRecord(iKey);
 
-				if (nullptr == item)
-				{
-					continue;
-				}
-				else
-				{
-					sit->fr = item;
-				}
+	//			if (nullptr == item)
+	//			{
+	//				continue;
+	//			}
+	//			else
+	//			{
+	//				sit->fr = item;
+	//			}
 
-				if (sit->fr)
-				{
-					//sit->fr->m_alertIndicationType = sit->alertType;
-				}
+	//			if (sit->fr)
+	//			{
+	//				//sit->fr->m_alertIndicationType = sit->alertType;
+	//			}
 
-				displayListSENC->AddAlertIndication(sit);
-			}
-		}
-	}
+	//			displayListSENC->AddAlertIndication(sit);
+	//		}
+	//	}
+	//}
 }
 
 void PCOutputSchemaManager::InitDisplayList()
@@ -182,11 +183,11 @@ void PCOutputSchemaManager::GenerateSENCInstruction(S100SpatialObject* s100so, P
 void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Instruction* si)
 {
 	si->displayPlane = tp->GetDisplayPlane().compare(L"UNDERRADAR") == 0 ? 0 : 1;
-	si->drawingPriority = _wtoi(tp->GetDrawingProiority().c_str());
-	si->viewingGroup = _wtoi(tp->GetViewingGroup().c_str());
+	si->drawingPriority = tp->GetDrawingProiority();
+	si->viewingGroup = _wtoi(tp->GetViewingGroup(0).c_str());
 	si->featureReference = pugi::as_utf8(tp->GetFeatureReference());
-	si->scaleMinimum = _wtoi(tp->GetScaleMinimum().c_str());
-	si->scaleMaximum = _wtoi(tp->GetScaleMaximum().c_str());
+	si->scaleMinimum = tp->GetScaleMinimum();
+	si->scaleMaximum = tp->GetScaleMaximum();
 
 	auto spatialReference = tp->GetSpatialReference();
 	for (auto itor = spatialReference.begin(); itor != spatialReference.end(); itor++)
@@ -196,7 +197,7 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 
 		ssr->SetRCNM(sr->GetType());
 		ssr->reference = _wtoi(sr->GetReference().c_str());
-		ssr->bForward = sr->GetForward().compare(L"true") == 0 ? true : false;
+		ssr->bForward = sr->isForward();
 
 		si->spatialReference.push_back(ssr);
 	}

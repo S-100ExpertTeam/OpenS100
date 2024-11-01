@@ -643,6 +643,43 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		cm->addPC(item);
 	}
 
+	// import Dataset
+	auto dsList = DataSetManagerSupport::GetInstance().initDataFileList();
+	for (auto item : dsList)
+	{
+		theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());
+	}
+
+	// import Support files
+	auto supportFiles = DataSetManagerSupport::GetInstance().initSupportFiles();
+	for (auto item : supportFiles)
+	{
+		CString cPath = LibMFCUtil::StringToWString(item).c_str();
+		auto ext = LibMFCUtil::GetExtension(cPath);
+		if (ext.CompareNoCase(L"xml") == 0)
+		{
+			TranslationPackageType languagePack;
+			debug_print_utf8("Language: " + languagePack.Language + "\n");
+			debug_print_utf8("Issue Date: " + languagePack.IssueDate + "\n");
+			debug_print_utf8("Issue Time: " + languagePack.IssueTime + "\n");
+			/*print_utf8("Responsible Party: " + translationPackage->ResponsibleParty + "\n");*/
+
+			for (const auto& sourceFile : languagePack.SourceFiles) {
+				debug_print_utf8("Source File Identifier: " + sourceFile.Header.ResourceIdentifier + "\n");
+				for (const auto& id : sourceFile.Header.Identifications) {
+					debug_print_utf8("  Path: " + id.Path + ", Value: " + id.Value + "\n");
+				}
+				for (const auto& item : sourceFile.TranslationItems) {
+					debug_print_utf8("  Translation Item Path: " + item.Path + "\n");
+					debug_print_utf8("    Original: " + item.Original + "\n");
+					debug_print_utf8("    Status: " + item.ItemStatus.toString() + "\n");
+					debug_print_utf8("    Translation: " + item.Translation + "\n");
+				}
+			}
+		}
+		//theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());
+	}
+
 	return 0;
 }
 

@@ -16,7 +16,7 @@ function QUAPOS01(feature, featurePortrayal, contextParameters, viewingGroup)
 		local symbol = QUAPNT02(feature, featurePortrayal, contextParameters)
 
 		if symbol then
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup ..	',31011,accuracy;PointInstruction:' .. symbol)
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup ..	',90011;PointInstruction:' .. symbol)
 		end
 	end
 

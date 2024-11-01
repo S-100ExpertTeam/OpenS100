@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
 <?S100Meta name="RCRDEF11" exposition="regulated recommended route centreline, details not defined"?>
-<lineStyle>
+<ls:lineStyle xmlns:ls="http://www.iho.int/S100LineStyle/5.2">
    <intervalLength>24.6</intervalLength>
    <pen width="0.32">
       <color>TRFCD</color>
@@ -32,4 +32,4 @@
    <symbol reference="EMRCRTC2">
       <position>16.5</position>
    </symbol>
-</lineStyle>
+</ls:lineStyle>

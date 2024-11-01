@@ -54,3 +54,28 @@ std::wstring S100_Foreground::GetTransparency()
 {
 	return transparency;
 }
+
+void S100_Foreground::fromDrawingCommand(std::string_view drawingCommand)
+{
+    // Parse the drawing command
+    std::string token;
+    std::string transparency;
+
+    size_t commaPos = drawingCommand.find(',');
+    if (commaPos != std::string_view::npos)
+    {
+        token = drawingCommand.substr(0, commaPos);
+        transparency = drawingCommand.substr(commaPos + 1);
+    }
+    else
+    {
+        token = drawingCommand;
+    }
+
+    // Set the parsed values
+    SetToken(std::wstring(token.begin(), token.end()));
+    if (!transparency.empty())
+    {
+        SetTransparency(std::wstring(transparency.begin(), transparency.end()));
+    }
+}

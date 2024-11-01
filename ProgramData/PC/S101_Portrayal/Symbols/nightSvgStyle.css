@@ -1,7 +1,3 @@
-svg {
-	background-color: #171E21;
-	color: #301705;
-}
 .layout {display:none}  /* used to control visibility of symbolBox, svgBox, pivotPoint (none or inline) */
 .symbolBox {stroke:black;stroke-width:0.32;}  /* show the cover of the symbol graphics */
 .svgBox {stroke:blue;stroke-width:0.32;}  /* show the entire SVG cover */

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.12mm" height="2.69mm" viewBox="-0.1 -0.1 5.12 2.69">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.75mm" height="4.5mm" viewBox="-1.0 -1.5 6.75 4.5">
   <title>SAFCON55</title>
   <desc>pattern of symbol</desc>
   <metadata>
-    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
-      <iho:Description iho:publisher="IHB" iho:creationDate="2019-01-30" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2024-02-20" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="1.0" />
     </iho:S100SVG>
   </metadata>
-  <rect class="symbolBox layout" fill="none" x="-0.1" y="2.59" height="2.69" width="5.12" />
-  <rect class="svgBox layout" fill="none" x="-0.1" y="-0.1" height="2.69" width="5.12" />
-  <path d=" M 4.92,0 L 3.69,0 L 3.69,1.08 L 4.68,1.08 L 4.92,1.32 L 4.92,2.25 L 4.68,2.49 L 3.93,2.49 L 3.69,2.25" class="sl f0 sDEPDW" style="stroke-width:0.96;" />
-  <path d=" M 4.92,0 L 3.69,0 L 3.69,1.08 L 4.68,1.08 L 4.92,1.32 L 4.92,2.25 L 4.68,2.49 L 3.93,2.49 L 3.69,2.25" class="sl f0 sSNDG2" style="stroke-width:0.32;" />
+  <circle class="pivotPoint layout" fill="none" cx="0.00" cy="0.00" r="0.1" />
+  <rect class="symbolBox layout" fill="none" x="-1.0" y="-1.5" height="4.5" width="6.75" />
+  <rect class="svgBox layout" fill="none" x="-1.0" y="-1.5" height="4.5" width="6.75" />
+  <path d=" M 4.71,-0.49 L 3.48,-0.49 L 3.48,0.59 L 4.46,0.59 L 4.71,0.83 L 4.71,1.76 L 4.46,2 L 3.72,2 L 3.48,1.76" class="sl f0 sDEPDW" stroke-width="0.96"  />
+  <path d=" M 4.71,-0.5 L 3.48,-0.5 L 3.48,0.58 L 4.46,0.58 L 4.71,0.82 L 4.71,1.75 L 4.46,1.99 L 3.72,1.99 L 3.48,1.75" class="sl f0 sSNDG2" stroke-width="0.32"  />
 </svg>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="12.86mm" height="6.06mm" viewBox="-9.81 -3.3 12.86 6.06">
+  <title>ANCBDNG2</title>
+  <desc>Anchorage berth for dangerous cargo</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2023-06-06" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-9.81" y="-3.3" height="6.06" width="12.86" />
+  <rect class="svgBox layout" fill="none" x="-9.81" y="-3.3" height="6.06" width="12.86" />
+  <circle cx="-6.82" cy="-0.26" r="2.49" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M 0.01,2.26 L 0.01,1.44" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M 2.55,0.72 L 1.03,2.24 L -0.94,2.24 L -2.51,0.69" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M -1.54,-1.26 L 1.63,-1.26" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <circle cx="0" cy="0.38" r="1.01" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <circle cx="-6.8" cy="1.7" r="0.29" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M -6.76,-2.29 L -6.69,-1.58 L -6.46,-0.84" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M -6.47,-0.87 L -6.27,-0.42 L -5.97,-0.01 L -5.89,0.39 L -6.09,0.88" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M -7.49,0.9 L -7.23,1.13 L -6.82,1.25 L -6.41,1.13 L -6.07,0.86" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M -7.51,0.88 L -7.78,0.46 L -7.85,0.21 L -7.69,-0.45" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M -7.68,-0.45 L -7.2,-1.53 L -6.67,-2.54" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M -6.95,0.94 L -6.66,0.51" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M -7.01,-1.41 L -7.01,-0.5" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M -6.99,-0.5 L -6.92,-0.18 L -6.75,0.23 L -6.68,0.52" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <path d=" M 0.01,-2.8 L 0.01,-0.58" class="sl f0 sCHMGD" stroke-width="0.32"  />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+</svg>

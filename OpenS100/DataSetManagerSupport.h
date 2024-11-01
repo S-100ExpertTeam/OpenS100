@@ -43,6 +43,13 @@ public:
 	
 };
 
+class SupportFiles
+{
+public:
+	std::string fileName;
+	std::string filePath;
+};
+
 //class DatasetFileClass : public DatasetClass
 //{
 //public:
@@ -94,6 +101,7 @@ public:
 	std::vector<std::string> initFCList();
 	std::vector<std::string> initPCList();
 	std::vector<std::string> initDataFileList();
+	std::vector<std::string> initSupportFiles();
 
 	// Catalogue.xml
 	void CreateCatalogueFile(std::string folderPath, S100::ExchangeCatalogue& ec);
@@ -120,6 +128,7 @@ public:
 
 	void insertData(std::string table, const std::string& fileName, const std::string& filePath, const std::string& product, const std::string& version);
 	void insertData(std::string table, const std::string& fileName, const std::string& filePath);
+	void insertData(std::string table, const std::string& fileName, const std::string& filePath, const std::string& resourcePurpose);
 
 	//void updateData(std::string table, const std::string& fileName, const std::string& filePath, const std::string& product, const std::string& version);
 	//void deleteData(std::string table, const std::string& filePath);
@@ -127,6 +136,7 @@ public:
 
 	std::vector<std::shared_ptr<FC_PC_DatasetClass>> selectAllData(std::string table);
 	std::vector<std::shared_ptr<DatasetClass>> selectAllDataDS_SP(std::string table);
+	std::vector<std::shared_ptr<SupportFiles>> selectAllSupportFiles(std::string table);
 
 	std::shared_ptr<FC_PC_DatasetClass> selectDataByFilePath(std::string table, const std::string& targetFilePath);
 	

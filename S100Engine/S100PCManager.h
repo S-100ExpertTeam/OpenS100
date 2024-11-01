@@ -45,10 +45,13 @@ public:
 	
 	void Draw(std::wstring& _symbolName, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, D2D1_POINT_2F point, FLOAT rotation = 0, FLOAT scale = 5, std::wstring paletteName = L"Day");
 	void DrawAreaFill(std::wstring _symbolName, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, std::wstring paletteName = L"Day");
+	void DrawAreaFill(AreaFill* areaFill, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, std::wstring paletteName = L"Day");
 	void DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, std::wstring paletteName = L"Day");
 	void CreateSVGGeometry(ID2D1Factory1* m_pDirect2dFactory);
 	void CreateBitmapImage(ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, std::wstring paletteName = L"Day");
+	AreaPatternBitmap* CreateBitmapImage(AreaFill* pAreaFill, ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, std::wstring paletteName = L"Day");
 	void CreateBitmapBrush(ID2D1RenderTarget* pRenderTarget);
+	ID2D1BitmapBrush* CreateBitmapBrush(AreaPatternBitmap* patternBitmap, ID2D1RenderTarget* pRenderTarget);
 	void CreateLineImage(ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, std::wstring paletteName = L"Day");
 	void DeleteBitmapBrush();
 	void DeleteBitmapImage();

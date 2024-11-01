@@ -1,6 +1,7 @@
 -- SNDFRM04 conditional symbology rules file.
 
 -- PSWG #118, PC #141
+-- PC #307
 
 -- Main entry point for CSP.
 function SNDFRM04(feature, featurePortrayal, contextParameters, soundingPoint, depthValue)
@@ -31,7 +32,9 @@ function SNDFRM04(feature, featurePortrayal, contextParameters, soundingPoint, d
 		--fontSize = contextParameters._Testing_SoundingsAsText_SizeSafe
 	end
 
-	if contains(feature.techniqueOfVerticalMeasurement, { 4, 6 }) then
+	-- TODO: if attribute is not present, check value from intersecting meta-feature QualityOfSurvey
+	if contains(feature.techniqueOfVerticalMeasurement, { 4, 18 }) then
+		-- add swept sounding symbol
 		addSymbol(symbolPrefix..'B1')
 	end
 

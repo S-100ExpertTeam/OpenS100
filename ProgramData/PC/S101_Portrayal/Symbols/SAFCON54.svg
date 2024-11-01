@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.36mm" height="3.17mm" viewBox="-0.1 -0.34 5.36 3.17">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.00mm" height="4.75mm" viewBox="-1.0 -1.57 7.00 4.75">
   <title>SAFCON54</title>
   <desc>pattern of symbol</desc>
   <metadata>
-    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
-      <iho:Description iho:publisher="IHB" iho:creationDate="2019-01-30" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2024-02-21" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="1.0" />
     </iho:S100SVG>
   </metadata>
-  <rect class="symbolBox layout" fill="none" x="-0.1" y="2.83" height="3.17" width="5.36" />
-  <rect class="svgBox layout" fill="none" x="-0.1" y="-0.34" height="3.17" width="5.36" />
-  <path d=" M 4.89,2.73 L 4.89,-0.24 L 3.63,1.5 L 5.16,1.5" class="sl f0 sDEPDW" style="stroke-width:0.064;" />
-  <path d=" M 4.89,2.73 L 4.89,-0.24 L 3.63,1.5 L 5.16,1.5" class="sl f0 sSNDG2" style="stroke-width:0.064;" />
+  <circle class="pivotPoint layout" fill="none" cx="0.00" cy="0.00" r="0.1" />
+  <rect class="symbolBox layout" fill="none" x="-1.0" y="-1.57" height="4.75" width="7.00" />
+  <rect class="svgBox layout" fill="none" x="-1.0" y="-1.57" height="4.75" width="7.00" />
+  <path d=" M 4.62,2.13 L 4.62,-0.57 L 3.43,0.94 L 4.92,0.94" class="sl f0 sDEPDW" stroke-width="0.96"  />
+  <path d=" M 4.61,2.07 L 4.62,-0.52 L 3.5,0.93 L 4.86,0.93" class="sl f0 sSNDG2" stroke-width="0.32"  />
 </svg>

@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 
 -- Pylon/bridge support main entry point.
 function PylonBridgeSupport(feature, featurePortrayal, contextParameters)
@@ -11,15 +9,15 @@ function PylonBridgeSupport(feature, featurePortrayal, contextParameters)
 		-- Simplified and paper chart points use the same symbolization
 		viewingGroup = 12210
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:12210;DrawingPriority:24;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:12210;DrawingPriority:24;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:12210;DrawingPriority:24;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:12210;DrawingPriority:24;DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:AddInstructions('PointInstruction:POSGEN03')
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
 		viewingGroup = 12210
-		featurePortrayal:AddInstructions('ViewingGroup:12210;DrawingPriority:18;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:12210;DrawingPriority:18;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('ColorFill:CHBRN')
 		featurePortrayal:SimpleLineStyle('solid',0.64,'CSTLN')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')

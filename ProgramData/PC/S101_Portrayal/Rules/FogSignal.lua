@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 
 -- Fog signal main entry point.
 function FogSignal(feature, featurePortrayal, contextParameters)
@@ -9,9 +7,9 @@ function FogSignal(feature, featurePortrayal, contextParameters)
 		-- Simplified and paper chart points use the same symbolization
 		viewingGroup = 27080
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:27080;DrawingPriority:18;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:27080;DrawingPriority:18;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:27080;DrawingPriority:18;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:27080;DrawingPriority:18;DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:AddInstructions('PointInstruction:FOGSIG01')
 	
@@ -19,7 +17,7 @@ function FogSignal(feature, featurePortrayal, contextParameters)
 		-- see dataset 1012J005X0001.000 for example
 		-- debug feature.signalGeneration = 5
 		if contains(feature.signalGeneration, {3,5,6}) then
-		featurePortrayal:AddInstructions('LocalOffset:-14,-5;FontSize:10')
+		featurePortrayal:AddInstructions('LocalOffset:-14,-5;FontSize:10;FontColor:CHBLK')
 		featurePortrayal:AddTextInstruction('(man)', 23, 24, viewingGroup, 18)
 	end
 	-- end issue #52

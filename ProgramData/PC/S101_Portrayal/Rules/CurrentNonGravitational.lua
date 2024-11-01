@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 -- #155
 
 -- Current - non-gravitational main entry point.
@@ -10,21 +8,21 @@ function CurrentNonGravitational(feature, featurePortrayal, contextParameters)
 		if feature.orientation and feature.orientation.orientationValue and feature.speed and feature.speed.speedMaximum then
 			viewingGroup = 33060
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. tostring(feature.orientation.orientationValue) .. '')
 			featurePortrayal:AddInstructions('PointInstruction:CURENT01')
 			featurePortrayal:AddInstructions('Rotation:PortrayalCRS,0')
-			featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;FontSize:10')
+			featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;FontSize:10;FontColor:CHBLK')
 			featurePortrayal:AddTextInstruction(EncodeString(feature.speed.speedMaximum, '%4.1f kn'), 30, 24, 33060, 15)
 		elseif feature.orientation and feature.orientation.orientationValue then
 			viewingGroup = 33060
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. tostring(feature.orientation.orientationValue) .. '')
 			featurePortrayal:AddInstructions('PointInstruction:CURENT01')
@@ -32,9 +30,9 @@ function CurrentNonGravitational(feature, featurePortrayal, contextParameters)
 		else
 			viewingGroup = 33060
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:CURDEF01')
 		end
@@ -42,21 +40,21 @@ function CurrentNonGravitational(feature, featurePortrayal, contextParameters)
 		if feature.orientation and feature.orientation.orientationValue and feature.speed and feature.speed.speedMaximum then
 			viewingGroup = 33060
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. tostring(feature.orientation.orientationValue) .. '')
 			featurePortrayal:AddInstructions('PointInstruction:CURENT01')
 			featurePortrayal:AddInstructions('Rotation:PortrayalCRS,0')
-			featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;FontSize:10')
+			featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;FontSize:10;FontColor:CHBLK')
 			featurePortrayal:AddTextInstruction(EncodeString(feature.speed.speedMaximum, '%4.1f kn'), 30, 24, 33060, 15)
 		elseif feature.orientation and feature.orientation.orientationValue then
 			viewingGroup = 33060
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. tostring(feature.orientation.orientationValue) .. '')
 			featurePortrayal:AddInstructions('PointInstruction:CURENT01')
@@ -64,9 +62,9 @@ function CurrentNonGravitational(feature, featurePortrayal, contextParameters)
 		else
 			viewingGroup = 33060
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:33060;DrawingPriority:15;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddInstructions('PointInstruction:CURDEF01')
 		end

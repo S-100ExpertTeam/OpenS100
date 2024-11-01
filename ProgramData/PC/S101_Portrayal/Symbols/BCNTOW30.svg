@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.32mm" height="5.52mm" viewBox="-2.66 -4.66 5.32 5.52">
+  <title>BCNTOW30</title>
+  <desc>beacon tower, lateral-rgr, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2023-01-23" iho:source="7Cs" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.5" y="-4.5" height="5.2" width="5"/>
+  <rect class="svgBox layout" fill="none" x="-2.5" y="-4.5" height="5.2" width="5"/>
+  <path d=" M -2,0 L -1,-4.5 L 1,-4.5 L 2,0 L -2,0 Z" class="fCHRED"/>
+  <path d=" M -2,0 M -1.66,-1.6 L -1.33,-3 L 1.33,-3 L 1.66,-1.6 L -1.66,-1.6 Z" class="fCHGRN"/>
+  <circle class="f0 sOUTLW" stroke-width="0.32"  cx="0" cy="0" r="0.65"/>
+  <path d=" M -2.5,0 L -0.7,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M 0.65,0 L 2.5,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M -2,0 L -1,-4.5 L 1,-4.5 L 2,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <circle class="fDEPDW" cx="0" cy="0" r="0.52"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.2"/>
+</svg>

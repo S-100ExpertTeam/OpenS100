@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 
 -- Water turbulence main entry point.
 function WaterTurbulence(feature, featurePortrayal, contextParameters)
@@ -9,17 +7,17 @@ function WaterTurbulence(feature, featurePortrayal, contextParameters)
 		-- Simplified and paper chart points use the same symbolization
 		viewingGroup = 33040
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:33040;DrawingPriority:9;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:33040;DrawingPriority:9;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:33040;DrawingPriority:9;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:33040;DrawingPriority:9;DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:AddInstructions('PointInstruction:WATTUR02')
 	elseif feature.PrimitiveType == PrimitiveType.Curve then
 		viewingGroup = 33040
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:33040;DrawingPriority:12;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:33040;DrawingPriority:12;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:33040;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:33040;DrawingPriority:12;DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
@@ -27,7 +25,7 @@ function WaterTurbulence(feature, featurePortrayal, contextParameters)
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
 		viewingGroup = 33040
-		featurePortrayal:AddInstructions('ViewingGroup:33040;DrawingPriority:12;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:33040;DrawingPriority:12;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('PointInstruction:WATTUR02')
 		featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')

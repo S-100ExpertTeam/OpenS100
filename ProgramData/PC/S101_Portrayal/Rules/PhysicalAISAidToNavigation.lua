@@ -4,17 +4,16 @@
 
 -- Main entry point for feature type.
 function PhysicalAISAidToNavigation(feature, featurePortrayal, contextParameters)
-	--error('Not Implemented: No symbology defined in S-52 for PhysicalAISAidToNavigation')
 
 	local viewingGroup = 27240
 
 	if feature.PrimitiveType == PrimitiveType.Point then
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ';DrawingPriority:24;DisplayPlane:OverRADAR;Hover:true')
+			featurePortrayal:AddInstructions('DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ';DrawingPriority:24;DisplayPlane:UnderRADAR;Hover:true')
+			featurePortrayal:AddInstructions('DisplayPlane:UnderRadar')
 		end
-		featurePortrayal:AddInstructions('PointInstruction:AISPHY05')
+		featurePortrayal:AddInstructions('AlertReference:NavHazard;ViewingGroup:' .. viewingGroup .. ';DrawingPriority:24;Hover:true;PointInstruction:AISPHY05')
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end

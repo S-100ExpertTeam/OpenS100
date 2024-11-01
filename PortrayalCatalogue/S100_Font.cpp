@@ -79,3 +79,13 @@ std::wstring S100_Font::GetProportion()
 {
 	return proportion;
 }
+
+bool S100_Font::isUpright()
+{
+	if (slant.compare(L"Upright") == 0)
+	{
+		return true;
+	}
+
+	return false;
+}

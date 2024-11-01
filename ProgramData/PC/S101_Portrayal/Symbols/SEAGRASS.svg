@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5mm" height="6.5mm" viewBox="-2.5 -6.5 5.0 6.5">
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5mm" height="6.5mm" viewBox="-2.5 -6.5 5.0 6.5">
   <title>SEAGRS01</title>
   <desc>Seagrass (draft)</desc>
   <metadata>
-    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
       <iho:Description iho:publisher="IHB" iho:creationDate="2022-05-16" iho:source="dKartOffice" iho:format="S100SVG" iho:version="0.1"/>
     </iho:S100SVG>
   </metadata>

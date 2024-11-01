@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-03"?>
-<?S100Meta name="QUESMRK1" exposition="pattern of symbols for an area which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library"?><symbolFill>
+<?S100Meta name="QUESMRK1" exposition="pattern of symbols for an area which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library"?><af:symbolFill xmlns:af="http://www.iho.int/S100AreaFill/5.2">
   <areaCRS>GlobalGeometry</areaCRS>
   <symbol reference="QUESMRK1P"/>
   <v1>
@@ -11,4 +11,4 @@
     <x>2.2</x>
     <y>24.43</y>
   </v2>
-</symbolFill>
+</af:symbolFill>

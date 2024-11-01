@@ -505,10 +505,7 @@ void LayerManager::AddSymbolDrawing(
 
 		D2->pBrush->SetOpacity(1.0f);
 		instruction->DrawInstruction(
-			D2->pRT,
-			D2->pD2Factory,
-			D2->pBrush,
-			&D2->D2D1StrokeStyleGroup,
+			D2,
 			scaler,
 			pc);
 	}
@@ -518,10 +515,7 @@ void LayerManager::AddSymbolDrawing(
 	{
 		auto instruction = *i;
 		instruction->DrawInstruction(
-			D2->pRT,
-			D2->pD2Factory,
-			D2->pBrush,
-			&D2->D2D1StrokeStyleGroup,
+			D2,
 			scaler,
 			pc);
 	}
@@ -532,14 +526,14 @@ void LayerManager::AddSymbolDrawing(
 	for (auto i = augmentedRay[drawingPrioriy].begin(); i != augmentedRay[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(D2->pRT, D2->pD2Factory, D2->pBrush, &D2->D2D1StrokeStyleGroup, scaler, pc);
+		instruction->DrawInstruction(D2, scaler, pc);
 	}
 
 	// AugmentedPath
 	for (auto i = augmentedPath[drawingPrioriy].begin(); i != augmentedPath[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(D2->pRT, D2->pD2Factory, D2->pBrush, &D2->D2D1StrokeStyleGroup, scaler, pc);
+		instruction->DrawInstruction(D2, scaler, pc);
 	}
 
 	// Point
@@ -654,38 +648,15 @@ void LayerManager::AddSymbolDrawing(
 
 					int bodySize = (int)(element->bodySize * (float)1.358);
 
-					IDWriteTextFormat* useWTF = NULL;
-					if (bodySize != 15)
+					IDWriteTextFormat* useWTF = nullptr;
+					
+					if (element->font.isUpright())
 					{
-						auto sizedFontIter = D2->writeTextFormatListByFontSize.find(bodySize);
-
-						if (sizedFontIter == D2->writeTextFormatListByFontSize.end())
-						{
-							IDWriteTextFormat* newWriteTextFormat = NULL;
-							HRESULT hr = D2->pDWriteFactory->CreateTextFormat(
-								ENCCommon::DISPLAY_FONT_NAME.c_str(),
-								NULL,
-								DWRITE_FONT_WEIGHT_NORMAL,
-								DWRITE_FONT_STYLE_NORMAL,
-								DWRITE_FONT_STRETCH_NORMAL,
-								(float)bodySize,
-								L"", //locale
-								&newWriteTextFormat
-							);
-
-							D2->writeTextFormatListByFontSize.insert(std::make_pair(bodySize, newWriteTextFormat));
-
-							useWTF = newWriteTextFormat;
-
-						}
-						else
-						{
-							useWTF = sizedFontIter->second;
-						}
+						useWTF = D2->getWriteTextFormat(bodySize);
 					}
 					else
 					{
-						useWTF = D2->pDWriteTextFormat;
+						useWTF = D2->getSlantWriteTextFormat(bodySize);
 					}
 
 					useWTF->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
@@ -777,6 +748,7 @@ void LayerManager::AddSymbolDrawing(
 					if (element->pColor)
 					{
 						D2->pBrush->SetColor(element->pColor);
+						D2->pBrush->SetOpacity(1 - element->foreground.transparency);
 					}
 
 					for (auto itor = points.begin(); itor != points.end(); itor++)
@@ -1302,21 +1274,22 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 	auto pc = ((S100Layer*)l)->GetPC();
 
 	if (pc &&
-		l->GetFileType() == S100_FileType::FILE_S_100_VECTOR) {
+		l->GetFileType() == S100_FileType::FILE_S_100_VECTOR) 
+	{
 		auto mainRuleFile = pc->GetMainRuleFile();
 		auto fileName = mainRuleFile->GetFileName();
 		auto rootPath = pc->GetRootPath();
 		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
-		
-
-		if (pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA) {
+		if (pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA) 
+		{
 			ProcessS101::ProcessS101_LUA(mainRulePath, (S100Layer*)l);
 		}
-		else if (pc->GetRuleFileFormat() == Portrayal::FileFormat::XSLT) {
+		else if (pc->GetRuleFileFormat() == Portrayal::FileFormat::XSLT) 
+		{
 			auto gml = (S10XGML*)l->GetSpatialObject();
 			gml->SaveToInputXML("..\\TEMP\\input.xml");
-			ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml", (S100Layer*)l);
+			ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml");
 			auto s100so = (S100SpatialObject*)l->GetSpatialObject();
 			s100so->OpenOutputXML("..\\TEMP\\output.xml");
 		}

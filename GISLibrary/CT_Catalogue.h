@@ -12,7 +12,7 @@
 
 
 namespace S100 {
-    std::string CharacterString(pugi::xml_node& node);
+    std::string GetCharacterString(pugi::xml_node& node);
     void SaveCharacterString(pugi::xml_node& node, std::string str);
 
     class CT_Catalogue {

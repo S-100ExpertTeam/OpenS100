@@ -2,11 +2,14 @@
 #include "CT_Catalogue.h"
 
 namespace S100 {
-    std::string CharacterString(pugi::xml_node& node) {
-        for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling()) {
+    std::string GetCharacterString(pugi::xml_node& node) 
+    {
+        for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling()) 
+        {
             const pugi::char_t* instructionName = instruction.name();
 
-            if (!strcmp(instructionName, "gco:CharacterString")) {
+            if (!strcmp(instructionName, "gco:CharacterString")) 
+            {
                 return instruction.child_value();
             }
         }

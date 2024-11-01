@@ -8,7 +8,7 @@
 function LocalDirectionOfBuoyage(feature, featurePortrayal, contextParameters)
 	if feature.PrimitiveType == PrimitiveType.Surface then
 	
-		featurePortrayal:AddInstructions('ViewingGroup:27040;DrawingPriority:12;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:27040;DrawingPriority:12;DisplayPlane:UnderRadar')
 
 
 		local MNSO = feature.marksNavigationalSystemOf
@@ -36,7 +36,7 @@ function LocalDirectionOfBuoyage(feature, featurePortrayal, contextParameters)
 				featurePortrayal:AddInstructions('LineInstruction:NAVARE51')
 			end
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:27040;DrawingPriority:12;DisplayPlane:UnderRADAR;NullInstruction')
+			featurePortrayal:AddInstructions('ViewingGroup:27040;DrawingPriority:12;DisplayPlane:UnderRadar;NullInstruction')
 		end
 	else
 		error('Primitive type for LocalDirectionOfBuoyage must be Surface')

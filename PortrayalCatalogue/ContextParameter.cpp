@@ -66,6 +66,22 @@ namespace Portrayal
 	void ContextParameter::SetDefault(std::wstring& value)
 	{
 		defaultValue = value;
+		setValue(value);
+	}
+
+	std::wstring ContextParameter::getValue()
+	{
+		return value;
+	}
+
+	std::string ContextParameter::getValueAsString()
+	{
+		return LibMFCUtil::WStringToString(value);
+	}
+
+	void ContextParameter::setValue(std::wstring& value)
+	{
+		this->value = value;
 	}
 
 	void ContextParameter::GetContents(pugi::xml_node& node)
@@ -94,7 +110,7 @@ namespace Portrayal
 			}
 			else if (!strcmp(instructionName,"default"))
 			{
-				defaultValue = pugi::as_wide(instruction.child_value());
+				SetDefault(pugi::as_wide(instruction.child_value()));
 			}
 		}
 	}

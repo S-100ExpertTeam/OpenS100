@@ -59,8 +59,13 @@ namespace GF
 		virtual ComplexAttributeType* AddComplexAttribute(std::string code);
 
 		virtual void AddAttribute(ThematicAttributeType* item);
+
+		// Return the attribute(Simple or Complex) with the given code and index
 		virtual std::optional<ThematicAttributeType*> getThematicAttribute(std::string code, int index);
+		virtual std::optional<GF::ComplexAttributeType*> getComplexAttribute(std::string code, int index);
 		virtual std::vector<std::string> getSimpleAttributeValues(std::string path, std::string code);
-		virtual int getComplexAttributeCount(std::string path);
+		virtual std::vector<std::string> getSimpleAttributeValues(std::string code);
+		virtual int getComplexAttributeCount(std::string path, std::string code);
+		virtual int getAttributeCount(std::string code);
 	};
 }

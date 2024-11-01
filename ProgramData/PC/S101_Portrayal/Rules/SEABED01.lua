@@ -50,12 +50,12 @@ function SEABED01(feature, featurePortrayal, contextParameters, depthRangeMinimu
 
 	if Shallow then
 		-- S-52 10.5.7
-		featurePortrayal:AddInstructions('ViewingGroup:23010,shallowPattern;DrawingPriority:9;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:90000;DrawingPriority:9;DisplayPlane:UnderRadar')
 
 		featurePortrayal:AddInstructions('AreaFillReference:DIAMOND1')
 
 		-- Restore default viewing and priorities for depth area and dredged area.
-		featurePortrayal:AddInstructions('ViewingGroup:13030;DrawingPriority:3;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:13030;DrawingPriority:3;DisplayPlane:UnderRadar')
 	end
 
 	if Shallow then

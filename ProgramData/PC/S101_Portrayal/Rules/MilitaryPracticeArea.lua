@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 
 -- Referenced portrayal rules.
 require 'RESTRN01'
@@ -14,21 +12,21 @@ function MilitaryPracticeArea(feature, featurePortrayal, contextParameters)
 		-- Simplified and paper chart points use the same symbolization
 		viewingGroup = 26040
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:26040;DrawingPriority:12;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26040;DrawingPriority:12;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:26040;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:26040;DrawingPriority:12;DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:AddInstructions('PointInstruction:CHINFO06')
 	elseif feature.PrimitiveType == PrimitiveType.Surface and contextParameters.PlainBoundaries then
 		viewingGroup = 26040
-		featurePortrayal:AddInstructions('ViewingGroup:26040;DrawingPriority:12;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:26040;DrawingPriority:12;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('PointInstruction:CTYARE51')
 		featurePortrayal:SimpleLineStyle('dash',0.64,'CHMGD')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 		RESTRN01(feature, featurePortrayal, contextParameters, viewingGroup)
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		viewingGroup = 26040
-		featurePortrayal:AddInstructions('ViewingGroup:26040;DrawingPriority:12;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:26040;DrawingPriority:12;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('PointInstruction:CTYARE51')
 		featurePortrayal:AddInstructions('LineInstruction:CTYARE51')
 		RESTRN01(feature, featurePortrayal, contextParameters, viewingGroup)

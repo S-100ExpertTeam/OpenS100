@@ -336,6 +336,8 @@ public:
 	int GetCMFZ();
 
 	void SetAllNumericCode(FeatureCatalogue* fc);
+	void SetAllCode(FeatureCatalogue* fc);
+	void SetAllCode();
 
 private:
 	bool UpdateDsgirRecord(S101Cell* cell);

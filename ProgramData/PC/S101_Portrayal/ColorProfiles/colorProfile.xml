@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100ColorProfile.xsd">
+<cp:colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cp="http://www.iho.int/S100ColorProfile/5.1">
     <colors>
         <color token="NODTA" name="grey">
             <description>No data color</description>
@@ -3023,4 +3023,4 @@
       </srgb>
     </item>
   </palette>
-  </colorProfile>
+</cp:colorProfile>

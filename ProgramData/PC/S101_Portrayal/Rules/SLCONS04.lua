@@ -17,7 +17,7 @@ function SLCONS04(feature, featurePortrayal, contextParameters, viewingGroup)
 
 		if symbol then
 			--Debug.Break()
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31011,accuracy;PointInstruction:' .. symbol)
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',90011;PointInstruction:' .. symbol)
 		end
 	else
 		Debug.StopPerformance('Lua Code - SLCONS04')

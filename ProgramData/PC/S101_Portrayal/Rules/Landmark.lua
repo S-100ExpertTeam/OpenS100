@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 -- FC 1.0.1: manually changed visuallyConspicuous to visualProminence
 --
 -- Issues: PSWG #60, PC #104 Torii
@@ -14,7 +12,7 @@
 function Landmark(feature, featurePortrayal, contextParameters)
 	local viewingGroup = 32220
 	local drawingPriority = 12
-	local displayPlane = 'UnderRADAR'
+	local displayPlane = 'UnderRadar'
 	
 	if feature.visualProminence == 1 then
 		viewingGroup = 22220
@@ -26,11 +24,13 @@ function Landmark(feature, featurePortrayal, contextParameters)
 	-- #256
 	if feature.inTheWater then
 		viewingGroup = 12200
+		-- #365
+		featurePortrayal:AddInstructions('AlertReference:NavHazard')
 	end
 	
 	if feature.PrimitiveType == PrimitiveType.Point or feature.PrimitiveType == PrimitiveType.Curve then
 		if contextParameters.RadarOverlay then
-			displayPlane = 'OverRADAR'
+			displayPlane = 'OverRadar'
 		end
 	end
 
@@ -49,13 +49,13 @@ function Landmark(feature, featurePortrayal, contextParameters)
 		elseif contains(17, feature.categoryOfLandmark) and contains(31, feature['function']) and feature.visualProminence == 1 then
 			featurePortrayal:AddInstructions('PointInstruction:TOWERS15')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif contains(17, feature.categoryOfLandmark) and contains(33, feature['function']) and feature.visualProminence == 1 then
 			featurePortrayal:AddInstructions('PointInstruction:TOWERS03')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif contains(20, feature.categoryOfLandmark) and contains(20, feature['function']) and feature.visualProminence == 1 then
@@ -111,13 +111,13 @@ function Landmark(feature, featurePortrayal, contextParameters)
 		elseif contains(17, feature.categoryOfLandmark) and contains(31, feature['function']) then
 			featurePortrayal:AddInstructions('PointInstruction:TOWERS05')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif contains(17, feature.categoryOfLandmark) and contains(33, feature['function']) then
 			featurePortrayal:AddInstructions('PointInstruction:TOWERS01')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif contains(20, feature.categoryOfLandmark) and contains(20, feature['function']) then
@@ -180,13 +180,13 @@ function Landmark(feature, featurePortrayal, contextParameters)
 		elseif contains(17, feature.categoryOfLandmark) and contains(31, feature['function']) and feature.visualProminence == 1 then
 			featurePortrayal:AddInstructions('PointInstruction:TOWERS15')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,-3.51;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif contains(17, feature.categoryOfLandmark) and contains(33, feature['function']) and feature.visualProminence == 1 then
 			featurePortrayal:AddInstructions('PointInstruction:TOWERS03')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif contains(20, feature.categoryOfLandmark) and contains(20, feature['function']) and feature.visualProminence == 1 then
@@ -242,13 +242,13 @@ function Landmark(feature, featurePortrayal, contextParameters)
 		elseif contains(17, feature.categoryOfLandmark) and contains(31, feature['function']) then
 			featurePortrayal:AddInstructions('PointInstruction:TOWERS05')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,-3.51;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif contains(17, feature.categoryOfLandmark) and contains(33, feature['function']) then
 			featurePortrayal:AddInstructions('PointInstruction:TOWERS01')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,3.51;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif contains(20, feature.categoryOfLandmark) and contains(20, feature['function']) then
@@ -311,7 +311,7 @@ function Landmark(feature, featurePortrayal, contextParameters)
 		if contains(17, feature.categoryOfLandmark) and contains(33, feature['function']) and feature.visualProminence == 1 then
 			featurePortrayal:AddInstructions('ColorFill:CHBRN')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 			featurePortrayal:SimpleLineStyle('solid',0.32,'CHBLK')
@@ -319,7 +319,7 @@ function Landmark(feature, featurePortrayal, contextParameters)
 		elseif contains(17, feature.categoryOfLandmark) and contains(33, feature['function']) then
 			featurePortrayal:AddInstructions('ColorFill:CHBRN')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 			featurePortrayal:SimpleLineStyle('solid',0.32,'LANDF')
@@ -337,7 +337,7 @@ function Landmark(feature, featurePortrayal, contextParameters)
 		if contains(17, feature.categoryOfLandmark) and contains(33, feature['function']) and feature.visualProminence == 1 then
 			featurePortrayal:AddInstructions('ColorFill:CHBRN')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 			featurePortrayal:SimpleLineStyle('solid',0.32,'CHBLK')
@@ -345,7 +345,7 @@ function Landmark(feature, featurePortrayal, contextParameters)
 		elseif contains(17, feature.categoryOfLandmark) and contains(33, feature['function']) then
 			featurePortrayal:AddInstructions('ColorFill:CHBRN')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 			featurePortrayal:SimpleLineStyle('solid',0.32,'LANDF')

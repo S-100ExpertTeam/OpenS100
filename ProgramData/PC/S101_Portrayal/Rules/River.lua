@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 
 -- River main entry point.
 function River(feature, featurePortrayal, contextParameters)
@@ -8,16 +6,16 @@ function River(feature, featurePortrayal, contextParameters)
 	if feature.PrimitiveType == PrimitiveType.Curve then
 		viewingGroup = 12420
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:12420;DrawingPriority:6;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:12420;DrawingPriority:6;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:12420;DrawingPriority:6;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:12420;DrawingPriority:6;DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:SimpleLineStyle('solid',0.32,'CHBLK')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
 		viewingGroup = 12420
-		featurePortrayal:AddInstructions('ViewingGroup:12420;DrawingPriority:6;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:12420;DrawingPriority:6;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('ColorFill:DEPVS')
 		featurePortrayal:SimpleLineStyle('solid',0.32,'CHBLK')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')

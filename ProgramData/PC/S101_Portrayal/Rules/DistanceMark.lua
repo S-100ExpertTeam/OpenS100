@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 -- #65
 -- #187
 
@@ -10,16 +8,21 @@ function DistanceMark(feature, featurePortrayal, contextParameters)
 	if feature.PrimitiveType == PrimitiveType.Point then
 		viewingGroup = 27030
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:27030;DrawingPriority:21;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:27030;DrawingPriority:21;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:27030;DrawingPriority:21;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:27030;DrawingPriority:21;DisplayPlane:UnderRadar')
 		end
 		local textColor = 'CHMGD'
 		local structures = feature:GetFeatureAssociations('StructureEquipment')
 		local noStructure = next(structures) == nil
 		if noStructure then
 			-- no StructureEquipment relationship, add a symbol
-			featurePortrayal:AddInstructions('PointInstruction:DISMAR06')
+			if feature.distanceMarkVisible then
+				featurePortrayal:AddInstructions('PointInstruction:DISMAR07')
+				textColor = 'CHBLK'
+			else
+				featurePortrayal:AddInstructions('PointInstruction:DISMAR06')
+			end
 		else
 			-- TODO: assign viewing group from structure so that text turns off with symbol?
 			textColor = 'CHBLK'

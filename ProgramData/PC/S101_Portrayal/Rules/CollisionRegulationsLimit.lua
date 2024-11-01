@@ -10,7 +10,7 @@ function CollisionRegulationsLimit(feature, featurePortrayal, contextParameters)
 		-- TODO: needs proper viewing group assignment etc
 		viewingGroup = 25001
 
-		featurePortrayal:AddInstructions('ViewingGroup:25001;DrawingPriority:4;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:25001;DrawingPriority:4;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('LineInstruction:COLREG01')
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')

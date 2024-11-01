@@ -16,17 +16,23 @@ function QualityOfBathymetricData(feature, featurePortrayal, contextParameters)
 	local catzoc
 	local zonesOfConfidence = feature.zoneOfConfidence
 	
-	featurePortrayal:AddInstructions('ViewingGroup:31010,accuracy;DrawingPriority:12;DisplayPlane:UnderRADAR')
+	featurePortrayal:AddInstructions('ViewingGroup:90010;DrawingPriority:12;DisplayPlane:UnderRadar')
 
-	local DRVAL1 = feature.depthRangeMinimumValue
-	local DRVAL2 = feature.depthRangeMaximumValue
-	local intersects = (DRVAL1 == nil or DRVAL1 < contextParameters.SafetyContour) and (DRVAL2 == nil or contextParameters.SafetyContour <= DRVAL2)
+	-- QoBD has gaps of 0.1m between bottom of upper QoBD and top of lower QoBD. Ensure safety contour doesn't fall
+	-- within a gap by restricting its precision.
+	local safetyContour = math.ceil(contextParameters.SafetyContour:ToNumber() * 10) / 10
+	local DRVAL1 = feature.depthRangeMinimumValue and feature.depthRangeMinimumValue:ToNumber()
+	local DRVAL2 = feature.depthRangeMaximumValue and feature.depthRangeMaximumValue:ToNumber()
+	
+	local intersects = (DRVAL1 == nil or DRVAL1 <= safetyContour) and (DRVAL2 == nil or safetyContour <= DRVAL2)
 	
 	local dateDependent = false
 	if zonesOfConfidence and #zonesOfConfidence > 0 then
 		for _, zoneOfConfidence in ipairs(zonesOfConfidence) do
-			dateDependent = ProcessFixedDateRange(featurePortrayal, zoneOfConfidence.fixedDateRange) or dateDependent
 			if intersects then
+
+				dateDependent = ProcessFixedDateRange(featurePortrayal, zoneOfConfidence.fixedDateRange) or dateDependent
+
 				if zoneOfConfidence.categoryOfZoneOfConfidenceInData then
 					if (zoneOfConfidence.categoryOfZoneOfConfidenceInData == 1) then
 						catzoc = 'A11'
@@ -47,7 +53,7 @@ function QualityOfBathymetricData(feature, featurePortrayal, contextParameters)
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
 
 				else
-					-- default without CATZOC: "M_QUAL","","AP(NODATA03);LS(DASH,2,CHGRD)","4","S","OTHER","31010" 
+					-- default without CATZOC: "M_QUAL","","AP(NODATA03);LS(DASH,2,CHGRD)","4","S","OTHER","90010" 
 					featurePortrayal:AddInstructions('AreaFillReference:NODATA03')
 					featurePortrayal:SimpleLineStyle('dash',0.64,'CHGRD')
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
@@ -55,12 +61,12 @@ function QualityOfBathymetricData(feature, featurePortrayal, contextParameters)
 			else
 				featurePortrayal:AddInstructions('NullInstruction')
 			end
-			if dateDependent then
-				AddDateDependentSymbol(feature, featurePortrayal, contextParameters, '31010,accuracy')
-				featurePortrayal:AddInstructions('ClearTime')
-			end
+		end
+		if dateDependent then
+			AddDateDependentSymbol(feature, featurePortrayal, contextParameters, 90010)
+			featurePortrayal:AddInstructions('ClearTime')
 		end
 	end
 
-	return '31010,accuracy'
+	return 90010
 end

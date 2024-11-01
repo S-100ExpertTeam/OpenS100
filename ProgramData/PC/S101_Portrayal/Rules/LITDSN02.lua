@@ -64,7 +64,7 @@ local statuses =
 }
 
 -- Main entry point for CSP.
-function LITDSN02(categoryOfLight, rhythmOfLight, lightColour, height, valueOfNominalRange, status)
+function LITDSN02(categoryOfLight, rhythmOfLight, lightColour, height, valueOfNominalRange, status, valueOfNominalRange2, numRanges)
 	Debug.StartPerformance('Lua Code - LITDSN02')
 
 	local description = categoryOfLights[categoryOfLight] or ''
@@ -90,7 +90,7 @@ function LITDSN02(categoryOfLight, rhythmOfLight, lightColour, height, valueOfNo
 
 	-- Colour
 	local colourFound = false
-
+	local prevColour
 	for i, colour in ipairs(lightColour) do
 		if colours[colour] then
 			if not colourFound then
@@ -98,7 +98,10 @@ function LITDSN02(categoryOfLight, rhythmOfLight, lightColour, height, valueOfNo
 				colourFound = true
 			end
 
-			description = description .. colours[colour]
+			if prevColour ~= colours[colour] then
+				description = description .. colours[colour]
+				prevColour = colours[colour]
+			end
 		end
 	end
 
@@ -122,7 +125,15 @@ function LITDSN02(categoryOfLight, rhythmOfLight, lightColour, height, valueOfNo
 
 	-- Value of Nominal Range
 	if valueOfNominalRange then
-		description = string.format('%s%s%gM', description, space, valueOfNominalRange:ToNumber())
+		if valueOfNominalRange2 and valueOfNominalRange ~= valueOfNominalRange2	then
+			if numRanges and numRanges == 2 then
+				description = string.format('%s%s%g/%gM', description, space, valueOfNominalRange:ToNumber(), valueOfNominalRange2:ToNumber())
+			else
+				description = string.format('%s%s%g-%gM', description, space, valueOfNominalRange:ToNumber(), valueOfNominalRange2:ToNumber())
+			end
+		else
+			description = string.format('%s%s%gM', description, space, valueOfNominalRange:ToNumber())
+		end
 	end
 
 	-- Status

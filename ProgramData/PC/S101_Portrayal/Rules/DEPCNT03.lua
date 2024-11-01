@@ -78,9 +78,9 @@ function DEPCNT03(feature, featurePortrayal, contextParameters, viewingGroup)
 	end
 
 	local function GenerateLabels()
-		featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',33022,contourLabel')
+		featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',90031')
 
-		featurePortrayal:AddInstructions('LinePlacement:Relative,0.5')
+		featurePortrayal:AddInstructions('LinePlacement:Relative,0.5,,true')
 		local instructions = SAFCON01(contextParameters, feature.valueOfDepthContour or scaledDecimalZero)
 		for i, instruction in ipairs(instructions) do
 			featurePortrayal:AddInstructions(instruction)

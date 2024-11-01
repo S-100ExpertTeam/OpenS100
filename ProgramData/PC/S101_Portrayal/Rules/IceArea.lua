@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 
 -- Ice area main entry point.
 function IceArea(feature, featurePortrayal, contextParameters)
@@ -10,8 +8,8 @@ function IceArea(feature, featurePortrayal, contextParameters)
 	if feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
 		viewingGroup = 12410
-		featurePortrayal:AddInstructions('ViewingGroup:12410;DrawingPriority:9;DisplayPlane:UnderRADAR')
-		featurePortrayal:AddInstructions('ColorFill:NODTA')
+		featurePortrayal:AddInstructions('ViewingGroup:12410;DrawingPriority:9;DisplayPlane:UnderRadar')
+		featurePortrayal:AddInstructions('ColorFill:NODTA,0.5')
 		featurePortrayal:AddInstructions('AreaFillReference:ICEARE04')
 		featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')

@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 -- #134
 
 -- Airport/airfield main entry point.
@@ -11,9 +9,9 @@ function AirportAirfield(feature, featurePortrayal, contextParameters)
 		-- Simplified and paper chart points use the same symbolization
 		viewingGroup = 32240
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:32240;DrawingPriority:12;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:32240;DrawingPriority:12;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:32240;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:32240;DrawingPriority:12;DisplayPlane:UnderRadar')
 		end
 		if categoryOfAirportAirfield == 3 or categoryOfAirportAirfield == 4 then
 		    featurePortrayal:AddInstructions('PointInstruction:HELIPD02')
@@ -23,7 +21,7 @@ function AirportAirfield(feature, featurePortrayal, contextParameters)
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
 		viewingGroup = 32240
-		featurePortrayal:AddInstructions('ViewingGroup:32240;DrawingPriority:6;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:32240;DrawingPriority:6;DisplayPlane:UnderRadar')
 		if categoryOfAirportAirfield == 3 or categoryOfAirportAirfield == 4 then
 			featurePortrayal:AddInstructions('PointInstruction:HELIPD02')
 		else

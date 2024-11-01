@@ -13,9 +13,8 @@ namespace GF
 		scaleMinimum = other.scaleMinimum;
 		scaleMaximum = other.scaleMaximum;
 
-		//GM::Object geometry;
-		//geometryID = other.geometryID;
-		geometry = std::make_unique<GM::Object>(other.geometry);
+		geometry = std::make_unique<GM::Object>();
+		*geometry = *other.geometry;
 
 		for (const auto& iter : other.maskReference)
 		{
@@ -36,10 +35,8 @@ namespace GF
 		scaleMinimum = other.scaleMinimum;
 		scaleMaximum = other.scaleMaximum;
 
-		//GM::Object geometry;
-		//geometryID = other.geometryID;
-		//geometry = other.geometry;
-		geometry = std::make_unique<GM::Object>(other.geometry);
+		geometry = std::make_unique<GM::Object>();
+		*geometry = *other.geometry;
 
 		for (const auto& iter : other.maskReference)
 		{
@@ -52,6 +49,10 @@ namespace GF
 
 	void SpatialAttributeType::SetGeometryID(std::string value)
 	{
+		if (geometry.get() == nullptr)
+		{
+			geometry = std::make_unique<GM::Object>();
+		}
 		geometry->SetID(value);
 		//geometryID = value;
 	}
@@ -159,6 +160,8 @@ namespace GF
 
 		sa.scale_maximum = getScaleMaximum();
 		sa.scale_minimum = getScaleMinimum();
+
+		return sa;
 	}
 
 	SpatialPrimitiveType SpatialAttributeType::getSpatialPrimitiveType()

@@ -23,25 +23,27 @@ function Crane(feature, featurePortrayal, contextParameters)
 	-- #256
 	if feature.inTheWater then
 		viewingGroup = 12200
+		-- #365
+		featurePortrayal:AddInstructions('AlertReference:NavHazard')
 	end
 
 	if feature.PrimitiveType == PrimitiveType.Point then
 		-- Simplified and paper chart points use the same symbolization
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:AddInstructions('PointInstruction:CRANES0' .. symbol)
 	elseif feature.PrimitiveType == PrimitiveType.Surface  then 
 		-- PlainBoundaries and Patterns border use the same symbolization
-		featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup .. ';DrawingPriority:12;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('ColorFill:CHBRN')
 		featurePortrayal:SimpleLineStyle('solid',0.32, colour)
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 	--elseif feature.PrimitiveType == PrimitiveType.Curve then
 		-- dKart improvment: Determine S-101 portrayal for Crane curve feature.
-		--featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup ..';DrawingPriority:12;DisplayPlane:UnderRADAR')
+		--featurePortrayal:AddInstructions('ViewingGroup:'.. viewingGroup ..';DrawingPriority:12;DisplayPlane:UnderRadar')
 		--featurePortrayal:SimpleLineStyle('solid',0.64,'LANDF')
 		--featurePortrayal:AddInstructions('LineInstruction:_simple_;LinePlacement:Relative,0.5')
 		--featurePortrayal:AddInstructions('PointInstruction:CRANES1' .. symbol)

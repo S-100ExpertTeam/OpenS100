@@ -109,9 +109,9 @@ function DEPARE03(feature, featurePortrayal, contextParameters, viewingGroup)
 			end
 
 			if contextParameters.RadarOverlay then
-				featurePortrayal:AddInstructions('ViewingGroup:13010;DrawingPriority:24;DisplayPlane:OverRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:13010;DrawingPriority:24;DisplayPlane:OverRadar')
 			else
-				featurePortrayal:AddInstructions('ViewingGroup:13010;DrawingPriority:24;DisplayPlane:UnderRADAR')
+				featurePortrayal:AddInstructions('ViewingGroup:13010;DrawingPriority:24;DisplayPlane:UnderRadar')
 			end
 			featurePortrayal:AddSpatialReference(curveAssociation)
 			
@@ -128,12 +128,12 @@ function DEPARE03(feature, featurePortrayal, contextParameters, viewingGroup)
 
 			if loc_valdco then
 				if contextParameters.RadarOverlay then
-					featurePortrayal:AddInstructions('ViewingGroup:33021,contourLabel;DrawingPriority:24;DisplayPlane:OverRADAR')
+					featurePortrayal:AddInstructions('ViewingGroup:90030;DrawingPriority:24;DisplayPlane:OverRadar')
 				else
-					featurePortrayal:AddInstructions('ViewingGroup:33021,contourLabel;DrawingPriority:24;DisplayPlane:UnderRADAR')
+					featurePortrayal:AddInstructions('ViewingGroup:90030;DrawingPriority:24;DisplayPlane:UnderRadar')
 				end
 
-				featurePortrayal:AddInstructions('LinePlacement:Relative,0.5')
+				featurePortrayal:AddInstructions('LinePlacement:Relative,0.5,,true')
 
 				local instructions = SAFCON01(contextParameters, loc_valdco)
 

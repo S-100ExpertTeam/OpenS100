@@ -23,7 +23,8 @@ void S100_DisplayList::OpenOutputXML(std::string path)
 {
 	pugi::xml_document doc;
 	auto result = doc.load_file(path.c_str());
-	auto displayListNode = doc.child("displayList");
+	/*auto displayListNode = doc.child("displayList");*/
+	auto displayListNode = doc.first_child();
 
 	for each (auto child in displayListNode)
 	{

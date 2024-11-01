@@ -5,7 +5,6 @@
 -- #119
 
 -- Referenced CSPs.
-require 'DEPVAL02'
 require 'QUAPNT02'
 require 'UDWHAZ05'
 require 'SNDFRM04'
@@ -15,18 +14,9 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, originalViewingG
 	Debug.StartPerformance('Lua Code - OBSTRN07')
 
 	local DEPTH_VALUE = feature.valueOfSounding or feature.defaultClearanceDepth
-
-	if not DEPTH_VALUE then
-		local LEAST_DEPTH, SEABED_DEPTH = DEPVAL02(feature)
-		if LEAST_DEPTH then
-			DEPTH_VALUE = LEAST_DEPTH
-		elseif feature['!categoryOfObstruction'] == 6 or feature.waterLevelEffect == 3 then
-			DEPTH_VALUE = CreateScaledDecimal(1, 2)
-		elseif feature.waterLevelEffect == 5 then
-			DEPTH_VALUE = scaledDecimalZero
-		else
-			DEPTH_VALUE = CreateScaledDecimal(-150, 1)
-		end
+	if DEPTH_VALUE == nil then
+		Debug.StopPerformance('Lua Code - OBSTRN07')
+		error('Neither valueOfSounding or defaultClearanceDepth have a value')
 	end
 
 	local hazardSymbol, viewingGroup = UDWHAZ05(feature, featurePortrayal, contextParameters, DEPTH_VALUE, originalViewingGroup)
@@ -41,7 +31,7 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, originalViewingG
 			featurePortrayal:AddInstructions('PointInstruction:' .. hazardSymbol)
 
 			if qualitySymbol then
-				featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup ..	',31011,accuracy;PointInstruction:' .. qualitySymbol)
+				featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup ..	',90011;PointInstruction:' .. qualitySymbol)
 			end
 		else
 			local sounding = false
@@ -102,7 +92,7 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, originalViewingG
 			end
 
 			if qualitySymbol then
-				featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31011,accuracy;PointInstruction:' .. qualitySymbol)
+				featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',90011;PointInstruction:' .. qualitySymbol)
 			end
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Curve then
@@ -189,7 +179,7 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, originalViewingG
 		local qualitySymbol = QUAPNT02(feature, featurePortrayal, contextParameters)
 
 		if qualitySymbol then
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31011,accuracy;PointInstruction:' .. qualitySymbol)
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',90011;PointInstruction:' .. qualitySymbol)
 		end
 	end
 

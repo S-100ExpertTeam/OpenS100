@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.09mm" height="2.69mm" viewBox="-0.1 -0.1 5.09 2.69">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.0mm" height="4.0mm" viewBox="-.5 -1.3 6.0 4.0">
   <title>SAFCON50</title>
   <desc>pattern of symbol</desc>
   <metadata>
-    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
-      <iho:Description iho:publisher="IHB" iho:creationDate="2019-01-30" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="0.1" />
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2024-02-21" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="1.0" />
     </iho:S100SVG>
   </metadata>
-  <rect class="symbolBox layout" fill="none" x="-0.1" y="2.59" height="2.69" width="5.09" />
-  <rect class="svgBox layout" fill="none" x="-0.1" y="-0.1" height="2.69" width="5.09" />
-  <path d=" M 3.87,0 L 3.63,0.24 L 3.63,2.25 L 3.87,2.49 L 4.62,2.49 L 4.86,2.25 L 4.86,0.24 L 4.62,0 L 3.87,0" class="sl f0 sDEPDW" style="stroke-width:0.96;" />
-  <path d=" M 3.9,0 L 3.66,0.24 L 3.66,2.25 L 3.9,2.49 L 4.65,2.49 L 4.89,2.25 L 4.89,0.24 L 4.65,0 L 3.9,0" class="sl f0 sSNDG2" style="stroke-width:0.32;" />
+  <circle class="pivotPoint layout" fill="none" cx="0.00" cy="0.00" r="0.1" />
+  <rect class="symbolBox layout" fill="none" x="-.5" y="-1.3" height="4.0" width="6.0" />
+  <rect class="svgBox layout" fill="none" x="-.5" y="-1.3" height="4.0" width="6.0" />
+  <path d=" M 3.77,-0.6 L 3.53,-0.36 L 3.53,1.65 L 3.77,1.89 L 4.52,1.89 L 4.76,1.65 L 4.76,-0.36 L 4.52,-0.6 L 3.77,-0.6" class="sl f0 sDEPDW" stroke-width="0.96"  />
+  <path d=" M 3.77,-0.59 L 3.53,-0.35 L 3.53,1.66 L 3.77,1.9 L 4.52,1.9 L 4.76,1.66 L 4.76,-0.35 L 4.52,-0.59 L 3.77,-0.59" class="sl f0 sSNDG2" stroke-width="0.32"  />
 </svg>

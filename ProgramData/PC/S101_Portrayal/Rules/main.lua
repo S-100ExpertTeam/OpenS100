@@ -19,12 +19,11 @@ function PortrayalMain(featureIDs)
 	-- higher priority edges suppress lower priority edges.
 
 	function ProcessFeaturePortrayalItem(featurePortrayalItem)
-		Debug.StartPerformance('Lua Code - Dataset processing')
 
 		local feature = featurePortrayalItem.Feature
 
-		--Debug.Break()
-
+		Debug.StartPerformance('Lua Code - Dataset processing')
+		
 		local featurePortrayal = featurePortrayalItem:NewFeaturePortrayal()
 
 		contextParameters._observed = {}
@@ -37,7 +36,7 @@ function PortrayalMain(featureIDs)
 			local scaleMinimum = feature['!scaleMinimum']
 			local scaleMaximum = feature['!scaleMaximum']
 
-			if scaleMinimum and not contextParameters.IgnoreScamin then
+			if scaleMinimum and not contextParameters.IgnoreScaleMinimum then
 				featurePortrayal:AddInstructions('ScaleMinimum:' .. scaleMinimum)
 			end
 
@@ -49,11 +48,16 @@ function PortrayalMain(featureIDs)
 			local viewingGroup = _G[feature.Code](feature, featurePortrayal, contextParameters)
 
 			if not viewingGroup then
-				error('Viewing group not returned')
+				error('Viewing group not returned for feature ' .. feature.ID)
 			end
 
 			if #featurePortrayal.DrawingInstructions == 0 then
 				error('No drawing instructions were emitted for feature ' .. feature.ID)
+			end
+
+			-- Ensure featureName is processed for those features whose rules don't process it directly.
+			if not featurePortrayal.GetFeatureNameCalled then
+				PortrayFeatureName(feature, featurePortrayal, contextParameters, 32, 24, viewingGroup, nil, 'TextAlignHorizontal:Center;TextAlignVertical:Top;LocalOffset:0,-3.51;FontColor:CHBLK')
 			end
 
 			ProcessNauticalInformation(feature, featurePortrayal, contextParameters, viewingGroup)
@@ -86,8 +90,6 @@ function PortrayalMain(featureIDs)
 		featurePortrayalItem.ObservedContextParameters = contextParameters._observed
 		featurePortrayalItem.InUseContextParameters = contextParameters._asTable
 
-		--Debug.Break()
-
 		local observed = ObservedContextParametersAsString(featurePortrayalItem)
 
 		local drawingInstructions = table.concat(featurePortrayal.DrawingInstructions, ';')
@@ -96,19 +98,45 @@ function PortrayalMain(featureIDs)
 
 		return HostPortrayalEmit(featurePortrayal.FeatureReference, drawingInstructions, observed)
 	end
-
-	--Debug.Break()
-
+	
+	local textPlacementFeatures = {}
+	
 	if featureIDs then
 		for _,  featureID in ipairs(featureIDs) do
-			if not ProcessFeaturePortrayalItem(featurePortrayalItems[featureID]) then
-				return false
+			local item = featurePortrayalItems[featureID]
+			-- TextPlacement gets processed when the feature it's associated with is processed
+			if item.Feature.Code ~= 'TextPlacement' then
+				if not ProcessFeaturePortrayalItem(item) then
+					return false
+				end
+			else
+				table.insert(textPlacementFeatures, item.Feature)
 			end
 		end
 	else
 		for _,  featurePortrayalItem in ipairs(featurePortrayalItems) do
-			if not ProcessFeaturePortrayalItem(featurePortrayalItem) then
-				return false
+			-- TextPlacement gets processed when the feature it's associated with is processed
+			if featurePortrayalItem.Feature.Code ~= 'TextPlacement' then
+				if not ProcessFeaturePortrayalItem(featurePortrayalItem) then
+					return false
+				end
+			else
+				table.insert(textPlacementFeatures, featurePortrayalItem.Feature)
+			end
+		end
+	end
+	
+	-- Emit TextPlacement features
+	require('TextPlacement')
+	for _, feature in ipairs(textPlacementFeatures) do
+		local featurePortrayal = rawget(feature, '_featurePortrayal')
+		if featurePortrayal then
+			TextPlacement(feature, featurePortrayal, contextParameters)	
+			if featurePortrayal.DrawingInstructions then
+				local item = rawget(feature, '_featurePortrayalItem')
+				HostPortrayalEmit(featurePortrayal.FeatureReference, table.concat(featurePortrayal.DrawingInstructions, ';'), ObservedContextParametersAsString(item))
+			else
+				Debug.Trace('Warning: TextPlacement ID=' .. feature.ID .. ' has no drawing instructions.')
 			end
 		end
 	end
@@ -123,7 +151,8 @@ end
 local unknownValueMetatable =
 {
 	__eq = function (o1, o2)
-		-- Never called when o1 and o2 are the same table.
+		-- always false because reference equality is handled prior to the metamethod being called.
+		-- this also means we don't have to worry about the EqMetaMethodGuarantee
 		return false
 	end,
 
@@ -144,4 +173,40 @@ nilMarker = {}
 
 scaminInfinite = 2147483647
 
-sqParams = {'SpatialAssociation', 'defines', 'SpatialQuality'}
+sqParams = {'SpatialAssociation', 'theQualityInformation', 'SpatialQuality'}
+
+-- Compatibility Checks
+
+-- Later versions of Lua use table.unpack instead of a global function
+unpack = unpack or table.unpack
+
+-- Lua 5.3 and later evaluate the __eq metamethod differently than earlier versions. In earlier
+-- versions the __eq metamethod is only called when both the lhs and rhs are the same type and
+-- have the same metamethod.
+--
+-- In version 5.3 and later Lua looks for an __eq metamethod on the lhs and then on the rhs; if
+-- any metamethod was found, it is called. There is no guarantee that the lhs and rhs are the same
+-- type.
+--
+-- NOTE: S-100 requires a Lua 5.1 scripting engine. Support for other versions should not be taken
+-- to imply that later versions will be supported in other cases. In cases where it is not possible
+-- to support multiple versions (either due to technical challenges or resource constraints) the
+-- scripts are only guaranteed to run as intended on Lua 5.1.
+--
+-- Lua 5.1: ScaledDecimal == unknownValue => false (because the __eq metamethods differ)
+--
+-- Lua 5.3: ScaledDecimal == unknownValue => error (because the ScaledDecimal __eq metamethod is called)
+-- Lua 5.3: unknownValue == ScaledDecimal => false (because the unknownValue __eq metamethod is called)
+EqMetaMethodGuarantee = true
+
+local t1 = {}
+local t2 = {}
+local m1 = {}
+local m2 = {}
+setmetatable(t1, m1)
+setmetatable(t2, m2)
+m1.__eq = function(p1, p2) return true end
+EqMetaMethodGuarantee = not (t1 == t2)
+if not EqMetaMethodGuarantee then
+	Debug.Trace('Warning: Non-standard Lua processor detected.')
+end

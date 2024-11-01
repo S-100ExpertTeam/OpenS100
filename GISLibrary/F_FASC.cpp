@@ -28,6 +28,7 @@ F_FASC::~F_FASC(void)
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++) {
 		delete (*i);
 	}
+	m_arr.clear();
 }
 
 F_FASC F_FASC::operator=(const F_FASC& other)

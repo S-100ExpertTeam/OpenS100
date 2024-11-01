@@ -5,6 +5,7 @@ These functions are intended to be called by the S-100 scripts.
 -- #80 - modularize processing of fixed and periodic date ranges
 -- #119
 -- #207
+-- #367
 
 local orig_error = error
 
@@ -34,7 +35,7 @@ end
 -- Date/Time commands support
 --
 
-function ProcessPeriodicDateRanges(featurePortrayal, periodicDateRanges)
+function ProcessPeriodicDateRanges(feature, featurePortrayal, periodicDateRanges)
 	local dateDependent = false
 
 	if periodicDateRanges and #periodicDateRanges > 0 then
@@ -42,7 +43,12 @@ function ProcessPeriodicDateRanges(featurePortrayal, periodicDateRanges)
 			local dateStart = periodicDateRange.dateStart
 			local dateEnd = periodicDateRange.dateEnd
 
-			featurePortrayal:AddInstructions('Date:' .. dateStart .. ',' .. dateEnd .. ';TimeValid:closedInterval')
+			-- #263 Deal with incomplete periodicDateRange
+			if dateStart and dateEnd then
+				featurePortrayal:AddInstructions('Date:' .. dateStart .. ',' .. dateEnd .. ';TimeValid:closedInterval')
+			else
+				Debug.Trace('Warning: ' .. feature.ID .. ' has incomplete periodicDateRange.')
+			end
 		end
 
 		dateDependent = true
@@ -73,22 +79,27 @@ function ProcessFixedDateRange(featurePortrayal, fixedDateRange)
 end
 
 function ProcessFixedAndPeriodicDates(feature, featurePortrayal)
-	local periodicDependent = ProcessPeriodicDateRanges(featurePortrayal, feature['!periodicDateRange'])
+	local periodicDependent = ProcessPeriodicDateRanges(feature, featurePortrayal, feature['!periodicDateRange'])
 	local fixedDependent = ProcessFixedDateRange(featurePortrayal, feature['!fixedDateRange'])
 	
 	return periodicDependent or fixedDependent
 end
 
 function AddDateDependentSymbol(feature, featurePortrayal, contextParameters, viewingGroup)
+	
+	-- #367, Do not add symbol to feature with no geometry	
+	if feature.PrimitiveType == PrimitiveType.None then
+		return
+	end
 	-- Clear any existing transforms and geometries
 	featurePortrayal:AddInstructions('LocalOffset:0,0;LinePlacement:Relative,0.5;AreaPlacement:VisibleParts;AreaCRS:GlobalGeometry;Rotation:PortrayalCRS,0;ScaleFactor:1;ClearGeometry')
 
 	featurePortrayal:AddInstructions('Hover:true')
 
-	local displayPlane = contextParameters.RadarOverlay and 'DisplayPlane:OverRADAR' or 'DisplayPlane:UnderRADAR'
+	local displayPlane = contextParameters.RadarOverlay and 'DisplayPlane:OverRadar' or 'DisplayPlane:UnderRadar'
 
 	featurePortrayal:AddInstructions(displayPlane)
-	featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31032,highlightDateDependent;DrawingPriority:24;PointInstruction:CHDATD01')
+	featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',90022;DrawingPriority:24;PointInstruction:CHDATD01')
 end
 
 --
@@ -96,59 +107,59 @@ end
 --
 
 function ProcessNauticalInformation(feature, featurePortrayal, contextParameters, viewingGroup)
-	local function GetViewingGroups(container, vg31030, vg31031)
+	local function GetViewingGroups(container, vg90020, vg90021)
 		if container then
 			if container['!pictorialRepresentation'] then
-				vg31031 = true
+				vg90021 = true
 			end
 
 			if container['!information'] then
 				for _, information in ipairs(container.information) do
 					if information.text then
-						vg31030 = true
+						vg90020 = true
 					end
 
 					if information.fileReference then
-						vg31031 = true
+						vg90021 = true
 					end
 				end
 			end
 
 			if container['!shapeInformation'] and next(container.shapeInformation) then
-				vg31030 = true
+				vg90020 = true
 			end
 
 			if container['!topmark'] and container.topmark.shapeInformation and next(container.topmark.shapeInformation) then
-				vg31030 = true
+				vg90020 = true
 			end
 		end
 
-		return vg31030, vg31031
+		return vg90020, vg90021
 	end
 
-	local vg31030, vg31031
+	local vg90020, vg90021
 
-	vg31030, vg31031 = GetViewingGroups(feature, vg31030, vg31031)
-	vg31030, vg31031 = GetViewingGroups(feature:GetInformationAssociation('AdditionalInformation', 'providesInformation', 'NauticalInformation'), vg31030, vg31031)
-	vg31030, vg31031 = GetViewingGroups(feature:GetInformationAssociation('AdditionalInformation', 'providesInformation', 'NonStandardWorkingDay'), vg31030, vg31031)
-	vg31030, vg31031 = GetViewingGroups(feature:GetInformationAssociation('AdditionalInformation', 'providesInformation', 'ServiceHours'), vg31030, vg31031)
+	vg90020, vg90021 = GetViewingGroups(feature, vg90020, vg90021)
+	vg90020, vg90021 = GetViewingGroups(feature:GetInformationAssociation('AdditionalInformation', 'theInformation', 'NauticalInformation'), vg90020, vg90021)
+	vg90020, vg90021 = GetViewingGroups(feature:GetInformationAssociation('AdditionalInformation', 'theInformation', 'NonStandardWorkingDay'), vg90020, vg90021)
+	vg90020, vg90021 = GetViewingGroups(feature:GetInformationAssociation('AdditionalInformation', 'theInformation', 'ServiceHours'), vg90020, vg90021)
 
-	if vg31030 or vg31031 then
+	if vg90020 or vg90021 then
 		-- Clear any existing transforms and geometries
 		featurePortrayal:AddInstructions('LocalOffset:0,0;LinePlacement:Relative,0.5;AreaPlacement:VisibleParts;AreaCRS:GlobalGeometry;Rotation:PortrayalCRS,0;ScaleFactor:1;ClearGeometry')
 
 		featurePortrayal:AddInstructions('Hover:true')
 
-		local displayPlane = contextParameters.RadarOverlay and 'DisplayPlane:OverRADAR' or 'DisplayPlane:UnderRADAR'
+		local displayPlane = contextParameters.RadarOverlay and 'DisplayPlane:OverRadar' or 'DisplayPlane:UnderRadar'
 
-		if vg31030 then
+		if vg90020 then
 			featurePortrayal:AddInstructions(displayPlane)
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31030,highlightInfo;DrawingPriority:24;PointInstruction:INFORM01')
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',90020;DrawingPriority:24;PointInstruction:INFORM01')
 		end
 
-		if vg31031 then
+		if vg90021 then
 			featurePortrayal:AddInstructions(displayPlane)
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',31031,highlightDocument;DrawingPriority:24;PointInstruction:INFORM01')
+			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',90021;DrawingPriority:24;PointInstruction:INFORM01')
 		end
 	end
 end
@@ -226,7 +237,22 @@ local function ScaledDecimalToNumber(scaledDecimal)
 	return value
 end
 
-function ScaledDecimalCompare(scaledDecimal1, scaledDecimal2)
+local function ScaledDecimalCompare_EqMetaMethodGuarantee(scaledDecimal1, scaledDecimal2)
+	CheckType(scaledDecimal1, 'ScaledDecimal')
+	CheckType(scaledDecimal2, 'ScaledDecimal')
+
+	local sd1 = { Value = scaledDecimal1.Value, Scale = scaledDecimal1.Scale }
+	local sd2 = { Value = scaledDecimal2.Value, Scale = scaledDecimal2.Scale }
+
+	NormalizeScaledDecimals(sd1, sd2)
+
+	return sd1.Value - sd2.Value
+end
+
+local function ScaledDecimalCompare_NotEqMetaMethodGuarantee(scaledDecimal1, scaledDecimal2)
+	if scaledDecimal2.Type ~= 'ScaledDecimal' then
+		return 1
+	end
 	CheckType(scaledDecimal1, 'ScaledDecimal')
 	CheckType(scaledDecimal2, 'ScaledDecimal')
 
@@ -269,6 +295,8 @@ local function ScaledDecimalSplit(scaledDecimal)
 		return sign, left, right
 	end
 end
+
+local ScaledDecimalCompare = EqMetaMethodGuarantee and ScaledDecimalCompare_EqMetaMethodGuarantee or ScaledDecimalCompare_NotEqMetaMethodGuarantee
 
 local scaledDecimalMetatable =
 {
@@ -680,6 +708,15 @@ function contains(value, array)
 	end
 
 	return false
+end
+
+-- table.concat with a nil check
+function safeConcat(t, s)
+	if t == nil then
+		return ''
+	end
+	
+	return table.concat(t, s)
 end
 
 --

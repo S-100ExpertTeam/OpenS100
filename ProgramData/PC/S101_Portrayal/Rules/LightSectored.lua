@@ -33,14 +33,16 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 	end
 
 	if contextParameters.RadarOverlay then
-		featurePortrayal:AddInstructions('ViewingGroup:27070;DrawingPriority:24;DisplayPlane:OverRADAR;Hover:true')
+		featurePortrayal:AddInstructions('ViewingGroup:27070;DrawingPriority:24;DisplayPlane:OverRadar;Hover:true')
 	else
-		featurePortrayal:AddInstructions('ViewingGroup:27070;DrawingPriority:24;DisplayPlane:UnderRADAR;Hover:true')
+		featurePortrayal:AddInstructions('ViewingGroup:27070;DrawingPriority:24;DisplayPlane:UnderRadar;Hover:true')
 	end
 
+	local textOffsetLines = featurePortrayal:GetColocatedTextCount()	-- lines of text output by co-located features
 	local informationFound = false
-
 	for isc, sectorCharacteristic in ipairs(feature.sectorCharacteristics) do
+		
+		local descriptionInfo = {}
 		for ils, lightSector in ipairs(sectorCharacteristic.lightSector) do
 			informationFound = informationFound or (lightSector.sectorInformation and #lightSector.sectorInformation ~= 0)
 
@@ -54,6 +56,8 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 			local sectorColourToken
 			local sectorLightSymbol
 
+			descriptionInfo[ils] = { valueOfNominalRange, colour, lightSector.valueOfNominalRange }
+			
 			if colour[1] == 1 and colour[2] == 3 then -- white and red
 				sectorColourToken = 'LITRD'
 				sectorLightSymbol = 'LIGHTS11'
@@ -123,7 +127,7 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 				featurePortrayal:AddInstructions('LineInstruction:_simple_')
 
 				-- Draw sector arcs
-				if lightSector.sectorExtension then
+				if lightSector.sectorArcExtension then
 					featurePortrayal:AddInstructions('ArcByRadius:0,0,25,' .. sectorLimit1 .. ',' .. sectorLimit2 - sectorLimit1)
 				else
 					featurePortrayal:AddInstructions('ArcByRadius:0,0,20,' .. sectorLimit1 .. ',' .. sectorLimit2 - sectorLimit1)
@@ -131,7 +135,6 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 				featurePortrayal:AddInstructions('AugmentedPath:LocalCRS,GeographicCRS,LocalCRS')
 
 				if contains(lightSector.lightVisibility, { 7, 8, 3 }) then
-					featurePortrayal:SimpleLineStyle('dash',0.32,'CHBLK') -- Redundant?
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
 				else
 					featurePortrayal:SimpleLineStyle('solid',1.28,'OUTLW')
@@ -139,6 +142,9 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 					featurePortrayal:SimpleLineStyle('solid',0.64,sectorColourToken)
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
 				end
+				
+				featurePortrayal:AddInstructions('ClearGeometry')
+				
 			elseif lightSector.directionalCharacter then
 				-- Directional light.
 				local leglen = nmi2metres(valueOfNominalRange)
@@ -153,6 +159,7 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 					featurePortrayal:AddInstructions('AugmentedRay:GeographicCRS,' .. orientation .. ',GeographicCRS,' .. leglen)
 					featurePortrayal:SimpleLineStyle('dash',0.32,'CHBLK')
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
+					featurePortrayal:AddInstructions('ClearGeometry')
 				end
 
 				local categoryOfLight = feature.categoryOfLight
@@ -165,15 +172,16 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
 					featurePortrayal:SimpleLineStyle('solid',0.64,sectorColourToken)
 					featurePortrayal:AddInstructions('LineInstruction:_simple_')
+					featurePortrayal:AddInstructions('ClearGeometry')
 				elseif orientationValue then
 					featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. orientation)
-					featurePortrayal:AddInstructions('ClearGeometry;PointInstruction:' .. sectorLightSymbol)
+					featurePortrayal:AddInstructions('PointInstruction:' .. sectorLightSymbol)
 					featurePortrayal:AddInstructions('Rotation:PortrayalCRS,0')
 				else
-					featurePortrayal:AddInstructions('ClearGeometry;PointInstruction:QUESMRK1')
+					featurePortrayal:AddInstructions('PointInstruction:QUESMRK1')
 				end
 
-				featurePortrayal:AddInstructions('LocalOffset:10.53,-3.51;FontSize:10;FontColor:CHBLK;ClearGeometry')
+				featurePortrayal:AddInstructions('LocalOffset:10.53,-3.51;FontColor:CHBLK')
 				
 				if orientationValue
 				then
@@ -182,33 +190,63 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 				end
 
 				local description = LITDSN02(feature.categoryOfLight[1], sectorCharacteristic, colour, feature.height, lightSector.valueOfNominalRange, feature.status)
-
+				
 				featurePortrayal:AddInstructions('TextAlignVertical:Bottom')
-				featurePortrayal:AddTextInstruction(EncodeString(description), 23, 24, 27070, 24)
-
+				featurePortrayal:AddTextInstruction(EncodeString(description), 23, 24, 27070, 24, true)
+				
 				-- PC #113
 				if lightSector.directionalCharacter.moireEffect then
 					if orientationValue then
 						featurePortrayal:AddInstructions('Rotation:GeographicCRS,' .. orientation)
-						featurePortrayal:AddInstructions('ClearGeometry;LocalOffset:0,0;PointInstruction:MOIRE01')
+						featurePortrayal:AddInstructions('LocalOffset:0,0;PointInstruction:MOIRE01')
 						featurePortrayal:AddInstructions('Rotation:PortrayalCRS,0')
 					else
-						featurePortrayal:AddInstructions('ClearGeometry;LocalOffset:0,0;PointInstruction:MOIRE01')
+						featurePortrayal:AddInstructions('LocalOffset:0,0;PointInstruction:MOIRE01')
 					end
 				end
 			else
 				-- Neither sectorLimit nor directionalCharacter was found.
-				featurePortrayal:AddInstructions('ClearGeometry;PointInstruction:QUESMRK1')
+				featurePortrayal:AddInstructions('PointInstruction:QUESMRK1')
 			end
+		end
+		
+		if #descriptionInfo > 0 then
+			table.sort(descriptionInfo, function(a,b) return a[1] > b[1] end)
+			
+			local numRanges = 1
+			local prevRange = descriptionInfo[1][1]
+			local colorsAdded = {}	-- don't repeat colors if they have different ranges
+			local sectorColors = {}	-- ordered by range (max range if a given color has multiple ranges)
+			for i, entry in ipairs(descriptionInfo) do
+				if entry[1] ~= prevRange then
+					prevRange = entry[1]
+					numRanges = numRanges + 1
+				end
+				for j, color in ipairs(entry[2]) do
+					if not colorsAdded[color] then
+						colorsAdded[color] = true
+						sectorColors[#sectorColors+1] = color
+					end
+				end
+			end
+			
+			-- Add light description
+			local vnr = descriptionInfo[1][3]
+			local vnr2 = descriptionInfo[#descriptionInfo][3]
+			local description = LITDSN02(feature.categoryOfLight[1], sectorCharacteristic, sectorColors, feature.height, vnr, feature.status, vnr2, numRanges)	
+			featurePortrayal:AddInstructions('ClearGeometry;FontColor:CHBLK')
+			featurePortrayal:AddInstructions('LocalOffset:7.02,0;TextAlignHorizontal:Start;TextAlignVertical:Center')
+			local textVerticalOffset = (textOffsetLines + isc - 1) * -3.51
+			if textVerticalOffset ~= 0 then
+				featurePortrayal:AddInstructions('TextVerticalOffset:' .. textVerticalOffset)
+			end
+			featurePortrayal:AddTextInstruction(EncodeString(description), 23, 24, 27070, 24, true)
 		end
 	end
 
 	if informationFound then
-		featurePortrayal:AddInstructions('LocalOffset:0,0;LinePlacement:Relative,0.5;AreaPlacement:VisibleParts;AreaCRS:GlobalGeometry;Rotation:PortrayalCRS,0;ScaleFactor:1;ClearGeometry')
-
-		featurePortrayal:AddInstructions('Hover:true')
-
-		featurePortrayal:AddInstructions('ViewingGroup:27070,31030;DrawingPriority:24;PointInstruction:INFORM01')
+		featurePortrayal:AddInstructions('LocalOffset:0,0')
+		featurePortrayal:AddInstructions('ViewingGroup:27070,90020;DrawingPriority:24;PointInstruction:INFORM01')
 	end
 
 	return 27070

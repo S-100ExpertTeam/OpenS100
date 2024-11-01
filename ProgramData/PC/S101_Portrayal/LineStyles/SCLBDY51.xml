@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-16"?>
 <?S100Meta name="SCLBDY51" exposition="chart scale boundary, the double line indicates the larger scale"?>
-<compositeLineStyle>
+<ls:compositeLineStyle xmlns:ls="http://www.iho.int/S100LineStyle/5.2">
     <lineStyle offset="-1.0">
         <intervalLength>6.10</intervalLength>
         <pen width="0.96">
@@ -32,4 +32,4 @@
             <length>6.10</length>
         </dash>
     </lineStyle>
-</compositeLineStyle>
+</ls:compositeLineStyle>

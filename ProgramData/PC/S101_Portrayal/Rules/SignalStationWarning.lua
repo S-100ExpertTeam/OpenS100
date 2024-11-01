@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 --
 -- ISSUES: PSWG #49, PC #112
 
@@ -11,9 +9,9 @@ function SignalStationWarning(feature, featurePortrayal, contextParameters)
 
 	viewingGroup = 28020
 	if contextParameters.RadarOverlay then
-		featurePortrayal:AddInstructions('ViewingGroup:28020;DrawingPriority:21;DisplayPlane:OverRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:28020;DrawingPriority:21;DisplayPlane:OverRadar')
 	else
-		featurePortrayal:AddInstructions('ViewingGroup:28020;DrawingPriority:21;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:28020;DrawingPriority:21;DisplayPlane:UnderRadar')
 	end
 
 	if feature.PrimitiveType == PrimitiveType.Point then

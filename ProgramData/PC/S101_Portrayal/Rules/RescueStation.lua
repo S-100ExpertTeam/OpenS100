@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 -- #194
 -- #235
 
@@ -8,9 +6,9 @@ function RescueStation(feature, featurePortrayal, contextParameters)
 	local viewingGroup = 38030
 
 	if contextParameters.RadarOverlay then
-		featurePortrayal:AddInstructions('ViewingGroup:38030;DrawingPriority:21;DisplayPlane:OverRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:38030;DrawingPriority:21;DisplayPlane:OverRadar')
 	else
-		featurePortrayal:AddInstructions('ViewingGroup:38030;DrawingPriority:21;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:38030;DrawingPriority:21;DisplayPlane:UnderRadar')
 	end
 
 	if feature.PrimitiveType == PrimitiveType.Point then

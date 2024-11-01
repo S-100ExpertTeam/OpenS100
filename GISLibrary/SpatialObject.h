@@ -15,7 +15,7 @@ public:
 
 public:
 	Layer* m_pLayer = nullptr;
-	S100_FileType m_FileType; 
+	S100_FileType m_FileType = S100_FileType::FILE_NONE; 
 
 private:
 	CString m_FilePath; // Full path of file (including name)

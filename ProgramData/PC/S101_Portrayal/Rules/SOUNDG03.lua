@@ -27,6 +27,8 @@ function SOUNDG03(feature, featurePortrayal, contextParameters, viewingGroup)
 		-- Clear for next sounding.
 		featurePortrayal:AddInstructions('AlertReference')
 	end
+	
+	featurePortrayal:AddInstructions('ClearGeometry')
 
 	Debug.StopPerformance('Lua Code - SOUNDG03')
 end

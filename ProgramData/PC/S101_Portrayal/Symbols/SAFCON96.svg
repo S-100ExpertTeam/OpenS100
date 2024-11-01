@@ -4,15 +4,15 @@
   <title>SAFCON96</title>
   <desc>contour label</desc>
   <metadata>
-    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
       <iho:Description iho:publisher="IHO" iho:creationDate="2023-05-18" iho:source="S52Preslib4.0.3" iho:format="S100SVG" iho:version="1.0" />
     </iho:S100SVG>
   </metadata>
   <rect class="symbolBox layout" fill="none" x="1.78" y="-1.57" height="3.14" width="1.89"/>
   <rect class="svgBox layout" fill="none" x="0.16" y="-1.57" height="3.14" width="3.51"/>
-  <path d="M 3.12,-1.28 L 2.37,-1.28 L 2.12,-1.03 L 2.12,0.97 L 2.37,1.22 L 3.12,1.22 L 3.37,0.97 L 3.37,0.00 L 3.12,-0.25 L 2.37,-0.25 L 2.12,0.00" class="sl f0 sDEPDW" style="stroke-width: 0.96;"/>
-  <path d="M 3.12,-1.28 L 3.24,-1.16" class="sl f0 sDEPDW" style="stroke-width: 0.96;"/>
-  <path d="M 3.12,-1.28 L 2.37,-1.28 L 2.12,-1.03 L 2.12,0.97 L 2.37,1.22 L 3.12,1.22 L 3.37,0.97 L 3.37,0.00 L 3.12,-0.25 L 2.37,-0.25 L 2.12,0.00" class="sl f0 sSNDG2" style="stroke-width: 0.32;"/>
-  <path d="M 3.12,-1.28 L 3.24,-1.16" class="sl f0 sSNDG2" style="stroke-width: 0.32;"/>
+  <path d="M 3.12,-1.28 L 2.37,-1.28 L 2.12,-1.03 L 2.12,0.97 L 2.37,1.22 L 3.12,1.22 L 3.37,0.97 L 3.37,0.00 L 3.12,-0.25 L 2.37,-0.25 L 2.12,0.00" class="sl f0 sDEPDW" stroke-width="0.96" />
+  <path d="M 3.12,-1.28 L 3.24,-1.16" class="sl f0 sDEPDW" stroke-width="0.96" />
+  <path d="M 3.12,-1.28 L 2.37,-1.28 L 2.12,-1.03 L 2.12,0.97 L 2.37,1.22 L 3.12,1.22 L 3.37,0.97 L 3.37,0.00 L 3.12,-0.25 L 2.37,-0.25 L 2.12,0.00" class="sl f0 sSNDG2" stroke-width="0.32" />
+  <path d="M 3.12,-1.28 L 3.24,-1.16" class="sl f0 sSNDG2" stroke-width="0.32" />
   <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
 </svg>

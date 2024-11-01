@@ -338,7 +338,7 @@ end
 --
 --
 
-function CreateAttributeConstraints(stringLength, textPattern, rangeLower, rangeUpper, closure, precision)
+function CreateAttributeConstraints(stringLength, textPattern, rangeLower, rangeUpper, rangeClosure, precision)
 	CheckTypeOrNil(stringLength, 'number')
 	CheckTypeOrNil(textPattern, 'string')
 	CheckTypeOrNil(rangeLower, 'string')
@@ -497,6 +497,7 @@ function CreateFeature(featureID, featureCode)
 		return feature
 	end
 	
+	-- Note: Potential namespace collision with attribute names. Consider renaming with leading underscore.
 	feature = { Type = 'Feature', ID = featureID, Code = featureCode, InformationAssociations = {}, FeatureAssociations = {} }
 
 	featureCache[featureID] = feature

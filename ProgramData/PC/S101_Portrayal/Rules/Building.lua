@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 -- FC 1.0.1: manually changed visuallyConspicuous to visualProminence
 -- #155
 -- #256
@@ -12,6 +10,7 @@ function Building(feature, featurePortrayal, contextParameters)
 	if feature.inTheWater then
 		-- Dangers above water
 		viewingGroup = 12200
+		featurePortrayal:AddInstructions('AlertReference:NavHazard')
 	elseif feature.visualProminence == 1 then
 		-- Visually conspicuous object
 		viewingGroup = 22220
@@ -26,16 +25,16 @@ function Building(feature, featurePortrayal, contextParameters)
 	featurePortrayal:AddInstructions('DrawingPriority:' .. drawingPriority)
 	
 	if feature.PrimitiveType == PrimitiveType.Point and contextParameters.RadarOverlay then
-		featurePortrayal:AddInstructions('DisplayPlane:OverRADAR')
+		featurePortrayal:AddInstructions('DisplayPlane:OverRadar')
 	else
-		featurePortrayal:AddInstructions('DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('DisplayPlane:UnderRadar')
 	end
 
 	if feature.PrimitiveType == PrimitiveType.Point and contextParameters.SimplifiedSymbols then
 		if contains(33, feature['function']) and feature.visualProminence == 1 and feature.featureName[1] and feature.featureName[1].name then
 			featurePortrayal:AddInstructions('PointInstruction:POSGEN03')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,0;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,0;TextAlignVertical:Center;FontSize:10;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif contains(20, feature['function']) and feature.visualProminence == 1 then
@@ -61,7 +60,7 @@ function Building(feature, featurePortrayal, contextParameters)
 		elseif contains(33, feature['function']) and feature.featureName[1] and feature.featureName[1].name then
 			featurePortrayal:AddInstructions('PointInstruction:POSGEN03')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,0;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,0;TextAlignVertical:Center;FontSize:10;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif feature.visualProminence == 1 then
@@ -93,7 +92,7 @@ function Building(feature, featurePortrayal, contextParameters)
 		if contains(33, feature['function']) and feature.visualProminence == 1 and feature.featureName[1] and feature.featureName[1].name then
 			featurePortrayal:AddInstructions('PointInstruction:POSGEN03')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,0;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,0;TextAlignVertical:Center;FontSize:10;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif contains(20, feature['function']) and feature.visualProminence == 1 then
@@ -119,7 +118,7 @@ function Building(feature, featurePortrayal, contextParameters)
 		elseif contains(33, feature['function']) and feature.featureName[1] and feature.featureName[1].name then
 			featurePortrayal:AddInstructions('PointInstruction:POSGEN03')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:3.51,0;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:3.51,0;TextAlignVertical:Center;FontSize:10;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 		elseif feature.visualProminence == 1 then
@@ -151,7 +150,7 @@ function Building(feature, featurePortrayal, contextParameters)
 		if contains(33, feature['function']) and feature.visualProminence == 1 then
 			featurePortrayal:AddInstructions('ColorFill:CHBRN')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 			featurePortrayal:SimpleLineStyle('solid',0.32,'CHBLK')
@@ -159,7 +158,7 @@ function Building(feature, featurePortrayal, contextParameters)
 		elseif contains(33, feature['function']) then
 			featurePortrayal:AddInstructions('ColorFill:CHBRN')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 			featurePortrayal:SimpleLineStyle('solid',0.32,'LANDF')
@@ -177,7 +176,7 @@ function Building(feature, featurePortrayal, contextParameters)
 		if contains(33, feature['function']) and feature.visualProminence == 1 then
 			featurePortrayal:AddInstructions('ColorFill:CHBRN')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 			featurePortrayal:SimpleLineStyle('solid',0.32,'CHBLK')
@@ -185,7 +184,7 @@ function Building(feature, featurePortrayal, contextParameters)
 		elseif contains(33, feature['function']) then
 			featurePortrayal:AddInstructions('ColorFill:CHBRN')
 			if feature.featureName[1] and feature.featureName[1].name then
-				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10')
+				featurePortrayal:AddInstructions('LocalOffset:0,0;TextAlignHorizontal:Center;TextAlignVertical:Center;FontSize:10;FontColor:CHBLK')
 				featurePortrayal:AddTextInstruction(EncodeString(GetFeatureName(feature, contextParameters)), 26, 24, viewingGroup, drawingPriority)
 			end
 			featurePortrayal:SimpleLineStyle('solid',0.32,'LANDF')

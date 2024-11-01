@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.32mm" height="6.6mm" viewBox="-4.21 -3.44 8.32 6.6">
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.32mm" height="6.6mm" viewBox="-4.21 -3.44 8.32 6.6">
   <title>DANGER02</title>
   <desc>underwater hazard with depth greater than 20 metres</desc>
   <metadata>
-    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.0">
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
       <iho:Description iho:publisher="IHO" iho:creationDate="2023-05-01" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="1.0"/>
     </iho:S100SVG>
   </metadata>

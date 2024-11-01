@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "DataSetManagerSupport.h"
+
 #include "../FeatureCatalog/FeatureCatalogue.h"
+
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
+
 #include "../LibMFCUtil/LibMFCUtil.h"
 
 #include "../GISLibrary/ExchangeCatalogue.h"
@@ -415,7 +418,8 @@ void DataSetManagerSupport::CreateSPTable()
 		"CREATE TABLE IF NOT EXISTS SupportFiles ("
 		"idx INTEGER PRIMARY KEY AUTOINCREMENT, "
 		"fileName TEXT NOT NULL, "
-		"filePath TEXT NOT NULL UNIQUE "
+		"filePath TEXT NOT NULL UNIQUE, "
+		"filePath TEXT "
 		");";
 
 	char* errMsg = nullptr;
@@ -448,7 +452,26 @@ void DataSetManagerSupport::insertData(std::string table, const std::string& fil
 	sqlite3_finalize(stmt);
 }
 
+void DataSetManagerSupport::insertData(std::string table, const std::string& fileName, const std::string& filePath, const std::string& resourcePurpose)
+{
+	std::string sqlInsert =
+		"INSERT INTO " + table + " (fileName, filePath, resourcePurpose) "
+		"VALUES (?, ?);";
 
+	sqlite3_stmt* stmt;
+	sqlite3_prepare_v2(m_db, sqlInsert.c_str(), -1, &stmt, nullptr);
+	sqlite3_bind_text(stmt, 1, fileName.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 2, filePath.c_str(), -1, SQLITE_TRANSIENT);
+	sqlite3_bind_text(stmt, 3, resourcePurpose.c_str(), -1, SQLITE_TRANSIENT);
+
+	if (sqlite3_step(stmt) != SQLITE_DONE) {
+		TRACE("Could not insert data: %s", sqlite3_errmsg(m_db));
+	}
+	else {
+		TRACE("Data inserted successfully");
+	}
+	sqlite3_finalize(stmt);
+}
 
 void DataSetManagerSupport::insertData(std::string table, const std::string& fileName, const std::string& filePath, const std::string& product, const std::string& version) {
 	std::string sqlInsert =
@@ -533,6 +556,31 @@ std::vector<std::shared_ptr<DatasetClass>> DataSetManagerSupport::selectAllDataD
 	return data;
 }
 
+std::vector<std::shared_ptr<SupportFiles>> DataSetManagerSupport::selectAllSupportFiles(std::string table)
+{
+	std::vector<std::shared_ptr<SupportFiles>> data;
+
+	std::string sqlSelect = "SELECT * FROM " + table + ";";
+	sqlite3_stmt* stmt;
+	int rc = sqlite3_prepare_v2(m_db, sqlSelect.c_str(), -1, &stmt, nullptr);
+
+	if (rc != SQLITE_OK) {
+		TRACE("Cannot prepare select statement: %s", sqlite3_errmsg(m_db));
+	}
+
+	while (sqlite3_step(stmt) == SQLITE_ROW) {
+
+		SupportFiles sf;
+
+		sf.fileName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+		sf.filePath = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
+
+		data.push_back(std::make_shared<SupportFiles>(sf));
+	}
+
+	sqlite3_finalize(stmt);
+	return data;
+}
 
 std::vector<std::shared_ptr<FC_PC_DatasetClass>> DataSetManagerSupport::selectAllData(std::string table) {
 	std::vector<std::shared_ptr<FC_PC_DatasetClass>> data;
@@ -643,12 +691,25 @@ std::vector<std::string> DataSetManagerSupport::initPCList()
 	return vec;
 }
 
-
 std::vector<std::string> DataSetManagerSupport::initDataFileList()
 {
 	std::vector<std::string> vec;
 
 	auto temp = selectAllDataDS_SP("DatasetFiles");
+	for (int i = 0; i < temp.size(); i++)
+	{
+		if (PathFileExists(LibMFCUtil::StringToWString(temp[i]->filePath).c_str()))
+			vec.push_back(temp[i]->filePath);
+	}
+
+	return vec;
+}
+
+std::vector<std::string> DataSetManagerSupport::initSupportFiles()
+{
+	std::vector<std::string> vec;
+
+	auto temp = selectAllSupportFiles("SupportFiles");
 	for (int i = 0; i < temp.size(); i++)
 	{
 		if (PathFileExists(LibMFCUtil::StringToWString(temp[i]->filePath).c_str()))

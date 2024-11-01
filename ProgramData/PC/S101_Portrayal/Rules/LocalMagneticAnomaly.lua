@@ -1,9 +1,7 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 
 -- PC Issue #73, PSWG #102
 -- PC issue #254
--- PC issue #214
+-- PC issue #214, updated to DCEG 1.2.0
 
 -- Local magnetic anomaly main entry point.
 function LocalMagneticAnomaly(feature, featurePortrayal, contextParameters)
@@ -12,27 +10,27 @@ function LocalMagneticAnomaly(feature, featurePortrayal, contextParameters)
 	if feature.PrimitiveType == PrimitiveType.Point then
 		-- Simplified and paper chart points use the same symbolization
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:31080;DrawingPriority:12;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:31080;DrawingPriority:12;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:31080;DrawingPriority:12;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:31080;DrawingPriority:12;DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:AddInstructions('PointInstruction:LOCMAG01')
 		
 
 	elseif feature.PrimitiveType == PrimitiveType.Curve then
-		featurePortrayal:AddInstructions('ViewingGroup:31080;DrawingPriority:12;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:31080;DrawingPriority:12;DisplayPlane:UnderRadar')
 		featurePortrayal:SimpleLineStyle('dash',0.32,'CHMGF')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 		featurePortrayal:AddInstructions('PointInstruction:LOCMAG01')
 	elseif feature.PrimitiveType == PrimitiveType.Surface and contextParameters.PlainBoundaries then
-		featurePortrayal:AddInstructions('ViewingGroup:31080;DrawingPriority:12;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:31080;DrawingPriority:12;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('PointInstruction:LOCMAG51')
-		featurePortrayal:SimpleLineStyle('dash',0.32,'CHGRD')
+		featurePortrayal:SimpleLineStyle('dash',0.32,'CHMGD')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
-		featurePortrayal:AddInstructions('ViewingGroup:31080;DrawingPriority:12;DisplayPlane:UnderRADAR')
+		featurePortrayal:AddInstructions('ViewingGroup:31080;DrawingPriority:12;DisplayPlane:UnderRadar')
 		featurePortrayal:AddInstructions('PointInstruction:LOCMAG51')
-		featurePortrayal:AddInstructions('LineInstruction:NAVARE51')
+		featurePortrayal:AddInstructions('LineInstruction:CTYARE51')
 	else
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
@@ -59,10 +57,10 @@ function LocalMagneticAnomaly(feature, featurePortrayal, contextParameters)
 					elseif  valueOfLocalMagneticAnomaly[1].referenceDirection == 13 then -- West
 						featurePortrayal:AddTextInstruction(EncodeString(valueOfLocalMagneticAnomaly[1].magneticAnomalyValue, '(%.0f°W)'), 27, 24, viewingGroup, 12)
 					elseif valueOfLocalMagneticAnomaly[1].referenceDirection == unknownValue then
-						featurePortrayal:AddTextInstruction(EncodeString(valueOfLocalMagneticAnomaly[1].magneticAnomalyValue, '(±%.0f°)'), 27, 24, viewingGroup, 12)
+						featurePortrayal:AddTextInstruction(EncodeString(valueOfLocalMagneticAnomaly[1].magneticAnomalyValue, '(%.0f°)'), 27, 24, viewingGroup, 12)
 					end
 				else
-					featurePortrayal:AddTextInstruction(EncodeString(valueOfLocalMagneticAnomaly[1].magneticAnomalyValue, '(±%.0f°)'), 27, 24, viewingGroup, 12)
+					featurePortrayal:AddTextInstruction(EncodeString(valueOfLocalMagneticAnomaly[1].magneticAnomalyValue, '(%.0f°)'), 27, 24, viewingGroup, 12)
 				end
 			else
 				-- depict text "Local Magnetic Anomaly"
@@ -87,12 +85,10 @@ function LocalMagneticAnomaly(feature, featurePortrayal, contextParameters)
 
 						txtStr = string.format('(%.0f°%s/%.0f°%s)',valueOfLocalMagneticAnomaly[1].magneticAnomalyValue:ToNumber(), dir1, valueOfLocalMagneticAnomaly[2].magneticAnomalyValue:ToNumber(), dir2)
 						featurePortrayal:AddTextInstruction(txtStr, 27, 24, viewingGroup, 12)
-						--featurePortrayal:AddTextInstruction(EncodeString(valueOfLocalMagneticAnomaly[1].magneticAnomalyValue, dir1, valueOfLocalMagneticAnomaly[2].magneticAnomalyValue, dir2, '(%.0f°%s/%.0f°%s)'), 27, 24, ViewingGroup, 12)
 
 				else
 					txtStr = string.format('(%.0f°%s/%.0f°%s)',valueOfLocalMagneticAnomaly[1].magneticAnomalyValue:ToNumber(), dir1, valueOfLocalMagneticAnomaly[2].magneticAnomalyValue:ToNumber(), dir2)
 					featurePortrayal:AddTextInstruction(txtStr, 27, 24, viewingGroup, 12)
-					--featurePortrayal:AddTextInstruction(EncodeString(valueOfLocalMagneticAnomaly[1].magneticAnomalyValue, dir1, valueOfLocalMagneticAnomaly[2].magneticAnomalyValue, dir2, '(%.0f°%s/%.0f°%s)'), 27, 24, ViewingGroup, 12)
 
 				end
 			elseif valueOfLocalMagneticAnomaly[1].magneticAnomalyValue == unknownValue or valueOfLocalMagneticAnomaly[2].magneticAnomalyValue == unknownValue then

@@ -1,5 +1,3 @@
--- Converter Version: 0.99
--- Feature Catalogue Version: 1.0.0 (2019/4/9)
 
 -- Traffic separation scheme boundary main entry point.
 function TrafficSeparationSchemeBoundary(feature, featurePortrayal, contextParameters)
@@ -8,9 +6,9 @@ function TrafficSeparationSchemeBoundary(feature, featurePortrayal, contextParam
 	if feature.PrimitiveType == PrimitiveType.Curve then
 		viewingGroup = 25010
 		if contextParameters.RadarOverlay then
-			featurePortrayal:AddInstructions('ViewingGroup:25010;DrawingPriority:21;DisplayPlane:OverRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:25010;DrawingPriority:21;DisplayPlane:OverRadar')
 		else
-			featurePortrayal:AddInstructions('ViewingGroup:25010;DrawingPriority:21;DisplayPlane:UnderRADAR')
+			featurePortrayal:AddInstructions('ViewingGroup:25010;DrawingPriority:21;DisplayPlane:UnderRadar')
 		end
 		featurePortrayal:SimpleLineStyle('dash',1.28,'TRFCD')
 		featurePortrayal:AddInstructions('LineInstruction:_simple_')
