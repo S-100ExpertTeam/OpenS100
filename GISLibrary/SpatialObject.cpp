@@ -54,3 +54,8 @@ S100_FileType SpatialObject::GetFileType()
 {
 	return m_FileType;
 }
+
+SpatialObjectType SpatialObject::getSpatialObjectType()
+{
+	return m_ObejctType;
+}

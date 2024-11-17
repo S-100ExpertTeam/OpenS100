@@ -80,12 +80,14 @@ S101Cell::S101Cell(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
+	m_ObejctType = SpatialObjectType::S101Cell;
 }
 
 S101Cell::S101Cell(FeatureCatalogue* fc, D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
+	m_ObejctType = SpatialObjectType::S101Cell;
 	//SetAllNumericCode(fc);
 }
 
@@ -1751,8 +1753,8 @@ std::vector<R_InformationRecord*>& S101Cell::GetVecInformation()
 }
 
 void S101Cell::InsertInformationFilter(__int64 key)
-{
-	m_infMatchingKeys.insert(key);
+{	
+	m_infMatchingKeys.push_back(key);
 }
 
 void S101Cell::InsertInformationFilter(std::string key)
@@ -1773,7 +1775,7 @@ void S101Cell::RemoveInformationFilter()
 	m_infMatchingKeys.clear();
 }
 
-std::set<__int64>& S101Cell::GetInformationFilter()
+std::vector<__int64>& S101Cell::GetInformationFilter()
 {
 	return m_infMatchingKeys;
 }
@@ -2171,7 +2173,7 @@ std::vector<R_FeatureRecord*>& S101Cell::GetVecFeature()
 
 void S101Cell::InsertFeatureFilter(__int64 key)
 {
-	m_feaMatchingKeys.insert(key);
+	m_feaMatchingKeys.push_back(key);
 }
 
 void S101Cell::InsertFeatureFilter(std::string key)
@@ -2192,7 +2194,7 @@ void S101Cell::RemoveFeatureFilter()
 	m_feaMatchingKeys.clear();
 }
 
-std::set<__int64>& S101Cell::GetFeatureFilter()
+std::vector<__int64>& S101Cell::GetFeatureFilter()
 {
 	return m_feaMatchingKeys;
 }

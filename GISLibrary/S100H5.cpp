@@ -10,6 +10,7 @@ S100H5::S100H5(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S100H5;
 	m_FileType = S100_FileType::FILE_S_100_GRID_H5;
+	m_ObejctType = SpatialObjectType::S100H5;
 }
 
 S100H5::~S100H5()

@@ -12,6 +12,7 @@ S100ExchangeCatalogue::S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm,
     m_pLayerManager->m_isScreenFitEnabled = false;
     m_IsLegacy = false;
     m_pParentLayerManager = parent;
+    m_ObejctType = SpatialObjectType::S100ExchangeCatalogue;
 }
 
 
