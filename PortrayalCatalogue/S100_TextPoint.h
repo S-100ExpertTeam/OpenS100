@@ -23,11 +23,14 @@ public:
 	void GetContents(pugi::xml_node node);
 
 	void SetHorizontalAlignment(std::wstring& value);
+	void SetHorizontalAlignment(std::string& value);
 	void SetVerticalAlignment(std::wstring& value);
+	void SetVerticalAlignment(std::string& value);
 	void SetElement(S100_Element* value);
 	void SetElements(std::vector<S100_Element*> value);
 	void SetOffset(S100_VectorPoint* value);
 	void SetRotation(std::wstring value);
+	void SetRotation(std::string value);
 	void SetAreaPlacement(S100_AreaPlacement* value);
 
 	std::wstring GetHorizontalAlignment();

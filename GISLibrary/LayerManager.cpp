@@ -754,7 +754,7 @@ void LayerManager::AddSymbolDrawing(
 					if (element->pColor)
 					{
 						D2->pBrush->SetColor(element->pColor);
-						D2->pBrush->SetOpacity(1 - element->foreground.transparency);
+						D2->pBrush->SetOpacity((FLOAT)(1 - element->foreground.transparency));
 					}
 
 					for (auto itor = points.begin(); itor != points.end(); itor++)

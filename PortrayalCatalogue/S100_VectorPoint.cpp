@@ -22,12 +22,19 @@ void S100_VectorPoint::GetContents(pugi::xml_node& node)
 
 void S100_VectorPoint::SetX(std::wstring& value)
 {
-	x = std::stod(value);
+	x = _ttoi(value.c_str());
 }
-
+void S100_VectorPoint::SetX(std::string& value)
+{
+	x = atoi(value.c_str());
+}
 void S100_VectorPoint::SetY(std::wstring& value)
 {
-	y = std::stod(value);
+	y = _ttoi(value.c_str());
+}
+void S100_VectorPoint::SetY(std::string& value)
+{
+	y = atoi(value.c_str());
 }
 void S100_VectorPoint::SetX(double value)
 {

@@ -93,6 +93,17 @@ void S100_Symbol::SetReference(std::wstring& value)
 	reference = value;
 }
 
+void S100_Symbol::SetReference(std::string& value)
+{
+	if (value.empty())
+		reference = _T("");
+	else
+	{
+		std::wstring Reference(value.begin(), value.end());
+		SetReference(Reference);
+	}
+}
+
 void S100_Symbol::SetRotation(double value)
 {
 	rotation = value;
@@ -103,9 +114,31 @@ void S100_Symbol::SetRotationCRS(std::wstring& value)
 	rotationCRS = value;
 }
 
+void S100_Symbol::SetRotationCRS(std::string& value)
+{
+	if (value.empty())
+		rotationCRS = _T("");
+	else
+	{
+		std::wstring RotationCRS(value.begin(), value.end());
+		SetRotationCRS(RotationCRS);
+	}
+}
+
 void S100_Symbol::SetScaleFactor(std::wstring& value)
 {
 	scaleFactor = value;
+}
+
+void S100_Symbol::SetScaleFactor(std::string& value)
+{
+	if (value.empty())
+		scaleFactor = _T("");
+	else
+	{
+		std::wstring ScaleFactor(value.begin(), value.end());
+		SetScaleFactor(ScaleFactor);
+	}
 }
 
 void S100_Symbol::SetAreaPlacement(S100_AreaPlacement* value)

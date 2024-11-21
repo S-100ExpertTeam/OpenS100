@@ -54,6 +54,7 @@ public:
 
 	void SetType(int value);
 	void SetFeatureReference(std::wstring& value);
+	void SetFeatureReference(std::string& value);
 
 	void setId(std::string value);
 	void setParentId(std::string value);
@@ -62,12 +63,17 @@ public:
 	void SetSpatialReference(S100_SpatialReference* value);
 	void SetSpatialReference(std::list<S100_SpatialReference*> value);
 	void SetViewingGroup(std::wstring& value);
+	void SetViewingGroup(std::string& value);
 	void SetDisplayPlane(std::wstring& value);
+	void SetDisplayPlane(std::string& value);
 	void SetDrawingPriority(std::wstring& value);
+	void SetDrawingPriority(std::string& value);
 	void SetDrawingPriority(int value);
 	void SetScaleMinimum(std::wstring& value);
+	void SetScaleMinimum(std::string& value);
 	void SetScaleMinimum(int value);
 	void SetScaleMaximum(std::wstring& value);
+	void SetScaleMaximum(std::string& value);
 	void SetScaleMaximum(int value);
 	void setAlertReference(S100_AlertReference value);
 

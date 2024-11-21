@@ -25,6 +25,18 @@ void S100_LineStyleReference::SetReference(std::wstring& value)
 {
 	reference = value;
 }
+
+void S100_LineStyleReference::SetReference(std::string& value)
+{
+	if (value.empty())
+		reference = _T("");
+	else
+	{
+		std::wstring Reference(value.begin(), value.end());
+		SetReference(Reference);
+	}
+}
+
 std::wstring S100_LineStyleReference::GetReference() 
 {
 	return reference;

@@ -16,6 +16,7 @@ public:
 	void GetContents(pugi::xml_node node);
 
 	void SetReference(std::wstring& value);
+	void SetReference(std::string& value);
 	std::wstring GetReference();
 };
 

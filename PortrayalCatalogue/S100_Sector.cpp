@@ -32,9 +32,31 @@ void S100_Sector::SetStartAngle(std::wstring& value)
 	startAngle = value;
 }
 
+void S100_Sector::SetStartAngle(std::string& value)
+{
+	if (value.empty())
+		startAngle = _T("");
+	else
+	{
+		std::wstring StartAngle(value.begin(), value.end());
+		SetStartAngle(StartAngle);
+	}
+}
+
 void S100_Sector::SetAnglearDistance(std::wstring& value)
 {
 	angularDistance = value;
+}
+
+void S100_Sector::SetAnglearDistance(std::string& value)
+{
+	if (value.empty())
+		angularDistance = _T("");
+	else
+	{
+		std::wstring AnglearDistance(value.begin(), value.end());
+		SetAnglearDistance(AnglearDistance);
+	}
 }
 
 std::wstring S100_Sector::GetStartAngle()

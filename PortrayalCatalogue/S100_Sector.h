@@ -15,7 +15,9 @@ public:
 	void GetContents(pugi::xml_node node);
 
 	void SetStartAngle(std::wstring& value);
+	void SetStartAngle(std::string& value);
 	void SetAnglearDistance(std::wstring& value);
+	void SetAnglearDistance(std::string& value);
 
 	std::wstring GetStartAngle();
 	std::wstring GetAnglearDistance();

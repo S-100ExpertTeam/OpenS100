@@ -57,6 +57,17 @@ void S100_ArcByRadius::SetRadius(std::wstring& value)
 	radius = value;
 }
 
+void S100_ArcByRadius::SetRadius(std::string& value)
+{
+	if (value.empty())
+		radius = _T("");
+	else
+	{
+		std::wstring Radius(value.begin(), value.end());
+		SetRadius(Radius);
+	}
+}
+
 std::wstring S100_ArcByRadius::GetRadius() 
 {
 	return radius;

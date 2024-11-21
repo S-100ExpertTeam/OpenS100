@@ -21,6 +21,7 @@ public:
 	S100_Sector* GetSector();
 
 	void SetRadius(std::wstring& value);
+	void SetRadius(std::string& value);
 	std::wstring GetRadius();
 
 	void GetContents(pugi::xml_node node);

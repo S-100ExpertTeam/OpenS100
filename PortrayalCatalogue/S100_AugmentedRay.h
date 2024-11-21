@@ -18,7 +18,9 @@ public:
 	void GetContents(pugi::xml_node node);
 
 	void SetDirection(std::wstring& value);
+	void SetDirection(std::string& value);
 	void SetLength(std::wstring& value);
+	void SetLength(std::string& value);
 
 	std::wstring GetDirection();
 	std::wstring GetLength();

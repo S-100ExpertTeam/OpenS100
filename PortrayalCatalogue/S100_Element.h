@@ -23,9 +23,11 @@ public:
 	S100_Text* GetText();
 
 	void SetBodySize(std::wstring& value);
+	void SetBodySize(std::string& value);
 	std::wstring GetBodySize();
 
 	void SetVerticalOffset(std::wstring& value);
+	void SetVerticalOffset(std::string& value);
 	std::wstring GetVerticalOffset();
 
 	void SetForground(S100_Foreground* value);

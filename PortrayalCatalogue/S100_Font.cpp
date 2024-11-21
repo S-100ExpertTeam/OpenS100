@@ -45,6 +45,17 @@ void S100_Font::SetSerifs(std::wstring& value)
 	serifs = value;
 }
 
+void S100_Font::SetSerifs(std::string& value)
+{
+	if (value.empty())
+		serifs = _T("");
+	else
+	{
+		std::wstring Serifs(value.begin(), value.end());
+		SetSerifs(Serifs);
+	}
+}
+
 std::wstring S100_Font::GetSerifs() 
 {
 	return serifs;
@@ -53,6 +64,17 @@ std::wstring S100_Font::GetSerifs()
 void S100_Font::SetWeight(std::wstring& value)
 {
 	weight = value;
+}
+
+void S100_Font::SetWeight(std::string& value)
+{
+	if (value.empty())
+		weight = _T("");
+	else
+	{
+		std::wstring Weight(value.begin(), value.end());
+		SetWeight(Weight);
+	}
 }
 
 std::wstring S100_Font::GetWeight()
@@ -65,6 +87,17 @@ void S100_Font::SetSlant(std::wstring& value)
 	slant = value;
 }
 
+void S100_Font::SetSlant(std::string& value)
+{
+	if (value.empty())
+		slant = _T("");
+	else
+	{
+		std::wstring Slant(value.begin(), value.end());
+		SetSlant(Slant);
+	}
+}
+
 std::wstring S100_Font::GetSlant()
 {
 	return slant;
@@ -73,6 +106,17 @@ std::wstring S100_Font::GetSlant()
 void S100_Font::SetProportion(std::wstring& value)
 {
 	proportion = value;
+}
+
+void S100_Font::SetProportion(std::string& value)
+{
+	if (value.empty())
+		proportion = _T("");
+	else
+	{
+		std::wstring Proportion(value.begin(), value.end());
+		SetProportion(Proportion);
+	}
 }
 
 std::wstring S100_Font::GetProportion()

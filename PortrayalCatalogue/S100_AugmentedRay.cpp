@@ -78,9 +78,31 @@ void S100_AugmentedRay::SetDirection(std::wstring& value)
 	direction = value;
 }
 
+void S100_AugmentedRay::SetDirection(std::string& value)
+{
+	if (value.empty())
+		direction = _T("");
+	else
+	{
+		std::wstring Direction(value.begin(), value.end());
+		SetDirection(Direction);
+	}
+}
+
 void S100_AugmentedRay::SetLength(std::wstring& value)
 {
 	length = value;
+}
+
+void S100_AugmentedRay::SetLength(std::string& value)
+{
+	if (value.empty())
+		length = _T("");
+	else
+	{
+		std::wstring Length(value.begin(), value.end());
+		SetLength(Length);
+	}
 }
 
 std::wstring S100_AugmentedRay::GetDirection()

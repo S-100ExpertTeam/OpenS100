@@ -354,11 +354,11 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					S100_AreaInstruction *in = new S100_AreaInstruction();
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetFeatureReference(featureID);
 					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
+					in->SetDisplayPlane(v_DisplayPlane);
+					in->SetViewingGroup(v_ViewingGroup);
+					in->SetScaleMinimum(v_ScaleMinimum);
 
 					if (v_ColorFill.size() > 0)
 					{
@@ -368,12 +368,12 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						S100_ColorFill* cf = (S100_ColorFill*)in->GetAreaFill();
 
 						if (!cf->GetColor()) cf->SetColor(new S100_Color());
-						cf->GetColor()->SetToken(std::wstring(v_splited[0].begin(), v_splited[0].end()));
-						cf->GetColor()->SetName(std::wstring(v_splited[0].begin(), v_splited[0].end()));
+						cf->GetColor()->SetToken(v_splited[0]);
+						cf->GetColor()->SetName(v_splited[0]);
 
 						if (v_splited.size() > 1)
 						{
-							cf->GetColor()->SetTransparency(std::wstring(v_splited[1].begin(), v_splited[1].end()));
+							cf->GetColor()->SetTransparency(v_splited[1]);
 						}
 					}
 					v_ColorFill = "";
@@ -534,21 +534,21 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					S100_TextInstruction *in = new S100_TextInstruction();
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetFeatureReference(featureID);
 					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
+					in->SetDisplayPlane(v_DisplayPlane);
+					in->SetViewingGroup(v_ViewingGroup);
+					in->SetScaleMinimum(v_ScaleMinimum);
 
 					in->SetTextPoint(new S100_TextPoint());
 
 					if (v_TextAlignVertical.size() > 0)
 					{
-						in->GetTextPoint()->SetVerticalAlignment(std::wstring(v_TextAlignVertical.begin(), v_TextAlignVertical.end()));
+						in->GetTextPoint()->SetVerticalAlignment(v_TextAlignVertical);
 					}
 					if (v_TextAlignHorizontal.size() > 0)
 					{
-						in->GetTextPoint()->SetHorizontalAlignment(std::wstring(v_TextAlignHorizontal.begin(), v_TextAlignHorizontal.end()));
+						in->GetTextPoint()->SetHorizontalAlignment(v_TextAlignHorizontal);
 					}
 
 					if (v_LocalOffset.size() > 0)
@@ -558,8 +558,8 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						std::vector<std::string> v_splited = Split(v_LocalOffset, ",");
 						if (v_splited.size() == 2)
 						{
-							in->GetTextPoint()->GetOffset()->SetX(std::wstring(v_splited[0].begin(), v_splited[0].end()));
-							in->GetTextPoint()->GetOffset()->SetY(std::wstring(v_splited[1].begin(), v_splited[1].end()));
+							in->GetTextPoint()->GetOffset()->SetX(v_splited[0]);
+							in->GetTextPoint()->GetOffset()->SetY(v_splited[1]);
 						}
 						else
 						{
@@ -584,7 +584,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 						if (v_FontSize.size() > 0)
 						{
-							element->SetBodySize(std::wstring(v_FontSize.begin(), v_FontSize.end()));
+							element->SetBodySize(v_FontSize);
 						}
 
 						if (v_FontSlant.size() > 0)
@@ -594,7 +594,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 								element->SetFont(new S100_Font());
 							}
 
-							element->GetFont()->SetSlant(std::wstring(v_FontSlant.begin(), v_FontSlant.end()));
+							element->GetFont()->SetSlant(v_FontSlant);
 						}
 
 						if (v_FontColor.size() > 0)
@@ -616,11 +616,11 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						S100_AugmentedRay *in = new S100_AugmentedRay();
 						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+						in->SetFeatureReference(featureID);
 						in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-						in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
+						in->SetDisplayPlane(v_DisplayPlane);
+						in->SetViewingGroup(v_ViewingGroup);
+						in->SetScaleMinimum(v_ScaleMinimum);
 
 						if (false == lineStyle.IsEmpty())
 						{
@@ -632,8 +632,8 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 							std::vector<std::string> v_splited = Split(v_AugmentedRay, ",");
 							if (v_splited.size() == 4)
 							{
-								in->SetDirection(std::wstring(v_splited[1].begin(), v_splited[1].end()));
-								in->SetLength(std::wstring(v_splited[3].begin(), v_splited[3].end()));
+								in->SetDirection(v_splited[1]);
+								in->SetLength(v_splited[3]);
 							}
 						}
 					}
@@ -642,11 +642,11 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						S100_AugmentedPath *in = new S100_AugmentedPath();
 						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+						in->SetFeatureReference(featureID);
 						in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-						in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
+						in->SetDisplayPlane(v_DisplayPlane);
+						in->SetViewingGroup(v_ViewingGroup);
+						in->SetScaleMinimum(v_ScaleMinimum);
 
 						if (false == lineStyle.IsEmpty())
 						{
@@ -663,13 +663,13 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 								S100_ArcByRadius arcByRadius;
 
-								arcByRadius.GetCenter()->SetX(std::wstring(v_splited[0].begin(), v_splited[0].end()));
-								arcByRadius.GetCenter()->SetY(std::wstring(v_splited[1].begin(), v_splited[1].end()));
-								arcByRadius.SetRadius(std::wstring(v_splited[2].begin(), v_splited[2].end()));
+								arcByRadius.GetCenter()->SetX(v_splited[0]);
+								arcByRadius.GetCenter()->SetY(v_splited[1]);
+								arcByRadius.SetRadius(v_splited[2]);
 
 								if (arcByRadius.GetSector() == nullptr)arcByRadius.SetSector(new S100_Sector());
-								arcByRadius.GetSector()->SetStartAngle(std::wstring(v_splited[3].begin(), v_splited[3].end()));
-								arcByRadius.GetSector()->SetAnglearDistance(std::wstring(v_splited[4].begin(), v_splited[4].end()));
+								arcByRadius.GetSector()->SetStartAngle(v_splited[3]);
+								arcByRadius.GetSector()->SetAnglearDistance(v_splited[4]);
 
 
 								in->GetPath()->SetArcByRadiuses(&arcByRadius);
@@ -681,18 +681,18 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						S100_LineInstruction *in = new S100_LineInstruction();
 						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+						in->SetFeatureReference(featureID);
 						in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-						in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
+						in->SetDisplayPlane(v_DisplayPlane);
+						in->SetViewingGroup(v_ViewingGroup);
+						in->SetScaleMinimum(v_ScaleMinimum);
 
 						if (v_LineInstruction.size() > 0)
 						{
 							if (!in->GetLineStyleReference())
 							{
 								in->SetLineStyleReference(new S100_LineStyleReference());
-								in->GetLineStyleReference()->SetReference(std::wstring(v_LineInstruction.begin(), v_LineInstruction.end()));
+								in->GetLineStyleReference()->SetReference(v_LineInstruction);
 							}
 						}
 
@@ -730,16 +730,16 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					S100_PointInstruction *in = new S100_PointInstruction();
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetFeatureReference(featureID);
 					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
+					in->SetDisplayPlane(v_DisplayPlane);
+					in->SetViewingGroup(v_ViewingGroup);
+					in->SetScaleMinimum(v_ScaleMinimum);
 
 					if (v_PointInstruction.size() > 0)
 					{
 						in->SetSymbol(new S100_Symbol());
-						in->GetSymbol()->SetReference(std::wstring(v_PointInstruction.begin(), v_PointInstruction.end()));
+						in->GetSymbol()->SetReference(v_PointInstruction);
 
 						std::vector<std::string> r_splited = Split(v_Rotation, ",");
 						if (r_splited.size() == 2)
@@ -756,8 +756,8 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						{
 							if (!in->GetVectorPoint()) in->SetVectorPoint(new S100_VectorPoint());
 
-							in->GetVectorPoint()->SetX(std::wstring(v_splited[1].begin(), v_splited[1].end()));
-							in->GetVectorPoint()->SetY(std::wstring(v_splited[2].begin(), v_splited[2].end()));
+							in->GetVectorPoint()->SetX(v_splited[1]);
+							in->GetVectorPoint()->SetY(v_splited[2]);
 						}
 						else
 						{
@@ -811,11 +811,11 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					S100_AreaInstruction *in = new S100_AreaInstruction();
 					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetFeatureReference(featureID);
 					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
+					in->SetDisplayPlane(v_DisplayPlane);
+					in->SetViewingGroup(v_ViewingGroup);
+					in->SetScaleMinimum(v_ScaleMinimum);
 
 					if (v_AreaFillReference.size() > 0)
 					{
@@ -826,7 +826,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 						S100_AreaFillReference* cf = (S100_AreaFillReference*)in->GetAreaFill();
 
-						cf->SetReference(std::wstring(v_AreaFillReference.begin(), v_AreaFillReference.end()));
+						cf->SetReference(v_AreaFillReference);
 
 						std::wstring path = cf->GetReference();
 						path.append(L".xml");
