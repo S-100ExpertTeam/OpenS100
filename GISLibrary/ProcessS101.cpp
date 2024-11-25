@@ -120,7 +120,7 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShallowPattern", shallow_pattern.c_str());
 		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShowIsolatedDangersInShallowWaters",
 		//	show_isolated_dangers_in_shallow_waters.c_str());
-		KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("PlainBoundaries", "false");
+		// KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("PlainBoundaries", "false");
 		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SimplifiedPoints", simplified_points.c_str());
 		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("FullSectors", full_sector.c_str());
 		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("RadarOverlay", radar_overlay.c_str());
