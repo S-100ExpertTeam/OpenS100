@@ -431,4 +431,8 @@ public:
 	void WritePointRecord(pugi::xml_node& node, R_PointRecord* record);
 
 	void ATTRtoAttribute();
+	void ATTRtoAttribute(R_FeatureRecord* fr);
+	void AddATTRtoAttribute(__int64 key);
+	void UpdateATTRtoAttribute(__int64 key);
+	void DeleteATTRtoAttribute(__int64 key);
 };

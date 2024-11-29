@@ -5010,20 +5010,6 @@ void S101Cell::ATTRtoAttribute()
 			{
 				auto value = ATTR->getValueAsString();
 				CString strValue;
-
-				//if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
-				//{
-				//	auto iValue = atoi(value.c_str());
-				//	auto listedValue = sa->GetListedValue(iValue);
-				//	if (listedValue)
-				//	{
-				//		strValue.Format(L"%d. %s", listedValue->GetCode(), listedValue->GetLabel().c_str());
-				//	}
-				//}
-				//else
-				//{
-				//	strValue = LibMFCUtil::StringToWString(value).c_str();
-				//}
 				strValue = LibMFCUtil::StringToWString(value).c_str();
 
 				if (ATTR->m_paix > 0)
@@ -5052,3 +5038,122 @@ void S101Cell::ATTRtoAttribute()
 		}
 	}
 }
+
+void S101Cell::ATTRtoAttribute(R_FeatureRecord* fr)
+{
+	auto fc = GetFC();
+
+	if ((fc == nullptr) ||
+		(fr == nullptr))
+		return;
+
+	std::vector<GF::ThematicAttributeType*> addedAttributes;
+	auto ATTRs = fr->GetAllAttributes();
+	for (auto j = ATTRs.begin(); j != ATTRs.end(); j++) {
+		auto ATTR = (*j);
+		auto strCode = m_dsgir.GetAttributeCode(ATTR->m_natc);
+		auto code = pugi::as_utf8(strCode);
+		auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
+		if (sa)
+		{
+			auto value = ATTR->getValueAsString();
+			CString strValue;
+			strValue = LibMFCUtil::StringToWString(value).c_str();
+
+			if (ATTR->m_paix > 0)
+			{
+				auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+				auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+				addedAttributes.push_back((GF::ThematicAttributeType*)addedSA);
+			}
+			else // top level
+			{
+				auto addedSA = fr->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+				addedAttributes.push_back(addedSA);
+			}
+		}
+		else
+		{
+			auto ca = fc->GetComplexAttribute(std::wstring(strCode));
+			auto addedCA = fr->AddComplexAttribute(code);
+			addedAttributes.push_back(addedCA);
+			if (ATTR->m_paix > 0)
+			{
+				auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+				parentCA->AddSubAttribute(addedCA->clone());
+			}
+		}
+	}
+}
+
+void S101Cell::AddATTRtoAttribute(__int64 key)
+{
+	auto fc = GetFC();
+	auto fr = GetFeatureRecord(key);
+
+	if ((fc == nullptr) ||
+		(fr == nullptr))
+		return;
+
+	std::vector<GF::ThematicAttributeType*> addedAttributes;
+	auto ATTRs = fr->GetAllAttributes();
+	for (auto j = ATTRs.begin(); j != ATTRs.end(); j++) {
+		auto ATTR = (*j);
+		auto strCode = m_dsgir.GetAttributeCode(ATTR->m_natc);
+		auto code = pugi::as_utf8(strCode);
+		auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
+		if (sa)
+		{
+			auto value = ATTR->getValueAsString();
+			CString strValue;
+			strValue = LibMFCUtil::StringToWString(value).c_str();
+
+			if (ATTR->m_paix > 0)
+			{
+				auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+				auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+				addedAttributes.push_back((GF::ThematicAttributeType*)addedSA);
+			}
+			else // top level
+			{
+				auto addedSA = fr->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+				addedAttributes.push_back(addedSA);
+			}
+		}
+		else
+		{
+			auto ca = fc->GetComplexAttribute(std::wstring(strCode));
+			auto addedCA = fr->AddComplexAttribute(code);
+			addedAttributes.push_back(addedCA);
+			if (ATTR->m_paix > 0)
+			{
+				auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+				parentCA->AddSubAttribute(addedCA->clone());
+			}
+		}
+	}
+}
+
+void S101Cell::UpdateATTRtoAttribute(__int64 key)
+{
+	DeleteATTRtoAttribute(key);
+	AddATTRtoAttribute(key);
+}
+
+void S101Cell::DeleteATTRtoAttribute(__int64 key)
+{
+	auto fc = GetFC();
+	auto fr = GetFeatureRecord(key);
+
+	if ((fc == nullptr) ||
+		(fr == nullptr))
+		return;
+
+	for (int i = 0; i < fr->attributes.size(); i++)
+	{
+		if (fr->attributes[i])
+			delete fr->attributes[i], fr->attributes[i] = nullptr;
+	}
+	fr->attributes.clear();
+}
+
