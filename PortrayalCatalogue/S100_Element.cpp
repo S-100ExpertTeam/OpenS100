@@ -67,16 +67,6 @@ void S100_Element::SetBodySize(std::wstring& value) {
 	bodySize = value;
 }
 
-void S100_Element::SetBodySize(std::string& value) {
-	if (value.empty())
-		bodySize = _T("");
-	else
-	{
-		std::wstring BodySize(value.begin(), value.end());
-		SetBodySize(BodySize);
-	}
-}
-
 std::wstring S100_Element::GetBodySize()
 {
 	return bodySize;
@@ -85,17 +75,6 @@ std::wstring S100_Element::GetBodySize()
 void S100_Element::SetVerticalOffset(std::wstring& value)
 {
 	verticalOffset = value;
-}
-
-void S100_Element::SetVerticalOffset(std::string& value)
-{
-	if (value.empty())
-		verticalOffset = _T("");
-	else
-	{
-		std::wstring VerticalOffset(value.begin(), value.end());
-		SetVerticalOffset(VerticalOffset);
-	}
 }
 
 std::wstring S100_Element::GetVerticalOffset()

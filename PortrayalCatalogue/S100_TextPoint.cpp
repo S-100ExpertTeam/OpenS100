@@ -72,31 +72,9 @@ void S100_TextPoint::SetHorizontalAlignment(std::wstring& value)
 	horizontalAlignment = value;
 }
 
-void S100_TextPoint::SetHorizontalAlignment(std::string& value)
-{
-	if (value.empty())
-		horizontalAlignment = _T("");
-	else
-	{
-		std::wstring HorizontalAlignment(value.begin(), value.end());
-		SetHorizontalAlignment(HorizontalAlignment);
-	}
-}
-
 void S100_TextPoint::SetVerticalAlignment(std::wstring& value)
 {
 	verticalAlignment = value;
-}
-
-void S100_TextPoint::SetVerticalAlignment(std::string& value)
-{
-	if (value.empty())
-		verticalAlignment = _T("");
-	else
-	{
-		std::wstring VerticalAlignment(value.begin(), value.end());
-		SetVerticalAlignment(VerticalAlignment);
-	}
 }
 
 void S100_TextPoint::SetElement(S100_Element* value) 
@@ -119,16 +97,6 @@ void S100_TextPoint::SetRotation(std::wstring value)
 	rotation = value;
 }
 
-void S100_TextPoint::SetRotation(std::string value)
-{
-	if (value.empty())
-		rotation = _T("");
-	else
-	{
-		std::wstring Rotation(value.begin(), value.end());
-		SetRotation(Rotation);
-	}
-}
 
 void S100_TextPoint::SetAreaPlacement(S100_AreaPlacement* value) 
 {

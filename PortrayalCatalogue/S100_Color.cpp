@@ -51,17 +51,6 @@ void S100_Color::SetToken(std::wstring& value)
 	token = value;
 }
 
-void S100_Color::SetToken(std::string& value)
-{
-	if (value.empty())
-		token = _T("");
-	else
-	{
-		std::wstring Token(value.begin(), value.end());
-		SetToken(Token);
-	}
-}
-
 std::wstring S100_Color::GetToken() 
 {
 	return token;
@@ -70,17 +59,6 @@ std::wstring S100_Color::GetToken()
 void S100_Color::SetName(std::wstring& value)
 {
 	name = value;
-}
-
-void S100_Color::SetName(std::string& value)
-{
-	if (value.empty())
-		name = _T("");
-	else
-	{
-		std::wstring Name(value.begin(), value.end());
-		SetName(Name);
-	}
 }
 
 std::wstring S100_Color::GetName() 
@@ -93,17 +71,6 @@ void S100_Color::SetDescription(std::wstring& value)
 	description = value;
 }
 
-void S100_Color::SetDescription(std::string& value)
-{
-	if (value.empty())
-		description = _T("");
-	else
-	{
-		std::wstring Description(value.begin(), value.end());
-		SetDescription(Description);
-	}
-}
-
 std::wstring S100_Color::GetDescription()
 {
 	return description;
@@ -112,17 +79,6 @@ std::wstring S100_Color::GetDescription()
 void S100_Color::SetTransparency(std::wstring& value)
 {
 	transparency = value;
-}
-
-void S100_Color::SetTransparency(std::string& value)
-{
-	if (value.empty())
-		transparency = _T("");
-	else
-	{
-		std::wstring Transparency(value.begin(), value.end());
-		SetTransparency(Transparency);
-	}
 }
 
 std::wstring S100_Color::GetTransparency()

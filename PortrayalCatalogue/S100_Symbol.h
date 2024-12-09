@@ -34,12 +34,9 @@ public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetReference(std::wstring& value);
-	void SetReference(std::string& value);
 	void SetRotation(double value);
 	void SetRotationCRS(std::wstring& value);
-	void SetRotationCRS(std::string& value);
 	void SetScaleFactor(std::wstring& value);
-	void SetScaleFactor(std::string& value);
 	void SetAreaPlacement(S100_AreaPlacement* value);
 	void SetLinePlacement(S100_LinePlacement* value);
 

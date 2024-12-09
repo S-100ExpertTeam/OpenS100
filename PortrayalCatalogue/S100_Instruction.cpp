@@ -29,17 +29,6 @@ void S100_Instruction::SetFeatureReference(std::wstring& value)
 	featureReference = value;
 }
 
-void S100_Instruction::SetFeatureReference(std::string& value)
-{
-	if (value.empty())
-		featureReference = _T("");
-	else
-	{
-		std::wstring FeatureReference(value.begin(), value.end());
-		SetFeatureReference(FeatureReference);
-	}
-}
-
 void S100_Instruction::setId(std::string value)
 {
 	id = value;
@@ -70,39 +59,21 @@ void S100_Instruction::SetViewingGroup(std::wstring& value)
 	viewingGroup.push_back(value);
 }
 
-void S100_Instruction::SetViewingGroup(std::string& value)
-{
-	if (value.empty())
-		return;
-
-	std::wstring ViewingGroup(value.begin(), value.end());
-	SetViewingGroup(ViewingGroup);
-}
-
 void S100_Instruction::SetDisplayPlane(std::wstring& value)
 {
 	displayPlane = value;
 }
 
-void S100_Instruction::SetDisplayPlane(std::string& value)
-{
-	if (value.empty())
-		displayPlane = _T("");
-	else
-	{
-		std::wstring DisplayPlane(value.begin(), value.end());
-		SetDisplayPlane(DisplayPlane);
-	}
-}
-
 void S100_Instruction::SetDrawingPriority(std::wstring& value)
 {
-	drawingPriority = _ttoi(value.c_str());
-}
-
-void S100_Instruction::SetDrawingPriority(std::string& value)
-{
-	drawingPriority = atoi(value.c_str());
+	try 
+	{
+		drawingPriority = std::stoi(value);
+	}
+	catch (std::exception e) 
+	{
+		drawingPriority = 0;
+	}
 }
 
 void S100_Instruction::SetDrawingPriority(int value)
@@ -112,12 +83,14 @@ void S100_Instruction::SetDrawingPriority(int value)
 
 void S100_Instruction::SetScaleMinimum(std::wstring& value)
 {
-	scaleMinimum = _ttoi(value.c_str());
-}
-
-void S100_Instruction::SetScaleMinimum(std::string& value)
-{
-	scaleMinimum = atoi(value.c_str());
+	try 
+	{
+		scaleMinimum = std::stoi(value);
+	}
+	catch (std::exception e) 
+	{
+		scaleMinimum = 0;
+	}
 }
 
 void S100_Instruction::SetScaleMinimum(int value)
@@ -127,12 +100,14 @@ void S100_Instruction::SetScaleMinimum(int value)
 
 void S100_Instruction::SetScaleMaximum(std::wstring& value)
 {
-	scaleMaximum = _ttoi(value.c_str());
-}
-
-void S100_Instruction::SetScaleMaximum(std::string& value)
-{
-	scaleMaximum = atoi(value.c_str());
+	try
+	{
+		scaleMaximum = std::stoi(value);
+	}
+	catch (std::exception e)
+	{
+		scaleMaximum = 0;
+	}
 }
 
 void S100_Instruction::SetScaleMaximum(int value)
@@ -208,7 +183,7 @@ std::wstring S100_Instruction::GetViewingGroup(int index)
 
 int S100_Instruction::getViewingGroupCount()
 {
-	return (int)viewingGroup.size();
+	return viewingGroup.size();
 }
 
 std::wstring S100_Instruction::GetDisplayPlane()

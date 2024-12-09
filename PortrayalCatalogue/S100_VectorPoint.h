@@ -14,9 +14,7 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 	void SetX(std::wstring& value);
-	void SetX(std::string& value);
 	void SetY(std::wstring& value);
-	void SetY(std::string& value);
 	void SetX(double value);
 	void SetY(double value);
 	double GetX();

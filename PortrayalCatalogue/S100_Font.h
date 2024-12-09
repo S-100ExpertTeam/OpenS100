@@ -19,19 +19,15 @@ public:
 	void GetContents(pugi::xml_node node);
 
 	void SetSerifs(std::wstring& value);
-	void SetSerifs(std::string& value);
 	std::wstring GetSerifs();
 
 	void SetWeight(std::wstring& value);
-	void SetWeight(std::string& value);
 	std::wstring GetWeight();
 
 	void SetSlant(std::wstring& value);
-	void SetSlant(std::string& value);
 	std::wstring GetSlant();
 
 	void SetProportion(std::wstring& value);
-	void SetProportion(std::string& value);
 	std::wstring GetProportion();
 
 	bool isUpright();
