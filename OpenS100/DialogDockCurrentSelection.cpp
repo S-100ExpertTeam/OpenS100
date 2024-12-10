@@ -472,3 +472,12 @@ void CDialogDockCurrentSelection::OnMenuRemoveAll()
 {
 	m_ListCurrentSelection.DeleteAllItems();
 }
+
+
+void CDialogDockCurrentSelection::OnCancel()
+{
+	// TODO: Add your specialized code here and/or call the base class
+
+	// CDialogEx::OnCancel();
+	return;
+}
