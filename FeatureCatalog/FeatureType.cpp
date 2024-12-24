@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "FeatureType.h"
 
+#include "../LatLonUtility/LatLonUtility.h"
+
 #include <iostream>
 
 FeatureType::FeatureType()
@@ -22,12 +24,13 @@ void FeatureType::GetContents(pugi::xml_node& node)
 
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
-		if (!strcmp(instructionName, "S100FC:featureUseType"))
+		std::string instructionName = instruction.name();
+		instructionName = LatLonUtility::DeleteXMLNamespace(instructionName);
+		if (instructionName == "featureUseType")
 		{
 			featureUseType.GetContents(instruction);
 		}
-		else if (!strcmp(instructionName, "S100FC:featureBinding"))
+		else if (instructionName == "featureBinding")
 		{
 			auto featureBinding = new FeatureBinding();
 			featureBinding->GetContents(instruction);
@@ -42,7 +45,7 @@ void FeatureType::GetContents(pugi::xml_node& node)
 				InsertFeatureBinding(featureBinding);
 			}
 		}
-		else if (!strcmp(instructionName, "S100FC:permittedPrimitives"))
+		else if (instructionName == "permittedPrimitives")
 		{
 			auto strPermittedPrimitive = instruction.child_value();
 
@@ -50,11 +53,11 @@ void FeatureType::GetContents(pugi::xml_node& node)
 
 			permittedPrimitives.push_back(type);
 		}
-		else if (!strcmp(instructionName, "S100FC:superType"))
+		else if (instructionName == "S100FC:superType")
 		{
 			superType = pugi::as_wide(instruction.child_value());
 		}
-		else if (!strcmp(instructionName, "S100FC:subType"))
+		else if (instructionName == "S100FC:subType")
 		{
 			subType.push_back(pugi::as_wide(instruction.child_value()));
 		}
