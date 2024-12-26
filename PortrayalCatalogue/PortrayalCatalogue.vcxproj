@@ -196,6 +196,7 @@
     <ClInclude Include="CatalogItem.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="ContextParameter.h" />
+    <ClInclude Include="DisplayFactory.h" />
     <ClInclude Include="DisplayMode.h" />
     <ClInclude Include="DisplayModes.h" />
     <ClInclude Include="DisplayPlane.h" />
@@ -305,6 +306,7 @@
     <ClCompile Include="CatalogItem.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="ContextParameter.cpp" />
+    <ClCompile Include="DisplayFactory.cpp" />
     <ClCompile Include="DisplayMode.cpp" />
     <ClCompile Include="DisplayModes.cpp" />
     <ClCompile Include="DisplayPlane.cpp" />

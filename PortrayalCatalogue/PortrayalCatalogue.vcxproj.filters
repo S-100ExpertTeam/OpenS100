@@ -375,6 +375,9 @@
     <ClInclude Include="HighlightStyle.h">
       <Filter>AlertCatalogue\Enum</Filter>
     </ClInclude>
+    <ClInclude Include="DisplayFactory.h">
+      <Filter>ResultOfXSLTProcess</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="S100_Rules.cpp">
@@ -691,6 +694,9 @@
     </ClCompile>
     <ClCompile Include="HighlightStyle.cpp">
       <Filter>AlertCatalogue\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="DisplayFactory.cpp">
+      <Filter>ResultOfXSLTProcess</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
