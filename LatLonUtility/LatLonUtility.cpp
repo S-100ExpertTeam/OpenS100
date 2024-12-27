@@ -206,6 +206,16 @@ std::string LatLonUtility::replace_all(__in const std::string& message, __in con
 	return result; 
 }
 
+void LatLonUtility::replace_string(std::string& str, const std::string& from, const std::string& to)
+{
+	std::string::size_type pos = 0;
+
+	while ((pos = str.find(from)) != std::string::npos)
+	{
+		str.replace(pos, from.size(), to);
+	}
+}
+
 std::string LatLonUtility::generate_uuid() {
 	static std::random_device rd;
 	static std::mt19937 gen(rd());

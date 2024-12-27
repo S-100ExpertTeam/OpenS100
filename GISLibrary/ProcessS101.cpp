@@ -38,6 +38,7 @@
 #include <libxslt/xsltutils.h>
 
 #include <sstream> 
+#include <algorithm>
 
 using namespace LatLonUtility;
 
@@ -617,15 +618,21 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 					if (v_TextInstruction.size() > 0)
 					{
+						LatLonUtility::replace_string(v_TextInstruction, "&s", ";");
+						LatLonUtility::replace_string(v_TextInstruction, "&c", ":");
+						LatLonUtility::replace_string(v_TextInstruction, "&m", ",");
+						LatLonUtility::replace_string(v_TextInstruction, "&a", "&");
+
 						S100_Element* element = new S100_Element();
 
 						in->GetTextPoint()->SetElement(element);
 
 						if (!element->GetText()) element->SetText(new S100_Text());
 
-						std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
+						//std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
 
-						auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_splited_text[0].c_str());
+						//auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_splited_text[0].c_str());
+						auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_TextInstruction.c_str());
 						std::wstring wstrValue = wValue;
 						delete[] wValue;
 						element->GetText()->SetValue(wstrValue);
