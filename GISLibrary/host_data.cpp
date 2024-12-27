@@ -866,9 +866,10 @@ std::string hd_get_information_type_code(std::string id)
 	auto info = s_information_nodes[id];
 	if (info)
 	{
-		info->GetCode();
+		return info->GetCode();
 	}
 
+	OutputDebugString(L"Information type not found\n");
 	return "";
 
 	//R_InformationRecord* ir = s_information_nodes[id];

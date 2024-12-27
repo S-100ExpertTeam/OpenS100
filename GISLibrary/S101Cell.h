@@ -431,4 +431,11 @@ public:
 	void WritePointRecord(pugi::xml_node& node, R_PointRecord* record);
 
 	void ATTRtoAttribute();
+
+private:
+	void FeatureAttrToAttribute();
+	void InformationAttrToAttribute();
+	void FeatureFeatureAssociationToGFM();
+	void FeatureInformationAssociationToGFM();
+	void InformationAssociationToGFM();
 };

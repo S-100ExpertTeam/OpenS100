@@ -1688,7 +1688,8 @@ R_InformationRecord* S101Cell::GetInformationRecord(__int64 key)
 R_InformationRecord* S101Cell::GetInformationRecord(std::string key)
 {
 	auto iKey = std::stoll(key);
-	return GetInformationRecord(iKey);
+	RecordName recordName(150, (int)iKey);
+	return GetInformationRecord(recordName.GetName());
 }
 
 R_InformationRecord* S101Cell::GetInformationRecord(std::wstring wstringKey)
@@ -4278,7 +4279,7 @@ std::wstring S101Cell::GetInformationTypeCodeByID(int id)
 	{
 		if (ir)
 		{
-			return std::wstring(m_dsgir.GetFeatureCode(ir->GetNumericCode()));
+			return std::wstring(m_dsgir.GetInformationCode(ir->GetNumericCode()));
 		}
 	}
 
@@ -4992,12 +4993,27 @@ bool S101Cell::InsertSurfaceRecordFromS101GML(S10XGML* gml, GM::Surface* curve)
 
 void S101Cell::ATTRtoAttribute()
 {
+	FeatureAttrToAttribute();
+	InformationAttrToAttribute();
+	FeatureFeatureAssociationToGFM();
+	FeatureInformationAssociationToGFM();
+	InformationAssociationToGFM();
+}
+
+void S101Cell::FeatureAttrToAttribute()
+{
 	auto fc = GetFC();
 	int cntFeature = GetFeatureCount();
 
 	for (int i = 0; i < cntFeature; i++) {
 		std::vector<GF::ThematicAttributeType*> addedAttributes;
 		auto fr = GetFeatureRecordByIndex(i);
+
+		if (fr->GetRCID() == 37)
+		{
+			OutputDebugString(L"A");
+		}
+
 		auto ATTRs = fr->GetAllAttributes();
 		for (auto j = ATTRs.begin(); j != ATTRs.end(); j++) {
 			auto ATTR = (*j);
@@ -5009,26 +5025,13 @@ void S101Cell::ATTRtoAttribute()
 				auto value = ATTR->getValueAsString();
 				CString strValue;
 
-				//if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
-				//{
-				//	auto iValue = atoi(value.c_str());
-				//	auto listedValue = sa->GetListedValue(iValue);
-				//	if (listedValue)
-				//	{
-				//		strValue.Format(L"%d. %s", listedValue->GetCode(), listedValue->GetLabel().c_str());
-				//	}
-				//}
-				//else
-				//{
-				//	strValue = LibMFCUtil::StringToWString(value).c_str();
-				//}
 				strValue = LibMFCUtil::StringToWString(value).c_str();
 
 				if (ATTR->m_paix > 0)
 				{
 					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
 					auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
-					addedAttributes.push_back((GF::ThematicAttributeType * )addedSA);
+					addedAttributes.push_back((GF::ThematicAttributeType*)addedSA);
 				}
 				else // top level
 				{
@@ -5039,7 +5042,69 @@ void S101Cell::ATTRtoAttribute()
 			else
 			{
 				auto ca = fc->GetComplexAttribute(std::wstring(strCode));
-				auto addedCA = fr->AddComplexAttribute(code);
+				if (ca)
+				{
+					if (ATTR->m_paix > 0)
+					{
+						auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+						auto addedCA = parentCA->AddComplexAttribute(code);
+						addedAttributes.push_back(addedCA);
+					}
+					else // top level
+					{
+						auto addedCA = fr->AddComplexAttribute(code);
+						addedAttributes.push_back(addedCA);
+					}
+					
+					//auto addedCA = fr->AddComplexAttribute(code);
+					//addedAttributes.push_back(addedCA);
+					//if (ATTR->m_paix > 0)
+					//{
+					//	auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+					//	parentCA->AddSubAttribute(addedCA->clone());
+					//}
+				}
+			}
+		}
+	}
+}
+
+void S101Cell::InformationAttrToAttribute()
+{
+	auto fc = GetFC();
+	int cntInformation = GetInformationCount();
+	for (int i = 0; i < cntInformation; i++) {
+		std::vector<GF::ThematicAttributeType*> addedAttributes;
+		auto ir = GetInformationRecordByIndex(i);
+		auto ATTRs = ir->GetAllAttributes();
+		for (auto j = ATTRs.begin(); j != ATTRs.end(); j++) {
+			auto ATTR = (*j);
+			auto strCode = m_dsgir.GetAttributeCode(ATTR->m_natc);
+			auto code = pugi::as_utf8(strCode);
+			auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
+			if (sa)
+			{
+				auto value = ATTR->getValueAsString();
+				CString strValue;
+
+				strValue = LibMFCUtil::StringToWString(value).c_str();
+
+				if (ATTR->m_paix > 0)
+				{
+					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+					auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+					addedAttributes.push_back((GF::ThematicAttributeType*)addedSA);
+				}
+				else // top level
+				{
+					auto addedSA = ir->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+					addedAttributes.push_back(addedSA);
+				}
+			}
+			else
+			{
+				auto ca = fc->GetComplexAttribute(std::wstring(strCode));
+				auto addedCA = ir->AddComplexAttribute(code);
 				addedAttributes.push_back(addedCA);
 				if (ATTR->m_paix > 0)
 				{
@@ -5047,6 +5112,69 @@ void S101Cell::ATTRtoAttribute()
 					parentCA->AddSubAttribute(addedCA->clone());
 				}
 			}
+		}
+	}
+}
+
+void S101Cell::FeatureFeatureAssociationToGFM()
+{
+	auto fc = GetFC();
+	int cntFeature = GetFeatureCount();
+	for (int i = 0; i < cntFeature; i++) 
+	{
+		auto fr = GetFeatureRecordByIndex(i);
+		auto fascs = fr->GetAllFeatureAssociations();
+		
+		for (auto j = fascs.begin(); j != fascs.end(); j++) 
+		{
+			auto fasc = (*j);
+			auto code = m_dsgir.GetFeatureAssociationCodeAsString(fasc->m_nfac);
+			auto role = m_dsgir.GetAssociationRoleCodeAsString(fasc->m_narc);
+			auto rcid = fasc->m_name.GetRCIDasString();
+
+			fr->AddFeatureAssociation(code, role, rcid);
+		}
+	}
+}
+
+void S101Cell::FeatureInformationAssociationToGFM()
+{
+	auto fc = GetFC();
+	int cntFeature = GetFeatureCount();
+	for (int i = 0; i < cntFeature; i++)
+	{
+		auto fr = GetFeatureRecordByIndex(i);
+		auto inass = fr->GetAllInformationAssociations();
+
+		for (auto j = inass.begin(); j != inass.end(); j++)
+		{
+			auto inas = (*j);
+			auto code = m_dsgir.GetInformationAssociationCodeAsString(inas->m_niac);
+			auto role = m_dsgir.GetAssociationRoleCodeAsString(inas->m_narc);
+			auto rcid = inas->m_name.GetRCIDasString();
+
+			fr->AddInformationAssociation(code, role, rcid);
+		}
+	}
+}
+
+void S101Cell::InformationAssociationToGFM()
+{
+	auto fc = GetFC();
+	int cntInformation = GetInformationCount();
+	for (int i = 0; i < cntInformation; i++)
+	{
+		auto ir = GetInformationRecordByIndex(i);
+		auto inass = ir->GetAllInformationAssociations();
+
+		for (auto j = inass.begin(); j != inass.end(); j++)
+		{
+			auto inas = (*j);
+			auto code = m_dsgir.GetInformationAssociationCodeAsString(inas->m_niac);
+			auto role = m_dsgir.GetAssociationRoleCodeAsString(inas->m_narc);
+			auto rcid = inas->m_name.GetRCIDasString();
+
+			ir->AddInformationAssociation(code, role, rcid);
 		}
 	}
 }
