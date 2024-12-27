@@ -2,7 +2,7 @@
 
 <!-- NOTE: See GitHub issues for complete change information -->
 
-<pc:portrayalCatalog xmlns:pc="http://www.iho.int/S100PortrayalCatalog/5.2" xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-101" version="1.5.0">
+<pc:portrayalCatalog xmlns:pc="http://www.iho.int/S100PortrayalCatalog/5.2" xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-101" version="2.0.0">
    <alertCatalog id="alertCatalog">
       <description>
          <name>Alert Catalog</name>
