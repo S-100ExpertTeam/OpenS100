@@ -8,326 +8,259 @@ S100_DisplayList* CDisplayFactory::createDisplayList()
 	return displayList;
 }
 
-S100_PointInstruction* CDisplayFactory::createPointInstruction(S100_DisplayList* displayList)
+bool CDisplayFactory::createPointInstruction(S100_DisplayList* displayList,
+	std::string& featureID,
+	std::string& drawingPriority,
+	std::string& displayPlane,
+	std::string& viewingGroup,
+	std::string& scaleMinimum,
+	std::string& reference,
+	std::string& rotation,
+	std::string& augmentedPoint,
+	std::list<std::string> liSpatialReference)
 {
 	if (displayList == nullptr)
-		return nullptr;
+		return false;
 
-	S100_PointInstruction* pointInstruction = new S100_PointInstruction();
-	if (pointInstruction == nullptr)
-		return pointInstruction;
+	S100_PointInstruction* instruction = new S100_PointInstruction();
 
-	displayList->SetDisplayInstruction(pointInstruction);
+	instruction->SetFeatureReference(string2wstring(featureID));
+	instruction->SetDrawingPriority(string2wstring(drawingPriority));
+	instruction->SetDisplayPlane(string2wstring(displayPlane));
+	instruction->SetViewingGroup(string2wstring(viewingGroup));
+	instruction->SetScaleMinimum(string2wstring(scaleMinimum));
 
-	return pointInstruction;
+	std::vector<std::string> vecRotation = splitString(rotation, ',');
+	instruction->SetSymbol(string2wstring(reference), ((int)vecRotation.size() == 2) ? std::stod(vecRotation[1]) : 0.0);
+	vecRotation.clear();
+
+	std::vector<std::string> vecAugmentedPoint = splitString(augmentedPoint, ',');
+	if (vecAugmentedPoint.size() == 3)
+		instruction->SetVectorPoint(string2wstring(vecAugmentedPoint[1]), string2wstring(vecAugmentedPoint[2]));
+	vecAugmentedPoint.clear();
+
+	for (const auto& iter : liSpatialReference)
+	{
+		std::vector<std::string> vecSpatailRef = splitString(iter, '|');
+		if (vecSpatailRef.size() == 2)
+			instruction->SetSpatialReference(vecSpatailRef[0], vecSpatailRef[1]);
+		vecSpatailRef.clear();
+	}
+
+	displayList->SetDisplayInstruction((S100_Instruction*)instruction);
+
+	return true;
 }
 
-S100_Symbol* CDisplayFactory::createSymbol(S100_PointInstruction* pointInstruction)
-{
-	if (pointInstruction == nullptr)
-		return nullptr;
-
-	S100_Symbol* symbol = new S100_Symbol();
-	if (symbol == nullptr)
-		return nullptr;
-
-	pointInstruction->SetSymbol(symbol);
-
-	return symbol;
-}
-
-S100_VectorPoint* CDisplayFactory::createVectorPoint(S100_PointInstruction* pointInstruction)
-{
-	if (pointInstruction == nullptr)
-		return nullptr;
-
-	S100_VectorPoint* vectorPoint = new S100_VectorPoint();
-	if (vectorPoint == nullptr)
-		return nullptr;
-
-	pointInstruction->SetVectorPoint(vectorPoint);
-
-	return vectorPoint;
-}
-
-S100_LineInstruction* CDisplayFactory::createLineInstruction(S100_DisplayList* displayList)
-{
-	if (displayList == nullptr)
-		return nullptr;
-
-	S100_LineInstruction* lineInstruction = new S100_LineInstruction();
-	if (lineInstruction == nullptr)
-		return lineInstruction;
-
-	displayList->SetDisplayInstruction(lineInstruction);
-
-	return lineInstruction;
-}
-
-S100_LineStyleReference* CDisplayFactory::createLineStyleReference(S100_LineInstruction* lineInstruction)
-{
-	if (lineInstruction == nullptr)
-		return nullptr;
-
-	S100_LineStyleReference* lineStyleReference = new S100_LineStyleReference();
-	if (lineStyleReference == nullptr)
-		return nullptr;
-
-	lineInstruction->SetLineStyleReference(lineStyleReference);
-
-	return lineStyleReference;
-}
-
-S100_LineStyle* CDisplayFactory::createLineStyle(S100_LineInstruction* lineInstruction)
-{
-	if (lineInstruction == nullptr)
-		return nullptr;
-
-	S100_LineStyle* lineStyle = new S100_LineStyle();
-	if (lineStyle == nullptr)
-		return nullptr;
-
-	lineInstruction->SetLineStyle(lineStyle);
-
-	return lineStyle;
-}
-
-S100_AreaInstruction* CDisplayFactory::createAreaInstruction(S100_DisplayList* displayList)
+bool CDisplayFactory::createLineInstruction(S100_DisplayList* displayList,
+	std::string& featureID,
+	std::string& drawingPriority,
+	std::string& displayPlane,
+	std::string& viewingGroup,
+	std::string& scaleMinimum,
+	std::string& reference,
+	std::string& lineStyle,
+	std::string& dash,
+	std::list<std::string> liSpatialReference)
 {
 	if (displayList == nullptr)
-		return nullptr;
+		return false;
 
-	S100_AreaInstruction* areaInstruction = new S100_AreaInstruction();
-	if (areaInstruction == nullptr)
-		return areaInstruction;
+	S100_LineInstruction* instruction = new S100_LineInstruction();
 
-	displayList->SetDisplayInstruction(areaInstruction);
+	instruction->SetFeatureReference(string2wstring(featureID));
+	instruction->SetDrawingPriority(string2wstring(drawingPriority));
+	instruction->SetDisplayPlane(string2wstring(displayPlane));
+	instruction->SetViewingGroup(string2wstring(viewingGroup));
+	instruction->SetScaleMinimum(string2wstring(scaleMinimum));
 
-	return areaInstruction;
+	instruction->SetLineStyleReference(string2wstring(reference));
+	instruction->SetLineStyle(lineStyle, dash);
+	for (const auto& iter : liSpatialReference)
+	{
+		std::vector<std::string> vecSpatailRef = splitString(iter, '|');
+		if (vecSpatailRef.size() == 2)
+			instruction->SetSpatialReference(vecSpatailRef[0], vecSpatailRef[1]);
+		vecSpatailRef.clear();
+	}
+
+	displayList->SetDisplayInstruction((S100_Instruction*)instruction);
+
+	return true;
 }
 
-S100_ColorFill* CDisplayFactory::createColorFill(S100_AreaInstruction* areaInstruction)
-{
-	if (areaInstruction == nullptr)
-		return nullptr;
-
-	S100_ColorFill* colorFill = new S100_ColorFill();
-	if (colorFill == nullptr)
-		return nullptr;
-
-	areaInstruction->SetAreaFill(colorFill);
-
-	return colorFill;
-}
-
-S100_Color* CDisplayFactory::createColor(S100_ColorFill* colorFill)
-{
-	if (colorFill == nullptr)
-		return nullptr;
-
-	S100_Color* color = new S100_Color();
-	if (color == nullptr)
-		return nullptr;
-
-	colorFill->SetColor(color);
-
-	return color;
-}
-
-S100_AreaFillReference* CDisplayFactory::createAreaFillReference(S100_AreaInstruction* areaInstruction)
-{
-	if (areaInstruction == nullptr)
-		return nullptr;
-
-	S100_AreaFillReference* areaFillReference = new S100_AreaFillReference();
-	if (areaFillReference == nullptr)
-		return nullptr;
-
-	areaInstruction->SetAreaFill(areaFillReference);
-
-	return areaFillReference;
-}
-
-S100_SpatialReference* CDisplayFactory::createSpatialReference(S100_Instruction* instruction)
-{
-	if (instruction == nullptr)
-		return nullptr;
-
-	S100_SpatialReference* spatialReference = new S100_SpatialReference();
-	if (spatialReference == nullptr)
-		return nullptr;
-
-	instruction->SetSpatialReference(spatialReference);
-
-	return spatialReference;
-}
-
-S100_TextInstruction* CDisplayFactory::createTextInstruction(S100_DisplayList* displayList)
+bool CDisplayFactory::createAreaInstructionA(S100_DisplayList* displayList,
+	std::string& featureID,
+	std::string& drawingPriority,
+	std::string& displayPlane,
+	std::string& viewingGroup,
+	std::string& scaleMinimum,
+	std::string& colorFill)
 {
 	if (displayList == nullptr)
-		return nullptr;
+		return false;
 
-	S100_TextInstruction* textInstruction = new S100_TextInstruction();
-	if (textInstruction == nullptr)
-		return textInstruction;
+	S100_AreaInstruction* instruction = new S100_AreaInstruction();
 
-	displayList->SetDisplayInstruction(textInstruction);
+	instruction->SetFeatureReference(string2wstring(featureID));
+	instruction->SetDrawingPriority(string2wstring(drawingPriority));
+	instruction->SetDisplayPlane(string2wstring(displayPlane));
+	instruction->SetViewingGroup(string2wstring(viewingGroup));
+	instruction->SetScaleMinimum(string2wstring(scaleMinimum));
 
-	return textInstruction;
+	std::vector<std::string> vecColorFill = splitString(colorFill, ',');
+	std::wstring name = (vecColorFill.size() > 0) ? string2wstring(vecColorFill[0]) : _T("");
+	std::wstring transparency = (vecColorFill.size() > 1) ? string2wstring(vecColorFill[1]) : _T("");
+	instruction->SetAreaFill(name, name, transparency);
+	vecColorFill.clear();
+
+	displayList->SetDisplayInstruction((S100_Instruction*)instruction);
+
+	return true;
 }
 
-S100_TextPoint* CDisplayFactory::createTextPoint(S100_TextInstruction* textInstruction)
-{
-	if (textInstruction == nullptr)
-		return nullptr;
-
-	S100_TextPoint* textPoint = new S100_TextPoint();
-	if (textPoint == nullptr)
-		return nullptr;
-
-	textInstruction->SetTextPoint(textPoint);
-
-	return textPoint;
-}
-
-S100_VectorPoint* CDisplayFactory::createVectorPoint(S100_TextPoint* textPoint)
-{
-	if (textPoint == nullptr)
-		return nullptr;
-
-	S100_VectorPoint* vectorPoint = new S100_VectorPoint();
-	if (vectorPoint == nullptr)
-		return nullptr;
-
-	textPoint->SetOffset(vectorPoint);
-
-	return vectorPoint;
-}
-
-S100_Element* CDisplayFactory::createElement(S100_TextPoint* textPoint)
-{
-	if (textPoint == nullptr)
-		return nullptr;
-
-	S100_Element* element = new S100_Element();
-	if (element == nullptr)
-		return nullptr;
-
-	textPoint->SetElement(element);
-
-	return element;
-}
-
-S100_Text* CDisplayFactory::createText(S100_Element* element)
-{
-	if (element == nullptr)
-		return nullptr;
-
-	S100_Text* text = new S100_Text();
-	if (text == nullptr)
-		return nullptr;
-
-	element->SetText(text);
-
-	return text;
-}
-
-S100_Font* CDisplayFactory::createFont(S100_Element* element)
-{
-	if (element == nullptr)
-		return nullptr;
-
-	S100_Font* font = new S100_Font();
-	if (font == nullptr)
-		return nullptr;
-
-	element->SetFont(font);
-
-	return font;
-}
-
-S100_Foreground* CDisplayFactory::createForeground(S100_Element* element)
-{
-	if (element == nullptr)
-		return nullptr;
-
-	S100_Foreground* foreground = new S100_Foreground();
-	if (foreground == nullptr)
-		return nullptr;
-
-	element->SetForground(foreground);
-
-	return foreground;
-}
-
-S100_AugmentedRay* CDisplayFactory::createAugmentedRay(S100_DisplayList* displayList)
+bool CDisplayFactory::createAreaInstructionB(S100_DisplayList* displayList,
+	std::string& featureID,
+	std::string& drawingPriority,
+	std::string& displayPlane,
+	std::string& viewingGroup,
+	std::string& scaleMinimum,
+	std::string& areaFillReference)
 {
 	if (displayList == nullptr)
-		return nullptr;
+		return false;
 
-	S100_AugmentedRay* augmentedRay = new S100_AugmentedRay();
-	if (augmentedRay == nullptr)
-		return augmentedRay;
+	S100_AreaInstruction* instruction = new S100_AreaInstruction();
 
-	displayList->SetDisplayInstruction(augmentedRay);
+	instruction->SetFeatureReference(string2wstring(featureID));
+	instruction->SetDrawingPriority(string2wstring(drawingPriority));
+	instruction->SetDisplayPlane(string2wstring(displayPlane));
+	instruction->SetViewingGroup(string2wstring(viewingGroup));
+	instruction->SetScaleMinimum(string2wstring(scaleMinimum));
 
-	return augmentedRay;
+	instruction->SetAreaFill(string2wstring(areaFillReference));
+
+	displayList->SetDisplayInstruction((S100_Instruction*)instruction);
+
+	return true;
 }
 
-S100_LineStyle* CDisplayFactory::createLineStyle(S100_AugmentedRay* augmentedRay)
-{
-	if (augmentedRay == nullptr)
-		return nullptr;
-
-	S100_LineStyle* lineStyle = new S100_LineStyle();
-	if (lineStyle == nullptr)
-		return nullptr;
-
-	augmentedRay->SetLineStyle(lineStyle);
-
-	return lineStyle;
-}
-
-S100_AugmentedPath* CDisplayFactory::createAugmentedPath(S100_DisplayList* displayList)
+bool CDisplayFactory::createTextInstruction(S100_DisplayList* displayList,
+	std::string& featureID,
+	std::string& drawingPriority,
+	std::string& displayPlane,
+	std::string& viewingGroup,
+	std::string& scaleMinimum,
+	std::string& textAlignVertical,
+	std::string& textAlignHorizontal,
+	std::string& localOffset,
+	std::string& textInstruction,
+	std::string& fontSize,
+	std::string& fontSlant,
+	std::string& fontColor)
 {
 	if (displayList == nullptr)
-		return nullptr;
+		return false;
 
-	S100_AugmentedPath* augmentedPath = new S100_AugmentedPath();
-	if (augmentedPath == nullptr)
-		return augmentedPath;
+	S100_TextInstruction* instruction = new S100_TextInstruction();
 
-	displayList->SetDisplayInstruction(augmentedPath);
+	instruction->SetFeatureReference(string2wstring(featureID));
+	instruction->SetDrawingPriority(string2wstring(drawingPriority));
+	instruction->SetDisplayPlane(string2wstring(displayPlane));
+	instruction->SetViewingGroup(string2wstring(viewingGroup));
+	instruction->SetScaleMinimum(string2wstring(scaleMinimum));
 
-	return augmentedPath;
+	S100_TextPoint* pTextPoint = new S100_TextPoint();
+	pTextPoint->SetVerticalAlignment(string2wstring(textAlignVertical));
+	pTextPoint->SetHorizontalAlignment(string2wstring(textAlignHorizontal));
+	std::vector<std::string> vecLocalOffset = splitString(localOffset, ',');
+	if (vecLocalOffset.size() == 2)
+		pTextPoint->SetOffset(string2wstring(vecLocalOffset[0]), string2wstring(vecLocalOffset[1]));
+	vecLocalOffset.clear();
+
+	std::vector<std::string> vecText = splitString(textInstruction, ',');
+	if (!vecText.empty())
+		pTextPoint->SetElement(string2wstring(vecText[0]), string2wstring(fontSize), fontColor, string2wstring(fontSlant));
+	vecText.clear();
+
+	instruction->SetTextPoint(pTextPoint);
+
+	displayList->SetDisplayInstruction((S100_Instruction*)instruction);
+
+	return true;
 }
 
-S100_LineStyle* CDisplayFactory::createLineStyle(S100_AugmentedPath* augmentedPath)
+bool CDisplayFactory::createAugmentedRay(S100_DisplayList* displayList,
+	std::string& featureID,
+	std::string& drawingPriority,
+	std::string& displayPlane,
+	std::string& viewingGroup,
+	std::string& scaleMinimum,
+	std::string& lineStyle,
+	std::string& dash,
+	std::string& augmentedRay)
 {
-	if (augmentedPath == nullptr)
-		return nullptr;
+	if (displayList == nullptr)
+		return false;
 
-	S100_LineStyle* lineStyle = new S100_LineStyle();
-	if (lineStyle == nullptr)
-		return nullptr;
+	S100_AugmentedRay* instruction = new S100_AugmentedRay();
 
-	augmentedPath->SetLineStyle(lineStyle);
+	instruction->SetFeatureReference(string2wstring(featureID));
+	instruction->SetDrawingPriority(string2wstring(drawingPriority));
+	instruction->SetDisplayPlane(string2wstring(displayPlane));
+	instruction->SetViewingGroup(string2wstring(viewingGroup));
+	instruction->SetScaleMinimum(string2wstring(scaleMinimum));
 
-	return lineStyle;
+	instruction->SetLineStyle(lineStyle, dash);
+
+	std::vector<std::string> vecAugmentedRay = splitString(augmentedRay, ',');
+	if (vecAugmentedRay.size() == 4)
+	{
+		instruction->SetDirection(string2wstring(vecAugmentedRay[1]));
+		instruction->SetLength(string2wstring(vecAugmentedRay[3]));
+	}
+	vecAugmentedRay.clear();
+
+	displayList->SetDisplayInstruction((S100_Instruction*)instruction);
+
+	return true;
 }
 
-S100_Path* CDisplayFactory::createPath(S100_AugmentedPath* augmentedPath)
+bool CDisplayFactory::createAugmentedPath(S100_DisplayList* displayList,
+	std::string& featureID,
+	std::string& drawingPriority,
+	std::string& displayPlane,
+	std::string& viewingGroup,
+	std::string& scaleMinimum,
+	std::string& lineStyle,
+	std::string& dash,
+	std::string& arcByRadius)
 {
-	if (augmentedPath == nullptr)
-		return nullptr;
+	if (displayList == nullptr)
+		return false;
 
-	S100_Path* path = new S100_Path();
-	if (path == nullptr)
-		return nullptr;
+	S100_AugmentedPath* instruction = new S100_AugmentedPath();
 
-	augmentedPath->SetPath(path);
+	instruction->SetFeatureReference(string2wstring(featureID));
+	instruction->SetDrawingPriority(string2wstring(drawingPriority));
+	instruction->SetDisplayPlane(string2wstring(displayPlane));
+	instruction->SetViewingGroup(string2wstring(viewingGroup));
+	instruction->SetScaleMinimum(string2wstring(scaleMinimum));
 
-	return path;
+	instruction->SetLineStyle(lineStyle, dash);
+
+	std::vector<std::string> vecArcByRadius = splitString(arcByRadius, ',');
+	if (vecArcByRadius.size() == 5)
+		instruction->SetPath(string2wstring(vecArcByRadius[0]),
+			string2wstring(vecArcByRadius[1]),
+			string2wstring(vecArcByRadius[2]),
+			string2wstring(vecArcByRadius[3]),
+			string2wstring(vecArcByRadius[4]));
+	vecArcByRadius.clear();
+
+	displayList->SetDisplayInstruction((S100_Instruction*)instruction);
+
+	return true;
 }
 
 void CDisplayFactory::destroyDisplayList(S100_DisplayList* displayList)
@@ -337,4 +270,38 @@ void CDisplayFactory::destroyDisplayList(S100_DisplayList* displayList)
 
 	return;
 }
+
+inline std::wstring CDisplayFactory::string2wstring(const std::string& str)
+{
+	if (str.empty())
+		return _T("");
+
+	USES_CONVERSION_EX;
+	LPCWSTR wideStr = A2CW_EX(str.c_str(), str.length());
+	if (wideStr == nullptr)
+		return _T("");
+
+	return std::wstring(wideStr);
+}
+
+inline std::vector<std::string> CDisplayFactory::splitString(const std::string& str, char delimiter)
+{
+	std::vector<std::string> tokens;
+	size_t start = 0, end;
+
+	while ((end = str.find(delimiter, start)) != std::string::npos) {
+		if (end > start) { // Ignore empty substrings
+			tokens.push_back(str.substr(start, end - start));
+		}
+		start = end + 1;
+	}
+
+	// Add the last token if it's not empty
+	if (start < str.size()) {
+		tokens.push_back(str.substr(start));
+	}
+
+	return tokens;
+}
+
 

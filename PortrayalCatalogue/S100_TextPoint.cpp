@@ -17,22 +17,22 @@ S100_TextPoint::~S100_TextPoint()
 
 	for (auto itor = elements.begin(); itor != elements.end(); itor++)
 	{
-		delete *itor;
+		delete* itor;
 	}
 }
 
 void S100_TextPoint::GetContents(pugi::xml_node node)
 {
-	if (node==nullptr) 
+	if (node == nullptr)
 	{
 		return;
 	}
-	for (auto attri=node.first_attribute(); attri; attri=attri.next_attribute()) 
+	for (auto attri = node.first_attribute(); attri; attri = attri.next_attribute())
 	{
 		auto attriName = attri.name();
-		if (!strcmp(attriName,"horizontalAlignment"))
+		if (!strcmp(attriName, "horizontalAlignment"))
 		{
-			horizontalAlignment =pugi::as_wide( attri.value());
+			horizontalAlignment = pugi::as_wide(attri.value());
 		}
 		else if (!strcmp(attriName, "verticalAlignment"))
 		{
@@ -40,12 +40,12 @@ void S100_TextPoint::GetContents(pugi::xml_node node)
 		}
 	}
 
-	for (auto instruction=node.first_child(); instruction; instruction=instruction.next_sibling()) 
+	for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
 		auto instructionName = instruction.name();
-		if (!strcmp(instructionName,"element"))
+		if (!strcmp(instructionName, "element"))
 		{
-			S100_Element *element = new S100_Element();
+			S100_Element* element = new S100_Element();
 			element->GetContents(instruction);
 			elements.push_back(element);
 		}
@@ -53,11 +53,11 @@ void S100_TextPoint::GetContents(pugi::xml_node node)
 		else if (!strcmp(instructionName, "offset"))
 		{
 			if (!offset) offset = new S100_VectorPoint();
-			offset-> GetContents(instruction);
+			offset->GetContents(instruction);
 		}
-		else if (!strcmp(instructionName,"rotation")) 
+		else if (!strcmp(instructionName, "rotation"))
 		{
-			rotation = pugi::as_wide( instruction.child_value());
+			rotation = pugi::as_wide(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "areaPlacement"))
 		{
@@ -77,38 +77,61 @@ void S100_TextPoint::SetVerticalAlignment(std::wstring& value)
 	verticalAlignment = value;
 }
 
-void S100_TextPoint::SetElement(S100_Element* value) 
+void S100_TextPoint::SetElement(S100_Element* value)
 {
 	elements.push_back(value);
 }
 
-void S100_TextPoint::SetElements(std::vector<S100_Element*> value) 
+void S100_TextPoint::SetElement(std::wstring& text, std::wstring& bodySize, std::string& foreground, std::wstring& font)
+{
+	if (text.empty())
+		return;
+
+	S100_Element* pElement = new S100_Element();
+	pElement->SetText(text);
+	pElement->SetBodySize(bodySize);
+	pElement->SetForground(foreground);
+	pElement->SetFont(font);
+
+	elements.push_back(pElement);
+}
+
+void S100_TextPoint::SetElements(std::vector<S100_Element*> value)
 {
 	elements = value;
 }
 
-void S100_TextPoint::SetOffset(S100_VectorPoint* value) 
+void S100_TextPoint::SetOffset(S100_VectorPoint* value)
 {
 	offset = value;
 }
 
-void S100_TextPoint::SetRotation(std::wstring value) 
+void S100_TextPoint::SetOffset(std::wstring& x, std::wstring& y)
+{
+	if (!offset)
+		offset = new S100_VectorPoint();
+
+	offset->SetX(x);
+	offset->SetY(y);
+}
+
+void S100_TextPoint::SetRotation(std::wstring value)
 {
 	rotation = value;
 }
 
 
-void S100_TextPoint::SetAreaPlacement(S100_AreaPlacement* value) 
+void S100_TextPoint::SetAreaPlacement(S100_AreaPlacement* value)
 {
 	areaPlacement = value;
 }
 
-std::wstring S100_TextPoint::GetHorizontalAlignment() 
+std::wstring S100_TextPoint::GetHorizontalAlignment()
 {
 	return horizontalAlignment;
 }
 
-std::wstring S100_TextPoint::GetVerticalAlignment() 
+std::wstring S100_TextPoint::GetVerticalAlignment()
 {
 	return verticalAlignment;
 }
@@ -118,22 +141,22 @@ S100_Element* S100_TextPoint::GetElement(int index)
 	return elements.at(index);
 }
 
-std::vector<S100_Element*> S100_TextPoint::GetElemets() 
+std::vector<S100_Element*> S100_TextPoint::GetElemets()
 {
 	return elements;
 }
 
-S100_VectorPoint* S100_TextPoint::GetOffset() 
+S100_VectorPoint* S100_TextPoint::GetOffset()
 {
 	return offset;
 }
 
-std::wstring S100_TextPoint::GetRotation() 
+std::wstring S100_TextPoint::GetRotation()
 {
 	return rotation;
 }
 
-S100_AreaPlacement* S100_TextPoint::GetAreaPlacement() 
+S100_AreaPlacement* S100_TextPoint::GetAreaPlacement()
 {
 	return areaPlacement;
 }

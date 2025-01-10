@@ -20,6 +20,7 @@ private:
 
 public:
 	void SetText(S100_Text* value);
+	void SetText(std::wstring& value);
 	S100_Text* GetText();
 
 	void SetBodySize(std::wstring& value);
@@ -29,9 +30,11 @@ public:
 	std::wstring GetVerticalOffset();
 
 	void SetForground(S100_Foreground* value);
+	void SetForground(std::string& value);
 	S100_Foreground* GetForground();
 
 	void SetFont(S100_Font* value);
+	void SetFont(std::wstring& value);
 	S100_Font* GetFont();
 	void GetContents(pugi::xml_node node);
 };

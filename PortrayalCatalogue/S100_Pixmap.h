@@ -13,8 +13,8 @@ private:
 	// attribute 
 	std::wstring reference;
 	// element
-	S100_Color overrideAll;
-	S100_OverrideColor overrideColor;
+	S100_Color* overrideAll;
+	S100_OverrideColor* overrideColor;
 
 public:
 	void GetContents(pugi::xml_node node);

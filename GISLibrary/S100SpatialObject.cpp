@@ -27,6 +27,7 @@ void S100SpatialObject::InitDrawingInstruction()
 	if (pcManager)
 	{
 		delete pcManager;
+		pcManager = nullptr;
 	}
 
 	pcManager = new PCOutputSchemaManager();

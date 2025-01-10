@@ -38,6 +38,18 @@ void S100_AugmentedLineOrArea::SetLineStyle(S100_LineStyle* value)
 	lineStyle = value;
 }
 
+void S100_AugmentedLineOrArea::SetLineStyle(std::string& value, std::string& dash)
+{
+	if (value.empty())
+		return;
+
+	if (!lineStyle)
+		lineStyle = new S100_LineStyle();
+
+	lineStyle->ParseValue(value);
+	lineStyle->SetDash(dash);
+}
+
 S100_LineStyleReference* S100_AugmentedLineOrArea::GetLineStyleReference()
 {
 	return lineStyleReference;

@@ -15,36 +15,75 @@ class CDisplayFactory
 public:
 	static S100_DisplayList* createDisplayList();
 
-	static S100_PointInstruction* createPointInstruction(S100_DisplayList*);
-	static S100_Symbol* createSymbol(S100_PointInstruction*);
-	static S100_VectorPoint* createVectorPoint(S100_PointInstruction*);
-	
-	static S100_LineInstruction* createLineInstruction(S100_DisplayList*);
-	static S100_LineStyleReference* createLineStyleReference(S100_LineInstruction*);
-	static S100_LineStyle* createLineStyle(S100_LineInstruction*);
-
-	static S100_AreaInstruction* createAreaInstruction(S100_DisplayList*);
-	static S100_ColorFill* createColorFill(S100_AreaInstruction*);
-	static S100_Color* createColor(S100_ColorFill*);
-	static S100_AreaFillReference* createAreaFillReference(S100_AreaInstruction*);
-
-	static S100_SpatialReference* createSpatialReference(S100_Instruction*);
-
-	static S100_TextInstruction* createTextInstruction(S100_DisplayList*);
-	static S100_TextPoint* createTextPoint(S100_TextInstruction*);
-	static S100_VectorPoint* createVectorPoint(S100_TextPoint*);
-	static S100_Element* createElement(S100_TextPoint*);
-	static S100_Text* createText(S100_Element*);
-	static S100_Font* createFont(S100_Element*);
-	static S100_Foreground* createForeground(S100_Element*);
-
-	static S100_AugmentedRay* createAugmentedRay(S100_DisplayList*);
-	static S100_LineStyle* createLineStyle(S100_AugmentedRay*);
-
-	static S100_AugmentedPath* createAugmentedPath(S100_DisplayList*);
-	static S100_LineStyle* createLineStyle(S100_AugmentedPath*);
-	static S100_Path* createPath(S100_AugmentedPath*);
-
+	static bool createPointInstruction(S100_DisplayList*,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::list<std::string>);
+	static bool createLineInstruction(S100_DisplayList*,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::list<std::string>);
+	static bool createAreaInstructionA(S100_DisplayList*,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&);
+	static bool createAreaInstructionB(S100_DisplayList*,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&);
+	static bool createTextInstruction(S100_DisplayList*,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&);
+	static bool createAugmentedRay(S100_DisplayList*,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&);
+	static bool createAugmentedPath(S100_DisplayList*,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&,
+		std::string&);
 	static void destroyDisplayList(S100_DisplayList*);
+
+private:
+	static inline std::wstring string2wstring(const std::string& str);
+	static inline std::vector<std::string> splitString(const std::string& str, char delimiter);
 };
 

@@ -28,9 +28,11 @@
 #include "SPoint.h"
 #include "SCoverage.h"
 
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/DisplayFactory.h"
+/*
 #include "../PortrayalCatalogue/S100_ColorFill.h"
 #include "../PortrayalCatalogue/S100_AreaFillReference.h"
-#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 #include "../PortrayalCatalogue/S100_DisplayList.h"
 #include "../PortrayalCatalogue/S100_NullInstruction.h"
 #include "../PortrayalCatalogue/S100_PointInstruction.h"
@@ -40,9 +42,7 @@
 #include "../PortrayalCatalogue/S100_AugmentedPath.h"
 #include "../PortrayalCatalogue/S100_AugmentedRay.h"
 #include "../PortrayalCatalogue/S100_AlertReference.h"
-
-
-
+*/
 
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
@@ -50,133 +50,43 @@
 
 PCOutputSchemaManager::PCOutputSchemaManager()
 {
-	displayList = new S100_DisplayList();
+	displayList = CDisplayFactory::createDisplayList();
 	displayListSENC = new SENC_DisplayList();
 }
 
 PCOutputSchemaManager::~PCOutputSchemaManager()
 {
-	delete displayList;
+	CDisplayFactory::destroyDisplayList(displayList);
 	displayList = nullptr;
 
 	delete displayListSENC;
 	displayListSENC = nullptr;
 }
 
-void PCOutputSchemaManager::GenerateSENCAlertInstruction(S101Cell* cell, PortrayalCatalogue* pc)
-{
-	// Don't run until the model of drawingCommands is completed
-
-	//if (nullptr == displayListSENC)
-	//{
-	//	displayListSENC = new SENC_DisplayList();
-	//}
-
-	//auto alertInstructions = displayList->GetAlertInstructions();
-
-	//for (auto itor = alertInstructions.begin();
-	//	itor != alertInstructions.end();
-	//	itor++)
-	//{
-	//	S100_AlertReference* it = (S100_AlertReference*)*itor;
-	//	SENC_AlertReference* sit = nullptr;
-	//	sit = new SENC_AlertReference();
-
-	//	GetSENCFromS100Common((S100_Instruction*)it, sit);
-
-	//	if (it->alertType.size() > 0)
-	//	{
-	//		if (it->alertType.compare(L"ProhAre") == 0)
-	//		{
-	//			sit->alertType = 1;
-	//		}
-	//		else if (it->alertType.compare(L"SafetyContour") == 0)
-	//		{
-	//			sit->alertType = 2;
-	//		}
-	//		else if (it->alertType.compare(L"NavHazard") == 0)
-	//		{
-	//			sit->alertType = 3;
-	//		}
-	//	}
-	//	sit->plan = it->plan;
-	//	sit->monitor = it->monitor;
-
-	//	if (sit)
-	//	{
-	//		auto feature = cell->GetFeatureType(sit->featureReference);
-	//		if (feature) {
-	//			auto id = feature->GetIDAsInteger();
-
-	//			__int64 iKey = ((__int64)100) << 32 | id;
-	//			auto item = cell->GetFeatureRecord(iKey);
-
-	//			if (nullptr == item)
-	//			{
-	//				continue;
-	//			}
-	//			else
-	//			{
-	//				sit->fr = item;
-	//			}
-
-	//			if (sit->fr)
-	//			{
-	//				//sit->fr->m_alertIndicationType = sit->alertType;
-	//			}
-
-	//			displayListSENC->AddAlertIndication(sit);
-	//		}
-	//	}
-	//}
-}
-
 void PCOutputSchemaManager::InitDisplayList()
 {
-	delete displayList;
+	CDisplayFactory::destroyDisplayList(displayList);
 	displayList = nullptr;
 }
 
 void PCOutputSchemaManager::GenerateSENCInstruction(S100SpatialObject* s100so, PortrayalCatalogue* pc)
 {
-	if (nullptr == displayListSENC)
-	{
+	if (!displayListSENC)
 		displayListSENC = new SENC_DisplayList();
-	}
 
-	auto displayInstructions = displayList->GetDisplayInstructions();
-
- 	for (auto itor = displayInstructions.begin();
-		itor != displayInstructions.end();
-		itor++)
+	for (const auto& iter : displayList->GetDisplayInstructions())
 	{
-		S100_Instruction* it = *itor;
+		SENC_Instruction* sit = SENC_Instruction::S1002SENC(iter, pc, this, s100so);
+		if (!sit)
+			continue;
 
-		/*
-		*  Type Of Instruction
-		*  0 : Null Instruction
-		*  1 : Point Instruction
-		*  2 : Line Instruction
-		*  3 : Area Instruction
-		** 4 : Coverage Instruction
-		*  5 : Text Instruction
-		** 6 : Augmented Point
-		*  7 : Augmented Ray
-		*  8 : Augmented Path
-		** 9 : Augmented Area
-		*/
-		SENC_Instruction* sit = nullptr;
-
-		sit = SENC_Instruction::S1002SENC(it, pc, this, s100so);
-		auto featureID = pugi::as_utf8(it->GetFeatureReference());
+		auto featureID = pugi::as_utf8(iter->GetFeatureReference());
 		auto featureType = s100so->GetFeatureType(featureID);
+		if (!featureType)
+			continue;
 
-		if ((sit) &&
-			(featureType))
-		{
-			displayListSENC->AddInstruction(sit);			
-			sit->fr = featureType;
-		}
+		displayListSENC->AddInstruction(sit);
+		sit->fr = featureType;
 	}
 }
 

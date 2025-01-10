@@ -51,7 +51,8 @@ void S100_TextInstruction::GetContents(pugi::xml_node node)
 		}
 		else if (!strcmp(instructionName, "textPoint"))
 		{
-			if (!textPoint) textPoint = new S100_TextPoint();
+			if (!textPoint)
+				textPoint = new S100_TextPoint();
 			textPoint->GetContents(instruction);
 		}
 	}

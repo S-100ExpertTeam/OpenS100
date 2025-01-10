@@ -21,12 +21,14 @@ private:
 
 public:
 	void SetLineStyleReference(S100_LineStyleReference* value);
+	void SetLineStyleReference(std::wstring& reference);
 	S100_LineStyleReference* GetLineStyleReference();
 
 	void SetCompositeLineStyle(S100_CompositeLineStyle* value);
 	S100_CompositeLineStyle* GetCompositeLineStyle();
 
 	void SetLineStyle(S100_LineStyle* value);
+	void SetLineStyle(std::string& value, std::string& dash);
 	S100_LineStyle* GetLineStyle();
 
 	void SetSuppression(std::wstring& value);

@@ -15,5 +15,6 @@ public:
 	void GetContents(pugi::xml_node node);
 
 	void SetColor(S100_Color* value);
+	void SetColor(std::wstring& token, std::wstring& name, std::wstring& transparency);
 	S100_Color* GetColor();
 };

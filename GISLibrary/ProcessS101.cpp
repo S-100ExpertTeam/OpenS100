@@ -26,6 +26,7 @@
 #include "../PortrayalCatalogue/S100_PointInstruction.h"
 #include "../PortrayalCatalogue/S100_SymbolFill.h"
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/DisplayFactory.h"
 #include "../PortrayalCatalogue/ViewingGroupLayer.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
@@ -54,7 +55,7 @@ ProcessS101::~ProcessS101()
 
 }
 
-void dump_com_error(_com_error &e)
+void dump_com_error(_com_error& e)
 {
 	printf("Error\n");
 	printf("\a\t Code = %08lx\n", e.Error());
@@ -143,13 +144,12 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 		}
 
 		c->pcManager->GenerateSENCInstruction(c, layer->GetPC());
-
 		c->pcManager->InitDisplayList();
 
 		KRS_LUA_SCRIPT_REFERENCE::SaveDrawingInstructions("..\\TEMP\\drawingCommands.txt");
 		KRS_LUA_SCRIPT_REFERENCE::RemoveResultDrawingInstructions();
 	}
-	catch (_com_error &e)
+	catch (_com_error& e)
 	{
 		dump_com_error(e);
 	}
@@ -249,17 +249,9 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 	std::string v_SymbolAnnotation;
 	std::string v_CoverageColor;
 
-	std::string v_ColorFill;
-	std::string v_TextInstruction;
-	std::string v_LineInstruction;
-	std::string v_PointInstruction;
 	std::list<std::string> vl_SpatialReference;
-	std::string v_AreaFillReference;
-	std::string v_AlertReference;
-	S100_Dash dash;
 
-	S100_LineStyle lineStyle;
-
+	//S100_LineStyle lineStyle;
 	for (auto i = elements.begin(); i != elements.end(); i++)
 	{
 		std::string element = *i;
@@ -275,7 +267,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 			{
 				v_AugmentedPoint = "";
 				vl_SpatialReference.clear();
-				v_AreaFillReference = "";
 				v_AugmentedRay = "";
 				v_AugmentedPath = "";
 				v_ArcByRadius = "";
@@ -287,124 +278,50 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 			std::string tag = di_splited[0];
 			std::string value = di_splited[1];
 
-			int sizeForIndex = (int)tag.size();
-
-			if (sizeForIndex == 2)
+			switch (tag.size())
 			{
-			}
-			else if (sizeForIndex == 4)
+			case 4:
 			{
-				// "Dash:0,3.6"
-				if (tag.compare("Dash") == 0)
+				if (tag == "Dash")
 				{
 					v_Dash = value;
-					dash.ParseValue(value);
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
-			else if (sizeForIndex == 5)
-			{
-				if (tag.compare("Hover") == 0)
-				{
-				}
-			}
-			else if (sizeForIndex == 6)
-			{
-				if (tag.compare("Parent") == 0)
-				{
-				}
-			}
-			else if (sizeForIndex == 8)
+			break;
+			case 8:
 			{
 				// "FontSize:10"
-				if (tag.compare("FontSize") == 0)
-				{
+				if (tag == "FontSize")
 					v_FontSize = value;
-				}
 				// "Rotation:PortrayalCRS,135"
-				else if (tag.compare("Rotation") == 0)
-				{
+				else if (tag == "Rotation")
 					v_Rotation = value;
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
-			else if (sizeForIndex == 7)
-			{
-				if (tag.compare("AreaCRS") == 0)
-				{
-				}
-			}
-			else if (sizeForIndex == 9)
+			break;
+			case 9:
 			{
 				// "ColorFill:DEPVS"
-				if (tag.compare("ColorFill") == 0)
+				if (tag == "ColorFill")
 				{
-					v_ColorFill = value;
-
-					S100_AreaInstruction *in = new S100_AreaInstruction();
-					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
-
-					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
-
-					if (v_ColorFill.size() > 0)
-					{
-						std::vector<std::string> v_splited = Split(v_ColorFill, ",");
-
-						if (!in->GetAreaFill()) in->SetAreaFill(new S100_ColorFill());
-						S100_ColorFill* cf = (S100_ColorFill*)in->GetAreaFill();
-
-						if (!cf->GetColor()) cf->SetColor(new S100_Color());
-						cf->GetColor()->SetToken(std::wstring(v_splited[0].begin(), v_splited[0].end()));
-						cf->GetColor()->SetName(std::wstring(v_splited[0].begin(), v_splited[0].end()));
-
-						if (v_splited.size() > 1)
-						{
-							cf->GetColor()->SetTransparency(std::wstring(v_splited[1].begin(), v_splited[1].end()));
-						}
-					}
-					v_ColorFill = "";
+					CDisplayFactory::createAreaInstructionA(pcm->displayList,
+						featureID,
+						v_DrawingPriority,
+						v_DisplayPlane,
+						v_ViewingGroup,
+						v_ScaleMinimum,
+						value);
 				}
-				else if (tag.compare("LineStyle") == 0)
+				else if (tag == "LineStyle")
 				{
 					v_LineStyle = value;
-					lineStyle.ParseValue(value);
-
-					if (false == dash.IsEmpty())
-					{
-						lineStyle.SetDash(&dash);
-						dash.SetEmpty();
-					}
 				}
-				else if (tag.compare("FontColor") == 0)
-				{
+				else if (tag == "FontColor")
 					v_FontColor = value;
-				}
-				else if (tag.compare("FontSlant") == 0)
-				{
+				else if (tag == "FontSlant")
 					v_FontSlant = value;
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
-			else if (sizeForIndex == 11)
+			break;
+			case 11:
 			{
 				// "LocalOffset:-3.51,3.51"
 				if (tag.compare("LocalOffset") == 0)
@@ -421,14 +338,9 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					v_ArcByRadius = value;
 				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
-			else if (sizeForIndex == 12)
+			break;
+			case 12:
 			{
 				// "ScaleMinimum:179999"
 				if (tag.compare("ScaleMinimum") == 0)
@@ -452,14 +364,9 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 					v_AugmentedPath = "";
 				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
-			else if (sizeForIndex == 13)
+			break;
+			case 13:
 			{
 				if (tag.compare("LinePlacement") == 0)
 				{
@@ -470,57 +377,17 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					v_AugmentedPath = value;
 					v_AugmentedRay = "";
 				}
-				else if (tag.compare("AreaPlacement") == 0)
-				{
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
-			else if (sizeForIndex == 14)
+			break;
+			case 14:
 			{
 				if (tag.compare("AugmentedPoint") == 0)
 				{
 					v_AugmentedPoint = value;
 				}
-				else if (tag.compare("AlertReference") == 0)
-				{
-					// !Don't parsing AlertReference util new model of drawingCommands is completed... 
-					
-					//v_AlertReference = value;
-
-					//S100_AlertReference* in = new S100_AlertReference();
-					//pcm->displayList->AddAlertInstruction((S100_Instruction*)in);
-
-					//in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-
-					//std::vector<std::string> v_splited = Split(v_AlertReference, ",");
-					//if (v_splited.size() > 0)
-					//{
-					//	in->alertType = std::wstring(v_splited[0].begin(), v_splited[0].end());
-					//}
-					//if (v_splited.size() > 1)
-					//{
-					//	in->plan = std::wstring(v_splited[1].begin(), v_splited[1].end());
-					//}
-					//if (v_splited.size() > 2)
-					//{
-					//	in->monitor = std::wstring(v_splited[2].begin(), v_splited[2].end());
-					//}
-
-					//v_AlertReference = "";
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
-			else if (sizeForIndex == 15)
+			break;
+			case 15:
 			{
 				// "DrawingPriority:8"
 				if (tag.compare("DrawingPriority") == 0)
@@ -530,274 +397,84 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				// "TextInstruction:bn Alligator River Light 16,21,8"
 				else if (tag.compare("TextInstruction") == 0)
 				{
-					v_TextInstruction = value;
-					S100_TextInstruction *in = new S100_TextInstruction();
-					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
-
-					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
-
-					in->SetTextPoint(new S100_TextPoint());
-
-					if (v_TextAlignVertical.size() > 0)
-					{
-						in->GetTextPoint()->SetVerticalAlignment(std::wstring(v_TextAlignVertical.begin(), v_TextAlignVertical.end()));
-					}
-					if (v_TextAlignHorizontal.size() > 0)
-					{
-						in->GetTextPoint()->SetHorizontalAlignment(std::wstring(v_TextAlignHorizontal.begin(), v_TextAlignHorizontal.end()));
-					}
-
-					if (v_LocalOffset.size() > 0)
-					{
-						in->GetTextPoint()->SetOffset(new S100_VectorPoint());
-
-						std::vector<std::string> v_splited = Split(v_LocalOffset, ",");
-						if (v_splited.size() == 2)
-						{
-							in->GetTextPoint()->GetOffset()->SetX(std::wstring(v_splited[0].begin(), v_splited[0].end()));
-							in->GetTextPoint()->GetOffset()->SetY(std::wstring(v_splited[1].begin(), v_splited[1].end()));
-						}
-						else
-						{
-							//OutputDebugString(L"Error : Offset Value should have 2 arguments.");
-						}
-					}
-
-					if (v_TextInstruction.size() > 0)
-					{
-						S100_Element* element = new S100_Element();
-
-						in->GetTextPoint()->SetElement(element);
-
-						if (!element->GetText()) element->SetText(new S100_Text());
-
-						std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
-
-						auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_splited_text[0].c_str());
-						std::wstring wstrValue = wValue;
-						delete[] wValue;
-						element->GetText()->SetValue(wstrValue);
-
-						if (v_FontSize.size() > 0)
-						{
-							element->SetBodySize(std::wstring(v_FontSize.begin(), v_FontSize.end()));
-						}
-
-						if (v_FontSlant.size() > 0)
-						{
-							if (!element->GetFont())
-							{
-								element->SetFont(new S100_Font());
-							}
-
-							element->GetFont()->SetSlant(std::wstring(v_FontSlant.begin(), v_FontSlant.end()));
-						}
-
-						if (v_FontColor.size() > 0)
-						{
-							auto fontColor = new S100_Foreground();
-							fontColor->fromDrawingCommand(v_FontColor);
-							element->SetForground(fontColor);
-						}
-					}
-
-					v_TextInstruction = "";
+					CDisplayFactory::createTextInstruction(pcm->displayList,
+						featureID,
+						v_DrawingPriority,
+						v_DisplayPlane,
+						v_ViewingGroup,
+						v_ScaleMinimum,
+						v_TextAlignVertical,
+						v_TextAlignHorizontal,
+						v_LocalOffset,
+						value,
+						v_FontSize,
+						v_FontSlant,
+						v_FontColor);
 				}
 				else if (tag.compare("LineInstruction") == 0)
 				{
-					v_LineInstruction = value;
-
-					if (v_AugmentedRay.size() > 0)
+					if (!v_AugmentedRay.empty())
 					{
-						S100_AugmentedRay *in = new S100_AugmentedRay();
-						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
-
-						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-						in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-						in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
-
-						if (false == lineStyle.IsEmpty())
-						{
-							in->SetLineStyle(new S100_LineStyle(lineStyle));
-						}
-
-						if (v_AugmentedRay.size() > 0)
-						{
-							std::vector<std::string> v_splited = Split(v_AugmentedRay, ",");
-							if (v_splited.size() == 4)
-							{
-								in->SetDirection(std::wstring(v_splited[1].begin(), v_splited[1].end()));
-								in->SetLength(std::wstring(v_splited[3].begin(), v_splited[3].end()));
-							}
-						}
+						CDisplayFactory::createAugmentedRay(pcm->displayList,
+							featureID,
+							v_DrawingPriority,
+							v_DisplayPlane,
+							v_ViewingGroup,
+							v_ScaleMinimum,
+							v_LineStyle,
+							v_Dash,
+							v_AugmentedRay);
 					}
 					else if (v_AugmentedPath.size() > 0)
 					{
-						S100_AugmentedPath *in = new S100_AugmentedPath();
-						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
-
-						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-						in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-						in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
-
-						if (false == lineStyle.IsEmpty())
-						{
-							in->SetLineStyle(new S100_LineStyle(lineStyle));
-						}
-
-						if (v_ArcByRadius.size() > 0)
-						{
-							std::vector<std::string> v_splited = Split(v_ArcByRadius, ",");
-							if (v_splited.size() == 5)
-							{
-
-								if (!in->GetPath()) in->SetPath(new S100_Path());
-
-								S100_ArcByRadius arcByRadius;
-
-								arcByRadius.GetCenter()->SetX(std::wstring(v_splited[0].begin(), v_splited[0].end()));
-								arcByRadius.GetCenter()->SetY(std::wstring(v_splited[1].begin(), v_splited[1].end()));
-								arcByRadius.SetRadius(std::wstring(v_splited[2].begin(), v_splited[2].end()));
-
-								if (arcByRadius.GetSector() == nullptr)arcByRadius.SetSector(new S100_Sector());
-								arcByRadius.GetSector()->SetStartAngle(std::wstring(v_splited[3].begin(), v_splited[3].end()));
-								arcByRadius.GetSector()->SetAnglearDistance(std::wstring(v_splited[4].begin(), v_splited[4].end()));
-
-
-								in->GetPath()->SetArcByRadiuses(&arcByRadius);
-							}
-						}
+						CDisplayFactory::createAugmentedPath(pcm->displayList,
+							featureID,
+							v_DrawingPriority,
+							v_DisplayPlane,
+							v_ViewingGroup,
+							v_ScaleMinimum,
+							v_LineStyle,
+							v_Dash,
+							v_ArcByRadius);
 					}
 					else
 					{
-						S100_LineInstruction *in = new S100_LineInstruction();
-						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
-
-						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-						in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-						in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-						in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-						in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
-
-						if (v_LineInstruction.size() > 0)
-						{
-							if (!in->GetLineStyleReference())
-							{
-								in->SetLineStyleReference(new S100_LineStyleReference());
-								in->GetLineStyleReference()->SetReference(std::wstring(v_LineInstruction.begin(), v_LineInstruction.end()));
-							}
-						}
-
-						if (false == lineStyle.IsEmpty())
-						{
-							in->SetLineStyle(new S100_LineStyle(lineStyle));
-						}
-
-						if (vl_SpatialReference.size() > 0)
-						{
-							for (auto it = vl_SpatialReference.begin(); it != vl_SpatialReference.end(); it++)
-							{
-								S100_SpatialReference* sref = new S100_SpatialReference();
-								in->SetSpatialReference(sref);
-								std::string v_SpatialReference = *it;
-
-								std::vector<std::string> v_splited = Split(v_SpatialReference, "|");
-								if (v_splited.size() == 2)
-								{
-									sref->SetType(v_splited[0]);
-									sref->SetReference(v_splited[1]);
-								}
-							}
-							v_LineInstruction = "";
-						}
+						CDisplayFactory::createLineInstruction(pcm->displayList,
+							featureID,
+							v_DrawingPriority,
+							v_DisplayPlane,
+							v_ViewingGroup,
+							v_ScaleMinimum,
+							value,
+							v_LineStyle,
+							v_Dash,
+							vl_SpatialReference);
 					}
 				}
 			}
-			else if (sizeForIndex == 16)
+			break;
+			case 16:
 			{
 				// PointInstruction
 				if (tag.compare("PointInstruction") == 0)
 				{
-					v_PointInstruction = value;
-					S100_PointInstruction *in = new S100_PointInstruction();
-					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
-
-					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
-
-					if (v_PointInstruction.size() > 0)
-					{
-						in->SetSymbol(new S100_Symbol());
-						in->GetSymbol()->SetReference(std::wstring(v_PointInstruction.begin(), v_PointInstruction.end()));
-
-						std::vector<std::string> r_splited = Split(v_Rotation, ",");
-						if (r_splited.size() == 2)
-						{
-							in->GetSymbol()->SetRotation(std::stod(r_splited[1]));
-
-						}
-					}
-
-					if (v_AugmentedPoint.size() > 1)
-					{
-						std::vector<std::string> v_splited = Split(v_AugmentedPoint, ",");
-						if (v_splited.size() == 3)
-						{
-							if (!in->GetVectorPoint()) in->SetVectorPoint(new S100_VectorPoint());
-
-							in->GetVectorPoint()->SetX(std::wstring(v_splited[1].begin(), v_splited[1].end()));
-							in->GetVectorPoint()->SetY(std::wstring(v_splited[2].begin(), v_splited[2].end()));
-						}
-						else
-						{
-							//OutputDebugString(L"Error : Vector Point Value should have 3 arguments.");
-						}
-					}
-
-					if (vl_SpatialReference.size() > 0)
-					{
-						for (auto it = vl_SpatialReference.begin(); it != vl_SpatialReference.end(); it++)
-						{
-							S100_SpatialReference* sref = new S100_SpatialReference();
-							in->SetSpatialReference(sref);
-							std::string v_SpatialReference = *it;
-
-							std::vector<std::string> v_splited = Split(v_SpatialReference, "|");
-							if (v_splited.size() == 2)
-							{
-								sref->SetType(v_splited[0]);
-								sref->SetReference(v_splited[1]);
-							}
-						}
-					}
-
-					v_PointInstruction = "";
+					CDisplayFactory::createPointInstruction(pcm->displayList,
+						featureID,
+						v_DrawingPriority,
+						v_DisplayPlane,
+						v_ViewingGroup,
+						v_ScaleMinimum,
+						value,
+						v_Rotation,
+						v_AugmentedPoint,
+						vl_SpatialReference);
 				}
 				// "SpatialReference:Curve|107" 
 				else if (tag.compare("SpatialReference") == 0)
-				{
-					std::string v_SpatialReference = value;
-					vl_SpatialReference.push_back(v_SpatialReference);
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
+					vl_SpatialReference.push_back(value);
 			}
-			else if (sizeForIndex == 17)
+			break;
+			case 17:
 			{
 				// "TextAlignVertical:Center"
 				if (tag.compare("TextAlignVertical") == 0)
@@ -806,63 +483,31 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				}
 				else if (tag.compare("AreaFillReference") == 0)
 				{
-					v_AreaFillReference = value;
-
-					S100_AreaInstruction *in = new S100_AreaInstruction();
-					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
-
-					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-					in->SetDrawingPriority(LUA_GetPriority(v_DrawingPriority));
-					in->SetDisplayPlane(std::wstring(v_DisplayPlane.begin(), v_DisplayPlane.end()));
-					in->SetViewingGroup(std::wstring(v_ViewingGroup.begin(), v_ViewingGroup.end()));
-					in->SetScaleMinimum(std::wstring(v_ScaleMinimum.begin(), v_ScaleMinimum.end()));
-
-					if (v_AreaFillReference.size() > 0)
-					{
-						if (!in->GetAreaFill())
-						{
-							in->SetAreaFill(new S100_AreaFillReference());
-						}
-
-						S100_AreaFillReference* cf = (S100_AreaFillReference*)in->GetAreaFill();
-
-						cf->SetReference(std::wstring(v_AreaFillReference.begin(), v_AreaFillReference.end()));
-
-						std::wstring path = cf->GetReference();
-						path.append(L".xml");
-						in->SetAreaFill(cf);
-					}
-					v_AreaFillReference = "";
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
+					CDisplayFactory::createAreaInstructionB(pcm->displayList,
+						featureID,
+						v_DrawingPriority,
+						v_DisplayPlane,
+						v_ViewingGroup,
+						v_ScaleMinimum,
+						value);
 				}
 			}
-			else if (sizeForIndex == 19)
+			break;
+			case 19:
 			{
 				// "TextAlignHorizontal:End"
 				if (tag.compare("TextAlignHorizontal") == 0)
 				{
 					v_TextAlignHorizontal = value;
 				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag, sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
-			else
-			{
-				CString str;
-				str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-				//OutputDebugString(str);
+			break;
 			}
 		}
 	}
+
+	vl_SpatialReference.clear();
+
 	return true;
 }
 
@@ -952,7 +597,8 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 	theInstance.m_lua_session->call_raw(1);
 }
 
-void ProcessS101::PortrayalSetContextParameter(const char*  parameterName, const char*  parameterValue)
+void ProcessS101::PortrayalSetContextParameter(const char* parameterName, const char* parameterValue)
 {
 	theInstance.m_lua_session->call("PortrayalSetContextParameter", { parameterName, parameterValue });
 }
+

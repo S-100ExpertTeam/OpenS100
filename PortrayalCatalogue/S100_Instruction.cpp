@@ -49,6 +49,14 @@ void S100_Instruction::SetSpatialReference(S100_SpatialReference* value)
 	spatialReference.push_back(value);
 }
 
+void S100_Instruction::SetSpatialReference(std::string& type, std::string& reference)
+{
+	S100_SpatialReference* pSpatialReference = new S100_SpatialReference();
+	pSpatialReference->SetType(type);
+	pSpatialReference->SetReference(reference);
+	spatialReference.push_back(pSpatialReference);
+}
+
 void S100_Instruction::SetSpatialReference(std::list<S100_SpatialReference*> value) 
 {
 	spatialReference = value;
@@ -115,7 +123,7 @@ void S100_Instruction::SetScaleMaximum(int value)
 	scaleMaximum = value;
 }
 
-void S100_Instruction::setAlertReference(S100_AlertReference value)
+void S100_Instruction::setAlertReference(S100_AlertReference* value)
 {
 	alertReference = value;
 }
@@ -183,7 +191,7 @@ std::wstring S100_Instruction::GetViewingGroup(int index)
 
 int S100_Instruction::getViewingGroupCount()
 {
-	return viewingGroup.size();
+	return (int)viewingGroup.size();
 }
 
 std::wstring S100_Instruction::GetDisplayPlane()
@@ -220,12 +228,12 @@ bool S100_Instruction::hasAlertReference()
 	return alertReference.has_value();
 }
 
-S100_AlertReference S100_Instruction::getAlertReference()
+S100_AlertReference* S100_Instruction::getAlertReference()
 {
 	if (alertReference.has_value())
 	{
 		return alertReference.value();
 	}
 
-	return S100_AlertReference();
+	return nullptr;
 }

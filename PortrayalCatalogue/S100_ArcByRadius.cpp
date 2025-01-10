@@ -3,12 +3,17 @@
 
 S100_ArcByRadius::S100_ArcByRadius()
 {
+	center = nullptr;
 	sector = nullptr;
 }
 
 S100_ArcByRadius::~S100_ArcByRadius()
 {
+	if (center)
+		delete center, center = nullptr;
 
+	if (sector)
+		delete sector, sector = nullptr;
 }
 
 void S100_ArcByRadius::GetContents(pugi::xml_node node) 
@@ -18,11 +23,14 @@ void S100_ArcByRadius::GetContents(pugi::xml_node node)
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName,"center"))
 		{
-			center.GetContents(instruction);
+			if (!center)
+				center = new S100_VectorPoint();
+			center->GetContents(instruction);
 		}
 		else if (!strcmp(instructionName, "sector"))
 		{
-			sector = new S100_Sector();
+			if (!sector)
+				sector = new S100_Sector();
 			sector->GetContents(instruction);
 		}
 		else if (!strcmp(instructionName, "radius"))
@@ -34,17 +42,35 @@ void S100_ArcByRadius::GetContents(pugi::xml_node node)
 
 void S100_ArcByRadius::SetCenter(S100_VectorPoint* value)
 {
-	center = *value;
+	center = value;
+}
+
+void S100_ArcByRadius::SetCenter(std::wstring& x, std::wstring& y)
+{
+	if (!center)
+		center = new S100_VectorPoint();
+
+	center->SetX(x);
+	center->SetY(y);
 }
 
 S100_VectorPoint* S100_ArcByRadius::GetCenter() 
 {
-	return &center;
+	return center;
 }
 
 void S100_ArcByRadius::SetSector(S100_Sector* value) 
 {
 	sector = value;
+}
+
+void S100_ArcByRadius::SetSector(std::wstring& angle, std::wstring& distance)
+{
+	if (!sector)
+		sector = new S100_Sector();
+
+	sector->SetStartAngle(angle);
+	sector->SetAnglearDistance(distance);
 }
 
 S100_Sector* S100_ArcByRadius::GetSector() 

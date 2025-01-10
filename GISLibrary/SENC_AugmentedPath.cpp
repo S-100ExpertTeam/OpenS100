@@ -211,7 +211,7 @@ void SENC_AugmentedPath::FromS100Instruction(S100_Instruction* s100Instruction, 
 		auto arcBy = s100AugmentedPath->GetPath()->GetArcByRadiuses();
 		for (auto itor = arcBy.begin(); itor != arcBy.end(); itor++)
 		{
-			S100_ArcByRadius* p = &(*itor);
+			S100_ArcByRadius* p = (*itor);
 			SENC_ArcByRadius* sp = new SENC_ArcByRadius();
 			sp->center.x = p->GetCenter()->GetX();
 			sp->center.y = p->GetCenter()->GetY();
