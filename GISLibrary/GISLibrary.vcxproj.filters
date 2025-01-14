@@ -2115,6 +2115,9 @@
     <ClInclude Include="SpatialObjectType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StringUtil.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GISLibrary.rc">

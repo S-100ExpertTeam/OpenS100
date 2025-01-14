@@ -40,6 +40,7 @@ public:
 	std::wstring GetPenColorToken();
 
 	void GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalogue *pc);
+	void GetStyleFromString(std::string& lineStyle, std::string& dash, PortrayalCatalogue* pc);
 	
 	void ChangePallete(PortrayalCatalogue *pc);
 

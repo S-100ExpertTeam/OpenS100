@@ -803,6 +803,7 @@
     <ClInclude Include="StateCommand.h" />
     <ClInclude Include="StateCommands.h" />
     <ClInclude Include="Status.h" />
+    <ClInclude Include="StringUtil.hpp" />
     <ClInclude Include="SupportFileDiscoveryMetadata.h" />
     <ClInclude Include="SupportFileRevisionStatus.h" />
     <ClInclude Include="SupportFileSpecification.h" />

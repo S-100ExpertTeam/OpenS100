@@ -19,11 +19,11 @@ SENC_LineStyle::~SENC_LineStyle()
 {
 	for (auto itor = symbols.begin(); itor != symbols.end(); itor++)
 	{
-		delete *itor;
+		delete* itor;
 	}
 	for (auto itor = dashes.begin(); itor != dashes.end(); itor++)
 	{
-		delete *itor;
+		delete* itor;
 	}
 }
 
@@ -47,7 +47,7 @@ std::wstring SENC_LineStyle::GetPenColorToken()
 	return colorToken;
 }
 
-void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalogue *pc)
+void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalogue* pc)
 {
 	intervalLength = _wtof(lineStyle->GetIntervalLength().c_str());
 	capStyle = SENC_CommonFuc::GetCapStyle(lineStyle->GetCapStyle());
@@ -57,7 +57,7 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 	std::wstring colorToken = lineStyle->GetPen()->GetColor()->GetToken();
 	pen_width = _wtof(lineStyle->GetPen()->GetWidth().c_str()) + 0.01;
 	pen_transparency = lineStyle->GetPen()->GetColor()->GetTransparency();
-	
+
 	auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
 
 	if (colorProfile)
@@ -65,8 +65,8 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 		SetPenColor(colorProfile->GetColor(colorToken));
 		SetPenColorToken(colorToken);
 	}
-	
-	auto dashs= lineStyle->GetDashs();
+
+	auto dashs = lineStyle->GetDashs();
 	for (auto itor = dashs.begin();
 		itor != dashs.end();
 		itor++)
@@ -93,7 +93,54 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 	}
 }
 
-void SENC_LineStyle::ChangePallete(PortrayalCatalogue *pc)
+void SENC_LineStyle::GetStyleFromString(std::string& lineStyle, std::string& dash, PortrayalCatalogue* pc)
+{
+	std::vector<std::string> vLineStyle = LatLonUtility::Split(lineStyle, ",");
+	if (vLineStyle.size() >= 4)
+	{
+		intervalLength = string2double(vLineStyle[1]);
+		pen_width = string2double(vLineStyle[2]);
+
+		if (vLineStyle.size() >= 5)
+		{
+			pen_transparency = string2double(vLineStyle[4]);
+			if (vLineStyle.size() >= 6)
+			{
+				capStyle = string2int(vLineStyle[5]);
+
+				if (vLineStyle.size() >= 7)
+				{
+					joinStyle = string2int(vLineStyle[6]);
+
+					if (vLineStyle.size() >= 8)
+						offset = string2float(vLineStyle[7]);
+				}
+			}
+		}
+
+		auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
+		if (colorProfile)
+		{
+			SetPenColor(colorProfile->GetColor(string2wstring(vLineStyle[3])));
+			SetPenColorToken(string2wstring(vLineStyle[3]));
+		}
+	}
+	vLineStyle.clear();
+
+	std::vector<std::string> vDash = split(dash, ',');
+	if (vDash.size() >= 2)
+	{
+		SENC_Dash* dashSENC = new SENC_Dash();
+
+		dashSENC->length = string2float(vDash[0]);
+		dashSENC->start = string2float(vDash[1]);
+
+		dashes.push_back(dashSENC);
+	}
+	vDash.clear();
+}
+
+void SENC_LineStyle::ChangePallete(PortrayalCatalogue* pc)
 {
 	SetPenColor(pc->GetS100PCManager()->GetS100ColorProfile()->GetColor(GetPenColorToken()));
 }
@@ -114,7 +161,7 @@ void SENC_LineStyle::DrawInstruction(
 	ID2D1Factory1* pDirect2dFactory,
 	ID2D1SolidColorBrush* brush,
 	std::vector<ID2D1StrokeStyle1*>* strokeGroup,
-	Scaler *scaler,
+	Scaler* scaler,
 	PortrayalCatalogue* pc)
 {
 	auto curve = curveHasOrient;

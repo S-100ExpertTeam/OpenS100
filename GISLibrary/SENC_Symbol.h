@@ -4,6 +4,7 @@
 #include "SENC_AreaPlacement.h"
 #include "SENC_OverrideColor.h"
 #include "SENC_VectorPoint.h"
+#include "StringUtil.hpp"
 
 //#include "..\\S100_SVG_D2D1_DLL\SVG.h"
 
