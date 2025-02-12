@@ -4,7 +4,8 @@
 
   <xsl:template name="symbolFillTemplate">
     <xsl:param name="featureReference"/>
-    <xsl:param name="viewingGroup"/>
+    <xsl:param name="viewingGroupA"/>
+    <xsl:param name="viewingGroupB"/>
     <xsl:param name="displayPlane"/>
     <xsl:param name="drawingPriority"/>
     <xsl:param name="symbolReference"/>
@@ -26,7 +27,10 @@
             <xsl:value-of select="$featureReference"/>
           </xsl:element>
           <xsl:element name="viewingGroup">
-              <xsl:value-of select="$viewingGroup"/>
+              <xsl:value-of select="$viewingGroupA"/>
+          </xsl:element>
+          <xsl:element name="viewingGroup">
+              <xsl:value-of select="$viewingGroupB"/>
           </xsl:element>
           <xsl:element name="displayPlane">
             <xsl:value-of select="$displayPlane"/>
@@ -35,6 +39,7 @@
             <xsl:value-of select="$drawingPriority"/>
           </xsl:element>
           <xsl:element name="symbolFill">
+            <xsl:element name="areaCRS">GlobalGeometry</xsl:element>
             <xsl:element name="symbol">
               <xsl:attribute name="reference">
                 <xsl:value-of select="$symbolReference"/>

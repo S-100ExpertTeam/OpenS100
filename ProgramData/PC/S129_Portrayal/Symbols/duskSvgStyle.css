@@ -8,8 +8,8 @@
 .fBLK {fill:#6B7F89}
 .sCHMGD {stroke:#826CA1}
 .fCHMGD {fill:#826CA1}
-.sDEPCN {stroke:#4C5B63}
-.fDEPCN {fill:#4C5B63}
+.sDEPCN {stroke:#4C5B63; stroke-opacity: 0}
+.fDEPCN {fill:#4C5B63; fill-opacity: 0}
 .sGOLDN {stroke:#9E8502}
 .fGOLDN {fill:#9E8502}
 .sORG {stroke:#86491E}

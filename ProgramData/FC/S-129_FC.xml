@@ -9,11 +9,11 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.iho.int/S100FC/5.2 https://schemas.s100dev.net/schemas/S100/5.2.0/S100FC/20231214/S100FC.xsd">
 
-  <S100FC:name>Feature Catalogue for S-129</S100FC:name>
+  <S100FC:name>Under Keel Clearance Management</S100FC:name>
   <S100FC:scope>Dynamic under keel clearance management information</S100FC:scope>
   <S100FC:fieldOfApplication>Under keel clearance management</S100FC:fieldOfApplication>
-  <S100FC:versionNumber>1.2.0-20240721</S100FC:versionNumber>
-  <S100FC:versionDate>2024-07-21</S100FC:versionDate>
+  <S100FC:versionNumber>2.0.0</S100FC:versionNumber>
+  <S100FC:versionDate>2024-09-28</S100FC:versionDate>
     <S100FC:productId>S-129</S100FC:productId>
   <S100FC:producer>
     <S100CI:role>editor</S100CI:role>
@@ -109,6 +109,30 @@
       <S100FC:valueType>text</S100FC:valueType>
     </S100FC:S100_FC_SimpleAttribute>
     <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Name Usage</S100FC:name>
+      <S100FC:definition>Classification of the type and display level of the name of a feature in an end-user system.</S100FC:definition>
+      <S100FC:code>nameUsage</S100FC:code>
+      <S100FC:valueType>enumeration</S100FC:valueType>
+      <S100FC:listedValues>
+        <S100FC:listedValue>
+          <S100FC:label>Default Name Display</S100FC:label>
+          <S100FC:definition>The name is intended to be displayed when the end-user system is set to the default name/text display setting.</S100FC:definition>
+          <S100FC:code>1</S100FC:code>
+        </S100FC:listedValue>
+        <S100FC:listedValue>
+          <S100FC:label>Alternate Name Display</S100FC:label>
+          <S100FC:definition>The name is intended to be displayed when the end-user system is set to an alternate name/text display setting, for example an alternate language.</S100FC:definition>
+          <S100FC:code>2</S100FC:code>
+        </S100FC:listedValue>
+      </S100FC:listedValues>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
+      <S100FC:name>Language</S100FC:name>
+      <S100FC:definition>The method of human communication, either spoken or written, consisting of the use of words in a structured and conventional way.</S100FC:definition>
+      <S100FC:code>language</S100FC:code>
+      <S100FC:valueType>text</S100FC:valueType>
+    </S100FC:S100_FC_SimpleAttribute>
+    <S100FC:S100_FC_SimpleAttribute>
       <S100FC:name>Expected Passing Time</S100FC:name>
       <S100FC:definition>The expected passing time for a ship for a nominated Under Keel Clearance Control Point.</S100FC:definition>
       <S100FC:code>expectedPassingTime</S100FC:code>
@@ -151,21 +175,12 @@
         <S100Base:name>metre</S100Base:name>
         <S100Base:symbol>m</S100Base:symbol>
       </S100FC:uom>
-      <S100FC:constraints>
-        <S100CD:range>
-          <S100Base:lowerBound>0</S100Base:lowerBound>
-          <S100Base:closure>gtSemiInterval</S100Base:closure>
-        </S100CD:range>
-      </S100FC:constraints>
     </S100FC:S100_FC_SimpleAttribute>
     <S100FC:S100_FC_SimpleAttribute>
       <S100FC:name>Interoperability Identifier</S100FC:name>
       <S100FC:definition>A common unique identifier for entities which describe a single real-world feature, and which is used to identify instances of the feature in end-user systems where the feature may be included in multiple data product types.</S100FC:definition>
       <S100FC:code>interoperabilityIdentifier</S100FC:code>
       <S100FC:valueType>URN</S100FC:valueType>
-      <S100FC:constraints>
-        <S100CD:textPattern>urn:mrn:[Organisational ID]:...:...</S100CD:textPattern>
-      </S100FC:constraints>
     </S100FC:S100_FC_SimpleAttribute>
 
     <!--attributes - enumeration-->
@@ -176,18 +191,18 @@
       <S100FC:valueType>enumeration</S100FC:valueType>
       <S100FC:listedValues>
         <S100FC:listedValue>
-          <S100FC:label>prePlan</S100FC:label>
-          <S100FC:definition></S100FC:definition>
+          <S100FC:label>Pre Plan</S100FC:label>
+          <S100FC:definition>An indicative UKC plan that identifies potential sailing windows for a nominated vessel draught; days, weeks or months prior to the planned passage through the UKCM region.</S100FC:definition>
           <S100FC:code>1</S100FC:code>
         </S100FC:listedValue>
         <S100FC:listedValue>
-          <S100FC:label>actualPlan</S100FC:label>
-          <S100FC:definition></S100FC:definition>
+          <S100FC:label>Actual Plan</S100FC:label>
+          <S100FC:definition>A detailed Under Keel Clearance plan that identifies sailing windows and no-go areas, integrating live weather data, hours or days prior to transiting the Under Keel Clearance Management region.</S100FC:definition>
           <S100FC:code>2</S100FC:code>
         </S100FC:listedValue>
         <S100FC:listedValue>
-          <S100FC:label>actualUpdate</S100FC:label>
-          <S100FC:definition></S100FC:definition>
+          <S100FC:label>Actual Update</S100FC:label>
+          <S100FC:definition>A near real-time, detailed, Under Keel Clearance plan that identifies sailing windows and no-go areas, using live weather, vessel position and traffic data, while the vessel is transiting the Under Keel Clearance Management region.</S100FC:definition>
           <S100FC:code>3</S100FC:code>
         </S100FC:listedValue>
       </S100FC:listedValues>      
@@ -199,17 +214,17 @@
       <S100FC:valueType>enumeration</S100FC:valueType>
       <S100FC:listedValues>
         <S100FC:listedValue>
-          <S100FC:label>timeWindow</S100FC:label>
-          <S100FC:definition></S100FC:definition>
+          <S100FC:label>Time Window</S100FC:label>
+          <S100FC:definition>The available time window(s) for a given draught.</S100FC:definition>
           <S100FC:code>1</S100FC:code>
         </S100FC:listedValue>
         <S100FC:listedValue>
-          <S100FC:label>maxDraught</S100FC:label>
-          <S100FC:definition></S100FC:definition>
+          <S100FC:label>Maximum Draught</S100FC:label>
+          <S100FC:definition>The maximum draught for a given time window.</S100FC:definition>
           <S100FC:code>2</S100FC:code>
         </S100FC:listedValue>
       </S100FC:listedValues>
-    </S100FC:S100_FC_SimpleAttribute>        
+    </S100FC:S100_FC_SimpleAttribute>
   </S100FC:S100_FC_SimpleAttributes>
 
   <!--attributes - complexAttribute-->
@@ -223,7 +238,7 @@
           <S100Base:lower>0</S100Base:lower>
           <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
         </S100FC:multiplicity>
-        <S100FC:attribute ref="timeStart"/>        
+        <S100FC:attribute ref="timeStart"/>
       </S100FC:subAttributeBinding>
       <S100FC:subAttributeBinding sequential="false">
         <S100FC:multiplicity>
@@ -231,6 +246,37 @@
           <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
         </S100FC:multiplicity>
         <S100FC:attribute ref="timeEnd"/>
+      </S100FC:subAttributeBinding>
+    </S100FC:S100_FC_ComplexAttribute>
+    <S100FC:S100_FC_ComplexAttribute>
+      <S100FC:name>Feature Name</S100FC:name>
+      <S100FC:definition>Provides the name of an entity, defines the national language of the name, and provides the option to display the name at various system display settings.</S100FC:definition>
+      <S100FC:code>featureName</S100FC:code>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="language" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>1</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:attribute ref="name" />
+      </S100FC:subAttributeBinding>
+      <S100FC:subAttributeBinding sequential="false">
+        <S100FC:multiplicity>
+          <S100Base:lower>0</S100Base:lower>
+          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+        </S100FC:multiplicity>
+        <S100FC:permittedValues>
+          <S100FC:value>1</S100FC:value>
+          <S100FC:value>2</S100FC:value>
+        </S100FC:permittedValues>
+        <S100FC:attributeVisibility>privateVisibility</S100FC:attributeVisibility>
+        <S100FC:attribute ref="nameUsage" />
       </S100FC:subAttributeBinding>
     </S100FC:S100_FC_ComplexAttribute>
   </S100FC:S100_FC_ComplexAttributes>
@@ -357,26 +403,26 @@
         </S100FC:multiplicity>
         <S100FC:permittedValues>
           <S100FC:value>1</S100FC:value>
-          <S100FC:value>2</S100FC:value>          
+          <S100FC:value>2</S100FC:value>
         </S100FC:permittedValues>
         <S100FC:attribute ref="underKeelClearanceCalculationRequested"/>
       </S100FC:attributeBinding>
       <S100FC:featureUseType>geographic</S100FC:featureUseType> 
-      <S100FC:featureBinding roleType="association">                     
+      <S100FC:featureBinding roleType="association">
         <S100FC:multiplicity>
           <S100Base:lower>0</S100Base:lower>
           <S100Base:upper xsi:nil="true" infinite="true"/>
         </S100FC:multiplicity>
-        <S100FC:association ref="UnderKeelClearancePlanAreaComposition"/>                   
+        <S100FC:association ref="UnderKeelClearancePlanAreaComposition"/>
         <S100FC:role ref="theComponent"/>
         <S100FC:featureType ref="UnderKeelClearancePlanArea"/>
       </S100FC:featureBinding>
-      <S100FC:featureBinding roleType="association">                       
+      <S100FC:featureBinding roleType="association">
         <S100FC:multiplicity>
           <S100Base:lower>0</S100Base:lower>
           <S100Base:upper xsi:nil="true" infinite="true"/>
         </S100FC:multiplicity>
-        <S100FC:association ref="UnderKeelClearanceNonNavigableAreaComposition"/>                    
+        <S100FC:association ref="UnderKeelClearanceNonNavigableAreaComposition"/>
         <S100FC:role ref="theComponent"/>
         <S100FC:featureType ref="UnderKeelClearanceNonNavigableArea"/>
       </S100FC:featureBinding>
@@ -385,7 +431,7 @@
           <S100Base:lower>0</S100Base:lower>
           <S100Base:upper xsi:nil="true" infinite="true"/>
         </S100FC:multiplicity>
-        <S100FC:association ref="UnderKeelClearanceAlmostNonNavigableAreaComposition"/>            
+        <S100FC:association ref="UnderKeelClearanceAlmostNonNavigableAreaComposition"/>
         <S100FC:role ref="theComponent"/>
         <S100FC:featureType ref="UnderKeelClearanceAlmostNonNavigableArea"/>
       </S100FC:featureBinding>
@@ -394,7 +440,7 @@
           <S100Base:lower>1</S100Base:lower>
           <S100Base:upper xsi:nil="true" infinite="true"/>
         </S100FC:multiplicity>
-        <S100FC:association ref="UnderKeelClearanceControlPointComposition"/>                     
+        <S100FC:association ref="UnderKeelClearanceControlPointComposition"/>
         <S100FC:role ref="theComponent"/>
         <S100FC:featureType ref="UnderKeelClearanceControlPoint"/>
       </S100FC:featureBinding>
@@ -425,9 +471,9 @@
       <S100FC:featureBinding roleType="composition">      
         <S100FC:multiplicity>
           <S100Base:lower>1</S100Base:lower>
-          <S100Base:upper infinite="false" xsi:nil="false">1</S100Base:upper>   
+          <S100Base:upper infinite="false" xsi:nil="false">1</S100Base:upper>
         </S100FC:multiplicity>
-        <S100FC:association ref="UnderKeelClearancePlanAreaComposition"/>         
+        <S100FC:association ref="UnderKeelClearancePlanAreaComposition"/>
         <S100FC:role ref="theCollection"/>
       <S100FC:featureType ref="UnderKeelClearancePlan"/>
       </S100FC:featureBinding>
@@ -458,7 +504,7 @@
       <S100FC:featureBinding roleType="composition">
         <S100FC:multiplicity>
           <S100Base:lower>1</S100Base:lower>
-          <S100Base:upper infinite="false" xsi:nil="false">1</S100Base:upper>    
+          <S100Base:upper infinite="false" xsi:nil="false">1</S100Base:upper>
         </S100FC:multiplicity>
         <S100FC:association ref="UnderKeelClearanceNonNavigableAreaComposition"/>
         <S100FC:role ref="theCollection"/>
@@ -498,7 +544,7 @@
       <S100FC:featureBinding roleType="composition">
         <S100FC:multiplicity>
           <S100Base:lower>1</S100Base:lower>
-          <S100Base:upper infinite="false" xsi:nil="false">1</S100Base:upper>    
+          <S100Base:upper infinite="false" xsi:nil="false">1</S100Base:upper>
         </S100FC:multiplicity>
         <S100FC:association ref="UnderKeelClearanceAlmostNonNavigableAreaComposition"/>
         <S100FC:role ref="theCollection"/>    
@@ -517,7 +563,7 @@
           <S100Base:lower>0</S100Base:lower>
           <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
         </S100FC:multiplicity>
-        <S100FC:attribute ref="name"/>
+        <S100FC:attribute ref="featureName"/>
       </S100FC:attributeBinding>
       <S100FC:attributeBinding sequential="false">
         <S100FC:multiplicity>
@@ -559,7 +605,7 @@
       <S100FC:featureBinding roleType="composition">
         <S100FC:multiplicity>
           <S100Base:lower>1</S100Base:lower>
-          <S100Base:upper infinite="false" xsi:nil="false">1</S100Base:upper>   
+          <S100Base:upper infinite="false" xsi:nil="false">1</S100Base:upper>
         </S100FC:multiplicity>
         <S100FC:association ref="UnderKeelClearanceControlPointComposition"/>
         <S100FC:role ref="theCollection"/>

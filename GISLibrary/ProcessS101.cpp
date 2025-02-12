@@ -1056,7 +1056,7 @@ std::vector<std::string> ProcessS101::getParams(PortrayalCatalogue* pc)
 			auto contextParameter = context->GetContextParameter(i);
 			if (contextParameter)
 			{
-				auto name = contextParameter->getName();
+				auto name = contextParameter->GetIdAsString();
 				auto value = contextParameter->getValueAsString();
 				params.push_back(name);
 				params.push_back(value);

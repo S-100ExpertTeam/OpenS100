@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cp:colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:cp="http://www.iho.int/S100ColorProfile/5.1">
+<cp:colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cp="http://www.iho.int/S100ColorProfile/5.1" xsi:schemaLocation="http://www.iho.int/S100ColorProfile/5.1 https://schemas.s100dev.net/schemas/S100/5.1.0/S100PC/20230327/S100ColorProfile.xsd">
 	<colors>
 		<color token="GOLDN" name="gold">
 			<description>Golden color for Almost Non Navigable Area</description>
@@ -143,7 +142,7 @@
 				<blue>36</blue>
 			</srgb>
 		</item>
-		<item token="DEPCN">
+		<item token="DEPCN" transparency="1.0">
 			<cie>
 				<xyL>
 					<x>0.28</x>
@@ -271,7 +270,7 @@
 				<blue>22</blue>
 			</srgb>
 		</item>
-		<item token="DEPCN">
+		<item token="DEPCN" transparency="1.0">
 			<cie>
 				<xyL>
 					<x>0.28</x>

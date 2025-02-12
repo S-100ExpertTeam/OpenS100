@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
   <xsl:import href="./templates/SimpleLineTemplate.xsl"/>
@@ -6,7 +6,7 @@
   <xsl:template match="PlannedRoute">
     <xsl:call-template name="SimpleLineTemplate">
       <xsl:with-param name="featureReference" select="@id"/>
-      <xsl:with-param name="viewingGroup" select="99994"/>
+      <xsl:with-param name="viewingGroup" select="29060"/>
       <xsl:with-param name="displayPlane" select="'UnderRadar'"/>
       <xsl:with-param name="drawingPriority" select="12"/>
       <xsl:with-param name="offset" select="1"/>

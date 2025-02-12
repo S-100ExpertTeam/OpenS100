@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<pc:portrayalCatalog version="1.2.0" productId="S-129" xmlns:pc="http://www.iho.int/S100PortrayalCatalog/5.2">
+<pc:portrayalCatalog version="2.0.0" productId="S-129" xmlns:pc="http://www.iho.int/S100PortrayalCatalog/5.2">
   <pixmaps/>
 
   <colorProfiles>
@@ -92,16 +92,6 @@
    </styleSheets>
 
   <lineStyles>
-    <lineStyle id="ROUTE">
-      <description>
-        <name>ROUTE</name>
-        <description>route</description>
-        <language>eng</language>
-     </description>      
-      <fileName>ROUTE.xml</fileName>
-      <fileType>LineStyle</fileType>
-      <fileFormat>XML</fileFormat>
-    </lineStyle>
     <lineStyle id="UKCARE01">
        <description>
           <name>UKCARE01</name>
@@ -114,113 +104,114 @@
     </lineStyle>
   </lineStyles>
 
-  <areaFills>
-    <areaFill id="ANA">
-      <fileName>ANA.xml</fileName>
-      <fileType>AreaFill</fileType>
-      <fileFormat>XML</fileFormat>
-    </areaFill>
-    <areaFill id="NNA">
-      <fileName>NNA.xml</fileName>
-      <fileType>AreaFill</fileType>
-      <fileFormat>XML</fileFormat>
-    </areaFill>
-    <areaFill id="DIAMOND1">
-      <fileName>DIAMOND1.xml</fileName>
-      <fileType>AreaFill</fileType>
-      <fileFormat>XML</fileFormat>
-    </areaFill>
-  </areaFills>
+  <areaFills/>
 
   <fonts/>
 
   <viewingGroups>
-    <viewingGroup id="99990">
-         <description>
-            <name>UKC Plan Area</name>
-            <description>Toggles visibility of UKC Plan Area features</description>
-            <language>eng</language>
-         </description>
-	</viewingGroup>
-    <viewingGroup id="99991">
-         <description>
-            <name>UKC Almost Non-Navigable Area</name>
-            <description>Toggles visibility of UKC Almost Non-Navigable Area features</description>
-            <language>eng</language>
-         </description>
-	</viewingGroup>
-    <viewingGroup id="99992">
-         <description>
-            <name>UKC Non-Navigable Area</name>
-            <description>Toggles visibility of UKC Non-Navigable Area features</description>
-            <language>eng</language>
-         </description>
-	</viewingGroup>
-    <viewingGroup id="99993">
-         <description>
-            <name>UKC Control Point</name>
-            <description>Toggles visibility of UKC Control Point features</description>
-            <language>eng</language>
-         </description>
-	</viewingGroup>
-    <viewingGroup id="99994">
-         <description>
-            <name>UKC Planned Route</name>
-            <description>Toggles visibility of UKC Planned Route</description>
-            <language>eng</language>
-         </description>
-	</viewingGroup>
-    <viewingGroup id="99995">
-         <description>
-            <name>UKC Information Box</name>
-            <description>Toggles visibility of UKC Information Box</description>
-            <language>eng</language>
-         </description>
-	</viewingGroup>
+    <viewingGroup id="29010">
+      <description>
+        <name>UKC Plan Area</name>
+        <description>Toggles visibility of UKC Plan Area features</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="29020">
+      <description>
+        <name>UKC Almost Non-Navigable Area</name>
+        <description>Toggles visibility of UKC Almost Non-Navigable Area features</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="29030">
+      <description>
+        <name>UKC Non-Navigable Area</name>
+        <description>Toggles visibility of UKC Non-Navigable Area features</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="29040">
+      <description>
+          <name>UKC Non-Navigable Area Pattern</name>
+          <description>Toggles visibility of UKC Non-Navigable Area pattern</description>
+          <language>eng</language>
+      </description>
+    </viewingGroup>    
+    <viewingGroup id="29050">
+      <description>
+        <name>UKC Control Point</name>
+        <description>Toggles visibility of UKC Control Point features</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="29060">
+      <description>
+        <name>UKC Planned Route</name>
+        <description>Toggles visibility of UKC Planned Route</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="29070">
+      <description>
+        <name>UKC Information Box</name>
+        <description>Toggles visibility of UKC Information Box</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
   </viewingGroups>
 
   <foundationMode/>
 
   <viewingGroupLayers>
     <viewingGroupLayer id="UKCViewingGroupLayer">
-		<description>
-			<name>UKC Viewing Group Layer</name>
-			<description>Contains UKC Viewing Groups</description>
-			<language>eng</language>
-		</description>
-		<viewingGroup>99990</viewingGroup>
-		<viewingGroup>99991</viewingGroup>
-		<viewingGroup>99992</viewingGroup>
-		<viewingGroup>99993</viewingGroup>
-		<viewingGroup>99994</viewingGroup>
-		<viewingGroup>99995</viewingGroup>
+      <description>
+        <name>UKC Viewing Group Layer</name>
+        <description>Contains UKC Viewing Groups</description>
+        <language>eng</language>
+      </description>
+      <viewingGroup>29010</viewingGroup>
+      <viewingGroup>29020</viewingGroup>
+      <viewingGroup>29030</viewingGroup>
+      <viewingGroup>29050</viewingGroup>
+      <viewingGroup>29060</viewingGroup>
+      <viewingGroup>29070</viewingGroup>
+    </viewingGroupLayer>
+    <viewingGroupLayer id="UKCNonNavigableAreaPattern">
+      <description>
+        <name>UKC Non-Navigable Area Pattern</name>
+        <description>UKC Non-Navigable Area pattern</description>
+        <language>eng</language>
+      </description>
+      <viewingGroup>29040</viewingGroup>
     </viewingGroupLayer>
   </viewingGroupLayers>
 
   <displayModes>
-	  <displayMode id="DisplayBase">
-		  <description>
-			  <name>Display Base</name>
-			  <description>Always on display</description>
-			  <language>eng</language>
-		  </description>
-	  </displayMode>
-	  <displayMode id="StandardDisplay">
-		  <description>
-			  <name>Standard Display</name>
-			  <description>ECDIS default display</description>
-			  <language>eng</language>
-		  </description>
-		  <viewingGroupLayer>UKCViewingGroupLayer</viewingGroupLayer>
-	  </displayMode>
-	  <displayMode id="OtherInformation">
-		  <description>
-			  <name>Other Information</name>
-			  <description>All other objects in the SENC</description>
-			  <language>eng</language>
-		  </description>
-		  <viewingGroupLayer>UKCViewingGroupLayer</viewingGroupLayer>
-	  </displayMode>
+    <displayMode id="DisplayBase">
+      <description>
+        <name>Display Base</name>
+        <description>Always on display</description>
+        <language>eng</language>
+      </description>
+    </displayMode>
+    <displayMode id="StandardDisplay">
+      <description>
+        <name>Standard Display</name>
+        <description>ECDIS default display</description>
+        <language>eng</language>
+      </description>
+      <viewingGroupLayer>UKCViewingGroupLayer</viewingGroupLayer>
+      <viewingGroupLayer>UKCNonNavigableAreaPattern</viewingGroupLayer>
+    </displayMode>
+    <displayMode id="OtherInformation">
+      <description>
+        <name>Other Information</name>
+        <description>All other objects in the SENC</description>
+        <language>eng</language>
+      </description>
+      <viewingGroupLayer>UKCViewingGroupLayer</viewingGroupLayer>
+      <viewingGroupLayer>UKCNonNavigableAreaPattern</viewingGroupLayer>
+    </displayMode>
   </displayModes>
 
   <displayPlanes>
@@ -238,24 +229,6 @@
       <description>
         <name>Plain boundaries</name>
         <description>Line symbol style</description>
-        <language>eng</language>
-      </description>
-      <type>Boolean</type>
-      <default>true</default>
-    </parameter>
-    <parameter id="PaletteName">
-      <description>
-        <name>Palette Name</name>
-        <description>-</description>
-        <language>eng</language>
-      </description>
-      <type>String</type>
-      <default>Day</default>
-    </parameter>
-    <parameter id="NonNavigableAreaPattern">
-      <description>
-        <name>NonNavigableArea Pattern</name>
-        <description>-</description>
         <language>eng</language>
       </description>
       <type>Boolean</type>
@@ -326,7 +299,7 @@
       <fileFormat>XSLT</fileFormat>
       <ruleType>TopLevelTemplate</ruleType>
     </ruleFile>
-	-->
+  -->
 
   </rules>
 </pc:portrayalCatalog>
