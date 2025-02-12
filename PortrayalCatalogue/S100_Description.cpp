@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "S100_Description.h"
 
+#include <pugixml.hpp>
 
 S100_Description::S100_Description()
 {
@@ -52,6 +53,11 @@ void S100_Description::Setname(std::wstring& value)
 std::wstring S100_Description::Getname() 
 {
 	return name;
+}
+
+std::string S100_Description::getName()
+{
+	return pugi::as_utf8(name);
 }
 
 void S100_Description::Setdescription(std::wstring& value)

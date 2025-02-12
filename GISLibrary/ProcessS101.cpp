@@ -157,7 +157,7 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 	return 0;
 }
 
-int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRulePath, std::string outputXmlPath)
+int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRulePath, std::string outputXmlPath, PortrayalCatalogue* pc)
 {
 	// Initialize the libraries
 	xmlInitParser();
@@ -169,8 +169,21 @@ int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRule
 	xmlDocPtr inputXml = xmlParseFile(inputXmlPath.c_str());
 	xsltStylesheetPtr xslt = xsltParseStylesheetFile((const xmlChar*)mainRulePath.c_str());
 
+	// Load params
+	std::vector<const char*> params;
+	std::vector<std::string> temp_params;
+	if (pc)
+	{
+		temp_params = ProcessS101::getParams(pc);
+		for (const auto& item : temp_params)
+		{
+			params.push_back(item.c_str());
+		}
+	}
+	params.push_back(nullptr);
+
 	// Transform
-	xmlDocPtr result = xsltApplyStylesheet(xslt, inputXml, nullptr);
+	xmlDocPtr result = xsltApplyStylesheet(xslt, inputXml, params.data());
 
 	// Output the transformed XML
 	FILE* outFile = fopen(outputXmlPath.c_str(), "wb");
@@ -188,7 +201,7 @@ int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRule
 	return 0;
 }
 
-std::string ProcessS101::ProcessS100_XSLT(std::string inputXmlContent, std::string mainRulePath)
+std::string ProcessS101::ProcessS100_XSLT(std::string inputXmlContent, std::string mainRulePath, PortrayalCatalogue* pc)
 {
 	// Init
 	xmlInitParser();
@@ -206,8 +219,21 @@ std::string ProcessS101::ProcessS100_XSLT(std::string inputXmlContent, std::stri
 		return std::string();
 	}
 
+	// Load params
+	std::vector<const char*> params;
+	std::vector<std::string> temp_params;
+	if (pc)
+	{
+		temp_params = ProcessS101::getParams(pc);
+		for (const auto& item : temp_params)
+		{
+			params.push_back(item.c_str());
+		}
+	}
+	params.push_back(nullptr);
+
 	// Transform XSLT
-	xmlDocPtr resultDoc = xsltApplyStylesheet(xsltDoc, xmlDoc, nullptr);
+	xmlDocPtr resultDoc = xsltApplyStylesheet(xsltDoc, xmlDoc, params.data());
 	if (!resultDoc) {
 		xsltFreeStylesheet(xsltDoc);
 		xmlFreeDoc(xmlDoc);
@@ -1010,4 +1036,33 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 void ProcessS101::PortrayalSetContextParameter(const char*  parameterName, const char*  parameterValue)
 {
 	theInstance.m_lua_session->call("PortrayalSetContextParameter", { parameterName, parameterValue });
+}
+
+std::vector<std::string> ProcessS101::getParams(PortrayalCatalogue* pc)
+{
+	// Load params
+	std::vector<std::string> params;
+	if (pc)
+	{
+		auto context = pc->GetContext();
+		if (!context)
+		{
+			return params;
+		}
+
+		int numContext = context->GetCountOfParameter();
+		for (int i = 0; i < numContext; i++)
+		{
+			auto contextParameter = context->GetContextParameter(i);
+			if (contextParameter)
+			{
+				auto name = contextParameter->getName();
+				auto value = contextParameter->getValueAsString();
+				params.push_back(name);
+				params.push_back(value);
+			}
+		}
+	}
+
+	return params;
 }
