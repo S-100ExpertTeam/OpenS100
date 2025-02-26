@@ -84,20 +84,6 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 			fc,
 			pc);
 
-		std::string two_shades = ENCCommon::TWO_SHADES ? "true" : "false";
-		std::string national_language = ENCCommon::SHOW_NOBJNM ? "eng" : "kor";
-		std::string ignore_scamin = ENCCommon::APPLY_SCALE_MIN ? "false" : "true";
-		std::string shallow_pattern = ENCCommon::SHALLOW_PATTERN ? "true" : "false";
-		std::string simplified_points = ENCCommon::SIMPLIFIED_POINT_SYMBOL ? "true" : "false";
-		std::string show_isolated_dangers_in_shallow_waters = ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER ? "true" : "false";
-		std::string plain_boundaries = ENCCommon::SymbolizedAreaBoundary ? "false" : "true";
-		std::string safety_depth = std::to_string(ENCCommon::SAFETY_DEPTH);
-		std::string sallow_contour = std::to_string(ENCCommon::SHALLOW_CONTOUR);
-		std::string safety_contour = std::to_string(ENCCommon::SAFETY_CONTOUR);
-		std::string deep_contour = std::to_string(ENCCommon::DEEP_CONTOUR);
-		std::string full_sector = ENCCommon::FULL_SECTORS ? "true" : "false";
-		std::string radar_overlay = ENCCommon::DISPLAY_PLANE ? "true" : "false";
-
 		auto context = pc->GetContext();
 		if (!context) {
 			return 0;
@@ -112,21 +98,6 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 				KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter(name.c_str(), defaultValue.c_str());
 			}
 		}
-
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SafetyDepth", safety_depth.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShallowContour", sallow_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SafetyContour", safety_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("TwoShades", two_shades.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("DeepContour", deep_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShallowPattern", shallow_pattern.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShowIsolatedDangersInShallowWaters",
-		//	show_isolated_dangers_in_shallow_waters.c_str());
-		// KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("PlainBoundaries", "false");
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SimplifiedPoints", simplified_points.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("FullSectors", full_sector.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("RadarOverlay", radar_overlay.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("IgnoreScamin", ignore_scamin.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("NationalLanguage", national_language.c_str());
 
 		std::list<Result_DrawingInstruction>* drawingInstructionResult = KRS_LUA_SCRIPT_REFERENCE::GetResultDrawingInstructions();
 
