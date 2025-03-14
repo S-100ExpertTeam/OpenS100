@@ -430,12 +430,12 @@ public:
 	S100GML::DatasetIdentificationInformation GetDatasetIdentificationInformation();
 	void WritePointRecord(pugi::xml_node& node, R_PointRecord* record);
 
-	void ATTRtoAttribute();
+	bool ATTRtoAttribute();
 
 private:
-	void FeatureAttrToAttribute();
-	void InformationAttrToAttribute();
-	void FeatureFeatureAssociationToGFM();
-	void FeatureInformationAssociationToGFM();
-	void InformationAssociationToGFM();
+	bool FeatureAttrToAttribute();
+	bool InformationAttrToAttribute();
+	bool FeatureFeatureAssociationToGFM();
+	bool FeatureInformationAssociationToGFM();
+	bool InformationAssociationToGFM();
 };

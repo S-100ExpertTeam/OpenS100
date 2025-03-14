@@ -482,9 +482,11 @@ bool S101Cell::OpenBy000(CString path)
 		CalcMBR();
 		Check();
 
-		ATTRtoAttribute();
+		if (false == ATTRtoAttribute())
+		{
+			return false;
+		}
 
-		//SaveAsGML(L"..\\TEMP\\101GML3.gml");
 		SetAllCode();
 
 		return true;
@@ -4991,16 +4993,37 @@ bool S101Cell::InsertSurfaceRecordFromS101GML(S10XGML* gml, GM::Surface* curve)
 	return true;
 }
 
-void S101Cell::ATTRtoAttribute()
+bool S101Cell::ATTRtoAttribute()
 {
-	FeatureAttrToAttribute();
-	InformationAttrToAttribute();
-	FeatureFeatureAssociationToGFM();
-	FeatureInformationAssociationToGFM();
-	InformationAssociationToGFM();
+	if (false == FeatureAttrToAttribute())
+	{
+		return false;
+	}
+
+	if (false == InformationAttrToAttribute())
+	{
+		return false;
+	}
+
+	if (false == FeatureFeatureAssociationToGFM())
+	{
+		return false;
+	}
+
+	if (false == FeatureInformationAssociationToGFM())
+	{
+		return false;
+	}
+
+	if (false == InformationAssociationToGFM())
+	{
+		return false;
+	}
+
+	return true;
 }
 
-void S101Cell::FeatureAttrToAttribute()
+bool S101Cell::FeatureAttrToAttribute()
 {
 	auto fc = GetFC();
 	int cntFeature = GetFeatureCount();
@@ -5055,21 +5078,19 @@ void S101Cell::FeatureAttrToAttribute()
 						auto addedCA = fr->AddComplexAttribute(code);
 						addedAttributes.push_back(addedCA);
 					}
-					
-					//auto addedCA = fr->AddComplexAttribute(code);
-					//addedAttributes.push_back(addedCA);
-					//if (ATTR->m_paix > 0)
-					//{
-					//	auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
-					//	parentCA->AddSubAttribute(addedCA->clone());
-					//}
+				}
+				else
+				{
+					return false;
 				}
 			}
 		}
 	}
+
+	return true;
 }
 
-void S101Cell::InformationAttrToAttribute()
+bool S101Cell::InformationAttrToAttribute()
 {
 	auto fc = GetFC();
 	int cntInformation = GetInformationCount();
@@ -5104,19 +5125,28 @@ void S101Cell::InformationAttrToAttribute()
 			else
 			{
 				auto ca = fc->GetComplexAttribute(std::wstring(strCode));
-				auto addedCA = ir->AddComplexAttribute(code);
-				addedAttributes.push_back(addedCA);
-				if (ATTR->m_paix > 0)
+				if (ca)
 				{
-					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
-					parentCA->AddSubAttribute(addedCA->clone());
+					auto addedCA = ir->AddComplexAttribute(code);
+					addedAttributes.push_back(addedCA);
+					if (ATTR->m_paix > 0)
+					{
+						auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+						parentCA->AddSubAttribute(addedCA->clone());
+					}
+				}
+				else
+				{
+					return false;
 				}
 			}
 		}
 	}
+
+	return true;
 }
 
-void S101Cell::FeatureFeatureAssociationToGFM()
+bool S101Cell::FeatureFeatureAssociationToGFM()
 {
 	auto fc = GetFC();
 	int cntFeature = GetFeatureCount();
@@ -5135,9 +5165,11 @@ void S101Cell::FeatureFeatureAssociationToGFM()
 			fr->AddFeatureAssociation(code, role, rcid);
 		}
 	}
+
+	return true;
 }
 
-void S101Cell::FeatureInformationAssociationToGFM()
+bool S101Cell::FeatureInformationAssociationToGFM()
 {
 	auto fc = GetFC();
 	int cntFeature = GetFeatureCount();
@@ -5156,9 +5188,11 @@ void S101Cell::FeatureInformationAssociationToGFM()
 			fr->AddInformationAssociation(code, role, rcid);
 		}
 	}
+
+	return true;
 }
 
-void S101Cell::InformationAssociationToGFM()
+bool S101Cell::InformationAssociationToGFM()
 {
 	auto fc = GetFC();
 	int cntInformation = GetInformationCount();
@@ -5177,4 +5211,6 @@ void S101Cell::InformationAssociationToGFM()
 			ir->AddInformationAssociation(code, role, rcid);
 		}
 	}
+
+	return true;
 }

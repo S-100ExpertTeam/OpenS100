@@ -40,7 +40,8 @@ bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 
 		if (!m_spatialObject->Open(_filepath))
 		{
-			delete enc;
+			delete m_spatialObject;
+			m_spatialObject = nullptr;
 			return false;
 		}
 
