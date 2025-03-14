@@ -32,6 +32,12 @@ public:
 		FeatureCatalogue* fc, 
 		PortrayalCatalogue* pc);
 
+	static void InitPortrayal(
+		const char* topLevelRule,
+		S100SpatialObject* cell,
+		FeatureCatalogue* fc,
+		PortrayalCatalogue* pc);
+
 	static void PortrayalSetContextParameter(
 		const char* parameterName, 
 		const char* parameterValue);
