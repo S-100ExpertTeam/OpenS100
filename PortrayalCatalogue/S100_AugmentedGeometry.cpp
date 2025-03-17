@@ -3,16 +3,22 @@
 
 S100_AugmentedGeometry::S100_AugmentedGeometry()
 {
-	vectorPoint = NULL;
-	textPoint = NULL;
-
 }
 
 
 S100_AugmentedGeometry::~S100_AugmentedGeometry()
 {
-	if (vectorPoint)delete vectorPoint;
-	if (textPoint)delete textPoint;
+	if (vectorPoint)
+	{
+		delete vectorPoint;
+		vectorPoint = nullptr;
+	}
+
+	if (textPoint)
+	{
+		delete textPoint;
+		textPoint = nullptr;
+	}
 }
 
 void S100_AugmentedGeometry::SetCrsType(std::wstring& value)

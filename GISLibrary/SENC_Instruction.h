@@ -37,7 +37,7 @@ public:
 	** 8 : Augmented Path
 	** 9 : Augmented Area
 	*/
-	unsigned type;
+	unsigned type = 0;
 
 	//////////////////////////////////////////////////////////
 	// Instruction Information
@@ -75,8 +75,6 @@ public:
 	unsigned scaleMinimum;
 	// Scale Maximum
 	unsigned scaleMaximum;
-
-	bool suppressedInstance;
 
 	// For Drawing
 	GF::FeatureType* fr = nullptr;

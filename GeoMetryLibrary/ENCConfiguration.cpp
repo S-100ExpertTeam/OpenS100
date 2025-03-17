@@ -91,21 +91,6 @@ bool ENCConfiguration::Open(std::string path)
 					}
 				}
 			}
-			else if (token.compare("CONTOUR_LABELS") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::CONTOUR_LABELS = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::CONTOUR_LABELS = false;
-					}
-				}
-			}
 			else if (token.compare("DEEP_CONTOUR") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
@@ -130,35 +115,12 @@ bool ENCConfiguration::Open(std::string path)
 					ENCCommon::DrawingType = atoi(token.c_str());
 				}
 			}
-			else if (token.compare("LIGHTS") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::LIGHTS = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::LIGHTS = false;
-					}
-				}
-			}
 			else if (token.compare("OVER_GROUP") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
 				{
 					token = pstringTokenizer->nextToken();
 					ENCCommon::OVER_GROUP = _atoi64(token.c_str());
-				}
-			}
-			else if (token.compare("SAFETY_DEPTH") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					ENCCommon::SAFETY_DEPTH = atof(token.c_str());
 				}
 			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)
@@ -197,36 +159,6 @@ bool ENCConfiguration::Open(std::string path)
 					ENCCommon::SHALLOW_CONTOUR = atof(token.c_str());
 				}
 			}
-			else if (token.compare("SHALLOW_PATTERN") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::SHALLOW_PATTERN = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::SHALLOW_PATTERN = false;
-					}
-				}
-			}
-			else if (token.compare("SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER = false;
-					}
-				}
-			}
 			else if (token.compare("FULL_SECTORS") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
@@ -239,81 +171,6 @@ bool ENCConfiguration::Open(std::string path)
 					else if (token.compare(strFalse) == 0)
 					{
 						ENCCommon::FULL_SECTORS = false;
-					}
-				}
-			}
-			else if (token.compare("SHOW_NOBJNM") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::SHOW_NOBJNM = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::SHOW_NOBJNM = false;
-					}
-				}
-			}
-			else if (token.compare("SHOW_LIST_ABBREVIATION") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::SHOW_LIST_ABBREVIATION = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::SHOW_LIST_ABBREVIATION = false;
-					}
-				}
-			}
-			else if (token.compare("WGS84_TEXT_TYPE") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::WGS84_TEXT_TYPE = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::WGS84_TEXT_TYPE = false;
-					}
-				}
-			}
-			else if (token.compare("SOUNDING") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::SOUNDING = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::SOUNDING = false;
-					}
-				}
-			}
-			else if (token.compare("SymbolizedAreaBoundary") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::SymbolizedAreaBoundary = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::SymbolizedAreaBoundary = false;
 					}
 				}
 			}
@@ -332,22 +189,6 @@ bool ENCConfiguration::Open(std::string path)
 					}
 				}
 			}
-			else if (token.compare("TWO_SHADES") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::TWO_SHADES = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::TWO_SHADES = false;
-					}
-				}
-			}
-
 			//Load Day Dusk Night
 			else if (token.compare("m_eColorTable") == 0)
 			{
@@ -371,14 +212,6 @@ bool ENCConfiguration::Open(std::string path)
 						ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Night;
 						ColorTableChanged();
 					}
-				}
-			}
-			else if (token.compare("UNIT_DISTANCE") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					ENCCommon::UNIT_DISTANCE = static_cast<GeoMetryLibrary::UnitDistance>(atoi(token.c_str()));
 				}
 			}
 			else if (token.compare("OBJECT_SHOW_SETTING_BEGIN") == 0)

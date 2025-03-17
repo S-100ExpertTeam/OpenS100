@@ -22,27 +22,15 @@ CConfigrationDlg::CConfigrationDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CConfigrationDlg::IDD, pParent)
 {
 	m_config.APPLY_SCALE_MIN = ENCCommon::APPLY_SCALE_MIN;
-	m_config.CONTOUR_LABELS = ENCCommon::CONTOUR_LABELS;
 	m_config.DEEP_CONTOUR = ENCCommon::DEEP_CONTOUR;
 	m_config.DISPLAY_MODE = ENCCommon::DISPLAY_MODE;
 	m_config.DrawingType = ENCCommon::DrawingType;
-	m_config.LIGHTS = ENCCommon::LIGHTS;
 	m_config.OVER_GROUP = ENCCommon::OVER_GROUP;
-	m_config.SAFETY_DEPTH = ENCCommon::SAFETY_DEPTH;
 	m_config.SAFETY_CONTOUR = ENCCommon::SAFETY_CONTOUR;
 	m_config.SHALLOW_CONTOUR = ENCCommon::SHALLOW_CONTOUR;
-	m_config.SHALLOW_PATTERN = ENCCommon::SHALLOW_PATTERN;
-	m_config.SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER = ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER;
 	m_config.FULL_SECTORS = ENCCommon::FULL_SECTORS;
-	m_config.SHOW_NOBJNM = ENCCommon::SHOW_NOBJNM;
-	m_config.SHOW_LIST_ABBREVIATION = ENCCommon::SHOW_LIST_ABBREVIATION;
-	m_config.WGS84_TEXT_TYPE = ENCCommon::WGS84_TEXT_TYPE;
-	m_config.SOUNDING = ENCCommon::SOUNDING;
-	m_config.SymbolizedAreaBoundary = ENCCommon::SymbolizedAreaBoundary;
 	m_config.TEXTOUT = ENCCommon::TEXTOUT;
-	m_config.TWO_SHADES = ENCCommon::TWO_SHADES;
 	m_config.m_eColorTable = ENCCommon::m_eColorTable;
-	m_config.UNIT_DISTANCE = ENCCommon::UNIT_DISTANCE;
 
 	m_config.DISPLAY_FONT_NAME = ENCCommon::DISPLAY_FONT_NAME;
 	m_config.DISPLAY_FONT_SIZE = ENCCommon::DISPLAY_FONT_SIZE;
@@ -180,10 +168,6 @@ void CConfigrationDlg::InitS101FeatureTypes(FeatureCatalogue* fc)
 
 void CConfigrationDlg::InitControlValues()
 {
-	mainTab.m_twoShade.SetCheck(m_config.TWO_SHADES);
-	mainTab.m_useNationalObjectName.SetCheck(m_config.SHOW_NOBJNM);
-
-	mainTab.m_safetyDepth.SetWindowText(_bstr_t(m_config.SAFETY_DEPTH));
 	mainTab.m_safetyWaterLevel.SetWindowText(_bstr_t(m_config.SAFETY_CONTOUR));
 	mainTab.m_veryShallowWaterLevel.SetWindowText(_bstr_t(m_config.SHALLOW_CONTOUR));
 	mainTab.m_veryDeepWaterLevel.SetWindowText(_bstr_t(m_config.DEEP_CONTOUR));
@@ -208,17 +192,9 @@ void CConfigrationDlg::OnBnClickedApply()
 
 	CString value;
 
-	m_config.TWO_SHADES = mainTab.m_twoShade.GetCheck() ? true : false;
-	m_config.SHOW_NOBJNM = mainTab.m_useNationalObjectName.GetCheck() ? true : false;
 	m_config.APPLY_SCALE_MIN = mainTab.checkBoxIgnoreScaleMin.GetCheck() ? false : true;
-	m_config.SHALLOW_PATTERN = mainTab.checkBoxShallowPattern.GetCheck() ? true : false;
 	m_config.SIMPLIFIED_POINT_SYMBOL = mainTab.checkBoxSimplifyPoint.GetCheck() ? true : false;
-	m_config.SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER = mainTab.checkBoxShowIsolatedDanger.GetCheck() ? true : false;
-	m_config.SymbolizedAreaBoundary = mainTab.checkBoxSimplifyLine.GetCheck() ? false : true;
 	m_config.FULL_SECTORS = mainTab.checkBoxFullSector.GetCheck() ? true : false;
-
-	mainTab.m_safetyDepth.GetWindowText(value);
-	m_config.SAFETY_DEPTH = _ttoi(value);
 
 	mainTab.m_safetyWaterLevel.GetWindowText(value);
 	m_config.SAFETY_CONTOUR = _ttoi(value);
@@ -245,12 +221,6 @@ void CConfigrationDlg::OnBnClickedApply()
 
 	m_config.Show_INFORM01 = mainTab.showinform01.GetCheck() ? true : false;
 
-	if (ENCCommon::CONTOUR_LABELS != m_config.CONTOUR_LABELS)
-	{
-		ENCCommon::CONTOUR_LABELS = m_config.CONTOUR_LABELS;
-		bMapRefresh = true;
-	}
-
 	if (ENCCommon::DISPLAY_MODE != m_config.DISPLAY_MODE)
 	{
 		ENCCommon::DISPLAY_MODE = m_config.DISPLAY_MODE;
@@ -261,19 +231,6 @@ void CConfigrationDlg::OnBnClickedApply()
 	if (ENCCommon::DrawingType != m_config.DrawingType)
 	{
 		ENCCommon::DrawingType = m_config.DrawingType;
-		bRebuildPortrayal = true;
-		bMapRefresh = true;
-	}
-
-	if (ENCCommon::LIGHTS != m_config.LIGHTS)
-	{
-		ENCCommon::LIGHTS = m_config.LIGHTS;
-		bMapRefresh = true;
-	}
-
-	if (ENCCommon::SAFETY_DEPTH != m_config.SAFETY_DEPTH)
-	{
-		ENCCommon::SAFETY_DEPTH = m_config.SAFETY_DEPTH;
 		bRebuildPortrayal = true;
 		bMapRefresh = true;
 	}
@@ -291,12 +248,6 @@ void CConfigrationDlg::OnBnClickedApply()
 		ENCCommon::SHALLOW_CONTOUR = m_config.SHALLOW_CONTOUR;
 		ENCCommon::DEEP_CONTOUR = m_config.DEEP_CONTOUR;
 		bRebuildPortrayal = true;
-		bMapRefresh = true;
-	}
-
-	if (ENCCommon::SOUNDING != m_config.SOUNDING)
-	{
-		ENCCommon::SOUNDING = m_config.SOUNDING;
 		bMapRefresh = true;
 	}
 
@@ -328,47 +279,9 @@ void CConfigrationDlg::OnBnClickedApply()
 		}
 	}
 
-	if (ENCCommon::UNIT_DISTANCE != m_config.UNIT_DISTANCE)
-	{
-		if (m_config.UNIT_DISTANCE == GeoMetryLibrary::UnitDistance::unitDistance_km)
-		{
-			ENCCommon::UNIT_DISTANCE = GeoMetryLibrary::UnitDistance::unitDistance_km;
-		}
-		else if (m_config.UNIT_DISTANCE == GeoMetryLibrary::UnitDistance::unitDistance_nautical_mile)
-		{
-			ENCCommon::UNIT_DISTANCE = GeoMetryLibrary::UnitDistance::unitDistance_nautical_mile;
-		}
-		else
-		{
-			ENCCommon::UNIT_DISTANCE = GeoMetryLibrary::UnitDistance::unitDistance_km;
-		}
-
-		bMapRefresh = true;
-	}
-
-	if (ENCCommon::TWO_SHADES != m_config.TWO_SHADES)
-	{
-		ENCCommon::TWO_SHADES = m_config.TWO_SHADES;
-		bRebuildPortrayal = true;
-		bMapRefresh = true;
-	}
-
-	if (ENCCommon::SHOW_NOBJNM != m_config.SHOW_NOBJNM)
-	{
-		ENCCommon::SHOW_NOBJNM = m_config.SHOW_NOBJNM;
-		bMapRefresh = true;
-	}
-
 	if (ENCCommon::APPLY_SCALE_MIN != m_config.APPLY_SCALE_MIN)
 	{
 		ENCCommon::APPLY_SCALE_MIN = m_config.APPLY_SCALE_MIN;
-		bRebuildPortrayal = true;
-		bMapRefresh = true;
-	}
-
-	if (ENCCommon::SHALLOW_PATTERN != m_config.SHALLOW_PATTERN)
-	{
-		ENCCommon::SHALLOW_PATTERN = m_config.SHALLOW_PATTERN;
 		bRebuildPortrayal = true;
 		bMapRefresh = true;
 	}
@@ -380,35 +293,10 @@ void CConfigrationDlg::OnBnClickedApply()
 		bMapRefresh = true;
 	}
 
-	if (ENCCommon::SymbolizedAreaBoundary != m_config.SymbolizedAreaBoundary)
-	{
-		ENCCommon::SymbolizedAreaBoundary = m_config.SymbolizedAreaBoundary;
-		bRebuildPortrayal = true;
-		bMapRefresh = true;
-	}
-
-	if (ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER != m_config.SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER) {
-		ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER = m_config.SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER;
-		bRebuildPortrayal = true;
-		bMapRefresh = true;
-	}
-
 	if (ENCCommon::FULL_SECTORS != m_config.FULL_SECTORS)
 	{
 		ENCCommon::FULL_SECTORS = m_config.FULL_SECTORS;
 		bRebuildPortrayal = true;
-		bMapRefresh = true;
-	}
-
-	if (ENCCommon::SHOW_LIST_ABBREVIATION != m_config.SHOW_LIST_ABBREVIATION)
-	{
-		ENCCommon::SHOW_LIST_ABBREVIATION = m_config.SHOW_LIST_ABBREVIATION;
-		bMapRefresh = true;
-	}
-
-	if (ENCCommon::WGS84_TEXT_TYPE != m_config.WGS84_TEXT_TYPE)
-	{
-		ENCCommon::WGS84_TEXT_TYPE = m_config.WGS84_TEXT_TYPE;
 		bMapRefresh = true;
 	}
 
@@ -517,21 +405,6 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 					}
 				}
 			}
-			else if (token.compare("CONTOUR_LABELS") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.CONTOUR_LABELS = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.CONTOUR_LABELS = false;
-					}
-				}
-			}
 			else if (token.compare("DEEP_CONTOUR") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
@@ -556,35 +429,12 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 					m_config.DrawingType = atoi(token.c_str());
 				}
 			}
-			else if (token.compare("LIGHTS") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.LIGHTS = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.LIGHTS = false;
-					}
-				}
-			}
 			else if (token.compare("OVER_GROUP") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
 				{
 					token = pstringTokenizer->nextToken();
 					m_config.OVER_GROUP = _atoi64(token.c_str());
-				}
-			}
-			else if (token.compare("SAFETY_DEPTH") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					m_config.SAFETY_DEPTH = atof(token.c_str());
 				}
 			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)
@@ -624,36 +474,6 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 					m_config.DISPLAY_FONT_SIZE = atoi(token.c_str());
 				}
 			}
-			else if (token.compare("SHALLOW_PATTERN") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.SHALLOW_PATTERN = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.SHALLOW_PATTERN = false;
-					}
-				}
-			}
-			else if (token.compare("SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER = false;
-					}
-				}
-			}
 			else if (token.compare("FULL_SECTORS") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
@@ -669,81 +489,6 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 					}
 				}
 			}
-			else if (token.compare("SHOW_NOBJNM") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.SHOW_NOBJNM = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.SHOW_NOBJNM = false;
-					}
-				}
-			}
-			else if (token.compare("SHOW_LIST_ABBREVIATION") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.SHOW_LIST_ABBREVIATION = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.SHOW_LIST_ABBREVIATION = false;
-					}
-				}
-			}
-			else if (token.compare("WGS84_TEXT_TYPE") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.WGS84_TEXT_TYPE = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.WGS84_TEXT_TYPE = false;
-					}
-				}
-			}
-			else if (token.compare("SOUNDING") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.SOUNDING = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.SOUNDING = false;
-					}
-				}
-			}
-			else if (token.compare("SymbolizedAreaBoundary") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.SymbolizedAreaBoundary = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.SymbolizedAreaBoundary = false;
-					}
-				}
-			}
 			else if (token.compare("TEXTOUT") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
@@ -756,21 +501,6 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 					else if (token.compare(strFalse) == 0)
 					{
 						m_config.TEXTOUT = false;
-					}
-				}
-			}
-			else if (token.compare("TWO_SHADES") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.TWO_SHADES = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.TWO_SHADES = false;
 					}
 				}
 			}

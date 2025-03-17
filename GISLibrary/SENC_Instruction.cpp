@@ -25,10 +25,6 @@
 
 SENC_Instruction::SENC_Instruction()
 {
-	featureReference = "";
-
-	type = 0;
-	suppressedInstance = false;
 }
 
 std::string SENC_Instruction::FeatureReference()
