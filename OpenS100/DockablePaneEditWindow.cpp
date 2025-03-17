@@ -403,26 +403,28 @@ void CDockablePaneEditWindow::addComplexAttribute(CMFCPropertyGridProperty* pare
 
 void CDockablePaneEditWindow::SetVectors()
 {
-	auto m_pFeature = m_cell->GetFeatureType(pugi::as_utf8(selectedFeatureID));
-
-	m_wndListVector.ShowWindow(FALSE);
-	DeleteVectorItems();
-
-	if (m_cell == nullptr || m_pFeature == nullptr)
+	if (m_cell)
 	{
+		auto m_pFeature = m_cell->GetFeatureType(pugi::as_utf8(selectedFeatureID));
+
+		m_wndListVector.ShowWindow(FALSE);
+		DeleteVectorItems();
+
+		if (m_cell == nullptr || m_pFeature == nullptr)
+		{
+			m_wndListVector.ShowWindow(TRUE);
+			return;
+		}
+
+		auto geom = m_pFeature->GetGeometry();
+		if (geom)
+		{
+			SetVector(geom);
+		}
+
+		m_wndListVector.ExpandAll(FALSE);
 		m_wndListVector.ShowWindow(TRUE);
-		return;
 	}
-
-	auto geom = m_pFeature->GetGeometry();
-	if (geom)
-	{
-		SetVector(geom);
-	}
-
-	m_wndListVector.ExpandAll(FALSE);
-	m_wndListVector.ShowWindow(TRUE);
-	
 }
 
 void CDockablePaneEditWindow::SetVector(SGeometry* geom, CMFCPropertyGridProperty* pSuperProperty)
