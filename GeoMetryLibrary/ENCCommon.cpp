@@ -11,7 +11,6 @@ unsigned ENCCommon::DrawingType = 0;		    // 1 :¡®main_PaperChart.xsl¡¯- include
 									// 2 :¡®main_SimpleSymbols¡¯ - includes all the COMMON entries plus SIMPLIFIED symbols and SYMBOLIZED _BOUNDARIES.	
 									// 3 :¡®main_Simplified.xsl¡¯- includes all the COMMON entries plus SIMPLIFIED symbols and PLAIN_BOUNDARIES.
 bool ENCCommon::SymbolizedAreaBoundary = true;
-bool ENCCommon::SeabedAreaType = false;
 
 bool   ENCCommon::SOUNDING = false;
 bool   ENCCommon::LIGHTS = true;
@@ -212,11 +211,6 @@ bool ENCCommon::Save(std::wstring filePath)
 
 	t = "SymbolizedAreaBoundary\t";
 	ENCCommon::SymbolizedAreaBoundary ? t.append(strTrue) : t.append(strFalse);
-	t.append("\n");
-	ofs.write(t.c_str(), t.size());
-
-	t = "SeabedType\t";
-	ENCCommon::SeabedAreaType ? t.append(strTrue) : t.append(strFalse);
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
@@ -553,21 +547,6 @@ bool ENCCommon::Open(std::wstring filePath)
 					else if (token.compare(strFalse) == 0)
 					{
 						ENCCommon::SymbolizedAreaBoundary = false;
-					}
-				}
-			}
-			else if (token.compare("SeabedType") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::SeabedAreaType = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::SeabedAreaType = false;
 					}
 				}
 			}

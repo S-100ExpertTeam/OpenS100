@@ -39,7 +39,6 @@ CConfigrationDlg::CConfigrationDlg(CWnd* pParent /*=NULL*/)
 	m_config.WGS84_TEXT_TYPE = ENCCommon::WGS84_TEXT_TYPE;
 	m_config.SOUNDING = ENCCommon::SOUNDING;
 	m_config.SymbolizedAreaBoundary = ENCCommon::SymbolizedAreaBoundary;
-	m_config.SeabedAreaType = ENCCommon::SeabedAreaType;
 	m_config.TEXTOUT = ENCCommon::TEXTOUT;
 	m_config.TWO_SHADES = ENCCommon::TWO_SHADES;
 	m_config.m_eColorTable = ENCCommon::m_eColorTable;
@@ -419,14 +418,6 @@ void CConfigrationDlg::OnBnClickedApply()
 		bMapRefresh = true;
 	}
 
-
-	if (ENCCommon::SeabedAreaType != m_config.SeabedAreaType)
-	{
-		ENCCommon::SeabedAreaType = m_config.SeabedAreaType;
-		bMapRefresh = true;
-	}
-
-	ENCCommon::SeabedAreaType = m_config.SeabedAreaType;
 	ENCCommon::DEEP_CONTOUR = m_config.DEEP_CONTOUR;
 	ENCCommon::OVER_GROUP = m_config.OVER_GROUP;
 
@@ -750,21 +741,6 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 					else if (token.compare(strFalse) == 0)
 					{
 						m_config.SymbolizedAreaBoundary = false;
-					}
-				}
-			}
-			else if (token.compare("SeabedType") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						m_config.SeabedAreaType = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						m_config.SeabedAreaType = false;
 					}
 				}
 			}

@@ -12,10 +12,6 @@ public:
 	// false = 0 (default)
 	bool SymbolizedAreaBoundary;
 
-	// true = 1  
-	// false = 0 (default)
-	bool SeabedAreaType;
-
 	bool TWO_SHADES;
 	bool SHALLOW_PATTERN;
 

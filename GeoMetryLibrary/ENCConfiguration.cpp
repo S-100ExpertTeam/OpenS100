@@ -317,21 +317,6 @@ bool ENCConfiguration::Open(std::string path)
 					}
 				}
 			}
-			else if (token.compare("SeabedType") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::SeabedAreaType = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::SeabedAreaType = false;
-					}
-				}
-			}
 			else if (token.compare("TEXTOUT") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
