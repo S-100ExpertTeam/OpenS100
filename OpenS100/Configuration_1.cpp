@@ -75,7 +75,6 @@ BOOL CConfiguration_1::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	checkBoxIgnoreScaleMin.SetCheck(!ENCCommon::APPLY_SCALE_MIN);
-	checkBoxSimplifyPoint.SetCheck(ENCCommon::SIMPLIFIED_POINT_SYMBOL);
 	checkBoxFullSector.SetCheck(ENCCommon::FULL_SECTORS);
 
 	m_safetyWaterLevel.SetWindowText(_bstr_t(ENCCommon::SAFETY_CONTOUR));

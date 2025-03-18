@@ -115,14 +115,6 @@ bool ENCConfiguration::Open(std::string path)
 					ENCCommon::DrawingType = atoi(token.c_str());
 				}
 			}
-			else if (token.compare("OVER_GROUP") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					ENCCommon::OVER_GROUP = _atoi64(token.c_str());
-				}
-			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
@@ -244,13 +236,6 @@ bool ENCConfiguration::Open(std::string path)
 					if (objectCode > 0)
 					{
 						std::unordered_map<int, bool>::iterator ositor;
-
-						ositor = ENCCommon::objectDisplaySettings.find(objectCode);
-						if (ositor != ENCCommon::objectDisplaySettings.end())
-						{
-							ositor->second = objectValue;
-
-						}
 					}
 					getline(ifs, strLine);
 				}

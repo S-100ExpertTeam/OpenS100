@@ -25,7 +25,6 @@ CConfigrationDlg::CConfigrationDlg(CWnd* pParent /*=NULL*/)
 	m_config.DEEP_CONTOUR = ENCCommon::DEEP_CONTOUR;
 	m_config.DISPLAY_MODE = ENCCommon::DISPLAY_MODE;
 	m_config.DrawingType = ENCCommon::DrawingType;
-	m_config.OVER_GROUP = ENCCommon::OVER_GROUP;
 	m_config.SAFETY_CONTOUR = ENCCommon::SAFETY_CONTOUR;
 	m_config.SHALLOW_CONTOUR = ENCCommon::SHALLOW_CONTOUR;
 	m_config.FULL_SECTORS = ENCCommon::FULL_SECTORS;
@@ -35,8 +34,6 @@ CConfigrationDlg::CConfigrationDlg(CWnd* pParent /*=NULL*/)
 	m_config.DISPLAY_FONT_NAME = ENCCommon::DISPLAY_FONT_NAME;
 	m_config.DISPLAY_FONT_SIZE = ENCCommon::DISPLAY_FONT_SIZE;
 
-	//arrangement enum 
-	m_config.objectDisplaySettings.insert(ENCCommon::objectDisplaySettings.begin(), ENCCommon::objectDisplaySettings.end());
 	bObjectDisplaySettingChanges = false;
 }
 
@@ -149,23 +146,6 @@ void CConfigrationDlg::OnClose()
 	CDialogEx::OnClose();
 }
 
-void CConfigrationDlg::InitS101FeatureTypes(FeatureCatalogue* fc)
-{
-	m_config.featureDisplaySettings.clear();
-
-	if (nullptr == fc)
-	{
-		return;
-	}
-
-	for (auto fti = fc->GetFeatureTypes()->GetFeatureType().begin(); fti != fc->GetFeatureTypes()->GetFeatureType().end(); fti++)
-	{
-		auto ft = fti->second;
-
-		m_config.featureDisplaySettings.insert({ ft->GetName(), true });
-	}
-}
-
 void CConfigrationDlg::InitControlValues()
 {
 	mainTab.m_safetyWaterLevel.SetWindowText(_bstr_t(m_config.SAFETY_CONTOUR));
@@ -193,7 +173,6 @@ void CConfigrationDlg::OnBnClickedApply()
 	CString value;
 
 	m_config.APPLY_SCALE_MIN = mainTab.checkBoxIgnoreScaleMin.GetCheck() ? false : true;
-	m_config.SIMPLIFIED_POINT_SYMBOL = mainTab.checkBoxSimplifyPoint.GetCheck() ? true : false;
 	m_config.FULL_SECTORS = mainTab.checkBoxFullSector.GetCheck() ? true : false;
 
 	mainTab.m_safetyWaterLevel.GetWindowText(value);
@@ -251,11 +230,6 @@ void CConfigrationDlg::OnBnClickedApply()
 		bMapRefresh = true;
 	}
 
-	if (ENCCommon::AUTOSELECTION_CATALOGUE != m_config.AUTOSELECTION_CATALOGUE)
-	{
-		ENCCommon::AUTOSELECTION_CATALOGUE = m_config.AUTOSELECTION_CATALOGUE;
-	}
-
 	if (ENCCommon::m_eColorTable != m_config.m_eColorTable)
 	{
 		ENCCommon::m_eColorTable = m_config.m_eColorTable;
@@ -286,13 +260,6 @@ void CConfigrationDlg::OnBnClickedApply()
 		bMapRefresh = true;
 	}
 
-	if (ENCCommon::SIMPLIFIED_POINT_SYMBOL != m_config.SIMPLIFIED_POINT_SYMBOL)
-	{
-		ENCCommon::SIMPLIFIED_POINT_SYMBOL = m_config.SIMPLIFIED_POINT_SYMBOL;
-		bRebuildPortrayal = true;
-		bMapRefresh = true;
-	}
-
 	if (ENCCommon::FULL_SECTORS != m_config.FULL_SECTORS)
 	{
 		ENCCommon::FULL_SECTORS = m_config.FULL_SECTORS;
@@ -307,23 +274,9 @@ void CConfigrationDlg::OnBnClickedApply()
 	}
 
 	ENCCommon::DEEP_CONTOUR = m_config.DEEP_CONTOUR;
-	ENCCommon::OVER_GROUP = m_config.OVER_GROUP;
 
 	std::unordered_map<int, bool>::iterator itor1;
 	std::unordered_map<int, bool>::iterator itor2;
-
-	for (itor1 = ENCCommon::objectDisplaySettings.begin(); itor1 != ENCCommon::objectDisplaySettings.end(); itor1++)
-	{
-		itor2 = m_config.objectDisplaySettings.find(itor1->first);
-		if (itor2 != m_config.objectDisplaySettings.end())
-		{
-			if (itor1->second != itor2->second)
-			{
-				itor1->second = itor2->second;
-				bObjectDisplaySettingChanges = true;
-			}
-		}
-	}
 
 	if (ENCCommon::DISPLAY_FONT_NAME.compare(m_config.DISPLAY_FONT_NAME) != 0
 		|| ENCCommon::DISPLAY_FONT_SIZE != m_config.DISPLAY_FONT_SIZE)
@@ -332,13 +285,6 @@ void CConfigrationDlg::OnBnClickedApply()
 		ENCCommon::DISPLAY_FONT_SIZE = m_config.DISPLAY_FONT_SIZE;
 
 		theApp.gisLib->ChangeDisplayFont();
-		bMapRefresh = true;
-	}
-
-	// S-111
-	if (ENCCommon::S111_SHOW_NODATA != m_config.S111_SHOW_NODATA)
-	{
-		ENCCommon::S111_SHOW_NODATA = m_config.S111_SHOW_NODATA;
 		bMapRefresh = true;
 	}
 
@@ -427,14 +373,6 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 				{
 					token = pstringTokenizer->nextToken();
 					m_config.DrawingType = atoi(token.c_str());
-				}
-			}
-			else if (token.compare("OVER_GROUP") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					m_config.OVER_GROUP = _atoi64(token.c_str());
 				}
 			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)
@@ -539,14 +477,6 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 
 					delete pstringTokenizerObjSettings;
 
-					if (objectCode > 0)
-					{
-						auto ositor = m_config.objectDisplaySettings.find(objectCode);
-						if (ositor != m_config.objectDisplaySettings.end())
-						{
-							ositor->second = objectValue;
-						}
-					}
 					getline(ifs, strLine);
 				}
 			}

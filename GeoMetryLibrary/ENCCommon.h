@@ -38,15 +38,10 @@ public:
 
 	static unsigned DrawingType;		    // paper  = 1
 										// simple = 0
-	static __int64 OVER_GROUP;
-
 	static std::wstring DISPLAY_FONT_NAME;
 
 	static GeoMetryLibrary::DisplayModeTable DISPLAY_MODE;
 	static GeoMetryLibrary::ColorTable m_eColorTable;
-
-	static std::unordered_map<int, bool> objectDisplaySettings;
-	static std::unordered_map<std::wstring, bool> featureDisplaySettings;
 
 	static float DISPLAY_SYMBOL_SCALE;
 
@@ -54,9 +49,6 @@ public:
 	// false: All AREA center point(fixed)
 	static bool AREA_SYMBOL_DYNAMIC_POSITION_MODE;
 
-	static bool SIMPLIFIED_POINT_SYMBOL;
-	static bool AUTOSELECTION_CATALOGUE;
-	static bool S111_SHOW_NODATA;
 	static bool Show_INFORM01; //inform01 show / hide
 
 public:

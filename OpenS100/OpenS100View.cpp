@@ -508,10 +508,6 @@ void COpenS100View::Setting()
 	CConfigrationDlg dlg(this);
 
 	auto fc = theApp.gisLib->GetCatalogManager()->getFC("S-101");
-	if (fc)
-	{
-		dlg.InitS101FeatureTypes(fc);
-	}
 
 	if (m_systemFontList.size() == 0)
 	{

@@ -20,14 +20,10 @@ double ENCCommon::DEEP_CONTOUR = 30;
 
 bool ENCCommon::FULL_SECTORS = false;
 
-std::unordered_map<int, bool> ENCCommon::objectDisplaySettings;
-std::unordered_map<std::wstring, bool> ENCCommon::featureDisplaySettings;
-
 GeoMetryLibrary::DisplayModeTable ENCCommon::DISPLAY_MODE = GeoMetryLibrary::DisplayModeTable::all;
 GeoMetryLibrary::ColorTable ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Day; //thema
 
 
-__int64 ENCCommon::OVER_GROUP = 0x7FFFFFFF;
 
 std::wstring ENCCommon::DISPLAY_FONT_NAME = L"Malgun Gothic";
 int ENCCommon::DISPLAY_FONT_SIZE = 15;
@@ -68,12 +64,6 @@ bool   ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE = true;
 #define OVERGROUP_CON30 viewGroup >= 62010 && viewGroup <= 62020
 #define OVERGROUP_CON31 true
 
-
-bool ENCCommon::SIMPLIFIED_POINT_SYMBOL = false;
-bool ENCCommon::AUTOSELECTION_CATALOGUE = true;
-bool ENCCommon::S111_SHOW_NODATA = false;
-bool ENCCommon::Show_INFORM01 = true;
-
 bool ENCCommon::Save(std::wstring filePath)
 {
 	std::locale::global(std::locale("Korean"));
@@ -103,11 +93,6 @@ bool ENCCommon::Save(std::wstring filePath)
 
 	t = "DrawingType\t";
 	t.append(_bstr_t(ENCCommon::DrawingType));
-	t.append("\n");
-	ofs.write(t.c_str(), t.size());
-
-	t = "OVER_GROUP\t";
-	t.append(_bstr_t(ENCCommon::OVER_GROUP));
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
@@ -144,19 +129,9 @@ bool ENCCommon::Save(std::wstring filePath)
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
-	t = "AUTOSELECTION_CATALOGUE\t";
-	ENCCommon::AUTOSELECTION_CATALOGUE ? t.append(strTrue) : t.append(strFalse);
-	t.append("\n");
-	ofs.write(t.c_str(), t.size());
-
 	//write Setting 
 	t = "m_eColorTable\t";
 	t.append(_bstr_t((int)ENCCommon::m_eColorTable));
-	t.append("\n");
-	ofs.write(t.c_str(), t.size());
-
-	t = "S111_SHOW_NODATA\t";
-	ENCCommon::S111_SHOW_NODATA ? t.append(strTrue) : t.append(strFalse);
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
@@ -167,21 +142,6 @@ bool ENCCommon::Save(std::wstring filePath)
 	ofs.write(t.c_str(), t.size());
 
 	std::unordered_map<int, bool>::iterator oitor;
-
-	t = "OBJECT_SHOW_SETTING_BEGIN\n";
-	ofs.write(t.c_str(), t.size());
-
-	for (oitor = ENCCommon::objectDisplaySettings.begin(); oitor != ENCCommon::objectDisplaySettings.end(); oitor++)
-	{
-		t = "\t";
-		t.append(_bstr_t((*oitor).first));
-		t.append("\t");
-		(*oitor).second ? t.append("1\n") : t.append("0\n");
-		ofs.write(t.c_str(), t.size());
-	}
-
-	t = "OBJECT_SHOW_SETTING_END\n";
-	ofs.write(t.c_str(), t.size());
 
 	t = "OBJECT_SHOW_SETTING_S101_BEGIN\n";
 	ofs.write(t.c_str(), t.size());
@@ -196,9 +156,6 @@ bool ENCCommon::Save(std::wstring filePath)
 
 bool ENCCommon::Open(std::wstring filePath)
 {
-	//project load => Repaint
-	ENCCommon::objectDisplaySettings.clear();  // init setting
-	
 	std::ifstream ifs;
 	ifs.open(filePath, std::ios::in);
 
@@ -262,14 +219,6 @@ bool ENCCommon::Open(std::wstring filePath)
 				{
 					token = pstringTokenizer->nextToken();
 					ENCCommon::DrawingType = atoi(token.c_str());
-				}
-			}
-			else if (token.compare("OVER_GROUP") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					ENCCommon::OVER_GROUP = _atoi64(token.c_str());
 				}
 			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)
@@ -336,21 +285,6 @@ bool ENCCommon::Open(std::wstring filePath)
 					}
 				}
 			}
-			else if (token.compare("AUTOSELECTION_CATALOGUE") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					if (token.compare(strTrue) == 0)
-					{
-						ENCCommon::AUTOSELECTION_CATALOGUE = true;
-					}
-					else if (token.compare(strFalse) == 0)
-					{
-						ENCCommon::AUTOSELECTION_CATALOGUE = false;
-					}
-				}
-			}
 			//Load Day Dusk Night.
 			else if (token.compare("m_eColorTable") == 0)
 			{
@@ -370,24 +304,6 @@ bool ENCCommon::Open(std::wstring filePath)
 					else if (ENCCommon::m_eColorTable == GeoMetryLibrary::ColorTable::Night)
 					{
 						ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Night;
-					}
-				}
-			}
-			else if (token.compare("S111_SHOW_NODATA") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					if (pstringTokenizer->hasMoreTokens())
-					{
-						token = pstringTokenizer->nextToken();
-						if (token.compare(strTrue) == 0)
-						{
-							ENCCommon::S111_SHOW_NODATA = true;
-						}
-						else if (token.compare(strFalse) == 0)
-						{
-							ENCCommon::S111_SHOW_NODATA = false;
-						}
 					}
 				}
 			}
@@ -433,17 +349,6 @@ bool ENCCommon::Open(std::wstring filePath)
 
 					delete pstringTokenizerObjSettings;
 
-					if (objectCode > 0)
-					{
-						std::unordered_map<int, bool>::iterator ositor;
-
-						ositor = ENCCommon::objectDisplaySettings.find(objectCode);
-						if (ositor != ENCCommon::objectDisplaySettings.end())
-						{
-							ositor->second = objectValue;
-
-						}
-					}
 					getline(ifs, strLine);
 				}
 			}
