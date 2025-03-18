@@ -36,8 +36,6 @@ public:
 
 	static int DISPLAY_FONT_SIZE;
 
-	static unsigned DrawingType;		    // paper  = 1
-										// simple = 0
 	static std::wstring DISPLAY_FONT_NAME;
 
 	static GeoMetryLibrary::DisplayModeTable DISPLAY_MODE;

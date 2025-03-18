@@ -7,10 +7,6 @@
 
 #include <fstream>
 
-unsigned ENCCommon::DrawingType = 0;		    // 1 :¡®main_PaperChart.xsl¡¯- includes all the COMMON entries plus PAPER_CHART symbols and SYMBOLIZED_BOUNDARIES.
-									// 2 :¡®main_SimpleSymbols¡¯ - includes all the COMMON entries plus SIMPLIFIED symbols and SYMBOLIZED _BOUNDARIES.	
-									// 3 :¡®main_Simplified.xsl¡¯- includes all the COMMON entries plus SIMPLIFIED symbols and PLAIN_BOUNDARIES.
-
 bool   ENCCommon::TEXTOUT = true;
 bool   ENCCommon::APPLY_SCALE_MIN = true;
 
@@ -19,6 +15,8 @@ double ENCCommon::SHALLOW_CONTOUR = 10;
 double ENCCommon::DEEP_CONTOUR = 30;
 
 bool ENCCommon::FULL_SECTORS = false;
+
+bool ENCCommon::Show_INFORM01 = true;
 
 GeoMetryLibrary::DisplayModeTable ENCCommon::DISPLAY_MODE = GeoMetryLibrary::DisplayModeTable::all;
 GeoMetryLibrary::ColorTable ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Day; //thema
@@ -88,11 +86,6 @@ bool ENCCommon::Save(std::wstring filePath)
 
 	t = "DISPLAY_MODE\t";
 	t.append(_bstr_t((int)ENCCommon::DISPLAY_MODE));
-	t.append("\n");
-	ofs.write(t.c_str(), t.size());
-
-	t = "DrawingType\t";
-	t.append(_bstr_t(ENCCommon::DrawingType));
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
@@ -211,14 +204,6 @@ bool ENCCommon::Open(std::wstring filePath)
 				{
 					token = pstringTokenizer->nextToken();
 					ENCCommon::DISPLAY_MODE = static_cast<GeoMetryLibrary::DisplayModeTable>(atoi(token.c_str()));
-				}
-			}
-			else if (token.compare("DrawingType") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					ENCCommon::DrawingType = atoi(token.c_str());
 				}
 			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)

@@ -7,7 +7,6 @@
 class MBR;
 
 static double ex = M_PI / 180.0;
-static double EXC = ((2*M_PI) / 360);
 static double limit = -85.0;
 static double M_PI_D4 = M_PI / 4.0;
 static double EARTH_RADIUS = 6378.1;

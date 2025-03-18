@@ -22,11 +22,6 @@ public:
 
 	int DISPLAY_FONT_SIZE;
 
-	// 1 :‘main_PaperChart.xsl’- includes all the COMMON entries plus PAPER_CHART symbols and SYMBOLIZED_BOUNDARIES.
-	// 2 :‘main_SimpleSymbols’ - includes all the COMMON entries plus SIMPLIFIED symbols and SYMBOLIZED _BOUNDARIES.
-	// 3 :‘main_Simplified.xsl’- includes all the COMMON entries plus SIMPLIFIED symbols and PLAIN_BOUNDARIES.
-	int DrawingType;
-
 	GeoMetryLibrary::DisplayModeTable DISPLAY_MODE;
 	GeoMetryLibrary::ColorTable m_eColorTable;
 

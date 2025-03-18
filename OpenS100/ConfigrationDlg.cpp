@@ -24,7 +24,6 @@ CConfigrationDlg::CConfigrationDlg(CWnd* pParent /*=NULL*/)
 	m_config.APPLY_SCALE_MIN = ENCCommon::APPLY_SCALE_MIN;
 	m_config.DEEP_CONTOUR = ENCCommon::DEEP_CONTOUR;
 	m_config.DISPLAY_MODE = ENCCommon::DISPLAY_MODE;
-	m_config.DrawingType = ENCCommon::DrawingType;
 	m_config.SAFETY_CONTOUR = ENCCommon::SAFETY_CONTOUR;
 	m_config.SHALLOW_CONTOUR = ENCCommon::SHALLOW_CONTOUR;
 	m_config.FULL_SECTORS = ENCCommon::FULL_SECTORS;
@@ -207,13 +206,6 @@ void CConfigrationDlg::OnBnClickedApply()
 		bMapRefresh = true;
 	}
 
-	if (ENCCommon::DrawingType != m_config.DrawingType)
-	{
-		ENCCommon::DrawingType = m_config.DrawingType;
-		bRebuildPortrayal = true;
-		bMapRefresh = true;
-	}
-
 	if (ENCCommon::SAFETY_CONTOUR != m_config.SAFETY_CONTOUR)
 	{
 		ENCCommon::SAFETY_CONTOUR = m_config.SAFETY_CONTOUR;
@@ -365,14 +357,6 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 				{
 					token = pstringTokenizer->nextToken();
 					m_config.DISPLAY_MODE = static_cast<GeoMetryLibrary::DisplayModeTable>(atoi(token.c_str()));
-				}
-			}
-			else if (token.compare("DrawingType") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					m_config.DrawingType = atoi(token.c_str());
 				}
 			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)

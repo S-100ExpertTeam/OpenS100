@@ -107,14 +107,6 @@ bool ENCConfiguration::Open(std::string path)
 					ENCCommon::DISPLAY_MODE = static_cast<GeoMetryLibrary::DisplayModeTable>(atoi(token.c_str()));
 				}
 			}
-			else if (token.compare("DrawingType") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					ENCCommon::DrawingType = atoi(token.c_str());
-				}
-			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
