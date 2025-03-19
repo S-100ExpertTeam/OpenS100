@@ -30,28 +30,7 @@
     <ClCompile Include="AreaFillInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AreaInstruction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AreaPatternBitmap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AugmentedArea.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AugmentedGeometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AugmentedLineOrArea.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AugmentedPath.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AugmentedPoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AugmentedRay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BackgroundLayer.cpp">
@@ -75,19 +54,10 @@
     <ClCompile Include="CoverageFill.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CoverageInstruction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CRSType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dash.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DisplayList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawingInstruction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FeatureReference.cpp">
@@ -100,9 +70,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Line.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LineInstruction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LineStyle.cpp">
@@ -120,9 +87,6 @@
     <ClCompile Include="LineSymbol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NullInstruction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Palette.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -136,9 +100,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Point.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PointInstruction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Rectangle.cpp">
@@ -195,16 +156,10 @@
     <ClCompile Include="Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextInstruction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicBasePackage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="S100DrawingUnitTextPoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DrawingInstructionReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GraphicBasePackage_Point.cpp">
@@ -226,15 +181,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GraphicBasePackage_Annulus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100DrawingUnitAugmentedPath.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100DrawingUnitAugmentedRay.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AbstractAreaFill.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TextPoint.cpp">
@@ -292,28 +238,7 @@
     <ClInclude Include="AreaFillInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AreaInstruction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AreaPatternBitmap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AugmentedArea.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AugmentedGeometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AugmentedLineOrArea.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AugmentedPath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AugmentedPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AugmentedRay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BackgroundLayer.h">
@@ -337,25 +262,10 @@
     <ClInclude Include="CoverageFill.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CoverageInstruction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CRSType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dash.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DisplayList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawingInstruction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawingInstructions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EnumTypeOfDrawingInstruction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FeatureReference.h">
@@ -371,9 +281,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Line.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LineInstruction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LineStyle.h">
@@ -397,9 +304,6 @@
     <ClInclude Include="LineSymbol.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NullInstruction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Palette.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -413,9 +317,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Point.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PointInstruction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rectangle.h">
@@ -475,9 +376,6 @@
     <ClInclude Include="Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextInstruction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TextPackageEnum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -485,9 +383,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="S100DrawingUnitTextPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawingInstructionReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GraphicBasePackage_Point.h">
@@ -526,16 +421,7 @@
     <ClInclude Include="GraphicBasePackage_Annulus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="S100DrawingUnitAugmentedPath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100DrawingUnitAugmentedRay.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CStringCompareNoCaseLessThan.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractAreaFill.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SVGGeometry.h">

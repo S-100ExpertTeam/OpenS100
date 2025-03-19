@@ -6,8 +6,6 @@
 #include "S100DrawingUnitPolygon.h"
 #include "S100DrawingUnitPatternPolygon.h"
 #include "S100DrawingUnitTextPoint.h"
-#include "S100DrawingUnitAugmentedPath.h"
-#include "S100DrawingUnitAugmentedRay.h"
 #include "AreaPatternBitmap.h"
 
 

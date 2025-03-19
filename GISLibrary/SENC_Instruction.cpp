@@ -92,3 +92,33 @@ SENC_Instruction* SENC_Instruction::S1002SENC(S100_Instruction* s100Instruction,
 	}
 	return result;
 }
+
+void SENC_Instruction::setID(std::string id)
+{
+	this->id = id;
+}
+
+std::optional<std::string> SENC_Instruction::getID()
+{
+	return id;
+}
+
+void SENC_Instruction::setParentID(std::string id)
+{
+	this->parentId = id;
+}
+
+std::optional<std::string> SENC_Instruction::getParentID()
+{
+	return parentId;
+}
+
+void SENC_Instruction::setHover(bool hover)
+{
+	this->hover = hover;
+}
+
+std::optional<bool> SENC_Instruction::getHover()
+{
+	return hover;
+}

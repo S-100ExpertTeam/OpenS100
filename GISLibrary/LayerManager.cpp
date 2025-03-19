@@ -38,8 +38,6 @@
 
 #include "../LatLonUtility/LatLonUtility.h"
 
-#include "../S100Engine/DrawingInstructionReader.h"
-
 #include <ctime> 
 #include <mmsystem.h> 
 #include <string>

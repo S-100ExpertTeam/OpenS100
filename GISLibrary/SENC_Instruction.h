@@ -2,9 +2,9 @@
 
 #include "../GeoMetryLibrary/Scaler.h"
 
-#include <polyclipping/clipper.hpp>
-
 #include <list>
+#include <string>
+#include <optional>
 
 class R_FeatureRecord;
 class SENC_TextInstruction;
@@ -41,6 +41,11 @@ public:
 
 	//////////////////////////////////////////////////////////
 	// Instruction Information
+	std::optional<std::string> id;
+
+	std::optional<std::string> parentId;
+
+	std::optional<bool> hover;
 
 	// Feature ID
 	std::string featureReference;
@@ -80,6 +85,15 @@ public:
 	GF::FeatureType* fr = nullptr;
 
 public:
+	void setID(std::string id);
+	std::optional<std::string> getID();
+
+	void setParentID(std::string id);
+	std::optional<std::string> getParentID();
+
+	void setHover(bool hover);
+	std::optional<bool> getHover();
+
 	std::string FeatureReference();
 	int DrawingPriority();
 
