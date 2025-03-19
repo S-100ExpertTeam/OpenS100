@@ -5,7 +5,6 @@
 #include "S100DrawingUnitPolyLine.h"
 #include "S100DrawingUnitPolygon.h"
 #include "S100DrawingUnitPatternPolygon.h"
-#include "S100DrawingUnitTextPoint.h"
 #include "AreaPatternBitmap.h"
 
 

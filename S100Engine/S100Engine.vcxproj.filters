@@ -60,9 +60,6 @@
     <ClCompile Include="Dash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FeatureReference.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="figure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -153,13 +150,7 @@
     <ClCompile Include="SVGReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicBasePackage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="S100DrawingUnitTextPoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GraphicBasePackage_Point.cpp">
@@ -181,27 +172,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GraphicBasePackage_Annulus.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextPoint.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextLine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextElement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FontReference.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FontCharacteristics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextFlags.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="S100ColorProfiles.cpp">
@@ -266,9 +236,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dash.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FeatureReference.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="figure.h">
@@ -373,18 +340,6 @@
     <ClInclude Include="SVGReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextPackageEnum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SymbolPackageEnum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="S100DrawingUnitTextPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GraphicBasePackage_Point.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -425,27 +380,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SVGGeometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextElement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FontReference.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FontCharacteristics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextFlags.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="S100ColorProfiles.h">
