@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "S100Render.h"
 #include "EnumTypeOfDrawingInstruction.h"
-#include "S100DrawingUnitPoint.h"
-#include "S100DrawingUnitPolyLine.h"
-#include "S100DrawingUnitPolygon.h"
-#include "S100DrawingUnitPatternPolygon.h"
 #include "AreaPatternBitmap.h"
 
 

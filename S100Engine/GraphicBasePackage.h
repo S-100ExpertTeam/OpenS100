@@ -1,11 +1,11 @@
 #pragma once
 #include "GraphicBasePackage_Enum.h"
-#include "GraphicBasePackage_Point.h"
-#include "GraphicBasePackage_Path.h"
-#include "GraphicBasePackage_Polyline.h"
-#include "GraphicBasePackage_Arc3Points.h"
-#include "GraphicBasePackage_ArcByRadius.h"
-#include "GraphicBasePackage_Annulus.h"
+//#include "GraphicBasePackage_Point.h"
+//#include "GraphicBasePackage_Path.h"
+//#include "GraphicBasePackage_Polyline.h"
+//#include "GraphicBasePackage_Arc3Points.h"
+//#include "GraphicBasePackage_ArcByRadius.h"
+//#include "GraphicBasePackage_Annulus.h"
 #include "Pen.h"
 #include "Color.h"
 
