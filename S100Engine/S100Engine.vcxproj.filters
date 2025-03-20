@@ -51,9 +51,6 @@
     <ClCompile Include="CompositeLineStyle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CoverageFill.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CRSType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -97,9 +94,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Point.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="S100ColorProfile.cpp">
@@ -190,9 +184,6 @@
     <ClInclude Include="CompositeLineStyle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CoverageFill.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CRSType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -242,9 +233,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Point.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="S100BaseModelGeometricPrimitive.h">

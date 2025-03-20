@@ -28,10 +28,6 @@ public:
 	std::wstring DISPLAY_FONT_NAME;
 
 private:
-	bool fontChanged = false;
-	bool colorTableChanged = false;
-	void FontChanged();
-	void ColorTableChanged();
 
 public:
 	bool Open(std::string path);
