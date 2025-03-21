@@ -5,6 +5,7 @@
 
 #include <pugixml.hpp>
 
+// Text Package : TextElement
 class S100_Element
 {
 public:

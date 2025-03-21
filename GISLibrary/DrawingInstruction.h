@@ -22,9 +22,5 @@ namespace DrawingInstructions
 	private:
 		DrawingInstructions::DrawingCommands* drawingCommand = nullptr;
 		DrawingInstructions::StateCommands* stateCommands = nullptr;
-
 	};
-
 }
-
-
