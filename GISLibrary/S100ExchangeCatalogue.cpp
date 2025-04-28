@@ -285,6 +285,10 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
 	return true;
 }
 
+bool S100ExchangeCatalogue::OpenMetadata(CString _filepath)
+{
+    return true;
+}
 
 bool S100ExchangeCatalogue::CompareByLayer(const Layer* a, const Layer* b)
 {

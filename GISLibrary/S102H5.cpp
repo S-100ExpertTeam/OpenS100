@@ -70,6 +70,11 @@ bool S102H5::Open(CString _filepath)
 	return true;
 }
 
+bool S102H5::OpenMetadata(CString _filepath)
+{
+	return true;
+}
+
 void S102H5::Draw(HDC& hDC, Scaler* scaler, double offset)
 {
 	if (!pWICBitmap) {

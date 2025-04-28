@@ -262,6 +262,11 @@ bool SHPFile::Open(CString _filepath)
 	return TRUE;
 }
 
+bool SHPFile::OpenMetadata(CString _filepath)
+{
+	return true;
+}
+
 void SHPFile::Draw(HDC &hDC, Scaler *scaler, double offset)
 {
 	double zero  = 0;

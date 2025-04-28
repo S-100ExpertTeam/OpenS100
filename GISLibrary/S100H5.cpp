@@ -46,6 +46,11 @@ bool S100H5::Open(CString _filepath)
 	return true;
 }
 
+bool S100H5::OpenMetadata(CString _filepath)
+{
+	return true;
+}
+
 void S100H5::SetMBR()
 {
 	auto layer = GetLayer();

@@ -99,10 +99,13 @@ public:
 	void ClearAll(void); 
 
 	bool Open(CString _filepath) override;
+	bool OpenMetadata(CString _filepath) override;
 	bool Save(std::wstring path) override;
 
 	bool OpenBy000(CString path);
+	bool OpenMetadataBy000(CString path);
 	bool OpenByGML(CString path);
+	bool OpenMetadataByGML(CString path);
 
 	bool Read8211(std::wstring path);
 	bool isUpdate();

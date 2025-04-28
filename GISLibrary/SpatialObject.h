@@ -26,6 +26,7 @@ protected:
 
 public:
 	virtual bool Open(CString _filepath) = 0;
+	virtual bool OpenMetadata(CString _filepath) = 0;
 	virtual bool Save(std::wstring path) { return true; }
 
 	virtual void Draw(CDC *pDC, Scaler *scaler, double offset = 0) {};
