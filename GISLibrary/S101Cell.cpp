@@ -75,6 +75,9 @@
 #include <iomanip>
 #include <mmsystem.h> 
 #include <unordered_map>
+#include <vector>
+#include <string>
+
 
 S101Cell::S101Cell(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
@@ -5213,4 +5216,34 @@ bool S101Cell::InformationAssociationToGFM()
 	}
 
 	return true;
+}
+
+Version S101Cell::GetVersion() const
+{
+   Version version;
+   std::wistringstream stream(std::wstring(m_dsgir.m_dsid.m_pred));
+   std::wstring segment;
+   std::vector<int> parts;
+
+   while (std::getline(stream, segment, L'.')) 
+   {
+       parts.push_back(std::stoi(segment));
+   }
+
+   if (parts.size() > 0)
+   {
+	   version.major = parts[0];
+   }
+
+   if (parts.size() > 1)
+   {
+	   version.minor = parts[1];
+   }
+
+   if (parts.size() > 2)
+   {
+	   version.patch = parts[2];
+   }
+
+   return version;
 }

@@ -10,10 +10,10 @@ public:
 	virtual ~Version();
 
 public:
-	std::string major;
-	std::string minor;
-	std::string patch;
-	std::string working;
+	std::string major = "";
+	std::string minor = "";
+	std::string patch = "";
+	std::string working = "";
 
 	std::string source;
 

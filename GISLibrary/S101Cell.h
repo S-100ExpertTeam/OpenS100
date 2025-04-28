@@ -10,6 +10,8 @@
 
 #include "../GeoMetryLibrary/MBR.h"
 
+#include "../FeatureCatalog/Version.h"
+
 #include <unordered_map>
 #include <set>
 #include <map>
@@ -431,6 +433,8 @@ public:
 	void WritePointRecord(pugi::xml_node& node, R_PointRecord* record);
 
 	bool ATTRtoAttribute();
+
+	Version GetVersion() const;
 
 private:
 	bool FeatureAttrToAttribute();

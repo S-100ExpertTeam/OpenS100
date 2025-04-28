@@ -284,3 +284,4 @@ Redist/**
 /OpenS100/DatasetManager.db
 
 vcpkg/
+vcpkg_installed/
