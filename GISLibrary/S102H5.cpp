@@ -14,6 +14,7 @@ S102H5::S102H5(PortrayalCatalogue* pc, D2D1Resources* d2d1) : S100H5(d2d1)
 {
 	type = S100SpatialObjectType::S102H5;
 	featureContainer.push_back(new S102_FC_BathymetryCoverage());
+	m_ObejctType = SpatialObjectType::S102H5;
 
 	if (!s102Color.isSet()) {
 		s102Color.setColor(pc);

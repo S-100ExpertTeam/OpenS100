@@ -388,6 +388,11 @@
   <ItemGroup>
     <ResourceCompile Include="FeatureCatalog.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LatLonUtility\LatLonUtility.vcxproj">
+      <Project>{d87f9640-70b7-4695-85c5-105ba24fa7c0}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
