@@ -22,7 +22,7 @@ public:
 	S100SpatialObject(D2D1Resources* d2d1);
 	virtual ~S100SpatialObject();
 
-public:
+public:	
 	S100SpatialObjectType type = S100SpatialObjectType::S100SpatialObject;
 	PCOutputSchemaManager* pcManager = nullptr;
 

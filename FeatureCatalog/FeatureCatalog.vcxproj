@@ -101,6 +101,9 @@
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -291,6 +294,7 @@
     <ClCompile Include="S100_CD_AttributeValueType.cpp" />
     <ClCompile Include="S100_CD_QuantitySpecification.cpp" />
     <ClCompile Include="S100_TM_Instant.cpp" />
+    <ClCompile Include="S100_TM_Period.cpp" />
     <ClCompile Include="Series.cpp" />
     <ClCompile Include="SimpleAttribute.cpp" />
     <ClCompile Include="SimpleAttributes.cpp" />
@@ -368,6 +372,7 @@
     <ClInclude Include="S100_CD_QuantitySpecification.h" />
     <ClInclude Include="S100_FC_RoleType.h" />
     <ClInclude Include="S100_TM_Instant.h" />
+    <ClInclude Include="S100_TM_Period.h" />
     <ClInclude Include="Series.h" />
     <ClInclude Include="SimpleAttribute.h" />
     <ClInclude Include="SimpleAttributes.h" />
@@ -384,6 +389,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FeatureCatalog.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LatLonUtility\LatLonUtility.vcxproj">
+      <Project>{d87f9640-70b7-4695-85c5-105ba24fa7c0}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

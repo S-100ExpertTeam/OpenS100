@@ -75,17 +75,22 @@
 #include <iomanip>
 #include <mmsystem.h> 
 #include <unordered_map>
+#include <vector>
+#include <string>
+
 
 S101Cell::S101Cell(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
+	m_ObejctType = SpatialObjectType::S101Cell;
 }
 
 S101Cell::S101Cell(FeatureCatalogue* fc, D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
+	m_ObejctType = SpatialObjectType::S101Cell;
 	//SetAllNumericCode(fc);
 }
 
@@ -228,6 +233,8 @@ void S101Cell::UpdateRemoveAll(void)
 
 void S101Cell::RemoveAll(void)
 {
+	m_dsgir.init();
+
 	if (nullptr != updateInformation)
 	{
 		updateInformation->ClearAll();
@@ -336,6 +343,22 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 	else if (extension.CompareNoCase(L"gml") == 0)
 	{
 		return OpenByGML(_filepath);
+	}
+
+	return false;
+}
+
+bool S101Cell::OpenMetadata(CString _filepath)
+{
+	auto extension = LibMFCUtil::GetExtension(_filepath);
+	if ((extension.CompareNoCase(L"000") >= 0) &&
+		(extension.CompareNoCase(L"999") <= 0))
+	{
+		return OpenMetadataBy000(_filepath);
+	}
+	else if (extension.CompareNoCase(L"gml") == 0)
+	{
+		return OpenMetadataByGML(_filepath);
 	}
 
 	return false;
@@ -495,6 +518,73 @@ bool S101Cell::OpenBy000(CString path)
 	return false;
 }
 
+bool S101Cell::OpenMetadataBy000(CString path)
+{
+	USES_CONVERSION;
+
+	CFile file;
+	if (!file.Open(path, CFile::modeRead))
+	{
+		return false;
+	}
+
+	BYTE* pBuf = nullptr;
+	BYTE* sBuf = nullptr;
+	BYTE* endOfBuf = nullptr;
+
+	LONGLONG fileLength = file.GetLength();
+
+	pBuf = new BYTE[(unsigned int)fileLength];
+	sBuf = pBuf;
+
+	file.Read(pBuf, (unsigned)fileLength);
+
+	endOfBuf = pBuf + fileLength - 1;
+
+	file.Close();
+
+	ReadDDR(pBuf);
+
+	DRDirectoryInfo drDir;
+
+	int tcnt = 0;
+	while (pBuf < endOfBuf)
+	{
+		auto curRecordAddress = pBuf;
+
+		tcnt++;
+		DRReader drReader;
+		int subFieldCount = 0;
+		drReader.ReadReader(pBuf);
+		subFieldCount = (drReader.m_fieldAreaLoc - DR_LENGTH - 1) / (4 + drReader.m_fieldLength + drReader.m_fieldPosition);
+
+		if (subFieldCount < 1)
+		{
+			continue;
+		}
+
+		drDir.ReAllocateDirectory(subFieldCount);
+
+		drDir.ReadDir(drReader, pBuf);
+
+		if (*(pBuf++) != 0x1E)
+		{
+		}
+
+		if (strcmp(drDir.GetDirectory(0)->tag, "DSID") == 0)
+		{
+			m_dsgir.ReadRecord(&drDir, pBuf);
+			break;
+		}
+
+		pBuf = curRecordAddress + drReader.m_recordLength;
+	}
+
+	delete[] sBuf;
+
+	return true;
+}
+
 bool S101Cell::OpenByGML(CString path)
 {
 	SetFilePath(path);
@@ -522,6 +612,11 @@ bool S101Cell::OpenByGML(CString path)
 		gml = nullptr;
 	}
 
+	return true;
+}
+
+bool S101Cell::OpenMetadataByGML(CString path)
+{
 	return true;
 }
 
@@ -1754,8 +1849,8 @@ std::vector<R_InformationRecord*>& S101Cell::GetVecInformation()
 }
 
 void S101Cell::InsertInformationFilter(__int64 key)
-{
-	m_infMatchingKeys.insert(key);
+{	
+	m_infMatchingKeys.push_back(key);
 }
 
 void S101Cell::InsertInformationFilter(std::string key)
@@ -1776,7 +1871,7 @@ void S101Cell::RemoveInformationFilter()
 	m_infMatchingKeys.clear();
 }
 
-std::set<__int64>& S101Cell::GetInformationFilter()
+std::vector<__int64>& S101Cell::GetInformationFilter()
 {
 	return m_infMatchingKeys;
 }
@@ -2174,7 +2269,7 @@ std::vector<R_FeatureRecord*>& S101Cell::GetVecFeature()
 
 void S101Cell::InsertFeatureFilter(__int64 key)
 {
-	m_feaMatchingKeys.insert(key);
+	m_feaMatchingKeys.push_back(key);
 }
 
 void S101Cell::InsertFeatureFilter(std::string key)
@@ -2195,7 +2290,7 @@ void S101Cell::RemoveFeatureFilter()
 	m_feaMatchingKeys.clear();
 }
 
-std::set<__int64>& S101Cell::GetFeatureFilter()
+std::vector<__int64>& S101Cell::GetFeatureFilter()
 {
 	return m_feaMatchingKeys;
 }
@@ -5032,11 +5127,6 @@ bool S101Cell::FeatureAttrToAttribute()
 		std::vector<GF::ThematicAttributeType*> addedAttributes;
 		auto fr = GetFeatureRecordByIndex(i);
 
-		if (fr->GetRCID() == 37)
-		{
-			OutputDebugString(L"A");
-		}
-
 		auto ATTRs = fr->GetAllAttributes();
 		for (auto j = ATTRs.begin(); j != ATTRs.end(); j++) {
 			auto ATTR = (*j);
@@ -5213,4 +5303,34 @@ bool S101Cell::InformationAssociationToGFM()
 	}
 
 	return true;
+}
+
+Version S101Cell::GetVersion() const
+{
+   Version version;
+   std::wistringstream stream(std::wstring(m_dsgir.m_dsid.m_pred));
+   std::wstring segment;
+   std::vector<int> parts;
+
+   while (std::getline(stream, segment, L'.')) 
+   {
+       parts.push_back(std::stoi(segment));
+   }
+
+   if (parts.size() > 0)
+   {
+	   version.major = std::to_string(parts[0]);
+   }
+
+   if (parts.size() > 1)
+   {
+	   version.minor = std::to_string(parts[1]);
+   }
+
+   if (parts.size() > 2)
+   {
+	   version.patch = std::to_string(parts[2]);
+   }
+
+   return version;
 }

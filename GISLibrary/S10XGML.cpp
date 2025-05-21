@@ -18,6 +18,7 @@ S10XGML::S10XGML(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
 	type = S100SpatialObjectType::S10XGML;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
+	m_ObejctType = SpatialObjectType::S10XGML;
 }
 
 S10XGML::~S10XGML()
@@ -72,11 +73,27 @@ bool S10XGML::Open(CString _filepath)
 	return Open(doc, result);
 }
 
+bool S10XGML::OpenMetadata(CString _filepath)
+{
+	std::wstring path = _filepath;
+
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(path.c_str());
+	return OpenMetadata(doc, result);
+}
+
 bool S10XGML::Open(std::string fileContent)
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load(fileContent.c_str());
 	return Open(doc, result);
+}
+
+bool S10XGML::OpenMetadata(std::string fileContent)
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load(fileContent.c_str());
+	return OpenMetadata(doc, result);
 }
 
 bool S10XGML::Open(pugi::xml_node doc, pugi::xml_parse_result result)
@@ -185,6 +202,38 @@ bool S10XGML::Open(pugi::xml_node doc, pugi::xml_parse_result result)
 
 	//SetGeometry();
 	//CalcMBR();
+
+	return true;
+}
+
+bool S10XGML::OpenMetadata(pugi::xml_node doc, pugi::xml_parse_result result)
+{
+	pugi::xml_node root = doc.first_child();
+
+	auto child = root.first_child();
+	while (child)
+	{
+		std::string childName = child.name();
+
+		// find ':' 
+		size_t colon_pos = childName.find(':');
+
+		// get string after ':' 
+		if (colon_pos != std::string::npos) {
+			childName = childName.substr(colon_pos + 1);
+		}
+
+		if (strcmp(childName.c_str(), "boundedBy") == 0)
+		{
+			envelop.Read(child);
+		}
+		else if (strcmp(childName.c_str(), "DatasetIdentificationInformation") == 0)
+		{
+			datasetIdentificationInformation.Read(child);
+		}
+
+		child = child.next_sibling();
+	}
 
 	return true;
 }

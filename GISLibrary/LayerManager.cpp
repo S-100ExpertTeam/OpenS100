@@ -295,7 +295,8 @@ int LayerManager::AddLayer(CString _filepath)
 
 		if (fc)
 		{
-			layer = new S100Layer(fc, pc);
+			//layer = new S100Layer(fc, pc);
+			layer = new S100Layer(productNumber);
 			if ((S100Layer*)layer->Open(_filepath, D2, this) == false)
 			{
 				delete layer;
@@ -324,7 +325,9 @@ int LayerManager::AddLayer(CString _filepath)
 		AddLayer(layer, firstlayerfilepath, false);
 	}
 	else
+	{
 		AddLayer(layer);
+	}
 
 	return layer->GetID();
 }
@@ -541,14 +544,15 @@ void LayerManager::AddSymbolDrawing(
 
 		points.clear();
 
-		if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
-		{
-			instruction->GetDrawPointsDynamic(scaler, points);
-		}
-		else
-		{
-			instruction->GetDrawPoints(scaler, points);
-		}
+		//if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
+		//{
+		//	instruction->GetDrawPointsDynamic(scaler, points);
+		//}
+		//else
+		//{
+		//	instruction->GetDrawPoints(scaler, points);
+		//}
+		instruction->GetDrawPoints(scaler, points);
 
 		for (auto pi = points.begin(); pi != points.end(); pi++)
 		{
@@ -618,14 +622,15 @@ void LayerManager::AddSymbolDrawing(
 				auto instruction = (SENC_TextInstruction*)*i;
 				points.clear();
 
-				if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
-				{
-					instruction->GetDrawPointsDynamic(scaler, points);
-				}
-				else
-				{
-					instruction->GetDrawPoints(scaler, points);
-				}
+				//if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
+				//{
+				//	instruction->GetDrawPointsDynamic(scaler, points);
+				//}
+				//else
+				//{
+				//	instruction->GetDrawPoints(scaler, points);
+				//}
+				instruction->GetDrawPoints(scaler, points);
 
 				SENC_TextPoint* textPoint = instruction->textPoint;
 				auto itorTp = textPoint->elements.begin();

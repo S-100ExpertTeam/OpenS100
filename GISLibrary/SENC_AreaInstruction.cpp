@@ -312,7 +312,7 @@ void SENC_AreaInstruction::FromS100Instruction(
 					symbolFill->symbol->rotation = s100Symbol->GetRotation();
 				}
 				symbolFill->symbol->rotationCRS = SENC_CommonFuc::GetRotationCRS(s100Symbol->GetRotationCRS());
-				symbolFill->symbol->scaleFactor = (float)(_wtof(s100Symbol->GetScaleFactor().c_str()));
+				symbolFill->symbol->scaleFactor = s100Symbol->GetScaleFactor();
 
 
 				auto svgSymbolManger = &(pc->GetS100PCManager()->s100SymbolManager);

@@ -42,218 +42,218 @@ void rotate_v(double &nx, double &ny, double tx, double ty, double cx, double cy
 	nx += cx, ny += cy;
 }
 
-#pragma warning(disable:4244)
-void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points)
-{
-	if (!fr || !fr->GetGeometry()) {
-		return;
-	}
-
-	auto geom = fr->GetGeometry();
-		
-	int viewPointNum = 0;
-	D2D1_POINT_2F tempPoint;
-
-	bool bDraw;
-
-	DWORD dwWorkStart = timeGetTime();
-
-	if (geom->GetType() == SGeometryType::Point)
-	{
-		SPoint* geo = (SPoint*)geom;
-		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
-		points.push_back(tempPoint);
-	}
-	else if (geom->GetType() == SGeometryType::Curve)
-	{
-		auto geo = (SCurve*)geom;
-		auto cnt = geo->getNumPoint();
-		POINT* sPoints = new POINT[cnt];
-		for (int i = 0; i < cnt; i++)
-		{
-			scaler->WorldToDevice(geo->GetX(i), geo->GetY(i), &sPoints[i].x, &sPoints[i].y);
-		}
-		POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(sPoints, cnt, &scaler->GetScreenRect());
-		delete[] sPoints;
-		if (symbolPoint)
-		{
-			tempPoint.x = (float)symbolPoint[0].x;
-			tempPoint.y = (float)symbolPoint[0].y;
-			points.push_back(tempPoint);
-
-			delete symbolPoint;
-		}
-	}
-	else if (geom->GetType() == SGeometryType::CompositeCurve)
-	{
-		SCompositeCurve* geo = (SCompositeCurve*)geom;
-		std::list<SCurve*> curveList;
-		geo->GetCurveList(curveList);
-
-		for (auto i = curveList.begin(); i != curveList.end(); i++)
-		{
-			bDraw = false;
-			auto c = (*i);
-
-			if (!c->GetMasking())
-			{
-				for (auto index = 0; index < c->GetNumPoints(); index++)
-				{
-					scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,
-						&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
-
-					viewPointNum++;
-				}
-			}
-			else
-			{
-				bDraw = true;
-			}
-
-			if (viewPointNum || bDraw)
-			{
-				POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
-				if (symbolPoint)
-				{
-					tempPoint.x = (float)symbolPoint[0].x;
-					tempPoint.y = (float)symbolPoint[0].y;
-					points.push_back(tempPoint);
-
-					delete symbolPoint;
-				}
-				viewPointNum = 0;
-			}
-		}
-
-		if (viewPointNum)
-		{
-			POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
-			if (symbolPoint)
-			{
-				tempPoint.x = (float)symbolPoint[0].x;
-				tempPoint.y = (float)symbolPoint[0].y;
-				points.push_back(tempPoint);
-
-				delete symbolPoint;
-			}
-			viewPointNum = 0;
-		}
-	}
-	else if (geom->GetType() == SGeometryType::Surface)
-	{
-		SSurface* geo = (SSurface*)geom;
-
-		// need coordinates that are not clipped.
-		std::vector<POINT> vp;
-		SCommonFuction::CalculateCenterOfGravityOfSurface(vp, geo, &CRect(scaler->sxMin, scaler->syMin, scaler->sxMax, scaler->syMax), scaler);
-
-		for (auto itor = vp.begin(); itor != vp.end(); itor++)
-		{
-			tempPoint.x = (float)(*itor).x;
-			tempPoint.y = (float)(*itor).y;
-			points.push_back(tempPoint);
-
-			break;
-		}
-	}
-}
-
-void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points)
-{
-	if (!fr) {
-		return;
-	}
-
-	auto geom = fr->GetGeometry();
-
-	if (!geom) {
-		return;
-	}
-
-	double rotation = 0;
-	double scaleFactor = 1;
-	int viewPointNum = 0;
-	int partsIndex = 1;
-	int lastPointIndex = -1;
-	unsigned preLoc = -1, curLoc = 0;
-	D2D1_POINT_2F tempPoint;
-
-	bool bDraw;
-
-	DWORD dwWorkStart = timeGetTime();
-
-	if (geom->GetType() == SGeometryType::Point)
-	{
-		SPoint* geo = (SPoint*)geom;
-		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
-		points.push_back(tempPoint);
-	}
-	else if (geom->GetType() == SGeometryType::CompositeCurve)
-	{
-		SCompositeCurve* geo = (SCompositeCurve*)geom;
-		std::list<SCurve*> curveList;
-		geo->GetCurveList(curveList);
-
-		for (auto i = curveList.begin(); i != curveList.end(); i++)
-		{
-			bDraw = false;
-			auto c = (*i);
-
-			if (!c->GetMasking())
-			{
-				for (auto index = 0; index < c->GetNumPoints(); index++)
-				{
-					scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,
-						&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
-
-					viewPointNum++;
-				}
-			}
-			else
-			{
-				bDraw = true;
-			}
-
-			if (viewPointNum || bDraw)
-			{
-				POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
-				if (symbolPoint)
-				{
-					tempPoint.x = (float)symbolPoint[0].x;
-					tempPoint.y = (float)symbolPoint[0].y;
-					points.push_back(tempPoint);
-
-					delete symbolPoint;
-				}
-				viewPointNum = 0;
-			}
-		}
-
-		if (viewPointNum)
-		{
-			POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
-			if (symbolPoint)
-			{
-				tempPoint.x = (float)symbolPoint[0].x;
-				tempPoint.y = (float)symbolPoint[0].y;
-				points.push_back(tempPoint);
-
-				delete symbolPoint;
-			}
-			viewPointNum = 0;
-		}
-	}
-	else if (geom->GetType() == SGeometryType::Surface)
-	{
-		SSurface* geo = (SSurface*)geom;
-
-		if (geo->m_centerPoint)
-		{
-			scaler->WorldToDevice_F(geo->m_centerPoint->x, geo->m_centerPoint->y, &tempPoint.x, &tempPoint.y);
-			points.push_back(tempPoint);
-		}
-	}
-}
+//#pragma warning(disable:4244)
+//void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points)
+//{
+//	if (!fr || !fr->GetGeometry()) {
+//		return;
+//	}
+//
+//	auto geom = fr->GetGeometry();
+//		
+//	int viewPointNum = 0;
+//	D2D1_POINT_2F tempPoint;
+//
+//	bool bDraw;
+//
+//	DWORD dwWorkStart = timeGetTime();
+//
+//	if (geom->GetType() == SGeometryType::Point)
+//	{
+//		SPoint* geo = (SPoint*)geom;
+//		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
+//		points.push_back(tempPoint);
+//	}
+//	else if (geom->GetType() == SGeometryType::Curve)
+//	{
+//		auto geo = (SCurve*)geom;
+//		auto cnt = geo->getNumPoint();
+//		POINT* sPoints = new POINT[cnt];
+//		for (int i = 0; i < cnt; i++)
+//		{
+//			scaler->WorldToDevice(geo->GetX(i), geo->GetY(i), &sPoints[i].x, &sPoints[i].y);
+//		}
+//		POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(sPoints, cnt, &scaler->GetScreenRect());
+//		delete[] sPoints;
+//		if (symbolPoint)
+//		{
+//			tempPoint.x = (float)symbolPoint[0].x;
+//			tempPoint.y = (float)symbolPoint[0].y;
+//			points.push_back(tempPoint);
+//
+//			delete symbolPoint;
+//		}
+//	}
+//	else if (geom->GetType() == SGeometryType::CompositeCurve)
+//	{
+//		SCompositeCurve* geo = (SCompositeCurve*)geom;
+//		std::list<SCurve*> curveList;
+//		geo->GetCurveList(curveList);
+//
+//		for (auto i = curveList.begin(); i != curveList.end(); i++)
+//		{
+//			bDraw = false;
+//			auto c = (*i);
+//
+//			if (!c->GetMasking())
+//			{
+//				for (auto index = 0; index < c->GetNumPoints(); index++)
+//				{
+//					scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,
+//						&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
+//
+//					viewPointNum++;
+//				}
+//			}
+//			else
+//			{
+//				bDraw = true;
+//			}
+//
+//			if (viewPointNum || bDraw)
+//			{
+//				POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//				if (symbolPoint)
+//				{
+//					tempPoint.x = (float)symbolPoint[0].x;
+//					tempPoint.y = (float)symbolPoint[0].y;
+//					points.push_back(tempPoint);
+//
+//					delete symbolPoint;
+//				}
+//				viewPointNum = 0;
+//			}
+//		}
+//
+//		if (viewPointNum)
+//		{
+//			POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//			if (symbolPoint)
+//			{
+//				tempPoint.x = (float)symbolPoint[0].x;
+//				tempPoint.y = (float)symbolPoint[0].y;
+//				points.push_back(tempPoint);
+//
+//				delete symbolPoint;
+//			}
+//			viewPointNum = 0;
+//		}
+//	}
+//	else if (geom->GetType() == SGeometryType::Surface)
+//	{
+//		SSurface* geo = (SSurface*)geom;
+//
+//		// need coordinates that are not clipped.
+//		std::vector<POINT> vp;
+//		SCommonFuction::CalculateCenterOfGravityOfSurface(vp, geo, &CRect(scaler->sxMin, scaler->syMin, scaler->sxMax, scaler->syMax), scaler);
+//
+//		for (auto itor = vp.begin(); itor != vp.end(); itor++)
+//		{
+//			tempPoint.x = (float)(*itor).x;
+//			tempPoint.y = (float)(*itor).y;
+//			points.push_back(tempPoint);
+//
+//			break;
+//		}
+//	}
+//}
+//
+//void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points)
+//{
+//	if (!fr) {
+//		return;
+//	}
+//
+//	auto geom = fr->GetGeometry();
+//
+//	if (!geom) {
+//		return;
+//	}
+//
+//	double rotation = 0;
+//	double scaleFactor = 1;
+//	int viewPointNum = 0;
+//	int partsIndex = 1;
+//	int lastPointIndex = -1;
+//	unsigned preLoc = -1, curLoc = 0;
+//	D2D1_POINT_2F tempPoint;
+//
+//	bool bDraw;
+//
+//	DWORD dwWorkStart = timeGetTime();
+//
+//	if (geom->GetType() == SGeometryType::Point)
+//	{
+//		SPoint* geo = (SPoint*)geom;
+//		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
+//		points.push_back(tempPoint);
+//	}
+//	else if (geom->GetType() == SGeometryType::CompositeCurve)
+//	{
+//		SCompositeCurve* geo = (SCompositeCurve*)geom;
+//		std::list<SCurve*> curveList;
+//		geo->GetCurveList(curveList);
+//
+//		for (auto i = curveList.begin(); i != curveList.end(); i++)
+//		{
+//			bDraw = false;
+//			auto c = (*i);
+//
+//			if (!c->GetMasking())
+//			{
+//				for (auto index = 0; index < c->GetNumPoints(); index++)
+//				{
+//					scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,
+//						&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
+//
+//					viewPointNum++;
+//				}
+//			}
+//			else
+//			{
+//				bDraw = true;
+//			}
+//
+//			if (viewPointNum || bDraw)
+//			{
+//				POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//				if (symbolPoint)
+//				{
+//					tempPoint.x = (float)symbolPoint[0].x;
+//					tempPoint.y = (float)symbolPoint[0].y;
+//					points.push_back(tempPoint);
+//
+//					delete symbolPoint;
+//				}
+//				viewPointNum = 0;
+//			}
+//		}
+//
+//		if (viewPointNum)
+//		{
+//			POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+//			if (symbolPoint)
+//			{
+//				tempPoint.x = (float)symbolPoint[0].x;
+//				tempPoint.y = (float)symbolPoint[0].y;
+//				points.push_back(tempPoint);
+//
+//				delete symbolPoint;
+//			}
+//			viewPointNum = 0;
+//		}
+//	}
+//	else if (geom->GetType() == SGeometryType::Surface)
+//	{
+//		SSurface* geo = (SSurface*)geom;
+//
+//		if (geo->m_centerPoint)
+//		{
+//			scaler->WorldToDevice_F(geo->m_centerPoint->x, geo->m_centerPoint->y, &tempPoint.x, &tempPoint.y);
+//			points.push_back(tempPoint);
+//		}
+//	}
+//}
 
 void SENC_TextInstruction::ChangePallete(PortrayalCatalogue* pc)
 {

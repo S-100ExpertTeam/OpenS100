@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "SVGReader.h"
-#include "Rectangle.h"
 
 #include <pugixml.hpp>
 

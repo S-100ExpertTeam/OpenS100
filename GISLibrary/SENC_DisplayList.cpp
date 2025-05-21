@@ -115,7 +115,7 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, int current
 		}
 		*/
 
-		if (instruction->viewingGroup > curViewingGroupLimit)
+		if (instruction->getViewingGroup(0) > curViewingGroupLimit)
 		{
 			continue;
 		}

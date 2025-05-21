@@ -115,26 +115,6 @@ bool ENCConfiguration::Open(std::string path)
 					ENCCommon::SAFETY_CONTOUR = atof(token.c_str());
 				}
 			}
-			else if (token.compare("DISPLAY_FONT_NAME") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					auto fontName = LibMFCUtil::ConvertCtoWC((char*)token.c_str());
-					ENCCommon::DISPLAY_FONT_NAME = fontName;
-					FontChanged();
-					delete[] fontName;
-				}
-			}
-			else if (token.compare("DISPLAY_FONT_SIZE") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					ENCCommon::DISPLAY_FONT_SIZE = atoi(token.c_str());
-					FontChanged();
-				}
-			}
 			else if (token.compare("SHALLOW_CONTOUR") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
@@ -170,31 +150,6 @@ bool ENCConfiguration::Open(std::string path)
 					else if (token.compare(strFalse) == 0)
 					{
 						ENCCommon::TEXTOUT = false;
-					}
-				}
-			}
-			//Load Day Dusk Night
-			else if (token.compare("m_eColorTable") == 0)
-			{
-				if (pstringTokenizer->hasMoreTokens())
-				{
-					token = pstringTokenizer->nextToken();
-					ENCCommon::m_eColorTable = static_cast<GeoMetryLibrary::ColorTable>(atoi(token.c_str()));
-
-					if (ENCCommon::m_eColorTable == GeoMetryLibrary::ColorTable::Day)
-					{
-						ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Day;
-						ColorTableChanged();
-					}
-					else if (ENCCommon::m_eColorTable == GeoMetryLibrary::ColorTable::Dusk)
-					{
-						ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Dusk;
-						ColorTableChanged();
-					}
-					else if (ENCCommon::m_eColorTable == GeoMetryLibrary::ColorTable::Night)
-					{
-						ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Night;
-						ColorTableChanged();
 					}
 				}
 			}
@@ -242,14 +197,4 @@ bool ENCConfiguration::Open(std::string path)
 bool ENCConfiguration::Save(std::string path)
 {
 	return true;
-}
-
-void ENCConfiguration::FontChanged()
-{
-	fontChanged = true;
-}
-
-void ENCConfiguration::ColorTableChanged()
-{
-	colorTableChanged = true;
 }

@@ -14,6 +14,8 @@ class FeatureCatalogue;
 class S100Layer : public Layer
 {
 public:
+	S100Layer();
+	S100Layer(int productNumber);
 	S100Layer(FeatureCatalogue* fc, PortrayalCatalogue* pc);
 	virtual ~S100Layer();
 

@@ -624,7 +624,10 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 						in->GetTextPoint()->SetElement(element);
 
-						if (!element->GetText()) element->SetText(new S100_Text());
+						if (!element->GetText())
+						{
+							element->SetText(new S100_Text());
+						}
 
 						//std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
 

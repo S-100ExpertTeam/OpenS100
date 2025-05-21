@@ -1,8 +1,10 @@
 #pragma once
+
 #include "S100_Color.h"
 #include "S100_OverrideColor.h"
 
 #include <string>
+
 class S100_Pixmap
 {
 public:

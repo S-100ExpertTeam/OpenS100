@@ -109,6 +109,62 @@ FeatureCatalogue* CatalogManager::getFC(std::string productId) const
 	return nullptr;
 }
 
+FeatureCatalogue* CatalogManager::getFC(std::string productId, Version version) const
+{
+	for (auto i = FCs.begin(); i != FCs.end(); i++)
+	{
+		if (productId.compare((*i)->getProductId()) == 0 && version == (*i)->getVersion())
+		{
+			return *i;
+		}
+	}
+
+	//Version currentVersion = version;
+	//
+	//while (currentVersion.isEmpty() == false)
+	//{
+	//	for (auto i = FCs.begin(); i != FCs.end(); i++)
+	//	{
+	//		if (productId.compare((*i)->getProductId()) == 0 && version == (*i)->getVersion())
+	//		{
+	//			return *i;
+	//		}
+	//	}
+
+	//	currentVersion = currentVersion.getReducedVersion();
+	//}
+
+	return nullptr;
+}
+
+PortrayalCatalogue* CatalogManager::getPC(std::string productId, Version version) const
+{
+	for (auto i = PCs.begin(); i != PCs.end(); i++)
+	{
+		if (productId.compare((*i)->getProduct()) == 0 && version == (*i)->getVersion())
+		{
+			return *i;
+		}
+	}
+
+	//Version currentVersion = version;
+
+	//while (currentVersion.isEmpty() == false)
+	//{
+	//	for (auto i = PCs.begin(); i != PCs.end(); i++)
+	//	{
+	//		if (productId.compare((*i)->getProduct()) == 0 && version == (*i)->getVersion())
+	//		{
+	//			return *i;
+	//		}
+	//	}
+
+	//	currentVersion = currentVersion.getReducedVersion();
+	//}
+	
+	return nullptr;
+}
+
 PortrayalCatalogue* CatalogManager::getPC(std::string productId) const
 {
 	PortrayalCatalogue* bpc = nullptr;
@@ -149,10 +205,22 @@ FeatureCatalogue* CatalogManager::getFC(int productId) const
 	return getFC(product);
 }
 
+FeatureCatalogue* CatalogManager::getFC(int productId, Version version) const
+{
+	auto product = "S-" + std::to_string(productId);
+	return getFC(product, version);
+}
+
 PortrayalCatalogue* CatalogManager::getPC(int productId) const
 {
 	auto product = "S-" + std::to_string(productId);
 	return getPC(product);
+}
+
+PortrayalCatalogue* CatalogManager::getPC(int productId, Version version) const
+{
+	auto product = "S-" + std::to_string(productId);
+	return getPC(product, version);
 }
 
 void CatalogManager::ChangeColorPallete(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke)

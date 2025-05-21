@@ -98,6 +98,9 @@
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -247,7 +250,6 @@
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Colors.cpp" />
     <ClCompile Include="CompositeLineStyle.cpp" />
-    <ClCompile Include="CoverageFill.cpp" />
     <ClCompile Include="CRSType.cpp" />
     <ClCompile Include="Dash.cpp" />
     <ClCompile Include="figure.cpp" />
@@ -263,7 +265,6 @@
     <ClCompile Include="Pen.cpp" />
     <ClCompile Include="PivotPoint.cpp" />
     <ClCompile Include="Point.cpp" />
-    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="S100ColorProfile.cpp" />
     <ClCompile Include="S100ColorProfiles.cpp" />
     <ClCompile Include="S100Data.cpp" />
@@ -299,7 +300,6 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="CompositeLineStyle.h" />
-    <ClInclude Include="CoverageFill.h" />
     <ClInclude Include="CRSType.h" />
     <ClInclude Include="CStringCompareNoCaseLessThan.h" />
     <ClInclude Include="Dash.h" />
@@ -318,7 +318,6 @@
     <ClInclude Include="Pen.h" />
     <ClInclude Include="PivotPoint.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="S100BaseModelGeometricPrimitive.h" />
     <ClInclude Include="S100ColorProfile.h" />

@@ -18,6 +18,7 @@ public:
 
 public:
 	bool Open(CString _filepath) override;
+	bool OpenMetadata(CString _filepath) override;
 	void Draw(HDC& hDC, Scaler* scaler, double offset = 0) override;
 
 	S102_FC_BathymetryCoverage* GetBathymetryCoverage();

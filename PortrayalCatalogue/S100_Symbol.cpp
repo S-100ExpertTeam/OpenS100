@@ -67,7 +67,8 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "scaleFactor") == 0)
 		{
-			scaleFactor = pugi::as_wide(instruction.child_value());
+			//scaleFactor = pugi::as_wide(instruction.child_value());
+			scaleFactor = std::stod(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "areaPlacement") == 0)
 		{
@@ -110,19 +111,9 @@ void S100_Symbol::SetRotationCRS(std::wstring& value)
 	rotationCRS = value;
 }
 
-void S100_Symbol::SetScaleFactor(std::wstring& value)
+void S100_Symbol::SetScaleFactor(double value)
 {
 	scaleFactor = value;
-}
-
-void S100_Symbol::SetAreaPlacement(S100_AreaPlacement* value)
-{
-	areaPlacement = value;
-}
-
-void S100_Symbol::SetLinePlacement(S100_LinePlacement* value)
-{
-	linePlacement = value;
 }
 
 std::wstring S100_Symbol::GetReference()
@@ -140,7 +131,7 @@ std::wstring S100_Symbol::GetRotationCRS()
 	return rotationCRS;
 }
 
-std::wstring S100_Symbol::GetScaleFactor()
+double S100_Symbol::GetScaleFactor()
 {
 	return scaleFactor;
 }
