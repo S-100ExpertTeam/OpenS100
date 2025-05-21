@@ -37,7 +37,6 @@
 #include "../PortrayalCatalogue/S100_LineInstruction.h"
 #include "../PortrayalCatalogue/S100_AreaInstruction.h"
 #include "../PortrayalCatalogue/S100_TextInstruction.h"
-#include "../PortrayalCatalogue/S100_AugmentedPath.h"
 #include "../PortrayalCatalogue/S100_AugmentedRay.h"
 #include "../PortrayalCatalogue/S100_AlertReference.h"
 
@@ -184,7 +183,7 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 {
 	si->displayPlane = tp->GetDisplayPlane().compare(L"UNDERRADAR") == 0 ? 0 : 1;
 	si->drawingPriority = tp->GetDrawingProiority();
-	si->viewingGroup = _wtoi(tp->GetViewingGroup(0).c_str());
+	si->addVewingGroup(_wtoi(tp->GetViewingGroup(0).c_str()));
 	si->featureReference = pugi::as_utf8(tp->GetFeatureReference());
 	si->scaleMinimum = tp->GetScaleMinimum();
 	si->scaleMaximum = tp->GetScaleMaximum();

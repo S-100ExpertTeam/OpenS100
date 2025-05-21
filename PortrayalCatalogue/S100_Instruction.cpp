@@ -229,3 +229,13 @@ S100_AlertReference S100_Instruction::getAlertReference()
 
 	return S100_AlertReference();
 }
+
+void S100_Instruction::addTimeValid(S100_TM_Period value)
+{
+	timeValid.push_back(value);
+}
+
+std::vector<S100_TM_Period> S100_Instruction::getTimeValid()
+{
+	return timeValid;
+}

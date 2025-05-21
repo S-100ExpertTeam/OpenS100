@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "S100_TM_Instant.h"
 
-namespace S100
-{
+//namespace S100
+//{
 
 	//TM_Instant::TM_Instant(Date date)
 	//{
@@ -44,4 +44,4 @@ namespace S100
 	//{
 	//	value = dateTime;
 	//}
-}
+//}

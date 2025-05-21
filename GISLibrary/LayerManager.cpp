@@ -544,14 +544,15 @@ void LayerManager::AddSymbolDrawing(
 
 		points.clear();
 
-		if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
-		{
-			instruction->GetDrawPointsDynamic(scaler, points);
-		}
-		else
-		{
-			instruction->GetDrawPoints(scaler, points);
-		}
+		//if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
+		//{
+		//	instruction->GetDrawPointsDynamic(scaler, points);
+		//}
+		//else
+		//{
+		//	instruction->GetDrawPoints(scaler, points);
+		//}
+		instruction->GetDrawPoints(scaler, points);
 
 		for (auto pi = points.begin(); pi != points.end(); pi++)
 		{
@@ -621,14 +622,15 @@ void LayerManager::AddSymbolDrawing(
 				auto instruction = (SENC_TextInstruction*)*i;
 				points.clear();
 
-				if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
-				{
-					instruction->GetDrawPointsDynamic(scaler, points);
-				}
-				else
-				{
-					instruction->GetDrawPoints(scaler, points);
-				}
+				//if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
+				//{
+				//	instruction->GetDrawPointsDynamic(scaler, points);
+				//}
+				//else
+				//{
+				//	instruction->GetDrawPoints(scaler, points);
+				//}
+				instruction->GetDrawPoints(scaler, points);
 
 				SENC_TextPoint* textPoint = instruction->textPoint;
 				auto itorTp = textPoint->elements.begin();

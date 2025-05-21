@@ -4,7 +4,8 @@
 #include "S100_LineStyle.h"
 #include "S100_AlertReference.h"
 
-#include "../FeatureCatalog/PrimitiveTypes.h"
+#include "..\\FeatureCatalog\\PrimitiveTypes.h"
+#include "..\\FeatureCatalog\\S100_TM_Period.h"
 
 #include <string>
 #include <optional>
@@ -36,18 +37,18 @@ protected:
 	*/
 	int type;
 
-	std::wstring featureReference;
 	std::optional<S100::CharacterString> id;
 	std::optional<S100::CharacterString> parentId;
 	std::optional<S100::Boolean> hover;
 	std::vector<std::wstring> viewingGroup;
-	std::list<S100_SpatialReference*> spatialReference;
 	std::wstring displayPlane;
 	S100::Integer drawingPriority = 0;
 	std::optional<S100::Integer> scaleMinimum = 0;
 	std::optional<S100::Integer> scaleMaximum = 0;
+	std::wstring featureReference;
+	std::list<S100_SpatialReference*> spatialReference;
 	std::optional<S100_AlertReference> alertReference;
-
+	std::vector<S100_TM_Period> timeValid;
 
 public:
 	void GetContents(pugi::xml_node node);
@@ -86,4 +87,8 @@ public:
 	int GetScaleMaximum();
 	bool hasAlertReference();
 	S100_AlertReference getAlertReference();
+
+	// timeValid
+	void addTimeValid(S100_TM_Period value);
+	std::vector<S100_TM_Period> getTimeValid();
 };

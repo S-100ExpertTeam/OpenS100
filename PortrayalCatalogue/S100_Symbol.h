@@ -17,11 +17,12 @@ private:
 	std::wstring reference;
 	double rotation = 0;
 	std::wstring rotationCRS;
-	std::wstring scaleFactor;
+	double scaleFactor = 1.0;
 
 	double offsetX = 0;
 	double offsetY = 0;
 
+private:
 	S100_AreaPlacement* areaPlacement = nullptr;
 	S100_LinePlacement* linePlacement = nullptr;
 
@@ -39,14 +40,12 @@ public:
 	void SetReference(std::wstring& value);
 	void SetRotation(double value);
 	void SetRotationCRS(std::wstring& value);
-	void SetScaleFactor(std::wstring& value);
-	void SetAreaPlacement(S100_AreaPlacement* value);
-	void SetLinePlacement(S100_LinePlacement* value);
+	void SetScaleFactor(double value);
 
 	std::wstring GetReference();
 	double GetRotation();
 	std::wstring GetRotationCRS();
-	std::wstring GetScaleFactor();
+	double GetScaleFactor();
 	S100_AreaPlacement* GetAreaPlacement();
 	S100_LinePlacement* GetLinePlacement();
 	//std::wstring GetId();
