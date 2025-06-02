@@ -533,6 +533,204 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //	}
 //}
 
+void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2F>& points)
+{
+	//auto geom = fr->GetGeometry();	
+
+	//double rotation = 0;
+	//double scaleFactor = 1;
+	//int viewPointNum = 0;
+	//int partsIndex = 1;
+	//int lastPointIndex = -1;
+	//bool bDraw;
+
+	//if (symbol)
+	//{
+	//	rotation = symbol->rotation;
+	//	scaleFactor = symbol->scaleFactor;
+	//}
+
+	//if (vectorPoint)
+	//{
+	//	SPoint geo;
+	//	geo.x = vectorPoint->x;
+	//	geo.y = vectorPoint->y;
+	//	projection(geo.x, geo.y);
+	//	D2D1_POINT_2F tempPoint;
+	//	scaler->WorldToDevice_F(geo.x, geo.y, &tempPoint.x, &tempPoint.y);
+	//	points.push_back(tempPoint);
+	//}
+	//else if (true == HasSpatialReference())
+	//{
+	//	for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
+	//	{
+	//		auto sr = *i;
+	//		if (sr->RCNM == 120 && 
+	//			geom->GetType() == SGeometryType::CompositeCurve)
+	//		{
+	//			SCompositeCurve* geo = (SCompositeCurve*)geom;
+	//			std::list<SCurve*> curveList;
+	//			geo->GetCurveList(curveList);
+	//			for (auto j = curveList.begin(); j != curveList.end(); j++)
+	//			{
+	//				auto curve = *j;
+	//				auto rcid = curve->GetRCID();
+	//				if (rcid == sr->reference)
+	//				{
+	//					int numPoints = curve->GetNumPoints();
+
+	//					POINT *screenPoints = new POINT[numPoints];
+
+	//					for (int k = 0; k < numPoints; k++)
+	//					{
+	//						scaler->WorldToDevice(
+	//							curve->GetX(k), curve->GetY(k),
+	//							&screenPoints[k].x, &screenPoints[k].y);
+	//					}
+
+	//					POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+
+	//					if (symbolPoint)
+	//					{
+	//						D2D1_POINT_2F d2Point;
+	//						d2Point.x = symbolPoint->x;
+	//						d2Point.y = symbolPoint->y;
+	//						delete symbolPoint;
+	//						points.push_back(d2Point);
+	//					}
+
+	//					delete[] screenPoints;
+	//					screenPoints = nullptr;
+	//				}
+	//			}
+	//		}
+	//		else if (sr->RCNM == 120 && 
+	//			geom->GetType() == SGeometryType::Surface)
+	//		{
+	//			SSurface* geo = (SSurface*)geom;
+	//			std::list<SCurve*> curveList;
+	//			geo->GetCurveList(curveList);
+
+	//			for (auto j = curveList.begin(); j != curveList.end(); j++)
+	//			{
+	//				auto curve = (*j);
+	//				auto rcid = curve->GetRCID();
+	//				if (rcid == sr->reference)
+	//				{
+	//					int numPoints = curve->GetNumPoints();
+	//					POINT *screenPoints = new POINT[numPoints];
+
+	//					for (int k = 0; k < numPoints; k++)
+	//					{
+	//						scaler->WorldToDevice(
+	//							curve->GetX(k), curve->GetY(k),
+	//							&screenPoints[k].x, &screenPoints[k].y);
+	//					}
+
+	//					POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(screenPoints, numPoints, &scaler->GetScreenRect());
+
+	//					if (symbolPoint)
+	//					{
+	//						D2D1_POINT_2F d2Point;
+	//						d2Point.x = symbolPoint->x;
+	//						d2Point.y = symbolPoint->y;
+	//						delete symbolPoint;
+	//						points.push_back(d2Point);
+	//					}
+
+	//					delete[] screenPoints;
+	//					screenPoints = nullptr;
+	//				}
+	//			}
+	//		}
+	//		else if (sr->RCNM == 125)
+	//		{
+	//		}
+	//		else if (sr->RCNM == 130)
+	//		{
+	//		}
+	//	}
+	//}
+	///*else if (geom->GetType() == SGeometryType::Point)
+	//{
+	//	D2D1_POINT_2F tempPoint;
+
+	//	auto mx = geom->GetX();
+	//	auto my = geom->GetY();
+
+	//	scaler->WorldToDevice_F(mx, my, &tempPoint.x, &tempPoint.y);
+	//	points.push_back(tempPoint);
+	//}
+	//else if (geom->GetType() == SGeometryType::CompositeCurve)
+	//{
+	//	SCompositeCurve* geo = (SCompositeCurve*)geom;
+	//	std::list<SCurve*> curveList;
+	//	geo->GetCurveList(curveList);
+
+	//	for (auto i = curveList.begin(); i != curveList.end(); i++)
+	//	{
+	//		bDraw = false;
+	//		auto c = (*i);
+	//		
+	//		if (!c->GetMasking())
+	//		{
+	//			for (auto index = 0; index < c->GetNumPoints(); index++)
+	//			{
+	//				scaler->WorldToDevice(c->m_pPoints[index].x, c->m_pPoints[index].y,
+	//					&SGeometry::viewPoints[viewPointNum].x, &SGeometry::viewPoints[viewPointNum].y);
+
+	//				viewPointNum++;
+	//			}
+	//		}
+	//		else
+	//		{
+	//			bDraw = true;
+	//		}
+	//		
+	//		if (viewPointNum || bDraw)
+	//		{
+	//			POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+	//			if (symbolPoint)
+	//			{
+	//				D2D1_POINT_2F tempPoint;
+	//				tempPoint.x = (float)symbolPoint[0].x;
+	//				tempPoint.y = (float)symbolPoint[0].y;
+	//				points.push_back(tempPoint);
+
+	//				delete symbolPoint;
+	//			}
+	//			viewPointNum = 0;
+	//		}
+	//	}
+
+	//	if (viewPointNum)
+	//	{
+	//		POINT *symbolPoint = SCommonFuction::GetCenterPointOfCurve(SGeometry::viewPoints, viewPointNum, &scaler->GetScreenRect());
+	//		if (symbolPoint)
+	//		{
+	//			D2D1_POINT_2F tempPoint;
+	//			tempPoint.x = (float)symbolPoint[0].x;
+	//			tempPoint.y = (float)symbolPoint[0].y;
+	//			points.push_back(tempPoint);
+
+	//			delete symbolPoint;
+	//		}
+	//		viewPointNum = 0;
+	//	}
+	//}*/
+	//else if (geom->GetType() == SGeometryType::Surface)
+	//{
+	//	SSurface* geo = (SSurface*)geom;
+
+	//	if (geo->m_centerPoint)
+	//	{
+	//		D2D1_POINT_2F tempPoint;
+	//		scaler->WorldToDevice_F(geo->m_centerPoint->x, geo->m_centerPoint->y, &tempPoint.x, &tempPoint.y);
+	//		points.push_back(tempPoint);
+	//	}
+	//}
+}
+
 void SENC_PointInstruction::FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output)
 {
 	auto s100PointInstruction = (S100_PointInstruction*)s100Instruction;

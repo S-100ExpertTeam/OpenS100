@@ -75,6 +75,8 @@ bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 	}
 	else if (!extension.CompareNoCase(L"gml"))
 	{
+		SetFeatureCatalog(lm->catalogManager->getFC(GetProductNumber()));
+		SetPC(lm->catalogManager->getPC(GetProductNumber()));
 		if (GetFC()->getProductId().compare("S-101") == 0)
 		{
 			m_spatialObject = new S101Cell(d2d1);

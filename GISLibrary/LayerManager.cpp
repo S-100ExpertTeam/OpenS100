@@ -552,7 +552,7 @@ void LayerManager::AddSymbolDrawing(
 		//{
 		//	instruction->GetDrawPoints(scaler, points);
 		//}
-		instruction->GetDrawPoints(scaler, points);
+		//instruction->GetDrawPoints(scaler, points);
 
 		for (auto pi = points.begin(); pi != points.end(); pi++)
 		{
