@@ -3,6 +3,8 @@
 
 #include <sstream>
 #include <vector>
+#include <string>
+#include <algorithm>
 
 Version::Version()
 {
@@ -151,8 +153,10 @@ int Version::convertToInt(const std::string& str) const
 
 bool Version::operator==(const Version& other) const
 {
-	return (major == other.major &&
-		minor == other.minor);
+	//return (major == other.major &&
+	//	minor == other.minor);
+
+	return (major == other.major);
 }
 
 bool Version::operator<(const Version& other) const
@@ -174,6 +178,25 @@ bool Version::operator<(const Version& other) const
 	return thisPatch < otherPatch;
 }
 
+bool Version::operator>(const Version& other) const
+{
+	if (*this == other || *this < other)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool Version::operator<=(const Version& other) const
+{
+	if (*this > other)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 Version Version::getMajorMinor()
 {
 	return Version{ major, minor, "", "" };
@@ -182,16 +205,6 @@ Version Version::getMajorMinor()
 Version Version::getMajor()
 {
 	return Version{ major, "", "", "" };
-}
-
-Version Version::getReducedVersion()
-{
-	if (patch.empty() == false || patch != "0")
-	{
-		return Version{ major, minor, "0", "0" };
-	}
-
-	return Version();
 }
 
 bool Version::isEmpty()

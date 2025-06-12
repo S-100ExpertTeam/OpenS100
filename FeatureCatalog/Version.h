@@ -39,12 +39,13 @@ public:
 
 	Version getMajorMinor();
 	Version getMajor();
-	Version getReducedVersion();
 	bool isEmpty();
 
 public:
 	bool operator==(const Version& other) const;
 	bool operator<(const Version& other) const;
+	bool operator>(const Version& other) const;
+	bool operator<=(const Version& other) const;
 
 private:
 	void init();

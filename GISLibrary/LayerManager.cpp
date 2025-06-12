@@ -296,7 +296,7 @@ int LayerManager::AddLayer(CString _filepath)
 		if (fc)
 		{
 			//layer = new S100Layer(fc, pc);
-			layer = new S100Layer(productNumber);
+			layer = new S100Layer(productNumber, fc, pc);
 			if ((S100Layer*)layer->Open(_filepath, D2, this) == false)
 			{
 				delete layer;

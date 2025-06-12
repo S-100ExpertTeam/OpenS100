@@ -161,7 +161,7 @@ PortrayalCatalogue* CatalogManager::getPC(std::string productId, Version version
 
 	//	currentVersion = currentVersion.getReducedVersion();
 	//}
-	
+	//
 	return nullptr;
 }
 

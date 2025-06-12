@@ -24,6 +24,13 @@ S100Layer::S100Layer(int productNumber) : Layer()
 	SetProductNumber(productNumber);
 }
 
+S100Layer::S100Layer(int productNumber, FeatureCatalogue* fc, PortrayalCatalogue* pc) : Layer()
+{
+	SetFeatureCatalog(fc);
+	SetPC(pc);
+	SetProductNumber(productNumber);
+}
+
 S100Layer::S100Layer(FeatureCatalogue* fc, PortrayalCatalogue *pc) : Layer()
 {	
 	SetFeatureCatalog(fc);
@@ -62,7 +69,7 @@ bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 
 		enc->RemoveAll();
 
-		if (!m_spatialObject->Open(_filepath) && fc && pc)
+		if (fc && pc && !m_spatialObject->Open(_filepath))
 		{
 			enc->GetVersion();
 			delete m_spatialObject;
