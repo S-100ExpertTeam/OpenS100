@@ -10,6 +10,8 @@
 
 #include <sstream>
 
+#include <geos_c.h>
+
 SCurve::SCurve() 
 {
 	
@@ -31,7 +33,9 @@ SCurve::SCurve(const SCurve& other) : SAbstractCurve(other)
 	}
 
 	if (other.centerPoint)
+	{
 		centerPoint = new GeoPoint(*other.centerPoint);
+	}
 }
 
 SCurve::~SCurve()
@@ -84,7 +88,9 @@ SCurve SCurve::operator=(const SCurve& other)
 	}
 
 	if (other.centerPoint)
+	{
 		centerPoint = new GeoPoint(*other.centerPoint);
+	}
 
 	return *this;
 }
