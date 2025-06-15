@@ -11,4 +11,5 @@ public:
 public:
     virtual SAbstractCurve operator=(const SAbstractCurve& other);
     virtual void Set(int index, double x, double y);
+    virtual void setCenterPoint();
 };

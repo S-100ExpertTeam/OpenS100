@@ -3,6 +3,7 @@
 #include "SAbstractCurve.h"
 
 class SPoint;
+
 class SCurve : public SAbstractCurve
 {
 public:
@@ -70,5 +71,6 @@ public:
 
 	bool isDraw();
 
-	void setCenterPoint();
+	void setCenterPoint() override;
+	GeoPoint getCenterPoint();
 };

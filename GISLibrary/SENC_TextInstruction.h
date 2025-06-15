@@ -14,7 +14,7 @@ public:
 	DWRITE_TEXT_METRICS* textMatrix = nullptr;
 
 public:
-	//void GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points);
+	void GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points);
 	//void GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points);
 	void ChangePallete(PortrayalCatalogue* pc);
 	void FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output);

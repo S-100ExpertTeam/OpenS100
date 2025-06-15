@@ -5,6 +5,12 @@
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/linestring.hpp>
+#include <boost/geometry/geometries/point_xy.hpp>
+
+namespace bg = boost::geometry;
+
 SCompositeCurve::SCompositeCurve()
 {
 	
@@ -291,22 +297,12 @@ void SCompositeCurve::Set(int index, double x, double y)
 
 double SCompositeCurve::GetX()
 {
-	if (m_listCurveLink.size() > 0)
-	{
-		return m_listCurveLink.front()->GetX();
-	}
-
-	return 0;
+	return getCenterPoint().GetX();
 }
 
 double SCompositeCurve::GetY()
 {
-	if (m_listCurveLink.size() > 0)
-	{
-		return m_listCurveLink.front()->GetY();
-	}
-
-	return 0;
+	return getCenterPoint().GetY();
 }
 
 double SCompositeCurve::GetX(int index)
@@ -386,3 +382,79 @@ void SCompositeCurve::setSuppress(bool value)
 	}
 }
 
+void SCompositeCurve::setCenterPoint()
+{
+	// allocate centerPoint for all sub curves
+	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
+	{
+		(*i)->setCenterPoint();
+	}
+
+	// allocate centerPoint for this composite curve
+	if (centerPoint == nullptr)
+	{
+		centerPoint = std::make_unique<GeoPoint>();
+
+		// Define Boost.Geometry types for 2D point and linestring
+		typedef bg::model::d2::point_xy<double> Point;
+		typedef bg::model::linestring<Point> LineString;
+
+		// Convert all curve points to a Boost.Geometry linestring (after inverse projection)
+		LineString line;
+		for (int i = 0; i < getNumPoint(); i++)
+		{
+			double x = GetX(i);
+			double y = GetY(i);
+			inverseProjection(x, y);
+			line.push_back(Point(x, y));
+		}
+
+		// Calculate the total length of the curve
+		double total_length = bg::length(line);
+
+		// Find the distance at the midpoint of the curve
+		double mid_distance = total_length / 2.0;
+
+		// Interpolate the midpoint along the curve
+		Point midpoint;
+		bg::line_interpolate(line, mid_distance, midpoint);
+
+		double x = midpoint.x();
+		double y = midpoint.y();
+
+		// Project the midpoint back to the original coordinate system
+		projection(x, y);
+		if (nullptr == centerPoint)
+		{
+			centerPoint = std::make_unique<GeoPoint>();
+		}
+
+		// Set the centerPoint to the calculated midpoint
+		centerPoint->SetPoint(x, y);
+	}
+}
+
+std::list<GeoPoint> SCompositeCurve::getAllCenterPoint()
+{
+	std::list<GeoPoint> result;
+
+	std::list<SCurve*> curveList;
+	GetCurveList(curveList);
+
+	for (auto i = curveList.begin(); i != curveList.end(); i++)
+	{
+		result.push_back((*i)->getCenterPoint());
+	}
+
+	return result;
+}
+
+GeoPoint SCompositeCurve::getCenterPoint()
+{
+	if (centerPoint == nullptr)
+	{
+		setCenterPoint();
+	}
+
+	return *centerPoint;
+}

@@ -552,7 +552,7 @@ void LayerManager::AddSymbolDrawing(
 		//{
 		//	instruction->GetDrawPoints(scaler, points);
 		//}
-		//instruction->GetDrawPoints(scaler, points);
+		instruction->GetDrawPoints(scaler, points);
 
 		for (auto pi = points.begin(); pi != points.end(); pi++)
 		{
@@ -630,7 +630,7 @@ void LayerManager::AddSymbolDrawing(
 				//{
 				//	instruction->GetDrawPoints(scaler, points);
 				//}
-				//instruction->GetDrawPoints(scaler, points);
+				instruction->GetDrawPoints(scaler, points);
 
 				SENC_TextPoint* textPoint = instruction->textPoint;
 				auto itorTp = textPoint->elements.begin();
