@@ -22,7 +22,6 @@ public:
 
 public:
     bool Open(CString _filepath) override;
-    bool OpenMetadata(CString _filepath) override;
 
     void SetMBR();
 };

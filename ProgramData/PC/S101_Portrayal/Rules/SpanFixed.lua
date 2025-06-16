@@ -26,8 +26,7 @@ function SpanFixed(feature, featurePortrayal, contextParameters)
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
 	
-	-- Note: SpanFixed binds horizontalClearanceFixed and verticalClearanceFixed. It doesn't bind featureName.
-	if HasClearance(feature) then
+	if HasHorizontalClearance(feature) then
 		local yOffset = 0
 		featurePortrayal:AddInstructions('TextAlignHorizontal:Center')
 		if feature.PrimitiveType == PrimitiveType.Curve then

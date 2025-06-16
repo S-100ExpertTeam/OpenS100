@@ -20,7 +20,9 @@
       <xsl:when test="$featureReference!=''">
         <xsl:element name="lineInstruction">
           <xsl:element name="featureReference">
-            <xsl:value-of select="$featureReference"/>
+            <xsl:attribute name="reference">
+              <xsl:value-of select="$featureReference"/>
+            </xsl:attribute>
           </xsl:element>
           <xsl:element name="viewingGroup">
             <xsl:value-of select="$viewingGroup"/>

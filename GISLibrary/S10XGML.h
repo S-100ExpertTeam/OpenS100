@@ -41,14 +41,7 @@ public:
     S100GML_NameSpace s100namespace;
 public:
     bool Open(CString _filepath) override;
-    bool OpenMetadata(CString _filepath) override;
-    bool Open(std::string fileContent);
-    bool OpenMetadata(std::string fileContent);
-    bool Open(pugi::xml_node doc, pugi::xml_parse_result result);
-    bool OpenMetadata(pugi::xml_node doc, pugi::xml_parse_result result);
     bool SaveToInputXML(std::string path) override;
-    std::string toInputXML();
-    pugi::xml_document toXmlDocument();
 
     bool ReadMembers(pugi::xml_node& node);
     GF::FeatureType* ReadFeature(pugi::xml_node& node, FeatureCatalogue* fc);

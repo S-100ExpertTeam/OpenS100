@@ -5,7 +5,6 @@
 #include "SENC_CompositeLineStyle.h"
 #include "SENC_CommonFuc.h"
 #include "PCOutputSchemaManager.h"
-#include "D2D1Resources.h"
 
 #include "../GISLibrary/R_FeatureRecord.h"
 
@@ -59,18 +58,8 @@ int iDebugCount_AumentedRayInstruction[100] = { 0 };
 
 #pragma warning(disable:4244)
 #pragma warning(disable:4838)
-void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc)
+void SENC_AugmentedRay::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* factory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
-	auto factory = d2->Factory();
-	auto brush = d2->SolidColorBrush();
-	auto rt = d2->RenderTarget();
-	auto solidStroke = d2->SolidStrokeStyle();
-
-	if (!factory || !brush || !rt || !solidStroke)
-	{
-		return;
-	}
-
 	if (nullptr == fr || nullptr == fr->GetGeometry())
 	{
 		return;
@@ -217,7 +206,7 @@ void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Portr
 				}
 				else
 				{
-					rt->DrawGeometry(pGeometry, brush, PEN_WIDTH, solidStroke);
+					rt->DrawGeometry(pGeometry, brush, PEN_WIDTH, (*strokeGroup)[0]);
 				}
 
 				SafeRelease(&pGeometry);

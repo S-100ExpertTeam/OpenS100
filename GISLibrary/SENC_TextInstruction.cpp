@@ -64,26 +64,6 @@ void SENC_TextInstruction::GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_P
 		scaler->WorldToDevice_F(geo->x, geo->y, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
-	else if (geom->GetType() == SGeometryType::Curve)
-	{
-		auto geo = (SCurve*)geom;
-		auto cnt = geo->getNumPoint();
-		POINT* sPoints = new POINT[cnt];
-		for (int i = 0; i < cnt; i++)
-		{
-			scaler->WorldToDevice(geo->GetX(i), geo->GetY(i), &sPoints[i].x, &sPoints[i].y);
-		}
-		POINT* symbolPoint = SCommonFuction::GetCenterPointOfCurve(sPoints, cnt, &scaler->GetScreenRect());
-		delete[] sPoints;
-		if (symbolPoint)
-		{
-			tempPoint.x = (float)symbolPoint[0].x;
-			tempPoint.y = (float)symbolPoint[0].y;
-			points.push_back(tempPoint);
-
-			delete symbolPoint;
-		}
-	}
 	else if (geom->GetType() == SGeometryType::CompositeCurve)
 	{
 		SCompositeCurve* geo = (SCompositeCurve*)geom;

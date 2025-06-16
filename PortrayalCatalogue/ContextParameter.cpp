@@ -84,21 +84,6 @@ namespace Portrayal
 		this->value = value;
 	}
 
-	std::string ContextParameter::getName()
-	{
-		auto cntDes = GetCountOfDescription();
-		if (cntDes > 0)
-		{
-			auto des = GetDescription(0);
-			if (des)
-			{
-				return des->getName();
-			}
-		}
-
-		return std::string("");
-	}
-
 	void ContextParameter::GetContents(pugi::xml_node& node)
 	{
 		auto idAttri = node.attribute("id");

@@ -38,7 +38,6 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 		featurePortrayal:AddInstructions('ViewingGroup:27070;DrawingPriority:24;DisplayPlane:UnderRadar;Hover:true')
 	end
 
-	local textOffsetLines = featurePortrayal:GetColocatedTextCount()	-- lines of text output by co-located features
 	local informationFound = false
 	for isc, sectorCharacteristic in ipairs(feature.sectorCharacteristics) do
 		
@@ -236,9 +235,8 @@ function LightSectored(feature, featurePortrayal, contextParameters)
 			local description = LITDSN02(feature.categoryOfLight[1], sectorCharacteristic, sectorColors, feature.height, vnr, feature.status, vnr2, numRanges)	
 			featurePortrayal:AddInstructions('ClearGeometry;FontColor:CHBLK')
 			featurePortrayal:AddInstructions('LocalOffset:7.02,0;TextAlignHorizontal:Start;TextAlignVertical:Center')
-			local textVerticalOffset = (textOffsetLines + isc - 1) * -3.51
-			if textVerticalOffset ~= 0 then
-				featurePortrayal:AddInstructions('TextVerticalOffset:' .. textVerticalOffset)
+			if isc > 1 then
+				featurePortrayal:AddInstructions('TextVerticalOffset:' .. (isc - 1) * -3.51)
 			end
 			featurePortrayal:AddTextInstruction(EncodeString(description), 23, 24, 27070, 24, true)
 		end

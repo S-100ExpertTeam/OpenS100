@@ -5,6 +5,7 @@
 -- #119
 
 -- Referenced CSPs.
+require 'DEPVAL02'
 require 'QUAPNT02'
 require 'UDWHAZ05'
 require 'SNDFRM04'

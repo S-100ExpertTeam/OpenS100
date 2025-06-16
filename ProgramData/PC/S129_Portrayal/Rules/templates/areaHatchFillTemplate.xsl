@@ -21,7 +21,9 @@
       <xsl:when test="$featureReference!=''">
         <xsl:element name="areaInstruction">
           <xsl:element name="featureReference">
-            <xsl:value-of select="$featureReference"/>
+            <xsl:attribute name="reference">
+              <xsl:value-of select="$featureReference"/>
+            </xsl:attribute>
           </xsl:element>
           <xsl:element name="viewingGroup">
             <xsl:value-of select="$viewingGroup"/>
@@ -78,3 +80,4 @@
     </xsl:choose>
   </xsl:template>
 </xsl:transform>
+

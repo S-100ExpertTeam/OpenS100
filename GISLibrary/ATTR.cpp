@@ -52,5 +52,5 @@ std::string ATTR::getValueAsString()
 
 std::wstring ATTR::getValueAsWString()
 {
-	return m_atvl;
+	return m_atvl.GetString();
 }

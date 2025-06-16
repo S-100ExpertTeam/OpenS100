@@ -7,9 +7,6 @@
 #include "SENC_HatchFill.h"
 #include "SENC_CommonFuc.h"
 #include "PCOutputSchemaManager.h"
-#include "GISLibrary.h"
-
-#include "..\\S100Engine\\AreaPatternBitmap.h"
 
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
 #include "..\\PortrayalCatalogue\\S100_ColorFill.h"
@@ -64,16 +61,8 @@ SENC_AreaFillBase* SENC_AreaInstruction::GetAreaFill()
 }
 
 // Area Instruction
-void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc)
+void SENC_AreaInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* pDirect2dFactory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
-	auto rt = d2->RenderTarget();
-	auto pDirect2dFactory = d2->Factory();
-	auto brush = d2->SolidColorBrush();
-	if (!brush || !pDirect2dFactory || !rt)
-	{
-		return;
-	}
-
 	auto surface = (SSurface*)fr->GetGeometry();
 
 	if (areaFill)
@@ -180,37 +169,19 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 				auto patternMap = &pc->GetS100PCManager()->areaFillInfo.patternMap;
 				auto i = patternMap->find(symbolFill->GetFileTitle().c_str());
 
-				ID2D1Brush* imageBrush = nullptr;
-				AreaPatternBitmap* bitmapImage = nullptr;
-
-				// Symbol Fill을 별도의 파일(AreaFills)에서 읽은 경우
-				if (symbolFill->GetFileTitle().empty() == false)
+				if (i == patternMap->end())
 				{
-					if (i != patternMap->end())
-					{
-						imageBrush = i->second->pBitmapBrush;
-					}
-				}
-				else
-				{
-					auto areaFill = symbolFill->as_AreaFill();
-					bitmapImage = pc->GetS100PCManager()->CreateBitmapImage(areaFill.get(), pDirect2dFactory, d2->pImagingFactory, d2->SolidStrokeStyle());
-					if (bitmapImage)
-					{
-						bitmapImage->pBitmapBrush = pc->GetS100PCManager()->CreateBitmapBrush(bitmapImage, rt);
-						imageBrush = bitmapImage->pBitmapBrush;
-						imageBrush->SetTransform(scaler->GetInverseMatrix());
-					}
+					i = patternMap->find(L"QUESMRK1");
 				}
 
-				if (imageBrush != nullptr)
+				if (i != patternMap->end())
 				{
 					if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 					{
 						auto geometry = surface->GetD2Geometry();
 						if (geometry)
 						{
-							rt->FillGeometry(geometry, imageBrush);
+							rt->FillGeometry(geometry, i->second->pBitmapBrush);
 						}
 					}
 					else
@@ -221,18 +192,24 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 							D2D1_MATRIX_3X2_F oldMatrix;
 							rt->GetTransform(&oldMatrix);
 							rt->SetTransform(D2D1::Matrix3x2F::Identity());
-							imageBrush->SetTransform(D2D1::Matrix3x2F::Identity());
-							rt->FillGeometry(geometry, imageBrush);
+							rt->SetTransform(
+								D2D1::Matrix3x2F::Rotation(
+									(float)scaler->GetRotationDegree(),
+									D2D1::Point2F((float)scaler->sox, (float)scaler->soy))
+							);
+
+							auto featureMBR = surface->GetMBR();
+							long sxmin = 0;
+							long symin = 0;
+							scaler->WorldToDevice(featureMBR.xmin, featureMBR.ymax, &sxmin, &symin);
+
+							i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Identity());
+							i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Rotation((FLOAT)(- scaler->GetRotationDegree())));
+							rt->FillGeometry(geometry, i->second->pBitmapBrush);
 							rt->SetTransform(oldMatrix);
 							SafeRelease(&geometry);
 						}
 					}
-				}
-
-				if (bitmapImage)
-				{
-					delete bitmapImage;
-					bitmapImage = nullptr;
 				}
 			}
 			break;
@@ -296,52 +273,37 @@ void SENC_AreaInstruction::FromS100Instruction(
 		case 4: // Symbol Fill
 			areaFill = new SENC_SymbolFill();
 			symbolFill = (SENC_SymbolFill*)areaFill;
+
 			auto s100SymbolFill = (S100_SymbolFill*)s100AreaInstruction->GetAreaFill();
 
 			symbolFill->areaCRSType = SENC_CommonFuc::GetAreaCRSType(s100SymbolFill->GetAreaCRS());
 
 			areaFill->SetFileTitle(s100SymbolFill->GetFileTitle());
 
-			auto s100Symbol = s100SymbolFill->GetSymbol();
-			if (s100Symbol)
-			{
-				symbolFill->symbol = new SENC_Symbol();
-				symbolFill->symbol->reference = s100Symbol->GetReference();
-				if (s100Symbol->GetRotation())
-				{
-					symbolFill->symbol->rotation = s100Symbol->GetRotation();
-				}
-				symbolFill->symbol->rotationCRS = SENC_CommonFuc::GetRotationCRS(s100Symbol->GetRotationCRS());
-				symbolFill->symbol->scaleFactor = (float)(_wtof(s100Symbol->GetScaleFactor().c_str()));
+			//if (s100SymbolFill->GetSymbol())
+			//{
+			//	symbolFill->symbol = new SENC_Symbol();
+			//	symbolFill->symbol->reference = s100SymbolFill->GetSymbol()->GetReference();
 
+			//	if (s100SymbolFill->GetSymbol()->GetRotation())
+			//	{
+			//		symbolFill->symbol->rotation = s100SymbolFill->GetSymbol()->GetRotation();
+			//	}
 
-				auto svgSymbolManger = &(pc->GetS100PCManager()->s100SymbolManager);
-				auto svg = svgSymbolManger->GetSVG(symbolFill->symbol->reference);
+			//	symbolFill->symbol->rotationCRS = SENC_CommonFuc::GetRotationCRS(s100SymbolFill->GetSymbol()->GetRotationCRS());
+			//	symbolFill->symbol->scaleFactor = (float)(_wtof(s100SymbolFill->GetSymbol()->GetScaleFactor().c_str()));
+			//}
 
-				if (svg == nullptr)
-				{
-					svg = svgSymbolManger->GetSVG(L"QUESMRK1");
-				}
-				else
-				{
-					symbolFill->symbol->pSvg = svg;
-				}
-
-				symbolFill->symbol->offset.x = s100Symbol->GetOffsetX();
-				symbolFill->symbol->offset.y = s100Symbol->GetOffsetY();
-			}
-
-			if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1())
-			{
-				symbolFill->v1.x = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1()->GetX();
-				symbolFill->v1.y = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV1()->GetY();
-			}
-
-			if (((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2())
-			{
-				symbolFill->v2.x = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2()->GetX();
-				symbolFill->v2.y = ((S100_SymbolFill*)s100AreaInstruction->GetAreaFill())->GetV2()->GetY();
-			}
+			//if (s100SymbolFill->GetV1())
+			//{
+			//	symbolFill->v1.x = s100SymbolFill->GetV1()->GetX();
+			//	symbolFill->v1.y = s100SymbolFill->GetV1()->GetY();
+			//}
+			//if (s100SymbolFill->GetV2())
+			//{
+			//	symbolFill->v2.x = s100SymbolFill->GetV2()->GetX();
+			//	symbolFill->v2.y = s100SymbolFill->GetV2()->GetY();
+			//}
 		}
 	}
 }

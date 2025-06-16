@@ -8,14 +8,6 @@ Version::Version()
 {
 }
 
-Version::Version(std::string major, std::string minor, std::string patch, std::string working)
-{
-	this->major = major;
-	this->minor = minor;
-	this->patch = patch;
-	this->working = working;
-}
-
 Version::Version(const Version& other)
 	: major(other.major),
 	minor(other.minor),
@@ -152,7 +144,8 @@ int Version::convertToInt(const std::string& str) const
 bool Version::operator==(const Version& other) const
 {
 	return (major == other.major &&
-		minor == other.minor);
+		minor == other.minor &&
+		patch == other.patch);
 }
 
 bool Version::operator<(const Version& other) const
@@ -172,34 +165,4 @@ bool Version::operator<(const Version& other) const
 		return thisMinor < otherMinor;
 
 	return thisPatch < otherPatch;
-}
-
-Version Version::getMajorMinor()
-{
-	return Version{ major, minor, "", "" };
-}
-
-Version Version::getMajor()
-{
-	return Version{ major, "", "", "" };
-}
-
-Version Version::getReducedVersion()
-{
-	if (patch.empty() == false || patch != "0")
-	{
-		return Version{ major, minor, "0", "0" };
-	}
-
-	return Version();
-}
-
-bool Version::isEmpty()
-{
-	if (major.empty() || major == "0")
-	{
-		return true;
-	}
-
-	return false;
 }

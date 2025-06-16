@@ -14,13 +14,13 @@ public:
 
 private:
 	std::wstring width;
-	GraphicBasePackage::Color color;
+	GraphicBasePackage::Color* color;
 
 public: 
 	void GetContents(pugi::xml_node& node);
 
 	void SetWidth(std::wstring& value);
 	std::wstring GetWidth();
-	void SetColor(GraphicBasePackage::Color value);
-	GraphicBasePackage::Color& GetColor();
+	void SetColor(GraphicBasePackage::Color* value);
+	GraphicBasePackage::Color* GetColor();
 };

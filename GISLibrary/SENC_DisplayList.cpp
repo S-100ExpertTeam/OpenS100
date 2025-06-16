@@ -122,7 +122,8 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, int current
 
 		auto geom = instruction->fr->GetGeometry();
 
-		if (geom)
+		if (false == instruction->suppressedInstance &&
+			geom)
 		{
 			if (ENCCommon::APPLY_SCALE_MIN == TRUE)
 			{

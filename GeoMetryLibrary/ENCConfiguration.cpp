@@ -91,6 +91,21 @@ bool ENCConfiguration::Open(std::string path)
 					}
 				}
 			}
+			else if (token.compare("CONTOUR_LABELS") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::CONTOUR_LABELS = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::CONTOUR_LABELS = false;
+					}
+				}
+			}
 			else if (token.compare("DEEP_CONTOUR") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
@@ -107,6 +122,45 @@ bool ENCConfiguration::Open(std::string path)
 					ENCCommon::DISPLAY_MODE = static_cast<GeoMetryLibrary::DisplayModeTable>(atoi(token.c_str()));
 				}
 			}
+			else if (token.compare("DrawingType") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					ENCCommon::DrawingType = atoi(token.c_str());
+				}
+			}
+			else if (token.compare("LIGHTS") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::LIGHTS = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::LIGHTS = false;
+					}
+				}
+			}
+			else if (token.compare("OVER_GROUP") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					ENCCommon::OVER_GROUP = _atoi64(token.c_str());
+				}
+			}
+			else if (token.compare("SAFETY_DEPTH") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					ENCCommon::SAFETY_DEPTH = atof(token.c_str());
+				}
+			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
@@ -115,12 +169,62 @@ bool ENCConfiguration::Open(std::string path)
 					ENCCommon::SAFETY_CONTOUR = atof(token.c_str());
 				}
 			}
+			else if (token.compare("DISPLAY_FONT_NAME") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					auto fontName = LibMFCUtil::ConvertCtoWC((char*)token.c_str());
+					ENCCommon::DISPLAY_FONT_NAME = fontName;
+					FontChanged();
+					delete[] fontName;
+				}
+			}
+			else if (token.compare("DISPLAY_FONT_SIZE") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					ENCCommon::DISPLAY_FONT_SIZE = atoi(token.c_str());
+					FontChanged();
+				}
+			}
 			else if (token.compare("SHALLOW_CONTOUR") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
 				{
 					token = pstringTokenizer->nextToken();
 					ENCCommon::SHALLOW_CONTOUR = atof(token.c_str());
+				}
+			}
+			else if (token.compare("SHALLOW_PATTERN") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::SHALLOW_PATTERN = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::SHALLOW_PATTERN = false;
+					}
+				}
+			}
+			else if (token.compare("SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER = false;
+					}
 				}
 			}
 			else if (token.compare("FULL_SECTORS") == 0)
@@ -138,6 +242,96 @@ bool ENCConfiguration::Open(std::string path)
 					}
 				}
 			}
+			else if (token.compare("SHOW_NOBJNM") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::SHOW_NOBJNM = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::SHOW_NOBJNM = false;
+					}
+				}
+			}
+			else if (token.compare("SHOW_LIST_ABBREVIATION") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::SHOW_LIST_ABBREVIATION = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::SHOW_LIST_ABBREVIATION = false;
+					}
+				}
+			}
+			else if (token.compare("WGS84_TEXT_TYPE") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::WGS84_TEXT_TYPE = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::WGS84_TEXT_TYPE = false;
+					}
+				}
+			}
+			else if (token.compare("SOUNDING") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::SOUNDING = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::SOUNDING = false;
+					}
+				}
+			}
+			else if (token.compare("SymbolizedAreaBoundary") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::SymbolizedAreaBoundary = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::SymbolizedAreaBoundary = false;
+					}
+				}
+			}
+			else if (token.compare("SeabedType") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::SeabedAreaType = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::SeabedAreaType = false;
+					}
+				}
+			}
 			else if (token.compare("TEXTOUT") == 0)
 			{
 				if (pstringTokenizer->hasMoreTokens())
@@ -151,6 +345,55 @@ bool ENCConfiguration::Open(std::string path)
 					{
 						ENCCommon::TEXTOUT = false;
 					}
+				}
+			}
+			else if (token.compare("TWO_SHADES") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					if (token.compare(strTrue) == 0)
+					{
+						ENCCommon::TWO_SHADES = true;
+					}
+					else if (token.compare(strFalse) == 0)
+					{
+						ENCCommon::TWO_SHADES = false;
+					}
+				}
+			}
+
+			//Load Day Dusk Night
+			else if (token.compare("m_eColorTable") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					ENCCommon::m_eColorTable = static_cast<GeoMetryLibrary::ColorTable>(atoi(token.c_str()));
+
+					if (ENCCommon::m_eColorTable == GeoMetryLibrary::ColorTable::Day)
+					{
+						ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Day;
+						ColorTableChanged();
+					}
+					else if (ENCCommon::m_eColorTable == GeoMetryLibrary::ColorTable::Dusk)
+					{
+						ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Dusk;
+						ColorTableChanged();
+					}
+					else if (ENCCommon::m_eColorTable == GeoMetryLibrary::ColorTable::Night)
+					{
+						ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTable::Night;
+						ColorTableChanged();
+					}
+				}
+			}
+			else if (token.compare("UNIT_DISTANCE") == 0)
+			{
+				if (pstringTokenizer->hasMoreTokens())
+				{
+					token = pstringTokenizer->nextToken();
+					ENCCommon::UNIT_DISTANCE = static_cast<GeoMetryLibrary::UnitDistance>(atoi(token.c_str()));
 				}
 			}
 			else if (token.compare("OBJECT_SHOW_SETTING_BEGIN") == 0)
@@ -183,6 +426,13 @@ bool ENCConfiguration::Open(std::string path)
 					if (objectCode > 0)
 					{
 						std::unordered_map<int, bool>::iterator ositor;
+
+						ositor = ENCCommon::objectDisplaySettings.find(objectCode);
+						if (ositor != ENCCommon::objectDisplaySettings.end())
+						{
+							ositor->second = objectValue;
+
+						}
 					}
 					getline(ifs, strLine);
 				}
@@ -197,4 +447,14 @@ bool ENCConfiguration::Open(std::string path)
 bool ENCConfiguration::Save(std::string path)
 {
 	return true;
+}
+
+void ENCConfiguration::FontChanged()
+{
+	fontChanged = true;
+}
+
+void ENCConfiguration::ColorTableChanged()
+{
+	colorTableChanged = true;
 }

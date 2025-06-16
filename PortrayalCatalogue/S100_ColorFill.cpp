@@ -9,7 +9,8 @@ S100_ColorFill::S100_ColorFill()
 
 S100_ColorFill::~S100_ColorFill()
 {
-	if (color) delete color;
+	if (color)
+		delete color, color = nullptr;
 }
 
 void S100_ColorFill::GetContents(pugi::xml_node node) 
@@ -24,12 +25,9 @@ void S100_ColorFill::GetContents(pugi::xml_node node)
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName,"color"))
 		{
-			if (!color) color = new S100_Color();
+			if (!color)
+				color = new S100_Color();
 			color->GetContents(instruction);
-		}
-		else
-		{
-			
 		}
 	}
 }
@@ -37,6 +35,20 @@ void S100_ColorFill::GetContents(pugi::xml_node node)
 void S100_ColorFill::SetColor(S100_Color* value) 
 {
 	color = value;
+}
+
+void S100_ColorFill::SetColor(std::wstring& token, std::wstring& name, std::wstring& transparency)
+{
+	if (token.empty())
+		return;
+
+	if (!color)
+		color = new S100_Color();
+
+	color->SetToken(token);
+	color->SetName(name);
+	if (!transparency.empty())
+		color->SetTransparency(transparency);
 }
 
 S100_Color* S100_ColorFill::GetColor() 

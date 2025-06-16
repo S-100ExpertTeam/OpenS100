@@ -14,16 +14,6 @@
 
 #include <sstream>
 
-S100Layer::S100Layer() : Layer()
-{
-
-}
-
-S100Layer::S100Layer(int productNumber) : Layer()
-{
-	SetProductNumber(productNumber);
-}
-
 S100Layer::S100Layer(FeatureCatalogue* fc, PortrayalCatalogue *pc) : Layer()
 {	
 	SetFeatureCatalog(fc);
@@ -48,25 +38,9 @@ bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 
 		auto enc = (S101Cell*)m_spatialObject;
 
-		FeatureCatalogue* fc = nullptr;
-		PortrayalCatalogue* pc = nullptr;
-
-		if (enc->OpenMetadata(_filepath))
+		if (!m_spatialObject->Open(_filepath))
 		{
-			auto version = enc->GetVersion();
-			fc = lm->catalogManager->getFC(GetProductNumber(), version);
-			pc = lm->catalogManager->getPC(GetProductNumber(), version);
-			SetFeatureCatalog(fc);
-			SetPC(pc);
-		}
-
-		enc->RemoveAll();
-
-		if (!m_spatialObject->Open(_filepath) && fc && pc)
-		{
-			enc->GetVersion();
-			delete m_spatialObject;
-			m_spatialObject = nullptr;
+			delete enc;
 			return false;
 		}
 
@@ -335,7 +309,7 @@ void S100Layer::BuildPortrayalCatalogue()
 	{
 		auto gml = (S10XGML*)m_spatialObject;
 		gml->SaveToInputXML("..\\TEMP\\input.xml");
-		ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml");
+		ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml", this);
 		auto s100so = (S100SpatialObject*)m_spatialObject;
 		s100so->OpenOutputXML("..\\TEMP\\output.xml");
 	}

@@ -131,7 +131,7 @@ void S100PCManager::DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRender
 					width = (FLOAT)(pLineStyle->pen->width / 0.32);
 					color = GetS100ColorProfile()->GetColor(pLineStyle->pen->color.GetToken());
 					pBrush->SetColor(color);
-					pBrush->SetOpacity(1 - pLineStyle->pen->color.GetTransparency());
+					pBrush->SetOpacity(pLineStyle->pen->color.GetTransparency());
 				}
 				pRenderTarget->DrawLine(p1, p2, pBrush, width, pStrokeStyle);
 			}
@@ -185,47 +185,34 @@ void S100PCManager::DrawAreaFill(std::wstring _symbolName, ID2D1RenderTarget* pR
 		return;
 	}
 
-	DrawAreaFill(pAreaFill, pRenderTarget, pBrush, pStrokeStyle, paletteName);
-}
-
-void S100PCManager::DrawAreaFill(AreaFill* areaFill, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, std::wstring paletteName)
-{
-	SVGReader* pSVG = s100SymbolManager.GetSVG(areaFill->_symbolReference);
+	SVGReader* pSVG = s100SymbolManager.GetSVG(pAreaFill->_symbolReference);
 
 	if (!pSVG) return;
 
-	float width = areaFill->v1_x;
-	float height = areaFill->v2_y;
+	float width = pAreaFill->v1_x;
+	float height = pAreaFill->v2_y;
 
-	if (areaFill->v1_y < 0.0001 && areaFill->v2_x < 0.0001)
+	if (pAreaFill->v1_y < 0.0001 && pAreaFill->v2_x < 0.0001)
 	{
 		D2D1_POINT_2F point1 = {
 			0,
 			0
 		};
-		point1.x += areaFill->offset_x;
-		point1.y += areaFill->offset_y;
 
 		D2D1_POINT_2F point2 = {
-			areaFill->v1_x,
+			pAreaFill->v1_x,
 			0
 		};
-		point2.x += areaFill->offset_x;
-		point2.y += areaFill->offset_y;
 
 		D2D1_POINT_2F point3 = {
-			areaFill->v1_x,
-			areaFill->v2_y
+			pAreaFill->v1_x,
+			pAreaFill->v2_y
 		};
-		point3.x += areaFill->offset_x;
-		point3.y += areaFill->offset_y;
 
 		D2D1_POINT_2F point4 = {
 			0,
-			areaFill->v2_y
+			pAreaFill->v2_y
 		};
-		point4.x += areaFill->offset_x;
-		point4.y += areaFill->offset_y;
 
 		point1.x *= ENCCommon::DISPLAY_SYMBOL_SCALE;
 		point1.y *= ENCCommon::DISPLAY_SYMBOL_SCALE;
@@ -236,47 +223,37 @@ void S100PCManager::DrawAreaFill(AreaFill* areaFill, ID2D1RenderTarget* pRenderT
 		point4.x *= ENCCommon::DISPLAY_SYMBOL_SCALE;
 		point4.y *= ENCCommon::DISPLAY_SYMBOL_SCALE;
 
-		Draw(areaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point1, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
-		Draw(areaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point2, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
-		Draw(areaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point3, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
-		Draw(areaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point4, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
+		Draw(pAreaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point1, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
+		Draw(pAreaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point2, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
+		Draw(pAreaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point3, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
+		Draw(pAreaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point4, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
 	}
 	else
 	{
-		D2D1_POINT_2F point1 = {
+		D2D1_POINT_2F point1 = { 
 			0,
 			0
 		};
-		point1.x += areaFill->offset_x;
-		point1.y += areaFill->offset_y;
 
-		D2D1_POINT_2F point2 = {
-			areaFill->v1_x,
+		D2D1_POINT_2F point2 = { 
+			pAreaFill->v1_x,
 			0
 		};
-		point2.x += areaFill->offset_x;
-		point2.y += areaFill->offset_y;
 
 		D2D1_POINT_2F point3 = {
-			areaFill->v1_x - width / 2,
+			pAreaFill->v1_x - width / 2,
 			height
 		};
-		point3.x += areaFill->offset_x;
-		point3.y += areaFill->offset_y;
 
 		D2D1_POINT_2F point4 = {
-			0,
+			0, 
 			height * 2
 		};
-		point4.x += areaFill->offset_x;
-		point4.y += areaFill->offset_y;
 
-		D2D1_POINT_2F point5 = {
-			areaFill->v1_x,
+		D2D1_POINT_2F point5 = { 
+			pAreaFill->v1_x,
 			height * 2
 		};
-		point5.x += areaFill->offset_x;
-		point5.y += areaFill->offset_y;
 
 		point1.x *= ENCCommon::DISPLAY_SYMBOL_SCALE;
 		point1.y *= ENCCommon::DISPLAY_SYMBOL_SCALE;
@@ -289,11 +266,11 @@ void S100PCManager::DrawAreaFill(AreaFill* areaFill, ID2D1RenderTarget* pRenderT
 		point5.x *= ENCCommon::DISPLAY_SYMBOL_SCALE;
 		point5.y *= ENCCommon::DISPLAY_SYMBOL_SCALE;
 
-		Draw(areaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point1, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
-		Draw(areaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point2, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
-		Draw(areaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point3, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
-		Draw(areaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point4, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
-		Draw(areaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point5, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
+		Draw(pAreaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point1, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
+		Draw(pAreaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point2, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
+		Draw(pAreaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point3, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
+		Draw(pAreaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point4, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
+		Draw(pAreaFill->_symbolReference, pRenderTarget, pBrush, pStrokeStyle, point5, 0, ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
 	}
 }
 
@@ -524,86 +501,32 @@ void S100PCManager::CreateLineImage(ID2D1Factory1* pDirect2dFactory, IWICImaging
 	}
 }
 
-AreaPatternBitmap* S100PCManager::CreateBitmapImage(AreaFill* pAreaFill, ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, std::wstring paletteName)
-{
-	D2D1_RECT_F rect = GetAreaFillRect(pAreaFill, ENCCommon::DISPLAY_SYMBOL_SCALE);
-
-	AreaPatternBitmap* areaPatternBitmap = new AreaPatternBitmap();
-	HRESULT hr = pImagingFactory->CreateBitmap((UINT)(rect.right - rect.left), (UINT)(rect.bottom - rect.top), GUID_WICPixelFormat32bppPRGBA, WICBitmapCacheOnDemand, &areaPatternBitmap->pIWICBitmap);
-
-	if (SUCCEEDED(hr))
-	{
-		ID2D1RenderTarget* pCurrentRenderTarget = nullptr;
-		D2D1_RENDER_TARGET_PROPERTIES prop = D2D1::RenderTargetProperties();
-		hr = pDirect2dFactory->CreateWicBitmapRenderTarget(areaPatternBitmap->pIWICBitmap, prop, &pCurrentRenderTarget);
-
-		if (SUCCEEDED(hr))
-		{
-			ID2D1SolidColorBrush* pCurrentBrush = nullptr;
-			pCurrentRenderTarget->CreateSolidColorBrush(
-				D2D1::ColorF(D2D1::ColorF::Crimson),
-				&pCurrentBrush
-			);
-
-			pCurrentRenderTarget->BeginDraw();
-			DrawAreaFill(pAreaFill, pCurrentRenderTarget, pCurrentBrush, pStrokeStyleS101Solid, paletteName);
-			pCurrentRenderTarget->EndDraw();
-
-			SafeRelease(&pCurrentBrush);
-			SafeRelease(&pCurrentRenderTarget);
-		}
-		else
-		{
-			OutputDebugString(L"Failed to create a iwic bitmap in AreaFill\n");
-			delete areaPatternBitmap;
-			areaPatternBitmap = nullptr;
-		}
-	}
-	else
-	{
-		OutputDebugString(L"Failed to create a bitmap in AreaFill\n");
-		delete areaPatternBitmap;
-		areaPatternBitmap = nullptr;
-	}
-
-	return areaPatternBitmap;
-}
 
 void S100PCManager::CreateBitmapBrush(ID2D1RenderTarget* pRenderTarget)
 {
 	for (auto i = areaFillInfo.patternMap.begin(); i != areaFillInfo.patternMap.end(); i++)
 	{
-		if (i->second)
-		{
-			auto bitmapBrush = CreateBitmapBrush(i->second, pRenderTarget);
-			i->second->pBitmapBrush = bitmapBrush;
-		}
-	}
-}
-
-ID2D1BitmapBrush* S100PCManager::CreateBitmapBrush(AreaPatternBitmap* patternBitmap, ID2D1RenderTarget* pRenderTarget)
-{
-	ID2D1Bitmap* pCurrentBitmap = nullptr;
-	HRESULT hr = pRenderTarget->CreateBitmapFromWicBitmap(patternBitmap->pIWICBitmap, nullptr, &pCurrentBitmap);
-
-	if (SUCCEEDED(hr))
-	{
-		ID2D1BitmapBrush* pCurrentBitmapBrush = nullptr;
-		hr = pRenderTarget->CreateBitmapBrush(pCurrentBitmap, &pCurrentBitmapBrush);
+		ID2D1Bitmap* pCurrentBitmap = nullptr;
+		HRESULT hr = pRenderTarget->CreateBitmapFromWicBitmap(i->second->pIWICBitmap, nullptr, &pCurrentBitmap);
 
 		if (SUCCEEDED(hr))
 		{
-			pCurrentBitmapBrush->SetExtendModeX(D2D1_EXTEND_MODE_WRAP);
-			pCurrentBitmapBrush->SetExtendModeY(D2D1_EXTEND_MODE_WRAP);
-			pCurrentBitmapBrush->SetInterpolationMode(D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
-			return pCurrentBitmapBrush;
+			ID2D1BitmapBrush* pCurrentBitmapBrush = nullptr;
+			hr = pRenderTarget->CreateBitmapBrush(pCurrentBitmap, &pCurrentBitmapBrush);
+
+			if (SUCCEEDED(hr))
+			{
+				pCurrentBitmapBrush->SetExtendModeX(D2D1_EXTEND_MODE_WRAP);
+				pCurrentBitmapBrush->SetExtendModeY(D2D1_EXTEND_MODE_WRAP);
+				pCurrentBitmapBrush->SetInterpolationMode(D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+				i->second->pBitmapBrush = pCurrentBitmapBrush;
+			}
+
+			SafeRelease(&pCurrentBitmap);
 		}
-
-		SafeRelease(&pCurrentBitmap);
 	}
-
-	return nullptr;
 }
+
 
 void S100PCManager::CreateBitmapImage(ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, std::wstring paletteName)
 {
@@ -612,10 +535,41 @@ void S100PCManager::CreateBitmapImage(ID2D1Factory1* pDirect2dFactory, IWICImagi
 		AreaFill* pAreaFill = GetAreaFill(i->_name);
 		if (pAreaFill)
 		{
-			auto areaPatternBitmap = CreateBitmapImage(pAreaFill, pDirect2dFactory, pImagingFactory, pStrokeStyleS101Solid, paletteName);
-			if (areaPatternBitmap)
+			D2D1_RECT_F rect = GetAreaFillRect(pAreaFill, ENCCommon::DISPLAY_SYMBOL_SCALE);
+
+			AreaPatternBitmap* areaPatternBitmap = new AreaPatternBitmap();
+			HRESULT hr = pImagingFactory->CreateBitmap((UINT)(rect.right - rect.left), (UINT)(rect.bottom - rect.top), GUID_WICPixelFormat32bppPRGBA, WICBitmapCacheOnDemand, &areaPatternBitmap->pIWICBitmap);
+
+			if (SUCCEEDED(hr))
 			{
+				ID2D1RenderTarget* pCurrentRenderTarget = nullptr;
+				D2D1_RENDER_TARGET_PROPERTIES prop = D2D1::RenderTargetProperties();
+				hr = pDirect2dFactory->CreateWicBitmapRenderTarget(areaPatternBitmap->pIWICBitmap, prop, &pCurrentRenderTarget);
+
 				areaFillInfo.patternMap.insert({ pAreaFill->_name.c_str(), areaPatternBitmap });
+
+				if (SUCCEEDED(hr))
+				{
+					ID2D1SolidColorBrush* pCurrentBrush = nullptr;
+					pCurrentRenderTarget->CreateSolidColorBrush(
+						D2D1::ColorF(D2D1::ColorF::Crimson),
+						&pCurrentBrush
+					);
+
+					pCurrentRenderTarget->BeginDraw();
+					DrawAreaFill(pAreaFill->_name, pCurrentRenderTarget, pCurrentBrush, pStrokeStyleS101Solid, paletteName);
+					pCurrentRenderTarget->EndDraw();
+				}
+				else
+				{
+					//OutputDebugString(L"Failed to create a iwic bitmap in AreaFill\n");
+					delete areaPatternBitmap;
+				}
+			}
+			else
+			{
+				//OutputDebugString(L"Failed to create a bitmap in AreaFill\n");
+				delete areaPatternBitmap;
 			}
 		}
 	}

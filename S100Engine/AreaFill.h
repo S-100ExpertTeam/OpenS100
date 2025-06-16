@@ -28,10 +28,6 @@ public:
 	float v2_x;
 	float v2_y;
 
-	// Symboll::offset
-	float offset_x = 0;
-	float offset_y = 0;
-
 public:
 
 	bool Read(std::wstring path);

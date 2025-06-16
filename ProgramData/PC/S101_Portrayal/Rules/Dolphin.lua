@@ -11,19 +11,13 @@ function Dolphin(feature, featurePortrayal, contextParameters)
 		else
 			featurePortrayal:AddInstructions('DisplayPlane:UnderRadar')
 		end
-		
-		-- #437
-		local categoryOfDolphin = feature.categoryOfDolphin
-		
-		if (contains(2,categoryOfDolphin)) then
+		if feature.categoryOfDolphin and feature.categoryOfDolphin == 2 then
 			-- Deviation Dolphin
 			featurePortrayal:AddInstructions('PointInstruction:MORFAC04')
 		else
 			-- Mooring Dolphin
 			featurePortrayal:AddInstructions('PointInstruction:MORFAC03')
 		end
-		
-
 	elseif feature.PrimitiveType == PrimitiveType.Surface then
 		-- Plain and symbolized boundaries use the same symbolization
 		featurePortrayal:AddInstructions('DisplayPlane:UnderRadar')

@@ -7,7 +7,6 @@
 #include "PCOutputSchemaManager.h"
 #include "SCommonFuction.h"
 #include "SCurve.h"
-#include "D2D1Resources.h"
 
 #include "../GISLibrary/R_FeatureRecord.h"
 
@@ -61,13 +60,8 @@ bool SENC_LineInstruction::GetSuppression()
 // Line Instruction
 #pragma warning(disable:4244)
 #pragma warning(disable:4838)
-void SENC_LineInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc)
+void SENC_LineInstruction::DrawInstruction(ID2D1DCRenderTarget* rt, ID2D1Factory1* pDirect2dFactory, ID2D1SolidColorBrush* brush, std::vector<ID2D1StrokeStyle1*>* strokeGroup, Scaler *scaler, PortrayalCatalogue* pc)
 {
-	auto rt = d2->RenderTarget();
-	auto pDirect2dFactory = d2->Factory();
-	auto brush = d2->SolidColorBrush();
-	auto strokeGroup = &d2->D2D1StrokeStyleGroup;
-
 	auto geom = fr->GetGeometry();
 
 	std::list<SCurve*> curListCurveLink;

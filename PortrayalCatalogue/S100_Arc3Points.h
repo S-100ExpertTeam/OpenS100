@@ -8,9 +8,9 @@ public:
 	virtual ~S100_Arc3Points();
 
 private:
-	S100_VectorPoint point;
-	S100_VectorPoint medianPoint;
-	S100_VectorPoint endPoint;
+	S100_VectorPoint* point;
+	S100_VectorPoint* medianPoint;
+	S100_VectorPoint* endPoint;
 
 public:
 	void SetPoint(S100_VectorPoint* value);

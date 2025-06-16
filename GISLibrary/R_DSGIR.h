@@ -33,17 +33,11 @@ public:
 	bool WriteRecord(CFile* file);
 	// function to get the code with the new memory code.
 	CString GetFeatureCode(int numericCode);
-	std::string GetFeatureCodeAsString(int numericCode);
 	CString GetInformationCode(int numericCode);
-	std::string GetInformationCodeAsString(int numericCode);
 	CString GetAttributeCode(int numericCode);
-	std::string GetAttributeCodeAsString(int numericCode);
 	CString GetInformationAssociationCode(int numericCode);
-	std::string GetInformationAssociationCodeAsString(int numericCode);
 	CString GetFeatureAssociationCode(int numericCode);
-	std::string GetFeatureAssociationCodeAsString(int numericCode);
 	CString GetAssociationRoleCode(int numericCode);
-	std::string GetAssociationRoleCodeAsString(int numericCode);
 
 	int GetAttributeCode(std::wstring& value);
 	int GetAttributeCode(CString& value);

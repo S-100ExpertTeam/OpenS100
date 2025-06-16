@@ -17,15 +17,15 @@ DirectPosition::DirectPosition(const DirectPosition& item)
 
 DirectPosition::DirectPosition(double x, double y)
 {
-	coordinates.push_back(x * Factor);
-	coordinates.push_back(y * Factor);
+	coordinates.push_back((int)(x * Factor));
+	coordinates.push_back((int)(y * Factor));
 }
 
 DirectPosition::DirectPosition(double x, double y, double z)
 {
-	coordinates.push_back(x * Factor);
-	coordinates.push_back(y * Factor);
-	coordinates.push_back(z * Factor);
+	coordinates.push_back((int)(x * Factor));
+	coordinates.push_back((int)(y * Factor));
+	coordinates.push_back((int)(z * Factor));
 }
 
 DirectPosition::~DirectPosition()
@@ -35,7 +35,7 @@ DirectPosition::~DirectPosition()
 
 int DirectPosition::GetDimension()
 {
-	return coordinates.size();
+	return (int)coordinates.size();
 }
 
 double DirectPosition::GetX()
@@ -50,7 +50,7 @@ int DirectPosition::GetXInteger()
 
 void DirectPosition::SetX(double value)
 {
-	coordinates[0] = value * Factor;
+	coordinates[0] = (int)(value * Factor);
 }
 
 double DirectPosition::GetY()
@@ -65,7 +65,7 @@ int DirectPosition::GetYInteger()
 
 void DirectPosition::SetY(double value)
 {
-	coordinates[1] = value * Factor;
+	coordinates[1] = (int)(value * Factor);
 }
 
 double DirectPosition::GetZ()
@@ -82,10 +82,10 @@ void DirectPosition::SetZ(double value)
 {
 	if (GetDimension() == 2)
 	{
-		coordinates.push_back(value * Factor);
+		coordinates.push_back((int)(value * Factor));
 	}
 	
-	coordinates[2] = value * Factor;
+	coordinates[2] = (int)(value * Factor);
 }
 
 bool DirectPosition::operator==(DirectPosition& item)

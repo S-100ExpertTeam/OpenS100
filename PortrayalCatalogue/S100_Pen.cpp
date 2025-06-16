@@ -3,12 +3,13 @@
 
 S100_Pen::S100_Pen()
 {
-
+	color = nullptr;
 }
 
 S100_Pen::~S100_Pen()
 {
-
+	if (color)
+		delete color, color = nullptr;
 }
 
 void S100_Pen::GetContents(pugi::xml_node& node)
@@ -25,7 +26,9 @@ void S100_Pen::GetContents(pugi::xml_node& node)
 
 		if (!strcmp(instructionName, "color"))
 		{
-			color.GetContents(instruction);
+			if (color == nullptr)
+				color = new GraphicBasePackage::Color();
+			color->GetContents(instruction);
 		}
 	}
 }
@@ -40,12 +43,12 @@ std::wstring S100_Pen::GetWidth()
 	return width;
 }
 
-void S100_Pen::SetColor(GraphicBasePackage::Color value) 
+void S100_Pen::SetColor(GraphicBasePackage::Color* value) 
 {
 	color = value;
 }
 
-GraphicBasePackage::Color& S100_Pen::GetColor()
+GraphicBasePackage::Color* S100_Pen::GetColor()
 {
 	return color;
 }

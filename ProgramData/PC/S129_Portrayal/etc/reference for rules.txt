@@ -1,0 +1,5 @@
+-- 조건문 걸때 아래 표현을 씀
+
+<xsl:if test="(distanceAboveUKCLimit_m = 0)">      
+    ... (내용 입력)
+</xsl:if>

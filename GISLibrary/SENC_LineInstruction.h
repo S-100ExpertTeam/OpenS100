@@ -24,7 +24,10 @@ public:
 	bool GetSuppression();
 
 	void DrawInstruction(
-		D2D1Resources* d2,
+		ID2D1DCRenderTarget* rt, 
+		ID2D1Factory1* pDirect2dFactory, 
+		ID2D1SolidColorBrush* brush, 
+		std::vector<ID2D1StrokeStyle1*>* strokeGroup, 
 		Scaler *scaler, 
 		PortrayalCatalogue* pc = nullptr);
 	

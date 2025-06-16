@@ -13,8 +13,6 @@ namespace GM
 	{
 	public:
 		Point();
-		Point(double x, double y);
-		Point(double x, double y, double z);
 		Point(const Point& item);
 		virtual ~Point();
 
@@ -27,11 +25,6 @@ namespace GM
 
 		double getX();
 		double getY();
-		double getZ();
-
-		void setX(double x);
-		void setY(double y);
-		void setZ(double z);
 
 	public:
 		GeometryType GetType() override;

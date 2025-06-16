@@ -6,7 +6,6 @@
 #include "OrientedCurveRecord.h"
 #include "GF_FeatureType.h"
 #include "GM_Object.h"
-#include "GF_InformationAssociationType.h"
 
 #include <map>
 

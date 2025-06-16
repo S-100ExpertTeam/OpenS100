@@ -28,8 +28,7 @@ function DredgedArea(feature, featurePortrayal, contextParameters)
 
 		if feature.depthRangeMinimumValue ~= nil then
 			-- #262 precision of numeric values
-			-- #438 removed text 'dredged to' before dredge depth value
-			drmv = EncodeString(feature.depthRangeMinimumValue, '%gm')
+			drmv = EncodeString(feature.depthRangeMinimumValue, 'dredged to %gm')
 			
 			if feature.dredgedDate then 
 				date = EncodeString(feature.dredgedDate, ' (%s)')

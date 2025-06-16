@@ -5,7 +5,7 @@
 
 S100SpatialObject::S100SpatialObject(D2D1Resources* d2d1) : SpatialObject(d2d1)
 {
-	
+	m_ObejctType = SpatialObjectType::S100SpatialObject;
 }
 
 S100SpatialObject::~S100SpatialObject()
@@ -27,6 +27,7 @@ void S100SpatialObject::InitDrawingInstruction()
 	if (pcManager)
 	{
 		delete pcManager;
+		pcManager = nullptr;
 	}
 
 	pcManager = new PCOutputSchemaManager();

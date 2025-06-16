@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6mm" height="4.2mm" viewBox="-3 -2.1 6 4.2">
+  <title>CP</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="2018-09-12" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3" y="2.1" height="4.2" width="6" />
+  <rect class="svgBox layout" fill="none" x="-3" y="-2.1" height="4.2" width="6" />
+  <path d=" M -2.5,-1.6 L -2.5,1.6 L 2.5,-1.6 L 2.5,1.6 L -2.5,-1.6 L -2.5,-1.6" class="fSNDG2" style="stroke-width:0.32;" />
+</svg>

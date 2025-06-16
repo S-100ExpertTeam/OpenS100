@@ -13,24 +13,4 @@ namespace GraphicBasePackage
 	{
 
 	}
-
-	void Pen::setWidth(double value)
-	{
-		width = value;
-	}
-
-	double Pen::getWidth()
-	{
-		return width;
-	}
-
-	void Pen::setColor(GraphicBasePackage::Color value)
-	{
-		color = value;
-	}
-
-	GraphicBasePackage::Color Pen::getColor()
-	{
-		return color;
-	}
 }

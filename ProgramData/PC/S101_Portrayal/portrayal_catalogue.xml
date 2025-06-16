@@ -2,7 +2,7 @@
 
 <!-- NOTE: See GitHub issues for complete change information -->
 
-<pc:portrayalCatalog xmlns:pc="http://www.iho.int/S100PortrayalCatalog/5.2" xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-101" version="2.0.0">
+<pc:portrayalCatalog xmlns:pc="http://www.iho.int/S100PortrayalCatalog/5.2" xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-101" version="1.4.0">
    <alertCatalog id="alertCatalog">
       <description>
          <name>Alert Catalog</name>
@@ -2405,6 +2405,26 @@
             <language>eng</language>
          </description>
          <fileName>EMFSHRE1.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="EMLOWAC01">
+         <description>
+            <name>EMLOWAC01</name>
+            <description>embedded symbol for safety contour of low accuracy in position</description>
+            <language>eng</language>
+         </description>
+         <fileName>EMLOWAC01.svg</fileName>
+         <fileType>Symbol</fileType>
+         <fileFormat>SVG</fileFormat>
+      </symbol>
+      <symbol id="EMLOWAC11">
+         <description>
+            <name>EMLOWAC11</name>
+            <description>embedded symbol for safety contour of low accuracy in position</description>
+            <language>eng</language>
+         </description>
+         <fileName>EMLOWAC11.svg</fileName>
          <fileType>Symbol</fileType>
          <fileFormat>SVG</fileFormat>
       </symbol>
@@ -7552,6 +7572,26 @@
          <fileType>LineStyle</fileType>
          <fileFormat>XML</fileFormat>
       </lineStyle>
+      <lineStyle id="LOWACC01">
+         <description>
+            <name>LOWACC01</name>
+            <description>safety contour of low accuracy in position</description>
+            <language>eng</language>
+         </description>
+         <fileName>LOWACC01.xml</fileName>
+         <fileType>LineStyle</fileType>
+         <fileFormat>XML</fileFormat>
+      </lineStyle>
+      <lineStyle id="LOWACC11">
+         <description>
+            <name>LOWACC11</name>
+            <description>contour of low accuracy in position</description>
+            <language>eng</language>
+         </description>
+         <fileName>LOWACC11.xml</fileName>
+         <fileType>LineStyle</fileType>
+         <fileFormat>XML</fileFormat>
+      </lineStyle>
       <lineStyle id="LOWACC21">
          <description>
             <name>LOWACC21</name>
@@ -8205,13 +8245,6 @@
             <language>eng</language>
          </description>
       </viewingGroup>
-      <viewingGroup id="14020">
-         <description>
-            <name>Non-isolated dangers (active submarine volcanos, junction cables (CableSubmarine categoryOfCable=9))</name>
-            <description>Base: J, K, L - Subsea Features</description>
-            <language>eng</language>
-         </description>
-      </viewingGroup>
 	  <viewingGroup id="14050">
          <description>
             <name>Isolated above water danger in safe water</name>
@@ -8324,7 +8357,7 @@
 	  <!-- 24000's: Seabed dangers -->
       <viewingGroup id="24010">
          <description>
-            <name>Mooring cables (CBLSUB, CATCBL6), tunnel on Seabed (TUNNEL, BURDEP=0), sandwaves (SNDWAV), ferry cables (CableSubmarine categoryOfCable=7)</name>
+            <name>Mooring cables (MORFAC, CATMOR6), (CBLSUB, CATCBL6), tunnel on Seabed (TUNNEL, BURDEP=0), sandwaves (SNDWAV)</name>
             <description>Standard: J, K, L - Seabed, Obstructions, Pipelines</description>
             <language>eng</language>
          </description>
@@ -8903,8 +8936,8 @@
       <!-- 22 na -->
 	  <viewingGroup id="23">
         <description>
-          <name>Text: Aids to Navigation information</name>
-          <description>Text describing the characteristics of navigation aids</description>
+          <name>Text: Light Description</name>
+          <description>Light description string</description>
           <language>eng</language>
         </description>
       </viewingGroup>
@@ -9169,7 +9202,6 @@
          <viewingGroup>13030</viewingGroup>
          <!-- J, K, L - SUBSEA FEATURES -->
          <viewingGroup>14010</viewingGroup>
-         <viewingGroup>14020</viewingGroup>
 		 <viewingGroup>14050</viewingGroup>
          <!-- M - TRACKS AND ROUTES -->
          <!-- N - SPECIAL AREAS -->
@@ -9202,7 +9234,6 @@
          <viewingGroup>13030</viewingGroup>
          <!-- J, K, L - SUBSEA FEATURES -->
          <viewingGroup>14010</viewingGroup>
-         <viewingGroup>14020</viewingGroup>
 		 <viewingGroup>14050</viewingGroup>
          <!-- M - TRACKS AND ROUTES -->
          <!-- N - SPECIAL AREAS -->
@@ -9339,6 +9370,23 @@
          <description>
             <name>Miscellaneous (Standard)</name>
             <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>21010</viewingGroup>
+         <viewingGroup>21060</viewingGroup>
+         <viewingGroup>24010</viewingGroup>
+         <viewingGroup>24020</viewingGroup>
+         <viewingGroup>24050</viewingGroup>
+         <viewingGroup>25001</viewingGroup>
+         <viewingGroup>26200</viewingGroup>
+         <viewingGroup>26210</viewingGroup>
+         <viewingGroup>28010</viewingGroup>
+         <viewingGroup>28020</viewingGroup>
+      </viewingGroupLayer>
+	  <viewingGroupLayer id="10a">       
+         <description>
+            <name>Chart (Standard)</name>
+            <description>Miscellaneous chart Standard Display elements</description>
             <language>eng</language>
          </description>
          <viewingGroup>21010</viewingGroup>
@@ -9623,6 +9671,7 @@
          <viewingGroupLayer>8</viewingGroupLayer>
          <viewingGroupLayer>9</viewingGroupLayer>
          <viewingGroupLayer>10</viewingGroupLayer>
+         <viewingGroupLayer>10a</viewingGroupLayer>
       </displayMode>
       <displayMode id="OtherInformation">
          <description>
@@ -9642,6 +9691,7 @@
          <viewingGroupLayer>8</viewingGroupLayer>
          <viewingGroupLayer>9</viewingGroupLayer>
          <viewingGroupLayer>10</viewingGroupLayer>
+         <viewingGroupLayer>10a</viewingGroupLayer>
          <viewingGroupLayer>11</viewingGroupLayer>
          <viewingGroupLayer>12</viewingGroupLayer>
          <viewingGroupLayer>13</viewingGroupLayer>
@@ -9897,6 +9947,17 @@
             <language>eng</language>
          </description>
          <fileName>DEPCNT03.lua</fileName>
+         <fileType>Rule</fileType>
+         <fileFormat>LUA</fileFormat>
+         <ruleType>SubTemplate</ruleType>
+      </ruleFile>
+      <ruleFile id="DEPVAL02">
+         <description>
+            <name>DEPVAL02</name>
+            <description>Custom rules DEPVAL02</description>
+            <language>eng</language>
+         </description>
+         <fileName>DEPVAL02.lua</fileName>
          <fileType>Rule</fileType>
          <fileFormat>LUA</fileFormat>
          <ruleType>SubTemplate</ruleType>

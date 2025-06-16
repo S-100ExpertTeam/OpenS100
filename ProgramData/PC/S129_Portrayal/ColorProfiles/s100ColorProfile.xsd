@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="Token">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:pattern value="[a-zA-Z][0-9a-zA-Z_]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ColorInteger">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="255"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NormalDouble">
+    <xs:restriction base="xs:double">
+      <xs:minInclusive value="0.0"/>
+      <xs:maxInclusive value="1.0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CIExyL">
+    <xs:sequence>
+      <xs:element name="x" type="NormalDouble"/>
+      <xs:element name="y" type="NormalDouble"/>
+      <xs:element name="L" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CIEXYZ">
+    <xs:sequence>
+      <xs:element name="X" type="xs:double"/>
+      <xs:element name="Y" type="xs:double"/>
+      <xs:element name="Z" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sRGB">
+    <xs:sequence>
+      <xs:element name="red" type="ColorInteger"/>
+      <xs:element name="green" type="ColorInteger"/>
+      <xs:element name="blue" type="ColorInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CIE">
+    <xs:choice>
+      <xs:element name="xyL" type="CIExyL"/>
+      <xs:element name="XYZ" type="CIEXYZ"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="ColorName">
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="token" type="Token" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="Colors">
+    <xs:sequence>
+      <xs:element name="color" type="ColorName" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PaletteItem">
+    <xs:sequence>
+      <xs:element name="cie" type="CIE"/>
+      <xs:element name="srgb" type="SRGB"/>
+    </xs:sequence>
+    <xs:attribute name="token" type="Token" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="Palette">
+    <xs:sequence>
+      <xs:element name="item" type="PaletteItem" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ColorProfile">
+    <xs:sequence>
+      <xs:element name="colors" type="Colors">
+        <xs:key name="colorKey">
+          <xs:selector xpath="color"/>
+          <xs:field xpath="@token"/>
+        </xs:key>
+      </xs:element>
+      <xs:element name="palette" type="Palette" minOccurs="1" maxOccurs="unbounded">
+        <xs:unique name="tokenUnique">
+          <xs:selector xpath="item"/>
+          <xs:field xpath="@token"/>
+        </xs:unique>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="colorProfile" type="ColorProfile">
+    <xs:keyref name="colorRef" refer="colorKey">
+      <xs:selector xpath="palette/item"/>
+      <xs:field xpath="@token"/>
+    </xs:keyref>
+  </xs:element>
+</xs:schema>

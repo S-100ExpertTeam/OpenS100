@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<lineStyle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
+  <intervalLength>6</intervalLength>
+  <pen width="0.3">
+    <color>ORG</color>
+  </pen>
+  <dash>
+    <start>0</start>
+    <length>1</length>
+  </dash>
+  <dash>
+    <start>2</start>
+    <length>3</length>
+  </dash>
+  <symbol reference="bla">
+    <position>3.5</position>
+  </symbol>
+</lineStyle>

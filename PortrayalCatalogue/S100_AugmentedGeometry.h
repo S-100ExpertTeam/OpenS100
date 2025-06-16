@@ -10,8 +10,8 @@ public:
 
 private:
 	std::wstring crsType;
-	S100_VectorPoint* vectorPoint = nullptr;
-	S100_TextPoint* textPoint = nullptr;
+	S100_VectorPoint* vectorPoint;
+	S100_TextPoint* textPoint;
 
 public:
 	void SetCrsType(std::wstring& value);

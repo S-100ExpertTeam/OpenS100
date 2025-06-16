@@ -21,7 +21,6 @@ public:
 	** Description: Read the file and store the data in the layer.
 	*/
 	bool Open(CString _filepath) override;
-	bool OpenMetadata(CString _filepath) override;
 
 	void Draw(HDC &hDC, Scaler *scaler, double offset = 0) override;
 

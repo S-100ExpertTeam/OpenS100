@@ -12,6 +12,7 @@
 S100_DisplayList::S100_DisplayList()
 {
 	displayInstructions.clear();
+	alertInstructions.clear();
 }
 
 S100_DisplayList::~S100_DisplayList()
@@ -23,8 +24,7 @@ void S100_DisplayList::OpenOutputXML(std::string path)
 {
 	pugi::xml_document doc;
 	auto result = doc.load_file(path.c_str());
-	/*auto displayListNode = doc.child("displayList");*/
-	auto displayListNode = doc.first_child();
+	auto displayListNode = doc.child("displayList");
 
 	for each (auto child in displayListNode)
 	{
@@ -38,31 +38,31 @@ void S100_DisplayList::GetContents(pugi::xml_node node)
 
 	if (!nodeName.compare("nullInstruction"))
 	{
-		S100_NullInstruction *in = new S100_NullInstruction();
+		S100_NullInstruction* in = new S100_NullInstruction();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
 	else if (!nodeName.compare("pointInstruction"))
 	{
-		S100_PointInstruction *in = new S100_PointInstruction();
+		S100_PointInstruction* in = new S100_PointInstruction();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
 	else if (!nodeName.compare("lineInstruction"))
 	{
-		S100_LineInstruction *in = new S100_LineInstruction();
+		S100_LineInstruction* in = new S100_LineInstruction();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
 	else if (!nodeName.compare("areaInstruction"))
 	{
-		S100_AreaInstruction *in = new S100_AreaInstruction();
+		S100_AreaInstruction* in = new S100_AreaInstruction();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
 	else if (!nodeName.compare("textInstruction"))
 	{
-		S100_TextInstruction *in = new S100_TextInstruction();
+		S100_TextInstruction* in = new S100_TextInstruction();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
@@ -71,13 +71,13 @@ void S100_DisplayList::GetContents(pugi::xml_node node)
 	}
 	else if (!nodeName.compare("augmentedRay"))
 	{
-		S100_AugmentedRay *in = new S100_AugmentedRay();
+		S100_AugmentedRay* in = new S100_AugmentedRay();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
 	else if (!nodeName.compare("augmentedPath"))
 	{
-		S100_AugmentedPath *in = new S100_AugmentedPath();
+		S100_AugmentedPath* in = new S100_AugmentedPath();
 		in->GetContents(node);
 		displayInstructions.push_back((S100_Instruction*)in);
 	}
@@ -85,59 +85,18 @@ void S100_DisplayList::GetContents(pugi::xml_node node)
 
 void S100_DisplayList::RemoveInstructions()
 {
-	for (auto itor = displayInstructions.begin(); itor != displayInstructions.end(); itor++)
+	for (auto iter : alertInstructions)
 	{
-		S100_Instruction* it = *itor;
-
-		/*
-		*  Type Of Instruction
-		*  0 : Null Instruction
-		*  1 : Point Instruction
-		*  2 : Line Instruction
-		*  3 : Area Instruction
-		** 4 : Coverage Instruction
-		*  5 : Text Instruction
-		** 6 : Augmented Point
-		** 7 : Augmented Ray
-		** 8 : Augmented Path
-		** 9 : Augmented Area
-		*/
-		switch (it->GetType())
-		{
-		case 0:
-			delete(S100_NullInstruction*)it;
-			break;
-		case 1:
-			delete(S100_PointInstruction*)it;
-			break;
-		case 2:
-			delete(S100_LineInstruction*)it;
-			break;
-		case 3:
-			delete(S100_AreaInstruction*)it;
-			break;
-		case 4:
-			break;
-		case 5:
-			delete(S100_TextInstruction*)it;
-			break;
-		case 6:
-			break;
-		case 7:
-			delete(S100_AugmentedRay*)it;
-			break;
-		case 8:
-			delete(S100_AugmentedPath*)it;
-			break;
-		case 9:
-			break;
-		}
+		if (iter)
+			delete iter, iter = nullptr;
 	}
-
-	for (auto itor = alertInstructions.begin(); itor != alertInstructions.end(); itor++)
-		delete *itor;
-
 	alertInstructions.clear();
+
+	for (auto iter : displayInstructions)
+	{
+		if (iter)
+			delete iter, iter = nullptr;
+	}
 	displayInstructions.clear();
 }
 

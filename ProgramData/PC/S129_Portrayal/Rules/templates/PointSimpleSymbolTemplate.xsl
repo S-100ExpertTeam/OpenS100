@@ -19,7 +19,9 @@
       <xsl:when test="$featureReference!=''">
         <xsl:element name="pointInstruction">
           <xsl:element name="featureReference">
-            <xsl:value-of select="$featureReference"/>
+            <xsl:attribute name="reference">
+              <xsl:value-of select="$featureReference"/>
+            </xsl:attribute>
           </xsl:element>
           <xsl:element name="viewingGroup">
             <xsl:value-of select="$viewingGroup"/>
@@ -31,9 +33,9 @@
             <xsl:value-of select="$drawingPriority"/>
           </xsl:element>
           <xsl:element name="symbol">
-            <xsl:attribute name="reference">
+            <xsl:element name="symbolReference">
               <xsl:value-of select="$symbolReference"/>
-            </xsl:attribute>
+            </xsl:element>
             <xsl:element name="rotation">
               <xsl:value-of select="$rotation"/>
             </xsl:element>

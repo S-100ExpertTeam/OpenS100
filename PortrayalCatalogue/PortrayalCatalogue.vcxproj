@@ -96,9 +96,6 @@
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)_$(Platform)\</OutDir>
   </PropertyGroup>
-  <PropertyGroup Label="Vcpkg">
-    <VcpkgEnableManifest>true</VcpkgEnableManifest>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -199,16 +196,12 @@
     <ClInclude Include="CatalogItem.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="ContextParameter.h" />
+    <ClInclude Include="DisplayFactory.h" />
     <ClInclude Include="DisplayMode.h" />
     <ClInclude Include="DisplayModes.h" />
     <ClInclude Include="DisplayPlane.h" />
     <ClInclude Include="DisplayPlanes.h" />
     <ClInclude Include="Enum_BoundaryType.h" />
-    <ClInclude Include="Enum_ChampionChoice.h" />
-    <ClInclude Include="Enum_CoveragePlacement.h" />
-    <ClInclude Include="Enum_FontProportion.h" />
-    <ClInclude Include="Enum_FontSlant.h" />
-    <ClInclude Include="Enum_FontWeight.h" />
     <ClInclude Include="Enum_GeometricPrimitive.h" />
     <ClInclude Include="Enum_InterpolationType.h" />
     <ClInclude Include="Enum_FileFormat.h" />
@@ -242,8 +235,6 @@
     <ClInclude Include="S100_ColorProfiles.h" />
     <ClInclude Include="S100_ComplexLineStyle.h" />
     <ClInclude Include="S100_CompositeLineStyle.h" />
-    <ClInclude Include="S100_CoverageColor.h" />
-    <ClInclude Include="S100_CoverageInstruction.h" />
     <ClInclude Include="S100_Description.h" />
     <ClInclude Include="S100_Hatch.h" />
     <ClInclude Include="S100_HatchFill.h" />
@@ -255,7 +246,6 @@
     <ClInclude Include="S100_LineStyleReference.h" />
     <ClInclude Include="S100_LineStyles.h" />
     <ClInclude Include="S100_LineSymbol.h" />
-    <ClInclude Include="S100_NumericAnnotation.h" />
     <ClInclude Include="S100_OverrideColor.h" />
     <ClInclude Include="S100_Palette.h" />
     <ClInclude Include="S100_Path.h" />
@@ -316,18 +306,14 @@
     <ClCompile Include="CatalogItem.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="ContextParameter.cpp" />
+    <ClCompile Include="DisplayFactory.cpp" />
     <ClCompile Include="DisplayMode.cpp" />
     <ClCompile Include="DisplayModes.cpp" />
     <ClCompile Include="DisplayPlane.cpp" />
     <ClCompile Include="DisplayPlanes.cpp" />
     <ClCompile Include="Enum_BoundaryType.cpp" />
-    <ClCompile Include="Enum_ChampionChoice.cpp" />
-    <ClCompile Include="Enum_CoveragePlacement.cpp" />
     <ClCompile Include="Enum_FileFormat.cpp" />
     <ClCompile Include="Enum_FileType.cpp" />
-    <ClCompile Include="Enum_FontProportion.cpp" />
-    <ClCompile Include="Enum_FontSlant.cpp" />
-    <ClCompile Include="Enum_FontWeight.cpp" />
     <ClCompile Include="Enum_InterpolationType.cpp" />
     <ClCompile Include="Enum_RuleType.cpp" />
     <ClCompile Include="ExternalFile.cpp" />
@@ -357,8 +343,6 @@
     <ClCompile Include="S100_ColorProfiles.cpp" />
     <ClCompile Include="S100_ComplexLineStyle.cpp" />
     <ClCompile Include="S100_CompositeLineStyle.cpp" />
-    <ClCompile Include="S100_CoverageColor.cpp" />
-    <ClCompile Include="S100_CoverageInstruction.cpp" />
     <ClCompile Include="S100_Description.cpp" />
     <ClCompile Include="S100_Hatch.cpp" />
     <ClCompile Include="S100_HatchFill.cpp" />
@@ -370,7 +354,6 @@
     <ClCompile Include="S100_LineStyleReference.cpp" />
     <ClCompile Include="S100_LineStyles.cpp" />
     <ClCompile Include="S100_LineSymbol.cpp" />
-    <ClCompile Include="S100_NumericAnnotation.cpp" />
     <ClCompile Include="S100_OverrideColor.cpp" />
     <ClCompile Include="S100_Palette.cpp" />
     <ClCompile Include="S100_Path.cpp" />
