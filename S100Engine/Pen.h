@@ -13,5 +13,12 @@ namespace GraphicBasePackage
 	public:
 		double width = 0.32;
 		GraphicBasePackage::Color color;
+
+	public:
+		void setWidth(double value);
+		double getWidth();
+
+		void setColor(GraphicBasePackage::Color value);
+		GraphicBasePackage::Color getColor();
 	};
 }

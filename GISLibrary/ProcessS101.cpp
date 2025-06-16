@@ -38,6 +38,7 @@
 #include <libxslt/xsltutils.h>
 
 #include <sstream> 
+#include <algorithm>
 
 using namespace LatLonUtility;
 
@@ -83,20 +84,6 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 			fc,
 			pc);
 
-		std::string two_shades = ENCCommon::TWO_SHADES ? "true" : "false";
-		std::string national_language = ENCCommon::SHOW_NOBJNM ? "eng" : "kor";
-		std::string ignore_scamin = ENCCommon::APPLY_SCALE_MIN ? "false" : "true";
-		std::string shallow_pattern = ENCCommon::SHALLOW_PATTERN ? "true" : "false";
-		std::string simplified_points = ENCCommon::SIMPLIFIED_POINT_SYMBOL ? "true" : "false";
-		std::string show_isolated_dangers_in_shallow_waters = ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER ? "true" : "false";
-		std::string plain_boundaries = ENCCommon::SymbolizedAreaBoundary ? "false" : "true";
-		std::string safety_depth = std::to_string(ENCCommon::SAFETY_DEPTH);
-		std::string sallow_contour = std::to_string(ENCCommon::SHALLOW_CONTOUR);
-		std::string safety_contour = std::to_string(ENCCommon::SAFETY_CONTOUR);
-		std::string deep_contour = std::to_string(ENCCommon::DEEP_CONTOUR);
-		std::string full_sector = ENCCommon::FULL_SECTORS ? "true" : "false";
-		std::string radar_overlay = ENCCommon::DISPLAY_PLANE ? "true" : "false";
-
 		auto context = pc->GetContext();
 		if (!context) {
 			return 0;
@@ -111,21 +98,6 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 				KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter(name.c_str(), defaultValue.c_str());
 			}
 		}
-
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SafetyDepth", safety_depth.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShallowContour", sallow_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SafetyContour", safety_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("TwoShades", two_shades.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("DeepContour", deep_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShallowPattern", shallow_pattern.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShowIsolatedDangersInShallowWaters",
-		//	show_isolated_dangers_in_shallow_waters.c_str());
-		KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("PlainBoundaries", "false");
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SimplifiedPoints", simplified_points.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("FullSectors", full_sector.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("RadarOverlay", radar_overlay.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("IgnoreScamin", ignore_scamin.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("NationalLanguage", national_language.c_str());
 
 		std::list<Result_DrawingInstruction>* drawingInstructionResult = KRS_LUA_SCRIPT_REFERENCE::GetResultDrawingInstructions();
 
@@ -156,7 +128,7 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 	return 0;
 }
 
-int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRulePath, std::string outputXmlPath, S100Layer* layer)
+int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRulePath, std::string outputXmlPath, PortrayalCatalogue* pc)
 {
 	// Initialize the libraries
 	xmlInitParser();
@@ -165,11 +137,24 @@ int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRule
 	xmlSubstituteEntitiesDefault(1);
 
 	// Load XML and XSL
-	xmlDocPtr doc = xmlParseFile(inputXmlPath.c_str());
+	xmlDocPtr inputXml = xmlParseFile(inputXmlPath.c_str());
 	xsltStylesheetPtr xslt = xsltParseStylesheetFile((const xmlChar*)mainRulePath.c_str());
 
+	// Load params
+	std::vector<const char*> params;
+	std::vector<std::string> temp_params;
+	if (pc)
+	{
+		temp_params = ProcessS101::getParams(pc);
+		for (const auto& item : temp_params)
+		{
+			params.push_back(item.c_str());
+		}
+	}
+	params.push_back(nullptr);
+
 	// Transform
-	xmlDocPtr result = xsltApplyStylesheet(xslt, doc, nullptr);
+	xmlDocPtr result = xsltApplyStylesheet(xslt, inputXml, params.data());
 
 	// Output the transformed XML
 	FILE* outFile = fopen(outputXmlPath.c_str(), "wb");
@@ -179,12 +164,73 @@ int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRule
 	// Cleanup
 	xsltFreeStylesheet(xslt);
 	xmlFreeDoc(result);
-	xmlFreeDoc(doc);
+	xmlFreeDoc(inputXml);
 
 	xsltCleanupGlobals();
 	xmlCleanupParser();
 
 	return 0;
+}
+
+std::string ProcessS101::ProcessS100_XSLT(std::string inputXmlContent, std::string mainRulePath, PortrayalCatalogue* pc)
+{
+	// Init
+	xmlInitParser();
+	xsltInit();
+
+	// Load XML & XSLT 
+	xmlDocPtr xmlDoc = xmlParseMemory(inputXmlContent.c_str(), inputXmlContent.length());
+	if (!xmlDoc) {
+		return std::string();
+	}
+
+	xsltStylesheetPtr xsltDoc = xsltParseStylesheetFile(reinterpret_cast<const xmlChar*>(mainRulePath.c_str()));
+	if (!xsltDoc) {
+		xmlFreeDoc(xmlDoc);
+		return std::string();
+	}
+
+	// Load params
+	std::vector<const char*> params;
+	std::vector<std::string> temp_params;
+	if (pc)
+	{
+		temp_params = ProcessS101::getParams(pc);
+		for (const auto& item : temp_params)
+		{
+			params.push_back(item.c_str());
+		}
+	}
+	params.push_back(nullptr);
+
+	// Transform XSLT
+	xmlDocPtr resultDoc = xsltApplyStylesheet(xsltDoc, xmlDoc, params.data());
+	if (!resultDoc) {
+		xsltFreeStylesheet(xsltDoc);
+		xmlFreeDoc(xmlDoc);
+		return std::string();
+	}
+
+	// Save result to memory
+	xmlChar* resultBuffer = nullptr;
+	int bufferSize = 0;
+	xsltSaveResultToString(&resultBuffer, &bufferSize, resultDoc, xsltDoc);
+
+	// Convert result to std::string
+	std::string result;
+	if (resultBuffer) {
+		result = std::string(reinterpret_cast<char*>(resultBuffer), bufferSize);
+		xmlFree(resultBuffer);
+	}
+	
+	// 메모리 정리
+	xmlFreeDoc(resultDoc);
+	xsltFreeStylesheet(xsltDoc);
+	xmlFreeDoc(xmlDoc);
+	xsltCleanupGlobals();
+	xmlCleanupParser();
+
+	return result;
 }
 
 bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm)
@@ -569,15 +615,24 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 					if (v_TextInstruction.size() > 0)
 					{
+						LatLonUtility::replace_string(v_TextInstruction, "&s", ";");
+						LatLonUtility::replace_string(v_TextInstruction, "&c", ":");
+						LatLonUtility::replace_string(v_TextInstruction, "&m", ",");
+						LatLonUtility::replace_string(v_TextInstruction, "&a", "&");
+
 						S100_Element* element = new S100_Element();
 
 						in->GetTextPoint()->SetElement(element);
 
-						if (!element->GetText()) element->SetText(new S100_Text());
+						if (!element->GetText())
+						{
+							element->SetText(new S100_Text());
+						}
 
-						std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
+						//std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
 
-						auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_splited_text[0].c_str());
+						//auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_splited_text[0].c_str());
+						auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_TextInstruction.c_str());
 						std::wstring wstrValue = wValue;
 						delete[] wValue;
 						element->GetText()->SetValue(wstrValue);
@@ -955,4 +1010,33 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 void ProcessS101::PortrayalSetContextParameter(const char*  parameterName, const char*  parameterValue)
 {
 	theInstance.m_lua_session->call("PortrayalSetContextParameter", { parameterName, parameterValue });
+}
+
+std::vector<std::string> ProcessS101::getParams(PortrayalCatalogue* pc)
+{
+	// Load params
+	std::vector<std::string> params;
+	if (pc)
+	{
+		auto context = pc->GetContext();
+		if (!context)
+		{
+			return params;
+		}
+
+		int numContext = context->GetCountOfParameter();
+		for (int i = 0; i < numContext; i++)
+		{
+			auto contextParameter = context->GetContextParameter(i);
+			if (contextParameter)
+			{
+				auto name = contextParameter->GetIdAsString();
+				auto value = contextParameter->getValueAsString();
+				params.push_back(name);
+				params.push_back(value);
+			}
+		}
+	}
+
+	return params;
 }

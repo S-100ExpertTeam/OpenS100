@@ -1,0 +1,17 @@
+{
+    "name": "my-geospatial-app",
+    "version": "1.0.0",
+    "description": "Geospatial processing system using GDAL, SQLite, and others",
+    "dependencies": [
+      "pugixml",
+      "geographiclib",
+      "polyclipping",
+      "hdf5",
+      "libxslt",
+      "openssl",
+      "sqlite3",
+      "gdal",
+      "boost-geometry"
+    ]
+  }
+  

@@ -24,7 +24,21 @@ void S100_Item::GetContents(pugi::xml_node Node)
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName, "cie"))
 		{
-			scie.GetContents(instruction);
+			//scie.GetContents(instruction);
+			if (auto xyLNode = instruction.child("xyL"))
+			{
+				double x = xyLNode.child("x").text().as_double();
+				double y = xyLNode.child("y").text().as_double();
+				double L = xyLNode.child("L").text().as_double();
+				scie = S100_CIExyL{ x, y, L };
+			}
+			else if (auto XYZNode = instruction.child("XYZ"))
+			{
+				double X = XYZNode.child("X").text().as_double();
+				double Y = XYZNode.child("Y").text().as_double();
+				double Z = XYZNode.child("Z").text().as_double();
+				scie = S100_CIEXYZ{ X, Y, Z };
+			}
 		}
 		else if (!strcmp(instructionName, "srgb"))
 		{

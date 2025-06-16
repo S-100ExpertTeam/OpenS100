@@ -14,6 +14,7 @@ class FeatureCatalogue;
 class S101Cell;
 
 void hd_init(S101Cell *c);
+void hd_init(S100SpatialObject *c);
 void hd_delete();
 
 std::vector<std::string>& hd_get_feature_ids();

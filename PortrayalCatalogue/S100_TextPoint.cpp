@@ -97,12 +97,6 @@ void S100_TextPoint::SetRotation(std::wstring value)
 	rotation = value;
 }
 
-
-void S100_TextPoint::SetAreaPlacement(S100_AreaPlacement* value) 
-{
-	areaPlacement = value;
-}
-
 std::wstring S100_TextPoint::GetHorizontalAlignment() 
 {
 	return horizontalAlignment;

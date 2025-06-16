@@ -25,10 +25,6 @@
 
 SENC_Instruction::SENC_Instruction()
 {
-	featureReference = "";
-
-	type = 0;
-	suppressedInstance = false;
 }
 
 std::string SENC_Instruction::FeatureReference()
@@ -95,4 +91,117 @@ SENC_Instruction* SENC_Instruction::S1002SENC(S100_Instruction* s100Instruction,
 		//result->code = so->GetFeatureTypeCodeByID(result->featureReference);
 	}
 	return result;
+}
+
+void SENC_Instruction::setID(std::string id)
+{
+	this->id = id;
+}
+
+std::optional<std::string> SENC_Instruction::getID()
+{
+	return id;
+}
+
+void SENC_Instruction::setParentID(std::string id)
+{
+	this->parentId = id;
+}
+
+std::optional<std::string> SENC_Instruction::getParentID()
+{
+	return parentId;
+}
+
+void SENC_Instruction::setHover(bool hover)
+{
+	this->hover = hover;
+}
+
+std::optional<bool> SENC_Instruction::getHover()
+{
+	return hover;
+}
+
+//void SENC_Instruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2F>& points)
+//{
+//	if (nullptr == fr)
+//	{
+//		return;
+//	}
+//
+//	auto geom = fr->GetGeometry();
+//
+//	if (nullptr == geom)
+//	{
+//		return;
+//	}
+//
+//	//if (vectorPoint)
+//	//{
+//	//	SPoint geo;
+//	//	geo.x = vectorPoint->x;
+//	//	geo.y = vectorPoint->y;
+//	//	projection(geo.x, geo.y);
+//	//	D2D1_POINT_2F tempPoint;
+//	//	scaler->WorldToDevice_F(geo.x, geo.y, &tempPoint.x, &tempPoint.y);
+//	//	points.push_back(tempPoint);
+//	//}
+//}
+
+void SENC_Instruction::setAlertReference(SENC_AlertReference alertReference)
+{
+	this->alertReference = alertReference;
+}
+
+std::optional<SENC_AlertReference> SENC_Instruction::getAlertReference()
+{
+	return alertReference;
+}
+
+void SENC_Instruction::addVewingGroup(int group)
+{
+	viewingGroup.push_back(group);
+}
+
+void SENC_Instruction::addVewingGroup(std::vector<int> group)
+{
+	for (auto itor = group.begin(); itor != group.end(); itor++)
+	{
+		viewingGroup.push_back(*itor);
+	}
+}
+
+int SENC_Instruction::getViewingGroup(int index)
+{
+	if (index < 0 || index >= viewingGroup.size())
+	{
+		return -1;
+	}
+	return viewingGroup[index];
+}
+
+int SENC_Instruction::getViewingGroupCount()
+{
+	return viewingGroup.size();
+}
+
+std::vector<int> SENC_Instruction::getViewingGroupList()
+{
+	return viewingGroup;
+}
+
+void SENC_Instruction::clearViewingGroup()
+{
+	viewingGroup.clear();
+}
+
+void SENC_Instruction::addTimeValid(S100_TM_Period value)
+{
+	timeValid.push_back(value);
+}
+
+std::vector<S100_TM_Period> SENC_Instruction::getTimeValid()
+{
+	return timeValid;
 }

@@ -189,6 +189,41 @@ function CreateFeaturePortrayal(feature)
 
 		self.DrawingInstructions:Add(instructions)
 	end
+	
+	-- Count the occurances of a given drawing instruction
+	function featurePortrayal:GetInstructionCount(drawingInstruction)
+		CheckSelf(self, featurePortrayal.Type)
+		CheckType(drawingInstruction, 'string')
+		
+		local count = 0
+		for _, v in ipairs(self.DrawingInstructions) do
+			for instruction in string.gmatch(v, "([^;]+)") do
+				if string.find(instruction, drawingInstruction, 1, true) ~= nil then
+					count = count + 1
+				end
+			end
+		end
+		return count
+	end
+
+	-- Count the number of text instructions which have been output by co-located features. This should only be called for point features.
+	function featurePortrayal:GetColocatedTextCount()
+		CheckType(self, featurePortrayal.Type)
+
+		local textOffsetLines = 0
+		local spatialAssociation = self.Feature:GetSpatialAssociation()
+
+		for i, af in ipairs(spatialAssociation:GetAssociatedFeatures()) do
+			if self.Feature.ID ~= af.ID then
+				local afp = rawget(af, '_featurePortrayal')
+				if afp ~= nil then
+					textOffsetLines = textOffsetLines + afp:GetInstructionCount('TextInstruction')
+				end
+			end
+		end
+		
+		return textOffsetLines
+	end
 
 	function featurePortrayal:AddTextInstruction(text, textViewingGroup, textPriority, viewingGroup, priority, isLightDescription)
 		CheckSelf(self, featurePortrayal.Type)

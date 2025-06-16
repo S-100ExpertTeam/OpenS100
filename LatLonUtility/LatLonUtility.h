@@ -73,6 +73,7 @@ namespace LatLonUtility {
 	size_t countDigits(int n);
 
 	std::string replace_all(__in const std::string& message, __in const std::string& pattern, __in const std::string& replace);
+	void replace_string(std::string& str, const std::string& from, const std::string& to);
 
 	std::string generate_uuid();
 

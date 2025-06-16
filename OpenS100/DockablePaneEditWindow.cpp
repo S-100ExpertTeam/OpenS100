@@ -24,6 +24,7 @@
 #include "../GISLibrary/SCurve.h"
 #include "../GISLibrary/SCompositeCurve.h"
 #include "../GISLibrary/SSurface.h"
+#include "../GISLibrary/ProcessS101.h"
 
 #include <vector>
 #include <sstream>
@@ -344,6 +345,10 @@ void CDockablePaneEditWindow::addSimpleAttribute(CMFCPropertyGridProperty* paren
 	if (sa) {
 		CString strCode = pugi::as_wide(code).c_str();
 		CString strValue = pugi::as_wide(value).c_str();
+		if (strValue.CompareNoCase(pugi::as_wide(ProcessS101::g_unknown_attribute_value).c_str()) == 0)
+		{
+			strValue = L"Unknown";
+		}
 		CString strDescription = sa->GetDefinition().c_str();
 
 		auto child = new CMFCPropertyGridProperty(strCode, strValue);
@@ -398,26 +403,28 @@ void CDockablePaneEditWindow::addComplexAttribute(CMFCPropertyGridProperty* pare
 
 void CDockablePaneEditWindow::SetVectors()
 {
-	auto m_pFeature = m_cell->GetFeatureType(pugi::as_utf8(selectedFeatureID));
-
-	m_wndListVector.ShowWindow(FALSE);
-	DeleteVectorItems();
-
-	if (m_cell == nullptr || m_pFeature == nullptr)
+	if (m_cell)
 	{
+		auto m_pFeature = m_cell->GetFeatureType(pugi::as_utf8(selectedFeatureID));
+
+		m_wndListVector.ShowWindow(FALSE);
+		DeleteVectorItems();
+
+		if (m_cell == nullptr || m_pFeature == nullptr)
+		{
+			m_wndListVector.ShowWindow(TRUE);
+			return;
+		}
+
+		auto geom = m_pFeature->GetGeometry();
+		if (geom)
+		{
+			SetVector(geom);
+		}
+
+		m_wndListVector.ExpandAll(FALSE);
 		m_wndListVector.ShowWindow(TRUE);
-		return;
 	}
-
-	auto geom = m_pFeature->GetGeometry();
-	if (geom)
-	{
-		SetVector(geom);
-	}
-
-	m_wndListVector.ExpandAll(FALSE);
-	m_wndListVector.ShowWindow(TRUE);
-	
 }
 
 void CDockablePaneEditWindow::SetVector(SGeometry* geom, CMFCPropertyGridProperty* pSuperProperty)

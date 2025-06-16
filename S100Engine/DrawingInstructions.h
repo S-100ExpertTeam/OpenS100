@@ -1,7 +1,0 @@
-#include "FeatureReference.h"
-#include "SpatialReference.h"
-#include "AreaInstruction.h"
-#include "LineInstruction.h"
-#include "NullInstruction.h"
-#include "PointInstruction.h"
-#include "TextInstruction.h"

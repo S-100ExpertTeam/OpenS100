@@ -14,6 +14,7 @@ public:
 
 private:
 	std::vector<SAbstractCurve*> m_listCurveLink;
+	std::unique_ptr<GeoPoint> centerPoint;
 
 public:
 	virtual SCompositeCurve operator=(const SCompositeCurve& other);
@@ -60,4 +61,8 @@ public:
 
 	void GetCurveList(std::list<SCurve*>& list);
 	void setSuppress(bool value);
+
+	void setCenterPoint() override;
+	std::list<GeoPoint> getAllCenterPoint();
+	GeoPoint getCenterPoint();
 };

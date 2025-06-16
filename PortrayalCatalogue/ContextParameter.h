@@ -31,6 +31,8 @@ namespace Portrayal
 		std::string getValueAsString();
 		void setValue(std::wstring& value);
 
+		std::string getName();
+
 		void GetContents(pugi::xml_node& node);
 	};
 }

@@ -27,7 +27,8 @@ function SpanOpening(feature, featurePortrayal, contextParameters)
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
 	
-	if HasHorizontalClearance(feature) then
+	-- Binds horizontalClearanceFixed, verticalClearanceClosed, verticalClearanceOpen
+	if HasClearance(feature) then
 		if feature.PrimitiveType == PrimitiveType.Curve then
 			featurePortrayal:AddInstructions('TextAlignHorizontal:Center;TextAlignVertical:Center')
 			PortrayClearances(feature, featurePortrayal, contextParameters, 12210, 0, -3.51)

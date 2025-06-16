@@ -223,3 +223,16 @@ void R_PointRecord::SetC3IT(int x, int y, int z)
 	m_c3it->m_zcoo = z;
 }
 
+GM::Point R_PointRecord::toGM_Point()
+{
+	if (m_c2it)
+	{
+		return GM::Point(m_c2it->m_xcoo, m_c2it->m_ycoo);
+	}
+	else if (m_c3it)
+	{
+		return GM::Point(m_c3it->m_xcoo, m_c3it->m_ycoo, m_c3it->m_zcoo);
+	}
+
+	return GM::Point();
+}

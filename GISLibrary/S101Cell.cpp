@@ -75,6 +75,9 @@
 #include <iomanip>
 #include <mmsystem.h> 
 #include <unordered_map>
+#include <vector>
+#include <string>
+
 
 S101Cell::S101Cell(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
@@ -230,6 +233,8 @@ void S101Cell::UpdateRemoveAll(void)
 
 void S101Cell::RemoveAll(void)
 {
+	m_dsgir.init();
+
 	if (nullptr != updateInformation)
 	{
 		updateInformation->ClearAll();
@@ -338,6 +343,22 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 	else if (extension.CompareNoCase(L"gml") == 0)
 	{
 		return OpenByGML(_filepath);
+	}
+
+	return false;
+}
+
+bool S101Cell::OpenMetadata(CString _filepath)
+{
+	auto extension = LibMFCUtil::GetExtension(_filepath);
+	if ((extension.CompareNoCase(L"000") >= 0) &&
+		(extension.CompareNoCase(L"999") <= 0))
+	{
+		return OpenMetadataBy000(_filepath);
+	}
+	else if (extension.CompareNoCase(L"gml") == 0)
+	{
+		return OpenMetadataByGML(_filepath);
 	}
 
 	return false;
@@ -484,15 +505,84 @@ bool S101Cell::OpenBy000(CString path)
 		CalcMBR();
 		Check();
 
-		ATTRtoAttribute();
+		if (false == ATTRtoAttribute())
+		{
+			return false;
+		}
 
-		//SaveAsGML(L"..\\TEMP\\101GML3.gml");
 		SetAllCode();
 
 		return true;
 	}
 
 	return false;
+}
+
+bool S101Cell::OpenMetadataBy000(CString path)
+{
+	USES_CONVERSION;
+
+	CFile file;
+	if (!file.Open(path, CFile::modeRead))
+	{
+		return false;
+	}
+
+	BYTE* pBuf = nullptr;
+	BYTE* sBuf = nullptr;
+	BYTE* endOfBuf = nullptr;
+
+	LONGLONG fileLength = file.GetLength();
+
+	pBuf = new BYTE[(unsigned int)fileLength];
+	sBuf = pBuf;
+
+	file.Read(pBuf, (unsigned)fileLength);
+
+	endOfBuf = pBuf + fileLength - 1;
+
+	file.Close();
+
+	ReadDDR(pBuf);
+
+	DRDirectoryInfo drDir;
+
+	int tcnt = 0;
+	while (pBuf < endOfBuf)
+	{
+		auto curRecordAddress = pBuf;
+
+		tcnt++;
+		DRReader drReader;
+		int subFieldCount = 0;
+		drReader.ReadReader(pBuf);
+		subFieldCount = (drReader.m_fieldAreaLoc - DR_LENGTH - 1) / (4 + drReader.m_fieldLength + drReader.m_fieldPosition);
+
+		if (subFieldCount < 1)
+		{
+			continue;
+		}
+
+		drDir.ReAllocateDirectory(subFieldCount);
+
+		drDir.ReadDir(drReader, pBuf);
+
+		if (*(pBuf++) != 0x1E)
+		{
+		}
+
+		if (strcmp(drDir.GetDirectory(0)->tag, "DSID") == 0)
+		{
+			m_dsgir.ReadRecord(&drDir, pBuf);
+			break;
+		}
+
+		pBuf = curRecordAddress + drReader.m_recordLength;
+	}
+
+	delete[] sBuf;
+
+	return true;
 }
 
 bool S101Cell::OpenByGML(CString path)
@@ -522,6 +612,11 @@ bool S101Cell::OpenByGML(CString path)
 		gml = nullptr;
 	}
 
+	return true;
+}
+
+bool S101Cell::OpenMetadataByGML(CString path)
+{
 	return true;
 }
 
@@ -1690,7 +1785,8 @@ R_InformationRecord* S101Cell::GetInformationRecord(__int64 key)
 R_InformationRecord* S101Cell::GetInformationRecord(std::string key)
 {
 	auto iKey = std::stoll(key);
-	return GetInformationRecord(iKey);
+	RecordName recordName(150, (int)iKey);
+	return GetInformationRecord(recordName.GetName());
 }
 
 R_InformationRecord* S101Cell::GetInformationRecord(std::wstring wstringKey)
@@ -4280,7 +4376,7 @@ std::wstring S101Cell::GetInformationTypeCodeByID(int id)
 	{
 		if (ir)
 		{
-			return std::wstring(m_dsgir.GetFeatureCode(ir->GetNumericCode()));
+			return std::wstring(m_dsgir.GetInformationCode(ir->GetNumericCode()));
 		}
 	}
 
@@ -4992,7 +5088,37 @@ bool S101Cell::InsertSurfaceRecordFromS101GML(S10XGML* gml, GM::Surface* curve)
 	return true;
 }
 
-void S101Cell::ATTRtoAttribute()
+bool S101Cell::ATTRtoAttribute()
+{
+	if (false == FeatureAttrToAttribute())
+	{
+		return false;
+	}
+
+	if (false == InformationAttrToAttribute())
+	{
+		return false;
+	}
+
+	if (false == FeatureFeatureAssociationToGFM())
+	{
+		return false;
+	}
+
+	if (false == FeatureInformationAssociationToGFM())
+	{
+		return false;
+	}
+
+	if (false == InformationAssociationToGFM())
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool S101Cell::FeatureAttrToAttribute()
 {
 	auto fc = GetFC();
 	int cntFeature = GetFeatureCount();
@@ -5000,6 +5126,7 @@ void S101Cell::ATTRtoAttribute()
 	for (int i = 0; i < cntFeature; i++) {
 		std::vector<GF::ThematicAttributeType*> addedAttributes;
 		auto fr = GetFeatureRecordByIndex(i);
+
 		auto ATTRs = fr->GetAllAttributes();
 		for (auto j = ATTRs.begin(); j != ATTRs.end(); j++) {
 			auto ATTR = (*j);
@@ -5011,26 +5138,13 @@ void S101Cell::ATTRtoAttribute()
 				auto value = ATTR->getValueAsString();
 				CString strValue;
 
-				//if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
-				//{
-				//	auto iValue = atoi(value.c_str());
-				//	auto listedValue = sa->GetListedValue(iValue);
-				//	if (listedValue)
-				//	{
-				//		strValue.Format(L"%d. %s", listedValue->GetCode(), listedValue->GetLabel().c_str());
-				//	}
-				//}
-				//else
-				//{
-				//	strValue = LibMFCUtil::StringToWString(value).c_str();
-				//}
 				strValue = LibMFCUtil::StringToWString(value).c_str();
 
 				if (ATTR->m_paix > 0)
 				{
 					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
 					auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
-					addedAttributes.push_back((GF::ThematicAttributeType * )addedSA);
+					addedAttributes.push_back((GF::ThematicAttributeType*)addedSA);
 				}
 				else // top level
 				{
@@ -5041,14 +5155,182 @@ void S101Cell::ATTRtoAttribute()
 			else
 			{
 				auto ca = fc->GetComplexAttribute(std::wstring(strCode));
-				auto addedCA = fr->AddComplexAttribute(code);
-				addedAttributes.push_back(addedCA);
-				if (ATTR->m_paix > 0)
+				if (ca)
 				{
-					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
-					parentCA->AddSubAttribute(addedCA->clone());
+					if (ATTR->m_paix > 0)
+					{
+						auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+						auto addedCA = parentCA->AddComplexAttribute(code);
+						addedAttributes.push_back(addedCA);
+					}
+					else // top level
+					{
+						auto addedCA = fr->AddComplexAttribute(code);
+						addedAttributes.push_back(addedCA);
+					}
+				}
+				else
+				{
+					return false;
 				}
 			}
 		}
 	}
+
+	return true;
+}
+
+bool S101Cell::InformationAttrToAttribute()
+{
+	auto fc = GetFC();
+	int cntInformation = GetInformationCount();
+	for (int i = 0; i < cntInformation; i++) {
+		std::vector<GF::ThematicAttributeType*> addedAttributes;
+		auto ir = GetInformationRecordByIndex(i);
+		auto ATTRs = ir->GetAllAttributes();
+		for (auto j = ATTRs.begin(); j != ATTRs.end(); j++) {
+			auto ATTR = (*j);
+			auto strCode = m_dsgir.GetAttributeCode(ATTR->m_natc);
+			auto code = pugi::as_utf8(strCode);
+			auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
+			if (sa)
+			{
+				auto value = ATTR->getValueAsString();
+				CString strValue;
+
+				strValue = LibMFCUtil::StringToWString(value).c_str();
+
+				if (ATTR->m_paix > 0)
+				{
+					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+					auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+					addedAttributes.push_back((GF::ThematicAttributeType*)addedSA);
+				}
+				else // top level
+				{
+					auto addedSA = ir->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+					addedAttributes.push_back(addedSA);
+				}
+			}
+			else
+			{
+				auto ca = fc->GetComplexAttribute(std::wstring(strCode));
+				if (ca)
+				{
+					auto addedCA = ir->AddComplexAttribute(code);
+					addedAttributes.push_back(addedCA);
+					if (ATTR->m_paix > 0)
+					{
+						auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+						parentCA->AddSubAttribute(addedCA->clone());
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::FeatureFeatureAssociationToGFM()
+{
+	auto fc = GetFC();
+	int cntFeature = GetFeatureCount();
+	for (int i = 0; i < cntFeature; i++) 
+	{
+		auto fr = GetFeatureRecordByIndex(i);
+		auto fascs = fr->GetAllFeatureAssociations();
+		
+		for (auto j = fascs.begin(); j != fascs.end(); j++) 
+		{
+			auto fasc = (*j);
+			auto code = m_dsgir.GetFeatureAssociationCodeAsString(fasc->m_nfac);
+			auto role = m_dsgir.GetAssociationRoleCodeAsString(fasc->m_narc);
+			auto rcid = fasc->m_name.GetRCIDasString();
+
+			fr->AddFeatureAssociation(code, role, rcid);
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::FeatureInformationAssociationToGFM()
+{
+	auto fc = GetFC();
+	int cntFeature = GetFeatureCount();
+	for (int i = 0; i < cntFeature; i++)
+	{
+		auto fr = GetFeatureRecordByIndex(i);
+		auto inass = fr->GetAllInformationAssociations();
+
+		for (auto j = inass.begin(); j != inass.end(); j++)
+		{
+			auto inas = (*j);
+			auto code = m_dsgir.GetInformationAssociationCodeAsString(inas->m_niac);
+			auto role = m_dsgir.GetAssociationRoleCodeAsString(inas->m_narc);
+			auto rcid = inas->m_name.GetRCIDasString();
+
+			fr->AddInformationAssociation(code, role, rcid);
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::InformationAssociationToGFM()
+{
+	auto fc = GetFC();
+	int cntInformation = GetInformationCount();
+	for (int i = 0; i < cntInformation; i++)
+	{
+		auto ir = GetInformationRecordByIndex(i);
+		auto inass = ir->GetAllInformationAssociations();
+
+		for (auto j = inass.begin(); j != inass.end(); j++)
+		{
+			auto inas = (*j);
+			auto code = m_dsgir.GetInformationAssociationCodeAsString(inas->m_niac);
+			auto role = m_dsgir.GetAssociationRoleCodeAsString(inas->m_narc);
+			auto rcid = inas->m_name.GetRCIDasString();
+
+			ir->AddInformationAssociation(code, role, rcid);
+		}
+	}
+
+	return true;
+}
+
+Version S101Cell::GetVersion() const
+{
+   Version version;
+   std::wistringstream stream(std::wstring(m_dsgir.m_dsid.m_pred));
+   std::wstring segment;
+   std::vector<int> parts;
+
+   while (std::getline(stream, segment, L'.')) 
+   {
+       parts.push_back(std::stoi(segment));
+   }
+
+   if (parts.size() > 0)
+   {
+	   version.major = std::to_string(parts[0]);
+   }
+
+   if (parts.size() > 1)
+   {
+	   version.minor = std::to_string(parts[1]);
+   }
+
+   if (parts.size() > 2)
+   {
+	   version.patch = std::to_string(parts[2]);
+   }
+
+   return version;
 }

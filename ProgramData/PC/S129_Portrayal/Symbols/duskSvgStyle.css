@@ -1,0 +1,24 @@
+.layout {display:none}  /* used to control visibility of symbolBox, svgBox, pivotPoint (none or inline) */
+.symbolBox {stroke:black;stroke-width:0.32;}  /* show the cover of the symbol graphics */
+.svgBox {stroke:blue;stroke-width:0.32;}  /* show the entire SVG cover */
+.pivotPoint {stroke:red;stroke-width:0.64;}  /* show the pivot/anchor point, 0,0 */
+.sl {stroke-linecap:round;stroke-linejoin:round} /* default line style elements */
+.f0 {fill:none}  /* no fill */
+.sBLK {stroke:#6B7F89}
+.fBLK {fill:#6B7F89}
+.sCHMGD {stroke:#826CA1}
+.fCHMGD {fill:#826CA1}
+.sDEPCN {stroke:#4C5B63; stroke-opacity: 0}
+.fDEPCN {fill:#4C5B63; fill-opacity: 0}
+.sGOLDN {stroke:#9E8502}
+.fGOLDN {fill:#9E8502}
+.sORG {stroke:#86491E}
+.fORG {fill:#86491E}
+.sPLRTE {stroke:#330803}
+.fPLRTE {fill:#330803}
+.sRED {stroke:#9B3549}
+.fRED {fill:#9B3549}
+.sSNDG2 {stroke:#8CA6B3}
+.fSNDG2 {fill:#8CA6B3}
+.sWHITE {stroke:#8CA6B3}
+.fWHITE {fill:#8CA6B3}

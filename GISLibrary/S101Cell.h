@@ -10,6 +10,8 @@
 
 #include "../GeoMetryLibrary/MBR.h"
 
+#include "../FeatureCatalog/Version.h"
+
 #include <unordered_map>
 #include <set>
 #include <map>
@@ -97,10 +99,13 @@ public:
 	void ClearAll(void); 
 
 	bool Open(CString _filepath) override;
+	bool OpenMetadata(CString _filepath) override;
 	bool Save(std::wstring path) override;
 
 	bool OpenBy000(CString path);
+	bool OpenMetadataBy000(CString path);
 	bool OpenByGML(CString path);
+	bool OpenMetadataByGML(CString path);
 
 	bool Read8211(std::wstring path);
 	bool isUpdate();
@@ -430,5 +435,14 @@ public:
 	S100GML::DatasetIdentificationInformation GetDatasetIdentificationInformation();
 	void WritePointRecord(pugi::xml_node& node, R_PointRecord* record);
 
-	void ATTRtoAttribute();
+	bool ATTRtoAttribute();
+
+	Version GetVersion() const;
+
+private:
+	bool FeatureAttrToAttribute();
+	bool InformationAttrToAttribute();
+	bool FeatureFeatureAssociationToGFM();
+	bool FeatureInformationAssociationToGFM();
+	bool InformationAssociationToGFM();
 };

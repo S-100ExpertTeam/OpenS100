@@ -89,7 +89,10 @@ D2D1Resources* CGISLibraryApp::GetD2D1Resources()
 
 bool CGISLibraryApp::AddLayer(CString _filepath)
 {
-	m_pLayerManager->AddLayer(_filepath);
+	if (0 > m_pLayerManager->AddLayer(_filepath))
+	{
+		return false;
+	}
 
 	return true;
 }

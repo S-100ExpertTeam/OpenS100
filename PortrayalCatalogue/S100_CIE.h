@@ -1,29 +1,33 @@
 #pragma once
 
-#include <pugixml.hpp>
+#include <variant>
 
-#include <string>
+#include "S100_CIExyL.h"
+#include "S100_CIEXYZ.h"
 
-class S100_CIE
-{
-public:
-	S100_CIE();
-	virtual ~S100_CIE();
+//#include <pugixml.hpp>
 
-private:
-	float x = 0.0f;
-	float y = 0.0f;
-	float L = 0.0f;
+using S100_CIE = std::variant<S100_CIExyL, S100_CIEXYZ>;
 
-public:
-	void GetContents(pugi::xml_node Node);
-	
-	void SetX(float value);
-	float GetX();
 
-	void SetY(float value);
-	float GetY();
 
-	void SetL(float value);
-	float GetL();
-};
+//class S100_CIE
+//{
+//public:
+//	S100_CIE();
+//	virtual ~S100_CIE();
+//
+//private:
+//
+//public:
+//	void GetContents(pugi::xml_node Node);
+//	
+//	void SetX(float value);
+//	float GetX();
+//
+//	void SetY(float value);
+//	float GetY();
+//
+//	void SetL(float value);
+//	float GetL();
+//};

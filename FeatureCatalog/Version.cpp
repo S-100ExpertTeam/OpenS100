@@ -3,9 +3,19 @@
 
 #include <sstream>
 #include <vector>
+#include <string>
+#include <algorithm>
 
 Version::Version()
 {
+}
+
+Version::Version(std::string major, std::string minor, std::string patch, std::string working)
+{
+	this->major = major;
+	this->minor = minor;
+	this->patch = patch;
+	this->working = working;
 }
 
 Version::Version(const Version& other)
@@ -143,9 +153,10 @@ int Version::convertToInt(const std::string& str) const
 
 bool Version::operator==(const Version& other) const
 {
-	return (major == other.major &&
-		minor == other.minor &&
-		patch == other.patch);
+	//return (major == other.major &&
+	//	minor == other.minor);
+
+	return (major == other.major);
 }
 
 bool Version::operator<(const Version& other) const
@@ -165,4 +176,43 @@ bool Version::operator<(const Version& other) const
 		return thisMinor < otherMinor;
 
 	return thisPatch < otherPatch;
+}
+
+bool Version::operator>(const Version& other) const
+{
+	if (*this == other || *this < other)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool Version::operator<=(const Version& other) const
+{
+	if (*this > other)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+Version Version::getMajorMinor()
+{
+	return Version{ major, minor, "", "" };
+}
+
+Version Version::getMajor()
+{
+	return Version{ major, "", "", "" };
+}
+
+bool Version::isEmpty()
+{
+	if (major.empty() || major == "0")
+	{
+		return true;
+	}
+
+	return false;
 }

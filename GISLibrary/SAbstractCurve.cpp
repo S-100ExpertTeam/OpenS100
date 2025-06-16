@@ -27,3 +27,8 @@ void SAbstractCurve::Set(int index, double x, double y)
 {
 
 }
+
+void SAbstractCurve::setCenterPoint()
+{
+
+}

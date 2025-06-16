@@ -10,6 +10,12 @@
 
 #include <sstream>
 
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/linestring.hpp>
+#include <boost/geometry/geometries/point_xy.hpp>
+
+namespace bg = boost::geometry;
+
 SCurve::SCurve() 
 {
 	
@@ -31,7 +37,9 @@ SCurve::SCurve(const SCurve& other) : SAbstractCurve(other)
 	}
 
 	if (other.centerPoint)
+	{
 		centerPoint = new GeoPoint(*other.centerPoint);
+	}
 }
 
 SCurve::~SCurve()
@@ -84,7 +92,9 @@ SCurve SCurve::operator=(const SCurve& other)
 	}
 
 	if (other.centerPoint)
+	{
 		centerPoint = new GeoPoint(*other.centerPoint);
+	}
 
 	return *this;
 }
@@ -368,12 +378,12 @@ SPoint* SCurve::GetLastPoint()
 
 double SCurve::GetX()
 {
-	return GetX(0);
+	return getCenterPoint().GetX();
 }
 
 double SCurve::GetY()
 {
-	return GetY(0);
+	return getCenterPoint().GetY();
 }
 
 std::string SCurve::ToString()
@@ -429,6 +439,50 @@ bool SCurve::isDraw()
 
 void SCurve::setCenterPoint()
 {
+	// Define Boost.Geometry types for 2D point and linestring
+	typedef bg::model::d2::point_xy<double> Point;
+	typedef bg::model::linestring<Point> LineString;
 
+	// Convert all curve points to a Boost.Geometry linestring (after inverse projection)
+	LineString line;
+	for (int i = 0; i < getNumPoint(); i++)
+	{
+		double x = GetX(i);
+		double y = GetY(i);
+		inverseProjection(x, y);
+		line.push_back(Point(x, y));
+	}
+
+	// Calculate the total length of the curve
+	double total_length = bg::length(line);
+	
+	// Find the distance at the midpoint of the curve
+	double mid_distance = total_length / 2.0;
+
+	// Interpolate the midpoint along the curve
+	Point midpoint;
+	bg::line_interpolate(line, mid_distance, midpoint);
+
+	double x = midpoint.x();
+	double y = midpoint.y();
+
+	// Project the midpoint back to the original coordinate system
+	projection(x, y);
+	if (nullptr == centerPoint)
+	{
+		centerPoint = new GeoPoint();
+	}
+	
+	// Set the centerPoint to the calculated midpoint
+	centerPoint->SetPoint(x, y);
 }
 
+GeoPoint SCurve::getCenterPoint()
+{
+	if (nullptr == centerPoint)
+	{
+		setCenterPoint();
+	}
+
+	return *centerPoint;
+}

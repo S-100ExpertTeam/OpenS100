@@ -14,6 +14,23 @@
 
 #include <sstream>
 
+S100Layer::S100Layer() : Layer()
+{
+
+}
+
+S100Layer::S100Layer(int productNumber) : Layer()
+{
+	SetProductNumber(productNumber);
+}
+
+S100Layer::S100Layer(int productNumber, FeatureCatalogue* fc, PortrayalCatalogue* pc) : Layer()
+{
+	SetFeatureCatalog(fc);
+	SetPC(pc);
+	SetProductNumber(productNumber);
+}
+
 S100Layer::S100Layer(FeatureCatalogue* fc, PortrayalCatalogue *pc) : Layer()
 {	
 	SetFeatureCatalog(fc);
@@ -38,9 +55,25 @@ bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 
 		auto enc = (S101Cell*)m_spatialObject;
 
-		if (!m_spatialObject->Open(_filepath))
+		FeatureCatalogue* fc = nullptr;
+		PortrayalCatalogue* pc = nullptr;
+
+		if (enc->OpenMetadata(_filepath))
 		{
-			delete enc;
+			auto version = enc->GetVersion();
+			fc = lm->catalogManager->getFC(GetProductNumber(), version);
+			pc = lm->catalogManager->getPC(GetProductNumber(), version);
+			SetFeatureCatalog(fc);
+			SetPC(pc);
+		}
+
+		enc->RemoveAll();
+
+		if (fc && pc && !m_spatialObject->Open(_filepath))
+		{
+			enc->GetVersion();
+			delete m_spatialObject;
+			m_spatialObject = nullptr;
 			return false;
 		}
 
@@ -49,6 +82,8 @@ bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 	}
 	else if (!extension.CompareNoCase(L"gml"))
 	{
+		SetFeatureCatalog(lm->catalogManager->getFC(GetProductNumber()));
+		SetPC(lm->catalogManager->getPC(GetProductNumber()));
 		if (GetFC()->getProductId().compare("S-101") == 0)
 		{
 			m_spatialObject = new S101Cell(d2d1);
@@ -309,7 +344,7 @@ void S100Layer::BuildPortrayalCatalogue()
 	{
 		auto gml = (S10XGML*)m_spatialObject;
 		gml->SaveToInputXML("..\\TEMP\\input.xml");
-		ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml", this);
+		ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml");
 		auto s100so = (S100SpatialObject*)m_spatialObject;
 		s100so->OpenOutputXML("..\\TEMP\\output.xml");
 	}

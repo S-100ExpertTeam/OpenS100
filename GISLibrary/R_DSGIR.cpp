@@ -4,6 +4,8 @@
 #include "CodeWithNumericCode.h"
 #include "DRDirectoryInfo.h"
 
+#include <pugixml.hpp>
+
 R_DSGIR::R_DSGIR()
 {
 }
@@ -318,6 +320,10 @@ CString R_DSGIR::GetFeatureCode(int numericCode)
 	return L"";
 }
 
+std::string R_DSGIR::GetFeatureCodeAsString(int numericCode)
+{
+	return pugi::as_utf8(GetFeatureCode(numericCode));
+}
 
 CString R_DSGIR::GetInformationCode(int numericCode)
 {
@@ -330,6 +336,11 @@ CString R_DSGIR::GetInformationCode(int numericCode)
 	return L"";
 }
 
+std::string R_DSGIR::GetInformationCodeAsString(int numericCode)
+{
+	return pugi::as_utf8(GetInformationCode(numericCode));
+
+}
 
 CString R_DSGIR::GetAttributeCode(int numericCode)
 {
@@ -342,6 +353,10 @@ CString R_DSGIR::GetAttributeCode(int numericCode)
 	return L"";
 }
 
+std::string R_DSGIR::GetAttributeCodeAsString(int numericCode)
+{
+	return pugi::as_utf8(GetAttributeCode(numericCode));
+}
 
 CString R_DSGIR::GetInformationAssociationCode(int numericCode)
 {
@@ -354,6 +369,10 @@ CString R_DSGIR::GetInformationAssociationCode(int numericCode)
 	return L"";
 }
 
+std::string R_DSGIR::GetInformationAssociationCodeAsString(int numericCode)
+{
+	return pugi::as_utf8(GetInformationAssociationCode(numericCode));
+}
 
 CString R_DSGIR::GetFeatureAssociationCode(int numericCode)
 {
@@ -366,6 +385,10 @@ CString R_DSGIR::GetFeatureAssociationCode(int numericCode)
 	return L"";
 }
 
+std::string R_DSGIR::GetFeatureAssociationCodeAsString(int numericCode)
+{
+	return pugi::as_utf8(GetFeatureAssociationCode(numericCode));
+}
 
 CString R_DSGIR::GetAssociationRoleCode(int numericCode)
 {
@@ -376,6 +399,11 @@ CString R_DSGIR::GetAssociationRoleCode(int numericCode)
 		return nc->m_code;
 	}
 	return L"";
+}
+
+std::string R_DSGIR::GetAssociationRoleCodeAsString(int numericCode)
+{
+	return pugi::as_utf8(GetAssociationRoleCode(numericCode));
 }
 
 int R_DSGIR::GetAttributeCode(std::wstring& value)

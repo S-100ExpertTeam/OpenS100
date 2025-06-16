@@ -10,6 +10,13 @@
 
 #include <algorithm>
 
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/point_xy.hpp>
+#include <boost/geometry/geometries/polygon.hpp>
+#include <boost/geometry/io/wkt/wkt.hpp>
+
+namespace bg = boost::geometry;
+
 SSurface::SSurface()
 {
 	
@@ -253,41 +260,57 @@ ID2D1PathGeometry* SSurface::GetD2Geometry()
 
 void SSurface::CalculateCenterPoint()
 {
-	int j = 0;
-	double area = 0;
-	double centerX = 0.0;
-	double centerY = 0.0;
+    // Define Boost.Geometry types for 2D point, polygon, and ring
+    typedef bg::model::d2::point_xy<double> Point;
+    typedef bg::model::polygon<Point> Polygon;
+    typedef bg::model::ring<Point> Ring;
 
-	double x1, y1, x2, y2, tmpArea;
+    Ring outer_ring;
+    auto outerRing = GetOuterRing();
+    if (outerRing)
+    {
+          // Add each point of the outer ring to the Boost.Geometry ring
+		  auto numPt = outerRing->getNumPoint();
+		  for (int i = 0; i < numPt; i++)
+		  {
+			  outer_ring.push_back(Point(outerRing->GetX(i), outerRing->GetY(i)));
+		  }
+    }
 
-	for (int i = 0; i < m_numPoints; i++)
+    Polygon poly;
+    poly.outer() = outer_ring;
+    int numHoles = getHoleCount();
+    for (int i = 0; i < numHoles; i++)
+    {
+        // Add each hole as a ring to the polygon's inners
+        Ring hole;
+        for (int j = 0; j < getHole(i)->getNumPoint(); j++)
+        {
+            hole.push_back(Point(getHole(i)->GetX(j), getHole(i)->GetY(j)));
+        }
+        poly.inners().push_back(hole);
+    }
+
+    // Calculate a point guaranteed to be on the surface of the polygon
+    Point point_on_surf;
+    bg::point_on_surface(poly, point_on_surf);
+
+    // Set the center point member variable to the calculated point
+    if (nullptr == m_centerPoint)
+    {
+        m_centerPoint = new GeoPoint();
+    }
+    m_centerPoint->SetPoint(point_on_surf.x(), point_on_surf.y());
+}
+
+GeoPoint SSurface::getCenterPoint()
+{
+	if (nullptr == m_centerPoint)
 	{
-		j = (i + 1) % m_numPoints;
-
-		x1 = m_pPoints[i].x;
-		y1 = m_pPoints[i].y;
-		x2 = m_pPoints[j].x;
-		y2 = m_pPoints[j].y;
-
-		tmpArea = ((x1 * y2) - (x2 * y1));
-
-		centerX += ((x1 + x2) * tmpArea);
-		centerY += ((y1 + y2) * tmpArea);
-		area += tmpArea;
+		CalculateCenterPoint();
 	}
 
-	area *= 0.5;
-
-	centerX = centerX / (6.0 * area);
-	centerY = centerY / (6.0 * area);
-
-	if (!m_centerPoint)
-	{
-		m_centerPoint = new GeoPoint();
-	}
-
-	m_centerPoint->x = centerX;
-	m_centerPoint->y = centerY;
+	return *m_centerPoint;
 }
 
 ID2D1PathGeometry* SSurface::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler)
@@ -686,12 +709,12 @@ void SSurface::SetXY(int ringIndex, int pointIndex, double x, double y)
 
 double SSurface::GetX()
 {
-	return GetXY(0, 0).GetX();
+	return getCenterPoint().GetX();
 }
 
 double SSurface::GetY()
 {
-	return GetXY(0, 0).GetY();
+	return getCenterPoint().GetY();
 }
 
 double SSurface::GetX(int index)
@@ -722,6 +745,36 @@ SAbstractCurve* SSurface::GetRing(int index) const
 	if (index >= 0 && index < GetRingCount())
 	{
 		return curveList.at(index);
+	}
+
+	return nullptr;
+}
+
+SAbstractCurve* SSurface::GetOuterRing() const
+{
+	if (GetRingCount() > 0)
+	{
+		return curveList.front();
+	}
+
+	return nullptr;
+}
+
+int SSurface::getHoleCount() const
+{
+	if (GetRingCount() > 0)
+	{
+		return GetRingCount() - 1; // The first ring is the outer ring
+	}
+
+	return 0;
+}
+
+SAbstractCurve* SSurface::getHole(int index) const
+{
+	if (index >= 0 && index < getHoleCount())
+	{
+		return curveList.at(index + 1); // The first ring is the outer ring
 	}
 
 	return nullptr;

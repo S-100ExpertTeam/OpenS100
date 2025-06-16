@@ -65,6 +65,7 @@ public:
 
 	int GetNumPointPerPart(int partIndex);
 	void CalculateCenterPoint();
+	GeoPoint getCenterPoint();
 	
 	ID2D1PathGeometry* GetD2Geometry();
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
@@ -80,6 +81,9 @@ public:
 
 	int GetRingCount() const;
 	SAbstractCurve* GetRing(int index) const;
+	SAbstractCurve* GetOuterRing() const;
+	int getHoleCount() const;
+	SAbstractCurve* getHole(int index) const;
 
 	SCurve* GetCurve(int rcid);
 

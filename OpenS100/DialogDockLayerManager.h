@@ -64,4 +64,5 @@ protected:
 	afx_msg void OnButtonDelete();
 public:
 	afx_msg void OnItemchangedListLm(NMHDR* pNMHDR, LRESULT* pResult);
+	virtual void OnCancel();
 };
