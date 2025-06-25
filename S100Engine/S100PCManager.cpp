@@ -187,7 +187,10 @@ void S100PCManager::DrawAreaFill(std::wstring _symbolName, ID2D1RenderTarget* pR
 
 	SVGReader* pSVG = s100SymbolManager.GetSVG(pAreaFill->_symbolReference);
 
-	if (!pSVG) return;
+	if (!pSVG) 
+	{
+		return;
+	}
 
 	float width = pAreaFill->v1_x;
 	float height = pAreaFill->v2_y;

@@ -155,7 +155,7 @@ void S100_AreaInstruction::SetAreaFill(std::wstring& reference)
 		delete areaFill, areaFill = nullptr;
 
 	S100_AreaFillReference* areaFillReference = new S100_AreaFillReference();
-	reference.append(L".xml");
+	//reference.append(L".xml");
 	areaFillReference->SetReference(reference);
 	SetAreaFill(areaFillReference);
 }

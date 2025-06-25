@@ -140,8 +140,12 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 			std::string drawingInstructions = i->drawingInstructions;
 			std::vector<std::string> di_splited = Split(drawingInstructions, ";");
 
-			c->pcManager->ParsingSENCInstruction(layer, i->featureID, di_splited);
+		//	c->pcManager->ParsingSENCInstruction(layer, i->featureID, di_splited);
+			LUA_ParsingDrawingInstructions(i->featureID, di_splited, c->pcManager);
 		}
+
+		c->pcManager->GenerateSENCInstruction(c, layer->GetPC());
+		c->pcManager->InitDisplayList();
 
 		KRS_LUA_SCRIPT_REFERENCE::SaveDrawingInstructions("..\\TEMP\\drawingCommands.txt");
 		KRS_LUA_SCRIPT_REFERENCE::RemoveResultDrawingInstructions();

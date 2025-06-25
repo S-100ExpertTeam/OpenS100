@@ -2014,29 +2014,29 @@ void COpenS100View::OnInitialUpdate()
 	theApp.m_pDockablePaneLayerManager.UpdateList();
 
 
-	TranslationPackageType* translationPackage = new TranslationPackageType;
-	if (translationPackage->LoadFromFile("..\\pizza_fc_de.xml"))
-	{
-		debug_print_utf8("Language: " + translationPackage->Language + "\n");
-		debug_print_utf8("Issue Date: " + translationPackage->IssueDate + "\n");
-		debug_print_utf8("Issue Time: " + translationPackage->IssueTime + "\n");
-		/*print_utf8("Responsible Party: " + translationPackage->ResponsibleParty + "\n");*/
+	//TranslationPackageType* translationPackage = new TranslationPackageType;
+	//if (translationPackage->LoadFromFile("..\\pizza_fc_de.xml"))
+	//{
+	//	debug_print_utf8("Language: " + translationPackage->Language + "\n");
+	//	debug_print_utf8("Issue Date: " + translationPackage->IssueDate + "\n");
+	//	debug_print_utf8("Issue Time: " + translationPackage->IssueTime + "\n");
+	//	/*print_utf8("Responsible Party: " + translationPackage->ResponsibleParty + "\n");*/
 
-		for (const auto& sourceFile : translationPackage->SourceFiles) {
-			debug_print_utf8("Source File Identifier: " + sourceFile.Header.ResourceIdentifier + "\n");
-			for (const auto& id : sourceFile.Header.Identifications) {
-				debug_print_utf8("  Path: " + id.Path + ", Value: " + id.Value + "\n");
-			}
-			for (const auto& item : sourceFile.TranslationItems) {
-				debug_print_utf8("  Translation Item Path: " + item.Path + "\n");
-				debug_print_utf8("    Original: " + item.Original + "\n");
-				debug_print_utf8("    Status: " + item.ItemStatus.toString() + "\n");
-				debug_print_utf8("    Translation: " + item.Translation + "\n");
-			}
-		}
-	}
-	else {
-		debug_print_utf8("Failed to load language pack.\n");
-	}
+	//	for (const auto& sourceFile : translationPackage->SourceFiles) {
+	//		debug_print_utf8("Source File Identifier: " + sourceFile.Header.ResourceIdentifier + "\n");
+	//		for (const auto& id : sourceFile.Header.Identifications) {
+	//			debug_print_utf8("  Path: " + id.Path + ", Value: " + id.Value + "\n");
+	//		}
+	//		for (const auto& item : sourceFile.TranslationItems) {
+	//			debug_print_utf8("  Translation Item Path: " + item.Path + "\n");
+	//			debug_print_utf8("    Original: " + item.Original + "\n");
+	//			debug_print_utf8("    Status: " + item.ItemStatus.toString() + "\n");
+	//			debug_print_utf8("    Translation: " + item.Translation + "\n");
+	//		}
+	//	}
+	//}
+	//else {
+	//	debug_print_utf8("Failed to load language pack.\n");
+	//}
 
 }

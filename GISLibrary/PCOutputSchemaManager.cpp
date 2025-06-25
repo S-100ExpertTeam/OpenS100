@@ -521,7 +521,7 @@ void PCOutputSchemaManager::ParsingSENCInstruction(S100Layer* layer, std::string
 						GetSENCFromString(sit, featureID, v_DrawingPriority, v_DisplayPlane, v_ViewingGroup, v_ScaleMinimum, v_ScaleMaximum, vl_SpatialReference);
 												
 						std::wstring title = string2wstring(value);
-						title.append(_T(".xml"));
+						//title.append(_T(".xml"));
 
 						sit->areaFill = new SENC_AreaFillReference();
 						sit->areaFill->SetFileTitle(title);

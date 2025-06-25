@@ -93,6 +93,11 @@ void S100_Instruction::SetScaleMinimum(std::wstring& value)
 {
 	try 
 	{
+		if (value.empty()) 
+		{
+			scaleMinimum = 0;
+			return;
+		}
 		scaleMinimum = std::stoi(value);
 	}
 	catch (std::exception e) 
