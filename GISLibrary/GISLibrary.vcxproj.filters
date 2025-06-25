@@ -94,7 +94,6 @@
     <None Include="S100SpatialObjectType.h">
       <Filter>S100</Filter>
     </None>
-    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GISLibrary.cpp">
@@ -2110,12 +2109,6 @@
       <Filter>S100\DrawingInstructions\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="LuaAttributePathItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpatialObjectType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StringUtil.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

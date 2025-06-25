@@ -66,7 +66,6 @@ namespace LatLonUtility {
 	//wchar_t* ConvertCtoWC(char* str);
 
 	std::vector<std::string> Split(std::string targetStr, std::string token);
-	std::vector<std::string> Split2(std::string targetStr, std::string token);
 
 	// value : 0101000000000000000000F03F000000000000F03F
 	unsigned char* HexStringToWKB(std::string value);
@@ -74,6 +73,7 @@ namespace LatLonUtility {
 	size_t countDigits(int n);
 
 	std::string replace_all(__in const std::string& message, __in const std::string& pattern, __in const std::string& replace);
+	void replace_string(std::string& str, const std::string& from, const std::string& to);
 
 	std::string generate_uuid();
 

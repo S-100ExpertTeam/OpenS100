@@ -74,16 +74,9 @@ BOOL CConfiguration_1::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	m_twoShade.SetCheck(ENCCommon::TWO_SHADES);
-	m_useNationalObjectName.SetCheck(ENCCommon::SHOW_NOBJNM);
 	checkBoxIgnoreScaleMin.SetCheck(!ENCCommon::APPLY_SCALE_MIN);
-	checkBoxShallowPattern.SetCheck(ENCCommon::SHALLOW_PATTERN);
-	checkBoxSimplifyPoint.SetCheck(ENCCommon::SIMPLIFIED_POINT_SYMBOL);
-	checkBoxShowIsolatedDanger.SetCheck(ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER);
-	checkBoxSimplifyLine.SetCheck(!ENCCommon::SymbolizedAreaBoundary);
 	checkBoxFullSector.SetCheck(ENCCommon::FULL_SECTORS);
 
-	m_safetyDepth.SetWindowText(_bstr_t(ENCCommon::SAFETY_DEPTH));
 	m_safetyWaterLevel.SetWindowText(_bstr_t(ENCCommon::SAFETY_CONTOUR));
 	m_veryShallowWaterLevel.SetWindowText(_bstr_t(ENCCommon::SHALLOW_CONTOUR));
 	m_veryDeepWaterLevel.SetWindowText(_bstr_t(ENCCommon::DEEP_CONTOUR));

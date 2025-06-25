@@ -38,8 +38,6 @@
 
 #include "../LatLonUtility/LatLonUtility.h"
 
-#include "../S100Engine/DrawingInstructionReader.h"
-
 #include <ctime> 
 #include <mmsystem.h> 
 #include <string>
@@ -297,7 +295,8 @@ int LayerManager::AddLayer(CString _filepath)
 
 		if (fc)
 		{
-			layer = new S100Layer(fc, pc);
+			//layer = new S100Layer(fc, pc);
+			layer = new S100Layer(productNumber);
 			if ((S100Layer*)layer->Open(_filepath, D2, this) == false)
 			{
 				delete layer;
@@ -326,7 +325,9 @@ int LayerManager::AddLayer(CString _filepath)
 		AddLayer(layer, firstlayerfilepath, false);
 	}
 	else
+	{
 		AddLayer(layer);
+	}
 
 	return layer->GetID();
 }
@@ -505,10 +506,7 @@ void LayerManager::AddSymbolDrawing(
 
 		D2->pBrush->SetOpacity(1.0f);
 		instruction->DrawInstruction(
-			D2->pRT,
-			D2->pD2Factory,
-			D2->pBrush,
-			&D2->D2D1StrokeStyleGroup,
+			D2,
 			scaler,
 			pc);
 	}
@@ -518,10 +516,7 @@ void LayerManager::AddSymbolDrawing(
 	{
 		auto instruction = *i;
 		instruction->DrawInstruction(
-			D2->pRT,
-			D2->pD2Factory,
-			D2->pBrush,
-			&D2->D2D1StrokeStyleGroup,
+			D2,
 			scaler,
 			pc);
 	}
@@ -532,14 +527,14 @@ void LayerManager::AddSymbolDrawing(
 	for (auto i = augmentedRay[drawingPrioriy].begin(); i != augmentedRay[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(D2->pRT, D2->pD2Factory, D2->pBrush, &D2->D2D1StrokeStyleGroup, scaler, pc);
+		instruction->DrawInstruction(D2, scaler, pc);
 	}
 
 	// AugmentedPath
 	for (auto i = augmentedPath[drawingPrioriy].begin(); i != augmentedPath[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(D2->pRT, D2->pD2Factory, D2->pBrush, &D2->D2D1StrokeStyleGroup, scaler, pc);
+		instruction->DrawInstruction(D2, scaler, pc);
 	}
 
 	// Point
@@ -754,7 +749,7 @@ void LayerManager::AddSymbolDrawing(
 					if (element->pColor)
 					{
 						D2->pBrush->SetColor(element->pColor);
-						D2->pBrush->SetOpacity((FLOAT)(1 - element->foreground.transparency));
+						D2->pBrush->SetOpacity(1 - element->foreground.transparency);
 					}
 
 					for (auto itor = points.begin(); itor != points.end(); itor++)
@@ -1295,7 +1290,7 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 		{
 			auto gml = (S10XGML*)l->GetSpatialObject();
 			gml->SaveToInputXML("..\\TEMP\\input.xml");
-			ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml", (S100Layer*)l);
+			ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml");
 			auto s100so = (S100SpatialObject*)l->GetSpatialObject();
 			s100so->OpenOutputXML("..\\TEMP\\output.xml");
 		}

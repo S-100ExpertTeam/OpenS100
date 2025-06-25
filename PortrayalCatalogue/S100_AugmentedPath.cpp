@@ -5,13 +5,13 @@
 S100_AugmentedPath::S100_AugmentedPath()
 {
 	SetType(8);
-	path = nullptr;
+	path = NULL;
 }
 
 S100_AugmentedPath::~S100_AugmentedPath()
 {
 	if (path)
-		delete path, path = nullptr;
+		delete path;
 }
 
 void S100_AugmentedPath::GetContents(pugi::xml_node node)
@@ -79,20 +79,6 @@ void S100_AugmentedPath::GetContents(pugi::xml_node node)
 void S100_AugmentedPath::SetPath(S100_Path* value)
 {
 	path = value;
-}
-
-void S100_AugmentedPath::SetPath(std::wstring& x, std::wstring& y, std::wstring& radius, std::wstring& angle, std::wstring& distance)
-{
-	if (!path)
-		path = new S100_Path();
-
-	S100_ArcByRadius* pArcByRadius = new S100_ArcByRadius();
-
-	pArcByRadius->SetCenter(x, y);
-	pArcByRadius->SetRadius(radius);
-	pArcByRadius->SetSector(angle, distance);
-
-	path->SetArcByRadiuses(pArcByRadius);
 }
 
 S100_Path* S100_AugmentedPath::GetPath()

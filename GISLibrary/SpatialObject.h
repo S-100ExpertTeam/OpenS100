@@ -2,7 +2,6 @@
 
 #include "Enum_S100_FileType.h"
 #include "Namespace_GISLibrary.h"
-#include "SpatialObjectType.h"
 
 using namespace GISLibrary;
 
@@ -17,7 +16,6 @@ public:
 public:
 	Layer* m_pLayer = nullptr;
 	S100_FileType m_FileType = S100_FileType::FILE_NONE; 
-	SpatialObjectType m_ObejctType = SpatialObjectType::SpatialObject;
 
 private:
 	CString m_FilePath; // Full path of file (including name)
@@ -28,6 +26,7 @@ protected:
 
 public:
 	virtual bool Open(CString _filepath) = 0;
+	virtual bool OpenMetadata(CString _filepath) = 0;
 	virtual bool Save(std::wstring path) { return true; }
 
 	virtual void Draw(CDC *pDC, Scaler *scaler, double offset = 0) {};
@@ -50,6 +49,4 @@ public:
 
 	void SetFileType(S100_FileType value);
 	S100_FileType GetFileType();
-
-	SpatialObjectType getSpatialObjectType();
 };

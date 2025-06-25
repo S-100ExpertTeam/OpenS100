@@ -19,15 +19,18 @@ private:
 	std::wstring rotationCRS;
 	std::wstring scaleFactor;
 
+	double offsetX = 0;
+	double offsetY = 0;
+
 	S100_AreaPlacement* areaPlacement = nullptr;
 	S100_LinePlacement* linePlacement = nullptr;
 
 
-	std::wstring id;
-	S100_Description* description;
-	std::wstring fileName;
-	std::wstring fileType;
-	std::wstring fileFormat;
+	//std::wstring id;
+	//S100_Description* description;
+	//std::wstring fileName;
+	//std::wstring fileType;
+	//std::wstring fileFormat;
 
 public:
 	//void GetContents(MSXML2::IXMLDOMNodePtr pNode);
@@ -46,11 +49,13 @@ public:
 	std::wstring GetScaleFactor();
 	S100_AreaPlacement* GetAreaPlacement();
 	S100_LinePlacement* GetLinePlacement();
-	std::wstring GetId();
+	//std::wstring GetId();
 
-	S100_Description* GetDescription();
-	std::wstring GetFileName();
-	std::wstring GetFileType();
-	std::wstring GetFileFormat();
+	//S100_Description* GetDescription();
+	//std::wstring GetFileName();
+	//std::wstring GetFileType();
+	//std::wstring GetFileFormat();
 
+	double GetOffsetX();
+	double GetOffsetY();
 };

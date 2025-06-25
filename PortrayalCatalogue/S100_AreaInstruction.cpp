@@ -133,35 +133,7 @@ void S100_AreaInstruction::SetAreaFill(S100_AreaFillBase* value)
 	areaFill = value;
 }
 
-void S100_AreaInstruction::SetAreaFill(std::wstring& token, std::wstring& name, std::wstring& transparency)
-{
-	if (token.empty())
-		return;
-
-	if (areaFill)
-		delete areaFill, areaFill = nullptr;
-
-	S100_ColorFill* colorFill = new S100_ColorFill();
-	colorFill->SetColor(token, name, transparency);
-	SetAreaFill(colorFill);
-}
-
-void S100_AreaInstruction::SetAreaFill(std::wstring& reference)
-{
-	if (reference.empty())
-		return;
-
-	if (areaFill)
-		delete areaFill, areaFill = nullptr;
-
-	S100_AreaFillReference* areaFillReference = new S100_AreaFillReference();
-	reference.append(L".xml");
-	areaFillReference->SetReference(reference);
-	SetAreaFill(areaFillReference);
-}
-
 S100_AreaFillBase* S100_AreaInstruction::GetAreaFill()
 {
 	return areaFill;
 }
-

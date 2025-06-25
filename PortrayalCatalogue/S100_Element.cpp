@@ -58,17 +58,6 @@ void S100_Element::SetText(S100_Text* value)
 	text = value;
 }
 
-void S100_Element::SetText(std::wstring& value)
-{
-	if (value.empty())
-		return;
-
-	if (!text)
-		text = new S100_Text();
-
-	text->SetValue(value);
-}
-
 S100_Text* S100_Element::GetText()
 {
 	return text;
@@ -98,17 +87,6 @@ void S100_Element::SetForground(S100_Foreground* value)
 	foreground = value;
 }
 
-void S100_Element::SetForground(std::string& value)
-{
-	if (value.empty())
-		return;
-
-	if (!foreground)
-		foreground = new S100_Foreground();
-
-	foreground->fromDrawingCommand(value);
-}
-
 S100_Foreground* S100_Element::GetForground()
 {
 	return foreground;
@@ -119,19 +97,7 @@ void S100_Element::SetFont(S100_Font* value)
 	font = value;
 }
 
-void S100_Element::SetFont(std::wstring& value)
-{
-	if (value.empty())
-		return;
-
-	if (!font)
-		font = new S100_Font();
-
-	font->SetSlant(value);
-}
-
 S100_Font* S100_Element::GetFont()
 {
 	return font;
 }
-

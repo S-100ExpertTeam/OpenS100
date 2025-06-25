@@ -186,3 +186,32 @@ Item& Item::operator = (const Item& item)
 	}
 	return *this;
 }
+
+void Item::setSourceIdentifier(std::wstring value)
+{
+	if (!definitionReference)
+	{
+		definitionReference = new DefinitionReference();
+	}
+
+	definitionReference->SetSourceIdentifier(value);
+}
+
+std::wstring Item::getSourceIdentifierAsWString()
+{
+	if (definitionReference)
+	{
+		auto si = definitionReference->GetSourceIdentifier();
+		if (si)
+		{
+			return *si;
+		}
+	}
+
+	return L"";
+}
+
+std::string Item::getSourceIdentifier()
+{
+	return pugi::as_utf8(getSourceIdentifierAsWString());
+}

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GF_SimpleAttributeType.h"
+#include "ProcessS101.h"
 
 namespace GF
 {
@@ -27,6 +28,9 @@ namespace GF
 
 	std::string SimpleAttributeType::GetValue()
 	{
+		if (value.empty()) {
+			return ProcessS101::g_unknown_attribute_value;
+		}
 		return value; 
 	}
 	

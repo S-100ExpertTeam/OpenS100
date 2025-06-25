@@ -79,16 +79,12 @@ function LightFlareAndDescription(feature, featurePortrayal, contextParameters, 
 	end
 
 	local description = LITDSN02(categoryOfLight, feature.rhythmOfLight, feature.colour, feature.height, feature['!valueOfNominalRange'], feature.status)
-	-- issue #52, Call Activated [Signal Generation] (row 40 main)
-	-- dataset 101GB005X01NE.000 will trigger
-	--Debug.Break()
-	--feature.signalGeneration = 5
-
 	if contains(feature['!signalGeneration'], {3,5,6}) then
-		--Debug.Break()
-		featurePortrayal:AddTextInstruction(description .. '(man)', 23, 24, viewingGroup, priority, true)
-	else
-		featurePortrayal:AddTextInstruction(description, 23, 24, viewingGroup, priority, true)
+		description = description .. '(man)'
 	end
-	-- end issue #52
+	local textOffsetLines = featurePortrayal:GetColocatedTextCount()	-- lines of text output by co-located features
+	if textOffsetLines > 0 then
+		featurePortrayal:AddInstructions('TextVerticalOffset:' .. textOffsetLines * -3.51)
+	end
+	featurePortrayal:AddTextInstruction(description, 23, 24, viewingGroup, priority, true)
 end

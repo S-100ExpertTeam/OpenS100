@@ -8,6 +8,19 @@ namespace GM
 
 	}
 
+	Point::Point(double x, double y)
+	{
+		position.SetX(x);
+		position.SetY(y);
+	}
+
+	Point::Point(double x, double y, double z)
+	{
+		position.SetX(x);
+		position.SetY(y);
+		position.SetZ(z);
+	}
+
 	Point::Point(const Point& item) : Primitive(item)
 	{
 		this->position = item.position;
@@ -35,6 +48,26 @@ namespace GM
 	double Point::getY()
 	{
 		return position.GetY();
+	}
+
+	double Point::getZ()
+	{
+		return position.GetZ();
+	}
+
+	void Point::setX(double x)
+	{
+		position.SetX(x);
+	}
+
+	void Point::setY(double y)
+	{
+		position.SetY(y);
+	}
+
+	void Point::setZ(double z)
+	{
+		position.SetZ(z);
 	}
 
 	GeometryType Point::GetType()

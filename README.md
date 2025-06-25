@@ -1,7 +1,11 @@
 # OpenS100
 OpenS100 is a open-source IHO S-101 ENC Viewer.  
 It was developed based on KHOA S-100 Viewer.  
-Currently only a single S-101 ENC is supported, in the future it will support multiple IHO S-100 product specifications and multiple datasets.  
+
+# S-100 Product Specifications: Support Status
+- S-101 Electronic Navigational Chart 2.0.0
+- S-100 GML (test stage)
+- S-102 Bathymetric Surface (test stage)
 
 # Features
 - Use Direct2D for performance. 
@@ -23,7 +27,7 @@ Currently only a single S-101 ENC is supported, in the future it will support mu
 - Run.
 
 # Main screen
-![image](https://user-images.githubusercontent.com/5345308/147812700-3e68c9cb-5b16-41f5-ba6c-c778881e3bf4.png)
+![image](https://github.com/user-attachments/assets/d3b5e499-860d-4bba-b09d-a7f4339525b7)
 
 # License
 OpenS100 is released under the MPLv2 (Mozilla Public License version 2.0)

@@ -246,7 +246,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="cpp.hint" />
     <None Include="GISLibrary.def" />
     <None Include="ReadMe.txt" />
     <None Include="S100SpatialObjectType.h" />
@@ -800,11 +799,9 @@
     <ClInclude Include="S100_SE_SignatureOnSignature.h" />
     <ClInclude Include="SourceFileType.h" />
     <ClInclude Include="SourceHeaderType.h" />
-    <ClInclude Include="SpatialObjectType.h" />
     <ClInclude Include="StateCommand.h" />
     <ClInclude Include="StateCommands.h" />
     <ClInclude Include="Status.h" />
-    <ClInclude Include="StringUtil.hpp" />
     <ClInclude Include="SupportFileDiscoveryMetadata.h" />
     <ClInclude Include="SupportFileRevisionStatus.h" />
     <ClInclude Include="SupportFileSpecification.h" />

@@ -33,9 +33,8 @@ public:
 
 public:
 	void GenerateSENCInstruction(S100SpatialObject* s100so, PortrayalCatalogue* pc);
-	void ParsingSENCInstruction(S100Layer* layer, std::string featureID, std::vector<std::string> elements);
 	void InitDisplayList();
+	void GenerateSENCAlertInstruction(S101Cell* cell, PortrayalCatalogue* pc);
 	void GetSENCFromS100Common(S100_Instruction* tp, SENC_Instruction* si);
-	void GetSENCFromString(SENC_Instruction* sit, std::string fid, std::string dpt, std::string dp, std::string vg, std::string min, std::string max, std::list<std::string> sr);
 	void ChangePallete(PortrayalCatalogue *pc);
 };

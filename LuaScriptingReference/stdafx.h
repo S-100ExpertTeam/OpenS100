@@ -35,8 +35,8 @@
 
 #include <optional>
 
-#ifdef _DEBUG
-# pragma comment(lib, "comsuppwd.lib")
-#else
-# pragma comment(lib, "comsuppw.lib")
-#endif
+//#ifdef _DEBUG
+//# pragma comment(lib, "comsuppwd.lib")
+//#else
+//# pragma comment(lib, "comsuppw.lib")
+//#endif

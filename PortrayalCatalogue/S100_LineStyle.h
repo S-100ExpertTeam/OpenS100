@@ -27,9 +27,9 @@ private:
 	std::wstring joinStyle;
 	std::wstring offset;
 	
-	S100_Pen* m_pen;
-	std::list<S100_Dash*> m_dash;
-	std::list<S100_LineSymbol*> m_symbol;
+	S100_Pen m_pen;
+	std::list<S100_Dash> m_dash;
+	std::list<S100_LineSymbol> m_symbol;
 
 public:
 	void GetContents(pugi::xml_node& node);
@@ -51,10 +51,9 @@ public:
 
 	void SetPen(S100_Pen* value);
 	void SetDash(S100_Dash* value);
-	void SetDash(std::string& value);
-	void SetDash(std::list<S100_Dash*> value);
+	void SetDash(std::list<S100_Dash> value);
 	void SetSymbol(S100_LineSymbol* value);
-	void SetSymbol(std::list<S100_LineSymbol*> value);
+	void SetSymbol(std::list<S100_LineSymbol> value);
 
 	//get
 	std::wstring GetName();
@@ -68,7 +67,7 @@ public:
 	
 	S100_Pen* GetPen();
 	S100_Dash* GetDash(int index);
-	std::list<S100_Dash*> GetDashs();
+	std::list<S100_Dash> GetDashs();
 	S100_LineSymbol* GetSymbol(int index);
-	std::list<S100_LineSymbol*> GetSymbols();
+	std::list<S100_LineSymbol> GetSymbols();
 };

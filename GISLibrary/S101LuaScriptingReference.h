@@ -6,9 +6,6 @@
 #include <string>
 #include <list>
 #include <vector>
-#include <chrono>
-#include <iomanip>
-#include <sstream>
 
 class lua_session;
 class S101Cell;
@@ -25,7 +22,6 @@ namespace KRS_LUA_SCRIPT_REFERENCE
 	void RemoveResultDrawingInstructions();
 	void SaveDrawingInstructions(std::string path);
 	std::vector<context_parameter> GetContextParameters(PortrayalCatalogue* pc);
-	std::string GetCurrentDateTime();
 }
 
 class S101LuaScriptingReference

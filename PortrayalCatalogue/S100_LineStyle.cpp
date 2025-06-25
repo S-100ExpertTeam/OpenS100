@@ -9,26 +9,11 @@ S100_LineStyle::S100_LineStyle()
 	joinStyle = L"Miter";
 	offset = L"0.0";
 	SetType(1);
-
-	m_pen = nullptr;
 }
 
 S100_LineStyle::~S100_LineStyle()
 {
-	if (m_pen)
-		delete m_pen, m_pen = nullptr;
 
-	for (auto& iter : m_dash)
-	{
-		if (iter)
-			delete iter, iter = nullptr;
-	}
-
-	for (auto& iter : m_symbol)
-	{
-		if (iter)
-			delete iter, iter = nullptr;
-	}
 }
 
 void S100_LineStyle::GetContents(pugi::xml_node& node) 
@@ -66,22 +51,20 @@ void S100_LineStyle::GetContents(pugi::xml_node& node)
 
 		else if (!strcmp(instructionName, "pen"))
 		{
-			if (m_pen == nullptr)
-				m_pen = new S100_Pen();
-			m_pen->GetContents(instruction);
+			m_pen.GetContents(instruction);
 		}
 
 		else if (!strcmp(instructionName, "dash"))
 		{
-			S100_Dash* dash = new S100_Dash();
-			dash->GetContents(instruction);
+			S100_Dash dash;
+			dash.GetContents(instruction);
 			m_dash.push_back(dash);
 		}
 
 		else if (!strcmp(instructionName, "symbol"))
 		{
-			S100_LineSymbol* symbol = new S100_LineSymbol();
-			symbol->GetContents(instruction);
+			S100_LineSymbol symbol;
+			symbol.GetContents(instruction);
 			m_symbol.push_back(symbol);
 		}
 	}
@@ -119,19 +102,9 @@ void S100_LineStyle::ParseValue(std::string value)
 			}
 		}
 
-		if (!m_pen)
-			m_pen = new S100_Pen();
-		m_pen->SetWidth(width);
-
-		GraphicBasePackage::Color* color = m_pen->GetColor();
-		if (!color)
-		{
-			color = new GraphicBasePackage::Color();
-			m_pen->SetColor(color);
-		}	
-		
-		color->SetToken(token);
-		color->SetTransparency(_wtof(transparency.c_str()));
+		m_pen.SetWidth(width);
+		m_pen.GetColor().SetToken(token);
+		m_pen.GetColor().SetTransparency(_wtof(transparency.c_str()));
 	}
 }
 
@@ -151,8 +124,6 @@ void S100_LineStyle::SetEmpty()
 	joinStyle = L"Miter";
 	offset = L"0.0";
 
-	if (m_pen)
-		delete m_pen, m_pen = nullptr;
 	m_dash.clear();
 	m_symbol.clear();
 }
@@ -195,37 +166,24 @@ void S100_LineStyle::SetOffset(std::wstring& value)
 }
 void S100_LineStyle::SetPen(S100_Pen* value) 
 {
-	if (m_pen)
-		delete m_pen, m_pen = nullptr;
-	m_pen = value;
+	m_pen = *value;
 }
 
 void S100_LineStyle::SetDash(S100_Dash* value)
 {
-	m_dash.push_back(value);
+	m_dash.push_back(*value);
 }
 
-void S100_LineStyle::SetDash(std::string& value)
-{
-	if (value.empty())
-		return;
-
-	S100_Dash* dash = new S100_Dash();
-	dash->ParseValue(value);
-
-	m_dash.push_back(dash);
-}
-
-void S100_LineStyle::SetDash(std::list<S100_Dash*> value) 
+void S100_LineStyle::SetDash(std::list<S100_Dash> value) 
 {
 	m_dash = value;
 }
 
 void S100_LineStyle::SetSymbol(S100_LineSymbol* value) 
 {
-	m_symbol.push_back(value);
+	m_symbol.push_back(*value);
 }
-void S100_LineStyle::SetSymbol(std::list<S100_LineSymbol*> value)
+void S100_LineStyle::SetSymbol(std::list<S100_LineSymbol> value)
 {
 	m_symbol = value;
 }
@@ -264,15 +222,15 @@ std::wstring S100_LineStyle::GetOffset()
 }
 
 S100_Pen* S100_LineStyle::GetPen() {
-	return m_pen;
+	return &m_pen;
 }
 S100_Dash* S100_LineStyle::GetDash(int index) 
 {
 	auto it = m_dash.begin();
 	advance(it, index);
-	return (*it);
+	return &(*it);
 }
-std::list<S100_Dash*> S100_LineStyle::GetDashs()
+std::list<S100_Dash> S100_LineStyle::GetDashs()
 {
 	return m_dash;
 }
@@ -280,9 +238,9 @@ S100_LineSymbol* S100_LineStyle::GetSymbol(int index)
 {
 	auto it = m_symbol.begin();
 	advance(it, index);
-	return (*it);
+	return &(*it);
 }
-std::list<S100_LineSymbol*> S100_LineStyle::GetSymbols() 
+std::list<S100_LineSymbol> S100_LineStyle::GetSymbols() 
 {
 	return m_symbol;
 }

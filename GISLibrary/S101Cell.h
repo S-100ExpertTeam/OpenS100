@@ -10,6 +10,8 @@
 
 #include "../GeoMetryLibrary/MBR.h"
 
+#include "../FeatureCatalog/Version.h"
+
 #include <unordered_map>
 #include <set>
 #include <map>
@@ -88,8 +90,8 @@ private:
 	std::vector<R_SurfaceRecord*> vecSurface;
 	std::vector<R_FeatureRecord*> vecFeature;
 
-	std::vector<__int64> m_feaMatchingKeys;
-	std::vector<__int64> m_infMatchingKeys;
+	std::set<__int64> m_feaMatchingKeys;
+	std::set<__int64> m_infMatchingKeys;
 public:
 	R_DSGIR* GetDatasetGeneralInformationRecord();
 	void UpdateRemoveAll(void);
@@ -97,10 +99,13 @@ public:
 	void ClearAll(void); 
 
 	bool Open(CString _filepath) override;
+	bool OpenMetadata(CString _filepath) override;
 	bool Save(std::wstring path) override;
 
 	bool OpenBy000(CString path);
+	bool OpenMetadataBy000(CString path);
 	bool OpenByGML(CString path);
+	bool OpenMetadataByGML(CString path);
 
 	bool Read8211(std::wstring path);
 	bool isUpdate();
@@ -237,7 +242,7 @@ public:
 	void InsertInformationFilter(std::string key);
 	void InsertInformationFilter(std::wstring wstringKey);
 	void RemoveInformationFilter();
-	std::vector<__int64>& GetInformationFilter();
+	std::set<__int64>& GetInformationFilter();
 
 	void InsertPointRecord(__int64 key, R_PointRecord* record);
 	void RemovePointRecord(__int64 key, R_PointRecord* record);
@@ -309,7 +314,7 @@ public:
 	void InsertFeatureFilter(std::string key);
 	void InsertFeatureFilter(std::wstring wstringKey);
 	void RemoveFeatureFilter();
-	std::vector<__int64>& GetFeatureFilter();
+	std::set<__int64>& GetFeatureFilter();
 
 	//============================================================================//
 	int GetCount_InformationRecord();
@@ -430,9 +435,14 @@ public:
 	S100GML::DatasetIdentificationInformation GetDatasetIdentificationInformation();
 	void WritePointRecord(pugi::xml_node& node, R_PointRecord* record);
 
-	void ATTRtoAttribute();
-	void ATTRtoAttribute(R_FeatureRecord* fr);
-	void AddATTRtoAttribute(__int64 key);
-	void UpdateATTRtoAttribute(__int64 key);
-	void DeleteATTRtoAttribute(__int64 key);
+	bool ATTRtoAttribute();
+
+	Version GetVersion() const;
+
+private:
+	bool FeatureAttrToAttribute();
+	bool InformationAttrToAttribute();
+	bool FeatureFeatureAssociationToGFM();
+	bool FeatureInformationAssociationToGFM();
+	bool InformationAssociationToGFM();
 };

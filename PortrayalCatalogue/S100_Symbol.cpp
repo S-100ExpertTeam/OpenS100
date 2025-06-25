@@ -5,14 +5,14 @@
 S100_Symbol::S100_Symbol()
 {
 	rotation = NULL;
-	description = NULL;
+	//description = NULL;
 }
 
 S100_Symbol::~S100_Symbol()
 {
-	if (description) delete description;
-	if (areaPlacement) delete areaPlacement;
-	if (linePlacement) delete linePlacement;
+	//if (description) delete description;
+	//if (areaPlacement) delete areaPlacement;
+	//if (linePlacement) delete linePlacement;
 }
 
 void S100_Symbol::GetContents(pugi::xml_node& node)
@@ -24,11 +24,11 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 
 	this->reference = pugi::as_wide(node.attribute("reference").value());
 
-	auto idAttri = node.attribute("id");
-	if (idAttri)
-	{
-		id = pugi::as_wide(idAttri.value());
-	}
+	//auto idAttri = node.attribute("id");
+	//if (idAttri)
+	//{
+	//	id = pugi::as_wide(idAttri.value());
+	//}
 
 	SetRotation(node.attribute("rotation").as_double());
 
@@ -39,23 +39,23 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		{
 			continue;
 		}
-		if (!strcmp(instructionName, "description"))
-		{
-			description = new S100_Description();
-			description->GetContents(instruction);
-		}
-		else if (!strcmp(instructionName, "fileName"))
-		{
-			fileName = pugi::as_wide(instruction.child_value());
-		}
-		else if (!strcmp(instructionName, "fileType"))
-		{
-			fileType = pugi::as_wide(instruction.child_value());
-		}
-		else if (!strcmp(instructionName, "fileFormat"))
-		{
-			fileFormat = pugi::as_wide(instruction.child_value());
-		}
+		//if (!strcmp(instructionName, "description"))
+		//{
+		//	description = new S100_Description();
+		//	description->GetContents(instruction);
+		//}
+		//else if (!strcmp(instructionName, "fileName"))
+		//{
+		//	fileName = pugi::as_wide(instruction.child_value());
+		//}
+		//else if (!strcmp(instructionName, "fileType"))
+		//{
+		//	fileType = pugi::as_wide(instruction.child_value());
+		//}
+		//else if (!strcmp(instructionName, "fileFormat"))
+		//{
+		//	fileFormat = pugi::as_wide(instruction.child_value());
+		//}
 		
 		if (!strcmp(instructionName, "rotation"))
 		{
@@ -84,6 +84,13 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 				linePlacement = new S100_LinePlacement();
 				linePlacement->GetContents(instruction);
 			}
+		}
+
+		auto offsetNode = node.child("offset");
+		if (offsetNode)
+		{
+			offsetX = offsetNode.child("x").text().as_double();
+			offsetY = offsetNode.child("y").text().as_double();
 		}
 	}
 }
@@ -148,27 +155,37 @@ S100_LinePlacement* S100_Symbol::GetLinePlacement()
 	return linePlacement;
 }
 
-std::wstring S100_Symbol::GetId() 
+//std::wstring S100_Symbol::GetId() 
+//{
+//	return id;
+//}
+//
+//S100_Description* S100_Symbol::GetDescription()
+//{
+//	return description;
+//}
+//
+//std::wstring S100_Symbol::GetFileName()
+//{
+//	return fileName;
+//}
+//
+//std::wstring S100_Symbol::GetFileType()
+//{
+//	return fileType;
+//}
+//
+//std::wstring S100_Symbol::GetFileFormat()
+//{
+//	return fileFormat;
+//}
+
+double S100_Symbol::GetOffsetX()
 {
-	return id;
+	return offsetX;
 }
 
-S100_Description* S100_Symbol::GetDescription()
+double S100_Symbol::GetOffsetY()
 {
-	return description;
-}
-
-std::wstring S100_Symbol::GetFileName()
-{
-	return fileName;
-}
-
-std::wstring S100_Symbol::GetFileType()
-{
-	return fileType;
-}
-
-std::wstring S100_Symbol::GetFileFormat()
-{
-	return fileFormat;
+	return offsetY;
 }

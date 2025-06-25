@@ -16,7 +16,5 @@ public:
 	void GetContents(pugi::xml_node node);
 
 	void SetAreaFill(S100_AreaFillBase* value);
-	void SetAreaFill(std::wstring& token, std::wstring& name, std::wstring& transparency);
-	void SetAreaFill(std::wstring& reference);
 	S100_AreaFillBase* GetAreaFill();
 };

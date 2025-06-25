@@ -55,8 +55,6 @@ namespace KRS_LUA_SCRIPT_REFERENCE
 
 	void SaveDrawingInstructions(std::string path)
 	{
-		//CreateDirectory
-
 		std::ofstream file;
 		file.open(path);
 
@@ -128,20 +126,5 @@ namespace KRS_LUA_SCRIPT_REFERENCE
 		}
 
 		return result;
-	}
-
-	std::string GetCurrentDateTime()
-	{
-		// Get the current time
-		auto now = std::chrono::system_clock::now();
-		// Convert to time_t for formatting
-		std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-		// Format time as a string
-		std::tm localTime;
-		localtime_s(&localTime, &now_time); // Thread-safe conversion to local time
-
-		std::ostringstream oss;
-		oss << std::put_time(&localTime, "%Y-%m-%d %H:%M:%S -> "); // Format: YYYY-MM-DD HH:MM:SS
-		return oss.str();
 	}
 }

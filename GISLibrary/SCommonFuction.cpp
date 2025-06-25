@@ -89,7 +89,7 @@ ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPat
 	ClipperLib::IntPoint tmp;
 
 
-	int part1PointCount = (int)itemPolygonPath.size();											// Find the number of points for the first part of the polygon.
+	int part1PointCount = itemPolygonPath.size();											// Find the number of points for the first part of the polygon.
 	//
 	long x, y;
 	
@@ -159,7 +159,7 @@ bool SCommonFuction::IntersectionPaths(ClipperLib::Paths& viewport, std::vector<
 	ClipperLib::IntPoint tmp;
 
 
-	int part1PointCount = (int)polygon.size();											// Find the number of points for the first part of the polygon.
+	int part1PointCount = polygon.size();											// Find the number of points for the first part of the polygon.
 	long x, y;
 
 	for (int i = 0; i < part1PointCount; i++)

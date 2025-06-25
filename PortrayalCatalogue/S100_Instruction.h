@@ -46,7 +46,7 @@ protected:
 	S100::Integer drawingPriority = 0;
 	std::optional<S100::Integer> scaleMinimum = 0;
 	std::optional<S100::Integer> scaleMaximum = 0;
-	std::optional<S100_AlertReference*> alertReference;
+	std::optional<S100_AlertReference> alertReference;
 
 
 public:
@@ -60,7 +60,6 @@ public:
 	void setHover(bool value);
 
 	void SetSpatialReference(S100_SpatialReference* value);
-	void SetSpatialReference(std::string& type, std::string& reference);
 	void SetSpatialReference(std::list<S100_SpatialReference*> value);
 	void SetViewingGroup(std::wstring& value);
 	void SetDisplayPlane(std::wstring& value);
@@ -70,7 +69,7 @@ public:
 	void SetScaleMinimum(int value);
 	void SetScaleMaximum(std::wstring& value);
 	void SetScaleMaximum(int value);
-	void setAlertReference(S100_AlertReference* value);
+	void setAlertReference(S100_AlertReference value);
 
 	int GetType();
 	const std::wstring& GetFeatureReference();
@@ -86,5 +85,5 @@ public:
 	int GetScaleMinimum();
 	int GetScaleMaximum();
 	bool hasAlertReference();
-	S100_AlertReference* getAlertReference();
+	S100_AlertReference getAlertReference();
 };

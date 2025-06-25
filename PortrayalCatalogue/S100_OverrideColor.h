@@ -9,8 +9,8 @@ public:
 
 private:
 	// element
-	S100_Color* overrideColor;
-	S100_Color* color;
+	S100_Color overrideColor;
+	S100_Color color;
 
 public:
 	void GetContents(pugi::xml_node node);

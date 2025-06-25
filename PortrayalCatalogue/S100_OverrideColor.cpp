@@ -3,60 +3,52 @@
 
 S100_OverrideColor::S100_OverrideColor()
 {
-	overrideColor = nullptr;
-	color = nullptr;
+
 }
 
 S100_OverrideColor::~S100_OverrideColor()
 {
-	if (overrideColor)
-		delete overrideColor, overrideColor = nullptr;
 
-	if (color)
-		delete color, color = nullptr;
 }
 
-void S100_OverrideColor::GetContents(pugi::xml_node node)
+void S100_OverrideColor::GetContents(pugi::xml_node node) 
 {
-	if (node == nullptr)
+	if (node==nullptr)
 	{
 		return;
 	}
 
-	for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
+
+	for (auto instruction=node.first_child(); instruction; instruction=instruction.next_sibling()) 
 	{
 		auto instructionName = instruction.name();
-		if (!strcmp(instructionName, "override"))
+		if (!strcmp(instructionName,"override"))
 		{
-			if (!overrideColor)
-				overrideColor = new S100_Color();
-			overrideColor->GetContents(instruction);
+			overrideColor.GetContents(instruction);
 		}
 		else if (!strcmp(instructionName, "color"))
 		{
-			if (!color)
-				color = new S100_Color();
-			color->GetContents(instruction);
+			color.GetContents(instruction);
 		}
 	}
 }
 
-void S100_OverrideColor::SetOverrideColor(S100_Color* value)
+void S100_OverrideColor::SetOverrideColor(S100_Color* value) 
 {
-	overrideColor = value;
+	overrideColor = *value;
 }
 
-S100_Color* S100_OverrideColor::GetOverrideColor()
+S100_Color* S100_OverrideColor::GetOverrideColor() 
 {
-	return overrideColor;
+	return &overrideColor;
 }
 
-void S100_OverrideColor::SetColor(S100_Color* value)
+void S100_OverrideColor::SetColor(S100_Color* value) 
 {
-	color = value;
+	color = *value;
 }
 
-S100_Color* S100_OverrideColor::GetColor()
+S100_Color* S100_OverrideColor::GetColor() 
 {
-	return color;
+	return &color;
 }

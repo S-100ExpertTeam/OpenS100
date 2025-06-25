@@ -25,10 +25,8 @@ public:
 	void SetHorizontalAlignment(std::wstring& value);
 	void SetVerticalAlignment(std::wstring& value);
 	void SetElement(S100_Element* value);
-	void SetElement(std::wstring& text, std::wstring& bodySize, std::string& foreground, std::wstring& font);
 	void SetElements(std::vector<S100_Element*> value);
 	void SetOffset(S100_VectorPoint* value);
-	void SetOffset(std::wstring& x, std::wstring& y);
 	void SetRotation(std::wstring value);
 	void SetAreaPlacement(S100_AreaPlacement* value);
 

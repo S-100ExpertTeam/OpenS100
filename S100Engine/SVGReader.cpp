@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "SVGReader.h"
-#include "Rectangle.h"
 
 #include <pugixml.hpp>
 
@@ -215,6 +214,10 @@ bool GetStyle(char* attributeContent, double& strokeWidth, std::wstring& strokeD
 			strokeDasharray = wsVecTemp[i + 1];
 		}
 		else if (wsVecTemp[i].compare(L"fill-opacity") == 0)
+		{
+			alpha = _wtof(wsVecTemp[i + 1].c_str());
+		}
+		else if (wsVecTemp[i].compare(L"stroke-opacity") == 0)
 		{
 			alpha = _wtof(wsVecTemp[i + 1].c_str());
 		}

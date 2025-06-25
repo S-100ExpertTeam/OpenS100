@@ -9,10 +9,10 @@ public:
 	virtual ~S100_Annulus();
 
 private:
-	S100_VectorPoint* point;
-	std::wstring* innerRadius;
+	S100_VectorPoint point;
+	std::wstring *innerRadius;
 	std::wstring outerRadius;
-	S100_Sector* sector;
+	S100_Sector *sector;
 
 public:
 	void GetContents(pugi::xml_node node);

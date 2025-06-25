@@ -355,26 +355,32 @@ void COpenS100View::Load100File()
 	CFileDialog dlg(TRUE, NULL, NULL, OFN_READONLY | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT, 
 		szFilter, this);
 
+	std::vector<std::wstring> failedFiles;
+
 	if (dlg.DoModal() == IDOK)
 	{
 		POSITION pos = dlg.GetStartPosition();
 		while (pos)
 		{
 			CString filePath = dlg.GetNextPathName(pos);
-			theApp.gisLib->AddLayer(filePath); //Add a layer.
-			theApp.m_pDockablePaneLayerManager.UpdateList();
-			
+			if (false == theApp.gisLib->AddLayer(filePath))
+			{
+				failedFiles.push_back(std::wstring(filePath));
+			}
+			theApp.m_pDockablePaneLayerManager.UpdateList();	
 		}
 
 		MapRefresh();
 
-		//CString filePath = dlg.GetPathName();
-
-		//RemoveLoadFile(); //Delete the existing history.
-		
-
-		//auto enc = theApp.gisLib->GetLayer(theApp.gisLib->GetLayerManager()->LayerCount() - 1);
-		//enc->GetSpatialObject()->Save(L"../TEMP/temp.gml");
+		if (failedFiles.size() > 0)
+		{
+			std::wstring message = L"Failed to load the following files:\n";
+			for (auto file : failedFiles)
+			{
+				message += file + L"\n";
+			}
+			AfxMessageBox(message.c_str());
+		}
 	}
 }
 
@@ -502,10 +508,6 @@ void COpenS100View::Setting()
 	CConfigrationDlg dlg(this);
 
 	auto fc = theApp.gisLib->GetCatalogManager()->getFC("S-101");
-	if (fc)
-	{
-		dlg.InitS101FeatureTypes(fc);
-	}
 
 	if (m_systemFontList.size() == 0)
 	{
@@ -600,7 +602,6 @@ void COpenS100View::Setting()
 
 void COpenS100View::DatasetManager()
 {
-	//AfxMessageBox(L"fdsafa");
 	DialogDatasetManager dlg;
 	dlg.ct = theApp.gisLib->GetCatalogManager();
 	dlg.DoModal();

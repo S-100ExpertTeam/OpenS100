@@ -13,15 +13,14 @@ public:
 private:
 	S100_LineStyleReference* lineStyleReference;
 	S100_CompositeLineStyle* compositeLineStyle;
-	S100_LineStyle* lineStyle;
+	S100_LineStyle *lineStyle;
 
 public:
 	void SetLineStyleReference(S100_LineStyleReference* value);
 	void SetCompositeLineStyle(S100_CompositeLineStyle* value);
 	void SetLineStyle(S100_LineStyle* value);
-	void SetLineStyle(std::string& value, std::string& dash);
 
 	S100_LineStyleReference* GetLineStyleReference();
 	S100_CompositeLineStyle* GetCompositeLineStyle();
-	S100_LineStyle* GetLineStyle();
+	S100_LineStyle* GetLineStyle(); 
 };

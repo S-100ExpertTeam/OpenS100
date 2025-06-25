@@ -29,7 +29,6 @@ public:
 	
 public:
 	void SettingLoadFromFile(std::wstring filename);
-	void InitS101FeatureTypes(FeatureCatalogue* catalog);
 	void InitControlValues();
 	
 

@@ -21,6 +21,7 @@ public:
 
 	void Setname(std::wstring& value);
 	std::wstring Getname();
+	std::string getName();
 
 	void Setdescription(std::wstring& value);
 	std::wstring Getdescription();

@@ -15,7 +15,7 @@ public:
 	Item(const Item& item);
 	virtual ~Item();
 
-private:
+protected:
 	std::wstring name = L"";
 	std::wstring definition = L"";
 	std::wstring code = L"";
@@ -50,4 +50,8 @@ public:
 	const std::wstring GetRemarksAsWString();
 
 	Item& operator = (const Item& item);
+
+	void setSourceIdentifier(std::wstring value);
+	std::wstring getSourceIdentifierAsWString();
+	std::string getSourceIdentifier();
 };

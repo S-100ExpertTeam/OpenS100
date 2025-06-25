@@ -2,9 +2,9 @@
 
 #include "../GeoMetryLibrary/Scaler.h"
 
-#include <polyclipping/clipper.hpp>
-
 #include <list>
+#include <string>
+#include <optional>
 
 class R_FeatureRecord;
 class SENC_TextInstruction;
@@ -37,10 +37,15 @@ public:
 	** 8 : Augmented Path
 	** 9 : Augmented Area
 	*/
-	unsigned type;
+	unsigned type = 0;
 
 	//////////////////////////////////////////////////////////
 	// Instruction Information
+	std::optional<std::string> id;
+
+	std::optional<std::string> parentId;
+
+	std::optional<bool> hover;
 
 	// Feature ID
 	std::string featureReference;
@@ -76,12 +81,19 @@ public:
 	// Scale Maximum
 	unsigned scaleMaximum;
 
-	bool suppressedInstance;
-
 	// For Drawing
 	GF::FeatureType* fr = nullptr;
 
 public:
+	void setID(std::string id);
+	std::optional<std::string> getID();
+
+	void setParentID(std::string id);
+	std::optional<std::string> getParentID();
+
+	void setHover(bool hover);
+	std::optional<bool> getHover();
+
 	std::string FeatureReference();
 	int DrawingPriority();
 
@@ -92,10 +104,7 @@ public:
 	virtual void GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points){};
 	
 	virtual void DrawInstruction(
-		ID2D1DCRenderTarget* rt, 
-		ID2D1Factory1* pDirect2dFactory, 
-		ID2D1SolidColorBrush* brush, 
-		std::vector<ID2D1StrokeStyle1*>* strokeGroup, 
+		D2D1Resources* d2,
 		Scaler *scaler, 
 		PortrayalCatalogue* pc = nullptr) {};
 

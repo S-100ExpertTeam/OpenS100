@@ -1,6 +1,5 @@
 require 'S101AttributeSupport'
 
--- Gate main entry point.
 function Gate(feature, featurePortrayal, contextParameters)
 	local viewingGroup
 
@@ -132,23 +131,32 @@ function Gate(feature, featurePortrayal, contextParameters)
 		error('Invalid primitive type or mariner settings passed to portrayal')
 	end
 
+	-- Gate bind featureName, horizontalClearanceOpen, and verticalClearanceOpen
 	local featureName = GetFeatureName(feature, contextParameters)
-	if featureName or HasHorizontalClearance(feature) then
+	if featureName or HasClearance(feature) then
 		-- Center annotationas in or on the feature
+		local xOffset = 0
 		local yOffset = 0
 		if feature.PrimitiveType == PrimitiveType.Point then
 			-- Center annotations underneath the symbol
 			featurePortrayal:AddInstructions('TextAlignVertical:Top')
 			yOffset = -3.51
+			featurePortrayal:AddInstructions('LocalOffset:'.. xOffset ..',' .. yOffset .. ';TextAlignHorizontal:Center;FontColor:CHBLK')
+		elseif 	feature.PrimitiveType == PrimitiveType.Curve then
+			-- to limit overwriting of vertical lines, place below (default alignments Horiz = Start, Vert = Bottom)
+			xOffset = 5.265
+			yOffset = 0.5
+			featurePortrayal:AddInstructions('LocalOffset:'.. xOffset ..',' .. yOffset .. ';FontColor:CHBLK')
 		else
 			featurePortrayal:AddInstructions('TextAlignVertical:Center')
+			featurePortrayal:AddInstructions('LocalOffset:'.. xOffset ..',' .. yOffset .. ';TextAlignHorizontal:Center;FontColor:CHBLK')
 		end
-		featurePortrayal:AddInstructions('LocalOffset:0,' .. yOffset .. ';TextAlignHorizontal:Center;FontColor:CHBLK')
+
 		if featureName then
 			featurePortrayal:AddTextInstruction(EncodeString(featureName), 26, 24, viewingGroup, 9)
 			yOffset = yOffset - 3.51
 		end
-		PortrayClearances(feature, featurePortrayal, contextParameters, viewingGroup, 0, yOffset)
+		PortrayClearances(feature, featurePortrayal, contextParameters, viewingGroup, xOffset, yOffset)
 	end
 
 	return viewingGroup
