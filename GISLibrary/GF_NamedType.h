@@ -8,6 +8,7 @@ namespace GF
 	{
 	public:
 		NamedType();
+		NamedType(std::string code);
 		NamedType(const NamedType& other);
 		virtual ~NamedType();
 
