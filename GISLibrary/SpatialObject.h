@@ -11,6 +11,7 @@ class Scaler;
 class SpatialObject
 {
 public:
+	SpatialObject();
 	SpatialObject(D2D1Resources* d2d1);
 	virtual ~SpatialObject();
 
