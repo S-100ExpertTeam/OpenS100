@@ -5118,6 +5118,110 @@ bool S101Cell::ATTRtoAttribute()
 	return true;
 }
 
+bool S101Cell::ATTRtoAttribute(R_FeatureRecord* fr)
+{
+	if (fr == nullptr)
+		return false;
+
+	if (false == FeatureAttrToAttribute(fr))
+	{
+		return false;
+	}
+
+	if (false == FeatureFeatureAssociationToGFM(fr))
+	{
+		return false;
+	}
+
+	if (false == FeatureInformationAssociationToGFM(fr))
+	{
+		return false;
+	}
+
+	for (const auto& iter : fr->m_inas)
+	{
+		R_InformationRecord* ir = GetInformationRecord(iter->m_name.GetName());
+		if (ir == nullptr)
+			continue;
+
+		if (false == InformationAssociationToGFM(ir))
+		{
+			return false;
+		}
+
+		if (false == InformationAttrToAttribute(ir))
+		{
+			return false;
+		}
+
+		if (false == InformationAssociationToGFM(ir))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void S101Cell::AddATTRtoAttribute(__int64 key)
+{
+	auto fr = GetFeatureRecord(key);
+	if (fr == nullptr)
+		return;
+
+	if (false == FeatureAttrToAttribute(fr))
+	{
+		return;
+	}
+	if (false == FeatureFeatureAssociationToGFM(fr))
+	{
+		return;
+	}
+	if (false == FeatureInformationAssociationToGFM(fr))
+	{
+		return;
+	}
+	for (const auto& iter : fr->m_inas)
+	{
+		R_InformationRecord* ir = GetInformationRecord(iter->m_name.GetName());
+		if (ir == nullptr)
+			continue;
+		if (false == InformationAssociationToGFM(ir))
+		{
+			return;
+		}
+		if (false == InformationAttrToAttribute(ir))
+		{
+			return;
+		}
+		if (false == InformationAssociationToGFM(ir))
+		{
+			return;
+		}
+	}
+}
+
+void S101Cell::DeleteATTRtoAttribute(__int64 key)
+{
+	auto fr = GetFeatureRecord(key);
+	if (fr == nullptr)
+		return;
+
+	for (int i = 0; i < fr->attributes.size(); i++)
+	{
+		if (fr->attributes[i])
+			delete fr->attributes[i], fr->attributes[i] = nullptr;
+	}
+	fr->attributes.clear();
+
+}
+
+void S101Cell::UpdateATTRtoAttribute(__int64 key)
+{
+	DeleteATTRtoAttribute(key);
+	AddATTRtoAttribute(key);
+}
+
 bool S101Cell::FeatureAttrToAttribute()
 {
 	auto fc = GetFC();
@@ -5173,6 +5277,63 @@ bool S101Cell::FeatureAttrToAttribute()
 				{
 					return false;
 				}
+			}
+		}
+	}
+
+	return true;
+}
+
+bool S101Cell::FeatureAttrToAttribute(R_FeatureRecord* fr)
+{
+	auto fc = GetFC();
+	std::vector<GF::ThematicAttributeType*> addedAttributes;
+
+	auto ATTRs = fr->GetAllAttributes();
+	for (auto j = ATTRs.begin(); j != ATTRs.end(); j++) {
+		auto ATTR = (*j);
+		auto strCode = m_dsgir.GetAttributeCode(ATTR->m_natc);
+		auto code = pugi::as_utf8(strCode);
+		auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
+		if (sa)
+		{
+			auto value = ATTR->getValueAsString();
+			CString strValue;
+
+			strValue = LibMFCUtil::StringToWString(value).c_str();
+
+			if (ATTR->m_paix > 0)
+			{
+				auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+				auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+				addedAttributes.push_back((GF::ThematicAttributeType*)addedSA);
+			}
+			else // top level
+			{
+				auto addedSA = fr->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+				addedAttributes.push_back(addedSA);
+			}
+		}
+		else
+		{
+			auto ca = fc->GetComplexAttribute(std::wstring(strCode));
+			if (ca)
+			{
+				if (ATTR->m_paix > 0)
+				{
+					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+					auto addedCA = parentCA->AddComplexAttribute(code);
+					addedAttributes.push_back(addedCA);
+				}
+				else // top level
+				{
+					auto addedCA = fr->AddComplexAttribute(code);
+					addedAttributes.push_back(addedCA);
+				}
+			}
+			else
+			{
+				return false;
 			}
 		}
 	}
@@ -5236,6 +5397,58 @@ bool S101Cell::InformationAttrToAttribute()
 	return true;
 }
 
+bool S101Cell::InformationAttrToAttribute(R_InformationRecord* ir)
+{
+	auto fc = GetFC();
+	std::vector<GF::ThematicAttributeType*> addedAttributes;
+	auto ATTRs = ir->GetAllAttributes();
+	for (auto j = ATTRs.begin(); j != ATTRs.end(); j++) {
+		auto ATTR = (*j);
+		auto strCode = m_dsgir.GetAttributeCode(ATTR->m_natc);
+		auto code = pugi::as_utf8(strCode);
+		auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
+		if (sa)
+		{
+			auto value = ATTR->getValueAsString();
+			CString strValue;
+
+			strValue = LibMFCUtil::StringToWString(value).c_str();
+
+			if (ATTR->m_paix > 0)
+			{
+				auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+				auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+				addedAttributes.push_back((GF::ThematicAttributeType*)addedSA);
+			}
+			else // top level
+			{
+				auto addedSA = ir->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+				addedAttributes.push_back(addedSA);
+			}
+		}
+		else
+		{
+			auto ca = fc->GetComplexAttribute(std::wstring(strCode));
+			if (ca)
+			{
+				auto addedCA = ir->AddComplexAttribute(code);
+				addedAttributes.push_back(addedCA);
+				if (ATTR->m_paix > 0)
+				{
+					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
+					parentCA->AddSubAttribute(addedCA->clone());
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
 bool S101Cell::FeatureFeatureAssociationToGFM()
 {
 	auto fc = GetFC();
@@ -5254,6 +5467,24 @@ bool S101Cell::FeatureFeatureAssociationToGFM()
 
 			fr->AddFeatureAssociation(code, role, rcid);
 		}
+	}
+
+	return true;
+}
+
+bool S101Cell::FeatureFeatureAssociationToGFM(R_FeatureRecord* fr)
+{
+	auto fc = GetFC();
+	auto fascs = fr->GetAllFeatureAssociations();
+
+	for (auto j = fascs.begin(); j != fascs.end(); j++)
+	{
+		auto fasc = (*j);
+		auto code = m_dsgir.GetFeatureAssociationCodeAsString(fasc->m_nfac);
+		auto role = m_dsgir.GetAssociationRoleCodeAsString(fasc->m_narc);
+		auto rcid = fasc->m_name.GetRCIDasString();
+
+		fr->AddFeatureAssociation(code, role, rcid);
 	}
 
 	return true;
@@ -5282,6 +5513,24 @@ bool S101Cell::FeatureInformationAssociationToGFM()
 	return true;
 }
 
+bool S101Cell::FeatureInformationAssociationToGFM(R_FeatureRecord* fr)
+{
+	auto fc = GetFC();
+	auto inass = fr->GetAllInformationAssociations();
+
+	for (auto j = inass.begin(); j != inass.end(); j++)
+	{
+		auto inas = (*j);
+		auto code = m_dsgir.GetInformationAssociationCodeAsString(inas->m_niac);
+		auto role = m_dsgir.GetAssociationRoleCodeAsString(inas->m_narc);
+		auto rcid = inas->m_name.GetRCIDasString();
+
+		fr->AddInformationAssociation(code, role, rcid);
+	}
+
+	return true;
+}
+
 bool S101Cell::InformationAssociationToGFM()
 {
 	auto fc = GetFC();
@@ -5300,6 +5549,24 @@ bool S101Cell::InformationAssociationToGFM()
 
 			ir->AddInformationAssociation(code, role, rcid);
 		}
+	}
+
+	return true;
+}
+
+bool S101Cell::InformationAssociationToGFM(R_InformationRecord* ir)
+{
+	auto fc = GetFC();
+	auto inass = ir->GetAllInformationAssociations();
+
+	for (auto j = inass.begin(); j != inass.end(); j++)
+	{
+		auto inas = (*j);
+		auto code = m_dsgir.GetInformationAssociationCodeAsString(inas->m_niac);
+		auto role = m_dsgir.GetAssociationRoleCodeAsString(inas->m_narc);
+		auto rcid = inas->m_name.GetRCIDasString();
+
+		ir->AddInformationAssociation(code, role, rcid);
 	}
 
 	return true;
