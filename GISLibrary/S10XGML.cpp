@@ -14,11 +14,14 @@
 
 #include <sstream>
 
+S10XGML::S10XGML() : S100SpatialObject()
+{
+	Init();
+}
+
 S10XGML::S10XGML(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
 {
-	type = S100SpatialObjectType::S10XGML;
-	m_FileType = S100_FileType::FILE_S_100_VECTOR;
-	m_ObejctType = SpatialObjectType::S10XGML;
+	Init();
 }
 
 S10XGML::~S10XGML()
@@ -1426,6 +1429,13 @@ std::string S10XGML::GetInformationAssociationRoleCode(GF::InformationType* info
 //{
 //	
 //}
+
+void S10XGML::Init()
+{
+	type = S100SpatialObjectType::S10XGML;
+	m_FileType = S100_FileType::FILE_S_100_VECTOR;
+	m_ObejctType = SpatialObjectType::S10XGML;
+}
 
 std::string S10XGML::DeleteXMLNamespace(std::string value)
 {

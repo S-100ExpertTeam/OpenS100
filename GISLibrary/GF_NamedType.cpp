@@ -8,6 +8,11 @@ namespace GF
 
 	}
 
+	NamedType::NamedType(std::string code)
+	{
+		this->code = code;
+	}
+
 	NamedType::NamedType(const NamedType& other)
 	{
 		code = other.code;
