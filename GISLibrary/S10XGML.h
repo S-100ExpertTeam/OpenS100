@@ -26,6 +26,7 @@ class S10XGML :
     public S100SpatialObject
 {
 public:
+    S10XGML();
     S10XGML(D2D1Resources* d2d1);
     virtual ~S10XGML();
 
@@ -132,6 +133,7 @@ public:
     SSurface* SurfaceToSSurface(GM::Surface* surface);
 
 private:
+    void Init();
     std::string DeleteXMLNamespace(std::string value);
     std::string getCodeFromMember(std::string nodeName);
     SPoint* PointToSPoint(GM::Point* point);

@@ -417,6 +417,7 @@
     <ClCompile Include="R_DDR.cpp" />
     <ClCompile Include="R_VectorRecord.cpp" />
     <ClCompile Include="S100EditRender.cpp" />
+    <ClCompile Include="S100Factory.cpp" />
     <ClCompile Include="S100GML_NameSpace.cpp" />
     <ClCompile Include="S100ExchangeCatalogue.cpp" />
     <ClCompile Include="S100H5.cpp" />
@@ -758,6 +759,7 @@
     <ClInclude Include="R_DDR.h" />
     <ClInclude Include="R_VectorRecord.h" />
     <ClInclude Include="S100EditRender.h" />
+    <ClInclude Include="S100Factory.h" />
     <ClInclude Include="S100GML_NameSpace.h" />
     <ClInclude Include="S100ExchangeCatalogue.h" />
     <ClInclude Include="S100H5.h" />
