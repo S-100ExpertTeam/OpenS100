@@ -507,7 +507,7 @@ bool S101Cell::OpenBy000(CString path)
 
 		if (false == ATTRtoAttribute())
 		{
-			return false;
+			//return false;
 		}
 
 		SetAllCode();
