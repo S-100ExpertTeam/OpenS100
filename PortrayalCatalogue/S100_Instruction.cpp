@@ -59,9 +59,22 @@ void S100_Instruction::SetViewingGroup(std::wstring& value)
 	viewingGroup.push_back(value);
 }
 
+void S100_Instruction::SetViewingGroup(std::vector<std::string>& value)
+{
+	for (const auto& v : value)
+	{
+		viewingGroup.push_back(std::wstring(v.begin(), v.end()));
+	}
+}
+
 void S100_Instruction::SetDisplayPlane(std::wstring& value)
 {
 	displayPlane = value;
+}
+
+void S100_Instruction::SetDisplayPlane(std::string& value)
+{
+	displayPlane = std::wstring(value.begin(), value.end());
 }
 
 void S100_Instruction::SetDrawingPriority(std::wstring& value)
