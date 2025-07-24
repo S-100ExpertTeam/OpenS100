@@ -163,6 +163,11 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 {
 	auto geom = fr->GetGeometry();
 
+	if (fr->GetIDAsInteger() == 250)
+	{
+		OutputDebugString(L"A");
+	}
+
 	if (true == HasSpatialReference())
 	{
 		for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)

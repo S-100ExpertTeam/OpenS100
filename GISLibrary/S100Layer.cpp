@@ -61,8 +61,8 @@ bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 		if (enc->OpenMetadata(_filepath))
 		{
 			auto version = enc->GetVersion();
-			fc = lm->catalogManager->getFC(GetProductNumber(), version);
-			pc = lm->catalogManager->getPC(GetProductNumber(), version);
+			fc = lm->catalogManager->getFC(GetProductNumber());
+			pc = lm->catalogManager->getPC(GetProductNumber());
 			SetFeatureCatalog(fc);
 			SetPC(pc);
 		}
