@@ -29,4 +29,5 @@ public:
 	void SetEmpty();
 
 	void ParseValue(std::string value);
+	void ParseValue(std::string_view value);
 };

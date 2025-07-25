@@ -108,6 +108,45 @@ void S100_LineStyle::ParseValue(std::string value)
 	}
 }
 
+void S100_LineStyle::ParseValue(std::string_view value)
+{
+	SetEmpty();
+
+	std::vector<std::string_view> v_splited;
+	LatLonUtility::Split(value, ",", v_splited);
+	if (v_splited.size() >= 4)
+	{
+		name = std::wstring(v_splited[0].begin(), v_splited[0].end());
+		intervalLength = std::wstring(v_splited[1].begin(), v_splited[1].end());
+		width = std::wstring(v_splited[2].begin(), v_splited[2].end());
+		token = std::wstring(v_splited[3].begin(), v_splited[3].end());
+
+		if (v_splited.size() >= 5)
+		{
+			transparency = std::wstring(v_splited[4].begin(), v_splited[4].end());
+
+			if (v_splited.size() >= 6)
+			{
+				capStyle = std::wstring(v_splited[5].begin(), v_splited[5].end());
+
+				if (v_splited.size() >= 7)
+				{
+					joinStyle = std::wstring(v_splited[6].begin(), v_splited[6].end());
+
+					if (v_splited.size() >= 8)
+					{
+						offset = std::wstring(v_splited[7].begin(), v_splited[7].end());
+					}
+				}
+			}
+		}
+
+		m_pen.SetWidth(width);
+		m_pen.GetColor().SetToken(token);
+		m_pen.GetColor().SetTransparency(_wtof(transparency.c_str()));
+	}
+}
+
 bool S100_LineStyle::IsEmpty()
 {
 	return width.empty();

@@ -67,6 +67,14 @@ void S100_Instruction::SetViewingGroup(std::vector<std::string>& value)
 	}
 }
 
+void S100_Instruction::SetViewingGroup(std::vector<std::string_view>& value)
+{
+	for (const auto& v : value)
+	{
+		viewingGroup.push_back(std::wstring(v.begin(), v.end()));
+	}
+}
+
 void S100_Instruction::SetDisplayPlane(std::wstring& value)
 {
 	displayPlane = value;

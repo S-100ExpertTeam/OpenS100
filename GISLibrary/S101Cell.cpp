@@ -620,7 +620,7 @@ bool S101Cell::OpenMetadataByGML(CString path)
 	return true;
 }
 
-BOOL S101Cell::ReadDDR(BYTE*& buf)
+bool S101Cell::ReadDDR(BYTE*& buf)
 {
 	int size = atoi(buf, 5);
 	buf -= 5;
@@ -650,7 +650,7 @@ void S101Cell::SortByFeatureType()
 	}
 }
 
-BOOL S101Cell::MakeFullSpatialData()
+bool S101Cell::MakeFullSpatialData()
 {
 	POSITION spasPos = NULL;
 	R_FeatureRecord* fr = nullptr;
@@ -690,7 +690,7 @@ BOOL S101Cell::MakeFullSpatialData()
 	return TRUE;
 }
 
-BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
+bool S101Cell::MakePointData(R_FeatureRecord* fe)
 {
 	if (fe->geometry)
 	{
@@ -725,7 +725,7 @@ BOOL S101Cell::MakePointData(R_FeatureRecord* fe)
 	return TRUE;
 }
 
-BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
+bool S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 {
 	R_MultiPointRecord* r;
 	__int64 iKey;
@@ -758,7 +758,7 @@ BOOL S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 	return TRUE;
 }
 
-BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
+bool S101Cell::MakeLineData(R_FeatureRecord* fe)
 {
 	if (fe->geometry)
 	{
@@ -810,7 +810,7 @@ BOOL S101Cell::MakeLineData(R_FeatureRecord* fe)
 }
 
 // France
-BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
+bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 {
 	if (fe->geometry)
 	{
@@ -931,7 +931,7 @@ BOOL S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	return TRUE;
 }
 
-BOOL S101Cell::GetFullSpatialData(R_PointRecord* r, SPoint* point)
+bool S101Cell::GetFullSpatialData(R_PointRecord* r, SPoint* point)
 {
 	double x = 0; r->m_c2it->m_xcoo;
 	double y = 0; r->m_c2it->m_ycoo;
@@ -977,7 +977,7 @@ BOOL S101Cell::GetFullSpatialData(R_PointRecord* r, SPoint* point)
 	return TRUE;
 }
 
-BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint)
+bool S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint)
 {
 	if (r->m_c3il.size() == 1)
 	{
@@ -1020,7 +1020,7 @@ BOOL S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 	return FALSE;
 }
 
-BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, int ORNT)
+bool S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, int ORNT)
 {
 	if (nullptr != r->m_ptas)
 	{
@@ -1111,7 +1111,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, 
 	return FALSE;
 }
 
-BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
+bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 {
 	int pointCount = r->GetPointCount();
 	if (pointCount == 0)
@@ -1235,7 +1235,7 @@ BOOL S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 	return FALSE;
 }
 
-BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT)
+bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT)
 {
 	//if (r->m_cuco.size() != 1)
 	//{
@@ -1327,7 +1327,7 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 	return TRUE;
 }
 
-BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoArr, int ORNT)
+bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoArr, int ORNT)
 {
 	for (auto i = r->m_cuco.begin(); i != r->m_cuco.end(); i++)
 	{
@@ -1362,7 +1362,7 @@ BOOL S101Cell::GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoA
 	return TRUE;
 }
 
-BOOL S101Cell::GetFullMaskData(R_FeatureRecord* fe)
+bool S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 {
 	std::list<SCurve*> listCurveLink;
 

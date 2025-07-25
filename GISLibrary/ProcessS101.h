@@ -16,7 +16,7 @@ public:
 	
 public:
 	// Visibility
-	std::vector<std::string> v_ViewingGroup;
+	std::vector<std::string_view> v_ViewingGroup;
 	std::string v_DisplayPlane;
 	std::string v_DrawingPriority;
 	std::string v_ScaleMinimum;
@@ -103,7 +103,8 @@ public:
 	static int ProcessS100_XSLT(std::string inputXmlPath, std::string mainRulePath, std::string outputXmlPath, PortrayalCatalogue* pc = nullptr);
 	static std::string ProcessS100_XSLT(std::string inputXmlContent, std::string mainRulePath, PortrayalCatalogue* pc = nullptr);
 
-	static bool LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm);
+	//static bool LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm);
+	static bool LUA_ParsingDrawingInstructions(std::string_view featureID, std::string_view drawingCommands, PCOutputSchemaManager* pcm);
 	static std::wstring LUA_GetPriority(std::string lua_priority);
 
 	static void InitPortrayal( 

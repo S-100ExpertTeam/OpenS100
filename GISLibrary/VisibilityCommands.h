@@ -3,7 +3,8 @@
 
 namespace DrawingInstructions
 {
-    class ViewingGroup : public StateCommand {
+    class ViewingGroup : public StateCommand 
+    {
     public:
         ViewingGroup(const std::vector<std::string>& viewingGroups);
         virtual void execute() override;
@@ -104,7 +105,6 @@ namespace DrawingInstructions
 		void setId(const std::string& id);
 		void setParent(const std::string& parentId);
 		void setHover(bool hover);
-
 
         void parse(const std::string& key, std::string value);
 		void execute() const;

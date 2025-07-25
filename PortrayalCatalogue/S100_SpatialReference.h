@@ -20,8 +20,10 @@ private:
 	// boolean
 	S100::Boolean forward = true;
 public:
-	void SetType(std::string &value);
-	void SetReference(std::string &value);
+	void SetType(std::string& value);
+	void SetType(std::string_view value);
+	void SetReference(std::string& value);
+	void SetReference(std::string_view value);
 	void SetForward();
 	void SetBackward();
 

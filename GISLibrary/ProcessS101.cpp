@@ -48,14 +48,14 @@ std::string ProcessS101::g_unknown_attribute_value = "";
 void Local_StateCommands::Init()
 {
 	// Visibility
-	v_ViewingGroup;
-	v_DisplayPlane;
-	v_DrawingPriority;
-	v_ScaleMinimum;
-	v_ScaleMaximum;
-	v_Id;
-	v_Parent;
-	v_Hover;
+	v_ViewingGroup.clear();
+	v_DisplayPlane = "";
+	v_DrawingPriority = "0";
+	v_ScaleMinimum = std::to_string(INT32_MAX);
+	v_ScaleMaximum = std::to_string(INT32_MIN);
+	v_Id = "";
+	v_Parent = "";
+	v_Hover = "false";
 
 	// Transform
 	v_LocalOffset;
@@ -180,10 +180,10 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 
 		for (auto i = drawingInstructionResult->begin(); i != drawingInstructionResult->end(); i++)
 		{
-			std::string drawingInstructions = i->drawingInstructions;
-			std::vector<std::string> di_splited = Split(drawingInstructions, ";");
+			//std::string drawingInstructions = i->drawingInstructions;
+			//std::vector<std::string> di_splited = Split(drawingInstructions, ";");
 
-			LUA_ParsingDrawingInstructions(i->featureID, di_splited, c->pcManager);
+			LUA_ParsingDrawingInstructions(i->featureID, i->drawingInstructions, c->pcManager);
 		}
 
 		c->pcManager->GenerateSENCInstruction(c, layer->GetPC());
@@ -305,15 +305,18 @@ std::string ProcessS101::ProcessS100_XSLT(std::string inputXmlContent, std::stri
 	return result;
 }
 
-bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm)
+bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std::string_view drawingCommands, PCOutputSchemaManager* pcm)
 {
+	std::vector<std::string_view> elements;
+	Split(drawingCommands, ";", elements);
+
 	Local_StateCommands stateCommands;
 
 	std::string v_ColorFill;
 	std::string v_TextInstruction;
 	std::string v_LineInstruction;
 	std::string v_PointInstruction;
-	std::list<std::string> vl_SpatialReference;
+	std::list<std::string_view> vl_SpatialReference;
 	std::string v_AreaFillReference;
 	S100_Dash dash;
 
@@ -321,8 +324,8 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 	for (auto i = elements.begin(); i != elements.end(); i++)
 	{
-		std::string element = *i;
-		std::vector<std::string> di_splited = Split(element, ":");
+		std::vector<std::string_view> di_splited;
+		Split(*i, ":", di_splited);
 
 		int splitedSize = (int)di_splited.size();
 
@@ -343,8 +346,8 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 		else
 		{
 			// Splited Size 2
-			std::string tag = di_splited[0];
-			std::string value = di_splited[1];
+			std::string_view tag = di_splited[0];
+			std::string_view value = di_splited[1];
 
 			int sizeForIndex = (int)tag.size();
 
@@ -362,12 +365,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					stateCommands.v_Dash = value;
 					dash.ParseValue(value);
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 5)
@@ -393,12 +390,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				else if (tag.compare("Rotation") == 0)
 				{
 					stateCommands.v_Rotation = value;
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 7)
@@ -460,12 +451,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					stateCommands.v_FontSlant = value;
 				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
 			else if (sizeForIndex == 11)
 			{
@@ -483,12 +468,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				else if (tag.compare("ArcByRadius") == 0)
 				{
 					stateCommands.v_ArcByRadius = value;
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 12)
@@ -515,12 +494,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 					stateCommands.v_AugmentedPath = "";
 				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
 			else if (sizeForIndex == 13)
 			{
@@ -535,12 +508,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				}
 				else if (tag.compare("AreaPlacement") == 0)
 				{
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 14)
@@ -575,12 +542,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					//}
 
 					//v_AlertReference = "";
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 15)
@@ -779,9 +740,10 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 							{
 								S100_SpatialReference* sref = new S100_SpatialReference();
 								in->SetSpatialReference(sref);
-								std::string v_SpatialReference = *it;
+								std::string_view v_SpatialReference = *it;
 
-								std::vector<std::string> v_splited = Split(v_SpatialReference, "|");
+								std::vector<std::string_view> v_splited;
+								Split(v_SpatialReference, "|", v_splited);
 								if (v_splited.size() == 2)
 								{
 									sref->SetType(v_splited[0]);
@@ -843,9 +805,10 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						{
 							S100_SpatialReference* sref = new S100_SpatialReference();
 							in->SetSpatialReference(sref);
-							std::string v_SpatialReference = *it;
+							std::string_view v_SpatialReference = *it;
 
-							std::vector<std::string> v_splited = Split(v_SpatialReference, "|");
+							std::vector<std::string_view> v_splited;
+							Split(v_SpatialReference, "|", v_splited);
 							if (v_splited.size() == 2)
 							{
 								sref->SetType(v_splited[0]);
@@ -859,14 +822,8 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				// "SpatialReference:Curve|107" 
 				else if (tag.compare("SpatialReference") == 0)
 				{
-					std::string v_SpatialReference = value;
+					std::string_view v_SpatialReference = value;
 					vl_SpatialReference.push_back(v_SpatialReference);
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 17)
@@ -906,12 +863,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					}
 					v_AreaFillReference = "";
 				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
 			else if (sizeForIndex == 19)
 			{
@@ -926,12 +877,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					str.Format(_T("Lua Parser error - %S(%d)"), tag, sizeForIndex);
 					//OutputDebugString(str);
 				}
-			}
-			else
-			{
-				CString str;
-				str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-				//OutputDebugString(str);
 			}
 		}
 	}

@@ -1,9 +1,11 @@
 #pragma once
+
 #include <string>
 
 namespace DrawingInstructions
 {
-    class StateCommand {
+    class StateCommand 
+    {
     public:
         StateCommand() = default;
         virtual ~StateCommand() = default;
