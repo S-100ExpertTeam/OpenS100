@@ -4,7 +4,9 @@ namespace DrawingInstructions
 {
     class Date : public StateCommand {
     public:
+		Date() = default;
         Date(const std::string& begin, const std::string& end);
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -15,7 +17,9 @@ namespace DrawingInstructions
 
     class Time : public StateCommand {
     public:
+		Time() = default;
         Time(const std::string& begin, const std::string& end);
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -26,7 +30,9 @@ namespace DrawingInstructions
 
     class DateTime : public StateCommand {
     public:
+		DateTime() = default;
         DateTime(const std::string& begin, const std::string& end);
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -37,7 +43,9 @@ namespace DrawingInstructions
 
     class TimeValid : public StateCommand {
     public:
+		TimeValid() = default;
         TimeValid(const std::string& closure);
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -48,6 +56,7 @@ namespace DrawingInstructions
     class ClearTime : public StateCommand {
     public:
         ClearTime();
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
     };

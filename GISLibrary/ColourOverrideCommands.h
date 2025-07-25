@@ -3,9 +3,14 @@
 
 namespace DrawingInstructions
 {
-    class OverrideColor : public StateCommand {
+    class OverrideColor : public StateCommand 
+    {
     public:
+		OverrideColor() = default;
         OverrideColor(const std::string& colorToken, double colorTransparency, const std::string& overrideToken, double overrideTransparency);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -16,9 +21,14 @@ namespace DrawingInstructions
         double overrideTransparency;
     };
 
-    class OverrideAll : public StateCommand {
+    class OverrideAll : public StateCommand 
+    {
     public:
+		OverrideAll() = default;
         OverrideAll(const std::string& token, double transparency);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "S101LuaScriptingReference.h"
+#include "VisibilityCommands.h"
 
 #include <string>
 #include <vector>
@@ -17,6 +18,8 @@ public:
 public:
 	// Visibility
 	std::vector<std::string_view> v_ViewingGroup;
+	DrawingInstructions::ViewingGroup viewingGroup;
+
 	std::string v_DisplayPlane;
 	std::string v_DrawingPriority;
 	std::string v_ScaleMinimum;

@@ -6,7 +6,9 @@ namespace DrawingInstructions
     class ViewingGroup : public StateCommand 
     {
     public:
+		ViewingGroup() = default;
         ViewingGroup(const std::vector<std::string>& viewingGroups);
+		virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
@@ -14,9 +16,12 @@ namespace DrawingInstructions
         std::vector<std::string> viewingGroups;
     };
 
-    class DisplayPlane : public StateCommand {
+    class DisplayPlane : public StateCommand 
+    {
     public:
+		DisplayPlane() = default;
         DisplayPlane(const std::string& displayPlane);
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
@@ -24,39 +29,51 @@ namespace DrawingInstructions
         std::string displayPlane;
     };
 
-    class DrawingPriority : public StateCommand {
+    class DrawingPriority : public StateCommand 
+    {
     public:
+		DrawingPriority() = default;
         DrawingPriority(int drawingPriority);
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
     private:
-        int drawingPriority;
+        int drawingPriority = 0;
     };
 
-    class ScaleMinimum : public StateCommand {
+    class ScaleMinimum : public StateCommand 
+    {
     public:
+		ScaleMinimum() = default;
         ScaleMinimum(int scaleMinimum);
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
     private:
-        int scaleMinimum;
+        int scaleMinimum = INT32_MAX;
     };
 
-    class ScaleMaximum : public StateCommand {
+    class ScaleMaximum : public StateCommand 
+    {
     public:
+		ScaleMaximum() = default;
         ScaleMaximum(int scaleMaximum);
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
     private:
-        int scaleMaximum;
+        int scaleMaximum = INT32_MIN;
     };
 
-    class Id : public StateCommand {
+    class Id : public StateCommand 
+    {
     public:
+		Id() = default;
         Id(const std::string& id);
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
@@ -64,9 +81,12 @@ namespace DrawingInstructions
         std::string id;
     };
 
-    class Parent : public StateCommand {
+    class Parent : public StateCommand 
+    {
     public:
+		Parent() = default;
         Parent(const std::string& parentId);
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
@@ -77,15 +97,13 @@ namespace DrawingInstructions
     class Hover : public StateCommand {
     public:
         Hover(bool hover);
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
     private:
-        bool hover;
+        bool hover = false;
     };
-
-
-
 
     class VisibilityCommands 
     {

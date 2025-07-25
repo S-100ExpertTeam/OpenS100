@@ -52,6 +52,10 @@ namespace DrawingInstructions
 	OverrideColor::OverrideColor(const std::string& colorToken, double colorTransparency, const std::string& overrideToken, double overrideTransparency)
 		: colorToken(colorToken), colorTransparency(colorTransparency), overrideToken(overrideToken), overrideTransparency(overrideTransparency) {}
 
+	void OverrideColor::init()
+	{
+	}
+
 	void OverrideColor::execute()
 	{
 	}
@@ -63,6 +67,11 @@ namespace DrawingInstructions
 
 	OverrideAll::OverrideAll(const std::string& token, double transparency)
 		: token(token), transparency(transparency) {}
+
+	void OverrideAll::init()
+	{
+	}
+
 	void OverrideAll::execute()  {
 	}
 	void OverrideAll::parse(const std::string& input)

@@ -187,6 +187,12 @@ namespace DrawingInstructions
     // FontColor class implementation
     FontColor::FontColor(const std::string& token, double transparency) : token(token), transparency(transparency) {}
 
+    void FontColor::init()
+    {
+        token.clear();
+        transparency = 0.0;
+	}
+
     void FontColor::execute()  {
     }
 
@@ -198,6 +204,13 @@ namespace DrawingInstructions
         : token(token), transparency(transparency)
     {
     }
+
+    void FontBackgroundColor::init()
+    {
+        token.clear();
+        transparency = 0.0;
+	}
+
     void FontBackgroundColor::execute()  {
     }
 
@@ -209,6 +222,11 @@ namespace DrawingInstructions
     // FontSize class implementation
     FontSize::FontSize(double bodySize) : bodySize(bodySize) {}
 
+    void FontSize::init()
+    {
+        bodySize = 0.0;
+	}
+
     void FontSize::execute()  {
     }
 
@@ -218,6 +236,11 @@ namespace DrawingInstructions
 
     // FontProportion class implementation
     FontProportion::FontProportion(const std::string& proportion) : proportion(proportion) {}
+
+    void FontProportion::init()
+    {
+        proportion.clear();
+    }
 
     void FontProportion::execute()  {
     }
@@ -229,6 +252,11 @@ namespace DrawingInstructions
     // FontWeight class implementation
     FontWeight::FontWeight(const std::string& weight) : weight(weight) {}
 
+    void FontWeight::init()
+    {
+        weight.clear();
+	}
+
     void FontWeight::execute()  {
     }
 
@@ -238,6 +266,11 @@ namespace DrawingInstructions
 
     // FontSlant class implementation
     FontSlant::FontSlant(const std::string& slant) : slant(slant) {}
+
+    void FontSlant::init()
+    {
+        slant.clear();
+	}
 
     void FontSlant::execute()  {
     }
@@ -249,6 +282,11 @@ namespace DrawingInstructions
     // FontSerifs class implementation
     FontSerifs::FontSerifs(bool serifs) : serifs(serifs) {}
 
+    void FontSerifs::init()
+    {
+        serifs = false; // Default value
+    }
+
     void FontSerifs::execute()  {
     }
 
@@ -258,6 +296,11 @@ namespace DrawingInstructions
 
     // FontUnderline class implementation
     FontUnderline::FontUnderline(bool underline) : underline(underline) {}
+
+    void FontUnderline::init()
+    {
+        underline = false; // Default value
+	}
 
     void FontUnderline::execute()  {
     }
@@ -269,6 +312,11 @@ namespace DrawingInstructions
     // FontStrikethrough class implementation
     FontStrikethrough::FontStrikethrough(bool strikethrough) : strikethrough(strikethrough) {}
 
+    void FontStrikethrough::init()
+    {
+        strikethrough = false; // Default value
+    }
+
     void FontStrikethrough::execute()  {
     }
 
@@ -278,6 +326,11 @@ namespace DrawingInstructions
 
     // TextAlignHorizontal class implementation
     TextAlignHorizontal::TextAlignHorizontal(const std::string& horizontalAlignment) : horizontalAlignment(horizontalAlignment) {}
+
+    void TextAlignHorizontal::init()
+    {
+        horizontalAlignment.clear();
+    }
 
     void TextAlignHorizontal::execute()  {
     }
@@ -289,6 +342,11 @@ namespace DrawingInstructions
     // TextAlignVertical class implementation
     TextAlignVertical::TextAlignVertical(const std::string& verticalAlignment) : verticalAlignment(verticalAlignment) {}
 
+    void TextAlignVertical::init()
+    {
+        verticalAlignment.clear();
+	}
+
     void TextAlignVertical::execute()  {
     }
 
@@ -296,6 +354,10 @@ namespace DrawingInstructions
     {
     }
 
+    void FontReference::init()
+    {
+        fontReference.clear();
+	}
 
     void FontReference::execute() 
     {
@@ -305,12 +367,22 @@ namespace DrawingInstructions
     {
     }
 
+    void FontUpperline::init()
+    {
+        strikethrough = false; // Default value
+	}
+
     void FontUpperline::execute() 
     {
     }
 
     void FontUpperline::parse(const std::string& input)
     {
+    }
+
+    void TextVerticalOffset::init()
+    {
+        verticalOffset = 0.0; // Default value
     }
 
     void TextVerticalOffset::execute() 

@@ -71,6 +71,11 @@ namespace DrawingInstructions {
 	NumericAnnotation::NumericAnnotation(int decimals, const std::string& championChoice, double buffer)
 		: decimals(decimals), championChoice(championChoice), buffer(buffer) {}
 
+	void NumericAnnotation::init() 
+	{
+
+	}
+
 	void NumericAnnotation::execute()  {
 	}
 
@@ -80,6 +85,11 @@ namespace DrawingInstructions {
 
 	SymbolAnnotation::SymbolAnnotation(const std::string& symbolRef, const std::string& rotationAttribute, const std::string& scaleAttribute, const std::string& rotationCRS, double rotationOffset, double rotationFactor, double scaleFactor)
 		: symbolRef(symbolRef), rotationAttribute(rotationAttribute), scaleAttribute(scaleAttribute), rotationCRS(rotationCRS), rotationOffset(rotationOffset), rotationFactor(rotationFactor), scaleFactor(scaleFactor) {}
+
+	void SymbolAnnotation::init()
+	{
+
+	}
 
 	void SymbolAnnotation::execute()  {
 	}
@@ -91,6 +101,11 @@ namespace DrawingInstructions {
 	CoverageColor::CoverageColor(const std::string& startToken, double startTransparency, const std::string& endToken, double endTransparency, double penWidth)
 		: startToken(startToken), startTransparency(startTransparency), endToken(endToken), endTransparency(endTransparency), penWidth(penWidth) {}
 
+	void CoverageColor::init()
+	{
+
+	}
+
 	void CoverageColor::execute()  {
 	}
 
@@ -100,6 +115,14 @@ namespace DrawingInstructions {
 
 	LookupEntry::LookupEntry(const std::string& label, double lower, double upper, const std::string& closure)
 		: label(label), lower(lower), upper(upper), closure(closure) {}
+
+	void LookupEntry::init()
+	{
+		label = "";
+		lower = 0.0;
+		upper = 0.0;
+		closure = "";
+	}
 
 	void LookupEntry::execute()  {
 	}

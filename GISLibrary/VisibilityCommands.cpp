@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "VisibilityCommands.h"
 
+#include "..\\LatLonUtility\\LatLonUtility.h"
+
 namespace DrawingInstructions
 {
     VisibilityCommands::~VisibilityCommands() {
@@ -105,73 +107,158 @@ namespace DrawingInstructions
     // ViewingGroup class implementation
     ViewingGroup::ViewingGroup(const std::vector<std::string>& viewingGroups) : viewingGroups(viewingGroups) {}
 
+    void ViewingGroup::init()
+    {
+        viewingGroups.clear();
+    }
+
     void ViewingGroup::execute()
     {
     }
 
-    void ViewingGroup::parse(const std::string& input) {
+    void ViewingGroup::parse(const std::string& input) 
+    {
+		viewingGroups = LatLonUtility::Split(input, ",");
 	}
 
     // DisplayPlane class implementation
     DisplayPlane::DisplayPlane(const std::string& displayPlane) : displayPlane(displayPlane) {}
 
-    void DisplayPlane::execute()  {
+    void DisplayPlane::init()
+    {
+		displayPlane = "";
     }
 
-    void DisplayPlane::parse(const std::string& input) {
+    void DisplayPlane::execute()  
+    {
+    }
+
+    void DisplayPlane::parse(const std::string& input) 
+    {
+		displayPlane = input;
 	}
 
     // DrawingPriority class implementation
     DrawingPriority::DrawingPriority(int drawingPriority) : drawingPriority(drawingPriority) {}
 
+    void DrawingPriority::init()
+    {
+		drawingPriority = 0; // Default value
+    }
+
     void DrawingPriority::execute()  {
     }
 
-    void DrawingPriority::parse(const std::string& input) {
+    void DrawingPriority::parse(const std::string& input) 
+    {
+		try 
+        {
+			drawingPriority = std::stoi(input);
+		}
+        catch (const std::exception& e) 
+        {
+            drawingPriority = 0; // Default value if parsing fails
+        }
     }
 
     // ScaleMinimum class implementation
     ScaleMinimum::ScaleMinimum(int scaleMinimum) : scaleMinimum(scaleMinimum) {}
 
+    void ScaleMinimum::init()
+    {
+        scaleMinimum = 0;
+    }
+
     void ScaleMinimum::execute()  {
     }
 
-    void ScaleMinimum::parse(const std::string& input) {
+    void ScaleMinimum::parse(const std::string& input) 
+    {
+        try
+        {
+            scaleMinimum = std::stoi(input);
+        }
+        catch (const std::exception& e)
+        {
+            scaleMinimum = 0; // Default value if parsing fails
+        }
 	}
 
     // ScaleMaximum class implementation
     ScaleMaximum::ScaleMaximum(int scaleMaximum) : scaleMaximum(scaleMaximum) {}
 
+    void ScaleMaximum::init()
+    {
+        scaleMaximum = 0;
+    }
+
     void ScaleMaximum::execute()  {
     }
 
-    void ScaleMaximum::parse(const std::string& input) {
+    void ScaleMaximum::parse(const std::string& input) 
+    {
+        try
+        {
+            scaleMaximum = std::stoi(input);
+        }
+        catch (const std::exception& e)
+        {
+            scaleMaximum = 0; // Default value if parsing fails
+        }
     }
 
     // Id class implementation
     Id::Id(const std::string& id) : id(id) {}
 
+    void Id::init()
+    {
+        id = "";
+    }
+
     void Id::execute()  {
     }
 
-    void Id::parse(const std::string& input) {
+    void Id::parse(const std::string& input) 
+    {
+		id = input;
 	}
 
     // Parent class implementation
     Parent::Parent(const std::string& parentId) : parentId(parentId) {}
 
+    void Parent::init()
+    {
+        parentId = "";
+    }
+
     void Parent::execute()  {
     }
 
-    void Parent::parse(const std::string& input) {
+    void Parent::parse(const std::string& input) 
+    {
+		parentId = input;
     }
 
     // Hover class implementation
     Hover::Hover(bool hover) : hover(hover) {}
 
+    void Hover::init()
+    {
+        hover = false;
+    }
+
     void Hover::execute()  {
     }
 
-    void Hover::parse(const std::string& input) {
+    void Hover::parse(const std::string& input) 
+    {
+		if (input == "true") 
+        {
+			hover = true;
+        } 
+        else if (input == "false")
+        {
+            hover = false;
+        }
     }
 }
