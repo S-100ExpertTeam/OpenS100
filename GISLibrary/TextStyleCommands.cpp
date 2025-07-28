@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "TextStyleCommands.h"
 
+#include "..\\LatLonUtility\\LatLonUtility.h"
+
 namespace DrawingInstructions
 {
     TextStyleCommands::~TextStyleCommands()
@@ -189,7 +191,7 @@ namespace DrawingInstructions
 
     void FontColor::init()
     {
-        token.clear();
+        token = "";
         transparency = 0.0;
 	}
 
@@ -198,6 +200,32 @@ namespace DrawingInstructions
 
     void FontColor::parse(const std::string& input)
     {
+        // FontColor:token[,transparency] 
+		auto tokens = LatLonUtility::Split(input, ",");
+        if (tokens.size() > 0) 
+        {
+            token = tokens[0];
+
+            if (tokens.size() > 1) 
+            {
+                try 
+                {
+                    transparency = std::stod(tokens[1]);
+                }
+                catch (const std::exception&) 
+                {
+                    transparency = 0.0; // Default value if parsing fails
+                }
+            }
+            else 
+            {
+                transparency = 0.0; // Default value
+            }
+        }
+        else
+        {
+            init();
+        }
     }
 
     FontBackgroundColor::FontBackgroundColor(const std::string& token, double transparency)
@@ -207,8 +235,8 @@ namespace DrawingInstructions
 
     void FontBackgroundColor::init()
     {
-        token.clear();
-        transparency = 0.0;
+        token = "";
+        transparency = 1.0;
 	}
 
     void FontBackgroundColor::execute()  {
@@ -216,6 +244,33 @@ namespace DrawingInstructions
 
     void FontBackgroundColor::parse(const std::string& input)
     {
+        // FontBackgroundColor:token[,transparency] 
+
+        auto tokens = LatLonUtility::Split(input, ",");
+        if (tokens.size() > 0)
+        {
+            token = tokens[0];
+
+            if (tokens.size() > 1)
+            {
+                try
+                {
+                    transparency = std::stod(tokens[1]);
+                }
+                catch (const std::exception&)
+                {
+                    transparency = 0.0; // Default value if parsing fails
+                }
+            }
+            else
+            {
+                transparency = 0.0; // Default value
+            }
+        }
+        else
+        {
+            init();
+        }
     }
 
 
@@ -224,7 +279,7 @@ namespace DrawingInstructions
 
     void FontSize::init()
     {
-        bodySize = 0.0;
+        bodySize = 10.0;
 	}
 
     void FontSize::execute()  {
@@ -232,6 +287,15 @@ namespace DrawingInstructions
 
     void FontSize::parse(const std::string& input)
     {
+        // FontSize:bodySize 
+        try
+        {
+            bodySize = std::stod(input);
+        }
+        catch (const std::exception& e)
+        {
+			init(); // Reset to default value if parsing fails
+		}
     }
 
     // FontProportion class implementation
@@ -239,7 +303,7 @@ namespace DrawingInstructions
 
     void FontProportion::init()
     {
-        proportion.clear();
+        proportion = "Proportional";
     }
 
     void FontProportion::execute()  {
@@ -254,7 +318,7 @@ namespace DrawingInstructions
 
     void FontWeight::init()
     {
-        weight.clear();
+        weight = "Medium";
 	}
 
     void FontWeight::execute()  {
@@ -269,7 +333,7 @@ namespace DrawingInstructions
 
     void FontSlant::init()
     {
-        slant.clear();
+        slant = "Upright";
 	}
 
     void FontSlant::execute()  {
@@ -329,7 +393,7 @@ namespace DrawingInstructions
 
     void TextAlignHorizontal::init()
     {
-        horizontalAlignment.clear();
+        horizontalAlignment = "Start";
     }
 
     void TextAlignHorizontal::execute()  {
@@ -344,7 +408,7 @@ namespace DrawingInstructions
 
     void TextAlignVertical::init()
     {
-        verticalAlignment.clear();
+        verticalAlignment = "Bottom";
 	}
 
     void TextAlignVertical::execute()  {
@@ -356,7 +420,7 @@ namespace DrawingInstructions
 
     void FontReference::init()
     {
-        fontReference.clear();
+        fontReference = "";
 	}
 
     void FontReference::execute() 
@@ -369,7 +433,7 @@ namespace DrawingInstructions
 
     void FontUpperline::init()
     {
-        strikethrough = false; // Default value
+        strikethrough = false;
 	}
 
     void FontUpperline::execute() 

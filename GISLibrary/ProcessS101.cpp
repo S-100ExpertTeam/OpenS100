@@ -307,11 +307,6 @@ std::string ProcessS101::ProcessS100_XSLT(std::string inputXmlContent, std::stri
 
 bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std::string_view drawingCommands, PCOutputSchemaManager* pcm)
 {
-	if (featureID == "195")
-	{
-		OutputDebugString(L"Feature ID 195 encountered.");
-	}
-
 	std::vector<std::string_view> elements;
 	Split(drawingCommands, ";", elements);
 

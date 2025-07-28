@@ -15,7 +15,7 @@ namespace DrawingInstructions
 
     private:
         std::string token;
-        double transparency;
+        double transparency = 0.0;
     };
 
     class FontBackgroundColor : public StateCommand {
@@ -29,7 +29,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
     private:
         std::string token;
-        double transparency;
+        double transparency = 1.0;
     };
 
     class FontSize : public StateCommand 
@@ -44,7 +44,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        double bodySize;
+        double bodySize = 10.0;
     };
 
     class FontProportion : public StateCommand 
@@ -59,7 +59,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        std::string proportion;
+        std::string proportion = "Proportional";
     };
 
     class FontWeight : public StateCommand 
@@ -74,7 +74,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        std::string weight;
+        std::string weight = "Medium";
     };
 
     class FontSlant : public StateCommand 
@@ -89,7 +89,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        std::string slant;
+        std::string slant = "Upright";
     };
 
     class FontSerifs : public StateCommand 
@@ -104,7 +104,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        bool serifs;
+        bool serifs = false;
     };
 
     class FontUnderline : public StateCommand 
@@ -119,7 +119,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        bool underline;
+        bool underline = false;
     };
 
     class FontStrikethrough : public StateCommand 
@@ -134,7 +134,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        bool strikethrough;
+        bool strikethrough = false;
     };
 
     class FontUpperline : public StateCommand 
@@ -150,7 +150,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        bool strikethrough;
+        bool strikethrough = false;
     };
 
     class FontReference : public StateCommand 
@@ -166,7 +166,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        std::string fontReference;
+        std::string fontReference = "";
     };
 
     class TextAlignHorizontal : public StateCommand 
@@ -181,7 +181,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        std::string horizontalAlignment;
+        std::string horizontalAlignment = "Start";
     };
 
     class TextAlignVertical : public StateCommand 
@@ -196,7 +196,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        std::string verticalAlignment;
+        std::string verticalAlignment = "Bottom";
     };
 
     class TextVerticalOffset : public StateCommand 
@@ -212,7 +212,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        double verticalOffset;
+        double verticalOffset = 0.0;
     };
 
 
