@@ -16,9 +16,9 @@ namespace DrawingInstructions
 
     private:
         std::string colorToken;
-        double colorTransparency;
+        double colorTransparency = 0.0;
         std::string overrideToken;
-        double overrideTransparency;
+        double overrideTransparency = 0.0;
     };
 
     class OverrideAll : public StateCommand 
@@ -34,8 +34,19 @@ namespace DrawingInstructions
 
     private:
         std::string token;
-        double transparency;
+        double transparency = 0.0;
     };
+
+    class ClearOverride : public StateCommand 
+	{
+    public:
+        ClearOverride() = default;
+
+    public:
+        void init() override;
+        void execute() override;
+        void parse(const std::string& input) override;
+	};
 
 	class ColourOverrideCommands
 	{

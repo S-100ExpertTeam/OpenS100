@@ -222,7 +222,7 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 							first = false;
 						}
 						
-						std::string str = "";
+						std::string str;
 						str += "FileName :";
 						str += item->strFileName;
 						str += " \n";

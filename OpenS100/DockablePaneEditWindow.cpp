@@ -202,7 +202,7 @@ void CDockablePaneEditWindow::SetAttributes() //After the point click, it goes o
 		return;
 	}
 
-	std::string id = "";
+	std::string id;
 	int type = 0;
 	if (m_selectedObjectType == L"Feature") {
 		id = pugi::as_utf8(selectedFeatureID);

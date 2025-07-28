@@ -23,7 +23,7 @@ namespace S100 {
 
     bool ExXmlSupport::Compare(std::string str, std::string nodeName, std::string nodeNameSpace)
     {
-        std::string nodeNameTemp = "";
+        std::string nodeNameTemp;
 
         if (nodeNameSpace == "")
             nodeNameTemp = nodeName;
@@ -96,7 +96,7 @@ namespace S100 {
 
     pugi::xml_node& ExXmlSupport::GetContentNode(pugi::xml_node& node, std::string nodeName, std::string nodeNameSpace)
     {
-        std::string nodeNameTemp = "";
+        std::string nodeNameTemp;
 
         if (nodeNameSpace == "")
             nodeNameTemp = nodeName;
@@ -116,7 +116,7 @@ namespace S100 {
 
     const pugi::char_t* ExXmlSupport::GetContentItem(pugi::xml_node& node, std::string nodeName, std::string nodeNameSpace)
     {
-        std::string nodeNameTemp = "";
+        std::string nodeNameTemp;
 
         if (nodeNameSpace == "")
             nodeNameTemp = nodeName;
@@ -138,7 +138,7 @@ namespace S100 {
 
     void ExXmlSupport::GetContentItemVector(pugi::xml_node& node, std::string nodeName, std::vector<std::string>& item, std::string nodeNameSpace)
     {
-        std::string nodeNameTemp = "";
+        std::string nodeNameTemp;
 
         if (nodeNameSpace == "")
             nodeNameTemp = nodeName;

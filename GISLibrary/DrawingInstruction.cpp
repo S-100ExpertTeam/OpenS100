@@ -29,6 +29,5 @@ namespace DrawingInstructions
 		drawingCommand->parse(key,value);
 		stateCommands->parse(key,value);
 	}
-
 }
 

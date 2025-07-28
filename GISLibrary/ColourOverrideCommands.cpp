@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "ColourOverrideCommands.h"
 
+#include "..\\LatLonUtility\\LatLonUtility.h"
+
 namespace DrawingInstructions
 {
 	ColourOverrideCommands::~ColourOverrideCommands()
@@ -54,6 +56,10 @@ namespace DrawingInstructions
 
 	void OverrideColor::init()
 	{
+		colorToken.clear();
+		colorTransparency = 0.0;
+		overrideToken.clear();
+		overrideTransparency = 0.0;
 	}
 
 	void OverrideColor::execute()
@@ -63,6 +69,19 @@ namespace DrawingInstructions
 
 	void OverrideColor::parse(const std::string& input)
 	{
+		// OverrideColor:colorToken,colorTransparency,overrideToken,overrideTransparency 
+		auto tokens = LatLonUtility::Split(input, ",");
+		if (tokens.size() == 4)
+		{
+			colorToken = tokens[0];
+			colorTransparency = std::stod(tokens[1]);
+			overrideToken = tokens[2];
+			overrideTransparency = std::stod(tokens[3]);
+		}
+		else
+		{
+			init(); // Reset to default if parsing fails
+		}
 	}
 
 	OverrideAll::OverrideAll(const std::string& token, double transparency)
@@ -70,11 +89,38 @@ namespace DrawingInstructions
 
 	void OverrideAll::init()
 	{
+		token.clear();
+		transparency = 0.0;
 	}
 
 	void OverrideAll::execute()  {
 	}
 	void OverrideAll::parse(const std::string& input)
 	{
+		// OverrideAll:token,transparency 
+		auto tokens = LatLonUtility::Split(input, ",");
+		if (tokens.size() == 2)
+		{
+			token = tokens[0];
+			transparency = std::stod(tokens[1]);
+		}
+		else
+		{
+			init(); // Reset to default if parsing fails
+		}
+	}
+
+	void ClearOverride::init()
+	{
+	}
+
+	void ClearOverride::execute()  
+	{
+	}
+
+	void ClearOverride::parse(const std::string& input)
+	{
+		// ClearOverride : No parameters expected
+		// No specific parsing needed for clear override
 	}
 }

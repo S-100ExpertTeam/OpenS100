@@ -49,12 +49,12 @@ void Local_StateCommands::Init()
 {
 	// Visibility
 	v_ViewingGroup.clear();
-	v_DisplayPlane = "";
+	v_DisplayPlane.clear();
 	v_DrawingPriority = "0";
 	v_ScaleMinimum = std::to_string(INT32_MAX);
 	v_ScaleMaximum = std::to_string(INT32_MIN);
-	v_Id = "";
-	v_Parent = "";
+	v_Id.clear();
+	v_Parent.clear();
 	v_Hover = "false";
 
 	// Transform
@@ -695,12 +695,12 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 			// "ClearGeometry"
 			if (di_splited[0].compare("ClearGeometry") == 0)
 			{
-				stateCommands.v_AugmentedPoint = "";
+				stateCommands.v_AugmentedPoint.clear();
 				vl_SpatialReference.clear();
-				v_AreaFillReference = "";
-				stateCommands.v_AugmentedRay = "";
-				stateCommands.v_AugmentedPath = "";
-				stateCommands.v_ArcByRadius = "";
+				v_AreaFillReference.clear();
+				stateCommands.v_AugmentedRay.clear();
+				stateCommands.v_AugmentedPath.clear();
+				stateCommands.v_ArcByRadius.clear();
 			}
 		}
 		else
@@ -790,7 +790,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 							cf->GetColor()->SetTransparency(std::wstring(v_splited[1].begin(), v_splited[1].end()));
 						}
 					}
-					v_ColorFill = "";
+					v_ColorFill.clear();
 				}
 				else if (tag.compare("LineStyle") == 0)
 				{
@@ -852,7 +852,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 				{
 					stateCommands.v_AugmentedRay = value;
 
-					stateCommands.v_AugmentedPath = "";
+					stateCommands.v_AugmentedPath.clear();
 				}
 			}
 			else if (sizeForIndex == 13)
@@ -864,7 +864,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 				else if (tag.compare("AugmentedPath") == 0)
 				{
 					stateCommands.v_AugmentedPath = value;
-					stateCommands.v_AugmentedRay = "";
+					stateCommands.v_AugmentedRay.clear();
 				}
 				else if (tag.compare("AreaPlacement") == 0)
 				{
@@ -998,7 +998,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						}
 					}
 
-					v_TextInstruction = "";
+					v_TextInstruction.clear();
 				}
 				else if (tag.compare("LineInstruction") == 0)
 				{
@@ -1110,7 +1110,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 									sref->SetReference(v_splited[1]);
 								}
 							}
-							v_LineInstruction = "";
+							v_LineInstruction.clear();
 						}
 					}
 				}
@@ -1177,7 +1177,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						}
 					}
 
-					v_PointInstruction = "";
+					v_PointInstruction.clear();
 				}
 				// "SpatialReference:Curve|107" 
 				else if (tag.compare("SpatialReference") == 0)
@@ -1221,7 +1221,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						path.append(L".xml");
 						in->SetAreaFill(cf);
 					}
-					v_AreaFillReference = "";
+					v_AreaFillReference.clear();
 				}
 			}
 			else if (sizeForIndex == 19)

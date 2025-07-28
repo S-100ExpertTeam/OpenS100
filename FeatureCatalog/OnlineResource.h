@@ -14,13 +14,13 @@ public:
 	virtual ~OnlineResource();
 
 private:
-	std::wstring url = L"";
-	std::wstring protocol = L"";
-	std::wstring applicationProfile = L"";
-	std::wstring name = L"";
-	std::wstring description = L"";
+	std::wstring url;
+	std::wstring protocol;
+	std::wstring applicationProfile;
+	std::wstring name;
+	std::wstring description;
 	OnlineFunctionCode function; 
-	std::string linkage = "";
+	std::string linkage;
 
 public:
 	void GetContents(pugi::xml_node& node);

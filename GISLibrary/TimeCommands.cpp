@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "TimeCommands.h"
+
+#include "..\\LatLonUtility\\LatLonUtility.h"
+
 namespace DrawingInstructions
 {
 	TimeCommands::~TimeCommands()
@@ -33,7 +36,7 @@ namespace DrawingInstructions
 		this->dateTime = new DateTime(begin, end);
 	}
 
-	void TimeCommands::setTimeValid(const std::string& closure)
+	void TimeCommands::setTimeValid(const IntervalType closure)
 	{
 		delete this->timeValid;
 		this->timeValid = new TimeValid(closure);
@@ -82,24 +85,35 @@ namespace DrawingInstructions
 
 	void Date::init()
 	{
-		begin = "";
-		end = "";
-	}
+		begin = "-…";
+		end = "…";
+	}	
 
 	void  Date::execute() {
 	}
 
 	void Date::parse(const std::string& input)
 	{
+		// Date:[begin][,end] 
+		auto tokens = LatLonUtility::Split(input, ",");
+		if (tokens.size() == 2) {
+			begin = tokens[0];
+			end = tokens[1];
+		} else if (tokens.size() == 1) {
+			begin = tokens[0];
+			end = "…"; // Default end if not specified
+		} else {
+			init(); // Reset to default if parsing fails
+		}
 	}
 
 	Time::Time(const std::string& begin, const std::string& end) : begin(begin), end(end) {}
 
 	void Time::init()
 	{
-		begin = "";
-		end = "";
-	}
+		begin = "-…";
+		end = "…";
+	}	
 
 	void Time::execute() 
 	{
@@ -107,14 +121,27 @@ namespace DrawingInstructions
 
 	void Time::parse(const std::string& input)
 	{
+		// Time:[begin][,end] 
+		auto tokens = LatLonUtility::Split(input, ",");
+		if (tokens.size() == 2) {
+			begin = tokens[0];
+			end = tokens[1];
+		}
+		else if (tokens.size() == 1) {
+			begin = tokens[0];
+			end = "…"; // Default end if not specified
+		}
+		else {
+			init(); // Reset to default if parsing fails
+		}
 	}
 
 	DateTime::DateTime(const std::string& begin, const std::string& end) : begin(begin), end(end) {}
 
 	void DateTime::init()
 	{
-		begin = "";
-		end = "";
+		begin = "-…";
+		end = "…";
 	}
 
 	void DateTime::execute() 
@@ -123,13 +150,26 @@ namespace DrawingInstructions
 
 	void DateTime::parse(const std::string& input)
 	{
+		// DateTime:[begin][,end] 
+		auto tokens = LatLonUtility::Split(input, ",");
+		if (tokens.size() == 2) {
+			begin = tokens[0];
+			end = tokens[1];
+		}
+		else if (tokens.size() == 1) {
+			begin = tokens[0];
+			end = "…"; // Default end if not specified
+		}
+		else {
+			init(); // Reset to default if parsing fails
+		}
 	}
 
-	TimeValid::TimeValid(const std::string& closure) : closure(closure) {}
+	TimeValid::TimeValid(const IntervalType closure) : closure(closure) {}
 
 	void TimeValid::init()
 	{
-		closure = "";
+		closure = IntervalType::none;
 	}
 
 	void TimeValid::execute() 
@@ -138,6 +178,8 @@ namespace DrawingInstructions
 
 	void TimeValid::parse(const std::string& input)
 	{
+		// TimeValid[:closure]
+		closure = StateCommand::GetIntervalTypeFromString(input);
 	}
 
 	void ClearTime::init()
@@ -148,12 +190,9 @@ namespace DrawingInstructions
 	{
 	}
 
-	ClearTime::ClearTime()
-	{
-	}
-
 	void ClearTime::parse(const std::string& input)
 	{
+		// ClearTime 
 	}
 
 

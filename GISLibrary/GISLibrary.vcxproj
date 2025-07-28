@@ -403,6 +403,7 @@
     <ClCompile Include="PCOutputSchemaManager.cpp" />
     <ClCompile Include="Permit.cpp" />
     <ClCompile Include="PermitHeader.cpp" />
+    <ClCompile Include="PointParameter.cpp" />
     <ClCompile Include="ProcessS101.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="GF_PropertyType.cpp" />
@@ -454,6 +455,7 @@
     <ClCompile Include="S100_SE_SignatureOnSignature.cpp" />
     <ClCompile Include="SourceFileType.cpp" />
     <ClCompile Include="SourceHeaderType.cpp" />
+    <ClCompile Include="StateCommand.cpp" />
     <ClCompile Include="StateCommands.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="SupportFileDiscoveryMetadata.cpp" />
@@ -646,6 +648,7 @@
     <ClInclude Include="Measure.h" />
     <ClInclude Include="Permit.h" />
     <ClInclude Include="PermitHeader.h" />
+    <ClInclude Include="PointParameter.h" />
     <ClInclude Include="ProductPermit.h" />
     <ClInclude Include="ProductsPermit.h" />
     <ClInclude Include="PT_Locale.h" />

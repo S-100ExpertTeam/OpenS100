@@ -100,11 +100,11 @@ void Version::setSource(const std::string& source)
 
 void Version::init()
 {
-	major = "";
-	minor = "";
-	patch = "";
-	working = "";
-	source = "";
+	major.clear();
+	minor.clear();
+	patch.clear();
+	working.clear();
+	source.clear();
 }
 
 void Version::parseSource(const std::string& source)

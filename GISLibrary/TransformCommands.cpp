@@ -98,6 +98,8 @@ namespace DrawingInstructions
 
 	void LocalOffset::parse(const std::string& input)
 	{
+		// LocalOffset:xOffsetMM, yOffsetMM
+
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
 		if (parts.size() == 2) 
 		{
@@ -135,6 +137,8 @@ namespace DrawingInstructions
 
 	void LinePlacement::parse(const std::string& input)
 	{
+		// LinePlacement:linePlacementMode, offset[, endOffset][, visibleParts]
+
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
 		if (parts.size() >= 2) 
 		{
@@ -183,6 +187,7 @@ namespace DrawingInstructions
 
 	void AreaPlacement::parse(const std::string& input)
 	{
+		// AreaPlacement:areaPlacementMode
 		areaPlacementMode = input;
 	}
 
@@ -199,6 +204,7 @@ namespace DrawingInstructions
 
 	void AreaCRS::parse(const std::string& input)
 	{
+		// AreaCRS:areaCRSType
 		areaCRSType = input;
 	}
 
@@ -217,6 +223,7 @@ namespace DrawingInstructions
 
 	void Rotation::parse(const std::string& input)
 	{
+		// Rotation:rotationCRS,rotation 
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
 		if (parts.size() == 2) 
 		{
@@ -250,6 +257,7 @@ namespace DrawingInstructions
 
 	void ScaleFactor::parse(const std::string& input)
 	{
+		// ScaleFactor:scaleFactor 
 		try 
 		{
 			scaleFactor = std::stod(input);

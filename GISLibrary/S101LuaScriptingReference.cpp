@@ -93,7 +93,7 @@ namespace KRS_LUA_SCRIPT_REFERENCE
 			{
 				auto id = cp->GetIdAsString();
 				auto enumType = cp->GetType();
-				std::string strType = "";
+				std::string strType;
 				auto default_value = cp->GetDefaultAsString();
 
 				if (enumType == ParameterType::Boolean)

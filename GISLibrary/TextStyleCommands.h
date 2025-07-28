@@ -166,7 +166,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        std::string fontReference = "";
+        std::string fontReference;
     };
 
     class TextAlignHorizontal : public StateCommand 

@@ -5,6 +5,7 @@
 #include "DrawingCommands.h"
 #include "StateCommands.h"
 
+#include "..\\S100Engine\\GraphicBasePackage_Enum.h"
 
 namespace DrawingInstructions
 {

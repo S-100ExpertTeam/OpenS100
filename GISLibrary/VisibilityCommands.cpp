@@ -118,6 +118,7 @@ namespace DrawingInstructions
 
     void ViewingGroup::parse(const std::string& input) 
     {
+        // ViewingGroup:viewingGroup[,viewingGroup2[,¡¦]] 
 		viewingGroups = LatLonUtility::Split(input, ",");
 	}
 
@@ -126,7 +127,7 @@ namespace DrawingInstructions
 
     void DisplayPlane::init()
     {
-		displayPlane = "";
+		displayPlane.clear();
     }
 
     void DisplayPlane::execute()  
@@ -135,6 +136,7 @@ namespace DrawingInstructions
 
     void DisplayPlane::parse(const std::string& input) 
     {
+        // DisplayPlane:displayPlane
 		displayPlane = input;
 	}
 
@@ -151,6 +153,8 @@ namespace DrawingInstructions
 
     void DrawingPriority::parse(const std::string& input) 
     {
+        // DrawingPriority:drawingPriority 
+
 		try 
         {
 			drawingPriority = std::stoi(input);
@@ -174,6 +178,8 @@ namespace DrawingInstructions
 
     void ScaleMinimum::parse(const std::string& input) 
     {
+        // ScaleMinimum:scaleMinimum
+
         try
         {
             scaleMinimum = std::stoi(input);
@@ -197,6 +203,8 @@ namespace DrawingInstructions
 
     void ScaleMaximum::parse(const std::string& input) 
     {
+        // ScaleMaximum:scaleMaximum 
+
         try
         {
             scaleMaximum = std::stoi(input);
@@ -212,7 +220,7 @@ namespace DrawingInstructions
 
     void Id::init()
     {
-        id = "";
+        id.clear();
     }
 
     void Id::execute()  {
@@ -220,6 +228,7 @@ namespace DrawingInstructions
 
     void Id::parse(const std::string& input) 
     {
+        // Id[:id]
 		id = input;
 	}
 
@@ -228,7 +237,7 @@ namespace DrawingInstructions
 
     void Parent::init()
     {
-        parentId = "";
+        parentId.clear();
     }
 
     void Parent::execute()  {
@@ -236,6 +245,7 @@ namespace DrawingInstructions
 
     void Parent::parse(const std::string& input) 
     {
+        // Parent[:id]
 		parentId = input;
     }
 
@@ -252,6 +262,8 @@ namespace DrawingInstructions
 
     void Hover::parse(const std::string& input) 
     {
+        // Hover:hover 
+
 		if (input == "true") 
         {
 			hover = true;

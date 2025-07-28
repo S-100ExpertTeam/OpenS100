@@ -4001,7 +4001,7 @@ bool S101Cell::SaveAttribute(pugi::xml_node& root, std::vector<ATTR*> attributes
 				}
 				else
 				{
-					value = "";
+					value.clear();
 				}
 			}
 			else

@@ -1,5 +1,9 @@
 #pragma once
+
 #include "StateCommand.h"
+
+#include "..\\FeatureCatalog\\IntervalType.h"
+
 namespace DrawingInstructions
 {
     class Date : public StateCommand {
@@ -11,8 +15,8 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        std::string begin;
-        std::string end;
+        std::string begin = "-…";
+        std::string end = "…";
     };
 
     class Time : public StateCommand {
@@ -24,8 +28,8 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        std::string begin;
-        std::string end;
+        std::string begin = "-…";
+        std::string end = "…";
     };
 
     class DateTime : public StateCommand {
@@ -37,25 +41,27 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        std::string begin;
-        std::string end;
+        std::string begin = "-…";
+        std::string end = "…";
     };
 
     class TimeValid : public StateCommand {
     public:
 		TimeValid() = default;
-        TimeValid(const std::string& closure);
+        TimeValid(const IntervalType closure);
 		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
     private:
-        std::string closure;
+        IntervalType closure = IntervalType::none;
     };
 
     class ClearTime : public StateCommand {
     public:
-        ClearTime();
+        ClearTime() = default;
+
+    public:
 		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
@@ -74,7 +80,7 @@ namespace DrawingInstructions
 		void setDate(const std::string& begin, const std::string& end);
 		void setTime(const std::string& begin, const std::string& end);
 		void setDateTime(const std::string& begin, const std::string& end);
-		void setTimeValid(const std::string& closure);
+		void setTimeValid(const IntervalType closure);
 		void clearTime();
 
         void parse(const std::string& key, std::string value);
@@ -87,8 +93,5 @@ namespace DrawingInstructions
 		DateTime* dateTime = nullptr;
 		TimeValid* timeValid = nullptr;
 		ClearTime* clearTimeCmd = nullptr;
-	};
-
-  
+	}; 
 }
-
