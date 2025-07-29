@@ -5,6 +5,7 @@ S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_Drawin
 {
 	auto pointInstruction = new S100_PointInstruction();
 
+	// DrawingInstruction
 	// id
 	if (sc.id.isPresent())
 	{
@@ -45,6 +46,35 @@ S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_Drawin
 	if (sc.scaleMinimum.isPresent())
 	{
 		pointInstruction->SetScaleMinimum(sc.scaleMinimum.GetScaleMinimum());
+	}
+
+	// scaleMaximum
+	if (sc.scaleMaximum.isPresent())
+	{
+		pointInstruction->SetScaleMaximum(sc.scaleMaximum.GetScaleMaximum());
+	}
+
+	// PointInstruction
+	if (dc.pointInstruction.isPresent())
+	{
+		S100_Symbol* symbol = new S100_Symbol();
+		if (sc.localOffset.isPresent())
+		{
+			symbol->SetOffsetX(sc.localOffset.GetXOffsetMM());
+			symbol->SetOffsetY(sc.localOffset.GetYOffsetMM());
+		}
+
+		if (sc.linePlacement.isPresent())
+		{
+			//sc.linePlacement.GetLinePlacementMode();
+		}
+
+		symbol->SetReference(dc.pointInstruction.GetSymbol());
+		
+
+
+
+		//pointInstruction->SetSymbol(dc.pointInstruction.GetSymbol());
 	}
 
 	return pointInstruction;

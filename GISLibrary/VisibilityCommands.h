@@ -78,6 +78,9 @@ namespace DrawingInstructions
 
     private:
         int scaleMaximum = INT32_MIN;
+
+	public:
+		int GetScaleMaximum() const;
     };
 
     class Id : public StateCommand 

@@ -3,8 +3,16 @@
 //#include "S100_Rotation.h"
 #include "S100_AreaPlacement.h"
 #include "S100_LinePlacement.h"
+#include "S100_LineSymbolPlacement.h"
+#include "S100_AreaSymbolPlacement.h"
+
+#include "..\\S100Engine\\GraphicBasePackage_Enum.h"
+#include "..\\S100Engine\\GraphicBasePackage.h"
 
 #include <pugixml.hpp>
+
+#include <optional>
+
 class S100_Description;
 
 class S100_Symbol
@@ -16,16 +24,13 @@ public:
 private:
 	std::wstring reference;
 	double rotation = 0;
-	std::wstring rotationCRS;
+	GraphicBasePackage::CRSType rotationCRS = GraphicBasePackage::CRSType::portrayalCRS;
 	double scaleFactor = 1.0;
-
-	double offsetX = 0;
-	double offsetY = 0;
+	GraphicBasePackage::Vector offset;
 
 private:
-	S100_AreaPlacement* areaPlacement = nullptr;
-	S100_LinePlacement* linePlacement = nullptr;
-
+	std::optional<S100_LineSymbolPlacement> linePlacement;
+	std::optional<S100_AreaSymbolPlacement> areaPlacement;
 
 	//std::wstring id;
 	//S100_Description* description;
@@ -38,16 +43,21 @@ public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetReference(std::wstring& value);
+	void SetReference(std::string& value);
 	void SetRotation(double value);
 	void SetRotationCRS(std::wstring& value);
 	void SetScaleFactor(double value);
 
 	std::wstring GetReference();
 	double GetRotation();
-	std::wstring GetRotationCRS();
+	//std::wstring GetRotationCRS();
+	GraphicBasePackage::CRSType GetRotationCRS();
 	double GetScaleFactor();
-	S100_AreaPlacement* GetAreaPlacement();
-	S100_LinePlacement* GetLinePlacement();
+	std::optional<S100_LineSymbolPlacement> GetLinePlacement();
+	std::optional<S100_AreaSymbolPlacement> GetAreaPlacement();
+
+	//S100_AreaPlacement* GetAreaPlacement();
+	//S100_LinePlacement* GetLinePlacement();
 	//std::wstring GetId();
 
 	//S100_Description* GetDescription();
@@ -56,5 +66,8 @@ public:
 	//std::wstring GetFileFormat();
 
 	double GetOffsetX();
+	void SetOffsetX(double value);
+
 	double GetOffsetY();
+	void SetOffsetY(double value);
 };

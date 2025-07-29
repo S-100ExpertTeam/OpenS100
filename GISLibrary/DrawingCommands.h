@@ -41,6 +41,9 @@ namespace DrawingInstructions
 
     private:
         std::string symbol;
+
+    public:
+        std::string GetSymbol() const;
     };
 
     class LineInstruction : public DrawingCommand 

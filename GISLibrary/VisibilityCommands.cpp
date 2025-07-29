@@ -240,6 +240,11 @@ namespace DrawingInstructions
         }
     }
 
+    int ScaleMaximum::GetScaleMaximum() const
+    {
+        return scaleMaximum;
+	}
+
     // Id class implementation
     Id::Id(const std::string& id) : id(id) {}
 

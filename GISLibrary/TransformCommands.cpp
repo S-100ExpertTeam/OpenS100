@@ -120,6 +120,16 @@ namespace DrawingInstructions
 		}
 	}
 
+	double LocalOffset::GetXOffsetMM() const
+	{
+		return xOffsetMM;
+	}
+
+	double LocalOffset::GetYOffsetMM() const
+	{
+		return yOffsetMM;
+	}
+
 	// LinePlacement class implementation
 	LinePlacement::LinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts)
 		: linePlacementMode(linePlacementMode), offset(offset), endOffset(endOffset), visibleParts(visibleParts) {}
@@ -173,6 +183,26 @@ namespace DrawingInstructions
 		{
 			init();
 		}
+	}
+
+	std::string LinePlacement::GetLinePlacementMode() const
+	{
+		return linePlacementMode;
+	}
+
+	double LinePlacement::GetOffset() const
+	{
+		return offset;
+	}
+
+	std::optional<double> LinePlacement::GetEndOffset() const
+	{
+		return endOffset;
+	}
+
+	bool LinePlacement::IsVisibleParts() const
+	{
+		return visibleParts;
 	}
 
 	// AreaPlacement class implementation

@@ -253,6 +253,8 @@
     <ClCompile Include="CRSType.cpp" />
     <ClCompile Include="Dash.cpp" />
     <ClCompile Include="figure.cpp" />
+    <ClCompile Include="GraphicBasePackage.cpp" />
+    <ClCompile Include="GraphicBasePackage_Enum.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LineStyle.cpp" />
@@ -284,6 +286,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SVGReader.cpp" />
+    <ClCompile Include="Symbol.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\S100Engine.rc2" />
@@ -303,7 +306,10 @@
     <ClInclude Include="CRSType.h" />
     <ClInclude Include="CStringCompareNoCaseLessThan.h" />
     <ClInclude Include="Dash.h" />
+    <ClInclude Include="EnumTypeOfDrawingInstruction.h" />
     <ClInclude Include="figure.h" />
+    <ClInclude Include="GraphicBasePackage.h" />
+    <ClInclude Include="GraphicBasePackage_Enum.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineStyle.h" />
@@ -324,6 +330,7 @@
     <ClInclude Include="S100ColorProfiles.h" />
     <ClInclude Include="S100Data.h" />
     <ClInclude Include="S100Engine.h" />
+    <ClInclude Include="S100Engine_h.h" />
     <ClInclude Include="S100PCLineStylesReader.h" />
     <ClInclude Include="S100PCManager.h" />
     <ClInclude Include="S100Render.h" />
@@ -335,6 +342,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SVGGeometry.h" />
     <ClInclude Include="SVGReader.h" />
+    <ClInclude Include="Symbol.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>

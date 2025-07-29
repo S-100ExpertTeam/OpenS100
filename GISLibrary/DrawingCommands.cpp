@@ -41,6 +41,11 @@ namespace DrawingInstructions
         symbol = input;
     }
 
+    std::string PointInstruction::GetSymbol() const
+    {
+		return symbol;
+    }
+
     // LineInstruction class implementation
     LineInstruction::LineInstruction(const std::vector<std::string>& lineStyle) : lineStyle(lineStyle)
     {

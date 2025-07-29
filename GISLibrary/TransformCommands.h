@@ -15,6 +15,10 @@ namespace DrawingInstructions
     private:
         double xOffsetMM = 0;
         double yOffsetMM = 0;
+
+    public:
+        double GetXOffsetMM() const;
+		double GetYOffsetMM() const;
     };
 
     class LinePlacement : public StateCommand 
@@ -31,6 +35,12 @@ namespace DrawingInstructions
         double offset = 0.5;
         std::optional<double> endOffset;
         bool visibleParts = false;
+
+    public:
+        std::string GetLinePlacementMode() const;
+        double GetOffset() const;
+        std::optional<double> GetEndOffset() const;
+		bool IsVisibleParts() const;
     };
 
     class AreaPlacement : public StateCommand 

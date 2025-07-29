@@ -197,6 +197,8 @@
     <ClInclude Include="AlertPrioritySelection.h" />
     <ClInclude Include="Alerts.h" />
     <ClInclude Include="CatalogItem.h" />
+    <ClInclude Include="S100_AreaPlacementMode.h" />
+    <ClInclude Include="S100_AreaSymbolPlacement.h" />
     <ClInclude Include="S100_CIEXYZ.h" />
     <ClInclude Include="Context.h" />
     <ClInclude Include="ContextParameter.h" />
@@ -251,12 +253,14 @@
     <ClInclude Include="S100_HatchFill.h" />
     <ClInclude Include="S100_Item.h" />
     <ClInclude Include="S100_LinePlacement.h" />
+    <ClInclude Include="S100_LinePlacementMode.h" />
     <ClInclude Include="S100_LineStyle.h" />
     <ClInclude Include="S100_LineStyleBase.h" />
     <ClInclude Include="S100_LineStyleFile.h" />
     <ClInclude Include="S100_LineStyleReference.h" />
     <ClInclude Include="S100_LineStyles.h" />
     <ClInclude Include="S100_LineSymbol.h" />
+    <ClInclude Include="S100_LineSymbolPlacement.h" />
     <ClInclude Include="S100_NumericAnnotation.h" />
     <ClInclude Include="S100_OverrideColor.h" />
     <ClInclude Include="S100_Palette.h" />
@@ -316,6 +320,8 @@
     <ClCompile Include="AlertPrioritySelection.cpp" />
     <ClCompile Include="Alerts.cpp" />
     <ClCompile Include="CatalogItem.cpp" />
+    <ClCompile Include="S100_AreaPlacementMode.cpp" />
+    <ClCompile Include="S100_AreaSymbolPlacement.cpp" />
     <ClCompile Include="S100_CIEXYZ.cpp" />
     <ClCompile Include="Context.cpp" />
     <ClCompile Include="ContextParameter.cpp" />
@@ -368,12 +374,14 @@
     <ClCompile Include="S100_HatchFill.cpp" />
     <ClCompile Include="S100_Item.cpp" />
     <ClCompile Include="S100_LinePlacement.cpp" />
+    <ClCompile Include="S100_LinePlacementMode.cpp" />
     <ClCompile Include="S100_LineStyle.cpp" />
     <ClCompile Include="S100_LineStyleBase.cpp" />
     <ClCompile Include="S100_LineStyleFile.cpp" />
     <ClCompile Include="S100_LineStyleReference.cpp" />
     <ClCompile Include="S100_LineStyles.cpp" />
     <ClCompile Include="S100_LineSymbol.cpp" />
+    <ClCompile Include="S100_LineSymbolPlacement.cpp" />
     <ClCompile Include="S100_NumericAnnotation.cpp" />
     <ClCompile Include="S100_OverrideColor.cpp" />
     <ClCompile Include="S100_Palette.cpp" />
