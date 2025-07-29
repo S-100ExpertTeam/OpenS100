@@ -75,6 +75,7 @@ namespace DrawingInstructions {
 
 	void NumericAnnotation::init() 
 	{
+		StateCommand::init();
 		decimals = 0;
 		championChoice = "ChampionChoice";
 		buffer = 0.0;
@@ -120,6 +121,7 @@ namespace DrawingInstructions {
 
 	void SymbolAnnotation::init()
 	{
+		StateCommand::init();
 		symbolRef.clear();
 		rotationAttribute.clear();
 		scaleAttribute.clear();
@@ -199,6 +201,7 @@ namespace DrawingInstructions {
 
 	void CoverageColor::init()
 	{
+		StateCommand::init();
 		startToken.clear();
 		startTransparency = 0.0;
 		endToken.clear();
@@ -272,6 +275,7 @@ namespace DrawingInstructions {
 
 	void LookupEntry::init()
 	{
+		StateCommand::init();
 		label.clear();
 		lower = 0.0;
 		upper = 0.0;

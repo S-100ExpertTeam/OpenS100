@@ -61,6 +61,7 @@ namespace DrawingInstructions
 
 	void LineStyle::init()
 	{
+		StateCommand::init();
 		name.clear();
 		intervalLength = 0.0;
 		width = 0.0;
@@ -122,6 +123,7 @@ namespace DrawingInstructions
 
 	void LineSymbol::init()
 	{
+		StateCommand::init();
 		reference;
 		position = 0.0;
 		rotation = 0.0;
@@ -187,6 +189,7 @@ namespace DrawingInstructions
 
 	void Dash::init()
 	{
+		StateCommand::init();
 		start = 0.0;
 		length = 0.0;
 	}

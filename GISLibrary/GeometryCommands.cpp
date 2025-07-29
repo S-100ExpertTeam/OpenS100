@@ -137,6 +137,7 @@ namespace DrawingInstructions
 
 	void SpatialReference::init()
 	{
+		StateCommand::init();
 		reference.clear();
 		forward = true;
 	}
@@ -171,6 +172,7 @@ namespace DrawingInstructions
 
 	void AugmentedPoint::init()
 	{
+		StateCommand::init();
 		crs = GraphicBasePackage::CRSType::CRSType_None;
 		point.Set(0.0, 0.0); 
 	}
@@ -208,6 +210,7 @@ namespace DrawingInstructions
 
 	void AugmentedRay::init()
 	{
+		StateCommand::init();
 		CRSType = GraphicBasePackage::CRSType::CRSType_None;
 		direction = 0.0;
 		crsLength = GraphicBasePackage::CRSType::CRSType_None;
@@ -246,6 +249,7 @@ namespace DrawingInstructions
 
 	void AugmentedPath::init()
 	{
+		StateCommand::init();
 		crsPosition = GraphicBasePackage::CRSType::CRSType_None;
 		crsAngle = GraphicBasePackage::CRSType::CRSType_None;
 		crsDistance = GraphicBasePackage::CRSType::CRSType_None;
@@ -285,6 +289,7 @@ namespace DrawingInstructions
 
 	void Polyline::init()
 	{
+		StateCommand::init();
 		points.clear();
 	}
 
@@ -329,6 +334,7 @@ namespace DrawingInstructions
 
 	void Arc3Points::init()
 	{
+		StateCommand::init();
 		startPoint.Set(0.0, 0.0);
 		medianPoint.Set(0.0, 0.0);
 		endPoint.Set(0.0, 0.0);
@@ -375,6 +381,7 @@ namespace DrawingInstructions
 
 	void ArcByRadius::init()
 	{
+		StateCommand::init();
 		center.Set(0.0, 0.0);
 		radius = 0.0;
 		startAngle = 0.0;
@@ -432,6 +439,7 @@ namespace DrawingInstructions
 
 	void Annulus::init()
 	{
+		StateCommand::init();
 		center.Set(0.0, 0.0);
 		outerRadius = 0.0;
 		innerRadius = 0.0;
@@ -493,6 +501,7 @@ namespace DrawingInstructions
 
 	void ClearGeometry::init()
 	{
+		StateCommand::init();
 	}
 
 	void ClearGeometry::execute() 

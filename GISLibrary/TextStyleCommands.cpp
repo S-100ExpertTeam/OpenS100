@@ -191,6 +191,7 @@ namespace DrawingInstructions
 
     void FontColor::init()
     {
+        StateCommand::init();
         token.clear();
         transparency = 0.0;
 	}
@@ -235,6 +236,7 @@ namespace DrawingInstructions
 
     void FontBackgroundColor::init()
     {
+        StateCommand::init();
         token.clear();
         transparency = 1.0;
 	}
@@ -279,6 +281,7 @@ namespace DrawingInstructions
 
     void FontSize::init()
     {
+        StateCommand::init();
         bodySize = 10.0;
 	}
 
@@ -303,6 +306,7 @@ namespace DrawingInstructions
 
     void FontProportion::init()
     {
+        StateCommand::init();
         proportion = "Proportional";
     }
 
@@ -327,6 +331,7 @@ namespace DrawingInstructions
 
     void FontWeight::init()
     {
+        StateCommand::init();
         weight = "Medium";
 	}
 
@@ -353,6 +358,7 @@ namespace DrawingInstructions
 
     void FontSlant::init()
     {
+        StateCommand::init();
         slant = "Upright";
 	}
 
@@ -378,6 +384,7 @@ namespace DrawingInstructions
 
     void FontSerifs::init()
     {
+        StateCommand::init();
         serifs = false; // Default value
     }
 
@@ -402,6 +409,7 @@ namespace DrawingInstructions
 
     void FontUnderline::init()
     {
+        StateCommand::init();
         underline = false; // Default value
 	}
 
@@ -426,6 +434,7 @@ namespace DrawingInstructions
 
     void FontStrikethrough::init()
     {
+        StateCommand::init();
         strikethrough = false; // Default value
     }
 
@@ -450,6 +459,7 @@ namespace DrawingInstructions
 
     void TextAlignHorizontal::init()
     {
+        StateCommand::init();
         horizontalAlignment = "Start";
     }
 
@@ -476,6 +486,7 @@ namespace DrawingInstructions
 
     void TextAlignVertical::init()
     {
+        StateCommand::init();
         verticalAlignment = "Bottom";
 	}
 
@@ -499,6 +510,7 @@ namespace DrawingInstructions
 
     void FontReference::init()
     {
+        StateCommand::init();
         fontReference.clear();
 	}
 
@@ -514,6 +526,7 @@ namespace DrawingInstructions
 
     void FontUpperline::init()
     {
+        StateCommand::init();
         strikethrough = false;
 	}
 
@@ -536,6 +549,7 @@ namespace DrawingInstructions
 
     void TextVerticalOffset::init()
     {
+        StateCommand::init();
         verticalOffset = 0.0; // Default value
     }
 

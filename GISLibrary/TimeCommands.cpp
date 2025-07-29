@@ -85,6 +85,7 @@ namespace DrawingInstructions
 
 	void Date::init()
 	{
+		StateCommand::init();
 		begin = "-…";
 		end = "…";
 	}	
@@ -111,6 +112,7 @@ namespace DrawingInstructions
 
 	void Time::init()
 	{
+		StateCommand::init();
 		begin = "-…";
 		end = "…";
 	}	
@@ -140,6 +142,7 @@ namespace DrawingInstructions
 
 	void DateTime::init()
 	{
+		StateCommand::init();
 		begin = "-…";
 		end = "…";
 	}
@@ -169,6 +172,7 @@ namespace DrawingInstructions
 
 	void TimeValid::init()
 	{
+		StateCommand::init();
 		closure = IntervalType::none;
 	}
 
@@ -184,6 +188,7 @@ namespace DrawingInstructions
 
 	void ClearTime::init()
 	{
+		StateCommand::init();
 	}
 
 	void ClearTime::execute() 

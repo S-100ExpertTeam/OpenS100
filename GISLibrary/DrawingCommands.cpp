@@ -5,6 +5,21 @@
 
 namespace DrawingInstructions
 {
+    void DrawingCommand::init()
+    {
+        present = false;
+    }
+
+    void DrawingCommand::setPresent(bool value)
+    {
+		present = value;
+    }
+
+    bool DrawingCommand::isPresent() const
+    {
+		return present;
+    }
+
     // PointInstruction class implementation
     PointInstruction::PointInstruction(const std::string& symbol) : symbol(symbol) 
     {
@@ -12,6 +27,7 @@ namespace DrawingInstructions
 
 	void PointInstruction::init()
 	{
+        DrawingCommand::init();
         symbol.clear();
 	}
 
@@ -30,6 +46,12 @@ namespace DrawingInstructions
     {
     }
 
+    void LineInstruction::init()
+    {
+        DrawingCommand::init();
+        lineStyle.clear();
+	}
+
     void LineInstruction::execute() 
     {
     }
@@ -43,7 +65,14 @@ namespace DrawingInstructions
     // LineInstructionUnsuppressed class implementation
     LineInstructionUnsuppressed::LineInstructionUnsuppressed(const std::vector<std::string>& lineStyle) : lineStyle(lineStyle) {}
 
-    void LineInstructionUnsuppressed::execute()  {
+    void LineInstructionUnsuppressed::init()
+    {
+        DrawingCommand::init();
+        lineStyle.clear();
+    }
+
+    void LineInstructionUnsuppressed::execute()  
+    {
     }
 
     void LineInstructionUnsuppressed::parse(const std::string& input)
@@ -59,6 +88,7 @@ namespace DrawingInstructions
 
 	void ColorFill::init()
 	{
+        DrawingCommand::init();
 		token.clear();
 		transparency = 0.0;
 	}
@@ -96,6 +126,7 @@ namespace DrawingInstructions
 
 	void AreaFillReference::init()
 	{
+        DrawingCommand::init();
 		reference.clear();
 	}
 
@@ -116,6 +147,7 @@ namespace DrawingInstructions
 
 	void PixmapFill::init()
 	{
+        DrawingCommand::init();
 		reference.clear();
 	}
 
@@ -137,6 +169,7 @@ namespace DrawingInstructions
 
 	void SymbolFill::init()
 	{
+        DrawingCommand::init();
 		symbol.clear();
         v1.Set(0.0, 0.0);
         v2.Set(0.0, 0.0);
@@ -178,6 +211,15 @@ namespace DrawingInstructions
     HatchFill::HatchFill(const DrawingInstructions::Vector& direction, double distance, const std::string& lineStyle1, const std::string& lineStyle2)
         : direction(direction), distance(distance), lineStyle1(lineStyle1), lineStyle2(lineStyle2) {}
 
+    void HatchFill::init()
+    {
+        DrawingCommand::init();
+        direction.Set(0.0, 0.0);
+        distance = 0.0;
+        lineStyle1.clear();
+        lineStyle2.clear();
+	}
+
     void HatchFill::execute()  {
     }
 
@@ -207,6 +249,12 @@ namespace DrawingInstructions
     // TextInstruction class implementation
     TextInstruction::TextInstruction(const std::string& text) : text(text) {}
 
+    void TextInstruction::init()
+    {
+        DrawingCommand::init();
+        text.clear();
+	}
+
     void TextInstruction::execute()  {
     }
 
@@ -220,7 +268,16 @@ namespace DrawingInstructions
     CoverageFill::CoverageFill(const std::string& attributeCode, const std::string& uom, const std::string& placement)
         : attributeCode(attributeCode), uom(uom), placement(placement) {}
 
-    void CoverageFill::execute()  {
+    void CoverageFill::init()
+    {
+        DrawingCommand::init();
+        attributeCode.clear();
+        uom.clear();
+        placement.clear();
+    }
+
+    void CoverageFill::execute()  
+    {
     }
 
     void CoverageFill::parse(const std::string& input)
@@ -244,6 +301,12 @@ namespace DrawingInstructions
             init(); // Reset to default values
         }
     }
+
+    void NullInstruction::init()
+    {
+        DrawingCommand::init();
+        // No specific initialization needed for NullInstruction
+	}
 
     // NullInstruction class implementation
     void NullInstruction::execute()  {

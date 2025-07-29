@@ -88,6 +88,7 @@ namespace DrawingInstructions
 
 	void LocalOffset::init()
 	{
+		StateCommand::init();
 		xOffsetMM = 0.0;
 		yOffsetMM = 0.0;
 	}
@@ -125,6 +126,7 @@ namespace DrawingInstructions
 
 	void LinePlacement::init()
 	{
+		StateCommand::init();
 		linePlacementMode = "Relative";
 		offset = 0.5;
 		endOffset.reset();
@@ -178,6 +180,7 @@ namespace DrawingInstructions
 
 	void AreaPlacement::init()
 	{
+		StateCommand::init();
 		areaPlacementMode = "VisibleParts";
 	}
 
@@ -196,6 +199,7 @@ namespace DrawingInstructions
 
 	void AreaCRS::init()
 	{
+		StateCommand::init();
 		areaCRSType = "ViGlobalGeometrysibleParts";
 	}
 
@@ -213,6 +217,7 @@ namespace DrawingInstructions
 
 	void Rotation::init()
 	{
+		StateCommand::init();
 		rotationCRS = "PortrayalCRS";
 		rotation = 0.0;
 	}
@@ -248,6 +253,7 @@ namespace DrawingInstructions
 
 	void ScaleFactor::init()
 	{
+		StateCommand::init();
 		scaleFactor = 1.0;
 	}
 

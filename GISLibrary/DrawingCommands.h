@@ -15,15 +15,24 @@ namespace DrawingInstructions
         virtual ~DrawingCommand() = default;
 
     public:
-        virtual void init() = 0;
+        virtual void init();
         virtual void execute()  = 0;
         virtual void parse(const std::string& input) = 0;
+
+    public:
+		bool present = false;
+
+    public:
+        void setPresent(bool value = true);
+		bool isPresent() const;
     };
 
     class PointInstruction : public DrawingCommand 
     {
     public:
+		PointInstruction() = default;
         PointInstruction(const std::string& symbol);
+		virtual ~PointInstruction() = default;
         
     public:
         virtual void init() override;
@@ -39,6 +48,7 @@ namespace DrawingInstructions
     public:
         LineInstruction() = default;
         LineInstruction(const std::vector<std::string>& lineStyle);
+		virtual ~LineInstruction() = default;
 
     public:
         virtual void init() override;
@@ -54,6 +64,7 @@ namespace DrawingInstructions
     public:
 		LineInstructionUnsuppressed() = default;
         LineInstructionUnsuppressed(const std::vector<std::string>& lineStyle);
+		virtual ~LineInstructionUnsuppressed() = default;
 
     public:
         virtual void init() override;
@@ -69,6 +80,7 @@ namespace DrawingInstructions
     public:
 		ColorFill() = default;
         ColorFill(const std::string& token, double transparency = 0.0);
+		virtual ~ColorFill() = default;
 
     public:
         virtual void init() override;
@@ -85,6 +97,7 @@ namespace DrawingInstructions
     public:
 		AreaFillReference() = default;
         AreaFillReference(const std::string& reference);
+		virtual ~AreaFillReference() = default;
 
     public:
         virtual void init() override;
@@ -100,6 +113,7 @@ namespace DrawingInstructions
     public:
 		PixmapFill() = default;
         PixmapFill(const std::string& reference);
+		virtual ~PixmapFill() = default;
 
     public:
         virtual void init() override;
@@ -115,6 +129,7 @@ namespace DrawingInstructions
     public:
 		SymbolFill() = default;
         SymbolFill(const std::string& symbol, const DrawingInstructions::Vector& v1, const DrawingInstructions::Vector& v2, bool clipSymbols = true);
+		virtual ~SymbolFill() = default;
 
     public:
         virtual void init() override;
@@ -133,6 +148,7 @@ namespace DrawingInstructions
     public:
 		HatchFill() = default;
         HatchFill(const DrawingInstructions::Vector& direction, double distance, const std::string& lineStyle1, const std::string& lineStyle2);
+		virtual ~HatchFill() = default;
         
     public:
         virtual void init() override;
@@ -151,6 +167,7 @@ namespace DrawingInstructions
     public:
 		TextInstruction() = default;
         TextInstruction(const std::string& text);
+		virtual ~TextInstruction() = default;
 
     public:
         virtual void init() override;
@@ -166,6 +183,7 @@ namespace DrawingInstructions
     public:
 		CoverageFill() = default;
         CoverageFill(const std::string& attributeCode, const std::string& uom = "", const std::string& placement = "");
+		virtual ~CoverageFill() = default;
 
     public:
         virtual void init() override;
@@ -182,6 +200,7 @@ namespace DrawingInstructions
     {
     public:
 		NullInstruction() = default;
+		virtual ~NullInstruction() = default;
 
     public:
         virtual void init() override;

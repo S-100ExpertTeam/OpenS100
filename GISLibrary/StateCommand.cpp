@@ -67,4 +67,19 @@ namespace DrawingInstructions
             return IntervalType::none;
         }
 	}
+
+    void StateCommand::init()
+    {
+        present = false;
+    }
+
+    void StateCommand::setPresent(bool value)
+    {
+        present = value;
+    }
+
+    bool StateCommand::isPresent() const
+    {
+        return present;
+    }
 }

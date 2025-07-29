@@ -271,6 +271,7 @@
     <ClCompile Include="CI_Telephone.cpp" />
     <ClCompile Include="CodeWithNumericCode.cpp" />
     <ClCompile Include="ColourOverrideCommands.cpp" />
+    <ClCompile Include="CommandToInstruction.cpp" />
     <ClCompile Include="CountryCode.cpp" />
     <ClCompile Include="CoverageCommands.cpp" />
     <ClCompile Include="CSAX.cpp" />
@@ -600,6 +601,7 @@
     <ClInclude Include="CI_Telephone.h" />
     <ClInclude Include="CodeWithNumericCode.h" />
     <ClInclude Include="ColourOverrideCommands.h" />
+    <ClInclude Include="CommandToInstruction.h" />
     <ClInclude Include="CoverageCommands.h" />
     <ClInclude Include="CT_Catalogue.h" />
     <ClInclude Include="CV_CommonPointRule.h" />

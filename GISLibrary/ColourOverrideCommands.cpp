@@ -56,6 +56,7 @@ namespace DrawingInstructions
 
 	void OverrideColor::init()
 	{
+		StateCommand::init();
 		colorToken.clear();
 		colorTransparency = 0.0;
 		overrideToken.clear();
@@ -89,6 +90,7 @@ namespace DrawingInstructions
 
 	void OverrideAll::init()
 	{
+		StateCommand::init();
 		token.clear();
 		transparency = 0.0;
 	}
@@ -112,6 +114,7 @@ namespace DrawingInstructions
 
 	void ClearOverride::init()
 	{
+		StateCommand::init();
 	}
 
 	void ClearOverride::execute()  

@@ -34,6 +34,7 @@ namespace DrawingInstructions
 	
 	void AlertReference::init()
 	{
+		StateCommand::init();
 		alertReference.clear();
 		plan.clear();
 		monitor.clear();

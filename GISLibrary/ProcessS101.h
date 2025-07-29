@@ -10,6 +10,7 @@
 #include "CoverageCommands.h"
 #include"TimeCommands.h"
 #include "AlertCommands.h"
+#include "DrawingCommands.h"
 
 #include <string>
 #include <vector>
@@ -161,6 +162,29 @@ public:
 
 	// Alert
 	DrawingInstructions::AlertReference alertReference;
+
+public:
+	void Init();
+};
+
+class Local_DrawingCommands
+{
+public:
+	Local_DrawingCommands() = default;
+	virtual ~Local_DrawingCommands() = default;
+
+public:
+	DrawingInstructions::PointInstruction pointInstruction;
+	DrawingInstructions::LineInstruction lineInstruction;
+	DrawingInstructions::LineInstructionUnsuppressed lineInstructionUnsuppressed;
+	DrawingInstructions::ColorFill colorFill;
+	DrawingInstructions::AreaFillReference areaFillReference;
+	DrawingInstructions::PixmapFill pixmapFill;	
+	DrawingInstructions::SymbolFill	symbolFill;
+	DrawingInstructions::HatchFill hatchFill;
+	DrawingInstructions::TextInstruction textInstruction;
+	DrawingInstructions::CoverageFill coverageFill;
+	DrawingInstructions::NullInstruction nullInstruction;
 
 public:
 	void Init();

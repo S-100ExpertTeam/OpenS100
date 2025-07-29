@@ -109,6 +109,7 @@ namespace DrawingInstructions
 
     void ViewingGroup::init()
     {
+        StateCommand::init();
         viewingGroups.clear();
     }
 
@@ -122,11 +123,17 @@ namespace DrawingInstructions
 		viewingGroups = LatLonUtility::Split(input, ",");
 	}
 
+    std::vector<std::string> ViewingGroup::GetViewingGroups() const
+    {
+		return viewingGroups;
+    }
+
     // DisplayPlane class implementation
     DisplayPlane::DisplayPlane(const std::string& displayPlane) : displayPlane(displayPlane) {}
 
     void DisplayPlane::init()
     {
+        StateCommand::init();
 		displayPlane.clear();
     }
 
@@ -140,11 +147,17 @@ namespace DrawingInstructions
 		displayPlane = input;
 	}
 
+    std::string DisplayPlane::GetDisplayPlane() const
+	{
+		return displayPlane;
+	}
+
     // DrawingPriority class implementation
     DrawingPriority::DrawingPriority(int drawingPriority) : drawingPriority(drawingPriority) {}
 
     void DrawingPriority::init()
     {
+        StateCommand::init();
 		drawingPriority = 0; // Default value
     }
 
@@ -165,11 +178,17 @@ namespace DrawingInstructions
         }
     }
 
+    int DrawingPriority::GetDrawingPriority() const
+    {
+		return drawingPriority;
+    }
+
     // ScaleMinimum class implementation
     ScaleMinimum::ScaleMinimum(int scaleMinimum) : scaleMinimum(scaleMinimum) {}
 
     void ScaleMinimum::init()
     {
+        StateCommand::init();
         scaleMinimum = 0;
     }
 
@@ -190,11 +209,17 @@ namespace DrawingInstructions
         }
 	}
 
+    int ScaleMinimum::GetScaleMinimum() const
+    {
+        return scaleMinimum;
+    }
+
     // ScaleMaximum class implementation
     ScaleMaximum::ScaleMaximum(int scaleMaximum) : scaleMaximum(scaleMaximum) {}
 
     void ScaleMaximum::init()
     {
+        StateCommand::init();
         scaleMaximum = 0;
     }
 
@@ -220,6 +245,7 @@ namespace DrawingInstructions
 
     void Id::init()
     {
+        StateCommand::init();
         id.clear();
     }
 
@@ -232,11 +258,17 @@ namespace DrawingInstructions
 		id = input;
 	}
 
+    std::string Id::GetId()
+    {
+        return id;
+    }
+
     // Parent class implementation
     Parent::Parent(const std::string& parentId) : parentId(parentId) {}
 
     void Parent::init()
     {
+        StateCommand::init();
         parentId.clear();
     }
 
@@ -249,11 +281,17 @@ namespace DrawingInstructions
 		parentId = input;
     }
 
+    std::string Parent::GetParentId() const
+    {
+		return parentId;
+    }
+
     // Hover class implementation
     Hover::Hover(bool hover) : hover(hover) {}
 
     void Hover::init()
     {
+        StateCommand::init();
         hover = false;
     }
 
@@ -272,5 +310,10 @@ namespace DrawingInstructions
         {
             hover = false;
         }
+    }
+
+    bool Hover::GetHover() const
+    {
+		return hover;
     }
 }

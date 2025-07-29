@@ -16,5 +16,12 @@ namespace DrawingInstructions
     public:
         static GraphicBasePackage::CRSType GetCRSTypeFromString(const std::string& value);
 		static IntervalType GetIntervalTypeFromString(const std::string& value);
+
+    public:
+        bool present = false;
+
+    public:
+        void setPresent(bool value = true);
+        bool isPresent() const;
     };
 }

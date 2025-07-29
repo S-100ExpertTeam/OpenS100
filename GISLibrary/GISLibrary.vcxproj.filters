@@ -1071,6 +1071,9 @@
     <ClCompile Include="VectorParameter.cpp">
       <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
     </ClCompile>
+    <ClCompile Include="CommandToInstruction.cpp">
+      <Filter>S100\DrawingInstructions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -2134,6 +2137,9 @@
     </ClInclude>
     <ClInclude Include="VectorParameter.h">
       <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandToInstruction.h">
+      <Filter>S100\DrawingInstructions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
