@@ -339,32 +339,24 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 			{
 				if (splitedSize > 1)
 				{
-					v_LineInstruction = di_splited[1];
-					stateCommands.v_LineStyle = v_LineInstruction;
-					lineStyle.ParseValue(v_LineInstruction);
 				}
 			}
 			else if (di_splited[0].compare("LineInstructionUnsuppressed") == 0)
 			{
 				if (splitedSize > 1)
 				{
-					v_LineInstruction = di_splited[1];
-					stateCommands.v_LineStyle = v_LineInstruction;
-					lineStyle.ParseValue(v_LineInstruction);
 				}
 			}
 			else if (di_splited[0].compare("ColorFill") == 0)
 			{
 				if (splitedSize > 1)
 				{
-					v_ColorFill = di_splited[1];
 				}
 			}
 			else if (di_splited[0].compare("AreaFillReference") == 0)
 			{
 				if (splitedSize > 1)
 				{
-					v_AreaFillReference = di_splited[1];
 				}
 			}
 			else if (di_splited[0].compare("PixmapFill") == 0)
@@ -380,8 +372,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 			{
 				if (splitedSize > 1)
 				{
-					v_TextInstruction = di_splited[1];
-					stateCommands.v_TextAlignHorizontal = v_TextInstruction;
 				}
 			}
 			else if (di_splited[0].compare("CoverageFill") == 0)
@@ -401,31 +391,36 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 			{
 				if (splitedSize > 1)
 				{
-					stateCommands.v_DisplayPlane = di_splited[1];
-					//stateCommands.displayPlane.ParseValue(stateCommands.v_DisplayPlane);
+					stateCommands.displayPlane.parse(cp[1]);
 				}
-			}
-			else if (di_splited[0].compare("DrawingPlane") == 0)
-			{
-			}
-			else if (di_splited[0].compare("DrawingGroup") == 0)
-			{
 			}
 			else if (di_splited[0].compare("DrawingPriority") == 0)
 			{
-
+				if (splitedSize > 1)
+				{
+					stateCommands.drawingPriority.parse(cp[1]);
+				}
 			}
 			else if (di_splited[0].compare("ScaleMinimum") == 0)
 			{
-
+				if (splitedSize > 1)
+				{
+					stateCommands.scaleMinimum.parse(cp[1]);
+				}
 			}
 			else if (di_splited[0].compare("ScaleMaximum") == 0)
 			{
-
+				if (splitedSize > 1)
+				{
+					stateCommands.scaleMaximum.parse(cp[1]);
+				}
 			}
 			else if (di_splited[0].compare("Id") == 0)
 			{
-
+				if (splitedSize > 1)
+				{
+					stateCommands..parse(cp[1]);
+				}
 			}
 			else if (di_splited[0].compare("Parent") == 0)
 			{

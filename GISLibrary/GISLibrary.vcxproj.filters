@@ -1068,6 +1068,9 @@
     <ClCompile Include="PointParameter.cpp">
       <Filter>S100\DrawingInstructions\StateCommands</Filter>
     </ClCompile>
+    <ClCompile Include="VectorParameter.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -2128,6 +2131,9 @@
     </ClInclude>
     <ClInclude Include="PointParameter.h">
       <Filter>S100\DrawingInstructions\StateCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorParameter.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

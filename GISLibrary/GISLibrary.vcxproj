@@ -574,6 +574,7 @@
     <ClCompile Include="TranslationItemType.cpp" />
     <ClCompile Include="TranslationPackageType.cpp" />
     <ClCompile Include="TypeOfTheHorizontalCRS.cpp" />
+    <ClCompile Include="VectorParameter.cpp" />
     <ClCompile Include="VerticalCoordinateBase.cpp" />
     <ClCompile Include="VerticalDatumReference.cpp" />
     <ClCompile Include="VisibilityCommands.cpp" />
@@ -926,6 +927,7 @@
     <ClInclude Include="URI.h" />
     <ClInclude Include="URL.h" />
     <ClInclude Include="URN.h" />
+    <ClInclude Include="VectorParameter.h" />
     <ClInclude Include="Version.h" />
     <ClInclude Include="VerticalCoordinateBase.h" />
     <ClInclude Include="VerticalDatumReference.h" />

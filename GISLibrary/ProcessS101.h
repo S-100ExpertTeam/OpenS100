@@ -2,6 +2,14 @@
 
 #include "S101LuaScriptingReference.h"
 #include "VisibilityCommands.h"
+#include "TransformCommands.h"
+#include "LineStyleCommands.h"
+#include "TextStyleCommands.h"
+#include "ColourOverrideCommands.h"
+#include "GeometryCommands.h"
+#include "CoverageCommands.h"
+#include"TimeCommands.h"
+#include "AlertCommands.h"
 
 #include <string>
 #include <vector>
@@ -18,8 +26,6 @@ public:
 public:
 	// Visibility
 	std::vector<std::string_view> v_ViewingGroup;
-	DrawingInstructions::ViewingGroup viewingGroup;
-
 	std::string v_DisplayPlane;
 	std::string v_DrawingPriority;
 	std::string v_ScaleMinimum;
@@ -86,6 +92,75 @@ public:
 
 	// Alert
 	std::string v_AlertReference;
+
+	// Visibility
+	DrawingInstructions::ViewingGroup viewingGroup;
+	DrawingInstructions::DisplayPlane displayPlane;
+	DrawingInstructions::DrawingPriority drawingPriority;
+	DrawingInstructions::ScaleMinimum scaleMinimum;
+	DrawingInstructions::ScaleMaximum scaleMaximum;
+	DrawingInstructions::Id id;
+	DrawingInstructions::Parent parent;
+	DrawingInstructions::Hover hover;
+
+	// Transform
+	DrawingInstructions::LocalOffset localOffset;
+	DrawingInstructions::LinePlacement linePlacement;
+	DrawingInstructions::AreaPlacement areaPlacement;
+	DrawingInstructions::AreaCRS areaCRS;
+	DrawingInstructions::Rotation rotation;
+	DrawingInstructions::ScaleFactor scaleFactor;
+
+	// Line Style
+	DrawingInstructions::LineStyle lineStyle;
+	DrawingInstructions::LineSymbol lineSymbol;
+	DrawingInstructions::Dash dash;
+
+	// Text Style
+	DrawingInstructions::FontColor fontColor;
+	DrawingInstructions::FontSize fontSize;
+	DrawingInstructions::FontProportion fontProportion;
+	DrawingInstructions::FontWeight fontWeight;
+	DrawingInstructions::FontSlant fontSlant;
+	DrawingInstructions::FontSerifs fontSerifs;
+	DrawingInstructions::FontUnderline fontUnderline;
+	DrawingInstructions::FontStrikethrough fontStrikethrough;
+	DrawingInstructions::FontUpperline fontUpperline;
+	DrawingInstructions::FontReference fontReference;
+	DrawingInstructions::TextAlignHorizontal textAlignHorizontal;
+	DrawingInstructions::TextAlignVertical textAlignVertical;
+	DrawingInstructions::TextVerticalOffset textVerticalOffset;
+
+	// Colour Override
+	DrawingInstructions::OverrideColor overrideColor;
+	DrawingInstructions::OverrideAll overrideAll;
+
+	// Geometry
+	DrawingInstructions::SpatialReference spatialReference;
+	DrawingInstructions::AugmentedPoint augmentedPoint;
+	DrawingInstructions::AugmentedRay augmentedRay;
+	DrawingInstructions::AugmentedPath augmentedPath;
+	DrawingInstructions::Polyline polyline;
+	DrawingInstructions::Arc3Points arc3Points;
+	DrawingInstructions::ArcByRadius arcByRadius;
+	DrawingInstructions::Annulus annulus;
+	DrawingInstructions::ClearGeometry clearGeometry;
+
+	// Coverage
+	DrawingInstructions::LookupEntry lookupEntry;
+	DrawingInstructions::NumericAnnotation numericAnnotation;
+	DrawingInstructions::SymbolAnnotation symbolAnnotation;
+	DrawingInstructions::CoverageColor coverageColor;
+
+	// Time
+	DrawingInstructions::Date date;
+	DrawingInstructions::Time time;
+	DrawingInstructions::DateTime dateTime;
+	DrawingInstructions::TimeValid timeValid;
+	DrawingInstructions::ClearTime clearTime;
+
+	// Alert
+	DrawingInstructions::AlertReference alertReference;
 
 public:
 	void Init();
