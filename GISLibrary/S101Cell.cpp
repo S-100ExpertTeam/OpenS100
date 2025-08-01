@@ -2231,25 +2231,25 @@ POSITION S101Cell::GetFeatureStartPosition()
 
 void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_FeatureRecord*& value)
 {
-	if (m_feaMatchingKeys.size() > 0)
+	if (!m_feaMatchingKeys.empty())
 	{
-		while (true)
+		while (index != nullptr) // 반복은 index 유효할 때까지만
 		{
-			m_feaMap.GetNextAssoc(index, key, value);
-			if (index == nullptr)
-			{
-				key = -1;
-				value = nullptr;
-				return;
-			}
+			m_feaMap.GetNextAssoc(index, key, value); // 이 호출 이후 index 변경됨
 
-			auto iter = std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key);
-			if (iter != m_feaMatchingKeys.end())
+			// 먼저 검사 후 종료
+			if (std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key) != m_feaMatchingKeys.end())
 				return;
 		}
+
+		// index 끝났지만 조건을 만족하는 키를 못 찾음
+		key = -1;
+		value = nullptr;
 	}
 	else
+	{
 		m_feaMap.GetNextAssoc(index, key, value);
+	}
 }
 
 void S101Cell::RemoveFeatureMapKey(long long key)
