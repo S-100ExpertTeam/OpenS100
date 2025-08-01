@@ -280,3 +280,15 @@ std::string LatLonUtility::DeleteXMLNamespace(std::string value)
 
 	return value;
 }
+
+std::wstring LatLonUtility::To_Lowercase(std::wstring s)
+{
+	std::transform(
+		s.begin(), s.end(),        // 변환할 범위
+		s.begin(),                 // 결과를 덮어쓸 위치
+		[](wchar_t wc) -> wchar_t {
+			return std::towlower(wc);
+		}
+	);
+	return s;
+}

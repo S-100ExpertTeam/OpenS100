@@ -11,6 +11,8 @@
 #include <cmath>
 #include <math.h>
 #include <vector>
+#include <algorithm>
+#include <cwctype>
 
 namespace LatLonUtility {
 
@@ -81,5 +83,7 @@ namespace LatLonUtility {
 	std::string TrimRight(std::string& str);
 
 	std::string DeleteXMLNamespace(std::string value);
+
+	std::wstring To_Lowercase(std::wstring s);
 };
 #endif 
