@@ -143,24 +143,24 @@ public:
 	bool HasOrientableCurve(pugi::xml_node& root, std::string id);
 	void AddOrientableCurve(pugi::xml_node& root, pugi::xml_node& prevNode, std::string odID, std::string refID);
 
-	BOOL ReadDDR(BYTE*& buf);
+	bool ReadDDR(BYTE*& buf);
 	void SortByFeatureType();
 
-	BOOL MakeFullSpatialData();
-	BOOL MakePointData(R_FeatureRecord* fe);
-	BOOL MakeSoundingData(R_FeatureRecord* fe);
-	BOOL MakeLineData(R_FeatureRecord* fe);
-	BOOL MakeAreaData(R_FeatureRecord* fe);
+	bool MakeFullSpatialData();
+	bool MakePointData(R_FeatureRecord* fe);
+	bool MakeSoundingData(R_FeatureRecord* fe);
+	bool MakeLineData(R_FeatureRecord* fe);
+	bool MakeAreaData(R_FeatureRecord* fe);
 
 	// Record -> Geometry
-	BOOL GetFullSpatialData(R_PointRecord* r, SPoint* point); // 
-	BOOL GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint); //
-	BOOL GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, int ORNT = 1); // 
-	BOOL GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT = 1); //
-	BOOL GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT = 1); //
-	BOOL GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoArr, int ORNT = 1); // 
+	bool GetFullSpatialData(R_PointRecord* r, SPoint* point); // 
+	bool GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint); //
+	bool GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, int ORNT = 1); // 
+	bool GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT = 1); //
+	bool GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT = 1); //
+	bool GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoArr, int ORNT = 1); // 
 
-	BOOL GetFullMaskData(R_FeatureRecord* fe);
+	bool GetFullMaskData(R_FeatureRecord* fe);
 
 	void Draw(D2D1Resources* D2, Scaler* scaler);
 	void Draw(HDC& hDC, Scaler* scaler, double offset = 0);
