@@ -201,6 +201,7 @@ namespace DrawingInstructions
 
     void FontColor::parse(const std::string& input)
     {
+        setPresent();
         // FontColor:token[,transparency] 
 		auto tokens = LatLonUtility::Split(input, ",");
         if (tokens.size() > 0) 
@@ -246,6 +247,7 @@ namespace DrawingInstructions
 
     void FontBackgroundColor::parse(const std::string& input)
     {
+        setPresent();
         // FontBackgroundColor:token[,transparency] 
 
         auto tokens = LatLonUtility::Split(input, ",");
@@ -290,6 +292,7 @@ namespace DrawingInstructions
 
     void FontSize::parse(const std::string& input)
     {
+        setPresent();
         // FontSize:bodySize 
         try
         {
@@ -315,6 +318,7 @@ namespace DrawingInstructions
 
     void FontProportion::parse(const std::string& input)
     {
+        setPresent();
         // FontProportion:proportion 
         if (input == "Proportional" || input == "MonoSpaced") 
         {
@@ -340,6 +344,7 @@ namespace DrawingInstructions
 
     void FontWeight::parse(const std::string& input)
     {
+        setPresent();
         // FontWeight:weight
         if (input == "Light" ||
             input == "Medium" || 
@@ -367,6 +372,7 @@ namespace DrawingInstructions
 
     void FontSlant::parse(const std::string& input)
     {
+        setPresent();
         // FontSlant:slant
         if (input == "Upright" || 
             input == "Italics") 
@@ -393,6 +399,7 @@ namespace DrawingInstructions
 
     void FontSerifs::parse(const std::string& input)
     {
+        setPresent();
         // FontSerifs:serifs 
         if (input == "true" || input == "false") 
         {
@@ -418,6 +425,7 @@ namespace DrawingInstructions
 
     void FontUnderline::parse(const std::string& input)
     {
+        setPresent();
         // FontUnderline:underline 
         if (input == "true" || input == "false") 
         {
@@ -443,6 +451,7 @@ namespace DrawingInstructions
 
     void FontStrikethrough::parse(const std::string& input)
     {
+        setPresent();
         // FontStrikethrough:strikethrough 
         if (input == "true" || input == "false") 
         {
@@ -468,6 +477,7 @@ namespace DrawingInstructions
 
     void TextAlignHorizontal::parse(const std::string& input)
     {
+        setPresent();
         // TextAlignHorizontal:horizontalAlignment 
         if (input == "Start" || 
             input == "Center" || 
@@ -495,6 +505,7 @@ namespace DrawingInstructions
 
     void TextAlignVertical::parse(const std::string& input)
     {
+        setPresent();
         // TextAlignVertical:verticalAlignment 
 		if (input == "Top" ||
 			input == "Center" ||
@@ -520,6 +531,7 @@ namespace DrawingInstructions
 
     void FontReference::parse(const std::string& input)
     {
+        setPresent();
 		// FontReference:fontReference 
 		fontReference = input;
     }
@@ -536,6 +548,7 @@ namespace DrawingInstructions
 
     void FontUpperline::parse(const std::string& input)
     {
+        setPresent();
         // FontUpperline:upperline 
         if (input == "true" || input == "false") 
         {
@@ -559,6 +572,7 @@ namespace DrawingInstructions
 
     void TextVerticalOffset::parse(const std::string& input)
     {
+        setPresent();
         // TextVerticalOffset:verticalOffset 
         try
         {

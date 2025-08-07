@@ -148,6 +148,7 @@ namespace DrawingInstructions
 
 	void SpatialReference::parse(const std::string& input)
 	{
+		setPresent();
 		// SpatialReference:reference[,forward] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() > 0) 
@@ -183,6 +184,7 @@ namespace DrawingInstructions
 
 	void AugmentedPoint::parse(const std::string& input)
 	{
+		setPresent();
 		// AugmentedPoint:crs,x,y 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 3) 
@@ -223,6 +225,7 @@ namespace DrawingInstructions
 
 	void AugmentedRay::parse(const std::string& input)
 	{
+		setPresent();
 		// AugmentedRay:crsDirection, direction, crsLength, length
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 4) 
@@ -261,6 +264,7 @@ namespace DrawingInstructions
 
 	void AugmentedPath::parse(const std::string& input)
 	{
+		setPresent();
 		// AugmentedPath:crsPosition,crsAngle,crsDistance 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 3) 
@@ -299,6 +303,7 @@ namespace DrawingInstructions
 
 	void Polyline::parse(const std::string& input)
 	{
+		setPresent();
 		// Polyline:positionXstart,positionYstart,positionXto,positionYto[,positionXto,positionYto¡¦] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() % 2 == 0 && tokens.size() >= 4) 
@@ -346,6 +351,7 @@ namespace DrawingInstructions
 
 	void Arc3Points::parse(const std::string& input)
 	{
+		setPresent();
 		// Arc3Points:startPointX,startPointY,medianPointX,medianPointY,endPointX,endPointY 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 6) 
@@ -394,6 +400,7 @@ namespace DrawingInstructions
 
 	void ArcByRadius::parse(const std::string& input)
 	{
+		setPresent();
 		// ArcByRadius:centerX,centerY,radius[,startAngle,angularDistance] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() >= 3 && tokens.size() <= 5) 
@@ -453,6 +460,7 @@ namespace DrawingInstructions
 
 	void Annulus::parse(const std::string& input)
 	{
+		setPresent();
 		// Annulus:centerX,centerY,outerRadius[,innerRadius[,startAngle,angularDistance]] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() >= 3 && tokens.size() <= 6) 
@@ -510,6 +518,7 @@ namespace DrawingInstructions
 
 	void ClearGeometry::parse(const std::string& input)
 	{
+		setPresent();
 		// ClearGeometry 
 	}
 

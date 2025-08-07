@@ -84,6 +84,7 @@ namespace LatLonUtility {
 
 	std::string DeleteXMLNamespace(std::string value);
 
+	std::string To_Lowercase(std::string s);
 	std::wstring To_Lowercase(std::wstring s);
 };
 #endif 

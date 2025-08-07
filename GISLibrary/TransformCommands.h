@@ -54,6 +54,9 @@ namespace DrawingInstructions
 
     private:
         std::string areaPlacementMode = "VisibleParts";
+
+    public:
+		std::string GetAreaPlacementMode() const;
     };
 
     class AreaCRS : public StateCommand 
@@ -81,6 +84,10 @@ namespace DrawingInstructions
     private:
         std::string rotationCRS = "PortrayalCRS";
         double rotation = 0.0;
+
+    public:
+		std::string GetRotationCRS() const;
+		double GetRotation() const;
     };
 
     class ScaleFactor : public StateCommand 
@@ -94,6 +101,9 @@ namespace DrawingInstructions
 
     private:
         double scaleFactor = 1.0;
+
+	public:
+		double GetScaleFactor() const;
     };
 
 

@@ -119,6 +119,7 @@ namespace DrawingInstructions
 
     void ViewingGroup::parse(const std::string& input) 
     {
+        setPresent();
         // ViewingGroup:viewingGroup[,viewingGroup2[,¡¦]] 
 		viewingGroups = LatLonUtility::Split(input, ",");
 	}
@@ -143,6 +144,7 @@ namespace DrawingInstructions
 
     void DisplayPlane::parse(const std::string& input) 
     {
+        setPresent();
         // DisplayPlane:displayPlane
 		displayPlane = input;
 	}
@@ -166,6 +168,7 @@ namespace DrawingInstructions
 
     void DrawingPriority::parse(const std::string& input) 
     {
+        setPresent();
         // DrawingPriority:drawingPriority 
 
 		try 
@@ -197,6 +200,7 @@ namespace DrawingInstructions
 
     void ScaleMinimum::parse(const std::string& input) 
     {
+        setPresent();
         // ScaleMinimum:scaleMinimum
 
         try
@@ -228,6 +232,7 @@ namespace DrawingInstructions
 
     void ScaleMaximum::parse(const std::string& input) 
     {
+        setPresent();
         // ScaleMaximum:scaleMaximum 
 
         try
@@ -259,6 +264,7 @@ namespace DrawingInstructions
 
     void Id::parse(const std::string& input) 
     {
+        setPresent();
         // Id[:id]
 		id = input;
 	}
@@ -282,6 +288,7 @@ namespace DrawingInstructions
 
     void Parent::parse(const std::string& input) 
     {
+        setPresent();
         // Parent[:id]
 		parentId = input;
     }
@@ -305,6 +312,7 @@ namespace DrawingInstructions
 
     void Hover::parse(const std::string& input) 
     {
+        setPresent();
         // Hover:hover 
 
 		if (input == "true") 

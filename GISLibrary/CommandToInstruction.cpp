@@ -57,24 +57,50 @@ S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_Drawin
 	// PointInstruction
 	if (dc.pointInstruction.isPresent())
 	{
+		// Symbol::Symbol
 		S100_Symbol* symbol = new S100_Symbol();
+		pointInstruction->SetSymbol(symbol);
+		
+		// reference
+		symbol->SetReference(dc.pointInstruction.GetSymbol());
+
+		// rotation
+		// rotationCRS
+		if (sc.rotation.isPresent())
+		{
+			symbol->SetRotation(sc.rotation.GetRotation());
+			symbol->SetRotationCRS(sc.rotation.GetRotationCRS());
+		}
+
+		// scaleFactor
+		if (sc.scaleFactor.isPresent())
+		{
+			symbol->SetScaleFactor(sc.scaleFactor.GetScaleFactor());
+		}
+
+		// offset
 		if (sc.localOffset.isPresent())
 		{
 			symbol->SetOffsetX(sc.localOffset.GetXOffsetMM());
 			symbol->SetOffsetY(sc.localOffset.GetYOffsetMM());
 		}
 
+		// linePlacement
 		if (sc.linePlacement.isPresent())
 		{
-			//sc.linePlacement.GetLinePlacementMode();
+			symbol->SetLinePlacement(
+				sc.linePlacement.GetOffset(),
+				StringToLinePlacementMode(sc.linePlacement.GetLinePlacementMode()),
+				sc.linePlacement.IsVisibleParts());
 		}
 
-		symbol->SetReference(dc.pointInstruction.GetSymbol());
-		
+		// areaPlacement
+		if (sc.areaPlacement.isPresent())
+		{
+			symbol->SetAreaPlacement(StringToS100AreaPlacementMode(sc.areaPlacement.GetAreaPlacementMode()));
+		}
 
-
-
-		//pointInstruction->SetSymbol(dc.pointInstruction.GetSymbol());
+		// overrideAll
 	}
 
 	return pointInstruction;

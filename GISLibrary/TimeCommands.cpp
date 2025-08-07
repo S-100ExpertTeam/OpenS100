@@ -95,6 +95,7 @@ namespace DrawingInstructions
 
 	void Date::parse(const std::string& input)
 	{
+		setPresent();
 		// Date:[begin][,end] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 2) {
@@ -123,6 +124,7 @@ namespace DrawingInstructions
 
 	void Time::parse(const std::string& input)
 	{
+		setPresent();
 		// Time:[begin][,end] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 2) {
@@ -153,6 +155,7 @@ namespace DrawingInstructions
 
 	void DateTime::parse(const std::string& input)
 	{
+		setPresent();
 		// DateTime:[begin][,end] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 2) {
@@ -182,6 +185,7 @@ namespace DrawingInstructions
 
 	void TimeValid::parse(const std::string& input)
 	{
+		setPresent();
 		// TimeValid[:closure]
 		closure = StateCommand::GetIntervalTypeFromString(input);
 	}
@@ -197,6 +201,7 @@ namespace DrawingInstructions
 
 	void ClearTime::parse(const std::string& input)
 	{
+		setPresent();
 		// ClearTime 
 	}
 

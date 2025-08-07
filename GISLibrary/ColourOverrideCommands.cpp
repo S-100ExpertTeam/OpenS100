@@ -70,6 +70,7 @@ namespace DrawingInstructions
 
 	void OverrideColor::parse(const std::string& input)
 	{
+		setPresent();
 		// OverrideColor:colorToken,colorTransparency,overrideToken,overrideTransparency 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 4)
@@ -99,6 +100,7 @@ namespace DrawingInstructions
 	}
 	void OverrideAll::parse(const std::string& input)
 	{
+		setPresent();
 		// OverrideAll:token,transparency 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 2)
@@ -123,6 +125,7 @@ namespace DrawingInstructions
 
 	void ClearOverride::parse(const std::string& input)
 	{
+		setPresent();
 		// ClearOverride : No parameters expected
 		// No specific parsing needed for clear override
 	}

@@ -79,6 +79,7 @@ namespace DrawingInstructions
 
 	void LineStyle::parse(const std::string& input)
 	{
+		setPresent();
 		// LineStyle:name,intervalLength,width,token[,transparency[,capStyle[,joinStyle[,offset]]]] 
 		std::vector<std::string> values = LatLonUtility::Split(input, ",");
 		if (values.size() >= 4)
@@ -138,6 +139,7 @@ namespace DrawingInstructions
 
 	void LineSymbol::parse(const std::string& input)
 	{
+		setPresent();
 		// LineSymbol:reference,position[,rotation[,crsType[,scaleFactor]]] 
 		std::vector<std::string> values = LatLonUtility::Split(input, ",");
 		if (values.size() >= 2) 
@@ -200,6 +202,7 @@ namespace DrawingInstructions
 	}
 	void Dash::parse(const std::string& input)
 	{
+		setPresent();
 		// Dash:start,length 
 		std::vector<std::string> values = LatLonUtility::Split(input, ",");
 		if (values.size() == 2) {

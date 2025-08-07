@@ -6,6 +6,7 @@
 #include "SENC_DisplayList.h"
 #include "host_data.h"
 #include "host_functions.h"
+#include "CommandToInstruction.h"
 
 #include "../LuaScriptingReference/lua_functions.h"
 #include "../LuaScriptingReference/lua_session.h"
@@ -401,7 +402,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 	for (auto i = elements.begin(); i != elements.end(); i++)
 	{
 		std::vector<std::string_view> di_splited;
-		std::vector<std::string> cp = Split(i->data(), ":");
+		std::vector<std::string> cp = Split(std::string(i->data(), i->size()), ":");
 		Split(*i, ":", di_splited);
 
 		int splitedSize = (int)di_splited.size();
@@ -412,6 +413,13 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 				if (splitedSize > 1)
 				{
 					drawingCommand.pointInstruction.parse(cp[1]);
+				}
+
+				auto ins = CommandToInstruction::ToS100PointInstruction(drawingCommand, stateCommands);
+				if (ins)
+				{
+					ins->SetFeatureReference(featureID);
+					pcm->displayList->SetDisplayInstruction(ins);
 				}
 			}
 			else if (di_splited[0].compare("LineInstruction") == 0)
@@ -1271,74 +1279,74 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 			}
 			else if (sizeForIndex == 16)
 			{
-				// PointInstruction
-				if (tag.compare("PointInstruction") == 0)
-				{
-					v_PointInstruction = value;
-					S100_PointInstruction *in = new S100_PointInstruction();
-					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
+				//// PointInstruction
+				//if (tag.compare("PointInstruction") == 0)
+				//{
+				//	v_PointInstruction = value;
+				//	S100_PointInstruction *in = new S100_PointInstruction();
+				//	pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-					in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
-					in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
-					in->SetViewingGroup(stateCommands.v_ViewingGroup);
-					in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
+				//	in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+				//	in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
+				//	in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
+				//	in->SetViewingGroup(stateCommands.v_ViewingGroup);
+				//	in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
 
-					if (v_PointInstruction.size() > 0)
-					{
-						in->SetSymbol(new S100_Symbol());
-						in->GetSymbol()->SetReference(std::wstring(v_PointInstruction.begin(), v_PointInstruction.end()));
+				//	if (v_PointInstruction.size() > 0)
+				//	{
+				//		in->SetSymbol(new S100_Symbol());
+				//		in->GetSymbol()->SetReference(std::wstring(v_PointInstruction.begin(), v_PointInstruction.end()));
 
-						std::vector<std::string> r_splited = Split(stateCommands.v_Rotation, ",");
-						if (r_splited.size() == 2)
-						{
-							in->GetSymbol()->SetRotation(std::stod(r_splited[1]));
+				//		std::vector<std::string> r_splited = Split(stateCommands.v_Rotation, ",");
+				//		if (r_splited.size() == 2)
+				//		{
+				//			in->GetSymbol()->SetRotation(std::stod(r_splited[1]));
 
-						}
-					}
+				//		}
+				//	}
 
-					if (stateCommands.v_AugmentedPoint.size() > 1)
-					{
-						std::vector<std::string> v_splited = Split(stateCommands.v_AugmentedPoint, ",");
-						if (v_splited.size() == 3)
-						{
-							if (!in->GetVectorPoint()) in->SetVectorPoint(new S100_VectorPoint());
+				//	if (stateCommands.v_AugmentedPoint.size() > 1)
+				//	{
+				//		std::vector<std::string> v_splited = Split(stateCommands.v_AugmentedPoint, ",");
+				//		if (v_splited.size() == 3)
+				//		{
+				//			if (!in->GetVectorPoint()) in->SetVectorPoint(new S100_VectorPoint());
 
-							in->GetVectorPoint()->SetX(std::wstring(v_splited[1].begin(), v_splited[1].end()));
-							in->GetVectorPoint()->SetY(std::wstring(v_splited[2].begin(), v_splited[2].end()));
-						}
-						else
-						{
-							//OutputDebugString(L"Error : Vector Point Value should have 3 arguments.");
-						}
-					}
+				//			in->GetVectorPoint()->SetX(std::wstring(v_splited[1].begin(), v_splited[1].end()));
+				//			in->GetVectorPoint()->SetY(std::wstring(v_splited[2].begin(), v_splited[2].end()));
+				//		}
+				//		else
+				//		{
+				//			//OutputDebugString(L"Error : Vector Point Value should have 3 arguments.");
+				//		}
+				//	}
 
-					if (vl_SpatialReference.size() > 0)
-					{
-						for (auto it = vl_SpatialReference.begin(); it != vl_SpatialReference.end(); it++)
-						{
-							S100_SpatialReference* sref = new S100_SpatialReference();
-							in->SetSpatialReference(sref);
-							std::string_view v_SpatialReference = *it;
+				//	if (vl_SpatialReference.size() > 0)
+				//	{
+				//		for (auto it = vl_SpatialReference.begin(); it != vl_SpatialReference.end(); it++)
+				//		{
+				//			S100_SpatialReference* sref = new S100_SpatialReference();
+				//			in->SetSpatialReference(sref);
+				//			std::string_view v_SpatialReference = *it;
 
-							std::vector<std::string_view> v_splited;
-							Split(v_SpatialReference, "|", v_splited);
-							if (v_splited.size() == 2)
-							{
-								sref->SetType(v_splited[0]);
-								sref->SetReference(v_splited[1]);
-							}
-						}
-					}
+				//			std::vector<std::string_view> v_splited;
+				//			Split(v_SpatialReference, "|", v_splited);
+				//			if (v_splited.size() == 2)
+				//			{
+				//				sref->SetType(v_splited[0]);
+				//				sref->SetReference(v_splited[1]);
+				//			}
+				//		}
+				//	}
 
-					v_PointInstruction.clear();
-				}
-				// "SpatialReference:Curve|107" 
-				else if (tag.compare("SpatialReference") == 0)
-				{
-					std::string_view v_SpatialReference = value;
-					vl_SpatialReference.push_back(v_SpatialReference);
-				}
+				//	v_PointInstruction.clear();
+				//}
+				//// "SpatialReference:Curve|107" 
+				//else if (tag.compare("SpatialReference") == 0)
+				//{
+				//	std::string_view v_SpatialReference = value;
+				//	vl_SpatialReference.push_back(v_SpatialReference);
+				//}
 			}
 			else if (sizeForIndex == 17)
 			{

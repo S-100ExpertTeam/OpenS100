@@ -37,6 +37,7 @@ namespace DrawingInstructions
 
     void PointInstruction::parse(const std::string& input)
     {
+        setPresent();
         // PointInstruction:symbol 
         symbol = input;
     }
@@ -63,6 +64,7 @@ namespace DrawingInstructions
 
     void LineInstruction::parse(const std::string& input)
     {
+        setPresent();
         // LineInstruction:lineStyle[,lineStyle,¡¦] 
 		lineStyle = LatLonUtility::Split(input, ",");
     }
@@ -82,6 +84,7 @@ namespace DrawingInstructions
 
     void LineInstructionUnsuppressed::parse(const std::string& input)
     {
+        setPresent();
         // LineInstructionUnsuppressed:lineStyle[,lineStyle,¡¦] 
         lineStyle = LatLonUtility::Split(input, ",");
     }
@@ -104,6 +107,7 @@ namespace DrawingInstructions
 
     void ColorFill::parse(const std::string& input)
     {
+        setPresent();
         // ColorFill:token[,transparency] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() > 0)
@@ -141,6 +145,7 @@ namespace DrawingInstructions
 
     void AreaFillReference::parse(const std::string& input)
     {
+        setPresent();
         // AreaFillReference:reference 
 		reference = input;
     }
@@ -162,6 +167,7 @@ namespace DrawingInstructions
 
     void PixmapFill::parse(const std::string& input)
     {
+        setPresent();
         // PixmapFill:reference 
 		reference = input;
     }
@@ -186,6 +192,7 @@ namespace DrawingInstructions
 
     void SymbolFill::parse(const std::string& input)
     {
+        setPresent();
         // SymbolFill:symbol,v1,v2[,clipSymbols] 
 		auto tokens = LatLonUtility::Split(input, ",");
         if (tokens.size() >= 5)
@@ -230,6 +237,7 @@ namespace DrawingInstructions
 
     void HatchFill::parse(const std::string& input)
     {
+        setPresent();
         // HatchFill:direction,distance,lineStyle[,lineStyle] 
 		auto tokens = LatLonUtility::Split(input, ",");
         if (tokens.size() >= 4)
@@ -265,6 +273,7 @@ namespace DrawingInstructions
 
     void TextInstruction::parse(const std::string& input)
     {
+        setPresent();
         // TextInstruction:text 
 		text = input;
     }
@@ -287,6 +296,7 @@ namespace DrawingInstructions
 
     void CoverageFill::parse(const std::string& input)
     {
+        setPresent();
         // CoverageFill:attributeCode[,uom[,placement]] 
 		auto tokens = LatLonUtility::Split(input, ",");
         if (tokens.size() > 0) 
@@ -319,6 +329,7 @@ namespace DrawingInstructions
 
     void NullInstruction::parse(const std::string& input)
     {
+        setPresent();
         // NullInstruction 
     }
 
@@ -394,6 +405,7 @@ namespace DrawingInstructions
 
     void DrawingCommands::parse(const std::string& key, std::string value)
     {
+
         if(key =="PointInstruction")
             pointInstruction->parse(key);
         else if (key == "LineInstruction")

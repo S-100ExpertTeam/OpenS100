@@ -86,6 +86,7 @@ namespace DrawingInstructions {
 
 	void NumericAnnotation::parse(const std::string& input)
 	{
+		setPresent();
 		// NumericAnnotation:decimals,championChoice[,buffer] 
 		auto tokens = LatLonUtility::Split(input, ",");
 
@@ -136,6 +137,7 @@ namespace DrawingInstructions {
 
 	void SymbolAnnotation::parse(const std::string& input)
 	{
+		setPresent();
 		// SymbolAnnotation:symbolRef,rotationAttribute,scaleAttribute[,rotationCRS,rotationOffset[,rotationFactor[,scaleFactor]]] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() >= 3 && tokens.size() <= 7)
@@ -214,6 +216,7 @@ namespace DrawingInstructions {
 
 	void CoverageColor::parse(const std::string& input)
 	{
+		setPresent();
 		// CoverageColor:startToken,startTransparency[,endToken,endTransparency][,penWidth] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() >= 2 && tokens.size() <= 5)
@@ -286,6 +289,7 @@ namespace DrawingInstructions {
 	}
 	void LookupEntry::parse(const std::string& input)
 	{
+		setPresent();
 		// LookupEntry:label,lower,upper,closure 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 4)

@@ -99,6 +99,7 @@ namespace DrawingInstructions
 
 	void LocalOffset::parse(const std::string& input)
 	{
+		setPresent();
 		// LocalOffset:xOffsetMM, yOffsetMM
 
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
@@ -149,6 +150,7 @@ namespace DrawingInstructions
 
 	void LinePlacement::parse(const std::string& input)
 	{
+		setPresent();
 		// LinePlacement:linePlacementMode, offset[, endOffset][, visibleParts]
 
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
@@ -220,8 +222,14 @@ namespace DrawingInstructions
 
 	void AreaPlacement::parse(const std::string& input)
 	{
+		setPresent();
 		// AreaPlacement:areaPlacementMode
 		areaPlacementMode = input;
+	}
+
+	std::string AreaPlacement::GetAreaPlacementMode() const
+	{
+		return areaPlacementMode;
 	}
 
 	// AreaCRS class implementation
@@ -238,6 +246,7 @@ namespace DrawingInstructions
 
 	void AreaCRS::parse(const std::string& input)
 	{
+		setPresent();
 		// AreaCRS:areaCRSType
 		areaCRSType = input;
 	}
@@ -258,6 +267,7 @@ namespace DrawingInstructions
 
 	void Rotation::parse(const std::string& input)
 	{
+		setPresent();
 		// Rotation:rotationCRS,rotation 
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
 		if (parts.size() == 2) 
@@ -278,6 +288,16 @@ namespace DrawingInstructions
 		}
 	}
 
+	std::string Rotation::GetRotationCRS() const
+	{
+		return rotationCRS;
+	}
+
+	double Rotation::GetRotation() const
+	{
+		return rotation;
+	}
+
 	// ScaleFactor class implementation
 	ScaleFactor::ScaleFactor(double scaleFactor) : scaleFactor(scaleFactor) {}
 
@@ -293,6 +313,7 @@ namespace DrawingInstructions
 
 	void ScaleFactor::parse(const std::string& input)
 	{
+		setPresent();
 		// ScaleFactor:scaleFactor 
 		try 
 		{
@@ -302,5 +323,10 @@ namespace DrawingInstructions
 		{
 			init();
 		}
+	}
+
+	double ScaleFactor::GetScaleFactor() const
+	{
+		return scaleFactor;
 	}
 }

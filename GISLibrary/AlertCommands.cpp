@@ -44,6 +44,7 @@ namespace DrawingInstructions
 	}
 	void AlertReference::parse(const std::string& input)
 	{
+		setPresent();
 		// AlertReference[:alertReference[,plan[,monitor]]] 
 		auto tokens = LatLonUtility::Split(input, ":");
 
