@@ -20,7 +20,7 @@ class FeatureCatalogue;
 class GeoPoint;
 class GeoPointZ;
 class Catalog;
-class PCOutputSchemaManager; 
+class PCOutputSchemaManager;
 class SPoint;
 class SCurve;
 class SSurface;
@@ -96,7 +96,7 @@ public:
 	R_DSGIR* GetDatasetGeneralInformationRecord();
 	void UpdateRemoveAll(void);
 	void RemoveAll(void);
-	void ClearAll(void); 
+	void ClearAll(void);
 
 	bool Open(CString _filepath) override;
 	bool OpenMetadata(CString _filepath) override;
@@ -109,7 +109,7 @@ public:
 
 	bool Read8211(std::wstring path);
 	bool isUpdate();
-	
+
 	bool ConvertFromS101GML(S10XGML* gml);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::FeatureType* featureType);
 	bool ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* featureRecord, GF::SimpleAttributeType* simpleAttribute);
@@ -153,27 +153,27 @@ public:
 	bool MakeAreaData(R_FeatureRecord* fe);
 
 	// Record -> Geometry
-	bool GetFullSpatialData(R_PointRecord *r, SPoint* point); // 
+	bool GetFullSpatialData(R_PointRecord* r, SPoint* point); // 
 	bool GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint); //
-	bool GetFullSpatialData(R_CurveRecord *r, std::vector<POINT> &geoArr, int ORNT = 1); // 
+	bool GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, int ORNT = 1); // 
 	bool GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT = 1); //
 	bool GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT = 1); //
-	bool GetFullSpatialData(R_CompositeRecord *r, std::vector<POINT> &geoArr, int ORNT = 1); // 
+	bool GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoArr, int ORNT = 1); // 
 
 	bool GetFullMaskData(R_FeatureRecord* fe);
 
 	void Draw(D2D1Resources* D2, Scaler* scaler);
-	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
+	void Draw(HDC& hDC, Scaler* scaler, double offset = 0);
 
 	/*
-	* set instruction type 
+	* set instruction type
 	* 1 : Point
 	* 2 : Curve
-	* 3 : Surface 
+	* 3 : Surface
 	* 4 : Text
 	* 5 : Multi Point (Sounding)
 	*/
-	void Draw(HDC &hDC, Scaler *scaler, int priority, int instructionType, double offset = 0);
+	void Draw(HDC& hDC, Scaler* scaler, int priority, int instructionType, double offset = 0);
 
 	MBR CalcMBR();
 	MBR ReMBR();
@@ -193,7 +193,7 @@ public:
 	void SetProductEdition(CString value);
 	CString GetProductEdition();
 	std::string GetProductEditionToString();
-	
+
 	void SetApplictionProfile(CString value);
 	CString GetApplicationProfile();
 	std::string GetApplicationProfileToString();
@@ -271,7 +271,7 @@ public:
 	R_CurveRecord* GetCurveRecord(__int64 key);
 	R_CurveRecord* GetCurveRecordByIndex(int index);
 	POSITION GetCurStartPosition();
-	void GetNextAssoc(POSITION& index, long long& key,R_CurveRecord*& value);
+	void GetNextAssoc(POSITION& index, long long& key, R_CurveRecord*& value);
 	void RemoveAllCurRecord();
 	//veccurve
 	std::vector<R_CurveRecord*>& GetVecCurve();
@@ -305,7 +305,7 @@ public:
 	R_FeatureRecord* GetFeatureRecord(std::wstring wstringKey);
 	R_FeatureRecord* GetFeatureRecordByIndex(int index);
 	POSITION GetFeatureStartPosition();
-	void GetNextAssoc(POSITION& index,long long& key,R_FeatureRecord*& value);
+	void GetNextAssoc(POSITION& index, long long& key, R_FeatureRecord*& value);
 	void RemoveFeatureMapKey(long long key);
 	void RemoveAllFeatureRecord();
 	std::vector<R_FeatureRecord*>& GetVecFeature();
@@ -351,7 +351,7 @@ private:
 
 	// Function for adding S-101 update function.
 	bool UpdateInfMapRecord(S101Cell* cell);
-	bool UpdateAttrRecord(std::list<F_ATTR*> Update, std::list<F_ATTR*> Base) ; // To increase utilization, change parameters.
+	bool UpdateAttrRecord(std::list<F_ATTR*> Update, std::list<F_ATTR*> Base); // To increase utilization, change parameters.
 	bool UpdateINASRecord(std::list<F_INAS*> Update, std::list<F_INAS*> Base);
 
 	bool UpdateC2ILRecord(std::list<F_C2IL*> update, std::list<F_C2IL*> base, F_COCC* updatemission);
@@ -436,13 +436,22 @@ public:
 	void WritePointRecord(pugi::xml_node& node, R_PointRecord* record);
 
 	bool ATTRtoAttribute();
+	bool ATTRtoAttribute(R_FeatureRecord* fr);
+	void AddATTRtoAttribute(__int64 key);	
+	void DeleteATTRtoAttribute(__int64 key);
+	void UpdateATTRtoAttribute(__int64 key);
 
 	Version GetVersion() const;
 
 private:
 	bool FeatureAttrToAttribute();
+	bool FeatureAttrToAttribute(R_FeatureRecord* fr);
 	bool InformationAttrToAttribute();
+	bool InformationAttrToAttribute(R_InformationRecord* ir);
 	bool FeatureFeatureAssociationToGFM();
+	bool FeatureFeatureAssociationToGFM(R_FeatureRecord* fr);
 	bool FeatureInformationAssociationToGFM();
+	bool FeatureInformationAssociationToGFM(R_FeatureRecord* fr);
 	bool InformationAssociationToGFM();
+	bool InformationAssociationToGFM(R_InformationRecord* ir);
 };
