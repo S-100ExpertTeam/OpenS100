@@ -153,21 +153,12 @@ public:
 	bool MakeAreaData(R_FeatureRecord* fe);
 
 	// Record -> Geometry
-<<<<<<< HEAD
-	BOOL GetFullSpatialData(R_PointRecord* r, SPoint* point); // 
-	BOOL GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint); //
-	BOOL GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, int ORNT = 1); // 
-	BOOL GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT = 1); //
-	BOOL GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT = 1); //
-	BOOL GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoArr, int ORNT = 1); // 
-=======
-	bool GetFullSpatialData(R_PointRecord* r, SPoint* point); // 
+	bool GetFullSpatialData(R_PointRecord* r, SPoint* point); //
 	bool GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint); //
 	bool GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, int ORNT = 1); // 
 	bool GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT = 1); //
 	bool GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT = 1); //
 	bool GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoArr, int ORNT = 1); // 
->>>>>>> 5776671d11f73e21b5e1de70cf041816eb2b0aea
 
 	bool GetFullMaskData(R_FeatureRecord* fe);
 
