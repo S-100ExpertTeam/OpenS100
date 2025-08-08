@@ -12,5 +12,6 @@ public:
 
 public:
 	static S100_PointInstruction* ToS100PointInstruction(Local_DrawingCommands& dc, Local_StateCommands& sc);
+	static bool SetDrawingInstruction(Local_StateCommands& sc, S100_Instruction* out);
 };
 

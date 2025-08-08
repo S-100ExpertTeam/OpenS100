@@ -211,8 +211,11 @@
     <ClInclude Include="Enum_ChampionChoice.h" />
     <ClInclude Include="Enum_CoveragePlacement.h" />
     <ClInclude Include="Enum_FontProportion.h" />
-    <ClInclude Include="Enum_FontSlant.h" />
-    <ClInclude Include="Enum_FontWeight.h" />
+    <ClInclude Include="TextPackage_FontProportion.h" />
+    <ClInclude Include="TextPackage_TextElement.h" />
+    <ClInclude Include="TextPackage_TextFlags.h" />
+    <ClInclude Include="TextPackage_FontSlant.h" />
+    <ClInclude Include="TextPackage_FontWeight.h" />
     <ClInclude Include="Enum_GeometricPrimitive.h" />
     <ClInclude Include="Enum_InterpolationType.h" />
     <ClInclude Include="Enum_FileFormat.h" />
@@ -305,6 +308,10 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="TextPackage_HorizontalAlignment.h" />
+    <ClInclude Include="TextPackage_Text.h" />
+    <ClInclude Include="TextPackage_TextFlag.h" />
+    <ClInclude Include="TextPackage_VerticalAlignment.h" />
     <ClInclude Include="ViewingGroup.h" />
     <ClInclude Include="ViewingGroupLayer.h" />
     <ClInclude Include="ViewingGroupLayers.h" />
@@ -336,8 +343,11 @@
     <ClCompile Include="Enum_FileFormat.cpp" />
     <ClCompile Include="Enum_FileType.cpp" />
     <ClCompile Include="Enum_FontProportion.cpp" />
-    <ClCompile Include="Enum_FontSlant.cpp" />
-    <ClCompile Include="Enum_FontWeight.cpp" />
+    <ClCompile Include="TextPackage_FontProportion.cpp" />
+    <ClCompile Include="TextPackage_TextElement.cpp" />
+    <ClCompile Include="TextPackage_TextFlags.cpp" />
+    <ClCompile Include="TextPackage_FontSlant.cpp" />
+    <ClCompile Include="TextPackage_FontWeight.cpp" />
     <ClCompile Include="Enum_InterpolationType.cpp" />
     <ClCompile Include="Enum_RuleType.cpp" />
     <ClCompile Include="ExternalFile.cpp" />
@@ -444,6 +454,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TextPackage_HorizontalAlignment.cpp" />
+    <ClCompile Include="TextPackage_Text.cpp" />
+    <ClCompile Include="TextPackage_TextFlag.cpp" />
+    <ClCompile Include="TextPackage_VerticalAlignment.cpp" />
     <ClCompile Include="ViewingGroup.cpp" />
     <ClCompile Include="ViewingGroupLayer.cpp" />
     <ClCompile Include="ViewingGroupLayers.cpp" />

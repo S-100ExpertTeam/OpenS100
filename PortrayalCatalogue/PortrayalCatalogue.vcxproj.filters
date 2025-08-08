@@ -49,6 +49,12 @@
     <Filter Include="AlertCatalogue\Enum">
       <UniqueIdentifier>{d51d597f-098a-45cc-88ad-8e31cf33e0cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Instruction">
+      <UniqueIdentifier>{b4ad0c6f-1fe4-486f-ac00-955281af620c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Instruction\TextPackage">
+      <UniqueIdentifier>{e0fc7254-67fe-4629-962e-f8c19e63de13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -393,12 +399,6 @@
     <ClInclude Include="Enum_FontProportion.h">
       <Filter>Enum</Filter>
     </ClInclude>
-    <ClInclude Include="Enum_FontSlant.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum_FontWeight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="S100_CIExyL.h">
       <Filter>ColorProfile</Filter>
     </ClInclude>
@@ -416,6 +416,33 @@
     </ClInclude>
     <ClInclude Include="S100_AreaSymbolPlacement.h">
       <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPackage_Text.h">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPackage_HorizontalAlignment.h">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPackage_VerticalAlignment.h">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPackage_TextFlag.h">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPackage_FontSlant.h">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPackage_FontWeight.h">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPackage_FontProportion.h">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPackage_TextFlags.h">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClInclude>
+    <ClInclude Include="TextPackage_TextElement.h">
+      <Filter>Instruction\TextPackage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -752,12 +779,6 @@
     <ClCompile Include="Enum_FontProportion.cpp">
       <Filter>Enum</Filter>
     </ClCompile>
-    <ClCompile Include="Enum_FontSlant.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Enum_FontWeight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="S100_CIExyL.cpp">
       <Filter>ColorProfile</Filter>
     </ClCompile>
@@ -775,6 +796,33 @@
     </ClCompile>
     <ClCompile Include="S100_AreaSymbolPlacement.cpp">
       <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="TextPackage_Text.cpp">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClCompile>
+    <ClCompile Include="TextPackage_HorizontalAlignment.cpp">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClCompile>
+    <ClCompile Include="TextPackage_VerticalAlignment.cpp">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClCompile>
+    <ClCompile Include="TextPackage_TextFlag.cpp">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClCompile>
+    <ClCompile Include="TextPackage_FontSlant.cpp">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClCompile>
+    <ClCompile Include="TextPackage_FontWeight.cpp">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClCompile>
+    <ClCompile Include="TextPackage_FontProportion.cpp">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClCompile>
+    <ClCompile Include="TextPackage_TextFlags.cpp">
+      <Filter>Instruction\TextPackage</Filter>
+    </ClCompile>
+    <ClCompile Include="TextPackage_TextElement.cpp">
+      <Filter>Instruction\TextPackage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

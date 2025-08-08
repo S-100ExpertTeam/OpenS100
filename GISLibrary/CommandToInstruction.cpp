@@ -3,56 +3,15 @@
 
 S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_DrawingCommands& dc, Local_StateCommands& sc)
 {
+	S100_Instruction* instruction = nullptr;
+	if (sc.augmentedPoint.isPresent())
+	{
+		instruction = new S100_AugmentedPoint();
+	}
 	auto pointInstruction = new S100_PointInstruction();
 
 	// DrawingInstruction
-	// id
-	if (sc.id.isPresent())
-	{
-		pointInstruction->setId(sc.id.GetId());
-	}
-
-	// parentId
-	if (sc.parent.isPresent())
-	{
-		pointInstruction->setParentId(sc.parent.GetParentId());
-	}
-
-	// hover
-	if (sc.hover.isPresent())
-	{
-		pointInstruction->setHover(sc.hover.GetHover());
-	}
-
-	// viewingGroup
-	if (sc.viewingGroup.isPresent())
-	{
-		pointInstruction->SetViewingGroup(sc.viewingGroup.GetViewingGroups());
-	}
-
-	// displayPlane
-	if (sc.displayPlane.isPresent())
-	{
-		pointInstruction->SetDisplayPlane(sc.displayPlane.GetDisplayPlane());
-	}
-
-	// drawingPriority
-	if (sc.drawingPriority.isPresent())
-	{
-		pointInstruction->SetDrawingPriority(sc.drawingPriority.GetDrawingPriority());
-	}
-
-	// scaleMinimum
-	if (sc.scaleMinimum.isPresent())
-	{
-		pointInstruction->SetScaleMinimum(sc.scaleMinimum.GetScaleMinimum());
-	}
-
-	// scaleMaximum
-	if (sc.scaleMaximum.isPresent())
-	{
-		pointInstruction->SetScaleMaximum(sc.scaleMaximum.GetScaleMaximum());
-	}
+	SetDrawingInstruction(sc, pointInstruction);
 
 	// PointInstruction
 	if (dc.pointInstruction.isPresent())
@@ -104,4 +63,62 @@ S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_Drawin
 	}
 
 	return pointInstruction;
+}
+
+bool CommandToInstruction::SetDrawingInstruction(Local_StateCommands& sc, S100_Instruction* out)
+{
+	if (out)
+	{
+		// id
+		if (sc.id.isPresent())
+		{
+			out->setId(sc.id.GetId());
+		}
+
+		// parentId
+		if (sc.parent.isPresent())
+		{
+			out->setParentId(sc.parent.GetParentId());
+		}
+
+		// hover
+		if (sc.hover.isPresent())
+		{
+			out->setHover(sc.hover.GetHover());
+		}
+
+		// viewingGroup
+		if (sc.viewingGroup.isPresent())
+		{
+			out->SetViewingGroup(sc.viewingGroup.GetViewingGroups());
+		}
+
+		// displayPlane
+		if (sc.displayPlane.isPresent())
+		{
+			out->SetDisplayPlane(sc.displayPlane.GetDisplayPlane());
+		}
+
+		// drawingPriority
+		if (sc.drawingPriority.isPresent())
+		{
+			out->SetDrawingPriority(sc.drawingPriority.GetDrawingPriority());
+		}
+
+		// scaleMinimum
+		if (sc.scaleMinimum.isPresent())
+		{
+			out->SetScaleMinimum(sc.scaleMinimum.GetScaleMinimum());
+		}
+
+		// scaleMaximum
+		if (sc.scaleMaximum.isPresent())
+		{
+			out->SetScaleMaximum(sc.scaleMaximum.GetScaleMaximum());
+		}
+
+		return true;
+	}
+
+	return false;
 }
