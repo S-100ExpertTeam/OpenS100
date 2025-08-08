@@ -122,7 +122,9 @@ std::vector<std::string> LatLonUtility::Split(std::string targetStr, std::string
 {
 	// Check parameters
 	if (token.length() == 0 || targetStr.find(token) == std::string::npos)
+	{
 		return std::vector<std::string>({ targetStr });
+	}
 
 	// return var
 	std::vector<std::string> ret;
@@ -137,6 +139,28 @@ std::vector<std::string> LatLonUtility::Split(std::string targetStr, std::string
 	ret.push_back(targetStr.substr(findOffset, targetStr.length() - findOffset));
 
 	return ret;
+}
+
+void LatLonUtility::Split(std::string_view targetStr, std::string_view token, std::vector<std::string_view>& result)
+{
+	// Check parameters
+	if (token.length() == 0 || targetStr.find(token) == std::string::npos)
+	{
+		result.push_back(targetStr);
+	}
+
+	// return var
+	std::vector<std::string> ret;
+
+	int findOffset = 0;
+	int splitOffset = 0;
+	while ((splitOffset = (int)targetStr.find(token, findOffset)) != std::string::npos)
+	{
+		result.push_back(targetStr.substr(findOffset, splitOffset - findOffset));
+		findOffset = splitOffset + (int)token.length();
+	}
+
+	result.push_back(targetStr.substr(findOffset, targetStr.length() - findOffset));
 }
 
 unsigned char* LatLonUtility::HexStringToWKB(std::string value)

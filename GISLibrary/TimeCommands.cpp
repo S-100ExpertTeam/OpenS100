@@ -80,6 +80,12 @@ namespace DrawingInstructions
 
 	Date::Date(const std::string& begin, const std::string& end) : begin(begin), end(end) {}
 
+	void Date::init()
+	{
+		begin = "";
+		end = "";
+	}
+
 	void  Date::execute() {
 	}
 
@@ -88,6 +94,12 @@ namespace DrawingInstructions
 	}
 
 	Time::Time(const std::string& begin, const std::string& end) : begin(begin), end(end) {}
+
+	void Time::init()
+	{
+		begin = "";
+		end = "";
+	}
 
 	void Time::execute() 
 	{
@@ -99,6 +111,12 @@ namespace DrawingInstructions
 
 	DateTime::DateTime(const std::string& begin, const std::string& end) : begin(begin), end(end) {}
 
+	void DateTime::init()
+	{
+		begin = "";
+		end = "";
+	}
+
 	void DateTime::execute() 
 	{
 	}
@@ -109,11 +127,20 @@ namespace DrawingInstructions
 
 	TimeValid::TimeValid(const std::string& closure) : closure(closure) {}
 
+	void TimeValid::init()
+	{
+		closure = "";
+	}
+
 	void TimeValid::execute() 
 	{
 	}
 
 	void TimeValid::parse(const std::string& input)
+	{
+	}
+
+	void ClearTime::init()
 	{
 	}
 

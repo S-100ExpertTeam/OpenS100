@@ -3,71 +3,87 @@
 
 namespace DrawingInstructions
 {
-
-
-    class LocalOffset : public StateCommand {
+    class LocalOffset : public StateCommand 
+    {
     public:
+		LocalOffset() = default;
         LocalOffset(double xOffsetMM, double yOffsetMM);
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
     private:
-        double xOffsetMM;
-        double yOffsetMM;
+        double xOffsetMM = 0;
+        double yOffsetMM = 0;
     };
 
-    class LinePlacement : public StateCommand {
+    class LinePlacement : public StateCommand 
+    {
     public:
+		LinePlacement() = default;
         LinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts);
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
     private:
-        std::string linePlacementMode;
-        double offset;
-        double endOffset;
-        bool visibleParts;
+        std::string linePlacementMode = "Relative"; // or Absolute
+        double offset = 0.5;
+        std::optional<double> endOffset;
+        bool visibleParts = false;
     };
 
-    class AreaPlacement : public StateCommand {
+    class AreaPlacement : public StateCommand 
+    {
     public:
+		AreaPlacement() = default;
         AreaPlacement(const std::string& areaPlacementMode);
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
     private:
-        std::string areaPlacementMode;
+        std::string areaPlacementMode = "VisibleParts";
     };
 
-    class AreaCRS : public StateCommand {
+    class AreaCRS : public StateCommand 
+    {
     public:
+		AreaCRS() = default;
         AreaCRS(const std::string& areaCRSType);
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
     private:
-        std::string areaCRSType;
+        std::string areaCRSType = "GlobalGeometry";
     };
 
-    class Rotation : public StateCommand {
+    class Rotation : public StateCommand 
+    {
     public:
+		Rotation() = default;
         Rotation(const std::string& rotationCRS, double rotation);
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
     private:
-        std::string rotationCRS;
-        double rotation;
+        std::string rotationCRS = "PortrayalCRS";
+        double rotation = 0.0;
     };
 
-    class ScaleFactor : public StateCommand {
+    class ScaleFactor : public StateCommand 
+    {
     public:
+		ScaleFactor() = default;
         ScaleFactor(double scaleFactor);
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
     private:
-        double scaleFactor;
+        double scaleFactor = 1.0;
     };
 
 

@@ -13,8 +13,6 @@
 
 namespace DrawingInstructions
 {
-  
-
     // StateCommands class
     class StateCommands {
     public:

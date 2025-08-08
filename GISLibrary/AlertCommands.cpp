@@ -30,6 +30,10 @@ namespace DrawingInstructions
 	AlertReference::AlertReference(std::string alertReference, std::string plan, std::string monitor)
 		: alertReference(alertReference), plan(plan), monitor(monitor) {}
 	
+	void AlertReference::init()
+	{
+	}
+
 	void AlertReference::execute()  {
 	}
 	void AlertReference::parse(const std::string& input)

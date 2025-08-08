@@ -596,6 +596,7 @@ ID2D1BitmapBrush* S100PCManager::CreateBitmapBrush(AreaPatternBitmap* patternBit
 			pCurrentBitmapBrush->SetExtendModeX(D2D1_EXTEND_MODE_WRAP);
 			pCurrentBitmapBrush->SetExtendModeY(D2D1_EXTEND_MODE_WRAP);
 			pCurrentBitmapBrush->SetInterpolationMode(D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+			SafeRelease(&pCurrentBitmap);
 			return pCurrentBitmapBrush;
 		}
 

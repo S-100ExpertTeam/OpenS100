@@ -35,6 +35,7 @@ public:
 	void GetContents(pugi::xml_node& node);
 
 	void ParseValue(std::string value);
+	void ParseValue(std::string_view value);
 
 	bool IsEmpty();
 	void SetEmpty();

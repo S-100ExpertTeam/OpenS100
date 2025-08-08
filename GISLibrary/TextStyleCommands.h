@@ -5,7 +5,11 @@ namespace DrawingInstructions
 {
     class FontColor : public StateCommand {
     public:
+		FontColor() = default;
         FontColor(const std::string& token, double transparency);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -16,7 +20,11 @@ namespace DrawingInstructions
 
     class FontBackgroundColor : public StateCommand {
     public:
+		FontBackgroundColor() = default;
         FontBackgroundColor(const std::string& token, double transparency);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
     private:
@@ -24,9 +32,14 @@ namespace DrawingInstructions
         double transparency;
     };
 
-    class FontSize : public StateCommand {
+    class FontSize : public StateCommand 
+    {
     public:
+		FontSize() = default;
         FontSize(double bodySize);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -34,9 +47,14 @@ namespace DrawingInstructions
         double bodySize;
     };
 
-    class FontProportion : public StateCommand {
+    class FontProportion : public StateCommand 
+    {
     public:
+		FontProportion() = default;
         FontProportion(const std::string& proportion);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -44,9 +62,14 @@ namespace DrawingInstructions
         std::string proportion;
     };
 
-    class FontWeight : public StateCommand {
+    class FontWeight : public StateCommand 
+    {
     public:
+		FontWeight() = default;
         FontWeight(const std::string& weight);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -54,9 +77,14 @@ namespace DrawingInstructions
         std::string weight;
     };
 
-    class FontSlant : public StateCommand {
+    class FontSlant : public StateCommand 
+    {
     public:
+		FontSlant() = default;
         FontSlant(const std::string& slant);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -64,9 +92,14 @@ namespace DrawingInstructions
         std::string slant;
     };
 
-    class FontSerifs : public StateCommand {
+    class FontSerifs : public StateCommand 
+    {
     public:
+		FontSerifs() = default;
         FontSerifs(bool serifs);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -74,9 +107,14 @@ namespace DrawingInstructions
         bool serifs;
     };
 
-    class FontUnderline : public StateCommand {
+    class FontUnderline : public StateCommand 
+    {
     public:
+        FontUnderline() = default;
         FontUnderline(bool underline);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -84,9 +122,14 @@ namespace DrawingInstructions
         bool underline;
     };
 
-    class FontStrikethrough : public StateCommand {
+    class FontStrikethrough : public StateCommand 
+    {
     public:
+		FontStrikethrough() = default;
         FontStrikethrough(bool strikethrough);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -94,10 +137,15 @@ namespace DrawingInstructions
         bool strikethrough;
     };
 
-    class FontUpperline : public StateCommand {
+    class FontUpperline : public StateCommand 
+    {
     public:
+		FontUpperline() = default;
         FontUpperline(bool strikethrough)
             : strikethrough(strikethrough) {}
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -105,10 +153,15 @@ namespace DrawingInstructions
         bool strikethrough;
     };
 
-    class FontReference : public StateCommand {
+    class FontReference : public StateCommand 
+    {
     public:
+		FontReference() = default;
         FontReference(const std::string& fontReference)
             : fontReference(fontReference) {}
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -116,9 +169,14 @@ namespace DrawingInstructions
         std::string fontReference;
     };
 
-    class TextAlignHorizontal : public StateCommand {
+    class TextAlignHorizontal : public StateCommand 
+    {
     public:
+		TextAlignHorizontal() = default;
         TextAlignHorizontal(const std::string& horizontalAlignment);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -126,9 +184,14 @@ namespace DrawingInstructions
         std::string horizontalAlignment;
     };
 
-    class TextAlignVertical : public StateCommand {
+    class TextAlignVertical : public StateCommand 
+    {
     public:
+		TextAlignVertical() = default;
         TextAlignVertical(const std::string& verticalAlignment);
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
@@ -136,10 +199,15 @@ namespace DrawingInstructions
         std::string verticalAlignment;
     };
 
-    class TextVerticalOffset : public StateCommand {
+    class TextVerticalOffset : public StateCommand 
+    {
     public:
+		TextVerticalOffset() = default;
         TextVerticalOffset(double verticalOffset)
             : verticalOffset(verticalOffset) {}
+
+    public:
+		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 

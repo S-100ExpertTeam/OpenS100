@@ -5,7 +5,9 @@ namespace DrawingInstructions
 {
 	class AlertReference : public StateCommand {
 	public:
+		AlertReference() = default;
 		AlertReference(std::string alertReference, std::string plan, std::string monitor);
+		virtual void init() override;
 		virtual void execute() override;
 		virtual void parse(const std::string& input) override;
 	private:

@@ -7,8 +7,10 @@ namespace DrawingInstructions
 
     class SpatialReference : public StateCommand {
     public:
+		SpatialReference() = default;
         SpatialReference(const std::string& reference, bool forward);
 
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -19,8 +21,10 @@ namespace DrawingInstructions
 
     class AugmentedPoint : public StateCommand {
     public:
+		AugmentedPoint() = default;
         AugmentedPoint(std::string crs, double x, double y);
 
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -32,8 +36,10 @@ namespace DrawingInstructions
 
     class AugmentedRay : public StateCommand {
     public:
+		AugmentedRay() = default;
         AugmentedRay(std::string CRSType, double direction, std::string crsLength, double length);
 
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -46,8 +52,10 @@ namespace DrawingInstructions
 
     class AugmentedPath : public StateCommand {
     public:
+		AugmentedPath() = default;
         AugmentedPath(std::string crsPosition, std::string crsAngle, std::string crsDistance);
 
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -60,8 +68,10 @@ namespace DrawingInstructions
     // Polyline class
     class Polyline : public StateCommand {
     public:
+		Polyline() = default;
         Polyline(const std::vector<std::string>& points);
 
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -72,8 +82,10 @@ namespace DrawingInstructions
     // Arc3Points class
     class Arc3Points : public StateCommand {
     public:
+		Arc3Points() = default;
         Arc3Points(std::string startPointX, std::string startPointY, std::string medianPointX, std::string medianPointY, std::string endPointX, std::string endPointY);
 
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -90,8 +102,10 @@ namespace DrawingInstructions
     // ArcByRadius class
     class ArcByRadius : public StateCommand {
     public:
+		ArcByRadius() = default;
         ArcByRadius(std::string centerX, std::string centerY, double radius, double startAngle, double angularDistance);
 
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -108,6 +122,7 @@ namespace DrawingInstructions
     public:
         Annulus(std::string centerX, std::string centerY, double outerRadius, double innerRadius, double startAngle, double angularDistance);
 
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
@@ -124,6 +139,7 @@ namespace DrawingInstructions
     public:
         ClearGeometry() = default;
 
+		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
     };

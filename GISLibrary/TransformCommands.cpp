@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "TransformCommands.h"
-
-
-
+#include "..\\LatLonUtility\\LatLonUtility.h"
 
 namespace DrawingInstructions
 {
@@ -88,62 +86,177 @@ namespace DrawingInstructions
 	// LocalOffset class implementation
 	LocalOffset::LocalOffset(double xOffsetMM, double yOffsetMM) : xOffsetMM(xOffsetMM), yOffsetMM(yOffsetMM) {}
 
-	void LocalOffset::execute() {
+	void LocalOffset::init()
+	{
+		xOffsetMM = 0.0;
+		yOffsetMM = 0.0;
+	}
+
+	void LocalOffset::execute() 
+	{
 	}
 
 	void LocalOffset::parse(const std::string& input)
 	{
+		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
+		if (parts.size() == 2) 
+		{
+			try 
+			{
+				xOffsetMM = std::stod(parts[0]);
+				yOffsetMM = std::stod(parts[1]);
+			} 
+			catch (const std::exception& e) 
+			{
+				init();
+			}
+		} 
+		else 
+		{
+			init();
+		}
 	}
 
 	// LinePlacement class implementation
 	LinePlacement::LinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts)
 		: linePlacementMode(linePlacementMode), offset(offset), endOffset(endOffset), visibleParts(visibleParts) {}
 
-	void LinePlacement::execute() {
+	void LinePlacement::init()
+	{
+		linePlacementMode = "Relative";
+		offset = 0.5;
+		endOffset.reset();
+		visibleParts = false;
+	}
+
+	void LinePlacement::execute() 
+	{
 	}
 
 	void LinePlacement::parse(const std::string& input)
 	{
+		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
+		if (parts.size() >= 2) 
+		{
+			linePlacementMode = parts[0];
+			try 
+			{
+				offset = std::stod(parts[1]);
+				if (parts.size() > 2) 
+				{
+					endOffset = std::stod(parts[2]);
+				}
+				if (parts.size() > 3) 
+				{
+					if (parts[3] == "true")
+					{
+						visibleParts = true;
+					}
+					else if (parts[3] == "false")
+					{
+						visibleParts = false;
+					}
+				}
+			} 
+			catch (const std::exception& e) 
+			{
+				init();
+			}
+		} 
+		else 
+		{
+			init();
+		}
 	}
 
 	// AreaPlacement class implementation
 	AreaPlacement::AreaPlacement(const std::string& areaPlacementMode) : areaPlacementMode(areaPlacementMode) {}
 
-	void AreaPlacement::execute() {
+	void AreaPlacement::init()
+	{
+		areaPlacementMode = "VisibleParts";
+	}
+
+	void AreaPlacement::execute() 
+	{
 	}
 
 	void AreaPlacement::parse(const std::string& input)
 	{
+		areaPlacementMode = input;
 	}
 
 	// AreaCRS class implementation
 	AreaCRS::AreaCRS(const std::string& areaCRSType) : areaCRSType(areaCRSType) {}
+
+	void AreaCRS::init()
+	{
+		areaCRSType = "ViGlobalGeometrysibleParts";
+	}
 
 	void AreaCRS::execute() {
 	}
 
 	void AreaCRS::parse(const std::string& input)
 	{
+		areaCRSType = input;
 	}
 
 	// Rotation class implementation
 	Rotation::Rotation(const std::string& rotationCRS, double rotation) : rotationCRS(rotationCRS), rotation(rotation) {}
 
-	void Rotation::execute() {
+	void Rotation::init()
+	{
+		rotationCRS = "PortrayalCRS";
+		rotation = 0.0;
+	}
+
+	void Rotation::execute() 
+	{
 	}
 
 	void Rotation::parse(const std::string& input)
 	{
+		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
+		if (parts.size() == 2) 
+		{
+			rotationCRS = parts[0];
+			try 
+			{
+				rotation = std::stod(parts[1]);
+			} 
+			catch (const std::exception& e) 
+			{
+				init();
+			}
+		} 
+		else 
+		{
+			init();
+		}
 	}
 
 	// ScaleFactor class implementation
 	ScaleFactor::ScaleFactor(double scaleFactor) : scaleFactor(scaleFactor) {}
 
-	void ScaleFactor::execute() {
+	void ScaleFactor::init()
+	{
+		scaleFactor = 1.0;
+	}
+
+	void ScaleFactor::execute() 
+	{
 	}
 
 	void ScaleFactor::parse(const std::string& input)
 	{
+		try 
+		{
+			scaleFactor = std::stod(input);
+		} 
+		catch (const std::exception& e) 
+		{
+			init();
+		}
 	}
-
 }

@@ -107,3 +107,14 @@ void S100_Dash::ParseValue(std::string value)
 		length = std::wstring(v_splited[1].begin(), v_splited[1].end());
 	}
 }
+
+void S100_Dash::ParseValue(std::string_view value)
+{
+	std::vector<std::string_view> v_splited;
+	LatLonUtility::Split(value, ",", v_splited);
+	if (v_splited.size() >= 2)
+	{
+		start = std::wstring(v_splited[0].begin(), v_splited[0].end());
+		length = std::wstring(v_splited[1].begin(), v_splited[1].end());
+	}
+}

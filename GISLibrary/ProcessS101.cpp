@@ -48,14 +48,14 @@ std::string ProcessS101::g_unknown_attribute_value = "";
 void Local_StateCommands::Init()
 {
 	// Visibility
-	v_ViewingGroup;
-	v_DisplayPlane;
-	v_DrawingPriority;
-	v_ScaleMinimum;
-	v_ScaleMaximum;
-	v_Id;
-	v_Parent;
-	v_Hover;
+	v_ViewingGroup.clear();
+	v_DisplayPlane = "";
+	v_DrawingPriority = "0";
+	v_ScaleMinimum = std::to_string(INT32_MAX);
+	v_ScaleMaximum = std::to_string(INT32_MIN);
+	v_Id = "";
+	v_Parent = "";
+	v_Hover = "false";
 
 	// Transform
 	v_LocalOffset;
@@ -180,10 +180,10 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 
 		for (auto i = drawingInstructionResult->begin(); i != drawingInstructionResult->end(); i++)
 		{
-			std::string drawingInstructions = i->drawingInstructions;
-			std::vector<std::string> di_splited = Split(drawingInstructions, ";");
+			//std::string drawingInstructions = i->drawingInstructions;
+			//std::vector<std::string> di_splited = Split(drawingInstructions, ";");
 
-			LUA_ParsingDrawingInstructions(i->featureID, di_splited, c->pcManager);
+			LUA_ParsingDrawingInstructions(i->featureID, i->drawingInstructions, c->pcManager);
 		}
 
 		c->pcManager->GenerateSENCInstruction(c, layer->GetPC());
@@ -305,15 +305,23 @@ std::string ProcessS101::ProcessS100_XSLT(std::string inputXmlContent, std::stri
 	return result;
 }
 
-bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm)
+bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std::string_view drawingCommands, PCOutputSchemaManager* pcm)
 {
+	if (featureID == "195")
+	{
+		OutputDebugString(L"Feature ID 195 encountered.");
+	}
+
+	std::vector<std::string_view> elements;
+	Split(drawingCommands, ";", elements);
+
 	Local_StateCommands stateCommands;
 
 	std::string v_ColorFill;
 	std::string v_TextInstruction;
 	std::string v_LineInstruction;
 	std::string v_PointInstruction;
-	std::list<std::string> vl_SpatialReference;
+	std::list<std::string_view> vl_SpatialReference;
 	std::string v_AreaFillReference;
 	S100_Dash dash;
 
@@ -321,10 +329,370 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 	for (auto i = elements.begin(); i != elements.end(); i++)
 	{
-		std::string element = *i;
-		std::vector<std::string> di_splited = Split(element, ":");
+		std::vector<std::string_view> di_splited;
+		std::vector<std::string> cp = Split(i->data(), ":");;
+		Split(*i, ":", di_splited);
 
 		int splitedSize = (int)di_splited.size();
+		if (splitedSize > 0)
+		{
+			if (di_splited[0].compare("PointInstruction") == 0)
+			{
+
+			}
+			else if (di_splited[0].compare("LineInstruction") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					v_LineInstruction = di_splited[1];
+					stateCommands.v_LineStyle = v_LineInstruction;
+					lineStyle.ParseValue(v_LineInstruction);
+				}
+			}
+			else if (di_splited[0].compare("LineInstructionUnsuppressed") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					v_LineInstruction = di_splited[1];
+					stateCommands.v_LineStyle = v_LineInstruction;
+					lineStyle.ParseValue(v_LineInstruction);
+				}
+			}
+			else if (di_splited[0].compare("ColorFill") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					v_ColorFill = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("AreaFillReference") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					v_AreaFillReference = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("PixmapFill") == 0)
+			{
+			}
+			else if (di_splited[0].compare("SymbolFill") == 0)
+			{
+			}
+			else if (di_splited[0].compare("HatchFill") == 0)
+			{
+			}
+			else if (di_splited[0].compare("TextInstruction") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					v_TextInstruction = di_splited[1];
+					stateCommands.v_TextAlignHorizontal = v_TextInstruction;
+				}
+			}
+			else if (di_splited[0].compare("CoverageFill") == 0)
+			{
+			}
+			else if (di_splited[0].compare("NullInstruction") == 0)
+			{
+			}
+			else if (di_splited[0].compare("ViewingGroup") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.viewingGroup.parse(cp[1]);
+				}
+			}
+			else if (di_splited[0].compare("DisplayPlane") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_DisplayPlane = di_splited[1];
+					//stateCommands.displayPlane.ParseValue(stateCommands.v_DisplayPlane);
+				}
+			}
+			else if (di_splited[0].compare("DrawingPlane") == 0)
+			{
+			}
+			else if (di_splited[0].compare("DrawingGroup") == 0)
+			{
+			}
+			else if (di_splited[0].compare("DrawingPriority") == 0)
+			{
+
+			}
+			else if (di_splited[0].compare("ScaleMinimum") == 0)
+			{
+
+			}
+			else if (di_splited[0].compare("ScaleMaximum") == 0)
+			{
+
+			}
+			else if (di_splited[0].compare("Id") == 0)
+			{
+
+			}
+			else if (di_splited[0].compare("Parent") == 0)
+			{
+
+			}
+			else if (di_splited[0].compare("Hover") == 0)
+			{
+
+			}
+			else if (di_splited[0].compare("LocalOffset") == 0)
+			{
+
+			}
+			else if (di_splited[0].compare("LinePlacement") == 0)
+			{
+
+			}
+			else if (di_splited[0].compare("AreaPlacement") == 0)
+			{
+			}
+			else if (di_splited[0].compare("AreaCRS") == 0)
+			{
+			}
+			else if (di_splited[0].compare("Rotation") == 0)
+			{
+			}
+			else if (di_splited[0].compare("ScaleFactor") == 0)
+			{
+			}
+			else if (di_splited[0].compare("LineStyle") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_LineStyle = di_splited[1];
+					lineStyle.ParseValue(stateCommands.v_LineStyle);
+					if (false == dash.IsEmpty())
+					{
+						lineStyle.SetDash(&dash);
+						dash.SetEmpty();
+					}
+				}
+			}
+			else if (di_splited[0].compare("LineSymbol") == 0)
+			{
+			}
+			else if (di_splited[0].compare("Dash") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_Dash = di_splited[1];
+					dash.ParseValue(stateCommands.v_Dash);
+				}
+			}
+			else if (di_splited[0].compare("FontColor") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_FontColor = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("FontSize") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_FontSize = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("FontProportion") == 0)
+			{
+			}
+			else if (di_splited[0].compare("FontWeight") == 0)
+			{
+			}
+			else if (di_splited[0].compare("FontSlant") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_FontSlant = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("FontSerifs") == 0)
+			{
+			}
+			else if (di_splited[0].compare("FontUnderline") == 0)
+			{
+			}
+			else if (di_splited[0].compare("FontStrikethrough") == 0)
+			{
+			}
+			else if (di_splited[0].compare("FontUpperline") == 0)
+			{
+			}
+			else if (di_splited[0].compare("FontReference") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_FontReference = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("TextAlignHorizontal") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_TextAlignHorizontal = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("TextAlignVertical") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_TextAlignVertical = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("TextVerticalOffset") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_TextVerticalOffset = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("OverrideColor") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_OverrideColor = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("OverrideAll") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_OverrideAll = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("SpatialReference") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					std::string_view spatialRef = di_splited[1];
+					if (!spatialRef.empty())
+					{
+						//stateCommands.v_SpatialReference.push_back(spatialRef);
+					}
+				}
+			}
+			else if (di_splited[0].compare("AugmentedPoint") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_AugmentedPoint;
+				}
+			}
+			else if (di_splited[0].compare("AugmentedRay") == 0)
+			{
+
+			}
+			else if (di_splited[0].compare("AugmentedPath") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_AugmentedPath = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("Polyline") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_Polyline = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("Arc3Points") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_Arc3Points = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("ArcByRadius") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_ArcByRadius = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("Annulus") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_Annulus = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("ClearAugmented") == 0)
+			{
+				stateCommands.v_ClearAugmented = di_splited[1];
+			}
+			else if (di_splited[0].compare("LookupEntry") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_LookupEntry = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("NumericAnnotation") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_NumericAnnotation = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("SymbolAnnotation") == 0)
+			{
+			}
+			else if (di_splited[0].compare("CoverageColor") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_CoverageColor = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("Date") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.Date = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("Time") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.Time = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("DateTime") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.DateTime = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("TimeValid") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.TimeValid = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("ClearTime") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.ClearTime = di_splited[1];
+				}
+			}
+			else if (di_splited[0].compare("AlertReference") == 0)
+			{
+				if (splitedSize > 1)
+				{
+					stateCommands.v_AlertReference = di_splited[1];
+				}
+			}
+		}
 
 		if (splitedSize == 1)
 		{
@@ -343,8 +711,8 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 		else
 		{
 			// Splited Size 2
-			std::string tag = di_splited[0];
-			std::string value = di_splited[1];
+			std::string_view tag = di_splited[0];
+			std::string_view value = di_splited[1];
 
 			int sizeForIndex = (int)tag.size();
 
@@ -362,12 +730,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					stateCommands.v_Dash = value;
 					dash.ParseValue(value);
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 5)
@@ -393,12 +755,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				else if (tag.compare("Rotation") == 0)
 				{
 					stateCommands.v_Rotation = value;
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 7)
@@ -460,12 +816,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				{
 					stateCommands.v_FontSlant = value;
 				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
 			else if (sizeForIndex == 11)
 			{
@@ -483,12 +833,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				else if (tag.compare("ArcByRadius") == 0)
 				{
 					stateCommands.v_ArcByRadius = value;
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 12)
@@ -515,12 +859,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 
 					stateCommands.v_AugmentedPath = "";
 				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
 			else if (sizeForIndex == 13)
 			{
@@ -535,12 +873,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				}
 				else if (tag.compare("AreaPlacement") == 0)
 				{
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 14)
@@ -575,12 +907,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					//}
 
 					//v_AlertReference = "";
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 15)
@@ -779,9 +1105,10 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 							{
 								S100_SpatialReference* sref = new S100_SpatialReference();
 								in->SetSpatialReference(sref);
-								std::string v_SpatialReference = *it;
+								std::string_view v_SpatialReference = *it;
 
-								std::vector<std::string> v_splited = Split(v_SpatialReference, "|");
+								std::vector<std::string_view> v_splited;
+								Split(v_SpatialReference, "|", v_splited);
 								if (v_splited.size() == 2)
 								{
 									sref->SetType(v_splited[0]);
@@ -843,9 +1170,10 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 						{
 							S100_SpatialReference* sref = new S100_SpatialReference();
 							in->SetSpatialReference(sref);
-							std::string v_SpatialReference = *it;
+							std::string_view v_SpatialReference = *it;
 
-							std::vector<std::string> v_splited = Split(v_SpatialReference, "|");
+							std::vector<std::string_view> v_splited;
+							Split(v_SpatialReference, "|", v_splited);
 							if (v_splited.size() == 2)
 							{
 								sref->SetType(v_splited[0]);
@@ -859,14 +1187,8 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 				// "SpatialReference:Curve|107" 
 				else if (tag.compare("SpatialReference") == 0)
 				{
-					std::string v_SpatialReference = value;
+					std::string_view v_SpatialReference = value;
 					vl_SpatialReference.push_back(v_SpatialReference);
-				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
 				}
 			}
 			else if (sizeForIndex == 17)
@@ -906,12 +1228,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					}
 					v_AreaFillReference = "";
 				}
-				else
-				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-					//OutputDebugString(str);
-				}
 			}
 			else if (sizeForIndex == 19)
 			{
@@ -926,12 +1242,6 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 					str.Format(_T("Lua Parser error - %S(%d)"), tag, sizeForIndex);
 					//OutputDebugString(str);
 				}
-			}
-			else
-			{
-				CString str;
-				str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
-				//OutputDebugString(str);
 			}
 		}
 	}
