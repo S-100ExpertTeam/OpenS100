@@ -7,12 +7,10 @@ class GeoPoint;
 class GeometricFuc
 {
 public:
-	GeometricFuc(void);
-	virtual ~GeometricFuc(void);
+	GeometricFuc() = default;
+	virtual ~GeometricFuc() = default;
 
 public:
-	static int intersect_equation(double p1x, double p1y, double p2x, double p2y, double p3x, double p3y, double p4x, double p4y);
-
 	// -1 : not cross
 	//  0 : If there's an end point of a line inside the line segment,
 	//  1 : cross

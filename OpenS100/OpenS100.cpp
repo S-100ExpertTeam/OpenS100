@@ -285,5 +285,4 @@ void COpenS100App::MapRefresh()
 void COpenS100App::SaveSettings()
 {
 	ENCCommon::Save(L"..\\ProgramData\\data\\settings.txt");
-	return;
 } 
