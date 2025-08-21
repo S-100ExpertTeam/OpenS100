@@ -293,13 +293,19 @@ void SSurface::CalculateCenterPoint()
 
     // Calculate a point guaranteed to be on the surface of the polygon
     Point point_on_surf;
-    bg::point_on_surface(poly, point_on_surf);
+	bg::centroid(poly, point_on_surf);
+	
+	if (false == bg::covered_by(point_on_surf, poly)) 
+	{
+		bg::point_on_surface(poly, point_on_surf);
+	}
 
     // Set the center point member variable to the calculated point
     if (nullptr == m_centerPoint)
     {
         m_centerPoint = new GeoPoint();
     }
+
     m_centerPoint->SetPoint(point_on_surf.x(), point_on_surf.y());
 }
 

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "CommandToInstruction.h"
 
+#include "..\\PortrayalCatalogue\\S100_AugmentedRay.h"
+
 S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_DrawingCommands& dc, Local_StateCommands& sc)
 {
 	S100_Instruction* instruction = nullptr;
@@ -8,14 +10,19 @@ S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_Drawin
 	{
 		instruction = new S100_AugmentedPoint();
 	}
-	auto pointInstruction = new S100_PointInstruction();
+	else
+	{
+		instruction = new S100_PointInstruction();
+	}
 
 	// DrawingInstruction
-	SetDrawingInstruction(sc, pointInstruction);
+	SetDrawingInstruction(sc, instruction);
 
 	// PointInstruction
 	if (dc.pointInstruction.isPresent())
 	{
+		auto pointInstruction = (S100_PointInstruction*)instruction;
+
 		// Symbol::Symbol
 		S100_Symbol* symbol = new S100_Symbol();
 		pointInstruction->SetSymbol(symbol);
@@ -61,8 +68,34 @@ S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_Drawin
 
 		// overrideAll
 	}
+	// AugmentedPoint
+	else if (sc.augmentedPoint.isPresent())
+	{
+		//sc.augmentedPoint
+	}
 
-	return pointInstruction;
+	return (S100_PointInstruction*)instruction;
+}
+
+S100_LineInstruction* CommandToInstruction::ToS100LineInstruction(Local_DrawingCommands& dc, Local_StateCommands& sc)
+{
+	S100_Instruction* instruction = nullptr;
+	if (sc.augmentedRay.isPresent())
+	{
+		instruction = new S100_AugmentedRay();
+	}
+	auto lineInstruction = new S100_LineInstruction();
+
+	// DrawingInstruction
+	SetDrawingInstruction(sc, lineInstruction);
+
+	// PointInstruction
+	if (dc.lineInstruction.isPresent())
+	{
+		
+	}
+
+	return lineInstruction;
 }
 
 bool CommandToInstruction::SetDrawingInstruction(Local_StateCommands& sc, S100_Instruction* out)
@@ -122,3 +155,4 @@ bool CommandToInstruction::SetDrawingInstruction(Local_StateCommands& sc, S100_I
 
 	return false;
 }
+
