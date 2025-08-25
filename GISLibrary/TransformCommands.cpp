@@ -4,91 +4,17 @@
 
 namespace DrawingInstructions
 {
-	TransformCommands::~TransformCommands() {
-		delete localOffset;
-		delete linePlacement;
-		delete areaPlacement;
-		delete areaCRS;
-		delete rotation;
-		delete scaleFactor;
-	}
-
-	void TransformCommands::setLocalOffset(double xOffsetMM, double yOffsetMM) {
-		delete this->localOffset;
-		localOffset = new LocalOffset(xOffsetMM, yOffsetMM);
-	}
-
-	void TransformCommands::setLinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts) {
-		delete this->linePlacement;
-		this->linePlacement = new LinePlacement(linePlacementMode, offset, endOffset, visibleParts);
-	}
-
-	void TransformCommands::setAreaPlacement(const std::string& areaPlacementMode) {
-		delete this->areaPlacement;
-		this->areaPlacement = new AreaPlacement(areaPlacementMode);
-	}
-
-	void TransformCommands::setAreaCRS(const std::string& areaCRSType) {
-		delete this->areaCRS;
-		this->areaCRS = new AreaCRS(areaCRSType);
-	}
-
-	void TransformCommands::setRotation(const std::string& rotationCRS, double rotation) {
-		delete this->rotation;
-		this->rotation = new Rotation(rotationCRS, rotation);
-	}
-
-	void TransformCommands::setScaleFactor(double scaleFactor) {
-		delete this->scaleFactor;
-		this->scaleFactor = new ScaleFactor(scaleFactor);
-	}
-
-	void TransformCommands::execute() const
-	{
-		if (localOffset) localOffset->execute();
-		if (linePlacement) linePlacement->execute();
-		if (areaPlacement) areaPlacement->execute();
-		if (areaCRS) areaCRS->execute();
-		if (rotation) rotation->execute();
-		if (scaleFactor) scaleFactor->execute();
-	}
-
-	void TransformCommands::parse(const std::string& key, std::string value)
-	{
-		if (key == "LocalOffset")
-		{
-			//setLocalOffset();
-		}
-		else if (key == "LinePlacement")
-		{
-			//setLinePlacement();
-		}
-		else if (key == "AreaPlacement")
-		{
-			//setAreaPlacement();
-		}
-		else if (key == "AreaCRS")
-		{
-			//setAreaCRS();
-		}
-		else if (key == "Rotation")
-		{
-			//setRotation();
-		}
-		else if (key == "ScaleFactor")
-		{
-			//setScaleFactor();
-		}
-	}
-
-
-
 	// LocalOffset class implementation
 	LocalOffset::LocalOffset(double xOffsetMM, double yOffsetMM) : xOffsetMM(xOffsetMM), yOffsetMM(yOffsetMM) {}
 
+	Enum_StateCommand LocalOffset::GetType() const
+	{
+		return Enum_StateCommand::LocalOffset;
+	}
+
 	void LocalOffset::init()
 	{
-		StateCommand::init();
+		Command::init();
 		xOffsetMM = 0.0;
 		yOffsetMM = 0.0;
 	}
@@ -135,9 +61,14 @@ namespace DrawingInstructions
 	LinePlacement::LinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts)
 		: linePlacementMode(linePlacementMode), offset(offset), endOffset(endOffset), visibleParts(visibleParts) {}
 
+	Enum_StateCommand LinePlacement::GetType() const
+	{
+		return Enum_StateCommand::LinePlacement;
+	}
+
 	void LinePlacement::init()
 	{
-		StateCommand::init();
+		Command::init();
 		linePlacementMode = "Relative";
 		offset = 0.5;
 		endOffset.reset();
@@ -210,9 +141,14 @@ namespace DrawingInstructions
 	// AreaPlacement class implementation
 	AreaPlacement::AreaPlacement(const std::string& areaPlacementMode) : areaPlacementMode(areaPlacementMode) {}
 
+	Enum_StateCommand AreaPlacement::GetType() const
+	{
+		return Enum_StateCommand::AreaPlacement;
+	}
+
 	void AreaPlacement::init()
 	{
-		StateCommand::init();
+		Command::init();
 		areaPlacementMode = "VisibleParts";
 	}
 
@@ -235,9 +171,14 @@ namespace DrawingInstructions
 	// AreaCRS class implementation
 	AreaCRS::AreaCRS(const std::string& areaCRSType) : areaCRSType(areaCRSType) {}
 
+	Enum_StateCommand AreaCRS::GetType() const
+	{
+		return Enum_StateCommand::AreaCRS;
+	}
+
 	void AreaCRS::init()
 	{
-		StateCommand::init();
+		Command::init();
 		areaCRSType = "ViGlobalGeometrysibleParts";
 	}
 
@@ -254,9 +195,14 @@ namespace DrawingInstructions
 	// Rotation class implementation
 	Rotation::Rotation(const std::string& rotationCRS, double rotation) : rotationCRS(rotationCRS), rotation(rotation) {}
 
+	Enum_StateCommand Rotation::GetType() const
+	{
+		return Enum_StateCommand::Rotation;
+	}
+
 	void Rotation::init()
 	{
-		StateCommand::init();
+		Command::init();
 		rotationCRS = "PortrayalCRS";
 		rotation = 0.0;
 	}
@@ -301,9 +247,14 @@ namespace DrawingInstructions
 	// ScaleFactor class implementation
 	ScaleFactor::ScaleFactor(double scaleFactor) : scaleFactor(scaleFactor) {}
 
+	Enum_StateCommand ScaleFactor::GetType() const
+	{
+		return Enum_StateCommand::ScaleFactor;
+	}
+
 	void ScaleFactor::init()
 	{
-		StateCommand::init();
+		Command::init();
 		scaleFactor = 1.0;
 	}
 

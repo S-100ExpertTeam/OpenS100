@@ -289,8 +289,8 @@
     <ClCompile Include="Directory.cpp" />
     <ClCompile Include="DirectPosition.cpp" />
     <ClCompile Include="DrawingCommands.cpp" />
-    <ClCompile Include="DrawingInstruction.cpp" />
     <ClCompile Include="DrawingSet.cpp" />
+    <ClCompile Include="Enum_StateCommand.cpp" />
     <ClCompile Include="EX_BoundingPolygon.cpp" />
     <ClCompile Include="EX_GeographicBoundingBox.cpp" />
     <ClCompile Include="FC2D.cpp" />
@@ -456,8 +456,8 @@
     <ClCompile Include="S100_SE_SignatureOnSignature.cpp" />
     <ClCompile Include="SourceFileType.cpp" />
     <ClCompile Include="SourceHeaderType.cpp" />
-    <ClCompile Include="StateCommand.cpp" />
-    <ClCompile Include="StateCommands.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandList.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="SupportFileDiscoveryMetadata.cpp" />
     <ClCompile Include="SupportFileRevisionStatus.cpp" />
@@ -612,8 +612,8 @@
     <ClInclude Include="DatasetPermit.h" />
     <ClInclude Include="DataStatus.h" />
     <ClInclude Include="DirectPosition.h" />
-    <ClInclude Include="DrawingInstruction.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
+    <ClInclude Include="Enum_StateCommand.h" />
     <ClInclude Include="ExchangeCatalogueNameSpace.h" />
     <ClInclude Include="EX_BoundingPolygon.h" />
     <ClInclude Include="EX_GeographicBoundingBox.h" />
@@ -808,8 +808,8 @@
     <ClInclude Include="SourceFileType.h" />
     <ClInclude Include="SourceHeaderType.h" />
     <ClInclude Include="SpatialObjectType.h" />
-    <ClInclude Include="StateCommand.h" />
-    <ClInclude Include="StateCommands.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandList.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="SupportFileDiscoveryMetadata.h" />
     <ClInclude Include="SupportFileRevisionStatus.h" />

@@ -5,7 +5,7 @@
 
 namespace DrawingInstructions
 {
-    void DrawingCommand::init()
+    /*void DrawingCommand::init()
     {
         present = false;
     }
@@ -18,7 +18,7 @@ namespace DrawingInstructions
     bool DrawingCommand::isPresent() const
     {
 		return present;
-    }
+    }*/
 
     // PointInstruction class implementation
     PointInstruction::PointInstruction(const std::string& symbol) : symbol(symbol) 
@@ -27,7 +27,7 @@ namespace DrawingInstructions
 
 	void PointInstruction::init()
 	{
-        DrawingCommand::init();
+        Command::init();
         symbol.clear();
 	}
 
@@ -54,7 +54,7 @@ namespace DrawingInstructions
 
     void LineInstruction::init()
     {
-        DrawingCommand::init();
+        Command::init();
         lineStyle.clear();
 	}
 
@@ -74,7 +74,7 @@ namespace DrawingInstructions
 
     void LineInstructionUnsuppressed::init()
     {
-        DrawingCommand::init();
+        Command::init();
         lineStyle.clear();
     }
 
@@ -96,7 +96,7 @@ namespace DrawingInstructions
 
 	void ColorFill::init()
 	{
-        DrawingCommand::init();
+        Command::init();
 		token.clear();
 		transparency = 0.0;
 	}
@@ -135,7 +135,7 @@ namespace DrawingInstructions
 
 	void AreaFillReference::init()
 	{
-        DrawingCommand::init();
+        Command::init();
 		reference.clear();
 	}
 
@@ -157,7 +157,7 @@ namespace DrawingInstructions
 
 	void PixmapFill::init()
 	{
-        DrawingCommand::init();
+        Command::init();
 		reference.clear();
 	}
 
@@ -180,7 +180,7 @@ namespace DrawingInstructions
 
 	void SymbolFill::init()
 	{
-        DrawingCommand::init();
+        Command::init();
 		symbol.clear();
         v1.Set(0.0, 0.0);
         v2.Set(0.0, 0.0);
@@ -225,7 +225,7 @@ namespace DrawingInstructions
 
     void HatchFill::init()
     {
-        DrawingCommand::init();
+        Command::init();
         direction.Set(0.0, 0.0);
         distance = 0.0;
         lineStyle1.clear();
@@ -264,7 +264,7 @@ namespace DrawingInstructions
 
     void TextInstruction::init()
     {
-        DrawingCommand::init();
+        Command::init();
         text.clear();
 	}
 
@@ -284,7 +284,7 @@ namespace DrawingInstructions
 
     void CoverageFill::init()
     {
-        DrawingCommand::init();
+        Command::init();
         attributeCode.clear();
         uom.clear();
         placement.clear();
@@ -319,7 +319,7 @@ namespace DrawingInstructions
 
     void NullInstruction::init()
     {
-        DrawingCommand::init();
+        Command::init();
         // No specific initialization needed for NullInstruction
 	}
 
@@ -331,116 +331,5 @@ namespace DrawingInstructions
     {
         setPresent();
         // NullInstruction 
-    }
-
-    // DrawingCommands class implementation
-    DrawingCommands::~DrawingCommands() {
-        delete pointInstruction;
-        delete lineInstruction;
-        delete lineInstructionUnsuppressed;
-        delete colorFill;
-        delete areaFillReference;
-        delete pixmapFill;
-        delete symbolFill;
-        delete hatchFill;
-        delete textInstruction;
-        delete coverageFill;
-        delete nullInstruction;
-    }
-
-    void DrawingCommands::setPointInstruction(const std::string& symbol) {
-        delete pointInstruction;
-        pointInstruction = new PointInstruction(symbol);
-    }
-
-    void DrawingCommands::setLineInstruction(const std::vector<std::string>& lineStyle) {
-        delete lineInstruction;
-        lineInstruction = new LineInstruction(lineStyle);
-    }
-
-    void DrawingCommands::setLineInstructionUnsuppressed(const std::vector<std::string>& lineStyle) {
-        delete lineInstructionUnsuppressed;
-        lineInstructionUnsuppressed = new LineInstructionUnsuppressed(lineStyle);
-    }
-
-    void DrawingCommands::setColorFill(const std::string& token, double transparency) {
-        delete colorFill;
-        colorFill = new ColorFill(token, transparency);
-    }
-
-    void DrawingCommands::setAreaFillReference(const std::string& reference) {
-        delete areaFillReference;
-        areaFillReference = new AreaFillReference(reference);
-    }
-
-    void DrawingCommands::setPixmapFill(const std::string& reference) {
-        delete pixmapFill;
-        pixmapFill = new PixmapFill(reference);
-    }
-
-    void DrawingCommands::setSymbolFill(const std::string& symbol, const DrawingInstructions::Vector& v1, const DrawingInstructions::Vector& v2, bool clipSymbols) {
-        delete symbolFill;
-        symbolFill = new SymbolFill(symbol, v1, v2, clipSymbols);
-    }
-
-    void DrawingCommands::setHatchFill(const DrawingInstructions::Vector& direction, double distance, const std::string& lineStyle1, const std::string& lineStyle2) {
-        delete hatchFill;
-        hatchFill = new HatchFill(direction, distance, lineStyle1, lineStyle2);
-    }
-
-    void DrawingCommands::setTextInstruction(const std::string& text) {
-        delete textInstruction;
-        textInstruction = new TextInstruction(text);
-    }
-
-    void DrawingCommands::setCoverageFill(const std::string& attributeCode, const std::string& uom, const std::string& placement) {
-        delete coverageFill;
-        coverageFill = new CoverageFill(attributeCode, uom, placement);
-    }
-
-    void DrawingCommands::setNullInstruction() {
-        delete nullInstruction;
-        nullInstruction = new NullInstruction();
-    }
-
-    void DrawingCommands::parse(const std::string& key, std::string value)
-    {
-
-        if(key =="PointInstruction")
-            pointInstruction->parse(key);
-        else if (key == "LineInstruction")
-			lineInstruction->parse(key);
-		else if (key == "LineInstructionUnsuppressed")
-			lineInstructionUnsuppressed->parse(key);
-		else if (key == "ColorFill")
-			colorFill->parse(key);
-		else if (key == "AreaFillReference")
-			areaFillReference->parse(key);
-		else if (key == "PixmapFill")
-			pixmapFill->parse(key);
-		else if (key == "SymbolFill")
-			symbolFill->parse(key);
-		else if (key == "HatchFill")
-			hatchFill->parse(key);
-		else if (key == "TextInstruction")
-			textInstruction->parse(key);
-		else if (key == "CoverageFill")
-			coverageFill->parse(key);
-		else if (key == "NullInstruction")
-			nullInstruction->parse(key);
-    }
-
-    void DrawingCommands::execute() const {
-        if (pointInstruction) pointInstruction->execute();
-        if (lineInstruction) lineInstruction->execute();
-        if (lineInstructionUnsuppressed) lineInstructionUnsuppressed->execute();
-        if (colorFill) colorFill->execute();
-        if (areaFillReference) areaFillReference->execute();
-        if (pixmapFill) pixmapFill->execute();
-        if (symbolFill) symbolFill->execute();
-        if (hatchFill) hatchFill->execute();
-        if (textInstruction) textInstruction->execute();
-        if (coverageFill) coverageFill->execute();
-        if (nullInstruction) nullInstruction->execute();
     }
 }

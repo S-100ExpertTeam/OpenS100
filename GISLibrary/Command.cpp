@@ -1,10 +1,10 @@
 #include "stdafx.h"
-#include "StateCommand.h"
+#include "Command.h"
 
 namespace DrawingInstructions
 {
 
-    GraphicBasePackage::CRSType StateCommand::GetCRSTypeFromString(const std::string& value)
+    GraphicBasePackage::CRSType Command::GetCRSTypeFromString(const std::string& value)
     {
         if (value == "GeographicCRS")
         {
@@ -28,7 +28,7 @@ namespace DrawingInstructions
         }
     }
 
-    IntervalType StateCommand::GetIntervalTypeFromString(const std::string& value)
+    IntervalType Command::GetIntervalTypeFromString(const std::string& value)
     {
         if (value == "openInterval")
         {
@@ -68,17 +68,17 @@ namespace DrawingInstructions
         }
 	}
 
-    void StateCommand::init()
+    void Command::init()
     {
         present = false;
     }
 
-    void StateCommand::setPresent(bool value)
+    void Command::setPresent(bool value)
     {
         present = value;
     }
 
-    bool StateCommand::isPresent() const
+    bool Command::isPresent() const
     {
         return present;
     }

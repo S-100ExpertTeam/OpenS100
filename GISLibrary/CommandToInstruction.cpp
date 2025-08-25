@@ -10,68 +10,70 @@ S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_Drawin
 	{
 		instruction = new S100_AugmentedPoint();
 	}
-	else
+	else if (dc.pointInstruction.isPresent())
 	{
 		instruction = new S100_PointInstruction();
 	}
 
-	// DrawingInstruction
-	SetDrawingInstruction(sc, instruction);
-
-	// PointInstruction
-	if (dc.pointInstruction.isPresent())
+	if (instruction)
 	{
-		auto pointInstruction = (S100_PointInstruction*)instruction;
+		SetDrawingInstruction(sc, instruction);
 
-		// Symbol::Symbol
-		S100_Symbol* symbol = new S100_Symbol();
-		pointInstruction->SetSymbol(symbol);
-		
-		// reference
-		symbol->SetReference(dc.pointInstruction.GetSymbol());
-
-		// rotation
-		// rotationCRS
-		if (sc.rotation.isPresent())
+		// PointInstruction
+		if (dc.pointInstruction.isPresent())
 		{
-			symbol->SetRotation(sc.rotation.GetRotation());
-			symbol->SetRotationCRS(sc.rotation.GetRotationCRS());
-		}
+			auto pointInstruction = (S100_PointInstruction*)instruction;
 
-		// scaleFactor
-		if (sc.scaleFactor.isPresent())
+			// Symbol::Symbol
+			S100_Symbol* symbol = new S100_Symbol();
+			pointInstruction->SetSymbol(symbol);
+
+			// reference
+			symbol->SetReference(dc.pointInstruction.GetSymbol());
+
+			// rotation
+			// rotationCRS
+			if (sc.rotation.isPresent())
+			{
+				symbol->SetRotation(sc.rotation.GetRotation());
+				symbol->SetRotationCRS(sc.rotation.GetRotationCRS());
+			}
+
+			// scaleFactor
+			if (sc.scaleFactor.isPresent())
+			{
+				symbol->SetScaleFactor(sc.scaleFactor.GetScaleFactor());
+			}
+
+			// offset
+			if (sc.localOffset.isPresent())
+			{
+				symbol->SetOffsetX(sc.localOffset.GetXOffsetMM());
+				symbol->SetOffsetY(sc.localOffset.GetYOffsetMM());
+			}
+
+			// linePlacement
+			if (sc.linePlacement.isPresent())
+			{
+				symbol->SetLinePlacement(
+					sc.linePlacement.GetOffset(),
+					StringToLinePlacementMode(sc.linePlacement.GetLinePlacementMode()),
+					sc.linePlacement.IsVisibleParts());
+			}
+
+			// areaPlacement
+			if (sc.areaPlacement.isPresent())
+			{
+				symbol->SetAreaPlacement(StringToS100AreaPlacementMode(sc.areaPlacement.GetAreaPlacementMode()));
+			}
+
+			// overrideAll
+		}
+		// AugmentedPoint
+		else if (sc.augmentedPoint.isPresent())
 		{
-			symbol->SetScaleFactor(sc.scaleFactor.GetScaleFactor());
+			//sc.augmentedPoint
 		}
-
-		// offset
-		if (sc.localOffset.isPresent())
-		{
-			symbol->SetOffsetX(sc.localOffset.GetXOffsetMM());
-			symbol->SetOffsetY(sc.localOffset.GetYOffsetMM());
-		}
-
-		// linePlacement
-		if (sc.linePlacement.isPresent())
-		{
-			symbol->SetLinePlacement(
-				sc.linePlacement.GetOffset(),
-				StringToLinePlacementMode(sc.linePlacement.GetLinePlacementMode()),
-				sc.linePlacement.IsVisibleParts());
-		}
-
-		// areaPlacement
-		if (sc.areaPlacement.isPresent())
-		{
-			symbol->SetAreaPlacement(StringToS100AreaPlacementMode(sc.areaPlacement.GetAreaPlacementMode()));
-		}
-
-		// overrideAll
-	}
-	// AugmentedPoint
-	else if (sc.augmentedPoint.isPresent())
-	{
-		//sc.augmentedPoint
 	}
 
 	return (S100_PointInstruction*)instruction;

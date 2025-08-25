@@ -7,6 +7,7 @@
 #include "host_data.h"
 #include "host_functions.h"
 #include "CommandToInstruction.h"
+#include "CommandList.h"
 
 #include "../LuaScriptingReference/lua_functions.h"
 #include "../LuaScriptingReference/lua_session.h"
@@ -388,6 +389,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 
 	Local_StateCommands stateCommands;
 	Local_DrawingCommands drawingCommand;
+	CommandList commandList;
 
 	std::string v_ColorFill;
 	std::string v_TextInstruction;
@@ -406,6 +408,12 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 		Split(*i, ":", di_splited);
 
 		int splitedSize = (int)di_splited.size();
+
+		if (splitedSize > 0)
+		{
+			commandList.Insert(cp[0], cp.size() > 1 ? cp[1] : "");
+		}
+
 		if (splitedSize > 0)
 		{
 			if (di_splited[0].compare("PointInstruction") == 0)

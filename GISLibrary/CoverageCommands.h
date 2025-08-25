@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StateCommand.h"
+#include "Command.h"
 
 #include "..\\FeatureCatalog\\IntervalType.h"
 
@@ -8,7 +8,7 @@ namespace DrawingInstructions
 {
 
     // NumericAnnotation Class
-    class NumericAnnotation : public StateCommand {
+    class NumericAnnotation : public Command {
     public:
 		NumericAnnotation() = default;
         NumericAnnotation(int decimals, const std::string& championChoice, double buffer);
@@ -24,7 +24,7 @@ namespace DrawingInstructions
     };
 
     // SymbolAnnotation Class
-    class SymbolAnnotation : public StateCommand {
+    class SymbolAnnotation : public Command {
     public:
 		SymbolAnnotation() = default;
         SymbolAnnotation(const std::string& symbolRef, const std::string& rotationAttribute, const std::string& scaleAttribute,
@@ -46,7 +46,7 @@ namespace DrawingInstructions
     };
 
     // CoverageColor Class
-    class CoverageColor : public StateCommand {
+    class CoverageColor : public Command {
     public:
 		CoverageColor() = default;
         CoverageColor(const std::string& startToken, double startTransparency, const std::string& endToken, double endTransparency, double penWidth);
@@ -63,7 +63,7 @@ namespace DrawingInstructions
         double penWidth = 0.0;
     };
 
-    class LookupEntry : public StateCommand {
+    class LookupEntry : public Command {
     public:
 		LookupEntry() = default;
         LookupEntry(const std::string& label, double lower, double upper, const IntervalType closure);
@@ -78,39 +78,5 @@ namespace DrawingInstructions
         double upper = 0.0;
         IntervalType closure = IntervalType::none;
     };
-
-    class CoverageCommands
-    {
-    public:
-        CoverageCommands() = default;
-        CoverageCommands(const CoverageCommands&) = delete;
-        CoverageCommands& operator=(const CoverageCommands&) = delete;
-        CoverageCommands(CoverageCommands&&) = delete;
-        CoverageCommands& operator=(CoverageCommands&&) = delete;
-        ~CoverageCommands();
-
-
-        void setNumericAnnotation(int decimals, const std::string& championChoice, double buffer);
-        void setSymbolAnnotation(const std::string& symbolRef, const std::string& rotationAttribute, const std::string& scaleAttribute,
-			const GraphicBasePackage::CRSType rotationCRS, double rotationOffset, double rotationFactor,
-			double scaleFactor);
-        void setCoverageColor(const std::string& startToken, double startTransparency, const std::string& endToken, double endTransparency, double penWidth);
-        void setLookupEntry(const std::string& label, double lower, double upper, const IntervalType closure);
-
-
-        void parse(const std::string& key, std::string value);
-        void execute() const;
-
-    private:
-        //Coverage commands
-		NumericAnnotation* numericAnnotation = nullptr;
-		SymbolAnnotation* symbolAnnotation = nullptr;
-		CoverageColor* coverageColor = nullptr;
-		LookupEntry* lookupEntry = nullptr;
-    };
-
-
-
-
 }
 

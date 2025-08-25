@@ -1,12 +1,12 @@
 #pragma once
 
-#include "StateCommand.h"
+#include "Command.h"
 
 #include "..\\FeatureCatalog\\IntervalType.h"
 
 namespace DrawingInstructions
 {
-    class Date : public StateCommand {
+    class Date : public Command {
     public:
 		Date() = default;
         Date(const std::string& begin, const std::string& end);
@@ -19,7 +19,7 @@ namespace DrawingInstructions
         std::string end = "¡Ä";
     };
 
-    class Time : public StateCommand {
+    class Time : public Command {
     public:
 		Time() = default;
         Time(const std::string& begin, const std::string& end);
@@ -32,7 +32,7 @@ namespace DrawingInstructions
         std::string end = "¡Ä";
     };
 
-    class DateTime : public StateCommand {
+    class DateTime : public Command {
     public:
 		DateTime() = default;
         DateTime(const std::string& begin, const std::string& end);
@@ -45,7 +45,7 @@ namespace DrawingInstructions
         std::string end = "¡Ä";
     };
 
-    class TimeValid : public StateCommand {
+    class TimeValid : public Command {
     public:
 		TimeValid() = default;
         TimeValid(const IntervalType closure);
@@ -57,7 +57,7 @@ namespace DrawingInstructions
         IntervalType closure = IntervalType::none;
     };
 
-    class ClearTime : public StateCommand {
+    class ClearTime : public Command {
     public:
         ClearTime() = default;
 
@@ -66,32 +66,4 @@ namespace DrawingInstructions
         void execute()  override;
         void parse(const std::string& input) override;
     };
-
-	class TimeCommands
-	{
-        public:
-		TimeCommands() = default;
-		TimeCommands(const TimeCommands&) = delete;
-		TimeCommands& operator=(const TimeCommands&) = delete;
-		TimeCommands(TimeCommands&&) = delete;
-		TimeCommands& operator=(TimeCommands&&) = delete;
-		~TimeCommands();
-
-		void setDate(const std::string& begin, const std::string& end);
-		void setTime(const std::string& begin, const std::string& end);
-		void setDateTime(const std::string& begin, const std::string& end);
-		void setTimeValid(const IntervalType closure);
-		void clearTime();
-
-        void parse(const std::string& key, std::string value);
-		void execute() const;
-
-    private:
-        //Time Commands
-        DrawingInstructions::Date* date = nullptr;
-		Time* time = nullptr;
-		DateTime* dateTime = nullptr;
-		TimeValid* timeValid = nullptr;
-		ClearTime* clearTimeCmd = nullptr;
-	}; 
 }

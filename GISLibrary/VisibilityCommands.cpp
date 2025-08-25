@@ -5,111 +5,17 @@
 
 namespace DrawingInstructions
 {
-    VisibilityCommands::~VisibilityCommands() {
-        delete viewingGroup;
-		delete displayPlane;
-		delete drawingPriority;
-		delete scaleMinimum;
-		delete scaleMaximum;
-		delete id;
-		delete parent;
-		delete hover;
-    }
-    
-    void VisibilityCommands::setViewingGroup(const std::vector<std::string>& viewingGroups) {
-        delete this->viewingGroup;
-        viewingGroup = new ViewingGroup(viewingGroups);
-    }
-
-    void VisibilityCommands::setDisplayPlane(const std::string& displayPlane) {
-        delete this->displayPlane;
-        this->displayPlane = new DisplayPlane(displayPlane);
-    }
-
-    void VisibilityCommands::setDrawingPriority(int drawingPriority) {
-        delete this->drawingPriority;
-        this->drawingPriority = new DrawingPriority(drawingPriority);
-    }
-
-    void VisibilityCommands::setScaleMinimum(int scaleMinimum) {
-        delete this->scaleMinimum;
-        this->scaleMinimum = new ScaleMinimum(scaleMinimum);
-    }
-
-    void VisibilityCommands::setScaleMaximum(int scaleMaximum) {
-        delete this->scaleMaximum;
-        this->scaleMaximum = new ScaleMaximum(scaleMaximum);
-    }
-
-    void VisibilityCommands::setId(const std::string& id) {
-        delete this->id;
-        this->id = new Id(id);
-    }
-
-    void VisibilityCommands::setParent(const std::string& parentId) {
-        delete this->parent;
-        this->parent = new Parent(parentId);
-    }
-
-    void VisibilityCommands::setHover(bool hover) {
-        delete this->hover;
-        this->hover = new Hover(hover);
-    }
-
-    void VisibilityCommands::execute() const
-    {
-        if (viewingGroup) viewingGroup->execute();
-        if (displayPlane) displayPlane->execute();
-        if (drawingPriority) drawingPriority->execute();
-        if (scaleMinimum) scaleMinimum->execute();
-        if (scaleMaximum) scaleMaximum->execute();
-        if (id) id->execute();
-        if (parent) parent->execute();
-        if (hover) hover->execute();
-    }
-
-    void VisibilityCommands::parse(const std::string& key, std::string value)
-    {
-        if (key == "ViewingGroup")
-        {
-            //setViewingGroup();
-        }
-        else if (key == "DisplayPlane")
-        {
-            //setDisplayPlane();
-        }
-        else if (key == "DrawingPriority")
-        {
-            //setDrawingPriority();
-        }
-        else if (key == "ScaleMinimum")
-        {
-            //setScaleMinimum();
-        }
-        else if (key == "ScaleMaximum")
-        {
-            //setScaleMaximum();
-        }
-        else if (key == "Id")
-        {
-            //setId();
-        }
-        else if (key == "Parent")
-        {
-            //setParent();
-        }
-        else if (key == "Hover")
-        {
-            //setHover();
-        }
-    }
-
     // ViewingGroup class implementation
     ViewingGroup::ViewingGroup(const std::vector<std::string>& viewingGroups) : viewingGroups(viewingGroups) {}
 
+    Enum_StateCommand ViewingGroup::GetType() const
+    {
+		return Enum_StateCommand::ViewingGroup;
+    }
+
     void ViewingGroup::init()
     {
-        StateCommand::init();
+        Command::init();
         viewingGroups.clear();
     }
 
@@ -132,9 +38,14 @@ namespace DrawingInstructions
     // DisplayPlane class implementation
     DisplayPlane::DisplayPlane(const std::string& displayPlane) : displayPlane(displayPlane) {}
 
+    Enum_StateCommand DisplayPlane::GetType() const
+    {
+		return Enum_StateCommand::DisplayPlane;
+    }
+
     void DisplayPlane::init()
     {
-        StateCommand::init();
+        Command::init();
 		displayPlane.clear();
     }
 
@@ -157,9 +68,14 @@ namespace DrawingInstructions
     // DrawingPriority class implementation
     DrawingPriority::DrawingPriority(int drawingPriority) : drawingPriority(drawingPriority) {}
 
+    Enum_StateCommand DrawingPriority::GetType() const
+    {
+        return Enum_StateCommand::DrawingPriority;
+    }
+
     void DrawingPriority::init()
     {
-        StateCommand::init();
+        Command::init();
 		drawingPriority = 0; // Default value
     }
 
@@ -189,9 +105,14 @@ namespace DrawingInstructions
     // ScaleMinimum class implementation
     ScaleMinimum::ScaleMinimum(int scaleMinimum) : scaleMinimum(scaleMinimum) {}
 
+    Enum_StateCommand ScaleMinimum::GetType() const
+    {
+        return Enum_StateCommand::ScaleMinimum;
+    }
+
     void ScaleMinimum::init()
     {
-        StateCommand::init();
+        Command::init();
         scaleMinimum = 0;
     }
 
@@ -221,9 +142,14 @@ namespace DrawingInstructions
     // ScaleMaximum class implementation
     ScaleMaximum::ScaleMaximum(int scaleMaximum) : scaleMaximum(scaleMaximum) {}
 
+    Enum_StateCommand ScaleMaximum::GetType() const
+    {
+        return Enum_StateCommand::ScaleMaximum;
+    }
+
     void ScaleMaximum::init()
     {
-        StateCommand::init();
+        Command::init();
         scaleMaximum = 0;
     }
 
@@ -253,9 +179,14 @@ namespace DrawingInstructions
     // Id class implementation
     Id::Id(const std::string& id) : id(id) {}
 
+    Enum_StateCommand Id::GetType() const
+    {
+        return Enum_StateCommand::Id;
+    }
+
     void Id::init()
     {
-        StateCommand::init();
+        Command::init();
         id.clear();
     }
 
@@ -277,9 +208,14 @@ namespace DrawingInstructions
     // Parent class implementation
     Parent::Parent(const std::string& parentId) : parentId(parentId) {}
 
+    Enum_StateCommand Parent::GetType() const
+    {
+        return Enum_StateCommand::Parent;
+    }
+
     void Parent::init()
     {
-        StateCommand::init();
+        Command::init();
         parentId.clear();
     }
 
@@ -301,9 +237,14 @@ namespace DrawingInstructions
     // Hover class implementation
     Hover::Hover(bool hover) : hover(hover) {}
 
+    Enum_StateCommand Hover::GetType() const
+    {
+        return Enum_StateCommand::Hover;
+    }
+
     void Hover::init()
     {
-        StateCommand::init();
+        Command::init();
         hover = false;
     }
 

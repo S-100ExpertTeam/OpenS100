@@ -11,9 +11,11 @@
 #include"TimeCommands.h"
 #include "AlertCommands.h"
 #include "DrawingCommands.h"
+#include "Command.h"
 
 #include <string>
 #include <vector>
+#include <list>
 
 class S100Layer;
 class PCOutputSchemaManager;
@@ -163,8 +165,12 @@ public:
 	// Alert
 	DrawingInstructions::AlertReference alertReference;
 
+	std::list<DrawingInstructions::Command*> stateCommands;
+
 public:
 	void Init();
+
+	DrawingInstructions::Command* Insert(std::string& command, std::string& params);
 };
 
 class Local_DrawingCommands

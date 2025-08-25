@@ -145,6 +145,7 @@ void S100_DisplayList::SetDisplayInstruction(S100_Instruction* value)
 {
 	displayInstructions.push_back(value);
 }
+
 void S100_DisplayList::SetDisplayInstructions(std::list<S100_Instruction*> value) {
 	displayInstructions = value;
 }
@@ -154,10 +155,17 @@ S100_Instruction* S100_DisplayList::GetDisplayInstruction(int index) {
 	advance(it, index);
 	return *it;
 }
+
 std::list<S100_Instruction*> S100_DisplayList::GetDisplayInstructions()
 {
 	return displayInstructions;
 }
+
+std::list<S100_Instruction*>& S100_DisplayList::GetInstructionList()
+{
+	return displayInstructions;
+}
+
 std::list<S100_Instruction*> S100_DisplayList::GetAlertInstructions()
 {
 	return alertInstructions;
