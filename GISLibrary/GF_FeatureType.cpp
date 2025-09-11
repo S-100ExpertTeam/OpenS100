@@ -28,51 +28,6 @@ namespace GF
 		
 		if (other.spatial)
 			spatial = new SpatialAttributeType(*other.spatial);
-		
-		if (other.geometry)
-		{
-			switch (other.geometry->GetType())
-			{				
-			case SGeometryType::Point:
-			{
-				SPoint* pt = (SPoint*)other.geometry;
-				geometry = (pt) ? new SPoint(*pt) : nullptr;
-			}
-			break;
-			case SGeometryType::CompositeCurve:
-			{
-				SCompositeCurve* cc = (SCompositeCurve*)other.geometry;
-				geometry = (cc) ? new SCompositeCurve(*cc) : nullptr;
-			}
-			break;
-			case SGeometryType::Surface:
-			{
-				SSurface* sf = (SSurface*)other.geometry;
-				geometry = (sf) ? new SSurface(*sf) : nullptr;
-			}
-			break;
-			case SGeometryType::MultiPoint:
-			{
-				SMultiPoint* mp = (SMultiPoint*)other.geometry;
-				geometry = (mp) ? new SMultiPoint(*mp) : nullptr;
-			}
-			break;
-			case SGeometryType::Curve:
-			{
-				SCurve* cv = (SCurve*)other.geometry;
-				geometry = (cv) ? new SCurve(*cv) : nullptr;
-			}
-			break;
-			case SGeometryType::Coverage:
-			{
-				SCoverage* cr = (SCoverage*)other.geometry;
-				geometry = (cr) ? new SCoverage(*cr) : nullptr;
-			}
-			break;
-			default:
-				break;
-			}
-		}
 	}
 
 	FeatureType::~FeatureType()
