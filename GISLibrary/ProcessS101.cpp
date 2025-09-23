@@ -405,443 +405,365 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 		Split(*i, ":", di_splited);
 
 		int splitedSize = (int)di_splited.size();
-		if (splitedSize > 0)
-		{
-			if (di_splited[0].compare("PointInstruction") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.pointInstruction.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("LineInstruction") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.lineInstruction.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("LineInstructionUnsuppressed") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.lineInstructionUnsuppressed.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("ColorFill") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.colorFill.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("AreaFillReference") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.areaFillReference.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("PixmapFill") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.pixmapFill.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("SymbolFill") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.symbolFill.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("HatchFill") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.hatchFill.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("TextInstruction") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.textInstruction.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("CoverageFill") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.coverageFill.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("NullInstruction") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					drawingCommand.nullInstruction.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("ViewingGroup") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.viewingGroup.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("DisplayPlane") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.displayPlane.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("DrawingPriority") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.drawingPriority.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("ScaleMinimum") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.scaleMinimum.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("ScaleMaximum") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.scaleMaximum.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("Id") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.id.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("Parent") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.parent.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("Hover") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.hover.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("LocalOffset") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.localOffset.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("LinePlacement") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.linePlacement.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("AreaPlacement") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.areaPlacement.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("AreaCRS") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.areaCRS.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("Rotation") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.rotation.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("ScaleFactor") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.scaleFactor.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("LineStyle") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.lineStyle.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("LineSymbol") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.lineSymbol.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("Dash") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.dash.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("FontColor") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.fontColor.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("FontSize") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.fontSize.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("FontProportion") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.fontProportion.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("FontWeight") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.fontWeight.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("FontSlant") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.fontSlant.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("FontSerifs") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.fontSerifs.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("FontUnderline") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.fontUnderline.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("FontStrikethrough") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.fontStrikethrough.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("FontUpperline") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.fontUpperline.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("FontReference") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.fontReference.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("TextAlignHorizontal") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.textAlignHorizontal.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("TextAlignVertical") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.textAlignVertical.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("TextVerticalOffset") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.textVerticalOffset.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("OverrideColor") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.overrideColor.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("OverrideAll") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.overrideAll.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("SpatialReference") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.spatialReference.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("AugmentedPoint") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.augmentedPoint.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("AugmentedRay") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.augmentedRay.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("AugmentedPath") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.augmentedPath.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("Polyline") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.polyline.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("Arc3Points") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.arc3Points.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("ArcByRadius") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.arcByRadius.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("Annulus") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.annulus.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("ClearAugmented") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.clearGeometry.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("LookupEntry") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.lookupEntry.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("NumericAnnotation") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.numericAnnotation.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("SymbolAnnotation") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.symbolAnnotation.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("CoverageColor") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.coverageColor.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("Date") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.date.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("Time") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.time.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("DateTime") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.dateTime.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("TimeValid") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.timeValid.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("ClearTime") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.clearTime.parse(cp[1]);
-				}
-			}
-			else if (di_splited[0].compare("AlertReference") == 0)
-			{
-				if (splitedSize > 1)
-				{
-					stateCommands.alertReference.parse(cp[1]);
-				}
-			}
-		}
+		//if (splitedSize > 0)
+		//{
+		//	if (di_splited[0].compare("PointInstruction") == 0)
+		//	{
+
+		//	}
+		//	else if (di_splited[0].compare("LineInstruction") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			v_LineInstruction = di_splited[1];
+		//			stateCommands.v_LineStyle = v_LineInstruction;
+		//			lineStyle.ParseValue(v_LineInstruction);
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("LineInstructionUnsuppressed") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			v_LineInstruction = di_splited[1];
+		//			stateCommands.v_LineStyle = v_LineInstruction;
+		//			lineStyle.ParseValue(v_LineInstruction);
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("ColorFill") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			v_ColorFill = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("AreaFillReference") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			v_AreaFillReference = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("PixmapFill") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("SymbolFill") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("HatchFill") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("TextInstruction") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			v_TextInstruction = di_splited[1];
+		//			stateCommands.v_TextAlignHorizontal = v_TextInstruction;
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("CoverageFill") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("NullInstruction") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("ViewingGroup") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.viewingGroup.parse(cp[1]);
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("DisplayPlane") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_DisplayPlane = di_splited[1];
+		//			//stateCommands.displayPlane.ParseValue(stateCommands.v_DisplayPlane);
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("DrawingPlane") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("DrawingGroup") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("DrawingPriority") == 0)
+		//	{
+
+		//	}
+		//	else if (di_splited[0].compare("ScaleMinimum") == 0)
+		//	{
+
+		//	}
+		//	else if (di_splited[0].compare("ScaleMaximum") == 0)
+		//	{
+
+		//	}
+		//	else if (di_splited[0].compare("Id") == 0)
+		//	{
+
+		//	}
+		//	else if (di_splited[0].compare("Parent") == 0)
+		//	{
+
+		//	}
+		//	else if (di_splited[0].compare("Hover") == 0)
+		//	{
+
+		//	}
+		//	else if (di_splited[0].compare("LocalOffset") == 0)
+		//	{
+
+		//	}
+		//	else if (di_splited[0].compare("LinePlacement") == 0)
+		//	{
+
+		//	}
+		//	else if (di_splited[0].compare("AreaPlacement") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("AreaCRS") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("Rotation") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("ScaleFactor") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("LineStyle") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_LineStyle = di_splited[1];
+		//			lineStyle.ParseValue(stateCommands.v_LineStyle);
+		//			if (false == dash.IsEmpty())
+		//			{
+		//				lineStyle.SetDash(&dash);
+		//				dash.SetEmpty();
+		//			}
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("LineSymbol") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("Dash") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_Dash = di_splited[1];
+		//			dash.ParseValue(stateCommands.v_Dash);
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("FontColor") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_FontColor = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("FontSize") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_FontSize = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("FontProportion") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("FontWeight") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("FontSlant") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_FontSlant = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("FontSerifs") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("FontUnderline") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("FontStrikethrough") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("FontUpperline") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("FontReference") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_FontReference = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("TextAlignHorizontal") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_TextAlignHorizontal = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("TextAlignVertical") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_TextAlignVertical = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("TextVerticalOffset") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_TextVerticalOffset = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("OverrideColor") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_OverrideColor = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("OverrideAll") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_OverrideAll = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("SpatialReference") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			std::string_view spatialRef = di_splited[1];
+		//			if (!spatialRef.empty())
+		//			{
+		//				//stateCommands.v_SpatialReference.push_back(spatialRef);
+		//			}
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("AugmentedPoint") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_AugmentedPoint;
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("AugmentedRay") == 0)
+		//	{
+
+		//	}
+		//	else if (di_splited[0].compare("AugmentedPath") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_AugmentedPath = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("Polyline") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_Polyline = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("Arc3Points") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_Arc3Points = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("ArcByRadius") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_ArcByRadius = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("Annulus") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_Annulus = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("ClearAugmented") == 0)
+		//	{
+		//		stateCommands.v_ClearAugmented = di_splited[1];
+		//	}
+		//	else if (di_splited[0].compare("LookupEntry") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_LookupEntry = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("NumericAnnotation") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_NumericAnnotation = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("SymbolAnnotation") == 0)
+		//	{
+		//	}
+		//	else if (di_splited[0].compare("CoverageColor") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_CoverageColor = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("Date") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.Date = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("Time") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.Time = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("DateTime") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.DateTime = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("TimeValid") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.TimeValid = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("ClearTime") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.ClearTime = di_splited[1];
+		//		}
+		//	}
+		//	else if (di_splited[0].compare("AlertReference") == 0)
+		//	{
+		//		if (splitedSize > 1)
+		//		{
+		//			stateCommands.v_AlertReference = di_splited[1];
+		//		}
+		//	}
+		//}
 
 		if (splitedSize == 1)
 		{
