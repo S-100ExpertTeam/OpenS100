@@ -10,10 +10,12 @@
 [Dd]ebug/
 [Dd]ebug_x64/
 [Dd]ebug_Win32/
+[Dd]ebug_ARM64/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]elease_x64/
 [Rr]elease_Win32/
+[Rr]elease_ARM64/
 [Rr]eleases/
 x64-[Dd]ebug/
 x64-[Rr]elease/
