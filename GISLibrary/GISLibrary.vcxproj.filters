@@ -1059,6 +1059,9 @@
     <ClCompile Include="LuaAttributePathItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="S101UpdateCell.cpp">
+      <Filter>S101</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -2113,6 +2116,9 @@
     </ClInclude>
     <ClInclude Include="SpatialObjectType.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="S101UpdateCell.h">
+      <Filter>S101</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

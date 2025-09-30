@@ -55,6 +55,7 @@
 #include <iostream>
 #include <vector>
 #include <future>
+#include <filesystem>
 
 #include "../LatLonUtility/LatLonUtility.h"
 
@@ -82,7 +83,7 @@ BEGIN_MESSAGE_MAP(COpenS100View, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &COpenS100View::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
-	ON_COMMAND(T1, Load100File)
+	ON_COMMAND(ID_FILE_OPEN, &COpenS100View::Load100File)
 	ON_COMMAND(T2, RemoveLoadFile)
 	ON_COMMAND(T3, MapPlus)
 	ON_COMMAND(T4, MapMinus)
@@ -376,6 +377,59 @@ void COpenS100View::Load100File()
 		{
 			std::wstring message = L"Failed to load the following files:\n";
 			for (auto file : failedFiles)
+			{
+				message += file + L"\n";
+			}
+			AfxMessageBox(message.c_str());
+		}
+	}
+}
+
+
+void COpenS100View::Load100Folder()
+{
+	CFolderPickerDialog dlg(NULL, 0, this);
+	if (dlg.DoModal() == IDOK)
+	{
+		CString folderPath = dlg.GetPathName();
+		std::vector<std::wstring> failedFiles;
+
+		std::vector<std::wstring> supportedExtensions = { L".000", L".gml", L".h5", L".shp", L".xml" };
+
+		for (const auto& entry : std::filesystem::recursive_directory_iterator(folderPath.GetString()))
+		{
+			if (entry.is_regular_file())
+			{
+				std::filesystem::path path = entry.path();
+				std::wstring extension = path.extension().wstring();
+				
+				bool is_supported = false;
+				for (const auto& supported_ext : supportedExtensions)
+				{
+					if (_wcsicmp(extension.c_str(), supported_ext.c_str()) == 0)
+					{
+						is_supported = true;
+						break;
+					}
+				}
+
+				if (is_supported)
+				{
+					if (false == theApp.gisLib->AddLayer(path.c_str()))
+					{
+						failedFiles.push_back(path.wstring());
+					}
+				}
+			}
+		}
+		
+		theApp.m_pDockablePaneLayerManager.UpdateList();
+		MapRefresh();
+
+		if (failedFiles.size() > 0)
+		{
+			std::wstring message = L"Failed to load the following files:\n";
+			for (auto& file : failedFiles)
 			{
 				message += file + L"\n";
 			}

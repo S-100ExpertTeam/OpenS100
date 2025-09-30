@@ -179,13 +179,14 @@
 #define ID_FILE_LOAD                    32777
 #define ID_FILE_DELETE32778             32778
 #define ID_FILE_OPENFOLDER              32779
+#define ID_FILE_OPEN_FOLDER             32780
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        370
-#define _APS_NEXT_COMMAND_VALUE         32780
+#define _APS_NEXT_COMMAND_VALUE         32781
 #define _APS_NEXT_CONTROL_VALUE         1007
 #define _APS_NEXT_SYMED_VALUE           312
 #endif

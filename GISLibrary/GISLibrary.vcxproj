@@ -451,6 +451,8 @@
     <ClCompile Include="S100_SE_DigitalSignatureReference.cpp" />
     <ClCompile Include="S100_SE_SignatureOnData.cpp" />
     <ClCompile Include="S100_SE_SignatureOnSignature.cpp" />
+    <ClCompile Include="S101UpdateCell.cpp" />
+
     <ClCompile Include="SourceFileType.cpp" />
     <ClCompile Include="SourceHeaderType.cpp" />
     <ClCompile Include="StateCommands.cpp" />
@@ -797,6 +799,8 @@
     <ClInclude Include="S100_SE_DigitalSignatureReference.h" />
     <ClInclude Include="S100_SE_SignatureOnData.h" />
     <ClInclude Include="S100_SE_SignatureOnSignature.h" />
+    <ClInclude Include="S101UpdateCell.h" />
+    <ClInclude Include="S101CellFactory.h" />
     <ClInclude Include="SourceFileType.h" />
     <ClInclude Include="SourceHeaderType.h" />
     <ClInclude Include="SpatialObjectType.h" />

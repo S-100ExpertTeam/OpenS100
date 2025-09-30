@@ -5,6 +5,7 @@
 #include "S100H5.h"
 #include "S102H5.h"
 #include "ProcessS101.h"
+#include "S101UpdateCell.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -76,6 +77,32 @@ bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 			m_spatialObject = nullptr;
 			return false;
 		}
+		else
+		{
+			if (((S101Cell*)m_spatialObject)->isUpdate())
+			{
+				//S101UpdateCell로 m_spatialObject를 업데이트
+				// 기존 S101Cell 삭제
+				delete m_spatialObject;
+				
+				// S101UpdateCell로 새로 생성
+				m_spatialObject = new S101UpdateCell(fc, d2d1);
+				m_spatialObject->SetLayer(this);
+				
+				// 업데이트 파일 다시 로드
+				if (!m_spatialObject->Open(_filepath))
+				{
+					delete m_spatialObject;
+					m_spatialObject = nullptr;
+					return false;
+				}
+				
+				// 업데이트 항목 생성
+				auto updateCell = (S101UpdateCell*)m_spatialObject;
+				updateCell->CreateUpdateItems();
+			}
+		}
+			
 
 		//enc->SetAllNumericCode(GetFC());
 		return true;

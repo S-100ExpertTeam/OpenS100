@@ -1,0 +1,35 @@
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+	"K",            ID_FILE_OPEN_FOLDER,    VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+END
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "File(&F)"
+    BEGIN
+        MENUITEM "Create(&N)\tCtrl+N",          ID_FILE_NEW
+        MENUITEM "Open(&O)...\tCtrl+O",         ID_FILE_OPEN
+        MENUITEM "Save(&S)\tCtrl+S",            ID_FILE_SAVE
+        MENUITEM "Other Nmae Save(&A)...",      ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "Exit(&X)",                    ID_APP_EXIT
+    END
+    POPUP "Edit(&E)"
+    BEGIN
+        MENUITEM "Undo(&Z)\tCtrl+Z",            ID_EDIT_UNDO
+        MENUITEM "Cut(&X)\tCtrl+X",             ID_EDIT_CUT
+        MENUITEM "Copy(&C)\tCtrl+C",            ID_EDIT_COPY
+        MENUITEM "Paste(&V)\tCtrl+V",           ID_EDIT_PASTE
+    END
+END

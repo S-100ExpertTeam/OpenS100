@@ -105,6 +105,7 @@ protected:
 public:
 
 	afx_msg void Load100File(); //Add Layer
+	afx_msg void Load100Folder();
 	afx_msg void RemoveLoadFile(); //Delete Layer
 	afx_msg void MapPlus(); //Layer Zoomin
 	afx_msg void MapMinus(); //Layer Zoomout

@@ -198,7 +198,7 @@ END
 
 IDR_TOOLBAR3 TOOLBAR 26, 24
 BEGIN
-    BUTTON      T1
+    BUTTON      ID_FILE_OPEN
     BUTTON      T2
     SEPARATOR
     BUTTON      T3
@@ -226,6 +226,7 @@ BEGIN
     BEGIN
         MENUITEM "Create(&N)\tCtrl+N",          ID_FILE_NEW
         MENUITEM "Open(&O)...\tCtrl+O",         ID_FILE_OPEN
+		MENUITEM "Open Folder...",				ID_FILE_OPEN_FOLDER
         MENUITEM "Save(&S)\tCtrl+S",            ID_FILE_SAVE
         MENUITEM "Other Nmae Save(&A)...",      ID_FILE_SAVE_AS
         MENUITEM SEPARATOR

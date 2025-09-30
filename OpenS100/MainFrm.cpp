@@ -3,6 +3,7 @@
 #include "OpenS100.h"
 
 #include "MainFrm.h"
+#include "OpenS100View.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -21,6 +22,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, &CMainFrame::OnViewCustomize)
 	ON_REGISTERED_MESSAGE(AFX_WM_CREATETOOLBAR, &CMainFrame::OnToolbarCreateNew)
 	ON_WM_SETTINGCHANGE()
+	ON_COMMAND(ID_FILE_OPEN_FOLDER, &CMainFrame::Load100Folder)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -156,6 +158,20 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
+BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		if (pMsg->wParam == 'K' && (GetKeyState(VK_CONTROL) & 0x8000))
+		{
+			Load100Folder();
+			return TRUE;
+		}
+	}
+
+	return CFrameWndEx::PreTranslateMessage(pMsg);
+}
+
 BOOL CMainFrame::CreateDockingWindows()
 {
 	if (!theApp.m_pDockablePaneLayerManager.Create(_T("Dataset information"), this, CRect(0, 0, 300, 300), TRUE, IDD_DIALOG_DOCK_LAYERMANEGER, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
@@ -262,4 +278,13 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 void CMainFrame::SetStatusBar(int nIndex, LPCTSTR lpszNewText, BOOL bUpdate)
 {
 	m_wndStatusBar.SetPaneText(nIndex, lpszNewText);
+}
+
+void CMainFrame::Load100Folder()
+{
+	COpenS100View* pView = (COpenS100View*)GetActiveView();
+	if (pView)
+	{
+		pView->Load100Folder();
+	}
 }
