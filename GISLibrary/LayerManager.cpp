@@ -1224,6 +1224,10 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int min
 	}
 
 	auto pc = layer->GetPC();
+	if (nullptr == pc)
+	{
+		return;
+	}
 
 	auto rt = D2->pRT;
 	rt->BindDC(hDC, scaler->GetScreenRect());

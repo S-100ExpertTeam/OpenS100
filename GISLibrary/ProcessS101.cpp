@@ -26,7 +26,6 @@
 #include "../PortrayalCatalogue/S100_PointInstruction.h"
 #include "../PortrayalCatalogue/S100_SymbolFill.h"
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
-#include "../PortrayalCatalogue/DisplayFactory.h"
 #include "../PortrayalCatalogue/ViewingGroupLayer.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
@@ -39,11 +38,84 @@
 #include <libxslt/xsltutils.h>
 
 #include <sstream> 
+#include <algorithm>
 
 using namespace LatLonUtility;
 
 S101LuaScriptingReference ProcessS101::theInstance;
 std::string ProcessS101::g_unknown_attribute_value = "";
+
+void Local_StateCommands::Init()
+{
+	// Visibility
+	v_ViewingGroup;
+	v_DisplayPlane;
+	v_DrawingPriority;
+	v_ScaleMinimum;
+	v_ScaleMaximum;
+	v_Id;
+	v_Parent;
+	v_Hover;
+
+	// Transform
+	v_LocalOffset;
+	v_LinePlacement;
+	v_AreaPlacement;
+	v_AreaCRS;
+	v_Rotation;
+	v_ScaleFactor;
+
+	// Line Style
+	v_LineStyle;
+	v_LineSymbol;
+	v_Dash;
+
+	// Text Style
+	v_FontColor;
+	v_FontSize = "10";
+	v_FontProportion;
+	v_FontWeight;
+	v_FontSlant;
+	v_FontSerifs;
+	v_FontUnderline;
+	v_FontStrikethrough;
+	v_FontUpperline;
+	v_FontReference;
+	v_TextAlignHorizontal;
+	v_TextAlignVertical;
+	v_TextVerticalOffset;
+
+	// Colour Override
+	v_OverrideColor;
+	v_OverrideAll;
+
+	// Geometry
+	v_SpatialReference;
+	v_AugmentedPoint;
+	v_AugmentedRay;
+	v_AugmentedPath;
+	v_Polyline;
+	v_Arc3Points;
+	v_ArcByRadius;
+	v_Annulus;
+	v_ClearAugmented;
+
+	// Coverage
+	v_LookupEntry;
+	v_NumericAnnotation;
+	v_SymbolAnnotation;
+	v_CoverageColor;
+
+	// Time
+	Date;
+	Time;
+	DateTime;
+	TimeValid;
+	ClearTime;
+
+	// Alert
+	v_AlertReference;
+}
 
 ProcessS101::ProcessS101()
 {
@@ -55,7 +127,7 @@ ProcessS101::~ProcessS101()
 
 }
 
-void dump_com_error(_com_error& e)
+void dump_com_error(_com_error &e)
 {
 	printf("Error\n");
 	printf("\a\t Code = %08lx\n", e.Error());
@@ -84,20 +156,6 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 			fc,
 			pc);
 
-		std::string two_shades = ENCCommon::TWO_SHADES ? "true" : "false";
-		std::string national_language = ENCCommon::SHOW_NOBJNM ? "eng" : "kor";
-		std::string ignore_scamin = ENCCommon::APPLY_SCALE_MIN ? "false" : "true";
-		std::string shallow_pattern = ENCCommon::SHALLOW_PATTERN ? "true" : "false";
-		std::string simplified_points = ENCCommon::SIMPLIFIED_POINT_SYMBOL ? "true" : "false";
-		std::string show_isolated_dangers_in_shallow_waters = ENCCommon::SHOW_ISOLATED_DANGER_IN_SHALLOW_WATER ? "true" : "false";
-		std::string plain_boundaries = ENCCommon::SymbolizedAreaBoundary ? "false" : "true";
-		std::string safety_depth = std::to_string(ENCCommon::SAFETY_DEPTH);
-		std::string sallow_contour = std::to_string(ENCCommon::SHALLOW_CONTOUR);
-		std::string safety_contour = std::to_string(ENCCommon::SAFETY_CONTOUR);
-		std::string deep_contour = std::to_string(ENCCommon::DEEP_CONTOUR);
-		std::string full_sector = ENCCommon::FULL_SECTORS ? "true" : "false";
-		std::string radar_overlay = ENCCommon::DISPLAY_PLANE ? "true" : "false";
-
 		auto context = pc->GetContext();
 		if (!context) {
 			return 0;
@@ -113,21 +171,6 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 			}
 		}
 
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SafetyDepth", safety_depth.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShallowContour", sallow_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SafetyContour", safety_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("TwoShades", two_shades.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("DeepContour", deep_contour.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShallowPattern", shallow_pattern.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("ShowIsolatedDangersInShallowWaters",
-		//	show_isolated_dangers_in_shallow_waters.c_str());
-		KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("PlainBoundaries", "false");
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("SimplifiedPoints", simplified_points.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("FullSectors", full_sector.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("RadarOverlay", radar_overlay.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("IgnoreScamin", ignore_scamin.c_str());
-		//KRS_LUA_SCRIPT_REFERENCE::PortrayalSetContextParameter("NationalLanguage", national_language.c_str());
-
 		std::list<Result_DrawingInstruction>* drawingInstructionResult = KRS_LUA_SCRIPT_REFERENCE::GetResultDrawingInstructions();
 
 		int t = (int)drawingInstructionResult->size();
@@ -140,20 +183,24 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 			std::string drawingInstructions = i->drawingInstructions;
 			std::vector<std::string> di_splited = Split(drawingInstructions, ";");
 
-			c->pcManager->ParsingSENCInstruction(layer, i->featureID, di_splited);
+			LUA_ParsingDrawingInstructions(i->featureID, di_splited, c->pcManager);
 		}
+
+		c->pcManager->GenerateSENCInstruction(c, layer->GetPC());
+
+		c->pcManager->InitDisplayList();
 
 		KRS_LUA_SCRIPT_REFERENCE::SaveDrawingInstructions("..\\TEMP\\drawingCommands.txt");
 		KRS_LUA_SCRIPT_REFERENCE::RemoveResultDrawingInstructions();
 	}
-	catch (_com_error& e)
+	catch (_com_error &e)
 	{
 		dump_com_error(e);
 	}
 	return 0;
 }
 
-int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRulePath, std::string outputXmlPath, S100Layer* layer)
+int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRulePath, std::string outputXmlPath, PortrayalCatalogue* pc)
 {
 	// Initialize the libraries
 	xmlInitParser();
@@ -162,11 +209,24 @@ int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRule
 	xmlSubstituteEntitiesDefault(1);
 
 	// Load XML and XSL
-	xmlDocPtr doc = xmlParseFile(inputXmlPath.c_str());
+	xmlDocPtr inputXml = xmlParseFile(inputXmlPath.c_str());
 	xsltStylesheetPtr xslt = xsltParseStylesheetFile((const xmlChar*)mainRulePath.c_str());
 
+	// Load params
+	std::vector<const char*> params;
+	std::vector<std::string> temp_params;
+	if (pc)
+	{
+		temp_params = ProcessS101::getParams(pc);
+		for (const auto& item : temp_params)
+		{
+			params.push_back(item.c_str());
+		}
+	}
+	params.push_back(nullptr);
+
 	// Transform
-	xmlDocPtr result = xsltApplyStylesheet(xslt, doc, nullptr);
+	xmlDocPtr result = xsltApplyStylesheet(xslt, inputXml, params.data());
 
 	// Output the transformed XML
 	FILE* outFile = fopen(outputXmlPath.c_str(), "wb");
@@ -176,7 +236,7 @@ int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRule
 	// Cleanup
 	xsltFreeStylesheet(xslt);
 	xmlFreeDoc(result);
-	xmlFreeDoc(doc);
+	xmlFreeDoc(inputXml);
 
 	xsltCleanupGlobals();
 	xmlCleanupParser();
@@ -184,71 +244,81 @@ int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRule
 	return 0;
 }
 
+std::string ProcessS101::ProcessS100_XSLT(std::string inputXmlContent, std::string mainRulePath, PortrayalCatalogue* pc)
+{
+	// Init
+	xmlInitParser();
+	xsltInit();
+
+	// Load XML & XSLT 
+	xmlDocPtr xmlDoc = xmlParseMemory(inputXmlContent.c_str(), inputXmlContent.length());
+	if (!xmlDoc) {
+		return std::string();
+	}
+
+	xsltStylesheetPtr xsltDoc = xsltParseStylesheetFile(reinterpret_cast<const xmlChar*>(mainRulePath.c_str()));
+	if (!xsltDoc) {
+		xmlFreeDoc(xmlDoc);
+		return std::string();
+	}
+
+	// Load params
+	std::vector<const char*> params;
+	std::vector<std::string> temp_params;
+	if (pc)
+	{
+		temp_params = ProcessS101::getParams(pc);
+		for (const auto& item : temp_params)
+		{
+			params.push_back(item.c_str());
+		}
+	}
+	params.push_back(nullptr);
+
+	// Transform XSLT
+	xmlDocPtr resultDoc = xsltApplyStylesheet(xsltDoc, xmlDoc, params.data());
+	if (!resultDoc) {
+		xsltFreeStylesheet(xsltDoc);
+		xmlFreeDoc(xmlDoc);
+		return std::string();
+	}
+
+	// Save result to memory
+	xmlChar* resultBuffer = nullptr;
+	int bufferSize = 0;
+	xsltSaveResultToString(&resultBuffer, &bufferSize, resultDoc, xsltDoc);
+
+	// Convert result to std::string
+	std::string result;
+	if (resultBuffer) {
+		result = std::string(reinterpret_cast<char*>(resultBuffer), bufferSize);
+		xmlFree(resultBuffer);
+	}
+	
+	// 메모리 정리
+	xmlFreeDoc(resultDoc);
+	xsltFreeStylesheet(xsltDoc);
+	xmlFreeDoc(xmlDoc);
+	xsltCleanupGlobals();
+	xmlCleanupParser();
+
+	return result;
+}
+
 bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vector<std::string> elements, PCOutputSchemaManager* pcm)
 {
-	// Visibility
-	std::string v_ViewingGroup;
-	std::string v_DisplayPlane;
-	std::string v_DrawingPriority;
-	std::string v_ScaleMinimum;
-	std::string v_ScaleMaximum;
+	Local_StateCommands stateCommands;
 
-	// Transform
-	std::string v_LocalOffset;
-	std::string v_LinePlacement;
-	std::string v_AreaPlacement;
-	std::string v_AreaCRS;
-	std::string v_Rotation;
-	std::string v_ScaleFactor;
-
-	// Pen Style
-	std::string v_PenColor;
-	std::string v_PenWidth;
-
-	// Line Style
-	std::string v_LineStyle;
-	std::string v_LineSymbol;
-	std::string v_Dash;
-
-	// Text Style
-	std::string v_FontColor;
-	std::string v_FontSize = "10";
-	std::string v_FontProportion;
-	std::string v_FontWeight;
-	std::string v_FontSlant;
-	std::string v_FontSerifs;
-	std::string v_FontUnderline;
-	std::string v_FontStrikethrough;
-	std::string v_FontUpperline;
-	std::string v_FontReference;
-	std::string v_TextAlignHorizontal;
-	std::string v_TextAlignVertical;
-	std::string v_TextVerticalOffset;
-
-	// Colour Override
-	std::string v_OverrideColor;
-	std::string v_OverrideAll;
-
-	// Geometry
-	std::string v_SpatialReference;
-	std::string v_AugmentedPoint;
-	std::string v_AugmentedRay;
-	std::string v_AugmentedPath;
-	std::string v_Polyline;
-	std::string v_Arc3Points;
-	std::string v_ArcByRadius;
-	std::string v_Annulus;
-	std::string v_ClearAugmented;
-
-	// Coverage
-	std::string v_LookupEntry;
-	std::string v_NumericAnnotation;
-	std::string v_SymbolAnnotation;
-	std::string v_CoverageColor;
-
+	std::string v_ColorFill;
+	std::string v_TextInstruction;
+	std::string v_LineInstruction;
+	std::string v_PointInstruction;
 	std::list<std::string> vl_SpatialReference;
+	std::string v_AreaFillReference;
+	S100_Dash dash;
 
-	//S100_LineStyle lineStyle;
+	S100_LineStyle lineStyle;
+
 	for (auto i = elements.begin(); i != elements.end(); i++)
 	{
 		std::string element = *i;
@@ -262,11 +332,12 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 			// "ClearGeometry"
 			if (di_splited[0].compare("ClearGeometry") == 0)
 			{
-				v_AugmentedPoint = "";
+				stateCommands.v_AugmentedPoint = "";
 				vl_SpatialReference.clear();
-				v_AugmentedRay = "";
-				v_AugmentedPath = "";
-				v_ArcByRadius = "";
+				v_AreaFillReference = "";
+				stateCommands.v_AugmentedRay = "";
+				stateCommands.v_AugmentedPath = "";
+				stateCommands.v_ArcByRadius = "";
 			}
 		}
 		else
@@ -275,236 +346,595 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string featureID, std::vec
 			std::string tag = di_splited[0];
 			std::string value = di_splited[1];
 
-			switch (tag.size())
+			int sizeForIndex = (int)tag.size();
+
+			if (tag.compare("TextVerticalOffset") == 0)
 			{
-			case 4:
+				OutputDebugString(L"A");
+			}
+			else if (sizeForIndex == 2)
 			{
-				if (tag == "Dash")
+			}
+			else if (sizeForIndex == 4)
+			{
+				// "Dash:0,3.6"
+				if (tag.compare("Dash") == 0)
 				{
-					v_Dash = value;
+					stateCommands.v_Dash = value;
+					dash.ParseValue(value);
+				}
+				else
+				{
+					CString str;
+					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
+					//OutputDebugString(str);
 				}
 			}
-			break;
-			case 8:
+			else if (sizeForIndex == 5)
+			{
+				if (tag.compare("Hover") == 0)
+				{
+				}
+			}
+			else if (sizeForIndex == 6)
+			{
+				if (tag.compare("Parent") == 0)
+				{
+				}
+			}
+			else if (sizeForIndex == 8)
 			{
 				// "FontSize:10"
-				if (tag == "FontSize")
-					v_FontSize = value;
+				if (tag.compare("FontSize") == 0)
+				{
+					stateCommands.v_FontSize = value;
+				}
 				// "Rotation:PortrayalCRS,135"
-				else if (tag == "Rotation")
-					v_Rotation = value;
+				else if (tag.compare("Rotation") == 0)
+				{
+					stateCommands.v_Rotation = value;
+				}
+				else
+				{
+					CString str;
+					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
+					//OutputDebugString(str);
+				}
 			}
-			break;
-			case 9:
+			else if (sizeForIndex == 7)
+			{
+				if (tag.compare("AreaCRS") == 0)
+				{
+				}
+			}
+			else if (sizeForIndex == 9)
 			{
 				// "ColorFill:DEPVS"
-				if (tag == "ColorFill")
+				if (tag.compare("ColorFill") == 0)
 				{
-					CDisplayFactory::createAreaInstructionA(pcm->displayList,
-						featureID,
-						v_DrawingPriority,
-						v_DisplayPlane,
-						v_ViewingGroup,
-						v_ScaleMinimum,
-						value);
+					v_ColorFill = value;
+
+					S100_AreaInstruction *in = new S100_AreaInstruction();
+					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
+
+					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
+					in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
+					in->SetViewingGroup(stateCommands.v_ViewingGroup);
+					in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
+
+					if (v_ColorFill.size() > 0)
+					{
+						std::vector<std::string> v_splited = Split(v_ColorFill, ",");
+
+						if (!in->GetAreaFill()) in->SetAreaFill(new S100_ColorFill());
+						S100_ColorFill* cf = (S100_ColorFill*)in->GetAreaFill();
+
+						if (!cf->GetColor()) cf->SetColor(new S100_Color());
+						cf->GetColor()->SetToken(std::wstring(v_splited[0].begin(), v_splited[0].end()));
+						cf->GetColor()->SetName(std::wstring(v_splited[0].begin(), v_splited[0].end()));
+
+						if (v_splited.size() > 1)
+						{
+							cf->GetColor()->SetTransparency(std::wstring(v_splited[1].begin(), v_splited[1].end()));
+						}
+					}
+					v_ColorFill = "";
 				}
-				else if (tag == "LineStyle")
+				else if (tag.compare("LineStyle") == 0)
 				{
-					v_LineStyle = value;
+					stateCommands.v_LineStyle = value;
+					lineStyle.ParseValue(value);
+
+					if (false == dash.IsEmpty())
+					{
+						lineStyle.SetDash(&dash);
+						dash.SetEmpty();
+					}
 				}
-				else if (tag == "FontColor")
-					v_FontColor = value;
-				else if (tag == "FontSlant")
-					v_FontSlant = value;
+				else if (tag.compare("FontColor") == 0)
+				{
+					stateCommands.v_FontColor = value;
+				}
+				else if (tag.compare("FontSlant") == 0)
+				{
+					stateCommands.v_FontSlant = value;
+				}
+				else
+				{
+					CString str;
+					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
+					//OutputDebugString(str);
+				}
 			}
-			break;
-			case 11:
+			else if (sizeForIndex == 11)
 			{
 				// "LocalOffset:-3.51,3.51"
 				if (tag.compare("LocalOffset") == 0)
 				{
-					v_LocalOffset = value;
+					stateCommands.v_LocalOffset = value;
 				}
 				// "ScaleFactor:0.311"
 				else if (tag.compare("ScaleFactor") == 0)
 				{
-					v_ScaleFactor = value;
+					stateCommands.v_ScaleFactor = value;
 				}
 				// "ArcByRadius:0,0,20,24,199"
 				else if (tag.compare("ArcByRadius") == 0)
 				{
-					v_ArcByRadius = value;
+					stateCommands.v_ArcByRadius = value;
+				}
+				else
+				{
+					CString str;
+					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
+					//OutputDebugString(str);
 				}
 			}
-			break;
-			case 12:
+			else if (sizeForIndex == 12)
 			{
 				// "ScaleMinimum:179999"
 				if (tag.compare("ScaleMinimum") == 0)
 				{
-					v_ScaleMinimum = value;
+					stateCommands.v_ScaleMinimum = value;
 				}
 				// "ViewingGroup:27020"
 				else if (tag.compare("ViewingGroup") == 0)
 				{
-					v_ViewingGroup = value;
+					stateCommands.v_ViewingGroup.push_back(value);
 				}
 				// "DisplayPlane:OverRADAR"
 				else if (tag.compare("DisplayPlane") == 0)
 				{
-					v_DisplayPlane = value;
+					stateCommands.v_DisplayPlane = value;
 				}
 				// "AugmentedRay:GeographicCRS,24,GeographicCRS,16668"
 				else if (tag.compare("AugmentedRay") == 0)
 				{
-					v_AugmentedRay = value;
+					stateCommands.v_AugmentedRay = value;
 
-					v_AugmentedPath = "";
+					stateCommands.v_AugmentedPath = "";
+				}
+				else
+				{
+					CString str;
+					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
+					//OutputDebugString(str);
 				}
 			}
-			break;
-			case 13:
+			else if (sizeForIndex == 13)
 			{
 				if (tag.compare("LinePlacement") == 0)
 				{
-					v_LinePlacement = value;
+					stateCommands.v_LinePlacement = value;
 				}
 				else if (tag.compare("AugmentedPath") == 0)
 				{
-					v_AugmentedPath = value;
-					v_AugmentedRay = "";
+					stateCommands.v_AugmentedPath = value;
+					stateCommands.v_AugmentedRay = "";
+				}
+				else if (tag.compare("AreaPlacement") == 0)
+				{
+				}
+				else
+				{
+					CString str;
+					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
+					//OutputDebugString(str);
 				}
 			}
-			break;
-			case 14:
+			else if (sizeForIndex == 14)
 			{
 				if (tag.compare("AugmentedPoint") == 0)
 				{
-					v_AugmentedPoint = value;
+					stateCommands.v_AugmentedPoint = value;
+				}
+				else if (tag.compare("AlertReference") == 0)
+				{
+					// !Don't parsing AlertReference util new model of drawingCommands is completed... 
+					
+					//v_AlertReference = value;
+
+					//S100_AlertReference* in = new S100_AlertReference();
+					//pcm->displayList->AddAlertInstruction((S100_Instruction*)in);
+
+					//in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+
+					//std::vector<std::string> v_splited = Split(v_AlertReference, ",");
+					//if (v_splited.size() > 0)
+					//{
+					//	in->alertType = std::wstring(v_splited[0].begin(), v_splited[0].end());
+					//}
+					//if (v_splited.size() > 1)
+					//{
+					//	in->plan = std::wstring(v_splited[1].begin(), v_splited[1].end());
+					//}
+					//if (v_splited.size() > 2)
+					//{
+					//	in->monitor = std::wstring(v_splited[2].begin(), v_splited[2].end());
+					//}
+
+					//v_AlertReference = "";
+				}
+				else
+				{
+					CString str;
+					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
+					//OutputDebugString(str);
 				}
 			}
-			break;
-			case 15:
+			else if (sizeForIndex == 15)
 			{
 				// "DrawingPriority:8"
 				if (tag.compare("DrawingPriority") == 0)
 				{
-					v_DrawingPriority = value;
+					stateCommands.v_DrawingPriority = value;
 				}
 				// "TextInstruction:bn Alligator River Light 16,21,8"
 				else if (tag.compare("TextInstruction") == 0)
 				{
-					CDisplayFactory::createTextInstruction(pcm->displayList,
-						featureID,
-						v_DrawingPriority,
-						v_DisplayPlane,
-						v_ViewingGroup,
-						v_ScaleMinimum,
-						v_TextAlignVertical,
-						v_TextAlignHorizontal,
-						v_LocalOffset,
-						value,
-						v_FontSize,
-						v_FontSlant,
-						v_FontColor);
+					v_TextInstruction = value;
+					S100_TextInstruction *in = new S100_TextInstruction();
+					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
+
+					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
+					in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
+					in->SetViewingGroup(stateCommands.v_ViewingGroup);
+					in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
+
+					in->SetTextPoint(new S100_TextPoint());
+
+					if (stateCommands.v_TextAlignVertical.size() > 0)
+					{
+						in->GetTextPoint()->SetVerticalAlignment(std::wstring(stateCommands.v_TextAlignVertical.begin(), stateCommands.v_TextAlignVertical.end()));
+					}
+					if (stateCommands.v_TextAlignHorizontal.size() > 0)
+					{
+						in->GetTextPoint()->SetHorizontalAlignment(std::wstring(stateCommands.v_TextAlignHorizontal.begin(), stateCommands.v_TextAlignHorizontal.end()));
+					}
+
+					if (stateCommands.v_LocalOffset.size() > 0)
+					{
+						in->GetTextPoint()->SetOffset(new S100_VectorPoint());
+
+						std::vector<std::string> v_splited = Split(stateCommands.v_LocalOffset, ",");
+						if (v_splited.size() == 2)
+						{
+							in->GetTextPoint()->GetOffset()->SetX(std::wstring(v_splited[0].begin(), v_splited[0].end()));
+							in->GetTextPoint()->GetOffset()->SetY(std::wstring(v_splited[1].begin(), v_splited[1].end()));
+						}
+						else
+						{
+							//OutputDebugString(L"Error : Offset Value should have 2 arguments.");
+						}
+					}
+
+					if (v_TextInstruction.size() > 0)
+					{
+						LatLonUtility::replace_string(v_TextInstruction, "&s", ";");
+						LatLonUtility::replace_string(v_TextInstruction, "&c", ":");
+						LatLonUtility::replace_string(v_TextInstruction, "&m", ",");
+						LatLonUtility::replace_string(v_TextInstruction, "&a", "&");
+
+						S100_Element* element = new S100_Element();
+
+						in->GetTextPoint()->SetElement(element);
+
+						if (!element->GetText())
+						{
+							element->SetText(new S100_Text());
+						}
+
+						//std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
+
+						//auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_splited_text[0].c_str());
+						auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_TextInstruction.c_str());
+						std::wstring wstrValue = wValue;
+						delete[] wValue;
+						element->GetText()->SetValue(wstrValue);
+
+						if (stateCommands.v_FontSize.size() > 0)
+						{
+							element->SetBodySize(std::wstring(stateCommands.v_FontSize.begin(), stateCommands.v_FontSize.end()));
+						}
+
+						if (stateCommands.v_FontSlant.size() > 0)
+						{
+							if (!element->GetFont())
+							{
+								element->SetFont(new S100_Font());
+							}
+
+							element->GetFont()->SetSlant(std::wstring(stateCommands.v_FontSlant.begin(), stateCommands.v_FontSlant.end()));
+						}
+
+						if (stateCommands.v_FontColor.size() > 0)
+						{
+							auto fontColor = new S100_Foreground();
+							fontColor->fromDrawingCommand(stateCommands.v_FontColor);
+							element->SetForground(fontColor);
+						}
+					}
+
+					v_TextInstruction = "";
 				}
 				else if (tag.compare("LineInstruction") == 0)
 				{
-					if (!v_AugmentedRay.empty())
+					v_LineInstruction = value;
+
+					if (stateCommands.v_AugmentedRay.size() > 0)
 					{
-						CDisplayFactory::createAugmentedRay(pcm->displayList,
-							featureID,
-							v_DrawingPriority,
-							v_DisplayPlane,
-							v_ViewingGroup,
-							v_ScaleMinimum,
-							v_LineStyle,
-							v_Dash,
-							v_AugmentedRay);
+						S100_AugmentedRay *in = new S100_AugmentedRay();
+						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
+
+						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+						in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
+						in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
+						in->SetViewingGroup(stateCommands.v_ViewingGroup);
+						in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
+
+						if (false == lineStyle.IsEmpty())
+						{
+							in->SetLineStyle(new S100_LineStyle(lineStyle));
+						}
+
+						if (stateCommands.v_AugmentedRay.size() > 0)
+						{
+							std::vector<std::string> v_splited = Split(stateCommands.v_AugmentedRay, ",");
+							if (v_splited.size() == 4)
+							{
+								in->SetDirection(std::wstring(v_splited[1].begin(), v_splited[1].end()));
+								in->SetLength(std::wstring(v_splited[3].begin(), v_splited[3].end()));
+							}
+						}
 					}
-					else if (v_AugmentedPath.size() > 0)
+					else if (stateCommands.v_AugmentedPath.size() > 0)
 					{
-						CDisplayFactory::createAugmentedPath(pcm->displayList,
-							featureID,
-							v_DrawingPriority,
-							v_DisplayPlane,
-							v_ViewingGroup,
-							v_ScaleMinimum,
-							v_LineStyle,
-							v_Dash,
-							v_ArcByRadius);
+						S100_AugmentedPath *in = new S100_AugmentedPath();
+						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
+
+						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+						in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
+						in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
+						in->SetViewingGroup(stateCommands.v_ViewingGroup);
+						in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
+
+						if (false == lineStyle.IsEmpty())
+						{
+							in->SetLineStyle(new S100_LineStyle(lineStyle));
+						}
+
+						if (stateCommands.v_ArcByRadius.size() > 0)
+						{
+							std::vector<std::string> v_splited = Split(stateCommands.v_ArcByRadius, ",");
+							if (v_splited.size() == 5)
+							{
+
+								if (!in->GetPath()) in->SetPath(new S100_Path());
+
+								S100_ArcByRadius arcByRadius;
+
+								arcByRadius.GetCenter()->SetX(std::wstring(v_splited[0].begin(), v_splited[0].end()));
+								arcByRadius.GetCenter()->SetY(std::wstring(v_splited[1].begin(), v_splited[1].end()));
+								arcByRadius.SetRadius(std::wstring(v_splited[2].begin(), v_splited[2].end()));
+
+								if (arcByRadius.GetSector() == nullptr)arcByRadius.SetSector(new S100_Sector());
+								arcByRadius.GetSector()->SetStartAngle(std::wstring(v_splited[3].begin(), v_splited[3].end()));
+								arcByRadius.GetSector()->SetAnglearDistance(std::wstring(v_splited[4].begin(), v_splited[4].end()));
+
+
+								in->GetPath()->SetArcByRadiuses(&arcByRadius);
+							}
+						}
 					}
 					else
 					{
-						CDisplayFactory::createLineInstruction(pcm->displayList,
-							featureID,
-							v_DrawingPriority,
-							v_DisplayPlane,
-							v_ViewingGroup,
-							v_ScaleMinimum,
-							value,
-							v_LineStyle,
-							v_Dash,
-							vl_SpatialReference);
+						S100_LineInstruction *in = new S100_LineInstruction();
+						pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
+
+						in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+						in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
+						in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
+						in->SetViewingGroup(stateCommands.v_ViewingGroup);
+						in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
+
+						if (v_LineInstruction.size() > 0)
+						{
+							if (!in->GetLineStyleReference())
+							{
+								in->SetLineStyleReference(new S100_LineStyleReference());
+								in->GetLineStyleReference()->SetReference(std::wstring(v_LineInstruction.begin(), v_LineInstruction.end()));
+							}
+						}
+
+						if (false == lineStyle.IsEmpty())
+						{
+							in->SetLineStyle(new S100_LineStyle(lineStyle));
+						}
+
+						if (vl_SpatialReference.size() > 0)
+						{
+							for (auto it = vl_SpatialReference.begin(); it != vl_SpatialReference.end(); it++)
+							{
+								S100_SpatialReference* sref = new S100_SpatialReference();
+								in->SetSpatialReference(sref);
+								std::string v_SpatialReference = *it;
+
+								std::vector<std::string> v_splited = Split(v_SpatialReference, "|");
+								if (v_splited.size() == 2)
+								{
+									sref->SetType(v_splited[0]);
+									sref->SetReference(v_splited[1]);
+								}
+							}
+							v_LineInstruction = "";
+						}
 					}
 				}
 			}
-			break;
-			case 16:
+			else if (sizeForIndex == 16)
 			{
 				// PointInstruction
 				if (tag.compare("PointInstruction") == 0)
 				{
-					CDisplayFactory::createPointInstruction(pcm->displayList,
-						featureID,
-						v_DrawingPriority,
-						v_DisplayPlane,
-						v_ViewingGroup,
-						v_ScaleMinimum,
-						value,
-						v_Rotation,
-						v_AugmentedPoint,
-						vl_SpatialReference);
+					v_PointInstruction = value;
+					S100_PointInstruction *in = new S100_PointInstruction();
+					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
+
+					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
+					in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
+					in->SetViewingGroup(stateCommands.v_ViewingGroup);
+					in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
+
+					if (v_PointInstruction.size() > 0)
+					{
+						in->SetSymbol(new S100_Symbol());
+						in->GetSymbol()->SetReference(std::wstring(v_PointInstruction.begin(), v_PointInstruction.end()));
+
+						std::vector<std::string> r_splited = Split(stateCommands.v_Rotation, ",");
+						if (r_splited.size() == 2)
+						{
+							in->GetSymbol()->SetRotation(std::stod(r_splited[1]));
+
+						}
+					}
+
+					if (stateCommands.v_AugmentedPoint.size() > 1)
+					{
+						std::vector<std::string> v_splited = Split(stateCommands.v_AugmentedPoint, ",");
+						if (v_splited.size() == 3)
+						{
+							if (!in->GetVectorPoint()) in->SetVectorPoint(new S100_VectorPoint());
+
+							in->GetVectorPoint()->SetX(std::wstring(v_splited[1].begin(), v_splited[1].end()));
+							in->GetVectorPoint()->SetY(std::wstring(v_splited[2].begin(), v_splited[2].end()));
+						}
+						else
+						{
+							//OutputDebugString(L"Error : Vector Point Value should have 3 arguments.");
+						}
+					}
+
+					if (vl_SpatialReference.size() > 0)
+					{
+						for (auto it = vl_SpatialReference.begin(); it != vl_SpatialReference.end(); it++)
+						{
+							S100_SpatialReference* sref = new S100_SpatialReference();
+							in->SetSpatialReference(sref);
+							std::string v_SpatialReference = *it;
+
+							std::vector<std::string> v_splited = Split(v_SpatialReference, "|");
+							if (v_splited.size() == 2)
+							{
+								sref->SetType(v_splited[0]);
+								sref->SetReference(v_splited[1]);
+							}
+						}
+					}
+
+					v_PointInstruction = "";
 				}
 				// "SpatialReference:Curve|107" 
 				else if (tag.compare("SpatialReference") == 0)
-					vl_SpatialReference.push_back(value);
+				{
+					std::string v_SpatialReference = value;
+					vl_SpatialReference.push_back(v_SpatialReference);
+				}
+				else
+				{
+					CString str;
+					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
+					//OutputDebugString(str);
+				}
 			}
-			break;
-			case 17:
+			else if (sizeForIndex == 17)
 			{
 				// "TextAlignVertical:Center"
 				if (tag.compare("TextAlignVertical") == 0)
 				{
-					v_TextAlignVertical = value;
+					stateCommands.v_TextAlignVertical = value;
 				}
 				else if (tag.compare("AreaFillReference") == 0)
 				{
-					CDisplayFactory::createAreaInstructionB(pcm->displayList,
-						featureID,
-						v_DrawingPriority,
-						v_DisplayPlane,
-						v_ViewingGroup,
-						v_ScaleMinimum,
-						value);
+					v_AreaFillReference = value;
+
+					S100_AreaInstruction *in = new S100_AreaInstruction();
+					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
+
+					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
+					in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
+					in->SetViewingGroup(stateCommands.v_ViewingGroup);
+					in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
+
+					if (v_AreaFillReference.size() > 0)
+					{
+						if (!in->GetAreaFill())
+						{
+							in->SetAreaFill(new S100_AreaFillReference());
+						}
+
+						S100_AreaFillReference* cf = (S100_AreaFillReference*)in->GetAreaFill();
+
+						cf->SetReference(std::wstring(v_AreaFillReference.begin(), v_AreaFillReference.end()));
+
+						std::wstring path = cf->GetReference();
+						path.append(L".xml");
+						in->SetAreaFill(cf);
+					}
+					v_AreaFillReference = "";
+				}
+				else
+				{
+					CString str;
+					str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
+					//OutputDebugString(str);
 				}
 			}
-			break;
-			case 19:
+			else if (sizeForIndex == 19)
 			{
 				// "TextAlignHorizontal:End"
 				if (tag.compare("TextAlignHorizontal") == 0)
 				{
-					v_TextAlignHorizontal = value;
+					stateCommands.v_TextAlignHorizontal = value;
+				}
+				else
+				{
+					CString str;
+					str.Format(_T("Lua Parser error - %S(%d)"), tag, sizeForIndex);
+					//OutputDebugString(str);
 				}
 			}
-			break;
+			else
+			{
+				CString str;
+				str.Format(_T("Lua Parser error - %S(%d)"), tag.c_str(), sizeForIndex);
+				//OutputDebugString(str);
 			}
 		}
 	}
-
-	vl_SpatialReference.clear();
-
 	return true;
 }
 
@@ -594,8 +1024,56 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 	theInstance.m_lua_session->call_raw(1);
 }
 
-void ProcessS101::PortrayalSetContextParameter(const char* parameterName, const char* parameterValue)
+void ProcessS101::PortrayalSetContextParameter(const char*  parameterName, const char*  parameterValue)
 {
 	theInstance.m_lua_session->call("PortrayalSetContextParameter", { parameterName, parameterValue });
 }
 
+std::vector<std::string> ProcessS101::getParams(PortrayalCatalogue* pc)
+{
+	// Load params
+	std::vector<std::string> params;
+	if (pc)
+	{
+		auto context = pc->GetContext();
+		if (!context)
+		{
+			return params;
+		}
+
+		int numContext = context->GetCountOfParameter();
+		for (int i = 0; i < numContext; i++)
+		{
+			auto contextParameter = context->GetContextParameter(i);
+			if (contextParameter)
+			{
+				auto name = contextParameter->GetIdAsString();
+				auto value = contextParameter->getValueAsString();
+				params.push_back(name);
+				params.push_back(value);
+			}
+		}
+	}
+
+	return params;
+}
+
+bool ProcessS101::IsDrawingCommands(std::string_view str)
+{
+	if (str.compare("PointInstruction") == 0 ||
+		str.compare("LineInstruction") == 0 ||
+		str.compare("LineInstructionUnsuppressed") == 0 ||
+		str.compare("ColorFill") == 0 ||
+		str.compare("AreaFillReference") == 0 ||
+		str.compare("PixmapFill") == 0 ||
+		str.compare("SymbolFill") == 0 ||
+		str.compare("HatchFill") == 0 ||
+		str.compare("TextInstruction") == 0 ||
+		str.compare("CoverageFill") == 0 ||
+		str.compare("NullInstruction") == 0) 
+	{
+		return true;
+	}
+
+	return false;
+}
