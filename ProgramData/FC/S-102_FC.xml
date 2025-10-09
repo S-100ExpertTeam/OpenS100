@@ -4,7 +4,7 @@
 	<S100FC:scope>Global</S100FC:scope>
 	<S100FC:fieldOfApplication>Marine Navigation</S100FC:fieldOfApplication>
 	<S100FC:versionNumber>3.0.0</S100FC:versionNumber>
-	<S100FC:versionDate>2024-05-31</S100FC:versionDate>
+	<S100FC:versionDate>2024-12-05</S100FC:versionDate>
 	<S100FC:productId>S-102</S100FC:productId>
 	<S100FC:producer>
 		<S100CI:role>pointOfContact</S100CI:role>
@@ -68,13 +68,13 @@
 		</S100FC:S100_FC_SimpleAttribute>
 		<S100FC:S100_FC_SimpleAttribute>
 			<S100FC:name>ID</S100FC:name>
-			<S100FC:definition>Meta data identifier for QualityOfBathymetric Coverage</S100FC:definition>
+			<S100FC:definition>Meta data record identifier for QualityOfBathymetric Coverage</S100FC:definition>
 			<S100FC:code>iD</S100FC:code>
 			<S100FC:alias>ID</S100FC:alias>
-			<!--S100FC:definitionReference>
-				<S100FC:sourceIdentifier>missing, need to be change after the approval in the IHO registry</S100FC:sourceIdentifier>
+			<S100FC:definitionReference>
+				<S100FC:sourceIdentifier>1251</S100FC:sourceIdentifier>
 				<S100FC:definitionSource ref="IHOREG" />
-			</S100FC:definitionReference-->
+			</S100FC:definitionReference>
 			<S100FC:valueType>integer</S100FC:valueType>
 		</S100FC:S100_FC_SimpleAttribute>
 	</S100FC:S100_FC_SimpleAttributes>
