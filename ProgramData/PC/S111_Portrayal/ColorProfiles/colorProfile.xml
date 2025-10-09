@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="S100ColorProfile.xsd">
+<cp:colorProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cp="http://www.iho.int/S100ColorProfile/5.1">
     <colors>
         <color token="CHBLK" name="black">
             <description>Chart black</description>
         </color>
-      <color token="SCBN1" name="purple">
-        <description>S111 Step 1 color</description>
+      <color token="SCBN1" name="Surface Current Speed Band 1">
+        <description>S111 Band 1 color</description>
       </color>
-      <color token="SCBN2" name="dark blue">
-        <description>S111 Step 2 color</description>
+      <color token="SCBN2" name="Surface Current Speed Band 2">
+        <description>S111 Band 2 color</description>
       </color>
-      <color token="SCBN3" name="light blue">
-        <description>S111 Step 3 color</description>
+      <color token="SCBN3" name="Surface Current Speed Band 3">
+        <description>S111 Band 3 color</description>
       </color>
-      <color token="SCBN4" name="dark green">
-        <description>S111 Step 4 color</description>
+      <color token="SCBN4" name="Surface Current Speed Band 4">
+        <description>S111 Band 4 color</description>
       </color>
-      <color token="SCBN5" name="light green">
-        <description>S111 Step 5 color</description>
+      <color token="SCBN5" name="Surface Current Speed Band 5">
+        <description>S111 Band 5 color</description>
       </color>
-      <color token="SCBN6" name="yellow-green">
-        <description>S111 Step 6 color</description>
+      <color token="SCBN6" name="Surface Current Speed Band 6">
+        <description>S111 Band 6 color</description>
       </color>
-      <color token="SCBN7" name="orange">
-        <description>S111 Step 7 color</description>
+      <color token="SCBN7" name="Surface Current Speed Band 7">
+        <description>S111 Band 7 color</description>
       </color>
-      <color token="SCBN8" name="pink">
-        <description>S111 Step 8 color</description>
+      <color token="SCBN8" name="Surface Current Speed Band 8">
+        <description>S111 Band 8 color</description>
       </color>
-      <color token="SCBN9" name="red">
-        <description>S111 Step 9 color</description>
+      <color token="SCBN9" name="Surface Current Speed Band 9">
+        <description>S111 Band 9 color</description>
       </color>
     </colors>
     
@@ -468,4 +468,4 @@
         </srgb>
       </item>
     </palette>
-</colorProfile>
+</cp:colorProfile>
