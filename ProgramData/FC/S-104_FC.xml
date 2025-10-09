@@ -1,94 +1,177 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="https://staging.s100dev.net/schemas/S100/5.2.0/S100FC/20240515/S100_FC.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <S100FC:S100_FC_FeatureCatalogue
-  xmlns:S100FC="http://www.iho.int/S100FC"
-  xmlns:S100Base="http://www.iho.int/S100Base"
-  xmlns:S100CI="http://www.iho.int/S100CI"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:S100FD="http://www.iho.int/S100FD"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.iho.int/S100FC S100FC.xsd">
-
-  <S100FC:name>S-104</S100FC:name>
-  <S100FC:scope>Marine Navigation</S100FC:scope>
-  <S100FC:fieldOfApplication>Marine Navigation</S100FC:fieldOfApplication>
-  <S100FC:versionNumber>0.1</S100FC:versionNumber>
-  <S100FC:versionDate>2020-07-20</S100FC:versionDate>
-  <S100FC:productId>S-104</S100FC:productId>
-  <S100FC:producer>
-    <S100CI:role>pointOfContact</S100CI:role>
-    <S100CI:party>
-      <S100CI:CI_Organisation>
-        <S100CI:name>>IHO</S100CI:name>
-        <S100CI:contactInfo>
-          <S100CI:address>
-            <S100CI:administrativeArea>4b quai Antonie 1er</S100CI:administrativeArea>
-            <S100CI:country>Monaco</S100CI:country>
-            <S100CI:electronicMailAddress>info@iho.int</S100CI:electronicMailAddress>
-          </S100CI:address>
-          <S100CI:onlineResource>
-            <S100CI:linkage>www.iho.int</S100CI:linkage>
-          </S100CI:onlineResource>
-        </S100CI:contactInfo>
-      </S100CI:CI_Organisation>
-    </S100CI:party>
-  </S100FC:producer>
-
-  <S100FC:S100_FC_SimpleAttributes>
-    <!--attributes-->
-    <S100FC:S100_FC_SimpleAttribute>
-      <S100FC:name>Water Level Height</S100FC:name>
-      <S100FC:definition></S100FC:definition>
-      <S100FC:code>waterLevelHeight</S100FC:code>
-      <S100FC:valueType>real</S100FC:valueType>
-    </S100FC:S100_FC_SimpleAttribute>
-    <S100FC:S100_FC_SimpleAttribute>
-      <S100FC:name>Water Level Uncertainty</S100FC:name>
-      <S100FC:definition></S100FC:definition>
-      <S100FC:code>waterLevelUncertainty</S100FC:code>
-      <S100FC:valueType>real</S100FC:valueType>
-    </S100FC:S100_FC_SimpleAttribute>
-    <S100FC:S100_FC_SimpleAttribute>
-      <S100FC:name>Water Level Trend</S100FC:name>
-      <S100FC:definition></S100FC:definition>
-      <S100FC:code>waterLevelTrend</S100FC:code>
-      <S100FC:valueType>real</S100FC:valueType>
-    </S100FC:S100_FC_SimpleAttribute>
-  </S100FC:S100_FC_SimpleAttributes>
-
-
-
-
-  <!--features-->
-  <S100FC:S100_FC_FeatureTypes>
-    <S100FC:S100_FC_FeatureType>
-      <S100FC:name>Water Level</S100FC:name>
-      <S100FC:definition></S100FC:definition>
-      <S100FC:code>WaterLevel</S100FC:code>
-      <S100FC:remarks></S100FC:remarks>
-      <S100FC:attributeBinding sequential="false">
-        <S100FC:multiplicity>
-          <S100Base:lower>1</S100Base:lower>
-          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-        </S100FC:multiplicity>
-        <S100FC:attribute ref="waterLevelHeight"/>
-      </S100FC:attributeBinding>
-      <S100FC:attributeBinding sequential="false">
-        <S100FC:multiplicity>
-          <S100Base:lower>1</S100Base:lower>
-          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-        </S100FC:multiplicity>
-        <S100FC:attribute ref="waterLevelUncertainty"/>
-      </S100FC:attributeBinding>
-      <S100FC:attributeBinding sequential="false">
-        <S100FC:multiplicity>
-          <S100Base:lower>1</S100Base:lower>
-          <S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
-        </S100FC:multiplicity>
-        <S100FC:attribute ref="waterLevelTrend"/>
-      </S100FC:attributeBinding>
-      <S100FC:featureUseType>geographic</S100FC:featureUseType>
-      <S100FC:permittedPrimitives>point</S100FC:permittedPrimitives>
-    </S100FC:S100_FC_FeatureType>
-  </S100FC:S100_FC_FeatureTypes>
-
+	xmlns:S100FC="http://www.iho.int/S100FC/5.2"
+	xmlns:S100Base="http://www.iho.int/S100Base/5.0"
+	xmlns:S100CI="http://www.iho.int/S100CI/5.0"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:S100CD="http://www.iho.int/S100CD/5.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.iho.int/S100FC/5.2 https://schemas.s100dev.net/schemas/S100/5.2.0/S100FC/20231214/S100FC.xsd">
+	<S100FC:name>S-104</S100FC:name>
+	<S100FC:scope>Water level data are intended to be used as stand-alone data or as a layer in an ENC.</S100FC:scope>
+	<S100FC:fieldOfApplication>Marine navigation</S100FC:fieldOfApplication>
+	<S100FC:versionNumber>2.0.0</S100FC:versionNumber>
+	<S100FC:versionDate>2024-05-30</S100FC:versionDate>
+	<S100FC:productId>S-104</S100FC:productId>
+	<S100FC:producer>
+		<S100CI:role>owner</S100CI:role>
+		<S100CI:party>
+			<S100CI:CI_Organisation>
+				<S100CI:name>International Hydrographic Organization</S100CI:name>
+				<S100CI:contactInfo>
+					<S100CI:phone>
+						<S100CI:number>+377 93 10 81 00</S100CI:number>
+						<S100CI:numberType>voice</S100CI:numberType>
+					</S100CI:phone>
+					<S100CI:address>
+						<S100CI:deliveryPoint>4b quai Antoine 1er</S100CI:deliveryPoint>
+						<S100CI:postalCode>B.P.445</S100CI:postalCode>
+						<S100CI:country>MONACO</S100CI:country>
+						<S100CI:electronicMailAddress>info@iho.int</S100CI:electronicMailAddress>
+					</S100CI:address>
+					<S100CI:hoursOfService>24h</S100CI:hoursOfService>
+				</S100CI:contactInfo>
+			</S100CI:CI_Organisation>
+		</S100CI:party>
+	</S100FC:producer>
+	<S100FC:classification>unclassified</S100FC:classification>
+	<S100FC:S100_FC_DefinitionSources>
+		<S100FC:FC_DefinitionSource id="IHOREG">
+			<S100FC:source>
+				<S100CI:title>IHO GI Registry</S100CI:title>
+				<S100CI:onlineResource>
+					<S100CI:linkage>https://registry.iho.int</S100CI:linkage>
+				</S100CI:onlineResource>
+			</S100FC:source>
+		</S100FC:FC_DefinitionSource>
+	</S100FC:S100_FC_DefinitionSources>
+	<S100FC:S100_FC_SimpleAttributes>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Uncertainty</S100FC:name>
+			<S100FC:definition>Estimate characterising the range of values within which the true value of a measurement is expected to lie as defined within a particular confidence level. It is expressed as a positive value.</S100FC:definition>
+			<S100FC:code>uncertainty</S100FC:code>
+			<S100FC:definitionReference>
+				<S100FC:sourceIdentifier>884</S100FC:sourceIdentifier>
+				<S100FC:definitionSource ref="IHOREG"/>
+			</S100FC:definitionReference>
+			<S100FC:valueType>real</S100FC:valueType>
+			<S100FC:uom>
+				<S100Base:name>metre</S100Base:name>
+				<S100Base:definition>SI metre</S100Base:definition>
+				<S100Base:symbol>m</S100Base:symbol>
+			</S100FC:uom>
+			<S100FC:quantitySpecification>length</S100FC:quantitySpecification>
+			<S100FC:constraints>
+				<S100CD:range>
+					<S100Base:lowerBound>0</S100Base:lowerBound>
+					<S100Base:upperBound>99.99</S100Base:upperBound>
+					<S100Base:closure>closedInterval</S100Base:closure>
+				</S100CD:range>
+				<S100CD:precision>2</S100CD:precision>
+			</S100FC:constraints>
+	</S100FC:S100_FC_SimpleAttribute>
+	<S100FC:S100_FC_SimpleAttribute>
+		<S100FC:name>Water Level Height</S100FC:name>
+			<S100FC:definition>The height of a water surface relative to a vertical datum.</S100FC:definition>
+			<S100FC:code>waterLevelHeight</S100FC:code>
+			<S100FC:definitionReference>
+				<S100FC:sourceIdentifier>910</S100FC:sourceIdentifier>
+				<S100FC:definitionSource ref="IHOREG"/>
+			</S100FC:definitionReference>
+			<S100FC:valueType>real</S100FC:valueType>
+			<S100FC:uom>
+				<S100Base:name>metre</S100Base:name>
+			<S100Base:definition>SI metre</S100Base:definition>
+			<S100Base:symbol>m</S100Base:symbol>
+			</S100FC:uom>
+			<S100FC:quantitySpecification>length</S100FC:quantitySpecification>
+			<S100FC:constraints>
+				<S100CD:range>
+					<S100Base:lowerBound>-99.99</S100Base:lowerBound>
+					<S100Base:upperBound>99.99</S100Base:upperBound>
+					<S100Base:closure>closedInterval</S100Base:closure>
+				</S100CD:range>
+				<S100CD:precision>2</S100CD:precision>
+			</S100FC:constraints>
+		</S100FC:S100_FC_SimpleAttribute>
+		<S100FC:S100_FC_SimpleAttribute>
+			<S100FC:name>Water Level Trend</S100FC:name>
+			<S100FC:definition>The tendency of water level to change in a particular direction.</S100FC:definition>
+			<S100FC:code>waterLevelTrend</S100FC:code>
+			<S100FC:definitionReference>
+				<S100FC:sourceIdentifier>378</S100FC:sourceIdentifier>
+				<S100FC:definitionSource ref="IHOREG"/>
+			</S100FC:definitionReference>
+			<S100FC:valueType>enumeration</S100FC:valueType>
+			<S100FC:listedValues>
+				<S100FC:listedValue>
+					<S100FC:label>Decreasing</S100FC:label>
+					<S100FC:definition>Becoming smaller in magnitude.</S100FC:definition>
+					<S100FC:code>1</S100FC:code>
+			<S100FC:definitionReference>
+				<S100FC:sourceIdentifier>1387</S100FC:sourceIdentifier>
+				<S100FC:definitionSource ref="IHOREG"/>
+			</S100FC:definitionReference>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Increasing</S100FC:label>
+					<S100FC:definition>Becoming larger in magnitude.</S100FC:definition>
+					<S100FC:code>2</S100FC:code>
+			<S100FC:definitionReference>
+				<S100FC:sourceIdentifier>1388</S100FC:sourceIdentifier>
+				<S100FC:definitionSource ref="IHOREG"/>
+			</S100FC:definitionReference>
+				</S100FC:listedValue>
+				<S100FC:listedValue>
+					<S100FC:label>Steady</S100FC:label>
+					<S100FC:definition>Constant.</S100FC:definition>
+					<S100FC:code>3</S100FC:code>
+			<S100FC:definitionReference>
+				<S100FC:sourceIdentifier>1389</S100FC:sourceIdentifier>
+				<S100FC:definitionSource ref="IHOREG"/>
+			</S100FC:definitionReference>
+				</S100FC:listedValue>
+			</S100FC:listedValues>
+		</S100FC:S100_FC_SimpleAttribute>
+	</S100FC:S100_FC_SimpleAttributes>
+	<S100FC:S100_FC_FeatureTypes>
+		<S100FC:S100_FC_FeatureType isAbstract="false">
+			<S100FC:name>Water Level</S100FC:name>
+			<S100FC:definition>The vertical position of a water surface.</S100FC:definition>
+			<S100FC:code>WaterLevel</S100FC:code>
+			<S100FC:definitionReference>
+				<S100FC:sourceIdentifier>369</S100FC:sourceIdentifier>
+				<S100FC:definitionSource ref="IHOREG"/>
+			</S100FC:definitionReference>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="waterLevelHeight"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>1</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:permittedValues>
+					<S100FC:value>1</S100FC:value>
+					<S100FC:value>2</S100FC:value>
+					<S100FC:value>3</S100FC:value>
+				</S100FC:permittedValues>
+				<S100FC:attribute ref="waterLevelTrend"/>
+			</S100FC:attributeBinding>
+			<S100FC:attributeBinding sequential="false">
+				<S100FC:multiplicity>
+					<S100Base:lower>0</S100Base:lower>
+					<S100Base:upper xsi:nil="false" infinite="false">1</S100Base:upper>
+				</S100FC:multiplicity>
+				<S100FC:attribute ref="uncertainty"/>
+			</S100FC:attributeBinding>
+			<S100FC:featureUseType>geographic</S100FC:featureUseType>
+			<S100FC:permittedPrimitives>coverage</S100FC:permittedPrimitives>
+		</S100FC:S100_FC_FeatureType>
+	</S100FC:S100_FC_FeatureTypes>
 </S100FC:S100_FC_FeatureCatalogue>
