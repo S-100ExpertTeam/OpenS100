@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.72mm" height="5.72mm" viewBox="-2.76 -5.56 5.72 5.72">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="5.72mm" height="5.72mm" viewBox="-2.76 -5.56 5.72 5.72">
   <title>VOLCANO01</title>
   <desc>Symbol for marking an active submarine volcano</desc>
   <metadata>

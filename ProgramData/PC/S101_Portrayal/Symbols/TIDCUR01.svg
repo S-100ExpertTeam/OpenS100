@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.4mm" height="15.17mm" viewBox="-2.17 -6.36 4.4 15.17">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="4.4mm" height="15.17mm" viewBox="-2.17 -6.36 4.4 15.17">
   <title>TIDCUR01</title>
   <desc>predicted tidal stream or current direction</desc>
   <metadata>

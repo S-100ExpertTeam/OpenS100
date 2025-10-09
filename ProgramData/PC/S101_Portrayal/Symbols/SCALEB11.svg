@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="1.29mm" height="21.28mm" viewBox="-0.64 -20.64 1.29 21.28">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="1.29mm" height="21.28mm" viewBox="-0.64 -20.64 1.29 21.28">
   <title>SCALEB11</title>
   <desc>10 mile latitude scale for display scales smaller than 1/80,000</desc>
   <metadata>

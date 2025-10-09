@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.34mm" height="5.35mm" viewBox="-2.22 -2.79 4.34 5.35">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="4.34mm" height="5.35mm" viewBox="-2.22 -2.79 4.34 5.35">
   <title>ACHARE02</title>
   <desc>anchorage area as a point at small scale, or anchor points of mooring trot at large scale</desc>
   <metadata>

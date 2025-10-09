@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="20.75mm" height="10.9mm" viewBox="-20.27 -9.32 20.75 10.9">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="20.75mm" height="10.9mm" viewBox="-20.27 -9.32 20.75 10.9">
   <title>RSRDEF51</title>
   <desc>area in which undefined restrictions exist</desc>
   <metadata>

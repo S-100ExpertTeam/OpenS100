@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.31mm" height="5.39mm" viewBox="-4.16 -2.7 8.31 5.39">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="8.31mm" height="5.39mm" viewBox="-4.16 -2.7 8.31 5.39">
   <title>BOYSUP02</title>
   <desc>super-buoy ODAS And LANBY, simplified</desc>
   <metadata>

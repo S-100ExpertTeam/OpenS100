@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="11.07mm" height="6.32mm" viewBox="-3.16 -3.16 11.07 6.32">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="11.07mm" height="6.32mm" viewBox="-3.16 -3.16 11.07 6.32">
   <title>DRFSTA01</title>
   <desc>DGPS reference station</desc>
   <metadata>

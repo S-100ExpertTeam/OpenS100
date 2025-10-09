@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.32mm" height="2.82mm" viewBox="-0.16 -1.41 4.32 2.82">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="4.32mm" height="2.82mm" viewBox="-0.16 -1.41 4.32 2.82">
   <title>SOUNDG45</title>
   <desc>for deep soundings, greater than safety depth</desc>
   <metadata>

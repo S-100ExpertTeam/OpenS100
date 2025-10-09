@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.32mm" height="6.33mm" viewBox="-2.65 -4.17 5.32 6.33">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="5.32mm" height="6.33mm" viewBox="-2.65 -4.17 5.32 6.33">
   <title>DAYTRI01</title>
   <desc>triangular daymark, point up, simplified</desc>
   <metadata>

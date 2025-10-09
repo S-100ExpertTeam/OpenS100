@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.32mm" height="10.32mm" viewBox="-5.16 -5.16 10.32 10.32">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="10.32mm" height="10.32mm" viewBox="-5.16 -5.16 10.32 10.32">
   <title>REFPNT02</title>
   <desc>reference point, 'ghost cursor' (user interface)</desc>
   <metadata>

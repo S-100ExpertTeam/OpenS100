@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.56mm" height="5.64mm" viewBox="-2.75 -2.85 5.56 5.64">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="5.56mm" height="5.64mm" viewBox="-2.75 -2.85 5.56 5.64">
   <title>PILBOP02</title>
   <desc>pilot boarding place</desc>
   <metadata>

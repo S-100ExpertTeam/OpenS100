@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.16mm" height="3.16mm" viewBox="-1.58 -1.57 3.16 3.16">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="3.16mm" height="3.16mm" viewBox="-1.58 -1.57 3.16 3.16">
   <title>TNKCON02</title>
   <desc>tank</desc>
   <metadata>

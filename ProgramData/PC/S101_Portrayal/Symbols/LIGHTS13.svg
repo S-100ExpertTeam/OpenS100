@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.64mm" height="7.37mm" viewBox="-1.36 -7.21 2.64 7.37">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="2.64mm" height="7.37mm" viewBox="-1.36 -7.21 2.64 7.37">
   <title>LIGHTS13</title>
   <desc>light flare, white or yellow</desc>
   <metadata>

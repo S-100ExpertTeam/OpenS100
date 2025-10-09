@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.65mm" height="6.91mm" viewBox="-3.78 -5.39 7.65 6.91">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="7.65mm" height="6.91mm" viewBox="-3.78 -5.39 7.65 6.91">
   <title>BOYSPH50</title>
   <desc>spherical buoy, safe water, red, white, paper-chart</desc>
   <metadata>

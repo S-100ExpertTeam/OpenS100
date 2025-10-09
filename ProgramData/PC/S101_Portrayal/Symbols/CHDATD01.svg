@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="17.54mm" height="17.25mm" viewBox="-15.8 -1.74 17.54 17.25">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="17.54mm" height="17.25mm" viewBox="-15.8 -1.74 17.54 17.25">
   <title>CHDATD01</title>
   <desc>This object is a date dependent object</desc>
   <metadata>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.53mm" height="4.75mm" viewBox="-2.19 -2.42 7.53 4.75">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="7.53mm" height="4.75mm" viewBox="-2.19 -2.42 7.53 4.75">
   <title>BOYDEF03</title>
   <desc>default symbol for buoy, simplified</desc>
   <metadata>
