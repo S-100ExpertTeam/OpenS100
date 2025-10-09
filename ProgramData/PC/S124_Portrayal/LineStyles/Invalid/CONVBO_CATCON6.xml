@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<lineStyle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
+<title>CONVBO CATCON6</title>
+  <desc>Convergent boundary: Category of Convergent Boundary: Convergence line</desc>
+<lineStyle offset="0">
+    <intervalLength>6</intervalLength>
+    <pen width="0.3">
+        <color>sWXRED</color>
+    </pen>
+    <dash>
+        <start>0</start>
+        <length>1</length>
+    </dash>   
+    <symbol reference="CNVLNE">
+        <position>2</position>
+    </symbol>
+    <dash>
+        <start>3</start>
+        <length>1</length>
+    </dash>   
+    <symbol reference="CNVLNE">
+        <position>4</position>
+    </symbol>
+</lineStyle>

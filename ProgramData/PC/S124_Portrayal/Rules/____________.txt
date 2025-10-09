@@ -1,3 +1,0 @@
-RestrictedAreaNavigational  -- RestrictedArea 로 들어가 있음
-RestrictedAreaRegulatory  -- RestrictedArea 로 들어가 있음
-TrafficControlService -- 없음

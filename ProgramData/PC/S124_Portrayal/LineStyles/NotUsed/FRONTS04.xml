@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--title>FRONTS CATFRO1 FROLEV1</title>
+  <desc>Fronts: Category of Front Cold: Front level Above surface</desc>-->
+<lineStyle offset="0">
+    <intervalLength>12</intervalLength>
+    <pen width="0.32">
+        <color>WXBLU</color>
+    </pen>
+  <symbol reference="SMCIRC2">
+    <position>3</position>
+  </symbol>
+  <symbol reference="TRIANG3">
+    <position>9</position>
+  </symbol>
+</lineStyle>

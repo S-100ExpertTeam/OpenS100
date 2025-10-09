@@ -17,6 +17,56 @@
 					<xsl:element name="proportion">MonoSpaced</xsl:element>			
 				</xsl:element>		<!-- The font -->		
 			</xsl:when>
+			<xsl:when test="$style = 'Italics'">  <!-- Added Apr 2023 -->
+				<xsl:element name="bodySize">10</xsl:element>				
+				<xsl:element name="foreground">CHBLK</xsl:element>				
+				<xsl:element name="fontCharacteristics"> <!-- The font -->
+					<xsl:element name="weight">Medium</xsl:element>				
+					<xsl:element name="slant">Italics</xsl:element> 				
+					<xsl:element name="serifs">0</xsl:element> <!-- boolean no serifs -->				
+					<xsl:element name="proportion">MonoSpaced</xsl:element>			
+				</xsl:element>		<!-- The font -->		
+			</xsl:when>
+			<xsl:when test="$style = 'Light'">  <!-- Added Apr 2023 -->
+				<xsl:element name="bodySize">10</xsl:element>				
+				<xsl:element name="foreground">CHBLK</xsl:element>				
+				<xsl:element name="fontCharacteristics"> <!-- The font -->
+					<xsl:element name="weight">Light</xsl:element>				
+					<xsl:element name="slant">Upright</xsl:element> 				
+					<xsl:element name="serifs">0</xsl:element> <!-- boolean no serifs -->				
+					<xsl:element name="proportion">MonoSpaced</xsl:element>			
+				</xsl:element>		<!-- The font -->		
+			</xsl:when>
+			<xsl:when test="$style = 'Magenta'">  <!-- Added Apr 2023 -->
+				<xsl:element name="bodySize">10</xsl:element>				
+				<xsl:element name="foreground">CHMGD</xsl:element>				
+				<xsl:element name="fontCharacteristics"> <!-- The font -->
+					<xsl:element name="weight">Medium</xsl:element>				
+					<xsl:element name="slant">Upright</xsl:element> 				
+					<xsl:element name="serifs">0</xsl:element> <!-- boolean no serifs -->				
+					<xsl:element name="proportion">MonoSpaced</xsl:element>			
+				</xsl:element>		<!-- The font -->		
+			</xsl:when>
+			<xsl:when test="$style = 'LightMagenta'">  <!-- Added Apr 2023 -->
+				<xsl:element name="bodySize">10</xsl:element>				
+				<xsl:element name="foreground">CHMGD</xsl:element>				
+				<xsl:element name="fontCharacteristics"> <!-- The font -->
+					<xsl:element name="weight">Light</xsl:element>				
+					<xsl:element name="slant">Upright</xsl:element> 				
+					<xsl:element name="serifs">0</xsl:element> <!-- boolean no serifs -->				
+					<xsl:element name="proportion">MonoSpaced</xsl:element>			
+				</xsl:element>		<!-- The font -->		
+			</xsl:when>
+			<xsl:when test="$style = 'LightMagentaFaint'">  <!-- Added Apr 2023 -->
+				<xsl:element name="bodySize">10</xsl:element>				
+				<xsl:element name="foreground">CHMGF</xsl:element>				
+				<xsl:element name="fontCharacteristics"> <!-- The font -->
+					<xsl:element name="weight">Light</xsl:element>				
+					<xsl:element name="slant">Upright</xsl:element> 				
+					<xsl:element name="serifs">0</xsl:element> <!-- boolean no serifs -->				
+					<xsl:element name="proportion">MonoSpaced</xsl:element>			
+				</xsl:element>		<!-- The font -->		
+			</xsl:when>
 			<xsl:otherwise>
 				<xsl:text>error:unrecogonized text style parameter:</xsl:text> <xsl:value-of select="$style"/>
 			</xsl:otherwise>
