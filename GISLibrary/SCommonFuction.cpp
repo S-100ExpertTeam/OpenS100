@@ -181,6 +181,8 @@ bool SCommonFuction::IntersectionPaths(ClipperLib::Paths& viewport, std::vector<
 	return !solution.empty();
 }
 
+
+
 ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, CRect *_viewPort)
 {
 	ClipperLib::Path  polygon, view;

@@ -8,7 +8,7 @@
 #include <cctype>
 
 ScaleBands S100Utilities::scaleBands[15] = {
-		ScaleBands(-1, 10000000),
+		ScaleBands(70000000, 10000000),
 		ScaleBands(10000000, 3500000),
 		ScaleBands(3500000, 1500000),
 		ScaleBands(1500000, 700000),
@@ -221,7 +221,7 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 							OutputDebugStringA("===== Select DataCoverages =====\n");
 							first = false;
 						}
-						
+
 						std::string str;
 						str += "FileName :";
 						str += item->strFileName;
@@ -241,20 +241,20 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 						///////////////////////
 
 						std::shared_ptr<InventoryItem> inventoryitem = std::make_shared<InventoryItem>();
-							inventoryitem->strFileName = item->strFileName;
-							inventoryitem->mbrBoundingBox = item->mbrBoundingBox;
-							inventoryitem->BoundingPolygon = item->vecBoundingPolygon[i];
-							inventoryitem->ScaleRange = item->vecScaleRange[i];
-							inventoryitem->strFilePath = item->strFilePath;
+						inventoryitem->strFileName = item->strFileName;
+						inventoryitem->mbrBoundingBox = item->mbrBoundingBox;
+						inventoryitem->BoundingPolygon = item->vecBoundingPolygon[i];
+						inventoryitem->ScaleRange = item->vecScaleRange[i];
+						inventoryitem->strFilePath = item->strFilePath;
 
-							S.push_back(inventoryitem);
-							viewPaths = SCommonFuction::ClipPaths(viewPaths, item->vecBoundingPolygon[i], scaler);
+						S.push_back(inventoryitem);
+						viewPaths = SCommonFuction::ClipPaths(viewPaths, item->vecBoundingPolygon[i], scaler);
 					}
 				}
 			}
 		}
 		SB = SB - 1;
-		if (SB < 0)
+		if (SB < -1)
 			return S;
 	}
 	return S; 

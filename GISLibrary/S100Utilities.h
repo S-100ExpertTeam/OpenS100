@@ -9,13 +9,13 @@
 #include <vector>
 #include <memory>
 #include <polyclipping/clipper.hpp>
-#include <algorithm> 
+#include <algorithm>
 
 
 class ScaleBand {
 public:
-	int MaxDisplayScale;
-	int MinDisplayScale;
+	int MaxDisplayScale = 10000000;
+	int MinDisplayScale = 70000000;
 
 	bool isOverlap(int scale)
 	{
@@ -24,19 +24,25 @@ public:
 
 	bool isIntersection(int minimumScale, int maximumScale)
 	{
-		if (minimumScale == -1)
-		{
-			if (MinDisplayScale >= maximumScale || MaxDisplayScale >= maximumScale)
-				return true;
-		}
+		//// 현재 범위가 무한대인 경우
+		//if (minimumScale == -1)
+		//{
+		//	return (MinDisplayScale >= maximumScale || MinDisplayScale == -1) &&
+		//		MaxDisplayScale <= maximumScale;
+		//}
 
-		if ((minimumScale >= MinDisplayScale && MinDisplayScale >= maximumScale) || (minimumScale >= MaxDisplayScale && MaxDisplayScale >= maximumScale))
-		{
-			return true;
-		}
-		else
-			return false;
+		//// 표출 범위가 무한대인 경우
+		//if (MinDisplayScale == -1)
+		//{
+		//	return (minimumScale >= maximumScale || minimumScale == -1) &&
+		//		MaxDisplayScale <= maximumScale;
+		//		//MaxDisplayScale <= minimumScale;
+		//}
+
+		// 일반적인 경우: 두 범위의 교차 확인
+		return max(MaxDisplayScale, maximumScale) <= min(MinDisplayScale, minimumScale);
 	}
+
 
 	static bool CompareByScale(const ScaleBand& a, const ScaleBand& b) {
 		if (a.MinDisplayScale == b.MinDisplayScale) {
