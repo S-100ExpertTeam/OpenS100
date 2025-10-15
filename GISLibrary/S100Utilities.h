@@ -15,32 +15,18 @@
 class ScaleBand {
 public:
 	int MaxDisplayScale = 10000000;
-	int MinDisplayScale = 70000000;
+	int MinDisplayScale = 600000000;
 
 	bool isOverlap(int scale)
 	{
 		return MaxDisplayScale < scale && scale < MinDisplayScale ? true : false;
 	}
 
-	bool isIntersection(int minimumScale, int maximumScale)
+	// S-98_Main_Document_2.3.0 Ver
+	bool ScaleBand::isIntersection(int minimumScale, int maximumScale)
 	{
-		//// 현재 범위가 무한대인 경우
-		//if (minimumScale == -1)
-		//{
-		//	return (MinDisplayScale >= maximumScale || MinDisplayScale == -1) &&
-		//		MaxDisplayScale <= maximumScale;
-		//}
-
-		//// 표출 범위가 무한대인 경우
-		//if (MinDisplayScale == -1)
-		//{
-		//	return (minimumScale >= maximumScale || minimumScale == -1) &&
-		//		MaxDisplayScale <= maximumScale;
-		//		//MaxDisplayScale <= minimumScale;
-		//}
-
-		// 일반적인 경우: 두 범위의 교차 확인
-		return max(MaxDisplayScale, maximumScale) <= min(MinDisplayScale, minimumScale);
+		return max(MaxDisplayScale, maximumScale) <
+			min(MinDisplayScale, minimumScale);
 	}
 
 

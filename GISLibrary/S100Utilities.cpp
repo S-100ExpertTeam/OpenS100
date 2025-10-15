@@ -8,7 +8,7 @@
 #include <cctype>
 
 ScaleBands S100Utilities::scaleBands[15] = {
-		ScaleBands(70000000, 10000000),
+		ScaleBands(600000000, 10000000),
 		ScaleBands(10000000, 3500000),
 		ScaleBands(3500000, 1500000),
 		ScaleBands(1500000, 700000),
@@ -18,7 +18,7 @@ ScaleBands S100Utilities::scaleBands[15] = {
 		ScaleBands(90000, 45000),
 		ScaleBands(45000, 22000),
 		ScaleBands(22000, 12000),
-		ScaleBands(12000, 8000),
+		ScaleBands(12000, 8000), 
 		ScaleBands(8000, 4000),
 		ScaleBands(4000, 3000),
 		ScaleBands(3000, 2000),
@@ -96,6 +96,7 @@ int S100Utilities::GetLevel(std::wstring path)
 	return 0;
 }
 
+// S-98_Main_Document_2.3.0 Ver
 int S100Utilities::GetScaleBand(int scale)
 {
 	if (scale > scaleBands[0].maximumScale) {
@@ -103,7 +104,8 @@ int S100Utilities::GetScaleBand(int scale)
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (scaleBands[i].minimumScale >= scale && scale > scaleBands[i].maximumScale) {
+		if (scale > scaleBands[i].maximumScale &&
+			scale <= scaleBands[i].minimumScale) {
 			return i;
 		}
 	}
@@ -111,18 +113,19 @@ int S100Utilities::GetScaleBand(int scale)
 	return 14;
 }
 
+// S-98_Main_Document_2.3.0 Ver
 std::vector<int> S100Utilities::GetScaleBands(S100::DataCoverage dataCoverage)
 {
 	int minDS = *dataCoverage.MinimumDisplayScale;
 	int maxDS = *dataCoverage.MaximumDisplayScale;
 	std::vector<int> S;
 
-	if (minDS < scaleBands[0].maximumScale) {
+	if (maxDS < scaleBands[0].maximumScale) {
 		S.push_back(0);
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (max(minDS, scaleBands[i].minimumScale) < min(maxDS, scaleBands[i].maximumScale)) {
+		if (max(maxDS, scaleBands[i].maximumScale) < min(minDS, scaleBands[i].minimumScale)) {
 			S.push_back(i);
 		}
 	}
@@ -130,19 +133,19 @@ std::vector<int> S100Utilities::GetScaleBands(S100::DataCoverage dataCoverage)
 	return S;
 }
 
-
+// S-98_Main_Document_2.3.0 Ver
 std::vector<int> S100Utilities::GetScaleBands(ScaleBand sb)
 {
 	int minDS = sb.MinDisplayScale;
 	int maxDS = sb.MaxDisplayScale;
 	std::vector<int> S;
 
-	if (minDS < scaleBands[0].maximumScale) {
+	if (maxDS < scaleBands[0].maximumScale) {
 		S.push_back(0);
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (max(minDS, scaleBands[i].minimumScale) < min(maxDS, scaleBands[i].maximumScale)) {
+		if (max(maxDS, scaleBands[i].maximumScale) < min(minDS, scaleBands[i].minimumScale)) {
 			S.push_back(i);
 		}
 	}
@@ -207,10 +210,11 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 	while (viewPaths.size() != 0)
 	{
 		for (auto item : INV)
-	{
+		{
 			for (int i = 0; i < item->vecScaleRange.size(); i++)
 			{
-				if (item->vecScaleRange[i].isIntersection(scaleBands[SB].minimumScale, scaleBands[SB].maximumScale))
+				auto scaleBandIndices = GetScaleBands(item->vecScaleRange[i]);
+				if (std::find(scaleBandIndices.begin(), scaleBandIndices.end(), SB) != scaleBandIndices.end())
 				{
 					if (SCommonFuction::IntersectionPaths(viewPaths, item->vecBoundingPolygon[i], scaler))
 					{
@@ -254,7 +258,7 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 			}
 		}
 		SB = SB - 1;
-		if (SB < -1)
+		if (SB < 0)
 			return S;
 	}
 	return S; 
