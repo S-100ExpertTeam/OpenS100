@@ -535,7 +535,7 @@ int HostDebuggerEntry(lua_State *l)
 
 	if (command == "trace")
 	{
-		auto text = ls->peek<std::string>(2);
+		auto text = "Lua debugger: " + ls->peek<std::string>(2);
 		//std::cout << '\t\n' << text << std::endl;
 		text.append("\n");
 		OutputDebugStringA(text.c_str());
