@@ -31,7 +31,7 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, originalViewingG
 			featurePortrayal:AddInstructions('PointInstruction:' .. hazardSymbol)
 
 			if qualitySymbol then
-				featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup ..	',90011;PointInstruction:' .. qualitySymbol)
+				AddLowAccuracySymbol(feature, featurePortrayal, viewingGroup)
 			end
 		else
 			local sounding = false
@@ -92,7 +92,7 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, originalViewingG
 			end
 
 			if qualitySymbol then
-				featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',90011;PointInstruction:' .. qualitySymbol)
+				AddLowAccuracySymbol(feature, featurePortrayal, viewingGroup)
 			end
 		end
 	elseif feature.PrimitiveType == PrimitiveType.Curve then
@@ -179,7 +179,7 @@ function OBSTRN07(feature, featurePortrayal, contextParameters, originalViewingG
 		local qualitySymbol = QUAPNT02(feature, featurePortrayal, contextParameters)
 
 		if qualitySymbol then
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',90011;PointInstruction:' .. qualitySymbol)
+			AddLowAccuracySymbol(feature, featurePortrayal, viewingGroup)
 		end
 	end
 

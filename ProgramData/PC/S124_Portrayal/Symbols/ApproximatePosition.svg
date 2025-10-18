@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="svgStyle.css" type="text/css"?>
+<svg xmlns:iho="http://www.iho.int/SVGMetadata/5.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/2000/svg" baseProfile="tiny" version="1.2" width="18.7mm" height="18.7mm" viewBox="-16.7 -16.7 18.7 18.7" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd">
+ <title>ApproximatePosition</title>
+  <desc>Approximate Position of NavigationalWarningFeaturePart description.</desc>
+  <metadata>
+    <iho:S100SVG>
+      <iho:Description iho:creationDate="2024-03-22" iho:publisher="IHO" iho:version="0.1" iho:source="S-124" iho:format="S100SVG"/>
+    </iho:S100SVG>
+  </metadata>
+  <circle class="pivotPoint layout" fill="none" cx="0.0" cy="0.0" r="0.4" />
+  <rect class="symbolBox layout" fill="none" x="-16.7" y="2" height="18.7" width="18.7" />
+  <rect class="svgBox layout" fill="none" x="-16.7" y="-16.7" height="18.7" width="18.7" />
+  <path d=" M -11.8,-11.5 L -4.6,-4.1" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <path d=" M -14.5,-14.45 L -14.23,-14.7 L -13.6,-14.69 L -13.25,-14.45 L -13.03,-14.07 L -13.06,-13.59 L -13.27,-13.19 L -13.81,-13.01 L -13.8,-12.59 L -13.8,-12.50" class="sl f0 sCHMGD" style="stroke-width:0.64;" />
+  <path d=" M -13.8,-11.7 L -13.8,-11.7" class="sl f0 sCHMGD" style="stroke-width:0.64;" />
+</svg>

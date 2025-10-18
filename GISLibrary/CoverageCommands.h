@@ -1,5 +1,8 @@
 #pragma once
+
 #include "StateCommand.h"
+
+#include "..\\FeatureCatalog\\IntervalType.h"
 
 namespace DrawingInstructions
 {
@@ -15,9 +18,9 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        int decimals;
-        std::string championChoice;
-        double buffer;
+        int decimals = 0;
+        std::string championChoice = "ChampionChoice";
+        double buffer = 0.0;
     };
 
     // SymbolAnnotation Class
@@ -25,7 +28,7 @@ namespace DrawingInstructions
     public:
 		SymbolAnnotation() = default;
         SymbolAnnotation(const std::string& symbolRef, const std::string& rotationAttribute, const std::string& scaleAttribute,
-            const std::string& rotationCRS, double rotationOffset, double rotationFactor,
+            const GraphicBasePackage::CRSType rotationCRS, double rotationOffset, double rotationFactor,
             double scaleFactor);
          
 		void init() override;
@@ -36,10 +39,10 @@ namespace DrawingInstructions
         std::string symbolRef;
         std::string rotationAttribute;
         std::string scaleAttribute;
-        std::string rotationCRS;
-        double rotationOffset;
-        double rotationFactor;
-        double scaleFactor;
+        GraphicBasePackage::CRSType rotationCRS = GraphicBasePackage::CRSType::CRSType_None;
+        double rotationOffset = 0.0;
+        double rotationFactor = 1.0;
+        double scaleFactor = 1.0;
     };
 
     // CoverageColor Class
@@ -54,16 +57,16 @@ namespace DrawingInstructions
 
     private:
         std::string startToken;
-        double startTransparency;
+        double startTransparency = 0.0;
         std::string endToken;
-        double endTransparency;
-        double penWidth;
+        double endTransparency = 0.0;
+        double penWidth = 0.0;
     };
 
     class LookupEntry : public StateCommand {
     public:
 		LookupEntry() = default;
-        LookupEntry(const std::string& label, double lower, double upper, const std::string& closure);
+        LookupEntry(const std::string& label, double lower, double upper, const IntervalType closure);
 
 		void init() override;
         void execute()  override;
@@ -71,9 +74,9 @@ namespace DrawingInstructions
 
     private:
         std::string label;
-        double lower;
-        double upper;
-        std::string closure;
+        double lower = 0.0;
+        double upper = 0.0;
+        IntervalType closure = IntervalType::none;
     };
 
     class CoverageCommands
@@ -89,10 +92,10 @@ namespace DrawingInstructions
 
         void setNumericAnnotation(int decimals, const std::string& championChoice, double buffer);
         void setSymbolAnnotation(const std::string& symbolRef, const std::string& rotationAttribute, const std::string& scaleAttribute,
-			const std::string& rotationCRS, double rotationOffset, double rotationFactor,
+			const GraphicBasePackage::CRSType rotationCRS, double rotationOffset, double rotationFactor,
 			double scaleFactor);
         void setCoverageColor(const std::string& startToken, double startTransparency, const std::string& endToken, double endTransparency, double penWidth);
-        void setLookupEntry(const std::string& label, double lower, double upper, const std::string& closure);
+        void setLookupEntry(const std::string& label, double lower, double upper, const IntervalType closure);
 
 
         void parse(const std::string& key, std::string value);

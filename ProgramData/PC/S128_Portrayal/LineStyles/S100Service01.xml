@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="" format="" version="0.1" creationDate="2024-02-05"?>
+<?S100Meta name="S100Service01" exposition="boundary of S-100 service"?>
+<lineStyle>
+   <intervalLength>8</intervalLength>
+   <pen width="0.32">
+      <color>CHMGD</color>
+   </pen>
+   <dash>
+      <start>2</start>
+      <length>6</length>
+   </dash>
+</lineStyle>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<lineStyle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
+<!--title>FRONTS CATFRO3</title>
+   <desc>Fronts: Category of Front Occluded front</desc>-->
+<lineStyle offset="0">
+    <intervalLength>6</intervalLength>
+    <pen width="0.3">
+        <color>sWXPRP</color>
+    </pen>  
+    <symbol reference="TRIANG4">
+        <position>1.5</position>
+    </symbol>
+    <symbol reference="SMCIRC3">
+        <position>4.5</position>
+    </symbol>
+</lineStyle>

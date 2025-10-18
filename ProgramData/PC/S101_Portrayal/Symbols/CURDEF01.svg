@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="10.41mm" height="9.4mm" viewBox="-5.04 -4.64 10.41 9.4">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="10.41mm" height="9.4mm" viewBox="-5.04 -4.64 10.41 9.4">
   <title>CURDEF01</title>
   <desc>current or tidal stream whose direction is not known</desc>
   <metadata>

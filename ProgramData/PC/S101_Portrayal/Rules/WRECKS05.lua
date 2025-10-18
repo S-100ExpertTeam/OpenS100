@@ -124,7 +124,7 @@ function WRECKS05(feature, featurePortrayal, contextParameters, originalViewingG
 		end
 
 		if qualitySymbol then
-			featurePortrayal:AddInstructions('ViewingGroup:' .. viewingGroup .. ',90011;PointInstruction:' .. qualitySymbol)
+			AddLowAccuracySymbol(feature, featurePortrayal, viewingGroup)
 		end
 	end
 

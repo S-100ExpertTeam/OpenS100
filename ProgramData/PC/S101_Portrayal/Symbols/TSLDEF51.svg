@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="12.41mm" height="13.82mm" viewBox="-6.19 -7.66 12.41 13.82">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="12.41mm" height="13.82mm" viewBox="-6.19 -7.66 12.41 13.82">
   <title>TSLDEF51</title>
   <desc>one way lane of a traffic separation scheme, with the direction not defined in the data</desc>
   <metadata>

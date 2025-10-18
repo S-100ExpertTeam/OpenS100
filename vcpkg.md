@@ -1,6 +1,31 @@
-# vckpg
+# vcpkg for OpenS100 (MFC)
 vcpkg is C/C++ dependecy manager from Microsoft for all platforms, buildsystems, and workflows  
 [vcpkg website](https://vcpkg.io/)
+
+# Quick start (Manifest mode + Binary cache)
+
+This repository uses vcpkg manifest mode and the system `VCPKG_DEFAULT_BINARY_CACHE` via `vcpkg-configuration.json`.
+
+- `vcpkg.json` lists all dependencies; no per-package installs are needed.
+- `vcpkg-configuration.json` points to `${env:VCPKG_DEFAULT_BINARY_CACHE}` so your system cache is used.
+
+Setup
+- Choose a cache directory, e.g. `D:\vcpkg-cache`.
+- Set the environment variable (PowerShell, current user):
+  ```powershell
+  [System.Environment]::SetEnvironmentVariable('VCPKG_DEFAULT_BINARY_CACHE','D:\vcpkg-cache','User')
+  ```
+- Restart Visual Studio or your terminal after setting it.
+
+Visual Studio (MSBuild/MFC)
+- Open the solution and build (e.g., `x64`).
+- Packages will auto-restore from `vcpkg.json` using your binary cache.
+
+Command line (alternative)
+```cmd
+> vcpkg install --triplet x64-windows
+```
+This reads `vcpkg.json` and restores dependencies using the binary cache.
 
 # About vcpkg
 vcpkg is a free C/C++ package manager for acquiring and managing libraries. Choose from over 1500 open source libraries to download and build in a single step or add your own private libraries to simplify your build process. Maintained by the Microsoft C++ team and open source contributors.
@@ -9,38 +34,16 @@ vcpkg is a free C/C++ package manager for acquiring and managing libraries. Choo
 - [Get started with vcpkg](https://vcpkg.io/en/getting-started.html)
 
 # Install vcpkg
-Installing vcpkg is a two-step process: first, clone the repo, then run the bootstrapping script to produce the vcpkg binary. The repo can be cloned anywhere, and will include the vcpkg binary after bootstrapping as well as any libraries that are installed from the command line. It is recommended to clone vcpkg as a submodule for CMake projects, but to install it globally for MSBuild projects. If installing globally, we highly recommend a install path: C:\vcpkg.
-
-## Step 1: Clone the vcpkg repo
-```cmd
-> git clone https://github.com/microsoft/vcpkg.git
-```
-Make sure you are in the directory you want the tool installed to before doing this.
-
-## Step 2: Run the bootstrap script to build vcpkg
+{{ ... }}
 ```cmd
 > cd vcpkg
 > .\bootstrap-vcpkg.bat
 ``` 
 
-## Step 3: Install packages used in OpenS100
+## Step 3: Restore packages for OpenS100 (manifest mode)
 ```cmd
-> vcpkg install pugixml:x64-windows
-> vcpkg install geographiclib:x64-windows
-> vcpkg install polyclipping:x64-windows
-> vcpkg install HDF5:x64-windows
-> vcpkg install libxslt:x64-windows
-> vcpkg install openssl:x64-windows
-> vcpkg install sqlite3:x64-windows
+> vcpkg install --triplet x64-windows
 ```
-OpenS100 uses packages below.
-- pugixml 1.13.0
-- geographiclib 2.1.2
-- polyclipping 6.4.2
-- hdf5 1.14.0
-- libxslt 1.1.37
-- openssl 3.1.3
-- sqlite3 3.45.0
 
 ## Using vcpkg with MSBuild / Visual Studio
 ```cmd

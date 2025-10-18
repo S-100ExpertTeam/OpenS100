@@ -109,6 +109,7 @@ namespace DrawingInstructions
 
     void ViewingGroup::init()
     {
+        StateCommand::init();
         viewingGroups.clear();
     }
 
@@ -118,15 +119,22 @@ namespace DrawingInstructions
 
     void ViewingGroup::parse(const std::string& input) 
     {
+        // ViewingGroup:viewingGroup[,viewingGroup2[,¡¦]] 
 		viewingGroups = LatLonUtility::Split(input, ",");
 	}
+
+    std::vector<std::string> ViewingGroup::GetViewingGroups() const
+    {
+		return viewingGroups;
+    }
 
     // DisplayPlane class implementation
     DisplayPlane::DisplayPlane(const std::string& displayPlane) : displayPlane(displayPlane) {}
 
     void DisplayPlane::init()
     {
-		displayPlane = "";
+        StateCommand::init();
+		displayPlane.clear();
     }
 
     void DisplayPlane::execute()  
@@ -135,7 +143,13 @@ namespace DrawingInstructions
 
     void DisplayPlane::parse(const std::string& input) 
     {
+        // DisplayPlane:displayPlane
 		displayPlane = input;
+	}
+
+    std::string DisplayPlane::GetDisplayPlane() const
+	{
+		return displayPlane;
 	}
 
     // DrawingPriority class implementation
@@ -143,6 +157,7 @@ namespace DrawingInstructions
 
     void DrawingPriority::init()
     {
+        StateCommand::init();
 		drawingPriority = 0; // Default value
     }
 
@@ -151,6 +166,8 @@ namespace DrawingInstructions
 
     void DrawingPriority::parse(const std::string& input) 
     {
+        // DrawingPriority:drawingPriority 
+
 		try 
         {
 			drawingPriority = std::stoi(input);
@@ -161,11 +178,17 @@ namespace DrawingInstructions
         }
     }
 
+    int DrawingPriority::GetDrawingPriority() const
+    {
+		return drawingPriority;
+    }
+
     // ScaleMinimum class implementation
     ScaleMinimum::ScaleMinimum(int scaleMinimum) : scaleMinimum(scaleMinimum) {}
 
     void ScaleMinimum::init()
     {
+        StateCommand::init();
         scaleMinimum = 0;
     }
 
@@ -174,6 +197,8 @@ namespace DrawingInstructions
 
     void ScaleMinimum::parse(const std::string& input) 
     {
+        // ScaleMinimum:scaleMinimum
+
         try
         {
             scaleMinimum = std::stoi(input);
@@ -184,11 +209,17 @@ namespace DrawingInstructions
         }
 	}
 
+    int ScaleMinimum::GetScaleMinimum() const
+    {
+        return scaleMinimum;
+    }
+
     // ScaleMaximum class implementation
     ScaleMaximum::ScaleMaximum(int scaleMaximum) : scaleMaximum(scaleMaximum) {}
 
     void ScaleMaximum::init()
     {
+        StateCommand::init();
         scaleMaximum = 0;
     }
 
@@ -197,6 +228,8 @@ namespace DrawingInstructions
 
     void ScaleMaximum::parse(const std::string& input) 
     {
+        // ScaleMaximum:scaleMaximum 
+
         try
         {
             scaleMaximum = std::stoi(input);
@@ -207,12 +240,18 @@ namespace DrawingInstructions
         }
     }
 
+    int ScaleMaximum::GetScaleMaximum() const
+    {
+        return scaleMaximum;
+	}
+
     // Id class implementation
     Id::Id(const std::string& id) : id(id) {}
 
     void Id::init()
     {
-        id = "";
+        StateCommand::init();
+        id.clear();
     }
 
     void Id::execute()  {
@@ -220,15 +259,22 @@ namespace DrawingInstructions
 
     void Id::parse(const std::string& input) 
     {
+        // Id[:id]
 		id = input;
 	}
+
+    std::string Id::GetId()
+    {
+        return id;
+    }
 
     // Parent class implementation
     Parent::Parent(const std::string& parentId) : parentId(parentId) {}
 
     void Parent::init()
     {
-        parentId = "";
+        StateCommand::init();
+        parentId.clear();
     }
 
     void Parent::execute()  {
@@ -236,7 +282,13 @@ namespace DrawingInstructions
 
     void Parent::parse(const std::string& input) 
     {
+        // Parent[:id]
 		parentId = input;
+    }
+
+    std::string Parent::GetParentId() const
+    {
+		return parentId;
     }
 
     // Hover class implementation
@@ -244,6 +296,7 @@ namespace DrawingInstructions
 
     void Hover::init()
     {
+        StateCommand::init();
         hover = false;
     }
 
@@ -252,6 +305,8 @@ namespace DrawingInstructions
 
     void Hover::parse(const std::string& input) 
     {
+        // Hover:hover 
+
 		if (input == "true") 
         {
 			hover = true;
@@ -260,5 +315,10 @@ namespace DrawingInstructions
         {
             hover = false;
         }
+    }
+
+    bool Hover::GetHover() const
+    {
+		return hover;
     }
 }

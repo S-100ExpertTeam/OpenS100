@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.14mm" height="5.15mm" viewBox="-1.57 -4.83 3.14 5.15">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="3.14mm" height="5.15mm" viewBox="-1.57 -4.83 3.14 5.15">
   <title>BCNSTK02</title>
   <desc>minor, stake or pole beacon, paper-chart</desc>
   <metadata>

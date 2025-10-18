@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.97mm" height="7.17mm" viewBox="-0.16 -7.01 2.97 7.17">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="2.97mm" height="7.17mm" viewBox="-0.16 -7.01 2.97 7.17">
   <title>TOPMAR04</title>
   <desc>topmark for buoys, cone point down, paper-chart</desc>
   <metadata>

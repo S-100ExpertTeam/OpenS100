@@ -2,6 +2,8 @@
 #include "S100_Symbol.h"
 #include "S100_Description.h"
 
+#include "..\\S100Engine\\GraphicBasePackage_Enum.h"
+
 S100_Symbol::S100_Symbol()
 {
 	rotation = NULL;
@@ -63,7 +65,9 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "rotationCRS") == 0)
 		{
-			rotationCRS = pugi::as_wide(instruction.child_value());
+			rotationCRS = GraphicBasePackage::GetCRSTypeFromString(instruction.child_value());
+
+			//rotationCRS = pugi::as_wide(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "scaleFactor") == 0)
 		{
@@ -72,26 +76,30 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "areaPlacement") == 0)
 		{
-			if (!areaPlacement)
-			{
-				areaPlacement = new S100_AreaPlacement();
-				areaPlacement->GetContents(instruction);
-			}
+			//if (!areaPlacement)
+			//{
+			//	areaPlacement = new S100_AreaPlacement();
+			//	areaPlacement->GetContents(instruction);
+			//}
+			areaPlacement.value().GetContents(instruction);
 		}
 		else if (!strcmp(instructionName, "linePlacement") == 0)
 		{
-			if (!linePlacement)
-			{
-				linePlacement = new S100_LinePlacement();
-				linePlacement->GetContents(instruction);
-			}
+			linePlacement.value().GetContents(instruction);
+
+			//if (!linePlacement)
+			//{
+			//	linePlacement = new S100_LinePlacement();
+			//	linePlacement->GetContents(instruction);
+			//}
 		}
 
 		auto offsetNode = node.child("offset");
 		if (offsetNode)
 		{
-			offsetX = offsetNode.child("x").text().as_double();
-			offsetY = offsetNode.child("y").text().as_double();
+			double offsetX = offsetNode.child("x").text().as_double();
+			double offsetY = offsetNode.child("y").text().as_double();
+			offset.Set(offsetX, offsetY);
 		}
 	}
 }
@@ -101,6 +109,11 @@ void S100_Symbol::SetReference(std::wstring& value)
 	reference = value;
 }
 
+void S100_Symbol::SetReference(std::string& value)
+{
+	reference = std::wstring(value.begin(), value.end());
+}
+
 void S100_Symbol::SetRotation(double value)
 {
 	rotation = value;
@@ -108,7 +121,8 @@ void S100_Symbol::SetRotation(double value)
 
 void S100_Symbol::SetRotationCRS(std::wstring& value)
 {
-	rotationCRS = value;
+	//rotationCRS = value;
+	rotationCRS = GraphicBasePackage::GetCRSTypeFromString(value);
 }
 
 void S100_Symbol::SetScaleFactor(double value)
@@ -126,7 +140,12 @@ double S100_Symbol::GetRotation()
 	return rotation;
 }
 
-std::wstring S100_Symbol::GetRotationCRS()
+//std::wstring S100_Symbol::GetRotationCRS()
+//{
+//	return rotationCRS;
+//}
+
+GraphicBasePackage::CRSType S100_Symbol::GetRotationCRS()
 {
 	return rotationCRS;
 }
@@ -136,15 +155,25 @@ double S100_Symbol::GetScaleFactor()
 	return scaleFactor;
 }
 
-S100_AreaPlacement* S100_Symbol::GetAreaPlacement()
+//S100_AreaPlacement* S100_Symbol::GetAreaPlacement()
+//{
+//	return areaPlacement;
+//}
+
+std::optional<S100_LineSymbolPlacement> S100_Symbol::GetLinePlacement()
+{
+	return linePlacement;
+}
+
+std::optional<S100_AreaSymbolPlacement> S100_Symbol::GetAreaPlacement()
 {
 	return areaPlacement;
 }
 
-S100_LinePlacement* S100_Symbol::GetLinePlacement()
-{
-	return linePlacement;
-}
+//S100_LinePlacement* S100_Symbol::GetLinePlacement()
+//{
+//	return linePlacement;
+//}
 
 //std::wstring S100_Symbol::GetId() 
 //{
@@ -173,10 +202,24 @@ S100_LinePlacement* S100_Symbol::GetLinePlacement()
 
 double S100_Symbol::GetOffsetX()
 {
-	return offsetX;
+	//return offsetX;
+	return offset.GetX();
 }
 
 double S100_Symbol::GetOffsetY()
 {
-	return offsetY;
+	//return offsetY;
+	return offset.GetY();
+}
+
+void S100_Symbol::SetOffsetX(double value)
+{
+	//offsetX = value;
+	offset.SetX(value);
+}
+
+void S100_Symbol::SetOffsetY(double value)
+{
+	//offsetY = value;
+	offset.SetY(value);
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<lineStyle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
+<title>CONVBO CATCON5</title>
+  <desc>Convergent boundary: Category of Convergent Boundary: Shear line</desc>
+<lineStyle offset="0">
+	<intervalLength>16.8</intervalLength>
+    <pen width="0.3">
+        <color>sWXBLU</color>
+    </pen>
+    <dash>
+        <start>0.0</start>
+        <length>5.0</length>
+    </dash>
+	<dash>
+        <start>5.3</start>
+        <length>0.3</length>
+    </dash>
+    <dash>
+        <start>5.9</start>
+        <length>5.0</length>
+    </dash>
+    <dash>
+        <start>11.2</start>
+        <length>10</length>
+    </dash>
+    <dash>
+        <start>11.8</start>
+        <length>5.0</length>
+    </dash>
+</lineStyle>

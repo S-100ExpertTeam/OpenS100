@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="2.34mm" height="9.16mm" viewBox="-1.17 -5.35 2.34 9.16">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="2.34mm" height="9.16mm" viewBox="-1.17 -5.35 2.34 9.16">
   <title>EBBSTR01</title>
   <desc>ebb stream, rate at spring tides</desc>
   <metadata>

@@ -49,12 +49,12 @@ void Local_StateCommands::Init()
 {
 	// Visibility
 	v_ViewingGroup.clear();
-	v_DisplayPlane = "";
+	v_DisplayPlane.clear();
 	v_DrawingPriority = "0";
 	v_ScaleMinimum = std::to_string(INT32_MAX);
 	v_ScaleMaximum = std::to_string(INT32_MIN);
-	v_Id = "";
-	v_Parent = "";
+	v_Id.clear();
+	v_Parent.clear();
 	v_Hover = "false";
 
 	// Transform
@@ -115,6 +115,81 @@ void Local_StateCommands::Init()
 
 	// Alert
 	v_AlertReference;
+
+	viewingGroup.init();
+	displayPlane.init();
+	drawingPriority.init();
+	scaleMinimum.init();
+	scaleMaximum.init();
+	id.init();
+	parent.init();
+	hover.init();
+	
+	localOffset.init();
+	linePlacement.init();
+	areaPlacement.init();
+	areaCRS.init();
+	rotation.init();
+	scaleFactor.init();
+
+	lineStyle.init();
+	lineSymbol.init();
+	dash.init();
+
+	fontColor.init();
+	fontSize.init();
+	fontProportion.init();
+	fontWeight.init();
+	fontSlant.init();
+	fontSerifs.init();
+	fontUnderline.init();
+	fontStrikethrough.init();
+	fontUpperline.init();
+	fontReference.init();
+	textAlignHorizontal.init();
+	textAlignVertical.init();
+	textVerticalOffset.init();
+
+	overrideColor.init();
+	overrideAll.init();
+
+	spatialReference.init();
+	augmentedPoint.init();
+	augmentedRay.init();
+	augmentedPath.init();
+	polyline.init();
+	arc3Points.init();
+	arcByRadius.init();
+	annulus.init();
+	clearGeometry.init();
+
+	lookupEntry.init();
+	numericAnnotation.init();
+	symbolAnnotation.init();
+	coverageColor.init();
+
+	date.init();
+	time.init();
+	dateTime.init();
+	timeValid.init();
+	clearTime.init();
+
+	alertReference.init();
+}
+
+void Local_DrawingCommands::Init()
+{
+	pointInstruction.init();
+	lineInstruction.init();
+	lineInstructionUnsuppressed.init();
+	colorFill.init();
+	areaFillReference.init();
+	pixmapFill.init();
+	symbolFill.init();
+	hatchFill.init();
+	textInstruction.init();
+	coverageFill.init();
+	nullInstruction.init();
 }
 
 ProcessS101::ProcessS101()
@@ -307,15 +382,11 @@ std::string ProcessS101::ProcessS100_XSLT(std::string inputXmlContent, std::stri
 
 bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std::string_view drawingCommands, PCOutputSchemaManager* pcm)
 {
-	if (featureID == "195")
-	{
-		OutputDebugString(L"Feature ID 195 encountered.");
-	}
-
 	std::vector<std::string_view> elements;
 	Split(drawingCommands, ";", elements);
 
 	Local_StateCommands stateCommands;
+	Local_DrawingCommands drawingCommand;
 
 	std::string v_ColorFill;
 	std::string v_TextInstruction;
@@ -330,7 +401,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 	for (auto i = elements.begin(); i != elements.end(); i++)
 	{
 		std::vector<std::string_view> di_splited;
-		std::vector<std::string> cp = Split(i->data(), ":");;
+		std::vector<std::string> cp = Split(i->data(), ":");
 		Split(*i, ":", di_splited);
 
 		int splitedSize = (int)di_splited.size();
@@ -700,12 +771,12 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 			// "ClearGeometry"
 			if (di_splited[0].compare("ClearGeometry") == 0)
 			{
-				stateCommands.v_AugmentedPoint = "";
+				stateCommands.v_AugmentedPoint.clear();
 				vl_SpatialReference.clear();
-				v_AreaFillReference = "";
-				stateCommands.v_AugmentedRay = "";
-				stateCommands.v_AugmentedPath = "";
-				stateCommands.v_ArcByRadius = "";
+				v_AreaFillReference.clear();
+				stateCommands.v_AugmentedRay.clear();
+				stateCommands.v_AugmentedPath.clear();
+				stateCommands.v_ArcByRadius.clear();
 			}
 		}
 		else
@@ -795,7 +866,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 							cf->GetColor()->SetTransparency(std::wstring(v_splited[1].begin(), v_splited[1].end()));
 						}
 					}
-					v_ColorFill = "";
+					v_ColorFill.clear();
 				}
 				else if (tag.compare("LineStyle") == 0)
 				{
@@ -857,7 +928,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 				{
 					stateCommands.v_AugmentedRay = value;
 
-					stateCommands.v_AugmentedPath = "";
+					stateCommands.v_AugmentedPath.clear();
 				}
 			}
 			else if (sizeForIndex == 13)
@@ -869,7 +940,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 				else if (tag.compare("AugmentedPath") == 0)
 				{
 					stateCommands.v_AugmentedPath = value;
-					stateCommands.v_AugmentedRay = "";
+					stateCommands.v_AugmentedRay.clear();
 				}
 				else if (tag.compare("AreaPlacement") == 0)
 				{
@@ -1003,7 +1074,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						}
 					}
 
-					v_TextInstruction = "";
+					v_TextInstruction.clear();
 				}
 				else if (tag.compare("LineInstruction") == 0)
 				{
@@ -1115,7 +1186,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 									sref->SetReference(v_splited[1]);
 								}
 							}
-							v_LineInstruction = "";
+							v_LineInstruction.clear();
 						}
 					}
 				}
@@ -1182,7 +1253,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						}
 					}
 
-					v_PointInstruction = "";
+					v_PointInstruction.clear();
 				}
 				// "SpatialReference:Curve|107" 
 				else if (tag.compare("SpatialReference") == 0)
@@ -1226,7 +1297,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						path.append(L".xml");
 						in->SetAreaFill(cf);
 					}
-					v_AreaFillReference = "";
+					v_AreaFillReference.clear();
 				}
 			}
 			else if (sizeForIndex == 19)

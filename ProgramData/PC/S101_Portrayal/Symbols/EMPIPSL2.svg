@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="1.46mm" height="1.46mm" viewBox="-0.74 -0.73 1.46 1.46">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="1.46mm" height="1.46mm" viewBox="-0.74 -0.73 1.46 1.46">
   <title>EMPIPSL2</title>
   <desc>Embedded symbol</desc>
   <metadata>

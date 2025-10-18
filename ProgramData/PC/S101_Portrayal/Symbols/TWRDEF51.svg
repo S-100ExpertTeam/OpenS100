@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="14.57mm" height="14.99mm" viewBox="-7.37 -7.42 14.57 14.99">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="14.57mm" height="14.99mm" viewBox="-7.37 -7.42 14.57 14.99">
   <title>TWRDEF51</title>
   <desc>two way route of a traffic separation scheme, with the direction not defined in the data</desc>
   <metadata>

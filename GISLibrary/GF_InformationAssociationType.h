@@ -14,7 +14,7 @@ namespace GF
         virtual ~InformationAssociationType();
 
     public:
-        std::string informationID = "";
+        std::string informationID;
 
     public:
         virtual InformationAssociationType operator=(const InformationAssociationType& other);

@@ -10,4 +10,7 @@ namespace GraphicBasePackage
 		localCRS,
 		lineCRS
 	};
+
+	CRSType GetCRSTypeFromString(const std::string& value);
+	CRSType GetCRSTypeFromString(const std::wstring& value);
 }

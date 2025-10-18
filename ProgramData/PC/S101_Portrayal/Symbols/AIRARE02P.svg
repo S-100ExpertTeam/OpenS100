@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="18.56mm" height="18.36mm" viewBox="-18.4 -18.2 18.56 18.36">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="18.56mm" height="18.36mm" viewBox="-18.4 -18.2 18.56 18.36">
   <title>AIRARE02P</title>
   <desc>pattern of symbols for an airport area</desc>
   <metadata>

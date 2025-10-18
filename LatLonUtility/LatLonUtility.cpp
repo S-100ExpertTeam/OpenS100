@@ -147,6 +147,7 @@ void LatLonUtility::Split(std::string_view targetStr, std::string_view token, st
 	if (token.length() == 0 || targetStr.find(token) == std::string::npos)
 	{
 		result.push_back(targetStr);
+		return;
 	}
 
 	// return var

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.59mm" height="4.78mm" viewBox="-1.19 -2.34 5.59 4.78">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="5.59mm" height="4.78mm" viewBox="-1.19 -2.34 5.59 4.78">
   <title>BCNDEF13</title>
   <desc>default symbol for a beacon, simplified</desc>
   <metadata>

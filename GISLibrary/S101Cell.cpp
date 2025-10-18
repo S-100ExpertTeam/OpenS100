@@ -475,7 +475,11 @@ bool S101Cell::Read8211(std::wstring path)
 			InsertFeatureRecord(r->m_frid.m_name.GetName(), r);
 		}
 
-		pBuf = curRecordAddress + drReader.m_recordLength;
+		// Record Length is 0 => Record Length > 99999
+		if (drReader.m_recordLength > 0)
+		{
+			pBuf = curRecordAddress + drReader.m_recordLength;
+		}
 	}
 
 	delete[] sBuf;
@@ -4008,7 +4012,7 @@ bool S101Cell::SaveAttribute(pugi::xml_node& root, std::vector<ATTR*> attributes
 				}
 				else
 				{
-					value = "";
+					value.clear();
 				}
 			}
 			else

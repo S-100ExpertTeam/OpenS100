@@ -54,6 +54,28 @@ int SENC_CommonFuc::GetRotationCRS(std::wstring name)
 	return 0;
 }	
 
+int SENC_CommonFuc::GetRotationCRS(GraphicBasePackage::CRSType value)
+{
+	if (GraphicBasePackage::CRSType::geographicCRS == value)
+	{
+		return GEOGRAPHIC_CRS;
+	}
+	else if (GraphicBasePackage::CRSType::portrayalCRS == value)
+	{
+		return PORTRAYAL_CRS;
+	}
+	else if (GraphicBasePackage::CRSType::localCRS == value)
+	{
+		return LOCAL_CRS;
+	}
+	else if (GraphicBasePackage::CRSType::lineCRS == value)
+	{
+		return LINE_CRS;
+	}
+	
+	return 0;
+}
+
 int SENC_CommonFuc::GetCapStyle(std::wstring name)
 {
 	ToLower(name);

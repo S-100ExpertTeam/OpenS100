@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.68mm" height="7.69mm" viewBox="-2.34 -5.35 4.68 7.69">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="4.68mm" height="7.69mm" viewBox="-2.34 -5.35 4.68 7.69">
   <title>RDOCAL02</title>
   <desc>radio calling-in point for traffic in one direction only</desc>
   <metadata>

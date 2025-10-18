@@ -14,7 +14,7 @@ public:
 	virtual ~CI_Organisation();
 
 private:
-	std::string name = "";
+	std::string name;
 	ContactInfo contactinfo;
 
 public:

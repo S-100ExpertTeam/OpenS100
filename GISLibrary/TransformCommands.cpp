@@ -88,6 +88,7 @@ namespace DrawingInstructions
 
 	void LocalOffset::init()
 	{
+		StateCommand::init();
 		xOffsetMM = 0.0;
 		yOffsetMM = 0.0;
 	}
@@ -98,6 +99,8 @@ namespace DrawingInstructions
 
 	void LocalOffset::parse(const std::string& input)
 	{
+		// LocalOffset:xOffsetMM, yOffsetMM
+
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
 		if (parts.size() == 2) 
 		{
@@ -117,12 +120,23 @@ namespace DrawingInstructions
 		}
 	}
 
+	double LocalOffset::GetXOffsetMM() const
+	{
+		return xOffsetMM;
+	}
+
+	double LocalOffset::GetYOffsetMM() const
+	{
+		return yOffsetMM;
+	}
+
 	// LinePlacement class implementation
 	LinePlacement::LinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts)
 		: linePlacementMode(linePlacementMode), offset(offset), endOffset(endOffset), visibleParts(visibleParts) {}
 
 	void LinePlacement::init()
 	{
+		StateCommand::init();
 		linePlacementMode = "Relative";
 		offset = 0.5;
 		endOffset.reset();
@@ -135,6 +149,8 @@ namespace DrawingInstructions
 
 	void LinePlacement::parse(const std::string& input)
 	{
+		// LinePlacement:linePlacementMode, offset[, endOffset][, visibleParts]
+
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
 		if (parts.size() >= 2) 
 		{
@@ -169,11 +185,32 @@ namespace DrawingInstructions
 		}
 	}
 
+	std::string LinePlacement::GetLinePlacementMode() const
+	{
+		return linePlacementMode;
+	}
+
+	double LinePlacement::GetOffset() const
+	{
+		return offset;
+	}
+
+	std::optional<double> LinePlacement::GetEndOffset() const
+	{
+		return endOffset;
+	}
+
+	bool LinePlacement::IsVisibleParts() const
+	{
+		return visibleParts;
+	}
+
 	// AreaPlacement class implementation
 	AreaPlacement::AreaPlacement(const std::string& areaPlacementMode) : areaPlacementMode(areaPlacementMode) {}
 
 	void AreaPlacement::init()
 	{
+		StateCommand::init();
 		areaPlacementMode = "VisibleParts";
 	}
 
@@ -183,6 +220,7 @@ namespace DrawingInstructions
 
 	void AreaPlacement::parse(const std::string& input)
 	{
+		// AreaPlacement:areaPlacementMode
 		areaPlacementMode = input;
 	}
 
@@ -191,6 +229,7 @@ namespace DrawingInstructions
 
 	void AreaCRS::init()
 	{
+		StateCommand::init();
 		areaCRSType = "ViGlobalGeometrysibleParts";
 	}
 
@@ -199,6 +238,7 @@ namespace DrawingInstructions
 
 	void AreaCRS::parse(const std::string& input)
 	{
+		// AreaCRS:areaCRSType
 		areaCRSType = input;
 	}
 
@@ -207,6 +247,7 @@ namespace DrawingInstructions
 
 	void Rotation::init()
 	{
+		StateCommand::init();
 		rotationCRS = "PortrayalCRS";
 		rotation = 0.0;
 	}
@@ -217,6 +258,7 @@ namespace DrawingInstructions
 
 	void Rotation::parse(const std::string& input)
 	{
+		// Rotation:rotationCRS,rotation 
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
 		if (parts.size() == 2) 
 		{
@@ -241,6 +283,7 @@ namespace DrawingInstructions
 
 	void ScaleFactor::init()
 	{
+		StateCommand::init();
 		scaleFactor = 1.0;
 	}
 
@@ -250,6 +293,7 @@ namespace DrawingInstructions
 
 	void ScaleFactor::parse(const std::string& input)
 	{
+		// ScaleFactor:scaleFactor 
 		try 
 		{
 			scaleFactor = std::stod(input);

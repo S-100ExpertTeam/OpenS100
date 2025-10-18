@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.66mm" height="4.6mm" viewBox="-6.32 -4.27 6.66 4.6">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="6.66mm" height="4.6mm" viewBox="-6.32 -4.27 6.66 4.6">
   <title>NODATA03P</title>
   <desc>area of no chart data</desc>
   <metadata>

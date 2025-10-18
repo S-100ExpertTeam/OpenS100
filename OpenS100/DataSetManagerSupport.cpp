@@ -198,7 +198,7 @@ void DataSetManagerSupport::ExtractFileNameAndPath(const std::string& fullPath, 
 	}
 	else {
 		outFileName = fullPath;
-		outFilePath = "";
+		outFilePath.clear();
 	}
 }
 

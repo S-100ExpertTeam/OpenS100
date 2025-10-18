@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.07mm" height="14.99mm" viewBox="-3.59 -7.42 7.07 14.99">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="7.07mm" height="14.99mm" viewBox="-3.59 -7.42 7.07 14.99">
   <title>TWRTPT52</title>
   <desc>reciprocal traffic directions in a two-way route of a traffic separation scheme</desc>
   <metadata>

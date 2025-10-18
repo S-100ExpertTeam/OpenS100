@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<lineStyle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
+<!--title>WAVWAV SIWAHE</title>
+   <desc>WAVe SIgnificant WAve HEight </desc>-->
+<lineStyle offset="0">
+    <intervalLength>4</intervalLength>
+    <pen width="0.3">
+        <color>sWXBLK</color>
+    </pen>  
+    <dash>
+      <start>0</start>
+      <length>4</length>
+    </dash>
+</lineStyle>

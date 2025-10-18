@@ -13,7 +13,7 @@ namespace GF
 		virtual ~NamedType();
 
 	public:
-		std::string code = "";
+		std::string code;
 
 	public:
 		virtual NamedType operator=(const NamedType& other);

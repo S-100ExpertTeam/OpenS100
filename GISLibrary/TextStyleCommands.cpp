@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "TextStyleCommands.h"
 
+#include "..\\LatLonUtility\\LatLonUtility.h"
+
 namespace DrawingInstructions
 {
     TextStyleCommands::~TextStyleCommands()
@@ -189,6 +191,7 @@ namespace DrawingInstructions
 
     void FontColor::init()
     {
+        StateCommand::init();
         token.clear();
         transparency = 0.0;
 	}
@@ -198,6 +201,32 @@ namespace DrawingInstructions
 
     void FontColor::parse(const std::string& input)
     {
+        // FontColor:token[,transparency] 
+		auto tokens = LatLonUtility::Split(input, ",");
+        if (tokens.size() > 0) 
+        {
+            token = tokens[0];
+
+            if (tokens.size() > 1) 
+            {
+                try 
+                {
+                    transparency = std::stod(tokens[1]);
+                }
+                catch (const std::exception&) 
+                {
+                    transparency = 0.0; // Default value if parsing fails
+                }
+            }
+            else 
+            {
+                transparency = 0.0; // Default value
+            }
+        }
+        else
+        {
+            init();
+        }
     }
 
     FontBackgroundColor::FontBackgroundColor(const std::string& token, double transparency)
@@ -207,8 +236,9 @@ namespace DrawingInstructions
 
     void FontBackgroundColor::init()
     {
+        StateCommand::init();
         token.clear();
-        transparency = 0.0;
+        transparency = 1.0;
 	}
 
     void FontBackgroundColor::execute()  {
@@ -216,6 +246,33 @@ namespace DrawingInstructions
 
     void FontBackgroundColor::parse(const std::string& input)
     {
+        // FontBackgroundColor:token[,transparency] 
+
+        auto tokens = LatLonUtility::Split(input, ",");
+        if (tokens.size() > 0)
+        {
+            token = tokens[0];
+
+            if (tokens.size() > 1)
+            {
+                try
+                {
+                    transparency = std::stod(tokens[1]);
+                }
+                catch (const std::exception&)
+                {
+                    transparency = 0.0; // Default value if parsing fails
+                }
+            }
+            else
+            {
+                transparency = 0.0; // Default value
+            }
+        }
+        else
+        {
+            init();
+        }
     }
 
 
@@ -224,7 +281,8 @@ namespace DrawingInstructions
 
     void FontSize::init()
     {
-        bodySize = 0.0;
+        StateCommand::init();
+        bodySize = 10.0;
 	}
 
     void FontSize::execute()  {
@@ -232,6 +290,15 @@ namespace DrawingInstructions
 
     void FontSize::parse(const std::string& input)
     {
+        // FontSize:bodySize 
+        try
+        {
+            bodySize = std::stod(input);
+        }
+        catch (const std::exception& e)
+        {
+			init(); // Reset to default value if parsing fails
+		}
     }
 
     // FontProportion class implementation
@@ -239,7 +306,8 @@ namespace DrawingInstructions
 
     void FontProportion::init()
     {
-        proportion.clear();
+        StateCommand::init();
+        proportion = "Proportional";
     }
 
     void FontProportion::execute()  {
@@ -247,6 +315,15 @@ namespace DrawingInstructions
 
     void FontProportion::parse(const std::string& input)
     {
+        // FontProportion:proportion 
+        if (input == "Proportional" || input == "MonoSpaced") 
+        {
+            proportion = input;
+        } 
+        else 
+        {
+            init(); // Reset to default value if parsing fails
+		}
     }
 
     // FontWeight class implementation
@@ -254,7 +331,8 @@ namespace DrawingInstructions
 
     void FontWeight::init()
     {
-        weight.clear();
+        StateCommand::init();
+        weight = "Medium";
 	}
 
     void FontWeight::execute()  {
@@ -262,6 +340,17 @@ namespace DrawingInstructions
 
     void FontWeight::parse(const std::string& input)
     {
+        // FontWeight:weight
+        if (input == "Light" ||
+            input == "Medium" || 
+            input == "Bold") 
+        {
+            weight = input;
+        } 
+        else
+        {
+            init(); // Reset to default value if parsing fails
+        }
     }
 
     // FontSlant class implementation
@@ -269,7 +358,8 @@ namespace DrawingInstructions
 
     void FontSlant::init()
     {
-        slant.clear();
+        StateCommand::init();
+        slant = "Upright";
 	}
 
     void FontSlant::execute()  {
@@ -277,6 +367,16 @@ namespace DrawingInstructions
 
     void FontSlant::parse(const std::string& input)
     {
+        // FontSlant:slant
+        if (input == "Upright" || 
+            input == "Italics") 
+        {
+            slant = input;
+        } 
+        else
+        {
+            init(); // Reset to default value if parsing fails
+        }
     }
 
     // FontSerifs class implementation
@@ -284,6 +384,7 @@ namespace DrawingInstructions
 
     void FontSerifs::init()
     {
+        StateCommand::init();
         serifs = false; // Default value
     }
 
@@ -292,6 +393,15 @@ namespace DrawingInstructions
 
     void FontSerifs::parse(const std::string& input)
     {
+        // FontSerifs:serifs 
+        if (input == "true" || input == "false") 
+        {
+            serifs = (input == "true");
+        } 
+        else 
+        {
+            init(); // Reset to default value if parsing fails
+		}
     }
 
     // FontUnderline class implementation
@@ -299,6 +409,7 @@ namespace DrawingInstructions
 
     void FontUnderline::init()
     {
+        StateCommand::init();
         underline = false; // Default value
 	}
 
@@ -307,6 +418,15 @@ namespace DrawingInstructions
 
     void FontUnderline::parse(const std::string& input)
     {
+        // FontUnderline:underline 
+        if (input == "true" || input == "false") 
+        {
+            underline = (input == "true");
+        } 
+        else
+        {
+            init(); // Reset to default value if parsing fails
+        }
     }
 
     // FontStrikethrough class implementation
@@ -314,6 +434,7 @@ namespace DrawingInstructions
 
     void FontStrikethrough::init()
     {
+        StateCommand::init();
         strikethrough = false; // Default value
     }
 
@@ -322,6 +443,15 @@ namespace DrawingInstructions
 
     void FontStrikethrough::parse(const std::string& input)
     {
+        // FontStrikethrough:strikethrough 
+        if (input == "true" || input == "false") 
+        {
+            strikethrough = (input == "true");
+        } 
+        else
+        {
+            init(); // Reset to default value if parsing fails
+        }
     }
 
     // TextAlignHorizontal class implementation
@@ -329,7 +459,8 @@ namespace DrawingInstructions
 
     void TextAlignHorizontal::init()
     {
-        horizontalAlignment.clear();
+        StateCommand::init();
+        horizontalAlignment = "Start";
     }
 
     void TextAlignHorizontal::execute()  {
@@ -337,6 +468,17 @@ namespace DrawingInstructions
 
     void TextAlignHorizontal::parse(const std::string& input)
     {
+        // TextAlignHorizontal:horizontalAlignment 
+        if (input == "Start" || 
+            input == "Center" || 
+            input == "End") 
+        {
+            horizontalAlignment = input;
+        } 
+        else
+        {
+            init(); // Reset to default value if parsing fails
+		}
     }
 
     // TextAlignVertical class implementation
@@ -344,7 +486,8 @@ namespace DrawingInstructions
 
     void TextAlignVertical::init()
     {
-        verticalAlignment.clear();
+        StateCommand::init();
+        verticalAlignment = "Bottom";
 	}
 
     void TextAlignVertical::execute()  {
@@ -352,10 +495,22 @@ namespace DrawingInstructions
 
     void TextAlignVertical::parse(const std::string& input)
     {
+        // TextAlignVertical:verticalAlignment 
+		if (input == "Top" ||
+			input == "Center" ||
+			input == "Bottom")
+		{
+			verticalAlignment = input;
+		}
+		else
+		{
+			init(); // Reset to default value if parsing fails
+		}
     }
 
     void FontReference::init()
     {
+        StateCommand::init();
         fontReference.clear();
 	}
 
@@ -365,11 +520,14 @@ namespace DrawingInstructions
 
     void FontReference::parse(const std::string& input)
     {
+		// FontReference:fontReference 
+		fontReference = input;
     }
 
     void FontUpperline::init()
     {
-        strikethrough = false; // Default value
+        StateCommand::init();
+        strikethrough = false;
 	}
 
     void FontUpperline::execute() 
@@ -378,10 +536,20 @@ namespace DrawingInstructions
 
     void FontUpperline::parse(const std::string& input)
     {
+        // FontUpperline:upperline 
+        if (input == "true" || input == "false") 
+        {
+            strikethrough = (input == "true");
+        } 
+        else
+        {
+            init(); // Reset to default value if parsing fails
+        }
     }
 
     void TextVerticalOffset::init()
     {
+        StateCommand::init();
         verticalOffset = 0.0; // Default value
     }
 
@@ -391,6 +559,15 @@ namespace DrawingInstructions
 
     void TextVerticalOffset::parse(const std::string& input)
     {
+        // TextVerticalOffset:verticalOffset 
+        try
+        {
+            verticalOffset = std::stod(input);
+        }
+        catch (const std::exception& e)
+        {
+            init(); // Reset to default value if parsing fails
+		}
     }
 
 }

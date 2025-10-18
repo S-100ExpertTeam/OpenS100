@@ -14,6 +14,9 @@ namespace DrawingInstructions
 
     private:
         std::vector<std::string> viewingGroups;
+
+    public:
+		std::vector<std::string> GetViewingGroups() const;
     };
 
     class DisplayPlane : public StateCommand 
@@ -27,6 +30,9 @@ namespace DrawingInstructions
 
     private:
         std::string displayPlane;
+
+    public:
+		std::string GetDisplayPlane() const;
     };
 
     class DrawingPriority : public StateCommand 
@@ -40,6 +46,9 @@ namespace DrawingInstructions
 
     private:
         int drawingPriority = 0;
+
+    public:
+		int GetDrawingPriority() const;
     };
 
     class ScaleMinimum : public StateCommand 
@@ -53,6 +62,9 @@ namespace DrawingInstructions
 
     private:
         int scaleMinimum = INT32_MAX;
+
+    public:
+		int GetScaleMinimum() const;
     };
 
     class ScaleMaximum : public StateCommand 
@@ -66,6 +78,9 @@ namespace DrawingInstructions
 
     private:
         int scaleMaximum = INT32_MIN;
+
+	public:
+		int GetScaleMaximum() const;
     };
 
     class Id : public StateCommand 
@@ -79,6 +94,9 @@ namespace DrawingInstructions
 
     private:
         std::string id;
+
+    public:
+        std::string GetId();
     };
 
     class Parent : public StateCommand 
@@ -92,10 +110,14 @@ namespace DrawingInstructions
 
     private:
         std::string parentId;
+
+    public:
+		std::string GetParentId() const;
     };
 
     class Hover : public StateCommand {
     public:
+		Hover() = default;
         Hover(bool hover);
         virtual void init() override;
         virtual void execute() override;
@@ -103,6 +125,9 @@ namespace DrawingInstructions
 
     private:
         bool hover = false;
+
+    public:
+		bool GetHover() const;
     };
 
     class VisibilityCommands 

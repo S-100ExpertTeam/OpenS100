@@ -591,7 +591,8 @@ void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2
 			}
 		}
 	}
-	else if (vectorPoint)
+	
+	if (vectorPoint)
 	{
 		D2D1_POINT_2F tempPoint;
 		double mx = vectorPoint->GetX();

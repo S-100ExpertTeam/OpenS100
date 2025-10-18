@@ -1,61 +1,109 @@
 #pragma once
+
+#include "VectorParameter.h"
+
 #include <string>
 #include <vector>
 
 namespace DrawingInstructions
 {
     // Base class for all drawing commands
-    class DrawingCommand {
+    class DrawingCommand 
+    {
     public:
+		DrawingCommand() = default;
         virtual ~DrawingCommand() = default;
+
+    public:
+        virtual void init();
         virtual void execute()  = 0;
         virtual void parse(const std::string& input) = 0;
+
+    public:
+		bool present = false;
+
+    public:
+        void setPresent(bool value = true);
+		bool isPresent() const;
     };
 
-    class PointInstruction : public DrawingCommand {
+    class PointInstruction : public DrawingCommand 
+    {
     public:
+		PointInstruction() = default;
         PointInstruction(const std::string& symbol);
+		virtual ~PointInstruction() = default;
+        
+    public:
+        virtual void init() override;
         virtual void execute()  override;
         virtual void parse(const std::string& input) override;
 
     private:
         std::string symbol;
+
+    public:
+        std::string GetSymbol() const;
     };
 
-    class LineInstruction : public DrawingCommand {
+    class LineInstruction : public DrawingCommand 
+    {
     public:
-        LineInstruction(const std::string& lineStyle);
+        LineInstruction() = default;
+        LineInstruction(const std::vector<std::string>& lineStyle);
+		virtual ~LineInstruction() = default;
+
+    public:
+        virtual void init() override;
         virtual void execute()  override;
         virtual void parse(const std::string& input) override;
 
     private:
-        std::string lineStyle;
+        std::vector<std::string> lineStyle;
     };
 
-    class LineInstructionUnsuppressed : public DrawingCommand {
+    class LineInstructionUnsuppressed : public DrawingCommand 
+    {
     public:
-        LineInstructionUnsuppressed(const std::string& lineStyle);
+		LineInstructionUnsuppressed() = default;
+        LineInstructionUnsuppressed(const std::vector<std::string>& lineStyle);
+		virtual ~LineInstructionUnsuppressed() = default;
+
+    public:
+        virtual void init() override;
         virtual void execute()  override;
         virtual void parse(const std::string& input) override;
 
     private:
-        std::string lineStyle;
+        std::vector<std::string> lineStyle;
     };
 
-    class ColorFill : public DrawingCommand {
+    class ColorFill : public DrawingCommand 
+    {
     public:
+		ColorFill() = default;
         ColorFill(const std::string& token, double transparency = 0.0);
+		virtual ~ColorFill() = default;
+
+    public:
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
     private:
         std::string token;
-        double transparency;
+        double transparency = 0.0;
     };
 
-    class AreaFillReference : public DrawingCommand {
+    class AreaFillReference : public DrawingCommand 
+    {
     public:
+		AreaFillReference() = default;
         AreaFillReference(const std::string& reference);
+		virtual ~AreaFillReference() = default;
+
+    public:
+        virtual void init() override;
         virtual void execute()  override;
         virtual void parse(const std::string& input) override;
 
@@ -63,9 +111,15 @@ namespace DrawingInstructions
         std::string reference;
     };
 
-    class PixmapFill : public DrawingCommand {
+    class PixmapFill : public DrawingCommand 
+    {
     public:
+		PixmapFill() = default;
         PixmapFill(const std::string& reference);
+		virtual ~PixmapFill() = default;
+
+    public:
+        virtual void init() override;
         virtual void execute()  override;
         virtual void parse(const std::string& input) override;
 
@@ -73,34 +127,53 @@ namespace DrawingInstructions
         std::string reference;
     };
 
-    class SymbolFill : public DrawingCommand {
+    class SymbolFill : public DrawingCommand 
+    {
     public:
-        SymbolFill(const std::string& symbol, const std::vector<double>& v1, const std::vector<double>& v2, bool clipSymbols = true);
+		SymbolFill() = default;
+        SymbolFill(const std::string& symbol, const DrawingInstructions::Vector& v1, const DrawingInstructions::Vector& v2, bool clipSymbols = true);
+		virtual ~SymbolFill() = default;
+
+    public:
+        virtual void init() override;
         virtual void execute()  override;
         virtual void parse(const std::string& input) override;
 
     private:
         std::string symbol;
-        std::vector<double> v1;
-        std::vector<double> v2;
-        bool clipSymbols;
+        DrawingInstructions::Vector v1;
+        DrawingInstructions::Vector v2;
+        bool clipSymbols = true;
     };
 
-    class HatchFill : public DrawingCommand {
+    class HatchFill : public DrawingCommand 
+    {
     public:
-        HatchFill(const std::vector<double>& direction, double distance, const std::string& lineStyle);
+		HatchFill() = default;
+        HatchFill(const DrawingInstructions::Vector& direction, double distance, const std::string& lineStyle1, const std::string& lineStyle2);
+		virtual ~HatchFill() = default;
+        
+    public:
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
     private:
-        std::vector<double> direction;
-        double distance;
-        std::string lineStyle;
+        DrawingInstructions::Vector direction;
+        double distance = 0.0;
+        std::string lineStyle1;
+		std::string lineStyle2;
     };
 
-    class TextInstruction : public DrawingCommand {
+    class TextInstruction : public DrawingCommand 
+    {
     public:
+		TextInstruction() = default;
         TextInstruction(const std::string& text);
+		virtual ~TextInstruction() = default;
+
+    public:
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
@@ -108,9 +181,15 @@ namespace DrawingInstructions
         std::string text;
     };
 
-    class CoverageFill : public DrawingCommand {
+    class CoverageFill : public DrawingCommand 
+    {
     public:
+		CoverageFill() = default;
         CoverageFill(const std::string& attributeCode, const std::string& uom = "", const std::string& placement = "");
+		virtual ~CoverageFill() = default;
+
+    public:
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
 
@@ -120,8 +199,14 @@ namespace DrawingInstructions
         std::string placement;
     };
 
-    class NullInstruction : public DrawingCommand {
+    class NullInstruction : public DrawingCommand 
+    {
     public:
+		NullInstruction() = default;
+		virtual ~NullInstruction() = default;
+
+    public:
+        virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
     };
@@ -132,13 +217,13 @@ namespace DrawingInstructions
         ~DrawingCommands();
 
         void setPointInstruction(const std::string& symbol);
-        void setLineInstruction(const std::string& lineStyle);
-        void setLineInstructionUnsuppressed(const std::string& lineStyle);
+        void setLineInstruction(const std::vector<std::string>& lineStyle);
+        void setLineInstructionUnsuppressed(const std::vector<std::string>& lineStyle);
         void setColorFill(const std::string& token, double transparency = 0.0);
         void setAreaFillReference(const std::string& reference);
         void setPixmapFill(const std::string& reference);
-        void setSymbolFill(const std::string& symbol, const std::vector<double>& v1, const std::vector<double>& v2, bool clipSymbols = true);
-        void setHatchFill(const std::vector<double>& direction, double distance, const std::string& lineStyle);
+        void setSymbolFill(const std::string& symbol, const DrawingInstructions::Vector& v1, const DrawingInstructions::Vector& v2, bool clipSymbols = true);
+        void setHatchFill(const DrawingInstructions::Vector& direction, double distance, const std::string& lineStyle1, const std::string& lineStyle2);
         void setTextInstruction(const std::string& text);
         void setCoverageFill(const std::string& attributeCode, const std::string& uom = "", const std::string& placement = "");
         void setNullInstruction();
