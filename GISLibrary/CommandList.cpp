@@ -107,8 +107,21 @@ void CommandList::Insert(std::unique_ptr<DrawingInstructions::Command> command)
 
 std::list<S100_Instruction*> CommandList::Parse()
 {
+	std::list<S100_Instruction*> result;
+
 	for (auto i = commands.begin(); i != commands.end(); ++i)
 	{
 		
+
+
+		// PointInstruction
+		// -- 
+
+		// LineInstruction Or LineInstructionUnsuppressed
+		// refers to a line style in PC or defiend by LineStyle command
+
+		// ColorFill
 	}
+
+	return result;
 }

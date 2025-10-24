@@ -8,26 +8,6 @@
 
 namespace DrawingInstructions
 {
-    // Base class for all drawing commands
-  //  class DrawingCommand 
-  //  {
-  //  public:
-		//DrawingCommand() = default;
-  //      virtual ~DrawingCommand() = default;
-
-  //  public:
-  //      virtual void init();
-  //      virtual void execute()  = 0;
-  //      virtual void parse(const std::string& input) = 0;
-
-  //  public:
-		//bool present = false;
-
-  //  public:
-  //      void setPresent(bool value = true);
-		//bool isPresent() const;
-  //  };
-
     class PointInstruction : public Command
     {
     public:

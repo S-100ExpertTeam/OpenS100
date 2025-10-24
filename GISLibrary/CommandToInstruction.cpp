@@ -3,80 +3,58 @@
 
 #include "..\\PortrayalCatalogue\\S100_AugmentedRay.h"
 
-S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_DrawingCommands& dc, Local_StateCommands& sc)
+S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_StateCommands& sc, DrawingInstructions::PointInstruction& pi)
 {
-	S100_Instruction* instruction = nullptr;
-	if (sc.augmentedPoint.isPresent())
+	auto instruction = new S100_PointInstruction();
+	
+	SetDrawingInstruction(sc, instruction);
+
+	// Symbol::Symbol
+	S100_Symbol* symbol = new S100_Symbol();
+	instruction->SetSymbol(symbol);
+
+	// reference
+	symbol->SetReference(pi.GetSymbol());
+
+	// rotation
+	// rotationCRS
+	if (sc.rotation.isPresent())
 	{
-		instruction = new S100_AugmentedPoint();
-	}
-	else if (dc.pointInstruction.isPresent())
-	{
-		instruction = new S100_PointInstruction();
-	}
-
-	if (instruction)
-	{
-		SetDrawingInstruction(sc, instruction);
-
-		// PointInstruction
-		if (dc.pointInstruction.isPresent())
-		{
-			auto pointInstruction = (S100_PointInstruction*)instruction;
-
-			// Symbol::Symbol
-			S100_Symbol* symbol = new S100_Symbol();
-			pointInstruction->SetSymbol(symbol);
-
-			// reference
-			symbol->SetReference(dc.pointInstruction.GetSymbol());
-
-			// rotation
-			// rotationCRS
-			if (sc.rotation.isPresent())
-			{
-				symbol->SetRotation(sc.rotation.GetRotation());
-				symbol->SetRotationCRS(sc.rotation.GetRotationCRS());
-			}
-
-			// scaleFactor
-			if (sc.scaleFactor.isPresent())
-			{
-				symbol->SetScaleFactor(sc.scaleFactor.GetScaleFactor());
-			}
-
-			// offset
-			if (sc.localOffset.isPresent())
-			{
-				symbol->SetOffsetX(sc.localOffset.GetXOffsetMM());
-				symbol->SetOffsetY(sc.localOffset.GetYOffsetMM());
-			}
-
-			// linePlacement
-			if (sc.linePlacement.isPresent())
-			{
-				symbol->SetLinePlacement(
-					sc.linePlacement.GetOffset(),
-					StringToLinePlacementMode(sc.linePlacement.GetLinePlacementMode()),
-					sc.linePlacement.IsVisibleParts());
-			}
-
-			// areaPlacement
-			if (sc.areaPlacement.isPresent())
-			{
-				symbol->SetAreaPlacement(StringToS100AreaPlacementMode(sc.areaPlacement.GetAreaPlacementMode()));
-			}
-
-			// overrideAll
-		}
-		// AugmentedPoint
-		else if (sc.augmentedPoint.isPresent())
-		{
-			//sc.augmentedPoint
-		}
+		symbol->SetRotation(sc.rotation.GetRotation());
+		symbol->SetRotationCRS(sc.rotation.GetRotationCRS());
 	}
 
-	return (S100_PointInstruction*)instruction;
+	// scaleFactor
+	if (sc.scaleFactor.isPresent())
+	{
+		symbol->SetScaleFactor(sc.scaleFactor.GetScaleFactor());
+	}
+
+	// offset
+	if (sc.localOffset.isPresent())
+	{
+		symbol->SetOffsetX(sc.localOffset.GetXOffsetMM());
+		symbol->SetOffsetY(sc.localOffset.GetYOffsetMM());
+	}
+
+	// linePlacement
+	if (sc.linePlacement.isPresent())
+	{
+		symbol->SetLinePlacement(
+			sc.linePlacement.GetOffset(),
+			StringToLinePlacementMode(sc.linePlacement.GetLinePlacementMode()),
+			sc.linePlacement.IsVisibleParts());
+	}
+
+	// areaPlacement
+	if (sc.areaPlacement.isPresent())
+	{
+		symbol->SetAreaPlacement(StringToS100AreaPlacementMode(sc.areaPlacement.GetAreaPlacementMode()));
+	}
+
+	// overrideAll
+
+	return instruction;
 }
 
 S100_LineInstruction* CommandToInstruction::ToS100LineInstruction(Local_DrawingCommands& dc, Local_StateCommands& sc)

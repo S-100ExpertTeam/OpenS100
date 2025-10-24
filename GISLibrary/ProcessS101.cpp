@@ -423,12 +423,12 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 					drawingCommand.pointInstruction.parse(cp[1]);
 				}
 
-				auto ins = CommandToInstruction::ToS100PointInstruction(drawingCommand, stateCommands);
-				if (ins)
-				{
-					ins->SetFeatureReference(featureID);
-					pcm->displayList->SetDisplayInstruction(ins);
-				}
+				//auto ins = CommandToInstruction::ToS100PointInstruction(drawingCommand, stateCommands);
+				//if (ins)
+				//{
+				//	ins->SetFeatureReference(featureID);
+				//	pcm->displayList->SetDisplayInstruction(ins);
+				//}
 			}
 			else if (di_splited[0].compare("LineInstruction") == 0)
 			{
@@ -1410,6 +1410,13 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 			}
 		}
 	}
+
+	auto instructionList = commandList.Parse();
+	for (auto instruction : instructionList)
+	{
+		pcm->displayList->SetDisplayInstruction(instruction);
+	}
+
 	return true;
 }
 
