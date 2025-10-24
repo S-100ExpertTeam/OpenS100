@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
     class Command 
     {

@@ -14,10 +14,10 @@ public:
 	virtual ~CommandList() = default;
 
 protected:
-	std::list<std::unique_ptr<DrawingInstructions::Command>> commands;
+	std::list<std::unique_ptr<DrawingCommand::Command>> commands;
 
 public:
 	void Insert(std::string& command, std::string& params);
-	void Insert(std::unique_ptr<DrawingInstructions::Command> command);
+	void Insert(std::unique_ptr<DrawingCommand::Command> command);
 	std::list<S100_Instruction*> Parse();
 };

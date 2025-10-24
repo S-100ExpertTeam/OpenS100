@@ -1074,6 +1074,39 @@
     <ClCompile Include="Enum_StateCommand.cpp">
       <Filter>S100\DrawingInstructions\StateCommands</Filter>
     </ClCompile>
+    <ClCompile Include="PointInstruction.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="LineInstruction.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="LineInstructionUnsuppressed.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorFill.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaFillReference.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="PixmapFill.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolFill.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="HatchFill.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="TextInstruction.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="CoverageFill.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="NullInstruction.cpp">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -2140,6 +2173,39 @@
     </ClInclude>
     <ClInclude Include="Enum_StateCommand.h">
       <Filter>S100\DrawingInstructions\StateCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="PointInstruction.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="LineInstruction.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="LineInstructionUnsuppressed.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorFill.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaFillReference.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="PixmapFill.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolFill.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="HatchFill.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="TextInstruction.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="CoverageFill.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="NullInstruction.h">
+      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

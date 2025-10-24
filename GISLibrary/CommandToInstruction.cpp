@@ -3,7 +3,7 @@
 
 #include "..\\PortrayalCatalogue\\S100_AugmentedRay.h"
 
-S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_StateCommands& sc, DrawingInstructions::PointInstruction& pi)
+S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_StateCommands& sc, DrawingCommand::PointInstruction& pi)
 {
 	auto instruction = new S100_PointInstruction();
 	

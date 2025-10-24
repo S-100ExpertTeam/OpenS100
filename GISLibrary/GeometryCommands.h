@@ -5,7 +5,7 @@
 #include "..\\GeoMetryLibrary\\GeoPoint.h"
 #include "..\\S100Engine\\GraphicBasePackage_Enum.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
     class SpatialReference : public Command {
     public:
@@ -32,7 +32,7 @@ namespace DrawingInstructions
 
     private:
         GraphicBasePackage::CRSType crs = GraphicBasePackage::CRSType::CRSType_None;
-        DrawingInstructions::Point point;
+        DrawingCommand::Point point;
     };
 
     class AugmentedRay : public Command {
@@ -70,14 +70,14 @@ namespace DrawingInstructions
     class Polyline : public Command {
     public:
 		Polyline() = default;
-        Polyline(const std::vector<DrawingInstructions::Point>& points);
+        Polyline(const std::vector<DrawingCommand::Point>& points);
 
 		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
     private:
-        std::vector<DrawingInstructions::Point> points;
+        std::vector<DrawingCommand::Point> points;
     };
 
     // Arc3Points class
@@ -92,9 +92,9 @@ namespace DrawingInstructions
 
 
     private:
-       DrawingInstructions::Point startPoint;
-       DrawingInstructions::Point medianPoint;
-       DrawingInstructions::Point endPoint;
+        DrawingCommand::Point startPoint;
+        DrawingCommand::Point medianPoint;
+        DrawingCommand::Point endPoint;
     };
 
     // ArcByRadius class
@@ -108,7 +108,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        DrawingInstructions::Point center;
+        DrawingCommand::Point center;
         double radius = 0.0;
         double startAngle = 0.0;
         double angularDistance = 360.0;
@@ -125,7 +125,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        DrawingInstructions::Point center;
+        DrawingCommand::Point center;
         double outerRadius = 0.0;
         double innerRadius = 0.0;
         double startAngle = 0.0;

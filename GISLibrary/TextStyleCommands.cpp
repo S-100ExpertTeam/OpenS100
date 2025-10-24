@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
     // FontColor class implementation
     FontColor::FontColor(const std::string& token, double transparency) : token(token), transparency(transparency) {}

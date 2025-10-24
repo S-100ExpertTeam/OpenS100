@@ -4,7 +4,7 @@
 
 #include "..\\FeatureCatalog\\IntervalType.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
     class Date : public Command {
     public:

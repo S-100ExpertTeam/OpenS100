@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Command.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
 
     GraphicBasePackage::CRSType Command::GetCRSTypeFromString(const std::string& value)

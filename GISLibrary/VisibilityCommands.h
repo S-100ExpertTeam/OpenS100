@@ -1,7 +1,7 @@
 #pragma once
 #include "Command.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
     class ViewingGroup : public Command 
     {

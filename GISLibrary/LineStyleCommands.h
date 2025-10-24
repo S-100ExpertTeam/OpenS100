@@ -4,7 +4,7 @@
 
 #include "..\\S100Engine\\GraphicBasePackage_Enum.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
     class LineStyle : public Command 
     {

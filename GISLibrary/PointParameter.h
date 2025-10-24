@@ -1,6 +1,6 @@
 #pragma once
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
 	class Point
 	{
