@@ -1,9 +1,9 @@
 #pragma once
-#include "StateCommand.h"
+#include "Command.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
-    class OverrideColor : public StateCommand 
+    class OverrideColor : public Command 
     {
     public:
 		OverrideColor() = default;
@@ -21,7 +21,7 @@ namespace DrawingInstructions
         double overrideTransparency = 0.0;
     };
 
-    class OverrideAll : public StateCommand 
+    class OverrideAll : public Command 
     {
     public:
 		OverrideAll() = default;
@@ -37,7 +37,7 @@ namespace DrawingInstructions
         double transparency = 0.0;
     };
 
-    class ClearOverride : public StateCommand 
+    class ClearOverride : public Command 
 	{
     public:
         ClearOverride() = default;
@@ -46,30 +46,6 @@ namespace DrawingInstructions
         void init() override;
         void execute() override;
         void parse(const std::string& input) override;
-	};
-
-	class ColourOverrideCommands
-	{
-	public:
-		ColourOverrideCommands() = default;
-		ColourOverrideCommands(const ColourOverrideCommands&) = delete;
-		ColourOverrideCommands& operator=(const ColourOverrideCommands&) = delete;
-		ColourOverrideCommands(ColourOverrideCommands&&) = delete;
-		ColourOverrideCommands& operator=(ColourOverrideCommands&&) = delete;
-		~ColourOverrideCommands();
-
-		void setOverrideColor(const std::string& colorToken, double colorTransparency, const std::string& overrideToken, double overrideTransparency);
-        void setOverrideAll(const std::string& token, double transparency);
-        void clearOverride();
-
-
-        void parse(const std::string& key, std::string value);
-        void execute() const;
-
-    private:
-        //Colour Override
-		OverrideColor* overrideColor = nullptr;
-		OverrideAll* overrideAll = nullptr;
 	};
 }
 

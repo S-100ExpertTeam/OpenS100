@@ -1,12 +1,12 @@
 #pragma once
 
-#include "StateCommand.h"
+#include "Command.h"
 
 #include "..\\S100Engine\\GraphicBasePackage_Enum.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
-    class LineStyle : public StateCommand 
+    class LineStyle : public Command 
     {
     public:
 		LineStyle() = default;
@@ -27,7 +27,7 @@ namespace DrawingInstructions
         double offset = 0.0;
     };
 
-    class LineSymbol : public StateCommand {
+    class LineSymbol : public Command {
     public:
 		LineSymbol() = default;
         LineSymbol(const std::string& Reference, double position, double rotation, const GraphicBasePackage::CRSType crsType);
@@ -42,7 +42,7 @@ namespace DrawingInstructions
 		double scaleFactor = 1.0; 
     };
 
-    class Dash : public StateCommand 
+    class Dash : public Command 
     {
     public:
 		Dash() = default;
@@ -54,30 +54,5 @@ namespace DrawingInstructions
         double start = 0.0;
         double length = 0.0;
     };
-
-	class LineStyleCommands
-	{
-		public:
-		LineStyleCommands() = default;
-		LineStyleCommands(const LineStyleCommands&) = delete;
-		LineStyleCommands& operator=(const LineStyleCommands&) = delete;
-		LineStyleCommands(LineStyleCommands&&) = delete;
-		LineStyleCommands& operator=(LineStyleCommands&&) = delete;
-		~LineStyleCommands();
-
- 		void setLineStyle(const std::string& name, double intervalLength, double width, const std::string& token, double transparency,
-            const std::string& capStyle, const std::string& joinStyle, double offset);
-        void setLineSymbol(const std::string& Reference, double position, double rotation, const GraphicBasePackage::CRSType crsType);
-        void setDash(double start, double length);
-
-
-        void parse(const std::string& key, std::string value);
-        void execute() const;
-    private:
-          //Line Style
-        LineStyle* lineStyle = nullptr;
-        LineSymbol* lineSymbol = nullptr;
-        Dash* dash = nullptr;
-	};
 }
 

@@ -1,13 +1,14 @@
 #pragma once
-#include "StateCommand.h"
+#include "Command.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
-    class LocalOffset : public StateCommand 
+    class LocalOffset : public Command 
     {
     public:
 		LocalOffset() = default;
         LocalOffset(double xOffsetMM, double yOffsetMM);
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
@@ -21,11 +22,12 @@ namespace DrawingInstructions
 		double GetYOffsetMM() const;
     };
 
-    class LinePlacement : public StateCommand 
+    class LinePlacement : public Command 
     {
     public:
 		LinePlacement() = default;
         LinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts);
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
@@ -43,24 +45,29 @@ namespace DrawingInstructions
 		bool IsVisibleParts() const;
     };
 
-    class AreaPlacement : public StateCommand 
+    class AreaPlacement : public Command 
     {
     public:
 		AreaPlacement() = default;
         AreaPlacement(const std::string& areaPlacementMode);
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
     private:
         std::string areaPlacementMode = "VisibleParts";
+
+    public:
+		std::string GetAreaPlacementMode() const;
     };
 
-    class AreaCRS : public StateCommand 
+    class AreaCRS : public Command 
     {
     public:
 		AreaCRS() = default;
         AreaCRS(const std::string& areaCRSType);
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
@@ -69,11 +76,12 @@ namespace DrawingInstructions
         std::string areaCRSType = "GlobalGeometry";
     };
 
-    class Rotation : public StateCommand 
+    class Rotation : public Command 
     {
     public:
 		Rotation() = default;
         Rotation(const std::string& rotationCRS, double rotation);
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
@@ -81,53 +89,27 @@ namespace DrawingInstructions
     private:
         std::string rotationCRS = "PortrayalCRS";
         double rotation = 0.0;
+
+    public:
+		std::string GetRotationCRS() const;
+		double GetRotation() const;
     };
 
-    class ScaleFactor : public StateCommand 
+    class ScaleFactor : public Command 
     {
     public:
 		ScaleFactor() = default;
         ScaleFactor(double scaleFactor);
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
 
     private:
         double scaleFactor = 1.0;
+
+	public:
+		double GetScaleFactor() const;
     };
-
-
-class TransformCommands
-{
-public:
-    TransformCommands() = default;
-    TransformCommands(const TransformCommands&) = delete;
-    TransformCommands& operator=(const TransformCommands&) = delete;
-    TransformCommands(TransformCommands&&) = delete;
-    TransformCommands& operator=(TransformCommands&&) = delete;
-    ~TransformCommands();
-
-    void setLocalOffset(double xOffsetMM, double yOffsetMM);
-    void setLinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts);
-    void setAreaPlacement(const std::string& areaPlacementMode);
-    void setAreaCRS(const std::string& areaCRSType);
-    void setRotation(const std::string& rotationCRS, double rotation);
-    void setScaleFactor(double scaleFactor);
-
-
-    void parse(const std::string& key, std::string value);
-    void execute() const;
-
-
-private:
-    //Transform commands
-    LocalOffset* localOffset = nullptr;
-    LinePlacement* linePlacement = nullptr;
-    AreaPlacement* areaPlacement = nullptr;
-    AreaCRS* areaCRS = nullptr;
-    Rotation* rotation = nullptr;
-    ScaleFactor* scaleFactor = nullptr;
-};
-
 
 }

@@ -82,4 +82,14 @@ namespace DrawingCommand
     {
         return present;
     }
+
+    void Command::setParameter(const std::string& value)
+    {
+		parameter = value;
+    }
+
+    std::string Command::getParameter()
+    {
+		return parameter;
+    }
 }

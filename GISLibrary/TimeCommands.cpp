@@ -3,89 +3,14 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
-	TimeCommands::~TimeCommands()
-	{
-		delete date;
-		delete time;
-		delete dateTime;
-		delete timeValid;
-		delete clearTimeCmd;
-		date = nullptr;
-		time = nullptr;
-		dateTime = nullptr;
-		timeValid = nullptr;
-		clearTimeCmd = nullptr;
-	}
-	void TimeCommands::setDate(const std::string& begin, const std::string& end)
-	{
-		delete this->date;
-		this->date = new Date(begin, end);
-	}
-
-	void TimeCommands::setTime(const std::string& begin, const std::string& end)
-	{
-		delete this->time;
-		this->time = new Time(begin, end);
-	}
-
-	void TimeCommands::setDateTime(const std::string& begin, const std::string& end)
-	{
-		delete this->dateTime;
-		this->dateTime = new DateTime(begin, end);
-	}
-
-	void TimeCommands::setTimeValid(const IntervalType closure)
-	{
-		delete this->timeValid;
-		this->timeValid = new TimeValid(closure);
-	}
-
-	void TimeCommands::clearTime()
-	{
-		delete this->clearTimeCmd;
-		this->clearTimeCmd = new ClearTime();
-	}
-
-	void TimeCommands::parse(const std::string& key, std::string value)
-	{
-		if (key == "Date")
-		{
-			//date->execute();
-		}
-		else if (key == "Time")
-		{
-			//time->execute();
-		}
-		else if (key == "DateTime")
-		{
-			//dateTime->execute();
-		}
-		else if (key == "TimeValid")
-		{
-			//timeValid->execute();
-		}
-		else if (key == "ClearTime")
-		{
-			//clearTimeCmd->execute();
-		}
-	}
-
-	void TimeCommands::execute() const
-	{
-		if (date) date->execute();
-		if (time) time->execute();
-		if (dateTime) dateTime->execute();
-		if (timeValid) timeValid->execute();
-		if (clearTimeCmd) clearTimeCmd->execute();
-	}
 
 	Date::Date(const std::string& begin, const std::string& end) : begin(begin), end(end) {}
 
 	void Date::init()
 	{
-		StateCommand::init();
+		Command::init();
 		begin = "-…";
 		end = "…";
 	}	
@@ -95,6 +20,7 @@ namespace DrawingInstructions
 
 	void Date::parse(const std::string& input)
 	{
+		setPresent();
 		// Date:[begin][,end] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 2) {
@@ -112,7 +38,7 @@ namespace DrawingInstructions
 
 	void Time::init()
 	{
-		StateCommand::init();
+		Command::init();
 		begin = "-…";
 		end = "…";
 	}	
@@ -123,6 +49,7 @@ namespace DrawingInstructions
 
 	void Time::parse(const std::string& input)
 	{
+		setPresent();
 		// Time:[begin][,end] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 2) {
@@ -142,7 +69,7 @@ namespace DrawingInstructions
 
 	void DateTime::init()
 	{
-		StateCommand::init();
+		Command::init();
 		begin = "-…";
 		end = "…";
 	}
@@ -153,6 +80,7 @@ namespace DrawingInstructions
 
 	void DateTime::parse(const std::string& input)
 	{
+		setPresent();
 		// DateTime:[begin][,end] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 2) {
@@ -172,7 +100,7 @@ namespace DrawingInstructions
 
 	void TimeValid::init()
 	{
-		StateCommand::init();
+		Command::init();
 		closure = IntervalType::none;
 	}
 
@@ -182,13 +110,14 @@ namespace DrawingInstructions
 
 	void TimeValid::parse(const std::string& input)
 	{
+		setPresent();
 		// TimeValid[:closure]
-		closure = StateCommand::GetIntervalTypeFromString(input);
+		closure = Command::GetIntervalTypeFromString(input);
 	}
 
 	void ClearTime::init()
 	{
-		StateCommand::init();
+		Command::init();
 	}
 
 	void ClearTime::execute() 
@@ -197,6 +126,7 @@ namespace DrawingInstructions
 
 	void ClearTime::parse(const std::string& input)
 	{
+		setPresent();
 		// ClearTime 
 	}
 

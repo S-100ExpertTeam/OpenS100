@@ -11,9 +11,12 @@
 #include"TimeCommands.h"
 #include "AlertCommands.h"
 #include "DrawingCommands.h"
+#include "Command.h"
+#include "PointInstruction.h"
 
 #include <string>
 #include <vector>
+#include <list>
 
 class S100Layer;
 class PCOutputSchemaManager;
@@ -95,76 +98,80 @@ public:
 	std::string v_AlertReference;
 
 	// Visibility
-	DrawingInstructions::ViewingGroup viewingGroup;
-	DrawingInstructions::DisplayPlane displayPlane;
-	DrawingInstructions::DrawingPriority drawingPriority;
-	DrawingInstructions::ScaleMinimum scaleMinimum;
-	DrawingInstructions::ScaleMaximum scaleMaximum;
-	DrawingInstructions::Id id;
-	DrawingInstructions::Parent parent;
-	DrawingInstructions::Hover hover;
+	DrawingCommand::ViewingGroup viewingGroup;
+	DrawingCommand::DisplayPlane displayPlane;
+	DrawingCommand::DrawingPriority drawingPriority;
+	DrawingCommand::ScaleMinimum scaleMinimum;
+	DrawingCommand::ScaleMaximum scaleMaximum;
+	DrawingCommand::Id id;
+	DrawingCommand::Parent parent;
+	DrawingCommand::Hover hover;
 
 	// Transform
-	DrawingInstructions::LocalOffset localOffset;
-	DrawingInstructions::LinePlacement linePlacement;
-	DrawingInstructions::AreaPlacement areaPlacement;
-	DrawingInstructions::AreaCRS areaCRS;
-	DrawingInstructions::Rotation rotation;
-	DrawingInstructions::ScaleFactor scaleFactor;
+	DrawingCommand::LocalOffset localOffset;
+	DrawingCommand::LinePlacement linePlacement;
+	DrawingCommand::AreaPlacement areaPlacement;
+	DrawingCommand::AreaCRS areaCRS;
+	DrawingCommand::Rotation rotation;
+	DrawingCommand::ScaleFactor scaleFactor;
 
 	// Line Style
-	DrawingInstructions::LineStyle lineStyle;
-	DrawingInstructions::LineSymbol lineSymbol;
-	DrawingInstructions::Dash dash;
+	DrawingCommand::LineStyle lineStyle;
+	DrawingCommand::LineSymbol lineSymbol;
+	DrawingCommand::Dash dash;
 
 	// Text Style
-	DrawingInstructions::FontColor fontColor;
-	DrawingInstructions::FontSize fontSize;
-	DrawingInstructions::FontProportion fontProportion;
-	DrawingInstructions::FontWeight fontWeight;
-	DrawingInstructions::FontSlant fontSlant;
-	DrawingInstructions::FontSerifs fontSerifs;
-	DrawingInstructions::FontUnderline fontUnderline;
-	DrawingInstructions::FontStrikethrough fontStrikethrough;
-	DrawingInstructions::FontUpperline fontUpperline;
-	DrawingInstructions::FontReference fontReference;
-	DrawingInstructions::TextAlignHorizontal textAlignHorizontal;
-	DrawingInstructions::TextAlignVertical textAlignVertical;
-	DrawingInstructions::TextVerticalOffset textVerticalOffset;
+	DrawingCommand::FontColor fontColor;
+	DrawingCommand::FontSize fontSize;
+	DrawingCommand::FontProportion fontProportion;
+	DrawingCommand::FontWeight fontWeight;
+	DrawingCommand::FontSlant fontSlant;
+	DrawingCommand::FontSerifs fontSerifs;
+	DrawingCommand::FontUnderline fontUnderline;
+	DrawingCommand::FontStrikethrough fontStrikethrough;
+	DrawingCommand::FontUpperline fontUpperline;
+	DrawingCommand::FontReference fontReference;
+	DrawingCommand::TextAlignHorizontal textAlignHorizontal;
+	DrawingCommand::TextAlignVertical textAlignVertical;
+	DrawingCommand::TextVerticalOffset textVerticalOffset;
 
 	// Colour Override
-	DrawingInstructions::OverrideColor overrideColor;
-	DrawingInstructions::OverrideAll overrideAll;
+	DrawingCommand::OverrideColor overrideColor;
+	DrawingCommand::OverrideAll overrideAll;
 
 	// Geometry
-	DrawingInstructions::SpatialReference spatialReference;
-	DrawingInstructions::AugmentedPoint augmentedPoint;
-	DrawingInstructions::AugmentedRay augmentedRay;
-	DrawingInstructions::AugmentedPath augmentedPath;
-	DrawingInstructions::Polyline polyline;
-	DrawingInstructions::Arc3Points arc3Points;
-	DrawingInstructions::ArcByRadius arcByRadius;
-	DrawingInstructions::Annulus annulus;
-	DrawingInstructions::ClearGeometry clearGeometry;
+	DrawingCommand::SpatialReference spatialReference;
+	DrawingCommand::AugmentedPoint augmentedPoint;
+	DrawingCommand::AugmentedRay augmentedRay;
+	DrawingCommand::AugmentedPath augmentedPath;
+	DrawingCommand::Polyline polyline;
+	DrawingCommand::Arc3Points arc3Points;
+	DrawingCommand::ArcByRadius arcByRadius;
+	DrawingCommand::Annulus annulus;
+	DrawingCommand::ClearGeometry clearGeometry;
 
 	// Coverage
-	DrawingInstructions::LookupEntry lookupEntry;
-	DrawingInstructions::NumericAnnotation numericAnnotation;
-	DrawingInstructions::SymbolAnnotation symbolAnnotation;
-	DrawingInstructions::CoverageColor coverageColor;
+	DrawingCommand::LookupEntry lookupEntry;
+	DrawingCommand::NumericAnnotation numericAnnotation;
+	DrawingCommand::SymbolAnnotation symbolAnnotation;
+	DrawingCommand::CoverageColor coverageColor;
 
 	// Time
-	DrawingInstructions::Date date;
-	DrawingInstructions::Time time;
-	DrawingInstructions::DateTime dateTime;
-	DrawingInstructions::TimeValid timeValid;
-	DrawingInstructions::ClearTime clearTime;
+	DrawingCommand::Date date;
+	DrawingCommand::Time time;
+	DrawingCommand::DateTime dateTime;
+	DrawingCommand::TimeValid timeValid;
+	DrawingCommand::ClearTime clearTime;
 
 	// Alert
-	DrawingInstructions::AlertReference alertReference;
+	DrawingCommand::AlertReference alertReference;
+
+	std::list<DrawingCommand::Command*> stateCommands;
 
 public:
 	void Init();
+
+	DrawingCommand::Command* Insert(std::string& command, std::string& params);
 };
 
 class Local_DrawingCommands
@@ -174,17 +181,17 @@ public:
 	virtual ~Local_DrawingCommands() = default;
 
 public:
-	DrawingInstructions::PointInstruction pointInstruction;
-	DrawingInstructions::LineInstruction lineInstruction;
-	DrawingInstructions::LineInstructionUnsuppressed lineInstructionUnsuppressed;
-	DrawingInstructions::ColorFill colorFill;
-	DrawingInstructions::AreaFillReference areaFillReference;
-	DrawingInstructions::PixmapFill pixmapFill;	
-	DrawingInstructions::SymbolFill	symbolFill;
-	DrawingInstructions::HatchFill hatchFill;
-	DrawingInstructions::TextInstruction textInstruction;
-	DrawingInstructions::CoverageFill coverageFill;
-	DrawingInstructions::NullInstruction nullInstruction;
+	DrawingCommand::PointInstruction pointInstruction;
+	DrawingCommand::LineInstruction lineInstruction;
+	DrawingCommand::LineInstructionUnsuppressed lineInstructionUnsuppressed;
+	DrawingCommand::ColorFill colorFill;
+	DrawingCommand::AreaFillReference areaFillReference;
+	DrawingCommand::PixmapFill pixmapFill;	
+	DrawingCommand::SymbolFill	symbolFill;
+	DrawingCommand::HatchFill hatchFill;
+	DrawingCommand::TextInstruction textInstruction;
+	DrawingCommand::CoverageFill coverageFill;
+	DrawingCommand::NullInstruction nullInstruction;
 
 public:
 	void Init();

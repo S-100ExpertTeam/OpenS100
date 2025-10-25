@@ -1,9 +1,9 @@
 #pragma once
-#include "StateCommand.h"
+#include "Command.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
-	class AlertReference : public StateCommand {
+	class AlertReference : public Command {
 	public:
 		AlertReference() = default;
 		AlertReference(std::string alertReference, std::string plan, std::string monitor);
@@ -17,26 +17,6 @@ namespace DrawingInstructions
 		std::string plan;
 		std::string monitor;
 	};
-
-	class AlertCommands
-	{
-		public:
-		AlertCommands() = default;
-		AlertCommands(const AlertCommands&) = delete;
-		AlertCommands& operator=(const AlertCommands&) = delete;
-		AlertCommands(AlertCommands&&) = delete;
-		AlertCommands& operator=(AlertCommands&&) = delete;
-		~AlertCommands();
-
-		void setAlertReference(const std::string& alertReference, const std::string& plan, const std::string& monitor);
-
-		void parse(const std::string& key, std::string value);
-		void execute() const;
-	private:
-		//Alert Commands
-		AlertReference* alertReference = nullptr;
-	};
-
 }
 
 

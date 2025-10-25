@@ -367,6 +367,7 @@
   <ItemGroup>
     <ClCompile Include="AlertCommands.cpp" />
     <ClCompile Include="Angle.cpp" />
+    <ClCompile Include="AreaFillReference.cpp" />
     <ClCompile Include="ATTR.cpp" />
     <ClCompile Include="Base64String.cpp" />
     <ClCompile Include="C3IL.cpp" />
@@ -384,10 +385,12 @@
     <ClCompile Include="CI_RoleCode.cpp" />
     <ClCompile Include="CI_Telephone.cpp" />
     <ClCompile Include="CodeWithNumericCode.cpp" />
+    <ClCompile Include="ColorFill.cpp" />
     <ClCompile Include="ColourOverrideCommands.cpp" />
     <ClCompile Include="CommandToInstruction.cpp" />
     <ClCompile Include="CountryCode.cpp" />
     <ClCompile Include="CoverageCommands.cpp" />
+    <ClCompile Include="CoverageFill.cpp" />
     <ClCompile Include="CSAX.cpp" />
     <ClCompile Include="CT_Catalogue.cpp" />
     <ClCompile Include="CUCO.cpp" />
@@ -403,8 +406,8 @@
     <ClCompile Include="Directory.cpp" />
     <ClCompile Include="DirectPosition.cpp" />
     <ClCompile Include="DrawingCommands.cpp" />
-    <ClCompile Include="DrawingInstruction.cpp" />
     <ClCompile Include="DrawingSet.cpp" />
+    <ClCompile Include="Enum_CommandType.cpp" />
     <ClCompile Include="EX_BoundingPolygon.cpp" />
     <ClCompile Include="EX_GeographicBoundingBox.cpp" />
     <ClCompile Include="FC2D.cpp" />
@@ -491,6 +494,7 @@
     <ClCompile Include="H5_FI_Attribute29.cpp" />
     <ClCompile Include="H5_RootGroup.cpp" />
     <ClCompile Include="H5_ValuesGroup.cpp" />
+    <ClCompile Include="HatchFill.cpp" />
     <ClCompile Include="HDF5Wrapper.cpp" />
     <ClCompile Include="host_data.cpp" />
     <ClCompile Include="host_functions.cpp" />
@@ -505,6 +509,8 @@
     <ClCompile Include="LayerManager.cpp" />
     <ClCompile Include="Leader.cpp" />
     <ClCompile Include="Length.cpp" />
+    <ClCompile Include="LineInstruction.cpp" />
+    <ClCompile Include="LineInstructionUnsuppressed.cpp" />
     <ClCompile Include="LineStyleCommands.cpp" />
     <ClCompile Include="LuaAttributePathItem.cpp" />
     <ClCompile Include="MASK.cpp" />
@@ -514,10 +520,13 @@
     <ClCompile Include="MD_MaintenanceFrequencyCode.cpp" />
     <ClCompile Include="MD_MaintenanceInformation.cpp" />
     <ClCompile Include="Measure.cpp" />
+    <ClCompile Include="NullInstruction.cpp" />
     <ClCompile Include="OrientedCurveRecord.cpp" />
     <ClCompile Include="PCOutputSchemaManager.cpp" />
     <ClCompile Include="Permit.cpp" />
     <ClCompile Include="PermitHeader.cpp" />
+    <ClCompile Include="PixmapFill.cpp" />
+    <ClCompile Include="PointInstruction.cpp" />
     <ClCompile Include="PointParameter.cpp" />
     <ClCompile Include="ProcessS101.cpp" />
     <ClCompile Include="Product.cpp" />
@@ -570,12 +579,13 @@
     <ClCompile Include="S100_SE_SignatureOnSignature.cpp" />
     <ClCompile Include="SourceFileType.cpp" />
     <ClCompile Include="SourceHeaderType.cpp" />
-    <ClCompile Include="StateCommand.cpp" />
-    <ClCompile Include="StateCommands.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandList.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="SupportFileDiscoveryMetadata.cpp" />
     <ClCompile Include="SupportFileRevisionStatus.cpp" />
     <ClCompile Include="SupportFileSpecification.cpp" />
+    <ClCompile Include="SymbolFill.cpp" />
     <ClCompile Include="TemporalExtent.cpp" />
     <ClCompile Include="S100_Time.cpp" />
     <ClCompile Include="S101Factory.cpp" />
@@ -683,6 +693,7 @@
     </ClCompile>
     <ClCompile Include="GM_SurfaceBoundary.cpp" />
     <ClCompile Include="SupportFileFormat.cpp" />
+    <ClCompile Include="TextInstruction.cpp" />
     <ClCompile Include="TextStyleCommands.cpp" />
     <ClCompile Include="THAS.cpp" />
     <ClCompile Include="GF_ThematicAttributeType.cpp" />
@@ -699,6 +710,7 @@
   <ItemGroup>
     <ClInclude Include="AlertCommands.h" />
     <ClInclude Include="Angle.h" />
+    <ClInclude Include="AreaFillReference.h" />
     <ClInclude Include="ATTR.h" />
     <ClInclude Include="Base64String.h" />
     <ClInclude Include="C3IL.h" />
@@ -716,9 +728,11 @@
     <ClInclude Include="CI_RoleCode.h" />
     <ClInclude Include="CI_Telephone.h" />
     <ClInclude Include="CodeWithNumericCode.h" />
+    <ClInclude Include="ColorFill.h" />
     <ClInclude Include="ColourOverrideCommands.h" />
     <ClInclude Include="CommandToInstruction.h" />
     <ClInclude Include="CoverageCommands.h" />
+    <ClInclude Include="CoverageFill.h" />
     <ClInclude Include="CT_Catalogue.h" />
     <ClInclude Include="CV_CommonPointRule.h" />
     <ClInclude Include="CV_InterpolationMethod.h" />
@@ -728,8 +742,8 @@
     <ClInclude Include="DatasetPermit.h" />
     <ClInclude Include="DataStatus.h" />
     <ClInclude Include="DirectPosition.h" />
-    <ClInclude Include="DrawingInstruction.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
+    <ClInclude Include="Enum_CommandType.h" />
     <ClInclude Include="ExchangeCatalogueNameSpace.h" />
     <ClInclude Include="EX_BoundingPolygon.h" />
     <ClInclude Include="EX_GeographicBoundingBox.h" />
@@ -752,11 +766,14 @@
     <ClInclude Include="H5_FI_Attribute29.h" />
     <ClInclude Include="H5_RootGroup.h" />
     <ClInclude Include="H5_ValuesGroup.h" />
+    <ClInclude Include="HatchFill.h" />
     <ClInclude Include="HDF5Wrapper.h" />
     <ClInclude Include="IndeterminateDate.h" />
     <ClInclude Include="indeterminatePosition.h" />
     <ClInclude Include="LanguageCode.h" />
     <ClInclude Include="Length.h" />
+    <ClInclude Include="LineInstruction.h" />
+    <ClInclude Include="LineInstructionUnsuppressed.h" />
     <ClInclude Include="LineStyleCommands.h" />
     <ClInclude Include="LuaAttributePathItem.h" />
     <ClInclude Include="Matrix.h" />
@@ -765,8 +782,11 @@
     <ClInclude Include="MD_MaintenanceFrequencyCode.h" />
     <ClInclude Include="MD_MaintenanceInformation.h" />
     <ClInclude Include="Measure.h" />
+    <ClInclude Include="NullInstruction.h" />
     <ClInclude Include="Permit.h" />
     <ClInclude Include="PermitHeader.h" />
+    <ClInclude Include="PixmapFill.h" />
+    <ClInclude Include="PointInstruction.h" />
     <ClInclude Include="PointParameter.h" />
     <ClInclude Include="ProductPermit.h" />
     <ClInclude Include="ProductsPermit.h" />
@@ -924,12 +944,13 @@
     <ClInclude Include="SourceFileType.h" />
     <ClInclude Include="SourceHeaderType.h" />
     <ClInclude Include="SpatialObjectType.h" />
-    <ClInclude Include="StateCommand.h" />
-    <ClInclude Include="StateCommands.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandList.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="SupportFileDiscoveryMetadata.h" />
     <ClInclude Include="SupportFileRevisionStatus.h" />
     <ClInclude Include="SupportFileSpecification.h" />
+    <ClInclude Include="SymbolFill.h" />
     <ClInclude Include="TemporalExtent.h" />
     <ClInclude Include="S100_Time.h" />
     <ClInclude Include="S101Factory.h" />
@@ -1034,6 +1055,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SupportFileFormat.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TextInstruction.h" />
     <ClInclude Include="TextStyleCommands.h" />
     <ClInclude Include="THAS.h" />
     <ClInclude Include="GF_ThematicAttributeType.h" />

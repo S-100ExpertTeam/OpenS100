@@ -1,13 +1,16 @@
 #pragma once
-#include "StateCommand.h"
+#include "Command.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
-    class ViewingGroup : public StateCommand 
+    class ViewingGroup : public Command 
     {
     public:
 		ViewingGroup() = default;
         ViewingGroup(const std::vector<std::string>& viewingGroups);
+
+        Enum_CommandType GetType() const override;
+
 		virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
@@ -19,11 +22,14 @@ namespace DrawingInstructions
 		std::vector<std::string> GetViewingGroups() const;
     };
 
-    class DisplayPlane : public StateCommand 
+    class DisplayPlane : public Command 
     {
     public:
 		DisplayPlane() = default;
         DisplayPlane(const std::string& displayPlane);
+
+        Enum_CommandType GetType() const override;
+
         virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
@@ -35,11 +41,14 @@ namespace DrawingInstructions
 		std::string GetDisplayPlane() const;
     };
 
-    class DrawingPriority : public StateCommand 
+    class DrawingPriority : public Command 
     {
     public:
 		DrawingPriority() = default;
         DrawingPriority(int drawingPriority);
+
+        Enum_CommandType GetType() const override;
+
         virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
@@ -51,11 +60,14 @@ namespace DrawingInstructions
 		int GetDrawingPriority() const;
     };
 
-    class ScaleMinimum : public StateCommand 
+    class ScaleMinimum : public Command 
     {
     public:
 		ScaleMinimum() = default;
         ScaleMinimum(int scaleMinimum);
+
+        Enum_CommandType GetType() const override;
+
         virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
@@ -67,11 +79,14 @@ namespace DrawingInstructions
 		int GetScaleMinimum() const;
     };
 
-    class ScaleMaximum : public StateCommand 
+    class ScaleMaximum : public Command 
     {
     public:
 		ScaleMaximum() = default;
         ScaleMaximum(int scaleMaximum);
+
+        Enum_CommandType GetType() const override;
+
         virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
@@ -83,11 +98,14 @@ namespace DrawingInstructions
 		int GetScaleMaximum() const;
     };
 
-    class Id : public StateCommand 
+    class Id : public Command 
     {
     public:
 		Id() = default;
         Id(const std::string& id);
+
+        Enum_CommandType GetType() const override;
+
         virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
@@ -99,11 +117,14 @@ namespace DrawingInstructions
         std::string GetId();
     };
 
-    class Parent : public StateCommand 
+    class Parent : public Command 
     {
     public:
 		Parent() = default;
         Parent(const std::string& parentId);
+
+        Enum_CommandType GetType() const override;
+
         virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
@@ -115,10 +136,13 @@ namespace DrawingInstructions
 		std::string GetParentId() const;
     };
 
-    class Hover : public StateCommand {
+    class Hover : public Command {
     public:
 		Hover() = default;
         Hover(bool hover);
+
+        Enum_CommandType GetType() const override;
+
         virtual void init() override;
         virtual void execute() override;
         virtual void parse(const std::string& input) override;
@@ -129,41 +153,4 @@ namespace DrawingInstructions
     public:
 		bool GetHover() const;
     };
-
-    class VisibilityCommands 
-    {
-    public:
-		VisibilityCommands() = default;
-		VisibilityCommands(const VisibilityCommands&) = delete;
-		VisibilityCommands& operator=(const VisibilityCommands&) = delete;
-		VisibilityCommands(VisibilityCommands&&) = delete;
-		VisibilityCommands& operator=(VisibilityCommands&&) = delete;
-		~VisibilityCommands();
-
-		void setViewingGroup(const std::vector<std::string>& viewingGroups);
-		void setDisplayPlane(const std::string& displayPlane);
-		void setDrawingPriority(int drawingPriority);
-		void setScaleMinimum(int scaleMinimum);
-		void setScaleMaximum(int scaleMaximum);
-		void setId(const std::string& id);
-		void setParent(const std::string& parentId);
-		void setHover(bool hover);
-
-        void parse(const std::string& key, std::string value);
-		void execute() const;
-        
-
-    private:
-        //Visibility commands
-        DrawingInstructions::ViewingGroup* viewingGroup = nullptr;
-        DrawingInstructions::DisplayPlane* displayPlane = nullptr;
-        DrawingPriority* drawingPriority = nullptr;
-        ScaleMinimum* scaleMinimum = nullptr;
-        ScaleMaximum* scaleMaximum = nullptr;
-        Id* id = nullptr;
-        Parent* parent = nullptr;
-        Hover* hover = nullptr;
-    };
-
 }
-

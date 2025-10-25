@@ -1,23 +1,27 @@
 #include "stdafx.h"
+
 #include "GraphicBasePackage_Enum.h"
+
+#include "..\\LatLonUtility\\LatLonUtility.h"
 
 namespace GraphicBasePackage
 {
 	CRSType GetCRSTypeFromString(const std::string& value)
 	{
-		if (value == "geographicCRS")
+		auto lower = LatLonUtility::To_Lowercase(value);
+		if (lower == "geographiccrs")
 		{
 			return CRSType::geographicCRS;
 		}
-		else if (value == "portrayalCRS")
+		else if (lower == "portrayalcrs")
 		{
 			return CRSType::portrayalCRS;
 		}
-		else if (value == "localCRS")
+		else if (lower == "localcrs")
 		{
 			return CRSType::localCRS;
 		}
-		else if (value == "lineCRS")
+		else if (lower == "linecrs")
 		{
 			return CRSType::lineCRS;
 		}

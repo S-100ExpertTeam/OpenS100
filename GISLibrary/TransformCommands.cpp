@@ -2,93 +2,19 @@
 #include "TransformCommands.h"
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingInstructions
+namespace DrawingCommand
 {
-	TransformCommands::~TransformCommands() {
-		delete localOffset;
-		delete linePlacement;
-		delete areaPlacement;
-		delete areaCRS;
-		delete rotation;
-		delete scaleFactor;
-	}
-
-	void TransformCommands::setLocalOffset(double xOffsetMM, double yOffsetMM) {
-		delete this->localOffset;
-		localOffset = new LocalOffset(xOffsetMM, yOffsetMM);
-	}
-
-	void TransformCommands::setLinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts) {
-		delete this->linePlacement;
-		this->linePlacement = new LinePlacement(linePlacementMode, offset, endOffset, visibleParts);
-	}
-
-	void TransformCommands::setAreaPlacement(const std::string& areaPlacementMode) {
-		delete this->areaPlacement;
-		this->areaPlacement = new AreaPlacement(areaPlacementMode);
-	}
-
-	void TransformCommands::setAreaCRS(const std::string& areaCRSType) {
-		delete this->areaCRS;
-		this->areaCRS = new AreaCRS(areaCRSType);
-	}
-
-	void TransformCommands::setRotation(const std::string& rotationCRS, double rotation) {
-		delete this->rotation;
-		this->rotation = new Rotation(rotationCRS, rotation);
-	}
-
-	void TransformCommands::setScaleFactor(double scaleFactor) {
-		delete this->scaleFactor;
-		this->scaleFactor = new ScaleFactor(scaleFactor);
-	}
-
-	void TransformCommands::execute() const
-	{
-		if (localOffset) localOffset->execute();
-		if (linePlacement) linePlacement->execute();
-		if (areaPlacement) areaPlacement->execute();
-		if (areaCRS) areaCRS->execute();
-		if (rotation) rotation->execute();
-		if (scaleFactor) scaleFactor->execute();
-	}
-
-	void TransformCommands::parse(const std::string& key, std::string value)
-	{
-		if (key == "LocalOffset")
-		{
-			//setLocalOffset();
-		}
-		else if (key == "LinePlacement")
-		{
-			//setLinePlacement();
-		}
-		else if (key == "AreaPlacement")
-		{
-			//setAreaPlacement();
-		}
-		else if (key == "AreaCRS")
-		{
-			//setAreaCRS();
-		}
-		else if (key == "Rotation")
-		{
-			//setRotation();
-		}
-		else if (key == "ScaleFactor")
-		{
-			//setScaleFactor();
-		}
-	}
-
-
-
 	// LocalOffset class implementation
 	LocalOffset::LocalOffset(double xOffsetMM, double yOffsetMM) : xOffsetMM(xOffsetMM), yOffsetMM(yOffsetMM) {}
 
+	Enum_CommandType LocalOffset::GetType() const
+	{
+		return Enum_CommandType::LocalOffset;
+	}
+
 	void LocalOffset::init()
 	{
-		StateCommand::init();
+		Command::init();
 		xOffsetMM = 0.0;
 		yOffsetMM = 0.0;
 	}
@@ -99,6 +25,7 @@ namespace DrawingInstructions
 
 	void LocalOffset::parse(const std::string& input)
 	{
+		setPresent();
 		// LocalOffset:xOffsetMM, yOffsetMM
 
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
@@ -134,9 +61,14 @@ namespace DrawingInstructions
 	LinePlacement::LinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts)
 		: linePlacementMode(linePlacementMode), offset(offset), endOffset(endOffset), visibleParts(visibleParts) {}
 
+	Enum_CommandType LinePlacement::GetType() const
+	{
+		return Enum_CommandType::LinePlacement;
+	}
+
 	void LinePlacement::init()
 	{
-		StateCommand::init();
+		Command::init();
 		linePlacementMode = "Relative";
 		offset = 0.5;
 		endOffset.reset();
@@ -149,6 +81,7 @@ namespace DrawingInstructions
 
 	void LinePlacement::parse(const std::string& input)
 	{
+		setPresent();
 		// LinePlacement:linePlacementMode, offset[, endOffset][, visibleParts]
 
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
@@ -208,9 +141,14 @@ namespace DrawingInstructions
 	// AreaPlacement class implementation
 	AreaPlacement::AreaPlacement(const std::string& areaPlacementMode) : areaPlacementMode(areaPlacementMode) {}
 
+	Enum_CommandType AreaPlacement::GetType() const
+	{
+		return Enum_CommandType::AreaPlacement;
+	}
+
 	void AreaPlacement::init()
 	{
-		StateCommand::init();
+		Command::init();
 		areaPlacementMode = "VisibleParts";
 	}
 
@@ -220,16 +158,27 @@ namespace DrawingInstructions
 
 	void AreaPlacement::parse(const std::string& input)
 	{
+		setPresent();
 		// AreaPlacement:areaPlacementMode
 		areaPlacementMode = input;
+	}
+
+	std::string AreaPlacement::GetAreaPlacementMode() const
+	{
+		return areaPlacementMode;
 	}
 
 	// AreaCRS class implementation
 	AreaCRS::AreaCRS(const std::string& areaCRSType) : areaCRSType(areaCRSType) {}
 
+	Enum_CommandType AreaCRS::GetType() const
+	{
+		return Enum_CommandType::AreaCRS;
+	}
+
 	void AreaCRS::init()
 	{
-		StateCommand::init();
+		Command::init();
 		areaCRSType = "ViGlobalGeometrysibleParts";
 	}
 
@@ -238,6 +187,7 @@ namespace DrawingInstructions
 
 	void AreaCRS::parse(const std::string& input)
 	{
+		setPresent();
 		// AreaCRS:areaCRSType
 		areaCRSType = input;
 	}
@@ -245,9 +195,14 @@ namespace DrawingInstructions
 	// Rotation class implementation
 	Rotation::Rotation(const std::string& rotationCRS, double rotation) : rotationCRS(rotationCRS), rotation(rotation) {}
 
+	Enum_CommandType Rotation::GetType() const
+	{
+		return Enum_CommandType::Rotation;
+	}
+
 	void Rotation::init()
 	{
-		StateCommand::init();
+		Command::init();
 		rotationCRS = "PortrayalCRS";
 		rotation = 0.0;
 	}
@@ -258,6 +213,7 @@ namespace DrawingInstructions
 
 	void Rotation::parse(const std::string& input)
 	{
+		setPresent();
 		// Rotation:rotationCRS,rotation 
 		std::vector<std::string> parts = LatLonUtility::Split(input, ",");
 		if (parts.size() == 2) 
@@ -278,12 +234,27 @@ namespace DrawingInstructions
 		}
 	}
 
+	std::string Rotation::GetRotationCRS() const
+	{
+		return rotationCRS;
+	}
+
+	double Rotation::GetRotation() const
+	{
+		return rotation;
+	}
+
 	// ScaleFactor class implementation
 	ScaleFactor::ScaleFactor(double scaleFactor) : scaleFactor(scaleFactor) {}
 
+	Enum_CommandType ScaleFactor::GetType() const
+	{
+		return Enum_CommandType::ScaleFactor;
+	}
+
 	void ScaleFactor::init()
 	{
-		StateCommand::init();
+		Command::init();
 		scaleFactor = 1.0;
 	}
 
@@ -293,6 +264,7 @@ namespace DrawingInstructions
 
 	void ScaleFactor::parse(const std::string& input)
 	{
+		setPresent();
 		// ScaleFactor:scaleFactor 
 		try 
 		{
@@ -302,5 +274,10 @@ namespace DrawingInstructions
 		{
 			init();
 		}
+	}
+
+	double ScaleFactor::GetScaleFactor() const
+	{
+		return scaleFactor;
 	}
 }

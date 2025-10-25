@@ -1767,8 +1767,12 @@ S100_FileType LayerManager::CheckFileType(CString path)
 			pugi::xml_node nodeList = doc.first_child();
 
 			std::wstring nodeName = pugi::as_wide(nodeList.name());
-			if ((nodeName.find(L"DataSet") != std::wstring::npos) ||
-				(nodeName.find(L"Dataset") != std::wstring::npos))
+
+			nodeName = LatLonUtility::To_Lowercase(nodeName);
+
+			//if ((nodeName.find(L"DataSet") != std::wstring::npos) ||
+			//	(nodeName.find(L"Dataset") != std::wstring::npos))
+			if (nodeName.find(L"dataset") != std::wstring::npos)
 			{
 				return S100_FileType::FILE_S_100_VECTOR;
 			}

@@ -55,6 +55,8 @@ public:
 
 	void SetType(int value);
 	void SetFeatureReference(std::wstring& value);
+	void SetFeatureReference(std::string& value);
+	void SetFeatureReference(std::string_view value);
 
 	void setId(std::string value);
 	void setParentId(std::string value);

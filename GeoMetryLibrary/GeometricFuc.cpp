@@ -5,47 +5,6 @@
 #include "GeoPoint.h"
 #include "ENCCommon.h"
 
-GeometricFuc::GeometricFuc(void)
-{
-
-}
-GeometricFuc::~GeometricFuc(void)
-{
-
-}
-
-// -1 : not cross
-//  1 : cross
-int GeometricFuc::intersect_equation(double p1x, double p1y, double p2x, double p2y, double p3x, double p3y, double p4x, double p4y)
-{
-	long m;
-	double x;
-	if(p1x > p2x)
-	{
-		swap(&p1x, &p2x);
-		swap(&p1y, &p2y);
-	}
-	if(p3x > p4x)
-	{
-		swap(&p3x, &p4x);
-		swap(&p3y, &p4y);
-	}
-	m =(long)( (p4x - p3x)*(p2y - p1y) - (p4y - p3y)*(p2x - p1x) );
-
-	if(m==0) // parallel
-	{
-		return -1;
-	}
-	x = ((p3y - p1y)*(p2x-p1x)*(p4x-p3x)
-		+ p1x*(p2y-p1y)*(p4x-p3x)
-		-  p3x*(p4y-p3y)*(p2x-p1x)) / m;
-	if(p1x <= x && x <= p2x && p3x <= x && x <= p4x) 
-		return 1;
-	else 
-		return -1;
-}
-
-
 // -10: When there is an end point of a line on the line segment extension to be compared & a tangential line clockwise (the line segment or surface to be compared)
 // -11 : When there is an end point of a line on the line segment extension to be compared & a tangent line counterclockwise (the line segment or surface to be compared)
 // -20 : When there is an end point of one line on the line segment extension of the comparison criterion & a tangential line clockwise (based on the line segment to find the intersection point)

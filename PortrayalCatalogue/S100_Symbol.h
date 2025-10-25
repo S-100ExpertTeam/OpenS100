@@ -45,6 +45,7 @@ public:
 	void SetReference(std::wstring& value);
 	void SetReference(std::string& value);
 	void SetRotation(double value);
+	void SetRotationCRS(std::string& value);
 	void SetRotationCRS(std::wstring& value);
 	void SetScaleFactor(double value);
 
@@ -55,6 +56,9 @@ public:
 	double GetScaleFactor();
 	std::optional<S100_LineSymbolPlacement> GetLinePlacement();
 	std::optional<S100_AreaSymbolPlacement> GetAreaPlacement();
+
+	void SetLinePlacement(double offset, S100_LinePlacementMode placementMode, std::optional<bool> visibleParts);
+	void SetAreaPlacement(S100_AreaPlacementMode mode);
 
 	//S100_AreaPlacement* GetAreaPlacement();
 	//S100_LinePlacement* GetLinePlacement();

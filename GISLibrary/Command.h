@@ -22,9 +22,13 @@ namespace DrawingCommand
 
     public:
         bool present = false;
+        std::string parameter;
 
     public:
         void setPresent(bool value = true);
         bool isPresent() const;
+
+		void setParameter(const std::string& value);
+        std::string getParameter();
     };
 }

@@ -119,6 +119,11 @@ void S100_Symbol::SetRotation(double value)
 	rotation = value;
 }
 
+void S100_Symbol::SetRotationCRS(std::string& value)
+{
+	rotationCRS = GraphicBasePackage::GetCRSTypeFromString(value);
+}
+
 void S100_Symbol::SetRotationCRS(std::wstring& value)
 {
 	//rotationCRS = value;
@@ -222,4 +227,25 @@ void S100_Symbol::SetOffsetY(double value)
 {
 	//offsetY = value;
 	offset.SetY(value);
+}
+
+void S100_Symbol::SetLinePlacement(double offset, S100_LinePlacementMode placementMode, std::optional<bool> visibleParts)
+{
+	linePlacement = S100_LineSymbolPlacement();
+	linePlacement.value().SetOffset(offset);
+	linePlacement.value().SetPlacementMode(placementMode);
+	if (visibleParts.has_value())
+	{
+		linePlacement.value().SetVisibleParts(visibleParts.value());
+	}
+	else
+	{
+		linePlacement.value().SetVisibleParts(false);
+	}
+}
+
+void S100_Symbol::SetAreaPlacement(S100_AreaPlacementMode mode)
+{
+	areaPlacement = S100_AreaSymbolPlacement();
+	areaPlacement.value().SetPlacementMode(mode);
 }

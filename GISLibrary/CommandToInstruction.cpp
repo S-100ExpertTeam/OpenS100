@@ -1,81 +1,187 @@
 #include "stdafx.h"
 #include "CommandToInstruction.h"
 
-S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_DrawingCommands& dc, Local_StateCommands& sc)
+#include "..\\PortrayalCatalogue\\S100_AugmentedRay.h"
+
+S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_StateCommands& sc, DrawingCommand::PointInstruction& pi)
 {
-	auto pointInstruction = new S100_PointInstruction();
+	auto instruction = new S100_PointInstruction();
+	
+	SetDrawingInstruction(sc, instruction);
+
+	// Symbol::Symbol
+	S100_Symbol* symbol = new S100_Symbol();
+	instruction->SetSymbol(symbol);
+
+	// reference
+	symbol->SetReference(pi.GetSymbol());
+
+	// rotation
+	// rotationCRS
+	if (sc.rotation.isPresent())
+	{
+		symbol->SetRotation(sc.rotation.GetRotation());
+		symbol->SetRotationCRS(sc.rotation.GetRotationCRS());
+	}
+
+	// scaleFactor
+	if (sc.scaleFactor.isPresent())
+	{
+		symbol->SetScaleFactor(sc.scaleFactor.GetScaleFactor());
+	}
+
+	// offset
+	if (sc.localOffset.isPresent())
+	{
+		symbol->SetOffsetX(sc.localOffset.GetXOffsetMM());
+		symbol->SetOffsetY(sc.localOffset.GetYOffsetMM());
+	}
+
+	// linePlacement
+	if (sc.linePlacement.isPresent())
+	{
+		symbol->SetLinePlacement(
+			sc.linePlacement.GetOffset(),
+			StringToLinePlacementMode(sc.linePlacement.GetLinePlacementMode()),
+			sc.linePlacement.IsVisibleParts());
+	}
+
+	// areaPlacement
+	if (sc.areaPlacement.isPresent())
+	{
+		symbol->SetAreaPlacement(StringToS100AreaPlacementMode(sc.areaPlacement.GetAreaPlacementMode()));
+	}
+
+	// overrideAll
+
+	return instruction;
+}
+
+S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(std::list<Local_StateCommands*> stateCommand, DrawingCommand::PointInstruction& pi)
+{
+	return nullptr;
+}
+
+S100_LineInstruction* CommandToInstruction::ToS100LineInstruction(Local_DrawingCommands& dc, Local_StateCommands& sc)
+{
+	S100_Instruction* instruction = nullptr;
+	if (sc.augmentedRay.isPresent())
+	{
+		instruction = new S100_AugmentedRay();
+	}
+	auto lineInstruction = new S100_LineInstruction();
 
 	// DrawingInstruction
-	// id
-	if (sc.id.isPresent())
-	{
-		pointInstruction->setId(sc.id.GetId());
-	}
-
-	// parentId
-	if (sc.parent.isPresent())
-	{
-		pointInstruction->setParentId(sc.parent.GetParentId());
-	}
-
-	// hover
-	if (sc.hover.isPresent())
-	{
-		pointInstruction->setHover(sc.hover.GetHover());
-	}
-
-	// viewingGroup
-	if (sc.viewingGroup.isPresent())
-	{
-		pointInstruction->SetViewingGroup(sc.viewingGroup.GetViewingGroups());
-	}
-
-	// displayPlane
-	if (sc.displayPlane.isPresent())
-	{
-		pointInstruction->SetDisplayPlane(sc.displayPlane.GetDisplayPlane());
-	}
-
-	// drawingPriority
-	if (sc.drawingPriority.isPresent())
-	{
-		pointInstruction->SetDrawingPriority(sc.drawingPriority.GetDrawingPriority());
-	}
-
-	// scaleMinimum
-	if (sc.scaleMinimum.isPresent())
-	{
-		pointInstruction->SetScaleMinimum(sc.scaleMinimum.GetScaleMinimum());
-	}
-
-	// scaleMaximum
-	if (sc.scaleMaximum.isPresent())
-	{
-		pointInstruction->SetScaleMaximum(sc.scaleMaximum.GetScaleMaximum());
-	}
+	SetDrawingInstruction(sc, lineInstruction);
 
 	// PointInstruction
-	if (dc.pointInstruction.isPresent())
+	if (dc.lineInstruction.isPresent())
 	{
-		S100_Symbol* symbol = new S100_Symbol();
-		if (sc.localOffset.isPresent())
-		{
-			symbol->SetOffsetX(sc.localOffset.GetXOffsetMM());
-			symbol->SetOffsetY(sc.localOffset.GetYOffsetMM());
-		}
-
-		if (sc.linePlacement.isPresent())
-		{
-			//sc.linePlacement.GetLinePlacementMode();
-		}
-
-		symbol->SetReference(dc.pointInstruction.GetSymbol());
 		
-
-
-
-		//pointInstruction->SetSymbol(dc.pointInstruction.GetSymbol());
 	}
 
-	return pointInstruction;
+	return lineInstruction;
+}
+
+bool CommandToInstruction::SetDrawingInstruction(Local_StateCommands& sc, S100_Instruction* out)
+{
+	if (out)
+	{
+		// id
+		if (sc.id.isPresent())
+		{
+			out->setId(sc.id.GetId());
+		}
+
+		// parentId
+		if (sc.parent.isPresent())
+		{
+			out->setParentId(sc.parent.GetParentId());
+		}
+
+		// hover
+		if (sc.hover.isPresent())
+		{
+			out->setHover(sc.hover.GetHover());
+		}
+
+		// viewingGroup
+		if (sc.viewingGroup.isPresent())
+		{
+			out->SetViewingGroup(sc.viewingGroup.GetViewingGroups());
+		}
+
+		// displayPlane
+		if (sc.displayPlane.isPresent())
+		{
+			out->SetDisplayPlane(sc.displayPlane.GetDisplayPlane());
+		}
+
+		// drawingPriority
+		if (sc.drawingPriority.isPresent())
+		{
+			out->SetDrawingPriority(sc.drawingPriority.GetDrawingPriority());
+		}
+
+		// scaleMinimum
+		if (sc.scaleMinimum.isPresent())
+		{
+			out->SetScaleMinimum(sc.scaleMinimum.GetScaleMinimum());
+		}
+
+		// scaleMaximum
+		if (sc.scaleMaximum.isPresent())
+		{
+			out->SetScaleMaximum(sc.scaleMaximum.GetScaleMaximum());
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+bool CommandToInstruction::SetState(std::list<Local_StateCommands*> stateCommand, S100_Instruction* out)
+{
+	for (auto i = stateCommand.begin(); i != stateCommand.end(); i++)
+	{
+		auto sc = (*i);
+		if (dynamic_cast<DrawingCommand::ViewingGroup*>(sc))
+		{
+			// ViewingGroup
+			auto vg = dynamic_cast<DrawingCommand::ViewingGroup*>(sc);
+			out->SetViewingGroup(vg->GetViewingGroups());
+		}
+		else if (dynamic_cast<DrawingCommand::DisplayPlane*>(sc))
+		{
+			// DisplayPlane
+		}
+		else if (dynamic_cast<DrawingCommand::DrawingPriority*>(sc))
+		{
+			// DrawingPriority
+		}
+		else if (dynamic_cast<DrawingCommand::ScaleMinimum*>(sc))
+		{
+			// ScaleMinimum
+		}
+		else if (dynamic_cast<DrawingCommand::ScaleMaximum*>(sc))
+		{
+			// ScaleMaximum
+		}
+		else if (dynamic_cast<DrawingCommand::Id*>(sc))
+		{
+			// Id
+		}
+		else if (dynamic_cast<DrawingCommand::Parent*>(sc))
+		{
+			// Parent
+		}
+		else if (dynamic_cast<DrawingCommand::Hover*>(sc))
+		{
+			// Hover
+		}
+
+	}
+
+	return true;
 }
