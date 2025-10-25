@@ -1071,7 +1071,7 @@
     <ClCompile Include="CommandToInstruction.cpp">
       <Filter>S100\DrawingInstructions</Filter>
     </ClCompile>
-    <ClCompile Include="Enum_StateCommand.cpp">
+    <ClCompile Include="Enum_CommandType.cpp">
       <Filter>S100\DrawingInstructions\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="PointInstruction.cpp">
@@ -2171,7 +2171,7 @@
     <ClInclude Include="CommandToInstruction.h">
       <Filter>S100\DrawingInstructions</Filter>
     </ClInclude>
-    <ClInclude Include="Enum_StateCommand.h">
+    <ClInclude Include="Enum_CommandType.h">
       <Filter>S100\DrawingInstructions\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="PointInstruction.h">

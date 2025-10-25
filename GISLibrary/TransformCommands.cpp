@@ -7,9 +7,9 @@ namespace DrawingCommand
 	// LocalOffset class implementation
 	LocalOffset::LocalOffset(double xOffsetMM, double yOffsetMM) : xOffsetMM(xOffsetMM), yOffsetMM(yOffsetMM) {}
 
-	Enum_StateCommand LocalOffset::GetType() const
+	Enum_CommandType LocalOffset::GetType() const
 	{
-		return Enum_StateCommand::LocalOffset;
+		return Enum_CommandType::LocalOffset;
 	}
 
 	void LocalOffset::init()
@@ -61,9 +61,9 @@ namespace DrawingCommand
 	LinePlacement::LinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts)
 		: linePlacementMode(linePlacementMode), offset(offset), endOffset(endOffset), visibleParts(visibleParts) {}
 
-	Enum_StateCommand LinePlacement::GetType() const
+	Enum_CommandType LinePlacement::GetType() const
 	{
-		return Enum_StateCommand::LinePlacement;
+		return Enum_CommandType::LinePlacement;
 	}
 
 	void LinePlacement::init()
@@ -141,9 +141,9 @@ namespace DrawingCommand
 	// AreaPlacement class implementation
 	AreaPlacement::AreaPlacement(const std::string& areaPlacementMode) : areaPlacementMode(areaPlacementMode) {}
 
-	Enum_StateCommand AreaPlacement::GetType() const
+	Enum_CommandType AreaPlacement::GetType() const
 	{
-		return Enum_StateCommand::AreaPlacement;
+		return Enum_CommandType::AreaPlacement;
 	}
 
 	void AreaPlacement::init()
@@ -171,9 +171,9 @@ namespace DrawingCommand
 	// AreaCRS class implementation
 	AreaCRS::AreaCRS(const std::string& areaCRSType) : areaCRSType(areaCRSType) {}
 
-	Enum_StateCommand AreaCRS::GetType() const
+	Enum_CommandType AreaCRS::GetType() const
 	{
-		return Enum_StateCommand::AreaCRS;
+		return Enum_CommandType::AreaCRS;
 	}
 
 	void AreaCRS::init()
@@ -195,9 +195,9 @@ namespace DrawingCommand
 	// Rotation class implementation
 	Rotation::Rotation(const std::string& rotationCRS, double rotation) : rotationCRS(rotationCRS), rotation(rotation) {}
 
-	Enum_StateCommand Rotation::GetType() const
+	Enum_CommandType Rotation::GetType() const
 	{
-		return Enum_StateCommand::Rotation;
+		return Enum_CommandType::Rotation;
 	}
 
 	void Rotation::init()
@@ -247,9 +247,9 @@ namespace DrawingCommand
 	// ScaleFactor class implementation
 	ScaleFactor::ScaleFactor(double scaleFactor) : scaleFactor(scaleFactor) {}
 
-	Enum_StateCommand ScaleFactor::GetType() const
+	Enum_CommandType ScaleFactor::GetType() const
 	{
-		return Enum_StateCommand::ScaleFactor;
+		return Enum_CommandType::ScaleFactor;
 	}
 
 	void ScaleFactor::init()

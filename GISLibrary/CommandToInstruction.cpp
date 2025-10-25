@@ -57,6 +57,11 @@ S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_StateC
 	return instruction;
 }
 
+S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(std::list<Local_StateCommands*> stateCommand, DrawingCommand::PointInstruction& pi)
+{
+	return nullptr;
+}
+
 S100_LineInstruction* CommandToInstruction::ToS100LineInstruction(Local_DrawingCommands& dc, Local_StateCommands& sc)
 {
 	S100_Instruction* instruction = nullptr;
@@ -136,3 +141,47 @@ bool CommandToInstruction::SetDrawingInstruction(Local_StateCommands& sc, S100_I
 	return false;
 }
 
+bool CommandToInstruction::SetState(std::list<Local_StateCommands*> stateCommand, S100_Instruction* out)
+{
+	for (auto i = stateCommand.begin(); i != stateCommand.end(); i++)
+	{
+		auto sc = (*i);
+		if (dynamic_cast<DrawingCommand::ViewingGroup*>(sc))
+		{
+			// ViewingGroup
+			auto vg = dynamic_cast<DrawingCommand::ViewingGroup*>(sc);
+			out->SetViewingGroup(vg->GetViewingGroups());
+		}
+		else if (dynamic_cast<DrawingCommand::DisplayPlane*>(sc))
+		{
+			// DisplayPlane
+		}
+		else if (dynamic_cast<DrawingCommand::DrawingPriority*>(sc))
+		{
+			// DrawingPriority
+		}
+		else if (dynamic_cast<DrawingCommand::ScaleMinimum*>(sc))
+		{
+			// ScaleMinimum
+		}
+		else if (dynamic_cast<DrawingCommand::ScaleMaximum*>(sc))
+		{
+			// ScaleMaximum
+		}
+		else if (dynamic_cast<DrawingCommand::Id*>(sc))
+		{
+			// Id
+		}
+		else if (dynamic_cast<DrawingCommand::Parent*>(sc))
+		{
+			// Parent
+		}
+		else if (dynamic_cast<DrawingCommand::Hover*>(sc))
+		{
+			// Hover
+		}
+
+	}
+
+	return true;
+}

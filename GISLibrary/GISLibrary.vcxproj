@@ -293,7 +293,7 @@
     <ClCompile Include="DirectPosition.cpp" />
     <ClCompile Include="DrawingCommands.cpp" />
     <ClCompile Include="DrawingSet.cpp" />
-    <ClCompile Include="Enum_StateCommand.cpp" />
+    <ClCompile Include="Enum_CommandType.cpp" />
     <ClCompile Include="EX_BoundingPolygon.cpp" />
     <ClCompile Include="EX_GeographicBoundingBox.cpp" />
     <ClCompile Include="FC2D.cpp" />
@@ -627,7 +627,7 @@
     <ClInclude Include="DataStatus.h" />
     <ClInclude Include="DirectPosition.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
-    <ClInclude Include="Enum_StateCommand.h" />
+    <ClInclude Include="Enum_CommandType.h" />
     <ClInclude Include="ExchangeCatalogueNameSpace.h" />
     <ClInclude Include="EX_BoundingPolygon.h" />
     <ClInclude Include="EX_GeographicBoundingBox.h" />

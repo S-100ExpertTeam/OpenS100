@@ -8,9 +8,9 @@ namespace DrawingCommand
     // ViewingGroup class implementation
     ViewingGroup::ViewingGroup(const std::vector<std::string>& viewingGroups) : viewingGroups(viewingGroups) {}
 
-    Enum_StateCommand ViewingGroup::GetType() const
+    Enum_CommandType ViewingGroup::GetType() const
     {
-		return Enum_StateCommand::ViewingGroup;
+		return Enum_CommandType::ViewingGroup;
     }
 
     void ViewingGroup::init()
@@ -38,9 +38,9 @@ namespace DrawingCommand
     // DisplayPlane class implementation
     DisplayPlane::DisplayPlane(const std::string& displayPlane) : displayPlane(displayPlane) {}
 
-    Enum_StateCommand DisplayPlane::GetType() const
+    Enum_CommandType DisplayPlane::GetType() const
     {
-		return Enum_StateCommand::DisplayPlane;
+		return Enum_CommandType::DisplayPlane;
     }
 
     void DisplayPlane::init()
@@ -68,9 +68,9 @@ namespace DrawingCommand
     // DrawingPriority class implementation
     DrawingPriority::DrawingPriority(int drawingPriority) : drawingPriority(drawingPriority) {}
 
-    Enum_StateCommand DrawingPriority::GetType() const
+    Enum_CommandType DrawingPriority::GetType() const
     {
-        return Enum_StateCommand::DrawingPriority;
+        return Enum_CommandType::DrawingPriority;
     }
 
     void DrawingPriority::init()
@@ -105,9 +105,9 @@ namespace DrawingCommand
     // ScaleMinimum class implementation
     ScaleMinimum::ScaleMinimum(int scaleMinimum) : scaleMinimum(scaleMinimum) {}
 
-    Enum_StateCommand ScaleMinimum::GetType() const
+    Enum_CommandType ScaleMinimum::GetType() const
     {
-        return Enum_StateCommand::ScaleMinimum;
+        return Enum_CommandType::ScaleMinimum;
     }
 
     void ScaleMinimum::init()
@@ -142,9 +142,9 @@ namespace DrawingCommand
     // ScaleMaximum class implementation
     ScaleMaximum::ScaleMaximum(int scaleMaximum) : scaleMaximum(scaleMaximum) {}
 
-    Enum_StateCommand ScaleMaximum::GetType() const
+    Enum_CommandType ScaleMaximum::GetType() const
     {
-        return Enum_StateCommand::ScaleMaximum;
+        return Enum_CommandType::ScaleMaximum;
     }
 
     void ScaleMaximum::init()
@@ -179,9 +179,9 @@ namespace DrawingCommand
     // Id class implementation
     Id::Id(const std::string& id) : id(id) {}
 
-    Enum_StateCommand Id::GetType() const
+    Enum_CommandType Id::GetType() const
     {
-        return Enum_StateCommand::Id;
+        return Enum_CommandType::Id;
     }
 
     void Id::init()
@@ -208,9 +208,9 @@ namespace DrawingCommand
     // Parent class implementation
     Parent::Parent(const std::string& parentId) : parentId(parentId) {}
 
-    Enum_StateCommand Parent::GetType() const
+    Enum_CommandType Parent::GetType() const
     {
-        return Enum_StateCommand::Parent;
+        return Enum_CommandType::Parent;
     }
 
     void Parent::init()
@@ -237,9 +237,9 @@ namespace DrawingCommand
     // Hover class implementation
     Hover::Hover(bool hover) : hover(hover) {}
 
-    Enum_StateCommand Hover::GetType() const
+    Enum_CommandType Hover::GetType() const
     {
-        return Enum_StateCommand::Hover;
+        return Enum_CommandType::Hover;
     }
 
     void Hover::init()

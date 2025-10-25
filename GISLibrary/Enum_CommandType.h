@@ -1,5 +1,5 @@
 #pragma once
-enum class Enum_StateCommand
+enum class Enum_CommandType
 {
 	None = 0,
 	ViewingGroup = 1,
@@ -52,6 +52,17 @@ enum class Enum_StateCommand
 	DateTime,
 	TimeValid,
 	ClearTime,
-	AlertReference
+	AlertReference,
+	PointInstruction,
+	LineInstruction,
+	LineInstructionUnsuppressed,
+	ColorFill,
+	AreaFillReference,
+	PixmapFill,
+	SymbolFill,
+	HatchFill,
+	TextInstruction,
+	CoverageFill,
+	NullInstruction
 };
 

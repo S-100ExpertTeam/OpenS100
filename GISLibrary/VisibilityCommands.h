@@ -9,7 +9,7 @@ namespace DrawingCommand
 		ViewingGroup() = default;
         ViewingGroup(const std::vector<std::string>& viewingGroups);
 
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 
 		virtual void init() override;
         virtual void execute() override;
@@ -28,7 +28,7 @@ namespace DrawingCommand
 		DisplayPlane() = default;
         DisplayPlane(const std::string& displayPlane);
 
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 
         virtual void init() override;
         virtual void execute() override;
@@ -47,7 +47,7 @@ namespace DrawingCommand
 		DrawingPriority() = default;
         DrawingPriority(int drawingPriority);
 
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 
         virtual void init() override;
         virtual void execute() override;
@@ -66,7 +66,7 @@ namespace DrawingCommand
 		ScaleMinimum() = default;
         ScaleMinimum(int scaleMinimum);
 
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 
         virtual void init() override;
         virtual void execute() override;
@@ -85,7 +85,7 @@ namespace DrawingCommand
 		ScaleMaximum() = default;
         ScaleMaximum(int scaleMaximum);
 
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 
         virtual void init() override;
         virtual void execute() override;
@@ -104,7 +104,7 @@ namespace DrawingCommand
 		Id() = default;
         Id(const std::string& id);
 
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 
         virtual void init() override;
         virtual void execute() override;
@@ -123,7 +123,7 @@ namespace DrawingCommand
 		Parent() = default;
         Parent(const std::string& parentId);
 
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 
         virtual void init() override;
         virtual void execute() override;
@@ -141,7 +141,7 @@ namespace DrawingCommand
 		Hover() = default;
         Hover(bool hover);
 
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 
         virtual void init() override;
         virtual void execute() override;

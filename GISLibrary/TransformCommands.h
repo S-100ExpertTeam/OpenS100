@@ -8,7 +8,7 @@ namespace DrawingCommand
     public:
 		LocalOffset() = default;
         LocalOffset(double xOffsetMM, double yOffsetMM);
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
@@ -27,7 +27,7 @@ namespace DrawingCommand
     public:
 		LinePlacement() = default;
         LinePlacement(const std::string& linePlacementMode, double offset, double endOffset, bool visibleParts);
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
@@ -50,7 +50,7 @@ namespace DrawingCommand
     public:
 		AreaPlacement() = default;
         AreaPlacement(const std::string& areaPlacementMode);
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
@@ -67,7 +67,7 @@ namespace DrawingCommand
     public:
 		AreaCRS() = default;
         AreaCRS(const std::string& areaCRSType);
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
@@ -81,7 +81,7 @@ namespace DrawingCommand
     public:
 		Rotation() = default;
         Rotation(const std::string& rotationCRS, double rotation);
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;
@@ -100,7 +100,7 @@ namespace DrawingCommand
     public:
 		ScaleFactor() = default;
         ScaleFactor(double scaleFactor);
-        Enum_StateCommand GetType() const override;
+        Enum_CommandType GetType() const override;
 		void init() override;
         void execute() override;
         void parse(const std::string& input) override;

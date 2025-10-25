@@ -13,7 +13,9 @@ public:
 
 public:
 	static S100_PointInstruction* ToS100PointInstruction(Local_StateCommands& sc, DrawingCommand::PointInstruction& pi);
+	static S100_PointInstruction* ToS100PointInstruction(std::list<Local_StateCommands*> stateCommand, DrawingCommand::PointInstruction& pi);
 	static S100_LineInstruction* ToS100LineInstruction(Local_DrawingCommands& dc, Local_StateCommands& sc);
 	static bool SetDrawingInstruction(Local_StateCommands& sc, S100_Instruction* out);
+	static bool SetState(std::list<Local_StateCommands*> stateCommand, S100_Instruction* out);
 };
 

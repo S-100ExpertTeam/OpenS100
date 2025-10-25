@@ -93,6 +93,7 @@ void CommandList::Insert(std::string& command, std::string& params)
 
 	auto obj = it->second();
 
+	obj->setParameter(params);
 	obj->parse(params);
 
 	Insert(std::move(obj));
@@ -107,14 +108,19 @@ void CommandList::Insert(std::unique_ptr<DrawingCommand::Command> command)
 std::list<S100_Instruction*> CommandList::Parse()
 {
 	std::list<S100_Instruction*> result;
+	std::list<DrawingCommand::Command*> stateCommand;
 
 	for (auto i = commands.begin(); i != commands.end(); ++i)
 	{
-		
-
+		auto command = i->get();
 
 		// PointInstruction
-		// -- 
+		if (dynamic_cast<DrawingCommand::PointInstruction*>(command))
+		{
+			auto ptr = dynamic_cast<DrawingCommand::PointInstruction*>(command);
+			
+			continue;
+		}
 
 		// LineInstruction Or LineInstructionUnsuppressed
 		// refers to a line style in PC or defiend by LineStyle command
