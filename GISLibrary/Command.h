@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Enum_StateCommand.h"
+#include "Enum_CommandType.h"
 
 #include <string>
 
@@ -11,7 +11,7 @@ namespace DrawingCommand
     public:
         Command() = default;
         virtual ~Command() = default;
-        virtual Enum_StateCommand GetType() const { return Enum_StateCommand::None; }
+        virtual Enum_CommandType GetType() const { return Enum_CommandType::None; }
 		virtual void init() = 0;
         virtual void execute() = 0;
         virtual void parse(const std::string& input) = 0;
