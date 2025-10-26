@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 	SpatialReference::SpatialReference(const std::string& reference, bool forward) : reference(reference), forward(forward) {}
 
@@ -158,7 +158,7 @@ namespace DrawingCommand
 		}
 	}
 
-	Polyline::Polyline(const std::vector<DrawingCommand::Point>& points) : points(points)
+	Polyline::Polyline(const std::vector<Part9a::Point>& points) : points(points)
 	{
 
 	}
@@ -187,7 +187,7 @@ namespace DrawingCommand
 				{
 					double x = std::stod(tokens[i]);
 					double y = std::stod(tokens[i + 1]);
-					points.push_back(DrawingCommand::Point(x, y));
+					points.push_back(Part9a::Point(x, y));
 				}
 				catch (const std::exception& e) 
 				{

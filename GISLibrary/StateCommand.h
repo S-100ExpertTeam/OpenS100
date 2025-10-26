@@ -2,15 +2,12 @@
 
 #include "Command.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 	class StateCommand : public Command
 	{
 	public:
 		StateCommand() = default;
 		virtual ~StateCommand() = default;
-
-	public:
-		bool IsStateCommand() const;
 	};
 }

@@ -5,7 +5,7 @@
 #include "..\\GeoMetryLibrary\\GeoPoint.h"
 #include "..\\S100Engine\\GraphicBasePackage_Enum.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
     class SpatialReference : public StateCommand {
     public:
@@ -32,7 +32,7 @@ namespace DrawingCommand
 
     private:
         GraphicBasePackage::CRSType crs = GraphicBasePackage::CRSType::CRSType_None;
-        DrawingCommand::Point point;
+        Part9a::Point point;
     };
 
     class AugmentedRay : public StateCommand {
@@ -70,14 +70,14 @@ namespace DrawingCommand
     class Polyline : public StateCommand {
     public:
 		Polyline() = default;
-        Polyline(const std::vector<DrawingCommand::Point>& points);
+        Polyline(const std::vector<Part9a::Point>& points);
 
 		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
     private:
-        std::vector<DrawingCommand::Point> points;
+        std::vector<Part9a::Point> points;
     };
 
     // Arc3Points class
@@ -92,9 +92,9 @@ namespace DrawingCommand
 
 
     private:
-        DrawingCommand::Point startPoint;
-        DrawingCommand::Point medianPoint;
-        DrawingCommand::Point endPoint;
+        Part9a::Point startPoint;
+        Part9a::Point medianPoint;
+        Part9a::Point endPoint;
     };
 
     // ArcByRadius class
@@ -108,7 +108,7 @@ namespace DrawingCommand
         void parse(const std::string& input) override;
 
     private:
-        DrawingCommand::Point center;
+        Part9a::Point center;
         double radius = 0.0;
         double startAngle = 0.0;
         double angularDistance = 360.0;
@@ -125,7 +125,7 @@ namespace DrawingCommand
         void parse(const std::string& input) override;
 
     private:
-        DrawingCommand::Point center;
+        Part9a::Point center;
         double outerRadius = 0.0;
         double innerRadius = 0.0;
         double startAngle = 0.0;

@@ -2,7 +2,8 @@
 
 #include "VectorParameter.h"
 #include "Command.h"
-
+#include "DrawingCommand.h"
+#include "StateCommand.h"
 #include "PointInstruction.h"
 #include "LineInstruction.h"
 #include "LineInstructionUnsuppressed.h"

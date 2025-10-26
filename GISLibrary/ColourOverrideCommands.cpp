@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 	OverrideColor::OverrideColor(const std::string& colorToken, double colorTransparency, const std::string& overrideToken, double overrideTransparency)
 		: colorToken(colorToken), colorTransparency(colorTransparency), overrideToken(overrideToken), overrideTransparency(overrideTransparency) {}

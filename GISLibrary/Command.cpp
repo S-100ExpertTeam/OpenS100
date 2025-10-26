@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Command.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 
     GraphicBasePackage::CRSType Command::GetCRSTypeFromString(const std::string& value)
@@ -67,11 +67,6 @@ namespace DrawingCommand
             return IntervalType::none;
         }
 	}
-
-    void Command::init()
-    {
-        present = false;
-    }
 
     void Command::setPresent(bool value)
     {

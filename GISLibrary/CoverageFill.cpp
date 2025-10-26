@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
     // CoverageFill class implementation
     CoverageFill::CoverageFill(const std::string& attributeCode, const std::string& uom, const std::string& placement)

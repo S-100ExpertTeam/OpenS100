@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace DrawingCommand
+namespace Part9a
 {
     class Command 
     {
@@ -12,9 +12,10 @@ namespace DrawingCommand
         Command() = default;
         virtual ~Command() = default;
         virtual Enum_CommandType GetType() const { return Enum_CommandType::None; }
-		virtual void init() = 0;
-        virtual void execute() = 0;
-        virtual void parse(const std::string& input) = 0;
+        virtual void init() { present = false; };
+        virtual void execute() {};
+        virtual void parse(const std::string& input) {};
+        virtual bool execute(std::list<Part9a::Command*>& stateCommands) { return false; };
 
     public:
         static GraphicBasePackage::CRSType GetCRSTypeFromString(const std::string& value);

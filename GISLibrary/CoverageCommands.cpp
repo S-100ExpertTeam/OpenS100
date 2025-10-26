@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 	NumericAnnotation::NumericAnnotation(int decimals, const std::string& championChoice, double buffer)
 		: decimals(decimals), championChoice(championChoice), buffer(buffer) {}

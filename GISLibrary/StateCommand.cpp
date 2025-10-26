@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "StateCommand.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-	bool StateCommand::IsStateCommand() const
-	{
-		return true;
-	}
 }

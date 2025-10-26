@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
     // ViewingGroup class implementation
     ViewingGroup::ViewingGroup(const std::vector<std::string>& viewingGroups) : viewingGroups(viewingGroups) {}

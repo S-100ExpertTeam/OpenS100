@@ -1,6 +1,6 @@
 #pragma once
 
-namespace DrawingCommand
+namespace Part9a
 {
 
 	class Vector

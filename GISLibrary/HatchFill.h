@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Command.h"
+#include "DrawingCommand.h"
 #include "VectorParameter.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class HatchFill : public Command
+    class HatchFill : public DrawingCommand
     {
     public:
         HatchFill() = default;
-        HatchFill(const DrawingCommand::Vector& direction, double distance, const std::string& lineStyle1, const std::string& lineStyle2);
+        HatchFill(const Part9a::Vector& direction, double distance, const std::string& lineStyle1, const std::string& lineStyle2);
         virtual ~HatchFill() = default;
 
     public:
@@ -18,7 +18,7 @@ namespace DrawingCommand
         virtual void parse(const std::string& input) override;
 
     private:
-        DrawingCommand::Vector direction;
+        Part9a::Vector direction;
         double distance = 0.0;
         std::string lineStyle1;
         std::string lineStyle2;

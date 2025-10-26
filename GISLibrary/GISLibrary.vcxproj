@@ -291,6 +291,7 @@
     <ClCompile Include="DDR.cpp" />
     <ClCompile Include="Directory.cpp" />
     <ClCompile Include="DirectPosition.cpp" />
+    <ClCompile Include="DrawingCommand.cpp" />
     <ClCompile Include="DrawingCommands.cpp" />
     <ClCompile Include="DrawingSet.cpp" />
     <ClCompile Include="Enum_CommandType.cpp" />
@@ -627,6 +628,7 @@
     <ClInclude Include="DatasetPermit.h" />
     <ClInclude Include="DataStatus.h" />
     <ClInclude Include="DirectPosition.h" />
+    <ClInclude Include="DrawingCommand.h" />
     <ClInclude Include="Enum_SGeometryType.h" />
     <ClInclude Include="Enum_CommandType.h" />
     <ClInclude Include="ExchangeCatalogueNameSpace.h" />

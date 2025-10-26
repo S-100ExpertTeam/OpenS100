@@ -3,10 +3,10 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 	// SymbolFill class implementation
-	SymbolFill::SymbolFill(const std::string& symbol, const DrawingCommand::Vector& v1, const DrawingCommand::Vector& v2, bool clipSymbols)
+	SymbolFill::SymbolFill(const std::string& symbol, const Part9a::Vector& v1, const Part9a::Vector& v2, bool clipSymbols)
 		: symbol(symbol), v1(v1), v2(v2), clipSymbols(clipSymbols)
 	{
 	}

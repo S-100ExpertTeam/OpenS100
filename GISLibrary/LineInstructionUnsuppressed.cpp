@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
     LineInstructionUnsuppressed::LineInstructionUnsuppressed(const std::vector<std::string>& lineStyle) : lineStyle(lineStyle) {}
 

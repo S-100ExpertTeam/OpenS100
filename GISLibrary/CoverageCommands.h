@@ -4,7 +4,7 @@
 
 #include "..\\FeatureCatalog\\IntervalType.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 
     // NumericAnnotation Class

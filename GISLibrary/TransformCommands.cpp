@@ -2,7 +2,7 @@
 #include "TransformCommands.h"
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 	// LocalOffset class implementation
 	LocalOffset::LocalOffset(double xOffsetMM, double yOffsetMM) : xOffsetMM(xOffsetMM), yOffsetMM(yOffsetMM) {}

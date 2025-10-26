@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Command.h"
+#include "DrawingCommand.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class PixmapFill : public Command
+    class PixmapFill : public DrawingCommand
     {
     public:
         PixmapFill() = default;
