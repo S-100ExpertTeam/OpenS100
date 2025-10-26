@@ -1,9 +1,9 @@
 #pragma once
-#include "Command.h"
+#include "StateCommand.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-	class AlertReference : public Command {
+	class AlertReference : public StateCommand {
 	public:
 		AlertReference() = default;
 		AlertReference(std::string alertReference, std::string plan, std::string monitor);

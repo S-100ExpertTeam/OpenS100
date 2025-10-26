@@ -1,9 +1,9 @@
 #pragma once
-#include "Command.h"
+#include "StateCommand.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class FontColor : public Command {
+    class FontColor : public StateCommand {
     public:
 		FontColor() = default;
         FontColor(const std::string& token, double transparency);
@@ -18,7 +18,7 @@ namespace DrawingCommand
         double transparency = 0.0;
     };
 
-    class FontBackgroundColor : public Command {
+    class FontBackgroundColor : public StateCommand {
     public:
 		FontBackgroundColor() = default;
         FontBackgroundColor(const std::string& token, double transparency);
@@ -32,7 +32,7 @@ namespace DrawingCommand
         double transparency = 1.0;
     };
 
-    class FontSize : public Command 
+    class FontSize : public StateCommand
     {
     public:
 		FontSize() = default;
@@ -47,7 +47,7 @@ namespace DrawingCommand
         double bodySize = 10.0;
     };
 
-    class FontProportion : public Command 
+    class FontProportion : public StateCommand
     {
     public:
 		FontProportion() = default;
@@ -62,7 +62,7 @@ namespace DrawingCommand
         std::string proportion = "Proportional";
     };
 
-    class FontWeight : public Command 
+    class FontWeight : public StateCommand
     {
     public:
 		FontWeight() = default;
@@ -77,7 +77,7 @@ namespace DrawingCommand
         std::string weight = "Medium";
     };
 
-    class FontSlant : public Command 
+    class FontSlant : public StateCommand
     {
     public:
 		FontSlant() = default;
@@ -92,7 +92,7 @@ namespace DrawingCommand
         std::string slant = "Upright";
     };
 
-    class FontSerifs : public Command 
+    class FontSerifs : public StateCommand
     {
     public:
 		FontSerifs() = default;
@@ -107,7 +107,7 @@ namespace DrawingCommand
         bool serifs = false;
     };
 
-    class FontUnderline : public Command 
+    class FontUnderline : public StateCommand
     {
     public:
         FontUnderline() = default;
@@ -122,7 +122,7 @@ namespace DrawingCommand
         bool underline = false;
     };
 
-    class FontStrikethrough : public Command 
+    class FontStrikethrough : public StateCommand
     {
     public:
 		FontStrikethrough() = default;
@@ -137,7 +137,7 @@ namespace DrawingCommand
         bool strikethrough = false;
     };
 
-    class FontUpperline : public Command 
+    class FontUpperline : public StateCommand
     {
     public:
 		FontUpperline() = default;
@@ -153,7 +153,7 @@ namespace DrawingCommand
         bool strikethrough = false;
     };
 
-    class FontReference : public Command 
+    class FontReference : public StateCommand
     {
     public:
 		FontReference() = default;
@@ -169,7 +169,7 @@ namespace DrawingCommand
         std::string fontReference;
     };
 
-    class TextAlignHorizontal : public Command 
+    class TextAlignHorizontal : public StateCommand
     {
     public:
 		TextAlignHorizontal() = default;
@@ -184,7 +184,7 @@ namespace DrawingCommand
         std::string horizontalAlignment = "Start";
     };
 
-    class TextAlignVertical : public Command 
+    class TextAlignVertical : public StateCommand
     {
     public:
 		TextAlignVertical() = default;
@@ -199,7 +199,7 @@ namespace DrawingCommand
         std::string verticalAlignment = "Bottom";
     };
 
-    class TextVerticalOffset : public Command 
+    class TextVerticalOffset : public StateCommand
     {
     public:
 		TextVerticalOffset() = default;

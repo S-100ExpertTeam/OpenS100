@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "NullInstruction.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
     void NullInstruction::init()
     {

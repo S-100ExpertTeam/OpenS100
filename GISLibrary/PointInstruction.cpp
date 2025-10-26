@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "PointInstruction.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
     // PointInstruction class implementation
     PointInstruction::PointInstruction(const std::string& symbol) : symbol(symbol)

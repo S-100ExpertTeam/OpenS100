@@ -3,7 +3,7 @@
 
 #include "..\\PortrayalCatalogue\\S100_AugmentedRay.h"
 
-S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_StateCommands& sc, DrawingCommand::PointInstruction& pi)
+S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_StateCommands& sc, Part9a::PointInstruction& pi)
 {
 	auto instruction = new S100_PointInstruction();
 	
@@ -57,7 +57,7 @@ S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_StateC
 	return instruction;
 }
 
-S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(std::list<Local_StateCommands*> stateCommand, DrawingCommand::PointInstruction& pi)
+S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(std::list<Local_StateCommands*> stateCommand, Part9a::PointInstruction& pi)
 {
 	return nullptr;
 }
@@ -146,37 +146,37 @@ bool CommandToInstruction::SetState(std::list<Local_StateCommands*> stateCommand
 	for (auto i = stateCommand.begin(); i != stateCommand.end(); i++)
 	{
 		auto sc = (*i);
-		if (dynamic_cast<DrawingCommand::ViewingGroup*>(sc))
+		if (dynamic_cast<Part9a::ViewingGroup*>(sc))
 		{
 			// ViewingGroup
-			auto vg = dynamic_cast<DrawingCommand::ViewingGroup*>(sc);
+			auto vg = dynamic_cast<Part9a::ViewingGroup*>(sc);
 			out->SetViewingGroup(vg->GetViewingGroups());
 		}
-		else if (dynamic_cast<DrawingCommand::DisplayPlane*>(sc))
+		else if (dynamic_cast<Part9a::DisplayPlane*>(sc))
 		{
 			// DisplayPlane
 		}
-		else if (dynamic_cast<DrawingCommand::DrawingPriority*>(sc))
+		else if (dynamic_cast<Part9a::DrawingPriority*>(sc))
 		{
 			// DrawingPriority
 		}
-		else if (dynamic_cast<DrawingCommand::ScaleMinimum*>(sc))
+		else if (dynamic_cast<Part9a::ScaleMinimum*>(sc))
 		{
 			// ScaleMinimum
 		}
-		else if (dynamic_cast<DrawingCommand::ScaleMaximum*>(sc))
+		else if (dynamic_cast<Part9a::ScaleMaximum*>(sc))
 		{
 			// ScaleMaximum
 		}
-		else if (dynamic_cast<DrawingCommand::Id*>(sc))
+		else if (dynamic_cast<Part9a::Id*>(sc))
 		{
 			// Id
 		}
-		else if (dynamic_cast<DrawingCommand::Parent*>(sc))
+		else if (dynamic_cast<Part9a::Parent*>(sc))
 		{
 			// Parent
 		}
-		else if (dynamic_cast<DrawingCommand::Hover*>(sc))
+		else if (dynamic_cast<Part9a::Hover*>(sc))
 		{
 			// Hover
 		}

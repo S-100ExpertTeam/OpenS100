@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "TextInstruction.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
     // TextInstruction class implementation
     TextInstruction::TextInstruction(const std::string& text) : text(text) {}

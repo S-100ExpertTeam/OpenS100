@@ -1,9 +1,9 @@
 #pragma once
-#include "Command.h"
+#include "StateCommand.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class ViewingGroup : public Command 
+    class ViewingGroup : public StateCommand
     {
     public:
 		ViewingGroup() = default;
@@ -22,7 +22,7 @@ namespace DrawingCommand
 		std::vector<std::string> GetViewingGroups() const;
     };
 
-    class DisplayPlane : public Command 
+    class DisplayPlane : public StateCommand
     {
     public:
 		DisplayPlane() = default;
@@ -41,7 +41,7 @@ namespace DrawingCommand
 		std::string GetDisplayPlane() const;
     };
 
-    class DrawingPriority : public Command 
+    class DrawingPriority : public StateCommand
     {
     public:
 		DrawingPriority() = default;
@@ -60,7 +60,7 @@ namespace DrawingCommand
 		int GetDrawingPriority() const;
     };
 
-    class ScaleMinimum : public Command 
+    class ScaleMinimum : public StateCommand
     {
     public:
 		ScaleMinimum() = default;
@@ -79,7 +79,7 @@ namespace DrawingCommand
 		int GetScaleMinimum() const;
     };
 
-    class ScaleMaximum : public Command 
+    class ScaleMaximum : public StateCommand
     {
     public:
 		ScaleMaximum() = default;
@@ -98,7 +98,7 @@ namespace DrawingCommand
 		int GetScaleMaximum() const;
     };
 
-    class Id : public Command 
+    class Id : public StateCommand
     {
     public:
 		Id() = default;
@@ -117,7 +117,7 @@ namespace DrawingCommand
         std::string GetId();
     };
 
-    class Parent : public Command 
+    class Parent : public StateCommand
     {
     public:
 		Parent() = default;
@@ -136,7 +136,7 @@ namespace DrawingCommand
 		std::string GetParentId() const;
     };
 
-    class Hover : public Command {
+    class Hover : public StateCommand {
     public:
 		Hover() = default;
         Hover(bool hover);

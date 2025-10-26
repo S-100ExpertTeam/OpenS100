@@ -98,80 +98,80 @@ public:
 	std::string v_AlertReference;
 
 	// Visibility
-	DrawingCommand::ViewingGroup viewingGroup;
-	DrawingCommand::DisplayPlane displayPlane;
-	DrawingCommand::DrawingPriority drawingPriority;
-	DrawingCommand::ScaleMinimum scaleMinimum;
-	DrawingCommand::ScaleMaximum scaleMaximum;
-	DrawingCommand::Id id;
-	DrawingCommand::Parent parent;
-	DrawingCommand::Hover hover;
+	Part9a::ViewingGroup viewingGroup;
+	Part9a::DisplayPlane displayPlane;
+	Part9a::DrawingPriority drawingPriority;
+	Part9a::ScaleMinimum scaleMinimum;
+	Part9a::ScaleMaximum scaleMaximum;
+	Part9a::Id id;
+	Part9a::Parent parent;
+	Part9a::Hover hover;
 
 	// Transform
-	DrawingCommand::LocalOffset localOffset;
-	DrawingCommand::LinePlacement linePlacement;
-	DrawingCommand::AreaPlacement areaPlacement;
-	DrawingCommand::AreaCRS areaCRS;
-	DrawingCommand::Rotation rotation;
-	DrawingCommand::ScaleFactor scaleFactor;
+	Part9a::LocalOffset localOffset;
+	Part9a::LinePlacement linePlacement;
+	Part9a::AreaPlacement areaPlacement;
+	Part9a::AreaCRS areaCRS;
+	Part9a::Rotation rotation;
+	Part9a::ScaleFactor scaleFactor;
 
 	// Line Style
-	DrawingCommand::LineStyle lineStyle;
-	DrawingCommand::LineSymbol lineSymbol;
-	DrawingCommand::Dash dash;
+	Part9a::LineStyle lineStyle;
+	Part9a::LineSymbol lineSymbol;
+	Part9a::Dash dash;
 
 	// Text Style
-	DrawingCommand::FontColor fontColor;
-	DrawingCommand::FontSize fontSize;
-	DrawingCommand::FontProportion fontProportion;
-	DrawingCommand::FontWeight fontWeight;
-	DrawingCommand::FontSlant fontSlant;
-	DrawingCommand::FontSerifs fontSerifs;
-	DrawingCommand::FontUnderline fontUnderline;
-	DrawingCommand::FontStrikethrough fontStrikethrough;
-	DrawingCommand::FontUpperline fontUpperline;
-	DrawingCommand::FontReference fontReference;
-	DrawingCommand::TextAlignHorizontal textAlignHorizontal;
-	DrawingCommand::TextAlignVertical textAlignVertical;
-	DrawingCommand::TextVerticalOffset textVerticalOffset;
+	Part9a::FontColor fontColor;
+	Part9a::FontSize fontSize;
+	Part9a::FontProportion fontProportion;
+	Part9a::FontWeight fontWeight;
+	Part9a::FontSlant fontSlant;
+	Part9a::FontSerifs fontSerifs;
+	Part9a::FontUnderline fontUnderline;
+	Part9a::FontStrikethrough fontStrikethrough;
+	Part9a::FontUpperline fontUpperline;
+	Part9a::FontReference fontReference;
+	Part9a::TextAlignHorizontal textAlignHorizontal;
+	Part9a::TextAlignVertical textAlignVertical;
+	Part9a::TextVerticalOffset textVerticalOffset;
 
 	// Colour Override
-	DrawingCommand::OverrideColor overrideColor;
-	DrawingCommand::OverrideAll overrideAll;
+	Part9a::OverrideColor overrideColor;
+	Part9a::OverrideAll overrideAll;
 
 	// Geometry
-	DrawingCommand::SpatialReference spatialReference;
-	DrawingCommand::AugmentedPoint augmentedPoint;
-	DrawingCommand::AugmentedRay augmentedRay;
-	DrawingCommand::AugmentedPath augmentedPath;
-	DrawingCommand::Polyline polyline;
-	DrawingCommand::Arc3Points arc3Points;
-	DrawingCommand::ArcByRadius arcByRadius;
-	DrawingCommand::Annulus annulus;
-	DrawingCommand::ClearGeometry clearGeometry;
+	Part9a::SpatialReference spatialReference;
+	Part9a::AugmentedPoint augmentedPoint;
+	Part9a::AugmentedRay augmentedRay;
+	Part9a::AugmentedPath augmentedPath;
+	Part9a::Polyline polyline;
+	Part9a::Arc3Points arc3Points;
+	Part9a::ArcByRadius arcByRadius;
+	Part9a::Annulus annulus;
+	Part9a::ClearGeometry clearGeometry;
 
 	// Coverage
-	DrawingCommand::LookupEntry lookupEntry;
-	DrawingCommand::NumericAnnotation numericAnnotation;
-	DrawingCommand::SymbolAnnotation symbolAnnotation;
-	DrawingCommand::CoverageColor coverageColor;
+	Part9a::LookupEntry lookupEntry;
+	Part9a::NumericAnnotation numericAnnotation;
+	Part9a::SymbolAnnotation symbolAnnotation;
+	Part9a::CoverageColor coverageColor;
 
 	// Time
-	DrawingCommand::Date date;
-	DrawingCommand::Time time;
-	DrawingCommand::DateTime dateTime;
-	DrawingCommand::TimeValid timeValid;
-	DrawingCommand::ClearTime clearTime;
+	Part9a::Date date;
+	Part9a::Time time;
+	Part9a::DateTime dateTime;
+	Part9a::TimeValid timeValid;
+	Part9a::ClearTime clearTime;
 
 	// Alert
-	DrawingCommand::AlertReference alertReference;
+	Part9a::AlertReference alertReference;
 
-	std::list<DrawingCommand::Command*> stateCommands;
+	std::list<Part9a::Command*> stateCommands;
 
 public:
 	void Init();
 
-	DrawingCommand::Command* Insert(std::string& command, std::string& params);
+	Part9a::Command* Insert(std::string& command, std::string& params);
 };
 
 class Local_DrawingCommands
@@ -181,17 +181,17 @@ public:
 	virtual ~Local_DrawingCommands() = default;
 
 public:
-	DrawingCommand::PointInstruction pointInstruction;
-	DrawingCommand::LineInstruction lineInstruction;
-	DrawingCommand::LineInstructionUnsuppressed lineInstructionUnsuppressed;
-	DrawingCommand::ColorFill colorFill;
-	DrawingCommand::AreaFillReference areaFillReference;
-	DrawingCommand::PixmapFill pixmapFill;	
-	DrawingCommand::SymbolFill	symbolFill;
-	DrawingCommand::HatchFill hatchFill;
-	DrawingCommand::TextInstruction textInstruction;
-	DrawingCommand::CoverageFill coverageFill;
-	DrawingCommand::NullInstruction nullInstruction;
+	Part9a::PointInstruction pointInstruction;
+	Part9a::LineInstruction lineInstruction;
+	Part9a::LineInstructionUnsuppressed lineInstructionUnsuppressed;
+	Part9a::ColorFill colorFill;
+	Part9a::AreaFillReference areaFillReference;
+	Part9a::PixmapFill pixmapFill;	
+	Part9a::SymbolFill	symbolFill;
+	Part9a::HatchFill hatchFill;
+	Part9a::TextInstruction textInstruction;
+	Part9a::CoverageFill coverageFill;
+	Part9a::NullInstruction nullInstruction;
 
 public:
 	void Init();

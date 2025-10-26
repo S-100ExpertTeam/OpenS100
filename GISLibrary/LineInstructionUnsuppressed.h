@@ -1,12 +1,12 @@
 #pragma	once
 
-#include "Command.h"
+#include "DrawingCommand.h"
 
 #include <vector>
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class LineInstructionUnsuppressed : public Command
+    class LineInstructionUnsuppressed : public DrawingCommand
     {
     public:
         LineInstructionUnsuppressed() = default;

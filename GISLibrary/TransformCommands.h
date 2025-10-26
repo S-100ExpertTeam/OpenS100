@@ -1,9 +1,9 @@
 #pragma once
-#include "Command.h"
+#include "StateCommand.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class LocalOffset : public Command 
+    class LocalOffset : public StateCommand
     {
     public:
 		LocalOffset() = default;
@@ -22,7 +22,7 @@ namespace DrawingCommand
 		double GetYOffsetMM() const;
     };
 
-    class LinePlacement : public Command 
+    class LinePlacement : public StateCommand
     {
     public:
 		LinePlacement() = default;
@@ -45,7 +45,7 @@ namespace DrawingCommand
 		bool IsVisibleParts() const;
     };
 
-    class AreaPlacement : public Command 
+    class AreaPlacement : public StateCommand
     {
     public:
 		AreaPlacement() = default;
@@ -62,7 +62,7 @@ namespace DrawingCommand
 		std::string GetAreaPlacementMode() const;
     };
 
-    class AreaCRS : public Command 
+    class AreaCRS : public StateCommand
     {
     public:
 		AreaCRS() = default;
@@ -76,7 +76,7 @@ namespace DrawingCommand
         std::string areaCRSType = "GlobalGeometry";
     };
 
-    class Rotation : public Command 
+    class Rotation : public StateCommand
     {
     public:
 		Rotation() = default;
@@ -95,7 +95,7 @@ namespace DrawingCommand
 		double GetRotation() const;
     };
 
-    class ScaleFactor : public Command 
+    class ScaleFactor : public StateCommand
     {
     public:
 		ScaleFactor() = default;

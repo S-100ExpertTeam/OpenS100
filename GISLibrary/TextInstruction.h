@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Command.h"
+#include "DrawingCommand.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class TextInstruction : public Command
+    class TextInstruction : public DrawingCommand
     {
     public:
         TextInstruction() = default;

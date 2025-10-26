@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 	LineStyle::LineStyle(const std::string& name, double intervalLength, double width, const std::string& token, double transparency, const std::string& capStyle, const std::string& joinStyle, double offset)
 		: name(name), intervalLength(intervalLength), width(width), token(token), transparency(transparency), capStyle(capStyle), joinStyle(joinStyle), offset(offset) {}

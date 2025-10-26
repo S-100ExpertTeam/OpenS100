@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 	ColorFill::ColorFill(const std::string& token, double transparency) : token(token), transparency(transparency)
 	{

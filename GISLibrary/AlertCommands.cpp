@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 	AlertReference::AlertReference(std::string alertReference, std::string plan, std::string monitor)
 		: alertReference(alertReference), plan(plan), monitor(monitor) {}

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Command.h"
+#include "DrawingCommand.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class CoverageFill : public Command
+    class CoverageFill : public DrawingCommand
     {
     public:
         CoverageFill() = default;

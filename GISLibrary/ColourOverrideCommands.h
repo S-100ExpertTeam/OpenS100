@@ -1,9 +1,9 @@
 #pragma once
-#include "Command.h"
+#include "StateCommand.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class OverrideColor : public Command 
+    class OverrideColor : public StateCommand
     {
     public:
 		OverrideColor() = default;
@@ -21,7 +21,7 @@ namespace DrawingCommand
         double overrideTransparency = 0.0;
     };
 
-    class OverrideAll : public Command 
+    class OverrideAll : public StateCommand
     {
     public:
 		OverrideAll() = default;
@@ -37,7 +37,7 @@ namespace DrawingCommand
         double transparency = 0.0;
     };
 
-    class ClearOverride : public Command 
+    class ClearOverride : public StateCommand
 	{
     public:
         ClearOverride() = default;

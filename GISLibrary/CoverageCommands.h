@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Command.h"
+#include "StateCommand.h"
 
 #include "..\\FeatureCatalog\\IntervalType.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 
     // NumericAnnotation Class
-    class NumericAnnotation : public Command {
+    class NumericAnnotation : public StateCommand {
     public:
 		NumericAnnotation() = default;
         NumericAnnotation(int decimals, const std::string& championChoice, double buffer);
@@ -24,7 +24,7 @@ namespace DrawingCommand
     };
 
     // SymbolAnnotation Class
-    class SymbolAnnotation : public Command {
+    class SymbolAnnotation : public StateCommand {
     public:
 		SymbolAnnotation() = default;
         SymbolAnnotation(const std::string& symbolRef, const std::string& rotationAttribute, const std::string& scaleAttribute,
@@ -46,7 +46,7 @@ namespace DrawingCommand
     };
 
     // CoverageColor Class
-    class CoverageColor : public Command {
+    class CoverageColor : public StateCommand {
     public:
 		CoverageColor() = default;
         CoverageColor(const std::string& startToken, double startTransparency, const std::string& endToken, double endTransparency, double penWidth);
@@ -63,7 +63,7 @@ namespace DrawingCommand
         double penWidth = 0.0;
     };
 
-    class LookupEntry : public Command {
+    class LookupEntry : public StateCommand {
     public:
 		LookupEntry() = default;
         LookupEntry(const std::string& label, double lower, double upper, const IntervalType closure);

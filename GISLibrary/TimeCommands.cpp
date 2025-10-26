@@ -3,7 +3,7 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 
 	Date::Date(const std::string& begin, const std::string& end) : begin(begin), end(end) {}

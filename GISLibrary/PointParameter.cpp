@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "PointParameter.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
 	Point::Point(double x, double y) : x(x), y(y)
 	{

@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Command.h"
+#include "DrawingCommand.h"
 #include "VectorParameter.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class SymbolFill : public Command
+    class SymbolFill : public DrawingCommand
     {
     public:
         SymbolFill() = default;
-        SymbolFill(const std::string& symbol, const DrawingCommand::Vector& v1, const DrawingCommand::Vector& v2, bool clipSymbols = true);
+        SymbolFill(const std::string& symbol, const Part9a::Vector& v1, const Part9a::Vector& v2, bool clipSymbols = true);
         virtual ~SymbolFill() = default;
 
     public:
@@ -19,8 +19,8 @@ namespace DrawingCommand
 
     private:
         std::string symbol;
-        DrawingCommand::Vector v1;
-        DrawingCommand::Vector v2;
+        Part9a::Vector v1;
+        Part9a::Vector v2;
         bool clipSymbols = true;
     };
 }

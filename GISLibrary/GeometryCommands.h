@@ -1,13 +1,13 @@
 #pragma once
-#include "Command.h"
+#include "StateCommand.h"
 #include "PointParameter.h"
 
 #include "..\\GeoMetryLibrary\\GeoPoint.h"
 #include "..\\S100Engine\\GraphicBasePackage_Enum.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
-    class SpatialReference : public Command {
+    class SpatialReference : public StateCommand {
     public:
 		SpatialReference() = default;
         SpatialReference(const std::string& reference, bool forward);
@@ -21,7 +21,7 @@ namespace DrawingCommand
         bool forward = true;
     };
 
-    class AugmentedPoint : public Command {
+    class AugmentedPoint : public StateCommand {
     public:
 		AugmentedPoint() = default;
         AugmentedPoint(GraphicBasePackage::CRSType crs, double x, double y);
@@ -32,10 +32,10 @@ namespace DrawingCommand
 
     private:
         GraphicBasePackage::CRSType crs = GraphicBasePackage::CRSType::CRSType_None;
-        DrawingCommand::Point point;
+        Part9a::Point point;
     };
 
-    class AugmentedRay : public Command {
+    class AugmentedRay : public StateCommand {
     public:
 		AugmentedRay() = default;
         AugmentedRay(GraphicBasePackage::CRSType CRSType, double direction, GraphicBasePackage::CRSType crsLength, double length);
@@ -51,7 +51,7 @@ namespace DrawingCommand
         double length = 0.0;
     };
 
-    class AugmentedPath : public Command {
+    class AugmentedPath : public StateCommand {
     public:
 		AugmentedPath() = default;
         AugmentedPath(GraphicBasePackage::CRSType crsPosition, GraphicBasePackage::CRSType crsAngle, GraphicBasePackage::CRSType crsDistance);
@@ -67,21 +67,21 @@ namespace DrawingCommand
     };
 
     // Polyline class
-    class Polyline : public Command {
+    class Polyline : public StateCommand {
     public:
 		Polyline() = default;
-        Polyline(const std::vector<DrawingCommand::Point>& points);
+        Polyline(const std::vector<Part9a::Point>& points);
 
 		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
     private:
-        std::vector<DrawingCommand::Point> points;
+        std::vector<Part9a::Point> points;
     };
 
     // Arc3Points class
-    class Arc3Points : public Command {
+    class Arc3Points : public StateCommand {
     public:
 		Arc3Points() = default;
         Arc3Points(double startPointX, double startPointY, double medianPointX, double medianPointY, double endPointX, double endPointY);
@@ -92,13 +92,13 @@ namespace DrawingCommand
 
 
     private:
-        DrawingCommand::Point startPoint;
-        DrawingCommand::Point medianPoint;
-        DrawingCommand::Point endPoint;
+        Part9a::Point startPoint;
+        Part9a::Point medianPoint;
+        Part9a::Point endPoint;
     };
 
     // ArcByRadius class
-    class ArcByRadius : public Command {
+    class ArcByRadius : public StateCommand {
     public:
 		ArcByRadius() = default;
         ArcByRadius(double centerX, double centerY, double radius, double startAngle, double angularDistance);
@@ -108,14 +108,14 @@ namespace DrawingCommand
         void parse(const std::string& input) override;
 
     private:
-        DrawingCommand::Point center;
+        Part9a::Point center;
         double radius = 0.0;
         double startAngle = 0.0;
         double angularDistance = 360.0;
     };
 
     // Annulus class
-    class Annulus : public Command {
+    class Annulus : public StateCommand {
     public:
 		Annulus() = default;
         Annulus(double centerX, double centerY, double outerRadius, double innerRadius, double startAngle, double angularDistance);
@@ -125,14 +125,14 @@ namespace DrawingCommand
         void parse(const std::string& input) override;
 
     private:
-        DrawingCommand::Point center;
+        Part9a::Point center;
         double outerRadius = 0.0;
         double innerRadius = 0.0;
         double startAngle = 0.0;
         double angularDistance = 360.0;
     };
 
-    class ClearGeometry : public Command {
+    class ClearGeometry : public StateCommand {
     public:
         ClearGeometry() = default;
 

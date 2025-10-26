@@ -3,10 +3,10 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
     // HatchFill class implementation
-    HatchFill::HatchFill(const DrawingCommand::Vector& direction, double distance, const std::string& lineStyle1, const std::string& lineStyle2)
+    HatchFill::HatchFill(const Part9a::Vector& direction, double distance, const std::string& lineStyle1, const std::string& lineStyle2)
         : direction(direction), distance(distance), lineStyle1(lineStyle1), lineStyle2(lineStyle2) {
     }
 

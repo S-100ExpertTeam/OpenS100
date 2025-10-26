@@ -20,69 +20,69 @@
 void CommandList::Insert(std::string& command, std::string& params)
 {
 	static const std::unordered_map<std::string,
-		std::function<std::unique_ptr<DrawingCommand::Command>()>> factory {
-			{ "ViewingGroup", [] { return std::make_unique<DrawingCommand::ViewingGroup>(); } },
-			{ "DisplayPlane", [] { return std::make_unique<DrawingCommand::DisplayPlane>(); } },
-			{ "DrawingPriority", [] { return std::make_unique<DrawingCommand::DrawingPriority>(); } },
-			{ "ScaleMinimum", [] { return std::make_unique<DrawingCommand::ScaleMinimum>(); } },
-			{ "ScaleMaximum", [] { return std::make_unique<DrawingCommand::ScaleMaximum>(); } },
-			{ "Id", [] { return std::make_unique<DrawingCommand::Id>(); } },
-			{ "Parent", [] { return std::make_unique<DrawingCommand::Parent>(); } },
-			{ "Hover", [] { return std::make_unique<DrawingCommand::Hover>(); } },
-			{ "LocalOffset", [] { return std::make_unique<DrawingCommand::LocalOffset>(); } },
-			{ "LinePlacement", [] { return std::make_unique<DrawingCommand::LinePlacement>(); } },
-			{ "AreaPlacement", [] { return std::make_unique<DrawingCommand::AreaPlacement>(); } },
-			{ "AreaCRS", [] { return std::make_unique<DrawingCommand::AreaCRS>(); } },
-			{ "Rotation", [] { return std::make_unique<DrawingCommand::Rotation>(); } },
-			{ "ScaleFactor", [] { return std::make_unique<DrawingCommand::ScaleFactor>(); } },
-			{ "LineStyle", [] { return std::make_unique<DrawingCommand::LineStyle>(); } },
-			{ "LineSymbol", [] { return std::make_unique<DrawingCommand::LineSymbol>(); } },
-			{ "Dash", [] { return std::make_unique<DrawingCommand::Dash>(); } },
-			{ "FontColor", [] { return std::make_unique<DrawingCommand::FontColor>(); } },
-			{ "FontSize", [] { return std::make_unique<DrawingCommand::FontSize>(); } },
-			{ "FontProportion", [] { return std::make_unique<DrawingCommand::FontProportion>(); } },
-			{ "FontWeight", [] { return std::make_unique<DrawingCommand::FontWeight>(); } },
-			{ "FontSlant", [] { return std::make_unique<DrawingCommand::FontSlant>(); } },
-			{ "FontSerifs", [] { return std::make_unique < DrawingCommand::FontSerifs>(); } },
-			{ "FontUnderline", [] { return std::make_unique<DrawingCommand::FontUnderline>(); } },
-			{ "FontStrikethrough", [] { return std::make_unique<DrawingCommand::FontStrikethrough>(); } },
-			{ "FontUpperline", [] { return std::make_unique<DrawingCommand::FontUpperline>(); } },
-			{ "FontReference", [] { return std::make_unique<DrawingCommand::FontReference>(); } },
-			{ "TextAlignHorizontal", [] { return std::make_unique<DrawingCommand::TextAlignHorizontal>(); } },
-			{ "TextAlignVertical", [] { return std::make_unique<DrawingCommand::TextAlignVertical>(); } },
-			{ "TextVerticalOffset", [] { return std::make_unique<DrawingCommand::TextVerticalOffset>(); } },
-			{ "OverrideColor", [] { return std::make_unique<DrawingCommand::OverrideColor>(); } },
-			{ "OverrideAll", [] { return std::make_unique<DrawingCommand::OverrideAll>(); } },
-			{ "SpatialReference", [] { return std::make_unique<DrawingCommand::SpatialReference>(); } },
-			{ "AugmentedPoint", [] { return std::make_unique<DrawingCommand::AugmentedPoint>(); } },
-			{ "AugmentedRay", [] { return std::make_unique<DrawingCommand::AugmentedRay>(); } },
-			{ "AugmentedPath", [] { return std::make_unique<DrawingCommand::AugmentedPath>(); } },
-			{ "Polyline", [] { return std::make_unique<DrawingCommand::Polyline>(); } },
-			{ "Arc3Points", [] { return std::make_unique<DrawingCommand::Arc3Points>(); } },
-			{ "ArcByRadius", [] { return std::make_unique<DrawingCommand::ArcByRadius>(); } },
-			{ "Annulus", [] { return std::make_unique<DrawingCommand::Annulus>(); } },
-			{ "ClearGeometry", [] { return std::make_unique<DrawingCommand::ClearGeometry>(); } },
-			{ "LookupEntry", [] { return std::make_unique<DrawingCommand::LookupEntry>(); } },
-			{ "NumericAnnotation", [] { return std::make_unique<DrawingCommand::NumericAnnotation>(); } },
-			{ "SymbolAnnotation", [] { return std::make_unique<DrawingCommand::SymbolAnnotation>(); } },
-			{ "CoverageColor", [] { return std::make_unique<DrawingCommand::CoverageColor>(); } },
-			{ "Date", [] { return std::make_unique<DrawingCommand::Date>(); } },
-			{ "Time", [] { return std::make_unique<DrawingCommand::Time>(); } },
-			{ "DateTime", [] { return std::make_unique<DrawingCommand::DateTime>(); } },
-			{ "TimeValid", [] { return std::make_unique<DrawingCommand::TimeValid>(); } },
-			{ "ClearTime", [] { return std::make_unique<DrawingCommand::ClearTime>(); } },
-			{ "AlertReference", [] { return std::make_unique<DrawingCommand::AlertReference>(); } },
-			{ "PointInstruction", [] { return std::make_unique<DrawingCommand::PointInstruction>(); } },
-			{ "LineInstruction", [] { return std::make_unique<DrawingCommand::LineInstruction>(); } },
-			{ "LineInstructionUnsuppressed", [] { return std::make_unique<DrawingCommand::LineInstructionUnsuppressed>(); } },
-			{ "ColorFill", [] { return std::make_unique<DrawingCommand::ColorFill>(); } },
-			{ "AreaFillReference", [] { return std::make_unique<DrawingCommand::AreaFillReference>(); } },
-			{ "PixmapFill", [] { return std::make_unique<DrawingCommand::PixmapFill>(); } },
-			{ "SymbolFill", [] { return std::make_unique<DrawingCommand::SymbolFill>(); } },
-			{ "HatchFill", [] { return std::make_unique<DrawingCommand::HatchFill>(); } },
-			{ "TextInstruction", [] { return std::make_unique<DrawingCommand::TextInstruction>(); } },
-			{ "CoverageFill", [] { return std::make_unique<DrawingCommand::CoverageFill>(); } },
-			{ "NullInstruction", [] { return std::make_unique<DrawingCommand::NullInstruction>(); } }
+		std::function<std::unique_ptr<Part9a::Command>()>> factory {
+			{ "ViewingGroup", [] { return std::make_unique<Part9a::ViewingGroup>(); } },
+			{ "DisplayPlane", [] { return std::make_unique<Part9a::DisplayPlane>(); } },
+			{ "DrawingPriority", [] { return std::make_unique<Part9a::DrawingPriority>(); } },
+			{ "ScaleMinimum", [] { return std::make_unique<Part9a::ScaleMinimum>(); } },
+			{ "ScaleMaximum", [] { return std::make_unique<Part9a::ScaleMaximum>(); } },
+			{ "Id", [] { return std::make_unique<Part9a::Id>(); } },
+			{ "Parent", [] { return std::make_unique<Part9a::Parent>(); } },
+			{ "Hover", [] { return std::make_unique<Part9a::Hover>(); } },
+			{ "LocalOffset", [] { return std::make_unique<Part9a::LocalOffset>(); } },
+			{ "LinePlacement", [] { return std::make_unique<Part9a::LinePlacement>(); } },
+			{ "AreaPlacement", [] { return std::make_unique<Part9a::AreaPlacement>(); } },
+			{ "AreaCRS", [] { return std::make_unique<Part9a::AreaCRS>(); } },
+			{ "Rotation", [] { return std::make_unique<Part9a::Rotation>(); } },
+			{ "ScaleFactor", [] { return std::make_unique<Part9a::ScaleFactor>(); } },
+			{ "LineStyle", [] { return std::make_unique<Part9a::LineStyle>(); } },
+			{ "LineSymbol", [] { return std::make_unique<Part9a::LineSymbol>(); } },
+			{ "Dash", [] { return std::make_unique<Part9a::Dash>(); } },
+			{ "FontColor", [] { return std::make_unique<Part9a::FontColor>(); } },
+			{ "FontSize", [] { return std::make_unique<Part9a::FontSize>(); } },
+			{ "FontProportion", [] { return std::make_unique<Part9a::FontProportion>(); } },
+			{ "FontWeight", [] { return std::make_unique<Part9a::FontWeight>(); } },
+			{ "FontSlant", [] { return std::make_unique<Part9a::FontSlant>(); } },
+			{ "FontSerifs", [] { return std::make_unique < Part9a::FontSerifs>(); } },
+			{ "FontUnderline", [] { return std::make_unique<Part9a::FontUnderline>(); } },
+			{ "FontStrikethrough", [] { return std::make_unique<Part9a::FontStrikethrough>(); } },
+			{ "FontUpperline", [] { return std::make_unique<Part9a::FontUpperline>(); } },
+			{ "FontReference", [] { return std::make_unique<Part9a::FontReference>(); } },
+			{ "TextAlignHorizontal", [] { return std::make_unique<Part9a::TextAlignHorizontal>(); } },
+			{ "TextAlignVertical", [] { return std::make_unique<Part9a::TextAlignVertical>(); } },
+			{ "TextVerticalOffset", [] { return std::make_unique<Part9a::TextVerticalOffset>(); } },
+			{ "OverrideColor", [] { return std::make_unique<Part9a::OverrideColor>(); } },
+			{ "OverrideAll", [] { return std::make_unique<Part9a::OverrideAll>(); } },
+			{ "SpatialReference", [] { return std::make_unique<Part9a::SpatialReference>(); } },
+			{ "AugmentedPoint", [] { return std::make_unique<Part9a::AugmentedPoint>(); } },
+			{ "AugmentedRay", [] { return std::make_unique<Part9a::AugmentedRay>(); } },
+			{ "AugmentedPath", [] { return std::make_unique<Part9a::AugmentedPath>(); } },
+			{ "Polyline", [] { return std::make_unique<Part9a::Polyline>(); } },
+			{ "Arc3Points", [] { return std::make_unique<Part9a::Arc3Points>(); } },
+			{ "ArcByRadius", [] { return std::make_unique<Part9a::ArcByRadius>(); } },
+			{ "Annulus", [] { return std::make_unique<Part9a::Annulus>(); } },
+			{ "ClearGeometry", [] { return std::make_unique<Part9a::ClearGeometry>(); } },
+			{ "LookupEntry", [] { return std::make_unique<Part9a::LookupEntry>(); } },
+			{ "NumericAnnotation", [] { return std::make_unique<Part9a::NumericAnnotation>(); } },
+			{ "SymbolAnnotation", [] { return std::make_unique<Part9a::SymbolAnnotation>(); } },
+			{ "CoverageColor", [] { return std::make_unique<Part9a::CoverageColor>(); } },
+			{ "Date", [] { return std::make_unique<Part9a::Date>(); } },
+			{ "Time", [] { return std::make_unique<Part9a::Time>(); } },
+			{ "DateTime", [] { return std::make_unique<Part9a::DateTime>(); } },
+			{ "TimeValid", [] { return std::make_unique<Part9a::TimeValid>(); } },
+			{ "ClearTime", [] { return std::make_unique<Part9a::ClearTime>(); } },
+			{ "AlertReference", [] { return std::make_unique<Part9a::AlertReference>(); } },
+			{ "PointInstruction", [] { return std::make_unique<Part9a::PointInstruction>(); } },
+			{ "LineInstruction", [] { return std::make_unique<Part9a::LineInstruction>(); } },
+			{ "LineInstructionUnsuppressed", [] { return std::make_unique<Part9a::LineInstructionUnsuppressed>(); } },
+			{ "ColorFill", [] { return std::make_unique<Part9a::ColorFill>(); } },
+			{ "AreaFillReference", [] { return std::make_unique<Part9a::AreaFillReference>(); } },
+			{ "PixmapFill", [] { return std::make_unique<Part9a::PixmapFill>(); } },
+			{ "SymbolFill", [] { return std::make_unique<Part9a::SymbolFill>(); } },
+			{ "HatchFill", [] { return std::make_unique<Part9a::HatchFill>(); } },
+			{ "TextInstruction", [] { return std::make_unique<Part9a::TextInstruction>(); } },
+			{ "CoverageFill", [] { return std::make_unique<Part9a::CoverageFill>(); } },
+			{ "NullInstruction", [] { return std::make_unique<Part9a::NullInstruction>(); } }
 	};
 
 	auto it = factory.find(command);
@@ -100,7 +100,7 @@ void CommandList::Insert(std::string& command, std::string& params)
 }
 
 
-void CommandList::Insert(std::unique_ptr<DrawingCommand::Command> command)
+void CommandList::Insert(std::unique_ptr<Part9a::Command> command)
 {
 	commands.push_back(std::move(command));
 }
@@ -108,7 +108,7 @@ void CommandList::Insert(std::unique_ptr<DrawingCommand::Command> command)
 std::list<S100_Instruction*> CommandList::Parse()
 {
 	std::list<S100_Instruction*> result;
-	std::list<DrawingCommand::Command*> stateCommand;
+	std::list<Part9a::Command*> stateCommand; // Context;
 
 	for (auto i = commands.begin(); i != commands.end(); ++i)
 	{
@@ -117,9 +117,9 @@ std::list<S100_Instruction*> CommandList::Parse()
 
 
 		// PointInstruction
-		if (dynamic_cast<DrawingCommand::PointInstruction*>(command))
+		if (dynamic_cast<Part9a::PointInstruction*>(command))
 		{
-			auto ptr = dynamic_cast<DrawingCommand::PointInstruction*>(command);
+			auto ptr = dynamic_cast<Part9a::PointInstruction*>(command);
 			
 			continue;
 		}

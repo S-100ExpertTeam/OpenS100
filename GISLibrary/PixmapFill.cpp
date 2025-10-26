@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "PixmapFill.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
     // PixmapFill class implementation
     PixmapFill::PixmapFill(const std::string& reference) : reference(reference)

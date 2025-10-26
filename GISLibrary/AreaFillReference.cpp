@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "AreaFillReference.h"
 
-namespace DrawingCommand
+namespace Part9a
 {
     AreaFillReference::AreaFillReference(const std::string& reference) : reference(reference)
     {
