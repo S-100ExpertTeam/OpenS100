@@ -1056,9 +1056,6 @@
     <ClCompile Include="S100Factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>S100\Part9a\StateCommands</Filter>
-    </ClCompile>
     <ClCompile Include="PointParameter.cpp">
       <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
@@ -1067,9 +1064,6 @@
     </ClCompile>
     <ClCompile Include="CommandToInstruction.cpp">
       <Filter>S100\Part9a</Filter>
-    </ClCompile>
-    <ClCompile Include="Enum_CommandType.cpp">
-      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="PointInstruction.cpp">
       <Filter>S100\Part9a\DrawingCommands</Filter>
@@ -1105,6 +1099,15 @@
       <Filter>S100\Part9a\DrawingCommands</Filter>
     </ClCompile>
     <ClCompile Include="CommandList.cpp">
+      <Filter>S100\Part9a</Filter>
+    </ClCompile>
+    <ClCompile Include="Enum_CommandType.cpp">
+      <Filter>S100\Part9a</Filter>
+    </ClCompile>
+    <ClCompile Include="StateCommand.cpp">
+      <Filter>S100\Part9a\StateCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
       <Filter>S100\Part9a</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2147,9 +2150,6 @@
     <ClInclude Include="AlertCommands.h">
       <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>S100\Part9a\StateCommands</Filter>
-    </ClInclude>
     <ClInclude Include="LuaAttributePathItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -2167,9 +2167,6 @@
     </ClInclude>
     <ClInclude Include="CommandToInstruction.h">
       <Filter>S100\Part9a</Filter>
-    </ClInclude>
-    <ClInclude Include="Enum_CommandType.h">
-      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="PointInstruction.h">
       <Filter>S100\Part9a\DrawingCommands</Filter>
@@ -2205,6 +2202,15 @@
       <Filter>S100\Part9a\DrawingCommands</Filter>
     </ClInclude>
     <ClInclude Include="CommandList.h">
+      <Filter>S100\Part9a</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_CommandType.h">
+      <Filter>S100\Part9a</Filter>
+    </ClInclude>
+    <ClInclude Include="StateCommand.h">
+      <Filter>S100\Part9a\StateCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
       <Filter>S100\Part9a</Filter>
     </ClInclude>
   </ItemGroup>

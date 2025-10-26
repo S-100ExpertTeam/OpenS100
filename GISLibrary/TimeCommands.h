@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Command.h"
+#include "StateCommand.h"
 
 #include "..\\FeatureCatalog\\IntervalType.h"
 
 namespace DrawingCommand
 {
-    class Date : public Command {
+    class Date : public StateCommand {
     public:
 		Date() = default;
         Date(const std::string& begin, const std::string& end);
@@ -19,7 +19,7 @@ namespace DrawingCommand
         std::string end = "¡Ä";
     };
 
-    class Time : public Command {
+    class Time : public StateCommand {
     public:
 		Time() = default;
         Time(const std::string& begin, const std::string& end);
@@ -32,7 +32,7 @@ namespace DrawingCommand
         std::string end = "¡Ä";
     };
 
-    class DateTime : public Command {
+    class DateTime : public StateCommand {
     public:
 		DateTime() = default;
         DateTime(const std::string& begin, const std::string& end);
@@ -45,7 +45,7 @@ namespace DrawingCommand
         std::string end = "¡Ä";
     };
 
-    class TimeValid : public Command {
+    class TimeValid : public StateCommand {
     public:
 		TimeValid() = default;
         TimeValid(const IntervalType closure);
@@ -57,7 +57,7 @@ namespace DrawingCommand
         IntervalType closure = IntervalType::none;
     };
 
-    class ClearTime : public Command {
+    class ClearTime : public StateCommand {
     public:
         ClearTime() = default;
 

@@ -467,6 +467,7 @@
     <ClCompile Include="SourceHeaderType.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="CommandList.cpp" />
+    <ClCompile Include="StateCommand.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="SupportFileDiscoveryMetadata.cpp" />
     <ClCompile Include="SupportFileRevisionStatus.cpp" />
@@ -830,6 +831,7 @@
     <ClInclude Include="SpatialObjectType.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandList.h" />
+    <ClInclude Include="StateCommand.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="SupportFileDiscoveryMetadata.h" />
     <ClInclude Include="SupportFileRevisionStatus.h" />

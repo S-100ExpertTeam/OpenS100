@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Command.h"
+#include "StateCommand.h"
 
 #include "..\\S100Engine\\GraphicBasePackage_Enum.h"
 
 namespace DrawingCommand
 {
-    class LineStyle : public Command 
+    class LineStyle : public StateCommand
     {
     public:
 		LineStyle() = default;
@@ -27,7 +27,7 @@ namespace DrawingCommand
         double offset = 0.0;
     };
 
-    class LineSymbol : public Command {
+    class LineSymbol : public StateCommand {
     public:
 		LineSymbol() = default;
         LineSymbol(const std::string& Reference, double position, double rotation, const GraphicBasePackage::CRSType crsType);
@@ -42,7 +42,7 @@ namespace DrawingCommand
 		double scaleFactor = 1.0; 
     };
 
-    class Dash : public Command 
+    class Dash : public StateCommand
     {
     public:
 		Dash() = default;

@@ -1,5 +1,5 @@
 #pragma once
-#include "Command.h"
+#include "StateCommand.h"
 #include "PointParameter.h"
 
 #include "..\\GeoMetryLibrary\\GeoPoint.h"
@@ -7,7 +7,7 @@
 
 namespace DrawingCommand
 {
-    class SpatialReference : public Command {
+    class SpatialReference : public StateCommand {
     public:
 		SpatialReference() = default;
         SpatialReference(const std::string& reference, bool forward);
@@ -21,7 +21,7 @@ namespace DrawingCommand
         bool forward = true;
     };
 
-    class AugmentedPoint : public Command {
+    class AugmentedPoint : public StateCommand {
     public:
 		AugmentedPoint() = default;
         AugmentedPoint(GraphicBasePackage::CRSType crs, double x, double y);
@@ -35,7 +35,7 @@ namespace DrawingCommand
         DrawingCommand::Point point;
     };
 
-    class AugmentedRay : public Command {
+    class AugmentedRay : public StateCommand {
     public:
 		AugmentedRay() = default;
         AugmentedRay(GraphicBasePackage::CRSType CRSType, double direction, GraphicBasePackage::CRSType crsLength, double length);
@@ -51,7 +51,7 @@ namespace DrawingCommand
         double length = 0.0;
     };
 
-    class AugmentedPath : public Command {
+    class AugmentedPath : public StateCommand {
     public:
 		AugmentedPath() = default;
         AugmentedPath(GraphicBasePackage::CRSType crsPosition, GraphicBasePackage::CRSType crsAngle, GraphicBasePackage::CRSType crsDistance);
@@ -67,7 +67,7 @@ namespace DrawingCommand
     };
 
     // Polyline class
-    class Polyline : public Command {
+    class Polyline : public StateCommand {
     public:
 		Polyline() = default;
         Polyline(const std::vector<DrawingCommand::Point>& points);
@@ -81,7 +81,7 @@ namespace DrawingCommand
     };
 
     // Arc3Points class
-    class Arc3Points : public Command {
+    class Arc3Points : public StateCommand {
     public:
 		Arc3Points() = default;
         Arc3Points(double startPointX, double startPointY, double medianPointX, double medianPointY, double endPointX, double endPointY);
@@ -98,7 +98,7 @@ namespace DrawingCommand
     };
 
     // ArcByRadius class
-    class ArcByRadius : public Command {
+    class ArcByRadius : public StateCommand {
     public:
 		ArcByRadius() = default;
         ArcByRadius(double centerX, double centerY, double radius, double startAngle, double angularDistance);
@@ -115,7 +115,7 @@ namespace DrawingCommand
     };
 
     // Annulus class
-    class Annulus : public Command {
+    class Annulus : public StateCommand {
     public:
 		Annulus() = default;
         Annulus(double centerX, double centerY, double outerRadius, double innerRadius, double startAngle, double angularDistance);
@@ -132,7 +132,7 @@ namespace DrawingCommand
         double angularDistance = 360.0;
     };
 
-    class ClearGeometry : public Command {
+    class ClearGeometry : public StateCommand {
     public:
         ClearGeometry() = default;
 
