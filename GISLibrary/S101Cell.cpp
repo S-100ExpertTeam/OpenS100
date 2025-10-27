@@ -4984,12 +4984,7 @@ bool S101Cell::InsertCurveRecordFromS101GML(S10XGML* gml, GM::Curve* curve)
 					curve->segment.front().controlPoints.at(i).GetYInteger());
 			}
 
-			auto result = InsertCurveRecord(cr->GetRecordName().GetName(), cr);
-			if (!result) {
-				OutputDebugString(L"A\n");
-				delete cr;
-				cr = nullptr;
-			}
+			InsertCurveRecord(cr->GetRecordName().GetName(), cr);
 		}
 	}
 
