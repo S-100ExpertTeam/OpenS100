@@ -550,7 +550,7 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 	int latIndex = 1;
 	int lonIndex = 0;
 
-	if (object->getSRSName().find(s100namespace.namespace_gml + "4326") != std::string::npos)
+	if (object->getSRSName().find("4326") != std::string::npos)
 	{
 		latIndex = 0;
 		lonIndex = 1;
