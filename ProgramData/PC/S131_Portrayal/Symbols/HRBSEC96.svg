@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.68mm" height="6.68mm" viewBox="-3.34 -3.34 6.68 6.68" xmlns="http://www.w3.org/2000/svg">  
+  <title>HRBSEC96</title>
+  <desc>port fairway point symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="S131Demo" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68" id="rect4546" />
+  <rect class="svgBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68" id="rect4548" />
+  <circle class="f0 sCHMGD" style="stroke-width:0.32" cx="0" cy="0" r="3" id="circle4550" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" id="circle828" />
+  <path
+    d="m -2.4746094,-1.1582031 v 0.1308593 2.4472657 h 0.578125 V 0.31445312 h 0.91796878 V -0.21289062 H -1.8964844 v -0.41796876 h 1.01562502 V -1.1582031 Z m 1.3300782,0.1308593 v 0.13085942 0.001953 h 0.1308593 v -0.001953 h -0.1308593 -1.0175782 v 0.001953 0.9453125 V 1.15625 h -0.048828 v -2.05078125 z"
+    class="fCHMGD sCHMGD" style="stroke-width:0.16"
+    id="portFairway"/>
+  <path
+    d="m -0.79882812,-1.1582031 0.0410156,0.16406248 0.60546875,2.41406252 H 0.44726562 L 0.8359375,-0.16601562 1.2207031,1.4199219 h 0.6015625 l 0.6484375,-2.578125 H 1.8789062 L 1.4960938,0.3828125 1.1132812,-1.1582031 H 0.5546875 L 0.171875,0.3828125 -0.2109375,-1.1582031 Z m 0.33789062,0.26367185 h 0.0449219 L 0.04492188,0.9609375 H 0.2890625 L 0.24023438,1.15625 h -0.1875 z m 1.22265625,0 H 0.90625 l 0.0351563,0.14257813 H 0.7265625 Z m 1.32421875,0 h 0.044922 L 1.6152344,1.15625 H 1.4296875 L 1.3828125,0.9609375 H 1.625 Z"
+    class="fCHMGD sCHMGD" style="stroke-width:0.16"
+    id="portFairway2"/>
+  <!--<path
+    d="M -0.37666664,-1.4630994 H 0.03450552 L 0.81895377,-0.29969065 1.5977174,-1.4630994 H 2.0088896 L 1.008434,0.01863618 V 1.3658408 H 0.62378911 V 0.01863618 Z"
+    class="fCHMGD sCHMGD" style="stroke-width:0.32"
+    id="path4536"/>-->
+  
+</svg>

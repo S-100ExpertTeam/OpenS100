@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="CHRVDEL2" exposition="This object has been deleted by an automatic update"?>
+<lineStyle>
+   <intervalLength>11</intervalLength>
+   <pen width="0.96">
+      <color>CHCOR</color>
+   </pen>
+   <symbol reference="EMCHRVD1">
+      <position>7</position>
+   </symbol>
+</lineStyle>

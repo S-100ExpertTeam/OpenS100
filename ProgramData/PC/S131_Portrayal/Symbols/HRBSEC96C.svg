@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="13.34mm" height="8.14mm" viewBox="-6.67 -0.32 13.34 8.14" xmlns="http://www.w3.org/2000/svg">  
+  <title>HRBSEC96C</title>
+  <desc>port fairway area symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="S131Demo" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+<!--  <rect class="symbolBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68" id="rect4546" />
+  <rect class="svgBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68" id="rect4548" />-->
+  <rect class="symbolBox layout" fill="none" x="-6.35" y="2.5" height="5" width="12.7"/>
+  <rect class="svgBox layout" fill="none" x="-6.35" y="0" height="7.5" width="12.7"/>
+  <!--<path
+    d="m -7.9105347,3.7166364 v -3.78594019 h 1.0071737 q 0.5629843,0 0.7360116,0.05423243 0.2763272,0.08780489 0.4545194,0.37446203 0.1807748,0.28665714 0.1807748,0.73859403 0,0.410617 -0.1549498,0.6895267 -0.1549498,0.2763271 -0.3873745,0.389957 -0.2324247,0.1110473 -0.800574,0.1110473 h -0.410617 v 1.4281207 z m 0.6249642,-3.145481 V 1.645474 h 0.3460546 q 0.348637,0 0.4725969,-0.049067 0.1265423,-0.049067 0.2065997,-0.1756098 0.080057,-0.1291248 0.080057,-0.3150646 0,-0.18852224 -0.08264,-0.31764707 Q -6.3455417,0.65896029 -6.466919,0.61505785 -6.5882964,0.5711554 -6.9808359,0.5711554 Z"
+    class="sl f0 sCHMGF" style="stroke-width: 0.64;"
+    id="path842"/>-->
+  <path
+    id="path842"
+    class="sl fCHMGF sCHMGF" style="stroke-width: 0.16;"    d="M -6.3316731,7.2908334 V 2.5608338 h 0.8061522 q 0.4506184,0 0.5891112,0.067756 0.2211751,0.1096998 0.363802,0.4678376 0.144694,0.3581377 0.144694,0.9227693 0,0.5130082 -0.1240234,0.8614666 -0.1240234,0.3452318 -0.3100585,0.4871964 -0.1860351,0.138738 -0.6407876,0.138738 h -0.3286621 v 1.7842359 z m 0.5002278,-3.929836 v 1.3422099 h 0.2769856 q 0.2790527,0 0.3782714,-0.061302 0.1012858,-0.061302 0.1653646,-0.2193997 0.064078,-0.1613233 0.064078,-0.3936289 0,-0.235532 -0.066146,-0.3968553 -0.066145,-0.1613238 -0.1632971,-0.2161738 -0.097152,-0.05485 -0.4113443,-0.05485 z" />
+  <path
+    id="path844"
+    class="sl fCHMGF sCHMGF" style="stroke-width: 0.16;"    d="M -3.2446217,7.2908334 V 3.3609974 H -3.9825609 V 2.5608338 h 1.9740393 v 0.8001636 h -0.7358723 v 3.929836 z" />
+  <path
+    id="path846"
+    class="sl fCHMGF sCHMGF" style="stroke-width: 0.16;"    d="M -1.4639503,7.2908334 V 2.5608338 h 1.70325485 v 0.8001636 h -1.20302707 v 1.1195839 h 1.03972958 v 0.8001636 h -1.03972958 v 2.0100885 z" />
+  <path
+    id="path848"
+    class="sl fCHMGF sCHMGF" style="stroke-width: 0.16;"    d="M 1.2200251,7.2908334 0.62677978,2.5608338 H 1.1414769 L 1.5135472,5.8098853 1.9682997,2.5608338 H 2.5656791 L 3.0018281,5.8647353 3.3842336,2.5608338 H 3.8885955 L 3.2850149,7.2908334 H 2.7517142 L 2.2556206,3.7546263 1.7636611,7.2908334 Z" />
+  <path
+    id="path850"
+    class="sl fCHMGF sCHMGF" style="stroke-width: 0.16;"    d="M 5.0078085,7.2908334 V 5.3001036 L 4.0983035,2.5608338 H 4.6853476 L 5.2703247,4.4321842 5.8449666,2.5608338 H 6.4216754 L 5.5080363,5.3065566 v 1.9842768 z" />
+  
+  
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" id="circle828" />
+</svg>

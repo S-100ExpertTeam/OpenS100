@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.68mm" height="6.68mm" viewBox="-3.34 -3.34 6.68 6.68" xmlns="http://www.w3.org/2000/svg">  
+  <title>HRBSEC95</title>
+  <desc>lay-by berth point symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="S131Demo" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68" id="rect4546" />
+  <rect class="svgBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68" id="rect4548" />
+  <circle class="f0 sCHMGD" style="stroke-width:0.32" cx="0" cy="0" r="3" id="circle4550" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" id="circle828" />
+  <path
+    d="m -1.7652855,-1.4630994 h 0.3827501 v 2.5068238 h 1.37752147 V 1.3658408 H -1.7652855 Z"
+    class="fCHMGD sCHMGD" style="stroke-width:0.32"
+    id="path4535"/>
+  <path
+    d="M -0.37666664,-1.4630994 H 0.03450552 L 0.81895377,-0.29969065 1.5977174,-1.4630994 H 2.0088896 L 1.008434,0.01863618 V 1.3658408 H 0.62378911 V 0.01863618 Z"
+    class="fCHMGD sCHMGD" style="stroke-width:0.32"
+    id="path4536"/>
+  
+</svg>

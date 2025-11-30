@@ -1,0 +1,3144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Draft portrayal catalogue for S-131 1.0.0
+  Build 20221231 - Initial draft. This portrayal catalogue is based on the S-101 portrayal catalogue
+    adapted for S-131 1.0.0. Note that it has not been possible to check this version in the absence of
+    production tool and viewer support for Lua portrayal/GML datasets in the IHO Portrayal Catalogue
+    Builder and in viewers for S-100 GML datasets, as of the date of preparation.
+    Some of the S-101 content not needed for S-131 (e.g., viewing groups not used in S-131) have been
+    removed, but some extraneous material remains.
+-->
+<portrayalCatalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://schemas.s100dev.net/schemas/S100/5.0.0/S100PC/20220705/S100PortrayalCatalog.xsd" productId="S-131" version="1.0.0-20221231">
+  <pixmaps/>
+  <colorProfiles>
+    <colorProfile id="1">
+      <description>
+        <name>Color Profile</name>
+        <description>Color profile for S-131 1.0.0</description>
+        <language>eng</language>
+      </description>
+      <fileName>colorProfile.xml</fileName>
+      <fileType>ColorProfile</fileType>
+      <fileFormat>XML</fileFormat>
+    </colorProfile>
+  </colorProfiles>
+  <symbols>
+    <symbol id="ACHARE02">
+      <description>
+        <name>ACHARE02</name>
+        <description>anchorage area as a point at small scale, or anchor points of mooring trot at large scale</description>
+        <language>eng</language>
+      </description>
+      <fileName>ACHARE02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="ACHARE03">
+      <description>
+        <name>ACHARE03</name>
+        <description>reported anchorage</description>
+        <language>eng</language>
+      </description>
+      <fileName>ACHARE03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="ACHARE51">
+      <description>
+        <name>ACHARE51</name>
+        <description>anchorage area</description>
+        <language>eng</language>
+      </description>
+      <fileName>ACHARE51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="ACHBRT07">
+      <description>
+        <name>ACHBRT07</name>
+        <description>designated anchor berth for a single vessel</description>
+        <language>eng</language>
+      </description>
+      <fileName>ACHBRT07.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYMOR01">
+      <description>
+        <name>BOYMOR01</name>
+        <description>mooring buoy, barrel shape, paper-chart</description>
+        <language>eng</language>
+      </description>
+      <fileName>BOYMOR01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYMOR03">
+      <description>
+        <name>BOYMOR03</name>
+        <description>mooring buoy, can shape, paper-chart</description>
+        <language>eng</language>
+      </description>
+      <fileName>BOYMOR03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="BOYMOR11">
+      <description>
+        <name>BOYMOR11</name>
+        <description>installation buoy and mooring buoy, simplified</description>
+        <language>eng</language>
+      </description>
+      <fileName>BOYMOR11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>    <symbol id="BRTHNO01">
+      <description>
+        <name>BRTHNO01</name>
+        <description>berth number symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>BRTHNO01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHCRDEL1">
+      <description>
+        <name>CHCRDEL1</name>
+        <description>this object has been manually deleted or modified</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHCRDEL1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHCRID01">
+      <description>
+        <name>CHCRID01</name>
+        <description>this object has been manually updated</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHCRID01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHDATD01">
+      <description>
+        <name>CHDATD01</name>
+        <description>This object is a date dependent object</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHDATD01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHINFO06">
+      <description>
+        <name>CHINFO06</name>
+        <description>HO caution note</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHINFO06.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHINFO07">
+      <description>
+        <name>CHINFO07</name>
+        <description>HO information note</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHINFO07.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHINFO08">
+      <description>
+        <name>CHINFO08</name>
+        <description>mariner's information note</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHINFO08.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHINFO09">
+      <description>
+        <name>CHINFO09</name>
+        <description>mariners caution note</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHINFO09.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHINFO10">
+      <description>
+        <name>CHINFO10</name>
+        <description>manufacturer's information note</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHINFO10.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHINFO11">
+      <description>
+        <name>CHINFO11</name>
+        <description>manufacturer's caution note</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHINFO11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHKSYM01">
+      <description>
+        <name>CHKSYM01</name>
+        <description>test symbol for checking symbol sizes, should measure 5mm by 5mm</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHKSYM01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHRVDEL1">
+      <description>
+        <name>CHRVDEL1</name>
+        <description>This object has been deleted by an automatic update</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHRVDEL1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CHRVID01">
+      <description>
+        <name>CHRVID01</name>
+        <description>This object has been inserted or modified by an automatic update</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHRVID01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CTYARE51">
+      <description>
+        <name>CTYARE51</name>
+        <description>cautionary area (e.g. ferry area) navigate with caution</description>
+        <language>eng</language>
+      </description>
+      <fileName>CTYARE51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CTYARE71">
+      <description>
+        <name>CTYARE71</name>
+        <description>cautionary area with further information</description>
+        <language>eng</language>
+      </description>
+      <fileName>CTYARE71.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CURSRA01">
+      <description>
+        <name>CURSRA01</name>
+        <description>ordinary cursor</description>
+        <language>eng</language>
+      </description>
+      <fileName>CURSRA01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="CURSRB01">
+      <description>
+        <name>CURSRB01</name>
+        <description>cursor with open centre</description>
+        <language>eng</language>
+      </description>
+      <fileName>CURSRB01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DQUALA11P">
+      <description>
+        <name>DQUALA11P</name>
+        <description>pattern of symbols for a chart of 5m accuracy with full seafloor coverage</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALA11P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DQUALA21P">
+      <description>
+        <name>DQUALA21P</name>
+        <description>pattern of symbols for a chart with 20m accuracy with full seafloor coverage</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALA21P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DQUALB01P">
+      <description>
+        <name>DQUALB01P</name>
+        <description>pattern of symbols for a chart with 50m accuracy from standard survey based on lines of continuous soundings</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALB01P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DQUALC01P">
+      <description>
+        <name>DQUALC01P</name>
+        <description>pattern of symbols for a low accuracy or incomplete chart</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALC01P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DQUALD01P">
+      <description>
+        <name>DQUALD01P</name>
+        <description>pattern of symbols for an unreliable chart</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALD01P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DQUALU01P">
+      <description>
+        <name>DQUALU01P</name>
+        <description>pattern of symbols for a chart with quality not assessed</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALU01P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DRGARE01P">
+      <description>
+        <name>DRGARE01P</name>
+        <description>dredged area</description>
+        <language>eng</language>
+      </description>
+      <fileName>DRGARE01P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="DRYDOC91">
+      <description>
+        <name>DRYDOC91</name>
+        <description>dry dock symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>DRYDOC91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    
+    <symbol id="EMACHAR1">
+      <description>
+        <name>EMACHAR1</name>
+        <description>Embedded symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMACHAR1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMACHRE2">
+      <description>
+        <name>EMACHRE2</name>
+        <description>Embedded symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMACHRE2.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMADMAR2">
+      <description>
+        <name>EMADMAR2</name>
+        <description>Embedded symbol for Admin area boundary</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMADMAR2.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMAREGR1">
+      <description>
+        <name>EMAREGR1</name>
+        <description>Embedded symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMAREGR1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMAREMG1">
+      <description>
+        <name>EMAREMG1</name>
+        <description>Embedded symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMAREMG1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMCHCR01">
+      <description>
+        <name>EMCHCR01</name>
+        <description>this object has been manually deleted or modified</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMCHCR01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMCHRV01">
+      <description>
+        <name>EMCHRV01</name>
+        <description>this object has been inserted or modified by an automatic update</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMCHRV01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMCHRVD1">
+      <description>
+        <name>EMCHRVD1</name>
+        <description>This object has been deleted by an automatic update</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMCHRVD1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMDRGRE1">
+      <description>
+        <name>EMDRGRE1</name>
+        <description>embedded symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMDRGRE1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMDRGRE2">
+      <description>
+        <name>EMDRGRE2</name>
+        <description>embedded symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMDRGRE2.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMENTRE1">
+      <description>
+        <name>EMENTRE1</name>
+        <description>Embedded symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMENTRE1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMLOWAC01">
+      <description>
+        <name>EMLOWAC01</name>
+        <description>embedded symbol for safety contour of low accuracy in position</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMLOWAC01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMLOWAC11">
+      <description>
+        <name>EMLOWAC11</name>
+        <description>embedded symbol for safety contour of low accuracy in position</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMLOWAC11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMLOWAC21">
+      <description>
+        <name>EMLOWAC21</name>
+        <description>embedded symbol for coastline or shoreline construction of low accuracy in position</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMLOWAC21.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMLOWAC31">
+      <description>
+        <name>EMLOWAC31</name>
+        <description>embedded symbol for area of wrecks or obstructions of low accuracy</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMLOWAC31.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMLOWAC41">
+      <description>
+        <name>EMLOWAC41</name>
+        <description>embedded symbol for danger line of low accuracy surrounding a foul area</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMLOWAC41.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMNEWOB1">
+      <description>
+        <name>EMNEWOB1</name>
+        <description>new object</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMNEWOB1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMNOHO01">
+      <description>
+        <name>EMNOHO01</name>
+        <description>Embedded diagnal for non HO boundary</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMNOHO01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMQUESM1">
+      <description>
+        <name>EMQUESM1</name>
+        <description>Embedded symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMQUESM1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMQUESM2">
+      <description>
+        <name>EMQUESM2</name>
+        <description>Embedded symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMQUESM2.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="EMQUESM3">
+      <description>
+        <name>EMQUESM3</name>
+        <description>Embedded symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>EMQUESM3.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="ENTRES51">
+      <description>
+        <name>ENTRES51</name>
+        <description>area where entry is prohibited or restricted or "to be avoided"</description>
+        <language>eng</language>
+      </description>
+      <fileName>ENTRES51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="ENTRES61">
+      <description>
+        <name>ENTRES61</name>
+        <description>area where entry is prohibited or restricted or "to be avoided", with other cautions</description>
+        <language>eng</language>
+      </description>
+      <fileName>ENTRES61.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="ENTRES71">
+      <description>
+        <name>ENTRES71</name>
+        <description>area where entry is prohibited or restricted or "to be avoided", with other information</description>
+        <language>eng</language>
+      </description>
+      <fileName>ENTRES71.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="FLODOC91">
+      <description>
+        <description>floating dock symbol for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>FLODOC91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="GRDIRN91">
+      <description>
+        <description>gridiron point symbol for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>GRDIRN91</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBARE91">
+      <description>
+        <description>harbour area point symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBARE91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBFAC09">
+      <description>
+        <name>HRBFAC09</name>
+        <description>fishing harbour</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBFAC09.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBFAC91">
+      <description>
+        <description>harbour facility naval base</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBFAC91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBFAC93">
+      <description>
+        <description>harbour area section ship yard</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBFAC93.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBFAC95">
+      <description>
+        <description>harbour area section service harbour</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBFAC95.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBFAC96">
+      <description>
+        <description>harbour facility pilotage service</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBFAC96.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBFAC97">
+      <description>
+        <description>harbour facility service and repair</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBFAC97.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBFAC98">
+      <description>
+        <description>harbour facility quarantine station</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBFAC98</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC91">
+      <description>
+        <description>harbour area section point symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC92">
+      <description>
+        <description>symbol for a seaplane anchorage</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC92.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC92C">
+      <description>
+        <description>centered symbol for a seaplane anchorage</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC92C</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC92P">
+      <description>
+        <description>pattern of symbols for a seaplane anchorage</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC92P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC93">
+      <description>
+        <description>dredged area harbor area point symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC93.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC94">
+      <description>
+        <description>port safety zone point symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC94.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC94C">
+      <description>
+        <description>port safety zone area symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC94C.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC95">
+      <description>
+        <description>lay-by berth point symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC95.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC95C">
+      <description>
+        <description>lay-by berth area symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC95C.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC96">
+      <description>
+        <description>port fairway point symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC96.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC96C">
+      <description>
+        <description>port fairway point symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC96C.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC97">
+      <description>
+        <description>Berth pocket</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC97.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="HRBSEC97C">
+      <description>
+        <description>Berth pocket area symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC97C.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="INDHLT01">
+      <description>
+        <name>INDHLT01</name>
+        <description>indication highlight for mariner's use</description>
+        <language>eng</language>
+      </description>
+      <fileName>INDHLT01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="INFARE01">
+      <description>
+        <name>INFARE01</name>
+        <description>Information symbol with pale magenta colour</description>
+        <language>eng</language>
+      </description>
+      <fileName>INFARE01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="INFARE51">
+      <description>
+        <name>INFARE51</name>
+        <description>area with minor restrictions or information notices</description>
+        <language>eng</language>
+      </description>
+      <fileName>INFARE51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="INFORM01">
+      <description>
+        <name>INFORM01</name>
+        <description>this object has additional information available by cursor query</description>
+        <language>eng</language>
+      </description>
+      <fileName>INFORM01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="LOWACC01">
+      <description>
+        <name>LOWACC01</name>
+        <description>point feature or area of low accuracy</description>
+        <language>eng</language>
+      </description>
+      <fileName>LOWACC01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MORFAC03">
+      <description>
+        <name>MORFAC03</name>
+        <description>mooring dolphin</description>
+        <language>eng</language>
+      </description>
+      <fileName>MORFAC03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MORFAC04">
+      <description>
+        <name>MORFAC04</name>
+        <description>deviation mooring dolphin</description>
+        <language>eng</language>
+      </description>
+      <fileName>MORFAC04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MORFAC91">
+      <description>
+        <name>MORFAC91</name>
+        <description>mooring cable</description>
+        <language>eng</language>
+      </description>
+      <fileName>MORFAC91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MORFAC92">
+      <description>
+        <name>MORFAC92</name>
+        <description>tie-up wall</description>
+        <language>eng</language>
+      </description>
+      <fileName>MORFAC92.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MULTIC91">
+      <description>
+        <name>MULTIC91</name>
+        <description>multiple categories point symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>MULTIC91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="MULTIC91C">
+      <description>
+        <name>MULTIC91C</name>
+        <description>miscellaneous facilities area symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>MULTIC91C.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="NEWOBJ01">
+      <description>
+        <name>NEWOBJ01</name>
+        <description>new object</description>
+        <language>eng</language>
+      </description>
+      <fileName>NEWOBJ01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="NODATA03P">
+      <description>
+        <name>NODATA03P</name>
+        <description>area of no chart data</description>
+        <language>eng</language>
+      </description>
+      <fileName>NODATA03P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="NORTHAR1">
+      <description>
+        <name>NORTHAR1</name>
+        <description>north arrow</description>
+        <language>eng</language>
+      </description>
+      <fileName>NORTHAR1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="OVERSC01P">
+      <description>
+        <name>OVERSC01P</name>
+        <description>overscale part of a display containing data from more than one navigation purpose</description>
+        <language>eng</language>
+      </description>
+      <fileName>OVERSC01P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="PILBOP02">
+      <description>
+        <name>PILBOP02</name>
+        <description>pilot boarding place</description>
+        <language>eng</language>
+      </description>
+      <fileName>PILBOP02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="PILPNT02">
+      <description>
+        <name>PILPNT02</name>
+        <description>pile or bollard</description>
+        <language>eng</language>
+      </description>
+      <fileName>PILPNT02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="POSGEN01">
+      <description>
+        <name>POSGEN01</name>
+        <description>position of a point feature</description>
+        <language>eng</language>
+      </description>
+      <fileName>POSGEN01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="POSGEN03">
+      <description>
+        <name>POSGEN03</name>
+        <description>position of a conspicuous point feature</description>
+        <language>eng</language>
+      </description>
+      <fileName>POSGEN03.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="POSGEN04">
+      <description>
+        <name>POSGEN04</name>
+        <description>position of an elevation or control point</description>
+        <language>eng</language>
+      </description>
+      <fileName>POSGEN04.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="POSGEN05">
+      <description>
+        <name>POSGEN05</name>
+        <description>Position of an elevation or control point, not conspicuous</description>
+        <language>eng</language>
+      </description>
+      <fileName>POSGEN05.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="QUAPOS01">
+      <description>
+        <name>QUAPOS01</name>
+        <description>position approximate</description>
+        <language>eng</language>
+      </description>
+      <fileName>QUAPOS01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>object which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library</description>
+        <language>eng</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="QUESMRK1P">
+      <description>
+        <name>QUESMRK1P</name>
+        <description>pattern of symbols for an area which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library</description>
+        <language>eng</language>
+      </description>
+      <fileName>QUESMRK1P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="REFPNT02">
+      <description>
+        <name>REFPNT02</name>
+        <description>reference point, 'ghost cursor' (user interface)</description>
+        <language>eng</language>
+      </description>
+      <fileName>REFPNT02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="ROLROL01">
+      <description>
+        <name>ROLROL01</name>
+        <description>RoRo terminal</description>
+        <language>eng</language>
+      </description>
+      <fileName>ROLROL01.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="RSRDEF51">
+      <description>
+        <name>RSRDEF51</name>
+        <description>area in which undefined restrictions exist</description>
+        <language>eng</language>
+      </description>
+      <fileName>RSRDEF51.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SCALEB10">
+      <description>
+        <name>SCALEB10</name>
+        <description>one mile scalebar for display scales larger than 1/80,000</description>
+        <language>eng</language>
+      </description>
+      <fileName>SCALEB10.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SCALEB11">
+      <description>
+        <name>SCALEB11</name>
+        <description>10 mile latitude scale for display scales smaller than 1/80,000</description>
+        <language>eng</language>
+      </description>
+      <fileName>SCALEB11.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SHPLFT91">
+      <description>
+        <description>Ship lift area symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>SHPLFT91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SHPLFT92">
+      <description>
+        <description>Ship lift point symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>SHPLFT92.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="SMCFAC02">
+      <description>
+        <name>SMCFAC02</name>
+        <description>yacht harbour, marina</description>
+        <language>eng</language>
+      </description>
+      <fileName>SMCFAC02.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="STRADC91">
+      <description>
+        <description>Straddle carrier area symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>STRADC91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="STRADC92">
+      <description>
+        <description>Straddle carrier point symbol</description>
+        <language>eng</language>
+      </description>
+      <fileName>STRADC92.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TERMNL92">
+      <description>
+        <description>ferry terminal for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TERMNL92.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TERMNL93">
+      <description>
+        <description>passenger terminal for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TERMNL93.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TERMNL94">
+      <description>
+        <description>bulk terminal for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TERMNL94.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TRMCHE91">
+      <description>
+        <description>terminal, Chemical for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TRMCHE91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TRMCON91">
+      <description>
+        <description>container terminal for s131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TRMCON91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TRMGEN91">
+      <description>
+        <description>terminal, unspecified type, for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TRMGEN91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TRMLNG91">
+      <description>
+        <description>terminal, LNG for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TRMLNG91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TRMLPG91">
+      <description>
+        <description>terminal, liquefied petroleum gas, for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TRMLPG91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TRMOIL91">
+      <description>
+        <description>terminal, Oil for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TRMOIL91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TRMTNK91">
+      <description>
+        <description>tanker terminal for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TRMTNK91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TRNBSN91">
+      <description>
+        <description>turning basin for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TRNBSN91.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+    <symbol id="TRNBSN91P">
+      <description>
+        <description>turning basin for S131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TRNBSN91P.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+  </symbols>
+  <styleSheets>
+    <styleSheet id="daySvgStyle">
+      <description>
+        <name>Day</name>
+        <description>CSS file for day palette</description>
+        <language>eng</language>
+      </description>
+      <fileName>daySvgStyle.css</fileName>
+      <fileType>StyleSheet</fileType>
+      <fileFormat>CSS</fileFormat>
+    </styleSheet>
+    <styleSheet id="duskSvgStyle">
+      <description>
+        <name>Dusk</name>
+        <description>CSS file for dusk palette</description>
+        <language>eng</language>
+      </description>
+      <fileName>duskSvgStyle.css</fileName>
+      <fileType>StyleSheet</fileType>
+      <fileFormat>CSS</fileFormat>
+    </styleSheet>
+    <styleSheet id="nightSvgStyle">
+      <description>
+        <name>Night</name>
+        <description>CSS file for night palette</description>
+        <language>eng</language>
+      </description>
+      <fileName>nightSvgStyle.css</fileName>
+      <fileType>StyleSheet</fileType>
+      <fileFormat>CSS</fileFormat>
+    </styleSheet>
+  </styleSheets>
+  <lineStyles>
+    <lineStyle id="testPCB">
+      <description>
+        <name>testPCB</name>
+        <description>new or adjusted feature objects not covered in S-52</description>
+        <language>eng</language>
+      </description>
+      <fileName>testPCB.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="ACHARE51">
+      <description>
+        <name>ACHARE51</name>
+        <description>boundary of an anchorage area</description>
+        <language>eng</language>
+      </description>
+      <fileName>ACHARE51.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="ADMARE01">
+      <description>
+        <name>ADMARE01</name>
+        <description>jurisdiction boundary</description>
+        <language>eng</language>
+      </description>
+      <fileName>ADMARE01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CHCRDEL1">
+      <description>
+        <name>CHCRDEL1</name>
+        <description>this line has been deleted by a manual update</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHCRDEL1.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CHCRID01">
+      <description>
+        <name>CHCRID01</name>
+        <description>this line has been manually updated</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHCRID01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CHRVDEL2">
+      <description>
+        <name>CHRVDEL2</name>
+        <description>This object has been deleted by an automatic update</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHRVDEL2.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CHRVID02">
+      <description>
+        <name>CHRVID02</name>
+        <description>This object has been inserted or modified by an automatic update</description>
+        <language>eng</language>
+      </description>
+      <fileName>CHRVID02.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="CTYARE51">
+      <description>
+        <name>CTYARE51</name>
+        <description>boundary of area to be navigated with caution</description>
+        <language>eng</language>
+      </description>
+      <fileName>CTYARE51.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="ENTRES51">
+      <description>
+        <name>ENTRES51</name>
+        <description>boundary of an area where entry is prohibited or restricted</description>
+        <language>eng</language>
+      </description>
+      <fileName>ENTRES51.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="HRBSEC01">
+      <description>
+        <name>HRBSEC01</name>
+        <description>boundary of an harbour section</description>
+        <language>eng</language>
+      </description>
+      <fileName>HRBSEC01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="INDHLT02">
+      <description>
+        <name>INDHLT02</name>
+        <description>indication highlight for mariner's use</description>
+        <language>eng</language>
+      </description>
+      <fileName>INDHLT02.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="INFARE51">
+      <description>
+        <name>INFARE51</name>
+        <description>Boundary of an information area</description>
+        <language>eng</language>
+      </description>
+      <fileName>INFARE51.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="LOWACC01">
+      <description>
+        <name>LOWACC01</name>
+        <description>safety contour of low accuracy in position</description>
+        <language>eng</language>
+      </description>
+      <fileName>LOWACC01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="LOWACC11">
+      <description>
+        <name>LOWACC11</name>
+        <description>contour of low accuracy in position</description>
+        <language>eng</language>
+      </description>
+      <fileName>LOWACC11.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="LOWACC21">
+      <description>
+        <name>LOWACC21</name>
+        <description>coastline or shoreline construction of low accuracy in position</description>
+        <language>eng</language>
+      </description>
+      <fileName>LOWACC21.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="LOWACC31">
+      <description>
+        <name>LOWACC31</name>
+        <description>area of wrecks or obstructions of low accuracy</description>
+        <language>eng</language>
+      </description>
+      <fileName>LOWACC31.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="LOWACC41">
+      <description>
+        <name>LOWACC41</name>
+        <description>danger line of low accuracy surrounding a foul area</description>
+        <language>eng</language>
+      </description>
+      <fileName>LOWACC41.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="NAVARE51">
+      <description>
+        <name>NAVARE51</name>
+        <description>boundary of a navigation feature such as a fairway, magnetic anomaly, etc.</description>
+        <language>eng</language>
+      </description>
+      <fileName>NAVARE51.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="NAVARE52">
+      <description>
+        <name>NAVARE52</name>
+        <description>boundary of a navigation feature anchorage area, small craft mooring</description>
+        <language>eng</language>
+      </description>
+      <fileName>NAVARE52.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="NEWOBJ01">
+      <description>
+        <name>NEWOBJ01</name>
+        <description>new object</description>
+        <language>eng</language>
+      </description>
+      <fileName>NEWOBJ01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="NONHODAT">
+      <description>
+        <name>NONHODAT</name>
+        <description>boundary of non-HO data</description>
+        <language>eng</language>
+      </description>
+      <fileName>NONHODAT.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="PILPNT01">
+      <description>
+        <name>Piles</name>
+        <description>Area or row of piles</description>
+        <language>eng</language>
+      </description>
+      <fileName>PILPNT01.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>object which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library</description>
+        <language>eng</language>
+      </description>
+      <fileName>QUESMRK1.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+    <lineStyle id="SCLBDY51">
+      <description>
+        <name>SCLBDY51</name>
+        <description>chart scale boundary, the double line indicates the larger scale</description>
+        <language>eng</language>
+      </description>
+      <fileName>SCLBDY51.xml</fileName>
+      <fileType>LineStyle</fileType>
+      <fileFormat>XML</fileFormat>
+    </lineStyle>
+  </lineStyles>
+  <areaFills>
+    <areaFill id="testPCB">
+      <description>
+        <name>testPCB</name>
+        <description>new or adjusted feature objects not covered in S-52</description>
+        <language>eng</language>
+      </description>
+      <fileName>testPCB.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="DIAMOND1">
+      <description>
+        <name>DIAMOND1</name>
+        <description>area of depth less than the safety contour</description>
+        <language>eng</language>
+      </description>
+      <fileName>DIAMOND1.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="DQUALA11">
+      <description>
+        <name>DQUALA11</name>
+        <description>pattern of symbols for a chart of 5m accuracy with full seafloor coverage</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALA11.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="DQUALA21">
+      <description>
+        <name>DQUALA21</name>
+        <description>pattern of symbols for a chart with 20m accuracy with full seafloor coverage</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALA21.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="DQUALB01">
+      <description>
+        <name>DQUALB01</name>
+        <description>pattern of symbols for a chart with 50m accuracy from standard survey based on lines of continuous soundings</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALB01.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="DQUALC01">
+      <description>
+        <name>DQUALC01</name>
+        <description>pattern of symbols for a low accuracy or incomplete chart</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALC01.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="DQUALD01">
+      <description>
+        <name>DQUALD01</name>
+        <description>pattern of symbols for an unreliable chart</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALD01.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="DQUALU01">
+      <description>
+        <name>DQUALU01</name>
+        <description>pattern of symbols for a chart with quality not assessed</description>
+        <language>eng</language>
+      </description>
+      <fileName>DQUALU01.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="DRGARE01">
+      <description>
+        <name>DRGARE01</name>
+        <description>dredged area</description>
+        <language>eng</language>
+      </description>
+      <fileName>DRGARE01.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="NODATA03">
+      <description>
+        <name>NODATA03</name>
+        <description>area of no chart data</description>
+        <language>eng</language>
+      </description>
+      <fileName>NODATA03.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="OVERSC01">
+      <description>
+        <name>OVERSC01</name>
+        <description>overscale part of a display containing data from more than one navigation purpose</description>
+        <language>eng</language>
+      </description>
+      <fileName>OVERSC01.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>pattern of symbols for an area which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library</description>
+        <language>eng</language>
+      </description>
+      <fileName>QUESMRK1.xml</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+    <areaFill id="TRNBSN91">
+      <description>
+        <description>harbor or turning basin s131</description>
+        <language>eng</language>
+      </description>
+      <fileName>TRNBSN91</fileName>
+      <fileType>AreaFill</fileType>
+      <fileFormat>XML</fileFormat>
+    </areaFill>
+  </areaFills>
+  <fonts></fonts>
+  <viewingGroups>
+    <!-- CHART INFORMATION - DISPLAY BASE -->
+    <!-- 10000-10999 Reserved for chart information -->
+    <!-- A, B - CHART FURNITURE -->
+    <viewingGroup id="11000">
+      <description>
+        <name>Information about the chart display</name>
+        <description>Base: A, B - Chart Furniture</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="11010">
+      <description>
+        <name>cursor [symbol  SY(CURSRA01)]</name>
+        <description>Base: A, B - Chart Furniture</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <!-- 11020 na (not assigned) -->
+    <viewingGroup id="11030">
+      <description>
+        <name>scalebar, latitude scale [SY(SCALEB10),SY( SCALEB11)]</name>
+        <description>Base: A, B - Chart Furniture</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="11040">
+      <description>
+        <name>north arrow [SY(NORTHAR1)]</name>
+        <description>Base: A, B - Chart Furniture</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="11050">
+      <description>
+        <name>no data [colour NODTA, AP(NODATA03)], unsurveyed (UNSARE), incompletely surveyed area  </name>
+        <description>Base: A, B - Chart Furniture</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="11060">
+      <description>
+        <name>Non-HO data boundary LC(NONHODAT)</name>
+        <description>Base: A, B - Chart Furniture</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+
+    <viewingGroup id="12000">
+      <description>
+        <name>Land area</name>
+        <description>Base: C, D, E, F - Topography and Infrastructure</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="12010">
+      <description>
+        <name>land area (LANDARE)</name>
+        <description>Base: C, D, E, F - Topography and Infrastructure</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="12210">
+      <description>
+        <name>bridge (BRIDGE), pylon (PYLONS), overhead cable (CBLOHD), conveyor (CONVYR), overhead pipeline (PIPOHD), offshore platform (OFSPLF)</name>
+        <description>Base: C, D, E, F - Topography and Infrastructure</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="12400">
+      <description>
+        <name>Shoreline</name>
+        <description>Base: C, D, E, F - Topography and Infrastructure</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="12410">
+      <description>
+        <name>coastline (COALNE), ice shelf, glacier (ICEARE), shoreline construction (SLCONS), tie-up wall, dolphin (MORFAC), gate (GATCON, pile (PILPNT), crib, wellhead, ice boom (OBSTRN), floating dock (FLODOC), hulk (HULKES), pontoon (PONTON), oilboom (OILBAR), log boom (LOGPON),  flood barrage (DAMCON, CATDAM3)</name>
+        <description>Base: C, D, E, F - Topography and Infrastructure</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="12420">
+      <description>
+        <name>dock (DOCARE), lock (LOKBSN), canal (CANALS), river (RIVERS)</name>
+        <description>Base: C, D, E, F - Topography and Infrastructure</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <!-- J, K, L - SUBSEA FEATURES -->
+    <viewingGroup id="14000">
+      <description>
+        <name>Dangers under water</name>
+        <description>Base: J, K, L - Subsea Features</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+    <viewingGroup id="14010">
+      <description>
+        <name>isolated underwater dangers in water deeper than the displayed safety contour  (rocks, wrecks, obstructions, mooring cables from conditional symbology procedure)</name>
+        <description>Base: J, K, L - Subsea Features</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+
+    <viewingGroup id="21000">
+      <description>
+        <name>Information about the chart display</name>
+        <description>Standard: A, B - Information about the chart display</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+      <viewingGroup id="21010">
+        <description>
+          <name>Unknown object (magenta question mark)</name>
+          <description>Standard: A, B - Information about the chart display</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="21020">
+        <description>
+          <name>Generic object (NEWOBJ01)</name>
+          <description>Standard: A, B - Information about the chart display</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+    <viewingGroup id="21030">
+      <description>
+        <name>Chart scale boundary, overscale data [AP(OVERSCO1)]</name>
+        <description>Standard: A, B - Information about the chart display</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+      <viewingGroup id="21060">
+        <description>
+          <name>Place-holder for geographic names (LNDRGN, SEAARE)</name>
+          <description>Standard: A, B - Information about the chart display</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+
+      <viewingGroup id="22000">
+        <description>
+          <name>Major Coastal Features</name>
+          <description>Standard: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="22010">
+        <description>
+          <name>Lake (LAKARE), sloping ground (SLOGRD), slope top (SLOTOP), dyke (DYKCON), causeway (CAUSWY), dam (DAMCON)</name>
+          <description>Standard: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="22200">
+        <description>
+          <name>Conspicuous landmarks</name>
+          <description>Standard: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="22240">
+        <description>
+          <name>Built up area (BUAARE)</name>
+          <description>Standard: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="23000">
+        <description>
+          <name>Depths</name>
+          <description>Standard: H, I - Depths, Currents, etc.</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+
+      <viewingGroup id="24010">
+        <description>
+          <name>Mooring cables (MORFAC, CATMOR6), (CBLSUB, CATCBL6), tunnel on Seabed (TUNNEL, BURDEP=0), sandwaves (SNDWAV)</name>
+          <description>Standard: J, K, L - Seabed, Obstructions, Pipelines</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+
+      <viewingGroup id="25001">
+        <description>
+          <name>Collision Regulations Limit, demarcation line between inland and international navigation rules</name>
+          <description>Standard: M - Traffic routes</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>	   
+    <viewingGroup id="25030">
+      <description>
+        <name>Ferry routes</name>
+        <description>Standard: M - Traffic routes</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+      <viewingGroup id="26040">
+        <description>
+          <name>Submarine transit lane (SUBTLN), military practice area (MIPARE), sea plane landing area (SPLARE), offshore production area (OSPARE)</name>
+          <description>Standard: N - Special areas</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="26050">
+        <description>
+          <name>Fairway (FAIRWY)</name>
+          <description>Standard: N - Special areas</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="26150">
+        <description>
+          <name>Caution area (CTNARE)</name>
+          <description>Standard: N - Special areas</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="26200">
+        <description>
+          <name>Information Areas. Protected Areas</name>
+          <description>Standard: N - Special areas</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="26210">
+        <description>
+          <name>Information Areas. Protected Areas</name>
+          <description>Standard: N - Special areas</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="26220">
+        <description>
+          <name>Anchorage area (ACHARE), anchor berth (ACHBRT)</name>
+          <description>Standard: N - Special areas</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="26240">
+        <description>
+          <name>Dumping ground (DMPGRD)</name>
+          <description>Standard: N - Special areas</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="26250">
+        <description>
+          <name>Cargo transhipment (CTSARE), incineration (ICNARE)</name>
+          <description>Standard: N - Special areas</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+
+      <viewingGroup id="27060">
+        <description>
+          <name>gridiron (GRIDRN)</name>
+          <description>Standard: P, Q, R, S - Buoys and Beacons, Lights, Fog signals, RADAR</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+
+      <viewingGroup id="28000">
+        <description>
+          <name>Services</name>
+          <description>Standard: T, U - Services and Small craft facilities</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="28010">
+        <description>
+          <name>pilot boarding point (PILBOP)</name>
+          <description>Standard: T, U - Services and Small craft facilities</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="28020">
+        <description>
+          <name>signal station, traffic (SISTAT), sig. stn. warning (SISTAW)</name>
+          <description>Standard: T, U - Services and Small craft facilities</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+    <viewingGroup id="31000">
+      <description>
+        <name>Information about the Chart Display</name>
+        <description>Other: A, B - Information about the chart display</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+      <viewingGroup id="31010">
+        <description>
+          <name>accuracy of data (M_ACCY), survey reliability (M_SREL), quality of data (M_QUAL)</name>
+          <description>Other: A, B - Information about the chart display</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="31011">
+        <description>
+          <name>symbol LOWACC01, identifying low accuracy data, applied to the spatial object of point and area wrecks, rocks and obstructions and to point land areas</name>
+          <description>Other: A, B - Information about the chart display</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="31020">
+        <description>
+          <name>information area or nautical publication (M_NPUB)</name>
+          <description>Other: A, B - Information about the chart display</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="31030">
+        <description>
+          <name>Additional Information INFORM, NINFOM</name>
+          <description>Other: A, B - Information about the chart display</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="31031">
+        <description>
+          <name>Additional Documents NTXTDS, TXTDSC, PICREP</name>
+          <description>Other: A, B - Information about the chart display</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="31032">
+        <description>
+          <name>Date dependent</name>
+          <description>The object is present only during the indicated period</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="31040">
+        <description>
+          <name>dataCoverage</name>
+          <description>Other: A, B - Information about the chart display</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <!-- C, D, E, F - NATURAL & MAN MADE FEATURES, PORT FEATURES -->
+      <viewingGroup id="32000">
+        <description>
+          <name>Natural Features</name>
+          <description>Other: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="32200">
+        <description>
+          <name>Shore Structures</name>
+          <description>Other: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+    <viewingGroup id="32220">
+      <description>
+        <name>any of the following not classified as CONVIS1 (conspicuous): landmark (LNDMRK), building (BUISGL), tank, silo, water tower (SILTNK), wall (FNCLNE), fort (FORSTC)</name>
+        <description>Other: C, D, E, F - Natural and man made features, Port features</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+      <viewingGroup id="32240">
+        <description>
+          <name>airport (AIRARE), runway (RUNWAY)</name>
+          <description>Other: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+    <viewingGroup id="32250">
+      <description>
+        <name>any of the following not classified as CONVIS1 (conspicuous): landmark (LNDMRK), building (BUISGL), tank, silo, water tower (SILTNK), wall (FNCLNE), fort (FORSTC)</name>
+        <description>Other: C, D, E, F - Natural and man made features, Port features</description>
+        <language>eng</language>
+      </description>
+    </viewingGroup>
+      <viewingGroup id="32270">
+        <description>
+          <name>quarry, refinery, power station, tank farm, wind farm, factory, timber yard (PRDARE)</name>
+          <description>Other: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="32400">
+        <description>
+          <name>Port Features</name>
+          <description>Other: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="32410">
+        <description>
+          <name>harbour type (HRBFAC), customs check point (CHKPNT) [note: "small craft facilities" (SMCFAC) is in group 38210]</name>
+          <description>Other: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="32440">
+        <description>
+          <name>berth number (BERTHS), mooring facility (such as bollard) (MORFAC), , gate (such as lock gate) (GATCON) , dry dock (DRYDOC), crane (CRANES)</name>
+          <description>Other: C, D, E, F - Natural and man made features, Port features</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <!-- N - SPECIAL AREAS -->
+      <viewingGroup id="36000">
+        <description>
+          <name>Administrative Areas, (by cursor enquiry)</name>
+          <description>Other: N - Special areas</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="36020">
+        <description>
+          <name>harbour area (HRBARE) free port area (FRPARE), customs zone (CUSZNE)</name>
+          <description>Other: N - Special areas</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <!-- P, Q, R, S - BUOYS & BEACONS, LIGHTS, FOG SIGNALS, RADAR -->
+      <!-- T, U - SERVICES & SMALL CRAFT FACILITIES -->
+      <viewingGroup id="38000">
+        <description>
+          <name>Services</name>
+          <description>Other: T, U - Services and Small craft facilities</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="38200">
+        <description>
+          <name>Small craft facilities</name>
+          <description>Other: T, U - Services and Small craft facilities</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="38210">
+        <description>
+          <name>small craft facilities (SMCFAC)</name>
+          <description>Other: T, U - Services and Small craft facilities</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <!-- TEXT GROUPS -->
+      <!-- 00-10 reserved for future assignment by IHO -->
+      <viewingGroup id="11">
+        <description>
+          <name>Text: Important</name>
+          <description>Various important text: Bearings, Clearances, Recommendations, Radio info</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <!-- 20 reserved -->
+      <viewingGroup id="21">
+        <description>
+          <name>Text: Name or number</name>
+          <description>Name or Number of Buoys, Beacons, Daymarks, Light Vessels, Light Floats, Offshore Platforms</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <!-- 22 na -->
+      
+      <viewingGroup id="24">
+        <description>
+          <name>Text: Supplementary information</name>
+          <description>Note on chart data (INFORM) or nautical publication (TXTDSC)</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      
+      <viewingGroup id="26">
+        <description>
+          <name>Text: Geographic Names</name>
+          <description>Names of Anchorages, Bridges, Buildings, Docks, etc.</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="27">
+        <description>
+          <name>Text: MagVar, Swept Depth</name>
+          <description>Value of magnetic variation and swept depth</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="28">
+        <description>
+          <name>Text: Height of land area</name>
+          <description>Height of islet or land feature</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+      <viewingGroup id="29">
+        <description>
+          <name>Text: Berth Number</name>
+          <description>Number of Berth or Anchor Berth</description>
+          <language>eng</language>
+        </description>
+      </viewingGroup>
+
+  </viewingGroups>
+  <foundationMode>
+    <!-- A, B - CHART FURNITURE -->
+    <viewingGroup>11000</viewingGroup>
+    <viewingGroup>11010</viewingGroup>
+    <viewingGroup>11030</viewingGroup>
+    <viewingGroup>11040</viewingGroup>
+    <viewingGroup>11050</viewingGroup>
+    <viewingGroup>11060</viewingGroup>
+    <!-- C, D, E, F - TOPOGRAPHY AND INFRASTRUCTURE -->
+    <viewingGroup>12000</viewingGroup>
+    <viewingGroup>12010</viewingGroup>
+    <!--<viewingGroup>12200</viewingGroup>-->
+    <viewingGroup>12210</viewingGroup>
+    <viewingGroup>12400</viewingGroup>
+    <viewingGroup>12410</viewingGroup>
+    <viewingGroup>12420</viewingGroup>
+    <!-- H, I - HYDROGRAPHY -->
+    <!--<viewingGroup>13000</viewingGroup>-->
+    <!--<viewingGroup>13010</viewingGroup>-->
+    <!--<viewingGroup>13030</viewingGroup>-->
+    <!-- J, K, L - SUBSEA FEATURES -->
+    <viewingGroup>14000</viewingGroup>
+    <viewingGroup>14010</viewingGroup>
+    <!--<viewingGroup>14050</viewingGroup>-->
+    <!-- M - TRACKS AND ROUTES -->
+    <!-- N - SPECIAL AREAS -->
+    <!-- P, Q, R, S - AIDS TO NAVIGATION -->
+    <!-- T, U - SERVICES -->
+</foundationMode>
+  <viewingGroupLayers>
+	  <!-- BASE LAYER GROUPS -->
+      <viewingGroupLayer id="1">
+         <description>
+            <name>Display Base</name>
+            <description>Base Display elements</description>
+            <language>eng</language>
+         </description>
+         <!-- A, B - CHART FURNITURE -->
+         <viewingGroup>11000</viewingGroup>
+         <viewingGroup>11010</viewingGroup>
+         <viewingGroup>11030</viewingGroup>
+         <viewingGroup>11040</viewingGroup>
+         <viewingGroup>11050</viewingGroup>
+         <viewingGroup>11060</viewingGroup>
+         <!-- C, D, E, F - TOPOGRAPHY AND INFRASTRUCTURE -->
+         <viewingGroup>12000</viewingGroup>
+         <viewingGroup>12010</viewingGroup>
+         <!--<viewingGroup>12200</viewingGroup>-->
+         <viewingGroup>12210</viewingGroup>
+         <viewingGroup>12400</viewingGroup>
+         <viewingGroup>12410</viewingGroup>
+         <viewingGroup>12420</viewingGroup>
+         <!-- H, I - HYDROGRAPHY -->
+         <!--<viewingGroup>13000</viewingGroup>-->
+         <!--<viewingGroup>13010</viewingGroup>-->
+         <!--<viewingGroup>13030</viewingGroup>-->
+         <!-- J, K, L - SUBSEA FEATURES -->
+         <viewingGroup>14000</viewingGroup>
+         <viewingGroup>14010</viewingGroup>
+		 <!--<viewingGroup>14050</viewingGroup>-->
+         <!-- M - TRACKS AND ROUTES -->
+         <!-- N - SPECIAL AREAS -->
+         <!-- P, Q, R, S - AIDS TO NAVIGATION -->
+         <!-- T, U - SERVICES -->
+      </viewingGroupLayer>
+	  <!-- END BASE LAYER GROUPS -->
+	  <!-- STANDARD LAYER GROUPS -->
+      <viewingGroupLayer id="2">
+         <description>
+            <name>Drying Line</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>22010</viewingGroup>
+      </viewingGroupLayer>
+      <viewingGroupLayer id="3">
+         <description>
+            <name>Buoys, beacons, aids to navigation</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>21010</viewingGroup>
+         <viewingGroup>21020</viewingGroup>
+         <viewingGroup>22200</viewingGroup>
+         <!--<viewingGroup>22210</viewingGroup>-->
+         <!--<viewingGroup>22220</viewingGroup>-->
+         <viewingGroup>22240</viewingGroup>
+         <!--<viewingGroup>27000</viewingGroup>-->
+         <!--<viewingGroup>27010</viewingGroup>-->
+         <!--<viewingGroup>27011</viewingGroup>-->
+         <!--<viewingGroup>27020</viewingGroup>-->
+         <!--<viewingGroup>27030</viewingGroup>-->
+         <!--<viewingGroup>27025</viewingGroup>-->
+         <!--<viewingGroup>27040</viewingGroup>-->
+         <!--<viewingGroup>27050</viewingGroup>-->
+         <!--<viewingGroup>27060</viewingGroup>-->
+         <!--<viewingGroup>27070</viewingGroup>-->
+         <!--<viewingGroup>27080</viewingGroup>-->
+         <!--<viewingGroup>27200</viewingGroup>-->
+         <!--<viewingGroup>27210</viewingGroup>-->
+         <!--<viewingGroup>27230</viewingGroup>-->
+         <viewingGroup>21020</viewingGroup>
+         <viewingGroup>21020</viewingGroup>
+         <viewingGroup>21020</viewingGroup>
+         <viewingGroup>21020</viewingGroup>
+      </viewingGroupLayer>
+      <viewingGroupLayer id="3a">            <!-- From S-52: 3.1 Buoys, beacons, structures -->
+         <description>
+            <name>Buoys, beacons, structures</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>21010</viewingGroup>
+         <viewingGroup>21020</viewingGroup>
+         <viewingGroup>22200</viewingGroup>
+         <!--<viewingGroup>22210</viewingGroup>-->
+         <!--<viewingGroup>22220</viewingGroup>-->
+         <viewingGroup>22240</viewingGroup>
+         <!--<viewingGroup>27000</viewingGroup>-->
+         <!--<viewingGroup>27010</viewingGroup>-->
+         <!--<viewingGroup>27011</viewingGroup>-->
+         <!--<viewingGroup>27020</viewingGroup>-->
+         <!--<viewingGroup>27025</viewingGroup>-->
+         <!--<viewingGroup>27030</viewingGroup>-->
+         <!--<viewingGroup>27040</viewingGroup>-->
+         <!--<viewingGroup>27050</viewingGroup>-->
+         <viewingGroup>27060</viewingGroup>
+         <!--<viewingGroup>27080</viewingGroup>-->
+         <!--<viewingGroup>27200</viewingGroup>-->
+         <!--<viewingGroup>27210</viewingGroup>-->
+         <!--<viewingGroup>27230</viewingGroup>-->
+      </viewingGroupLayer>
+      <!--<viewingGroupLayer id="3b">           <!-\- From S-52: 3.2 Lights -\->
+         <description>
+            <name>Lights</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>27070</viewingGroup>
+      </viewingGroupLayer>-->
+      <viewingGroupLayer id="4">
+         <description>
+            <name>Boundaries and limits</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <!--<viewingGroup>23030</viewingGroup>-->
+         <viewingGroup>26050</viewingGroup>
+         <viewingGroup>26220</viewingGroup>
+         <viewingGroup>26240</viewingGroup>
+         <viewingGroup>26250</viewingGroup>
+      </viewingGroupLayer>
+      <viewingGroupLayer id="5">
+         <description>
+            <name>Prohibited and restricted areas</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <!--<viewingGroup>26000</viewingGroup>-->
+		 <!--<viewingGroup>26010</viewingGroup>-->
+		 <!--<viewingGroup>26020</viewingGroup>-->
+		 <viewingGroup>26040</viewingGroup>
+      </viewingGroupLayer>
+      <viewingGroupLayer id="6">
+         <description>
+            <name>Chart scale boundaries</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>21030</viewingGroup>
+      </viewingGroupLayer>
+      <viewingGroupLayer id="7">
+         <description>
+            <name>Cautionary notes</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>26150</viewingGroup>
+      </viewingGroupLayer>
+      <viewingGroupLayer id="8">
+         <description>
+            <name>Ships' routeing systems and ferry routes</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <!--<viewingGroup>25010</viewingGroup>-->
+         <!--<viewingGroup>25020</viewingGroup>-->
+         <viewingGroup>25030</viewingGroup>
+         <!--<viewingGroup>25040</viewingGroup>-->
+         <!--<viewingGroup>25060</viewingGroup>-->
+      </viewingGroupLayer>
+      <!--<viewingGroupLayer id="9">
+         <description>
+            <name>Archipelagic sea lanes</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>26260</viewingGroup>
+      </viewingGroupLayer>-->
+      <viewingGroupLayer id="10">      <!-- S-52: 10 Miscellaneous (Standard) and 101 Alert Highlights -->
+         <description>
+            <name>Miscellaneous (Standard)</name>
+            <description>Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>21000</viewingGroup>
+         <viewingGroup>21060</viewingGroup>
+         <viewingGroup>22000</viewingGroup>
+         <viewingGroup>23000</viewingGroup>
+         <!--<viewingGroup>23010</viewingGroup>-->
+         <!--<viewingGroup>24000</viewingGroup>-->
+         <!--<viewingGroup>24010</viewingGroup>-->
+         <!--<viewingGroup>24020</viewingGroup>-->
+         <!--<viewingGroup>24050</viewingGroup>-->
+         <!--<viewingGroup>25000</viewingGroup>-->
+         <viewingGroup>25001</viewingGroup>
+         <viewingGroup>26200</viewingGroup>
+         <viewingGroup>26210</viewingGroup>
+         <viewingGroup>28000</viewingGroup>
+         <viewingGroup>28010</viewingGroup>
+         <viewingGroup>28020</viewingGroup>
+		 <!-- Alert Highlights -->
+		 <!--<viewingGroup>101</viewingGroup>-->
+		 <!--<viewingGroup>102</viewingGroup>-->
+		 <!--<viewingGroup>103</viewingGroup>-->
+		 <!--<viewingGroup>104</viewingGroup>-->
+		 <!--<viewingGroup>105</viewingGroup>-->
+		 <!--<viewingGroup>106</viewingGroup>-->
+		 <!--<viewingGroup>107</viewingGroup>-->
+		 <!--<viewingGroup>108</viewingGroup>-->
+		 <!--<viewingGroup>109</viewingGroup>-->
+		 <!--<viewingGroup>110</viewingGroup>-->
+		 <!--<viewingGroup>111</viewingGroup>-->
+		 <!--<viewingGroup>112</viewingGroup>-->
+		 <!--<viewingGroup>113</viewingGroup>-->
+		 <!--<viewingGroup>114</viewingGroup>-->
+		 <!--<viewingGroup>115</viewingGroup>-->
+      </viewingGroupLayer>
+	  <viewingGroupLayer id="10a">       
+         <description>
+            <name>Chart (Standard)</name>
+            <description>Miscellaneous chart Standard Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>21000</viewingGroup>
+         <viewingGroup>21060</viewingGroup>
+         <viewingGroup>22000</viewingGroup>
+         <viewingGroup>23000</viewingGroup>
+         <!--<viewingGroup>23010</viewingGroup>-->
+         <!--<viewingGroup>24000</viewingGroup>-->
+         <viewingGroup>24010</viewingGroup>
+         <!--<viewingGroup>24020</viewingGroup>-->
+         <!--<viewingGroup>24050</viewingGroup>-->
+         <!--<viewingGroup>25000</viewingGroup>-->
+         <viewingGroup>25001</viewingGroup>
+         <viewingGroup>26200</viewingGroup>
+         <viewingGroup>26210</viewingGroup>
+         <viewingGroup>28000</viewingGroup>
+         <viewingGroup>28010</viewingGroup>
+         <viewingGroup>28020</viewingGroup>
+      </viewingGroupLayer>
+	  <!--<viewingGroupLayer id="10b">      <!-\- S-101 Alert Highlights -\->
+		<description>
+            <name>Alert Highlights (Standard)</name>
+            <description>Toggles graphical highlighting of detected alerts</description>
+            <language>eng</language>
+		</description>
+		 <!-\- Alert Highlights -\->
+		 <viewingGroup>101</viewingGroup>
+		 <viewingGroup>102</viewingGroup>
+		 <viewingGroup>103</viewingGroup>
+		 <viewingGroup>104</viewingGroup>
+		 <viewingGroup>105</viewingGroup>
+		 <viewingGroup>106</viewingGroup>
+		 <viewingGroup>107</viewingGroup>
+		 <viewingGroup>108</viewingGroup>
+		 <viewingGroup>109</viewingGroup>
+		 <viewingGroup>110</viewingGroup>
+		 <viewingGroup>111</viewingGroup>
+		 <viewingGroup>112</viewingGroup>
+		 <viewingGroup>113</viewingGroup>
+		 <viewingGroup>114</viewingGroup>
+		 <viewingGroup>115</viewingGroup>
+		 <!-\- TODO: Implement 56000-56999 once a way to specify ranges is provided -\->
+	  </viewingGroupLayer>-->
+	  <!-- ********************************************************************************* -->
+	  <!-- END STANDARD LAYER GROUPS -->
+	  <!-- OTHER LAYER GROUPS -->
+      <!--<viewingGroupLayer id="11">
+         <description>
+            <name>Spot soundings</name>
+            <description>Other Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>33010</viewingGroup>
+      </viewingGroupLayer>-->
+      <!--<viewingGroupLayer id="12">
+         <description>
+            <name>Submarine cables and pipelines</name>
+            <description>Other Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>34030</viewingGroup>
+         <viewingGroup>34070</viewingGroup>
+      </viewingGroupLayer>-->
+      <!--<viewingGroupLayer id="13">
+         <description>
+            <name>All isolated dangers</name>
+            <description>Other Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>34050</viewingGroup>
+         <viewingGroup>34051</viewingGroup>
+      </viewingGroupLayer>-->
+      <!--<viewingGroupLayer id="14">
+         <description>
+            <name>Magnetic variation</name>
+            <description>Other Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>31080</viewingGroup>
+      </viewingGroupLayer>-->
+      <!--<viewingGroupLayer id="15">
+         <description>
+            <name>Depth contours</name>
+            <description>Other Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>33020</viewingGroup>
+      </viewingGroupLayer>-->
+      <!--<viewingGroupLayer id="16">
+         <description>
+            <name>Seabed</name>
+            <description>Other Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>34010</viewingGroup>
+         <viewingGroup>34020</viewingGroup>
+         <viewingGroup>33040</viewingGroup>
+      </viewingGroupLayer>-->
+      <!--<viewingGroupLayer id="17">
+         <description>
+            <name>Tidal</name>
+            <description>Other Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>33050</viewingGroup>
+         <viewingGroup>33060</viewingGroup>
+      </viewingGroupLayer>-->
+      <viewingGroupLayer id="18">
+         <description>
+            <name>Miscellaneous (Other)</name>
+            <description>Other Display elements</description>
+            <language>eng</language>
+         </description>
+         <viewingGroup>31000</viewingGroup>
+         <viewingGroup>31010</viewingGroup>
+		 <viewingGroup>31020</viewingGroup>
+         <viewingGroup>31011</viewingGroup>
+         <viewingGroup>31030</viewingGroup>
+         <viewingGroup>31031</viewingGroup>
+         <viewingGroup>31032</viewingGroup>
+         <viewingGroup>31040</viewingGroup>
+         <viewingGroup>32000</viewingGroup>
+         <!--<viewingGroup>32010</viewingGroup>-->
+         <!--<viewingGroup>32030</viewingGroup>-->
+         <!--<viewingGroup>32050</viewingGroup>-->
+         <!--<viewingGroup>32070</viewingGroup>-->
+         <viewingGroup>32200</viewingGroup>
+         <viewingGroup>32220</viewingGroup>
+         <viewingGroup>32240</viewingGroup>
+         <viewingGroup>32250</viewingGroup>
+         <viewingGroup>32270</viewingGroup>
+         <viewingGroup>32400</viewingGroup>
+         <viewingGroup>32410</viewingGroup>
+         <viewingGroup>32440</viewingGroup>
+         <!--<viewingGroup>33000</viewingGroup>-->
+         <!--<viewingGroup>33021</viewingGroup>-->
+         <!--<viewingGroup>33022</viewingGroup>-->
+         <!--<viewingGroup>34000</viewingGroup>-->
+         <!--<viewingGroup>35000</viewingGroup>-->
+         <viewingGroup>36000</viewingGroup>
+         <!--<viewingGroup>36010</viewingGroup>-->
+         <viewingGroup>36020</viewingGroup>
+         <!--<viewingGroup>36040</viewingGroup>-->
+         <!--<viewingGroup>36050</viewingGroup>-->
+         <!--<viewingGroup>36060</viewingGroup>-->		  
+         <viewingGroup>38000</viewingGroup>
+         <!--<viewingGroup>38010</viewingGroup>-->
+         <!--<viewingGroup>38030</viewingGroup>-->
+         <viewingGroup>38200</viewingGroup>
+         <viewingGroup>38210</viewingGroup>
+      </viewingGroupLayer>
+     <!-- END OTHER LAYER GROUPS -->
+     <!-- TEXT LAYER GROUPS (not part of a display mode / IMO display category) -->
+     <viewingGroupLayer id="101">
+       <description>
+         <name>Important Text</name>
+         <description>Important Text</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>11</viewingGroup>
+     </viewingGroupLayer>
+     <viewingGroupLayer id="102">
+       <description>
+         <name>Other Text</name>
+         <description>Text other than important text</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>21</viewingGroup>
+       <!--<viewingGroup>23</viewingGroup>-->
+       <viewingGroup>24</viewingGroup>
+       <!--<viewingGroup>25</viewingGroup>-->
+       <viewingGroup>26</viewingGroup>
+       <viewingGroup>27</viewingGroup>
+       <viewingGroup>28</viewingGroup>
+       <viewingGroup>29</viewingGroup>
+       <!--<viewingGroup>30</viewingGroup>-->
+     </viewingGroupLayer>
+     <viewingGroupLayer id="102a">
+       <description>
+         <name>Names</name>
+         <description>Geographic Names - e.g. Anchorages, Buoys, Bridges, Docks, Lights, etc.</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>21</viewingGroup>
+       <viewingGroup>26</viewingGroup>
+       <viewingGroup>29</viewingGroup>
+     </viewingGroupLayer>
+     <!--<viewingGroupLayer id="102b">
+       <description>
+         <name>Light description</name>
+         <description>Light description string</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>23</viewingGroup>
+     </viewingGroupLayer>-->
+     <viewingGroupLayer id="102c">
+       <description>
+         <name>All other chart text</name>
+         <description>All chart text from "Other" not controlled via "Names" or "Light description"</description>
+         <language>eng</language>
+       </description>
+       <viewingGroup>24</viewingGroup>
+       <!--<viewingGroup>25</viewingGroup>-->
+       <viewingGroup>27</viewingGroup>
+       <viewingGroup>28</viewingGroup>
+       <!--<viewingGroup>30</viewingGroup>-->
+     </viewingGroupLayer>
+     <!-- END TEXT LAYER GROUPS -->
+   </viewingGroupLayers>
+  <displayModes>
+    <displayMode id="1">
+      <description>
+        <name>Base</name>
+        <description>Always on display</description>
+        <language>eng</language>
+      </description>
+      <viewingGroupLayer>1</viewingGroupLayer>
+    </displayMode>
+    <displayMode id="2">
+      <description>
+        <name>Standard</name>
+        <description>ECDIS default display</description>
+        <language>eng</language>
+      </description>
+      <viewingGroupLayer>1</viewingGroupLayer>
+      <viewingGroupLayer>2</viewingGroupLayer>
+      <viewingGroupLayer>3</viewingGroupLayer>
+      <viewingGroupLayer>3a</viewingGroupLayer>
+      <!--<viewingGroupLayer>3b</viewingGroupLayer>-->
+      <viewingGroupLayer>4</viewingGroupLayer>
+      <viewingGroupLayer>5</viewingGroupLayer>
+      <viewingGroupLayer>6</viewingGroupLayer>
+      <viewingGroupLayer>7</viewingGroupLayer>
+      <!--<viewingGroupLayer>8</viewingGroupLayer>-->
+      <!--<viewingGroupLayer>9</viewingGroupLayer>-->
+      <viewingGroupLayer>10</viewingGroupLayer>
+      <viewingGroupLayer>10a</viewingGroupLayer>
+      <!--<viewingGroupLayer>10b</viewingGroupLayer>-->
+    </displayMode>
+    <displayMode id="3">
+      <description>
+        <name>Other</name>
+        <description>Displays all features in the SENC</description>
+        <language>eng</language>
+      </description>
+      <viewingGroupLayer>1</viewingGroupLayer>
+      <viewingGroupLayer>2</viewingGroupLayer>
+      <viewingGroupLayer>3</viewingGroupLayer>
+      <viewingGroupLayer>3a</viewingGroupLayer>
+      <!--<viewingGroupLayer>3b</viewingGroupLayer>-->
+      <viewingGroupLayer>4</viewingGroupLayer>
+      <viewingGroupLayer>5</viewingGroupLayer>
+      <viewingGroupLayer>6</viewingGroupLayer>
+      <viewingGroupLayer>7</viewingGroupLayer>
+      <!--<viewingGroupLayer>8</viewingGroupLayer>-->
+      <!--<viewingGroupLayer>9</viewingGroupLayer>-->
+      <viewingGroupLayer>10</viewingGroupLayer>
+      <viewingGroupLayer>10a</viewingGroupLayer>
+      <!--<viewingGroupLayer>10b</viewingGroupLayer>-->
+      <!--<viewingGroupLayer>11</viewingGroupLayer>-->
+      <!--<viewingGroupLayer>12</viewingGroupLayer>-->
+      <!--<viewingGroupLayer>13</viewingGroupLayer>-->
+      <!--<viewingGroupLayer>14</viewingGroupLayer>-->
+      <!--<viewingGroupLayer>15</viewingGroupLayer>-->
+      <!--<viewingGroupLayer>16</viewingGroupLayer>-->
+      <!--<viewingGroupLayer>17</viewingGroupLayer>-->
+      <viewingGroupLayer>18</viewingGroupLayer>
+    </displayMode>
+  </displayModes>
+  <displayPlanes>
+    <displayPlane id="OverRADAR" order="1">
+      <description>
+        <name>Over radar</name>
+        <description>Content displayed on top of Radar image</description>
+        <language>eng</language>
+      </description>
+    </displayPlane>
+    <displayPlane id="UnderRADAR" order="-1">
+      <description>
+        <name>Under radar</name>
+        <description>Content displayed underneath Radar image</description>
+        <language>eng</language>
+      </description>
+    </displayPlane>
+  </displayPlanes>
+  <context>
+    <parameter id="SafetyDepth">
+      <description>
+        <name>SAFETY_DEPTH</name>
+        <description>selected safety depth (meters)</description>
+        <language>eng</language>
+      </description>
+      <type>Double</type>
+      <default>30</default>
+    </parameter>
+    <parameter id="SafetyContour">
+      <description>
+        <name>SAFETY_CONTOUR</name>
+        <description>selected safety contour (meters)</description>
+        <language>eng</language>
+      </description>
+      <type>Double</type>
+      <default>30</default>
+    </parameter>
+    <parameter id="TwoShades">
+      <description>
+        <name>TWO_SHADES</name>
+        <description>show two depth shades only, safe vs unsafe</description>
+        <language>eng</language>
+      </description>
+      <type>Boolean</type>
+      <default>true</default>
+    </parameter>
+    <parameter id="ShallowContour" enable="//TwoShades[1]='false' or //TwoShades[1]='0'">
+      <description>
+        <name>SHALLOW_CONTOUR</name>
+        <description>selected shallow water contour (meters) (optional)</description>
+        <language>eng</language>
+      </description>
+      <type>Double</type>
+      <default>2</default>
+      <validate>
+        <xpath>//ShallowContour &lt;= //SafetyContour</xpath>
+        <errorMessage>
+          <text>Must be &lt;= safety contour value</text>
+          <text language="kor">ìì  ì¤ê³½ ê°ë³´ë¤ ìê±°ë ê°ìì¼ í©ëë¤</text>
+        </errorMessage>
+      </validate>
+    </parameter>
+    <parameter id="DeepContour" enable="//TwoShades[1]='false' or //TwoShades[1]='0'">
+      <description>
+        <name>DEEP_CONTOUR</name>
+        <description>selected deep water contour (meters) (optional)</description>
+        <language>eng</language>
+      </description>
+      <type>Double</type>
+      <default>30</default>
+      <validate>
+        <xpath>//DeepContour >= //SafetyContour</xpath>
+        <errorMessage>
+          <text>Must be >= safety contour value</text>
+          <text language="kor">ìì  ì¤ê³½ ê°ë³´ë¤ í¬ê±°ë ê°ìì¼ í©ëë¤</text>
+        </errorMessage>
+      </validate>
+    </parameter>
+    <parameter id="ShallowPattern">
+      <description>
+        <name>SHALLOW_PATTERN</name>
+        <description>show the shallow diamond pattern in shallow water</description>
+        <language>eng</language>
+      </description>
+      <type>Boolean</type>
+      <default>false</default>
+    </parameter>
+    <parameter id="ShowIsolatedDangersInShallowWaters">
+      <description>
+        <name>SHOW_ISOLATED_DANGERS_IN_SHALLOW_WATERS</name>
+        <description>show isolated dangers in shallow waters</description>
+        <language>eng</language>
+      </description>
+      <type>Boolean</type>
+      <default>true</default>
+    </parameter>
+    <parameter id="PlainBoundaries">
+      <description>
+        <name>Plain boundaries</name>
+        <description>simplify portrayal of lines</description>
+        <language>eng</language>
+      </description>
+      <type>Boolean</type>
+      <default>true</default>
+    </parameter>
+    <parameter id="SimplifiedPoints">
+      <description>
+        <name>Simplified points</name>
+        <description>simplify portrayal of point symbols</description>
+        <language>eng</language>
+      </description>
+      <type>Boolean</type>
+      <default>false</default>
+    </parameter>
+    <parameter id="FullSectors">
+      <description>
+        <name>Full sectors</name>
+        <description>show full light sectors</description>
+        <language>eng</language>
+      </description>
+      <type>Boolean</type>
+      <default>false</default>
+    </parameter>
+    <parameter id="RadarOverlay">
+      <description>
+        <name>Radar overlay</name>
+        <description>Tells the portrayal whether a RADAR sweep is displayed or not</description>
+        <language>eng</language>
+      </description>
+      <type>Boolean</type>
+      <default>false</default>
+    </parameter>
+    <parameter id="IgnoreScamin">
+      <description>
+        <name>Ignore scamin</name>
+        <description>Ignore the scaleMinimum attribute</description>
+        <language>eng</language>
+      </description>
+      <type>Boolean</type>
+      <default>false</default>
+    </parameter>
+    <parameter id="NationalLanguage">
+      <description>
+        <name>National language</name>
+        <description>Selects which language to use for text (ISO 639-3)</description>
+        <language>eng</language>
+      </description>
+      <type>String</type>
+      <default>eng</default>
+      <validate>
+        <regex>^[a-z]{3}$</regex>
+        <errorMessage>
+          <text>Must be three lower-case characters</text>
+        </errorMessage>
+      </validate>
+    </parameter>
+  </context>
+  <rules>
+    <ruleFile id="main">
+      <description>
+        <name>main</name>
+        <description>Top level rule</description>
+        <language>eng</language>
+      </description>
+      <fileName>main.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>TopLevelTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="S100Scripting">
+      <description>
+        <name>S100Scripting</name>
+        <description>Scripting support</description>
+        <language>eng</language>
+      </description>
+      <fileName>S100Scripting.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="PortrayalAPI">
+      <description>
+        <name>PortrayalAPI</name>
+        <description>Portrayal API</description>
+        <language>eng</language>
+      </description>
+      <fileName>PortrayalAPI.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="PortrayalModel">
+      <description>
+        <name>PortrayalModel</name>
+        <description>Portrayal Model</description>
+        <language>eng</language>
+      </description>
+      <fileName>PortrayalModel.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="Default">
+      <description>
+        <name>Default</name>
+        <description>Default portrayal rules</description>
+        <language>eng</language>
+      </description>
+      <fileName>Default.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    
+    
+
+    <ruleFile id="AnchorageArea">
+      <description>
+        <name>AnchorageArea</name>
+        <description>Rules for feature type AnchorageArea</description>
+        <language>eng</language>
+      </description>
+      <fileName>AnchorageArea.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="AnchorBerth">
+      <description>
+        <name>AnchorBerth</name>
+        <description>Rules for feature type AnchorBerth</description>
+        <language>eng</language>
+      </description>
+      <fileName>AnchorBerth.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="Berth">
+      <description>
+        <name>Berth</name>
+        <description>Rules for feature type Berth</description>
+        <language>eng</language>
+      </description>
+      <fileName>Berth.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="BerthPosition">
+      <description>
+        <name>BerthPosition</name>
+        <description>Rules for feature type BerthPosition</description>
+        <language>eng</language>
+      </description>
+      <fileName>BerthPosition.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="DataCoverage">
+      <description>
+        <name>DataCoverage</name>
+        <description>Rules for feature type DataCoverage</description>
+        <language>eng</language>
+      </description>
+      <fileName>DataCoverage.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="DockArea">
+      <description>
+        <name>DockArea</name>
+        <description>Rules for feature type DockArea</description>
+        <language>eng</language>
+      </description>
+      <fileName>DockArea.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="DryDock">
+      <description>
+        <name>DryDock</name>
+        <description>Rules for feature type DryDock</description>
+        <language>eng</language>
+      </description>
+      <fileName>DryDock.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="DumpingGround">
+      <description>
+        <name>DumpingGround</name>
+        <description>Rules for feature type DumpingGround</description>
+        <language>eng</language>
+      </description>
+      <fileName>DumpingGround.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    
+    
+    <ruleFile id="FloatingDock">
+      <description>
+        <name>FloatingDock</name>
+        <description>Rules for feature type FloatingDock</description>
+        <language>eng</language>
+      </description>
+      <fileName>FloatingDock.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    
+    <ruleFile id="Gridiron">
+      <description>
+        <name>Gridiron</name>
+        <description>Rules for feature type Gridiron</description>
+        <language>eng</language>
+      </description>
+      <fileName>Gridiron.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="HarbourAreaAdministrative">
+      <description>
+        <name>HarbourAreaAdministrative</name>
+        <description>Rules for feature type HarbourAreaAdministrative</description>
+        <language>eng</language>
+      </description>
+      <fileName>HarbourAreaAdministrative.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="HarbourAreaSection">
+      <description>
+        <name>HarbourAreaAdministrative</name>
+        <description>Rules for feature type HarbourAreaSection</description>
+        <language>eng</language>
+      </description>
+      <fileName>HarbourAreaSection.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="HarbourBasin">
+      <description>
+        <name>HarbourBasin</name>
+        <description>Rules for feature type HarbourBasin</description>
+        <language>eng</language>
+      </description>
+      <fileName>HarbourBasin.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="HarbourFacility">
+      <description>
+        <name>HarbourFacility</name>
+        <description>Rules for feature type HarbourFacility</description>
+        <language>eng</language>
+      </description>
+      <fileName>HarbourFacility.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="MooringWarpingFacility">
+      <description>
+        <name>MooringWarpingFacility</name>
+        <description>Rules for feature type MooringWarpingFacility</description>
+        <language>eng</language>
+      </description>
+      <fileName>MooringWarpingFacility.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="OuterLimit">
+      <description>
+        <name>OuterLimit</name>
+        <description>Rules for feature type OuterLimit</description>
+        <language>eng</language>
+      </description>
+      <fileName>OuterLimit.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="PilotBoardingPlace">
+      <description>
+        <name>PilotBoardingPlace</name>
+        <description>Rules for feature type PilotBoardingPlace</description>
+        <language>eng</language>
+      </description>
+      <fileName>PilotBoardingPlace.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    
+    <ruleFile id="QualityOfNonBathymetricData">
+      <description>
+        <name>QualityOfNonBathymetricData</name>
+        <description>Rules for feature type QualityOfNonBathymetricData</description>
+        <language>eng</language>
+      </description>
+      <fileName>QualityOfNonBathymetricData.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    
+    
+    
+    <ruleFile id="SeaplaneLandingArea">
+      <description>
+        <name>SeaplaneLandingArea</name>
+        <description>Rules for feature type SeaplaneLandingArea</description>
+        <language>eng</language>
+      </description>
+      <fileName>SeaplaneLandingArea.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="SoundingDatum">
+      <description>
+        <name>SoundingDatum</name>
+        <description>Rules for feature type SoundingDatum</description>
+        <language>eng</language>
+      </description>
+      <fileName>SoundingDatum.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="Terminal">
+      <description>
+        <name>Terminal</name>
+        <description>Rules for feature type Terminal</description>
+        <language>eng</language>
+      </description>
+      <fileName>Terminal.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="TextPlacement">
+      <description>
+        <name>TextPlacement</name>
+        <description>Rules for feature type TextPlacement</description>
+        <language>eng</language>
+      </description>
+      <fileName>TextPlacement.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="VerticalDatumOfData">
+      <description>
+        <name>VerticalDatumOfData</name>
+        <description>Rules for feature type VerticalDatumOfData</description>
+        <language>eng</language>
+      </description>
+      <fileName>VerticalDatumOfData.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+    <ruleFile id="WaterwayArea">
+      <description>
+        <name>WaterwayArea</name>
+        <description>Rules for feature type WaterwayArea</description>
+        <language>eng</language>
+      </description>
+      <fileName>WaterwayArea.lua</fileName>
+      <fileType>Rule</fileType>
+      <fileFormat>LUA</fileFormat>
+      <ruleType>SubTemplate</ruleType>
+    </ruleFile>
+  </rules>
+</portrayalCatalog>

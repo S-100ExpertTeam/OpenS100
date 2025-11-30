@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type='text/css' href='daySvgStyle.css'?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.36mm" height="5.36mm" viewBox="-2.68 -2.68 5.36 5.36" xmlns="http://www.w3.org/2000/svg">
+  <title>TRMGEN91</title>
+  <desc>terminal, unspecified type, for S131</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="NIPWG, RMM" iho:format="SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+ 
+  <rect class="symbolBox layout" fill="none" x="-2.68" y="-2.68" height="5.36" width="5.36"/>
+  <rect class="svgBox layout" fill="none" x="-2.68" y="-2.68" height="5.36" width="5.36"/>
+  <circle cx="0.00" cy="0.00" r="2.60" class="fCHWHT sCHMGD" style="stroke-width:0.32" />
+  
+  <path class="fCHMGD sCHMGD" style="stroke-width:0.08;stroke-linecap:butt;stroke-linejoin:miter"
+    d="M -1.5616895,-1.5587832 H 1.5636942 V -1.1729999 H 0.22481749 V 1.8051442 H -0.22883486 V -1.1729999 H -1.562 Z"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" />
+ 
+</svg>

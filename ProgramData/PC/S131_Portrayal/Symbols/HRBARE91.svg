@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.68mm" height="6.68mm" viewBox="-3.34 -3.34 6.68 6.68" xmlns="http://www.w3.org/2000/svg">  
+  <title>HRBARE91</title>
+  <desc>harbour area point symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-20" iho:source="S131Demo" iho:format="S100SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68" id="rect4546" />
+  <rect class="svgBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68" id="rect4548" />
+  <circle class="f0 sCHBLK" style="stroke-width:0.32" cx="0" cy="0" r="3" id="circle4550" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" id="circle828" />
+  <path
+       d="m -2.0588874,-1.1367625 h 0.3131592 v 0.94877927 h 1.13791501 V -1.1367625 h 0.31315917 V 1.1778249 H -0.60781319 V 0.07556657 H -1.7457282 V 1.1778249 h -0.3131592 z"
+       class="fCHBLK sCHBLK" style="stroke-width:0.16" id="path840" />
+  <path
+       d="m 1.4261712,0.09261979 q 0.100769,0.03410645 0.1953369,0.14572754 0.096118,0.11162109 0.1922363,0.306958 L 2.1315545,1.1778249 H 1.7951409 L 1.499035,0.58406266 Q 1.3843133,0.35151871 1.2757928,0.27555436 1.1688226,0.19959001 0.9827874,0.19959001 H 0.64172296 V 1.1778249 H 0.32856378 V -1.1367625 H 1.0354974 q 0.396875,0 0.5922119,0.16588133 0.1953369,0.16588135 0.1953369,0.50074462 0,0.21859131 -0.1023194,0.36276855 -0.100769,0.14417725 -0.2945556,0.19998779 z M 0.64172296,-0.87941388 v 0.82165526 H 1.0354974 q 0.2263427,0 0.3410644,-0.10386963 0.116272,-0.10541992 0.116272,-0.3085083 0,-0.20308837 -0.116272,-0.30540771 -0.1147217,-0.10386962 -0.3410644,-0.10386962 z"
+       class="fCHBLK sCHBLK" style="stroke-width:0.16" id="path842" />
+</svg>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="daySvgStyle.css"?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.64mm" height="4.64mm" viewBox="-2.32 -2.32 4.64 4.64" xmlns="http://www.w3.org/2000/svg">
+  <title>HRBFAC91</title>
+  <desc>harbour facility naval base</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-11-28" iho:source="" iho:format="S131, Demo, SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  
+    <rect class="symbolBox layout" fill="none" x="-2.0" y="-2.0" height="4.0" width="4.0"/>
+    <rect class="svgBox layout" fill="none" x="-2.0" y="-2.0" height="4.0" width="4.0"/>
+    <!--<circle cx="0.00" cy="0.00" r="2.00" class="f0" />-->
+    <circle cx="0.00" cy="0.00" r="2.00" class="f0 sCHMGD" style="stroke-width: 0.16" />
+    <path class="fCHMGD sCHMGD" style="stroke-width:0.16" d="M -0.57,0.69 L -0.57,-0.82 L -0.47,-0.82 L 0.47,0.47 L 0.47,-0.82 L 0.58,-0.82 L 0.58,0.69 L 0.50,0.69 L -0.45,-0.61 L -0.45,0.69 L -0.57,0.69 Z" />
+    <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" />
+  
+</svg>

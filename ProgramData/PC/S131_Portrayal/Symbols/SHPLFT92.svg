@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="8.7mm" height="5.14mm" viewBox="-0.37 -4.62 8.34 5.14">
+  <title>SHPLFT92</title>
+  <desc>Ship lift point symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="NIPWG" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" x="-0.37" y="-4.62" height="5.14" width="8.7" id="rect8" style="fill:none" />
+  <rect class="svgBox layout" x="-0.37" y="-4.62" height="5.14" width="8.7"  id="rect10" style="fill:none" />
+  <circle
+     class="fLANDF"
+     cx="0.02"
+     cy="0.02"
+     r="0.31"
+     id="circle12" />
+  <path
+     class="sl f0 sCHMGD"
+     style="stroke-width:0.16"
+     d="m 0.1171875,-4.2773438 h 7.78125 v 3.50781255 h -7.78125 z"
+     id="rect845" />
+  
+  <path
+     id="path832"
+class="sl fCHMGD sCHMGD"     style="stroke-width:0.16"
+     d="M 0.62199998,-1.1409717 V -3.8960146 H 1.0805422 v 2.2870267 h 1.1444607 v 0.4680162 z" />
+  <path
+     id="path834"
+class="sl fCHMGD sCHMGD"     style="stroke-width:0.16"
+     d="m 2.6756214,-1.1409717 v -2.7777805 h 0.4585423 v 2.7777805 z" />
+  <path
+     id="path836"
+class="sl fCHMGD sCHMGD"     style="stroke-width:0.16"
+     d="m 3.7117338,-1.1409717 v -2.7777805 h 1.5613173 v 0.469911 h -1.102775 v 0.6574965 h 0.9530856 v 0.469911 H 4.1702761 v 1.180462 z" />
+  <path
+     id="path838"
+class="sl fCHMGD sCHMGD"     style="stroke-width:0.16"
+     d="M 6.3015844,-1.1409717 V -3.4488412 H 5.6251399 v -0.469911 h 1.8095365 v 0.469911 H 6.7601266 v 2.3078695 z" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

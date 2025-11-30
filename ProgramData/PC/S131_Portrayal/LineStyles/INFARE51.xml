@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2022-09-01"?>
+<?S100Meta name="INFARE51" exposition="curve or boundary of information area"?>
+<lineStyle>
+   <intervalLength>32.3</intervalLength>
+   <pen width="0.32">
+      <color>CHMGF</color>
+   </pen>
+   <dash>
+      <start>2</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>18.2</start>
+      <length>6</length>
+   </dash>
+   <dash>
+      <start>26.2</start>
+      <length>6</length>
+   </dash>
+   <symbol reference="INFARE01">
+      <position>13.1</position>
+   </symbol>
+</lineStyle>

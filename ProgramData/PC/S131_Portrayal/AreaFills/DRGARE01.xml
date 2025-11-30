@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-03"?>
+<?S100Meta name="DRGARE01" exposition="dredged area"?><symbolFill>
+  <areaCRS>GlobalGeometry</areaCRS>
+  <symbol reference="DRGARE01P"/>
+  <v1>
+    <x>3.5</x>
+    <y>0.0</y>
+  </v1>
+  <v2>
+    <x>0</x>
+    <y>3.5</y>
+  </v2>
+</symbolFill>
