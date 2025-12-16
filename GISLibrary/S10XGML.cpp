@@ -583,30 +583,37 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 
 	auto strPos = node.child_value((s100namespace.namespace_gml + ":posList").c_str());
 
-	auto strPosList = LatLonUtility::Split(strPos, " ");
-	int posCnt = (int)strPosList.size();
-
-	if (posCnt < 4)
-	{
-		return false;
-	}
-	
-	int latIndex = 1;
-	int lonIndex = 0;
-
-	if (object->getSRSName().find("4326") != std::string::npos || 
-		envelop.isYXSequence())
-	{
-		latIndex = 0;
-		lonIndex = 1;
-	}
-
-	for (int i = 0; (i + 1) < posCnt; i += 2)
-	{
-		double lon = std::stod(strPosList.at(i + lonIndex));
-		double lat = std::stod(strPosList.at(i + latIndex));
+	std::istringstream iss(strPos);
+	double lat = 0;
+	double lon = 0;
+	while (iss >> lat >> lon) {
 		object->Add(lon, lat);
 	}
+
+	//auto strPosList = LatLonUtility::Split(strPos, " ");
+	//int posCnt = (int)strPosList.size();
+
+	//if (posCnt < 4)
+	//{
+	//	return false;
+	//}
+	//
+	//int latIndex = 1;
+	//int lonIndex = 0;
+
+	//if (object->getSRSName().find("4326") != std::string::npos || 
+	//	envelop.isYXSequence())
+	//{
+	//	latIndex = 0;
+	//	lonIndex = 1;
+	//}
+
+	//for (int i = 0; (i + 1) < posCnt; i += 2)
+	//{
+	//	double lon = std::stod(strPosList.at(i + lonIndex));
+	//	double lat = std::stod(strPosList.at(i + latIndex));
+	//	object->Add(lon, lat);
+	//}
 
 	return object;
 }

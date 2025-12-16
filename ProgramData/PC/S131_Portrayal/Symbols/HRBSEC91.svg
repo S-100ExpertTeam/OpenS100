@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.68mm" height="6.68mm" viewBox="-3.34 -3.34 6.68 6.68" xmlns="http://www.w3.org/2000/svg">
+   
+  <title>HRBSEC91</title>
+  <desc>harbour area section point symbol</desc>
+  <metadata>
+     <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description
+         iho:publisher="IHO"
+         iho:creationDate="2022-12-20"
+         iho:source="S131Demo"
+         iho:format="S100SVG"
+         iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <rect
+     class="symbolBox layout"
+     fill="none"
+     x="-3.34"
+     y="-3.34"
+     height="6.68"
+     width="6.68"
+     id="rect4546" />
+  <rect
+     class="svgBox layout"
+     fill="none"
+     x="-3.34"
+     y="-3.34"
+     height="6.68"
+     width="6.68"
+     id="rect4548" />
+  <circle
+     class="f0 sCHGRD"
+     style="stroke-width:0.31999999"
+     cx="0"
+     cy="0"
+     r="3"
+     id="circle4550" />
+  <circle
+     class="pivotPoint layout"
+     fill="none"
+     cx="0"
+     cy="0"
+     r="1"
+     id="circle828" />
+    <path
+       d="m -2.1198667,-1.2872775 h 0.3479547 v 1.05419929 h 1.26435007 V -1.2872775 h 0.34795466 V 1.2844864 H -0.50756193 V 0.05975492 H -1.771912 V 1.2844864 h -0.3479547 z"
+       class="fCHGRD sCHGRD" style="stroke-width:0.16"
+       id="path832"/>
+    <path
+       d="m 2.0745372,-1.2028726 v 0.3393419 q -0.198093,-0.0947401 -0.3737929,-0.1412489 -0.1756999,-0.046509 -0.3393419,-0.046509 -0.2842204,0 -0.43924972,0.11024305 -0.15330676,0.11024306 -0.15330676,0.3135037 0,0.17053223 0.10163033,0.25838217 0.10335286,0.0861274 0.38929575,0.13952637 l 0.2101509,0.0430637 q 0.3892958,0.0740695 0.5736084,0.26182726 0.1860352,0.18603517 0.1860352,0.49953887 0,0.37379287 -0.251492,0.56671818 -0.2497694,0.1929254 -0.7338054,0.1929254 -0.18259,0 -0.38929579,-0.041341 Q 0.64999013,1.251758 0.42950401,1.1707983 V 0.81250831 q 0.21187338,0.1188558 0.41513402,0.17914498 0.20326067,0.0602892 0.39963107,0.0602892 0.2980008,0 0.4599203,-0.11713334 0.1619195,-0.11713325 0.1619195,-0.33417428 0,-0.18948026 -0.1171333,-0.29627822 Q 1.6335649,0.19755875 1.3682926,0.14415976 L 1.1564192,0.10281862 Q 0.76712338,0.02530397 0.59314605,-0.14006062 0.41916872,-0.30542521 0.41916872,-0.59998089 q 0,-0.34106446 0.23943414,-0.53743491 0.2411567,-0.1963705 0.66318094,-0.1963705 0.1808675,0 0.3686252,0.032729 0.1877577,0.032728 0.3841282,0.098185 z"
+       class="fCHGRD sCHGRD" style="stroke-width:0.16"
+       id="path834" />
+</svg>

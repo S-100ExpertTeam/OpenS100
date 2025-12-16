@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.52mm" height="3.36mm" viewBox="-3.83 -1.58 7.52 3.36">
+  <title>SHPLFT91</title>
+  <desc>Ship lift area symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="NIPWG" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.67" y="-1.42" height="3.04" width="7.2"/>
+  <rect class="svgBox layout" fill="none" x="-3.67" y="-1.42" height="3.04" width="7.2"/>
+  <path d="m -3.4299999,1.48 v -2.7550429 h 0.4585422 v 2.2870267 h 1.1444608 V 1.48 Z" class="sl fCHMGD sCHMGD" style="stroke-width: 0.01;"/>
+  <path d="m -1.5086701,1.48 v -2.7777805 h 0.4585422 V 1.48 Z" class="sl fCHMGD sCHMGD" style="stroke-width: 0.01;"/>
+  <path d="m -0.60484937,1.48 v -2.7777805 h 1.5613173 v 0.46991101 h -1.10277508 v 0.65749648 H 0.80677853 V 0.29953803 H -0.14630715 V 1.48 Z" class="sl fCHMGD sCHMGD" style="stroke-width: 0.01;"/>
+  <path d="M 1.8527097,1.48 V -0.82786949 H 1.1762651 V -1.2977805 h 1.8095365 v 0.46991101 H 2.3112519 V 1.48 Z" class="sl fCHMGD sCHMGD" style="stroke-width: 0.01;"/>
+
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

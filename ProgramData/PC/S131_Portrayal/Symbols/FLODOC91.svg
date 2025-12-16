@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.68mm" height="6.68mm" viewBox="-3.34 -3.34 6.68 6.68">
+  <title>FLODOC91</title>
+  <desc>floating dock symbol for S131</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-10-31" iho:source="S131Demo" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68"/>
+  <rect class="svgBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68"/>
+  <circle class="fCHBRN sCHMGD" style="stroke-width: 0.32;" cx="0" cy="0" r="3"/>
+  <path d="m 0.56701037,-0.88292387 v 1.76378314 h 0.37068311 q 0.46943062,0 0.68667522,-0.21268703 0.2187638,-0.21268703 0.2187638,-0.67148333 0,-0.45575792 -0.2187638,-0.66692575 Q 1.4071241,-0.88292387 0.93769348,-0.88292387 Z M 0.26013338,-1.1351099 H 0.8905985 q 0.6593298,0 0.967726,0.27497392 0.3083962,0.27345475 0.3083962,0.85682489 0,0.58640852 -0.3099154,0.86138246 Q 1.5468899,1.1330453 0.8905985,1.1330453 H 0.26013338 Z"
+     style="stroke-width:0.32;"
+     class="sl f0 sCHMGD" />
+  <path
+       d="m -2.0767634,-1.0295727 h 1.49421755 v 0.23421634 H -1.7249779 v 0.60620694 h 1.03097526 V 0.04506689 H -1.7249779 V 1.0273976 h -0.3517855 z"
+       style="stroke-width:0.32;" class="sl f0 sCHMGD"/>
+
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

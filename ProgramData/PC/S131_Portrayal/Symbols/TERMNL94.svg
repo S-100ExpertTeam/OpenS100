@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type='text/css' href='daySvgStyle.css'?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.36mm" height="5.36mm" viewBox="-2.68 -2.68 5.36 5.36" xmlns="http://www.w3.org/2000/svg">
+  <title>TERMNL94</title>
+  <desc>bulk terminal for S131</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="NIPWG, RMM" iho:format="SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+    <rect class="symbolBox layout" fill="none" x="-2.68" y="-2.68" height="5.36" width="5.36"/>
+    <rect class="svgBox layout" fill="none" x="-2.68" y="-2.68" height="5.36" width="5.36"/>
+    <circle cx="0.00" cy="0.00" r="2.60" class="f0 sCHMGD" style="stroke-width:0.16" />
+
+  <path
+    class="f0 sCHBLK"
+    style="stroke-width:0.08"
+    d="m -0.01,-2.6 v 1.73"
+    id="path10" />
+  <path
+    class="fCHMGD sCHMGD"
+    style="stroke-width:0.04"
+    d="m -0.01,-0.87 -2.02,0.83 1.14,1.12 z"
+    id="path12" />
+  <path
+    class="fCHMGD sCHMGD"
+    style="stroke-width:0.04"
+    d="m -0.01,-0.87 1.98,0.84 -1.1,1.11 z"
+    id="path14"/>
+  <path
+    class="f0 sCHBLK"
+    style="stroke-width:0.08"
+    d="m -2.03,-0.04 2.02,-2.07"
+    id="path16" />
+  <path
+    class="f0 sCHBLK"
+    style="stroke-width:0.08"
+    d="M 1.97,-0.03 -0.01,-2.11"
+    id="path18" />
+  <path
+    class="fCHBRN sCHBRN"
+    style="stroke-width:0.04"
+    d="M -1.12,2.09 H 1.03 L 0.96,1.81 H 0.67 L 0.19,0.92 h -0.43 l -0.42,0.89 h -0.4 z"
+    id="path20" />
+
+    <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" />
+  
+</svg>
