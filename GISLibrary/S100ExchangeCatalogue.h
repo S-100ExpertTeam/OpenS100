@@ -48,7 +48,7 @@ public:
 
 	void DrawEx(HDC& hDC, Scaler* scaler, double offset);
 
-	void DrawFiles(HDC& hDC, Scaler* scaler, double offset);
+	void DrawFiles(HDC& hDC, Scaler* scaler, double offset, std::vector<std::shared_ptr<InventoryItem>>& item);
 	
 	bool containsFile(const std::vector<std::shared_ptr<InventoryItem>>& files, const CString& targetFile);
 
