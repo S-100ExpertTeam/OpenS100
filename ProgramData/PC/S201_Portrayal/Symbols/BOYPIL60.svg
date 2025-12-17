@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.97mm" height="6.9mm" viewBox="-4.07 -5.32 7.97 6.9">
+  <title>BOYPIL60</title>
+  <desc>pillar buoy, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2024-03-28" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="1.0" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-4.07" y="1.58" height="6.9" width="7.97" />
+  <rect class="svgBox layout" fill="none" x="-4.07" y="-5.32" height="6.9" width="7.97" />
+  <path d=" M -0.01,-0.01 L 2.31,-0.01 L 1.39,-1.96 L 1.39,-4.3 L 0.92,-4.3 L 0.01,-0.02" class="fCHYLW" />
+  <path d=" M -0.09,0.01 L -2.36,-0.02 L -0.21,-2.32 L 0.43,-4.3 L 0.92,-4.29 L 0.01,0.01" class="fRESBL" />
+  <circle cx="0" cy="0" r="0.58" class="fDEPDW" />
+  <circle cx="0" cy="0" r="0.58" class="sl f0 sOUTLW" stroke-width="0.32"  />
+  <path d=" M -2.41,0 L -0.22,-2.33 L 0.43,-4.32 L 1.4,-4.32 L 1.4,-1.94 L 2.33,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M -3.07,0 L -0.57,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M 0.6,0 L 2.9,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.2"/>
+</svg>

@@ -6,7 +6,7 @@
   <!--  template for sectored lights -->
   <!--  First draft April 14, 2015 -->
   <!--  Added support for directional and Moire lights May 30, 2016 -->
-  <xsl:template match="Light[@primitive='Point' and (categoryOfLight=1 or categoryOfLight=16)]" priority="2">
+  <xsl:template match="Light[@primitive='Point' and (categoryOfLight=1 or categoryOfLight=16)]" priority="1">
     <xsl:variable name="viewingGroup">27070</xsl:variable>
     <xsl:variable name="displayPlane">OVERRADAR</xsl:variable>
     <xsl:variable name="drawingPriority" select="24"/>

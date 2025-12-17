@@ -9,11 +9,11 @@
 	<xsl:param name="catLight" select="categoryOfLight"/>
 	<xsl:param name="lightStatus" select="status"/>
 	<xsl:param name="colour" select="colour"/>
-	<xsl:param name="signalGroup" select="signalGroup"/>
-	<xsl:param name="signalPeriod" select="signalPeriod"/>
+	<xsl:param name="signalGroup" select="rhythmOfLight/signalGroup"/>
+	<xsl:param name="signalPeriod" select="rhythmOfLight/signalPeriod"/>
 	<xsl:param name="height" select="height"/>
 	<xsl:param name="nominalRange" select="valueOfNominalRange"/>
-	<xsl:param name="lightChar" select="lightCharacteristic"/>
+	<xsl:param name="lightChar" select="rhythmOfLight/lightCharacteristic"/>
 	<xsl:param name="fid" select="@id"/>
 	<xsl:param name="flareAt45" select="'false'"/>
 	
@@ -108,13 +108,10 @@
 		<xsl:variable name="SIGGRP">
 			<xsl:choose>
 				<xsl:when test="$signalGroup = '' ">
-          <xsl:value-of select="$signalGroup"/>
-        </xsl:when>
-        <xsl:when test="$signalGroup = '()' ">
-          <xsl:value-of select="$signalGroup"/>
+				</xsl:when>
+				<xsl:when test="$signalGroup = '()' ">
 				</xsl:when>
 				<xsl:when test="$signalGroup = '(1)' ">
-          <xsl:value-of select="$signalGroup"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="$signalGroup"/>

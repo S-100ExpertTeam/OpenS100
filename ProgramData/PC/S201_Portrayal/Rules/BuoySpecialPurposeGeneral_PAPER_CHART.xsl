@@ -2,7 +2,7 @@
 
 <xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
    <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point']" priority="1">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point']" priority="1">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -39,7 +39,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and buoyShape=1]" priority="2">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=1]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -76,7 +76,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and buoyShape=2]" priority="2">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=2]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -113,7 +113,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and buoyShape=3]" priority="2">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=3]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -150,7 +150,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and buoyShape=4]" priority="2">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=4]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -187,7 +187,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and (buoyShape=5 or buoyShape=8)]" priority="3">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and (buoyShape=5 or buoyShape=8)]" priority="3">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -224,7 +224,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and buoyShape=6]" priority="2">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=6]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -261,7 +261,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and buoyShape=7]" priority="2">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=7]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -298,7 +298,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and categoryOfSpecialPurposeMark=15]" priority="2">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and categoryOfSpecialPurposeMark=15]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -335,7 +335,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and categoryOfSpecialPurposeMark=9]" priority="2">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and categoryOfSpecialPurposeMark=9]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -372,29 +372,29 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point']" priority="1">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=1 and colour[1]=6]" priority="3">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
          </featureReference>
-         <viewingGroup>27025</viewingGroup>
+         <viewingGroup>27010</viewingGroup>
          <displayPlane>OVERRADAR</displayPlane>
-         <drawingPriority>21</drawingPriority>
-         <symbol reference="DAYSQR21"/>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BOYCON12"/>
       </pointInstruction>
       <xsl:if test="featureName!= ''">
          <textInstruction>
             <featureReference>
                <xsl:value-of select="@id"/>
             </featureReference>
-            <viewingGroup>27025</viewingGroup>
+            <viewingGroup>21</viewingGroup>
             <displayPlane>OVERRADAR</displayPlane>
-            <drawingPriority>21</drawingPriority>
+            <drawingPriority>24</drawingPriority>
             <textPoint horizontalAlignment="End">
                <element>
                   <text>
                      <xsl:apply-templates select="featureName" mode="text">
-                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                        <xsl:with-param name="prefix">by </xsl:with-param>
                      </xsl:apply-templates>
                   </text>
                   <xsl:call-template name="textStyle">
@@ -409,29 +409,29 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and topmark/topmarkDaymarkShape=24]" priority="2">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=2 and colour[1]=6]" priority="3">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
          </featureReference>
-         <viewingGroup>27025</viewingGroup>
+         <viewingGroup>27010</viewingGroup>
          <displayPlane>OVERRADAR</displayPlane>
-         <drawingPriority>21</drawingPriority>
-         <symbol reference="DAYTRI21"/>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BOYCAN12"/>
       </pointInstruction>
       <xsl:if test="featureName!= ''">
          <textInstruction>
             <featureReference>
                <xsl:value-of select="@id"/>
             </featureReference>
-            <viewingGroup>27025</viewingGroup>
+            <viewingGroup>21</viewingGroup>
             <displayPlane>OVERRADAR</displayPlane>
-            <drawingPriority>21</drawingPriority>
+            <drawingPriority>24</drawingPriority>
             <textPoint horizontalAlignment="End">
                <element>
                   <text>
                      <xsl:apply-templates select="featureName" mode="text">
-                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                        <xsl:with-param name="prefix">by </xsl:with-param>
                      </xsl:apply-templates>
                   </text>
                   <xsl:call-template name="textStyle">
@@ -446,29 +446,140 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BuoySpecialPurposeGeneral[@primitive='Point' and topmark/topmarkDaymarkShape=25]" priority="2">
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=3 and colour[1]=6]" priority="3">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
          </featureReference>
-         <viewingGroup>27025</viewingGroup>
+         <viewingGroup>27010</viewingGroup>
          <displayPlane>OVERRADAR</displayPlane>
-         <drawingPriority>21</drawingPriority>
-         <symbol reference="DAYTRI25"/>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BOYSPH12"/>
       </pointInstruction>
       <xsl:if test="featureName!= ''">
          <textInstruction>
             <featureReference>
                <xsl:value-of select="@id"/>
             </featureReference>
-            <viewingGroup>27025</viewingGroup>
+            <viewingGroup>21</viewingGroup>
             <displayPlane>OVERRADAR</displayPlane>
-            <drawingPriority>21</drawingPriority>
+            <drawingPriority>24</drawingPriority>
             <textPoint horizontalAlignment="End">
                <element>
                   <text>
                      <xsl:apply-templates select="featureName" mode="text">
-                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                        <xsl:with-param name="prefix">by </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=4 and colour[1]=6]" priority="3">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27010</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BOYPIL12"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">by </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=5 and colour[1]=6]" priority="3">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27010</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BOYSPR12"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">by </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="SpecialPurposeGeneralBuoy[@primitive='Point' and buoyShape=6 and colour[1]=6]" priority="3">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27010</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BOYBAR12"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">by </xsl:with-param>
                      </xsl:apply-templates>
                   </text>
                   <xsl:call-template name="textStyle">

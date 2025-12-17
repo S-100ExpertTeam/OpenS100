@@ -3,7 +3,7 @@
 <xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
-  <xsl:template match="Topmark[@primitive='Point']" priority="1">
+  <!-- <xsl:template match="Topmark[@primitive='Point']" priority="1">
     <pointInstruction>
       <featureReference>
         <xsl:value-of select="@id"/>
@@ -11,7 +11,7 @@
       <viewingGroup>32220</viewingGroup>
       <displayPlane>OVERRADAR</displayPlane>
       <drawingPriority>12</drawingPriority>
-      <symbol reference="QUESMRK1"/>
+      <symbol reference="WNDMIL12"/>
     </pointInstruction>
   </xsl:template>
   
@@ -22,9 +22,9 @@
       <xsl:with-param name="displayPlane">OVERRADAR</xsl:with-param>
       <xsl:with-param name="drawingPriority">24</xsl:with-param>
     </xsl:call-template>
-  </xsl:template>
+  </xsl:template> -->
 
-  <xsl:template match="Topmark[@primitive='Point' and installationType=2]" priority="2">
+  <xsl:template match="Topmark[@primitive='Point']" priority="1">
     <xsl:call-template name="FloatingTopmark">
       <xsl:with-param name="featureReference" select="@id"/>
       <xsl:with-param name="viewingGroup">27010</xsl:with-param>

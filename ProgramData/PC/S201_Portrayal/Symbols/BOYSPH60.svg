@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.65mm" height="6.9mm" viewBox="-3.78 -5.38 7.65 6.9">
+  <title>BOYSPH60</title>
+  <desc>pattern of symbol</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2024-03-28" iho:source="S52Preslib4.0" iho:format="S100SVG" iho:version="1.0" />
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.78" y="1.52" height="6.9" width="7.65" />
+  <rect class="svgBox layout" fill="none" x="-3.78" y="-5.38" height="6.9" width="7.65" />
+  <path d=" M 0.01,0.01 L 2.33,-0.01 L 2.57,-0.39 L 2.79,-0.86 L 2.84,-1.59 L 2.81,-2.17 L 2.62,-2.71 L 2.02,-3.63 L 1.89,-3.76 L 1.62,-3.94 L 1.33,-4.09 L 0.9,-4.26 L 0,-0.01" class="fCHYLW" />
+  <path d=" M 0.01,0 L -2.18,0 L -2.44,-0.67 L -2.6,-1.82 L -2.51,-2.35 L -2.32,-2.97 L -1.59,-3.78 L -1.12,-4.09 L -0.68,-4.26 L -0.13,-4.38 L 0.44,-4.37 L 0.92,-4.27 L 0.01,0" class="fRESBL" />
+  <path d=" M 0.56,0 L 2.87,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M -2.78,0 L -0.52,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M -2.19,0 L -2.47,-0.69 L -2.56,-1.25 L -2.63,-1.85 L -2.5,-2.5 L -2.31,-2.97 L -1.97,-3.41 L -1.59,-3.79 L -1.13,-4.1 L -0.69,-4.25 L -0.16,-4.38 L 0.41,-4.38 L 0.97,-4.25 L 1.59,-3.97 L 2,-3.66 L 2.28,-3.25 L 2.62,-2.72 L 2.81,-2.19 L 2.84,-1.6 L 2.78,-0.88 L 2.56,-0.38 L 2.33,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <circle cx="0" cy="0" r="0.52" class="fDEPDW" />
+  <circle cx="0" cy="0" r="0.52" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.2"/>
+</svg>

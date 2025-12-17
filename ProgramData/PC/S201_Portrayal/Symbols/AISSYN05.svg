@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="19.04mm" height="12.72mm" viewBox="-5 -7.72 19.04 12.72">
+  <title>AISSYN05</title>
+  <desc>Synthetic AIS Aid To Navigation</desc>
+  <metadata>
+    <S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <Description publisher="IHB" creationDate="13-07-2022" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+    </S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-5" y="-7.72" height="12.72" width="19.04" />
+  <rect class="svgBox layout" fill="none" x="-5" y="-7.72" height="12.72" width="19.04" />
+  <path d=" M 8.63,-4.21 L 9.63,-7.22 L 10.64,-4.21" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <circle cx="0" cy="0" r="4.5" class="sl f0 sCHMGD" style="stroke-width:0.32" />
+  <path d=" M 9.03,-5.22 L 10.13,-5.22" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <path d=" M 11.24,-4.21 L 11.24,-7.22" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <path d=" M 13.54,-6.82 L 13.14,-7.22 L 12.34,-7.22 L 11.93,-6.82 L 11.93,-6.12 L 12.14,-5.92 L 12.34,-5.72 L 13.14,-5.72 L 13.54,-5.32 L 13.54,-4.62 L 13.14,-4.21 L 12.34,-4.21 L 11.93,-4.62" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <path d=" M 6.58,-6.82 L 6.18,-7.22 L 5.38,-7.22 L 4.97,-6.82 L 4.97,-6.12 L 5.18,-5.92 L 5.38,-5.72 L 6.18,-5.72 L 6.58,-5.32 L 6.58,-4.62 L 6.18,-4.21 L 5.38,-4.21 L 4.97,-4.62" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <path d=" M 7.4,-5.7 L 8.2,-5.7" class="sl f0 sCHMGD" style="stroke-width:0.32;" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.4"/>
+</svg>

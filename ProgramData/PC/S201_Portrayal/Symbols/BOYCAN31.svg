@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.48mm" height="4.26mm" viewBox="-3.04 -3.51 6.48 4.26">
+  <title>BOYCAN31</title>
+  <desc>can buoy, lateral grg, paper-chart</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata/5.2">
+      <iho:Description iho:publisher="IHB" iho:creationDate="2023-01-23" iho:source="7Cs" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-2.88" y="-3.35" height="3.94" width="6.16"/>
+  <rect class="svgBox layout" fill="none" x="-2.88" y="-3.35" height="3.94" width="6.16"/>
+  <path d=" M -2.41,0 L -1.47,-3.35 L 3.28,-3.35 L 2.34,0 Z" class="fCHGRN"/>
+  <path d=" M -2.41,0 M -2.1,-1.11 L 2.65,-1.11 L 2.96,-2.23 L -1.79,-2.23 L -2.1,-1.11 Z" class="fCHRED"/>
+  <circle class="f0 sOUTLW" stroke-width="0.32"  cx="0" cy="0" r="0.59"/>
+  <path d=" M -2.88,0 L -0.6,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M 0.53,0 L 2.81,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <path d=" M -2.41,0 L -1.47,-3.35 L 3.28,-3.35 L 2.34,0" class="sl f0 sOUTLW" stroke-width="0.32" />
+  <circle class="fDEPDW" cx="0" cy="0" r="0.45"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.2"/>
+</svg>

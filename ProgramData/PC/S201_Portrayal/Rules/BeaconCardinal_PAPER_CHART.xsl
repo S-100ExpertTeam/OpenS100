@@ -2,7 +2,13 @@
 
 <xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
    <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
-   <xsl:template match="BeaconCardinal[@primitive='Point']" priority="1">
+   
+   <xsl:variable name="vg_point" select="'27020'"/>
+   <xsl:variable name="vg_text" select="'21'"/>
+   <xsl:variable name="priority" select="'24'"/>
+   <xsl:variable name="displayPlane" select="'OVERRADAR'"/>
+   
+   <xsl:template match="CardinalBeacon[@primitive='Point']" priority="1">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -39,7 +45,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BeaconCardinal[@primitive='Point' and beaconShape=1]" priority="2">
+   <xsl:template match="CardinalBeacon[@primitive='Point' and beaconShape=1]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -76,7 +82,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BeaconCardinal[@primitive='Point' and beaconShape=3]" priority="2">
+   <xsl:template match="CardinalBeacon[@primitive='Point' and beaconShape=3]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -113,7 +119,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BeaconCardinal[@primitive='Point' and beaconShape=4]" priority="2">
+   <xsl:template match="CardinalBeacon[@primitive='Point' and beaconShape=4]" priority="2">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -150,7 +156,7 @@
          </textInstruction>
       </xsl:if>
    </xsl:template>
-   <xsl:template match="BeaconCardinal[@primitive='Point' and (beaconShape=5 or beaconShape=7)]" priority="3">
+   <xsl:template match="CardinalBeacon[@primitive='Point' and (beaconShape=5 or beaconShape=7)]" priority="3">
       <pointInstruction>
          <featureReference>
             <xsl:value-of select="@id"/>
@@ -182,6 +188,302 @@
                <offset>
                   <x>-3.51</x>
                   <y>7.02</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="CardinalBeacon[@primitive='Point' and beaconShape=3 and colour[1]=2 and colour[2]=6]" priority="4">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27020</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BCNTOW22"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="CardinalBeacon[@primitive='Point' and (beaconShape=5 or beaconShape=7) and colour[1]=2 and colour[2]=6]" priority="4">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27020</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BCNGEN22"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="CardinalBeacon[@primitive='Point' and beaconShape=3 and colour[1]=6 and colour[2]=2]" priority="4">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27020</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BCNTOW24"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="CardinalBeacon[@primitive='Point' and (beaconShape=5 or beaconShape=7) and colour[1]=6 and colour[2]=2]" priority="4">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27020</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BCNGEN24"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="CardinalBeacon[@primitive='Point' and beaconShape=3 and colour[1]=2 and colour[2]=6 and colour[3]=2]" priority="5">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27020</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BCNTOW23"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="CardinalBeacon[@primitive='Point' and (beaconShape=5 or beaconShape=7) and colour[1]=2 and colour[2]=6 and colour[3]=2]" priority="5">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27020</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BCNGEN23"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="CardinalBeacon[@primitive='Point' and beaconShape=3 and colour[1]=6 and colour[2]=2 and colour[3]=6]" priority="5">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27020</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BCNTOW25"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
+               </offset>
+            </textPoint>
+         </textInstruction>
+      </xsl:if>
+   </xsl:template>
+   <xsl:template match="CardinalBeacon[@primitive='Point' and (beaconShape=5 or beaconShape=7) and colour[1]=6 and colour[2]=2 and colour[3]=6]" priority="5">
+      <pointInstruction>
+         <featureReference>
+            <xsl:value-of select="@id"/>
+         </featureReference>
+         <viewingGroup>27020</viewingGroup>
+         <displayPlane>OVERRADAR</displayPlane>
+         <drawingPriority>24</drawingPriority>
+         <symbol reference="BCNGEN25"/>
+      </pointInstruction>
+      <xsl:if test="featureName!= ''">
+         <textInstruction>
+            <featureReference>
+               <xsl:value-of select="@id"/>
+            </featureReference>
+            <viewingGroup>21</viewingGroup>
+            <displayPlane>OVERRADAR</displayPlane>
+            <drawingPriority>24</drawingPriority>
+            <textPoint horizontalAlignment="End">
+               <element>
+                  <text>
+                     <xsl:apply-templates select="featureName" mode="text">
+                        <xsl:with-param name="prefix">bn </xsl:with-param>
+                     </xsl:apply-templates>
+                  </text>
+                  <xsl:call-template name="textStyle">
+                     <xsl:with-param name="style">default</xsl:with-param>
+                  </xsl:call-template>
+               </element>
+               <offset>
+                  <x>-3.51</x>
+                  <y>3.51</y>
                </offset>
             </textPoint>
          </textInstruction>

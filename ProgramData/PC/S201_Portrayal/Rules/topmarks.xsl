@@ -53,8 +53,7 @@
 				<xsl:when test="topmarkDaymarkShape = '29'">TOPMAR22</xsl:when>
 				<xsl:when test="topmarkDaymarkShape = '30'">TOPMAR86</xsl:when>
 				<xsl:when test="topmarkDaymarkShape = '31'">TOPMAR14</xsl:when>
-        <xsl:when test="topmarkDaymarkShape = '32'">TOPMAR30</xsl:when>
-        <xsl:when test="topmarkDaymarkShape = '33'">TMARDEF1</xsl:when>
+				<xsl:when test="topmarkDaymarkShape = '32'">TOPMAR30</xsl:when>
 				<xsl:otherwise>TMARDEF1</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -94,10 +93,7 @@
 				<xsl:when test="topmarkDaymarkShape = '11'">TOPMAR07</xsl:when>
 				<xsl:when test="topmarkDaymarkShape = '12'">TOPMAR14</xsl:when>
 				<xsl:when test="topmarkDaymarkShape = '13'">TOPMAR05</xsl:when>
-        <xsl:when test="topmarkDaymarkShape = '14'">TOPMAR06</xsl:when>
-        <xsl:when test="topmarkDaymarkShape = '15'">TMARDEF2</xsl:when>
-        <xsl:when test="topmarkDaymarkShape = '16'">TMARDEF2</xsl:when>
-        <xsl:when test="topmarkDaymarkShape = '17'">TMARDEF2</xsl:when>
+				<xsl:when test="topmarkDaymarkShape = '14'">TOPMAR06</xsl:when>
 				<xsl:when test="topmarkDaymarkShape = '18'">TOPMAR10</xsl:when>
 				<xsl:when test="topmarkDaymarkShape = '19'">TOPMAR13</xsl:when>
 				<xsl:when test="topmarkDaymarkShape = '20'">TOPMAR14</xsl:when>
@@ -112,8 +108,7 @@
 				<xsl:when test="topmarkDaymarkShape = '29'">TOPMAR02</xsl:when>
 				<xsl:when test="topmarkDaymarkShape = '30'">TOPMAR17</xsl:when>
 				<xsl:when test="topmarkDaymarkShape = '31'">TOPMAR14</xsl:when>
-        <xsl:when test="topmarkDaymarkShape = '32'">TOPMAR10</xsl:when>
-        <xsl:when test="topmarkDaymarkShape = '33'">TMARDEF2</xsl:when>
+				<xsl:when test="topmarkDaymarkShape = '32'">TOPMAR10</xsl:when>
 				<xsl:otherwise>TMARDEF2</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
