@@ -158,7 +158,7 @@ void SENC_LineInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 
 	output->GetSENCFromS100Common(s100Instruction, this);
 
-	SetSuppression(s100LineInstruction->SuppressionIsTrue());
+	SetSuppression(s100LineInstruction->GetSuppression());
 
 	if (s100LineInstruction->GetCompositeLineStyle())
 	{
@@ -168,7 +168,7 @@ void SENC_LineInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 			itor++)
 		{
 			SENC_LineStyle* ls = new SENC_LineStyle();
-			ls->GetStyleFromS100(*itor, pc);
+			ls->GetStyleFromS100((S100_LineStyle*)*itor, pc);
 			lineStyles.push_back(ls);
 		}
 	}
@@ -202,7 +202,7 @@ void SENC_LineInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 					itor != lineStyleslist.end();
 					itor++)
 				{
-					S100_LineStyle* ls = *itor;
+					S100_LineStyle* ls = (S100_LineStyle*)*itor;
 					SENC_LineStyle* sencls = new SENC_LineStyle();
 
 					sencls->GetStyleFromS100(ls, pc);

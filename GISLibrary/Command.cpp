@@ -87,4 +87,14 @@ namespace Part9a
     {
 		return parameter;
     }
+
+    void Command::setId(const std::string& value)
+    {
+        id = value;
+    }
+
+    std::string Command::getId()
+    {
+        return id;
+	}
 }

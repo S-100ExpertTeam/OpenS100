@@ -12,6 +12,7 @@
 #include <pugixml.hpp>
 
 #include <optional>
+#include <vector>
 
 class S100_Description;
 

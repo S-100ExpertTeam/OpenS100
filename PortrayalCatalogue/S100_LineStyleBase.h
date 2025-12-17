@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+// AbstractLineStyle
 class S100_LineStyleBase
 {
 public:

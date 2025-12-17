@@ -20,7 +20,7 @@
 #include <unordered_map>
 #include <memory>
 
-void CommandList::Insert(std::string& command, std::string& params)
+void CommandList::Insert(std::string id, std::string& command, std::string& params)
 {
 	static const std::unordered_map<std::string,
 		std::function<std::unique_ptr<Part9a::Command>()>> factory {
@@ -96,6 +96,7 @@ void CommandList::Insert(std::string& command, std::string& params)
 
 	auto obj = it->second();
 
+	obj->setId(id);
 	obj->setParameter(params);
 	obj->parse(params);
 
@@ -111,7 +112,8 @@ void CommandList::Insert(std::unique_ptr<Part9a::Command> command)
 std::list<S100_Instruction*> CommandList::Parse()
 {
 	std::list<S100_Instruction*> result;
-	std::list<Part9a::Command*> stateCommand; // Context;
+
+	std::optional<Part9a::ViewingGroup> viewingGroup;
 
 	for (auto i = commands.begin(); i != commands.end(); ++i) {
 		auto command = i->get();
@@ -120,6 +122,9 @@ std::list<S100_Instruction*> CommandList::Parse()
 		if (dynamic_cast<Part9a::PointInstruction*>(command)) {
 			auto ptr = dynamic_cast<Part9a::PointInstruction*>(command);
 			auto instruction = new S100_PointInstruction();
+			instruction->SetFeatureReference(ptr->getId());
+			instruction->SetViewingGroup(viewingGroup.has_value() ? viewingGroup->GetViewingGroups() : std::vector<std::string>());
+			result.push_back(instruction);
 			continue;
 		}
 		else if (dynamic_cast<Part9a::LineInstruction*>(command)) {
@@ -144,7 +149,10 @@ std::list<S100_Instruction*> CommandList::Parse()
 		}
 		else if (dynamic_cast<Part9a::NullInstruction*>(command)) {
 		}
-
+		else if (dynamic_cast<Part9a::ViewingGroup*>(command)) {
+			auto ptr = dynamic_cast<Part9a::ViewingGroup*>(command);
+			viewingGroup = *ptr;
+		}
 	}
 
 	return result;

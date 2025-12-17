@@ -259,7 +259,7 @@ void SENC_AugmentedRay::FromS100Instruction(S100_Instruction* s100Instruction, P
 			itor++)
 		{
 			SENC_LineStyle* ls = new SENC_LineStyle();
-			ls->GetStyleFromS100(*itor, pc);
+			ls->GetStyleFromS100((S100_LineStyle*)*itor, pc);
 
 			//for (auto itorSymbol = ls->symbols.begin(); itorSymbol != ls->symbols.end(); itorSymbol++)
 			//{
@@ -326,7 +326,7 @@ void SENC_AugmentedRay::FromS100Instruction(S100_Instruction* s100Instruction, P
 				itor != lineStyleList.end();
 				itor++)
 			{
-				S100_LineStyle* ls = *itor;
+				S100_LineStyle* ls = (S100_LineStyle*)*itor;
 				SENC_LineStyle* sencls = new SENC_LineStyle();
 
 				sencls->GetStyleFromS100(ls, pc);

@@ -412,7 +412,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 		if (splitedSize > 0)
 		{
 			// insert & parse
-			commandList.Insert(cp[0], cp.size() > 1 ? cp[1] : "");
+			commandList.Insert(std::string(featureID), cp[0], cp.size() > 1 ? cp[1] : "");
 		}
 	}
 

@@ -22,6 +22,7 @@ namespace Part9a
 		static IntervalType GetIntervalTypeFromString(const std::string& value);
 
     public:
+        std::string id;
         bool present = false;
         std::string parameter;
 
@@ -31,5 +32,8 @@ namespace Part9a
 
 		void setParameter(const std::string& value);
         std::string getParameter();
+
+		void setId(const std::string& value);
+		std::string getId();
     };
 }

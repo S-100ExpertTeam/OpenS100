@@ -14,10 +14,10 @@ public:
 private:
 	S100_LineStyleReference* lineStyleReference;
 	S100_CompositeLineStyle* compositeLineStyle;
-	S100_LineStyle *lineStyle;
+	S100_LineStyle *lineStyle; // LineStyles::AbstractLineStyle
 
 private:
-	std::wstring suppression = L"false";
+	bool suppression = true;
 
 public:
 	void SetLineStyleReference(S100_LineStyleReference* value);
@@ -29,9 +29,8 @@ public:
 	void SetLineStyle(S100_LineStyle* value);
 	S100_LineStyle* GetLineStyle();
 
-	void SetSuppression(std::wstring& value);
-	std::wstring GetSuppression();
+	void SetSuppression(bool value);
+	bool GetSuppression();
 
 	void GetContents(pugi::xml_node node);
-	bool SuppressionIsTrue();
 };

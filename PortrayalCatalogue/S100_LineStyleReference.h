@@ -10,7 +10,7 @@ public:
 	virtual ~S100_LineStyleReference();
 
 private:
-	std::wstring reference = L"";
+	std::wstring reference;
 
 public:
 	void GetContents(pugi::xml_node& node);

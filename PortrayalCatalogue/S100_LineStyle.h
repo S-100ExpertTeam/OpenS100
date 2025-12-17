@@ -27,9 +27,9 @@ private:
 	std::wstring joinStyle;
 	std::wstring offset;
 	
-	S100_Pen m_pen;
-	std::list<S100_Dash> m_dash;
-	std::list<S100_LineSymbol> m_symbol;
+	S100_Pen m_pen; // pen 1
+	std::list<S100_Dash> m_dash; // symbol 0..*
+	std::list<S100_LineSymbol> m_symbol; // dash 0..*
 
 public:
 	void GetContents(pugi::xml_node& node);

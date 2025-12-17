@@ -14,14 +14,14 @@ public:
 	virtual ~S100_CompositeLineStyle();
 
 private:
-	std::vector<S100_LineStyle*> lineStyles;
+	std::vector<S100_LineStyleBase*> lineStyles;
 
 public:
 	void GetContents(pugi::xml_node& node);
 
-	void SetLineStyle(S100_LineStyle* value);
-	void SetLineStyles(std::vector<S100_LineStyle*> value);
+	void SetLineStyle(S100_LineStyleBase* value);
+	void SetLineStyles(std::vector<S100_LineStyleBase*> value);
 
-	S100_LineStyle* GetLineStyle(int index);
-	std::vector<S100_LineStyle*> GetLineStyles();
+	S100_LineStyleBase* GetLineStyle(int index);
+	std::vector<S100_LineStyleBase*> GetLineStyles();
 };

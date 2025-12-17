@@ -66,28 +66,31 @@ S100_LineStyle* S100_LineInstruction::GetLineStyle()
 }
 
 
-void S100_LineInstruction::SetSuppression(std::wstring& value)
+void S100_LineInstruction::SetSuppression(bool value)
 {
 	suppression = value;
 }
 
 
-std::wstring S100_LineInstruction::GetSuppression()
+bool S100_LineInstruction::GetSuppression()
 {
 	return suppression;
 }
 
 void S100_LineInstruction::GetContents(pugi::xml_node node) 
 {
-	//attri
+	//attributes
 	for (auto attri = node.first_attribute(); attri; attri = attri.next_attribute())
 	{
 		auto attriName = attri.name();
 		
-		if (!strcmp(attriName,"suppression"))
-		{
-			suppression = pugi::as_wide(attri.value());
-			break;
+		if (!strcmp(attriName,"suppression")) {
+			if (!strcmp(attri.value(), "true")) {
+				suppression = true;
+			}
+			else {
+				suppression = false;
+			}
 		}
 	}
 
@@ -138,14 +141,4 @@ void S100_LineInstruction::GetContents(pugi::xml_node node)
 			compositeLineStyle->GetContents(instruction);
 		}
 	}
-}
-
-bool S100_LineInstruction::SuppressionIsTrue()
-{
-	if (suppression.compare(L"true") == 0)
-	{
-		return true;
-	}
-
-	return false;
 }

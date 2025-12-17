@@ -556,6 +556,10 @@ void LayerManager::AddSymbolDrawing(
 
 		for (auto pi = points.begin(); pi != points.end(); pi++)
 		{
+			if (nullptr == instruction->symbol) {
+				continue;
+			}
+
 			// rotate Point
 			if (scaler->GetRotationDegree())
 			{

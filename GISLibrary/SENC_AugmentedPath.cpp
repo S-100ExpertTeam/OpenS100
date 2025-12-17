@@ -248,7 +248,7 @@ void SENC_AugmentedPath::FromS100Instruction(S100_Instruction* s100Instruction, 
 			itor++)
 		{
 			SENC_LineStyle* ls = new SENC_LineStyle();
-			ls->GetStyleFromS100(*itor, pc);
+			ls->GetStyleFromS100((S100_LineStyle*)*itor, pc);
 			lineStyles.push_back(ls);
 		}
 	}
@@ -279,7 +279,7 @@ void SENC_AugmentedPath::FromS100Instruction(S100_Instruction* s100Instruction, 
 				itor != lineStylesList.end();
 				itor++)
 			{
-				S100_LineStyle* ls = *itor;
+				S100_LineStyle* ls = (S100_LineStyle*)*itor;
 				SENC_LineStyle* sencls = new SENC_LineStyle();
 
 				sencls->GetStyleFromS100(ls, pc);

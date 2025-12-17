@@ -58,22 +58,22 @@ void S100_CompositeLineStyle::GetContents(pugi::xml_node& node)
 	}
 }
 
-void S100_CompositeLineStyle::SetLineStyle(S100_LineStyle* value) 
+void S100_CompositeLineStyle::SetLineStyle(S100_LineStyleBase* value)
 {
 	lineStyles.push_back(value);
 }
 
-void S100_CompositeLineStyle::SetLineStyles(std::vector<S100_LineStyle*> value) 
+void S100_CompositeLineStyle::SetLineStyles(std::vector<S100_LineStyleBase*> value)
 {
 	lineStyles = value;
 }
 
-S100_LineStyle* S100_CompositeLineStyle::GetLineStyle(int index) 
+S100_LineStyleBase* S100_CompositeLineStyle::GetLineStyle(int index)
 {
 	return lineStyles.at(index);
 }
 
-std::vector<S100_LineStyle*> S100_CompositeLineStyle::GetLineStyles()
+std::vector<S100_LineStyleBase*> S100_CompositeLineStyle::GetLineStyles()
 {
 	return lineStyles;
 }
