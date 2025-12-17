@@ -110,20 +110,22 @@ std::list<S100_Instruction*> CommandList::Parse()
 	std::list<S100_Instruction*> result;
 	std::list<Part9a::Command*> stateCommand; // Context;
 
-	for (auto i = commands.begin(); i != commands.end(); ++i)
-	{
+	for (auto i = commands.begin(); i != commands.end(); ++i) {
 		auto command = i->get();
 
 		// PointInstruction
-		if (dynamic_cast<Part9a::PointInstruction*>(command))
-		{
+		if (dynamic_cast<Part9a::PointInstruction*>(command)) {
 			auto ptr = dynamic_cast<Part9a::PointInstruction*>(command);
 			
 			continue;
 		}
+		else if (dynamic_cast<Part9a::LineInstruction*>(command) || dynamic_cast<Part9a::LineInstructionUnsuppressed*>(command)) {
 
-		// LineInstruction Or LineInstructionUnsuppressed
-		// refers to a line style in PC or defiend by LineStyle command
+		}
+		else if (dynamic_cast<Part9a::ColorFill*>(command)) {
+			auto ptr = dynamic_cast<Part9a::ColorFill*>(command);
+			continue;
+		}
 
 		// ColorFill
 	}
