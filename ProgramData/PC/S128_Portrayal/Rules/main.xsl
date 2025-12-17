@@ -8,10 +8,10 @@
   <xsl:include href="textStyle.xsl"/>
   
   <!--Include templates/rules for: GeoFeature-->
-  <xsl:include href="CatalogueOfNauticalProduct.xsl"/>
-  <xsl:include href="NauticalProduct.xsl"/>
-  <xsl:include href="ElectronicChart.xsl"/>
-  <xsl:include href="PaperChart.xsl"/>
+  <xsl:include href="DistributorInformation.xsl"/>
+  <xsl:include href="S100Service.xsl"/>
+  <xsl:include href="ElectronicProduct.xsl"/>
+  <xsl:include href="PhysicalProduct.xsl"/>
   
   <!--Include templates/rules for: Default-->
   <xsl:include href="Default.xsl"/>

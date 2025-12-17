@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="FRONTS02" exposition="boundary of an area where anchoring is prohibited or restricted"?>
+<lineStyle offset="0">
+    <intervalLength>6</intervalLength>
+    <pen width="0.32">
+        <color>WXRED</color>
+    </pen>  
+    <symbol reference="SMCIRC2">
+        <position>3</position>
+    </symbol>
+</lineStyle>

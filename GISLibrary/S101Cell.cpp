@@ -609,6 +609,13 @@ bool S101Cell::OpenByGML(CString path)
 
 	CalcMBR();
 	Check();
+	
+	if (false == ATTRtoAttribute())
+	{
+		//return false;
+	}
+
+	SetAllCode();
 
 	if (gml)
 	{
@@ -4756,6 +4763,7 @@ bool S101Cell::ConvertFromS101GML(S101Creator* creator, R_FeatureRecord* feature
 {
 	auto fc = GetFC();
 	auto sa = fc->GetSimpleAttribute(simpleAttribute->GetCode());
+
 	if (sa->GetValueType() == FCD::S100_CD_AttributeValueType::enumeration)
 	{
 		auto listedValue = sa->GetListedValue(simpleAttribute->GetValue());
@@ -4827,40 +4835,44 @@ bool S101Cell::ConvertFeaturesFromS101GML(S10XGML* gml, S101Creator* creator)
 		auto code = (*i)->GetCode();
 
 		auto geometryID = feature->GetGeometryID();
-		if (geometryID.empty() == false)
+		//if (geometryID.empty() == false)
 		{
 			auto fr = new R_FeatureRecord();
 			fr->SetRCID(feature->GetIDAsInteger());
 			fr->SetNumericCode(m_dsgir.GetFeatureTypeCode(pugi::as_wide(code)));
+			fr->SetCode(feature->GetCode());
 
-			auto geometryIntID = feature->GetGeometryIDAsInt();
-			if (std::string::npos != geometryID.find("mp"))
+			if (geometryID.empty() == false)
 			{
-				fr->SetSPAS(115, geometryIntID, 1);
-			}
-			else if (std::string::npos != geometryID.find("p"))
-			{
-				fr->SetSPAS(110, geometryIntID, 1);
-			}
-			else if (std::string::npos != geometryID.find("s"))
-			{
-				fr->SetSPAS(130, geometryIntID, 1);
-			}
-			else if (std::string::npos != geometryID.find("occ"))
-			{
-				fr->SetSPAS(125, geometryIntID, 2);
-			}
-			else if (std::string::npos != geometryID.find("cc"))
-			{
-				fr->SetSPAS(125, geometryIntID, 1);
-			}
-			else if (std::string::npos != geometryID.find("oc"))
-			{
-				fr->SetSPAS(120, geometryIntID, 2);
-			}
-			else if (std::string::npos != geometryID.find("c"))
-			{
-				fr->SetSPAS(120, geometryIntID, 1);
+				auto geometryIntID = feature->GetGeometryIDAsInt();
+				if (std::string::npos != geometryID.find("mp"))
+				{
+					fr->SetSPAS(115, geometryIntID, 1);
+				}
+				else if (std::string::npos != geometryID.find("p"))
+				{
+					fr->SetSPAS(110, geometryIntID, 1);
+				}
+				else if (std::string::npos != geometryID.find("s"))
+				{
+					fr->SetSPAS(130, geometryIntID, 1);
+				}
+				else if (std::string::npos != geometryID.find("occ"))
+				{
+					fr->SetSPAS(125, geometryIntID, 2);
+				}
+				else if (std::string::npos != geometryID.find("cc"))
+				{
+					fr->SetSPAS(125, geometryIntID, 1);
+				}
+				else if (std::string::npos != geometryID.find("oc"))
+				{
+					fr->SetSPAS(120, geometryIntID, 2);
+				}
+				else if (std::string::npos != geometryID.find("c"))
+				{
+					fr->SetSPAS(120, geometryIntID, 1);
+				}
 			}
 
 			ConvertFromS101GML(creator, fr, feature);
@@ -4972,12 +4984,7 @@ bool S101Cell::InsertCurveRecordFromS101GML(S10XGML* gml, GM::Curve* curve)
 					curve->segment.front().controlPoints.at(i).GetYInteger());
 			}
 
-			auto result = InsertCurveRecord(cr->GetRecordName().GetName(), cr);
-			if (!result) {
-				OutputDebugString(L"A\n");
-				delete cr;
-				cr = nullptr;
-			}
+			InsertCurveRecord(cr->GetRecordName().GetName(), cr);
 		}
 	}
 

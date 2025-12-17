@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.45mm" height="2.56mm" viewBox="-3.23 -1.28 6.45 2.56">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="6.45mm" height="2.56mm" viewBox="-3.23 -1.28 6.45 2.56">
   <title>LITFLT02</title>
   <desc>light float, simplified</desc>
   <metadata>

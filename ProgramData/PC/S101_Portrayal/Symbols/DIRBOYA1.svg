@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="13.44mm" height="30.75mm" viewBox="-6.66 -30.59 13.44 30.75">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="13.44mm" height="30.75mm" viewBox="-6.66 -30.59 13.44 30.75">
   <title>DIRBOYA1</title>
   <desc>direction and color of buoyage for approaching harbour in IALA region A (red to port)</desc>
   <metadata>

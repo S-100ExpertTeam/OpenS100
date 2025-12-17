@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.84mm" height="10.32mm" viewBox="-2.49 -10 4.84 10.32">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="4.84mm" height="10.32mm" viewBox="-2.49 -10 4.84 10.32">
   <title>TOPMAR86</title>
   <desc>topmark for beacons, upright cross, paper-chart</desc>
   <metadata>

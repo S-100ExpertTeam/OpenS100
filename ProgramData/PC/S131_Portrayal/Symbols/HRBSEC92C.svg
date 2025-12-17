@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="12.24mm" height="6.02mm" viewBox="-12.24 -6.02 12.24 6.02">
+  <title>HRBSEC92C</title>
+  <desc>centered symbol for a seaplane anchorage</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="NIPWG" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none"    x="-12.24" y="-6.02" height="6.02"  width="12.24"/>
+  <rect class="svgBox layout" fill="none" x="-12.24" y="-6.02" height="6.02" width="12.24"/>
+  <path
+   d="m -7.4199969,-1.5529928e-7 h 2.3599988 L -5.749999,-0.79000044 V -1.7900022 h 2.6300009 l -2.4300006,-1.6299982 v -1.22 l -0.5899997,-0.6400006 -0.7099988,0.6400006 v 1.22 L -9.3,-1.8500022 l 2.4900025,0.02 v 1.10000176 L -7.4199969,-1.5529928e-7"
+    class="sl f0 sCHMGD" style="stroke-width: 0.32;"/>
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.98mm" height="5.92mm" viewBox="-2.96 -2.97 5.98 5.92">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="5.98mm" height="5.92mm" viewBox="-2.96 -2.97 5.98 5.92">
   <title>TIDSTR01</title>
   <desc>point or area for which a tidal stream table is available</desc>
   <metadata>

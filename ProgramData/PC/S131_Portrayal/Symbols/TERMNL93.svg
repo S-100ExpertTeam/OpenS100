@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type='text/css' href='daySvgStyle.css'?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.36mm" height="5.36mm" viewBox="-2.68 -2.68 5.36 5.36" xmlns="http://www.w3.org/2000/svg">
+  <title>TERMNL93</title>
+  <desc>passenger terminal for S131</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="NIPWG, RMM" iho:format="SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+    <rect class="symbolBox layout" fill="none" x="-2.68" y="-2.68" height="5.36" width="5.36"/>
+    <rect class="svgBox layout" fill="none" x="-2.68" y="-2.68" height="5.36" width="5.36"/>
+    <circle cx="0.00" cy="0.00" r="2.60" class="f0 sCHMGD" style="stroke-width:0.16" />
+    <path class="fCHMGD sCHMGD" style="stroke-width:0.16;stroke-cap:round;stroke-join:round" d="M -1.66,0.65 L 1.41,0.65 L 1.89,-0.02 L -2.28,-0.02 L -1.66,0.65 Z" />
+    <path class="f0 sCHMGD" style="stroke-width:0.16;stroke-cap:round;stroke-join:round" d="M 0.88,-0.72 L 0.52,-1.22 L 0.13,-0.72 L 0.88,-0.72 Z" />
+    <path class="f0 sCHMGD" style="stroke-width:0.16;stroke-cap:round;stroke-join:round" d="M 0.13,-0.72 L -0.97,-0.72 L -1.55,-0.02 L 1.89,-0.02 L 1.15,-0.72 L 0.88,-0.72 L 0.13,-0.72 Z" />
+    <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" />
+  
+</svg>

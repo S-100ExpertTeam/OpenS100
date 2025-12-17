@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="3.32mm" height="5.47mm" viewBox="-1.66 -4.66 3.32 5.47">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="3.32mm" height="5.47mm" viewBox="-1.66 -4.66 3.32 5.47">
   <title>BCNGEN13</title>
   <desc>beacon in general,black,paper-chart</desc>
   <metadata>

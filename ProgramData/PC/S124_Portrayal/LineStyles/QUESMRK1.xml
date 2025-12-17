@@ -2,7 +2,7 @@
 
 <?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
 <?S100Meta name="QUESMRK1" exposition="object which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library"?>
-<lineStyle>
+<S100LS:lineStyle xmlns:S100LS="http://www.iho.int/S100LineStyle/5.1">
    <intervalLength>17.5</intervalLength>
    <pen width="0.64">
       <color>CHMGD</color>
@@ -22,4 +22,4 @@
    <symbol reference="EMQUESM1">
       <position>11.4</position>
    </symbol>
-</lineStyle>
+</S100LS:lineStyle>

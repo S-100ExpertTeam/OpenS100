@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lineStyle offset="0">
+    <intervalLength>5</intervalLength>
+    <pen width="0.3">
+        <color>sWXRED</color>
+    </pen>  
+    <symbol reference="SMCIRC2">
+        <position>1.5</position>
+    </symbol>
+    <symbol reference="DGCRSR">
+        <position>4.5</position>
+    </symbol>
+</lineStyle>

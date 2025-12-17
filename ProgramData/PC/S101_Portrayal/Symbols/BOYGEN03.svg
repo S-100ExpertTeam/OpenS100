@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="7.97mm" height="5.06mm" viewBox="-2.82 -4.37 7.97 5.06">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="7.97mm" height="5.06mm" viewBox="-2.82 -4.37 7.97 5.06">
   <title>BOYGEN03</title>
   <desc>default symbol for buoy, paper-chart</desc>
   <metadata>

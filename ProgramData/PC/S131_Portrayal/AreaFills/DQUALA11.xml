@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-03"?>
+<?S100Meta name="DQUALA11" exposition="pattern of symbols for a chart of 5m accuracy with full seafloor coverage"?><symbolFill>
+  <areaCRS>GlobalGeometry</areaCRS>
+  <symbol reference="DQUALA11P"/>
+  <v1>
+    <x>30.97</x>
+    <y>0.0</y>
+  </v1>
+  <v2>
+    <x>16.97</x>
+    <y>25.84</y>
+  </v2>
+</symbolFill>

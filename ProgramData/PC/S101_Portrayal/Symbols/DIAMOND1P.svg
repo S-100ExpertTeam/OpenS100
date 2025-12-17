@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="22.82mm" height="43.45mm" viewBox="-11.41 -21.73 22.82 43.45">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="22.82mm" height="43.45mm" viewBox="-11.41 -21.73 22.82 43.45">
   <title>DIAMOND1P</title>
   <desc>area of depth less than the safety contour</desc>
   <metadata>

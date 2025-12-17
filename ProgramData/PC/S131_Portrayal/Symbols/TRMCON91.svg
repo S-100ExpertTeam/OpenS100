@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type='text/css' href='daySvgStyle.css'?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.36mm" height="5.36mm" viewBox="-2.68 -2.68 5.36 5.36" xmlns="http://www.w3.org/2000/svg">
+  <title>TRMCON91</title>
+  <desc>container terminal for S131</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="NIPWG, RMM" iho:format="SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+    <rect class="symbolBox layout" fill="none" x="-2.68" y="-2.68" height="5.36" width="5.36"/>
+    <rect class="svgBox layout" fill="none" x="-2.68" y="-2.68" height="5.36" width="5.36"/>
+    <circle cx="0.00" cy="0.00" r="2.60" class="f0 sCHMGD" style="stroke-width:0.16" />
+
+  <path
+    class="f0 sCHMGD"
+    style="stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:round"
+    d="M -0.59799863,0.35527811 H 0.5408251 V 1.5077535 h -1.13882373 z"
+    id="path10" />
+  <path
+    class="f0 sCHMGD"
+    style="stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:round"
+    d="M -0.59799863,-0.74815579 H -1.6633498 v 1.1034339 h 1.06535117 z"
+    id="path12" />
+  <path
+    class="f0 sCHMGD"
+    style="stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:round"
+    d="M -0.59799863,-0.74815579 0.83471508,-2.1090577 h -1.06535121 l -1.43271367,1.36090191 z"
+    id="path14"/>
+  <path
+    class="f0 sCHMGD"
+    style="stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:round"
+    d="m -0.59799863,-0.74815579 v 1.1034339 L 0.83471508,-1.0056236 v -1.1034341 z"
+    id="path16" />
+  <path
+    class="f0 sCHMGD"
+    style="stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:round"
+    d="M -0.59799863,0.35527811 0.83471508,-1.0056236 H 1.9735383 L 0.5408251,0.35527811 Z"
+    id="path18" />
+  <path
+    class="f0 sCHMGD"
+    style="stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:round"
+    d="M 0.5408251,0.35527811 1.9735383,-1.0056236 V 0.14685173 L 0.5408251,1.5077535 Z"
+    id="path20" />
+  <path
+    class="f0 sCHMGD"
+    style="stroke-width:0.16;stroke-linecap:butt;stroke-linejoin:round"
+    d="m -1.6633498,0.35527811 h 1.06535117 V 1.5077535 H -1.6633498 Z"
+    id="path22"/>
+
+    <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" />
+  
+</svg>

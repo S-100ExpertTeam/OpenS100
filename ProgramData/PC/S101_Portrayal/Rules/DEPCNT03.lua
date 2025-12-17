@@ -1,36 +1,5 @@
--- DEPCNT03 conditional symbology rules file.
--- #119
-
--- Referenced CSPs.
 require 'SAFCON01'
 
-local selectedSafetyContour
-local computedSafetyContour
-
-local function ComputeSafetyContour(safetyContour)
-	if safetyContour == selectedSafetyContour then
-		return computedSafetyContour
-	end
-
-	computedSafetyContour = nil
-
-	local depthContours = portrayalContext:GetFeatures('DepthContour')
-
-	for i, dc in ipairs(depthContours) do
-		if dc.valueOfDepthContour and dc.valueOfDepthContour >= safetyContour then
-			computedSafetyContour = computedSafetyContour or dc.valueOfDepthContour
-
-			if dc.valueOfDepthContour < computedSafetyContour then
-				computedSafetyContour = dc.valueOfDepthContour
-			end
-		end
-	end
-
-	selectedSafetyContour = safetyContour
-	return computedSafetyContour
-end
-
--- Main entry point for CSP.
 function DEPCNT03(feature, featurePortrayal, contextParameters, viewingGroup)
 	Debug.StartPerformance('Lua Code - DEPCNT03')
 
@@ -87,14 +56,8 @@ function DEPCNT03(feature, featurePortrayal, contextParameters, viewingGroup)
 		end
 	end
 
-	local safetyContour = ComputeSafetyContour(contextParameters.SafetyContour)
-
-	if feature.valueOfDepthContour ~= safetyContour then
-		GenerateCurves()
-		GenerateLabels()
-	else
-		featurePortrayal:AddInstructions('NullInstruction')
-	end
+	GenerateCurves()
+	GenerateLabels()
 
 	Debug.StopPerformance('Lua Code - DEPCNT03')
 end

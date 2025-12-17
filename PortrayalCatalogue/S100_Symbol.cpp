@@ -63,18 +63,18 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		{
 			rotation =std::stod(instruction.child_value());
 		}
-		else if (!strcmp(instructionName, "rotationCRS") == 0)
+		else if (!strcmp(instructionName, "rotationCRS"))
 		{
 			rotationCRS = GraphicBasePackage::GetCRSTypeFromString(instruction.child_value());
 
 			//rotationCRS = pugi::as_wide(instruction.child_value());
 		}
-		else if (!strcmp(instructionName, "scaleFactor") == 0)
+		else if (!strcmp(instructionName, "scaleFactor"))
 		{
 			//scaleFactor = pugi::as_wide(instruction.child_value());
 			scaleFactor = std::stod(instruction.child_value());
 		}
-		else if (!strcmp(instructionName, "areaPlacement") == 0)
+		else if (!strcmp(instructionName, "areaPlacement"))
 		{
 			//if (!areaPlacement)
 			//{
@@ -83,7 +83,7 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 			//}
 			areaPlacement.value().GetContents(instruction);
 		}
-		else if (!strcmp(instructionName, "linePlacement") == 0)
+		else if (!strcmp(instructionName, "linePlacement"))
 		{
 			linePlacement.value().GetContents(instruction);
 

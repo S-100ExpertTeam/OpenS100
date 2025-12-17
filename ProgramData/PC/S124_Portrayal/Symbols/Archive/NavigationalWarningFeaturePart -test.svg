@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="svgStyle.css" type="text/css"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.0" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.376mm" height="5.376mm" viewBox="-2.688 -2.688 5.376 5.376">
+		<title>NavigationalWarningFeaturePart</title>
+		<desc>NavigationalWarningFeaturePart description.</desc>
+		<metadata>
+			<S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+				<Description publisher="KHOA" creationDate="2020-06-26" source="S52Preslib4.0" format="S100SVG" version="0.1" />
+			</S100SVG>
+		</metadata>
+		<rect class="symbolBox layout" fill="none" x="-2.628" y="-2.628" height="5.256" width="5.256" />
+		<rect class="svgBox layout" fill="none" x="-2.628" y="-2.628" height="5.256" width="5.256" />
+		<circle class="fNWMGD" cx="0" cy="0" r="2.628" />
+		<path d=" M -1.49,0.82 L -1.75,0.82 L -1.75,-0.82 L -1.45,-0.82 L -0.8,0.34 L -0.8,-0.82 L -0.54,-0.82 L -0.54,0.8 L -0.83,0.8 L -1.49,-0.38 L -1.49,0.82 Z" class="fNWWHT" style="stroke-width:0.12;" />
+		<path d=" M 1.41,0.82 L 1.06,0.82 L 0.76,-0.34 L 0.48,0.82 L 0.11,0.82 L -0.19,-0.81 L 0.11,-0.81 L 0.11,-0.6 L 0.3,0.45 L 0.61,-0.81 L 0.9,-0.81 L 1.23,0.44 L 1.44,-0.61 L 1.44,-0.81 L 1.75,-0.81 L 1.41,0.82 Z" class="fNWWHT" style="stroke-width:0.12;" />
+		<circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="0.36" />
+	</svg>

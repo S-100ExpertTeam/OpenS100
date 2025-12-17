@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="SVGStyle.css" type="text/css"?>
+<svg xmlns:iho="http://www.iho.int/SVGMetadata/5.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/2000/svg" baseProfile="tiny" version="1.2" width="13.96mm" height="13.96mm" viewBox="-6.97 -6.96 13.96 13.96" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd">
+  <title>NavigationalWarningFeaturePart</title>
+  <desc>NavigationalWarningFeaturePart description.</desc>
+  <metadata>
+    <iho:S100SVG>
+      <iho:Description iho:creationDate="2024-03-22" iho:publisher="IHO" iho:version="0.1" iho:source="S-124" iho:format="S100SVG"/>
+    </iho:S100SVG>
+  </metadata>
+  <circle class="pivotPoint layout" fill="none" cx="0.00" cy="0.00" r="0.4" />
+  <rect class="symbolBox layout" fill="none" x="-6.97" y="7" height="13.96" width="13.96" />
+  <rect class="svgBox layout" fill="none" x="-6.97" y="-6.96" height="13.96" width="13.96" />
+  <circle cx="0.01" cy="0.02" r="5" class="sl f0 sNWMGD" stroke-width=" 0.96" />
+  <path d=" M -3.2,1.3 L -3.2,-1.4 L -2.5,-1.4 L -1.4,0.6 L -1.4,-1.4 L -0.9,-1.4 L -0.9,1.3 L -1.6,1.3 L -2.7,-0.8 L -2.7,1.3 L -3.2,1.3" class="fNWMGD" stroke-width=" 0.32" />
+  <path d=" M 0.2,1.3 L 0.9,1.3 L 1.41,-0.58 L 1.9,1.3 L 2.6,1.3 L 3.36,-1.36 L 2.8,-1.4 L 2.3,0.8 L 1.7,-1.4 L 1.16,-1.41 L 0.62,0.83 L 0.1,-1.4 L -0.48,-1.38 L 0.2,1.3" class="fNWMGD" stroke-width=" 0.32" />
+</svg> 

@@ -3,15 +3,15 @@
   <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
   <xsl:template match="TextPlacement[@primitive='Point']" priority="1">
-    <pointInstruction>
-      <featureReference>
-        <xsl:value-of select="@id"/>
-      </featureReference>
-      <viewingGroup>32250</viewingGroup>
-      <displayPlane>OVERRADAR</displayPlane>
-      <drawingPriority>12</drawingPriority>
-      <symbol reference="POSGEN04"/>
-    </pointInstruction>
+    <!-- <pointInstruction> -->
+      <!-- <featureReference> -->
+        <!-- <xsl:value-of select="@id"/> -->
+      <!-- </featureReference> -->
+      <!-- <viewingGroup>32250</viewingGroup> -->
+      <!-- <displayPlane>OVERRADAR</displayPlane> -->
+      <!-- <drawingPriority>12</drawingPriority> -->
+      <!-- <symbol reference="POSGEN04"/> -->
+    <!-- </pointInstruction> -->
     <xsl:if test="text!= ''">
       <textInstruction>
         <featureReference>
@@ -20,7 +20,7 @@
         <viewingGroup>26</viewingGroup>
         <displayPlane>UNDERRADAR</displayPlane>
         <drawingPriority>12</drawingPriority>
-        <textPoint horizontalAlignment="Right" verticalAlignment="Center">
+        <textPoint>
           <element>
             <text>
               <xsl:apply-templates select="text" mode="text"/>
@@ -30,7 +30,7 @@
             </xsl:call-template>
             <font>
               <slant>
-                <xsl:value-of select="flipBearing"/>
+                <xsl:value-of select="textRotation"/>
               </slant>
             </font>
           </element>

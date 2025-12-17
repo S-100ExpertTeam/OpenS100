@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type='text/css' href='daySvgStyle.css'?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="5.36mm" height="5.36mm" viewBox="-2.68 -2.68 5.36 5.36" xmlns="http://www.w3.org/2000/svg">
+  <title>TRMLNG91</title>
+  <desc>terminal, LNG for S131</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="NIPWG, RMM" iho:format="SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+ 
+    <rect class="symbolBox layout" fill="none" x="-2.68" y="-2.68" height="5.36" width="5.36"/>
+    <rect class="svgBox layout" fill="none" x="-2.68" y="-2.68" height="5.36" width="5.36"/>
+    <circle cx="0.00" cy="0.00" r="2.60" class="f0 sCHMGD" style="stroke-width:0.16" />
+  <path class="f0 sCHMGD" style="stroke-width:0.32;stroke-linecap:round;stroke-linejoin:round"
+      d="M -2.0031856,-0.84430338 V 0.89449788 M -2.0031856,0.89449788 H -1.0722888"/>
+  <path class="f0 sCHMGD" style="stroke-width:0.32;stroke-linecap:round;stroke-linejoin:round"
+      d="M -0.68441517,-0.84430338 V 0.89449788 M -0.68441517,-0.84430338 0.40163105,0.89449788 M 0.40163105,-0.84430338 V 0.89449788"/>
+  <path class="f0 sCHMGD" style="stroke-width:0.32;stroke-linecap:round;stroke-linejoin:round"
+      d="M 2.1082751,-0.43030308 2.0307004,-0.5959032 1.875551,-0.76150332 1.7204015,-0.84430338 H 1.4101026 L 1.2549531,-0.76150332 1.0998037,-0.5959032 1.0222289,-0.43030308 0.94465419,-0.1819029 V 0.2320974 L 1.0222289,0.48049758 1.0998037,0.6460977 1.2549531,0.81169782 1.4101026,0.89449788 H 1.7204015 L 1.875551,0.81169782 2.0307004,0.6460977 2.1082751,0.48049758 V 0.2320974 M 1.7204015,0.2320974 H 2.1082751"/>
+      <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" />
+ 
+</svg>

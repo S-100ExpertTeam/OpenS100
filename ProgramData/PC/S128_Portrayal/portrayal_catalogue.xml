@@ -1,47 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-128" version="0.1.0">
+<pc:portrayalCatalog xmlns:pc="http://www.iho.int/S100PortrayalCatalog/5.2"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" productId="S-128" version="1.1.0"
+xsi:schemaLocation="http://www.iho.int/S100PortrayalCatalog/5.2 https://schemas.s100dev.net/schemas/S100/5.2.0/S100PC/20240415/S100PortrayalCatalog.xsd">
+
   <pixmaps/>  
   <colorProfiles>
-    <colorProfile id="colorProfile.xml">
+    <colorProfile id="1">
       <description>
         <name>Color Profile</name>
         <description>Color Profile</description>
-        <language>en</language>
+        <language>eng</language>
       </description>
-      <fileName>colorProfile.xml</fileName>
-      <fileType>ColorProfile</fileType>
-      <fileFormat>XML</fileFormat>
+        <fileName>colorProfile.xml</fileName>
+        <fileType>ColorProfile</fileType>
+        <fileFormat>XML</fileFormat>
     </colorProfile>
   </colorProfiles>  
-  <symbols/>  
+  <symbols>
+	<symbol id="QUESMRK1">
+      <description>
+        <name>QUESMRK1</name>
+        <description>object which is not sufficiently described to be symbolized, or for which no symbol exists in the symbol library</description>
+        <language>eng</language>
+      </description>
+      <fileName>QUESMRK1.svg</fileName>
+      <fileType>Symbol</fileType>
+      <fileFormat>SVG</fileFormat>
+    </symbol>
+  </symbols> 
+  <styleSheets>
+    <styleSheet id="daySvgStyle">
+      <description>
+        <name>Day</name>
+        <description>CSS file for day palette</description>
+        <language>eng</language>
+      </description>
+      <fileName>daySvgStyle.css</fileName>
+      <fileType>StyleSheet</fileType>
+      <fileFormat>CSS</fileFormat>
+    </styleSheet>
+    <styleSheet id="duskSvgStyle">
+      <description>
+        <name>Dusk</name>
+        <description>CSS file for dusk palette</description>
+        <language>eng</language>
+      </description>
+      <fileName>duskSvgStyle.css</fileName>
+      <fileType>StyleSheet</fileType>
+      <fileFormat>CSS</fileFormat>
+    </styleSheet>
+    <styleSheet id="nightSvgStyle">
+      <description>
+        <name>Night</name>
+        <description>CSS file for night palette</description>
+        <language>eng</language>
+      </description>
+      <fileName>nightSvgStyle.css</fileName>
+      <fileType>StyleSheet</fileType>
+      <fileFormat>CSS</fileFormat>
+    </styleSheet>
+  </styleSheets>
   <lineStyles>
-	<lineStyle id="ElectronicChart01">
+	<lineStyle id="ElectronicProduct01">
       <description>
-        <name>ElectronicChart01</name>
-        <description>ElectronicChart01</description>
-        <language>en</language>
+        <name>ElectronicProduct01</name>
+        <description>ElectronicProduct01</description>
+        <language>eng</language>
       </description>
-      <fileName>ElectronicChart01.xml</fileName>
+      <fileName>ElectronicProduct01.xml</fileName>
       <fileType>LineStyle</fileType>
       <fileFormat>XML</fileFormat>
     </lineStyle>
-	<lineStyle id="NauticalProduct01">
+	<lineStyle id="S100Service01">
       <description>
-        <name>NauticalProduct01</name>
-        <description>NauticalProduct01</description>
-        <language>en</language>
+        <name>S100Service01</name>
+        <description>S100Service01</description>
+        <language>eng</language>
       </description>
-      <fileName>NauticalProduct01.xml</fileName>
+      <fileName>S100Service01.xml</fileName>
       <fileType>LineStyle</fileType>
       <fileFormat>XML</fileFormat>
     </lineStyle>
-	<lineStyle id="PaperChart01">
+	<lineStyle id="PhysicalProduct01">
       <description>
-        <name>PaperChart01</name>
-        <description>PaperChart01</description>
-        <language>en</language>
+        <name>PhysicalProduct01</name>
+        <description>PhysicalProduct01</description>
+        <language>eng</language>
       </description>
-      <fileName>PaperChart01.xml</fileName>
+      <fileName>PhysicalProduct01.xml</fileName>
       <fileType>LineStyle</fileType>
       <fileFormat>XML</fileFormat>
     </lineStyle>	
@@ -91,106 +137,106 @@
       <description>
         <name>Over radar</name>
         <description>Content displayed on top of Radar image</description>
-        <language>en</language>
+        <language>eng</language>
       </description>
     </displayPlane>
 	  <displayPlane id="UnderRADAR" order="-1">
       <description>
           <name>Under radar</name>
           <description>Content displayed underneath Radar image</description>
-          <language>en</language>
+          <language>eng</language>
       </description> 
     </displayPlane>   
   </displayPlanes>
   <context/>  
   <rules>
-    <ruleFile id="main.xsl">
+    <ruleFile id="main">
       <description>
         <name>main</name>
         <description>main rule file</description>
-        <language>en</language>
+        <language>eng</language>
       </description>
       <fileName>main.xsl</fileName>
       <fileType>Rule</fileType>
       <fileFormat>XSLT</fileFormat>
       <ruleType>TopLevelTemplate</ruleType>
     </ruleFile>
-	<ruleFile id="Default.xsl">
+	<ruleFile id="Default">
       <description>
         <name>Default</name>
         <description>Default</description>
-        <language>en</language>
+        <language>eng</language>
       </description>
       <fileName>Default.xsl</fileName>
       <fileType>Rule</fileType>
       <fileFormat>XSLT</fileFormat>
       <ruleType>SubTemplate</ruleType>
     </ruleFile>
-	<ruleFile id="simpleLineStyle.xsl">
+	<ruleFile id="simpleLineStyle">
       <description>
         <name>simpleLineStyle</name>
         <description>simple Line Style rule file</description>
-        <language>en</language>
+        <language>eng</language>
       </description>
       <fileName>simpleLineStyle.xsl</fileName>
       <fileType>Rule</fileType>
       <fileFormat>XSLT</fileFormat>
       <ruleType>SubTemplate</ruleType>
     </ruleFile>
-	<ruleFile id="textStyle.xsl">
+	<ruleFile id="textStyle">
       <description>
         <name>textStyle</name>
         <description>text Style rule file</description>
-        <language>en</language>
+        <language>eng</language>
       </description>
       <fileName>textStyle.xsl</fileName>
       <fileType>Rule</fileType>
       <fileFormat>XSLT</fileFormat>
       <ruleType>SubTemplate</ruleType>
     </ruleFile>
-	<ruleFile id="CatalogueOfNauticalProduct.xsl">
+	<ruleFile id="DistributorInformation">
       <description>
-        <name>Catalogue Of Nautical Product</name>
-        <description>Catalogue Of Nautical Product rule file</description>
-        <language>en</language>
+        <name>Distributor Information</name>
+        <description>Distributor Information rule file</description>
+        <language>eng</language>
       </description>
-      <fileName>CatalogueOfNauticalProduct.xsl</fileName>
+      <fileName>DistributorInformation.xsl</fileName>
       <fileType>Rule</fileType>
       <fileFormat>XSLT</fileFormat>
       <ruleType>SubTemplate</ruleType>
     </ruleFile>
-	<ruleFile id="NauticalProduct.xsl">
+	<ruleFile id="S100Service">
       <description>
-        <name>Nautical Product</name>
-        <description>Nautical Product rule file</description>
-        <language>en</language>
+        <name>S100 Service</name>
+        <description>S100 Service rule file</description>
+        <language>eng</language>
       </description>
-      <fileName>NauticalProduct.xsl</fileName>
+      <fileName>S100Service.xsl</fileName>
       <fileType>Rule</fileType>
       <fileFormat>XSLT</fileFormat>
       <ruleType>SubTemplate</ruleType>
     </ruleFile>
-	<ruleFile id="ElectronicChart.xsl">
+	<ruleFile id="ElectronicProduct">
       <description>
-        <name>Electronic Chart</name>
-        <description>Electronic Chart rule file</description>
-        <language>en</language>
+        <name>Electronic Product</name>
+        <description>Electronic Product rule file</description>
+        <language>eng</language>
       </description>
-      <fileName>ElectronicChart.xsl</fileName>
+      <fileName>ElectronicProduct.xsl</fileName>
       <fileType>Rule</fileType>
       <fileFormat>XSLT</fileFormat>
       <ruleType>SubTemplate</ruleType>
     </ruleFile>
-	<ruleFile id="PaperChart.xsl">
+	<ruleFile id="PhysicalProduct">
       <description>
-        <name>Paper Chart</name>
-        <description>Paper Chart rule file</description>
-        <language>en</language>
+        <name>Physical Product</name>
+        <description>Physical Product rule file</description>
+        <language>eng</language>
       </description>
-      <fileName>Paper Chart.xsl</fileName>
+      <fileName>PhysicalProduct.xsl</fileName>
       <fileType>Rule</fileType>
       <fileFormat>XSLT</fileFormat>
       <ruleType>SubTemplate</ruleType>
     </ruleFile>	
-  </rules>  
-</portrayalCatalog>
+  </rules>
+</pc:portrayalCatalog>

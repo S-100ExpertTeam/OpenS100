@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="17.63mm" height="4.75mm" viewBox="-8.9 -2.5 17.63 4.75">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="17.63mm" height="4.75mm" viewBox="-8.9 -2.5 17.63 4.75">
   <title>RECDEF51</title>
   <desc>recommended track as an area, direction not defined in data</desc>
   <metadata>

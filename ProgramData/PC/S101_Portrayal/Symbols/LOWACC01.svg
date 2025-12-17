@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="12.62mm" height="13.62mm" viewBox="-12.46 -13.46 12.62 13.62">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="12.62mm" height="13.62mm" viewBox="-12.46 -13.46 12.62 13.62">
   <title>LOWACC01</title>
   <desc>point feature or area of low accuracy</desc>
   <metadata>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.65mm" height="4.71mm" viewBox="-3.05 -3.15 4.65 4.71">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="4.65mm" height="4.71mm" viewBox="-3.05 -3.15 4.65 4.71">
   <title>BOYSPP15</title>
   <desc>special purpose TSS buoy marking the starboard side of the traffic lane, simplified</desc>
   <metadata>

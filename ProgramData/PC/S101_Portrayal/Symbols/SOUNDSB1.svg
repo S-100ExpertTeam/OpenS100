@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="daySvgStyle.css" type="text/css"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.63mm" height="3.41mm" viewBox="-4.26 -0.16 6.63 3.41">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" shape-rendering="geometricPrecision" fill-rule="evenodd" width="6.63mm" height="3.41mm" viewBox="-4.26 -0.16 6.63 3.41">
   <title>SOUNDSB1</title>
   <desc>symbol for swept sounding, used for shallow soundings, less than or equal to safety depth</desc>
   <metadata>

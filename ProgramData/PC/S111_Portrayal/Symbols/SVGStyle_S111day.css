@@ -10,7 +10,7 @@
 .sl {stroke-linecap:round;stroke-linejoin:round} /* default line style elements */
 .f0 {fill:none} /* no fill */
 .sCHBLK {stroke:#000000} /*  sRGB line colour for all surface current arrow tokens */
-
+ 
 .fSCBN1 {fill:#7652E2} /* sRGB line colour for colour token STEP1: S111 Step 1 color */
 
 .fSCBN2 {fill:#4898D3} /* sRGB line colour for colour token STEP2: S111 Step 2 color */

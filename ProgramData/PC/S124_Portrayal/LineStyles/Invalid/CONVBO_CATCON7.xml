@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="SVGStyle_S412.css" type="text/css"?>
+<lineStyle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="s100LineStyle.xsd">
+<title>CONVBO CATCON7</title>
+  <desc>Convergent boundary: Category of Convergent Boundary: Monsoon trough</desc>
+<lineStyle offset="1">
+	<intervalLength>6</intervalLength>
+    <pen width="0.3">
+        <color>sWXRED</color>
+    </pen>
+    <dash>
+        <start>0</start>
+        <length>6</length>
+    </dash>    
+</lineStyle>
+<lineStyle offset="-1">
+	<intervalLength>6</intervalLength>
+    <pen width="0.3">
+        <color>sWXRED</color>
+    </pen>
+    <dash>
+        <start>0</start>
+        <length>6</length>
+    </dash>
+</lineStyle>

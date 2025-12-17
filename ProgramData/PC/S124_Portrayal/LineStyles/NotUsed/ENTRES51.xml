@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<?S100lineage source="S52Preslib4.0" format="S100Ed2" version="0.1" creationDate="2015-03-13"?>
+<?S100Meta name="ENTRES51" exposition="boundary of an area where entry is prohibited or restricted"?>
+<lineStyle>
+   <intervalLength>30.7</intervalLength>
+   <pen width="0.32">
+      <color>CHMGD</color>
+   </pen>
+   <dash>
+      <start>3.4</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>15.5</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>21.4</start>
+      <length>3</length>
+   </dash>
+   <dash>
+      <start>27.7</start>
+      <length>3</length>
+   </dash>
+   <symbol reference="EMACHRE2">
+      <position>4.9</position>
+   </symbol>
+   <symbol reference="EMENTRE1">
+      <position>11</position>
+   </symbol>
+   <symbol reference="EMACHRE2">
+      <position>17</position>
+   </symbol>
+   <symbol reference="EMACHRE2">
+      <position>23</position>
+   </symbol>
+   <symbol reference="EMACHRE2">
+      <position>29.2</position>
+   </symbol>
+</lineStyle>

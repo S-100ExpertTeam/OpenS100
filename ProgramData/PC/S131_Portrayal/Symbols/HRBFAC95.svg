@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type='text/css' href='daySvgStyle.css'?>
+<svg version="1.2" baseProfile="tiny" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="4.64mm" height="4.64mm" viewBox="-2.32 -2.32 4.64 4.64" xmlns="http://www.w3.org/2000/svg">
+  <title>HRBFAC95</title>
+  <desc>harbour area section service harbour</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-12-31" iho:source="NIPWG" iho:format="SVG" iho:version="0.1" />
+    </iho:S100SVG>
+  </metadata>
+  <g>
+    <rect class="symbolBox layout" fill="none" x="-2.0" y="-2.0" height="4.0" width="4.0"/>
+    <rect class="svgBox layout" fill="none" x="-2.0" y="-2.0" height="4.0" width="4.0"/>
+    <circle cx="0.00" cy="0.00" r="2.00" class="fLITYW" />
+    <circle cx="0.00" cy="0.00" r="2.00" class="f0 sOUTLL" style="stroke-width: 0.16" />
+    <path
+      d="m -1.12225,1.259 -0.549,-0.918 h 3.3525 l -0.5985,0.918 z"
+      class="f0 sCHMGD"
+      style="stroke-width:0.16;"
+      id="path18"/>
+    <path
+      d="M 0,0.16999981 V -1.4200002"
+      class="sl f0 sCHMGD"
+      style="stroke-width:0.16"
+      id="path20"/>
+    <path class="fLITYW sCHMGD" style="stroke-width:0.16" d="M -0.62,-0.95 L -0.24,-0.61 L -0.17,-0.41 L -0.23,-0.25 L -0.45,-0.15 L -0.64,-0.25 L -1.01,-0.58 L -1.03,-0.28 L -0.86,-0.03 L -0.64,0.12 L -0.39,0.13 L -0.19,0.08 L 0.89,1.00 L 1.10,0.76 L 0.07,-0.18 L 0.11,-0.42 L 0.08,-0.62 L -0.02,-0.76 L -0.20,-0.92 L -0.35,-0.98 L -0.62,-0.95 Z" />
+    <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1" />
+  </g>
+</svg>

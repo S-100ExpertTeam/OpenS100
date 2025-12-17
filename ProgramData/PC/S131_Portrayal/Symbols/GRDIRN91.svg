@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="daySvgStyle.css" type="text/css"?><svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xml:space="preserve" style="shape-rendering:geometricPrecision; fill-rule:evenodd;" width="6.68mm" height="6.68mm" viewBox="-3.34 -3.34 6.68 6.68">
+  <title>GRDIRN91</title>
+  <desc>gridiron point symbol for S131</desc>
+  <metadata>
+    <iho:S100SVG xmlns:iho="http://www.iho.int/SVGMetadata">
+      <iho:Description iho:publisher="IHO" iho:creationDate="2022-10-31" iho:source="S131Demo, RMM" iho:format="S100SVG" iho:version="0.1"/>
+    </iho:S100SVG>
+  </metadata>
+  <rect class="symbolBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68"/>
+  <rect class="svgBox layout" fill="none" x="-3.34" y="-3.34" height="6.68" width="6.68"/>
+  <circle class="fCHWHT sCHMGD" style="stroke-width: 0.32;" cx="0" cy="0" r="3"/>
+  <path
+   d="M -0.46914624,-0.86075284 -0.58569691,-1.1272683 -0.81879825,-1.3937838 -1.0518996,-1.5270415 h -0.4662027 l -0.2331013,0.1332577 -0.2331013,0.2665155 -0.1165507,0.26651546 -0.1165507,0.39977322 v 0.6662887 l 0.1165507,0.39977322 0.1165507,0.26651548 0.2331013,0.26651552 0.2331013,0.1332577 h 0.4662027 L -0.81879825,1.1381133 -0.58569691,0.87159778 -0.46914624,0.6050823 V 0.20530908 m -0.58275336,0 h 0.58275336"
+       style="stroke-width:0.32;" class="sl f0 sCHMGD" />
+  <path
+   d="M 0.34670841,-1.5270415 V 1.271371 m 0,-2.7984125 H 1.3956644 l 0.3496521,0.1332577 0.1165506,0.1332577 0.1165507,0.26651552 V -0.7274951 L 1.8618671,-0.46097962 1.7453165,-0.32772188 1.3956644,-0.19446414 H 0.34670841 m 0.81585469,0 0.8158547,1.46583514"
+       style="stroke-width:0.32;" class="sl f0 sCHMGD" />
+  <circle class="pivotPoint layout" fill="none" cx="0" cy="0" r="1"/>
+</svg>

@@ -80,6 +80,7 @@ namespace S100GML
 
 	bool Envelop::isXYSequence()
 	{
+		// srsName contains "4326"
 		if (srsName.find("4326") != std::string::npos) {
 			return false;
 		}
