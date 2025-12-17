@@ -646,15 +646,5 @@ void SENC_PointInstruction::FromS100Instruction(S100_Instruction* s100Instructio
 		//	s->areaPlacement = new SENC_AreaPlacement();
 		//	s->areaPlacement->placementMode = SENC_CommonFuc::GetAreaPlacement(s100PointInstruction->GetSymbol()->GetAreaPlacement()->GetPlacementMode());
 		//}
-
-		if (s100PointInstruction->GetVectorPoint())
-		{
-			if (!vectorPoint)
-			{
-				vectorPoint = new SENC_VectorPoint();
-			}
-			vectorPoint->x = s100PointInstruction->GetVectorPoint()->GetX();
-			vectorPoint->y = s100PointInstruction->GetVectorPoint()->GetY();
-		}
 	}
 }

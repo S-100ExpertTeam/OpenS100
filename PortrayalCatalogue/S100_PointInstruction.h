@@ -11,14 +11,11 @@ public:
 
 private:
 	S100_Symbol *symbol = nullptr;
-	S100_VectorPoint *vectorPoint = nullptr;
 
 public:
 	void GetContents(pugi::xml_node node);
 
 	void SetSymbol(S100_Symbol* value);
-	void SetVectorPoint(S100_VectorPoint* value);
 
 	S100_Symbol* GetSymbol();
-	S100_VectorPoint* GetVectorPoint();
 };

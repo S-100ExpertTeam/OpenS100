@@ -13,6 +13,9 @@
 #include "PointInstruction.h"
 
 #include "..\\PortrayalCatalogue\\S100_Instruction.h"
+#include "..\\PortrayalCatalogue\\S100_PointInstruction.h"
+#include "..\\PortrayalCatalogue\\S100_LineInstruction.h"
+
 
 #include <unordered_map>
 #include <memory>
@@ -116,18 +119,32 @@ std::list<S100_Instruction*> CommandList::Parse()
 		// PointInstruction
 		if (dynamic_cast<Part9a::PointInstruction*>(command)) {
 			auto ptr = dynamic_cast<Part9a::PointInstruction*>(command);
-			
+			auto instruction = new S100_PointInstruction();
 			continue;
 		}
-		else if (dynamic_cast<Part9a::LineInstruction*>(command) || dynamic_cast<Part9a::LineInstructionUnsuppressed*>(command)) {
+		else if (dynamic_cast<Part9a::LineInstruction*>(command)) {
+
+		}
+		else if (dynamic_cast<Part9a::LineInstructionUnsuppressed*>(command)) {
 
 		}
 		else if (dynamic_cast<Part9a::ColorFill*>(command)) {
-			auto ptr = dynamic_cast<Part9a::ColorFill*>(command);
-			continue;
+		}
+		else if (dynamic_cast<Part9a::AreaFillReference*>(command)) {
+		}
+		else if (dynamic_cast<Part9a::PixmapFill*>(command)) {
+		}
+		else if (dynamic_cast<Part9a::SymbolFill*>(command)) {
+		}
+		else if (dynamic_cast<Part9a::HatchFill*>(command)) {
+		}
+		else if (dynamic_cast<Part9a::TextInstruction*>(command)) {
+		}
+		else if (dynamic_cast<Part9a::CoverageFill*>(command)) {
+		}
+		else if (dynamic_cast<Part9a::NullInstruction*>(command)) {
 		}
 
-		// ColorFill
 	}
 
 	return result;

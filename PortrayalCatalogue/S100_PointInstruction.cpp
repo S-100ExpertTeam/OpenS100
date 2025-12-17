@@ -4,19 +4,18 @@
 S100_PointInstruction::S100_PointInstruction() 
 {
 	SetType(1);
-	symbol = NULL;
-	vectorPoint = NULL;
 }
 
 S100_PointInstruction::~S100_PointInstruction()
 {
-	if (symbol) delete symbol;
-	if (vectorPoint) delete vectorPoint;
+	if (symbol) {
+		delete symbol;
+	}
 }
 
 void S100_PointInstruction::GetContents(pugi::xml_node node)
 {
-	if (node==nullptr) 
+	if (node == nullptr) 
 	{
 		return;
 	}
@@ -65,17 +64,7 @@ void S100_PointInstruction::SetSymbol(S100_Symbol* value)
 	symbol = value;
 }
 
-void S100_PointInstruction::SetVectorPoint(S100_VectorPoint* value) 
-{
-	vectorPoint = value;
-}
-
 S100_Symbol* S100_PointInstruction::GetSymbol() 
 {
 	return symbol;
-}
-
-S100_VectorPoint* S100_PointInstruction::GetVectorPoint() 
-{
-	return vectorPoint;
 }

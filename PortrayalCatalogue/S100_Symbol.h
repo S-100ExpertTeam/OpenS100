@@ -32,6 +32,10 @@ private:
 	std::optional<S100_LineSymbolPlacement> linePlacement;
 	std::optional<S100_AreaSymbolPlacement> areaPlacement;
 
+private:
+	std::optional<GraphicBasePackage::Color> overrideAll;
+	std::vector<GraphicBasePackage::Color> override;
+
 	//std::wstring id;
 	//S100_Description* description;
 	//std::wstring fileName;
