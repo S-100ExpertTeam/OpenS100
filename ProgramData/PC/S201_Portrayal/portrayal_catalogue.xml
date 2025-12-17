@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <?pcbinfo name="S-201" fieldOfApplication="WithNewSyms" scope="Testing" versionDate="2014-07-01T18:56:34+0000" user="Test User" organization="IHO-Test"?>
-<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-201" version="1.0">
+<portrayalCatalog xmlns:xsl="http://www.w3.org/2001/XMLSchema" productId="S-201" version="2.0.0">
    <pixmaps/>
    <colorProfiles>
       <colorProfile id="sample1">
@@ -2521,11 +2521,11 @@
     </ruleFile>
     <ruleFile id="23">
       <description>
-        <name>Lights</name>
-        <description>Lights</description>
+        <name>LightAllAround</name>
+        <description>LightAllAround</description>
         <language>en</language>
       </description>
-      <fileName>Lights.xsl</fileName>
+      <fileName>LightAllAround.xsl</fileName>
       <fileType>Rule</fileType>
       <fileFormat>XSLT</fileFormat>
       <ruleType>SubTemplate</ruleType>

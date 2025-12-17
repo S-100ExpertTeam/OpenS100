@@ -6,7 +6,7 @@
 	<!-- Added test for colocated non sectored lights Nov 2016 -->
 
 	<!-- create key index to quickly lookup lights using the point reference id as the lookup key -->	
-	<xsl:key name="NonSectoredLights" match="/Dataset/Features/Light " use="Point/@ref"/>
+	<xsl:key name="NonSectoredLights" match="/Dataset/Features/LightAllAround " use="Point/@ref"/>
 	
 	<!--Template for: Lights-->
 	<xsl:template name="LIGHTS">
@@ -171,7 +171,7 @@
 
 	</xsl:template>
 
-	<xsl:template match="Light[@primitive = 'Point']" priority="1">
+	<xsl:template match="LightAllAround[@primitive = 'Point']" priority="1">
 		<xsl:choose>
 			<xsl:when test="majorLight = 'true' ">
 				<!-- Call a common lights template for major allround lights -->
@@ -187,13 +187,13 @@
 		</xsl:choose>
 	</xsl:template>
 
-  <xsl:template match="Light[@primitive = 'Point' and categoryOfLight = 6 ]" priority="2">
+  <xsl:template match="LightAllAround[@primitive = 'Point' and categoryOfLight = 6 ]" priority="2">
 	<!--<xsl:template match="LightAirObstruction[@primitive = 'Point']" priority="1">-->
 		<!-- Call a common lights template -->
 		<xsl:call-template name="LIGHTS"/>
 	</xsl:template>
 
-  <xsl:template match="Light[@primitive = 'Point' and categoryOfLight = 7 ]" priority="2">
+  <xsl:template match="LightAllAround[@primitive = 'Point' and categoryOfLight = 7 ]" priority="2">
 	<!--<xsl:template match="LightFogDetector[@primitive = 'Point']" priority="1">-->
 		<xsl:choose>
 			<xsl:when test="majorLight = 'true' ">
@@ -211,7 +211,7 @@
 	</xsl:template>
 	
 	<!--Template for: spot light or flood Light-->
-	<xsl:template match="Light[@primitive = 'Point' and (categoryOfLight = 11 or categoryOfLight = 8) ]" priority="2">
+	<xsl:template match="LightAllAround[@primitive = 'Point' and (categoryOfLight = 11 or categoryOfLight = 8) ]" priority="2">
         <pointInstruction>
 			<featureReference><xsl:value-of select="@id"/></featureReference>
             <viewingGroup>27070</viewingGroup>
@@ -224,7 +224,7 @@
 	</xsl:template>
 
   <!--Template for: strip Light-->
-  <xsl:template match="Light[@primitive = 'Point' and categoryOfLight = 9]" priority="2">
+  <xsl:template match="LightAllAround[@primitive = 'Point' and categoryOfLight = 9]" priority="2">
     <pointInstruction>
       <featureReference>
         <xsl:value-of select="@id"/>

@@ -14,7 +14,7 @@
   <xsl:include href="Obstruction_custom.xsl"/>
   <xsl:include href="UnderWaterAwashRock_custom.xsl"/>
   <xsl:include href="LightDescription.xsl"/>
-  <xsl:include href="Lights.xsl"/>
+  <xsl:include href="LightAllAround.xsl"/>
   <xsl:include href="topmarks.xsl"/>
   <xsl:include href="seabed01.xsl"/>
   <xsl:include href="natsur01.xsl"/>
@@ -92,4 +92,3 @@
     </displayList>
   </xsl:template>
 </xsl:transform>
-
