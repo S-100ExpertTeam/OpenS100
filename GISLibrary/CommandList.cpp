@@ -117,6 +117,9 @@ std::list<S100_Instruction*> CommandList::Parse()
 	// Applicability: All drawing commands
 	std::optional<Part9a::ViewingGroup> viewingGroup;
 	std::optional<Part9a::Id> id;
+	std::optional<Part9a::SpatialReference> spatialReference;
+	std::optional<Part9a::TimeValid> timeValid;
+	std::optional<Part9a::AlertReference> alertReference;
 
 	// Applicability: All drawing commands, except NullInstruction
 	std::optional<Part9a::DisplayPlane> displayPlane;
@@ -172,6 +175,40 @@ std::list<S100_Instruction*> CommandList::Parse()
 	std::optional<Part9a::OverrideAll> overrideAll;
 	std::optional<Part9a::ClearOverride> clearOverride;
 
+	// Applicability: PointInstruction, TextInstruction, NullInstruction
+	std::optional<Part9a::AugmentedPoint> augmentedPoint;
+
+	// Applicability: LineInstruction, LineInstructionUnsuppressed, TextInstruction, NullInstruction
+	std::optional<Part9a::AugmentedRay> augmentedRay;
+
+	// Applicability: All drawing commands except PointInstruction
+	std::optional<Part9a::AugmentedPath> augmentedPath;
+
+	// Applicability: AugmentedPath
+	std::optional<Part9a::Polyline> polyline;
+	std::optional<Part9a::Arc3Points> arc3Points;
+	std::optional<Part9a::ArcByRadius> arcByRadius;
+	std::optional<Part9a::Annulus> annulus;
+
+	// Applicability: AugmentedPath, SpatialReference
+	std::optional<Part9a::ClearGeometry> clearGeometry;
+
+	// Applicability: LookupEntry
+	std::optional<Part9a::NumericAnnotation> numericAnnotation;
+	std::optional<Part9a::SymbolAnnotation> symbolAnnotation;
+	std::optional<Part9a::CoverageColor> coverageColor;
+
+	// Applicability: CoverageFill
+	std::optional<Part9a::LookupEntry> lookupEntry;
+
+	// Applicability: TimeValid
+	std::optional<Part9a::Date> date;
+	std::optional<Part9a::Time> time;
+	std::optional<Part9a::DateTime> dateTime;
+
+	// Applicability: All time commands, all drawing commands
+	std::optional<Part9a::ClearTime> clearTime;
+	
 	for (auto i = commands.begin(); i != commands.end(); ++i) {
 		auto command = i->get();
 
@@ -209,6 +246,9 @@ std::list<S100_Instruction*> CommandList::Parse()
 		else if (dynamic_cast<Part9a::ViewingGroup*>(command)) {
 			auto ptr = dynamic_cast<Part9a::ViewingGroup*>(command);
 			viewingGroup = *ptr;
+		}
+		else if (dynamic_cast<Part9a::StateCommand*>(command)) {
+			OutputDebugString(L"A");
 		}
 	}
 
