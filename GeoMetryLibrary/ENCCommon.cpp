@@ -5,7 +5,9 @@
 #include "..\\LibMFCUtil\\LibMFCUtil.h"
 #include "..\\LibMFCUtil\\StringTokenizer.h"
 
+#include <filesystem>
 #include <fstream>
+#include <locale>
 
 bool   ENCCommon::TEXTOUT = true;
 bool   ENCCommon::APPLY_SCALE_MIN = true;
@@ -66,6 +68,8 @@ bool ENCCommon::Save(std::wstring filePath)
 {
 	std::locale::global(std::locale("Korean"));
 	std::ofstream ofs;
+
+	std::filesystem::create_directories(L"..\\ProgramData\\data");
 	ofs.open(L"..\\ProgramData\\data\\settings.txt", std::ios::out | std::ios::trunc | std::ios::binary);
 
 	std::string strTrue = "true";
