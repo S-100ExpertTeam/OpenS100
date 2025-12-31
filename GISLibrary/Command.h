@@ -22,7 +22,7 @@ namespace Part9a
 		static IntervalType GetIntervalTypeFromString(const std::string& value);
 
     public:
-        std::string id;
+        std::string id; // not used
         bool present = false;
         std::string parameter;
 

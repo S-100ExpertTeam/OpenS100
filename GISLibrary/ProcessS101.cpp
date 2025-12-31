@@ -391,15 +391,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 	Local_DrawingCommands drawingCommand;
 	CommandList commandList;
 
-	std::string v_ColorFill;
-	std::string v_TextInstruction;
-	std::string v_LineInstruction;
-	std::string v_PointInstruction;
-	std::list<std::string_view> vl_SpatialReference;
-	std::string v_AreaFillReference;
-	S100_Dash dash;
-
-	S100_LineStyle lineStyle;
+	commandList.SetID(std::string(featureID));
 
 	for (auto i = elements.begin(); i != elements.end(); i++)
 	{

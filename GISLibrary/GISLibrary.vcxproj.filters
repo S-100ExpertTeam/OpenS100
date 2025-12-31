@@ -1113,6 +1113,9 @@
     <ClCompile Include="DrawingCommand.cpp">
       <Filter>S100\Part9a\DrawingCommands</Filter>
     </ClCompile>
+    <ClCompile Include="StateCommandStore.cpp">
+      <Filter>S100\Part9a</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -2218,6 +2221,9 @@
     </ClInclude>
     <ClInclude Include="DrawingCommand.h">
       <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="StateCommandStore.h">
+      <Filter>S100\Part9a</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
