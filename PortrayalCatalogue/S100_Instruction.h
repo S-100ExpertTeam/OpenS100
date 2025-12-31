@@ -64,6 +64,7 @@ public:
 
 	void SetSpatialReference(S100_SpatialReference* value);
 	void SetSpatialReference(std::list<S100_SpatialReference*> value);
+	void SetSpatialReference(std::string reference, bool forward);
 	void SetViewingGroup(std::wstring& value);
 	void SetViewingGroup(std::vector<std::string>& value);
 	void SetViewingGroup(std::vector<std::string_view>& value);

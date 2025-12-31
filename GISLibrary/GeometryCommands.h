@@ -19,6 +19,10 @@ namespace Part9a
     private:
         std::string reference;
         bool forward = true;
+
+    public:
+        std::string getReference() const;
+		bool getForward() const;
     };
 
     class AugmentedPoint : public StateCommand {

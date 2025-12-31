@@ -24,7 +24,7 @@ public:
 	//void SetType(std::string_view value);
 	void SetReference(std::string& value);
 	void SetReference(std::string_view value);
-	void SetForward();
+	void SetForward(bool value = true);
 	void SetBackward();
 
 	//std::wstring GetType();

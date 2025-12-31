@@ -38,6 +38,16 @@ namespace Part9a
 		}
 	}
 
+	std::string SpatialReference::getReference() const
+	{
+		return reference;
+	}
+
+	bool SpatialReference::getForward() const
+	{
+		return forward;
+	}
+
 	AugmentedPoint::AugmentedPoint(GraphicBasePackage::CRSType crs, double x, double y) : crs(crs) 
 	{
 		point.Set(x, y);

@@ -35,7 +35,7 @@ void S100_SpatialReference::SetReference(std::string_view value)
 	reference = std::string(value);
 }
 
-void S100_SpatialReference::SetForward()
+void S100_SpatialReference::SetForward(bool value)
 {
 	forward = true;
 }

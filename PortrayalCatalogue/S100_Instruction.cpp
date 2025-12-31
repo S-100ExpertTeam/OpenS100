@@ -64,6 +64,14 @@ void S100_Instruction::SetSpatialReference(std::list<S100_SpatialReference*> val
 	spatialReference = value;
 }
 
+void S100_Instruction::SetSpatialReference(std::string reference, bool forward)
+{
+	S100_SpatialReference* sr = new S100_SpatialReference();
+	sr->SetReference(reference);
+	sr->SetForward(forward);
+	spatialReference.push_back(sr);
+}
+
 void S100_Instruction::SetViewingGroup(std::wstring& value)
 {
 	viewingGroup.push_back(value);

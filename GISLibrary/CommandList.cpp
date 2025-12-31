@@ -126,6 +126,7 @@ std::list<S100_Instruction*> CommandList::Parse()
 			if (dynamic_cast<Part9a::PointInstruction*>(command)) {
 				auto ptr = dynamic_cast<Part9a::PointInstruction*>(command);
 				auto instruction = new S100_PointInstruction();
+				StateCommandStoreToInstruction(&s, instruction);
 				instruction->SetFeatureReference(ptr->getId());
 				instruction->SetViewingGroup(s.viewingGroup.has_value() ? s.viewingGroup->GetViewingGroups() : std::vector<std::string>());
 				result.push_back(instruction);
@@ -177,7 +178,14 @@ void CommandList::StateCommandStoreToInstruction(StateCommandStore* stateStore, 
 	instruction->SetScaleMinimum(stateStore->scaleMinimum.has_value() ? stateStore->scaleMinimum->GetScaleMinimum() : 0);
 	instruction->SetScaleMaximum(stateStore->scaleMaximum.has_value() ? stateStore->scaleMaximum->GetScaleMaximum() : 0);
 	instruction->SetFeatureReference(id);
-	//instruction->SetSpatialReference(stateStore->spatialReference.has_value() ? stateStore->spatialReference : std::list<S100_SpatialReference*>());
+
+	if (stateStore->spatialReference.has_value()) {
+		instruction->SetSpatialReference(
+			stateStore->spatialReference->getReference(), 
+			stateStore->spatialReference->getForward());
+	}
+
+	instruction->setAlertReference();
 }
 
 void CommandList::SetID(std::string& value)
