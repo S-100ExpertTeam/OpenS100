@@ -1176,15 +1176,20 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 							{
 								S100_SpatialReference* sref = new S100_SpatialReference();
 								in->SetSpatialReference(sref);
+								
+								// SpatialReference argument
 								std::string_view v_SpatialReference = *it;
+								
+								sref->Set(std::string(v_SpatialReference));
 
-								std::vector<std::string_view> v_splited;
-								Split(v_SpatialReference, "|", v_splited);
-								if (v_splited.size() == 2)
-								{
-									sref->SetType(v_splited[0]);
-									sref->SetReference(v_splited[1]);
-								}
+
+								//std::vector<std::string_view> v_splited;
+								//Split(v_SpatialReference, "|", v_splited);
+								//if (v_splited.size() == 2)
+								//{
+								//	//sref->SetType(v_splited[0]);
+								//	sref->SetReference(v_splited[1]);
+								//}
 							}
 							v_LineInstruction.clear();
 						}
@@ -1241,15 +1246,11 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						{
 							S100_SpatialReference* sref = new S100_SpatialReference();
 							in->SetSpatialReference(sref);
+
+							// SpatialReference argument
 							std::string_view v_SpatialReference = *it;
 
-							std::vector<std::string_view> v_splited;
-							Split(v_SpatialReference, "|", v_splited);
-							if (v_splited.size() == 2)
-							{
-								sref->SetType(v_splited[0]);
-								sref->SetReference(v_splited[1]);
-							}
+							sref->Set(std::string(v_SpatialReference));
 						}
 					}
 
