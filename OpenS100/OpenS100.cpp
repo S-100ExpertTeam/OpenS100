@@ -22,6 +22,7 @@
 #include <direct.h>
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 
 #ifdef _DEBUG
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
@@ -284,6 +285,6 @@ void COpenS100App::MapRefresh()
 // Save txt whenever the setting changes.
 void COpenS100App::SaveSettings()
 {
+	std::filesystem::create_directories(L"..\\ProgramData\\data");
 	ENCCommon::Save(L"..\\ProgramData\\data\\settings.txt");
-	return;
 } 
