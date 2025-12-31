@@ -1292,47 +1292,47 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 			}
 			else if (sizeForIndex == 16)
 			{
-				//// PointInstruction
-				//if (tag.compare("PointInstruction") == 0)
-				//{
-				//	v_PointInstruction = value;
-				//	S100_PointInstruction *in = new S100_PointInstruction();
-				//	pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
+				// PointInstruction
+				if (tag.compare("PointInstruction") == 0)
+				{
+					v_PointInstruction = value;
+					S100_PointInstruction *in = new S100_PointInstruction();
+					pcm->displayList->SetDisplayInstruction((S100_Instruction*)in);
 
-				//	in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
-				//	in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
-				//	in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
-				//	in->SetViewingGroup(stateCommands.v_ViewingGroup);
-				//	in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
+					in->SetFeatureReference(std::wstring(featureID.begin(), featureID.end()));
+					in->SetDrawingPriority(LUA_GetPriority(stateCommands.v_DrawingPriority));
+					in->SetDisplayPlane(std::wstring(stateCommands.v_DisplayPlane.begin(), stateCommands.v_DisplayPlane.end()));
+					in->SetViewingGroup(stateCommands.v_ViewingGroup);
+					in->SetScaleMinimum(std::wstring(stateCommands.v_ScaleMinimum.begin(), stateCommands.v_ScaleMinimum.end()));
 
-				//	if (v_PointInstruction.size() > 0)
-				//	{
-				//		in->SetSymbol(new S100_Symbol());
-				//		in->GetSymbol()->SetReference(std::wstring(v_PointInstruction.begin(), v_PointInstruction.end()));
+					if (v_PointInstruction.size() > 0)
+					{
+						in->SetSymbol(new S100_Symbol());
+						in->GetSymbol()->SetReference(std::wstring(v_PointInstruction.begin(), v_PointInstruction.end()));
 
-				//		std::vector<std::string> r_splited = Split(stateCommands.v_Rotation, ",");
-				//		if (r_splited.size() == 2)
-				//		{
-				//			in->GetSymbol()->SetRotation(std::stod(r_splited[1]));
+						std::vector<std::string> r_splited = Split(stateCommands.v_Rotation, ",");
+						if (r_splited.size() == 2)
+						{
+							in->GetSymbol()->SetRotation(std::stod(r_splited[1]));
 
-				//		}
-				//	}
+						}
+					}
 
-				//	if (stateCommands.v_AugmentedPoint.size() > 1)
-				//	{
-				//		std::vector<std::string> v_splited = Split(stateCommands.v_AugmentedPoint, ",");
-				//		if (v_splited.size() == 3)
-				//		{
-				//			if (!in->GetVectorPoint()) in->SetVectorPoint(new S100_VectorPoint());
+					if (stateCommands.v_AugmentedPoint.size() > 1)
+					{
+						std::vector<std::string> v_splited = Split(stateCommands.v_AugmentedPoint, ",");
+						if (v_splited.size() == 3)
+						{
+							if (!in->GetVectorPoint()) in->SetVectorPoint(new S100_VectorPoint());
 
-				//			in->GetVectorPoint()->SetX(std::wstring(v_splited[1].begin(), v_splited[1].end()));
-				//			in->GetVectorPoint()->SetY(std::wstring(v_splited[2].begin(), v_splited[2].end()));
-				//		}
-				//		else
-				//		{
-				//			//OutputDebugString(L"Error : Vector Point Value should have 3 arguments.");
-				//		}
-				//	}
+							in->GetVectorPoint()->SetX(std::wstring(v_splited[1].begin(), v_splited[1].end()));
+							in->GetVectorPoint()->SetY(std::wstring(v_splited[2].begin(), v_splited[2].end()));
+						}
+						else
+						{
+							//OutputDebugString(L"Error : Vector Point Value should have 3 arguments.");
+						}
+					}
 
 					if (vl_SpatialReference.size() > 0)
 					{
@@ -1348,14 +1348,14 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						}
 					}
 
-				//	v_PointInstruction.clear();
-				//}
-				//// "SpatialReference:Curve|107" 
-				//else if (tag.compare("SpatialReference") == 0)
-				//{
-				//	std::string_view v_SpatialReference = value;
-				//	vl_SpatialReference.push_back(v_SpatialReference);
-				//}
+					v_PointInstruction.clear();
+				}
+				// "SpatialReference:Curve|107" 
+				else if (tag.compare("SpatialReference") == 0)
+				{
+					std::string_view v_SpatialReference = value;
+					vl_SpatialReference.push_back(v_SpatialReference);
+				}
 			}
 			else if (sizeForIndex == 17)
 			{
