@@ -3,7 +3,6 @@
 #include "FeatureCatalogue.h"
 #include "Role.h"
 
-#include <atlstr.h>
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
