@@ -9,7 +9,7 @@ ScaleBands::ScaleBands()
 ScaleBands::ScaleBands(int minimumScale, int maximumScale)
 {
 	this->minimumScale = minimumScale;
-	this->maximumScale = maximumScale;
+	this->optimumScale = maximumScale;
 }
 
 ScaleBands::~ScaleBands()

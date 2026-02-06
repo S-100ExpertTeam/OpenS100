@@ -99,12 +99,12 @@ int S100Utilities::GetLevel(std::wstring path)
 // S-98_Main_Document_2.3.0 Ver
 int S100Utilities::GetScaleBand(int scale)
 {
-	if (scale > scaleBands[0].maximumScale) {
+	if (scale > scaleBands[0].optimumScale) {
 		return 0;
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (scale > scaleBands[i].maximumScale &&
+		if (scale > scaleBands[i].optimumScale &&
 			scale <= scaleBands[i].minimumScale) {
 			return i;
 		}
@@ -120,12 +120,12 @@ std::vector<int> S100Utilities::GetScaleBands(S100::DataCoverage dataCoverage)
 	int maxDS = *dataCoverage.MaximumDisplayScale;
 	std::vector<int> S;
 
-	if (maxDS < scaleBands[0].maximumScale) {
+	if (maxDS < scaleBands[0].optimumScale) {
 		S.push_back(0);
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (max(maxDS, scaleBands[i].maximumScale) < min(minDS, scaleBands[i].minimumScale)) {
+		if (max(maxDS, scaleBands[i].optimumScale) < min(minDS, scaleBands[i].minimumScale)) {
 			S.push_back(i);
 		}
 	}
@@ -137,15 +137,15 @@ std::vector<int> S100Utilities::GetScaleBands(S100::DataCoverage dataCoverage)
 std::vector<int> S100Utilities::GetScaleBands(ScaleBand sb)
 {
 	int minDS = sb.MinDisplayScale;
-	int maxDS = sb.MaxDisplayScale;
+	int maxDS = sb.OptDisplayScale;
 	std::vector<int> S;
 
-	if (maxDS < scaleBands[0].maximumScale) {
+	if (maxDS < scaleBands[0].optimumScale) {
 		S.push_back(0);
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (max(maxDS, scaleBands[i].maximumScale) < min(minDS, scaleBands[i].minimumScale)) {
+		if (max(maxDS, scaleBands[i].optimumScale) < min(minDS, scaleBands[i].minimumScale)) {
 			S.push_back(i);
 		}
 	}
@@ -233,8 +233,8 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 						str += "Index: ";
 						str += std::to_string(i);
 						str += " \n";
-						str += "MaxDisplayScale : ";
-						str += std::to_string(item->vecScaleRange[i].MaxDisplayScale);
+						str += "OptDisplayScale : ";
+						str += std::to_string(item->vecScaleRange[i].OptDisplayScale);
 						str += " \n";
 						str += "MinDisplayScale : ";
 						str += std::to_string(item->vecScaleRange[i].MinDisplayScale);
