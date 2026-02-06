@@ -10,7 +10,6 @@
       "libxslt",
       "openssl",
       "sqlite3",
-      "gdal",
       "boost-geometry"
     ]
   }

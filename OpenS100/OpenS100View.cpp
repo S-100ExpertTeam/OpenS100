@@ -29,7 +29,6 @@
 #include "../GISLibrary/ExchangeCatalogue.h"
 
 #include "../GISLibrary/IC_InteroperabilityCatalogue.h"
-//#include "../GISLibrary/ExchangeCatalogue.h"
 #include "../GISLibrary/TranslationPackageType.h"
 
 #include "../GeoMetryLibrary/GeometricFuc.h"
