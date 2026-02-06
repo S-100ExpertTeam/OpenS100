@@ -18,6 +18,8 @@
 #include <cmath>
 #include <math.h>
 #include <vector>
+#include <algorithm>
+#include <cwctype>
 
 /**
  * @namespace LatLonUtility
@@ -200,5 +202,8 @@ namespace LatLonUtility {
 	 * @return String with namespace prefix removed (e.g., "element")
 	 */
 	std::string DeleteXMLNamespace(std::string value);
+
+	std::string To_Lowercase(std::string s);
+	std::wstring To_Lowercase(std::wstring s);
 };
 #endif 

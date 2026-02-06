@@ -5,7 +5,7 @@
 #include "..\\GeoMetryLibrary\\GeoPoint.h"
 #include "..\\S100Engine\\GraphicBasePackage_Enum.h"
 
-namespace DrawingInstructions
+namespace Part9a
 {
     class SpatialReference : public StateCommand {
     public:
@@ -32,7 +32,7 @@ namespace DrawingInstructions
 
     private:
         GraphicBasePackage::CRSType crs = GraphicBasePackage::CRSType::CRSType_None;
-        DrawingInstructions::Point point;
+        Part9a::Point point;
     };
 
     class AugmentedRay : public StateCommand {
@@ -70,14 +70,14 @@ namespace DrawingInstructions
     class Polyline : public StateCommand {
     public:
 		Polyline() = default;
-        Polyline(const std::vector<DrawingInstructions::Point>& points);
+        Polyline(const std::vector<Part9a::Point>& points);
 
 		void init() override;
         void execute()  override;
         void parse(const std::string& input) override;
 
     private:
-        std::vector<DrawingInstructions::Point> points;
+        std::vector<Part9a::Point> points;
     };
 
     // Arc3Points class
@@ -92,9 +92,9 @@ namespace DrawingInstructions
 
 
     private:
-       DrawingInstructions::Point startPoint;
-       DrawingInstructions::Point medianPoint;
-       DrawingInstructions::Point endPoint;
+        Part9a::Point startPoint;
+        Part9a::Point medianPoint;
+        Part9a::Point endPoint;
     };
 
     // ArcByRadius class
@@ -108,7 +108,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        DrawingInstructions::Point center;
+        Part9a::Point center;
         double radius = 0.0;
         double startAngle = 0.0;
         double angularDistance = 360.0;
@@ -125,7 +125,7 @@ namespace DrawingInstructions
         void parse(const std::string& input) override;
 
     private:
-        DrawingInstructions::Point center;
+        Part9a::Point center;
         double outerRadius = 0.0;
         double innerRadius = 0.0;
         double startAngle = 0.0;
@@ -140,43 +140,6 @@ namespace DrawingInstructions
         void execute()  override;
         void parse(const std::string& input) override;
     };
-
-	class GeometryCommands
-	{
-		public:
-		GeometryCommands() = default;
-		GeometryCommands(const GeometryCommands&) = delete;
-		GeometryCommands& operator=(const GeometryCommands&) = delete;
-		GeometryCommands(GeometryCommands&&) = delete;
-		GeometryCommands& operator=(GeometryCommands&&) = delete;
-		~GeometryCommands();
-
-        void setSpatialReference(const std::string& reference, bool forward);
-        void setAugmentedPoint(GraphicBasePackage::CRSType crs, double x, double y);
-        void setAugmentedRay(GraphicBasePackage::CRSType, double direction, GraphicBasePackage::CRSType crsLength, double length);
-        void setAugmentedPath(GraphicBasePackage::CRSType crsPosition, GraphicBasePackage::CRSType crsAngle, GraphicBasePackage::CRSType crsDistance);
-        void setPolyline(const std::vector<DrawingInstructions::Point>& points);
-        void setArc3Points(double startPointX, double startPointY, double medianPointX, double medianPointY, double endPointX, double endPointY);
-        void setArcByRadius(double centerX, double centerY, double radius, double startAngle, double angularDistance);
-        void setAnnulus(double centerX, double centerY, double outerRadius, double innerRadius, double startAngle, double angularDistance);
-        void setClearGeometry();
-
-        void parse(const std::string& key, std::string value);
-		void execute() const;
-	private:
-		//Geometry Commands
-		SpatialReference* spatialReference = nullptr;
-		AugmentedPoint* augmentedPoint = nullptr;
-		AugmentedRay* augmentedRay = nullptr;
-		AugmentedPath* augmentedPath = nullptr;
-		Polyline* polyline = nullptr;
-		Arc3Points* arc3Points = nullptr;
-		ArcByRadius* arcByRadius = nullptr;
-		Annulus* annulus = nullptr;
-		ClearGeometry* clearGeometryCmd = nullptr;
-	};
-
-
 }
 
 

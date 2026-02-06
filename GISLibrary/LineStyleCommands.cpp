@@ -3,65 +3,14 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingInstructions
+namespace Part9a
 {
-	LineStyleCommands::~LineStyleCommands()
-	{
-		delete lineStyle;
-		lineStyle = nullptr;
-
-		delete lineSymbol;
-		lineSymbol = nullptr;
-
-		delete dash;
-		dash = nullptr;
-	}
-	void LineStyleCommands::setLineStyle(const std::string& name, double intervalLength, double width, const std::string& token, double transparency, const std::string& capStyle, const std::string& joinStyle, double offset)
-	{
-		delete this->lineStyle;
-		this->lineStyle = new LineStyle(name, intervalLength, width, token, transparency, capStyle, joinStyle, offset);
-	}
-
-	void LineStyleCommands::setLineSymbol(const std::string& Reference, double position, double rotation, const GraphicBasePackage::CRSType crsType)
-	{
-		delete this->lineSymbol;
-		this->lineSymbol = new LineSymbol(Reference, position, rotation, crsType);
-	}
-
-	void LineStyleCommands::setDash(double start, double length) {
-		delete this->dash;
-		this->dash = new Dash(start, length);
-	}
-
-	void LineStyleCommands::parse(const std::string& key, std::string value)
-	{
-		if (key == "LineStyle")
-		{
-			lineStyle->execute();
-		}
-		else if (key == "LineSymbol")
-		{
-			lineSymbol->execute();
-		}
-		else if (key == "Dash")
-		{
-			dash->execute();
-		}
-	}
-
-	void LineStyleCommands::execute() const
-	{
-		if (lineStyle) lineStyle->execute();
-		if (lineSymbol) lineSymbol->execute();
-		if (dash) dash->execute();
-	}
-
 	LineStyle::LineStyle(const std::string& name, double intervalLength, double width, const std::string& token, double transparency, const std::string& capStyle, const std::string& joinStyle, double offset)
 		: name(name), intervalLength(intervalLength), width(width), token(token), transparency(transparency), capStyle(capStyle), joinStyle(joinStyle), offset(offset) {}
 
 	void LineStyle::init()
 	{
-		StateCommand::init();
+		Command::init();
 		name.clear();
 		intervalLength = 0.0;
 		width = 0.0;
@@ -79,6 +28,7 @@ namespace DrawingInstructions
 
 	void LineStyle::parse(const std::string& input)
 	{
+		setPresent();
 		// LineStyle:name,intervalLength,width,token[,transparency[,capStyle[,joinStyle[,offset]]]] 
 		std::vector<std::string> values = LatLonUtility::Split(input, ",");
 		if (values.size() >= 4)
@@ -123,7 +73,7 @@ namespace DrawingInstructions
 
 	void LineSymbol::init()
 	{
-		StateCommand::init();
+		Command::init();
 		reference;
 		position = 0.0;
 		rotation = 0.0;
@@ -138,6 +88,7 @@ namespace DrawingInstructions
 
 	void LineSymbol::parse(const std::string& input)
 	{
+		setPresent();
 		// LineSymbol:reference,position[,rotation[,crsType[,scaleFactor]]] 
 		std::vector<std::string> values = LatLonUtility::Split(input, ",");
 		if (values.size() >= 2) 
@@ -189,7 +140,7 @@ namespace DrawingInstructions
 
 	void Dash::init()
 	{
-		StateCommand::init();
+		Command::init();
 		start = 0.0;
 		length = 0.0;
 	}
@@ -200,6 +151,7 @@ namespace DrawingInstructions
 	}
 	void Dash::parse(const std::string& input)
 	{
+		setPresent();
 		// Dash:start,length 
 		std::vector<std::string> values = LatLonUtility::Split(input, ",");
 		if (values.size() == 2) {

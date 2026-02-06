@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "VectorParameter.h"
 
-namespace DrawingInstructions
+namespace Part9a
 {
 
 	void Vector::SetX(double value)

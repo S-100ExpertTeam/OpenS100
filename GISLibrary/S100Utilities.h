@@ -9,34 +9,26 @@
 #include <vector>
 #include <memory>
 #include <polyclipping/clipper.hpp>
-#include <algorithm> 
+#include <algorithm>
 
 
 class ScaleBand {
 public:
-	int MaxDisplayScale;
-	int MinDisplayScale;
+	int MaxDisplayScale = 10000000;
+	int MinDisplayScale = 600000000;
 
 	bool isOverlap(int scale)
 	{
 		return MaxDisplayScale < scale && scale < MinDisplayScale ? true : false;
 	}
 
-	bool isIntersection(int minimumScale, int maximumScale)
+	// S-98_Main_Document_2.3.0 Ver
+	bool ScaleBand::isIntersection(int minimumScale, int maximumScale)
 	{
-		if (minimumScale == -1)
-		{
-			if (MinDisplayScale >= maximumScale || MaxDisplayScale >= maximumScale)
-				return true;
-		}
-
-		if ((minimumScale >= MinDisplayScale && MinDisplayScale >= maximumScale) || (minimumScale >= MaxDisplayScale && MaxDisplayScale >= maximumScale))
-		{
-			return true;
-		}
-		else
-			return false;
+		return max(MaxDisplayScale, maximumScale) <
+			min(MinDisplayScale, minimumScale);
 	}
+
 
 	static bool CompareByScale(const ScaleBand& a, const ScaleBand& b) {
 		if (a.MinDisplayScale == b.MinDisplayScale) {

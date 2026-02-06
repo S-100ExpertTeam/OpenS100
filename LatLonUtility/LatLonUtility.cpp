@@ -143,25 +143,46 @@ std::vector<std::string> LatLonUtility::Split(std::string targetStr, std::string
 
 void LatLonUtility::Split(std::string_view targetStr, std::string_view token, std::vector<std::string_view>& result)
 {
-	// Check parameters
-	if (token.length() == 0 || targetStr.find(token) == std::string::npos)
-	{
-		result.push_back(targetStr);
+	//// Check parameters
+	//if (token.length() == 0 || targetStr.find(token) == std::string::npos)
+	//{
+	//	result.push_back(targetStr);
+	//	return;
+	//}
+
+	//// return var
+	//std::vector<std::string> ret;
+
+	//int findOffset = 0;
+	//int splitOffset = 0;
+	//while ((splitOffset = (int)targetStr.find(token, findOffset)) != std::string::npos)
+	//{
+	//	result.push_back(targetStr.substr(findOffset, splitOffset - findOffset));
+	//	findOffset = splitOffset + (int)token.length();
+	//}
+
+	//result.push_back(targetStr.substr(findOffset, targetStr.length() - findOffset));
+	result.clear();
+	// 토큰이 비어있으면 원본 전체를 하나로 반환
+	if (token.empty()) {
+		result.emplace_back(targetStr);
 		return;
 	}
 
-	// return var
-	std::vector<std::string> ret;
-
-	int findOffset = 0;
-	int splitOffset = 0;
-	while ((splitOffset = (int)targetStr.find(token, findOffset)) != std::string::npos)
-	{
-		result.push_back(targetStr.substr(findOffset, splitOffset - findOffset));
-		findOffset = splitOffset + (int)token.length();
+	size_t start = 0;
+	while (start <= targetStr.size()) {
+		// token 위치 검색
+		auto pos = targetStr.find(token, start);
+		if (pos == std::string_view::npos) {
+			// 남은 부분을 마지막 조각으로
+			result.emplace_back(targetStr.substr(start));
+			break;
+		}
+		// token 앞부분을 한 조각으로
+		result.emplace_back(targetStr.substr(start, pos - start));
+		// 다음 검색 시작 지점
+		start = pos + token.size();
 	}
-
-	result.push_back(targetStr.substr(findOffset, targetStr.length() - findOffset));
 }
 
 unsigned char* LatLonUtility::HexStringToWKB(std::string value)
@@ -279,4 +300,28 @@ std::string LatLonUtility::DeleteXMLNamespace(std::string value)
 	}
 
 	return value;
+}
+
+std::string LatLonUtility::To_Lowercase(std::string s)
+{
+	std::transform(
+		s.begin(), s.end(),        // 변환할 범위
+		s.begin(),                 // 결과를 덮어쓸 위치
+		[](char c) -> char {
+			return std::towlower(c);
+		}
+	);
+	return s;
+}
+
+std::wstring LatLonUtility::To_Lowercase(std::wstring s)
+{
+	std::transform(
+		s.begin(), s.end(),        // 변환할 범위
+		s.begin(),                 // 결과를 덮어쓸 위치
+		[](wchar_t wc) -> wchar_t {
+			return std::towlower(wc);
+		}
+	);
+	return s;
 }

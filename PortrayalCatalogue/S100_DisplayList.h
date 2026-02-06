@@ -28,6 +28,7 @@ public:
 
 	S100_Instruction* GetDisplayInstruction(int index);
 	std::list<S100_Instruction*> GetDisplayInstructions();
+	std::list<S100_Instruction*>& GetInstructionList();
 
 	std::list<S100_Instruction*> GetAlertInstructions();
 	void AddAlertInstruction(S100_Instruction* _ins);

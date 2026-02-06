@@ -3,79 +3,14 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingInstructions {
-	CoverageCommands::~CoverageCommands()
-	{
-		delete numericAnnotation;
-		numericAnnotation = nullptr;
-
-		delete symbolAnnotation;
-		symbolAnnotation = nullptr;
-
-		delete coverageColor;
-		coverageColor = nullptr;
-
-		delete lookupEntry;
-		lookupEntry = nullptr;
-	}
-	void CoverageCommands::setNumericAnnotation(int decimals, const std::string& championChoice, double buffer)
-	{
-		delete this->numericAnnotation;
-		this->numericAnnotation = new NumericAnnotation(decimals, championChoice, buffer);
-	}
-
-	void CoverageCommands::setSymbolAnnotation(const std::string& symbolRef, const std::string& rotationAttribute, const std::string& scaleAttribute, const GraphicBasePackage::CRSType rotationCRS, double rotationOffset, double rotationFactor, double scaleFactor)
-	{
-		delete this->symbolAnnotation;
-		this->symbolAnnotation = new SymbolAnnotation(symbolRef, rotationAttribute, scaleAttribute, rotationCRS, rotationOffset, rotationFactor, scaleFactor);
-	}
-
-	void CoverageCommands::setCoverageColor(const std::string& startToken, double startTransparency, const std::string& endToken, double endTransparency, double penWidth)
-	{
-		delete this->coverageColor;
-		this->coverageColor = new CoverageColor(startToken, startTransparency, endToken, endTransparency, penWidth);
-	}
-
-	void CoverageCommands::setLookupEntry(const std::string& label, double lower, double upper, const IntervalType closure)
-	{
-		delete this->lookupEntry;
-		this->lookupEntry = new LookupEntry(label, lower, upper, closure);
-	}
-
-	void CoverageCommands::parse(const std::string& key, std::string value)
-	{
-		if (key == "NumericAnnotation")
-		{
-			//numericAnnotation->execute();
-		}
-		else if (key == "SymbolAnnotation")
-		{
-			//symbolAnnotation->execute();
-		}
-		else if (key == "CoverageColor")
-		{
-			//coverageColor->execute();
-		}
-		else if (key == "LookupEntry")
-		{
-			//lookupEntry->execute();
-		}
-	}
-
-	void CoverageCommands::execute() const
-	{
-		if (numericAnnotation) numericAnnotation->execute();
-		if (symbolAnnotation) symbolAnnotation->execute();
-		if (coverageColor) coverageColor->execute();
-		if (lookupEntry) lookupEntry->execute();
-	}
-
+namespace Part9a
+{
 	NumericAnnotation::NumericAnnotation(int decimals, const std::string& championChoice, double buffer)
 		: decimals(decimals), championChoice(championChoice), buffer(buffer) {}
 
 	void NumericAnnotation::init() 
 	{
-		StateCommand::init();
+		Command::init();
 		decimals = 0;
 		championChoice = "ChampionChoice";
 		buffer = 0.0;
@@ -86,6 +21,7 @@ namespace DrawingInstructions {
 
 	void NumericAnnotation::parse(const std::string& input)
 	{
+		setPresent();
 		// NumericAnnotation:decimals,championChoice[,buffer] 
 		auto tokens = LatLonUtility::Split(input, ",");
 
@@ -121,7 +57,7 @@ namespace DrawingInstructions {
 
 	void SymbolAnnotation::init()
 	{
-		StateCommand::init();
+		Command::init();
 		symbolRef.clear();
 		rotationAttribute.clear();
 		scaleAttribute.clear();
@@ -136,6 +72,7 @@ namespace DrawingInstructions {
 
 	void SymbolAnnotation::parse(const std::string& input)
 	{
+		setPresent();
 		// SymbolAnnotation:symbolRef,rotationAttribute,scaleAttribute[,rotationCRS,rotationOffset[,rotationFactor[,scaleFactor]]] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() >= 3 && tokens.size() <= 7)
@@ -145,7 +82,7 @@ namespace DrawingInstructions {
 			scaleAttribute = tokens[2];
 			if (tokens.size() > 3)
 			{
-				rotationCRS = StateCommand::GetCRSTypeFromString(tokens[3]);
+				rotationCRS = Command::GetCRSTypeFromString(tokens[3]);
 			}
 			else
 			{
@@ -201,7 +138,7 @@ namespace DrawingInstructions {
 
 	void CoverageColor::init()
 	{
-		StateCommand::init();
+		Command::init();
 		startToken.clear();
 		startTransparency = 0.0;
 		endToken.clear();
@@ -214,6 +151,7 @@ namespace DrawingInstructions {
 
 	void CoverageColor::parse(const std::string& input)
 	{
+		setPresent();
 		// CoverageColor:startToken,startTransparency[,endToken,endTransparency][,penWidth] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() >= 2 && tokens.size() <= 5)
@@ -275,7 +213,7 @@ namespace DrawingInstructions {
 
 	void LookupEntry::init()
 	{
-		StateCommand::init();
+		Command::init();
 		label.clear();
 		lower = 0.0;
 		upper = 0.0;
@@ -286,6 +224,7 @@ namespace DrawingInstructions {
 	}
 	void LookupEntry::parse(const std::string& input)
 	{
+		setPresent();
 		// LookupEntry:label,lower,upper,closure 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 4)
@@ -304,7 +243,7 @@ namespace DrawingInstructions {
 				upper = 0.0; // Default value if parsing fails
 			}
 			
-			closure = StateCommand::GetIntervalTypeFromString(tokens[3]);
+			closure = Command::GetIntervalTypeFromString(tokens[3]);
 		}
 		else
 		{

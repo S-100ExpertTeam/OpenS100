@@ -3,195 +3,14 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingInstructions
+namespace Part9a
 {
-    TextStyleCommands::~TextStyleCommands()
-    {
-		delete fontColor;
-		fontColor = nullptr;
-
-		delete fontBackgroundColor;
-		fontBackgroundColor = nullptr;
-
-		delete fontSize;
-		fontSize = nullptr;
-
-		delete fontProportion;
-		fontProportion = nullptr;
-
-		delete fontWeight;
-		fontWeight = nullptr;
-
-		delete fontSlant;
-		fontSlant = nullptr;
-
-		delete fontSerifs;
-		fontSerifs = nullptr;
-
-		delete fontUnderline;
-		fontUnderline = nullptr;
-
-		delete fontStrikethrough;
-		fontStrikethrough = nullptr;
-
-		delete textAlignHorizontal;
-		textAlignHorizontal = nullptr;
-
-		delete textAlignVertical;
-		textAlignVertical = nullptr;
-
-		delete fontReference;
-		fontReference = nullptr;
-
-		delete fontUpperline;
-		fontUpperline = nullptr;
-
-		delete textVerticalOffset;
-		textVerticalOffset = nullptr;
-    }
-    void TextStyleCommands::setFontColor(const std::string& token, double transparency) {
-        delete this->fontColor;
-        this->fontColor = new FontColor(token, transparency);
-    }
-
-    void TextStyleCommands::setFontBackgroundColor(const std::string& token, double transparency)
-    {
-        delete this->fontBackgroundColor;
-		this->fontBackgroundColor = new FontBackgroundColor(token, transparency);
-    }
-
-    void TextStyleCommands::setFontSize(double bodySize) {
-        delete this->fontSize;
-        this->fontSize = new FontSize(bodySize);
-    }
-
-    void TextStyleCommands::setFontProportion(const std::string& proportion) {
-        delete this->fontProportion;
-        this->fontProportion = new FontProportion(proportion);
-    }
-
-    void TextStyleCommands::setFontWeight(const std::string& weight) {
-        delete this->fontWeight;
-        this->fontWeight = new FontWeight(weight);
-    }
-
-    void TextStyleCommands::setFontSlant(const std::string& slant) {
-        delete this->fontSlant;
-        this->fontSlant = new FontSlant(slant);
-    }
-
-    void TextStyleCommands::setFontSerifs(bool serifs) {
-        delete this->fontSerifs;
-        this->fontSerifs = new FontSerifs(serifs);
-    }
-
-    void TextStyleCommands::setFontUnderline(bool underline) {
-        delete this->fontUnderline;
-        this->fontUnderline = new FontUnderline(underline);
-    }
-
-    void TextStyleCommands::setFontStrikethrough(bool strikethrough) {
-        delete this->fontStrikethrough;
-        this->fontStrikethrough = new FontStrikethrough(strikethrough);
-    }
-
-    void TextStyleCommands::setFontUpperline(bool overline)
-    {
-        delete this->fontUpperline;
-		this->fontUpperline = new FontUpperline(overline);
-    }
-
-    void TextStyleCommands::setFontReference(const std::string& reference)
-    {
-        delete this->fontReference;
-        this->fontReference = new FontReference(reference);
-    }
-
-    void TextStyleCommands::setTextAlignHorizontal(const std::string& horizontalAlignment) {
-        delete this->textAlignHorizontal;
-        this->textAlignHorizontal = new TextAlignHorizontal(horizontalAlignment);
-    }
-
-    void TextStyleCommands::setTextAlignVertical(const std::string& verticalAlignment) {
-        delete this->textAlignVertical;
-        this->textAlignVertical = new TextAlignVertical(verticalAlignment);
-    }
-
-    void TextStyleCommands::setTextVerticalOffset(double verticalOffset)
-    {
-		delete this->textVerticalOffset;
-		this->textVerticalOffset = new TextVerticalOffset(verticalOffset);
-    }
-
-
-	void TextStyleCommands::parse(const std::string& key, std::string value)
-	{
-		if (key == "FontColor")
-		{
-			//fontColor->execute();
-		}
-		else if (key == "FontSize")
-		{
-			//fontSize->execute();
-		}
-		else if (key == "FontProportion")
-		{
-			//fontProportion->execute();
-		}
-		else if (key == "FontWeight")
-		{
-			//fontWeight->execute();
-		}
-		else if (key == "FontSlant")
-		{
-			//fontSlant->execute();
-		}
-		else if (key == "FontSerifs")
-		{
-			//fontSerifs->execute();
-		}
-		else if (key == "FontUnderline")
-		{
-			//fontUnderline->execute();
-		}
-		else if (key == "FontStrikethrough")
-		{
-			//fontStrikethrough->execute();
-		}
-		else if (key == "TextAlignHorizontal")
-		{
-			//textAlignHorizontal->execute();
-		}
-		else if (key == "TextAlignVertical")
-		{
-			//textAlignVertical->execute();
-		}	
-
-	}
-
-	void TextStyleCommands::execute() const
-	{
-        if (fontColor) fontColor->execute();
-		if (fontSize) fontSize->execute();
-		if (fontProportion) fontProportion->execute();
-		if (fontWeight) fontWeight->execute();
-		if (fontSlant) fontSlant->execute();
-		if (fontSerifs) fontSerifs->execute();
-		if (fontUnderline) fontUnderline->execute();
-		if (fontStrikethrough) fontStrikethrough->execute();
-		if (textAlignHorizontal) textAlignHorizontal->execute();
-		if (textAlignVertical) textAlignVertical->execute();
-		
-	}
-
-
-
     // FontColor class implementation
     FontColor::FontColor(const std::string& token, double transparency) : token(token), transparency(transparency) {}
 
     void FontColor::init()
     {
-        StateCommand::init();
+        Command::init();
         token.clear();
         transparency = 0.0;
 	}
@@ -201,6 +20,7 @@ namespace DrawingInstructions
 
     void FontColor::parse(const std::string& input)
     {
+        setPresent();
         // FontColor:token[,transparency] 
 		auto tokens = LatLonUtility::Split(input, ",");
         if (tokens.size() > 0) 
@@ -236,7 +56,7 @@ namespace DrawingInstructions
 
     void FontBackgroundColor::init()
     {
-        StateCommand::init();
+        Command::init();
         token.clear();
         transparency = 1.0;
 	}
@@ -246,6 +66,7 @@ namespace DrawingInstructions
 
     void FontBackgroundColor::parse(const std::string& input)
     {
+        setPresent();
         // FontBackgroundColor:token[,transparency] 
 
         auto tokens = LatLonUtility::Split(input, ",");
@@ -281,7 +102,7 @@ namespace DrawingInstructions
 
     void FontSize::init()
     {
-        StateCommand::init();
+        Command::init();
         bodySize = 10.0;
 	}
 
@@ -290,6 +111,7 @@ namespace DrawingInstructions
 
     void FontSize::parse(const std::string& input)
     {
+        setPresent();
         // FontSize:bodySize 
         try
         {
@@ -306,7 +128,7 @@ namespace DrawingInstructions
 
     void FontProportion::init()
     {
-        StateCommand::init();
+        Command::init();
         proportion = "Proportional";
     }
 
@@ -315,6 +137,7 @@ namespace DrawingInstructions
 
     void FontProportion::parse(const std::string& input)
     {
+        setPresent();
         // FontProportion:proportion 
         if (input == "Proportional" || input == "MonoSpaced") 
         {
@@ -331,7 +154,7 @@ namespace DrawingInstructions
 
     void FontWeight::init()
     {
-        StateCommand::init();
+        Command::init();
         weight = "Medium";
 	}
 
@@ -340,6 +163,7 @@ namespace DrawingInstructions
 
     void FontWeight::parse(const std::string& input)
     {
+        setPresent();
         // FontWeight:weight
         if (input == "Light" ||
             input == "Medium" || 
@@ -358,7 +182,7 @@ namespace DrawingInstructions
 
     void FontSlant::init()
     {
-        StateCommand::init();
+        Command::init();
         slant = "Upright";
 	}
 
@@ -367,6 +191,7 @@ namespace DrawingInstructions
 
     void FontSlant::parse(const std::string& input)
     {
+        setPresent();
         // FontSlant:slant
         if (input == "Upright" || 
             input == "Italics") 
@@ -384,7 +209,7 @@ namespace DrawingInstructions
 
     void FontSerifs::init()
     {
-        StateCommand::init();
+        Command::init();
         serifs = false; // Default value
     }
 
@@ -393,6 +218,7 @@ namespace DrawingInstructions
 
     void FontSerifs::parse(const std::string& input)
     {
+        setPresent();
         // FontSerifs:serifs 
         if (input == "true" || input == "false") 
         {
@@ -409,7 +235,7 @@ namespace DrawingInstructions
 
     void FontUnderline::init()
     {
-        StateCommand::init();
+        Command::init();
         underline = false; // Default value
 	}
 
@@ -418,6 +244,7 @@ namespace DrawingInstructions
 
     void FontUnderline::parse(const std::string& input)
     {
+        setPresent();
         // FontUnderline:underline 
         if (input == "true" || input == "false") 
         {
@@ -434,7 +261,7 @@ namespace DrawingInstructions
 
     void FontStrikethrough::init()
     {
-        StateCommand::init();
+        Command::init();
         strikethrough = false; // Default value
     }
 
@@ -443,6 +270,7 @@ namespace DrawingInstructions
 
     void FontStrikethrough::parse(const std::string& input)
     {
+        setPresent();
         // FontStrikethrough:strikethrough 
         if (input == "true" || input == "false") 
         {
@@ -459,7 +287,7 @@ namespace DrawingInstructions
 
     void TextAlignHorizontal::init()
     {
-        StateCommand::init();
+        Command::init();
         horizontalAlignment = "Start";
     }
 
@@ -468,6 +296,7 @@ namespace DrawingInstructions
 
     void TextAlignHorizontal::parse(const std::string& input)
     {
+        setPresent();
         // TextAlignHorizontal:horizontalAlignment 
         if (input == "Start" || 
             input == "Center" || 
@@ -486,7 +315,7 @@ namespace DrawingInstructions
 
     void TextAlignVertical::init()
     {
-        StateCommand::init();
+        Command::init();
         verticalAlignment = "Bottom";
 	}
 
@@ -495,6 +324,7 @@ namespace DrawingInstructions
 
     void TextAlignVertical::parse(const std::string& input)
     {
+        setPresent();
         // TextAlignVertical:verticalAlignment 
 		if (input == "Top" ||
 			input == "Center" ||
@@ -510,7 +340,7 @@ namespace DrawingInstructions
 
     void FontReference::init()
     {
-        StateCommand::init();
+        Command::init();
         fontReference.clear();
 	}
 
@@ -520,13 +350,14 @@ namespace DrawingInstructions
 
     void FontReference::parse(const std::string& input)
     {
+        setPresent();
 		// FontReference:fontReference 
 		fontReference = input;
     }
 
     void FontUpperline::init()
     {
-        StateCommand::init();
+        Command::init();
         strikethrough = false;
 	}
 
@@ -536,6 +367,7 @@ namespace DrawingInstructions
 
     void FontUpperline::parse(const std::string& input)
     {
+        setPresent();
         // FontUpperline:upperline 
         if (input == "true" || input == "false") 
         {
@@ -549,7 +381,7 @@ namespace DrawingInstructions
 
     void TextVerticalOffset::init()
     {
-        StateCommand::init();
+        Command::init();
         verticalOffset = 0.0; // Default value
     }
 
@@ -559,6 +391,7 @@ namespace DrawingInstructions
 
     void TextVerticalOffset::parse(const std::string& input)
     {
+        setPresent();
         // TextVerticalOffset:verticalOffset 
         try
         {

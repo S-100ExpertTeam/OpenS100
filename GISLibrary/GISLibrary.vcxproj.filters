@@ -76,13 +76,13 @@
     <Filter Include="S100\LanguagePackModel">
       <UniqueIdentifier>{51b01cae-a899-4ce3-b2c6-155a3d778b9d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="S100\DrawingInstructions">
+    <Filter Include="S100\Part9a">
       <UniqueIdentifier>{ea5ebd4d-c83b-4443-b2a5-253629289b9f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="S100\DrawingInstructions\DrawingCommands">
+    <Filter Include="S100\Part9a\DrawingCommands">
       <UniqueIdentifier>{c6517684-ddb8-4c81-8956-e406e9f87f08}</UniqueIdentifier>
     </Filter>
-    <Filter Include="S100\DrawingInstructions\StateCommands">
+    <Filter Include="S100\Part9a\StateCommands">
       <UniqueIdentifier>{475ac1ad-577b-4051-88b8-8cbded9c3c7f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -1017,41 +1017,35 @@
     <ClCompile Include="Status.cpp">
       <Filter>S100\LanguagePackModel</Filter>
     </ClCompile>
-    <ClCompile Include="DrawingInstruction.cpp">
-      <Filter>S100\DrawingInstructions</Filter>
-    </ClCompile>
     <ClCompile Include="DrawingCommands.cpp">
-      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+      <Filter>S100\Part9a\DrawingCommands</Filter>
     </ClCompile>
     <ClCompile Include="VisibilityCommands.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="CoverageCommands.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="ColourOverrideCommands.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="GeometryCommands.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="LineStyleCommands.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="TextStyleCommands.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="TimeCommands.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="TransformCommands.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="AlertCommands.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
-    </ClCompile>
-    <ClCompile Include="StateCommands.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="GM_OrientableSurface.cpp">
       <Filter>S100\GM</Filter>
@@ -1062,17 +1056,62 @@
     <ClCompile Include="S100Factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StateCommand.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
-    </ClCompile>
     <ClCompile Include="PointParameter.cpp">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClCompile>
     <ClCompile Include="VectorParameter.cpp">
-      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+      <Filter>S100\Part9a\DrawingCommands</Filter>
     </ClCompile>
     <ClCompile Include="CommandToInstruction.cpp">
-      <Filter>S100\DrawingInstructions</Filter>
+      <Filter>S100\Part9a</Filter>
+    </ClCompile>
+    <ClCompile Include="PointInstruction.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="LineInstruction.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="LineInstructionUnsuppressed.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorFill.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaFillReference.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="PixmapFill.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolFill.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="HatchFill.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="TextInstruction.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="CoverageFill.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="NullInstruction.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandList.cpp">
+      <Filter>S100\Part9a</Filter>
+    </ClCompile>
+    <ClCompile Include="Enum_CommandType.cpp">
+      <Filter>S100\Part9a</Filter>
+    </ClCompile>
+    <ClCompile Include="StateCommand.cpp">
+      <Filter>S100\Part9a\StateCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>S100\Part9a</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingCommand.cpp">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2084,44 +2123,35 @@
     <ClInclude Include="Status.h">
       <Filter>S100\LanguagePackModel</Filter>
     </ClInclude>
-    <ClInclude Include="DrawingInstruction.h">
-      <Filter>S100\DrawingInstructions</Filter>
-    </ClInclude>
     <ClInclude Include="DrawingCommands.h">
-      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+      <Filter>S100\Part9a\DrawingCommands</Filter>
     </ClInclude>
     <ClInclude Include="VisibilityCommands.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="TransformCommands.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="TimeCommands.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="TextStyleCommands.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="LineStyleCommands.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="GeometryCommands.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="CoverageCommands.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="ColourOverrideCommands.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="AlertCommands.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
-    </ClInclude>
-    <ClInclude Include="StateCommands.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
-    </ClInclude>
-    <ClInclude Include="StateCommand.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="LuaAttributePathItem.h">
       <Filter>Header Files</Filter>
@@ -2133,13 +2163,61 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PointParameter.h">
-      <Filter>S100\DrawingInstructions\StateCommands</Filter>
+      <Filter>S100\Part9a\StateCommands</Filter>
     </ClInclude>
     <ClInclude Include="VectorParameter.h">
-      <Filter>S100\DrawingInstructions\DrawingCommands</Filter>
+      <Filter>S100\Part9a\DrawingCommands</Filter>
     </ClInclude>
     <ClInclude Include="CommandToInstruction.h">
-      <Filter>S100\DrawingInstructions</Filter>
+      <Filter>S100\Part9a</Filter>
+    </ClInclude>
+    <ClInclude Include="PointInstruction.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="LineInstruction.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="LineInstructionUnsuppressed.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorFill.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaFillReference.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="PixmapFill.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolFill.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="HatchFill.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="TextInstruction.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="CoverageFill.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="NullInstruction.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandList.h">
+      <Filter>S100\Part9a</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_CommandType.h">
+      <Filter>S100\Part9a</Filter>
+    </ClInclude>
+    <ClInclude Include="StateCommand.h">
+      <Filter>S100\Part9a\StateCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>S100\Part9a</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingCommand.h">
+      <Filter>S100\Part9a\DrawingCommands</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

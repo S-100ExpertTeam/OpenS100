@@ -3,113 +3,19 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingInstructions
+namespace Part9a
 {
-    VisibilityCommands::~VisibilityCommands() {
-        delete viewingGroup;
-		delete displayPlane;
-		delete drawingPriority;
-		delete scaleMinimum;
-		delete scaleMaximum;
-		delete id;
-		delete parent;
-		delete hover;
-    }
-    
-    void VisibilityCommands::setViewingGroup(const std::vector<std::string>& viewingGroups) {
-        delete this->viewingGroup;
-        viewingGroup = new ViewingGroup(viewingGroups);
-    }
-
-    void VisibilityCommands::setDisplayPlane(const std::string& displayPlane) {
-        delete this->displayPlane;
-        this->displayPlane = new DisplayPlane(displayPlane);
-    }
-
-    void VisibilityCommands::setDrawingPriority(int drawingPriority) {
-        delete this->drawingPriority;
-        this->drawingPriority = new DrawingPriority(drawingPriority);
-    }
-
-    void VisibilityCommands::setScaleMinimum(int scaleMinimum) {
-        delete this->scaleMinimum;
-        this->scaleMinimum = new ScaleMinimum(scaleMinimum);
-    }
-
-    void VisibilityCommands::setScaleMaximum(int scaleMaximum) {
-        delete this->scaleMaximum;
-        this->scaleMaximum = new ScaleMaximum(scaleMaximum);
-    }
-
-    void VisibilityCommands::setId(const std::string& id) {
-        delete this->id;
-        this->id = new Id(id);
-    }
-
-    void VisibilityCommands::setParent(const std::string& parentId) {
-        delete this->parent;
-        this->parent = new Parent(parentId);
-    }
-
-    void VisibilityCommands::setHover(bool hover) {
-        delete this->hover;
-        this->hover = new Hover(hover);
-    }
-
-    void VisibilityCommands::execute() const
-    {
-        if (viewingGroup) viewingGroup->execute();
-        if (displayPlane) displayPlane->execute();
-        if (drawingPriority) drawingPriority->execute();
-        if (scaleMinimum) scaleMinimum->execute();
-        if (scaleMaximum) scaleMaximum->execute();
-        if (id) id->execute();
-        if (parent) parent->execute();
-        if (hover) hover->execute();
-    }
-
-    void VisibilityCommands::parse(const std::string& key, std::string value)
-    {
-        if (key == "ViewingGroup")
-        {
-            //setViewingGroup();
-        }
-        else if (key == "DisplayPlane")
-        {
-            //setDisplayPlane();
-        }
-        else if (key == "DrawingPriority")
-        {
-            //setDrawingPriority();
-        }
-        else if (key == "ScaleMinimum")
-        {
-            //setScaleMinimum();
-        }
-        else if (key == "ScaleMaximum")
-        {
-            //setScaleMaximum();
-        }
-        else if (key == "Id")
-        {
-            //setId();
-        }
-        else if (key == "Parent")
-        {
-            //setParent();
-        }
-        else if (key == "Hover")
-        {
-            //setHover();
-        }
-    }
-
     // ViewingGroup class implementation
     ViewingGroup::ViewingGroup(const std::vector<std::string>& viewingGroups) : viewingGroups(viewingGroups) {}
 
+    Enum_CommandType ViewingGroup::GetType() const
+    {
+		return Enum_CommandType::ViewingGroup;
+    }
+
     void ViewingGroup::init()
     {
-        StateCommand::init();
+        Command::init();
         viewingGroups.clear();
     }
 
@@ -119,6 +25,7 @@ namespace DrawingInstructions
 
     void ViewingGroup::parse(const std::string& input) 
     {
+        setPresent();
         // ViewingGroup:viewingGroup[,viewingGroup2[,¡¦]] 
 		viewingGroups = LatLonUtility::Split(input, ",");
 	}
@@ -131,9 +38,14 @@ namespace DrawingInstructions
     // DisplayPlane class implementation
     DisplayPlane::DisplayPlane(const std::string& displayPlane) : displayPlane(displayPlane) {}
 
+    Enum_CommandType DisplayPlane::GetType() const
+    {
+		return Enum_CommandType::DisplayPlane;
+    }
+
     void DisplayPlane::init()
     {
-        StateCommand::init();
+        Command::init();
 		displayPlane.clear();
     }
 
@@ -143,6 +55,7 @@ namespace DrawingInstructions
 
     void DisplayPlane::parse(const std::string& input) 
     {
+        setPresent();
         // DisplayPlane:displayPlane
 		displayPlane = input;
 	}
@@ -155,9 +68,14 @@ namespace DrawingInstructions
     // DrawingPriority class implementation
     DrawingPriority::DrawingPriority(int drawingPriority) : drawingPriority(drawingPriority) {}
 
+    Enum_CommandType DrawingPriority::GetType() const
+    {
+        return Enum_CommandType::DrawingPriority;
+    }
+
     void DrawingPriority::init()
     {
-        StateCommand::init();
+        Command::init();
 		drawingPriority = 0; // Default value
     }
 
@@ -166,6 +84,7 @@ namespace DrawingInstructions
 
     void DrawingPriority::parse(const std::string& input) 
     {
+        setPresent();
         // DrawingPriority:drawingPriority 
 
 		try 
@@ -186,9 +105,14 @@ namespace DrawingInstructions
     // ScaleMinimum class implementation
     ScaleMinimum::ScaleMinimum(int scaleMinimum) : scaleMinimum(scaleMinimum) {}
 
+    Enum_CommandType ScaleMinimum::GetType() const
+    {
+        return Enum_CommandType::ScaleMinimum;
+    }
+
     void ScaleMinimum::init()
     {
-        StateCommand::init();
+        Command::init();
         scaleMinimum = 0;
     }
 
@@ -197,6 +121,7 @@ namespace DrawingInstructions
 
     void ScaleMinimum::parse(const std::string& input) 
     {
+        setPresent();
         // ScaleMinimum:scaleMinimum
 
         try
@@ -217,9 +142,14 @@ namespace DrawingInstructions
     // ScaleMaximum class implementation
     ScaleMaximum::ScaleMaximum(int scaleMaximum) : scaleMaximum(scaleMaximum) {}
 
+    Enum_CommandType ScaleMaximum::GetType() const
+    {
+        return Enum_CommandType::ScaleMaximum;
+    }
+
     void ScaleMaximum::init()
     {
-        StateCommand::init();
+        Command::init();
         scaleMaximum = 0;
     }
 
@@ -228,6 +158,7 @@ namespace DrawingInstructions
 
     void ScaleMaximum::parse(const std::string& input) 
     {
+        setPresent();
         // ScaleMaximum:scaleMaximum 
 
         try
@@ -248,9 +179,14 @@ namespace DrawingInstructions
     // Id class implementation
     Id::Id(const std::string& id) : id(id) {}
 
+    Enum_CommandType Id::GetType() const
+    {
+        return Enum_CommandType::Id;
+    }
+
     void Id::init()
     {
-        StateCommand::init();
+        Command::init();
         id.clear();
     }
 
@@ -259,6 +195,7 @@ namespace DrawingInstructions
 
     void Id::parse(const std::string& input) 
     {
+        setPresent();
         // Id[:id]
 		id = input;
 	}
@@ -271,9 +208,14 @@ namespace DrawingInstructions
     // Parent class implementation
     Parent::Parent(const std::string& parentId) : parentId(parentId) {}
 
+    Enum_CommandType Parent::GetType() const
+    {
+        return Enum_CommandType::Parent;
+    }
+
     void Parent::init()
     {
-        StateCommand::init();
+        Command::init();
         parentId.clear();
     }
 
@@ -282,6 +224,7 @@ namespace DrawingInstructions
 
     void Parent::parse(const std::string& input) 
     {
+        setPresent();
         // Parent[:id]
 		parentId = input;
     }
@@ -294,9 +237,14 @@ namespace DrawingInstructions
     // Hover class implementation
     Hover::Hover(bool hover) : hover(hover) {}
 
+    Enum_CommandType Hover::GetType() const
+    {
+        return Enum_CommandType::Hover;
+    }
+
     void Hover::init()
     {
-        StateCommand::init();
+        Command::init();
         hover = false;
     }
 
@@ -305,6 +253,7 @@ namespace DrawingInstructions
 
     void Hover::parse(const std::string& input) 
     {
+        setPresent();
         // Hover:hover 
 
 		if (input == "true") 

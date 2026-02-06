@@ -40,10 +40,11 @@
 #include "../PortrayalCatalogue/S100_AugmentedRay.h"
 #include "../PortrayalCatalogue/S100_AlertReference.h"
 
-
-
+#include "..\\LatLonUtility\\LatLonUtility.h"
 
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
+
+#include <pugixml.hpp>
 
 #include <mmsystem.h> 
 
@@ -194,8 +195,23 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 		S100_SpatialReference* sr = *itor;
 		SENC_SpatialReference* ssr = new SENC_SpatialReference();
 
-		ssr->SetRCNM(sr->GetType());
-		ssr->reference = _wtoi(sr->GetReference().c_str());
+		auto reference = sr->GetReference();
+
+		// split reference by '|'
+		std::vector<std::string_view> element;
+		LatLonUtility::Split(reference, "|", element);
+
+		if (element.size() >= 2)
+		{
+			auto spatialType = pugi::as_wide(std::string(element[0]));
+			ssr->SetRCNM(spatialType);
+
+			// string to int
+			ssr->reference = std::stoi(std::string(element[1]));
+		}
+		
+		//ssr->SetRCNM(sr->GetType());
+		//ssr->reference = _wtoi(sr->GetReference().c_str());
 		ssr->bForward = sr->isForward();
 
 		si->spatialReference.push_back(ssr);

@@ -16,4 +16,3 @@ namespace S100
 		void GetContents(pugi::xml_node& node);
 	};
 }
-

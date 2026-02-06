@@ -10,3 +10,4 @@ enum class S100_LinePlacementMode
 };
 
 S100_LinePlacementMode StringToLinePlacementMode(const std::string& value);
+S100_LinePlacementMode StringToLinePlacementMode(const std::wstring& value);

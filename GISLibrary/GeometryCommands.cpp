@@ -3,141 +3,13 @@
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 
-namespace DrawingInstructions
+namespace Part9a
 {
-	GeometryCommands::~GeometryCommands()
-	{
-		delete spatialReference;
-		spatialReference = nullptr;
-
-		delete augmentedPoint;
-		augmentedPoint = nullptr;
-
-		delete augmentedRay;
-		augmentedRay = nullptr;
-
-		delete augmentedPath;
-		augmentedPath = nullptr;
-
-		delete polyline;
-		polyline = nullptr;
-
-		delete arc3Points;
-		arc3Points = nullptr;
-
-		delete arcByRadius;
-		arcByRadius = nullptr;
-
-		delete annulus;
-		annulus = nullptr;
-
-		delete clearGeometryCmd;
-		clearGeometryCmd = nullptr;
-	}
-
-	void GeometryCommands::setSpatialReference(const std::string& reference, bool forward)
-	{
-		delete this->spatialReference;
-		this->spatialReference = new SpatialReference(reference, forward);
-	}
-	void GeometryCommands::setAugmentedPoint(GraphicBasePackage::CRSType crs, double x, double y)
-	{
-		delete this->augmentedPoint;
-		this->augmentedPoint = new AugmentedPoint(crs, x, y);
-	}
-	void GeometryCommands::setAugmentedRay(GraphicBasePackage::CRSType CRSType, double direction, GraphicBasePackage::CRSType crsLength, double length)
-	{
-		delete this->augmentedRay;
-		this->augmentedRay = new AugmentedRay(CRSType, direction, crsLength, length);
-	}
-	void GeometryCommands::setAugmentedPath(GraphicBasePackage::CRSType crsPosition, GraphicBasePackage::CRSType crsAngle, GraphicBasePackage::CRSType crsDistance)
-	{
-		delete this->augmentedPath;
-		this->augmentedPath = new AugmentedPath(crsPosition, crsAngle, crsDistance);
-	}
-	void GeometryCommands::setPolyline(const std::vector<DrawingInstructions::Point>& points)
-	{
-		delete this->polyline;
-		this->polyline = new Polyline(points);
-	}
-	void GeometryCommands::setArc3Points(double startPointX, double startPointY, double medianPointX, double medianPointY, double endPointX, double endPointY)
-	{
-		delete this->arc3Points;
-		this->arc3Points = new Arc3Points(startPointX, startPointY, medianPointX, medianPointY, endPointX, endPointY);
-	}
-	void GeometryCommands::setArcByRadius(double centerX, double centerY, double radius, double startAngle, double angularDistance)
-	{
-		delete this->arcByRadius;
-		this->arcByRadius = new ArcByRadius(centerX, centerY, radius, startAngle, angularDistance);
-	}
-	void GeometryCommands::setAnnulus(double centerX, double centerY, double outerRadius, double innerRadius, double startAngle, double angularDistance)
-	{
-		delete this->annulus;
-		this->annulus = new Annulus(centerX, centerY, outerRadius, innerRadius, startAngle, angularDistance);
-	}
-	void GeometryCommands::setClearGeometry()
-	{
-		delete this->clearGeometryCmd;
-		this->clearGeometryCmd = new ClearGeometry();
-	}
-
-	void GeometryCommands::parse(const std::string& key, std::string value)
-	{
-		if (key == "SpatialReference")
-		{
-			//setSpatialReference();
-		}
-		else if (key == "AugmentedPoint")
-		{
-			//setAugmentedPoint();
-		}
-		else if (key == "AugmentedRay")
-		{
-			//setAugmentedRay();
-		}
-		else if (key == "AugmentedPath")
-		{
-			//setAugmentedPath();
-		}
-		else if (key == "Polyline")
-		{
-			//setPolyline();
-		}
-		else if (key == "Arc3Points")
-		{
-			//setArc3Points();
-		}
-		else if (key == "ArcByRadius")
-		{
-			//setArcByRadius();
-		}
-		else if (key == "Annulus")
-		{
-			//setAnnulus();
-		}
-		else if (key == "ClearGeometry")
-		{
-			//setClearGeometry();
-		}
-	}
-	void GeometryCommands::execute() const
-	{
-		if (spatialReference) spatialReference->execute();
-		if (augmentedPoint) augmentedPoint->execute();
-		if (augmentedRay) augmentedRay->execute();
-		if (augmentedPath) augmentedPath->execute();
-		if (polyline) polyline->execute();
-		if (arc3Points) arc3Points->execute();
-		if (arcByRadius) arcByRadius->execute();
-		if (annulus) annulus->execute();
-		if (clearGeometryCmd) clearGeometryCmd->execute();
-	}
-
 	SpatialReference::SpatialReference(const std::string& reference, bool forward) : reference(reference), forward(forward) {}
 
 	void SpatialReference::init()
 	{
-		StateCommand::init();
+		Command::init();
 		reference.clear();
 		forward = true;
 	}
@@ -148,6 +20,7 @@ namespace DrawingInstructions
 
 	void SpatialReference::parse(const std::string& input)
 	{
+		setPresent();
 		// SpatialReference:reference[,forward] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() > 0) 
@@ -172,7 +45,7 @@ namespace DrawingInstructions
 
 	void AugmentedPoint::init()
 	{
-		StateCommand::init();
+		Command::init();
 		crs = GraphicBasePackage::CRSType::CRSType_None;
 		point.Set(0.0, 0.0); 
 	}
@@ -183,13 +56,14 @@ namespace DrawingInstructions
 
 	void AugmentedPoint::parse(const std::string& input)
 	{
+		setPresent();
 		// AugmentedPoint:crs,x,y 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 3) 
 		{
 			try
 			{
-				crs = StateCommand::GetCRSTypeFromString(tokens[0]);
+				crs = Command::GetCRSTypeFromString(tokens[0]);
 
 				double x = std::stod(tokens[1]);
 				double y = std::stod(tokens[2]);
@@ -210,7 +84,7 @@ namespace DrawingInstructions
 
 	void AugmentedRay::init()
 	{
-		StateCommand::init();
+		Command::init();
 		CRSType = GraphicBasePackage::CRSType::CRSType_None;
 		direction = 0.0;
 		crsLength = GraphicBasePackage::CRSType::CRSType_None;
@@ -223,15 +97,16 @@ namespace DrawingInstructions
 
 	void AugmentedRay::parse(const std::string& input)
 	{
+		setPresent();
 		// AugmentedRay:crsDirection, direction, crsLength, length
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 4) 
 		{
 			try
 			{
-				CRSType = StateCommand::GetCRSTypeFromString(tokens[0]);
+				CRSType = Command::GetCRSTypeFromString(tokens[0]);
 				direction = std::stod(tokens[1]);
-				crsLength = StateCommand::GetCRSTypeFromString(tokens[2]);
+				crsLength = Command::GetCRSTypeFromString(tokens[2]);
 				length = std::stod(tokens[3]);
 			}
 			catch (const std::exception& e) 
@@ -249,7 +124,7 @@ namespace DrawingInstructions
 
 	void AugmentedPath::init()
 	{
-		StateCommand::init();
+		Command::init();
 		crsPosition = GraphicBasePackage::CRSType::CRSType_None;
 		crsAngle = GraphicBasePackage::CRSType::CRSType_None;
 		crsDistance = GraphicBasePackage::CRSType::CRSType_None;
@@ -261,15 +136,16 @@ namespace DrawingInstructions
 
 	void AugmentedPath::parse(const std::string& input)
 	{
+		setPresent();
 		// AugmentedPath:crsPosition,crsAngle,crsDistance 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 3) 
 		{
 			try
 			{
-				crsPosition = StateCommand::GetCRSTypeFromString(tokens[0]);
-				crsAngle = StateCommand::GetCRSTypeFromString(tokens[1]);
-				crsDistance = StateCommand::GetCRSTypeFromString(tokens[2]);
+				crsPosition = Command::GetCRSTypeFromString(tokens[0]);
+				crsAngle = Command::GetCRSTypeFromString(tokens[1]);
+				crsDistance = Command::GetCRSTypeFromString(tokens[2]);
 			}
 			catch (const std::exception& e) 
 			{
@@ -282,14 +158,14 @@ namespace DrawingInstructions
 		}
 	}
 
-	Polyline::Polyline(const std::vector<DrawingInstructions::Point>& points) : points(points)
+	Polyline::Polyline(const std::vector<Part9a::Point>& points) : points(points)
 	{
 
 	}
 
 	void Polyline::init()
 	{
-		StateCommand::init();
+		Command::init();
 		points.clear();
 	}
 
@@ -299,6 +175,7 @@ namespace DrawingInstructions
 
 	void Polyline::parse(const std::string& input)
 	{
+		setPresent();
 		// Polyline:positionXstart,positionYstart,positionXto,positionYto[,positionXto,positionYto¡¦] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() % 2 == 0 && tokens.size() >= 4) 
@@ -310,7 +187,7 @@ namespace DrawingInstructions
 				{
 					double x = std::stod(tokens[i]);
 					double y = std::stod(tokens[i + 1]);
-					points.push_back(DrawingInstructions::Point(x, y));
+					points.push_back(Part9a::Point(x, y));
 				}
 				catch (const std::exception& e) 
 				{
@@ -334,7 +211,7 @@ namespace DrawingInstructions
 
 	void Arc3Points::init()
 	{
-		StateCommand::init();
+		Command::init();
 		startPoint.Set(0.0, 0.0);
 		medianPoint.Set(0.0, 0.0);
 		endPoint.Set(0.0, 0.0);
@@ -346,6 +223,7 @@ namespace DrawingInstructions
 
 	void Arc3Points::parse(const std::string& input)
 	{
+		setPresent();
 		// Arc3Points:startPointX,startPointY,medianPointX,medianPointY,endPointX,endPointY 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() == 6) 
@@ -381,7 +259,7 @@ namespace DrawingInstructions
 
 	void ArcByRadius::init()
 	{
-		StateCommand::init();
+		Command::init();
 		center.Set(0.0, 0.0);
 		radius = 0.0;
 		startAngle = 0.0;
@@ -394,6 +272,7 @@ namespace DrawingInstructions
 
 	void ArcByRadius::parse(const std::string& input)
 	{
+		setPresent();
 		// ArcByRadius:centerX,centerY,radius[,startAngle,angularDistance] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() >= 3 && tokens.size() <= 5) 
@@ -439,7 +318,7 @@ namespace DrawingInstructions
 
 	void Annulus::init()
 	{
-		StateCommand::init();
+		Command::init();
 		center.Set(0.0, 0.0);
 		outerRadius = 0.0;
 		innerRadius = 0.0;
@@ -453,6 +332,7 @@ namespace DrawingInstructions
 
 	void Annulus::parse(const std::string& input)
 	{
+		setPresent();
 		// Annulus:centerX,centerY,outerRadius[,innerRadius[,startAngle,angularDistance]] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() >= 3 && tokens.size() <= 6) 
@@ -501,7 +381,7 @@ namespace DrawingInstructions
 
 	void ClearGeometry::init()
 	{
-		StateCommand::init();
+		Command::init();
 	}
 
 	void ClearGeometry::execute() 
@@ -510,6 +390,7 @@ namespace DrawingInstructions
 
 	void ClearGeometry::parse(const std::string& input)
 	{
+		setPresent();
 		// ClearGeometry 
 	}
 

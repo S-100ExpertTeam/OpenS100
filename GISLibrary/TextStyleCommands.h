@@ -1,7 +1,7 @@
 #pragma once
 #include "StateCommand.h"
 
-namespace DrawingInstructions
+namespace Part9a
 {
     class FontColor : public StateCommand {
     public:
@@ -32,7 +32,7 @@ namespace DrawingInstructions
         double transparency = 1.0;
     };
 
-    class FontSize : public StateCommand 
+    class FontSize : public StateCommand
     {
     public:
 		FontSize() = default;
@@ -47,7 +47,7 @@ namespace DrawingInstructions
         double bodySize = 10.0;
     };
 
-    class FontProportion : public StateCommand 
+    class FontProportion : public StateCommand
     {
     public:
 		FontProportion() = default;
@@ -62,7 +62,7 @@ namespace DrawingInstructions
         std::string proportion = "Proportional";
     };
 
-    class FontWeight : public StateCommand 
+    class FontWeight : public StateCommand
     {
     public:
 		FontWeight() = default;
@@ -77,7 +77,7 @@ namespace DrawingInstructions
         std::string weight = "Medium";
     };
 
-    class FontSlant : public StateCommand 
+    class FontSlant : public StateCommand
     {
     public:
 		FontSlant() = default;
@@ -92,7 +92,7 @@ namespace DrawingInstructions
         std::string slant = "Upright";
     };
 
-    class FontSerifs : public StateCommand 
+    class FontSerifs : public StateCommand
     {
     public:
 		FontSerifs() = default;
@@ -107,7 +107,7 @@ namespace DrawingInstructions
         bool serifs = false;
     };
 
-    class FontUnderline : public StateCommand 
+    class FontUnderline : public StateCommand
     {
     public:
         FontUnderline() = default;
@@ -122,7 +122,7 @@ namespace DrawingInstructions
         bool underline = false;
     };
 
-    class FontStrikethrough : public StateCommand 
+    class FontStrikethrough : public StateCommand
     {
     public:
 		FontStrikethrough() = default;
@@ -137,7 +137,7 @@ namespace DrawingInstructions
         bool strikethrough = false;
     };
 
-    class FontUpperline : public StateCommand 
+    class FontUpperline : public StateCommand
     {
     public:
 		FontUpperline() = default;
@@ -153,7 +153,7 @@ namespace DrawingInstructions
         bool strikethrough = false;
     };
 
-    class FontReference : public StateCommand 
+    class FontReference : public StateCommand
     {
     public:
 		FontReference() = default;
@@ -169,7 +169,7 @@ namespace DrawingInstructions
         std::string fontReference;
     };
 
-    class TextAlignHorizontal : public StateCommand 
+    class TextAlignHorizontal : public StateCommand
     {
     public:
 		TextAlignHorizontal() = default;
@@ -184,7 +184,7 @@ namespace DrawingInstructions
         std::string horizontalAlignment = "Start";
     };
 
-    class TextAlignVertical : public StateCommand 
+    class TextAlignVertical : public StateCommand
     {
     public:
 		TextAlignVertical() = default;
@@ -199,7 +199,7 @@ namespace DrawingInstructions
         std::string verticalAlignment = "Bottom";
     };
 
-    class TextVerticalOffset : public StateCommand 
+    class TextVerticalOffset : public StateCommand
     {
     public:
 		TextVerticalOffset() = default;
@@ -214,52 +214,5 @@ namespace DrawingInstructions
     private:
         double verticalOffset = 0.0;
     };
-
-
-	class TextStyleCommands
-	{
-    public:
-        TextStyleCommands() = default;
-        TextStyleCommands(const TextStyleCommands&) = delete;
-        TextStyleCommands& operator=(const TextStyleCommands&) = delete;
-        TextStyleCommands(TextStyleCommands&&) = delete;
-        TextStyleCommands& operator=(TextStyleCommands&&) = delete;
-        ~TextStyleCommands();
-
-        void setFontColor(const std::string& token, double transparency);
-        void setFontBackgroundColor(const std::string& token, double transparency);
-        void setFontSize(double bodySize);
-        void setFontProportion(const std::string& proportion);
-        void setFontWeight(const std::string& weight);
-        void setFontSlant(const std::string& slant);
-        void setFontSerifs(bool serifs);
-        void setFontUnderline(bool underline);
-        void setFontStrikethrough(bool strikethrough);
-        void setFontUpperline(bool overline);
-        void setFontReference(const std::string& reference);
-        void setTextAlignHorizontal(const std::string& horizontalAlignment);
-        void setTextAlignVertical(const std::string& verticalAlignment);
-        void setTextVerticalOffset(double verticalOffset);
-
-        void parse(const std::string& key, std::string value);
-        void execute() const;
-
-    private:
-        FontColor* fontColor = nullptr;
-        FontBackgroundColor* fontBackgroundColor = nullptr;
-        FontSize* fontSize = nullptr;
-        FontProportion* fontProportion = nullptr;
-        FontWeight* fontWeight = nullptr;
-        FontSlant* fontSlant = nullptr;
-        FontSerifs* fontSerifs = nullptr;
-        FontUnderline* fontUnderline = nullptr;
-        FontStrikethrough* fontStrikethrough = nullptr;
-        FontUpperline* fontUpperline = nullptr; 
-        FontReference* fontReference = nullptr;
-        TextAlignHorizontal* textAlignHorizontal = nullptr;
-        TextAlignVertical* textAlignVertical = nullptr;
-        TextVerticalOffset* textVerticalOffset = nullptr;
-	};
-
 }
 

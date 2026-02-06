@@ -29,6 +29,16 @@ void S100_Instruction::SetFeatureReference(std::wstring& value)
 	featureReference = value;
 }
 
+void S100_Instruction::SetFeatureReference(std::string& value)
+{
+	featureReference = std::wstring(value.begin(), value.end());
+}
+
+void S100_Instruction::SetFeatureReference(std::string_view value)
+{
+	featureReference = std::wstring(value.begin(), value.end());
+}
+
 void S100_Instruction::setId(std::string value)
 {
 	id = value;
