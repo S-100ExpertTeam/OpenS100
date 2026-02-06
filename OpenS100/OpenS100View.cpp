@@ -59,7 +59,7 @@
 
 #include "../LatLonUtility/Logger.h"
 #include "../PortrayalCatalogue/AlertCatalog.h"
-#include "sqlite3.h"
+#include <sqlite3.h>
 
 
 #include "../GISLibrary/Permit.h"
@@ -91,7 +91,6 @@ BEGIN_MESSAGE_MAP(COpenS100View, CView)
 	ON_COMMAND(T8, NoGeometryInfo)
 	ON_COMMAND(T9, Setting)
 	ON_COMMAND(T10, DatasetManager)
-	//ON_COMMAND(T10, &COpenS100App::OnAppAbout)
 	ON_WM_CREATE()
 	ON_WM_MBUTTONDOWN()
 	ON_WM_MBUTTONUP()
@@ -2010,10 +2009,6 @@ void COpenS100View::OnInitialUpdate()
 	CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath + DataSetManagerSupport::GetInstance().m_FileName;
 	theApp.gisLib->AddLayer(filepath);
 	
-
-	/*for (auto item : DataSetManagerSupport::GetInstance().initDataFileList())
-		theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());*/
-
 	theApp.m_pDockablePaneLayerManager.UpdateList();
 
 

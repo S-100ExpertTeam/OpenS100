@@ -88,7 +88,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
                     ScaleBand sr;
 
                     if(dataCoverages[idx].MaximumDisplayScale != nullptr)
-                        sr.MaxDisplayScale = *dataCoverages[idx].MaximumDisplayScale;
+                        sr.OptDisplayScale = *dataCoverages[idx].MaximumDisplayScale;
 
                     if(dataCoverages[idx].MinimumDisplayScale != nullptr)
                         sr.MinDisplayScale = *dataCoverages[idx].MinimumDisplayScale;
@@ -105,7 +105,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
                         else
                         {
                             ScaleBand sb;
-                            sb.MaxDisplayScale = min(inv->totalScaleBand.MaxDisplayScale, sr.MaxDisplayScale);
+                            sb.OptDisplayScale = min(inv->totalScaleBand.OptDisplayScale, sr.OptDisplayScale);
                             sb.MinDisplayScale = min(inv->totalScaleBand.MinDisplayScale, sr.MinDisplayScale);
                             inv->totalScaleBand = sb;
                         }
@@ -194,7 +194,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
                     if (dataCoverages[idx].MaximumDisplayScale && dataCoverages[idx].MinimumDisplayScale)
                     {
                         ScaleBand sr;
-                        sr.MaxDisplayScale = *dataCoverages[idx].MaximumDisplayScale;
+                        sr.OptDisplayScale = *dataCoverages[idx].MaximumDisplayScale;
                         sr.MinDisplayScale = *dataCoverages[idx].MinimumDisplayScale;
                         inv->vecScaleRange.push_back(sr);
 
@@ -206,7 +206,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
                         else
                         {
                             ScaleBand sb;
-                            sb.MaxDisplayScale = min(inv->totalScaleBand.MaxDisplayScale, sr.MaxDisplayScale);
+                            sb.OptDisplayScale = min(inv->totalScaleBand.OptDisplayScale, sr.OptDisplayScale);
                             sb.MinDisplayScale = min(inv->totalScaleBand.MinDisplayScale, sr.MinDisplayScale);
                             inv->totalScaleBand = sb;
                         }
@@ -225,7 +225,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
                             auto sbs = util.GetLegacyScaleband(extracted_int);
 
                             ScaleBand sr;
-                            sr.MaxDisplayScale = sbs.maximumScale;
+                            sr.OptDisplayScale = sbs.optimumScale;
                             sr.MinDisplayScale = sbs.minimumScale;
                             inv->vecScaleRange.push_back(sr);
 
@@ -237,7 +237,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
                             else
                             {
                                 ScaleBand sb;
-                                sb.MaxDisplayScale = min(inv->totalScaleBand.MaxDisplayScale, sr.MaxDisplayScale);
+                                sb.OptDisplayScale = min(inv->totalScaleBand.OptDisplayScale, sr.OptDisplayScale);
                                 sb.MinDisplayScale = min(inv->totalScaleBand.MinDisplayScale, sr.MinDisplayScale);
                                 inv->totalScaleBand = sb;
                             }
