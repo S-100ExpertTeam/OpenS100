@@ -741,9 +741,6 @@
     <ClCompile Include="GM_Ring.cpp">
       <Filter>S100\GM</Filter>
     </ClCompile>
-    <ClCompile Include="ScaleBands.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GM_SurfaceBoundary.cpp">
       <Filter>S100\GM</Filter>
     </ClCompile>
@@ -1112,6 +1109,15 @@
     </ClCompile>
     <ClCompile Include="DrawingCommand.cpp">
       <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaleBand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryItem.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1835,9 +1841,6 @@
     <ClInclude Include="Measure.h">
       <Filter>S100</Filter>
     </ClInclude>
-    <ClInclude Include="ScaleBands.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Length.h">
       <Filter>S100</Filter>
     </ClInclude>
@@ -2218,6 +2221,15 @@
     </ClInclude>
     <ClInclude Include="DrawingCommand.h">
       <Filter>S100\Part9a\DrawingCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaleBand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryItem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

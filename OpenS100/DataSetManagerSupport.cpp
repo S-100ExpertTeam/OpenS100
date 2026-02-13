@@ -365,7 +365,7 @@ void DataSetManagerSupport::CreateFCTable()
 		sqlite3_free(errMsg);
 	}
 	else {
-		TRACE("FeatureCatalogue Table created successfully");
+		TRACE("FeatureCatalogue Table created successfully\n");
 	}
 }
 
@@ -387,7 +387,7 @@ void DataSetManagerSupport::CreatePCTable()
 		sqlite3_free(errMsg);
 	}
 	else {
-		TRACE("PortrayalCatalogue Table created successfully");
+		TRACE("PortrayalCatalogue Table created successfully\n");
 	}
 }
 
@@ -408,7 +408,7 @@ void DataSetManagerSupport::CreateDSTable()
 		sqlite3_free(errMsg);
 	}
 	else {
-		TRACE("FeatureCatalogue Table created successfully");
+		TRACE("FeatureCatalogue Table created successfully\n");
 	}
 }
 
@@ -429,7 +429,7 @@ void DataSetManagerSupport::CreateSPTable()
 		sqlite3_free(errMsg);
 	}
 	else {
-		TRACE("FeatureCatalogue Table created successfully");
+		TRACE("FeatureCatalogue Table created successfully\n");
 	}
 }
 
@@ -444,10 +444,10 @@ void DataSetManagerSupport::insertData(std::string table, const std::string& fil
 	sqlite3_bind_text(stmt, 2, filePath.c_str(), -1, SQLITE_TRANSIENT);
 
 	if (sqlite3_step(stmt) != SQLITE_DONE) {
-		TRACE("Could not insert data: %s", sqlite3_errmsg(m_db));
+		TRACE("Could not insert data: %s\n", sqlite3_errmsg(m_db));
 	}
 	else {
-		TRACE("Data inserted successfully");
+		TRACE("Data inserted successfully\n");
 	}
 	sqlite3_finalize(stmt);
 }
@@ -465,10 +465,10 @@ void DataSetManagerSupport::insertData(std::string table, const std::string& fil
 	sqlite3_bind_text(stmt, 3, resourcePurpose.c_str(), -1, SQLITE_TRANSIENT);
 
 	if (sqlite3_step(stmt) != SQLITE_DONE) {
-		TRACE("Could not insert data: %s", sqlite3_errmsg(m_db));
+		TRACE("Could not insert data: %s\n", sqlite3_errmsg(m_db));
 	}
 	else {
-		TRACE("Data inserted successfully");
+		TRACE("Data inserted successfully\n");
 	}
 	sqlite3_finalize(stmt);
 }
@@ -486,10 +486,10 @@ void DataSetManagerSupport::insertData(std::string table, const std::string& fil
 	sqlite3_bind_text(stmt, 4, version.c_str(), -1, SQLITE_TRANSIENT);
 
 	if (sqlite3_step(stmt) != SQLITE_DONE) {
-		TRACE("Could not insert data: %s", sqlite3_errmsg(m_db));
+		TRACE("Could not insert data: %s\n", sqlite3_errmsg(m_db));
 	}
 	else {
-		TRACE("Data inserted successfully");
+		TRACE("Data inserted successfully\n");
 	}
 	sqlite3_finalize(stmt);
 }
@@ -501,7 +501,7 @@ std::shared_ptr<FC_PC_DatasetClass>  DataSetManagerSupport::selectDataByFilePath
 	int rc = sqlite3_prepare_v2(m_db, sqlSelect.c_str(), -1, &stmt, nullptr);
 
 	if (rc != SQLITE_OK) {
-		TRACE("Cannot prepare select statement: %s",sqlite3_errmsg(m_db));
+		TRACE("Cannot prepare select statement: %s\n",sqlite3_errmsg(m_db));
 	}
 
 	sqlite3_bind_text(stmt, 1, targetFilePath.c_str(), -1, SQLITE_TRANSIENT);
@@ -521,7 +521,7 @@ std::shared_ptr<FC_PC_DatasetClass>  DataSetManagerSupport::selectDataByFilePath
 
 	}
 	else {
-		TRACE("No data found for the specified filePath: %s", targetFilePath);
+		TRACE("No data found for the specified filePath: %s\n", targetFilePath);
 	}
 
 	sqlite3_finalize(stmt);
@@ -538,7 +538,7 @@ std::vector<std::shared_ptr<DatasetClass>> DataSetManagerSupport::selectAllDataD
 	int rc = sqlite3_prepare_v2(m_db, sqlSelect.c_str(), -1, &stmt, nullptr);
 
 	if (rc != SQLITE_OK) {
-		TRACE("Cannot prepare select statement: %s", sqlite3_errmsg(m_db));
+		TRACE("Cannot prepare select statement: %s\n", sqlite3_errmsg(m_db));
 	}
 
 	while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -565,7 +565,7 @@ std::vector<std::shared_ptr<SupportFiles>> DataSetManagerSupport::selectAllSuppo
 	int rc = sqlite3_prepare_v2(m_db, sqlSelect.c_str(), -1, &stmt, nullptr);
 
 	if (rc != SQLITE_OK) {
-		TRACE("Cannot prepare select statement: %s", sqlite3_errmsg(m_db));
+		TRACE("Cannot prepare select statement: %s\n", sqlite3_errmsg(m_db));
 	}
 
 	while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -590,7 +590,7 @@ std::vector<std::shared_ptr<FC_PC_DatasetClass>> DataSetManagerSupport::selectAl
 	int rc = sqlite3_prepare_v2(m_db, sqlSelect.c_str(), -1, &stmt, nullptr);
 
 	if (rc != SQLITE_OK) {
-		TRACE("Cannot prepare select statement: %s", sqlite3_errmsg(m_db));
+		TRACE("Cannot prepare select statement: %s\n", sqlite3_errmsg(m_db));
 	}
 
 	while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -616,15 +616,15 @@ void DataSetManagerSupport::deleteAllDataFromTable(const std::string& table) {
 
 	sqlite3_stmt* stmt;
 	if (sqlite3_prepare_v2(m_db, sqlDelete.c_str(), -1, &stmt, nullptr) != SQLITE_OK) {
-		TRACE("Could not prepare delete statement: %s", sqlite3_errmsg(m_db));
+		TRACE("Could not prepare delete statement: %s\n", sqlite3_errmsg(m_db));
 		return;
 	}
 
 	if (sqlite3_step(stmt) != SQLITE_DONE) {
-		TRACE("Could not delete data: %s", sqlite3_errmsg(m_db));
+		TRACE("Could not delete data: %s\n", sqlite3_errmsg(m_db));
 	}
 	else {
-		TRACE("All data deleted successfully from %s", table.c_str());
+		TRACE("All data deleted successfully from %s\n", table.c_str());
 	}
 
 	sqlite3_finalize(stmt);

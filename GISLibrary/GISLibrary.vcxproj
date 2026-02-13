@@ -504,6 +504,8 @@
     <ClCompile Include="GF_ObjectType.cpp" />
     <ClCompile Include="IndeterminateDate.cpp" />
     <ClCompile Include="indeterminatePosition.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="InventoryItem.cpp" />
     <ClCompile Include="ISO8211Fuc.cpp" />
     <ClCompile Include="LanguageCode.cpp" />
     <ClCompile Include="Layer.cpp" />
@@ -578,6 +580,7 @@
     <ClCompile Include="S100_SE_DigitalSignatureReference.cpp" />
     <ClCompile Include="S100_SE_SignatureOnData.cpp" />
     <ClCompile Include="S100_SE_SignatureOnSignature.cpp" />
+    <ClCompile Include="ScaleBand.cpp" />
     <ClCompile Include="SourceFileType.cpp" />
     <ClCompile Include="SourceHeaderType.cpp" />
     <ClCompile Include="Command.cpp" />
@@ -605,7 +608,6 @@
     <ClCompile Include="S101Creator.cpp" />
     <ClCompile Include="S101LuaScriptingReference.cpp" />
     <ClCompile Include="SAbstractCurve.cpp" />
-    <ClCompile Include="ScaleBands.cpp" />
     <ClCompile Include="SCommonFuction.cpp" />
     <ClCompile Include="SCompositeCurve.cpp" />
     <ClCompile Include="SCoverage.cpp" />
@@ -773,6 +775,8 @@
     <ClInclude Include="HDF5Wrapper.h" />
     <ClInclude Include="IndeterminateDate.h" />
     <ClInclude Include="indeterminatePosition.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="InventoryItem.h" />
     <ClInclude Include="LanguageCode.h" />
     <ClInclude Include="Length.h" />
     <ClInclude Include="LineInstruction.h" />
@@ -944,6 +948,7 @@
     <ClInclude Include="S100_SE_DigitalSignatureReference.h" />
     <ClInclude Include="S100_SE_SignatureOnData.h" />
     <ClInclude Include="S100_SE_SignatureOnSignature.h" />
+    <ClInclude Include="ScaleBand.h" />
     <ClInclude Include="SourceFileType.h" />
     <ClInclude Include="SourceHeaderType.h" />
     <ClInclude Include="SpatialObjectType.h" />
@@ -973,7 +978,6 @@
     <ClInclude Include="S101Creator.h" />
     <ClInclude Include="S101LuaScriptingReference.h" />
     <ClInclude Include="SAbstractCurve.h" />
-    <ClInclude Include="ScaleBands.h" />
     <ClInclude Include="SCommonFuction.h" />
     <ClInclude Include="SCompositeCurve.h" />
     <ClInclude Include="SCoverage.h" />

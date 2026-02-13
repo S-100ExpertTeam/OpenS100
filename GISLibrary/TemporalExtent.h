@@ -1,9 +1,11 @@
 #pragma once
 
-#include <memory>
 #include "S100_DateTime.h"
 
-namespace S100 {
+#include <memory>
+
+namespace S100 
+{
     class TemporalExtent
     {
     public:

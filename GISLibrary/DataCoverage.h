@@ -19,8 +19,6 @@ namespace S100 {
 
         //temp Bounding Box
         std::shared_ptr<EX_GeographicBoundingBox> BoundingBox;
-   
-
 
         void GetContents(pugi::xml_node& node);
         void Save(pugi::xml_node& node);

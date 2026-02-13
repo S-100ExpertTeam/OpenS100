@@ -7,22 +7,22 @@
 #include <filesystem>
 #include <cctype>
 
-ScaleBands S100Utilities::scaleBands[15] = {
-		ScaleBands(600000000, 10000000),
-		ScaleBands(10000000, 3500000),
-		ScaleBands(3500000, 1500000),
-		ScaleBands(1500000, 700000),
-		ScaleBands(700000, 350000),
-		ScaleBands(350000, 180000),
-		ScaleBands(180000, 90000),
-		ScaleBands(90000, 45000),
-		ScaleBands(45000, 22000),
-		ScaleBands(22000, 12000),
-		ScaleBands(12000, 8000), 
-		ScaleBands(8000, 4000),
-		ScaleBands(4000, 3000),
-		ScaleBands(3000, 2000),
-		ScaleBands(2000, 1000)
+ScaleBand S100Utilities::scaleBand[15] = {
+		ScaleBand(INT_MAX, 10000000),
+		ScaleBand(10000000, 3500000),
+		ScaleBand(3500000, 1500000),
+		ScaleBand(1500000, 700000),
+		ScaleBand(700000, 350000),
+		ScaleBand(350000, 180000),
+		ScaleBand(180000, 90000),
+		ScaleBand(90000, 45000),
+		ScaleBand(45000, 22000),
+		ScaleBand(22000, 12000),
+		ScaleBand(12000, 8000), 
+		ScaleBand(8000, 4000),
+		ScaleBand(4000, 3000),
+		ScaleBand(3000, 2000),
+		ScaleBand(2000, 1000)
 };
 
 
@@ -57,24 +57,24 @@ D2D1::ColorF S100Utilities::GetColorNum(int num)
 
 
 
-ScaleBands S100Utilities::GetLegacyScaleband(int scale) 
+ScaleBand S100Utilities::GetLegacyScaleband(int scale) 
 {
 	switch (scale)
 	{
 	case 1:
-		return ScaleBands(300000, 5000000);
+		return ScaleBand(300000, 5000000);
 	case 2:
-		return ScaleBands(150000, 300000);
+		return ScaleBand(150000, 300000);
 	case 3:
-		return ScaleBands(50000, 150000);
+		return ScaleBand(50000, 150000);
 	case 4:
-		return ScaleBands(20000, 50000);
+		return ScaleBand(20000, 50000);
 	case 5:
-		return ScaleBands(5000, 20000);
+		return ScaleBand(5000, 20000);
 	case 6:
-		return ScaleBands(2000, 5000);
+		return ScaleBand(2000, 5000);
 	default:
-		return ScaleBands(0, 0);
+		return ScaleBand(0, 0);
 	}
 };
 
@@ -99,13 +99,13 @@ int S100Utilities::GetLevel(std::wstring path)
 // S-98_Main_Document_2.3.0 Ver
 int S100Utilities::GetScaleBand(int scale)
 {
-	if (scale > scaleBands[0].optimumScale) {
+	if (scale > scaleBand[0].GetOptimumDisplayScale()) {
 		return 0;
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (scale > scaleBands[i].optimumScale &&
-			scale <= scaleBands[i].minimumScale) {
+		if (scale > scaleBand[i].GetOptimumDisplayScale() &&
+			scale <= scaleBand[i].GetMinimumDisplayScale()) {
 			return i;
 		}
 	}
@@ -114,18 +114,18 @@ int S100Utilities::GetScaleBand(int scale)
 }
 
 // S-98_Main_Document_2.3.0 Ver
-std::vector<int> S100Utilities::GetScaleBands(S100::DataCoverage dataCoverage)
+std::vector<int> S100Utilities::algorithm_ScaleBand(S100::DataCoverage dataCoverage)
 {
 	int minDS = *dataCoverage.MinimumDisplayScale;
-	int maxDS = *dataCoverage.MaximumDisplayScale;
+	int optDS = *dataCoverage.OptimumDisplayScale;
 	std::vector<int> S;
 
-	if (maxDS < scaleBands[0].optimumScale) {
+	if (minDS > scaleBand[0].GetOptimumDisplayScale()) {
 		S.push_back(0);
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (max(maxDS, scaleBands[i].optimumScale) < min(minDS, scaleBands[i].minimumScale)) {
+		if (min(minDS, scaleBand[i].GetMinimumDisplayScale()) > max(optDS, scaleBand[i].GetOptimumDisplayScale())) {
 			S.push_back(i);
 		}
 	}
@@ -134,18 +134,18 @@ std::vector<int> S100Utilities::GetScaleBands(S100::DataCoverage dataCoverage)
 }
 
 // S-98_Main_Document_2.3.0 Ver
-std::vector<int> S100Utilities::GetScaleBands(ScaleBand sb)
+std::vector<int> S100Utilities::GetScaleBand(ScaleBand sb)
 {
-	int minDS = sb.MinDisplayScale;
-	int maxDS = sb.OptDisplayScale;
+	int minDS = sb.GetMinimumDisplayScale();
+	int maxDS = sb.GetOptimumDisplayScale();
 	std::vector<int> S;
 
-	if (maxDS < scaleBands[0].optimumScale) {
+	if (maxDS < scaleBand[0].GetOptimumDisplayScale()) {
 		S.push_back(0);
 	}
 
 	for (int i = 1; i <= 14; i++) {
-		if (max(maxDS, scaleBands[i].optimumScale) < min(minDS, scaleBands[i].minimumScale)) {
+		if (max(maxDS, scaleBand[i].GetOptimumDisplayScale()) < min(minDS, scaleBand[i].GetMinimumDisplayScale())) {
 			S.push_back(i);
 		}
 	}
@@ -156,8 +156,7 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 {
 	bool first = true;
 
-	
-
+	// 1. S = 0
 	std::vector<std::shared_ptr<InventoryItem>> S;
 	
 	if (std::isnan(viewport.GetWidth()))
@@ -167,9 +166,6 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 	long latTemp;
 	ClipperLib::Path  view;
 	ClipperLib::Paths  viewPaths;
-
-	ClipperLib::Path  view1;
-	ClipperLib::Paths  viewPaths1;
 
 	ClipperLib::IntPoint tmp;
 
@@ -204,16 +200,22 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 
 	viewPaths.push_back(view);
 
-	
+	// 2. ScaleBand = GetScaleBand(scale)
 	int SB = GetScaleBand(scaler->GetCurrentScale());
 
+	// 3. While viewPort != 0 do
 	while (viewPaths.size() != 0)
 	{
+		// a. For all dataCoverage in collection
 		for (auto item : INV)
 		{
+			// i. If scaleBand ...
+			bool scaleBandInScaleBand = false;
+			//algorithm_ScaleBand();
+
 			for (int i = 0; i < item->vecScaleRange.size(); i++)
 			{
-				auto scaleBandIndices = GetScaleBands(item->vecScaleRange[i]);
+				auto scaleBandIndices = GetScaleBand(item->vecScaleRange[i]);
 				if (std::find(scaleBandIndices.begin(), scaleBandIndices.end(), SB) != scaleBandIndices.end())
 				{
 					if (SCommonFuction::IntersectionPaths(viewPaths, item->vecBoundingPolygon[i], scaler))
@@ -234,10 +236,10 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 						str += std::to_string(i);
 						str += " \n";
 						str += "OptDisplayScale : ";
-						str += std::to_string(item->vecScaleRange[i].OptDisplayScale);
+						str += std::to_string(item->vecScaleRange[i].GetOptimumDisplayScale());
 						str += " \n";
 						str += "MinDisplayScale : ";
-						str += std::to_string(item->vecScaleRange[i].MinDisplayScale);
+						str += std::to_string(item->vecScaleRange[i].GetMinimumDisplayScale());
 						str += " \n";
 						str += " \n";
 						OutputDebugStringA(str.c_str());
@@ -257,10 +259,18 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 				}
 			}
 		}
+
+		// b. ScaleBand = ScaleBand - 1
 		SB = SB - 1;
-		if (SB < 0)
+
+		// c. If ScaleBand = 0
+		if (SB < 0) {
+			// i. Return S
 			return S;
+		}
 	}
+
+	// 4. Return S
 	return S; 
 }
 

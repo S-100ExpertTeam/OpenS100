@@ -22,8 +22,6 @@ public:
 	virtual ~S100ExchangeCatalogue();
 
 public:
-	bool m_IsLegacy;
-
 	unsigned int m_nRecords;					// The number of records
 	unsigned int m_nShapeType;					// Shape Type
 	shared_ptr<ExchangeCatalogue>  m_DataPtr;	//
