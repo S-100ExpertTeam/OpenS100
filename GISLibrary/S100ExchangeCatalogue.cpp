@@ -529,23 +529,23 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                     delete cls;
                     delete sSurface;
 
-                    CString maximumDisplayScale;
-                    if (dc.MaximumDisplayScale != nullptr)
-                    {
-                        CString str(std::to_string(*dc.MaximumDisplayScale).c_str());
-                        maximumDisplayScale = L"Max Scale: " + str;
+                    CString optimumDisplayScale;
+                    if (dc.OptimumDisplayScale != nullptr) {
+                        CString str(std::to_string(*dc.OptimumDisplayScale).c_str());
+                        optimumDisplayScale = L"Opt Scale: " + str;
                     }
-                    else
-                        maximumDisplayScale = L"Max Scale: -";
-
+                    else {
+                        optimumDisplayScale = L"Opt Scale: -";
+                    }
+                    
                     CString minimumDisplayScale;
-                    if (dc.MinimumDisplayScale != nullptr)
-                    {
+                    if (dc.MinimumDisplayScale != nullptr) {
                         CString str(std::to_string(*dc.MinimumDisplayScale).c_str());
                         minimumDisplayScale = L"Min Scale: " + str;
                     }
-                    else
+                    else {
                         minimumDisplayScale = L"Min Scale: -";
+                    }
 
                     // 스케일 정보를 사각형 크기에 맞게 동적으로 계산 (파일명의 60% 크기)
                     float scaleFontSize = fontSize * 0.6f;
@@ -560,7 +560,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                     bool canDrawScale = false;
 
                     // 스케일 정보 폰트 크기 조정 (한 줄로 들어오도록)
-                    CString longerText = maximumDisplayScale.GetLength() > minimumDisplayScale.GetLength() ? maximumDisplayScale : minimumDisplayScale;
+                    CString longerText = optimumDisplayScale.GetLength() > minimumDisplayScale.GetLength() ? optimumDisplayScale : minimumDisplayScale;
                         
                     for (float testSize = scaleFontSize; testSize >= minScaleFontSize; testSize -= 1.0f)
                     {
@@ -600,7 +600,9 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                         }
                     }
 
-                    if (scaleLayout) scaleLayout->Release();
+                    if (scaleLayout) {
+                        scaleLayout->Release();
+                    }
 
                     if (canDrawScale && scaleTextFormat)
                     {
@@ -618,7 +620,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                             currentY + scaleFontSize * 1.2f
                         );
                             
-                        pRenderTarget->DrawTextW(maximumDisplayScale, maximumDisplayScale.GetLength(), scaleTextFormat, maxScaleRect, brush);
+                        pRenderTarget->DrawTextW(optimumDisplayScale, optimumDisplayScale.GetLength(), scaleTextFormat, maxScaleRect, brush);
                         currentY += scaleFontSize * 1.2f + textSpacing;
 
                         D2D1_RECT_F minScaleRect = D2D1::RectF(
