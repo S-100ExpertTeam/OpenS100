@@ -32,8 +32,6 @@ public:
 
 	LayerManager* m_pParentLayerManager;
 
-	
-
 
 public:
 	/*
