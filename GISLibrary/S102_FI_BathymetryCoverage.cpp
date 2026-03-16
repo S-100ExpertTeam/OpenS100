@@ -17,12 +17,12 @@ bool S102_FI_BathymetryCoverage::Read(hid_t groupID, DataOrganizationIndex dataC
 
 	auto vgID = H5Gopen(groupID, "Group_001", H5P_DEFAULT);
 	auto bathymetryCoverage = GetBathymetryCoverage();
-	bathymetryCoverage->Read(
+	bool result = bathymetryCoverage->Read(
 		vgID,
 		attribute29->getNumPointsLatitudinal(),
 		attribute29->getNumPointsLongitudinal());
-
-	return true;
+	H5Gclose(vgID);
+	return result;
 }
 
 S102_VG_BathymetryCoverage* S102_FI_BathymetryCoverage::GetBathymetryCoverage()
