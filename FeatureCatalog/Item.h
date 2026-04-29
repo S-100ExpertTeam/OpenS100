@@ -16,42 +16,40 @@ public:
 	virtual ~Item();
 
 protected:
-	std::wstring name = L"";
-	std::wstring definition = L"";
-	std::wstring code = L"";
-	std::wstring* remarks = nullptr;
-	std::list<std::wstring> alias;
+	std::string name = "";
+	std::string definition = "";
+	std::string code = "";
+	std::string* remarks = nullptr;
+	std::list<std::string> alias;
 	DefinitionReference* definitionReference = nullptr; 
 
 public:
 	void GetContents(pugi::xml_node& node);
 
 	bool CompareCode(std::string& value);
-	bool CompareCode(std::wstring& value);
+	bool CompareCode(std::string& value);
 
-	const std::list<std::wstring>& GetAlias();
+	const std::list<std::string>& GetAlias();
 	
-	const std::wstring& GetName();
-	void SetName(std::wstring& value);
+	const std::string& GetName();
+	void SetName(std::string& value);
 
-	const std::wstring& GetDefinition();
-	void SetDefinition(std::wstring& value);
+	const std::string& GetDefinition();
+	void SetDefinition(std::string& value);
 
 	const std::string GetCode();
-	const std::wstring GetCodeAsWString();
-	void SetCode(std::wstring& value);
+	const std::string GetCodeAsWString();
 	void SetCode(std::string& value);
 
 	const bool IsEmptyRemarks();
 	void NullCheckRemarks();
 	void SetRemarks(std::string& value);
-	void SetRemarks(std::wstring& value);
 	const std::string GetRemarks();
-	const std::wstring GetRemarksAsWString();
+	const std::string GetRemarksAsWString();
 
 	Item& operator = (const Item& item);
 
-	void setSourceIdentifier(std::wstring value);
-	std::wstring getSourceIdentifierAsWString();
+	void setSourceIdentifier(std::string value);
+	std::string getSourceIdentifierAsWString();
 	std::string getSourceIdentifier();
 };

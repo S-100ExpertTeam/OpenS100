@@ -10,11 +10,11 @@ public:
 	virtual ~DateExt();
 
 private:
-	std::wstring date = L"";
+	std::string date = "";
 
 public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetDate(char* value);
-	const std::wstring& GetDate();
+	const std::string& GetDate();
 };

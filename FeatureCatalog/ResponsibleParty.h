@@ -16,9 +16,9 @@ public:
 	virtual ~ResponsibleParty();
 
 private:
-	std::wstring individualName = L"";
-	std::wstring organisationName = L"";
-	std::wstring positionName = L"";
+	std::string individualName = "";
+	std::string organisationName = "";
+	std::string positionName = "";
 	Contact contactInfo; 
 	RoleCode role;
 	Party party;
@@ -26,14 +26,14 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 
-	void SetIndividualName(std::wstring value);
-	const std::wstring& GetIndividualName();
+	void SetIndividualName(std::string value);
+	const std::string& GetIndividualName();
 
-	void SetOrganisationName(std::wstring value);
-	const std::wstring& GetOrganisationName();
+	void SetOrganisationName(std::string value);
+	const std::string& GetOrganisationName();
 
-	void SetPositionName(std::wstring value);
-	const std::wstring& GetPositionName();
+	void SetPositionName(std::string value);
+	const std::string& GetPositionName();
 
 	void SetContactInfo(Contact value);
 	Contact &GetContactInfo();

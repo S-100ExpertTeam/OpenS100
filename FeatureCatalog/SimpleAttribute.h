@@ -30,7 +30,7 @@ private:
 	// Value : Label
 	std::unordered_map<int, ListedValue*> codeMap;
 	
-	std::unordered_map<std::wstring, ListedValue*> labelMap;
+	std::unordered_map<std::string, ListedValue*> labelMap;
 
 public:
 	void GetContents(pugi::xml_node& node);
@@ -48,7 +48,7 @@ public:
 
 	void InsertListedValue(ListedValue* item);
 	ListedValue* GetListedValue(std::string label);
-	ListedValue* GetListedValue(std::wstring label);
+	ListedValue* GetListedValue(std::string label);
 	ListedValue* GetListedValue(int code);
 
 	bool IsSimple();

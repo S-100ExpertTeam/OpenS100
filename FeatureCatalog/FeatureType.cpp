@@ -55,21 +55,21 @@ void FeatureType::GetContents(pugi::xml_node& node)
 		}
 		else if (instructionName == "S100FC:superType")
 		{
-			superType = pugi::as_wide(instruction.child_value());
+			superType = instruction.child_value();
 		}
 		else if (instructionName == "S100FC:subType")
 		{
-			subType.push_back(pugi::as_wide(instruction.child_value()));
+			subType.push_back(instruction.child_value());
 		}
 	}
 }
 
-const std::wstring& FeatureType::GetSuperType()
+const std::string& FeatureType::GetSuperType()
 {
 	return superType;
 }
 
-void FeatureType::SetSuperType(std::wstring value)
+void FeatureType::SetSuperType(std::string value)
 {
 	superType = value;
 }
@@ -85,12 +85,12 @@ void FeatureType::SetSuperType(std::wstring value)
 //	return nullptr;
 //}
 //
-//FeatureBinding* FeatureType::GetFeatureBinding(std::wstring featureTypeCode)
+//FeatureBinding* FeatureType::GetFeatureBinding(std::string featureTypeCode)
 //{
-//	return GetFeatureBinding(pugi::as_utf8(featureTypeCode));
+//	return GetFeatureBinding(featureTypeCode);
 //}
 
-std::list<std::wstring>& FeatureType::GetSubTypePointer()
+std::list<std::string>& FeatureType::GetSubTypePointer()
 {
 	return subType;
 }

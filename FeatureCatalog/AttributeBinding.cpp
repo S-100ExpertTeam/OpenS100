@@ -27,7 +27,7 @@ void AttributeBinding::GetContents(pugi::xml_node& node)
 
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 
 		if (!strcmp(instructionName, "S100FC:multiplicity"))
 		{
@@ -73,9 +73,9 @@ std::string AttributeBinding::GetAttributeCode()
 	return attributeCode;
 }
 
-std::wstring AttributeBinding::GetAttributeCodeAsWstring()
+std::string AttributeBinding::GetAttributeCodeAsWstring()
 {
-	return pugi::as_wide(attributeCode);
+	return attributeCode;
 }
 
 bool AttributeBinding::IsSequential()

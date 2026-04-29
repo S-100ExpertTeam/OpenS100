@@ -13,28 +13,28 @@ public:
 	virtual ~ListedValue();
 
 private:
-	std::wstring label = L"";
-	std::wstring definition = L"";
+	std::string label = "";
+	std::string definition = "";
 	int code;
-	std::wstring remarks = L"";
-	std::list<std::wstring> alias; 
+	std::string remarks = "";
+	std::list<std::string> alias; 
 	DefinitionReference definitionReference; 
 
 public:
 	void GetContents(pugi::xml_node& node);
 
-	const std::wstring& GetLabel();
-	void SetLabel(std::wstring& value);
+	const std::string& GetLabel();
+	void SetLabel(std::string& value);
 
-	const std::wstring& GetDefinition();
-	void SetDefinition(std::wstring& value);
+	const std::string& GetDefinition();
+	void SetDefinition(std::string& value);
 
-	const std::wstring& GetRemarks(); 
-	void SetRemarks(std::wstring& value);
+	const std::string& GetRemarks(); 
+	void SetRemarks(std::string& value);
 
 	int GetCode();
 
-	std::list<std::wstring>& GetAliasPointer(); 
+	std::list<std::string>& GetAliasPointer(); 
 
 	DefinitionReference& GetDefinitionReferencePointer(); 
 };

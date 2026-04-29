@@ -3,11 +3,11 @@
 
 FeatureUseType::FeatureUseType()
 {
-	InsertValue(L"geographic");
-	InsertValue(L"meta");
-	InsertValue(L"cartographic");
-	InsertValue(L"aggregation");
-	InsertValue(L"theme");
+	InsertValue("geographic");
+	InsertValue("meta");
+	InsertValue("cartographic");
+	InsertValue("aggregation");
+	InsertValue("theme");
 }
 
 FeatureUseType::~FeatureUseType()
@@ -17,5 +17,5 @@ FeatureUseType::~FeatureUseType()
 
 void FeatureUseType::GetContents(pugi::xml_node& node)
 {
-	SetValueString(pugi::as_wide(node.child_value()));
+	SetValueString(node.child_value());
 }

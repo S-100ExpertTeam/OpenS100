@@ -15,7 +15,7 @@ enum class SpatialPrimitiveType
 };
 
 SpatialPrimitiveType StringToSpatialPrimitiveType(std::string& value);
-SpatialPrimitiveType StringToSpatialPrimitiveType(std::wstring& value);
+SpatialPrimitiveType StringToSpatialPrimitiveType(std::string& value);
 
 std::string SpatialPrimitiveTypeToString(SpatialPrimitiveType value);
-std::wstring SpatialPrimitiveTypeToWString(SpatialPrimitiveType value);
+std::string SpatialPrimitiveTypeToWString(SpatialPrimitiveType value);

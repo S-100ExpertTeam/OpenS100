@@ -10,19 +10,19 @@ public:
 	virtual ~Series();
 
 private:
-	std::wstring name = L"";
-	std::wstring issueIdentification = L"";
-	std::wstring page = L"";
+	std::string name = "";
+	std::string issueIdentification = "";
+	std::string page = "";
 
 public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetName();
-	const std::wstring& GetName();
+	const std::string& GetName();
 
-	void SetIssueIdentification(std::wstring value);
-	const std::wstring& GetIssueIdentification();
+	void SetIssueIdentification(std::string value);
+	const std::string& GetIssueIdentification();
 
-	void SetPage(std::wstring valeu);
-	const std::wstring& GetPage();
+	void SetPage(std::string valeu);
+	const std::string& GetPage();
 };

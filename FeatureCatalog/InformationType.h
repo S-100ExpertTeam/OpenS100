@@ -11,12 +11,12 @@ public:
 	virtual ~InformationType();
 
 private:
-	std::wstring superType = L"";
-	std::list<std::wstring> subType; 
+	std::string superType = "";
+	std::list<std::string> subType; 
 
 public:
 	void GetContents(pugi::xml_node& node);
-	const std::wstring& GetSuperType(); 
-	void SetSuperType(std::wstring value);
-	std::list<std::wstring>& GetSubTypePointer(); 
+	const std::string& GetSuperType(); 
+	void SetSuperType(std::string value);
+	std::list<std::string>& GetSubTypePointer(); 
 }; 

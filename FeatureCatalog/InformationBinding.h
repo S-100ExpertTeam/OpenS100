@@ -26,20 +26,18 @@ public:
 	Multiplicity& GetMultiplicity();
 
 	std::string GetAssociation();
-	std::wstring GetAssociationAsWstring();
+	std::string GetAssociationAsWstring();
 
 	void SetAssociation(std::string value);
-	void SetAssociation(std::wstring value);
 
 	std::string GetRole();
-	std::wstring GetRoleAsWstring();
+	std::string GetRoleAsWstring();
 
 	void SetRole(std::string value);
-	void SetRole(std::wstring value);
 
 	S100_FC_RoleType GetRoleType();
 	std::string GetRoleTypeAsString();
-	std::wstring GetRoleTypeAsWstring();
+	std::string GetRoleTypeAsWstring();
 
 	void SetRoleType(S100_FC_RoleType value);
 	void SetRoleType(std::string value);
@@ -48,10 +46,10 @@ public:
 
 	std::string GetInformationType(int index);
 	std::vector<std::string> GetInformationTypes();
-	std::wstring GetInformationTypeAsWstring(int index);
+	std::string GetInformationTypeAsWstring(int index);
 
 	void InsertInformationType(std::string value);
-	void InsertInformationType(std::wstring value);
+	void InsertInformationType(std::string value);
 
 	bool IsSameAssociation(InformationBinding& ib);
 	void AppendInformationBinding(InformationBinding& ib);

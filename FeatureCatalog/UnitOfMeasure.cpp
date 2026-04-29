@@ -26,35 +26,35 @@ void UnitOfMeasure::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100Base:name"))
 		{
-			name = pugi::as_wide(instruction.child_value());
+			name = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100Base:definition"))
 		{
-			auto value = pugi::as_wide(instruction.child_value());
+			auto value = instruction.child_value();
 			SetDefinition(value);
 		}
 		else if (!strcmp(instructionName, "S100Base:symbol"))
 		{
-			auto value = pugi::as_wide(instruction.child_value());
+			auto value = instruction.child_value();
 			SetSymbol(value);
 		}
 	}
 }
 
-void UnitOfMeasure::SetName(std::wstring value)
+void UnitOfMeasure::SetName(std::string value)
 {
 	name = value;
 }
 
-const std::wstring UnitOfMeasure::GetName()
+const std::string UnitOfMeasure::GetName()
 {
 	return name;
 }
 
-const std::wstring& UnitOfMeasure::GetNameRef()
+const std::string& UnitOfMeasure::GetNameRef()
 {
 	return name;
 }
@@ -63,18 +63,18 @@ void UnitOfMeasure::NullCheckDefinition()
 {
 	if (nullptr == definition)
 	{
-		definition = new std::wstring();
+		definition = new std::string();
 	}
 }
 
-void UnitOfMeasure::SetDefinition(std::wstring& value)
+void UnitOfMeasure::SetDefinition(std::string& value)
 {
 	NullCheckDefinition();
-	std::wstring tmp = value;
+	std::string tmp = value;
 	*definition = tmp;
 }
 
-const std::wstring* UnitOfMeasure::GetDefinition()
+const std::string* UnitOfMeasure::GetDefinition()
 {
 	if (definition) 
 	{
@@ -88,17 +88,17 @@ void UnitOfMeasure::NullCheckSymbol()
 {
 	if (nullptr == symbol)
 	{
-		symbol = new std::wstring();
+		symbol = new std::string();
 	}
 }
 
-void UnitOfMeasure::SetSymbol(std::wstring& value) 
+void UnitOfMeasure::SetSymbol(std::string& value) 
 {
 	NullCheckSymbol();
 	*symbol = value;
 }
 
-const std::wstring* UnitOfMeasure::GetSymbol()
+const std::string* UnitOfMeasure::GetSymbol()
 {
 	if (symbol) 
 	{

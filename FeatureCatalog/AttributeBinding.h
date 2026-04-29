@@ -31,7 +31,7 @@ public:
 	ValueList& GetPermittedValues();
 
 	std::string GetAttributeCode();
-	std::wstring GetAttributeCodeAsWstring();
+	std::string GetAttributeCodeAsWstring();
 
 	bool IsSequential();
 

@@ -11,17 +11,17 @@ public:
 	virtual ~InformationAssociation();
 
 private:
-	std::wstring superType = L"";
-	std::list<std::wstring> subType; 
+	std::string superType = "";
+	std::list<std::string> subType; 
 	Reference role[2];
 
 public:
 	void GetContents(pugi::xml_node& node);
 
-	const std::wstring& GetSuperType();
-	void SetSuperType(std::wstring value);
+	const std::string& GetSuperType();
+	void SetSuperType(std::string value);
 
-	std::list<std::wstring>& GetSubTypePointer();
+	std::list<std::string>& GetSubTypePointer();
 
 	Reference(&GetRolePointer())[2];
 };

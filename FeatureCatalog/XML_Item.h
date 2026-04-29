@@ -12,7 +12,7 @@ public:
 	
 private:
 	std::list<XML_Attribute> attributes;
-	std::wstring value = L"";
+	std::string value = "";
 
 public:
 	virtual void GetContents() {};
@@ -21,10 +21,10 @@ public:
 	std::list<XML_Attribute> Getattributes();
 	std::list<XML_Attribute>& GetattributesPointer();
 
-	void Setvalue(std::wstring& value);
-	const std::wstring& Getvalue();
-	std::wstring* GetvaluePointer();
+	void Setvalue(std::string& value);
+	const std::string& Getvalue();
+	std::string* GetvaluePointer();
 
-	const std::wstring& GetReference();
-	void SetReference(std::wstring _value);
+	const std::string& GetReference();
+	void SetReference(std::string _value);
 };

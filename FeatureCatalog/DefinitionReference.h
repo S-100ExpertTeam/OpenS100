@@ -11,11 +11,11 @@ public:
 	virtual ~DefinitionReference();
 
 private:
-	std::wstring* sourceIdentifier = nullptr;
+	std::string* sourceIdentifier = nullptr;
 	DefinitionSource definitionSource;
 	
 public:
 	void GetContents(pugi::xml_node& node);
-	void SetSourceIdentifier(std::wstring value);
-	const std::wstring* GetSourceIdentifier();
+	void SetSourceIdentifier(std::string value);
+	const std::string* GetSourceIdentifier();
 };

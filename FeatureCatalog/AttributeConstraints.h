@@ -13,7 +13,7 @@ public:
 
 public:
 	int stringLength = 0;
-	std::wstring textPattern = L"";
+	std::string textPattern = "";
 	NumericRange range;
 	int precision = 0;
 
@@ -23,8 +23,8 @@ public:
 	int GetStringLength();
 	void SetStringLength(int value);
 	
-	const std::wstring& GetTextPattern();
-	void GetTextPattern(std::wstring value);
+	const std::string& GetTextPattern();
+	void GetTextPattern(std::string value);
 
 	NumericRange& GetRangePointer();
 

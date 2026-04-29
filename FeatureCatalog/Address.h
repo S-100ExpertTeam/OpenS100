@@ -13,31 +13,31 @@ public:
 	virtual ~Address();
 
 private:
-	std::wstring deliveryPoint = L"";
-	std::wstring city = L"";
-	std::wstring administrativeArea = L"";
-	std::wstring postalCode = L"";
-	std::wstring country = L"";
-	std::wstring electronicMailAddress = L"";
+	std::string deliveryPoint = "";
+	std::string city = "";
+	std::string administrativeArea = "";
+	std::string postalCode = "";
+	std::string country = "";
+	std::string electronicMailAddress = "";
 
 public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetDeliveryPoint(char* value);
-	const std::wstring& GetDeliveryPoint();
+	const std::string& GetDeliveryPoint();
 	 
 	void SetCity(char* value);
-	const std::wstring& GetCity();
+	const std::string& GetCity();
 
 	void SetAdministrativeArea(char* value);
-	const std::wstring& GetAdministrativeArea();
+	const std::string& GetAdministrativeArea();
 
 	void SetPostalCode(char* value);
-	const std::wstring& GetPostalCode();
+	const std::string& GetPostalCode();
 
 	void SetCountry(char* value);
-	const std::wstring& GetCountry();
+	const std::string& GetCountry();
 
 	void SetElectronicMailAddress(char* value);
-	const std::wstring& GetElectronicMailAddress();
+	const std::string& GetElectronicMailAddress();
 };

@@ -13,22 +13,22 @@ public:
 	virtual ~UnitOfMeasure();
 
 private:
-	std::wstring name = L"";
-	std::wstring* definition = nullptr;
-	std::wstring* symbol = nullptr;
+	std::string name = "";
+	std::string* definition = nullptr;
+	std::string* symbol = nullptr;
 
 public:
 	void GetContents(pugi::xml_node& node);
 
-	void SetName(std::wstring value);
-	const std::wstring GetName();
-	const std::wstring& GetNameRef();
+	void SetName(std::string value);
+	const std::string GetName();
+	const std::string& GetNameRef();
 
 	void NullCheckDefinition();
-	void SetDefinition(std::wstring& value);
-	const std::wstring* GetDefinition();
+	void SetDefinition(std::string& value);
+	const std::string* GetDefinition();
 
 	void NullCheckSymbol();
-	void SetSymbol(std::wstring& value);
-	const std::wstring* GetSymbol();
+	void SetSymbol(std::string& value);
+	const std::string* GetSymbol();
 };

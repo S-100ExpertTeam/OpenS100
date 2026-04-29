@@ -24,23 +24,23 @@ class FeatureCatalogue
 {
 public:
 	FeatureCatalogue();
-	//FeatureCatalogue(std::wstring path);
+	//FeatureCatalogue(std::string path);
 	virtual ~FeatureCatalogue();
 
 protected:
-	std::wstring name = L"";
-	std::wstring scope = L"";
+	std::string name = "";
+	std::string scope = "";
 
 protected:
-	std::wstring* fieldOfApplication = nullptr;  
+	std::string* fieldOfApplication = nullptr;  
 
 protected:
-	//std::wstring versionNumber = L"";
+	//std::string versionNumber = "";
 	Version versionNumber;
-	std::wstring versionDate = L""; 
-	std::wstring productId = L"";
+	std::string versionDate = ""; 
+	std::string productId = "";
 	
-	std::wstring filePath = L"";
+	std::string filePath = "";
 
 	// CI_Responsibility 
 	//ResponsibleParty producer; 
@@ -55,75 +55,68 @@ protected:
 	FeatureTypes featureTypes; 
 
 public:
-	bool Read(std::wstring filePath);
-	bool Save(std::wstring filePath);
+	bool Read(std::string filePath);
+	bool Save(std::string filePath);
 
 	void GetContents(pugi::xml_node& node);
 	void WriteContents(pugi::xml_node& node);
 
-	const std::wstring& GetName();
+	const std::string& GetName();
 	void SetName(std::string value);
-	void SetName(std::wstring value);
 
-	const std::wstring& GetFilePath();
+	const std::string& GetFilePath();
 	void SetFilePath(std::string value);
-	void SetFilePath(std::wstring value);
 	
-	const std::wstring& GetScope();
+	const std::string& GetScope();
 	void SetScope(std::string value);
-	void SetScope(std::wstring value);
 
-	const std::wstring* GetFieldOfApplication();
+	const std::string* GetFieldOfApplication();
 	void SetFieldOfApplication(std::string& value);
-	void SetFieldOfApplication(std::wstring& value);
 
-	const std::wstring& GetVersionNumber();
+	const std::string& GetVersionNumber();
 	void SetVersionNumber(std::string value);
-	void SetVersionNumber(std::wstring value);
 	Version getVersion() const;
 
-	const std::wstring& GetVersionDate();
+	const std::string& GetVersionDate();
 	void SetVersionDate(std::string value);
-	void SetVersionDate(std::wstring value);
 
 	std::string getProductId() const;
-	const std::wstring& GetProductId();
+	const std::string& GetProductId();
 	void SetProductId(std::string value);
-	void SetProductId(std::wstring value);
 
 	SimpleAttribute* GetSimpleAttribute(std::string code);
-	SimpleAttribute* GetSimpleAttribute(std::wstring Code);
-	SimpleAttribute* GetSimpleAttributeFromName(std::wstring name);
+	SimpleAttribute* GetSimpleAttribute(std::string Code);
+	SimpleAttribute* GetSimpleAttributeFromName(std::string name);
 	SimpleAttributes* GetSimpleAttributes();
 	
 	ComplexAttribute* GetComplexAttribute(std::string code);
-	ComplexAttribute* GetComplexAttribute(std::wstring Code);
-	ComplexAttribute* GetComplexAttributeFromName(std::wstring name);
+	ComplexAttribute* GetComplexAttribute(std::string Code);
+	ComplexAttribute* GetComplexAttributeFromName(std::string name);
 	ComplexAttributes* GetComplexAttributes();
 
 	Role* GetRole(std::string Code);
-	Role* GetRole(std::wstring Code);
-	Role* GetRoleFromName(std::wstring name);
+	Role* GetRole(std::string Code);
+	Role* GetRoleFromName(std::string name);
 	Roles* GetRoles();
 
 	InformationAssociation* GetInformationAssociation(std::string Code);
-	InformationAssociation* GetInformationAssociation(std::wstring Code);
-	InformationAssociation* GetInformationAssociationFromName(std::wstring name);
+	InformationAssociation* GetInformationAssociation(std::string Code);
+	InformationAssociation* GetInformationAssociationFromName(std::string name);
 	InformationAssociations* GetInformationAssociations();
 
 	FeatureAssociation* GetFeatureAssociation(std::string Code);
-	FeatureAssociation* GetFeatureAssociation(std::wstring Code);
-	FeatureAssociation* GetFeatureAssociationFromName(std::wstring name);
+	FeatureAssociation* GetFeatureAssociation(std::string Code);
+	FeatureAssociation* GetFeatureAssociationFromName(std::string name);
 	FeatureAssociations* GetFeatureAssociations();
 
 	InformationType* GetInformationType(std::string Code);
-	InformationType* GetInformationType(std::wstring Code);
-	InformationType* GetInformationTypeFromName(std::wstring name);
+	InformationType* GetInformationType(std::string Code);
+	InformationType* GetInformationTypeFromName(std::string name);
 	InformationTypes* GetInformationTypes();
 
 	FeatureType* GetFeatureType(std::string Code);
-	FeatureType* GetFeatureType(std::wstring Code);
-	FeatureType* GetFeatureTypeName(std::wstring Name);
+	FeatureType* GetFeatureType(std::string Code);
+	FeatureType* GetFeatureTypeName(std::string Name);
 	FeatureType* GetFeatureTypeFromIndex(int indexnum);
 	FeatureTypes* GetFeatureTypes();
 
@@ -132,13 +125,13 @@ public:
 	//void SetFullAssociations();
 	//void SetSubAssociation(FeatureType* ft);
 	//void SetSubAssociation(InformationType* it);
-	//void SetFeatureAssociationFromSuperType(FeatureType* ft, std::wstring superTypeName, std::wstring roleName, std::wstring associationName);
-	//void SetInformationAssociationFromSuperType(FeatureType* ft, std::wstring superTypeName, std::wstring roleName, std::wstring associationName);
-	//void SetInformationAssociationFromSuperType(InformationType* it, std::wstring superTypeName, std::wstring roleName, std::wstring associationName);
+	//void SetFeatureAssociationFromSuperType(FeatureType* ft, std::string superTypeName, std::string roleName, std::string associationName);
+	//void SetInformationAssociationFromSuperType(FeatureType* ft, std::string superTypeName, std::string roleName, std::string associationName);
+	//void SetInformationAssociationFromSuperType(InformationType* it, std::string superTypeName, std::string roleName, std::string associationName);
 
-	//void AddFeatureBinding(FeatureType* ft, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName);
-	//void AddInformationBinding(FeatureType* ft, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName);
-	//void AddInformationBinding(InformationType* it, std::wstring bindedTypeName, std::wstring roleName, std::wstring associationName);
+	//void AddFeatureBinding(FeatureType* ft, std::string bindedTypeName, std::string roleName, std::string associationName);
+	//void AddInformationBinding(FeatureType* ft, std::string bindedTypeName, std::string roleName, std::string associationName);
+	//void AddInformationBinding(InformationType* it, std::string bindedTypeName, std::string roleName, std::string associationName);
 
 	void NullCheckFieldOfApplication();
 
@@ -151,5 +144,5 @@ public:
 	void GetNoGeometryFeatures(std::vector<FeatureType*>& result);
 
 	Attribute* GetAttribute(std::string code);
-	Attribute* GetAttribute(std::wstring code);
+	Attribute* GetAttribute(std::string code);
 };

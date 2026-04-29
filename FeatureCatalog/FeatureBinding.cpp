@@ -19,7 +19,7 @@ void FeatureBinding::GetContents(pugi::xml_node& node)
 	
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:multiplicity"))
 		{
 			multiplicity.GetContents(instruction);
@@ -49,9 +49,9 @@ std::string FeatureBinding::GetAssociation()
 	return association;
 }
 
-std::wstring FeatureBinding::GetAssociationAsWstring()
+std::string FeatureBinding::GetAssociationAsWstring()
 {
-	return pugi::as_wide(association);
+	return association;
 }
 
 void FeatureBinding::SetAssociation(std::string value)
@@ -59,19 +59,15 @@ void FeatureBinding::SetAssociation(std::string value)
 	association = value;
 }
 
-void FeatureBinding::SetAssociation(std::wstring value)
-{
-	association = pugi::as_utf8(value);
-}
 
 std::string FeatureBinding::GetRole() 
 {
 	return role;
 }
 
-std::wstring FeatureBinding::GetRoleAsWstring()
+std::string FeatureBinding::GetRoleAsWstring()
 {
-	return pugi::as_wide(role);
+	return role;
 }
 
 void FeatureBinding::SetRole(std::string value)
@@ -79,10 +75,6 @@ void FeatureBinding::SetRole(std::string value)
 	role = value;
 }
 
-void FeatureBinding::SetRole(std::wstring value)
-{
-	role = pugi::as_utf8(value);
-}
 
 S100_FC_RoleType FeatureBinding::GetRoleType()
 {
@@ -107,9 +99,9 @@ std::string FeatureBinding::GetRoleTypeAsString()
 	return "";
 }
 
-std::wstring FeatureBinding::GetRoleTypeAsWstring()
+std::string FeatureBinding::GetRoleTypeAsWstring()
 {
-	return pugi::as_wide(GetRoleTypeAsString());
+	return GetRoleTypeAsString();
 }
 
 void FeatureBinding::SetRoleType(S100_FC_RoleType value)
@@ -153,9 +145,9 @@ std::vector<std::string> FeatureBinding::GetFeatureTypes()
 	return featureTypes;
 }
 
-std::wstring FeatureBinding::GetFeatureTypeAsWstring(int index)
+std::string FeatureBinding::GetFeatureTypeAsWstring(int index)
 {
-	return pugi::as_wide(GetFeatureType(index));
+	return GetFeatureType(index);
 }
 
 void FeatureBinding::InsertFeatureType(std::string value)
@@ -163,10 +155,6 @@ void FeatureBinding::InsertFeatureType(std::string value)
 	featureTypes.push_back(value);
 }
 
-void FeatureBinding::InsertFeatureType(std::wstring value)
-{
-	featureTypes.push_back(pugi::as_utf8(value));
-}
 
 bool FeatureBinding::IsSameAssociation(FeatureBinding& fb)
 {
