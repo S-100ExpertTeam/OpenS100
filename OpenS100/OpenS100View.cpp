@@ -55,8 +55,6 @@
 #include <vector>
 #include <future>
 
-#include "../LatLonUtility/LatLonUtility.h"
-
 #include "../LatLonUtility/Logger.h"
 #include "../PortrayalCatalogue/AlertCatalog.h"
 #include <sqlite3.h>

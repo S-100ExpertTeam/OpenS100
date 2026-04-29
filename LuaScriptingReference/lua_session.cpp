@@ -44,6 +44,15 @@ lua_session::lua_session()
 
 	luaL_openlibs(m_l);
 
+	// [SECURITY PATCH] Disable dangerous libraries 
+	luaL_dostring(m_l,
+	"os = nil " "io = nil " "debug = nil "
+		"package.loadlib = nil " "package.cpath = ¡± " "loadfile = nil "
+		"dofile = nil "
+		"load = nil "
+		"rawset = nil " "loadstring = nil"
+		);
+
 	lua_atpanic(m_l, atpanic);
 
 	m_state_session_map[m_l] = this;

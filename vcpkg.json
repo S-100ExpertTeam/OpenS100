@@ -8,9 +8,11 @@
       "polyclipping",
       "hdf5",
       "libxslt",
+      "libxml2",
       "openssl",
       "sqlite3",
       "boost-geometry"
     ]
   }
+
   

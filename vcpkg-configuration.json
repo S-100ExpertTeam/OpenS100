@@ -1,9 +1,0 @@
-{
-  "binarySources": [
-    { "type": "clear" },
-    {
-      "type": "local",
-      "path": "${env:VCPKG_DEFAULT_BINARY_CACHE}"
-    }
-  ]
-}

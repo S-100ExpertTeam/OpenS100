@@ -1,7 +1,10 @@
 #pragma once
 
-#include "ScaleBands.h"
+#include "ScaleBand.h"
 #include "DataCoverage.h"
+#include "Inventory.h"
+#include "InventoryItem.h"
+
 #include "../GeoMetryLibrary/MBR.h"
 #include "../GeoMetryLibrary/Scaler.h"
 
@@ -11,73 +14,19 @@
 #include <polyclipping/clipper.hpp>
 #include <algorithm>
 
-
-class ScaleBand {
-public:
-	int OptDisplayScale = 10000000;
-	int MinDisplayScale = 600000000;
-
-	bool isOverlap(int scale)
-	{
-		return OptDisplayScale < scale && scale < MinDisplayScale ? true : false;
-	}
-
-	// S-98_Main_Document_2.3.0 Ver
-	bool ScaleBand::isIntersection(int minimumScale, int maximumScale)
-	{
-		return max(OptDisplayScale, maximumScale) <
-			min(MinDisplayScale, minimumScale);
-	}
-
-
-	static bool CompareByScale(const ScaleBand& a, const ScaleBand& b) {
-		if (a.MinDisplayScale == b.MinDisplayScale) {
-			return a.OptDisplayScale > b.OptDisplayScale;
-		}
-		return a.MinDisplayScale > b.MinDisplayScale;
-	}
-};
-
-class Inventory {
-public:
-	//EX : 10100AA_X0000.000
-	std::string strFileName;
-	std::shared_ptr<MBR> mbrBoundingBox;
-	//std::vector<SSurface*> vecBoundingPolygon;
-	std::vector< std::vector<D2D1_POINT_2F>> vecBoundingPolygon;
-	std::vector<ScaleBand> vecScaleRange; 
-
-	ScaleBand totalScaleBand;
-	CString strFilePath;
-};
-
-
-class InventoryItem {
-public:
-	//EX : 10100AA_X0000.000
-	std::string strFileName;
-	std::shared_ptr<MBR> mbrBoundingBox;
-	std::vector<D2D1_POINT_2F> BoundingPolygon;
-	ScaleBand ScaleRange;
-
-	CString strFilePath;
-};
-
-
 class S100Utilities
 {
 public:
 	static int GetLevel(std::wstring path);
 
-	static ScaleBands scaleBands[15];
+	static ScaleBand scaleBand[15];
 
 	D2D1::ColorF GetColorNum(int num);
 
 	static int GetScaleBand(int scale);
-	static std::vector<int> GetScaleBands(S100::DataCoverage dataCoverage);
-	static std::vector<int> GetScaleBands(ScaleBand sb);
+	static std::vector<int> algorithm_ScaleBand(S100::DataCoverage dataCoverage);
+	static std::vector<int> GetScaleBand(ScaleBand sb);
 	static std::vector<std::shared_ptr<InventoryItem>> SelectDataCoverages(std::vector<std::shared_ptr<Inventory>> INV, Scaler* scaler, MBR viewport);
 
-
-	ScaleBands GetLegacyScaleband(int scale);
+	ScaleBand GetLegacyScaleband(int scale);
 };
