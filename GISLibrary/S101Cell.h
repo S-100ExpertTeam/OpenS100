@@ -54,6 +54,7 @@ struct SPAS;
 class S101Cell : public S100SpatialObject
 {
 public:
+	S101Cell();
 	S101Cell(D2D1Resources* d2d1);
 	S101Cell(FeatureCatalogue* fc, D2D1Resources* d2d1);
 	virtual ~S101Cell();

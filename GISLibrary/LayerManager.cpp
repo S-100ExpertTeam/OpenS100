@@ -290,8 +290,10 @@ int LayerManager::AddLayer(CString _filepath)
 		fileType == S100_FileType::FILE_S_100_GRID_H5)
 	{
 		auto productNumber = pathToProductNumber(_filepath);
-		auto fc = catalogManager->getFC(productNumber);
-		auto pc = catalogManager->getPC(productNumber);
+		FeatureCatalogue* fc = nullptr;
+		PortrayalCatalogue* pc = nullptr;
+		fc = catalogManager->getFC(productNumber);
+		pc = catalogManager->getPC(productNumber);
 
 		if (fc)
 		{
