@@ -27,6 +27,8 @@ bld/
 [Ll]og/
 TEMP/
 
+.claude/
+
 # External Library
 !extlibs/**
 !extlib/**
