@@ -14,25 +14,25 @@
 
 class ScaleBand {
 public:
-	int MaxDisplayScale = 10000000;
+	int OptDisplayScale = 10000000;
 	int MinDisplayScale = 600000000;
 
 	bool isOverlap(int scale)
 	{
-		return MaxDisplayScale < scale && scale < MinDisplayScale ? true : false;
+		return OptDisplayScale < scale && scale < MinDisplayScale ? true : false;
 	}
 
 	// S-98_Main_Document_2.3.0 Ver
 	bool ScaleBand::isIntersection(int minimumScale, int maximumScale)
 	{
-		return max(MaxDisplayScale, maximumScale) <
+		return max(OptDisplayScale, maximumScale) <
 			min(MinDisplayScale, minimumScale);
 	}
 
 
 	static bool CompareByScale(const ScaleBand& a, const ScaleBand& b) {
 		if (a.MinDisplayScale == b.MinDisplayScale) {
-			return a.MaxDisplayScale > b.MaxDisplayScale;
+			return a.OptDisplayScale > b.OptDisplayScale;
 		}
 		return a.MinDisplayScale > b.MinDisplayScale;
 	}

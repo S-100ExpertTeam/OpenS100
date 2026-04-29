@@ -12,7 +12,6 @@ namespace S100
 	class EX_GeographicBoundingBox;
 }
 
-
 class FC_PC_DatasetClass
 {
 public:
