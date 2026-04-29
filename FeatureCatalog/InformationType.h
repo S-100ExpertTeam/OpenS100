@@ -2,6 +2,7 @@
 #include "S100ObjectType.h"
 
 #include <pugixml.hpp>
+#include "StringUtil.h"
 
 class InformationType :
 	public S100ObjectType
@@ -18,5 +19,6 @@ public:
 	void GetContents(pugi::xml_node& node);
 	const std::string& GetSuperType(); 
 	void SetSuperType(std::string value);
+	void SetSuperType(std::wstring value) { SetSuperType(toUtf8(value)); }
 	std::list<std::string>& GetSubTypePointer(); 
 }; 

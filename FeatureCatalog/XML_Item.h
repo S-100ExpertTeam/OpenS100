@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include "StringUtil.h"
 
 class XML_Item
 {
@@ -22,9 +23,14 @@ public:
 	std::list<XML_Attribute>& GetattributesPointer();
 
 	void Setvalue(std::string& value);
+	void Setvalue(std::wstring value) { Setvalue(toUtf8(value)); }
 	const std::string& Getvalue();
+	std::wstring GetvalueW() { return toWide(Getvalue()); }
 	std::string* GetvaluePointer();
+	std::wstring GetvaluePointerW() { return toWide(GetvaluePointer()); }
 
 	const std::string& GetReference();
+	std::wstring GetReferenceW() { return toWide(GetReference()); }
 	void SetReference(std::string _value);
+	void SetReference(std::wstring _value) { SetReference(toUtf8(_value)); }
 };

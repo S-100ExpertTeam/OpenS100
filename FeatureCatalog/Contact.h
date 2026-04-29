@@ -5,6 +5,7 @@
 #include "OnlineResource.h"
 
 #include <pugixml.hpp>
+#include "StringUtil.h"
 
 class Contact :
 	public XML_Item
@@ -34,7 +35,9 @@ public:
 
 	void SetHoursOfService(char* value);
 	const std::string& GetHoursOfService();
+	std::wstring GetHoursOfServiceW() { return toWide(GetHoursOfService()); }
 
 	void SetContactInstructions(char* value);
 	const std::string& GetContactInstructions();
+	std::wstring GetContactInstructionsW() { return toWide(GetContactInstructions()); }
 };

@@ -5,6 +5,7 @@
 #include <pugixml.hpp>
 
 #include <string>
+#include "StringUtil.h"
 
 class CI_Organisation :
 	public XML_Item
@@ -22,6 +23,7 @@ public:
 
 	void SetName(char* value);
 	const std::string GetName();
+	std::wstring GetNameW() { return toWide(GetName()); }
 
 	void SetContactinfo(ContactInfo& value);
 	const ContactInfo& GetContactinfo();

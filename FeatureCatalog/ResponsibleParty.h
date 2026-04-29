@@ -7,6 +7,7 @@
 #include <pugixml.hpp>
 
 #include <string>
+#include "StringUtil.h"
 
 class ResponsibleParty :
 	public XML_Item
@@ -27,13 +28,19 @@ public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetIndividualName(std::string value);
+	void SetIndividualName(std::wstring value) { SetIndividualName(toUtf8(value)); }
 	const std::string& GetIndividualName();
+	std::wstring GetIndividualNameW() { return toWide(GetIndividualName()); }
 
 	void SetOrganisationName(std::string value);
+	void SetOrganisationName(std::wstring value) { SetOrganisationName(toUtf8(value)); }
 	const std::string& GetOrganisationName();
+	std::wstring GetOrganisationNameW() { return toWide(GetOrganisationName()); }
 
 	void SetPositionName(std::string value);
+	void SetPositionName(std::wstring value) { SetPositionName(toUtf8(value)); }
 	const std::string& GetPositionName();
+	std::wstring GetPositionNameW() { return toWide(GetPositionName()); }
 
 	void SetContactInfo(Contact value);
 	Contact &GetContactInfo();

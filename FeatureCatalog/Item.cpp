@@ -1,3 +1,4 @@
+#include "StringUtil.h"
 #include "stdafx.h"
 #include "Item.h"
 
@@ -99,9 +100,9 @@ const std::string Item::GetCode()
 	return code;
 }
 
-const std::string Item::GetCodeAsWString()
+std::wstring Item::GetCodeAsWString()
 {
-	return code;
+	return toWide(code);
 }
 
 void Item::SetCode(std::string& value)
@@ -134,10 +135,10 @@ const std::string Item::GetRemarks()
 	return "";
 }
 
-const std::string Item::GetRemarksAsWString()
+std::wstring Item::GetRemarksAsWString()
 {
 	if (remarks) {
-		return *remarks;
+		return toWide(*remarks);
 	}
 
 	return "";
@@ -184,14 +185,14 @@ void Item::setSourceIdentifier(std::string value)
 	definitionReference->SetSourceIdentifier(value);
 }
 
-std::string Item::getSourceIdentifierAsWString()
+std::wstring Item::getSourceIdentifierAsWString()
 {
 	if (definitionReference)
 	{
 		auto si = definitionReference->GetSourceIdentifier();
 		if (si)
 		{
-			return *si;
+			return toWide(*si);
 		}
 	}
 

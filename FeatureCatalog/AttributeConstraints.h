@@ -3,6 +3,7 @@
 #include "NumericRange.h"
 
 #include <pugixml.hpp>
+#include "StringUtil.h"
 
 class AttributeConstraints :
 	public XML_Item
@@ -24,7 +25,9 @@ public:
 	void SetStringLength(int value);
 	
 	const std::string& GetTextPattern();
+	std::wstring GetTextPatternW() { return toWide(GetTextPattern()); }
 	void GetTextPattern(std::string value);
+	void GetTextPattern(std::wstring value) { return GetTextPattern(toUtf8(value)); }
 
 	NumericRange& GetRangePointer();
 

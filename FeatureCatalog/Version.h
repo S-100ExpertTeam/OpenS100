@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "StringUtil.h"
 
 class Version
 {
@@ -20,21 +21,26 @@ public:
 
 public:
 	std::string getMajor() const;
+	std::wstring getMajorW() const { return toWide(getMajor()); }
 	void setMajor(const std::string& major);
 	int getMajorAsInt() const;
 
 	std::string getMinor() const;
+	std::wstring getMinorW() const { return toWide(getMinor()); }
 	void setMinor(const std::string& minor);
 	int getMinorAsInt() const;
 
 	std::string getPatch() const;
+	std::wstring getPatchW() const { return toWide(getPatch()); }
 	void setPatch(const std::string& patch);
 	int getPatchAsInt() const;
 
 	std::string getWorking() const;
+	std::wstring getWorkingW() const { return toWide(getWorking()); }
 	void setWorking(const std::string& working);
 
 	std::string getSource() const;
+	std::wstring getSourceW() const { return toWide(getSource()); }
 	void setSource(const std::string& source);
 
 	Version getMajorMinor();

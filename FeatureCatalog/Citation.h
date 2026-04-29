@@ -8,6 +8,7 @@
 #include <pugixml.hpp>
 
 #include <string>
+#include "StringUtil.h"
 
 class Citation : public XML_Item
 {
@@ -37,6 +38,7 @@ public:
 
 	void SetTitle(char* value);
 	const std::string& GetTitle();
+	std::wstring GetTitleW() { return toWide(GetTitle()); }
 
 	void SetAternateTitle(char* value);
 	void SetAternateTitle(std::list<std::string>& value);
@@ -48,15 +50,18 @@ public:
 
 	void SetEdition(char* value);
 	const std::string& GetEdition();
+	std::wstring GetEditionW() { return toWide(GetEdition()); }
 
 	void SetEditionDate(DateExt& value);
 	DateExt& GetEditionDate();
 
 	void SetIdentifier(char* value);
 	const std::string& GetIdentifier();
+	std::wstring GetIdentifierW() { return toWide(GetIdentifier()); }
 
 	void SetIdentifierType(char* value);
 	const std::string& GetIdentifierType();
+	std::wstring GetIdentifierTypeW() { return toWide(GetIdentifierType()); }
 
 	void SetCitedResponsibleParty(ResponsibleParty& value);
 	ResponsibleParty& GetCitedResponsibleParty();
@@ -69,13 +74,17 @@ public:
 
 	void SetOtherCitationDetails(char* value);
 	const std::string& GetOtherCitationDetails();
+	std::wstring GetOtherCitationDetailsW() { return toWide(GetOtherCitationDetails()); }
 
 	void SetCollectiveTitle(char* value);
 	const std::string& GetCollectiveTitle();
+	std::wstring GetCollectiveTitleW() { return toWide(GetCollectiveTitle()); }
 
 	void SetISBN(char* value);
 	const std::string& GetISBN();
+	std::wstring GetISBNW() { return toWide(GetISBN()); }
 
 	void SetISSN(char* value);
 	const std::string& GetISSN();
+	std::wstring GetISSNW() { return toWide(GetISSN()); }
 };

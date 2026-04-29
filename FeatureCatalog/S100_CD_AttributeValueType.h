@@ -23,7 +23,6 @@ namespace FCD
 	};
 
 	S100_CD_AttributeValueType StringToS100_CD_AttributeValueType(std::string& value);
-	S100_CD_AttributeValueType StringToS100_CD_AttributeValueType(std::string& value);
 
 	std::string S100_CD_AttributeValueTypeToString(S100_CD_AttributeValueType value);
 	std::string S100_CD_AttributeValueTypeToWString(S100_CD_AttributeValueType value);

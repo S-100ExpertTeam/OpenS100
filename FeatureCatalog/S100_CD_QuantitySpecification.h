@@ -48,7 +48,6 @@ namespace FCD
 	};
 
 	S100_CD_QuantitySpecification StringToS100_CD_QuantitySpecification(std::string& value);
-	S100_CD_QuantitySpecification StringToS100_CD_QuantitySpecification(std::string& value);
 
 	std::string S100_CD_QuantitySpecificationToString(S100_CD_QuantitySpecification value);
 	std::string S100_CD_QuantitySpecificationToWString(S100_CD_QuantitySpecification value);
