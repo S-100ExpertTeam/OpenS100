@@ -220,13 +220,13 @@ lua_ref_ptr CreateInformationAssociation(lua_session *ls, InformationAssociation
 
 	std::vector<lua_ref_ptr> ia_roles;
 
-	std::wstring referenceCode;
+	std::string referenceCode;
 
 	for (auto ia_role : information_association->GetRolePointer())
 	{
 		for (auto a : ia_role.Getattributes())
 		{
-			if (a.Getname() == L"ref")
+			if (a.CompareName("ref"))
 			{
 				referenceCode = a.Getvalue();
 			}
@@ -259,13 +259,13 @@ lua_ref_ptr CreateFeatureAssociation(lua_session *ls, FeatureAssociation *featur
 
 	std::vector<lua_ref_ptr> fa_roles;
 
-	std::wstring referenceCode;
+	std::string referenceCode;
 
 	for (auto fa_role : feature_association->GetRolePointer())
 	{
 		for (auto a : fa_role.Getattributes())
 		{
-			if (a.Getname() == L"ref")
+			if (a.CompareName("ref"))
 			{
 				referenceCode = a.Getvalue();
 			}
@@ -330,7 +330,7 @@ lua_ref_ptr CreateSimpleAttribute(lua_session *ls, SimpleAttribute *simple_attri
 
 	if (true == sa->GetUOMRef().GetNameRef().empty())
 	{
-		uom = pugi::as_utf8(sa->GetUOMRef().GetName());
+		uom = sa->GetUOMRef().GetName();
 	}
 
 	quantitySpecification = FCD::S100_CD_QuantitySpecificationToString(simple_attribute->GetQuantitySpecification());
@@ -369,8 +369,9 @@ lua_ref_ptr CreateListedValue(lua_session *ls, ListedValue *listed_value)
 	int code = listed_value->GetCode();
 
 	std::optional<std::string> remarks;
-	if (listed_value->GetRemarks() != L"")
+	if (listed_value->CompareRemarks("") == false) {
 		remarks = std::string(listed_value->GetRemarks().begin(), listed_value->GetRemarks().end());
+	}
 
 	std::vector<std::string> alias;
 	for (auto a : listed_value->GetAliasPointer())

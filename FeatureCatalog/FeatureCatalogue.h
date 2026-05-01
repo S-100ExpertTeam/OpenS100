@@ -57,6 +57,7 @@ protected:
 
 public:
 	bool Read(std::string filePath);
+	bool Read(std::wstring filePath);
 	bool Save(std::string filePath);
 
 	void GetContents(pugi::xml_node& node);
@@ -109,16 +110,12 @@ public:
 
 	SimpleAttribute* GetSimpleAttribute(std::string code);
 	SimpleAttribute* GetSimpleAttribute(std::wstring code);
-	SimpleAttribute* GetSimpleAttribute(std::string Code);
-	SimpleAttribute* GetSimpleAttribute(std::wstring Code);
 	SimpleAttribute* GetSimpleAttributeFromName(std::string name);
 	SimpleAttribute* GetSimpleAttributeFromName(std::wstring name);
 	SimpleAttributes* GetSimpleAttributes();
 	
 	ComplexAttribute* GetComplexAttribute(std::string code);
 	ComplexAttribute* GetComplexAttribute(std::wstring code);
-	ComplexAttribute* GetComplexAttribute(std::string Code);
-	ComplexAttribute* GetComplexAttribute(std::wstring Code);
 	ComplexAttribute* GetComplexAttributeFromName(std::string name);
 	ComplexAttribute* GetComplexAttributeFromName(std::wstring name);
 	ComplexAttributes* GetComplexAttributes();

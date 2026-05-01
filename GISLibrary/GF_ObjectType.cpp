@@ -173,6 +173,16 @@ namespace GF
 		return sa;
 	}
 
+	GF::SimpleAttributeType* ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::wstring value)
+	{
+		auto sa = new SimpleAttributeType(valueType, value);
+		sa->SetCode(code);
+
+		attributes.push_back(sa);
+
+		return sa;
+	}
+
 	void ObjectType::AddComplexAttribute(ComplexAttributeType* ca)
 	{
 		attributes.push_back(ca);

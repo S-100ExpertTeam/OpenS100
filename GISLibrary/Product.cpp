@@ -33,9 +33,8 @@ bool Product::OpenFC(std::wstring path)
 {
 	auto fc = new FeatureCatalogue();
 	if (fc->Read(path)) {
-
-		if (this->fc.find(fc->GetVersionNumber()) == this->fc.end()) {
-			this->fc.insert({ fc->GetVersionNumber(), fc });
+		if (this->fc.find(fc->GetVersionNumberW()) == this->fc.end()) {
+			this->fc.insert({ fc->GetVersionNumberW(), fc });
 			return true;
 		}
 	}

@@ -34,11 +34,6 @@ SpatialPrimitiveType StringToSpatialPrimitiveType(std::string& value)
 	return SpatialPrimitiveType::none;
 }
 
-SpatialPrimitiveType StringToSpatialPrimitiveType(std::string& value)
-{
-	return StringToSpatialPrimitiveType(value);
-}
-
 std::string SpatialPrimitiveTypeToString(SpatialPrimitiveType value)
 {
 	if (value == SpatialPrimitiveType::point)

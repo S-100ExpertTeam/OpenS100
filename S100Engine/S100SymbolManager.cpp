@@ -50,7 +50,8 @@ bool S100SymbolManager::Add(std::wstring path)
 		return false;
 	}
 
-	svgSymbols.insert({ svg.name, svg });
+	auto name = svg.name;
+	svgSymbols.emplace(name, std::move(svg));
 
 	return true;
 }

@@ -23,7 +23,7 @@ void FeatureAssociations::GetContents(pugi::xml_node& node)
 		{
 			auto sa = new FeatureAssociation();
 			sa->GetContents(instruction);
-			featureAssociation[sa->GetCodeAsWString()] = sa;
+			featureAssociation[sa->GetCode()] = sa;
 
 			if (instruction.attribute("isAbstract"))
 			{

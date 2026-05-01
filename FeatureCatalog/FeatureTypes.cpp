@@ -126,7 +126,7 @@ std::unordered_map<std::string, FeatureType*>& FeatureTypes::GetFeatureType()
 
 bool FeatureTypes::InsertFeatureType(FeatureType* value)
 {
-	auto key = value->GetCodeAsWString();
+	auto key = value->GetCode();
 	if (featureType.find(key) == featureType.end())
 	{
 		vecFeatureType.push_back(value);

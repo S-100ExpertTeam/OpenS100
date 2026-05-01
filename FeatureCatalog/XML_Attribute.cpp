@@ -66,6 +66,21 @@ std::wstring XML_Attribute::GetnameW()
 	return toWide(Getname());
 }
 
+bool XML_Attribute::CompareName(const char* otherName)
+{
+	if (otherName == nullptr)
+	{
+		return false;
+	}
+	
+	if (strcmp(name.c_str(), otherName) == 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void XML_Attribute::Setvalue(const char* value)
 {
 	std::string s(value ? value : "");

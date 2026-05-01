@@ -4014,7 +4014,7 @@ bool S101Cell::SaveAttribute(pugi::xml_node& root, std::vector<ATTR*> attributes
 				auto listedValue = sa->GetListedValue(_ttoi(attr->m_atvl));
 				if (listedValue)
 				{
-					value = pugi::as_utf8(listedValue->GetLabel());
+					value = listedValue->GetLabel();
 				}
 				else
 				{
@@ -5256,20 +5256,20 @@ bool S101Cell::FeatureAttrToAttribute()
 			auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
 			if (sa)
 			{
-				auto value = ATTR->getValueAsString();
-				CString strValue;
+				CString strValue = ATTR->getValueAsWString().c_str();
+				
 
-				strValue = LibMFCUtil::StringToWString(value).c_str();
+				//strValue = LibMFCUtil::StringToWString(value).c_str();
 
 				if (ATTR->m_paix > 0)
 				{
 					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
-					auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+					auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, std::wstring(strValue));
 					addedAttributes.push_back((GF::ThematicAttributeType*)addedSA);
 				}
 				else // top level
 				{
-					auto addedSA = fr->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+					auto addedSA = fr->AddSimpleAttribute(sa->GetValueType(), code, std::wstring(strValue));
 					addedAttributes.push_back(addedSA);
 				}
 			}

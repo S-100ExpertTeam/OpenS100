@@ -96,7 +96,8 @@ bool S100PCManager::AddS100Symbol(std::wstring path)
 		return false;
 	}
 
-	s100SymbolManager.svgSymbols.insert({ svg.name, svg });
+	auto name = svg.name;
+	s100SymbolManager.svgSymbols.emplace(name, std::move(svg));
 	return true;
 }
 

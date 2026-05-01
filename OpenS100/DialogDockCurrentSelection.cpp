@@ -261,6 +261,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialO
 			CString lon = CString::CStringT(CA2CT(tok[4].c_str()));
 			CString csType = CString::CStringT(CA2CT(tok[5].c_str()));
 			std::wstring ws_name = std::wstring(tok[6].begin(), tok[6].end());
+			std::string s_name = tok[6];
 			CString name;
 			CString assoCnt = CString::CStringT(CA2CT(tok[7].c_str()));
 		
@@ -272,7 +273,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialO
 				auto fc_featureTypeORG = fc->GetFeatureType(ws_name);
 				
 				if (fc_featureTypeORG)
-					name.Format(_T("%s"), fc_featureTypeORG->GetName().c_str());
+					name.Format(_T("%s"), fc_featureTypeORG->GetNameW().c_str());
 				else
 					name.Format(_T("%s"), ws_name);
 			}
@@ -280,7 +281,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialO
 			{
 				auto fc_inforTypeORG = fc->GetInformationType(ws_name);
 				if (fc_inforTypeORG)
-					name.Format(_T("%s"), fc_inforTypeORG->GetName().c_str());
+					name.Format(_T("%s"), fc_inforTypeORG->GetNameW().c_str());
 				else
 					name.Format(_T("%s"), ws_name);
 			}
@@ -341,7 +342,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialO
 				if (featureType == L"Feature")
 				{
 					// Acquired a catalog.
-					auto it = fc->GetFeatureTypes()->GetFeatureType().find(ws_name);
+					auto it = fc->GetFeatureTypes()->GetFeatureType().find(s_name);
 					if (it == fc->GetFeatureTypes()->GetFeatureType().end())
 					{
 						CString msg;

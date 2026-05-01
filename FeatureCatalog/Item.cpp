@@ -141,7 +141,7 @@ std::wstring Item::GetRemarksAsWString()
 		return toWide(*remarks);
 	}
 
-	return "";
+	return L"";
 }
 
 const bool Item::IsEmptyRemarks()
@@ -156,6 +156,29 @@ const bool Item::IsEmptyRemarks()
 const std::list<std::string>& Item::GetAlias()
 {
 	return alias;
+}
+
+int Item::GetAliasCount()
+{
+	return (int)alias.size();
+}
+
+std::string Item::GetAlias(int index)
+{
+	try {
+		auto it = alias.begin();
+		std::advance(it, index);
+		return *it;
+	}
+	catch (const std::exception& e)
+	{
+		return "";
+	}
+}
+
+std::wstring Item::GetAliasW(int index)
+{
+	return toWide(GetAlias(index));
 }
 
 Item& Item::operator = (const Item& item)
@@ -196,12 +219,21 @@ std::wstring Item::getSourceIdentifierAsWString()
 		}
 	}
 
-	return "";
+	return L"";
 }
 
 std::string Item::getSourceIdentifier()
 {
-	return getSourceIdentifierAsWString();
+	if (definitionReference)
+	{
+		auto si = definitionReference->GetSourceIdentifier();
+		if (si)
+		{
+			return *si;
+		}
+	}
+
+	return "";
 }
 
 std::wstring Item::GetNameW()

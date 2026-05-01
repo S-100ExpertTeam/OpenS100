@@ -1779,22 +1779,23 @@ void COpenS100View::PointFeatureList()
 
 		for (auto i = features.begin(); i != features.end(); i++)
 		{
-			CString name = (*i)->GetName().c_str();
-			CString code = (*i)->GetCodeAsWString().c_str();
-			CString definition = (*i)->GetDefinition().c_str();
+			CString name = (*i)->GetNameW().c_str();
+			CString code = (*i)->GetCodeW().c_str();
+			CString definition = (*i)->GetDefinitionW().c_str();
 			auto alias = (*i)->GetAlias();
 
 			CString str;
 			str.Format(L"%s, %s, %s, ", name, code, definition);
-			for (std::list<std::wstring>::const_iterator j = alias.begin(); j != alias.end(); j++)
-			{
-				if (j == alias.begin())
+
+			int cntAlias = (*i)->GetAliasCount();
+			for (int j = 0; j < cntAlias; j++) {
+				if (j == 0)
 				{
-					str.AppendFormat(L"%s", j->c_str());
+					str.AppendFormat(L"%s", (*i)->GetAliasW(j).c_str());
 				}
 				else
 				{
-					str.AppendFormat(L";%s", j->c_str());
+					str.AppendFormat(L";%s", (*i)->GetAliasW(j).c_str());
 				}
 			}
 
@@ -1815,22 +1816,23 @@ void COpenS100View::LineFeatureList()
 
 		for (auto i = features.begin(); i != features.end(); i++)
 		{
-			CString name = (*i)->GetName().c_str();
-			CString code = (*i)->GetCodeAsWString().c_str();
-			CString definition = (*i)->GetDefinition().c_str();
+			CString name = (*i)->GetNameW().c_str();
+			CString code = (*i)->GetCodeW().c_str();
+			CString definition = (*i)->GetDefinitionW().c_str();
 			auto alias = (*i)->GetAlias();
 
 			CString str;
 			str.Format(L"%s, %s, %s, ", name, code, definition);
-			for (std::list<std::wstring>::const_iterator j = alias.begin(); j != alias.end(); j++)
-			{
-				if (j == alias.begin())
+
+			int cntAlias = (*i)->GetAliasCount();
+			for (int j = 0; j < cntAlias; j++) {
+				if (j == 0)
 				{
-					str.AppendFormat(L"%s", j->c_str());
+					str.AppendFormat(L"%s", (*i)->GetAliasW(j).c_str());
 				}
 				else
 				{
-					str.AppendFormat(L";%s", j->c_str());
+					str.AppendFormat(L";%s", (*i)->GetAliasW(j).c_str());
 				}
 			}
 
@@ -1851,22 +1853,23 @@ void COpenS100View::AreaFeatureList()
 
 		for (auto i = features.begin(); i != features.end(); i++)
 		{
-			CString name = (*i)->GetName().c_str();
-			CString code = (*i)->GetCodeAsWString().c_str();
-			CString definition = (*i)->GetDefinition().c_str();
+			CString name = (*i)->GetNameW().c_str();
+			CString code = (*i)->GetCodeW().c_str();
+			CString definition = (*i)->GetDefinitionW().c_str();
 			auto alias = (*i)->GetAlias();
 
 			CString str;
 			str.Format(L"%s, %s, %s, ", name, code, definition);
-			for (std::list<std::wstring>::const_iterator j = alias.begin(); j != alias.end(); j++)
-			{
-				if (j == alias.begin())
+
+			int cntAlias = (*i)->GetAliasCount();
+			for (int j = 0; j < cntAlias; j++) {
+				if (j == 0)
 				{
-					str.AppendFormat(L"%s", j->c_str());
+					str.AppendFormat(L"%s", (*i)->GetAliasW(j).c_str());
 				}
 				else
 				{
-					str.AppendFormat(L";%s", j->c_str());
+					str.AppendFormat(L";%s", (*i)->GetAliasW(j).c_str());
 				}
 			}
 

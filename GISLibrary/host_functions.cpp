@@ -274,11 +274,8 @@ int HostGetFeatureTypeCodes(lua_State *l)
 
 	for (auto iit = feature_types.begin(); iit != feature_types.end(); iit++)
 	{
-		std::wstring name = iit->first;
-
-		std::string ret = std::string(name.begin(), name.end());
-
-		ret_feature_codes.push_back(ret);
+		std::string name = iit->first;
+		ret_feature_codes.push_back(name);
 	}
 
 	ls->push(ret_feature_codes);
@@ -307,11 +304,8 @@ int HostGetInformationTypeCodes(lua_State *l)
 
 	for (auto iit = information_types.begin(); iit != information_types.end(); iit++)
 	{
-		std::wstring name = iit->first;
-
-		std::string ret = std::string(name.begin(), name.end());
-
-		ret_information_codes.push_back(ret);
+		std::string name = iit->first;
+		ret_information_codes.push_back(name);
 	}
 
 	ls->push(ret_information_codes);
@@ -327,11 +321,8 @@ int HostGetSimpleAttributeTypeCodes(lua_State *l)
 	std::vector<std::string> ret_simpleattribute_codes;
 	for (auto iit = simpleattribute_types.begin(); iit != simpleattribute_types.end(); iit++)
 	{
-		std::wstring name = iit->first;
-
-		std::string ret = std::string(name.begin(), name.end());
-
-		ret_simpleattribute_codes.push_back(ret);
+		std::string name = iit->first;
+		ret_simpleattribute_codes.push_back(name);
 	}
 
 	ls->push(ret_simpleattribute_codes);
@@ -362,9 +353,8 @@ int HostGetComplexAttributeTypeCodes(lua_State *l)
 
 	for (auto iit = complexattribute_types.begin(); iit != complexattribute_types.end(); iit++)
 	{
-		std::wstring name = iit->first;
-		std::string ret = std::string(name.begin(), name.end());
-		ret_complexattribute_codes.push_back(ret);
+		std::string name = iit->first;
+		ret_complexattribute_codes.push_back(name);
 	}
 
 	ls->push(ret_complexattribute_codes);
@@ -421,11 +411,8 @@ int HostGetInformationAssociationTypeCodes(lua_State *l)
 	std::vector<std::string> ret_information_association_codes;
 	for (auto iit = information_association_types.begin(); iit != information_association_types.end(); iit++)
 	{
-		std::wstring name = iit->first;
-
-		std::string ret = std::string(name.begin(), name.end());
-
-		ret_information_association_codes.push_back(ret);
+		std::string name = iit->first;
+		ret_information_association_codes.push_back(name);
 	}
 
 	ls->push(ret_information_association_codes);
@@ -452,9 +439,8 @@ int HostGetFeatureAssociationTypeCodes(lua_State *l)
 	std::vector<std::string> ret_feature_association_codes;
 	for (auto iit = feature_association_types.begin(); iit != feature_association_types.end(); iit++)
 	{
-		std::wstring name = iit->first;
-		std::string ret = std::string(name.begin(), name.end());
-		ret_feature_association_codes.push_back(ret);
+		std::string name = iit->first;
+		ret_feature_association_codes.push_back(name);
 	}
 
 	ls->push(ret_feature_association_codes);

@@ -35,7 +35,7 @@ S100Layer::S100Layer(FeatureCatalogue* fc, PortrayalCatalogue *pc) : Layer()
 {	
 	SetFeatureCatalog(fc);
 	SetPC(pc);
-	SetProductNumber(fc->GetProductId());
+	SetProductNumber(fc->GetProductIdW());
 }
 
 S100Layer::~S100Layer()

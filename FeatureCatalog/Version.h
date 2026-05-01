@@ -47,6 +47,8 @@ public:
 	Version getMajor();
 	bool isEmpty();
 
+	void parseSource(const std::string& source);
+
 public:
 	bool operator==(const Version& other) const;
 	bool operator<(const Version& other) const;
@@ -55,6 +57,5 @@ public:
 
 private:
 	void init();
-	void parseSource(const std::string& source);
 	int convertToInt(const std::string& str) const;
 };

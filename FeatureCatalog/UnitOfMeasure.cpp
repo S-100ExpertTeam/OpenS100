@@ -145,7 +145,7 @@ void UnitOfMeasure::SetDefinition(std::wstring value)
 
 std::wstring UnitOfMeasure::GetDefinitionW()
 {
-	return toWide(GetDefinition());
+	return toWide(*GetDefinition());
 }
 
 void UnitOfMeasure::SetSymbol(const char* value)
@@ -162,5 +162,5 @@ void UnitOfMeasure::SetSymbol(std::wstring value)
 
 std::wstring UnitOfMeasure::GetSymbolW()
 {
-	return toWide(GetSymbol());
+	return toWide(*GetSymbol());
 }

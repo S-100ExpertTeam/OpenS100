@@ -68,5 +68,5 @@ void DefinitionReference::SetSourceIdentifier(std::wstring value)
 
 std::wstring DefinitionReference::GetSourceIdentifierW()
 {
-	return toWide(GetSourceIdentifier());
+	return toWide(*GetSourceIdentifier());
 }

@@ -26,7 +26,7 @@ void Roles::GetContents(pugi::xml_node& node)
 		{
 			Role* r = new Role();
 			r->GetContents(instruction);
-			role.insert(std::make_pair(r->GetCodeAsWString(), r));
+			role.insert(std::make_pair(r->GetCode(), r));
 		}
 	}
 }

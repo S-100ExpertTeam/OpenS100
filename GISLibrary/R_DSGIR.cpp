@@ -406,6 +406,12 @@ std::string R_DSGIR::GetAssociationRoleCodeAsString(int numericCode)
 	return pugi::as_utf8(GetAssociationRoleCode(numericCode));
 }
 
+int R_DSGIR::GetAttributeCode(std::string& value)
+{
+	auto str = pugi::as_wide(value);
+	return GetAttributeCode(str);
+}
+
 int R_DSGIR::GetAttributeCode(std::wstring& value)
 {
 	CString str = value.c_str();

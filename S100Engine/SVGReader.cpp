@@ -269,7 +269,8 @@ bool SVGReader::OpenByPugi(char* path)
 
 		if (!instructionName.compare("path"))
 		{
-			libS100Engine::Line* line = new libS100Engine::Line();
+			auto line = std::make_unique<libS100Engine::Line>();
+			
 			std::vector<std::wstring> wsVecTemp;
 			for (pugi::xml_attribute attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
 			{
@@ -308,7 +309,8 @@ bool SVGReader::OpenByPugi(char* path)
 					line->alpha = attri.as_double();
 				}
 			}
-			figures.push_back(line);
+
+			figures.push_back(std::move(line));
 		}
 		else if (!instructionName.compare("line"))
 		{
@@ -317,7 +319,7 @@ bool SVGReader::OpenByPugi(char* path)
 		else if (!instructionName.compare("rect"))
 		{
 			bool bSymbolBoxLayout = false;
-			libS100Engine::Line* line = nullptr;
+			std::unique_ptr<libS100Engine::Line> line;
 			double x = 0;
 			double y = 0;
 			double width = 0;
@@ -337,7 +339,7 @@ bool SVGReader::OpenByPugi(char* path)
 				// If rect is not layout,
 				else if (std::string::npos == std::string(classValue).find("layout"))
 				{
-					line = new libS100Engine::Line();
+					line = std::make_unique<libS100Engine::Line>();
 				}
 			}
 
@@ -439,12 +441,12 @@ bool SVGReader::OpenByPugi(char* path)
 				line->AddPoint(points[3]);
 				line->AddPoint(points[4]);
 
-				figures.push_back(line);
+				figures.push_back(std::move(line));
 			}
 		}
 		else if (!instructionName.compare("circle"))
 		{
-			libS100Engine::Circle* circle = new libS100Engine::Circle();
+			auto circle = std::make_unique<libS100Engine::Circle>();
 			std::vector<std::wstring> wsVecTemp;
 
 			for (pugi::xml_attribute attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
@@ -503,12 +505,13 @@ bool SVGReader::OpenByPugi(char* path)
 			if (!wcscmp(circle->colorName.c_str(), L""))
 			{
 				circle->type = libS100Engine::FigureType::pivotPoint;
-				figures.push_back(circle);
 			}
 			else
 			{
-				figures.push_back(circle);
+				figures.push_back(std::move(circle));
 			}
+
+			figures.push_back(std::move(circle));
 		}
 		else if (!instructionName.compare("ellipse"))
 		{
@@ -545,14 +548,14 @@ SVGReader::~SVGReader()
 
 void SVGReader::Close()
 {
-	for (int i = 0; i < (int)figures.size(); i++)
-	{
-		if (figures[i] != nullptr)
-		{
-			delete figures[i];
-			figures[i] = nullptr;
-		}
-	}
+	//for (int i = 0; i < (int)figures.size(); i++)
+	//{
+	//	if (figures[i] != nullptr)
+	//	{
+	//		delete figures[i];
+	//		figures[i] = nullptr;
+	//	}
+	//}
 
 	figures.clear();
 
@@ -567,13 +570,18 @@ void SVGReader::CreateSVGGeometry(ID2D1Factory1* m_pDirect2dFactory)
 {
 	for (auto i = 0; i < (int)figures.size(); i++)
 	{
-		switch (figures[i]->type)
+		if (!figures[i])
+		{
+			continue;
+		}
+
+		switch (figures[i].get()->type)
 		{
 		case libS100Engine::FigureType::line:
-			geometry.push_back(CreateSVGGeometryFromLine(m_pDirect2dFactory, (libS100Engine::Line*)figures[i]));
+			geometry.push_back(CreateSVGGeometryFromLine(m_pDirect2dFactory, (libS100Engine::Line*)figures[i].get()));
 			break;
 		case libS100Engine::FigureType::circle:
-			geometry.push_back(CreateSVGGeometryFromCircle((libS100Engine::Circle*)figures[i]));
+			geometry.push_back(CreateSVGGeometryFromCircle((libS100Engine::Circle*)figures[i].get()));
 			break;
 		default:
 			break;

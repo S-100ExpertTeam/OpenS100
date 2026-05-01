@@ -30,6 +30,9 @@ public:
 	bool CompareCode(std::string& value);
 
 	const std::list<std::string>& GetAlias();
+	int GetAliasCount();
+	std::string GetAlias(int index);
+	std::wstring GetAliasW(int index);
 	
 	const std::string& GetName();
 	std::wstring GetNameW();

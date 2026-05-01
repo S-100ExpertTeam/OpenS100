@@ -23,7 +23,7 @@ void SimpleAttributes::GetContents(pugi::xml_node& node)
 		{
 			auto sa = new SimpleAttribute();
 			sa->GetContents(instruction);
-			simpleAttribute.insert({ sa->GetCodeAsWString(), sa });
+			simpleAttribute.insert({ sa->GetCode(), sa });
 		}
 	}
 }

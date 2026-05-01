@@ -134,3 +134,18 @@ void ListedValue::SetRemarks(std::wstring value)
 	std::string s = toUtf8(value);
 	SetRemarks(s);
 }
+
+bool ListedValue::CompareRemarks(const char* value)
+{
+	if (value == nullptr)
+	{
+		return false;
+	}
+
+	if (strcmp(remarks.c_str(), value) == 0)
+	{
+		return true;
+	}
+
+	return false;
+}

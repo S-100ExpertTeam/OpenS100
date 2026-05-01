@@ -115,7 +115,7 @@ std::unordered_map<std::string, InformationType*>& InformationTypes::GetInformat
 
 bool InformationTypes::InsertInformationType(InformationType* value)
 {
-	auto key = value->GetCodeAsWString();
+	auto key = value->GetCode();
 	if (informationType.find(key) == informationType.end())
 	{
 		informationTypes.push_back(value);

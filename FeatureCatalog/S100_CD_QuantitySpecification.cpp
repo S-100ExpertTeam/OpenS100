@@ -21,12 +21,6 @@ namespace FCD
 		return S100_CD_QuantitySpecification::none;
 	}
 
-	S100_CD_QuantitySpecification StringToS100_CD_QuantitySpecification(std::string& value)
-	{
-		std::string str = value;
-		return StringToS100_CD_QuantitySpecification(str);
-	}
-
 	std::string S100_CD_QuantitySpecificationToString(S100_CD_QuantitySpecification value)
 	{
 		auto index = (int)value;

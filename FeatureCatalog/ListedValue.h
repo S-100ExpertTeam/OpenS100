@@ -40,6 +40,7 @@ public:
 	void SetRemarks(std::string& value);
 	void SetRemarks(const char* value);
 	void SetRemarks(std::wstring value);
+	bool CompareRemarks(const char* value);
 
 	int GetCode();
 

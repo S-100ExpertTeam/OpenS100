@@ -20,6 +20,7 @@ public:
 	void Setname(char* value);
 	const std::string& Getname();
 	std::wstring GetnameW();
+	bool CompareName(const char* otherName);
 
 	void Setvalue(std::string& value);
 	void Setvalue(const char* value);

@@ -74,9 +74,9 @@ BOOL CConfiguration_4::OnInitDialog()
 		for (int i = 0; i < vecFeature.size(); i++)
 		{
 			auto feature = vecFeature[i];
-			auto name = feature->GetName();
-			auto code = feature->GetCodeAsWString();
-			auto definition = feature->GetDefinition();
+			auto name = feature->GetNameW();
+			auto code = feature->GetCodeW();
+			auto definition = feature->GetDefinitionW();
 
 			m_viewingGroupList.InsertItem(i, _T(""));
 			m_viewingGroupList.SetItemText(i, 1, name.c_str());

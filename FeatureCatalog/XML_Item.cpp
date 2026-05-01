@@ -98,7 +98,7 @@ std::wstring XML_Item::GetvalueW()
 
 std::wstring XML_Item::GetvaluePointerW()
 {
-	return toWide(GetvaluePointer());
+	return toWide(*GetvaluePointer());
 }
 
 std::wstring XML_Item::GetReferenceW()
