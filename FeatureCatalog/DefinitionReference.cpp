@@ -16,15 +16,15 @@ void DefinitionReference::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:sourceIdentifier"))
 		{
 			if (nullptr == sourceIdentifier)
 			{
-				sourceIdentifier = new std::wstring();
+				sourceIdentifier = new std::string();
 			}
 
-			*sourceIdentifier = pugi::as_wide(instruction.child_value());
+			*sourceIdentifier = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100FC:definitionSource"))
 		{
@@ -33,17 +33,17 @@ void DefinitionReference::GetContents(pugi::xml_node& node)
 	}
 }
 
-void DefinitionReference::SetSourceIdentifier(std::wstring value)
+void DefinitionReference::SetSourceIdentifier(std::string value)
 {
 	if (nullptr == sourceIdentifier)
 	{
-		sourceIdentifier = new std::wstring();
+		sourceIdentifier = new std::string();
 	}
 	
 	*sourceIdentifier = value;
 }
 
-const std::wstring* DefinitionReference::GetSourceIdentifier()
+const std::string* DefinitionReference::GetSourceIdentifier()
 {
 	if (sourceIdentifier) 
 	{

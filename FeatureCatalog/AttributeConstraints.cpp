@@ -15,14 +15,14 @@ void AttributeConstraints::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FD:stringLength"))
 		{
 			stringLength = std::stoi(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100FD:textPattern"))
 		{
-			textPattern = pugi::as_wide(instruction.child_value());
+			textPattern = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100FD:range"))
 		{
@@ -45,12 +45,12 @@ void AttributeConstraints::SetStringLength(int value)
 	stringLength = value;
 }
 
-const std::wstring& AttributeConstraints::GetTextPattern()
+const std::string& AttributeConstraints::GetTextPattern()
 {
 	return textPattern;
 }
 
-void AttributeConstraints::GetTextPattern(std::wstring value)
+void AttributeConstraints::GetTextPattern(std::string value)
 {
 	textPattern = value;
 }

@@ -1,3 +1,4 @@
+#include "StringUtil.h"
 #include "stdafx.h"
 #include "Item.h"
 
@@ -27,15 +28,15 @@ void Item::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 
 		if (!strcmp(instructionName, "S100FC:name"))
 		{
-			name = pugi::as_wide(instruction.child_value());
+			name = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100FC:definition"))
 		{
-			definition = pugi::as_wide(instruction.child_value());
+			definition = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100FC:code"))
 		{
@@ -49,7 +50,7 @@ void Item::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:alias"))
 		{
-			alias.push_back(pugi::as_wide(instruction.child_value()));
+			alias.push_back(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100FC:definitionReference"))
 		{
@@ -63,13 +64,9 @@ void Item::GetContents(pugi::xml_node& node)
 	}
 }
 
-bool Item::CompareCode(std::string& value)
-{
-	std::wstring wval = pugi::as_wide(value);
-	return CompareCode(wval);
-}
 
-bool Item::CompareCode(std::wstring& value)
+
+bool Item::CompareCode(std::string& value)
 {
 	if (code.compare(value) == 0)
 	{
@@ -78,82 +75,73 @@ bool Item::CompareCode(std::wstring& value)
 	return false;
 }
 
-const std::wstring& Item::GetName()
+const std::string& Item::GetName()
 {
 	return name;
 }
 
-void Item::SetName(std::wstring& value)
+void Item::SetName(std::string& value)
 {
 	name = value;
 }
 
-const std::wstring& Item::GetDefinition()
+const std::string& Item::GetDefinition()
 {
 	return definition;
 }
 
-void Item::SetDefinition(std::wstring& value)
+void Item::SetDefinition(std::string& value)
 {
 	definition = value;
 }
 
 const std::string Item::GetCode()
 {
-	return pugi::as_utf8(code);
-}
-
-const std::wstring Item::GetCodeAsWString()
-{
 	return code;
 }
 
-void Item::SetCode(std::wstring& value)
+std::wstring Item::GetCodeAsWString()
 {
-	code = value;
+	return toWide(code);
 }
 
 void Item::SetCode(std::string& value)
 {
-	code = pugi::as_wide(value);
+	code = value;
 }
+
 
 void Item::NullCheckRemarks()
 {
 	if (nullptr == remarks)
 	{
-		remarks = new std::wstring();
+		remarks = new std::string();
 	}
 }
 
 void Item::SetRemarks(std::string& value)
 {
 	NullCheckRemarks();
-	*remarks = pugi::as_wide(value);
-}
-
-void Item::SetRemarks(std::wstring& value)
-{
-	NullCheckRemarks();
 	*remarks = value;
 }
+
 
 const std::string Item::GetRemarks()
 {
 	if (nullptr != remarks)
 	{
-		return pugi::as_utf8(*remarks);
+		return *remarks;
 	}
 	return "";
 }
 
-const std::wstring Item::GetRemarksAsWString()
+std::wstring Item::GetRemarksAsWString()
 {
 	if (remarks) {
-		return *remarks;
+		return toWide(*remarks);
 	}
 
-	return L"";
+	return "";
 }
 
 const bool Item::IsEmptyRemarks()
@@ -165,7 +153,7 @@ const bool Item::IsEmptyRemarks()
 	return true;
 }
 
-const std::list<std::wstring>& Item::GetAlias()
+const std::list<std::string>& Item::GetAlias()
 {
 	return alias;
 }
@@ -187,7 +175,7 @@ Item& Item::operator = (const Item& item)
 	return *this;
 }
 
-void Item::setSourceIdentifier(std::wstring value)
+void Item::setSourceIdentifier(std::string value)
 {
 	if (!definitionReference)
 	{
@@ -204,14 +192,14 @@ std::wstring Item::getSourceIdentifierAsWString()
 		auto si = definitionReference->GetSourceIdentifier();
 		if (si)
 		{
-			return *si;
+			return toWide(*si);
 		}
 	}
 
-	return L"";
+	return "";
 }
 
 std::string Item::getSourceIdentifier()
 {
-	return pugi::as_utf8(getSourceIdentifierAsWString());
+	return getSourceIdentifierAsWString();
 }

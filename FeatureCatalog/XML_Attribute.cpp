@@ -11,32 +11,32 @@ XML_Attribute::~XML_Attribute()
 {
 }
 
-void XML_Attribute::Setname(std::wstring& values)
+void XML_Attribute::Setname(std::string& values)
 {
 	name = value;
 }
 
 void XML_Attribute::Setname(char* value)
 {
-	name = pugi::as_wide(value);
+	name = value;
 }
 
- const std::wstring& XML_Attribute::Getname()
+ const std::string& XML_Attribute::Getname()
 {
 	return name;
 }
 
-void XML_Attribute::Setvalue(std::wstring& values)
+void XML_Attribute::Setvalue(std::string& values)
 {
 	value = values;
 }
 
 void XML_Attribute::Setvalue(char* _value)
 {
-	value = pugi::as_wide(_value);
+	value = _value;
 }
 
- const std::wstring& XML_Attribute::Getvalue()
+ const std::string& XML_Attribute::Getvalue()
 {
 	return value;
 }

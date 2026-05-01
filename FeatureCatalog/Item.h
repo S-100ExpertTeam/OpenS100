@@ -6,6 +6,7 @@
 #include <pugixml.hpp>
 
 #include <string>
+#include "StringUtil.h"
 
 // S100_FC_Item
 class Item
@@ -16,42 +17,48 @@ public:
 	virtual ~Item();
 
 protected:
-	std::wstring name = L"";
-	std::wstring definition = L"";
-	std::wstring code = L"";
-	std::wstring* remarks = nullptr;
-	std::list<std::wstring> alias;
+	std::string name = "";
+	std::string definition = "";
+	std::string code = "";
+	std::string* remarks = nullptr;
+	std::list<std::string> alias;
 	DefinitionReference* definitionReference = nullptr; 
 
 public:
 	void GetContents(pugi::xml_node& node);
 
 	bool CompareCode(std::string& value);
-	bool CompareCode(std::wstring& value);
 
-	const std::list<std::wstring>& GetAlias();
+	const std::list<std::string>& GetAlias();
 	
-	const std::wstring& GetName();
-	void SetName(std::wstring& value);
+	const std::string& GetName();
+	std::wstring GetNameW() { return toWide(GetName()); }
+	void SetName(std::string& value);
+	void SetName(std::wstring value) { SetName(toUtf8(value)); }
 
-	const std::wstring& GetDefinition();
-	void SetDefinition(std::wstring& value);
+	const std::string& GetDefinition();
+	std::wstring GetDefinitionW() { return toWide(GetDefinition()); }
+	void SetDefinition(std::string& value);
+	void SetDefinition(std::wstring value) { SetDefinition(toUtf8(value)); }
 
 	const std::string GetCode();
-	const std::wstring GetCodeAsWString();
-	void SetCode(std::wstring& value);
+	std::wstring GetCodeW() { return toWide(GetCode()); }
+	std::wstring GetCodeAsWString();
 	void SetCode(std::string& value);
+	void SetCode(std::wstring value) { SetCode(toUtf8(value)); }
 
 	const bool IsEmptyRemarks();
 	void NullCheckRemarks();
 	void SetRemarks(std::string& value);
-	void SetRemarks(std::wstring& value);
+	void SetRemarks(std::wstring value) { SetRemarks(toUtf8(value)); }
 	const std::string GetRemarks();
-	const std::wstring GetRemarksAsWString();
+	std::wstring GetRemarksW() { return toWide(GetRemarks()); }
+	std::wstring GetRemarksAsWString();
 
 	Item& operator = (const Item& item);
 
-	void setSourceIdentifier(std::wstring value);
+	void setSourceIdentifier(std::string value);
 	std::wstring getSourceIdentifierAsWString();
 	std::string getSourceIdentifier();
+	std::wstring getSourceIdentifierW() { return toWide(getSourceIdentifier()); }
 };

@@ -2,6 +2,7 @@
 #include "XML_Item.h"
 
 #include <pugixml.hpp>
+#include "StringUtil.h"
 
 class DateExt : public XML_Item
 {
@@ -10,11 +11,12 @@ public:
 	virtual ~DateExt();
 
 private:
-	std::wstring date = L"";
+	std::string date = "";
 
 public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetDate(char* value);
-	const std::wstring& GetDate();
+	const std::string& GetDate();
+	std::wstring GetDateW() { return toWide(GetDate()); }
 };

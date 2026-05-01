@@ -5,6 +5,7 @@
 #include "OnlineResource.h"
 
 #include <pugixml.hpp>
+#include "StringUtil.h"
 
 class Contact :
 	public XML_Item
@@ -17,8 +18,8 @@ private:
 	Telephone phone;
 	Address address;
 	OnlineResource onlineResource;
-	std::wstring hoursOfService = L"";
-	std::wstring contactInstructions = L"";
+	std::string hoursOfService = "";
+	std::string contactInstructions = "";
 	
 public:
 	void GetContents(pugi::xml_node& node);
@@ -33,8 +34,10 @@ public:
 	const OnlineResource& GetOnlineResource();
 
 	void SetHoursOfService(char* value);
-	const std::wstring& GetHoursOfService();
+	const std::string& GetHoursOfService();
+	std::wstring GetHoursOfServiceW() { return toWide(GetHoursOfService()); }
 
 	void SetContactInstructions(char* value);
-	const std::wstring& GetContactInstructions();
+	const std::string& GetContactInstructions();
+	std::wstring GetContactInstructionsW() { return toWide(GetContactInstructions()); }
 };

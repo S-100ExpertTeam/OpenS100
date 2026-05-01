@@ -10,48 +10,48 @@ Restriction_Item::~Restriction_Item()
 
 }
 
-void Restriction_Item::InsertValue(std::wstring value)
+void Restriction_Item::InsertValue(std::string value)
 {
 	permittedValues[value] = value;
 	return;
 }
 
-void Restriction_Item::SetPermittedValues(std::unordered_map<std::wstring, std::wstring>& value)
+void Restriction_Item::SetPermittedValues(std::unordered_map<std::string, std::string>& value)
 {
 	permittedValues = value;
 }
 
-const std::unordered_map<std::wstring, std::wstring>& Restriction_Item::GetPermittedValues()
+const std::unordered_map<std::string, std::string>& Restriction_Item::GetPermittedValues()
 {
 	return permittedValues;
 }
 
-void Restriction_Item::SetPattern(std::wstring& value)
+void Restriction_Item::SetPattern(std::string& value)
 {
 	pattern = value;
 }
 
-const std::wstring& Restriction_Item::GetPattern()
+const std::string& Restriction_Item::GetPattern()
 {
 	return pattern;
 }
 
-void Restriction_Item::SetMaxExclusive(std::wstring& value)
+void Restriction_Item::SetMaxExclusive(std::string& value)
 {
 	maxExclusive = value;
 }
 
-const std::wstring& Restriction_Item::GetMaxExclusive()
+const std::string& Restriction_Item::GetMaxExclusive()
 {
 	return maxExclusive;
 }
 
-void Restriction_Item::SetValueString(std::wstring& value)
+void Restriction_Item::SetValueString(std::string& value)
 {
 	valueString = value;
 }
 
-const std::wstring& Restriction_Item::GetValueString()
+const std::string& Restriction_Item::GetValueString()
 {
 	return valueString;
 }

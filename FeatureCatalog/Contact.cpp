@@ -15,7 +15,7 @@ void Contact::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 
 		if (!strcmp(instructionName, "S100CI:phone"))
 		{
@@ -45,8 +45,8 @@ void Contact::GetContents(pugi::xml_node& node)
 		}
 		else 
 		{
-			std::wstring content = pugi::as_wide(instructionName);
-			content.append(L" is another data");
+			std::string content = instructionName;
+			content.append(" is another data");
 		}
 	}
 }
@@ -83,20 +83,20 @@ const OnlineResource& Contact::GetOnlineResource()
 
 void Contact::SetHoursOfService(char* value) 
 {
-	hoursOfService = pugi::as_wide(value);
+	hoursOfService = value;
 }
 
-const std::wstring& Contact::GetHoursOfService()
+const std::string& Contact::GetHoursOfService()
 {
 	return hoursOfService;
 }
 
 void Contact::SetContactInstructions(char* value) 
 {
-	contactInstructions = pugi::as_wide(value);
+	contactInstructions = value;
 }
 
-const std::wstring& Contact::GetContactInstructions()
+const std::string& Contact::GetContactInstructions()
 {
 	return contactInstructions;
 }

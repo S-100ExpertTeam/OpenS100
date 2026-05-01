@@ -16,27 +16,27 @@ void OnlineResource::GetContents(pugi::xml_node& node)
 	//S100CI
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 
 		if (!strcmp(instructionName, "S100CI:url"))
 		{
-			SetUrl(pugi::as_wide(instruction.child_value()));
+			SetUrl(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100CI:protocol"))
 		{
-			SetProtocol(pugi::as_wide(instruction.child_value()));
+			SetProtocol(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100CI:applicationProfile"))
 		{
-			SetApplicationProfile(pugi::as_wide(instruction.child_value()));
+			SetApplicationProfile(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100CI:name"))
 		{
-			SetName(pugi::as_wide(instruction.child_value()));
+			SetName(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100CI:description"))
 		{
-			SetDescription(pugi::as_wide(instruction.child_value()));
+			SetDescription(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100CI:function"))
 		{
@@ -48,55 +48,55 @@ void OnlineResource::GetContents(pugi::xml_node& node)
 		}
 		else
 		{
-			std::wstring content = pugi::as_wide(instructionName);
-			content.append(L" is another data");
+			std::string content = instructionName;
+			content.append(" is another data");
 		}
 	}
 }
 
-void OnlineResource::SetUrl(std::wstring value)
+void OnlineResource::SetUrl(std::string value)
 {
 	url = value;
 }
 
-const std::wstring& OnlineResource::GetUrl()
+const std::string& OnlineResource::GetUrl()
 {
 	return url;
 }
 
-void OnlineResource::SetProtocol(std::wstring value) 
+void OnlineResource::SetProtocol(std::string value) 
 {
 	protocol = value;
 }
 
-const std::wstring& OnlineResource::GetProtocol()
+const std::string& OnlineResource::GetProtocol()
 {
 	return protocol;
 }
 
-void OnlineResource::SetApplicationProfile(std::wstring value) 
+void OnlineResource::SetApplicationProfile(std::string value) 
 {
 	applicationProfile = value;
 }
-const std::wstring& OnlineResource::GetApplicationProfile()
+const std::string& OnlineResource::GetApplicationProfile()
 {
 	return applicationProfile;
 }
 
-void OnlineResource::SetName(std::wstring value) 
+void OnlineResource::SetName(std::string value) 
 {
 	name = value;
 }
-const std::wstring& OnlineResource::GetName()
+const std::string& OnlineResource::GetName()
 {
 	return name;
 }
 
-void OnlineResource::SetDescription(std::wstring value) 
+void OnlineResource::SetDescription(std::string value) 
 {
 	description = value;
 }
-const std::wstring& OnlineResource::GetDescription()
+const std::string& OnlineResource::GetDescription()
 {
 	return description;
 }

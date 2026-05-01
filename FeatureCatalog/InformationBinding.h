@@ -6,6 +6,7 @@
 
 #include <pugixml.hpp>
 #include <vector>
+#include "StringUtil.h"
 
 class InformationBinding
 {
@@ -26,32 +27,37 @@ public:
 	Multiplicity& GetMultiplicity();
 
 	std::string GetAssociation();
-	std::wstring GetAssociationAsWstring();
+	std::wstring GetAssociationW() { return toWide(GetAssociation()); }
+	std::string GetAssociationAsWstring();
+	std::wstring GetAssociationAsWstringW() { return toWide(GetAssociationAsWstring()); }
 
 	void SetAssociation(std::string value);
-	void SetAssociation(std::wstring value);
+	void SetAssociation(std::wstring value) { SetAssociation(toUtf8(value)); }
 
 	std::string GetRole();
-	std::wstring GetRoleAsWstring();
+	std::wstring GetRoleW() { return toWide(GetRole()); }
+	std::string GetRoleAsWstring();
+	std::wstring GetRoleAsWstringW() { return toWide(GetRoleAsWstring()); }
 
 	void SetRole(std::string value);
-	void SetRole(std::wstring value);
+	void SetRole(std::wstring value) { SetRole(toUtf8(value)); }
 
 	S100_FC_RoleType GetRoleType();
 	std::string GetRoleTypeAsString();
-	std::wstring GetRoleTypeAsWstring();
+	std::string GetRoleTypeAsWstring();
+	std::wstring GetRoleTypeAsWstringW() { return toWide(GetRoleTypeAsWstring()); }
 
 	void SetRoleType(S100_FC_RoleType value);
 	void SetRoleType(std::string value);
+	void SetRoleType(std::wstring value) { SetRoleType(toUtf8(value)); }
 
 	int GetInformationTypeCount();
 
 	std::string GetInformationType(int index);
 	std::vector<std::string> GetInformationTypes();
-	std::wstring GetInformationTypeAsWstring(int index);
+	std::string GetInformationTypeAsWstring(int index);
 
 	void InsertInformationType(std::string value);
-	void InsertInformationType(std::wstring value);
 
 	bool IsSameAssociation(InformationBinding& ib);
 	void AppendInformationBinding(InformationBinding& ib);

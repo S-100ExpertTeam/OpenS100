@@ -8,6 +8,7 @@
 #include <pugixml.hpp>
 
 #include <string>
+#include "StringUtil.h"
 
 class Citation : public XML_Item
 {
@@ -17,46 +18,50 @@ public:
 	virtual ~Citation();
 
 private:
-	std::wstring title = L"";
-	std::list<std::wstring> aternateTitle;
+	std::string title = "";
+	std::list<std::string> aternateTitle;
 	std::list<Date> date;
-	std::wstring edition = L"";
+	std::string edition = "";
 	DateExt editionDate;
-	std::wstring identifier = L"";
-	std::wstring identifierType = L"";
+	std::string identifier = "";
+	std::string identifierType = "";
 	ResponsibleParty citedResponsibleParty;
 	PresentationFormCode presentationForm;
 	Series series;
-	std::wstring otherCitationDetails = L"";
-	std::wstring collectiveTitle = L"";
-	std::wstring ISBN = L"";
-	std::wstring ISSN = L"";
+	std::string otherCitationDetails = "";
+	std::string collectiveTitle = "";
+	std::string ISBN = "";
+	std::string ISSN = "";
 
 public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetTitle(char* value);
-	const std::wstring& GetTitle();
+	const std::string& GetTitle();
+	std::wstring GetTitleW() { return toWide(GetTitle()); }
 
 	void SetAternateTitle(char* value);
-	void SetAternateTitle(std::list<std::wstring>& value);
-	std::list<std::wstring>& GetAternateTitle();
+	void SetAternateTitle(std::list<std::string>& value);
+	std::list<std::string>& GetAternateTitle();
 
 	void SetDate(Date* value);
 	void SetDate(std::list<Date>& value);
 	std::list<Date>& GetDate();
 
 	void SetEdition(char* value);
-	const std::wstring& GetEdition();
+	const std::string& GetEdition();
+	std::wstring GetEditionW() { return toWide(GetEdition()); }
 
 	void SetEditionDate(DateExt& value);
 	DateExt& GetEditionDate();
 
 	void SetIdentifier(char* value);
-	const std::wstring& GetIdentifier();
+	const std::string& GetIdentifier();
+	std::wstring GetIdentifierW() { return toWide(GetIdentifier()); }
 
 	void SetIdentifierType(char* value);
-	const std::wstring& GetIdentifierType();
+	const std::string& GetIdentifierType();
+	std::wstring GetIdentifierTypeW() { return toWide(GetIdentifierType()); }
 
 	void SetCitedResponsibleParty(ResponsibleParty& value);
 	ResponsibleParty& GetCitedResponsibleParty();
@@ -68,14 +73,18 @@ public:
 	Series& GetSeries();
 
 	void SetOtherCitationDetails(char* value);
-	const std::wstring& GetOtherCitationDetails();
+	const std::string& GetOtherCitationDetails();
+	std::wstring GetOtherCitationDetailsW() { return toWide(GetOtherCitationDetails()); }
 
 	void SetCollectiveTitle(char* value);
-	const std::wstring& GetCollectiveTitle();
+	const std::string& GetCollectiveTitle();
+	std::wstring GetCollectiveTitleW() { return toWide(GetCollectiveTitle()); }
 
 	void SetISBN(char* value);
-	const std::wstring& GetISBN();
+	const std::string& GetISBN();
+	std::wstring GetISBNW() { return toWide(GetISBN()); }
 
 	void SetISSN(char* value);
-	const std::wstring& GetISSN();
+	const std::string& GetISSN();
+	std::wstring GetISSNW() { return toWide(GetISSN()); }
 };

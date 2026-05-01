@@ -3,6 +3,7 @@
 #include "NamedType.h"
 
 #include <pugixml.hpp>
+#include "StringUtil.h"
 
 class FeatureAssociation : public NamedType
 {
@@ -11,13 +12,14 @@ public:
 	virtual ~FeatureAssociation();
 
 private:
-	std::wstring superType = L"";
-	std::list<std::wstring> subType;
+	std::string superType = "";
+	std::list<std::string> subType;
 	Reference role[2];
 
 public:
 	void GetContents(pugi::xml_node& node);
-	std::list<std::wstring>& GetSubTypePointer();
-	std::wstring& GetSuperType();
+	std::list<std::string>& GetSubTypePointer();
+	std::string& GetSuperType();
+	std::wstring GetSuperTypeW() { return toWide(GetSuperType()); }
 	Reference(&GetRolePointer())[2];
 };

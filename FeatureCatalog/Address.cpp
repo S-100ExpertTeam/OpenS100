@@ -15,7 +15,7 @@ void Address::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100CI:deliveryPoint"))
 		{
 			SetDeliveryPoint((char*)instruction.child_value());
@@ -42,8 +42,8 @@ void Address::GetContents(pugi::xml_node& node)
 		}
 		else 
 		{
-			std::wstring content = pugi::as_wide(instructionName);
-			content.append(L"is another data");
+			std::string content = instructionName;
+			content.append("is another data");
 		}
 
 	}
@@ -51,60 +51,60 @@ void Address::GetContents(pugi::xml_node& node)
 
 void Address::SetDeliveryPoint(char* value)
 {
-	deliveryPoint =pugi::as_wide(value);
+	deliveryPoint =value;
 }
 
-const std::wstring& Address::GetDeliveryPoint()
+const std::string& Address::GetDeliveryPoint()
 {
 	return deliveryPoint;
 }
 
 void Address::SetCity(char* value) 
 {
-	city = pugi::as_wide(value);
+	city = value;
 }
 
-const std::wstring& Address::GetCity()
+const std::string& Address::GetCity()
 {
 	return city;
 }
 
 void Address::SetAdministrativeArea(char* value) 
 {
-	administrativeArea = pugi::as_wide(value);
+	administrativeArea = value;
 }
 
-const std::wstring& Address::GetAdministrativeArea()
+const std::string& Address::GetAdministrativeArea()
 {
 	return administrativeArea;
 }
 
 void Address::SetPostalCode(char* value) 
 {
-	postalCode = pugi::as_wide(value);
+	postalCode = value;
 }
 
-const std::wstring& Address::GetPostalCode()
+const std::string& Address::GetPostalCode()
 {
 	return postalCode;
 }
 
 void Address::SetCountry(char* value) 
 {
-	country = pugi::as_wide(value);
+	country = value;
 }
 
-const std::wstring& Address::GetCountry()
+const std::string& Address::GetCountry()
 {
 	return country;
 }
 
 void Address::SetElectronicMailAddress(char* value) 
 {
-	electronicMailAddress = pugi::as_wide(value);
+	electronicMailAddress = value;
 }
 
-const std::wstring& Address::GetElectronicMailAddress()
+const std::string& Address::GetElectronicMailAddress()
 {
 	return electronicMailAddress;
 }
