@@ -23,7 +23,7 @@ void ComplexAttributes::GetContents(pugi::xml_node& node)
 		{
 			auto complex = new ComplexAttribute();
 			complex->GetContents(instruction);
-			complexAttribute[complex->GetCodeAsWString()] = complex;
+			complexAttribute[complex->GetCode()] = complex;
 		}
 	}
 }

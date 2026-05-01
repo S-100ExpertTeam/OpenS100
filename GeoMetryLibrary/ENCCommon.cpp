@@ -8,6 +8,7 @@
 #include <filesystem>
 #include <fstream>
 #include <locale>
+#include <unordered_map>
 
 bool   ENCCommon::TEXTOUT = true;
 bool   ENCCommon::APPLY_SCALE_MIN = true;
