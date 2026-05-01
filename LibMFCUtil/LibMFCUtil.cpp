@@ -78,23 +78,22 @@ char* LibMFCUtil::ConvertWCtoC(wchar_t* str)
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
 
-	// Declaration of char* variable to return
-	char* pStr = nullptr;
-
-	// Find the length of the input wchar_t variable.
-	int strSize = WideCharToMultiByte(CP_ACP, 0, str, -1, NULL, 0, NULL, NULL);
-
-	if (strSize <= 0)
+	if (!str)
 	{
-		//OutputDebugString(_T("Failed to WideCharToMultiByte()\n"));
 		return nullptr;
 	}
 
-	// Char* Memory allocation.
-	pStr = new char[strSize];
+	int strSize = WideCharToMultiByte(CP_UTF8, 0, str, -1, nullptr, 0, nullptr, nullptr);
 
-	// Change Type 
-	WideCharToMultiByte(CP_ACP, 0, str, -1, pStr, strSize, 0, 0);
+	if (strSize <= 0)
+	{
+		return nullptr;
+	}
+
+	char* pStr = new char[strSize];
+
+	WideCharToMultiByte(CP_UTF8, 0, str, -1, pStr, strSize, nullptr, nullptr);
+
 	return pStr;
 }
 
@@ -102,23 +101,24 @@ char* LibMFCUtil::ConvertWCtoC(wchar_t* str)
 wchar_t* LibMFCUtil::ConvertCtoWC(char* str)
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
-	//Wchar_t type variable declaration
-	wchar_t* pStr = nullptr;
-	//Multi-byte size calculation length return
-	int strSize = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, NULL);
 
-	if (strSize <= 0)
+	if (!str)
 	{
-		//OutputDebugString(_T("Failed to MultiByteToWideChar()\n"));
 		return nullptr;
 	}
 
-	//Wchar_t memory allocation
-	pStr = new WCHAR[strSize];
-	// change type
-	MultiByteToWideChar(CP_ACP, 0, str, (int)strlen(str) + 1, pStr, strSize);
-	return pStr;
+	int strSize = MultiByteToWideChar(CP_UTF8, 0, str, -1, nullptr, 0);
 
+	if (strSize <= 0)
+	{
+		return nullptr;
+	}
+
+	wchar_t* pStr = new WCHAR[strSize];
+
+	MultiByteToWideChar(CP_UTF8, 0, str, -1, pStr, strSize);
+
+	return pStr;
 }
 
 //Extract extensions: Modify the entire path and name+extensions to work.

@@ -546,6 +546,7 @@ int HostPortrayalEmit(lua_State *l)
 
 	resultDrawingInstructions.back().observedParameters = ls->pop<std::string>();
 	resultDrawingInstructions.back().drawingInstructions = ls->pop<std::string>();
+
 	resultDrawingInstructions.back().featureID = ls->pop<std::string>();
 
 	ls->push(true);
