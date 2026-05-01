@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "Series.h"
 
 Series::Series()
@@ -58,4 +59,43 @@ void Series::SetPage(std::string valeu)
 const std::string& Series::GetPage()
 {
 	return page;
+}
+
+std::wstring Series::GetNameW()
+{
+	return toWide(GetName());
+}
+
+void Series::SetIssueIdentification(const char* value)
+{
+	std::string s(value ? value : "");
+	SetIssueIdentification(s);
+}
+
+void Series::SetIssueIdentification(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetIssueIdentification(s);
+}
+
+std::wstring Series::GetIssueIdentificationW()
+{
+	return toWide(GetIssueIdentification());
+}
+
+void Series::SetPage(const char* value)
+{
+	std::string s(value ? value : "");
+	SetPage(s);
+}
+
+void Series::SetPage(std::wstring valeu)
+{
+	std::string s = toUtf8(valeu);
+	SetPage(s);
+}
+
+std::wstring Series::GetPageW()
+{
+	return toWide(GetPage());
 }

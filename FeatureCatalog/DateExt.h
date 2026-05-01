@@ -18,5 +18,5 @@ public:
 
 	void SetDate(char* value);
 	const std::string& GetDate();
-	std::wstring GetDateW() { return toWide(GetDate()); }
+	std::wstring GetDateW();
 };

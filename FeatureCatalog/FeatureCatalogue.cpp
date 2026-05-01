@@ -1,5 +1,6 @@
 // FeatureCatalog.cpp : Define the initialization routine of the corresponding DLL.
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "FeatureCatalogue.h"
 #include "Role.h"
 
@@ -772,4 +773,236 @@ Attribute* FeatureCatalogue::GetAttribute(std::string code)
 	}
 
 	return nullptr;
+}
+
+std::wstring SimpleAttribute::GetNameW()
+{
+	return toWide(GetName());
+}
+
+void SimpleAttribute::SetName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetName(s);
+}
+
+void SimpleAttribute::SetName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetName(s);
+}
+
+std::wstring SimpleAttribute::GetFilePathW()
+{
+	return toWide(GetFilePath());
+}
+
+void SimpleAttribute::SetFilePath(const char* value)
+{
+	std::string s(value ? value : "");
+	SetFilePath(s);
+}
+
+void SimpleAttribute::SetFilePath(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetFilePath(s);
+}
+
+std::wstring SimpleAttribute::GetScopeW()
+{
+	return toWide(GetScope());
+}
+
+void SimpleAttribute::SetScope(const char* value)
+{
+	std::string s(value ? value : "");
+	SetScope(s);
+}
+
+void SimpleAttribute::SetScope(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetScope(s);
+}
+
+std::wstring SimpleAttribute::GetFieldOfApplicationW()
+{
+	return toWide(GetFieldOfApplication());
+}
+
+void SimpleAttribute::SetFieldOfApplication(const char* value)
+{
+	std::string s(value ? value : "");
+	SetFieldOfApplication(s);
+}
+
+void SimpleAttribute::SetFieldOfApplication(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetFieldOfApplication(s);
+}
+
+std::wstring SimpleAttribute::GetVersionNumberW()
+{
+	return toWide(GetVersionNumber());
+}
+
+void SimpleAttribute::SetVersionNumber(const char* value)
+{
+	std::string s(value ? value : "");
+	SetVersionNumber(s);
+}
+
+void SimpleAttribute::SetVersionNumber(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetVersionNumber(s);
+}
+
+std::wstring SimpleAttribute::GetVersionDateW()
+{
+	return toWide(GetVersionDate());
+}
+
+void SimpleAttribute::SetVersionDate(const char* value)
+{
+	std::string s(value ? value : "");
+	SetVersionDate(s);
+}
+
+void SimpleAttribute::SetVersionDate(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetVersionDate(s);
+}
+
+std::wstring SimpleAttribute::getProductIdW() const
+{
+	return toWide(getProductId());
+}
+
+std::wstring SimpleAttribute::GetProductIdW()
+{
+	return toWide(GetProductId());
+}
+
+void SimpleAttribute::SetProductId(const char* value)
+{
+	std::string s(value ? value : "");
+	SetProductId(s);
+}
+
+void SimpleAttribute::SetProductId(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetProductId(s);
+}
+
+SimpleAttribute* SimpleAttribute::GetSimpleAttribute(std::wstring code)
+{
+	std::string s = toUtf8(code);
+	return GetSimpleAttribute(s);
+}
+
+SimpleAttribute* SimpleAttribute::GetSimpleAttribute(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetSimpleAttribute(s);
+}
+
+SimpleAttribute* SimpleAttribute::GetSimpleAttributeFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetSimpleAttributeFromName(s);
+}
+
+ComplexAttribute* SimpleAttribute::GetComplexAttribute(std::wstring code)
+{
+	std::string s = toUtf8(code);
+	return GetComplexAttribute(s);
+}
+
+ComplexAttribute* SimpleAttribute::GetComplexAttribute(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetComplexAttribute(s);
+}
+
+ComplexAttribute* SimpleAttribute::GetComplexAttributeFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetComplexAttributeFromName(s);
+}
+
+Role* SimpleAttribute::GetRole(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetRole(s);
+}
+
+Role* SimpleAttribute::GetRoleFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetRoleFromName(s);
+}
+
+InformationAssociation* SimpleAttribute::GetInformationAssociation(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetInformationAssociation(s);
+}
+
+InformationAssociation* SimpleAttribute::GetInformationAssociationFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetInformationAssociationFromName(s);
+}
+
+FeatureAssociation* SimpleAttribute::GetFeatureAssociation(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetFeatureAssociation(s);
+}
+
+FeatureAssociation* SimpleAttribute::GetFeatureAssociationFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetFeatureAssociationFromName(s);
+}
+
+InformationType* SimpleAttribute::GetInformationType(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetInformationType(s);
+}
+
+InformationType* SimpleAttribute::GetInformationTypeFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetInformationTypeFromName(s);
+}
+
+FeatureType* SimpleAttribute::GetFeatureType(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetFeatureType(s);
+}
+
+FeatureType* SimpleAttribute::GetFeatureTypeName(std::wstring Name)
+{
+	std::string s = toUtf8(Name);
+	return GetFeatureTypeName(s);
+}
+
+FCD::S100_CD_AttributeValueType SimpleAttribute::getSimpleAttributeType(std::wstring code)
+{
+	std::string s = toUtf8(code);
+	return getSimpleAttributeType(s);
+}
+
+Attribute* SimpleAttribute::GetAttribute(std::wstring code)
+{
+	std::string s = toUtf8(code);
+	return GetAttribute(s);
 }

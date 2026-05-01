@@ -20,12 +20,14 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 	void SetVoice(std::string value);
-	void SetVoice(std::wstring value) { SetVoice(toUtf8(value)); }
+	void SetVoice(const char* value);
+	void SetVoice(std::wstring value);
 	void SetVoice(std::list<std::string> value);
 	std::list<std::string>& GetVoicePointer();
 	const std::string& GetVoice(int index);
 	void SetFacsimile(std::string value);
-	void SetFacsimile(std::wstring value) { SetFacsimile(toUtf8(value)); }
+	void SetFacsimile(const char* value);
+	void SetFacsimile(std::wstring value);
 	const std::string& GetFacsimile();
-	std::wstring GetFacsimileW() { return toWide(GetFacsimile()); }
+	std::wstring GetFacsimileW();
 };

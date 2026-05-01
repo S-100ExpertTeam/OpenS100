@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "UnitOfMeasure.h"
 
 UnitOfMeasure::UnitOfMeasure()
@@ -106,4 +107,60 @@ const std::string* UnitOfMeasure::GetSymbol()
 	}
 
 	return nullptr;
+}
+
+void UnitOfMeasure::SetName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetName(s);
+}
+
+void UnitOfMeasure::SetName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetName(s);
+}
+
+std::wstring UnitOfMeasure::GetNameW()
+{
+	return toWide(GetName());
+}
+
+std::wstring UnitOfMeasure::GetNameRefW()
+{
+	return toWide(GetNameRef());
+}
+
+void UnitOfMeasure::SetDefinition(const char* value)
+{
+	std::string s(value ? value : "");
+	SetDefinition(s);
+}
+
+void UnitOfMeasure::SetDefinition(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetDefinition(s);
+}
+
+std::wstring UnitOfMeasure::GetDefinitionW()
+{
+	return toWide(GetDefinition());
+}
+
+void UnitOfMeasure::SetSymbol(const char* value)
+{
+	std::string s(value ? value : "");
+	SetSymbol(s);
+}
+
+void UnitOfMeasure::SetSymbol(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetSymbol(s);
+}
+
+std::wstring UnitOfMeasure::GetSymbolW()
+{
+	return toWide(GetSymbol());
 }

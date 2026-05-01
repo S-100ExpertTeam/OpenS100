@@ -25,9 +25,9 @@ public:
 	void SetStringLength(int value);
 	
 	const std::string& GetTextPattern();
-	std::wstring GetTextPatternW() { return toWide(GetTextPattern()); }
+	std::wstring GetTextPatternW();
 	void GetTextPattern(std::string value);
-	void GetTextPattern(std::wstring value) { return GetTextPattern(toUtf8(value)); }
+	void GetTextPattern(std::wstring value);
 
 	NumericRange& GetRangePointer();
 

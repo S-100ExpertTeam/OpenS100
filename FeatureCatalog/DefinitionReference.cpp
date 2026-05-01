@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "DefinitionReference.h"
 
 DefinitionReference::DefinitionReference()
@@ -51,4 +52,21 @@ const std::string* DefinitionReference::GetSourceIdentifier()
 	}
 	
 	return nullptr;
+}
+
+void DefinitionReference::SetSourceIdentifier(const char* value)
+{
+	std::string s(value ? value : "");
+	SetSourceIdentifier(s);
+}
+
+void DefinitionReference::SetSourceIdentifier(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetSourceIdentifier(s);
+}
+
+std::wstring DefinitionReference::GetSourceIdentifierW()
+{
+	return toWide(GetSourceIdentifier());
 }

@@ -18,7 +18,8 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 	void SetSourceIdentifier(std::string value);
-	void SetSourceIdentifier(std::wstring value) { SetSourceIdentifier(toUtf8(value)); }
+	void SetSourceIdentifier(const char* value);
+	void SetSourceIdentifier(std::wstring value);
 	const std::string* GetSourceIdentifier();
-	std::wstring GetSourceIdentifierW() { return toWide(GetSourceIdentifier()); }
+	std::wstring GetSourceIdentifierW();
 };

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "CI_Organisation.h"
 
 CI_Organisation::CI_Organisation()
@@ -47,4 +48,9 @@ void CI_Organisation::SetContactinfo(ContactInfo& value)
 const ContactInfo& CI_Organisation::GetContactinfo()
 {
 	return contactinfo;
+}
+
+std::wstring CI_Organisation::GetNameW()
+{
+	return toWide(GetName());
 }

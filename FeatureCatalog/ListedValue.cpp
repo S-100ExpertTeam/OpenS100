@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "ListedValue.h"
 
 ListedValue::ListedValue()
@@ -86,4 +87,50 @@ std::list<std::string>& ListedValue::GetAliasPointer()
 DefinitionReference& ListedValue::GetDefinitionReferencePointer()
 {
 	return definitionReference;
+}
+
+std::wstring ListedValue::GetLabelW()
+{
+	return toWide(GetLabel());
+}
+
+void ListedValue::SetLabel(const char* value)
+{
+	std::string s(value ? value : "");
+	SetLabel(s);
+}
+
+void ListedValue::SetLabel(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetLabel(s);
+}
+
+std::wstring ListedValue::GetDefinitionW()
+{
+	return toWide(GetDefinition());
+}
+
+void ListedValue::SetDefinition(const char* value)
+{
+	std::string s(value ? value : "");
+	SetDefinition(s);
+}
+
+void ListedValue::SetDefinition(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetDefinition(s);
+}
+
+void ListedValue::SetRemarks(const char* value)
+{
+	std::string s(value ? value : "");
+	SetRemarks(s);
+}
+
+void ListedValue::SetRemarks(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetRemarks(s);
 }

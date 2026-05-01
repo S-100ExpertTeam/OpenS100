@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "InformationAssociation.h"
 
 InformationAssociation::InformationAssociation()
@@ -54,4 +55,21 @@ std::list<std::string>& InformationAssociation::GetSubTypePointer()
 Reference(&InformationAssociation::GetRolePointer())[2]
 {
 	return role;
+}
+
+std::wstring InformationAssociation::GetSuperTypeW()
+{
+	return toWide(GetSuperType());
+}
+
+void InformationAssociation::SetSuperType(const char* value)
+{
+	std::string s(value ? value : "");
+	SetSuperType(s);
+}
+
+void InformationAssociation::SetSuperType(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetSuperType(s);
 }

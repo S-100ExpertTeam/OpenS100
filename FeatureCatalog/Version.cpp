@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "Version.h"
 
 #include <sstream>
@@ -215,4 +216,29 @@ bool Version::isEmpty()
 	}
 
 	return false;
+}
+
+std::wstring Version::getMajorW() const
+{
+	return toWide(getMajor());
+}
+
+std::wstring Version::getMinorW() const
+{
+	return toWide(getMinor());
+}
+
+std::wstring Version::getPatchW() const
+{
+	return toWide(getPatch());
+}
+
+std::wstring Version::getWorkingW() const
+{
+	return toWide(getWorking());
+}
+
+std::wstring Version::getSourceW() const
+{
+	return toWide(getSource());
 }

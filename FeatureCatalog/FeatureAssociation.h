@@ -20,6 +20,6 @@ public:
 	void GetContents(pugi::xml_node& node);
 	std::list<std::string>& GetSubTypePointer();
 	std::string& GetSuperType();
-	std::wstring GetSuperTypeW() { return toWide(GetSuperType()); }
+	std::wstring GetSuperTypeW();
 	Reference(&GetRolePointer())[2];
 };

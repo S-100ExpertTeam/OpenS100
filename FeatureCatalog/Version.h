@@ -21,26 +21,26 @@ public:
 
 public:
 	std::string getMajor() const;
-	std::wstring getMajorW() const { return toWide(getMajor()); }
+	std::wstring getMajorW() const;
 	void setMajor(const std::string& major);
 	int getMajorAsInt() const;
 
 	std::string getMinor() const;
-	std::wstring getMinorW() const { return toWide(getMinor()); }
+	std::wstring getMinorW() const;
 	void setMinor(const std::string& minor);
 	int getMinorAsInt() const;
 
 	std::string getPatch() const;
-	std::wstring getPatchW() const { return toWide(getPatch()); }
+	std::wstring getPatchW() const;
 	void setPatch(const std::string& patch);
 	int getPatchAsInt() const;
 
 	std::string getWorking() const;
-	std::wstring getWorkingW() const { return toWide(getWorking()); }
+	std::wstring getWorkingW() const;
 	void setWorking(const std::string& working);
 
 	std::string getSource() const;
-	std::wstring getSourceW() const { return toWide(getSource()); }
+	std::wstring getSourceW() const;
 	void setSource(const std::string& source);
 
 	Version getMajorMinor();

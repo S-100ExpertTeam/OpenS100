@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "SimpleAttribute.h"
 #include "S100_CD_AttributeValueType.h"
 
@@ -136,4 +137,10 @@ bool SimpleAttribute::IsSimple()
 bool SimpleAttribute::IsComplex()
 {
 	return false;
+}
+
+ListedValue* SimpleAttribute::GetListedValue(std::wstring label)
+{
+	std::string s = toUtf8(label);
+	return GetListedValue(s);
 }

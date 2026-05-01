@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "FeatureType.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
@@ -134,4 +135,21 @@ FeatureBinding* FeatureType::CanMerged(FeatureBinding& fb)
 	}
 
 	return nullptr;
+}
+
+std::wstring FeatureType::GetSuperTypeW()
+{
+	return toWide(GetSuperType());
+}
+
+void FeatureType::SetSuperType(const char* value)
+{
+	std::string s(value ? value : "");
+	SetSuperType(s);
+}
+
+void FeatureType::SetSuperType(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetSuperType(s);
 }

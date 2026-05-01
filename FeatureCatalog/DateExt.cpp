@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "DateExt.h"
 
 DateExt::DateExt()
@@ -39,4 +40,9 @@ void DateExt::SetDate(char* value)
 const std::string& DateExt::GetDate()
 {
 	return date;
+}
+
+std::wstring DateExt::GetDateW()
+{
+	return toWide(GetDate());
 }

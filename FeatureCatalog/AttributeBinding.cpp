@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "AttributeBinding.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
@@ -106,4 +107,14 @@ int AttributeBinding::GetLower()
 int AttributeBinding::GetUpper()
 {
 	return multiplicity.GetUpperCount();
+}
+
+std::wstring AttributeBinding::GetAttributeCodeW()
+{
+	return toWide(GetAttributeCode());
+}
+
+std::wstring AttributeBinding::GetAttributeCodeAsWstringW()
+{
+	return toWide(GetAttributeCodeAsWstring());
 }

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "OnlineResource.h"
 
 OnlineResource::OnlineResource()
@@ -118,4 +119,106 @@ void OnlineResource::SetLinkage(std::string value)
 const std::string& OnlineResource::GetLinkage()
 {
 	return linkage;
+}
+
+void OnlineResource::SetUrl(const char* value)
+{
+	std::string s(value ? value : "");
+	SetUrl(s);
+}
+
+void OnlineResource::SetUrl(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetUrl(s);
+}
+
+std::wstring OnlineResource::GetUrlW()
+{
+	return toWide(GetUrl());
+}
+
+void OnlineResource::SetProtocol(const char* value)
+{
+	std::string s(value ? value : "");
+	SetProtocol(s);
+}
+
+void OnlineResource::SetProtocol(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetProtocol(s);
+}
+
+std::wstring OnlineResource::GetProtocolW()
+{
+	return toWide(GetProtocol());
+}
+
+void OnlineResource::SetApplicationProfile(const char* value)
+{
+	std::string s(value ? value : "");
+	SetApplicationProfile(s);
+}
+
+void OnlineResource::SetApplicationProfile(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetApplicationProfile(s);
+}
+
+std::wstring OnlineResource::GetApplicationProfileW()
+{
+	return toWide(GetApplicationProfile());
+}
+
+void OnlineResource::SetName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetName(s);
+}
+
+void OnlineResource::SetName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetName(s);
+}
+
+std::wstring OnlineResource::GetNameW()
+{
+	return toWide(GetName());
+}
+
+void OnlineResource::SetDescription(const char* value)
+{
+	std::string s(value ? value : "");
+	SetDescription(s);
+}
+
+void OnlineResource::SetDescription(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetDescription(s);
+}
+
+std::wstring OnlineResource::GetDescriptionW()
+{
+	return toWide(GetDescription());
+}
+
+void OnlineResource::SetLinkage(const char* value)
+{
+	std::string s(value ? value : "");
+	SetLinkage(s);
+}
+
+void OnlineResource::SetLinkage(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetLinkage(s);
+}
+
+std::wstring OnlineResource::GetLinkageW()
+{
+	return toWide(GetLinkage());
 }

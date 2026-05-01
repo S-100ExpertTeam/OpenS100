@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "FeatureBinding.h"
 
 #include <algorithm>
@@ -181,4 +182,65 @@ void FeatureBinding::AppendFeatureBinding(FeatureBinding& fb)
 void FeatureBinding::SortFeatureType()
 {
 	std::sort(featureTypes.begin(), featureTypes.end());
+}
+
+std::wstring FeatureBinding::GetAssociationW()
+{
+	return toWide(GetAssociation());
+}
+
+std::wstring FeatureBinding::GetAssociationAsWstringW()
+{
+	return toWide(GetAssociationAsWstring());
+}
+
+void FeatureBinding::SetAssociation(const char* value)
+{
+	std::string s(value ? value : "");
+	SetAssociation(s);
+}
+
+void FeatureBinding::SetAssociation(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetAssociation(s);
+}
+
+std::wstring FeatureBinding::GetRoleW()
+{
+	return toWide(GetRole());
+}
+
+std::wstring FeatureBinding::GetRoleAsWstringW()
+{
+	return toWide(GetRoleAsWstring());
+}
+
+void FeatureBinding::SetRole(const char* value)
+{
+	std::string s(value ? value : "");
+	SetRole(s);
+}
+
+void FeatureBinding::SetRole(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetRole(s);
+}
+
+std::wstring FeatureBinding::GetRoleTypeAsWstringW()
+{
+	return toWide(GetRoleTypeAsWstring());
+}
+
+void FeatureBinding::SetRoleType(const char* value)
+{
+	std::string s(value ? value : "");
+	SetRoleType(s);
+}
+
+void FeatureBinding::SetRoleType(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetRoleType(s);
 }

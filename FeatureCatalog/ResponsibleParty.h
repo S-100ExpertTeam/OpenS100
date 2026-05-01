@@ -28,19 +28,22 @@ public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetIndividualName(std::string value);
-	void SetIndividualName(std::wstring value) { SetIndividualName(toUtf8(value)); }
+	void SetIndividualName(const char* value);
+	void SetIndividualName(std::wstring value);
 	const std::string& GetIndividualName();
-	std::wstring GetIndividualNameW() { return toWide(GetIndividualName()); }
+	std::wstring GetIndividualNameW();
 
 	void SetOrganisationName(std::string value);
-	void SetOrganisationName(std::wstring value) { SetOrganisationName(toUtf8(value)); }
+	void SetOrganisationName(const char* value);
+	void SetOrganisationName(std::wstring value);
 	const std::string& GetOrganisationName();
-	std::wstring GetOrganisationNameW() { return toWide(GetOrganisationName()); }
+	std::wstring GetOrganisationNameW();
 
 	void SetPositionName(std::string value);
-	void SetPositionName(std::wstring value) { SetPositionName(toUtf8(value)); }
+	void SetPositionName(const char* value);
+	void SetPositionName(std::wstring value);
 	const std::string& GetPositionName();
-	std::wstring GetPositionNameW() { return toWide(GetPositionName()); }
+	std::wstring GetPositionNameW();
 
 	void SetContactInfo(Contact value);
 	Contact &GetContactInfo();

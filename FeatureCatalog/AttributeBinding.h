@@ -32,9 +32,9 @@ public:
 	ValueList& GetPermittedValues();
 
 	std::string GetAttributeCode();
-	std::wstring GetAttributeCodeW() { return toWide(GetAttributeCode()); }
+	std::wstring GetAttributeCodeW();
 	std::string GetAttributeCodeAsWstring();
-	std::wstring GetAttributeCodeAsWstringW() { return toWide(GetAttributeCodeAsWstring()); }
+	std::wstring GetAttributeCodeAsWstringW();
 
 	bool IsSequential();
 

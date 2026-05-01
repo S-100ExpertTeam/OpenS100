@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "FeatureAssociation.h"
 
 FeatureAssociation::FeatureAssociation()
@@ -51,4 +52,9 @@ std::string& FeatureAssociation::GetSuperType()
 Reference(&FeatureAssociation::GetRolePointer())[2]
 {
 	return role;
+}
+
+std::wstring FeatureAssociation::GetSuperTypeW()
+{
+	return toWide(GetSuperType());
 }

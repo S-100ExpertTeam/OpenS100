@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "Address.h"
 
 Address::Address()
@@ -107,4 +108,34 @@ void Address::SetElectronicMailAddress(char* value)
 const std::string& Address::GetElectronicMailAddress()
 {
 	return electronicMailAddress;
+}
+
+std::wstring Address::GetDeliveryPointW()
+{
+	return toWide(GetDeliveryPoint());
+}
+
+std::wstring Address::GetCityW()
+{
+	return toWide(GetCity());
+}
+
+std::wstring Address::GetAdministrativeAreaW()
+{
+	return toWide(GetAdministrativeArea());
+}
+
+std::wstring Address::GetPostalCodeW()
+{
+	return toWide(GetPostalCode());
+}
+
+std::wstring Address::GetCountryW()
+{
+	return toWide(GetCountry());
+}
+
+std::wstring Address::GetElectronicMailAddressW()
+{
+	return toWide(GetElectronicMailAddress());
 }

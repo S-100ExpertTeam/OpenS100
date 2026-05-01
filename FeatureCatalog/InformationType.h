@@ -19,6 +19,7 @@ public:
 	void GetContents(pugi::xml_node& node);
 	const std::string& GetSuperType(); 
 	void SetSuperType(std::string value);
-	void SetSuperType(std::wstring value) { SetSuperType(toUtf8(value)); }
+	void SetSuperType(const char* value);
+	void SetSuperType(std::wstring value);
 	std::list<std::string>& GetSubTypePointer(); 
 }; 

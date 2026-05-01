@@ -49,7 +49,7 @@ public:
 
 	void InsertListedValue(ListedValue* item);
 	ListedValue* GetListedValue(std::string label);
-	ListedValue* GetListedValue(std::wstring label) { return GetListedValue(toUtf8(label)); }
+	ListedValue* GetListedValue(std::wstring label);
 	ListedValue* GetListedValue(int code);
 
 	bool IsSimple();
