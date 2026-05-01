@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "Restriction_Item.h"
 
 Restriction_Item::Restriction_Item()
@@ -64,4 +65,55 @@ void Restriction_Item::SetValueInteger(int value)
 const int Restriction_Item::GetvalueInteger()
 {
 	return valueInteger;
+}
+
+void Restriction_Item::SetPattern(const char* value)
+{
+	std::string s(value ? value : "");
+	SetPattern(s);
+}
+
+void Restriction_Item::SetPattern(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetPattern(s);
+}
+
+std::wstring Restriction_Item::GetPatternW()
+{
+	return toWide(GetPattern());
+}
+
+void Restriction_Item::SetMaxExclusive(const char* value)
+{
+	std::string s(value ? value : "");
+	SetMaxExclusive(s);
+}
+
+void Restriction_Item::SetMaxExclusive(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetMaxExclusive(s);
+}
+
+std::wstring Restriction_Item::GetMaxExclusiveW()
+{
+	return toWide(GetMaxExclusive());
+}
+
+void Restriction_Item::SetValueString(const char* value)
+{
+	std::string s(value ? value : "");
+	SetValueString(s);
+}
+
+void Restriction_Item::SetValueString(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetValueString(s);
+}
+
+std::wstring Restriction_Item::GetValueStringW()
+{
+	return toWide(GetValueString());
 }

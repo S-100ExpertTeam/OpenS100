@@ -35,9 +35,9 @@ public:
 
 	void SetHoursOfService(char* value);
 	const std::string& GetHoursOfService();
-	std::wstring GetHoursOfServiceW() { return toWide(GetHoursOfService()); }
+	std::wstring GetHoursOfServiceW();
 
 	void SetContactInstructions(char* value);
 	const std::string& GetContactInstructions();
-	std::wstring GetContactInstructionsW() { return toWide(GetContactInstructions()); }
+	std::wstring GetContactInstructionsW();
 };

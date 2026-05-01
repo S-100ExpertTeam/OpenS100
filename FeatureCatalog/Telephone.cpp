@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "Telephone.h"
 
 Telephone::Telephone()
@@ -63,4 +64,33 @@ void Telephone::SetFacsimile(std::string value)
 const std::string& Telephone::GetFacsimile()
 {
 	return facsimile;
+}
+
+void Telephone::SetVoice(const char* value)
+{
+	std::string s(value ? value : "");
+	SetVoice(s);
+}
+
+void Telephone::SetVoice(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetVoice(s);
+}
+
+void Telephone::SetFacsimile(const char* value)
+{
+	std::string s(value ? value : "");
+	SetFacsimile(s);
+}
+
+void Telephone::SetFacsimile(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetFacsimile(s);
+}
+
+std::wstring Telephone::GetFacsimileW()
+{
+	return toWide(GetFacsimile());
 }

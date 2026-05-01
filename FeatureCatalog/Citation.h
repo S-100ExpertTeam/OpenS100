@@ -38,7 +38,7 @@ public:
 
 	void SetTitle(char* value);
 	const std::string& GetTitle();
-	std::wstring GetTitleW() { return toWide(GetTitle()); }
+	std::wstring GetTitleW();
 
 	void SetAternateTitle(char* value);
 	void SetAternateTitle(std::list<std::string>& value);
@@ -50,18 +50,18 @@ public:
 
 	void SetEdition(char* value);
 	const std::string& GetEdition();
-	std::wstring GetEditionW() { return toWide(GetEdition()); }
+	std::wstring GetEditionW();
 
 	void SetEditionDate(DateExt& value);
 	DateExt& GetEditionDate();
 
 	void SetIdentifier(char* value);
 	const std::string& GetIdentifier();
-	std::wstring GetIdentifierW() { return toWide(GetIdentifier()); }
+	std::wstring GetIdentifierW();
 
 	void SetIdentifierType(char* value);
 	const std::string& GetIdentifierType();
-	std::wstring GetIdentifierTypeW() { return toWide(GetIdentifierType()); }
+	std::wstring GetIdentifierTypeW();
 
 	void SetCitedResponsibleParty(ResponsibleParty& value);
 	ResponsibleParty& GetCitedResponsibleParty();
@@ -74,17 +74,17 @@ public:
 
 	void SetOtherCitationDetails(char* value);
 	const std::string& GetOtherCitationDetails();
-	std::wstring GetOtherCitationDetailsW() { return toWide(GetOtherCitationDetails()); }
+	std::wstring GetOtherCitationDetailsW();
 
 	void SetCollectiveTitle(char* value);
 	const std::string& GetCollectiveTitle();
-	std::wstring GetCollectiveTitleW() { return toWide(GetCollectiveTitle()); }
+	std::wstring GetCollectiveTitleW();
 
 	void SetISBN(char* value);
 	const std::string& GetISBN();
-	std::wstring GetISBNW() { return toWide(GetISBN()); }
+	std::wstring GetISBNW();
 
 	void SetISSN(char* value);
 	const std::string& GetISSN();
-	std::wstring GetISSNW() { return toWide(GetISSN()); }
+	std::wstring GetISSNW();
 };

@@ -27,9 +27,10 @@ public:
 	void GetContents(pugi::xml_node& node);
 
 	const std::string& GetSuperType();
-	std::wstring GetSuperTypeW() { return toWide(GetSuperType()); }
+	std::wstring GetSuperTypeW();
 	void SetSuperType(std::string value);
-	void SetSuperType(std::wstring value) { SetSuperType(toUtf8(value)); }
+	void SetSuperType(const char* value);
+	void SetSuperType(std::wstring value);
 
 	//FeatureBinding* GetFeatureBinding(std::string featureTypeCode);
 

@@ -203,3 +203,76 @@ std::string Item::getSourceIdentifier()
 {
 	return getSourceIdentifierAsWString();
 }
+
+std::wstring Item::GetNameW()
+{
+	return toWide(GetName());
+}
+
+void Item::SetName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetName(s);
+}
+
+void Item::SetName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetName(s);
+}
+
+std::wstring Item::GetDefinitionW()
+{
+	return toWide(GetDefinition());
+}
+
+void Item::SetDefinition(const char* value)
+{
+	std::string s(value ? value : "");
+	SetDefinition(s);
+}
+
+void Item::SetDefinition(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetDefinition(s);
+}
+
+std::wstring Item::GetCodeW()
+{
+	return toWide(GetCode());
+}
+
+void Item::SetCode(const char* value)
+{
+	std::string s(value ? value : "");
+	SetCode(s);
+}
+
+void Item::SetCode(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetCode(s);
+}
+
+void Item::SetRemarks(const char* value)
+{
+	std::string s(value ? value : "");
+	SetRemarks(s);
+}
+
+void Item::SetRemarks(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetRemarks(s);
+}
+
+std::wstring Item::GetRemarksW()
+{
+	return toWide(GetRemarks());
+}
+
+std::wstring Item::getSourceIdentifierW()
+{
+	return toWide(getSourceIdentifier());
+}

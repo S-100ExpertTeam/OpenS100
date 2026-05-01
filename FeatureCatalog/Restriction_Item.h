@@ -23,19 +23,22 @@ public:
 	const std::unordered_map<std::string, std::string>& GetPermittedValues();
 
 	void SetPattern(std::string& value);
-	void SetPattern(std::wstring value) { SetPattern(toUtf8(value)); }
+	void SetPattern(const char* value);
+	void SetPattern(std::wstring value);
 	const std::string& GetPattern();
-	std::wstring GetPatternW() { return toWide(GetPattern()); }
+	std::wstring GetPatternW();
 
 	void SetMaxExclusive(std::string& value);
-	void SetMaxExclusive(std::wstring value) { SetMaxExclusive(toUtf8(value)); }
+	void SetMaxExclusive(const char* value);
+	void SetMaxExclusive(std::wstring value);
 	const std::string& GetMaxExclusive();
-	std::wstring GetMaxExclusiveW() { return toWide(GetMaxExclusive()); }
+	std::wstring GetMaxExclusiveW();
 
 	void SetValueString(std::string& value);
-	void SetValueString(std::wstring value) { SetValueString(toUtf8(value)); }
+	void SetValueString(const char* value);
+	void SetValueString(std::wstring value);
 	const std::string& GetValueString();
-	std::wstring GetValueStringW() { return toWide(GetValueString()); }
+	std::wstring GetValueStringW();
 
 	void SetValueInteger(int value);
 	const int GetvalueInteger();

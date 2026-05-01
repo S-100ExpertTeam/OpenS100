@@ -20,9 +20,10 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 	void SetSourceIdentifier(std::string value);
-	void SetSourceIdentifier(std::wstring value) { SetSourceIdentifier(toUtf8(value)); }
+	void SetSourceIdentifier(const char* value);
+	void SetSourceIdentifier(std::wstring value);
 	std::string& GetSourceIdentifier();
-	std::wstring GetSourceIdentifierW() { return toWide(GetSourceIdentifier()); }
+	std::wstring GetSourceIdentifierW();
 	void SetDefinitionSource(std::unordered_map<std::string, DefinitionSource*> value);
 	std::unordered_map<std::string, DefinitionSource*>& GetDefinitionSource();
 	bool InsertDefinitionSource(DefinitionSource* value);

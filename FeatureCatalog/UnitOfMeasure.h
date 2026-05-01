@@ -22,21 +22,24 @@ public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetName(std::string value);
-	void SetName(std::wstring value) { SetName(toUtf8(value)); }
+	void SetName(const char* value);
+	void SetName(std::wstring value);
 	const std::string GetName();
-	std::wstring GetNameW() { return toWide(GetName()); }
+	std::wstring GetNameW();
 	const std::string& GetNameRef();
-	std::wstring GetNameRefW() { return toWide(GetNameRef()); }
+	std::wstring GetNameRefW();
 
 	void NullCheckDefinition();
 	void SetDefinition(std::string& value);
-	void SetDefinition(std::wstring value) { SetDefinition(toUtf8(value)); }
+	void SetDefinition(const char* value);
+	void SetDefinition(std::wstring value);
 	const std::string* GetDefinition();
-	std::wstring GetDefinitionW() { return toWide(GetDefinition()); }
+	std::wstring GetDefinitionW();
 
 	void NullCheckSymbol();
 	void SetSymbol(std::string& value);
-	void SetSymbol(std::wstring value) { SetSymbol(toUtf8(value)); }
+	void SetSymbol(const char* value);
+	void SetSymbol(std::wstring value);
 	const std::string* GetSymbol();
-	std::wstring GetSymbolW() { return toWide(GetSymbol()); }
+	std::wstring GetSymbolW();
 };

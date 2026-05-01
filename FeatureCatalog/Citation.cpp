@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "Citation.h"
 
 Citation::Citation()
@@ -237,4 +238,44 @@ void Citation::SetISSN(char* value)
 const std::string& Citation::GetISSN()
 {
 	return ISSN;
+}
+
+std::wstring Citation::GetTitleW()
+{
+	return toWide(GetTitle());
+}
+
+std::wstring Citation::GetEditionW()
+{
+	return toWide(GetEdition());
+}
+
+std::wstring Citation::GetIdentifierW()
+{
+	return toWide(GetIdentifier());
+}
+
+std::wstring Citation::GetIdentifierTypeW()
+{
+	return toWide(GetIdentifierType());
+}
+
+std::wstring Citation::GetOtherCitationDetailsW()
+{
+	return toWide(GetOtherCitationDetails());
+}
+
+std::wstring Citation::GetCollectiveTitleW()
+{
+	return toWide(GetCollectiveTitle());
+}
+
+std::wstring Citation::GetISBNW()
+{
+	return toWide(GetISBN());
+}
+
+std::wstring Citation::GetISSNW()
+{
+	return toWide(GetISSN());
 }

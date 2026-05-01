@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "Contact.h"
 
 Contact::Contact(void)
@@ -99,4 +100,14 @@ void Contact::SetContactInstructions(char* value)
 const std::string& Contact::GetContactInstructions()
 {
 	return contactInstructions;
+}
+
+std::wstring Contact::GetHoursOfServiceW()
+{
+	return toWide(GetHoursOfService());
+}
+
+std::wstring Contact::GetContactInstructionsW()
+{
+	return toWide(GetContactInstructions());
 }

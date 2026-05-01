@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "AttributeConstraints.h"
 
 AttributeConstraints::AttributeConstraints()
@@ -68,4 +69,15 @@ int AttributeConstraints::GetPrecision()
 void AttributeConstraints::SetPrecision(int value)
 {
 	precision = value;
+}
+
+std::wstring AttributeConstraints::GetTextPatternW()
+{
+	return toWide(GetTextPattern());
+}
+
+void AttributeConstraints::GetTextPattern(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	return GetTextPattern(s);
 }

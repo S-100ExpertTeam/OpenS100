@@ -32,27 +32,31 @@ public:
 	const std::list<std::string>& GetAlias();
 	
 	const std::string& GetName();
-	std::wstring GetNameW() { return toWide(GetName()); }
+	std::wstring GetNameW();
 	void SetName(std::string& value);
-	void SetName(std::wstring value) { SetName(toUtf8(value)); }
+	void SetName(const char* value);
+	void SetName(std::wstring value);
 
 	const std::string& GetDefinition();
-	std::wstring GetDefinitionW() { return toWide(GetDefinition()); }
+	std::wstring GetDefinitionW();
 	void SetDefinition(std::string& value);
-	void SetDefinition(std::wstring value) { SetDefinition(toUtf8(value)); }
+	void SetDefinition(const char* value);
+	void SetDefinition(std::wstring value);
 
 	const std::string GetCode();
-	std::wstring GetCodeW() { return toWide(GetCode()); }
+	std::wstring GetCodeW();
 	std::wstring GetCodeAsWString();
 	void SetCode(std::string& value);
-	void SetCode(std::wstring value) { SetCode(toUtf8(value)); }
+	void SetCode(const char* value);
+	void SetCode(std::wstring value);
 
 	const bool IsEmptyRemarks();
 	void NullCheckRemarks();
 	void SetRemarks(std::string& value);
-	void SetRemarks(std::wstring value) { SetRemarks(toUtf8(value)); }
+	void SetRemarks(const char* value);
+	void SetRemarks(std::wstring value);
 	const std::string GetRemarks();
-	std::wstring GetRemarksW() { return toWide(GetRemarks()); }
+	std::wstring GetRemarksW();
 	std::wstring GetRemarksAsWString();
 
 	Item& operator = (const Item& item);
@@ -60,5 +64,5 @@ public:
 	void setSourceIdentifier(std::string value);
 	std::wstring getSourceIdentifierAsWString();
 	std::string getSourceIdentifier();
-	std::wstring getSourceIdentifierW() { return toWide(getSourceIdentifier()); }
+	std::wstring getSourceIdentifierW();
 };

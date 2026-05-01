@@ -23,14 +23,16 @@ public:
 	std::list<XML_Attribute>& GetattributesPointer();
 
 	void Setvalue(std::string& value);
-	void Setvalue(std::wstring value) { Setvalue(toUtf8(value)); }
+	void Setvalue(const char* value);
+	void Setvalue(std::wstring value);
 	const std::string& Getvalue();
-	std::wstring GetvalueW() { return toWide(Getvalue()); }
+	std::wstring GetvalueW();
 	std::string* GetvaluePointer();
-	std::wstring GetvaluePointerW() { return toWide(GetvaluePointer()); }
+	std::wstring GetvaluePointerW();
 
 	const std::string& GetReference();
-	std::wstring GetReferenceW() { return toWide(GetReference()); }
+	std::wstring GetReferenceW();
 	void SetReference(std::string _value);
-	void SetReference(std::wstring _value) { SetReference(toUtf8(_value)); }
+	void SetReference(const char* value);
+	void SetReference(std::wstring _value);
 };

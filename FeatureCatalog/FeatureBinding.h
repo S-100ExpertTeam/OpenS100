@@ -27,29 +27,32 @@ public:
 	Multiplicity& GetMultiplicity();
 
 	std::string GetAssociation();
-	std::wstring GetAssociationW() { return toWide(GetAssociation()); }
+	std::wstring GetAssociationW();
 	std::string GetAssociationAsWstring();
-	std::wstring GetAssociationAsWstringW() { return toWide(GetAssociationAsWstring()); }
+	std::wstring GetAssociationAsWstringW();
 
 	void SetAssociation(std::string value);
-	void SetAssociation(std::wstring value) { SetAssociation(toUtf8(value)); }
+	void SetAssociation(const char* value);
+	void SetAssociation(std::wstring value);
 
 	std::string GetRole();
-	std::wstring GetRoleW() { return toWide(GetRole()); }
+	std::wstring GetRoleW();
 	std::string GetRoleAsWstring();
-	std::wstring GetRoleAsWstringW() { return toWide(GetRoleAsWstring()); }
+	std::wstring GetRoleAsWstringW();
 
 	void SetRole(std::string value);
-	void SetRole(std::wstring value) { SetRole(toUtf8(value)); }
+	void SetRole(const char* value);
+	void SetRole(std::wstring value);
 
 	S100_FC_RoleType GetRoleType();
 	std::string GetRoleTypeAsString();
 	std::string GetRoleTypeAsWstring();
-	std::wstring GetRoleTypeAsWstringW() { return toWide(GetRoleTypeAsWstring()); }
+	std::wstring GetRoleTypeAsWstringW();
 
 	void SetRoleType(S100_FC_RoleType value);
 	void SetRoleType(std::string value);
-	void SetRoleType(std::wstring value) { SetRoleType(toUtf8(value)); }
+	void SetRoleType(const char* value);
+	void SetRoleType(std::wstring value);
 
 	int GetFeatureTypeCount();
 

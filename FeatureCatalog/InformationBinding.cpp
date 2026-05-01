@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "InformationBinding.h"
 
 #include <algorithm>
@@ -181,4 +182,65 @@ void InformationBinding::AppendInformationBinding(InformationBinding& ib)
 void InformationBinding::SortInformationType()
 {
 	std::sort(informationTypes.begin(), informationTypes.end());
+}
+
+std::wstring InformationBinding::GetAssociationW()
+{
+	return toWide(GetAssociation());
+}
+
+std::wstring InformationBinding::GetAssociationAsWstringW()
+{
+	return toWide(GetAssociationAsWstring());
+}
+
+void InformationBinding::SetAssociation(const char* value)
+{
+	std::string s(value ? value : "");
+	SetAssociation(s);
+}
+
+void InformationBinding::SetAssociation(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetAssociation(s);
+}
+
+std::wstring InformationBinding::GetRoleW()
+{
+	return toWide(GetRole());
+}
+
+std::wstring InformationBinding::GetRoleAsWstringW()
+{
+	return toWide(GetRoleAsWstring());
+}
+
+void InformationBinding::SetRole(const char* value)
+{
+	std::string s(value ? value : "");
+	SetRole(s);
+}
+
+void InformationBinding::SetRole(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetRole(s);
+}
+
+std::wstring InformationBinding::GetRoleTypeAsWstringW()
+{
+	return toWide(GetRoleTypeAsWstring());
+}
+
+void InformationBinding::SetRoleType(const char* value)
+{
+	std::string s(value ? value : "");
+	SetRoleType(s);
+}
+
+void InformationBinding::SetRoleType(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetRoleType(s);
 }

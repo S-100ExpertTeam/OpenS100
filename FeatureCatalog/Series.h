@@ -20,15 +20,17 @@ public:
 
 	void SetName();
 	const std::string& GetName();
-	std::wstring GetNameW() { return toWide(GetName()); }
+	std::wstring GetNameW();
 
 	void SetIssueIdentification(std::string value);
-	void SetIssueIdentification(std::wstring value) { SetIssueIdentification(toUtf8(value)); }
+	void SetIssueIdentification(const char* value);
+	void SetIssueIdentification(std::wstring value);
 	const std::string& GetIssueIdentification();
-	std::wstring GetIssueIdentificationW() { return toWide(GetIssueIdentification()); }
+	std::wstring GetIssueIdentificationW();
 
 	void SetPage(std::string valeu);
-	void SetPage(std::wstring valeu) { SetPage(toUtf8(valeu)); }
+	void SetPage(const char* value);
+	void SetPage(std::wstring valeu);
 	const std::string& GetPage();
-	std::wstring GetPageW() { return toWide(GetPage()); }
+	std::wstring GetPageW();
 };

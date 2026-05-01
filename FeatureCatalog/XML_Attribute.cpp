@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "XML_Attribute.h"
 
 #include <pugixml.hpp>
@@ -46,4 +47,43 @@ std::string XML_Attribute::GetvalueString()
 {
 	std::string resultstring = std::string(value.begin(), value.end());
 	return resultstring;
+}
+
+void XML_Attribute::Setname(const char* value)
+{
+	std::string s(value ? value : "");
+	Setname(s);
+}
+
+void XML_Attribute::Setname(std::wstring values)
+{
+	std::string s = toUtf8(values);
+	Setname(s);
+}
+
+std::wstring XML_Attribute::GetnameW()
+{
+	return toWide(Getname());
+}
+
+void XML_Attribute::Setvalue(const char* value)
+{
+	std::string s(value ? value : "");
+	Setvalue(s);
+}
+
+void XML_Attribute::Setvalue(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	Setvalue(s);
+}
+
+std::wstring XML_Attribute::GetvalueW()
+{
+	return toWide(Getvalue());
+}
+
+std::wstring XML_Attribute::GetvalueStringW()
+{
+	return toWide(GetvalueString());
 }

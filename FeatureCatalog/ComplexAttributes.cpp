@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "ComplexAttributes.h"
 
 ComplexAttributes::ComplexAttributes(void)
@@ -46,4 +47,10 @@ ComplexAttribute* ComplexAttributes::GetComplexAttribute(std::string key)
 std::unordered_map<std::string, ComplexAttribute*>& ComplexAttributes::GetComplexAttributePointer() 
 {
 	return complexAttribute;
+}
+
+ComplexAttribute* ComplexAttributes::GetComplexAttribute(std::wstring key)
+{
+	std::string s = toUtf8(key);
+	return GetComplexAttribute(s);
 }

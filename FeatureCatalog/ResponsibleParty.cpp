@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "ResponsibleParty.h"
 
 ResponsibleParty::ResponsibleParty()
@@ -106,4 +107,55 @@ void ResponsibleParty::SetParty(Party value)
 Party &ResponsibleParty::GetParty()
 {
 	return party;
+}
+
+void ResponsibleParty::SetIndividualName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetIndividualName(s);
+}
+
+void ResponsibleParty::SetIndividualName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetIndividualName(s);
+}
+
+std::wstring ResponsibleParty::GetIndividualNameW()
+{
+	return toWide(GetIndividualName());
+}
+
+void ResponsibleParty::SetOrganisationName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetOrganisationName(s);
+}
+
+void ResponsibleParty::SetOrganisationName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetOrganisationName(s);
+}
+
+std::wstring ResponsibleParty::GetOrganisationNameW()
+{
+	return toWide(GetOrganisationName());
+}
+
+void ResponsibleParty::SetPositionName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetPositionName(s);
+}
+
+void ResponsibleParty::SetPositionName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetPositionName(s);
+}
+
+std::wstring ResponsibleParty::GetPositionNameW()
+{
+	return toWide(GetPositionName());
 }

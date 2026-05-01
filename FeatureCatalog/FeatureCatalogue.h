@@ -63,92 +63,99 @@ public:
 	void WriteContents(pugi::xml_node& node);
 
 	const std::string& GetName();
-	std::wstring GetNameW() { return toWide(GetName()); }
+	std::wstring GetNameW();
 	void SetName(std::string value);
-	void SetName(std::wstring value) { SetName(toUtf8(value)); }
+	void SetName(const char* value);
+	void SetName(std::wstring value);
 
 	const std::string& GetFilePath();
-	std::wstring GetFilePathW() { return toWide(GetFilePath()); }
+	std::wstring GetFilePathW();
 	void SetFilePath(std::string value);
-	void SetFilePath(std::wstring value) { SetFilePath(toUtf8(value)); }
+	void SetFilePath(const char* value);
+	void SetFilePath(std::wstring value);
 	
 	const std::string& GetScope();
-	std::wstring GetScopeW() { return toWide(GetScope()); }
+	std::wstring GetScopeW();
 	void SetScope(std::string value);
-	void SetScope(std::wstring value) { SetScope(toUtf8(value)); }
+	void SetScope(const char* value);
+	void SetScope(std::wstring value);
 
 	const std::string* GetFieldOfApplication();
-	std::wstring GetFieldOfApplicationW() { return toWide(GetFieldOfApplication()); }
+	std::wstring GetFieldOfApplicationW();
 	void SetFieldOfApplication(std::string& value);
-	void SetFieldOfApplication(std::wstring value) { SetFieldOfApplication(toUtf8(value)); }
+	void SetFieldOfApplication(const char* value);
+	void SetFieldOfApplication(std::wstring value);
 
 	const std::string& GetVersionNumber();
-	std::wstring GetVersionNumberW() { return toWide(GetVersionNumber()); }
+	std::wstring GetVersionNumberW();
 	void SetVersionNumber(std::string value);
-	void SetVersionNumber(std::wstring value) { SetVersionNumber(toUtf8(value)); }
+	void SetVersionNumber(const char* value);
+	void SetVersionNumber(std::wstring value);
 	Version getVersion() const;
 
 	const std::string& GetVersionDate();
-	std::wstring GetVersionDateW() { return toWide(GetVersionDate()); }
+	std::wstring GetVersionDateW();
 	void SetVersionDate(std::string value);
-	void SetVersionDate(std::wstring value) { SetVersionDate(toUtf8(value)); }
+	void SetVersionDate(const char* value);
+	void SetVersionDate(std::wstring value);
 
 	std::string getProductId() const;
-	std::wstring getProductIdW() const { return toWide(getProductId()); }
+	std::wstring getProductIdW() const;
 	const std::string& GetProductId();
-	std::wstring GetProductIdW() { return toWide(GetProductId()); }
+	std::wstring GetProductIdW();
 	void SetProductId(std::string value);
-	void SetProductId(std::wstring value) { SetProductId(toUtf8(value)); }
+	void SetProductId(const char* value);
+	void SetProductId(std::wstring value);
 
 	SimpleAttribute* GetSimpleAttribute(std::string code);
-	SimpleAttribute* GetSimpleAttribute(std::wstring code) { return GetSimpleAttribute(toUtf8(code)); }
+	SimpleAttribute* GetSimpleAttribute(std::wstring code);
 	SimpleAttribute* GetSimpleAttribute(std::string Code);
-	SimpleAttribute* GetSimpleAttribute(std::wstring Code) { return GetSimpleAttribute(toUtf8(Code)); }
+	SimpleAttribute* GetSimpleAttribute(std::wstring Code);
 	SimpleAttribute* GetSimpleAttributeFromName(std::string name);
-	SimpleAttribute* GetSimpleAttributeFromName(std::wstring name) { return GetSimpleAttributeFromName(toUtf8(name)); }
+	SimpleAttribute* GetSimpleAttributeFromName(std::wstring name);
 	SimpleAttributes* GetSimpleAttributes();
 	
 	ComplexAttribute* GetComplexAttribute(std::string code);
-	ComplexAttribute* GetComplexAttribute(std::wstring code) { return GetComplexAttribute(toUtf8(code)); }
+	ComplexAttribute* GetComplexAttribute(std::wstring code);
 	ComplexAttribute* GetComplexAttribute(std::string Code);
-	ComplexAttribute* GetComplexAttribute(std::wstring Code) { return GetComplexAttribute(toUtf8(Code)); }
+	ComplexAttribute* GetComplexAttribute(std::wstring Code);
 	ComplexAttribute* GetComplexAttributeFromName(std::string name);
-	ComplexAttribute* GetComplexAttributeFromName(std::wstring name) { return GetComplexAttributeFromName(toUtf8(name)); }
+	ComplexAttribute* GetComplexAttributeFromName(std::wstring name);
 	ComplexAttributes* GetComplexAttributes();
 
 	Role* GetRole(std::string Code);
-	Role* GetRole(std::wstring Code) { return GetRole(toUtf8(Code)); }
+	Role* GetRole(std::wstring Code);
 	Role* GetRoleFromName(std::string name);
-	Role* GetRoleFromName(std::wstring name) { return GetRoleFromName(toUtf8(name)); }
+	Role* GetRoleFromName(std::wstring name);
 	Roles* GetRoles();
 
 	InformationAssociation* GetInformationAssociation(std::string Code);
-	InformationAssociation* GetInformationAssociation(std::wstring Code) { return GetInformationAssociation(toUtf8(Code)); }
+	InformationAssociation* GetInformationAssociation(std::wstring Code);
 	InformationAssociation* GetInformationAssociationFromName(std::string name);
-	InformationAssociation* GetInformationAssociationFromName(std::wstring name) { return GetInformationAssociationFromName(toUtf8(name)); }
+	InformationAssociation* GetInformationAssociationFromName(std::wstring name);
 	InformationAssociations* GetInformationAssociations();
 
 	FeatureAssociation* GetFeatureAssociation(std::string Code);
-	FeatureAssociation* GetFeatureAssociation(std::wstring Code) { return GetFeatureAssociation(toUtf8(Code)); }
+	FeatureAssociation* GetFeatureAssociation(std::wstring Code);
 	FeatureAssociation* GetFeatureAssociationFromName(std::string name);
-	FeatureAssociation* GetFeatureAssociationFromName(std::wstring name) { return GetFeatureAssociationFromName(toUtf8(name)); }
+	FeatureAssociation* GetFeatureAssociationFromName(std::wstring name);
 	FeatureAssociations* GetFeatureAssociations();
 
 	InformationType* GetInformationType(std::string Code);
-	InformationType* GetInformationType(std::wstring Code) { return GetInformationType(toUtf8(Code)); }
+	InformationType* GetInformationType(std::wstring Code);
 	InformationType* GetInformationTypeFromName(std::string name);
-	InformationType* GetInformationTypeFromName(std::wstring name) { return GetInformationTypeFromName(toUtf8(name)); }
+	InformationType* GetInformationTypeFromName(std::wstring name);
 	InformationTypes* GetInformationTypes();
 
 	FeatureType* GetFeatureType(std::string Code);
-	FeatureType* GetFeatureType(std::wstring Code) { return GetFeatureType(toUtf8(Code)); }
+	FeatureType* GetFeatureType(std::wstring Code);
 	FeatureType* GetFeatureTypeName(std::string Name);
-	FeatureType* GetFeatureTypeName(std::wstring Name) { return GetFeatureTypeName(toUtf8(Name)); }
+	FeatureType* GetFeatureTypeName(std::wstring Name);
 	FeatureType* GetFeatureTypeFromIndex(int indexnum);
 	FeatureTypes* GetFeatureTypes();
 
 	FCD::S100_CD_AttributeValueType getSimpleAttributeType(std::string code);
-	FCD::S100_CD_AttributeValueType getSimpleAttributeType(std::wstring code) { return getSimpleAttributeType(toUtf8(code)); }
+	FCD::S100_CD_AttributeValueType getSimpleAttributeType(std::wstring code);
 
 	//void SetFullAssociations();
 	//void SetSubAssociation(FeatureType* ft);
@@ -172,5 +179,5 @@ public:
 	void GetNoGeometryFeatures(std::vector<FeatureType*>& result);
 
 	Attribute* GetAttribute(std::string code);
-	Attribute* GetAttribute(std::wstring code) { return GetAttribute(toUtf8(code)); }
+	Attribute* GetAttribute(std::wstring code);
 };

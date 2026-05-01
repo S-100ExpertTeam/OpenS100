@@ -26,25 +26,25 @@ public:
 
 	void SetDeliveryPoint(char* value);
 	const std::string& GetDeliveryPoint();
-	std::wstring GetDeliveryPointW() { return toWide(GetDeliveryPoint()); }
+	std::wstring GetDeliveryPointW();
 	 
 	void SetCity(char* value);
 	const std::string& GetCity();
-	std::wstring GetCityW() { return toWide(GetCity()); }
+	std::wstring GetCityW();
 
 	void SetAdministrativeArea(char* value);
 	const std::string& GetAdministrativeArea();
-	std::wstring GetAdministrativeAreaW() { return toWide(GetAdministrativeArea()); }
+	std::wstring GetAdministrativeAreaW();
 
 	void SetPostalCode(char* value);
 	const std::string& GetPostalCode();
-	std::wstring GetPostalCodeW() { return toWide(GetPostalCode()); }
+	std::wstring GetPostalCodeW();
 
 	void SetCountry(char* value);
 	const std::string& GetCountry();
-	std::wstring GetCountryW() { return toWide(GetCountry()); }
+	std::wstring GetCountryW();
 
 	void SetElectronicMailAddress(char* value);
 	const std::string& GetElectronicMailAddress();
-	std::wstring GetElectronicMailAddressW() { return toWide(GetElectronicMailAddress()); }
+	std::wstring GetElectronicMailAddressW();
 };

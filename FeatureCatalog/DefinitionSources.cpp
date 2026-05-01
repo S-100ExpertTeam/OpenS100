@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "DefinitionSources.h"
 
 DefinitionSources::DefinitionSources()
@@ -63,4 +64,21 @@ bool DefinitionSources::InsertDefinitionSource(DefinitionSource* value)
 
 	//definitionSource[definition->Getvalue()] = definition;
 	return false;
+}
+
+void DefinitionSources::SetSourceIdentifier(const char* value)
+{
+	std::string s(value ? value : "");
+	SetSourceIdentifier(s);
+}
+
+void DefinitionSources::SetSourceIdentifier(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetSourceIdentifier(s);
+}
+
+std::wstring DefinitionSources::GetSourceIdentifierW()
+{
+	return toWide(GetSourceIdentifier());
 }

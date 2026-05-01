@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "InformationType.h"
 
 InformationType::InformationType()
@@ -41,4 +42,16 @@ void InformationType::SetSuperType(std::string value)
 std::list<std::string>& InformationType::GetSubTypePointer()
 {
 	return subType;
+}
+
+void InformationType::SetSuperType(const char* value)
+{
+	std::string s(value ? value : "");
+	SetSuperType(s);
+}
+
+void InformationType::SetSuperType(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetSuperType(s);
 }

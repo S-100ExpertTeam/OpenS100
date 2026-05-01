@@ -23,7 +23,7 @@ public:
 
 	void SetName(char* value);
 	const std::string GetName();
-	std::wstring GetNameW() { return toWide(GetName()); }
+	std::wstring GetNameW();
 
 	void SetContactinfo(ContactInfo& value);
 	const ContactInfo& GetContactinfo();

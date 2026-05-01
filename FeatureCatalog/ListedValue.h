@@ -25,18 +25,21 @@ public:
 	void GetContents(pugi::xml_node& node);
 
 	const std::string& GetLabel();
-	std::wstring GetLabelW() { return toWide(GetLabel()); }
+	std::wstring GetLabelW();
 	void SetLabel(std::string& value);
-	void SetLabel(std::wstring value) { SetLabel(toUtf8(value)); }
+	void SetLabel(const char* value);
+	void SetLabel(std::wstring value);
 
 	const std::string& GetDefinition();
-	std::wstring GetDefinitionW() { return toWide(GetDefinition()); }
+	std::wstring GetDefinitionW();
 	void SetDefinition(std::string& value);
-	void SetDefinition(std::wstring value) { SetDefinition(toUtf8(value)); }
+	void SetDefinition(const char* value);
+	void SetDefinition(std::wstring value);
 
 	const std::string& GetRemarks(); 
 	void SetRemarks(std::string& value);
-	void SetRemarks(std::wstring value) { SetRemarks(toUtf8(value)); }
+	void SetRemarks(const char* value);
+	void SetRemarks(std::wstring value);
 
 	int GetCode();
 

@@ -27,35 +27,41 @@ public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetUrl(std::string value);
-	void SetUrl(std::wstring value) { SetUrl(toUtf8(value)); }
+	void SetUrl(const char* value);
+	void SetUrl(std::wstring value);
 	const std::string& GetUrl();
-	std::wstring GetUrlW() { return toWide(GetUrl()); }
+	std::wstring GetUrlW();
 
 	void SetProtocol(std::string value);
-	void SetProtocol(std::wstring value) { SetProtocol(toUtf8(value)); }
+	void SetProtocol(const char* value);
+	void SetProtocol(std::wstring value);
 	const std::string& GetProtocol();
-	std::wstring GetProtocolW() { return toWide(GetProtocol()); }
+	std::wstring GetProtocolW();
 
 	void SetApplicationProfile(std::string value);
-	void SetApplicationProfile(std::wstring value) { SetApplicationProfile(toUtf8(value)); }
+	void SetApplicationProfile(const char* value);
+	void SetApplicationProfile(std::wstring value);
 	const std::string& GetApplicationProfile();
-	std::wstring GetApplicationProfileW() { return toWide(GetApplicationProfile()); }
+	std::wstring GetApplicationProfileW();
 
 	void SetName(std::string value);
-	void SetName(std::wstring value) { SetName(toUtf8(value)); }
+	void SetName(const char* value);
+	void SetName(std::wstring value);
 	const std::string& GetName();
-	std::wstring GetNameW() { return toWide(GetName()); }
+	std::wstring GetNameW();
 
 	void SetDescription(std::string value);
-	void SetDescription(std::wstring value) { SetDescription(toUtf8(value)); }
+	void SetDescription(const char* value);
+	void SetDescription(std::wstring value);
 	const std::string& GetDescription();
-	std::wstring GetDescriptionW() { return toWide(GetDescription()); }
+	std::wstring GetDescriptionW();
 
 	void SetFunction(OnlineFunctionCode value);
 	OnlineFunctionCode& GetFunction();
 
 	void SetLinkage(std::string value);
-	void SetLinkage(std::wstring value) { SetLinkage(toUtf8(value)); }
+	void SetLinkage(const char* value);
+	void SetLinkage(std::wstring value);
 	const std::string& GetLinkage();
-	std::wstring GetLinkageW() { return toWide(GetLinkage()); }
+	std::wstring GetLinkageW();
 };
