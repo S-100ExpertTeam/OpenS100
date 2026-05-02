@@ -26,7 +26,7 @@ GeoMetryLibrary::ColorTable ENCCommon::m_eColorTable = GeoMetryLibrary::ColorTab
 
 
 
-std::wstring ENCCommon::DISPLAY_FONT_NAME = L"Malgun Gothic";
+std::string ENCCommon::DISPLAY_FONT_NAME = "Malgun Gothic";
 int ENCCommon::DISPLAY_FONT_SIZE = 15;
 
 float ENCCommon::DISPLAY_SYMBOL_SCALE = 5;
@@ -65,7 +65,7 @@ bool   ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE = true;
 #define OVERGROUP_CON30 viewGroup >= 62010 && viewGroup <= 62020
 #define OVERGROUP_CON31 true
 
-bool ENCCommon::Save(std::wstring filePath)
+bool ENCCommon::Save(std::string filePath)
 {
 	std::locale::global(std::locale("Korean"));
 	std::ofstream ofs;
@@ -105,10 +105,7 @@ bool ENCCommon::Save(std::wstring filePath)
 	ofs.write(t.c_str(), t.size());
 
 	t = "DISPLAY_FONT_NAME\t";
-
-	char* path = LibMFCUtil::ConvertWCtoC((wchar_t*)std::wstring(ENCCommon::DISPLAY_FONT_NAME).c_str());
-	t.append(path);
-	delete path;
+	t.append(ENCCommon::DISPLAY_FONT_NAME);
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
@@ -152,7 +149,15 @@ bool ENCCommon::Save(std::wstring filePath)
 	return true;
 }
 
-bool ENCCommon::Open(std::wstring filePath)
+bool ENCCommon::Save(std::wstring filePath)
+{
+	auto* narrow = LibMFCUtil::ConvertWCtoC((wchar_t*)filePath.c_str());
+	bool result = Save(std::string(narrow));
+	delete[] narrow;
+	return result;
+}
+
+bool ENCCommon::Open(std::string filePath)
 {
 	std::ifstream ifs;
 	ifs.open(filePath, std::ios::in);
@@ -224,9 +229,7 @@ bool ENCCommon::Open(std::wstring filePath)
 				if (pstringTokenizer->hasMoreTokens())
 				{
 					token = pstringTokenizer->nextToken();
-					auto fontName = LibMFCUtil::ConvertCtoWC((char*)token.c_str());
-					ENCCommon::DISPLAY_FONT_NAME = fontName;
-					delete[] fontName;
+					ENCCommon::DISPLAY_FONT_NAME = token;
 				}
 			}
 			else if (token.compare("DISPLAY_FONT_SIZE") == 0)
@@ -346,4 +349,20 @@ bool ENCCommon::Open(std::wstring filePath)
 		delete pstringTokenizer;
 	}
 	return true;
+}
+
+bool ENCCommon::Open(std::wstring filePath)
+{
+	auto* narrow = LibMFCUtil::ConvertWCtoC((wchar_t*)filePath.c_str());
+	bool result = Open(std::string(narrow));
+	delete[] narrow;
+	return result;
+}
+
+std::wstring ENCCommon::getDisplayFontNameW()
+{
+	auto* wide = LibMFCUtil::ConvertCtoWC((char*)DISPLAY_FONT_NAME.c_str());
+	std::wstring result(wide);
+	delete[] wide;
+	return result;
 }

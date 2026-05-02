@@ -3,8 +3,6 @@
 #include "SimpleAttribute.h"
 #include "S100_CD_AttributeValueType.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h" 
-
 SimpleAttribute::SimpleAttribute()
 {
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SGeometricFuc.h"
 
-#include "..\\GeoMetryLibrary\\ENCCommon.h"
+#include <utility>
 
 int SGeometricFuc::overlap(SAbstractCurve* objPoly, SSurface* comPoly)
 {
@@ -133,8 +133,8 @@ int SGeometricFuc::overlap(double p1x, double p1y, SCurve *comPoly)
 
 		if (p3x > p4x)
 		{
-			swap(&p3x, &p4x);
-			swap(&p3y, &p4y);
+			std::swap(p3x, p4x);
+			std::swap(p3y, p4y);
 		}
 
 		r341 = GeometricFuc::ccw(p3x, p3y, p4x, p4y, p1x, p1y);

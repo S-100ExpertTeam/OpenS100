@@ -183,7 +183,11 @@ void CConfigrationDlg::OnBnClickedApply()
 	mainTab.m_veryDeepWaterLevel.GetWindowText(value);
 	m_config.DEEP_CONTOUR = _ttof(value);
 
-	m_config.DISPLAY_FONT_NAME = value;
+	{
+		auto* narrow = LibMFCUtil::ConvertWCtoC((wchar_t*)value.GetString());
+		m_config.DISPLAY_FONT_NAME = narrow;
+		delete[] narrow;
+	}
 
 	m_config.DISPLAY_FONT_SIZE = _ttoi(value);
 
@@ -381,11 +385,7 @@ void CConfigrationDlg::SettingLoadFromFile(std::wstring fileName)
 				{
 					token = pstringTokenizer->nextToken();
 
-					auto fontName = LibMFCUtil::ConvertCtoWC((char*)token.c_str());
-
-					m_config.DISPLAY_FONT_NAME = fontName;
-
-					delete[] fontName;
+					m_config.DISPLAY_FONT_NAME = token;
 				}
 			}
 			else if (token.compare("DISPLAY_FONT_SIZE") == 0)

@@ -2,8 +2,6 @@
 #include "StringUtil.h"
 #include "AttributeBinding.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
-
 AttributeBinding::AttributeBinding()
 {
 

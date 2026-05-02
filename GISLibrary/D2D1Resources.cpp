@@ -118,7 +118,7 @@ namespace GISLibrary
 
 			// Create a DirectWrite text format object.
 			hr = pDWriteFactory->CreateTextFormat(
-				ENCCommon::DISPLAY_FONT_NAME.c_str(),
+				ENCCommon::getDisplayFontNameW().c_str(),
 				NULL,
 				DWRITE_FONT_WEIGHT_NORMAL,
 				DWRITE_FONT_STYLE_NORMAL,
@@ -357,7 +357,7 @@ namespace GISLibrary
 		{
 			IDWriteTextFormat* newWriteTextFormat = NULL;
 			HRESULT hr = pDWriteFactory->CreateTextFormat(
-				ENCCommon::DISPLAY_FONT_NAME.c_str(),
+				ENCCommon::getDisplayFontNameW().c_str(),
 				NULL,
 				DWRITE_FONT_WEIGHT_NORMAL,
 				DWRITE_FONT_STYLE_NORMAL,
@@ -382,7 +382,7 @@ namespace GISLibrary
 		{
 			IDWriteTextFormat* newWriteTextFormat = NULL;
 			HRESULT hr = pDWriteFactory->CreateTextFormat(
-				ENCCommon::DISPLAY_FONT_NAME.c_str(),
+				ENCCommon::getDisplayFontNameW().c_str(),
 				NULL,
 				DWRITE_FONT_WEIGHT_NORMAL,
 				DWRITE_FONT_STYLE_ITALIC,

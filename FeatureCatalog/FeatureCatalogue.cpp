@@ -4,9 +4,6 @@
 #include "FeatureCatalogue.h"
 #include "Role.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
 
 FeatureCatalogue::FeatureCatalogue()
 {

@@ -1,23 +1,8 @@
 #pragma once
 
 #include <string>
-
-namespace GeoMetryLibrary
-{
-	enum class ColorTable
-	{
-		Day = 0,
-		Dusk,
-		Night,
-	};
-
-	enum class DisplayModeTable
-	{
-		base = 0,
-		standard = 1,
-		all = 2
-	};
-}
+#include "Enum_ColorTable.h"
+#include "Enum_DisplayModeTable.h"
 
 class ENCCommon
 {
@@ -35,7 +20,8 @@ public:
 
 	static int DISPLAY_FONT_SIZE;
 
-	static std::wstring DISPLAY_FONT_NAME;
+	static std::string DISPLAY_FONT_NAME;
+	static std::wstring getDisplayFontNameW();
 
 	static GeoMetryLibrary::DisplayModeTable DISPLAY_MODE;
 	static GeoMetryLibrary::ColorTable m_eColorTable;
@@ -49,6 +35,8 @@ public:
 	static bool Show_INFORM01; //inform01 show / hide
 
 public:
+	static bool Save(std::string filePath);
 	static bool Save(std::wstring filePath);
+	static bool Open(std::string filePath);
 	static bool Open(std::wstring filePath);
 };

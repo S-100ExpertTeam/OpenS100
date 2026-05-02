@@ -25,7 +25,7 @@ public:
 	GeoMetryLibrary::DisplayModeTable DISPLAY_MODE;
 	GeoMetryLibrary::ColorTable m_eColorTable;
 
-	std::wstring DISPLAY_FONT_NAME;
+	std::string DISPLAY_FONT_NAME;
 
 private:
 

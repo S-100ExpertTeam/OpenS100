@@ -1,23 +1,20 @@
 #pragma once
 #include <string>
-#include <windows.h>
+#include <utf8cpp/utf8.h>
 
 inline std::wstring toWide(const std::string& utf8)
 {
 	if (utf8.empty()) return L"";
-	int size = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, nullptr, 0);
-	if (size <= 1) return L"";
-	std::wstring result(size - 1, 0);
-	MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), -1, &result[0], size);
-	return result;
+	std::u16string u16;
+	utf8::utf8to16(utf8.begin(), utf8.end(), std::back_inserter(u16));
+	return std::wstring(u16.begin(), u16.end());
 }
 
 inline std::string toUtf8(const std::wstring& wide)
 {
 	if (wide.empty()) return "";
-	int size = WideCharToMultiByte(CP_UTF8, 0, wide.c_str(), -1, nullptr, 0, nullptr, nullptr);
-	if (size <= 1) return "";
-	std::string result(size - 1, 0);
-	WideCharToMultiByte(CP_UTF8, 0, wide.c_str(), -1, &result[0], size, nullptr, nullptr);
+	std::u16string u16(wide.begin(), wide.end());
+	std::string result;
+	utf8::utf16to8(u16.begin(), u16.end(), std::back_inserter(result));
 	return result;
 }

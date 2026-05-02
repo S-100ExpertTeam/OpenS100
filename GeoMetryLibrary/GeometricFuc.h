@@ -39,5 +39,3 @@ public:
 	static int inside(GeoPoint *point, GeoPolygon *poly, bool applyOption = false);
 	static int inside(double x, double y, GeoPolygon *poly, bool applyOption = false);
 };
-
-void swap(double *var1, double *var2);

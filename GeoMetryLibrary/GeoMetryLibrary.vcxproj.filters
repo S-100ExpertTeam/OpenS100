@@ -112,6 +112,12 @@
     <ClInclude Include="ENCConfiguration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Enum_ColorTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum_DisplayModeTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Enum_WKBGeometryType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
