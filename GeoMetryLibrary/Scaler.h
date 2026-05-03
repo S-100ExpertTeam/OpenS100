@@ -12,7 +12,6 @@ public:
 	virtual ~Scaler();
 
 public:
-	static const long long COMF = 10000000000;
 
 	// center map
 	double mox = 0;
@@ -130,5 +129,4 @@ public:
 	double GetMapYMin();
 	double GetMapXMax();
 	double GetMapYMax();
-	long long GetCOMF();
 };
