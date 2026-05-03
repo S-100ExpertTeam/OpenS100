@@ -1,11 +1,8 @@
 #include "stdafx.h"
 #include "lua_session.h"
 
-#include <assert.h>
+#include <cassert>
 #include <iostream>
-#include <afxcmn.h>
-#include <mmsystem.h>
-//#pragma comment(lib, "winmm.lib" )
 
 std::map<lua_State*, lua_session*> lua_session::m_state_session_map;
 
@@ -47,7 +44,7 @@ lua_session::lua_session()
 	// [SECURITY PATCH] Disable dangerous libraries 
 	luaL_dostring(m_l,
 	"os = nil " "io = nil " "debug = nil "
-		"package.loadlib = nil " "package.cpath = °± " "loadfile = nil "
+		"package.loadlib = nil " "package.cpath = ‚Äù " "loadfile = nil "
 		"dofile = nil "
 		"load = nil "
 		"rawset = nil " "loadstring = nil"

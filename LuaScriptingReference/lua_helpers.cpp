@@ -1,5 +1,6 @@
 
 #include "stdafx.h"
+#include <cassert>
 #include <iostream>
 
 #include "lsr.h"
@@ -66,7 +67,7 @@ void push(lua_variant value)
 	else if (holds_alternative<string>(value))
 		lua_pushstring(l, get<string>(value).c_str());
 	else
-		_ASSERT(false);
+		assert(false);
 }
 
 lua_variant pop()
@@ -81,7 +82,7 @@ lua_variant pop()
 		case LUA_TSTRING:  result = lua_variant((string)lua_tostring(l, -1)); break;
 
 		default:
-			_ASSERT(false);
+			assert(false);
 			result = lua_variant();
 	}
 

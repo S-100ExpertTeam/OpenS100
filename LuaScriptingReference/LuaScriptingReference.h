@@ -5,12 +5,3 @@
 #else
 	#define KRS_LUA_SCRIPT_REFERENCE_API __declspec(dllimport)
 #endif
-
-class KRS_LUA_SCRIPT_REFERENCE_API CLuaScriptingReferenceApp : public CWinApp
-{
-public:
-	CLuaScriptingReferenceApp() = default;
-
-public:
-	virtual BOOL InitInstance();
-};
