@@ -625,7 +625,7 @@ void SENC_PointInstruction::FromS100Instruction(S100_Instruction* s100Instructio
 
 		SENC_Symbol* s = symbol;
 
-		s->reference = s100PointInstruction->GetSymbol()->GetReference();
+		s->reference = s100PointInstruction->GetSymbol()->GetReferenceW();
 
 		if (s100PointInstruction->GetSymbol()->GetRotation())
 		{

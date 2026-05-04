@@ -187,7 +187,7 @@ void SENC_LineInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 			if (base->GetType() == 1)
 			{
 				SENC_LineStyle* ls = new SENC_LineStyle();
-				ls->SetLineStyleName(s100LineInstruction->GetLineStyleReference()->GetReference());
+				ls->SetLineStyleName(s100LineInstruction->GetLineStyleReference()->GetReferenceW());
 				if (itorStyle != lineStyleList.end())
 				{
 					ls->GetStyleFromS100((S100_LineStyle*)itorStyle->second, pc);

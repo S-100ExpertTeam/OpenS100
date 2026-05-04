@@ -343,8 +343,8 @@ void S100Layer::BuildPortrayalCatalogue()
 
 	auto mainRuleFile = portrayalCatalogue->GetMainRuleFile();
 	auto RulefileFormat = portrayalCatalogue->GetRuleFileFormat();
-	auto fileName = mainRuleFile->GetFileName();
-	auto rootPath = portrayalCatalogue->GetRootPath();
+	auto fileName = mainRuleFile->GetFileNameW();
+	auto rootPath = portrayalCatalogue->GetRootPathW();
 	auto mainRulePath = rootPath + L"Rules\\" + fileName;
 	
 	if (RulefileFormat == Portrayal::FileFormat::LUA)

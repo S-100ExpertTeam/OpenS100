@@ -200,7 +200,7 @@ void SENC_AugmentedPath::FromS100Instruction(S100_Instruction* s100Instruction, 
 	auto s100AugmentedPath = (S100_AugmentedPath*)s100Instruction;
 	output->GetSENCFromS100Common(s100Instruction, this);
 
-	areaCRSType = SENC_CommonFuc::GetAreaCRSType(s100AugmentedPath->GetCrsType());
+	areaCRSType = SENC_CommonFuc::GetAreaCRSType(s100AugmentedPath->GetCrsTypeW());
 
 	if (s100AugmentedPath->GetPath())
 	{
@@ -224,12 +224,12 @@ void SENC_AugmentedPath::FromS100Instruction(S100_Instruction* s100Instruction, 
 			SENC_ArcByRadius* sp = new SENC_ArcByRadius();
 			sp->center.x = p->GetCenter()->GetX();
 			sp->center.y = p->GetCenter()->GetY();
-			sp->radius = _wtof(p->GetRadius().c_str());
+			sp->radius = _wtof(p->GetRadiusW().c_str());
 			if (p->GetSector())
 			{
 				sp->sector = new SENC_Sector();
-				sp->sector->angularDistance = _wtof(p->GetSector()->GetAnglearDistance().c_str());
-				sp->sector->startAngle = _wtof(p->GetSector()->GetStartAngle().c_str());
+				sp->sector->angularDistance = _wtof(p->GetSector()->GetAnglearDistanceW().c_str());
+				sp->sector->startAngle = _wtof(p->GetSector()->GetStartAngleW().c_str());
 			}
 			path->arcByRadiuses.push_back(sp);
 		}

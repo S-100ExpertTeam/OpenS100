@@ -49,13 +49,13 @@ std::wstring SENC_LineStyle::GetPenColorToken()
 
 void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalogue *pc)
 {
-	intervalLength = _wtof(lineStyle->GetIntervalLength().c_str());
-	capStyle = SENC_CommonFuc::GetCapStyle(lineStyle->GetCapStyle());
-	joinStyle = SENC_CommonFuc::GetJoinStyle(lineStyle->GetJoinStyle());
-	offset = (float)(_wtof(lineStyle->GetOffset().c_str()));
+	intervalLength = _wtof(lineStyle->GetIntervalLengthW().c_str());
+	capStyle = SENC_CommonFuc::GetCapStyle(lineStyle->GetCapStyleW());
+	joinStyle = SENC_CommonFuc::GetJoinStyle(lineStyle->GetJoinStyleW());
+	offset = (float)(_wtof(lineStyle->GetOffsetW().c_str()));
 
 	std::wstring colorToken = lineStyle->GetPen()->GetColor().GetToken();
-	pen_width = _wtof(lineStyle->GetPen()->GetWidth().c_str()) + 0.01;
+	pen_width = _wtof(lineStyle->GetPen()->GetWidthW().c_str()) + 0.01;
 	pen_transparency = lineStyle->GetPen()->GetColor().GetTransparency();
 
 	auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
@@ -73,8 +73,8 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 	{
 		S100_Dash dash = *itor;
 		SENC_Dash* dashSENC = new SENC_Dash();
-		dashSENC->length = (float)(_wtof(dash.GetLength().c_str()));
-		dashSENC->start = (float)(_wtof(dash.GetStart().c_str()));
+		dashSENC->length = (float)(_wtof(dash.GetLengthW().c_str()));
+		dashSENC->start = (float)(_wtof(dash.GetStartW().c_str()));
 
 		dashes.push_back(dashSENC);
 	}
@@ -87,8 +87,8 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 	{
 		S100_LineSymbol symbol = *itor;
 		SENC_LineSymbol* symbolSENC = new SENC_LineSymbol();
-		symbolSENC->reference = symbol.reference;
-		symbolSENC->position = (float)(_wtof(symbol.position.c_str()));
+		symbolSENC->reference = symbol.GetReferenceW();
+		symbolSENC->position = (float)(_wtof(symbol.GetPositionW().c_str()));
 
 		symbols.push_back(symbolSENC);
 	}

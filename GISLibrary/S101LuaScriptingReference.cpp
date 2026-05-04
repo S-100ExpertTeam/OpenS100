@@ -91,10 +91,10 @@ namespace KRS_LUA_SCRIPT_REFERENCE
 			auto cp = context->GetContextParameter(i);
 			if (cp)
 			{
-				auto id = cp->GetIdAsString();
+				auto id = cp->GetId();
 				auto enumType = cp->GetType();
 				std::string strType;
-				auto default_value = cp->GetDefaultAsString();
+				auto default_value = cp->GetDefault();
 
 				if (enumType == ParameterType::Boolean)
 				{

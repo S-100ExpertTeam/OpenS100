@@ -48,8 +48,8 @@ bool Product::OpenPC(std::wstring path)
 	auto pc = new PortrayalCatalogue();
 	if (pc->Open(path)) {
 
-		if (this->pc.find(pc->GetVersion()) == this->pc.end()) {
-			this->pc.insert({ pc->GetVersion(), pc });
+		if (this->pc.find(pc->GetVersionW()) == this->pc.end()) {
+			this->pc.insert({ pc->GetVersionW(), pc });
 			return true;
 		}
 	}

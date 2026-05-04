@@ -246,10 +246,10 @@ void SENC_AugmentedRay::FromS100Instruction(S100_Instruction* s100Instruction, P
 
 	output->GetSENCFromS100Common(s100Instruction, this);
 
-	direction = _wtof(s100AugmentedRay->GetDirection().c_str());
-	length = _wtof(s100AugmentedRay->GetLength().c_str());
+	direction = _wtof(s100AugmentedRay->GetDirectionW().c_str());
+	length = _wtof(s100AugmentedRay->GetLengthW().c_str());
 
-	areaCRSType = SENC_CommonFuc::GetAreaCRSType(s100AugmentedRay->GetCrsType());
+	areaCRSType = SENC_CommonFuc::GetAreaCRSType(s100AugmentedRay->GetCrsTypeW());
 
 	if (s100AugmentedRay->GetCompositeLineStyle())
 	{
