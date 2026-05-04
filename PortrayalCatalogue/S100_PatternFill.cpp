@@ -13,7 +13,7 @@ S100_PatternFill::~S100_PatternFill()
 
 void S100_PatternFill::GetContents(pugi::xml_node node)
 {
-	if (node==nullptr) 
+	if (node==nullptr)
 	{
 		return;
 	}
@@ -23,18 +23,13 @@ void S100_PatternFill::GetContents(pugi::xml_node node)
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName,"areaCRS"))
 		{
-			areaCRS = pugi::as_wide(instruction.child_value());
+			areaCRS = instruction.child_value();
 			break;
 		}
 	}
 }
 
-void S100_PatternFill::SetAreaCRS(std::wstring& value)
-{
-	areaCRS = value;
-}
-
-std::wstring S100_PatternFill::GetAreaCRS()
-{
-	return areaCRS;
-}
+void S100_PatternFill::SetAreaCRS(const std::string& value)  { areaCRS = value; }
+void S100_PatternFill::SetAreaCRS(const std::wstring& value) { areaCRS = toUtf8(value); }
+std::string  S100_PatternFill::GetAreaCRS()  { return areaCRS; }
+std::wstring S100_PatternFill::GetAreaCRSW() { return toWide(areaCRS); }

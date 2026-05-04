@@ -12,22 +12,28 @@ public:
 	virtual ~S100_SimpleLineStyle();
 
 private:
-	std::wstring capStyle;
-	std::wstring joinStyle;
-	std::wstring offset;
+	std::string capStyle;
+	std::string joinStyle;
+	std::string offset;
 	S100_Pen *pen;
 	S100_Dash *dash;
 
 public:
-	void SetCapStyle(std::wstring& value);
-	void SetJoinStyle(std::wstring& value);
-	void SetOffset(std::wstring& value);
+	void SetCapStyle(const std::string& value);
+	void SetCapStyle(const std::wstring& value);
+	void SetJoinStyle(const std::string& value);
+	void SetJoinStyle(const std::wstring& value);
+	void SetOffset(const std::string& value);
+	void SetOffset(const std::wstring& value);
 	void SetPen(S100_Pen* value);
 	void SetDash(S100_Dash* value);
 
-	std::wstring GetCapStyle();
-	std::wstring GetJoinStyle();
-	std::wstring GetOffset();
+	std::string  GetCapStyle();
+	std::wstring GetCapStyleW();
+	std::string  GetJoinStyle();
+	std::wstring GetJoinStyleW();
+	std::string  GetOffset();
+	std::wstring GetOffsetW();
 	S100_Pen* GetPen();
 	S100_Dash* GetDash();
 };

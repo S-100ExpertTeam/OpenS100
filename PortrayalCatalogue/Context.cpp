@@ -29,11 +29,9 @@ namespace Portrayal
 
 	ContextParameter* Context::GetContextParameter(std::string id)
 	{
-		auto wid = pugi::as_wide(id.c_str());
-
 		for (auto item : parameter)
 		{
-			if (item->GetId() == wid)
+			if (item->GetId() == id)
 			{
 				return item;
 			}

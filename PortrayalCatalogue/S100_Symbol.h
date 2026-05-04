@@ -22,7 +22,7 @@ public:
 	virtual ~S100_Symbol();
 
 private:
-	std::wstring reference;
+	std::string reference;
 	double rotation = 0;
 	GraphicBasePackage::CRSType rotationCRS = GraphicBasePackage::CRSType::portrayalCRS;
 	double scaleFactor = 1.0;
@@ -42,14 +42,15 @@ public:
 	//void GetContents(MSXML2::IXMLDOMNodePtr pNode);
 	void GetContents(pugi::xml_node& node);
 
-	void SetReference(std::wstring& value);
-	void SetReference(std::string& value);
+	void SetReference(const std::string& value);
+	void SetReference(const std::wstring& value);
 	void SetRotation(double value);
-	void SetRotationCRS(std::string& value);
-	void SetRotationCRS(std::wstring& value);
+	void SetRotationCRS(const std::string& value);
+	void SetRotationCRS(const std::wstring& value);
 	void SetScaleFactor(double value);
 
-	std::wstring GetReference();
+	std::string  GetReference();
+	std::wstring GetReferenceW();
 	double GetRotation();
 	//std::wstring GetRotationCRS();
 	GraphicBasePackage::CRSType GetRotationCRS();

@@ -10,10 +10,12 @@ public:
 	virtual ~S100_AreaPlacement();
 
 private:
-	std::wstring placementMode;
+	std::string placementMode;
 
 public:
 	void GetContents(pugi::xml_node& node);
-	void SetPlacementMode(std::wstring& value);
-	std::wstring GetPlacementMode();
+	void SetPlacementMode(const std::string& value);
+	void SetPlacementMode(const std::wstring& value);
+	std::string  GetPlacementMode();
+	std::wstring GetPlacementModeW();
 };

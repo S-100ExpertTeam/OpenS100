@@ -13,18 +13,20 @@ public:
 	virtual ~S100_Item();
 
 private:
-	std::wstring token;
+	std::string token;
 	S100_CIE scie;
 	S100_SRGB srgb;
 
 public:
 	void GetContents(pugi::xml_node Node);
 
-	void SetToken(std::wstring& value);
+	void SetToken(const std::string& value);
+	void SetToken(const std::wstring& value);
 	void SetSCIE(S100_CIE* value);
 	void SetSRGB(S100_SRGB* value);
 
-	std::wstring GetToken();
+	std::string  GetToken();
+	std::wstring GetTokenW();
 	S100_CIE* GetSCIE();
 	S100_SRGB* GetSRGB();
 };

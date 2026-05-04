@@ -41,6 +41,12 @@ namespace GraphicBasePackage
 	{
 		transparency = value;
 	}
+
+	void Color::SetToken(std::string value)
+	{
+		token = pugi::as_wide(value);
+	}
+
 	void Color::SetToken(std::wstring value) 
 	{
 		token = value;

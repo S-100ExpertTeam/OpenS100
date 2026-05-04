@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "Enum_Orientation.h"
 
-#include <pugixml.hpp>
-
 namespace PCD 
 {
 	Orientation StringToOrientation(std::string& value)
@@ -18,9 +16,9 @@ namespace PCD
 		return Orientation::none;
 	}
 
-	Orientation StringToOrientation(std::wstring& value) 
+	Orientation StringToOrientation(std::wstring& value)
 	{
-		std::string str = pugi::as_utf8(value);
+		std::string str = toUtf8(value);
 		return StringToOrientation(str);
 	}
 
@@ -37,7 +35,6 @@ namespace PCD
 
 	std::wstring OrientationToWstring(Orientation value)
 	{
-		auto str = OrientationToString(value);
-		return pugi::as_wide(str);
+		return toWide(OrientationToString(value));
 	}
 }

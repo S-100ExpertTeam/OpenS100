@@ -9,16 +9,18 @@ public:
 	virtual ~S100_AugmentedGeometry();
 
 private:
-	std::wstring crsType;
+	std::string crsType;
 	S100_VectorPoint* vectorPoint = nullptr;
 	S100_TextPoint* textPoint = nullptr;
 
 public:
-	void SetCrsType(std::wstring& value);
+	void SetCrsType(const std::string& value);
+	void SetCrsType(const std::wstring& value);
 	void SetVectorPoint(S100_VectorPoint* value);
 	void SetTextPoint(S100_TextPoint* value);
 
-	std::wstring GetCrsType();
+	std::string  GetCrsType();
+	std::wstring GetCrsTypeW();
 	S100_VectorPoint* GetVectorPoint();
 	S100_TextPoint* GetTextPoint();
 };

@@ -20,7 +20,6 @@
 
 #include <pugixml.hpp>
 
-
 #include "../S100Engine/S100Render.h"
 #include "../FeatureCatalog/Version.h"
 
@@ -39,28 +38,27 @@ public:
 
 protected:
 	// include PC folder (ex: ..\\ProgramData\\S101_Portrayal\\)
-	std::wstring rootPath;
+	std::string rootPath;
 
 	// path of portrayal_catalogue.xml (ex: ..\\ProgramData\\S101_Portrayal\\portrayal_catalogue.xml)
-	std::wstring catalogPath;
+	std::string catalogPath;
 
 	// ex : S-101
-	std::wstring product;
+	std::string product;
 
 	// ex : 1.1.1
-	//std::wstring version;
 	Version version;
 
-	// Rules 
+	// Rules
 	S100_Rules rules;
 
-	// ViewingGroups 
+	// ViewingGroups
 	ViewingGroups viewingGroups;
 
-	// FoundationMode 
+	// FoundationMode
 	FoundationMode foundationMode;
-	
-	// ViewingGroupLayers 
+
+	// ViewingGroupLayers
 	ViewingGroupLayers viewingGroupLayers;
 
 	// DisplayModes
@@ -69,43 +67,48 @@ protected:
 	// Displayplane
 	DisplayPlanes displayPlanes;
 
-	// Context 
+	// Context
 	Context context;
 
 	// S100_Symbols
-	S100_Symbols symbols; ////////
+	S100_Symbols symbols;
 
-	// ColorProfiles 
-	S100_ColorProfiles colorProfiles; //read color
+	// ColorProfiles
+	S100_ColorProfiles colorProfiles;
 
 	// lineStyle
-	S100_LineStyles lineStyles;///////
-	
-	// AreaFills
-	S100_AreaFills areaFills;////
+	S100_LineStyles lineStyles;
 
-	std::unordered_map<std::wstring, S100_LineStyleBase*> s100_lineStyles; //save linestyle value
-	std::vector< S100_LineStyleBase*> s100_lineStyle_vec;
+	// AreaFills
+	S100_AreaFills areaFills;
+
+	std::unordered_map<std::string, S100_LineStyleBase*> s100_lineStyles;
+	std::vector<S100_LineStyleBase*> s100_lineStyle_vec;
 
 	// FOR SENC
-	std::unordered_map<std::wstring, S100_RuleFile*> mainRules;
-	
-	std::wstring currentPalette = L"Day";
+	std::unordered_map<std::string, S100_RuleFile*> mainRules;
+
+	std::string currentPalette = "Day";
 	S100PCManager *s100PCManager = new S100PCManager();
 
 public:
 	bool Read(std::wstring path);
+	bool Read(const std::string& path);
 	bool Open(std::wstring path);
+	bool Open(const std::string& path);
 	void Init();
 	void Delete();
-	bool ReadPortrayalCatalogueByPugiXML(std::wstring& path);	//change pugixml
+	bool ReadPortrayalCatalogueByPugiXML(std::wstring& path);
 	void GetContents(pugi::xml_node& node);
 	void CreateSVGD2Geometry(ID2D1Factory1* factory);
 
 	//set
-	void SetRootPath(std::wstring& value);
-	void SetProduct(std::wstring& value);
-	void SetVersion(std::wstring& value);
+	void SetRootPath(const std::string& value);
+	void SetRootPath(const std::wstring& value);
+	void SetProduct(const std::string& value);
+	void SetProduct(const std::wstring& value);
+	void SetVersion(const std::string& value);
+	void SetVersion(const std::wstring& value);
 	void SetRules(S100_Rules* value);
 	void SetVewingGroups(ViewingGroups* value);
 	void SetFoundationMode(FoundationMode* value);
@@ -115,15 +118,20 @@ public:
 	void SetContext(Context* value);
 	void SetColorProfiles(S100_ColorProfiles* value);
 	void SetAreaFills(S100_AreaFills* value);
-	void SetLineStyles(std::wstring& key, S100_LineStyleBase* value);
-	void SetCurrentPaletteName(std::wstring& paletteName);
+	void SetLineStyles(const std::string& key, S100_LineStyleBase* value);
+	void SetLineStyles(const std::wstring& key, S100_LineStyleBase* value);
+	void SetCurrentPaletteName(const std::string& paletteName);
+	void SetCurrentPaletteName(const std::wstring& paletteName);
 	void SetS100PCManager(S100PCManager* value);
 
 	//get
-	std::wstring GetRootPath();
-	std::wstring GetProduct();
-	std::string getProduct() const;
-	std::wstring GetVersion();
+	std::string  GetRootPath();
+	std::wstring GetRootPathW();
+	std::string  GetProduct();
+	std::wstring GetProductW();
+	std::string  getProduct() const;
+	std::string  GetVersion();
+	std::wstring GetVersionW();
 	Version getVersion() const;
 	S100_Rules* GetRules();
 	ViewingGroups* GetViewingGroups();
@@ -134,13 +142,15 @@ public:
 	Context* GetContext();
 	S100_ColorProfiles* GetColorProfiles();
 	S100_AreaFills* GetAreaFills();
-	S100_LineStyleBase* GetLineStyles(std::wstring& key);
+	S100_LineStyleBase* GetLineStyles(const std::string& key);
+	S100_LineStyleBase* GetLineStyles(const std::wstring& key);
 	S100_Symbols* GetSymbols();
-	std::unordered_map<std::wstring, S100_LineStyleBase*> GetLineStyles();
+	std::unordered_map<std::string, S100_LineStyleBase*> GetLineStyles();
 	std::vector<S100_LineStyleBase*>* GetLineStylesVector();
 
-	S100_RuleFile* GetMainRules(std::wstring& key);
-	std::unordered_map<std::wstring, S100_RuleFile*> GetMainRules();
+	S100_RuleFile* GetMainRules(const std::string& key);
+	S100_RuleFile* GetMainRules(const std::wstring& key);
+	std::unordered_map<std::string, S100_RuleFile*> GetMainRules();
 
 	S100PCManager* GetS100PCManager();
 
@@ -149,9 +159,11 @@ public:
 	void GetLineStylesByPugiXml();
 
 	S100_RuleFile* GetMainRuleFile();
-	std::wstring GetMainRuleFilePath();
-	
-	std::wstring GetCurrentPaletteName();
+	std::string  GetMainRuleFilePath();
+	std::wstring GetMainRuleFilePathW();
+
+	std::string  GetCurrentPaletteName();
+	std::wstring GetCurrentPaletteNameW();
 
 	void ChangePalette(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 

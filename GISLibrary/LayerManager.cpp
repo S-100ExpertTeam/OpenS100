@@ -1285,8 +1285,8 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 		l->GetFileType() == S100_FileType::FILE_S_100_VECTOR) 
 	{
 		auto mainRuleFile = pc->GetMainRuleFile();
-		auto fileName = mainRuleFile->GetFileName();
-		auto rootPath = pc->GetRootPath();
+		auto fileName = mainRuleFile->GetFileNameW();
+		auto rootPath = pc->GetRootPathW();
 		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
 		if (pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA) 

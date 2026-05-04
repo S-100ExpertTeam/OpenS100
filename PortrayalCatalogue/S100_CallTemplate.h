@@ -10,15 +10,17 @@ public:
 	virtual ~S100_CallTemplate();
 
 private:
-	std::wstring name;
+	std::string name;
 	std::vector<S100_WithParam*> params;
 
 public:
-	void SetName(std::wstring& value);
+	void SetName(const std::string& value);
+	void SetName(const std::wstring& value);
 	void SetParam(S100_WithParam* value);
 	void SetParams(std::vector<S100_WithParam*> value);
 
-	std::wstring GetName();
+	std::string  GetName();
+	std::wstring GetNameW();
 	S100_WithParam* GetParam(int index);
 	std::vector<S100_WithParam*> GetParams();
 };

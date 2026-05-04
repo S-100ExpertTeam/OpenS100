@@ -13,7 +13,7 @@ S100_AreaInstruction::S100_AreaInstruction()
 }
 
 S100_AreaInstruction::~S100_AreaInstruction()
-{	
+{
 	/*
 	* 1 : ColorFill
 	* 2 : AreaFillReference
@@ -40,10 +40,9 @@ S100_AreaInstruction::~S100_AreaInstruction()
 		case 5:
 			delete (S100_HatchFill*)areaFill;
 			break;
-
 		}
 	}
-} 
+}
 
 void S100_AreaInstruction::GetContents(pugi::xml_node node)
 {
@@ -58,27 +57,27 @@ void S100_AreaInstruction::GetContents(pugi::xml_node node)
 
 		if (!strcmp(instructionName,"featureReference"))
 		{
-			SetFeatureReference(pugi::as_wide(instruction.child_value()));
+			SetFeatureReference(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "viewingGroup"))
 		{
-			SetViewingGroup(pugi::as_wide(instruction.child_value()));
+			SetViewingGroup(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "displayPlane"))
 		{
-			SetDisplayPlane(pugi::as_wide(instruction.child_value()));
+			SetDisplayPlane(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "drawingPriority"))
 		{
-			SetDrawingPriority(pugi::as_wide(instruction.child_value()));
+			SetDrawingPriority(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMinimum"))
 		{
-			SetScaleMinimum(pugi::as_wide(instruction.child_value()));
+			SetScaleMinimum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMaximum"))
 		{
-			SetScaleMaximum(pugi::as_wide(instruction.child_value()));
+			SetScaleMaximum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "symbolFill"))
 		{
@@ -111,7 +110,7 @@ void S100_AreaInstruction::GetContents(pugi::xml_node node)
 			if (areaFill->GetType() == 2)
 			{
 				S100_AreaFillReference *areaFillRef = (S100_AreaFillReference*)areaFill;
-				std::wstring path = areaFillRef->GetReference();
+				std::wstring path = areaFillRef->GetReferenceW();
 				S100_SymbolFill* tempAreaFill = new S100_SymbolFill();
 
 				if (!tempAreaFill->ReadFileByPugiXml(path + L".xml"))
@@ -128,12 +127,5 @@ void S100_AreaInstruction::GetContents(pugi::xml_node node)
 	}
 }
 
-void S100_AreaInstruction::SetAreaFill(S100_AreaFillBase* value) 
-{
-	areaFill = value;
-}
-
-S100_AreaFillBase* S100_AreaInstruction::GetAreaFill()
-{
-	return areaFill;
-}
+void S100_AreaInstruction::SetAreaFill(S100_AreaFillBase* value) { areaFill = value; }
+S100_AreaFillBase* S100_AreaInstruction::GetAreaFill()           { return areaFill; }

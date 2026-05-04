@@ -13,18 +13,19 @@ namespace Portrayal
 		virtual ~CatalogItem();
 
 	private:
-		std::wstring id;
+		std::string id;
 		std::vector<S100_Description*> description;
 
-	public: 
-		std::wstring GetId();
-		std::string GetIdAsString();
-		void SetId(std::wstring& value);
+	public:
+		std::string  GetId();
+		std::wstring GetIdW();
+		void SetId(const std::string& value);
+		void SetId(const std::wstring& value);
 
 		S100_Description* GetDescription(int index);
 		std::vector<S100_Description*>* GetDescription();
 
 		void AddDescription(S100_Description* value);
-		int GetCountOfDescription(); // description size
+		int GetCountOfDescription();
 	};
-} 
+}

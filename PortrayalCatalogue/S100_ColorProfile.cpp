@@ -21,30 +21,35 @@ S100_ColorProfile::~S100_ColorProfile()
 	}
 }
 
-bool S100_ColorProfile::ReadFile(std::wstring path) 
+bool S100_ColorProfile::ReadFile(const std::string& path)
 {
 	pugi::xml_document xmldoc;
 	pugi::xml_parse_result result = xmldoc.load_file(path.c_str());
 
-	pugi::xml_node firstchildNode= xmldoc.first_child();
+	pugi::xml_node firstchildNode = xmldoc.first_child();
 	const pugi::char_t* colorProfileName = firstchildNode.name();
-	
-	if (!strcmp(colorProfileName,"colorProfile"))
+
+	if (!strcmp(colorProfileName, "colorProfile"))
 	{
 		GetContents(firstchildNode);
 	}
 	return true;
 }
 
-void S100_ColorProfile::GetContents(pugi::xml_node Node) 
+bool S100_ColorProfile::ReadFile(const std::wstring& path)
 {
-	for (auto instruction= Node.first_child(); instruction; instruction=instruction.next_sibling())
+	return ReadFile(toUtf8(path));
+}
+
+void S100_ColorProfile::GetContents(pugi::xml_node Node)
+{
+	for (auto instruction = Node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
 		auto instructionName = instruction.name();
 
-		if (!strcmp(instructionName,"colors")) 
+		if (!strcmp(instructionName, "colors"))
 		{
-			for (auto child=instruction.first_child(); child; child=child.next_sibling())
+			for (auto child = instruction.first_child(); child; child = child.next_sibling())
 			{
 				auto color = new S100_Color();
 				color->GetContents(child);
@@ -61,119 +66,17 @@ void S100_ColorProfile::GetContents(pugi::xml_node Node)
 		}
 	}
 }
-//void S100_ColorProfile::GetContentsInfo(pugi::xml_node& node)
-//{
-//	if (!node)
-//	{
-//		return;
-//	}
-//
-//	auto idvalue = node.attribute("id").value(); //Bring the attribute value.
-//	if (idvalue)
-//	{
-//		id = pugi::as_wide(idvalue);
-//	}
-//
-//	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
-//	{
-//		const pugi::char_t* instructionName = instruction.name();
-//		if (!strcmp(instructionName, "description"))
-//		{
-//			description.GetContents(instruction);
-//		}
-//
-//		else if (!strcmp(instructionName, "fileName"))
-//		{
-//			fileName = pugi::as_wide(instruction.child_value());
-//		}
-//
-//		else if (!strcmp(instructionName, "fileType"))
-//		{
-//			fileType = pugi::as_wide(instruction.child_value());
-//		}
-//
-//		else if (!strcmp(instructionName, "fileFormat"))
-//		{
-//			fileFormat = pugi::as_wide(instruction.child_value());
-//		}
-//	}
-//}
 
-//============================Property====================================//
+void S100_ColorProfile::Setcolors(const std::string& key, S100_Color* value)  { colors.insert({ key, value }); }
+void S100_ColorProfile::Setcolors(const std::wstring& key, S100_Color* value) { colors.insert({ toUtf8(key), value }); }
+std::unordered_map<std::string, S100_Color*> S100_ColorProfile::Getcolors()   { return colors; }
 
-//void S100_ColorProfile::Setid(std::wstring& value)
-//{
-//	id = value;
-//}
-//
-//std::wstring S100_ColorProfile::Getid() 
-//{
-//	return id;
-//}
-
-//void S100_ColorProfile::Setdescription(S100_Description value)
-//{
-//	description = value;
-//}
-//
-//S100_Description S100_ColorProfile::Getdescription()
-//{
-//	return description;
-//}
-
-//void S100_ColorProfile::SetfileName(std::wstring& value)
-//{
-//	fileName = value;
-//}
-//
-//std::wstring S100_ColorProfile::GetfileName() 
-//{
-//	return fileName;
-//}
-//
-//void S100_ColorProfile::SetfileType(std::wstring& value )
-//{
-//	fileType = value;
-//}
-//
-//std::wstring S100_ColorProfile::GetfileType()
-//{
-//	return fileType;
-//}
-//
-//void S100_ColorProfile::SetfileFormat(std::wstring& value)
-//{
-//	fileFormat = value;
-//}
-//
-//std::wstring S100_ColorProfile::GetfileFormat() 
-//{
-//	return fileFormat;
-//}
-
-void S100_ColorProfile::Setcolors(std::wstring key, S100_Color* value) 
-{
-	colors.insert({key,value});
-}
-
-std::unordered_map<std::wstring, S100_Color*> S100_ColorProfile::Getcolors() 
-{
-	return colors;
-}
-
-void S100_ColorProfile::Setpaletters(std::wstring key, S100_Palette* value)
-{
-	palettes.insert({key,value});
-}
-
-std::unordered_map<std::wstring, S100_Palette*> S100_ColorProfile::Getpalettes()
-{
-	return palettes;
-}
-
+void S100_ColorProfile::Setpaletters(const std::string& key, S100_Palette* value)  { palettes.insert({ key, value }); }
+void S100_ColorProfile::Setpaletters(const std::wstring& key, S100_Palette* value) { palettes.insert({ toUtf8(key), value }); }
+std::unordered_map<std::string, S100_Palette*> S100_ColorProfile::Getpalettes()    { return palettes; }
 
 #pragma warning(disable:4244)
-D2D1_COLOR_F S100_ColorProfile::GetD2Color(std::wstring paletteName, std::wstring token)
+D2D1_COLOR_F S100_ColorProfile::GetD2Color(const std::string& paletteName, const std::string& token)
 {
 	auto item = palettes.find(paletteName);
 	if (item != palettes.end())
@@ -183,7 +86,7 @@ D2D1_COLOR_F S100_ColorProfile::GetD2Color(std::wstring paletteName, std::wstrin
 		if (color != item->second->GetItem().end())
 		{
 			return D2D1::ColorF(
-				color->second->GetSRGB()->GetRed() / 255.0, 
+				color->second->GetSRGB()->GetRed() / 255.0,
 				color->second->GetSRGB()->GetGreen() / 255.0,
 				color->second->GetSRGB()->GetBlue() / 255.0);
 		}
@@ -192,8 +95,12 @@ D2D1_COLOR_F S100_ColorProfile::GetD2Color(std::wstring paletteName, std::wstrin
 	return D2D1::ColorF(0, 0, 0);
 }
 
+D2D1_COLOR_F S100_ColorProfile::GetD2Color(const std::wstring& paletteName, const std::wstring& token)
+{
+	return GetD2Color(toUtf8(paletteName), toUtf8(token));
+}
 
-COLORREF S100_ColorProfile::GetRGBRef(std::wstring paletteName, std::wstring token)
+COLORREF S100_ColorProfile::GetRGBRef(const std::string& paletteName, const std::string& token)
 {
 	auto item = palettes.find(paletteName);
 	if (item != palettes.end())
@@ -208,4 +115,9 @@ COLORREF S100_ColorProfile::GetRGBRef(std::wstring paletteName, std::wstring tok
 	}
 
 	return RGB(0, 0, 0);
+}
+
+COLORREF S100_ColorProfile::GetRGBRef(const std::wstring& paletteName, const std::wstring& token)
+{
+	return GetRGBRef(toUtf8(paletteName), toUtf8(token));
 }

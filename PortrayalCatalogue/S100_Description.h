@@ -2,6 +2,7 @@
 #include <pugixml.hpp>
 
 #include <string>
+
 class S100_Description
 {
 public:
@@ -9,9 +10,9 @@ public:
 	virtual ~S100_Description();
 
 public:
-	std::wstring name ;
-	std::wstring description;
-	std::wstring language;
+	std::string name;
+	std::string description;
+	std::string language;
 
 private:
 	bool on = true;
@@ -19,15 +20,20 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 
-	void Setname(std::wstring& value);
-	std::wstring Getname();
-	std::string getName();
+	void Setname(const std::string& value);
+	void Setname(const std::wstring& value);
+	std::string  Getname();
+	std::wstring GetnameW();
 
-	void Setdescription(std::wstring& value);
-	std::wstring Getdescription();
+	void Setdescription(const std::string& value);
+	void Setdescription(const std::wstring& value);
+	std::string  Getdescription();
+	std::wstring GetdescriptionW();
 
-	void Setlanguage(std::wstring& value);
-	std::wstring Getlanguage();
+	void Setlanguage(const std::string& value);
+	void Setlanguage(const std::wstring& value);
+	std::string  Getlanguage();
+	std::wstring GetlanguageW();
 
 	void SetOn(bool value);
 	bool GetOn();

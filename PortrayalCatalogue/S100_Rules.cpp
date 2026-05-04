@@ -14,27 +14,26 @@ S100_Rules::~S100_Rules()
 	}
 }
 
-void S100_Rules::AddRuleFiles(std::wstring& key, S100_RuleFile* value)
-{
-	ruleFiles[key] = value;
-}
+void S100_Rules::AddRuleFiles(const std::string& key, S100_RuleFile* value)  { ruleFiles[key] = value; }
+void S100_Rules::AddRuleFiles(const std::wstring& key, S100_RuleFile* value) { ruleFiles[toUtf8(key)] = value; }
 
-void S100_Rules::SetRuleFiles(std::unordered_map<std::wstring, S100_RuleFile*> value)
+void S100_Rules::SetRuleFiles(std::unordered_map<std::string, S100_RuleFile*> value)
 {
 	ruleFiles = value;
 }
 
-S100_RuleFile* S100_Rules::GetRuleFiles(std::wstring& key)
+S100_RuleFile* S100_Rules::GetRuleFiles(const std::string& key)
 {
-	auto isrule = ruleFiles.find(key);
-	if (isrule!=ruleFiles.end())
-	{
-		return ruleFiles[key];
-	}
-	return nullptr;
+	auto it = ruleFiles.find(key);
+	return (it != ruleFiles.end()) ? it->second : nullptr;
 }
 
-std::unordered_map<std::wstring, S100_RuleFile*> S100_Rules::GetRuleFiles()
+S100_RuleFile* S100_Rules::GetRuleFiles(const std::wstring& key)
+{
+	return GetRuleFiles(toUtf8(key));
+}
+
+std::unordered_map<std::string, S100_RuleFile*> S100_Rules::GetRuleFiles()
 {
 	return ruleFiles;
 }
@@ -53,13 +52,8 @@ void S100_Rules::GetContents(pugi::xml_node& node)
 		{
 			S100_RuleFile* ruleFile = new S100_RuleFile();
 			ruleFile->GetContents(instruction);
-			ruleFiles[ruleFile->GetId()]= ruleFile;
+			ruleFiles[ruleFile->GetId()] = ruleFile;
 			ruleFileVector.push_back(ruleFile);
-		}
-		else
-		{
-			std::wstring nodename =pugi::as_wide(instructionName);
-			nodename.append(L"is another data");
 		}
 	}
 }

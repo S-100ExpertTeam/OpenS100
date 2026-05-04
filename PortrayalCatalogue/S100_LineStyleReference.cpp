@@ -13,19 +13,15 @@ S100_LineStyleReference::~S100_LineStyleReference()
 
 void S100_LineStyleReference::GetContents(pugi::xml_node& node)
 {
-	if (!node) 
+	if (!node)
 	{
 		return;
 	}
 
-	reference = pugi::as_wide(node.attribute("reference").as_string());
+	reference = node.attribute("reference").as_string();
 }
 
-void S100_LineStyleReference::SetReference(std::wstring& value)
-{
-	reference = value;
-}
-std::wstring S100_LineStyleReference::GetReference() 
-{
-	return reference;
-}
+void S100_LineStyleReference::SetReference(const std::string& value)  { reference = value; }
+void S100_LineStyleReference::SetReference(const std::wstring& value) { reference = toUtf8(value); }
+std::string  S100_LineStyleReference::GetReference()  { return reference; }
+std::wstring S100_LineStyleReference::GetReferenceW() { return toWide(reference); }

@@ -5,7 +5,6 @@
 
 namespace Portrayal
 {
-	
 	class ContextParameter :
 		public CatalogItem
 	{
@@ -15,21 +14,24 @@ namespace Portrayal
 
 	private:
 		ParameterType type;
-		std::wstring defaultValue;
-		std::wstring value;
+		std::string defaultValue;
+		std::string value;
 
 	public:
 		ParameterType GetType();
 		void SetType(ParameterType value);
-		void SetType(std::wstring value);
+		void SetType(const std::string& value);
+		void SetType(const std::wstring& value);
 
-		std::wstring GetDefault();
-		std::string GetDefaultAsString();
-		void SetDefault(std::wstring& value);
+		std::string  GetDefault();
+		std::wstring GetDefaultW();
+		void SetDefault(const std::string& value);
+		void SetDefault(const std::wstring& value);
 
-		std::wstring getValue();
-		std::string getValueAsString();
-		void setValue(std::wstring& value);
+		std::string  getValue();
+		std::wstring getValueW();
+		void setValue(const std::string& value);
+		void setValue(const std::wstring& value);
 
 		std::string getName();
 

@@ -4,7 +4,6 @@
 
 namespace Portrayal
 {
-
 	S100_ColorProfiles::S100_ColorProfiles()
 	{
 
@@ -25,11 +24,6 @@ namespace Portrayal
 
 		if (!strcmp(instructionName, "colorProfile"))
 		{
-			//S100_ColorProfile* colorPath = new S100_ColorProfile();
-			//colorPath->GetContentsInfo(colorProfile);
-			//colorProfileFiles[colorPath->Getid()] = colorPath;
-			//colorProfileFiles_v.push_back(colorPath);
-
 			ExternalFile* externalFile = new ExternalFile();
 			externalFile->GetContents(colorProfile);
 
@@ -45,41 +39,8 @@ namespace Portrayal
 		}
 	}
 
-	//bool S100_ColorProfiles::ReadColorProfiles(std::wstring path)
-	//{
-	//	auto colorprofile = colorProfileFiles.begin()->second;
-	//	if (colorprofile == nullptr)
-	//	{
-	//		return false;
-	//	}
-	//	colorprofile->ReadFile(path + L"ColorProfiles\\" + colorprofile->GetfileName());
-	//	return true;
-	//}
-
-	//S100_ColorProfile* S100_ColorProfiles::GetColorProfile()
-	//{
-	//	if (colorProfileFiles.size() >= 1)
-	//	{
-	//		return colorProfileFiles.begin()->second;
-	//	}
-	//
-	//	return nullptr;
-	//}
-
-
-	//std::unordered_map<std::wstring, S100_ColorProfile*>  S100_ColorProfiles::GetColorProfiles()
-	//{
-	//	return colorProfileFiles;
-	//}
-	//
-	//void S100_ColorProfiles::SetColorProfile(std::wstring key, S100_ColorProfile* value)
-	//{
-	//	colorProfileFiles[key] = value;
-	//}
-	//
 	std::vector<ExternalFile*>* S100_ColorProfiles::GetColorProfilesVector()
 	{
 		return &colorProfileFiles_v;
 	}
-
 }

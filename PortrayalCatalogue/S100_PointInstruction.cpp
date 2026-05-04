@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100_PointInstruction.h"
 
-S100_PointInstruction::S100_PointInstruction() 
+S100_PointInstruction::S100_PointInstruction()
 {
 	SetType(1);
 	symbol = NULL;
@@ -16,37 +16,37 @@ S100_PointInstruction::~S100_PointInstruction()
 
 void S100_PointInstruction::GetContents(pugi::xml_node node)
 {
-	if (node==nullptr) 
+	if (node==nullptr)
 	{
 		return;
 	}
 
-	for (auto instruction=node.first_child(); instruction; instruction=instruction.next_sibling()) 
+	for (auto instruction=node.first_child(); instruction; instruction=instruction.next_sibling())
 	{
 		auto instructionName = instruction.name();
-		if (!strcmp(instructionName,"featureReference")) 
+		if (!strcmp(instructionName,"featureReference"))
 		{
-			SetFeatureReference(pugi::as_wide(instruction.child_value()));
+			SetFeatureReference(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "viewingGroup"))
 		{
-			SetViewingGroup(pugi::as_wide(instruction.child_value()));
+			SetViewingGroup(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "displayPlane"))
 		{
-			SetDisplayPlane(pugi::as_wide(instruction.child_value()));
+			SetDisplayPlane(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "drawingPriority"))
 		{
-			SetDrawingPriority(pugi::as_wide(instruction.child_value()));
+			SetDrawingPriority(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMinimum"))
 		{
-			SetScaleMinimum(pugi::as_wide(instruction.child_value()));
+			SetScaleMinimum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMaximum"))
 		{
-			SetScaleMaximum(pugi::as_wide(instruction.child_value()));
+			SetScaleMaximum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "symbol"))
 		{
@@ -56,26 +56,10 @@ void S100_PointInstruction::GetContents(pugi::xml_node node)
 				symbol->GetContents(instruction);
 			}
 		}
-
 	}
 }
 
-void S100_PointInstruction::SetSymbol(S100_Symbol* value) 
-{
-	symbol = value;
-}
-
-void S100_PointInstruction::SetVectorPoint(S100_VectorPoint* value) 
-{
-	vectorPoint = value;
-}
-
-S100_Symbol* S100_PointInstruction::GetSymbol() 
-{
-	return symbol;
-}
-
-S100_VectorPoint* S100_PointInstruction::GetVectorPoint() 
-{
-	return vectorPoint;
-}
+void S100_PointInstruction::SetSymbol(S100_Symbol* value)     { symbol = value; }
+void S100_PointInstruction::SetVectorPoint(S100_VectorPoint* value) { vectorPoint = value; }
+S100_Symbol* S100_PointInstruction::GetSymbol()               { return symbol; }
+S100_VectorPoint* S100_PointInstruction::GetVectorPoint()     { return vectorPoint; }

@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include "Enum_FileType.h"
 
-#include <pugixml.hpp>
-
 namespace Portrayal
 {
-	FileType StringToFileType(std::string& value)
+	FileType StringToFileType(const std::string& value)
 	{
 		int maxindex = (int)FileType::Rule + 1;
 		for (int i = 0; i < maxindex; i++)
@@ -18,9 +16,9 @@ namespace Portrayal
 		return FileType::none;
 	}
 
-	FileType StringToFileType(std::wstring& value)
+	FileType StringToFileType(const std::wstring& value)
 	{
-		auto str = pugi::as_utf8(value);
+		auto str = toUtf8(value);
 		return StringToFileType(str);
 	}
 
@@ -37,7 +35,6 @@ namespace Portrayal
 
 	std::wstring FileTypeToWString(FileType value)
 	{
-		auto str = FileTypeToString(value);
-		return pugi::as_wide(str);
+		return toWide(FileTypeToString(value));
 	}
 }

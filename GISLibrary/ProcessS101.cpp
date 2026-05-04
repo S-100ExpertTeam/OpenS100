@@ -1388,7 +1388,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 
 						cf->SetReference(std::wstring(v_AreaFillReference.begin(), v_AreaFillReference.end()));
 
-						std::wstring path = cf->GetReference();
+						std::wstring path = cf->GetReferenceW();
 						path.append(L".xml");
 						in->SetAreaFill(cf);
 					}
@@ -1530,8 +1530,8 @@ std::vector<std::string> ProcessS101::getParams(PortrayalCatalogue* pc)
 			auto contextParameter = context->GetContextParameter(i);
 			if (contextParameter)
 			{
-				auto name = contextParameter->GetIdAsString();
-				auto value = contextParameter->getValueAsString();
+				auto name = contextParameter->GetId();
+				auto value = contextParameter->getValue();
 				params.push_back(name);
 				params.push_back(value);
 			}

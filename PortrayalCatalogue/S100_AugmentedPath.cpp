@@ -22,27 +22,27 @@ void S100_AugmentedPath::GetContents(pugi::xml_node node)
 
 		if (!strcmp(instructionName, "featureReference"))
 		{
-			SetFeatureReference(pugi::as_wide(instruction.child_value()));
+			SetFeatureReference(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "viewingGroup"))
 		{
-			SetViewingGroup(pugi::as_wide(instruction.child_value()));
+			SetViewingGroup(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "displayPlane"))
 		{
-			SetDisplayPlane(pugi::as_wide(instruction.child_value()));
+			SetDisplayPlane(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "drawingPriority"))
 		{
-			SetDrawingPriority(pugi::as_wide(instruction.child_value()));
+			SetDrawingPriority(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMinimum"))
 		{
-			SetScaleMinimum(pugi::as_wide(instruction.child_value()));
+			SetScaleMinimum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMaximum"))
 		{
-			SetScaleMaximum(pugi::as_wide(instruction.child_value()));
+			SetScaleMaximum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "path"))
 		{
@@ -61,7 +61,7 @@ void S100_AugmentedPath::GetContents(pugi::xml_node node)
 		}
 		else if (!strcmp(instructionName, "compositeLineStyle"))
 		{
-			if (!GetCompositeLineStyle())SetCompositeLineStyle(new S100_CompositeLineStyle());
+			if (!GetCompositeLineStyle()) SetCompositeLineStyle(new S100_CompositeLineStyle());
 			GetCompositeLineStyle()->GetContents(instruction);
 		}
 		else if (!strcmp(instructionName, "textPoint"))
@@ -71,17 +71,10 @@ void S100_AugmentedPath::GetContents(pugi::xml_node node)
 		}
 		else if (!strcmp(instructionName, "crs"))
 		{
-			SetCrsType(pugi::as_wide(instruction.child_value()));
+			SetCrsType(std::string(instruction.child_value()));
 		}
 	}
 }
 
-void S100_AugmentedPath::SetPath(S100_Path* value)
-{
-	path = value;
-}
-
-S100_Path* S100_AugmentedPath::GetPath()
-{
-	return path;
-}
+void S100_AugmentedPath::SetPath(S100_Path* value) { path = value; }
+S100_Path* S100_AugmentedPath::GetPath()           { return path; }

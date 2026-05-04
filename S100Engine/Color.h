@@ -19,6 +19,7 @@ namespace GraphicBasePackage
 	public:
 		void GetContents(pugi::xml_node& node);
 		void SetTransparency(double value);
+		void SetToken(std::string value);
 		void SetToken(std::wstring value);
 
 		double GetTransparency();

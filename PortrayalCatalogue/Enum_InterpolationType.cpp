@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "Enum_InterpolationType.h"
 
-#include <pugixml.hpp>
-
 namespace PCD 
 {
 	InterpolationType StringInterpolationType(std::string& value) 
@@ -17,9 +15,9 @@ namespace PCD
 		}
 		return InterpolationType::none;
 	}
-	InterpolationType StringInterpolationType(std::wstring& value) 
+	InterpolationType StringInterpolationType(std::wstring& value)
 	{
-		auto str = pugi::as_utf8(value);
+		auto str = toUtf8(value);
 		return StringInterpolationType(str);
 	}
 	std::string InterpolationTypeToString(InterpolationType value) 
@@ -32,9 +30,8 @@ namespace PCD
 		}
 		return InterpolationType_String[index];
 	}
-	std::wstring InterpolationTypeToWString(InterpolationType value) 
+	std::wstring InterpolationTypeToWString(InterpolationType value)
 	{
-		auto str = InterpolationTypeToString(value);
-		return pugi::as_wide(str);
+		return toWide(InterpolationTypeToString(value));
 	}
 }

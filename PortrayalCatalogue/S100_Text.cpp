@@ -23,30 +23,20 @@ void S100_Text::GetContents(pugi::xml_node node)
 		auto attriName = attri.name();
 		if (!strcmp(attriName, "useValueOf"))
 		{
-			useValueOf = pugi::as_wide(attri.value());
+			useValueOf = attri.value();
 			break;
 		}
 	}
 
-	value = pugi::as_wide(node.child_value());
+	value = node.child_value();
 }
 
-void S100_Text::SetValue(std::wstring& _value)
-{
-	value = _value;
-}
+void S100_Text::SetValue(const std::string& v)  { value = v; }
+void S100_Text::SetValue(const std::wstring& v) { value = toUtf8(v); }
+void S100_Text::SetUseValueOf(const std::string& v)  { useValueOf = v; }
+void S100_Text::SetUseValueOf(const std::wstring& v) { useValueOf = toUtf8(v); }
 
-void S100_Text::SetUseValueOf(std::wstring& value)
-{
-	useValueOf = value;
-}
-
-std::wstring S100_Text::GetValue() 
-{
-	return value;
-}
-
-std::wstring S100_Text::GetUseValueOf() 
-{
-	return useValueOf;
-}
+std::string  S100_Text::GetValue()      { return value; }
+std::wstring S100_Text::GetValueW()     { return toWide(value); }
+std::string  S100_Text::GetUseValueOf()  { return useValueOf; }
+std::wstring S100_Text::GetUseValueOfW() { return toWide(useValueOf); }

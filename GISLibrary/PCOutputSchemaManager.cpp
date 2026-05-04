@@ -168,7 +168,7 @@ void PCOutputSchemaManager::GenerateSENCInstruction(S100SpatialObject* s100so, P
 		SENC_Instruction* sit = nullptr;
 
 		sit = SENC_Instruction::S1002SENC(it, pc, this, s100so);
-		auto featureID = pugi::as_utf8(it->GetFeatureReference());
+		auto featureID = it->GetFeatureReference();
 		auto featureType = s100so->GetFeatureType(featureID);
 
 		if ((sit) &&
@@ -182,10 +182,10 @@ void PCOutputSchemaManager::GenerateSENCInstruction(S100SpatialObject* s100so, P
 
 void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Instruction* si)
 {
-	si->displayPlane = tp->GetDisplayPlane().compare(L"UNDERRADAR") == 0 ? 0 : 1;
+	si->displayPlane = tp->GetDisplayPlane().compare("UNDERRADAR") == 0 ? 0 : 1;
 	si->drawingPriority = tp->GetDrawingProiority();
-	si->addVewingGroup(_wtoi(tp->GetViewingGroup(0).c_str()));
-	si->featureReference = pugi::as_utf8(tp->GetFeatureReference());
+	si->addVewingGroup(_wtoi(tp->GetViewingGroupW(0).c_str()));
+	si->featureReference = tp->GetFeatureReference();
 	si->scaleMinimum = tp->GetScaleMinimum();
 	si->scaleMaximum = tp->GetScaleMaximum();
 

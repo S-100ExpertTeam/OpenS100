@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "Enum_RuleType.h"
 
-#include <pugixml.hpp>
-
 namespace Portrayal
 {
 	RuleType StringToRuleType(std::string& value)
@@ -20,7 +18,7 @@ namespace Portrayal
 
 	RuleType StringToRuleType(std::wstring& value)
 	{
-		auto str = pugi::as_utf8(value);
+		auto str = toUtf8(value);
 		return StringToRuleType(str);
 	}
 
@@ -37,7 +35,6 @@ namespace Portrayal
 
 	std::wstring RuleTypeToWString(RuleType value)
 	{
-		auto str = RuleTypeToString(value);
-		return pugi::as_wide(str);
+		return toWide(RuleTypeToString(value));
 	}
 }

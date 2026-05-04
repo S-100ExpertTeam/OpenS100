@@ -13,7 +13,7 @@ S100_Foreground::~S100_Foreground()
 
 void S100_Foreground::GetContents(pugi::xml_node node)
 {
-	if (node == nullptr) 
+	if (node == nullptr)
 	{
 		return;
 	}
@@ -22,60 +22,39 @@ void S100_Foreground::GetContents(pugi::xml_node node)
 	{
 		auto instructionName = instruction.name();
 
-		if (!strcmp(instructionName,"token"))
+		if (!strcmp(instructionName, "token"))
 		{
-			token = pugi::as_wide(instruction.child_value());
+			token = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "transparency"))
 		{
-			transparency = pugi::as_wide(instruction.child_value());
+			transparency = instruction.child_value();
 		}
 	}
 
-	token = pugi::as_wide(node.child_value());
+	token = node.child_value();
 }
 
-void S100_Foreground::SetToken(std::wstring& value)
-{
-	token = value;
-}
+void S100_Foreground::SetToken(const std::string& value)  { token = value; }
+void S100_Foreground::SetToken(const std::wstring& value) { token = toUtf8(value); }
+std::string  S100_Foreground::GetToken()  { return token; }
+std::wstring S100_Foreground::GetTokenW() { return toWide(token); }
 
-std::wstring S100_Foreground::GetToken() 
-{
-	return token;
-}
-
-void S100_Foreground::SetTransparency(std::wstring& value)
-{
-	transparency = value;
-}
-
-std::wstring S100_Foreground::GetTransparency() 
-{
-	return transparency;
-}
+void S100_Foreground::SetTransparency(const std::string& value)  { transparency = value; }
+void S100_Foreground::SetTransparency(const std::wstring& value) { transparency = toUtf8(value); }
+std::string  S100_Foreground::GetTransparency()  { return transparency; }
+std::wstring S100_Foreground::GetTransparencyW() { return toWide(transparency); }
 
 void S100_Foreground::fromDrawingCommand(std::string_view drawingCommand)
 {
-    // Parse the drawing command
-    std::string token;
-    std::string transparency;
-
-    size_t commaPos = drawingCommand.find(',');
-    if (commaPos != std::string_view::npos)
-    {
-        token = drawingCommand.substr(0, commaPos);
-        transparency = drawingCommand.substr(commaPos + 1);
-    }
-    else
-    {
-        token = drawingCommand;
-    }
-
-    // Set the parsed values
-    SetToken(std::wstring(token.begin(), token.end()));
-    if (!transparency.empty())
-    {
-        SetTransparency(std::wstring(transparency.begin(), transparency.end()));
-    }
+	size_t commaPos = drawingCommand.find(',');
+	if (commaPos != std::string_view::npos)
+	{
+		token = drawingCommand.substr(0, commaPos);
+		transparency = drawingCommand.substr(commaPos + 1);
+	}
+	else
+	{
+		token = drawingCommand;
+	}
 }

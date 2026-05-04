@@ -1,16 +1,14 @@
 #include "stdafx.h"
 #include "S100_SymbolFill.h"
 
-#include "..\\LibMFCUtil\\LibMFCUtil.h"
-
 S100_SymbolFill::S100_SymbolFill()
 {
-	clipSymbols = L"true";
+	clipSymbols = "true";
 	symbol = NULL;
 
 	v1 = NULL;
 	v2 = NULL;
-	
+
 	SetType(4);
 }
 
@@ -24,11 +22,10 @@ S100_SymbolFill::~S100_SymbolFill()
 
 bool S100_SymbolFill::ReadFileByPugiXml(std::wstring& path)
 {
-	
 	std::wstring head = L"..\\ProgramData\\S101_Portrayal\\AreaFills\\";
 
 	path.insert(path.begin(), head.begin(), head.end());
-	
+
 	if (!path.empty())
 	{
 		pugi::xml_document doc;
@@ -53,11 +50,11 @@ void S100_SymbolFill::GetContents(pugi::xml_node& node)
 	{
 		return;
 	}
-	
-	auto Attribute = node.attribute("clipSymbols"); //save attribute
-	if (Attribute) 
+
+	auto Attribute = node.attribute("clipSymbols");
+	if (Attribute)
 	{
-		clipSymbols =pugi::as_wide(Attribute.value());
+		clipSymbols = Attribute.value();
 	}
 
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
@@ -87,40 +84,17 @@ void S100_SymbolFill::GetContents(pugi::xml_node& node)
 				v2->GetContents(instruction);
 			}
 		}
-
 	}
 }
 
-void S100_SymbolFill::SetClipSymbols(std::wstring& value)
-{
-	clipSymbols = value;
-}
-void S100_SymbolFill::SetSymbol(S100_Symbol* value) 
-{
-	symbol = value;
-}
-void S100_SymbolFill::SetV1(S100_VectorPoint* value) 
-{
-	v1 = value;
-}
-void S100_SymbolFill::SetV2(S100_VectorPoint* value)
-{
-	v2 = value;
-}
+void S100_SymbolFill::SetClipSymbols(const std::string& value)  { clipSymbols = value; }
+void S100_SymbolFill::SetClipSymbols(const std::wstring& value) { clipSymbols = toUtf8(value); }
+void S100_SymbolFill::SetSymbol(S100_Symbol* value) { symbol = value; }
+void S100_SymbolFill::SetV1(S100_VectorPoint* value) { v1 = value; }
+void S100_SymbolFill::SetV2(S100_VectorPoint* value) { v2 = value; }
 
-std::wstring S100_SymbolFill::GetClipSymbols()
-{
-	return clipSymbols;
-}
-S100_Symbol* S100_SymbolFill::GetSymbol()
-{
-	return symbol;
-}
-S100_VectorPoint* S100_SymbolFill::GetV1()
-{
-	return v1;
-}
-S100_VectorPoint* S100_SymbolFill::GetV2()
-{
-	return v2;
-}
+std::string  S100_SymbolFill::GetClipSymbols()  { return clipSymbols; }
+std::wstring S100_SymbolFill::GetClipSymbolsW() { return toWide(clipSymbols); }
+S100_Symbol* S100_SymbolFill::GetSymbol() { return symbol; }
+S100_VectorPoint* S100_SymbolFill::GetV1() { return v1; }
+S100_VectorPoint* S100_SymbolFill::GetV2() { return v2; }

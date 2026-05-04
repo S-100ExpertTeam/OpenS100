@@ -155,7 +155,7 @@ void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, 
 				D2D1::Point2F((FLOAT)screenX, (FLOAT)screenY),
 				(FLOAT)rotation,
 				scale,
-				pc->GetCurrentPaletteName());
+				pc->GetCurrentPaletteNameW());
 
 			rt->SetTransform(oldTransform);
 		}

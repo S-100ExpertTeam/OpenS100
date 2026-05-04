@@ -11,15 +11,19 @@ public:
 	virtual ~S100_Dash();
 
 private:
-	std::wstring start;
-	std::wstring length;
+	std::string start;
+	std::string length;
 
 public:
-	void SetStart(std::wstring& value);
-	std::wstring GetStart();
-	
-	void SetLength(std::wstring& value);
-	std::wstring GetLength();
+	void SetStart(const std::string& value);
+	void SetStart(const std::wstring& value);
+	std::string  GetStart();
+	std::wstring GetStartW();
+
+	void SetLength(const std::string& value);
+	void SetLength(const std::wstring& value);
+	std::string  GetLength();
+	std::wstring GetLengthW();
 
 	void GetContents(pugi::xml_node& node);
 

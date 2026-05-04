@@ -32,8 +32,8 @@ namespace Portrayal
 		"AlertCatalog"
 	};
 
-	FileType StringToFileType(std::string& value);
-	FileType StringToFileType(std::wstring& value);
+	FileType StringToFileType(const std::string& value);
+	FileType StringToFileType(const std::wstring& value);
 
 	std::string FileTypeToString(FileType value);
 	std::wstring FileTypeToWString(FileType value);

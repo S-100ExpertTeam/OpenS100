@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "ContextParameter.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
-
 namespace Portrayal
 {
 	ContextParameter::ContextParameter()
@@ -17,71 +15,53 @@ namespace Portrayal
 
 	ParameterType ContextParameter::GetType()
 	{
-		return type; 
+		return type;
 	}
 
-	void ContextParameter::SetType(ParameterType value)
+	void ContextParameter::SetType(ParameterType val)
 	{
-		type = value;
+		type = val;
 	}
 
-	void ContextParameter::SetType(std::wstring value)
+	void ContextParameter::SetType(const std::string& val)
 	{
-		if (!StrCmpW(value.c_str(),L"Boolean"))
-		{
-			type = ParameterType::Boolean;
-		}
-
-		else if (!StrCmpW(value.c_str(), L"Integer"))
-		{
-			type = ParameterType::Integer;
-		}
-
-		else if (!StrCmpW(value.c_str(), L"Double"))
-		{
-			type = ParameterType::Double;
-		}
-
-		else if (!StrCmpW(value.c_str(), L"String"))
-		{
-			type = ParameterType::String;
-		}
-
-		else if (!StrCmpW(value.c_str(), L"Date"))
-		{
-			type = ParameterType::Date;
-		}
+		if (val == "Boolean")       type = ParameterType::Boolean;
+		else if (val == "Integer")  type = ParameterType::Integer;
+		else if (val == "Double")   type = ParameterType::Double;
+		else if (val == "String")   type = ParameterType::String;
+		else if (val == "Date")     type = ParameterType::Date;
 	}
 
-	std::wstring ContextParameter::GetDefault() 
+	void ContextParameter::SetType(const std::wstring& val)
 	{
-		return defaultValue;
+		SetType(toUtf8(val));
 	}
 
-	std::string ContextParameter::GetDefaultAsString()
+	std::string  ContextParameter::GetDefault()  { return defaultValue; }
+	std::wstring ContextParameter::GetDefaultW() { return toWide(defaultValue); }
+
+	void ContextParameter::SetDefault(const std::string& val)
 	{
-		return LibMFCUtil::WStringToString(defaultValue);
+		defaultValue = val;
+		setValue(val);
 	}
 
-	void ContextParameter::SetDefault(std::wstring& value)
+	void ContextParameter::SetDefault(const std::wstring& val)
 	{
-		defaultValue = value;
-		setValue(value);
+		SetDefault(toUtf8(val));
 	}
 
-	std::wstring ContextParameter::getValue()
+	std::string  ContextParameter::getValue()  { return value; }
+	std::wstring ContextParameter::getValueW() { return toWide(value); }
+
+	void ContextParameter::setValue(const std::string& val)
 	{
-		return value;
+		value = val;
 	}
 
-	std::string ContextParameter::getValueAsString()
+	void ContextParameter::setValue(const std::wstring& val)
 	{
-		return LibMFCUtil::WStringToString(value);
-	}
-
-	void ContextParameter::setValue(std::wstring& value)
-	{
-		this->value = value;
+		value = toUtf8(val);
 	}
 
 	std::string ContextParameter::getName()
@@ -92,40 +72,37 @@ namespace Portrayal
 			auto des = GetDescription(0);
 			if (des)
 			{
-				return des->getName();
+				return des->name;
 			}
 		}
-
 		return std::string("");
 	}
 
 	void ContextParameter::GetContents(pugi::xml_node& node)
 	{
 		auto idAttri = node.attribute("id");
-		if (idAttri!=nullptr)
+		if (idAttri != nullptr)
 		{
-			auto idValue =pugi::as_wide( idAttri.value());
-			SetId(idValue);
+			SetId(std::string(idAttri.value()));
 		}
 
-		for (auto instruction = node.first_child(); instruction; instruction= instruction.next_sibling())
+		for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 		{
 			auto instructionName = instruction.name();
 
-			if (!strcmp(instructionName,"description")) 
+			if (!strcmp(instructionName, "description"))
 			{
 				S100_Description* des = new S100_Description();
 				des->GetContents(instruction);
-
 				AddDescription(des);
 			}
-			else if (!strcmp(instructionName,"type"))
+			else if (!strcmp(instructionName, "type"))
 			{
-				SetType(pugi::as_wide(instruction.child_value()));
+				SetType(std::string(instruction.child_value()));
 			}
-			else if (!strcmp(instructionName,"default"))
+			else if (!strcmp(instructionName, "default"))
 			{
-				SetDefault(pugi::as_wide(instruction.child_value()));
+				SetDefault(std::string(instruction.child_value()));
 			}
 		}
 	}

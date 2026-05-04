@@ -10,11 +10,13 @@ public:
 	virtual ~S100_PatternFill();
 
 private:
-	std::wstring areaCRS;
+	std::string areaCRS;
 
 public:
 	void GetContents(pugi::xml_node node);
 
-	void SetAreaCRS(std::wstring& value);
-	std::wstring GetAreaCRS();
+	void SetAreaCRS(const std::string& value);
+	void SetAreaCRS(const std::wstring& value);
+	std::string  GetAreaCRS();
+	std::wstring GetAreaCRSW();
 };

@@ -7,6 +7,7 @@
 
 class S100_Color;
 class S100_Palette;
+
 class S100_ColorProfile
 {
 public:
@@ -14,50 +15,28 @@ public:
 	virtual ~S100_ColorProfile();
 
 private:
-	//======portrayal=========//
-	//std::wstring id;
-	//S100_Description description;
-	//std::wstring fileName;
-	//std::wstring fileType;
-	//std::wstring fileFormat; 
-
-	//======colorProfile=========//
-	std::unordered_map<std::wstring, S100_Color*> colors;
+	std::unordered_map<std::string, S100_Color*> colors;
 	std::vector<S100_Color*> colors_v;
 
-	std::unordered_map<std::wstring, S100_Palette*> palettes;
+	std::unordered_map<std::string, S100_Palette*> palettes;
 	std::vector<S100_Palette*> palettes_v;
 
 public:
-	bool ReadFile(std::wstring path);
+	bool ReadFile(const std::string& path);
+	bool ReadFile(const std::wstring& path);
 
-	// ColorProfile.xml
 	void GetContents(pugi::xml_node node);
 
-	// Portrayal Catalogue
-	//void GetContentsInfo(pugi::xml_node& node);
+	D2D1_COLOR_F GetD2Color(const std::string& paletteName, const std::string& token);
+	D2D1_COLOR_F GetD2Color(const std::wstring& paletteName, const std::wstring& token);
+	COLORREF GetRGBRef(const std::string& paletteName, const std::string& token);
+	COLORREF GetRGBRef(const std::wstring& paletteName, const std::wstring& token);
 
-	D2D1_COLOR_F GetD2Color(std::wstring paletteName, std::wstring token);
-	COLORREF GetRGBRef(std::wstring paletteName, std::wstring token);
+	void Setcolors(const std::string& key, S100_Color* value);
+	void Setcolors(const std::wstring& key, S100_Color* value);
+	std::unordered_map<std::string, S100_Color*> Getcolors();
 
-	//void Setid(std::wstring& value);
-	//std::wstring Getid();
-
-	//void Setdescription(S100_Description value);
-	//S100_Description Getdescription();
-
-	//void SetfileName(std::wstring& value);
-	//std::wstring GetfileName();
-
-	//void SetfileType(std::wstring& value);
-	//std::wstring GetfileType();
-
-	//void SetfileFormat(std::wstring& value);
-	//std::wstring GetfileFormat();
-
-	void Setcolors(std::wstring key, S100_Color* value);
-	std::unordered_map<std::wstring, S100_Color*> Getcolors(); 
-
-	void Setpaletters(std::wstring key, S100_Palette* value);
-	std::unordered_map<std::wstring, S100_Palette*> Getpalettes();
+	void Setpaletters(const std::string& key, S100_Palette* value);
+	void Setpaletters(const std::wstring& key, S100_Palette* value);
+	std::unordered_map<std::string, S100_Palette*> Getpalettes();
 };
