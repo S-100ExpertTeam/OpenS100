@@ -13,7 +13,7 @@ namespace libS100Engine
 		virtual ~Item();
 
 	public:
-		std::wstring token;
+		std::string token;
 		SRGB    srgb;
 	};
 }

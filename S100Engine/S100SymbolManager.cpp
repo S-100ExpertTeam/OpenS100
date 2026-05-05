@@ -18,32 +18,33 @@ S100SymbolManager::~S100SymbolManager()
 	svgSymbols.clear();
 }
 
-bool S100SymbolManager::Open(std::wstring _path)
+bool S100SymbolManager::Open(const std::string& _path)
+{
+	return Open(LibMFCUtil::StringToWString(_path));
+}
+
+bool S100SymbolManager::Open(const std::wstring& _path)
 {
 	CFileFind m_fileFinder;
 
-	BOOL bWorking = FALSE;
-	
-	bWorking = m_fileFinder.FindFile(_path.c_str());
-	
+	BOOL bWorking = m_fileFinder.FindFile(_path.c_str());
+
 	while (bWorking)
 	{
 		bWorking = m_fileFinder.FindNextFile();
 
 		auto cFilePath = m_fileFinder.GetFilePath();
-		auto wFilePath = std::wstring(cFilePath);
-		Add(wFilePath);
+		auto charPath = LibMFCUtil::ConvertWCtoC(cFilePath.GetBuffer());
+		Add(std::string(charPath));
+		delete[] charPath;
 	}
 	return true;
 }
 
-bool S100SymbolManager::Add(std::wstring path)
+bool S100SymbolManager::Add(const std::string& path)
 {
-	auto filePath = LibMFCUtil::ConvertWCtoC((wchar_t*)path.c_str());
 	SVGReader svg;
-	svg.OpenByPugi(filePath);
-
-	delete[] filePath;
+	svg.OpenByPugi(const_cast<char*>(path.c_str()));
 
 	if (GetSVG(svg.name))
 	{
@@ -52,20 +53,27 @@ bool S100SymbolManager::Add(std::wstring path)
 
 	auto name = svg.name;
 	svgSymbols.emplace(name, std::move(svg));
-
 	return true;
 }
 
-SVGReader* S100SymbolManager::GetSVG(std::wstring _name)
+bool S100SymbolManager::Add(const std::wstring& path)
+{
+	return Add(LibMFCUtil::WStringToString(path));
+}
+
+SVGReader* S100SymbolManager::GetSVG(const std::string& _name)
 {
 	auto svgSymbol = svgSymbols.find(_name);
-
 	if (svgSymbol != svgSymbols.end())
 	{
 		return &svgSymbol->second;
 	}
-
 	return nullptr;
+}
+
+SVGReader* S100SymbolManager::GetSVG(const std::wstring& _name)
+{
+	return GetSVG(LibMFCUtil::WStringToString(_name));
 }
 
 void S100SymbolManager::CreateSVGGeometry(ID2D1Factory1* m_pDirect2dFactory)

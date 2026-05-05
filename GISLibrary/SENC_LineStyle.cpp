@@ -54,7 +54,7 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 	joinStyle = SENC_CommonFuc::GetJoinStyle(lineStyle->GetJoinStyleW());
 	offset = (float)(_wtof(lineStyle->GetOffsetW().c_str()));
 
-	std::wstring colorToken = lineStyle->GetPen()->GetColor().GetToken();
+	std::wstring colorToken = lineStyle->GetPen()->GetColor().GetTokenW();
 	pen_width = _wtof(lineStyle->GetPen()->GetWidthW().c_str()) + 0.01;
 	pen_transparency = lineStyle->GetPen()->GetColor().GetTransparency();
 

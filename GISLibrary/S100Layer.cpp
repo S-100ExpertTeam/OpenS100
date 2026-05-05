@@ -27,7 +27,11 @@ S100Layer::S100Layer(int productNumber) : Layer()
 S100Layer::S100Layer(int productNumber, FeatureCatalogue* fc, PortrayalCatalogue* pc) : Layer()
 {
 	SetFeatureCatalog(fc);
-	SetPC(pc);
+
+	if (pc) {
+		SetPC(pc);
+	}
+
 	SetProductNumber(productNumber);
 }
 

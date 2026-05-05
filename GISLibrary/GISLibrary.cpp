@@ -148,14 +148,14 @@ void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, 
 			rt->GetTransform(&oldTransform);
 
 			pcManager->Draw(
-				symbolName,
+				pugi::as_utf8(symbolName),
 				rt,
 				brush,
 				stroke,
 				D2D1::Point2F((FLOAT)screenX, (FLOAT)screenY),
 				(FLOAT)rotation,
 				scale,
-				pc->GetCurrentPaletteNameW());
+				pc->GetCurrentPaletteName());
 
 			rt->SetTransform(oldTransform);
 		}

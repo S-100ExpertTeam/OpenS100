@@ -22,7 +22,7 @@ std::unique_ptr<AreaFill> SENC_SymbolFill::as_AreaFill()
 	areaFill->v1_y = v1.y;
 	areaFill->v2_x = v2.x;
 	areaFill->v2_y = v2.y;
-	areaFill->_symbolReference = symbol->reference;
+	areaFill->_symbolReference = pugi::as_utf8(symbol->reference);
 	areaFill->offset_x = symbol->offset.x;
 	areaFill->offset_y = symbol->offset.y;
 	return areaFill;

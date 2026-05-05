@@ -10,14 +10,17 @@ public:
 	virtual ~S100SymbolManager();
 
 public:
-	std::unordered_map<std::wstring, SVGReader> svgSymbols;
+	std::unordered_map<std::string, SVGReader> svgSymbols;
 
 public:
 	// SVG folder path. (ex : C:\\Symbols\\*.svg)
-	bool Open(std::wstring _path);
+	bool Open(const std::string& _path);
+	bool Open(const std::wstring& _path);
 
 	// Open single svg
-	bool Add(std::wstring path);
+	bool Add(const std::string& path);
+	bool Add(const std::wstring& path);
 	void CreateSVGGeometry(ID2D1Factory1* m_pDirect2dFactory);
-	SVGReader* GetSVG(std::wstring _name);
+	SVGReader* GetSVG(const std::string& _name);
+	SVGReader* GetSVG(const std::wstring& _name);
 };

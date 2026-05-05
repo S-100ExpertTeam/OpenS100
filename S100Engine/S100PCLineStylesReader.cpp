@@ -18,14 +18,13 @@ namespace S100XMLReader
 
 	}
 
-	bool S100PCLineStylesReader::OpenByPugi(std::wstring path, LineStylesPackage::LineStyles *pLineStyles)
+	bool S100PCLineStylesReader::OpenByPugi(const std::string& path, LineStylesPackage::LineStyles* pLineStyles)
 	{
+		std::wstring wpath = LibMFCUtil::StringToWString(path);
+		std::wstring lineStylePath = wpath + L"\\*.xml";
+
 		WIN32_FIND_DATA findFileData;
-		HANDLE hFind;
-
-		std::wstring lineStylePath = path + L"\\*.xml";
-
-		hFind = FindFirstFile(lineStylePath.c_str(), &findFileData);
+		HANDLE hFind = FindFirstFile(lineStylePath.c_str(), &findFileData);
 
 		if (INVALID_HANDLE_VALUE == hFind)
 		{
@@ -36,31 +35,32 @@ namespace S100XMLReader
 		{
 			if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 			{
-				CString filePath;
-				filePath.Format(_T("%s\\%s"), path.c_str(), findFileData.cFileName);
-
-				if (!filePath.IsEmpty())
+				std::wstring wfilePath = wpath + L"\\" + findFileData.cFileName;
+				std::string filePath = LibMFCUtil::WStringToString(wfilePath);
+				if (!filePath.empty())
 				{
-					AddByPugi(path, pLineStyles);
+					AddByPugi(filePath, pLineStyles);
 				}
 			}
 		} while (FindNextFile(hFind, &findFileData));
 
-
 		FindClose(hFind);
-
 		return true;
-
 	}
 
-	bool S100PCLineStylesReader::AddByPugi(std::wstring path, LineStylesPackage::LineStyles* pLineStyles)
+	bool S100PCLineStylesReader::OpenByPugi(const std::wstring& path, LineStylesPackage::LineStyles* pLineStyles)
+	{
+		return OpenByPugi(LibMFCUtil::WStringToString(path), pLineStyles);
+	}
+
+	bool S100PCLineStylesReader::AddByPugi(const std::string& path, LineStylesPackage::LineStyles* pLineStyles)
 	{
 		LineStylesPackage::AbstractLineStyle* pLineStyle = nullptr;
 		pugi::xml_document doc;
 		pugi::xml_parse_result result = doc.load_file(path.c_str());
 
 		pugi::xml_node displayList = doc.first_child();
-		if (displayList  == nullptr)
+		if (displayList == nullptr)
 		{
 			return false;
 		}
@@ -82,7 +82,7 @@ namespace S100XMLReader
 
 		if (nullptr != pLineStyle)
 		{
-			auto key = std::filesystem::path(path).filename().wstring();
+			auto key = std::filesystem::path(path).filename().string();
 			pLineStyle->name = key;
 
 			if (pLineStyles->mapLineStyle.find(key) == pLineStyles->mapLineStyle.end())
@@ -93,6 +93,11 @@ namespace S100XMLReader
 		}
 
 		return false;
+	}
+
+	bool S100PCLineStylesReader::AddByPugi(const std::wstring& path, LineStylesPackage::LineStyles* pLineStyles)
+	{
+		return AddByPugi(LibMFCUtil::WStringToString(path), pLineStyles);
 	}
 
 	bool S100PCLineStylesReader::SetLineStyle(pugi::xml_node node, std::vector<LineStylesPackage::AbstractLineStyle *>* lineStyle)
@@ -229,7 +234,7 @@ namespace S100XMLReader
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "color"))
 			{
-				pPen->color.SetToken(pugi::as_wide(instruction.child_value()));
+				pPen->color.SetToken(std::string(instruction.child_value()));
 				pPen->color.SetTransparency(instruction.attribute("transparency").as_double());
 			}
 		}
@@ -259,7 +264,7 @@ namespace S100XMLReader
 			auto attriName = attri.name();
 			if (!strcmp(attriName, "reference"))
 			{
-				pSymbol->reference = pugi::as_wide(attri.value());
+				pSymbol->reference = attri.value();
 			}
 			else if (!strcmp(attriName, "rotation"))
 			{

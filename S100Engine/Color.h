@@ -13,17 +13,18 @@ namespace GraphicBasePackage
 		virtual ~Color();
 
 	private:
-		std::wstring token;
+		std::string token;
 		double transparency = 0;
 
 	public:
 		void GetContents(pugi::xml_node& node);
 		void SetTransparency(double value);
-		void SetToken(std::string value);
-		void SetToken(std::wstring value);
+		void SetToken(const std::string& value);
+		void SetToken(const std::wstring& value);
 
 		double GetTransparency();
-		std::wstring GetToken();
+		std::string  GetToken();
+		std::wstring GetTokenW();
 	};
 }
 
@@ -36,8 +37,8 @@ namespace libS100Engine
 		virtual ~Color();
 
 	public:
-		std::wstring token;
-		std::wstring name;
-		std::wstring desctiption;
+		std::string token;
+		std::string name;
+		std::string desctiption;
 	};
 }

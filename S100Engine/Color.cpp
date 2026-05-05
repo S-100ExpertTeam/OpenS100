@@ -33,31 +33,36 @@ namespace GraphicBasePackage
 			transparency = attribute.as_double();
 		}
 
-		auto token = node.text().get();
-		this->token = pugi::as_wide(token);
+		token = node.text().get();
 	}
 
-	void Color::SetTransparency(double value) 
+	void Color::SetTransparency(double value)
 	{
 		transparency = value;
 	}
 
-	void Color::SetToken(std::string value)
-	{
-		token = pugi::as_wide(value);
-	}
-
-	void Color::SetToken(std::wstring value) 
+	void Color::SetToken(const std::string& value)
 	{
 		token = value;
 	}
 
-	double Color::GetTransparency() 
+	void Color::SetToken(const std::wstring& value)
+	{
+		token = LibMFCUtil::WStringToString(value);
+	}
+
+	double Color::GetTransparency()
 	{
 		return transparency;
 	}
-	std::wstring Color::GetToken()
+
+	std::string Color::GetToken()
 	{
 		return token;
+	}
+
+	std::wstring Color::GetTokenW()
+	{
+		return LibMFCUtil::StringToWString(token);
 	}
 }

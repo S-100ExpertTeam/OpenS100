@@ -19,14 +19,18 @@ namespace LineStylesPackage
 }
 
 
-bool LineStylesPackage::LineStyles::GetRect(CString name, D2D1_RECT_F *pRect)
+bool LineStylesPackage::LineStyles::GetRect(const std::string& name, D2D1_RECT_F* pRect)
 {
-	auto keyValue = mapLineStyle.find(std::wstring(name));
+	auto keyValue = mapLineStyle.find(name);
 	if (keyValue != mapLineStyle.end())
 	{
 		keyValue->second->GetRect(pRect);
 		return true;
 	}
-
 	return false;
+}
+
+bool LineStylesPackage::LineStyles::GetRect(const std::wstring& name, D2D1_RECT_F* pRect)
+{
+	return GetRect(LibMFCUtil::WStringToString(name), pRect);
 }

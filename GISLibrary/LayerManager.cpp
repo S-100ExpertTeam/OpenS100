@@ -589,7 +589,7 @@ void LayerManager::AddSymbolDrawing(
 					pRenderTarget->GetTransform(&oldTransform);
 						
 					s100PCManager->Draw(
-						instruction->symbol->reference,
+						pugi::as_utf8(instruction->symbol->reference),
 						pRenderTarget,
 						D2->SolidColorBrush(),
 						D2->SolidStrokeStyle(),
@@ -920,6 +920,11 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 			}
 		}
 	}
+}
+
+void LayerManager::DrawECDISMode(HDC& hDC, int offset)
+{
+
 }
 
 void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)

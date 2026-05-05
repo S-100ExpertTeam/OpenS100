@@ -32,7 +32,7 @@ public:
 	SVGGeometry CreateSVGGeometryFromCircle(libS100Engine::Circle* circle);
 
 	std::vector<std::unique_ptr<libS100Engine::Figure>> figures;
-	std::wstring name;
+	std::string name;
 
 	// Resources used for svg drawing using direct2d.
 	std::vector<SVGGeometry> geometry;

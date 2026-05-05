@@ -86,6 +86,7 @@ public:
 	void DrawBackground(HDC &hDC, int offset = 0);
 
 	void DrawS100Datasets(HDC &hDC, int offset = 0);
+	void DrawECDISMode(HDC& hDC, int offset = 0);
 	void DrawNonS100Datasets(HDC &hDC, int offset = 0);
 	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer);
 	void SetDrawingInstruction(S100Layer* layer);

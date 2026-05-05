@@ -322,7 +322,7 @@ void PortrayalCatalogue::CreatePatternImages(ID2D1Factory1* d2Factory, IWICImagi
 {
 	if (nullptr != s100PCManager)
 	{
-		s100PCManager->CreateBitmapImage(d2Factory, imageFactory, stroke, GetCurrentPaletteNameW());
+		s100PCManager->CreateBitmapImage(d2Factory, imageFactory, stroke, GetCurrentPaletteName());
 	}
 }
 
@@ -338,7 +338,7 @@ void PortrayalCatalogue::CreateLineImages(ID2D1Factory1* d2Factory, IWICImagingF
 {
 	if (nullptr != s100PCManager)
 	{
-		s100PCManager->CreateLineImage(d2Factory, imageFactory, stroke, GetCurrentPaletteNameW());
+		s100PCManager->CreateLineImage(d2Factory, imageFactory, stroke, GetCurrentPaletteName());
 	}
 }
 

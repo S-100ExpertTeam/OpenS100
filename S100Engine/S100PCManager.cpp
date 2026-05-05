@@ -17,7 +17,12 @@ S100PCManager::~S100PCManager()
 
 }
 
-bool S100PCManager::AddS100ColorProfile(std::wstring id, std::wstring path)
+bool S100PCManager::AddS100ColorProfile(const std::string& id, const std::string& path)
+{
+	return s100ColorProfiles.AddColorProfile(id, path);
+}
+
+bool S100PCManager::AddS100ColorProfile(const std::wstring& id, const std::wstring& path)
 {
 	return s100ColorProfiles.AddColorProfile(id, path);
 }
@@ -30,18 +35,29 @@ bool S100PCManager::AddS100ColorProfile(std::wstring id, std::wstring path)
 //	return ret;
 //}
 
-bool S100PCManager::AddS100LineStyle(std::wstring path)
+bool S100PCManager::AddS100LineStyle(const std::string& path)
 {
 	return S100XMLReader::S100PCLineStylesReader::AddByPugi(path, &lineStyles);
 }
 
-bool S100PCManager::OpenS100LineStyles(std::wstring _path)
+bool S100PCManager::AddS100LineStyle(const std::wstring& path)
+{
+	return S100XMLReader::S100PCLineStylesReader::AddByPugi(path, &lineStyles);
+}
+
+bool S100PCManager::OpenS100LineStyles(const std::string& _path)
 {
 	S100XMLReader::S100PCLineStylesReader::OpenByPugi(_path, &lineStyles);
 	return true;
 }
 
-bool S100PCManager::AddS100AreaFill(std::wstring path)
+bool S100PCManager::OpenS100LineStyles(const std::wstring& _path)
+{
+	S100XMLReader::S100PCLineStylesReader::OpenByPugi(_path, &lineStyles);
+	return true;
+}
+
+bool S100PCManager::AddS100AreaFill(const std::string& path)
 {
 	AreaFill areaFill;
 	areaFill.ReadByPugi(path);
@@ -52,19 +68,23 @@ bool S100PCManager::AddS100AreaFill(std::wstring path)
 		areaFills.push_back(areaFill);
 		return true;
 	}
-
 	return false;
 }
 
-bool S100PCManager::OpenS100AreaFills(std::wstring _path)
+bool S100PCManager::AddS100AreaFill(const std::wstring& path)
 {
-	CFileFind  finder; 
-	BOOL bWorking = finder.FindFile(_path.c_str());
+	return AddS100AreaFill(LibMFCUtil::WStringToString(path));
+}
+
+bool S100PCManager::OpenS100AreaFills(const std::string& _path)
+{
+	CFileFind finder;
+	BOOL bWorking = finder.FindFile(LibMFCUtil::StringToWString(_path).c_str());
 	while (bWorking)
 	{
 		bWorking = finder.FindNextFile();
-		std::wstring path(finder.GetFilePath());
-		if (path.find(L".xml") != -1)
+		std::string path = LibMFCUtil::WStringToString(std::wstring(finder.GetFilePath()));
+		if (path.find(".xml") != std::string::npos)
 		{
 			AreaFill areaFill;
 			areaFill.ReadByPugi(path);
@@ -74,22 +94,20 @@ bool S100PCManager::OpenS100AreaFills(std::wstring _path)
 			{
 				areaFills.push_back(areaFill);
 			}
-			else
-			{
-				//OutputDebugString(_T("Already exist in areaFills\n"));
-			}
 		}
 	}
-
 	return true;
 }
 
-bool S100PCManager::AddS100Symbol(std::wstring path)
+bool S100PCManager::OpenS100AreaFills(const std::wstring& _path)
 {
-	auto filePath = LibMFCUtil::ConvertWCtoC((wchar_t*)path.c_str());
+	return OpenS100AreaFills(LibMFCUtil::WStringToString(_path));
+}
+
+bool S100PCManager::AddS100Symbol(const std::string& path)
+{
 	SVGReader svg;
-	svg.OpenByPugi(filePath);
-	delete[] filePath;
+	svg.OpenByPugi(const_cast<char*>(path.c_str()));
 
 	if (s100SymbolManager.svgSymbols.find(svg.name) != s100SymbolManager.svgSymbols.end())
 	{
@@ -101,14 +119,24 @@ bool S100PCManager::AddS100Symbol(std::wstring path)
 	return true;
 }
 
-bool S100PCManager::OpenS100Symbol(std::wstring _path)
+bool S100PCManager::AddS100Symbol(const std::wstring& path)
+{
+	return AddS100Symbol(LibMFCUtil::WStringToString(path));
+}
+
+bool S100PCManager::OpenS100Symbol(const std::string& _path)
 {
 	return s100SymbolManager.Open(_path);
 }
 
-void S100PCManager::DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, std::wstring paletteName)
+bool S100PCManager::OpenS100Symbol(const std::wstring& _path)
 {
-	auto i = lineStyles.mapLineStyle.find(_name.c_str());
+	return s100SymbolManager.Open(_path);
+}
+
+void S100PCManager::DrawLineStyle(const std::string& _name, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, const std::string& paletteName)
+{
+	auto i = lineStyles.mapLineStyle.find(_name);
 
 	if (i != lineStyles.mapLineStyle.end())
 	{
@@ -118,7 +146,7 @@ void S100PCManager::DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRender
 		{
 			for (int j = 0; j < cntLineStyles; j++)
 			{
-				LineStylesPackage::LineStyle *pLineStyle = i->second->GetLineStyle(j);
+				LineStylesPackage::LineStyle* pLineStyle = i->second->GetLineStyle(j);
 
 				D2D1_POINT_2F p1, p2;
 				p1.x = 0;
@@ -139,57 +167,47 @@ void S100PCManager::DrawLineStyle(std::wstring _name, ID2D1RenderTarget* pRender
 		}
 		else if (cntLineStyles == 1)
 		{
-			LineStylesPackage::LineStyle *pLineStyle = i->second->GetLineStyle(0);
+			LineStylesPackage::LineStyle* pLineStyle = i->second->GetLineStyle(0);
 
 			if (pLineStyle)
 			{
 				pBrush->SetColor(GetS100ColorProfile()->GetColor(pLineStyle->pen->color.GetToken()));
 				pBrush->SetOpacity(1 - pLineStyle->pen->color.GetTransparency());
-				D2D1_RECT_F rect = GetLineStyleRect(_name.c_str(), 2);
+				D2D1_RECT_F rect = GetLineStyleRect(_name, 2);
 
 				for (auto j = pLineStyle->dash.begin(); j != pLineStyle->dash.end(); j++)
 				{
 					D2D1_POINT_2F p1, p2;
-
-					p1.x = (FLOAT)((*j)->start / 0.32)*2;
-					p2.x = (FLOAT)((*j)->length / 0.32)*2 + p1.x;
-
+					p1.x = (FLOAT)((*j)->start / 0.32) * 2;
+					p2.x = (FLOAT)((*j)->length / 0.32) * 2 + p1.x;
 					p1.y = (rect.bottom - rect.top) / 2;
 					p2.y = (rect.bottom - rect.top) / 2;
-
 					pRenderTarget->DrawLine(p1, p2, pBrush, 1, pStrokeStyle);
 				}
 
 				for (auto k = pLineStyle->symbol.begin(); k != pLineStyle->symbol.end(); k++)
 				{
 					D2D1_POINT_2F pSymbol;
-					pSymbol.x = (FLOAT)((*k)->position / 0.32)*2;
+					pSymbol.x = (FLOAT)((*k)->position / 0.32) * 2;
 					pSymbol.y = (rect.bottom - rect.top) / 2;
-
 					Draw((*k)->reference, pRenderTarget, pBrush, pStrokeStyle, pSymbol, (FLOAT)((*k)->_rotation), ENCCommon::DISPLAY_SYMBOL_SCALE, paletteName);
 				}
 			}
 		}
-		else
-		{
-			//OutputDebugString(_T("invalied linestyle count\n"));
-		}
 	}
 }
 
-void S100PCManager::DrawAreaFill(std::wstring _symbolName, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, std::wstring paletteName)
+void S100PCManager::DrawAreaFill(const std::string& _symbolName, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, const std::string& paletteName)
 {
 	AreaFill* pAreaFill = GetAreaFill(_symbolName);
-
 	if (!pAreaFill)
 	{
 		return;
 	}
-
 	DrawAreaFill(pAreaFill, pRenderTarget, pBrush, pStrokeStyle, paletteName);
 }
 
-void S100PCManager::DrawAreaFill(AreaFill* areaFill, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, std::wstring paletteName)
+void S100PCManager::DrawAreaFill(AreaFill* areaFill, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, const std::string& paletteName)
 {
 	SVGReader* pSVG = s100SymbolManager.GetSVG(areaFill->_symbolReference);
 
@@ -299,21 +317,20 @@ void S100PCManager::DrawAreaFill(AreaFill* areaFill, ID2D1RenderTarget* pRenderT
 }
 
 void S100PCManager::Draw(
-	std::wstring& _symbolName,
+	const std::string& _symbolName,
 	ID2D1RenderTarget* pRenderTarget,
 	ID2D1SolidColorBrush* pBrush,
 	ID2D1StrokeStyle1* pStrokeStyle,
 	D2D1_POINT_2F point,
 	FLOAT rotation,
 	FLOAT scale,
-	std::wstring paletteName)
+	const std::string& paletteName)
 {
 	SVGReader* pSVG = s100SymbolManager.GetSVG(_symbolName);
 
-	//inform01
-	if (!wcscmp(_symbolName.c_str(),L"INFORM01"))
+	if (_symbolName == "INFORM01")
 	{
-		if (ENCCommon::Show_INFORM01==false)
+		if (ENCCommon::Show_INFORM01 == false)
 		{
 			return;
 		}
@@ -321,14 +338,12 @@ void S100PCManager::Draw(
 
 	if (!pSVG)
 	{
-		pSVG = s100SymbolManager.GetSVG(L"QUESMRK1");
+		pSVG = s100SymbolManager.GetSVG("QUESMRK1");
 		if (!pSVG)
 		{
 			return;
 		}
 	}
-
-	D2D1_POINT_2F yReversePoint = { point.x, point.y };
 
 	D2D1::Matrix3x2F rot = D2D1::Matrix3x2F::Rotation(rotation);
 	D2D1::Matrix3x2F trans = D2D1::Matrix3x2F::Translation(point.x, point.y);
@@ -402,25 +417,29 @@ void S100PCManager::CreateSVGGeometry(ID2D1Factory1* m_pDirect2dFactory)
 }
 
 
-AreaFill* S100PCManager::GetAreaFill(std::wstring _name)
+AreaFill* S100PCManager::GetAreaFill(const std::string& _name)
 {
 	for (auto i = areaFills.begin(); i != areaFills.end(); i++)
 	{
-		if (!i->_name.compare(_name))
+		if (i->_name == _name)
 		{
 			return &(*i);
 		}
 	}
-
 	return nullptr;
 }
 
+AreaFill* S100PCManager::GetAreaFill(const std::wstring& _name)
+{
+	return GetAreaFill(LibMFCUtil::WStringToString(_name));
+}
 
-D2D1_RECT_F S100PCManager::GetLineStyleRect(CString _name, FLOAT scale)
+
+D2D1_RECT_F S100PCManager::GetLineStyleRect(const std::string& _name, FLOAT scale)
 {
 	D2D1_RECT_F rect = { 0, 0, 100, 100 };
 
-	auto keyValue = lineStyles.mapLineStyle.find(std::wstring(_name));
+	auto keyValue = lineStyles.mapLineStyle.find(_name);
 	if (keyValue != lineStyles.mapLineStyle.end())
 	{
 		if (keyValue->second->subClassType == LineStylesPackage::SubClassTypeOfAbstractLineStyle::eLineStyle)
@@ -487,8 +506,13 @@ D2D1_RECT_F S100PCManager::GetLineStyleRect(CString _name, FLOAT scale)
 	return rect;
 }
 
+D2D1_RECT_F S100PCManager::GetLineStyleRect(const std::wstring& _name, FLOAT scale)
+{
+	return GetLineStyleRect(LibMFCUtil::WStringToString(_name), scale);
+}
 
-void S100PCManager::CreateLineImage(ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, std::wstring paletteName)
+
+void S100PCManager::CreateLineImage(ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, const std::string& paletteName)
 {
 	for (
 		auto i = lineStyles.mapLineStyle.begin();
@@ -497,7 +521,7 @@ void S100PCManager::CreateLineImage(ID2D1Factory1* pDirect2dFactory, IWICImaging
 		)
 	{
 		IWICBitmap *pBitmap = nullptr;
-		D2D1_RECT_F lineStyleRect = GetLineStyleRect(i->second->name.c_str(), 2);
+		D2D1_RECT_F lineStyleRect = GetLineStyleRect(i->second->name, 2);
 		HRESULT hr = pImagingFactory->CreateBitmap((UINT)(lineStyleRect.right - lineStyleRect.left), (UINT)(lineStyleRect.bottom - lineStyleRect.top), GUID_WICPixelFormat32bppPRGBA, WICBitmapCacheOnDemand, &pBitmap);
 
 		if (!SUCCEEDED(hr))
@@ -521,11 +545,11 @@ void S100PCManager::CreateLineImage(ID2D1Factory1* pDirect2dFactory, IWICImaging
 			pCurrentRenderTarget->EndDraw();
 		}
 
-		lineImageMap.SetAt(i->second->name.c_str(), pBitmap);
+		lineImageMap.SetAt(CString(LibMFCUtil::StringToWString(i->second->name).c_str()), pBitmap);
 	}
 }
 
-AreaPatternBitmap* S100PCManager::CreateBitmapImage(AreaFill* pAreaFill, ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, std::wstring paletteName)
+AreaPatternBitmap* S100PCManager::CreateBitmapImage(AreaFill* pAreaFill, ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, const std::string& paletteName)
 {
 	D2D1_RECT_F rect = GetAreaFillRect(pAreaFill, ENCCommon::DISPLAY_SYMBOL_SCALE);
 
@@ -607,7 +631,7 @@ ID2D1BitmapBrush* S100PCManager::CreateBitmapBrush(AreaPatternBitmap* patternBit
 	return nullptr;
 }
 
-void S100PCManager::CreateBitmapImage(ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, std::wstring paletteName)
+void S100PCManager::CreateBitmapImage(ID2D1Factory1* pDirect2dFactory, IWICImagingFactory* pImagingFactory, ID2D1StrokeStyle1* pStrokeStyleS101Solid, const std::string& paletteName)
 {
 	for (auto i = areaFills.begin(); i != areaFills.end(); i++)
 	{
@@ -617,12 +641,11 @@ void S100PCManager::CreateBitmapImage(ID2D1Factory1* pDirect2dFactory, IWICImagi
 			auto areaPatternBitmap = CreateBitmapImage(pAreaFill, pDirect2dFactory, pImagingFactory, pStrokeStyleS101Solid, paletteName);
 			if (areaPatternBitmap)
 			{
-				areaFillInfo.patternMap.insert({ pAreaFill->_name.c_str(), areaPatternBitmap });
+				areaFillInfo.patternMap.insert({ CString(LibMFCUtil::StringToWString(pAreaFill->_name).c_str()), areaPatternBitmap });
 			}
 		}
 	}
 }
-
 
 D2D1_RECT_F S100PCManager::GetAreaFillRect(AreaFill* pAreaFill, FLOAT scale)
 {
@@ -703,16 +726,20 @@ void S100PCManager::InverseMatrixBitmapBrush(D2D1::Matrix3x2F matrix)
 }
 
 
-IWICBitmap* S100PCManager::GetLineImage(std::wstring& key)
+IWICBitmap* S100PCManager::GetLineImage(const std::string& key)
 {
 	IWICBitmap* result;
-
-	// If you can't find it,
-	if (0 == lineImageMap.Lookup(key.c_str(), result))
+	CString wkey(LibMFCUtil::StringToWString(key).c_str());
+	if (0 == lineImageMap.Lookup(wkey, result))
 	{
 		return nullptr;
 	}
 	return result;
+}
+
+IWICBitmap* S100PCManager::GetLineImage(const std::wstring& key)
+{
+	return GetLineImage(LibMFCUtil::WStringToString(key));
 }
 
 S100ColorProfile* S100PCManager::GetS100ColorProfile()

@@ -22,30 +22,38 @@ AreaFill::~AreaFill()
 
 }
 
-bool AreaFill::Read(std::wstring path)
+bool AreaFill::Read(const std::string& path)
 {
 	return ReadByPugi(path);
 }
 
-std::wstring getAttributeValue(const std::wstring& input, const std::wstring& attributeName) {
-	std::wstring attributePattern = attributeName + L"=\"";
+bool AreaFill::Read(const std::wstring& path)
+{
+	return ReadByPugi(LibMFCUtil::WStringToString(path));
+}
+
+static std::string getAttributeValueStr(const std::string& input, const std::string& attributeName)
+{
+	std::string attributePattern = attributeName + "=\"";
 	size_t startPos = input.find(attributePattern);
 
-	if (startPos == std::string::npos) {
-		return L""; // 속성을 찾을 수 없음
+	if (startPos == std::string::npos)
+	{
+		return "";
 	}
 
 	startPos += attributePattern.length();
-	size_t endPos = input.find(L"\"", startPos);
+	size_t endPos = input.find("\"", startPos);
 
-	if (endPos == std::string::npos) {
-		return L""; // 닫는 따옴표를 찾을 수 없음
+	if (endPos == std::string::npos)
+	{
+		return "";
 	}
 
 	return input.substr(startPos, endPos - startPos);
 }
 
-bool AreaFill::ReadByPugi(std::wstring path)
+bool AreaFill::ReadByPugi(const std::string& path)
 {
 	try
 	{
@@ -57,8 +65,7 @@ bool AreaFill::ReadByPugi(std::wstring path)
 			std::string name = child.name();
 			if (name.find("S100Meta") != std::string::npos)
 			{
-				auto w = pugi::as_wide(child.value());
-				_name = getAttributeValue(w, L"name");
+				_name = getAttributeValueStr(child.value(), "name");
 			}
 			else if (name.find("symbolFill") != std::string::npos)
 			{
@@ -67,11 +74,11 @@ bool AreaFill::ReadByPugi(std::wstring path)
 					auto instructionName = instruction.name();
 					if (!strcmp(instructionName, "areaCRS"))
 					{
-						_areaCRS = pugi::as_wide(instruction.child_value());
+						_areaCRS = instruction.child_value();
 					}
 					else if (!strcmp(instructionName, "symbol"))
 					{
-						_symbolReference = pugi::as_wide(instruction.attribute("reference").value());
+						_symbolReference = instruction.attribute("reference").value();
 						offset_x = instruction.child("offset").child("x").text().as_double();
 						offset_y = instruction.child("offset").child("y").text().as_double();
 					}
@@ -87,7 +94,6 @@ bool AreaFill::ReadByPugi(std::wstring path)
 					}
 				}
 			}
-
 		}
 	}
 	catch (std::exception e)
@@ -95,6 +101,11 @@ bool AreaFill::ReadByPugi(std::wstring path)
 		return false;
 	}
 	return true;
+}
+
+bool AreaFill::ReadByPugi(const std::wstring& path)
+{
+	return ReadByPugi(LibMFCUtil::WStringToString(path));
 }
 
 // Initialization is performed to use COM objects.
@@ -108,12 +119,12 @@ bool AreaFill::initializeCOM() {
 	return true;
 }
 
-std::wstring AreaFill::getNodeValue(pugi::xml_node node)
+std::string AreaFill::getNodeValue(pugi::xml_node node)
 {
-	return L"";
+	return "";
 }
 
-std::wstring AreaFill::getNodeAttribute(pugi::xml_node node)
+std::string AreaFill::getNodeAttribute(pugi::xml_node node)
 {
-	return L"";
+	return "";
 }

@@ -9,42 +9,58 @@ Palette::~Palette()
 {
 }
 
-void Palette::SetName(std::wstring value) 
+void Palette::SetName(const std::string& value)
 {
 	name = value;
 }
 
-std::wstring Palette::GetName()
+void Palette::SetName(const std::wstring& value)
+{
+	name = LibMFCUtil::WStringToString(value);
+}
+
+std::string Palette::GetName()
 {
 	return name;
 }
 
-void Palette::SetItem(std::wstring key, libS100Engine::Item value) 
+std::wstring Palette::GetNameW()
 {
-	item.insert({key,value});
+	return LibMFCUtil::StringToWString(name);
 }
 
-libS100Engine::Item* Palette::GetItem(std::wstring& key) 
+void Palette::SetItem(const std::string& key, libS100Engine::Item value)
+{
+	item.insert({ key, value });
+}
+
+void Palette::SetItem(const std::wstring& key, libS100Engine::Item value)
+{
+	item.insert({ LibMFCUtil::WStringToString(key), value });
+}
+
+libS100Engine::Item* Palette::GetItem(const std::string& key)
 {
 	auto find = item.find(key);
-
 	if (find == item.end())
 	{
 		return nullptr;
 	}
-	
 	return &find->second;
 }
 
-bool Palette::IsItem(std::wstring key) 
+libS100Engine::Item* Palette::GetItem(const std::wstring& key)
 {
-	auto  result = item.find(key);
-	if (result==item.end()) 
-	{
-		return false;
-	}
-	else 
-	{
-		return true;
-	}
+	auto skey = LibMFCUtil::WStringToString(key);
+	return GetItem(skey);
+}
+
+bool Palette::IsItem(const std::string& key)
+{
+	return item.find(key) != item.end();
+}
+
+bool Palette::IsItem(const std::wstring& key)
+{
+	return IsItem(LibMFCUtil::WStringToString(key));
 }
