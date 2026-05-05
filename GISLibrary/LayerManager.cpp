@@ -924,7 +924,15 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 
 void LayerManager::DrawECDISMode(HDC& hDC, int offset)
 {
+	for (auto i = layers.begin(); i != layers.end(); i++)
+	{
+		auto layer = (*i);
 
+		if (!layer->IsS100Layer())
+		{
+			layer->Draw(hDC, scaler, offset);
+		}
+	}
 }
 
 void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)

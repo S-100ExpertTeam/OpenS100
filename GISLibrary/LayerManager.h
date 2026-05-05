@@ -81,7 +81,7 @@ public:
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
 
 	void BuildPortrayalCatalogue(Layer* l);
-	void S101RebuildPortrayal(/*PORTRAYAL_BUILD_TYPE type = PORTRAYAL_BUILD_TYPE::ALL*/);
+	void S101RebuildPortrayal();
 	void Draw(HDC &hDC, int offset = 0);
 	void DrawBackground(HDC &hDC, int offset = 0);
 

@@ -68,8 +68,8 @@ BOOL DATASET_SUPPORTdlg::OnInitDialog()
 	m_list2.SetExtendedStyle(m_list2.GetExtendedStyle()| LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
 
 
-	CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath + DataSetManagerSupport::GetInstance().m_FileName;
-	LoadFile(filepath);
+	//CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath + DataSetManagerSupport::GetInstance().m_FileName;
+	//LoadFile(filepath);
 
 	//// Get Files
 	//auto DSItems = DataSetManagerSupport::GetInstance().selectAllDataDS_SP("DatasetFiles");
@@ -289,8 +289,9 @@ void DATASET_SUPPORTdlg::OnDestroy()
 		if (DataSetManagerSupport::GetInstance().tryDeleteFile(stfilePath))
 			ec->Save(stfilePath);
 	}
-	else
+	else {
 		ec->Save(stfilePath);
+	}
 
 	
 	bool blayercreate = true;
@@ -309,8 +310,9 @@ void DATASET_SUPPORTdlg::OnDestroy()
 		}
 	}
 
-	if(blayercreate)
+	if (blayercreate) {
 		theApp.gisLib->GetLayerManager()->AddLayerFront(filePath);
+	}
 	
 	theApp.m_pDockablePaneLayerManager.UpdateList();
 

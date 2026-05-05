@@ -4608,7 +4608,7 @@ std::wstring S101Cell::GetChartName()
 	return std::wstring(GetFileName());
 }
 
-std::wstring S101Cell::GetEditionNumberAsWstring()
+std::string S101Cell::GetEditionNumber()
 {
 	CString Ened = m_dsgir.m_dsid.m_ened;
 	auto index = Ened.Find(L".");
@@ -4620,15 +4620,15 @@ std::wstring S101Cell::GetEditionNumberAsWstring()
 	// m is Update Number.
 	// I'll return the Edition Number here.
 	// e.g. If it's 1.4, return 1
-	return std::wstring(result);
+	return pugi::as_utf8(result);
 }
 
 std::string S101Cell::GetUpdateNumber()
 {
-	return pugi::as_utf8(GetUpdateNumberAsWstring());
+	return pugi::as_utf8(GetUpdateNumberW());
 }
 
-std::wstring S101Cell::GetUpdateNumberAsWstring()
+std::wstring S101Cell::GetUpdateNumberW()
 {
 	auto Ened = m_dsgir.m_dsid.m_dsed;
 
@@ -4643,7 +4643,7 @@ std::wstring S101Cell::GetUpdateNumberAsWstring()
 	return std::wstring(result);
 }
 
-std::wstring S101Cell::GetIssueDateAsWstring()
+std::wstring S101Cell::GetIssueDateW()
 {
 	CString Dsrd = m_dsgir.m_dsid.m_dsrd;
 

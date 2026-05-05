@@ -2007,10 +2007,10 @@ void COpenS100View::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
 
-	CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath + DataSetManagerSupport::GetInstance().m_FileName;
-	theApp.gisLib->AddLayer(filepath);
-	
-	theApp.m_pDockablePaneLayerManager.UpdateList();
+	//CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath + DataSetManagerSupport::GetInstance().m_FileName;
+	//theApp.gisLib->AddLayer(filepath);
+	//
+	//theApp.m_pDockablePaneLayerManager.UpdateList();
 
 
 	TranslationPackageType* translationPackage = new TranslationPackageType;
