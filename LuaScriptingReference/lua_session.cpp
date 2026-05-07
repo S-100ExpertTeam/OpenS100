@@ -75,13 +75,15 @@ void lua_session::check_status(int status)
 	if (status != 0 && status != LUA_YIELD)
 	{
 		const char *message = lua_tostring(m_l, -1);
-
-		std::cerr << message << "\n";
-
-		//assert(false);
-
-		//exit(3);
-		return;
+		if (message)
+		{
+			std::string msg = std::string("[Lua Error] ") + message + "\n";
+			OutputDebugStringA(msg.c_str());
+		}
+		else
+		{
+			OutputDebugStringA("[Lua Error] (no message)\n");
+		}
 	}
 }
 
