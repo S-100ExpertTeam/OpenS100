@@ -74,6 +74,8 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 		return;
 	}
 
+	rt->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
+
 	auto surface = (SSurface*)fr->GetGeometry();
 
 	if (areaFill)
@@ -238,6 +240,8 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 			break;
 		}
 	}
+
+	rt->SetAntialiasMode(D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 }
 
 void SENC_AreaInstruction::ChangePallete(PortrayalCatalogue *pc)
