@@ -2,6 +2,7 @@
 #include "GeometryCommands.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace Part9a
 {
@@ -65,8 +66,8 @@ namespace Part9a
 			{
 				crs = Command::GetCRSTypeFromString(tokens[0]);
 
-				double x = std::stod(tokens[1]);
-				double y = std::stod(tokens[2]);
+				double x = cpp_util::stod(tokens[1]);
+				double y = cpp_util::stod(tokens[2]);
 				point.Set(x, y);
 			}
 			catch (const std::exception& e) 
@@ -105,9 +106,9 @@ namespace Part9a
 			try
 			{
 				CRSType = Command::GetCRSTypeFromString(tokens[0]);
-				direction = std::stod(tokens[1]);
+				direction = cpp_util::stod(tokens[1]);
 				crsLength = Command::GetCRSTypeFromString(tokens[2]);
-				length = std::stod(tokens[3]);
+				length = cpp_util::stod(tokens[3]);
 			}
 			catch (const std::exception& e) 
 			{
@@ -185,8 +186,8 @@ namespace Part9a
 			{
 				try
 				{
-					double x = std::stod(tokens[i]);
-					double y = std::stod(tokens[i + 1]);
+					double x = cpp_util::stod(tokens[i]);
+					double y = cpp_util::stod(tokens[i + 1]);
 					points.push_back(Part9a::Point(x, y));
 				}
 				catch (const std::exception& e) 
@@ -230,12 +231,12 @@ namespace Part9a
 		{
 			try
 			{
-				double startPointX = std::stod(tokens[0]);
-				double startPointY = std::stod(tokens[1]);
-				double medianPointX = std::stod(tokens[2]);
-				double medianPointY = std::stod(tokens[3]);
-				double endPointX = std::stod(tokens[4]);
-				double endPointY = std::stod(tokens[5]);
+				double startPointX = cpp_util::stod(tokens[0]);
+				double startPointY = cpp_util::stod(tokens[1]);
+				double medianPointX = cpp_util::stod(tokens[2]);
+				double medianPointY = cpp_util::stod(tokens[3]);
+				double endPointX = cpp_util::stod(tokens[4]);
+				double endPointY = cpp_util::stod(tokens[5]);
 
 				startPoint.Set(startPointX, startPointY);
 				medianPoint.Set(medianPointX, medianPointY);
@@ -279,13 +280,13 @@ namespace Part9a
 		{
 			try
 			{
-				double centerX = std::stod(tokens[0]);
-				double centerY = std::stod(tokens[1]);
-				radius = std::stod(tokens[2]);
+				double centerX = cpp_util::stod(tokens[0]);
+				double centerY = cpp_util::stod(tokens[1]);
+				radius = cpp_util::stod(tokens[2]);
 				center.Set(centerX, centerY);
 				if (tokens.size() > 3) 
 				{
-					startAngle = std::stod(tokens[3]);
+					startAngle = cpp_util::stod(tokens[3]);
 				} 
 				else 
 				{
@@ -293,7 +294,7 @@ namespace Part9a
 				}
 				if (tokens.size() > 4) 
 				{
-					angularDistance = std::stod(tokens[4]);
+					angularDistance = cpp_util::stod(tokens[4]);
 				} 
 				else 
 				{
@@ -339,13 +340,13 @@ namespace Part9a
 		{
 			try
 			{
-				double centerX = std::stod(tokens[0]);
-				double centerY = std::stod(tokens[1]);
-				outerRadius = std::stod(tokens[2]);
+				double centerX = cpp_util::stod(tokens[0]);
+				double centerY = cpp_util::stod(tokens[1]);
+				outerRadius = cpp_util::stod(tokens[2]);
 				center.Set(centerX, centerY);
 				if (tokens.size() > 3) 
 				{
-					innerRadius = std::stod(tokens[3]);
+					innerRadius = cpp_util::stod(tokens[3]);
 				} 
 				else 
 				{
@@ -353,7 +354,7 @@ namespace Part9a
 				}
 				if (tokens.size() > 4) 
 				{
-					startAngle = std::stod(tokens[4]);
+					startAngle = cpp_util::stod(tokens[4]);
 				} 
 				else 
 				{
@@ -361,7 +362,7 @@ namespace Part9a
 				}
 				if (tokens.size() > 5) 
 				{
-					angularDistance = std::stod(tokens[5]);
+					angularDistance = cpp_util::stod(tokens[5]);
 				} 
 				else 
 				{

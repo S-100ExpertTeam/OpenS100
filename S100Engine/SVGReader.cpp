@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "SVGReader.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <pugixml.hpp>
 
 #ifdef _DEBUG
@@ -169,7 +171,7 @@ bool GetRotation(char* attributeContent, int& rotation)
 	{
 		std::vector<std::string> sVecTemp;
 		simpleUse::split<std::string>(std::string(attributeContent), "rotate ()", sVecTemp);
-		rotation = std::stoi(sVecTemp[0]);
+		rotation = cpp_util::stoi(sVecTemp[0]);
 	}
 	catch (std::exception ex)
 	{

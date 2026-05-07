@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <stdexcept>
 
 std::map<lua_State*, lua_session*> lua_session::m_state_session_map;
 
@@ -29,10 +30,14 @@ void lua_session::specialize()
 	peek<lua_ref_ptr>(0);
 }
 
+struct LuaPanicException : public std::runtime_error {
+	using std::runtime_error::runtime_error;
+};
+
 static int atpanic(lua_State *l)
 {
-	std::cerr << "Lua panic!\n";
-	return 2;
+	const char* msg = lua_tostring(l, -1);
+	throw LuaPanicException(msg ? msg : "Lua panic (no message)");
 }
 
 lua_session::lua_session()

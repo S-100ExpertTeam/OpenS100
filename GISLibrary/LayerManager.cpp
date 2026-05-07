@@ -37,6 +37,7 @@
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include <ctime> 
 #include <mmsystem.h> 
@@ -1843,7 +1844,7 @@ int LayerManager::pathToProductNumber(CString path)
 		std::wstring strProductNumber = name.Left(3);
 
 		try {
-			return std::stoi(strProductNumber);
+			return cpp_util::stoi(strProductNumber);
 		}
 		catch (const std::exception& e) {
 		}

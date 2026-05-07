@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "S100PCLineStylesReader.h"
 
-#include "../LatLonUtility/LatLonUtility.h"
+#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include <iostream>
 #include <filesystem>
@@ -119,7 +120,7 @@ namespace S100XMLReader
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "intervalLength"))
 			{
-				((LineStylesPackage::LineStyle*)pLineStyle)->intervalLength = std::stod(instruction.child_value());
+				((LineStylesPackage::LineStyle*)pLineStyle)->intervalLength = cpp_util::stod(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "pen"))
 			{
@@ -143,7 +144,7 @@ namespace S100XMLReader
 
 					if (!strcmp(attriName, "offset"))
 					{
-						pLS->offset = std::stod(attri.value());
+						pLS->offset = cpp_util::stod(attri.value());
 					}
 
 				}
@@ -177,7 +178,7 @@ namespace S100XMLReader
 				auto instructionName = instruction.name();
 				if (!strcmp(instructionName, "intervalLength"))
 				{
-					((LineStylesPackage::LineStyle*)*pLineStyle)->intervalLength = std::stod(instruction.child_value());
+					((LineStylesPackage::LineStyle*)*pLineStyle)->intervalLength = cpp_util::stod(instruction.child_value());
 				}
 				else if (!strcmp(instructionName, "pen"))
 				{
@@ -206,7 +207,7 @@ namespace S100XMLReader
 						auto attriName = attri.name();
 						if (!strcmp(attriName, "offset"))
 						{
-							pLS->offset = std::stod(attri.value());
+							pLS->offset = cpp_util::stod(attri.value());
 						}
 					}
 
@@ -225,7 +226,7 @@ namespace S100XMLReader
 			auto attriName = attri.name();
 			if (!strcmp(attriName, "width"))
 			{
-				pPen->width = std::stod(attri.value());
+				pPen->width = cpp_util::stod(attri.value());
 			}
 		}
 
@@ -248,11 +249,11 @@ namespace S100XMLReader
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "start"))
 			{
-				pDash->start = std::stod(instruction.child_value());
+				pDash->start = cpp_util::stod(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "length"))
 			{
-				pDash->length = std::stod(instruction.child_value());
+				pDash->length = cpp_util::stod(instruction.child_value());
 			}
 		}
 	}
@@ -268,7 +269,7 @@ namespace S100XMLReader
 			}
 			else if (!strcmp(attriName, "rotation"))
 			{
-				pSymbol->_rotation = std::stod(attri.value());
+				pSymbol->_rotation = cpp_util::stod(attri.value());
 			}
 		}
 
@@ -277,7 +278,7 @@ namespace S100XMLReader
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "position"))
 			{
-				pSymbol->position = std::stod(instruction.child_value());
+				pSymbol->position = cpp_util::stod(instruction.child_value());
 			}
 		}
 
@@ -290,7 +291,7 @@ namespace S100XMLReader
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "intervalLength"))
 			{
-				pLineStyle->intervalLength = std::stod(instruction.child_value());
+				pLineStyle->intervalLength = cpp_util::stod(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "pen"))
 			{

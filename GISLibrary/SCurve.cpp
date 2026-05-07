@@ -8,6 +8,8 @@
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <sstream>
 
 #include <boost/geometry.hpp>
@@ -106,7 +108,7 @@ SGeometryType SCurve::GetType()
 
 int SCurve::GetRCID()
 {
-	return std::stoi(GetID());
+	return cpp_util::stoi(GetID());
 }
 
 int SCurve::GetNumPoints() const

@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "S100_Time.h"
+
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <iostream>
 #include <sstream>
 #include <iomanip>
@@ -44,8 +47,8 @@ std::string S100_Time::ToString() const {
 //    std::regex offsetRegex(R"(([+-])(\d{2})(\d{2})$)");
 //    std::smatch matches;
 //    if (std::regex_search(time, matches, offsetRegex)) {
-//        utcOffsetHours = std::stoi(matches[2].str()) * (matches[1].str() == "+" ? 1 : -1);
-//        utcOffsetMinutes = std::stoi(matches[3].str()) * (matches[1].str() == "+" ? 1 : -1);
+//        utcOffsetHours = cpp_util::stoi(matches[2].str()) * (matches[1].str() == "+" ? 1 : -1);
+//        utcOffsetMinutes = cpp_util::stoi(matches[3].str()) * (matches[1].str() == "+" ? 1 : -1);
 //    }
 //}
 
@@ -67,8 +70,8 @@ void S100_Time::ProcessUtcOffset(const std::string& time) {
             utcOffsetMinutes = 0;
         }
         else {
-            utcOffsetHours = std::stoi(matches[2].str()) * (matches[1].str() == "+" ? 1 : -1);
-            utcOffsetMinutes = std::stoi(matches[3].str()) * (matches[1].str() == "+" ? 1 : -1);
+            utcOffsetHours = cpp_util::stoi(matches[2].str()) * (matches[1].str() == "+" ? 1 : -1);
+            utcOffsetMinutes = cpp_util::stoi(matches[3].str()) * (matches[1].str() == "+" ? 1 : -1);
         }
     }
 }

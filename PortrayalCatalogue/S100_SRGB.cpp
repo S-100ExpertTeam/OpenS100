@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "S100_SRGB.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 S100_SRGB::S100_SRGB()
 {
 
@@ -19,17 +21,17 @@ void S100_SRGB::GetContents(pugi::xml_node Node)
 		if (!strcmp(instructionName, "red"))
 		{
 			const char* val = instruction.child_value();
-			if (val && *val) red = std::stoi(val);
+			if (val && *val) red = cpp_util::stoi(val);
 		}
 		else if (!strcmp(instructionName, "green"))
 		{
 			const char* val = instruction.child_value();
-			if (val && *val) green = std::stoi(val);
+			if (val && *val) green = cpp_util::stoi(val);
 		}
 		else if (!strcmp(instructionName, "blue"))
 		{
 			const char* val = instruction.child_value();
-			if (val && *val) blue = std::stoi(val);
+			if (val && *val) blue = cpp_util::stoi(val);
 		}
 	}
 }

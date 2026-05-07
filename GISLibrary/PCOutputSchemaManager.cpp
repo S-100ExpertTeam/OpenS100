@@ -41,6 +41,7 @@
 #include "../PortrayalCatalogue/S100_AlertReference.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
@@ -207,7 +208,7 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 			ssr->SetRCNM(spatialType);
 
 			// string to int
-			ssr->reference = std::stoi(std::string(element[1]));
+			ssr->reference = cpp_util::stoi(std::string(element[1]));
 		}
 		
 		//ssr->SetRCNM(sr->GetType());

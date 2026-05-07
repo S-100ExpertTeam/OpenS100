@@ -3,6 +3,8 @@
 #include "GISLibrary.h"
 #include "SCommonFuction.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <string>
 #include <filesystem>
 #include <cctype>
@@ -88,7 +90,7 @@ int S100Utilities::GetLevel(std::wstring path)
 		auto levelStr = name.substr(7, 1);
 		if (std::isdigit(levelStr.at(0)))
 		{
-			auto level = std::stoi(levelStr);
+			auto level = cpp_util::stoi(levelStr);
 			return level;
 		}
 	}

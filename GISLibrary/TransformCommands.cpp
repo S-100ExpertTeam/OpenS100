@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "TransformCommands.h"
+
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace Part9a
 {
@@ -33,8 +35,8 @@ namespace Part9a
 		{
 			try 
 			{
-				xOffsetMM = std::stod(parts[0]);
-				yOffsetMM = std::stod(parts[1]);
+				xOffsetMM = cpp_util::stod(parts[0]);
+				yOffsetMM = cpp_util::stod(parts[1]);
 			} 
 			catch (const std::exception& e) 
 			{
@@ -90,10 +92,10 @@ namespace Part9a
 			linePlacementMode = parts[0];
 			try 
 			{
-				offset = std::stod(parts[1]);
+				offset = cpp_util::stod(parts[1]);
 				if (parts.size() > 2) 
 				{
-					endOffset = std::stod(parts[2]);
+					endOffset = cpp_util::stod(parts[2]);
 				}
 				if (parts.size() > 3) 
 				{
@@ -221,7 +223,7 @@ namespace Part9a
 			rotationCRS = parts[0];
 			try 
 			{
-				rotation = std::stod(parts[1]);
+				rotation = cpp_util::stod(parts[1]);
 			} 
 			catch (const std::exception& e) 
 			{
@@ -268,7 +270,7 @@ namespace Part9a
 		// ScaleFactor:scaleFactor 
 		try 
 		{
-			scaleFactor = std::stod(input);
+			scaleFactor = cpp_util::stod(input);
 		} 
 		catch (const std::exception& e) 
 		{

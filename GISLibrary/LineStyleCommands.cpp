@@ -2,6 +2,7 @@
 #include "LineStyleCommands.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace Part9a
 {
@@ -36,13 +37,13 @@ namespace Part9a
 			name = values[0];
 			try
 			{
-				intervalLength = std::stod(values[1]);
-				width = std::stod(values[2]);
+				intervalLength = cpp_util::stod(values[1]);
+				width = cpp_util::stod(values[2]);
 				token = values[3];
 				
 				if (values.size() >= 5)
 				{
-					transparency = std::stod(values[4]);
+					transparency = cpp_util::stod(values[4]);
 				}
 				if (values.size() >= 6)
 				{
@@ -54,7 +55,7 @@ namespace Part9a
 				}
 				if (values.size() >= 8)
 				{
-					offset = std::stod(values[7]);
+					offset = cpp_util::stod(values[7]);
 				}
 			}
 			catch (const std::exception& e)
@@ -96,10 +97,10 @@ namespace Part9a
 			reference = values[0];
 			try
 			{
-				position = std::stod(values[1]);
+				position = cpp_util::stod(values[1]);
 				if (values.size() >= 3)
 				{
-					rotation = std::stod(values[2]);
+					rotation = cpp_util::stod(values[2]);
 				}
 				if (values.size() >= 4)
 				{
@@ -118,7 +119,7 @@ namespace Part9a
 				}
 				if (values.size() >= 5)
 				{
-					scaleFactor = std::stod(values[4]);
+					scaleFactor = cpp_util::stod(values[4]);
 				}
 			}
 			catch (const std::exception& e) 
@@ -156,8 +157,8 @@ namespace Part9a
 		std::vector<std::string> values = LatLonUtility::Split(input, ",");
 		if (values.size() == 2) {
 			try {
-				start = std::stod(values[0]);
-				length = std::stod(values[1]);
+				start = cpp_util::stod(values[0]);
+				length = cpp_util::stod(values[1]);
 			} catch (const std::exception& e) {
 				init();
 			}

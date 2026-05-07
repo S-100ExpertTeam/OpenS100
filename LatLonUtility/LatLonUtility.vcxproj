@@ -252,9 +252,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cpp_util.cpp" />
     <ClCompile Include="LatLonUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cpp_util.h" />
     <ClInclude Include="LatLonUtility.h" />
     <ClInclude Include="Logger.h" />
   </ItemGroup>

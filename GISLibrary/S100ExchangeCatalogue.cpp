@@ -4,7 +4,8 @@
 #include "Inventory.h"
 #include "S100Utilities.h"
 
-#include "../LatLonUtility/LatLonUtility.h"
+#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 S100ExchangeCatalogue::S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1, LayerManager* parent) : SpatialObject(d2d1)
 {
@@ -113,8 +114,8 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
 
                     for (int i = 0; i < posCnt; i += 2)
                     {
-                        double lon = std::stod(strPosList.at(i));
-                        double lat = std::stod(strPosList.at(i + 1));
+                        double lon = cpp_util::stod(strPosList.at(i));
+                        double lat = cpp_util::stod(strPosList.at(i + 1));
 
                         if (reverse)
                         {
@@ -508,8 +509,8 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
                         for (int i = 0; i < posCnt; i += 2)
                         {
-                            double lon = std::stod(strPosList.at(i));
-                            double lat = std::stod(strPosList.at(i + 1));
+                            double lon = cpp_util::stod(strPosList.at(i));
+                            double lat = cpp_util::stod(strPosList.at(i + 1));
 
                             if (reverse)
                                 curve->Add(lat, lon);

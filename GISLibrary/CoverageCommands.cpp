@@ -2,6 +2,7 @@
 #include "CoverageCommands.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace Part9a
 {
@@ -28,7 +29,7 @@ namespace Part9a
 		if (tokens.size() >= 2 && tokens.size() <= 3)
 		{
 			try {
-				decimals = std::stoi(tokens[0]);
+				decimals = cpp_util::stoi(tokens[0]);
 			}
 			catch (const std::exception&) {
 				decimals = 0; // Default value if parsing fails
@@ -39,7 +40,7 @@ namespace Part9a
 			if (tokens.size() == 3)
 			{
 				try {
-					buffer = std::stod(tokens[2]);
+					buffer = cpp_util::stod(tokens[2]);
 				}
 				catch (const std::exception&) {
 					buffer = 0.0; // Default value if parsing fails
@@ -92,7 +93,7 @@ namespace Part9a
 			if (tokens.size() > 4)
 			{
 				try {
-					rotationOffset = std::stod(tokens[4]);
+					rotationOffset = cpp_util::stod(tokens[4]);
 				}
 				catch (const std::exception&) {
 					rotationOffset = 0.0; // Default value if parsing fails
@@ -106,7 +107,7 @@ namespace Part9a
 			if (tokens.size() > 5)
 			{
 				try {
-					rotationFactor = std::stod(tokens[5]);
+					rotationFactor = cpp_util::stod(tokens[5]);
 				}
 				catch (const std::exception&) {
 					rotationFactor = 1.0; // Default value if parsing fails
@@ -120,7 +121,7 @@ namespace Part9a
 			if (tokens.size() > 6)
 			{
 				try {
-					scaleFactor = std::stod(tokens[6]);
+					scaleFactor = cpp_util::stod(tokens[6]);
 				}
 				catch (const std::exception&) {
 					scaleFactor = 1.0; // Default value if parsing fails
@@ -158,7 +159,7 @@ namespace Part9a
 		{
 			startToken = tokens[0];
 			try {
-				startTransparency = std::stod(tokens[1]);
+				startTransparency = cpp_util::stod(tokens[1]);
 			}
 			catch (const std::exception&) {
 				startTransparency = 0.0; // Default value if parsing fails
@@ -170,7 +171,7 @@ namespace Part9a
 				if (tokens.size() > 3)
 				{
 					try {
-						endTransparency = std::stod(tokens[3]);
+						endTransparency = cpp_util::stod(tokens[3]);
 					}
 					catch (const std::exception&) {
 						endTransparency = 0.0; // Default value if parsing fails
@@ -184,7 +185,7 @@ namespace Part9a
 				if (tokens.size() == 5)
 				{
 					try {
-						penWidth = std::stod(tokens[4]);
+						penWidth = cpp_util::stod(tokens[4]);
 					}
 					catch (const std::exception&) {
 						penWidth = 0.0; // Default value if parsing fails
@@ -231,13 +232,13 @@ namespace Part9a
 		{
 			label = tokens[0];
 			try {
-				lower = std::stod(tokens[1]);
+				lower = cpp_util::stod(tokens[1]);
 			}
 			catch (const std::exception&) {
 				lower = 0.0; // Default value if parsing fails
 			}
 			try {
-				upper = std::stod(tokens[2]);
+				upper = cpp_util::stod(tokens[2]);
 			}
 			catch (const std::exception&) {
 				upper = 0.0; // Default value if parsing fails

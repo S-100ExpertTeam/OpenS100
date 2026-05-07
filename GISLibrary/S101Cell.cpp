@@ -70,6 +70,7 @@
 #include "../FeatureCatalog/S100_CD_AttributeValueType.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include <sstream> 
 #include <iomanip>
@@ -4352,13 +4353,13 @@ GF::ObjectType* S101Cell::GetObjectType(int type, std::string id)
 
 std::wstring S101Cell::GetFeatureTypeCodeByID(std::wstring id)
 {
-	int rcid = std::stoi(id);
+	int rcid = cpp_util::stoi(id);
 	return GetFeatureTypeCodeByID(rcid);
 }
 
 std::wstring S101Cell::GetFeatureTypeCodeByID(std::string id)
 {
-	int rcid = std::stoi(id);
+	int rcid = cpp_util::stoi(id);
 	return GetFeatureTypeCodeByID(rcid);
 }
 
@@ -4376,7 +4377,7 @@ std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
 
 std::wstring S101Cell::GetInformationTypeCodeByID(std::wstring id)
 {
-	auto key = std::stoi(id);
+	auto key = cpp_util::stoi(id);
 	return GetInformationTypeCodeByID(key);
 }
 
@@ -5598,7 +5599,7 @@ Version S101Cell::GetVersion() const
 
    while (std::getline(stream, segment, L'.')) 
    {
-       parts.push_back(std::stoi(segment));
+       parts.push_back(cpp_util::stoi(segment));
    }
 
    if (parts.size() > 0)

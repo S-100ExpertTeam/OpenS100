@@ -7,6 +7,7 @@
 #include "ProcessS101.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -326,7 +327,7 @@ void S100Layer::SetProductNumber(std::wstring value)
 
 	if (tokens.size() == 2)
 	{
-		productNumber = std::stoi(tokens.at(1));
+		productNumber = cpp_util::stoi(tokens.at(1));
 	}
 }
 

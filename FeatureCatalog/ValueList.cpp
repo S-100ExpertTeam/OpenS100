@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "ValueList.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 ValueList::ValueList()
 {
 
@@ -18,7 +20,7 @@ void ValueList::GetContents(pugi::xml_node& node)
 		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:value"))
 		{
-			int Value = std::stoi(instruction.child_value());
+			int Value = cpp_util::stoi(instruction.child_value());
 			value.push_back(Value);
 		}
 	}

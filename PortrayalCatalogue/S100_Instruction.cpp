@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "S100_Instruction.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 S100_Instruction::S100_Instruction() : type(0)
 {
 
@@ -73,7 +75,7 @@ void S100_Instruction::SetDisplayPlane(const std::wstring& value) { displayPlane
 
 void S100_Instruction::SetDrawingPriority(const std::string& value)
 {
-	try   { drawingPriority = std::stoi(value); }
+	try   { drawingPriority = cpp_util::stoi(value); }
 	catch (...) { drawingPriority = 0; }
 }
 
@@ -89,7 +91,13 @@ void S100_Instruction::SetDrawingPriority(int value)
 
 void S100_Instruction::SetScaleMinimum(const std::string& value)
 {
-	try   { scaleMinimum = std::stoi(value); }
+	if (value.empty())
+	{
+		scaleMinimum = 0;
+		return;
+	}
+
+	try   { scaleMinimum = cpp_util::stoi(value); }
 	catch (...) { scaleMinimum = 0; }
 }
 
@@ -105,7 +113,7 @@ void S100_Instruction::SetScaleMinimum(int value)
 
 void S100_Instruction::SetScaleMaximum(const std::string& value)
 {
-	try   { scaleMaximum = std::stoi(value); }
+	try   { scaleMaximum = cpp_util::stoi(value); }
 	catch (...) { scaleMaximum = 0; }
 }
 

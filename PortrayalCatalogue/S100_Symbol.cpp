@@ -4,6 +4,8 @@
 
 #include "..\\S100Engine\\GraphicBasePackage_Enum.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 S100_Symbol::S100_Symbol()
 {
 	rotation = NULL;
@@ -61,7 +63,7 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		
 		if (!strcmp(instructionName, "rotation"))
 		{
-			rotation =std::stod(instruction.child_value());
+			rotation =cpp_util::stod(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "rotationCRS"))
 		{
@@ -72,7 +74,7 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		else if (!strcmp(instructionName, "scaleFactor"))
 		{
 			//scaleFactor = pugi::as_wide(instruction.child_value());
-			scaleFactor = std::stod(instruction.child_value());
+			scaleFactor = cpp_util::stod(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "areaPlacement"))
 		{

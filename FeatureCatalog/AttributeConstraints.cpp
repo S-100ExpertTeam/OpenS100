@@ -2,6 +2,8 @@
 #include "StringUtil.h"
 #include "AttributeConstraints.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 AttributeConstraints::AttributeConstraints()
 {
 
@@ -19,7 +21,7 @@ void AttributeConstraints::GetContents(pugi::xml_node& node)
 		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FD:stringLength"))
 		{
-			stringLength = std::stoi(instruction.child_value());
+			stringLength = cpp_util::stoi(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100FD:textPattern"))
 		{
@@ -31,7 +33,7 @@ void AttributeConstraints::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FD:precision"))
 		{
-			precision = std::stoi(instruction.child_value());
+			precision = cpp_util::stoi(instruction.child_value());
 		}
 	}
 }

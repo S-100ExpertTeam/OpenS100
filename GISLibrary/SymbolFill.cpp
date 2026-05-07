@@ -2,6 +2,7 @@
 #include "SymbolFill.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace Part9a
 {
@@ -32,8 +33,8 @@ namespace Part9a
 		{
 			symbol = tokens[0];
 			try {
-				v1.Set(std::stod(tokens[1]), std::stod(tokens[2]));
-				v2.Set(std::stod(tokens[3]), std::stod(tokens[4]));
+				v1.Set(cpp_util::stod(tokens[1]), cpp_util::stod(tokens[2]));
+				v2.Set(cpp_util::stod(tokens[3]), cpp_util::stod(tokens[4]));
 			}
 			catch (...) {
 				v1.Set(0.0, 0.0);

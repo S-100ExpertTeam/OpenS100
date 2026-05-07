@@ -3,7 +3,8 @@
 
 #include <string>
 
-#include "../LatLonUtility/LatLonUtility.h"
+#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace S100GML
 {
@@ -33,14 +34,14 @@ namespace S100GML
 
 		if (lowerCornerItem.size() == 2)
 		{
-			mbr.SetYMin(std::stod(lowerCornerItem.at(0)));
-			mbr.SetXMin(std::stod(lowerCornerItem.at(1)));
+			mbr.SetYMin(cpp_util::stod(lowerCornerItem.at(0)));
+			mbr.SetXMin(cpp_util::stod(lowerCornerItem.at(1)));
 		}
 
 		if (upperCornerItem.size() == 2)
 		{
-			mbr.SetYMax(std::stod(upperCornerItem.at(0)));
-			mbr.SetXMax(std::stod(upperCornerItem.at(1)));
+			mbr.SetYMax(cpp_util::stod(upperCornerItem.at(0)));
+			mbr.SetXMax(cpp_util::stod(upperCornerItem.at(1)));
 		}
 
 		std::string srsName = node_Envelpe.attribute("srsName").as_string();

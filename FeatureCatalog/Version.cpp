@@ -2,6 +2,8 @@
 #include "StringUtil.h"
 #include "Version.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <sstream>
 #include <vector>
 #include <string>
@@ -145,7 +147,7 @@ void Version::parseSource(const std::string& source)
 int Version::convertToInt(const std::string& str) const
 {
 	try {
-		return std::stoi(str);
+		return cpp_util::stoi(str);
 	}
 	catch (const std::exception& e) {
 		return 0;  
