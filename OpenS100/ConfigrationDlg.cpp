@@ -65,11 +65,13 @@ BOOL CConfigrationDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	CString    strOne = _T("Context Parameter");
-	CString    strS101 = _T("Features");
+	CString strOne = _T("Context Parameter");
+	CString strS101 = _T("Features");
+	CString strPortrayal = _T("Portrayal");
 
 	m_tab.InsertItem(1, strOne);
 	m_tab.InsertItem(2, strS101);
+	m_tab.InsertItem(3, strPortrayal);
 
 	CRect r;
 	m_tab.GetWindowRect(&r);
@@ -80,11 +82,16 @@ BOOL CConfigrationDlg::OnInitDialog()
 	mainTab.GetWindowRect(&r);
 	mainTab.MoveWindow(5, 25, r.Width() - 10, r.Height() - 30);
 
-	//// S-101
+	// S-101
 	s101Tab.Create(IDD_DIALOG_CONFIG_4, &m_tab);
 	s101Tab.ShowWindow(SW_HIDE);
 	s101Tab.MoveWindow(5, 25, r.Width() - 10, r.Height() - 30);
 	s101Tab.m_pParent = this;
+
+	// Portrayal
+	portrayalTab.Create(IDD_CDlg_Portrayal, &m_tab);
+	portrayalTab.ShowWindow(SW_HIDE);
+	portrayalTab.MoveWindow(5, 25, r.Width() - 10, r.Height() - 30);
 
 	m_tab.SetCurSel(0);
 
@@ -106,7 +113,9 @@ void CConfigrationDlg::OnTcnSelchangeConfigTab(NMHDR *pNMHDR, LRESULT *pResult)
 	case 1:
 		s101Tab.ShowWindow(SW_SHOW);
 		break;
-
+	case 2:
+		portrayalTab.ShowWindow(SW_SHOW);
+		break;
 	}
 	*pResult = 0;
 }
@@ -124,7 +133,9 @@ void CConfigrationDlg::OnTcnSelchangingConfigTab(NMHDR *pNMHDR, LRESULT *pResult
 	case 1:
 		s101Tab.ShowWindow(SW_HIDE);
 		break;
-
+	case 2:
+		portrayalTab.ShowWindow(SW_HIDE);
+		break;
 	}
 	*pResult = 0;
 }

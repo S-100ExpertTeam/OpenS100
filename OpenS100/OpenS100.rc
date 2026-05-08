@@ -17,7 +17,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Neutral (Default) resources
+// 중립(기본값) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
 LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
@@ -747,12 +747,12 @@ BEGIN
     T10                     "Dataset Manager"
 END
 
-#endif    // Neutral (Default) resources
+#endif    // 중립(기본값) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Korean (Korea) resources
+// 한국어(대한민국) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
 LANGUAGE LANG_KOREAN, SUBLANG_DEFAULT
@@ -811,6 +811,13 @@ BEGIN
     LTEXT           "Support Files",IDC_STATIC,293,7,135,13
 END
 
+IDD_CDlg_Portrayal DIALOGEX 0, 0, 320, 200
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 9, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_LIST_PC,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,90,142
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -843,6 +850,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 169
     END
+
+    IDD_CDlg_Portrayal, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 313
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -867,12 +882,17 @@ BEGIN
     0
 END
 
-#endif    // Korean (Korea) resources
+IDD_CDlg_Portrayal AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+#endif    // 한국어(대한민국) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (United States) resources
+// 영어(미국) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
@@ -925,7 +945,7 @@ BEGIN
     0
 END
 
-#endif    // English (United States) resources
+#endif    // 영어(미국) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Configuration_1.h"
 #include "Configuration_4.h"
+#include "CDlg_Portrayal.h"
 
 #include "../GeoMetryLibrary/ENCConfiguration.h"
 
@@ -20,6 +21,7 @@ public:
 
 	CConfiguration_1 mainTab;
 	CConfiguration_4 s101Tab;
+	CDlg_Portrayal portrayalTab;
 	
 	CTabCtrl m_tab;
 

@@ -1,6 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by OpenS100.rc
+// Microsoft Visual C++에서 생성한 포함 파일입니다.
+// OpenS100.rc에서 사용되고 있습니다.
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -78,6 +78,7 @@
 #define IDR_TOOLBAR2                    312
 #define IDD_DIALOG_DOCK_RELATION        313
 #define IDD_DIALOG_DOCK_CURRENT_SELECTION 314
+#define IDD_CDlg_Portrayal              315
 #define IDC_LIST_RELATION               316
 #define IDR_HELP_MENU                   317
 #define IDC_LIST_CURRENT_SELECTION      318
@@ -139,6 +140,7 @@
 #define IDC_LIST2                       1004
 #define IDC_COMBO_PRODUCT               1005
 #define IDC_TAB1                        1006
+#define IDC_LIST_PC                     1007
 #define IDC_RADIO_OTHER                 1036
 #define IDC_COLOR_DUSK_WB               1040
 #define IDC_DPM_STANDARD                1081
@@ -184,9 +186,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        370
+#define _APS_NEXT_RESOURCE_VALUE        371
 #define _APS_NEXT_COMMAND_VALUE         32780
-#define _APS_NEXT_CONTROL_VALUE         1007
-#define _APS_NEXT_SYMED_VALUE           312
+#define _APS_NEXT_CONTROL_VALUE         1008
+#define _APS_NEXT_SYMED_VALUE           316
 #endif
 #endif
