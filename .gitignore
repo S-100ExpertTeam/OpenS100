@@ -292,4 +292,5 @@ vcpkg_installed/
 
 .DS_Store
 
+// Open Code
 .sisyphus/
