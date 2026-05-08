@@ -291,3 +291,5 @@ vcpkg/
 vcpkg_installed/
 
 .DS_Store
+
+.sisyphus/
