@@ -141,6 +141,7 @@
 #define IDC_COMBO_PRODUCT               1005
 #define IDC_TAB1                        1006
 #define IDC_LIST_PC                     1007
+#define IDC_MFCPROPERTYGRID_PC_SETTING  1008
 #define IDC_RADIO_OTHER                 1036
 #define IDC_COLOR_DUSK_WB               1040
 #define IDC_DPM_STANDARD                1081
@@ -188,7 +189,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        371
 #define _APS_NEXT_COMMAND_VALUE         32780
-#define _APS_NEXT_CONTROL_VALUE         1008
+#define _APS_NEXT_CONTROL_VALUE         1009
 #define _APS_NEXT_SYMED_VALUE           316
 #endif
 #endif
