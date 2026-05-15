@@ -342,22 +342,9 @@ std::vector<std::string>& hd_get_feature_ids()
 
 std::string hd_get_feature_code(std::string id)
 {
-	//R_FeatureRecord* fr = s_feature_nodes[id];
 	auto fr = s_feature_nodes[id];
 
-	//auto f1 = cell->m_dsgir.m_ftcs->m_arr.find(fr->m_frid.m_nftc);
-	//if (f1 == cell->m_dsgir.m_ftcs->m_arr.end())
-	//{
-	//	return "";
-	//}
-
 	return fr->GetCode();
-
-	//std::wstring s1 = std::wstring(f1->second->m_code);
-	//std::string ret;
-	//ret.assign(s1.begin(), s1.end());
-
-	//return ret;
 }
 
 static spatial_association get_spatial_association(F_SPAS* spatial)
