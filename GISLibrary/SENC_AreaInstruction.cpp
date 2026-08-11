@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "SENC_AreaInstruction.h"
 #include "SENC_ColorFill.h"
 #include "SENC_AreaFillReference.h"
@@ -185,7 +185,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 				ID2D1Brush* imageBrush = nullptr;
 				AreaPatternBitmap* bitmapImage = nullptr;
 
-				// Symbol FillÀ» º°µµÀÇ ÆÄÀÏ(AreaFills)¿¡¼­ ÀĞÀº °æ¿ì
+				// Symbol Fillì„ ë³„ë„ì˜ íŒŒì¼(AreaFills)ì—ì„œ ì½ì€ ê²½ìš°
 				if (symbolFill->GetFileTitle().empty() == false)
 				{
 					if (i != patternMap->end())

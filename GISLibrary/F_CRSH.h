@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Field.h"
 
 class F_CRSH : public Field
@@ -54,7 +54,7 @@ public:
 	/*
 	* CRS Source Information
 	* Format		: A
-	* Information about the CRS source if CRSS = ¡®Other Source¡¯
+	* Information about the CRS source if CRSS = â€˜Other Sourceâ€™
 	*/
 	CString m_scri;
 

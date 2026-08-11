@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "S100ExchangeCatalogue.h"
 #include "GISLibrary.h"
 #include "Inventory.h"

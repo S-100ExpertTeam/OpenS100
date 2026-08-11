@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Field.h"
 /*
 * Field Tag: PROJ
@@ -52,13 +52,13 @@ public:
 	/*
 	* False Easting
 	* b48
-	* False easting (Units of measurement according to the coordinate axis ¡®Easting¡¯
+	* False easting (Units of measurement according to the coordinate axis â€˜Eastingâ€™
 	*/
 	double m_feas;
 	/*
 	* False Northing
 	* b48
-	* False northing (Units of measurement according to the coordinate axis ¡®Northing¡¯
+	* False northing (Units of measurement according to the coordinate axis â€˜Northingâ€™
 	*/
 	double m_fnor;
 

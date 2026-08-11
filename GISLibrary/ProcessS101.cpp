@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "ProcessS101.h"
 #include <stdexcept>
 #include "S100Layer.h"

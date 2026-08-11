@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Field.h"
 
@@ -66,13 +66,13 @@ public:
 	virtual ~F_DataDescriptiveField();
 
 public:
-	std::string spaceOld = "¡à";
+	std::string spaceOld = "â–¡";
 	std::string spaceNew = { 0x20 };
 
-	std::string UTOld = "¡ã";
+	std::string UTOld = "â–²";
 	std::string UTNew = { 0x1F };
 
-	std::string FTOld = "¡å";
+	std::string FTOld = "â–¼";
 	std::string FTNew = { 0x1E };
 
 	int type = 0;

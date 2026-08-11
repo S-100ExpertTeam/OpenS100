@@ -1,0 +1,57 @@
+# =============================================================================
+# OpenS100 - Git attributes
+#
+# Purpose
+#   1. Disable automatic end-of-line conversion so that the currently committed
+#      content is frozen exactly as it is.
+#   2. Protect encoding-sensitive files (such as .rc) from being altered by Git.
+#
+# Background
+#   - The blobs in this repository already contain CRLF, while the development
+#     environment has core.autocrlf=true. Under that combination, editing a file
+#     makes Git renormalize the whole file to LF, producing a large diff that has
+#     nothing to do with the actual change.
+#   - The `* -text` rule below takes precedence over core.autocrlf and disables
+#     EOL conversion for the entire repository. Files are stored exactly as they
+#     are and checked out exactly as they were stored.
+#
+# Note
+#   The source encoding policy (UTF-8 with BOM) is enforced by the compiler
+#   settings and a validation script, not by Git. See OpenS100.Common.props and
+#   CONVENTIONS.md.
+# =============================================================================
+
+# Default: no EOL conversion (freeze the current state)
+* -text
+
+# -----------------------------------------------------------------------------
+# Resource files
+#   The MFC resource editor saves these as UTF-16LE. If Git mistakes them for
+#   text and converts or merges them, the files are corrupted. Treat as binary.
+# -----------------------------------------------------------------------------
+*.rc      binary
+*.rc2     binary
+
+# -----------------------------------------------------------------------------
+# Binary assets (prevent diff/merge attempts)
+# -----------------------------------------------------------------------------
+*.png     binary
+*.bmp     binary
+*.ico     binary
+*.ttf     binary
+*.eap     binary
+*.lib     binary
+*.dll     binary
+*.exe     binary
+*.pdb     binary
+*.h5      binary
+*.000     binary
+
+# -----------------------------------------------------------------------------
+# Visual Studio project files
+#   Structured XML/INI formats; conflicts are safer to resolve by hand.
+# -----------------------------------------------------------------------------
+*.sln          -text
+*.vcxproj      -text
+*.vcxproj.filters -text
+*.props        -text

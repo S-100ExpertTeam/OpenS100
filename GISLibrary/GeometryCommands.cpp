@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "GeometryCommands.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
@@ -177,7 +177,7 @@ namespace Part9a
 	void Polyline::parse(const std::string& input)
 	{
 		setPresent();
-		// Polyline:positionXstart,positionYstart,positionXto,positionYto[,positionXto,positionYto¡¦] 
+		// Polyline:positionXstart,positionYstart,positionXto,positionYto[,positionXto,positionYtoâ€¦] 
 		auto tokens = LatLonUtility::Split(input, ",");
 		if (tokens.size() % 2 == 0 && tokens.size() >= 4) 
 		{

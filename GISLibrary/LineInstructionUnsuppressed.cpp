@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "LineInstructionUnsuppressed.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
@@ -20,7 +20,7 @@ namespace Part9a
     void LineInstructionUnsuppressed::parse(const std::string& input)
     {
         setPresent();
-        // LineInstructionUnsuppressed:lineStyle[,lineStyle,¡¦] 
+        // LineInstructionUnsuppressed:lineStyle[,lineStyle,â€¦] 
         lineStyle = LatLonUtility::Split(input, ",");
     }
 }

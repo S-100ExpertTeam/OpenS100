@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  =============================================================================
+  OpenS100 : common compiler settings shared by every project
+
+  Every .vcxproj imports this file immediately after importing
+  Microsoft.Cpp.props. Project specific ItemDefinitionGroup elements appear
+  later in each .vcxproj, so a project that sets the same property explicitly
+  still wins.
+
+  [ Why /utf-8 is set here ]
+
+  Without this option MSVC interprets source files that have no BOM using the
+  system ANSI code page, which is CP949 on a Korean Windows installation.
+  As a result:
+
+    * Build output depends on the locale of the developer machine. The same
+      commit compiles differently on Korean Windows and on English Windows.
+    * Non-ASCII characters in files stored as UTF-8 without a BOM are silently
+      corrupted. No warning and no error is produced.
+
+  /utf-8 pins both the source charset and the execution charset to UTF-8,
+  which removes that dependency: the same binary is produced regardless of the
+  locale the build runs under.
+
+  See also: CONVENTIONS.md ("Source encoding")
+  =============================================================================
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+</Project>

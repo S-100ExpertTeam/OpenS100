@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "StateCommand.h"
 
@@ -15,8 +15,8 @@ namespace Part9a
         void parse(const std::string& input) override;
 
     private:
-        std::string begin = "-¡Ä";
-        std::string end = "¡Ä";
+        std::string begin = "-âˆž";
+        std::string end = "âˆž";
     };
 
     class Time : public StateCommand {
@@ -28,8 +28,8 @@ namespace Part9a
         void parse(const std::string& input) override;
 
     private:
-        std::string begin = "-¡Ä";
-        std::string end = "¡Ä";
+        std::string begin = "-âˆž";
+        std::string end = "âˆž";
     };
 
     class DateTime : public StateCommand {
@@ -41,8 +41,8 @@ namespace Part9a
         void parse(const std::string& input) override;
 
     private:
-        std::string begin = "-¡Ä";
-        std::string end = "¡Ä";
+        std::string begin = "-âˆž";
+        std::string end = "âˆž";
     };
 
     class TimeValid : public StateCommand {

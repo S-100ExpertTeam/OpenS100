@@ -1,4 +1,4 @@
-#include "LatLonUtility.h"
+ï»¿#include "LatLonUtility.h"
 #include <cmath>
 #include <cfloat>
 #include <regex>
@@ -163,7 +163,7 @@ void LatLonUtility::Split(std::string_view targetStr, std::string_view token, st
 
 	//result.push_back(targetStr.substr(findOffset, targetStr.length() - findOffset));
 	result.clear();
-	// ÅäÅ«ÀÌ ºñ¾îÀÖÀ¸¸é ¿øº» ÀüÃ¼¸¦ ÇÏ³ª·Î ¹İÈ¯
+	// í† í°ì´ ë¹„ì–´ìˆìœ¼ë©´ ì›ë³¸ ì „ì²´ë¥¼ í•˜ë‚˜ë¡œ ë°˜í™˜
 	if (token.empty()) {
 		result.emplace_back(targetStr);
 		return;
@@ -171,16 +171,16 @@ void LatLonUtility::Split(std::string_view targetStr, std::string_view token, st
 
 	size_t start = 0;
 	while (start <= targetStr.size()) {
-		// token À§Ä¡ °Ë»ö
+		// token ìœ„ì¹˜ ê²€ìƒ‰
 		auto pos = targetStr.find(token, start);
 		if (pos == std::string_view::npos) {
-			// ³²Àº ºÎºĞÀ» ¸¶Áö¸· Á¶°¢À¸·Î
+			// ë‚¨ì€ ë¶€ë¶„ì„ ë§ˆì§€ë§‰ ì¡°ê°ìœ¼ë¡œ
 			result.emplace_back(targetStr.substr(start));
 			break;
 		}
-		// token ¾ÕºÎºĞÀ» ÇÑ Á¶°¢À¸·Î
+		// token ì•ë¶€ë¶„ì„ í•œ ì¡°ê°ìœ¼ë¡œ
 		result.emplace_back(targetStr.substr(start, pos - start));
-		// ´ÙÀ½ °Ë»ö ½ÃÀÛ ÁöÁ¡
+		// ë‹¤ìŒ ê²€ìƒ‰ ì‹œì‘ ì§€ì 
 		start = pos + token.size();
 	}
 }
@@ -305,8 +305,8 @@ std::string LatLonUtility::DeleteXMLNamespace(std::string value)
 std::string LatLonUtility::To_Lowercase(std::string s)
 {
 	std::transform(
-		s.begin(), s.end(),        // º¯È¯ÇÒ ¹üÀ§
-		s.begin(),                 // °á°ú¸¦ µ¤¾î¾µ À§Ä¡
+		s.begin(), s.end(),        // ë³€í™˜í•  ë²”ìœ„
+		s.begin(),                 // ê²°ê³¼ë¥¼ ë®ì–´ì“¸ ìœ„ì¹˜
 		[](char c) -> char {
 			return std::towlower(c);
 		}
@@ -317,8 +317,8 @@ std::string LatLonUtility::To_Lowercase(std::string s)
 std::wstring LatLonUtility::To_Lowercase(std::wstring s)
 {
 	std::transform(
-		s.begin(), s.end(),        // º¯È¯ÇÒ ¹üÀ§
-		s.begin(),                 // °á°ú¸¦ µ¤¾î¾µ À§Ä¡
+		s.begin(), s.end(),        // ë³€í™˜í•  ë²”ìœ„
+		s.begin(),                 // ê²°ê³¼ë¥¼ ë®ì–´ì“¸ ìœ„ì¹˜
 		[](wchar_t wc) -> wchar_t {
 			return std::towlower(wc);
 		}

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "S101Cell.h"
 #include "GISLibrary.h"
 #include "S100Layer.h"
@@ -2251,16 +2251,16 @@ void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_FeatureRecord*& v
 {
 	if (!m_feaMatchingKeys.empty())
 	{
-		while (index != nullptr) // ¹İº¹Àº index À¯È¿ÇÒ ¶§±îÁö¸¸
+		while (index != nullptr) // ë°˜ë³µì€ index ìœ íš¨í•  ë•Œê¹Œì§€ë§Œ
 		{
-			m_feaMap.GetNextAssoc(index, key, value); // ÀÌ È£Ãâ ÀÌÈÄ index º¯°æµÊ
+			m_feaMap.GetNextAssoc(index, key, value); // ì´ í˜¸ì¶œ ì´í›„ index ë³€ê²½ë¨
 
-			// ¸ÕÀú °Ë»ç ÈÄ Á¾·á
+			// ë¨¼ì € ê²€ì‚¬ í›„ ì¢…ë£Œ
 			if (std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key) != m_feaMatchingKeys.end())
 				return;
 		}
 
-		// index ³¡³µÁö¸¸ Á¶°ÇÀ» ¸¸Á·ÇÏ´Â Å°¸¦ ¸ø Ã£À½
+		// index ëë‚¬ì§€ë§Œ ì¡°ê±´ì„ ë§Œì¡±í•˜ëŠ” í‚¤ë¥¼ ëª» ì°¾ìŒ
 		key = -1;
 		value = nullptr;
 	}

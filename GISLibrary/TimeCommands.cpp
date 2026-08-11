@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "TimeCommands.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
@@ -11,8 +11,8 @@ namespace Part9a
 	void Date::init()
 	{
 		Command::init();
-		begin = "-¡Ä";
-		end = "¡Ä";
+		begin = "-âˆž";
+		end = "âˆž";
 	}	
 
 	void  Date::execute() {
@@ -28,7 +28,7 @@ namespace Part9a
 			end = tokens[1];
 		} else if (tokens.size() == 1) {
 			begin = tokens[0];
-			end = "¡Ä"; // Default end if not specified
+			end = "âˆž"; // Default end if not specified
 		} else {
 			init(); // Reset to default if parsing fails
 		}
@@ -39,8 +39,8 @@ namespace Part9a
 	void Time::init()
 	{
 		Command::init();
-		begin = "-¡Ä";
-		end = "¡Ä";
+		begin = "-âˆž";
+		end = "âˆž";
 	}	
 
 	void Time::execute() 
@@ -58,7 +58,7 @@ namespace Part9a
 		}
 		else if (tokens.size() == 1) {
 			begin = tokens[0];
-			end = "¡Ä"; // Default end if not specified
+			end = "âˆž"; // Default end if not specified
 		}
 		else {
 			init(); // Reset to default if parsing fails
@@ -70,8 +70,8 @@ namespace Part9a
 	void DateTime::init()
 	{
 		Command::init();
-		begin = "-¡Ä";
-		end = "¡Ä";
+		begin = "-âˆž";
+		end = "âˆž";
 	}
 
 	void DateTime::execute() 
@@ -89,7 +89,7 @@ namespace Part9a
 		}
 		else if (tokens.size() == 1) {
 			begin = tokens[0];
-			end = "¡Ä"; // Default end if not specified
+			end = "âˆž"; // Default end if not specified
 		}
 		else {
 			init(); // Reset to default if parsing fails

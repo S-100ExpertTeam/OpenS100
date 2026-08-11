@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "VisibilityCommands.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
@@ -27,7 +27,7 @@ namespace Part9a
     void ViewingGroup::parse(const std::string& input) 
     {
         setPresent();
-        // ViewingGroup:viewingGroup[,viewingGroup2[,¡¦]] 
+        // ViewingGroup:viewingGroup[,viewingGroup2[,â€¦]] 
 		viewingGroups = LatLonUtility::Split(input, ",");
 	}
 
