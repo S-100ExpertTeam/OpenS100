@@ -28,7 +28,6 @@ public:
     std::optional<int> scaleMaximum;
 
     std::unique_ptr<GM::Object> geometry;
-    //std::string geometryID;
 
     std::vector<MaskReference> maskReference;
 
@@ -38,6 +37,9 @@ public:
 public:
     void SetGeometryID(std::string value);
     std::string GetGeometryID();
+
+	void SetGMGeometry(GM::Object* geometry);
+	GM::Object* GetGMGeometry();
 
     std::optional<int> getScaleMinimum();
     std::optional<std::string> getScaleMinimumAsString();

@@ -335,6 +335,80 @@ void hd_init(S101Cell *c)
 	}
 }
 
+void hd_init(S100SpatialObject* c)
+{
+	if (!c)
+	{
+		return;
+	}
+
+	if (c->getS100SpatialObjectType() == S100SpatialObjectType::S101Cell)
+	{
+		hd_init((S101Cell*)c);
+		return;
+	}
+
+	s_feature_ids.clear();
+	s_information_ids.clear();
+	s_feature_nodes.clear();
+	s_information_nodes.clear();
+	s_spatial_point_nodes.clear();
+	s_spatial_mpoint_nodes.clear();
+	s_spatial_curve_nodes.clear();
+	s_spatial_ccurve_nodes.clear();
+	s_spatial_surface_nodes.clear();
+	s_spatial_features.clear();
+
+	cell = nullptr;
+
+	for (int i = 0; i < c->GetFeatureCount(); i++)
+	{
+		auto feature = c->GetFeatureTypeByIndex(i);
+		if (!feature)
+		{
+			continue;
+		}
+
+		auto id = feature->GetID();
+		s_feature_ids.push_back(id);
+		s_feature_nodes[id] = feature;
+	}
+
+	for (int i = 0; i < c->GetInformationCount(); i++)
+	{
+		auto information = c->GetInformationTypeByIndex(i);
+		if (!information)
+		{
+			continue;
+		}
+
+		auto id = information->GetID();
+		s_information_ids.push_back(id);
+		s_information_nodes[id] = information;
+	}
+
+	for (auto feature_id : s_feature_ids)
+	{
+		auto spatials = hd_get_feature_spatial_associations(feature_id);
+		for (auto spatial : spatials)
+		{
+			if (spatial.spatial_id.empty() || spatial.spatial_id == "None")
+			{
+				continue;
+			}
+
+			if (!s_spatial_features.count(spatial.spatial_id))
+			{
+				s_spatial_features[spatial.spatial_id] = new std::set<std::string>();
+			}
+
+			auto spatial_features = s_spatial_features[spatial.spatial_id];
+			spatial_features->insert(feature_id);
+		}
+	}
+
+}
+
 std::vector<std::string>& hd_get_feature_ids()
 {
 	return s_feature_ids;
@@ -342,9 +416,12 @@ std::vector<std::string>& hd_get_feature_ids()
 
 std::string hd_get_feature_code(std::string id)
 {
-	auto fr = s_feature_nodes[id];
-
-	return fr->GetCode();
+	auto fr = s_feature_nodes.find(id);
+	if (fr != s_feature_nodes.end() && fr->second)
+	{
+		return fr->second->GetCode();
+	}
+	return "";
 }
 
 static spatial_association get_spatial_association(F_SPAS* spatial)
@@ -850,31 +927,12 @@ std::vector<std::string>& hd_get_information_type_ids()
 
 std::string hd_get_information_type_code(std::string id)
 {
-	auto info = s_information_nodes[id];
-	if (info)
+	auto info = s_information_nodes.find(id);
+	if (info != s_information_nodes.end() && info->second)
 	{
-		return info->GetCode();
+		return info->second->GetCode();
 	}
-
-	OutputDebugString(L"Information type not found\n");
 	return "";
-
-	//R_InformationRecord* ir = s_information_nodes[id];
-	//if (!ir) {
-	//	return std::string("");
-	//}
-
-	//auto i1 = cell->m_dsgir.m_itcs->m_arr.find(ir->m_irid.NITC());
-	//if (i1 == cell->m_dsgir.m_itcs->m_arr.end())
-	//{
-	//	return std::string("");
-	//}
-	//
-	//std::wstring s1 =std::wstring(i1->second->m_code);
-	//std::string ret;
-	//ret.assign(s1.begin(), s1.end());
-
-	//return ret;
 }
 
 std::vector<std::string> hd_get_information_type_simple_attribute_values(std::string id, std::string path, std::string attribute_code)

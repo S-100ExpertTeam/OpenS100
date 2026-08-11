@@ -231,7 +231,7 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 
 		InitPortrayal(
 			luaRulePath_string.c_str(),
-			(S101Cell*)layer->m_spatialObject,
+			(S100SpatialObject*)layer->m_spatialObject,
 			fc,
 			pc);
 
@@ -1436,7 +1436,7 @@ std::wstring ProcessS101::LUA_GetPriority(std::string lua_priority)
 	return std::wstring(lua_priority.begin(), lua_priority.end());
 }
 
-void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, FeatureCatalogue* fc, PortrayalCatalogue* pc)
+void ProcessS101::InitPortrayal(const char* topLevelRule, S100SpatialObject* cell, FeatureCatalogue* fc, PortrayalCatalogue* pc)
 {
 	if (theInstance.m_lua_session)
 	{
@@ -1447,7 +1447,13 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S101Cell* cell, Featur
 	std::string top_level_rule(topLevelRule);
 	pTheFC = fc;
 
-	hd_init(cell);
+	if (fc->GetProductId() == "S-101") {
+		hd_init((S101Cell*)cell);
+	}
+	else {
+		hd_init(cell);
+	}
+	
 
 	//Initialize Lua library
 	theInstance.m_lua_session = new lua_session();

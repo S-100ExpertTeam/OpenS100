@@ -54,14 +54,21 @@ namespace GF
 			geometry = std::make_unique<GM::Object>();
 		}
 		geometry->SetID(value);
-		//geometryID = value;
 	}
 
 	std::string SpatialAttributeType::GetGeometryID()
 	{
-		//return geometryID;
-		//return geometry.GetID();
 		return geometry->GetID();
+	}
+
+	void SpatialAttributeType::SetGMGeometry(GM::Object* geometry)
+	{
+		this->geometry.reset(geometry);
+	}
+
+	GM::Object* SpatialAttributeType::GetGMGeometry()
+	{
+		return geometry.get();
 	}
 
 	std::optional<int> SpatialAttributeType::getScaleMinimum()

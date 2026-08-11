@@ -284,6 +284,16 @@ namespace GF
 		return nullptr;
 	}
 
+	void FeatureType::SetGMGeometry(GM::Object* geometry)
+	{
+		if (nullptr == spatial)
+		{
+			spatial = new SpatialAttributeType();
+		}
+
+		spatial->SetGMGeometry(geometry);
+	}
+
 	void FeatureType::AddFeatureAssociation(
 		std::string featureAssociation,
 		std::string role,

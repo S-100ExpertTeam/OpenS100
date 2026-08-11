@@ -105,8 +105,9 @@ int HostFeatureGetSpatialAssociations(lua_State *l)
 
 	std::vector<lua_ref_ptr> sas_refs;
 
-	for (auto sa : sas)
+	for (auto sa : sas) {
 		sas_refs.push_back(CreateSpatialAssociation(ls, &sa));
+	}
 
 	ls->push(sas_refs);
 

@@ -982,7 +982,9 @@ bool S10XGML::ReadObjectAttribute(
 
 bool S10XGML::AddSubAttribute(pugi::xml_node& node, GF::ComplexAttributeType* complexAttribute, FeatureCatalogue* fc)
 {
-	auto sa = fc->GetSimpleAttribute(node.name());
+	std::string nodeName = node.name();
+	nodeName = DeleteXMLNamespace(nodeName);
+	auto sa = fc->GetSimpleAttribute(nodeName);
 	if (sa)
 	{
 		auto value = node.child_value();
@@ -1028,7 +1030,8 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 			{
 				auto addedPoint = AddGeometry(point);
 				if (addedPoint) {
-					feature->SetGeometryID(addedPoint->GetID());
+					//feature->SetGeometryID(addedPoint->GetID());
+					feature->SetGMGeometry(addedPoint);
 				}
 			}
 		}
@@ -1040,7 +1043,8 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 			if (curve) {
 				auto addedCurve = AddGeometry(curve);
 				if (addedCurve) {
-					feature->SetGeometryID(addedCurve->GetID());
+					//feature->SetGeometryID(addedCurve->GetID());
+					feature->SetGMGeometry(addedCurve);
 				}
 			}
 		}
@@ -1064,7 +1068,8 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 			if (surface) {
 				auto addedSurface = AddGeometry(surface);
 				if (addedSurface) {
-					feature->SetGeometryID(addedSurface->GetID());
+					//feature->SetGeometryID(addedSurface->GetID());
+					feature->SetGMGeometry(surface);
 				}
 			}
 		}

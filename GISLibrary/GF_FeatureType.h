@@ -58,6 +58,7 @@ namespace GF
 
 		// Need release by a user.
 		virtual GM::Object* GetGMGeometry();
+		virtual void SetGMGeometry(GM::Object* geometry);
 
 		virtual int GetAttributeCount();
 

@@ -216,12 +216,6 @@ public:
 	static bool LUA_ParsingDrawingInstructions(std::string_view featureID, std::string_view drawingCommands, PCOutputSchemaManager* pcm);
 	static std::wstring LUA_GetPriority(std::string lua_priority);
 
-	static void InitPortrayal( 
-		const char* topLevelRule, 
-		S101Cell* cell, 
-		FeatureCatalogue* fc, 
-		PortrayalCatalogue* pc);
-
 	static void InitPortrayal(
 		const char* topLevelRule,
 		S100SpatialObject* cell,
