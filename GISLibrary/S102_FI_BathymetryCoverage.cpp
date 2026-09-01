@@ -16,13 +16,23 @@ bool S102_FI_BathymetryCoverage::Read(hid_t groupID, DataOrganizationIndex dataC
 	H5_FeatureInstanceGroup::Read(groupID, dataCodingFormat);
 
 	auto vgID = H5Gopen(groupID, "Group_001", H5P_DEFAULT);
+	if (vgID < 0) {
+		return false;
+	}
+
 	auto bathymetryCoverage = GetBathymetryCoverage();
-	bathymetryCoverage->Read(
+
+	// Propagate the result. Returning true unconditionally left callers to walk
+	// depth[] and uncertainty[] after a rejected or failed read, which is how a
+	// refused file turned into a null dereference further downstream.
+	const bool read = bathymetryCoverage->Read(
 		vgID,
 		attribute29->getNumPointsLatitudinal(),
 		attribute29->getNumPointsLongitudinal());
 
-	return true;
+	H5Gclose(vgID);
+
+	return read;
 }
 
 S102_VG_BathymetryCoverage* S102_FI_BathymetryCoverage::GetBathymetryCoverage()
