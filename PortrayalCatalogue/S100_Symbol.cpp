@@ -4,6 +4,8 @@
 
 #include "..\\S100Engine\\GraphicBasePackage_Enum.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 S100_Symbol::S100_Symbol()
 {
 	rotation = NULL;
@@ -24,7 +26,7 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		return;
 	}
 
-	this->reference = pugi::as_wide(node.attribute("reference").value());
+	this->reference = node.attribute("reference").value();
 
 	//auto idAttri = node.attribute("id");
 	//if (idAttri)
@@ -61,7 +63,7 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		
 		if (!strcmp(instructionName, "rotation"))
 		{
-			rotation =std::stod(instruction.child_value());
+			rotation =cpp_util::stod(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "rotationCRS"))
 		{
@@ -72,7 +74,7 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 		else if (!strcmp(instructionName, "scaleFactor"))
 		{
 			//scaleFactor = pugi::as_wide(instruction.child_value());
-			scaleFactor = std::stod(instruction.child_value());
+			scaleFactor = cpp_util::stod(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "areaPlacement"))
 		{
@@ -104,41 +106,24 @@ void S100_Symbol::GetContents(pugi::xml_node& node)
 	}
 }
 
-void S100_Symbol::SetReference(std::wstring& value)
-{
-	reference = value;
-}
-
-void S100_Symbol::SetReference(std::string& value)
-{
-	reference = std::wstring(value.begin(), value.end());
-}
+void S100_Symbol::SetReference(const std::string& value)  { reference = value; }
+void S100_Symbol::SetReference(const std::wstring& value) { reference = toUtf8(value); }
 
 void S100_Symbol::SetRotation(double value)
 {
 	rotation = value;
 }
 
-void S100_Symbol::SetRotationCRS(std::string& value)
-{
-	rotationCRS = GraphicBasePackage::GetCRSTypeFromString(value);
-}
-
-void S100_Symbol::SetRotationCRS(std::wstring& value)
-{
-	//rotationCRS = value;
-	rotationCRS = GraphicBasePackage::GetCRSTypeFromString(value);
-}
+void S100_Symbol::SetRotationCRS(const std::string& value)  { rotationCRS = GraphicBasePackage::GetCRSTypeFromString(value); }
+void S100_Symbol::SetRotationCRS(const std::wstring& value) { rotationCRS = GraphicBasePackage::GetCRSTypeFromString(value); }
 
 void S100_Symbol::SetScaleFactor(double value)
 {
 	scaleFactor = value;
 }
 
-std::wstring S100_Symbol::GetReference()
-{
-	return reference;
-}
+std::string  S100_Symbol::GetReference()  { return reference; }
+std::wstring S100_Symbol::GetReferenceW() { return toWide(reference); }
 
 double S100_Symbol::GetRotation()
 {

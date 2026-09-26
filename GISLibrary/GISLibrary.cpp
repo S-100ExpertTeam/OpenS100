@@ -148,7 +148,7 @@ void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, 
 			rt->GetTransform(&oldTransform);
 
 			pcManager->Draw(
-				symbolName,
+				pugi::as_utf8(symbolName),
 				rt,
 				brush,
 				stroke,
@@ -402,7 +402,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 
 	// Create a DirectWrite text format object.
 	HRESULT hr = D2->pDWriteFactory->CreateTextFormat(
-		ENCCommon::DISPLAY_FONT_NAME.c_str(),
+		ENCCommon::getDisplayFontNameW().c_str(),
 		NULL,
 		DWRITE_FONT_WEIGHT_NORMAL,
 		DWRITE_FONT_STYLE_NORMAL,
@@ -423,7 +423,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 
 	// Create a DirectWrite text format object.
 	hr = D2->pDWriteFactory->CreateTextFormat(
-		ENCCommon::DISPLAY_FONT_NAME.c_str(),
+		ENCCommon::getDisplayFontNameW().c_str(),
 		NULL,
 		DWRITE_FONT_WEIGHT_BOLD,
 		DWRITE_FONT_STYLE_NORMAL,

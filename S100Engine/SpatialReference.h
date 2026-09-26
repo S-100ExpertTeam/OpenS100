@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 class SpatialReference
 {
 public:
@@ -7,6 +9,6 @@ public:
 	virtual ~SpatialReference();
 
 public:
-	CString m_strReference;
-	bool    m_bForword;
+	std::string m_strReference;
+	bool        m_bForword;
 };

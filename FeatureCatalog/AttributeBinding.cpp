@@ -1,7 +1,6 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "AttributeBinding.h"
-
-#include "../LibMFCUtil/LibMFCUtil.h"
 
 AttributeBinding::AttributeBinding()
 {
@@ -27,7 +26,7 @@ void AttributeBinding::GetContents(pugi::xml_node& node)
 
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 
 		if (!strcmp(instructionName, "S100FC:multiplicity"))
 		{
@@ -73,9 +72,9 @@ std::string AttributeBinding::GetAttributeCode()
 	return attributeCode;
 }
 
-std::wstring AttributeBinding::GetAttributeCodeAsWstring()
+std::string AttributeBinding::GetAttributeCodeAsWstring()
 {
-	return pugi::as_wide(attributeCode);
+	return attributeCode;
 }
 
 bool AttributeBinding::IsSequential()
@@ -106,4 +105,14 @@ int AttributeBinding::GetLower()
 int AttributeBinding::GetUpper()
 {
 	return multiplicity.GetUpperCount();
+}
+
+std::wstring AttributeBinding::GetAttributeCodeW()
+{
+	return toWide(GetAttributeCode());
+}
+
+std::wstring AttributeBinding::GetAttributeCodeAsWstringW()
+{
+	return toWide(GetAttributeCodeAsWstring());
 }

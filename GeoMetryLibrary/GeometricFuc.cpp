@@ -5,6 +5,8 @@
 #include "GeoPoint.h"
 #include "ENCCommon.h"
 
+#include <utility>
+
 // -10: When there is an end point of a line on the line segment extension to be compared & a tangential line clockwise (the line segment or surface to be compared)
 // -11 : When there is an end point of a line on the line segment extension to be compared & a tangent line counterclockwise (the line segment or surface to be compared)
 // -20 : When there is an end point of one line on the line segment extension of the comparison criterion & a tangential line clockwise (based on the line segment to find the intersection point)
@@ -26,13 +28,13 @@ int GeometricFuc::intersect_ccw(double p1x, double p1y, double p2x, double p2y, 
 
 	if(p1x > p2x)
 	{
-		swap(&p1x, &p2x);
-		swap(&p1y, &p2y);
+		std::swap(p1x, p2x);
+		std::swap(p1y, p2y);
 	}
 	if(p3x > p4x)
 	{
-		swap(&p3x, &p4x);
-		swap(&p3y, &p4y);
+		std::swap(p3x, p4x);
+		std::swap(p3y, p4y);
 	}
 
 	r123 = ccw(p1x, p1y, p2x, p2y, p3x, p3y);
@@ -328,8 +330,8 @@ int GeometricFuc::overlap(double p1x, double p1y, GeoPolyline *comPoly, bool app
 
 		if (p3x > p4x)
 		{
-			swap(&p3x, &p4x);
-			swap(&p3y, &p4y);
+			std::swap(p3x, p4x);
+			std::swap(p3y, p4y);
 		}
 
 		r341 = ccw(p3x, p3y, p4x, p4y, p1x, p1y);
@@ -391,13 +393,13 @@ int GeometricFuc::overlap(GeoPolyline *objPoly, GeoPolyline *comPoly, bool apply
 
 		if(p1x > p2x)
 		{
-			swap(&p1x, &p2x);
-			swap(&p1y, &p2y);
+			std::swap(p1x, p2x);
+			std::swap(p1y, p2y);
 		}
 		if(p3x > p4x)
 		{
-			swap(&p3x, &p4x);
-			swap(&p3y, &p4y);
+			std::swap(p3x, p4x);
+			std::swap(p3y, p4y);
 		}
 	
 		r123 = ccw(p1x, p1y, p2x, p2y, p3x, p3y);
@@ -635,11 +637,4 @@ int GeometricFuc::inside(double x, double y, GeoPolygon *poly, bool applyOption)
 		return 1;
 	else 
 		return -1;
-}
-
-void swap(double *var1, double *var2)
-{
-	double temp = *var1;
-	*var1 = *var2;
-	*var2 = temp;
 }

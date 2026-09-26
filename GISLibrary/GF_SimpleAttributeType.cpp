@@ -2,6 +2,8 @@
 #include "GF_SimpleAttributeType.h"
 #include "ProcessS101.h"
 
+#include "..\\LibMFCUtil\\LibMFCUtil.h"
+
 namespace GF
 {
 	SimpleAttributeType::SimpleAttributeType()
@@ -19,6 +21,12 @@ namespace GF
 	{
 		this->valueType = valueType;
 		this->value = value;
+	}
+
+	SimpleAttributeType::SimpleAttributeType(FCD::S100_CD_AttributeValueType valueType, std::wstring value)
+	{
+		this->valueType = valueType;
+		this->value = LibMFCUtil::WStringToString(value);
 	}
 
 	SimpleAttributeType::~SimpleAttributeType()

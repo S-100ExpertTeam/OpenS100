@@ -11,7 +11,7 @@ struct SVGGeometry
 	bool bFill;
 	bool bStoke;
 	FLOAT width; // stroke width
-	std::wstring strokeColorName;
-	std::wstring fillColorName;
+	std::string strokeColorName;
+	std::string fillColorName;
 	FLOAT alpha;
 };

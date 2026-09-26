@@ -13,5 +13,5 @@ StringCode::~StringCode()
 
 void StringCode::GetContents(pugi::xml_node& node)
 {
-	SetValueString(pugi::as_wide(node.child_value()));
+	SetValueString(node.child_value());
 }

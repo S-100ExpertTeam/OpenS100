@@ -7,6 +7,7 @@
 #include "ProcessS101.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -27,7 +28,11 @@ S100Layer::S100Layer(int productNumber) : Layer()
 S100Layer::S100Layer(int productNumber, FeatureCatalogue* fc, PortrayalCatalogue* pc) : Layer()
 {
 	SetFeatureCatalog(fc);
-	SetPC(pc);
+
+	if (pc) {
+		SetPC(pc);
+	}
+
 	SetProductNumber(productNumber);
 }
 
@@ -35,7 +40,7 @@ S100Layer::S100Layer(FeatureCatalogue* fc, PortrayalCatalogue *pc) : Layer()
 {	
 	SetFeatureCatalog(fc);
 	SetPC(pc);
-	SetProductNumber(fc->GetProductId());
+	SetProductNumber(fc->GetProductIdW());
 }
 
 S100Layer::~S100Layer()
@@ -322,7 +327,7 @@ void S100Layer::SetProductNumber(std::wstring value)
 
 	if (tokens.size() == 2)
 	{
-		productNumber = std::stoi(tokens.at(1));
+		productNumber = cpp_util::stoi(tokens.at(1));
 	}
 }
 
@@ -343,8 +348,8 @@ void S100Layer::BuildPortrayalCatalogue()
 
 	auto mainRuleFile = portrayalCatalogue->GetMainRuleFile();
 	auto RulefileFormat = portrayalCatalogue->GetRuleFileFormat();
-	auto fileName = mainRuleFile->GetFileName();
-	auto rootPath = portrayalCatalogue->GetRootPath();
+	auto fileName = mainRuleFile->GetFileNameW();
+	auto rootPath = portrayalCatalogue->GetRootPathW();
 	auto mainRulePath = rootPath + L"Rules\\" + fileName;
 	
 	if (RulefileFormat == Portrayal::FileFormat::LUA)

@@ -3,6 +3,7 @@
 #include "DefinitionSource.h"
 
 #include <pugixml.hpp>
+#include "StringUtil.h"
 
 class DefinitionReference
 {
@@ -11,11 +12,14 @@ public:
 	virtual ~DefinitionReference();
 
 private:
-	std::wstring* sourceIdentifier = nullptr;
+	std::string* sourceIdentifier = nullptr;
 	DefinitionSource definitionSource;
 	
 public:
 	void GetContents(pugi::xml_node& node);
+	void SetSourceIdentifier(std::string value);
+	void SetSourceIdentifier(const char* value);
 	void SetSourceIdentifier(std::wstring value);
-	const std::wstring* GetSourceIdentifier();
+	const std::string* GetSourceIdentifier();
+	std::wstring GetSourceIdentifierW();
 };

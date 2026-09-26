@@ -12,5 +12,5 @@ void Text::GetContents(pugi::xml_node& node)
         Language = std::make_shared<std::string>(idAttri.value());
     }
 
-    Value = pugi::as_wide(node.child_value());
+    Value = node.child_value();
 }

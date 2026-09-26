@@ -13,7 +13,7 @@ namespace LineStylesPackage
 		virtual ~LineSymbol();
 	
 	public:
-		std::wstring reference;
+		std::string reference;
 		double _rotation = 0;
 		double _scaleFactor = 1;
 		GraphicBasePackage::CRSType _crsType = GraphicBasePackage::CRSType::localCRS;

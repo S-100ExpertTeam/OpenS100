@@ -11,9 +11,9 @@ public:
 	virtual ~Roles(void);
 
 private:
-	std::unordered_map<std::wstring, Role*> role;
+	std::unordered_map<std::string, Role*> role;
 
 public:
 	void GetContents(pugi::xml_node& node);
-	std::unordered_map<std::wstring, Role*>& GetRolePointer();
+	std::unordered_map<std::string, Role*>& GetRolePointer();
 };

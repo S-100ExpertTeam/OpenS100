@@ -17,9 +17,10 @@ namespace LineStylesPackage
 		virtual ~LineStyles();
 
 	public:
-		std::map<std::wstring, AbstractLineStyle*> mapLineStyle;
+		std::map<std::string, AbstractLineStyle*> mapLineStyle;
 
 	public:
-		bool GetRect(CString name, D2D1_RECT_F *pRect);
+		bool GetRect(const std::string& name, D2D1_RECT_F* pRect);
+		bool GetRect(const std::wstring& name, D2D1_RECT_F* pRect);
 	};
 }

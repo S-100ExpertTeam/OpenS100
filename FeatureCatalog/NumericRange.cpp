@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "NumericRange.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 NumericRange::NumericRange()
 {
 
@@ -15,16 +17,16 @@ void NumericRange::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 
 		if (!strcmp(instructionName, "S100Base:lowerBound"))
 		{
-			lowerBound = std::stod(instruction.child_value());
+			lowerBound = cpp_util::stod(instruction.child_value());
 		}
 
 		else if (!strcmp(instructionName, "S100Base:upperBound"))
 		{
-			upperBound = std::stod(instruction.child_value());
+			upperBound = cpp_util::stod(instruction.child_value());
 		}
 
 		else if (!strcmp(instructionName, "S100Base:intervalType"))

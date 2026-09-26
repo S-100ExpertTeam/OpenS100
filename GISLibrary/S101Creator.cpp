@@ -1098,7 +1098,7 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 				{
 					auto currentAttributeBinding = *i;
 
-					auto attributeNumericCode = enc->m_dsgir.GetAttributeCode(currentAttributeBinding->GetAttributeCodeAsWstring());
+					auto attributeNumericCode = enc->m_dsgir.GetAttributeCode(currentAttributeBinding->GetAttributeCode());
 
 					auto currentRootAttribute = feature->GetRootAttributes(attributeNumericCode);
 
@@ -1138,7 +1138,7 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 				{
 					auto currentAttributeBinding = *i;
 
-					auto attributeNumericCode = enc->m_dsgir.GetAttributeCode(currentAttributeBinding->GetAttributeCodeAsWstring());
+					auto attributeNumericCode = enc->m_dsgir.GetAttributeCode(currentAttributeBinding->GetAttributeCode());
 
 					auto currentChildAttributes = feature->GetChildAttributes(parentATTR, attributeNumericCode);
 
@@ -1178,7 +1178,7 @@ void S101Creator::AddDefaultChildAttributes(R_FeatureRecord* feature)
 				auto simpleAttribute = fc->GetSimpleAttribute(attributeCode);
 				if (simpleAttribute)
 				{
-					AddSimpleAttribute(feature, attributeCode, L"");
+					AddSimpleAttribute(feature, attributeCode, "");
 				}
 				else
 				{
@@ -1215,7 +1215,7 @@ void S101Creator::AddDefaultChildAttributes(R_FeatureRecord* feature, ATTR* attr
 				auto simpleAttribute = fc->GetSimpleAttribute(attributeCode);
 				if (simpleAttribute)
 				{
-					AddSimpleAttribute(feature, attr, attributeCode, L"");
+					AddSimpleAttribute(feature, attr, attributeCode, "");
 				}
 				else
 				{

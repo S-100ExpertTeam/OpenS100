@@ -6,6 +6,7 @@
 
 #include <pugixml.hpp>
 #include <vector>
+#include "StringUtil.h"
 
 class InformationBinding
 {
@@ -26,32 +27,40 @@ public:
 	Multiplicity& GetMultiplicity();
 
 	std::string GetAssociation();
-	std::wstring GetAssociationAsWstring();
+	std::wstring GetAssociationW();
+	std::string GetAssociationAsWstring();
+	std::wstring GetAssociationAsWstringW();
 
 	void SetAssociation(std::string value);
+	void SetAssociation(const char* value);
 	void SetAssociation(std::wstring value);
 
 	std::string GetRole();
-	std::wstring GetRoleAsWstring();
+	std::wstring GetRoleW();
+	std::string GetRoleAsWstring();
+	std::wstring GetRoleAsWstringW();
 
 	void SetRole(std::string value);
+	void SetRole(const char* value);
 	void SetRole(std::wstring value);
 
 	S100_FC_RoleType GetRoleType();
 	std::string GetRoleTypeAsString();
-	std::wstring GetRoleTypeAsWstring();
+	std::string GetRoleTypeAsWstring();
+	std::wstring GetRoleTypeAsWstringW();
 
 	void SetRoleType(S100_FC_RoleType value);
 	void SetRoleType(std::string value);
+	void SetRoleType(const char* value);
+	void SetRoleType(std::wstring value);
 
 	int GetInformationTypeCount();
 
 	std::string GetInformationType(int index);
 	std::vector<std::string> GetInformationTypes();
-	std::wstring GetInformationTypeAsWstring(int index);
+	std::string GetInformationTypeAsWstring(int index);
 
 	void InsertInformationType(std::string value);
-	void InsertInformationType(std::wstring value);
 
 	bool IsSameAssociation(InformationBinding& ib);
 	void AppendInformationBinding(InformationBinding& ib);

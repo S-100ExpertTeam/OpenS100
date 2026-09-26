@@ -11,9 +11,9 @@ S100_AreaFillReference::~S100_AreaFillReference()
 
 }
 
-void S100_AreaFillReference::GetContents(pugi::xml_node node) 
+void S100_AreaFillReference::GetContents(pugi::xml_node node)
 {
-	if (node == nullptr) 
+	if (node == nullptr)
 	{
 		return;
 	}
@@ -23,7 +23,7 @@ void S100_AreaFillReference::GetContents(pugi::xml_node node)
 		auto attriName = attri.name();
 		if (!strcmp(attriName,"reference"))
 		{
-			reference = pugi::as_wide(attri.value());
+			reference = attri.value();
 			break;
 		}
 	}
@@ -33,18 +33,13 @@ void S100_AreaFillReference::GetContents(pugi::xml_node node)
 		auto instructionName = node.name();
 		if (!strcmp(instructionName,"reference"))
 		{
-			reference = pugi::as_wide(instruction.value());
+			reference = instruction.value();
 			break;
 		}
 	}
 }
 
-void S100_AreaFillReference::SetReference(std::wstring& value)
-{
-	reference = value;
-}
-
-std::wstring S100_AreaFillReference::GetReference() 
-{
-	return reference;
-}
+void S100_AreaFillReference::SetReference(const std::string& value)  { reference = value; }
+void S100_AreaFillReference::SetReference(const std::wstring& value) { reference = toUtf8(value); }
+std::string  S100_AreaFillReference::GetReference()  { return reference; }
+std::wstring S100_AreaFillReference::GetReferenceW() { return toWide(reference); }

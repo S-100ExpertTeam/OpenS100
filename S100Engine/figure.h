@@ -22,9 +22,9 @@ namespace libS100Engine
 
 	public:
 		FigureType type;
-		std::wstring colorName;
+		std::string colorName;
 		double strokeWidth;
-		std::wstring strokeDasharray;
+		std::string strokeDasharray;
 		int rotation;
 		bool fill;
 		float alpha = 1.0f;

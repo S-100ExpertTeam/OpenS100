@@ -21,66 +21,37 @@ void S100_Description::GetContents(pugi::xml_node& node)
 
 		if (!strcmp(instructionName, "name"))
 		{
-			std::wstring name_value = pugi::as_wide(instruction.child_value());
-			name = name_value;
-			//Setname(name_value);
+			name = instruction.child_value();
 		}
 
 		if (!strcmp(instructionName, "description"))
 		{
-			auto description_value = pugi::as_wide(instruction.child_value());
-			description = description_value;
-			//Setdescription(description_value);
+			description = instruction.child_value();
 		}
 
 		if (!strcmp(instructionName, "language"))
 		{
-			auto language_value = pugi::as_wide(instruction.child_value());
-			language = language_value;
-			//Setlanguage(language_value);
+			language = instruction.child_value();
 		}
-
 	}
 }
 
-//==============Property=============================//
+void S100_Description::Setname(const std::string& value)  { name = value; }
+void S100_Description::Setname(const std::wstring& value) { name = toUtf8(value); }
+std::string  S100_Description::Getname()  { return name; }
+std::wstring S100_Description::GetnameW() { return toWide(name); }
 
-void S100_Description::Setname(std::wstring& value)
-{
-	name = value;
-}
+void S100_Description::Setdescription(const std::string& value)  { description = value; }
+void S100_Description::Setdescription(const std::wstring& value) { description = toUtf8(value); }
+std::string  S100_Description::Getdescription()  { return description; }
+std::wstring S100_Description::GetdescriptionW() { return toWide(description); }
 
-std::wstring S100_Description::Getname() 
-{
-	return name;
-}
+void S100_Description::Setlanguage(const std::string& value)  { language = value; }
+void S100_Description::Setlanguage(const std::wstring& value) { language = toUtf8(value); }
+std::string  S100_Description::Getlanguage()  { return language; }
+std::wstring S100_Description::GetlanguageW() { return toWide(language); }
 
-std::string S100_Description::getName()
-{
-	return pugi::as_utf8(name);
-}
-
-void S100_Description::Setdescription(std::wstring& value)
-{
-	description = value;
-}
-
-std::wstring S100_Description::Getdescription() 
-{
-	return description;
-}
-
-void S100_Description::Setlanguage(std::wstring& value)
-{
-	language = value;
-}
-
-std::wstring S100_Description::Getlanguage() 
-{
-	return language;
-}
-
-void S100_Description::SetOn(bool value) 
+void S100_Description::SetOn(bool value)
 {
 	on = value;
 }

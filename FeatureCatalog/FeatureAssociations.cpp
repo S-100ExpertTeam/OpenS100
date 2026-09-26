@@ -18,12 +18,12 @@ void FeatureAssociations::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:S100_FC_FeatureAssociation"))
 		{
 			auto sa = new FeatureAssociation();
 			sa->GetContents(instruction);
-			featureAssociation[sa->GetCodeAsWString()] = sa;
+			featureAssociation[sa->GetCode()] = sa;
 
 			if (instruction.attribute("isAbstract"))
 			{
@@ -35,7 +35,7 @@ void FeatureAssociations::GetContents(pugi::xml_node& node)
 	}
 }
 
-std::unordered_map<std::wstring, FeatureAssociation*>& FeatureAssociations::GetFeatureAssociationPointer()
+std::unordered_map<std::string, FeatureAssociation*>& FeatureAssociations::GetFeatureAssociationPointer()
 {
 	return featureAssociation;
 }

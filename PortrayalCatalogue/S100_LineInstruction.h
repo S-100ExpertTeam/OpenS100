@@ -3,7 +3,7 @@
 #include "S100_LineStyleReference.h"
 #include "S100_CompositeLineStyle.h"
 
-#include  <vector>
+#include <vector>
 
 class S100_LineInstruction : public S100_Instruction
 {
@@ -17,7 +17,7 @@ private:
 	S100_LineStyle *lineStyle;
 
 private:
-	std::wstring suppression = L"false";
+	std::string suppression = "false";
 
 public:
 	void SetLineStyleReference(S100_LineStyleReference* value);
@@ -29,8 +29,10 @@ public:
 	void SetLineStyle(S100_LineStyle* value);
 	S100_LineStyle* GetLineStyle();
 
-	void SetSuppression(std::wstring& value);
-	std::wstring GetSuppression();
+	void SetSuppression(const std::string& value);
+	void SetSuppression(const std::wstring& value);
+	std::string  GetSuppression();
+	std::wstring GetSuppressionW();
 
 	void GetContents(pugi::xml_node node);
 	bool SuppressionIsTrue();

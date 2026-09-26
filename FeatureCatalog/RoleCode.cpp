@@ -3,16 +3,16 @@
 
 RoleCode::RoleCode()
 {
-	InsertValue(L"resourceProvider");
-	InsertValue(L"custodian");
-	InsertValue(L"owner");
-	InsertValue(L"user");
-	InsertValue(L"distributer");
-	InsertValue(L"originator");
-	InsertValue(L"pointOfContact");
-	InsertValue(L"principalInvestigator");
-	InsertValue(L"processor");
-	InsertValue(L"publisher");
+	InsertValue("resourceProvider");
+	InsertValue("custodian");
+	InsertValue("owner");
+	InsertValue("user");
+	InsertValue("distributer");
+	InsertValue("originator");
+	InsertValue("pointOfContact");
+	InsertValue("principalInvestigator");
+	InsertValue("processor");
+	InsertValue("publisher");
 }
 
 RoleCode::~RoleCode()
@@ -22,5 +22,5 @@ RoleCode::~RoleCode()
 
 void RoleCode::GetContents(pugi::xml_node& node)
 {
-	SetValueString(pugi::as_wide(node.child_value()));
+	SetValueString(node.child_value());
 }

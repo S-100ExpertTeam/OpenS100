@@ -10,7 +10,8 @@
 #include "GF_FeatureType.h"
 #include "GF_InformationType.h"
 
-#include "../LatLonUtility/LatLonUtility.h"
+#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include <sstream>
 
@@ -494,8 +495,8 @@ GM::Point* S10XGML::ReadPoint(pugi::xml_node& node, std::string id, std::string 
 		lonIndex = 1;
 	}
 
-	double lat = std::stod(strPosList.at(latIndex));
-	double lon = std::stod(strPosList.at(lonIndex));
+	double lat = cpp_util::stod(strPosList.at(latIndex));
+	double lon = cpp_util::stod(strPosList.at(lonIndex));
 
 	object->position.SetX(lon);
 	object->position.SetY(lat);
@@ -528,9 +529,9 @@ GM::MultiPoint* S10XGML::ReadMultiPoint(pugi::xml_node& node, std::string id, st
 
 		if (strPosList.size() == 3)
 		{
-			double lat = std::stod(strPosList.at(latIndex));
-			double lon = std::stod(strPosList.at(lonIndex));
-			double depth = std::stod(strPosList.at(2));
+			double lat = cpp_util::stod(strPosList.at(latIndex));
+			double lon = cpp_util::stod(strPosList.at(lonIndex));
+			double depth = cpp_util::stod(strPosList.at(2));
 			
 			object->Add(lon, lat, depth);
 		}
@@ -569,8 +570,8 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 
 	for (int i = 0; (i + 1) < posCnt; i += 2)
 	{
-		double lon = std::stod(strPosList.at(i + lonIndex));
-		double lat = std::stod(strPosList.at(i + latIndex));
+		double lon = cpp_util::stod(strPosList.at(i + lonIndex));
+		double lat = cpp_util::stod(strPosList.at(i + latIndex));
 		object->Add(lon, lat);
 	}
 
@@ -610,8 +611,8 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
 
 	//for (int i = 0; (i + 1) < posCnt; i += 2)
 	//{
-	//	double lon = std::stod(strPosList.at(i + lonIndex));
-	//	double lat = std::stod(strPosList.at(i + latIndex));
+	//	double lon = cpp_util::stod(strPosList.at(i + lonIndex));
+	//	double lat = cpp_util::stod(strPosList.at(i + latIndex));
 	//	object->Add(lon, lat);
 	//}
 

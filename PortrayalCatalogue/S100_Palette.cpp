@@ -22,11 +22,11 @@ void S100_Palette::GetContents(pugi::xml_node node)
 	{
 		if (!strcmp(attri.name(), "name"))
 		{
-			name = pugi::as_wide(attri.value());
+			name = attri.value();
 		}
 		else if (!strcmp(attri.name(), "css"))
 		{
-			css = pugi::as_wide(attri.value());
+			css = attri.value();
 		}
 	}
 
@@ -46,63 +46,62 @@ void S100_Palette::GetContents(pugi::xml_node node)
 			}
 			else
 			{
-				//OutputDebugString(_T("items already exist\n"));
 				delete item;
 			}
 		}
 	}
 }
 
-void S100_Palette::SetName(std::wstring& value) 
+void S100_Palette::SetName(const std::string& value)  { name = value; }
+void S100_Palette::SetName(const std::wstring& value) { name = toUtf8(value); }
+std::string  S100_Palette::GetName()  { return name; }
+std::wstring S100_Palette::GetNameW() { return toWide(name); }
+
+void S100_Palette::SetCss(const std::string& value)  { css = value; }
+void S100_Palette::SetCss(const std::wstring& value) { css = toUtf8(value); }
+std::string  S100_Palette::GetCss()  { return css; }
+std::wstring S100_Palette::GetCssW() { return toWide(css); }
+
+void S100_Palette::AddItem(const std::string& key, S100_Item* value)
 {
-	name = value;
+	items.insert({ key, value });
 }
 
-std::wstring S100_Palette::GetName() 
+void S100_Palette::AddItem(const std::wstring& key, S100_Item* value)
 {
-	return name;
+	items.insert({ toUtf8(key), value });
 }
 
-void S100_Palette::SetCss(std::wstring& value)
-{
-	css = value;
-}
-
-std::wstring S100_Palette::GetCss() 
-{
-	return css;
-}
-
-void S100_Palette::AddItem(std::wstring key, S100_Item* value) 
-{
-	items.insert({ key,value });
-}
-
-void S100_Palette::SetItem(std::unordered_map<std::wstring, S100_Item*> value) 
+void S100_Palette::SetItem(std::unordered_map<std::string, S100_Item*> value)
 {
 	items = value;
 }
 
-S100_Item* S100_Palette::GetItem(std::wstring key) 
+S100_Item* S100_Palette::GetItem(const std::string& key)
 {
-	if (HasItems(key)==true)
+	if (HasItems(key))
 	{
 		return items[key];
 	}
 	return nullptr;
 }
 
-std::unordered_map<std::wstring, S100_Item*> S100_Palette::GetItem()
+S100_Item* S100_Palette::GetItem(const std::wstring& key)
+{
+	return GetItem(toUtf8(key));
+}
+
+std::unordered_map<std::string, S100_Item*> S100_Palette::GetItem()
 {
 	return items;
 }
 
-bool S100_Palette::HasItems(std::wstring key)
+bool S100_Palette::HasItems(const std::string& key)
 {
-	auto isitems = items.find(key);
-	if (isitems!=items.end()) 
-	{
-		return true;
-	}
-	return false;
+	return items.find(key) != items.end();
+}
+
+bool S100_Palette::HasItems(const std::wstring& key)
+{
+	return HasItems(toUtf8(key));
 }

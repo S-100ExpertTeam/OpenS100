@@ -3,11 +3,11 @@
 
 OnlineFunctionCode::OnlineFunctionCode()
 {
-	InsertValue(L"download");
-	InsertValue(L"information");
-	InsertValue(L"offlineAccess");
-	InsertValue(L"order");
-	InsertValue(L"search");
+	InsertValue("download");
+	InsertValue("information");
+	InsertValue("offlineAccess");
+	InsertValue("order");
+	InsertValue("search");
 }
 
 OnlineFunctionCode::~OnlineFunctionCode()
@@ -17,6 +17,6 @@ OnlineFunctionCode::~OnlineFunctionCode()
 
 void OnlineFunctionCode::GetContents(pugi::xml_node& node)
 {
-	SetValueString(pugi::as_wide(node.child_value()));
+	SetValueString(node.child_value());
 }
 

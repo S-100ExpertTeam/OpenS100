@@ -4,8 +4,6 @@
 
 namespace Portrayal
 {
-	class ViewingGroup;
-
 	ViewingGroupLayer::ViewingGroupLayer()
 	{
 
@@ -24,79 +22,77 @@ namespace Portrayal
 		auto ischild = node.child_value();
 		if (strcmp(ischild, ""))
 		{
-			value = pugi::as_wide(node.child_value());
+			value = node.child_value();
 			return;
 		}
 
-
-		auto idNode=node.first_attribute();
-		if (idNode!= nullptr)
+		auto idNode = node.first_attribute();
+		if (idNode != nullptr)
 		{
-			auto idName =idNode.name();
-			if (!strcmp(idName,"id")) 
+			auto idName = idNode.name();
+			if (!strcmp(idName, "id"))
 			{
-				SetId(pugi::as_wide(idNode.value()));
+				SetId(std::string(idNode.value()));
 			}
 		}
-	
-		
-		for (auto instruction= node.first_child(); instruction; instruction= instruction.next_sibling()) 
+
+		for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 		{
 			auto instructionName = instruction.name();
-			
-			if (!strcmp(instructionName,"description")) 
+
+			if (!strcmp(instructionName, "description"))
 			{
 				S100_Description* desc = new S100_Description();
 				desc->GetContents(instruction);
 				AddDescription(desc);
 			}
-			
-			else if (!strcmp(instructionName,"viewingGroup")) 
+			else if (!strcmp(instructionName, "viewingGroup"))
 			{
 				ViewingGroup* viewingGroupNode = new ViewingGroup();
 				viewingGroupNode->GetContents(instruction);
 				viewingGroup_v.push_back(viewingGroupNode);
-
-				viewingGroup.insert({ viewingGroupNode->GetId(),viewingGroupNode});
+				viewingGroup.insert({ viewingGroupNode->GetId(), viewingGroupNode });
 			}
-
 		}
 	}
 
-	void ViewingGroupLayer::AddViewingGroup(std::wstring key, ViewingGroup* value)
+	void ViewingGroupLayer::AddViewingGroup(const std::string& key, ViewingGroup* val)
 	{
-		viewingGroup[key] = value;
+		viewingGroup[key] = val;
 	}
 
-	void ViewingGroupLayer::SetViewingGroup(std::unordered_map<std::wstring , ViewingGroup*> value)
+	void ViewingGroupLayer::AddViewingGroup(const std::wstring& key, ViewingGroup* val)
 	{
-		viewingGroup = value;
+		viewingGroup[toUtf8(key)] = val;
 	}
 
-	ViewingGroup* ViewingGroupLayer::GetViewingGroup(std::wstring key)
+	void ViewingGroupLayer::SetViewingGroup(std::unordered_map<std::string, ViewingGroup*> val)
 	{
-		if(HasViewingGroup(key)==true)
+		viewingGroup = val;
+	}
+
+	ViewingGroup* ViewingGroupLayer::GetViewingGroup(const std::string& key)
+	{
+		if (HasViewingGroup(key))
 		{
 			return viewingGroup[key];
 		}
-		else
-		{
-			return false;
-		}
-
+		return nullptr;
 	}
 
-	bool ViewingGroupLayer::HasViewingGroup(std::wstring key)
+	ViewingGroup* ViewingGroupLayer::GetViewingGroup(const std::wstring& key)
 	{
-		auto isView = viewingGroup.find(key);
-		if (isView!= viewingGroup.end())
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return GetViewingGroup(toUtf8(key));
+	}
+
+	bool ViewingGroupLayer::HasViewingGroup(const std::string& key)
+	{
+		return viewingGroup.find(key) != viewingGroup.end();
+	}
+
+	bool ViewingGroupLayer::HasViewingGroup(const std::wstring& key)
+	{
+		return HasViewingGroup(toUtf8(key));
 	}
 
 	std::vector<ViewingGroup*>* ViewingGroupLayer::GetViewingGroupVector()
@@ -104,8 +100,6 @@ namespace Portrayal
 		return &viewingGroup_v;
 	}
 
-	std::wstring ViewingGroupLayer::GetValue()
-	{
-		return value;
-	}
+	std::string  ViewingGroupLayer::GetValue()  { return value; }
+	std::wstring ViewingGroupLayer::GetValueW() { return toWide(value); }
 }

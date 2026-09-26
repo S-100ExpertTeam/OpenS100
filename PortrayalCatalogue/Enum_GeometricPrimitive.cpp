@@ -1,8 +1,6 @@
 #include"stdafx.h"
 #include "Enum_GeometricPrimitive.h"
 
-#include <pugixml.hpp>
-
 namespace PCD 
 {
 	GeometricPrimitive StringToGeometricPrimitive(std::string& value)
@@ -21,7 +19,7 @@ namespace PCD
 
 	GeometricPrimitive StringToGeometricPrimitive(std::wstring& value)
 	{
-		std::string str = pugi::as_utf8(value);
+		std::string str = toUtf8(value);
 		return StringToGeometricPrimitive(str);
 	}
 
@@ -39,7 +37,6 @@ namespace PCD
 	}
 	std::wstring GeometricPrimitiveToWString(GeometricPrimitive value)
 	{
-		auto str = GeometricPrimitiveToString(value);
-		return pugi::as_wide(str);
+		return toWide(GeometricPrimitiveToString(value));
 	}
 }

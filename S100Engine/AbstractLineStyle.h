@@ -16,7 +16,7 @@ namespace LineStylesPackage
 
 	public:
 		SubClassTypeOfAbstractLineStyle subClassType;
-		std::wstring name;
+		std::string name;
 
 	public:
 		int         GetLineStyleCount();

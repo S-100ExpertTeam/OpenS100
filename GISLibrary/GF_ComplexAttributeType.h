@@ -32,6 +32,7 @@ namespace GF
 		virtual bool IsSimple();
 		virtual ThematicAttributeType* AddSubAttribute(ThematicAttributeType* subAttribute);
 		virtual SimpleAttribute* AddSubSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value);
+		virtual SimpleAttribute* AddSubSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::wstring value);
 		virtual ComplexAttributeType* AddComplexAttribute(std::string code);
 		virtual ThematicAttributeType* clone() override;
 	};

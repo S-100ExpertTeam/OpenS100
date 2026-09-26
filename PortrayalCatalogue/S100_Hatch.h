@@ -10,15 +10,13 @@ public:
 	S100_Hatch();
 	virtual ~S100_Hatch();
 
-	// element
 private:
-	// Group 
 	S100_LineStyle lineStyle;
 	S100_LineStyleReference lineStyleReference;
 	S100_CompositeLineStyle compositeLineStyle;
 
 	S100_VectorPoint direction;
-	std::wstring distance;
+	std::string distance;
 
 public:
 	void GetContents(pugi::xml_node node);
@@ -35,6 +33,8 @@ public:
 	void SetDirection(S100_VectorPoint value);
 	S100_VectorPoint GetDirection();
 
-	void SetDistance(std::wstring& value);
-	std::wstring GetDistance();
+	void SetDistance(const std::string& value);
+	void SetDistance(const std::wstring& value);
+	std::string  GetDistance();
+	std::wstring GetDistanceW();
 };

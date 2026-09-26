@@ -7,6 +7,7 @@
 #include <pugixml.hpp>
 
 #include <string>
+#include "StringUtil.h"
 
 class ResponsibleParty :
 	public XML_Item
@@ -16,9 +17,9 @@ public:
 	virtual ~ResponsibleParty();
 
 private:
-	std::wstring individualName = L"";
-	std::wstring organisationName = L"";
-	std::wstring positionName = L"";
+	std::string individualName = "";
+	std::string organisationName = "";
+	std::string positionName = "";
 	Contact contactInfo; 
 	RoleCode role;
 	Party party;
@@ -26,14 +27,23 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 
+	void SetIndividualName(std::string value);
+	void SetIndividualName(const char* value);
 	void SetIndividualName(std::wstring value);
-	const std::wstring& GetIndividualName();
+	const std::string& GetIndividualName();
+	std::wstring GetIndividualNameW();
 
+	void SetOrganisationName(std::string value);
+	void SetOrganisationName(const char* value);
 	void SetOrganisationName(std::wstring value);
-	const std::wstring& GetOrganisationName();
+	const std::string& GetOrganisationName();
+	std::wstring GetOrganisationNameW();
 
+	void SetPositionName(std::string value);
+	void SetPositionName(const char* value);
 	void SetPositionName(std::wstring value);
-	const std::wstring& GetPositionName();
+	const std::string& GetPositionName();
+	std::wstring GetPositionNameW();
 
 	void SetContactInfo(Contact value);
 	Contact &GetContactInfo();

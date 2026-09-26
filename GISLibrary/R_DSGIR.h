@@ -45,6 +45,7 @@ public:
 	CString GetAssociationRoleCode(int numericCode);
 	std::string GetAssociationRoleCodeAsString(int numericCode);
 
+	int GetAttributeCode(std::string& value);
 	int GetAttributeCode(std::wstring& value);
 	int GetAttributeCode(CString& value);
 

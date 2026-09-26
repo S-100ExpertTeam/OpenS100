@@ -17,13 +17,13 @@ private:
 	std::vector<InformationType*> informationTypes;
 
 	// key : code (information type)
-	std::unordered_map<std::wstring, InformationType*> informationType;
+	std::unordered_map<std::string, InformationType*> informationType;
 
 public:
 	void GetContents(pugi::xml_node& node);
 	
 	std::vector<InformationType*> GetVecInformationType();
-	std::unordered_map<std::wstring, InformationType*>& GetInformationTypePointer();
+	std::unordered_map<std::string, InformationType*>& GetInformationTypePointer();
 	void ApplySuperType();
 	bool SetAttributeFromSuperType(InformationType* it);
 	bool SetAssociationFromSuperType(InformationType* it);

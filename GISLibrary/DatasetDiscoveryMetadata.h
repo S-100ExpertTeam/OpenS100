@@ -67,6 +67,8 @@ namespace S100
 
         void GetContents(pugi::xml_node& node) override;
         void SaveXmlNode(pugi::xml_node& node) override;
+
+        bool SetFromFilePath(const std::string& path);
     };
 
 }

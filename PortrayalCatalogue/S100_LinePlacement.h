@@ -11,15 +11,19 @@ public:
 	virtual ~S100_LinePlacement();
 
 private:
-	std::wstring offset;
-	std::wstring placementMode;
+	std::string offset;
+	std::string placementMode;
 
 public:
 	void GetContents(pugi::xml_node& node);
 
-	void SetOffset(std::wstring& value);
-	std::wstring GetOffset();
+	void SetOffset(const std::string& value);
+	void SetOffset(const std::wstring& value);
+	std::string  GetOffset();
+	std::wstring GetOffsetW();
 
-	void SetPlacementMode(std::wstring& value);
-	std::wstring GetPlacementMode();
+	void SetPlacementMode(const std::string& value);
+	void SetPlacementMode(const std::wstring& value);
+	std::string  GetPlacementMode();
+	std::wstring GetPlacementModeW();
 };

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "DateExt.h"
 
 DateExt::DateExt()
@@ -16,7 +17,7 @@ void DateExt::GetContents(pugi::xml_node& node)
 	//S100CI
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100CI:date")) 
 		{
 			SetDate((char*)instruction.child_value());
@@ -34,9 +35,14 @@ void DateExt::GetContents(pugi::xml_node& node)
 
 void DateExt::SetDate(char* value) 
 {
-	date = pugi::as_wide(value);
+	date = value;
 }
-const std::wstring& DateExt::GetDate()
+const std::string& DateExt::GetDate()
 {
 	return date;
+}
+
+std::wstring DateExt::GetDateW()
+{
+	return toWide(GetDate());
 }

@@ -70,6 +70,7 @@
 #include "../FeatureCatalog/S100_CD_AttributeValueType.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include <sstream> 
 #include <iomanip>
@@ -4014,7 +4015,7 @@ bool S101Cell::SaveAttribute(pugi::xml_node& root, std::vector<ATTR*> attributes
 				auto listedValue = sa->GetListedValue(_ttoi(attr->m_atvl));
 				if (listedValue)
 				{
-					value = pugi::as_utf8(listedValue->GetLabel());
+					value = listedValue->GetLabel();
 				}
 				else
 				{
@@ -4352,13 +4353,13 @@ GF::ObjectType* S101Cell::GetObjectType(int type, std::string id)
 
 std::wstring S101Cell::GetFeatureTypeCodeByID(std::wstring id)
 {
-	int rcid = std::stoi(id);
+	int rcid = cpp_util::stoi(id);
 	return GetFeatureTypeCodeByID(rcid);
 }
 
 std::wstring S101Cell::GetFeatureTypeCodeByID(std::string id)
 {
-	int rcid = std::stoi(id);
+	int rcid = cpp_util::stoi(id);
 	return GetFeatureTypeCodeByID(rcid);
 }
 
@@ -4376,7 +4377,7 @@ std::wstring S101Cell::GetFeatureTypeCodeByID(int id)
 
 std::wstring S101Cell::GetInformationTypeCodeByID(std::wstring id)
 {
-	auto key = std::stoi(id);
+	auto key = cpp_util::stoi(id);
 	return GetInformationTypeCodeByID(key);
 }
 
@@ -4608,7 +4609,7 @@ std::wstring S101Cell::GetChartName()
 	return std::wstring(GetFileName());
 }
 
-std::wstring S101Cell::GetEditionNumberAsWstring()
+std::string S101Cell::GetEditionNumber()
 {
 	CString Ened = m_dsgir.m_dsid.m_ened;
 	auto index = Ened.Find(L".");
@@ -4620,15 +4621,15 @@ std::wstring S101Cell::GetEditionNumberAsWstring()
 	// m is Update Number.
 	// I'll return the Edition Number here.
 	// e.g. If it's 1.4, return 1
-	return std::wstring(result);
+	return pugi::as_utf8(result);
 }
 
 std::string S101Cell::GetUpdateNumber()
 {
-	return pugi::as_utf8(GetUpdateNumberAsWstring());
+	return pugi::as_utf8(GetUpdateNumberW());
 }
 
-std::wstring S101Cell::GetUpdateNumberAsWstring()
+std::wstring S101Cell::GetUpdateNumberW()
 {
 	auto Ened = m_dsgir.m_dsid.m_dsed;
 
@@ -4643,7 +4644,7 @@ std::wstring S101Cell::GetUpdateNumberAsWstring()
 	return std::wstring(result);
 }
 
-std::wstring S101Cell::GetIssueDateAsWstring()
+std::wstring S101Cell::GetIssueDateW()
 {
 	CString Dsrd = m_dsgir.m_dsid.m_dsrd;
 
@@ -5256,20 +5257,20 @@ bool S101Cell::FeatureAttrToAttribute()
 			auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
 			if (sa)
 			{
-				auto value = ATTR->getValueAsString();
-				CString strValue;
+				CString strValue = ATTR->getValueAsWString().c_str();
+				
 
-				strValue = LibMFCUtil::StringToWString(value).c_str();
+				//strValue = LibMFCUtil::StringToWString(value).c_str();
 
 				if (ATTR->m_paix > 0)
 				{
 					auto parentCA = (GF::ComplexAttributeType*)addedAttributes.at(ATTR->m_paix - 1);
-					auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+					auto addedSA = parentCA->AddSubSimpleAttribute(sa->GetValueType(), code, std::wstring(strValue));
 					addedAttributes.push_back((GF::ThematicAttributeType*)addedSA);
 				}
 				else // top level
 				{
-					auto addedSA = fr->AddSimpleAttribute(sa->GetValueType(), code, pugi::as_utf8(std::wstring(strValue)));
+					auto addedSA = fr->AddSimpleAttribute(sa->GetValueType(), code, std::wstring(strValue));
 					addedAttributes.push_back(addedSA);
 				}
 			}
@@ -5598,7 +5599,7 @@ Version S101Cell::GetVersion() const
 
    while (std::getline(stream, segment, L'.')) 
    {
-       parts.push_back(std::stoi(segment));
+       parts.push_back(cpp_util::stoi(segment));
    }
 
    if (parts.size() > 0)

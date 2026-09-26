@@ -37,6 +37,7 @@
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include <ctime> 
 #include <mmsystem.h> 
@@ -589,7 +590,7 @@ void LayerManager::AddSymbolDrawing(
 					pRenderTarget->GetTransform(&oldTransform);
 						
 					s100PCManager->Draw(
-						instruction->symbol->reference,
+						pugi::as_utf8(instruction->symbol->reference),
 						pRenderTarget,
 						D2->SolidColorBrush(),
 						D2->SolidStrokeStyle(),
@@ -918,6 +919,19 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 					}
 				}
 			}
+		}
+	}
+}
+
+void LayerManager::DrawECDISMode(HDC& hDC, int offset)
+{
+	for (auto i = layers.begin(); i != layers.end(); i++)
+	{
+		auto layer = (*i);
+
+		if (!layer->IsS100Layer())
+		{
+			layer->Draw(hDC, scaler, offset);
 		}
 	}
 }
@@ -1285,8 +1299,8 @@ void LayerManager::BuildPortrayalCatalogue(Layer* l)
 		l->GetFileType() == S100_FileType::FILE_S_100_VECTOR) 
 	{
 		auto mainRuleFile = pc->GetMainRuleFile();
-		auto fileName = mainRuleFile->GetFileName();
-		auto rootPath = pc->GetRootPath();
+		auto fileName = mainRuleFile->GetFileNameW();
+		auto rootPath = pc->GetRootPathW();
 		auto mainRulePath = rootPath + L"Rules\\" + fileName;
 
 		if (pc->GetRuleFileFormat() == Portrayal::FileFormat::LUA) 
@@ -1830,7 +1844,7 @@ int LayerManager::pathToProductNumber(CString path)
 		std::wstring strProductNumber = name.Left(3);
 
 		try {
-			return std::stoi(strProductNumber);
+			return cpp_util::stoi(strProductNumber);
 		}
 		catch (const std::exception& e) {
 		}

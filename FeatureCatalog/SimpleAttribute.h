@@ -10,6 +10,7 @@
 #include <pugixml.hpp>
 
 #include <vector>
+#include "StringUtil.h"
 
 // S100_FC_SimpleAttribute
 class SimpleAttribute : public Attribute
@@ -30,7 +31,7 @@ private:
 	// Value : Label
 	std::unordered_map<int, ListedValue*> codeMap;
 	
-	std::unordered_map<std::wstring, ListedValue*> labelMap;
+	std::unordered_map<std::string, ListedValue*> labelMap;
 
 public:
 	void GetContents(pugi::xml_node& node);

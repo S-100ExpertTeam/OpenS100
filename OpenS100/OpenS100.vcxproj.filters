@@ -113,6 +113,9 @@
     <ClInclude Include="DataSetManagerSupport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CDlg_Portrayal.h">
+      <Filter>Dialog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpenS100.cpp">
@@ -194,6 +197,9 @@
       <Filter>Dialog</Filter>
     </ClCompile>
     <ClCompile Include="FC_PCSelectdlg.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="CDlg_Portrayal.cpp">
       <Filter>Dialog</Filter>
     </ClCompile>
   </ItemGroup>

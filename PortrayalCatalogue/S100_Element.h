@@ -14,8 +14,8 @@ public:
 
 private:
 	S100_Text* text = false;
-	std::wstring bodySize;
-	std::wstring verticalOffset;
+	std::string bodySize;
+	std::string verticalOffset;
 	S100_Foreground* foreground = false;
 	S100_Font* font = false;
 
@@ -23,11 +23,15 @@ public:
 	void SetText(S100_Text* value);
 	S100_Text* GetText();
 
-	void SetBodySize(std::wstring& value);
-	std::wstring GetBodySize();
+	void SetBodySize(const std::string& value);
+	void SetBodySize(const std::wstring& value);
+	std::string  GetBodySize();
+	std::wstring GetBodySizeW();
 
-	void SetVerticalOffset(std::wstring& value);
-	std::wstring GetVerticalOffset();
+	void SetVerticalOffset(const std::string& value);
+	void SetVerticalOffset(const std::wstring& value);
+	std::string  GetVerticalOffset();
+	std::wstring GetVerticalOffsetW();
 
 	void SetForground(S100_Foreground* value);
 	S100_Foreground* GetForground();

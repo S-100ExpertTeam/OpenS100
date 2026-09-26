@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "Citation.h"
 
 Citation::Citation()
@@ -15,7 +16,7 @@ void Citation::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100CI:title"))
 		{
 			SetTitle((char*)instruction.child_value());
@@ -84,33 +85,33 @@ void Citation::GetContents(pugi::xml_node& node)
 		}
 		else  //case not fixed value
 		{
-			std::wstring content = pugi::as_wide(instructionName);
-			content.append(L" is another data");
+			std::string content = instructionName;
+			content.append(" is another data");
 		}
 	}
 }
 
 void Citation::SetTitle(char* value) 
 {
-	title =pugi::as_wide(value);
+	title =value;
 }
 
-const std::wstring& Citation::GetTitle()
+const std::string& Citation::GetTitle()
 {
 	return title;
 }
 
 void Citation::SetAternateTitle(char* value) 
 {
-	aternateTitle.push_back(pugi::as_wide(value));
+	aternateTitle.push_back(value);
 }
 
-void Citation::SetAternateTitle(std::list<std::wstring>& value)
+void Citation::SetAternateTitle(std::list<std::string>& value)
 {
 	aternateTitle = value;
 }
 
-std::list<std::wstring>& Citation::GetAternateTitle()
+std::list<std::string>& Citation::GetAternateTitle()
 {
 	return aternateTitle;
 }
@@ -131,10 +132,10 @@ std::list<Date>& Citation::GetDate()
 
 void Citation::SetEdition(char* value)
 {
-	edition =pugi::as_wide(value);
+	edition =value;
 }
 
-const std::wstring& Citation::GetEdition()
+const std::string& Citation::GetEdition()
 {	
 	return edition;
 }
@@ -151,20 +152,20 @@ DateExt& Citation::GetEditionDate()
 
 void Citation::SetIdentifier(char* value)
 {
-	identifier =pugi::as_wide(value);
+	identifier =value;
 }
 
-const std::wstring& Citation::GetIdentifier()
+const std::string& Citation::GetIdentifier()
 {
 	return identifier;
 }
 
 void Citation::SetIdentifierType(char* value)
 {
-	identifierType = pugi::as_wide(value);
+	identifierType = value;
 }
 
-const std::wstring& Citation::GetIdentifierType()
+const std::string& Citation::GetIdentifierType()
 {
 	return identifierType;
 }
@@ -201,40 +202,80 @@ Series& Citation::GetSeries()
 
 void Citation::SetOtherCitationDetails(char* value)
 {
-	otherCitationDetails =pugi::as_wide(value);
+	otherCitationDetails =value;
 }
 
-const std::wstring& Citation::GetOtherCitationDetails()
+const std::string& Citation::GetOtherCitationDetails()
 {
 	return otherCitationDetails;
 }
 
 void Citation::SetCollectiveTitle(char* value)
 {
-	collectiveTitle = pugi::as_wide(value);
+	collectiveTitle = value;
 }
 
-const std::wstring& Citation::GetCollectiveTitle()
+const std::string& Citation::GetCollectiveTitle()
 {
 	return collectiveTitle;
 }
 
 void Citation::SetISBN(char* value) 
 {
-	ISBN = pugi::as_wide(value);
+	ISBN = value;
 }
 
-const std::wstring& Citation::GetISBN()
+const std::string& Citation::GetISBN()
 {
 	return ISBN;
 }
 
 void Citation::SetISSN(char* value) 
 {
-	ISSN = pugi::as_wide(value);
+	ISSN = value;
 }
 
-const std::wstring& Citation::GetISSN()
+const std::string& Citation::GetISSN()
 {
 	return ISSN;
+}
+
+std::wstring Citation::GetTitleW()
+{
+	return toWide(GetTitle());
+}
+
+std::wstring Citation::GetEditionW()
+{
+	return toWide(GetEdition());
+}
+
+std::wstring Citation::GetIdentifierW()
+{
+	return toWide(GetIdentifier());
+}
+
+std::wstring Citation::GetIdentifierTypeW()
+{
+	return toWide(GetIdentifierType());
+}
+
+std::wstring Citation::GetOtherCitationDetailsW()
+{
+	return toWide(GetOtherCitationDetails());
+}
+
+std::wstring Citation::GetCollectiveTitleW()
+{
+	return toWide(GetCollectiveTitle());
+}
+
+std::wstring Citation::GetISBNW()
+{
+	return toWide(GetISBN());
+}
+
+std::wstring Citation::GetISSNW()
+{
+	return toWide(GetISSN());
 }

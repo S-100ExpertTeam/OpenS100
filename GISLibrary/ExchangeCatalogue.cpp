@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "ExchangeCatalogue.h"
 #include "GISLibrary.h"
-#include "../LatLonUtility/LatLonUtility.h"
-#include "../LibMFCUtil/LibMFCUtil.h"
 #include "S10XGML.h"
 #include "ExchangeCatalogueNameSpace.h"
+
+#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
+
+#include "..\\LibMFCUtil\\LibMFCUtil.h"
 
 #include <filesystem>
 
@@ -295,8 +298,8 @@ namespace S100
 
                      for (int i = 0; i < posCnt; i += 2)
                      {
-                         double lon = std::stod(strPosList.at(i));
-                         double lat = std::stod(strPosList.at(i + 1));
+                         double lon = cpp_util::stod(strPosList.at(i));
+                         double lat = cpp_util::stod(strPosList.at(i + 1));
                          curve->Add(lon, lat);
                      }
                      object->SetExteriorRing(curve);

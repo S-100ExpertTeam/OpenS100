@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "FeatureAssociation.h"
 
 FeatureAssociation::FeatureAssociation()
@@ -18,7 +19,7 @@ void FeatureAssociation::GetContents(pugi::xml_node& node)
 	int count = 0;
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:role"))
 		{
 			Reference reference;
@@ -28,22 +29,22 @@ void FeatureAssociation::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:superType"))
 		{
-			superType = pugi::as_wide(instruction.child_value());
+			superType = instruction.child_value();
 		}
 
 		else if (!strcmp(instructionName, "S100FC:subType"))
 		{
-			subType.push_back(pugi::as_wide(instruction.child_value()));
+			subType.push_back(instruction.child_value());
 		}
 	}
 }
 
-std::list<std::wstring> &FeatureAssociation::GetSubTypePointer()
+std::list<std::string> &FeatureAssociation::GetSubTypePointer()
 {
 	return subType;
 }
 
-std::wstring& FeatureAssociation::GetSuperType()
+std::string& FeatureAssociation::GetSuperType()
 {
 	return superType;
 }
@@ -51,4 +52,9 @@ std::wstring& FeatureAssociation::GetSuperType()
 Reference(&FeatureAssociation::GetRolePointer())[2]
 {
 	return role;
+}
+
+std::wstring FeatureAssociation::GetSuperTypeW()
+{
+	return toWide(GetSuperType());
 }

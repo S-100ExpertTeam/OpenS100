@@ -34,11 +34,6 @@ SpatialPrimitiveType StringToSpatialPrimitiveType(std::string& value)
 	return SpatialPrimitiveType::none;
 }
 
-SpatialPrimitiveType StringToSpatialPrimitiveType(std::wstring& value)
-{
-	return StringToSpatialPrimitiveType(pugi::as_utf8(value));
-}
-
 std::string SpatialPrimitiveTypeToString(SpatialPrimitiveType value)
 {
 	if (value == SpatialPrimitiveType::point)
@@ -69,7 +64,7 @@ std::string SpatialPrimitiveTypeToString(SpatialPrimitiveType value)
 	return "none";
 }
 
-std::wstring SpatialPrimitiveTypeToWString(SpatialPrimitiveType value)
+std::string SpatialPrimitiveTypeToWString(SpatialPrimitiveType value)
 {
-	return pugi::as_wide(SpatialPrimitiveTypeToString(value));
+	return SpatialPrimitiveTypeToString(value);
 }

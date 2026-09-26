@@ -13,79 +13,54 @@ S100_Font::~S100_Font()
 
 void S100_Font::GetContents(pugi::xml_node node)
 {
-	if (node==nullptr)
+	if (node == nullptr)
 	{
 		return;
 	}
 
-	for (auto instruction=node.first_child(); instruction; instruction=instruction.next_sibling()) 
+	for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
 		auto instructionName = instruction.name();
-		if (!strcmp(instructionName,"serifs"))
+		if (!strcmp(instructionName, "serifs"))
 		{
-			serifs = pugi::as_wide(instruction.child_value());
+			serifs = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "weight"))
 		{
-			weight = pugi::as_wide(instruction.child_value());
+			weight = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "slant"))
 		{
-			slant = pugi::as_wide(instruction.child_value());
+			slant = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "proportion"))
 		{
-			proportion = pugi::as_wide(instruction.child_value());
+			proportion = instruction.child_value();
 		}
 	}
 }
 
-void S100_Font::SetSerifs(std::wstring& value)
-{
-	serifs = value;
-}
+void S100_Font::SetSerifs(const std::string& value)  { serifs = value; }
+void S100_Font::SetSerifs(const std::wstring& value) { serifs = toUtf8(value); }
+std::string  S100_Font::GetSerifs()  { return serifs; }
+std::wstring S100_Font::GetSerifsW() { return toWide(serifs); }
 
-std::wstring S100_Font::GetSerifs() 
-{
-	return serifs;
-}
+void S100_Font::SetWeight(const std::string& value)  { weight = value; }
+void S100_Font::SetWeight(const std::wstring& value) { weight = toUtf8(value); }
+std::string  S100_Font::GetWeight()  { return weight; }
+std::wstring S100_Font::GetWeightW() { return toWide(weight); }
 
-void S100_Font::SetWeight(std::wstring& value)
-{
-	weight = value;
-}
+void S100_Font::SetSlant(const std::string& value)  { slant = value; }
+void S100_Font::SetSlant(const std::wstring& value) { slant = toUtf8(value); }
+std::string  S100_Font::GetSlant()  { return slant; }
+std::wstring S100_Font::GetSlantW() { return toWide(slant); }
 
-std::wstring S100_Font::GetWeight()
-{
-	return weight;
-}
-
-void S100_Font::SetSlant(std::wstring& value)
-{
-	slant = value;
-}
-
-std::wstring S100_Font::GetSlant()
-{
-	return slant;
-}
-
-void S100_Font::SetProportion(std::wstring& value)
-{
-	proportion = value;
-}
-
-std::wstring S100_Font::GetProportion()
-{
-	return proportion;
-}
+void S100_Font::SetProportion(const std::string& value)  { proportion = value; }
+void S100_Font::SetProportion(const std::wstring& value) { proportion = toUtf8(value); }
+std::string  S100_Font::GetProportion()  { return proportion; }
+std::wstring S100_Font::GetProportionW() { return toWide(proportion); }
 
 bool S100_Font::isUpright()
 {
-	if (slant.compare(L"Upright") == 0)
-	{
-		return true;
-	}
-
-	return false;
+	return slant.compare("Upright") == 0;
 }

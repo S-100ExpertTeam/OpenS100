@@ -32,32 +32,31 @@ namespace Portrayal
 		}
 	}
 
-	void S100_AreaFills::SetAreaFillFiles(std::wstring key, ExternalFile* value)
-	{
-		areaFillFiles.insert({ key,value });
-	}
-	void S100_AreaFills::SetAreaFillFiles(std::unordered_map<std::wstring, ExternalFile*> value)
+	void S100_AreaFills::SetAreaFillFiles(const std::string& key, ExternalFile* value)  { areaFillFiles.insert({ key, value }); }
+	void S100_AreaFills::SetAreaFillFiles(const std::wstring& key, ExternalFile* value) { areaFillFiles.insert({ toUtf8(key), value }); }
+
+	void S100_AreaFills::SetAreaFillFiles(std::unordered_map<std::string, ExternalFile*> value)
 	{
 		areaFillFiles = value;
 	}
 
-	ExternalFile* S100_AreaFills::GetAreaFillFiles(std::wstring value)
+	ExternalFile* S100_AreaFills::GetAreaFillFiles(const std::string& value)
 	{
-		auto isarea = areaFillFiles.find(value);
-		if (isarea != areaFillFiles.end())
-		{
-			return areaFillFiles[value];
-		}
-		return nullptr;
+		auto it = areaFillFiles.find(value);
+		return (it != areaFillFiles.end()) ? it->second : nullptr;
 	}
 
-	std::unordered_map<std::wstring, ExternalFile*> S100_AreaFills::GetAreaFillFiles()
+	ExternalFile* S100_AreaFills::GetAreaFillFiles(const std::wstring& value)
+	{
+		return GetAreaFillFiles(toUtf8(value));
+	}
+
+	std::unordered_map<std::string, ExternalFile*> S100_AreaFills::GetAreaFillFiles()
 	{
 		return areaFillFiles;
 	}
 
-
-	std::vector< ExternalFile*>* S100_AreaFills::GetAreaFillFilesVecter()
+	std::vector<ExternalFile*>* S100_AreaFills::GetAreaFillFilesVecter()
 	{
 		return &areaFillFiles_v;
 	}

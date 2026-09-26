@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "S100_DateTime.h"
+
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <sstream>
 #include <iomanip>
 #include <ctime>
@@ -51,8 +54,8 @@ void S100_DateTime::ProcessUtcOffset(const std::string& dateTime) {
     std::smatch matches;
 
     if (std::regex_search(dateTime, matches, offsetRegex)) {
-        utcOffsetHours = std::stoi(matches[2].str()) * (matches[1].str() == "+" ? 1 : -1);
-        utcOffsetMinutes = std::stoi(matches[3].str()) * (matches[1].str() == "+" ? 1 : -1);
+        utcOffsetHours = cpp_util::stoi(matches[2].str()) * (matches[1].str() == "+" ? 1 : -1);
+        utcOffsetMinutes = cpp_util::stoi(matches[3].str()) * (matches[1].str() == "+" ? 1 : -1);
     }
     else if (dateTime.back() == 'Z' || dateTime.back() == 'z') {
         utcOffsetHours = 0;

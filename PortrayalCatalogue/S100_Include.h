@@ -8,9 +8,11 @@ public:
 	virtual ~S100_Include();
 
 private:
-	std::wstring href;
+	std::string href;
 
 public:
-	void SetHerf(std::wstring& value);
-	std::wstring GetHerf();
-}; 
+	void SetHerf(const std::string& value);
+	void SetHerf(const std::wstring& value);
+	std::string  GetHerf();
+	std::wstring GetHerfW();
+};

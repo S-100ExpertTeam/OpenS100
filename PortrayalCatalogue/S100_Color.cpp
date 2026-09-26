@@ -19,69 +19,49 @@ void S100_Color::GetContents(pugi::xml_node& node)
 	}
 
 	auto attribute_transparency = node.attribute("transparency");
-	transparency = pugi::as_wide(attribute_transparency.as_string());
+	transparency = attribute_transparency.as_string();
 
-	token = pugi::as_wide(node.child_value());
+	token = node.child_value();
 
 	for (auto colorNode = node.first_attribute(); colorNode; colorNode = colorNode.next_attribute())
 	{
 		auto colorNodeName = colorNode.name();
 		if (!strcmp(colorNodeName, "token"))
 		{
-			token = pugi::as_wide(colorNode.value());
+			token = colorNode.value();
 		}
 		else if (!strcmp(colorNodeName, "name"))
 		{
-			name = pugi::as_wide(colorNode.value());
+			name = colorNode.value();
 		}
 	}
 
-	for (auto instruction= node.first_child(); instruction; instruction= instruction.next_sibling()) 
+	for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		auto instructionName = instruction.name(); 
-		if (!strcmp(instructionName,"description"))
+		auto instructionName = instruction.name();
+		if (!strcmp(instructionName, "description"))
 		{
-			description = pugi::as_wide(instruction.child_value());
+			description = instruction.child_value();
 		}
 	}
 }
 
-void S100_Color::SetToken(std::wstring& value)
-{
-	token = value;
-}
+void S100_Color::SetToken(const std::string& value)  { token = value; }
+void S100_Color::SetToken(const std::wstring& value) { token = toUtf8(value); }
+std::string  S100_Color::GetToken()  { return token; }
+std::wstring S100_Color::GetTokenW() { return toWide(token); }
 
-std::wstring S100_Color::GetToken() 
-{
-	return token;
-}
+void S100_Color::SetName(const std::string& value)  { name = value; }
+void S100_Color::SetName(const std::wstring& value) { name = toUtf8(value); }
+std::string  S100_Color::GetName()  { return name; }
+std::wstring S100_Color::GetNameW() { return toWide(name); }
 
-void S100_Color::SetName(std::wstring& value)
-{
-	name = value;
-}
+void S100_Color::SetDescription(const std::string& value)  { description = value; }
+void S100_Color::SetDescription(const std::wstring& value) { description = toUtf8(value); }
+std::string  S100_Color::GetDescription()  { return description; }
+std::wstring S100_Color::GetDescriptionW() { return toWide(description); }
 
-std::wstring S100_Color::GetName() 
-{
-	return name;
-}
-
-void S100_Color::SetDescription(std::wstring& value)
-{
-	description = value;
-}
-
-std::wstring S100_Color::GetDescription()
-{
-	return description;
-}
-
-void S100_Color::SetTransparency(std::wstring& value)
-{
-	transparency = value;
-}
-
-std::wstring S100_Color::GetTransparency()
-{
-	return transparency;
-}
+void S100_Color::SetTransparency(const std::string& value)  { transparency = value; }
+void S100_Color::SetTransparency(const std::wstring& value) { transparency = toUtf8(value); }
+std::string  S100_Color::GetTransparency()  { return transparency; }
+std::wstring S100_Color::GetTransparencyW() { return toWide(transparency); }

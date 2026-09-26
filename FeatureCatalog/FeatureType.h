@@ -7,6 +7,7 @@
 #include "SpatialPrimitiveType.h"
 
 #include <pugixml.hpp>
+#include "StringUtil.h"
 
 class FeatureType :
 	public S100ObjectType
@@ -16,8 +17,8 @@ public:
 	virtual ~FeatureType();
 
 private:
-	std::wstring superType; 
-	std::list<std::wstring> subType; 
+	std::string superType; 
+	std::list<std::string> subType; 
 	FeatureUseType featureUseType;
 	std::list<FeatureBinding*> vecFeatureBinding;
 	std::list<SpatialPrimitiveType> permittedPrimitives;
@@ -25,13 +26,15 @@ private:
 public:
 	void GetContents(pugi::xml_node& node);
 
-	const std::wstring& GetSuperType();
+	const std::string& GetSuperType();
+	std::wstring GetSuperTypeW();
+	void SetSuperType(std::string value);
+	void SetSuperType(const char* value);
 	void SetSuperType(std::wstring value);
 
 	//FeatureBinding* GetFeatureBinding(std::string featureTypeCode);
-	//FeatureBinding* GetFeatureBinding(std::wstring featureTypeCode);
 
-	std::list<std::wstring>& GetSubTypePointer(); 
+	std::list<std::string>& GetSubTypePointer(); 
 	FeatureUseType& GetFeatureUseTypePointer();
 	std::list<FeatureBinding*>& GetFeatureBindingPointer();
 	std::list<SpatialPrimitiveType>& GetPermittedPrimitivesPointer();

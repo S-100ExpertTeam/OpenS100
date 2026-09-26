@@ -24,8 +24,8 @@ namespace Portrayal
 		"LUA"
 	};
 
-	FileFormat StringToFileFormat(std::string& value);
-	FileFormat StringToFileFormat(std::wstring& value);
+	FileFormat StringToFileFormat(const std::string& value);
+	FileFormat StringToFileFormat(const std::wstring& value);
 
 	std::string FileFormatToString(FileFormat value);
 	std::wstring FileFormatToWString(FileFormat value);

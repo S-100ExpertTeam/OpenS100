@@ -10,11 +10,13 @@ public:
 	virtual ~S100_LineStyleReference();
 
 private:
-	std::wstring reference = L"";
+	std::string reference;
 
 public:
 	void GetContents(pugi::xml_node& node);
 
-	void SetReference(std::wstring& value);
-	std::wstring GetReference();
+	void SetReference(const std::string& value);
+	void SetReference(const std::wstring& value);
+	std::string  GetReference();
+	std::wstring GetReferenceW();
 };

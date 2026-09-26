@@ -3,10 +3,9 @@
 
 S100_LineSymbol::S100_LineSymbol()
 {
-	//reference;
-	rotation = L"0.0";
-	scaleFactor = L"1.0";
-	crsType = L"LocalCRS";
+	rotation = "0.0";
+	scaleFactor = "1.0";
+	crsType = "LocalCRS";
 }
 
 S100_LineSymbol::~S100_LineSymbol()
@@ -14,7 +13,7 @@ S100_LineSymbol::~S100_LineSymbol()
 
 }
 
-void S100_LineSymbol::GetContents(pugi::xml_node& node) 
+void S100_LineSymbol::GetContents(pugi::xml_node& node)
 {
 	if (!node)
 	{
@@ -25,23 +24,21 @@ void S100_LineSymbol::GetContents(pugi::xml_node& node)
 		auto attriName = attri.name();
 		if (!strcmp(attriName, "reference"))
 		{
-			reference = pugi::as_wide(attri.value());
+			reference = attri.value();
 		}
 		else if (!strcmp(attriName, "rotation"))
 		{
-			rotation = pugi::as_wide(attri.value());
+			rotation = attri.value();
 		}
 		else if (!strcmp(attriName, "scaleFactor"))
 		{
-			scaleFactor = pugi::as_wide(attri.value());
+			scaleFactor = attri.value();
 		}
 		else if (!strcmp(attriName, "crsType"))
 		{
-			crsType = pugi::as_wide(attri.value());
+			crsType = attri.value();
 		}
 	}
-
-
 
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
@@ -49,57 +46,29 @@ void S100_LineSymbol::GetContents(pugi::xml_node& node)
 
 		if (!strcmp(instructionName, "position"))
 		{
-			position = pugi::as_wide(instruction.child_value());
+			position = instruction.child_value();
 		}
 	}
 }
 
-void S100_LineSymbol::SetReference(std::wstring& value)
-{
-	reference = value;
-}
+void S100_LineSymbol::SetReference(const std::string& value)  { reference = value; }
+void S100_LineSymbol::SetReference(const std::wstring& value) { reference = toUtf8(value); }
+void S100_LineSymbol::SetRotation(const std::string& value)   { rotation = value; }
+void S100_LineSymbol::SetRotation(const std::wstring& value)  { rotation = toUtf8(value); }
+void S100_LineSymbol::SetScaleFactor(const std::string& value)  { scaleFactor = value; }
+void S100_LineSymbol::SetScaleFactor(const std::wstring& value) { scaleFactor = toUtf8(value); }
+void S100_LineSymbol::SetCrsType(const std::string& value)  { crsType = value; }
+void S100_LineSymbol::SetCrsType(const std::wstring& value) { crsType = toUtf8(value); }
+void S100_LineSymbol::SetPosition(const std::string& value)  { position = value; }
+void S100_LineSymbol::SetPosition(const std::wstring& value) { position = toUtf8(value); }
 
-void S100_LineSymbol::SetRotation(std::wstring& value)
-{
-	rotation = value;
-}
-
-void S100_LineSymbol::SetScaleFactor(std::wstring& value)
-{
-	scaleFactor = value;
-}
-
-void S100_LineSymbol::SetCrsType(std::wstring& value)
-{
-	crsType = value;
-}
-
-void S100_LineSymbol::SetPosition(std::wstring& value)
-{
-	position = value;
-}
-
-std::wstring S100_LineSymbol::GetReference() 
-{
-	return reference;
-}
-
-std::wstring S100_LineSymbol::GetRotation() 
-{
-	return rotation;
-}
-
-std::wstring S100_LineSymbol::GetScaleFactor()
-{
-	return scaleFactor;
-}
-
-std::wstring S100_LineSymbol::GetCrsType() 
-{
-	return crsType;
-}
-
-std::wstring S100_LineSymbol::GetPosition() 
-{
-	return position;
-}
+std::string  S100_LineSymbol::GetReference()   { return reference; }
+std::wstring S100_LineSymbol::GetReferenceW()  { return toWide(reference); }
+std::string  S100_LineSymbol::GetRotation()    { return rotation; }
+std::wstring S100_LineSymbol::GetRotationW()   { return toWide(rotation); }
+std::string  S100_LineSymbol::GetScaleFactor() { return scaleFactor; }
+std::wstring S100_LineSymbol::GetScaleFactorW(){ return toWide(scaleFactor); }
+std::string  S100_LineSymbol::GetCrsType()     { return crsType; }
+std::wstring S100_LineSymbol::GetCrsTypeW()    { return toWide(crsType); }
+std::string  S100_LineSymbol::GetPosition()    { return position; }
+std::wstring S100_LineSymbol::GetPositionW()   { return toWide(position); }

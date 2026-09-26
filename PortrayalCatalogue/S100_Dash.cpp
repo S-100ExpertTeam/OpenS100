@@ -16,25 +16,15 @@ S100_Dash::~S100_Dash()
 
 }
 
-void S100_Dash::SetStart(std::wstring& value)
-{
-	start = value;
-}
+void S100_Dash::SetStart(const std::string& value)  { start = value; }
+void S100_Dash::SetStart(const std::wstring& value) { start = toUtf8(value); }
+std::string  S100_Dash::GetStart()  { return start; }
+std::wstring S100_Dash::GetStartW() { return toWide(start); }
 
-std::wstring S100_Dash::GetStart()
-{
-	return start;
-}
-
-void S100_Dash::SetLength(std::wstring& value)
-{
-	length = value;
-}
-
-std::wstring S100_Dash::GetLength()
-{
-	return length;
-}
+void S100_Dash::SetLength(const std::string& value)  { length = value; }
+void S100_Dash::SetLength(const std::wstring& value) { length = toUtf8(value); }
+std::string  S100_Dash::GetLength()  { return length; }
+std::wstring S100_Dash::GetLengthW() { return toWide(length); }
 
 void S100_Dash::GetContents(pugi::xml_node& node)
 {
@@ -48,11 +38,11 @@ void S100_Dash::GetContents(pugi::xml_node& node)
 
 		if (!strcmp(instructionName, "start"))
 		{
-			start = pugi::as_wide(instruction.child_value());
+			start = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "length"))
 		{
-			length = pugi::as_wide(instruction.child_value());
+			length = instruction.child_value();
 		}
 	}
 }
@@ -61,41 +51,24 @@ void S100_Dash::SetFromStartLength(std::string& value)
 {
 	auto commaIndex = value.find(',');
 
-	// If you don't have a comma,
-	if (std::string::npos == commaIndex)
+	if (std::string::npos == commaIndex || commaIndex >= value.length())
 	{
-		//OutputDebugString(_T("Failed to parse (Dash:start,length)[1]\n"));
 		return;
 	}
-	else if (commaIndex >= value.length())
-	{
-		//OutputDebugString(_T("Failed to parse (Dash:start,length)[2]\n"));
-		return;
-	}
-	else
-	{
-		auto start = value.substr(0, commaIndex);
-		auto length = value.substr(commaIndex + 1, std::string::npos);
 
-		SetStart(pugi::as_wide(start));
-		SetLength(pugi::as_wide(length));
-	}
+	start = value.substr(0, commaIndex);
+	length = value.substr(commaIndex + 1, std::string::npos);
 }
 
 bool S100_Dash::IsEmpty()
 {
-	if (start.empty() && length.empty())
-	{
-		return true;
-	}
-
-	return false;
+	return start.empty() && length.empty();
 }
 
 void S100_Dash::SetEmpty()
 {
-	start = L"";
-	length = L"";
+	start = "";
+	length = "";
 }
 
 void S100_Dash::ParseValue(std::string value)
@@ -103,8 +76,8 @@ void S100_Dash::ParseValue(std::string value)
 	std::vector<std::string> v_splited = LatLonUtility::Split(value, ",");
 	if (v_splited.size() >= 2)
 	{
-		start = std::wstring(v_splited[0].begin(), v_splited[0].end());
-		length = std::wstring(v_splited[1].begin(), v_splited[1].end());
+		start = v_splited[0];
+		length = v_splited[1];
 	}
 }
 
@@ -114,7 +87,7 @@ void S100_Dash::ParseValue(std::string_view value)
 	LatLonUtility::Split(value, ",", v_splited);
 	if (v_splited.size() >= 2)
 	{
-		start = std::wstring(v_splited[0].begin(), v_splited[0].end());
-		length = std::wstring(v_splited[1].begin(), v_splited[1].end());
+		start = std::string(v_splited[0]);
+		length = std::string(v_splited[1]);
 	}
 }

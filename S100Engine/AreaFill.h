@@ -10,17 +10,17 @@ public:
 	virtual ~AreaFill();
 
 public:
-	// ?S100Meta::name
-	std::wstring _name;
+	// S100Meta::name
+	std::string _name;
 
-	// ?S100Meta::exposition
-	std::wstring _exposition;
+	// S100Meta::exposition
+	std::string _exposition;
 
 	// areaCRS
-	std::wstring _areaCRS;
+	std::string _areaCRS;
 
 	// symbol::reference
-	std::wstring _symbolReference;
+	std::string _symbolReference;
 
 	// symbol::v1,v2
 	float v1_x;
@@ -34,11 +34,11 @@ public:
 
 public:
 
-	bool Read(std::wstring path);
-	bool ReadByPugi(std::wstring path);
+	bool Read(const std::string& path);
+	bool Read(const std::wstring& path);
+	bool ReadByPugi(const std::string& path);
+	bool ReadByPugi(const std::wstring& path);
 	bool initializeCOM();
-	//std::wstring getNodeValue(IXMLDOMDocumentPtr &pDoc, BSTR selectSingleNode);
-	std::wstring getNodeValue(pugi::xml_node node);
-	/*std::wstring getNodeAttribute(IXMLDOMDocumentPtr &pDoc, BSTR selectSingleNode);*/
-	std::wstring getNodeAttribute(pugi::xml_node node);
+	std::string getNodeValue(pugi::xml_node node);
+	std::string getNodeAttribute(pugi::xml_node node);
 };

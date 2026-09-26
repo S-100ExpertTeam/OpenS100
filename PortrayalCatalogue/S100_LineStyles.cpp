@@ -33,28 +33,26 @@ namespace Portrayal
 		}
 	}
 
-	void S100_LineStyles::SetLineStyleFiles(std::wstring& key, ExternalFile* value)
+	void S100_LineStyles::SetLineStyleFiles(const std::string& key, ExternalFile* value)  { lineStyleFiles.insert({ key, value }); }
+	void S100_LineStyles::SetLineStyleFiles(const std::wstring& key, ExternalFile* value) { lineStyleFiles.insert({ toUtf8(key), value }); }
+
+	ExternalFile* S100_LineStyles::GetLineStyleFiles(const std::string& key)
 	{
-		lineStyleFiles.insert({ key, value });
+		auto it = lineStyleFiles.find(key);
+		return (it != lineStyleFiles.end()) ? it->second : nullptr;
 	}
 
-	ExternalFile* S100_LineStyles::GetLineStyleFiles(std::wstring key)
+	ExternalFile* S100_LineStyles::GetLineStyleFiles(const std::wstring& key)
 	{
-		auto isline = lineStyleFiles.find(key);
-		if (isline != lineStyleFiles.end())
-		{
-			return lineStyleFiles[key];
-		}
-		return nullptr;
+		return GetLineStyleFiles(toUtf8(key));
 	}
 
-	std::unordered_map<std::wstring, ExternalFile*> S100_LineStyles::GetLineStyleFiles()
+	std::unordered_map<std::string, ExternalFile*> S100_LineStyles::GetLineStyleFiles()
 	{
 		return lineStyleFiles;
 	}
 
-
-	std::vector< ExternalFile*>* S100_LineStyles::GetLineStyleFilesVector()
+	std::vector<ExternalFile*>* S100_LineStyles::GetLineStyleFilesVector()
 	{
 		return &lineStyleFiles_v;
 	}

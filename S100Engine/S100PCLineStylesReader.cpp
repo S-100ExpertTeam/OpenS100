@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "S100PCLineStylesReader.h"
 
-#include "../LatLonUtility/LatLonUtility.h"
+#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include <iostream>
 #include <filesystem>
@@ -18,14 +19,13 @@ namespace S100XMLReader
 
 	}
 
-	bool S100PCLineStylesReader::OpenByPugi(std::wstring path, LineStylesPackage::LineStyles *pLineStyles)
+	bool S100PCLineStylesReader::OpenByPugi(const std::string& path, LineStylesPackage::LineStyles* pLineStyles)
 	{
+		std::wstring wpath = LibMFCUtil::StringToWString(path);
+		std::wstring lineStylePath = wpath + L"\\*.xml";
+
 		WIN32_FIND_DATA findFileData;
-		HANDLE hFind;
-
-		std::wstring lineStylePath = path + L"\\*.xml";
-
-		hFind = FindFirstFile(lineStylePath.c_str(), &findFileData);
+		HANDLE hFind = FindFirstFile(lineStylePath.c_str(), &findFileData);
 
 		if (INVALID_HANDLE_VALUE == hFind)
 		{
@@ -36,31 +36,32 @@ namespace S100XMLReader
 		{
 			if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 			{
-				CString filePath;
-				filePath.Format(_T("%s\\%s"), path.c_str(), findFileData.cFileName);
-
-				if (!filePath.IsEmpty())
+				std::wstring wfilePath = wpath + L"\\" + findFileData.cFileName;
+				std::string filePath = LibMFCUtil::WStringToString(wfilePath);
+				if (!filePath.empty())
 				{
-					AddByPugi(path, pLineStyles);
+					AddByPugi(filePath, pLineStyles);
 				}
 			}
 		} while (FindNextFile(hFind, &findFileData));
 
-
 		FindClose(hFind);
-
 		return true;
-
 	}
 
-	bool S100PCLineStylesReader::AddByPugi(std::wstring path, LineStylesPackage::LineStyles* pLineStyles)
+	bool S100PCLineStylesReader::OpenByPugi(const std::wstring& path, LineStylesPackage::LineStyles* pLineStyles)
+	{
+		return OpenByPugi(LibMFCUtil::WStringToString(path), pLineStyles);
+	}
+
+	bool S100PCLineStylesReader::AddByPugi(const std::string& path, LineStylesPackage::LineStyles* pLineStyles)
 	{
 		LineStylesPackage::AbstractLineStyle* pLineStyle = nullptr;
 		pugi::xml_document doc;
 		pugi::xml_parse_result result = doc.load_file(path.c_str());
 
 		pugi::xml_node displayList = doc.first_child();
-		if (displayList  == nullptr)
+		if (displayList == nullptr)
 		{
 			return false;
 		}
@@ -82,7 +83,7 @@ namespace S100XMLReader
 
 		if (nullptr != pLineStyle)
 		{
-			auto key = std::filesystem::path(path).filename().wstring();
+			auto key = std::filesystem::path(path).filename().string();
 			pLineStyle->name = key;
 
 			if (pLineStyles->mapLineStyle.find(key) == pLineStyles->mapLineStyle.end())
@@ -93,6 +94,11 @@ namespace S100XMLReader
 		}
 
 		return false;
+	}
+
+	bool S100PCLineStylesReader::AddByPugi(const std::wstring& path, LineStylesPackage::LineStyles* pLineStyles)
+	{
+		return AddByPugi(LibMFCUtil::WStringToString(path), pLineStyles);
 	}
 
 	bool S100PCLineStylesReader::SetLineStyle(pugi::xml_node node, std::vector<LineStylesPackage::AbstractLineStyle *>* lineStyle)
@@ -114,7 +120,7 @@ namespace S100XMLReader
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "intervalLength"))
 			{
-				((LineStylesPackage::LineStyle*)pLineStyle)->intervalLength = std::stod(instruction.child_value());
+				((LineStylesPackage::LineStyle*)pLineStyle)->intervalLength = cpp_util::stod(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "pen"))
 			{
@@ -138,7 +144,7 @@ namespace S100XMLReader
 
 					if (!strcmp(attriName, "offset"))
 					{
-						pLS->offset = std::stod(attri.value());
+						pLS->offset = cpp_util::stod(attri.value());
 					}
 
 				}
@@ -172,7 +178,7 @@ namespace S100XMLReader
 				auto instructionName = instruction.name();
 				if (!strcmp(instructionName, "intervalLength"))
 				{
-					((LineStylesPackage::LineStyle*)*pLineStyle)->intervalLength = std::stod(instruction.child_value());
+					((LineStylesPackage::LineStyle*)*pLineStyle)->intervalLength = cpp_util::stod(instruction.child_value());
 				}
 				else if (!strcmp(instructionName, "pen"))
 				{
@@ -201,7 +207,7 @@ namespace S100XMLReader
 						auto attriName = attri.name();
 						if (!strcmp(attriName, "offset"))
 						{
-							pLS->offset = std::stod(attri.value());
+							pLS->offset = cpp_util::stod(attri.value());
 						}
 					}
 
@@ -220,7 +226,7 @@ namespace S100XMLReader
 			auto attriName = attri.name();
 			if (!strcmp(attriName, "width"))
 			{
-				pPen->width = std::stod(attri.value());
+				pPen->width = cpp_util::stod(attri.value());
 			}
 		}
 
@@ -229,7 +235,7 @@ namespace S100XMLReader
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "color"))
 			{
-				pPen->color.SetToken(pugi::as_wide(instruction.child_value()));
+				pPen->color.SetToken(std::string(instruction.child_value()));
 				pPen->color.SetTransparency(instruction.attribute("transparency").as_double());
 			}
 		}
@@ -243,11 +249,11 @@ namespace S100XMLReader
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "start"))
 			{
-				pDash->start = std::stod(instruction.child_value());
+				pDash->start = cpp_util::stod(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "length"))
 			{
-				pDash->length = std::stod(instruction.child_value());
+				pDash->length = cpp_util::stod(instruction.child_value());
 			}
 		}
 	}
@@ -259,11 +265,11 @@ namespace S100XMLReader
 			auto attriName = attri.name();
 			if (!strcmp(attriName, "reference"))
 			{
-				pSymbol->reference = pugi::as_wide(attri.value());
+				pSymbol->reference = attri.value();
 			}
 			else if (!strcmp(attriName, "rotation"))
 			{
-				pSymbol->_rotation = std::stod(attri.value());
+				pSymbol->_rotation = cpp_util::stod(attri.value());
 			}
 		}
 
@@ -272,7 +278,7 @@ namespace S100XMLReader
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "position"))
 			{
-				pSymbol->position = std::stod(instruction.child_value());
+				pSymbol->position = cpp_util::stod(instruction.child_value());
 			}
 		}
 
@@ -285,7 +291,7 @@ namespace S100XMLReader
 			auto instructionName = instruction.name();
 			if (!strcmp(instructionName, "intervalLength"))
 			{
-				pLineStyle->intervalLength = std::stod(instruction.child_value());
+				pLineStyle->intervalLength = cpp_util::stod(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "pen"))
 			{

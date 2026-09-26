@@ -3,9 +3,9 @@
 
 DateTypeCode::DateTypeCode()
 {
-	InsertValue(L"creation");
-	InsertValue(L"publication");
-	InsertValue(L"revision");
+	InsertValue("creation");
+	InsertValue("publication");
+	InsertValue("revision");
 }
 
 DateTypeCode::~DateTypeCode()
@@ -15,5 +15,5 @@ DateTypeCode::~DateTypeCode()
 
 void DateTypeCode::GetContents(pugi::xml_node& node)
 {
-	SetValueString(pugi::as_wide(node.child_value()));
+	SetValueString(node.child_value());
 }

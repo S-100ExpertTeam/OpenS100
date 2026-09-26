@@ -10,25 +10,33 @@ public:
 	virtual ~S100_Font();
 
 private:
-	std::wstring serifs;
-	std::wstring weight;
-	std::wstring slant;
-	std::wstring proportion;
+	std::string serifs;
+	std::string weight;
+	std::string slant;
+	std::string proportion;
 
 public:
 	void GetContents(pugi::xml_node node);
 
-	void SetSerifs(std::wstring& value);
-	std::wstring GetSerifs();
+	void SetSerifs(const std::string& value);
+	void SetSerifs(const std::wstring& value);
+	std::string  GetSerifs();
+	std::wstring GetSerifsW();
 
-	void SetWeight(std::wstring& value);
-	std::wstring GetWeight();
+	void SetWeight(const std::string& value);
+	void SetWeight(const std::wstring& value);
+	std::string  GetWeight();
+	std::wstring GetWeightW();
 
-	void SetSlant(std::wstring& value);
-	std::wstring GetSlant();
+	void SetSlant(const std::string& value);
+	void SetSlant(const std::wstring& value);
+	std::string  GetSlant();
+	std::wstring GetSlantW();
 
-	void SetProportion(std::wstring& value);
-	std::wstring GetProportion();
+	void SetProportion(const std::string& value);
+	void SetProportion(const std::wstring& value);
+	std::string  GetProportion();
+	std::wstring GetProportionW();
 
 	bool isUpright();
 };

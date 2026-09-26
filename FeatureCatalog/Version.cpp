@@ -1,5 +1,8 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "Version.h"
+
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include <sstream>
 #include <vector>
@@ -144,7 +147,7 @@ void Version::parseSource(const std::string& source)
 int Version::convertToInt(const std::string& str) const
 {
 	try {
-		return std::stoi(str);
+		return cpp_util::stoi(str);
 	}
 	catch (const std::exception& e) {
 		return 0;  
@@ -215,4 +218,29 @@ bool Version::isEmpty()
 	}
 
 	return false;
+}
+
+std::wstring Version::getMajorW() const
+{
+	return toWide(getMajor());
+}
+
+std::wstring Version::getMinorW() const
+{
+	return toWide(getMinor());
+}
+
+std::wstring Version::getPatchW() const
+{
+	return toWide(getPatch());
+}
+
+std::wstring Version::getWorkingW() const
+{
+	return toWide(getWorking());
+}
+
+std::wstring Version::getSourceW() const
+{
+	return toWide(getSource());
 }

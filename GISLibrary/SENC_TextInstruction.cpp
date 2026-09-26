@@ -268,8 +268,8 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 	{
 		textPoint = new SENC_TextPoint();
 
-		textPoint->horizontalAlignment = SENC_CommonFuc::GetHorizontalAlignment(s100TextInstruction->GetTextPoint()->GetHorizontalAlignment());
-		textPoint->verticalAlignment = SENC_CommonFuc::GetVerticalAlignment(s100TextInstruction->GetTextPoint()->GetVerticalAlignment());
+		textPoint->horizontalAlignment = SENC_CommonFuc::GetHorizontalAlignment(s100TextInstruction->GetTextPoint()->GetHorizontalAlignmentW());
+		textPoint->verticalAlignment = SENC_CommonFuc::GetVerticalAlignment(s100TextInstruction->GetTextPoint()->GetVerticalAlignmentW());
 		if (s100TextInstruction->GetTextPoint()->GetOffset())
 		{
 			textPoint->offset.x = s100TextInstruction->GetTextPoint()->GetOffset()->GetX();
@@ -284,13 +284,13 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 
 			textPoint->elements.push_back(e2);
 
-			e2->bodySize = _wtoi(e1->GetBodySize().c_str());
-			e2->verticalOffset = (float)(_wtof(e1->GetVerticalOffset().c_str()));
+			e2->bodySize = _wtoi(e1->GetBodySizeW().c_str());
+			e2->verticalOffset = (float)(_wtof(e1->GetVerticalOffsetW().c_str()));
 
 			if (e1->GetFont())
 			{
-				e2->font.proportion = SENC_CommonFuc::GetFontProportion(e1->GetFont()->GetProportion());
-				e2->font.serifs = _wtoi(e1->GetFont()->GetSerifs().c_str()) != 0 ? true : false;
+				e2->font.proportion = SENC_CommonFuc::GetFontProportion(e1->GetFont()->GetProportionW());
+				e2->font.serifs = _wtoi(e1->GetFont()->GetSerifsW().c_str()) != 0 ? true : false;
 
 				if (true == e1->GetFont()->isUpright())
 				{
@@ -302,13 +302,13 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 				}
 
 				//e2->font.slant = _wtoi(e1->GetFont()->GetSlant().c_str());
-				e2->font.weight = _wtoi(e1->GetFont()->GetWeight().c_str());
+				e2->font.weight = _wtoi(e1->GetFont()->GetWeightW().c_str());
 			}
 
 			if (e1->GetForground())
 			{
-				e2->foreground.token = e1->GetForground()->GetToken();
-				e2->foreground.transparency = (int)(_wtof(e1->GetForground()->GetTransparency().c_str()) * 100);
+				e2->foreground.token = e1->GetForground()->GetTokenW();
+				e2->foreground.transparency = (int)(_wtof(e1->GetForground()->GetTransparencyW().c_str()) * 100);
 				
 				auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
 
@@ -322,8 +322,8 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 
 			if (e1->GetText())
 			{
-				e2->text.value = e1->GetText()->GetValue();
-				e2->text.useValueOf = e1->GetText()->GetUseValueOf();
+				e2->text.value = e1->GetText()->GetValueW();
+				e2->text.useValueOf = e1->GetText()->GetUseValueOfW();
 			}
 		}
 	}

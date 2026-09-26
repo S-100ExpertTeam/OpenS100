@@ -16,7 +16,7 @@ void S100_Item::GetContents(pugi::xml_node Node)
 	auto tokenNode = Node.first_attribute();
 	if (!strcmp(tokenNode.name(), "token"))
 	{
-		token = pugi::as_wide(tokenNode.value());
+		token = tokenNode.value();
 	}
 
 	for (pugi::xml_node instruction = Node.first_child(); instruction; instruction = instruction.next_sibling())
@@ -24,7 +24,6 @@ void S100_Item::GetContents(pugi::xml_node Node)
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName, "cie"))
 		{
-			//scie.GetContents(instruction);
 			if (auto xyLNode = instruction.child("xyL"))
 			{
 				double x = xyLNode.child("x").text().as_double();
@@ -47,10 +46,8 @@ void S100_Item::GetContents(pugi::xml_node Node)
 	}
 }
 
-void S100_Item::SetToken(std::wstring& value)
-{
-	token = value;
-}
+void S100_Item::SetToken(const std::string& value)  { token = value; }
+void S100_Item::SetToken(const std::wstring& value) { token = toUtf8(value); }
 
 void S100_Item::SetSCIE(S100_CIE* value)
 {
@@ -62,10 +59,8 @@ void S100_Item::SetSRGB(S100_SRGB* value)
 	srgb = *value;
 }
 
-std::wstring S100_Item::GetToken()
-{
-	return token;
-}
+std::string  S100_Item::GetToken()  { return token; }
+std::wstring S100_Item::GetTokenW() { return toWide(token); }
 
 S100_CIE* S100_Item::GetSCIE()
 {

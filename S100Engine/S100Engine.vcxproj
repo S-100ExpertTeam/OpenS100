@@ -443,7 +443,6 @@
     <ClInclude Include="S100ColorProfiles.h" />
     <ClInclude Include="S100Data.h" />
     <ClInclude Include="S100Engine.h" />
-    <ClInclude Include="S100Engine_h.h" />
     <ClInclude Include="S100PCLineStylesReader.h" />
     <ClInclude Include="S100PCManager.h" />
     <ClInclude Include="S100Render.h" />

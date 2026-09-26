@@ -13,17 +13,19 @@ namespace Portrayal
 		virtual ~S100_AreaFills();
 
 	private:
-		std::unordered_map<std::wstring, ExternalFile*> areaFillFiles;
-		std::vector< ExternalFile*> areaFillFiles_v;
+		std::unordered_map<std::string, ExternalFile*> areaFillFiles;
+		std::vector<ExternalFile*> areaFillFiles_v;
 
 	public:
 		void GetContents(pugi::xml_node& node);
 
-		void SetAreaFillFiles(std::wstring key, ExternalFile* value);
-		void SetAreaFillFiles(std::unordered_map<std::wstring, ExternalFile*> value);
+		void SetAreaFillFiles(const std::string& key, ExternalFile* value);
+		void SetAreaFillFiles(const std::wstring& key, ExternalFile* value);
+		void SetAreaFillFiles(std::unordered_map<std::string, ExternalFile*> value);
 
-		ExternalFile* GetAreaFillFiles(std::wstring value);
-		std::unordered_map<std::wstring, ExternalFile*> GetAreaFillFiles();
-		std::vector< ExternalFile*>* GetAreaFillFilesVecter();
+		ExternalFile* GetAreaFillFiles(const std::string& value);
+		ExternalFile* GetAreaFillFiles(const std::wstring& value);
+		std::unordered_map<std::string, ExternalFile*> GetAreaFillFiles();
+		std::vector<ExternalFile*>* GetAreaFillFilesVecter();
 	};
 }

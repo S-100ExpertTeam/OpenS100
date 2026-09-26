@@ -15,7 +15,7 @@ S100ColorProfile::~S100ColorProfile()
 
 }
 
-bool S100ColorProfile::OpenByPugi(char *filePath)
+bool S100ColorProfile::OpenByPugi(const char *filePath)
 {
 	pugi::xml_document xmldoc;
 	auto result = xmldoc.load_file(filePath);
@@ -48,24 +48,29 @@ bool S100ColorProfile::OpenByPugi(char *filePath)
 	return true;
 }
 
-D2D1_COLOR_F S100ColorProfile::GetColor(std::wstring _paletteName, std::wstring _token)
+D2D1_COLOR_F S100ColorProfile::GetColor(const std::string& _paletteName, const std::string& _token)
 {
-	D2D1_COLOR_F resultColor = D2D1::ColorF(D2D1::ColorF::Crimson);
-
-	for (auto i = palette.begin(); i != palette.end(); i++) {
-		if (i->GetName().compare(_paletteName) == 0) {
+	for (auto i = palette.begin(); i != palette.end(); i++)
+	{
+		if (i->GetName() == _paletteName)
+		{
 			auto item = i->GetItem(_token);
-			if (item) {
+			if (item)
+			{
 				return D2D1::ColorF((FLOAT)(item->srgb.red / 255.0), (FLOAT)(item->srgb.green / 255.0), (FLOAT)(item->srgb.blue / 255.0));
 			}
 		}
 	}
-
 	return D2D1::ColorF(D2D1::ColorF::Black);
 }
 
+D2D1_COLOR_F S100ColorProfile::GetColor(const std::wstring& _paletteName, const std::wstring& _token)
+{
+	return GetColor(LibMFCUtil::WStringToString(_paletteName), LibMFCUtil::WStringToString(_token));
+}
+
 // Current Palette returns the color corresponding to token.
-D2D1_COLOR_F S100ColorProfile::GetColor(std::wstring token)
+D2D1_COLOR_F S100ColorProfile::GetColor(const std::string& token)
 {
 	if (currentPalette->IsItem(token))
 	{
@@ -75,53 +80,58 @@ D2D1_COLOR_F S100ColorProfile::GetColor(std::wstring token)
 			return D2D1::ColorF((FLOAT)(item->srgb.red / 255.0), (FLOAT)(item->srgb.green / 255.0), (FLOAT)(item->srgb.blue / 255.0));
 		}
 	}
-
 	return D2D1::ColorF(D2D1::ColorF::Black);
 }
 
+D2D1_COLOR_F S100ColorProfile::GetColor(const std::wstring& token)
+{
+	return GetColor(LibMFCUtil::WStringToString(token));
+}
+
 // Save palette pointer to current palette according to palette name
-void S100ColorProfile::ChangePalette(std::wstring paletteName) 
+void S100ColorProfile::ChangePalette(const std::string& paletteName)
 {
 	for (auto i = palette.begin(); i != palette.end(); i++)
 	{
-		if (!i->GetName().compare(paletteName))
+		if (i->GetName() == paletteName)
 		{
 			currentPalette = &*i;
 		}
 	}
 }
 
+void S100ColorProfile::ChangePalette(const std::wstring& paletteName)
+{
+	ChangePalette(LibMFCUtil::WStringToString(paletteName));
+}
+
 void S100ColorProfile::extractionColors(pugi::xml_node node)
 {
-	//Add colors' child.
-	for (pugi::xml_node instruction=node.first_child(); instruction; instruction =instruction.next_sibling())
+	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		//color
 		libS100Engine::Color color;
 		if (instruction == nullptr)
 		{
 			return;
 		}
-	
+
 		for (pugi::xml_attribute attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
 		{
 			auto attriName = attri.name();
 			if (strcmp(attriName, "name"))
 			{
-				color.name = pugi::as_wide(attri.value());
-				//int i = 0;
+				color.name = attri.value();
 			}
 			else if (strcmp(attriName, "token"))
 			{
-				color.token= pugi::as_wide(attri.value());
-				//int i = 0;
+				color.token = attri.value();
 			}
 		}
 
-		auto desctiptionName=instruction.first_child().name();
-		if (!strcmp(desctiptionName,"description"))
+		auto desctiptionName = instruction.first_child().name();
+		if (!strcmp(desctiptionName, "description"))
 		{
-			color.desctiption =pugi::as_wide(instruction.first_child().child_value());
+			color.desctiption = instruction.first_child().child_value();
 		}
 		colors.colors.push_back(color);
 	}
@@ -129,15 +139,14 @@ void S100ColorProfile::extractionColors(pugi::xml_node node)
 
 void S100ColorProfile::extractionPalette(pugi::xml_node node)
 {
-	//palette
 	Palette pale;
-	std::wstring token;
-	for (pugi::xml_attribute attri=node.first_attribute(); attri; attri=attri.next_attribute()) 
+	std::string token;
+	for (pugi::xml_attribute attri = node.first_attribute(); attri; attri = attri.next_attribute())
 	{
 		auto attriName = attri.name();
-		if (!strcmp(attriName,"name"))
+		if (!strcmp(attriName, "name"))
 		{
-			pale.SetName(pugi::as_wide(attri.value()));
+			pale.SetName(std::string(attri.value()));
 		}
 	}
 
@@ -148,20 +157,20 @@ void S100ColorProfile::extractionPalette(pugi::xml_node node)
 			return;
 		}
 		auto instructionName = instruction.name();
-		if (!strcmp(instructionName,"item"))
+		if (!strcmp(instructionName, "item"))
 		{
 			libS100Engine::Item item;
-			for (pugi::xml_attribute attri= instruction.first_attribute(); attri; attri=attri.next_attribute())
+			for (pugi::xml_attribute attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
 			{
 				auto attriName = attri.name();
-				if (!strcmp(attriName,"token"))
+				if (!strcmp(attriName, "token"))
 				{
-					token = pugi::as_wide(attri.value());
+					token = attri.value();
 					item.token = token;
 				}
 			}
 
-			for (pugi::xml_node child=instruction.first_child(); child; child=child.next_sibling())
+			for (pugi::xml_node child = instruction.first_child(); child; child = child.next_sibling())
 			{
 				if (child != nullptr)
 				{
@@ -170,36 +179,33 @@ void S100ColorProfile::extractionPalette(pugi::xml_node node)
 						auto srgbchildName = srgbchild.name();
 						if (!strcmp(srgbchildName, "red"))
 						{
-							std::wstring value = pugi::as_wide(srgbchild.child_value());
-							if (value!=L"") 
+							std::string value = srgbchild.child_value();
+							if (!value.empty())
 							{
 								item.srgb.red = stoi(value);
 							}
 						}
 						else if (!strcmp(srgbchildName, "green"))
 						{
-							std::wstring value = pugi::as_wide(srgbchild.child_value());
-							if (value != L"")
+							std::string value = srgbchild.child_value();
+							if (!value.empty())
 							{
 								item.srgb.green = stoi(value);
-
 							}
 						}
 						else if (!strcmp(srgbchildName, "blue"))
 						{
-							std::wstring value = pugi::as_wide(srgbchild.child_value());
-							if (value != L"")
+							std::string value = srgbchild.child_value();
+							if (!value.empty())
 							{
 								item.srgb.blue = stoi(value);
-								int i = 0;
 							}
-							
 						}
 					}
 				}
 			}
 
-			pale.SetItem(token,item);
+			pale.SetItem(token, item);
 		}
 	}
 	palette.push_back(pale);

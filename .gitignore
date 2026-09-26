@@ -27,6 +27,8 @@ bld/
 [Ll]og/
 TEMP/
 
+.claude/
+
 # External Library
 !extlibs/**
 !extlib/**
@@ -287,3 +289,8 @@ Redist/**
 
 vcpkg/
 vcpkg_installed/
+
+.DS_Store
+
+// Open Code
+.sisyphus/

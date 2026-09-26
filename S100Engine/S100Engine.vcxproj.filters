@@ -298,9 +298,6 @@
     <ClInclude Include="GraphicBasePackage_Enum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="S100Engine_h.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Symbol.h">
       <Filter>Header Files</Filter>
     </ClInclude>

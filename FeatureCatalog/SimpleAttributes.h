@@ -11,9 +11,9 @@ public:
 	virtual ~SimpleAttributes(void);
 
 private:
-	std::unordered_map<std::wstring, SimpleAttribute*> simpleAttribute;
+	std::unordered_map<std::string, SimpleAttribute*> simpleAttribute;
 
 public:
 	void GetContents(pugi::xml_node& node);
-	std::unordered_map<std::wstring, SimpleAttribute*>& GetSimpleAttributePointer();
+	std::unordered_map<std::string, SimpleAttribute*>& GetSimpleAttributePointer();
 };

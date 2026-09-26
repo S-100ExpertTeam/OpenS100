@@ -2,6 +2,7 @@
 #include "VisibilityCommands.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace Part9a
 {
@@ -89,7 +90,7 @@ namespace Part9a
 
 		try 
         {
-			drawingPriority = std::stoi(input);
+			drawingPriority = cpp_util::stoi(input);
 		}
         catch (const std::exception& e) 
         {
@@ -126,7 +127,7 @@ namespace Part9a
 
         try
         {
-            scaleMinimum = std::stoi(input);
+            scaleMinimum = cpp_util::stoi(input);
         }
         catch (const std::exception& e)
         {
@@ -163,7 +164,7 @@ namespace Part9a
 
         try
         {
-            scaleMaximum = std::stoi(input);
+            scaleMaximum = cpp_util::stoi(input);
         }
         catch (const std::exception& e)
         {

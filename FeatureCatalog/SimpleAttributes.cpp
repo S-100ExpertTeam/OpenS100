@@ -18,17 +18,17 @@ void SimpleAttributes::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:S100_FC_SimpleAttribute"))
 		{
 			auto sa = new SimpleAttribute();
 			sa->GetContents(instruction);
-			simpleAttribute.insert({ sa->GetCodeAsWString(), sa });
+			simpleAttribute.insert({ sa->GetCode(), sa });
 		}
 	}
 }
 
-std::unordered_map<std::wstring, SimpleAttribute*>& SimpleAttributes::GetSimpleAttributePointer()
+std::unordered_map<std::string, SimpleAttribute*>& SimpleAttributes::GetSimpleAttributePointer()
 {
 	return simpleAttribute;
 }

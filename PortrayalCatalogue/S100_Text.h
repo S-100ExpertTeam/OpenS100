@@ -10,17 +10,21 @@ public:
 	virtual ~S100_Text();
 
 private:
-	std::wstring value;
-	
+	std::string value;
+
 	// Not used
-	std::wstring useValueOf;
+	std::string useValueOf;
 
 public:
 	void GetContents(pugi::xml_node node);
 
-	void SetValue(std::wstring& _value);
-	void SetUseValueOf(std::wstring& value);
+	void SetValue(const std::string& value);
+	void SetValue(const std::wstring& value);
+	void SetUseValueOf(const std::string& value);
+	void SetUseValueOf(const std::wstring& value);
 
-	std::wstring GetValue();
-	std::wstring GetUseValueOf();
+	std::string  GetValue();
+	std::wstring GetValueW();
+	std::string  GetUseValueOf();
+	std::wstring GetUseValueOfW();
 };

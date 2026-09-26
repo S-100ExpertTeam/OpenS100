@@ -323,7 +323,7 @@ std::shared_ptr<FC_PC_DatasetClass> DataSetManagerSupport::FC_PC_LoadFile(std::s
 		FC_PC_DatasetClass dc;
 		//FC
 		dc.FC_PC = false;
-		dc.product = LibMFCUtil::WStringToString(fc.GetProductId());
+		dc.product = fc.GetProductId();
 		auto tmp = fc.getVersion();
 		dc.version = tmp.source;
 
@@ -338,8 +338,8 @@ std::shared_ptr<FC_PC_DatasetClass> DataSetManagerSupport::FC_PC_LoadFile(std::s
 		FC_PC_DatasetClass dc;
 		//PC
 		dc.FC_PC = true;
-		dc.product = LibMFCUtil::WStringToString(pc.GetProduct());
-		dc.version = LibMFCUtil::WStringToString(pc.GetVersion());
+		dc.product = LibMFCUtil::WStringToString(pc.GetProductW());
+		dc.version = LibMFCUtil::WStringToString(pc.GetVersionW());
 
 		return std::make_shared<FC_PC_DatasetClass>(dc);
 	}

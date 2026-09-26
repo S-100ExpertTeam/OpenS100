@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Multiplicity.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <string>
 
 Multiplicity::Multiplicity()
@@ -17,10 +19,10 @@ void Multiplicity::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100Base:lower"))
 		{
-			lower = std::stoi(instruction.child_value());
+			lower = cpp_util::stoi(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100Base:upper"))
 		{

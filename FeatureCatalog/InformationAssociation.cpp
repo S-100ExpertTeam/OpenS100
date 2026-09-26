@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "InformationAssociation.h"
 
 InformationAssociation::InformationAssociation()
@@ -17,7 +18,7 @@ void InformationAssociation::GetContents(pugi::xml_node& node)
 	int count = 0;
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:role"))
 		{
 			Reference reference;
@@ -27,26 +28,26 @@ void InformationAssociation::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:superType")) 
 		{
-			superType = pugi::as_wide(instruction.child_value());
+			superType = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100FC:subType"))
 		{
-			subType.push_back(pugi::as_wide(instruction.child_value()));
+			subType.push_back(instruction.child_value());
 		}
 	}
 }
 
-const std::wstring& InformationAssociation::GetSuperType()
+const std::string& InformationAssociation::GetSuperType()
 {
 	return superType;
 }
 
-void InformationAssociation::SetSuperType(std::wstring value)
+void InformationAssociation::SetSuperType(std::string value)
 {
 	superType = value;
 }
 
-std::list<std::wstring>& InformationAssociation::GetSubTypePointer()
+std::list<std::string>& InformationAssociation::GetSubTypePointer()
 {
 	return subType;
 }
@@ -54,4 +55,21 @@ std::list<std::wstring>& InformationAssociation::GetSubTypePointer()
 Reference(&InformationAssociation::GetRolePointer())[2]
 {
 	return role;
+}
+
+std::wstring InformationAssociation::GetSuperTypeW()
+{
+	return toWide(GetSuperType());
+}
+
+void InformationAssociation::SetSuperType(const char* value)
+{
+	std::string s(value ? value : "");
+	SetSuperType(s);
+}
+
+void InformationAssociation::SetSuperType(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetSuperType(s);
 }

@@ -11,6 +11,6 @@ namespace LineStylesPackage
 		LineStyleReference();
 		virtual ~LineStyleReference();
 	public:
-		std::wstring reference;
+		std::string reference;
 	};
 }

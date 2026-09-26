@@ -380,10 +380,10 @@ private:
 	bool FeatureRecordHasMaskedSpatialTypeField();
 
 	std::wstring GetChartName();
-	std::wstring GetEditionNumberAsWstring();
+	std::string GetEditionNumber();
 	std::string GetUpdateNumber();
-	std::wstring GetUpdateNumberAsWstring();
-	std::wstring GetIssueDateAsWstring();
+	std::wstring GetUpdateNumberW();
+	std::wstring GetIssueDateW();
 
 public:
 	GF::ObjectType* GetObjectType(int type, std::string id) override;

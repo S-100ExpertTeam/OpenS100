@@ -11,15 +11,19 @@ public:
 	virtual ~S100_AugmentedRay();
 
 private:
-	std::wstring direction;
-	std::wstring length;
+	std::string direction;
+	std::string length;
 
 public:
 	void GetContents(pugi::xml_node node);
 
-	void SetDirection(std::wstring& value);
-	void SetLength(std::wstring& value);
+	void SetDirection(const std::string& value);
+	void SetDirection(const std::wstring& value);
+	std::string  GetDirection();
+	std::wstring GetDirectionW();
 
-	std::wstring GetDirection();
-	std::wstring GetLength();
+	void SetLength(const std::string& value);
+	void SetLength(const std::wstring& value);
+	std::string  GetLength();
+	std::wstring GetLengthW();
 };

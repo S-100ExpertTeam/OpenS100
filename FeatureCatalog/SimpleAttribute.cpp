@@ -1,8 +1,7 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "SimpleAttribute.h"
 #include "S100_CD_AttributeValueType.h"
-
-#include "../LibMFCUtil/LibMFCUtil.h" 
 
 SimpleAttribute::SimpleAttribute()
 {
@@ -23,7 +22,7 @@ void SimpleAttribute::GetContents(pugi::xml_node& node)
 
 	for (auto i = node.first_child(); i; i = i.next_sibling())
 	{
-		const pugi::char_t* instructionName = i.name();
+		const char* instructionName = i.name();
 
 		if (!strcmp(instructionName, "S100FC:valueType"))
 		{
@@ -47,7 +46,7 @@ void SimpleAttribute::GetContents(pugi::xml_node& node)
 		{
 			for (auto j = i.first_child(); j; j = j.next_sibling())
 			{
-				const pugi::char_t* instructionName = j.name();
+				const char* instructionName = j.name();
 
 				if (!strcmp(instructionName, "S100FC:listedValue"))
 				{
@@ -102,13 +101,9 @@ void SimpleAttribute::InsertListedValue(ListedValue* item)
 	labelMap.insert({ item->GetLabel(), item });
 }
 
-ListedValue* SimpleAttribute::GetListedValue(std::string label)
-{
-	auto wlabel = pugi::as_wide(label);
-	return GetListedValue(wlabel);
-}
 
-ListedValue* SimpleAttribute::GetListedValue(std::wstring label)
+
+ListedValue* SimpleAttribute::GetListedValue(std::string label)
 {
 	auto item = labelMap.find(label);
 
@@ -140,4 +135,10 @@ bool SimpleAttribute::IsSimple()
 bool SimpleAttribute::IsComplex()
 {
 	return false;
+}
+
+ListedValue* SimpleAttribute::GetListedValue(std::wstring label)
+{
+	std::string s = toUtf8(label);
+	return GetListedValue(s);
 }

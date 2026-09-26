@@ -2,6 +2,7 @@
 #include "Geometry.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include <fstream>
 #include <iostream>
@@ -55,7 +56,7 @@ std::wstring Geometry::GetIDAsWString()
 
 int Geometry::GetIDAsInt()
 {
-	return std::stoi(GetID());
+	return cpp_util::stoi(GetID());
 }
 
 void Geometry::SetID(std::string value)

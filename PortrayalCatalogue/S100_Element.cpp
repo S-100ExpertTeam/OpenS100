@@ -27,18 +27,16 @@ void S100_Element::GetContents(pugi::xml_node node)
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName, "text"))
 		{
-			if (!text) {
-				text = new S100_Text();
-			}
+			if (!text) text = new S100_Text();
 			text->GetContents(instruction);
 		}
 		else if (!strcmp(instructionName, "bodySize"))
 		{
-			bodySize = pugi::as_wide(instruction.child_value());
+			bodySize = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "verticalOffset"))
 		{
-			verticalOffset = pugi::as_wide(instruction.child_value());
+			verticalOffset = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "foreground"))
 		{
@@ -63,24 +61,15 @@ S100_Text* S100_Element::GetText()
 	return text;
 }
 
-void S100_Element::SetBodySize(std::wstring& value) {
-	bodySize = value;
-}
+void S100_Element::SetBodySize(const std::string& value)  { bodySize = value; }
+void S100_Element::SetBodySize(const std::wstring& value) { bodySize = toUtf8(value); }
+std::string  S100_Element::GetBodySize()  { return bodySize; }
+std::wstring S100_Element::GetBodySizeW() { return toWide(bodySize); }
 
-std::wstring S100_Element::GetBodySize()
-{
-	return bodySize;
-}
-
-void S100_Element::SetVerticalOffset(std::wstring& value)
-{
-	verticalOffset = value;
-}
-
-std::wstring S100_Element::GetVerticalOffset()
-{
-	return verticalOffset;
-}
+void S100_Element::SetVerticalOffset(const std::string& value)  { verticalOffset = value; }
+void S100_Element::SetVerticalOffset(const std::wstring& value) { verticalOffset = toUtf8(value); }
+std::string  S100_Element::GetVerticalOffset()  { return verticalOffset; }
+std::wstring S100_Element::GetVerticalOffsetW() { return toWide(verticalOffset); }
 
 void S100_Element::SetForground(S100_Foreground* value)
 {

@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "Roles.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
-
 Roles::Roles(void)
 {
 
@@ -21,17 +19,17 @@ void Roles::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:S100_FC_Role"))
 		{
 			Role* r = new Role();
 			r->GetContents(instruction);
-			role.insert(std::make_pair(r->GetCodeAsWString(), r));
+			role.insert(std::make_pair(r->GetCode(), r));
 		}
 	}
 }
 
-std::unordered_map<std::wstring, Role*>& Roles::GetRolePointer()
+std::unordered_map<std::string, Role*>& Roles::GetRolePointer()
 {
 	return role;
 }

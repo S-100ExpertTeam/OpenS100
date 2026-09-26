@@ -2,6 +2,7 @@
 #include "TextStyleCommands.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace Part9a
 {
@@ -31,7 +32,7 @@ namespace Part9a
             {
                 try 
                 {
-                    transparency = std::stod(tokens[1]);
+                    transparency = cpp_util::stod(tokens[1]);
                 }
                 catch (const std::exception&) 
                 {
@@ -78,7 +79,7 @@ namespace Part9a
             {
                 try
                 {
-                    transparency = std::stod(tokens[1]);
+                    transparency = cpp_util::stod(tokens[1]);
                 }
                 catch (const std::exception&)
                 {
@@ -114,8 +115,8 @@ namespace Part9a
         setPresent();
         // FontSize:bodySize 
         try
-        {
-            bodySize = std::stod(input);
+        {   
+            bodySize = cpp_util::stod(input);
         }
         catch (const std::exception& e)
         {
@@ -395,7 +396,7 @@ namespace Part9a
         // TextVerticalOffset:verticalOffset 
         try
         {
-            verticalOffset = std::stod(input);
+            verticalOffset = cpp_util::stod(input);
         }
         catch (const std::exception& e)
         {

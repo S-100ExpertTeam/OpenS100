@@ -14,21 +14,26 @@ namespace Portrayal
 		virtual ~ExternalFile();
 
 	private:
-		std::wstring FileName = _T("");
+		std::string FileName;
 		FileType FileType = FileType::none;
 		FileFormat FileFormat = FileFormat::none;
 
 	public:
-		std::wstring GetFileName();
+		std::string  GetFileName();
+		std::wstring GetFileNameW();
+		std::string  GetFileTypeAsString();
 		std::wstring GetFileType();
+		std::string  GetFileFormatAsString();
 		std::wstring GetFileFormatAsWstring();
 		Portrayal::FileFormat GetFileFormat();
 
-		void SetFileName(std::wstring value);
-		void SetFileType(std::wstring value);
-		void SetFileFormat(std::wstring value);
+		void SetFileName(const std::string& value);
+		void SetFileName(const std::wstring& value);
+		void SetFileType(const std::string& value);
+		void SetFileType(const std::wstring& value);
+		void SetFileFormat(const std::string& value);
+		void SetFileFormat(const std::wstring& value);
 
 		void GetContents(pugi::xml_node& node);
 	};
 }
-

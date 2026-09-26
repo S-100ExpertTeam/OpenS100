@@ -40,12 +40,12 @@ protected:
 	std::optional<S100::CharacterString> id;
 	std::optional<S100::CharacterString> parentId;
 	std::optional<S100::Boolean> hover;
-	std::vector<std::wstring> viewingGroup;
-	std::wstring displayPlane;
+	std::vector<std::string> viewingGroup;
+	std::string displayPlane;
 	S100::Integer drawingPriority = 0;
 	std::optional<S100::Integer> scaleMinimum = 0;
 	std::optional<S100::Integer> scaleMaximum = 0;
-	std::wstring featureReference;
+	std::string featureReference;
 	std::list<S100_SpatialReference*> spatialReference;
 	std::optional<S100_AlertReference> alertReference;
 	std::vector<S100_TM_Period> timeValid;
@@ -54,8 +54,8 @@ public:
 	void GetContents(pugi::xml_node node);
 
 	void SetType(int value);
-	void SetFeatureReference(std::wstring& value);
-	void SetFeatureReference(std::string& value);
+	void SetFeatureReference(const std::string& value);
+	void SetFeatureReference(const std::wstring& value);
 	void SetFeatureReference(std::string_view value);
 
 	void setId(std::string value);
@@ -64,29 +64,36 @@ public:
 
 	void SetSpatialReference(S100_SpatialReference* value);
 	void SetSpatialReference(std::list<S100_SpatialReference*> value);
-	void SetViewingGroup(std::wstring& value);
+	void SetViewingGroup(const std::string& value);
+	void SetViewingGroup(const std::wstring& value);
 	void SetViewingGroup(std::vector<std::string>& value);
 	void SetViewingGroup(std::vector<std::string_view>& value);
-	void SetDisplayPlane(std::wstring& value);
-	void SetDisplayPlane(std::string& value);
-	void SetDrawingPriority(std::wstring& value);
+	void SetDisplayPlane(const std::string& value);
+	void SetDisplayPlane(const std::wstring& value);
+	void SetDrawingPriority(const std::string& value);
+	void SetDrawingPriority(const std::wstring& value);
 	void SetDrawingPriority(int value);
-	void SetScaleMinimum(std::wstring& value);
+	void SetScaleMinimum(const std::string& value);
+	void SetScaleMinimum(const std::wstring& value);
 	void SetScaleMinimum(int value);
-	void SetScaleMaximum(std::wstring& value);
+	void SetScaleMaximum(const std::string& value);
+	void SetScaleMaximum(const std::wstring& value);
 	void SetScaleMaximum(int value);
 	void setAlertReference(S100_AlertReference value);
 
 	int GetType();
-	const std::wstring& GetFeatureReference();
+	const std::string& GetFeatureReference();
+	std::wstring GetFeatureReferenceW();
 	const std::string getId();
 	const std::string getParentId();
 	const bool getHover();
 	S100_SpatialReference* GetSpatialReference(int index);
 	std::list<S100_SpatialReference*> GetSpatialReference();
-	std::wstring GetViewingGroup(int index);
+	std::string  GetViewingGroup(int index);
+	std::wstring GetViewingGroupW(int index);
 	int getViewingGroupCount();
-	std::wstring GetDisplayPlane();
+	std::string  GetDisplayPlane();
+	std::wstring GetDisplayPlaneW();
 	int GetDrawingProiority();
 	int GetScaleMinimum();
 	int GetScaleMaximum();

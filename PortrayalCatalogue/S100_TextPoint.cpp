@@ -6,8 +6,8 @@ S100_TextPoint::S100_TextPoint()
 	offset = NULL;
 	areaPlacement = NULL;
 
-	horizontalAlignment = L"left";
-	verticalAlignment = L"center";
+	horizontalAlignment = "left";
+	verticalAlignment = "center";
 }
 
 S100_TextPoint::~S100_TextPoint()
@@ -23,24 +23,24 @@ S100_TextPoint::~S100_TextPoint()
 
 void S100_TextPoint::GetContents(pugi::xml_node node)
 {
-	if (node==nullptr) 
+	if (node==nullptr)
 	{
 		return;
 	}
-	for (auto attri=node.first_attribute(); attri; attri=attri.next_attribute()) 
+	for (auto attri=node.first_attribute(); attri; attri=attri.next_attribute())
 	{
 		auto attriName = attri.name();
 		if (!strcmp(attriName,"horizontalAlignment"))
 		{
-			horizontalAlignment =pugi::as_wide( attri.value());
+			horizontalAlignment = attri.value();
 		}
 		else if (!strcmp(attriName, "verticalAlignment"))
 		{
-			verticalAlignment = pugi::as_wide(attri.value());
+			verticalAlignment = attri.value();
 		}
 	}
 
-	for (auto instruction=node.first_child(); instruction; instruction=instruction.next_sibling()) 
+	for (auto instruction=node.first_child(); instruction; instruction=instruction.next_sibling())
 	{
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName,"element"))
@@ -49,15 +49,14 @@ void S100_TextPoint::GetContents(pugi::xml_node node)
 			element->GetContents(instruction);
 			elements.push_back(element);
 		}
-
 		else if (!strcmp(instructionName, "offset"))
 		{
 			if (!offset) offset = new S100_VectorPoint();
-			offset-> GetContents(instruction);
+			offset->GetContents(instruction);
 		}
-		else if (!strcmp(instructionName,"rotation")) 
+		else if (!strcmp(instructionName,"rotation"))
 		{
-			rotation = pugi::as_wide( instruction.child_value());
+			rotation = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "areaPlacement"))
 		{
@@ -67,68 +66,53 @@ void S100_TextPoint::GetContents(pugi::xml_node node)
 	}
 }
 
-void S100_TextPoint::SetHorizontalAlignment(std::wstring& value)
-{
-	horizontalAlignment = value;
-}
+void S100_TextPoint::SetHorizontalAlignment(const std::string& value)  { horizontalAlignment = value; }
+void S100_TextPoint::SetHorizontalAlignment(const std::wstring& value) { horizontalAlignment = toUtf8(value); }
+void S100_TextPoint::SetVerticalAlignment(const std::string& value)    { verticalAlignment = value; }
+void S100_TextPoint::SetVerticalAlignment(const std::wstring& value)   { verticalAlignment = toUtf8(value); }
 
-void S100_TextPoint::SetVerticalAlignment(std::wstring& value)
-{
-	verticalAlignment = value;
-}
-
-void S100_TextPoint::SetElement(S100_Element* value) 
+void S100_TextPoint::SetElement(S100_Element* value)
 {
 	elements.push_back(value);
 }
 
-void S100_TextPoint::SetElements(std::vector<S100_Element*> value) 
+void S100_TextPoint::SetElements(std::vector<S100_Element*> value)
 {
 	elements = value;
 }
 
-void S100_TextPoint::SetOffset(S100_VectorPoint* value) 
+void S100_TextPoint::SetOffset(S100_VectorPoint* value)
 {
 	offset = value;
 }
 
-void S100_TextPoint::SetRotation(std::wstring value) 
-{
-	rotation = value;
-}
+void S100_TextPoint::SetRotation(const std::string& value)  { rotation = value; }
+void S100_TextPoint::SetRotation(const std::wstring& value) { rotation = toUtf8(value); }
 
-std::wstring S100_TextPoint::GetHorizontalAlignment() 
-{
-	return horizontalAlignment;
-}
-
-std::wstring S100_TextPoint::GetVerticalAlignment() 
-{
-	return verticalAlignment;
-}
+std::string  S100_TextPoint::GetHorizontalAlignment()  { return horizontalAlignment; }
+std::wstring S100_TextPoint::GetHorizontalAlignmentW() { return toWide(horizontalAlignment); }
+std::string  S100_TextPoint::GetVerticalAlignment()    { return verticalAlignment; }
+std::wstring S100_TextPoint::GetVerticalAlignmentW()   { return toWide(verticalAlignment); }
 
 S100_Element* S100_TextPoint::GetElement(int index)
 {
 	return elements.at(index);
 }
 
-std::vector<S100_Element*> S100_TextPoint::GetElemets() 
+std::vector<S100_Element*> S100_TextPoint::GetElemets()
 {
 	return elements;
 }
 
-S100_VectorPoint* S100_TextPoint::GetOffset() 
+S100_VectorPoint* S100_TextPoint::GetOffset()
 {
 	return offset;
 }
 
-std::wstring S100_TextPoint::GetRotation() 
-{
-	return rotation;
-}
+std::string  S100_TextPoint::GetRotation()  { return rotation; }
+std::wstring S100_TextPoint::GetRotationW() { return toWide(rotation); }
 
-S100_AreaPlacement* S100_TextPoint::GetAreaPlacement() 
+S100_AreaPlacement* S100_TextPoint::GetAreaPlacement()
 {
 	return areaPlacement;
 }
-

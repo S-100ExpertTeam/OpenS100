@@ -4,6 +4,8 @@
 #include "GF_ComplexAttributeType.h"
 #include "ProcessS101.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <regex>
 #include <sstream>
 
@@ -90,7 +92,7 @@ namespace GF
 	int ObjectType::GetIDAsInteger() 
 	{
 		std::string digitID = std::regex_replace(id, std::regex(R"([\D])"), "");
-		return std::stoi(digitID);
+		return cpp_util::stoi(digitID);
 	}
 
 	int ObjectType::GetInformationRelationCount() 
@@ -168,6 +170,16 @@ namespace GF
 		auto sa = new SimpleAttributeType(valueType, value);
 		sa->SetCode(code);
 		
+		attributes.push_back(sa);
+
+		return sa;
+	}
+
+	GF::SimpleAttributeType* ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::wstring value)
+	{
+		auto sa = new SimpleAttributeType(valueType, value);
+		sa->SetCode(code);
+
 		attributes.push_back(sa);
 
 		return sa;

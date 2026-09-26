@@ -1,4 +1,7 @@
 #pragma once
+
+#include <pugixml.hpp>
+
 #include <string>
 
 class S100_ComplexLineStyle
@@ -8,13 +11,19 @@ public:
 	virtual ~S100_ComplexLineStyle();
 
 private:
-	std::wstring symbolReference;
-	std::wstring scaleFactor;
+	std::string symbolReference;
+	std::string scaleFactor;
 
 public:
-	void SetSymbolReference(std::wstring& value);
-	std::wstring GetSymbolReference();
+	void SetSymbolReference(const std::string& value);
+	void SetSymbolReference(const std::wstring& value);
+	std::string  GetSymbolReference();
+	std::wstring GetSymbolReferenceW();
 
-	void SetScaleFactor(std::wstring& value);
-	std::wstring GetScaleFactor();
+	void SetScaleFactor(const std::string& value);
+	void SetScaleFactor(const std::wstring& value);
+	std::string  GetScaleFactor();
+	std::wstring GetScaleFactorW();
+
+	void GetContents(	pugi::xml_node& node);
 };

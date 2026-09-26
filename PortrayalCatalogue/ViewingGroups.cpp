@@ -3,12 +3,12 @@
 
 namespace Portrayal
 {
-	ViewingGroups::ViewingGroups() 
+	ViewingGroups::ViewingGroups()
 	{
 
 	}
 
-	ViewingGroups::~ViewingGroups() 
+	ViewingGroups::~ViewingGroups()
 	{
 		for (auto i = viewingGroup_v.begin(); i != viewingGroup_v.end(); i++)
 		{
@@ -18,22 +18,20 @@ namespace Portrayal
 
 	void ViewingGroups::GetContents(pugi::xml_node& node)
 	{
-		for (pugi::xml_node instruction =node.first_child(); instruction; instruction= instruction.next_sibling())
+		for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 		{
-		
 			auto instructionName = instruction.name();
-			if (!strcmp(instructionName,"viewingGroup")) 
+			if (!strcmp(instructionName, "viewingGroup"))
 			{
 				ViewingGroup* viewing = new ViewingGroup();
 				viewing->GetContents(instruction);
 				viewingGroup_v.push_back(viewing);
-				viewingGroup.insert({ viewing ->GetId(), viewing });
-				
+				viewingGroup.insert({ viewing->GetId(), viewing });
 			}
 		}
 	}
 
-	void ViewingGroups::AddViewingGroup(ViewingGroup* value) 
+	void ViewingGroups::AddViewingGroup(ViewingGroup* value)
 	{
 		viewingGroup_v.push_back(value);
 	}
@@ -48,21 +46,23 @@ namespace Portrayal
 		return viewingGroup_v.at(index);
 	}
 
-	ViewingGroup* ViewingGroups::GetViewingGroup_id(std::wstring id)
+	ViewingGroup* ViewingGroups::GetViewingGroup_id(const std::string& id)
 	{
-		auto find=  viewingGroup.find(id);
-		if (find== viewingGroup.end())
+		auto find = viewingGroup.find(id);
+		if (find == viewingGroup.end())
 		{
 			return nullptr;
 		}
-
 		return viewingGroup[id];
+	}
+
+	ViewingGroup* ViewingGroups::GetViewingGroup_id(const std::wstring& id)
+	{
+		return GetViewingGroup_id(toUtf8(id));
 	}
 
 	std::vector<ViewingGroup*>* ViewingGroups::GetViewingGroup()
 	{
 		return &viewingGroup_v;
 	}
-
-
 }

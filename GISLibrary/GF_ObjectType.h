@@ -55,6 +55,7 @@ namespace GF
 			std::string informationID);
 
 		virtual GF::SimpleAttributeType* AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value);
+		virtual GF::SimpleAttributeType* AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::wstring value);
 		virtual void AddComplexAttribute(ComplexAttributeType* ca);
 		virtual ComplexAttributeType* AddComplexAttribute(std::string code);
 

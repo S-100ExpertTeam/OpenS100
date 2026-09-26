@@ -19,29 +19,29 @@ void S100_AugmentedRay::GetContents(pugi::xml_node node)
 	{
 		auto instructionName = instruction.name();
 
-		if (!strcmp(instructionName,"featureReference"))
+		if (!strcmp(instructionName, "featureReference"))
 		{
-			SetFeatureReference(pugi::as_wide(instruction.child_value()));
+			SetFeatureReference(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "viewingGroup"))
 		{
-			SetViewingGroup(pugi::as_wide(instruction.child_value()));
+			SetViewingGroup(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "displayPlane"))
 		{
-			SetDisplayPlane(pugi::as_wide(instruction.child_value()));
+			SetDisplayPlane(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "drawingPriority"))
 		{
-			SetDrawingPriority(pugi::as_wide(instruction.child_value()));
+			SetDrawingPriority(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMinimum"))
 		{
-			SetScaleMinimum(pugi::as_wide(instruction.child_value()));
+			SetScaleMinimum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMaximum"))
 		{
-			SetScaleMaximum(pugi::as_wide(instruction.child_value()));
+			SetScaleMaximum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "lineStyle"))
 		{
@@ -60,35 +60,25 @@ void S100_AugmentedRay::GetContents(pugi::xml_node node)
 		}
 		else if (!strcmp(instructionName, "direction"))
 		{
-			direction = pugi::as_wide(instruction.child_value());
+			direction = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "length"))
 		{
-			length = pugi::as_wide(instruction.child_value());
+			length = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "crs"))
 		{
-			SetCrsType(pugi::as_wide(instruction.child_value()));
+			SetCrsType(std::string(instruction.child_value()));
 		}
 	}
 }
 
-void S100_AugmentedRay::SetDirection(std::wstring& value)
-{
-	direction = value;
-}
+void S100_AugmentedRay::SetDirection(const std::string& value)  { direction = value; }
+void S100_AugmentedRay::SetDirection(const std::wstring& value) { direction = toUtf8(value); }
+std::string  S100_AugmentedRay::GetDirection()  { return direction; }
+std::wstring S100_AugmentedRay::GetDirectionW() { return toWide(direction); }
 
-void S100_AugmentedRay::SetLength(std::wstring& value)
-{
-	length = value;
-}
-
-std::wstring S100_AugmentedRay::GetDirection()
-{
-	return direction;
-}
-
-std::wstring S100_AugmentedRay::GetLength() 
-{
-	return length;
-}
+void S100_AugmentedRay::SetLength(const std::string& value)  { length = value; }
+void S100_AugmentedRay::SetLength(const std::wstring& value) { length = toUtf8(value); }
+std::string  S100_AugmentedRay::GetLength()  { return length; }
+std::wstring S100_AugmentedRay::GetLengthW() { return toWide(length); }

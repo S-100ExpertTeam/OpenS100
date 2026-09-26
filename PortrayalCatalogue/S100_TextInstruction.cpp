@@ -15,9 +15,9 @@ S100_TextInstruction::~S100_TextInstruction()
 		delete textPoint;
 }
 
-void S100_TextInstruction::GetContents(pugi::xml_node node) 
+void S100_TextInstruction::GetContents(pugi::xml_node node)
 {
-	if (node==nullptr) 
+	if (node==nullptr)
 	{
 		return;
 	}
@@ -27,27 +27,27 @@ void S100_TextInstruction::GetContents(pugi::xml_node node)
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName,"featureReference"))
 		{
-			SetFeatureReference(pugi::as_wide(instruction.child_value()));
+			SetFeatureReference(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "viewingGroup"))
 		{
-			SetViewingGroup(pugi::as_wide(instruction.child_value()));
+			SetViewingGroup(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "displayPlane"))
 		{
-			SetDisplayPlane(pugi::as_wide(instruction.child_value()));
+			SetDisplayPlane(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "drawingPriority"))
 		{
-			SetDrawingPriority(pugi::as_wide(instruction.child_value()));
+			SetDrawingPriority(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMinimum"))
 		{
-			SetScaleMinimum(pugi::as_wide(instruction.child_value()));
+			SetScaleMinimum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMaximum"))
 		{
-			SetScaleMaximum(pugi::as_wide(instruction.child_value()));
+			SetScaleMaximum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "textPoint"))
 		{
@@ -55,15 +55,7 @@ void S100_TextInstruction::GetContents(pugi::xml_node node)
 			textPoint->GetContents(instruction);
 		}
 	}
-
 }
 
-void S100_TextInstruction::SetTextPoint(S100_TextPoint* value)
-{
-	textPoint = value;
-}
-
-S100_TextPoint* S100_TextInstruction::GetTextPoint() 
-{
-	return textPoint;
-}
+void S100_TextInstruction::SetTextPoint(S100_TextPoint* value) { textPoint = value; }
+S100_TextPoint* S100_TextInstruction::GetTextPoint()          { return textPoint; }

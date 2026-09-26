@@ -11,23 +11,31 @@ public:
 	virtual ~S100_Color();
 
 private:
-	std::wstring token;
-	std::wstring name;
-	std::wstring transparency; 
-	std::wstring description;
+	std::string token;
+	std::string name;
+	std::string transparency;
+	std::string description;
 
 public:
 	void GetContents(pugi::xml_node& node);
 
-	void SetToken(std::wstring& value);
-	std::wstring GetToken();
+	void SetToken(const std::string& value);
+	void SetToken(const std::wstring& value);
+	std::string  GetToken();
+	std::wstring GetTokenW();
 
-	void SetName(std::wstring& value);
-	std::wstring GetName();
+	void SetName(const std::string& value);
+	void SetName(const std::wstring& value);
+	std::string  GetName();
+	std::wstring GetNameW();
 
-	void SetDescription(std::wstring&  value);
-	std::wstring GetDescription();
+	void SetDescription(const std::string& value);
+	void SetDescription(const std::wstring& value);
+	std::string  GetDescription();
+	std::wstring GetDescriptionW();
 
-	void SetTransparency(std::wstring& value);
-	std::wstring GetTransparency();
+	void SetTransparency(const std::string& value);
+	void SetTransparency(const std::wstring& value);
+	std::string  GetTransparency();
+	std::wstring GetTransparencyW();
 };

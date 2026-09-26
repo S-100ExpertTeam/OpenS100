@@ -2,6 +2,7 @@
 #include "ColorFill.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace Part9a
 {
@@ -34,7 +35,7 @@ namespace Part9a
 		{
 			try
 			{
-				transparency = std::stod(tokens[1]);
+				transparency = cpp_util::stod(tokens[1]);
 			}
 			catch (...)
 			{

@@ -6,6 +6,7 @@
 #include "AttributeVisibility.h"
 
 #include <pugixml.hpp>
+#include "StringUtil.h"
 
 class AttributeBinding :
 	public XML_Item
@@ -31,7 +32,9 @@ public:
 	ValueList& GetPermittedValues();
 
 	std::string GetAttributeCode();
-	std::wstring GetAttributeCodeAsWstring();
+	std::wstring GetAttributeCodeW();
+	std::string GetAttributeCodeAsWstring();
+	std::wstring GetAttributeCodeAsWstringW();
 
 	bool IsSequential();
 

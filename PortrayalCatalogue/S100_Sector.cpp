@@ -18,31 +18,21 @@ void S100_Sector::GetContents(pugi::xml_node node)
 		auto instructionName = instruction.name();
 		if (!strcmp(instructionName, "startAngle"))
 		{
-			startAngle = pugi::as_wide(instruction.value());
+			startAngle = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "angularDistance"))
 		{
-			angularDistance = pugi::as_wide(instruction.value());
+			angularDistance = instruction.child_value();
 		}
 	}
 }
 
-void S100_Sector::SetStartAngle(std::wstring& value)
-{
-	startAngle = value;
-}
+void S100_Sector::SetStartAngle(const std::string& value)  { startAngle = value; }
+void S100_Sector::SetStartAngle(const std::wstring& value) { startAngle = toUtf8(value); }
+std::string  S100_Sector::GetStartAngle()  { return startAngle; }
+std::wstring S100_Sector::GetStartAngleW() { return toWide(startAngle); }
 
-void S100_Sector::SetAnglearDistance(std::wstring& value)
-{
-	angularDistance = value;
-}
-
-std::wstring S100_Sector::GetStartAngle()
-{
-	return startAngle;
-}
- 
-std::wstring S100_Sector::GetAnglearDistance()
-{
-	return angularDistance;
-}
+void S100_Sector::SetAnglearDistance(const std::string& value)  { angularDistance = value; }
+void S100_Sector::SetAnglearDistance(const std::wstring& value) { angularDistance = toUtf8(value); }
+std::string  S100_Sector::GetAnglearDistance()  { return angularDistance; }
+std::wstring S100_Sector::GetAnglearDistanceW() { return toWide(angularDistance); }

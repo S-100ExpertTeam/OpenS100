@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "InformationBinding.h"
 
 #include <algorithm>
@@ -19,7 +20,7 @@ void InformationBinding::GetContents(pugi::xml_node& node)
 
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:multiplicity"))
 		{
 			multiplicity.GetContents(instruction);
@@ -49,9 +50,9 @@ std::string InformationBinding::GetAssociation()
 	return association;
 }
 
-std::wstring InformationBinding::GetAssociationAsWstring()
+std::string InformationBinding::GetAssociationAsWstring()
 {
-	return pugi::as_wide(association);
+	return association;
 }
 
 void InformationBinding::SetAssociation(std::string value)
@@ -59,19 +60,15 @@ void InformationBinding::SetAssociation(std::string value)
 	association = value;
 }
 
-void InformationBinding::SetAssociation(std::wstring value)
-{
-	association = pugi::as_utf8(value);
-}
 
 std::string InformationBinding::GetRole()
 {
 	return role;
 }
 
-std::wstring InformationBinding::GetRoleAsWstring()
+std::string InformationBinding::GetRoleAsWstring()
 {
-	return pugi::as_wide(role);
+	return role;
 }
 
 void InformationBinding::SetRole(std::string value)
@@ -79,10 +76,6 @@ void InformationBinding::SetRole(std::string value)
 	role = value;
 }
 
-void InformationBinding::SetRole(std::wstring value)
-{
-	role = pugi::as_utf8(value);
-}
 
 S100_FC_RoleType InformationBinding::GetRoleType()
 {
@@ -107,9 +100,9 @@ std::string InformationBinding::GetRoleTypeAsString()
 	return "";
 }
 
-std::wstring InformationBinding::GetRoleTypeAsWstring()
+std::string InformationBinding::GetRoleTypeAsWstring()
 {
-	return pugi::as_wide(GetRoleTypeAsString());
+	return GetRoleTypeAsString();
 }
 
 void InformationBinding::SetRoleType(S100_FC_RoleType value)
@@ -153,9 +146,9 @@ std::vector<std::string> InformationBinding::GetInformationTypes()
 	return informationTypes;
 }
 
-std::wstring InformationBinding::GetInformationTypeAsWstring(int index)
+std::string InformationBinding::GetInformationTypeAsWstring(int index)
 {
-	return pugi::as_wide(GetInformationType(index));
+	return GetInformationType(index);
 }
 
 void InformationBinding::InsertInformationType(std::string value)
@@ -163,10 +156,6 @@ void InformationBinding::InsertInformationType(std::string value)
 	informationTypes.push_back(value);
 }
 
-void InformationBinding::InsertInformationType(std::wstring value)
-{
-	informationTypes.push_back(pugi::as_utf8(value));
-}
 
 bool InformationBinding::IsSameAssociation(InformationBinding& ib)
 {
@@ -193,4 +182,65 @@ void InformationBinding::AppendInformationBinding(InformationBinding& ib)
 void InformationBinding::SortInformationType()
 {
 	std::sort(informationTypes.begin(), informationTypes.end());
+}
+
+std::wstring InformationBinding::GetAssociationW()
+{
+	return toWide(GetAssociation());
+}
+
+std::wstring InformationBinding::GetAssociationAsWstringW()
+{
+	return toWide(GetAssociationAsWstring());
+}
+
+void InformationBinding::SetAssociation(const char* value)
+{
+	std::string s(value ? value : "");
+	SetAssociation(s);
+}
+
+void InformationBinding::SetAssociation(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetAssociation(s);
+}
+
+std::wstring InformationBinding::GetRoleW()
+{
+	return toWide(GetRole());
+}
+
+std::wstring InformationBinding::GetRoleAsWstringW()
+{
+	return toWide(GetRoleAsWstring());
+}
+
+void InformationBinding::SetRole(const char* value)
+{
+	std::string s(value ? value : "");
+	SetRole(s);
+}
+
+void InformationBinding::SetRole(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetRole(s);
+}
+
+std::wstring InformationBinding::GetRoleTypeAsWstringW()
+{
+	return toWide(GetRoleTypeAsWstring());
+}
+
+void InformationBinding::SetRoleType(const char* value)
+{
+	std::string s(value ? value : "");
+	SetRoleType(s);
+}
+
+void InformationBinding::SetRoleType(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetRoleType(s);
 }

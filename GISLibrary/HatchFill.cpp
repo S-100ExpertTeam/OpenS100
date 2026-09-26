@@ -2,6 +2,7 @@
 #include "HatchFill.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace Part9a
 {
@@ -31,8 +32,8 @@ namespace Part9a
         {
             try
             {
-                direction.Set(std::stod(tokens[0]), std::stod(tokens[1]));
-                distance = std::stod(tokens[2]);
+                direction.Set(cpp_util::stod(tokens[0]), cpp_util::stod(tokens[1]));
+                distance = cpp_util::stod(tokens[2]);
                 lineStyle1 = tokens[3];
 
                 if (tokens.size() == 5)

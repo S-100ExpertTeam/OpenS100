@@ -17,7 +17,7 @@ namespace Portrayal
 
 	private:
 		std::vector<ExternalFile*> s100_symbols_v;
-		std::unordered_map<std::wstring, ExternalFile*> s100_symbols;
+		std::unordered_map<std::string, ExternalFile*> s100_symbols;
 
 	public:
 		std::vector<ExternalFile*>* GetSymbolsVector();

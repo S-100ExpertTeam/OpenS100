@@ -8,6 +8,8 @@
 #include "SCurve.h"
 #include "SCoverage.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <regex>
 
 namespace GF
@@ -135,7 +137,7 @@ namespace GF
 	int FeatureType::GetGeometryIDAsInt()
 	{
 		std::string digitID = std::regex_replace(GetGeometryID(), std::regex(R"([\D])"), "");
-		return std::stoi(digitID);
+		return cpp_util::stoi(digitID);
 	}
 
 	void FeatureType::SetGeometryID(std::string value)

@@ -11,7 +11,8 @@
       "libxml2",
       "openssl",
       "sqlite3",
-      "boost-geometry"
+      "boost-geometry",
+      "utfcpp"
     ]
   }
 

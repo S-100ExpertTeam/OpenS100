@@ -17,20 +17,22 @@ S100ColorProfiles::~S100ColorProfiles()
 	}
 }
 
-bool S100ColorProfiles::AddColorProfile(std::wstring id, std::wstring path)
+bool S100ColorProfiles::AddColorProfile(const std::string& id, const std::string& path)
 {
 	auto colorProfile = new S100ColorProfile();
+	bool ret = colorProfile->OpenByPugi(path.c_str());
 
-	char* cpath = LibMFCUtil::ConvertWCtoC((wchar_t*)path.c_str());
-	bool ret = colorProfile->OpenByPugi(cpath);
-	delete[] cpath;
-	
 	if (colorProfileMap.find(id) == colorProfileMap.end())
 	{
 		colorProfileMap.insert({ id, colorProfile });
 		return true;
 	}
-	
+
 	delete colorProfile;
 	return false;
+}
+
+bool S100ColorProfiles::AddColorProfile(const std::wstring& id, const std::wstring& path)
+{
+	return AddColorProfile(LibMFCUtil::WStringToString(id), LibMFCUtil::WStringToString(path));
 }

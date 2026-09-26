@@ -16,11 +16,13 @@ private:
 	* 5 : HatchFill
 	*/
 	int type;
-	std::wstring fileTitle;
+	std::string fileTitle;
 
 public:
 	void SetType(int value);
 	int GetType();
-	void SetFileTitle(std::wstring& value);
-	std::wstring GetFileTitle();
+	void SetFileTitle(const std::string& value);
+	void SetFileTitle(const std::wstring& value);
+	std::string  GetFileTitle();
+	std::wstring GetFileTitleW();
 };

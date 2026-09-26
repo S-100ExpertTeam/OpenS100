@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "StringUtil.h"
 
 class Version
 {
@@ -20,26 +21,33 @@ public:
 
 public:
 	std::string getMajor() const;
+	std::wstring getMajorW() const;
 	void setMajor(const std::string& major);
 	int getMajorAsInt() const;
 
 	std::string getMinor() const;
+	std::wstring getMinorW() const;
 	void setMinor(const std::string& minor);
 	int getMinorAsInt() const;
 
 	std::string getPatch() const;
+	std::wstring getPatchW() const;
 	void setPatch(const std::string& patch);
 	int getPatchAsInt() const;
 
 	std::string getWorking() const;
+	std::wstring getWorkingW() const;
 	void setWorking(const std::string& working);
 
 	std::string getSource() const;
+	std::wstring getSourceW() const;
 	void setSource(const std::string& source);
 
 	Version getMajorMinor();
 	Version getMajor();
 	bool isEmpty();
+
+	void parseSource(const std::string& source);
 
 public:
 	bool operator==(const Version& other) const;
@@ -49,6 +57,5 @@ public:
 
 private:
 	void init();
-	void parseSource(const std::string& source);
 	int convertToInt(const std::string& str) const;
 };

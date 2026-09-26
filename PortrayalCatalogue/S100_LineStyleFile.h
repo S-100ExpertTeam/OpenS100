@@ -10,27 +10,32 @@ public:
 	virtual ~S100_LineStyleFile();
 
 private:
-	/*
-	* Attribute ID value
-	*/
-	std::wstring id;
+	std::string id;
 	S100_Description description;
-	std::wstring fileName;
-	std::wstring fileType;
-	std::wstring fileFormat;
+	std::string fileName;
+	std::string fileType;
+	std::string fileFormat;
 
 public:
 	void GetContents(pugi::xml_node& node);
 
-	void SetId(std::wstring& value);
+	void SetId(const std::string& value);
+	void SetId(const std::wstring& value);
 	void SetDescription(S100_Description* value);
-	void SetFileName(std::wstring& value);
-	void SetFileType(std::wstring& value);
-	void SetFileFormat(std::wstring& value);
+	void SetFileName(const std::string& value);
+	void SetFileName(const std::wstring& value);
+	void SetFileType(const std::string& value);
+	void SetFileType(const std::wstring& value);
+	void SetFileFormat(const std::string& value);
+	void SetFileFormat(const std::wstring& value);
 
-	std::wstring GetId();
+	std::string  GetId();
+	std::wstring GetIdW();
 	S100_Description* GetDescription();
-	std::wstring GetFileName();
-	std::wstring GetFileType();
-	std::wstring GetFileFormat();
+	std::string  GetFileName();
+	std::wstring GetFileNameW();
+	std::string  GetFileType();
+	std::wstring GetFileTypeW();
+	std::string  GetFileFormat();
+	std::wstring GetFileFormatW();
 };

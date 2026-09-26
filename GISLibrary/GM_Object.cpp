@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GM_Object.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <regex>
 
 namespace GM
@@ -47,7 +49,7 @@ namespace GM
 	int Object::GetIDAsInt()
 	{
 		std::string digitID = std::regex_replace(id, std::regex(R"([\D])"), "");
-		return std::stoi(digitID);
+		return cpp_util::stoi(digitID);
 	}
 
 	void Object::SetID(std::string value)

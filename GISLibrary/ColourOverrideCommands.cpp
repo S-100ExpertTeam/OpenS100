@@ -2,6 +2,7 @@
 #include "ColourOverrideCommands.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 namespace Part9a
 {
@@ -30,9 +31,9 @@ namespace Part9a
 		if (tokens.size() == 4)
 		{
 			colorToken = tokens[0];
-			colorTransparency = std::stod(tokens[1]);
+			colorTransparency = cpp_util::stod(tokens[1]);
 			overrideToken = tokens[2];
-			overrideTransparency = std::stod(tokens[3]);
+			overrideTransparency = cpp_util::stod(tokens[3]);
 		}
 		else
 		{
@@ -60,7 +61,7 @@ namespace Part9a
 		if (tokens.size() == 2)
 		{
 			token = tokens[0];
-			transparency = std::stod(tokens[1]);
+			transparency = cpp_util::stod(tokens[1]);
 		}
 		else
 		{

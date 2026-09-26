@@ -1,18 +1,16 @@
 // FeatureCatalog.cpp : Define the initialization routine of the corresponding DLL.
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "FeatureCatalogue.h"
 #include "Role.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
 
 FeatureCatalogue::FeatureCatalogue()
 {
 	
 }
 
-//FeatureCatalogue::FeatureCatalogue(std::wstring path)
+//FeatureCatalogue::FeatureCatalogue(std::string path)
 //{
 //	Read(path);
 //}
@@ -26,13 +24,9 @@ FeatureCatalogue::~FeatureCatalogue()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Search infomation */
 
-SimpleAttribute* FeatureCatalogue::GetSimpleAttribute(std::string code)
-{
-	auto wcode = pugi::as_wide(code);
-	return GetSimpleAttribute(wcode);
-}
 
-SimpleAttribute* FeatureCatalogue::GetSimpleAttribute(std::wstring code)
+
+SimpleAttribute* FeatureCatalogue::GetSimpleAttribute(std::string code)
 {
 	auto itor = simpleAttributes.GetSimpleAttributePointer().find(code);
 
@@ -46,7 +40,7 @@ SimpleAttribute* FeatureCatalogue::GetSimpleAttribute(std::wstring code)
 	}
 }
 
-SimpleAttribute* FeatureCatalogue::GetSimpleAttributeFromName(std::wstring name)
+SimpleAttribute* FeatureCatalogue::GetSimpleAttributeFromName(std::string name)
 {
 	for (auto i = simpleAttributes.GetSimpleAttributePointer().begin();
 		i != simpleAttributes.GetSimpleAttributePointer().end();
@@ -60,13 +54,9 @@ SimpleAttribute* FeatureCatalogue::GetSimpleAttributeFromName(std::wstring name)
 	return nullptr;
 }
 
-ComplexAttribute* FeatureCatalogue::GetComplexAttribute(std::string code)
-{
-	auto wcode = pugi::as_wide(code);
-	return GetComplexAttribute(wcode);
-}
 
-ComplexAttribute* FeatureCatalogue::GetComplexAttribute(std::wstring code)
+
+ComplexAttribute* FeatureCatalogue::GetComplexAttribute(std::string code)
 {
 	auto itor = complexAttributes.GetComplexAttributePointer().find(code);
 
@@ -76,7 +66,7 @@ ComplexAttribute* FeatureCatalogue::GetComplexAttribute(std::wstring code)
 		return itor->second;
 }
 
-ComplexAttribute* FeatureCatalogue::GetComplexAttributeFromName(std::wstring name)
+ComplexAttribute* FeatureCatalogue::GetComplexAttributeFromName(std::string name)
 {
 	for (auto i = complexAttributes.GetComplexAttributePointer().begin();
 		i != complexAttributes.GetComplexAttributePointer().end();
@@ -88,12 +78,7 @@ ComplexAttribute* FeatureCatalogue::GetComplexAttributeFromName(std::wstring nam
 	return nullptr;
 }
 
-FeatureType* FeatureCatalogue::GetFeatureType(std::string Code)
-{
-	return GetFeatureType(pugi::as_wide(Code));
-}
-
-FeatureType* FeatureCatalogue::GetFeatureType(std::wstring code)
+FeatureType* FeatureCatalogue::GetFeatureType(std::string code)
 {
 	auto itor = featureTypes.GetFeatureType().find(code);
 
@@ -117,7 +102,7 @@ FCD::S100_CD_AttributeValueType FeatureCatalogue::getSimpleAttributeType(std::st
 	return FCD::S100_CD_AttributeValueType::none;
 }
 
-FeatureType* FeatureCatalogue::GetFeatureTypeName(std::wstring name)
+FeatureType* FeatureCatalogue::GetFeatureTypeName(std::string name)
 {
 	for (
 		auto i = featureTypes.GetFeatureType().begin();
@@ -148,12 +133,7 @@ FeatureType* FeatureCatalogue::GetFeatureTypeFromIndex(int indexnum)
 	return nullptr;
 }
 
-InformationType* FeatureCatalogue::GetInformationType(std::string Code)
-{
-	return GetInformationType(pugi::as_wide(Code));
-}
-
-InformationType* FeatureCatalogue::GetInformationType(std::wstring code)
+InformationType* FeatureCatalogue::GetInformationType(std::string code)
 {
 	auto itor = informationTypes.GetInformationTypePointer().find(code);
 
@@ -163,8 +143,7 @@ InformationType* FeatureCatalogue::GetInformationType(std::wstring code)
 		return itor->second;
 }
 
-
-InformationType* FeatureCatalogue::GetInformationTypeFromName(std::wstring name)
+InformationType* FeatureCatalogue::GetInformationTypeFromName(std::string name)
 {
 	for (auto itor = informationTypes.GetInformationTypePointer().begin();
 		itor != informationTypes.GetInformationTypePointer().end();
@@ -176,12 +155,7 @@ InformationType* FeatureCatalogue::GetInformationTypeFromName(std::wstring name)
 	return NULL;
 }
 
-FeatureAssociation* FeatureCatalogue::GetFeatureAssociation(std::string Code)
-{
-	return GetFeatureAssociation(pugi::as_wide(Code));
-}
-
-FeatureAssociation* FeatureCatalogue::GetFeatureAssociation(std::wstring code)
+FeatureAssociation* FeatureCatalogue::GetFeatureAssociation(std::string code)
 {
 	auto itor = featureAssociations.GetFeatureAssociationPointer().find(code);
 
@@ -191,7 +165,7 @@ FeatureAssociation* FeatureCatalogue::GetFeatureAssociation(std::wstring code)
 		return itor->second;
 }
 
-FeatureAssociation* FeatureCatalogue::GetFeatureAssociationFromName(std::wstring name)
+FeatureAssociation* FeatureCatalogue::GetFeatureAssociationFromName(std::string name)
 {
 	for (auto itor = featureAssociations.GetFeatureAssociationPointer().begin();
 		itor != featureAssociations.GetFeatureAssociationPointer().end();
@@ -203,12 +177,7 @@ FeatureAssociation* FeatureCatalogue::GetFeatureAssociationFromName(std::wstring
 	return NULL;
 }
 
-InformationAssociation* FeatureCatalogue::GetInformationAssociation(std::string Code)
-{
-	return GetInformationAssociation(pugi::as_wide(Code));
-}
-
-InformationAssociation* FeatureCatalogue::GetInformationAssociation(std::wstring code)
+InformationAssociation* FeatureCatalogue::GetInformationAssociation(std::string code)
 {
 	auto itor = informationAssociations.GetInformationAssociationPointer().find(code);
 
@@ -218,7 +187,7 @@ InformationAssociation* FeatureCatalogue::GetInformationAssociation(std::wstring
 		return itor->second;
 }
 
-InformationAssociation* FeatureCatalogue::GetInformationAssociationFromName(std::wstring name)
+InformationAssociation* FeatureCatalogue::GetInformationAssociationFromName(std::string name)
 {
 	for (auto itor = informationAssociations.GetInformationAssociationPointer().begin();
 		itor != informationAssociations.GetInformationAssociationPointer().end();
@@ -230,12 +199,7 @@ InformationAssociation* FeatureCatalogue::GetInformationAssociationFromName(std:
 	return NULL;
 }
 
-Role* FeatureCatalogue::GetRole(std::string Code)
-{
-	return GetRole(pugi::as_wide(Code));
-}
-
-Role* FeatureCatalogue::GetRole(std::wstring code)
+Role* FeatureCatalogue::GetRole(std::string code)
 {
 	auto itor = roles.GetRolePointer().find(code);
 
@@ -245,7 +209,7 @@ Role* FeatureCatalogue::GetRole(std::wstring code)
 		return itor->second;
 }
 
-Role* FeatureCatalogue::GetRoleFromName(std::wstring name)
+Role* FeatureCatalogue::GetRoleFromName(std::string name)
 {
 	for (auto itor = roles.GetRolePointer().begin();
 		itor != roles.GetRolePointer().end();
@@ -263,20 +227,20 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 	//Modification plan : Put a value in the map, search for it, and if not, print out an error message.
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 
 		if (!strcmp(instructionName, "S100FC:name"))
 		{
 			if (instruction.child_value() != nullptr) 
 			{
-				name = pugi::as_wide(instruction.child_value());
+				name = instruction.child_value();
 			}
 		}
 		else if (!strcmp(instructionName, "S100FC:scope"))
 		{
 			if (instruction.child_value() != nullptr)
 			{
-				scope = pugi::as_wide(instruction.child_value());
+				scope = instruction.child_value();
 			}
 		}
 		else if (!strcmp(instructionName, "S100FC:fieldOfApplication"))
@@ -298,7 +262,7 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 		{
 			if (instruction.child_value() != nullptr)
 			{
-				versionDate = pugi::as_wide(instruction.child_value());
+				versionDate = instruction.child_value();
 			}
 		}
 		else if (!strcmp(instructionName, "S100FC:productId"))
@@ -346,8 +310,8 @@ void FeatureCatalogue::GetContents(pugi::xml_node& node)
 		}
 		else  //Unspecified value
 		{
-			std::wstring anotherName = pugi::as_wide(instructionName);
-			anotherName.append(L"is another FCDateName");
+			std::string anotherName = instructionName;
+			anotherName.append("is another FCDateName");
 		}
 	}
 
@@ -486,11 +450,11 @@ void FeatureCatalogue::NullCheckFieldOfApplication()
 {
 	if (fieldOfApplication == nullptr)
 	{
-		fieldOfApplication = new std::wstring();
+		fieldOfApplication = new std::string();
 	}
 }
 
-bool FeatureCatalogue::Read(std::wstring path)
+bool FeatureCatalogue::Read(std::string path)
 {
 	// FC (FileName) Loading start
 	SetFilePath(path);
@@ -508,7 +472,12 @@ bool FeatureCatalogue::Read(std::wstring path)
 	return false;
 }
 
-bool FeatureCatalogue::Save(std::wstring filePath)
+bool FeatureCatalogue::Read(std::wstring filePath)
+{
+	return Read(toUtf8(filePath));
+}
+
+bool FeatureCatalogue::Save(std::string filePath)
 {
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file(GetFilePath().c_str()); ///Read File
@@ -554,52 +523,40 @@ FeatureAssociations* FeatureCatalogue::GetFeatureAssociations()
 }
 
 
-const std::wstring& FeatureCatalogue::GetName()
+const std::string& FeatureCatalogue::GetName()
 {
 	return name;
 }
 
 void FeatureCatalogue::SetName(std::string value)
 {
-	name = pugi::as_wide(value);
-}
-
-void FeatureCatalogue::SetName(std::wstring value)
-{
 	name = value;
 }
 
-const std::wstring& FeatureCatalogue::GetFilePath()
+
+const std::string& FeatureCatalogue::GetFilePath()
 {
 	return filePath;
 }
 
 void FeatureCatalogue::SetFilePath(std::string value)
 {
-	filePath = pugi::as_wide(value);
-}
-
-void FeatureCatalogue::SetFilePath(std::wstring value)
-{
 	filePath = value;
 }
 
-const std::wstring& FeatureCatalogue::GetScope()
+
+const std::string& FeatureCatalogue::GetScope()
 {
 	return scope;
 }
 
 void FeatureCatalogue::SetScope(std::string value)
 {
-	scope = pugi::as_wide(value);
-}
-
-void FeatureCatalogue::SetScope(std::wstring value)
-{
 	scope = value;
 }
 
-const std::wstring* FeatureCatalogue::GetFieldOfApplication()
+
+const std::string* FeatureCatalogue::GetFieldOfApplication()
 {
 	if (fieldOfApplication) 
 	{
@@ -612,30 +569,22 @@ const std::wstring* FeatureCatalogue::GetFieldOfApplication()
 void FeatureCatalogue::SetFieldOfApplication(std::string& value)
 {
 	NullCheckFieldOfApplication();
-	*fieldOfApplication = pugi::as_wide(value);
-}
-
-void FeatureCatalogue::SetFieldOfApplication(std::wstring& value)
-{
-	NullCheckFieldOfApplication();
 	*fieldOfApplication = value;
 }
 
-const std::wstring& FeatureCatalogue::GetVersionNumber()
+
+const std::string& FeatureCatalogue::GetVersionNumber()
 {
-	return pugi::as_wide(versionNumber.getSource());
+	return versionNumber.getSource();
 }
+
+
 
 void FeatureCatalogue::SetVersionNumber(std::string value)
 {
-	//versionNumber = pugi::as_wide(value);
-	versionNumber.setSource(value);
-}
-
-void FeatureCatalogue::SetVersionNumber(std::wstring value)
-{
-	SetVersionNumber(pugi::as_utf8(value));
+	//SetVersionNumber(value);
 	//versionNumber = value;
+	versionNumber.parseSource(value);
 }
 
 Version FeatureCatalogue::getVersion() const
@@ -643,40 +592,32 @@ Version FeatureCatalogue::getVersion() const
 	return versionNumber;
 }
 
-const std::wstring& FeatureCatalogue::GetVersionDate()
+const std::string& FeatureCatalogue::GetVersionDate()
 {
 	return versionDate;
 }
 
 void FeatureCatalogue::SetVersionDate(std::string value)
 {
-	versionDate = pugi::as_wide(value);
-}
-
-void FeatureCatalogue::SetVersionDate(std::wstring value)
-{
 	versionDate = value;
 }
 
+
 std::string FeatureCatalogue::getProductId() const
 {
-	return pugi::as_utf8(productId);
+	return productId;
 }
 
-const std::wstring& FeatureCatalogue::GetProductId()
+const std::string& FeatureCatalogue::GetProductId()
 {
 	return productId;
 }
 
 void FeatureCatalogue::SetProductId(std::string value)
 {
-	productId = pugi::as_wide(value);
-}
-
-void FeatureCatalogue::SetProductId(std::wstring value)
-{
 	productId = value;
 }
+
 
 void FeatureCatalogue::GetPointFeatures(std::vector<FeatureType*>& result)
 {
@@ -792,12 +733,9 @@ void FeatureCatalogue::GetNoGeometryFeatures(std::vector<FeatureType*>& result)
 	}
 }
 
-Attribute* FeatureCatalogue::GetAttribute(std::string code)
-{
-	return GetAttribute(pugi::as_wide(code));
-}
 
-Attribute* FeatureCatalogue::GetAttribute(std::wstring code)
+
+Attribute* FeatureCatalogue::GetAttribute(std::string code)
 {
 	auto simpleAttribute = GetSimpleAttribute(code);
 	if (simpleAttribute)
@@ -812,4 +750,224 @@ Attribute* FeatureCatalogue::GetAttribute(std::wstring code)
 	}
 
 	return nullptr;
+}
+
+std::wstring FeatureCatalogue::GetNameW()
+{
+	return toWide(GetName());
+}
+
+void FeatureCatalogue::SetName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetName(s);
+}
+
+void FeatureCatalogue::SetName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetName(s);
+}
+
+std::wstring FeatureCatalogue::GetFilePathW()
+{
+	return toWide(GetFilePath());
+}
+
+void FeatureCatalogue::SetFilePath(const char* value)
+{
+	std::string s(value ? value : "");
+	SetFilePath(s);
+}
+
+void FeatureCatalogue::SetFilePath(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetFilePath(s);
+}
+
+std::wstring FeatureCatalogue::GetScopeW()
+{
+	return toWide(GetScope());
+}
+
+void FeatureCatalogue::SetScope(const char* value)
+{
+	std::string s(value ? value : "");
+	SetScope(s);
+}
+
+void FeatureCatalogue::SetScope(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetScope(s);
+}
+
+std::wstring FeatureCatalogue::GetFieldOfApplicationW()
+{
+	return toWide(*GetFieldOfApplication());
+}
+
+void FeatureCatalogue::SetFieldOfApplication(const char* value)
+{
+	std::string s(value ? value : "");
+	SetFieldOfApplication(s);
+}
+
+void FeatureCatalogue::SetFieldOfApplication(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetFieldOfApplication(s);
+}
+
+std::wstring FeatureCatalogue::GetVersionNumberW()
+{
+	return toWide(GetVersionNumber());
+}
+
+void FeatureCatalogue::SetVersionNumber(const char* value)
+{
+	std::string s(value ? value : "");
+	SetVersionNumber(s);
+}
+
+void FeatureCatalogue::SetVersionNumber(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetVersionNumber(s);
+}
+
+std::wstring FeatureCatalogue::GetVersionDateW()
+{
+	return toWide(GetVersionDate());
+}
+
+void FeatureCatalogue::SetVersionDate(const char* value)
+{
+	std::string s(value ? value : "");
+	SetVersionDate(s);
+}
+
+void FeatureCatalogue::SetVersionDate(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetVersionDate(s);
+}
+
+std::wstring FeatureCatalogue::getProductIdW() const
+{
+	return toWide(getProductId());
+}
+
+std::wstring FeatureCatalogue::GetProductIdW()
+{
+	return toWide(GetProductId());
+}
+
+void FeatureCatalogue::SetProductId(const char* value)
+{
+	std::string s(value ? value : "");
+	SetProductId(s);
+}
+
+void FeatureCatalogue::SetProductId(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetProductId(s);
+}
+
+SimpleAttribute* FeatureCatalogue::GetSimpleAttribute(std::wstring code)
+{
+	std::string s = toUtf8(code);
+	return GetSimpleAttribute(s);
+}
+
+SimpleAttribute* FeatureCatalogue::GetSimpleAttributeFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetSimpleAttributeFromName(s);
+}
+
+ComplexAttribute* FeatureCatalogue::GetComplexAttribute(std::wstring code)
+{
+	std::string s = toUtf8(code);
+	return GetComplexAttribute(s);
+}
+
+ComplexAttribute* FeatureCatalogue::GetComplexAttributeFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetComplexAttributeFromName(s);
+}
+
+Role* FeatureCatalogue::GetRole(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetRole(s);
+}
+
+Role* FeatureCatalogue::GetRoleFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetRoleFromName(s);
+}
+
+InformationAssociation* FeatureCatalogue::GetInformationAssociation(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetInformationAssociation(s);
+}
+
+InformationAssociation* FeatureCatalogue::GetInformationAssociationFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetInformationAssociationFromName(s);
+}
+
+FeatureAssociation* FeatureCatalogue::GetFeatureAssociation(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetFeatureAssociation(s);
+}
+
+FeatureAssociation* FeatureCatalogue::GetFeatureAssociationFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetFeatureAssociationFromName(s);
+}
+
+InformationType* FeatureCatalogue::GetInformationType(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetInformationType(s);
+}
+
+InformationType* FeatureCatalogue::GetInformationTypeFromName(std::wstring name)
+{
+	std::string s = toUtf8(name);
+	return GetInformationTypeFromName(s);
+}
+
+FeatureType* FeatureCatalogue::GetFeatureType(std::wstring Code)
+{
+	std::string s = toUtf8(Code);
+	return GetFeatureType(s);
+}
+
+FeatureType* FeatureCatalogue::GetFeatureTypeName(std::wstring Name)
+{
+	std::string s = toUtf8(Name);
+	return GetFeatureTypeName(s);
+}
+
+FCD::S100_CD_AttributeValueType FeatureCatalogue::getSimpleAttributeType(std::wstring code)
+{
+	std::string s = toUtf8(code);
+	return getSimpleAttributeType(s);
+}
+
+Attribute* FeatureCatalogue::GetAttribute(std::wstring code)
+{
+	std::string s = toUtf8(code);
+	return GetAttribute(s);
 }

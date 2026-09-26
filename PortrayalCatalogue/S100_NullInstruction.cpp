@@ -14,7 +14,7 @@ S100_NullInstruction::~S100_NullInstruction()
 
 }
 
-void S100_NullInstruction::GetContents(pugi::xml_node node) 
+void S100_NullInstruction::GetContents(pugi::xml_node node)
 {
 	if (node==nullptr)
 	{
@@ -24,34 +24,29 @@ void S100_NullInstruction::GetContents(pugi::xml_node node)
 	for (auto instruction=node.first_child(); instruction; instruction=instruction.next_sibling())
 	{
 		auto instructionName = instruction.name();
-		if (!strcmp(instructionName,"featureReference")) 
+		if (!strcmp(instructionName,"featureReference"))
 		{
-			SetFeatureReference(pugi::as_wide(instruction.child_value()));
+			SetFeatureReference(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName,"viewingGroup"))
 		{
-			SetViewingGroup(pugi::as_wide( instruction.child_value()));
+			SetViewingGroup(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "displayPlane"))
 		{
-			SetDisplayPlane(pugi::as_wide(instruction.child_value()));
+			SetDisplayPlane(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "drawingPriority"))
 		{
-			SetDrawingPriority(pugi::as_wide(instruction.child_value()));
+			SetDrawingPriority(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMinimum"))
 		{
-			SetScaleMinimum(pugi::as_wide(instruction.child_value()));
+			SetScaleMinimum(std::string(instruction.child_value()));
 		}
 		else if (!strcmp(instructionName, "scaleMaximum"))
 		{
-			SetScaleMaximum(pugi::as_wide(instruction.child_value()));
-		}
-		else 
-		{
-			std::wstring name =pugi::as_wide(instructionName);
-			name.append(L" Context without");
+			SetScaleMaximum(std::string(instruction.child_value()));
 		}
 	}
 }

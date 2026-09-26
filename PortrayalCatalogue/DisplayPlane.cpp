@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "DisplayPlane.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 namespace Portrayal
 {
 	DisplayPlane::DisplayPlane()
@@ -32,7 +34,7 @@ namespace Portrayal
 		SetId(id);
 
 		auto order_value = node.attribute("order").value();
-		SetOrder(std::stoi(order_value));
+		SetOrder(cpp_util::stoi(order_value));
 
 		for (auto instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 		{

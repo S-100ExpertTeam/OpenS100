@@ -11,7 +11,6 @@ class S100_ColorProfile;
 
 namespace Portrayal
 {
-
 	class S100_ColorProfiles
 	{
 	public:
@@ -19,21 +18,12 @@ namespace Portrayal
 		virtual ~S100_ColorProfiles();
 
 	private:
-		// key : id
-		std::unordered_map<std::wstring, ExternalFile*> colorProfileFiles;
+		std::unordered_map<std::string, ExternalFile*> colorProfileFiles;
 		std::vector<ExternalFile*> colorProfileFiles_v;
 
-
 	public:
-		//Read ColorProfile
-		//bool ReadColorProfiles(std::wstring path);
-
 		void GetContents(pugi::xml_node& node);
 
-		//ExternalFile* GetColorProfile();
-		//std::unordered_map<std::wstring, ExternalFile*> GetColorProfiles();
-
-		//void SetColorProfile(std::wstring key, S100_ColorProfile* value);
 		std::vector<ExternalFile*>* GetColorProfilesVector();
 	};
 }

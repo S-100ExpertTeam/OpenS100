@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "ResponsibleParty.h"
 
 ResponsibleParty::ResponsibleParty()
@@ -15,19 +16,19 @@ void ResponsibleParty::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 
 		if (!strcmp(instructionName, "S100CI:individualName"))
 		{
-			individualName = pugi::as_wide(instruction.child_value());
+			individualName = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100CI:organisationName"))
 		{
-			organisationName = pugi::as_wide(instruction.child_value());
+			organisationName = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100CI:positionName"))
 		{
-			positionName = pugi::as_wide(instruction.child_value());
+			positionName = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100CI:contactInfo"))
 		{
@@ -44,37 +45,37 @@ void ResponsibleParty::GetContents(pugi::xml_node& node)
 		}
 		else
 		{
-			std::wstring content = pugi::as_wide(instruction.child_value());
-			content.append(L" is another data");
+			std::string content = instruction.child_value();
+			content.append(" is another data");
 		}
 	}
 }
 
-void ResponsibleParty::SetIndividualName(std::wstring value)
+void ResponsibleParty::SetIndividualName(std::string value)
 {
 	individualName = value;
 }
 
-const std::wstring& ResponsibleParty::GetIndividualName()
+const std::string& ResponsibleParty::GetIndividualName()
 {
 	return individualName;
 }
 
-void ResponsibleParty::SetOrganisationName(std::wstring value)
+void ResponsibleParty::SetOrganisationName(std::string value)
 {
 	organisationName = value;
 }
-const std::wstring& ResponsibleParty::GetOrganisationName()
+const std::string& ResponsibleParty::GetOrganisationName()
 {
 	return organisationName;
 }
 
-void ResponsibleParty::SetPositionName(std::wstring value)
+void ResponsibleParty::SetPositionName(std::string value)
 {
 	positionName = value;
 }
 
-const std::wstring& ResponsibleParty::GetPositionName()
+const std::string& ResponsibleParty::GetPositionName()
 {
 	return positionName;
 }
@@ -106,4 +107,55 @@ void ResponsibleParty::SetParty(Party value)
 Party &ResponsibleParty::GetParty()
 {
 	return party;
+}
+
+void ResponsibleParty::SetIndividualName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetIndividualName(s);
+}
+
+void ResponsibleParty::SetIndividualName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetIndividualName(s);
+}
+
+std::wstring ResponsibleParty::GetIndividualNameW()
+{
+	return toWide(GetIndividualName());
+}
+
+void ResponsibleParty::SetOrganisationName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetOrganisationName(s);
+}
+
+void ResponsibleParty::SetOrganisationName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetOrganisationName(s);
+}
+
+std::wstring ResponsibleParty::GetOrganisationNameW()
+{
+	return toWide(GetOrganisationName());
+}
+
+void ResponsibleParty::SetPositionName(const char* value)
+{
+	std::string s(value ? value : "");
+	SetPositionName(s);
+}
+
+void ResponsibleParty::SetPositionName(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetPositionName(s);
+}
+
+std::wstring ResponsibleParty::GetPositionNameW()
+{
+	return toWide(GetPositionName());
 }

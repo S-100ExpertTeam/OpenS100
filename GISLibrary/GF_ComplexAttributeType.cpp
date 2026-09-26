@@ -103,6 +103,14 @@ namespace GF
 		return (SimpleAttribute*)AddSubAttribute(sa);
 	}
 
+	SimpleAttribute* ComplexAttributeType::AddSubSimpleAttribute(
+		FCD::S100_CD_AttributeValueType valueType, std::string code, std::wstring value)
+	{
+		auto sa = new SimpleAttributeType(valueType, value);
+		sa->SetCode(code);
+		return (SimpleAttribute*)AddSubAttribute(sa);
+	}
+
 	ComplexAttributeType* ComplexAttributeType::AddComplexAttribute(std::string code)
 	{
 		auto ca = new ComplexAttributeType();

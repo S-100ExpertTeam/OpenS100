@@ -802,8 +802,3 @@ double Scaler::GetMapYMax()
 {
 	return myMax;
 }
-
-long long Scaler::GetCOMF()
-{
-	return COMF;
-}

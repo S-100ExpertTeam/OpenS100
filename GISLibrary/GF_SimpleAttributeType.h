@@ -15,6 +15,7 @@ namespace GF
 		SimpleAttributeType();
 		SimpleAttributeType(const SimpleAttributeType& other);
 		SimpleAttributeType(FCD::S100_CD_AttributeValueType valueType, std::string value);
+		SimpleAttributeType(FCD::S100_CD_AttributeValueType valueType, std::wstring value);
 		virtual ~SimpleAttributeType();
 
 	public:

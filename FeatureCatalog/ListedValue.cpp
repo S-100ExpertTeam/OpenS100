@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "ListedValue.h"
 
 ListedValue::ListedValue()
@@ -15,14 +16,14 @@ void ListedValue::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:label"))
 		{
-			label = pugi::as_wide(instruction.child_value());
+			label = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100FC:definition"))
 		{
-			definition = pugi::as_wide(instruction.child_value());
+			definition = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100FC:code"))
 		{
@@ -30,11 +31,11 @@ void ListedValue::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FC:remarks"))
 		{
-			remarks = pugi::as_wide(instruction.child_value());
+			remarks = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100FC:alias"))
 		{
-			alias.push_back(pugi::as_wide(instruction.child_value()));
+			alias.push_back(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100FC:definitionReference"))
 		{
@@ -43,22 +44,22 @@ void ListedValue::GetContents(pugi::xml_node& node)
 	}
 }
 
-const std::wstring& ListedValue::GetLabel()
+const std::string& ListedValue::GetLabel()
 {
 	return label;
 }
 
-void ListedValue::SetLabel(std::wstring& value)
+void ListedValue::SetLabel(std::string& value)
 {
 	label = value;
 }
 
-const std::wstring& ListedValue::GetDefinition()
+const std::string& ListedValue::GetDefinition()
 {
 	return definition;
 }
 
-void ListedValue::SetDefinition(std::wstring& value)
+void ListedValue::SetDefinition(std::string& value)
 {
 	definition = value;
 }
@@ -68,17 +69,17 @@ int ListedValue::GetCode()
 	return code;
 }
 
-const std::wstring& ListedValue::GetRemarks()
+const std::string& ListedValue::GetRemarks()
 {
 	return remarks;
 }
 
-void ListedValue::SetRemarks(std::wstring& value)
+void ListedValue::SetRemarks(std::string& value)
 {
 	remarks = value;
 }
 
-std::list<std::wstring>& ListedValue::GetAliasPointer()
+std::list<std::string>& ListedValue::GetAliasPointer()
 {
 	return alias;
 }
@@ -86,4 +87,65 @@ std::list<std::wstring>& ListedValue::GetAliasPointer()
 DefinitionReference& ListedValue::GetDefinitionReferencePointer()
 {
 	return definitionReference;
+}
+
+std::wstring ListedValue::GetLabelW()
+{
+	return toWide(GetLabel());
+}
+
+void ListedValue::SetLabel(const char* value)
+{
+	std::string s(value ? value : "");
+	SetLabel(s);
+}
+
+void ListedValue::SetLabel(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetLabel(s);
+}
+
+std::wstring ListedValue::GetDefinitionW()
+{
+	return toWide(GetDefinition());
+}
+
+void ListedValue::SetDefinition(const char* value)
+{
+	std::string s(value ? value : "");
+	SetDefinition(s);
+}
+
+void ListedValue::SetDefinition(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetDefinition(s);
+}
+
+void ListedValue::SetRemarks(const char* value)
+{
+	std::string s(value ? value : "");
+	SetRemarks(s);
+}
+
+void ListedValue::SetRemarks(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	SetRemarks(s);
+}
+
+bool ListedValue::CompareRemarks(const char* value)
+{
+	if (value == nullptr)
+	{
+		return false;
+	}
+
+	if (strcmp(remarks.c_str(), value) == 0)
+	{
+		return true;
+	}
+
+	return false;
 }

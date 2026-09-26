@@ -74,6 +74,8 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 		return;
 	}
 
+	rt->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
+
 	auto surface = (SSurface*)fr->GetGeometry();
 
 	if (areaFill)
@@ -238,6 +240,8 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 			break;
 		}
 	}
+
+	rt->SetAntialiasMode(D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 }
 
 void SENC_AreaInstruction::ChangePallete(PortrayalCatalogue *pc)
@@ -275,8 +279,8 @@ void SENC_AreaInstruction::FromS100Instruction(
 			if (((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor())
 			{
 				colorFill->color = new SENC_Color();
-				colorFill->color->SetToken(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetToken());
-				colorFill->color->SetTransparency((float)_wtof(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTransparency().c_str()));
+				colorFill->color->SetToken(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTokenW());
+				colorFill->color->SetTransparency((float)_wtof(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTransparencyW().c_str()));
 
 				auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
 
@@ -290,7 +294,7 @@ void SENC_AreaInstruction::FromS100Instruction(
 		{
 			areaFill = new SENC_AreaFillReference();
 			auto s100AreaFillReference = (S100_AreaFillReference*)s100AreaInstruction->GetAreaFill();
-			areaFill->SetFileTitle(s100AreaFillReference->GetReference());
+			areaFill->SetFileTitle(s100AreaFillReference->GetReferenceW());
 		}
 		break;
 		case 4: // Symbol Fill
@@ -298,15 +302,15 @@ void SENC_AreaInstruction::FromS100Instruction(
 			symbolFill = (SENC_SymbolFill*)areaFill;
 			auto s100SymbolFill = (S100_SymbolFill*)s100AreaInstruction->GetAreaFill();
 
-			symbolFill->areaCRSType = SENC_CommonFuc::GetAreaCRSType(s100SymbolFill->GetAreaCRS());
+			symbolFill->areaCRSType = SENC_CommonFuc::GetAreaCRSType(s100SymbolFill->GetAreaCRSW());
 
-			areaFill->SetFileTitle(s100SymbolFill->GetFileTitle());
+			areaFill->SetFileTitle(s100SymbolFill->GetFileTitleW());
 
 			auto s100Symbol = s100SymbolFill->GetSymbol();
 			if (s100Symbol)
 			{
 				symbolFill->symbol = new SENC_Symbol();
-				symbolFill->symbol->reference = s100Symbol->GetReference();
+				symbolFill->symbol->reference = s100Symbol->GetReferenceW();
 				if (s100Symbol->GetRotation())
 				{
 					symbolFill->symbol->rotation = s100Symbol->GetRotation();

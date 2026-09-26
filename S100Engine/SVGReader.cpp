@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "SVGReader.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <pugixml.hpp>
 
 #ifdef _DEBUG
@@ -127,67 +129,49 @@ namespace simpleUse
 }
 
 #pragma region GetFunction
-bool GetClass(char* attributeContent, bool& fill, std::wstring& colorName)
+bool GetClass(char* attributeContent, bool& fill, std::string& colorName)
 {
-	std::wstring wsTemp = std::wstring(attributeContent, attributeContent + strlen(attributeContent));
-	std::wstring temp;
-	std::wstring wsColor;
-	std::wstring wsFill;
-	std::vector<std::wstring> wsVecTemp;
+	std::string sTemp(attributeContent, attributeContent + strlen(attributeContent));
+	std::string temp;
+	std::string sColor;
+	std::string sFill;
+	std::vector<std::string> sVecTemp;
 
-	if (wsTemp.size() == 6)
+	if (sTemp.size() == 6)
 	{
-		temp = wsTemp;
-		wsColor = temp.substr(1, temp.size());
-		wsFill = temp.substr(0, 1);
+		temp = sTemp;
+		sColor = temp.substr(1, temp.size());
+		sFill = temp.substr(0, 1);
 	}
 	else
 	{
-		simpleUse::split<std::wstring>(std::wstring(attributeContent, attributeContent + strlen(attributeContent)),
-			L" ",
-			wsVecTemp);
-		temp = wsVecTemp[wsVecTemp.size() - 1].c_str();
-		wsColor = temp.substr(1, temp.size());
-		wsFill = temp.substr(0, 1);
+		simpleUse::split<std::string>(sTemp, " ", sVecTemp);
+		temp = sVecTemp[sVecTemp.size() - 1];
+		sColor = temp.substr(1, temp.size());
+		sFill = temp.substr(0, 1);
 	}
 
-	if (&colorName != nullptr)
+	colorName = sColor;
+
+	if (sFill == "f")
 	{
-		colorName = wsColor;
+		fill = true;
 	}
 	else
 	{
-		return false;
+		fill = false;
 	}
 
-	if (&fill != nullptr)
-	{
-		if (!wcscmp(wsFill.c_str(), L"f"))
-		{
-			fill = true;
-			return true;
-		}
-		else
-		{
-			fill = false;
-			return true;
-		}
-	}
-	else
-	{
-		return false;
-	}
-
-	return false;
+	return true;
 }
 
 bool GetRotation(char* attributeContent, int& rotation)
 {
 	try
 	{
-		std::vector<std::wstring> wsVecTemp;
-		simpleUse::split<std::wstring>(std::wstring(attributeContent, attributeContent + strlen(attributeContent)), L"rotate ()", wsVecTemp);
-		rotation = _wtoi(wsVecTemp[0].c_str());
+		std::vector<std::string> sVecTemp;
+		simpleUse::split<std::string>(std::string(attributeContent), "rotate ()", sVecTemp);
+		rotation = cpp_util::stoi(sVecTemp[0]);
 	}
 	catch (std::exception ex)
 	{
@@ -197,29 +181,27 @@ bool GetRotation(char* attributeContent, int& rotation)
 }
 
 #pragma warning(disable:4244)
-bool GetStyle(char* attributeContent, double& strokeWidth, std::wstring& strokeDasharray, float& alpha)
+bool GetStyle(char* attributeContent, double& strokeWidth, std::string& strokeDasharray, float& alpha)
 {
-	std::vector<std::wstring> wsVecTemp;
-	simpleUse::split<std::wstring>(std::wstring(attributeContent, attributeContent + strlen(attributeContent)), L":; ", wsVecTemp);
-	for (int i = 0; i < (int)wsVecTemp.size(); i += 2)
+	std::vector<std::string> sVecTemp;
+	simpleUse::split<std::string>(std::string(attributeContent), ":; ", sVecTemp);
+	for (int i = 0; i + 1 < (int)sVecTemp.size(); i += 2)
 	{
-		const wchar_t* a = wsVecTemp[i].c_str();
-		std::wstring sss = wsVecTemp[i + 1];
-		if (!wcscmp(wsVecTemp[i].c_str(), L"stroke-width") && (&strokeWidth != nullptr))
+		if (sVecTemp[i] == "stroke-width")
 		{
-			strokeWidth = _wtof(wsVecTemp[i + 1].c_str());
+			strokeWidth = std::stod(sVecTemp[i + 1]);
 		}
-		else if (!wcscmp(wsVecTemp[i].c_str(), L"stroke-dasharray") && (&strokeDasharray != nullptr))
+		else if (sVecTemp[i] == "stroke-dasharray")
 		{
-			strokeDasharray = wsVecTemp[i + 1];
+			strokeDasharray = sVecTemp[i + 1];
 		}
-		else if (wsVecTemp[i].compare(L"fill-opacity") == 0)
+		else if (sVecTemp[i] == "fill-opacity")
 		{
-			alpha = _wtof(wsVecTemp[i + 1].c_str());
+			alpha = std::stof(sVecTemp[i + 1]);
 		}
-		else if (wsVecTemp[i].compare(L"stroke-opacity") == 0)
+		else if (sVecTemp[i] == "stroke-opacity")
 		{
-			alpha = _wtof(wsVecTemp[i + 1].c_str());
+			alpha = std::stof(sVecTemp[i + 1]);
 		}
 	}
 	return true;
@@ -269,7 +251,8 @@ bool SVGReader::OpenByPugi(char* path)
 
 		if (!instructionName.compare("path"))
 		{
-			libS100Engine::Line* line = new libS100Engine::Line();
+			auto line = std::make_unique<libS100Engine::Line>();
+			
 			std::vector<std::wstring> wsVecTemp;
 			for (pugi::xml_attribute attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
 			{
@@ -308,7 +291,8 @@ bool SVGReader::OpenByPugi(char* path)
 					line->alpha = attri.as_double();
 				}
 			}
-			figures.push_back(line);
+
+			figures.push_back(std::move(line));
 		}
 		else if (!instructionName.compare("line"))
 		{
@@ -317,7 +301,7 @@ bool SVGReader::OpenByPugi(char* path)
 		else if (!instructionName.compare("rect"))
 		{
 			bool bSymbolBoxLayout = false;
-			libS100Engine::Line* line = nullptr;
+			std::unique_ptr<libS100Engine::Line> line;
 			double x = 0;
 			double y = 0;
 			double width = 0;
@@ -337,7 +321,7 @@ bool SVGReader::OpenByPugi(char* path)
 				// If rect is not layout,
 				else if (std::string::npos == std::string(classValue).find("layout"))
 				{
-					line = new libS100Engine::Line();
+					line = std::make_unique<libS100Engine::Line>();
 				}
 			}
 
@@ -439,12 +423,12 @@ bool SVGReader::OpenByPugi(char* path)
 				line->AddPoint(points[3]);
 				line->AddPoint(points[4]);
 
-				figures.push_back(line);
+				figures.push_back(std::move(line));
 			}
 		}
 		else if (!instructionName.compare("circle"))
 		{
-			libS100Engine::Circle* circle = new libS100Engine::Circle();
+			auto circle = std::make_unique<libS100Engine::Circle>();
 			std::vector<std::wstring> wsVecTemp;
 
 			for (pugi::xml_attribute attri = instruction.first_attribute(); attri; attri = attri.next_attribute())
@@ -500,15 +484,16 @@ bool SVGReader::OpenByPugi(char* path)
 				}
 			}
 
-			if (!wcscmp(circle->colorName.c_str(), L""))
+			if (circle->colorName.empty())
 			{
 				circle->type = libS100Engine::FigureType::pivotPoint;
-				figures.push_back(circle);
 			}
 			else
 			{
-				figures.push_back(circle);
+				figures.push_back(std::move(circle));
 			}
+
+			figures.push_back(std::move(circle));
 		}
 		else if (!instructionName.compare("ellipse"))
 		{
@@ -529,7 +514,7 @@ bool SVGReader::OpenByPugi(char* path)
 	CString cpath(wPath);
 	delete[] wPath;
 
-	name = LibMFCUtil::GetFileName(cpath);
+	name = LibMFCUtil::WStringToString(std::wstring(LibMFCUtil::GetFileName(cpath)));
 
 	return true;
 }
@@ -545,14 +530,14 @@ SVGReader::~SVGReader()
 
 void SVGReader::Close()
 {
-	for (int i = 0; i < (int)figures.size(); i++)
-	{
-		if (figures[i] != nullptr)
-		{
-			delete figures[i];
-			figures[i] = nullptr;
-		}
-	}
+	//for (int i = 0; i < (int)figures.size(); i++)
+	//{
+	//	if (figures[i] != nullptr)
+	//	{
+	//		delete figures[i];
+	//		figures[i] = nullptr;
+	//	}
+	//}
 
 	figures.clear();
 
@@ -567,13 +552,18 @@ void SVGReader::CreateSVGGeometry(ID2D1Factory1* m_pDirect2dFactory)
 {
 	for (auto i = 0; i < (int)figures.size(); i++)
 	{
-		switch (figures[i]->type)
+		if (!figures[i])
+		{
+			continue;
+		}
+
+		switch (figures[i].get()->type)
 		{
 		case libS100Engine::FigureType::line:
-			geometry.push_back(CreateSVGGeometryFromLine(m_pDirect2dFactory, (libS100Engine::Line*)figures[i]));
+			geometry.push_back(CreateSVGGeometryFromLine(m_pDirect2dFactory, (libS100Engine::Line*)figures[i].get()));
 			break;
 		case libS100Engine::FigureType::circle:
-			geometry.push_back(CreateSVGGeometryFromCircle((libS100Engine::Circle*)figures[i]));
+			geometry.push_back(CreateSVGGeometryFromCircle((libS100Engine::Circle*)figures[i].get()));
 			break;
 		default:
 			break;

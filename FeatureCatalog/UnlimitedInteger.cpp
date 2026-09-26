@@ -15,7 +15,7 @@ UnlimitedInteger::~UnlimitedInteger()
 
 void UnlimitedInteger::GetContents(pugi::xml_node& node)
 {
-	std::wstring name = pugi::as_wide(node.name());
+	std::string name = node.name();
 
 	if (auto attributeNode = node.attribute("infinite")) 
 	{

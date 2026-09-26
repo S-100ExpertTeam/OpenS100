@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "S100_VectorPoint.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 S100_VectorPoint::S100_VectorPoint()
 {
 
@@ -22,12 +24,12 @@ void S100_VectorPoint::GetContents(pugi::xml_node& node)
 
 void S100_VectorPoint::SetX(std::wstring& value)
 {
-	x = std::stod(value);
+	x = cpp_util::stod(value);
 }
 
 void S100_VectorPoint::SetY(std::wstring& value)
 {
-	y = std::stod(value);
+	y = cpp_util::stod(value);
 }
 void S100_VectorPoint::SetX(double value)
 {

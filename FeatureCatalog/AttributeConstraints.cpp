@@ -1,5 +1,8 @@
 #include "stdafx.h"
+#include "StringUtil.h"
 #include "AttributeConstraints.h"
+
+#include "..\\LatLonUtility\\cpp_util.h"
 
 AttributeConstraints::AttributeConstraints()
 {
@@ -15,14 +18,14 @@ void AttributeConstraints::GetContents(pugi::xml_node& node)
 {
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	{
-		const pugi::char_t* instructionName = instruction.name();
+		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FD:stringLength"))
 		{
-			stringLength = std::stoi(instruction.child_value());
+			stringLength = cpp_util::stoi(instruction.child_value());
 		}
 		else if (!strcmp(instructionName, "S100FD:textPattern"))
 		{
-			textPattern = pugi::as_wide(instruction.child_value());
+			textPattern = instruction.child_value();
 		}
 		else if (!strcmp(instructionName, "S100FD:range"))
 		{
@@ -30,7 +33,7 @@ void AttributeConstraints::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100FD:precision"))
 		{
-			precision = std::stoi(instruction.child_value());
+			precision = cpp_util::stoi(instruction.child_value());
 		}
 	}
 }
@@ -45,12 +48,12 @@ void AttributeConstraints::SetStringLength(int value)
 	stringLength = value;
 }
 
-const std::wstring& AttributeConstraints::GetTextPattern()
+const std::string& AttributeConstraints::GetTextPattern()
 {
 	return textPattern;
 }
 
-void AttributeConstraints::GetTextPattern(std::wstring value)
+void AttributeConstraints::GetTextPattern(std::string value)
 {
 	textPattern = value;
 }
@@ -68,4 +71,15 @@ int AttributeConstraints::GetPrecision()
 void AttributeConstraints::SetPrecision(int value)
 {
 	precision = value;
+}
+
+std::wstring AttributeConstraints::GetTextPatternW()
+{
+	return toWide(GetTextPattern());
+}
+
+void AttributeConstraints::GetTextPattern(std::wstring value)
+{
+	std::string s = toUtf8(value);
+	return GetTextPattern(s);
 }

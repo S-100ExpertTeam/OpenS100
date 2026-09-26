@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "CatalogItem.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
-
 namespace Portrayal
 {
 	CatalogItem::CatalogItem()
@@ -18,22 +16,12 @@ namespace Portrayal
 		}
 	}
 
-	void CatalogItem::SetId(std::wstring& value)
-	{
-		id = value;
-	}
+	void CatalogItem::SetId(const std::string& value)  { id = value; }
+	void CatalogItem::SetId(const std::wstring& value) { id = toUtf8(value); }
+	std::string  CatalogItem::GetId()  { return id; }
+	std::wstring CatalogItem::GetIdW() { return toWide(id); }
 
-	std::wstring CatalogItem::GetId()
-	{
-		return id;
-	}
-
-	std::string CatalogItem::GetIdAsString()
-	{
-		return LibMFCUtil::WStringToString(id);
-	}
-
-	void CatalogItem::AddDescription(S100_Description* value) 
+	void CatalogItem::AddDescription(S100_Description* value)
 	{
 		description.push_back(value);
 	}
@@ -48,7 +36,7 @@ namespace Portrayal
 		return &description;
 	}
 
-	int CatalogItem::GetCountOfDescription() 
+	int CatalogItem::GetCountOfDescription()
 	{
 		return (int)description.size();
 	}

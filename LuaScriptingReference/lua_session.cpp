@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include "lua_session.h"
 
-#include <assert.h>
+#include <cassert>
 #include <iostream>
-#include <afxcmn.h>
-#include <mmsystem.h>
-//#pragma comment(lib, "winmm.lib" )
+#include <stdexcept>
 
 std::map<lua_State*, lua_session*> lua_session::m_state_session_map;
 
@@ -32,10 +30,14 @@ void lua_session::specialize()
 	peek<lua_ref_ptr>(0);
 }
 
+struct LuaPanicException : public std::runtime_error {
+	using std::runtime_error::runtime_error;
+};
+
 static int atpanic(lua_State *l)
 {
-	std::cerr << "Lua panic!\n";
-	return 2;
+	const char* msg = lua_tostring(l, -1);
+	throw LuaPanicException(msg ? msg : "Lua panic (no message)");
 }
 
 lua_session::lua_session()
@@ -47,7 +49,7 @@ lua_session::lua_session()
 	// [SECURITY PATCH] Disable dangerous libraries 
 	luaL_dostring(m_l,
 	"os = nil " "io = nil " "debug = nil "
-		"package.loadlib = nil " "package.cpath = ¡± " "loadfile = nil "
+		"package.loadlib = nil " "package.cpath = â€ " "loadfile = nil "
 		"dofile = nil "
 		"load = nil "
 		"rawset = nil " "loadstring = nil"
@@ -73,13 +75,15 @@ void lua_session::check_status(int status)
 	if (status != 0 && status != LUA_YIELD)
 	{
 		const char *message = lua_tostring(m_l, -1);
-
-		std::cerr << message << "\n";
-
-		//assert(false);
-
-		//exit(3);
-		return;
+		if (message)
+		{
+			std::string msg = std::string("[Lua Error] ") + message + "\n";
+			OutputDebugStringA(msg.c_str());
+		}
+		else
+		{
+			OutputDebugStringA("[Lua Error] (no message)\n");
+		}
 	}
 }
 

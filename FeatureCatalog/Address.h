@@ -4,6 +4,7 @@
 #include <pugixml.hpp>
 
 #include <string>
+#include "StringUtil.h"
 
 class Address :
 	public XML_Item
@@ -13,31 +14,37 @@ public:
 	virtual ~Address();
 
 private:
-	std::wstring deliveryPoint = L"";
-	std::wstring city = L"";
-	std::wstring administrativeArea = L"";
-	std::wstring postalCode = L"";
-	std::wstring country = L"";
-	std::wstring electronicMailAddress = L"";
+	std::string deliveryPoint = "";
+	std::string city = "";
+	std::string administrativeArea = "";
+	std::string postalCode = "";
+	std::string country = "";
+	std::string electronicMailAddress = "";
 
 public:
 	void GetContents(pugi::xml_node& node);
 
 	void SetDeliveryPoint(char* value);
-	const std::wstring& GetDeliveryPoint();
+	const std::string& GetDeliveryPoint();
+	std::wstring GetDeliveryPointW();
 	 
 	void SetCity(char* value);
-	const std::wstring& GetCity();
+	const std::string& GetCity();
+	std::wstring GetCityW();
 
 	void SetAdministrativeArea(char* value);
-	const std::wstring& GetAdministrativeArea();
+	const std::string& GetAdministrativeArea();
+	std::wstring GetAdministrativeAreaW();
 
 	void SetPostalCode(char* value);
-	const std::wstring& GetPostalCode();
+	const std::string& GetPostalCode();
+	std::wstring GetPostalCodeW();
 
 	void SetCountry(char* value);
-	const std::wstring& GetCountry();
+	const std::string& GetCountry();
+	std::wstring GetCountryW();
 
 	void SetElectronicMailAddress(char* value);
-	const std::wstring& GetElectronicMailAddress();
+	const std::string& GetElectronicMailAddress();
+	std::wstring GetElectronicMailAddressW();
 };

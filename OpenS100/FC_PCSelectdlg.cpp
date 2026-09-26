@@ -7,6 +7,7 @@
 
 
 #include "../LibMFCUtil/LibMFCUtil.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 
 #include <sstream>
@@ -195,7 +196,7 @@ std::vector<int> FC_PCSelectdlg::parseVersion(const std::string& version) {
 	std::string part;
 	while (std::getline(ss, part, '.')) {
 		try {
-			parts.push_back(std::stoi(part));
+			parts.push_back(cpp_util::stoi(part));
 		}
 		catch (const std::invalid_argument& e) {
 			return {};

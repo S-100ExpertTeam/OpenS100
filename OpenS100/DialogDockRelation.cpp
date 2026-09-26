@@ -258,7 +258,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (featureType)
 			{
-				colSrcFeatureName.Format(_T("%s (%s)"), featureType->GetName().c_str(), srcFeature->GetIDAsWString().c_str());
+				colSrcFeatureName.Format(_T("%s (%s)"), featureType->GetNameW().c_str(), srcFeature->GetIDAsWString().c_str());
 			}
 			else
 			{
@@ -267,7 +267,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (fc_featureAssociation)
 			{
-				colAssociationName.Format(_T("%s"), fc_featureAssociation->GetName().c_str());
+				colAssociationName.Format(_T("%s"), fc_featureAssociation->GetNameW().c_str());
 			}
 			else
 			{
@@ -276,7 +276,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (fc_role)
 			{
-				colAssociationRole.Format(_T("%s"), fc_role->GetName().c_str());
+				colAssociationRole.Format(_T("%s"), fc_role->GetNameW().c_str());
 			}
 			else
 			{
@@ -285,7 +285,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (fc_associatedFeatureType)
 			{
-				colAssociationFeatureName.Format(_T("%s (%s)"), fc_associatedFeatureType->GetName().c_str(), pugi::as_wide(associatedFeatureTypeID).c_str());
+				colAssociationFeatureName.Format(_T("%s (%s)"), fc_associatedFeatureType->GetNameW().c_str(), pugi::as_wide(associatedFeatureTypeID).c_str());
 			}
 			else
 			{
@@ -333,7 +333,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (featureType)
 			{
-				colSrcFeatureName.Format(_T("%s (%s)"), featureType->GetName().c_str(), srcFeature->GetIDAsWString().c_str());
+				colSrcFeatureName.Format(_T("%s (%s)"), featureType->GetNameW().c_str(), srcFeature->GetIDAsWString().c_str());
 			}
 			else
 			{
@@ -342,7 +342,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (fc_informationAssociation)
 			{
-				colAssociationName.Format(_T("%s"), fc_informationAssociation->GetName().c_str());
+				colAssociationName.Format(_T("%s"), fc_informationAssociation->GetNameW().c_str());
 			}
 			else
 			{
@@ -351,7 +351,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (fc_role)
 			{
-				colAssociationRole.Format(_T("%s"), fc_role->GetName().c_str());
+				colAssociationRole.Format(_T("%s"), fc_role->GetNameW().c_str());
 			}
 			else
 			{
@@ -360,7 +360,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (fc_associatedInformationType)
 			{
-				colAssociationFeatureName.Format(_T("%s (%s)"), fc_associatedInformationType->GetName().c_str(), pugi::as_wide(associatedInformationTypeID).c_str());
+				colAssociationFeatureName.Format(_T("%s (%s)"), fc_associatedInformationType->GetNameW().c_str(), pugi::as_wide(associatedInformationTypeID).c_str());
 			}
 			else
 			{
@@ -420,7 +420,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (informationType)
 			{
-				colSrcFeatureName.Format(_T("%s (%s)"), informationType->GetName().c_str(), srcInformation->GetIDAsWString().c_str());
+				colSrcFeatureName.Format(_T("%s (%s)"), informationType->GetNameW().c_str(), srcInformation->GetIDAsWString().c_str());
 			}
 			else
 			{
@@ -429,7 +429,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (fc_informationAssociation)
 			{
-				colAssociationName.Format(_T("%s"), fc_informationAssociation->GetName().c_str());
+				colAssociationName.Format(_T("%s"), fc_informationAssociation->GetNameW().c_str());
 			}
 			else
 			{
@@ -438,7 +438,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (fc_role)
 			{
-				colAssociationRole.Format(_T("%s"), fc_role->GetName().c_str());
+				colAssociationRole.Format(_T("%s"), fc_role->GetNameW().c_str());
 			}
 			else
 			{
@@ -447,7 +447,7 @@ void CDialogDockRelation::SetFeatureList(S100SpatialObject* cell, std::list<GF::
 
 			if (fc_associatedInformationType)
 			{
-				colAssociationFeatureName.Format(_T("%s (%s)"), fc_associatedInformationType->GetName().c_str(), pugi::as_wide(associatedInformationTypeID).c_str());
+				colAssociationFeatureName.Format(_T("%s (%s)"), fc_associatedInformationType->GetNameW().c_str(), pugi::as_wide(associatedInformationTypeID).c_str());
 			}
 			else
 			{

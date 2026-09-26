@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ProcessS101.h"
+#include <stdexcept>
 #include "S100Layer.h"
 #include "S101Cell.h"
 #include "PCOutputSchemaManager.h"
@@ -31,6 +32,7 @@
 #include "../PortrayalCatalogue/ViewingGroupLayer.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
+#include "..\\LatLonUtility\\cpp_util.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
 
@@ -274,6 +276,14 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 	{
 		dump_com_error(e);
 	}
+	catch (const std::exception& e)
+	{
+		OutputDebugStringA(("Lua exception: " + std::string(e.what()) + "\n").c_str());
+	}
+	catch (...)
+	{
+		OutputDebugStringA("Unknown Lua exception\n");
+	}
 	return 0;
 }
 
@@ -372,7 +382,7 @@ std::string ProcessS101::ProcessS100_XSLT(std::string inputXmlContent, std::stri
 		xmlFree(resultBuffer);
 	}
 	
-	// ¸Þ¸ð¸® Á¤¸®
+	// ï¿½Þ¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 	xmlFreeDoc(resultDoc);
 	xsltFreeStylesheet(xsltDoc);
 	xmlFreeDoc(xmlDoc);
@@ -1313,7 +1323,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						std::vector<std::string> r_splited = Split(stateCommands.v_Rotation, ",");
 						if (r_splited.size() == 2)
 						{
-							in->GetSymbol()->SetRotation(std::stod(r_splited[1]));
+							in->GetSymbol()->SetRotation(cpp_util::stod(r_splited[1]));
 
 						}
 					}
@@ -1388,7 +1398,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 
 						cf->SetReference(std::wstring(v_AreaFillReference.begin(), v_AreaFillReference.end()));
 
-						std::wstring path = cf->GetReference();
+						std::wstring path = cf->GetReferenceW();
 						path.append(L".xml");
 						in->SetAreaFill(cf);
 					}
@@ -1530,8 +1540,8 @@ std::vector<std::string> ProcessS101::getParams(PortrayalCatalogue* pc)
 			auto contextParameter = context->GetContextParameter(i);
 			if (contextParameter)
 			{
-				auto name = contextParameter->GetIdAsString();
-				auto value = contextParameter->getValueAsString();
+				auto name = contextParameter->GetId();
+				auto value = contextParameter->getValue();
 				params.push_back(name);
 				params.push_back(value);
 			}

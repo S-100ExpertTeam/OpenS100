@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GM_OrientableCurve.h"
 
+#include "..\\LatLonUtility\\cpp_util.h"
+
 #include <regex>
 
 namespace GM
@@ -56,7 +58,7 @@ namespace GM
 	//int OrientableCurve::GetBaseCurveIDAsInt()
 	//{
 	//	std::string digitID = std::regex_replace(baseCurveID, std::regex(R"([\D])"), "");
-	//	return std::stoi(digitID);
+	//	return cpp_util::stoi(digitID);
 	//}
 
 	void OrientableCurve::Read(pugi::xml_node& node)

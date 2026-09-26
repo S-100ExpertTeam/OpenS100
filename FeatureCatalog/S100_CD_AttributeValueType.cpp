@@ -64,12 +64,6 @@ namespace FCD
 		return S100_CD_AttributeValueType::none;
 	}
 
-	S100_CD_AttributeValueType StringToS100_CD_AttributeValueType(std::wstring& value)
-	{
-		std::string str = pugi::as_utf8(value);
-		return StringToS100_CD_AttributeValueType(str);
-	}
-
 	std::string S100_CD_AttributeValueTypeToString(S100_CD_AttributeValueType value)
 	{
 		if (value == S100_CD_AttributeValueType::boolean)
@@ -128,9 +122,9 @@ namespace FCD
 		return "none";
 	}
 
-	std::wstring S100_CD_AttributeValueTypeToWString(S100_CD_AttributeValueType value)
+	std::string S100_CD_AttributeValueTypeToWString(S100_CD_AttributeValueType value)
 	{
 		auto str = S100_CD_AttributeValueTypeToString(value);
-		return pugi::as_wide(str);
+		return str;
 	}
 }

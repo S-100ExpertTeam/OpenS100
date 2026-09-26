@@ -56,9 +56,9 @@ std::string S100_SpatialReference::GetReference()
 	return reference;
 }
 
-std::wstring S100_SpatialReference::GetReferenceAsWString() 
+std::wstring S100_SpatialReference::GetReferenceAsWString()
 {
-	return pugi::as_wide(reference);
+	return toWide(reference);
 }
 
 bool S100_SpatialReference::isForward()

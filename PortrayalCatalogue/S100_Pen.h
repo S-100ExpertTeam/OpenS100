@@ -13,14 +13,16 @@ public:
 	virtual ~S100_Pen();
 
 private:
-	std::wstring width;
+	std::string width;
 	GraphicBasePackage::Color color;
 
-public: 
+public:
 	void GetContents(pugi::xml_node& node);
 
-	void SetWidth(std::wstring& value);
-	std::wstring GetWidth();
+	void SetWidth(const std::string& value);
+	void SetWidth(const std::wstring& value);
+	std::string  GetWidth();
+	std::wstring GetWidthW();
 	void SetColor(GraphicBasePackage::Color value);
 	GraphicBasePackage::Color& GetColor();
 };

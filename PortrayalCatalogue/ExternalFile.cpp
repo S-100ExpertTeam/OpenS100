@@ -13,40 +13,28 @@ namespace Portrayal
 
 	}
 
-	std::wstring ExternalFile::GetFileName()
-	{
-		return FileName;
-	}
+	std::string  ExternalFile::GetFileName()  { return FileName; }
+	std::wstring ExternalFile::GetFileNameW() { return toWide(FileName); }
 
-	std::wstring ExternalFile::GetFileType()
-	{
-		return FileTypeToWString(FileType);
-	}
+	std::string  ExternalFile::GetFileTypeAsString() { return FileTypeToString(FileType); }
+	std::wstring ExternalFile::GetFileType()         { return FileTypeToWString(FileType); }
 
-	std::wstring ExternalFile::GetFileFormatAsWstring()
-	{
-		return FileFormatToWString(FileFormat);
-	}
+	std::string  ExternalFile::GetFileFormatAsString()  { return FileFormatToString(FileFormat); }
+	std::wstring ExternalFile::GetFileFormatAsWstring() { return FileFormatToWString(FileFormat); }
 
 	Portrayal::FileFormat ExternalFile::GetFileFormat()
 	{
 		return FileFormat;
 	}
 
-	void ExternalFile::SetFileName(std::wstring value)
-	{
-		FileName = value;
-	}
+	void ExternalFile::SetFileName(const std::string& value)  { FileName = value; }
+	void ExternalFile::SetFileName(const std::wstring& value) { FileName = toUtf8(value); }
 
-	void ExternalFile::SetFileType(std::wstring value)
-	{
-		FileType = StringToFileType(value);
-	}
+	void ExternalFile::SetFileType(const std::string& value)  { FileType = StringToFileType(value); }
+	void ExternalFile::SetFileType(const std::wstring& value) { FileType = StringToFileType(value); }
 
-	void ExternalFile::SetFileFormat(std::wstring value)
-	{
-		FileFormat = StringToFileFormat(value);
-	}
+	void ExternalFile::SetFileFormat(const std::string& value)  { FileFormat = StringToFileFormat(value); }
+	void ExternalFile::SetFileFormat(const std::wstring& value) { FileFormat = StringToFileFormat(value); }
 
 	void ExternalFile::GetContents(pugi::xml_node& node)
 	{
@@ -58,7 +46,7 @@ namespace Portrayal
 		auto idAttri = node.attribute("id");
 		if (idAttri)
 		{
-			SetId(pugi::as_wide(idAttri.value()));
+			SetId(std::string(idAttri.value()));
 		}
 
 		for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
@@ -77,15 +65,15 @@ namespace Portrayal
 			}
 			else if (!strcmp(instructionName, "fileName"))
 			{
-				SetFileName(pugi::as_wide(instruction.child_value()));
+				SetFileName(std::string(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "fileType"))
 			{
-				SetFileType(pugi::as_wide(instruction.child_value()));
+				SetFileType(std::string(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "fileFormat"))
 			{
-				SetFileFormat(pugi::as_wide(instruction.child_value()));
+				SetFileFormat(std::string(instruction.child_value()));
 			}
 		}
 	}
