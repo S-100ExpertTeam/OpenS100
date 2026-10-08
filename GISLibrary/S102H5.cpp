@@ -138,6 +138,19 @@ void S102H5::CreateBitmap()
 	auto width = featureInstance->getNumPointsLongitudinal();
 	auto height = featureInstance->getNumPointsLatitudinal();
 
+	// The grid is walked below through valuesGroup->depth. Bound that walk by
+	// what Read() actually allocated instead of recomputing width * height,
+	// which is int arithmetic over file-supplied attributes and wraps for large
+	// declared dimensions.
+	if (!valuesGroup || !valuesGroup->depth || valuesGroup->pointCountRead == 0) {
+		return;
+	}
+
+	if (width <= 0 || height <= 0 ||
+		static_cast<size_t>(width) * static_cast<size_t>(height) != valuesGroup->pointCountRead) {
+		return;
+	}
+
 	HRESULT hr = D2->pImagingFactory->CreateBitmap(width, height, GUID_WICPixelFormat32bppPRGBA, WICBitmapCacheOnDemand, &pWICBitmap);
 	if (SUCCEEDED(hr)) {
 		ID2D1RenderTarget* rt = nullptr;
@@ -155,12 +168,14 @@ void S102H5::CreateBitmap()
 
 			rt->BeginDraw();
 			
-			auto numPoint = width * height;
+			const size_t numPoint = valuesGroup->pointCountRead;
+			const size_t gridWidth = static_cast<size_t>(width);
+			const size_t gridHeight = static_cast<size_t>(height);
 			D2D1_RECT_F rect = { 0, 0, 1, 1 };
-			for (auto i = 0; i < numPoint; i++) {
+			for (size_t i = 0; i < numPoint; i++) {
 
-				auto xIndex = i % width;
-				auto yIndex = (height - 1) - i / width;
+				auto xIndex = i % gridWidth;
+				auto yIndex = (gridHeight - 1) - i / gridWidth;
 
 				auto value = valuesGroup->depth[i];
 
@@ -218,12 +233,15 @@ void S102H5::SetPositive()
 		auto featureInstance = featureContainer->GetBathymetryCoverage();
 		auto valuesGroup = featureInstance->GetBathymetryCoverage();
 
-		auto width = featureInstance->getNumPointsLongitudinal();
-		auto height = featureInstance->getNumPointsLatitudinal();
+		// Same reasoning as CreateBitmap(): iterate over what was read, not over
+		// a product recomputed from the file's dimension attributes.
+		if (!valuesGroup || !valuesGroup->depth) {
+			return;
+		}
 
-		auto numPoint = width * height;
+		const size_t numPoint = valuesGroup->pointCountRead;
 
-		for (int i = 0; i < numPoint; i++) {
+		for (size_t i = 0; i < numPoint; i++) {
 			if (valuesGroup->depth[i] != 1000000) {
 				valuesGroup->depth[i] = -valuesGroup->depth[i];
 			}
