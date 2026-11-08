@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "../S100Engine/S100PCManager.h"
 #include "SENC_LineStyle.h"
 #include "D2DGeometryCache.h"
 #include "SENC_CommonFuc.h"

@@ -2,6 +2,7 @@
 #include "PortrayalRenderCache.h"
 #include "D2D1Resources.h"
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../S100Engine/S100PCManager.h"
 
 namespace
 {
@@ -21,9 +22,14 @@ namespace GISLibrary
 			{
 				return;
 			}
-			pc->CreateSVGD2Geometry(d2->pD2Factory);
-			pc->CreatePatternImages(d2->pD2Factory, d2->pImagingFactory, DefaultStroke(d2));
-			pc->CreateLineImages(d2->pD2Factory, d2->pImagingFactory, DefaultStroke(d2));
+			auto manager = pc->GetS100PCManager();
+			if (!manager)
+			{
+				return;
+			}
+			manager->CreateSVGGeometry(d2->pD2Factory);
+			manager->CreateBitmapImage(d2->pD2Factory, d2->pImagingFactory, DefaultStroke(d2), pc->GetCurrentPaletteName());
+			manager->CreateLineImage(d2->pD2Factory, d2->pImagingFactory, DefaultStroke(d2), pc->GetCurrentPaletteName());
 		}
 
 		void ChangePalette(PortrayalCatalogue* pc, const std::string& paletteName, D2D1Resources* d2)
@@ -32,7 +38,16 @@ namespace GISLibrary
 			{
 				return;
 			}
-			pc->ChangePalette(paletteName, d2->pD2Factory, d2->pImagingFactory, DefaultStroke(d2));
+			pc->ChangePalette(paletteName);
+			auto manager = pc->GetS100PCManager();
+			if (!manager)
+			{
+				return;
+			}
+			manager->DeleteBitmapImage();
+			manager->CreateBitmapImage(d2->pD2Factory, d2->pImagingFactory, DefaultStroke(d2), pc->GetCurrentPaletteName());
+			manager->DeleteLineImage();
+			manager->CreateLineImage(d2->pD2Factory, d2->pImagingFactory, DefaultStroke(d2), pc->GetCurrentPaletteName());
 		}
 
 		void ChangePalette(PortrayalCatalogue* pc, const std::wstring& paletteName, D2D1Resources* d2)

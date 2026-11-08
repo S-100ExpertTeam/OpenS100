@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "../S100Engine/S100PCManager.h"
 #include "SENC_Color.h"
 
 #include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"

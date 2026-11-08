@@ -14,7 +14,7 @@
 
 PortrayalCatalogue::PortrayalCatalogue()
 {
-
+	Init();
 }
 
 PortrayalCatalogue::~PortrayalCatalogue()
@@ -41,7 +41,7 @@ bool PortrayalCatalogue::Open(std::wstring path)
 
 void PortrayalCatalogue::Init()
 {
-	s100PCManager = new S100PCManager();
+	s100PCManager = std::make_unique<S100PCManager>();
 }
 
 void PortrayalCatalogue::Delete()
@@ -53,8 +53,7 @@ void PortrayalCatalogue::Delete()
 	}
 	s100_lineStyles.clear();
 
-	delete s100PCManager;
-	s100PCManager = nullptr;
+	s100PCManager.reset();
 }
 
 bool PortrayalCatalogue::ReadPortrayalCatalogueByPugiXML(std::wstring& path)
@@ -167,11 +166,6 @@ void PortrayalCatalogue::GetContents(pugi::xml_node& node)
 	}
 }
 
-void PortrayalCatalogue::CreateSVGD2Geometry(ID2D1Factory1* factory)
-{
-	s100PCManager->CreateSVGGeometry(factory);
-}
-
 void PortrayalCatalogue::SetRootPath(const std::string& value)  { rootPath = value; }
 void PortrayalCatalogue::SetRootPath(const std::wstring& value) { rootPath = toUtf8(value); }
 void PortrayalCatalogue::SetProduct(const std::string& value)   { product = value; }
@@ -206,7 +200,6 @@ void PortrayalCatalogue::SetCurrentPaletteName(const std::wstring& paletteName)
 	SetCurrentPaletteName(toUtf8(paletteName));
 }
 
-void PortrayalCatalogue::SetS100PCManager(S100PCManager* value) { s100PCManager = value; }
 
 std::string  PortrayalCatalogue::GetRootPath()  { return rootPath; }
 std::wstring PortrayalCatalogue::GetRootPathW() { return toWide(rootPath); }
@@ -316,29 +309,13 @@ S100_RuleFile* PortrayalCatalogue::GetMainRuleFile()
 std::string  PortrayalCatalogue::GetCurrentPaletteName()  { return currentPalette; }
 std::wstring PortrayalCatalogue::GetCurrentPaletteNameW() { return toWide(currentPalette); }
 
-S100PCManager* PortrayalCatalogue::GetS100PCManager() { return s100PCManager; }
-
-void PortrayalCatalogue::CreatePatternImages(ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke)
-{
-	if (nullptr != s100PCManager)
-	{
-		s100PCManager->CreateBitmapImage(d2Factory, imageFactory, stroke, GetCurrentPaletteName());
-	}
-}
+S100PCManager* PortrayalCatalogue::GetS100PCManager() { return s100PCManager.get(); }
 
 void PortrayalCatalogue::DeletePatternImage()
 {
 	if (nullptr != s100PCManager)
 	{
 		s100PCManager->DeleteBitmapImage();
-	}
-}
-
-void PortrayalCatalogue::CreateLineImages(ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke)
-{
-	if (nullptr != s100PCManager)
-	{
-		s100PCManager->CreateLineImage(d2Factory, imageFactory, stroke, GetCurrentPaletteName());
 	}
 }
 
@@ -436,11 +413,7 @@ std::string PortrayalCatalogue::GetCataloguePathAsString()
 	return catalogPath;
 }
 
-void PortrayalCatalogue::ChangePalette(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke)
+void PortrayalCatalogue::ChangePalette(const std::string& paletteName)
 {
 	SetCurrentPaletteName(paletteName);
-	DeletePatternImage();
-	CreatePatternImages(d2Factory, imageFactory, stroke);
-	DeleteLineImages();
-	CreateLineImages(d2Factory, imageFactory, stroke);
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "SENC_LineStyleBase.h"
+#include "../S100Engine/S100Render.h"
 #include "string"
 
 class S100_LineStyleReference;

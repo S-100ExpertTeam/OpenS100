@@ -27,8 +27,6 @@ public:
 
 	void GetContents(pugi::xml_node node);
 
-	D2D1_COLOR_F GetD2Color(const std::string& paletteName, const std::string& token);
-	D2D1_COLOR_F GetD2Color(const std::wstring& paletteName, const std::wstring& token);
 	COLORREF GetRGBRef(const std::string& paletteName, const std::string& token);
 	COLORREF GetRGBRef(const std::wstring& paletteName, const std::wstring& token);
 

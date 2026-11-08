@@ -75,30 +75,6 @@ void S100_ColorProfile::Setpaletters(const std::string& key, S100_Palette* value
 void S100_ColorProfile::Setpaletters(const std::wstring& key, S100_Palette* value) { palettes.insert({ toUtf8(key), value }); }
 std::unordered_map<std::string, S100_Palette*> S100_ColorProfile::Getpalettes()    { return palettes; }
 
-#pragma warning(disable:4244)
-D2D1_COLOR_F S100_ColorProfile::GetD2Color(const std::string& paletteName, const std::string& token)
-{
-	auto item = palettes.find(paletteName);
-	if (item != palettes.end())
-	{
-		auto color = item->second->GetItem().find(token);
-
-		if (color != item->second->GetItem().end())
-		{
-			return D2D1::ColorF(
-				color->second->GetSRGB()->GetRed() / 255.0,
-				color->second->GetSRGB()->GetGreen() / 255.0,
-				color->second->GetSRGB()->GetBlue() / 255.0);
-		}
-	}
-
-	return D2D1::ColorF(0, 0, 0);
-}
-
-D2D1_COLOR_F S100_ColorProfile::GetD2Color(const std::wstring& paletteName, const std::wstring& token)
-{
-	return GetD2Color(toUtf8(paletteName), toUtf8(token));
-}
 
 COLORREF S100_ColorProfile::GetRGBRef(const std::string& paletteName, const std::string& token)
 {

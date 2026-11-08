@@ -20,11 +20,11 @@
 
 #include <pugixml.hpp>
 
-#include "../S100Engine/S100Render.h"
 #include "../FeatureCatalog/Version.h"
 
 #include <unordered_map>
 #include <string>
+#include <memory>
 
 using namespace Portrayal;
 
@@ -89,7 +89,10 @@ protected:
 	std::unordered_map<std::string, S100_RuleFile*> mainRules;
 
 	std::string currentPalette = "Day";
-	S100PCManager *s100PCManager = new S100PCManager();
+	// Symbol/line-style/area-fill/colour-profile resources of this catalogue plus the
+	// renderer's caches for them. Owned here; Direct2D caches are built by
+	// GISLibrary::PortrayalRender (render side), never by this class.
+	std::unique_ptr<S100PCManager> s100PCManager;
 
 public:
 	bool Read(std::wstring path);
@@ -100,7 +103,6 @@ public:
 	void Delete();
 	bool ReadPortrayalCatalogueByPugiXML(std::wstring& path);
 	void GetContents(pugi::xml_node& node);
-	void CreateSVGD2Geometry(ID2D1Factory1* factory);
 
 	//set
 	void SetRootPath(const std::string& value);
@@ -122,7 +124,6 @@ public:
 	void SetLineStyles(const std::wstring& key, S100_LineStyleBase* value);
 	void SetCurrentPaletteName(const std::string& paletteName);
 	void SetCurrentPaletteName(const std::wstring& paletteName);
-	void SetS100PCManager(S100PCManager* value);
 
 	//get
 	std::string  GetRootPath();
@@ -165,12 +166,12 @@ public:
 	std::string  GetCurrentPaletteName();
 	std::wstring GetCurrentPaletteNameW();
 
-	void ChangePalette(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
+	// Model-side palette switch (name + colour profile). Rebuilding pattern/line
+	// bitmaps for the new palette is the renderer's job (PortrayalRender::ChangePalette).
+	void ChangePalette(const std::string& paletteName);
 
-	void CreatePatternImages(ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 	void DeletePatternImage();
 
-	void CreateLineImages(ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 	void DeleteLineImages();
 
 	bool OpenSVG();

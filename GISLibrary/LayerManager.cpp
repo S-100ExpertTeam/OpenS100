@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "../S100Engine/S100PCManager.h"
 #include "LayerManager.h"
 #include "PortrayalRenderCache.h"
 #include "BinaryFile.h"
@@ -1528,11 +1529,7 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 			auto pc = s100layer->GetPC();
 			if (nullptr != pc)
 			{
-				pc->SetCurrentPaletteName(paletteName);
-				pc->DeletePatternImage();
-				pc->CreatePatternImages(D2->pD2Factory, D2->pImagingFactory, D2->D2D1StrokeStyleGroup.at(0));
-				pc->DeleteLineImages();
-				pc->CreateLineImages(D2->pD2Factory, D2->pImagingFactory, D2->D2D1StrokeStyleGroup.at(0));
+				PortrayalRender::ChangePalette(pc, paletteName, D2);
 			}
 
 			auto s100so = (S100SpatialObject*)layer->GetSpatialObject();

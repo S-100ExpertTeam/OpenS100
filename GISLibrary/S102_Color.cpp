@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "../S100Engine/S100PCManager.h"
 #include "S102_Color.h"
 #include "GISLibrary.h"
 

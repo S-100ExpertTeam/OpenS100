@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "../S100Engine/S100PCManager.h"
 #include "GISLibrary.h"
 #include "Product.h"
 #include "SGeometry.h"

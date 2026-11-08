@@ -1,5 +1,6 @@
 #pragma once
 #include "SENC_LineStyleBase.h"
+#include "../S100Engine/S100Render.h"
 #include "SENC_Symbol.h"
 #include "SENC_Dash.h"
 #include "SENC_LineSymbol.h"
