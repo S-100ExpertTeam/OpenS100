@@ -1,19 +1,21 @@
 {
-    "name": "my-geospatial-app",
-    "version": "1.0.0",
-    "description": "Geospatial processing system using GDAL, SQLite, and others",
-    "dependencies": [
-      "pugixml",
-      "geographiclib",
-      "polyclipping",
-      "hdf5",
-      "libxslt",
-      "libxml2",
-      "openssl",
-      "sqlite3",
-      "boost-geometry",
-      "utfcpp"
-    ]
-  }
-
-  
+  "name": "opens100",
+  "version-string": "0.1.0-dev",
+  "description": "OpenS100: core C++ library for IHO S-100 hydrographic data (ISO 8211, GML, HDF5, feature/portrayal catalogues, portrayal engine) with a reference Windows viewer.",
+  "homepage": "https://github.com/S-100ExpertTeam/OpenS100",
+  "license": "MPL-2.0",
+  "builtin-baseline": "6cf5a3612342c3cf0d7dee5cf6687d0882ec6663",
+  "dependencies": [
+    "pugixml",
+    "geographiclib",
+    "polyclipping",
+    "hdf5",
+    "libxslt",
+    "libxml2",
+    "openssl",
+    "sqlite3",
+    "boost-geometry",
+    "utfcpp",
+    "gtest"
+  ]
+}

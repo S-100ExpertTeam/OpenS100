@@ -1,0 +1,66 @@
+name: build
+
+# Windows build + unit tests.
+# vcpkg builds hdf5/libxslt/openssl from source the first time, which takes a long
+# time; the cache below keeps later runs short. Until the cache is warm this runs
+# only on manual dispatch and on pushes to the development branches.
+on:
+  workflow_dispatch:
+  push:
+    branches: [dev-jogm, main]
+    paths-ignore:
+      - "Documents/**"
+      - "**/*.md"
+  pull_request:
+    branches: [main]
+
+env:
+  VCPKG_BINARY_SOURCES: "clear;files,${{ github.workspace }}/vcpkg-cache,readwrite"
+  VCPKG_ROOT: "C:/vcpkg"
+
+jobs:
+  windows:
+    runs-on: windows-2025
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Release]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore vcpkg binary cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/vcpkg-cache
+          key: vcpkg-${{ runner.os }}-${{ hashFiles('vcpkg.json') }}
+          restore-keys: vcpkg-${{ runner.os }}-
+
+      - name: Pin vcpkg to the manifest baseline
+        shell: pwsh
+        run: |
+          $baseline = (Get-Content vcpkg.json | ConvertFrom-Json).'builtin-baseline'
+          git -C $env:VCPKG_ROOT fetch --depth 1 origin $baseline
+          git -C $env:VCPKG_ROOT checkout $baseline
+          & "$env:VCPKG_ROOT/bootstrap-vcpkg.bat" -disableMetrics
+          & "$env:VCPKG_ROOT/vcpkg" integrate install
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build
+        shell: pwsh
+        run: |
+          msbuild OpenS100.sln -m -p:Configuration=${{ matrix.configuration }} -p:Platform=x64 -v:minimal
+
+      - name: Run unit tests
+        shell: pwsh
+        run: |
+          & "${{ matrix.configuration }}_x64/OpenS100Tests.exe" --gtest_output=xml:test-results.xml
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.configuration }}
+          path: test-results.xml
