@@ -46,7 +46,7 @@
 
 ### 3단계. MFC 제거
 
-- [ ] 3-1. `CFile` → `std::ifstream`/`std::filesystem`(117곳). 바이너리 읽기 헬퍼 하나로 통일.
+- [~] 3-1. `CFile` → 표준 C++. (a) 읽기: `GISLibrary/BinaryFile.h`의 `s100::io::ReadAllBytes(path)`(헤더 전용, `std::filesystem`+`std::ifstream`)를 도입하고 `S101Cell::Read8211`/`OpenMetadataBy000`가 사용. 수동 `new BYTE[]`/`delete[]`도 `std::vector`로 대체. 테스트 `S101Cell.MissingFileReturnsFalse`. (b) 남은 것: 8211 쓰기 경로(`S101Cell::Save`, `R_*::WriteRecord(CFile&)` 등 13파일), `SHPFile`(11곳), `LayerManager`(4곳) 등 `CFile` 사용 cpp 42파일.
 - [ ] 3-2. 공개 API의 `CString` → `std::string`(UTF-8)/`std::wstring`(CONVENTIONS.md). `SpatialObject::Open(CString)` 등. 내부 `CString` 137곳.
 - [ ] 3-3. `CMap`/`POSITION` 순회(8곳) → `std::unordered_map`.
 - [ ] 3-4. `GISLibrary`, `S100Engine`, `PortrayalCatalogue`, `GeoMetryLibrary`에서 `stdafx.h`의 `afx*` include 제거 → `UseOfMfc=false`. 렌더 전용 코드(`HDC`, `CDC`)는 `S100Engine`(렌더 모듈)로 격리.
@@ -88,3 +88,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-08 | 2-2b, 2-3a: Draw 인터페이스 축소, CatalogManager 렌더러 분리(`PortrayalRenderCache`) | f04e886b | 테스트 14/14, 앱 기동 확인 |
 | 2026-11-08 | 2-4: `Layer::Open`에서 렌더러 인자 제거 | 13851aff | 테스트 14/14, 앱 기동 확인 |
 | 2026-11-08 | 5-1: 결합 측정 스크립트와 기준선 | bea7251e | |
+| 2026-11-08 | 3-1(a): 8211 리더의 `CFile`을 `s100::io::ReadAllBytes`로 | (아래) | 테스트 15/15 |

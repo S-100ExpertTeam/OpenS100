@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "S101Cell.h"
+#include "BinaryFile.h"
 #include "GISLibrary.h"
 #include "S100Layer.h"
 #include "F_CUCO.h"
@@ -369,30 +370,16 @@ bool S101Cell::Read8211(std::wstring path)
 {
 	SetFilePath(path.c_str());
 
-	USES_CONVERSION;
-
 	RemoveAll();
 
-	CFile file;
-	if (!file.Open(path.c_str(), CFile::modeRead))
+	auto bytes = s100::io::ReadAllBytes(path);
+	if (!bytes || bytes->empty())
 	{
 		return false;
 	}
 
-	BYTE* pBuf = nullptr;
-	BYTE* sBuf = nullptr;
-	BYTE* endOfBuf = nullptr;
-
-	LONGLONG fileLength = file.GetLength();
-
-	pBuf = new BYTE[(unsigned int)fileLength];
-	sBuf = pBuf;
-
-	file.Read(pBuf, (unsigned)fileLength);
-
-	endOfBuf = pBuf + fileLength - 1;
-
-	file.Close();
+	BYTE* pBuf = bytes->data();
+	BYTE* endOfBuf = pBuf + bytes->size() - 1;
 
 	ReadDDR(pBuf);
 
@@ -493,7 +480,6 @@ bool S101Cell::Read8211(std::wstring path)
 		}
 	}
 
-	delete[] sBuf;
 
 	return true;
 }
@@ -535,28 +521,14 @@ bool S101Cell::OpenBy000(CString path)
 
 bool S101Cell::OpenMetadataBy000(CString path)
 {
-	USES_CONVERSION;
-
-	CFile file;
-	if (!file.Open(path, CFile::modeRead))
+	auto bytes = s100::io::ReadAllBytes(std::wstring(path));
+	if (!bytes || bytes->empty())
 	{
 		return false;
 	}
 
-	BYTE* pBuf = nullptr;
-	BYTE* sBuf = nullptr;
-	BYTE* endOfBuf = nullptr;
-
-	LONGLONG fileLength = file.GetLength();
-
-	pBuf = new BYTE[(unsigned int)fileLength];
-	sBuf = pBuf;
-
-	file.Read(pBuf, (unsigned)fileLength);
-
-	endOfBuf = pBuf + fileLength - 1;
-
-	file.Close();
+	BYTE* pBuf = bytes->data();
+	BYTE* endOfBuf = pBuf + bytes->size() - 1;
 
 	ReadDDR(pBuf);
 
@@ -609,7 +581,6 @@ bool S101Cell::OpenMetadataBy000(CString path)
 		pBuf = curRecordAddress + drReader.m_recordLength;
 	}
 
-	delete[] sBuf;
 
 	return true;
 }
