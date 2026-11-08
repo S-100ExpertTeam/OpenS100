@@ -89,9 +89,7 @@ bool F_FASC::WriteField(s100::io::BinaryWriter* file)
 		file->Write(&(*i)->m_atix, 2);
 		file->Write(&(*i)->m_paix, 2);
 		file->Write(&(*i)->m_atin, 1);
-		CT2CA outputString((*i)->m_atvl, CP_UTF8);
-		file->Write(outputString, (UINT)::strlen(outputString));
-		file->Write(&NonPrintableCharacter::unitTerminator, 1);
+		s100::iso8211::WriteUtf8Unit(file, (*i)->m_atvl);
 	}
 
 	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
@@ -108,8 +106,7 @@ int F_FASC::GetFieldLength()
 	{
 		ATTR *cont = *itor;
 		len += ATTR::GetOffsetToATVL();
-		CT2CA outputString(cont->m_atvl, CP_UTF8);
-		len += (int)::strlen(outputString) + 1;
+		len += static_cast<int>(s100::iso8211::Utf8Length(cont->m_atvl)) + 1;
 	}
 	return ++len;
 }

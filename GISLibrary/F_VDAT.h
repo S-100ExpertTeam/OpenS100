@@ -1,5 +1,6 @@
 #pragma once
 #include "BinaryWriter.h"
+#include <string>
 #include "Field.h"
 
 class F_VDAT : public Field
@@ -10,10 +11,10 @@ public:
 	virtual ~F_VDAT();
 
 public:
-	CString m_dtnm;
-	CString m_dtid;
+	std::wstring m_dtnm;
+	std::wstring m_dtid;
 	int m_dtsr;
-	CString m_scri;
+	std::wstring m_scri;
 
 public:
 	virtual F_VDAT operator=(const F_VDAT& other);

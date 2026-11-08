@@ -1414,9 +1414,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 				}
 				else
 				{
-					CString str;
-					str.Format(_T("Lua Parser error - %S(%d)"), tag, sizeForIndex);
-					//OutputDebugString(str);
+					// Unknown tag: ignored (was a debug trace "Lua Parser error - <tag>(<index>)").
 				}
 			}
 		}

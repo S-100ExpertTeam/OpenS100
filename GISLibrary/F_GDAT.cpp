@@ -93,12 +93,12 @@ int F_GDAT::GetFieldLength()
 {
 	int len = 0;
 
-	len += m_dtnm.GetLength() + 1;
-	len += m_elnm.GetLength() + 1;
+	len += static_cast<int>(s100::iso8211::Utf8Length(m_dtnm)) + 1;
+	len += static_cast<int>(s100::iso8211::Utf8Length(m_elnm)) + 1;
 	len += 8;
 	len += 1;
 	len += 8;
-	len += m_cmnm.GetLength() + 1;
+	len += static_cast<int>(s100::iso8211::Utf8Length(m_cmnm)) + 1;
 	len += 8;
 
 	return ++len;

@@ -12,7 +12,7 @@ CodeWithNumericCode::CodeWithNumericCode(const CodeWithNumericCode& other)
 	m_nmcd = other.m_nmcd;
 }
 
-CodeWithNumericCode::CodeWithNumericCode(CString& code, int numericCode)
+CodeWithNumericCode::CodeWithNumericCode(const std::wstring& code, int numericCode)
 {
 	this->m_code = code;
 	this->m_nmcd = numericCode;
@@ -43,7 +43,7 @@ void CodeWithNumericCode::SetNumericCode(int value)
 
 std::wstring CodeWithNumericCode::GetCode()
 {
-	return std::wstring(m_code);
+	return m_code;
 }
 
 std::string CodeWithNumericCode::getCodeAsString()
@@ -53,5 +53,5 @@ std::string CodeWithNumericCode::getCodeAsString()
 
 void CodeWithNumericCode::SetCode(std::wstring value)
 {
-	this->m_code = value.c_str();
+	this->m_code = std::move(value);
 }

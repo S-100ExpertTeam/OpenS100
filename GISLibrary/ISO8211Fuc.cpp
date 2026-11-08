@@ -3,72 +3,24 @@
 #include "NonPrintableCharacter.h"
 
 #include <cmath>
-#include <atlbase.h>
-#include <atlconv.h>
 #include <algorithm>
 #include <bitset> // Convert the 32-bit binary encoding into hexadecimal
-#include <locale>
-#include <codecvt>
 
-BYTE tBYTEArr[1024];
-void buf2charArr(CString &dest, BYTE*& buf)
+void buf2charArr(std::wstring& dest, BYTE*& buf)
 {
-	USES_CONVERSION;
-	int i = 0;
-	int endLoc = 0;
-	
-	while (buf[endLoc] != NonPrintableCharacter::unitTerminator)
+	std::size_t len = 0;
+	while (buf[len] != NonPrintableCharacter::unitTerminator)
 	{
-		endLoc++;
+		++len;
 	}
-	for(i = 0; i < endLoc; i++)
-	{
-		tBYTEArr[i] = *(buf++);
-	}
-	tBYTEArr[i] = NULL;
-
-	dest = pugi::as_wide((const char*)tBYTEArr).c_str();
-
-	buf++;
+	dest = s100::text::ToWide(std::string_view(reinterpret_cast<const char*>(buf), len));
+	buf += len + 1; // skip the unit terminator
 }
 
-void buf2charArr(std::wstring &dest, BYTE*& buf)
+void buf2charArr(std::wstring& dest, BYTE*& buf, int len)
 {
-	//USES_CONVERSION;
-	int i = 0;
-	int endLoc = 0;
-	
-	while(buf[endLoc] != 0x1F)
-	{
-		endLoc++;
-	}
-	for(i = 0; i < endLoc; i++)
-	{
-		tBYTEArr[i] = *(buf++);
-	}
-	tBYTEArr[i] = NULL;
-	dest = ATL::CA2W((char*)tBYTEArr, CP_UTF8);
-	buf++;
-}
-
-void buf2charArr(CString &dest, BYTE*& buf, int len)
-{
-	for(int i = 0; i < len; i++)
-	{
-		dest.AppendChar(*(buf++));
-	}
-}
-
-void buf2charArr(std::wstring &dest, BYTE*& buf, int len)
-{
-//	USES_CONVERSION;
-	int i = 0;
-	for(i = 0; i < len; i++)
-	{
-		tBYTEArr[i] = *(buf++);
-	}
-	tBYTEArr[i] = NULL;
-	dest = ATL::CA2W((char*)tBYTEArr, CP_UTF8);
+	dest = s100::text::ToWide(std::string_view(reinterpret_cast<const char*>(buf), static_cast<std::size_t>(len)));
+	buf += len;
 }
 
 DWORD buf2uint(BYTE*& buf, int size)

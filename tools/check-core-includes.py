@@ -42,6 +42,7 @@ def scan(project: str):
         rel = f"{project}/{h.name}"
         try:
             text = h.read_text(encoding="utf-8", errors="replace")
+            text = re.sub(r"//[^\n]*", "", text)  # line comments are prose, not code
         except OSError:
             continue
         for key, pat in PATTERNS.items():

@@ -1078,7 +1078,7 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 	if (feature) 
 	{
 		auto featureCode = enc->m_dsgir.GetFeatureCode(feature->GetNumericCode());
-		if (featureCode.IsEmpty() == false)
+		if (!featureCode.empty())
 		{
 			auto featureType = fc->GetFeatureType(std::wstring(featureCode));
 			if (featureType)
@@ -1118,7 +1118,7 @@ std::list<AttributeBinding*> S101Creator::GetAddableAttributes(R_FeatureRecord* 
 	if (parentATTR)
 	{
 		auto attributeCode = enc->m_dsgir.GetAttributeCode(parentATTR->m_natc);
-		if (attributeCode.IsEmpty() == false)
+		if (!attributeCode.empty())
 		{
 			auto complexAttribute = fc->GetComplexAttribute(std::wstring(attributeCode));
 			if (complexAttribute)

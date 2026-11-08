@@ -1,5 +1,6 @@
 #pragma once
 #include "BinaryWriter.h"
+#include <string>
 #include "Field.h"
 
 class F_GDAT :
@@ -16,13 +17,13 @@ public:
 	* A
 	* Name of the geodetic datum
 	*/
-	CString m_dtnm;
+	std::wstring m_dtnm;
 	/*
 	* Ellipsoid Name
 	* A
 	* Name of the ellipsoid
 	*/
-	CString m_elnm;
+	std::wstring m_elnm;
 	/*
 	* Ellipsoid semi major axis
 	* b48
@@ -47,7 +48,7 @@ public:
 	* A
 	* Name of the central meridian
 	*/
-	CString m_cmnm;
+	std::wstring m_cmnm;
 	/*
 	* Central Meridian Greenwich Longitude
 	* b48

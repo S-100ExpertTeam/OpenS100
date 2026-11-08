@@ -33,44 +33,38 @@ public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
 	bool WriteRecord(s100::io::BinaryWriter* file);
 	// function to get the code with the new memory code.
-	CString GetFeatureCode(int numericCode);
+	std::wstring GetFeatureCode(int numericCode);
 	std::string GetFeatureCodeAsString(int numericCode);
-	CString GetInformationCode(int numericCode);
+	std::wstring GetInformationCode(int numericCode);
 	std::string GetInformationCodeAsString(int numericCode);
-	CString GetAttributeCode(int numericCode);
+	std::wstring GetAttributeCode(int numericCode);
 	std::string GetAttributeCodeAsString(int numericCode);
-	CString GetInformationAssociationCode(int numericCode);
+	std::wstring GetInformationAssociationCode(int numericCode);
 	std::string GetInformationAssociationCodeAsString(int numericCode);
-	CString GetFeatureAssociationCode(int numericCode);
+	std::wstring GetFeatureAssociationCode(int numericCode);
 	std::string GetFeatureAssociationCodeAsString(int numericCode);
-	CString GetAssociationRoleCode(int numericCode);
+	std::wstring GetAssociationRoleCode(int numericCode);
 	std::string GetAssociationRoleCodeAsString(int numericCode);
 
-	int GetAttributeCode(std::string& value);
-	int GetAttributeCode(std::wstring& value);
-	int GetAttributeCode(CString& value);
+	int GetAttributeCode(const std::string& value);
+	int GetAttributeCode(const std::wstring& value);
 
-	int GetInformationTypeCode(std::wstring& value);
-	int GetInformationTypeCode(CString& value);
+	int GetInformationTypeCode(const std::wstring& value);
 
-	int GetFeatureTypeCode(std::wstring& value);
-	int GetFeatureTypeCode(CString& value);
+	int GetFeatureTypeCode(const std::wstring& value);
 
-	int GetInformationAssociationCode(std::wstring& value);
-	int GetInformationAssociationCode(CString& value);
+	int GetInformationAssociationCode(const std::wstring& value);
 
-	int GetFeatureAssociationCode(std::wstring& value);
-	int GetFeatureAssociationCode(CString& value);
+	int GetFeatureAssociationCode(const std::wstring& value);
 
-	int GetAssociationRoleCode(std::wstring& value);
-	int GetAssociationRoleCode(CString& value);
+	int GetAssociationRoleCode(const std::wstring& value);
 
-	void setAttributeCode(int numericCode, CString code);
-	void setInformationTypeCode(int numericCode, CString code);
-	void setFeatureTypeCode(int numericCode, CString code);
-	void setInformationAssociationCode(int numericCode, CString code);
-	void setFeatureAssociationCode(int numericCode, CString code);
-	void setAssociationRoleCode(int numericCode, CString code);
+	void setAttributeCode(int numericCode, const std::wstring& code);
+	void setInformationTypeCode(int numericCode, const std::wstring& code);
+	void setFeatureTypeCode(int numericCode, const std::wstring& code);
+	void setInformationAssociationCode(int numericCode, const std::wstring& code);
+	void setFeatureAssociationCode(int numericCode, const std::wstring& code);
+	void setAssociationRoleCode(int numericCode, const std::wstring& code);
 
 	void init();
 	void initAttributeCode();

@@ -87,9 +87,7 @@ bool F_ATTR::WriteField(s100::io::BinaryWriter* file)
 		file->Write(&attr->m_atix, 2);
 		file->Write(&attr->m_paix, 2);
 		file->Write(&attr->m_atin, 1);
-		CT2CA outputString(attr->m_atvl, CP_UTF8);
-		file->Write(outputString, (UINT)::strlen(outputString));
-		file->Write(&NonPrintableCharacter::unitTerminator, 1);
+		s100::iso8211::WriteUtf8Unit(file, attr->m_atvl);
 	}
 	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
 
@@ -106,9 +104,7 @@ int F_ATTR::GetFieldLength()
 
 		len += ATTR::GetOffsetToATVL();
 
-		CT2CA outputString(attr->m_atvl, CP_UTF8);
-
-		len += (unsigned int)::strlen(outputString) + 1;
+		len += static_cast<int>(s100::iso8211::Utf8Length(attr->m_atvl)) + 1;
 	}
 	return ++len;
 }
@@ -118,7 +114,7 @@ void F_ATTR::Insert(ATTR* attr)
 	m_arr.push_back(attr);
 }
 
-void F_ATTR::Insert(int natc, int atix, int paix, int atin, CString atvl)
+void F_ATTR::Insert(int natc, int atix, int paix, int atin, const std::wstring& atvl)
 {
 	ATTR* attr = new ATTR(natc, atix, paix, atin, atvl);
 	m_arr.push_back(attr);

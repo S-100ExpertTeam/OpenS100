@@ -25,7 +25,7 @@ void TestGISLibrary::TestCreateNewCode()
 		auto enc = (S101Cell*)layer->GetSpatialObject();
 
 		// Find a feature by code
-		CString featureTypeCode = L"Hulk";
+		std::wstring featureTypeCode = L"Hulk";
 		auto numericCode = enc->m_dsgir.m_ftcs->GetCode(featureTypeCode);
 
 		// Failed to find
@@ -145,8 +145,8 @@ void TestGISLibrary::SetCodeNumericCode()
 	cell.Read8211(L"..\\SampleData\\101KR004X0000.000");
 	auto dsgir = cell.GetDatasetGeneralInformationRecord();
 	
-	auto oldNumericCode = dsgir->GetFeatureTypeCode(CString(L"LandArea"));
+	auto oldNumericCode = dsgir->GetFeatureTypeCode(std::wstring(L"LandArea"));
 	dsgir->initFeatureTypeCode();
 	dsgir->setFeatureTypeCode(100, L"LandArea");
-	auto newNemericCode = dsgir->GetFeatureTypeCode(CString(L"LandArea"));
+	auto newNemericCode = dsgir->GetFeatureTypeCode(std::wstring(L"LandArea"));
 }

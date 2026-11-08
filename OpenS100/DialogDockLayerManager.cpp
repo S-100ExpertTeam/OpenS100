@@ -491,44 +491,44 @@ void CDialogDockLayerManager::FillPropList(S101Cell* cell)
 	propertyGridLayer->RemoveAll();
 
 	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Data Set Identification"));
-	CMFCPropertyGridProperty* Encoding_specification = new CMFCPropertyGridProperty(_T("Encoding specification"), (_variant_t)cell->m_dsgir.m_dsid.m_ensp, L"Encoding specification that defines the encoding");
+	CMFCPropertyGridProperty* Encoding_specification = new CMFCPropertyGridProperty(_T("Encoding specification"), (_variant_t)cell->m_dsgir.m_dsid.m_ensp.c_str(), L"Encoding specification that defines the encoding");
 	Encoding_specification->Enable(false);
 	
 	pGroup1->AddSubItem(Encoding_specification);
 
-	CMFCPropertyGridProperty* Encoding_specification_edition = new CMFCPropertyGridProperty(_T("Encoding specification edition"), (_variant_t)cell->m_dsgir.m_dsid.m_ened, L"Edition of the encoding specification");
+	CMFCPropertyGridProperty* Encoding_specification_edition = new CMFCPropertyGridProperty(_T("Encoding specification edition"), (_variant_t)cell->m_dsgir.m_dsid.m_ened.c_str(), L"Edition of the encoding specification");
 	Encoding_specification_edition->Enable(false);
 
 	pGroup1->AddSubItem(Encoding_specification_edition);
 
-	CMFCPropertyGridProperty* Product_identifier = new CMFCPropertyGridProperty(_T("Product identifier"), (_variant_t)cell->m_dsgir.m_dsid.m_prsp, L"Unique identifier for the data product as specified in the product specification");
+	CMFCPropertyGridProperty* Product_identifier = new CMFCPropertyGridProperty(_T("Product identifier"), (_variant_t)cell->m_dsgir.m_dsid.m_prsp.c_str(), L"Unique identifier for the data product as specified in the product specification");
 	Product_identifier->Enable(false);
 	
 	pGroup1->AddSubItem(Product_identifier);
 
-	CMFCPropertyGridProperty* Product_edition = new CMFCPropertyGridProperty(_T("Product edition"), (_variant_t)cell->m_dsgir.m_dsid.m_pred, L"The file identifier of the dataset");
+	CMFCPropertyGridProperty* Product_edition = new CMFCPropertyGridProperty(_T("Product edition"), (_variant_t)cell->m_dsgir.m_dsid.m_pred.c_str(), L"The file identifier of the dataset");
 	Product_edition->Enable(false);
 	
 	pGroup1->AddSubItem(Product_edition);
 
-	CMFCPropertyGridProperty* Application_profile = new CMFCPropertyGridProperty(_T("Application profile"), (_variant_t)cell->m_dsgir.m_dsid.m_prof, L"Identifier that specifies a profile within the data product");
+	CMFCPropertyGridProperty* Application_profile = new CMFCPropertyGridProperty(_T("Application profile"), (_variant_t)cell->m_dsgir.m_dsid.m_prof.c_str(), L"Identifier that specifies a profile within the data product");
 	Application_profile->Enable(false);
 	
 	pGroup1->AddSubItem(Application_profile);
 
-	CMFCPropertyGridProperty* Dataset_file_identifier = new CMFCPropertyGridProperty(_T("Dataset file identifier"), (_variant_t)cell->m_dsgir.m_dsid.m_dsnm, L"The file identifier of the dataset");
+	CMFCPropertyGridProperty* Dataset_file_identifier = new CMFCPropertyGridProperty(_T("Dataset file identifier"), (_variant_t)cell->m_dsgir.m_dsid.m_dsnm.c_str(), L"The file identifier of the dataset");
 	Dataset_file_identifier->Enable(false);
 	pGroup1->AddSubItem(Dataset_file_identifier);
 
-	CMFCPropertyGridProperty* Dataset_title = new CMFCPropertyGridProperty(_T("Dataset title"), (_variant_t)cell->m_dsgir.m_dsid.m_dstl, L"The title of the dataset");
+	CMFCPropertyGridProperty* Dataset_title = new CMFCPropertyGridProperty(_T("Dataset title"), (_variant_t)cell->m_dsgir.m_dsid.m_dstl.c_str(), L"The title of the dataset");
 	Dataset_title->Enable(false);
 	pGroup1->AddSubItem(Dataset_title);
 
-	CMFCPropertyGridProperty* Dataset_reference_date = new CMFCPropertyGridProperty(_T("Dataset reference date"), (_variant_t)cell->m_dsgir.m_dsid.m_dsrd, L"The reference date of the dataset Format: YYYYMMDD according to ISO 8601");
+	CMFCPropertyGridProperty* Dataset_reference_date = new CMFCPropertyGridProperty(_T("Dataset reference date"), (_variant_t)cell->m_dsgir.m_dsid.m_dsrd.c_str(), L"The reference date of the dataset Format: YYYYMMDD according to ISO 8601");
 	Dataset_reference_date->Enable(false);
 	pGroup1->AddSubItem(Dataset_reference_date);
 
-	CMFCPropertyGridProperty* Dataset_language = new CMFCPropertyGridProperty(_T("Dataset language"), (_variant_t)cell->m_dsgir.m_dsid.m_dslg, L"The (primary) language used in this dataset");
+	CMFCPropertyGridProperty* Dataset_language = new CMFCPropertyGridProperty(_T("Dataset language"), (_variant_t)cell->m_dsgir.m_dsid.m_dslg.c_str(), L"The (primary) language used in this dataset");
 	Dataset_language->Enable(false);
 	pGroup1->AddSubItem(Dataset_language);
 
@@ -536,7 +536,7 @@ void CDialogDockLayerManager::FillPropList(S101Cell* cell)
 	Dataset_abstract->Enable(false);
 	pGroup1->AddSubItem(Dataset_abstract);
 
-	CMFCPropertyGridProperty* Dataset_edition = new CMFCPropertyGridProperty(_T("Dataset edition"), (_variant_t)cell->m_dsgir.m_dsid.m_dsed, L"The edition of the dataset");
+	CMFCPropertyGridProperty* Dataset_edition = new CMFCPropertyGridProperty(_T("Dataset edition"), (_variant_t)cell->m_dsgir.m_dsid.m_dsed.c_str(), L"The edition of the dataset");
 	Dataset_edition->Enable(false);
 	pGroup1->AddSubItem(Dataset_edition);
 

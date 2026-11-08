@@ -71,14 +71,6 @@ static spatial_association get_spatial_association(CUCO* cuco);
 static spatial_association get_spatial_association(F_SPAS* spatial);
 static spatial_association get_spatial_association(RIAS* rias);
 
-static std::string WstringToString(CString& value)
-{
-	auto cValue = LibMFCUtil::ConvertWCtoC((wchar_t*)std::wstring(value).c_str());
-	std::string result(cValue);
-	delete[] cValue;
-	return result;
-}
-
 static void get_referenced_spatials(std::string spatial_id, std::vector<std::string> *spatials)
 {
 	std::vector<std::string> ret;
@@ -729,7 +721,7 @@ static std::vector<std::string> get_simple_attribute_values(R_InformationRecord*
 					}
 					else
 					{
-						if(attr->m_atvl.GetLength() > 0)
+						if (!attr->m_atvl.empty())
 						{
 							std::string r_value = attr->getValueAsString();
 						}

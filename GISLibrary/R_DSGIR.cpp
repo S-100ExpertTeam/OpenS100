@@ -309,7 +309,7 @@ bool R_DSGIR::WriteRecord(s100::io::BinaryWriter* file)
 }
 
 
-CString R_DSGIR::GetFeatureCode(int numericCode)
+std::wstring R_DSGIR::GetFeatureCode(int numericCode)
 {
 	auto item = m_ftcs->m_arr.find(numericCode);
 	if (item != m_ftcs->m_arr.end())
@@ -325,7 +325,7 @@ std::string R_DSGIR::GetFeatureCodeAsString(int numericCode)
 	return pugi::as_utf8(GetFeatureCode(numericCode));
 }
 
-CString R_DSGIR::GetInformationCode(int numericCode)
+std::wstring R_DSGIR::GetInformationCode(int numericCode)
 {
 	auto item = m_itcs->m_arr.find(numericCode);
 	if (item != m_itcs->m_arr.end())
@@ -342,7 +342,7 @@ std::string R_DSGIR::GetInformationCodeAsString(int numericCode)
 
 }
 
-CString R_DSGIR::GetAttributeCode(int numericCode)
+std::wstring R_DSGIR::GetAttributeCode(int numericCode)
 {
 	auto item = m_atcs->m_arr.find(numericCode);
 	if (item != m_atcs->m_arr.end())
@@ -358,7 +358,7 @@ std::string R_DSGIR::GetAttributeCodeAsString(int numericCode)
 	return pugi::as_utf8(GetAttributeCode(numericCode));
 }
 
-CString R_DSGIR::GetInformationAssociationCode(int numericCode)
+std::wstring R_DSGIR::GetInformationAssociationCode(int numericCode)
 {
 	auto item = m_iacs->m_arr.find(numericCode);
 	if (item != m_iacs->m_arr.end())
@@ -374,7 +374,7 @@ std::string R_DSGIR::GetInformationAssociationCodeAsString(int numericCode)
 	return pugi::as_utf8(GetInformationAssociationCode(numericCode));
 }
 
-CString R_DSGIR::GetFeatureAssociationCode(int numericCode)
+std::wstring R_DSGIR::GetFeatureAssociationCode(int numericCode)
 {
 	auto item = m_facs->m_arr.find(numericCode);
 	if (item != m_facs->m_arr.end())
@@ -390,7 +390,7 @@ std::string R_DSGIR::GetFeatureAssociationCodeAsString(int numericCode)
 	return pugi::as_utf8(GetFeatureAssociationCode(numericCode));
 }
 
-CString R_DSGIR::GetAssociationRoleCode(int numericCode)
+std::wstring R_DSGIR::GetAssociationRoleCode(int numericCode)
 {
 	auto item = m_arcs->m_arr.find(numericCode);
 	if (item != m_arcs->m_arr.end())
@@ -406,19 +406,13 @@ std::string R_DSGIR::GetAssociationRoleCodeAsString(int numericCode)
 	return pugi::as_utf8(GetAssociationRoleCode(numericCode));
 }
 
-int R_DSGIR::GetAttributeCode(std::string& value)
+int R_DSGIR::GetAttributeCode(const std::string& value)
 {
 	auto str = pugi::as_wide(value);
 	return GetAttributeCode(str);
 }
 
-int R_DSGIR::GetAttributeCode(std::wstring& value)
-{
-	CString str = value.c_str();
-	return GetAttributeCode(str);
-}
-
-int R_DSGIR::GetAttributeCode(CString& value)
+int R_DSGIR::GetAttributeCode(const std::wstring& value)
 {
 	if (nullptr == m_atcs)
 	{
@@ -428,13 +422,7 @@ int R_DSGIR::GetAttributeCode(CString& value)
 	return m_atcs->GetNumericCode(value);
 }
 
-int R_DSGIR::GetInformationTypeCode(std::wstring& value)
-{
-	CString str = value.c_str();
-	return GetInformationTypeCode(str);
-}
-
-int R_DSGIR::GetInformationTypeCode(CString& value)
+int R_DSGIR::GetInformationTypeCode(const std::wstring& value)
 {
 	if (nullptr == m_itcs)
 	{
@@ -444,13 +432,7 @@ int R_DSGIR::GetInformationTypeCode(CString& value)
 	return m_itcs->GetNumericCode(value);
 }
 
-int R_DSGIR::GetFeatureTypeCode(std::wstring& value)
-{
-	CString str = value.c_str();
-	return GetFeatureTypeCode(str);
-}
-
-int R_DSGIR::GetFeatureTypeCode(CString& value)
+int R_DSGIR::GetFeatureTypeCode(const std::wstring& value)
 {
 	if (nullptr == m_ftcs)
 	{
@@ -460,13 +442,7 @@ int R_DSGIR::GetFeatureTypeCode(CString& value)
 	return m_ftcs->GetNumericCode(value);
 }
 
-int R_DSGIR::GetInformationAssociationCode(std::wstring& value)
-{
-	CString str = value.c_str();
-	return GetInformationAssociationCode(str);
-}
-
-int R_DSGIR::GetInformationAssociationCode(CString& value)
+int R_DSGIR::GetInformationAssociationCode(const std::wstring& value)
 {
 	if (nullptr == m_iacs)
 	{
@@ -476,13 +452,7 @@ int R_DSGIR::GetInformationAssociationCode(CString& value)
 	return m_iacs->GetNumericCode(value);
 }
 
-int R_DSGIR::GetFeatureAssociationCode(std::wstring& value)
-{
-	CString str = value.c_str();
-	return GetFeatureAssociationCode(str);
-}
-
-int R_DSGIR::GetFeatureAssociationCode(CString& value)
+int R_DSGIR::GetFeatureAssociationCode(const std::wstring& value)
 {
 	if (nullptr == m_facs)
 	{
@@ -492,13 +462,7 @@ int R_DSGIR::GetFeatureAssociationCode(CString& value)
 	return m_facs->GetNumericCode(value);
 }
 
-int R_DSGIR::GetAssociationRoleCode(std::wstring& value)
-{
-	CString str = value.c_str();
-	return GetAssociationRoleCode(str);
-}
-
-int R_DSGIR::GetAssociationRoleCode(CString& value)
+int R_DSGIR::GetAssociationRoleCode(const std::wstring& value)
 {
 	if (nullptr == m_arcs)
 	{
@@ -508,42 +472,42 @@ int R_DSGIR::GetAssociationRoleCode(CString& value)
 	return m_arcs->GetNumericCode(value);
 }
 
-void R_DSGIR::setAttributeCode(int numericCode, CString code)
+void R_DSGIR::setAttributeCode(int numericCode, const std::wstring& code)
 {
 	if (m_atcs) {
 		m_atcs->setCodeNumericCode(code, numericCode);
 	}
 }
 
-void R_DSGIR::setInformationTypeCode(int numericCode, CString code)
+void R_DSGIR::setInformationTypeCode(int numericCode, const std::wstring& code)
 {
 	if (m_itcs) {
 		m_itcs->setCodeNumericCode(code, numericCode);
 	}
 }
 
-void R_DSGIR::setFeatureTypeCode(int numericCode, CString code)
+void R_DSGIR::setFeatureTypeCode(int numericCode, const std::wstring& code)
 {
 	if (m_ftcs) {
 		m_ftcs->setCodeNumericCode(code, numericCode);
 	}
 }
 
-void R_DSGIR::setInformationAssociationCode(int numericCode, CString code)
+void R_DSGIR::setInformationAssociationCode(int numericCode, const std::wstring& code)
 {
 	if (m_iacs) {
 		m_iacs->setCodeNumericCode(code, numericCode);
 	}
 }
 
-void R_DSGIR::setFeatureAssociationCode(int numericCode, CString code)
+void R_DSGIR::setFeatureAssociationCode(int numericCode, const std::wstring& code)
 {
 	if (m_facs) {
 		m_facs->setCodeNumericCode(code, numericCode);
 	}
 }
 
-void R_DSGIR::setAssociationRoleCode(int numericCode, CString code)
+void R_DSGIR::setAssociationRoleCode(int numericCode, const std::wstring& code)
 {
 	if (m_arcs) {
 		m_arcs->setCodeNumericCode(code, numericCode);

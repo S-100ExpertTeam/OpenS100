@@ -5,10 +5,10 @@
 
 F_VDAT::F_VDAT()
 {
-	m_dtnm = "";
-	m_dtid = "";
+	m_dtnm = L"";
+	m_dtid = L"";
 	m_dtsr = 0;
-	m_scri = "";
+	m_scri = L"";
 }
 
 F_VDAT::F_VDAT(const F_VDAT& other) : Field(other)
@@ -44,21 +44,11 @@ void F_VDAT::ReadField(BYTE*& buf)
 
 bool F_VDAT::WriteField(s100::io::BinaryWriter* file)
 {
-	CT2CA outputStringDTNM(m_dtnm, CP_UTF8);
-	file->Write(outputStringDTNM, (UINT)::strlen(outputStringDTNM));
-	file->Write(&NonPrintableCharacter::unitTerminator, 1);
-
-	CT2CA outputStringDTID(m_dtid, CP_UTF8);
-	file->Write(outputStringDTID, (UINT)::strlen(outputStringDTID));
-	file->Write(&NonPrintableCharacter::unitTerminator, 1);
-
+	s100::iso8211::WriteUtf8Unit(file, m_dtnm);
+	s100::iso8211::WriteUtf8Unit(file, m_dtid);
 	file->Write(&m_dtsr, 1);
 
-	CT2CA outputStringSCRI(m_scri, CP_UTF8);
-	file->Write(outputStringSCRI, (UINT)::strlen(outputStringSCRI));
-	file->Write(&NonPrintableCharacter::unitTerminator, 1);
-
-
+	s100::iso8211::WriteUtf8Unit(file, m_scri);
 	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
 
 	return true;
@@ -67,10 +57,10 @@ bool F_VDAT::WriteField(s100::io::BinaryWriter* file)
 int F_VDAT::GetFieldLength()
 {
 	int len = 0;
-	len += m_dtnm.GetLength() + 1;
-	len += m_dtid.GetLength() + 1;
+	len += static_cast<int>(s100::iso8211::Utf8Length(m_dtnm)) + 1;
+	len += static_cast<int>(s100::iso8211::Utf8Length(m_dtid)) + 1;
 	len++;
-	len += m_scri.GetLength() + 1;
+	len += static_cast<int>(s100::iso8211::Utf8Length(m_scri)) + 1;
 	return ++len;
 }
 

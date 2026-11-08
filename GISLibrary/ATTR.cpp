@@ -15,7 +15,7 @@ ATTR::ATTR(const ATTR& other)
 	m_atvl = other.m_atvl;
 }
 
-ATTR::ATTR(int NATC, int ATIX, int PAIX, int ATIN, CString& ATVL)
+ATTR::ATTR(int NATC, int ATIX, int PAIX, int ATIN, const std::wstring& ATVL)
 {
 	m_natc = NATC;
 	m_atix = ATIX;

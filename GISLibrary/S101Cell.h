@@ -166,48 +166,48 @@ public:
 	MBR CalcMBR();
 	MBR ReMBR();
 
-	void SetEncodingSpecification(CString value);
-	CString GetEncodingSpecification();
+	void SetEncodingSpecification(const std::wstring& value);
+	std::wstring GetEncodingSpecification();
 	std::string GetEncodingSpecificationToString();
 
-	void SetEncodingSpecificationEdition(CString value);
-	CString GetEncodingSpecificationEdition();
+	void SetEncodingSpecificationEdition(const std::wstring& value);
+	std::wstring GetEncodingSpecificationEdition();
 	std::string GetEncodingSpecificationEditionToString();
 
-	void SetProductIdentifier(CString value);
-	CString GetProductIdentifier();
+	void SetProductIdentifier(const std::wstring& value);
+	std::wstring GetProductIdentifier();
 	std::string GetProductIdentifierToString();
 
-	void SetProductEdition(CString value);
-	CString GetProductEdition();
+	void SetProductEdition(const std::wstring& value);
+	std::wstring GetProductEdition();
 	std::string GetProductEditionToString();
 
-	void SetApplictionProfile(CString value);
-	CString GetApplicationProfile();
+	void SetApplictionProfile(const std::wstring& value);
+	std::wstring GetApplicationProfile();
 	std::string GetApplicationProfileToString();
 
-	void SetDatasetFileIdentifier(CString value);
-	CString GetDatasetFileIdentifier();
+	void SetDatasetFileIdentifier(const std::wstring& value);
+	std::wstring GetDatasetFileIdentifier();
 	std::string GetDatasetFileIdentifierToString();
 
-	void SetDatasetTitle(CString value);
-	CString GetDatasetTitle();
+	void SetDatasetTitle(const std::wstring& value);
+	std::wstring GetDatasetTitle();
 	std::string GetDatasetTitleToString();
 
-	void SetDatasetReferenceDate(CString value);
-	CString GetDatasetReferenceDate();
+	void SetDatasetReferenceDate(const std::wstring& value);
+	std::wstring GetDatasetReferenceDate();
 	std::string GetDatasetReferenceDataToString();
 
-	void SetDatasetLanguage(CString value);
-	CString GetDatasetLanguage();
+	void SetDatasetLanguage(const std::wstring& value);
+	std::wstring GetDatasetLanguage();
 	std::string GetDatasetLanguageToString();
 
-	void SetDatasetAbstract(CString value);
-	CString GetDatasetAbstract();
+	void SetDatasetAbstract(const std::wstring& value);
+	std::wstring GetDatasetAbstract();
 	std::string GetDatasetAbstractToString();
 
-	void SetDatasetEdition(CString value);
-	CString GetDatasetEdition();
+	void SetDatasetEdition(const std::wstring& value);
+	std::wstring GetDatasetEdition();
 	std::string GetDatasetEditionToString();
 
 	void InsertRecord(Record* record);

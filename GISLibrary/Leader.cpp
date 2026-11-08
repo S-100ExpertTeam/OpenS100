@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Leader.h"
 
+#include <format>
+#include <string>
+
 Leader::Leader()
 {
 
@@ -60,8 +63,7 @@ int Leader::GetSizeOfFieldPositionField()
 void Leader::SetAsDDR()
 {
 	// Record length
-	CString str;
-	str.Format(L"%05d", recordLength);
+	std::string str = std::format("{:05d}", recordLength);
 	for (int i = 0; i < 5; i++)
 	{
 		byte[i] = (unsigned char)str[i];
@@ -78,7 +80,7 @@ void Leader::SetAsDDR()
 	byte[11] = 0x39; 
 
 	// Base address of field area
-	str.Format(L"%05d", baseAddressOfFieldArea);
+	str = std::format("{:05d}", baseAddressOfFieldArea);
 	for (int i = 0; i < 5; i++)
 	{
 		byte[12 + i] = (unsigned char)str[i];
@@ -89,10 +91,10 @@ void Leader::SetAsDDR()
 	byte[18] = 0x21; // "1"
 	byte[19] = 0x20; // SPACE
 
-	str.Format(L"%01d", sizeOfFieldLengthField);
+	str = std::format("{:01d}", sizeOfFieldLengthField);
 	byte[20] = (unsigned char)str[0];
 
-	str.Format(L"%01d", sizeOfFieldPositionField);
+	str = std::format("{:01d}", sizeOfFieldPositionField);
 	byte[21] = (unsigned char)str[0];
 
 	byte[22] = 0x30; // "0"
@@ -102,8 +104,7 @@ void Leader::SetAsDDR()
 void Leader::SetAsDR()
 {
 	// Record length
-	CString str;
-	str.Format(L"%05d", recordLength);
+	std::string str = std::format("{:05d}", recordLength);
 	for (int i = 0; i < 5; i++)
 	{
 		byte[i] = (unsigned char)str[i];
@@ -120,7 +121,7 @@ void Leader::SetAsDR()
 	byte[11] = 0x20; // SPACE
 
 	// Base address of field area
-	str.Format(L"%05d", baseAddressOfFieldArea);
+	str = std::format("{:05d}", baseAddressOfFieldArea);
 	for (int i = 0; i < 5; i++)
 	{
 		byte[12 + i] = (unsigned char)str[i];
@@ -131,10 +132,10 @@ void Leader::SetAsDR()
 	byte[18] = 0x20; // SPACE
 	byte[19] = 0x20; // SPACE
 
-	str.Format(L"%01d", sizeOfFieldLengthField);
+	str = std::format("{:01d}", sizeOfFieldLengthField);
 	byte[20] = (unsigned char)str[0];
 
-	str.Format(L"%01d", sizeOfFieldPositionField);
+	str = std::format("{:01d}", sizeOfFieldPositionField);
 	byte[21] = (unsigned char)str[0];
 
 	byte[22] = 0x30; // "0"

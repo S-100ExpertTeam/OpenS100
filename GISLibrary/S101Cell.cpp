@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "../GeoMetryLibrary/TextCodec.h"
 #include "S101Cell.h"
 #include "BinaryFile.h"
 #include "BinaryWriter.h"
@@ -472,7 +473,7 @@ bool S101Cell::Read8211(std::wstring path)
 
 bool S101Cell::isUpdate()
 {
-	if (!m_dsgir.m_dsid.m_prof.Compare(L"2")) {
+	if (m_dsgir.m_dsid.m_prof == L"2") {
 		return true;
 	}
 
@@ -1481,11 +1482,11 @@ MBR S101Cell::ReMBR()
 	return result;
 }
 
-void S101Cell::SetEncodingSpecification(CString value)
+void S101Cell::SetEncodingSpecification(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_ensp = value;
 }
-CString S101Cell::GetEncodingSpecification()
+std::wstring S101Cell::GetEncodingSpecification()
 {
 	return m_dsgir.m_dsid.m_ensp;
 }
@@ -1494,12 +1495,12 @@ std::string S101Cell::GetEncodingSpecificationToString()
 	return pugi::as_utf8(GetEncodingSpecification());
 }
 
-void S101Cell::SetEncodingSpecificationEdition(CString value)
+void S101Cell::SetEncodingSpecificationEdition(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_ened = value;
 }
 
-CString S101Cell::GetEncodingSpecificationEdition()
+std::wstring S101Cell::GetEncodingSpecificationEdition()
 {
 	return m_dsgir.m_dsid.m_ened;
 }
@@ -1509,12 +1510,12 @@ std::string S101Cell::GetEncodingSpecificationEditionToString()
 	return pugi::as_utf8(GetEncodingSpecificationEdition());
 }
 
-void S101Cell::SetProductIdentifier(CString value)
+void S101Cell::SetProductIdentifier(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_prsp = value;
 }
 
-CString S101Cell::GetProductIdentifier()
+std::wstring S101Cell::GetProductIdentifier()
 {
 	return m_dsgir.m_dsid.m_prsp;
 }
@@ -1524,12 +1525,12 @@ std::string S101Cell::GetProductIdentifierToString()
 	return pugi::as_utf8(GetProductIdentifier());
 }
 
-void S101Cell::SetProductEdition(CString value)
+void S101Cell::SetProductEdition(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_pred = value;
 }
 
-CString S101Cell::GetProductEdition()
+std::wstring S101Cell::GetProductEdition()
 {
 	return m_dsgir.m_dsid.m_pred;
 }
@@ -1539,12 +1540,12 @@ std::string S101Cell::GetProductEditionToString()
 	return pugi::as_utf8(GetProductEdition());
 }
 
-void S101Cell::SetApplictionProfile(CString value)
+void S101Cell::SetApplictionProfile(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_prof = value;
 }
 
-CString S101Cell::GetApplicationProfile()
+std::wstring S101Cell::GetApplicationProfile()
 {
 	return m_dsgir.m_dsid.m_prof;
 }
@@ -1554,23 +1555,23 @@ std::string S101Cell::GetApplicationProfileToString()
 	return pugi::as_utf8(GetApplicationProfile());
 }
 
-void S101Cell::SetDatasetFileIdentifier(CString value)
+void S101Cell::SetDatasetFileIdentifier(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_dsnm = value;
-	SetFileName(value);
+	SetFileName(CString(value.c_str())); // SpatialObject API: 3-2b
 }
 
-CString S101Cell::GetDatasetFileIdentifier()
+std::wstring S101Cell::GetDatasetFileIdentifier()
 {
 	return m_dsgir.m_dsid.m_dsnm;
 }
 
-void S101Cell::SetDatasetTitle(CString value)
+void S101Cell::SetDatasetTitle(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_dstl = value;
 }
 
-CString S101Cell::GetDatasetTitle()
+std::wstring S101Cell::GetDatasetTitle()
 {
 	return m_dsgir.m_dsid.m_dstl;
 }
@@ -1580,12 +1581,12 @@ std::string S101Cell::GetDatasetTitleToString()
 	return pugi::as_utf8(GetDatasetTitle());
 }
 
-void S101Cell::SetDatasetReferenceDate(CString value)
+void S101Cell::SetDatasetReferenceDate(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_dsrd = value;
 }
 
-CString S101Cell::GetDatasetReferenceDate()
+std::wstring S101Cell::GetDatasetReferenceDate()
 {
 	return m_dsgir.m_dsid.m_dsrd;
 }
@@ -1595,12 +1596,12 @@ std::string S101Cell::GetDatasetReferenceDataToString()
 	return pugi::as_utf8(GetDatasetReferenceDate());
 }
 
-void S101Cell::SetDatasetLanguage(CString value)
+void S101Cell::SetDatasetLanguage(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_dslg = value;
 }
 
-CString S101Cell::GetDatasetLanguage()
+std::wstring S101Cell::GetDatasetLanguage()
 {
 	return m_dsgir.m_dsid.m_dslg;
 }
@@ -1610,12 +1611,12 @@ std::string S101Cell::GetDatasetLanguageToString()
 	return pugi::as_utf8(GetDatasetLanguage());
 }
 
-void S101Cell::SetDatasetAbstract(CString value)
+void S101Cell::SetDatasetAbstract(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_dsab = value;
 }
 
-CString S101Cell::GetDatasetAbstract()
+std::wstring S101Cell::GetDatasetAbstract()
 {
 	return m_dsgir.m_dsid.m_dsab;
 }
@@ -1625,12 +1626,12 @@ std::string S101Cell::GetDatasetAbstractToString()
 	return pugi::as_utf8(GetDatasetAbstract());
 }
 
-void S101Cell::SetDatasetEdition(CString value)
+void S101Cell::SetDatasetEdition(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_dsed = value;
 }
 
-CString S101Cell::GetDatasetEdition()
+std::wstring S101Cell::GetDatasetEdition()
 {
 	return m_dsgir.m_dsid.m_dsed;
 }
@@ -2474,7 +2475,7 @@ bool S101Cell::UpdateAttrField(std::list<F_ATTR*> Update, F_CodeWithNumericCode*
 	{
 		for (auto attr : f_attr->m_arr)
 		{
-			CString updateCode = atcs->GetFeatureCode(attr->m_natc); //bring the NC value for Update.
+			const std::wstring updateCode = atcs->GetFeatureCode(attr->m_natc); //bring the NC value for Update.
 			int NewCode = m_dsgir.m_atcs->GetCode(updateCode); //bring the NC price from the base.
 
 			//all data change
@@ -2491,7 +2492,7 @@ bool S101Cell::UpdateInasField(std::list<F_INAS*> Update, F_CodeWithNumericCode*
 		for (auto i = f_inas->m_arr.begin(); i != f_inas->m_arr.end(); i++)
 		{
 			auto arr = (*i);
-			CString updateCode = iacs->GetFeatureCode(arr->m_natc);
+			const std::wstring updateCode = iacs->GetFeatureCode(arr->m_natc);
 			int NewCode = m_dsgir.m_iacs->GetCode(updateCode);
 
 			arr->m_natc = NewCode;
@@ -3795,7 +3796,7 @@ bool S101Cell::SaveAttribute(pugi::xml_node& root, std::vector<ATTR*> attributes
 			auto type = sa->GetValueType();
 			if (type == FCD::S100_CD_AttributeValueType::enumeration)
 			{
-				auto listedValue = sa->GetListedValue(_ttoi(attr->m_atvl));
+				auto listedValue = sa->GetListedValue(static_cast<int>(std::wcstol(attr->m_atvl.c_str(), nullptr, 10)));
 				if (listedValue)
 				{
 					value = listedValue->GetLabel();
@@ -4394,17 +4395,9 @@ std::wstring S101Cell::GetChartName()
 
 std::string S101Cell::GetEditionNumber()
 {
-	CString Ened = m_dsgir.m_dsid.m_ened;
-	auto index = Ened.Find(L".");
-	CString result;
-	AfxExtractSubString(result, Ened, 0, '.');
-
-	// The ENED of the DSID contains values in the form of n.m. such as 1.0, 1.1, etc.
-	// n is Edition Number.
-	// m is Update Number.
-	// I'll return the Edition Number here.
-	// e.g. If it's 1.4, return 1
-	return pugi::as_utf8(result);
+	// ENED is "n.m" (edition.update); return n. Without a dot the whole value is the edition.
+	const auto& ened = m_dsgir.m_dsid.m_ened;
+	return pugi::as_utf8(ened.substr(0, ened.find(L'.')));
 }
 
 std::string S101Cell::GetUpdateNumber()
@@ -4414,40 +4407,26 @@ std::string S101Cell::GetUpdateNumber()
 
 std::wstring S101Cell::GetUpdateNumberW()
 {
-	auto Ened = m_dsgir.m_dsid.m_dsed;
-
-	CString result;
-	AfxExtractSubString(result, Ened, 1, '.');
-
-	// The ENED of the DSID contains values in the form of n.m. such as 1.0, 1.1, etc.
-	// n is Edition Number.
-	// m is Update Number.
-	// I'll return the Edition Number here.
-	// e.g. If it's 1.4, return 4
-	return std::wstring(result);
+	// DSED is "n.m" (edition.update); return m, or empty when there is no update part.
+	const auto& dsed = m_dsgir.m_dsid.m_dsed;
+	const auto dot = dsed.find(L'.');
+	if (dot == std::wstring::npos)
+	{
+		return {};
+	}
+	const auto next = dsed.find(L'.', dot + 1);
+	return dsed.substr(dot + 1, next == std::wstring::npos ? std::wstring::npos : next - dot - 1);
 }
 
 std::wstring S101Cell::GetIssueDateW()
 {
-	CString Dsrd = m_dsgir.m_dsid.m_dsrd;
-
-	// Output DSRD of DSID.
-	// DSRD is in the form of YYYMMDD (e.g., 20210324).
-	// Return Example: 2012-03-24
-	auto index = Dsrd.Find(_T("-"));
-	if (index == -1)
+	// DSRD is YYYYMMDD (e.g. 20210324); return YYYY-MM-DD. Values already containing a dash pass through.
+	const auto& dsrd = m_dsgir.m_dsid.m_dsrd;
+	if (dsrd.find(L'-') != std::wstring::npos || dsrd.size() < 8)
 	{
-		CString year = Dsrd.Left(4);
-		CString month = Dsrd.Mid(4, 2);
-		CString day = Dsrd.Right(2);
-
-		std::wstring result = year + L"-" + month + L"-" + day;
-		return result;
+		return dsrd;
 	}
-	else
-	{
-		return std::wstring(Dsrd);
-	}
+	return dsrd.substr(0, 4) + L"-" + dsrd.substr(4, 2) + L"-" + dsrd.substr(6, 2);
 }
 
 std::vector<std::string> S101Cell::Query(MBR mbr)
@@ -4487,13 +4466,13 @@ S100GML::DatasetIdentificationInformation S101Cell::GetDatasetIdentificationInfo
 	result.datasetFileIdentifier = LibMFCUtil::WStringToString(std::wstring(GetFileName()));
 	result.datasetTitle = LibMFCUtil::WStringToString(std::wstring(LibMFCUtil::GetFileName(GetFilePath())));
 
-	if (m_dsgir.m_dsid.m_dsrd.GetLength() >= 8)
+	if (m_dsgir.m_dsid.m_dsrd.size() >= 8)
 	{
-		CString dsrd = m_dsgir.m_dsid.m_dsrd;
+		const auto& dsrd = m_dsgir.m_dsid.m_dsrd;
 
-		std::string yyyy = pugi::as_utf8(dsrd.Left(4));
-		std::string mm = pugi::as_utf8(dsrd.Mid(4, 2));
-		std::string dd = pugi::as_utf8(dsrd.Mid(6, 2));
+		std::string yyyy = pugi::as_utf8(dsrd.substr(0, 4));
+		std::string mm = pugi::as_utf8(dsrd.substr(4, 2));
+		std::string dd = pugi::as_utf8(dsrd.substr(6, 2));
 
 		result.datasetReferenceDate = yyyy + "-" + mm + "-" + dd;
 	}
@@ -5040,7 +5019,7 @@ bool S101Cell::FeatureAttrToAttribute()
 			auto sa = fc->GetSimpleAttribute(std::wstring(strCode));
 			if (sa)
 			{
-				CString strValue = ATTR->getValueAsWString().c_str();
+				std::wstring strValue = ATTR->getValueAsWString();
 				
 
 				//strValue = LibMFCUtil::StringToWString(value).c_str();
@@ -5099,9 +5078,7 @@ bool S101Cell::FeatureAttrToAttribute(R_FeatureRecord* fr)
 		if (sa)
 		{
 			auto value = ATTR->getValueAsString();
-			CString strValue;
-
-			strValue = LibMFCUtil::StringToWString(value).c_str();
+			std::wstring strValue = s100::text::ToWide(value);
 
 			if (ATTR->m_paix > 0)
 			{
@@ -5158,9 +5135,7 @@ bool S101Cell::InformationAttrToAttribute()
 			if (sa)
 			{
 				auto value = ATTR->getValueAsString();
-				CString strValue;
-
-				strValue = LibMFCUtil::StringToWString(value).c_str();
+				std::wstring strValue = s100::text::ToWide(value);
 
 				if (ATTR->m_paix > 0)
 				{
@@ -5211,9 +5186,7 @@ bool S101Cell::InformationAttrToAttribute(R_InformationRecord* ir)
 		if (sa)
 		{
 			auto value = ATTR->getValueAsString();
-			CString strValue;
-
-			strValue = LibMFCUtil::StringToWString(value).c_str();
+			std::wstring strValue = s100::text::ToWide(value);
 
 			if (ATTR->m_paix > 0)
 			{

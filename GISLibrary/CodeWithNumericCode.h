@@ -1,11 +1,12 @@
 #pragma once
+#include <string>
 
 class CodeWithNumericCode
 {
 public:
 	CodeWithNumericCode();
 	CodeWithNumericCode(const CodeWithNumericCode& other);
-	CodeWithNumericCode(CString& code, int numericCode);
+	CodeWithNumericCode(const std::wstring& code, int numericCode);
 
 public:
 	/*
@@ -13,7 +14,7 @@ public:
 	* Format		: A
 	* Description	: The code as defined in the feature catalogue
 	*/
-	CString m_code;
+	std::wstring m_code;
 
 	/*
 	* Code

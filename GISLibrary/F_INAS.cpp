@@ -116,9 +116,7 @@ bool F_INAS::WriteField(s100::io::BinaryWriter* file)
 		file->Write(&attr->m_atix, 2);
 		file->Write(&attr->m_paix, 2);
 		file->Write(&attr->m_atin, 1);
-		CT2CA outputString(attr->m_atvl, CP_UTF8);
-		file->Write(outputString, (UINT)::strlen(outputString));
-		file->Write(&NonPrintableCharacter::unitTerminator, 1);
+		s100::iso8211::WriteUtf8Unit(file, attr->m_atvl);
 	}
 	file->Write(&NonPrintableCharacter::fieldTerminator, 1);
 
@@ -134,8 +132,7 @@ int F_INAS::GetFieldLength()
 	{
 		auto attr = *i;
 		len += ATTR::GetOffsetToATVL();
-		CT2CA outputString(attr->m_atvl, CP_UTF8);
-		len += (int)::strlen(outputString) + 1;
+		len += static_cast<int>(s100::iso8211::Utf8Length(attr->m_atvl)) + 1;
 	}
 
 	return ++len;

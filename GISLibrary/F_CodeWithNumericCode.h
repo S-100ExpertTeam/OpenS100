@@ -32,18 +32,16 @@ public:
 	int GetFieldLength();
 	int GetCount();
 	void InsertCodeNumericCode(CodeWithNumericCode* value);
-	void InsertCodeNumericCode(CString& code, int numericCode);
-	CString GetFeatureCode(int numericCode);
-	int GetCode(CString nc);
-	bool HasCode(std::wstring& code);
+	void InsertCodeNumericCode(const std::wstring& code, int numericCode);
+	std::wstring GetFeatureCode(int numericCode);
+	int GetCode(const std::wstring& code);
+	bool HasCode(const std::wstring& code) const;
 
 	int GetNewNumericCode();
-	int AddNewCodeNumericCode(CString& code);
-	int AddNewCodeNumericCode(std::wstring& code);
-	int GetNumericCode(CString& code);
-	int GetNumericCode(std::wstring& code);
+	int AddNewCodeNumericCode(const std::wstring& code);
+	int GetNumericCode(const std::wstring& code);
 
 	CodeWithNumericCode* getCodeWithNumericCode(int numericCode);
-	CodeWithNumericCode* getCodeWIthNumericCode(CString code);
-	void setCodeNumericCode(CString code, int numericCode);
+	CodeWithNumericCode* getCodeWIthNumericCode(const std::wstring& code);
+	void setCodeNumericCode(const std::wstring& code, int numericCode);
 };

@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <vector>
 #include "BinaryWriter.h"
 #include "Field.h"
@@ -14,17 +15,17 @@ public:
 
 public:
 	RecordName m_name;
-	CString m_ensp; //encodingSpecification(have fixed value) //S-100 Part 10a
-	CString m_ened; //encodingSpecificationEdition(have fixed value) //1.1
-	CString m_prsp;	//productIdentifier(have fixed value) //INT.IHO.S-101.1.0
-	CString m_pred; //productEdition(have fixed value) //1.0
-	CString m_prof; //applicationProfile(have fixed value) //1
-	CString m_dsnm; //datasetFileIdentifier
-	CString m_dstl; //datasetTitle
-	CString m_dsrd; //datasetReferenceDate
-	CString m_dslg; //datasetLanguage(have fixed value) //EN
-	CString m_dsab; //datasetAbstract
-	CString m_dsed; //dataset Edition
+	std::wstring m_ensp; //encodingSpecification(have fixed value) //S-100 Part 10a
+	std::wstring m_ened; //encodingSpecificationEdition(have fixed value) //1.1
+	std::wstring m_prsp;	//productIdentifier(have fixed value) //INT.IHO.S-101.1.0
+	std::wstring m_pred; //productEdition(have fixed value) //1.0
+	std::wstring m_prof; //applicationProfile(have fixed value) //1
+	std::wstring m_dsnm; //datasetFileIdentifier
+	std::wstring m_dstl; //datasetTitle
+	std::wstring m_dsrd; //datasetReferenceDate
+	std::wstring m_dslg; //datasetLanguage(have fixed value) //EN
+	std::wstring m_dsab; //datasetAbstract
+	std::wstring m_dsed; //dataset Edition
 	std::vector<int> m_dstc;
 
 public:

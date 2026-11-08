@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 // Attribute Field
 struct ATTR
@@ -6,7 +7,7 @@ struct ATTR
 public:
 	ATTR();
 	ATTR(const ATTR& other);
-	ATTR(int NATC, int ATIX, int PAIX, int ATIN, CString& ATVL);
+	ATTR(int NATC, int ATIX, int PAIX, int ATIN, const std::wstring& ATVL);
 	virtual ~ATTR();
 
 public:
@@ -46,7 +47,7 @@ public:
 	* Format		: A()
 	* A string containing a valid value for the domain of the attribute specified by the subfields above.
 	*/
-	CString m_atvl = L"";
+	std::wstring m_atvl;
 
 public:
 	virtual ATTR operator=(const ATTR& other);

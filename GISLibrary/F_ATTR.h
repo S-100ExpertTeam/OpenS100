@@ -26,7 +26,7 @@ public:
 	int GetFieldLength();
 
 	void Insert(ATTR* attr);
-	void Insert(int natc, int atix, int paix, int atin, CString atvl);
+	void Insert(int natc, int atix, int paix, int atin, const std::wstring& atvl);
 	ATTR* getATTR(int index) const;
 	int getCount() const;
 };

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "BinaryWriter.h"
+#include <string>
 #include "Field.h"
 
 class F_CRSH : public Field
@@ -35,14 +36,14 @@ public:
 	* Format		: A
 	* Name of the Coordinate Reference System
 	*/
-	CString m_crnm;
+	std::wstring m_crnm;
 	/*
 	* CRS Identifier
 	* Format		: A
 	* Identifier of the CRS from an external source.
 	* Empty if not defined by reference
 	*/
-	CString m_crsi;
+	std::wstring m_crsi;
 	/*
 	* CRS Source
 	* Format		: b11
@@ -57,7 +58,7 @@ public:
 	* Format		: A
 	* Information about the CRS source if CRSS = ‘Other Source’
 	*/
-	CString m_scri;
+	std::wstring m_scri;
 
 public:
 	virtual F_CRSH operator=(const F_CRSH& other);
