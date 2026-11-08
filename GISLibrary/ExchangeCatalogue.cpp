@@ -10,7 +10,6 @@
 #include "..\\LatLonUtility\\LatLonUtility.h"
 #include "..\\LatLonUtility\\cpp_util.h"
 
-#include "..\\LibMFCUtil\\LibMFCUtil.h"
 
 #include <filesystem>
 

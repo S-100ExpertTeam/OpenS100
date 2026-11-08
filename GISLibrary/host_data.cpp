@@ -35,7 +35,6 @@
 #include "../LuaScriptingReference/spatial_association.h"
 #include "../LuaScriptingReference/composite_curve.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <iostream>
 #include <sstream>

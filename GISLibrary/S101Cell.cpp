@@ -73,7 +73,6 @@
 #include "../FeatureCatalog/FeatureCatalogue.h"
 #include "../FeatureCatalog/S100_CD_AttributeValueType.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
 #include "..\\LatLonUtility\\cpp_util.h"
 
 #include <sstream> 
@@ -5020,7 +5019,6 @@ bool S101Cell::FeatureAttrToAttribute()
 				std::wstring strValue = ATTR->getValueAsWString();
 				
 
-				//strValue = LibMFCUtil::StringToWString(value).c_str();
 
 				if (ATTR->m_paix > 0)
 				{
