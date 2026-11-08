@@ -90,4 +90,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-08 | 5-1: 결합 측정 스크립트와 기준선 | bea7251e | |
 | 2026-11-08 | 3-1(a): 8211 리더의 `CFile`을 `s100::io::ReadAllBytes`로 | 74c5f817 | 테스트 15/15 |
 | 2026-11-08 | 3-1(b): 8211 라이터 체인(95개 시그니처)을 `s100::io::BinaryWriter`로 | 62091ea2 | 테스트 16/16, 라운드트립 |
-| 2026-11-08 | 3-1(c): `CheckFileType` 중복 제거·`SHPFile` 전환, GISLibrary에서 `CFile` 0 | (아래) | 테스트 16/16, 앱 기동(셰이프 배경 로딩) |
+| 2026-11-08 | 3-1(c): `CheckFileType` 중복 제거·`SHPFile` 전환, GISLibrary에서 `CFile` 0 | ef05a1cc | 테스트 16/16, 앱 기동(셰이프 배경 로딩) |
