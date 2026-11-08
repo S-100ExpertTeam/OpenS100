@@ -22,7 +22,7 @@ public:
 public:
 	void SetType(int value);
 	int GetType();
-	void SetFileStem(std::wstring& value);
+	void SetFileStem(const std::wstring& value);
 	std::wstring GetFileStem();
 
 public:

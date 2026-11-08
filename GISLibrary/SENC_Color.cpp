@@ -25,7 +25,7 @@ D2D1_COLOR_F SENC_Color::GetRGBColor()
 	return RGBColor;
 }
 
-void SENC_Color::SetToken(std::wstring& value)
+void SENC_Color::SetToken(const std::wstring& value)
 {
 	token = value;
 }

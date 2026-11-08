@@ -1376,7 +1376,7 @@ bool LayerManager::IsOnByKey(int key)
 		return layer->IsOn();
 	}
 
-	return nullptr;
+	return false;
 }
 
 void LayerManager::DeleteLayer(int index)

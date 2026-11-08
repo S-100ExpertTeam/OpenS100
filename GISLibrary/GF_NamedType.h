@@ -20,7 +20,7 @@ namespace GF
 
 	public:
 		virtual std::string GetCode();
-		virtual void SetCode(std::string& value);
+		virtual void SetCode(const std::string& value);
 		virtual void SetCode(std::wstring value);
 	};
 }

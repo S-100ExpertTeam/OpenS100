@@ -68,7 +68,7 @@ bool F_FieldControlField::WriteField(s100::io::BinaryWriter* file)
 	return true;
 }
 
-void F_FieldControlField::AddTagPair(char tag1[5], char tag2[5])
+void F_FieldControlField::AddTagPair(const char* tag1, const char* tag2)
 {
 	TagPair tagPair;
 	memcpy(&tagPair.tag1, tag1, 4);

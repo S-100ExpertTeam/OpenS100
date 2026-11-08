@@ -22,12 +22,12 @@ void S100_VectorPoint::GetContents(pugi::xml_node& node)
 
 }
 
-void S100_VectorPoint::SetX(std::wstring& value)
+void S100_VectorPoint::SetX(const std::wstring& value)
 {
 	x = cpp_util::stod(value);
 }
 
-void S100_VectorPoint::SetY(std::wstring& value)
+void S100_VectorPoint::SetY(const std::wstring& value)
 {
 	y = cpp_util::stod(value);
 }

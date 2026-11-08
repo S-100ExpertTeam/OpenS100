@@ -60,7 +60,7 @@ public:
     GM::Curve* ReadCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
     GM::OrientableCurve* ReadOrientableCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
     GM::CompositeCurve* ReadCompositeCurve(pugi::xml_node& node, std::string id = "", std::string srsName = "");
-    GM::Curve* ReadLinearRing(pugi::xml_node& node); // read gml:LinearRing
+    GM::Curve* ReadLinearRing(pugi::xml_node node); // read gml:LinearRing
     GM::Surface* ReadSurface(pugi::xml_node& node); // read S100:Surface
     
     // node : Polygon node

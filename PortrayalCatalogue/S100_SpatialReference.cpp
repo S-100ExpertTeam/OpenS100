@@ -71,7 +71,7 @@ bool S100_SpatialReference::isBackward()
 	return !forward;
 }
 
-void S100_SpatialReference::Set(std::string& value)
+void S100_SpatialReference::Set(const std::string& value)
 {
 	// value : reference[,forward]
 	std::vector<std::string_view> element;

@@ -19,16 +19,16 @@ public:
 
 public:
 	void SetXMin(double value);
-	double GetXMin();
+	double GetXMin() const;
 
 	void SetYMin(double value);
-	double GetYMin();
+	double GetYMin() const;
 
 	void SetXMax(double value);
-	double GetXMax();
+	double GetXMax() const;
 
 	void SetYMax(double value);
-	double GetYMax();
+	double GetYMax() const;
 
 	void SetMBR(MBR mbr);
 	void SetMBR(double _xmin, double _ymin, double _xmax, double _ymax);
@@ -44,7 +44,7 @@ public:
 	*/
 	void ReMBR(MBR newMBR);
 	void CalcMBR(double x, double y);
-	void CalcMBR(MBR& mbr);
+	void CalcMBR(const MBR& mbr);
 	void InitMBR();
 	bool PtInMBR(double x, double y);
 	void Scale(double Scale);

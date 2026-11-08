@@ -14,7 +14,7 @@ HDF5Wrapper::~HDF5Wrapper()
 }
 
 
-bool HDF5Wrapper::ReadMetadataIntegerAttribute(__int64 id, char* attributeName, int& attributeValue)
+bool HDF5Wrapper::ReadMetadataIntegerAttribute(__int64 id, const char* attributeName, int& attributeValue)
 {
 	if (IsInteger64Attribute(id))
 	{
@@ -53,7 +53,7 @@ bool HDF5Wrapper::ReadMetadataIntegerAttribute(__int64 id, char* attributeName, 
 }
 
 
-bool HDF5Wrapper::ReadMetadataInteger64Attribute(__int64 id, char* attributeName, __int64& attributeValue)
+bool HDF5Wrapper::ReadMetadataInteger64Attribute(__int64 id, const char* attributeName, __int64& attributeValue)
 {
 	if (IsInteger32Attribute(id))
 	{
@@ -93,7 +93,7 @@ bool HDF5Wrapper::ReadMetadataInteger64Attribute(__int64 id, char* attributeName
 
 
 
-bool HDF5Wrapper::ReadMetadataFloatAttribute(__int64 id, char* attributeName, float& attributeValue)
+bool HDF5Wrapper::ReadMetadataFloatAttribute(__int64 id, const char* attributeName, float& attributeValue)
 {
 	if (IsFloat64Attribute(id))
 	{
@@ -132,7 +132,7 @@ bool HDF5Wrapper::ReadMetadataFloatAttribute(__int64 id, char* attributeName, fl
 }
 
 
-bool HDF5Wrapper::ReadMetadataDoubleAttribute(__int64 id, char* attributeName, double& attributeValue)
+bool HDF5Wrapper::ReadMetadataDoubleAttribute(__int64 id, const char* attributeName, double& attributeValue)
 {
 	if (IsFloat32Attribute(id))
 	{
@@ -172,7 +172,7 @@ bool HDF5Wrapper::ReadMetadataDoubleAttribute(__int64 id, char* attributeName, d
 
 
 
-bool HDF5Wrapper::ReadMetadataStringAttribute(__int64 id, char* attributeName, std::string& attributeValue)
+bool HDF5Wrapper::ReadMetadataStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue)
 {
 	herr_t status = 0;
 
@@ -252,7 +252,7 @@ bool HDF5Wrapper::ReadMetadataStringAttribute(__int64 id, char* attributeName, s
 }
 
 
-bool HDF5Wrapper::ReadMetadataVariableLengthStringAttribute(__int64 id, char* attributeName, std::string& attributeValue)
+bool HDF5Wrapper::ReadMetadataVariableLengthStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue)
 {
 	herr_t status = 0;
 
@@ -320,7 +320,7 @@ bool HDF5Wrapper::ReadMetadataVariableLengthStringAttribute(__int64 id, char* at
 	return true;
 }
 
-bool HDF5Wrapper::ReadMetadataAnyStringAttribute(__int64 id, char* attributeName, std::string& attributeValue)
+bool HDF5Wrapper::ReadMetadataAnyStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue)
 {
 	if (!ReadMetadataStringAttribute(id, attributeName, attributeValue))
 	{

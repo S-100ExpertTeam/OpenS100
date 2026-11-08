@@ -226,7 +226,7 @@ namespace GF
 
 	bool FeatureType::IsNoGeometry()
 	{
-		if (false == spatial)
+		if (!spatial)
 		{
 			return true;
 		}

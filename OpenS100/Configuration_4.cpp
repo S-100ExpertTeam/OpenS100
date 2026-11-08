@@ -133,7 +133,7 @@ void CConfiguration_4::Apply()
 	auto cnt = m_viewingGroupList.GetItemCount();
 	for (auto j = 0; j < cnt; j++)
 	{
-		std::wstring code = m_viewingGroupList.GetItemText(j, COLOUM_INDEX_CODE);
+		std::wstring code = m_viewingGroupList.GetItemText(j, COLOUM_INDEX_CODE).GetString();
 		bool on = m_viewingGroupList.GetCheck(j);
 		theApp.gisLib->GetLayerManager()->SetFeatureOnOff(code, on);
 	}

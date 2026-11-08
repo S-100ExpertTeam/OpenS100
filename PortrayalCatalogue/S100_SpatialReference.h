@@ -34,5 +34,5 @@ public:
 	bool isBackward();
 
 	// value : reference[,forward]
-	void Set(std::string& value);
+	void Set(const std::string& value);
 };

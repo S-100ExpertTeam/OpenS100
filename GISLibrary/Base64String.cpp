@@ -16,9 +16,9 @@ Base64String Base64String::Encode() {
     BIO_get_mem_ptr(bio, &bufferPtr);
     BIO_set_close(bio, BIO_NOCLOSE);
 
-    std::string base64Text(bufferPtr->data, bufferPtr->length);
+    Base64String base64Text(bufferPtr->data, bufferPtr->length);
 
     BIO_free_all(bio);
 
-    return (Base64String)base64Text;
+    return base64Text;
 }

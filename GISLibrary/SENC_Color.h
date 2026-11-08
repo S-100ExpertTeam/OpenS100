@@ -17,7 +17,7 @@ public:
 public:
 	void SetRGBColor(D2D1_COLOR_F value);
 	D2D1_COLOR_F GetRGBColor();
-	void SetToken(std::wstring& value);
+	void SetToken(const std::wstring& value);
 	std::wstring GetToken();
 	void SetTransparency(float value);
 	int GetTransparency();

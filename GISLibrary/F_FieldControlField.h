@@ -30,7 +30,7 @@ public:
 public:
     void ReadField(BYTE*& buf) {};
     bool WriteField(s100::io::BinaryWriter* file);
-    void AddTagPair(char tag1[5], char tag2[5]);
+    void AddTagPair(const char* tag1, const char* tag2);
     int GetFieldLength();
 };
 

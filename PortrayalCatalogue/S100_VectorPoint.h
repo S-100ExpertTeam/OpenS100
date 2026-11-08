@@ -13,8 +13,8 @@ private:
 	double y = 0;
 public:
 	void GetContents(pugi::xml_node& node);
-	void SetX(std::wstring& value);
-	void SetY(std::wstring& value);
+	void SetX(const std::wstring& value);
+	void SetY(const std::wstring& value);
 	void SetX(double value);
 	void SetY(double value);
 	double GetX();

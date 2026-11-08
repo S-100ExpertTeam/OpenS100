@@ -51,7 +51,7 @@ void MBR::SetXMin(double value)
 	xmin = value;
 }
 
-double MBR::GetXMin()
+double MBR::GetXMin() const
 {
 	return xmin;
 }
@@ -61,7 +61,7 @@ void MBR::SetYMin(double value)
 	ymin = value;
 }
 
-double MBR::GetYMin()
+double MBR::GetYMin() const
 {
 	return ymin;
 }
@@ -71,7 +71,7 @@ void MBR::SetXMax(double value)
 	xmax = value;
 }
 
-double MBR::GetXMax()
+double MBR::GetXMax() const
 {
 	return xmax;
 }
@@ -81,7 +81,7 @@ void MBR::SetYMax(double value)
 	ymax = value;
 }
 
-double MBR::GetYMax()
+double MBR::GetYMax() const
 {
 	return ymax;
 }
@@ -173,7 +173,7 @@ void MBR::CalcMBR(double x, double y)
 	}
 }
 
-void MBR::CalcMBR(MBR& mbr)
+void MBR::CalcMBR(const MBR& mbr)
 {
 	CalcMBR(mbr.GetXMin(), mbr.GetYMin());
 	CalcMBR(mbr.GetXMin(), mbr.GetYMax());

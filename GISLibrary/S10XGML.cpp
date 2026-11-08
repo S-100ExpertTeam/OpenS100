@@ -488,7 +488,7 @@ GM::Point* S10XGML::ReadPoint(pugi::xml_node& node, std::string id, std::string 
 	if (strPosList.size() != 2)
 	{
 		delete object;
-		return false;
+		return nullptr;
 	}
 
 	int latIndex = 1;
@@ -570,7 +570,7 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 	if (posCnt < 4)
 	{
 		delete object;
-		return false;
+		return nullptr;
 	}
 
 	for (int i = 0; (i + 1) < posCnt; i += 2)
@@ -583,7 +583,7 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 	return object;
 }
 
-GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node& node)
+GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node node)
 {
 	auto object = new GM::Curve();
 

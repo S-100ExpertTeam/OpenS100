@@ -66,8 +66,8 @@ public:
 	void SetSpatialReference(std::list<S100_SpatialReference*> value);
 	void SetViewingGroup(const std::string& value);
 	void SetViewingGroup(const std::wstring& value);
-	void SetViewingGroup(std::vector<std::string>& value);
-	void SetViewingGroup(std::vector<std::string_view>& value);
+	void SetViewingGroup(const std::vector<std::string>& value);
+	void SetViewingGroup(const std::vector<std::string_view>& value);
 	void SetDisplayPlane(const std::string& value);
 	void SetDisplayPlane(const std::wstring& value);
 	void SetDrawingPriority(const std::string& value);

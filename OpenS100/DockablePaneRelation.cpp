@@ -34,7 +34,8 @@ void CDockablePaneRelation::OnPaint()
 	ScreenToClient(rect);
 	rect.InflateRect(1, 1);
 	dc.Draw3dRect(rect, ::GetSysColor(COLOR_3DSHADOW), ::GetSysColor(COLOR_3DSHADOW));
-	dc.FillRect(rect, &CBrush(RGB(230, 230, 230))); // make the background gray.
+	CBrush background(RGB(230, 230, 230));
+	dc.FillRect(rect, &background);  // make the background gray.
 }
 
 int CDockablePaneRelation::OnCreate(LPCREATESTRUCT lpCreateStruct)

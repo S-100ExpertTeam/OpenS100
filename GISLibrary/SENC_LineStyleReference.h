@@ -17,7 +17,7 @@ public:
 public:
 	void GetStyleFromS100(S100_LineStyleReference* lineStyle);
 
-	void SetReference(std::wstring& value);
+	void SetReference(const std::wstring& value);
 	std::wstring GetReference();
 
 public: // ovveride from SENC_LineStyleBase

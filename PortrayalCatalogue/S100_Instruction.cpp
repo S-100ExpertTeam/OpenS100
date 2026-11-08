@@ -54,7 +54,7 @@ void S100_Instruction::SetViewingGroup(const std::wstring& value)
 	viewingGroup.push_back(toUtf8(value));
 }
 
-void S100_Instruction::SetViewingGroup(std::vector<std::string>& value)
+void S100_Instruction::SetViewingGroup(const std::vector<std::string>& value)
 {
 	for (const auto& v : value)
 	{
@@ -62,7 +62,7 @@ void S100_Instruction::SetViewingGroup(std::vector<std::string>& value)
 	}
 }
 
-void S100_Instruction::SetViewingGroup(std::vector<std::string_view>& value)
+void S100_Instruction::SetViewingGroup(const std::vector<std::string_view>& value)
 {
 	for (const auto& v : value)
 	{

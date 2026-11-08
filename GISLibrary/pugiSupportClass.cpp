@@ -72,7 +72,7 @@ namespace S100 {
         }
     }
 
-    pugi::xml_node& ExXmlSupport::GetContentSelectNode(pugi::xml_node& node, std::string nodeName, std::string nodeNameSpace)
+    pugi::xml_node ExXmlSupport::GetContentSelectNode(pugi::xml_node& node, std::string nodeName, std::string nodeNameSpace)
     {
         if (node.empty()) {
             return pugi::xml_node();
@@ -94,7 +94,7 @@ namespace S100 {
         return pugi::xml_node();
     }
 
-    pugi::xml_node& ExXmlSupport::GetContentNode(pugi::xml_node& node, std::string nodeName, std::string nodeNameSpace)
+    pugi::xml_node ExXmlSupport::GetContentNode(pugi::xml_node& node, std::string nodeName, std::string nodeNameSpace)
     {
         std::string nodeNameTemp;
 

@@ -102,7 +102,7 @@ void SENC_LineStyle::ChangePallete(PortrayalCatalogue *pc)
 	SetPenColor(pc->GetS100PCManager()->GetS100ColorProfile()->GetColor(GetPenColorToken()));
 }
 
-void SENC_LineStyle::SetLineStyleName(std::wstring& value)
+void SENC_LineStyle::SetLineStyleName(const std::wstring& value)
 {
 	lineStyleName = value;
 }

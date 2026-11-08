@@ -35,7 +35,7 @@ namespace GF
 		return code;
 	}
 
-	void NamedType::SetCode(std::string& value)
+	void NamedType::SetCode(const std::string& value)
 	{
 		code = value;
 	}

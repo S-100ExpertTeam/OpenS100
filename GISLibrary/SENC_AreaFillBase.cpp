@@ -21,7 +21,7 @@ int SENC_AreaFillBase::GetType()
 	return type;
 }
 
-void SENC_AreaFillBase::SetFileStem(std::wstring& value)
+void SENC_AreaFillBase::SetFileStem(const std::wstring& value)
 {
 	fileStem = value;
 }

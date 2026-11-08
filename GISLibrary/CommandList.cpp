@@ -17,7 +17,7 @@
 #include <unordered_map>
 #include <memory>
 
-void CommandList::Insert(std::string& command, std::string& params)
+void CommandList::Insert(const std::string& command, const std::string& params)
 {
 	static const std::unordered_map<std::string,
 		std::function<std::unique_ptr<Part9a::Command>()>> factory {

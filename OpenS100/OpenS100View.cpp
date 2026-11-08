@@ -1221,17 +1221,20 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		x += offsetX;
 		y += offsetY;
 
-		g.DrawLine(&Pen(Color(255, 0, 0), 4), x - 20, y + 8, x - 20, y + 20);
-		g.DrawLine(&Pen(Color(255, 0, 0), 4), x - 20, y + 20, x - 8, y + 20);
+		Pen marker(Color(255, 0, 0), 4);
+		const INT ix = static_cast<INT>(x);
+		const INT iy = static_cast<INT>(y);
+		g.DrawLine(&marker, ix - 20, iy + 8, ix - 20, iy + 20);
+		g.DrawLine(&marker, ix - 20, iy + 20, ix - 8, iy + 20);
 
-		g.DrawLine(&Pen(Color(255, 0, 0), 4), x - 20, y - 8, x - 20, y - 20);
-		g.DrawLine(&Pen(Color(255, 0, 0), 4), x - 20, y - 20, x - 8, y - 20);
+		g.DrawLine(&marker, ix - 20, iy - 8, ix - 20, iy - 20);
+		g.DrawLine(&marker, ix - 20, iy - 20, ix - 8, iy - 20);
 
-		g.DrawLine(&Pen(Color(255, 0, 0), 4), x + 20, y + 8, x + 20, y + 20);
-		g.DrawLine(&Pen(Color(255, 0, 0), 4), x + 20, y + 20, x + 8, y + 20);
+		g.DrawLine(&marker, ix + 20, iy + 8, ix + 20, iy + 20);
+		g.DrawLine(&marker, ix + 20, iy + 20, ix + 8, iy + 20);
 
-		g.DrawLine(&Pen(Color(255, 0, 0), 4), x + 20, y - 8, x + 20, y - 20);
-		g.DrawLine(&Pen(Color(255, 0, 0), 4), x + 20, y - 20, x + 8, y - 20);
+		g.DrawLine(&marker, ix + 20, iy - 8, ix + 20, iy - 20);
+		g.DrawLine(&marker, ix + 20, iy - 20, ix + 8, iy - 20);
 
 	}
 	else if (frPick->GetGeometry()->GetType() == SGeometryType::MultiPoint)
@@ -1247,7 +1250,8 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 			x += offsetX;
 			y += offsetY;
 
-			g.DrawEllipse(&Pen(Color(255, 0, 0), 4), x - 20, y - 20, 40, 40);
+			Pen marker(Color(255, 0, 0), 4);
+			g.DrawEllipse(&marker, x - 20, y - 20, 40, 40);
 		}
 	}
 	// Line
@@ -1278,7 +1282,8 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 				pickPoints[i].Y += offsetY;
 			}
 
-			g.DrawLines(&Pen(&brush, 4), pickPoints, pickNumPoints);
+			Pen linePen(&brush, 4);
+			g.DrawLines(&linePen, pickPoints, pickNumPoints);
 
 			delete[] pickPoints;
 		}
@@ -1306,7 +1311,8 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 			pickPoints[i].Y += offsetY;
 		}
 
-		g.DrawLines(&Pen(&brush, 4), pickPoints, pickNumPoints);
+		Pen linePen(&brush, 4);
+		g.DrawLines(&linePen, pickPoints, pickNumPoints);
 
 		delete[] pickPoints;
 	}

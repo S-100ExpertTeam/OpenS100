@@ -6,7 +6,7 @@ class Directory
 public:
 	Directory();
 	Directory(const Directory& other);
-	Directory(char fieldTag[5], int fieldLength, int fieldPosition);
+	Directory(const char* fieldTag, int fieldLength, int fieldPosition);
 	~Directory();
 
 public:

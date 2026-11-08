@@ -44,7 +44,7 @@ public:
 	
 	void ChangePallete(PortrayalCatalogue *pc);
 
-	void SetLineStyleName(std::wstring& value);
+	void SetLineStyleName(const std::wstring& value);
 	std::wstring GetLineStyleName();
 
 public: // override from SENC_LineStyleBase

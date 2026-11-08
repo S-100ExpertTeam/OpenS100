@@ -25,7 +25,7 @@ void SENC_LineStyleReference::GetStyleFromS100(S100_LineStyleReference* lineStyl
 	SetReference(lineStyle->GetReferenceW());
 }
 
-void SENC_LineStyleReference::SetReference(std::wstring& value)
+void SENC_LineStyleReference::SetReference(const std::wstring& value)
 {
 	reference = value;
 }
