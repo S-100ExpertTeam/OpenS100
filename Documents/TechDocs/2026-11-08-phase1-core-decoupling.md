@@ -88,4 +88,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-08 | 2-2b, 2-3a: Draw 인터페이스 축소, CatalogManager 렌더러 분리(`PortrayalRenderCache`) | f04e886b | 테스트 14/14, 앱 기동 확인 |
 | 2026-11-08 | 2-4: `Layer::Open`에서 렌더러 인자 제거 | 13851aff | 테스트 14/14, 앱 기동 확인 |
 | 2026-11-08 | 5-1: 결합 측정 스크립트와 기준선 | bea7251e | |
-| 2026-11-08 | 3-1(a): 8211 리더의 `CFile`을 `s100::io::ReadAllBytes`로 | (아래) | 테스트 15/15 |
+| 2026-11-08 | 3-1(a): 8211 리더의 `CFile`을 `s100::io::ReadAllBytes`로 | 74c5f817 | 테스트 15/15 |
