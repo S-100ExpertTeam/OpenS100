@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DView.h"
 #include "S102Renderer.h"
 #include "S102H5.h"
 #include "S102_FC_BathymetryCoverage.h"
@@ -105,7 +106,8 @@ namespace GISLibrary
 				return;
 			}
 
-			rt->BindDC(hDC, scaler->GetScreenRect());
+			const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
+			rt->BindDC(hDC, &screen);
 			rt->BeginDraw();
 			rt->SetTransform(D2D1::Matrix3x2F::Identity());
 

@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "D2DView.h"
 #include "S100ExchangeCatalogue.h"
 #include "D2DGeometryCache.h"
 #include "GISLibrary.h"
@@ -372,7 +373,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                 S10XGML* cls = new S10XGML();
                 auto sSurface = cls->SurfaceToSSurface(object);
                 brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-                pRenderTarget->SetTransform(scaler->GetMatrix());
+                pRenderTarget->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
                 pRenderTarget->DrawGeometry(GISLibrary::D2DGeometry::Get(sSurface, D2->Factory()), brush, 1.0, D2->SolidStrokeStyle());
 
                 delete object;
@@ -390,8 +391,8 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                 projection(ptTopLeft.x, ptTopLeft.y);
                 projection(ptBottomRight.x, ptBottomRight.y);
 
-                scaler->WorldToDevice(ptTopLeft);
-                scaler->WorldToDevice(ptBottomRight);
+                scaler->WorldToDevice_F(ptTopLeft.x, ptTopLeft.y, &ptTopLeft.x, &ptTopLeft.y);
+                scaler->WorldToDevice_F(ptBottomRight.x, ptBottomRight.y, &ptBottomRight.x, &ptBottomRight.y);
 
                 // 스크린 좌표에서의 사각형 크기 계산
                 float rectWidth = abs(ptBottomRight.x - ptTopLeft.x);
@@ -488,7 +489,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                     
                 for (int j = 0; j < ddm.dataCoverage.size(); j++)
                 {
-                    D2->pRT->SetTransform(scaler->GetMatrix());
+                    D2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
 
                     auto dc = ddm.dataCoverage[j];
                     auto object = new GM::Surface();

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "LayerManager.h"
 #include "PortrayalRenderCache.h"
@@ -503,7 +504,7 @@ void LayerManager::AddSymbolDrawing(
 {
 	std::list<D2D1_POINT_2F> points;
 
-	D2->pRT->SetTransform(scaler->GetMatrix());
+	D2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
 
 	// Area
 	for (auto i = area[drawingPrioriy].begin(); i != area[drawingPrioriy].end(); i++)
@@ -1080,13 +1081,14 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 	SuppressS101Lines(layer->drawingPriority, &layer->drawingSet);
 
 	auto rt = D2->pRT;
-	rt->BindDC(hDC, scaler->GetScreenRect());
+	const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
+	rt->BindDC(hDC, &screen);
 	rt->BeginDraw();
 	D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 	D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
 	pc->GetS100PCManager()->CreateBitmapBrush(D2->pRT);
-	pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
+	pc->GetS100PCManager()->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
 
 	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
 	{
@@ -1246,13 +1248,14 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int min
 	}
 
 	auto rt = D2->pRT;
-	rt->BindDC(hDC, scaler->GetScreenRect());
+	const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
+	rt->BindDC(hDC, &screen);
 	rt->BeginDraw();
 	D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 	D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
 	pc->GetS100PCManager()->CreateBitmapBrush(D2->pRT);
-	pc->GetS100PCManager()->InverseMatrixBitmapBrush(scaler->GetInverseMatrix());
+	pc->GetS100PCManager()->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
 
 	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
 	{
@@ -1499,7 +1502,7 @@ void LayerManager::ReMBR()
 
 void LayerManager::SetViewMBR(RECT r)
 {
-	scaler->SetMap(r);
+	scaler->SetMapFromScreen(r.left, r.top, r.right, r.bottom);
 }
 
 void LayerManager::ChangeS100ColorPalette(GeoMetryLibrary::ColorTable value)

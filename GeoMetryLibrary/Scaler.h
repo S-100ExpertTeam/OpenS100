@@ -1,4 +1,14 @@
 #pragma once
+#include <string>
+
+// Device-space rectangle in pixels (no Win32 types in the geometry library).
+struct ScreenRect
+{
+	long left = 0;
+	long top = 0;
+	long right = 0;
+	long bottom = 0;
+};
 #include <vector>
 
 #include "MBR.h"
@@ -47,22 +57,19 @@ public:
 	/*
 	** Coordinate change.
 	*/
-	void DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate = TRUE);
-	void WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate = TRUE);
-	void WorldToDevice(D2D1_POINT_2F& p);
-	void WorldToDevice_F(double mx, double my, float *sx, float *sy, bool rotate = TRUE);
+	void DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate = true);
+	void WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate = true);
+	void WorldToDevice_F(double mx, double my, float *sx, float *sy, bool rotate = true);
 
 	/*
 	** Screen settings.
 	*/
 	// You must call me when the size of View changes (OnSize)
-	void SetScreen(RECT *rect);
-	void SetScreen(const RECT& rect);
+	void SetScreen(long left, long top, long right, long bottom);
 	// The screen area is delivered in pixel units (Max-Min +1, +1 is because the screen coordinates are zero-base).
-	int  GetScreenWidth();
-	int  GetScreenHeight();
-	CRect GetScreenRect();
-	D2D1_RECT_F GetD2Rect();
+	int  GetScreenWidth() const;
+	int  GetScreenHeight() const;
+	ScreenRect GetScreenRect() const;
 	
 	/*
 	** Map's information shown on the screen.
@@ -70,7 +77,8 @@ public:
 	// Must be called when MBR of the entire map is changed (map file open)
 	void SetMap(double xmin, double ymin, double xmax, double ymax);
 	void SetMap(MBR mbr);
-	void SetMap(RECT r);
+	// Map extent from a screen rectangle (device coordinates).
+	void SetMapFromScreen(long left, long top, long right, long bottom);
 	double GetMapWidth();
 	double GetMapHeight();
 	void GetMap(MBR *mbr);
@@ -82,7 +90,8 @@ public:
 	int GetCurrentScale();
 	void SetScale(int scale);
 	void UpdateScale();
-	CString GetFormatedScale();
+	// "1 : 12,345"
+	std::wstring GetFormattedScale() const;
 	
 	/*
 	** Rotation info
@@ -120,11 +129,6 @@ public:
 	double GetScreenWidthKM();
 	bool PtInMap(double _x, double _y);
 	void PrivateMoveMap(int sx, int sy, double mx, double my);
-	D2D1::Matrix3x2F GetMatrix();
-	D2D1::Matrix3x2F GetInverseMatrix();
-	D2D1::Matrix3x2F GetMatrixWithoutTranform();
-	D2D1::Matrix3x2F GetInverseMatrixWithoutTransform();
-	CRect WGS84MBRtoCRect(MBR& mbr);
 	double GetMapXMin();
 	double GetMapYMin();
 	double GetMapXMax();

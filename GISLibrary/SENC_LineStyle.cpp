@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_LineStyle.h"
 #include "D2DGeometryCache.h"
@@ -183,7 +184,7 @@ void SENC_LineStyle::DrawInstruction(
 						}
 					}
 
-					s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect(), GetPenColor(), strokeGroup->at(1));
+					s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler), GetPenColor(), strokeGroup->at(1));
 					SafeRelease(&pBitmap);
 				}
 			}

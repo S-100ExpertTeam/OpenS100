@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ENCConfiguration.h"
 
-#include "..\\LibMFCUtil\\StringTokenizer.h"
+#include "StringTokenizer.h"
 
 #include <fstream>
 #include <string>
@@ -70,18 +70,18 @@ bool ENCConfiguration::Open(std::string path)
 		if (opt.compare("*") == 0)
 			continue;
 
-		StringTokenizer *pstringTokenizer = new StringTokenizer(strLine, " \t");
+		s100::StringTokenizer tokenizer(strLine, " \t");
 		strLine.clear();
 
-		if (pstringTokenizer->hasMoreTokens())
+		if (tokenizer.hasMoreTokens())
 		{
-			std::string token = pstringTokenizer->nextToken();
+			std::string token = tokenizer.nextToken();
 
 			if (token.compare("APPLY_SCALE_MIN") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					if (token.compare(strTrue) == 0)
 					{
 						ENCCommon::APPLY_SCALE_MIN = true;
@@ -94,41 +94,41 @@ bool ENCConfiguration::Open(std::string path)
 			}
 			else if (token.compare("DEEP_CONTOUR") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::DEEP_CONTOUR = atof(token.c_str());
 				}
 			}
 			else if (token.compare("DISPLAY_MODE") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::DISPLAY_MODE = static_cast<GeoMetryLibrary::DisplayModeTable>(atoi(token.c_str()));
 				}
 			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::SAFETY_CONTOUR = atof(token.c_str());
 				}
 			}
 			else if (token.compare("SHALLOW_CONTOUR") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::SHALLOW_CONTOUR = atof(token.c_str());
 				}
 			}
 			else if (token.compare("FULL_SECTORS") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					if (token.compare(strTrue) == 0)
 					{
 						ENCCommon::FULL_SECTORS = true;
@@ -141,9 +141,9 @@ bool ENCConfiguration::Open(std::string path)
 			}
 			else if (token.compare("TEXTOUT") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					if (token.compare(strTrue) == 0)
 					{
 						ENCCommon::TEXTOUT = true;
@@ -162,16 +162,16 @@ bool ENCConfiguration::Open(std::string path)
 					int objectCode = 0;
 					bool objectValue = 0;
 
-					StringTokenizer *pstringTokenizerObjSettings = new StringTokenizer(strLine, " \t");
+					s100::StringTokenizer objectTokenizer(strLine, " \t");
 
-					if (pstringTokenizerObjSettings->hasMoreTokens())
+					if (objectTokenizer.hasMoreTokens())
 					{
-						token = pstringTokenizerObjSettings->nextToken();
+						token = objectTokenizer.nextToken();
 
 						objectCode = atoi(token.c_str());
-						if (pstringTokenizerObjSettings->hasMoreTokens())
+						if (objectTokenizer.hasMoreTokens())
 						{
-							token = pstringTokenizerObjSettings->nextToken();
+							token = objectTokenizer.nextToken();
 
 							int value = atoi(token.c_str());
 
@@ -179,7 +179,6 @@ bool ENCConfiguration::Open(std::string path)
 						}
 					}
 
-					delete pstringTokenizerObjSettings;
 
 					if (objectCode > 0)
 					{
@@ -189,7 +188,6 @@ bool ENCConfiguration::Open(std::string path)
 				}
 			}
 		}
-		delete pstringTokenizer;
 	}
 
 	return true;

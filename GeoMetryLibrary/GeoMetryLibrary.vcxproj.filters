@@ -97,6 +97,12 @@
     <ClInclude Include="Scaler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StringTokenizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextCodec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="GeoCommonFuc.h">
       <Filter>Header Files</Filter>
     </ClInclude>

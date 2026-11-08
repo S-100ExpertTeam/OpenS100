@@ -53,17 +53,6 @@ double GeoPointZ::GetZ()
 	return z;
 }
 
-void GeoPointZ::DrawGeometry(HDC &hDC, Scaler *scaler, double offset)
-{
-	POINT point;
-	scaler->WorldToDevice(x + offset, y, &(point.x), &(point.y));
-
-	std::wstringstream streamVal;
-	streamVal << z;
-	std::wstring strVal = streamVal.str();
-	::TextOut(hDC, point.x - 15, point.y - 30, strVal.c_str(), (int)strVal.size());
-}
-
 bool GeoPointZ::ImportFromWkb(unsigned char* value, int size)
 {
 	if (value == nullptr || value[0] != 0x01) {

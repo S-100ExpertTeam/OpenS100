@@ -249,7 +249,7 @@ void COpenS100View::OnDraw(CDC* pDC)
 			//std::future<void> drawResult = std::async(std::launch::async, [this, rect]() {
 			//	DrawFromMapRefresh(&map_dc, (CRect&)rect);
 
-			//	m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
+			//	m_strFormatedScale = CString(theApp.gisLib->GetScaler()->GetFormattedScale().c_str());
 
 			//	mem_dc.BitBlt(rect.left, rect.top, rect.Width(), rect.Height(), &map_dc, 0, 0, SRCCOPY);
 			//});
@@ -265,7 +265,7 @@ void COpenS100View::OnDraw(CDC* pDC)
 				m_Ex->DrawCoverage(theApp.gisLib->D2.pRT, theApp.gisLib->D2.pD2Factory, theApp.gisLib->GetScaler(), 0, 0);
 			}*/
 
-			m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
+			m_strFormatedScale = CString(theApp.gisLib->GetScaler()->GetFormattedScale().c_str());
 		}
 
 		mem_dc.BitBlt(rect.left, rect.top, rect.Width(), rect.Height(), &map_dc, 0, 0, SRCCOPY);
@@ -1180,7 +1180,7 @@ BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 
 	MapRefresh();
 
-	m_strFormatedScale = theApp.gisLib->GetScaler()->GetFormatedScale();
+	m_strFormatedScale = CString(theApp.gisLib->GetScaler()->GetFormattedScale().c_str());
 	CString strFomatedInfo = _T("");
 	strFomatedInfo.Format(_T("%s , %s , %s"), m_strFormatedScale, m_strFormatedLatitude, m_strFormatedLongitude);
 
@@ -1323,7 +1323,9 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 		color.a = float(0.7);
 
 		HDC hdc = g.GetHDC();
-		theApp.gisLib->GetD2D1Resources()->Begin(hdc, theApp.gisLib->GetScaler()->GetScreenRect());
+		const auto screen = theApp.gisLib->GetScaler()->GetScreenRect();
+		CRect screenRect(screen.left, screen.top, screen.right, screen.bottom);
+		theApp.gisLib->GetD2D1Resources()->Begin(hdc, screenRect);
 		if (geometry)
 		{
 			theApp.gisLib->GetD2D1Resources()->pRT->SetTransform(D2D1::Matrix3x2F::Translation(float(offsetX), float(offsetY)));
@@ -1336,7 +1338,8 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 	}
 
 	auto hdc = g.GetHDC();
-	CRect rect = theApp.gisLib->GetScaler()->GetScreenRect();
+	const auto screen2 = theApp.gisLib->GetScaler()->GetScreenRect();
+	CRect rect(screen2.left, screen2.top, screen2.right, screen2.bottom);
 	theApp.gisLib->GetD2D1Resources()->Begin(hdc, rect);
 	
 	if (encPick->GetProductNumber() == 101)

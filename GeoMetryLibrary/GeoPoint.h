@@ -20,6 +20,5 @@ public:
 	void SetPoint(double _x, double _y);
 	double GetX();
 	double GetY();
-	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
 	bool operator == (const GeoPoint& p) const;
 };

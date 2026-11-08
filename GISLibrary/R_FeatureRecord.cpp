@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "R_FeatureRecord.h"
+#include "GdiGeometryRenderer.h"
 #include "F_SPAS.h"
 #include "F_FASC.h"
 #include "F_MASK.h"
@@ -389,8 +390,7 @@ void R_FeatureRecord::Draw(HDC &hdc, Scaler *scaler, double offset)
 {
 	if (geometry != NULL)
 	{
-		geometry->DrawGeometry(hdc, scaler, offset);
-		geometry->DrawTextInfo(hdc, scaler, offset);
+		GISLibrary::GdiRender::Draw(*geometry, hdc, scaler, offset);
 	}
 }
 

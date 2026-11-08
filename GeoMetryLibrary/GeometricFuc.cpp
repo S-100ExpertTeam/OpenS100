@@ -6,6 +6,7 @@
 #include "ENCCommon.h"
 
 #include <utility>
+#include <algorithm>
 
 // -10: When there is an end point of a line on the line segment extension to be compared & a tangential line clockwise (the line segment or surface to be compared)
 // -11 : When there is an end point of a line on the line segment extension to be compared & a tangent line counterclockwise (the line segment or surface to be compared)
@@ -75,7 +76,7 @@ int GeometricFuc::intersect_ccw(double p1x, double p1y, double p2x, double p2y, 
 		{
 			return 22;
 		}
-		else if(p3x <= p1x && p1x <= p4x && min(p3y, p4y) <= p1y && max(p3y, p4y) >= p1y) 
+		else if(p3x <= p1x && p1x <= p4x && std::min(p3y, p4y) <= p1y && std::max(p3y, p4y) >= p1y) 
 		{
 			if(r342 == 1) // clockwise
 			{
@@ -110,7 +111,7 @@ int GeometricFuc::intersect_ccw(double p1x, double p1y, double p2x, double p2y, 
 		{
 			return 22;
 		}
-		else if(p3x <= p2x && p2x <= p4x && min(p3y, p4y) <= p2y && max(p3y, p4y) >= p2y) 
+		else if(p3x <= p2x && p2x <= p4x && std::min(p3y, p4y) <= p2y && std::max(p3y, p4y) >= p2y) 
 		{
 			if(r341 == 1) // clockwise
 			{
@@ -144,7 +145,7 @@ int GeometricFuc::intersect_ccw(double p1x, double p1y, double p2x, double p2y, 
 		{
 			return 12;
 		}
-		else if(p1x <= p3x && p3x <= p2x && min(p1y, p2y) <= p3y && max(p1y, p2y) >= p3y) 
+		else if(p1x <= p3x && p3x <= p2x && std::min(p1y, p2y) <= p3y && std::max(p1y, p2y) >= p3y) 
 		{
 			if(r124 == 1) // clockwise
 			{
@@ -178,7 +179,7 @@ int GeometricFuc::intersect_ccw(double p1x, double p1y, double p2x, double p2y, 
 		{
 			return 12;
 		}
-		else if(p1x <= p4x && p4x <= p2x && min(p1y, p2y) <= p4y && max(p1y, p2y) >= p4y) 
+		else if(p1x <= p4x && p4x <= p2x && std::min(p1y, p2y) <= p4y && std::max(p1y, p2y) >= p4y) 
 		{
 			if(r123 == 1) // clockwise
 			{
@@ -343,7 +344,7 @@ int GeometricFuc::overlap(double p1x, double p1y, GeoPolyline *comPoly, bool app
 			{
 				ret = 1;
 			}
-			else if (p3x <= p1x && p1x <= p4x && min(p3y, p4y) <= p1y && max(p3y, p4y) >= p1y)
+			else if (p3x <= p1x && p1x <= p4x && std::min(p3y, p4y) <= p1y && std::max(p3y, p4y) >= p1y)
 			{
 				ret = 1;
 			}
@@ -407,8 +408,8 @@ int GeometricFuc::overlap(GeoPolyline *objPoly, GeoPolyline *comPoly, bool apply
 		
 		if(r123 == 0 && r124 == 0)
 		{
-			if(	p3x <= p1x && p1x <= p4x && min(p3y, p4y) <= p1y && max(p3y, p4y) >= p1y && 
-				p3x <= p2x && p2x <= p4x && min(p3y, p4y) <= p2y && max(p3y, p4y) >= p2y)
+			if(	p3x <= p1x && p1x <= p4x && std::min(p3y, p4y) <= p1y && std::max(p3y, p4y) >= p1y && 
+				p3x <= p2x && p2x <= p4x && std::min(p3y, p4y) <= p2y && std::max(p3y, p4y) >= p2y)
 			{
 				if(i+1 == objPoly->NumPoints-1)
 				{
@@ -579,7 +580,7 @@ int GeometricFuc::inside(double x, double y, GeoPolygon *poly, bool applyOption)
 			}
 		}
 
-		double max_px = max(max(poly->Points[i].x, poly->Points[i+1].x) + 1, x + 1);
+		double max_px = std::max(std::max(poly->Points[i].x, poly->Points[i+1].x) + 1, x + 1);
 		
 		ic = intersect_ccw(x, y, max_px, y, poly->Points[i].x, poly->Points[i].y, poly->Points[i+1].x, poly->Points[i+1].y);
 		icList[listIndex++] = ic;
@@ -589,7 +590,7 @@ int GeometricFuc::inside(double x, double y, GeoPolygon *poly, bool applyOption)
 		}
 		if(ic == 0)
 		{
-			if(x > min(poly->Points[i].x, poly->Points[i+1].x) )
+			if(x > std::min(poly->Points[i].x, poly->Points[i+1].x) )
 			{
 				count = 0;
 				break;

@@ -1,5 +1,10 @@
 #include "stdafx.h"
 #include "Scaler.h"
+#include <utility>
+#include <limits>
+#include <cmath>
+#include <array>
+#include <algorithm>
 #include "GeoCommonFuc.h"
 #include "MBR.h"
 #include "GeoPoint.h"
@@ -96,19 +101,9 @@ void Scaler::WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate
 	sox = (sxMax + sxMin) / 2;
 	soy = (syMax + syMin) / 2;
 
-	*sx = (LONG)((mx - mox) / currentRatio + sox);
-	*sy = (LONG)((moy - my) / currentRatio + soy);
+	*sx = (long)((mx - mox) / currentRatio + sox);
+	*sy = (long)((moy - my) / currentRatio + soy);
 
-}
-
-void Scaler::WorldToDevice(D2D1_POINT_2F& p)
-{
-	long sx = 0;
-	long sy = 0;
-	WorldToDevice(p.x, p.y, &sx, &sy);
-
-	p.x = (float)sx;
-	p.y = (float)sy;
 }
 
 #pragma warning(disable:4244)
@@ -149,19 +144,12 @@ void Scaler::WorldToDevice_F(double mx, double my, float *sx, float *sy, bool ro
 	*sy = (float)((moy - my) / currentRatio + soy);
 }
 
-void Scaler::SetScreen(RECT *rect)
+void Scaler::SetScreen(long left, long top, long right, long bottom)
 {
-	if (rect == nullptr) return;
-
-	SetScreen(*rect);
-}
-
-void Scaler::SetScreen(const RECT& rect)
-{
-	sxMin = rect.left;
-	syMin = rect.top;
-	sxMax = rect.right;
-	syMax = rect.bottom;
+	sxMin = left;
+	syMin = top;
+	sxMax = right;
+	syMax = bottom;
 
 	sox = (sxMin + sxMax) / 2;
 	soy = (syMin + syMax) / 2;
@@ -186,15 +174,15 @@ void Scaler::SetMap(MBR mbr)
 	SetMap(mbr.xmin, mbr.ymin, mbr.xmax, mbr.ymax);
 }
 
-void Scaler::SetMap(RECT r)
+void Scaler::SetMapFromScreen(long left, long top, long right, long bottom)
 {
 	double xmin = 0;
 	double ymin = 0;
 	double xmax = 0;
 	double ymax = 0;
 
-	DeviceToWorld(r.left, r.bottom, &xmin, &ymin);
-	DeviceToWorld(r.right, r.top, &xmax, &ymax);
+	DeviceToWorld(left, bottom, &xmin, &ymin);
+	DeviceToWorld(right, top, &xmax, &ymax);
 
 	SetMap(xmin, ymin, xmax, ymax);
 }
@@ -273,54 +261,22 @@ void Scaler::SetScale(int scale)
 	UpdateScale();
 }
 
-CString Scaler::GetFormatedScale()
+std::wstring Scaler::GetFormattedScale() const
 {
-	CString str;
-	double Scale = GetCurrentScale();
-
-	CString newStr, strComma;
-
-	strComma.Format(_T(","));
-	str.Format(_T("%.lf"), Scale);
-
-	int addedLength;
-
-	if ((str.GetLength() % 3) == 0) {
-		addedLength = (str.GetLength() / 3) - 1;
-	}
-	else {
-		addedLength = (str.GetLength() / 3);
-	}
-
-	newStr = str;
-
-	for (int k = 0; k < addedLength; k++) {
-		newStr.AppendChar('a');
-	}
-
-	int cnt = 0;
-
-	int i = str.GetLength() - 1;
-	int j = newStr.GetLength() - 1;
-
-	for (; i >= 0;) {
-		newStr.SetAt(j, str.GetAt(i));
-		j--;
-		i--;
-		cnt++;
-
-		if ((cnt == 3) && (j >= 0)) {
-			newStr.SetAt(j, strComma.GetAt(0));
-			j--;
-			cnt = 0;
+	// Thousands grouping of the integral scale, e.g. 1 : 12,345
+	const auto digits = std::to_wstring(static_cast<long long>(currentScale));
+	std::wstring grouped;
+	int count = 0;
+	for (auto it = digits.rbegin(); it != digits.rend(); ++it)
+	{
+		if (count != 0 && count % 3 == 0)
+		{
+			grouped.insert(grouped.begin(), L',');
 		}
+		grouped.insert(grouped.begin(), *it);
+		++count;
 	}
-
-	str.Format(_T("1 : "));
-	str.AppendFormat(newStr);
-
-
-	return str;
+	return L"1 : " + grouped;
 }
 
 int Scaler::GetRotationDegree()
@@ -450,8 +406,8 @@ void Scaler::MoveMap(int sx, int sy, double mx, double my)
 {
 	PrivateMoveMap(sx, sy, mx, my);
 
-	LONG sx1 = 0, sy1 = 0;     // On the right side of the map.
-	LONG sx2 = 0, sy2 = 0;	   // The left side of the map.
+	long sx1 = 0, sy1 = 0;     // On the right side of the map.
+	long sx2 = 0, sy2 = 0;	   // The left side of the map.
 
 	double x = 180;
 	double y = 0;
@@ -630,65 +586,33 @@ MBR Scaler::GetMap()
 		return MBR (mxMin, myMin, mxMax, myMax);
 	}
 	else {
-		Gdiplus::PointF l_u(mxMin - mox, myMax - moy);
-		Gdiplus::PointF l_d(mxMin - mox, myMin - moy);
-		Gdiplus::PointF r_u(mxMax - mox, myMax - moy);
-		Gdiplus::PointF r_d(mxMax - mox, myMin - moy);
+		// Rotate the four view corners about the map origin and take their bounding box.
+		const double radian = rotateDegree * DEG2RAD;
+		const double sinValue = std::sin(radian);
+		const double cosValue = std::cos(radian);
 
-		double radian = (rotateDegree)*DEG2RAD;
-		double sinValue = sin(radian);
-		double cosValue = cos(radian);
+		const std::array<std::pair<double, double>, 4> corners{ {
+			{ mxMin - mox, myMax - moy },
+			{ mxMin - mox, myMin - moy },
+			{ mxMax - mox, myMax - moy },
+			{ mxMax - mox, myMin - moy } } };
 
-		FLOAT tempX = l_u.Y * sinValue + l_u.X * cosValue;
-		FLOAT tempY = l_u.Y * cosValue - l_u.X * sinValue;
+		double mxMinCalcMBR = std::numeric_limits<double>::max();
+		double mxMaxCalcMBR = std::numeric_limits<double>::lowest();
+		double myMinCalcMBR = std::numeric_limits<double>::max();
+		double myMaxCalcMBR = std::numeric_limits<double>::lowest();
 
-		l_u.X = tempX;
-		l_u.Y = tempY;
+		for (const auto& [x, y] : corners)
+		{
+			const double rx = y * sinValue + x * cosValue;
+			const double ry = y * cosValue - x * sinValue;
+			mxMinCalcMBR = std::min(mxMinCalcMBR, rx);
+			mxMaxCalcMBR = std::max(mxMaxCalcMBR, rx);
+			myMinCalcMBR = std::min(myMinCalcMBR, ry);
+			myMaxCalcMBR = std::max(myMaxCalcMBR, ry);
+		}
 
-		tempX = l_d.Y * sinValue + l_d.X * cosValue;
-		tempY = l_d.Y * cosValue - l_d.X * sinValue;
-
-		l_d.X = tempX;
-		l_d.Y = tempY;
-
-		tempX = r_u.Y * sinValue + r_u.X * cosValue;
-		tempY = r_u.Y * cosValue - r_u.X * sinValue;
-
-		r_u.X = tempX;
-		r_u.Y = tempY;
-
-		tempX = r_d.Y * sinValue + r_d.X * cosValue;
-		tempY = r_d.Y * cosValue - r_d.X * sinValue;
-
-		r_d.X = tempX;
-		r_d.Y = tempY;
-
-		double mxMinCalcMBR = l_u.X;
-		double mxMaxCalcMBR = l_u.X;
-		double myMinCalcMBR = l_u.Y;
-		double myMaxCalcMBR = l_u.Y;
-
-		mxMinCalcMBR = l_d.X < mxMinCalcMBR ? l_d.X : mxMinCalcMBR;
-		mxMaxCalcMBR = l_d.X > mxMaxCalcMBR ? l_d.X : mxMaxCalcMBR;
-		myMinCalcMBR = l_d.Y < myMinCalcMBR ? l_d.Y : myMinCalcMBR;
-		myMaxCalcMBR = l_d.Y > myMaxCalcMBR ? l_d.Y : myMaxCalcMBR;
-
-		mxMinCalcMBR = r_u.X < mxMinCalcMBR ? r_u.X : mxMinCalcMBR;
-		mxMaxCalcMBR = r_u.X > mxMaxCalcMBR ? r_u.X : mxMaxCalcMBR;
-		myMinCalcMBR = r_u.Y < myMinCalcMBR ? r_u.Y : myMinCalcMBR;
-		myMaxCalcMBR = r_u.Y > myMaxCalcMBR ? r_u.Y : myMaxCalcMBR;
-
-		mxMinCalcMBR = r_d.X < mxMinCalcMBR ? r_d.X : mxMinCalcMBR;
-		mxMaxCalcMBR = r_d.X > mxMaxCalcMBR ? r_d.X : mxMaxCalcMBR;
-		myMinCalcMBR = r_d.Y < myMinCalcMBR ? r_d.Y : myMinCalcMBR;
-		myMaxCalcMBR = r_d.Y > myMaxCalcMBR ? r_d.Y : myMaxCalcMBR;
-
-		mxMinCalcMBR += mox;
-		mxMaxCalcMBR += mox;
-		myMinCalcMBR += moy;
-		myMaxCalcMBR += moy;
-
-		return MBR(mxMinCalcMBR, myMinCalcMBR, mxMaxCalcMBR, myMaxCalcMBR);
+		return MBR(mxMinCalcMBR + mox, myMinCalcMBR + moy, mxMaxCalcMBR + mox, myMaxCalcMBR + moy);
 	}
 }
 
@@ -701,30 +625,24 @@ double Scaler::GetScreenWidthKM()
 }
 
 #pragma warning(disable:4244)
-int Scaler::GetScreenWidth()
+int Scaler::GetScreenWidth() const
 {
 	return sxMax - sxMin + 1;
 }
 
-int Scaler::GetScreenHeight()
+int Scaler::GetScreenHeight() const
 {
 	return syMax - syMin + 1;
 }
 
-CRect Scaler::GetScreenRect()
+ScreenRect Scaler::GetScreenRect() const
 {
-	return CRect(0, 0, GetScreenWidth(), GetScreenHeight());
+	return ScreenRect{ 0, 0, GetScreenWidth(), GetScreenHeight() };
 }
 
 
 
 
-
-#pragma warning(disable:4244)
-D2D1_RECT_F Scaler::GetD2Rect()
-{
-	return D2D1::RectF(0, 0, GetScreenWidth(), GetScreenHeight());
-}
 
 bool Scaler::PtInMap(double _x, double _y)
 {
@@ -734,53 +652,6 @@ bool Scaler::PtInMap(double _x, double _y)
 	}
 
 	return false;
-}
-
-#pragma warning(disable:4244)
-D2D1::Matrix3x2F Scaler::GetMatrix()
-{
-	D2D1::Matrix3x2F result = D2D1::Matrix3x2F::Identity();
-
-	auto translation1 = D2D1::Matrix3x2F::Translation(-mox, moy);
-	double ratio = (sxMax - sxMin) / (mxMax - mxMin);
-	auto scale = D2D1::Matrix3x2F::Scale(ratio, ratio);
-	auto translation2 = D2D1::Matrix3x2F::Translation(sox, soy);
-
-	result = translation1 * scale * translation2;
-
-	return result;
-}
-
-D2D1::Matrix3x2F Scaler::GetInverseMatrix()
-{
-	auto matrix = GetMatrix();
-	matrix.Invert();
-	return matrix;
-}
-
-D2D1::Matrix3x2F Scaler::GetMatrixWithoutTranform()
-{
-	D2D1::Matrix3x2F result = D2D1::Matrix3x2F::Identity();
-
-	double ratio = (sxMax - sxMin) / (mxMax - mxMin);
-	auto scale = D2D1::Matrix3x2F::Scale(ratio, ratio, D2D1::Point2F(-mox, moy));
-	result = scale;
-	return result;
-}
-
-D2D1::Matrix3x2F Scaler::GetInverseMatrixWithoutTransform()
-{
-	auto matrix = GetMatrixWithoutTranform();
-	matrix.Invert();
-	return matrix;
-}
-
-CRect Scaler::WGS84MBRtoCRect(MBR& mbr)
-{
-	CRect rect;
-	WorldToDevice(mbr.GetXMin(), mbr.GetYMin(), &rect.left, &rect.bottom);
-	WorldToDevice(mbr.GetXMax(), mbr.GetYMax(), &rect.right, &rect.top);
-	return rect;
 }
 
 double Scaler::GetMapXMin()

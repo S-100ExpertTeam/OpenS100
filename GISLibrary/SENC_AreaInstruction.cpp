@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_AreaInstruction.h"
 #include "D2DGeometryCache.h"
@@ -203,7 +204,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 					{
 						bitmapImage->pBitmapBrush = pc->GetS100PCManager()->CreateBitmapBrush(bitmapImage, rt);
 						imageBrush = bitmapImage->pBitmapBrush;
-						imageBrush->SetTransform(scaler->GetInverseMatrix());
+						imageBrush->SetTransform(GISLibrary::D2DView::InverseMatrix(*scaler));
 					}
 				}
 

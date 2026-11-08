@@ -22,5 +22,4 @@ public:
 
 public:
 	void SetPoint(int index, double _x, double _y);
-	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
 };

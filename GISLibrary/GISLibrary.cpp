@@ -285,12 +285,12 @@ void CGISLibraryApp::DeviceToWorld(D2D1_POINT_2F& p)
 void CGISLibraryApp::SetScreen(RECT* rect)
 {
 	if (rect == nullptr) return;
-	m_pScaler->SetScreen(rect);
+	SetScreen(*rect);
 }
 
 void CGISLibraryApp::SetScreen(const RECT& rect)
 {
-	m_pScaler->SetScreen(rect);
+	m_pScaler->SetScreen(rect.left, rect.top, rect.right, rect.bottom);
 }
 
 int CGISLibraryApp::GetCenterXScreen()

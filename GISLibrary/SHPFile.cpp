@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SHPFile.h"
 #include "BinaryFile.h"
+#include "GdiGeometryRenderer.h"
 
 SHPFile::SHPFile(void) : SpatialObject()
 {
@@ -180,7 +181,6 @@ bool SHPFile::Open(CString _filepath)
 				((GeoPolyline *)m_pSHPObject[i])->NumPoints = numPoints;
 				((GeoPolyline *)m_pSHPObject[i])->Parts = parts;
 				((GeoPolyline *)m_pSHPObject[i])->Points = points;
-				((GeoPolyline *)m_pSHPObject[i])->CPoints = new CPoint[numPoints];
 			}
 
 			break;
@@ -251,7 +251,6 @@ bool SHPFile::Open(CString _filepath)
 				((GeoPolyline *)m_pSHPObject[i])->NumPoints = numPoints;
 				((GeoPolyline *)m_pSHPObject[i])->Parts = parts;
 				((GeoPolyline *)m_pSHPObject[i])->Points = points;
-				((GeoPolyline *)m_pSHPObject[i])->CPoints = new CPoint[numPoints];
 			}
 
 			break;
@@ -273,7 +272,7 @@ void SHPFile::Draw(HDC &hDC, Scaler *scaler, double offset)
 	projection(offset, zero);
 
 	for (unsigned int i = 0; i < m_nRecords; i++) {
-		m_pSHPObject[i]->DrawGeometry(hDC, scaler, offset);
+		GISLibrary::GdiRender::Draw(*m_pSHPObject[i], hDC, scaler, offset);
 	}
 }
 

@@ -52,7 +52,7 @@ def scan(project: str):
 
 # Projects that have reached zero. Any taint here fails the check even without --fail,
 # so a regression is caught by whoever runs the gauge (and by CI).
-CLEAN_PROJECTS = ["FeatureCatalog", "PortrayalCatalogue"]
+CLEAN_PROJECTS = ["FeatureCatalog", "PortrayalCatalogue", "GeoMetryLibrary"]
 
 
 def main(argv):

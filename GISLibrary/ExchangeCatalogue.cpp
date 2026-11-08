@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DView.h"
 #include "ExchangeCatalogue.h"
 #include "D2DGeometryCache.h"
 #include "GISLibrary.h"
@@ -254,7 +255,7 @@ namespace S100
             S10XGML* cls = new S10XGML();
             auto sSurface = cls->SurfaceToSSurface(object);
             brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-            pD2->pRT->SetTransform(scaler->GetMatrix());
+            pD2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
             pD2->pRT->DrawGeometry(GISLibrary::D2DGeometry::Get(sSurface, pD2->Factory()), brush, 1.0, pD2->SolidStrokeStyle());
 
             delete object;
@@ -285,7 +286,7 @@ namespace S100
             //Datacorverage
             for (int j = 0; j < ddm.dataCoverage.size(); j++)
             {
-                pD2->pRT->SetTransform(scaler->GetMatrix());
+                pD2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
 
                  auto dc = ddm.dataCoverage[j]; 
                  auto object = new GM::Surface();

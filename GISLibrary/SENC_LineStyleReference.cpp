@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_LineStyleReference.h"
 #include "GISLibrary.h"
@@ -88,7 +89,7 @@ void SENC_LineStyleReference::DrawInstruction(
 			else
 			{
 				//pc->GetS100Render().DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
-				s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
+				s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler));
 				SafeRelease(&pBitmap);
 			}
 		}

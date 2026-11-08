@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Geometry.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
+#include "TextCodec.h"
 #include "..\\LatLonUtility\\cpp_util.h"
 
 #include <fstream>
@@ -51,7 +51,7 @@ std::string Geometry::GetID()
 
 std::wstring Geometry::GetIDAsWString()
 {
-	return LibMFCUtil::StringToWString(GetID());
+	return s100::text::ToWide(GetID());
 }
 
 int Geometry::GetIDAsInt()
@@ -66,7 +66,7 @@ void Geometry::SetID(std::string value)
 
 void Geometry::SetID(std::wstring value)
 {
-	SetID(LibMFCUtil::WStringToString(value));
+	SetID(s100::text::ToUtf8(value));
 }
 
 void Geometry::SetID(int value)

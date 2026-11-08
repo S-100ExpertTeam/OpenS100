@@ -81,21 +81,3 @@ void GeoMultiPoint::SetPoint(int index, double _x, double _y)
 	m_pPoints[index].SetPoint(_x, _y);
 }
 
-void GeoMultiPoint::DrawGeometry(HDC& hDC, Scaler* scaler, double offset)
-{
-	POINT point;
-	HBRUSH m_hBrush = (HBRUSH)GetStockObject(RGB(255, 191, 221));
-
-	for (unsigned i = 0; i < m_numPoints; i++)
-	{
-		scaler->WorldToDevice(m_pPoints[i].x + offset, m_pPoints[i].y, &(point.x), &(point.y));
-
-		RECT r;
-		r.left = point.x - 2;
-		r.top = point.y - 2;
-		r.right = point.x + 2;
-		r.bottom = point.y + 2;
-		::FillRect(hDC, &r, m_hBrush);
-	}
-}
-

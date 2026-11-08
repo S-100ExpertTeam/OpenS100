@@ -2,8 +2,8 @@
 #include "ENCCommon.h"
 #include "comutil.h"
 
-#include "..\\LibMFCUtil\\LibMFCUtil.h"
-#include "..\\LibMFCUtil\\StringTokenizer.h"
+#include "TextCodec.h"
+#include "StringTokenizer.h"
 
 #include <filesystem>
 #include <fstream>
@@ -151,10 +151,7 @@ bool ENCCommon::Save(std::string filePath)
 
 bool ENCCommon::Save(std::wstring filePath)
 {
-	auto* narrow = LibMFCUtil::ConvertWCtoC((wchar_t*)filePath.c_str());
-	bool result = Save(std::string(narrow));
-	delete[] narrow;
-	return result;
+	return Save(s100::text::ToUtf8(filePath));
 }
 
 bool ENCCommon::Open(std::string filePath)
@@ -178,18 +175,18 @@ bool ENCCommon::Open(std::string filePath)
 		if (opt.compare("*") == 0)
 			continue;
 
-		StringTokenizer *pstringTokenizer = new StringTokenizer(strLine, " \t");
+		s100::StringTokenizer tokenizer(strLine, " \t");
 		strLine.clear();
 
-		if (pstringTokenizer->hasMoreTokens())
+		if (tokenizer.hasMoreTokens())
 		{
-			std::string token = pstringTokenizer->nextToken();
+			std::string token = tokenizer.nextToken();
 
 			if (token.compare("APPLY_SCALE_MIN") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					if (token.compare(strTrue) == 0)
 					{
 						ENCCommon::APPLY_SCALE_MIN = true;
@@ -202,57 +199,57 @@ bool ENCCommon::Open(std::string filePath)
 			}
 			else if (token.compare("DEEP_CONTOUR") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::DEEP_CONTOUR = atof(token.c_str());
 				}
 			}
 			else if (token.compare("DISPLAY_MODE") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::DISPLAY_MODE = static_cast<GeoMetryLibrary::DisplayModeTable>(atoi(token.c_str()));
 				}
 			}
 			else if (token.compare("SAFETY_CONTOUR") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::SAFETY_CONTOUR = atof(token.c_str());
 				}
 			}
 			else if (token.compare("DISPLAY_FONT_NAME") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::DISPLAY_FONT_NAME = token;
 				}
 			}
 			else if (token.compare("DISPLAY_FONT_SIZE") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::DISPLAY_FONT_SIZE = atoi(token.c_str());
 				}
 			}
 			else if (token.compare("SHALLOW_CONTOUR") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::SHALLOW_CONTOUR = atof(token.c_str());
 				}
 			}
 			else if (token.compare("FULL_SECTORS") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					if (token.compare(strTrue) == 0)
 					{
 						ENCCommon::FULL_SECTORS = true;
@@ -265,9 +262,9 @@ bool ENCCommon::Open(std::string filePath)
 			}
 			else if (token.compare("TEXTOUT") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					if (token.compare(strTrue) == 0)
 					{
 						ENCCommon::TEXTOUT = true;
@@ -281,9 +278,9 @@ bool ENCCommon::Open(std::string filePath)
 			//Load Day Dusk Night.
 			else if (token.compare("m_eColorTable") == 0)
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					ENCCommon::m_eColorTable = static_cast<GeoMetryLibrary::ColorTable>(atoi(token.c_str()));
 
 					if (ENCCommon::m_eColorTable == GeoMetryLibrary::ColorTable::Day)
@@ -302,9 +299,9 @@ bool ENCCommon::Open(std::string filePath)
 			}
 			else if (token.compare("Show_INFORM01")==0) 
 			{
-				if (pstringTokenizer->hasMoreTokens())
+				if (tokenizer.hasMoreTokens())
 				{
-					token = pstringTokenizer->nextToken();
+					token = tokenizer.nextToken();
 					if (token.compare(strTrue) == 0)
 					{
 						ENCCommon::Show_INFORM01 = true;
@@ -323,16 +320,16 @@ bool ENCCommon::Open(std::string filePath)
 					int objectCode = 0;
 					bool objectValue = 0;
 
-					StringTokenizer *pstringTokenizerObjSettings = new StringTokenizer(strLine, " \t");
+					s100::StringTokenizer objectTokenizer(strLine, " \t");
 
-					if (pstringTokenizerObjSettings->hasMoreTokens())
+					if (objectTokenizer.hasMoreTokens())
 					{
-						token = pstringTokenizerObjSettings->nextToken();
+						token = objectTokenizer.nextToken();
 
 						objectCode = atoi(token.c_str());
-						if (pstringTokenizerObjSettings->hasMoreTokens())
+						if (objectTokenizer.hasMoreTokens())
 						{
-							token = pstringTokenizerObjSettings->nextToken();
+							token = objectTokenizer.nextToken();
 
 							int value = atoi(token.c_str());
 
@@ -340,29 +337,21 @@ bool ENCCommon::Open(std::string filePath)
 						}
 					}
 
-					delete pstringTokenizerObjSettings;
 
 					getline(ifs, strLine);
 				}
 			}
 		}
-		delete pstringTokenizer;
 	}
 	return true;
 }
 
 bool ENCCommon::Open(std::wstring filePath)
 {
-	auto* narrow = LibMFCUtil::ConvertWCtoC((wchar_t*)filePath.c_str());
-	bool result = Open(std::string(narrow));
-	delete[] narrow;
-	return result;
+	return Open(s100::text::ToUtf8(filePath));
 }
 
 std::wstring ENCCommon::getDisplayFontNameW()
 {
-	auto* wide = LibMFCUtil::ConvertCtoWC((char*)DISPLAY_FONT_NAME.c_str());
-	std::wstring result(wide);
-	delete[] wide;
-	return result;
+	return s100::text::ToWide(DISPLAY_FONT_NAME);
 }
