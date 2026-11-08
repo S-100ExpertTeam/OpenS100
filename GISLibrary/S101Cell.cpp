@@ -251,70 +251,55 @@ void S101Cell::RemoveAll(void)
 	}
 	updates.clear();
 
-	POSITION pos = NULL;
-	__int64 iKey;
+	std::int64_t iKey;
 	R_InformationRecord* ir;
-	pos = m_infMap.GetStartPosition();
-	while (pos != NULL)
+	for (auto& [iKey, ir] : m_infMap)
 	{
-		m_infMap.GetNextAssoc(pos, iKey, ir);
 		delete ir;
 	}
-	m_infMap.RemoveAll();
+	m_infMap.clear();
 
 	R_PointRecord* pr;
-	pos = m_ptMap.GetStartPosition();
-	while (pos != NULL)
+	for (auto& [iKey, pr] : m_ptMap)
 	{
-		m_ptMap.GetNextAssoc(pos, iKey, pr);
 		delete pr;
 	}
-	m_ptMap.RemoveAll();
+	m_ptMap.clear();
 
 	R_MultiPointRecord* mr;
-	pos = m_mpMap.GetStartPosition();
-	while (pos != NULL)
+	for (auto& [iKey, mr] : m_mpMap)
 	{
-		m_mpMap.GetNextAssoc(pos, iKey, mr);
 		delete mr;
 	}
-	m_mpMap.RemoveAll();
+	m_mpMap.clear();
 
 	R_CurveRecord* cr;
-	pos = m_curMap.GetStartPosition();
-	while (pos != NULL)
+	for (auto& [iKey, cr] : m_curMap)
 	{
-		m_curMap.GetNextAssoc(pos, iKey, cr);
 		delete cr;
 	}
-	m_curMap.RemoveAll();
+	m_curMap.clear();
 
 	R_CompositeRecord* ccr;
-	pos = m_comMap.GetStartPosition();
-	while (pos != NULL)
+	for (auto& [iKey, ccr] : m_comMap)
 	{
-		m_comMap.GetNextAssoc(pos, iKey, ccr);
 		delete ccr;
 	}
-	m_comMap.RemoveAll();
+	m_comMap.clear();
 
 	R_SurfaceRecord* sr;
-	pos = m_surMap.GetStartPosition();
-	while (pos != NULL)
+	for (auto& [iKey, sr] : m_surMap)
 	{
-		m_surMap.GetNextAssoc(pos, iKey, sr);
 		delete sr;
 	}
-	m_surMap.RemoveAll();
+	m_surMap.clear();
 
 	R_FeatureRecord* fr;
-	pos = m_feaMap.GetStartPosition();
-	while (pos != NULL)
+	for (auto& [iKey, fr] : m_feaMap)
 	{
-		m_feaMap.GetNextAssoc(pos, iKey, fr);
 		delete fr;
 	}
-	m_feaMap.RemoveAll();
+	m_feaMap.clear();
 
 	m_feaMatchingKeys.clear();
 	m_infMatchingKeys.clear();
@@ -322,13 +307,13 @@ void S101Cell::RemoveAll(void)
 
 void S101Cell::ClearAll(void)
 {
-	m_infMap.RemoveAll();
-	m_ptMap.RemoveAll();
-	m_mpMap.RemoveAll();
-	m_curMap.RemoveAll();
-	m_comMap.RemoveAll();
-	m_surMap.RemoveAll();
-	m_feaMap.RemoveAll();
+	m_infMap.clear();
+	m_ptMap.clear();
+	m_mpMap.clear();
+	m_curMap.clear();
+	m_comMap.clear();
+	m_surMap.clear();
+	m_feaMap.clear();
 
 	m_feaMatchingKeys.clear();
 	m_infMatchingKeys.clear();
@@ -643,16 +628,11 @@ bool S101Cell::ReadDDR(BYTE*& buf)
 
 void S101Cell::SortByFeatureType()
 {
-	POSITION spasPos = NULL;
 
 	R_FeatureRecord* fr;
 
-	POSITION pos = m_feaMap.GetStartPosition();
-	__int64 iKey;
-
-	while (pos)
+	for (auto& [iKey, fr] : m_feaMap)
 	{
-		m_feaMap.GetNextAssoc(pos, iKey, fr);
 		if (fr->m_spas.size() == 0)
 			continue;
 	}
@@ -660,15 +640,10 @@ void S101Cell::SortByFeatureType()
 
 bool S101Cell::MakeFullSpatialData()
 {
-	POSITION spasPos = NULL;
 	R_FeatureRecord* fr = nullptr;
 
-	POSITION pos = m_feaMap.GetStartPosition();
-	__int64 iKey = 0;
-
-	while (pos)
+	for (auto& [iKey, fr] : m_feaMap)
 	{
-		m_feaMap.GetNextAssoc(pos, iKey, fr);
 		if (fr->m_spas.size() == 0)
 		{
 			continue;
@@ -716,8 +691,8 @@ bool S101Cell::MakePointData(R_FeatureRecord* fe)
 		{
 			SPAS* spas = *itor;
 
-			__int64 iKey = ((__int64)spas->m_name.RCNM) << 32 | spas->m_name.RCID;
-			if (m_ptMap.Lookup(iKey, r))
+			std::int64_t iKey = ((std::int64_t)spas->m_name.RCNM) << 32 | spas->m_name.RCID;
+			if (s100::Lookup(m_ptMap, iKey, r))
 			{
 				if (r->m_c2it)
 				{
@@ -736,7 +711,7 @@ bool S101Cell::MakePointData(R_FeatureRecord* fe)
 bool S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 {
 	R_MultiPointRecord* r;
-	__int64 iKey;
+	std::int64_t iKey;
 
 	if (fe->geometry)
 	{
@@ -754,8 +729,8 @@ bool S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 		{
 			SPAS* spas = *itor;
 
-			iKey = ((__int64)spas->m_name.RCNM) << 32 | spas->m_name.RCID;
-			if (m_mpMap.Lookup(iKey, r))
+			iKey = ((std::int64_t)spas->m_name.RCNM) << 32 | spas->m_name.RCID;
+			if (s100::Lookup(m_mpMap, iKey, r))
 			{
 				geo->SetID(r->GetRCID());
 				GetFullSpatialData(r, geo);
@@ -784,11 +759,11 @@ bool S101Cell::MakeLineData(R_FeatureRecord* fe)
 		for (auto j = spasParent->m_arr.begin(); j != spasParent->m_arr.end(); j++)
 		{
 			SPAS* spas = *j;
-			__int64 iKey = ((__int64)spas->m_name.RCNM) << 32 | spas->m_name.RCID;
+			std::int64_t iKey = ((std::int64_t)spas->m_name.RCNM) << 32 | spas->m_name.RCID;
 
 			if (spas->m_name.RCNM == 120)
 			{
-				if (m_curMap.Lookup(iKey, cr))
+				if (s100::Lookup(m_curMap, iKey, cr))
 				{
 					auto sc = new SCurve();
 					fe->geometry = sc;
@@ -798,7 +773,7 @@ bool S101Cell::MakeLineData(R_FeatureRecord* fe)
 			}
 			else if (spas->m_name.RCNM == 125)
 			{
-				if (m_comMap.Lookup(iKey, ccr))
+				if (s100::Lookup(m_comMap, iKey, ccr))
 				{
 					auto scc = new SCompositeCurve();
 					fe->geometry = scc;
@@ -823,7 +798,7 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	}
 
 	R_SurfaceRecord* sr = nullptr;
-	__int64 iKey;
+	std::int64_t iKey;
 
 	std::vector<POINT> vecPoint;
 	std::vector<int> boundaryList;
@@ -842,7 +817,7 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 
 			iKey = spas->m_name.GetName();
 
-			if (m_surMap.Lookup(iKey, sr))
+			if (s100::Lookup(m_surMap, iKey, sr))
 			{
 				geo->SetID(sr->GetRCID());
 
@@ -858,7 +833,7 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 						if (rias->m_name.RCNM == 120)
 						{
 							R_CurveRecord* cr = nullptr;
-							if (m_curMap.Lookup(iKey, cr))
+							if (s100::Lookup(m_curMap, iKey, cr))
 							{
 								SCurve* sCurve = new SCurve();
 								sCurve->SetID(cr->GetRCID());
@@ -874,7 +849,7 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 						else if (rias->m_name.RCNM == 125)
 						{
 							R_CompositeRecord* ccr = nullptr;
-							if (m_comMap.Lookup(iKey, ccr))
+							if (s100::Lookup(m_comMap, iKey, ccr))
 							{
 								auto compositeCurve = new SCompositeCurve();
 								compositeCurve->SetID(ccr->GetRCID());
@@ -919,7 +894,7 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
 			R_InformationRecord* info = nullptr;
-			if (TRUE == m_infMap.Lookup(infoKey, info))
+			if (TRUE == s100::Lookup(m_infMap, infoKey, info))
 			{
 				geo->AddInformationType(info);
 			}
@@ -966,7 +941,7 @@ bool S101Cell::GetFullSpatialData(R_PointRecord* r, SPoint* point)
 		auto f_inas = *i;
 		auto infoKey = f_inas->m_name.GetName();
 		R_InformationRecord* info = nullptr;
-		if (TRUE == m_infMap.Lookup(infoKey, info))
+		if (TRUE == s100::Lookup(m_infMap, infoKey, info))
 		{
 			point->AddInformationType(info);
 		}
@@ -1006,7 +981,7 @@ bool S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
 			R_InformationRecord* info = nullptr;
-			if (TRUE == m_infMap.Lookup(infoKey, info))
+			if (TRUE == s100::Lookup(m_infMap, infoKey, info))
 			{
 				multiPoint->AddInformationType(info);
 			}
@@ -1221,7 +1196,7 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
 			R_InformationRecord* info = nullptr;
-			if (TRUE == m_infMap.Lookup(infoKey, info))
+			if (TRUE == s100::Lookup(m_infMap, infoKey, info))
 			{
 				curve->AddInformationType(info);
 			}
@@ -1251,7 +1226,7 @@ bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 			{
 				R_CurveRecord* cr = nullptr;
 
-				if (m_curMap.Lookup(iKey, cr))
+				if (s100::Lookup(m_curMap, iKey, cr))
 				{
 					SCurve* scurve = new SCurve();
 					scurve->SetID(cuco->m_name.RCID);
@@ -1288,7 +1263,7 @@ bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 			{
 				R_CompositeRecord* ccr = nullptr;
 
-				if (m_comMap.Lookup(iKey, ccr))
+				if (s100::Lookup(m_comMap, iKey, ccr))
 				{
 					auto scc = new SCompositeCurve();
 					scc->SetID(cuco->m_name.RCID);
@@ -1316,7 +1291,7 @@ bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 		auto f_inas = *i;
 		auto infoKey = f_inas->m_name.GetName();
 		R_InformationRecord* info = nullptr;
-		if (TRUE == m_infMap.Lookup(infoKey, info))
+		if (TRUE == s100::Lookup(m_infMap, infoKey, info))
 		{
 			curve->AddInformationType(info);
 		}
@@ -1422,11 +1397,9 @@ MBR S101Cell::CalcMBR()
 
 	R_FeatureRecord* fr = nullptr;
 
-	__int64 iKey;
-	POSITION pos = m_feaMap.GetStartPosition();
-	while (pos != NULL)
+	std::int64_t iKey;
+	for (auto& [iKey, fr] : m_feaMap)
 	{
-		m_feaMap.GetNextAssoc(pos, iKey, fr);
 		if (fr->geometry)
 		{
 			if (fr->geometry->GetType() == SGeometryType::Surface)
@@ -1467,11 +1440,9 @@ MBR S101Cell::ReMBR()
 
 	R_FeatureRecord* fr = nullptr;
 
-	__int64 iKey;
-	POSITION pos = m_feaMap.GetStartPosition();
-	while (pos != NULL)
+	std::int64_t iKey;
+	for (auto& [iKey, fr] : m_feaMap)
 	{
-		m_feaMap.GetNextAssoc(pos, iKey, fr);
 		if (fr->geometry)
 		{
 			if (fr->geometry->GetType() == SGeometryType::Surface)
@@ -1715,32 +1686,32 @@ void S101Cell::InsertRecord(Record* record)
 	}
 }
 
-void S101Cell::InsertInformationRecord(__int64 key, R_InformationRecord* record)
+void S101Cell::InsertInformationRecord(std::int64_t key, R_InformationRecord* record)
 {
 	R_InformationRecord* informationRecord = nullptr;
-	if (TRUE == m_infMap.Lookup(key, informationRecord))
+	if (TRUE == s100::Lookup(m_infMap, key, informationRecord))
 	{
 		if (!informationRecord)
 		{
-			m_infMap.SetAt(key, record);
+			m_infMap.insert_or_assign(key, record);
 			vecInformation.push_back(record);
 		}
 	}
 	else
 	{
-		m_infMap.SetAt(key, record);
+		m_infMap.insert_or_assign(key, record);
 		vecInformation.push_back(record);
 	}
 }
 
-void S101Cell::RemoveInformationRecord(__int64 key)
+void S101Cell::RemoveInformationRecord(std::int64_t key)
 {
 	R_InformationRecord* informationRecord = nullptr;
-	if (TRUE == m_infMap.Lookup(key, informationRecord))
+	if (TRUE == s100::Lookup(m_infMap, key, informationRecord))
 	{
 		if (informationRecord)
 		{
-			m_infMap.RemoveKey(key);
+			m_infMap.erase(key);
 			vecInformation.erase(std::remove(vecInformation.begin(), vecInformation.end(), informationRecord), vecInformation.end());
 
 			delete informationRecord;
@@ -1748,7 +1719,7 @@ void S101Cell::RemoveInformationRecord(__int64 key)
 	}
 }
 
-R_InformationRecord* S101Cell::GetInformationRecord(__int64 key)
+R_InformationRecord* S101Cell::GetInformationRecord(std::int64_t key)
 {
 	if (m_infMatchingKeys.size() > 0)
 	{
@@ -1758,7 +1729,7 @@ R_InformationRecord* S101Cell::GetInformationRecord(__int64 key)
 	}
 
 	R_InformationRecord* item = nullptr;
-	if (TRUE == m_infMap.Lookup(key, item))
+	if (TRUE == s100::Lookup(m_infMap, key, item))
 	{
 		return item;
 	}
@@ -1789,42 +1760,14 @@ R_InformationRecord* S101Cell::GetInformationRecordByIndex(int index)
 	return nullptr;
 }
 
-POSITION S101Cell::GetInfoStartPosition()
-{
-	return m_infMap.GetStartPosition();
-}
-
-void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_InformationRecord*& value)
-{
-	if (m_infMatchingKeys.size() > 0)
-	{
-		while (true)
-		{
-			m_infMap.GetNextAssoc(index, key, value);
-			if (index == nullptr)
-			{
-				key = -1;
-				value = nullptr;
-				return;
-			}
-
-			auto iter = std::find(m_infMatchingKeys.begin(), m_infMatchingKeys.end(), key);
-			if (iter != m_infMatchingKeys.end())
-				return;
-		}
-	}
-	else
-		m_infMap.GetNextAssoc(index, key, value);
-}
-
 void S101Cell::RemoveAllInfoRecord()
 {
-	m_infMap.RemoveAll();
+	m_infMap.clear();
 }
 
 int S101Cell::GetInfoMapCount()
 {
-	return (int)m_infMap.GetCount();
+	return (int)m_infMap.size();
 }
 
 std::vector<R_InformationRecord*>& S101Cell::GetVecInformation()
@@ -1832,7 +1775,7 @@ std::vector<R_InformationRecord*>& S101Cell::GetVecInformation()
 	return vecInformation;
 }
 
-void S101Cell::InsertInformationFilter(__int64 key)
+void S101Cell::InsertInformationFilter(std::int64_t key)
 {	
 	m_infMatchingKeys.push_back(key);
 }
@@ -1855,30 +1798,30 @@ void S101Cell::RemoveInformationFilter()
 	m_infMatchingKeys.clear();
 }
 
-std::vector<__int64>& S101Cell::GetInformationFilter()
+std::vector<std::int64_t>& S101Cell::GetInformationFilter()
 {
 	return m_infMatchingKeys;
 }
 
-void S101Cell::InsertPointRecord(__int64 key, R_PointRecord* record)
+void S101Cell::InsertPointRecord(std::int64_t key, R_PointRecord* record)
 {
 	auto pointRecord = GetPointRecord(key);
 	if (nullptr == pointRecord)
 	{
-		m_ptMap.SetAt(key, record);
+		m_ptMap.insert_or_assign(key, record);
 		vecPoint.push_back(record);
 	}
 }
 
-void S101Cell::RemovePointRecord(__int64 key, R_PointRecord* record)
+void S101Cell::RemovePointRecord(std::int64_t key, R_PointRecord* record)
 {
-	m_ptMap.RemoveKey(key);
+	m_ptMap.erase(key);
 }
 
-R_PointRecord* S101Cell::GetPointRecord(__int64 key)
+R_PointRecord* S101Cell::GetPointRecord(std::int64_t key)
 {
 	R_PointRecord* item = nullptr;
-	if (TRUE == m_ptMap.Lookup(key, item))
+	if (TRUE == s100::Lookup(m_ptMap, key, item))
 	{
 		return item;
 	}
@@ -1896,19 +1839,9 @@ R_PointRecord* S101Cell::GetPointRecordByIndex(int index)
 	return nullptr;
 }
 
-POSITION S101Cell::GetpointStartPosition()
-{
-	return m_ptMap.GetStartPosition();
-}
-
-void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_PointRecord*& value)
-{
-	return m_ptMap.GetNextAssoc(index, key, value);
-}
-
 void S101Cell::RemoveAllPointRecord()
 {
-	m_ptMap.RemoveAll();
+	m_ptMap.clear();
 }
 
 std::vector<R_PointRecord*>& S101Cell::GetVecPoint()
@@ -1916,19 +1849,19 @@ std::vector<R_PointRecord*>& S101Cell::GetVecPoint()
 	return vecPoint;
 }
 
-void S101Cell::InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record)
+void S101Cell::InsertMultiPointRecord(std::int64_t key, R_MultiPointRecord* record)
 {
 	auto multiPointRecord = GetMultiPointRecord(key);
 	if (nullptr == multiPointRecord)
 	{
-		m_mpMap.SetAt(key, record);
+		m_mpMap.insert_or_assign(key, record);
 		vecMultiPoint.push_back(record);
 	}
 }
 
-void S101Cell::RemoveMultiPointRecord(__int64 key)
+void S101Cell::RemoveMultiPointRecord(std::int64_t key)
 {
-	m_mpMap.RemoveKey(key);
+	m_mpMap.erase(key);
 
 	for (auto i = vecMultiPoint.begin(); i != vecMultiPoint.end(); i++)
 	{
@@ -1941,10 +1874,10 @@ void S101Cell::RemoveMultiPointRecord(__int64 key)
 	}
 }
 
-R_MultiPointRecord* S101Cell::GetMultiPointRecord(__int64 key)
+R_MultiPointRecord* S101Cell::GetMultiPointRecord(std::int64_t key)
 {
 	R_MultiPointRecord* item = nullptr;
-	if (TRUE == m_mpMap.Lookup(key, item))
+	if (TRUE == s100::Lookup(m_mpMap, key, item))
 	{
 		return item;
 	}
@@ -1962,20 +1895,10 @@ R_MultiPointRecord* S101Cell::GetMultiPointRecordByIndex(int index)
 	return nullptr;
 }
 
-POSITION S101Cell::GetMultStartPosition()
-{
-	return m_mpMap.GetStartPosition();
-}
-
-
-void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_MultiPointRecord*& value)
-{
-	m_mpMap.GetNextAssoc(index, key, value);
-}
 
 void S101Cell::RemoveAllMultRecord()
 {
-	m_mpMap.RemoveAll();
+	m_mpMap.clear();
 }
 
 std::vector<R_MultiPointRecord*>& S101Cell::GetVecMultiPoint()
@@ -1983,11 +1906,11 @@ std::vector<R_MultiPointRecord*>& S101Cell::GetVecMultiPoint()
 	return vecMultiPoint;
 }
 
-bool S101Cell::InsertCurveRecord(__int64 key, R_CurveRecord* record)
+bool S101Cell::InsertCurveRecord(std::int64_t key, R_CurveRecord* record)
 {
 	auto curveRecord = GetCurveRecord(key);
 	if (curveRecord == nullptr) {
-		m_curMap.SetAt(key, record);
+		m_curMap.insert_or_assign(key, record);
 		vecCurve.push_back(record);
 		return true;
 	}
@@ -1995,15 +1918,15 @@ bool S101Cell::InsertCurveRecord(__int64 key, R_CurveRecord* record)
 	return false;
 }
 
-void S101Cell::RemoveCurveRecord(__int64 key, R_CurveRecord* record)
+void S101Cell::RemoveCurveRecord(std::int64_t key, R_CurveRecord* record)
 {
-	m_curMap.RemoveKey(key);
+	m_curMap.erase(key);
 }
 
-R_CurveRecord* S101Cell::GetCurveRecord(__int64 key)
+R_CurveRecord* S101Cell::GetCurveRecord(std::int64_t key)
 {
 	R_CurveRecord* item = nullptr;
-	if (TRUE == m_curMap.Lookup(key, item))
+	if (TRUE == s100::Lookup(m_curMap, key, item))
 	{
 		return item;
 	}
@@ -2021,19 +1944,9 @@ R_CurveRecord* S101Cell::GetCurveRecordByIndex(int index)
 	return nullptr;
 }
 
-POSITION S101Cell::GetCurStartPosition()
-{
-	return m_curMap.GetStartPosition();
-}
-
-void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_CurveRecord*& value)
-{
-	m_curMap.GetNextAssoc(index, key, value);
-}
-
 void S101Cell::RemoveAllCurRecord()
 {
-	m_curMap.RemoveAll();
+	m_curMap.clear();
 }
 
 std::vector<R_CurveRecord*>& S101Cell::GetVecCurve()
@@ -2041,25 +1954,25 @@ std::vector<R_CurveRecord*>& S101Cell::GetVecCurve()
 	return vecCurve;
 }
 
-void S101Cell::InsertCompositeCurveRecord(__int64 key, R_CompositeRecord* record)
+void S101Cell::InsertCompositeCurveRecord(std::int64_t key, R_CompositeRecord* record)
 {
 	auto compositeCurveRecord = GetCompositeCurveRecord(key);
 	if (nullptr == compositeCurveRecord)
 	{
-		m_comMap.SetAt(key, record);
+		m_comMap.insert_or_assign(key, record);
 		vecComposite.push_back(record);
 	}
 }
 
-void S101Cell::RemoveCompositeCurveRecord(__int64 key, R_CompositeRecord* record)
+void S101Cell::RemoveCompositeCurveRecord(std::int64_t key, R_CompositeRecord* record)
 {
-	m_comMap.RemoveKey(key);
+	m_comMap.erase(key);
 }
 
-R_CompositeRecord* S101Cell::GetCompositeCurveRecord(__int64 key)
+R_CompositeRecord* S101Cell::GetCompositeCurveRecord(std::int64_t key)
 {
 	R_CompositeRecord* item = nullptr;
-	if (TRUE == m_comMap.Lookup(key, item))
+	if (TRUE == s100::Lookup(m_comMap, key, item))
 	{
 		return item;
 	}
@@ -2077,19 +1990,9 @@ R_CompositeRecord* S101Cell::GetCompositeCurveRecordByIndex(int index)
 	return nullptr;
 }
 
-POSITION S101Cell::GetComStartPosition()
-{
-	return m_comMap.GetStartPosition();
-}
-
-void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_CompositeRecord*& value)
-{
-	m_comMap.GetNextAssoc(index, key, value);
-}
-
 void S101Cell::RemoveAllComRecord()
 {
-	m_comMap.RemoveAll();
+	m_comMap.clear();
 }
 
 std::vector<R_CompositeRecord*>& S101Cell::GetVecComposite()
@@ -2097,12 +2000,12 @@ std::vector<R_CompositeRecord*>& S101Cell::GetVecComposite()
 	return vecComposite;
 }
 
-void S101Cell::InsertSurfaceRecord(__int64 key, R_SurfaceRecord* record)
+void S101Cell::InsertSurfaceRecord(std::int64_t key, R_SurfaceRecord* record)
 {
 	auto surfaceRecord = GetSurfaceRecord(key);
 	if (nullptr == surfaceRecord)
 	{
-		m_surMap.SetAt(key, record);
+		m_surMap.insert_or_assign(key, record);
 		vecSurface.push_back(record);
 	}
 }
@@ -2117,15 +2020,15 @@ R_SurfaceRecord* S101Cell::GetSurfaceRecordByIndex(int index)
 	return nullptr;
 }
 
-void S101Cell::RemoveSurfaceRecord(__int64 key, R_SurfaceRecord* record)
+void S101Cell::RemoveSurfaceRecord(std::int64_t key, R_SurfaceRecord* record)
 {
-	m_surMap.RemoveKey(key);
+	m_surMap.erase(key);
 }
 
-R_SurfaceRecord* S101Cell::GetSurfaceRecord(__int64 key)
+R_SurfaceRecord* S101Cell::GetSurfaceRecord(std::int64_t key)
 {
 	R_SurfaceRecord* item = nullptr;
-	if (TRUE == m_surMap.Lookup(key, item))
+	if (TRUE == s100::Lookup(m_surMap, key, item))
 	{
 		return item;
 	}
@@ -2133,19 +2036,9 @@ R_SurfaceRecord* S101Cell::GetSurfaceRecord(__int64 key)
 	return nullptr;
 }
 
-POSITION S101Cell::GetSurStartPosition()
-{
-	return m_surMap.GetStartPosition();
-}
-
-void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_SurfaceRecord*& value)
-{
-	m_surMap.GetNextAssoc(index, key, value);
-}
-
 void S101Cell::RemoveAllSurRecord()
 {
-	m_surMap.RemoveAll();
+	m_surMap.clear();
 }
 
 std::vector<R_SurfaceRecord*>& S101Cell::GetVecSurface()
@@ -2153,31 +2046,31 @@ std::vector<R_SurfaceRecord*>& S101Cell::GetVecSurface()
 	return vecSurface;
 }
 
-void S101Cell::InsertFeatureRecord(__int64 key, R_FeatureRecord* record)
+void S101Cell::InsertFeatureRecord(std::int64_t key, R_FeatureRecord* record)
 {
 	auto featureRecord = GetFeatureRecord(key);
 	if (nullptr == featureRecord)
 	{
-		m_feaMap.SetAt(key, record);
+		m_feaMap.insert_or_assign(key, record);
 		vecFeature.push_back(record);
 	}
 }
 
-void S101Cell::RemoveFeatureRecord(__int64 key)
+void S101Cell::RemoveFeatureRecord(std::int64_t key)
 {
 	auto featureRecord = GetFeatureRecord(key);
 	if (featureRecord)
 	{
-		m_feaMap.RemoveKey(key);
+		m_feaMap.erase(key);
 		vecFeature.erase(std::remove(vecFeature.begin(), vecFeature.end(), featureRecord), vecFeature.end());
 		delete featureRecord;
 	}
 }
 
-R_FeatureRecord* S101Cell::GetFeatureRecord(__int64 key)
+R_FeatureRecord* S101Cell::GetFeatureRecord(std::int64_t key)
 {
 	R_FeatureRecord* item = nullptr;
-	if (TRUE == m_feaMap.Lookup(key, item))
+	if (TRUE == s100::Lookup(m_feaMap, key, item))
 	{
 		return item;
 	}
@@ -2208,42 +2101,14 @@ R_FeatureRecord* S101Cell::GetFeatureRecordByIndex(int index)
 	return nullptr;
 }
 
-POSITION S101Cell::GetFeatureStartPosition()
-{
-	return m_feaMap.GetStartPosition();
-}
-
-void S101Cell::GetNextAssoc(POSITION& index, long long& key, R_FeatureRecord*& value)
-{
-	if (!m_feaMatchingKeys.empty())
-	{
-		while (index != nullptr) // 반복은 index 유효할 때까지만
-		{
-			m_feaMap.GetNextAssoc(index, key, value); // 이 호출 이후 index 변경됨
-
-			// 먼저 검사 후 종료
-			if (std::find(m_feaMatchingKeys.begin(), m_feaMatchingKeys.end(), key) != m_feaMatchingKeys.end())
-				return;
-		}
-
-		// index 끝났지만 조건을 만족하는 키를 못 찾음
-		key = -1;
-		value = nullptr;
-	}
-	else
-	{
-		m_feaMap.GetNextAssoc(index, key, value);
-	}
-}
-
 void S101Cell::RemoveFeatureMapKey(long long key)
 {
-	m_feaMap.RemoveKey(key);
+	m_feaMap.erase(key);
 }
 
 void S101Cell::RemoveAllFeatureRecord()
 {
-	m_feaMap.RemoveAll();
+	m_feaMap.clear();
 }
 
 std::vector<R_FeatureRecord*>& S101Cell::GetVecFeature()
@@ -2251,7 +2116,7 @@ std::vector<R_FeatureRecord*>& S101Cell::GetVecFeature()
 	return vecFeature;
 }
 
-void S101Cell::InsertFeatureFilter(__int64 key)
+void S101Cell::InsertFeatureFilter(std::int64_t key)
 {
 	m_feaMatchingKeys.push_back(key);
 }
@@ -2274,44 +2139,44 @@ void S101Cell::RemoveFeatureFilter()
 	m_feaMatchingKeys.clear();
 }
 
-std::vector<__int64>& S101Cell::GetFeatureFilter()
+std::vector<std::int64_t>& S101Cell::GetFeatureFilter()
 {
 	return m_feaMatchingKeys;
 }
 
 int S101Cell::GetCount_InformationRecord()
 {
-	return (int)m_infMap.GetCount();
+	return (int)m_infMap.size();
 }
 
 int S101Cell::GetCount_PointRecord()
 {
-	return (int)m_ptMap.GetCount();
+	return (int)m_ptMap.size();
 }
 
 int S101Cell::GetCount_MultiPointRecord()
 {
-	return (int)m_mpMap.GetCount();
+	return (int)m_mpMap.size();
 }
 
 int S101Cell::GetCount_CurveRecord()
 {
-	return (int)m_curMap.GetCount();
+	return (int)m_curMap.size();
 }
 
 int S101Cell::GetCount_CompositeCurveRecord()
 {
-	return (int)m_comMap.GetCount();
+	return (int)m_comMap.size();
 }
 
 int S101Cell::GetCount_SurfaceRecord()
 {
-	return (int)m_surMap.GetCount();
+	return (int)m_surMap.size();
 }
 
 int S101Cell::GetCount_FeatureTypeRecord()
 {
-	return (int)m_feaMap.GetCount();
+	return (int)m_feaMap.size();
 }
 
 int S101Cell::GetMetaCount_InformationRecord()
@@ -2523,12 +2388,9 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 	}
 
 	//chage Information Record ATTR 
-	__int64 infokey;
-	POSITION pos = cell->m_infMap.GetStartPosition(); //change Update Attri to NC
-	while (pos != nullptr)
+	std::int64_t infokey;
+	for (auto& [infokey, ir] : cell->m_infMap)
 	{
-		R_InformationRecord* ir = new R_InformationRecord(); //UPdate value
-		cell->m_infMap.GetNextAssoc(pos, infokey, ir);
 
 		//change itcs
 		auto updateCode = itcs->GetFeatureCode(ir->m_irid.NITC());
@@ -2541,61 +2403,43 @@ bool S101Cell::UpdateDsgirRecord(S101Cell* cell)
 	}
 
 	//point map
-	__int64 posKey;
-	pos = cell->m_ptMap.GetStartPosition();
-	while (pos != nullptr)
+	std::int64_t posKey;
+	for (auto& [posKey, pt] : cell->m_ptMap)
 	{
-		R_PointRecord* pt = new R_PointRecord();
-		cell->m_ptMap.GetNextAssoc(pos, posKey, pt);
 		UpdateInasField(pt->m_inas, iacs);
 
 	}
 
 	//multi point
-	__int64 muitKey;
-	pos = cell->m_mpMap.GetStartPosition();
-	while (pos != nullptr)
+	std::int64_t muitKey;
+	for (auto& [muitKey, mt] : cell->m_mpMap)
 	{
-		R_MultiPointRecord* mt = new R_MultiPointRecord();
-		cell->m_mpMap.GetNextAssoc(pos, muitKey, mt);
 		UpdateInasField(mt->m_inas, iacs);
 	}
 
-	__int64 curKey;
-	pos = cell->m_curMap.GetStartPosition();
-	while (pos != nullptr)
+	std::int64_t curKey;
+	for (auto& [curKey, cur] : cell->m_curMap)
 	{
-		R_CurveRecord* cur = new R_CurveRecord();
-		cell->m_curMap.GetNextAssoc(pos, curKey, cur);
 		UpdateInasField(cur->m_inas, iacs);
 		//PATS
 	}
 
-	__int64 conpoKey;
-	pos = cell->m_comMap.GetStartPosition();
-	while (pos != nullptr)
+	std::int64_t conpoKey;
+	for (auto& [conpoKey, com] : cell->m_comMap)
 	{
-		R_CompositeRecord* com = new R_CompositeRecord();
-		cell->m_comMap.GetNextAssoc(pos, conpoKey, com);
 		UpdateInasField(com->m_inas, iacs);
 	}
 
-	__int64 surKey;
-	pos = cell->m_surMap.GetStartPosition();
-	while (pos != nullptr)
+	std::int64_t surKey;
+	for (auto& [surKey, sur] : cell->m_surMap)
 	{
-		R_SurfaceRecord* sur = new R_SurfaceRecord();
-		cell->m_surMap.GetNextAssoc(pos, surKey, sur);
 		UpdateInasField(sur->m_inas, iacs);
 	}
 
 	//change FeatureType Record ATTR
-	__int64 feakey;
-	pos = cell->m_feaMap.GetStartPosition(); //change Update Attri to NC
-	while (pos != nullptr)
+	std::int64_t feakey;
+	for (auto& [feakey, fe] : cell->m_feaMap)
 	{
-		R_FeatureRecord* fe = new R_FeatureRecord(); //UPdate value
-		cell->m_feaMap.GetNextAssoc(pos, feakey, fe);
 
 		//FTCS
 		auto updateCode = ftcs->GetFeatureCode(fe->m_frid.m_nftc);
@@ -2658,13 +2502,9 @@ bool S101Cell::UpdateInasField(std::list<F_INAS*> Update, F_CodeWithNumericCode*
 
 bool S101Cell::UpdateInfMapRecord(S101Cell* cell)
 {
-	__int64 key;
-	POSITION pos = cell->m_infMap.GetStartPosition();
-
-	while (pos != NULL)
+	std::int64_t key;
+	for (auto& [key, ir] : cell->m_infMap)
 	{
-		R_InformationRecord* ir = new R_InformationRecord(); //UPdate  value
-		cell->m_infMap.GetNextAssoc(pos, key, ir);
 
 		auto UpdateName = ir->m_irid.m_name.GetName();
 		int idvalue = ir->m_irid.m_ruin;
@@ -2676,7 +2516,7 @@ bool S101Cell::UpdateInfMapRecord(S101Cell* cell)
 		else //delete , modify
 		{
 			R_InformationRecord* values = new R_InformationRecord();
-			auto isValues = m_infMap.Lookup(UpdateName, values);
+			auto isValues = s100::Lookup(m_infMap, UpdateName, values);
 			if (isValues == false)
 			{
 				continue;
@@ -2827,13 +2667,9 @@ bool S101Cell::UpdateINASRecord(std::list<F_INAS*> Update, std::list<F_INAS*> Ba
 bool S101Cell::UpdatePtMapRecord(S101Cell* cell) //point
 {
 	//change point Record value
-	__int64 key;
-	POSITION pos = cell->m_ptMap.GetStartPosition();
-
-	while (pos != NULL)
+	std::int64_t key;
+	for (auto& [key, r] : cell->m_ptMap)
 	{
-		R_PointRecord* r = new R_PointRecord(); //update value
-		cell->m_ptMap.GetNextAssoc(pos, key, r);
 
 		//PRID
 		auto newName = r->m_prid.m_name.GetName();
@@ -2846,7 +2682,7 @@ bool S101Cell::UpdatePtMapRecord(S101Cell* cell) //point
 		else
 		{
 			R_PointRecord* values = new R_PointRecord();
-			auto isValues = m_ptMap.Lookup(newName, values);
+			auto isValues = s100::Lookup(m_ptMap, newName, values);
 
 			if (isValues == false)
 			{
@@ -2880,13 +2716,9 @@ bool S101Cell::UpdatePtMapRecord(S101Cell* cell) //point
 
 bool S101Cell::UpdateMpMapRecord(S101Cell* cell) //multi point
 {
-	__int64 key;
-	POSITION pos = cell->m_mpMap.GetStartPosition();
-
-	while (pos != NULL)
+	std::int64_t key;
+	for (auto& [key, mu] : cell->m_mpMap)
 	{
-		R_MultiPointRecord* mu = new R_MultiPointRecord();
-		cell->m_mpMap.GetNextAssoc(pos, key, mu);
 
 		auto mission = mu->m_mrid.m_ruin;
 		auto UpdateName = mu->m_mrid.m_name.GetName();
@@ -2899,7 +2731,7 @@ bool S101Cell::UpdateMpMapRecord(S101Cell* cell) //multi point
 
 			//find Common value
 			R_MultiPointRecord* values = new R_MultiPointRecord();
-			auto isValus = m_mpMap.Lookup(UpdateName, values);
+			auto isValus = s100::Lookup(m_mpMap, UpdateName, values);
 			if (isValus == false) // no value
 			{
 				continue;
@@ -2976,14 +2808,9 @@ bool S101Cell::UpdateC3ILRecord(std::list<F_C3IL*> Updates, std::list<F_C3IL*> b
 
 bool S101Cell::UpdateCurMapRecord(S101Cell* cell) //curve Record.
 {
-	__int64 key;
-	POSITION pos = cell->m_curMap.GetStartPosition();
-
-	while (pos != NULL)
+	std::int64_t key;
+	for (auto& [key, cur] : cell->m_curMap)
 	{
-
-		R_CurveRecord* cur = new R_CurveRecord();
-		cell->m_curMap.GetNextAssoc(pos, key, cur);
 
 		auto UpdateName = cur->m_crid.m_name.GetName();
 		auto mission = cur->m_crid.m_ruin;
@@ -2995,7 +2822,7 @@ bool S101Cell::UpdateCurMapRecord(S101Cell* cell) //curve Record.
 		else
 		{
 			R_CurveRecord* value = new R_CurveRecord();
-			auto isValue = m_curMap.Lookup(UpdateName, value);
+			auto isValue = s100::Lookup(m_curMap, UpdateName, value);
 
 			if (isValue == false)
 			{
@@ -3041,13 +2868,9 @@ bool S101Cell::UpdateCurMapRecord(S101Cell* cell) //curve Record.
 
 bool S101Cell::UpdateComMapRecord(S101Cell* cell)// Composite Curve
 {
-	__int64 key;
-	POSITION pos = cell->m_comMap.GetStartPosition();
-
-	while (pos != NULL)
+	std::int64_t key;
+	for (auto& [key, com] : cell->m_comMap)
 	{
-		R_CompositeRecord* com = new R_CompositeRecord();
-		cell->m_comMap.GetNextAssoc(pos, key, com);
 		auto UpdateName = com->m_ccid.m_name.GetName();
 		auto mission = com->m_ccid.m_ruin;
 
@@ -3058,7 +2881,7 @@ bool S101Cell::UpdateComMapRecord(S101Cell* cell)// Composite Curve
 		else
 		{
 			R_CompositeRecord* values = new R_CompositeRecord();
-			auto isValue = m_comMap.Lookup(UpdateName, values);
+			auto isValue = s100::Lookup(m_comMap, UpdateName, values);
 
 			if (isValue == false)
 			{
@@ -3140,12 +2963,9 @@ bool S101Cell::UpdateComMapRecord(S101Cell* cell)// Composite Curve
 
 bool S101Cell::UpdateSurMapRecord(S101Cell* cell)
 {
-	__int64 key;
-	POSITION pos = cell->m_surMap.GetStartPosition();
-	while (pos != NULL)
+	std::int64_t key;
+	for (auto& [key, sur] : cell->m_surMap)
 	{
-		R_SurfaceRecord* sur = new R_SurfaceRecord();
-		cell->m_surMap.GetNextAssoc(pos, key, sur);
 
 		auto UpdateName = sur->m_srid.m_name.GetName();
 		auto mission = sur->m_srid.m_ruin;
@@ -3157,7 +2977,7 @@ bool S101Cell::UpdateSurMapRecord(S101Cell* cell)
 		else
 		{
 			R_SurfaceRecord* values = new R_SurfaceRecord();
-			auto isValues = m_surMap.Lookup(UpdateName, values);
+			auto isValues = s100::Lookup(m_surMap, UpdateName, values);
 
 			if (isValues == false)
 			{
@@ -3209,13 +3029,9 @@ bool S101Cell::UpdateSurMapRecord(S101Cell* cell)
 bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 {
 
-	__int64 key;
-	POSITION pos = cell->m_feaMap.GetStartPosition(); //value that came to change.
-
-	while (pos != NULL)
+	std::int64_t key;
+	for (auto& [key, fe] : cell->m_feaMap)
 	{
-		R_FeatureRecord* fe = new R_FeatureRecord();
-		cell->m_feaMap.GetNextAssoc(pos, key, fe);
 		auto UpdateName = fe->m_frid.m_name.GetName();
 		auto mission = fe->m_frid.m_ruin;
 
@@ -3226,7 +3042,7 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 		else
 		{
 			R_FeatureRecord* values = new R_FeatureRecord();
-			auto isValues = m_feaMap.Lookup(UpdateName, values);
+			auto isValues = s100::Lookup(m_feaMap, UpdateName, values);
 
 			if (isValues == false)
 			{
@@ -3347,7 +3163,7 @@ bool S101Cell::UpdateFeaMapRecord(S101Cell* cell)
 				{
 					for (auto mask : f_mask->listMask)
 					{
-						auto Key = (__int64)mask->m_name.GetName();
+						auto Key = (std::int64_t)mask->m_name.GetName();
 						auto mission = mask->m_muin;
 
 						auto it = values->m_mask.begin();
@@ -4357,7 +4173,7 @@ std::wstring S101Cell::GetInformationTypeCodeByID(int id)
 {
 	RecordName rn(150, id);
 	R_InformationRecord* ir = nullptr;
-	if (TRUE == m_infMap.Lookup(rn.GetName(), ir))
+	if (TRUE == s100::Lookup(m_infMap, rn.GetName(), ir))
 	{
 		if (ir)
 		{
@@ -5148,7 +4964,7 @@ bool S101Cell::ATTRtoAttribute(R_FeatureRecord* fr)
 	return true;
 }
 
-void S101Cell::AddATTRtoAttribute(__int64 key)
+void S101Cell::AddATTRtoAttribute(std::int64_t key)
 {
 	auto fr = GetFeatureRecord(key);
 	if (fr == nullptr)
@@ -5186,7 +5002,7 @@ void S101Cell::AddATTRtoAttribute(__int64 key)
 	}
 }
 
-void S101Cell::DeleteATTRtoAttribute(__int64 key)
+void S101Cell::DeleteATTRtoAttribute(std::int64_t key)
 {
 	auto fr = GetFeatureRecord(key);
 	if (fr == nullptr)
@@ -5201,7 +5017,7 @@ void S101Cell::DeleteATTRtoAttribute(__int64 key)
 
 }
 
-void S101Cell::UpdateATTRtoAttribute(__int64 key)
+void S101Cell::UpdateATTRtoAttribute(std::int64_t key)
 {
 	DeleteATTRtoAttribute(key);
 	AddATTRtoAttribute(key);

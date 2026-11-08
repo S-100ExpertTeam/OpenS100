@@ -48,7 +48,7 @@
 
 - [x] 3-1. `CFile` → 표준 C++. (a) 읽기: `GISLibrary/BinaryFile.h`의 `s100::io::ReadAllBytes(path)`(헤더 전용, `std::filesystem`+`std::ifstream`)를 도입하고 `S101Cell::Read8211`/`OpenMetadataBy000`가 사용. 수동 `new BYTE[]`/`delete[]`도 `std::vector`로 대체. 테스트 `S101Cell.MissingFileReturnsFalse`. (b) 쓰기: `GISLibrary/BinaryWriter.h`의 `s100::io::BinaryWriter`(`std::ostream` 위의 `Write(ptr, len)`)와 `BinaryFileWriter`를 도입하고, `WriteRecord/WriteField/WriteDirectory/WriteLeader`의 `CFile*` 매개변수 95개(헤더 53개 포함)를 `BinaryWriter*`로 일괄 교체. 호출 형태 `file->Write(p, n)`은 그대로라 185곳의 본문은 변경 없음. `S101Cell::SaveAsENC`는 `BinaryFileWriter`로 연다. 테스트 `SaveAsEncRoundTrip`(저장 후 재읽기, 레코드 수 동일). (c) `LayerManager::CheckFileType` 두 오버로드에 복사돼 있던 8211 헤더 스니핑을 `SniffIso8211(path)` 하나로 합치고(`s100::io::ReadBytes`), 기존의 `delete`/`delete[]` 불일치·태그 미일치 시 누수·1024바이트 이하 파일 처리 누락을 함께 정리. `SHPFile::Open`은 `s100::io::BinaryFileReader`(ifstream 기반 `Open/Seek/Read`)로. **GISLibrary 코드에서 `CFile` 사용 0.** 게이지 213 → 169 (BinaryWriter.h 전환으로 헤더 53개에서 MFC 타입이 사라짐).
 - [ ] 3-2. 공개 API의 `CString` → `std::string`(UTF-8)/`std::wstring`(CONVENTIONS.md). `SpatialObject::Open(CString)` 등. 내부 `CString` 137곳.
-- [ ] 3-3. `CMap`/`POSITION` 순회(8곳) → `std::unordered_map`.
+- [x] 3-3. `S101Cell`의 레코드 맵 7개를 `s100::RecordMap<R_X>`(`std::unordered_map<std::int64_t, R_X*>`, `GISLibrary/RecordMap.h`)로, `POSITION` 순회 25곳을 범위 기반 for로. 외부 호출자가 없던 `POSITION` 기반 공개 API 14개(`GetXStartPosition`/`GetNextAssoc`) 삭제. 업데이트 병합 루프 14곳이 `new R_X()` 뒤 바로 덮어쓰던 누수도 사라짐. `__int64` → `std::int64_t`(S101Cell). `S100PCManager`의 `CMap<CString,...>` → `std::unordered_map<std::wstring, IWICBitmap*>`, `F_DSID::m_dstc`의 `CArray<int>` → `std::vector<int>`. **코어에 MFC 컨테이너 0.**
 - [ ] 3-4. `GISLibrary`, `S100Engine`, `PortrayalCatalogue`, `GeoMetryLibrary`에서 `stdafx.h`의 `afx*` include 제거 → `UseOfMfc=false`. 렌더 전용 코드(`HDC`, `CDC`)는 `S100Engine`(렌더 모듈)로 격리.
 - 완료 기준: 코어 프로젝트가 `UseOfMfc=false`로 빌드. 테스트 호스트에서 `AfxWinInit` 제거.
 
@@ -91,3 +91,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-08 | 3-1(a): 8211 리더의 `CFile`을 `s100::io::ReadAllBytes`로 | 74c5f817 | 테스트 15/15 |
 | 2026-11-08 | 3-1(b): 8211 라이터 체인(95개 시그니처)을 `s100::io::BinaryWriter`로 | 62091ea2 | 테스트 16/16, 라운드트립 |
 | 2026-11-08 | 3-1(c): `CheckFileType` 중복 제거·`SHPFile` 전환, GISLibrary에서 `CFile` 0 | ef05a1cc | 테스트 16/16, 앱 기동(셰이프 배경 로딩) |
+| 2026-11-08 | 3-3: `CMap`/`POSITION`/`CArray` → 표준 컨테이너, 누수 14곳 제거 | (아래) | 테스트 16/16, 앱 기동 확인 |

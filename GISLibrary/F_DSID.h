@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "BinaryWriter.h"
 #include "Field.h"
 #include "RecordName.h"
@@ -24,7 +25,7 @@ public:
 	CString m_dslg; //datasetLanguage(have fixed value) //EN
 	CString m_dsab; //datasetAbstract
 	CString m_dsed; //dataset Edition
-	CArray<int> m_dstc;
+	std::vector<int> m_dstc;
 
 public:
 	virtual F_DSID& operator=(const F_DSID& other);

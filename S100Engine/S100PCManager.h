@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <unordered_map>
 
 #include <string>
 #include "S100ColorProfile.h"
@@ -21,7 +23,7 @@ public:
 	std::vector<AreaFill> areaFills;
 	AreaFillInfo areaFillInfo;
 	LineStylesPackage::LineStyles lineStyles;
-	CMap<CString, LPCTSTR, IWICBitmap*, IWICBitmap*&> lineImageMap;
+	std::unordered_map<std::wstring, IWICBitmap*> lineImageMap;
 
 private:
 	char* ConvertWCtoC(wchar_t* str);

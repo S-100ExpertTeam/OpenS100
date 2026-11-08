@@ -545,7 +545,7 @@ void S100PCManager::CreateLineImage(ID2D1Factory1* pDirect2dFactory, IWICImaging
 			pCurrentRenderTarget->EndDraw();
 		}
 
-		lineImageMap.SetAt(CString(LibMFCUtil::StringToWString(i->second->name).c_str()), pBitmap);
+		lineImageMap.insert_or_assign(LibMFCUtil::StringToWString(i->second->name), pBitmap);
 	}
 }
 
@@ -703,17 +703,11 @@ void S100PCManager::DeleteBitmapImage()
 
 void S100PCManager::DeleteLineImage()
 {
-	auto pos = lineImageMap.GetStartPosition();
-	while (pos)
+	for (auto& [key, bitmap] : lineImageMap)
 	{
-		CString key;
-		IWICBitmap* bitmap = nullptr;
-		lineImageMap.GetNextAssoc(pos, key, bitmap);
-
 		SafeRelease(&bitmap);
 	}
-
-	lineImageMap.RemoveAll();
+	lineImageMap.clear();
 }
 
 
@@ -728,13 +722,8 @@ void S100PCManager::InverseMatrixBitmapBrush(D2D1::Matrix3x2F matrix)
 
 IWICBitmap* S100PCManager::GetLineImage(const std::string& key)
 {
-	IWICBitmap* result;
-	CString wkey(LibMFCUtil::StringToWString(key).c_str());
-	if (0 == lineImageMap.Lookup(wkey, result))
-	{
-		return nullptr;
-	}
-	return result;
+	const auto it = lineImageMap.find(LibMFCUtil::StringToWString(key));
+	return it == lineImageMap.end() ? nullptr : it->second;
 }
 
 IWICBitmap* S100PCManager::GetLineImage(const std::wstring& key)

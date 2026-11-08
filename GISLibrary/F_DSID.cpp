@@ -18,8 +18,8 @@ F_DSID::F_DSID(void)
 	m_dslg = "EN";
 	m_dsab = "";
 	m_dsed = "1.0";
-	m_dstc.Add(14);
-	m_dstc.Add(18);
+	m_dstc.push_back(14);
+	m_dstc.push_back(18);
 }
 
 F_DSID::F_DSID(const F_DSID& other) : Field(other)
@@ -36,12 +36,12 @@ F_DSID::F_DSID(const F_DSID& other) : Field(other)
 	m_dslg = other.m_dslg;
 	m_dsab = other.m_dsab;
 	m_dsed = other.m_dsed;
-	m_dstc.Copy(other.m_dstc);
+	m_dstc = other.m_dstc;
 }
 
 F_DSID::~F_DSID(void)
 {
-	m_dstc.RemoveAll();
+	m_dstc.clear();
 
 }
 
@@ -59,7 +59,7 @@ F_DSID& F_DSID::operator=(const F_DSID& other)
 	m_dslg = other.m_dslg;
 	m_dsab = other.m_dsab;
 	m_dsed = other.m_dsed;
-	m_dstc.Copy(other.m_dstc);
+	m_dstc = other.m_dstc;
 
 	return *this;
 }
@@ -82,10 +82,10 @@ void F_DSID::ReadField(BYTE*& buf)
 	buf2charArr(m_dsab, buf);
 	buf2charArr(m_dsed, buf);
 
-	m_dstc.RemoveAll();
+	m_dstc.clear();
 	while (*buf != 0x1E)
 	{
-		m_dstc.Add(*(buf++));
+		m_dstc.push_back(*(buf++));
 	}
 }
 
@@ -160,7 +160,7 @@ int F_DSID::GetFieldLength()
 	len += m_dslg.GetLength() + 1;
 	len += m_dsab.GetLength() + 1;
 	len += m_dsed.GetLength() + 1;
-	len += (int)m_dstc.GetCount();
+	len += (int)m_dstc.size();
 	return ++len;
 }
 

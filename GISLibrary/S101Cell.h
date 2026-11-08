@@ -7,6 +7,7 @@
 #include "DDR.h"
 #include "GML_DatasetIdentificationInformation.h"
 #include "S10XGML.h"
+#include "RecordMap.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 
@@ -74,13 +75,13 @@ public:
 	R_DSCRS m_dscrs;
 
 private:
-	CMap<__int64, __int64, R_InformationRecord*, R_InformationRecord*&> m_infMap; // Information Type
-	CMap<__int64, __int64, R_PointRecord*, R_PointRecord*&> m_ptMap;              // Point
-	CMap<__int64, __int64, R_MultiPointRecord*, R_MultiPointRecord*&> m_mpMap;    // Multi Point
-	CMap<__int64, __int64, R_CurveRecord*, R_CurveRecord*&> m_curMap;             // Curve
-	CMap<__int64, __int64, R_CompositeRecord*, R_CompositeRecord*&> m_comMap;     // Composite Curve
-	CMap<__int64, __int64, R_SurfaceRecord*, R_SurfaceRecord*&> m_surMap;         // Surface
-	CMap<__int64, __int64, R_FeatureRecord*, R_FeatureRecord*&> m_feaMap;         // Feature Type
+	s100::RecordMap<R_InformationRecord> m_infMap; // Information Type
+	s100::RecordMap<R_PointRecord> m_ptMap;              // Point
+	s100::RecordMap<R_MultiPointRecord> m_mpMap;    // Multi Point
+	s100::RecordMap<R_CurveRecord> m_curMap;             // Curve
+	s100::RecordMap<R_CompositeRecord> m_comMap;     // Composite Curve
+	s100::RecordMap<R_SurfaceRecord> m_surMap;         // Surface
+	s100::RecordMap<R_FeatureRecord> m_feaMap;         // Feature Type
 
 	std::vector<R_InformationRecord*> vecInformation;
 	std::vector<R_PointRecord*> vecPoint;
@@ -90,8 +91,8 @@ private:
 	std::vector<R_SurfaceRecord*> vecSurface;
 	std::vector<R_FeatureRecord*> vecFeature;
 
-	std::vector<__int64> m_feaMatchingKeys;
-	std::vector<__int64> m_infMatchingKeys;
+	std::vector<std::int64_t> m_feaMatchingKeys;
+	std::vector<std::int64_t> m_infMatchingKeys;
 public:
 	R_DSGIR* GetDatasetGeneralInformationRecord();
 	void UpdateRemoveAll(void);
@@ -212,96 +213,82 @@ public:
 	void InsertRecord(Record* record);
 
 	//============================================================================//
-	void InsertInformationRecord(__int64 key, R_InformationRecord* record);
-	void RemoveInformationRecord(__int64 key);
-	R_InformationRecord* GetInformationRecord(__int64 key);
+	void InsertInformationRecord(std::int64_t key, R_InformationRecord* record);
+	void RemoveInformationRecord(std::int64_t key);
+	R_InformationRecord* GetInformationRecord(std::int64_t key);
 	R_InformationRecord* GetInformationRecord(std::string key);
 	R_InformationRecord* GetInformationRecord(std::wstring wstringKey);
 	R_InformationRecord* GetInformationRecordByIndex(int index);
-	POSITION GetInfoStartPosition();
-	void GetNextAssoc(POSITION& index, long long& key, R_InformationRecord*& value);
 	void RemoveAllInfoRecord();
 	int GetInfoMapCount();
 	//vectorinformation
 	std::vector<R_InformationRecord*>& GetVecInformation();
 
-	void InsertInformationFilter(__int64 key);
+	void InsertInformationFilter(std::int64_t key);
 	void InsertInformationFilter(std::string key);
 	void InsertInformationFilter(std::wstring wstringKey);
 	void RemoveInformationFilter();
-	std::vector<__int64>& GetInformationFilter();
+	std::vector<std::int64_t>& GetInformationFilter();
 
-	void InsertPointRecord(__int64 key, R_PointRecord* record);
-	void RemovePointRecord(__int64 key, R_PointRecord* record);
-	R_PointRecord* GetPointRecord(__int64 key);
+	void InsertPointRecord(std::int64_t key, R_PointRecord* record);
+	void RemovePointRecord(std::int64_t key, R_PointRecord* record);
+	R_PointRecord* GetPointRecord(std::int64_t key);
 	R_PointRecord* GetPointRecordByIndex(int index);
-	POSITION GetpointStartPosition();
-	void GetNextAssoc(POSITION& index, long long& key, R_PointRecord*& value);
 	void RemoveAllPointRecord();
 	//vecpoint
 	std::vector<R_PointRecord*>& GetVecPoint();
 
 
-	void InsertMultiPointRecord(__int64 key, R_MultiPointRecord* record);
-	void RemoveMultiPointRecord(__int64 key);
-	R_MultiPointRecord* GetMultiPointRecord(__int64 key);
+	void InsertMultiPointRecord(std::int64_t key, R_MultiPointRecord* record);
+	void RemoveMultiPointRecord(std::int64_t key);
+	R_MultiPointRecord* GetMultiPointRecord(std::int64_t key);
 	R_MultiPointRecord* GetMultiPointRecordByIndex(int index);
-	POSITION GetMultStartPosition();
-	void GetNextAssoc(POSITION& index, long long& key, R_MultiPointRecord*& value);
 	void RemoveAllMultRecord();
 	//vecMult
 	std::vector<R_MultiPointRecord*>& GetVecMultiPoint();
 
 
-	bool InsertCurveRecord(__int64 key, R_CurveRecord* record);
-	void RemoveCurveRecord(__int64 key, R_CurveRecord* record);
-	R_CurveRecord* GetCurveRecord(__int64 key);
+	bool InsertCurveRecord(std::int64_t key, R_CurveRecord* record);
+	void RemoveCurveRecord(std::int64_t key, R_CurveRecord* record);
+	R_CurveRecord* GetCurveRecord(std::int64_t key);
 	R_CurveRecord* GetCurveRecordByIndex(int index);
-	POSITION GetCurStartPosition();
-	void GetNextAssoc(POSITION& index, long long& key, R_CurveRecord*& value);
 	void RemoveAllCurRecord();
 	//veccurve
 	std::vector<R_CurveRecord*>& GetVecCurve();
 
 
-	void InsertCompositeCurveRecord(__int64 key, R_CompositeRecord* record);
-	void RemoveCompositeCurveRecord(__int64 key, R_CompositeRecord* record);
+	void InsertCompositeCurveRecord(std::int64_t key, R_CompositeRecord* record);
+	void RemoveCompositeCurveRecord(std::int64_t key, R_CompositeRecord* record);
 
-	R_CompositeRecord* GetCompositeCurveRecord(__int64 key);
+	R_CompositeRecord* GetCompositeCurveRecord(std::int64_t key);
 	R_CompositeRecord* GetCompositeCurveRecordByIndex(int index);
-	POSITION GetComStartPosition();
-	void GetNextAssoc(POSITION& index, long long& key, R_CompositeRecord*& value);
 	void RemoveAllComRecord();
 	std::vector<R_CompositeRecord*>& GetVecComposite();
 
 
-	void InsertSurfaceRecord(__int64 key, R_SurfaceRecord* record);
-	void RemoveSurfaceRecord(__int64 key, R_SurfaceRecord* record);
-	R_SurfaceRecord* GetSurfaceRecord(__int64 key);
+	void InsertSurfaceRecord(std::int64_t key, R_SurfaceRecord* record);
+	void RemoveSurfaceRecord(std::int64_t key, R_SurfaceRecord* record);
+	R_SurfaceRecord* GetSurfaceRecord(std::int64_t key);
 	R_SurfaceRecord* GetSurfaceRecordByIndex(int index);
-	POSITION GetSurStartPosition();
-	void GetNextAssoc(POSITION& index, long long& key, R_SurfaceRecord*& value);
 	void RemoveAllSurRecord();
 	std::vector<R_SurfaceRecord*>& GetVecSurface();
 
-	void InsertFeatureRecord(__int64 key, R_FeatureRecord* record);
-	void RemoveFeatureRecord(__int64 key);
+	void InsertFeatureRecord(std::int64_t key, R_FeatureRecord* record);
+	void RemoveFeatureRecord(std::int64_t key);
 
-	R_FeatureRecord* GetFeatureRecord(__int64 key);
+	R_FeatureRecord* GetFeatureRecord(std::int64_t key);
 	R_FeatureRecord* GetFeatureRecord(std::string key);
 	R_FeatureRecord* GetFeatureRecord(std::wstring wstringKey);
 	R_FeatureRecord* GetFeatureRecordByIndex(int index);
-	POSITION GetFeatureStartPosition();
-	void GetNextAssoc(POSITION& index, long long& key, R_FeatureRecord*& value);
 	void RemoveFeatureMapKey(long long key);
 	void RemoveAllFeatureRecord();
 	std::vector<R_FeatureRecord*>& GetVecFeature();
 
-	void InsertFeatureFilter(__int64 key);
+	void InsertFeatureFilter(std::int64_t key);
 	void InsertFeatureFilter(std::string key);
 	void InsertFeatureFilter(std::wstring wstringKey);
 	void RemoveFeatureFilter();
-	std::vector<__int64>& GetFeatureFilter();
+	std::vector<std::int64_t>& GetFeatureFilter();
 
 	//============================================================================//
 	int GetCount_InformationRecord();
@@ -424,9 +411,9 @@ public:
 
 	bool ATTRtoAttribute();
 	bool ATTRtoAttribute(R_FeatureRecord* fr);
-	void AddATTRtoAttribute(__int64 key);	
-	void DeleteATTRtoAttribute(__int64 key);
-	void UpdateATTRtoAttribute(__int64 key);
+	void AddATTRtoAttribute(std::int64_t key);	
+	void DeleteATTRtoAttribute(std::int64_t key);
+	void UpdateATTRtoAttribute(std::int64_t key);
 
 	Version GetVersion() const;
 
