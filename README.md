@@ -33,6 +33,7 @@ KHOA S-100 Viewer build on. See the plans in [Documents/TechDocs](Documents/Tech
 ![image](https://github.com/user-attachments/assets/d3b5e499-860d-4bba-b09d-a7f4339525b7)
 
 # Tests
+- `python tools/check-core-includes.py` reports how many core headers still name Direct2D/MFC/Win32 types (Phase 1 progress gauge).
 - `Tests/OpenS100Tests` (GoogleTest). Build the solution and run `Debug_x64\OpenS100Tests.exe`.
 - Reference data is read from `S100_TDS_ROOT` (default `D:\s100-reference	ds`); tests skip when it is absent.
 

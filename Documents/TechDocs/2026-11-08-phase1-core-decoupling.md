@@ -59,7 +59,21 @@
 
 ### 5단계. 전 플랫폼 게이트
 
-- [ ] 5-1. 코어 프로젝트에 `windows.h`·`afx*`·`d2d1.h` include를 검출하는 스크립트(`tools/check-core-includes.py`)와 테스트.
+- [x] 5-1. `tools/check-core-includes.py`: 코어 프로젝트별로 D2D/DWrite/WIC 타입, MFC 타입, Win32 핸들을 이름으로 쓰는 **헤더 수**를 센다(렌더 측으로 선언된 4개 헤더는 D2D 허용). `--fail`로 CI 게이트, `--verbose`로 파일 목록. 기준선(2026-11-08, 2-4 이후):
+
+```
+project                headers   d2d   mfc  win32
+FeatureCatalog              71     0     0      0
+PortrayalCatalogue         128     3     1      2
+GeoMetryLibrary             19     1     4      8
+S100Engine                  51    11     8      0
+GISLibrary                 375    26    76     72
+LuaScriptingReference       16     0     0      1
+
+tainted core headers: 213 (render-side files allowed: 4)
+```
+
+  목표는 모든 코어 프로젝트에서 0. 2-3b(S100PCManager 분리)와 3단계(MFC 제거)가 끝나면 FeatureCatalog·PortrayalCatalogue·GeoMetryLibrary부터 `--fail`을 켠다.
 - [ ] 5-2. CMake 전환(Phase 4)과 함께 `x64-linux` 빌드 시도.
 
 ## 3. 진행 기록
@@ -73,3 +87,4 @@
 | 2026-11-08 | 2-2a: 데이터셋에서 렌더러 핸들 제거, `S102Renderer` 분리 | d6e09a08 | 테스트 12/12, 앱 기동 확인 |
 | 2026-11-08 | 2-2b, 2-3a: Draw 인터페이스 축소, CatalogManager 렌더러 분리(`PortrayalRenderCache`) | f04e886b | 테스트 14/14, 앱 기동 확인 |
 | 2026-11-08 | 2-4: `Layer::Open`에서 렌더러 인자 제거 | 13851aff | 테스트 14/14, 앱 기동 확인 |
+| 2026-11-08 | 5-1: 결합 측정 스크립트와 기준선 | bea7251e | |
