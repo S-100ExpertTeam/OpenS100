@@ -1713,6 +1713,10 @@ S100_FileType LayerManager::CheckFileType(CString path, int update)
 		{
 			pugi::xml_document doc;
 			pugi::xml_parse_result result = doc.load_file(path);
+			if (!result)
+			{
+				return S100_FileType::FILE_NONE;
+			}
 			pugi::xml_node nodeList = doc.first_child();
 
 			std::wstring nodeName = pugi::as_wide(nodeList.name());
@@ -1779,6 +1783,10 @@ S100_FileType LayerManager::CheckFileType(CString path)
 		{
 			pugi::xml_document doc;
 			pugi::xml_parse_result result = doc.load_file(path);
+			if (!result)
+			{
+				return S100_FileType::FILE_NONE;
+			}
 			pugi::xml_node nodeList = doc.first_child();
 
 			std::wstring nodeName = pugi::as_wide(nodeList.name());

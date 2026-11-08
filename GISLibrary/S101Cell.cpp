@@ -225,6 +225,7 @@ void S101Cell::UpdateRemoveAll(void)
 	{
 		updateInformation->ClearAll();
 		delete updateInformation;
+		updateInformation = nullptr;
 	}
 
 	for (auto i = updates.begin(); i != updates.end(); i++)
@@ -246,6 +247,7 @@ void S101Cell::RemoveAll(void)
 	{
 		updateInformation->ClearAll();
 		delete updateInformation;
+		updateInformation = nullptr;
 	}
 
 	for (auto i = updates.begin(); i != updates.end(); i++)
@@ -415,8 +417,18 @@ bool S101Cell::Read8211(std::wstring path)
 		drReader.ReadReader(pBuf);
 		subFieldCount = (drReader.m_fieldAreaLoc - DR_LENGTH - 1) / (4 + drReader.m_fieldLength + drReader.m_fieldPosition);
 
+		if (drReader.m_recordLength > 0 && curRecordAddress + drReader.m_recordLength > endOfBuf + 1)
+		{
+			break; // record claims to extend beyond the buffer
+		}
+
 		if (subFieldCount < 1)
 		{
+			if (drReader.m_recordLength <= 0)
+			{
+				break; // malformed record of unknown length: cannot skip safely
+			}
+			pBuf = curRecordAddress + drReader.m_recordLength;
 			continue;
 		}
 
@@ -569,8 +581,18 @@ bool S101Cell::OpenMetadataBy000(CString path)
 		drReader.ReadReader(pBuf);
 		subFieldCount = (drReader.m_fieldAreaLoc - DR_LENGTH - 1) / (4 + drReader.m_fieldLength + drReader.m_fieldPosition);
 
+		if (drReader.m_recordLength > 0 && curRecordAddress + drReader.m_recordLength > endOfBuf + 1)
+		{
+			break; // record claims to extend beyond the buffer
+		}
+
 		if (subFieldCount < 1)
 		{
+			if (drReader.m_recordLength <= 0)
+			{
+				break; // malformed record of unknown length: cannot skip safely
+			}
+			pBuf = curRecordAddress + drReader.m_recordLength;
 			continue;
 		}
 
@@ -588,6 +610,10 @@ bool S101Cell::OpenMetadataBy000(CString path)
 			break;
 		}
 
+		if (drReader.m_recordLength <= 0)
+		{
+			break;
+		}
 		pBuf = curRecordAddress + drReader.m_recordLength;
 	}
 

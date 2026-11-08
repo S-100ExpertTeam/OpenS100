@@ -59,6 +59,10 @@ namespace S100XMLReader
 		LineStylesPackage::AbstractLineStyle* pLineStyle = nullptr;
 		pugi::xml_document doc;
 		pugi::xml_parse_result result = doc.load_file(path.c_str());
+		if (!result)
+		{
+			return false;
+		}
 
 		pugi::xml_node displayList = doc.first_child();
 		if (displayList == nullptr)

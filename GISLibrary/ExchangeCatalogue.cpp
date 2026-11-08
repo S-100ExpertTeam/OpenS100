@@ -25,6 +25,10 @@ namespace S100
     {
         pugi::xml_document doc;
         pugi::xml_parse_result result = doc.load_file(filePath.c_str());
+        if (!result)
+        {
+            return;
+        }
         pugi::xml_node nodeList = doc.first_child();
 
         const pugi::char_t* instructionName = nodeList.name();
