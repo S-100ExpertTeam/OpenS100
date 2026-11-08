@@ -16,5 +16,6 @@ namespace testpaths
 	std::filesystem::path tdsRoot();
 	std::filesystem::path korS101Cell();          // smallest cell of the Korean S-101 exchange set
 	std::filesystem::path korS101Catalog();       // KOR_TDS/S100_ROOT/CATALOG.XML
+	std::filesystem::path korS124Gml();           // KOR_TDS/KOR_S-124/S-124/124KR.KCG.XI.S100.TEST1.gml
 	std::filesystem::path tempDir();              // per-run scratch directory
 }

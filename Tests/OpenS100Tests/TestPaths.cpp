@@ -37,6 +37,11 @@ namespace testpaths
 		return tdsRoot() / L"KOR_TDS" / L"S100_ROOT" / L"CATALOG.XML";
 	}
 
+	fs::path korS124Gml()
+	{
+		return tdsRoot() / L"KOR_TDS" / L"KOR_S-124" / L"S-124" / L"124KR.KCG.XI.S100.TEST1.gml";
+	}
+
 	fs::path tempDir()
 	{
 		auto dir = fs::temp_directory_path() / L"OpenS100Tests";

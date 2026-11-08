@@ -102,6 +102,11 @@ bool S10XGML::OpenMetadata(std::string fileContent)
 
 bool S10XGML::Open(pugi::xml_node doc, pugi::xml_parse_result result)
 {
+	if (!result)
+	{
+		return false;
+	}
+
 	pugi::xml_node root = doc.first_child();
 
 	for (pugi::xml_attribute attr : root.attributes()) {
@@ -212,6 +217,11 @@ bool S10XGML::Open(pugi::xml_node doc, pugi::xml_parse_result result)
 
 bool S10XGML::OpenMetadata(pugi::xml_node doc, pugi::xml_parse_result result)
 {
+	if (!result)
+	{
+		return false;
+	}
+
 	pugi::xml_node root = doc.first_child();
 
 	auto child = root.first_child();

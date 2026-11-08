@@ -27,7 +27,10 @@ public:
     std::optional<int> scaleMinimum;
     std::optional<int> scaleMaximum;
 
+    // Owned placeholder (carries the geometry id when the dataset has not resolved it).
     std::unique_ptr<GM::Object> geometry;
+    // Non-owning reference to a geometry owned by the dataset (S10XGML::geometries).
+    GM::Object* sharedGeometry = nullptr;
 
     std::vector<MaskReference> maskReference;
 

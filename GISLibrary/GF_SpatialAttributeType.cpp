@@ -13,8 +13,12 @@ namespace GF
 		scaleMinimum = other.scaleMinimum;
 		scaleMaximum = other.scaleMaximum;
 
-		geometry = std::make_unique<GM::Object>();
-		*geometry = *other.geometry;
+		sharedGeometry = other.sharedGeometry;
+		if (other.geometry)
+		{
+			geometry = std::make_unique<GM::Object>();
+			*geometry = *other.geometry;
+		}
 
 		for (const auto& iter : other.maskReference)
 		{
@@ -35,8 +39,12 @@ namespace GF
 		scaleMinimum = other.scaleMinimum;
 		scaleMaximum = other.scaleMaximum;
 
-		geometry = std::make_unique<GM::Object>();
-		*geometry = *other.geometry;
+		sharedGeometry = other.sharedGeometry;
+		if (other.geometry)
+		{
+			geometry = std::make_unique<GM::Object>();
+			*geometry = *other.geometry;
+		}
 
 		for (const auto& iter : other.maskReference)
 		{
@@ -58,17 +66,23 @@ namespace GF
 
 	std::string SpatialAttributeType::GetGeometryID()
 	{
-		return geometry->GetID();
+		if (sharedGeometry)
+		{
+			return sharedGeometry->GetID();
+		}
+		return geometry ? geometry->GetID() : std::string();
 	}
 
 	void SpatialAttributeType::SetGMGeometry(GM::Object* geometry)
 	{
-		this->geometry.reset(geometry);
+		// The dataset keeps ownership of its geometries; this is a reference only.
+		// Taking ownership here caused a double delete in ~S10XGML.
+		sharedGeometry = geometry;
 	}
 
 	GM::Object* SpatialAttributeType::GetGMGeometry()
 	{
-		return geometry.get();
+		return sharedGeometry ? sharedGeometry : geometry.get();
 	}
 
 	std::optional<int> SpatialAttributeType::getScaleMinimum()
