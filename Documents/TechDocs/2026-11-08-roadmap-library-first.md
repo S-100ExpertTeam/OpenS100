@@ -58,7 +58,7 @@ S-100은 프레임워크 표준 전체를 뜻한다. Part 3(데이터 모델), 4
 
 | 원인 | 대책 | 단계 |
 |---|---|---|
-| 프로젝트마다 Win32/x64/ARM64 × Debug/Release 구성, 사용하지 않는 플랫폼까지 유지 | x64만 남기고 Win32·ARM64 구성 삭제(ARM64는 CMake 전환 후 크로스 빌드로) | Phase 0~1 |
+| 프로젝트마다 Win32/x64/ARM64 × Debug/Release 구성 | **구성은 유지한다**(지침 19: vcpkg CI가 x86·x64·arm64 트리플릿을 빌드). 로컬은 x64만 빌드하고, 다른 구성은 CI 매트릭스에서 확인. CMake 전환 후에는 구성 중복이 사라진다 | Phase 4 |
 | PCH가 프로젝트마다 제각각, 일부는 PCH 없이 `<afx*.h>`·`<d2d1.h>`·HDF5 헤더를 매 TU마다 포함 | 코어에서 무거운 헤더 제거(MFC·D2D 제거가 곧 빌드 속도 개선), 모듈별 PCH 정리, 전방 선언 | Phase 1 |
 | 거대 TU(`S101Cell.cpp` 5.6K줄, KHOA `LayerManager.cpp` 9.7K줄) | 분할 | Phase 1~4 |
 | vcpkg가 hdf5·libxslt·openssl·boost를 소스 빌드 | 바이너리 캐시(로컬 `files` + CI `GitHub Actions cache` 또는 NuGet), boost-geometry 같은 헤더 전용 의존성은 필요 범위만 | Phase 0 |
@@ -99,7 +99,7 @@ namespace s100 {
 2. **CMake 빌드**와 `install()` 규칙, `find_package(opens100 CONFIG)`용 config export.
 3. 모든 의존성이 vcpkg 포트. 벤더링 금지.
 4. OSI 라이선스(MPL-2.0, 충족). 포함된 FC/PC 카탈로그(IHO·KHOA 저작물)는 라이선스가 다르므로 **라이브러리 소스와 분리**해 별도 데이터 패키지로.
-5. `x64-windows`, `x64-windows-static`, `x64-linux`, `arm64-osx`. 지침 18에 따라 전 플랫폼이 목표이므로 코어는 Windows 전용 API를 쓰지 않는다. 장기적으로 `wasm32-emscripten`(opens100-web과 코어 공유 가능성).
+5. `x86-windows`, `x64-windows`, `arm64-windows`, `x64-windows-static`(지침 19), 이후 `x64-linux`, `arm64-osx`. 지침 18에 따라 전 플랫폼이 목표이므로 코어는 Windows 전용 API를 쓰지 않는다. 장기적으로 `wasm32-emscripten`(opens100-web과 코어 공유 가능성).
 6. `portfile.cmake`, 포트용 `vcpkg.json`, `usage`. vcpkg CI 통과.
 
 권장 경로: 먼저 **자체 Git 레지스트리**(예: `S-100ExpertTeam/vcpkg-registry`)에 포트를 만들어 KHOA 뷰어가 `vcpkg-configuration.json`으로 받아 쓰게 한다. 이것이 "KHOA 뷰어가 OpenS100을 사용한다"의 기술적 형태다. 코어가 안정되고 Linux 빌드가 되면 microsoft/vcpkg에 PR.
@@ -137,3 +137,4 @@ Phase 2와 3은 순서를 바꿔도 되지만, **Phase 0 없이 Phase 4를 시�
 
 - 2026-11-08 초안. 처음엔 KHOA 뷰어 저장소에 작성했으나 사용자가 대상은 OpenS100이라고 정정하여 이 저장소로 이동하고 2절(세 저장소 역할)과 업스트림 단계를 추가.
 - 2026-11-08 지침 16~18 반영: vcpkg 참조 확정, 빌드 속도 절(3.3) 추가, 전 플랫폼·MFC 제거를 결정 사항으로.
+- 2026-11-08 지침 19 반영: Win32/ARM64 구성 삭제 계획 철회, 트리플릿 목록에 x86·arm64 추가.

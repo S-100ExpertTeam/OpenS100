@@ -22,7 +22,7 @@
 ### B'. 빌드 속도 기준선 (지침 17)
 
 - [x] B4. 클린 빌드와 증분 빌드(한 .cpp 수정) 시간을 x64 Debug에서 측정해 기록(2026-11-08, 아래 표).
-- [ ] B5. 사용하지 않는 Win32·ARM64 구성 제거(9개 vcxproj, sln). x64만 유지.
+- [x] B5. ~~Win32·ARM64 구성 제거~~ **철회**(지침 19). 구성은 유지하고 CI 매트릭스로 확인. 테스트 프로젝트는 x64만 있으므로 sln에서 x86/ARM64 솔루션 구성에 대한 `Build.0` 매핑만 제거(해당 구성에서 빌드 생략).
 - [ ] B6. 로컬 vcpkg 바이너리 캐시 사용 확인(`VCPKG_BINARY_SOURCES`, BUILD.md 5절).
 
 ### C. 의존성
@@ -34,7 +34,7 @@
 
 - [x] D1. `Tests/OpenS100Tests/` gtest 콘솔 프로젝트. GISLibrary·FeatureCatalog·PortrayalCatalogue 링크. 첫 테스트: (a) `FeatureCatalogue` 로딩(`ProgramData/FC/S-101_FC.xml`), (b) `S101Cell` 8211 열기(`D:\s100-reference\tds\KOR_TDS\S100_ROOT\S-101\DATASET_FILES\` 중 하나. 파일이 없으면 SKIP), (c) 손상 8211(잘린 버퍼)에서 A2가 중단되는지, (d) `ExchangeCatalogue` 파싱(`KOR_TDS\S100_ROOT\CATALOG.XML`, 없으면 SKIP). (93aec60c)
 - [x] D2. 솔루션에 테스트 프로젝트 추가(`04. TEST` 폴더). (93aec60c)
-- [x] D3. `.github/workflows/build.yml`: `workflow_dispatch` + push(dev-jogm, main). windows-latest, vcpkg 바이너리 캐시(GitHub Actions cache), MSBuild x64 Release, 테스트 실행. 첫 실행은 hdf5·libxslt 소스 빌드로 오래 걸림(수십 분). 캐시가 쌓이면 push 트리거로. (93aec60c)
+- [x] D3. (결정 20에 따라 `workflow_dispatch` 전용으로 변경) `.github/workflows/build.yml`: `workflow_dispatch` + push(dev-jogm, main). windows-latest, vcpkg 바이너리 캐시(GitHub Actions cache), MSBuild x64 Release, 테스트 실행. 첫 실행은 hdf5·libxslt 소스 빌드로 오래 걸림(수십 분). 캐시가 쌓이면 push 트리거로. (93aec60c)
 
 ### E. 정리
 

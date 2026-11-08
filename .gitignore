@@ -296,3 +296,6 @@ vcpkg_installed/
 .sisyphus/
 
 .mcp.json
+
+# Visual Studio encoding temp copies
+enc_temp_folder/

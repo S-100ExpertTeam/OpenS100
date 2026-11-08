@@ -1,18 +1,10 @@
 name: build
 
 # Windows build + unit tests.
-# vcpkg builds hdf5/libxslt/openssl from source the first time, which takes a long
-# time; the cache below keeps later runs short. Until the cache is warm this runs
-# only on manual dispatch and on pushes to the development branches.
+# Manual only for now (owner decision 2026-11-08): the first run builds hdf5/libxslt/openssl
+# from source and takes a long time. Enable push/pull_request triggers once the binary cache is warm.
 on:
   workflow_dispatch:
-  push:
-    branches: [dev-jogm, main]
-    paths-ignore:
-      - "Documents/**"
-      - "**/*.md"
-  pull_request:
-    branches: [main]
 
 env:
   VCPKG_BINARY_SOURCES: "clear;files,${{ github.workspace }}/vcpkg-cache,readwrite"
