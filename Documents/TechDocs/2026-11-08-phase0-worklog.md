@@ -21,7 +21,7 @@
 
 ### B'. 빌드 속도 기준선 (지침 17)
 
-- [ ] B4. 클린 빌드와 증분 빌드(한 .cpp 수정) 시간을 x64 Debug에서 측정해 기록. `MSBuild -clp:PerformanceSummary` 사용. 결과는 이 문서 아래 표에.
+- [x] B4. 클린 빌드와 증분 빌드(한 .cpp 수정) 시간을 x64 Debug에서 측정해 기록(2026-11-08, 아래 표).
 - [ ] B5. 사용하지 않는 Win32·ARM64 구성 제거(9개 vcxproj, sln). x64만 유지.
 - [ ] B6. 로컬 vcpkg 바이너리 캐시 사용 확인(`VCPKG_BINARY_SOURCES`, BUILD.md 5절).
 
@@ -71,7 +71,7 @@
 
 | 날짜 | 조건 | 클린 빌드 | 증분(1 TU) | 비고 |
 |---|---|---|---|---|
-| | | | | |
+| 2026-11-08 | 개발 PC, v145, C++20, x64 Debug, `MSBuild -m -t:Rebuild`, vcpkg 캐시 적중 | **117s** (벽시계) | **4s** (`GISLibrary/S10XGML.cpp` touch) | 프로젝트별 포함 시간: OpenS100 115.6s, OpenS100Tests 98.6s, GISLibrary 83.2s, PortrayalCatalogue 28.9s, LuaScriptingReference 15.4s, S100Engine 12.2s, FeatureCatalog 11.9s, GeoMetryLibrary 10.1s. 임계 경로는 GISLibrary(61K줄, 단일 프로젝트라 파일 병렬화만 가능). 커밋 93aec60c 기준 |
 
 ## 커밋 기록
 
