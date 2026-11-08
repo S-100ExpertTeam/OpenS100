@@ -6,38 +6,19 @@
 
 #include "targetver.h"
 
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS     
-
-#include <afxwin.h>        
-#include <afxext.h>       
-#include <afxtempl.h>
-#include <comdef.h>
-
-#ifndef _AFX_NO_OLE_SUPPORT
-#include <afxole.h>        
-#include <afxodlgs.h>      
-#include <afxdisp.h>       
-#endif // _AFX_NO_OLE_SUPPORT
-
-#ifndef _AFX_NO_DB_SUPPORT
-#include <afxdb.h>                      
-#endif // _AFX_NO_DB_SUPPORT
-
-#ifndef _AFX_NO_DAO_SUPPORT
-#include <afxdao.h>                     
-#endif // _AFX_NO_DAO_SUPPORT
-
-#ifndef _AFX_NO_OLE_SUPPORT
-#include <afxdtctl.h>           
+// GISLibrary builds without MFC (Phase 1 step 3-5a). Win32 + COM + ATL conversion helpers
+// remain while the Direct2D renderer lives in this project; they go with it in Phase 3.
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN // keep commdlg.h out: its GetFileTitle macro clashes with catalogue method names
 #endif
-#ifndef _AFX_NO_AFXCMN_SUPPORT
-#include <afxcmn.h>                    
-#endif // _AFX_NO_AFXCMN_SUPPORT
-
-#include "resource.h"
+#include <windows.h>
+#include <tchar.h>
+#include <comdef.h>
+#include <atlbase.h>
+#include <atlconv.h>
+#include <atlsafe.h>
 
 #include "Common.h"
-#include <windows.h>
 #include <gdiplus.h>
 // GDI+ names were previously pulled in unqualified through a PortrayalCatalogue header; keep
 // that for the legacy GDI drawing code in this project until it moves to the renderer.
@@ -45,6 +26,8 @@ using namespace Gdiplus;
 
 #include <d2d1.h>
 #include <d2d1_1.h>
+#include <dwrite.h>
+#include <wincodec.h>
 #pragma comment(lib, "d2d1.lib")
 #pragma comment(lib, "winmm.lib")
 

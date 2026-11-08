@@ -4,8 +4,6 @@
 #include "SENC_Foreground.h"
 #include "SENC_Font.h"
 
-class CFont;
-
 class SENC_Element
 {
 public:
@@ -21,5 +19,4 @@ public:
 
 	// For show text on screen
 	D2D1_COLOR_F* pColor = nullptr;
-	CFont* pFont = nullptr;
 };

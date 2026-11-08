@@ -17,10 +17,6 @@
 
 #include <direct.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
-
 CGISLibraryApp::CGISLibraryApp()
 {
 	std::string str = "..\\TEMP"; // read path

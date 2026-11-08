@@ -37,7 +37,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfMfc>false</UseOfMfc>
     <PlatformToolset>v145</PlatformToolset>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
@@ -45,7 +45,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfMfc>false</UseOfMfc>
     <PlatformToolset>v145</PlatformToolset>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
@@ -53,7 +53,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfMfc>false</UseOfMfc>
     <PlatformToolset>v145</PlatformToolset>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
@@ -62,7 +62,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfMfc>false</UseOfMfc>
     <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -70,7 +70,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfMfc>false</UseOfMfc>
     <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
@@ -78,7 +78,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfMfc>false</UseOfMfc>
     <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -1099,10 +1099,7 @@
     <ClInclude Include="VisibilityCommands.h" />
     <ClInclude Include="XML_Collection.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="GISLibrary.rc" />
-  </ItemGroup>
-  <ItemGroup>
+    <ItemGroup>
     <ProjectReference Include="..\FeatureCatalog\FeatureCatalog.vcxproj">
       <Project>{4964c844-dae9-4dd3-b9d9-daa7520d019a}</Project>
     </ProjectReference>
@@ -1111,9 +1108,6 @@
     </ProjectReference>
     <ProjectReference Include="..\LatLonUtility\LatLonUtility.vcxproj">
       <Project>{d87f9640-70b7-4695-85c5-105ba24fa7c0}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\LibMFCUtil\LibMFCUtil.vcxproj">
-      <Project>{423e4835-a278-43c4-ad2d-e8a4d0c98f8a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\LuaScriptingReference\LuaScriptingReference.vcxproj">
       <Project>{33943243-a35e-42c3-ad7e-b6be65f4bc47}</Project>

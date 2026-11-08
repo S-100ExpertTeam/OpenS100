@@ -58,7 +58,6 @@ R_SurfaceRecord R_SurfaceRecord::operator=(const R_SurfaceRecord& other)
 
 BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
-	USES_CONVERSION;
 	for (int i = 0; i < dir->m_count; i++)
 	{
 		if (strcmp(dir->GetDirectory(i)->tag, "SRID") == 0)
@@ -86,7 +85,7 @@ BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 
 		if (*(buf++) != 0x1E)
 		{
-			TRACE(W2A(TEXT("terminator error")));
+			OutputDebugStringW(L"terminator error\n");
 		}
 	}
 	return TRUE;

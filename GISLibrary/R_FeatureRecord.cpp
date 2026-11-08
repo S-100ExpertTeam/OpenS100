@@ -203,7 +203,6 @@ R_FeatureRecord R_FeatureRecord::operator=(const R_FeatureRecord& other)
 #pragma warning(disable:4018)
 BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 {
-	USES_CONVERSION;
 	unsigned i = 0, j = 0, cnt;
 	for (i = 0; i < dir->m_count; i++)
 	{

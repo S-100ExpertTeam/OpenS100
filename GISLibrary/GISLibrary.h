@@ -10,9 +10,6 @@
 
 #include "../S100Engine/S100Render.h"
 
-#ifndef __AFXWIN_H__
-#endif
-
 using namespace GISLibrary;
 
 class CGISLibraryApp

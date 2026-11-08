@@ -106,7 +106,6 @@ R_MultiPointRecord R_MultiPointRecord::operator=(const R_MultiPointRecord& other
 #pragma warning(disable:4018)
 BOOL R_MultiPointRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
-	USES_CONVERSION;
 	int i = 0, j = 0, cnt;
 	for (unsigned i = 0; i < dir->m_count; i++)
 	{

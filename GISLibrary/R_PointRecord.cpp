@@ -58,7 +58,6 @@ R_PointRecord R_PointRecord::operator=(const R_PointRecord& other)
 
 BOOL R_PointRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
-	USES_CONVERSION;
 	int i = 0, j = 0;
 	for (i = 0; i < dir->m_count; i++)
 	{
@@ -94,7 +93,7 @@ BOOL R_PointRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 		}
 
 		if (*(buf++) != 0x1E)//{}
-			TRACE(W2A(TEXT("terminator error")));
+			OutputDebugStringW(L"terminator error\n");
 	}
 
 	return TRUE;

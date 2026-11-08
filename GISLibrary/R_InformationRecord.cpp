@@ -87,7 +87,6 @@ R_InformationRecord R_InformationRecord::operator=(const R_InformationRecord& ot
 
 BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 {
-	USES_CONVERSION;
 	int i = 0, j = 0, cnt;
 	for(i = 0; i < dir->m_count; i++)
 	{
@@ -134,7 +133,7 @@ BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		}
 		
 		if(*(buf++)!= 0x1E)//{}
-			TRACE(W2A(TEXT("terminator error")));
+			OutputDebugStringW(L"terminator error\n");
 	}
 	return TRUE;
 }

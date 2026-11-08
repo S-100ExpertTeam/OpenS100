@@ -72,7 +72,6 @@ BOOL R_DSCRS::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
 	Release();
 
-	USES_CONVERSION;
 	for (unsigned i = 0; i < dir->m_count; i++)
 	{
 		if (strcmp(dir->GetDirectory(i)->tag, "CSID") == 0)

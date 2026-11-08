@@ -7,12 +7,6 @@ SENC_Element::SENC_Element()
 
 SENC_Element::~SENC_Element()
 {
-	if (pFont) 
-	{	
-		delete pFont;
-		pFont = nullptr; 	
-	}
-
 	if (pColor) 
 	{	
 		delete pColor; 
