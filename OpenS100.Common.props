@@ -35,6 +35,12 @@
         (Documents/TechDocs/2026-11-08-phase1-core-decoupling.md); keep it that way.
       -->
       <ConformanceMode>true</ConformanceMode>
+      <!--
+        Newer vcpkg libxml2 ports install headers under include/libxml2/libxml/...; older
+        installs used include/libxml/... directly. Add the sub-directory so <libxml/parser.h>
+        resolves either way (the directory is simply ignored when it does not exist).
+      -->
+      <AdditionalIncludeDirectories>$(VcpkgManifestRoot)\vcpkg_installed\$(VcpkgTriplet)\$(VcpkgTriplet)\include\libxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
 </Project>
