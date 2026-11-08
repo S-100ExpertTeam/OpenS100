@@ -110,7 +110,7 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 
 	if (file_extension.CompareNoCase(_T("SHP")) == 0) 
 	{
-		if (backgroundLayer.Open(_filepath, D2) == false)
+		if (backgroundLayer.Open(_filepath, this) == false)
 		{
 			return false;
 		}
@@ -282,7 +282,7 @@ int LayerManager::AddLayer(CString _filepath)
 		fileType == S100_FileType::FILE_ETC)
 	{
 		layer = new Layer();
-		if (layer->Open(_filepath, D2, this) == false)
+		if (layer->Open(_filepath, this) == false)
 		{
 			delete layer;
 			return -1;
@@ -300,7 +300,7 @@ int LayerManager::AddLayer(CString _filepath)
 		if (fc)
 		{
 			layer = new S100Layer(productNumber, fc, pc);
-			if ((S100Layer*)layer->Open(_filepath, D2, this) == false)
+			if (layer->Open(_filepath, this) == false)
 			{
 				delete layer;
 				return -1;
@@ -347,7 +347,7 @@ int LayerManager::AddLayerFront(CString _filepath)
 		fileType == S100_FileType::FILE_ETC)
 	{
 		layer = new Layer();
-		if (layer->Open(_filepath, D2, this) == false)
+		if (layer->Open(_filepath, this) == false)
 		{
 			delete layer;
 			return -1;
@@ -363,7 +363,7 @@ int LayerManager::AddLayerFront(CString _filepath)
 		if (fc)
 		{
 			layer = new S100Layer(fc, pc);
-			if ((S100Layer*)layer->Open(_filepath, D2, this) == false)
+			if (layer->Open(_filepath, this) == false)
 			{
 				delete layer;
 				return -1;

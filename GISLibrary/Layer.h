@@ -29,7 +29,7 @@ public:
 	int scaleMaximum = 0;
 
 public:
-	virtual bool Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm = nullptr);
+	virtual bool Open(CString _filepath, LayerManager* lm = nullptr);
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 	bool IsOn();
 	bool IsOn(int scale);

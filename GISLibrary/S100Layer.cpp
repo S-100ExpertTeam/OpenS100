@@ -50,7 +50,7 @@ S100Layer::~S100Layer()
 	DeleteCatalog();
 }
 
-bool S100Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
+bool S100Layer::Open(CString _filepath, LayerManager* lm)
 {
 	auto extension = LibMFCUtil::GetExtension(_filepath);
 
@@ -204,23 +204,6 @@ bool S100Layer::OpenFC(CString path)
 		
 	SetIndividualFC(false);
 	delete fc;
-	return false;
-}
-
-bool S100Layer::OpenPC(CString path, D2D1Resources* d2d1)
-{
-	PortrayalCatalogue* pc = new PortrayalCatalogue();
-
-	if (pc) {
-		PortrayalRender::Prepare(pc, d2d1);
-
-		SetIndividualPC(true);
-		SetPC(pc);
-		return true;
-	}
-
-	SetIndividualPC(false);
-	delete pc;
 	return false;
 }
 

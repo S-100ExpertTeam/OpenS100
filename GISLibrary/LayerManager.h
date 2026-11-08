@@ -48,6 +48,10 @@ public:
 	bool onIC = true;
 	bool m_isScreenFitEnabled = true;
 
+	// Renderer used by this layer manager. Datasets never hold it; UI-side objects that
+	// draw themselves (exchange-set coverage) receive it from here.
+	D2D1Resources* GetRenderResources() const { return D2; }
+
 protected:
 	D2D1Resources* D2 = nullptr;
 

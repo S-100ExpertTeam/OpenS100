@@ -41,7 +41,7 @@
 - [x] 2-2b. `SpatialObject`의 Draw 가상 함수 6종 중 5종 제거(`CDC*`, `D2D1Resources*`, `CDCRenderTarget*`, `ID2D1HwndRenderTarget*`, priority/geoType 변형). 호출자 없는 `Layer::Draw` 2종과 `S101Cell::Draw` 3종(빈 함수·스텁) 제거. 남은 것: `Draw(HDC&, Scaler*, double)` 하나(`SHPFile`, `S100ExchangeCatalogue`가 사용, GDI). 이것은 3단계(MFC 제거)에서 렌더 측으로.
 - [x] 2-3a. `CatalogManager`에서 `D2D1Resources*` 멤버·생성자·`ChangeColorPallete` 제거. 카탈로그 추가 후 렌더 캐시 생성은 렌더 측 `GISLibrary/PortrayalRenderCache`(`PortrayalRender::Prepare(pc, d2)`, `ChangePalette(pc, name, d2)`)가 담당하고, 호출은 PC를 추가하는 쪽(앱의 `FC_PCSelectdlg`, `OpenS100View`, `S100Layer::OpenPC`)과 팔레트 변경(`LayerManager`)에서 명시적으로. 테스트 `CatalogManager.LoadsCataloguesWithoutRenderer`(FC+PC 로딩, 렌더러 없음).
 - [ ] 2-3b. `PortrayalCatalogue.h`에서 D2D 타입 제거: `S100PCManager`(SVG D2D 지오메트리·패턴 비트맵 보유)를 PC 밖 렌더 측 캐시로 이동(`GetS100PCManager()` 참조 24곳: SENC_* 7파일, LayerManager, GISLibrary.cpp, S102_Color). `S100_ColorProfile::GetD2Color` → `GetColor()`(RGBA 구조체).
-- [ ] 2-4. `S100Layer::Open`, `LayerManager`에서 `D2D1Resources*` 의존 제거.
+- [x] 2-4. `Layer::Open`/`S100Layer::Open`에서 `D2D1Resources*` 인자 제거(데이터셋이 더 이상 필요로 하지 않음). 교환세트 커버리지 객체만 `LayerManager::GetRenderResources()`로 렌더러를 받는다. 호출자 없는 `S100Layer::OpenPC` 삭제, `(S100Layer*)layer->Open(...) == false`의 무의미한 캐스트 정리. `LayerManager` 자체는 렌더·로딩·경보가 섞인 sdk 객체라 D2 멤버를 유지(분할은 Phase 4).
 - 완료 기준: `PortrayalCatalogue`, `GeoMetryLibrary`, `GISLibrary`의 **헤더**에 `d2d1.h`·`ID2D1*`가 없다(`.cpp`는 2-5 후).
 
 ### 3단계. MFC 제거
@@ -72,3 +72,4 @@
 | 2026-11-08 | 2-1: D2D 지오메트리를 모델 밖 `D2DGeometryCache`로 | e0047a78 | 테스트 12/12, 앱 기동 확인 |
 | 2026-11-08 | 2-2a: 데이터셋에서 렌더러 핸들 제거, `S102Renderer` 분리 | d6e09a08 | 테스트 12/12, 앱 기동 확인 |
 | 2026-11-08 | 2-2b, 2-3a: Draw 인터페이스 축소, CatalogManager 렌더러 분리(`PortrayalRenderCache`) | f04e886b | 테스트 14/14, 앱 기동 확인 |
+| 2026-11-08 | 2-4: `Layer::Open`에서 렌더러 인자 제거 | (아래) | 테스트 14/14, 앱 기동 확인 |
