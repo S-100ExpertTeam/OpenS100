@@ -55,7 +55,7 @@
 
 ### 4단계. 적합성 복구
 
-- [ ] 4-1. `Common.props`의 `ConformanceMode=false` 임시 조치 제거. GISLibrary 약 180건(C2664 94: 문자열 리터럴→`char*`(HDF5 래퍼 시그니처 `const char*`로), C2665 58: 임시→비상수 참조(`const&`), C2440 11: `CString`→`std::wstring`(3단계와 함께)) 정리.
+- [x] 4-1. `Common.props`의 `ConformanceMode=false` 임시 조치 제거 (eb9b8cd8). 측정 시점(3단계 완료 후) 176건: GISLibrary 153, 뷰어 23, S100Engine 0. C2664 94건은 `char*`로 받던 문자열 리터럴(`F_FieldControlField::AddTagPair`, `Directory(const char*, …)`, `HDF5Wrapper::ReadMetadata*Attribute`) → `const char*`; C2665 52건은 임시 객체를 비상수 참조로 받던 setter(`MBR::CalcMBR`, `S100_VectorPoint::SetX/Y`, `S100_Instruction::SetViewingGroup(vector)`, `S100_SpatialReference::Set`, `CommandList::Insert`, `GF::NamedType::SetCode`, `SENC_*` setter 4개) → `const&`, `S10XGML::ReadLinearRing`은 값 전달, `ExXmlSupport::GetContent(Select)Node`는 지역 변수 참조를 돌려주던 것을 값 반환으로; C2440/C2446: `Base64String` 생성, `IsNoGeometry`의 포인터 비교, `IsOn(key)`의 `return nullptr`, GML 리더의 `return false`(포인터 반환). 뷰어 23건은 GDI+ `&Pen(...)` 임시 주소·`DrawLine` 정수/실수 모호성·`CString`→`std::wstring` 초기화. 이제 모든 프로젝트가 `/permissive-`로 빌드된다.
 - [ ] 4-2. `/W4` 프로젝트별 적용, 경고-에러는 코어부터.
 
 ### 5단계. 전 플랫폼 게이트
@@ -101,3 +101,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-09 | 3-2c: GISLibrary 잔여 MFC 타입·LibMFCUtil 제거, S100Engine CString/CFile 정리 | aa9ec086 | 테스트 16/16, 앱 기동 확인, 게이지 118. **3-2 완료** |
 | 2026-11-09 | 3-5a: GISLibrary `UseOfMfc=false` | 294bfe99 | 테스트 16/16, 앱 기동 확인, 게이지 117 |
 | 2026-11-09 | 3-5b/c: S100Engine·테스트 호스트 `UseOfMfc=false`, MFC DLL 골격 삭제, FileTitle→FileStem | c89d2b62 | 테스트 16/16, 앱 기동 확인, MFC 헤더 0. **3단계 완료** |
+| 2026-11-09 | 4-1: 전 프로젝트 `/permissive-` 복구(176건 수정) | eb9b8cd8 | 테스트 16/16, 앱 기동 확인 |
