@@ -31,7 +31,7 @@
 - [x] 1-3. 모델 생성 코드(`S101Cell` 2곳, `S10XGML` 8곳)의 즉시 생성은 `D2`가 있을 때만 수행(있으면 기존과 동일한 성능 특성 유지, 없으면 지연 생성).
 - [x] 1-4. 테스트 `OpensSmallestKoreanCellWithoutRenderer`: `S101Cell(fc, nullptr).Open(cell)`이 true, 피처·곡선 레코드 수 양수. GML(`S10XGML`)은 생성자가 FC를 받지 않아 보류(1-5).
 - [x] 1-5(추가). **FC/PC가 Layer에 묶여 있던 문제.** `S101Cell(FeatureCatalogue*, ...)` 생성자가 `fc`를 버리고 `GetFC()`가 항상 `m_pLayer`를 거쳐서, Layer 없이 열면 `ATTRtoAttribute()`에서 널 FC의 속성 맵을 조회하다 접근 위반. `S100SpatialObject`에 `m_fc/m_pc` 멤버와 `SetFC/SetPC`를 두고 Layer가 없거나 Layer의 카탈로그가 비어 있으면 멤버를 쓴다. 데이터셋이 UI 개념(Layer) 없이 자립하는 첫걸음.
-- [ ] 1-6. `S10XGML`에도 FC를 직접 받는 생성자/`SetFC` 경로를 만들고 GML 열기 테스트 추가(KOR_S-1xx의 S-124/S-128 GML).
+- [x] 1-6. `S10XGML`은 `SetFC()`로 FC를 직접 바인딩해 KOR_S-124 GML을 렌더러·Layer 없이 연다(테스트 `OpensKoreanS124WithoutRenderer`). 과정에서 발견·수정한 기존 버그: (a) `S10XGML::Open/OpenMetadata`가 pugi 파싱 결과를 무시해 없는 파일도 true 반환, (b) `GF::SpatialAttributeType::SetGMGeometry`가 `unique_ptr.reset()`으로 소유권을 가져가 `~S10XGML`에서 모든 피처 기하가 이중 해제됨(앱에서는 객체가 소멸되지 않아 숨어 있었음). 비소유 참조 `sharedGeometry`로 변경. (6e24bcd5)
 - 완료 기준: `OpenS100Tests`에서 D2D 없이 8211 셀을 끝까지 연다(달성, 2026-11-08). 앱 렌더링 동일(기동 확인).
 
 ### 2단계. 렌더 훅을 모델에서 떼어내기
@@ -66,3 +66,4 @@
 |---|---|---|---|
 | 2026-11-08 | 문서 작성, 인벤토리 | | |
 | 2026-11-08 | 1-1~1-5: 렌더 캐시 지연 생성, 카탈로그 직접 바인딩, 렌더러 없는 Open 테스트 | bcbc2feb | 테스트 10/10 |
+| 2026-11-08 | 1-6: GML도 렌더러 없이 열기, 이중 해제·파싱 실패 무시 수정 | 6e24bcd5 | 테스트 12/12. **1단계 완료** |
