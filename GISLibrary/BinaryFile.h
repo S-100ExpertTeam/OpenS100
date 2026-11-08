@@ -37,5 +37,45 @@ namespace s100
 			}
 			return bytes;
 		}
+
+		// Reads at most `count` bytes from the start of the file (fewer if the file is shorter).
+		inline std::optional<std::vector<std::uint8_t>> ReadBytes(const std::filesystem::path& path, std::size_t count)
+		{
+			std::ifstream in(path, std::ios::binary);
+			if (!in)
+			{
+				return std::nullopt;
+			}
+			std::vector<std::uint8_t> bytes(count);
+			in.read(reinterpret_cast<char*>(bytes.data()), static_cast<std::streamsize>(count));
+			bytes.resize(static_cast<size_t>(in.gcount()));
+			return bytes;
+		}
+
+		// Random-access binary reader for record-oriented formats (shapefile .shp/.shx ...).
+		class BinaryFileReader
+		{
+		public:
+			bool Open(const std::filesystem::path& path)
+			{
+				m_in.open(path, std::ios::binary);
+				return m_in.is_open();
+			}
+			bool IsOpen() const { return m_in.is_open(); }
+			void Seek(std::uint64_t offsetFromStart)
+			{
+				m_in.clear();
+				m_in.seekg(static_cast<std::streamoff>(offsetFromStart), std::ios::beg);
+			}
+			// Returns the number of bytes actually read.
+			std::size_t Read(void* buffer, std::size_t size)
+			{
+				m_in.read(static_cast<char*>(buffer), static_cast<std::streamsize>(size));
+				return static_cast<std::size_t>(m_in.gcount());
+			}
+
+		private:
+			std::ifstream m_in;
+		};
 	}
 }

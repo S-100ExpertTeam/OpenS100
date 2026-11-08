@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SHPFile.h"
+#include "BinaryFile.h"
 
 SHPFile::SHPFile(void) : SpatialObject()
 {
@@ -23,11 +24,10 @@ bool SHPFile::Open(CString _filepath)
 
 	m_FileType = S100_FileType::FILE_Shape;
 
-	CFile fdSHP, fdSHX;
-	CFileException e;
+	s100::io::BinaryFileReader fdSHP, fdSHX;
 
 	// Open the SHP file.
-	if (!fdSHP.Open(_filepath, CFile::modeRead, &e))
+	if (!fdSHP.Open(std::wstring(_filepath)))
 	{
 		//OutputDebugString(_T("SHP File Open Error!"));
 		return FALSE;
@@ -45,7 +45,7 @@ bool SHPFile::Open(CString _filepath)
 	ShxFilePath.AppendFormat(_T("shx"));
 
 	// Open the SHX file.
-	if (!fdSHX.Open(ShxFilePath, CFile::modeRead, &e))
+	if (!fdSHX.Open(std::wstring(ShxFilePath)))
 	{
 		//OutputDebugString(_T("SHX File Open Error!"));
 		return FALSE;
@@ -54,7 +54,7 @@ bool SHPFile::Open(CString _filepath)
 	// Find out the number of records.
 	int tmp;
 
-	fdSHX.Seek(24, CFile::begin);
+	fdSHX.Seek(24);
 	fdSHX.Read(&tmp, 4);
 	SwapWord(4, &tmp);
 
@@ -62,7 +62,7 @@ bool SHPFile::Open(CString _filepath)
 	m_nRecords = (SHXFileSize - 100) / 8;
 	
 	// Get shape type
-	fdSHP.Seek(32, CFile::begin);
+	fdSHP.Seek(32);
 	fdSHP.Read(&m_nShapeType, sizeof(int));
 
 	if (!((m_nShapeType == GEOPOINT) || (m_nShapeType == GEOPOLYLINE) || (m_nShapeType == GEOPOLYGON))) {
@@ -95,7 +95,7 @@ bool SHPFile::Open(CString _filepath)
 				// Finding the location of the record in SHX.
 				int offset;
 
-				fdSHX.Seek(100 + (i * 8), CFile::begin);
+				fdSHX.Seek(100 + (i * 8));
 				fdSHX.Read(&offset, 4);
 				SwapWord(4, &offset);
 				offset *= 2;
@@ -103,7 +103,7 @@ bool SHPFile::Open(CString _filepath)
 				// Read the record and save it.
 				double x, y;
 
-				fdSHP.Seek(offset + 12, CFile::begin);
+				fdSHP.Seek(offset + 12);
 				fdSHP.Read(&x, 8);
 				fdSHP.Read(&y, 8);
 
@@ -124,7 +124,7 @@ bool SHPFile::Open(CString _filepath)
 				// Finding the location of the record in SHX.
 				int offset;
 
-				fdSHX.Seek(100 + (i * 8), CFile::begin);
+				fdSHX.Seek(100 + (i * 8));
 				fdSHX.Read(&offset, 4);
 				SwapWord(4, &offset);
 				offset *= 2;
@@ -132,7 +132,7 @@ bool SHPFile::Open(CString _filepath)
 				// Read the record and save it.
 				// MBR 
 				MBR polylineMBR;
-				fdSHP.Seek(offset + 12, CFile::begin);
+				fdSHP.Seek(offset + 12);
 
 				fdSHP.Read(&tmpMBR, sizeof(double));
 				polylineMBR.xmin = tmpMBR;
@@ -195,7 +195,7 @@ bool SHPFile::Open(CString _filepath)
 				// Finding the location of the record in SHX.
 				int offset;
 
-				fdSHX.Seek(100 + (i * 8), CFile::begin);
+				fdSHX.Seek(100 + (i * 8));
 				fdSHX.Read(&offset, 4);
 				SwapWord(4, &offset);
 				offset *= 2;
@@ -203,7 +203,7 @@ bool SHPFile::Open(CString _filepath)
 				// read recoad then save
 				// MBR 
 				MBR polygonMBR;
-				fdSHP.Seek(offset + 12, CFile::begin);
+				fdSHP.Seek(offset + 12);
 
 				fdSHP.Read(&tmpMBR, sizeof(double));
 				polygonMBR.xmin = tmpMBR;

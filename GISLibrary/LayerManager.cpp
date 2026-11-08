@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "LayerManager.h"
 #include "PortrayalRenderCache.h"
+#include "BinaryFile.h"
+#include <filesystem>
 #include "F_ATTR.h"
 #include "R_FeatureRecord.h"
 #include "ATTR.h"
@@ -1672,9 +1674,43 @@ int LayerManager::LayerCount()
 	return (int)layers.size();
 }
 
+namespace
+{
+	// Looks at the first data record of an ISO 8211 file: an S-57 cell starts with field
+	// "0001", an S-100 dataset with "DSID". Platform-neutral (no CFile).
+	S100_FileType SniffIso8211(const std::filesystem::path& path)
+	{
+		constexpr std::size_t headerBytes = 1024;
+		auto bytes = s100::io::ReadBytes(path, headerBytes);
+		if (!bytes || bytes->size() < headerBytes)
+		{
+			return S100_FileType::FILE_NONE;
+		}
+
+		BYTE* cursor = bytes->data();
+		DRReader drReader;
+		drReader.ReadReader(cursor);
+		const std::size_t tagOffset = static_cast<std::size_t>(cursor - bytes->data()) + drReader.m_fieldPosition + drReader.m_fieldLength + 4;
+		if (tagOffset + 4 > bytes->size())
+		{
+			return S100_FileType::FILE_NONE;
+		}
+
+		const std::string tag(reinterpret_cast<const char*>(bytes->data() + tagOffset), 4);
+		if (tag == "0001")
+		{
+			return S100_FileType::FILE_S_57;
+		}
+		if (tag == "DSID")
+		{
+			return S100_FileType::FILE_S_100_VECTOR;
+		}
+		return S100_FileType::FILE_NONE;
+	}
+}
+
 S100_FileType LayerManager::CheckFileType(CString path, int update)
 {
-	CFile file;
 	S100_FileType ret = S100_FileType::FILE_NONE;
 
 	CString file_extension = LibMFCUtil::GetExtension(path);
@@ -1682,34 +1718,7 @@ S100_FileType LayerManager::CheckFileType(CString path, int update)
 
 	if (file_extension.CompareNoCase(_T("000")) == 0 || isUpdatFile)
 	{
-		if (file.Open(path, CFile::modeRead))
-		{
-			if (file.GetLength() > 1024)
-			{
-				BYTE *lpBuf, *sBuf;
-				lpBuf = new BYTE[1024];
-				file.Read(lpBuf, 1024);
-				sBuf = lpBuf;
-				DRReader drReader;
-				drReader.ReadReader(lpBuf);
-				lpBuf += drReader.m_fieldPosition;
-				lpBuf += drReader.m_fieldLength;
-				lpBuf += 4;
-				int tag = *((unsigned int*)lpBuf);
-
-				if (tag == *((unsigned int*)"0001"))
-				{
-					ret = S100_FileType::FILE_S_57;
-				}
-				else if (tag == *((unsigned int*)"DSID"))
-				{
-					ret = S100_FileType::FILE_S_100_VECTOR;
-				}
-				delete sBuf;
-			}
-
-			file.Close();
-		}
+		ret = SniffIso8211(std::wstring(path));
 	}
 	else if (file_extension.CompareNoCase(_T("XML")) == 0 || file_extension.CompareNoCase(_T("GML")) == 0)
 	{
@@ -1741,7 +1750,6 @@ S100_FileType LayerManager::CheckFileType(CString path, int update)
 
 S100_FileType LayerManager::CheckFileType(CString path)
 {
-	CFile file;
 	S100_FileType ret = S100_FileType::FILE_NONE;
 
 	CString file_extension = LibMFCUtil::GetExtension(path);
@@ -1750,35 +1758,10 @@ S100_FileType LayerManager::CheckFileType(CString path)
 	if ((file_extension.CompareNoCase(_T("000")) >= 0) &&
 		(file_extension.CompareNoCase(_T("999")) <= 0))
 	{
-		if (file.Open(path, CFile::modeRead))
+		auto sniffed = SniffIso8211(std::wstring(path));
+		if (sniffed != S100_FileType::FILE_NONE)
 		{
-			if (file.GetLength() > 1024)
-			{
-				BYTE* lpBuf = nullptr;
-				BYTE* sBuf = nullptr;
-				lpBuf = new BYTE[1024];
-				file.Read(lpBuf, 1024);
-				sBuf = lpBuf;
-				DRReader drReader;
-				drReader.ReadReader(lpBuf);
-				lpBuf += drReader.m_fieldPosition;
-				lpBuf += drReader.m_fieldLength;
-				lpBuf += 4;
-				int tag = *((unsigned int*)lpBuf);
-
-				if (tag == *((unsigned int*)"0001"))
-				{
-					delete sBuf;
-					return S100_FileType::FILE_S_57;
-				}
-				else if (tag == *((unsigned int*)"DSID"))
-				{
-					delete sBuf;
-					return S100_FileType::FILE_S_100_VECTOR;
-				}
-			}
-
-			file.Close();
+			return sniffed;
 		}
 	}
 	else if (file_extension.CompareNoCase(_T("XML")) == 0 || file_extension.CompareNoCase(_T("GML")) == 0)
