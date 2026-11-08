@@ -294,3 +294,5 @@ vcpkg_installed/
 
 // Open Code
 .sisyphus/
+
+.mcp.json
