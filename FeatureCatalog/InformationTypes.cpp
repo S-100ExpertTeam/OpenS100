@@ -71,7 +71,6 @@ bool InformationTypes::SetAttributeFromSuperType(InformationType* it)
 	else
 		return true;
 
-	return false;
 }
 
 bool InformationTypes::SetAssociationFromSuperType(InformationType* it)
@@ -103,8 +102,6 @@ bool InformationTypes::SetAssociationFromSuperType(InformationType* it)
 	}
 	else
 		return true;
-
-	return false;
 
 }
 

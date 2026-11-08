@@ -170,7 +170,7 @@ std::string Item::GetAlias(int index)
 		std::advance(it, index);
 		return *it;
 	}
-	catch (const std::exception& e)
+	catch (const std::exception&)
 	{
 		return "";
 	}

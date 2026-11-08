@@ -67,7 +67,6 @@ bool FeatureTypes::SetAttributeFromSuperType(FeatureType* ft)
 	else
 		return true;
 
-	return false;
 }
 
 
@@ -109,8 +108,6 @@ bool FeatureTypes::SetAssociationFromSuperType(FeatureType* ft)
 	}
 	else
 		return true;
-
-	return false;
 
 }
 

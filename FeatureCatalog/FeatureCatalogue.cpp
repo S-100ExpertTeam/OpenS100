@@ -125,7 +125,6 @@ FeatureType* FeatureCatalogue::GetFeatureTypeFromIndex(int indexnum)
 	{
 		if (num==indexnum)
 		{
-			auto dfsf = &i->second;
 			return i->second;
 		}
 		num++;
@@ -326,7 +325,7 @@ void FeatureCatalogue::WriteContents(pugi::xml_node& node)
 		auto simple = i->second;
 		std::string xpath = "S100FC:S100_FC_FeatureCatalogue/S100FC:S100_FC_SimpleAttributes/S100FC:S100_FC_SimpleAttribute/S100FC:code[text()='" + simple->GetCode() + "']";
 		auto simpleNode = node.select_node(xpath.c_str()).node().parent();
-		auto node_dr = simpleNode.select_node("S100FC:definitionReference/S100FC:sourceIdentifier").node().text().set(simple->getSourceIdentifier().c_str());
+		simpleNode.select_node("S100FC:definitionReference/S100FC:sourceIdentifier").node().text().set(simple->getSourceIdentifier().c_str());
 		
 	}
 
@@ -347,7 +346,7 @@ void FeatureCatalogue::WriteContents(pugi::xml_node& node)
 
 		auto userTypeNode = featureNode.select_node("S100FC:featureUseType").node();
 
-		auto node_dr = featureNode.select_node("S100FC:definitionReference/S100FC:sourceIdentifier").node().text().set(feature->getSourceIdentifier().c_str());
+		featureNode.select_node("S100FC:definitionReference/S100FC:sourceIdentifier").node().text().set(feature->getSourceIdentifier().c_str());
 
 		auto informationBindings = feature->GetInformationBindingPointer();
 		for (auto j = informationBindings.begin(); j != informationBindings.end(); j++)
@@ -378,11 +377,6 @@ void FeatureCatalogue::WriteContents(pugi::xml_node& node)
 			node_ib.append_child("S100FC:role").append_attribute("ref").set_value(ib->GetRole().c_str());
 
 			auto cnt = ib->GetInformationTypeCount();
-
-			if (cnt > 1)
-			{
-				int a = 0;
-			}
 
 			for (int k = 0; k < cnt; k++)
 			{
@@ -573,7 +567,7 @@ void FeatureCatalogue::SetFieldOfApplication(std::string& value)
 }
 
 
-const std::string& FeatureCatalogue::GetVersionNumber()
+std::string FeatureCatalogue::GetVersionNumber()
 {
 	return versionNumber.getSource();
 }

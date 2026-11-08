@@ -149,7 +149,7 @@ int Version::convertToInt(const std::string& str) const
 	try {
 		return cpp_util::stoi(str);
 	}
-	catch (const std::exception& e) {
+	catch (const std::exception&) {
 		return 0;  
 	}
 }

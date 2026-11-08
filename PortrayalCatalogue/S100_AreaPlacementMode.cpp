@@ -17,5 +17,5 @@ S100_AreaPlacementMode StringToS100AreaPlacementMode(const std::string& value)
 
 S100_AreaPlacementMode StringToS100AreaPlacementMode(const std::wstring& value)
 {
-	return StringToS100AreaPlacementMode(std::string(value.begin(), value.end()));
+	return StringToS100AreaPlacementMode(toUtf8(value));
 }

@@ -46,9 +46,9 @@ void SimpleAttribute::GetContents(pugi::xml_node& node)
 		{
 			for (auto j = i.first_child(); j; j = j.next_sibling())
 			{
-				const char* instructionName = j.name();
+				const char* listedValueName = j.name();
 
-				if (!strcmp(instructionName, "S100FC:listedValue"))
+				if (!strcmp(listedValueName, "S100FC:listedValue"))
 				{
 					auto lv = new ListedValue();
 					lv->GetContents(j);

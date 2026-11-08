@@ -87,7 +87,7 @@ public:
 	void SetFieldOfApplication(const char* value);
 	void SetFieldOfApplication(std::wstring value);
 
-	const std::string& GetVersionNumber();
+	std::string GetVersionNumber();
 	std::wstring GetVersionNumberW();
 	void SetVersionNumber(std::string value);
 	void SetVersionNumber(const char* value);

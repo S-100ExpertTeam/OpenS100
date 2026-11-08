@@ -21,5 +21,5 @@ S100_LinePlacementMode StringToLinePlacementMode(const std::string& value)
 
 S100_LinePlacementMode StringToLinePlacementMode(const std::wstring& value)
 {
-	return StringToLinePlacementMode(std::string(value.begin(), value.end()));
+	return StringToLinePlacementMode(toUtf8(value));
 }
