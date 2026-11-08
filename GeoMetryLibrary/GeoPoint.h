@@ -21,5 +21,5 @@ public:
 	double GetX();
 	double GetY();
 	void DrawGeometry(HDC &hDC, Scaler *scaler, double offset = 0);
-	bool operator == (GeoPoint& p);
+	bool operator == (const GeoPoint& p) const;
 };

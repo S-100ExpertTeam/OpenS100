@@ -13,11 +13,11 @@ public:
 	virtual ~S100_Element();
 
 private:
-	S100_Text* text = false;
+	S100_Text* text = nullptr;
 	std::string bodySize;
 	std::string verticalOffset;
-	S100_Foreground* foreground = false;
-	S100_Font* font = false;
+	S100_Foreground* foreground = nullptr;
+	S100_Font* font = nullptr;
 
 public:
 	void SetText(S100_Text* value);

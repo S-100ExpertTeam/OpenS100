@@ -23,7 +23,7 @@ void S100_LineStyle::GetContents(pugi::xml_node& node)
 		return;
 	}
 
-	for each (pugi::xml_attribute attri in node.attributes())
+	for (pugi::xml_attribute attri : node.attributes())
 	{
 		auto attriName = attri.name();
 		if (!strcmp(attriName, "capStyle"))

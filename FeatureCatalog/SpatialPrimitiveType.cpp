@@ -4,7 +4,7 @@
 
 #include <pugixml.hpp>
 
-SpatialPrimitiveType StringToSpatialPrimitiveType(std::string& value)
+SpatialPrimitiveType StringToSpatialPrimitiveType(const std::string& value)
 {
 	if (value.compare("point") == 0)
 	{

@@ -11,7 +11,7 @@ namespace S100
 	{
 	public:
 		AlertPriority alertPriority;
-		std::shared_ptr<bool> default;
+		std::shared_ptr<bool> isDefault;
 		std::shared_ptr<bool> optional;
 
 		void GetContents(pugi::xml_node& node);

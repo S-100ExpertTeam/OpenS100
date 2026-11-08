@@ -20,16 +20,16 @@ S100_SymbolFill::~S100_SymbolFill()
 	if (v2) delete v2;
 }
 
-bool S100_SymbolFill::ReadFileByPugiXml(std::wstring& path)
+bool S100_SymbolFill::ReadFileByPugiXml(const std::wstring& path)
 {
 	std::wstring head = L"..\\ProgramData\\S101_Portrayal\\AreaFills\\";
 
-	path.insert(path.begin(), head.begin(), head.end());
+	const std::wstring fullPath = head + path;
 
 	if (!path.empty())
 	{
 		pugi::xml_document doc;
-		pugi::xml_parse_result result = doc.load_file(path.c_str());
+		pugi::xml_parse_result result = doc.load_file(fullPath.c_str());
 		pugi::xml_node displayList = doc.first_child();
 
 		if (displayList)

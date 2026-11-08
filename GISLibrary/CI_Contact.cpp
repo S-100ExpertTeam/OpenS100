@@ -23,9 +23,9 @@ namespace S100
             }
             else if (!strcmp(instructionName, "cit:onlineResource"))
             {
-                CI_OnlineResource or ;
-                or .GetContents(instruction);
-                OnlineResource.push_back(or );
+                CI_OnlineResource onlineResource;
+                onlineResource.GetContents(instruction);
+                OnlineResource.push_back(onlineResource);
             }
             else if (!strcmp(instructionName, "cit:hoursOfService"))
             {

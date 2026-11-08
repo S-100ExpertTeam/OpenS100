@@ -30,6 +30,15 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <!--
+        /std:c++20 implies /permissive-. GISLibrary, S100Engine and the app still contain
+        ~180 non-conforming constructs (string literals passed as char*, CString->wstring
+        implicit conversions, temporaries bound to non-const references). Until they are
+        fixed (Phase 1, see Documents/TechDocs/2026-11-08-phase0-worklog.md) conformance
+        mode is relaxed here. Projects that already conform set ConformanceMode=true
+        in their own .vcxproj, which overrides this default.
+      -->
+      <ConformanceMode>false</ConformanceMode>
     </ClCompile>
   </ItemDefinitionGroup>
 </Project>

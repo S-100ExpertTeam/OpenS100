@@ -33,7 +33,8 @@ namespace Portrayal
 			else if (!strcmp(instructionName, "viewingGroup"))
 			{
 				S100_Description* desc = new S100_Description();
-				desc->GetContents(instruction.first_child());
+				auto firstChild = instruction.first_child();
+				desc->GetContents(firstChild);
 				AddDescription(desc);
 			}
 		}

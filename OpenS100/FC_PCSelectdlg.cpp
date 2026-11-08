@@ -74,7 +74,7 @@ BOOL FC_PCSelectdlg::OnInitDialog()
 
 	// Get Files
 	auto FCItems= DataSetManagerSupport::GetInstance().selectAllData("FeatureCatalogue");
-	for each (auto var in FCItems)
+	for (auto var : FCItems)
 	{
 		if (var)
 		{
@@ -84,7 +84,7 @@ BOOL FC_PCSelectdlg::OnInitDialog()
 	}
 
 	auto PCItems = DataSetManagerSupport::GetInstance().selectAllData("PortrayalCatalogue");
-	for each (auto var in PCItems)
+	for (auto var : PCItems)
 	{
 		if (var)
 		{

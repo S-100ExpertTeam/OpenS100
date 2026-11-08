@@ -26,7 +26,7 @@ void S100_DisplayList::OpenOutputXML(std::string path)
 	/*auto displayListNode = doc.child("displayList");*/
 	auto displayListNode = doc.first_child();
 
-	for each (auto child in displayListNode)
+	for (auto child : displayListNode)
 	{
 		GetContents(child);
 	}

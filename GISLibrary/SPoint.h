@@ -32,7 +32,7 @@ public:
 	bool ImportFromWkb(unsigned char* value, int size);
 	bool ExportToWkb(unsigned char** value, int* size);
 
-	bool operator==(const SPoint& point);
+	bool operator==(const SPoint& point) const;
 
 	double GetX() override;
 	double GetY() override;

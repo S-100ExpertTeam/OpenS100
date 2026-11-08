@@ -57,7 +57,7 @@ double GeoPoint::GetY()
 	return y;
 }
 
-bool GeoPoint::operator == (GeoPoint& p)
+bool GeoPoint::operator == (const GeoPoint& p) const
 {
 	if (x == p.x && y == p.y)
 	{

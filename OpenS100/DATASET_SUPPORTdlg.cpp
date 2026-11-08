@@ -73,7 +73,7 @@ BOOL DATASET_SUPPORTdlg::OnInitDialog()
 
 	//// Get Files
 	//auto DSItems = DataSetManagerSupport::GetInstance().selectAllDataDS_SP("DatasetFiles");
-	//for each (auto var in DSItems)
+	//for (auto var : DSItems)
 	//{
 	//	if (var)
 	//	{
@@ -83,7 +83,7 @@ BOOL DATASET_SUPPORTdlg::OnInitDialog()
 	//}
 
 	//auto SPItems = DataSetManagerSupport::GetInstance().selectAllDataDS_SP("SupportFiles");
-	//for each (auto var in SPItems)
+	//for (auto var : SPItems)
 	//{
 	//	if (var)
 	//	{

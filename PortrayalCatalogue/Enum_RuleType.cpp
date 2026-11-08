@@ -3,7 +3,7 @@
 
 namespace Portrayal
 {
-	RuleType StringToRuleType(std::string& value)
+	RuleType StringToRuleType(const std::string& value)
 	{
 		int maxindex = (int)RuleType::SubTemplate + 1;
 		for (int i = 0; i < maxindex; i++)
@@ -16,7 +16,7 @@ namespace Portrayal
 		return RuleType::none;
 	}
 
-	RuleType StringToRuleType(std::wstring& value)
+	RuleType StringToRuleType(const std::wstring& value)
 	{
 		auto str = toUtf8(value);
 		return StringToRuleType(str);

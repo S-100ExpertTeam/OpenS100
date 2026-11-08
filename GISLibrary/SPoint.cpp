@@ -109,7 +109,7 @@ bool SPoint::ExportToWkb(unsigned char** value, int* size)
 	return true;
 }
 
-bool SPoint::operator==(const SPoint& point)
+bool SPoint::operator==(const SPoint& point) const
 {
 	if (this->x == point.x && this->y == point.y)
 	{

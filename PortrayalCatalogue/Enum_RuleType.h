@@ -18,8 +18,8 @@ namespace Portrayal
 		"SubTemplate"
 	};
 
-	RuleType StringToRuleType(std::string& value);
-	RuleType StringToRuleType(std::wstring& value);
+	RuleType StringToRuleType(const std::string& value);
+	RuleType StringToRuleType(const std::wstring& value);
 
 	std::string RuleTypeToString(RuleType value);
 	std::wstring RuleTypeToWString(RuleType value);

@@ -15,12 +15,15 @@ archive extraction and CMake toolchain problems.
 - Windows 10 / 11 (x64)
 
 ### 1.2 Visual Studio
-- Visual Studio 2022
+- Visual Studio 2026 (version 18). The projects use the **v145** toolset and **C++20** (`/std:c++20`).
 - Required workload:
   - **Desktop development with C++**
 - Required components:
-  - MSVC v143 toolset
+  - MSVC v145 toolset
+  - **MFC for v145** (C++ MFC for latest build tools). The MFC projects fail with MSB8041 if this is missing.
   - Windows 10/11 SDK
+
+> Visual Studio 2022 (v143) is no longer the supported toolset since 2026-11. If you must stay on v143, change `PlatformToolset` in each `.vcxproj` and install MFC for v143.
 
 ---
 
@@ -133,7 +136,18 @@ rmdir /s /q C:\vcpkg\buildtrees
 
 ---
 
-### 6.2 Build from Visual Studio
+### 6.2 Build from the command line
+
+```bat
+"C:\Program Files\Microsoft Visual Studio8\Community\MSBuild\Current\Bin\MSBuild.exe" OpenS100.sln -m -p:Configuration=Debug -p:Platform=x64
+Debug_x64\OpenS100Tests.exe
+```
+
+The second line runs the GoogleTest suite (`Tests/OpenS100Tests`). Tests that need
+reference data read it from `S100_TDS_ROOT` (default `D:\s100-reference	ds`) and skip
+when the files are absent.
+
+### 6.3 Build from Visual Studio
 
 * Open the solution
 * Select configuration:
@@ -152,6 +166,7 @@ vcpkg dependencies will be:
 
 | Item                          | Value                                         |
 | ----------------------------- | --------------------------------------------- |
+| Visual Studio                 | **2026 (v145), C++20, MFC for v145**           |
 | CMake                         | **3.29.x (system installed)**                 |
 | vcpkg mode                    | Manifest                                      |
 | `VCPKG_FORCE_SYSTEM_BINARIES` | `1`                                           |

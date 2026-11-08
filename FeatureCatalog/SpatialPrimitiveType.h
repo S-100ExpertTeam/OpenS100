@@ -14,7 +14,7 @@ enum class SpatialPrimitiveType
 	noGeometry
 };
 
-SpatialPrimitiveType StringToSpatialPrimitiveType(std::string& value);
+SpatialPrimitiveType StringToSpatialPrimitiveType(const std::string& value);
 
 std::string SpatialPrimitiveTypeToString(SpatialPrimitiveType value);
 std::string SpatialPrimitiveTypeToWString(SpatialPrimitiveType value);

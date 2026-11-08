@@ -1,6 +1,8 @@
 # OpenS100
-OpenS100 is a open-source IHO S-101 ENC Viewer.  
-It was developed based on KHOA S-100 Viewer.  
+OpenS100 is an open-source C++ library for IHO S-100 hydrographic data, with a reference Windows viewer.  
+It was developed based on KHOA S-100 Viewer and is being reshaped from a viewer into a core library
+(ISO 8211, GML, HDF5, feature/portrayal catalogues, Part 9/13 portrayal engine) that applications such as the
+KHOA S-100 Viewer build on. See the plans in [Documents/TechDocs](Documents/TechDocs/README.md).  
 
 # S-100 Product Specifications: Support Status
 - S-101 Electronic Navigational Chart 2.0.0
@@ -12,7 +14,7 @@ It was developed based on KHOA S-100 Viewer.
 - Use source codes of LuaScriptingReference for S-101 PC.
 
 # Requirements
-- Microsoft Visual Studio 2022
+- Microsoft Visual Studio 2026 (v145 toolset, C++20) with MFC
 - MFC (Microsoft Foundation Class Library)
 - Windows 10 (or later)
 - Visual C++ Redistributable for Visual Studio 2012
@@ -20,6 +22,7 @@ It was developed based on KHOA S-100 Viewer.
 - vcpkg
 
 # Build instructions
+- See [BUILD.md](BUILD.md) for the verified setup (vcpkg manifest mode, binary cache).
 - Install vcpkg packages. ([Manual](vcpkg.md))
 - Open OpenS100.sln.
 - Select a plastform as x64.
@@ -28,6 +31,10 @@ It was developed based on KHOA S-100 Viewer.
 
 # Main screen
 ![image](https://github.com/user-attachments/assets/d3b5e499-860d-4bba-b09d-a7f4339525b7)
+
+# Tests
+- `Tests/OpenS100Tests` (GoogleTest). Build the solution and run `Debug_x64\OpenS100Tests.exe`.
+- Reference data is read from `S100_TDS_ROOT` (default `D:\s100-reference	ds`); tests skip when it is absent.
 
 # License
 OpenS100 is released under the MPLv2 (Mozilla Public License version 2.0)
