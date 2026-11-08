@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 
 class Directory
 {
@@ -17,5 +18,5 @@ public:
 	virtual Directory operator=(const Directory& other);
 
 public:
-	bool WriteDirectory(CFile* file, int sizeOfFieldLengthField, int sizeOfFieldPositionField);
+	bool WriteDirectory(s100::io::BinaryWriter* file, int sizeOfFieldLengthField, int sizeOfFieldPositionField);
 };

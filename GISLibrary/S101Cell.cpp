@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "S101Cell.h"
 #include "BinaryFile.h"
+#include "BinaryWriter.h"
 #include "GISLibrary.h"
 #include "S100Layer.h"
 #include "F_CUCO.h"
@@ -3417,10 +3418,11 @@ bool S101Cell::Save(std::wstring path)
 
 bool S101Cell::SaveAsENC(std::wstring path)
 {
-	CString filePath(path.c_str());
-
-	CFile file;
-	file.Open(filePath, CFile::modeCreate | CFile::modeWrite);
+	s100::io::BinaryFileWriter file(path);
+	if (!file.IsOpen())
+	{
+		return false;
+	}
 
 	// DDR
 	R_DDR ddr;

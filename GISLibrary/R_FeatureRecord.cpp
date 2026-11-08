@@ -282,7 +282,7 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return true;
 }
 
-bool R_FeatureRecord::WriteRecord(CFile* file)
+bool R_FeatureRecord::WriteRecord(s100::io::BinaryWriter* file)
 {
 	directory.clear();
 

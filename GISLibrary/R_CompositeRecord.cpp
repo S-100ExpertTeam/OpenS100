@@ -116,7 +116,7 @@ BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return TRUE;
 }
 
-bool R_CompositeRecord::WriteRecord(CFile* file)
+bool R_CompositeRecord::WriteRecord(s100::io::BinaryWriter* file)
 {
 	directory.clear();
 

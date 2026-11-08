@@ -70,7 +70,7 @@ void F_C2IL::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-bool F_C2IL::WriteField(CFile* file)
+bool F_C2IL::WriteField(s100::io::BinaryWriter* file)
 {
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{

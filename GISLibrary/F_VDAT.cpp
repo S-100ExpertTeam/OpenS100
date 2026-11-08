@@ -42,7 +42,7 @@ void F_VDAT::ReadField(BYTE*& buf)
 	buf2charArr(m_scri, buf);
 }
 
-bool F_VDAT::WriteField(CFile* file)
+bool F_VDAT::WriteField(s100::io::BinaryWriter* file)
 {
 	CT2CA outputStringDTNM(m_dtnm, CP_UTF8);
 	file->Write(outputStringDTNM, (UINT)::strlen(outputStringDTNM));

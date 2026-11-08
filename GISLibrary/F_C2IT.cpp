@@ -37,7 +37,7 @@ void F_C2IT::ReadField(BYTE *&buf)
 	m_xcoo = buf2int(buf, 4);
 }
 
-bool F_C2IT::WriteField(CFile* file)
+bool F_C2IT::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write(&m_ycoo, 4);
 	file->Write(&m_xcoo, 4);

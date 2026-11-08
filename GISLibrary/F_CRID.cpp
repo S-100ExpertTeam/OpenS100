@@ -47,7 +47,7 @@ void F_CRID::ReadField(BYTE*& buf)
 	m_ruin = *(buf++);
 }
 
-bool F_CRID::WriteField(CFile* file)
+bool F_CRID::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write(&m_name.RCNM, 1);
 	file->Write(&m_name.RCID, 4);

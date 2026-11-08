@@ -77,7 +77,7 @@ void F_ATTR::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-bool F_ATTR::WriteField(CFile* file)
+bool F_ATTR::WriteField(s100::io::BinaryWriter* file)
 {
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{

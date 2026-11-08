@@ -49,7 +49,7 @@ void F_FRID::ReadField(BYTE*& buf)
 	m_ruin = *(buf++);
 }
 
-bool F_FRID::WriteField(CFile* file)
+bool F_FRID::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write(&m_name.RCNM, 1);
 	file->Write(&m_name.RCID, 4);

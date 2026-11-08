@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 #include "Field.h"
 
 struct FC3D;
@@ -27,7 +28,7 @@ public:
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
-	bool WriteField(CFile* file) { return true; }
+	bool WriteField(s100::io::BinaryWriter* file) { return true; }
 	int GetFieldLength();
 
 	void Insert(int xcoo, int ycoo, int zcoo);

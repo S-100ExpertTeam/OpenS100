@@ -197,7 +197,7 @@ BOOL R_DSGIR::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 	return true;
 }
 
-bool R_DSGIR::WriteRecord(CFile* file)
+bool R_DSGIR::WriteRecord(s100::io::BinaryWriter* file)
 {
 	directory.clear();
 

@@ -39,7 +39,7 @@ R_DDR R_DDR::operator=(const R_DDR& other)
 	return *this;
 }
 
-bool R_DDR::WriteRecord(CFile* file)
+bool R_DDR::WriteRecord(s100::io::BinaryWriter* file)
 {
 	directory.clear();
 

@@ -73,7 +73,7 @@ void F_PTAS::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-bool F_PTAS::WriteField(CFile* file)
+bool F_PTAS::WriteField(s100::io::BinaryWriter* file)
 {
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{

@@ -80,7 +80,7 @@ void F_MASK::ReadField(BYTE*& buf, int loopCnt)
 	}
 }
 
-bool F_MASK::WriteField(CFile* file)
+bool F_MASK::WriteField(s100::io::BinaryWriter* file)
 {
 	for (auto i = listMask.begin(); i != listMask.end(); i++)
 	{

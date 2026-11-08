@@ -82,7 +82,7 @@ void F_CodeWithNumericCode::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-bool F_CodeWithNumericCode::WriteField(CFile* file)
+bool F_CodeWithNumericCode::WriteField(s100::io::BinaryWriter* file)
 {
 	for (auto i = listCodeWithNumericCode.begin(); i != listCodeWithNumericCode.end(); i++)
 	{

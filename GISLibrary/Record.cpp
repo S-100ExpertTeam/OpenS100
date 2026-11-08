@@ -36,7 +36,7 @@ Record Record::operator=(const Record& other)
 	return *this;
 }
 
-bool Record::WriteDirectory(CFile* file)
+bool Record::WriteDirectory(s100::io::BinaryWriter* file)
 {
 	for (auto i = directory.begin(); i != directory.end(); i++)
 	{

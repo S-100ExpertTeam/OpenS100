@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 #include "Field.h"
 #include "RecordName.h"
 
@@ -21,7 +22,7 @@ public:
 public:
 	void ReadField(BYTE *&buf);
 	void ReadField(BYTE *&buf, int loopCnt);
-	bool WriteField(CFile* file);
+	bool WriteField(s100::io::BinaryWriter* file);
 	int GetFieldLength();
 
 	void Insert(RecordName name, int topi);

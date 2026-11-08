@@ -986,6 +986,7 @@
     <ClInclude Include="SCompositeCurve.h" />
     <ClInclude Include="SCoverage.h" />
     <ClInclude Include="BinaryFile.h" />
+    <ClInclude Include="BinaryWriter.h" />
     <ClInclude Include="D2DGeometryCache.h" />
     <ClInclude Include="S102Renderer.h" />
     <ClInclude Include="PortrayalRenderCache.h" />

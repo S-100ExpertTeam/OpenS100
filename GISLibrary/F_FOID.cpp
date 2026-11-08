@@ -42,7 +42,7 @@ void F_FOID::ReadField(BYTE*& buf)
 	FIDS = buf2uint(buf, 2);
 }
 
-bool F_FOID::WriteField(CFile* file)
+bool F_FOID::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write(&AGEN, 2);
 	file->Write(&FIDN, 4);

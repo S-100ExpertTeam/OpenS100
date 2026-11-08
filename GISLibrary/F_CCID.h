@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 #include "Field.h"
 #include "RecordName.h"
 class F_CCID : public Field
@@ -19,7 +20,7 @@ public:
 
 public:
 	void ReadField(BYTE *&buf);
-	bool WriteField(CFile* file);
+	bool WriteField(s100::io::BinaryWriter* file);
 
 	int GetFieldLength();
 };

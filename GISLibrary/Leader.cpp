@@ -141,7 +141,7 @@ void Leader::SetAsDR()
 	byte[23] = 0x34; // "4"
 }
 
-bool Leader::WriteLeader(CFile* file)
+bool Leader::WriteLeader(s100::io::BinaryWriter* file)
 {
 	file->Write(byte, 24);
 	return true;

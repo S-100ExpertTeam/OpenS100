@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 
 #include "Record.h"
 #include "F_FieldControlField.h"
@@ -22,7 +23,7 @@ public:
     virtual R_DDR operator=(const R_DDR& other);
 
 public:
-    bool WriteRecord(CFile* file);
+    bool WriteRecord(s100::io::BinaryWriter* file);
 
     void AddDDF(F_DataDescriptiveField ddf);
 };

@@ -53,7 +53,7 @@ F_FieldControlField F_FieldControlField::operator=(const F_FieldControlField& ot
 	return *this;
 }
 
-bool F_FieldControlField::WriteField(CFile* file)
+bool F_FieldControlField::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write((const void*)&byte[0], 10);
 

@@ -70,7 +70,7 @@ void F_CSAX::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-bool F_CSAX::WriteField(CFile* file)
+bool F_CSAX::WriteField(s100::io::BinaryWriter* file)
 {
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{

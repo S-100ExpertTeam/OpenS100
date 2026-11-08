@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 
 #include "S100_GF.h"
 #include "Record.h"
@@ -28,7 +29,7 @@ public:
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
-	bool WriteRecord(CFile* file);
+	bool WriteRecord(s100::io::BinaryWriter* file);
 	RecordName GetRecordName();
 
 	int GetRCID();

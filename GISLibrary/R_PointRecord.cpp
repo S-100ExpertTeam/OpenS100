@@ -100,7 +100,7 @@ BOOL R_PointRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 	return TRUE;
 }
 
-bool R_PointRecord::WriteRecord(CFile* file)
+bool R_PointRecord::WriteRecord(s100::io::BinaryWriter* file)
 {
 	directory.clear();
 

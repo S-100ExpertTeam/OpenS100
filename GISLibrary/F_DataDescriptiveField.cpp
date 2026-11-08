@@ -147,7 +147,7 @@ std::string F_DataDescriptiveField::Replace(std::string text)
 	return text;
 }
 
-bool F_DataDescriptiveField::WriteField(CFile* file)
+bool F_DataDescriptiveField::WriteField(s100::io::BinaryWriter* file)
 {
 	std::string ddf = DDF[type];
 

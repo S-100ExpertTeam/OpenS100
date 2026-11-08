@@ -92,7 +92,7 @@ BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 	return TRUE;
 }
 
-bool R_SurfaceRecord::WriteRecord(CFile* file)
+bool R_SurfaceRecord::WriteRecord(s100::io::BinaryWriter* file)
 {
 	directory.clear();
 

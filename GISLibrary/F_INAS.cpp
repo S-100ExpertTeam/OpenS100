@@ -100,7 +100,7 @@ void F_INAS::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-bool F_INAS::WriteField(CFile* file)
+bool F_INAS::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write(&m_name.RCNM, 1);
 	file->Write(&m_name.RCID, 4);

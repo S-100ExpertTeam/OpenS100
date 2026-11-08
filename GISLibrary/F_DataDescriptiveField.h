@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "BinaryWriter.h"
 
 #include "Field.h"
 
@@ -80,7 +81,7 @@ public:
 public:
 	std::string Replace(std::string text);
 	void ReadField(BYTE*& buf) {};
-	bool WriteField(CFile* file);
+	bool WriteField(s100::io::BinaryWriter* file);
 	int GetFieldLength();
 	std::string GetTagName();
 

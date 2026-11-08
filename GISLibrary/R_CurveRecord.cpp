@@ -197,7 +197,7 @@ BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 	return true;
 }
 
-bool R_CurveRecord::WriteRecord(CFile* file)
+bool R_CurveRecord::WriteRecord(s100::io::BinaryWriter* file)
 {
 	directory.clear();
 

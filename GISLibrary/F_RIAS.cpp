@@ -75,7 +75,7 @@ void F_RIAS::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-bool F_RIAS::WriteField(CFile* file)
+bool F_RIAS::WriteField(s100::io::BinaryWriter* file)
 {
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{

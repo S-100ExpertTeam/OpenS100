@@ -78,7 +78,7 @@ void F_DSSI::ReadField(BYTE *&buf)
 	m_nofr = buf2uint(buf, 4);
 }
 
-bool F_DSSI::WriteField(CFile* file)
+bool F_DSSI::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write(&m_dcox, 8);
 	file->Write(&m_dcoy, 8);

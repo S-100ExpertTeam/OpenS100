@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 
 #include <vector>
 
@@ -11,6 +12,6 @@ public:
 
 public:
 	virtual void ReadField(BYTE*& buf) = 0;
-	virtual bool WriteField(CFile* file) = 0;
+	virtual bool WriteField(s100::io::BinaryWriter* file) = 0;
 	virtual int GetFieldLength() = 0;
 };

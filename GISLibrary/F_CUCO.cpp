@@ -70,7 +70,7 @@ void F_CUCO::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-bool F_CUCO::WriteField(CFile* file)
+bool F_CUCO::WriteField(s100::io::BinaryWriter* file)
 {
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{

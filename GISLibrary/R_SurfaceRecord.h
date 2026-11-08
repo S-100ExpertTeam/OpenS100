@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 
 #include "R_VectorRecord.h"
 #include "F_SRID.h"
@@ -27,7 +28,7 @@ public:
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
-	bool WriteRecord(CFile* file);
+	bool WriteRecord(s100::io::BinaryWriter* file);
 	RecordName GetRecordName();
 
 	int GetRCID();

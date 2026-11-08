@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 class Leader
 {
 public:
@@ -29,5 +30,5 @@ public:
 	void SetAsDDR();
 	void SetAsDR();	
 
-	bool WriteLeader(CFile* file);
+	bool WriteLeader(s100::io::BinaryWriter* file);
 };

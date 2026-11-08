@@ -54,7 +54,7 @@ void F_CRSH::ReadField(BYTE *&buf)
 	buf2charArr(m_scri, buf);
 }
 
-bool F_CRSH::WriteField(CFile* file)
+bool F_CRSH::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write(&m_crix, 1);
 	file->Write(&m_crst, 1);

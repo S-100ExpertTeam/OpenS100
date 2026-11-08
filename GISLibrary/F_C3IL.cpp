@@ -75,7 +75,7 @@ void F_C3IL::ReadField(BYTE *&buf, int loopCnt)
 	}
 }
 
-bool F_C3IL::WriteField(CFile* file)
+bool F_C3IL::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write(&m_vcid, 1);
 

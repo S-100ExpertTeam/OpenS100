@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 
 #include "Leader.h"
 #include "Directory.h"
@@ -22,10 +23,10 @@ public:
 	virtual Record operator=(const Record& other);
 
 	virtual BOOL ReadRecord(DRDirectoryInfo* dir, BYTE*& buf) {	return TRUE; };
-	virtual bool WriteRecord(CFile* file) { return true; };
+	virtual bool WriteRecord(s100::io::BinaryWriter* file) { return true; };
 	virtual RecordName GetRecordName() { return RecordName(); };
 
-	bool WriteDirectory(CFile* file);
+	bool WriteDirectory(s100::io::BinaryWriter* file);
 	void SetLeader(int totalFieldSize, bool adjustEntryMap = true);
 	int DirectoryLength(int sizeOfFieldLengthField, int sizeOfFieldPositionField);
 };

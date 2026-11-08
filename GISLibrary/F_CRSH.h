@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "BinaryWriter.h"
 #include "Field.h"
 
 class F_CRSH : public Field
@@ -63,7 +64,7 @@ public:
 
 public:
 	void ReadField(BYTE *&buf);
-	bool WriteField(CFile* file);
+	bool WriteField(s100::io::BinaryWriter* file);
 
 	int GetFieldLength();
 };

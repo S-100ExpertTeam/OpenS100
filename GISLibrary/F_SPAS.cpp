@@ -80,7 +80,7 @@ void F_SPAS::ReadField(BYTE*& buf, int loopCnt)
 	}
 }
 
-bool F_SPAS::WriteField(CFile* file)
+bool F_SPAS::WriteField(s100::io::BinaryWriter* file)
 {
 	for (auto i = m_arr.begin(); i != m_arr.end(); i++)
 	{

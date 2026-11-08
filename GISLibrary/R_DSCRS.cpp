@@ -109,7 +109,7 @@ BOOL R_DSCRS::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 	return TRUE;
 }
 
-bool R_DSCRS::WriteRecord(CFile* file)
+bool R_DSCRS::WriteRecord(s100::io::BinaryWriter* file)
 {
 	directory.clear();
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "BinaryWriter.h"
 
 #include "Record.h"
 #include "F_DSID.h"
@@ -30,7 +31,7 @@ public:
 
 public:
 	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
-	bool WriteRecord(CFile* file);
+	bool WriteRecord(s100::io::BinaryWriter* file);
 	// function to get the code with the new memory code.
 	CString GetFeatureCode(int numericCode);
 	std::string GetFeatureCodeAsString(int numericCode);

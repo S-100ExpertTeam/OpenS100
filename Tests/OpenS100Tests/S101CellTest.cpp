@@ -72,6 +72,26 @@ TEST_F(S101CellKorTds, OpensSmallestKoreanCellWithoutRenderer)
 	ASSERT_GT(cell.GetCount_CurveRecord(), 0);
 }
 
+// The ISO 8211 writer now streams through s100::io::BinaryWriter. Writing a cell and
+// reading it back must preserve the record counts.
+TEST_F(S101CellKorTds, SaveAsEncRoundTrip)
+{
+	S101Cell cell(&fc);
+	ASSERT_TRUE(cell.Open(CString(cellPath.wstring().c_str())));
+
+	auto out = testpaths::tempDir() / "roundtrip.000";
+	ASSERT_TRUE(cell.SaveAsENC(out.wstring()));
+	ASSERT_GT(std::filesystem::file_size(out), 0u);
+
+	S101Cell again(&fc);
+	ASSERT_TRUE(again.Read8211(out.wstring()));
+	EXPECT_EQ(again.GetCount_FeatureTypeRecord(), cell.GetCount_FeatureTypeRecord());
+	EXPECT_EQ(again.GetCount_InformationRecord(), cell.GetCount_InformationRecord());
+	EXPECT_EQ(again.GetCount_PointRecord(), cell.GetCount_PointRecord());
+	EXPECT_EQ(again.GetCount_CurveRecord(), cell.GetCount_CurveRecord());
+	EXPECT_EQ(again.GetCount_SurfaceRecord(), cell.GetCount_SurfaceRecord());
+}
+
 TEST_F(S101CellKorTds, MalformedRecordLeaderDoesNotHang)
 {
 	auto bytes = readAll(cellPath);

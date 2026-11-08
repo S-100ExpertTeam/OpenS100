@@ -35,7 +35,7 @@ Directory Directory::operator=(const Directory& other)
 	return *this;
 }
 
-bool Directory::WriteDirectory(CFile* file, int sizeOfFieldLengthField, int sizeOfFieldPositionField)
+bool Directory::WriteDirectory(s100::io::BinaryWriter* file, int sizeOfFieldLengthField, int sizeOfFieldPositionField)
 {
 	file->Write(fieldTag, 4);
 

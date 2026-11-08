@@ -42,7 +42,7 @@ void F_SEGH::ReadField(BYTE *&buf)
 	m_intp = *(buf++);
 }
 
-bool F_SEGH::WriteField(CFile* file)
+bool F_SEGH::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write(&m_intp, 1);
 

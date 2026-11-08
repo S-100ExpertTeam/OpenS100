@@ -139,7 +139,7 @@ BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 	return TRUE;
 }
 
-bool R_InformationRecord::WriteRecord(CFile* file)
+bool R_InformationRecord::WriteRecord(s100::io::BinaryWriter* file)
 {
 	directory.clear();
 

@@ -36,7 +36,7 @@ void F_CSID::ReadField(BYTE *&buf)
 	m_ncrc = *(buf++);
 }
 
-bool F_CSID::WriteField(CFile* file)
+bool F_CSID::WriteField(s100::io::BinaryWriter* file)
 {
 	file->Write(&m_name.RCNM, 1);
 	file->Write(&m_name.RCID, 4);

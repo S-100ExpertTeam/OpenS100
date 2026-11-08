@@ -157,7 +157,7 @@ BOOL R_MultiPointRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 	return TRUE;
 }
 
-bool R_MultiPointRecord::WriteRecord(CFile* file)
+bool R_MultiPointRecord::WriteRecord(s100::io::BinaryWriter* file)
 {
 	directory.clear();
 
