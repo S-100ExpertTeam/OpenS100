@@ -42,6 +42,7 @@
 - [x] 2-3a. `CatalogManager`에서 `D2D1Resources*` 멤버·생성자·`ChangeColorPallete` 제거. 카탈로그 추가 후 렌더 캐시 생성은 렌더 측 `GISLibrary/PortrayalRenderCache`(`PortrayalRender::Prepare(pc, d2)`, `ChangePalette(pc, name, d2)`)가 담당하고, 호출은 PC를 추가하는 쪽(앱의 `FC_PCSelectdlg`, `OpenS100View`, `S100Layer::OpenPC`)과 팔레트 변경(`LayerManager`)에서 명시적으로. 테스트 `CatalogManager.LoadsCataloguesWithoutRenderer`(FC+PC 로딩, 렌더러 없음).
 - [x] 2-3b. `PortrayalCatalogue.h/.cpp`와 `S100_ColorProfile.h/.cpp`에서 D2D 타입 제거. PC의 `CreateSVGD2Geometry/CreatePatternImages/CreateLineImages/ChangePalette(d2...)`를 삭제하고 렌더 측 `PortrayalRender::Prepare/ChangePalette`가 `S100PCManager`의 캐시 함수를 직접 호출. PC의 `ChangePalette(name)`은 모델만(팔레트 이름·컬러 프로파일). 호출자 없는 `S100_ColorProfile::GetD2Color`, `SetS100PCManager` 삭제. `#include "../S100Engine/S100Render.h"`를 PC 헤더에서 제거(PortrayalCatalogue → S100Engine 역방향 의존 해소; 필요한 GISLibrary 파일 10개가 `S100PCManager.h`/`S100Render.h`를 직접 include). `s100PCManager`는 `std::unique_ptr`로, 헤더 기본 초기화 + `Init()` 이중 할당 누수 제거(그 누수가 `Init()` 미호출을 숨기고 있었음 → 생성자에서 `Init()` 호출). 남은 것(2-3c): `S100PCManager` 자체가 모델(SVG·선스타일·면채움·컬러 프로파일 파싱)과 D2D 캐시를 겸함. 모델 부분을 PortrayalCatalogue 쪽으로, 캐시를 렌더 쪽으로 분리.
 - [x] 2-4. `Layer::Open`/`S100Layer::Open`에서 `D2D1Resources*` 인자 제거(데이터셋이 더 이상 필요로 하지 않음). 교환세트 커버리지 객체만 `LayerManager::GetRenderResources()`로 렌더러를 받는다. 호출자 없는 `S100Layer::OpenPC` 삭제, `(S100Layer*)layer->Open(...) == false`의 무의미한 캐스트 정리. `LayerManager` 자체는 렌더·로딩·경보가 섞인 sdk 객체라 D2 멤버를 유지(분할은 Phase 4).
+- [ ] 2-3c. `S100PCManager`(S100Engine) 분리. 현재 `PortrayalCatalogue`가 `unique_ptr<S100PCManager>`를 소유하고 `Open` 시 심볼(SVG)·선 스타일·영역 채움·색상 프로파일 파일을 이 객체로 읽어 들인다(`PortrayalCatalogue.cpp` 335~390행). 즉 PortrayalCatalogue 프로젝트가 렌더 모듈 S100Engine을 참조한다(헤더는 전방 선언이라 게이지에는 안 잡힘). 분리안: (1) 파서(`SVGReader`의 경로/좌표 모델, `AreaFill`, `LineStyles`, `S100ColorProfile(s)`)를 D2D 타입 없이 PortrayalCatalogue 안의 모델 클래스로 내리고, (2) D2D 캐시(`SVGGeometry`의 `ID2D1PathGeometry`, `AreaPatternBitmap`, `lineImageMap`, 비트맵 브러시)는 렌더 측 `PortrayalRenderCache`가 `Geometry::RenderAttachment`와 같은 불투명 슬롯으로 PC에 붙인다, (3) GISLibrary의 `pc->GetS100PCManager()` 호출 27곳(SENC_*, LayerManager, S102_Color, GISLibrary.cpp)을 `PortrayalRender::Caches(pc)`로 바꾼다. 규모가 커서(SVG 파서가 D2D 지오메트리를 직접 만든다) Phase 3의 Skia 렌더러·디스플레이 리스트 IR 설계와 함께 진행하는 것이 맞다. Phase 1에서는 보류.
 - 완료 기준: `PortrayalCatalogue`, `GeoMetryLibrary`, `GISLibrary`의 **헤더**에 `d2d1.h`·`ID2D1*`가 없다(`.cpp`는 2-5 후).
 
 ### 3단계. MFC 제거
@@ -75,6 +76,7 @@ tainted core headers: 213 (render-side files allowed: 4)
 ```
 
   목표는 모든 코어 프로젝트에서 0. 2-3b(S100PCManager 분리)와 3단계(MFC 제거)가 끝나면 FeatureCatalog·PortrayalCatalogue·GeoMetryLibrary부터 `--fail`을 켠다.
+- [x] 5-1b. 구성 점검 (e5f63cec, 2026-11-09): Debug|x64(테스트 16/16)·Release|x64·Debug|x86 빌드 통과. x86은 두 가지를 고쳐야 했다 — 최신 vcpkg libxml2 포트는 헤더를 `include/libxml2/libxml/…`에 두므로 `Common.props`가 그 디렉터리를 include 경로에 추가(x64의 기존 설치는 옛 레이아웃이라 그동안 드러나지 않음), 뷰어 프로젝트가 Debug|Win32에서 `VcpkgConfiguration=Release`로 릴리스 polyclipping을 디버그 exe에 링크하던 오버라이드 제거. 테스트 프로젝트에는 x86 구성이 없다(솔루션이 x64로 매핑). ARM64는 이 PC에 ARM64용 MFC 라이브러리와 vcpkg `lua51` arm64 패키지가 없어 빌드 불가 — 뷰어가 MFC를 버리고 Lua 바인딩이 vcpkg 포트로 정리된 뒤(Phase 2~4) 다시 본다. 주의: vcpkg 매니페스트를 건드린 채로 다른 트리플렛 빌드를 돌리면 그 트리플렛 설치가 불완전해진다(이번에 겪음).
 - [ ] 5-2. CMake 전환(Phase 4)과 함께 `x64-linux` 빌드 시도.
 
 ## 3. 진행 기록
@@ -102,3 +104,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-09 | 3-5a: GISLibrary `UseOfMfc=false` | 294bfe99 | 테스트 16/16, 앱 기동 확인, 게이지 117 |
 | 2026-11-09 | 3-5b/c: S100Engine·테스트 호스트 `UseOfMfc=false`, MFC DLL 골격 삭제, FileTitle→FileStem | c89d2b62 | 테스트 16/16, 앱 기동 확인, MFC 헤더 0. **3단계 완료** |
 | 2026-11-09 | 4-1: 전 프로젝트 `/permissive-` 복구(176건 수정) | eb9b8cd8 | 테스트 16/16, 앱 기동 확인 |
+| 2026-11-09 | 5-1b: Release x64·Debug x86 구성 점검, x86 빌드 복구; 2-3c 범위 기록 | e5f63cec | x64 테스트 16/16, x86 뷰어 빌드 |
