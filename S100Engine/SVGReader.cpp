@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <filesystem>
 #include "SVGReader.h"
 
 #include "..\\LatLonUtility\\cpp_util.h"
@@ -11,28 +12,6 @@
 
 namespace simpleUse
 {
-	//Divide strings (separate strings using char characters)
-	std::vector<CString> Split(CString _data, char parsingChar)
-	{
-		std::vector<CString> result;
-
-		CString data = _data;
-		while (data.GetLength() != 0)
-		{
-			data.TrimLeft(parsingChar);
-			int nFind2 = data.Find(parsingChar);
-			if (nFind2 == -1)
-			{
-				result.push_back(data);
-				break;
-			}
-			CString strNum = data.Mid(0, nFind2);
-			result.push_back(strNum);
-			data = data.Mid(nFind2);
-		}
-		return result;
-	}
-
 	template<typename T>
 	void split(const T& line, const T& separators, std::vector<T>& tokens)
 	{
@@ -47,24 +26,6 @@ namespace simpleUse
 		}
 	}
 
-
-	//Divide strings (separate strings by specifying the number of characters)
-	std::vector<CString> SplitBySpace(CString _data, int _space)
-	{
-		std::vector<CString> result;
-
-		CString data = _data;
-		for (int i = 0; i < _data.GetLength(); i += _space)
-		{
-			CString cs;
-			for (int j = 0; j < _space; j++)
-			{
-				cs.AppendChar(_data[i + j]);
-			}
-			result.push_back(cs);
-		}
-		return result;
-	}
 
 	// Converting to hexadecimal to decimal.
 	int Conert16to10(char* ch)
@@ -233,10 +194,6 @@ bool SVGReader::OpenByPugi(char* path)
 	pugi::xml_node displayList = document.child("svg");
 	if (displayList.empty())
 	{
-		auto wpath = pugi::as_wide(path);
-		CString errStr;
-		errStr.Format(L"Failed to call load svg in SVGReader::OpenByPugi() %s \n", wpath.c_str());
-		//OutputDebugString(errStr);
 		return false;
 	}
 
@@ -510,11 +467,7 @@ bool SVGReader::OpenByPugi(char* path)
 	}
 
 	// Get the name of the file without ext.
-	auto wPath = LibMFCUtil::ConvertCtoWC(path);
-	CString cpath(wPath);
-	delete[] wPath;
-
-	name = LibMFCUtil::WStringToString(std::wstring(LibMFCUtil::GetFileName(cpath)));
+	name = std::filesystem::path(path).stem().string();
 
 	return true;
 }

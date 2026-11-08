@@ -63,10 +63,10 @@ namespace GISLibrary
 		ID2D1DCRenderTarget* RenderTarget();
 		ID2D1SolidColorBrush* SolidColorBrush();
 
-		void Begin(HDC& hdc, CRect& rect);
+		void Begin(HDC& hdc, const RECT& rect);
 		void End();
 
-		void DrawCRect(CRect& rect);
+		void DrawRect(const RECT& rect);
 		void DrawD2Rect(D2D1_RECT_F& rect);
 
 		IDWriteTextFormat* getWriteTextFormat(int fontSize);

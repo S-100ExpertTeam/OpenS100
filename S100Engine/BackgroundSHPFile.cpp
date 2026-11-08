@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include <filesystem>
+#include <fstream>
 #include "BackgroundSHPFile.h"
 
 
@@ -30,66 +32,51 @@ SHPPolygon* BackgroundSHPFile::GetPolygon(unsigned index)
 	return vecPolygons.at(index);
 }
 
-bool BackgroundSHPFile::Open(CString path)
+bool BackgroundSHPFile::Open(const std::wstring& path)
 {
-	int indexOfSplit = path.ReverseFind('\\');
-
-	CFile fdSHP, fdSHX;
-	CFileException e;
-
-	// Open the SHP file.
-	if (!fdSHP.Open(path, CFile::modeRead, &e))
+	std::ifstream fdSHP(std::filesystem::path(path), std::ios::binary);
+	if (!fdSHP)
 	{
-		//OutputDebugString(_T("SHP File Open Error!"));
 		return false;
 	}
 
-	//CString with path of SHX file.
-	CString ShxFilePath = path.Left(path.GetLength() - 3) + _T("shx");
-
-	// Open the SHX file.
-	if (!fdSHX.Open(ShxFilePath, CFile::modeRead, &e))
+	// SHX file: same name, extension swapped.
+	const std::wstring shxPath = path.substr(0, path.size() - 3) + L"shx";
+	std::ifstream fdSHX(std::filesystem::path(shxPath), std::ios::binary);
+	if (!fdSHX)
 	{
-		//OutputDebugString(_T("SHX File Open Error!"));
 		return false;
-	}	
+	}
 
-	//Find out the number of records.
-	int tmp;
-
-	fdSHX.Seek(24, CFile::begin);
-	fdSHX.Read(&tmp, 4);
+	// Record count from the SHX header (big-endian file length in 16-bit words).
+	int tmp = 0;
+	fdSHX.seekg(24);
+	fdSHX.read(reinterpret_cast<char*>(&tmp), 4);
 	SwapWord(4, &tmp);
-
-	int SHXFileSize = tmp * 2;
+	const int SHXFileSize = tmp * 2;
 	recordCount = (SHXFileSize - 100) / 8;
 
-	// Get shape type
-	fdSHP.Seek(32, CFile::begin);
-
+	// Shape type must be polygon (5).
 	int shapeType = 0;
-	fdSHP.Read(&shapeType, sizeof(int));
-
+	fdSHP.seekg(32);
+	fdSHP.read(reinterpret_cast<char*>(&shapeType), sizeof(int));
 	if (shapeType != 5)
 	{
-		//OutputDebugString(_T("Invalied shape type\n"));
 		return false;
 	}
 
-	fdSHP.Seek(100, CFile::begin);
-	fdSHP.Read(&shapeType, sizeof(int));
+	fdSHP.seekg(100);
+	fdSHP.read(reinterpret_cast<char*>(&shapeType), sizeof(int));
 
 	for (unsigned int i = 0; i < recordCount; i++)
 	{
 		SHPPolygon* polygon = new SHPPolygon;
 		vecPolygons.push_back(polygon);
-
 		polygon->Read(i, fdSHP, fdSHX);
 	}
 
 	return true;
 }
-
 
 void BackgroundSHPFile::SwapWord(int _length, void *_pData)
 {

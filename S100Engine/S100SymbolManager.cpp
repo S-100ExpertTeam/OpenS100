@@ -18,29 +18,6 @@ S100SymbolManager::~S100SymbolManager()
 	svgSymbols.clear();
 }
 
-bool S100SymbolManager::Open(const std::string& _path)
-{
-	return Open(LibMFCUtil::StringToWString(_path));
-}
-
-bool S100SymbolManager::Open(const std::wstring& _path)
-{
-	CFileFind m_fileFinder;
-
-	BOOL bWorking = m_fileFinder.FindFile(_path.c_str());
-
-	while (bWorking)
-	{
-		bWorking = m_fileFinder.FindNextFile();
-
-		auto cFilePath = m_fileFinder.GetFilePath();
-		auto charPath = LibMFCUtil::ConvertWCtoC(cFilePath.GetBuffer());
-		Add(std::string(charPath));
-		delete[] charPath;
-	}
-	return true;
-}
-
 bool S100SymbolManager::Add(const std::string& path)
 {
 	SVGReader svg;

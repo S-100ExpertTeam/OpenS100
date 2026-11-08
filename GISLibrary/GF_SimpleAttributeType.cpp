@@ -1,8 +1,7 @@
 #include "stdafx.h"
+#include "../GeoMetryLibrary/TextCodec.h"
 #include "GF_SimpleAttributeType.h"
 #include "ProcessS101.h"
-
-#include "..\\LibMFCUtil\\LibMFCUtil.h"
 
 namespace GF
 {
@@ -26,7 +25,7 @@ namespace GF
 	SimpleAttributeType::SimpleAttributeType(FCD::S100_CD_AttributeValueType valueType, std::wstring value)
 	{
 		this->valueType = valueType;
-		this->value = LibMFCUtil::WStringToString(value);
+		this->value = s100::text::ToUtf8(value);
 	}
 
 	SimpleAttributeType::~SimpleAttributeType()

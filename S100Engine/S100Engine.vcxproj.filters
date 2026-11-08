@@ -280,9 +280,6 @@
     <ClInclude Include="SVGReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CStringCompareNoCaseLessThan.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SVGGeometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>

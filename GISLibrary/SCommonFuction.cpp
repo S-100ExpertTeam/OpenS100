@@ -7,7 +7,7 @@
 
 #include "../GeoMetryLibrary/Scaler.h"
 
-void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, CRect *_viewPort, Scaler *pScaler)
+void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, const RECT* _viewPort, Scaler *pScaler)
 {
 	std::vector<POINT> m_pvPoints;
 
@@ -20,7 +20,7 @@ void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, S
 	if (SGeometry::viewPoints == nullptr)
 	{
 		SGeometry::sizeOfPoint = (int)(_surface->getNumPoint() * 1.5);
-		SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
+		SGeometry::viewPoints = new POINT[SGeometry::sizeOfPoint]();
 	}
 
 	for (int count = 0; count < _surface->getNumPoint(); count++)
@@ -183,7 +183,7 @@ bool SCommonFuction::IntersectionPaths(ClipperLib::Paths& viewport, std::vector<
 
 
 
-ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, CRect *_viewPort)
+ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, const RECT* _viewPort)
 {
 	ClipperLib::Path  polygon, view;
 	ClipperLib::Paths polygonPaths, viewPaths;
@@ -375,7 +375,7 @@ double SCommonFuction::GetDistanceOfCurve(POINT *_p, int _count)
 	return returnValue;
 }
 
-void SCommonFuction::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, CRect* viewPort)
+void SCommonFuction::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, const RECT* viewPort)
 {
 	// Store the values for fast access and easy
 
@@ -419,7 +419,7 @@ void SCommonFuction::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT
 	}
 }
 
-void SCommonFuction::GetViewLineInCurve(POINT *_p, int _count, CRect* viewPort)
+void SCommonFuction::GetViewLineInCurve(POINT *_p, int _count, const RECT* viewPort)
 {
 	POINT p1, p2;
 	p1.x =viewPort->left;
@@ -475,7 +475,7 @@ void SCommonFuction::GetViewLineInCurve(POINT *_p, int _count, CRect* viewPort)
 	return;
 }
 
-POINT* SCommonFuction::GetCenterPointOfCurve(POINT *_p, int _count, CRect* viewPort)
+POINT* SCommonFuction::GetCenterPointOfCurve(POINT *_p, int _count, const RECT* viewPort)
 {
 	if (_count < 2)
 	{

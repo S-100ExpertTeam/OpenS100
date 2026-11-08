@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "../GeoMetryLibrary/TextCodec.h"
 #include "S101Creator.h"
 #include "S101Cell.h"
 #include "S100Layer.h"
@@ -32,8 +33,6 @@
 #include "SSurface.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
-
-#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <set>
 
@@ -214,7 +213,7 @@ bool S101Creator::DeleteFeature(int rcid)
 ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, std::string code, std::string value)
 {
 	auto wcode = pugi::as_wide(code);
-	auto wvalue = LibMFCUtil::StringToWString(value);
+	auto wvalue = s100::text::ToWide(value);
 
 	return AddSimpleAttribute(feature, wcode, wvalue);
 }
@@ -250,7 +249,7 @@ ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, std::wstring cod
 ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, std::string code, std::string value)
 {
 	auto wcode = pugi::as_wide(code);
-	auto wvalue = LibMFCUtil::StringToWString(value);
+	auto wvalue = s100::text::ToWide(value);
 	return AddSimpleAttribute(information, wcode, wvalue);
 }
 
@@ -284,7 +283,7 @@ ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, std::wst
 ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR, std::string code, std::string value)
 {
 	auto wcode = pugi::as_wide(code);
-	auto wvalue = LibMFCUtil::StringToWString(value);
+	auto wvalue = s100::text::ToWide(value);
 	return AddSimpleAttribute(feature, parentATTR, wcode, wvalue);
 }
 
@@ -324,7 +323,7 @@ ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR
 ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, ATTR* parentATTR, std::string code, std::string value)
 {
 	auto wcode = pugi::as_wide(code);
-	auto wvalue = LibMFCUtil::StringToWString(value);
+	auto wvalue = s100::text::ToWide(value);
 	return AddSimpleAttribute(information, wcode, wvalue);
 }
 

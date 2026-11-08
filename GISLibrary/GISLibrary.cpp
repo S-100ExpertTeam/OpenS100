@@ -11,8 +11,6 @@
 
 #include "../LatLonUtility/LatLonUtility.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
-
 #include "../GeoMetryLibrary/ENCCommon.h"
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"

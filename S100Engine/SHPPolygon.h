@@ -1,4 +1,5 @@
 #pragma once
+#include <istream>
 #include "SHPPoint.h"
 
 class SHPPolygon
@@ -14,7 +15,7 @@ public:
 	SHPPoint* points = nullptr;
 
 public:
-	void Read(int index, CFile& fdSHP, CFile& fdSHX);
+	void Read(int index, std::istream& fdSHP, std::istream& fdSHX);
 	int GetNumParts();
 	int GetNumPoints();
 	int GetNumPointsPerPart(int index);

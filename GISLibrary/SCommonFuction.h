@@ -12,12 +12,12 @@ public:
 	** function   : Clip the given surface to fit the screen area and obtain the center of gravity point of the result.
 	** factor   :
 	SSurface *_surface  - AREA to find the center of gravity
-	CRect*   _viewPort - Screen area.
+	const RECT* _viewPort - Screen area.
 	** return value :
 	NULL  - If the screen and the surface do not overlap at all (the center of gravity cannot exist).
 	!NULL - Surface containing center of gravity points (unconditionally, there is one part, and all points are center of gravity points).
 	*/
-	static void CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, CRect *_viewPort, Scaler *pScaler);
+	static void CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, SSurface *_surface, const RECT* _viewPort, Scaler *pScaler);
 
 	static ClipperLib::Paths ClipPaths(const ClipperLib::Paths& viewportPaths, const ClipperLib::Paths& itemPolygonPath);
 	static ClipperLib::Paths ClipPaths(const ClipperLib::Paths& viewportPaths, std::vector<D2D1_POINT_2F>& itemPolygonPath, Scaler* scaler);
@@ -29,12 +29,12 @@ public:
 	** function   : Clips the given AREA to fit the screen area.
 	** factor   :
 	ENCArea* _polygon  - Area to clip.
-	CRect*   _viewPort - Screen area.
+	const RECT* _viewPort - Screen area.
 	** return value :
 	NULL  - If the screen area and AREA do not overlap at all,
 	!NULL - As a result of clipping, it may be a multi-part.
 	*/
-	static ClipperLib::Paths ClipSurface(SSurface *_polygon, CRect *_viewPort);
+	static ClipperLib::Paths ClipSurface(SSurface *_polygon, const RECT* _viewPort);
 
 	/*
 	** function   : Clips the given AREA to fit the screen area.
@@ -83,7 +83,7 @@ public:
 	int    _count - The number of polyline coordinates.
 	** return value : Among the polylines, the line you see on the screen.
 	*/
-	static void GetViewLineInCurve(POINT *_p, int _count, CRect* viewPort);
+	static void GetViewLineInCurve(POINT *_p, int _count, const RECT* viewPort);
 
 	/*
 	** function   : Find the midpoint at the distance of the polyline.
@@ -92,7 +92,7 @@ public:
 	int    _count -The number of polyline coordinates.
 	** return value : The midpoint of the polyline.
 	*/
-	static POINT* GetCenterPointOfCurve(POINT *_p, int _count, CRect* viewPort);
+	static POINT* GetCenterPointOfCurve(POINT *_p, int _count, const RECT* viewPort);
 
 	/*
 	** function   :
@@ -103,7 +103,7 @@ public:
 	POINT _e2     - The end point of Line 2.
 	** return value :
 	*/
-	static void CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, CRect* viewPort);
+	static void CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT _e2, const RECT* viewPort);
 
 
 	/*

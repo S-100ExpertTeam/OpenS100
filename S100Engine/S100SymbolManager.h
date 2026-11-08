@@ -15,8 +15,6 @@ public:
 
 public:
 	// SVG folder path. (ex : C:\\Symbols\\*.svg)
-	bool Open(const std::string& _path);
-	bool Open(const std::wstring& _path);
 
 	// Open single svg
 	bool Add(const std::string& path);

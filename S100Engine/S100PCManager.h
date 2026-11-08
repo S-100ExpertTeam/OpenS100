@@ -37,8 +37,6 @@ public:
 	// Open single svg
 	bool AddS100Symbol(const std::string& path);
 	bool AddS100Symbol(const std::wstring& path);
-	bool OpenS100Symbol(const std::string& _path);
-	bool OpenS100Symbol(const std::wstring& _path);
 
 	// Open single line style
 	bool AddS100LineStyle(const std::string& path);
@@ -49,8 +47,6 @@ public:
 	// Open single area fill
 	bool AddS100AreaFill(const std::string& path);
 	bool AddS100AreaFill(const std::wstring& path);
-	bool OpenS100AreaFills(const std::string& _path);
-	bool OpenS100AreaFills(const std::wstring& _path);
 
 	void Draw(const std::string& _symbolName, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, D2D1_POINT_2F point, FLOAT rotation = 0, FLOAT scale = 5, const std::string& paletteName = "Day");
 	void DrawAreaFill(const std::string& _symbolName, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, const std::string& paletteName = "Day");

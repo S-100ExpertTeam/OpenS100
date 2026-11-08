@@ -76,34 +76,6 @@ bool S100PCManager::AddS100AreaFill(const std::wstring& path)
 	return AddS100AreaFill(LibMFCUtil::WStringToString(path));
 }
 
-bool S100PCManager::OpenS100AreaFills(const std::string& _path)
-{
-	CFileFind finder;
-	BOOL bWorking = finder.FindFile(LibMFCUtil::StringToWString(_path).c_str());
-	while (bWorking)
-	{
-		bWorking = finder.FindNextFile();
-		std::string path = LibMFCUtil::WStringToString(std::wstring(finder.GetFilePath()));
-		if (path.find(".xml") != std::string::npos)
-		{
-			AreaFill areaFill;
-			areaFill.ReadByPugi(path);
-
-			auto item = GetAreaFill(areaFill._name);
-			if (nullptr == item)
-			{
-				areaFills.push_back(areaFill);
-			}
-		}
-	}
-	return true;
-}
-
-bool S100PCManager::OpenS100AreaFills(const std::wstring& _path)
-{
-	return OpenS100AreaFills(LibMFCUtil::WStringToString(_path));
-}
-
 bool S100PCManager::AddS100Symbol(const std::string& path)
 {
 	SVGReader svg;
@@ -122,16 +94,6 @@ bool S100PCManager::AddS100Symbol(const std::string& path)
 bool S100PCManager::AddS100Symbol(const std::wstring& path)
 {
 	return AddS100Symbol(LibMFCUtil::WStringToString(path));
-}
-
-bool S100PCManager::OpenS100Symbol(const std::string& _path)
-{
-	return s100SymbolManager.Open(_path);
-}
-
-bool S100PCManager::OpenS100Symbol(const std::wstring& _path)
-{
-	return s100SymbolManager.Open(_path);
 }
 
 void S100PCManager::DrawLineStyle(const std::string& _name, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, const std::string& paletteName)

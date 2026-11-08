@@ -4,7 +4,7 @@
 
 int SGeometry::sizeOfPoint = 10;
 // It also has a CPoint arrangement to minimize memory allocation and recovery.
-POINT* SGeometry::viewPoints = new CPoint[SGeometry::sizeOfPoint];
+POINT* SGeometry::viewPoints = new POINT[SGeometry::sizeOfPoint]();
 
 SGeometry::SGeometry()
 {

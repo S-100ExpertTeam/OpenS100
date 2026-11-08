@@ -420,7 +420,6 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="CompositeLineStyle.h" />
     <ClInclude Include="CRSType.h" />
-    <ClInclude Include="CStringCompareNoCaseLessThan.h" />
     <ClInclude Include="Dash.h" />
     <ClInclude Include="EnumTypeOfDrawingInstruction.h" />
     <ClInclude Include="figure.h" />

@@ -26,9 +26,7 @@ namespace GISLibrary
 		hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_MULTI_THREADED, &pD2Factory);
 		if (!pD2Factory)
 		{
-			CString errMsg;
-			errMsg.Format(_T("Failed to create Direct2D Factory! (%02X)"), hr);
-			//OutputDebugString(errMsg);
+			// Failed to create Direct2D Factory! (%02X) (was a debug trace)
 			return false;
 		}
 		
@@ -50,9 +48,7 @@ namespace GISLibrary
 
 			if (!pSolidStrokeStyle)
 			{
-				CString errMsg;
-				errMsg.Format(_T("Failed to create stroke line!(User Layer Solid Style) (%02X)"), hr);
-				//OutputDebugString(errMsg);
+				// Failed to create stroke line!(User Layer Solid Style) (%02X) (was a debug trace)
 				return false;
 			}
 
@@ -74,9 +70,7 @@ namespace GISLibrary
 
 			if (!pDashStrokeStyle)
 			{
-				CString errMsg;
-				errMsg.Format(_T("Failed to create stroke line!(User Layer Dash Style) (%02X)"), hr);
-				//OutputDebugString(errMsg);
+				// Failed to create stroke line!(User Layer Dash Style) (%02X) (was a debug trace)
 				return false;
 			}
 
@@ -98,9 +92,7 @@ namespace GISLibrary
 
 			if (!pDotStrokeStyle)
 			{
-				CString errMsg;
-				errMsg.Format(_T("Failed to create stroke line!(User Layer Dot Style) (%02X)"), hr);
-				//OutputDebugString(errMsg);
+				// Failed to create stroke line!(User Layer Dot Style) (%02X) (was a debug trace)
 				return false;
 			}
 			D2D1StrokeStyleGroup.push_back(pDotStrokeStyle);
@@ -110,9 +102,7 @@ namespace GISLibrary
 
 			if (!pDWriteFactory)
 			{
-				CString errMsg;
-				errMsg.Format(_T("Failed to create IDWriteFactory! (%02X)"), hr);
-				//OutputDebugString(errMsg);
+				// Failed to create IDWriteFactory! (%02X) (was a debug trace)
 				return false;
 			}
 
@@ -132,9 +122,7 @@ namespace GISLibrary
 
 			if (!pDWriteTextFormat)
 			{
-				CString errMsg;
-				errMsg.Format(_T("Failed to create IDWriteTextFormat! (%02X)"), hr);
-				//OutputDebugString(errMsg);
+				// Failed to create IDWriteTextFormat! (%02X) (was a debug trace)
 				return false;
 			}
 
@@ -156,9 +144,7 @@ namespace GISLibrary
 
 			if (!pDWriteTextFormatArea)
 			{
-				CString errMsg;
-				errMsg.Format(_T("Failed to create IDWriteTextFormat (for Area)! (%02X)"), hr);
-				//OutputDebugString(errMsg);
+				// Failed to create IDWriteTextFormat (for Area)! (%02X) (was a debug trace)
 				return false;
 			}
 
@@ -227,17 +213,13 @@ namespace GISLibrary
 				}
 				else
 				{
-					CString errMsg;
-					errMsg.Format(_T("Failed to create ID2D1SolidColorBrush! (%02X)"), hr);
-					//OutputDebugString(errMsg);
+					// Failed to create ID2D1SolidColorBrush! (%02X) (was a debug trace)
 					return false;
 				}
 			}
 			else
 			{
-				CString errMsg;
-				errMsg.Format(_T("Failed to create ID2D1DCRenderTarget! (%02X)"), hr);
-				//OutputDebugString(errMsg);
+				// Failed to create ID2D1DCRenderTarget! (%02X) (was a debug trace)
 				return false;
 			}
 		}
@@ -270,9 +252,7 @@ namespace GISLibrary
 
 		if (!pDWriteTextFormat)
 		{
-			CString errMsg;
-			errMsg.Format(_T("Failed to create IDWriteTextFormat! (%02X)"), result);
-			//OutputDebugString(errMsg);
+			// Failed to create IDWriteTextFormat! (%02X) (was a debug trace)
 			return false;
 		}
 
@@ -311,9 +291,9 @@ namespace GISLibrary
 		return pBrush;
 	}
 
-	void D2D1Resources::Begin(HDC& hdc, CRect& rect)
+	void D2D1Resources::Begin(HDC& hdc, const RECT& rect)
 	{
-		pRT->BindDC(hdc, rect);
+		pRT->BindDC(hdc, &rect);
 		pRT->BeginDraw();
 		pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 	}
@@ -323,7 +303,7 @@ namespace GISLibrary
 		pRT->EndDraw();
 	}
 
-	void D2D1Resources::DrawCRect(CRect& rect)
+	void D2D1Resources::DrawRect(const RECT& rect)
 	{
 		D2D1_RECT_F d2rect = {
 			(FLOAT)rect.left, (FLOAT)rect.top, (FLOAT)rect.right, (FLOAT)rect.bottom

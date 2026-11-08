@@ -70,11 +70,11 @@ public:
 	FLOAT GetCurrentScale();
 	FLOAT GetMaxZoom(); //ZOOM when it's 1:1000.
 
-	void KeyDown(UINT nChar, CRect& rectView, int dpiX, int dpiY);
+	void KeyDown(UINT nChar, const RECT& rectView, int dpiX, int dpiY);
 
 	void CreateBackgroundGeometry(ID2D1Factory1* pD2Factory);
 
-	void GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, CRect& rect, FLOAT& xmin, FLOAT& ymin, FLOAT& xmax, FLOAT& ymax);
+	void GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, const RECT& rect, FLOAT& xmin, FLOAT& ymin, FLOAT& xmax, FLOAT& ymax);
 	
 	void SetViewFactor(double x, double y, long long zoom);
 	void ZoomIn(double f = 1.1);

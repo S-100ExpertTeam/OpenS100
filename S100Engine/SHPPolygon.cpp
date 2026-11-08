@@ -30,29 +30,29 @@ void SHPPolygon::SwapWord(int _length, void *_pData)
 	}
 }
 
-void SHPPolygon::Read(int index, CFile& fdSHP, CFile& fdSHX)
+void SHPPolygon::Read(int index, std::istream& fdSHP, std::istream& fdSHX)
 {
 	int offset = 0;
 
-	fdSHX.Seek(100 + (index * 8), CFile::begin);
-	fdSHX.Read(&offset, 4);
+	fdSHX.seekg(100 + (index * 8));
+	fdSHX.read(reinterpret_cast<char*>(&offset), 4);
 	SwapWord(4, &offset);
 	offset *= 2;
 
-	fdSHP.Seek(offset + 12, CFile::begin);
+	fdSHP.seekg(offset + 12);
 
 	// Read the record and save it.
 	// MBR 
 	double box[4] = { 0, 0, 0, 0 };
 	
-	fdSHP.Read(box, sizeof(double) * 4);
+	fdSHP.read(reinterpret_cast<char*>(box), sizeof(double) * 4);
 
 	// The number of parts.
-	fdSHP.Read(&numParts, sizeof(int));
+	fdSHP.read(reinterpret_cast<char*>(&numParts), sizeof(int));
 
 	// The number of points.
 	numPoints = 0;
-	fdSHP.Read(&numPoints, sizeof(int));
+	fdSHP.read(reinterpret_cast<char*>(&numPoints), sizeof(int));
 
 	// Arrangement of parts.
 	parts = new int[numParts];
@@ -60,15 +60,15 @@ void SHPPolygon::Read(int index, CFile& fdSHP, CFile& fdSHX)
 
 	for (int i = 0; i < numParts; i++) 
 	{
-		fdSHP.Read(&parts[i], sizeof(int));
+		fdSHP.read(reinterpret_cast<char*>(&parts[i]), sizeof(int));
 	}
 
 	// Point arrangement.
 	points = new SHPPoint[numPoints];
 
 	for (int j = 0; j < numPoints; j++) {
-		fdSHP.Read(&points[j].x, sizeof(double));
-		fdSHP.Read(&points[j].y, sizeof(double));
+		fdSHP.read(reinterpret_cast<char*>(&points[j].x), sizeof(double));
+		fdSHP.read(reinterpret_cast<char*>(&points[j].y), sizeof(double));
 	}
 }
 

@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "SHPPolygon.h"
 
 #include <vector>
@@ -14,7 +15,7 @@ public:
 	std::vector<SHPPolygon*> vecPolygons;
 
 public:
-	bool Open(CString path);
+	bool Open(const std::wstring& path);
 	int GetRecordCount();
 	SHPPolygon* GetPolygon(unsigned index);
 

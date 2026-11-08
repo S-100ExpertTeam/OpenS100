@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "../GeoMetryLibrary/TextCodec.h"
 #include "ProcessS101.h"
 #include <stdexcept>
 #include "S100Layer.h"
@@ -33,8 +34,6 @@
 
 #include "../LatLonUtility/LatLonUtility.h"
 #include "..\\LatLonUtility\\cpp_util.h"
-
-#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <libxml/parser.h>
 #include <libxml/tree.h>
@@ -227,7 +226,7 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 			return 0;
 		}
 
-		std::string luaRulePath_string = LibMFCUtil::WStringToString(luaRulePath);
+		std::string luaRulePath_string = s100::text::ToUtf8(luaRulePath);
 
 		InitPortrayal(
 			luaRulePath_string.c_str(),
@@ -1149,10 +1148,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 
 						//std::vector<std::string> v_splited_text = Split(v_TextInstruction, ",");
 
-						//auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_splited_text[0].c_str());
-						auto wValue = LibMFCUtil::ConvertCtoWC((char*)v_TextInstruction.c_str());
-						std::wstring wstrValue = wValue;
-						delete[] wValue;
+						const std::wstring wstrValue = s100::text::ToWide(v_TextInstruction);
 						element->GetText()->SetValue(wstrValue);
 
 						if (stateCommands.v_FontSize.size() > 0)

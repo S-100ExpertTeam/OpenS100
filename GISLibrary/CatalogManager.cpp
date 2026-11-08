@@ -1,8 +1,7 @@
 #include "stdafx.h"
+#include "../GeoMetryLibrary/TextCodec.h"
 #include "CatalogManager.h"
 #include "GISLibrary.h"
-
-#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <algorithm>
 
@@ -25,7 +24,7 @@ CatalogManager::~CatalogManager()
 
 FeatureCatalogue* CatalogManager::addFC(std::string path)
 {
-	return addFC(LibMFCUtil::StringToWString(path));
+	return addFC(s100::text::ToWide(path));
 }
 
 FeatureCatalogue* CatalogManager::addFC(std::wstring path)
@@ -51,7 +50,7 @@ void CatalogManager::addFC(FeatureCatalogue* fc)
 
 PortrayalCatalogue* CatalogManager::addPC(std::string path)
 {
-	return addPC(LibMFCUtil::StringToWString(path));
+	return addPC(s100::text::ToWide(path));
 }
 
 PortrayalCatalogue* CatalogManager::addPC(std::wstring path)

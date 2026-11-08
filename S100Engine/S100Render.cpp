@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <string>
 #include "S100Render.h"
 #include "EnumTypeOfDrawingInstruction.h"
 #include "AreaPatternBitmap.h"
@@ -198,11 +199,10 @@ void S100Render::DrawScale(ID2D1RenderTarget *pRenderTarget, ID2D1SolidColorBrus
 
 	int currentScale = (int)GetCurrentScale();
 
-	CString strScale;
-	strScale.Format(_T("1 : %d"), currentScale);
+	const std::wstring strScale = L"1 : " + std::to_wstring(currentScale);
 
 	pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
-	pRenderTarget->DrawTextW(strScale, strScale.GetLength(), pTextFormat, D2D1::RectF(0, 0, 500, 100), pBrush);
+	pRenderTarget->DrawTextW(strScale.c_str(), static_cast<UINT32>(strScale.size()), pTextFormat, D2D1::RectF(0, 0, 500, 100), pBrush);
 
 	pRenderTarget->SetTransform(oldMatrix);
 }
@@ -219,7 +219,7 @@ void S100Render::CreateBackgroundGeometry(ID2D1Factory1* pD2Factory)
 }
 
 #pragma warning(disable:4244)
-void S100Render::KeyDown(UINT nChar, CRect& rectView, int dpiX, int dpiY)
+void S100Render::KeyDown(UINT nChar, const RECT& rectView, int dpiX, int dpiY)
 {
 	FLOAT maxZoom = GetMaxZoom();
 
@@ -261,8 +261,8 @@ void S100Render::KeyDown(UINT nChar, CRect& rectView, int dpiX, int dpiY)
 		break;
 	case VK_F2:
 	{
-		int screenWidth = (int)(rectView.Width() * (96.0 / dpiX));
-		int screenHeight = (int)(rectView.Height() * (96.0 / dpiY));
+		int screenWidth = (int)((rectView.right - rectView.left) * (96.0 / dpiX));
+		int screenHeight = (int)((rectView.bottom - rectView.top) * (96.0 / dpiY));
 		double centerX = screenWidth / 2.0;
 		double centerY = screenHeight / 2.0;
 
@@ -278,7 +278,7 @@ void S100Render::KeyDown(UINT nChar, CRect& rectView, int dpiX, int dpiY)
 		float projectedXmax = ProjectionX(xmax) * FACTOR;
 		float projectedYmax = ProjectionX(ymax) * FACTOR;
 
-		double earthPixel = rectView.Width() * (360.0 / (xmax - xmin));
+		double earthPixel = (rectView.right - rectView.left) * (360.0 / (xmax - xmin));
 		scale = (EARTH_2PIR / PIXEL_MM) / earthPixel;
 	}
 	break;
@@ -286,7 +286,7 @@ void S100Render::KeyDown(UINT nChar, CRect& rectView, int dpiX, int dpiY)
 }
 
 #pragma warning(disable:4244)
-void S100Render::GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, CRect& rect, FLOAT& xmin, FLOAT& ymin, FLOAT& xmax, FLOAT& ymax)
+void S100Render::GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, const RECT& rect, FLOAT& xmin, FLOAT& ymin, FLOAT& xmax, FLOAT& ymax)
 {
 	D2D1_POINT_2F screenLeftBottomPoint;
 	D2D1_POINT_2F wgs84LeftBottomPoint;
@@ -323,9 +323,7 @@ void S100Render::GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, CRect& rect, FL
 		ymax = temp;
 	}
 
-	CString str;
-	str.Format(_T("%f, %f, %f, %f\n"), xmin, ymin, xmax, ymax);
-	//OutputDebugString(str);
+	// %f, %f, %f, %f (was a debug trace)
 }
 
 #pragma warning(disable:4244)
