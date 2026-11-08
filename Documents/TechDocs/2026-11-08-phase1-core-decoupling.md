@@ -93,4 +93,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-08 | 3-1(c): `CheckFileType` 중복 제거·`SHPFile` 전환, GISLibrary에서 `CFile` 0 | ef05a1cc | 테스트 16/16, 앱 기동(셰이프 배경 로딩) |
 | 2026-11-08 | 3-3: `CMap`/`POSITION`/`CArray` → 표준 컨테이너, 누수 14곳 제거 | 2ef3c6af | 테스트 16/16, 앱 기동 확인 |
 | 2026-11-08 | 2-3b: PC 헤더에서 D2D 제거, PC→S100Engine 역방향 include 해소, PCManager 이중 할당 제거 | 356a2a8f | 테스트 16/16, 앱 기동 확인, 게이지 167 |
-| 2026-11-08 | 3-4a: PortrayalCatalogue `UseOfMfc=false`, S100Engine 렌더 헤더 자체 완결(`RenderPrelude.h`) | (아래) | 테스트 16/16, 앱 기동 확인, 게이지 163 |
+| 2026-11-08 | 3-4a: PortrayalCatalogue `UseOfMfc=false`, S100Engine 렌더 헤더 자체 완결(`RenderPrelude.h`) | d55a9251 | 테스트 16/16, 앱 기동 확인, 게이지 163 |
