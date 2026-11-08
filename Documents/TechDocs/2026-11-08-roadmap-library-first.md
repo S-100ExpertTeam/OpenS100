@@ -128,6 +128,7 @@ Phase 2와 3은 순서를 바꿔도 되지만, **Phase 0 없이 Phase 4를 시�
 - **KHOA 뷰어는 vcpkg 포트로 OpenS100을 참조한다**(지침 16). 서브모듈·소스 복사 없음.
 - **전 플랫폼 지원이 목표다**(지침 18): Windows, Linux, macOS, 가능하면 WASM. 코어는 MFC·ATL·Direct2D·GDI·Win32 API를 쓰지 않는다. 파일 I/O는 `std::filesystem`/`std::fstream`, 문자열은 UTF-8 `std::string`, 스레드는 `std::thread`/`std::jthread`. Windows 전용 코드는 `s100-render-d2d`와 앱에만.
 - **빌드 속도는 별도 작업 흐름으로 관리한다**(지침 17). 아래 3.4절.
+- **렌더 백엔드는 Skia 단일**(지침 24). Windows·Linux·macOS·WASM(CanvasKit) 모두 같은 코드. Direct2D는 전환기에 Skia 렌더러의 결과를 비교하는 기준 구현으로만 유지하고 이후 제거. 모듈 표의 `s100-render-d2d`는 최종적으로 `s100-render-skia`로 대체된다. 도입 시점은 디스플레이 리스트 IR이 확정되는 Phase 3~4.
 
 열린 질문 (사용자 결정 필요):
 - FC/PC 카탈로그 재배포 라이선스(IHO, KHOA 임시 카탈로그).
@@ -138,3 +139,4 @@ Phase 2와 3은 순서를 바꿔도 되지만, **Phase 0 없이 Phase 4를 시�
 - 2026-11-08 초안. 처음엔 KHOA 뷰어 저장소에 작성했으나 사용자가 대상은 OpenS100이라고 정정하여 이 저장소로 이동하고 2절(세 저장소 역할)과 업스트림 단계를 추가.
 - 2026-11-08 지침 16~18 반영: vcpkg 참조 확정, 빌드 속도 절(3.3) 추가, 전 플랫폼·MFC 제거를 결정 사항으로.
 - 2026-11-08 지침 19 반영: Win32/ARM64 구성 삭제 계획 철회, 트리플릿 목록에 x86·arm64 추가.
+- 2026-11-08 지침 24 반영: 렌더 백엔드 Skia 단일, D2D는 전환기 기준 구현.
