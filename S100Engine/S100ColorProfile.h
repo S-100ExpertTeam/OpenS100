@@ -1,4 +1,5 @@
 #pragma once
+#include "RenderPrelude.h"
 #include "Palette.h"
 #include "Colors.h"
 
@@ -34,20 +35,12 @@ private:
 	void extractionColors(pugi::xml_node node);
 	void extractionPalette(pugi::xml_node node);
 
-	// Divide strings (separate strings using char characters)
-	std::vector<CString> Split(CString _data, char parsingChar);
 
-	// Divide strings (separate strings by specifying the number of characters)
-	std::vector<CString> SplitBySpace(CString _data, int _space);
 
 	// Hex to decimal.
 	int Conert16to10(char* ch);
 
-	//CString -> char* (delete. Please enter it!)
-	//char* ConvertCstringToChar(CString inCstring);
 
-	//char* -> CString
-	CString ConvertCharToCString(char* inChar);
 
 	//char*-> wstring
 	std::wstring ConvertCtoWS(char* c);

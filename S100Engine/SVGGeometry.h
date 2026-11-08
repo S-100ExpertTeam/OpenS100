@@ -1,4 +1,5 @@
 #pragma once
+#include "RenderPrelude.h"
 
 #include "PivotPoint.h"
 

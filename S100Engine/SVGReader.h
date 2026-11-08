@@ -1,4 +1,5 @@
 #pragma once
+#include "RenderPrelude.h"
 #include "figure.h"
 #include "Line.h"
 #include "Circle.h"

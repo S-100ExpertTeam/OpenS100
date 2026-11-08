@@ -1,4 +1,5 @@
 #pragma once
+#include "RenderPrelude.h"
 #include "AbstractLineStyle.h"
 #include "CompositeLineStyle.h"
 #include "LineStyle.h"

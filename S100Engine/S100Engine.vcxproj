@@ -410,6 +410,8 @@
     <ClInclude Include="AbstractLineStyle.h" />
     <ClInclude Include="AreaFill.h" />
     <ClInclude Include="AreaFillInfo.h" />
+    <ClInclude Include="RenderPrelude.h" />
+    <ClInclude Include="CaseInsensitiveLess.h" />
     <ClInclude Include="AreaPatternBitmap.h" />
     <ClInclude Include="BackgroundLayer.h" />
     <ClInclude Include="BackgroundSHPFile.h" />

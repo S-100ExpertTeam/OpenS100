@@ -1,6 +1,7 @@
 #pragma once
 #include "AreaPatternBitmap.h"
-#include "CStringCompareNoCaseLessThan.h"
+#include "CaseInsensitiveLess.h"
+#include <string>
 
 #include <map>
 
@@ -11,7 +12,7 @@ public:
 	virtual ~AreaFillInfo();
 
 public:
-	std::map<CString, AreaPatternBitmap*, CStringCompareNoCaseLessThan> patternMap;
+	std::map<std::wstring, AreaPatternBitmap*, s100::CaseInsensitiveLessW> patternMap;
 
 public:
 	void PatternMapDelete();

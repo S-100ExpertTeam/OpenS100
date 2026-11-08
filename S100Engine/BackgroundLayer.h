@@ -1,4 +1,5 @@
 #pragma once
+#include "RenderPrelude.h"
 
 class BackgroundSHPFile;
 class BackgroundLayer

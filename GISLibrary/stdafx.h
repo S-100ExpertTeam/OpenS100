@@ -39,6 +39,9 @@
 #include "Common.h"
 #include <windows.h>
 #include <gdiplus.h>
+// GDI+ names were previously pulled in unqualified through a PortrayalCatalogue header; keep
+// that for the legacy GDI drawing code in this project until it moves to the renderer.
+using namespace Gdiplus;
 
 #include <d2d1.h>
 #include <d2d1_1.h>

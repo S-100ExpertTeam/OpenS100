@@ -50,14 +50,23 @@ def scan(project: str):
     return len(headers), counts
 
 
+# Projects that have reached zero. Any taint here fails the check even without --fail,
+# so a regression is caught by whoever runs the gauge (and by CI).
+CLEAN_PROJECTS = ["FeatureCatalog", "PortrayalCatalogue"]
+
+
 def main(argv):
     fail = "--fail" in argv
     tainted_core = 0
+    regressions = []
     print(f"{'project':22s} {'headers':>7s} {'d2d':>5s} {'mfc':>5s} {'win32':>6s}")
     for project in CORE_PROJECTS:
         total, counts = scan(project)
         core_d2d = [f for f in counts["d2d"] if f not in RENDER_SIDE]
-        tainted_core += len(core_d2d) + len(counts["mfc"]) + len(counts["win32"])
+        project_taint = len(core_d2d) + len(counts["mfc"]) + len(counts["win32"])
+        tainted_core += project_taint
+        if project in CLEAN_PROJECTS and project_taint:
+            regressions += core_d2d + counts["mfc"] + counts["win32"]
         print(f"{project:22s} {total:7d} {len(core_d2d):5d} {len(counts['mfc']):5d} {len(counts['win32']):6d}")
     print()
     if "--verbose" in argv:
@@ -68,6 +77,9 @@ def main(argv):
                 if files:
                     print(f"[{project}] {key}: " + ", ".join(Path(f).name for f in files))
     print(f"tainted core headers: {tainted_core} (render-side files allowed: {len(RENDER_SIDE)})")
+    if regressions:
+        print("REGRESSION: these headers belong to a project that was already clean: " + ", ".join(sorted(set(regressions))))
+        return 1
     if fail and tainted_core:
         return 1
     return 0

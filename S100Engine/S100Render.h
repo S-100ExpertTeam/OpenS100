@@ -1,4 +1,5 @@
 #pragma once
+#include "RenderPrelude.h"
 
 #include "AreaFillInfo.h"
 #include "S100PCManager.h"

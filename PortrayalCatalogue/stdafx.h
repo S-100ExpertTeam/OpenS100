@@ -1,35 +1,14 @@
 #pragma once
-
-#include "targetver.h"
-
-#define WIN32_LEAN_AND_MEAN
-#include <afxwin.h>        
-#include <afxext.h>        
-#include <windows.h>
-
+// PortrayalCatalogue is catalogue data: no MFC, no Direct2D, no Win32 here.
+// (Phase 1 step 3-4, Documents/TechDocs/2026-11-08-phase1-core-decoupling.md)
+#include <string>
+#include <vector>
+#include <list>
+#include <map>
+#include <unordered_map>
+#include <memory>
+#include <optional>
+#include <algorithm>
+#include <cstdint>
+#include <pugixml.hpp>
 #include "../FeatureCatalog/StringUtil.h"
-
-#include <gdiPlus.h>
-#pragma comment(lib, "gdiplus")
-using namespace Gdiplus;
-
-
-#include <d2d1.h>
-#include <d2d1_1.h>
-#pragma comment(lib, "d2d1.lib")
-
-#ifndef D2_SAFE_RELEASE
-#define D2_SAFE_RELEASE
-
-template<class Interface>
-inline void SafeRelease(Interface **ppInterfaceToRelease)
-{
-	if (*ppInterfaceToRelease != NULL)
-	{
-		(*ppInterfaceToRelease)->Release();
-
-		(*ppInterfaceToRelease) = NULL;
-	}
-}
-
-#endif

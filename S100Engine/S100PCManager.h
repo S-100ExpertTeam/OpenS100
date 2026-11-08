@@ -1,4 +1,5 @@
 #pragma once
+#include "RenderPrelude.h"
 #include <string>
 #include <unordered_map>
 

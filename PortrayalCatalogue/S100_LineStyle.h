@@ -1,5 +1,4 @@
 #pragma once
-#include "stdafx.h"
 #include "S100_LineStyleBase.h"
 #include "S100_Pen.h"
 #include "S100_Dash.h"

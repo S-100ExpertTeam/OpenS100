@@ -212,43 +212,7 @@ void S100ColorProfile::extractionPalette(pugi::xml_node node)
 }
 
 
-std::vector<CString> S100ColorProfile::Split(CString _data, char parsingChar)
-{
-	std::vector<CString> result;
 
-	CString data = _data;
-	while (data.GetLength() != 0)
-	{
-		data.TrimLeft(parsingChar);
-		int nFind2 = data.Find(parsingChar);
-		if (nFind2 == -1)
-		{
-			result.push_back(data);
-			break;
-		}
-		CString strNum = data.Mid(0, nFind2);
-		result.push_back(strNum);
-		data = data.Mid(nFind2);
-	}
-	return result;
-}
-
-std::vector<CString> S100ColorProfile::SplitBySpace(CString _data, int _space)
-{
-	std::vector<CString> result;
-
-	CString data = _data;
-	for (int i = 0; i < _data.GetLength(); i += _space)
-	{
-		CString cs;
-		for (int j = 0; j < _space; j++)
-		{
-			cs.AppendChar(_data[i + j]);
-		}
-		result.push_back(cs);
-	}
-	return result;
-}
 
 int S100ColorProfile::Conert16to10(char* ch)
 {
@@ -276,10 +240,6 @@ int S100ColorProfile::Conert16to10(char* ch)
 //	return result;
 //}
 
-CString S100ColorProfile::ConvertCharToCString(char* inChar)
-{
-	return (CString)inChar;
-}
 
 std::wstring S100ColorProfile::ConvertCtoWS(char* c)
 {

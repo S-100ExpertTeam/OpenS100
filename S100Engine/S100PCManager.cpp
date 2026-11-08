@@ -641,7 +641,7 @@ void S100PCManager::CreateBitmapImage(ID2D1Factory1* pDirect2dFactory, IWICImagi
 			auto areaPatternBitmap = CreateBitmapImage(pAreaFill, pDirect2dFactory, pImagingFactory, pStrokeStyleS101Solid, paletteName);
 			if (areaPatternBitmap)
 			{
-				areaFillInfo.patternMap.insert({ CString(LibMFCUtil::StringToWString(pAreaFill->_name).c_str()), areaPatternBitmap });
+				areaFillInfo.patternMap.insert({ LibMFCUtil::StringToWString(pAreaFill->_name), areaPatternBitmap });
 			}
 		}
 	}

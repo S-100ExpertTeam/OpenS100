@@ -76,24 +76,3 @@ void S100_ColorProfile::Setpaletters(const std::wstring& key, S100_Palette* valu
 std::unordered_map<std::string, S100_Palette*> S100_ColorProfile::Getpalettes()    { return palettes; }
 
 
-COLORREF S100_ColorProfile::GetRGBRef(const std::string& paletteName, const std::string& token)
-{
-	auto item = palettes.find(paletteName);
-	if (item != palettes.end())
-	{
-		auto items = item->second->GetItem();
-		auto color = items.find(token);
-
-		if (color != items.end())
-		{
-			return RGB(color->second->GetSRGB()->GetRed(), color->second->GetSRGB()->GetGreen(), color->second->GetSRGB()->GetBlue());
-		}
-	}
-
-	return RGB(0, 0, 0);
-}
-
-COLORREF S100_ColorProfile::GetRGBRef(const std::wstring& paletteName, const std::wstring& token)
-{
-	return GetRGBRef(toUtf8(paletteName), toUtf8(token));
-}

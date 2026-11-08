@@ -27,8 +27,6 @@ public:
 
 	void GetContents(pugi::xml_node node);
 
-	COLORREF GetRGBRef(const std::string& paletteName, const std::string& token);
-	COLORREF GetRGBRef(const std::wstring& paletteName, const std::wstring& token);
 
 	void Setcolors(const std::string& key, S100_Color* value);
 	void Setcolors(const std::wstring& key, S100_Color* value);
