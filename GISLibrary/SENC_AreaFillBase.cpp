@@ -21,12 +21,12 @@ int SENC_AreaFillBase::GetType()
 	return type;
 }
 
-void SENC_AreaFillBase::SetFileTitle(std::wstring& value)
+void SENC_AreaFillBase::SetFileStem(std::wstring& value)
 {
-	fileTitle = value;
+	fileStem = value;
 }
 
-std::wstring SENC_AreaFillBase::GetFileTitle()
+std::wstring SENC_AreaFillBase::GetFileStem()
 {
-	return fileTitle;
+	return fileStem;
 }

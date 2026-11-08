@@ -1,4 +1,6 @@
 #pragma once
+// Self-contained: Direct2D/DirectWrite/WIC/Win32 types come from the render prelude (Phase 1 step 3-5).
+#include "../S100Engine/RenderPrelude.h"
 
 #include <vector>
 

@@ -6,7 +6,7 @@
 #include "CI_Contact.h"
 #include "CI_Organisation.h"
 #include "CI_Individual.h"
-using namespace std;
+
 
 namespace S100 {
     class CI_Party

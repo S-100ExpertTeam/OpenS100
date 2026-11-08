@@ -73,7 +73,7 @@ bool S100PCManager::AddS100AreaFill(const std::string& path)
 
 bool S100PCManager::AddS100AreaFill(const std::wstring& path)
 {
-	return AddS100AreaFill(LibMFCUtil::WStringToString(path));
+	return AddS100AreaFill(s100::text::ToUtf8(path));
 }
 
 bool S100PCManager::AddS100Symbol(const std::string& path)
@@ -93,7 +93,7 @@ bool S100PCManager::AddS100Symbol(const std::string& path)
 
 bool S100PCManager::AddS100Symbol(const std::wstring& path)
 {
-	return AddS100Symbol(LibMFCUtil::WStringToString(path));
+	return AddS100Symbol(s100::text::ToUtf8(path));
 }
 
 void S100PCManager::DrawLineStyle(const std::string& _name, ID2D1RenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush, ID2D1StrokeStyle1* pStrokeStyle, const std::string& paletteName)
@@ -393,7 +393,7 @@ AreaFill* S100PCManager::GetAreaFill(const std::string& _name)
 
 AreaFill* S100PCManager::GetAreaFill(const std::wstring& _name)
 {
-	return GetAreaFill(LibMFCUtil::WStringToString(_name));
+	return GetAreaFill(s100::text::ToUtf8(_name));
 }
 
 
@@ -470,7 +470,7 @@ D2D1_RECT_F S100PCManager::GetLineStyleRect(const std::string& _name, FLOAT scal
 
 D2D1_RECT_F S100PCManager::GetLineStyleRect(const std::wstring& _name, FLOAT scale)
 {
-	return GetLineStyleRect(LibMFCUtil::WStringToString(_name), scale);
+	return GetLineStyleRect(s100::text::ToUtf8(_name), scale);
 }
 
 
@@ -507,7 +507,7 @@ void S100PCManager::CreateLineImage(ID2D1Factory1* pDirect2dFactory, IWICImaging
 			pCurrentRenderTarget->EndDraw();
 		}
 
-		lineImageMap.insert_or_assign(LibMFCUtil::StringToWString(i->second->name), pBitmap);
+		lineImageMap.insert_or_assign(s100::text::ToWide(i->second->name), pBitmap);
 	}
 }
 
@@ -603,7 +603,7 @@ void S100PCManager::CreateBitmapImage(ID2D1Factory1* pDirect2dFactory, IWICImagi
 			auto areaPatternBitmap = CreateBitmapImage(pAreaFill, pDirect2dFactory, pImagingFactory, pStrokeStyleS101Solid, paletteName);
 			if (areaPatternBitmap)
 			{
-				areaFillInfo.patternMap.insert({ LibMFCUtil::StringToWString(pAreaFill->_name), areaPatternBitmap });
+				areaFillInfo.patternMap.insert({ s100::text::ToWide(pAreaFill->_name), areaPatternBitmap });
 			}
 		}
 	}
@@ -684,13 +684,13 @@ void S100PCManager::InverseMatrixBitmapBrush(D2D1::Matrix3x2F matrix)
 
 IWICBitmap* S100PCManager::GetLineImage(const std::string& key)
 {
-	const auto it = lineImageMap.find(LibMFCUtil::StringToWString(key));
+	const auto it = lineImageMap.find(s100::text::ToWide(key));
 	return it == lineImageMap.end() ? nullptr : it->second;
 }
 
 IWICBitmap* S100PCManager::GetLineImage(const std::wstring& key)
 {
-	return GetLineImage(LibMFCUtil::WStringToString(key));
+	return GetLineImage(s100::text::ToUtf8(key));
 }
 
 S100ColorProfile* S100PCManager::GetS100ColorProfile()

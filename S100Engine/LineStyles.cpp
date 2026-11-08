@@ -32,5 +32,5 @@ bool LineStylesPackage::LineStyles::GetRect(const std::string& name, D2D1_RECT_F
 
 bool LineStylesPackage::LineStyles::GetRect(const std::wstring& name, D2D1_RECT_F* pRect)
 {
-	return GetRect(LibMFCUtil::WStringToString(name), pRect);
+	return GetRect(s100::text::ToUtf8(name), pRect);
 }

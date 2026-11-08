@@ -257,8 +257,8 @@ std::vector<std::shared_ptr<DatasetClass>> DataSetManagerSupport::Dataset_LoadFi
 			}
 			std::replace(adjustedRelativePath.begin(), adjustedRelativePath.end(), '/', '\\');
 
-			string file;
-			string path;
+			std::string file;
+			std::string path;
 			ExtractFileNameAndPath(ex.DatasetDiscoveryMetadata[i].FileName, file, path);
 
 			dc.fileName = file;
@@ -270,7 +270,7 @@ std::vector<std::shared_ptr<DatasetClass>> DataSetManagerSupport::Dataset_LoadFi
 			dc.BoundingBox = ex.DatasetDiscoveryMetadata[i].BoundingBox;
 			dc.Name= ex.DatasetDiscoveryMetadata[i].FileName;
 
-			vec.push_back(make_shared<DatasetClass>(dc));
+			vec.push_back(std::make_shared<DatasetClass>(dc));
 		}
 
 
@@ -287,8 +287,8 @@ std::vector<std::shared_ptr<DatasetClass>> DataSetManagerSupport::Dataset_LoadFi
 			}
 			std::replace(adjustedRelativePath.begin(), adjustedRelativePath.end(), '/', '\\');
 
-			string file;
-			string path;
+			std::string file;
+			std::string path;
 			ExtractFileNameAndPath(ex.SupportFileDiscoveryMetadata[i].FileName, file, path);
 
 			dc.fileName = file;
@@ -297,7 +297,7 @@ std::vector<std::shared_ptr<DatasetClass>> DataSetManagerSupport::Dataset_LoadFi
 			dc.commonfilePath = adjustedRelativePath;
 			dc.Name = ex.SupportFileDiscoveryMetadata[i].FileName;
 
-			vec.push_back(make_shared<DatasetClass>(dc));
+			vec.push_back(std::make_shared<DatasetClass>(dc));
 		}
 
 		return vec;

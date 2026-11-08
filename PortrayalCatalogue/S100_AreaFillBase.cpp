@@ -13,7 +13,7 @@ S100_AreaFillBase::~S100_AreaFillBase()
 void S100_AreaFillBase::SetType(int value) { type = value; }
 int  S100_AreaFillBase::GetType()          { return type; }
 
-void S100_AreaFillBase::SetFileTitle(const std::string& value)  { fileTitle = value; }
-void S100_AreaFillBase::SetFileTitle(const std::wstring& value) { fileTitle = toUtf8(value); }
-std::string  S100_AreaFillBase::GetFileTitle()  { return fileTitle; }
-std::wstring S100_AreaFillBase::GetFileTitleW() { return toWide(fileTitle); }
+void S100_AreaFillBase::SetFileStem(const std::string& value)  { fileStem = value; }
+void S100_AreaFillBase::SetFileStem(const std::wstring& value) { fileStem = toUtf8(value); }
+std::string  S100_AreaFillBase::GetFileStem()  { return fileStem; }
+std::wstring S100_AreaFillBase::GetFileStemW() { return toWide(fileStem); }

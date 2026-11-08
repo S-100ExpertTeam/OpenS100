@@ -1,4 +1,3 @@
-#include <afxwin.h>
 #include <gtest/gtest.h>
 #include <pugixml.hpp>
 #include <fstream>

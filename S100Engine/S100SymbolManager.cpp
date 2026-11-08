@@ -35,7 +35,7 @@ bool S100SymbolManager::Add(const std::string& path)
 
 bool S100SymbolManager::Add(const std::wstring& path)
 {
-	return Add(LibMFCUtil::WStringToString(path));
+	return Add(s100::text::ToUtf8(path));
 }
 
 SVGReader* S100SymbolManager::GetSVG(const std::string& _name)
@@ -50,7 +50,7 @@ SVGReader* S100SymbolManager::GetSVG(const std::string& _name)
 
 SVGReader* S100SymbolManager::GetSVG(const std::wstring& _name)
 {
-	return GetSVG(LibMFCUtil::WStringToString(_name));
+	return GetSVG(s100::text::ToUtf8(_name));
 }
 
 void S100SymbolManager::CreateSVGGeometry(ID2D1Factory1* m_pDirect2dFactory)

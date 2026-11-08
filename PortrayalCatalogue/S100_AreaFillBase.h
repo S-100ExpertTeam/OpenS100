@@ -16,13 +16,13 @@ private:
 	* 5 : HatchFill
 	*/
 	int type;
-	std::string fileTitle;
+	std::string fileStem;
 
 public:
 	void SetType(int value);
 	int GetType();
-	void SetFileTitle(const std::string& value);
-	void SetFileTitle(const std::wstring& value);
-	std::string  GetFileTitle();
-	std::wstring GetFileTitleW();
+	void SetFileStem(const std::string& value);
+	void SetFileStem(const std::wstring& value);
+	std::string  GetFileStem();
+	std::wstring GetFileStemW();
 };

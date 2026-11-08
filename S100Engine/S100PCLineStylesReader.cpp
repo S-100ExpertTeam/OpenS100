@@ -21,7 +21,7 @@ namespace S100XMLReader
 
 	bool S100PCLineStylesReader::OpenByPugi(const std::string& path, LineStylesPackage::LineStyles* pLineStyles)
 	{
-		std::wstring wpath = LibMFCUtil::StringToWString(path);
+		std::wstring wpath = s100::text::ToWide(path);
 		std::wstring lineStylePath = wpath + L"\\*.xml";
 
 		WIN32_FIND_DATA findFileData;
@@ -37,7 +37,7 @@ namespace S100XMLReader
 			if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 			{
 				std::wstring wfilePath = wpath + L"\\" + findFileData.cFileName;
-				std::string filePath = LibMFCUtil::WStringToString(wfilePath);
+				std::string filePath = s100::text::ToUtf8(wfilePath);
 				if (!filePath.empty())
 				{
 					AddByPugi(filePath, pLineStyles);
@@ -51,7 +51,7 @@ namespace S100XMLReader
 
 	bool S100PCLineStylesReader::OpenByPugi(const std::wstring& path, LineStylesPackage::LineStyles* pLineStyles)
 	{
-		return OpenByPugi(LibMFCUtil::WStringToString(path), pLineStyles);
+		return OpenByPugi(s100::text::ToUtf8(path), pLineStyles);
 	}
 
 	bool S100PCLineStylesReader::AddByPugi(const std::string& path, LineStylesPackage::LineStyles* pLineStyles)
@@ -102,7 +102,7 @@ namespace S100XMLReader
 
 	bool S100PCLineStylesReader::AddByPugi(const std::wstring& path, LineStylesPackage::LineStyles* pLineStyles)
 	{
-		return AddByPugi(LibMFCUtil::WStringToString(path), pLineStyles);
+		return AddByPugi(s100::text::ToUtf8(path), pLineStyles);
 	}
 
 	bool S100PCLineStylesReader::SetLineStyle(pugi::xml_node node, std::vector<LineStylesPackage::AbstractLineStyle *>* lineStyle)

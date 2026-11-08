@@ -2,7 +2,6 @@
 #include "S100ColorProfiles.h"
 #include "S100ColorProfile.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
 
 S100ColorProfiles::S100ColorProfiles()
 {
@@ -34,5 +33,5 @@ bool S100ColorProfiles::AddColorProfile(const std::string& id, const std::string
 
 bool S100ColorProfiles::AddColorProfile(const std::wstring& id, const std::wstring& path)
 {
-	return AddColorProfile(LibMFCUtil::WStringToString(id), LibMFCUtil::WStringToString(path));
+	return AddColorProfile(s100::text::ToUtf8(id), s100::text::ToUtf8(path));
 }

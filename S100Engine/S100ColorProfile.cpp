@@ -1,10 +1,6 @@
 #include "stdafx.h"
 #include "S100ColorProfile.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
-
 S100ColorProfile::S100ColorProfile()
 {
 
@@ -66,7 +62,7 @@ D2D1_COLOR_F S100ColorProfile::GetColor(const std::string& _paletteName, const s
 
 D2D1_COLOR_F S100ColorProfile::GetColor(const std::wstring& _paletteName, const std::wstring& _token)
 {
-	return GetColor(LibMFCUtil::WStringToString(_paletteName), LibMFCUtil::WStringToString(_token));
+	return GetColor(s100::text::ToUtf8(_paletteName), s100::text::ToUtf8(_token));
 }
 
 // Current Palette returns the color corresponding to token.
@@ -85,7 +81,7 @@ D2D1_COLOR_F S100ColorProfile::GetColor(const std::string& token)
 
 D2D1_COLOR_F S100ColorProfile::GetColor(const std::wstring& token)
 {
-	return GetColor(LibMFCUtil::WStringToString(token));
+	return GetColor(s100::text::ToUtf8(token));
 }
 
 // Save palette pointer to current palette according to palette name
@@ -102,7 +98,7 @@ void S100ColorProfile::ChangePalette(const std::string& paletteName)
 
 void S100ColorProfile::ChangePalette(const std::wstring& paletteName)
 {
-	ChangePalette(LibMFCUtil::WStringToString(paletteName));
+	ChangePalette(s100::text::ToUtf8(paletteName));
 }
 
 void S100ColorProfile::extractionColors(pugi::xml_node node)

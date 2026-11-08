@@ -55,6 +55,9 @@ def scan(project: str):
 # so a regression is caught by whoever runs the gauge (and by CI).
 CLEAN_PROJECTS = ["FeatureCatalog", "PortrayalCatalogue", "GeoMetryLibrary"]
 
+# Every core project builds with UseOfMfc=false since Phase 1 step 3-5; any MFC type in a header is a regression.
+MFC_FREE_PROJECTS = CORE_PROJECTS
+
 
 def main(argv):
     fail = "--fail" in argv
@@ -68,6 +71,8 @@ def main(argv):
         tainted_core += project_taint
         if project in CLEAN_PROJECTS and project_taint:
             regressions += core_d2d + counts["mfc"] + counts["win32"]
+        elif project in MFC_FREE_PROJECTS and counts["mfc"]:
+            regressions += counts["mfc"]
         print(f"{project:22s} {total:7d} {len(core_d2d):5d} {len(counts['mfc']):5d} {len(counts['win32']):6d}")
     print()
     if "--verbose" in argv:

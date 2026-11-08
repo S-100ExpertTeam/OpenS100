@@ -16,7 +16,7 @@ void Palette::SetName(const std::string& value)
 
 void Palette::SetName(const std::wstring& value)
 {
-	name = LibMFCUtil::WStringToString(value);
+	name = s100::text::ToUtf8(value);
 }
 
 std::string Palette::GetName()
@@ -26,7 +26,7 @@ std::string Palette::GetName()
 
 std::wstring Palette::GetNameW()
 {
-	return LibMFCUtil::StringToWString(name);
+	return s100::text::ToWide(name);
 }
 
 void Palette::SetItem(const std::string& key, libS100Engine::Item value)
@@ -36,7 +36,7 @@ void Palette::SetItem(const std::string& key, libS100Engine::Item value)
 
 void Palette::SetItem(const std::wstring& key, libS100Engine::Item value)
 {
-	item.insert({ LibMFCUtil::WStringToString(key), value });
+	item.insert({ s100::text::ToUtf8(key), value });
 }
 
 libS100Engine::Item* Palette::GetItem(const std::string& key)
@@ -51,7 +51,7 @@ libS100Engine::Item* Palette::GetItem(const std::string& key)
 
 libS100Engine::Item* Palette::GetItem(const std::wstring& key)
 {
-	auto skey = LibMFCUtil::WStringToString(key);
+	auto skey = s100::text::ToUtf8(key);
 	return GetItem(skey);
 }
 
@@ -62,5 +62,5 @@ bool Palette::IsItem(const std::string& key)
 
 bool Palette::IsItem(const std::wstring& key)
 {
-	return IsItem(LibMFCUtil::WStringToString(key));
+	return IsItem(s100::text::ToUtf8(key));
 }

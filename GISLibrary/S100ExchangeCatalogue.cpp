@@ -59,7 +59,7 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
 	// Narrow path in the native encoding (ACP on Windows, UTF-8 elsewhere) for the narrow XML loader.
 	const std::string filepath = std::filesystem::path(_filepath).string();
 
-	m_DataPtr = make_shared<ExchangeCatalogue>();
+	m_DataPtr = std::make_shared<ExchangeCatalogue>();
 	m_DataPtr->Open(filepath);
 
     auto DDM = m_DataPtr->DatasetDiscoveryMetadata;
@@ -69,10 +69,10 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
         if (std::string::npos != DDM[i].productSpecification->ProductIdentifier.find("101") || DDM[i].productSpecification->Number == 101)
         {
             //add Inventory ptr
-            shared_ptr<Inventory> inv = make_shared<Inventory>();
+            std::shared_ptr<Inventory> inv = std::make_shared<Inventory>();
 
             auto bound = DDM[i].BoundingBox;
-            inv->mbrBoundingBox = make_shared<MBR>(MBR(bound->WestBoundLongitude, bound->NorthBoundLatitude, bound->EastBoundLongitude, bound->SouthBoundLatitude));
+            inv->mbrBoundingBox = std::make_shared<MBR>(MBR(bound->WestBoundLongitude, bound->NorthBoundLatitude, bound->EastBoundLongitude, bound->SouthBoundLatitude));
             projection(*inv->mbrBoundingBox);
             inv->strFileName = DDM[i].FileName;
             inv->strFilePath = FixFileName(DDM[i].FileName);
@@ -80,7 +80,7 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
             auto dataCoverages = DDM[i].dataCoverage;
             for (int idx = 0; idx < dataCoverages.size(); idx++)
             {
-                vector<D2D1_POINT_2F> point;
+                std::vector<D2D1_POINT_2F> point;
 
                 ScaleBand sr;
 
@@ -163,7 +163,7 @@ bool S100ExchangeCatalogue::CompareByLayer(const Layer* a, const Layer* b)
 
 bool S100ExchangeCatalogue::CompareByFileName(const std::wstring& a, const std::wstring& b) 
 {
-    shared_ptr<Inventory> invA,invB;
+    std::shared_ptr<Inventory> invA,invB;
     S100Utilities util;
 
     for (auto inventory : m_vecInventory)
@@ -206,7 +206,7 @@ bool S100ExchangeCatalogue::containsFile(const std::vector<std::shared_ptr<Inven
 
 void S100ExchangeCatalogue::DrawFiles(HDC& hDC, Scaler* scaler, double offset, std::vector<std::shared_ptr<InventoryItem>>& item)
 {
-    string catalogueFolderPath;
+    std::string catalogueFolderPath;
     MBR mbr;
     S100Utilities util;
 

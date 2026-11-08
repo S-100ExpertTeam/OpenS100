@@ -1,4 +1,3 @@
-#include <afxwin.h>
 #include "TestPaths.h"
 #include <windows.h>
 #include <cstdlib>

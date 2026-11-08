@@ -48,7 +48,7 @@ namespace GraphicBasePackage
 
 	void Color::SetToken(const std::wstring& value)
 	{
-		token = LibMFCUtil::WStringToString(value);
+		token = s100::text::ToUtf8(value);
 	}
 
 	double Color::GetTransparency()
@@ -63,6 +63,6 @@ namespace GraphicBasePackage
 
 	std::wstring Color::GetTokenW()
 	{
-		return LibMFCUtil::StringToWString(token);
+		return s100::text::ToWide(token);
 	}
 }

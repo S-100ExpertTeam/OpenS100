@@ -25,9 +25,9 @@ public:
 public:
 	//unsigned int m_nRecords;					// The number of records
 	//unsigned int m_nShapeType;					// Shape Type
-	shared_ptr<ExchangeCatalogue>  m_DataPtr;	//
+	std::shared_ptr<ExchangeCatalogue>  m_DataPtr;	//
 
-	std::vector<shared_ptr<Inventory>> m_vecInventory;
+	std::vector<std::shared_ptr<Inventory>> m_vecInventory;
 
 	LayerManager* m_pLayerManager;
 

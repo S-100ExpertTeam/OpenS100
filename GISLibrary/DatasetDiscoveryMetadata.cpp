@@ -16,27 +16,27 @@ namespace S100
 			}
 			else if (!strcmp(instructionName, "S100XC:description"))
 			{
-				Description = make_shared<string>(instruction.child_value());
+				Description = std::make_shared<std::string>(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "S100XC:datasetID"))
 			{
-				DatasetID = make_shared<URN>(instruction.child_value());
+				DatasetID = std::make_shared<URN>(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "S100XC:compressionFlag"))
 			{
-				CompressionFlag = make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
+				CompressionFlag = std::make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:dataProtection"))
 			{
-				DataProtection = make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
+				DataProtection = std::make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:protectionScheme"))
 			{
-				protectionScheme = make_shared<ProtectionScheme>(S100_ProtectionSchemeFromString(instruction.child_value()));
+				protectionScheme = std::make_shared<ProtectionScheme>(S100_ProtectionSchemeFromString(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:digitalSignatureReference"))
 			{
-				DigitalSignatureReference = make_shared<S100_SE_DigitalSignatureReference>(S100_SE_DigitalSignatureReferenceFromString(instruction.child_value()));
+				DigitalSignatureReference = std::make_shared<S100_SE_DigitalSignatureReference>(S100_SE_DigitalSignatureReferenceFromString(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:digitalSignatureValue"))
 			{
@@ -60,83 +60,83 @@ namespace S100
 			}
 			else if (!strcmp(instructionName, "S100XC:copyright"))
 			{
-				Copyright = make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
+				Copyright = std::make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:classification"))
 			{
-				if (!string(instruction.child_value()).empty())
-					Classification = make_shared<MD_ClassificationCode>(MD_ClassificationCodeFromString(instruction.child_value()));
+				if (!std::string(instruction.child_value()).empty())
+					Classification = std::make_shared<MD_ClassificationCode>(MD_ClassificationCodeFromString(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:purpose"))
 			{
-				if (!string(instruction.child_value()).empty())
-					purpose = make_shared<Purpose>(S100_PurposeFromString(instruction.child_value()));
+				if (!std::string(instruction.child_value()).empty())
+					purpose = std::make_shared<Purpose>(S100_PurposeFromString(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:notForNavigation"))
 			{
-				NotForNavigation = make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
+				NotForNavigation = std::make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:specificUsage"))
 			{
-				SpecificUsage = make_shared<string>(instruction.child_value());
+				SpecificUsage = std::make_shared<std::string>(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "S100XC:editionNumber"))
 			{
-				EditionNumber = make_shared<int>(atoi(instruction.child_value()));
+				EditionNumber = std::make_shared<int>(atoi(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:updateNumber"))
 			{
-				UpdateNumber = make_shared<int>(atoi(instruction.child_value()));
+				UpdateNumber = std::make_shared<int>(atoi(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:updateApplicationDate"))
 			{
-				UpdateApplicationDate = make_shared<S100_Date>(instruction.child_value());
+				UpdateApplicationDate = std::make_shared<S100_Date>(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "S100XC:referenceID"))
 			{
-				ReferenceID = make_shared<URN>(instruction.child_value());
+				ReferenceID = std::make_shared<URN>(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "S100XC:issueDate"))
 			{
-				IssueDate = make_shared<S100_Date>(instruction.child_value());
+				IssueDate = std::make_shared<S100_Date>(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "S100XC:issueTime"))
 			{
-				IssueTime = make_shared<S100_Time>(instruction.child_value());
+				IssueTime = std::make_shared<S100_Time>(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "S100XC:boundingBox"))
 			{
 				EX_GeographicBoundingBox gb;
 				gb.GetContents(instruction);
-				BoundingBox = make_shared<EX_GeographicBoundingBox>(gb);
+				BoundingBox = std::make_shared<EX_GeographicBoundingBox>(gb);
 			}
 			else if (!strcmp(instructionName, "S100XC:temporalExtent"))
 			{
 				TemporalExtent te;
 				te.GetContents(instruction);
-				temporalExtent = make_shared<TemporalExtent>(te);
+				temporalExtent = std::make_shared<TemporalExtent>(te);
 			}
 			else if (!strcmp(instructionName, "S100XC:productSpecification"))
 			{
 				ProductSpecification ps;
 				ps.GetContents(instruction);
-				productSpecification = make_shared<ProductSpecification>(ps);
+				productSpecification = std::make_shared<ProductSpecification>(ps);
 			}
 			else if (!strcmp(instructionName, "S100XC:producingAgency"))
 			{
 				CI_Responsibility os;
 				auto temp = ExXmlSupport().GetContentNode(instruction, "CI_Responsibility", "cit");
 				os.GetContents(temp);
-				ProducingAgency = make_shared<CI_Responsibility>(os);
+				ProducingAgency = std::make_shared<CI_Responsibility>(os);
 			}
 			else if (!strcmp(instructionName, "S100XC:producerCode"))
 			{
-				ProducerCode = make_shared<string>(instruction.child_value());
+				ProducerCode = std::make_shared<std::string>(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "S100XC:encodingFormat"))
 			{
-				if (!string(instruction.child_value()).empty())
-					EncodingFormat = make_shared<S100::EncodingFormat>(S100_EncodingFormatFromString(instruction.child_value()));
+				if (!std::string(instruction.child_value()).empty())
+					EncodingFormat = std::make_shared<S100::EncodingFormat>(S100_EncodingFormatFromString(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:dataCoverage"))
 			{
@@ -146,13 +146,13 @@ namespace S100
 			}
 			else if (!strcmp(instructionName, "S100XC:comment"))
 			{
-				Comment = make_shared<string>(instruction.child_value());
+				Comment = std::make_shared<std::string>(instruction.child_value());
 			}
 			else if (!strcmp(instructionName, "S100XC:defaultLocale"))
 			{
 				PT_Locale lo;
 				lo.GetContents(instruction);
-				DefaultLocale = make_shared<PT_Locale>(lo);
+				DefaultLocale = std::make_shared<PT_Locale>(lo);
 			}
 			else if (!strcmp(instructionName, "S100XC:otherLocale"))
 			{
@@ -164,15 +164,15 @@ namespace S100
 			{
 				CI_Responsibility rb;
 				rb.GetContents(instruction);
-				MetadataPointOfContact = make_shared<CI_Responsibility>(rb);
+				MetadataPointOfContact = std::make_shared<CI_Responsibility>(rb);
 			}
 			else if (!strcmp(instructionName, "S100XC:metadataDateStamp"))
 			{
-				MetadataDateStamp = make_shared<S100_Date>(S100_Date(instruction.child_value()));
+				MetadataDateStamp = std::make_shared<S100_Date>(S100_Date(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:replacedData"))
 			{
-				ReplacedData = make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
+				ReplacedData = std::make_shared<bool>(ExXmlSupport().ParseStr2Bool(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:dataReplacement"))
 			{
@@ -180,14 +180,14 @@ namespace S100
 			}
 			else if (!strcmp(instructionName, "S100XC:navigationPurpose"))
 			{
-				if (!string(instruction.child_value()).empty())
+				if (!std::string(instruction.child_value()).empty())
 					NavigationPurpose.push_back(S100_NavigationPurposeFromString(instruction.child_value()));
 			}
 			else if (!strcmp(instructionName, "S100XC:resourceMaintenance"))
 			{
 				MD_MaintenanceInformation mi;
 				mi.GetContents(instruction);
-				ResourceMaintenance = make_shared<MD_MaintenanceInformation>(mi);
+				ResourceMaintenance = std::make_shared<MD_MaintenanceInformation>(mi);
 			}
 			else
 			{

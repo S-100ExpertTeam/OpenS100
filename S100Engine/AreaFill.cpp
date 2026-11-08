@@ -29,7 +29,7 @@ bool AreaFill::Read(const std::string& path)
 
 bool AreaFill::Read(const std::wstring& path)
 {
-	return ReadByPugi(LibMFCUtil::WStringToString(path));
+	return ReadByPugi(s100::text::ToUtf8(path));
 }
 
 static std::string getAttributeValueStr(const std::string& input, const std::string& attributeName)
@@ -105,7 +105,7 @@ bool AreaFill::ReadByPugi(const std::string& path)
 
 bool AreaFill::ReadByPugi(const std::wstring& path)
 {
-	return ReadByPugi(LibMFCUtil::WStringToString(path));
+	return ReadByPugi(s100::text::ToUtf8(path));
 }
 
 // Initialization is performed to use COM objects.

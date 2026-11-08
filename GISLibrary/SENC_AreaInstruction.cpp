@@ -132,7 +132,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 			areaFillReference = (SENC_AreaFillReference*)areaFill;
 			{
 				auto patternMap = &pc->GetS100PCManager()->areaFillInfo.patternMap;
-				auto i = patternMap->find(areaFillReference->GetFileTitle().c_str());
+				auto i = patternMap->find(areaFillReference->GetFileStem().c_str());
 
 				if (i == patternMap->end())
 				{
@@ -183,13 +183,13 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 			//if (symbolFill->symbol)			
 			{
 				auto patternMap = &pc->GetS100PCManager()->areaFillInfo.patternMap;
-				auto i = patternMap->find(symbolFill->GetFileTitle().c_str());
+				auto i = patternMap->find(symbolFill->GetFileStem().c_str());
 
 				ID2D1Brush* imageBrush = nullptr;
 				AreaPatternBitmap* bitmapImage = nullptr;
 
 				// Symbol Fill을 별도의 파일(AreaFills)에서 읽은 경우
-				if (symbolFill->GetFileTitle().empty() == false)
+				if (symbolFill->GetFileStem().empty() == false)
 				{
 					if (i != patternMap->end())
 					{
@@ -297,7 +297,7 @@ void SENC_AreaInstruction::FromS100Instruction(
 		{
 			areaFill = new SENC_AreaFillReference();
 			auto s100AreaFillReference = (S100_AreaFillReference*)s100AreaInstruction->GetAreaFill();
-			areaFill->SetFileTitle(s100AreaFillReference->GetReferenceW());
+			areaFill->SetFileStem(s100AreaFillReference->GetReferenceW());
 		}
 		break;
 		case 4: // Symbol Fill
@@ -307,7 +307,7 @@ void SENC_AreaInstruction::FromS100Instruction(
 
 			symbolFill->areaCRSType = SENC_CommonFuc::GetAreaCRSType(s100SymbolFill->GetAreaCRSW());
 
-			areaFill->SetFileTitle(s100SymbolFill->GetFileTitleW());
+			areaFill->SetFileStem(s100SymbolFill->GetFileStemW());
 
 			auto s100Symbol = s100SymbolFill->GetSymbol();
 			if (s100Symbol)

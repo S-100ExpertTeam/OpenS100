@@ -17,13 +17,13 @@ public:
 	* 5 : HatchFill
 	*/
 	int type;
-	std::wstring fileTitle; 
+	std::wstring fileStem; 
 
 public:
 	void SetType(int value);
 	int GetType();
-	void SetFileTitle(std::wstring& value);
-	std::wstring GetFileTitle();
+	void SetFileStem(std::wstring& value);
+	std::wstring GetFileStem();
 
 public:
 	virtual void ChangePallete(PortrayalCatalogue *pc) {};
