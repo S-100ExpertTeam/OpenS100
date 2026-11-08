@@ -28,3 +28,12 @@ std::wstring getNameW() const;   // UTF-16
 void setName(const std::string&  name);  // UTF-8
 void setName(const std::wstring& name);  // UTF-16
 ```
+
+## Modern C++
+
+New code and any code being touched follows the C++20 rules in
+`Documents/TechDocs/DIRECTIVES.md` item 25: smart pointers instead of raw `new`/`delete`,
+`std::string`/`std::string_view`/`std::filesystem::path` instead of `CString`, `std::span` and
+`std::optional` at boundaries, `enum class`, `constexpr`, `[[nodiscard]]`, `override`/`explicit`,
+no C-style casts or macros, standard containers instead of `CMap`/`CArray`/`CList`.
+Existing code is migrated function by function as it is touched, not in one sweep.
