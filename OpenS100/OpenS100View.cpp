@@ -7,6 +7,7 @@
 #include "OpenS100Doc.h"
 #include "OpenS100View.h"
 #include "../GISLibrary/D2DGeometryCache.h"
+#include "../GISLibrary/PortrayalRenderCache.h"
 #include "MainFrm.h"
 #include "DialogViewNoGeometry.h"
 #include "DialogViewInformationType.h"
@@ -641,7 +642,7 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	auto pclist = DataSetManagerSupport::GetInstance().initPCList();
 	for (auto item : pclist)
 	{
-		cm->addPC(item);
+		GISLibrary::PortrayalRender::Prepare(cm->addPC(item), theApp.gisLib->GetD2D1Resources());
 	}
 
 	// import Dataset

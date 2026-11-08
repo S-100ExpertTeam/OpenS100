@@ -162,19 +162,6 @@ public:
 
 	bool GetFullMaskData(R_FeatureRecord* fe);
 
-	void Draw(D2D1Resources* D2, Scaler* scaler);
-	void Draw(HDC& hDC, Scaler* scaler, double offset = 0);
-
-	/*
-	* set instruction type
-	* 1 : Point
-	* 2 : Curve
-	* 3 : Surface
-	* 4 : Text
-	* 5 : Multi Point (Sounding)
-	*/
-	void Draw(HDC& hDC, Scaler* scaler, int priority, int instructionType, double offset = 0);
-
 	MBR CalcMBR();
 	MBR ReMBR();
 

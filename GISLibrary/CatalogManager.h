@@ -9,13 +9,12 @@
 class CatalogManager
 {
 public:
-	CatalogManager(D2D1Resources* d2d1);
+	CatalogManager();
 	virtual ~CatalogManager();
 
 public:
 	std::vector<FeatureCatalogue*> FCs;
 	std::vector<PortrayalCatalogue*> PCs;
-	D2D1Resources* D2;
 
 public:
 	FeatureCatalogue* addFC(std::string path);
@@ -36,8 +35,6 @@ public:
 	PortrayalCatalogue* getPC(int productId) const;
 	PortrayalCatalogue* getPC(int productId, Version version) const;
 
-	void ChangeColorPallete(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
-	void ChangeColorPallete(std::wstring paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke);
 
 	const std::set<std::string> getFcProductList();
 	const std::set<std::string> getPcProductList();

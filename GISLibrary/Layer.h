@@ -30,10 +30,7 @@ public:
 
 public:
 	virtual bool Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm = nullptr);
-	virtual void Draw(D2D1Resources* D2, Scaler* scaler) {};
-	void Draw(CDC *pDC, Scaler *scaler, double offset = 0);
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
-	void Draw(HDC &hDC, Scaler *scaler, int priority, int geoType, double offset);
 	bool IsOn();
 	bool IsOn(int scale);
 	bool InfoOn();

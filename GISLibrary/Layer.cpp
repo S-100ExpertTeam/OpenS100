@@ -61,30 +61,12 @@ bool Layer::Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm)
 	return m_spatialObject->Open(strFolderPath);
 }
 
-void Layer::Draw(CDC *pDC, Scaler *scaler, double offset)
-{
-	// only draw layers when it's on.
-	if (On == true)
-	{
-		m_spatialObject->Draw(pDC, scaler, offset);
-	}
-}
-
 void Layer::Draw(HDC &hDC, Scaler *scaler, double offset)
 {
 	// only draw layers when it's on.
 	if (On && m_spatialObject)
 	{
 		m_spatialObject->Draw(hDC, scaler, offset);
-	}
-}
-
-void Layer::Draw(HDC &hDC, Scaler *scaler, int priority, int geoType, double offset)
-{
-	// only draw layers when it's on.
-	if (On)
-	{
-		m_spatialObject->Draw(hDC, scaler, priority, geoType, offset);
 	}
 }
 

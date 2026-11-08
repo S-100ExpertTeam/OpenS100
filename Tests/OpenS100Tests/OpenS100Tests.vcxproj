@@ -91,6 +91,7 @@
     <ClCompile Include="FeatureCatalogueTest.cpp" />
     <ClCompile Include="S101CellTest.cpp" />
     <ClCompile Include="S10XGMLTest.cpp" />
+    <ClCompile Include="CatalogManagerTest.cpp" />
     <ClCompile Include="ExchangeCatalogueTest.cpp" />
   </ItemGroup>
   <ItemGroup>

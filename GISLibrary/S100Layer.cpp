@@ -5,6 +5,7 @@
 #include "S100H5.h"
 #include "S102H5.h"
 #include "S102Renderer.h"
+#include "PortrayalRenderCache.h"
 #include "ProcessS101.h"
 
 #include "../LibMFCUtil/LibMFCUtil.h"
@@ -211,9 +212,7 @@ bool S100Layer::OpenPC(CString path, D2D1Resources* d2d1)
 	PortrayalCatalogue* pc = new PortrayalCatalogue();
 
 	if (pc) {
-		pc->CreateSVGD2Geometry(d2d1->pD2Factory);
-		pc->CreatePatternImages(d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
-		pc->CreateLineImages(d2d1->pD2Factory, d2d1->pImagingFactory, d2d1->D2D1StrokeStyleGroup.at(0));
+		PortrayalRender::Prepare(pc, d2d1);
 
 		SetIndividualPC(true);
 		SetPC(pc);

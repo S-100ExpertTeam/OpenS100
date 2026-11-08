@@ -1,4 +1,5 @@
 ﻿#include "pch.h"
+#include "../GISLibrary/PortrayalRenderCache.h"
 #include "OpenS100.h"
 #include "afxdialogex.h"
 #include "FC_PCSelectdlg.h"
@@ -447,7 +448,7 @@ void FC_PCSelectdlg::OnDestroy()
 		}
 
 		if (!enable)
-			ct->addPC(m_vecPC[i]->filePath);
+			GISLibrary::PortrayalRender::Prepare(ct->addPC(m_vecPC[i]->filePath), theApp.gisLib->GetD2D1Resources());
 
 		DataSetManagerSupport::GetInstance().insertData("PortrayalCatalogue", m_vecPC[i]->fileName, m_vecPC[i]->filePath
 			, m_vecPC[i]->product, m_vecPC[i]->version);

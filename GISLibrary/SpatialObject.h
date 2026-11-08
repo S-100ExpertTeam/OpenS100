@@ -29,12 +29,9 @@ public:
 	virtual bool OpenMetadata(CString _filepath) = 0;
 	virtual bool Save(std::wstring path) { return true; }
 
-	virtual void Draw(CDC *pDC, Scaler *scaler, double offset = 0) {};
+	// Legacy GDI drawing entry used by shapefile layers and the exchange-set coverage view.
+	// S-100 datasets do not draw themselves; renderers do (Phase 1 step 2).
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0) {};
-	virtual void Draw(HDC &hDC, Scaler *scaler, int priority, int geoType, double offset = 0) {};
-	virtual void Draw(D2D1Resources* D2, Scaler* scaler) {};
-	virtual void Draw(CDCRenderTarget* pRenderTarget, Scaler *scaler, double offsetX = 0, double offsetY = 0) {};
-	virtual void Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1Factory *pDXFactory, Scaler *scaler, double offsetX = 0, double offsetY = 0) {};
 
 	virtual int getEPSGNumber() { return 0; }
 

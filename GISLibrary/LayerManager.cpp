@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "LayerManager.h"
+#include "PortrayalRenderCache.h"
 #include "F_ATTR.h"
 #include "R_FeatureRecord.h"
 #include "ATTR.h"
@@ -1544,7 +1545,10 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 		}
 	}
 
-	catalogManager->ChangeColorPallete(paletteName, D2->pD2Factory, D2->pImagingFactory, D2->D2D1StrokeStyleGroup.at(0));
+	for (auto pc : catalogManager->PCs)
+	{
+		PortrayalRender::ChangePalette(pc, paletteName, D2);
+	}
 }
 
 Scaler* LayerManager::GetScaler()

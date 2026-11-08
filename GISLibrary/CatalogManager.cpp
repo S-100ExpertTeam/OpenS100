@@ -6,9 +6,8 @@
 
 #include <algorithm>
 
-CatalogManager::CatalogManager(D2D1Resources* d2d1)
+CatalogManager::CatalogManager()
 {
-	D2 = d2d1;
 }
 
 CatalogManager::~CatalogManager()
@@ -60,16 +59,8 @@ PortrayalCatalogue* CatalogManager::addPC(std::wstring path)
 	auto pc = new PortrayalCatalogue();
 
 	if (pc->Open(path)) {
-		if (pc && D2) {
-			pc->CreateSVGD2Geometry(D2->pD2Factory);
-			pc->CreatePatternImages(D2->pD2Factory,
-				D2->pImagingFactory,
-				D2->D2D1StrokeStyleGroup.at(0));
-			pc->CreateLineImages(D2->pD2Factory,
-				D2->pImagingFactory,
-				D2->D2D1StrokeStyleGroup.at(0));
-		}
-
+		// Render caches (SVG geometry, pattern bitmaps) are built by the renderer:
+		// GISLibrary::PortrayalRender::Prepare(pc, d2).
 		PCs.push_back(pc);
 		return pc;
 	}
@@ -221,19 +212,6 @@ PortrayalCatalogue* CatalogManager::getPC(int productId, Version version) const
 {
 	auto product = "S-" + std::to_string(productId);
 	return getPC(product, version);
-}
-
-void CatalogManager::ChangeColorPallete(std::string paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke)
-{
-	for (auto i = PCs.begin(); i != PCs.end(); i++)
-	{
-		(*i)->ChangePalette(paletteName, d2Factory, imageFactory, stroke);
-	}
-}
-
-void CatalogManager::ChangeColorPallete(std::wstring paletteName, ID2D1Factory1* d2Factory, IWICImagingFactory* imageFactory, ID2D1StrokeStyle1* stroke)
-{
-	ChangeColorPallete(pugi::as_utf8(paletteName), d2Factory, imageFactory, stroke);
 }
 
 const std::set<std::string> CatalogManager::getFcProductList()

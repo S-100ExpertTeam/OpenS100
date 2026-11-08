@@ -32,7 +32,7 @@ CGISLibraryApp::CGISLibraryApp()
 	D2->CreateDeviceDependentResources();
 
 	m_pScaler = new Scaler();
-	m_pCatalogManager = new CatalogManager(D2);
+	m_pCatalogManager = new CatalogManager();
 	m_pLayerManager = new LayerManager(m_pScaler, m_pCatalogManager, D2);
 }
 

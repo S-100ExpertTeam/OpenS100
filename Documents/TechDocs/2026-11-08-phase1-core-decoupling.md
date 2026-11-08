@@ -38,8 +38,9 @@
 
 - [x] 2-1. `pGeometry`와 `CreateD2Geometry/GetD2Geometry/GetNewD2Geometry`를 `SCurve`/`SSurface`/`SCompositeCurve`에서 제거하고 `GeoMetryLibrary/Geometry.h`의 `CreateD2Geometry` 가상 함수도 제거. 대신 `Geometry::RenderAttachment`(불투명 슬롯, `unique_ptr`, 복사되지 않음)를 두고, 렌더 측 `GISLibrary/D2DGeometryCache.{h,cpp}`가 `D2DGeometry::Get(curve|surface, factory)`(첫 사용 시 생성·캐시)와 `CreateScaled(...)`(프레임용, 호출자가 Release)를 제공. 소비자 5개 파일(SENC_AreaInstruction, SENC_LineStyle, ExchangeCatalogue, S100ExchangeCatalogue, OpenS100View)과 모델 측 사전 생성(S101Cell, S10XGML, TestGISLibrary) 정리. 모델 헤더에서 `ID2D1*` 타입이 사라짐. 다중 링 표면의 지오메트리 그룹을 `ID2D1PathGeometry*`로 캐스팅하던 타입 펀도 함께 제거.
 - [x] 2-2a. `SpatialObject`/`S100SpatialObject`에서 `D2D1Resources*` 멤버·생성자·`GetD2()` 제거. 데이터셋 생성자(`S101Cell`, `S10XGML`, `S100H5`, `S102H5`, `SHPFile`)에서 렌더러 인자 제거. S-102 그리기(`Draw`, `CreateBitmap`)를 `GISLibrary/S102Renderer`로 이동하고 `S100Layer::DrawGrid(d2, hdc, scaler)`가 호출(LayerManager가 D2를 명시적으로 넘김). `S100EditRender`는 `Set(..., renderResources)`로 렌더러를 받음. `S101Creator`의 D2 멤버·생성자 제거. `S100ExchangeCatalogue`(커버리지를 직접 그리는 UI 측 객체)는 자기 `D2` 멤버를 가짐. 남은 것: `S102H5::pWICBitmap`(렌더 캐시)과 `getColor()`의 `D2D1_COLOR_F`, `S102_Color`.
-- [ ] 2-2b. `SpatialObject`의 `Draw(CDC*/HDC/ID2D1...)` 6종 가상 함수 제거(인터페이스 분리). 셰이프파일 `SHPFile::Draw`는 렌더 측으로.
-- [ ] 2-3. `CatalogManager`에서 `D2D1Resources*` 제거. PC의 SVG→D2D 지오메트리, 패턴 비트맵 생성(`PortrayalCatalogue::CreateSVGD2Geometry` 등)을 `S100Engine`(렌더) 쪽 `PortrayalRenderCache`로 이동. `S100_ColorProfile::GetD2Color`는 `GetColor()`(RGBA 구조체)로 바꾸고 D2D 변환은 렌더 쪽에서.
+- [x] 2-2b. `SpatialObject`의 Draw 가상 함수 6종 중 5종 제거(`CDC*`, `D2D1Resources*`, `CDCRenderTarget*`, `ID2D1HwndRenderTarget*`, priority/geoType 변형). 호출자 없는 `Layer::Draw` 2종과 `S101Cell::Draw` 3종(빈 함수·스텁) 제거. 남은 것: `Draw(HDC&, Scaler*, double)` 하나(`SHPFile`, `S100ExchangeCatalogue`가 사용, GDI). 이것은 3단계(MFC 제거)에서 렌더 측으로.
+- [x] 2-3a. `CatalogManager`에서 `D2D1Resources*` 멤버·생성자·`ChangeColorPallete` 제거. 카탈로그 추가 후 렌더 캐시 생성은 렌더 측 `GISLibrary/PortrayalRenderCache`(`PortrayalRender::Prepare(pc, d2)`, `ChangePalette(pc, name, d2)`)가 담당하고, 호출은 PC를 추가하는 쪽(앱의 `FC_PCSelectdlg`, `OpenS100View`, `S100Layer::OpenPC`)과 팔레트 변경(`LayerManager`)에서 명시적으로. 테스트 `CatalogManager.LoadsCataloguesWithoutRenderer`(FC+PC 로딩, 렌더러 없음).
+- [ ] 2-3b. `PortrayalCatalogue.h`에서 D2D 타입 제거: `S100PCManager`(SVG D2D 지오메트리·패턴 비트맵 보유)를 PC 밖 렌더 측 캐시로 이동(`GetS100PCManager()` 참조 24곳: SENC_* 7파일, LayerManager, GISLibrary.cpp, S102_Color). `S100_ColorProfile::GetD2Color` → `GetColor()`(RGBA 구조체).
 - [ ] 2-4. `S100Layer::Open`, `LayerManager`에서 `D2D1Resources*` 의존 제거.
 - 완료 기준: `PortrayalCatalogue`, `GeoMetryLibrary`, `GISLibrary`의 **헤더**에 `d2d1.h`·`ID2D1*`가 없다(`.cpp`는 2-5 후).
 
@@ -70,3 +71,4 @@
 | 2026-11-08 | 1-6: GML도 렌더러 없이 열기, 이중 해제·파싱 실패 무시 수정 | 6e24bcd5 | 테스트 12/12. **1단계 완료** |
 | 2026-11-08 | 2-1: D2D 지오메트리를 모델 밖 `D2DGeometryCache`로 | e0047a78 | 테스트 12/12, 앱 기동 확인 |
 | 2026-11-08 | 2-2a: 데이터셋에서 렌더러 핸들 제거, `S102Renderer` 분리 | d6e09a08 | 테스트 12/12, 앱 기동 확인 |
+| 2026-11-08 | 2-2b, 2-3a: Draw 인터페이스 축소, CatalogManager 렌더러 분리(`PortrayalRenderCache`) | (아래) | 테스트 14/14, 앱 기동 확인 |

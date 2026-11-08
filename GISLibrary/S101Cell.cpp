@@ -21,7 +21,6 @@
 #include "R_CurveRecord.h"
 #include "R_FeatureRecord.h"
 #include "R_PointRecord.h"
-#include "D2D1Resources.h"
 #include "ATTR.h"
 #include "C3IL.h"
 #include "C2IL.h"
@@ -1433,20 +1432,6 @@ bool S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 	}
 
 	return TRUE;
-}
-
-void S101Cell::Draw(D2D1Resources* D2, Scaler* scaler)
-{
-	auto rt = D2->pRT;
-	rt->FillRectangle(D2D1::RectF(0, 0, 100, 100), D2->pBrush);
-}
-
-void S101Cell::Draw(HDC& hDC, Scaler* scaler, double offset)
-{
-}
-
-void S101Cell::Draw(HDC& hDC, Scaler* scaler, int priority, int instructionType, double offset)
-{
 }
 
 MBR S101Cell::CalcMBR()

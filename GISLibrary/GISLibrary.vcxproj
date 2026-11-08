@@ -614,6 +614,7 @@
     <ClCompile Include="SCoverage.cpp" />
     <ClCompile Include="D2DGeometryCache.cpp" />
     <ClCompile Include="S102Renderer.cpp" />
+    <ClCompile Include="PortrayalRenderCache.cpp" />
     <ClCompile Include="SCurve.cpp" />
     <ClCompile Include="SENC_AlertReference.cpp" />
     <ClCompile Include="SENC_Annulus.cpp" />
@@ -986,6 +987,7 @@
     <ClInclude Include="SCoverage.h" />
     <ClInclude Include="D2DGeometryCache.h" />
     <ClInclude Include="S102Renderer.h" />
+    <ClInclude Include="PortrayalRenderCache.h" />
     <ClInclude Include="SCurve.h" />
     <ClInclude Include="SENC_AlertReference.h" />
     <ClInclude Include="SENC_Annulus.h" />
