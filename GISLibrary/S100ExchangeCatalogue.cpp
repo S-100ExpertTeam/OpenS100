@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "S100ExchangeCatalogue.h"
+#include "D2DGeometryCache.h"
 #include "GISLibrary.h"
 #include "Inventory.h"
 #include "S100Utilities.h"
@@ -369,10 +370,9 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
                 S10XGML* cls = new S10XGML(D2);
                 auto sSurface = cls->SurfaceToSSurface(object);
-                sSurface->CreateD2Geometry(D2->Factory());
                 brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
                 pRenderTarget->SetTransform(scaler->GetMatrix());
-                pRenderTarget->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, D2->SolidStrokeStyle());
+                pRenderTarget->DrawGeometry(GISLibrary::D2DGeometry::Get(sSurface, D2->Factory()), brush, 1.0, D2->SolidStrokeStyle());
 
                 delete object;
                 delete cls;
@@ -524,7 +524,6 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
                     S10XGML* cls = new S10XGML(D2);
                     auto sSurface = cls->SurfaceToSSurface(object);
-                    sSurface->CreateD2Geometry(D2->Factory());
 
                     delete object;
                     delete cls;

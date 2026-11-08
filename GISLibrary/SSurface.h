@@ -26,8 +26,6 @@ public:
 	GeoPoint* m_pPoints = nullptr;
 	GeoPoint* m_centerPoint = nullptr;
 
-	// AreaD2Geometry
-	ID2D1PathGeometry* pGeometry = nullptr;
 
 private:
 	// Rings
@@ -42,7 +40,6 @@ public: // override from Geometry
 	int WkbSize() override;
 
 	void SetMBR() override;
-	void CreateD2Geometry(ID2D1Factory1* factory) override;
 
 	void Release() override;
 
@@ -67,10 +64,6 @@ public:
 	void CalculateCenterPoint();
 	GeoPoint getCenterPoint();
 	
-	ID2D1PathGeometry* GetD2Geometry();
-	// Creates the Direct2D geometry on first use. Lets datasets be opened without a renderer.
-	ID2D1PathGeometry* GetD2Geometry(ID2D1Factory1* factory);
-	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
 
 	void AddCurve(SAbstractCurve* curve);
 	

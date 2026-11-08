@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SENC_LineStyle.h"
+#include "D2DGeometryCache.h"
 #include "SENC_CommonFuc.h"
 #include "GISLibrary.h"
 
@@ -221,7 +222,7 @@ void SENC_LineStyle::DrawInstruction(
 
 			if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 			{
-				auto geometry = curve->GetD2Geometry(pDirect2dFactory);
+				auto geometry = GISLibrary::D2DGeometry::Get(curve, pDirect2dFactory);
 				if (geometry)
 				{
 					rt->DrawGeometry(geometry, brush, PEN_WIDTH, dash);
@@ -229,7 +230,7 @@ void SENC_LineStyle::DrawInstruction(
 			}
 			else
 			{
-				auto geometry = curve->GetNewD2Geometry(pDirect2dFactory, scaler);
+				auto geometry = GISLibrary::D2DGeometry::CreateScaled(curve, pDirect2dFactory, scaler);
 				if (geometry)
 				{
 					D2D1_MATRIX_3X2_F oldMatrix;
@@ -256,7 +257,7 @@ void SENC_LineStyle::DrawInstruction(
 		{
 			if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 			{
-				auto geometry = curve->GetD2Geometry(pDirect2dFactory);
+				auto geometry = GISLibrary::D2DGeometry::Get(curve, pDirect2dFactory);
 				if (geometry)
 				{
 					rt->DrawGeometry(geometry, brush, PEN_WIDTH, (*strokeGroup)[0]);
@@ -265,7 +266,7 @@ void SENC_LineStyle::DrawInstruction(
 			else
 			{
 				//Memory leak
-				auto geometry = curve->GetNewD2Geometry(pDirect2dFactory, scaler);
+				auto geometry = GISLibrary::D2DGeometry::CreateScaled(curve, pDirect2dFactory, scaler);
 				if (geometry)
 				{
 					D2D1_MATRIX_3X2_F oldMatrix;

@@ -3,11 +3,11 @@
 #include "MBR.h"
 
 #include <string>
+#include <memory>
 
 class Scaler;
 class Symbol;
 
-struct ID2D1Factory1;
 
 class Geometry
 {
@@ -19,6 +19,16 @@ public:
 public:
 	MBR m_mbr;
 	std::string id;
+
+	// Opaque per-geometry slot for a renderer cache (for example a Direct2D geometry).
+	// The model does not know the concrete type; the renderer attaches and owns it and it
+	// is destroyed with the geometry. It is never copied with the geometry.
+	struct RenderAttachment
+	{
+		virtual ~RenderAttachment() = default;
+	};
+	std::unique_ptr<RenderAttachment> renderAttachment;
+	void ResetRenderAttachment() { renderAttachment.reset(); }
 
 public:
 	virtual Geometry operator=(const Geometry& other);
@@ -41,7 +51,6 @@ public:
 	virtual int WkbSize() { return 0; };
 
 	virtual void SetMBR() {};
-	virtual void CreateD2Geometry(ID2D1Factory1* factory) {};
 
 	// Function for memory release outside of deconstructor
 	virtual void Release() {};

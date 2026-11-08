@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "SENC_AreaInstruction.h"
+#include "D2DGeometryCache.h"
 #include "SENC_ColorFill.h"
 #include "SENC_AreaFillReference.h"
 #include "SENC_PixmapFill.h"
@@ -97,7 +98,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 
 				if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 				{
-					auto geometry = surface->GetD2Geometry(pDirect2dFactory);
+					auto geometry = GISLibrary::D2DGeometry::Get(surface, pDirect2dFactory);
 					
 					if (geometry)
 					{
@@ -106,7 +107,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 				}
 				else
 				{
-					auto geometry = surface->GetNewD2Geometry(pDirect2dFactory, scaler);
+					auto geometry = GISLibrary::D2DGeometry::CreateScaled(surface, pDirect2dFactory, scaler);
 					if (geometry)
 					{
 						D2D1_MATRIX_3X2_F oldMatrix;
@@ -140,7 +141,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 				{
 					if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 					{
-						auto geometry = surface->GetD2Geometry(pDirect2dFactory);
+						auto geometry = GISLibrary::D2DGeometry::Get(surface, pDirect2dFactory);
 						if (geometry)
 						{
 							rt->FillGeometry(geometry, i->second->pBitmapBrush);
@@ -148,7 +149,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 					}
 					else
 					{
-						auto geometry = surface->GetNewD2Geometry(pDirect2dFactory, scaler);
+						auto geometry = GISLibrary::D2DGeometry::CreateScaled(surface, pDirect2dFactory, scaler);
 
 						if (geometry)
 						{
@@ -209,7 +210,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 				{
 					if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 					{
-						auto geometry = surface->GetD2Geometry(pDirect2dFactory);
+						auto geometry = GISLibrary::D2DGeometry::Get(surface, pDirect2dFactory);
 						if (geometry)
 						{
 							rt->FillGeometry(geometry, imageBrush);
@@ -217,7 +218,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 					}
 					else
 					{
-						auto geometry = surface->GetNewD2Geometry(pDirect2dFactory, scaler);
+						auto geometry = GISLibrary::D2DGeometry::CreateScaled(surface, pDirect2dFactory, scaler);
 						if (geometry)
 						{
 							D2D1_MATRIX_3X2_F oldMatrix;

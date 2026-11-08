@@ -845,10 +845,6 @@ bool S101Cell::MakeLineData(R_FeatureRecord* fe)
 		}
 	}
 
-	if (fe->geometry)
-	{
-		fe->geometry->CreateD2Geometry(D2 ? D2->pD2Factory : nullptr);
-	}
 
 	return TRUE;
 }
@@ -955,7 +951,6 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	}
 
 	geo->SetMBR();
-	geo->CreateD2Geometry(D2 ? D2->pD2Factory : nullptr);
 	geo->CalculateCenterPoint();
 
 	if (sr)

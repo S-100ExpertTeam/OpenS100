@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ExchangeCatalogue.h"
+#include "D2DGeometryCache.h"
 #include "GISLibrary.h"
 #include "S10XGML.h"
 #include "ExchangeCatalogueNameSpace.h"
@@ -252,10 +253,9 @@ namespace S100
 
             S10XGML* cls = new S10XGML(pD2);
             auto sSurface = cls->SurfaceToSSurface(object);
-            sSurface->CreateD2Geometry(pD2->Factory());
             brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
             pD2->pRT->SetTransform(scaler->GetMatrix());
-            pD2->pRT->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, pD2->SolidStrokeStyle());
+            pD2->pRT->DrawGeometry(GISLibrary::D2DGeometry::Get(sSurface, pD2->Factory()), brush, 1.0, pD2->SolidStrokeStyle());
 
             delete object;
             delete cls;
@@ -313,13 +313,12 @@ namespace S100
 
                  S10XGML* cls = new S10XGML(pD2);
                  auto sSurface = cls->SurfaceToSSurface(object);
-                 sSurface->CreateD2Geometry(pD2->Factory());
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
                  brush->SetOpacity((FLOAT)0.3);
-                 pD2->pRT->FillGeometry(sSurface->GetD2Geometry(), brush);
+                 pD2->pRT->FillGeometry(GISLibrary::D2DGeometry::Get(sSurface, pD2->Factory()), brush);
 
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Blue));
-                 pD2->pRT->DrawGeometry(sSurface->GetD2Geometry(), brush, 1.0, pD2->SolidStrokeStyle());
+                 pD2->pRT->DrawGeometry(GISLibrary::D2DGeometry::Get(sSurface, pD2->Factory()), brush, 1.0, pD2->SolidStrokeStyle());
 
                  delete object;
                  delete cls;

@@ -20,8 +20,6 @@ public:
 	bool m_masking = false;
 	bool suppress = false;
 
-	ID2D1PathGeometry* pGeometry = nullptr;
-
 private:
 	//int m_id = 0;
 
@@ -43,11 +41,6 @@ public:
 	int GetRCID();
 	void Init(int size);
 
-	void CreateD2Geometry(ID2D1Factory1* factory);
-	ID2D1PathGeometry* GetD2Geometry();
-	// Creates the Direct2D geometry on first use. Lets datasets be opened without a renderer.
-	ID2D1PathGeometry* GetD2Geometry(ID2D1Factory1* factory);
-	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
 	void SetMBR();
 	bool ImportFromWkb(unsigned char* value, int size);
 	bool ExportToWkb(unsigned char** value, int* size);

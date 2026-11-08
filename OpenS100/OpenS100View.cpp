@@ -6,6 +6,7 @@
 
 #include "OpenS100Doc.h"
 #include "OpenS100View.h"
+#include "../GISLibrary/D2DGeometryCache.h"
 #include "MainFrm.h"
 #include "DialogViewNoGeometry.h"
 #include "DialogViewInformationType.h"
@@ -1312,7 +1313,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 	else if (frPick->GetGeometry()->GetType() == SGeometryType::Surface)
 	{
 		auto surface = (SSurface*)frPick->GetGeometry();
-		auto geometry = surface->GetNewD2Geometry(theApp.gisLib->GetD2D1Resources()->pD2Factory, theApp.gisLib->GetScaler());
+		auto geometry = GISLibrary::D2DGeometry::CreateScaled(surface, theApp.gisLib->GetD2D1Resources()->pD2Factory, theApp.gisLib->GetScaler());
 
 		D2D1_COLOR_F color{};
 		color.r = 255 / float(255.0);

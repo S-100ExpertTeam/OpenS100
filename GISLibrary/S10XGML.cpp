@@ -1504,9 +1504,6 @@ void S10XGML::CalcMBR()
 
 void S10XGML::SetGeometry()
 {
-	// Direct2D geometry is only pre-built when a renderer is attached; otherwise it is created lazily at draw time.
-	ID2D1Factory1* d2Factory = D2 ? D2->Factory() : nullptr;
-
 	for (auto i = features.begin(); i != features.end(); i++) {
 		auto feature = (*i);
 		auto geometryID = feature->GetGeometryID();
@@ -1515,32 +1512,26 @@ void S10XGML::SetGeometry()
 			if (geometry->GetType() == GM::GeometryType::Point) {
 				auto sPoint = PointToSPoint((GM::Point*)geometry);
 				feature->SetGeometry(sPoint);
-				sPoint->CreateD2Geometry(d2Factory);
 			}
 			else if (geometry->GetType() == GM::GeometryType::MultiPoint) {
 				auto sMultiPoint = MultiPointToSMultiPoint((GM::MultiPoint*)geometry);
 				feature->SetGeometry(sMultiPoint);
-				sMultiPoint->CreateD2Geometry(d2Factory);
 			}
 			else if (geometry->GetType() == GM::GeometryType::OrientableCurve) {
 				auto sCurve = OrientableCurveToSCurve((GM::OrientableCurve*)geometry);
 				feature->SetGeometry(sCurve);
-				sCurve->CreateD2Geometry(d2Factory);
 			}
 			else if (geometry->GetType() == GM::GeometryType::Curve) {
 				auto sCurve = CurveToSCurve((GM::Curve*)geometry);
 				feature->SetGeometry(sCurve);
-				sCurve->CreateD2Geometry(d2Factory);
 			}
 			else if (geometry->GetType() == GM::GeometryType::CompositeCurve) {
 				auto sCompositeCurve = CompositeCurveToSCompositeCurve((GM::CompositeCurve*)geometry);
 				feature->SetGeometry(sCompositeCurve);
-				sCompositeCurve->CreateD2Geometry(d2Factory);
 			}
 			else if (geometry->GetType() == GM::GeometryType::Surface) {
 				auto sSurface = SurfaceToSSurface((GM::Surface*)geometry);
 				feature->SetGeometry(sSurface);
-				sSurface->CreateD2Geometry(d2Factory);
 
 				auto surface = (GM::Surface*)geometry;
 				auto exteriorRing = surface->getExteriorRing();
@@ -1556,12 +1547,10 @@ void S10XGML::SetGeometry()
 					auto ring = rings[j];
 					if (ring->GetType() == GM::GeometryType::Curve) {
 						auto sCurve = CurveToSCurve((GM::Curve*)ring);
-						sCurve->CreateD2Geometry(d2Factory);
 						sSurface->AddCurve(sCurve);
 					}
 					else if (ring->GetType() == GM::GeometryType::CompositeCurve) {
 						auto sCompositeCurve = CompositeCurveToSCompositeCurve((GM::CompositeCurve*)ring);
-						sCompositeCurve->CreateD2Geometry(d2Factory);
 						sSurface->AddCurve(sCompositeCurve);
 					}
 				}

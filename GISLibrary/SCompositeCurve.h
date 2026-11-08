@@ -24,7 +24,6 @@ public:
 
 	void SetMBR();
 
-	void CreateD2Geometry(ID2D1Factory1* factory);
 
 	// Type : WKBMultiLineString
 	bool ImportFromWkb(unsigned char* value, int size);

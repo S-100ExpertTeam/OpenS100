@@ -81,19 +81,6 @@ void SCompositeCurve::SetMBR()
 	}
 }
 
-void SCompositeCurve::CreateD2Geometry(ID2D1Factory1* factory)
-{
-	if (factory == nullptr)
-	{
-		return;
-	}
-
-	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
-	{
-		(*i)->CreateD2Geometry(factory);
-	}
-}
-
 bool SCompositeCurve::ImportFromWkb(unsigned char* value, int size)
 {
 	Release();
@@ -234,7 +221,7 @@ void SCompositeCurve::Release()
 	{
 		if ((*i)->GetType() == SGeometryType::Curve) {
 			auto curve = (SCurve*)(*i);
-			SafeRelease(&curve->pGeometry);
+			curve->ResetRenderAttachment();
 		}
 
 		delete (*i);

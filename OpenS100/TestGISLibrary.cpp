@@ -98,7 +98,6 @@ void TestGISLibrary::CopySelectedFeatureToNewLayer()
 							
 							if (geom)
 							{
-								geom->CreateD2Geometry(theApp.gisLib->GetD2D1Resources()->Factory());
 								geom->SetMBR();
 								creator.enc->ReMBR();
 								theApp.gisLib->GetLayerManager()->ReMBR();

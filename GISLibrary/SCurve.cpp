@@ -58,7 +58,7 @@ SCurve::~SCurve()
 		centerPoint = nullptr;
 	}
 
-	SafeRelease(&pGeometry);
+	ResetRenderAttachment();
 }
 
 SCurve SCurve::operator=(const SCurve& other)
@@ -75,8 +75,7 @@ SCurve SCurve::operator=(const SCurve& other)
 		centerPoint = nullptr;
 	}
 
-	if (pGeometry)
-		SafeRelease(&pGeometry);
+	ResetRenderAttachment();
 
 	SAbstractCurve::operator=(other);
 
@@ -141,88 +140,6 @@ double SCurve::GetY(int i)
 }
 
 #pragma warning(disable:4244)
-void SCurve::CreateD2Geometry(ID2D1Factory1* factory)
-{
-	if (factory == nullptr)
-	{
-		return;
-	}
-
-	if (pGeometry)
-	{
-		SafeRelease(&pGeometry);
-	}
-
-	if (m_numPoints > 1)
-	{
-		auto points = new D2D1_POINT_2F[m_numPoints];
-		for (auto i = 0; i < m_numPoints; i++)
-		{
-			points[i].x = m_pPoints[i].x;
-			points[i].y = -m_pPoints[i].y;
-		}
-
-		factory->CreatePathGeometry(&pGeometry);
-		ID2D1GeometrySink *pSink = nullptr;
-		pGeometry->Open(&pSink);
-		pSink->BeginFigure(points[0], D2D1_FIGURE_BEGIN_HOLLOW);
-		pSink->AddLines(points + 1, m_numPoints - 1);
-		pSink->EndFigure(D2D1_FIGURE_END_OPEN);
-		pSink->Close();
-		SafeRelease(&pSink);
-
-		delete[] points;
-	}
-}
-
-
-ID2D1PathGeometry* SCurve::GetD2Geometry()
-{
-	return pGeometry;
-}
-
-ID2D1PathGeometry* SCurve::GetD2Geometry(ID2D1Factory1* factory)
-{
-	if (pGeometry == nullptr)
-	{
-		CreateD2Geometry(factory);
-	}
-	return pGeometry;
-}
-
-
-ID2D1PathGeometry* SCurve::GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler)
-{
-	if (m_numPoints > 1)
-	{
-		ID2D1PathGeometry* newGeometry = nullptr;
-		auto points = new D2D1_POINT_2F[m_numPoints];
-		for (auto i = 0; i < m_numPoints; i++)
-		{
-			scaler->WorldToDevice_F(m_pPoints[i].x, m_pPoints[i].y, &points[i].x, &points[i].y); 
-		}
-
-		//memory leak
-		factory->CreatePathGeometry(&newGeometry);
-
-		ID2D1GeometrySink *pSink = nullptr;
-		newGeometry->Open(&pSink);
-		pSink->BeginFigure(points[0], D2D1_FIGURE_BEGIN_HOLLOW);
-		pSink->AddLines(points + 1, m_numPoints - 1);
-		pSink->EndFigure(D2D1_FIGURE_END_OPEN);
-		pSink->Close();
-		SafeRelease(&pSink);
-
-
-		delete[] points;
-		points = nullptr;
-		
-		return newGeometry;
-	}
-
-	return nullptr;
-}
-
 bool SCurve::ImportFromWkb(unsigned char* value, int size)
 {
 	if (value == nullptr ||
@@ -294,7 +211,7 @@ int SCurve::WkbSize()
 
 void SCurve::Init(int size)
 {
-	SafeRelease(&pGeometry);
+	ResetRenderAttachment();
 
 	SetID(0);
 
