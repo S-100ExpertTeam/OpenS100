@@ -25,7 +25,7 @@ KHOA 쪽 코드는 KHOA 저장소 경로, OpenS100 쪽은 이 저장소 경로.
 | 픽 리포트 | `GISLibrary/PickReportResult`, `libS100HDF5/PickedFeature`(라이브러리) | `OpenS100View.cpp:1191-1375`(뷰) | KHOA가 위치상 옳음 |
 | 커버리지 레이어·컬러맵 | `ColorMap*`, `S101_CoverageLayer` | 없음 | 없음 |
 | S-124 매니저 | `S124Manager` | `S10XGML` 범용 | 범용으로 충분한지 확인 |
-| S-57 | `ENC_S101_Factory`, `ENC_Feature/Vector`(감지만, 로딩 거부) | 없음 | 범위 밖 |
+| S-57 / S-52 / S-63 | `ENC_S101_Factory`, `ENC_Feature/Vector`(감지만, 로딩 거부), `PLLibrary`(S-52식 심볼) | 없음 | 지침 2에 따라 **범위 안**. 단 후순위(P3 이후). KHOA 코드는 감지 수준이라 별도 설계 필요 |
 | AIS/NMEA/선박 감시, 항로, SECOM, OpenAPI, 조석 | 다수 | 없음 | **뷰어에 남긴다.** 단 항로 감시의 코어 모델(S-98 route monitoring)은 opens100-web 역이식 항목 |
 
 ## 2. 업스트림 항목 (우선순위)
@@ -50,7 +50,7 @@ KHOA 쪽 코드는 KHOA 저장소 경로, OpenS100 쪽은 이 저장소 경로.
 ### 하지 않을 것
 
 - `S101_CS_*` C++ CS 절차: S-101 PC 2.0.0 Lua CS로 대체됐는지 확인 후, 대체됐으면 가져오지 않는다.
-- S-57, BAG: 범위 밖 또는 후순위.
+- BAG: 후순위. S-57/52/63은 지침 2에 따라 범위에 포함하되 Phase 2에서는 다루지 않는다(별도 계획).
 - 뷰어 특화(AIS, 항로 UI, SECOM, OpenAPI, 조석, 설치): KHOA에 남긴다.
 
 ## 3. 절차 (항목마다)

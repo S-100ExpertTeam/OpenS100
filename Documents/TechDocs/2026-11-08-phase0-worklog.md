@@ -9,44 +9,78 @@
 
 ### A. 견고성 버그 (KHOA 뷰어와 공유, 그쪽도 같은 패치)
 
-- [ ] A1. `GISLibrary/S101Cell.cpp` `UpdateRemoveAll`(:223)/`RemoveAll`(:242): `delete updateInformation` 후 `nullptr` 대입.
-- [ ] A2. `S101Cell.cpp:418, 572` 8211 레코드 루프: `subFieldCount < 1`이면 `m_recordLength`만큼 전진, 0이면 중단. `curRecordAddress + m_recordLength > endOfBuf + 1`이면 중단. 종결자 불일치는 로그.
-- [ ] A3. pugi `xml_parse_result` 미확인 5곳(`S100PCLineStylesReader.cpp:61`, `ExchangeCatalogue.cpp:27`, `IC_InteroperabilityCatalogue.cpp:9`, `LayerManager.cpp:1715, 1781`) 실패 시 false/빈 결과 반환.
+- [x] A1. `GISLibrary/S101Cell.cpp` `UpdateRemoveAll`(:223)/`RemoveAll`(:242): `delete updateInformation` 후 `nullptr` 대입. (953739aa)
+- [x] A2. `S101Cell.cpp:418, 572` 8211 레코드 루프: `subFieldCount < 1`이면 `m_recordLength`만큼 전진, 0이면 중단. `curRecordAddress + m_recordLength > endOfBuf + 1`이면 중단. 종결자 불일치는 로그. (953739aa)
+- [x] A3. pugi `xml_parse_result` 미확인 5곳(`S100PCLineStylesReader.cpp:61`, `ExchangeCatalogue.cpp:27`, `IC_InteroperabilityCatalogue.cpp:9`, `LayerManager.cpp:1715, 1781`) 실패 시 false/빈 결과 반환. (953739aa)
 
 ### B. 툴체인 (지침 6)
 
-- [ ] B1. 전 vcxproj `PlatformToolset` v143 → v145, `LanguageStandard` stdcpp17 → stdcpp20 (9개 프로젝트, 54 구성).
-- [ ] B2. `OpenS100.Common.props`에 `/W4 /permissive-`(ConformanceMode) 추가. 경고-에러는 코어 프로젝트가 정리된 뒤(Phase 1).
-- [ ] B3. `BUILD.md`를 VS2026/v145/C++20 기준으로 갱신. CMake 3.29 제약이 여전한지 확인.
+- [x] B1. 전 vcxproj `PlatformToolset` v143 → v145, `LanguageStandard` stdcpp17 → stdcpp20 (9개 프로젝트, 54 구성). 기준 빌드(v143)는 VS2026에 v143용 MFC가 없어 MFC 프로젝트가 MSB8041로 실패했으므로 v145 전환은 필수였음. (6b095ed1)
+- [~] B2. (6b095ed1, 임시 조치) `/std:c++20`이 `/permissive-`를 함축하므로 전 프로젝트가 엄격 모드가 됐고 GISLibrary에서 적합성 오류 약 180건(C2664 94: 문자열 리터럴→`char*`, C2665 58: 비상수 참조에 임시 바인딩, C2440 11: `CString`→`std::wstring` 암시 변환 등). **임시 조치:** `Common.props`에 `ConformanceMode=false`를 두고, 이미 정리한 FeatureCatalog·PortrayalCatalogue는 vcxproj에서 `ConformanceMode=true`로 고정. GISLibrary·S100Engine·OpenS100 앱의 적합성 정리는 **Phase 1 항목**. `/W4`는 프로젝트별 Level3 설정이 우선하므로 props로 못 올림(프로젝트별 수정 필요).
+- [x] B3. `BUILD.md`를 VS2026/v145/C++20 기준으로 갱신(명령줄 빌드·테스트 절 추가). CMake 3.29 제약은 미확인(그대로 둠). (6b095ed1)
+
+### B'. 빌드 속도 기준선 (지침 17)
+
+- [ ] B4. 클린 빌드와 증분 빌드(한 .cpp 수정) 시간을 x64 Debug에서 측정해 기록. `MSBuild -clp:PerformanceSummary` 사용. 결과는 이 문서 아래 표에.
+- [ ] B5. 사용하지 않는 Win32·ARM64 구성 제거(9개 vcxproj, sln). x64만 유지.
+- [ ] B6. 로컬 vcpkg 바이너리 캐시 사용 확인(`VCPKG_BINARY_SOURCES`, BUILD.md 5절).
 
 ### C. 의존성
 
-- [ ] C1. `vcpkg.json`: name `opens100`, description, `builtin-baseline` = `6cf5a3612342c3cf0d7dee5cf6687d0882ec6663`, `gtest` 추가.
+- [x] C1. `vcpkg.json`: name `opens100`, description, `builtin-baseline` = `6cf5a3612342c3cf0d7dee5cf6687d0882ec6663`, `gtest` 추가. (93aec60c)
 - [ ] C2. (Phase 1로 보류) `extlibs/Lua`의 lua51 DLL/LIB를 vcpkg `lua` 포트로 대체. Part 13은 Lua 5.1 기준이므로 포트 버전 확인 필요.
 
 ### D. 테스트·CI
 
-- [ ] D1. `Tests/OpenS100Tests/` gtest 콘솔 프로젝트. GISLibrary·FeatureCatalog·PortrayalCatalogue 링크. 첫 테스트: (a) `FeatureCatalogue` 로딩(`ProgramData/FC/S-101_FC.xml`), (b) `S101Cell` 8211 열기(`D:\s100-reference\tds\KOR_TDS\S100_ROOT\S-101\DATASET_FILES\` 중 하나. 파일이 없으면 SKIP), (c) 손상 8211(잘린 버퍼)에서 A2가 중단되는지, (d) `ExchangeCatalogue` 파싱(`KOR_TDS\S100_ROOT\CATALOG.XML`, 없으면 SKIP).
-- [ ] D2. 솔루션에 테스트 프로젝트 추가(`04. TEST` 폴더).
-- [ ] D3. `.github/workflows/build.yml`: `workflow_dispatch` + push(dev-jogm, main). windows-latest, vcpkg 바이너리 캐시(GitHub Actions cache), MSBuild x64 Release, 테스트 실행. 첫 실행은 hdf5·libxslt 소스 빌드로 오래 걸림(수십 분). 캐시가 쌓이면 push 트리거로.
+- [x] D1. `Tests/OpenS100Tests/` gtest 콘솔 프로젝트. GISLibrary·FeatureCatalog·PortrayalCatalogue 링크. 첫 테스트: (a) `FeatureCatalogue` 로딩(`ProgramData/FC/S-101_FC.xml`), (b) `S101Cell` 8211 열기(`D:\s100-reference\tds\KOR_TDS\S100_ROOT\S-101\DATASET_FILES\` 중 하나. 파일이 없으면 SKIP), (c) 손상 8211(잘린 버퍼)에서 A2가 중단되는지, (d) `ExchangeCatalogue` 파싱(`KOR_TDS\S100_ROOT\CATALOG.XML`, 없으면 SKIP). (93aec60c)
+- [x] D2. 솔루션에 테스트 프로젝트 추가(`04. TEST` 폴더). (93aec60c)
+- [x] D3. `.github/workflows/build.yml`: `workflow_dispatch` + push(dev-jogm, main). windows-latest, vcpkg 바이너리 캐시(GitHub Actions cache), MSBuild x64 Release, 테스트 실행. 첫 실행은 hdf5·libxslt 소스 빌드로 오래 걸림(수십 분). 캐시가 쌓이면 push 트리거로. (93aec60c)
 
 ### E. 정리
 
 - [ ] E1. `origin/makeUpdateFile` 브랜치 내용 확인(업데이트 생성). 병합 가능하면 `dev-jogm`에 병합. 충돌 크면 업스트림 U2로.
 - [ ] E2. `S100Geometry/` 폴더(솔루션 미포함) 처리: 삭제 또는 포함.
-- [ ] E3. `README.md`에 "라이브러리 지향" 재정의 한 단락과 TechDocs 링크.
+- [x] E3. `README.md`에 "라이브러리 지향" 재정의 한 단락과 TechDocs 링크. (6b095ed1)
 
 ### F. 검증
 
-- [ ] F1. `OpenS100.sln` x64 Debug 빌드 통과 (v145, C++20).
-- [ ] F2. 테스트 전부 통과.
+- [x] F1. `OpenS100.sln` x64 Debug 빌드 통과 (v145, C++20). 2026-11-08.
+- [x] F2. 테스트 전부 통과. 9/9 (2026-11-08). `Debug_x64\OpenS100Tests.exe`
 - [ ] F3. 앱으로 KOR_TDS S-101 셀 하나 열어 렌더 확인.
+
+## C++20 전환에서 고친 것 (기록)
+
+| 파일 | 문제 | 조치 |
+|---|---|---|
+| `FeatureCatalog/SpatialPrimitiveType.*` | `StringToSpatialPrimitiveType(std::string&)`에 임시 전달 | `const std::string&` |
+| `PortrayalCatalogue/AlertPrioritySelection.*` | 멤버 이름이 키워드 `default` | `isDefault` |
+| `PortrayalCatalogue/S100_Element.h` | 포인터 멤버를 `= false`로 초기화 | `= nullptr` |
+| `PortrayalCatalogue/Enum_RuleType.*`, `S100_SymbolFill.*` | 비상수 참조 매개변수에 임시 전달 | `const&` (SymbolFill은 `fullPath` 지역 변수) |
+| `PortrayalCatalogue/S100_DisplayList.cpp`, `S100_LineStyle.cpp`, `S100_LineSymbol.cpp`, `OpenS100/DATASET_SUPPORTdlg.cpp`, `FC_PCSelectdlg.cpp` | MSVC 확장 `for each` | 범위 기반 for |
+| `PortrayalCatalogue/ViewingGroup.cpp` | `GetContents(pugi::xml_node&)`에 임시 전달 | 지역 변수로 바인딩 |
+| `GISLibrary/CI_Contact.cpp` | 변수명 `or`(대체 토큰) | `onlineResource` |
+| `LuaScriptingReference/point.h`, `spatial_association.h`, `multipoint.h`, `surface.h` | `X() = default;` 때문에 C++20에서 집합체 자격 상실 → `x = {a, b}` 컴파일 오류 | 선언 제거 |
+| `GISLibrary/SPoint.*`, `GeoMetryLibrary/GeoPoint.*` | 비상수 `operator==` → C++20 재작성 후보 모호성 | `const` 멤버, `const&` 매개변수 |
+
+## 테스트에서 드러난 결합 문제 (Phase 1 입력)
+
+- `S101Cell::Open()`은 파싱 뒤 `MakeFullSpatialData()` 등에서 D2D 리소스를 필요로 해서 `D2D1Resources* = nullptr`로 열면 접근 위반이 난다. 즉 **데이터셋을 여는 데 렌더러가 필요하다.** 테스트는 `Read8211()`(파서)만 호출한다. 코어에서 D2D를 분리하는 것이 Phase 1의 첫 과제.
+- `LuaScriptingReference.dll`이 `extlibs\Luaind\lua51.dll`을 요구하지만 어떤 프로젝트도 OutDir로 복사하지 않는다(앱은 아마 VS 디버그 환경 PATH로 동작). 테스트 프로젝트에 post-build 복사를 넣었고, 근본적으로는 vcpkg `lua` 포트로 대체(C2).
+
+## 빌드 시간 기록
+
+| 날짜 | 조건 | 클린 빌드 | 증분(1 TU) | 비고 |
+|---|---|---|---|---|
+| | | | | |
 
 ## 커밋 기록
 
 | 커밋 | 항목 | 내용 |
 |---|---|---|
-| | 문서 | TechDocs 생성 |
+| 71c5e1e5 | 문서 | TechDocs 생성 |
+| 953739aa | A1~A3 | 8211 루프 가드, 이중 delete, pugi 파싱 결과 확인 |
+| 6b095ed1 | B1~B3, E3 | VS2026 v145 + C++20, 적합성 수정, Common.props ConformanceMode 임시 완화, BUILD.md/README |
+| 93aec60c | C1, D1~D3 | gtest 프로젝트·솔루션 폴더, vcpkg.json 정리(gtest 추가), GitHub Actions |
 
 ## 다른 세션을 위한 메모
 

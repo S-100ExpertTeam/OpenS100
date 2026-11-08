@@ -10,6 +10,8 @@
 4. **KHOA S-100 Viewer(`gorogara/S-100SimpleEditor`)는 OpenS100을 사용해서 개발한 뷰어가 되어야 한다.** OpenS100은 KHOA S-100 Viewer에서 오픈소스로 파생됐다. 라이브러리 개선은 OpenS100에서 하고, KHOA 뷰어는 OpenS100과 호환되는 소비자 앱으로 바꾼다. KHOA 뷰어에만 있는 코어 기능은 OpenS100으로 올려보낸다. (2026-11-08)
 5. **opens100-web과는 병렬 개발이 불가피하다.** opens100-web은 OpenS100을 참조해 만들었지만 지금은 기능·기술적으로 앞서 있다. 앞선 부분은 OpenS100으로 다시 옮긴다(역이식). 두 저장소의 개념 모델과 모듈 경계를 맞춘다. (2026-11-08)
 6. **C++ 표준은 더 최신으로, 단 VS2026에서 안정적으로 지원하는 수준까지.** 결정: 기본 C++20(`/std:c++20`). C++23은 MSVC 지원이 부분적이므로 라이브러리 공개 API에는 쓰지 않는다. 모듈(`import`)은 vcpkg·CMake 생태계가 안정될 때까지 보류. (2026-11-08)
+7. 장기적으로 KHOA S-100 Viewer는 OpenS100을 사용하는 뷰어이기 때문에 UI관련된거나 Application을 위한 별도 코드 라이브러리만 남아야 한다. 
+8. OpenS100과 KHOA S-100 Viewer는 같은 개발 환경을 사용해야 한다. 되도록 안정된 최신 버전 활용한다. 
 
 ## 작업 방식
 
@@ -26,6 +28,13 @@
 14. 웹 구현: `C:\Users\jogm\Desktop\Git\bluemap-github\opens100-web` (github.com/bluemap-github/opens100-web). 역이식 검토 문서가 그 저장소 `docs/plans/opens100-cpp-backport-feasibility.md`에 있다(OpenS100 `55cacf84` 기준).
 15. KHOA S-100 Viewer: `C:\Users\jogm\Desktop\Git\S-100SimpleEditor` (비공개, 브랜치 `jogm`). 코드 평가와 뷰어 전환 계획은 그 저장소 `Document/TechDocs/`에 있다.
 
+## 추가 지침 (2026-11-08, 두 번째)
+
+16. **KHOA S-100 Viewer는 vcpkg로 OpenS100을 참조해서 만든다.** 서브모듈·소스 복사가 아니라 vcpkg 포트(처음엔 자체 레지스트리, 나중엔 공식)로 받아 링크한다.
+17. **빌드 속도를 최신화한다.** OpenS100과 KHOA S-100 Viewer 모두 빌드가 매우 오래 걸린다. 빌드 시스템 현대화(CMake + Ninja, PCH/유니티 빌드 정리, vcpkg 바이너리 캐시, 불필요한 구성·플랫폼 제거)를 계획에 포함한다.
+18. **MFC는 최대한 제거한다.** OpenS100은 vcpkg 위주의 순수 C++ 라이브러리가 되어야 하며, **모든 플랫폼(Windows, Linux, macOS, 가능하면 WASM)에서 동작**해야 한다. Windows 전용 API(MFC, ATL, Direct2D, GDI)는 렌더 백엔드와 앱 계층에만 남긴다.
+
 ## 변경 이력
 
 - 2026-11-08 최초 작성. 처음에는 KHOA 뷰어 저장소에서 "그 저장소를 라이브러리화"하는 것으로 적었으나, 사용자가 라이브러리화 대상은 OpenS100이고 KHOA 뷰어는 소비자라고 정정함(항목 4).
+- 2026-11-08 항목 16~18 추가 (vcpkg 참조 확정, 빌드 속도, MFC 제거·전 플랫폼).
