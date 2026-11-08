@@ -37,11 +37,6 @@
 
 #include <set>
 
-S101Creator::S101Creator(D2D1Resources* d2d1)
-{
-	this->D2 = d2d1;
-}
-
 S101Creator::S101Creator(S101Cell* enc)
 {
 	Set(enc->GetFC(), enc);
@@ -75,15 +70,11 @@ void S101Creator::SetENC(S101Cell* enc)
 	{
 		this->layer = (S100Layer*)enc->m_pLayer;
 	}
-	if (enc && enc->GetD2())
-	{
-		this->D2 = enc->GetD2();
-	}
 }
 
 S101Cell* S101Creator::CreateENC(std::wstring name)
 {
-	auto result = new S101Cell(D2);
+	auto result = new S101Cell();
 	enc = result;
 
 	enc->m_dsgir.m_dsid.m_dsnm = name.c_str();

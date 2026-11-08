@@ -12,7 +12,6 @@ class SpatialObject
 {
 public:
 	SpatialObject();
-	SpatialObject(D2D1Resources* d2d1);
 	virtual ~SpatialObject();
 
 public:
@@ -24,8 +23,6 @@ private:
 	CString m_FilePath; // Full path of file (including name)
 	CString m_FileName; // File name (including extension)
 
-protected:
-	D2D1Resources* D2 = nullptr;
 
 public:
 	virtual bool Open(CString _filepath) = 0;

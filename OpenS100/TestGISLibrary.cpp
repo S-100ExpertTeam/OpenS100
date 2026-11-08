@@ -54,7 +54,7 @@ void TestGISLibrary::TestSave()
 
 void TestGISLibrary::CreateNewLayer()
 {
-	S101Creator creator(theApp.gisLib->GetD2D1Resources());
+	S101Creator creator;
 	auto layer = creator.CreateLayer(L"newENC.000", theApp.gisLib->GetCatalogManager()->getFC(), theApp.gisLib->GetCatalogManager()->getPC());
 	if (layer)
 	{
@@ -64,7 +64,7 @@ void TestGISLibrary::CreateNewLayer()
 
 void TestGISLibrary::CreateMemoryLayer()
 {
-	S101Creator creator(theApp.gisLib->GetD2D1Resources());
+	S101Creator creator;
 	auto layer = creator.CreateLayer(L"MemoryLayer.000", theApp.gisLib->GetCatalogManager()->getFC(), theApp.gisLib->GetCatalogManager()->getPC());
 	delete layer;
 }
@@ -127,7 +127,7 @@ void TestGISLibrary::OffFeature()
 
 void TestGISLibrary::OpenUpdate()
 {	
-	S101Cell cell(theApp.gisLib->GetD2D1Resources());
+	S101Cell cell;
 	cell.Read8211(L"..\\SampleData\\101GB005X01SW.001");
 	if (cell.isUpdate()) {
 		OutputDebugString(L"Update\n");
@@ -141,7 +141,7 @@ void TestGISLibrary::OpenUpdate()
 
 void TestGISLibrary::SetCodeNumericCode()
 {	
-	S101Cell cell(theApp.gisLib->GetD2D1Resources());
+	S101Cell cell;
 	cell.Read8211(L"..\\SampleData\\101KR004X0000.000");
 	auto dsgir = cell.GetDatasetGeneralInformationRecord();
 	

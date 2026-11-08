@@ -1340,7 +1340,7 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 	
 	if (encPick->GetProductNumber() == 101)
 	{
-		s100EditRender.Set((S101Cell*)encPick, theApp.gisLib->GetScaler(), (R_FeatureRecord*)frPick);
+		s100EditRender.Set((S101Cell*)encPick, theApp.gisLib->GetScaler(), (R_FeatureRecord*)frPick, theApp.gisLib->GetD2D1Resources());
 		s100EditRender.ShowPoint();
 	}
 	theApp.gisLib->GetD2D1Resources()->End();

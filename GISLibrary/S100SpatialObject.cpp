@@ -8,11 +8,6 @@ S100SpatialObject::S100SpatialObject() : SpatialObject()
 	m_ObejctType = SpatialObjectType::S100SpatialObject;
 }
 
-S100SpatialObject::S100SpatialObject(D2D1Resources* d2d1) : SpatialObject(d2d1)
-{
-	m_ObejctType = SpatialObjectType::S100SpatialObject;
-}
-
 S100SpatialObject::~S100SpatialObject()
 {
 	if (pcManager)
@@ -83,11 +78,6 @@ void S100SpatialObject::SetFC(FeatureCatalogue* fc)
 void S100SpatialObject::SetPC(PortrayalCatalogue* pc)
 {
 	m_pc = pc;
-}
-
-D2D1Resources* S100SpatialObject::GetD2() const
-{
-	return D2;
 }
 
 bool S100SpatialObject::OpenOutputXML(std::string path)

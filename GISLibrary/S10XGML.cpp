@@ -20,11 +20,6 @@ S10XGML::S10XGML() : S100SpatialObject()
 	Init();
 }
 
-S10XGML::S10XGML(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
-{
-	Init();
-}
-
 S10XGML::~S10XGML()
 {
 	for (auto i = features.begin(); i != features.end(); i++)

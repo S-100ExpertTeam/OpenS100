@@ -10,7 +10,7 @@
 
 #include <hdf5.h>
 
-S102H5::S102H5(PortrayalCatalogue* pc, D2D1Resources* d2d1) : S100H5(d2d1)
+S102H5::S102H5(PortrayalCatalogue* pc) : S100H5()
 {
 	type = S100SpatialObjectType::S102H5;
 	featureContainer.push_back(new S102_FC_BathymetryCoverage());
@@ -76,113 +76,9 @@ bool S102H5::OpenMetadata(CString _filepath)
 	return true;
 }
 
-void S102H5::Draw(HDC& hDC, Scaler* scaler, double offset)
-{
-	if (!pWICBitmap) {
-		CreateBitmap();
-	}
-
-	if (pWICBitmap) {
-		auto rt = D2->RenderTarget();
-
-		ID2D1Bitmap* pBitmap = nullptr;
-		auto hr = rt->CreateBitmapFromWicBitmap(pWICBitmap, &pBitmap);
-		ID2D1BitmapBrush* brush = nullptr;
-		hr = rt->CreateBitmapBrush(pBitmap, &brush);
-
-		if (SUCCEEDED(hr))
-		{
-			brush->SetExtendModeX(D2D1_EXTEND_MODE_WRAP);
-			brush->SetExtendModeY(D2D1_EXTEND_MODE_WRAP);
-			brush->SetInterpolationMode(D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
-		}
-
-		hr = rt->BindDC(hDC, scaler->GetScreenRect());
-		rt->BeginDraw();
-
-		rt->SetTransform(D2D1::Matrix3x2F::Identity());
-
-		D2D1_RECT_F rect = { 10.0f, 10.0f, 1000.0f, 1000.0f };
-
-		long sxmin = 0;
-		long sxmax = 0;
-		long symin = 0;
-		long symax = 0;
-
-		auto mbr = GetLayer()->GetMBR();
-		auto map = scaler->GetMap();
-
-		scaler->WorldToDevice(mbr.xmin, mbr.ymin, &sxmin, &symax);
-		scaler->WorldToDevice(mbr.xmax, mbr.ymax, &sxmax, &symin);
-
-		rt->DrawBitmap(pBitmap, D2D1::RectF((float)sxmin, (float)symin, (float)sxmax, (float)symax), 1, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
-
-		hr = rt->EndDraw();
-
-		SafeRelease(&brush);
-		SafeRelease(&pBitmap);
-	}
-}
-
 S102_FC_BathymetryCoverage* S102H5::GetBathymetryCoverage()
 {
 	return (S102_FC_BathymetryCoverage*)featureContainer.at(0);
-}
-
-void S102H5::CreateBitmap()
-{
-	auto featureContainer = GetBathymetryCoverage();
-	auto featureInstance = featureContainer->GetBathymetryCoverage();
-	auto valuesGroup = featureInstance->GetBathymetryCoverage();
-
-	auto width = featureInstance->getNumPointsLongitudinal();
-	auto height = featureInstance->getNumPointsLatitudinal();
-
-	HRESULT hr = D2->pImagingFactory->CreateBitmap(width, height, GUID_WICPixelFormat32bppPRGBA, WICBitmapCacheOnDemand, &pWICBitmap);
-	if (SUCCEEDED(hr)) {
-		ID2D1RenderTarget* rt = nullptr;
-		hr = D2->pD2Factory->CreateWicBitmapRenderTarget(
-			pWICBitmap, 
-			D2D1::RenderTargetProperties(), 
-			&rt);
-
-		if (SUCCEEDED(hr)) {
-			ID2D1SolidColorBrush* brush = nullptr;
-			auto hr = rt->CreateSolidColorBrush(
-				D2D1::ColorF(D2D1::ColorF::Crimson),
-				&brush
-			);
-
-			rt->BeginDraw();
-			
-			auto numPoint = width * height;
-			D2D1_RECT_F rect = { 0, 0, 1, 1 };
-			for (auto i = 0; i < numPoint; i++) {
-
-				auto xIndex = i % width;
-				auto yIndex = (height - 1) - i / width;
-
-				auto value = valuesGroup->depth[i];
-
-				if (value != 1000000) {
-
-					rt->SetTransform(D2D1::Matrix3x2F::Identity());
-					rt->SetTransform(D2D1::Matrix3x2F::Translation((float)xIndex, (float)yIndex));
-
-					brush->SetColor(getColor(value));
-					brush->SetOpacity(1);
-
-					rt->FillRectangle(rect, brush);
-				}
-			}
-
-			rt->EndDraw();
-
-			SafeRelease(&brush);
-		}
-
-		SafeRelease(&rt);
-	}
 }
 
 void S102H5::DeleteBitmap()

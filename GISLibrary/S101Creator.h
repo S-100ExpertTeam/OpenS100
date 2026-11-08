@@ -11,7 +11,7 @@ using namespace GISLibrary;
 class S101Creator
 {
 public:
-	S101Creator(D2D1Resources* d2d1);
+	S101Creator() = default;
 	S101Creator(S101Cell* enc);
 	S101Creator(FeatureCatalogue* fc, S101Cell* enc);
 	~S101Creator();
@@ -22,7 +22,6 @@ public:
 	S100Layer* layer = nullptr;
 
 protected:
-	D2D1Resources* D2 = nullptr;
 
 public:
 	void Set(FeatureCatalogue* fc, S101Cell* enc);

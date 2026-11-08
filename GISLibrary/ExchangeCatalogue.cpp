@@ -251,7 +251,7 @@ namespace S100
      
             object->SetExteriorRing(curve);
 
-            S10XGML* cls = new S10XGML(pD2);
+            S10XGML* cls = new S10XGML();
             auto sSurface = cls->SurfaceToSSurface(object);
             brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
             pD2->pRT->SetTransform(scaler->GetMatrix());
@@ -311,7 +311,7 @@ namespace S100
                      delete curve;
                  }
 
-                 S10XGML* cls = new S10XGML(pD2);
+                 S10XGML* cls = new S10XGML();
                  auto sSurface = cls->SurfaceToSSurface(object);
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
                  brush->SetOpacity((FLOAT)0.3);

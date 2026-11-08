@@ -48,7 +48,7 @@ protected:
 
 TEST_F(S101CellKorTds, ParsesSmallestKoreanCell)
 {
-	S101Cell cell(&fc, nullptr);
+	S101Cell cell(&fc);
 	ASSERT_TRUE(cell.Read8211(cellPath.wstring()));
 
 	EXPECT_GT(cell.GetCount_FeatureTypeRecord(), 0);
@@ -64,7 +64,7 @@ TEST_F(S101CellKorTds, ParsesSmallestKoreanCell)
 // is created lazily at draw time, so Open() with D2D1Resources == nullptr succeeds.
 TEST_F(S101CellKorTds, OpensSmallestKoreanCellWithoutRenderer)
 {
-	S101Cell cell(&fc, nullptr);
+	S101Cell cell(&fc);
 	ASSERT_TRUE(cell.Open(CString(cellPath.wstring().c_str())));
 
 	EXPECT_GT(cell.GetCount_FeatureTypeRecord(), 0);
@@ -89,7 +89,7 @@ TEST_F(S101CellKorTds, MalformedRecordLeaderDoesNotHang)
 	auto corrupt = testpaths::tempDir() / "malformed_leader.000";
 	writeAll(corrupt, bytes);
 
-	S101Cell cell(&fc, nullptr);
+	S101Cell cell(&fc);
 	(void)cell.Open(CString(corrupt.wstring().c_str()));   // must return; result is unspecified
 	SUCCEED();
 }
@@ -107,7 +107,7 @@ TEST_F(S101CellKorTds, RecordLengthBeyondBufferDoesNotCrash)
 	auto corrupt = testpaths::tempDir() / "oversized_record.000";
 	writeAll(corrupt, bytes);
 
-	S101Cell cell(&fc, nullptr);
+	S101Cell cell(&fc);
 	(void)cell.Open(CString(corrupt.wstring().c_str()));
 	SUCCEED();
 }
@@ -120,7 +120,7 @@ TEST_F(S101CellKorTds, TruncatedFileDoesNotCrash)
 	auto corrupt = testpaths::tempDir() / "truncated.000";
 	writeAll(corrupt, bytes);
 
-	S101Cell cell(&fc, nullptr);
+	S101Cell cell(&fc);
 	(void)cell.Open(CString(corrupt.wstring().c_str()));
 	SUCCEED();
 }
@@ -137,7 +137,7 @@ TEST(S101Cell, ReadTwiceIntoSameCellIsStable)
 
 	// Read8211() calls RemoveAll() first and the destructor calls it again; the
 	// record maps and updateInformation must survive that sequence (double delete fix).
-	S101Cell cell(&fc, nullptr);
+	S101Cell cell(&fc);
 	ASSERT_TRUE(cell.Read8211(cellPath.wstring()));
 	const int first = cell.GetCount_FeatureTypeRecord();
 	ASSERT_TRUE(cell.Read8211(cellPath.wstring()));

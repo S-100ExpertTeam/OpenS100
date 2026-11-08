@@ -310,7 +310,7 @@ S101Cell* S100LayerFactory::CopyS101Cell(Layer* layer, CString newName)
 	if (!enc)
 		return nullptr;
 
-	S101Cell* cell = new S101Cell(enc->GetD2());
+	S101Cell* cell = new S101Cell();
 	cell->SetFilePath(newName);
 	cell->m_pLayer = layer;
 
@@ -377,7 +377,7 @@ S10XGML* S100LayerFactory::CopyS10XGML(Layer* layer, CString newName)
 	if (!enc)
 		return nullptr;
 
-	S10XGML* gml = new S10XGML(enc->GetD2());
+	S10XGML* gml = new S10XGML();
 	gml->SetFilePath(newName);
 	gml->m_pLayer = layer;
 
@@ -417,7 +417,7 @@ S100H5* S100LayerFactory::CopyS100H5(Layer* layer, CString newName)
 	if (!enc)
 		return nullptr;
 
-	S100H5* h5 = new S100H5(enc->GetD2());
+	S100H5* h5 = new S100H5();
 	h5->SetFilePath(newName);
 	h5->m_pLayer = layer;
 
@@ -436,7 +436,7 @@ S102H5* S100LayerFactory::CopyS102H5(Layer* layer, CString newName)
 	if (!enc)
 		return nullptr;
 
-	S102H5* h5 = new S102H5(enc->GetPC(), enc->GetD2());
+	S102H5* h5 = new S102H5(enc->GetPC());
 
 	h5->SetFilePath(newName);
 	h5->m_pLayer = layer;

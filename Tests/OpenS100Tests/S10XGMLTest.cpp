@@ -17,7 +17,7 @@ TEST(S10XGML, OpensKoreanS124WithoutRenderer)
 	FeatureCatalogue fc;
 	ASSERT_TRUE(fc.Read((testpaths::repoRoot() / "ProgramData" / "FC" / "S-124_FC.xml").string()));
 
-	S10XGML gml(nullptr);
+	S10XGML gml;
 	gml.SetFC(&fc);
 	ASSERT_TRUE(gml.Open(CString(gmlPath.wstring().c_str())));
 	EXPECT_GT(gml.features.size(), 0u);
@@ -26,6 +26,6 @@ TEST(S10XGML, OpensKoreanS124WithoutRenderer)
 
 TEST(S10XGML, MissingFileReturnsFalse)
 {
-	S10XGML gml(nullptr);
+	S10XGML gml;
 	EXPECT_FALSE(gml.Open(CString(L"Z:\does\not\exist.gml")));
 }

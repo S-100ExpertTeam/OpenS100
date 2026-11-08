@@ -2,6 +2,7 @@
 
 class S101Cell;
 class SPoint;
+namespace GISLibrary { class D2D1Resources; }
 
 class S100EditRender
 {
@@ -14,11 +15,12 @@ public:
 	S101Cell* enc = nullptr;
 	Scaler* scaler = nullptr;
 	R_FeatureRecord* feature = nullptr;
+	GISLibrary::D2D1Resources* renderResources = nullptr;
 	int pointIndex = -1;
 	int partIndex = -1;
 
 public:
-	void Set(S101Cell* enc, Scaler* scaler, R_FeatureRecord* feature);
+	void Set(S101Cell* enc, Scaler* scaler, R_FeatureRecord* feature, GISLibrary::D2D1Resources* renderResources);
 	void ShowPoint();
 	void ShowPoint(SPoint* geom);
 	void ShowPoint(SMultiPoint* geom);

@@ -31,6 +31,8 @@ public:
 	LayerManager* m_pLayerManager;
 
 	LayerManager* m_pParentLayerManager;
+	// Renderer used by DrawEx/DrawFiles. Datasets no longer carry one; this class is render-side.
+	D2D1Resources* D2 = nullptr;
 
 
 public:

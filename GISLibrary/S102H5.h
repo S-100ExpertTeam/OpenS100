@@ -8,10 +8,11 @@ class S102H5 :
 	public S100H5
 {
 public:
-	S102H5(PortrayalCatalogue* pc, D2D1Resources* d2d1);
+	S102H5(PortrayalCatalogue* pc);
 	virtual ~S102H5();
 
 public:
+	// Render cache filled by GISLibrary::S102Renderer (to move out of the dataset in a later step).
 	IWICBitmap* pWICBitmap = nullptr;
 	//ID2D1Bitmap* pBitmap = nullptr;
 	S102_Color s102Color;
@@ -19,11 +20,9 @@ public:
 public:
 	bool Open(CString _filepath) override;
 	bool OpenMetadata(CString _filepath) override;
-	void Draw(HDC& hDC, Scaler* scaler, double offset = 0) override;
 
 	S102_FC_BathymetryCoverage* GetBathymetryCoverage();
 
-	void CreateBitmap();
 	void DeleteBitmap();
 	D2D1_COLOR_F getColor(float depth);
 	void SetPositive();

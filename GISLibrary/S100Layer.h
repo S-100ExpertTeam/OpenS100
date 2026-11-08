@@ -33,7 +33,8 @@ public: // for draw
 
 public:
 	bool Open(CString _filepath, D2D1Resources* d2d1, LayerManager* lm = nullptr) override;
-	void Draw(HDC& hDC, Scaler* scaler, double offset = 0) override;
+	// Grid datasets (S-102 ...) are drawn by a renderer that receives the D2D resources explicitly.
+	void DrawGrid(D2D1Resources* d2, HDC& hDC, Scaler* scaler);
 	void SetFeatureCatalog(FeatureCatalogue* value);
 	FeatureCatalogue* GetFeatureCatalog();
 	FeatureCatalogue* GetFC();

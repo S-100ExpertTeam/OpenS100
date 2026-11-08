@@ -28,8 +28,9 @@ S100EditRender::~S100EditRender()
 
 }
 
-void S100EditRender::Set(S101Cell* enc, Scaler* scaler, R_FeatureRecord* feature)
+void S100EditRender::Set(S101Cell* enc, Scaler* scaler, R_FeatureRecord* feature, GISLibrary::D2D1Resources* renderResources)
 {
+	this->renderResources = renderResources;
 	this->enc = enc;
 	this->scaler = scaler;
 	this->feature = feature;
@@ -88,8 +89,8 @@ void S100EditRender::ShowPoint(SPoint* geom)
 		(geom == nullptr))
 		return;
 
-	auto d2 = enc->GetD2();
-	if (d2->pRT)
+	auto d2 = renderResources;
+	if (d2 && d2->pRT)
 	{
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
 
@@ -129,8 +130,8 @@ void S100EditRender::ShowPoint(SMultiPoint* geom)
 		(geom == nullptr))
 		return;
 
-	auto d2 = enc->GetD2();
-	if (d2->pRT)
+	auto d2 = renderResources;
+	if (d2 && d2->pRT)
 	{
 		D2D1_RECT_F rect = { -5, -5, 5, 5 };
 
@@ -174,8 +175,8 @@ void S100EditRender::ShowPoint(SCurve* geom)
 		(geom == nullptr))
 		return;
 
-	auto d2 = enc->GetD2();
-	if (d2->pRT)
+	auto d2 = renderResources;
+	if (d2 && d2->pRT)
 	{
 		long selectedSX = 0;
 		long selectedSY = 0;
@@ -231,8 +232,8 @@ void S100EditRender::ShowPoint(SCompositeCurve* geom)
 		(geom == nullptr))
 		return;
 
-	auto d2 = enc->GetD2();
-	if (d2->pRT)
+	auto d2 = renderResources;
+	if (d2 && d2->pRT)
 	{
 		long selectedSX = 0;
 		long selectedSY = 0;
@@ -287,8 +288,8 @@ void S100EditRender::ShowPoint(SSurface* geom)
 		(geom == nullptr))
 		return;
 
-	auto d2 = enc->GetD2();
-	if (d2->pRT)
+	auto d2 = renderResources;
+	if (d2 && d2->pRT)
 	{
 		long selectedSX = 0;
 		long selectedSY = 0;

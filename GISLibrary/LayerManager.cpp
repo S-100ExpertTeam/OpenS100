@@ -882,7 +882,7 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				{
 					if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
 					{
-						layer->Draw(hdc, scaler);
+						static_cast<S100Layer*>(layer)->DrawGrid(D2, hdc, scaler);
 					}
 				}
 			}

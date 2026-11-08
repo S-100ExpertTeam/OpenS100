@@ -86,14 +86,7 @@ S101Cell::S101Cell() : S100SpatialObject()
 	m_ObejctType = SpatialObjectType::S101Cell;
 }
 
-S101Cell::S101Cell(D2D1Resources* d2d1) : S100SpatialObject(d2d1)
-{
-	type = S100SpatialObjectType::S101Cell;
-	m_FileType = S100_FileType::FILE_S_100_VECTOR;
-	m_ObejctType = SpatialObjectType::S101Cell;
-}
-
-S101Cell::S101Cell(FeatureCatalogue* fc, D2D1Resources* d2d1) : S100SpatialObject(d2d1)
+S101Cell::S101Cell(FeatureCatalogue* fc) : S100SpatialObject()
 {
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
@@ -630,7 +623,7 @@ bool S101Cell::OpenByGML(CString path)
 
 	RemoveAll();
 
-	S10XGML* gml = new S10XGML(D2);
+	S10XGML* gml = new S10XGML();
 	gml->SetLayer(GetLayer());
 	gml->Open(path);
 
@@ -944,11 +937,6 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	}
 
 	geo->Set(vecPoint, boundaryList);
-
-	if (D2 == nullptr)
-	{
-		return false;
-	}
 
 	geo->SetMBR();
 	geo->CalculateCenterPoint();

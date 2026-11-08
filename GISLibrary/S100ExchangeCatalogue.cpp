@@ -8,8 +8,9 @@
 #include "..\\LatLonUtility\\LatLonUtility.h"
 #include "..\\LatLonUtility\\cpp_util.h"
 
-S100ExchangeCatalogue::S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1, LayerManager* parent) : SpatialObject(d2d1)
+S100ExchangeCatalogue::S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1, LayerManager* parent) : SpatialObject()
 {
+    D2 = d2d1;
     m_pLayerManager = new LayerManager(scaler, cm, d2d1);
     m_pLayerManager->onIC = false;
     m_pLayerManager->m_isScreenFitEnabled = false;
@@ -368,7 +369,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
                 object->SetExteriorRing(curve);
 
-                S10XGML* cls = new S10XGML(D2);
+                S10XGML* cls = new S10XGML();
                 auto sSurface = cls->SurfaceToSSurface(object);
                 brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
                 pRenderTarget->SetTransform(scaler->GetMatrix());
@@ -522,7 +523,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                         delete curve;
                     }
 
-                    S10XGML* cls = new S10XGML(D2);
+                    S10XGML* cls = new S10XGML();
                     auto sSurface = cls->SurfaceToSSurface(object);
 
                     delete object;

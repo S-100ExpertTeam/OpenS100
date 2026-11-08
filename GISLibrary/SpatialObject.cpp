@@ -6,11 +6,6 @@ SpatialObject::SpatialObject()
 
 }
 
-SpatialObject::SpatialObject(D2D1Resources* d2d1)
-{
-	this->D2 = d2d1;
-}
-
 SpatialObject::~SpatialObject(void)
 {
 
