@@ -19,7 +19,7 @@ TEST(S10XGML, OpensKoreanS124WithoutRenderer)
 
 	S10XGML gml;
 	gml.SetFC(&fc);
-	ASSERT_TRUE(gml.Open(CString(gmlPath.wstring().c_str())));
+	ASSERT_TRUE(gml.Open(gmlPath.wstring()));
 	EXPECT_GT(gml.features.size(), 0u);
 	EXPECT_GT(gml.geometries.size(), 0u);
 }
@@ -27,5 +27,5 @@ TEST(S10XGML, OpensKoreanS124WithoutRenderer)
 TEST(S10XGML, MissingFileReturnsFalse)
 {
 	S10XGML gml;
-	EXPECT_FALSE(gml.Open(CString(L"Z:\does\not\exist.gml")));
+	EXPECT_FALSE(gml.Open(std::wstring(L"Z:\does\not\exist.gml")));
 }

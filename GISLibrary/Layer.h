@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "Namespace_GISLibrary.h"
 #include "Enum_S100_FileType.h"
 
@@ -29,7 +30,7 @@ public:
 	int scaleMaximum = 0;
 
 public:
-	virtual bool Open(CString _filepath, LayerManager* lm = nullptr);
+	virtual bool Open(const std::wstring& _filepath, LayerManager* lm = nullptr);
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 	bool IsOn();
 	bool IsOn(int scale);
@@ -39,9 +40,9 @@ public:
 	void LayerInfoOn();
 	void LayerInfoOff();
 
-	CString GetLayerName();
-	CString GetLayerPath();
-	CString GetLayerType();
+	std::wstring GetLayerName();
+	std::wstring GetLayerPath();
+	std::wstring GetLayerType();
 
 	void SetMBR(MBR& value);
 	MBR GetMBR();

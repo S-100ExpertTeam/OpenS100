@@ -17,7 +17,7 @@ public:
 	std::vector<ScaleBand> vecScaleRange;
 
 	ScaleBand totalScaleBand;
-	CString strFilePath;
+	std::wstring strFilePath;
 
 private:
 	std::vector<S100::DataCoverage> vecDataCoverage;

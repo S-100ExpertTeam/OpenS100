@@ -298,11 +298,11 @@ void DATASET_SUPPORTdlg::OnDestroy()
 	auto layers = theApp.gisLib->GetLayerManager()->layers;
 	for (auto layer : layers)
 	{
-		if (std::string::npos != layer->GetLayerPath().Find(filePath))
+		if (layer->GetLayerPath().find(filePath.GetString()) != std::wstring::npos)
 		{
 			int id = layer->GetID();
 
-			theApp.gisLib->GetLayerManager()->AddLayerFront(filePath);
+			theApp.gisLib->GetLayerManager()->AddLayerFront(std::wstring(filePath));
 			theApp.gisLib->GetLayerManager()->DeleteLayerByKey(id);
 
 			blayercreate = false;
@@ -311,7 +311,7 @@ void DATASET_SUPPORTdlg::OnDestroy()
 	}
 
 	if (blayercreate) {
-		theApp.gisLib->GetLayerManager()->AddLayerFront(filePath);
+		theApp.gisLib->GetLayerManager()->AddLayerFront(std::wstring(filePath));
 	}
 	
 	theApp.m_pDockablePaneLayerManager.UpdateList();

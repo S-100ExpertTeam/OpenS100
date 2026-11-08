@@ -79,8 +79,7 @@ S101Cell* S101Creator::CreateENC(std::wstring name)
 
 	enc->m_dsgir.m_dsid.m_dsnm = name.c_str();
 
-	CString strName = name.c_str();
-	result->SetFileName(strName);
+	result->SetFileName(name);
 
 	return result;
 }

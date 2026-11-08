@@ -14,5 +14,5 @@ public:
 	std::vector<D2D1_POINT_2F> BoundingPolygon;
 	ScaleBand ScaleRange;
 
-	CString strFilePath;
+	std::wstring strFilePath;
 };

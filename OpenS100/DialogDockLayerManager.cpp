@@ -337,7 +337,7 @@ void CDialogDockLayerManager::UpdateList()
 		auto layer = lm->GetLayer(i);
 
 		strNo.Format(L"%d", i + 1);
-		strName = layer->GetLayerName();
+		strName = layer->GetLayerName().c_str();
 
 		listCtrlLayers.InsertItem(i, strNo);
 		listCtrlLayers.SetItemText(i, 1, strName);

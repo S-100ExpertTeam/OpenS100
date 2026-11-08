@@ -19,7 +19,7 @@ SHPFile::~SHPFile(void)
 }
 
 // Read the file and store the data in the layer.
-bool SHPFile::Open(CString _filepath)
+bool SHPFile::Open(const std::wstring& _filepath)
 {
 	SetFilePath(_filepath);
 
@@ -28,25 +28,17 @@ bool SHPFile::Open(CString _filepath)
 	s100::io::BinaryFileReader fdSHP, fdSHX;
 
 	// Open the SHP file.
-	if (!fdSHP.Open(std::wstring(_filepath)))
+	if (!fdSHP.Open(_filepath))
 	{
 		//OutputDebugString(_T("SHP File Open Error!"));
 		return FALSE;
 	}
 
-	// CString with path of SHX file.
-	CString ShxFilePath = _T("");
-	// Copy without extension.
-	for (int i = 0; i < (_filepath.GetLength() - 3); i++)
-	{
-		ShxFilePath.AppendChar(_filepath.GetAt(i));
-	}
-
-	// Attach extensions to the path of SHX file.
-	ShxFilePath.AppendFormat(_T("shx"));
+	// Path of the SHX file: same name, extension swapped.
+	const std::wstring ShxFilePath = _filepath.substr(0, _filepath.size() - 3) + L"shx";
 
 	// Open the SHX file.
-	if (!fdSHX.Open(std::wstring(ShxFilePath)))
+	if (!fdSHX.Open(ShxFilePath))
 	{
 		//OutputDebugString(_T("SHX File Open Error!"));
 		return FALSE;
@@ -261,7 +253,7 @@ bool SHPFile::Open(CString _filepath)
 	return TRUE;
 }
 
-bool SHPFile::OpenMetadata(CString _filepath)
+bool SHPFile::OpenMetadata(const std::wstring& _filepath)
 {
 	return true;
 }

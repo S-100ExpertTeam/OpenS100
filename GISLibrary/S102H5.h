@@ -18,8 +18,8 @@ public:
 	S102_Color s102Color;
 
 public:
-	bool Open(CString _filepath) override;
-	bool OpenMetadata(CString _filepath) override;
+	bool Open(const std::wstring& _filepath) override;
+	bool OpenMetadata(const std::wstring& _filepath) override;
 
 	S102_FC_BathymetryCoverage* GetBathymetryCoverage();
 

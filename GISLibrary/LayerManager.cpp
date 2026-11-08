@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include "PathUtil.h"
+#include "TextCompare.h"
 #include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "LayerManager.h"
@@ -35,8 +37,6 @@
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
-
 #include "../GeoMetryLibrary/GeometricFuc.h"
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
@@ -56,19 +56,6 @@
 
 LayerManager::LayerManager(D2D1Resources* d2d1)
 {
-	CString strFolderPath;
-	::GetModuleFileName(NULL, strFolderPath.GetBuffer(MAX_PATH), MAX_PATH);
-	strFolderPath.ReleaseBuffer();
-	if (strFolderPath.Find('\\') != -1)
-	{
-		for (int i = strFolderPath.GetLength() - 1; i >= 0; i--)
-		{
-			TCHAR ch = strFolderPath[i];
-			strFolderPath.Delete(i);
-			if (ch == '\\') break;
-		}
-	}
-
 	D2 = d2d1;
 }
 
@@ -98,21 +85,21 @@ void LayerManager::MoveLayerFromList(int from, int to) {
 	layers.splice(toIt, layers, fromIt);
 }
 
-bool LayerManager::IsContainFilePathToLayer(CString _filepath)
+bool LayerManager::IsContainFilePathToLayer(const std::wstring& _filepath)
 {
 	for (auto layer : layers) {
-		if (layer->GetLayerPath().Compare(_filepath) == 0) {
+		if (layer->GetLayerPath() == _filepath) {
 			return true;
 		}
 	}
 	return false;
 }
 
-bool LayerManager::AddBackgroundLayer(CString _filepath)
+bool LayerManager::AddBackgroundLayer(const std::wstring& _filepath)
 {
-	CString file_extension = LibMFCUtil::GetExtension(_filepath);
+	const std::wstring file_extension = s100::path::Extension(_filepath);
 
-	if (file_extension.CompareNoCase(_T("SHP")) == 0) 
+	if (s100::text::CompareNoCase(file_extension, L"SHP") == 0) 
 	{
 		if (backgroundLayer.Open(_filepath, this) == false)
 		{
@@ -133,7 +120,7 @@ bool LayerManager::AddBackgroundLayer(CString _filepath)
 	return TRUE;
 }
 
-int LayerManager::AddLayer(Layer* _layer , CString FilePath, bool InsertBack)
+int LayerManager::AddLayer(Layer* _layer , const std::wstring& FilePath, bool InsertBack)
 {
 	if (_layer == nullptr)
 	{
@@ -159,7 +146,7 @@ int LayerManager::AddLayer(Layer* _layer , CString FilePath, bool InsertBack)
 		mbr.CalcMBR(_layer->m_mbr);
 	}
 
-	if (FilePath == "")
+	if (FilePath.empty())
 		layers.push_back(_layer);
 	else
 	{
@@ -258,13 +245,13 @@ bool LayerManager::AddUpdateLayer(Layer* Base, Layer* Update)
 	return false;
 }
 
-int LayerManager::isUpdate(CString filePath)
+int LayerManager::isUpdate(const std::wstring& filePath)
 {
-	CString file_extension = LibMFCUtil::GetExtension(filePath);
+	const std::wstring file_extension = s100::path::Extension(filePath);
 
 	try
 	{
-		int value = _ttoi(file_extension);
+		int value = static_cast<int>(std::wcstol(file_extension.c_str(), nullptr, 10));
 		return value;
 	}
 	catch (std::exception e)
@@ -275,7 +262,7 @@ int LayerManager::isUpdate(CString filePath)
 	return 0;
 }
 
-int LayerManager::AddLayer(CString _filepath)
+int LayerManager::AddLayer(const std::wstring& _filepath)
 {
 	Layer* layer = nullptr;
 	size_t fitor = std::wstring::npos;
@@ -328,7 +315,7 @@ int LayerManager::AddLayer(CString _filepath)
 	auto tempTypePtr = dynamic_cast<S100ExchangeCatalogue*>(layer->m_spatialObject);
 	if (tempTypePtr != nullptr)
 	{
-		CString firstlayerfilepath = tempTypePtr->GetFirstLayerFilePath();
+		const std::wstring firstlayerfilepath = tempTypePtr->GetFirstLayerFilePath();
 		AddLayer(layer, firstlayerfilepath, false);
 	}
 	else
@@ -340,7 +327,7 @@ int LayerManager::AddLayer(CString _filepath)
 }
 
 
-int LayerManager::AddLayerFront(CString _filepath)
+int LayerManager::AddLayerFront(const std::wstring& _filepath)
 {
 	Layer* layer = nullptr;
 	size_t fitor = std::wstring::npos;
@@ -452,18 +439,14 @@ void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
 	SolidBrush B(Color(0, 0, 255));
 	StringFormat sf;
 
-	CString layername;
-	layername.Format(_T("LayerName : %s \n"), layer->GetLayerName());
-	CString strLayer;
-	strLayer.Format(_T("LayerType : %s \n"), layer->GetLayerType());
-	layername += strLayer;
+	const std::wstring layername = L"LayerName : " + layer->GetLayerName() + L" \nLayerType : " + layer->GetLayerType() + L" \n";
 
 	sf.SetAlignment(StringAlignmentNear);
 	sf.SetLineAlignment(StringAlignmentNear);
 
 	graphics.DrawRectangle(&linePen, position.X, position.Y, position.Width, position.Height);
 	graphics.FillRectangle(&internalBrush, position.X, position.Y, position.Width, position.Height);
-	graphics.DrawString(layername, -1, &F, position, &sf, &B);
+	graphics.DrawString(layername.c_str(), -1, &F, position, &sf, &B);
 }
 
 void LayerManager::DrawInformationLayer(HDC& hDC, int nindex)
@@ -1350,27 +1333,25 @@ Layer* LayerManager::GetLayerByKey(int key)
 	return item->second;
 }
 
-CString LayerManager::GetLayerName(int index)
+std::wstring LayerManager::GetLayerName(int index)
 {
 	auto layer = GetLayer(index);
 
 	if (layer)
 	{
-		layer->GetLayerName();
+		return layer->GetLayerName();
 	}
-
 	return L"";
 }
 
-CString LayerManager::GetLayerNameByKey(int key)
+std::wstring LayerManager::GetLayerNameByKey(int key)
 {
 	auto layer = GetLayerByKey(key);
 
 	if (layer)
 	{
-		layer->GetLayerName();
+		return layer->GetLayerName();
 	}
-
 	return L"";
 }
 
@@ -1421,12 +1402,12 @@ void LayerManager::DeleteLayer(int index)
 	return;
 }
 
-void LayerManager::FindPathDeleteLayer(CString FindLayerPath)
+void LayerManager::FindPathDeleteLayer(const std::wstring& FindLayerPath)
 {
 	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
 		auto layer = *i;
-		if(std::string::npos != layer->GetLayerPath().Find(FindLayerPath))
+		if (layer->GetLayerPath().find(FindLayerPath) != std::wstring::npos)
 		{
 			mapLayer.erase(layer->GetID());
 			delete layer;
@@ -1438,12 +1419,12 @@ void LayerManager::FindPathDeleteLayer(CString FindLayerPath)
 	}
 }
 
-void LayerManager::DeleteLayer(CString filepath)
+void LayerManager::DeleteLayer(const std::wstring& filepath)
 {
 	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
 		auto layer = *i;
-		if (layer->GetLayerPath().Compare(filepath) == 0)
+		if (layer->GetLayerPath() == filepath)
 		{
 			mapLayer.erase(layer->GetID());
 			delete layer;
@@ -1709,23 +1690,23 @@ namespace
 	}
 }
 
-S100_FileType LayerManager::CheckFileType(CString path, int update)
+S100_FileType LayerManager::CheckFileType(const std::wstring& path, int update)
 {
 	S100_FileType ret = S100_FileType::FILE_NONE;
 
-	CString file_extension = LibMFCUtil::GetExtension(path);
+	const std::wstring file_extension = s100::path::Extension(path);
 	auto isUpdatFile = update > 0 ? true : false;
 
-	if (file_extension.CompareNoCase(_T("000")) == 0 || isUpdatFile)
+	if (s100::text::CompareNoCase(file_extension, L"000") == 0 || isUpdatFile)
 	{
-		ret = SniffIso8211(std::wstring(path));
+		ret = SniffIso8211(path);
 	}
-	else if (file_extension.CompareNoCase(_T("XML")) == 0 || file_extension.CompareNoCase(_T("GML")) == 0)
+	else if (s100::text::CompareNoCase(file_extension, L"XML") == 0 || s100::text::CompareNoCase(file_extension, L"GML") == 0)
 	{
-		if (!path.IsEmpty())
+		if (!path.empty())
 		{
 			pugi::xml_document doc;
-			pugi::xml_parse_result result = doc.load_file(path);
+			pugi::xml_parse_result result = doc.load_file(path.c_str());
 			if (!result)
 			{
 				return S100_FileType::FILE_NONE;
@@ -1740,7 +1721,7 @@ S100_FileType LayerManager::CheckFileType(CString path, int update)
 			}
 		}
 	}
-	else if (file_extension.CompareNoCase(_T("h5")) == 0)
+	else if (s100::text::CompareNoCase(file_extension, L"h5") == 0)
 	{
 		ret = S100_FileType::FILE_S_100_GRID_H5;
 	}
@@ -1748,28 +1729,28 @@ S100_FileType LayerManager::CheckFileType(CString path, int update)
 	return ret;
 }
 
-S100_FileType LayerManager::CheckFileType(CString path)
+S100_FileType LayerManager::CheckFileType(const std::wstring& path)
 {
 	S100_FileType ret = S100_FileType::FILE_NONE;
 
-	CString file_extension = LibMFCUtil::GetExtension(path);
+	const std::wstring file_extension = s100::path::Extension(path);
 
 
-	if ((file_extension.CompareNoCase(_T("000")) >= 0) &&
-		(file_extension.CompareNoCase(_T("999")) <= 0))
+	if ((s100::text::CompareNoCase(file_extension, L"000") >= 0) &&
+		(s100::text::CompareNoCase(file_extension, L"999") <= 0))
 	{
-		auto sniffed = SniffIso8211(std::wstring(path));
+		auto sniffed = SniffIso8211(path);
 		if (sniffed != S100_FileType::FILE_NONE)
 		{
 			return sniffed;
 		}
 	}
-	else if (file_extension.CompareNoCase(_T("XML")) == 0 || file_extension.CompareNoCase(_T("GML")) == 0)
+	else if (s100::text::CompareNoCase(file_extension, L"XML") == 0 || s100::text::CompareNoCase(file_extension, L"GML") == 0)
 	{
-		if (!path.IsEmpty())
+		if (!path.empty())
 		{
 			pugi::xml_document doc;
-			pugi::xml_parse_result result = doc.load_file(path);
+			pugi::xml_parse_result result = doc.load_file(path.c_str());
 			if (!result)
 			{
 				return S100_FileType::FILE_NONE;
@@ -1792,11 +1773,11 @@ S100_FileType LayerManager::CheckFileType(CString path)
 			}
 		}
 	}
-	else if (file_extension.CompareNoCase(_T("h5")) == 0)
+	else if (s100::text::CompareNoCase(file_extension, L"h5") == 0)
 	{
 		return S100_FileType::FILE_S_100_GRID_H5;
 	}
-	else if (file_extension.CompareNoCase(L"SHP") == 0)
+	else if (s100::text::CompareNoCase(file_extension, L"SHP") == 0)
 	{
 		return S100_FileType::FILE_Shape;
 	}
@@ -1831,12 +1812,12 @@ int LayerManager::CreateLayerID()
 	return 1;
 }
 
-int LayerManager::pathToProductNumber(CString path)
+int LayerManager::pathToProductNumber(const std::wstring& path)
 {
-	auto name = LibMFCUtil::GetFileName(path);
-	if (name.GetLength() >= 3)
+	const auto name = s100::path::Stem(path);
+	if (name.size() >= 3)
 	{
-		std::wstring strProductNumber = name.Left(3);
+		const std::wstring strProductNumber = name.substr(0, 3);
 
 		try {
 			return cpp_util::stoi(strProductNumber);

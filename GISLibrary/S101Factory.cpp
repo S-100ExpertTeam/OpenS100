@@ -244,7 +244,7 @@ SGeometryType S101GeometryUtil::ReadWKBGeometryType(const unsigned char* pabyDat
 	return SGeometryType::none;
 }
 
-SHPFile* S100LayerFactory::CopySHPFile(Layer* layer, CString newName)
+SHPFile* S100LayerFactory::CopySHPFile(Layer* layer, const std::wstring& newName)
 {
 	if (!layer)
 		return nullptr;
@@ -301,7 +301,7 @@ SHPFile* S100LayerFactory::CopySHPFile(Layer* layer, CString newName)
 	return shpFile;
 }
 
-S101Cell* S100LayerFactory::CopyS101Cell(Layer* layer, CString newName)
+S101Cell* S100LayerFactory::CopyS101Cell(Layer* layer, const std::wstring& newName)
 {
 	if (!layer)
 		return nullptr;
@@ -368,7 +368,7 @@ S101Cell* S100LayerFactory::CopyS101Cell(Layer* layer, CString newName)
 	return cell;
 }
 
-S10XGML* S100LayerFactory::CopyS10XGML(Layer* layer, CString newName)
+S10XGML* S100LayerFactory::CopyS10XGML(Layer* layer, const std::wstring& newName)
 {
 	if (!layer)
 		return nullptr;
@@ -408,7 +408,7 @@ S10XGML* S100LayerFactory::CopyS10XGML(Layer* layer, CString newName)
 	return gml;
 }
 
-S100H5* S100LayerFactory::CopyS100H5(Layer* layer, CString newName)
+S100H5* S100LayerFactory::CopyS100H5(Layer* layer, const std::wstring& newName)
 {
 	if (!layer)
 		return nullptr;
@@ -427,7 +427,7 @@ S100H5* S100LayerFactory::CopyS100H5(Layer* layer, CString newName)
 	return h5;
 }
 
-S102H5* S100LayerFactory::CopyS102H5(Layer* layer, CString newName)
+S102H5* S100LayerFactory::CopyS102H5(Layer* layer, const std::wstring& newName)
 {
 	if (!layer)
 		return nullptr;
@@ -455,7 +455,7 @@ S102H5* S100LayerFactory::CopyS102H5(Layer* layer, CString newName)
 	return nullptr;
 }
 
-Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, CString newName)
+Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, const std::wstring& newName)
 {
 	Layer* dscLayer = nullptr;
 
@@ -516,7 +516,7 @@ Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, CString newName)
 	return dscLayer;
 }
 
-Layer* S100LayerFactory::CopyLayerWithoutPC(Layer* srcLayer, CString newName)
+Layer* S100LayerFactory::CopyLayerWithoutPC(Layer* srcLayer, const std::wstring& newName)
 {
 	Layer* dscLayer = nullptr;
 

@@ -65,7 +65,7 @@ TEST_F(S101CellKorTds, ParsesSmallestKoreanCell)
 TEST_F(S101CellKorTds, OpensSmallestKoreanCellWithoutRenderer)
 {
 	S101Cell cell(&fc);
-	ASSERT_TRUE(cell.Open(CString(cellPath.wstring().c_str())));
+	ASSERT_TRUE(cell.Open(cellPath.wstring()));
 
 	EXPECT_GT(cell.GetCount_FeatureTypeRecord(), 0);
 	EXPECT_GT(cell.GetFeatureCount(), 0);
@@ -77,7 +77,7 @@ TEST_F(S101CellKorTds, OpensSmallestKoreanCellWithoutRenderer)
 TEST_F(S101CellKorTds, SaveAsEncRoundTrip)
 {
 	S101Cell cell(&fc);
-	ASSERT_TRUE(cell.Open(CString(cellPath.wstring().c_str())));
+	ASSERT_TRUE(cell.Open(cellPath.wstring()));
 
 	auto out = testpaths::tempDir() / "roundtrip.000";
 	ASSERT_TRUE(cell.SaveAsENC(out.wstring()));
@@ -110,7 +110,7 @@ TEST_F(S101CellKorTds, MalformedRecordLeaderDoesNotHang)
 	writeAll(corrupt, bytes);
 
 	S101Cell cell(&fc);
-	(void)cell.Open(CString(corrupt.wstring().c_str()));   // must return; result is unspecified
+	(void)cell.Open(corrupt.wstring());   // must return; result is unspecified
 	SUCCEED();
 }
 
@@ -128,7 +128,7 @@ TEST_F(S101CellKorTds, RecordLengthBeyondBufferDoesNotCrash)
 	writeAll(corrupt, bytes);
 
 	S101Cell cell(&fc);
-	(void)cell.Open(CString(corrupt.wstring().c_str()));
+	(void)cell.Open(corrupt.wstring());
 	SUCCEED();
 }
 
@@ -141,7 +141,7 @@ TEST_F(S101CellKorTds, TruncatedFileDoesNotCrash)
 	writeAll(corrupt, bytes);
 
 	S101Cell cell(&fc);
-	(void)cell.Open(CString(corrupt.wstring().c_str()));
+	(void)cell.Open(corrupt.wstring());
 	SUCCEED();
 }
 
@@ -150,7 +150,7 @@ TEST(S101Cell, MissingFileReturnsFalse)
 	FeatureCatalogue fc;
 	S101Cell cell(&fc);
 	EXPECT_FALSE(cell.Read8211(L"Z:\does\not\exist\101XX000.000"));
-	EXPECT_FALSE(cell.Open(CString(L"Z:\does\not\exist\101XX000.000")));
+	EXPECT_FALSE(cell.Open(std::wstring(L"Z:\does\not\exist\101XX000.000")));
 }
 
 TEST(S101Cell, ReadTwiceIntoSameCellIsStable)

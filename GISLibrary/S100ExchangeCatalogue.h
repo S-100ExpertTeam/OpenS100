@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "spatialobject.h"
 #include "ExchangeCatalogue.h"
 
@@ -39,8 +40,8 @@ public:
 	/*
 	** Description: Read the file and store the data in the layer.
 	*/
-	bool Open(CString _filepath) override;
-	bool OpenMetadata(CString _filepath) override;
+	bool Open(const std::wstring& _filepath) override;
+	bool OpenMetadata(const std::wstring& _filepath) override;
 
 	void Draw(HDC& hDC, Scaler* scaler, double offset) override;
 
@@ -48,15 +49,15 @@ public:
 
 	void DrawFiles(HDC& hDC, Scaler* scaler, double offset, std::vector<std::shared_ptr<InventoryItem>>& item);
 	
-	bool containsFile(const std::vector<std::shared_ptr<InventoryItem>>& files, const CString& targetFile);
+	bool containsFile(const std::vector<std::shared_ptr<InventoryItem>>& files, const std::wstring& targetFile);
 
-	bool CompareByFileName(const CString& a, const CString& b);
+	bool CompareByFileName(const std::wstring& a, const std::wstring& b);
 
 	bool CompareByLayer(const Layer* a, const Layer* b);
 
-	CString FixFileName(string str);
+	std::wstring FixFileName(const std::string& str);
 
-	CString FixLegacyFileName(string str);
+	std::wstring FixLegacyFileName(const std::string& str);
 
-	CString GetFirstLayerFilePath();
+	std::wstring GetFirstLayerFilePath();
 };

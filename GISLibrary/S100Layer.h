@@ -32,7 +32,7 @@ public: // for draw
 	DrawingSet drawingSet;
 
 public:
-	bool Open(CString _filepath, LayerManager* lm = nullptr) override;
+	bool Open(const std::wstring& _filepath, LayerManager* lm = nullptr) override;
 	// Grid datasets (S-102 ...) are drawn by a renderer that receives the D2D resources explicitly.
 	void DrawGrid(D2D1Resources* d2, HDC& hDC, Scaler* scaler);
 	void SetFeatureCatalog(FeatureCatalogue* value);
@@ -44,7 +44,7 @@ public:
 	bool GetIndividualFC();
 	void SetIndividualPC(bool value);
 	bool GetIndividualPC();
-	bool OpenFC(CString path);
+	bool OpenFC(const std::wstring& path);
 	void DeleteCatalog();
 	void DrawInfo(HDC& hDC, Scaler* scaler);
 	S100SpatialObject* GetS100SpatialObject();

@@ -1,4 +1,6 @@
 ﻿#include "stdafx.h"
+#include "PathUtil.h"
+#include "TextCompare.h"
 #include "../GeoMetryLibrary/TextCodec.h"
 #include "S101Cell.h"
 #include "BinaryFile.h"
@@ -321,15 +323,15 @@ void S101Cell::ClearAll(void)
 }
 
 #pragma warning(disable:4018)
-bool S101Cell::Open(CString _filepath) // Dataset start, read .000 
+bool S101Cell::Open(const std::wstring& _filepath) // Dataset start, read .000 
 {
-	auto extension = LibMFCUtil::GetExtension(_filepath);
-	if ((extension.CompareNoCase(L"000") >= 0) &&
-		(extension.CompareNoCase(L"999") <= 0))
+	const auto extension = s100::path::Extension(_filepath);
+	if ((s100::text::CompareNoCase(extension, L"000") >= 0) &&
+		(s100::text::CompareNoCase(extension, L"999") <= 0))
 	{
 		return OpenBy000(_filepath);
 	}
-	else if (extension.CompareNoCase(L"gml") == 0)
+	else if (s100::text::CompareNoCase(extension, L"gml") == 0)
 	{
 		return OpenByGML(_filepath);
 	}
@@ -337,15 +339,15 @@ bool S101Cell::Open(CString _filepath) // Dataset start, read .000
 	return false;
 }
 
-bool S101Cell::OpenMetadata(CString _filepath)
+bool S101Cell::OpenMetadata(const std::wstring& _filepath)
 {
-	auto extension = LibMFCUtil::GetExtension(_filepath);
-	if ((extension.CompareNoCase(L"000") >= 0) &&
-		(extension.CompareNoCase(L"999") <= 0))
+	const auto extension = s100::path::Extension(_filepath);
+	if ((s100::text::CompareNoCase(extension, L"000") >= 0) &&
+		(s100::text::CompareNoCase(extension, L"999") <= 0))
 	{
 		return OpenMetadataBy000(_filepath);
 	}
-	else if (extension.CompareNoCase(L"gml") == 0)
+	else if (s100::text::CompareNoCase(extension, L"gml") == 0)
 	{
 		return OpenMetadataByGML(_filepath);
 	}
@@ -355,7 +357,7 @@ bool S101Cell::OpenMetadata(CString _filepath)
 
 bool S101Cell::Read8211(std::wstring path)
 {
-	SetFilePath(path.c_str());
+	SetFilePath(path);
 
 	RemoveAll();
 
@@ -480,15 +482,13 @@ bool S101Cell::isUpdate()
 	return false;
 }
 
-bool S101Cell::OpenBy000(CString path)
+bool S101Cell::OpenBy000(const std::wstring& path)
 {
 	SetFilePath(path);
 
-	USES_CONVERSION;
-
 	RemoveAll();
 
-	if (Read8211(std::wstring(path))) {
+	if (Read8211(path)) {
 		MakeFullSpatialData();
 		CalcMBR();
 		Check();
@@ -506,9 +506,9 @@ bool S101Cell::OpenBy000(CString path)
 	return false;
 }
 
-bool S101Cell::OpenMetadataBy000(CString path)
+bool S101Cell::OpenMetadataBy000(const std::wstring& path)
 {
-	auto bytes = s100::io::ReadAllBytes(std::wstring(path));
+	auto bytes = s100::io::ReadAllBytes(path);
 	if (!bytes || bytes->empty())
 	{
 		return false;
@@ -572,11 +572,9 @@ bool S101Cell::OpenMetadataBy000(CString path)
 	return true;
 }
 
-bool S101Cell::OpenByGML(CString path)
+bool S101Cell::OpenByGML(const std::wstring& path)
 {
 	SetFilePath(path);
-
-	USES_CONVERSION;
 
 	RemoveAll();
 
@@ -609,7 +607,7 @@ bool S101Cell::OpenByGML(CString path)
 	return true;
 }
 
-bool S101Cell::OpenMetadataByGML(CString path)
+bool S101Cell::OpenMetadataByGML(const std::wstring& path)
 {
 	return true;
 }
@@ -1558,7 +1556,7 @@ std::string S101Cell::GetApplicationProfileToString()
 void S101Cell::SetDatasetFileIdentifier(const std::wstring& value)
 {
 	m_dsgir.m_dsid.m_dsnm = value;
-	SetFileName(CString(value.c_str())); // SpatialObject API: 3-2b
+	SetFileName(value);
 }
 
 std::wstring S101Cell::GetDatasetFileIdentifier()
@@ -3220,8 +3218,8 @@ void S101Cell::InitCurveSuppression()
 
 bool S101Cell::Save(std::wstring path)
 {
-	auto ext = LibMFCUtil::GetExtension(path.c_str());
-	if (ext.CompareNoCase(L"gml") != 0)
+	const auto ext = s100::path::Extension(path);
+	if (s100::text::CompareNoCase(ext, L"gml") != 0)
 	{
 		return SaveAsENC(path);
 	}
@@ -4390,7 +4388,7 @@ std::wstring S101Cell::GetChartName()
 {
 	// return filename 
 	// ex : 101GB005X01SW.000
-	return std::wstring(GetFileName());
+	return GetFileName();
 }
 
 std::string S101Cell::GetEditionNumber()
@@ -4463,8 +4461,8 @@ S100GML::DatasetIdentificationInformation S101Cell::GetDatasetIdentificationInfo
 	result.productIdentifier = "INT.IHO.S-101.1.0";
 	result.productEdition = "1.0.0";
 	result.applicationProfile = "1";
-	result.datasetFileIdentifier = LibMFCUtil::WStringToString(std::wstring(GetFileName()));
-	result.datasetTitle = LibMFCUtil::WStringToString(std::wstring(LibMFCUtil::GetFileName(GetFilePath())));
+	result.datasetFileIdentifier = s100::text::ToUtf8(GetFileName());
+	result.datasetTitle = s100::text::ToUtf8(s100::path::Stem(GetFilePath()));
 
 	if (m_dsgir.m_dsid.m_dsrd.size() >= 8)
 	{

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PathUtil.h"
 #include "SpatialObject.h"
 
 SpatialObject::SpatialObject()
@@ -21,26 +22,23 @@ Layer* SpatialObject::GetLayer()
 	return m_pLayer;
 }
 
-void SpatialObject::SetFilePath(CString value)
+void SpatialObject::SetFilePath(const std::wstring& value)
 {
 	m_FilePath = value;
-	int index= value.ReverseFind('\\');
-	auto name= value.Mid(index + 1);
-	//Includes file name and extension.
-	SetFileName(name);
+	SetFileName(s100::path::FileName(value)); // name with extension
 }
 
-CString SpatialObject::GetFilePath()
+std::wstring SpatialObject::GetFilePath() const
 {
 	return m_FilePath;
 }
 
-void SpatialObject::SetFileName(CString value)
+void SpatialObject::SetFileName(const std::wstring& value)
 {
 	m_FileName = value;
 }
 
-CString SpatialObject::GetFileName()
+std::wstring SpatialObject::GetFileName() const
 {
 	return m_FileName;
 }

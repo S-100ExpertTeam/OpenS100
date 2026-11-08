@@ -88,7 +88,7 @@ D2D1Resources* CGISLibraryApp::GetD2D1Resources()
 	return D2;
 }
 
-bool CGISLibraryApp::AddLayer(CString _filepath)
+bool CGISLibraryApp::AddLayer(const std::wstring& _filepath)
 {
 	if (0 > m_pLayerManager->AddLayer(_filepath))
 	{
@@ -98,7 +98,7 @@ bool CGISLibraryApp::AddLayer(CString _filepath)
 	return true;
 }
 
-bool CGISLibraryApp::AddBackgroundLayer(CString _filepath)
+bool CGISLibraryApp::AddBackgroundLayer(const std::wstring& _filepath)
 {
 	return m_pLayerManager->AddBackgroundLayer(_filepath);
 }
@@ -214,7 +214,7 @@ void CGISLibraryApp::DrawScaleBar()
 	}
 }
 
-CString CGISLibraryApp::GetLayerName(int index)
+std::wstring CGISLibraryApp::GetLayerName(int index)
 {
 	return m_pLayerManager->GetLayerName(index);
 }
@@ -226,7 +226,7 @@ void CGISLibraryApp::DeleteLayer(int index)
 {
 	m_pLayerManager->DeleteLayer(index);
 }
-void CGISLibraryApp::DeleteLayer(CString filepath)
+void CGISLibraryApp::DeleteLayer(const std::wstring& filepath)
 {
 	m_pLayerManager->DeleteLayer(filepath);
 }
@@ -417,9 +417,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 
 	if (!D2->pDWriteTextFormat)
 	{
-		CString errMsg;
-		errMsg.Format(_T("Failed to create IDWriteTextFormat! (%02X)"), hr);
-		//OutputDebugString(errMsg);
+		// Failed to create IDWriteTextFormat! (%02X) (was a debug trace)
 	}
 
 	// Create a DirectWrite text format object.
@@ -440,9 +438,7 @@ void CGISLibraryApp::ChangeDisplayFont()
 
 	if (!D2->pDWriteTextFormatArea)
 	{
-		CString errMsg;
-		errMsg.Format(_T("Failed to create IDWriteTextFormat (for Area)! (%02X)"), hr);
-		//OutputDebugString(errMsg);
+		// Failed to create IDWriteTextFormat (for Area)! (%02X) (was a debug trace)
 	}
 }
 

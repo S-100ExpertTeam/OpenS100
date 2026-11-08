@@ -1,10 +1,9 @@
 #include "stdafx.h"
+#include "PathUtil.h"
 #include "S102H5.h"
 #include "S102_RootGroup.h"
 #include "S102_FC_BathymetryCoverage.h"
 #include "GISLibrary.h"
-
-#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include "../GeoMetryLibrary/ENCCommon.h"
 
@@ -26,10 +25,10 @@ S102H5::~S102H5()
 	DeleteBitmap();
 }
 
-bool S102H5::Open(CString _filepath)
+bool S102H5::Open(const std::wstring& _filepath)
 {
 	SetFilePath(_filepath);
-	SetFileName(LibMFCUtil::GetFileName(_filepath));
+	SetFileName(s100::path::Stem(_filepath)); // HDF5 datasets are named by their stem
 
 	auto path = pugi::as_utf8(_filepath);
 
@@ -71,7 +70,7 @@ bool S102H5::Open(CString _filepath)
 	return true;
 }
 
-bool S102H5::OpenMetadata(CString _filepath)
+bool S102H5::OpenMetadata(const std::wstring& _filepath)
 {
 	return true;
 }

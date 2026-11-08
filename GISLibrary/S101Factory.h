@@ -67,14 +67,14 @@ public:
 class S100LayerFactory
 {
 private:
-	static SHPFile* CopySHPFile(Layer*, CString newName);
-	static S101Cell* CopyS101Cell(Layer*, CString newName);
-	static S10XGML* CopyS10XGML(Layer*, CString newName);
-	static S100H5* CopyS100H5(Layer*, CString newName);
-	static S102H5* CopyS102H5(Layer*, CString newName);
+	static SHPFile* CopySHPFile(Layer*, const std::wstring& newName);
+	static S101Cell* CopyS101Cell(Layer*, const std::wstring& newName);
+	static S10XGML* CopyS10XGML(Layer*, const std::wstring& newName);
+	static S100H5* CopyS100H5(Layer*, const std::wstring& newName);
+	static S102H5* CopyS102H5(Layer*, const std::wstring& newName);
 
 public:
-	static Layer* CopyLayer(Layer*, CString NewName);
-	static Layer* CopyLayerWithoutPC(Layer*, CString NewName);
+	static Layer* CopyLayer(Layer*, const std::wstring& NewName);
+	static Layer* CopyLayerWithoutPC(Layer*, const std::wstring& NewName);
 	static void DestoryLayer(Layer*);
 };

@@ -614,6 +614,7 @@
     <ClCompile Include="SCoverage.cpp" />
     <ClCompile Include="D2DGeometryCache.cpp" />
     <ClCompile Include="GdiGeometryRenderer.cpp" />
+    <ClCompile Include="PathUtil.cpp" />
     <ClCompile Include="S102Renderer.cpp" />
     <ClCompile Include="PortrayalRenderCache.cpp" />
     <ClCompile Include="SCurve.cpp" />
@@ -991,6 +992,8 @@
     <ClInclude Include="RecordMap.h" />
     <ClInclude Include="D2DGeometryCache.h" />
     <ClInclude Include="GdiGeometryRenderer.h" />
+    <ClInclude Include="PathUtil.h" />
+    <ClInclude Include="TextCompare.h" />
     <ClInclude Include="D2DView.h" />
     <ClInclude Include="S102Renderer.h" />
     <ClInclude Include="PortrayalRenderCache.h" />

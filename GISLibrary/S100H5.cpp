@@ -1,8 +1,7 @@
 #include "stdafx.h"
+#include "PathUtil.h"
 #include "S100H5.h"
 #include "S102_RootGroup.h"
-
-#include "../LibMFCUtil/LibMFCUtil.h"
 
 #include <hdf5.h>
 
@@ -23,10 +22,10 @@ S100H5::~S100H5()
 	}
 }
 
-bool S100H5::Open(CString _filepath)
+bool S100H5::Open(const std::wstring& _filepath)
 {
 	SetFilePath(_filepath);
-	SetFileName(LibMFCUtil::GetFileName(_filepath));
+	SetFileName(s100::path::Stem(_filepath)); // HDF5 datasets are named by their stem
 
 	auto path = pugi::as_utf8(_filepath);
 
@@ -47,7 +46,7 @@ bool S100H5::Open(CString _filepath)
 	return true;
 }
 
-bool S100H5::OpenMetadata(CString _filepath)
+bool S100H5::OpenMetadata(const std::wstring& _filepath)
 {
 	return true;
 }

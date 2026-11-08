@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include "PathUtil.h"
+#include "TextCompare.h"
 #include "S100Layer.h"
 #include "GISLibrary.h"
 #include "S10XGML.h"
@@ -8,7 +10,6 @@
 #include "PortrayalRenderCache.h"
 #include "ProcessS101.h"
 
-#include "../LibMFCUtil/LibMFCUtil.h"
 #include "..\\LatLonUtility\\cpp_util.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
@@ -50,12 +51,12 @@ S100Layer::~S100Layer()
 	DeleteCatalog();
 }
 
-bool S100Layer::Open(CString _filepath, LayerManager* lm)
+bool S100Layer::Open(const std::wstring& _filepath, LayerManager* lm)
 {
-	auto extension = LibMFCUtil::GetExtension(_filepath);
+	const auto extension = s100::path::Extension(_filepath);
 
-	if ((extension.CompareNoCase(L"000") >= 0) &&
-		(extension.CompareNoCase(L"999") <= 0))
+	if ((s100::text::CompareNoCase(extension, L"000") >= 0) &&
+		(s100::text::CompareNoCase(extension, L"999") <= 0))
 	{
 		m_spatialObject = new S101Cell();
 		m_spatialObject->SetLayer(this);
@@ -96,7 +97,7 @@ bool S100Layer::Open(CString _filepath, LayerManager* lm)
 		//enc->SetAllNumericCode(GetFC());
 		return true;
 	}
-	else if (!extension.CompareNoCase(L"gml"))
+	else if (!s100::text::CompareNoCase(extension, L"gml"))
 	{
 		SetFeatureCatalog(lm->catalogManager->getFC(GetProductNumber()));
 		SetPC(lm->catalogManager->getPC(GetProductNumber()));
@@ -127,7 +128,7 @@ bool S100Layer::Open(CString _filepath, LayerManager* lm)
 		
 		return true;
 	}
-	else if (!extension.CompareNoCase(L"h5"))
+	else if (!s100::text::CompareNoCase(extension, L"h5"))
 	{
 		if (GetFC()->getProductId().compare("S-102") == 0)
 		{
@@ -191,10 +192,10 @@ PortrayalCatalogue* S100Layer::GetPC()
 	return portrayalCatalogue;
 }
 
-bool S100Layer::OpenFC(CString path)
+bool S100Layer::OpenFC(const std::wstring& path)
 {
 	FeatureCatalogue* fc = new FeatureCatalogue();
-	fc->Read(std::wstring(path));
+	fc->Read(path);
 	
 	if (fc) {
 		SetIndividualFC(true);
@@ -276,15 +277,14 @@ void S100Layer::DrawInfo(HDC &hDC, Scaler *scaler)
 		SolidBrush B(Color(0, 0, 255));
 		StringFormat sf;
 
-		CString chatName;
-		chatName.Format(_T("Chart Name : %s \n"), m_spatialObject->GetFileName());
+		const std::wstring chatName = L"Chart Name : " + m_spatialObject->GetFileName() + L" \n";
 
 		sf.SetAlignment(StringAlignmentNear);
 		sf.SetLineAlignment(StringAlignmentNear);
 
 		graphics.DrawRectangle(&linePen, position.X, position.Y, position.Width, position.Height);
 		graphics.FillRectangle(&internalBrush, position.X, position.Y, position.Width, position.Height);
-		graphics.DrawString(chatName, -1, &F, position, &sf, &B); 
+		graphics.DrawString(chatName.c_str(), -1, &F, position, &sf, &B); 
 	}
 }
 

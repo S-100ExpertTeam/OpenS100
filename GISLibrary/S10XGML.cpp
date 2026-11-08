@@ -61,7 +61,7 @@ bool S10XGML::GetNameSpaceName(pugi::xml_attribute attr, std::string &name)
 	return false;
 }
 
-bool S10XGML::Open(CString _filepath)
+bool S10XGML::Open(const std::wstring& _filepath)
 {
 	SetFilePath(_filepath);
 
@@ -72,7 +72,7 @@ bool S10XGML::Open(CString _filepath)
 	return Open(doc, result);
 }
 
-bool S10XGML::OpenMetadata(CString _filepath)
+bool S10XGML::OpenMetadata(const std::wstring& _filepath)
 {
 	std::wstring path = _filepath;
 
@@ -724,9 +724,7 @@ GM::CompositeCurve* S10XGML::ReadCompositeCurve(pugi::xml_node& node, std::strin
 					object->Add(orientableCurve);
 				}
 				else {
-					CString str;
-					str.Format(L"Failed to find curve (%s)\n", pugi::as_wide(curveMemberID).c_str());
-					OutputDebugString(str);
+					OutputDebugStringW((L"Failed to find curve (" + pugi::as_wide(curveMemberID) + L")\n").c_str());
 				}
 				//object->Add(curveMemberID);
 			}

@@ -21,8 +21,8 @@ public:
     std::vector<H5_FeatureContainer*> featureContainer;
 
 public:
-    bool Open(CString _filepath) override;
-    bool OpenMetadata(CString _filepath) override;
+    bool Open(const std::wstring& _filepath) override;
+    bool OpenMetadata(const std::wstring& _filepath) override;
 
     void SetMBR();
 };

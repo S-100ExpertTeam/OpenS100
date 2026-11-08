@@ -99,14 +99,14 @@ public:
 	void RemoveAll(void);
 	void ClearAll(void);
 
-	bool Open(CString _filepath) override;
-	bool OpenMetadata(CString _filepath) override;
+	bool Open(const std::wstring& _filepath) override;
+	bool OpenMetadata(const std::wstring& _filepath) override;
 	bool Save(std::wstring path) override;
 
-	bool OpenBy000(CString path);
-	bool OpenMetadataBy000(CString path);
-	bool OpenByGML(CString path);
-	bool OpenMetadataByGML(CString path);
+	bool OpenBy000(const std::wstring& path);
+	bool OpenMetadataBy000(const std::wstring& path);
+	bool OpenByGML(const std::wstring& path);
+	bool OpenMetadataByGML(const std::wstring& path);
 
 	bool Read8211(std::wstring path);
 	bool isUpdate();

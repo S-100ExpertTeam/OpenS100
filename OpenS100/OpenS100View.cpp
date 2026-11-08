@@ -364,7 +364,7 @@ void COpenS100View::Load100File()
 		while (pos)
 		{
 			CString filePath = dlg.GetNextPathName(pos);
-			if (false == theApp.gisLib->AddLayer(filePath))
+			if (false == theApp.gisLib->AddLayer(std::wstring(filePath)))
 			{
 				failedFiles.push_back(std::wstring(filePath));
 			}

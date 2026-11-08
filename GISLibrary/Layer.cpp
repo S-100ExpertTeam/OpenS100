@@ -1,9 +1,9 @@
 #include "stdafx.h"
+#include "PathUtil.h"
+#include "TextCompare.h"
 #include "Layer.h"
 #include "S100Utilities.h"
 #include "S100ExchangeCatalogue.h"
-
-#include "..\\LibMFCUtil\\LibMFCUtil.h"
 
 Layer::Layer(void)
 {
@@ -21,44 +21,32 @@ Layer::~Layer(void)
 	}
 }
 
-bool Layer::Open(CString _filepath, LayerManager* lm)
+bool Layer::Open(const std::wstring& _filepath, LayerManager* lm)
 {
-	auto extension = LibMFCUtil::GetExtension(_filepath);
+	const auto extension = s100::path::Extension(_filepath);
 
 	if (nullptr == m_spatialObject)
 	{
-		if (!extension.CompareNoCase(L"SHP")) {
+		if (s100::text::IEquals(extension, L"SHP")) {
 			m_spatialObject = new SHPFile();
 		}
-		else if (!extension.CompareNoCase(L"XML")) {
+		else if (s100::text::IEquals(extension, L"XML")) {
 			m_spatialObject = new S100ExchangeCatalogue(lm->GetScaler(), lm->catalogManager, lm->GetRenderResources(), lm);
 		}
 	}
 
+	if (nullptr == m_spatialObject)
+	{
+		return false;
+	}
 	m_spatialObject->m_pLayer = this;
 
-	CString strFolderPath;
-	if (_filepath.Find(TEXT(":\\")) > 0)
-	{
-		strFolderPath = _filepath;
-	}
-	else
-	{
-		::GetModuleFileName(nullptr, strFolderPath.GetBuffer(MAX_PATH), MAX_PATH);
-		strFolderPath.ReleaseBuffer();
-		if (strFolderPath.Find('\\') != -1)
-		{
-			for (int i = strFolderPath.GetLength() - 1; i >= 0; i--)
-			{
-				TCHAR ch = strFolderPath[i];
-				strFolderPath.Delete(i);
-				if (ch == '\\') break;
-			}
-		}
-		strFolderPath.Append(TEXT("\\") + _filepath);
-	}
+	// Relative paths are resolved against the executable directory (legacy behaviour).
+	const std::wstring fullPath = s100::path::IsAbsolute(_filepath)
+		? _filepath
+		: (s100::path::ExecutableDirectory() / _filepath).wstring();
 
-	return m_spatialObject->Open(strFolderPath);
+	return m_spatialObject->Open(fullPath);
 }
 
 void Layer::Draw(HDC &hDC, Scaler *scaler, double offset)
@@ -120,17 +108,17 @@ void Layer::LayerInfoOff()
 	Info = false;
 }
 
-CString Layer::GetLayerName()
+std::wstring Layer::GetLayerName()
 {
 	return m_spatialObject->GetFileName();
 }
 
-CString Layer::GetLayerPath()
+std::wstring Layer::GetLayerPath()
 {
 	return m_spatialObject->GetFilePath();
 }
 
-CString Layer::GetLayerType()
+std::wstring Layer::GetLayerType()
 {
 	if (m_spatialObject->m_FileType == S100_FileType::FILE_Shape)
 	{

@@ -33,8 +33,8 @@ public:
 	CatalogManager* GetCatalogManager();
 	D2D1Resources* GetD2D1Resources();
 
-	bool AddBackgroundLayer(CString _filepath);
-	bool AddLayer(CString _filepath);
+	bool AddBackgroundLayer(const std::wstring& _filepath);
+	bool AddLayer(const std::wstring& _filepath);
 	void Draw(HDC &hDC, int offset = 0);
 	void BuildPortrayalCatalogue(Layer* l);
 	void S101RebuildPortrayal();
@@ -43,10 +43,10 @@ public:
 	void DrawS100Symbol(int productNumber, std::wstring symbolName, int screenX, int screenY, int rotation, float scale = 5);
 	void DrawScaleBar();
 
-	CString GetLayerName(int index);
+	std::wstring GetLayerName(int index);
 	BOOL IsOn(int index);
 	void DeleteLayer(int index);
-	void DeleteLayer(CString filepath);
+	void DeleteLayer(const std::wstring& filepath);
 	void ReMBR();
 
 	void SetViewMBR(RECT r);

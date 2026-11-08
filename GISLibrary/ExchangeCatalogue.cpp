@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "../GeoMetryLibrary/TextCodec.h"
 #include "D2DView.h"
 #include "ExchangeCatalogue.h"
 #include "D2DGeometryCache.h"
@@ -276,12 +277,11 @@ namespace S100
             pt.x = (float)sx;
             pt.y = (float)sy;
 
-            CString cstrFileName = CString(ddm.FileName.c_str());
-            CString fileName = L"FileName : " + cstrFileName;
+            const std::wstring fileName = L"FileName : " + s100::text::ToWide(ddm.FileName);
             brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
             pD2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
   
-            pD2->pRT->DrawTextW(fileName, fileName.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
+            pD2->pRT->DrawTextW(fileName.c_str(), static_cast<UINT32>(fileName.size()), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
 
             //Datacorverage
             for (int j = 0; j < ddm.dataCoverage.size(); j++)
@@ -327,32 +327,30 @@ namespace S100
 
                  pt.y += 15;
                  ////maximumDisplayScale 
-                 CString maximumDisplayScale;
+                 std::wstring maximumDisplayScale;
                  if (dc.MaximumDisplayScale != nullptr)
                  {
-                     CString str(std::to_string(*dc.MaximumDisplayScale).c_str());
-                     maximumDisplayScale = L"MaximumDisplayScale : " + str;
+                                          maximumDisplayScale = L"MaximumDisplayScale : " + std::to_wstring(*dc.MaximumDisplayScale);
                  }
                  else
                      maximumDisplayScale = L"MaximumDisplayScale : - ";
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
                  brush->SetOpacity(1);
                  pD2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-                 pD2->pRT->DrawTextW(maximumDisplayScale, maximumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
+                 pD2->pRT->DrawTextW(maximumDisplayScale.c_str(), static_cast<UINT32>(maximumDisplayScale.size()), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
                  
                  pt.y += 15;
                 ////minimumDisplayScale 
-                CString minimumDisplayScale;
+                std::wstring minimumDisplayScale;
                 if (dc.MinimumDisplayScale != nullptr)
                 {
-                    CString str(std::to_string(*dc.MinimumDisplayScale).c_str());
-                    minimumDisplayScale = L"MinimumDisplayScale : " + str;
+                                        minimumDisplayScale = L"MinimumDisplayScale : " + std::to_wstring(*dc.MinimumDisplayScale);
                 }
                 else
                     minimumDisplayScale = L"MinimumDisplayScale : - ";
                 brush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
                 pD2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-                pD2->pRT->DrawTextW(minimumDisplayScale, minimumDisplayScale.GetLength(), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
+                pD2->pRT->DrawTextW(minimumDisplayScale.c_str(), static_cast<UINT32>(minimumDisplayScale.size()), textformat, D2D1::RectF(pt.x, pt.y, (FLOAT)Width, (FLOAT)Height), brush);
 
 
                 pt.y += 15;

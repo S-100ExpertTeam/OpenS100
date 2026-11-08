@@ -1,4 +1,9 @@
 ﻿#include "stdafx.h"
+#include "PathUtil.h"
+#include "TextCompare.h"
+#include "../GeoMetryLibrary/TextCodec.h"
+#include <algorithm>
+#include <filesystem>
 #include "D2DView.h"
 #include "S100ExchangeCatalogue.h"
 #include "D2DGeometryCache.h"
@@ -28,7 +33,7 @@ S100ExchangeCatalogue::~S100ExchangeCatalogue(void)
     }
 }
 
-CString S100ExchangeCatalogue::GetFirstLayerFilePath()
+std::wstring S100ExchangeCatalogue::GetFirstLayerFilePath()
 {
     auto ddm = m_DataPtr->DatasetDiscoveryMetadata;
 
@@ -36,7 +41,7 @@ CString S100ExchangeCatalogue::GetFirstLayerFilePath()
     {
         if (std::string::npos == ddm[i].productSpecification->ProductIdentifier.find("101") && ddm[i].productSpecification->Number != 101)
         {
-            CString strFilePath = FixFileName(ddm[i].FileName);
+            const std::wstring strFilePath = FixFileName(ddm[i].FileName);
             return strFilePath;
         }
     }
@@ -45,14 +50,14 @@ CString S100ExchangeCatalogue::GetFirstLayerFilePath()
 
 
 
-bool S100ExchangeCatalogue::Open(CString _filepath)
+bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
 {
     SetFilePath(_filepath);
 
     m_FileType = S100_FileType::FILE_ETC;
 
-	CT2CA pszConvertedAnsiString(_filepath);
-	std::string filepath(pszConvertedAnsiString);
+	// Narrow path in the native encoding (ACP on Windows, UTF-8 elsewhere) for the narrow XML loader.
+	const std::string filepath = std::filesystem::path(_filepath).string();
 
 	m_DataPtr = make_shared<ExchangeCatalogue>();
 	m_DataPtr->Open(filepath);
@@ -138,7 +143,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
         }
         else
         {
-            CString strFilePath = FixFileName(DDM[i].FileName);
+            const std::wstring strFilePath = FixFileName(DDM[i].FileName);
             m_pParentLayerManager->AddLayer(strFilePath);
         }
     }
@@ -146,7 +151,7 @@ bool S100ExchangeCatalogue::Open(CString _filepath)
 	return true;
 }
 
-bool S100ExchangeCatalogue::OpenMetadata(CString _filepath)
+bool S100ExchangeCatalogue::OpenMetadata(const std::wstring& _filepath)
 {
     return true;
 }
@@ -156,7 +161,7 @@ bool S100ExchangeCatalogue::CompareByLayer(const Layer* a, const Layer* b)
     return CompareByFileName(a->m_spatialObject->GetFilePath(), b->m_spatialObject->GetFilePath());
 }
 
-bool S100ExchangeCatalogue::CompareByFileName(const CString& a, const CString& b) 
+bool S100ExchangeCatalogue::CompareByFileName(const std::wstring& a, const std::wstring& b) 
 {
     shared_ptr<Inventory> invA,invB;
     S100Utilities util;
@@ -172,47 +177,27 @@ bool S100ExchangeCatalogue::CompareByFileName(const CString& a, const CString& b
     return ScaleBand::CompareByScale(invA->totalScaleBand, invB->totalScaleBand);
 }
 
-CString S100ExchangeCatalogue::FixLegacyFileName(string str)
+std::wstring S100ExchangeCatalogue::FixLegacyFileName(const std::string& str)
 {
-    string catalogueFolderPath;
-    CT2CA pszConvertedAnsiString(GetFilePath());
-    string CatalogFilePath(pszConvertedAnsiString);
-
-    size_t lastBackslashPos = CatalogFilePath.find_last_of("\\");
-    if (lastBackslashPos != std::string::npos) {
-        catalogueFolderPath = CatalogFilePath.substr(0, lastBackslashPos + 1);
-    }
-
-    std::string filePath = catalogueFolderPath +"DataSet\\" + str;
-
-    CString temp(filePath.c_str());
-    return temp;
+    // "<catalogue dir>\\DataSet\\<name>" (UTF-8 name from the XML).
+    return s100::path::Directory(GetFilePath()) + L"DataSet\\" + s100::text::ToWide(str);
 }
 
-
-CString S100ExchangeCatalogue::FixFileName(string str)
+std::wstring S100ExchangeCatalogue::FixFileName(const std::string& str)
 {
-    CString catalogueFolderPath;
-    CString filePath = GetFilePath(); 
-
-    int lastBackslashPos = filePath.ReverseFind('\\');
-    if (lastBackslashPos != -1) {
-        catalogueFolderPath = filePath.Left(lastBackslashPos + 1);
+    // "file:/DataSet/x.000" -> "<catalogue dir>\\DataSet\\x.000".
+    std::wstring result = s100::text::ToWide(str);
+    for (auto pos = result.find(L"file:/"); pos != std::wstring::npos; pos = result.find(L"file:/", pos))
+    {
+        result.erase(pos, 6);
     }
-
-    CString result = CString(str.c_str());
-    result.Replace(_T("file:/"), _T(""));
-    result.Replace(_T('/'), _T('\\'));
-
-    CString finalPath = catalogueFolderPath + result;
-
-    return finalPath;
+    std::replace(result.begin(), result.end(), L'/', L'\\');
+    return s100::path::Directory(GetFilePath()) + result;
 }
 
-
-bool S100ExchangeCatalogue::containsFile(const std::vector<std::shared_ptr<InventoryItem>>& files, const CString& targetFile) {
+bool S100ExchangeCatalogue::containsFile(const std::vector<std::shared_ptr<InventoryItem>>& files, const std::wstring& targetFile) {
     for (auto file : files) {
-        if (file->strFilePath.Compare(targetFile) == 0) { 
+        if (file->strFilePath == targetFile) { 
             return true; 
         }
     }
@@ -233,7 +218,7 @@ void S100ExchangeCatalogue::DrawFiles(HDC& hDC, Scaler* scaler, double offset, s
     pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
     
     // check Remove LayerItem 
-    std::vector<CString> pathsToDelete;
+    std::vector<std::wstring> pathsToDelete;
     for (auto layer : m_pLayerManager->layers) {
         if (!containsFile(item, layer->GetLayerPath())) {
             pathsToDelete.push_back(layer->GetLayerPath());
@@ -337,7 +322,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
         for (int i = 0; i < m_DataPtr->DatasetDiscoveryMetadata.size(); i++)
         {
             auto& ddm = m_DataPtr->DatasetDiscoveryMetadata[i];
-            CString fixedFileName = FixFileName(ddm.FileName);
+            const std::wstring fixedFileName = FixFileName(ddm.FileName);
                 
             if (item->strFilePath != fixedFileName)
                 continue;
@@ -398,8 +383,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                 float rectWidth = abs(ptBottomRight.x - ptTopLeft.x);
                 float rectHeight = abs(ptBottomRight.y - ptTopLeft.y);
 
-                CString cstrFileName = CString(ddm.FileName.c_str());
-                CString fileName = L"FileName : " + cstrFileName;
+                const std::wstring fileName = L"FileName : " + s100::text::ToWide(ddm.FileName);
 
                 // 사각형 크기 기반으로 폰트 크기 계산 (한 줄로 들어오도록)
                 float fontSize = 12.0f;
@@ -429,8 +413,8 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
                     if (textLayout) textLayout->Release();
                     D2->WriteFactory()->CreateTextLayout(
-                        fileName,
-                        fileName.GetLength(),
+                        fileName.c_str(),
+                        static_cast<UINT32>(fileName.size()),
                         dynamicTextFormat,
                         rectWidth * 0.95f,  // 가로 여백 5%
                         rectHeight,
@@ -476,7 +460,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                     {
                         dynamicTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);  // 왼쪽 정렬
                         dynamicTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);  // 위쪽 정렬
-                        pRenderTarget->DrawTextW(fileName, fileName.GetLength(), dynamicTextFormat, textRect, brush);
+                        pRenderTarget->DrawTextW(fileName.c_str(), static_cast<UINT32>(fileName.size()), dynamicTextFormat, textRect, brush);
                         dynamicTextFormat->Release();
                     }
 
@@ -531,19 +515,17 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                     delete cls;
                     delete sSurface;
 
-                    CString optimumDisplayScale;
+                    std::wstring optimumDisplayScale;
                     if (dc.OptimumDisplayScale != nullptr) {
-                        CString str(std::to_string(*dc.OptimumDisplayScale).c_str());
-                        optimumDisplayScale = L"Opt Scale: " + str;
+                                                optimumDisplayScale = L"Opt Scale: " + std::to_wstring(*dc.OptimumDisplayScale);
                     }
                     else {
                         optimumDisplayScale = L"Opt Scale: -";
                     }
                     
-                    CString minimumDisplayScale;
+                    std::wstring minimumDisplayScale;
                     if (dc.MinimumDisplayScale != nullptr) {
-                        CString str(std::to_string(*dc.MinimumDisplayScale).c_str());
-                        minimumDisplayScale = L"Min Scale: " + str;
+                                                minimumDisplayScale = L"Min Scale: " + std::to_wstring(*dc.MinimumDisplayScale);
                     }
                     else {
                         minimumDisplayScale = L"Min Scale: -";
@@ -562,7 +544,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                     bool canDrawScale = false;
 
                     // 스케일 정보 폰트 크기 조정 (한 줄로 들어오도록)
-                    CString longerText = optimumDisplayScale.GetLength() > minimumDisplayScale.GetLength() ? optimumDisplayScale : minimumDisplayScale;
+                    const std::wstring& longerText = optimumDisplayScale.size() > minimumDisplayScale.size() ? optimumDisplayScale : minimumDisplayScale;
                         
                     for (float testSize = scaleFontSize; testSize >= minScaleFontSize; testSize -= 1.0f)
                     {
@@ -581,8 +563,8 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
                         if (scaleLayout) scaleLayout->Release();
                         D2->WriteFactory()->CreateTextLayout(
-                            longerText,
-                            longerText.GetLength(),
+                            longerText.c_str(),
+                            static_cast<UINT32>(longerText.size()),
                             scaleTextFormat,
                             rectWidth * 0.95f,
                             rectHeight,
@@ -622,7 +604,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                             currentY + scaleFontSize * 1.2f
                         );
                             
-                        pRenderTarget->DrawTextW(optimumDisplayScale, optimumDisplayScale.GetLength(), scaleTextFormat, maxScaleRect, brush);
+                        pRenderTarget->DrawTextW(optimumDisplayScale.c_str(), static_cast<UINT32>(optimumDisplayScale.size()), scaleTextFormat, maxScaleRect, brush);
                         currentY += scaleFontSize * 1.2f + textSpacing;
 
                         D2D1_RECT_F minScaleRect = D2D1::RectF(
@@ -632,7 +614,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                             currentY + scaleFontSize * 1.2f
                         );
                             
-                        pRenderTarget->DrawTextW(minimumDisplayScale, minimumDisplayScale.GetLength(), scaleTextFormat, minScaleRect, brush);
+                        pRenderTarget->DrawTextW(minimumDisplayScale.c_str(), static_cast<UINT32>(minimumDisplayScale.size()), scaleTextFormat, minScaleRect, brush);
                         currentY += scaleFontSize * 1.2f + textSpacing;  // 다음 dataCoverage를 위해 Y 위치 증가
                     }
                         

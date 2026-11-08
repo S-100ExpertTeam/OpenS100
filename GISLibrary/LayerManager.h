@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 #include "S101Cell.h"
 #include "Layer.h"
@@ -65,23 +66,23 @@ private:
 
 public:
 	void MoveLayerFromList(int from, int to);
-	bool IsContainFilePathToLayer(CString _filepath);
+	bool IsContainFilePathToLayer(const std::wstring& _filepath);
 
 
 	void SetViewMBR(RECT r);
 
-	bool AddBackgroundLayer(CString _filepath);
+	bool AddBackgroundLayer(const std::wstring& _filepath);
 
 	// Success : id (> 0)
 	// Fail : -1
-	int AddLayer(CString _filepath);
+	int AddLayer(const std::wstring& _filepath);
 	int AddLayer(Layer* layer);
-	int AddLayer(Layer* _layer, CString FilePath, bool InsertBack = true);
+	int AddLayer(Layer* _layer, const std::wstring& FilePath, bool InsertBack = true);
 
-	int AddLayerFront(CString _filepath);
+	int AddLayerFront(const std::wstring& _filepath);
 	int AddLayerFront(Layer* _layer);
 
-	int isUpdate(CString filePath);
+	int isUpdate(const std::wstring& filePath);
 	bool AddUpdateLayer(Layer* Base, Layer* Update);
 
 	void BuildPortrayalCatalogue(Layer* l);
@@ -114,16 +115,16 @@ public:
 	Layer* GetLayer(int index);
 	Layer* GetLayerByKey(int key);
 
-	CString GetLayerName(int index);
-	CString GetLayerNameByKey(int key);
+	std::wstring GetLayerName(int index);
+	std::wstring GetLayerNameByKey(int key);
 
 	bool IsOn(int index);
 	bool IsOnByKey(int key);
 
 	void DeleteLayer(int index);
-	void DeleteLayer(CString filepath);
+	void DeleteLayer(const std::wstring& filepath);
 	void DeleteLayerByKey(int key);
-	void FindPathDeleteLayer(CString FindLayerPath);
+	void FindPathDeleteLayer(const std::wstring& FindLayerPath);
 
 	void ReMBR();
 
@@ -138,12 +139,12 @@ public:
 	int LayerCount();
 
 	// Return type : enum S100_FileType
-	static S100_FileType CheckFileType(CString path, int update);
-	static S100_FileType CheckFileType(CString path);
+	static S100_FileType CheckFileType(const std::wstring& path, int update);
+	static S100_FileType CheckFileType(const std::wstring& path);
 
 	int CreateLayerID();
 
-	int pathToProductNumber(CString path);
+	int pathToProductNumber(const std::wstring& path);
 
 	void SetS100Scale(double value);
 	int GetS100Scale();
