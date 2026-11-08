@@ -98,7 +98,7 @@ S101Cell::S101Cell(FeatureCatalogue* fc, D2D1Resources* d2d1) : S100SpatialObjec
 	type = S100SpatialObjectType::S101Cell;
 	m_FileType = S100_FileType::FILE_S_100_VECTOR;
 	m_ObejctType = SpatialObjectType::S101Cell;
-	//SetAllNumericCode(fc);
+	SetFC(fc);
 }
 
 S101Cell::~S101Cell()
@@ -847,7 +847,7 @@ bool S101Cell::MakeLineData(R_FeatureRecord* fe)
 
 	if (fe->geometry)
 	{
-		fe->geometry->CreateD2Geometry(D2->pD2Factory);
+		fe->geometry->CreateD2Geometry(D2 ? D2->pD2Factory : nullptr);
 	}
 
 	return TRUE;
@@ -955,7 +955,7 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 	}
 
 	geo->SetMBR();
-	geo->CreateD2Geometry(D2->pD2Factory);
+	geo->CreateD2Geometry(D2 ? D2->pD2Factory : nullptr);
 	geo->CalculateCenterPoint();
 
 	if (sr)

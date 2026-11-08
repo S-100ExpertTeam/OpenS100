@@ -221,7 +221,7 @@ void SENC_LineStyle::DrawInstruction(
 
 			if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 			{
-				auto geometry = curve->GetD2Geometry();
+				auto geometry = curve->GetD2Geometry(pDirect2dFactory);
 				if (geometry)
 				{
 					rt->DrawGeometry(geometry, brush, PEN_WIDTH, dash);
@@ -256,7 +256,7 @@ void SENC_LineStyle::DrawInstruction(
 		{
 			if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 			{
-				auto geometry = curve->GetD2Geometry();
+				auto geometry = curve->GetD2Geometry(pDirect2dFactory);
 				if (geometry)
 				{
 					rt->DrawGeometry(geometry, brush, PEN_WIDTH, (*strokeGroup)[0]);

@@ -143,6 +143,11 @@ double SCurve::GetY(int i)
 #pragma warning(disable:4244)
 void SCurve::CreateD2Geometry(ID2D1Factory1* factory)
 {
+	if (factory == nullptr)
+	{
+		return;
+	}
+
 	if (pGeometry)
 	{
 		SafeRelease(&pGeometry);
@@ -173,6 +178,15 @@ void SCurve::CreateD2Geometry(ID2D1Factory1* factory)
 
 ID2D1PathGeometry* SCurve::GetD2Geometry()
 {
+	return pGeometry;
+}
+
+ID2D1PathGeometry* SCurve::GetD2Geometry(ID2D1Factory1* factory)
+{
+	if (pGeometry == nullptr)
+	{
+		CreateD2Geometry(factory);
+	}
 	return pGeometry;
 }
 

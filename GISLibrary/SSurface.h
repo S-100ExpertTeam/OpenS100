@@ -68,6 +68,8 @@ public:
 	GeoPoint getCenterPoint();
 	
 	ID2D1PathGeometry* GetD2Geometry();
+	// Creates the Direct2D geometry on first use. Lets datasets be opened without a renderer.
+	ID2D1PathGeometry* GetD2Geometry(ID2D1Factory1* factory);
 	ID2D1PathGeometry* GetNewD2Geometry(ID2D1Factory1* factory, Scaler* scaler);
 
 	void AddCurve(SAbstractCurve* curve);

@@ -46,10 +46,6 @@ protected:
 	FeatureCatalogue fc;
 };
 
-// Note: S101Cell::Open() goes on to MakeFullSpatialData(), which needs live
-// Direct2D resources and crashes with D2D1Resources == nullptr. Opening a dataset
-// must not require a renderer; until that coupling is removed (Phase 1) the tests
-// exercise the ISO 8211 parser through Read8211() only.
 TEST_F(S101CellKorTds, ParsesSmallestKoreanCell)
 {
 	S101Cell cell(&fc, nullptr);
@@ -64,6 +60,18 @@ TEST_F(S101CellKorTds, ParsesSmallestKoreanCell)
 // Regression for the record loop in S101Cell::Read8211 / OpenMetadataBy000:
 // a data record whose leader declares zero length and a field-area offset that
 // yields no directory entries used to spin forever. The reader must return.
+// Phase 1 step 1: opening a dataset must not require a renderer. Direct2D geometry
+// is created lazily at draw time, so Open() with D2D1Resources == nullptr succeeds.
+TEST_F(S101CellKorTds, OpensSmallestKoreanCellWithoutRenderer)
+{
+	S101Cell cell(&fc, nullptr);
+	ASSERT_TRUE(cell.Open(CString(cellPath.wstring().c_str())));
+
+	EXPECT_GT(cell.GetCount_FeatureTypeRecord(), 0);
+	EXPECT_GT(cell.GetFeatureCount(), 0);
+	ASSERT_GT(cell.GetCount_CurveRecord(), 0);
+}
+
 TEST_F(S101CellKorTds, MalformedRecordLeaderDoesNotHang)
 {
 	auto bytes = readAll(cellPath);

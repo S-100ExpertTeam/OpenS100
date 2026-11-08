@@ -83,6 +83,11 @@ void SCompositeCurve::SetMBR()
 
 void SCompositeCurve::CreateD2Geometry(ID2D1Factory1* factory)
 {
+	if (factory == nullptr)
+	{
+		return;
+	}
+
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
 		(*i)->CreateD2Geometry(factory);

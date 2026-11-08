@@ -27,6 +27,14 @@ public:
 	S100SpatialObjectType type = S100SpatialObjectType::S100SpatialObject;
 	PCOutputSchemaManager* pcManager = nullptr;
 
+private:
+	// Catalogues bound directly to this dataset. Used when the dataset is not attached to a
+	// Layer (library use, tests). When a Layer is attached its catalogues take precedence.
+	FeatureCatalogue* m_fc = nullptr;
+	PortrayalCatalogue* m_pc = nullptr;
+
+public:
+
 public:
 	S100SpatialObjectType getS100SpatialObjectType();
 
@@ -37,6 +45,8 @@ public:
 
 	FeatureCatalogue* GetFC();
 	PortrayalCatalogue* GetPC();
+	void SetFC(FeatureCatalogue* fc);
+	void SetPC(PortrayalCatalogue* pc);
 	D2D1Resources* GetD2() const;
 
 	bool OpenOutputXML(std::string path);

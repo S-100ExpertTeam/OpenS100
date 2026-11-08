@@ -56,23 +56,33 @@ int S100SpatialObject::GetProductNumber()
 FeatureCatalogue* S100SpatialObject::GetFC()
 {
 	auto layer = (S100Layer*)GetLayer();
-	if (layer)
+	if (layer && layer->GetFC())
 	{
 		return layer->GetFC();
 	}
 
-	return nullptr;
+	return m_fc;
 }
 
 PortrayalCatalogue* S100SpatialObject::GetPC()
 {
 	auto layer = (S100Layer*)GetLayer();
-	if (layer)
+	if (layer && layer->GetPC())
 	{
 		return layer->GetPC();
 	}
 
-	return nullptr;
+	return m_pc;
+}
+
+void S100SpatialObject::SetFC(FeatureCatalogue* fc)
+{
+	m_fc = fc;
+}
+
+void S100SpatialObject::SetPC(PortrayalCatalogue* pc)
+{
+	m_pc = pc;
 }
 
 D2D1Resources* S100SpatialObject::GetD2() const

@@ -97,7 +97,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 
 				if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 				{
-					auto geometry = surface->GetD2Geometry();
+					auto geometry = surface->GetD2Geometry(pDirect2dFactory);
 					
 					if (geometry)
 					{
@@ -140,7 +140,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 				{
 					if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 					{
-						auto geometry = surface->GetD2Geometry();
+						auto geometry = surface->GetD2Geometry(pDirect2dFactory);
 						if (geometry)
 						{
 							rt->FillGeometry(geometry, i->second->pBitmapBrush);
@@ -209,7 +209,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 				{
 					if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 					{
-						auto geometry = surface->GetD2Geometry();
+						auto geometry = surface->GetD2Geometry(pDirect2dFactory);
 						if (geometry)
 						{
 							rt->FillGeometry(geometry, imageBrush);

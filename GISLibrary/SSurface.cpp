@@ -112,6 +112,11 @@ SGeometryType SSurface::GetType()
 #pragma warning(disable:4244)
 void SSurface::CreateD2Geometry(ID2D1Factory1* factory)
 {
+	if (factory == nullptr)
+	{
+		return;
+	}
+
 	if (nullptr == pGeometry &&
 		m_numPoints > 2)
 	{
@@ -255,6 +260,15 @@ int SSurface::GetNumPointPerPart(int partIndex)
 
 ID2D1PathGeometry* SSurface::GetD2Geometry()
 {
+	return pGeometry;
+}
+
+ID2D1PathGeometry* SSurface::GetD2Geometry(ID2D1Factory1* factory)
+{
+	if (pGeometry == nullptr)
+	{
+		CreateD2Geometry(factory);
+	}
 	return pGeometry;
 }
 

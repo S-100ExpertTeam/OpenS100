@@ -10,5 +10,6 @@ OpenS100 개발자용 기술 문서. 새 세션은 **DIRECTIVES → 로드맵 �
 | [2026-11-08-upstream-plan-from-khoa-viewer.md](2026-11-08-upstream-plan-from-khoa-viewer.md) | KHOA S-100 Viewer에만 있는 코어 기능을 OpenS100으로 올려보내는 계획 |
 | [2026-11-08-code-assessment.md](2026-11-08-code-assessment.md) | OpenS100 코드베이스 평가 |
 | [2026-11-08-phase0-worklog.md](2026-11-08-phase0-worklog.md) | 선행 정리 작업 목록. 체크박스와 커밋 해시 |
+| [2026-11-08-phase1-core-decoupling.md](2026-11-08-phase1-core-decoupling.md) | Phase 1: 코어에서 MFC·Direct2D 분리. 결합 인벤토리와 5단계 계획, 진행 기록 |
 
 기존 문서: 상위 `../Functions/`(기능 설명), `../../BUILD.md`, `../../CONVENTIONS.md`, `../../DOXYGEN.md`.
