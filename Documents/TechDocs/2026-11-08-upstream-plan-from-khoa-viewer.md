@@ -32,6 +32,7 @@ KHOA 쪽 코드는 KHOA 저장소 경로, OpenS100 쪽은 이 저장소 경로.
 
 ### P1. 코어 데이터 (Phase 2 전반)
 
+- [x] **U0. 측지 함수 (LatLonUtility 수렴 1차).** (85f9c919) 뷰어 포크에만 있던 대권·항정선 거리/방위/도착점, 도분초 변환, 다각형 중심을 `s100::geodesy`(`LatLonUtility/Geodesy.h`: `Position`, `Course`, `LengthUnit`, `RhumbInverse/Direct`, `GeodesicInverse/Direct`, `DmsToDegrees`, `PolygonCentroid`)로 올리고, 뷰어가 쓰는 옛 이름(`GetDistanceRhumbLineMercator`, `CalcGreatCirclePosByGeographicLib`, `DMStoDegree` 등)은 얇은 래퍼로 유지. 테스트 9건. 이것이 뷰어가 자기 `LatLonUtility` 포크를 버리고 `opens100::latlon`을 링크하기 위한 선행 조건이다. 남은 차이: 좌표 문자열 함수(`CheckFormWGS`, `GetDegree`, `LatLonToWGS` 등 wide 문자열), `UNIT`이 `enum class`인 점, `Pos`의 가상 소멸자. 코어에 넣지 않을 것: `Convert`(PROJ 기반 EPSG 변환), 타임스탬프·파일 쓰기 유틸, `TileCalculator`, `TimeUtil` — 뷰어에 남긴다.
 - [ ] **U1. HDF5 모듈.** `libS100HDF5`를 참조해 `s100-hdf5` 경계로 재작성: 공통 `S100H5File`(메타데이터, 피처 정보 그룹, 축·격자 파라미터), S-102(수심 격자, 불확도), S-104(수위 시계열), S-111(유속·유향 시계열, 정점/격자), S-413(기상). 렌더링은 분리(격자 → 커버리지 디스플레이 인스트럭션). 완료 기준: `D:\s100-reference\tds\KOR_TDS\KOR_S-1xx\`의 S-102/104/111 파일 로딩 테스트 통과, 시각 확인.
 - [ ] **U2. 업데이트 생성.** `origin/makeUpdateFile` 브랜치를 `dev-jogm`에 병합하고 KHOA `CreateUpdateFile`과 결과 비교. 완료 기준: 베이스+업데이트 → 병합 → 재분해 라운드트립 테스트.
 - [ ] **U3. 교환세트 차이 보완.** KHOA `S100ExchangeSet`과 OpenS100 `ExchangeCatalogue` diff. CATD·서명·지원 파일 처리 중 빠진 것 보완. 완료 기준: `KOR_TDS\S100_ROOT\CATALOG.XML`(808셀) 파싱 테스트.
@@ -67,3 +68,4 @@ KHOA 쪽 코드는 KHOA 저장소 경로, OpenS100 쪽은 이 저장소 경로.
 | 날짜 | 항목 | 커밋 | 비고 |
 |---|---|---|---|
 | 2026-11-08 | 문서 작성 | | 두 저장소 비교 조사 기반 |
+| 2026-11-09 | U0: 측지 함수 업스트림 + `s100::geodesy` | 85f9c919 | 테스트 26/26, CMake 타깃 `opens100::latlon`에도 포함 |
