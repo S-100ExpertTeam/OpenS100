@@ -67,15 +67,9 @@ double LatLonUtility::GetAngle(double lat1, double lon1, double lat2, double lon
 LatLonUtility::Pos LatLonUtility::GetDestinationPointRhumbLineMercatorByGeographicLib(
 	double lat, double lon, double bearing, double dist)
 {
-	LatLonUtility::Pos result;
-
-	GeographicLib::Geodesic geod(
-		GeographicLib::Constants::WGS84_a(),
-		GeographicLib::Constants::WGS84_f());
-
-	geod.Direct(lat, lon, bearing, dist, result.lat, result.lon);
-
-	return result;
+	// Geodesic, not rhumb: kept so callers get the positions they always got.
+	const auto destination = s100::geodesy::GeodesicDirect({ lat, lon }, bearing, dist);
+	return Pos(destination.lon, destination.lat);
 }
 
 void LatLonUtility::RotatePoint(int _x, int _y, int _cx, int _cy, int& _mx, int& _my, double _degree, bool radian)
@@ -362,8 +356,8 @@ LatLonUtility::Pos LatLonUtility::GetDestinationPointRhumbLineMercator(double la
 		lat *= RAD2DEG;
 		lon *= RAD2DEG;
 	}
-	const auto destination = s100::geodesy::RhumbDirect({ lat, lon }, bearing, dist);
-	return Pos(destination.lon, destination.lat);
+	// Historical behaviour: despite the name this follows a geodesic (see the header).
+	return GetDestinationPointRhumbLineMercatorByGeographicLib(lat, lon, bearing, dist);
 }
 
 LatLonUtility::Pos LatLonUtility::GetDestinationPointGreateCircle(double lat, double lon, double bearing, double dist, bool radian)

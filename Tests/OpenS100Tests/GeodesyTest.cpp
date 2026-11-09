@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include <array>
+#include <iostream>
 
 #include "LatLonUtility/Geodesy.h"
 #include "LatLonUtility/LatLonUtility.h"
@@ -127,6 +128,9 @@ TEST(GeodesyLegacy, WrappersAgreeWithTheTypedApi)
 	const auto rhumb = LatLonUtility::GetDestinationPointRhumbLineMercator(0.0, 0.0, 90.0, kEquatorDegree, false);
 	EXPECT_NEAR(rhumb.lon, 1.0, 1e-9);
 	EXPECT_NEAR(rhumb.lat, 0.0, 1e-9);
+	double rx = 0.0, ry = 0.0;
+	LatLonUtility::CalcRhumbLinePosByGeographicLib(129.0, 35.0, 90.0, 100000.0, &rx, &ry);
+	EXPECT_NEAR(ry, 35.0, 1e-9) << "a rhumb line due east keeps its latitude";
 	const auto geodesic = LatLonUtility::GetDestinationPointGreateCircle(0.0, 127.0, 0.0, kMeridianDegree, false);
 	EXPECT_NEAR(geodesic.lat, 1.0, 1e-9);
 	EXPECT_NEAR(geodesic.lon, 127.0, 1e-9);
@@ -155,3 +159,26 @@ TEST(GeodesyLegacy, WrappersAgreeWithTheTypedApi)
 	EXPECT_DOUBLE_EQ(cx, 1.0);
 	EXPECT_DOUBLE_EQ(cy, 0.5);
 }
+
+TEST(GeodesyLegacy, RhumbNamedDestinationFollowsAGeodesic)
+{
+	// GetDestinationPointRhumbLineMercator[ByGeographicLib] have always solved the geodesic direct
+	// problem. This test pins that, and prints how far the result is from the true rhumb line so the
+	// decision to change it can be made with numbers.
+	const Position start{ 35.0, 129.0 };
+	for (const double nauticalMiles : { 10.0, 100.0, 300.0 })
+	{
+		const double metres = ToMetres(nauticalMiles, LengthUnit::NauticalMile);
+		const auto legacy = LatLonUtility::GetDestinationPointRhumbLineMercatorByGeographicLib(start.lat, start.lon, 90.0, metres);
+		const auto geodesic = GeodesicDirect(start, 90.0, metres);
+		EXPECT_NEAR(legacy.lat, geodesic.lat, 1e-12);
+		EXPECT_NEAR(legacy.lon, geodesic.lon, 1e-12);
+
+		const auto rhumb = RhumbDirect(start, 90.0, metres);
+		const double gap = GeodesicInverse(geodesic, rhumb).distance;
+		std::cout << "[ geodesy  ] " << nauticalMiles << " NM due east from 35N: geodesic and rhumb end points are "
+			<< gap << " m apart" << std::endl;
+		EXPECT_LT(gap, metres * 0.05);   // 19 m at 10 NM, 1.9 km at 100 NM, 16.9 km at 300 NM
+	}
+}
+

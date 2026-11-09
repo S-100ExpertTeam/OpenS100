@@ -244,9 +244,14 @@ namespace LatLonUtility {
 	double GetDistanceRhumbLineMercator(double lat1, double lon1, double lat2, double lon2, bool radian, UNIT unitReturnValue);
 
 	/**
-	 * @brief Destination along a rhumb line
+	 * @brief Destination point at a bearing and distance
 	 * @param dist Distance in metres
 	 * @param radian If true, lat/lon/bearing are radians; the result is always in degrees
+	 * @warning Despite the name this follows a GEODESIC, like
+	 *          GetDestinationPointRhumbLineMercatorByGeographicLib which it calls. Both the KHOA viewer
+	 *          and OpenS100 have always behaved that way, so it is kept until the callers (route legs,
+	 *          AIS vectors, augmented rays) are reviewed. For a real rhumb line use
+	 *          s100::geodesy::RhumbDirect or CalcRhumbLinePosByGeographicLib.
 	 */
 	Pos GetDestinationPointRhumbLineMercator(double lat, double lon, double bearing, double dist, bool radian);
 
