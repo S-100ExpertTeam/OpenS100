@@ -1,0 +1,8 @@
+{
+  "name": "opens100-consumer-example",
+  "version-string": "0",
+  "builtin-baseline": "6cf5a3612342c3cf0d7dee5cf6687d0882ec6663",
+  "dependencies": [
+    "opens100"
+  ]
+}

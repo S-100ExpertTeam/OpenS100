@@ -34,34 +34,6 @@ void LatLonUtility::CalcRhumbLinePosByGeographicLib(double x1, double y1, double
 double LatLonUtility::GetBearingRhubmLineMercator(double lat1, double lon1, double lat2, double lon2, bool radian)
 {
 	return GetBearingRhubmLineMercatorByGeographicLib(lat1, lon1, lat2, lon2, radian);
-
-	// If the unit of the input value is degree,
-	if (radian == false)
-	{
-		lat1 *= DEG2RAD;
-		lon1 *= DEG2RAD;
-		lat2 *= DEG2RAD;
-		lon2 *= DEG2RAD;
-	}
-
-	double dLon = lon2 - lon1;
-
-	// if dLon over M_PI take shorter rhumb line across the anti-meridian
-	if (abs(dLon) > M_PI)
-	{
-		dLon = (dLon > 0) ? -(2 * M_PI - dLon) : (2 * M_PI + dLon);
-	}
-
-	double d = log(tan((lat2 / 2) + (M_PI / 4)) / tan((lat1 / 2) + (M_PI / 4)));
-
-	double result = atan2(dLon, d);
-
-	if (radian == false)
-	{
-		return result * RAD2DEG;
-	}
-
-	return result;
 }
 
 double LatLonUtility::GetBearingRhubmLineMercatorByGeographicLib(double lat1, double lon1, double lat2, double lon2, bool radian)
@@ -98,9 +70,6 @@ LatLonUtility::Pos LatLonUtility::GetDestinationPointRhumbLineMercatorByGeograph
 	GeographicLib::Geodesic geod(
 		GeographicLib::Constants::WGS84_a(),
 		GeographicLib::Constants::WGS84_f());
-
-	double s12 = 0;
-	double azi12 = 0;
 
 	geod.Direct(lat, lon, bearing, dist, result.lat, result.lon);
 
@@ -308,7 +277,7 @@ std::string LatLonUtility::To_Lowercase(std::string s)
 		s.begin(), s.end(),        // 변환할 범위
 		s.begin(),                 // 결과를 덮어쓸 위치
 		[](char c) -> char {
-			return std::towlower(c);
+			return static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
 		}
 	);
 	return s;

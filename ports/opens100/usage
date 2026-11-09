@@ -1,0 +1,9 @@
+opens100 provides CMake targets:
+
+    find_package(opens100 CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE opens100::featurecatalog opens100::geometry)
+
+Headers keep the module directory names:
+
+    #include <FeatureCatalog/FeatureCatalogue.h>
+    #include <GeoMetryLibrary/MBR.h>

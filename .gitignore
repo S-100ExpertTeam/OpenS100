@@ -299,3 +299,6 @@ vcpkg_installed/
 
 # Visual Studio encoding temp copies
 enc_temp_folder/
+
+# CMake build trees (cmake -B build/...)
+/build/

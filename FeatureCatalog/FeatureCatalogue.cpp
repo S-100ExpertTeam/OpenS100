@@ -578,7 +578,7 @@ void FeatureCatalogue::SetVersionNumber(std::string value)
 {
 	//SetVersionNumber(value);
 	//versionNumber = value;
-	versionNumber.parseSource(value);
+	versionNumber.setSource(value);
 }
 
 Version FeatureCatalogue::getVersion() const
