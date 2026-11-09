@@ -14,6 +14,7 @@
 #include <objidl.h>
 #include <gdiplus.h>
 
+#include <chrono>
 #include <cstdint>
 #include <cstdlib>
 #include <filesystem>
@@ -128,30 +129,54 @@ namespace
 	// Opens `cell` in a fresh library instance, draws it fitted to the canvas and saves a PNG.
 	void RenderCell(const std::filesystem::path& cell, std::size_t& nonWhite, std::size_t& colours)
 	{
+		using Clock = std::chrono::steady_clock;
+		const auto ms = [](Clock::time_point a, Clock::time_point b)
+		{
+			return std::chrono::duration_cast<std::chrono::milliseconds>(b - a).count();
+		};
+
 		GdiplusSession gdiplus;
 		CGISLibraryApp gis;
 
+		const auto t0 = Clock::now();
 		auto cm = gis.GetCatalogManager();
 		ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
 		auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
 		ASSERT_NE(pc, nullptr);
 		GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
+		const auto t1 = Clock::now();
 
 		const RECT view{ 0, 0, kWidth, kHeight };
 		gis.SetScreen(view);
 
+		// Opening a layer parses the dataset and runs the portrayal rules.
 		ASSERT_TRUE(gis.AddLayer(cell.wstring())) << cell.string();
 		gis.SetViewMBR(view);
+		const auto t2 = Clock::now();
 
 		MemoryCanvas canvas(kWidth, kHeight);
 		ASSERT_TRUE(canvas.valid());
 		gis.Draw(canvas.dc());
+		::GdiFlush();
+		const auto t3 = Clock::now();
+
+		// Further frames of the same view: these must not get slower.
+		std::string frames;
+		for (int i = 0; i < 4; ++i)
+		{
+			const auto a = Clock::now();
+			gis.Draw(canvas.dc());
+			::GdiFlush();
+			frames += " " + std::to_string(ms(a, Clock::now()));
+		}
 
 		const auto png = OutputDirectory() / (cell.stem().string() + ".png");
 		EXPECT_TRUE(canvas.SavePng(png)) << png.string();
 		canvas.Measure(nonWhite, colours);
 		std::cout << "[ render   ] " << png.string() << "  non-white pixels: " << nonWhite
 			<< ", distinct colours: " << colours << std::endl;
+		std::cout << "[ timing   ] " << cell.stem().string() << "  catalogues " << ms(t0, t1) << " ms, open+portrayal "
+			<< ms(t1, t2) << " ms, first draw " << ms(t2, t3) << " ms, next frames" << frames << " ms" << std::endl;
 	}
 }
 
