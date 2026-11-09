@@ -207,5 +207,63 @@ namespace LatLonUtility {
 
 	std::string To_Lowercase(std::string s);
 	std::wstring To_Lowercase(std::wstring s);
+
+	// ---- Upstreamed from the KHOA S-100 Viewer. New code should use s100::geodesy (Geodesy.h). ----
+
+	/**
+	 * @brief Destination along a geodesic (great circle on the ellipsoid)
+	 * @param x1 Start longitude in degrees
+	 * @param y1 Start latitude in degrees
+	 * @param azimuth Initial bearing in degrees
+	 * @param distance Distance in metres
+	 * @param[out] x2 Destination longitude in degrees
+	 * @param[out] y2 Destination latitude in degrees
+	 */
+	void CalcGreatCirclePosByGeographicLib(double x1, double y1, double azimuth, double distance, double* x2, double* y2);
+
+	/**
+	 * @brief Geodesic distance between two points
+	 * @return Distance in metres
+	 */
+	double CalcGreatCircleDistanceByGeographicLib(double x1, double y1, double x2, double y2);
+
+	/**
+	 * @brief Initial great-circle bearing on a sphere
+	 * @param radian If true, input and output are radians; otherwise degrees
+	 * @return Bearing in (-180, 180] degrees (or the radian equivalent)
+	 */
+	double GetBearingGreatCircle(double lat1, double lon1, double lat2, double lon2, bool radian);
+
+	/**
+	 * @brief Rhumb line distance in kilometres
+	 * @param radian If true, the inputs are radians; otherwise degrees
+	 */
+	double GetDistanceRhumbLineMercator(double lat1, double lon1, double lat2, double lon2, bool radian);
+
+	/** @brief Rhumb line distance in the requested unit */
+	double GetDistanceRhumbLineMercator(double lat1, double lon1, double lat2, double lon2, bool radian, UNIT unitReturnValue);
+
+	/**
+	 * @brief Destination along a rhumb line
+	 * @param dist Distance in metres
+	 * @param radian If true, lat/lon/bearing are radians; the result is always in degrees
+	 */
+	Pos GetDestinationPointRhumbLineMercator(double lat, double lon, double bearing, double dist, bool radian);
+
+	/**
+	 * @brief Destination along a geodesic
+	 * @param dist Distance in metres
+	 * @param radian If true, lat/lon/bearing are radians; the result is always in degrees
+	 */
+	Pos GetDestinationPointGreateCircle(double lat, double lon, double bearing, double dist, bool radian);
+
+	/** @brief Degrees/minutes/seconds to decimal degrees; the sign of `_D` applies to the whole value */
+	double DMStoDegree(double _D, double _M, double _S);
+
+	/** @brief Decimal degrees to degrees/minutes/seconds; `_D` carries the sign */
+	void DegreeToDMS(const double _deg, double& _D, double& _M, double& _S);
+
+	/** @brief Area-weighted centroid of a polygon given as coordinate arrays */
+	void Centroid(double* _x, double* _y, int _cnt, double& resX, double& resY);
 };
 #endif 

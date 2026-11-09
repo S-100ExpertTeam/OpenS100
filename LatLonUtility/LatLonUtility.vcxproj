@@ -260,10 +260,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cpp_util.cpp" />
+    <ClCompile Include="Geodesy.cpp" />
     <ClCompile Include="LatLonUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cpp_util.h" />
+    <ClInclude Include="Geodesy.h" />
     <ClInclude Include="LatLonUtility.h" />
     <ClInclude Include="Logger.h" />
   </ItemGroup>

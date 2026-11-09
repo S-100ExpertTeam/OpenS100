@@ -1,4 +1,5 @@
 ﻿#include "LatLonUtility.h"
+#include "Geodesy.h"
 #include <cmath>
 #include <cfloat>
 #include <regex>
@@ -8,6 +9,7 @@
 #include <iomanip>
 #include <random>
 
+#include <span>
 #include <GeographicLib/PolygonArea.hpp>
 #include <GeographicLib/Geodesic.hpp>
 #include <GeographicLib/Constants.hpp>
@@ -293,4 +295,110 @@ std::wstring LatLonUtility::To_Lowercase(std::wstring s)
 		}
 	);
 	return s;
+}
+
+// ---- Upstreamed from the KHOA S-100 Viewer; thin wrappers over s100::geodesy ----
+
+void LatLonUtility::CalcGreatCirclePosByGeographicLib(double x1, double y1, double azimuth, double distance, double* x2, double* y2)
+{
+	const auto destination = s100::geodesy::GeodesicDirect({ y1, x1 }, azimuth, distance);
+	*x2 = destination.lon;
+	*y2 = destination.lat;
+}
+
+double LatLonUtility::CalcGreatCircleDistanceByGeographicLib(double x1, double y1, double x2, double y2)
+{
+	return s100::geodesy::GeodesicInverse({ y1, x1 }, { y2, x2 }).distance;
+}
+
+double LatLonUtility::GetBearingGreatCircle(double lat1, double lon1, double lat2, double lon2, bool radian)
+{
+	// Spherical formula, kept as it was in the viewer so existing results do not move.
+	// s100::geodesy::GeodesicInverse gives the ellipsoidal initial bearing.
+	if (radian == false)
+	{
+		lat1 *= DEG2RAD;
+		lon1 *= DEG2RAD;
+		lat2 *= DEG2RAD;
+		lon2 *= DEG2RAD;
+	}
+
+	const double result = std::atan2(std::sin(lon2 - lon1) * std::cos(lat2),
+		std::cos(lat1) * std::sin(lat2) - std::sin(lat1) * std::cos(lat2) * std::cos(lon2 - lon1));
+
+	return radian ? result : result * RAD2DEG;
+}
+
+double LatLonUtility::GetDistanceRhumbLineMercator(double lat1, double lon1, double lat2, double lon2, bool radian)
+{
+	return GetDistanceRhumbLineMercator(lat1, lon1, lat2, lon2, radian, UNIT::km);
+}
+
+double LatLonUtility::GetDistanceRhumbLineMercator(double lat1, double lon1, double lat2, double lon2, bool radian, UNIT unitReturnValue)
+{
+	if (radian)
+	{
+		lat1 *= RAD2DEG;
+		lon1 *= RAD2DEG;
+		lat2 *= RAD2DEG;
+		lon2 *= RAD2DEG;
+	}
+
+	const double metres = s100::geodesy::RhumbInverse({ lat1, lon1 }, { lat2, lon2 }).distance;
+	switch (unitReturnValue)
+	{
+	case UNIT::m:             return metres;
+	case UNIT::nautical_mile: return s100::geodesy::FromMetres(metres, s100::geodesy::LengthUnit::NauticalMile);
+	case UNIT::km:
+	default:                  return s100::geodesy::FromMetres(metres, s100::geodesy::LengthUnit::Kilometre);
+	}
+}
+
+LatLonUtility::Pos LatLonUtility::GetDestinationPointRhumbLineMercator(double lat, double lon, double bearing, double dist, bool radian)
+{
+	if (radian)
+	{
+		bearing *= RAD2DEG;
+		lat *= RAD2DEG;
+		lon *= RAD2DEG;
+	}
+	const auto destination = s100::geodesy::RhumbDirect({ lat, lon }, bearing, dist);
+	return Pos(destination.lon, destination.lat);
+}
+
+LatLonUtility::Pos LatLonUtility::GetDestinationPointGreateCircle(double lat, double lon, double bearing, double dist, bool radian)
+{
+	if (radian)
+	{
+		bearing *= RAD2DEG;
+		lat *= RAD2DEG;
+		lon *= RAD2DEG;
+	}
+	const auto destination = s100::geodesy::GeodesicDirect({ lat, lon }, bearing, dist);
+	return Pos(destination.lon, destination.lat);
+}
+
+double LatLonUtility::DMStoDegree(double _D, double _M, double _S)
+{
+	return s100::geodesy::DmsToDegrees(_D, _M, _S);
+}
+
+void LatLonUtility::DegreeToDMS(const double _deg, double& _D, double& _M, double& _S)
+{
+	const auto dms = s100::geodesy::DegreesToDms(_deg);
+	_D = dms.degrees;
+	_M = dms.minutes;
+	_S = dms.seconds;
+}
+
+void LatLonUtility::Centroid(double* _x, double* _y, int _cnt, double& resX, double& resY)
+{
+	if (!_x || !_y || _cnt <= 0)
+	{
+		return;
+	}
+	const auto count = static_cast<std::size_t>(_cnt);
+	const auto centre = s100::geodesy::PolygonCentroid(std::span<const double>(_x, count), std::span<const double>(_y, count));
+	resX = centre.lon;
+	resY = centre.lat;
 }
