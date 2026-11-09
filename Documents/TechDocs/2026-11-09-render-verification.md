@@ -3,14 +3,32 @@
 Phase 1에서 그리기 코드를 여러 번 옮겼다(GDI 그리기 → `GdiGeometryRenderer`, D2D 뷰 변환 → `D2DView.h`,
 `Scaler` API 변경, `/W4` 정리 등). 지침 23번대로 실제 화면으로 확인해야 하는 변경이다.
 
-## 화면 캡처는 이번에 불가능했다
+## 화면 캡처는 처음에는 불가능했다
 
 `agent-desktop`으로 뷰어를 띄우고 접근성 트리까지는 읽었지만 스크린숏은 실패했다
 (`BitBlt failed for display capture`, PowerShell `CopyFromScreen`도 `The handle is invalid`).
 원인은 사용자 세션이 원격 연결 해제 상태(`qwinsta` 기준 `Disc`)였기 때문이다. 연결이 끊긴 RDP 세션은
 데스크톱을 그리지 않으므로 어떤 캡처 API도 동작하지 않는다. 세션이 연결되어 있을 때 다시 시도한다.
 
-## 대신 만든 것: 오프스크린 렌더 테스트
+## 실제 화면 확인 (같은 날 오후, 세션 연결 상태)
+
+세션이 연결된 뒤 `agent-desktop`으로 다시 확인했다. `Release_x64\OpenS100.exe`(Phase 1 완료 시점 빌드)에서
+`101KR001C0000.000`을 열고 화면을 캡처했다.
+
+![OpenS100 앱 화면](assets/2026-11-09-render-check/onscreen-OpenS100-101KR001C0000.png)
+
+육지·수심 구역 채움, 해안선, 등대 기호와 등질 문자열(`Fl R 20M`, `Iso W 19M`), 등광 호, 침선, 수심 숫자와 등심선 라벨,
+지명(VLADIVOSTOK, NAKHODKA), 정보 기호와 지시선, 점선 경계가 모두 그려진다. 오프스크린 결과와 같은 모양이고 이상 징후는 없다.
+
+자동화 방법(다음에 다시 할 때):
+
+- 이 서버의 `agent-desktop`은 접근성 동작만 허용한다(마우스·키보드 입력 불가). 툴바 버튼은 이름이 없어 접근성으로 누를 수 없다.
+- 그래서 앱의 명령을 직접 보낸다: 메인 창에 `WM_COMMAND`(`PostMessage(hwnd, 0x0111, id, 0)`). 명령 ID는 `resource.h`의
+  `T1`(322, 열기) `T3`(324, 확대) `T4`(325, 축소) `T6`(327, 레이어에 맞춤).
+- 열기 대화상자는 표준 대화상자라 접근성으로 다룬다: 파일 이름 입력란(automation id 1148)에 경로를 넣고 `Open`(id 1)을 누른다.
+- 명령줄 인자로 준 데이터셋 경로는 열리지 않는다(`ProcessShellCommand`가 문서를 만들 뿐 레이어를 추가하지 않음). 뷰어 쪽은 열린다.
+
+## 세션이 끊겨 있을 때를 위한 것: 오프스크린 렌더 테스트
 
 `Tests/OpenS100Tests/RenderSmokeTest.cpp`
 
