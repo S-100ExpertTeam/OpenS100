@@ -78,7 +78,7 @@ namespace Part9a
 	{
 	}
 
-	void ClearOverride::parse(const std::string& input)
+	void ClearOverride::parse(const std::string& /*input*/)
 	{
 		setPresent();
 		// ClearOverride : No parameters expected

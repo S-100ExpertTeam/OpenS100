@@ -57,7 +57,7 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 	joinStyle = SENC_CommonFuc::GetJoinStyle(lineStyle->GetJoinStyleW());
 	offset = (float)(_wtof(lineStyle->GetOffsetW().c_str()));
 
-	std::wstring colorToken = lineStyle->GetPen()->GetColor().GetTokenW();
+	std::wstring _colorToken = lineStyle->GetPen()->GetColor().GetTokenW();
 	pen_width = _wtof(lineStyle->GetPen()->GetWidthW().c_str()) + 0.01;
 	pen_transparency = lineStyle->GetPen()->GetColor().GetTransparency();
 
@@ -65,8 +65,8 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 
 	if (colorProfile)
 	{
-		SetPenColor(colorProfile->GetColor(colorToken));
-		SetPenColorToken(colorToken);
+		SetPenColor(colorProfile->GetColor(_colorToken));
+		SetPenColorToken(_colorToken);
 	}
 
 	auto dashs= lineStyle->GetDashs();
@@ -204,7 +204,7 @@ void SENC_LineStyle::DrawInstruction(
 
 		if (dashes.size() > 0)
 		{
-			float dashes[] = { (float)(this->dashes.front()->length + 0.01) / (float)(0.32 * PEN_WIDTH), (float)(intervalLength - this->dashes.front()->length + 0.01) / (float)(0.32 * PEN_WIDTH) };
+			float _dashes[] = { (float)(this->dashes.front()->length + 0.01) / (float)(0.32 * PEN_WIDTH), (float)(intervalLength - this->dashes.front()->length + 0.01) / (float)(0.32 * PEN_WIDTH) };
 			ID2D1StrokeStyle1* dash = nullptr;
 			pDirect2dFactory->CreateStrokeStyle(
 				D2D1::StrokeStyleProperties1(
@@ -217,8 +217,8 @@ void SENC_LineStyle::DrawInstruction(
 					0.0f,
 					D2D1_STROKE_TRANSFORM_TYPE_FIXED
 				),
-				dashes,
-				ARRAYSIZE(dashes),
+				_dashes,
+				ARRAYSIZE(_dashes),
 				&dash
 			);
 

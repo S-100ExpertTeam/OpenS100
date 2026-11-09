@@ -61,7 +61,7 @@ namespace GM
 	//	return cpp_util::stoi(digitID);
 	//}
 
-	void OrientableCurve::Read(pugi::xml_node& node)
+	void OrientableCurve::Read(pugi::xml_node& /*node*/)
 	{
 		
 	}
@@ -87,7 +87,7 @@ namespace GM
 		return 0;
 	}
 		
-	double OrientableCurve::getX(int index)
+	double OrientableCurve::getX(int /*index*/)
 	{
 		//if (baseCurve) {
 		//	if (orientation) {
@@ -101,7 +101,7 @@ namespace GM
 		return 0;
 	}
 
-	double OrientableCurve::getY(int index)
+	double OrientableCurve::getY(int /*index*/)
 	{
 		//if (baseCurve) {
 		//	if (orientation) {

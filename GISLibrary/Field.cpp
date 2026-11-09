@@ -6,7 +6,7 @@ Field::Field(void)
 
 }
 
-Field::Field(const Field& other)
+Field::Field(const Field& /*other*/)
 {
 
 }

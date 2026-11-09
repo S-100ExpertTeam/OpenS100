@@ -235,11 +235,11 @@ namespace GISLibrary
 	}
 
 
-	bool D2D1Resources::CreateReSizeTextFormat(int size)
+	bool D2D1Resources::CreateReSizeTextFormat(int /*size*/)
 	{
 		SafeRelease(&pDWriteTextFormat);
 
-		auto result = pDWriteFactory->CreateTextFormat(
+		pDWriteFactory->CreateTextFormat(
 				L"rounded typeface",
 				NULL,
 				DWRITE_FONT_WEIGHT_NORMAL,
@@ -336,7 +336,7 @@ namespace GISLibrary
 		if (item == writeTextFormatListByFontSize.end())
 		{
 			IDWriteTextFormat* newWriteTextFormat = NULL;
-			HRESULT hr = pDWriteFactory->CreateTextFormat(
+			pDWriteFactory->CreateTextFormat(
 				ENCCommon::getDisplayFontNameW().c_str(),
 				NULL,
 				DWRITE_FONT_WEIGHT_NORMAL,
@@ -361,7 +361,7 @@ namespace GISLibrary
 		if (item == slantTextFormatListByFontSize.end())
 		{
 			IDWriteTextFormat* newWriteTextFormat = NULL;
-			HRESULT hr = pDWriteFactory->CreateTextFormat(
+			pDWriteFactory->CreateTextFormat(
 				ENCCommon::getDisplayFontNameW().c_str(),
 				NULL,
 				DWRITE_FONT_WEIGHT_NORMAL,

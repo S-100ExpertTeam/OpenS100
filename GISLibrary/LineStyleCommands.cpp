@@ -58,7 +58,7 @@ namespace Part9a
 					offset = cpp_util::stod(values[7]);
 				}
 			}
-			catch (const std::exception& e)
+			catch (const std::exception&)
 			{
 				init();
 			}
@@ -122,7 +122,7 @@ namespace Part9a
 					scaleFactor = cpp_util::stod(values[4]);
 				}
 			}
-			catch (const std::exception& e) 
+			catch (const std::exception&) 
 			{
 				init();
 			}
@@ -159,7 +159,7 @@ namespace Part9a
 			try {
 				start = cpp_util::stod(values[0]);
 				length = cpp_util::stod(values[1]);
-			} catch (const std::exception& e) {
+			} catch (const std::exception&) {
 				init();
 			}
 		} else {

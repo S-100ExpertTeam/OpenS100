@@ -119,12 +119,12 @@ bool AreaFill::initializeCOM() {
 	return true;
 }
 
-std::string AreaFill::getNodeValue(pugi::xml_node node)
+std::string AreaFill::getNodeValue(pugi::xml_node /*node*/)
 {
 	return "";
 }
 
-std::string AreaFill::getNodeAttribute(pugi::xml_node node)
+std::string AreaFill::getNodeAttribute(pugi::xml_node /*node*/)
 {
 	return "";
 }

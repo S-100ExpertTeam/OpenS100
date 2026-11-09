@@ -148,7 +148,7 @@ namespace GF
 		return "";
 	}
 
-	int ObjectType::GetParentAttributeIndex(int index) 
+	int ObjectType::GetParentAttributeIndex(int /*index*/) 
 	{
 		return 0;
 	}
@@ -165,20 +165,20 @@ namespace GF
 		informationAssociations.push_back(ia);
 	}
 
-	GF::SimpleAttributeType* ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value)
+	GF::SimpleAttributeType* ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string _code, std::string value)
 	{
 		auto sa = new SimpleAttributeType(valueType, value);
-		sa->SetCode(code);
+		sa->SetCode(_code);
 		
 		attributes.push_back(sa);
 
 		return sa;
 	}
 
-	GF::SimpleAttributeType* ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string code, std::wstring value)
+	GF::SimpleAttributeType* ObjectType::AddSimpleAttribute(FCD::S100_CD_AttributeValueType valueType, std::string _code, std::wstring value)
 	{
 		auto sa = new SimpleAttributeType(valueType, value);
-		sa->SetCode(code);
+		sa->SetCode(_code);
 
 		attributes.push_back(sa);
 
@@ -190,10 +190,10 @@ namespace GF
 		attributes.push_back(ca);
 	}
 
-	ComplexAttributeType* ObjectType::AddComplexAttribute(std::string code)
+	ComplexAttributeType* ObjectType::AddComplexAttribute(std::string _code)
 	{
 		auto ca = new ComplexAttributeType();
-		ca->SetCode(code);
+		ca->SetCode(_code);
 		attributes.push_back(ca);
 		return ca;
 	}
@@ -203,12 +203,12 @@ namespace GF
 		attributes.push_back(item);
 	}
 
-	std::optional<ThematicAttributeType*> ObjectType::getThematicAttribute(std::string code, int index)
+	std::optional<ThematicAttributeType*> ObjectType::getThematicAttribute(std::string _code, int index)
 	{
 		int num = 0;
 		for (auto iter : attributes)
 		{
-			if (iter->GetCode() == code)
+			if (iter->GetCode() == _code)
 			{
 				if (num == index)
 				{
@@ -221,12 +221,12 @@ namespace GF
 		return std::nullopt;
 	}
 
-	std::optional<GF::ComplexAttributeType*> ObjectType::getComplexAttribute(std::string code, int index)
+	std::optional<GF::ComplexAttributeType*> ObjectType::getComplexAttribute(std::string _code, int index)
 	{
 		int num = 0;
 		for (auto iter : attributes)
 		{
-			if (iter->IsSimple() == false && iter->GetCode() == code)
+			if (iter->IsSimple() == false && iter->GetCode() == _code)
 			{
 				if (num == index)
 				{
@@ -245,12 +245,11 @@ namespace GF
 	surfaceCharacteristics:2* natureOfSurface
 	path : all complex attributes
 	*/
-	std::vector<std::string> ObjectType::getSimpleAttributeValues(std::string path, std::string code)
+	std::vector<std::string> ObjectType::getSimpleAttributeValues(std::string path, std::string _code)
 	{
 		std::vector<std::string> path_items;
 		std::vector<int> atixs;
 
-		size_t offset = 0;
 
 		if (!path.empty())
 		{
@@ -270,20 +269,20 @@ namespace GF
 				auto atix = atoi(strAtix.c_str());
 				atixs.push_back(atix - 1);
 
-				auto code = token.substr(0, colonIndex);
-				path_items.push_back(code);
+				auto __code = token.substr(0, colonIndex);
+				path_items.push_back(__code);
 			}
 		}
 
 		ComplexAttributeType* previousComplexType = nullptr;
 		for (int i = 0; i < path_items.size(); i++)
 		{
-			auto code = path_items[i];
+			auto __code = path_items[i];
 			auto atix = atixs[i];
 
 			if (i == 0)
 			{
-				auto currentComplex = getComplexAttribute(code, atix);
+				auto currentComplex = getComplexAttribute(__code, atix);
 				if (currentComplex.has_value())
 				{
 					previousComplexType = currentComplex.value();
@@ -291,7 +290,7 @@ namespace GF
 			}
 			else if (i != 0 && previousComplexType != nullptr)
 			{
-				auto currentComplex = previousComplexType->getComplexAttribute(code, atix);
+				auto currentComplex = previousComplexType->getComplexAttribute(__code, atix);
 				if (currentComplex.has_value())
 				{
 					previousComplexType = currentComplex.value();
@@ -301,18 +300,18 @@ namespace GF
 
 		if (previousComplexType)
 		{
-			return previousComplexType->getAttributeValues(code);
+			return previousComplexType->getAttributeValues(_code);
 		}
 
-		return this->getSimpleAttributeValues(code);
+		return this->getSimpleAttributeValues(_code);
 	}
 
-	std::vector<std::string> ObjectType::getSimpleAttributeValues(std::string code)
+	std::vector<std::string> ObjectType::getSimpleAttributeValues(std::string _code)
 	{
 		std::vector<std::string> values;
 		for (auto iter : attributes)
 		{
-			if (iter->IsSimple() && iter->GetCode() == code)
+			if (iter->IsSimple() && iter->GetCode() == _code)
 			{
 				if (iter->GetValue().empty() == true)
 				{
@@ -328,12 +327,11 @@ namespace GF
 		return values;
 	}
 
-	int ObjectType::getComplexAttributeCount(std::string path, std::string code)
+	int ObjectType::getComplexAttributeCount(std::string path, std::string _code)
 	{
 		std::vector<std::string> path_items;
 		std::vector<int> atixs;
 
-		size_t offset = 0;
 
 		if (!path.empty())
 		{
@@ -353,20 +351,20 @@ namespace GF
 				auto atix = atoi(strAtix.c_str());
 				atixs.push_back(atix - 1);
 
-				auto code = token.substr(0, colonIndex);
-				path_items.push_back(code);
+				auto __code = token.substr(0, colonIndex);
+				path_items.push_back(__code);
 			}
 		}
 
 		ComplexAttributeType* previousComplexType = nullptr;
 		for (int i = 0; i < path_items.size(); i++)
 		{
-			auto code = path_items[i];
+			auto __code = path_items[i];
 			auto atix = atixs[i];
 
 			if (i == 0)
 			{
-				auto currentComplex = getComplexAttribute(code, atix);
+				auto currentComplex = getComplexAttribute(__code, atix);
 				if (currentComplex.has_value())
 				{
 					previousComplexType = currentComplex.value();
@@ -374,7 +372,7 @@ namespace GF
 			}
 			else if (i != 0 && previousComplexType != nullptr)
 			{
-				auto currentComplex = previousComplexType->getComplexAttribute(code, atix);
+				auto currentComplex = previousComplexType->getComplexAttribute(__code, atix);
 				if (currentComplex.has_value())
 				{
 					previousComplexType = currentComplex.value();
@@ -384,22 +382,22 @@ namespace GF
 
 		if (previousComplexType)
 		{
-			return previousComplexType->GetSubAttributeCount(code);
+			return previousComplexType->GetSubAttributeCount(_code);
 		}
 		else
 		{
-			return getAttributeCount(code);
+			return getAttributeCount(_code);
 		}
 
 		return 0;
 	}
 
-	int ObjectType::getAttributeCount(std::string code)
+	int ObjectType::getAttributeCount(std::string _code)
 	{
 		int count = 0;
 		for (auto iter : attributes)
 		{
-			if (iter->GetCode() == code)
+			if (iter->GetCode() == _code)
 			{
 				count++;
 			}

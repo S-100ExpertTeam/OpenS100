@@ -73,11 +73,11 @@ namespace GF
 		return geometry ? geometry->GetID() : std::string();
 	}
 
-	void SpatialAttributeType::SetGMGeometry(GM::Object* geometry)
+	void SpatialAttributeType::SetGMGeometry(GM::Object* _geometry)
 	{
 		// The dataset keeps ownership of its geometries; this is a reference only.
 		// Taking ownership here caused a double delete in ~S10XGML.
-		sharedGeometry = geometry;
+		sharedGeometry = _geometry;
 	}
 
 	GM::Object* SpatialAttributeType::GetGMGeometry()

@@ -32,9 +32,9 @@ namespace GF
 		return role.GetCode();
 	}
 
-	void AssociationType::SetRole(std::string code)
+	void AssociationType::SetRole(std::string _code)
 	{
-		role.SetCode(code);
+		role.SetCode(_code);
 	}
 
 }

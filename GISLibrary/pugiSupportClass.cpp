@@ -112,6 +112,7 @@ namespace S100 {
                 return instruction;
             }
         }
+        return pugi::xml_node();
     }
 
     const pugi::char_t* ExXmlSupport::GetContentItem(pugi::xml_node& node, std::string nodeName, std::string nodeNameSpace)

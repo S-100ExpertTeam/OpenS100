@@ -55,7 +55,7 @@ namespace S100 {
             {
                 auto childNode = instruction.first_child();
                 auto childName = childNode.name();
-                if (childName == "S100SE:S100_SE_SignatureOnData")
+                if (!strcmp(childName, "S100SE:S100_SE_SignatureOnData"))
                 {
                     S100_SE_SignatureOnData ds;
                     auto temp = ExXmlSupport().GetContentNode(instruction, "S100_SE_SignatureOnData", "S100SE");
@@ -63,7 +63,7 @@ namespace S100 {
                     DigitalSignatureValue.push_back(ds);
 
                 }
-                else if (childName == "S100SE:S100_SE_DigitalSignature")
+                else if (!strcmp(childName, "S100SE:S100_SE_DigitalSignature"))
                 {
                     S100_SE_DigitalSignature ds;
                     auto temp = ExXmlSupport().GetContentNode(instruction, "S100_SE_SignatureOnData", "S100SE");

@@ -146,8 +146,6 @@ bool SCompositeCurve::ExportToWkb(unsigned char** value, int* size)
 
 	for (int i = 0; i < numPoints; i++)
 	{
-		double localX = 0;
-		double localY = 0;
 
 		auto p = GetXY(i);
 
@@ -181,10 +179,10 @@ bool SCompositeCurve::ExportToWkbMultiLineString(unsigned char** value, int* siz
 	int offset = 0;
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)
 	{
-		int size = 0;
+		int _size = 0;
 		auto mem = (*value) + (9 + offset);
-		(*i)->ExportToWkb(&mem, &size);
-		offset += size;
+		(*i)->ExportToWkb(&mem, &_size);
+		offset += _size;
 	}
 
 	return true;

@@ -302,14 +302,12 @@ ClipperLib::Paths SCommonFuction::ClipSurface(SSurface* _surface, SSurface* _vie
 
 POINT SCommonFuction::CalculateCenterOfGravityOfSurface(ClipperLib::Path polygon)
 {
-	int j = 0;
 	double area = 0;
 	double centerX = 0.0;
 	double centerY = 0.0;
 
 	ClipperLib::long64 x1, y1, x2, y2, tmpArea;
 
-	int _count = (int)polygon.size();
 
 	for (auto itor = polygon.begin(); itor != polygon.end(); itor++)
 	{
@@ -512,7 +510,7 @@ POINT* SCommonFuction::GetCenterPointOfCurve(POINT *_p, int _count, const RECT* 
 
 //  -1 : outside
 //  1 : inside
-int SCommonFuction::inside(double x, double y, SSurface* poly, bool applyOption)
+int SCommonFuction::inside(double x, double y, SSurface* poly, bool /*applyOption*/)
 {
 	if (poly == NULL)
 		return -1;
@@ -533,8 +531,8 @@ int SCommonFuction::inside(double x, double y, SSurface* poly, bool applyOption)
 	static int ticList[100000];
 	if (poly->getNumPoint() > 100000)
 	{
-		int* ticList = new int[poly->getNumPoint()];
-		icList = ticList;
+		int* _ticList = new int[poly->getNumPoint()];
+		icList = _ticList;
 	}
 	else
 	{
@@ -662,7 +660,7 @@ int SCommonFuction::overlap(SAbstractCurve* objPoly, SSurface* comPoly, bool app
 	return -1;
 }
 
-int SCommonFuction::overlap(SCurve* objPoly, SSurface* comPoly, bool applyOption)
+int SCommonFuction::overlap(SCurve* objPoly, SSurface* comPoly, bool /*applyOption*/)
 {
 
 	int ret = -1;
@@ -693,7 +691,7 @@ int SCommonFuction::overlap(SCurve* objPoly, SSurface* comPoly, bool applyOption
 	return ret;
 }
 
-int SCommonFuction::overlap(SSurface* objPoly, SSurface* comPoly, bool applyOption)
+int SCommonFuction::overlap(SSurface* objPoly, SSurface* comPoly, bool /*applyOption*/)
 {
 	int ret = -1;
 

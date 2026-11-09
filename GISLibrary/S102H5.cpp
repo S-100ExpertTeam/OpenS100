@@ -70,7 +70,7 @@ bool S102H5::Open(const std::wstring& _filepath)
 	return true;
 }
 
-bool S102H5::OpenMetadata(const std::wstring& _filepath)
+bool S102H5::OpenMetadata(const std::wstring& /*_filepath*/)
 {
 	return true;
 }
@@ -103,14 +103,13 @@ D2D1_COLOR_F S102H5::getColor(float depth)
 		return s102Color.DEPIT[0];
 	}
 
-	return D2D1::ColorF(D2D1::ColorF::Black);
 }
 
 void S102H5::SetPositive()
 {
 	if (rootGroup->productSpecification.find("2.0.0") != std::string::npos) {
-		auto featureContainer = GetBathymetryCoverage();
-		auto featureInstance = featureContainer->GetBathymetryCoverage();
+		auto _featureContainer = GetBathymetryCoverage();
+		auto featureInstance = _featureContainer->GetBathymetryCoverage();
 		auto valuesGroup = featureInstance->GetBathymetryCoverage();
 
 		auto width = featureInstance->getNumPointsLongitudinal();

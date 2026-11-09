@@ -284,14 +284,14 @@ namespace GF
 		return nullptr;
 	}
 
-	void FeatureType::SetGMGeometry(GM::Object* geometry)
+	void FeatureType::SetGMGeometry(GM::Object* _geometry)
 	{
 		if (nullptr == spatial)
 		{
 			spatial = new SpatialAttributeType();
 		}
 
-		spatial->SetGMGeometry(geometry);
+		spatial->SetGMGeometry(_geometry);
 	}
 
 	void FeatureType::AddFeatureAssociation(

@@ -14,8 +14,8 @@ namespace Part9a
         virtual Enum_CommandType GetType() const { return Enum_CommandType::None; }
         virtual void init() { present = false; };
         virtual void execute() {};
-        virtual void parse(const std::string& input) {};
-        virtual bool execute(std::list<Part9a::Command*>& stateCommands) { return false; };
+        virtual void parse(const std::string& /*input*/) {};
+        virtual bool execute(std::list<Part9a::Command*>& /*stateCommands*/) { return false; };
 
     public:
         static GraphicBasePackage::CRSType GetCRSTypeFromString(const std::string& value);

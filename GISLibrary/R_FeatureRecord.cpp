@@ -468,26 +468,16 @@ int R_FeatureRecord::GetSPASRCNM()
 		return 0;
 	}
 
-	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
+	// The first spatial association decides: its record name must be a geometry record.
+	for (F_SPAS* spasParent : m_spas)
 	{
-		F_SPAS *spasParent = *i;
-
-		for (auto j = spasParent->m_arr.begin(); j != spasParent->m_arr.end(); j++)
+		if (spasParent->m_arr.empty())
 		{
-			SPAS* spas = *j;
-
-			auto rcnm = spas->m_name.RCNM;
-			if (rcnm == 110 || rcnm == 115 || rcnm == 120 || rcnm == 125 || rcnm == 130)
-			{
-				return rcnm;
-			}
-			else
-			{
-				return -1;
-			}
+			continue;
 		}
+		const auto rcnm = spasParent->m_arr.front()->m_name.RCNM;
+		return (rcnm == 110 || rcnm == 115 || rcnm == 120 || rcnm == 125 || rcnm == 130) ? rcnm : -1;
 	}
-
 	return -1;
 }
 
@@ -656,16 +646,13 @@ int R_FeatureRecord::GetAttributeIndex(ATTR* attr)
 
 SPAS* R_FeatureRecord::GetSPAS()
 {
-	for (auto i = m_spas.begin(); i != m_spas.end(); i++)
+	for (F_SPAS* spasParent : m_spas)
 	{
-		F_SPAS* spasParent = *i;
-
-		for (auto j = spasParent->m_arr.begin(); j != spasParent->m_arr.end(); j++)
+		if (!spasParent->m_arr.empty())
 		{
 			return spasParent->m_arr.front();
 		}
 	}
-
 	return nullptr;
 }
 
@@ -869,12 +856,12 @@ int R_FeatureRecord::GetAttributeCount() const
 
 std::string R_FeatureRecord::GetAttributeValue(int index)
 {
-	auto attributes = GetAllAttributes();
-	int count = (int)attributes.size();
+	auto _attributes = GetAllAttributes();
+	int count = (int)_attributes.size();
 
 	if (count > 0 && index < count)
 	{
-		return pugi::as_utf8(std::wstring(attributes.at(index)->m_atvl));
+		return pugi::as_utf8(std::wstring(_attributes.at(index)->m_atvl));
 	}
 
 	return "";

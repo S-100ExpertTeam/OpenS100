@@ -21,9 +21,9 @@ std::string SENC_AlertReference::getReference() const
 	return reference;
 }
 
-void SENC_AlertReference::setPlan(const std::string& plan)
+void SENC_AlertReference::setPlan(const std::string& _plan)
 {
-	this->plan = plan;
+	this->plan = _plan;
 }
 
 std::optional<std::string> SENC_AlertReference::getPlan() const
@@ -31,9 +31,9 @@ std::optional<std::string> SENC_AlertReference::getPlan() const
 	return plan;
 }
 
-void SENC_AlertReference::setMonitoring(const std::string& monitoring)
+void SENC_AlertReference::setMonitoring(const std::string& _monitoring)
 {
-	this->monitoring = monitoring;
+	this->monitoring = _monitoring;
 }
 
 std::optional<std::string> SENC_AlertReference::getMonitoring() const

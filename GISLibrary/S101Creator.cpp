@@ -51,23 +51,23 @@ S101Creator::~S101Creator()
 
 }
 
-void S101Creator::Set(FeatureCatalogue* fc, S101Cell* enc)
+void S101Creator::Set(FeatureCatalogue* _fc, S101Cell* _enc)
 {
-	SetFC(fc);
-	SetENC(enc);
+	SetFC(_fc);
+	SetENC(_enc);
 }
 
-void S101Creator::SetFC(FeatureCatalogue* fc)
+void S101Creator::SetFC(FeatureCatalogue* _fc)
 {
-	this->fc = fc;
+	this->fc = _fc;
 }
 
-void S101Creator::SetENC(S101Cell* enc)
+void S101Creator::SetENC(S101Cell* _enc)
 {
-	this->enc = enc;
-	if (enc && enc->m_pLayer)
+	this->enc = _enc;
+	if (_enc && _enc->m_pLayer)
 	{
-		this->layer = (S100Layer*)enc->m_pLayer;
+		this->layer = (S100Layer*)_enc->m_pLayer;
 	}
 }
 
@@ -83,24 +83,24 @@ S101Cell* S101Creator::CreateENC(std::wstring name)
 	return result;
 }
 
-S100Layer* S101Creator::CreateLayer(std::string name, FeatureCatalogue* fc, PortrayalCatalogue* pc)
+S100Layer* S101Creator::CreateLayer(std::string name, FeatureCatalogue* _fc, PortrayalCatalogue* pc)
 {
 	auto wname = pugi::as_wide(name);
-	return CreateLayer(wname, fc, pc);
+	return CreateLayer(wname, _fc, pc);
 }
 
-S100Layer* S101Creator::CreateLayer(std::wstring name, FeatureCatalogue* fc, PortrayalCatalogue* pc)
+S100Layer* S101Creator::CreateLayer(std::wstring name, FeatureCatalogue* _fc, PortrayalCatalogue* pc)
 {
-	auto result = new S100Layer(fc, pc);
+	auto result = new S100Layer(_fc, pc);
 
 	enc = CreateENC(name);
 
-	Set(fc, enc);
+	Set(_fc, enc);
 
 	result->m_spatialObject = enc;
 	enc->m_pLayer = result;
 
-	enc->SetAllNumericCode(fc);
+	enc->SetAllNumericCode(_fc);
 
 	return result;
 }
@@ -320,7 +320,7 @@ ATTR* S101Creator::AddSimpleAttribute(R_FeatureRecord* feature, ATTR* parentATTR
 	return nullptr;
 }
 
-ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, ATTR* parentATTR, std::string code, std::string value)
+ATTR* S101Creator::AddSimpleAttribute(R_InformationRecord* information, ATTR* /*parentATTR*/, std::string code, std::string value)
 {
 	auto wcode = pugi::as_wide(code);
 	auto wvalue = s100::text::ToWide(value);
@@ -1199,19 +1199,19 @@ void S101Creator::AddDefaultChildAttributes(R_FeatureRecord* feature, ATTR* attr
 			auto attributeBinding = *i;
 			if (attributeBinding->GetLower() > 0)
 			{
-				auto attributeCode = attributeBinding->GetAttributeCodeAsWstring();
+				auto _attributeCode = attributeBinding->GetAttributeCodeAsWstring();
 
-				auto simpleAttribute = fc->GetSimpleAttribute(attributeCode);
+				auto simpleAttribute = fc->GetSimpleAttribute(_attributeCode);
 				if (simpleAttribute)
 				{
-					AddSimpleAttribute(feature, attr, attributeCode, "");
+					AddSimpleAttribute(feature, attr, _attributeCode, "");
 				}
 				else
 				{
-					auto complexAttribute = fc->GetComplexAttribute(attributeCode);
-					if (complexAttribute)
+					auto _complexAttribute = fc->GetComplexAttribute(_attributeCode);
+					if (_complexAttribute)
 					{
-						auto newATTR = AddComplexAttribute(feature, attr, attributeCode);
+						auto newATTR = AddComplexAttribute(feature, attr, _attributeCode);
 						if (newATTR)
 						{
 							AddDefaultChildAttributes(feature, newATTR);

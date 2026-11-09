@@ -239,7 +239,7 @@ int LayerManager::AddLayerFront(Layer* _layer)
 	return _layer->GetID();
 }
 
-bool LayerManager::AddUpdateLayer(Layer* Base, Layer* Update)
+bool LayerManager::AddUpdateLayer(Layer* /*Base*/, Layer* /*Update*/)
 {
 
 	return false;
@@ -265,7 +265,6 @@ int LayerManager::isUpdate(const std::wstring& filePath)
 int LayerManager::AddLayer(const std::wstring& _filepath)
 {
 	Layer* layer = nullptr;
-	size_t fitor = std::wstring::npos;
 
 	S100_FileType fileType = CheckFileType(_filepath);
 
@@ -330,7 +329,6 @@ int LayerManager::AddLayer(const std::wstring& _filepath)
 int LayerManager::AddLayerFront(const std::wstring& _filepath)
 {
 	Layer* layer = nullptr;
-	size_t fitor = std::wstring::npos;
 
 	S100_FileType fileType = CheckFileType(_filepath);
 
@@ -417,16 +415,16 @@ void LayerManager::DrawInformationLayer(HDC& hDC, Layer* layer)
 	SolidBrush internalBrush(internalColor);
 	Pen linePen(lineColor);
 
-	auto mbr = layer->GetMBR();
+	auto _mbr = layer->GetMBR();
 	long sxmin = 0;
 	long symax = 0;
 
 	// Internal coordinate system -> Screen coordinate system.
-	scaler->WorldToDevice(mbr.xmin, mbr.ymin, &sxmin, &symax);
+	scaler->WorldToDevice(_mbr.xmin, _mbr.ymin, &sxmin, &symax);
 
 	long sxmax = 0;
 	long symin = 0;
-	scaler->WorldToDevice(mbr.xmax, mbr.ymax, &sxmax, &symin);
+	scaler->WorldToDevice(_mbr.xmax, _mbr.ymax, &sxmax, &symin);
 
 	RectF position = {
 		(float)sxmin,
@@ -475,8 +473,8 @@ void LayerManager::DrawInformationLayerByKey(HDC& hDC, int key)
 
 void LayerManager::AddSymbolDrawing(
 	int drawingPrioriy,
-	HDC& hdc,
-	int offset,
+	HDC& /*hdc*/,
+	int /*offset*/,
 	std::list<SENC_Instruction*>* augmentedRay,
 	std::list<SENC_Instruction*>* augmentedPath,
 	std::list<SENC_Instruction*>* point,
@@ -565,7 +563,6 @@ void LayerManager::AddSymbolDrawing(
 				rotation = (float)(instruction->symbol)->rotation;
 			}
 
-			float instructionScale = (instruction->symbol)->scaleFactor;
 
 			if (instruction && instruction->symbol)
 			{
@@ -599,12 +596,6 @@ void LayerManager::AddSymbolDrawing(
 		D2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
 		if (text[drawingPrioriy].size() > 0)
 		{
-			HWND hWnd = ::GetActiveWindow();
-			HDC hdc = ::GetDC(hWnd);
-
-			int dpiX = GetDeviceCaps(hdc, LOGPIXELSX);    // Monitor x axis dpi.
-			int dpiY = GetDeviceCaps(hdc, LOGPIXELSY);    // Monitor y axis dpi.
-			::ReleaseDC(hWnd, hdc);
 			D2D1_SIZE_F renderTargetSize = D2->pRT->GetSize();
 
 			for (auto i = text[drawingPrioriy].begin(); i != text[drawingPrioriy].end(); i++)
@@ -627,7 +618,6 @@ void LayerManager::AddSymbolDrawing(
 
 				if (itorTp != textPoint->elements.end())
 				{
-					unsigned textSize = 1;
 					SENC_Element* element = *itorTp;
 
 					std::wstring viewString = element->text.value;
@@ -750,8 +740,8 @@ void LayerManager::AddSymbolDrawing(
 
 						float x = p->x + offset_x;
 						float y = p->y + offset_y;
-						float width = instruction->textMatrix->width;
-						float height = instruction->textMatrix->height;
+						float _width = instruction->textMatrix->width;
+						float _height = instruction->textMatrix->height;
 
 						const wchar_t* vText = element->text.value.c_str();
 
@@ -761,10 +751,10 @@ void LayerManager::AddSymbolDrawing(
 						// rotate Point
 						if (scaler->GetRotationDegree())
 						{
-							double radian = (180 - scaler->GetRotationDegree()) * DEG2RAD;
+							double _radian = (180 - scaler->GetRotationDegree()) * DEG2RAD;
 
-							FLOAT tempX = (float)(scaler->soy - y) * (float)sin(radian) + (float)(scaler->sox - x) * (float)cos(radian);
-							FLOAT tempY = (float)(scaler->soy - y) * (float)cos(radian) - (float)(scaler->sox - x) * (float)sin(radian);
+							FLOAT tempX = (float)(scaler->soy - y) * (float)sin(_radian) + (float)(scaler->sox - x) * (float)cos(_radian);
+							FLOAT tempY = (float)(scaler->soy - y) * (float)cos(_radian) - (float)(scaler->sox - x) * (float)sin(_radian);
 
 							x = tempX + (float)scaler->sox;
 							y = tempY + (float)scaler->soy;
@@ -775,7 +765,7 @@ void LayerManager::AddSymbolDrawing(
 							vText,
 							vTextSize,
 							useWTF,
-							D2D1::RectF(x, y, x + width, y + height),
+							D2D1::RectF(x, y, x + _width, y + _height),
 							D2->pBrush
 						);
 					}
@@ -939,7 +929,6 @@ void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)
 
 void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 {
-	auto fc = layer->GetFeatureCatalog();
 	auto pc = layer->GetPC();
 	layer->InitDraw();
 
@@ -1092,8 +1081,6 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 
 void LayerManager::SetDrawingInstruction(S100Layer* layer)
 {
-	auto fc = layer->GetFeatureCatalog();
-	auto pc = layer->GetPC();
 
 	auto cell = (S100SpatialObject*)layer->GetSpatialObject();
 	if (nullptr == cell->pcManager ||
@@ -1551,9 +1538,9 @@ void LayerManager::SuppressS101Lines(std::set<int>& drawingPriority, DrawingSet*
 	// Drawing priority : High -> Low
 	for (auto i = drawingPriority.rbegin(); i != drawingPriority.rend(); i++)
 	{
-		int drawingPriority = *i;
+		int _drawingPriority = *i;
 
-		auto lineInstructions = drawingSet->GetLineList()[drawingPriority];
+		auto lineInstructions = drawingSet->GetLineList()[_drawingPriority];
 
 		for (auto j = lineInstructions.begin(); j != lineInstructions.end(); j++)
 		{
@@ -1822,7 +1809,7 @@ int LayerManager::pathToProductNumber(const std::wstring& path)
 		try {
 			return cpp_util::stoi(strProductNumber);
 		}
-		catch (const std::exception& e) {
+		catch (const std::exception&) {
 		}
 	}
 

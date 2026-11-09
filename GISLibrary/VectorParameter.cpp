@@ -24,10 +24,10 @@ namespace Part9a
 		return y;
 	}
 
-	void Vector::Set(double x, double y)
+	void Vector::Set(double _x, double _y)
 	{
-		SetX(x);
-		SetY(y);
+		SetX(_x);
+		SetY(_y);
 	}
 
 }

@@ -89,13 +89,13 @@ bool S100SpatialObject::OpenOutputXML(std::string path)
 	return true;
 }
 
-GF::ObjectType* S100SpatialObject::GetObjectType(int type, std::string id)
+GF::ObjectType* S100SpatialObject::GetObjectType(int _type, std::string id)
 {
-	if (type == 1)
+	if (_type == 1)
 	{
 		return GetFeatureType(id);
 	}
-	else if (type == 2)
+	else if (_type == 2)
 	{
 		return GetInformationType(id);
 	}
@@ -153,13 +153,13 @@ std::string S100SpatialObject::GetInformationAttributeCode(std::string id, int i
 	return std::string("");
 }
 
-std::string S100SpatialObject::GetObjectAttributeCode(int type, std::string id, int index)
+std::string S100SpatialObject::GetObjectAttributeCode(int _type, std::string id, int index)
 {
-	if (type == 1)
+	if (_type == 1)
 	{
 		return GetFeatureAttributeCode(id, index);
 	}
-	else if (type == 2)
+	else if (_type == 2)
 	{
 		return GetInformationAttributeCode(id, index);
 	}

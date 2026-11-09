@@ -31,12 +31,12 @@ namespace GM
 
 	}
 
-	void Point::Read(pugi::xml_node& node)
+	void Point::Read(pugi::xml_node& /*node*/)
 	{
 
 	}
 
-	void Point::Write(pugi::xml_node& node)
+	void Point::Write(pugi::xml_node& /*node*/)
 	{
 
 	}

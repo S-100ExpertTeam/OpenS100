@@ -102,7 +102,6 @@ int F_SPAS::GetFieldLength()
 	int len = 0;
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 	{
-		SPAS* spas = *itor;
 		len += SPAS::GetSize();
 	}
 	return ++len;

@@ -46,7 +46,7 @@ bool S100H5::Open(const std::wstring& _filepath)
 	return true;
 }
 
-bool S100H5::OpenMetadata(const std::wstring& _filepath)
+bool S100H5::OpenMetadata(const std::wstring& /*_filepath*/)
 {
 	return true;
 }

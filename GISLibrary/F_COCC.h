@@ -37,7 +37,7 @@ public:
 
 public:
 	void ReadField(BYTE *&buf);
-	bool WriteField(s100::io::BinaryWriter* file) { return true; };
+	bool WriteField(s100::io::BinaryWriter* /*file*/) { return true; };
 	int GetFieldLength();
 };
 

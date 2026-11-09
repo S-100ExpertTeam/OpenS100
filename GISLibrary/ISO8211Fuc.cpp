@@ -52,7 +52,7 @@ DWORD atoi(BYTE*& buf, int len)
 	return ret;
 }
 
-double buf2double(BYTE*& buf, int size)
+double buf2double(BYTE*& buf, int /*size*/)
 {
 	double ret = 0;
 	memcpy_s(&ret, 8, buf, 8);

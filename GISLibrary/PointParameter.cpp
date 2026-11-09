@@ -27,9 +27,9 @@ namespace Part9a
 		return y;
 	}
 
-	void Point::Set(double x, double y)
+	void Point::Set(double _x, double _y)
 	{
-		SetX(x);
-		SetY(y);
+		SetX(_x);
+		SetY(_y);
 	}
 }

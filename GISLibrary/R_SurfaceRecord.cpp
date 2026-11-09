@@ -105,16 +105,16 @@ bool R_SurfaceRecord::WriteRecord(s100::io::BinaryWriter* file)
 	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("INAS", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 
 	for (auto i = m_rias.begin(); i != m_rias.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("RIAS", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("RIAS", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 

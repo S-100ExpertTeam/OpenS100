@@ -66,7 +66,7 @@ void F_FASC::ReadField(BYTE *&buf)
 	m_faui = *(buf++);
 }
 
-void F_FASC::ReadField(BYTE *&buf, int loopCnt)
+void F_FASC::ReadField(BYTE *&buf, int /*loopCnt*/)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);

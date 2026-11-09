@@ -99,21 +99,21 @@ namespace S100
             {
                 for (pugi::xml_node inst = instruction.first_child(); inst; inst = inst.next_sibling())
                 {
-                    const pugi::char_t* instructionName = inst.name();
+                    const pugi::char_t* _instructionName = inst.name();
 
-                    if (!strcmp(instructionName, "IC_SimpleRule"))
+                    if (!strcmp(_instructionName, "IC_SimpleRule"))
                     {
                         IC_SimpleRule simple;
                         simple.GetContents(inst);
                         HybridizationRules.push_back((IC_HybridFeatureCreationRule)simple);
                     }
-                    else if (!strcmp(instructionName, "IC_ThematicRule"))
+                    else if (!strcmp(_instructionName, "IC_ThematicRule"))
                     {
                         IC_ThematicRule them;
                         them.GetContents(inst);
                         HybridizationRules.push_back((IC_HybridFeatureCreationRule)them);
                     }
-                    else if (!strcmp(instructionName, "IC_CompleteRule"))
+                    else if (!strcmp(_instructionName, "IC_CompleteRule"))
                     {
                         IC_CompleteRule comp;
                         comp.GetContents(inst);

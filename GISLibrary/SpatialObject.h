@@ -28,11 +28,11 @@ private:
 public:
 	virtual bool Open(const std::wstring& _filepath) = 0;
 	virtual bool OpenMetadata(const std::wstring& _filepath) = 0;
-	virtual bool Save(std::wstring path) { return true; }
+	virtual bool Save(std::wstring /*path*/) { return true; }
 
 	// Legacy GDI drawing entry used by shapefile layers and the exchange-set coverage view.
 	// S-100 datasets do not draw themselves; renderers do (Phase 1 step 2).
-	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0) {};
+	virtual void Draw(HDC &/*hDC*/, Scaler */*scaler*/, double /*offset*/ = 0) {};
 
 	virtual int getEPSGNumber() { return 0; }
 

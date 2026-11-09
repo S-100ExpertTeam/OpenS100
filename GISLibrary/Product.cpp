@@ -31,29 +31,29 @@ Product::~Product()
 
 bool Product::OpenFC(std::wstring path)
 {
-	auto fc = new FeatureCatalogue();
-	if (fc->Read(path)) {
-		if (this->fc.find(fc->GetVersionNumberW()) == this->fc.end()) {
-			this->fc.insert({ fc->GetVersionNumberW(), fc });
+	auto _fc = new FeatureCatalogue();
+	if (_fc->Read(path)) {
+		if (this->fc.find(_fc->GetVersionNumberW()) == this->fc.end()) {
+			this->fc.insert({ _fc->GetVersionNumberW(), _fc });
 			return true;
 		}
 	}
 
-	delete fc;
+	delete _fc;
 	return false;
 }
 
 bool Product::OpenPC(std::wstring path)
 {
-	auto pc = new PortrayalCatalogue();
-	if (pc->Open(path)) {
+	auto _pc = new PortrayalCatalogue();
+	if (_pc->Open(path)) {
 
-		if (this->pc.find(pc->GetVersionW()) == this->pc.end()) {
-			this->pc.insert({ pc->GetVersionW(), pc });
+		if (this->pc.find(_pc->GetVersionW()) == this->pc.end()) {
+			this->pc.insert({ _pc->GetVersionW(), _pc });
 			return true;
 		}
 	}
 
-	delete pc;
+	delete _pc;
 	return false;
 }

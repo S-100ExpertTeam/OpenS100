@@ -58,7 +58,7 @@ R_PointRecord R_PointRecord::operator=(const R_PointRecord& other)
 
 BOOL R_PointRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
-	int i = 0, j = 0;
+	int i = 0;
 	for (i = 0; i < dir->m_count; i++)
 	{
 		if (strcmp(dir->GetDirectory(i)->tag, "PRID") == 0)
@@ -113,16 +113,16 @@ bool R_PointRecord::WriteRecord(s100::io::BinaryWriter* file)
 	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("INAS", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 
 	if (m_c2it)
 	{
 		fieldLength = m_c2it->GetFieldLength();
-		Directory dir("C2IT", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("C2IT", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 

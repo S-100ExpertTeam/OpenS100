@@ -23,7 +23,7 @@ SAbstractCurve SAbstractCurve::operator=(const SAbstractCurve& other)
 	return *this;
 }
 
-void SAbstractCurve::Set(int index, double x, double y)
+void SAbstractCurve::Set(int /*index*/, double /*x*/, double /*y*/)
 {
 
 }

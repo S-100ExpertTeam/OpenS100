@@ -46,7 +46,7 @@ SENC_AugmentedPath::~SENC_AugmentedPath()
 }
 
 #pragma warning(disable:4244)
-void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc)
+void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* /*pc*/)
 {
 	auto factory = d2->Factory();
 	auto rt = d2->RenderTarget();
@@ -85,9 +85,9 @@ void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Port
 
 				if (ls->geometryVector.size() == 0)
 				{
-					for (auto itor = path->arcByRadiuses.begin(); itor != path->arcByRadiuses.end(); itor++)
+					for (auto _itor = path->arcByRadiuses.begin(); _itor != path->arcByRadiuses.end(); _itor++)
 					{
-						SENC_ArcByRadius* _arcByRadius = *itor;
+						SENC_ArcByRadius* _arcByRadius = *_itor;
 						ID2D1PathGeometry *pGeometry = nullptr;
 
 						HRESULT hr = factory->CreatePathGeometry(&pGeometry);

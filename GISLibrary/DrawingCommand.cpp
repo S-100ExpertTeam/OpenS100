@@ -13,7 +13,7 @@ namespace Part9a
 
 	}
 
-	void DrawingCommand::parse(const std::string& input)
+	void DrawingCommand::parse(const std::string& /*input*/)
 	{
 
 	}

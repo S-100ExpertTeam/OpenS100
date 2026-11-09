@@ -28,7 +28,7 @@ public:
     virtual F_FieldControlField operator=(const F_FieldControlField& other);
     
 public:
-    void ReadField(BYTE*& buf) {};
+    void ReadField(BYTE*& /*buf*/) {};
     bool WriteField(s100::io::BinaryWriter* file);
     void AddTagPair(const char* tag1, const char* tag2);
     int GetFieldLength();

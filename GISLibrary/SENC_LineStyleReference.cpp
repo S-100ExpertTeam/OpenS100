@@ -38,9 +38,9 @@ std::wstring SENC_LineStyleReference::GetReference()
 void SENC_LineStyleReference::DrawInstruction(
 	SCurve* curveHasOrient,
 	ID2D1DCRenderTarget* rt,
-	ID2D1Factory1* pDirect2dFactory,
-	ID2D1SolidColorBrush* brush,
-	std::vector<ID2D1StrokeStyle1*>* strokeGroup,
+	ID2D1Factory1* /*pDirect2dFactory*/,
+	ID2D1SolidColorBrush* /*brush*/,
+	std::vector<ID2D1StrokeStyle1*>* /*strokeGroup*/,
 	Scaler *scaler,
 	PortrayalCatalogue* pc)
 {

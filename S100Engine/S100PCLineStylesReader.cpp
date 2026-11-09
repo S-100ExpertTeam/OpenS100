@@ -132,11 +132,9 @@ namespace S100XMLReader
 			}
 			else if (!strcmp(instructionName, "dash"))
 			{
-				LineStylesPackage::Dash* pDash = new LineStylesPackage::Dash();
 			}
 			else if (!strcmp(instructionName, "symbol"))
 			{
-				LineStylesPackage::LineSymbol* pSymbol = new LineStylesPackage::LineSymbol();
 			}
 			else if (!strcmp(instructionName, "lineStyle"))
 			{

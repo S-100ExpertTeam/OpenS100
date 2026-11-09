@@ -211,32 +211,32 @@ bool R_CurveRecord::WriteRecord(s100::io::BinaryWriter* file)
 	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("INAS", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 
 	if (m_ptas)
 	{
 		fieldLength = m_ptas->GetFieldLength();
-		Directory dir("PTAS", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("PTAS", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 
 	if (m_segh)
 	{
 		fieldLength = m_segh->GetFieldLength();
-		Directory dir("SEGH", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("SEGH", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 
 	for (auto i = m_c2il.begin(); i != m_c2il.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("C2IL", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("C2IL", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 

@@ -91,7 +91,7 @@ void S100Render::DrawBitmapOnPolyline(
 	D2D1_POINT_2F *points,
 	int cnt,
 	ID2D1Bitmap *pBitmap,
-	D2D1_RECT_F viewRect,
+	D2D1_RECT_F /*viewRect*/,
 	D2D1_COLOR_F penColor,
 	ID2D1StrokeStyle1 *stroke)
 {
@@ -219,11 +219,9 @@ void S100Render::CreateBackgroundGeometry(ID2D1Factory1* pD2Factory)
 }
 
 #pragma warning(disable:4244)
-void S100Render::KeyDown(UINT nChar, const RECT& rectView, int dpiX, int dpiY)
+void S100Render::KeyDown(UINT nChar, const RECT& rectView, int /*dpiX*/, int /*dpiY*/)
 {
-	FLOAT maxZoom = GetMaxZoom();
 
-	int moveFactor = 50;
 	FLOAT offset = 10;
 
 	double zoomFactor = 2.0f;
@@ -261,11 +259,6 @@ void S100Render::KeyDown(UINT nChar, const RECT& rectView, int dpiX, int dpiY)
 		break;
 	case VK_F2:
 	{
-		int screenWidth = (int)((rectView.right - rectView.left) * (96.0 / dpiX));
-		int screenHeight = (int)((rectView.bottom - rectView.top) * (96.0 / dpiY));
-		double centerX = screenWidth / 2.0;
-		double centerY = screenHeight / 2.0;
-
 		D2D1_POINT_2F chartCenterPoint;
 		chartCenterPoint.x = (xmin + xmax) / 2.0f;
 		chartCenterPoint.y = -(ymin + ymax) / 2.0f;
@@ -273,10 +266,6 @@ void S100Render::KeyDown(UINT nChar, const RECT& rectView, int dpiX, int dpiY)
 		_x = chartCenterPoint.x;
 		_y = -chartCenterPoint.y;
 
-		float projectedXmin = ProjectionX(xmin) * FACTOR;
-		float projectedYmin = ProjectionX(ymin) * FACTOR;
-		float projectedXmax = ProjectionX(xmax) * FACTOR;
-		float projectedYmax = ProjectionX(ymax) * FACTOR;
 
 		double earthPixel = (rectView.right - rectView.left) * (360.0 / (xmax - xmin));
 		scale = (EARTH_2PIR / PIXEL_MM) / earthPixel;
@@ -286,7 +275,7 @@ void S100Render::KeyDown(UINT nChar, const RECT& rectView, int dpiX, int dpiY)
 }
 
 #pragma warning(disable:4244)
-void S100Render::GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, const RECT& rect, FLOAT& xmin, FLOAT& ymin, FLOAT& xmax, FLOAT& ymax)
+void S100Render::GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, const RECT& rect, FLOAT& _xmin, FLOAT& _ymin, FLOAT& _xmax, FLOAT& _ymax)
 {
 	D2D1_POINT_2F screenLeftBottomPoint;
 	D2D1_POINT_2F wgs84LeftBottomPoint;
@@ -304,30 +293,30 @@ void S100Render::GetMBRfromRenderTarget(D2D1::Matrix3x2F matrix, const RECT& rec
 	wgs84TopRightPoint.x /= FACTOR;
 	wgs84TopRightPoint.y /= -FACTOR;
 
-	xmin = InverseProjectionX(wgs84LeftBottomPoint.x);
-	ymin = InverseProjectionY(wgs84LeftBottomPoint.y);
-	xmax = InverseProjectionX(wgs84TopRightPoint.x);
-	ymax = InverseProjectionY(wgs84TopRightPoint.y);
+	_xmin = InverseProjectionX(wgs84LeftBottomPoint.x);
+	_ymin = InverseProjectionY(wgs84LeftBottomPoint.y);
+	_xmax = InverseProjectionX(wgs84TopRightPoint.x);
+	_ymax = InverseProjectionY(wgs84TopRightPoint.y);
 
-	if (xmin > xmax)
+	if (_xmin > _xmax)
 	{
-		FLOAT temp = xmin;
-		xmin = xmax;
-		xmax = temp;
+		FLOAT temp = _xmin;
+		_xmin = _xmax;
+		_xmax = temp;
 	}
 
-	if (ymin > ymax)
+	if (_ymin > _ymax)
 	{
-		FLOAT temp = ymin;
-		ymin = ymax;
-		ymax = temp;
+		FLOAT temp = _ymin;
+		_ymin = _ymax;
+		_ymax = temp;
 	}
 
 	// %f, %f, %f, %f (was a debug trace)
 }
 
 #pragma warning(disable:4244)
-void S100Render::SetViewFactor(double x, double y, long long zoom)
+void S100Render::SetViewFactor(double x, double y, long long /*zoom*/)
 {
 	_x = (x * FACTOR);
 	_y = (y * FACTOR);

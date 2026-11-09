@@ -251,7 +251,6 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 
 		std::list<Result_DrawingInstruction>* drawingInstructionResult = KRS_LUA_SCRIPT_REFERENCE::GetResultDrawingInstructions();
 
-		int t = (int)drawingInstructionResult->size();
 
 		S101Cell* c = (S101Cell*)layer->m_spatialObject;
 		c->InitDrawingInstruction();
@@ -291,8 +290,12 @@ int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRule
 	// Initialize the libraries
 	xmlInitParser();
 	LIBXML_TEST_VERSION
-		xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
+	// libxml2 deprecates these process-wide switches; libxslt's legacy entry point still needs them.
+#pragma warning(push)
+#pragma warning(disable: 4996)
+	xmlLoadExtDtdDefaultValue = XML_DETECT_IDS | XML_COMPLETE_ATTRS;
 	xmlSubstituteEntitiesDefault(1);
+#pragma warning(pop)
 
 	// Load XML and XSL
 	xmlDocPtr inputXml = xmlParseFile(inputXmlPath.c_str());
@@ -315,9 +318,12 @@ int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRule
 	xmlDocPtr result = xsltApplyStylesheet(xslt, inputXml, params.data());
 
 	// Output the transformed XML
-	FILE* outFile = fopen(outputXmlPath.c_str(), "wb");
-	xsltSaveResultToFile(outFile, result, xslt);
-	fclose(outFile);
+	FILE* outFile = nullptr;
+	if (fopen_s(&outFile, outputXmlPath.c_str(), "wb") == 0 && outFile)
+	{
+		xsltSaveResultToFile(outFile, result, xslt);
+		fclose(outFile);
+	}
 
 	// Cleanup
 	xsltFreeStylesheet(xslt);

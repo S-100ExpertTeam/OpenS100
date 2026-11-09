@@ -214,7 +214,7 @@ namespace S100
         }
     }
 
-    void ExchangeCatalogue::DrawCoverage(D2D1Resources* pD2, Scaler* scaler, double offsetX, double offsetY)
+    void ExchangeCatalogue::DrawCoverage(D2D1Resources* pD2, Scaler* scaler, double /*offsetX*/, double /*offsetY*/)
     {
         double Width = scaler->GetScreenWidth();
         double Height = scaler->GetScreenWidth();
@@ -288,11 +288,11 @@ namespace S100
                 pD2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
 
                  auto dc = ddm.dataCoverage[j]; 
-                 auto object = new GM::Surface();
+                 auto _object = new GM::Surface();
                
                  for (int geoms = 0; geoms < dc.BoundingPolygon.Polygon.Geom.size(); geoms++)
                  {
-                     auto curve = new GM::Curve();
+                     auto _curve = new GM::Curve();
                      
                      auto strPosList = LatLonUtility::Split(LatLonUtility::TrimRight(dc.BoundingPolygon.Polygon.Geom[geoms]), " ");
                      int posCnt = (int)strPosList.size();
@@ -300,29 +300,29 @@ namespace S100
                      if (posCnt < 4 && posCnt % 2 != 0)
                          break;
 
-                     for (int i = 0; i < posCnt; i += 2)
+                     for (int _i = 0; _i < posCnt; _i += 2)
                      {
-                         double lon = cpp_util::stod(strPosList.at(i));
-                         double lat = cpp_util::stod(strPosList.at(i + 1));
-                         curve->Add(lon, lat);
+                         double _lon = cpp_util::stod(strPosList.at(_i));
+                         double _lat = cpp_util::stod(strPosList.at(_i + 1));
+                         _curve->Add(_lon, _lat);
                      }
-                     object->SetExteriorRing(curve);
+                     _object->SetExteriorRing(_curve);
 
-                     delete curve;
+                     delete _curve;
                  }
 
-                 S10XGML* cls = new S10XGML();
-                 auto sSurface = cls->SurfaceToSSurface(object);
+                 S10XGML* _cls = new S10XGML();
+                 auto _sSurface = _cls->SurfaceToSSurface(_object);
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
                  brush->SetOpacity((FLOAT)0.3);
-                 pD2->pRT->FillGeometry(GISLibrary::D2DGeometry::Get(sSurface, pD2->Factory()), brush);
+                 pD2->pRT->FillGeometry(GISLibrary::D2DGeometry::Get(_sSurface, pD2->Factory()), brush);
 
                  brush->SetColor(D2D1::ColorF(D2D1::ColorF::Blue));
-                 pD2->pRT->DrawGeometry(GISLibrary::D2DGeometry::Get(sSurface, pD2->Factory()), brush, 1.0, pD2->SolidStrokeStyle());
+                 pD2->pRT->DrawGeometry(GISLibrary::D2DGeometry::Get(_sSurface, pD2->Factory()), brush, 1.0, pD2->SolidStrokeStyle());
 
-                 delete object;
-                 delete cls;
-                 delete sSurface;
+                 delete _object;
+                 delete _cls;
+                 delete _sSurface;
 
                  pt.y += 15;
                  ////maximumDisplayScale 

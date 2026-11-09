@@ -59,7 +59,6 @@ double SMultiPoint::GetX(int index)
 	{
 		return 0;
 	}
-	return 0;
 }
 
 double SMultiPoint::GetY(int index)
@@ -73,7 +72,6 @@ double SMultiPoint::GetY(int index)
 		return 0;
 	}
 
-	return 0;
 }
 
 double SMultiPoint::GetZ(int index)
@@ -87,7 +85,6 @@ double SMultiPoint::GetZ(int index)
 		return 0;
 	}
 
-	return 0;
 }
 
 void SMultiPoint::SetSize(int size)
@@ -122,7 +119,7 @@ void SMultiPoint::Set(int index, double x, double y, double z)
 	}
 }
 
-bool SMultiPoint::ImportFromWkb(unsigned char* value, int size)
+bool SMultiPoint::ImportFromWkb(unsigned char* value, int /*size*/)
 {
 	if (value == nullptr ||
 		value[0] != 0x01)

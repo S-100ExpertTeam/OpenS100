@@ -152,16 +152,16 @@ bool R_InformationRecord::WriteRecord(s100::io::BinaryWriter* file)
 	for (auto i = m_attr.begin(); i != m_attr.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("ATTR", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("ATTR", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 
 	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("INAS", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 
@@ -407,12 +407,12 @@ int R_InformationRecord::GetAttributeCount()
 
 std::string R_InformationRecord::GetAttributeValue(int index)
 {
-	auto attributes = GetAllAttributes();
-	int count = (int)attributes.size();
+	auto _attributes = GetAllAttributes();
+	int count = (int)_attributes.size();
 
 	if (count > 0 && index < count)
 	{
-		return pugi::as_utf8(std::wstring(attributes.at(index)->m_atvl));
+		return pugi::as_utf8(std::wstring(_attributes.at(index)->m_atvl));
 	}
 
 	return "";

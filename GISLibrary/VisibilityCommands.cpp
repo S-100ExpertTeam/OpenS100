@@ -92,7 +92,7 @@ namespace Part9a
         {
 			drawingPriority = cpp_util::stoi(input);
 		}
-        catch (const std::exception& e) 
+        catch (const std::exception&) 
         {
             drawingPriority = 0; // Default value if parsing fails
         }
@@ -129,7 +129,7 @@ namespace Part9a
         {
             scaleMinimum = cpp_util::stoi(input);
         }
-        catch (const std::exception& e)
+        catch (const std::exception&)
         {
             scaleMinimum = 0; // Default value if parsing fails
         }
@@ -166,7 +166,7 @@ namespace Part9a
         {
             scaleMaximum = cpp_util::stoi(input);
         }
-        catch (const std::exception& e)
+        catch (const std::exception&)
         {
             scaleMaximum = 0; // Default value if parsing fails
         }

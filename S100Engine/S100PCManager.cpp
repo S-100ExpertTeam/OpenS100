@@ -286,7 +286,7 @@ void S100PCManager::Draw(
 	D2D1_POINT_2F point,
 	FLOAT rotation,
 	FLOAT scale,
-	const std::string& paletteName)
+	const std::string& /*paletteName*/)
 {
 	SVGReader* pSVG = s100SymbolManager.GetSVG(_symbolName);
 

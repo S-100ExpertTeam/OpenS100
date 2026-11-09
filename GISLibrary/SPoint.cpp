@@ -134,12 +134,12 @@ std::string SPoint::ToString()
 	std::stringstream ss;
 	ss.precision(7);
 
-	double x = GetX();
-	double y = GetY();
+	double _x = GetX();
+	double _y = GetY();
 
-	inverseProjection(x, y);
+	inverseProjection(_x, _y);
 
-	ss << y << " " << x;
+	ss << _y << " " << _x;
 
 	return ss.str();
 }

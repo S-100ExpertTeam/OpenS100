@@ -26,5 +26,5 @@ public:
 	std::wstring GetFileStem();
 
 public:
-	virtual void ChangePallete(PortrayalCatalogue *pc) {};
+	virtual void ChangePallete(PortrayalCatalogue */*pc*/) {};
 };

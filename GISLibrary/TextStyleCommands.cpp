@@ -118,7 +118,7 @@ namespace Part9a
         {   
             bodySize = cpp_util::stod(input);
         }
-        catch (const std::exception& e)
+        catch (const std::exception&)
         {
 			init(); // Reset to default value if parsing fails
 		}
@@ -398,7 +398,7 @@ namespace Part9a
         {
             verticalOffset = cpp_util::stod(input);
         }
-        catch (const std::exception& e)
+        catch (const std::exception&)
         {
             init(); // Reset to default value if parsing fails
 		}

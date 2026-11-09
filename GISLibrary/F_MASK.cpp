@@ -101,7 +101,6 @@ int F_MASK::GetFieldLength()
 	int len = 0;
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 	{
-		MASK* mask = itor->second;
 		len += MASK::GetSize();
 	}
 	return ++len;

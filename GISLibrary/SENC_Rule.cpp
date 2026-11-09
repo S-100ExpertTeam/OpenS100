@@ -120,11 +120,11 @@ SENC_Template* SENC_Rule::FindPortrayalObject(int typeOfGeometry, std::wstring c
 
 		if (itor != searchColumn->end())
 		{
-			std::vector<SENC_Template*>* templates = itor->second;
-			if (templates == NULL)
+			std::vector<SENC_Template*>* _templates = itor->second;
+			if (_templates == NULL)
 				continue;
 
-			for (auto titor = templates->rbegin(); titor != templates->rend(); titor++)
+			for (auto titor = _templates->rbegin(); titor != _templates->rend(); titor++)
 			{
 				SENC_Template* st = *titor;
 				bool same = true;

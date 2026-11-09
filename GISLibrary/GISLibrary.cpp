@@ -20,7 +20,7 @@
 CGISLibraryApp::CGISLibraryApp()
 {
 	std::string str = "..\\TEMP"; // read path
-	int mkFlag = _mkdir(str.c_str()); //If it's new, 0, if it exists or if it's not, -1.
+	_mkdir(str.c_str()); //If it's new, 0, if it exists or if it's not, -1.
 
 	D2 = new GISLibrary::D2D1Resources();
 	D2->CreateDeviceIndependentResources();

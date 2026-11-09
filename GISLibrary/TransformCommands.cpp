@@ -38,7 +38,7 @@ namespace Part9a
 				xOffsetMM = cpp_util::stod(parts[0]);
 				yOffsetMM = cpp_util::stod(parts[1]);
 			} 
-			catch (const std::exception& e) 
+			catch (const std::exception&) 
 			{
 				init();
 			}
@@ -109,7 +109,7 @@ namespace Part9a
 					}
 				}
 			} 
-			catch (const std::exception& e) 
+			catch (const std::exception&) 
 			{
 				init();
 			}
@@ -225,7 +225,7 @@ namespace Part9a
 			{
 				rotation = cpp_util::stod(parts[1]);
 			} 
-			catch (const std::exception& e) 
+			catch (const std::exception&) 
 			{
 				init();
 			}
@@ -272,7 +272,7 @@ namespace Part9a
 		{
 			scaleFactor = cpp_util::stod(input);
 		} 
-		catch (const std::exception& e) 
+		catch (const std::exception&) 
 		{
 			init();
 		}

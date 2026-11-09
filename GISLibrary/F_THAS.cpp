@@ -74,7 +74,6 @@ int F_THAS::GetFieldLength()
 	int len = 0;
 	for (auto itor = m_arr.begin(); itor != m_arr.end(); itor++)
 	{
-		THAS* thas = *itor;
 		len += THAS::GetSize();
 	}
 	return ++len;

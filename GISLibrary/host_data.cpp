@@ -241,7 +241,6 @@ void hd_init(S101Cell *c)
 	s_information_nodes.clear();
 	s_spatial_features.clear();
 
-	__int64 key = 0;
 	cell = c;
 
 	auto features = cell->GetVecFeature();
@@ -1004,7 +1003,7 @@ std::vector<std::string> hd_get_feature_associated_feature_ids(std::string featu
 	return feature_ids;
 }
 
-std::vector<std::string> hd_get_spatial_associated_information_ids(std::string spatial_id, std::string association_code, std::optional<std::string> role_code)
+std::vector<std::string> hd_get_spatial_associated_information_ids(std::string spatial_id, std::string /*association_code*/, std::optional<std::string> role_code)
 {
 	std::vector<std::string> ret;
 
@@ -1260,10 +1259,10 @@ multipoint hd_get_multipoint(std::string spatial_id)
 		for (auto itor = spatial->m_c3il.begin(); itor != spatial->m_c3il.end(); itor++)
 		{
 			F_C3IL* c3il = *itor;
-			for (auto itor = c3il->m_arr.begin(); itor != c3il->m_arr.end(); itor++)
+			for (auto _itor = c3il->m_arr.begin(); _itor != c3il->m_arr.end(); _itor++)
 			{
-				C3IL* c3il = *itor;
-				multipoint.points.push_back(get_point(c3il));
+				C3IL* _c3il = *_itor;
+				multipoint.points.push_back(get_point(_c3il));
 			}
 		}
 	}

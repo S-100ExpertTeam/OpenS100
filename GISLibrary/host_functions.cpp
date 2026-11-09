@@ -140,9 +140,8 @@ int HostFeatureGetAssociatedInformationIDs(lua_State *l)
 	return 1;
 }
 
-int HostGetSpatialIDs(lua_State *l)
+int HostGetSpatialIDs(lua_State */*l*/)
 {
-	auto ls = lua_session::get_session(l);
 
 	assert(false); // TODO: Implement.
 
@@ -501,9 +500,8 @@ int HostGetComplexAttributeTypeInfo(lua_State *l)
 // Spatial Operations Functions
 //
 
-int HostSpatialRelate(lua_State *l)
+int HostSpatialRelate(lua_State */*l*/)
 {
-	auto ls = lua_session::get_session(l);
 
 	assert(false); // TODO: Implement.
 

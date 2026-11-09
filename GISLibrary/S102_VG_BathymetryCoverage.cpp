@@ -12,7 +12,7 @@ S102_VG_BathymetryCoverage::~S102_VG_BathymetryCoverage()
 	delete[] uncertainty;
 }
 
-bool S102_VG_BathymetryCoverage::Read(hid_t groupID)
+bool S102_VG_BathymetryCoverage::Read(hid_t /*groupID*/)
 {
 	return true;
 }

@@ -198,8 +198,8 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 				}
 				else
 				{
-					auto areaFill = symbolFill->as_AreaFill();
-					bitmapImage = pc->GetS100PCManager()->CreateBitmapImage(areaFill.get(), pDirect2dFactory, d2->pImagingFactory, d2->SolidStrokeStyle());
+					auto _areaFill = symbolFill->as_AreaFill();
+					bitmapImage = pc->GetS100PCManager()->CreateBitmapImage(_areaFill.get(), pDirect2dFactory, d2->pImagingFactory, d2->SolidStrokeStyle());
 					if (bitmapImage)
 					{
 						bitmapImage->pBitmapBrush = pc->GetS100PCManager()->CreateBitmapBrush(bitmapImage, rt);
@@ -249,10 +249,10 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 
 void SENC_AreaInstruction::ChangePallete(PortrayalCatalogue *pc)
 {
-	auto areaFill = GetAreaFill();
-	if (areaFill)
+	auto _areaFill = GetAreaFill();
+	if (_areaFill)
 	{
-		areaFill->ChangePallete(pc);
+		_areaFill->ChangePallete(pc);
 	}
 }
 
@@ -265,9 +265,6 @@ void SENC_AreaInstruction::FromS100Instruction(
 
 	SENC_ColorFill *colorFill = NULL;
 	SENC_SymbolFill *symbolFill = NULL;
-	SENC_AreaFillReference *areaFillReference = NULL;
-	SENC_PixmapFill *pixmapFill = NULL;
-	SENC_HatchFill *hatchFill = NULL;
 
 	auto s100AreaInstruction = (S100_AreaInstruction*)s100Instruction;
 

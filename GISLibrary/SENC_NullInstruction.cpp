@@ -14,7 +14,7 @@ SENC_NullInstruction::~SENC_NullInstruction()
 
 void SENC_NullInstruction::FromS100Instruction(
 	S100_Instruction* s100Instruction, 
-	PortrayalCatalogue *pc, 
+	PortrayalCatalogue */*pc*/, 
 	PCOutputSchemaManager* output)
 {
 	output->GetSENCFromS100Common(s100Instruction, this);

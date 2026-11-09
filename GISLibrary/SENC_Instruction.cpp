@@ -50,7 +50,7 @@ bool SENC_Instruction::HasSpatialReference()
 	return spatialReference.size() > 0;
 }
 
-SENC_Instruction* SENC_Instruction::S1002SENC(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output, S100SpatialObject* so)
+SENC_Instruction* SENC_Instruction::S1002SENC(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output, S100SpatialObject* /*so*/)
 {
 	SENC_Instruction *result = nullptr;
 
@@ -93,9 +93,9 @@ SENC_Instruction* SENC_Instruction::S1002SENC(S100_Instruction* s100Instruction,
 	return result;
 }
 
-void SENC_Instruction::setID(std::string id)
+void SENC_Instruction::setID(std::string _id)
 {
-	this->id = id;
+	this->id = _id;
 }
 
 std::optional<std::string> SENC_Instruction::getID()
@@ -103,9 +103,9 @@ std::optional<std::string> SENC_Instruction::getID()
 	return id;
 }
 
-void SENC_Instruction::setParentID(std::string id)
+void SENC_Instruction::setParentID(std::string _id)
 {
-	this->parentId = id;
+	this->parentId = _id;
 }
 
 std::optional<std::string> SENC_Instruction::getParentID()
@@ -113,9 +113,9 @@ std::optional<std::string> SENC_Instruction::getParentID()
 	return parentId;
 }
 
-void SENC_Instruction::setHover(bool hover)
+void SENC_Instruction::setHover(bool _hover)
 {
-	this->hover = hover;
+	this->hover = _hover;
 }
 
 std::optional<bool> SENC_Instruction::getHover()
@@ -149,9 +149,9 @@ std::optional<bool> SENC_Instruction::getHover()
 //	//}
 //}
 
-void SENC_Instruction::setAlertReference(SENC_AlertReference alertReference)
+void SENC_Instruction::setAlertReference(SENC_AlertReference _alertReference)
 {
-	this->alertReference = alertReference;
+	this->alertReference = _alertReference;
 }
 
 std::optional<SENC_AlertReference> SENC_Instruction::getAlertReference()

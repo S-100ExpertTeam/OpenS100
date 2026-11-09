@@ -16,9 +16,9 @@ double SENC_VectorPoint::GetX()
 	return x;
 }
 
-void SENC_VectorPoint::SetX(double x)
+void SENC_VectorPoint::SetX(double _x)
 {
-	this->x = x;
+	this->x = _x;
 }
 
 double SENC_VectorPoint::GetY()
@@ -26,7 +26,7 @@ double SENC_VectorPoint::GetY()
 	return y;
 }
 
-void SENC_VectorPoint::SetY(double y)
+void SENC_VectorPoint::SetY(double _y)
 {
-	this->y = y;
+	this->y = _y;
 }

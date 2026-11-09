@@ -468,7 +468,7 @@ bool SVGReader::OpenByPugi(char* path)
 	return true;
 }
 
-SVGReader::SVGReader(char* path)
+SVGReader::SVGReader(char* /*path*/)
 {
 }
 

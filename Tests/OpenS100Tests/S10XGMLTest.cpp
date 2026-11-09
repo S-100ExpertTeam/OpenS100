@@ -26,5 +26,5 @@ TEST(S10XGML, OpensKoreanS124WithoutRenderer)
 TEST(S10XGML, MissingFileReturnsFalse)
 {
 	S10XGML gml;
-	EXPECT_FALSE(gml.Open(std::wstring(L"Z:\does\not\exist.gml")));
+	EXPECT_FALSE(gml.Open(std::wstring(LR"(Z:\does\not\exist.gml)")));
 }

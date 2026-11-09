@@ -43,7 +43,7 @@ namespace GM
 	
 	public:
 		virtual int GetInformationRelationCount() { return 0; }
-		virtual std::string GetAssociatedInformationID(int index) { return ""; }
+		virtual std::string GetAssociatedInformationID(int /*index*/) { return ""; }
 
 		virtual GeometryType GetType() { return GeometryType::Object; }
 

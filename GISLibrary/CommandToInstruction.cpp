@@ -57,7 +57,7 @@ S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_StateC
 	return instruction;
 }
 
-S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(std::list<Local_StateCommands*> stateCommand, Part9a::PointInstruction& pi)
+S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(std::list<Local_StateCommands*> /*stateCommand*/, Part9a::PointInstruction& /*pi*/)
 {
 	return nullptr;
 }

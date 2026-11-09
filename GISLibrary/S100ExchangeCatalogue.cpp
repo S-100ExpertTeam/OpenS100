@@ -120,10 +120,10 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
                     if (posCnt < 4 && posCnt % 2 != 0)
                         break;
 
-                    for (int i = 0; i < posCnt; i += 2)
+                    for (int _i = 0; _i < posCnt; _i += 2)
                     {
-                        double lon = cpp_util::stod(strPosList.at(i));
-                        double lat = cpp_util::stod(strPosList.at(i + 1));
+                        double lon = cpp_util::stod(strPosList.at(_i));
+                        double lat = cpp_util::stod(strPosList.at(_i + 1));
 
                         if (reverse)
                         {
@@ -151,7 +151,7 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
 	return true;
 }
 
-bool S100ExchangeCatalogue::OpenMetadata(const std::wstring& _filepath)
+bool S100ExchangeCatalogue::OpenMetadata(const std::wstring& /*_filepath*/)
 {
     return true;
 }
@@ -164,7 +164,6 @@ bool S100ExchangeCatalogue::CompareByLayer(const Layer* a, const Layer* b)
 bool S100ExchangeCatalogue::CompareByFileName(const std::wstring& a, const std::wstring& b) 
 {
     std::shared_ptr<Inventory> invA,invB;
-    S100Utilities util;
 
     for (auto inventory : m_vecInventory)
     {
@@ -204,7 +203,7 @@ bool S100ExchangeCatalogue::containsFile(const std::vector<std::shared_ptr<Inven
     return false; 
 }
 
-void S100ExchangeCatalogue::DrawFiles(HDC& hDC, Scaler* scaler, double offset, std::vector<std::shared_ptr<InventoryItem>>& item)
+void S100ExchangeCatalogue::DrawFiles(HDC& /*hDC*/, Scaler* scaler, double /*offset*/, std::vector<std::shared_ptr<InventoryItem>>& item)
 {
     std::string catalogueFolderPath;
     MBR mbr;
@@ -236,7 +235,6 @@ void S100ExchangeCatalogue::DrawFiles(HDC& hDC, Scaler* scaler, double offset, s
             m_pLayerManager->AddLayer(temp->strFilePath);
     }
 
-    auto ptr = this; 
 
     // Sort DataCoverage List
     m_pLayerManager->layers.sort([this](const Layer* a, const Layer* b){
@@ -245,7 +243,7 @@ void S100ExchangeCatalogue::DrawFiles(HDC& hDC, Scaler* scaler, double offset, s
 
 }
 
-void S100ExchangeCatalogue::DrawEx(HDC& hDC, Scaler* scaler, double offset)
+void S100ExchangeCatalogue::DrawEx(HDC& /*hDC*/, Scaler* scaler, double /*offset*/)
 {
     MBR mbr;
     S100Utilities util;
@@ -284,7 +282,7 @@ void S100ExchangeCatalogue::DrawEx(HDC& hDC, Scaler* scaler, double offset)
 
         pRenderTarget->BeginDraw();
         brush->SetColor(D2D1::ColorF(util.GetColorNum(i)));
-        brush->SetOpacity(0.3);
+        brush->SetOpacity(0.3f);
         pRenderTarget->FillGeometry(pPathGeometry, brush);
 
         brush->SetColor(D2D1::ColorF(util.GetColorNum(i)));
@@ -305,8 +303,6 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
     m_pLayerManager->Draw(hDC, offset);
 
-    double Width = scaler->GetScreenWidth();
-    double Height = scaler->GetScreenWidth();
 
     D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
     D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
@@ -329,7 +325,6 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
             if (std::string::npos != ddm.productSpecification->ProductIdentifier.find("101"))
             {
-                auto textformat = D2->pDWriteTextFormat;
                 auto brush = D2->pBrush;
 
                 auto object = new GM::Surface();
@@ -446,7 +441,6 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                     float left = min(ptTopLeft.x, ptBottomRight.x);
                     float top = min(ptTopLeft.y, ptBottomRight.y);
                     float right = max(ptTopLeft.x, ptBottomRight.x);
-                    float bottom = max(ptTopLeft.y, ptBottomRight.y);
 
                     // 텍스트를 좌상단에 표시하기 위한 영역 설정
                     D2D1_RECT_F textRect = D2D1::RectF(
@@ -476,7 +470,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                     D2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
 
                     auto dc = ddm.dataCoverage[j];
-                    auto object = new GM::Surface();
+                    auto _object = new GM::Surface();
 
                     bool reverse = false;
 
@@ -485,7 +479,7 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 
                     for (int geoms = 0; geoms < dc.BoundingPolygon.Polygon.Geom.size(); geoms++)
                     {
-                        auto curve = new GM::Curve();
+                        auto _curve = new GM::Curve();
 
                         auto strPosList = LatLonUtility::Split(LatLonUtility::TrimRight(dc.BoundingPolygon.Polygon.Geom[geoms]), " ");
                         int posCnt = strPosList.size();
@@ -493,27 +487,27 @@ void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
                         if (posCnt < 4 && posCnt % 2 != 0)
                             break;
 
-                        for (int i = 0; i < posCnt; i += 2)
+                        for (int _i = 0; _i < posCnt; _i += 2)
                         {
-                            double lon = cpp_util::stod(strPosList.at(i));
-                            double lat = cpp_util::stod(strPosList.at(i + 1));
+                            double _lon = cpp_util::stod(strPosList.at(_i));
+                            double _lat = cpp_util::stod(strPosList.at(_i + 1));
 
                             if (reverse)
-                                curve->Add(lat, lon);
+                                _curve->Add(_lat, _lon);
                             else
-                                curve->Add(lon, lat);
+                                _curve->Add(_lon, _lat);
                         }
-                        object->SetExteriorRing(curve);
+                        _object->SetExteriorRing(_curve);
 
-                        delete curve;
+                        delete _curve;
                     }
 
-                    S10XGML* cls = new S10XGML();
-                    auto sSurface = cls->SurfaceToSSurface(object);
+                    S10XGML* _cls = new S10XGML();
+                    auto _sSurface = _cls->SurfaceToSSurface(_object);
 
-                    delete object;
-                    delete cls;
-                    delete sSurface;
+                    delete _object;
+                    delete _cls;
+                    delete _sSurface;
 
                     std::wstring optimumDisplayScale;
                     if (dc.OptimumDisplayScale != nullptr) {

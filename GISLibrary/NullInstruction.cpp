@@ -13,7 +13,7 @@ namespace Part9a
     void NullInstruction::execute() {
     }
 
-    void NullInstruction::parse(const std::string& input)
+    void NullInstruction::parse(const std::string& /*input*/)
     {
         setPresent();
         // NullInstruction 

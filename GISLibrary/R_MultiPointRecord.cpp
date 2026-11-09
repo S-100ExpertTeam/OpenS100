@@ -106,7 +106,7 @@ R_MultiPointRecord R_MultiPointRecord::operator=(const R_MultiPointRecord& other
 #pragma warning(disable:4018)
 BOOL R_MultiPointRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 {
-	int i = 0, j = 0, cnt;
+	int cnt;
 	for (unsigned i = 0; i < dir->m_count; i++)
 	{
 		if (strcmp(dir->GetDirectory(i)->tag, "MRID") == 0)
@@ -170,16 +170,16 @@ bool R_MultiPointRecord::WriteRecord(s100::io::BinaryWriter* file)
 	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("INAS", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 
 	for (auto i = m_c3il.begin(); i != m_c3il.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("C3IL", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("C3IL", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 
@@ -353,7 +353,6 @@ void R_MultiPointRecord::GetC3IL(double cmfx, double cmfy, double cmfz, SAFEARRA
 	CComSafeArray<double> yArray;
 	CComSafeArray<double> zArray;
 
-	const int arraySize = (int)m_c3il.size();
 	xArray.Create();
 	yArray.Create();
 	zArray.Create();

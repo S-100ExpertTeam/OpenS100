@@ -505,11 +505,21 @@ Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, const std::wstring& newName)
 		}
 		else if (objType == S100SpatialObjectType::S100H5)
 		{
-			S100H5* dscObject = S100LayerFactory::CopyS100H5(srcLayer, newName);
+			auto dscObject = S100LayerFactory::CopyS100H5(srcLayer, newName);
+			if (dscObject)
+			{
+				dscLayer = new S100Layer(((S100Layer*)srcLayer)->GetFC(), ((S100Layer*)srcLayer)->GetPC());
+				dscLayer->m_spatialObject = dscObject;
+			}
 		}
 		else if (objType == S100SpatialObjectType::S102H5)
 		{
-			S102H5* dscObject = S100LayerFactory::CopyS102H5(srcLayer, newName);
+			auto dscObject = S100LayerFactory::CopyS102H5(srcLayer, newName);
+			if (dscObject)
+			{
+				dscLayer = new S100Layer(((S100Layer*)srcLayer)->GetFC(), ((S100Layer*)srcLayer)->GetPC());
+				dscLayer->m_spatialObject = dscObject;
+			}
 		}
 	}
 
@@ -562,11 +572,21 @@ Layer* S100LayerFactory::CopyLayerWithoutPC(Layer* srcLayer, const std::wstring&
 		}
 		else if (objType == S100SpatialObjectType::S100H5)
 		{
-			S100H5* dscObject = S100LayerFactory::CopyS100H5(srcLayer, newName);
+			auto dscObject = S100LayerFactory::CopyS100H5(srcLayer, newName);
+			if (dscObject)
+			{
+				dscLayer = new S100Layer(((S100Layer*)srcLayer)->GetFC(), ((S100Layer*)srcLayer)->GetPC());
+				dscLayer->m_spatialObject = dscObject;
+			}
 		}
 		else if (objType == S100SpatialObjectType::S102H5)
 		{
-			S102H5* dscObject = S100LayerFactory::CopyS102H5(srcLayer, newName);
+			auto dscObject = S100LayerFactory::CopyS102H5(srcLayer, newName);
+			if (dscObject)
+			{
+				dscLayer = new S100Layer(((S100Layer*)srcLayer)->GetFC(), ((S100Layer*)srcLayer)->GetPC());
+				dscLayer->m_spatialObject = dscObject;
+			}
 		}
 	}
 

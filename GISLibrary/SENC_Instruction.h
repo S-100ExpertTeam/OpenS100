@@ -115,13 +115,13 @@ public:
 	//virtual void GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points){};
 	
 	virtual void DrawInstruction(
-		D2D1Resources* d2,
-		Scaler *scaler, 
-		PortrayalCatalogue* pc = nullptr) {};
+		D2D1Resources* /*d2*/,
+		Scaler */*scaler*/, 
+		PortrayalCatalogue* /*pc*/ = nullptr) {};
 
-	virtual void ChangePallete(PortrayalCatalogue *pc) {};
+	virtual void ChangePallete(PortrayalCatalogue */*pc*/) {};
 
-	virtual void FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output) {};
+	virtual void FromS100Instruction(S100_Instruction* /*s100Instruction*/, PortrayalCatalogue */*pc*/, PCOutputSchemaManager* /*output*/) {};
 
 	static SENC_Instruction* S1002SENC(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output, S100SpatialObject* so);
 

@@ -31,7 +31,6 @@ int SGeometricFuc::overlap(SCurve *objPoly, SSurface *comPoly)
 	{
 		for (j = 0; j < comPoly->getNumPoint() - 1 && ret != 1; j++)
 		{
-			auto dsf = objPoly->m_pPoints[i].x;
 
 			ret = GeometricFuc::intersect_ccw(objPoly->m_pPoints[i].x, objPoly->m_pPoints[i].y, objPoly->m_pPoints[i + 1].x, objPoly->m_pPoints[i + 1].y,
 				comPoly->m_pPoints[j].x, comPoly->m_pPoints[j].y, comPoly->m_pPoints[j + 1].x, comPoly->m_pPoints[j + 1].y);
@@ -122,7 +121,6 @@ int SGeometricFuc::overlap(double p1x, double p1y, SCurve *comPoly)
 
 	int j = 0;
 
-	int obj2PartIndex = 0;
 
 	for (j = 0; j < comPoly->m_numPoints - 1 && ret != 1; j++)
 	{
@@ -158,7 +156,6 @@ int SGeometricFuc::overlap(double p1x, double p1y, SCurve *comPoly)
 
 int SGeometricFuc::overlap(SPoint *objPoint, SCurve *comPoly)
 {
-	unsigned i = 0;
 	int ret = -1;
 
 	if (overlap(objPoint->x, objPoint->y, comPoly) == 1)
@@ -197,8 +194,8 @@ int SGeometricFuc::inside(double x, double y, SSurface *poly)
 	static int ticList[100000];
 	if (poly->getNumPoint() > 100000)
 	{
-		int *ticList = new int[poly->getNumPoint()];
-		icList = ticList;
+		int *_ticList = new int[poly->getNumPoint()];
+		icList = _ticList;
 	}
 	else
 	{

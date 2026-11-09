@@ -84,14 +84,14 @@ bool S10XGML::OpenMetadata(const std::wstring& _filepath)
 bool S10XGML::Open(std::string fileContent)
 {
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load(fileContent.c_str());
+	pugi::xml_parse_result result = doc.load_string(fileContent.c_str());
 	return Open(doc, result);
 }
 
 bool S10XGML::OpenMetadata(std::string fileContent)
 {
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load(fileContent.c_str());
+	pugi::xml_parse_result result = doc.load_string(fileContent.c_str());
 	return OpenMetadata(doc, result);
 }
 
@@ -358,14 +358,14 @@ GM::OrientableCurve* S10XGML::GetOrientableCurve(std::string id)
 	auto geometry = GetGeometry(id);
 
 	if (geometry) {
-		auto type = geometry->GetType();
-		if (type == GM::GeometryType::OrientableCurve) {
+		auto _type = geometry->GetType();
+		if (_type == GM::GeometryType::OrientableCurve) {
 			return (GM::OrientableCurve*)geometry;
 		}
-		else if (type == GM::GeometryType::Curve) {
+		else if (_type == GM::GeometryType::Curve) {
 			return (GM::Curve*)geometry;
 		}
-		else if (type == GM::GeometryType::CompositeCurve) {
+		else if (_type == GM::GeometryType::CompositeCurve) {
 			return (GM::CompositeCurve*)geometry;
 		}
 	}
@@ -624,7 +624,7 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node node)
 	return object;
 }
 
-GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node, std::string id, std::string srsName)
+GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node, std::string /*id*/, std::string /*srsName*/)
 {
 	auto gmlid = node.attribute((s100namespace.namespace_gml + ":id").c_str()).value();
 	auto orientation = node.attribute("orientation").value();
@@ -647,14 +647,14 @@ GM::OrientableCurve* S10XGML::ReadOrientableCurve(pugi::xml_node& node, std::str
 			auto baseCurve = GetGeometry(baseCurveID);
 			if (baseCurve) {
 
-				auto type = baseCurve->GetType();
-				if (type == GM::GeometryType::Curve) {
+				auto _type = baseCurve->GetType();
+				if (_type == GM::GeometryType::Curve) {
 					auto orientableCurve = new GM::Curve(*((GM::Curve*)baseCurve));
 					orientableCurve->SetID(gmlid);
 					orientableCurve->orientation = bOrientation;
 					return orientableCurve;
 				}
-				else if (type == GM::GeometryType::CompositeCurve) {
+				else if (_type == GM::GeometryType::CompositeCurve) {
 					auto orientableCurve = new GM::CompositeCurve(*((GM::CompositeCurve*)baseCurve));
 					orientableCurve->SetID(gmlid);
 					orientableCurve->orientation = bOrientation;
@@ -1202,8 +1202,8 @@ bool S10XGML::WriteInputXML_FeatureTypes(pugi::xml_node& node)
 		}
 
 		auto cntInformationAssociation = feature->GetInformationRelationCount();
-		for (int i = 0; i < cntInformationAssociation; i++) {
-			auto informationAssociation = feature->getInformationAssociation(i);
+		for (int _i = 0; _i < cntInformationAssociation; _i++) {
+			auto informationAssociation = feature->getInformationAssociation(_i);
 			auto informationAssociationCode = informationAssociation.GetCode();
 			if (!informationAssociationCode.empty()) {
 				auto node_association = node_feature.append_child(informationAssociationCode.c_str()); 
@@ -1246,11 +1246,11 @@ bool S10XGML::WriteInputXML_FeatureType_SimpleAttribute(pugi::xml_node& node, GF
 
 	auto code = simpleAttribute->GetCode();
 
-	auto type = fc->getSimpleAttributeType(code);
-	if (type == FCD::S100_CD_AttributeValueType::none) {
+	auto _type = fc->getSimpleAttributeType(code);
+	if (_type == FCD::S100_CD_AttributeValueType::none) {
 		return false;
 	}
-	else if (type == FCD::S100_CD_AttributeValueType::enumeration) {
+	else if (_type == FCD::S100_CD_AttributeValueType::enumeration) {
 		auto sa = fc->GetSimpleAttribute(code);
 		if (sa) {
 			auto lv = sa->GetListedValue(simpleAttribute->GetValue());
@@ -1683,9 +1683,9 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 			
 			
 
-			for (auto i = 0; i < pointCountInteriorRing; i++) {
-				auto x = interiorRing->GetX(i);
-				auto y = interiorRing->GetY(i);
+			for (auto _i = 0; _i < pointCountInteriorRing; _i++) {
+				auto x = interiorRing->GetX(_i);
+				auto y = interiorRing->GetY(_i);
 
 				inverseProjection(x, y);
 

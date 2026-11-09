@@ -212,7 +212,6 @@ std::vector<std::shared_ptr<InventoryItem>> S100Utilities::SelectDataCoverages(s
 		for (auto item : INV)
 		{
 			// i. If scaleBand ...
-			bool scaleBandInScaleBand = false;
 			//algorithm_ScaleBand();
 
 			for (int i = 0; i < item->vecScaleRange.size(); i++)

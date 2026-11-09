@@ -253,7 +253,7 @@ bool SHPFile::Open(const std::wstring& _filepath)
 	return TRUE;
 }
 
-bool SHPFile::OpenMetadata(const std::wstring& _filepath)
+bool SHPFile::OpenMetadata(const std::wstring& /*_filepath*/)
 {
 	return true;
 }

@@ -59,7 +59,7 @@ int iDebugCount_AumentedRayInstruction[100] = { 0 };
 
 #pragma warning(disable:4244)
 #pragma warning(disable:4838)
-void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc)
+void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* /*pc*/)
 {
 	auto factory = d2->Factory();
 	auto brush = d2->SolidColorBrush();

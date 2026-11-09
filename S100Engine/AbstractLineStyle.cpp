@@ -21,7 +21,6 @@ namespace LineStylesPackage
 	{
 		if (subClassType == SubClassTypeOfAbstractLineStyle::eLineStyle)
 		{
-			LineStyle *pLineStyle = (LineStyle *)this;
 			return 1;
 		}
 		else if (subClassType == SubClassTypeOfAbstractLineStyle::eLineStyleReference)
@@ -61,7 +60,6 @@ namespace LineStylesPackage
 		}
 		else if (subClassType == SubClassTypeOfAbstractLineStyle::eCompositeLineStyle)
 		{
-			CompositeLineStyle *pCompositeLineStyle = (CompositeLineStyle *)this;
 			pRect->left = 0;
 			pRect->top = 0;
 			pRect->right = 100;

@@ -140,7 +140,7 @@ double SCurve::GetY(int i)
 }
 
 #pragma warning(disable:4244)
-bool SCurve::ImportFromWkb(unsigned char* value, int size)
+bool SCurve::ImportFromWkb(unsigned char* value, int /*size*/)
 {
 	if (value == nullptr ||
 		value[0] != 0x01)

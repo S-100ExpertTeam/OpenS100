@@ -80,7 +80,7 @@ public:
 
 public:
 	std::string Replace(std::string text);
-	void ReadField(BYTE*& buf) {};
+	void ReadField(BYTE*& /*buf*/) {};
 	bool WriteField(s100::io::BinaryWriter* file);
 	int GetFieldLength();
 	std::string GetTagName();

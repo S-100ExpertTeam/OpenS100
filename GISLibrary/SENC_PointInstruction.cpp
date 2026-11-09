@@ -614,7 +614,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2
 	}
 }
 
-void SENC_PointInstruction::FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output)
+void SENC_PointInstruction::FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue */*pc*/, PCOutputSchemaManager* output)
 {
 	auto s100PointInstruction = (S100_PointInstruction*)s100Instruction;
 	output->GetSENCFromS100Common(s100Instruction, this);

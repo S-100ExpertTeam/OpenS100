@@ -37,8 +37,8 @@ void GraphicBasePackage::Vector::SetY(double value)
 	this->y = value;
 }
 
-void GraphicBasePackage::Vector::Set(double x, double y)
+void GraphicBasePackage::Vector::Set(double _x, double _y)
 {
-	SetX(x);
-	SetY(y);
+	SetX(_x);
+	SetY(_y);
 }

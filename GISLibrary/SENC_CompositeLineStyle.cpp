@@ -32,7 +32,7 @@ SENC_CompositeLineStyle::~SENC_CompositeLineStyle()
 	}
 }
 
-void SENC_CompositeLineStyle::GetStyleFromS100(S100_CompositeLineStyle* lineStyleS100, PortrayalCatalogue *pc, std::vector<SENC_LineStyle*> &lineStyles)
+void SENC_CompositeLineStyle::GetStyleFromS100(S100_CompositeLineStyle* lineStyleS100, PortrayalCatalogue *pc, std::vector<SENC_LineStyle*> &_lineStyles)
 {
 	auto lineStyle = lineStyleS100->GetLineStyles();
 	for (auto itor = lineStyle.begin(); itor != lineStyle.end(); itor++)
@@ -56,7 +56,7 @@ void SENC_CompositeLineStyle::GetStyleFromS100(S100_CompositeLineStyle* lineStyl
 		{
 			sencBase = new SENC_CompositeLineStyle();
 			SENC_CompositeLineStyle* ls = (SENC_CompositeLineStyle*)sencBase;
-			ls->GetStyleFromS100((S100_CompositeLineStyle*)base, pc, lineStyles);
+			ls->GetStyleFromS100((S100_CompositeLineStyle*)base, pc, _lineStyles);
 		}
 	}
 }

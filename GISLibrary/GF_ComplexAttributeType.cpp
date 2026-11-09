@@ -60,12 +60,12 @@ namespace GF
 		return (int)carries.size();
 	}
 
-	int ComplexAttributeType::GetSubAttributeCount(std::string code) const
+	int ComplexAttributeType::GetSubAttributeCount(std::string _code) const
 	{
 		int count = 0;
 		for (auto iter : carries)
 		{
-			if (iter->GetCode() == code)
+			if (iter->GetCode() == _code)
 			{
 				count++;
 			}
@@ -96,25 +96,25 @@ namespace GF
 	}
 
 	SimpleAttribute* ComplexAttributeType::AddSubSimpleAttribute(
-		FCD::S100_CD_AttributeValueType valueType, std::string code, std::string value)
+		FCD::S100_CD_AttributeValueType valueType, std::string _code, std::string value)
 	{
 		auto sa = new SimpleAttributeType(valueType, value);
-		sa->SetCode(code);
+		sa->SetCode(_code);
 		return (SimpleAttribute*)AddSubAttribute(sa);
 	}
 
 	SimpleAttribute* ComplexAttributeType::AddSubSimpleAttribute(
-		FCD::S100_CD_AttributeValueType valueType, std::string code, std::wstring value)
+		FCD::S100_CD_AttributeValueType valueType, std::string _code, std::wstring value)
 	{
 		auto sa = new SimpleAttributeType(valueType, value);
-		sa->SetCode(code);
+		sa->SetCode(_code);
 		return (SimpleAttribute*)AddSubAttribute(sa);
 	}
 
-	ComplexAttributeType* ComplexAttributeType::AddComplexAttribute(std::string code)
+	ComplexAttributeType* ComplexAttributeType::AddComplexAttribute(std::string _code)
 	{
 		auto ca = new ComplexAttributeType();
-		ca->SetCode(code);
+		ca->SetCode(_code);
 		carries.push_back(ca);
 		return ca;
 	}
@@ -124,12 +124,12 @@ namespace GF
 		return new ComplexAttributeType(*this);
 	}
 
-	std::optional<ThematicAttributeType*> ComplexAttributeType::getThematicAttribute(std::string code, int index)
+	std::optional<ThematicAttributeType*> ComplexAttributeType::getThematicAttribute(std::string _code, int index)
 	{
 		int num = 0;
 		for (auto iter : carries)
 		{
-			if (iter->GetCode() == code)
+			if (iter->GetCode() == _code)
 			{
 				if (num == index)
 				{
@@ -142,12 +142,12 @@ namespace GF
 		return std::nullopt;
 	}
 
-	std::optional<ComplexAttributeType*> ComplexAttributeType::getComplexAttribute(std::string code, int index)
+	std::optional<ComplexAttributeType*> ComplexAttributeType::getComplexAttribute(std::string _code, int index)
 	{
 		int num = 0;
 		for (auto iter : carries)
 		{
-			if (iter->IsSimple() == false && iter->GetCode() == code)
+			if (iter->IsSimple() == false && iter->GetCode() == _code)
 			{
 				if (num == index)
 				{
@@ -160,12 +160,12 @@ namespace GF
 		return std::nullopt;
 	}
 
-	std::vector<std::string> ComplexAttributeType::getAttributeValues(std::string code)
+	std::vector<std::string> ComplexAttributeType::getAttributeValues(std::string _code)
 	{
 		std::vector<std::string> values;
 		for (auto iter : carries)
 		{
-			if (iter->GetCode() == code && iter->IsSimple())
+			if (iter->GetCode() == _code && iter->IsSimple())
 			{
 				values.push_back(iter->GetValue());
 			}

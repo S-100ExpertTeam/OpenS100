@@ -369,7 +369,7 @@ SSurface SSurface::operator=(const SSurface& other)
 	return *this;
 }
 
-bool SSurface::ImportFromWkb(unsigned char* value, int size)
+bool SSurface::ImportFromWkb(unsigned char* value, int /*size*/)
 {
 	Init();
 

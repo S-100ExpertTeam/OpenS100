@@ -77,10 +77,10 @@ namespace GM
 		this->srsName = value;
 	}
 
-	void Object::setParentIdSrsName(std::string id, std::string srsName)
+	void Object::setParentIdSrsName(std::string _id, std::string _srsName)
 	{
-		SetID(id);
-		setSRSName(srsName);
+		SetID(_id);
+		setSRSName(_srsName);
 	}
 
 	void Object::readID(pugi::xml_node& node)

@@ -124,7 +124,7 @@ namespace Part9a
 	{
 	}
 
-	void ClearTime::parse(const std::string& input)
+	void ClearTime::parse(const std::string& /*input*/)
 	{
 		setPresent();
 		// ClearTime 

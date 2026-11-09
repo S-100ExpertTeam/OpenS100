@@ -58,7 +58,7 @@ namespace S100
         }
     }
 
-    void IC_FeatureDerivation::SaveXmlNode(pugi::xml_node& node)
+    void IC_FeatureDerivation::SaveXmlNode(pugi::xml_node& /*node*/)
     {
 
     }

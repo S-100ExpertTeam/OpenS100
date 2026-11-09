@@ -46,9 +46,9 @@ void DDR::Allocate()
 	}
 }
 
-void DDR::Allocate(int size)
+void DDR::Allocate(int _size)
 {
-	SetSize(size);
+	SetSize(_size);
 	content = new BYTE[GetSize()];
 }
 
@@ -62,14 +62,14 @@ void DDR::SetByte(int index, BYTE value)
 	}
 }
 
-void DDR::SetBytes(int size, BYTE* value)
+void DDR::SetBytes(int _size, BYTE* value)
 {
 	Delete();
 
-	if (size > 0 && nullptr != value)
+	if (_size > 0 && nullptr != value)
 	{
-		Allocate(size);
-		memcpy_s(content, size, value, size);
+		Allocate(_size);
+		memcpy_s(content, _size, value, _size);
 	}
 }
 

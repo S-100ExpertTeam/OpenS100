@@ -119,7 +119,6 @@ std::list<S100_Instruction*> CommandList::Parse()
 		// PointInstruction
 		if (dynamic_cast<Part9a::PointInstruction*>(command))
 		{
-			auto ptr = dynamic_cast<Part9a::PointInstruction*>(command);
 			
 			continue;
 		}

@@ -70,7 +70,7 @@ namespace Part9a
 				double y = cpp_util::stod(tokens[2]);
 				point.Set(x, y);
 			}
-			catch (const std::exception& e) 
+			catch (const std::exception&) 
 			{
 				init(); // Reset to default values on error
 			}
@@ -110,7 +110,7 @@ namespace Part9a
 				crsLength = Command::GetCRSTypeFromString(tokens[2]);
 				length = cpp_util::stod(tokens[3]);
 			}
-			catch (const std::exception& e) 
+			catch (const std::exception&) 
 			{
 				init(); // Reset to default values on error
 			}
@@ -148,7 +148,7 @@ namespace Part9a
 				crsAngle = Command::GetCRSTypeFromString(tokens[1]);
 				crsDistance = Command::GetCRSTypeFromString(tokens[2]);
 			}
-			catch (const std::exception& e) 
+			catch (const std::exception&) 
 			{
 				init(); // Reset to default values on error
 			}
@@ -190,7 +190,7 @@ namespace Part9a
 					double y = cpp_util::stod(tokens[i + 1]);
 					points.push_back(Part9a::Point(x, y));
 				}
-				catch (const std::exception& e) 
+				catch (const std::exception&) 
 				{
 					init(); // Reset to default values on error
 					return;
@@ -242,7 +242,7 @@ namespace Part9a
 				medianPoint.Set(medianPointX, medianPointY);
 				endPoint.Set(endPointX, endPointY);
 			}
-			catch (const std::exception& e) 
+			catch (const std::exception&) 
 			{
 				init(); // Reset to default values on error
 			}
@@ -301,7 +301,7 @@ namespace Part9a
 					angularDistance = 360.0; // Default value
 				}
 			}
-			catch (const std::exception& e) 
+			catch (const std::exception&) 
 			{
 				init(); // Reset to default values on error
 			}
@@ -369,7 +369,7 @@ namespace Part9a
 					angularDistance = 360.0; // Default value
 				}
 			}
-			catch (const std::exception& e) 
+			catch (const std::exception&) 
 			{
 				init(); // Reset to default values on error
 			}
@@ -389,7 +389,7 @@ namespace Part9a
 	{
 	}
 
-	void ClearGeometry::parse(const std::string& input)
+	void ClearGeometry::parse(const std::string& /*input*/)
 	{
 		setPresent();
 		// ClearGeometry 

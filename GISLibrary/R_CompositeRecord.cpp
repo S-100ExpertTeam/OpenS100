@@ -72,7 +72,7 @@ R_CompositeRecord R_CompositeRecord::operator=(const R_CompositeRecord& other)
 
 BOOL R_CompositeRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 {
-	int i = 0, j = 0;
+	int i = 0;
 	for(i = 0; i < dir->m_count; i++)
 	{
 		if (strcmp(dir->GetDirectory(i)->tag, "CCID") == 0)
@@ -129,16 +129,16 @@ bool R_CompositeRecord::WriteRecord(s100::io::BinaryWriter* file)
 	for (auto i = m_inas.begin(); i != m_inas.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("INAS", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("INAS", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 
 	for (auto i = m_cuco.begin(); i != m_cuco.end(); i++)
 	{
 		fieldLength = (*i)->GetFieldLength();
-		Directory dir("CUCO", fieldLength, fieldOffset);
-		directory.push_back(dir);
+		Directory _dir("CUCO", fieldLength, fieldOffset);
+		directory.push_back(_dir);
 		fieldOffset += fieldLength;
 	}
 

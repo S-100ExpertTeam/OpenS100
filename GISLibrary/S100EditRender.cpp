@@ -28,14 +28,14 @@ S100EditRender::~S100EditRender()
 
 }
 
-void S100EditRender::Set(S101Cell* enc, Scaler* scaler, R_FeatureRecord* feature, GISLibrary::D2D1Resources* renderResources)
+void S100EditRender::Set(S101Cell* _enc, Scaler* _scaler, R_FeatureRecord* _feature, GISLibrary::D2D1Resources* _renderResources)
 {
-	this->renderResources = renderResources;
-	this->enc = enc;
-	this->scaler = scaler;
-	this->feature = feature;
+	this->renderResources = _renderResources;
+	this->enc = _enc;
+	this->scaler = _scaler;
+	this->feature = _feature;
 
-	if (enc == nullptr && feature == nullptr)
+	if (_enc == nullptr && _feature == nullptr)
 	{
 		pointIndex = -1;
 		partIndex = -1;
@@ -384,7 +384,7 @@ void S100EditRender::SelectByScreen(int sx, int sy)
 	}
 }
 
-void S100EditRender::SelectByScreen(int sx, int sy, SPoint* geom)
+void S100EditRender::SelectByScreen(int /*sx*/, int /*sy*/, SPoint* /*geom*/)
 {
 	pointIndex = 0;
 	partIndex = 0;

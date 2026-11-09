@@ -38,7 +38,7 @@ void F_SECC::ReadField(BYTE *&buf)
 	m_nseg = buf2uint(buf, 2);
 }
 
-void F_SECC::ReadField(BYTE *&buf, int loopCnt)
+void F_SECC::ReadField(BYTE *&buf, int /*loopCnt*/)
 {
 	m_seui = *(buf++);
 	m_seix = buf2uint(buf, 2);

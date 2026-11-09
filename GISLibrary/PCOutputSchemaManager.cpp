@@ -64,7 +64,7 @@ PCOutputSchemaManager::~PCOutputSchemaManager()
 	displayListSENC = nullptr;
 }
 
-void PCOutputSchemaManager::GenerateSENCAlertInstruction(S101Cell* cell, PortrayalCatalogue* pc)
+void PCOutputSchemaManager::GenerateSENCAlertInstruction(S101Cell* /*cell*/, PortrayalCatalogue* /*pc*/)
 {
 	// Don't run until the model of drawingCommands is completed
 

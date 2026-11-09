@@ -40,7 +40,7 @@ namespace S100 {
         }
     }
 
-    void IC_SuppressedFeatureLayer::SaveXmlNode(pugi::xml_node& node)
+    void IC_SuppressedFeatureLayer::SaveXmlNode(pugi::xml_node& /*node*/)
     {
 
     }

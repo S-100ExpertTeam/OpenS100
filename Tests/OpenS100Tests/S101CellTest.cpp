@@ -148,8 +148,8 @@ TEST(S101Cell, MissingFileReturnsFalse)
 {
 	FeatureCatalogue fc;
 	S101Cell cell(&fc);
-	EXPECT_FALSE(cell.Read8211(L"Z:\does\not\exist\101XX000.000"));
-	EXPECT_FALSE(cell.Open(std::wstring(L"Z:\does\not\exist\101XX000.000")));
+	EXPECT_FALSE(cell.Read8211(LR"(Z:\does\not\exist\101XX000.000)"));
+	EXPECT_FALSE(cell.Open(std::wstring(LR"(Z:\does\not\exist\101XX000.000)")));
 }
 
 TEST(S101Cell, ReadTwiceIntoSameCellIsStable)

@@ -19,7 +19,7 @@ S100ColorProfiles::~S100ColorProfiles()
 bool S100ColorProfiles::AddColorProfile(const std::string& id, const std::string& path)
 {
 	auto colorProfile = new S100ColorProfile();
-	bool ret = colorProfile->OpenByPugi(path.c_str());
+	colorProfile->OpenByPugi(path.c_str());
 
 	if (colorProfileMap.find(id) == colorProfileMap.end())
 	{
