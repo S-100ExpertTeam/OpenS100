@@ -59,9 +59,9 @@ namespace Portrayal
 
 			if (!strcmp(instructionName, "description"))
 			{
-				auto description = new S100_Description();
-				description->GetContents(instruction);
-				AddDescription(description);
+				auto _description = new S100_Description();
+				_description->GetContents(instruction);
+				AddDescription(_description);
 			}
 			else if (!strcmp(instructionName, "fileName"))
 			{

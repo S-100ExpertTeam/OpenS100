@@ -11,10 +11,10 @@ S100_WithParam::~S100_WithParam()
 
 }
 
-void S100_WithParam::SetName(const std::string& value)   { name = value; }
-void S100_WithParam::SetName(const std::wstring& value)  { name = toUtf8(value); }
-void S100_WithParam::SetSelect(const std::string& value)  { select = value; }
-void S100_WithParam::SetSelect(const std::wstring& value) { select = toUtf8(value); }
+void S100_WithParam::SetName(const std::string& _value)   { name = _value; }
+void S100_WithParam::SetName(const std::wstring& _value)  { name = toUtf8(_value); }
+void S100_WithParam::SetSelect(const std::string& _value)  { select = _value; }
+void S100_WithParam::SetSelect(const std::wstring& _value) { select = toUtf8(_value); }
 void S100_WithParam::SetValue(const std::string& _value)  { value = _value; }
 void S100_WithParam::SetValue(const std::wstring& _value) { value = toUtf8(_value); }
 

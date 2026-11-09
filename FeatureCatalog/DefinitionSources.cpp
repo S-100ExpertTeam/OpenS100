@@ -15,7 +15,7 @@ DefinitionSources::~DefinitionSources()
 	}
 }
 
-void DefinitionSources::GetContents(pugi::xml_node& node)
+void DefinitionSources::GetContents(pugi::xml_node& /*node*/)
 {
 	//for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
 	//{
@@ -38,9 +38,9 @@ void DefinitionSources::GetContents(pugi::xml_node& node)
 	//}
 }
 
-void DefinitionSources::SetSourceIdentifier(std::string value)
+void DefinitionSources::SetSourceIdentifier(std::string _value)
 {
-	sourceIdentifier = value;
+	sourceIdentifier = _value;
 }
 
 std::string& DefinitionSources::GetSourceIdentifier()
@@ -48,9 +48,9 @@ std::string& DefinitionSources::GetSourceIdentifier()
 	return sourceIdentifier;
 }
 
-void DefinitionSources::SetDefinitionSource(std::unordered_map<std::string, DefinitionSource*> value)
+void DefinitionSources::SetDefinitionSource(std::unordered_map<std::string, DefinitionSource*> _value)
 {
-	definitionSource = value;
+	definitionSource = _value;
 }
 
 std::unordered_map<std::string, DefinitionSource*>& DefinitionSources::GetDefinitionSource()
@@ -58,7 +58,7 @@ std::unordered_map<std::string, DefinitionSource*>& DefinitionSources::GetDefini
 	return definitionSource;
 }
 
-bool DefinitionSources::InsertDefinitionSource(DefinitionSource* value)
+bool DefinitionSources::InsertDefinitionSource(DefinitionSource* /*value*/)
 {
 	//if (definitionSource.find(value->))
 
@@ -66,15 +66,15 @@ bool DefinitionSources::InsertDefinitionSource(DefinitionSource* value)
 	return false;
 }
 
-void DefinitionSources::SetSourceIdentifier(const char* value)
+void DefinitionSources::SetSourceIdentifier(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetSourceIdentifier(s);
 }
 
-void DefinitionSources::SetSourceIdentifier(std::wstring value)
+void DefinitionSources::SetSourceIdentifier(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetSourceIdentifier(s);
 }
 

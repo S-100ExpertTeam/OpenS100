@@ -106,13 +106,13 @@ std::string GeoPointZ::ToString()
 	std::stringstream ss;
 	ss.precision(7);
 
-	double x = GetX();
-	double y = GetY();
-	double z = GetZ();
+	double _x = GetX();
+	double _y = GetY();
+	double _z = GetZ();
 
-	inverseProjection(x, y);
+	inverseProjection(_x, _y);
 
-	ss << y << " " << x << " " << z;
+	ss << _y << " " << _x << " " << _z;
 
 	return ss.str();
 }

@@ -30,8 +30,8 @@ namespace Portrayal
 			return;
 		}
 
-		auto id = pugi::as_wide(node.attribute("id").value());
-		SetId(id);
+		auto _id = pugi::as_wide(node.attribute("id").value());
+		SetId(_id);
 
 		auto order_value = node.attribute("order").value();
 		SetOrder(cpp_util::stoi(order_value));

@@ -12,14 +12,14 @@ XML_Item::~XML_Item()
 
 }
 
-void XML_Item::SetAttributes(std::list<XML_Attribute>& value)
+void XML_Item::SetAttributes(std::list<XML_Attribute>& _value)
 {
-	attributes = value;
+	attributes = _value;
 }
 
-void XML_Item::SetAttributes(XML_Attribute& value)
+void XML_Item::SetAttributes(XML_Attribute& _value)
 {
-	attributes.push_back(value);
+	attributes.push_back(_value);
 }
 
 std::list<XML_Attribute> XML_Item::Getattributes()
@@ -32,9 +32,9 @@ std::list<XML_Attribute>& XML_Item::GetattributesPointer()
 	return attributes;
 }
 
-void XML_Item::Setvalue(std::string& value) 
+void XML_Item::Setvalue(std::string& _value) 
 {
-	this->value = value;
+	this->value = _value;
 }
 
 const std::string& XML_Item::Getvalue()
@@ -79,15 +79,15 @@ void XML_Item::SetReference(std::string _value)
 	attributes.push_back(at);
 }
 
-void XML_Item::Setvalue(const char* value)
+void XML_Item::Setvalue(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	Setvalue(s);
 }
 
-void XML_Item::Setvalue(std::wstring value)
+void XML_Item::Setvalue(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	Setvalue(s);
 }
 
@@ -106,9 +106,9 @@ std::wstring XML_Item::GetReferenceW()
 	return toWide(GetReference());
 }
 
-void XML_Item::SetReference(const char* value)
+void XML_Item::SetReference(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetReference(s);
 }
 

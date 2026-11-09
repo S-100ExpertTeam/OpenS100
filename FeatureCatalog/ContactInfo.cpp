@@ -31,9 +31,9 @@ void ContactInfo::GetContents(pugi::xml_node& node)
 	}
 }
 
-void ContactInfo::SetAddress(Address& value)
+void ContactInfo::SetAddress(Address& _value)
 {
-	address = value;
+	address = _value;
 }
 
 Address& ContactInfo::GetAddress()
@@ -41,9 +41,9 @@ Address& ContactInfo::GetAddress()
 	return address;
 }
 
-void ContactInfo::SetOnlineResource(OnlineResource& value)
+void ContactInfo::SetOnlineResource(OnlineResource& _value)
 {
-	onlineResource = value;
+	onlineResource = _value;
 }
 
 OnlineResource& ContactInfo::GetOnlineResource()

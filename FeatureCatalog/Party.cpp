@@ -23,9 +23,9 @@ void Party::GetContents(pugi::xml_node& node)
 	}
 }
 
-void Party::SetCi_Organisation(CI_Organisation value) 
+void Party::SetCi_Organisation(CI_Organisation _value) 
 {
-	ci_Organisation = value;
+	ci_Organisation = _value;
 }
 
 CI_Organisation& Party::GetCi_Organisation()

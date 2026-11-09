@@ -29,9 +29,9 @@ void NamedType::GetContents(pugi::xml_node& node)
 		const char* instructionName = instruction.name();
 		if (!strcmp(instructionName, "S100FC:attributeBinding"))
 		{
-			auto attributeBinding = new AttributeBinding();
-			attributeBinding->GetContents(instruction);
-			this->attributeBinding.push_back(attributeBinding);
+			auto _attributeBinding = new AttributeBinding();
+			_attributeBinding->GetContents(instruction);
+			this->attributeBinding.push_back(_attributeBinding);
 		}
 	}
 }

@@ -18,10 +18,10 @@ void AttributeBinding::GetContents(pugi::xml_node& node)
 	{
 		sequential = node.attribute("sequential").as_bool();
 
-		XML_Attribute value;
-		value.Setname("sequential");
-		value.Setvalue((char*)node.attribute("sequential").value());
-		SetAttributes(value);
+		XML_Attribute _value;
+		_value.Setname("sequential");
+		_value.Setvalue((char*)node.attribute("sequential").value());
+		SetAttributes(_value);
 	}
 
 	for (pugi::xml_node instruction = node.first_child(); instruction; instruction = instruction.next_sibling())
@@ -47,9 +47,9 @@ void AttributeBinding::GetContents(pugi::xml_node& node)
 	}
 }
 
-void AttributeBinding::SetMultiplicity(Multiplicity value) 
+void AttributeBinding::SetMultiplicity(Multiplicity _value) 
 {
-	multiplicity = value;
+	multiplicity = _value;
 }
 
 Multiplicity& AttributeBinding::GetMultiplicity() 
@@ -57,9 +57,9 @@ Multiplicity& AttributeBinding::GetMultiplicity()
 	return multiplicity;
 }
 
-void AttributeBinding::SetPermittedValues(ValueList value) 
+void AttributeBinding::SetPermittedValues(ValueList _value) 
 {
-	permittedValues = value;
+	permittedValues = _value;
 }
 
 ValueList& AttributeBinding::GetPermittedValues()

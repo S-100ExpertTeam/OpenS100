@@ -27,9 +27,9 @@ void FeatureAssociations::GetContents(pugi::xml_node& node)
 
 			if (instruction.attribute("isAbstract"))
 			{
-				XML_Attribute value;
-				value.Setname("isAbstract");
-				value.Setvalue((char*)instruction.attribute("isAbstract").value());
+				XML_Attribute _value;
+				_value.Setname("isAbstract");
+				_value.Setvalue((char*)instruction.attribute("isAbstract").value());
 			}
 		}
 	}

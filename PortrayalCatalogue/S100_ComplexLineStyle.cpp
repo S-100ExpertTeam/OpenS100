@@ -21,6 +21,6 @@ void S100_ComplexLineStyle::SetScaleFactor(const std::wstring& value) { scaleFac
 std::string  S100_ComplexLineStyle::GetScaleFactor()  { return scaleFactor; }
 std::wstring S100_ComplexLineStyle::GetScaleFactorW() { return toWide(scaleFactor); }
 
-void S100_ComplexLineStyle::GetContents(pugi::xml_node& node)
+void S100_ComplexLineStyle::GetContents(pugi::xml_node& /*node*/)
 {
 }

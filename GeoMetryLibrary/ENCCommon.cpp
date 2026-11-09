@@ -70,8 +70,13 @@ bool ENCCommon::Save(std::string filePath)
 	std::locale::global(std::locale("Korean"));
 	std::ofstream ofs;
 
-	std::filesystem::create_directories(L"..\\ProgramData\\data");
-	ofs.open(L"..\\ProgramData\\data\\settings.txt", std::ios::out | std::ios::trunc | std::ios::binary);
+	const std::filesystem::path target(s100::text::ToWide(filePath));
+	if (target.has_parent_path())
+	{
+		std::error_code ec;
+		std::filesystem::create_directories(target.parent_path(), ec);
+	}
+	ofs.open(target, std::ios::out | std::ios::trunc | std::ios::binary);
 
 	std::string strTrue = "true";
 	std::string strFalse = "false";

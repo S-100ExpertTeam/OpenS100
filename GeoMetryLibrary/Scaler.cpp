@@ -30,7 +30,7 @@ Scaler::~Scaler(void)
 }
 
 #pragma warning(disable:4244)
-void Scaler::DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate)
+void Scaler::DeviceToWorld(long sx, long sy, double *mx, double *my, bool /*rotate*/)
 {
 	double mxWidth = mxMax - mxMin;
 	double myHeight = myMax - myMin;
@@ -68,7 +68,7 @@ void Scaler::DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate
 }
 
 #pragma warning(disable:4244)
-void Scaler::WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate)
+void Scaler::WorldToDevice(double mx, double my, long *sx, long *sy, bool /*rotate*/)
 {
 	double mxWidth = mxMax - mxMin;
 	double myHeight = myMax - myMin;
@@ -107,7 +107,7 @@ void Scaler::WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate
 }
 
 #pragma warning(disable:4244)
-void Scaler::WorldToDevice_F(double mx, double my, float *sx, float *sy, bool rotate)
+void Scaler::WorldToDevice_F(double mx, double my, float *sx, float *sy, bool /*rotate*/)
 {
 	double mxWidth = mxMax - mxMin;
 	double myHeight = myMax - myMin;

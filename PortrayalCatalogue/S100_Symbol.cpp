@@ -214,10 +214,10 @@ void S100_Symbol::SetOffsetY(double value)
 	offset.SetY(value);
 }
 
-void S100_Symbol::SetLinePlacement(double offset, S100_LinePlacementMode placementMode, std::optional<bool> visibleParts)
+void S100_Symbol::SetLinePlacement(double _offset, S100_LinePlacementMode placementMode, std::optional<bool> visibleParts)
 {
 	linePlacement = S100_LineSymbolPlacement();
-	linePlacement.value().SetOffset(offset);
+	linePlacement.value().SetOffset(_offset);
 	linePlacement.value().SetPlacementMode(placementMode);
 	if (visibleParts.has_value())
 	{

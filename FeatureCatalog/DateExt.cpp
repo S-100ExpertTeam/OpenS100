@@ -33,9 +33,9 @@ void DateExt::GetContents(pugi::xml_node& node)
 	}
 }
 
-void DateExt::SetDate(char* value) 
+void DateExt::SetDate(char* _value) 
 {
-	date = value;
+	date = _value;
 }
 const std::string& DateExt::GetDate()
 {

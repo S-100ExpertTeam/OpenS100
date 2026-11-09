@@ -55,9 +55,9 @@ void OnlineResource::GetContents(pugi::xml_node& node)
 	}
 }
 
-void OnlineResource::SetUrl(std::string value)
+void OnlineResource::SetUrl(std::string _value)
 {
-	url = value;
+	url = _value;
 }
 
 const std::string& OnlineResource::GetUrl()
@@ -65,9 +65,9 @@ const std::string& OnlineResource::GetUrl()
 	return url;
 }
 
-void OnlineResource::SetProtocol(std::string value) 
+void OnlineResource::SetProtocol(std::string _value) 
 {
-	protocol = value;
+	protocol = _value;
 }
 
 const std::string& OnlineResource::GetProtocol()
@@ -75,36 +75,36 @@ const std::string& OnlineResource::GetProtocol()
 	return protocol;
 }
 
-void OnlineResource::SetApplicationProfile(std::string value) 
+void OnlineResource::SetApplicationProfile(std::string _value) 
 {
-	applicationProfile = value;
+	applicationProfile = _value;
 }
 const std::string& OnlineResource::GetApplicationProfile()
 {
 	return applicationProfile;
 }
 
-void OnlineResource::SetName(std::string value) 
+void OnlineResource::SetName(std::string _value) 
 {
-	name = value;
+	name = _value;
 }
 const std::string& OnlineResource::GetName()
 {
 	return name;
 }
 
-void OnlineResource::SetDescription(std::string value) 
+void OnlineResource::SetDescription(std::string _value) 
 {
-	description = value;
+	description = _value;
 }
 const std::string& OnlineResource::GetDescription()
 {
 	return description;
 }
 
-void OnlineResource::SetFunction(OnlineFunctionCode value)
+void OnlineResource::SetFunction(OnlineFunctionCode _value)
 {
-	function = value;
+	function = _value;
 }
 
 OnlineFunctionCode& OnlineResource::GetFunction() 
@@ -112,24 +112,24 @@ OnlineFunctionCode& OnlineResource::GetFunction()
 	return function;
 }
 
-void OnlineResource::SetLinkage(std::string value) 
+void OnlineResource::SetLinkage(std::string _value) 
 {
-	linkage = value;
+	linkage = _value;
 }
 const std::string& OnlineResource::GetLinkage()
 {
 	return linkage;
 }
 
-void OnlineResource::SetUrl(const char* value)
+void OnlineResource::SetUrl(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetUrl(s);
 }
 
-void OnlineResource::SetUrl(std::wstring value)
+void OnlineResource::SetUrl(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetUrl(s);
 }
 
@@ -138,15 +138,15 @@ std::wstring OnlineResource::GetUrlW()
 	return toWide(GetUrl());
 }
 
-void OnlineResource::SetProtocol(const char* value)
+void OnlineResource::SetProtocol(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetProtocol(s);
 }
 
-void OnlineResource::SetProtocol(std::wstring value)
+void OnlineResource::SetProtocol(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetProtocol(s);
 }
 
@@ -155,15 +155,15 @@ std::wstring OnlineResource::GetProtocolW()
 	return toWide(GetProtocol());
 }
 
-void OnlineResource::SetApplicationProfile(const char* value)
+void OnlineResource::SetApplicationProfile(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetApplicationProfile(s);
 }
 
-void OnlineResource::SetApplicationProfile(std::wstring value)
+void OnlineResource::SetApplicationProfile(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetApplicationProfile(s);
 }
 
@@ -172,15 +172,15 @@ std::wstring OnlineResource::GetApplicationProfileW()
 	return toWide(GetApplicationProfile());
 }
 
-void OnlineResource::SetName(const char* value)
+void OnlineResource::SetName(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetName(s);
 }
 
-void OnlineResource::SetName(std::wstring value)
+void OnlineResource::SetName(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetName(s);
 }
 
@@ -189,15 +189,15 @@ std::wstring OnlineResource::GetNameW()
 	return toWide(GetName());
 }
 
-void OnlineResource::SetDescription(const char* value)
+void OnlineResource::SetDescription(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetDescription(s);
 }
 
-void OnlineResource::SetDescription(std::wstring value)
+void OnlineResource::SetDescription(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetDescription(s);
 }
 
@@ -206,15 +206,15 @@ std::wstring OnlineResource::GetDescriptionW()
 	return toWide(GetDescription());
 }
 
-void OnlineResource::SetLinkage(const char* value)
+void OnlineResource::SetLinkage(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetLinkage(s);
 }
 
-void OnlineResource::SetLinkage(std::wstring value)
+void OnlineResource::SetLinkage(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetLinkage(s);
 }
 

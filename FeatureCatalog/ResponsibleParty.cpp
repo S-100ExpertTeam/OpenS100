@@ -51,9 +51,9 @@ void ResponsibleParty::GetContents(pugi::xml_node& node)
 	}
 }
 
-void ResponsibleParty::SetIndividualName(std::string value)
+void ResponsibleParty::SetIndividualName(std::string _value)
 {
-	individualName = value;
+	individualName = _value;
 }
 
 const std::string& ResponsibleParty::GetIndividualName()
@@ -61,18 +61,18 @@ const std::string& ResponsibleParty::GetIndividualName()
 	return individualName;
 }
 
-void ResponsibleParty::SetOrganisationName(std::string value)
+void ResponsibleParty::SetOrganisationName(std::string _value)
 {
-	organisationName = value;
+	organisationName = _value;
 }
 const std::string& ResponsibleParty::GetOrganisationName()
 {
 	return organisationName;
 }
 
-void ResponsibleParty::SetPositionName(std::string value)
+void ResponsibleParty::SetPositionName(std::string _value)
 {
-	positionName = value;
+	positionName = _value;
 }
 
 const std::string& ResponsibleParty::GetPositionName()
@@ -80,9 +80,9 @@ const std::string& ResponsibleParty::GetPositionName()
 	return positionName;
 }
 
-void ResponsibleParty::SetContactInfo(Contact value)
+void ResponsibleParty::SetContactInfo(Contact _value)
 {
-	contactInfo = value;
+	contactInfo = _value;
 }
 
 Contact &ResponsibleParty::GetContactInfo()
@@ -90,18 +90,18 @@ Contact &ResponsibleParty::GetContactInfo()
 	return contactInfo;
 }
 
-void ResponsibleParty::SetRoleCode(RoleCode value)
+void ResponsibleParty::SetRoleCode(RoleCode _value)
 {
-	role = value;
+	role = _value;
 }
 RoleCode &ResponsibleParty::GetRoleCode()
 {
 	return role;
 }
 
-void ResponsibleParty::SetParty(Party value)
+void ResponsibleParty::SetParty(Party _value)
 {
-	party = value;
+	party = _value;
 }
 
 Party &ResponsibleParty::GetParty()
@@ -109,15 +109,15 @@ Party &ResponsibleParty::GetParty()
 	return party;
 }
 
-void ResponsibleParty::SetIndividualName(const char* value)
+void ResponsibleParty::SetIndividualName(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetIndividualName(s);
 }
 
-void ResponsibleParty::SetIndividualName(std::wstring value)
+void ResponsibleParty::SetIndividualName(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetIndividualName(s);
 }
 
@@ -126,15 +126,15 @@ std::wstring ResponsibleParty::GetIndividualNameW()
 	return toWide(GetIndividualName());
 }
 
-void ResponsibleParty::SetOrganisationName(const char* value)
+void ResponsibleParty::SetOrganisationName(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetOrganisationName(s);
 }
 
-void ResponsibleParty::SetOrganisationName(std::wstring value)
+void ResponsibleParty::SetOrganisationName(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetOrganisationName(s);
 }
 
@@ -143,15 +143,15 @@ std::wstring ResponsibleParty::GetOrganisationNameW()
 	return toWide(GetOrganisationName());
 }
 
-void ResponsibleParty::SetPositionName(const char* value)
+void ResponsibleParty::SetPositionName(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetPositionName(s);
 }
 
-void ResponsibleParty::SetPositionName(std::wstring value)
+void ResponsibleParty::SetPositionName(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetPositionName(s);
 }
 

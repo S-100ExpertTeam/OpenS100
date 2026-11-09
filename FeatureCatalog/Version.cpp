@@ -39,9 +39,9 @@ std::string Version::getMajor() const
     return major;
 }
 
-void Version::setMajor(const std::string& major)
+void Version::setMajor(const std::string& _major)
 {
-    this->major = major;
+    this->major = _major;
 }
 
 int Version::getMajorAsInt() const
@@ -54,9 +54,9 @@ std::string Version::getMinor() const
     return minor;
 }
 
-void Version::setMinor(const std::string& minor)
+void Version::setMinor(const std::string& _minor)
 {
-    this->minor = minor;
+    this->minor = _minor;
 }
 
 int Version::getMinorAsInt() const
@@ -69,9 +69,9 @@ std::string Version::getPatch() const
     return patch;
 }
 
-void Version::setPatch(const std::string& patch)
+void Version::setPatch(const std::string& _patch)
 {
-    this->patch = patch;
+    this->patch = _patch;
 }
 
 int Version::getPatchAsInt() const
@@ -84,9 +84,9 @@ std::string Version::getWorking() const
     return working;
 }
 
-void Version::setWorking(const std::string& working)
+void Version::setWorking(const std::string& _working)
 {
-    this->working = working;
+    this->working = _working;
 }
 
 std::string Version::getSource() const
@@ -94,11 +94,11 @@ std::string Version::getSource() const
     return source;
 }
 
-void Version::setSource(const std::string& source)
+void Version::setSource(const std::string& _source)
 {
 	init();
-    this->source = source;
-    parseSource(source);
+    this->source = _source;
+    parseSource(_source);
 }
 
 void Version::init()
@@ -110,12 +110,12 @@ void Version::init()
 	source.clear();
 }
 
-void Version::parseSource(const std::string& source)
+void Version::parseSource(const std::string& _source)
 {
 	// Split the source string by '.'
 	std::vector<std::string> parts;
 	std::string delimiter = ".";
-	std::string remaining = source;
+	std::string remaining = _source;
 	size_t pos = 0;
 	std::string token;
 

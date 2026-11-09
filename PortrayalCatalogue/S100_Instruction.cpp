@@ -16,7 +16,7 @@ S100_Instruction::~S100_Instruction()
 	}
 }
 
-void S100_Instruction::GetContents(pugi::xml_node node)
+void S100_Instruction::GetContents(pugi::xml_node /*node*/)
 {
 
 }

@@ -193,7 +193,7 @@ bool ENCConfiguration::Open(std::string path)
 	return true;
 }
 
-bool ENCConfiguration::Save(std::string path)
+bool ENCConfiguration::Save(std::string /*path*/)
 {
 	return true;
 }

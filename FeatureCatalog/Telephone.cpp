@@ -34,14 +34,14 @@ void Telephone::GetContents(pugi::xml_node& node)
 	}
 }
 
-void Telephone::SetVoice(std::string value) 
+void Telephone::SetVoice(std::string _value) 
 {
-	voice.push_back(value);
+	voice.push_back(_value);
 }
 
-void Telephone::SetVoice(std::list<std::string> value)
+void Telephone::SetVoice(std::list<std::string> _value)
 {
-	voice = value;
+	voice = _value;
 }
 
 std::list<std::string>& Telephone::GetVoicePointer()
@@ -56,9 +56,9 @@ const std::string& Telephone::GetVoice(int index)
 	return *it;
 }
 
-void Telephone::SetFacsimile(std::string value) 
+void Telephone::SetFacsimile(std::string _value) 
 {
-	facsimile = value;
+	facsimile = _value;
 }
 
 const std::string& Telephone::GetFacsimile()
@@ -66,27 +66,27 @@ const std::string& Telephone::GetFacsimile()
 	return facsimile;
 }
 
-void Telephone::SetVoice(const char* value)
+void Telephone::SetVoice(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetVoice(s);
 }
 
-void Telephone::SetVoice(std::wstring value)
+void Telephone::SetVoice(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetVoice(s);
 }
 
-void Telephone::SetFacsimile(const char* value)
+void Telephone::SetFacsimile(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetFacsimile(s);
 }
 
-void Telephone::SetFacsimile(std::wstring value)
+void Telephone::SetFacsimile(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetFacsimile(s);
 }
 

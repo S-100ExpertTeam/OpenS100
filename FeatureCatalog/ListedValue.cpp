@@ -49,9 +49,9 @@ const std::string& ListedValue::GetLabel()
 	return label;
 }
 
-void ListedValue::SetLabel(std::string& value)
+void ListedValue::SetLabel(std::string& _value)
 {
-	label = value;
+	label = _value;
 }
 
 const std::string& ListedValue::GetDefinition()
@@ -59,9 +59,9 @@ const std::string& ListedValue::GetDefinition()
 	return definition;
 }
 
-void ListedValue::SetDefinition(std::string& value)
+void ListedValue::SetDefinition(std::string& _value)
 {
-	definition = value;
+	definition = _value;
 }
 
 int ListedValue::GetCode()
@@ -74,9 +74,9 @@ const std::string& ListedValue::GetRemarks()
 	return remarks;
 }
 
-void ListedValue::SetRemarks(std::string& value)
+void ListedValue::SetRemarks(std::string& _value)
 {
-	remarks = value;
+	remarks = _value;
 }
 
 std::list<std::string>& ListedValue::GetAliasPointer()
@@ -94,15 +94,15 @@ std::wstring ListedValue::GetLabelW()
 	return toWide(GetLabel());
 }
 
-void ListedValue::SetLabel(const char* value)
+void ListedValue::SetLabel(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetLabel(s);
 }
 
-void ListedValue::SetLabel(std::wstring value)
+void ListedValue::SetLabel(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetLabel(s);
 }
 
@@ -111,38 +111,38 @@ std::wstring ListedValue::GetDefinitionW()
 	return toWide(GetDefinition());
 }
 
-void ListedValue::SetDefinition(const char* value)
+void ListedValue::SetDefinition(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetDefinition(s);
 }
 
-void ListedValue::SetDefinition(std::wstring value)
+void ListedValue::SetDefinition(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetDefinition(s);
 }
 
-void ListedValue::SetRemarks(const char* value)
+void ListedValue::SetRemarks(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetRemarks(s);
 }
 
-void ListedValue::SetRemarks(std::wstring value)
+void ListedValue::SetRemarks(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetRemarks(s);
 }
 
-bool ListedValue::CompareRemarks(const char* value)
+bool ListedValue::CompareRemarks(const char* _value)
 {
-	if (value == nullptr)
+	if (_value == nullptr)
 	{
 		return false;
 	}
 
-	if (strcmp(remarks.c_str(), value) == 0)
+	if (strcmp(remarks.c_str(), _value) == 0)
 	{
 		return true;
 	}

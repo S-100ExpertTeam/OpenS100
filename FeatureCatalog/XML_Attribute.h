@@ -14,7 +14,7 @@ private:
 	std::string value = "";
 
 public:
-	void Setname(std::string& values);
+	void Setname(std::string& _name);
 	void Setname(const char* value);
 	void Setname(std::wstring values);
 	void Setname(char* value);

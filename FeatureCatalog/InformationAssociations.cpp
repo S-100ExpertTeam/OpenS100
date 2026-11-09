@@ -26,10 +26,10 @@ void InformationAssociations::GetContents(pugi::xml_node& node)
 			informationAssociation[sa->GetCode()] = sa;
 			if (instruction.attribute("isAbstract"))
 			{
-				XML_Attribute value;
-				value.Setname("isAbstract");
-				value.Setvalue((char*)instruction.attribute("isAbstract").value());
-				SetAttributes(value);
+				XML_Attribute _value;
+				_value.Setname("isAbstract");
+				_value.Setvalue((char*)instruction.attribute("isAbstract").value());
+				SetAttributes(_value);
 			}
 		}
 	}

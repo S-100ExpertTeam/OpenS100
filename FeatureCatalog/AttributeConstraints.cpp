@@ -43,9 +43,9 @@ int AttributeConstraints::GetStringLength()
 	return stringLength;
 }
 
-void AttributeConstraints::SetStringLength(int value) 
+void AttributeConstraints::SetStringLength(int _value) 
 {
-	stringLength = value;
+	stringLength = _value;
 }
 
 const std::string& AttributeConstraints::GetTextPattern()
@@ -53,9 +53,9 @@ const std::string& AttributeConstraints::GetTextPattern()
 	return textPattern;
 }
 
-void AttributeConstraints::GetTextPattern(std::string value)
+void AttributeConstraints::GetTextPattern(std::string _value)
 {
-	textPattern = value;
+	textPattern = _value;
 }
 
 NumericRange& AttributeConstraints::GetRangePointer()
@@ -68,9 +68,9 @@ int AttributeConstraints::GetPrecision()
 	return precision;
 }
 
-void AttributeConstraints::SetPrecision(int value)
+void AttributeConstraints::SetPrecision(int _value)
 {
-	precision = value;
+	precision = _value;
 }
 
 std::wstring AttributeConstraints::GetTextPatternW()
@@ -78,8 +78,8 @@ std::wstring AttributeConstraints::GetTextPatternW()
 	return toWide(GetTextPattern());
 }
 
-void AttributeConstraints::GetTextPattern(std::wstring value)
+void AttributeConstraints::GetTextPattern(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	return GetTextPattern(s);
 }

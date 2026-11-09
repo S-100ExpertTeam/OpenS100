@@ -42,18 +42,18 @@ const std::string& Series::GetName()
 	return name;
 }
 
-void Series::SetIssueIdentification(std::string value) 
+void Series::SetIssueIdentification(std::string _value) 
 {
-	issueIdentification = value;
+	issueIdentification = _value;
 }
 const std::string& Series::GetIssueIdentification()
 {
 	return issueIdentification;
 }
 
-void Series::SetPage(std::string valeu) 
+void Series::SetPage(std::string _page)
 {
-	page = Getvalue();
+	page = _page;
 }
 
 const std::string& Series::GetPage()
@@ -66,15 +66,15 @@ std::wstring Series::GetNameW()
 	return toWide(GetName());
 }
 
-void Series::SetIssueIdentification(const char* value)
+void Series::SetIssueIdentification(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetIssueIdentification(s);
 }
 
-void Series::SetIssueIdentification(std::wstring value)
+void Series::SetIssueIdentification(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	SetIssueIdentification(s);
 }
 
@@ -83,9 +83,9 @@ std::wstring Series::GetIssueIdentificationW()
 	return toWide(GetIssueIdentification());
 }
 
-void Series::SetPage(const char* value)
+void Series::SetPage(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	SetPage(s);
 }
 

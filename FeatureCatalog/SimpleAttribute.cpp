@@ -115,9 +115,9 @@ ListedValue* SimpleAttribute::GetListedValue(std::string label)
 	return nullptr;
 }
 
-ListedValue* SimpleAttribute::GetListedValue(int code)
+ListedValue* SimpleAttribute::GetListedValue(int _code)
 {
-	auto item = codeMap.find(code);
+	auto item = codeMap.find(_code);
 
 	if (item != codeMap.end())
 	{

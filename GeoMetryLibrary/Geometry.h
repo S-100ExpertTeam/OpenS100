@@ -44,8 +44,8 @@ public:
 
 public:
 
-	virtual bool ImportFromWkb(unsigned char* value, int size) { return true; };
-	virtual bool ExportToWkb(unsigned char** value, int* size) { return true; };
+	virtual bool ImportFromWkb(unsigned char* /*value*/, int /*size*/) { return true; };
+	virtual bool ExportToWkb(unsigned char** /*value*/, int* /*size*/) { return true; };
 	virtual int WkbSize() { return 0; };
 
 	virtual void SetMBR() {};
@@ -55,8 +55,8 @@ public:
 
 	virtual double GetX() { return 0; };
 	virtual double GetY() { return 0; };
-	virtual double GetX(int index) { return 0; };
-	virtual double GetY(int index) { return 0; };
+	virtual double GetX(int /*index*/) { return 0; };
+	virtual double GetY(int /*index*/) { return 0; };
 
 	virtual std::string ToString() { return ""; }
 

@@ -52,9 +52,9 @@ void Contact::GetContents(pugi::xml_node& node)
 	}
 }
 
-void Contact::SetPhone(Telephone& value)
+void Contact::SetPhone(Telephone& _value)
 {
-	phone = value;
+	phone = _value;
 }
 
 const Telephone& Contact::Getphone()
@@ -62,9 +62,9 @@ const Telephone& Contact::Getphone()
 	return phone;
 }
 
-void Contact::SetAddress(Address& value)
+void Contact::SetAddress(Address& _value)
 {
-	address = value;
+	address = _value;
 }
 
 const Address& Contact::GetAddress()
@@ -72,9 +72,9 @@ const Address& Contact::GetAddress()
 	return address;
 }
 
-void Contact::SetOnlineResource(OnlineResource& value)
+void Contact::SetOnlineResource(OnlineResource& _value)
 {
-	onlineResource = value;
+	onlineResource = _value;
 }
 
 const OnlineResource& Contact::GetOnlineResource()
@@ -82,9 +82,9 @@ const OnlineResource& Contact::GetOnlineResource()
 	return onlineResource;
 }
 
-void Contact::SetHoursOfService(char* value) 
+void Contact::SetHoursOfService(char* _value) 
 {
-	hoursOfService = value;
+	hoursOfService = _value;
 }
 
 const std::string& Contact::GetHoursOfService()
@@ -92,9 +92,9 @@ const std::string& Contact::GetHoursOfService()
 	return hoursOfService;
 }
 
-void Contact::SetContactInstructions(char* value) 
+void Contact::SetContactInstructions(char* _value) 
 {
-	contactInstructions = value;
+	contactInstructions = _value;
 }
 
 const std::string& Contact::GetContactInstructions()

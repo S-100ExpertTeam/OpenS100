@@ -29,14 +29,14 @@ void ComplexAttributes::GetContents(pugi::xml_node& node)
 	}
 }
 
-void ComplexAttributes::SetComplexAttribute(std::string key, ComplexAttribute* value)
+void ComplexAttributes::SetComplexAttribute(std::string key, ComplexAttribute* _value)
 {
-	complexAttribute.insert({ key,value });
+	complexAttribute.insert({ key,_value });
 }
 
-void ComplexAttributes::SetComplexAttribute(std::unordered_map<std::string, ComplexAttribute*> value) 
+void ComplexAttributes::SetComplexAttribute(std::unordered_map<std::string, ComplexAttribute*> _value) 
 {
-	complexAttribute = value;
+	complexAttribute = _value;
 }
 
 ComplexAttribute* ComplexAttributes::GetComplexAttribute(std::string key) 

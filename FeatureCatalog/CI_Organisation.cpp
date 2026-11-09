@@ -23,16 +23,16 @@ void CI_Organisation::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName,"S100CI:contactInfo"))
 		{
-			ContactInfo value;
-			value.GetContents(instruction);
-			SetContactinfo(value);
+			ContactInfo _value;
+			_value.GetContents(instruction);
+			SetContactinfo(_value);
 		}
 	}
 }
 
-void CI_Organisation::SetName(char* value)
+void CI_Organisation::SetName(char* _value)
 {
-	name = value;
+	name = _value;
 }
 
 const std::string CI_Organisation::GetName()
@@ -40,9 +40,9 @@ const std::string CI_Organisation::GetName()
 	return name;
 }
 
-void CI_Organisation::SetContactinfo(ContactInfo& value) 
+void CI_Organisation::SetContactinfo(ContactInfo& _value) 
 {
-	contactinfo = value;
+	contactinfo = _value;
 }
 
 const ContactInfo& CI_Organisation::GetContactinfo()

@@ -12,14 +12,14 @@ XML_Attribute::~XML_Attribute()
 {
 }
 
-void XML_Attribute::Setname(std::string& values)
+void XML_Attribute::Setname(std::string& _name)
 {
-	name = value;
+	name = _name;
 }
 
-void XML_Attribute::Setname(char* value)
+void XML_Attribute::Setname(char* _value)
 {
-	name = value;
+	name = _value;
 }
 
  const std::string& XML_Attribute::Getname()
@@ -49,9 +49,9 @@ std::string XML_Attribute::GetvalueString()
 	return resultstring;
 }
 
-void XML_Attribute::Setname(const char* value)
+void XML_Attribute::Setname(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	Setname(s);
 }
 
@@ -81,15 +81,15 @@ bool XML_Attribute::CompareName(const char* otherName)
 	return false;
 }
 
-void XML_Attribute::Setvalue(const char* value)
+void XML_Attribute::Setvalue(const char* _value)
 {
-	std::string s(value ? value : "");
+	std::string s(_value ? _value : "");
 	Setvalue(s);
 }
 
-void XML_Attribute::Setvalue(std::wstring value)
+void XML_Attribute::Setvalue(std::wstring _value)
 {
-	std::string s = toUtf8(value);
+	std::string s = toUtf8(_value);
 	Setvalue(s);
 }
 

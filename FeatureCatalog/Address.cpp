@@ -50,9 +50,9 @@ void Address::GetContents(pugi::xml_node& node)
 	}
 }
 
-void Address::SetDeliveryPoint(char* value)
+void Address::SetDeliveryPoint(char* _value)
 {
-	deliveryPoint =value;
+	deliveryPoint =_value;
 }
 
 const std::string& Address::GetDeliveryPoint()
@@ -60,9 +60,9 @@ const std::string& Address::GetDeliveryPoint()
 	return deliveryPoint;
 }
 
-void Address::SetCity(char* value) 
+void Address::SetCity(char* _value) 
 {
-	city = value;
+	city = _value;
 }
 
 const std::string& Address::GetCity()
@@ -70,9 +70,9 @@ const std::string& Address::GetCity()
 	return city;
 }
 
-void Address::SetAdministrativeArea(char* value) 
+void Address::SetAdministrativeArea(char* _value) 
 {
-	administrativeArea = value;
+	administrativeArea = _value;
 }
 
 const std::string& Address::GetAdministrativeArea()
@@ -80,9 +80,9 @@ const std::string& Address::GetAdministrativeArea()
 	return administrativeArea;
 }
 
-void Address::SetPostalCode(char* value) 
+void Address::SetPostalCode(char* _value) 
 {
-	postalCode = value;
+	postalCode = _value;
 }
 
 const std::string& Address::GetPostalCode()
@@ -90,9 +90,9 @@ const std::string& Address::GetPostalCode()
 	return postalCode;
 }
 
-void Address::SetCountry(char* value) 
+void Address::SetCountry(char* _value) 
 {
-	country = value;
+	country = _value;
 }
 
 const std::string& Address::GetCountry()
@@ -100,9 +100,9 @@ const std::string& Address::GetCountry()
 	return country;
 }
 
-void Address::SetElectronicMailAddress(char* value) 
+void Address::SetElectronicMailAddress(char* _value) 
 {
-	electronicMailAddress = value;
+	electronicMailAddress = _value;
 }
 
 const std::string& Address::GetElectronicMailAddress()

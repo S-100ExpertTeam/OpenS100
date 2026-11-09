@@ -27,9 +27,9 @@ void Citation::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100CI:date"))
 		{
-			Date* date = new Date();
-			date->GetContents(instruction);
-			SetDate(date);
+			Date* _date = new Date();
+			_date->GetContents(instruction);
+			SetDate(_date);
 		}
 		else if (!strcmp(instructionName, "S100CI:edition"))
 		{
@@ -63,9 +63,9 @@ void Citation::GetContents(pugi::xml_node& node)
 		}
 		else if (!strcmp(instructionName, "S100CI:series"))
 		{
-			Series* series = new Series();
-			series->GetContents(instruction);
-			SetSeries(*series);
+			Series* _series = new Series();
+			_series->GetContents(instruction);
+			SetSeries(*_series);
 		}
 		else if (!strcmp(instructionName, "S100CI:otherCitationDetails"))
 		{
@@ -91,9 +91,9 @@ void Citation::GetContents(pugi::xml_node& node)
 	}
 }
 
-void Citation::SetTitle(char* value) 
+void Citation::SetTitle(char* _value) 
 {
-	title =value;
+	title =_value;
 }
 
 const std::string& Citation::GetTitle()
@@ -101,14 +101,14 @@ const std::string& Citation::GetTitle()
 	return title;
 }
 
-void Citation::SetAternateTitle(char* value) 
+void Citation::SetAternateTitle(char* _value) 
 {
-	aternateTitle.push_back(value);
+	aternateTitle.push_back(_value);
 }
 
-void Citation::SetAternateTitle(std::list<std::string>& value)
+void Citation::SetAternateTitle(std::list<std::string>& _value)
 {
-	aternateTitle = value;
+	aternateTitle = _value;
 }
 
 std::list<std::string>& Citation::GetAternateTitle()
@@ -116,13 +116,13 @@ std::list<std::string>& Citation::GetAternateTitle()
 	return aternateTitle;
 }
 
-void Citation::SetDate(Date* value)
+void Citation::SetDate(Date* _value)
 {
-	date.push_back(*value);
+	date.push_back(*_value);
 }
-void Citation::SetDate(std::list<Date>& value)
+void Citation::SetDate(std::list<Date>& _value)
 {
-	date = value;
+	date = _value;
 }
 
 std::list<Date>& Citation::GetDate()
@@ -130,9 +130,9 @@ std::list<Date>& Citation::GetDate()
 	return date;
 }
 
-void Citation::SetEdition(char* value)
+void Citation::SetEdition(char* _value)
 {
-	edition =value;
+	edition =_value;
 }
 
 const std::string& Citation::GetEdition()
@@ -140,9 +140,9 @@ const std::string& Citation::GetEdition()
 	return edition;
 }
 
-void Citation::SetEditionDate(DateExt& value)
+void Citation::SetEditionDate(DateExt& _value)
 {
-	editionDate = value;
+	editionDate = _value;
 }
 
 DateExt& Citation::GetEditionDate()
@@ -150,9 +150,9 @@ DateExt& Citation::GetEditionDate()
 	return editionDate;
 }
 
-void Citation::SetIdentifier(char* value)
+void Citation::SetIdentifier(char* _value)
 {
-	identifier =value;
+	identifier =_value;
 }
 
 const std::string& Citation::GetIdentifier()
@@ -160,9 +160,9 @@ const std::string& Citation::GetIdentifier()
 	return identifier;
 }
 
-void Citation::SetIdentifierType(char* value)
+void Citation::SetIdentifierType(char* _value)
 {
-	identifierType = value;
+	identifierType = _value;
 }
 
 const std::string& Citation::GetIdentifierType()
@@ -170,9 +170,9 @@ const std::string& Citation::GetIdentifierType()
 	return identifierType;
 }
 
-void Citation::SetCitedResponsibleParty(ResponsibleParty& value)
+void Citation::SetCitedResponsibleParty(ResponsibleParty& _value)
 {
-	citedResponsibleParty = value;
+	citedResponsibleParty = _value;
 }
 
 ResponsibleParty& Citation::GetCitedResponsibleParty()
@@ -180,9 +180,9 @@ ResponsibleParty& Citation::GetCitedResponsibleParty()
 	return citedResponsibleParty;
 }
 
-void Citation::SetPresentationForm(PresentationFormCode& value)
+void Citation::SetPresentationForm(PresentationFormCode& _value)
 {
-	presentationForm = value; 
+	presentationForm = _value; 
 }
 
 PresentationFormCode& Citation::GetPresentationForm()
@@ -190,9 +190,9 @@ PresentationFormCode& Citation::GetPresentationForm()
 	return presentationForm;
 }
 
-void Citation::SetSeries(Series& value)
+void Citation::SetSeries(Series& _value)
 {
-	series = value;
+	series = _value;
 }
 
 Series& Citation::GetSeries()
@@ -200,9 +200,9 @@ Series& Citation::GetSeries()
 	return series;
 }
 
-void Citation::SetOtherCitationDetails(char* value)
+void Citation::SetOtherCitationDetails(char* _value)
 {
-	otherCitationDetails =value;
+	otherCitationDetails =_value;
 }
 
 const std::string& Citation::GetOtherCitationDetails()
@@ -210,9 +210,9 @@ const std::string& Citation::GetOtherCitationDetails()
 	return otherCitationDetails;
 }
 
-void Citation::SetCollectiveTitle(char* value)
+void Citation::SetCollectiveTitle(char* _value)
 {
-	collectiveTitle = value;
+	collectiveTitle = _value;
 }
 
 const std::string& Citation::GetCollectiveTitle()
@@ -220,9 +220,9 @@ const std::string& Citation::GetCollectiveTitle()
 	return collectiveTitle;
 }
 
-void Citation::SetISBN(char* value) 
+void Citation::SetISBN(char* _value) 
 {
-	ISBN = value;
+	ISBN = _value;
 }
 
 const std::string& Citation::GetISBN()
@@ -230,9 +230,9 @@ const std::string& Citation::GetISBN()
 	return ISBN;
 }
 
-void Citation::SetISSN(char* value) 
+void Citation::SetISSN(char* _value) 
 {
-	ISSN = value;
+	ISSN = _value;
 }
 
 const std::string& Citation::GetISSN()

@@ -8,9 +8,9 @@ namespace TextPackage
 		return text;
 	}
 
-	void TextElement::SetText(const std::string& text)
+	void TextElement::SetText(const std::string& _text)
 	{
-		this->text = text;
+		this->text = _text;
 	}
 
 	double TextElement::GetBodySize() const
@@ -18,9 +18,9 @@ namespace TextPackage
 		return bodySize;
 	}
 
-	void TextElement::SetBodySize(double bodySize)
+	void TextElement::SetBodySize(double _bodySize)
 	{
-		this->bodySize = bodySize;
+		this->bodySize = _bodySize;
 	}
 
 	double TextElement::GetVerticalOffset() const
@@ -28,9 +28,9 @@ namespace TextPackage
 		return verticalOffset;
 	}
 
-	void TextElement::SetVerticalOffset(double verticalOffset)
+	void TextElement::SetVerticalOffset(double _verticalOffset)
 	{
-		this->verticalOffset = verticalOffset;
+		this->verticalOffset = _verticalOffset;
 	}
 
 	void TextElement::SetForeground(const GraphicBasePackage::Color& color)
