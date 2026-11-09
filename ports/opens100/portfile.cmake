@@ -21,8 +21,15 @@ endif()
 
 vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
 
+vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
+    FEATURES
+        feature-catalogue OPENS100_BUILD_FEATURECATALOG
+        geometry          OPENS100_BUILD_GEOMETRY
+)
+
 vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
+    OPTIONS ${FEATURE_OPTIONS}
 )
 vcpkg_cmake_install()
 vcpkg_cmake_config_fixup(PACKAGE_NAME opens100 CONFIG_PATH share/opens100)

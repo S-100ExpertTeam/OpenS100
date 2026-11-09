@@ -23,13 +23,17 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(OPENS100_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
+option(OPENS100_BUILD_GEOMETRY "Build opens100::geometry (GeoMetryLibrary)" ON)
+option(OPENS100_BUILD_FEATURECATALOG "Build opens100::featurecatalog (FeatureCatalog)" ON)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-find_package(pugixml CONFIG REQUIRED)
 find_package(GeographicLib CONFIG REQUIRED)
-find_package(utf8cpp CONFIG REQUIRED)
+if(OPENS100_BUILD_FEATURECATALOG)
+    find_package(pugixml CONFIG REQUIRED)
+    find_package(utf8cpp CONFIG REQUIRED)
+endif()
 
 # Headers are installed as <prefix>/include/opens100/<Module>/<header>, the same relative layout
 # as the source tree, so the modules' "../Other/x.h" includes keep working after installation and
@@ -81,9 +85,13 @@ endfunction()
 
 # Dependency order: latlon <- geometry, featurecatalog. (PortrayalCatalogue still includes the
 # Direct2D render module and joins after step 2-3c of the Phase 1 plan.)
-opens100_add_module(latlon         LatLonUtility   DEPENDS GeographicLib::GeographicLib)
-opens100_add_module(geometry       GeoMetryLibrary DEPENDS latlon)
-opens100_add_module(featurecatalog FeatureCatalog  DEPENDS latlon pugixml::pugixml utf8cpp::utf8cpp)
+opens100_add_module(latlon LatLonUtility DEPENDS GeographicLib::GeographicLib)
+if(OPENS100_BUILD_GEOMETRY)
+    opens100_add_module(geometry GeoMetryLibrary DEPENDS latlon)
+endif()
+if(OPENS100_BUILD_FEATURECATALOG)
+    opens100_add_module(featurecatalog FeatureCatalog DEPENDS latlon pugixml::pugixml utf8cpp::utf8cpp)
+endif()
 
 # --- package ------------------------------------------------------------------------------
 set(OPENS100_INSTALL_CMAKEDIR "${CMAKE_INSTALL_DATADIR}/opens100")

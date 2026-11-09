@@ -1,13 +1,12 @@
 {
   "name": "opens100",
   "version": "0.1.0",
-  "description": "Core C++ library for IHO S-100 hydrographic data (feature catalogue, geometry; more modules follow).",
+  "port-version": 1,
+  "description": "Core C++ library for IHO S-100 hydrographic data. The base package is the geodesy module (opens100::latlon); the other modules are features.",
   "homepage": "https://github.com/S-100ExpertTeam/OpenS100",
   "license": "MPL-2.0",
   "dependencies": [
     "geographiclib",
-    "pugixml",
-    "utfcpp",
     {
       "name": "vcpkg-cmake",
       "host": true
@@ -16,5 +15,21 @@
       "name": "vcpkg-cmake-config",
       "host": true
     }
-  ]
+  ],
+  "default-features": [
+    "feature-catalogue",
+    "geometry"
+  ],
+  "features": {
+    "feature-catalogue": {
+      "description": "S-100 Part 5 feature catalogue model and reader (opens100::featurecatalog)",
+      "dependencies": [
+        "pugixml",
+        "utfcpp"
+      ]
+    },
+    "geometry": {
+      "description": "Geometry primitives, map scaler and display settings (opens100::geometry)"
+    }
+  }
 }
