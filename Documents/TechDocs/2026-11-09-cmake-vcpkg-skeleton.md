@@ -68,8 +68,9 @@ build\consumer\opens100_consumer.exe ProgramData\FC\S-101_FC.xml
 
 ## 다음
 
-- [ ] KHOA 뷰어(MSBuild + vcpkg 매니페스트)에서 `overlay-ports`로 이 포트를 받아 FC 로딩 한 곳을 OpenS100 것으로 교체.
-      로드맵 Phase 5의 완료 기준("뷰어가 `find_package(opens100)`로 코어 기능 하나 사용")의 축소판이다.
+- [x] KHOA 뷰어가 `overlay-ports`로 이 포트를 받아 쓴다 (2026-11-09, 뷰어 커밋 633437fa). 첫 대상은 FC가 아니라 **측지 함수(`opens100::latlon`)**다. 뷰어에는 `FeatureCatalog`·`GeoMetryLibrary`·`LatLonUtility`의 포크가 있고 클래스 이름이 같아서, 포크를 그대로 둔 채 같은 모듈을 링크할 수 없다. 그래서 (1) 뷰어 포크에만 있던 함수를 OpenS100으로 올리고(업스트림 U0, 85f9c919), (2) 포트에 기능 선택을 넣어 뷰어가 기본 패키지(`latlon`)만 받게 하고(4899a312), (3) 뷰어의 `LatLonUtility.h`를 OpenS100 헤더를 넘겨주는 얇은 헤더로 바꾸고 중복 구현 17개를 지웠다. 뷰어 Debug x64 빌드와 실행(셀 로드)을 확인했다. 같은 순서(올리기 → 기능으로 분리 → 포크 제거)로 `GeoMetryLibrary`, `FeatureCatalog`를 진행한다.
+- [ ] `GeoMetryLibrary` 수렴: 뷰어 포크에만 있는 `ENCGeometry`·`ENCSounding`과 API 차이 조사 → 업스트림 → 뷰어 포크 제거.
+- [ ] `FeatureCatalog` 수렴: OpenS100 쪽이 더 새롭다(`Version`, `AttributeVisibility`, `S100_TM_*`). 뷰어 코드가 쓰는 API 차이를 조사하고 뷰어를 맞춘다.
 - [ ] `portrayalcatalogue` 타깃: Phase 1의 2-3c(`S100PCManager` 분리)가 선행.
 - [ ] `iso8211`·`gml` 타깃: `GISLibrary`에서 8211/GML 모델과 리더를 렌더·Win32 코드와 떼어 내야 한다(Phase 4의 `S101Cell` 분리).
 - [ ] CMake로 테스트 빌드(`OPENS100_BUILD_TESTS`), GitHub Actions에 CMake 잡 추가(수동 실행 유지).

@@ -133,6 +133,7 @@ Phase 2와 3은 순서를 바꿔도 되지만, **Phase 0 없이 Phase 4를 시�
 열린 질문 (사용자 결정 필요):
 - FC/PC 카탈로그 재배포 라이선스(IHO, KHOA 임시 카탈로그).
 - `GISLibrary`라는 이름을 유지할지, 3.1의 모듈 이름으로 바꿀지(Phase 4).
+- **`RhumbLine` 도착점 함수의 실제 동작**(2026-11-09 발견): `LatLonUtility::GetDestinationPointRhumbLineMercator[ByGeographicLib]`는 OpenS100과 KHOA 뷰어 모두에서 예전부터 측지선(대권)으로 계산한다. 진짜 항정선과의 차이는 35N에서 정동으로 10 NM에 19 m, 100 NM에 1.9 km, 300 NM에 16.9 km. 뷰어의 항로 구간·AIS 예측 벡터·augmented ray가 이 함수를 쓴다. 지금은 동작을 유지했다(테스트 `GeodesyLegacy.RhumbNamedDestinationFollowsAGeodesic`가 고정). 항정선으로 바꿀지 결정 필요. 올바른 항정선은 `s100::geodesy::RhumbDirect`.
 
 ## 변경 이력
 
@@ -140,3 +141,4 @@ Phase 2와 3은 순서를 바꿔도 되지만, **Phase 0 없이 Phase 4를 시�
 - 2026-11-08 지침 16~18 반영: vcpkg 참조 확정, 빌드 속도 절(3.3) 추가, 전 플랫폼·MFC 제거를 결정 사항으로.
 - 2026-11-08 지침 19 반영: Win32/ARM64 구성 삭제 계획 철회, 트리플릿 목록에 x86·arm64 추가.
 - 2026-11-08 지침 24 반영: 렌더 백엔드 Skia 단일, D2D는 전환기 기준 구현.
+- 2026-11-09 Phase 1 완료(코어 6개 프로젝트 MFC 없음, `/permissive-`, `/W4`+경고=에러). Phase 4·5의 뼈대를 앞당겨 세움: CMake 빌드·설치·오버레이 포트·소비자 예제, 뷰어가 `opens100::latlon`을 vcpkg로 사용 시작. 자세한 내용은 `2026-11-09-cmake-vcpkg-skeleton.md`.
