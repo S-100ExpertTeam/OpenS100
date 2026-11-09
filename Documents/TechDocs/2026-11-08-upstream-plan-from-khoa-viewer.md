@@ -69,3 +69,4 @@ KHOA 쪽 코드는 KHOA 저장소 경로, OpenS100 쪽은 이 저장소 경로.
 |---|---|---|---|
 | 2026-11-08 | 문서 작성 | | 두 저장소 비교 조사 기반 |
 | 2026-11-09 | U0: 측지 함수 업스트림 + `s100::geodesy` | 85f9c919 | 테스트 26/26, CMake 타깃 `opens100::latlon`에도 포함 |
+| 2026-11-09 | FC 수렴: 연관 바인딩 조회, 경로 생성자, `isProductId` | 6058305f | 테스트 30/30. 뷰어가 `FeatureCatalog` 포크를 지우고 `opens100[feature-catalogue]` 사용(뷰어 브랜치 `jogm-opens100-fc`, 502bd0e9) |

@@ -69,8 +69,11 @@ build\consumer\opens100_consumer.exe ProgramData\FC\S-101_FC.xml
 ## 다음
 
 - [x] KHOA 뷰어가 `overlay-ports`로 이 포트를 받아 쓴다 (2026-11-09, 뷰어 커밋 633437fa). 첫 대상은 FC가 아니라 **측지 함수(`opens100::latlon`)**다. 뷰어에는 `FeatureCatalog`·`GeoMetryLibrary`·`LatLonUtility`의 포크가 있고 클래스 이름이 같아서, 포크를 그대로 둔 채 같은 모듈을 링크할 수 없다. 그래서 (1) 뷰어 포크에만 있던 함수를 OpenS100으로 올리고(업스트림 U0, 85f9c919), (2) 포트에 기능 선택을 넣어 뷰어가 기본 패키지(`latlon`)만 받게 하고(4899a312), (3) 뷰어의 `LatLonUtility.h`를 OpenS100 헤더를 넘겨주는 얇은 헤더로 바꾸고 중복 구현 17개를 지웠다. 뷰어 Debug x64 빌드와 실행(셀 로드)을 확인했다. 같은 순서(올리기 → 기능으로 분리 → 포크 제거)로 `GeoMetryLibrary`, `FeatureCatalog`를 진행한다.
-- [ ] `GeoMetryLibrary` 수렴: 뷰어 포크에만 있는 `ENCGeometry`·`ENCSounding`과 API 차이 조사 → 업스트림 → 뷰어 포크 제거.
-- [ ] `FeatureCatalog` 수렴: OpenS100 쪽이 더 새롭다(`Version`, `AttributeVisibility`, `S100_TM_*`). 뷰어 코드가 쓰는 API 차이를 조사하고 뷰어를 맞춘다.
+- [x] `GeoMetryLibrary` 수렴: **하지 않기로 했다** (2026-11-09 조사). 뷰어 포크의 `Scaler`(CRect, D2D 행렬, 함수 포인터)와 `Geometry`(HDC/CDC 그리기 가상 함수, POINT 도우미)는 MFC·Direct2D에 묶여 있고, 뷰어 엔진을 통째로 교체할 때 사라질 코드다. 뷰어는 포트 기능 `geometry`를 켜지 않는다.
+- [x] `FeatureCatalog` 수렴 (2026-11-09, 6058305f, 뷰어 브랜치 `jogm-opens100-fc` 커밋 502bd0e9). 뷰어 포크에만 있던 것을 올렸다: 경로 생성자, `isProductId`, 연관 바인딩 조회 `FindFeatureBinding`/`FindInformationBinding`(대상의 상위 타입까지 탐색)와 그 역방향 `AdmittedFeatureTypes`/`AdmittedInformationTypes`. 뷰어는 `opens100[feature-catalogue]`를 받고 포크(131개 파일)를 지웠다. 뷰어 쪽 포팅 규칙과 검증 범위는 뷰어 저장소 `Document/TechDocs/2026-11-08-khoa-viewer-plan.md` 3절. 얻은 교훈:
+  - 오버레이 포트 뒤의 소스를 고치면 `port-version`을 올려야 한다. `vcpkg_installed`만 지우면 바이너리 캐시에서 예전 빌드가 복원된다(이번에 1 → 3). 소비자 쪽 MSBuild 통합은 `.msbuildstamp-<triplet>.stamp`도 지워야 다시 설치한다.
+  - API의 `W` 쌍(`GetNameW()` 등)이 있어서 wide 문자열 소비자의 포팅이 기계적으로 됐다(346개 오류 중 110여 곳). 반대로 `GetAttributeCodeAsWstring()`처럼 이름과 달리 `std::string`을 반환하는 접근자가 남아 있다. 공개 API 정리(Phase 4) 때 없앤다.
+  - `LuaScriptingReference`는 바인딩마다 대상 타입 수만큼 같은 Lua 바인딩을 중복 생성한다(`CreateFeatureBinding(ls, fb, i)`가 `i`를 쓰지 않음). 뷰어 쪽 포팅에서는 바인딩당 한 번만 만든다. 이쪽도 고칠 것.
 - [ ] `portrayalcatalogue` 타깃: Phase 1의 2-3c(`S100PCManager` 분리)가 선행.
 - [ ] `iso8211`·`gml` 타깃: `GISLibrary`에서 8211/GML 모델과 리더를 렌더·Win32 코드와 떼어 내야 한다(Phase 4의 `S101Cell` 분리).
 - [ ] CMake로 테스트 빌드(`OPENS100_BUILD_TESTS`), GitHub Actions에 CMake 잡 추가(수동 실행 유지).
