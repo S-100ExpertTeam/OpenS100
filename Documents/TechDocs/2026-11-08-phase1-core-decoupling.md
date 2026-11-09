@@ -57,7 +57,7 @@
 ### 4단계. 적합성 복구
 
 - [x] 4-1. `Common.props`의 `ConformanceMode=false` 임시 조치 제거 (eb9b8cd8). 측정 시점(3단계 완료 후) 176건: GISLibrary 153, 뷰어 23, S100Engine 0. C2664 94건은 `char*`로 받던 문자열 리터럴(`F_FieldControlField::AddTagPair`, `Directory(const char*, …)`, `HDF5Wrapper::ReadMetadata*Attribute`) → `const char*`; C2665 52건은 임시 객체를 비상수 참조로 받던 setter(`MBR::CalcMBR`, `S100_VectorPoint::SetX/Y`, `S100_Instruction::SetViewingGroup(vector)`, `S100_SpatialReference::Set`, `CommandList::Insert`, `GF::NamedType::SetCode`, `SENC_*` setter 4개) → `const&`, `S10XGML::ReadLinearRing`은 값 전달, `ExXmlSupport::GetContent(Select)Node`는 지역 변수 참조를 돌려주던 것을 값 반환으로; C2440/C2446: `Base64String` 생성, `IsNoGeometry`의 포인터 비교, `IsOn(key)`의 `return nullptr`, GML 리더의 `return false`(포인터 반환). 뷰어 23건은 GDI+ `&Pen(...)` 임시 주소·`DrawLine` 정수/실수 모호성·`CString`→`std::wstring` 초기화. 이제 모든 프로젝트가 `/permissive-`로 빌드된다.
-- [~] 4-2. `/W4` 프로젝트별 적용, 경고-에러는 코어부터. (a) FeatureCatalog·PortrayalCatalogue·GeoMetryLibrary를 `/W4` + `TreatWarningAsError` (42b9754b). 측정 201건 중 C4458(setter 매개변수가 멤버 `value`를 가림) 164건과 C4100(미사용 매개변수) 19건은 스타일 문제라 `DisableSpecificWarnings`로 보류(4-2b), 나머지는 수정: `FeatureCatalogue::GetVersionNumber`가 임시 객체의 `const&`를 반환하던 실제 결함(C4172), `S100_*PlacementMode`의 wide→char 코드 유닛 복사(C4244, `toUtf8`로), 도달 불가 `return false` 4곳, 미사용 지역 변수 4곳, 미사용 예외 변수 2곳, 가려진 루프 변수 1곳. (b) 남은 것: C4458/C4100 정리 후 억제 해제, GISLibrary(/W3 기준 56건)·S100Engine·뷰어의 `/W4`.
+- [~] 4-2. `/W4` 프로젝트별 적용, 경고-에러는 코어부터. (a) FeatureCatalog·PortrayalCatalogue·GeoMetryLibrary를 `/W4` + `TreatWarningAsError` (42b9754b). 측정 201건 중 C4458(setter 매개변수가 멤버 `value`를 가림) 164건과 C4100(미사용 매개변수) 19건은 스타일 문제라 `DisableSpecificWarnings`로 보류(4-2b), 나머지는 수정: `FeatureCatalogue::GetVersionNumber`가 임시 객체의 `const&`를 반환하던 실제 결함(C4172), `S100_*PlacementMode`의 wide→char 코드 유닛 복사(C4244, `toUtf8`로), 도달 불가 `return false` 4곳, 미사용 지역 변수 4곳, 미사용 예외 변수 2곳, 가려진 루프 변수 1곳. (b) 억제 해제 (bf712377): C4458 164건은 가리는 매개변수·지역 변수를 기존 코드 스타일대로 `x` → `_x`로 개명, C4100 14건은 스텁·기본 가상 함수의 매개변수 이름을 주석 처리. 미사용 매개변수 중 3건은 실제 버그였다 — `XML_Attribute::Setname`과 `Series::SetPage`가 인자를 무시하고 요소 텍스트를 대입, `ENCCommon::Save(path)`가 경로를 무시하고 고정 경로에 저장. 모델 3개 프로젝트는 이제 억제 없이 `/W4` + 경고=에러. (c) 남은 것: GISLibrary(/W3 기준 56건)·S100Engine·뷰어의 `/W4`.
 
 ### 5단계. 전 플랫폼 게이트
 
@@ -106,3 +106,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-09 | 4-1: 전 프로젝트 `/permissive-` 복구(176건 수정) | eb9b8cd8 | 테스트 16/16, 앱 기동 확인 |
 | 2026-11-09 | 5-1b: Release x64·Debug x86 구성 점검, x86 빌드 복구; 2-3c 범위 기록 | e5f63cec | x64 테스트 16/16, x86 뷰어 빌드 |
 | 2026-11-09 | 4-2a: 모델 3개 프로젝트 `/W4`+경고=에러, 실제 결함 1건(C4172) 포함 13건 수정 | 42b9754b | 테스트 16/16, 앱 기동 확인 |
+| 2026-11-09 | 4-2b: 모델 3개 프로젝트 C4458/C4100 정리(181건), 억제 해제, 버그 3건 수정 | bf712377 | 테스트 16/16, 앱 기동 확인 |
