@@ -46,6 +46,8 @@
 
 25. **현대적인 C++(C++20)로 쓴다.** 새 코드와 손대는 기존 코드에 적용하는 구체 규칙: (a) 소유권은 `std::unique_ptr`/`std::shared_ptr`, raw `new`/`delete` 금지, 배열은 `std::vector`/`std::array`; (b) 문자열은 `std::string`(UTF-8)/`std::string_view`, 경로는 `std::filesystem::path`, `CString`·`wchar_t*` 버퍼 금지; (c) 연속 데이터 전달은 `std::span`, 실패 가능한 반환은 `std::optional` 또는 `std::expected`(C++23 전까지는 `tl::expected` 또는 자체 `Result`), 예외는 진짜 예외 상황에만; (d) `enum class`, `constexpr`, `[[nodiscard]]`, `const` 정확성, 구조적 바인딩, 범위 기반 for와 `<ranges>`/`<algorithm>`, 지정 초기화자; (e) C 스타일 캐스트·매크로·`#define` 상수·`using namespace`(헤더) 금지, 가상 함수는 `override`/`final` 명시, 생성자는 `explicit`; (f) MFC 컨테이너(`CMap`, `CArray`, `CList`, `POSITION`) 금지, `std::unordered_map`/`std::map`/`std::vector`; (g) 포맷은 `std::format`, 시간은 `<chrono>`, 스레드는 `std::jthread`/`std::stop_token`. 기존 코드는 한 번에 다 고치지 않고, 해당 파일을 손댈 때 그 함수·클래스 단위로 이 규칙에 맞춘다. (2026-11-08)
 
+26. **로컬 S-100 데이터는 System Database 하나로 관리한다.** 데이터셋·FC·PC·지원 파일을 모두 이 DB에 추가하고 관리한다. Dataset Manager가 `IniCatalog.XML`을 만들어 여는 지금 방식은 맞지 않으므로 쓰지 않는다. 설계와 작업 항목은 `2026-11-10-system-database.md`. (2026-11-10)
+
 ## 변경 이력
 
 - 2026-11-08 최초 작성. 처음에는 KHOA 뷰어 저장소에서 "그 저장소를 라이브러리화"하는 것으로 적었으나, 사용자가 라이브러리화 대상은 OpenS100이고 KHOA 뷰어는 소비자라고 정정함(항목 4).
@@ -55,3 +57,4 @@
 - 2026-11-08 항목 23 추가 (시각 검증은 agent-desktop MCP로).
 - 2026-11-08 항목 24 추가 (렌더 백엔드 Skia 단일, D2D는 전환기만).
 - 2026-11-08 항목 25 추가 (현대적 C++ 규칙).
+- 2026-11-10 항목 26 추가 (System Database로 로컬 데이터 통합 관리, `IniCatalog.XML` 방식 폐기).

@@ -1,0 +1,168 @@
+# System Database: 로컬 S-100 데이터 통합 관리 (2026-11-10)
+
+지침 26의 설계와 작업 계획. 데이터셋·FC·PC·지원 파일을 한 로컬 DB가 관리하고, 화면에 올릴 데이터셋은 그 DB의 메타데이터로 S-98 부속서 E-1 알고리즘이 고른다.
+
+## 1. 지금 구조와 문제
+
+Dataset Manager(앱 `OpenS100/DATASET_SUPPORTdlg`, `DataSetManagerSupport`)의 현재 동작:
+
+- DB는 `..\TEMP\DatasetManager.db`(실행 위치 기준 상대 경로). 테이블 `FeatureCatalogue`, `PortrayalCatalogue`, `DatasetFiles`, `SupportFiles`.
+- 다이얼로그를 닫으면 `DatasetFiles`·`SupportFiles`를 전부 지우고 다시 넣는다. 동시에 목록으로 `..\TEMP\IniCatalog.XML`을 새로 쓰고, 파일을 `..\TEMP\`로 복사하고, 그 카탈로그를 레이어 하나로 연다. 이 세션에서만 `S100ExchangeCatalogue::DrawFiles` → `S100Utilities::SelectDataCoverages`가 로딩·언로딩을 한다.
+- 재시작하면 `COpenS100View::OnCreate`가 `DatasetFiles`의 **원본 경로**를 하나씩 `AddLayer` 한다. 808셀이면 808셀을 모두 파싱해 올리고, 선택 알고리즘 없이 MBR만 보고 전부 그린다.
+
+문제:
+
+1. **메타데이터가 DB에 없다.** `DatasetFiles`는 `fileName`, `filePath`뿐이다. 커버리지·축척·제품·판 정보가 XML(`IniCatalog.XML`)에만 있어서, 선택 알고리즘을 돌리려면 XML을 거쳐야 한다. 그 XML은 앱이 만든 임시 파일이라 표준 교환세트도 아니다.
+2. **두 저장소가 어긋난다.** DB에는 원본 경로, `TEMP`에는 복사본, XML에는 복사본 기준 상대 경로가 있다. 원본을 옮기거나 지우면 재시작 후 동작과 세션 중 동작이 달라진다.
+3. **`SupportFiles` 테이블이 생성되지 않는다.** `CREATE TABLE` 문에 `filePath` 열이 두 번 있어 `duplicate column name`으로 실패한다. 오류는 `TRACE`로만 나가므로, 지원 파일 등록은 매번 조용히 실패한다.
+4. 4인자 `insertData`(resourcePurpose)는 없는 열을 쓰고 자리표시자가 2개뿐이다(호출하는 곳은 없다).
+5. FC/PC는 경로만 보고 시작 시 전부 파싱한다. 데이터셋이 참조하는 제품·버전과의 연결이 DB에 없다.
+6. 전부 앱(MFC) 코드다. 지침 1·18에 따르면 이 기능은 라이브러리 코어에 있어야 한다.
+
+## 2. 목표
+
+- **System Database(SDB)**: 로컬에 설치된 S-100 자원(데이터셋과 그 업데이트, FC, PC, 지원 파일, 가져온 교환세트)을 관리하는 하나의 DB.
+- **시작할 때 데이터셋 파일을 열지 않는다.** SDB의 메타데이터(커버리지 폴리곤, 축척, 경계 상자)만 메모리에 올리고, 뷰가 바뀔 때 E-1 선택 결과에 따라 필요한 데이터셋만 열고 닫는다.
+- FC/PC는 SDB에 (제품, 버전)으로 등록하고, 데이터셋이 요구하는 제품·버전으로 찾는다(`CatalogManager` → 장기적으로 `CatalogueRegistry`).
+- 교환세트(`CATALOG.XML`) 가져오기, 단일 파일 가져오기, 삭제·교체가 모두 SDB 트랜잭션 하나로 끝난다. 임시 XML은 쓰지 않는다.
+- 라이브러리 코드(순수 C++20, `sqlite3`, `std::filesystem`)로 둔다. 앱 다이얼로그는 SDB API 위의 얇은 UI다.
+
+## 3. 설계
+
+### 3.1 책임 분리 (지침 22)
+
+| 구성 요소 | 책임 | 위치 |
+|---|---|---|
+| `s100::sdb::SystemDatabase` | SQLite 연결, 스키마 버전·마이그레이션, 트랜잭션, 레코드 CRUD. 파일 내용은 모른다 | `s100-sdk` |
+| `s100::sdb::Importer` | 교환세트·단일 파일을 읽어 메타데이터 추출(데이터셋의 DataCoverage 피처, 제품·판·업데이트 번호, FC/PC 제품·버전), 관리 저장소로 복사, SDB에 기록 | `s100-sdk` (파서는 `s100-core`/`s100-iso8211` 사용) |
+| `s100::sdb::ResourceStore` | 관리 저장소의 디렉터리 배치와 파일 복사·삭제. 경로는 SDB 루트 기준 상대 경로로 기록 | `s100-sdk` |
+| `CatalogueRegistry` | (제품, 버전) → FC/PC 해석. SDB에서 목록을 받고 실제 파싱은 처음 필요할 때 | `s100-core` (기존 `CatalogManager` 대체) |
+| `DatasetSelector` | S-98 E-1.3 데이터 커버리지 선택. 입력은 SDB 커버리지 인덱스와 뷰, 출력은 그릴 데이터셋 ID와 순서 | `s100-sdk` (`S100Utilities::SelectDataCoverages` 대체, opens100-web `dataset-loading.ts`와 맞춤) |
+| `DatasetCache` | 열린 데이터셋의 LRU 캐시. 선택에서 빠졌다가 다시 들어온 셀을 다시 파싱하지 않는다 | `s100-sdk` |
+
+### 3.2 스키마 초안
+
+경로는 모두 SDB 루트 기준 상대 경로(UTF-8). 시간은 ISO 8601 문자열.
+
+```sql
+CREATE TABLE schema_info (version INTEGER NOT NULL);
+
+CREATE TABLE exchange_set (
+  id INTEGER PRIMARY KEY,
+  source_path TEXT NOT NULL,          -- where it was imported from (informational)
+  identifier TEXT, issue_date TEXT,
+  imported_at TEXT NOT NULL
+);
+
+CREATE TABLE feature_catalogue (
+  id INTEGER PRIMARY KEY,
+  product TEXT NOT NULL, version TEXT NOT NULL,
+  path TEXT NOT NULL UNIQUE, sha256 TEXT NOT NULL,
+  issue_date TEXT, imported_at TEXT NOT NULL,
+  UNIQUE (product, version)
+);
+
+CREATE TABLE portrayal_catalogue (   -- same shape as feature_catalogue
+  id INTEGER PRIMARY KEY,
+  product TEXT NOT NULL, version TEXT NOT NULL,
+  path TEXT NOT NULL UNIQUE,          -- portrayal_catalogue.xml inside the PC folder
+  sha256 TEXT NOT NULL, issue_date TEXT, imported_at TEXT NOT NULL,
+  UNIQUE (product, version)
+);
+
+CREATE TABLE dataset (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,                 -- dataset file name without extension, e.g. 101KR003G2M00
+  product TEXT NOT NULL, product_edition TEXT,
+  format TEXT NOT NULL,               -- iso8211 | gml | hdf5
+  edition INTEGER, update_number INTEGER NOT NULL DEFAULT 0,
+  issue_date TEXT,
+  path TEXT NOT NULL UNIQUE,
+  min_x REAL, min_y REAL, max_x REAL, max_y REAL,
+  status TEXT NOT NULL DEFAULT 'active',   -- active | cancelled
+  exchange_set_id INTEGER REFERENCES exchange_set(id),
+  imported_at TEXT NOT NULL,
+  UNIQUE (product, name)
+);
+
+CREATE TABLE dataset_update (
+  dataset_id INTEGER NOT NULL REFERENCES dataset(id) ON DELETE CASCADE,
+  update_number INTEGER NOT NULL, path TEXT NOT NULL, issue_date TEXT,
+  applied INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (dataset_id, update_number)
+);
+
+CREATE TABLE data_coverage (
+  id INTEGER PRIMARY KEY,
+  dataset_id INTEGER NOT NULL REFERENCES dataset(id) ON DELETE CASCADE,
+  optimum_display_scale INTEGER, minimum_display_scale INTEGER, maximum_display_scale INTEGER,
+  min_x REAL, min_y REAL, max_x REAL, max_y REAL,
+  polygon BLOB NOT NULL                -- WKB, lon/lat
+);
+CREATE INDEX data_coverage_dataset ON data_coverage(dataset_id);
+
+CREATE TABLE support_file (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL, path TEXT NOT NULL UNIQUE,
+  purpose TEXT, edition INTEGER, format TEXT, issue_date TEXT,
+  sha256 TEXT NOT NULL, imported_at TEXT NOT NULL
+);
+
+CREATE TABLE dataset_support_file (   -- which datasets reference which support files
+  dataset_id INTEGER NOT NULL REFERENCES dataset(id) ON DELETE CASCADE,
+  support_file_id INTEGER NOT NULL REFERENCES support_file(id) ON DELETE CASCADE,
+  PRIMARY KEY (dataset_id, support_file_id)
+);
+```
+
+- 커버리지는 **데이터셋 안의 DataCoverage 피처**에서 읽는다(S-98 E-1, opens100-web `readDataCoverages`와 같음). 교환세트의 `S100XC:dataCoverage`는 데이터셋에 커버리지가 없을 때만 쓴다. 가져올 때 한 번 파싱하므로 시작 시에는 파싱이 없다.
+- 같은 (제품, 이름)이 다시 들어오면 판·업데이트 번호를 비교해 교체·업데이트 추가·거부를 정한다. 판 0 업데이트(취소)는 `status = 'cancelled'`.
+- 공간 질의는 처음에는 메모리 인덱스(시작 시 `data_coverage` 전체를 읽어 경계 상자 트리)로 한다. 808셀 규모에서는 충분하다. 필요해지면 SQLite R*Tree 모듈을 쓴다.
+
+### 3.3 관리 저장소
+
+```
+<SDB root>/
+  sdb.sqlite
+  FC/<product>/<version>/<file>.xml
+  PC/<product>/<version>/...            (PC folder as delivered)
+  DATASET/<product>/<name>/<name>.000, .001, ...
+  SUPPORT/<product>/<file>
+```
+
+SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS100\SDB`, Linux `$XDG_DATA_HOME/opens100/sdb`)이고, API로 바꿀 수 있다. 라이브러리는 루트 경로를 인자로 받을 뿐 기본값을 정하지 않는다. 기본값은 앱이 정한다.
+
+### 3.4 런타임 흐름
+
+1. 앱 시작: `SystemDatabase::open(root)` → `CatalogueRegistry`에 FC/PC 목록 등록(파싱은 지연) → `DatasetSelector`에 커버리지 인덱스 적재. 데이터셋 파일은 열지 않는다.
+2. 뷰 변경: `DatasetSelector::select(view, scale)` → 데이터셋 ID 목록(그리기 순서 포함) → `DatasetCache`가 없는 것만 열고(해당 제품의 FC/PC를 레지스트리에서 받음) 나머지는 캐시에 남긴다 → 렌더.
+3. 가져오기·삭제: `Importer`가 트랜잭션으로 처리하고, 끝나면 선택기 인덱스와 캐시를 무효화한다.
+
+`S100ExchangeCatalogue` 레이어(교환세트를 설치하지 않고 바로 보기)는 유지할지 결정이 필요하다(6절).
+
+## 4. 작업 항목
+
+- [ ] **SDB-1** 라이브러리 `SystemDatabase`: 스키마 v1, 마이그레이션 틀, 트랜잭션, 레코드 CRUD. gtest는 `:memory:` DB로.
+- [ ] **SDB-2** `ResourceStore`: 루트 배치, 복사(해시 계산), 삭제. 경로 UTF-8·`std::filesystem::path`.
+- [ ] **SDB-3** `Importer`: 단일 FC, 단일 PC 폴더, 단일 데이터셋(8211부터), 지원 파일, 교환세트(`CATALOG.XML`). 데이터셋 DataCoverage 추출. 판·업데이트 비교 규칙.
+- [ ] **SDB-4** `CatalogueRegistry`를 SDB에서 채우기. `initFCList`/`initPCList` 제거. 데이터셋 제품·버전으로 FC/PC 해석(ready/fallback/unresolved, opens100-web `catalogue-registry.ts`와 맞춤).
+- [ ] **SDB-5** `DatasetSelector`: opens100-web `selectDataCoverages`(경계값 수정 포함)를 역이식하고, 같은 입력으로 두 구현의 결과가 같은지 테스트. `S100Utilities::SelectDataCoverages`의 Clipper 경로를 대체한다.
+- [ ] **SDB-6** `DatasetCache`(LRU, 상한은 셀 수 또는 메모리).
+- [ ] **SDB-7** 앱: Dataset Manager 다이얼로그를 SDB 위의 UI로 다시 만든다. `IniCatalog.XML`·`TEMP` 복사·`DatasetManager.db` 제거. `OnCreate`의 일괄 `AddLayer` 제거. 기존 `DatasetManager.db`에서 FC/PC/데이터셋 경로를 읽어 한 번 가져오는 마이그레이션.
+- [ ] **SDB-8** 업데이트 파일 적용(`.001`~), 취소, 교환세트 서명(`CATALOG.SIGN`) 검증 연결.
+- [ ] **SDB-9** 화면 검증(지침 23): KOR_TDS 808셀 교환세트를 가져와 축척을 바꿔 가며 선택·그리기를 캡처하고, 시작 시간·메모리를 기록한다.
+
+## 5. 성능 목표
+
+- KOR_TDS 808셀 기준: 가져오기 후 앱 시작에서 데이터셋 파싱 0회, 시작 시간은 FC/PC 목록 적재 수준.
+- 뷰 변경 시 선택 계산 10 ms 이하(메모리 인덱스).
+
+## 6. 열린 질문 (사용자 결정 필요)
+
+1. **가져올 때 파일을 복사할지, 원본 경로만 참조할지.** 권장은 복사(3.3). 원본이 옮겨지거나 지워져도 동작이 같고, 업데이트·교체를 SDB가 일관되게 관리할 수 있다. 대신 디스크를 두 배로 쓴다.
+2. **설치 없이 `CATALOG.XML`을 바로 여는 기존 기능(`S100ExchangeCatalogue` 레이어)을 남길지.** 남긴다면 같은 `DatasetSelector`를 쓰게 바꾼다.
+3. **SDB 루트 기본 위치.** 사용자 데이터 폴더(권장)와 실행 파일 옆 폴더 중 무엇으로 할지.
+
+## 변경 이력
+
+- 2026-11-10 초안. 지침 26에서 시작.
