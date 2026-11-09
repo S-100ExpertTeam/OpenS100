@@ -56,9 +56,32 @@ protected:
 	FeatureTypes featureTypes; 
 
 public:
+	/// Reads the catalogue at `path`; check getProductId() (empty on failure) or use Read() for a result.
+	explicit FeatureCatalogue(const std::string& path);
+	explicit FeatureCatalogue(const std::wstring& path);
+
 	bool Read(std::string filePath);
 	bool Read(std::wstring filePath);
 	bool Save(std::string filePath);
+
+	/// True when this catalogue describes product `value` (for example "S-101").
+	bool isProductId(const std::string& value) const;
+
+	/// The binding of `source` that admits the feature type `targetFeatureTypeCode`, directly or
+	/// through one of the target's super types. nullptr when the two cannot be associated.
+	FeatureBinding* FindFeatureBinding(FeatureType* source, const std::string& targetFeatureTypeCode);
+	FeatureBinding* FindFeatureBinding(FeatureType* source, const std::wstring& targetFeatureTypeCode);
+	FeatureBinding* FindFeatureBinding(const std::string& sourceFeatureTypeCode, const std::string& targetFeatureTypeCode);
+	FeatureBinding* FindFeatureBinding(const std::wstring& sourceFeatureTypeCode, const std::wstring& targetFeatureTypeCode);
+
+	/// The same for information associations. `source` is a feature type or an information type.
+	InformationBinding* FindInformationBinding(S100ObjectType* source, const std::string& targetInformationTypeCode);
+	InformationBinding* FindInformationBinding(S100ObjectType* source, const std::wstring& targetInformationTypeCode);
+
+	/// Every type code `binding` admits: the codes it lists, then the types derived from them
+	/// (in catalogue order). Each code appears once. The inverse question of Find...Binding().
+	std::vector<std::string> AdmittedFeatureTypes(FeatureBinding* binding);
+	std::vector<std::string> AdmittedInformationTypes(InformationBinding* binding);
 
 	void GetContents(pugi::xml_node& node);
 	void WriteContents(pugi::xml_node& node);

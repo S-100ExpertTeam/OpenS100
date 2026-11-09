@@ -4,10 +4,165 @@
 #include "FeatureCatalogue.h"
 #include "Role.h"
 
+#include <algorithm>
+
 
 FeatureCatalogue::FeatureCatalogue()
 {
 	
+}
+
+FeatureCatalogue::FeatureCatalogue(const std::string& path)
+{
+	Read(path);
+}
+
+FeatureCatalogue::FeatureCatalogue(const std::wstring& path)
+{
+	Read(path);
+}
+
+bool FeatureCatalogue::isProductId(const std::string& value) const
+{
+	return productId == value;
+}
+
+namespace
+{
+	// Type inheritance in a catalogue is shallow; the bound only guards against a cyclic file.
+	constexpr int kMaxSuperTypeDepth = 32;
+
+	template <typename Binding, typename Codes>
+	bool Lists(Binding* binding, Codes (Binding::*codes)(), const std::string& code)
+	{
+		const auto listed = (binding->*codes)();
+		return std::find(listed.begin(), listed.end(), code) != listed.end();
+	}
+}
+
+FeatureBinding* FeatureCatalogue::FindFeatureBinding(FeatureType* source, const std::string& targetFeatureTypeCode)
+{
+	if (!source)
+	{
+		return nullptr;
+	}
+
+	std::string code = targetFeatureTypeCode;
+	for (int depth = 0; depth < kMaxSuperTypeDepth && !code.empty(); ++depth)
+	{
+		for (auto* binding : source->GetFeatureBindingPointer())
+		{
+			if (binding && Lists(binding, &FeatureBinding::GetFeatureTypes, code))
+			{
+				return binding;
+			}
+		}
+		auto* target = GetFeatureType(code);
+		code = target ? target->GetSuperType() : std::string();
+	}
+	return nullptr;
+}
+
+FeatureBinding* FeatureCatalogue::FindFeatureBinding(FeatureType* source, const std::wstring& targetFeatureTypeCode)
+{
+	return FindFeatureBinding(source, toUtf8(targetFeatureTypeCode));
+}
+
+FeatureBinding* FeatureCatalogue::FindFeatureBinding(const std::string& sourceFeatureTypeCode, const std::string& targetFeatureTypeCode)
+{
+	return FindFeatureBinding(GetFeatureType(sourceFeatureTypeCode), targetFeatureTypeCode);
+}
+
+FeatureBinding* FeatureCatalogue::FindFeatureBinding(const std::wstring& sourceFeatureTypeCode, const std::wstring& targetFeatureTypeCode)
+{
+	return FindFeatureBinding(toUtf8(sourceFeatureTypeCode), toUtf8(targetFeatureTypeCode));
+}
+
+InformationBinding* FeatureCatalogue::FindInformationBinding(S100ObjectType* source, const std::string& targetInformationTypeCode)
+{
+	if (!source)
+	{
+		return nullptr;
+	}
+
+	std::string code = targetInformationTypeCode;
+	for (int depth = 0; depth < kMaxSuperTypeDepth && !code.empty(); ++depth)
+	{
+		for (auto* binding : source->GetInformationBindingPointer())
+		{
+			if (binding && Lists(binding, &InformationBinding::GetInformationTypes, code))
+			{
+				return binding;
+			}
+		}
+		auto* target = GetInformationType(code);
+		code = target ? target->GetSuperType() : std::string();
+	}
+	return nullptr;
+}
+
+InformationBinding* FeatureCatalogue::FindInformationBinding(S100ObjectType* source, const std::wstring& targetInformationTypeCode)
+{
+	return FindInformationBinding(source, toUtf8(targetInformationTypeCode));
+}
+
+namespace
+{
+	// `listed` followed by every type of `types` that has one of the listed codes among its super types.
+	template <typename Type, typename Lookup>
+	std::vector<std::string> WithDerivedTypes(const std::vector<std::string>& listed, const std::vector<Type*>& types, Lookup&& typeOf)
+	{
+		std::vector<std::string> admitted;
+		for (const auto& code : listed)
+		{
+			if (std::find(admitted.begin(), admitted.end(), code) == admitted.end())
+			{
+				admitted.push_back(code);
+			}
+		}
+
+		const std::vector<std::string> roots = admitted;
+		for (auto* type : types)
+		{
+			if (!type || std::find(admitted.begin(), admitted.end(), type->GetCode()) != admitted.end())
+			{
+				continue;
+			}
+
+			std::string super = type->GetSuperType();
+			for (int depth = 0; depth < kMaxSuperTypeDepth && !super.empty(); ++depth)
+			{
+				if (std::find(roots.begin(), roots.end(), super) != roots.end())
+				{
+					admitted.push_back(type->GetCode());
+					break;
+				}
+				auto* superType = typeOf(super);
+				super = superType ? superType->GetSuperType() : std::string();
+			}
+		}
+		return admitted;
+	}
+}
+
+std::vector<std::string> FeatureCatalogue::AdmittedFeatureTypes(FeatureBinding* binding)
+{
+	if (!binding)
+	{
+		return {};
+	}
+	return WithDerivedTypes(binding->GetFeatureTypes(), featureTypes.GetVecFeatureType(),
+		[this](const std::string& code) { return GetFeatureType(code); });
+}
+
+std::vector<std::string> FeatureCatalogue::AdmittedInformationTypes(InformationBinding* binding)
+{
+	if (!binding)
+	{
+		return {};
+	}
+	return WithDerivedTypes(binding->GetInformationTypes(), informationTypes.GetVecInformationType(),
+		[this](const std::string& code) { return GetInformationType(code); });
 }
 
 //FeatureCatalogue::FeatureCatalogue(std::string path)
