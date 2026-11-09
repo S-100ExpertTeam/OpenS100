@@ -91,6 +91,7 @@
     <ClCompile Include="S10XGMLTest.cpp" />
     <ClCompile Include="CatalogManagerTest.cpp" />
     <ClCompile Include="ExchangeCatalogueTest.cpp" />
+    <ClCompile Include="RenderSmokeTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestPaths.h" />
