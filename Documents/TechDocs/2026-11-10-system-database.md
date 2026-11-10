@@ -185,7 +185,12 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
   - 레지스트리는 별도 클래스를 새로 만들지 않고 기존 `CatalogManager`에 붙였다(뷰어 전체가 이미 이 객체를 돌려 쓴다): `registerFeatureCatalogue`/`registerPortrayalCatalogue`/`registerInstalled(SDB, store)`는 아무것도 읽지 않고, `resolve(product, version)`가 처음 필요할 때 읽는다. 제품별 `getFC/getPC`도 등록된 최신판을 먼저 읽는다. 읽기 실패는 unresolved로 보고하고 다시 시도하지 않는다. PC를 읽을 때마다 `onPortrayalLoaded`로 렌더 캐시 준비를 앱에 맡긴다.
   - `initFCList`/`initPCList` 제거와 앱의 등록 호출은 앱을 SDB로 옮기는 SDB-7에서 한다(`DataSetManagerSupport` 자체가 없어진다).
   - 뷰어 프로젝트가 SystemDatabase를 링크한다.
-- [ ] **SDB-5** `DatasetSelector`: opens100-web `selectDataCoverages`(경계값 수정 포함)를 역이식하고, 같은 입력으로 두 구현의 결과가 같은지 테스트. `S100Utilities::SelectDataCoverages`의 Clipper 경로를 대체한다.
+- [x] **SDB-5** `DatasetSelector`: opens100-web `selectDataCoverages`(경계값 수정 포함)를 역이식하고, 같은 입력으로 두 구현의 결과가 같은지 테스트. `S100Utilities::SelectDataCoverages`의 Clipper 경로를 대체한다. (2026-11-10, 658b0c45)
+  - `SystemDatabase/DatasetSelection.h`: `scaleBandOf`(1:10,000,000은 1번 띠), `scaleBandsOf`, 셀 격자 `DeviceRegion`, `selectDataCoverages`(지상 경계 생략, 고정(pinned) 커버리지 포함), DB에서 활성 커버리지를 한 번 읽는 `DatasetSelector`. 웹 테스트의 사례와 기대값을 그대로 옮겨 같은 결과를 확인했다.
+  - 웹의 `coverageDisplayMasks`(두 선택 사이 축척이 다른 해도가 겹쳐 보이지 않게 하는 마스크)는 렌더 쪽 일이라 옮기지 않았다. 지금은 선택된 셀을 작은 축척부터 그려 큰 축척이 위에 오게만 한다.
+  - `GISLibrary::selectionView(Scaler&)`: 축척, 화면 크기, 경위도 → Mercator → 장치 좌표, 회전이 없을 때 지상 경계.
+  - `S100ExchangeCatalogue`(설치 없이 교환세트 보기)도 같은 선택기를 쓴다(6절 결정). Clipper 경로(`S100Utilities::SelectDataCoverages`, 그것만 쓰던 `SCommonFuction` 함수 2개)와 쓰이지 않던 `DrawEx`를 지웠다.
+  - 오프스크린 확인(`RenderSmoke.ExchangeSetLoadsOnlyTheSelectedCells`): KOR 교환세트를 바로 열어 부산 1:52,843에서 808셀 중 2개, 남해안 1:1,321,085에서 4개만 열고 그린다. 화면은 정상(사람이 PNG 확인).
 - [ ] **SDB-6** `DatasetCache`(LRU, 상한은 셀 수 또는 메모리).
 - [ ] **SDB-7** 앱: Dataset Manager 다이얼로그를 SDB 위의 UI로 다시 만든다. `IniCatalog.XML`·`TEMP` 복사·`DatasetManager.db` 제거. `OnCreate`의 일괄 `AddLayer` 제거. 기존 `DatasetManager.db`에서 FC/PC/데이터셋 경로를 읽어 한 번 가져오는 마이그레이션.
 - [ ] **SDB-8** 업데이트 파일 적용(`.001`~), 취소, 교환세트 서명(`CATALOG.SIGN`) 검증 연결.
