@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CatalogueResolutionTest.cpp" />
+    <ClCompile Include="CoverageDepthLinesTest.cpp" />
     <ClCompile Include="CoverageGridTest.cpp" />
     <ClCompile Include="CoverageHdf5Test.cpp" />
     <ClCompile Include="CoverageRasterTest.cpp" />

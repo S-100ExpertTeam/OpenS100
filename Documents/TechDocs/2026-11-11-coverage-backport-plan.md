@@ -56,6 +56,8 @@
   - 결함 수정: `S100_ColorProfile::ReadFile`이 루트를 `colorProfile`로만 비교해 `cp:colorProfile`(S-100 5.x 스키마, S-102 PC 3.0.0)을 아무 말 없이 읽지 않았다. 지역 이름으로 비교한다.
   - 검증: 렌더 테스트 2개를 켰다(System Database 차트, 레이어로 직접 연 S-102). KOR S-102가 흰색 + 3색(DEPIT·DEPVS·DEPDW, 안전등심선 30 m)으로 그려짐을 PNG로 확인. 전체 155개 통과. 실제 뷰어 화면 확인은 남음.
 - [ ] **CV-4** ESC와 경계: `collectEdges`, `safetyContourEdges`, `boundaryEdgesOfClasses`, `depthLines`, `validGridRings`, 선 모양과 DEPWL 색(`xyLToRgb`), ESC가 켜지면 S-102 아래 S-101 수심 피처 가리기. 테스트: 웹 `enhanced-safety-contour.test.ts`(그림 D-1-5: 길이 8, 선분 6 …), `valid-grid-rings.test.ts`, `depth-compute.test.ts`.
+  - 1부(알고리즘, 2026-11-11): `Coverage/DepthLines` — `safetyContourEdges`(분류 1=얕음·2=안전·0=자료 없음, 1|2 사이 변만), `boundaryEdges(OfClasses)`, `depthLines`(ESC면 안전등심선과 S-102 경계, WLA가 적용된 셀은 경계에서 빼고 WLA 경계로), `validGridRings`(유효 셀 외곽, 구멍은 따로, 모서리 접촉은 우회전으로 분리), `xyLToRgb`·`depwlColor`, S-98 선 모양 3종. 웹과 같은 순서로 훑어 선분 수까지 같다. 테스트 7개(그림 D-1-5: 길이 8·선분 6, 경계 18/13/8, 3×2 격자 선분 1개, 링 블록·구멍·대각, UTM 격자 경계 조각 4+4+1+1, DEPWL) 통과.
+  - 남은 것(2부): 뷰어에서 선 그리기(mm 굵기·파선, DEPSC는 S-102 색 프로필, DEPWL은 xyL), ESC가 켜지면 S-102 아래 S-101 `DepthArea`·`DredgedArea`·`DepthContour` 가리기.
 - [ ] **CV-5** WLA: 기록 선택, 데이텀 판정(D-2.2), 수위 격자, 겹치는 셀 중 최소(같은 CRS, 다른 CRS), `adjustDepths`, 보정 원본(리비전 증가), 불확도. 테스트: 웹 `water-level-adjustment.test.ts`(표 10, 그림 D-2-9, UTM 8N, 경계 여유, 데이텀, 표시 문자열), KOR S-102/S-104 실제 자료(데이텀 불일치 → 무시 시 적용 > 0, 한 셀 = 원수심 + 수위).
 - [ ] **CV-6** UI: 수심 설정(ESC, 불확도, WLA 방식·시각·기간, 데이텀 무시), 표시 문구, 픽 리포트(원수심·수위·보정 수심), 계산 스레드 풀(`std::jthread`).
 - [ ] **CV-7** 화면 검증과 성능 기록: KOR S-102·S-104를 S-101과 함께 축척을 바꿔 캡처, 첫 그리기·다음 프레임 시간(웹 기준: S-102 프레임 1 s → 51 ms).

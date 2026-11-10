@@ -261,6 +261,7 @@
     <ClCompile Include="CoverageModel.cpp" />
     <ClCompile Include="CoverageRaster.cpp" />
     <ClCompile Include="CoverageTime.cpp" />
+    <ClCompile Include="DepthLines.cpp" />
     <ClCompile Include="Hdf5Coverage.cpp" />
     <ClCompile Include="RegularGrid.cpp" />
     <ClCompile Include="Utm.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="CoverageModel.h" />
     <ClInclude Include="CoverageRaster.h" />
     <ClInclude Include="CoverageTime.h" />
+    <ClInclude Include="DepthLines.h" />
     <ClInclude Include="Geo.h" />
     <ClInclude Include="Hdf5Coverage.h" />
     <ClInclude Include="RegularGrid.h" />
