@@ -84,6 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CatalogueResolutionTest.cpp" />
     <ClCompile Include="ImporterTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceStoreTest.cpp" />

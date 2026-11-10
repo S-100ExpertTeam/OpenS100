@@ -23,16 +23,6 @@ namespace
 	}
 }
 
-TEST(SdbReaders, ProductFromIdentifier)
-{
-	EXPECT_EQ(GISLibrary::productFromIdentifier("INT.IHO.S-101.2.0"), "S-101");
-	EXPECT_EQ(GISLibrary::productFromIdentifier("S-124"), "S-124");
-	EXPECT_EQ(GISLibrary::productFromIdentifier("S101"), "S-101");
-	EXPECT_EQ(GISLibrary::productFromIdentifier("102"), "S-102");
-	EXPECT_EQ(GISLibrary::productFromIdentifier("S-1011"), "");
-	EXPECT_EQ(GISLibrary::productFromIdentifier("DATASET_FILES"), "");
-}
-
 TEST(SdbReaders, ReadsFeatureAndPortrayalCataloguesFromTheirRoots)
 {
 	const GISLibrary::XmlCatalogueInspector inspector;

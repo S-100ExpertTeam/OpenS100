@@ -257,6 +257,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CatalogueRepository.cpp" />
+    <ClCompile Include="CatalogueResolution.cpp" />
     <ClCompile Include="CoverageRepository.cpp" />
     <ClCompile Include="DatasetRepository.cpp" />
     <ClCompile Include="ExchangeSetRepository.cpp" />
@@ -272,6 +273,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CatalogueRepository.h" />
+    <ClInclude Include="CatalogueResolution.h" />
     <ClInclude Include="CoverageRepository.h" />
     <ClInclude Include="DatasetRepository.h" />
     <ClInclude Include="ExchangeSetRepository.h" />

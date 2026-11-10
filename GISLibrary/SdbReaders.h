@@ -4,8 +4,6 @@
 
 #include <filesystem>
 #include <optional>
-#include <string>
-#include <string_view>
 
 // The System Database importer's readers for the formats this library parses
 // (Documents/TechDocs/2026-11-10-system-database.md, SDB-3). Each reads only what the importer
@@ -36,7 +34,4 @@ namespace GISLibrary
 	public:
 		[[nodiscard]] std::optional<s100::sdb::InspectedExchangeSet> read(const std::filesystem::path& catalogXml) const override;
 	};
-
-	// "INT.IHO.S-101.2.0", "S-101", "S101", "101" -> "S-101"; empty for anything else.
-	[[nodiscard]] std::string productFromIdentifier(std::string_view text);
 }

@@ -15,6 +15,7 @@
 #include "SPAS.h"
 
 #include "../GeoMetryLibrary/TextCodec.h"
+#include "../SystemDatabase/CatalogueResolution.h"
 #include "../SystemDatabase/Utf8Path.h"
 
 #include <pugixml.hpp>
@@ -32,6 +33,7 @@ namespace GISLibrary
 	using s100::sdb::InspectedExchangeSet;
 	using s100::sdb::Position;
 	using s100::sdb::Ring;
+	using s100::sdb::productFromIdentifier;
 
 	namespace
 	{
@@ -285,35 +287,6 @@ namespace GISLibrary
 			}
 			return std::nullopt;
 		}
-	}
-
-	std::string productFromIdentifier(std::string_view text)
-	{
-		const auto digitsAt = [&](std::size_t at) {
-			return at + 3 <= text.size() && isDigit(text[at]) && isDigit(text[at + 1]) && isDigit(text[at + 2])
-				&& (at + 3 == text.size() || !isDigit(text[at + 3]));
-		};
-		for (std::size_t i = 0; i < text.size(); ++i)
-		{
-			if ((text[i] != 'S' && text[i] != 's') || (i > 0 && std::isalnum(static_cast<unsigned char>(text[i - 1]))))
-			{
-				continue;
-			}
-			std::size_t at = i + 1;
-			if (at < text.size() && text[at] == '-')
-			{
-				++at;
-			}
-			if (digitsAt(at))
-			{
-				return "S-" + std::string(text.substr(at, 3));
-			}
-		}
-		if (text.size() == 3 && digitsAt(0))
-		{
-			return "S-" + std::string(text);
-		}
-		return {};
 	}
 
 	// --- S101DatasetInspector ------------------------------------------------------------------

@@ -436,6 +436,9 @@
     <ProjectReference Include="..\GISLibrary\GISLibrary.vcxproj">
       <Project>{ad396c19-6f9e-4f51-ac6e-ab02a1348795}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\SystemDatabase\SystemDatabase.vcxproj">
+      <Project>{f3755787-d9d8-4180-ae99-b237b0bd8a69}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
