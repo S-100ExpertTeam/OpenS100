@@ -162,7 +162,7 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
 
 ## 4. 작업 항목
 
-- [x] **SDB-1** 라이브러리 `SystemDatabase`: 스키마 v1, 마이그레이션 틀, 트랜잭션, 레코드 CRUD. gtest는 `:memory:` DB로. (2026-11-10, COMMIT_SDB1)
+- [x] **SDB-1** 라이브러리 `SystemDatabase`: 스키마 v1, 마이그레이션 틀, 트랜잭션, 레코드 CRUD. gtest는 `:memory:` DB로. (2026-11-10, 73234b71)
   - 새 디렉터리 `SystemDatabase/`(MFC 없음, sqlite3만 의존). VS 솔루션의 `01. LIB`에 6개 구성으로 추가, CMake 타깃 `opens100::sdb`(옵션 `OPENS100_BUILD_SYSTEMDATABASE`), 포트 기능 `system-database`(기본 기능 아님).
   - 구성: `Sqlite`(연결·문장·트랜잭션 RAII, 실패는 `DatabaseError`), `Schema`(`user_version` 기반 마이그레이션), 저장소 5개(`ExchangeSet`, `Catalogue`(FC·PC 겸용), `Dataset`(업데이트·지원 파일 연결 포함), `Coverage`, `SupportFile`), 파사드 `SystemDatabase`.
   - 조회가 없을 수 있는 경우는 `std::optional`, DB 오류·제약 위반은 예외(지침 25c).
