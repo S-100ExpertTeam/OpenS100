@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ResourceStoreTest.cpp" />
     <ClCompile Include="TestPaths.cpp" />
     <ClCompile Include="FeatureCatalogueTest.cpp" />
     <ClCompile Include="S101CellTest.cpp" />
