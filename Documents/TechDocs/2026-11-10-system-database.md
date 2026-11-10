@@ -4,6 +4,8 @@
 
 ## 1. 지금 구조와 문제
 
+(SDB-7 이전의 구조다. SDB-7(109300fc) 이후의 동작은 4절 SDB-7 항목을 본다.)
+
 Dataset Manager(앱 `OpenS100/DATASET_SUPPORTdlg`, `DataSetManagerSupport`)의 현재 동작:
 
 - DB는 `..\TEMP\DatasetManager.db`(실행 위치 기준 상대 경로). 테이블 `FeatureCatalogue`, `PortrayalCatalogue`, `DatasetFiles`, `SupportFiles`.
@@ -197,7 +199,14 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
   - `LayerManager`: 레이어를 추가하지 않고 여는 `CreateLayer`, 해석된 카탈로그로 여는 `CreateS100Layer`, 지우지 않고 꺼내는 `ReleaseLayer`. `AddLayer(path)`는 `CreateLayer` 위로 옮겼다.
   - 교환세트 바로 보기(`S100ExchangeCatalogue`)도 같은 `DatasetLayerSet`을 쓴다. 부산 → 남해안 → 부산으로 돌아오면 첫 그리기 903 ms → 59 ms(재파싱 없음).
   - 검증: `LruCache.*` 3개, `DatasetLayerSetTest.*` 4개(누수·이중 삭제 확인 포함), 렌더 테스트 통과.
-- [ ] **SDB-7** 앱: Dataset Manager 다이얼로그를 SDB 위의 UI로 다시 만든다. `IniCatalog.XML`·`TEMP` 복사·`DatasetManager.db` 제거. `OnCreate`의 일괄 `AddLayer` 제거. 기존 `DatasetManager.db`에서 FC/PC/데이터셋 경로를 읽어 한 번 가져오는 마이그레이션.
+- [x] **SDB-7** 앱: Dataset Manager 다이얼로그를 SDB 위의 UI로 다시 만든다. `IniCatalog.XML`·`TEMP` 복사·`DatasetManager.db` 제거. `OnCreate`의 일괄 `AddLayer` 제거. 기존 `DatasetManager.db`에서 FC/PC/데이터셋 경로를 읽어 한 번 가져오는 마이그레이션. (2026-11-10, 109300fc)
+  - **재시작 후 동작**: `OnCreate`는 SDB를 열고(`%LOCALAPPDATA%\OpenS100\SDB`, 환경 변수 `OPENS100_SDB_ROOT`로 바꿀 수 있음) 설치된 FC/PC를 읽지 않고 등록만 한 뒤, "System Database" 레이어 하나를 추가한다. 이 레이어가 매 프레임 E-1.3으로 데이터셋을 고르고, 고른 것만 그 제품판에 맞는 카탈로그로 열고, 빠진 것은 LRU 캐시에 둔다. 시작 시 데이터셋·카탈로그 파싱은 0회.
+  - 라이브러리(GISLibrary): `SystemDatabaseChart`(차트 레이어), `SystemDatabaseSession`(DB·저장소·리더를 갖춘 Importer·차트를 묶고, 가져오기·삭제 후 카탈로그 등록과 차트를 맞춘다), `LayerContainer`(차트와 교환세트 레이어에 색상표 변경·포트레이얼 재생성을 전하고 캐시를 비운다. 이 둘은 따로 연 데이터셋보다 아래에 그린다). `CatalogManager::registerInstalled`는 동기화로 바꿨다(지워진 카탈로그는 등록 해제, 그대로인 것은 읽어 둔 것을 유지).
+  - 앱: Dataset Manager의 두 탭은 SDB 목록을 보여 주는 얇은 UI다. 불러오기 = 설치(`CATALOG.XML`, 데이터셋·업데이트 파일, 지원 파일, FC XML, PC 폴더), 삭제 = 제거(확인 후). 결과는 요약 상자로 알린다. `DataSetManagerSupport`, `IniCatalog.XML` 쓰기, `TEMP` 복사, 시작 시 전체 `AddLayer`, 아무것도 읽지 않던 지원 파일 루프를 지웠다.
+  - 마이그레이션: `..\TEMP\DatasetManager.db`가 있으면 거기 적힌 파일 중 남아 있는 것을 SDB에 한 번 설치하고 `DatasetManager.db.migrated`로 이름을 바꾼다. 설치 못 한 것이 있을 때만 알린다. 예전 `TEMP` 복사본과 `IniCatalog.XML`은 건드리지 않는다.
+  - System Database 레이어를 선택하고 객체를 고르면(Pick) 그 점을 덮는 맨 위(가장 큰 축척) 셀에서 고른다. 레이어를 휴지통으로 지웠다면 다음 데이터셋 가져오기 때 다시 붙는다.
+  - 검증: 렌더 테스트 `RenderSmoke.SystemDatabaseChartLoadsBySelectionAfterRestart`(부산 7셀 설치 → 새 라이브러리 인스턴스로 같은 SDB 열기 → 시작 시 열린 셀 0, 카탈로그 0 → 부산 항만 1:26,421에서 1셀만 열림 → 남해안으로 갔다 돌아오면 재파싱 없음). 실제 뷰어(Release x64)를 808셀 SDB로 띄워 차트가 그려지고, Dataset Manager 목록이 FC 1·PC 1·데이터셋 808·지원 파일 22이며, 정상 종료(코드 0)함을 확인했다. 사용자의 기존 `DatasetManager.db`(FC 7, PC 7)는 실제로 이전되어 SDB에 14개가 설치됐다(원본은 백업 후 진행).
+  - 남은 점: 선택된 셀을 그리기 스레드에서 동기로 연다(처음 보는 영역은 셀당 0.1~2.7초). 백그라운드 열기는 후속 작업. 업데이트 파일은 기록만 하고 적용하지 않는다(SDB-8). 웹의 선택 간 마스크는 옮기지 않았다.
 - [ ] **SDB-8** 업데이트 파일 적용(`.001`~), 취소, 교환세트 서명(`CATALOG.SIGN`) 검증 연결.
 - [ ] **SDB-9** 화면 검증(지침 23): KOR_TDS 808셀 교환세트를 가져와 축척을 바꿔 가며 선택·그리기를 캡처하고, 시작 시간·메모리를 기록한다.
 
@@ -218,3 +227,4 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
 - 2026-11-10 초안. 지침 26에서 시작.
 - 2026-11-10 결정 반영: 교환세트 바로 열기 유지(같은 선택기), SDB 기본 위치는 사용자 데이터 폴더.
 - 2026-11-10 결정 반영: 가져올 때 관리 저장소로 복사. 스키마 버전은 `PRAGMA user_version`.
+- 2026-11-10 SDB-2~7 구현(85f44c84, 9098bc41, f20ca04e, 658b0c45, a4f5e347, 109300fc). 3.1절 표의 `s100-sdk`/`s100-core` 모듈은 아직 나뉘지 않아, 플랫폼 중립 부분(저장소·가져오기 규칙·카탈로그 판정·선택기·LRU)은 `SystemDatabase`(CMake `opens100::sdb`)에, 파서를 쓰는 리더·차트·세션은 GISLibrary에 두었다. 모듈을 나눌 때 그대로 옮긴다.
