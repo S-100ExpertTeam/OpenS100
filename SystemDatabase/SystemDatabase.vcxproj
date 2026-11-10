@@ -282,6 +282,7 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Importer.h" />
     <ClInclude Include="Inspection.h" />
+    <ClInclude Include="LruCache.h" />
     <ClInclude Include="Records.h" />
     <ClInclude Include="ResourceStore.h" />
     <ClInclude Include="Schema.h" />

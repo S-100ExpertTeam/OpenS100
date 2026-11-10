@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CatalogueResolutionTest.cpp" />
+    <ClCompile Include="DatasetCacheTest.cpp" />
     <ClCompile Include="DatasetSelectionTest.cpp" />
     <ClCompile Include="ImporterTest.cpp" />
     <ClCompile Include="main.cpp" />

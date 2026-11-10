@@ -52,6 +52,7 @@
 #include <algorithm>
 #include <future>
 #include <chrono>
+#include <memory>
 #include "S100ExchangeCatalogue.h"
 
 LayerManager::LayerManager(D2D1Resources* d2d1)
@@ -262,52 +263,55 @@ int LayerManager::isUpdate(const std::wstring& filePath)
 	return 0;
 }
 
-int LayerManager::AddLayer(const std::wstring& _filepath)
+std::unique_ptr<Layer> LayerManager::CreateS100Layer(const std::wstring& _filepath, int productNumber, FeatureCatalogue* fc, PortrayalCatalogue* pc)
 {
-	Layer* layer = nullptr;
+	if (!fc)
+	{
+		return nullptr;
+	}
+	auto layer = std::make_unique<S100Layer>(productNumber, fc, pc);
+	if (layer->Open(_filepath, this) == false || !layer->m_spatialObject)
+	{
+		return nullptr;
+	}
+	BuildPortrayalCatalogue(layer.get());
+	return layer;
+}
+
+std::unique_ptr<Layer> LayerManager::CreateLayer(const std::wstring& _filepath)
+{
+	std::unique_ptr<Layer> layer;
 
 	S100_FileType fileType = CheckFileType(_filepath);
 
 	if (fileType == S100_FileType::FILE_Shape ||
 		fileType == S100_FileType::FILE_ETC)
 	{
-		layer = new Layer();
+		layer = std::make_unique<Layer>();
 		if (layer->Open(_filepath, this) == false)
 		{
-			delete layer;
-			return -1;
+			return nullptr;
 		}
 	}
 	else if (fileType == S100_FileType::FILE_S_100_VECTOR ||
 		fileType == S100_FileType::FILE_S_100_GRID_H5)
 	{
 		auto productNumber = pathToProductNumber(_filepath);
-		FeatureCatalogue* fc = nullptr;
-		PortrayalCatalogue* pc = nullptr;
-		fc = catalogManager->getFC(productNumber);
-		pc = catalogManager->getPC(productNumber);
-
-		if (fc)
-		{
-			layer = new S100Layer(productNumber, fc, pc);
-			if (layer->Open(_filepath, this) == false)
-			{
-				delete layer;
-				return -1;
-			}
-
-			BuildPortrayalCatalogue(layer);
-		}
+		layer = CreateS100Layer(_filepath, productNumber, catalogManager->getFC(productNumber), catalogManager->getPC(productNumber));
 	}
 
-	if (!layer ||
-		!layer->m_spatialObject)
+	if (!layer || !layer->m_spatialObject)
 	{
-		if (layer)
-		{
-			delete layer;
-		}
+		return nullptr;
+	}
+	return layer;
+}
 
+int LayerManager::AddLayer(const std::wstring& _filepath)
+{
+	Layer* layer = CreateLayer(_filepath).release();
+	if (!layer)
+	{
 		return -1;
 	}
 
@@ -1387,6 +1391,19 @@ void LayerManager::DeleteLayer(int index)
 	ReMBR();
 
 	return;
+}
+
+std::unique_ptr<Layer> LayerManager::ReleaseLayer(Layer* layer)
+{
+	const auto found = std::find(layers.begin(), layers.end(), layer);
+	if (found == layers.end())
+	{
+		return nullptr;
+	}
+	layers.erase(found);
+	mapLayer.erase(layer->GetID());
+	ReMBR();
+	return std::unique_ptr<Layer>(layer);
 }
 
 void LayerManager::FindPathDeleteLayer(const std::wstring& FindLayerPath)

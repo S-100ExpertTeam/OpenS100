@@ -11,6 +11,7 @@
 #include <vector>
 #include <list>
 #include <functional>
+#include <memory>
 #include <unordered_map>
 
 using namespace GISLibrary;
@@ -73,6 +74,13 @@ public:
 
 	bool AddBackgroundLayer(const std::wstring& _filepath);
 
+	// Opens the file as a layer without adding it; nullptr when it cannot be opened. S-100
+	// datasets take the newest catalogues of the product the file name implies.
+	std::unique_ptr<Layer> CreateLayer(const std::wstring& _filepath);
+	// Opens an S-100 dataset with the given catalogues (as resolved for it) and runs its
+	// portrayal; nullptr without a feature catalogue or when the file cannot be opened.
+	std::unique_ptr<Layer> CreateS100Layer(const std::wstring& _filepath, int productNumber, FeatureCatalogue* fc, PortrayalCatalogue* pc);
+
 	// Success : id (> 0)
 	// Fail : -1
 	int AddLayer(const std::wstring& _filepath);
@@ -120,6 +128,9 @@ public:
 
 	bool IsOn(int index);
 	bool IsOnByKey(int key);
+
+	// Takes the layer out without deleting it; nullptr when it is not one of this manager's.
+	std::unique_ptr<Layer> ReleaseLayer(Layer* layer);
 
 	void DeleteLayer(int index);
 	void DeleteLayer(const std::wstring& filepath);

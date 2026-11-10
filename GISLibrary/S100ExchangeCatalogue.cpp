@@ -4,7 +4,6 @@
 #include "../GeoMetryLibrary/TextCodec.h"
 #include <algorithm>
 #include <filesystem>
-#include <unordered_map>
 #include "D2DView.h"
 #include "S100ExchangeCatalogue.h"
 #include "D2DGeometryCache.h"
@@ -30,6 +29,7 @@ S100ExchangeCatalogue::S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm,
 
 S100ExchangeCatalogue::~S100ExchangeCatalogue(void)
 {
+    m_layers.reset();   // its layers live in m_pLayerManager
     if (m_pLayerManager) {
         delete m_pLayerManager;
         m_pLayerManager = nullptr;
@@ -164,6 +164,10 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
         }
     }
     m_selector = s100::sdb::DatasetSelector(std::move(selectable));
+    m_layers = std::make_unique<GISLibrary::DatasetLayerSet>(*m_pLayerManager,
+        [this](GISLibrary::DatasetLayerSet::DatasetId dataset) {
+            return m_pLayerManager->CreateLayer(m_vecInventory[static_cast<std::size_t>(dataset)]->strFilePath);
+        });
 
 	return true;
 }
@@ -191,25 +195,11 @@ std::wstring S100ExchangeCatalogue::FixFileName(const std::string& str)
     return s100::path::Directory(GetFilePath()) + result;
 }
 
-bool S100ExchangeCatalogue::containsFile(const std::vector<std::shared_ptr<InventoryItem>>& files, const std::wstring& targetFile) {
-    for (auto file : files) {
-        if (file->strFilePath == targetFile) { 
-            return true; 
-        }
-    }
-    return false; 
-}
-
-std::vector<std::shared_ptr<InventoryItem>> S100ExchangeCatalogue::SelectItems(Scaler& scaler) const
+std::vector<std::shared_ptr<InventoryItem>> S100ExchangeCatalogue::ItemsOf(std::span<const s100::sdb::SelectedCoverage> selection) const
 {
     std::vector<std::shared_ptr<InventoryItem>> items;
-    const auto view = GISLibrary::selectionView(scaler);
-    if (!view)
-    {
-        return items;
-    }
     const auto coverages = m_selector.coverages();
-    for (const auto& selected : m_selector.select(*view))
+    for (const auto& selected : selection)
     {
         const auto [inventoryIndex, coverageIndex] = m_coverageOwners[static_cast<std::size_t>(selected.coverage - coverages.data())];
         const auto& inventory = m_vecInventory[inventoryIndex];
@@ -230,40 +220,18 @@ std::vector<std::shared_ptr<InventoryItem>> S100ExchangeCatalogue::SelectItems(S
 
 void S100ExchangeCatalogue::DrawFiles(HDC& /*hDC*/, Scaler* scaler, double /*offset*/, std::vector<std::shared_ptr<InventoryItem>>& item)
 {
-    item = SelectItems(*scaler);
-
-    auto pRenderTarget = D2->pRT;
-    pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-
-    // check Remove LayerItem 
-    std::vector<std::wstring> pathsToDelete;
-    for (auto layer : m_pLayerManager->layers) {
-        if (!containsFile(item, layer->GetLayerPath())) {
-            pathsToDelete.push_back(layer->GetLayerPath());
-        }
-    }
-    // Remove LayerItem 
-    for (const auto& path : pathsToDelete) {
-        m_pLayerManager->DeleteLayer(path);
-    }
-
-    // add Layer
-    for (auto temp : item)
+    item.clear();
+    const auto view = GISLibrary::selectionView(*scaler);
+    if (!view || !m_layers)
     {
-        if (m_pLayerManager->IsContainFilePathToLayer(temp->strFilePath) == false)
-            m_pLayerManager->AddLayer(temp->strFilePath);
+        return;
     }
+    const auto selection = m_selector.select(*view);
+    const auto datasets = s100::sdb::DatasetSelector::datasetsOf(selection);
+    m_layers->show(datasets);
+    item = ItemsOf(selection);
 
-    // Draw order: the chart selected last (the smallest scale) at the bottom, the one selected
-    // first (the largest scale) on top.
-    std::unordered_map<std::wstring, std::size_t> selectionOrder;
-    for (std::size_t i = 0; i < item.size(); ++i)
-    {
-        selectionOrder.try_emplace(item[i]->strFilePath, i);
-    }
-    m_pLayerManager->layers.sort([&selectionOrder](Layer* a, Layer* b) {
-        return selectionOrder[a->GetLayerPath()] > selectionOrder[b->GetLayerPath()];
-    });
+    D2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 }
 
 void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)

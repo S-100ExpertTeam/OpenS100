@@ -1125,6 +1125,9 @@
     <ClCompile Include="ViewSelection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DatasetLayerSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -2241,6 +2244,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ViewSelection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DatasetLayerSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

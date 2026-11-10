@@ -413,6 +413,7 @@
     <ClCompile Include="D2D1Resources.cpp" />
     <ClCompile Include="DataOrganizationIndex.cpp" />
     <ClCompile Include="dataProduct.cpp" />
+    <ClCompile Include="DatasetLayerSet.cpp" />
     <ClCompile Include="DatasetPermit.cpp" />
     <ClCompile Include="DataStatus.cpp" />
     <ClCompile Include="DDR.cpp" />
@@ -763,6 +764,7 @@
     <ClInclude Include="CV_SequenceType.h" />
     <ClInclude Include="DataOrganizationIndex.h" />
     <ClInclude Include="dataProduct.h" />
+    <ClInclude Include="DatasetLayerSet.h" />
     <ClInclude Include="DatasetPermit.h" />
     <ClInclude Include="DataStatus.h" />
     <ClInclude Include="DirectPosition.h" />

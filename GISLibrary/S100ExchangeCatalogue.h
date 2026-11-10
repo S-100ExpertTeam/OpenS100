@@ -3,9 +3,12 @@
 #include "spatialobject.h"
 #include "ExchangeCatalogue.h"
 
+#include "DatasetLayerSet.h"
+
 #include "../SystemDatabase/DatasetSelection.h"
 
 #include <memory>
+#include <span>
 #include <utility>
 
 using namespace S100;
@@ -49,20 +52,24 @@ public:
 
 	void DrawFiles(HDC& hDC, Scaler* scaler, double offset, std::vector<std::shared_ptr<InventoryItem>>& item);
 	
-	bool containsFile(const std::vector<std::shared_ptr<InventoryItem>>& files, const std::wstring& targetFile);
-
 	std::wstring FixFileName(const std::string& str);
 
 	std::wstring FixLegacyFileName(const std::string& str);
 
 	std::wstring GetFirstLayerFilePath();
 
-private:
-	// S-98 E-1.3 selection over the catalogue's S100XC:dataCoverage: the selected coverages of the
-	// view, one item per dataset, the larger scale first.
-	std::vector<std::shared_ptr<InventoryItem>> SelectItems(Scaler& scaler) const;
+	// The layers of the selected datasets and the cache of deselected ones; null before Open.
+	[[nodiscard]] const GISLibrary::DatasetLayerSet* GetLayerSet() const noexcept { return m_layers.get(); }
 
+private:
+	// One item per dataset of a selection, the larger scale first.
+	std::vector<std::shared_ptr<InventoryItem>> ItemsOf(std::span<const s100::sdb::SelectedCoverage> selection) const;
+
+	// S-98 E-1.3 selection over the catalogue's S100XC:dataCoverage. A dataset is identified by
+	// its index in m_vecInventory.
 	s100::sdb::DatasetSelector m_selector;
+	// The selected datasets' layers in m_pLayerManager, and the recently deselected ones.
+	std::unique_ptr<GISLibrary::DatasetLayerSet> m_layers;
 	// For each coverage of m_selector, in the same order: its index in m_vecInventory and its
 	// index among that entry's data coverages.
 	std::vector<std::pair<std::size_t, std::size_t>> m_coverageOwners;

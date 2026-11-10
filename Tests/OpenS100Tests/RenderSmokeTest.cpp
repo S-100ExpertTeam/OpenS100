@@ -288,4 +288,12 @@ TEST(RenderSmoke, ExchangeSetLoadsOnlyTheSelectedCells)
 	};
 	drawAt(128.95, 35.02, 129.15, 35.14, "busan");
 	drawAt(125.5, 33.5, 130.5, 36.0, "south-coast");
+
+	// SDB-6: the Busan cells left the selection for the cache; going back parses nothing again.
+	const auto* layerSet = exchangeSet->GetLayerSet();
+	ASSERT_NE(layerSet, nullptr);
+	EXPECT_GT(layerSet->cachedCount(), 0u);
+	const std::size_t opened = layerSet->openCount();
+	drawAt(128.95, 35.02, 129.15, 35.14, "busan-again");
+	EXPECT_EQ(layerSet->openCount(), opened);
 }
