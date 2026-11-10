@@ -207,6 +207,14 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
   - System Database 레이어를 선택하고 객체를 고르면(Pick) 그 점을 덮는 맨 위(가장 큰 축척) 셀에서 고른다. 레이어를 휴지통으로 지웠다면 다음 데이터셋 가져오기 때 다시 붙는다.
   - 검증: 렌더 테스트 `RenderSmoke.SystemDatabaseChartLoadsBySelectionAfterRestart`(부산 7셀 설치 → 새 라이브러리 인스턴스로 같은 SDB 열기 → 시작 시 열린 셀 0, 카탈로그 0 → 부산 항만 1:26,421에서 1셀만 열림 → 남해안으로 갔다 돌아오면 재파싱 없음). 실제 뷰어(Release x64)를 808셀 SDB로 띄워 차트가 그려지고, Dataset Manager 목록이 FC 1·PC 1·데이터셋 808·지원 파일 22이며, 정상 종료(코드 0)함을 확인했다. 사용자의 기존 `DatasetManager.db`(FC 7, PC 7)는 실제로 이전되어 SDB에 14개가 설치됐다(원본은 백업 후 진행).
   - 남은 점: 선택된 셀을 그리기 스레드에서 동기로 연다(처음 보는 영역은 셀당 0.1~2.7초). 백그라운드 열기는 후속 작업. 업데이트 파일은 기록만 하고 적용하지 않는다(SDB-8). 웹의 선택 간 마스크는 옮기지 않았다.
+- [x] **SDB-7.1** Dataset Manager와 레이어 목록 보완(사용자 요청, 2026-11-11).
+  - 서명된 교환세트 `CATALOG.XML`을 읽는다: `dataStatus="unencrypted"`(Part 15 표기)를 대소문자 구분 없이 받고, 카탈로그 파서가 던지는 예외는 "읽을 수 없는 카탈로그"로 바꾼다. (f5616205)
+  - Datasets / SupportFiles 탭에 제품사양 필터와 Product 열. (36171d1c)
+  - **HDF5 데이터셋**: `Hdf5DatasetInspector`(S-102/S-104/S-111 등, 루트 속성 `productSpecification`·`issueDate`·경계 상자만 읽음)를 Importer에 등록했다. 전에는 S-101 판별기만 있어서 `.h5`가 지원 파일로 들어갔다. 이 제품들은 표시 축척이 없어 E-1.3에 참여하지 않으므로, 차트는 경계 상자가 화면과 겹치면 선택된 셀 아래에 그린다(차트의 그리기 경로가 격자를 이름 상자로만 그리던 것을 격자 렌더러로 보냄). 단, 기존 `S102Renderer`가 직접 연 레이어에서도 아무것도 그리지 않아 S-102는 아직 보이지 않는다. 렌더 테스트 2개(`DISABLED_SystemDatabaseChartDrawsS102Grid`, `DISABLED_DrawsS102GridAsLayer`)는 커버리지 렌더러 역이식(`2026-11-11-coverage-backport-plan.md`)에서 켠다. `HDF5Wrapper`의 가변 길이 문자열 속성 읽기가 클래스를 `H5T_VLEN`으로만 보고 있어 `H5T_STRING` 가변 길이 문자열(KOR S-102의 `productSpecification`)을 읽지 못하던 결함도 고쳤다.
+  - **폴더 가져오기** `Importer::importFolder`: 폴더 아래의 교환세트(`CATALOG.XML`)를 먼저 가져오고, 읽을 수 있는 카탈로그가 다루지 않는 데이터셋과 `SUPPORT_FILES` 아래 지원 파일을 하나씩 가져온다. 같은 호출에서 이름과 SHA-256이 같은 파일은 한 번만 가져오고 나머지는 unchanged("same file as ...")로 보고한다. 내용이 같은 `CATALOG.XML`은 교환세트 전체를 건너뛴다. 이름이 다르면 내용이 같아도 따로 둔다(데이터셋이 지원 파일을 이름으로 참조하므로). Dataset Manager: 오른쪽 메뉴 "Load Folder...", 폴더 끌어다 놓기.
+  - **읽을 수 없는 `CATALOG.XML`**: `importExchangeSet`은 카탈로그를 거부로 보고하고, 그 폴더의 데이터셋과 지원 파일을 하나씩 가져온다.
+  - **레이어 목록**: "System Database" 레이어 자체 대신 그 차트가 지금 그리는 데이터셋(맨 위=가장 큰 축척 먼저)을 보여 준다. 그릴 때마다 바뀌었으면 다시 채운다. 행은 (레이어 번호, 차트 안 번호)로 기억하고 쓸 때마다 다시 찾는다. 이런 행을 휴지통으로 지우려 하면 Dataset Manager에서 지우라고 알린다. 범위 맞춤(Map Fill)과 데이터셋 속성은 그 데이터셋 기준.
+  - 검증: `ImporterTest`에 3개 추가(읽을 수 없는 카탈로그, 폴더 안 같은 파일, 복사된 교환세트), `SdbReaders.InspectsS102GridFromItsRootAttributes`(KOR S-102).
 - [ ] **SDB-8** 업데이트 파일 적용(`.001`~), 취소, 교환세트 서명(`CATALOG.SIGN`) 검증 연결.
 - [ ] **SDB-9** 화면 검증(지침 23): KOR_TDS 808셀 교환세트를 가져와 축척을 바꿔 가며 선택·그리기를 캡처하고, 시작 시간·메모리를 기록한다.
 
