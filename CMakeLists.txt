@@ -38,6 +38,10 @@ if(OPENS100_BUILD_FEATURECATALOG)
 endif()
 if(OPENS100_BUILD_SYSTEMDATABASE)
     find_package(unofficial-sqlite3 CONFIG REQUIRED)
+    # S-100 Part 15 data protection (DataProtection, ZipArchive, ProtectedImport).
+    find_package(pugixml CONFIG REQUIRED)
+    find_package(OpenSSL REQUIRED)
+    find_package(ZLIB REQUIRED)
 endif()
 
 # Headers are installed as <prefix>/include/opens100/<Module>/<header>, the same relative layout
@@ -98,7 +102,7 @@ if(OPENS100_BUILD_FEATURECATALOG)
     opens100_add_module(featurecatalog FeatureCatalog DEPENDS latlon pugixml::pugixml utf8cpp::utf8cpp)
 endif()
 if(OPENS100_BUILD_SYSTEMDATABASE)
-    opens100_add_module(sdb SystemDatabase DEPENDS unofficial::sqlite3::sqlite3)
+    opens100_add_module(sdb SystemDatabase DEPENDS unofficial::sqlite3::sqlite3 pugixml::pugixml OpenSSL::Crypto ZLIB::ZLIB)
 endif()
 
 if(OPENS100_BUILD_COVERAGE)

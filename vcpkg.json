@@ -13,6 +13,7 @@
     "libxslt",
     "libxml2",
     "openssl",
+    "zlib",
     "sqlite3",
     "boost-geometry",
     "utfcpp",
