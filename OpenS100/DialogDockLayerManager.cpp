@@ -6,8 +6,12 @@
 #include "resource.h"
 
 #include "../GISLibrary/Layer.h"
+#include "../GISLibrary/LayerManager.h"
 #include "../GISLibrary/S100Layer.h"
 #include "../GISLibrary/GISLibrary.h"
+#include "../GISLibrary/SystemDatabaseSession.h"
+
+#include <algorithm>
 
 IMPLEMENT_DYNAMIC(CDialogDockLayerManager, CDialog)
 
@@ -75,17 +79,94 @@ BOOL CDialogDockLayerManager::OnInitDialog()
 	return TRUE; 
 }
 
+std::vector<CDialogDockLayerManager::Row> CDialogDockLayerManager::CurrentRows() const
+{
+	std::vector<Row> result;
+	auto* manager = theApp.gisLib ? theApp.gisLib->GetLayerManager() : nullptr;
+	if (!manager)
+	{
+		return result;
+	}
+	auto* chart = theApp.systemDatabase ? theApp.systemDatabase->chart() : nullptr;
+	const int count = manager->LayerCount();
+	for (int i = 0; i < count; ++i)
+	{
+		Layer* layer = manager->GetLayer(i);
+		if (!layer)
+		{
+			continue;
+		}
+		if (chart && layer->GetSpatialObject() == chart)
+		{
+			if (auto* inner = chart->GetInnerLayers())
+			{
+				const int innerCount = inner->LayerCount();
+				for (int j = innerCount - 1; j >= 0; --j)   // the top (largest scale) first
+				{
+					result.push_back({ i, j, inner->GetLayer(j) });
+				}
+			}
+			continue;
+		}
+		result.push_back({ i, -1, layer });
+	}
+	return result;
+}
+
+Layer* CDialogDockLayerManager::Resolve(int row) const
+{
+	if (row < 0 || row >= static_cast<int>(rows.size()) || !theApp.gisLib)
+	{
+		return nullptr;
+	}
+	const Row& entry = rows[static_cast<std::size_t>(row)];
+	Layer* layer = theApp.gisLib->GetLayer(entry.layerIndex);
+	if (!layer || entry.innerIndex < 0)
+	{
+		return layer;
+	}
+	auto* chart = theApp.systemDatabase ? theApp.systemDatabase->chart() : nullptr;
+	if (!chart || layer->GetSpatialObject() != chart || !chart->GetInnerLayers())
+	{
+		return nullptr;
+	}
+	auto* inner = chart->GetInnerLayers();
+	return entry.innerIndex < inner->LayerCount() ? inner->GetLayer(entry.innerIndex) : nullptr;
+}
+
 int CDialogDockLayerManager::GetSelectedLayerIndex()
 {
-	int result = listCtrlLayers.GetNextItem(-1, LVNI_SELECTED);
-	return result;
+	const int row = listCtrlLayers.GetNextItem(-1, LVNI_SELECTED);
+	return row >= 0 && row < static_cast<int>(rows.size()) ? rows[static_cast<std::size_t>(row)].layerIndex : -1;
+}
+
+Layer* CDialogDockLayerManager::GetSelectedLayer()
+{
+	return Resolve(listCtrlLayers.GetNextItem(-1, LVNI_SELECTED));
+}
+
+bool CDialogDockLayerManager::IsSystemDatabaseDatasetSelected()
+{
+	const int row = listCtrlLayers.GetNextItem(-1, LVNI_SELECTED);
+	return row >= 0 && row < static_cast<int>(rows.size()) && rows[static_cast<std::size_t>(row)].innerIndex >= 0;
 }
 
 S101Cell* CDialogDockLayerManager::GetSelectedCell()
 {
-	auto index = GetSelectedLayerIndex();
-	auto layer = (S100Layer*)theApp.gisLib->GetLayer(index);
-	return (S101Cell*)layer->GetSpatialObject();
+	auto* layer = GetSelectedLayer();
+	if (!layer || !layer->IsS100Layer() || static_cast<S100Layer*>(layer)->GetProductNumber() != 101)
+	{
+		return nullptr;
+	}
+	return static_cast<S101Cell*>(layer->GetSpatialObject());
+}
+
+void CDialogDockLayerManager::ShowProperties(Layer* layer)
+{
+	if (layer && layer->IsS100Layer() && static_cast<S100Layer*>(layer)->GetProductNumber() == 101)
+	{
+		FillPropList(static_cast<S101Cell*>(layer->GetSpatialObject()));
+	}
 }
 
 void CDialogDockLayerManager::OnButtonDelete()  //delete layer
@@ -323,37 +404,43 @@ void CDialogDockLayerManager::DeleteLayer()
 
 void CDialogDockLayerManager::UpdateList()
 {
-	auto selectedLayerIndex = GetSelectedLayerIndex();
-	
-	RemoveAllListCtrl();
+	if (!listCtrlLayers.GetSafeHwnd())
+	{
+		return;
+	}
+	// The selection follows its layer, wherever the layer is listed now.
+	const int selectedRow = listCtrlLayers.GetNextItem(-1, LVNI_SELECTED);
+	Layer* selected = selectedRow >= 0 && selectedRow < static_cast<int>(rows.size())
+		? rows[static_cast<std::size_t>(selectedRow)].layer : nullptr;
 
-	auto lm = theApp.gisLib->GetLayerManager();
-	auto cnt = lm->LayerCount();
-	for (int i = 0; i < cnt; i++)
+	RemoveAllListCtrl();
+	rows = CurrentRows();
+	for (int i = 0; i < static_cast<int>(rows.size()); ++i)
 	{
 		CString strNo;
-		CString strName;
-
-		auto layer = lm->GetLayer(i);
-
 		strNo.Format(L"%d", i + 1);
-		strName = layer->GetLayerName().c_str();
-
 		listCtrlLayers.InsertItem(i, strNo);
-		listCtrlLayers.SetItemText(i, 1, strName);
+		listCtrlLayers.SetItemText(i, 1, rows[static_cast<std::size_t>(i)].layer->GetLayerName().c_str());
 	}
 
-	if (selectedLayerIndex >= 0 && selectedLayerIndex < listCtrlLayers.GetItemCount())
+	const auto found = std::ranges::find(rows, selected, &Row::layer);
+	if (selected && found != rows.end())
 	{
-		listCtrlLayers.SetItemState(selectedLayerIndex, LVIS_SELECTED, LVIS_SELECTED);
-		auto layer = theApp.gisLib->GetLayer(selectedLayerIndex);
-		if (layer->IsS100Layer())
-		{
-			auto s100Layer = (S100Layer*)layer;
-			if (s100Layer->GetProductNumber() == 101) {
-				FillPropList((S101Cell*)layer->GetSpatialObject());
-			}
-		}
+		const int row = static_cast<int>(found - rows.begin());
+		listCtrlLayers.SetItemState(row, LVIS_SELECTED, LVIS_SELECTED);
+		ShowProperties(Resolve(row));
+	}
+}
+
+void CDialogDockLayerManager::RefreshIfChanged()
+{
+	const auto current = CurrentRows();
+	const bool same = std::ranges::equal(current, rows, [](const Row& a, const Row& b) {
+		return a.layer == b.layer && a.layerIndex == b.layerIndex && a.innerIndex == b.innerIndex;
+	});
+	if (!same)
+	{
+		UpdateList();
 	}
 }
 
@@ -634,13 +721,9 @@ void CDialogDockLayerManager::OnItemchangedListLm(NMHDR* pNMHDR, LRESULT* pResul
 	// TODO: Add your control notification handler code here
 	*pResult = 0;
 
-	auto layer = theApp.gisLib->GetLayer(pNMLV->iItem);
-	if (layer)
+	if ((pNMLV->uNewState & LVIS_SELECTED) && !(pNMLV->uOldState & LVIS_SELECTED))
 	{
-		auto s100Layer = (S100Layer*)layer;
-		if (s100Layer->GetProductNumber() == 101) {
-			FillPropList((S101Cell*)layer->GetSpatialObject());
-		}
+		ShowProperties(Resolve(pNMLV->iItem));
 	}
 }
 

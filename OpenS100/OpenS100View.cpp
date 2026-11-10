@@ -398,8 +398,13 @@ void COpenS100View::RemoveLoadFile()
 		AfxMessageBox(L"Select a layer first.");
 		return;
 	}
+	if (theApp.m_pDockablePaneLayerManager.pDlg->IsSystemDatabaseDatasetSelected())
+	{
+		AfxMessageBox(L"This dataset is drawn from the System Database. Remove it in the Dataset Manager.");
+		return;
+	}
 
-	auto lm = theApp.gisLib->GetLayerManager(); 
+	auto lm = theApp.gisLib->GetLayerManager();
 	lm->DeleteLayer(selectedLayerIndex);
 	theApp.m_pDockablePaneLayerManager.DeleteLayer();
 	ClearPickReport();
@@ -445,7 +450,7 @@ void COpenS100View::MapFill()
 
 	auto lm = theApp.gisLib->GetLayerManager();
 
-	Layer *layer = theApp.gisLib->GetLayer(selectedLayerIndex);
+	Layer *layer = theApp.m_pDockablePaneLayerManager.pDlg->GetSelectedLayer();
 	if (nullptr == layer)
 	{
 		return;
@@ -1102,6 +1107,12 @@ void COpenS100View::DrawFromMapRefresh(CDC* pDC, CRect& rect)
 	}
 
 	m_bMapRefesh = false;
+
+	// The System Database chart picks its datasets while drawing; the layer list shows them.
+	if (auto* layerList = theApp.m_pDockablePaneLayerManager.pDlg; layerList && layerList->GetSafeHwnd())
+	{
+		layerList->RefreshIfChanged();
+	}
 }
 
 void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
@@ -1116,15 +1127,7 @@ void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
 
 Layer* COpenS100View::GetCurrentLayer()
 {
-	int selectedLayerIndex = theApp.m_pDockablePaneLayerManager.pDlg->GetSelectedLayerIndex();
-
-	if (selectedLayerIndex < 0)
-	{		
-		return nullptr;
-	}
-
-	auto layer = theApp.gisLib->GetLayer(selectedLayerIndex);
-	return layer;
+	return theApp.m_pDockablePaneLayerManager.pDlg->GetSelectedLayer();
 }
 
 BOOL COpenS100View::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
