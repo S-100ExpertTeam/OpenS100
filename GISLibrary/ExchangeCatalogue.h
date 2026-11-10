@@ -12,6 +12,7 @@
 #include "../GISLibrary/D2D1Resources.h"
 #include "../GeoMetryLibrary/Scaler.h"
 
+#include <filesystem>
 #include <string>
 #include <memory>
 #include <vector>
@@ -24,6 +25,9 @@ namespace S100
         ExchangeCatalogue();
         ~ExchangeCatalogue();
         void Open(std::string filePath);
+        // Any path, including characters outside the ANSI code page. False when the file is not
+        // an exchange catalogue.
+        bool OpenFile(const std::filesystem::path& filePath);
         bool Save(std::string filePath);
 
         std::shared_ptr<ExchangeCatalogueIdentifier> Identifier;

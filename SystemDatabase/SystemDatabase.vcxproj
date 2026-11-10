@@ -260,6 +260,8 @@
     <ClCompile Include="CoverageRepository.cpp" />
     <ClCompile Include="DatasetRepository.cpp" />
     <ClCompile Include="ExchangeSetRepository.cpp" />
+    <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="Importer.cpp" />
     <ClCompile Include="Records.cpp" />
     <ClCompile Include="ResourceStore.cpp" />
     <ClCompile Include="Schema.cpp" />
@@ -273,6 +275,9 @@
     <ClInclude Include="CoverageRepository.h" />
     <ClInclude Include="DatasetRepository.h" />
     <ClInclude Include="ExchangeSetRepository.h" />
+    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="Importer.h" />
+    <ClInclude Include="Inspection.h" />
     <ClInclude Include="Records.h" />
     <ClInclude Include="ResourceStore.h" />
     <ClInclude Include="Schema.h" />

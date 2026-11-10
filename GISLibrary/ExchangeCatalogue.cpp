@@ -25,11 +25,16 @@ namespace S100
 
     void ExchangeCatalogue::Open(std::string filePath)
     {
+        (void)OpenFile(std::filesystem::path(filePath));
+    }
+
+    bool ExchangeCatalogue::OpenFile(const std::filesystem::path& filePath)
+    {
         pugi::xml_document doc;
         pugi::xml_parse_result result = doc.load_file(filePath.c_str());
         if (!result)
         {
-            return;
+            return false;
         }
         pugi::xml_node nodeList = doc.first_child();
 
@@ -37,11 +42,9 @@ namespace S100
         if (!strcmp(instructionName, "S100XC:S100_ExchangeCatalogue") || !strcmp(instructionName, "S100XC:S-101_ExchangeCatalogue"))
         {
             GetContents(nodeList);
+            return true;
         }
-        else
-        {
-
-        }
+        return false;
     }
 
     bool ExchangeCatalogue::Save(std::string filePath)

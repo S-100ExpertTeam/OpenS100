@@ -1119,6 +1119,9 @@
     <ClCompile Include="InventoryItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SdbReaders.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -2229,6 +2232,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InventoryItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SdbReaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

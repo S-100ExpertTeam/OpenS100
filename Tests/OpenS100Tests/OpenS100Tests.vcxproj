@@ -84,8 +84,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ImporterTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ResourceStoreTest.cpp" />
+    <ClCompile Include="SdbReadersTest.cpp" />
     <ClCompile Include="TestPaths.cpp" />
     <ClCompile Include="FeatureCatalogueTest.cpp" />
     <ClCompile Include="S101CellTest.cpp" />
