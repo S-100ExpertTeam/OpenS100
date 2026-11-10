@@ -5,6 +5,7 @@
 #include "ExchangeCatalogue.h"
 #include "F_RIAS.h"
 #include "F_SPAS.h"
+#include "H5_RootGroup.h"
 #include "R_CompositeRecord.h"
 #include "R_CurveRecord.h"
 #include "R_FeatureRecord.h"
@@ -360,6 +361,73 @@ namespace GISLibrary
 	}
 
 	// --- XmlCatalogueInspector -----------------------------------------------------------------
+
+	bool Hdf5DatasetInspector::accepts(const fs::path& file) const
+	{
+		std::string extension = s100::sdb::toUtf8(file.extension());
+		std::ranges::transform(extension, extension.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+		return extension == ".h5" || extension == ".hdf5";
+	}
+
+	std::optional<InspectedDataset> Hdf5DatasetInspector::inspect(const fs::path& file) const
+	{
+		// A file that is not HDF5 is an expected answer here, not an error to print.
+		H5E_auto2_t errorHandler = nullptr;
+		void* errorData = nullptr;
+		H5Eget_auto2(H5E_DEFAULT, &errorHandler, &errorData);
+		H5Eset_auto2(H5E_DEFAULT, nullptr, nullptr);
+		const hid_t fileId = H5Fopen(s100::sdb::toUtf8(file).c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
+		H5_RootGroup root;
+		if (fileId >= 0)
+		{
+			root.Read(fileId);
+			H5Fclose(fileId);
+		}
+		H5Eset_auto2(H5E_DEFAULT, errorHandler, errorData);
+		if (fileId < 0)
+		{
+			return std::nullopt;
+		}
+
+		// productSpecification is "INT.IHO.S-102.2.2": the product, then its edition.
+		InspectedDataset dataset;
+		dataset.name = s100::sdb::toUtf8(file.stem());
+		dataset.product = productFromIdentifier(root.productSpecification);
+		if (!dataset.product.empty())
+		{
+			const auto at = root.productSpecification.find(dataset.product.substr(2));
+			const auto dot = at == std::string::npos ? std::string::npos : root.productSpecification.find('.', at);
+			if (dot != std::string::npos)
+			{
+				dataset.productEdition = root.productSpecification.substr(dot + 1);
+			}
+		}
+		else
+		{
+			// No usable productSpecification: S-100 file names start with the product number.
+			const std::string& name = dataset.name;
+			dataset.product = name.size() >= 3 ? productFromIdentifier(name.substr(0, 3)) : std::string();
+		}
+		if (dataset.product.empty())
+		{
+			return std::nullopt;   // HDF5, but not an S-100 dataset
+		}
+		dataset.format = s100::sdb::DatasetFormat::Hdf5;
+		dataset.issueDate = isoDate(root.issueDate);
+
+		const double west = root.westBoundLongitude;
+		const double east = root.eastBoundLongitude;
+		const double south = root.southBoundLatitude;
+		const double north = root.northBoundLatitude;
+		if (west < east && south < north)
+		{
+			dataset.bounds = s100::sdb::BoundingBox{ west, south, east, north };
+			InspectedCoverage coverage;
+			coverage.rings.push_back(Ring{ { west, south }, { east, south }, { east, north }, { west, north }, { west, south } });
+			dataset.coverages.push_back(std::move(coverage));
+		}
+		return dataset;
+	}
 
 	std::optional<InspectedCatalogue> XmlCatalogueInspector::inspectFeatureCatalogue(const fs::path& xml) const
 	{

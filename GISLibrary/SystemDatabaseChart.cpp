@@ -12,6 +12,7 @@
 #include "../SystemDatabase/SystemDatabase.h"
 
 #include <charconv>
+#include <unordered_set>
 
 namespace GISLibrary
 {
@@ -46,7 +47,26 @@ namespace GISLibrary
 
 		layers_ = std::make_unique<DatasetLayerSet>(*drawer_,
 			[this](s100::sdb::RecordId dataset) { return OpenDataset(dataset); }, std::move(cache));
+		LoadSelection();
+	}
+
+	void SystemDatabaseChart::LoadSelection()
+	{
 		selector_ = s100::sdb::DatasetSelector::fromDatabase(*database_);
+
+		std::unordered_set<s100::sdb::RecordId> scaled;
+		for (const auto& coverage : selector_.coverages())
+		{
+			scaled.insert(coverage.dataset);
+		}
+		unscaled_.clear();
+		for (const auto& dataset : database_->datasets().all())
+		{
+			if (dataset.status == s100::sdb::DatasetStatus::Active && dataset.bounds && !scaled.contains(dataset.id))
+			{
+				unscaled_.push_back({ dataset.id, *dataset.bounds });
+			}
+		}
 	}
 
 	SystemDatabaseChart::~SystemDatabaseChart()
@@ -72,13 +92,22 @@ namespace GISLibrary
 			return;
 		}
 		MBR extent;
+		std::vector<s100::sdb::BoundingBox> bounds;
 		for (const auto& coverage : selector_.coverages())
 		{
-			MBR box(coverage.bounds.minX, coverage.bounds.minY, coverage.bounds.maxX, coverage.bounds.maxY);
+			bounds.push_back(coverage.bounds);
+		}
+		for (const auto& dataset : unscaled_)
+		{
+			bounds.push_back(dataset.bounds);
+		}
+		for (const auto& bound : bounds)
+		{
+			MBR box(bound.minX, bound.minY, bound.maxX, bound.maxY);
 			projection(box);
 			extent.CalcMBR(box);
 		}
-		if (selector_.coverages().empty())
+		if (bounds.empty())
 		{
 			// Nothing installed yet: the same world view a layer manager without layers shows.
 			extent = MBR(-170.0, -30.0, 170.0, 30.0);
@@ -99,14 +128,26 @@ namespace GISLibrary
 			return;
 		}
 		const auto selection = selector_.select(*view);
-		layers_->show(s100::sdb::DatasetSelector::datasetsOf(selection));
+		auto datasets = s100::sdb::DatasetSelector::datasetsOf(selection);
+		// Shown last in selection order, so drawn first: under the vector charts.
+		for (const auto& dataset : unscaled_)
+		{
+			const bool inView = !view->ground
+				|| (dataset.bounds.minX <= view->ground->maxX && dataset.bounds.maxX >= view->ground->minX
+					&& dataset.bounds.minY <= view->ground->maxY && dataset.bounds.maxY >= view->ground->minY);
+			if (inView)
+			{
+				datasets.push_back(dataset.id);
+			}
+		}
+		layers_->show(datasets);
 		drawer_->Draw(hDC, static_cast<int>(offset));
 	}
 
 	void SystemDatabaseChart::Reload()
 	{
 		layers_->clear();
-		selector_ = s100::sdb::DatasetSelector::fromDatabase(*database_);
+		LoadSelection();
 		UpdateExtent();
 	}
 

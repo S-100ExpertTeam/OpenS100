@@ -26,6 +26,16 @@ namespace GISLibrary
 		[[nodiscard]] std::optional<s100::sdb::InspectedDataset> inspect(const std::filesystem::path& file) const override;
 	};
 
+	// S-100 Part 10c HDF5 datasets (S-102, S-104, S-111, ...): the root group attributes only
+	// (productSpecification, issueDate, the geographic bounding box). The grids are not read.
+	// These products carry no display scales, so the coverage is the bounding box with none.
+	class Hdf5DatasetInspector final : public s100::sdb::DatasetInspector
+	{
+	public:
+		[[nodiscard]] bool accepts(const std::filesystem::path& file) const override;
+		[[nodiscard]] std::optional<s100::sdb::InspectedDataset> inspect(const std::filesystem::path& file) const override;
+	};
+
 	// Feature catalogues and portrayal catalogues, from the top of their XML only.
 	class XmlCatalogueInspector final : public s100::sdb::CatalogueInspector
 	{

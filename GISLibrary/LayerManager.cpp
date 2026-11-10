@@ -819,7 +819,11 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 					}
 					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
 					{
-						DrawInformationLayer(hdc, layer);
+						// A grid without a renderer of its own shows where it lies.
+						if (!static_cast<S100Layer*>(layer)->DrawGrid(D2, hdc, scaler))
+						{
+							DrawInformationLayer(hdc, layer);
+						}
 					}
 				}
 			}

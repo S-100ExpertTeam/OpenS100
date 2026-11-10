@@ -25,6 +25,10 @@
 #include "GISLibrary.h"
 #include "PortrayalRenderCache.h"
 #include "S100ExchangeCatalogue.h"
+#include "S102H5.h"
+#include "S102_FC_BathymetryCoverage.h"
+#include "S102_FI_BathymetryCoverage.h"
+#include "S102_VG_BathymetryCoverage.h"
 #include "SystemDatabaseSession.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
@@ -374,4 +378,109 @@ TEST(RenderSmoke, SystemDatabaseChartLoadsBySelectionAfterRestart)
 
 	session.detach();
 	EXPECT_TRUE(gis.GetLayerManager()->layers.empty());
+}
+
+// A gridded dataset (S-102) has no display scales: the System Database chart shows it whenever its
+// bounding box meets the view, and draws the grid itself.
+// Disabled until the S-102 grid renderer draws (it draws nothing yet); enabled by the coverage
+// renderer port (Documents/TechDocs/2026-11-11-coverage-backport-plan.md).
+TEST(RenderSmoke, DISABLED_SystemDatabaseChartDrawsS102Grid)
+{
+	const auto grid = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-102" / L"S-102" / L"102KR00T4G3B3000026.h5";
+	if (!std::filesystem::exists(grid))
+	{
+		GTEST_SKIP() << "S-102 test grid not available: " << grid.string();
+	}
+	const auto root = testpaths::tempDir() / L"SystemDatabaseChartS102";
+	std::filesystem::remove_all(root);
+	{
+		GISLibrary::SystemDatabaseSession session(root);
+		ASSERT_EQ(session.importer().importFeatureCatalogue(testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").outcome,
+			s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(session.importer().importDataset(grid).outcome, s100::sdb::ImportOutcome::Added);
+	}
+
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto* catalogues = gis.GetCatalogManager();
+	catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+
+	GISLibrary::SystemDatabaseSession session(root);
+	session.attach(*gis.GetLayerManager(), *catalogues);
+	auto* chart = session.chart();
+	ASSERT_NE(chart, nullptr);
+	const auto record = session.database().datasets().find("S-102", "102KR00T4G3B3000026");
+	ASSERT_TRUE(record && record->bounds);
+
+	MBR area(record->bounds->minX, record->bounds->minY, record->bounds->maxX, record->bounds->maxY);
+	projection(area);
+	gis.SetMap(area);
+	MemoryCanvas canvas(kWidth, kHeight);
+	gis.Draw(canvas.dc());
+	std::size_t nonWhite = 0;
+	std::size_t colours = 0;
+	canvas.Measure(nonWhite, colours);
+	const auto png = OutputDirectory() / "sdb-chart-s102.png";
+	EXPECT_TRUE(canvas.SavePng(png));
+	std::cout << "[ sdb chart ] S-102 1:" << gis.GetScaler()->GetCurrentScale() << " shown " << chart->GetLayerSet().shownCount()
+		<< ", opened " << chart->GetLayerSet().openCount() << ", non-white " << nonWhite << ", colours " << colours << ", "
+		<< png.string() << std::endl;
+	EXPECT_TRUE(chart->GetLayerSet().isShown(record->id)) << "the grid is in view";
+	if (auto* inner = chart->GetInnerLayers(); inner && inner->LayerCount() == 1)
+	{
+		auto* grid = static_cast<S102H5*>(inner->GetLayer(0)->GetSpatialObject());
+		auto* coverage = grid && grid->GetBathymetryCoverage() ? grid->GetBathymetryCoverage()->GetBathymetryCoverage() : nullptr;
+		ASSERT_NE(coverage, nullptr) << "the grid's BathymetryCoverage.01 was read";
+		const int width = coverage->getNumPointsLongitudinal();
+		const int height = coverage->getNumPointsLatitudinal();
+		auto* values = coverage->GetBathymetryCoverage();
+		std::size_t withData = 0;
+		float shallowest = 1e9f;
+		float deepest = -1e9f;
+		for (int i = 0; values && values->depth && i < width * height; ++i)
+		{
+			if (values->depth[i] != 1000000)
+			{
+				++withData;
+				shallowest = (std::min)(shallowest, values->depth[i]);
+				deepest = (std::max)(deepest, values->depth[i]);
+			}
+		}
+		std::cout << "[ s102 grid ] " << width << " x " << height << ", nodes with depth " << withData << ", depth "
+			<< shallowest << " .. " << deepest << std::endl;
+		EXPECT_GT(withData, 0u);
+	}
+	EXPECT_GT(colours, 8u) << "the depths are drawn, not only an outline";
+}
+
+// The same S-102 grid opened directly as a layer (not through the System Database): the reference
+// for what the grid renderer draws.
+// Disabled for the same reason as SystemDatabaseChartDrawsS102Grid.
+TEST(RenderSmoke, DISABLED_DrawsS102GridAsLayer)
+{
+	const auto grid = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-102" / L"S-102" / L"102KR00T4G3B3000026.h5";
+	if (!std::filesystem::exists(grid))
+	{
+		GTEST_SKIP() << "S-102 test grid not available: " << grid.string();
+	}
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto* catalogues = gis.GetCatalogManager();
+	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddLayer(grid.wstring()));
+	gis.SetViewMBR(view);
+	MemoryCanvas canvas(kWidth, kHeight);
+	gis.Draw(canvas.dc());
+	std::size_t nonWhite = 0;
+	std::size_t colours = 0;
+	canvas.Measure(nonWhite, colours);
+	const auto png = OutputDirectory() / "s102-layer.png";
+	EXPECT_TRUE(canvas.SavePng(png));
+	std::cout << "[ s102 layer ] onIC " << gis.GetLayerManager()->onIC << ", non-white " << nonWhite << ", colours " << colours
+		<< ", " << png.string() << std::endl;
+	EXPECT_GT(colours, 8u);
 }

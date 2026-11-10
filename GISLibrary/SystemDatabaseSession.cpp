@@ -17,7 +17,7 @@ namespace GISLibrary
 	SystemDatabaseSession::SystemDatabaseSession(std::filesystem::path root)
 		: store_(std::move(root)),
 		  database_(s100::sdb::SystemDatabase::open(store_.databaseFile())),
-		  importer_(database_, store_, s100::sdb::Importer::Readers{ { &datasetInspector_ }, &catalogueInspector_, &exchangeSetReader_ })
+		  importer_(database_, store_, s100::sdb::Importer::Readers{ { &datasetInspector_, &gridInspector_ }, &catalogueInspector_, &exchangeSetReader_ })
 	{
 	}
 

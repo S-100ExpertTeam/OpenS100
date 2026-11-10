@@ -36,7 +36,7 @@ namespace
 		const auto width = featureInstance->getNumPointsLongitudinal();
 		const auto height = featureInstance->getNumPointsLatitudinal();
 
-		HRESULT hr = d2->pImagingFactory->CreateBitmap(width, height, GUID_WICPixelFormat32bppPRGBA, WICBitmapCacheOnDemand, &grid.pWICBitmap);
+		HRESULT hr = d2->pImagingFactory->CreateBitmap(width, height, GUID_WICPixelFormat32bppPBGRA, WICBitmapCacheOnDemand, &grid.pWICBitmap);
 		if (FAILED(hr) || !grid.pWICBitmap)
 		{
 			return;

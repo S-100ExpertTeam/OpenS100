@@ -60,6 +60,7 @@ namespace GISLibrary
 		s100::sdb::ResourceStore store_;
 		s100::sdb::SystemDatabase database_;
 		S101DatasetInspector datasetInspector_;
+		Hdf5DatasetInspector gridInspector_;
 		XmlCatalogueInspector catalogueInspector_;
 		ExchangeCatalogueReader exchangeSetReader_;
 		s100::sdb::Importer importer_;

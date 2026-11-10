@@ -254,70 +254,42 @@ bool HDF5Wrapper::ReadMetadataStringAttribute(__int64 id, const char* attributeN
 
 bool HDF5Wrapper::ReadMetadataVariableLengthStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue)
 {
-	herr_t status = 0;
-
-	hid_t id_attribute = H5Aopen_name(id, attributeName);
-
-	if (id_attribute < 0)
+	const hid_t attribute = H5Aopen_name(id, attributeName);
+	if (attribute < 0)
 	{
 		return false;
 	}
-
-	hid_t type = H5Aget_type(id_attribute);
-
-	if (H5T_VLEN != H5Tget_class(type))
+	const hid_t fileType = H5Aget_type(attribute);
+	// A variable-length string is of class H5T_STRING (H5Tis_variable_str says which); older
+	// writers also used a VLEN of characters.
+	const H5T_class_t typeClass = fileType < 0 ? H5T_NO_CLASS : H5Tget_class(fileType);
+	const bool variableString = typeClass == H5T_STRING && H5Tis_variable_str(fileType) > 0;
+	if (!variableString && typeClass != H5T_VLEN)
 	{
-		H5Tclose(type);
-		H5Aclose(id_attribute);
+		if (fileType >= 0) H5Tclose(fileType);
+		H5Aclose(attribute);
 		return false;
 	}
 
-	if (type < 0)
+	const hid_t memoryType = H5Tcopy(H5T_C_S1);
+	H5Tset_size(memoryType, H5T_VARIABLE);
+	if (variableString)
 	{
-		H5Aclose(id_attribute);
-		return false;
+		H5Tset_cset(memoryType, H5Tget_cset(fileType));
 	}
 
-	H5Tset_size(type, H5T_VARIABLE);
-
-	char* vbuf = nullptr;
-
-	status = H5Aread(id_attribute, type, &vbuf);
-
-	if (status < 0)
+	char* value = nullptr;
+	const herr_t status = H5Aread(attribute, memoryType, &value);
+	if (status >= 0 && value)
 	{
-		delete[] vbuf;
-		H5Tclose(type);
-		H5Aclose(id_attribute);
-		return false;
+		attributeValue = value;
+		H5free_memory(value);
 	}
 
-	status = H5Tclose(type);
-
-	if (status != 0)
-	{
-		H5Aclose(id_attribute);
-		return false;
-	}
-
-	attributeValue = vbuf;
-	//delete[] vbuf;
-
-	if (status != 0)
-	{
-		H5Aclose(id_attribute);
-
-		return false;
-	}
-
-	status = H5Aclose(id_attribute);
-
-	if (status != 0)
-	{
-		return false;
-	}
-
-	return true;
+	H5Tclose(memoryType);
+	H5Tclose(fileType);
+	H5Aclose(attribute);
+	return status >= 0;
 }
 
 bool HDF5Wrapper::ReadMetadataAnyStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue)

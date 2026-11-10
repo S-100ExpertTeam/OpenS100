@@ -54,6 +54,35 @@ protected:
 	}
 };
 
+// The S-102 grid of the KOR test data: an HDF5 dataset, not a support file.
+TEST(SdbReaders, InspectsS102GridFromItsRootAttributes)
+{
+	const fs::path grid = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-102" / L"S-102" / L"102KR00T4G3B3000026.h5";
+	if (!fs::exists(grid))
+	{
+		GTEST_SKIP() << "S-102 test grid not found: " << grid;
+	}
+	const GISLibrary::Hdf5DatasetInspector inspector;
+	ASSERT_TRUE(inspector.accepts(grid));
+	EXPECT_FALSE(inspector.accepts(testpaths::korS101Cell()));
+
+	const auto dataset = inspector.inspect(grid);
+	ASSERT_TRUE(dataset);
+	EXPECT_EQ(dataset->name, "102KR00T4G3B3000026");
+	EXPECT_EQ(dataset->product, "S-102");
+	EXPECT_FALSE(dataset->productEdition.empty());
+	EXPECT_EQ(dataset->format, s100::sdb::DatasetFormat::Hdf5);
+	ASSERT_TRUE(dataset->bounds);
+	EXPECT_LT(dataset->bounds->minX, dataset->bounds->maxX);
+	EXPECT_LT(dataset->bounds->minY, dataset->bounds->maxY);
+	ASSERT_EQ(dataset->coverages.size(), 1u);
+	EXPECT_FALSE(dataset->coverages[0].optimumDisplayScale);
+	std::cout << "[ grid ] " << dataset->product << " " << dataset->productEdition << " issued " << dataset->issueDate << "\n";
+
+	// A file that is not HDF5 is not a dataset, and says nothing on stderr.
+	EXPECT_FALSE(inspector.inspect(testpaths::korS101Cell()));
+}
+
 TEST_F(SdbReadersKorTds, InspectsS101CellWithoutCatalogue)
 {
 	const GISLibrary::S101DatasetInspector inspector;

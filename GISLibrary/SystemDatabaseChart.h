@@ -7,6 +7,7 @@
 #include "../SystemDatabase/DatasetSelection.h"
 
 #include <memory>
+#include <vector>
 
 class Layer;
 class LayerManager;
@@ -23,7 +24,9 @@ namespace GISLibrary
 	// front: the coverages are read from the database, and each frame S-98 E-1.3 picks the
 	// datasets the view needs; those are opened (with the catalogues their product edition
 	// resolves to) and the ones that leave the view are kept in a cache for a while
-	// (Documents/TechDocs/2026-11-10-system-database.md, SDB-7).
+	// (Documents/TechDocs/2026-11-10-system-database.md, SDB-7). Datasets without display scales
+	// (the gridded products: S-102, S-104, S-111, ...) take no part in E-1.3; they are shown
+	// whenever their bounding box meets the view, under the selected ones.
 	class SystemDatabaseChart final : public SpatialObject, public LayerContainer
 	{
 	public:
@@ -56,13 +59,21 @@ namespace GISLibrary
 		[[nodiscard]] const s100::sdb::DatasetSelector& GetSelector() const noexcept { return selector_; }
 
 	private:
+		struct UnscaledDataset
+		{
+			s100::sdb::RecordId id = 0;
+			s100::sdb::BoundingBox bounds;   // longitude/latitude
+		};
+
 		[[nodiscard]] std::unique_ptr<Layer> OpenDataset(s100::sdb::RecordId dataset);
 		void UpdateExtent();
+		void LoadSelection();
 
 		s100::sdb::SystemDatabase* database_;
 		const s100::sdb::ResourceStore* store_;
 		std::unique_ptr<LayerManager> drawer_;
 		s100::sdb::DatasetSelector selector_;
+		std::vector<UnscaledDataset> unscaled_;
 		std::unique_ptr<DatasetLayerSet> layers_;
 	};
 }

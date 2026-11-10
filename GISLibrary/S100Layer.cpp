@@ -153,18 +153,20 @@ bool S100Layer::Open(const std::wstring& _filepath, LayerManager* lm)
 	return false;
 }
 
-void S100Layer::DrawGrid(D2D1Resources* d2, HDC& hDC, Scaler* scaler)
+bool S100Layer::DrawGrid(D2D1Resources* d2, HDC& hDC, Scaler* scaler)
 {
 	if (GetFileType() != S100_FileType::FILE_S_100_GRID_H5 || !m_spatialObject)
 	{
-		return;
+		return false;
 	}
 
 	auto s100 = dynamic_cast<S100SpatialObject*>(m_spatialObject);
 	if (s100 && s100->getS100SpatialObjectType() == S100SpatialObjectType::S102H5)
 	{
 		S102Renderer::Draw(*static_cast<S102H5*>(m_spatialObject), d2, hDC, scaler);
+		return true;
 	}
+	return false;
 }
 
 void S100Layer::SetFeatureCatalog(FeatureCatalogue* value)
