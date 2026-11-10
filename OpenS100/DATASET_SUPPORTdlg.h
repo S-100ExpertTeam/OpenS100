@@ -33,8 +33,9 @@ protected:
 public:
 	CListCtrl m_list1;   // datasets
 	CListCtrl m_list2;   // support files
+	CComboBox m_comboProduct;   // product specification filter: "All" first, then one entry per product
 
-	// The rows of the two lists, in list order.
+	// The rows of the two lists, in list order (only the selected product's, when one is selected).
 	std::vector<s100::sdb::DatasetRecord> m_vecDS;
 	std::vector<s100::sdb::SupportFileRecord> m_vecSP;
 
@@ -54,8 +55,16 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnNMCustomdrawList1(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnNMCustomdrawList2(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnCbnSelchangeComboProduct();
 
 private:
+	// The product specifications in the database, in combo order after "All"; the selected one,
+	// or empty for all products.
+	std::vector<std::string> m_products;
+	std::string m_product;
+
+	void FillProductCombo(const std::vector<s100::sdb::DatasetRecord>& datasets,
+		const std::vector<s100::sdb::SupportFileRecord>& supportFiles);
 	void ShowContextMenu();
 	// The selected rows of the focused list, and whether it is the dataset list.
 	std::vector<std::size_t> SelectedRows(bool& datasets);

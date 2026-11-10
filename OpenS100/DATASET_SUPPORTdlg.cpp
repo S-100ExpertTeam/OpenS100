@@ -7,14 +7,36 @@
 #include "DATASET_SUPPORTdlg.h"
 #include "DatasetManagerUi.h"
 
+#include <algorithm>
 #include <format>
+#include <map>
 
 IMPLEMENT_DYNAMIC(DATASET_SUPPORTdlg, CDialogEx)
 
 namespace
 {
-	enum DatasetColumn { DatasetName, DatasetEdition, DatasetIssued, DatasetStatus, DatasetPath };
-	enum SupportColumn { SupportName, SupportPath };
+	enum DatasetColumn { DatasetName, DatasetProduct, DatasetEdition, DatasetIssued, DatasetStatus, DatasetPath };
+	enum SupportColumn { SupportName, SupportProduct, SupportPath };
+
+	constexpr const char* unknownProduct = "(unknown)";
+
+	std::string datasetProduct(const s100::sdb::DatasetRecord& dataset)
+	{
+		return dataset.product.empty() ? std::string(unknownProduct) : dataset.product;
+	}
+
+	// Support files are stored as "SUPPORT/<product>/<file name>" (ResourceStore::supportFilePath).
+	std::string supportFileProduct(const s100::sdb::SupportFileRecord& supportFile)
+	{
+		const std::string& path = supportFile.path;
+		const auto first = path.find('/');
+		const auto second = first == std::string::npos ? std::string::npos : path.find('/', first + 1);
+		if (second == std::string::npos || second == first + 1)
+		{
+			return unknownProduct;
+		}
+		return path.substr(first + 1, second - first - 1);
+	}
 
 	bool isExchangeCatalogue(const std::filesystem::path& file)
 	{
@@ -51,6 +73,7 @@ void DATASET_SUPPORTdlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST1, m_list1);
 	DDX_Control(pDX, IDC_LIST2, m_list2);
+	DDX_Control(pDX, IDC_COMBO_DATASET_PRODUCT, m_comboProduct);
 }
 
 
@@ -63,6 +86,7 @@ BEGIN_MESSAGE_MAP(DATASET_SUPPORTdlg, CDialogEx)
 	ON_WM_DROPFILES()
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_LIST1, &DATASET_SUPPORTdlg::OnNMCustomdrawList1)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_LIST2, &DATASET_SUPPORTdlg::OnNMCustomdrawList2)
+	ON_CBN_SELCHANGE(IDC_COMBO_DATASET_PRODUCT, &DATASET_SUPPORTdlg::OnCbnSelchangeComboProduct)
 END_MESSAGE_MAP()
 
 
@@ -70,14 +94,16 @@ BOOL DATASET_SUPPORTdlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	m_list1.InsertColumn(DatasetName, _T("Name"), LVCFMT_LEFT, 135);
-	m_list1.InsertColumn(DatasetEdition, _T("Edition"), LVCFMT_LEFT, 60);
-	m_list1.InsertColumn(DatasetIssued, _T("Issued"), LVCFMT_LEFT, 85);
-	m_list1.InsertColumn(DatasetStatus, _T("Status"), LVCFMT_LEFT, 70);
+	m_list1.InsertColumn(DatasetName, _T("Name"), LVCFMT_LEFT, 115);
+	m_list1.InsertColumn(DatasetProduct, _T("Product"), LVCFMT_LEFT, 55);
+	m_list1.InsertColumn(DatasetEdition, _T("Edition"), LVCFMT_LEFT, 55);
+	m_list1.InsertColumn(DatasetIssued, _T("Issued"), LVCFMT_LEFT, 80);
+	m_list1.InsertColumn(DatasetStatus, _T("Status"), LVCFMT_LEFT, 60);
 	m_list1.InsertColumn(DatasetPath, _T("FilePath"), LVCFMT_LEFT, 275);
 	m_list1.SetExtendedStyle(m_list1.GetExtendedStyle() | LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
 
 	m_list2.InsertColumn(SupportName, _T("Name"), LVCFMT_LEFT, 135);
+	m_list2.InsertColumn(SupportProduct, _T("Product"), LVCFMT_LEFT, 55);
 	m_list2.InsertColumn(SupportPath, _T("FilePath"), LVCFMT_LEFT, 275);
 	m_list2.SetExtendedStyle(m_list2.GetExtendedStyle() | LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
 
@@ -93,8 +119,26 @@ void DATASET_SUPPORTdlg::SetRefreshItem()
 		return;
 	}
 	auto& database = theApp.systemDatabase->database();
-	m_vecDS = database.datasets().all();
-	m_vecSP = database.supportFiles().all();
+	auto datasets = database.datasets().all();
+	auto supportFiles = database.supportFiles().all();
+	FillProductCombo(datasets, supportFiles);
+
+	m_vecDS.clear();
+	m_vecSP.clear();
+	for (auto& dataset : datasets)
+	{
+		if (m_product.empty() || datasetProduct(dataset) == m_product)
+		{
+			m_vecDS.push_back(std::move(dataset));
+		}
+	}
+	for (auto& supportFile : supportFiles)
+	{
+		if (m_product.empty() || supportFileProduct(supportFile) == m_product)
+		{
+			m_vecSP.push_back(std::move(supportFile));
+		}
+	}
 
 	m_list1.DeleteAllItems();
 	for (int row = 0; row < static_cast<int>(m_vecDS.size()); ++row)
@@ -107,6 +151,7 @@ void DATASET_SUPPORTdlg::SetRefreshItem()
 			edition += std::format(" +{}", update.updateNumber);
 		}
 		m_list1.InsertItem(row, DatasetManagerUi::Widen(dataset.name).c_str());
+		m_list1.SetItemText(row, DatasetProduct, DatasetManagerUi::Widen(datasetProduct(dataset)).c_str());
 		m_list1.SetItemText(row, DatasetEdition, DatasetManagerUi::Widen(edition).c_str());
 		m_list1.SetItemText(row, DatasetIssued, DatasetManagerUi::Widen(dataset.issueDate).c_str());
 		m_list1.SetItemText(row, DatasetStatus, DatasetManagerUi::Widen(std::string(s100::sdb::toString(dataset.status))).c_str());
@@ -118,8 +163,59 @@ void DATASET_SUPPORTdlg::SetRefreshItem()
 	{
 		const auto& supportFile = m_vecSP[static_cast<std::size_t>(row)];
 		m_list2.InsertItem(row, DatasetManagerUi::Widen(supportFile.name).c_str());
+		m_list2.SetItemText(row, SupportProduct, DatasetManagerUi::Widen(supportFileProduct(supportFile)).c_str());
 		m_list2.SetItemText(row, SupportPath, session->store().absolute(supportFile.path).c_str());
 	}
+}
+
+void DATASET_SUPPORTdlg::FillProductCombo(const std::vector<s100::sdb::DatasetRecord>& datasets,
+	const std::vector<s100::sdb::SupportFileRecord>& supportFiles)
+{
+	struct Counts
+	{
+		std::size_t datasets = 0;
+		std::size_t supportFiles = 0;
+	};
+	std::map<std::string, Counts> products;
+	for (const auto& dataset : datasets)
+	{
+		++products[datasetProduct(dataset)].datasets;
+	}
+	for (const auto& supportFile : supportFiles)
+	{
+		++products[supportFileProduct(supportFile)].supportFiles;
+	}
+
+	// A product that is no longer installed falls back to all products.
+	if (!m_product.empty() && !products.contains(m_product))
+	{
+		m_product.clear();
+	}
+
+	m_products.clear();
+	m_comboProduct.ResetContent();
+	m_comboProduct.AddString(std::format(L"All products ({} datasets, {} support files)",
+		datasets.size(), supportFiles.size()).c_str());
+	int selection = 0;
+	for (const auto& [product, counts] : products)
+	{
+		m_products.push_back(product);
+		m_comboProduct.AddString(std::format(L"{} ({} datasets, {} support files)",
+			DatasetManagerUi::Widen(product), counts.datasets, counts.supportFiles).c_str());
+		if (product == m_product)
+		{
+			selection = static_cast<int>(m_products.size());
+		}
+	}
+	m_comboProduct.SetCurSel(selection);
+}
+
+void DATASET_SUPPORTdlg::OnCbnSelchangeComboProduct()
+{
+	const int selection = m_comboProduct.GetCurSel();
+	m_product = selection > 0 && static_cast<std::size_t>(selection) <= m_products.size()
+		? m_products[static_cast<std::size_t>(selection) - 1] : std::string();
+	SetRefreshItem();
 }
 
 void DATASET_SUPPORTdlg::ShowContextMenu()
