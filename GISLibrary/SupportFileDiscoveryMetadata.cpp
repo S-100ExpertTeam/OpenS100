@@ -13,6 +13,10 @@ namespace S100 {
             {
                 FileName = instruction.child_value();
             }
+            else if (!strcmp(instructionName, "S100XC:filePath"))
+            {
+                FilePath = instruction.child_value();
+            }
             else if (!strcmp(instructionName, "S100XC:revisionStatus"))
             {
                 RevisionStatus = std::make_shared<SupportFileRevisionStatus>(S100_SupportFileRevisionStatusFromString(instruction.child_value()));

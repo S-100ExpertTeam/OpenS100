@@ -13,6 +13,10 @@ namespace S100 {
             {
                 FileName = instruction.child_value();
             }
+            else if (!strcmp(instructionName, "S100XC:filePath"))
+            {
+                FilePath = instruction.child_value();
+            }
             else if (!strcmp(instructionName, "S100XC:Purpose"))
             {
                 if(!std::string(instruction.child_value()).empty())

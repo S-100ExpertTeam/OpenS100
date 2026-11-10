@@ -192,6 +192,22 @@ namespace GISLibrary
 			return (folder / s100::sdb::fromUtf8(relative)).lexically_normal();
 		}
 
+		// Where a catalogue entry's file is: Edition 4.0 names the folder in filePath and only the
+		// file in fileName; later editions put the whole path in fileName.
+		std::string entryLocation(const std::string& filePath, const std::string& fileName)
+		{
+			if (filePath.empty())
+			{
+				return fileName;
+			}
+			std::string location = filePath;
+			if (location.back() != '/' && location.back() != '\\')
+			{
+				location += '/';
+			}
+			return location + fileName;
+		}
+
 		// The product folder a file was delivered in ("S-101" of "S-101/SUPPORT_FILES/x.TXT").
 		std::string productFolder(const std::string& uri)
 		{
@@ -216,6 +232,13 @@ namespace GISLibrary
 
 		std::optional<s100::sdb::CatalogueKind> catalogueKind(const fs::path& file)
 		{
+			// Portrayal catalogues are delivered as archives (feature catalogues as XML).
+			std::string extension = s100::sdb::toUtf8(file.extension());
+			std::ranges::transform(extension, extension.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+			if (extension == ".zip")
+			{
+				return s100::sdb::CatalogueKind::Portrayal;
+			}
 			pugi::xml_document document;
 			if (!document.load_file(file.c_str()))
 			{
@@ -507,7 +530,7 @@ namespace GISLibrary
 
 		for (const auto& entry : catalogue.DatasetDiscoveryMetadata)
 		{
-			InspectedExchangeSet::Dataset dataset{ .file = resolveCatalogueFile(folder, entry.FileName) };
+			InspectedExchangeSet::Dataset dataset{ .file = resolveCatalogueFile(folder, entryLocation(entry.FilePath, entry.FileName)) };
 			if (entry.productSpecification)
 			{
 				dataset.product = productFromIdentifier(entry.productSpecification->ProductIdentifier);
@@ -529,8 +552,9 @@ namespace GISLibrary
 
 		for (const auto& entry : catalogue.SupportFileDiscoveryMetadata)
 		{
-			InspectedExchangeSet::SupportFile supportFile{ .file = resolveCatalogueFile(folder, entry.FileName) };
-			supportFile.product = productFolder(entry.FileName);
+			const std::string location = entryLocation(entry.FilePath, entry.FileName);
+			InspectedExchangeSet::SupportFile supportFile{ .file = resolveCatalogueFile(folder, location) };
+			supportFile.product = productFolder(location);
 			if (supportFile.product.empty()) supportFile.product = setProduct;
 			if (entry.RevisionStatus) supportFile.purpose = S100::S100_SupportFileRevisionStatusToString(*entry.RevisionStatus);
 			if (entry.EditionNumber) supportFile.edition = *entry.EditionNumber;
@@ -541,7 +565,7 @@ namespace GISLibrary
 
 		for (const auto& entry : catalogue.CatalogueDiscoveryMetadata)
 		{
-			const fs::path file = resolveCatalogueFile(folder, entry.FileName);
+			const fs::path file = resolveCatalogueFile(folder, entryLocation(entry.FilePath, entry.FileName));
 			if (const auto kind = catalogueKind(file))
 			{
 				set.catalogues.push_back({ .file = file, .kind = *kind });

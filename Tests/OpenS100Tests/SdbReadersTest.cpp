@@ -8,6 +8,7 @@
 #include <chrono>
 #include <cstdlib>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 
 // System Database work item SDB-3: the readers GISLibrary gives the importer, on the Korean S-101
@@ -194,4 +195,39 @@ TEST_F(SdbReadersKorTds, ImportsWholeExchangeSetWhenAsked)
 	EXPECT_TRUE(report.installProblems.empty());
 	EXPECT_EQ(database.datasets().all().size(), 808u);
 	EXPECT_GE(database.coverages().active().size(), 808u);
+}
+
+// S-100 Edition 4.0 catalogues name the folder in filePath and only the file in fileName.
+TEST(SdbReaders, ExchangeCatalogueJoinsEdition4FilePath)
+{
+	const auto folder = testpaths::tempDir() / L"SdbReaders" / L"Edition4" / L"EXCH_ROOT";
+	fs::remove_all(folder.parent_path());
+	fs::create_directories(folder);
+	{
+		std::ofstream out(folder / "CATALOG.XML", std::ios::binary);
+		out << R"(<?xml version="1.0" encoding="UTF-8"?>
+<S100XC:S100_ExchangeCatalogue xmlns:S100XC="http://www.iho.int/s100/xc">
+  <S100XC:identifier><S100XC:identifier>KR-2020</S100XC:identifier><S100XC:dateTime>2020-12-03T00:00:00Z</S100XC:dateTime></S100XC:identifier>
+  <S100XC:datasetDiscoveryMetadata>
+    <S100XC:S100_DatasetDiscoveryMetadata>
+      <S100XC:fileName>101KR00251200.000</S100XC:fileName>
+      <S100XC:filePath>DataSet/101KR00251200</S100XC:filePath>
+    </S100XC:S100_DatasetDiscoveryMetadata>
+  </S100XC:datasetDiscoveryMetadata>
+  <S100XC:supportFileDiscoveryMetadata>
+    <S100XC:S100_SupportFileDiscoveryMetadata>
+      <S100XC:fileName>101KR000010E100.TXT</S100XC:fileName>
+      <S100XC:filePath>S-101/SUPPORT_FILES</S100XC:filePath>
+    </S100XC:S100_SupportFileDiscoveryMetadata>
+  </S100XC:supportFileDiscoveryMetadata>
+</S100XC:S100_ExchangeCatalogue>)";
+	}
+	const GISLibrary::ExchangeCatalogueReader reader;
+	const auto set = reader.read(folder / "CATALOG.XML");
+	ASSERT_TRUE(set);
+	ASSERT_EQ(set->datasets.size(), 1u);
+	EXPECT_EQ(set->datasets[0].file, (folder / "DataSet" / "101KR00251200" / "101KR00251200.000").lexically_normal());
+	ASSERT_EQ(set->supportFiles.size(), 1u);
+	EXPECT_EQ(set->supportFiles[0].file, (folder / "S-101" / "SUPPORT_FILES" / "101KR000010E100.TXT").lexically_normal());
+	EXPECT_EQ(set->supportFiles[0].product, "S-101");
 }

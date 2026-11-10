@@ -19,6 +19,8 @@ namespace S100 {
     {
     public:
         URI FileName;
+        // S-100 Edition 4.0 catalogues name the folder apart ("DataSet/101KR00251200"); empty otherwise.
+        std::string FilePath;
         std::shared_ptr<Purpose> purpose;
         int EditionNumber;
         CatalogueScope Scope;
