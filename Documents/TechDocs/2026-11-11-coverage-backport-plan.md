@@ -41,7 +41,11 @@
 ## 4. 작업 항목
 
 - [ ] **CV-0** PC zip 설치. 구현·테스트 완료, `ZipArchive` 커밋 후 커밋.
-- [ ] **CV-1** `Coverage/` 모듈 뼈대와 격자 모델: `RegularGrid`, UTM(Krüger n³, 웹과 같은 식), `gridPosition/gridCoordinates/gridLine/gridBlockRing/gridBounds/gridCellBounds/gridCellSize/gridCellAt`, `isNoData`(값은 float32, 채움값은 `(double)(float)` 비교), `sampleGrid`, `parseS100DateTime`, `timeIndexAt`, `displayTimeIndex`, `LatticeMapping`. 테스트: 웹 `coverage.test.ts`, `utm.test.ts`의 값.
+- [x] **CV-1** `Coverage/` 모듈 뼈대와 격자 모델: `RegularGrid`, UTM(Krüger n³, 웹과 같은 식), `gridPosition/gridCoordinates/gridLine/gridBlockRing/gridBounds/gridCellBounds/gridCellSize/gridCellAt`, `isNoData`(값은 float32, 채움값은 `(double)(float)` 비교), `sampleGrid`, `parseS100DateTime`, `timeIndexAt`, `displayTimeIndex`, `LatticeMapping`. 테스트: 웹 `coverage.test.ts`, `utm.test.ts`의 값. (2026-11-11)
+  - 네임스페이스 `s100::coverage`. 파일: `Geo.h`, `Utm`, `RegularGrid`(격자 기하·표본·`LatticeMapping`), `CoverageTime`(`std::chrono::sys_time<milliseconds>`, 1년도 그대로), `CoverageModel`(구성요소·피처·데이터셋·`CoverageSource` 인터페이스, 값은 `shared_ptr<const vector<float>>`), `CoverageLookup`(Part 9a 구간 8종, 첫 일치·비율)도 여기 둔다(CV-3에서 쓸 것).
+  - `gridCellAt`의 반올림은 JS `Math.round`와 같이 `floor(x + 0.5)`(음수 반값에서 `std::round`와 다르다).
+  - VS 솔루션 `01. LIB`에 `Coverage`(6개 구성, `/W4 /WX`), CMake `opens100::coverage`(옵션 `OPENS100_BUILD_COVERAGE`). 의존성 없음(HDF5는 CV-2).
+  - 검증: `CoverageGridTest.cpp` 14개(PROJ 기준값 5 mm 이내, 왕복 5e-8°, UTM 격자선 조각, 격자 대응 0.001셀 이내 포함) 통과. CMake `coverage` 타깃 빌드 확인.
 - [ ] **CV-2** HDF5 커버리지 리더: 루트 속성, `Group_F` 설명, 인스턴스·시간 그룹, 데이터 오프셋, compound 해독, 채움값, UTM 경계(셀 경계의 합집합), LRU. 테스트: KOR S-102(원점·간격·행렬 수, 오프셋 코드 5), S-104(구성요소, 시간, 범위), 웹 `read-hdf5.test.ts`의 값.
 - [ ] **CV-3** S-102 표시: 커버리지 Lua 호스트, `CoverageLookup`(첫 일치, 닫힘 4종, 반구간), 색 프로필(sRGB, 같은 이름 토큰 대체), `CoverageRaster`(지리·UTM, sharpWindow), D2D 그리기, 문맥 변수(S-101 SafetyContour를 S-102에도). 기존 `S102Renderer` 경로를 이 경로로 바꾼다. 테스트: 웹 `s102.test.ts`(조회 항목, FourShades 5항목), `coverage-raster.test.ts`, 렌더 테스트 2개를 켠다. 뷰어에서 KOR S-102를 S-101과 겹쳐 캡처.
 - [ ] **CV-4** ESC와 경계: `collectEdges`, `safetyContourEdges`, `boundaryEdgesOfClasses`, `depthLines`, `validGridRings`, 선 모양과 DEPWL 색(`xyLToRgb`), ESC가 켜지면 S-102 아래 S-101 수심 피처 가리기. 테스트: 웹 `enhanced-safety-contour.test.ts`(그림 D-1-5: 길이 8, 선분 6 …), `valid-grid-rings.test.ts`, `depth-compute.test.ts`.

@@ -26,6 +26,7 @@ option(OPENS100_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 option(OPENS100_BUILD_GEOMETRY "Build opens100::geometry (GeoMetryLibrary)" ON)
 option(OPENS100_BUILD_FEATURECATALOG "Build opens100::featurecatalog (FeatureCatalog)" ON)
 option(OPENS100_BUILD_SYSTEMDATABASE "Build opens100::sdb (SystemDatabase)" ON)
+option(OPENS100_BUILD_COVERAGE "Build opens100::coverage (Coverage)" ON)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -98,6 +99,11 @@ if(OPENS100_BUILD_FEATURECATALOG)
 endif()
 if(OPENS100_BUILD_SYSTEMDATABASE)
     opens100_add_module(sdb SystemDatabase DEPENDS unofficial::sqlite3::sqlite3)
+endif()
+
+if(OPENS100_BUILD_COVERAGE)
+    # S-100 Part 10c gridded coverages: grid model, lookups (Documents/TechDocs/2026-11-11-coverage-backport-plan.md).
+    opens100_add_module(coverage Coverage)
 endif()
 
 # --- package ------------------------------------------------------------------------------

@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CatalogueResolutionTest.cpp" />
+    <ClCompile Include="CoverageGridTest.cpp" />
     <ClCompile Include="DatasetCacheTest.cpp" />
     <ClCompile Include="DatasetSelectionTest.cpp" />
     <ClCompile Include="ImporterTest.cpp" />
@@ -107,6 +108,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\GISLibrary\GISLibrary.vcxproj">
       <Project>{ad396c19-6f9e-4f51-ac6e-ab02a1348795}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Coverage\Coverage.vcxproj">
+      <Project>{138fb708-aca6-421c-9c6d-06aa8fb2c8fe}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\SystemDatabase\SystemDatabase.vcxproj">
       <Project>{f3755787-d9d8-4180-ae99-b237b0bd8a69}</Project>
