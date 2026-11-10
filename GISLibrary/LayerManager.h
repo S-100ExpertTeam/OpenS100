@@ -100,6 +100,7 @@ public:
 
 	void DrawS100Datasets(HDC &hDC, int offset = 0);
 	void DrawECDISMode(HDC& hDC, int offset = 0);
+	void DrawLayerContainers(HDC& hDC, int offset = 0);
 	void DrawNonS100Datasets(HDC &hDC, int offset = 0);
 	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer);
 	void SetDrawingInstruction(S100Layer* layer);
@@ -141,6 +142,9 @@ public:
 
 	void ChangeS100ColorPalette(GeoMetryLibrary::ColorTable value);
 	void ChangeS100ColorPalette(std::wstring paletteName);
+	// The palette of every S-100 layer's drawing instructions, including the layers of layer
+	// containers; the catalogues' own palettes are left to ChangeS100ColorPalette.
+	void ChangeLayerPalettes(const std::wstring& paletteName);
 
 	Scaler* GetScaler();
 	//D2D1Resources* GetD2D1Resources();

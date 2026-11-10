@@ -104,6 +104,11 @@ namespace GISLibrary
 		failed_.clear();
 	}
 
+	void DatasetLayerSet::dropCache()
+	{
+		cache_.clear();
+	}
+
 	void DatasetLayerSet::forgetFailures()
 	{
 		failed_.clear();

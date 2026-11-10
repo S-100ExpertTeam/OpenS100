@@ -49,6 +49,9 @@ namespace GISLibrary
 
 		// Drops every layer, shown and cached (the installed datasets changed).
 		void clear();
+		// Drops the cached layers only (portrayal settings changed; shown layers are rebuilt by
+		// the drawer).
+		void dropCache();
 		// Lets datasets that failed to open be tried again (new catalogues were installed).
 		void forgetFailures();
 

@@ -1,18 +1,40 @@
-﻿
-#include "pch.h"
+﻿#include "pch.h"
+#include "../GISLibrary/SystemDatabaseSession.h"
+#include "../SystemDatabase/CatalogueResolution.h"
+#include "../SystemDatabase/Utf8Path.h"
 #include "OpenS100.h"
 #include "afxdialogex.h"
 #include "DATASET_SUPPORTdlg.h"
-#include "../LibMFCUtil/LibMFCUtil.h"
-#include "DataSetManagerSupport.h"
-#include "../GISLibrary/ExchangeCatalogue.h"
+#include "DatasetManagerUi.h"
 
-#include <fstream>
-#include <filesystem>
-
-namespace fs = std::filesystem;
+#include <format>
 
 IMPLEMENT_DYNAMIC(DATASET_SUPPORTdlg, CDialogEx)
+
+namespace
+{
+	enum DatasetColumn { DatasetName, DatasetEdition, DatasetIssued, DatasetStatus, DatasetPath };
+	enum SupportColumn { SupportName, SupportPath };
+
+	bool isExchangeCatalogue(const std::filesystem::path& file)
+	{
+		std::wstring name = file.filename().wstring();
+		for (auto& c : name)
+		{
+			c = static_cast<wchar_t>(::towupper(c));
+		}
+		return name == L"CATALOG.XML";
+	}
+
+	// The product a support file belongs to, from its name: S-101 support files are named
+	// "101<producer>...". Files that do not say go with S-100 material in general.
+	std::string supportFileProduct(const std::filesystem::path& file)
+	{
+		const std::string name = s100::sdb::toUtf8(file.filename());
+		const std::string product = name.size() >= 3 ? s100::sdb::productFromIdentifier(name.substr(0, 3)) : std::string();
+		return product.empty() ? "S-100" : product;
+	}
+}
 
 DATASET_SUPPORTdlg::DATASET_SUPPORTdlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_DATASET_SUPPORT, pParent)
@@ -39,357 +61,211 @@ BEGIN_MESSAGE_MAP(DATASET_SUPPORTdlg, CDialogEx)
 	ON_UPDATE_COMMAND_UI(ID_FILE_DELETE32778, &DATASET_SUPPORTdlg::OnMenuDelete)
 	ON_UPDATE_COMMAND_UI(ID_FILE_OPENFOLDER, &DATASET_SUPPORTdlg::OnMenuOpenFolder)
 	ON_WM_DROPFILES()
-	ON_WM_DESTROY()
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_LIST1, &DATASET_SUPPORTdlg::OnNMCustomdrawList1)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_LIST2, &DATASET_SUPPORTdlg::OnNMCustomdrawList2)
 END_MESSAGE_MAP()
-
-
 
 
 BOOL DATASET_SUPPORTdlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	CRect rect;
+	m_list1.InsertColumn(DatasetName, _T("Name"), LVCFMT_LEFT, 135);
+	m_list1.InsertColumn(DatasetEdition, _T("Edition"), LVCFMT_LEFT, 60);
+	m_list1.InsertColumn(DatasetIssued, _T("Issued"), LVCFMT_LEFT, 85);
+	m_list1.InsertColumn(DatasetStatus, _T("Status"), LVCFMT_LEFT, 70);
+	m_list1.InsertColumn(DatasetPath, _T("FilePath"), LVCFMT_LEFT, 275);
+	m_list1.SetExtendedStyle(m_list1.GetExtendedStyle() | LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
 
-	m_list1.GetClientRect(rect);
-	m_list1.InsertColumn(0, _T("Name"), LVCFMT_LEFT, 135);
-	m_list1.InsertColumn(1, _T("FilePath"), LVCFMT_LEFT, 275);
-	
+	m_list2.InsertColumn(SupportName, _T("Name"), LVCFMT_LEFT, 135);
+	m_list2.InsertColumn(SupportPath, _T("FilePath"), LVCFMT_LEFT, 275);
+	m_list2.SetExtendedStyle(m_list2.GetExtendedStyle() | LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
 
-	m_list1.SetExtendedStyle(m_list1.GetExtendedStyle()| LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
-
-
-	m_list2.GetClientRect(rect);
-	m_list2.InsertColumn(0, _T("Name"), LVCFMT_LEFT, 135);
-	m_list2.InsertColumn(1, _T("FilePath"), LVCFMT_LEFT, 275);
-
-	m_list2.SetExtendedStyle(m_list2.GetExtendedStyle()| LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
-
-
-	//CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath + DataSetManagerSupport::GetInstance().m_FileName;
-	//LoadFile(filepath);
-
-	//// Get Files
-	//auto DSItems = DataSetManagerSupport::GetInstance().selectAllDataDS_SP("DatasetFiles");
-	//for (auto var : DSItems)
-	//{
-	//	if (var)
-	//	{
-	//		m_vecDS.push_back(var);
-	//		Set_Item(var);
-	//	}
-	//}
-
-	//auto SPItems = DataSetManagerSupport::GetInstance().selectAllDataDS_SP("SupportFiles");
-	//for (auto var : SPItems)
-	//{
-	//	if (var)
-	//	{
-	//		m_vecSP.push_back(var);
-	//		Set_Item(var);
-	//	}
-	//}
-
+	SetRefreshItem();
 	return TRUE;
 }
 
+void DATASET_SUPPORTdlg::SetRefreshItem()
+{
+	const auto* session = theApp.systemDatabase.get();
+	if (!session)
+	{
+		return;
+	}
+	auto& database = theApp.systemDatabase->database();
+	m_vecDS = database.datasets().all();
+	m_vecSP = database.supportFiles().all();
 
-void DATASET_SUPPORTdlg::OnMenuLoad(CCmdUI* pCmdUI)
+	m_list1.DeleteAllItems();
+	for (int row = 0; row < static_cast<int>(m_vecDS.size()); ++row)
+	{
+		const auto& dataset = m_vecDS[static_cast<std::size_t>(row)];
+		std::string edition = dataset.edition ? std::to_string(*dataset.edition) : std::string("-");
+		edition += "." + std::to_string(dataset.updateNumber);
+		for (const auto& update : database.datasets().updates(dataset.id))
+		{
+			edition += std::format(" +{}", update.updateNumber);
+		}
+		m_list1.InsertItem(row, DatasetManagerUi::Widen(dataset.name).c_str());
+		m_list1.SetItemText(row, DatasetEdition, DatasetManagerUi::Widen(edition).c_str());
+		m_list1.SetItemText(row, DatasetIssued, DatasetManagerUi::Widen(dataset.issueDate).c_str());
+		m_list1.SetItemText(row, DatasetStatus, DatasetManagerUi::Widen(std::string(s100::sdb::toString(dataset.status))).c_str());
+		m_list1.SetItemText(row, DatasetPath, session->store().absolute(dataset.path).c_str());
+	}
+
+	m_list2.DeleteAllItems();
+	for (int row = 0; row < static_cast<int>(m_vecSP.size()); ++row)
+	{
+		const auto& supportFile = m_vecSP[static_cast<std::size_t>(row)];
+		m_list2.InsertItem(row, DatasetManagerUi::Widen(supportFile.name).c_str());
+		m_list2.SetItemText(row, SupportPath, session->store().absolute(supportFile.path).c_str());
+	}
+}
+
+void DATASET_SUPPORTdlg::ShowContextMenu()
+{
+	CPoint point;
+	GetCursorPos(&point);
+
+	CMenu menu;
+	menu.LoadMenu(IDR_POPUP_DATASET_MANAGER);
+	CMenu* pPopupMenu = menu.GetSubMenu(0);
+	if (pPopupMenu != nullptr)
+	{
+		pPopupMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
+	}
+}
+
+void DATASET_SUPPORTdlg::OnNMRClickList1(NMHDR* /*pNMHDR*/, LRESULT* pResult)
+{
+	ShowContextMenu();
+	*pResult = 0;
+}
+
+void DATASET_SUPPORTdlg::OnNMRClickList2(NMHDR* /*pNMHDR*/, LRESULT* pResult)
+{
+	ShowContextMenu();
+	*pResult = 0;
+}
+
+void DATASET_SUPPORTdlg::OnMenuLoad(CCmdUI* /*pCmdUI*/)
 {
 	CFileDialog dlg(TRUE,
-		_T("xml"),
+		nullptr,
 		NULL,
-		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST,
-		_T("xml (*.xml)|*.xml|"));
+		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT,
+		_T("Exchange set catalogue (CATALOG.XML)|CATALOG.XML|Datasets and updates (*.000;*.001;...)|*.0*;*.1*;*.2*;*.3*;*.4*;*.5*;*.6*;*.7*;*.8*;*.9*|All files (*.*)|*.*|"));
 
 	if (dlg.DoModal() == IDOK)
 	{
-		CString filePath = dlg.GetPathName();
-		LoadFile(filePath);
-	}
-}
-
-void DATASET_SUPPORTdlg::OnMenuDelete(CCmdUI* pCmdUI)
-{
-	CWnd* pFocus = GetFocus();
-
-	if (pFocus != nullptr && pFocus->GetDlgCtrlID() == m_list1.GetDlgCtrlID())
-	{
-		DeleteSelectedItems(m_list1, m_vecDS);
-	}
-	else if (pFocus != nullptr && pFocus->GetDlgCtrlID() == m_list2.GetDlgCtrlID())
-	{
-		DeleteSelectedItems(m_list2, m_vecSP);
-	}
-}
-
-
-void DATASET_SUPPORTdlg::OnMenuOpenFolder(CCmdUI * pCmdUI)
-{
-	CWnd* pFocus = GetFocus();
-
-	if (pFocus != nullptr && pFocus->GetDlgCtrlID() == m_list1.GetDlgCtrlID())
-	{
-		OpenFolder(m_list1, m_vecDS);
-	}
-	else if (pFocus != nullptr && pFocus->GetDlgCtrlID() == m_list2.GetDlgCtrlID())
-	{
-		OpenFolder(m_list2, m_vecSP);
-	}
-}
-
-void DATASET_SUPPORTdlg::OpenFolder(CListCtrl& listControl, std::vector<std::shared_ptr<DatasetClass>>& vec)
-{
-
-	int nItem = listControl.GetNextItem(-1, LVNI_SELECTED);
-	while (nItem != -1)
-	{
-		if (nItem >= 0 && nItem < vec.size()) {
-			DataSetManagerSupport::GetInstance().OpenFolder(LibMFCUtil::StringToWString(vec[nItem]->filePath).c_str());
+		std::vector<std::filesystem::path> files;
+		for (POSITION position = dlg.GetStartPosition(); position != nullptr;)
+		{
+			files.emplace_back(dlg.GetNextPathName(position).GetString());
 		}
-
-		nItem = listControl.GetNextItem(nItem, LVNI_SELECTED);
+		LoadFiles(files);
 	}
-
-
-	//int nItem = listControl.GetNextItem(-1, LVNI_SELECTED);
-	//while (nItem != -1)
-	//{
-	//	if (nItem >= 0 && nItem < vec.size()) {
-	//		DataSetManagerSupport::GetInstance().OpenFolder(LibMFCUtil::StringToWString(vec[nItem]->filePath).c_str());
-	//	}
-
-	//	nItem = listControl.GetNextItem(-1, LVNI_SELECTED);
-	//}
 }
 
-void DATASET_SUPPORTdlg::DeleteSelectedItems(CListCtrl& listControl, std::vector<std::shared_ptr<DatasetClass>>& vec)
+void DATASET_SUPPORTdlg::LoadFiles(const std::vector<std::filesystem::path>& files)
 {
-	int nItem = listControl.GetNextItem(-1, LVNI_SELECTED);
-	while (nItem != -1)
+	auto* session = DatasetManagerUi::Session(this);
+	if (!session)
 	{
-		listControl.DeleteItem(nItem);
+		return;
+	}
 
-		if (nItem >= 0 && nItem < vec.size()) {
-			vec.erase(vec.begin() + nItem);
+	CWaitCursor wait;
+	const GISLibrary::S101DatasetInspector datasetInspector;
+	std::vector<s100::sdb::ImportResult> results;
+	std::vector<std::string> problems;
+	for (const auto& file : files)
+	{
+		if (isExchangeCatalogue(file))
+		{
+			auto report = session->importer().importExchangeSet(file);
+			results.insert(results.end(), report.results.begin(), report.results.end());
+			problems.insert(problems.end(), report.installProblems.begin(), report.installProblems.end());
 		}
-
-		nItem = listControl.GetNextItem(-1, LVNI_SELECTED);
+		else if (datasetInspector.accepts(file))
+		{
+			results.push_back(session->importer().importDataset(file));
+		}
+		else
+		{
+			results.push_back(session->importer().importSupportFile(file, supportFileProduct(file), "new"));
+		}
 	}
+	session->refreshDatasets();
+	SetRefreshItem();
+	theApp.MapRefresh();
+	theApp.m_pDockablePaneLayerManager.UpdateList();
+	DatasetManagerUi::Report(this, results, problems);
 }
 
-
-void DATASET_SUPPORTdlg::OnNMRClickList1(NMHDR* pNMHDR, LRESULT* pResult)
+std::vector<std::size_t> DATASET_SUPPORTdlg::SelectedRows(bool& datasets)
 {
-	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	CWnd* focus = GetFocus();
+	datasets = !(focus && focus->GetDlgCtrlID() == m_list2.GetDlgCtrlID());
+	CListCtrl& list = datasets ? m_list1 : m_list2;
+	const std::size_t count = datasets ? m_vecDS.size() : m_vecSP.size();
 
-	CPoint point;
-	GetCursorPos(&point);
-
-	CMenu menu;
-	menu.LoadMenu(IDR_POPUP_DATASET_MANAGER);
-	CMenu* pPopupMenu = menu.GetSubMenu(0);
-
-	if (pPopupMenu != nullptr)
+	std::vector<std::size_t> rows;
+	for (int item = list.GetNextItem(-1, LVNI_SELECTED); item != -1; item = list.GetNextItem(item, LVNI_SELECTED))
 	{
-		pPopupMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
+		if (static_cast<std::size_t>(item) < count)
+		{
+			rows.push_back(static_cast<std::size_t>(item));
+		}
 	}
-
-	*pResult = 0;
+	return rows;
 }
 
-
-void DATASET_SUPPORTdlg::OnNMRClickList2(NMHDR* pNMHDR, LRESULT* pResult)
+void DATASET_SUPPORTdlg::OnMenuDelete(CCmdUI* /*pCmdUI*/)
 {
-	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-
-	CPoint point;
-	GetCursorPos(&point);
-
-	CMenu menu;
-	menu.LoadMenu(IDR_POPUP_DATASET_MANAGER);
-	CMenu* pPopupMenu = menu.GetSubMenu(0);
-
-	if (pPopupMenu != nullptr)
+	auto* session = DatasetManagerUi::Session(this);
+	bool datasets = true;
+	const auto rows = SelectedRows(datasets);
+	if (!session || rows.empty() || !DatasetManagerUi::ConfirmRemoval(this, rows.size()))
 	{
-		pPopupMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
+		return;
 	}
+	CWaitCursor wait;
+	for (const std::size_t row : rows)
+	{
+		if (datasets)
+		{
+			(void)session->importer().removeDataset(m_vecDS[row].id);
+		}
+		else
+		{
+			(void)session->importer().removeSupportFile(m_vecSP[row].id);
+		}
+	}
+	session->refreshDatasets();
+	SetRefreshItem();
+	theApp.MapRefresh();
+}
 
-	*pResult = 0;
+void DATASET_SUPPORTdlg::OnMenuOpenFolder(CCmdUI* /*pCmdUI*/)
+{
+	const auto* session = theApp.systemDatabase.get();
+	if (!session)
+	{
+		return;
+	}
+	bool datasets = true;
+	for (const std::size_t row : SelectedRows(datasets))
+	{
+		DatasetManagerUi::ShowInFolder(session->store().absolute(datasets ? m_vecDS[row].path : m_vecSP[row].path));
+	}
 }
 
 void DATASET_SUPPORTdlg::OnDropFiles(HDROP hDropInfo)
 {
-	UINT nFiles = ::DragQueryFile(hDropInfo, (UINT)-1, NULL, 0);
-
-	for (UINT i = 0; i < nFiles; i++)
-	{
-		UINT nPathLength = ::DragQueryFile(hDropInfo, i, NULL, 0);
-		CString filePath;
-		::DragQueryFile(hDropInfo, i, filePath.GetBufferSetLength(nPathLength), nPathLength + 1);
-		filePath.ReleaseBuffer();
-
-		LoadFile(filePath);
-	}
+	LoadFiles(DatasetManagerUi::DroppedFiles(hDropInfo));
 	CDialogEx::OnDropFiles(hDropInfo);
 }
-
-void DATASET_SUPPORTdlg::OnDestroy()
-{
-	DataSetManagerSupport::GetInstance().deleteAllDataFromTable("DatasetFiles");
-	DataSetManagerSupport::GetInstance().deleteAllDataFromTable("SupportFiles");
-	
-	std::vector<CString> dsFilePathVec;
-	std::vector<CString> spFilePathVec;
-
-	S100::ExchangeCatalogue* ec = new S100::ExchangeCatalogue();
-
-	for (int i = 0; i < m_vecDS.size(); i++)
-	{
-		DataSetManagerSupport::GetInstance().insertData("DatasetFiles", m_vecDS[i]->fileName, m_vecDS[i]->filePath);
-		S100::DatasetDiscoveryMetadata ddm;
-
-		ddm.FileName = m_vecDS[i]->Name;
-		ddm.dataCoverage = m_vecDS[i]->datacoverage;
-		ddm.productSpecification = m_vecDS[i]->productSpecification;
-		ddm.BoundingBox = m_vecDS[i]->BoundingBox;
-		ec->DatasetDiscoveryMetadata.push_back(ddm);
-
-		CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath;
-		filepath += LibMFCUtil::StringToWString(m_vecDS[i]->commonfilePath).c_str();
-		dsFilePathVec.push_back(filepath);
-		DataSetManagerSupport::GetInstance().CopyFileWithChecks(LibMFCUtil::StringToWString(m_vecDS[i]->filePath).c_str(),
-			filepath);
-	}
-
-	for (int i = 0; i < m_vecSP.size(); i++)
-	{
-		DataSetManagerSupport::GetInstance().insertData("SupportFiles", m_vecSP[i]->fileName, m_vecSP[i]->filePath);
-		S100::SupportFileDiscoveryMetadata sfd;
-
-		sfd.FileName = m_vecSP[i]->Name;
-
-		ec->SupportFileDiscoveryMetadata.push_back(sfd);
-
-		CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath;
-		filepath += LibMFCUtil::StringToWString(m_vecSP[i]->commonfilePath).c_str();
-		spFilePathVec.push_back(filepath);
-		DataSetManagerSupport::GetInstance().CopyFileWithChecks(LibMFCUtil::StringToWString(m_vecSP[i]->filePath).c_str(),
-			filepath);
-	}
-
-	CString filePath = DataSetManagerSupport::GetInstance().m_FolderPath;
-	filePath += DataSetManagerSupport::GetInstance().m_FileName;
-
-	std::string stfilePath = LibMFCUtil::WStringToString(filePath.GetBuffer());
-
-	if (fs::exists(stfilePath)) {
-		if (DataSetManagerSupport::GetInstance().tryDeleteFile(stfilePath))
-			ec->Save(stfilePath);
-	}
-	else {
-		ec->Save(stfilePath);
-	}
-
-	
-	bool blayercreate = true;
-	auto layers = theApp.gisLib->GetLayerManager()->layers;
-	for (auto layer : layers)
-	{
-		if (layer->GetLayerPath().find(filePath.GetString()) != std::wstring::npos)
-		{
-			int id = layer->GetID();
-
-			theApp.gisLib->GetLayerManager()->AddLayerFront(std::wstring(filePath));
-			theApp.gisLib->GetLayerManager()->DeleteLayerByKey(id);
-
-			blayercreate = false;
-			break;
-		}
-	}
-
-	if (blayercreate) {
-		theApp.gisLib->GetLayerManager()->AddLayerFront(std::wstring(filePath));
-	}
-	
-	theApp.m_pDockablePaneLayerManager.UpdateList();
-
-	delete ec;
-	CDialogEx::OnDestroy();
-}
-
-
-void DATASET_SUPPORTdlg::SetRefreshItem()
-{
-	m_list1.DeleteAllItems();
-	for (auto item : m_vecDS)
-		Set_Item(item);
-
-	m_list2.DeleteAllItems();
-	for (auto item : m_vecSP)
-		Set_Item(item);
-}
-
-void DATASET_SUPPORTdlg::Set_Item(std::shared_ptr<DatasetClass> item)
-{
-	if (item)
-	{
-		if (item->DS_SP)
-		{
-			int size = m_list2.GetItemCount();
-			m_list2.InsertItem(size, _T(""));
-			m_list2.SetItemText(size, 0, LibMFCUtil::StringToWString(item->fileName).c_str());
-			m_list2.SetItemText(size, 1, LibMFCUtil::StringToWString(item->filePath).c_str());
-
-			m_list2.SetCheck(size, false);
-		}
-		else
-		{
-			int size = m_list1.GetItemCount();
-			m_list1.InsertItem(size, _T(""));
-			m_list1.SetItemText(size, 0, LibMFCUtil::StringToWString(item->fileName).c_str());
-			m_list1.SetItemText(size, 1, LibMFCUtil::StringToWString(item->filePath).c_str());
-
-			m_list1.SetCheck(size, false);
-		}
-	}
-}
-
-
-void DATASET_SUPPORTdlg::LoadFile(CString filePath)
-{
-	if ((filePath.Find(L".xml") != std::wstring::npos) || (filePath.Find(L"XML") != std::wstring::npos))
-	{
-		CString fileName;
-		int pos = filePath.ReverseFind('\\');
-		if (pos != -1) {
-			fileName = filePath.Mid(pos + 1);
-		}
-
-		auto temp = DataSetManagerSupport::GetInstance().Dataset_LoadFile(LibMFCUtil::WStringToString(filePath.GetBuffer()));
-		if (temp.size())
-		{
-			for (int i = 0; i < temp.size(); i++)
-			{
-				if (temp[i])
-				{
-					if (temp[i]->DS_SP)
-					{
-						m_vecSP.push_back(temp[i]);
-					}
-					else
-					{
-						m_vecDS.push_back(temp[i]);
-					}
-				}
-			}
-		}
-		SetRefreshItem();
-	}
-}
-
 
 BOOL DATASET_SUPPORTdlg::PreTranslateMessage(MSG* pMsg)
 {
@@ -401,8 +277,7 @@ BOOL DATASET_SUPPORTdlg::PreTranslateMessage(MSG* pMsg)
 	return CDialogEx::PreTranslateMessage(pMsg);
 }
 
-
-void DATASET_SUPPORTdlg::OnNMCustomdrawList1(NMHDR* pNMHDR, LRESULT* pResult)
+void DATASET_SUPPORTdlg::HighlightMissing(CListCtrl& list, int pathColumn, NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMLVCUSTOMDRAW lplvcd = reinterpret_cast<LPNMLVCUSTOMDRAW>(pNMHDR);
 
@@ -414,41 +289,23 @@ void DATASET_SUPPORTdlg::OnNMCustomdrawList1(NMHDR* pNMHDR, LRESULT* pResult)
 
 	case CDDS_ITEMPREPAINT:
 	{
-		CString strFilePath = m_list1.GetItemText(lplvcd->nmcd.dwItemSpec, 1); 
-
-		if (!PathFileExists(strFilePath))
+		const CString path = list.GetItemText(static_cast<int>(lplvcd->nmcd.dwItemSpec), pathColumn);
+		if (!PathFileExists(path))
 		{
 			lplvcd->clrTextBk = RGB(223, 159, 160);
 		}
-
 		*pResult = CDRF_DODEFAULT;
 	}
 	break;
 	}
 }
 
+void DATASET_SUPPORTdlg::OnNMCustomdrawList1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	HighlightMissing(m_list1, DatasetPath, pNMHDR, pResult);
+}
 
 void DATASET_SUPPORTdlg::OnNMCustomdrawList2(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	LPNMLVCUSTOMDRAW lplvcd = reinterpret_cast<LPNMLVCUSTOMDRAW>(pNMHDR);
-
-	switch (lplvcd->nmcd.dwDrawStage)
-	{
-	case CDDS_PREPAINT:
-		*pResult = CDRF_NOTIFYITEMDRAW;
-		break;
-
-	case CDDS_ITEMPREPAINT:
-	{
-		CString strFilePath = m_list2.GetItemText(lplvcd->nmcd.dwItemSpec, 1); 
-
-		if (!PathFileExists(strFilePath))
-		{
-			lplvcd->clrTextBk = RGB(223, 159, 160);
-		}
-
-		*pResult = CDRF_DODEFAULT;
-	}
-	break;
-	}
+	HighlightMissing(m_list2, SupportPath, pNMHDR, pResult);
 }

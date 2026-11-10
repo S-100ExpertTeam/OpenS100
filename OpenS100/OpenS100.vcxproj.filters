@@ -110,7 +110,10 @@
     <ClInclude Include="FC_PCSelectdlg.h">
       <Filter>Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="DataSetManagerSupport.h">
+    <ClInclude Include="DatasetManagerUi.h">
+      <Filter>Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="LegacyDatasetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CDlg_Portrayal.h">
@@ -190,7 +193,10 @@
     <ClCompile Include="DialogDatasetManager.cpp">
       <Filter>Dialog</Filter>
     </ClCompile>
-    <ClCompile Include="DataSetManagerSupport.cpp">
+    <ClCompile Include="DatasetManagerUi.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="LegacyDatasetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DATASET_SUPPORTdlg.cpp">

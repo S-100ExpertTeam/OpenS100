@@ -3,6 +3,7 @@
 #include "afxwinappex.h"
 #include "afxdialogex.h"
 #include "OpenS100.h"
+#include "../GISLibrary/SystemDatabaseSession.h"
 #include "MainFrm.h"
 #include "OpenS100Doc.h"
 #include "OpenS100View.h"
@@ -160,6 +161,8 @@ BOOL COpenS100App::InitInstance()
 
 int COpenS100App::ExitInstance()
 {
+	systemDatabase.reset();   // takes its chart layer out of the layer manager
+
 	AfxOleTerm(FALSE);
 
 	return CWinAppEx::ExitInstance();

@@ -606,6 +606,8 @@
     <ClCompile Include="SupportFileRevisionStatus.cpp" />
     <ClCompile Include="SupportFileSpecification.cpp" />
     <ClCompile Include="SymbolFill.cpp" />
+    <ClCompile Include="SystemDatabaseChart.cpp" />
+    <ClCompile Include="SystemDatabaseSession.cpp" />
     <ClCompile Include="TemporalExtent.cpp" />
     <ClCompile Include="S100_Time.cpp" />
     <ClCompile Include="S101Factory.cpp" />
@@ -800,6 +802,7 @@
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryItem.h" />
     <ClInclude Include="LanguageCode.h" />
+    <ClInclude Include="LayerContainer.h" />
     <ClInclude Include="Length.h" />
     <ClInclude Include="LineInstruction.h" />
     <ClInclude Include="LineInstructionUnsuppressed.h" />
@@ -983,6 +986,8 @@
     <ClInclude Include="SupportFileRevisionStatus.h" />
     <ClInclude Include="SupportFileSpecification.h" />
     <ClInclude Include="SymbolFill.h" />
+    <ClInclude Include="SystemDatabaseChart.h" />
+    <ClInclude Include="SystemDatabaseSession.h" />
     <ClInclude Include="TemporalExtent.h" />
     <ClInclude Include="S100_Time.h" />
     <ClInclude Include="S101Factory.h" />

@@ -11,6 +11,13 @@
 
 #include "../GISLibrary/GISLibrary.h"
 
+#include <memory>
+
+namespace GISLibrary
+{
+	class SystemDatabaseSession;
+}
+
 class COpenS100View;
 class COpenS100App : public CWinAppEx
 {
@@ -32,6 +39,10 @@ public:
 
 	CGISLibraryApp* gisLib = new CGISLibraryApp();
 	CGISLibraryApp* gisLib2;// = new CGISLibraryApp();
+
+	// The installed S-100 data (catalogues, datasets, support files); null when it could not be
+	// opened. Its chart layer draws the installed datasets.
+	std::unique_ptr<GISLibrary::SystemDatabaseSession> systemDatabase;
 
 public:
 	virtual BOOL InitInstance();

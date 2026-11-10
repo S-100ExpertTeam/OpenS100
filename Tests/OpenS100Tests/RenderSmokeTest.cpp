@@ -25,6 +25,7 @@
 #include "GISLibrary.h"
 #include "PortrayalRenderCache.h"
 #include "S100ExchangeCatalogue.h"
+#include "SystemDatabaseSession.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
 namespace
@@ -296,4 +297,81 @@ TEST(RenderSmoke, ExchangeSetLoadsOnlyTheSelectedCells)
 	const std::size_t opened = layerSet->openCount();
 	drawAt(128.95, 35.02, 129.15, 35.14, "busan-again");
 	EXPECT_EQ(layerSet->openCount(), opened);
+}
+
+// System Database work item SDB-7: datasets installed once are drawn after a restart by S-98 E-1.3
+// selection: nothing is opened at start-up, a view opens only the cells it needs.
+TEST(RenderSmoke, SystemDatabaseChartLoadsBySelectionAfterRestart)
+{
+	const auto cells = testpaths::tdsRoot() / L"KOR_TDS" / L"S100_ROOT" / L"S-101" / L"DATASET_FILES";
+	if (!std::filesystem::exists(cells))
+	{
+		GTEST_SKIP() << "reference exchange set not available: " << cells.string();
+	}
+	const auto root = testpaths::tempDir() / L"SystemDatabaseChart";
+	std::filesystem::remove_all(root);
+
+	// Every cell over Busan, from the overview to the harbour plans.
+	const char* busan[] = { "101KR00659C81", "101KR00659C82", "101KR005G3B33", "101KR004G3B30", "101KR003G3B00", "101KR002G3000", "101KR001G0000" };
+	{
+		GISLibrary::SystemDatabaseSession session(root);
+		ASSERT_EQ(session.importer().importFeatureCatalogue(testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").outcome,
+			s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(session.importer().importPortrayalCatalogue(testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal").outcome,
+			s100::sdb::ImportOutcome::Added);
+		for (const char* name : busan)
+		{
+			const auto file = cells / name / (std::string(name) + ".000");
+			ASSERT_EQ(session.importer().importDataset(file).outcome, s100::sdb::ImportOutcome::Added) << name;
+		}
+	}
+
+	// "Restart": a new library instance over the same System Database.
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto* catalogues = gis.GetCatalogManager();
+	catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+
+	GISLibrary::SystemDatabaseSession session(root);
+	session.attach(*gis.GetLayerManager(), *catalogues);
+	auto* chart = session.chart();
+	ASSERT_NE(chart, nullptr);
+	EXPECT_GE(chart->GetSelector().coverages().size(), 7u);   // some cells have more than one
+	EXPECT_EQ(chart->GetLayerSet().openCount(), 0u) << "nothing is opened at start-up";
+	EXPECT_TRUE(catalogues->FCs.empty()) << "nor is a catalogue read";
+
+	const auto drawAt = [&](double west, double south, double east, double north, const char* name) {
+		MBR area(west, south, east, north);
+		projection(area);
+		gis.SetMap(area);
+		MemoryCanvas canvas(kWidth, kHeight);
+		gis.Draw(canvas.dc());
+		std::size_t nonWhite = 0;
+		std::size_t colours = 0;
+		canvas.Measure(nonWhite, colours);
+		const auto png = OutputDirectory() / (std::string("sdb-chart-") + name + ".png");
+		EXPECT_TRUE(canvas.SavePng(png));
+		std::cout << "[ sdb chart ] " << name << " 1:" << gis.GetScaler()->GetCurrentScale() << " shown "
+			<< chart->GetLayerSet().shownCount() << ", cached " << chart->GetLayerSet().cachedCount() << ", opened so far "
+			<< chart->GetLayerSet().openCount() << ", " << png.string() << std::endl;
+		EXPECT_GT(nonWhite, static_cast<std::size_t>(kWidth) * kHeight / 50) << name << ": the chart is (almost) blank";
+	};
+
+	drawAt(129.00, 35.05, 129.10, 35.11, "busan-harbour");
+	const std::size_t harbour = chart->GetLayerSet().shownCount();
+	EXPECT_GT(harbour, 0u);
+	EXPECT_LT(harbour, 7u);
+	EXPECT_EQ(catalogues->FCs.size(), 1u);
+
+	drawAt(126.0, 33.0, 131.0, 37.0, "south-coast");
+	EXPECT_GT(chart->GetLayerSet().cachedCount(), 0u) << "the harbour cells left the view for the cache";
+
+	const std::size_t opened = chart->GetLayerSet().openCount();
+	drawAt(129.00, 35.05, 129.10, 35.11, "busan-harbour-again");
+	EXPECT_EQ(chart->GetLayerSet().openCount(), opened) << "coming back parses nothing again";
+
+	session.detach();
+	EXPECT_TRUE(gis.GetLayerManager()->layers.empty());
 }

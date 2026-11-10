@@ -111,7 +111,10 @@ BOOL CDockablePaneLayerManager::CanBeResized() const
 
 void CDockablePaneLayerManager::UpdateList()
 {
-	pDlg->UpdateList();
+	if (pDlg && pDlg->GetSafeHwnd())
+	{
+		pDlg->UpdateList();
+	}
 }
 
 BOOL CDockablePaneLayerManager::CanFloat() const

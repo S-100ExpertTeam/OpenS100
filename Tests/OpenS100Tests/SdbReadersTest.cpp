@@ -143,6 +143,11 @@ TEST_F(SdbReadersKorTds, ImportsWholeExchangeSetWhenAsked)
 	const GISLibrary::ExchangeCatalogueReader exchangeSets;
 	Importer importer(database, store, Importer::Readers{ { &cells }, &catalogues, &exchangeSets });
 
+	// With the S-101 catalogues, the store is a complete one a viewer can open
+	// (set OPENS100_SDB_ROOT to the root printed below).
+	ASSERT_EQ(importer.importFeatureCatalogue(testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").outcome, ImportOutcome::Added);
+	ASSERT_EQ(importer.importPortrayalCatalogue(testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal").outcome, ImportOutcome::Added);
+
 	const auto start = std::chrono::steady_clock::now();
 	const auto report = importer.importExchangeSet(testpaths::korS101Catalog());
 	const auto seconds = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();

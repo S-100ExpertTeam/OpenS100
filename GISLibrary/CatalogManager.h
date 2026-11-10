@@ -63,7 +63,8 @@ public:
 	// registration (a catalogue already loaded from it stays loaded).
 	void registerFeatureCatalogue(const s100::sdb::CatalogueRecord& record, const std::filesystem::path& file);
 	void registerPortrayalCatalogue(const s100::sdb::CatalogueRecord& record, const std::filesystem::path& file);
-	// Registers every catalogue installed in the System Database.
+	// Makes the registrations those of the catalogues installed in the System Database: new ones
+	// are added, removed ones dropped, unchanged ones keep what was loaded from them.
 	void registerInstalled(const s100::sdb::SystemDatabase& database, const s100::sdb::ResourceStore& store);
 	void clearRegistrations();
 

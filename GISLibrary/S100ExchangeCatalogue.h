@@ -4,6 +4,7 @@
 #include "ExchangeCatalogue.h"
 
 #include "DatasetLayerSet.h"
+#include "LayerContainer.h"
 
 #include "../SystemDatabase/DatasetSelection.h"
 
@@ -21,7 +22,7 @@ class ScaleRange;
 
 
 class S100ExchangeCatalogue :
-	public SpatialObject
+	public SpatialObject, public GISLibrary::LayerContainer
 {
 public:
 	S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1, LayerManager* parent);
@@ -57,6 +58,9 @@ public:
 	std::wstring FixLegacyFileName(const std::string& str);
 
 	std::wstring GetFirstLayerFilePath();
+
+	LayerManager* GetInnerLayers() override { return m_pLayerManager; }
+	void DropCachedLayers() override { if (m_layers) m_layers->dropCache(); }
 
 	// The layers of the selected datasets and the cache of deselected ones; null before Open.
 	[[nodiscard]] const GISLibrary::DatasetLayerSet* GetLayerSet() const noexcept { return m_layers.get(); }

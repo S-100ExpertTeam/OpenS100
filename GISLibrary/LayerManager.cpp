@@ -54,6 +54,7 @@
 #include <chrono>
 #include <memory>
 #include "S100ExchangeCatalogue.h"
+#include "LayerContainer.h"
 
 LayerManager::LayerManager(D2D1Resources* d2d1)
 {
@@ -387,6 +388,10 @@ int LayerManager::AddLayerFront(const std::wstring& _filepath)
 void LayerManager::Draw(HDC& hdc, int offset)
 {
 	DrawBackground(hdc, offset);
+
+	// Layer containers (the System Database chart, exchange sets) are base charts: drawn under
+	// the datasets opened on their own.
+	DrawLayerContainers(hdc, offset);
 
 	DrawS100Datasets(hdc, offset);
 
@@ -918,13 +923,24 @@ void LayerManager::DrawECDISMode(HDC& hDC, int offset)
 	}
 }
 
+void LayerManager::DrawLayerContainers(HDC& hDC, int offset)
+{
+	for (auto layer : layers)
+	{
+		if (dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject))
+		{
+			layer->Draw(hDC, scaler, offset);
+		}
+	}
+}
+
 void LayerManager::DrawNonS100Datasets(HDC& hDC, int offset)
 {
 	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
 		auto layer = (*i);
 
-		if (!layer->IsS100Layer())
+		if (!layer->IsS100Layer() && !dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject))
 		{
 			layer->Draw(hDC, scaler, offset);
 		}
@@ -1257,6 +1273,16 @@ void LayerManager::S101RebuildPortrayal()
 	{
 		auto layer = (*i);
 
+		if (auto container = dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject))
+		{
+			container->DropCachedLayers();
+			if (auto inner = container->GetInnerLayers())
+			{
+				inner->S101RebuildPortrayal();
+			}
+			continue;
+		}
+
 		if (layer->m_spatialObject->m_FileType == S100_FileType::FILE_S_100_VECTOR)
 		{
 			BuildPortrayalCatalogue(layer);
@@ -1508,10 +1534,28 @@ void LayerManager::ChangeS100ColorPalette(GeoMetryLibrary::ColorTable value)
 
 void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 {
+	ChangeLayerPalettes(paletteName);
+
+	for (auto pc : catalogManager->PCs)
+	{
+		PortrayalRender::ChangePalette(pc, paletteName, D2);
+	}
+}
+
+void LayerManager::ChangeLayerPalettes(const std::wstring& paletteName)
+{
 	for (auto i = layers.begin(); i != layers.end(); i++)
 	{
 		auto layer = *i;
-		if (layer && true == layer->IsS100Layer())
+		if (auto container = layer ? dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject) : nullptr)
+		{
+			container->DropCachedLayers();
+			if (auto inner = container->GetInnerLayers())
+			{
+				inner->ChangeLayerPalettes(paletteName);
+			}
+		}
+		else if (layer && true == layer->IsS100Layer())
 		{
 			auto s100layer = (S100Layer*)layer;
 			auto pc = s100layer->GetPC();
@@ -1530,11 +1574,6 @@ void LayerManager::ChangeS100ColorPalette(std::wstring paletteName)
 				}
 			}
 		}
-	}
-
-	for (auto pc : catalogManager->PCs)
-	{
-		PortrayalRender::ChangePalette(pc, paletteName, D2);
 	}
 }
 

@@ -65,7 +65,10 @@
 #include "../GISLibrary/Permit.h"
 #include "DialogDatasetManager.h"
 
-#include "DataSetManagerSupport.h"
+#include "LegacyDatasetManager.h"
+#include "DatasetManagerUi.h"
+#include "../GISLibrary/SystemDatabaseSession.h"
+#include "../GISLibrary/LayerContainer.h"
 
 #pragma comment(lib, "d2d1.lib")
 
@@ -628,58 +631,32 @@ int COpenS100View::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CView::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	// catalog manager
+	// Portrayal catalogues are read when a dataset first needs one; the renderer builds its
+	// caches for each as it is read.
 	auto cm = theApp.gisLib->GetCatalogManager();
+	cm->onPortrayalLoaded = [](PortrayalCatalogue* pc) {
+		GISLibrary::PortrayalRender::Prepare(pc, theApp.gisLib->GetD2D1Resources());
+	};
 
-	//import FC
-	auto fclist = DataSetManagerSupport::GetInstance().initFCList();
-	for (auto item : fclist)
+	// The System Database: no dataset or catalogue is read here. Its chart layer selects the
+	// datasets each view needs (S-98 E-1.3) and opens only those.
+	try
 	{
-		cm->addFC(item);
-	}
-
-	//import PC
-	auto pclist = DataSetManagerSupport::GetInstance().initPCList();
-	for (auto item : pclist)
-	{
-		GISLibrary::PortrayalRender::Prepare(cm->addPC(item), theApp.gisLib->GetD2D1Resources());
-	}
-
-	// import Dataset
-	auto dsList = DataSetManagerSupport::GetInstance().initDataFileList();
-	for (auto item : dsList)
-	{
-		theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());
-	}
-
-	// import Support files
-	auto supportFiles = DataSetManagerSupport::GetInstance().initSupportFiles();
-	for (auto item : supportFiles)
-	{
-		CString cPath = LibMFCUtil::StringToWString(item).c_str();
-		auto ext = LibMFCUtil::GetExtension(cPath);
-		if (ext.CompareNoCase(L"xml") == 0)
+		theApp.systemDatabase = std::make_unique<GISLibrary::SystemDatabaseSession>(GISLibrary::SystemDatabaseSession::defaultRoot());
+		// The old Dataset Manager's list is installed once; the user hears of it only when
+		// something could not be installed.
+		const auto migrated = MigrateLegacyDatasetManager(*theApp.systemDatabase, L"..\\TEMP\\DatasetManager.db");
+		if (migrated && std::ranges::any_of(*migrated, [](const auto& result) { return result.outcome == s100::sdb::ImportOutcome::Rejected; }))
 		{
-			TranslationPackageType languagePack;
-			debug_print_utf8("Language: " + languagePack.Language + "\n");
-			debug_print_utf8("Issue Date: " + languagePack.IssueDate + "\n");
-			debug_print_utf8("Issue Time: " + languagePack.IssueTime + "\n");
-			/*print_utf8("Responsible Party: " + translationPackage->ResponsibleParty + "\n");*/
-
-			for (const auto& sourceFile : languagePack.SourceFiles) {
-				debug_print_utf8("Source File Identifier: " + sourceFile.Header.ResourceIdentifier + "\n");
-				for (const auto& id : sourceFile.Header.Identifications) {
-					debug_print_utf8("  Path: " + id.Path + ", Value: " + id.Value + "\n");
-				}
-				for (const auto& item : sourceFile.TranslationItems) {
-					debug_print_utf8("  Translation Item Path: " + item.Path + "\n");
-					debug_print_utf8("    Original: " + item.Original + "\n");
-					debug_print_utf8("    Status: " + item.ItemStatus.toString() + "\n");
-					debug_print_utf8("    Translation: " + item.Translation + "\n");
-				}
-			}
+			DatasetManagerUi::Report(this, *migrated);
 		}
-		//theApp.gisLib->AddLayer(LibMFCUtil::StringToWString(item).c_str());
+		theApp.systemDatabase->attach(*theApp.gisLib->GetLayerManager(), *cm);
+	}
+	catch (const std::exception& e)
+	{
+		theApp.systemDatabase.reset();
+		const std::wstring message = L"The System Database could not be opened:\n" + DatasetManagerUi::Widen(e.what());
+		AfxMessageBox(message.c_str(), MB_ICONERROR);
 	}
 
 	return 0;
@@ -1386,6 +1363,29 @@ void COpenS100View::PickReport(CPoint _point)
 void COpenS100View::PickReport(CPoint _point, int layerIndex)
 {
 	auto layer = theApp.gisLib->GetLayerManager()->GetLayer(layerIndex);
+	if (layer && !layer->IsS100Layer())
+	{
+		// The System Database chart or an exchange set: pick from the topmost of its datasets
+		// (the largest scale) that covers the point.
+		if (auto container = dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject))
+		{
+			layer = nullptr;
+			double x = 0;
+			double y = 0;
+			theApp.gisLib->DeviceToWorld(_point.x, _point.y, &x, &y);
+			if (auto inner = container->GetInnerLayers())
+			{
+				for (auto candidate = inner->layers.rbegin(); candidate != inner->layers.rend(); ++candidate)
+				{
+					if ((*candidate)->IsS100Layer() && (*candidate)->GetMBR().PtInMBR(x, y))
+					{
+						layer = *candidate;
+						break;
+					}
+				}
+			}
+		}
+	}
 	if (nullptr == layer || !layer->IsS100Layer())
 	{
 		return;
@@ -2018,10 +2018,7 @@ void COpenS100View::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
 
-	//CString filepath = DataSetManagerSupport::GetInstance().m_FolderPath + DataSetManagerSupport::GetInstance().m_FileName;
-	//theApp.gisLib->AddLayer(filepath);
-	//
-	//theApp.m_pDockablePaneLayerManager.UpdateList();
+	theApp.m_pDockablePaneLayerManager.UpdateList();
 
 
 	TranslationPackageType* translationPackage = new TranslationPackageType;

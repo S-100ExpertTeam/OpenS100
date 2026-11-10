@@ -261,8 +261,12 @@ void CatalogManager::registerFeatureCatalogue(const s100::sdb::CatalogueRecord& 
 	const std::size_t index = indexOf(registeredFCRecords, record);
 	if (index < registeredFCRecords.size())
 	{
+		// The same file as before keeps what was loaded from it.
+		if (registeredFCs[index].file != file || registeredFCRecords[index].sha256 != record.sha256)
+		{
+			registeredFCs[index] = Registration{ file };
+		}
 		registeredFCRecords[index] = record;
-		registeredFCs[index] = Registration{ file };
 		return;
 	}
 	registeredFCRecords.push_back(record);
@@ -274,8 +278,12 @@ void CatalogManager::registerPortrayalCatalogue(const s100::sdb::CatalogueRecord
 	const std::size_t index = indexOf(registeredPCRecords, record);
 	if (index < registeredPCRecords.size())
 	{
+		// The same folder as before keeps what was loaded from it.
+		if (registeredPCs[index].file != file || registeredPCRecords[index].sha256 != record.sha256)
+		{
+			registeredPCs[index] = Registration{ file };
+		}
 		registeredPCRecords[index] = record;
-		registeredPCs[index] = Registration{ file };
 		return;
 	}
 	registeredPCRecords.push_back(record);
@@ -284,11 +292,36 @@ void CatalogManager::registerPortrayalCatalogue(const s100::sdb::CatalogueRecord
 
 void CatalogManager::registerInstalled(const s100::sdb::SystemDatabase& database, const s100::sdb::ResourceStore& store)
 {
-	for (const auto& record : database.featureCatalogues().all())
+	const auto featureCatalogues = database.featureCatalogues().all();
+	const auto portrayalCatalogues = database.portrayalCatalogues().all();
+
+	// Registrations of catalogues no longer installed go (what was loaded from them stays loaded
+	// for the layers that use it).
+	const auto installed = [](const std::vector<s100::sdb::CatalogueRecord>& records, const s100::sdb::CatalogueRecord& record) {
+		return indexOf(records, record) < records.size();
+	};
+	for (std::size_t i = registeredFCRecords.size(); i-- > 0;)
+	{
+		if (!installed(featureCatalogues, registeredFCRecords[i]))
+		{
+			registeredFCRecords.erase(registeredFCRecords.begin() + static_cast<std::ptrdiff_t>(i));
+			registeredFCs.erase(registeredFCs.begin() + static_cast<std::ptrdiff_t>(i));
+		}
+	}
+	for (std::size_t i = registeredPCRecords.size(); i-- > 0;)
+	{
+		if (!installed(portrayalCatalogues, registeredPCRecords[i]))
+		{
+			registeredPCRecords.erase(registeredPCRecords.begin() + static_cast<std::ptrdiff_t>(i));
+			registeredPCs.erase(registeredPCs.begin() + static_cast<std::ptrdiff_t>(i));
+		}
+	}
+
+	for (const auto& record : featureCatalogues)
 	{
 		registerFeatureCatalogue(record, store.absolute(record.path));
 	}
-	for (const auto& record : database.portrayalCatalogues().all())
+	for (const auto& record : portrayalCatalogues)
 	{
 		registerPortrayalCatalogue(record, store.absolute(record.path));
 	}

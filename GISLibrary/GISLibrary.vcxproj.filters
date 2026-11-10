@@ -1128,6 +1128,12 @@
     <ClCompile Include="DatasetLayerSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SystemDatabaseChart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SystemDatabaseSession.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GISLibrary.h">
@@ -2247,6 +2253,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DatasetLayerSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemDatabaseChart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemDatabaseSession.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
