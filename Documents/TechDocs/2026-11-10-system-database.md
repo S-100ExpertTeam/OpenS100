@@ -167,7 +167,11 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
   - 구성: `Sqlite`(연결·문장·트랜잭션 RAII, 실패는 `DatabaseError`), `Schema`(`user_version` 기반 마이그레이션), 저장소 5개(`ExchangeSet`, `Catalogue`(FC·PC 겸용), `Dataset`(업데이트·지원 파일 연결 포함), `Coverage`, `SupportFile`), 파사드 `SystemDatabase`.
   - 조회가 없을 수 있는 경우는 `std::optional`, DB 오류·제약 위반은 예외(지침 25c).
   - 검증: `SystemDatabase.*` 16개 통과(전체 46 통과, 1 SKIP은 기존 환경 의존 테스트). 한글 경로 DB 파일, 새 스키마 거부, 외래 키 연쇄 삭제, 트랜잭션 롤백 포함. CMake Release `/W4 /WX` 통과, 설치된 패키지를 외부 프로젝트에서 `find_package(opens100)` → `opens100::sdb`로 링크해 실행 확인.
-- [ ] **SDB-2** `ResourceStore`: 루트 배치, 복사(해시 계산), 삭제. 경로 UTF-8·`std::filesystem::path`.
+- [x] **SDB-2** `ResourceStore`: 루트 배치, 복사(해시 계산), 삭제. 경로 UTF-8·`std::filesystem::path`. (2026-11-10, 85f44c84)
+  - `ResourceStore`(배치·복사·이동·삭제), `Sha256`(FIPS 180-4 자체 구현, 의존성 추가 없음), `Utf8Path.h`(경로 ↔ UTF-8, Windows ANSI 코드 페이지를 거치지 않음).
+  - 제품·버전·이름은 한 경로 조각으로만 쓰인다(`/ \ : * ? " < > |`·제어 문자·끝의 점과 공백을 `_`로). `absolute()`는 절대 경로와 `..`을 거부한다.
+  - 파일 복사는 `<대상>.part`에 쓰고 이름을 바꿔 넣는다. 삭제·이동은 비게 된 상위 폴더를 루트 전까지 지운다.
+  - 검증: `Sha256.*` 2개(표준 벡터, 나눠 넣기), `ResourceStore.*` 6개(한글 루트 포함) 통과.
 - [ ] **SDB-3** `Importer`: 단일 FC, 단일 PC 폴더, 단일 데이터셋(8211부터), 지원 파일, 교환세트(`CATALOG.XML`). 데이터셋 DataCoverage 추출. 판·업데이트 비교 규칙.
 - [ ] **SDB-4** `CatalogueRegistry`를 SDB에서 채우기. `initFCList`/`initPCList` 제거. 데이터셋 제품·버전으로 FC/PC 해석(ready/fallback/unresolved, opens100-web `catalogue-registry.ts`와 맞춤).
 - [ ] **SDB-5** `DatasetSelector`: opens100-web `selectDataCoverages`(경계값 수정 포함)를 역이식하고, 같은 입력으로 두 구현의 결과가 같은지 테스트. `S100Utilities::SelectDataCoverages`의 Clipper 경로를 대체한다.
