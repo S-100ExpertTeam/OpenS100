@@ -141,6 +141,8 @@ public:
 
 	void DrawFromMapRefresh(CDC* pDC, CRect& rect);
 	void DrawFromInvalidate(CDC* pDC, CRect& rect);
+	// S-98 Appendix D indications for the S-102 depths on screen (WLA, uncertainty).
+	void DrawDepthIndications(CDC* pDC, const CRect& rect);
 
 	Layer* GetCurrentLayer();
 

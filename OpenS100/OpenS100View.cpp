@@ -69,6 +69,7 @@
 #include "DatasetManagerUi.h"
 #include "../GISLibrary/SystemDatabaseSession.h"
 #include "../GISLibrary/LayerContainer.h"
+#include "../GISLibrary/CoverageDataset.h"
 
 #pragma comment(lib, "d2d1.lib")
 
@@ -1113,6 +1114,65 @@ void COpenS100View::DrawFromMapRefresh(CDC* pDC, CRect& rect)
 	{
 		layerList->RefreshIfChanged();
 	}
+
+	DrawDepthIndications(pDC, rect);
+}
+
+// S-98 Appendix D indications for the S-102 depths on screen: the permanent WLA indication
+// (D-2.5, D-2.6) and why WLA could not be applied, and that uncertainty is applied (D-1.5).
+void COpenS100View::DrawDepthIndications(CDC* pDC, const CRect& rect)
+{
+	using GISLibrary::CoverageDataset;
+	using s100::coverage::WlaIssue;
+	using s100::coverage::WlaMethod;
+	const auto& settings = CoverageDataset::GetDepthSettings();
+	const bool wlaOn = settings.adjustment.wla.kind != WlaMethod::Kind::Off;
+	if (!wlaOn && !settings.adjustment.uncertainty)
+	{
+		return;
+	}
+	const CoverageDataset::WlaStatus status = CoverageDataset::CurrentWlaStatus();
+	std::vector<std::string> texts;
+	if (wlaOn)
+	{
+		if (status.applied > 0)
+		{
+			texts.push_back(s100::coverage::wlaIndication(settings.adjustment.wla).value_or(""));
+		}
+		if (!CoverageDataset::WaterLevelTimeSpan())
+		{
+			texts.push_back("Water level needs S-104");
+		}
+		if (status.issues.contains(WlaIssue::IncompatibleDatums))
+		{
+			texts.push_back(settings.adjustment.ignoreIncompatibleDatums ? "Incompatible datums (ignored for testing)"
+				: "Incompatible datums: S-102 " + s100::coverage::verticalDatumName(status.s102Datum) + ", S-104 "
+					+ s100::coverage::verticalDatumName(status.s104Datum));
+		}
+		if (status.issues.contains(WlaIssue::TimeNotCovered))
+		{
+			texts.push_back("No water level: S-104 does not cover this time");
+		}
+	}
+	if (settings.adjustment.uncertainty)
+	{
+		texts.push_back("Depths less vertical uncertainty");
+	}
+
+	const int oldMode = pDC->SetBkMode(OPAQUE);
+	const COLORREF oldBack = pDC->SetBkColor(RGB(255, 255, 255));
+	const COLORREF oldText = pDC->SetTextColor(RGB(0, 0, 0));
+	int y = rect.bottom - 24;
+	for (auto text = texts.rbegin(); text != texts.rend(); ++text)
+	{
+		if (text->empty()) continue;
+		const std::wstring line = DatasetManagerUi::Widen(*text);
+		pDC->TextOutW(rect.left + 8, y, line.c_str(), static_cast<int>(line.size()));
+		y -= 20;
+	}
+	pDC->SetTextColor(oldText);
+	pDC->SetBkColor(oldBack);
+	pDC->SetBkMode(oldMode);
 }
 
 void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)

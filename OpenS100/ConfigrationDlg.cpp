@@ -72,6 +72,7 @@ BOOL CConfigrationDlg::OnInitDialog()
 	m_tab.InsertItem(1, strOne);
 	m_tab.InsertItem(2, strS101);
 	m_tab.InsertItem(3, strPortrayal);
+	m_tab.InsertItem(4, _T("S-102 / S-104"));
 
 	CRect r;
 	m_tab.GetWindowRect(&r);
@@ -92,6 +93,11 @@ BOOL CConfigrationDlg::OnInitDialog()
 	portrayalTab.Create(IDD_CDlg_Portrayal, &m_tab);
 	portrayalTab.ShowWindow(SW_HIDE);
 	portrayalTab.MoveWindow(5, 25, r.Width() - 10, r.Height() - 30);
+
+	// S-102 / S-104: the S-98 Appendix D depth settings
+	depthTab.Create(IDD_DIALOG_CONFIG_DEPTH, &m_tab);
+	depthTab.ShowWindow(SW_HIDE);
+	depthTab.MoveWindow(5, 25, r.Width() - 10, r.Height() - 30);
 
 	m_tab.SetCurSel(0);
 
@@ -116,6 +122,9 @@ void CConfigrationDlg::OnTcnSelchangeConfigTab(NMHDR *pNMHDR, LRESULT *pResult)
 	case 2:
 		portrayalTab.ShowWindow(SW_SHOW);
 		break;
+	case 3:
+		depthTab.ShowWindow(SW_SHOW);
+		break;
 	}
 	*pResult = 0;
 }
@@ -135,6 +144,9 @@ void CConfigrationDlg::OnTcnSelchangingConfigTab(NMHDR *pNMHDR, LRESULT *pResult
 		break;
 	case 2:
 		portrayalTab.ShowWindow(SW_HIDE);
+		break;
+	case 3:
+		depthTab.ShowWindow(SW_HIDE);
 		break;
 	}
 	*pResult = 0;
@@ -179,6 +191,12 @@ void CConfigrationDlg::OnBnClickedApply()
 
 	mainTab.UpdateData();
 	s101Tab.UpdateData();
+
+	// S-102 / S-104: the depths are adjusted again and redrawn.
+	if (depthTab.Apply())
+	{
+		bMapRefresh = true;
+	}
 
 	CString value;
 

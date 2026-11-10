@@ -326,6 +326,7 @@
     <ClInclude Include="InformationCodeString.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="ConfigrationDlg.h" />
+    <ClInclude Include="ConfigurationDepth.h" />
     <ClInclude Include="Configuration_1.h" />
     <ClInclude Include="Configuration_4.h" />
     <ClInclude Include="DialogDockCurrentSelection.h" />
@@ -359,6 +360,7 @@
     <ClCompile Include="FC_PCSelectdlg.cpp" />
     <ClCompile Include="InformationCodeString.cpp" />
     <ClCompile Include="ConfigrationDlg.cpp" />
+    <ClCompile Include="ConfigurationDepth.cpp" />
     <ClCompile Include="Configuration_1.cpp" />
     <ClCompile Include="Configuration_4.cpp" />
     <ClCompile Include="DialogViewInformationType.cpp" />

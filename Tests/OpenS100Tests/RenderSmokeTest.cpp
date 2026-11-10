@@ -19,6 +19,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>
+#include <numeric>
 #include <vector>
 
 #include "TestPaths.h"
@@ -478,4 +479,69 @@ TEST(RenderSmoke, DrawsS102GridAsLayer)
 	std::cout << "[ s102 layer ] onIC " << gis.GetLayerManager()->onIC << ", non-white " << nonWhite << ", colours " << colours
 		<< ", " << png.string() << std::endl;
 	EXPECT_GE(colours, 4u) << "white and the three depth classes of the two-shade table";
+}
+
+// Coverage backport CV-6: water level adjustment in the viewer. KOR S-102 and the S-104 over it,
+// opened as layers; with WLA at the first S-104 record (their datums differ, so only with the
+// datum check overridden, as opens100-web's viewer offers for test data) the depths change.
+TEST(RenderSmoke, AdjustsS102ByTheS104OnScreen)
+{
+	const auto s102 = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-102" / L"S-102" / L"102KR00T4G3B3000026.h5";
+	const auto s104 = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-104" / L"S-104" / L"104KR00KR4_MOHID2K_G3B30_20260330_F36.h5";
+	const auto pc = testpaths::webDataRoot().parent_path() / L"pc" / L"S102_Portrayal" / L"portrayal_catalogue.xml";
+	if (!std::filesystem::exists(s102) || !std::filesystem::exists(s104) || !std::filesystem::exists(pc))
+	{
+		GTEST_SKIP() << "KOR S-102/S-104 or the S-102 PC not available";
+	}
+	using GISLibrary::CoverageDataset;
+	const CoverageDataset::DepthSettings original = CoverageDataset::GetDepthSettings();
+
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto* catalogues = gis.GetCatalogManager();
+	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
+	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-104_FC.xml").string()), nullptr);
+	ASSERT_NE(catalogues->addPC(pc.wstring()), nullptr);
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddLayer(s104.wstring()));
+	ASSERT_TRUE(gis.AddLayer(s102.wstring()));
+	ASSERT_TRUE(CoverageDataset::WaterLevelTimeSpan()) << "the S-104 records are known";
+
+	const auto render = [&](const char* name, std::vector<std::uint32_t>& pixels) {
+		// Fit the S-102 layer: the last one added.
+		gis.SetMap(gis.GetLayerManager()->GetLayer(gis.GetLayerManager()->LayerCount() - 1)->GetMBR());
+		MemoryCanvas canvas(kWidth, kHeight);
+		gis.Draw(canvas.dc());
+		::GdiFlush();
+		const auto png = OutputDirectory() / (std::string("s102-wla-") + name + ".png");
+		EXPECT_TRUE(canvas.SavePng(png));
+		std::size_t nonWhite = 0, colours = 0;
+		canvas.Measure(nonWhite, colours);
+		std::cout << "[ wla ] " << name << ": non-white " << nonWhite << ", colours " << colours << ", " << png.string() << std::endl;
+		pixels.assign(static_cast<std::size_t>(kWidth) * kHeight, 0);
+		BITMAPINFO info{};
+		info.bmiHeader = { sizeof(BITMAPINFOHEADER), kWidth, -kHeight, 1, 32, BI_RGB };
+		HBITMAP bitmap = static_cast<HBITMAP>(::GetCurrentObject(canvas.dc(), OBJ_BITMAP));
+		::GetDIBits(canvas.dc(), bitmap, 0, kHeight, pixels.data(), &info, DIB_RGB_COLORS);
+	};
+
+	std::vector<std::uint32_t> plain;
+	render("off", plain);
+
+	CoverageDataset::DepthSettings wla = original;
+	wla.adjustment.wla = s100::coverage::WlaMethod::instant(CoverageDataset::WaterLevelTimeSpan()->first);
+	wla.adjustment.ignoreIncompatibleDatums = true;
+	CoverageDataset::SetDepthSettings(wla);
+	std::vector<std::uint32_t> adjusted;
+	render("instant", adjusted);
+	const auto status = CoverageDataset::CurrentWlaStatus();
+	CoverageDataset::SetDepthSettings(original);
+
+	EXPECT_GT(status.applied, 0u);
+	EXPECT_TRUE(status.issues.contains(s100::coverage::WlaIssue::IncompatibleDatums));
+	const auto changed = std::inner_product(plain.begin(), plain.end(), adjusted.begin(), std::size_t{ 0 }, std::plus<>(),
+		[](std::uint32_t a, std::uint32_t b) { return a != b ? std::size_t{ 1 } : std::size_t{ 0 }; });
+	std::cout << "[ wla ] pixels changed by WLA: " << changed << std::endl;
+	EXPECT_GT(changed, 0u) << "adjusted depths draw differently (shading, contour, WLA boundary)";
 }

@@ -185,13 +185,26 @@
 #define ID_FILE_OPENFOLDER              32779
 #define ID_FILE_LOADFOLDER              32780
 
+#define IDD_DIALOG_CONFIG_DEPTH         372
+#define IDC_DEPTH_ESC                   1020
+#define IDC_DEPTH_UNCERTAINTY           1021
+#define IDC_DEPTH_WLA_METHOD            1022
+#define IDC_DEPTH_WLA_DATE              1023
+#define IDC_DEPTH_WLA_TIME              1024
+#define IDC_DEPTH_WLA_START_DATE        1025
+#define IDC_DEPTH_WLA_START_TIME        1026
+#define IDC_DEPTH_WLA_END_DATE          1027
+#define IDC_DEPTH_WLA_END_TIME          1028
+#define IDC_DEPTH_IGNORE_DATUM          1029
+#define IDC_DEPTH_S104_SPAN             1030
+#define IDC_DEPTH_FROM_S104             1031
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        371
+#define _APS_NEXT_RESOURCE_VALUE        373
 #define _APS_NEXT_COMMAND_VALUE         32781
-#define _APS_NEXT_CONTROL_VALUE         1010
+#define _APS_NEXT_CONTROL_VALUE         1032
 #define _APS_NEXT_SYMED_VALUE           316
 #endif
 #endif

@@ -2,6 +2,7 @@
 #include "Configuration_1.h"
 #include "Configuration_4.h"
 #include "CDlg_Portrayal.h"
+#include "ConfigurationDepth.h"
 
 #include "../GeoMetryLibrary/ENCConfiguration.h"
 
@@ -22,6 +23,7 @@ public:
 	CConfiguration_1 mainTab;
 	CConfiguration_4 s101Tab;
 	CDlg_Portrayal portrayalTab;
+	CConfigurationDepth depthTab;   // S-102 / S-104 (S-98 Appendix D)
 	
 	CTabCtrl m_tab;
 
