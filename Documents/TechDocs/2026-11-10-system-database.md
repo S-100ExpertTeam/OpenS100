@@ -191,7 +191,12 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
   - `GISLibrary::selectionView(Scaler&)`: 축척, 화면 크기, 경위도 → Mercator → 장치 좌표, 회전이 없을 때 지상 경계.
   - `S100ExchangeCatalogue`(설치 없이 교환세트 보기)도 같은 선택기를 쓴다(6절 결정). Clipper 경로(`S100Utilities::SelectDataCoverages`, 그것만 쓰던 `SCommonFuction` 함수 2개)와 쓰이지 않던 `DrawEx`를 지웠다.
   - 오프스크린 확인(`RenderSmoke.ExchangeSetLoadsOnlyTheSelectedCells`): KOR 교환세트를 바로 열어 부산 1:52,843에서 808셀 중 2개, 남해안 1:1,321,085에서 4개만 열고 그린다. 화면은 정상(사람이 PNG 확인).
-- [ ] **SDB-6** `DatasetCache`(LRU, 상한은 셀 수 또는 메모리).
+- [x] **SDB-6** `DatasetCache`(LRU, 상한은 셀 수 또는 메모리). (2026-11-10, a4f5e347)
+  - `SystemDatabase/LruCache.h`: 용량을 비용 단위로 재는 LRU(항목당 1이면 셀 수, 파일 크기면 대략의 메모리).
+  - 캐시를 쓰는 쪽은 `GISLibrary::DatasetLayerSet`: 선택된 데이터셋의 레이어를 그리는 `LayerManager`에 두고, 선택에서 빠진 레이어는 지우지 않고 캐시로, 다시 선택되면 캐시에서 꺼낸다. 나머지만 연다. 다시 들어올 것을 먼저 꺼낸 뒤에 빠지는 것을 넣는다(작은 캐시에서 곧 쓸 셀이 밀려나 재파싱되던 결함을 테스트가 잡았다). 그리기 순서는 작은 축척이 아래. 열지 못한 데이터셋은 매 프레임 다시 시도하지 않는다(`forgetFailures()`).
+  - `LayerManager`: 레이어를 추가하지 않고 여는 `CreateLayer`, 해석된 카탈로그로 여는 `CreateS100Layer`, 지우지 않고 꺼내는 `ReleaseLayer`. `AddLayer(path)`는 `CreateLayer` 위로 옮겼다.
+  - 교환세트 바로 보기(`S100ExchangeCatalogue`)도 같은 `DatasetLayerSet`을 쓴다. 부산 → 남해안 → 부산으로 돌아오면 첫 그리기 903 ms → 59 ms(재파싱 없음).
+  - 검증: `LruCache.*` 3개, `DatasetLayerSetTest.*` 4개(누수·이중 삭제 확인 포함), 렌더 테스트 통과.
 - [ ] **SDB-7** 앱: Dataset Manager 다이얼로그를 SDB 위의 UI로 다시 만든다. `IniCatalog.XML`·`TEMP` 복사·`DatasetManager.db` 제거. `OnCreate`의 일괄 `AddLayer` 제거. 기존 `DatasetManager.db`에서 FC/PC/데이터셋 경로를 읽어 한 번 가져오는 마이그레이션.
 - [ ] **SDB-8** 업데이트 파일 적용(`.001`~), 취소, 교환세트 서명(`CATALOG.SIGN`) 검증 연결.
 - [ ] **SDB-9** 화면 검증(지침 23): KOR_TDS 808셀 교환세트를 가져와 축척을 바꿔 가며 선택·그리기를 캡처하고, 시작 시간·메모리를 기록한다.
