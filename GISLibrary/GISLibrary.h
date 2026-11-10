@@ -4,7 +4,6 @@
 #include "D2D1Resources.h"
 #include "S101Creator.h"
 #include "CatalogManager.h"
-#include "S102_Color.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 

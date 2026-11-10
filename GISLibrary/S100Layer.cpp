@@ -5,8 +5,6 @@
 #include "GISLibrary.h"
 #include "S10XGML.h"
 #include "S100H5.h"
-#include "S102H5.h"
-#include "S102Renderer.h"
 #include "CoverageDataset.h"
 #include "PortrayalRenderCache.h"
 #include "ProcessS101.h"
@@ -179,12 +177,6 @@ bool S100Layer::DrawGrid(D2D1Resources* d2, HDC& hDC, Scaler* scaler)
 		return true;
 	}
 
-	auto s100 = dynamic_cast<S100SpatialObject*>(m_spatialObject);
-	if (s100 && s100->getS100SpatialObjectType() == S100SpatialObjectType::S102H5)
-	{
-		S102Renderer::Draw(*static_cast<S102H5*>(m_spatialObject), d2, hDC, scaler);
-		return true;
-	}
 	return false;
 }
 

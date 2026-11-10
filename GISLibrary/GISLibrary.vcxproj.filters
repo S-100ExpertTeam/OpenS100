@@ -666,9 +666,6 @@
     <ClCompile Include="S100H5.cpp">
       <Filter>S100H5</Filter>
     </ClCompile>
-    <ClCompile Include="S102H5.cpp">
-      <Filter>S100H5</Filter>
-    </ClCompile>
     <ClCompile Include="H5_RootGroup.cpp">
       <Filter>S100H5</Filter>
     </ClCompile>
@@ -684,16 +681,7 @@
     <ClCompile Include="HDF5Wrapper.cpp">
       <Filter>S100H5</Filter>
     </ClCompile>
-    <ClCompile Include="S102_GriddingMethod.cpp">
-      <Filter>S100H5</Filter>
-    </ClCompile>
-    <ClCompile Include="S102_RootGroup.cpp">
-      <Filter>S100H5</Filter>
-    </ClCompile>
     <ClCompile Include="H5_FeatureContainer.cpp">
-      <Filter>S100H5</Filter>
-    </ClCompile>
-    <ClCompile Include="S102_FC_BathymetryCoverage.cpp">
       <Filter>S100H5</Filter>
     </ClCompile>
     <ClCompile Include="DataOrganizationIndex.cpp">
@@ -718,15 +706,6 @@
       <Filter>S100H5</Filter>
     </ClCompile>
     <ClCompile Include="H5_FI_Attribute29.cpp">
-      <Filter>S100H5</Filter>
-    </ClCompile>
-    <ClCompile Include="S102_FI_BathymetryCoverage.cpp">
-      <Filter>S100H5</Filter>
-    </ClCompile>
-    <ClCompile Include="S102_VG_BathymetryCoverage.cpp">
-      <Filter>S100H5</Filter>
-    </ClCompile>
-    <ClCompile Include="S102_Color.cpp">
       <Filter>S100H5</Filter>
     </ClCompile>
     <ClCompile Include="SAbstractCurve.cpp">
@@ -1784,9 +1763,6 @@
     <ClInclude Include="S100H5.h">
       <Filter>S100H5</Filter>
     </ClInclude>
-    <ClInclude Include="S102H5.h">
-      <Filter>S100H5</Filter>
-    </ClInclude>
     <ClInclude Include="H5_RootGroup.h">
       <Filter>S100H5</Filter>
     </ClInclude>
@@ -1802,16 +1778,7 @@
     <ClInclude Include="HDF5Wrapper.h">
       <Filter>S100H5</Filter>
     </ClInclude>
-    <ClInclude Include="S102_GriddingMethod.h">
-      <Filter>S100H5</Filter>
-    </ClInclude>
-    <ClInclude Include="S102_RootGroup.h">
-      <Filter>S100H5</Filter>
-    </ClInclude>
     <ClInclude Include="H5_FeatureContainer.h">
-      <Filter>S100H5</Filter>
-    </ClInclude>
-    <ClInclude Include="S102_FC_BathymetryCoverage.h">
       <Filter>S100H5</Filter>
     </ClInclude>
     <ClInclude Include="DataOrganizationIndex.h">
@@ -1832,19 +1799,10 @@
     <ClInclude Include="H5_FeatureInstanceGroup.h">
       <Filter>S100H5</Filter>
     </ClInclude>
-    <ClInclude Include="S102_FI_BathymetryCoverage.h">
-      <Filter>S100H5</Filter>
-    </ClInclude>
     <ClInclude Include="H5_FI_Attribute29.h">
       <Filter>S100H5</Filter>
     </ClInclude>
     <ClInclude Include="H5_ValuesGroup.h">
-      <Filter>S100H5</Filter>
-    </ClInclude>
-    <ClInclude Include="S102_VG_BathymetryCoverage.h">
-      <Filter>S100H5</Filter>
-    </ClInclude>
-    <ClInclude Include="S102_Color.h">
       <Filter>S100H5</Filter>
     </ClInclude>
     <ClInclude Include="SAbstractCurve.h">

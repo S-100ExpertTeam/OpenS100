@@ -8,7 +8,6 @@
 #include "S100SpatialObject.h"
 #include "S10XGML.h"
 #include "S100H5.h"
-#include "S102H5.h"
 
 #define DB2_V72_FIX_BYTE_ORDER(x) ((((x)&0x31) == (x)) ? ((x)&0x1) : (x))
 
@@ -71,7 +70,6 @@ private:
 	static S101Cell* CopyS101Cell(Layer*, const std::wstring& newName);
 	static S10XGML* CopyS10XGML(Layer*, const std::wstring& newName);
 	static S100H5* CopyS100H5(Layer*, const std::wstring& newName);
-	static S102H5* CopyS102H5(Layer*, const std::wstring& newName);
 
 public:
 	static Layer* CopyLayer(Layer*, const std::wstring& NewName);

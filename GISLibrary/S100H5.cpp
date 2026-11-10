@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "PathUtil.h"
 #include "S100H5.h"
-#include "S102_RootGroup.h"
 
 #include <hdf5.h>
 

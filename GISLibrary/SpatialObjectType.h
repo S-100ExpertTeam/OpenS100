@@ -6,6 +6,5 @@ enum class SpatialObjectType {
 	S100SpatialObject = 2,
 	S101Cell = 3,
 	S10XGML = 4,
-	S100H5 = 5,
-	S102H5 = 6
+	S100H5 = 5
 };

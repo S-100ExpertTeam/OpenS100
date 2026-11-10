@@ -24,7 +24,6 @@ CORE_PROJECTS = ["FeatureCatalog", "PortrayalCatalogue", "GeoMetryLibrary", "S10
 RENDER_SIDE = {
     "GISLibrary/D2D1Resources.h",
     "GISLibrary/D2DGeometryCache.h",
-    "GISLibrary/S102Renderer.h",
     "GISLibrary/PortrayalRenderCache.h",
 }
 

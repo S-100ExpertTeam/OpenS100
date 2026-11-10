@@ -69,7 +69,10 @@
   - 2부(픽 리포트, 2026-11-11): `CoverageDataset::PickAt`/`PickAllAt` — 클릭한 점의 셀(가장 가까운 노드, 지금 그리는 기록)에서 그려지는 피처의 값을 모두, 단위를 붙여 소수 둘째 자리로(웹 `picking.ts`). WLA가 적용된 셀은 "Water level"과 "Depth (adjusted) … [WLA hh:mm dd Mmm yyyy]"를 원수심과 함께(D-2 3b), 불확도만 적용된 셀은 "Depth (uncertainty)", 그리고 보정 수심이 드는 조회 항목("Portrayal: Deep Water"). 이름은 FC(`Portray` 때 받아 둠) → 파일 Group_F → 코드 순. 보기 창은 클릭한 점에 표시와 그 옆 상자로 그리고(선택한 레이어와 무관, 켜진 커버리지 전부), ESC·다음 픽·레이어 삭제로 지운다. 검증: `RenderSmoke.AdjustsS102ByTheS104OnScreen`에서 WLA가 적용된 셀을 픽해 Depth 44.95 m, Water level 0.34 m, Depth (adjusted) 45.29 m [WLA 15:00 29 Mar 2026], Portrayal Deep Water, Uncertainty 0.18 m 확인, 자료 밖 점은 비어 있음. 전체 174개 통과. 보기 창 상자는 빌드만 확인(화면 확인 남음).
   - 남은 것: 계산 스레드(지금은 그리기 스레드에서 동기, KOR 501×501은 수 ms), WLA 기록 시각 눈금 슬라이더. System Database 차트에서 S-104를 쓰려면 S-104 FC가 설치돼 있어야 한다(`ProgramData/FC/S-104_FC.xml`).
 - [ ] **CV-7** 화면 검증과 성능 기록: KOR S-102·S-104를 S-101과 함께 축척을 바꿔 캡처, 첫 그리기·다음 프레임 시간(웹 기준: S-102 프레임 1 s → 51 ms).
-- [ ] **CV-8** 정리: 표시 경로에서 빠진 `S102H5`·`S102Renderer`·`S102_Color`·`H5_*` 제거, 문서 갱신.
+- [x] **CV-8** 정리: 표시 경로에서 빠진 `S102H5`·`S102Renderer`·`S102_Color`·`H5_*` 제거, 문서 갱신. (2026-11-11)
+  - 지운 것: `GISLibrary/S102H5`, `S102Renderer`, `S102_Color`, `S102_RootGroup`, `S102_FC_/S102_FI_/S102_VG_BathymetryCoverage`, `S102_GriddingMethod`(16개 파일), `S100Layer::DrawGrid`의 `S102H5` 분기, `S100LayerFactory::CopyS102H5`(복사본을 만들고도 `nullptr`을 돌려주던 함수), 형식 값 `S100SpatialObjectType::S102H5`·`SpatialObjectType::S102H5`, `tools/check-core-includes.py`의 허용 목록 항목.
+  - 남긴 것: `S100H5`와 `H5_*`. S-102/S-104가 아닌 `.h5`(S-111 등)는 아직 `S100H5`로 열고, `SdbReaders`의 `Hdf5DatasetInspector`가 `H5_RootGroup`을 쓴다. 이 둘을 `Coverage/Hdf5Coverage`로 옮기는 일은 S-111 표시와 함께 한다.
+  - 검증: 솔루션 전체 빌드(오류 0, 새 경고 0), 테스트 174개 통과, 코어 헤더 검사 120 → 117.
 
 ## 5. 위험과 결정할 것
 

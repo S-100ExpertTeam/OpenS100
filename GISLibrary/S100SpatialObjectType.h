@@ -5,6 +5,5 @@ enum class S100SpatialObjectType {
 	S101Cell = 1,
 	S10XGML = 2,
 	S100H5 = 3,
-	S102H5 = 4,
 	Coverage = 5,   // GISLibrary::CoverageDataset: a Part 10c grid portrayed by its catalogue
 };

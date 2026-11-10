@@ -3,7 +3,6 @@
 
 #include "S100Layer.h"
 
-#include "S102_RootGroup.h"
 
 #include "SPoint.h"
 #include "SMultiPoint.h"
@@ -427,34 +426,6 @@ S100H5* S100LayerFactory::CopyS100H5(Layer* layer, const std::wstring& newName)
 	return h5;
 }
 
-S102H5* S100LayerFactory::CopyS102H5(Layer* layer, const std::wstring& newName)
-{
-	if (!layer)
-		return nullptr;
-
-	S102H5* enc = (S102H5*)layer->GetSpatialObject();
-	if (!enc)
-		return nullptr;
-
-	S102H5* h5 = new S102H5(enc->GetPC());
-
-	h5->SetFilePath(newName);
-	h5->m_pLayer = layer;
-
-	S102_RootGroup* roopGroup = (S102_RootGroup*)enc->rootGroup;
-	h5->rootGroup = new S102_RootGroup(*roopGroup);
-
-	for (const auto& iter : enc->featureContainer)
-	{
-		H5_FeatureContainer* container = new H5_FeatureContainer(*iter);
-		h5->featureContainer.push_back(container);
-	}
-
-	h5->SetMBR();
-
-	return nullptr;
-}
-
 Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, const std::wstring& newName)
 {
 	Layer* dscLayer = nullptr;
@@ -506,15 +477,6 @@ Layer* S100LayerFactory::CopyLayer(Layer* srcLayer, const std::wstring& newName)
 		else if (objType == S100SpatialObjectType::S100H5)
 		{
 			auto dscObject = S100LayerFactory::CopyS100H5(srcLayer, newName);
-			if (dscObject)
-			{
-				dscLayer = new S100Layer(((S100Layer*)srcLayer)->GetFC(), ((S100Layer*)srcLayer)->GetPC());
-				dscLayer->m_spatialObject = dscObject;
-			}
-		}
-		else if (objType == S100SpatialObjectType::S102H5)
-		{
-			auto dscObject = S100LayerFactory::CopyS102H5(srcLayer, newName);
 			if (dscObject)
 			{
 				dscLayer = new S100Layer(((S100Layer*)srcLayer)->GetFC(), ((S100Layer*)srcLayer)->GetPC());
@@ -573,15 +535,6 @@ Layer* S100LayerFactory::CopyLayerWithoutPC(Layer* srcLayer, const std::wstring&
 		else if (objType == S100SpatialObjectType::S100H5)
 		{
 			auto dscObject = S100LayerFactory::CopyS100H5(srcLayer, newName);
-			if (dscObject)
-			{
-				dscLayer = new S100Layer(((S100Layer*)srcLayer)->GetFC(), ((S100Layer*)srcLayer)->GetPC());
-				dscLayer->m_spatialObject = dscObject;
-			}
-		}
-		else if (objType == S100SpatialObjectType::S102H5)
-		{
-			auto dscObject = S100LayerFactory::CopyS102H5(srcLayer, newName);
 			if (dscObject)
 			{
 				dscLayer = new S100Layer(((S100Layer*)srcLayer)->GetFC(), ((S100Layer*)srcLayer)->GetPC());
