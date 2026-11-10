@@ -97,6 +97,8 @@ void FC_PCSelectdlg::ShowContextMenu()
 	CMenu* pPopupMenu = menu.GetSubMenu(0);
 	if (pPopupMenu != nullptr)
 	{
+		// Folders are loaded on the Datasets / SupportFiles tab.
+		pPopupMenu->DeleteMenu(ID_FILE_LOADFOLDER, MF_BYCOMMAND);
 		pPopupMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 	}
 }

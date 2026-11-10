@@ -1,5 +1,6 @@
 #include "Importer.h"
 
+#include "CatalogueResolution.h"
 #include "ResourceStore.h"
 #include "Sha256.h"
 #include "SystemDatabase.h"
@@ -10,7 +11,9 @@
 #include <cctype>
 #include <chrono>
 #include <format>
+#include <iterator>
 #include <tuple>
+#include <unordered_map>
 
 namespace s100::sdb
 {
@@ -127,6 +130,110 @@ namespace s100::sdb
         {
             return result(source, ImportOutcome::Rejected, id, std::move(message));
         }
+
+        std::string upper(std::string text)
+        {
+            std::ranges::transform(text, text.begin(), [](unsigned char c) { return static_cast<char>(std::toupper(c)); });
+            return text;
+        }
+
+        bool isExchangeCatalogue(const fs::path& file)
+        {
+            return upper(toUtf8(file.filename())) == "CATALOG.XML";
+        }
+
+        // The regular files under `folder`, exchange set catalogues apart, each list in path order.
+        void filesUnder(const fs::path& folder, std::vector<fs::path>& catalogues, std::vector<fs::path>& files)
+        {
+            std::error_code error;
+            for (auto entry = fs::recursive_directory_iterator(folder, fs::directory_options::skip_permission_denied, error);
+                !error && entry != fs::recursive_directory_iterator(); entry.increment(error))
+            {
+                std::error_code typeError;
+                if (entry->is_regular_file(typeError))
+                {
+                    (isExchangeCatalogue(entry->path()) ? catalogues : files).push_back(entry->path());
+                }
+            }
+            std::ranges::sort(catalogues);
+            std::ranges::sort(files);
+        }
+
+        bool isUnder(const fs::path& file, const fs::path& folder)
+        {
+            const auto [end, unused] = std::ranges::mismatch(folder, file);
+            (void)unused;
+            return end == folder.end();
+        }
+
+        // S-100 Part 17 exchange sets keep support files in <product>/SUPPORT_FILES.
+        bool inSupportFolder(const fs::path& file)
+        {
+            for (const auto& part : file.parent_path())
+            {
+                if (upper(toUtf8(part)) == "SUPPORT_FILES")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // The product a loose support file belongs to: the nearest product folder ("S-101") above
+        // it, else its name ("101KR..."), else S-100 material in general.
+        std::string supportFileProduct(const fs::path& file)
+        {
+            for (fs::path folder = file.parent_path(); !folder.empty() && folder != folder.parent_path(); folder = folder.parent_path())
+            {
+                const std::string name = toUtf8(folder.filename());
+                if (name.size() <= 6)
+                {
+                    if (std::string product = productFromIdentifier(name); !product.empty())
+                    {
+                        return product;
+                    }
+                }
+            }
+            const std::string name = toUtf8(file.filename());
+            const std::string product = name.size() >= 3 ? productFromIdentifier(name.substr(0, 3)) : std::string();
+            return product.empty() ? "S-100" : product;
+        }
+
+        ImportResult duplicate(const fs::path& file, const fs::path& first)
+        {
+            return result(file, ImportOutcome::Unchanged, 0, "same file as " + toUtf8(first) + "; imported once");
+        }
+    }
+
+    // Files already met in one import, by name and SHA-256: the same file delivered twice (two
+    // copies of an exchange set, a dataset in two folders) is imported once. Files with the same
+    // content under different names stay apart, since datasets refer to support files by name.
+    class Importer::SeenFiles
+    {
+    public:
+        // The first file met with this name and content, or std::nullopt when `file` is the first
+        // (it is remembered) or cannot be read.
+        std::optional<fs::path> firstCopyOf(const fs::path& file)
+        {
+            std::string key;
+            try
+            {
+                key = upper(toUtf8(file.filename())) + "|" + sha256File(file);
+            }
+            catch (const fs::filesystem_error&)
+            {
+                return std::nullopt;
+            }
+            const auto [found, inserted] = first_.try_emplace(std::move(key), file);
+            return inserted ? std::nullopt : std::optional(found->second);
+        }
+
+    private:
+        std::unordered_map<std::string, fs::path> first_;
+    };
+
+    namespace
+    {
 
         // SHA-256 over every file of a folder, by relative path, so a changed rule file or symbol
         // changes the catalogue's fingerprint, not only a changed portrayal_catalogue.xml.
@@ -407,6 +514,72 @@ namespace s100::sdb
 
     ImportReport Importer::importExchangeSet(const fs::path& catalogXml, const Progress& progress)
     {
+        return importExchangeSet(catalogXml, progress, nullptr, true);
+    }
+
+    ImportReport Importer::importFolder(const fs::path& folder, const Progress& progress)
+    {
+        ImportReport report;
+        std::error_code error;
+        if (!fs::is_directory(folder, error))
+        {
+            report.results.push_back(rejected(folder, "not a folder"));
+            return report;
+        }
+        std::vector<fs::path> catalogues;
+        std::vector<fs::path> files;
+        filesUnder(folder, catalogues, files);
+
+        SeenFiles seen;
+        std::vector<fs::path> covered;   // folders a readable catalogue accounts for
+        for (const fs::path& catalogue : catalogues)
+        {
+            if (const auto first = seen.firstCopyOf(catalogue))
+            {
+                report.results.push_back(result(catalogue, ImportOutcome::Unchanged, 0,
+                    "same exchange set as " + toUtf8(*first) + "; imported once"));
+                covered.push_back(catalogue.parent_path());
+                continue;
+            }
+            ImportReport set = importExchangeSet(catalogue, progress, &seen, false);
+            if (set.exchangeSetId)
+            {
+                covered.push_back(catalogue.parent_path());
+                report.exchangeSetId = set.exchangeSetId;
+            }
+            std::ranges::move(set.results, std::back_inserter(report.results));
+            std::ranges::move(set.installProblems, std::back_inserter(report.installProblems));
+        }
+        std::erase_if(files, [&](const fs::path& file) {
+            return std::ranges::any_of(covered, [&](const fs::path& root) { return isUnder(file, root); });
+        });
+        importFiles(std::move(files), seen, report);
+        return report;
+    }
+
+    void Importer::importFiles(std::vector<fs::path> files, SeenFiles& seen, ImportReport& report)
+    {
+        // Path order puts a base dataset (.000) before its updates (.001, ...).
+        std::ranges::sort(files);
+        for (const fs::path& file : files)
+        {
+            const bool dataset = acceptsDataset(file);
+            if (!dataset && !inSupportFolder(file))
+            {
+                continue;
+            }
+            if (const auto first = seen.firstCopyOf(file))
+            {
+                report.results.push_back(duplicate(file, *first));
+                continue;
+            }
+            report.results.push_back(dataset ? importDataset(file) : importSupportFile(file, supportFileProduct(file), "new"));
+        }
+    }
+
+    ImportReport Importer::importExchangeSet(const fs::path& catalogXml, const Progress& progress, SeenFiles* seen,
+        bool fallBackToFiles)
+    {
         ImportReport report;
         if (!readers_.exchangeSets)
         {
@@ -416,7 +589,19 @@ namespace s100::sdb
         auto set = readers_.exchangeSets->read(catalogXml);
         if (!set)
         {
-            report.results.push_back(rejected(catalogXml, "cannot be read as an exchange set catalogue"));
+            if (!fallBackToFiles)
+            {
+                report.results.push_back(rejected(catalogXml,
+                    "cannot be read as an exchange set catalogue; the files in its folder are imported one by one"));
+                return report;
+            }
+            report.results.push_back(rejected(catalogXml,
+                "cannot be read as an exchange set catalogue; the files in its folder were imported one by one"));
+            std::vector<fs::path> catalogues;
+            std::vector<fs::path> files;
+            filesUnder(catalogXml.parent_path(), catalogues, files);
+            SeenFiles folderSeen;
+            importFiles(std::move(files), seen ? *seen : folderSeen, report);
             return report;
         }
 
@@ -426,6 +611,7 @@ namespace s100::sdb
             fs::path file;
             std::optional<InspectedDataset> dataset;
             std::string problem;
+            std::optional<fs::path> firstCopy;   // the same file met earlier in a folder import
         };
         std::vector<Pending> pending;
         pending.reserve(set->datasets.size());
@@ -437,6 +623,10 @@ namespace s100::sdb
             if (!fs::is_regular_file(entry.file, error))
             {
                 item.problem = "listed in the catalogue but not found";
+            }
+            else if (seen && (item.firstCopy = seen->firstCopyOf(entry.file)))
+            {
+                // imported already, earlier in the same folder import
             }
             else if (!inspector)
             {
@@ -494,8 +684,8 @@ namespace s100::sdb
         }
         for (Pending& item : pending)
         {
-            report.results.push_back(item.dataset
-                ? installDataset(item.file, std::move(*item.dataset), exchangeSetId, changes)
+            report.results.push_back(item.firstCopy ? duplicate(item.file, *item.firstCopy)
+                : item.dataset ? installDataset(item.file, std::move(*item.dataset), exchangeSetId, changes)
                 : rejected(item.file, item.problem));
         }
 

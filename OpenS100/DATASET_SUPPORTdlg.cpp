@@ -81,6 +81,7 @@ BEGIN_MESSAGE_MAP(DATASET_SUPPORTdlg, CDialogEx)
 	ON_NOTIFY(NM_RCLICK, IDC_LIST1, &DATASET_SUPPORTdlg::OnNMRClickList1)
 	ON_NOTIFY(NM_RCLICK, IDC_LIST2, &DATASET_SUPPORTdlg::OnNMRClickList2)
 	ON_UPDATE_COMMAND_UI(ID_FILE_LOAD, &DATASET_SUPPORTdlg::OnMenuLoad)
+	ON_COMMAND(ID_FILE_LOADFOLDER, &DATASET_SUPPORTdlg::OnMenuLoadFolder)
 	ON_UPDATE_COMMAND_UI(ID_FILE_DELETE32778, &DATASET_SUPPORTdlg::OnMenuDelete)
 	ON_UPDATE_COMMAND_UI(ID_FILE_OPENFOLDER, &DATASET_SUPPORTdlg::OnMenuOpenFolder)
 	ON_WM_DROPFILES()
@@ -263,6 +264,20 @@ void DATASET_SUPPORTdlg::OnMenuLoad(CCmdUI* /*pCmdUI*/)
 	}
 }
 
+void DATASET_SUPPORTdlg::OnMenuLoadFolder()
+{
+	CFolderPickerDialog dlg(nullptr, OFN_ALLOWMULTISELECT, this);
+	if (dlg.DoModal() == IDOK)
+	{
+		std::vector<std::filesystem::path> folders;
+		for (POSITION position = dlg.GetStartPosition(); position != nullptr;)
+		{
+			folders.emplace_back(dlg.GetNextPathName(position).GetString());
+		}
+		LoadFiles(folders);
+	}
+}
+
 void DATASET_SUPPORTdlg::LoadFiles(const std::vector<std::filesystem::path>& files)
 {
 	auto* session = DatasetManagerUi::Session(this);
@@ -272,18 +287,24 @@ void DATASET_SUPPORTdlg::LoadFiles(const std::vector<std::filesystem::path>& fil
 	}
 
 	CWaitCursor wait;
-	const GISLibrary::S101DatasetInspector datasetInspector;
 	std::vector<s100::sdb::ImportResult> results;
 	std::vector<std::string> problems;
+	const auto add = [&](const s100::sdb::ImportReport& report) {
+		results.insert(results.end(), report.results.begin(), report.results.end());
+		problems.insert(problems.end(), report.installProblems.begin(), report.installProblems.end());
+	};
 	for (const auto& file : files)
 	{
-		if (isExchangeCatalogue(file))
+		std::error_code error;
+		if (std::filesystem::is_directory(file, error))
 		{
-			auto report = session->importer().importExchangeSet(file);
-			results.insert(results.end(), report.results.begin(), report.results.end());
-			problems.insert(problems.end(), report.installProblems.begin(), report.installProblems.end());
+			add(session->importer().importFolder(file));
 		}
-		else if (datasetInspector.accepts(file))
+		else if (isExchangeCatalogue(file))
+		{
+			add(session->importer().importExchangeSet(file));
+		}
+		else if (session->importer().acceptsDataset(file))
 		{
 			results.push_back(session->importer().importDataset(file));
 		}

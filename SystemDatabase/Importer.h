@@ -102,8 +102,20 @@ namespace s100::sdb
         // Every dataset, support file and catalogue the exchange set lists. One dataset that
         // cannot be installed does not stop the others; its result says why. `progress` is called
         // after each dataset has been read, with the number read and the number listed.
+        // A catalogue that cannot be read is reported as rejected, and the datasets and support
+        // files in its folder are imported one by one instead (as importFolder does).
         using Progress = std::function<void(std::size_t done, std::size_t total)>;
         ImportReport importExchangeSet(const std::filesystem::path& catalogXml, const Progress& progress = {});
+        // Everything under `folder`: each exchange set (CATALOG.XML) with what it lists, then the
+        // datasets and support files no readable catalogue accounts for, one by one. Support files
+        // are the files in a SUPPORT_FILES folder; other files are left out. A file met again in
+        // the same call (same name, same SHA-256) is imported once: the later copies are reported
+        // as unchanged, naming the first. An exchange set whose CATALOG.XML is a copy of one
+        // already met is skipped as a whole.
+        ImportReport importFolder(const std::filesystem::path& folder, const Progress& progress = {});
+
+        // Whether a registered reader takes files like this one as datasets (from the name).
+        [[nodiscard]] bool acceptsDataset(const std::filesystem::path& file) const { return inspectorFor(file) != nullptr; }
 
         // Removal deletes the record and the files in the store. Each returns false when there
         // was no such record.
@@ -116,7 +128,15 @@ namespace s100::sdb
 
     private:
         class Changes;
+        class SeenFiles;
         struct SupportFileInput;
+
+        // `seen` (may be null) skips files already met; `fallBackToFiles` imports the folder's
+        // files one by one when the catalogue cannot be read.
+        ImportReport importExchangeSet(const std::filesystem::path& catalogXml, const Progress& progress, SeenFiles* seen,
+            bool fallBackToFiles);
+        // Datasets and support files (see importFolder) among `files`, in path order.
+        void importFiles(std::vector<std::filesystem::path> files, SeenFiles& seen, ImportReport& report);
 
         [[nodiscard]] const DatasetInspector* inspectorFor(const std::filesystem::path& file) const;
 

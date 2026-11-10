@@ -8,8 +8,9 @@
 #include <vector>
 
 // Dataset Manager tab: the datasets and support files installed in the System Database.
-// Loading installs (an exchange set's CATALOG.XML, a dataset or update file, a support file);
-// deleting removes. The chart redraws from the database; nothing is kept in the dialog itself.
+// Loading installs (an exchange set's CATALOG.XML, a dataset or update file, a support file, or
+// a whole folder of them; a file delivered twice is installed once); deleting removes. The chart
+// redraws from the database; nothing is kept in the dialog itself.
 class DATASET_SUPPORTdlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(DATASET_SUPPORTdlg)
@@ -45,6 +46,7 @@ public:
 	virtual BOOL OnInitDialog();
 
 	void OnMenuLoad(CCmdUI* pCmdUI);
+	afx_msg void OnMenuLoadFolder();
 	void OnMenuDelete(CCmdUI* pCmdUI);
 	void OnMenuOpenFolder(CCmdUI* pCmdUI);
 

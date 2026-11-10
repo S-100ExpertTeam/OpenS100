@@ -767,7 +767,8 @@ IDR_POPUP_DATASET_MANAGER MENU
 BEGIN
     POPUP "File"
     BEGIN
-        MENUITEM "Load",                        ID_FILE_LOAD
+        MENUITEM "Load Files...",               ID_FILE_LOAD
+        MENUITEM "Load Folder...",              ID_FILE_LOADFOLDER
         MENUITEM "Open Folder",                 ID_FILE_OPENFOLDER
         MENUITEM SEPARATOR
         MENUITEM "Delete",                      ID_FILE_DELETE32778

@@ -350,6 +350,68 @@ TEST_F(ImporterTest, ExchangeSetInstallsEverythingItListsAndLinksSupportFiles)
 	EXPECT_EQ(database.datasets().all().size(), 2u);
 }
 
+TEST_F(ImporterTest, UnreadableCatalogueImportsTheFilesInItsFolder)
+{
+	const fs::path catalogue = dir / "source" / "CATALOG.XML";
+	writeText(catalogue, "<not a catalogue/>");
+	const fs::path text = dir / "source" / "S-101" / "SUPPORT_FILES" / "note.txt";
+	writeText(text, "notes");
+	source("S-101/DATASET_FILES/A/A.000", cell("A", 1));
+	exchangeSets.answer.reset();   // the reader cannot read it
+
+	const auto report = importer->importExchangeSet(catalogue);
+
+	EXPECT_FALSE(report.exchangeSetId);
+	EXPECT_EQ(report.count(ImportOutcome::Rejected), 1u);   // the catalogue itself, saying what was done
+	EXPECT_EQ(report.count(ImportOutcome::Added), 2u);      // the dataset and the support file
+	EXPECT_TRUE(database.datasets().find("S-101", "A"));
+	EXPECT_EQ(database.supportFiles().all().size(), 1u);
+}
+
+// --- folders ---------------------------------------------------------------------------------
+
+TEST_F(ImporterTest, FolderImportsTheSameFileOnce)
+{
+	source("copy1/S-101/DATASET_FILES/A/A.000", cell("A", 1), "cell A");
+	source("copy2/S-101/DATASET_FILES/A/A.000", cell("A", 1), "cell A");   // same name, same bytes
+	source("copy2/S-101/DATASET_FILES/B/B.000", cell("B", 1), "cell B");
+	writeText(dir / "source" / "copy1" / "S-101" / "SUPPORT_FILES" / "note.txt", "notes");
+	writeText(dir / "source" / "copy2" / "S-101" / "SUPPORT_FILES" / "note.txt", "notes");
+	writeText(dir / "source" / "copy2" / "S-101" / "SUPPORT_FILES" / "other.txt", "notes");   // same bytes, another name
+	writeText(dir / "source" / "readme.txt", "not a support file");   // outside SUPPORT_FILES: left out
+
+	const auto report = importer->importFolder(dir / "source");
+
+	EXPECT_EQ(report.count(ImportOutcome::Added), 4u);       // A, B, note.txt, other.txt
+	EXPECT_EQ(report.count(ImportOutcome::Unchanged), 2u);   // the second A and note.txt
+	EXPECT_EQ(report.count(ImportOutcome::Rejected), 0u);
+	EXPECT_EQ(database.datasets().all().size(), 2u);
+	EXPECT_EQ(database.supportFiles().all().size(), 2u);
+	const auto copy = std::ranges::find(report.results, ImportOutcome::Unchanged, &ImportResult::outcome);
+	ASSERT_NE(copy, report.results.end());
+	EXPECT_NE(copy->message.find("same file as"), std::string::npos);
+}
+
+TEST_F(ImporterTest, FolderImportsACopiedExchangeSetOnce)
+{
+	const fs::path fileA = source("set1/S-101/DATASET_FILES/A/A.000", cell("A", 1), "cell A");
+	source("set2/S-101/DATASET_FILES/A/A.000", cell("A", 1), "cell A");
+	writeText(dir / "source" / "set1" / "CATALOG.XML", "<catalogue/>");
+	writeText(dir / "source" / "set2" / "CATALOG.XML", "<catalogue/>");
+	InspectedExchangeSet set;
+	set.identifier = "KR00-test";
+	set.datasets.push_back({ .file = fileA });
+	exchangeSets.answer = set;
+
+	const auto report = importer->importFolder(dir / "source");
+
+	ASSERT_TRUE(report.exchangeSetId);
+	EXPECT_EQ(report.count(ImportOutcome::Added), 1u);
+	EXPECT_EQ(report.count(ImportOutcome::Unchanged), 1u);   // set2's catalogue: its files are not looked at
+	EXPECT_EQ(database.exchangeSets().all().size(), 1u);
+	EXPECT_EQ(database.datasets().all().size(), 1u);
+}
+
 // --- geometry --------------------------------------------------------------------------------
 
 TEST(Wkb, PolygonRoundTripsAndClosesRings)
