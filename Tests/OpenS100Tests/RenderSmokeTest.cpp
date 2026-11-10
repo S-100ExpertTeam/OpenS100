@@ -24,6 +24,8 @@
 #include "TestPaths.h"
 #include "GISLibrary.h"
 #include "PortrayalRenderCache.h"
+#include "S100ExchangeCatalogue.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
 
 namespace
 {
@@ -228,4 +230,62 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 		RenderCell(cell, nonWhite, colours);
 		EXPECT_GT(nonWhite, 0u) << item;
 	}
+}
+
+// System Database work item SDB-5: an exchange set opened without installing it loads only the
+// cells S-98 E-1.3 selects for the view, through the same selector as the System Database.
+TEST(RenderSmoke, ExchangeSetLoadsOnlyTheSelectedCells)
+{
+	const auto catalog = testpaths::korS101Catalog();
+	if (!std::filesystem::exists(catalog))
+	{
+		GTEST_SKIP() << "reference exchange set not available: " << catalog.string();
+	}
+
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto cm = gis.GetCatalogManager();
+	ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+	auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
+	ASSERT_NE(pc, nullptr);
+	GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
+
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddLayer(catalog.wstring()));
+
+	S100ExchangeCatalogue* exchangeSet = nullptr;
+	for (Layer* layer : gis.GetLayerManager()->layers)
+	{
+		if (auto* candidate = dynamic_cast<S100ExchangeCatalogue*>(layer->m_spatialObject))
+		{
+			exchangeSet = candidate;
+		}
+	}
+	ASSERT_NE(exchangeSet, nullptr);
+	EXPECT_EQ(exchangeSet->m_vecInventory.size(), 808u);
+
+	// Busan harbour at about 1:50,000, then the whole south coast at about 1:1,500,000.
+	const auto drawAt = [&](double west, double south, double east, double north, const char* name) {
+		MBR area(west, south, east, north);
+		projection(area);
+		gis.SetMap(area);
+		MemoryCanvas canvas(kWidth, kHeight);
+		const auto start = std::chrono::steady_clock::now();
+		gis.Draw(canvas.dc());
+		const auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count();
+		std::size_t nonWhite = 0;
+		std::size_t colours = 0;
+		canvas.Measure(nonWhite, colours);
+		const auto png = OutputDirectory() / (std::string("exchange-set-") + name + ".png");
+		EXPECT_TRUE(canvas.SavePng(png));
+		const std::size_t loaded = exchangeSet->m_pLayerManager->layers.size();
+		std::cout << "[ selection ] " << name << " 1:" << gis.GetScaler()->GetCurrentScale() << " loaded " << loaded
+			<< " of 808 cells, first draw " << ms << " ms, " << png.string() << std::endl;
+		EXPECT_GT(loaded, 0u) << name;
+		EXPECT_LT(loaded, 100u) << name;
+		EXPECT_GT(nonWhite, static_cast<std::size_t>(kWidth) * kHeight / 50) << name << ": the chart is (almost) blank";
+	};
+	drawAt(128.95, 35.02, 129.15, 35.14, "busan");
+	drawAt(125.5, 33.5, 130.5, 36.0, "south-coast");
 }

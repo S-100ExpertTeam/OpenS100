@@ -81,38 +81,6 @@ ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPat
 }
 
 
-ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPaths, std::vector<D2D1_POINT_2F>& itemPolygonPath, Scaler* scaler) {
-	ClipperLib::Clipper c;
-	ClipperLib::Paths solution;
-	ClipperLib::Path  polygon;
-	ClipperLib::Paths polygonPaths;
-	ClipperLib::IntPoint tmp;
-
-
-	int part1PointCount = itemPolygonPath.size();											// Find the number of points for the first part of the polygon.
-	//
-	long x, y;
-	
-	for (int i = 0; i < part1PointCount; i++)
-	{
-		scaler->WorldToDevice(itemPolygonPath[i].x, itemPolygonPath[i].y, &x, &y);
-		tmp.X = x;
-		tmp.Y = y;
-		polygon.push_back(tmp);
-	}
-
-	polygonPaths.push_back(polygon);
-
-	c.AddPaths(viewportPaths, ClipperLib::ptSubject, true);
-	c.AddPaths(polygonPaths, ClipperLib::ptClip, true);
-
-	c.Execute(ClipperLib::ctDifference, solution, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
-
-	return solution;
-}
-
-
-
 ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPaths, SSurface* itemPolygonPath) {
 	ClipperLib::Clipper clipper;
 	ClipperLib::Path  polygon;
@@ -149,39 +117,6 @@ ClipperLib::Paths SCommonFuction::ClipPaths(const ClipperLib::Paths& viewportPat
 
 	return solution;
 }
-
-bool SCommonFuction::IntersectionPaths(ClipperLib::Paths& viewport, std::vector<D2D1_POINT_2F>& polygon, Scaler* scaler)
-{
-	ClipperLib::Clipper clipper;
-	ClipperLib::Paths solution;
-	ClipperLib::Path  polygonpath;
-	ClipperLib::Paths polygonPaths;
-	ClipperLib::IntPoint tmp;
-
-
-	int part1PointCount = polygon.size();											// Find the number of points for the first part of the polygon.
-	long x, y;
-
-	for (int i = 0; i < part1PointCount; i++)
-	{
-		scaler->WorldToDevice(polygon[i].x, polygon[i].y, &x, &y);
-		tmp.X = x;
-		tmp.Y = y;
-		polygonpath.push_back(tmp);
-	}
-
-	polygonPaths.push_back(polygonpath);
-
-
-	clipper.AddPaths(viewport, ClipperLib::ptSubject, true);
-	clipper.AddPaths(polygonPaths, ClipperLib::ptClip, true);
-
-	clipper.Execute(ClipperLib::ctIntersection, solution, ClipperLib::pftEvenOdd, ClipperLib::pftEvenOdd);
-
-	return !solution.empty();
-}
-
-
 
 ClipperLib::Paths SCommonFuction::ClipSurface(SSurface *_surface, const RECT* _viewPort)
 {

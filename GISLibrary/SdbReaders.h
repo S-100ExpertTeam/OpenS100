@@ -4,6 +4,12 @@
 
 #include <filesystem>
 #include <optional>
+#include <vector>
+
+namespace S100
+{
+	class DataCoverage;
+}
 
 // The System Database importer's readers for the formats this library parses
 // (Documents/TechDocs/2026-11-10-system-database.md, SDB-3). Each reads only what the importer
@@ -34,4 +40,9 @@ namespace GISLibrary
 	public:
 		[[nodiscard]] std::optional<s100::sdb::InspectedExchangeSet> read(const std::filesystem::path& catalogXml) const override;
 	};
+
+	// The S100XC:dataCoverage of an exchange catalogue entry, one per coverage in the same order
+	// (a coverage whose polygon cannot be read has no rings). EPSG:4326 positions are latitude
+	// first; only an explicit CRS84 lists longitude first.
+	[[nodiscard]] std::vector<s100::sdb::InspectedCoverage> exchangeCatalogueCoverages(const std::vector<S100::DataCoverage>& coverages);
 }

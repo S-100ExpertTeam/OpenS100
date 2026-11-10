@@ -260,6 +260,7 @@
     <ClCompile Include="CatalogueResolution.cpp" />
     <ClCompile Include="CoverageRepository.cpp" />
     <ClCompile Include="DatasetRepository.cpp" />
+    <ClCompile Include="DatasetSelection.cpp" />
     <ClCompile Include="ExchangeSetRepository.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Importer.cpp" />
@@ -276,6 +277,7 @@
     <ClInclude Include="CatalogueResolution.h" />
     <ClInclude Include="CoverageRepository.h" />
     <ClInclude Include="DatasetRepository.h" />
+    <ClInclude Include="DatasetSelection.h" />
     <ClInclude Include="ExchangeSetRepository.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Importer.h" />

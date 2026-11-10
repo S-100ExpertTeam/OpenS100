@@ -213,62 +213,6 @@ namespace GISLibrary
 			return {};
 		}
 
-		std::vector<InspectedCoverage> catalogueCoverages(const std::vector<S100::DataCoverage>& coverages)
-		{
-			std::vector<InspectedCoverage> result;
-			for (const S100::DataCoverage& coverage : coverages)
-			{
-				InspectedCoverage item;
-				if (coverage.OptimumDisplayScale) item.optimumDisplayScale = *coverage.OptimumDisplayScale;
-				if (coverage.MinimumDisplayScale) item.minimumDisplayScale = *coverage.MinimumDisplayScale;
-				if (coverage.MaximumDisplayScale) item.maximumDisplayScale = *coverage.MaximumDisplayScale;
-
-				const auto& polygon = coverage.BoundingPolygon.Polygon;
-				// EPSG:4326 lists latitude first; only an explicit CRS84 lists longitude first.
-				const bool longitudeFirst = polygon.srsName.find("CRS84") != std::string::npos;
-				for (const std::string& posList : polygon.Geom)
-				{
-					std::vector<double> values;
-					std::string_view text(posList);
-					while (!text.empty())
-					{
-						const auto start = text.find_first_not_of(" \t\r\n");
-						if (start == std::string_view::npos)
-						{
-							break;
-						}
-						text.remove_prefix(start);
-						const auto end = text.find_first_of(" \t\r\n");
-						const std::string_view number = text.substr(0, end);
-						double value = 0;
-						const auto [last, error] = std::from_chars(number.data(), number.data() + number.size(), value);
-						if (error != std::errc() || last != number.data() + number.size())
-						{
-							values.clear();
-							break;
-						}
-						values.push_back(value);
-						text.remove_prefix(number.size());
-					}
-					if (values.size() < 6 || values.size() % 2 != 0)
-					{
-						continue;
-					}
-					Ring ring;
-					for (std::size_t i = 0; i < values.size(); i += 2)
-					{
-						ring.push_back(longitudeFirst ? Position{ values[i], values[i + 1] } : Position{ values[i + 1], values[i] });
-					}
-					item.rings.push_back(std::move(ring));
-				}
-				if (!item.rings.empty())
-				{
-					result.push_back(std::move(item));
-				}
-			}
-			return result;
-		}
-
 		std::optional<s100::sdb::CatalogueKind> catalogueKind(const fs::path& file)
 		{
 			pugi::xml_document document;
@@ -287,6 +231,61 @@ namespace GISLibrary
 			}
 			return std::nullopt;
 		}
+	}
+
+	// --- exchange catalogue coverage ----------------------------------------------------------
+
+	std::vector<InspectedCoverage> exchangeCatalogueCoverages(const std::vector<S100::DataCoverage>& coverages)
+	{
+		std::vector<InspectedCoverage> result;
+		for (const S100::DataCoverage& coverage : coverages)
+		{
+			InspectedCoverage item;
+			if (coverage.OptimumDisplayScale) item.optimumDisplayScale = *coverage.OptimumDisplayScale;
+			if (coverage.MinimumDisplayScale) item.minimumDisplayScale = *coverage.MinimumDisplayScale;
+			if (coverage.MaximumDisplayScale) item.maximumDisplayScale = *coverage.MaximumDisplayScale;
+
+			const auto& polygon = coverage.BoundingPolygon.Polygon;
+			// EPSG:4326 lists latitude first; only an explicit CRS84 lists longitude first.
+			const bool longitudeFirst = polygon.srsName.find("CRS84") != std::string::npos;
+			for (const std::string& posList : polygon.Geom)
+			{
+				std::vector<double> values;
+				std::string_view text(posList);
+				while (!text.empty())
+				{
+					const auto start = text.find_first_not_of(" \t\r\n");
+					if (start == std::string_view::npos)
+					{
+						break;
+					}
+					text.remove_prefix(start);
+					const auto end = text.find_first_of(" \t\r\n");
+					const std::string_view number = text.substr(0, end);
+					double value = 0;
+					const auto [last, error] = std::from_chars(number.data(), number.data() + number.size(), value);
+					if (error != std::errc() || last != number.data() + number.size())
+					{
+						values.clear();
+						break;
+					}
+					values.push_back(value);
+					text.remove_prefix(number.size());
+				}
+				if (values.size() < 6 || values.size() % 2 != 0)
+				{
+					continue;
+				}
+				Ring ring;
+				for (std::size_t i = 0; i < values.size(); i += 2)
+				{
+					ring.push_back(longitudeFirst ? Position{ values[i], values[i + 1] } : Position{ values[i + 1], values[i] });
+				}
+				item.rings.push_back(std::move(ring));
+			}
+			result.push_back(std::move(item));
+		}
+		return result;
 	}
 
 	// --- S101DatasetInspector ------------------------------------------------------------------
@@ -446,7 +445,8 @@ namespace GISLibrary
 				dataset.bounds = s100::sdb::BoundingBox{ entry.BoundingBox->WestBoundLongitude, entry.BoundingBox->SouthBoundLatitude,
 					entry.BoundingBox->EastBoundLongitude, entry.BoundingBox->NorthBoundLatitude };
 			}
-			dataset.coverages = catalogueCoverages(entry.dataCoverage);
+			dataset.coverages = exchangeCatalogueCoverages(entry.dataCoverage);
+			std::erase_if(dataset.coverages, [](const InspectedCoverage& coverage) { return coverage.rings.empty(); });
 			set.datasets.push_back(std::move(dataset));
 		}
 

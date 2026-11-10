@@ -728,6 +728,7 @@
     <ClCompile Include="VectorParameter.cpp" />
     <ClCompile Include="VerticalCoordinateBase.cpp" />
     <ClCompile Include="VerticalDatumReference.cpp" />
+    <ClCompile Include="ViewSelection.cpp" />
     <ClCompile Include="VisibilityCommands.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -1110,6 +1111,7 @@
     <ClInclude Include="VerticalCoordinateBase.h" />
     <ClInclude Include="VerticalDatumReference.h" />
     <ClInclude Include="CountryCode.h" />
+    <ClInclude Include="ViewSelection.h" />
     <ClInclude Include="VisibilityCommands.h" />
     <ClInclude Include="XML_Collection.h" />
   </ItemGroup>

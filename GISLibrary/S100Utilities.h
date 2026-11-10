@@ -11,7 +11,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <polyclipping/clipper.hpp>
 #include <algorithm>
 
 class S100Utilities
@@ -26,7 +25,6 @@ public:
 	static int GetScaleBand(int scale);
 	static std::vector<int> algorithm_ScaleBand(S100::DataCoverage dataCoverage);
 	static std::vector<int> GetScaleBand(ScaleBand sb);
-	static std::vector<std::shared_ptr<InventoryItem>> SelectDataCoverages(std::vector<std::shared_ptr<Inventory>> INV, Scaler* scaler, MBR viewport);
 
 	ScaleBand GetLegacyScaleband(int scale);
 };

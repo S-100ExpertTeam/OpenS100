@@ -3,8 +3,10 @@
 #include "spatialobject.h"
 #include "ExchangeCatalogue.h"
 
+#include "../SystemDatabase/DatasetSelection.h"
 
 #include <memory>
+#include <utility>
 
 using namespace S100;
 
@@ -45,19 +47,23 @@ public:
 
 	void Draw(HDC& hDC, Scaler* scaler, double offset) override;
 
-	void DrawEx(HDC& hDC, Scaler* scaler, double offset);
-
 	void DrawFiles(HDC& hDC, Scaler* scaler, double offset, std::vector<std::shared_ptr<InventoryItem>>& item);
 	
 	bool containsFile(const std::vector<std::shared_ptr<InventoryItem>>& files, const std::wstring& targetFile);
-
-	bool CompareByFileName(const std::wstring& a, const std::wstring& b);
-
-	bool CompareByLayer(const Layer* a, const Layer* b);
 
 	std::wstring FixFileName(const std::string& str);
 
 	std::wstring FixLegacyFileName(const std::string& str);
 
 	std::wstring GetFirstLayerFilePath();
+
+private:
+	// S-98 E-1.3 selection over the catalogue's S100XC:dataCoverage: the selected coverages of the
+	// view, one item per dataset, the larger scale first.
+	std::vector<std::shared_ptr<InventoryItem>> SelectItems(Scaler& scaler) const;
+
+	s100::sdb::DatasetSelector m_selector;
+	// For each coverage of m_selector, in the same order: its index in m_vecInventory and its
+	// index among that entry's data coverages.
+	std::vector<std::pair<std::size_t, std::size_t>> m_coverageOwners;
 };

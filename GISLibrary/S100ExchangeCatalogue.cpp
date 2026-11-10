@@ -4,12 +4,15 @@
 #include "../GeoMetryLibrary/TextCodec.h"
 #include <algorithm>
 #include <filesystem>
+#include <unordered_map>
 #include "D2DView.h"
 #include "S100ExchangeCatalogue.h"
 #include "D2DGeometryCache.h"
 #include "GISLibrary.h"
 #include "Inventory.h"
 #include "S100Utilities.h"
+#include "SdbReaders.h"
+#include "ViewSelection.h"
 
 #include "..\\LatLonUtility\\LatLonUtility.h"
 #include "..\\LatLonUtility\\cpp_util.h"
@@ -63,6 +66,8 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
 	m_DataPtr->Open(filepath);
 
     auto DDM = m_DataPtr->DatasetDiscoveryMetadata;
+    std::vector<s100::sdb::SelectableCoverage> selectable;
+    m_coverageOwners.clear();
 
     for (int i = 0; i < DDM.size(); i++)
     {
@@ -139,6 +144,17 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
                 }
                 inv->vecBoundingPolygon.push_back(point);
             }
+            const auto coverages = GISLibrary::exchangeCatalogueCoverages(dataCoverages);
+            for (std::size_t j = 0; j < coverages.size(); ++j)
+            {
+                auto coverage = s100::sdb::makeSelectableCoverage(static_cast<s100::sdb::RecordId>(m_vecInventory.size()),
+                    coverages[j].minimumDisplayScale, coverages[j].optimumDisplayScale, coverages[j].rings);
+                if (coverage)
+                {
+                    selectable.push_back(std::move(*coverage));
+                    m_coverageOwners.emplace_back(m_vecInventory.size(), j);
+                }
+            }
             m_vecInventory.push_back(inv);
         }
         else
@@ -147,6 +163,7 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
             m_pParentLayerManager->AddLayer(strFilePath);
         }
     }
+    m_selector = s100::sdb::DatasetSelector(std::move(selectable));
 
 	return true;
 }
@@ -154,26 +171,6 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
 bool S100ExchangeCatalogue::OpenMetadata(const std::wstring& /*_filepath*/)
 {
     return true;
-}
-
-bool S100ExchangeCatalogue::CompareByLayer(const Layer* a, const Layer* b)
-{
-    return CompareByFileName(a->m_spatialObject->GetFilePath(), b->m_spatialObject->GetFilePath());
-}
-
-bool S100ExchangeCatalogue::CompareByFileName(const std::wstring& a, const std::wstring& b) 
-{
-    std::shared_ptr<Inventory> invA,invB;
-
-    for (auto inventory : m_vecInventory)
-    {
-        if (inventory->strFilePath == a)
-            invA = inventory;
-
-        if (inventory->strFilePath == b)
-            invB = inventory;
-    }
-    return ScaleBand::CompareByScale(invA->totalScaleBand, invB->totalScaleBand);
 }
 
 std::wstring S100ExchangeCatalogue::FixLegacyFileName(const std::string& str)
@@ -203,19 +200,41 @@ bool S100ExchangeCatalogue::containsFile(const std::vector<std::shared_ptr<Inven
     return false; 
 }
 
+std::vector<std::shared_ptr<InventoryItem>> S100ExchangeCatalogue::SelectItems(Scaler& scaler) const
+{
+    std::vector<std::shared_ptr<InventoryItem>> items;
+    const auto view = GISLibrary::selectionView(scaler);
+    if (!view)
+    {
+        return items;
+    }
+    const auto coverages = m_selector.coverages();
+    for (const auto& selected : m_selector.select(*view))
+    {
+        const auto [inventoryIndex, coverageIndex] = m_coverageOwners[static_cast<std::size_t>(selected.coverage - coverages.data())];
+        const auto& inventory = m_vecInventory[inventoryIndex];
+        if (std::any_of(items.begin(), items.end(), [&](const auto& item) { return item->strFilePath == inventory->strFilePath; }))
+        {
+            continue;   // another coverage of a dataset already selected
+        }
+        auto item = std::make_shared<InventoryItem>();
+        item->strFileName = inventory->strFileName;
+        item->strFilePath = inventory->strFilePath;
+        item->mbrBoundingBox = inventory->mbrBoundingBox;
+        if (coverageIndex < inventory->vecBoundingPolygon.size()) item->BoundingPolygon = inventory->vecBoundingPolygon[coverageIndex];
+        if (coverageIndex < inventory->vecScaleRange.size()) item->ScaleRange = inventory->vecScaleRange[coverageIndex];
+        items.push_back(std::move(item));
+    }
+    return items;
+}
+
 void S100ExchangeCatalogue::DrawFiles(HDC& /*hDC*/, Scaler* scaler, double /*offset*/, std::vector<std::shared_ptr<InventoryItem>>& item)
 {
-    std::string catalogueFolderPath;
-    MBR mbr;
-    S100Utilities util;
-
-    scaler->GetMap(&mbr);
-
-    item = util.SelectDataCoverages(m_vecInventory, scaler, mbr);
+    item = SelectItems(*scaler);
 
     auto pRenderTarget = D2->pRT;
     pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-    
+
     // check Remove LayerItem 
     std::vector<std::wstring> pathsToDelete;
     for (auto layer : m_pLayerManager->layers) {
@@ -235,65 +254,17 @@ void S100ExchangeCatalogue::DrawFiles(HDC& /*hDC*/, Scaler* scaler, double /*off
             m_pLayerManager->AddLayer(temp->strFilePath);
     }
 
-
-    // Sort DataCoverage List
-    m_pLayerManager->layers.sort([this](const Layer* a, const Layer* b){
-        return CompareByFileName(a->m_spatialObject->GetFilePath(), b->m_spatialObject->GetFilePath());;
-        });
-
-}
-
-void S100ExchangeCatalogue::DrawEx(HDC& /*hDC*/, Scaler* scaler, double /*offset*/)
-{
-    MBR mbr;
-    S100Utilities util;
-    scaler->GetMap(&mbr);
-    std::vector<std::shared_ptr<InventoryItem>> item = util.SelectDataCoverages(m_vecInventory, scaler, mbr);
-
-    auto pRenderTarget = D2->pRT;
-    //pRenderTarget->SetTransform(scaler->GetMatrix());
-    pRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-
-    for (int i = 0 ; i < item.size() ; i++)
+    // Draw order: the chart selected last (the smallest scale) at the bottom, the one selected
+    // first (the largest scale) on top.
+    std::unordered_map<std::wstring, std::size_t> selectionOrder;
+    for (std::size_t i = 0; i < item.size(); ++i)
     {
-        auto brush = D2->pBrush;
-
-        long x;
-        long y;
-
-        ID2D1PathGeometry* pPathGeometry = nullptr;
-        D2->Factory()->CreatePathGeometry(&pPathGeometry);
-
-        ID2D1GeometrySink* pSink = nullptr;
-        pPathGeometry->Open(&pSink);
-
-        for (int geoms = 0; geoms < item[i]->BoundingPolygon.size(); geoms++)
-        {
-
-            scaler->WorldToDevice(item[i]->BoundingPolygon[geoms].x, item[i]->BoundingPolygon[geoms].y, &x, &y);
-            if( geoms ==0)
-                pSink->BeginFigure(D2D1::Point2F(x, y), D2D1_FIGURE_BEGIN_FILLED);
-            else
-                pSink->AddLine(D2D1::Point2F(x, y));
-        }
-
-        pSink->EndFigure(D2D1_FIGURE_END_CLOSED);
-        pSink->Close();
-
-        pRenderTarget->BeginDraw();
-        brush->SetColor(D2D1::ColorF(util.GetColorNum(i)));
-        brush->SetOpacity(0.3f);
-        pRenderTarget->FillGeometry(pPathGeometry, brush);
-
-        brush->SetColor(D2D1::ColorF(util.GetColorNum(i)));
-        pRenderTarget->DrawGeometry(pPathGeometry, brush, 1.0, D2->SolidStrokeStyle());
-        pRenderTarget->EndDraw();
-
-        pSink->Release();
-        pPathGeometry->Release();
+        selectionOrder.try_emplace(item[i]->strFilePath, i);
     }
+    m_pLayerManager->layers.sort([&selectionOrder](Layer* a, Layer* b) {
+        return selectionOrder[a->GetLayerPath()] > selectionOrder[b->GetLayerPath()];
+    });
 }
-
 
 void S100ExchangeCatalogue::Draw(HDC& hDC, Scaler* scaler, double offset)
 {
