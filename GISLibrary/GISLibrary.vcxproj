@@ -606,6 +606,7 @@
     <ClCompile Include="SupportFileRevisionStatus.cpp" />
     <ClCompile Include="SupportFileSpecification.cpp" />
     <ClCompile Include="SymbolFill.cpp" />
+    <ClCompile Include="CoverageDataset.cpp" />
     <ClCompile Include="SystemDatabaseChart.cpp" />
     <ClCompile Include="SystemDatabaseSession.cpp" />
     <ClCompile Include="TemporalExtent.cpp" />
@@ -986,6 +987,7 @@
     <ClInclude Include="SupportFileRevisionStatus.h" />
     <ClInclude Include="SupportFileSpecification.h" />
     <ClInclude Include="SymbolFill.h" />
+    <ClInclude Include="CoverageDataset.h" />
     <ClInclude Include="SystemDatabaseChart.h" />
     <ClInclude Include="SystemDatabaseSession.h" />
     <ClInclude Include="TemporalExtent.h" />
@@ -1123,6 +1125,9 @@
     <ClInclude Include="XML_Collection.h" />
   </ItemGroup>
     <ItemGroup>
+    <ProjectReference Include="..\Coverage\Coverage.vcxproj">
+      <Project>{138fb708-aca6-421c-9c6d-06aa8fb2c8fe}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\FeatureCatalog\FeatureCatalog.vcxproj">
       <Project>{4964c844-dae9-4dd3-b9d9-daa7520d019a}</Project>
     </ProjectReference>

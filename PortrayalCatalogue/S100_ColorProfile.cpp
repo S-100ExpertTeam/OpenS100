@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "S100_ColorProfile.h"
+
+#include <string_view>
 #include "S100_Palette.h"
 #include "S100_Color.h"
 
@@ -26,13 +28,17 @@ bool S100_ColorProfile::ReadFile(const std::string& path)
 	pugi::xml_document xmldoc;
 	pugi::xml_parse_result result = xmldoc.load_file(path.c_str());
 
-	pugi::xml_node firstchildNode = xmldoc.first_child();
-	const pugi::char_t* colorProfileName = firstchildNode.name();
-
-	if (!strcmp(colorProfileName, "colorProfile"))
+	// The root is <colorProfile>, or <cp:colorProfile> in profiles written to the S-100 5.x
+	// schema (the S-102 PC 3.0.0's): compared by its local name.
+	pugi::xml_node root = xmldoc.document_element();
+	const std::string_view name = root.name();
+	const auto colon = name.find(':');
+	const std::string_view localName = colon == std::string_view::npos ? name : name.substr(colon + 1);
+	if (localName != "colorProfile")
 	{
-		GetContents(firstchildNode);
+		return false;
 	}
+	GetContents(root);
 	return true;
 }
 

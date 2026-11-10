@@ -34,6 +34,7 @@
 #include "SCompositeCurve.h"
 #include "SPoint.h"
 #include "SCommonFuction.h"
+#include "CoverageDataset.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -1305,6 +1306,13 @@ void LayerManager::S101RebuildPortrayal()
 void LayerManager::BuildPortrayalCatalogue(Layer* l)
 {
 	auto pc = ((S100Layer*)l)->GetPC();
+
+	// Gridded coverages portrayed by their catalogue's rules (S-102).
+	if (auto coverage = dynamic_cast<GISLibrary::CoverageDataset*>(l->GetSpatialObject()))
+	{
+		coverage->Portray(((S100Layer*)l)->GetFC(), pc);
+		return;
+	}
 
 	if (pc &&
 		l->GetFileType() == S100_FileType::FILE_S_100_VECTOR) 

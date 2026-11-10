@@ -7,6 +7,7 @@
 #include "S100H5.h"
 #include "S102H5.h"
 #include "S102Renderer.h"
+#include "CoverageDataset.h"
 #include "PortrayalRenderCache.h"
 #include "ProcessS101.h"
 
@@ -132,7 +133,18 @@ bool S100Layer::Open(const std::wstring& _filepath, LayerManager* lm)
 	{
 		if (GetFC()->getProductId().compare("S-102") == 0)
 		{
-			m_spatialObject = new S102H5(GetPC());
+			// Portrayed by the S-102 portrayal catalogue (CoverageFill), drawn as one image.
+			auto coverage = new GISLibrary::CoverageDataset();
+			m_spatialObject = coverage;
+			coverage->SetLayer(this);
+			if (!coverage->Open(_filepath))
+			{
+				delete m_spatialObject;
+				m_spatialObject = nullptr;
+				return false;
+			}
+			coverage->Portray(GetFC(), GetPC());
+			return true;
 		}
 		else
 		{
@@ -158,6 +170,12 @@ bool S100Layer::DrawGrid(D2D1Resources* d2, HDC& hDC, Scaler* scaler)
 	if (GetFileType() != S100_FileType::FILE_S_100_GRID_H5 || !m_spatialObject)
 	{
 		return false;
+	}
+
+	if (auto coverage = dynamic_cast<GISLibrary::CoverageDataset*>(m_spatialObject))
+	{
+		coverage->DrawCoverage(d2, hDC, scaler);
+		return true;
 	}
 
 	auto s100 = dynamic_cast<S100SpatialObject*>(m_spatialObject);

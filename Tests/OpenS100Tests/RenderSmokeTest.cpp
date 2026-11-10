@@ -25,10 +25,7 @@
 #include "GISLibrary.h"
 #include "PortrayalRenderCache.h"
 #include "S100ExchangeCatalogue.h"
-#include "S102H5.h"
-#include "S102_FC_BathymetryCoverage.h"
-#include "S102_FI_BathymetryCoverage.h"
-#include "S102_VG_BathymetryCoverage.h"
+#include "CoverageDataset.h"
 #include "SystemDatabaseSession.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
@@ -382,9 +379,9 @@ TEST(RenderSmoke, SystemDatabaseChartLoadsBySelectionAfterRestart)
 
 // A gridded dataset (S-102) has no display scales: the System Database chart shows it whenever its
 // bounding box meets the view, and draws the grid itself.
-// Disabled until the S-102 grid renderer draws (it draws nothing yet); enabled by the coverage
-// renderer port (Documents/TechDocs/2026-11-11-coverage-backport-plan.md).
-TEST(RenderSmoke, DISABLED_SystemDatabaseChartDrawsS102Grid)
+// Coverage backport CV-3 (Documents/TechDocs/2026-11-11-coverage-backport-plan.md): the S-102
+// portrayal catalogue's rules colour the grid, drawn as one image.
+TEST(RenderSmoke, SystemDatabaseChartDrawsS102Grid)
 {
 	const auto grid = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-102" / L"S-102" / L"102KR00T4G3B3000026.h5";
 	if (!std::filesystem::exists(grid))
@@ -397,6 +394,13 @@ TEST(RenderSmoke, DISABLED_SystemDatabaseChartDrawsS102Grid)
 		GISLibrary::SystemDatabaseSession session(root);
 		ASSERT_EQ(session.importer().importFeatureCatalogue(testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").outcome,
 			s100::sdb::ImportOutcome::Added);
+		// The portrayal catalogue as IHO delivers it.
+		const auto pcZip = testpaths::tdsRoot() / L"FC_PC" / L"S-102" / L"unzipped" / L"S-102" / L"CATALOGUES" / L"102_Portrayal_Catalogue_3.0.0.zip";
+		if (!std::filesystem::exists(pcZip))
+		{
+			GTEST_SKIP() << "S-102 portrayal catalogue not available: " << pcZip.string();
+		}
+		ASSERT_EQ(session.importer().importPortrayalCatalogue(pcZip).outcome, s100::sdb::ImportOutcome::Added);
 		ASSERT_EQ(session.importer().importDataset(grid).outcome, s100::sdb::ImportOutcome::Added);
 	}
 
@@ -430,35 +434,19 @@ TEST(RenderSmoke, DISABLED_SystemDatabaseChartDrawsS102Grid)
 	EXPECT_TRUE(chart->GetLayerSet().isShown(record->id)) << "the grid is in view";
 	if (auto* inner = chart->GetInnerLayers(); inner && inner->LayerCount() == 1)
 	{
-		auto* grid = static_cast<S102H5*>(inner->GetLayer(0)->GetSpatialObject());
-		auto* coverage = grid && grid->GetBathymetryCoverage() ? grid->GetBathymetryCoverage()->GetBathymetryCoverage() : nullptr;
-		ASSERT_NE(coverage, nullptr) << "the grid's BathymetryCoverage.01 was read";
-		const int width = coverage->getNumPointsLongitudinal();
-		const int height = coverage->getNumPointsLatitudinal();
-		auto* values = coverage->GetBathymetryCoverage();
-		std::size_t withData = 0;
-		float shallowest = 1e9f;
-		float deepest = -1e9f;
-		for (int i = 0; values && values->depth && i < width * height; ++i)
-		{
-			if (values->depth[i] != 1000000)
-			{
-				++withData;
-				shallowest = (std::min)(shallowest, values->depth[i]);
-				deepest = (std::max)(deepest, values->depth[i]);
-			}
-		}
-		std::cout << "[ s102 grid ] " << width << " x " << height << ", nodes with depth " << withData << ", depth "
-			<< shallowest << " .. " << deepest << std::endl;
-		EXPECT_GT(withData, 0u);
+		// Portrayed by the S-102 catalogue: one CoverageFill of depth with its lookup table.
+		auto* coverage = dynamic_cast<GISLibrary::CoverageDataset*>(inner->GetLayer(0)->GetSpatialObject());
+		ASSERT_NE(coverage, nullptr) << "S-102 opens as a coverage portrayed by its catalogue";
+		ASSERT_EQ(coverage->GetInstructions().size(), 1u);
+		EXPECT_EQ(coverage->GetInstructions()[0].attributeCode, "depth");
+		EXPECT_GE(coverage->GetInstructions()[0].lookup.size(), 3u);
 	}
-	EXPECT_GT(colours, 8u) << "the depths are drawn, not only an outline";
+	EXPECT_GE(colours, 4u) << "white and the three depth classes of the two-shade table (DEPIT, DEPVS, DEPDW)";
 }
 
 // The same S-102 grid opened directly as a layer (not through the System Database): the reference
 // for what the grid renderer draws.
-// Disabled for the same reason as SystemDatabaseChartDrawsS102Grid.
-TEST(RenderSmoke, DISABLED_DrawsS102GridAsLayer)
+TEST(RenderSmoke, DrawsS102GridAsLayer)
 {
 	const auto grid = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-102" / L"S-102" / L"102KR00T4G3B3000026.h5";
 	if (!std::filesystem::exists(grid))
@@ -469,6 +457,13 @@ TEST(RenderSmoke, DISABLED_DrawsS102GridAsLayer)
 	CGISLibraryApp gis;
 	auto* catalogues = gis.GetCatalogManager();
 	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
+	// The S-102 PC 3.0.0 opens100-web ships, as a folder.
+	const auto pc = testpaths::webDataRoot().parent_path() / L"pc" / L"S102_Portrayal" / L"portrayal_catalogue.xml";
+	if (!std::filesystem::exists(pc))
+	{
+		GTEST_SKIP() << "S-102 portrayal catalogue not available: " << pc.string();
+	}
+	ASSERT_NE(catalogues->addPC(pc.wstring()), nullptr);
 	const RECT view{ 0, 0, kWidth, kHeight };
 	gis.SetScreen(view);
 	ASSERT_TRUE(gis.AddLayer(grid.wstring()));
@@ -482,5 +477,5 @@ TEST(RenderSmoke, DISABLED_DrawsS102GridAsLayer)
 	EXPECT_TRUE(canvas.SavePng(png));
 	std::cout << "[ s102 layer ] onIC " << gis.GetLayerManager()->onIC << ", non-white " << nonWhite << ", colours " << colours
 		<< ", " << png.string() << std::endl;
-	EXPECT_GT(colours, 8u);
+	EXPECT_GE(colours, 4u) << "white and the three depth classes of the two-shade table";
 }
