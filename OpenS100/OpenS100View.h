@@ -3,6 +3,7 @@
 #include "../GISLibrary/S100EditRender.h"
 #include "../GISLibrary/S101Creator.h"
 #include "../GISLibrary/ExchangeCatalogue.h"
+#include "../GISLibrary/CoverageDataset.h"
 
 class COpenS100Doc;
 class Layer;
@@ -59,6 +60,9 @@ public:
 
 	S100SpatialObject* encPick = nullptr;
 	std::wstring featurePick; // selected feature ID
+	// The coverage values at the last pick (S-102 depths, ...), drawn in a box by the point.
+	std::vector<GISLibrary::CoverageDataset::PickSection> coveragePick;
+	s100::coverage::GeoPosition coveragePickAt;
 
 	// Variables related to mouse change points.
 	unsigned int modifyWaypointIndex; // The acupuncture point number that's being fixed with the mouse
@@ -143,6 +147,7 @@ public:
 	void DrawFromInvalidate(CDC* pDC, CRect& rect);
 	// S-98 Appendix D indications for the S-102 depths on screen (WLA, uncertainty).
 	void DrawDepthIndications(CDC* pDC, const CRect& rect);
+	void DrawCoveragePickReport(CDC* pDC, const CRect& rect);
 
 	Layer* GetCurrentLayer();
 

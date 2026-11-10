@@ -88,6 +88,24 @@ namespace GISLibrary
 		[[nodiscard]] static std::uint64_t SuppressionVersion() noexcept;
 		[[nodiscard]] static std::vector<std::vector<s100::coverage::GeoPosition>> SuppressionRings();
 
+		// The pick report of the values under a point (opens100-web viewer-ol picking.ts): each
+		// value of the drawn features as the file gives it, with its unit (S-98 14.1 rules 3 and
+		// 4); where WLA applies, the water level and the adjusted depth as well (D-2 item 3b), or
+		// the depth less uncertainty where only that applies; and the lookup entry the portrayed
+		// value falls in.
+		struct PickSection
+		{
+			std::string dataset;   // the file's name
+			std::string product;   // "S-102"
+			std::string title;     // the feature's name
+			std::vector<std::pair<std::string, std::string>> rows;   // name, value
+		};
+		// Empty when the point has no value of this dataset's drawn features.
+		[[nodiscard]] std::optional<PickSection> PickAt(const s100::coverage::GeoPosition& position);
+		// Over every coverage dataset alive and drawn now, in the order of their names. S-104 is not
+		// drawn and is reported through the S-102 water level.
+		[[nodiscard]] static std::vector<PickSection> PickAllAt(const s100::coverage::GeoPosition& position);
+
 		// The values drawn: the depth-adjusted coverage for S-102, the file's for the others.
 		[[nodiscard]] const s100::coverage::CoverageSource* GetCoverage() const noexcept { return Source(); }
 		// The file's values, unadjusted (for the pick report).
@@ -138,6 +156,10 @@ namespace GISLibrary
 		std::map<std::string, Lines> lines_;    // by feature ID
 		ID2D1StrokeStyle* s102BoundaryStroke_ = nullptr;
 		ID2D1StrokeStyle* wlaBoundaryStroke_ = nullptr;
+
+		// The feature catalogue's names, by feature code and by attribute code (the pick report).
+		std::map<std::string, std::string> featureNames_;
+		std::map<std::string, std::string> attributeNames_;
 
 		// The catalogue's colour profile, token -> sRGB per palette name.
 		std::map<std::string, std::map<std::string, s100::coverage::Rgb>> palettes_;

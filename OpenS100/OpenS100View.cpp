@@ -1175,12 +1175,80 @@ void COpenS100View::DrawDepthIndications(CDC* pDC, const CRect& rect)
 	pDC->SetBkMode(oldMode);
 }
 
+// The coverage pick report (opens100-web viewer-ol pick-report-view): a mark at the picked point
+// and, beside it, a section per dataset with its values (S-98 D-2 item 3b where WLA applies).
+void COpenS100View::DrawCoveragePickReport(CDC* pDC, const CRect& rect)
+{
+	if (coveragePick.empty())
+	{
+		return;
+	}
+	double x = coveragePickAt.lon;
+	double y = coveragePickAt.lat;
+	projection(x, y);
+	long px = 0;
+	long py = 0;
+	theApp.gisLib->WorldToDevice(x, y, &px, &py);
+
+	std::vector<std::pair<std::wstring, bool>> lines;   // text, heading
+	for (const auto& section : coveragePick)
+	{
+		lines.emplace_back(DatasetManagerUi::Widen(section.product + "  " + section.dataset), true);
+		if (!section.title.empty())
+		{
+			lines.emplace_back(DatasetManagerUi::Widen(section.title), false);
+		}
+		for (const auto& [name, value] : section.rows)
+		{
+			lines.emplace_back(DatasetManagerUi::Widen(name + ": " + value), false);
+		}
+	}
+
+	CFont* oldFont = static_cast<CFont*>(pDC->SelectStockObject(DEFAULT_GUI_FONT));
+	const int lineHeight = pDC->GetTextExtent(L"Ag", 2).cy + 2;
+	int width = 0;
+	for (const auto& [text, heading] : lines)
+	{
+		width = (std::max)(width, static_cast<int>(pDC->GetTextExtent(text.c_str(), static_cast<int>(text.size())).cx));
+	}
+	const int pad = 6;
+	CRect box(0, 0, width + 2 * pad, static_cast<int>(lines.size()) * lineHeight + 2 * pad);
+	// Below and right of the point, moved back inside the view where it would leave it.
+	box.OffsetRect(px + 12, py + 12);
+	if (box.right > rect.right) box.OffsetRect(-(box.Width() + 24), 0);
+	if (box.bottom > rect.bottom) box.OffsetRect(0, -(box.Height() + 24));
+	box.OffsetRect((std::max)(0L, rect.left - box.left), (std::max)(0L, rect.top - box.top));
+
+	CPen pen(PS_SOLID, 2, RGB(255, 0, 255));
+	CPen* oldPen = pDC->SelectObject(&pen);
+	pDC->MoveTo(px - 8, py);
+	pDC->LineTo(px + 9, py);
+	pDC->MoveTo(px, py - 8);
+	pDC->LineTo(px, py + 9);
+	pDC->SelectObject(oldPen);
+
+	pDC->FillSolidRect(box, RGB(255, 255, 255));
+	CBrush frame(RGB(96, 96, 96));
+	pDC->FrameRect(box, &frame);
+	const int oldMode = pDC->SetBkMode(TRANSPARENT);
+	int ty = box.top + pad;
+	for (const auto& [text, heading] : lines)
+	{
+		pDC->SetTextColor(heading ? RGB(0, 70, 140) : RGB(0, 0, 0));
+		pDC->TextOutW(box.left + pad, ty, text.c_str(), static_cast<int>(text.size()));
+		ty += lineHeight;
+	}
+	pDC->SetBkMode(oldMode);
+	pDC->SelectObject(oldFont);
+}
+
 void COpenS100View::DrawFromInvalidate(CDC* pDC, CRect& rect)
 {
 	HDC hdc = pDC->GetSafeHdc();
 
 	DrawZoomArea(pDC);
 	DrawPickReport(hdc);
+	DrawCoveragePickReport(pDC, rect);
 
 	
 }
@@ -1400,10 +1468,26 @@ void COpenS100View::DrawS101PickReport(Graphics& g, int offsetX, int offsetY)
 void COpenS100View::ClearPickReport()
 {
 	SetPick();
+	coveragePick.clear();
 }
 
 void COpenS100View::PickReport(CPoint _point)
 {
+	// The coverage values under the point, from every coverage drawn there, whichever layer is selected.
+	{
+		double lon = 0;
+		double lat = 0;
+		theApp.gisLib->DeviceToWorld(_point.x, _point.y, &lon, &lat);
+		inverseProjection(lon, lat);
+		const bool shown = !coveragePick.empty();
+		coveragePickAt = { .lon = lon, .lat = lat };
+		coveragePick = GISLibrary::CoverageDataset::PickAllAt(coveragePickAt);
+		if (shown || !coveragePick.empty())
+		{
+			Invalidate(FALSE);
+		}
+	}
+
 	auto layerCount = theApp.gisLib->GetLayerManager()->LayerCount();
 
 	if (1 == layerCount)
@@ -1747,6 +1831,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 void COpenS100View::ESC()
 {
 	SetPick();
+	coveragePick.clear();
 
 	MapRefresh(); 
 }

@@ -12,6 +12,8 @@
 
 #include "../Coverage/Hdf5Coverage.h"
 #include "../FeatureCatalog/FeatureCatalogue.h"
+#include "../FeatureCatalog/FeatureType.h"
+#include "../FeatureCatalog/SimpleAttribute.h"
 #include "../GeoMetryLibrary/ENCCommon.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 #include "../GeoMetryLibrary/Scaler.h"
@@ -21,6 +23,7 @@
 #include "../PortrayalCatalogue/S100_Palette.h"
 
 #include <algorithm>
+#include <cctype>
 #include <chrono>
 #include <format>
 
@@ -323,6 +326,24 @@ namespace GISLibrary
 			return false;
 		}
 
+		// The catalogue's names of the features and their values, for the pick report.
+		featureNames_.clear();
+		attributeNames_.clear();
+		for (const auto& feature : raw_->dataset().features)
+		{
+			if (auto* featureType = fc->GetFeatureType(feature.code))
+			{
+				featureNames_[feature.code] = featureType->GetName();
+			}
+			for (const auto& component : feature.components)
+			{
+				if (auto* attribute = fc->GetSimpleAttribute(component.name))
+				{
+					attributeNames_[component.name] = attribute->GetName();
+				}
+			}
+		}
+
 		// The colour profile: palettes of token -> sRGB.
 		palettes_.clear();
 		if (auto* profiles = pc->GetColorProfiles(); profiles && profiles->GetColorProfilesVector() && !profiles->GetColorProfilesVector()->empty())
@@ -584,5 +605,146 @@ namespace GISLibrary
 		{
 			ReleaseImages();
 		}
+	}
+
+	namespace
+	{
+		// "12.30 m", as opens100-web writes a value: two decimals, the unit after it.
+		std::string formatValue(double value, const std::string& uom)
+		{
+			return uom.empty() ? std::format("{:.2f}", value) : std::format("{:.2f} {}", value, uom);
+		}
+
+		// A feature code spaced into words, "BathymetryCoverage" -> "Bathymetry Coverage".
+		std::string spacedCode(const std::string& code)
+		{
+			std::string out;
+			for (std::size_t i = 0; i < code.size(); ++i)
+			{
+				const unsigned char c = static_cast<unsigned char>(code[i]);
+				const unsigned char previous = i > 0 ? static_cast<unsigned char>(code[i - 1]) : 0;
+				if (i > 0 && std::isupper(c) && (std::islower(previous) || std::isdigit(previous)))
+				{
+					out.push_back(' ');
+				}
+				out.push_back(code[i]);
+			}
+			return out;
+		}
+	}
+
+	std::optional<CoverageDataset::PickSection> CoverageDataset::PickAt(const s100::coverage::GeoPosition& position)
+	{
+		if (!raw_ || fillsByFeature_.empty())
+		{
+			return std::nullopt;
+		}
+		PrepareAdjustment();
+		const auto& dataset = raw_->dataset();
+		const auto now = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now());
+		PickSection section{ .dataset = dataset.name, .product = dataset.productId };
+		std::set<std::string, std::less<>> picked;
+		for (const Fill& drawn : fillsByFeature_)
+		{
+			const auto* feature = dataset.feature(drawn.featureId);
+			if (!feature || !picked.insert(drawn.featureId).second)
+			{
+				continue;
+			}
+			// The record drawn now, as DrawCoverage chooses it.
+			const auto timeIndex = s100::coverage::displayTimeIndex(feature->timeGroups, now);
+			const auto cell = s100::coverage::gridCellAt(feature->grid, position);
+			if (!timeIndex || !cell)
+			{
+				continue;
+			}
+			const std::size_t index = static_cast<std::size_t>(cell->row) * static_cast<std::size_t>(feature->grid.cols)
+				+ static_cast<std::size_t>(cell->col);
+			std::vector<std::pair<std::string, std::string>> rows;
+			for (std::size_t c = 0; c < feature->components.size(); ++c)
+			{
+				const auto& component = feature->components[c];
+				const auto values = raw_->readValues(feature->id, { .timeIndex = *timeIndex, .component = c });
+				if (!values || index >= values->size() || s100::coverage::isNoData((*values)[index], component.fillValue))
+				{
+					continue;
+				}
+				const double value = (*values)[index];
+				// The catalogue's name; failing that, the file's (Group_F); failing that, the code.
+				const auto named = attributeNames_.find(component.name);
+				rows.emplace_back(named != attributeNames_.end() && !named->second.empty() ? named->second
+					: component.label.empty() ? component.name : component.label, formatValue(value, component.uom));
+
+				double portrayed = value;
+				const auto* adjustment = component.name == "depth" && adjusted_ ? adjusted_->adjustment(feature->id) : nullptr;
+				if (adjustment && adjustment->depth && index < adjustment->depth->size())
+				{
+					portrayed = (*adjustment->depth)[index];
+					// S-98 D-2 item 3b: both the unadjusted and the adjusted depth where WLA applies.
+					if (index < adjustment->applied.size() && adjustment->applied[index] == 1)
+					{
+						rows.emplace_back("Water level", formatValue(adjustment->waterLevel[index], "m"));
+						rows.emplace_back("Depth (adjusted)", formatValue(portrayed, component.uom) + " ["
+							+ s100::coverage::wlaIndication(settings().adjustment.wla).value_or("WLA") + "]");
+					}
+					else if (portrayed != value)
+					{
+						rows.emplace_back("Depth (uncertainty)", formatValue(portrayed, component.uom));
+					}
+				}
+				// The lookup entry the portrayed value falls in, "Deep water".
+				for (const Fill& fill : fillsByFeature_)
+				{
+					if (fill.featureId != feature->id || fill.instruction.attributeCode != component.name)
+					{
+						continue;
+					}
+					if (const auto match = s100::coverage::lookupCoverageEntry(fill.instruction.lookup, portrayed);
+						match && !fill.instruction.lookup[match->index].label.empty())
+					{
+						rows.emplace_back("Portrayal", fill.instruction.lookup[match->index].label);
+					}
+					break;
+				}
+			}
+			if (rows.empty())
+			{
+				continue;
+			}
+			if (section.title.empty())
+			{
+				const auto named = featureNames_.find(feature->code);
+				section.title = named != featureNames_.end() && !named->second.empty() ? named->second
+					: !feature->label.empty() && feature->label != feature->code ? feature->label : spacedCode(feature->code);
+			}
+			if (const auto& time = feature->timeGroups[*timeIndex].time)
+			{
+				rows.insert(rows.begin(), { "Time", s100::coverage::formatWlaDateTime(*time) });
+			}
+			std::ranges::move(rows, std::back_inserter(section.rows));
+		}
+		if (section.rows.empty())
+		{
+			return std::nullopt;
+		}
+		return section;
+	}
+
+	std::vector<CoverageDataset::PickSection> CoverageDataset::PickAllAt(const s100::coverage::GeoPosition& position)
+	{
+		std::vector<PickSection> sections;
+		for (CoverageDataset* dataset : registry())
+		{
+			if (dataset->m_pLayer && !dataset->m_pLayer->IsOn())
+			{
+				continue;
+			}
+			if (auto section = dataset->PickAt(position))
+			{
+				sections.push_back(std::move(*section));
+			}
+		}
+		std::ranges::sort(sections, {}, &PickSection::dataset);
+		return sections;
 	}
 }

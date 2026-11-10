@@ -18,7 +18,9 @@
 #include <cstdint>
 #include <cstdlib>
 #include <filesystem>
+#include <format>
 #include <iostream>
+#include <map>
 #include <numeric>
 #include <vector>
 
@@ -536,7 +538,39 @@ TEST(RenderSmoke, AdjustsS102ByTheS104OnScreen)
 	std::vector<std::uint32_t> adjusted;
 	render("instant", adjusted);
 	const auto status = CoverageDataset::CurrentWlaStatus();
+
+	// The pick report at a cell WLA adjusted: the file's depth, the water level and the adjusted
+	// depth (S-98 D-2 item 3b), and the portrayal entry.
+	auto* dataset = dynamic_cast<CoverageDataset*>(gis.GetLayerManager()->GetLayer(gis.GetLayerManager()->LayerCount() - 1)->m_spatialObject);
+	ASSERT_NE(dataset, nullptr);
+	const auto* source = dynamic_cast<const s100::coverage::WaterLevelAdjustedCoverage*>(dataset->GetCoverage());
+	ASSERT_NE(source, nullptr);
+	const auto& feature = source->dataset().features.front();
+	const auto* adjustment = source->adjustment(feature.id);
+	ASSERT_NE(adjustment, nullptr);
+	const auto applied = std::ranges::find(adjustment->applied, std::uint8_t{ 1 });
+	ASSERT_NE(applied, adjustment->applied.end());
+	const auto index = static_cast<int>(applied - adjustment->applied.begin());
+	const auto position = s100::coverage::gridPosition(feature.grid, index % feature.grid.cols, index / feature.grid.cols);
+	const auto sections = CoverageDataset::PickAllAt(position);
 	CoverageDataset::SetDepthSettings(original);
+	ASSERT_EQ(sections.size(), 1u);
+	const auto& section = sections.front();
+	EXPECT_EQ(section.product, "S-102");
+	std::map<std::string, std::string> rows(section.rows.begin(), section.rows.end());
+	for (const auto& [name, value] : section.rows)
+	{
+		std::cout << "[ wla pick ] " << name << ": " << value << std::endl;
+	}
+	EXPECT_TRUE(rows.contains("Water level"));
+	EXPECT_TRUE(rows.contains("Portrayal"));
+	ASSERT_TRUE(rows.contains("Depth (adjusted)"));
+	EXPECT_NE(rows["Depth (adjusted)"].find("[WLA "), std::string::npos);
+	const double raw = (*source->base().readValues(feature.id, {}))[index];
+	const double level = adjustment->waterLevel[index];
+	EXPECT_EQ(rows["Depth (adjusted)"].substr(0, rows["Depth (adjusted)"].find(' ')), std::format("{:.2f}", (*adjustment->depth)[index]));
+	std::cout << "[ wla pick ] raw " << raw << ", water level " << level << std::endl;
+	EXPECT_TRUE(CoverageDataset::PickAllAt({ .lon = 0, .lat = 0 }).empty()) << "nothing outside the data";
 
 	EXPECT_GT(status.applied, 0u);
 	EXPECT_TRUE(status.issues.contains(s100::coverage::WlaIssue::IncompatibleDatums));
