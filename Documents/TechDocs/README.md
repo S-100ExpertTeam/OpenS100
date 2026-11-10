@@ -15,4 +15,6 @@ OpenS100 개발자용 기술 문서. 새 세션은 **DIRECTIVES → 로드맵 �
 | [2026-11-09-cmake-vcpkg-skeleton.md](2026-11-09-cmake-vcpkg-skeleton.md) | CMake 빌드·설치·오버레이 포트·외부 소비자 예제. Phase 4·5의 선행 뼈대와 다음 할 일 |
 | [2026-11-10-system-database.md](2026-11-10-system-database.md) | System Database: 데이터셋·FC·PC·지원 파일을 관리하는 로컬 DB와 S-98 E-1 기반 데이터셋 선택. 예전 Dataset Manager의 문제, 스키마, 작업 항목(SDB-1~7 완료: 재시작 후에도 선택대로 로딩·언로딩), 남은 항목 |
 
+| [2026-11-11-coverage-backport-plan.md](2026-11-11-coverage-backport-plan.md) | 커버리지 역이식: PC zip 설치, S-102 표시(PC의 Lua와 커버리지 래스터), 강화 안전등심선(ESC), 수위 보정(WLA). 웹 구현 요약, 모듈 설계, 작업 항목 CV-0~8 |
+
 기존 문서: 상위 `../Functions/`(기능 설명), `../../BUILD.md`, `../../CONVENTIONS.md`, `../../DOXYGEN.md`.

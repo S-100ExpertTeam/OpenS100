@@ -1,0 +1,65 @@
+# 커버리지 역이식: S-102 표시, 강화 안전등심선(ESC), 수위 보정(WLA)
+
+2026-11-11 작성. 사용자 요청: "zip으로 된 PC 설치, 102 그리기, opens100-web의 기능(102·ESC·WLA)을 가져온다. 문서부터 하고 시작한다." 지침 5(웹의 앞선 부분 역이식), 7(계획은 문서로), 22·25(SOLID·현대 C++), 23(화면 검증), 24(렌더 백엔드는 Skia로 가되 D2D는 격리만)를 따른다. [역이식 계획](2026-11-08-backport-plan-from-opens100-web.md)의 P1 "S-102 유효 셀 링", "커버리지 재샘플링 1회"와 S-98 부속서 D 항목을 이 문서가 구체화한다.
+
+## 1. 지금 상태 (2026-11-11)
+
+- **설치·선택은 된다.** `.h5`는 `Hdf5DatasetInspector`로 데이터셋으로 설치되고(8e7eebbe), System Database 차트는 경계 상자가 화면과 겹치면 S-102를 연다. 차트의 그리기 경로는 격자를 격자 렌더러로 보낸다.
+- **그려지지 않는다.** 기존 `S102Renderer`는 직접 연 레이어에서도 아무것도 그리지 않는다(렌더 테스트 2개 `DISABLED_` 상태). 격자는 제대로 읽힌다(KOR `102KR00T4G3B3000026`: 501×501, 수심 노드 138,200개, -1.2~221.5 m). 이 렌더러는 PC를 쓰지 않고 색을 하드코딩하며(`S102_Color`, `ENCCommon` 등심선), 비트맵을 셀마다 `FillRectangle`로 채운다.
+- **PC zip 설치**: `Importer::importPortrayalCatalogue`가 `.zip`을 받아 임시 폴더에 풀고(경로 탈출 이름 거부) `portrayal_catalogue.xml`이 있는 폴더를 설치한다. FC/PC 탭이 `.zip`을 받는다. 교환세트 카탈로그의 `.zip` 항목은 PC로 본다(fd552a76). 테스트 3개 통과(가짜 zip 2개, IHO가 배포한 S-102 PC 3.0.0 zip 1개). **커밋 대기**: 다른 세션이 만든 `SystemDatabase/ZipArchive`(아직 미커밋)를 쓴다. 그 세션이 커밋하면 바로 커밋한다.
+- Lua 명령 파서(`ProcessS101.cpp`)는 `CoverageColor`·`CoverageFill`을 알아보지만 그리는 쪽이 없다.
+
+## 2. opens100-web의 구현 (참조)
+
+웹 저장소 `bluemap-github/opens100-web` 기준. 줄 수는 TS.
+
+| 영역 | 파일 | 핵심 |
+|---|---|---|
+| 격자 모델 | `packages/core/src/coverage.ts`(670), `utm.ts`(72) | `RegularGrid`(행 우선, 0행=남쪽, 노드=셀 중심, UTM 선택), `CoverageDataset/Feature/Component/TimeGroup`, `CoverageSource.readValues`(지연 읽기)와 `revision`, `gridPosition/gridCoordinates/gridLine`(UTM은 32셀 조각), `gridCellAt`, `LatticeMapping`, `isNoData`(NaN 또는 채움값과 정확히 같음), `parseS100DateTime`, `timeIndexAt`, `displayTimeIndex`(S-111 9.4) |
+| HDF5 리더 | `packages/hdf5/src/read-hdf5.ts`(655) | Part 10c 일반 리더. 루트 속성 → `metadata`, `/Group_F/featureCode`와 구성요소 설명(채움값·하한·상한), `dataCodingFormat` 2·3, 인스턴스 `<Code>.NN`, 시간 그룹 `Group_NNN`(`validTime/timePoint/forecastTime`, 1년 이하는 null), `[행, 열]` 축 순서, `dataOffsetCode/Vector`로 원점 이동, compound 구성요소 해독, LRU 48 |
+| S-102 색 | `apps/viewer-ol/public/pc/S102_Portrayal/Rules/BathymetryCoverage.lua`, `core/src/display-list.ts`(L332-410), `core/src/color-profile.ts`(188) | **PC의 Lua가 정한다**: `CoverageColor:<토큰>`·`LookupEntry:<이름>,<하한>,<상한>,<닫힘>` 쌍 뒤에 `CoverageFill:depth`. 두 단계(DEPIT/DEPVS/DEPDW) 또는 `FourShades`면 다섯 단계. 문맥 변수 `SafetyContour`(30), `ShallowContour`(2), `DeepContour`(30), `FourShades`(false)는 S-101과 이름이 같아 함께 설정된다. 첫 번째로 맞는 항목, 맞는 것이 없으면 투명 |
+| 래스터 | `packages/render/src/coverage-renderer.ts`(735) | 셀 RGBA 배열 → 지리 격자는 Mercator 행으로 다시 표본(높이 ≤ 16384), UTM은 `LatticeMapping`으로 휘어 넣기. 리비전·팔레트·시간 인덱스당 1회. 셀이 화면에서 3 px 이상이면 보이는 부분만 화면 해상도로 다시 휘어 넣는 `sharpWindow`. 보간 없이(nearest) 한 번에 그린다 |
+| 유효 셀 링 | `core/src/valid-grid-rings.ts`(98) | 유효 셀 외곽선(구멍은 별도 링, 짝홀 채움). ESC가 켜지면 S-102 아래의 S-101 `DepthArea`·`DredgedArea`·`DepthContour`를 가린다 |
+| ESC | `core/src/enhanced-safety-contour.ts`(179), `sdk/src/depth-jobs.ts` | S-98 D-1.4/D-2.4. 셀 분류(0=격자 밖·자료 없음, 1=`d < 안전등심선`, 2=안전) 후 분류가 다른 셀 사이 변을 모아 격자선 따라 이어 붙인 선분. S-102 경계·WLA 경계도 같은 함수. 선 모양: DEPSC 0.64 mm 실선, S-102 경계 DEPWL 0.96 mm 파선, WLA 경계 DEPWL 1.92 mm 일점쇄선. DEPWL은 S-102 색 프로필에 없어 xyL에서 계산(`xyLToRgb`) |
+| WLA | `core/src/water-level-adjustment.ts`(553) | S-98 D-1.5(불확도), D-2.2(데이텀 호환), D-2.5(옵션 1: 한 시각), D-2.6(옵션 2: 기간). 옵션 3(항로 일정)은 웹도 없음. 시간 보간 없음: 앞뒤 기록 중 얕은 쪽. 기록 중 하나라도 값이 없으면 그 셀은 보정 안 함. S-104 셀 → S-102 셀은 겹치는 S-104 셀 중 가장 얕은 값(그림 D-2-9, 경계 여유 1e-6 셀). CRS가 다르면 `LatticeMapping`. 깊이 = 원수심 − 불확도 + 수위(양수가 아래). `verticalCS` 6498이면 부호 반대 |
+| UI | `apps/viewer-ol/src/depth-settings.ts`(313), `context-settings.ts`(254) | ESC 켜기(기본 켬), 불확도, WLA 끔/한 시각/기간, 시각 슬라이더(10분 단위, S-104 기록 시각 눈금), 데이텀 불일치 무시(시험용). 표시: `WLA hh:mm dd Mmm yyyy`, "Incompatible datums", "No water level: S-104 does not cover this time", "OVERLAP". 픽 리포트: 원수심, 수위, 보정 수심 |
+
+## 3. 설계
+
+### 3.1 모듈
+
+- **새 라이브러리 `Coverage/`**(MFC·Direct2D 없음, 지침 18·22): 격자 모델, UTM, `LatticeMapping`, 커버리지 원본 인터페이스, 룩업·색 프로필, ESC·경계, 유효 셀 링, WLA. 순수 함수와 작은 클래스. CMake 타깃 `opens100::coverage`, VS 솔루션 `01. LIB`.
+- **HDF5 커버리지 리더**: `Coverage/Hdf5Coverage`(의존: hdf5). Part 10c 일반 리더로 웹 리더와 같은 규칙. 기존 `S102H5`·`S100H5`·`H5_*` 클래스는 리더가 대체한 뒤 표시 경로에서 빠진다(삭제는 마지막 단계에서 따로).
+- **포트레이얼**: S-102 PC의 Lua를 기존 Lua 엔진으로 실행하되, 커버리지 데이터셋용 호스트(피처 = 커버리지 인스턴스, 공간 = Coverage)를 둔다. 결과 명령(`CoverageColor`/`LookupEntry`/`CoverageFill`)을 `CoverageLookup`으로 모은다. 웹 `coverageToDataset`과 같은 모양. S-104·S-111 PC도 같은 길을 쓴다.
+- **렌더**: `GISLibrary/CoverageRasterRenderer`가 `CoverageRaster`(셀 색 → Mercator 래스터, 리비전당 1회)를 D2D 비트맵 한 장으로 그린다. D2D 코드는 이 파일에만 둔다(지침 24: 나중에 Skia 렌더러가 같은 래스터를 그린다). 선(ESC·경계)은 화면 좌표 선분 목록으로 넘긴다.
+- **System Database 차트**: S-102 레이어가 새 커버리지 레이어로 열리고, WLA가 켜지면 같은 화면의 S-104를 수위 원본으로 쓴다.
+
+### 3.2 검증 원칙
+
+웹 테스트의 입력과 기대값을 그대로 C++ 테스트로 옮겨 같은 결과를 확인한다(SDB-5 방식). 실제 자료 테스트는 KOR TDS(`D:\s100-reference\tds\KOR_TDS\KOR_S-102`, `KOR_S-104`)와 웹 저장소의 시험 자료(`apps/viewer-ol/public/data`, S-102 5개·S-104 약 100개)를 쓰고, 없으면 건너뛴다. 화면 변경은 오프스크린 PNG와 실제 뷰어 캡처로 확인한다(지침 23).
+
+## 4. 작업 항목
+
+- [ ] **CV-0** PC zip 설치. 구현·테스트 완료, `ZipArchive` 커밋 후 커밋.
+- [ ] **CV-1** `Coverage/` 모듈 뼈대와 격자 모델: `RegularGrid`, UTM(Krüger n³, 웹과 같은 식), `gridPosition/gridCoordinates/gridLine/gridBlockRing/gridBounds/gridCellBounds/gridCellSize/gridCellAt`, `isNoData`(값은 float32, 채움값은 `(double)(float)` 비교), `sampleGrid`, `parseS100DateTime`, `timeIndexAt`, `displayTimeIndex`, `LatticeMapping`. 테스트: 웹 `coverage.test.ts`, `utm.test.ts`의 값.
+- [ ] **CV-2** HDF5 커버리지 리더: 루트 속성, `Group_F` 설명, 인스턴스·시간 그룹, 데이터 오프셋, compound 해독, 채움값, UTM 경계(셀 경계의 합집합), LRU. 테스트: KOR S-102(원점·간격·행렬 수, 오프셋 코드 5), S-104(구성요소, 시간, 범위), 웹 `read-hdf5.test.ts`의 값.
+- [ ] **CV-3** S-102 표시: 커버리지 Lua 호스트, `CoverageLookup`(첫 일치, 닫힘 4종, 반구간), 색 프로필(sRGB, 같은 이름 토큰 대체), `CoverageRaster`(지리·UTM, sharpWindow), D2D 그리기, 문맥 변수(S-101 SafetyContour를 S-102에도). 기존 `S102Renderer` 경로를 이 경로로 바꾼다. 테스트: 웹 `s102.test.ts`(조회 항목, FourShades 5항목), `coverage-raster.test.ts`, 렌더 테스트 2개를 켠다. 뷰어에서 KOR S-102를 S-101과 겹쳐 캡처.
+- [ ] **CV-4** ESC와 경계: `collectEdges`, `safetyContourEdges`, `boundaryEdgesOfClasses`, `depthLines`, `validGridRings`, 선 모양과 DEPWL 색(`xyLToRgb`), ESC가 켜지면 S-102 아래 S-101 수심 피처 가리기. 테스트: 웹 `enhanced-safety-contour.test.ts`(그림 D-1-5: 길이 8, 선분 6 …), `valid-grid-rings.test.ts`, `depth-compute.test.ts`.
+- [ ] **CV-5** WLA: 기록 선택, 데이텀 판정(D-2.2), 수위 격자, 겹치는 셀 중 최소(같은 CRS, 다른 CRS), `adjustDepths`, 보정 원본(리비전 증가), 불확도. 테스트: 웹 `water-level-adjustment.test.ts`(표 10, 그림 D-2-9, UTM 8N, 경계 여유, 데이텀, 표시 문자열), KOR S-102/S-104 실제 자료(데이텀 불일치 → 무시 시 적용 > 0, 한 셀 = 원수심 + 수위).
+- [ ] **CV-6** UI: 수심 설정(ESC, 불확도, WLA 방식·시각·기간, 데이텀 무시), 표시 문구, 픽 리포트(원수심·수위·보정 수심), 계산 스레드 풀(`std::jthread`).
+- [ ] **CV-7** 화면 검증과 성능 기록: KOR S-102·S-104를 S-101과 함께 축척을 바꿔 캡처, 첫 그리기·다음 프레임 시간(웹 기준: S-102 프레임 1 s → 51 ms).
+- [ ] **CV-8** 정리: 표시 경로에서 빠진 `S102H5`·`S102Renderer`·`S102_Color`·`H5_*` 제거, 문서 갱신.
+
+## 5. 위험과 결정할 것
+
+- **프로젝트 파일 동시 수정**: 새 모듈은 `CMakeLists.txt`, `OpenS100.sln`, 테스트 `.vcxproj`를 고친다. 이 중 둘은 데이터 보호 세션이 아직 커밋하지 않은 변경을 갖고 있다. 그 세션의 커밋 뒤에 추가하거나, 먼저 알리고 줄을 덧붙이기만 한다.
+- **Lua 버전**: 엔진은 Lua 5.1(S-101용)이다. S-102 PC 규칙은 `tostring(contextParameters.SafetyContour)`처럼 문맥 값을 문자열로 다룬다. 불리언은 진짜 Lua 불리언으로 넘겨야 한다("false" 문자열은 참).
+- **채움값 비교**: 웹은 float32 값을 double로 넓혀 double 채움값과 정확히 비교한다. C++도 같은 규칙을 지킨다.
+- **S-102 2.x**: 웹은 판 구분이 없고 시험 자료는 모두 3.0이다. 2.x는 같은 `values`(depth, uncertainty) 구성이면 읽힌다. 2.x 자료로 확인하지 못했다.
+- **WLA 부호**: `verticalCS` 6499 = +1, 6498 = −1(S-98 D-1.5 각주 5와 반대로 둔 웹의 판단). 그대로 따르고 테스트로 고정한다.
+- **경계선은 S-102마다**: 이웃 데이터셋 사이의 경계가 각각 그려진다. 생산자 선택은 웹에도 없다(`OVERLAP` 표시만).
+- **렌더 백엔드**: 이번에는 D2D 비트맵으로 그린다. 래스터 생성은 백엔드와 무관한 코드로 두어 Skia 전환 때 그대로 쓴다.
+
+## 변경 이력
+
+- 2026-11-11 작성. 웹 구현 조사(영역 7개)와 C++ 현재 상태 확인(S-102 렌더러가 아무것도 그리지 않음, PC zip 설치 구현).

@@ -215,6 +215,10 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
   - **읽을 수 없는 `CATALOG.XML`**: `importExchangeSet`은 카탈로그를 거부로 보고하고, 그 폴더의 데이터셋과 지원 파일을 하나씩 가져온다.
   - **레이어 목록**: "System Database" 레이어 자체 대신 그 차트가 지금 그리는 데이터셋(맨 위=가장 큰 축척 먼저)을 보여 준다. 그릴 때마다 바뀌었으면 다시 채운다. 행은 (레이어 번호, 차트 안 번호)로 기억하고 쓸 때마다 다시 찾는다. 이런 행을 휴지통으로 지우려 하면 Dataset Manager에서 지우라고 알린다. 범위 맞춤(Map Fill)과 데이터셋 속성은 그 데이터셋 기준.
   - 검증: `ImporterTest`에 3개 추가(읽을 수 없는 카탈로그, 폴더 안 같은 파일, 복사된 교환세트), `SdbReaders.InspectsS102GridFromItsRootAttributes`(KOR S-102).
+  - 커밋: HDF5 데이터셋 8e7eebbe, 폴더 가져오기 3ef9f9ab, 레이어 목록 567bc272.
+  - S-100 4.0 교환세트 카탈로그의 `S100XC:filePath`(파일 이름과 따로 적힌 폴더)를 읽는다. 전에는 KHOA 2020 TDS의 모든 데이터셋이 "listed in the catalogue but not found"였다(데이터 보호 세션이 찾음). (fd552a76)
+  - 남은 점: GML 데이터셋(S-122/123/124/127 등) 판별기가 없어 "no reader for this kind of file"로 거부된다.
+  - S-102 표시·PC zip·ESC·WLA는 [커버리지 역이식 계획](2026-11-11-coverage-backport-plan.md)으로 넘긴다.
 - [ ] **SDB-8** 업데이트 파일 적용(`.001`~), 취소, 교환세트 서명(`CATALOG.SIGN`) 검증 연결.
 - [ ] **SDB-9** 화면 검증(지침 23): KOR_TDS 808셀 교환세트를 가져와 축척을 바꿔 가며 선택·그리기를 캡처하고, 시작 시간·메모리를 기록한다.
 
