@@ -180,7 +180,11 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
   - 한 번의 호출이 트랜잭션 하나. 파일은 저장소 안 `STAGING/`에 복사했다가 커밋 후 제자리로 옮긴다(교체되는 판의 폴더는 그 전에 지움). 실패하면 설치된 파일은 그대로다. 커밋 후 옮기기 실패는 `installProblems`로 보고한다.
   - 교환세트: 모든 데이터셋을 트랜잭션 전에 읽고(느린 부분), 기반 → 업데이트 순으로 설치, 읽지 못한 데이터셋은 그것만 거부. 지원 파일을 먼저 설치하고 데이터셋에 연결한다. 커버리지는 데이터셋의 DataCoverage, 없을 때만 카탈로그의 것.
   - 검증: 가짜 리더로 규칙·파일 처리 12개, 실제 리더 5개 통과. KOR_TDS 808셀 전체 가져오기 19초(Release x64, `S100_SDB_FULL_IMPORT=1`일 때만 도는 테스트), 거부 0, 모든 셀에 커버리지(821개), 지원 파일 22개·연결 850건, 커버리지 WKB 합계 2.9 MB.
-- [ ] **SDB-4** `CatalogueRegistry`를 SDB에서 채우기. `initFCList`/`initPCList` 제거. 데이터셋 제품·버전으로 FC/PC 해석(ready/fallback/unresolved, opens100-web `catalogue-registry.ts`와 맞춤).
+- [x] **SDB-4** `CatalogueRegistry`를 SDB에서 채우기. `initFCList`/`initPCList` 제거. 데이터셋 제품·버전으로 FC/PC 해석(ready/fallback/unresolved, opens100-web `catalogue-registry.ts`와 맞춤). (2026-11-10, f20ca04e)
+  - 판정은 SDB 모듈의 순수 함수 `resolveCatalogue`(`CatalogueResolution.h`). 웹 테스트의 경우를 같은 기대값으로 옮겼다. `2.0`과 `2.0.0`은 같은 버전(KOR 셀은 `2.0`, FC/PC는 `2.0.0`).
+  - 레지스트리는 별도 클래스를 새로 만들지 않고 기존 `CatalogManager`에 붙였다(뷰어 전체가 이미 이 객체를 돌려 쓴다): `registerFeatureCatalogue`/`registerPortrayalCatalogue`/`registerInstalled(SDB, store)`는 아무것도 읽지 않고, `resolve(product, version)`가 처음 필요할 때 읽는다. 제품별 `getFC/getPC`도 등록된 최신판을 먼저 읽는다. 읽기 실패는 unresolved로 보고하고 다시 시도하지 않는다. PC를 읽을 때마다 `onPortrayalLoaded`로 렌더 캐시 준비를 앱에 맡긴다.
+  - `initFCList`/`initPCList` 제거와 앱의 등록 호출은 앱을 SDB로 옮기는 SDB-7에서 한다(`DataSetManagerSupport` 자체가 없어진다).
+  - 뷰어 프로젝트가 SystemDatabase를 링크한다.
 - [ ] **SDB-5** `DatasetSelector`: opens100-web `selectDataCoverages`(경계값 수정 포함)를 역이식하고, 같은 입력으로 두 구현의 결과가 같은지 테스트. `S100Utilities::SelectDataCoverages`의 Clipper 경로를 대체한다.
 - [ ] **SDB-6** `DatasetCache`(LRU, 상한은 셀 수 또는 메모리).
 - [ ] **SDB-7** 앱: Dataset Manager 다이얼로그를 SDB 위의 UI로 다시 만든다. `IniCatalog.XML`·`TEMP` 복사·`DatasetManager.db` 제거. `OnCreate`의 일괄 `AddLayer` 제거. 기존 `DatasetManager.db`에서 FC/PC/데이터셋 경로를 읽어 한 번 가져오는 마이그레이션.
