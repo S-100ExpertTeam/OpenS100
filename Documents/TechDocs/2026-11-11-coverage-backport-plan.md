@@ -6,7 +6,7 @@
 
 - **설치·선택은 된다.** `.h5`는 `Hdf5DatasetInspector`로 데이터셋으로 설치되고(8e7eebbe), System Database 차트는 경계 상자가 화면과 겹치면 S-102를 연다. 차트의 그리기 경로는 격자를 격자 렌더러로 보낸다.
 - **그려지지 않는다.** 기존 `S102Renderer`는 직접 연 레이어에서도 아무것도 그리지 않는다(렌더 테스트 2개 `DISABLED_` 상태). 격자는 제대로 읽힌다(KOR `102KR00T4G3B3000026`: 501×501, 수심 노드 138,200개, -1.2~221.5 m). 이 렌더러는 PC를 쓰지 않고 색을 하드코딩하며(`S102_Color`, `ENCCommon` 등심선), 비트맵을 셀마다 `FillRectangle`로 채운다.
-- **PC zip 설치**: `Importer::importPortrayalCatalogue`가 `.zip`을 받아 임시 폴더에 풀고(경로 탈출 이름 거부) `portrayal_catalogue.xml`이 있는 폴더를 설치한다. FC/PC 탭이 `.zip`을 받는다. 교환세트 카탈로그의 `.zip` 항목은 PC로 본다(fd552a76). 테스트 3개 통과(가짜 zip 2개, IHO가 배포한 S-102 PC 3.0.0 zip 1개). **커밋 대기**: 다른 세션이 만든 `SystemDatabase/ZipArchive`(아직 미커밋)를 쓴다. 그 세션이 커밋하면 바로 커밋한다.
+- **PC zip 설치**: `Importer::importPortrayalCatalogue`가 `.zip`을 받아 임시 폴더에 풀고(경로 탈출 이름 거부) `portrayal_catalogue.xml`이 있는 폴더를 설치한다. FC/PC 탭이 `.zip`을 받는다. 교환세트 카탈로그의 `.zip` 항목은 PC로 본다(fd552a76). 테스트 3개 통과(가짜 zip 2개, IHO가 배포한 S-102 PC 3.0.0 zip 1개). 다른 세션이 만든 `SystemDatabase/ZipArchive`를 쓴다.
 - Lua 명령 파서(`ProcessS101.cpp`)는 `CoverageColor`·`CoverageFill`을 알아보지만 그리는 쪽이 없다.
 
 ## 2. opens100-web의 구현 (참조)
@@ -40,7 +40,7 @@
 
 ## 4. 작업 항목
 
-- [ ] **CV-0** PC zip 설치. 구현·테스트 완료, `ZipArchive` 커밋 후 커밋.
+- [x] **CV-0** PC zip 설치(2026-11-11). `Importer::importPortrayalCatalogue`가 `.zip`을 임시 폴더에 풀고(경로 탈출 이름 거부) `portrayal_catalogue.xml`에 가장 가까운 폴더를 설치한다. FC/PC 탭이 `.zip`을 받는다. 데이터 보호 세션의 `ZipArchive`(4f2c5b56)를 쓴다. 테스트: 가짜 zip 2개, IHO S-102 PC 3.0.0 zip.
 - [x] **CV-1** `Coverage/` 모듈 뼈대와 격자 모델: `RegularGrid`, UTM(Krüger n³, 웹과 같은 식), `gridPosition/gridCoordinates/gridLine/gridBlockRing/gridBounds/gridCellBounds/gridCellSize/gridCellAt`, `isNoData`(값은 float32, 채움값은 `(double)(float)` 비교), `sampleGrid`, `parseS100DateTime`, `timeIndexAt`, `displayTimeIndex`, `LatticeMapping`. 테스트: 웹 `coverage.test.ts`, `utm.test.ts`의 값. (2026-11-11)
   - 네임스페이스 `s100::coverage`. 파일: `Geo.h`, `Utm`, `RegularGrid`(격자 기하·표본·`LatticeMapping`), `CoverageTime`(`std::chrono::sys_time<milliseconds>`, 1년도 그대로), `CoverageModel`(구성요소·피처·데이터셋·`CoverageSource` 인터페이스, 값은 `shared_ptr<const vector<float>>`), `CoverageLookup`(Part 9a 구간 8종, 첫 일치·비율)도 여기 둔다(CV-3에서 쓸 것).
   - `gridCellAt`의 반올림은 JS `Math.round`와 같이 `floor(x + 0.5)`(음수 반값에서 `std::round`와 다르다).

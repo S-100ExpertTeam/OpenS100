@@ -121,7 +121,7 @@ void FC_PCSelectdlg::OnMenuLoad(CCmdUI* /*pCmdUI*/)
 		_T("xml"),
 		NULL,
 		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST,
-		_T("Feature or portrayal catalogue (*.xml)|*.xml|"));
+		_T("Feature or portrayal catalogue (*.xml;*.zip)|*.xml;*.zip|"));
 
 	if (dlg.DoModal() == IDOK)
 	{
@@ -143,7 +143,12 @@ void FC_PCSelectdlg::LoadFiles(const std::vector<std::filesystem::path>& files)
 	for (const auto& file : files)
 	{
 		std::error_code error;
-		if (std::filesystem::is_directory(file, error))
+		std::wstring extension = file.extension().wstring();
+		for (auto& c : extension)
+		{
+			c = static_cast<wchar_t>(::towlower(c));
+		}
+		if (std::filesystem::is_directory(file, error) || extension == L".zip")
 		{
 			results.push_back(session->importer().importPortrayalCatalogue(file));
 		}

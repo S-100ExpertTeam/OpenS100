@@ -5,12 +5,14 @@
 #include "Sha256.h"
 #include "SystemDatabase.h"
 #include "Utf8Path.h"
+#include "ZipArchive.h"
 
 #include <algorithm>
 #include <atomic>
 #include <cctype>
 #include <chrono>
 #include <format>
+#include <fstream>
 #include <iterator>
 #include <tuple>
 #include <unordered_map>
@@ -202,6 +204,100 @@ namespace s100::sdb
         ImportResult duplicate(const fs::path& file, const fs::path& first)
         {
             return result(file, ImportOutcome::Unchanged, 0, "same file as " + toUtf8(first) + "; imported once");
+        }
+
+        bool isZip(const fs::path& file)
+        {
+            return upper(toUtf8(file.extension())) == ".ZIP";
+        }
+
+        // A ZIP archive extracted to a fresh temporary folder, removed again with this object.
+        // Entry names that would leave the folder (absolute, a drive, "..") are refused.
+        class ExtractedArchive
+        {
+        public:
+            // Throws ZipError when the archive cannot be read or holds an unsafe name, and
+            // std::filesystem::filesystem_error when the files cannot be written.
+            explicit ExtractedArchive(const fs::path& zip)
+            {
+                std::ifstream in(zip, std::ios::binary);
+                if (!in)
+                {
+                    throw ZipError("the file cannot be opened");
+                }
+                const std::vector<std::uint8_t> bytes((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
+                const ZipArchive archive(bytes);
+
+                static std::atomic<unsigned> counter{ 0 };
+                const auto stamp = std::chrono::steady_clock::now().time_since_epoch().count();
+                root_ = fs::temp_directory_path() / fromUtf8(std::format("opens100-archive-{}-{}", stamp, counter++));
+                fs::create_directories(root_);
+                try
+                {
+                    for (const ZipArchive::Entry& entry : archive.entries())
+                    {
+                        const fs::path relative = fromUtf8(entry.name).lexically_normal();
+                        if (relative.empty() || relative.is_absolute() || relative.has_root_name()
+                            || std::ranges::any_of(relative, [](const fs::path& part) { return part == ".."; }))
+                        {
+                            throw ZipError("unsafe entry name " + entry.name);
+                        }
+                        const fs::path target = root_ / relative;
+                        if (entry.isDirectory())
+                        {
+                            fs::create_directories(target);
+                            continue;
+                        }
+                        fs::create_directories(target.parent_path());
+                        const std::vector<std::uint8_t> content = archive.read(entry);
+                        std::ofstream out(target, std::ios::binary | std::ios::trunc);
+                        out.write(reinterpret_cast<const char*>(content.data()), static_cast<std::streamsize>(content.size()));
+                        if (!out)
+                        {
+                            throw fs::filesystem_error("cannot write the extracted file", target, std::make_error_code(std::errc::io_error));
+                        }
+                    }
+                }
+                catch (...)
+                {
+                    std::error_code ignored;
+                    fs::remove_all(root_, ignored);
+                    throw;
+                }
+            }
+            ExtractedArchive(const ExtractedArchive&) = delete;
+            ExtractedArchive& operator=(const ExtractedArchive&) = delete;
+            ~ExtractedArchive()
+            {
+                std::error_code ignored;
+                fs::remove_all(root_, ignored);
+            }
+
+            [[nodiscard]] const fs::path& root() const noexcept { return root_; }
+
+        private:
+            fs::path root_;
+        };
+
+        // The portrayal_catalogue.xml nearest the top of `folder` (archives wrap the catalogue in
+        // one or two folders of their own).
+        std::optional<fs::path> findPortrayalCatalogueXmlBelow(const fs::path& folder)
+        {
+            std::optional<fs::path> found;
+            std::size_t depth = 0;
+            std::error_code error;
+            for (auto entry = fs::recursive_directory_iterator(folder, error); !error && entry != fs::recursive_directory_iterator();
+                entry.increment(error))
+            {
+                std::string name = toUtf8(entry->path().filename());
+                std::ranges::transform(name, name.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+                if (name == "portrayal_catalogue.xml" && (!found || static_cast<std::size_t>(entry.depth()) < depth))
+                {
+                    found = entry->path();
+                    depth = static_cast<std::size_t>(entry.depth());
+                }
+            }
+            return found;
         }
     }
 
@@ -749,6 +845,31 @@ namespace s100::sdb
         if (!readers_.catalogues)
         {
             return rejected(location, "no catalogue reader");
+        }
+        if (isZip(location))
+        {
+            // A catalogue delivered as an archive: installed from the folder that holds its
+            // portrayal_catalogue.xml, which is copied to the store before the archive goes.
+            try
+            {
+                const ExtractedArchive archive(location);
+                const auto xml = findPortrayalCatalogueXmlBelow(archive.root());
+                if (!xml)
+                {
+                    return rejected(location, "no portrayal_catalogue.xml in the archive");
+                }
+                ImportResult installed = installPortrayalCatalogue(xml->parent_path(), changes);
+                installed.source = location;
+                return installed;
+            }
+            catch (const ZipError& e)
+            {
+                return rejected(location, std::string("cannot be read as a ZIP archive: ") + e.what());
+            }
+            catch (const fs::filesystem_error& e)
+            {
+                return rejected(location, e.what());
+            }
         }
         try
         {

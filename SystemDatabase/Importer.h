@@ -92,8 +92,8 @@ namespace s100::sdb
         Importer(SystemDatabase& database, ResourceStore& store, Readers readers, Clock clock = &Importer::utcNow);
 
         ImportResult importFeatureCatalogue(const std::filesystem::path& xml);
-        // `location` is the catalogue folder or the portrayal_catalogue.xml in it; the whole
-        // folder is installed.
+        // `location` is the catalogue folder, the portrayal_catalogue.xml in it, or a .zip archive
+        // that holds the folder (at any depth); the whole folder is installed.
         ImportResult importPortrayalCatalogue(const std::filesystem::path& location);
         // A base dataset, an update file or a cancellation.
         ImportResult importDataset(const std::filesystem::path& file);

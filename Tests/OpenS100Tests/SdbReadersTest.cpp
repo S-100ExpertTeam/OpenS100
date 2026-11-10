@@ -84,6 +84,31 @@ TEST(SdbReaders, InspectsS102GridFromItsRootAttributes)
 	EXPECT_FALSE(inspector.inspect(testpaths::korS101Cell()));
 }
 
+// The S-102 portrayal catalogue as IHO delivers it: a .zip with the catalogue two folders down.
+TEST(SdbReaders, InstallsDeliveredS102PortrayalCatalogueZip)
+{
+	const fs::path zip = testpaths::tdsRoot() / L"FC_PC" / L"S-102" / L"unzipped" / L"S-102" / L"CATALOGUES" / L"102_Portrayal_Catalogue_3.0.0.zip";
+	if (!fs::exists(zip))
+	{
+		GTEST_SKIP() << "S-102 portrayal catalogue archive not found: " << zip;
+	}
+	const auto root = testpaths::tempDir() / L"SdbReaders" / L"PcZip";
+	fs::remove_all(root);
+	s100::sdb::ResourceStore store(root);
+	auto database = s100::sdb::SystemDatabase::open(store.databaseFile());
+	const GISLibrary::XmlCatalogueInspector catalogues;
+	s100::sdb::Importer importer(database, store, s100::sdb::Importer::Readers{ {}, &catalogues, nullptr });
+
+	const auto added = importer.importPortrayalCatalogue(zip);
+	ASSERT_EQ(added.outcome, s100::sdb::ImportOutcome::Added) << added.message;
+	const auto record = database.portrayalCatalogues().find(added.id);
+	ASSERT_TRUE(record);
+	EXPECT_EQ(record->product, "S-102");
+	EXPECT_EQ(record->version, "3.0.0");
+	EXPECT_TRUE(store.exists("PC/S-102/3.0.0/Rules/BathymetryCoverage.lua"));
+	EXPECT_TRUE(store.exists("PC/S-102/3.0.0/ColorProfiles/colorProfile.xml"));
+}
+
 TEST_F(SdbReadersKorTds, InspectsS101CellWithoutCatalogue)
 {
 	const GISLibrary::S101DatasetInspector inspector;

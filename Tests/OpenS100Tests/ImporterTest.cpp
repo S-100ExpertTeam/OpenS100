@@ -4,6 +4,7 @@
 #include "SystemDatabase/Importer.h"
 #include "SystemDatabase/ResourceStore.h"
 #include "SystemDatabase/SystemDatabase.h"
+#include "SystemDatabase/ZipArchive.h"
 
 #include <filesystem>
 #include <fstream>
@@ -30,6 +31,34 @@ namespace
 		fs::create_directories(file.parent_path());
 		std::ofstream out(file, std::ios::binary | std::ios::trunc);
 		out << text;
+	}
+
+	// A ZIP archive of stored (uncompressed) entries; a name ending in '/' is a folder.
+	void writeStoredZip(const fs::path& file, const std::vector<std::pair<std::string, std::string>>& entries)
+	{
+		std::string body;
+		std::string directory;
+		const auto u16 = [](std::string& out, std::uint16_t v) { out += static_cast<char>(v & 0xFF); out += static_cast<char>(v >> 8); };
+		const auto u32 = [&](std::string& out, std::uint32_t v) { u16(out, static_cast<std::uint16_t>(v & 0xFFFF)); u16(out, static_cast<std::uint16_t>(v >> 16)); };
+		for (const auto& [name, content] : entries)
+		{
+			const auto crc = computeCrc32(std::span(reinterpret_cast<const std::uint8_t*>(content.data()), content.size()));
+			const auto offset = static_cast<std::uint32_t>(body.size());
+			const auto size = static_cast<std::uint32_t>(content.size());
+			u32(body, 0x04034b50); u16(body, 20); u16(body, 0); u16(body, 0); u16(body, 0); u16(body, 0);
+			u32(body, crc); u32(body, size); u32(body, size); u16(body, static_cast<std::uint16_t>(name.size())); u16(body, 0);
+			body += name;
+			body += content;
+			u32(directory, 0x02014b50); u16(directory, 20); u16(directory, 20); u16(directory, 0); u16(directory, 0); u16(directory, 0); u16(directory, 0);
+			u32(directory, crc); u32(directory, size); u32(directory, size); u16(directory, static_cast<std::uint16_t>(name.size()));
+			u16(directory, 0); u16(directory, 0); u16(directory, 0); u16(directory, 0); u32(directory, 0); u32(directory, offset);
+			directory += name;
+		}
+		std::string end;
+		u32(end, 0x06054b50); u16(end, 0); u16(end, 0);
+		u16(end, static_cast<std::uint16_t>(entries.size())); u16(end, static_cast<std::uint16_t>(entries.size()));
+		u32(end, static_cast<std::uint32_t>(directory.size())); u32(end, static_cast<std::uint32_t>(body.size())); u16(end, 0);
+		writeText(file, body + directory + end);
 	}
 
 	Ring square(double x0, double y0, double x1, double y1)
@@ -72,9 +101,15 @@ namespace
 	{
 	public:
 		std::map<fs::path, InspectedCatalogue> answers;
+		// For a portrayal_catalogue.xml at a path the test cannot know (extracted from an archive).
+		std::optional<InspectedCatalogue> anyPortrayal;
 
 		std::optional<InspectedCatalogue> inspectFeatureCatalogue(const fs::path& xml) const override { return find(xml); }
-		std::optional<InspectedCatalogue> inspectPortrayalCatalogue(const fs::path& xml) const override { return find(xml); }
+		std::optional<InspectedCatalogue> inspectPortrayalCatalogue(const fs::path& xml) const override
+		{
+			const auto found = find(xml);
+			return found ? found : anyPortrayal;
+		}
 
 	private:
 		std::optional<InspectedCatalogue> find(const fs::path& xml) const
@@ -280,6 +315,50 @@ TEST_F(ImporterTest, InstallsPortrayalCatalogueFolder)
 
 	EXPECT_TRUE(importer->removePortrayalCatalogue(added.id));
 	EXPECT_FALSE(fs::exists(store->absolute("PC")));
+}
+
+TEST_F(ImporterTest, InstallsPortrayalCatalogueFromZip)
+{
+	// As delivered: the catalogue two folders down, folders listed as entries of their own.
+	const fs::path zip = dir / "source" / "102_Portrayal_Catalogue_3.0.0.zip";
+	writeStoredZip(zip, {
+		{ "S-102-PC/", "" },
+		{ "S-102-PC/Changelog.md", "notes" },
+		{ "S-102-PC/PortrayalCatalog/", "" },
+		{ "S-102-PC/PortrayalCatalog/portrayal_catalogue.xml", "<pc/>" },
+		{ "S-102-PC/PortrayalCatalog/Rules/main.lua", "-- main" },
+	});
+	catalogues.anyPortrayal = InspectedCatalogue{ "S-102", "3.0.0", "" };
+
+	const auto added = importer->importPortrayalCatalogue(zip);
+	ASSERT_EQ(added.outcome, ImportOutcome::Added) << added.message;
+	EXPECT_EQ(added.source, zip);
+	EXPECT_EQ(database.portrayalCatalogues().find(added.id)->path, "PC/S-102/3.0.0/portrayal_catalogue.xml");
+	EXPECT_TRUE(store->exists("PC/S-102/3.0.0/Rules/main.lua"));
+	EXPECT_FALSE(store->exists("PC/S-102/3.0.0/Changelog.md")) << "only the catalogue folder is installed";
+	EXPECT_EQ(importer->importPortrayalCatalogue(zip).outcome, ImportOutcome::Unchanged);
+}
+
+TEST_F(ImporterTest, RejectsZipWithoutCatalogueOrWithUnsafeNames)
+{
+	catalogues.anyPortrayal = InspectedCatalogue{ "S-102", "3.0.0", "" };
+	const fs::path empty = dir / "source" / "empty.zip";
+	writeStoredZip(empty, { { "readme.txt", "nothing here" } });
+	const auto none = importer->importPortrayalCatalogue(empty);
+	EXPECT_EQ(none.outcome, ImportOutcome::Rejected);
+	EXPECT_NE(none.message.find("no portrayal_catalogue.xml"), std::string::npos) << none.message;
+
+	const fs::path escaping = dir / "source" / "escaping.zip";
+	writeStoredZip(escaping, { { "../outside.txt", "x" }, { "portrayal_catalogue.xml", "<pc/>" } });
+	const auto unsafe = importer->importPortrayalCatalogue(escaping);
+	EXPECT_EQ(unsafe.outcome, ImportOutcome::Rejected);
+	EXPECT_NE(unsafe.message.find("unsafe"), std::string::npos) << unsafe.message;
+	EXPECT_FALSE(fs::exists(fs::temp_directory_path() / "outside.txt"));
+
+	const fs::path notZip = dir / "source" / "broken.zip";
+	writeText(notZip, "not an archive");
+	EXPECT_EQ(importer->importPortrayalCatalogue(notZip).outcome, ImportOutcome::Rejected);
+	EXPECT_TRUE(database.portrayalCatalogues().all().empty());
 }
 
 TEST_F(ImporterTest, SupportFilesAreReplacedAndDeletedByPurpose)
