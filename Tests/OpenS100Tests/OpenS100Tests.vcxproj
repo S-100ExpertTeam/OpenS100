@@ -93,6 +93,7 @@
     <ClCompile Include="ExchangeCatalogueTest.cpp" />
     <ClCompile Include="RenderSmokeTest.cpp" />
     <ClCompile Include="GeodesyTest.cpp" />
+    <ClCompile Include="SystemDatabaseTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestPaths.h" />
@@ -100,6 +101,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\GISLibrary\GISLibrary.vcxproj">
       <Project>{ad396c19-6f9e-4f51-ac6e-ab02a1348795}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SystemDatabase\SystemDatabase.vcxproj">
+      <Project>{f3755787-d9d8-4180-ae99-b237b0bd8a69}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\GeoMetryLibrary\GeoMetryLibrary.vcxproj">
       <Project>{a95f413a-d144-4140-8e51-05d2e2ba5770}</Project>

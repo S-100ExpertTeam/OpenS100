@@ -6,6 +6,9 @@ if(@OPENS100_BUILD_FEATURECATALOG@)
     find_dependency(pugixml CONFIG)
     find_dependency(utf8cpp CONFIG)
 endif()
+if(@OPENS100_BUILD_SYSTEMDATABASE@)
+    find_dependency(unofficial-sqlite3 CONFIG)
+endif()
 
 include("${CMAKE_CURRENT_LIST_DIR}/opens100Targets.cmake")
 

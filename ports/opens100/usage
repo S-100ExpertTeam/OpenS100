@@ -7,3 +7,7 @@ Headers keep the module directory names:
 
     #include <FeatureCatalog/FeatureCatalogue.h>
     #include <GeoMetryLibrary/MBR.h>
+
+The System Database (feature "system-database") is opens100::sdb:
+
+    #include <SystemDatabase/SystemDatabase.h>

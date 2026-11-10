@@ -1,7 +1,7 @@
 {
   "name": "opens100",
   "version": "0.1.0",
-  "port-version": 3,
+  "port-version": 4,
   "description": "Core C++ library for IHO S-100 hydrographic data. The base package is the geodesy module (opens100::latlon); the other modules are features.",
   "homepage": "https://github.com/S-100ExpertTeam/OpenS100",
   "license": "MPL-2.0",
@@ -30,6 +30,12 @@
     },
     "geometry": {
       "description": "Geometry primitives, map scaler and display settings (opens100::geometry)"
+    },
+    "system-database": {
+      "description": "System Database: local store of installed datasets, catalogues and support files (opens100::sdb)",
+      "dependencies": [
+        "sqlite3"
+      ]
     }
   }
 }

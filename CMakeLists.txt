@@ -25,6 +25,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 option(OPENS100_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 option(OPENS100_BUILD_GEOMETRY "Build opens100::geometry (GeoMetryLibrary)" ON)
 option(OPENS100_BUILD_FEATURECATALOG "Build opens100::featurecatalog (FeatureCatalog)" ON)
+option(OPENS100_BUILD_SYSTEMDATABASE "Build opens100::sdb (SystemDatabase)" ON)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -33,6 +34,9 @@ find_package(GeographicLib CONFIG REQUIRED)
 if(OPENS100_BUILD_FEATURECATALOG)
     find_package(pugixml CONFIG REQUIRED)
     find_package(utf8cpp CONFIG REQUIRED)
+endif()
+if(OPENS100_BUILD_SYSTEMDATABASE)
+    find_package(unofficial-sqlite3 CONFIG REQUIRED)
 endif()
 
 # Headers are installed as <prefix>/include/opens100/<Module>/<header>, the same relative layout
@@ -83,7 +87,7 @@ function(opens100_add_module target directory)
     install(FILES ${headers} DESTINATION "${OPENS100_INSTALL_INCLUDEDIR}/${directory}")
 endfunction()
 
-# Dependency order: latlon <- geometry, featurecatalog. (PortrayalCatalogue still includes the
+# Dependency order: latlon <- geometry, featurecatalog; sdb stands alone. (PortrayalCatalogue still includes the
 # Direct2D render module and joins after step 2-3c of the Phase 1 plan.)
 opens100_add_module(latlon LatLonUtility DEPENDS GeographicLib::GeographicLib)
 if(OPENS100_BUILD_GEOMETRY)
@@ -91,6 +95,9 @@ if(OPENS100_BUILD_GEOMETRY)
 endif()
 if(OPENS100_BUILD_FEATURECATALOG)
     opens100_add_module(featurecatalog FeatureCatalog DEPENDS latlon pugixml::pugixml utf8cpp::utf8cpp)
+endif()
+if(OPENS100_BUILD_SYSTEMDATABASE)
+    opens100_add_module(sdb SystemDatabase DEPENDS unofficial::sqlite3::sqlite3)
 endif()
 
 # --- package ------------------------------------------------------------------------------

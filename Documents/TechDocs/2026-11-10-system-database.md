@@ -40,79 +40,99 @@ Dataset Manager(앱 `OpenS100/DATASET_SUPPORTdlg`, `DataSetManagerSupport`)의 �
 | `DatasetSelector` | S-98 E-1.3 데이터 커버리지 선택. 입력은 SDB 커버리지 인덱스와 뷰, 출력은 그릴 데이터셋 ID와 순서 | `s100-sdk` (`S100Utilities::SelectDataCoverages` 대체, opens100-web `dataset-loading.ts`와 맞춤) |
 | `DatasetCache` | 열린 데이터셋의 LRU 캐시. 선택에서 빠졌다가 다시 들어온 셀을 다시 파싱하지 않는다 | `s100-sdk` |
 
-### 3.2 스키마 초안
+### 3.2 스키마 (v1)
 
 경로는 모두 SDB 루트 기준 상대 경로(UTF-8). 시간은 ISO 8601 문자열.
 
-```sql
-CREATE TABLE schema_info (version INTEGER NOT NULL);
+스키마 버전은 `PRAGMA user_version`에 둔다(별도 테이블 없음). 연결마다 `PRAGMA foreign_keys = ON`, 파일 DB는 WAL. 아래는 v1이고, 기준은 코드(`SystemDatabase/Schema.cpp`)다. 배포된 단계는 고치지 않고 다음 단계를 덧붙인다.
 
+```sql
 CREATE TABLE exchange_set (
   id INTEGER PRIMARY KEY,
-  source_path TEXT NOT NULL,          -- where it was imported from (informational)
-  identifier TEXT, issue_date TEXT,
+  source_path TEXT NOT NULL,
+  identifier TEXT NOT NULL DEFAULT '',
+  issue_date TEXT NOT NULL DEFAULT '',
   imported_at TEXT NOT NULL
 );
 
 CREATE TABLE feature_catalogue (
   id INTEGER PRIMARY KEY,
-  product TEXT NOT NULL, version TEXT NOT NULL,
-  path TEXT NOT NULL UNIQUE, sha256 TEXT NOT NULL,
-  issue_date TEXT, imported_at TEXT NOT NULL,
+  product TEXT NOT NULL,
+  version TEXT NOT NULL,
+  path TEXT NOT NULL UNIQUE,
+  sha256 TEXT NOT NULL,
+  issue_date TEXT NOT NULL DEFAULT '',
+  imported_at TEXT NOT NULL,
   UNIQUE (product, version)
 );
 
-CREATE TABLE portrayal_catalogue (   -- same shape as feature_catalogue
+CREATE TABLE portrayal_catalogue (
   id INTEGER PRIMARY KEY,
-  product TEXT NOT NULL, version TEXT NOT NULL,
-  path TEXT NOT NULL UNIQUE,          -- portrayal_catalogue.xml inside the PC folder
-  sha256 TEXT NOT NULL, issue_date TEXT, imported_at TEXT NOT NULL,
+  product TEXT NOT NULL,
+  version TEXT NOT NULL,
+  path TEXT NOT NULL UNIQUE,
+  sha256 TEXT NOT NULL,
+  issue_date TEXT NOT NULL DEFAULT '',
+  imported_at TEXT NOT NULL,
   UNIQUE (product, version)
 );
 
 CREATE TABLE dataset (
   id INTEGER PRIMARY KEY,
-  name TEXT NOT NULL,                 -- dataset file name without extension, e.g. 101KR003G2M00
-  product TEXT NOT NULL, product_edition TEXT,
-  format TEXT NOT NULL,               -- iso8211 | gml | hdf5
-  edition INTEGER, update_number INTEGER NOT NULL DEFAULT 0,
-  issue_date TEXT,
+  name TEXT NOT NULL,
+  product TEXT NOT NULL,
+  product_edition TEXT NOT NULL DEFAULT '',
+  format TEXT NOT NULL CHECK (format IN ('iso8211', 'gml', 'hdf5')),
+  edition INTEGER,
+  update_number INTEGER NOT NULL DEFAULT 0,
+  issue_date TEXT NOT NULL DEFAULT '',
   path TEXT NOT NULL UNIQUE,
   min_x REAL, min_y REAL, max_x REAL, max_y REAL,
-  status TEXT NOT NULL DEFAULT 'active',   -- active | cancelled
-  exchange_set_id INTEGER REFERENCES exchange_set(id),
+  status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'cancelled')),
+  exchange_set_id INTEGER REFERENCES exchange_set(id) ON DELETE SET NULL,
   imported_at TEXT NOT NULL,
   UNIQUE (product, name)
 );
+CREATE INDEX dataset_exchange_set ON dataset(exchange_set_id);
 
 CREATE TABLE dataset_update (
   dataset_id INTEGER NOT NULL REFERENCES dataset(id) ON DELETE CASCADE,
-  update_number INTEGER NOT NULL, path TEXT NOT NULL, issue_date TEXT,
-  applied INTEGER NOT NULL DEFAULT 0,
+  update_number INTEGER NOT NULL,
+  path TEXT NOT NULL UNIQUE,
+  issue_date TEXT NOT NULL DEFAULT '',
+  applied INTEGER NOT NULL DEFAULT 0 CHECK (applied IN (0, 1)),
   PRIMARY KEY (dataset_id, update_number)
 );
 
 CREATE TABLE data_coverage (
   id INTEGER PRIMARY KEY,
   dataset_id INTEGER NOT NULL REFERENCES dataset(id) ON DELETE CASCADE,
-  optimum_display_scale INTEGER, minimum_display_scale INTEGER, maximum_display_scale INTEGER,
-  min_x REAL, min_y REAL, max_x REAL, max_y REAL,
-  polygon BLOB NOT NULL                -- WKB, lon/lat
+  optimum_display_scale INTEGER,
+  minimum_display_scale INTEGER,
+  maximum_display_scale INTEGER,
+  min_x REAL NOT NULL, min_y REAL NOT NULL, max_x REAL NOT NULL, max_y REAL NOT NULL,
+  polygon BLOB NOT NULL
 );
 CREATE INDEX data_coverage_dataset ON data_coverage(dataset_id);
 
 CREATE TABLE support_file (
   id INTEGER PRIMARY KEY,
-  name TEXT NOT NULL, path TEXT NOT NULL UNIQUE,
-  purpose TEXT, edition INTEGER, format TEXT, issue_date TEXT,
-  sha256 TEXT NOT NULL, imported_at TEXT NOT NULL
+  name TEXT NOT NULL,
+  path TEXT NOT NULL UNIQUE,
+  purpose TEXT NOT NULL DEFAULT '',
+  edition INTEGER,
+  format TEXT NOT NULL DEFAULT '',
+  issue_date TEXT NOT NULL DEFAULT '',
+  sha256 TEXT NOT NULL,
+  imported_at TEXT NOT NULL
 );
 
-CREATE TABLE dataset_support_file (   -- which datasets reference which support files
+CREATE TABLE dataset_support_file (
   dataset_id INTEGER NOT NULL REFERENCES dataset(id) ON DELETE CASCADE,
   support_file_id INTEGER NOT NULL REFERENCES support_file(id) ON DELETE CASCADE,
   PRIMARY KEY (dataset_id, support_file_id)
 );
+CREATE INDEX dataset_support_file_reverse ON dataset_support_file(support_file_id);
 ```
 
 - 커버리지는 **데이터셋 안의 DataCoverage 피처**에서 읽는다(S-98 E-1, opens100-web `readDataCoverages`와 같음). 교환세트의 `S100XC:dataCoverage`는 데이터셋에 커버리지가 없을 때만 쓴다. 가져올 때 한 번 파싱하므로 시작 시에는 파싱이 없다.
@@ -142,7 +162,11 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
 
 ## 4. 작업 항목
 
-- [ ] **SDB-1** 라이브러리 `SystemDatabase`: 스키마 v1, 마이그레이션 틀, 트랜잭션, 레코드 CRUD. gtest는 `:memory:` DB로.
+- [x] **SDB-1** 라이브러리 `SystemDatabase`: 스키마 v1, 마이그레이션 틀, 트랜잭션, 레코드 CRUD. gtest는 `:memory:` DB로. (2026-11-10, COMMIT_SDB1)
+  - 새 디렉터리 `SystemDatabase/`(MFC 없음, sqlite3만 의존). VS 솔루션의 `01. LIB`에 6개 구성으로 추가, CMake 타깃 `opens100::sdb`(옵션 `OPENS100_BUILD_SYSTEMDATABASE`), 포트 기능 `system-database`(기본 기능 아님).
+  - 구성: `Sqlite`(연결·문장·트랜잭션 RAII, 실패는 `DatabaseError`), `Schema`(`user_version` 기반 마이그레이션), 저장소 5개(`ExchangeSet`, `Catalogue`(FC·PC 겸용), `Dataset`(업데이트·지원 파일 연결 포함), `Coverage`, `SupportFile`), 파사드 `SystemDatabase`.
+  - 조회가 없을 수 있는 경우는 `std::optional`, DB 오류·제약 위반은 예외(지침 25c).
+  - 검증: `SystemDatabase.*` 16개 통과(전체 46 통과, 1 SKIP은 기존 환경 의존 테스트). 한글 경로 DB 파일, 새 스키마 거부, 외래 키 연쇄 삭제, 트랜잭션 롤백 포함. CMake Release `/W4 /WX` 통과, 설치된 패키지를 외부 프로젝트에서 `find_package(opens100)` → `opens100::sdb`로 링크해 실행 확인.
 - [ ] **SDB-2** `ResourceStore`: 루트 배치, 복사(해시 계산), 삭제. 경로 UTF-8·`std::filesystem::path`.
 - [ ] **SDB-3** `Importer`: 단일 FC, 단일 PC 폴더, 단일 데이터셋(8211부터), 지원 파일, 교환세트(`CATALOG.XML`). 데이터셋 DataCoverage 추출. 판·업데이트 비교 규칙.
 - [ ] **SDB-4** `CatalogueRegistry`를 SDB에서 채우기. `initFCList`/`initPCList` 제거. 데이터셋 제품·버전으로 FC/PC 해석(ready/fallback/unresolved, opens100-web `catalogue-registry.ts`와 맞춤).
@@ -162,11 +186,10 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
 결정 (2026-11-10, 사용자):
 - **설치 없이 `CATALOG.XML`을 바로 여는 기능(`S100ExchangeCatalogue` 레이어)은 남긴다.** 단, SDB와 같은 `DatasetSelector`를 쓰게 바꾼다(SDB-5).
 - **앱의 SDB 루트 기본 위치는 사용자 데이터 폴더**(3.3)다.
-
-열린 질문 (사용자 결정 필요):
-1. **가져올 때 파일을 복사할지, 원본 경로만 참조할지.** 권장은 복사(3.3). 원본이 옮겨지거나 지워져도 동작이 같고, 업데이트·교체를 SDB가 일관되게 관리할 수 있다. 대신 디스크를 두 배로 쓴다.
+- **가져올 때 파일을 관리 저장소로 복사한다**(3.3). 원본이 옮겨지거나 지워져도 동작이 같고, 업데이트·교체를 SDB가 일관되게 관리한다. SDB의 경로는 모두 SDB 루트 기준 상대 경로다.
 
 ## 변경 이력
 
 - 2026-11-10 초안. 지침 26에서 시작.
-- 2026-11-10 결정 반영: 교환세트 바로 열기 유지(같은 선택기), SDB 기본 위치는 사용자 데이터 폴더. 복사·참조 여부는 미정.
+- 2026-11-10 결정 반영: 교환세트 바로 열기 유지(같은 선택기), SDB 기본 위치는 사용자 데이터 폴더.
+- 2026-11-10 결정 반영: 가져올 때 관리 저장소로 복사. 스키마 버전은 `PRAGMA user_version`.

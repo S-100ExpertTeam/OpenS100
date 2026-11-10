@@ -25,6 +25,7 @@ vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
     FEATURES
         feature-catalogue OPENS100_BUILD_FEATURECATALOG
         geometry          OPENS100_BUILD_GEOMETRY
+        system-database   OPENS100_BUILD_SYSTEMDATABASE
 )
 
 vcpkg_cmake_configure(
