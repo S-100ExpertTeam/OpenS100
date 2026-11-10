@@ -172,7 +172,14 @@ SDB 루트 기본값은 사용자 데이터 폴더(Windows `%LOCALAPPDATA%\OpenS
   - 제품·버전·이름은 한 경로 조각으로만 쓰인다(`/ \ : * ? " < > |`·제어 문자·끝의 점과 공백을 `_`로). `absolute()`는 절대 경로와 `..`을 거부한다.
   - 파일 복사는 `<대상>.part`에 쓰고 이름을 바꿔 넣는다. 삭제·이동은 비게 된 상위 폴더를 루트 전까지 지운다.
   - 검증: `Sha256.*` 2개(표준 벡터, 나눠 넣기), `ResourceStore.*` 6개(한글 루트 포함) 통과.
-- [ ] **SDB-3** `Importer`: 단일 FC, 단일 PC 폴더, 단일 데이터셋(8211부터), 지원 파일, 교환세트(`CATALOG.XML`). 데이터셋 DataCoverage 추출. 판·업데이트 비교 규칙.
+- [x] **SDB-3** `Importer`: 단일 FC, 단일 PC 폴더, 단일 데이터셋(8211부터), 지원 파일, 교환세트(`CATALOG.XML`). 데이터셋 DataCoverage 추출. 판·업데이트 비교 규칙. (2026-11-10, 9098bc41)
+  - 리더는 인터페이스(`Inspection.h`: `DatasetInspector`, `CatalogueInspector`, `ExchangeSetReader`)이고 구현은 파서가 있는 GISLibrary(`SdbReaders.h`)에 둔다. SDB 모듈은 여전히 sqlite3에만 의존한다. 형식 추가는 리더 추가로 끝난다.
+  - `S101DatasetInspector`: FC 없이 8211 레코드에서 DSID와 DataCoverage 피처(`optimum/minimum/maximumDisplayScale`, 면의 RIAS 링)를 읽는다. `DSED`는 "판.업데이트"(`2.4` = 2판 4차 업데이트 포함), `PROF` 2는 업데이트 파일. `fileReference`·`pictorialRepresentation` 값을 지원 파일 참조로 모은다.
+  - `XmlCatalogueInspector`: FC/PC의 제품·버전을 XML 루트에서만 읽는다(전체 파싱 없음). `ExchangeCatalogueReader`: `CATALOG.XML`(경로는 `ExchangeCatalogue::OpenFile`로 한글 경로 가능).
+  - 판·업데이트 규칙은 `decideDataset` 순수 함수: 새 데이터셋, 새 판(교체), 같은 판 재발행(교체), 같은 파일(변경 없음), 다음 업데이트(기록, 적용은 SDB-8), 판 0 업데이트(취소, 선택에서 빠짐). 거부: 이전 판, 빠진 업데이트, 기반 없는 업데이트, 취소된 데이터셋의 업데이트.
+  - 한 번의 호출이 트랜잭션 하나. 파일은 저장소 안 `STAGING/`에 복사했다가 커밋 후 제자리로 옮긴다(교체되는 판의 폴더는 그 전에 지움). 실패하면 설치된 파일은 그대로다. 커밋 후 옮기기 실패는 `installProblems`로 보고한다.
+  - 교환세트: 모든 데이터셋을 트랜잭션 전에 읽고(느린 부분), 기반 → 업데이트 순으로 설치, 읽지 못한 데이터셋은 그것만 거부. 지원 파일을 먼저 설치하고 데이터셋에 연결한다. 커버리지는 데이터셋의 DataCoverage, 없을 때만 카탈로그의 것.
+  - 검증: 가짜 리더로 규칙·파일 처리 12개, 실제 리더 5개 통과. KOR_TDS 808셀 전체 가져오기 19초(Release x64, `S100_SDB_FULL_IMPORT=1`일 때만 도는 테스트), 거부 0, 모든 셀에 커버리지(821개), 지원 파일 22개·연결 850건, 커버리지 WKB 합계 2.9 MB.
 - [ ] **SDB-4** `CatalogueRegistry`를 SDB에서 채우기. `initFCList`/`initPCList` 제거. 데이터셋 제품·버전으로 FC/PC 해석(ready/fallback/unresolved, opens100-web `catalogue-registry.ts`와 맞춤).
 - [ ] **SDB-5** `DatasetSelector`: opens100-web `selectDataCoverages`(경계값 수정 포함)를 역이식하고, 같은 입력으로 두 구현의 결과가 같은지 테스트. `S100Utilities::SelectDataCoverages`의 Clipper 경로를 대체한다.
 - [ ] **SDB-6** `DatasetCache`(LRU, 상한은 셀 수 또는 메모리).
