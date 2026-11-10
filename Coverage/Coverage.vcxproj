@@ -265,6 +265,7 @@
     <ClCompile Include="Hdf5Coverage.cpp" />
     <ClCompile Include="RegularGrid.cpp" />
     <ClCompile Include="Utm.cpp" />
+    <ClCompile Include="WaterLevelAdjustment.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoverageInstructions.h" />
@@ -277,6 +278,7 @@
     <ClInclude Include="Hdf5Coverage.h" />
     <ClInclude Include="RegularGrid.h" />
     <ClInclude Include="Utm.h" />
+    <ClInclude Include="WaterLevelAdjustment.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
