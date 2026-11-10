@@ -413,8 +413,17 @@ namespace GISLibrary
 	std::optional<InspectedExchangeSet> ExchangeCatalogueReader::read(const fs::path& catalogXml) const
 	{
 		S100::ExchangeCatalogue catalogue;
-		if (!catalogue.OpenFile(catalogXml))
+		try
 		{
+			if (!catalogue.OpenFile(catalogXml))
+			{
+				return std::nullopt;
+			}
+		}
+		catch (const std::exception&)
+		{
+			// The metadata parsers throw on values they do not know; report the catalogue
+			// as unreadable rather than letting the exception escape the import.
 			return std::nullopt;
 		}
 		const fs::path folder = catalogXml.parent_path();
