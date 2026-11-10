@@ -81,6 +81,10 @@ namespace GISLibrary
 	CoverageDataset::~CoverageDataset()
 	{
 		ReleaseImages();
+		if (s102BoundaryStroke_)
+		{
+			s102BoundaryStroke_->Release();
+		}
 	}
 
 	bool CoverageDataset::Open(const std::wstring& path)
@@ -216,6 +220,72 @@ namespace GISLibrary
 			}
 		}
 		images_.clear();
+		lines_.clear();
+	}
+
+	void CoverageDataset::DrawLines(D2D1Resources* d2, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
+		const s100::coverage::Values& depth, double fillValue)
+	{
+		if (!EnhancedSafetyContour || !depth)
+		{
+			return;
+		}
+		const std::string key = std::format("{}|{}", ENCCommon::SAFETY_CONTOUR, source_->revision());
+		Lines& lines = lines_[feature.id];
+		if (lines.key != key)
+		{
+			lines.lines = s100::coverage::depthLines({ .grid = &feature.grid, .depth = *depth, .fillValue = fillValue,
+				.esc = true, .safetyContour = ENCCommon::SAFETY_CONTOUR, .wlaActive = false });
+			lines.key = key;
+		}
+
+		auto* rt = d2->RenderTarget();
+		auto* brush = d2->SolidColorBrush();
+		if (!rt || !brush)
+		{
+			return;
+		}
+		// Millimetres at 96 device pixels per inch; Direct2D dashes are in stroke widths.
+		constexpr float pixelsPerMillimetre = 96.0f / 25.4f;
+		if (!s102BoundaryStroke_ && d2->Factory())
+		{
+			const auto& style = s100::coverage::s102BoundaryStyle();
+			std::vector<float> dashes;
+			for (const double length : style.dash) dashes.push_back(static_cast<float>(length / style.width));
+			d2->Factory()->CreateStrokeStyle(D2D1::StrokeStyleProperties(D2D1_CAP_STYLE_FLAT, D2D1_CAP_STYLE_FLAT, D2D1_CAP_STYLE_FLAT,
+				D2D1_LINE_JOIN_MITER, 10.0f, D2D1_DASH_STYLE_CUSTOM, 0.0f), dashes.data(), static_cast<UINT32>(dashes.size()), &s102BoundaryStroke_);
+		}
+		const RECT screen = D2DView::ScreenRECT(*scaler);
+		const auto draw = [&](const s100::coverage::GridEdges& edges, const s100::coverage::S98LineStyle& style, const s100::coverage::Rgb& color,
+			ID2D1StrokeStyle* stroke) {
+			brush->SetColor(D2D1::ColorF(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, 1.0f));
+			const float width = static_cast<float>(style.width) * pixelsPerMillimetre;
+			for (std::size_t i = 0; i + 3 < edges.size(); i += 4)
+			{
+				double x1 = edges[i], y1 = edges[i + 1], x2 = edges[i + 2], y2 = edges[i + 3];
+				projection(x1, y1);
+				projection(x2, y2);
+				long sx1 = 0, sy1 = 0, sx2 = 0, sy2 = 0;
+				scaler->WorldToDevice(x1, y1, &sx1, &sy1);
+				scaler->WorldToDevice(x2, y2, &sx2, &sy2);
+				if ((sx1 < screen.left && sx2 < screen.left) || (sx1 > screen.right && sx2 > screen.right)
+					|| (sy1 < screen.top && sy2 < screen.top) || (sy1 > screen.bottom && sy2 > screen.bottom))
+				{
+					continue;
+				}
+				rt->DrawLine(D2D1::Point2F(static_cast<float>(sx1), static_cast<float>(sy1)), D2D1::Point2F(static_cast<float>(sx2), static_cast<float>(sy2)),
+					brush, width, stroke);
+			}
+		};
+		const std::string palette = paletteName();
+		if (lines.lines.s102Boundary)
+		{
+			draw(*lines.lines.s102Boundary, s100::coverage::s102BoundaryStyle(), s100::coverage::depwlColor(palette), s102BoundaryStroke_);
+		}
+		if (lines.lines.safetyContour)
+		{
+			draw(*lines.lines.safetyContour, s100::coverage::safetyContourStyle(), ResolveColor(s100::coverage::safetyContourStyle().token), nullptr);
+		}
 	}
 
 	void CoverageDataset::DrawCoverage(D2D1Resources* d2, HDC& hDC, Scaler* scaler)
@@ -304,6 +374,12 @@ namespace GISLibrary
 			rt->DrawBitmap(image.bitmap,
 				D2D1::RectF(static_cast<float>(left), static_cast<float>(top), static_cast<float>(right), static_cast<float>(bottom)),
 				1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+
+			if (fill.instruction.attributeCode == "depth")
+			{
+				DrawLines(d2, scaler, *feature, source_->readValues(feature->id, { .timeIndex = *timeIndex, .component = *component }),
+					feature->components[*component].fillValue);
+			}
 		}
 		if (rt->EndDraw() == static_cast<HRESULT>(D2DERR_RECREATE_TARGET))
 		{
