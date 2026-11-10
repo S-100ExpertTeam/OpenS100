@@ -256,16 +256,20 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CoverageInstructions.cpp" />
     <ClCompile Include="CoverageLookup.cpp" />
     <ClCompile Include="CoverageModel.cpp" />
+    <ClCompile Include="CoverageRaster.cpp" />
     <ClCompile Include="CoverageTime.cpp" />
     <ClCompile Include="Hdf5Coverage.cpp" />
     <ClCompile Include="RegularGrid.cpp" />
     <ClCompile Include="Utm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CoverageInstructions.h" />
     <ClInclude Include="CoverageLookup.h" />
     <ClInclude Include="CoverageModel.h" />
+    <ClInclude Include="CoverageRaster.h" />
     <ClInclude Include="CoverageTime.h" />
     <ClInclude Include="Geo.h" />
     <ClInclude Include="Hdf5Coverage.h" />
