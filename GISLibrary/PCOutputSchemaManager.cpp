@@ -177,6 +177,8 @@ void PCOutputSchemaManager::GenerateSENCInstruction(S100SpatialObject* s100so, P
 		{
 			displayListSENC->AddInstruction(sit);			
 			sit->fr = featureType;
+			// The feature code, for drawing that depends on it (S-98 D-1 depth suppression).
+			sit->code = s100so->GetFeatureTypeCodeByID(featureID);
 		}
 	}
 }

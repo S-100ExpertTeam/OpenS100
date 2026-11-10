@@ -94,6 +94,12 @@ namespace GISLibrary
 			return version;
 		}
 
+		std::uint64_t& suppressionVersion()
+		{
+			static std::uint64_t version = 1;
+			return version;
+		}
+
 		bool isProduct(const s100::coverage::CoverageSource* source, std::string_view product)
 		{
 			return source && source->dataset().productId == product;
@@ -107,8 +113,53 @@ namespace GISLibrary
 
 	void CoverageDataset::SetDepthSettings(const DepthSettings& value)
 	{
+		if (settings().enhancedSafetyContour != value.enhancedSafetyContour)
+		{
+			++suppressionVersion();
+		}
 		settings() = value;
 		++settingsVersion();
+	}
+
+	std::uint64_t CoverageDataset::SuppressionVersion() noexcept
+	{
+		return suppressionVersion();
+	}
+
+	std::vector<std::vector<s100::coverage::GeoPosition>> CoverageDataset::SuppressionRings()
+	{
+		std::vector<std::vector<s100::coverage::GeoPosition>> rings;
+		if (!settings().enhancedSafetyContour)
+		{
+			return rings;
+		}
+		for (CoverageDataset* dataset : registry())
+		{
+			if (!dataset->adjusted_)
+			{
+				continue;
+			}
+			if (!dataset->validRings_)
+			{
+				// Of the file's depths: adjustment never makes a cell valid or empty.
+				std::vector<s100::coverage::GridRing> outline;
+				for (const auto& feature : dataset->raw_->dataset().features)
+				{
+					const auto depth = feature.componentIndex("depth");
+					if (!depth) continue;
+					const auto values = dataset->raw_->readValues(feature.id, { .timeIndex = 0, .component = *depth });
+					if (!values) continue;
+					auto featureRings = s100::coverage::validGridRings(feature.grid, *values, feature.components[*depth].fillValue);
+					std::ranges::move(featureRings, std::back_inserter(outline));
+				}
+				dataset->validRings_ = std::move(outline);
+			}
+			for (const auto& ring : *dataset->validRings_)
+			{
+				rings.push_back(ring.exterior);
+			}
+		}
+		return rings;
 	}
 
 	CoverageDataset::WlaStatus CoverageDataset::CurrentWlaStatus()
@@ -163,11 +214,13 @@ namespace GISLibrary
 		m_FileType = S100_FileType::FILE_S_100_GRID_H5;
 		m_ObejctType = SpatialObjectType::S100H5;
 		registry().insert(this);
+		++suppressionVersion();
 	}
 
 	CoverageDataset::~CoverageDataset()
 	{
 		registry().erase(this);
+		++suppressionVersion();
 		ReleaseImages();
 		for (ID2D1StrokeStyle* stroke : { s102BoundaryStroke_, wlaBoundaryStroke_ })
 		{
@@ -219,6 +272,8 @@ namespace GISLibrary
 		adjusted_ = isProduct(raw_.get(), "S-102") ? std::make_shared<s100::coverage::WaterLevelAdjustedCoverage>(raw_) : nullptr;
 		adjustedFor_ = 0;
 		adjustedSources_.clear();
+		validRings_.reset();
+		++suppressionVersion();
 
 		features_.clear();
 		for (const auto& feature : raw_->dataset().features)

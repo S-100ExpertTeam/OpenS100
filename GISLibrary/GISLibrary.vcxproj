@@ -607,6 +607,7 @@
     <ClCompile Include="SupportFileSpecification.cpp" />
     <ClCompile Include="SymbolFill.cpp" />
     <ClCompile Include="CoverageDataset.cpp" />
+    <ClCompile Include="DepthSuppression.cpp" />
     <ClCompile Include="SystemDatabaseChart.cpp" />
     <ClCompile Include="SystemDatabaseSession.cpp" />
     <ClCompile Include="TemporalExtent.cpp" />
@@ -988,6 +989,7 @@
     <ClInclude Include="SupportFileSpecification.h" />
     <ClInclude Include="SymbolFill.h" />
     <ClInclude Include="CoverageDataset.h" />
+    <ClInclude Include="DepthSuppression.h" />
     <ClInclude Include="SystemDatabaseChart.h" />
     <ClInclude Include="SystemDatabaseSession.h" />
     <ClInclude Include="TemporalExtent.h" />

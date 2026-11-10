@@ -81,6 +81,13 @@ namespace GISLibrary
 		// The first and last S-104 record times over the S-104 datasets open now.
 		[[nodiscard]] static std::optional<std::pair<s100::coverage::TimePoint, s100::coverage::TimePoint>> WaterLevelTimeSpan();
 
+		// S-98 D-1: where S-102 data covers the water, the S-101 depth features (DepthArea,
+		// DredgedArea, DepthContour) are suppressed while the enhanced safety contour is on. The
+		// outlines of the S-102 cells with data, over every S-102 dataset alive now (in degrees);
+		// empty when nothing is suppressed. The version changes whenever the outlines may have.
+		[[nodiscard]] static std::uint64_t SuppressionVersion() noexcept;
+		[[nodiscard]] static std::vector<std::vector<s100::coverage::GeoPosition>> SuppressionRings();
+
 		// The values drawn: the depth-adjusted coverage for S-102, the file's for the others.
 		[[nodiscard]] const s100::coverage::CoverageSource* GetCoverage() const noexcept { return Source(); }
 		// The file's values, unadjusted (for the pick report).
@@ -123,6 +130,7 @@ namespace GISLibrary
 		std::uint64_t adjustedFor_ = 0;   // the settings version adjusted_ was computed for
 		std::vector<const s100::coverage::CoverageSource*> adjustedSources_;
 		s100::coverage::WlaReport report_;
+		std::optional<std::vector<s100::coverage::GridRing>> validRings_;   // S-102: computed when first asked for
 		std::vector<std::unique_ptr<GF::FeatureType>> features_;
 		std::vector<Fill> fillsByFeature_;
 		std::vector<s100::coverage::CoverageInstruction> fills_;

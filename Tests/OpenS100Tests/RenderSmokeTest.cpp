@@ -545,3 +545,82 @@ TEST(RenderSmoke, AdjustsS102ByTheS104OnScreen)
 	std::cout << "[ wla ] pixels changed by WLA: " << changed << std::endl;
 	EXPECT_GT(changed, 0u) << "adjusted depths draw differently (shading, contour, WLA boundary)";
 }
+
+// Coverage backport CV-4: with the enhanced safety contour on, the S-101 depth features
+// (DepthArea, DredgedArea, DepthContour) are not drawn where S-102 data covers the water (S-98 D-1).
+TEST(RenderSmoke, SuppressesS101DepthFeaturesUnderS102)
+{
+	const auto cell = testpaths::tdsRoot() / L"KOR_TDS" / L"S100_ROOT" / L"S-101" / L"DATASET_FILES" / L"101KR004G3B30" / L"101KR004G3B30.000";
+	const auto s102 = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-102" / L"S-102" / L"102KR00T4G3B3000026.h5";
+	if (!std::filesystem::exists(cell) || !std::filesystem::exists(s102))
+	{
+		GTEST_SKIP() << "KOR S-101/S-102 not available";
+	}
+	using GISLibrary::CoverageDataset;
+	const CoverageDataset::DepthSettings original = CoverageDataset::GetDepthSettings();
+
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto* catalogues = gis.GetCatalogManager();
+	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+	auto* s101pc = catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
+	ASSERT_NE(s101pc, nullptr);
+	GISLibrary::PortrayalRender::Prepare(s101pc, gis.GetD2D1Resources());
+	// The S-102 without its portrayal catalogue: open, with its data outline, but not drawn, so what
+	// changes with ESC on is the S-101 depth portrayal alone.
+	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddLayer(cell.wstring()));
+	ASSERT_TRUE(gis.AddLayer(s102.wstring()));
+	gis.SetMap(gis.GetLayerManager()->GetLayer(0)->GetMBR());
+
+	const auto render = [&](bool esc, const char* name) {
+		CoverageDataset::DepthSettings settings = original;
+		settings.enhancedSafetyContour = esc;
+		CoverageDataset::SetDepthSettings(settings);
+		MemoryCanvas canvas(kWidth, kHeight);
+		gis.Draw(canvas.dc());
+		::GdiFlush();
+		const auto png = OutputDirectory() / (std::string("s101-under-s102-") + name + ".png");
+		EXPECT_TRUE(canvas.SavePng(png));
+		std::cout << "[ suppression ] " << name << ": " << png.string() << std::endl;
+		std::vector<std::uint32_t> pixels(static_cast<std::size_t>(kWidth) * kHeight, 0);
+		BITMAPINFO info{};
+		info.bmiHeader = { sizeof(BITMAPINFOHEADER), kWidth, -kHeight, 1, 32, BI_RGB };
+		::GetDIBits(canvas.dc(), static_cast<HBITMAP>(::GetCurrentObject(canvas.dc(), OBJ_BITMAP)), 0, kHeight, pixels.data(), &info, DIB_RGB_COLORS);
+		return pixels;
+	};
+	const auto off = render(false, "esc-off");
+	const auto on = render(true, "esc-on");
+	CoverageDataset::SetDepthSettings(original);
+
+	EXPECT_FALSE(CoverageDataset::SuppressionVersion() == 0);
+	// A clear difference, not the rounding of drawing through a layer.
+	const auto differs = [](std::uint32_t a, std::uint32_t b) {
+		for (int shift : { 0, 8, 16 })
+		{
+			if (std::abs(static_cast<int>((a >> shift) & 0xFF) - static_cast<int>((b >> shift) & 0xFF)) > 8) return true;
+		}
+		return false;
+	};
+	const auto changed = std::inner_product(off.begin(), off.end(), on.begin(), std::size_t{ 0 }, std::plus<>(),
+		[&](std::uint32_t a, std::uint32_t b) { return differs(a, b) ? std::size_t{ 1 } : std::size_t{ 0 }; });
+	std::cout << "[ suppression ] pixels that differ clearly with ESC on: " << changed << std::endl;
+	EXPECT_GT(changed, 100000u) << "the S-101 depth areas under the S-102 data are not drawn";
+	EXPECT_FALSE(CoverageDataset::SuppressionRings().empty());
+
+	// Where they differ, in red over the ESC-on picture, for a person to look at.
+	std::vector<std::uint32_t> diff(on.size());
+	for (std::size_t i = 0; i < on.size(); ++i)
+	{
+		diff[i] = differs(on[i], off[i]) ? 0x00FF0000u : ((on[i] >> 1) & 0x007F7F7Fu) | 0x00808080u;
+	}
+	MemoryCanvas canvas(kWidth, kHeight);
+	BITMAPINFO info{};
+	info.bmiHeader = { sizeof(BITMAPINFOHEADER), kWidth, -kHeight, 1, 32, BI_RGB };
+	::SetDIBitsToDevice(canvas.dc(), 0, 0, kWidth, kHeight, 0, 0, 0, kHeight, diff.data(), &info, DIB_RGB_COLORS);
+	const auto png = OutputDirectory() / "s101-under-s102-diff.png";
+	EXPECT_TRUE(canvas.SavePng(png));
+	std::cout << "[ suppression ] differences: " << png.string() << std::endl;
+}

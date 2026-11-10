@@ -35,6 +35,7 @@
 #include "SPoint.h"
 #include "SCommonFuction.h"
 #include "CoverageDataset.h"
+#include "DepthSuppression.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 
@@ -497,10 +498,13 @@ void LayerManager::AddSymbolDrawing(
 
 	D2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
 
+	// Area and line instructions of the S-101 depth features are masked under S-102 data (S-98 D-1).
+	std::optional<GISLibrary::DepthSuppression::Runs> worldRuns(std::in_place, D2->pRT, D2->Factory(), *scaler, true);
 	// Area
 	for (auto i = area[drawingPrioriy].begin(); i != area[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
+		worldRuns->Update(instruction);
 
 		D2->pBrush->SetOpacity(1.0f);
 		instruction->DrawInstruction(
@@ -513,11 +517,13 @@ void LayerManager::AddSymbolDrawing(
 	for (auto i = line[drawingPrioriy].begin(); i != line[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
+		worldRuns->Update(instruction);
 		instruction->DrawInstruction(
 			D2,
 			scaler,
 			pc);
 	}
+	worldRuns.reset();   // pops a run still open before the transform changes
 
 	D2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
 
@@ -608,9 +614,11 @@ void LayerManager::AddSymbolDrawing(
 		{
 			D2D1_SIZE_F renderTargetSize = D2->pRT->GetSize();
 
+			GISLibrary::DepthSuppression::Runs textRuns(D2->pRT, D2->Factory(), *scaler, false);
 			for (auto i = text[drawingPrioriy].begin(); i != text[drawingPrioriy].end(); i++)
 			{
 				auto instruction = (SENC_TextInstruction*)*i;
+				textRuns.Update(instruction);
 				points.clear();
 
 				//if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
