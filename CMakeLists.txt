@@ -32,6 +32,9 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 find_package(GeographicLib CONFIG REQUIRED)
+if(OPENS100_BUILD_COVERAGE)
+    find_package(hdf5 CONFIG REQUIRED)
+endif()
 if(OPENS100_BUILD_FEATURECATALOG)
     find_package(pugixml CONFIG REQUIRED)
     find_package(utf8cpp CONFIG REQUIRED)
@@ -106,8 +109,9 @@ if(OPENS100_BUILD_SYSTEMDATABASE)
 endif()
 
 if(OPENS100_BUILD_COVERAGE)
-    # S-100 Part 10c gridded coverages: grid model, lookups (Documents/TechDocs/2026-11-11-coverage-backport-plan.md).
-    opens100_add_module(coverage Coverage)
+    # S-100 Part 10c gridded coverages: grid model, HDF5 reader, lookups (Documents/TechDocs/2026-11-11-coverage-backport-plan.md).
+    opens100_add_module(coverage Coverage DEPENDS hdf5::hdf5-shared)
+    target_compile_definitions(coverage PUBLIC H5_BUILT_AS_DYNAMIC_LIB)
 endif()
 
 # --- package ------------------------------------------------------------------------------

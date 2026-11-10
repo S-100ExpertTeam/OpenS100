@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClCompile Include="CatalogueResolutionTest.cpp" />
     <ClCompile Include="CoverageGridTest.cpp" />
+    <ClCompile Include="CoverageHdf5Test.cpp" />
     <ClCompile Include="DatasetCacheTest.cpp" />
     <ClCompile Include="DataProtectionTest.cpp" />
     <ClCompile Include="DatasetSelectionTest.cpp" />

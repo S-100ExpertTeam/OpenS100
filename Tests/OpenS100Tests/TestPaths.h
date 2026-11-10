@@ -18,4 +18,7 @@ namespace testpaths
 	std::filesystem::path korS101Catalog();       // KOR_TDS/S100_ROOT/CATALOG.XML
 	std::filesystem::path korS124Gml();           // KOR_TDS/KOR_S-124/S-124/124KR.KCG.XI.S100.TEST1.gml
 	std::filesystem::path tempDir();              // per-run scratch directory
+	// The HDF5 test data opens100-web ships for its viewer (S-102, S-104, S-111 tiles). Taken from
+	// OPENS100_WEB_DATA, default ../bluemap-github/opens100-web beside this checkout (DIRECTIVES.md, reference 14).
+	std::filesystem::path webDataRoot();
 }

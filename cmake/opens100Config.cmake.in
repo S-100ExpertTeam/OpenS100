@@ -13,6 +13,10 @@ if(@OPENS100_BUILD_SYSTEMDATABASE@)
     find_dependency(ZLIB)
 endif()
 
+if(@OPENS100_BUILD_COVERAGE@)
+    find_dependency(hdf5 CONFIG)
+endif()
+
 include("${CMAKE_CURRENT_LIST_DIR}/opens100Targets.cmake")
 
 check_required_components(opens100)
