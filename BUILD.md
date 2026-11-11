@@ -139,13 +139,12 @@ rmdir /s /q C:\vcpkg\buildtrees
 ### 6.2 Build from the command line
 
 ```bat
-"C:\Program Files\Microsoft Visual Studio8\Community\MSBuild\Current\Bin\MSBuild.exe" OpenS100.sln -m -p:Configuration=Debug -p:Platform=x64
+"C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" OpenS100.sln -m -p:Configuration=Debug -p:Platform=x64
 Debug_x64\OpenS100Tests.exe
 ```
 
 The second line runs the GoogleTest suite (`Tests/OpenS100Tests`). Tests that need
-reference data read it from `S100_TDS_ROOT` (default `D:\s100-reference	ds`) and skip
-when the files are absent.
+data not shipped in the repository are skipped automatically.
 
 ### 6.3 Build from Visual Studio
 
