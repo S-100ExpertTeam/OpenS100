@@ -95,6 +95,18 @@ namespace
 			distinctColours = seen.size();
 		}
 
+		// Pixels that differ from the same pixel of `other` (of the same size).
+		std::size_t DifferingPixels(const MemoryCanvas& other) const
+		{
+			::GdiFlush();
+			std::size_t count = 0;
+			for (int i = 0; i < m_width * m_height; ++i)
+			{
+				if ((m_bits[i] & 0x00FFFFFF) != (other.m_bits[i] & 0x00FFFFFF)) ++count;
+			}
+			return count;
+		}
+
 		bool SavePng(const std::filesystem::path& path) const
 		{
 			::GdiFlush();
@@ -890,4 +902,133 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS128Gml)
 {
 	DrawGmlFromSystemDatabase("S-128", L"S128_Portrayal",
 		testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-128" / L"S-128" / L"128AA0020260522150149.gml");
+}
+
+// Two adjacent cells of one scale (101KR005G3A44 and 101KR005G3B33 meet at 129 E): drawn one after
+// the other, the second's area fills cover the symbols and text the first draws across the common
+// edge, so the picture depends on which comes first. Drawn as one group, priority by priority
+// across both, it does not (but for objects of one priority overlapping at the edge).
+TEST(RenderSmoke, AdjacentCellsOfOneGroupDoNotCoverEachOther)
+{
+	const auto cells = testpaths::tdsRoot() / L"KOR_TDS" / L"S100_ROOT" / L"S-101" / L"DATASET_FILES";
+	const auto west = cells / L"101KR005G3A44" / L"101KR005G3A44.000";
+	const auto east = cells / L"101KR005G3B33" / L"101KR005G3B33.000";
+	if (!std::filesystem::exists(west) || !std::filesystem::exists(east))
+	{
+		GTEST_SKIP() << "reference cells not available under " << cells.string();
+	}
+
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto* catalogues = gis.GetCatalogManager();
+	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+	auto* pc = catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
+	ASSERT_NE(pc, nullptr);
+	GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddLayer(west.wstring()));
+	ASSERT_TRUE(gis.AddLayer(east.wstring()));
+
+	auto* layers = gis.GetLayerManager();
+	layers->onIC = false;   // as the System Database chart draws
+	layers->m_isScreenFitEnabled = false;
+	ASSERT_EQ(layers->layers.size(), 2u);
+	MBR area(128.96, 35.06, 129.04, 35.11);
+	projection(area);
+	gis.SetMap(area);
+
+	const auto draw = [&](MemoryCanvas& canvas, bool reversed, bool grouped) {
+		layers->layers.reverse();
+		if (!reversed) layers->layers.reverse();
+		layers->drawGroups.clear();
+		if (grouped)
+		{
+			for (const Layer* layer : layers->layers) layers->drawGroups[layer] = 1;
+		}
+		gis.Draw(canvas.dc());
+		::GdiFlush();
+	};
+
+	MemoryCanvas first(kWidth, kHeight);
+	MemoryCanvas second(kWidth, kHeight);
+	draw(first, false, false);
+	draw(second, true, false);
+	const std::size_t apart = first.DifferingPixels(second);
+	EXPECT_TRUE(first.SavePng(OutputDirectory() / "adjacent-apart.png"));
+	EXPECT_TRUE(second.SavePng(OutputDirectory() / "adjacent-apart-reversed.png"));
+
+	MemoryCanvas groupedFirst(kWidth, kHeight);
+	MemoryCanvas groupedSecond(kWidth, kHeight);
+	draw(groupedFirst, false, true);
+	draw(groupedSecond, true, true);
+	const std::size_t together = groupedFirst.DifferingPixels(groupedSecond);
+	EXPECT_TRUE(groupedFirst.SavePng(OutputDirectory() / "adjacent-grouped.png"));
+	EXPECT_TRUE(groupedSecond.SavePng(OutputDirectory() / "adjacent-grouped-reversed.png"));
+
+	std::cout << "[ adjacent ] 1:" << gis.GetScaler()->GetCurrentScale() << " pixels that depend on the order: one at a time "
+		<< apart << ", as one group " << together << std::endl;
+	EXPECT_GT(apart, 200u) << "drawn one at a time, the second cell covers the first's symbols at the edge";
+	// What is left are features both cells hold at the edge (texts, a building), one over the other.
+	EXPECT_LT(together * 3, apart) << "drawn as one group, the order hardly matters";
+}
+
+// A navigational warning over the chart it concerns: the vector overlays of the System Database
+// (S-124, S-128, ...) are drawn over the S-101 cells, the grids under them.
+TEST(RenderSmoke, SystemDatabaseChartDrawsS124OverTheS101)
+{
+	const auto cell = testpaths::tdsRoot() / L"KOR_TDS" / L"S100_ROOT" / L"S-101" / L"DATASET_FILES" / L"101KR00659C72" / L"101KR00659C72.000";
+	const auto warning = testpaths::korS124Gml();
+	if (!std::filesystem::exists(cell) || !std::filesystem::exists(warning))
+	{
+		GTEST_SKIP() << "KOR S-101/S-124 test data not available under " << testpaths::tdsRoot().string();
+	}
+	// The same chart with and without the warning.
+	const auto install = [&](const std::filesystem::path& root, bool withWarning) {
+		std::filesystem::remove_all(root);
+		GISLibrary::SystemDatabaseSession session(root);
+		auto& importer = session.importer();
+		ASSERT_EQ(importer.importFeatureCatalogue(testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").outcome, s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(importer.importPortrayalCatalogue(testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal").outcome, s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(importer.importDataset(cell).outcome, s100::sdb::ImportOutcome::Added);
+		if (withWarning)
+		{
+			ASSERT_EQ(importer.importFeatureCatalogue(testpaths::repoRoot() / "ProgramData" / "FC" / "S-124_FC.xml").outcome, s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(importer.importPortrayalCatalogue(testpaths::repoRoot() / "ProgramData" / "PC" / "S124_Portrayal").outcome, s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(importer.importDataset(warning).outcome, s100::sdb::ImportOutcome::Added);
+		}
+	};
+	const auto chartOnly = testpaths::tempDir() / L"SystemDatabaseChartS101Only";
+	const auto withWarning = testpaths::tempDir() / L"SystemDatabaseChartS101S124";
+	install(chartOnly, false);
+	install(withWarning, true);
+
+	GdiplusSession gdiplus;
+	const auto draw = [&](const std::filesystem::path& root, MemoryCanvas& canvas) {
+		CGISLibraryApp gis;
+		auto* catalogues = gis.GetCatalogManager();
+		catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
+		const RECT view{ 0, 0, kWidth, kHeight };
+		gis.SetScreen(view);
+		GISLibrary::SystemDatabaseSession session(root);
+		session.attach(*gis.GetLayerManager(), *catalogues);
+		// Around the warning area off Busan North Port, at the cell's scale.
+		MBR area(129.045, 35.105, 129.063, 35.119);
+		projection(area);
+		gis.SetMap(area);
+		gis.Draw(canvas.dc());
+		::GdiFlush();
+	};
+	MemoryCanvas chart(kWidth, kHeight);
+	MemoryCanvas both(kWidth, kHeight);
+	draw(chartOnly, chart);
+	draw(withWarning, both);
+	EXPECT_TRUE(both.SavePng(OutputDirectory() / "sdb-chart-s101-s124.png"));
+	std::size_t nonWhite = 0;
+	std::size_t colours = 0;
+	chart.Measure(nonWhite, colours);
+	const std::size_t changed = chart.DifferingPixels(both);
+	std::cout << "[ sdb chart ] S-101 non-white " << nonWhite << ", pixels the S-124 changes " << changed << std::endl;
+	EXPECT_GT(nonWhite, 100000u) << "the chart is drawn";
+	EXPECT_GT(changed, 1000u) << "the warning shows over the chart";
 }

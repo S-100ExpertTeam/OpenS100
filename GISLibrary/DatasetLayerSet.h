@@ -61,6 +61,12 @@ namespace GISLibrary
 		[[nodiscard]] std::size_t openCount() const noexcept { return opened_; }
 		[[nodiscard]] bool isShown(DatasetId dataset) const { return shown_.contains(dataset); }
 		[[nodiscard]] bool isCached(DatasetId dataset) const { return cache_.contains(dataset); }
+		// The layer of a shown dataset; null when it is not shown.
+		[[nodiscard]] const Layer* layerOf(DatasetId dataset) const
+		{
+			const auto found = shown_.find(dataset);
+			return found == shown_.end() ? nullptr : found->second;
+		}
 
 	private:
 		[[nodiscard]] std::size_t costOf(DatasetId dataset) const;

@@ -25,8 +25,10 @@ namespace GISLibrary
 	// datasets the view needs; those are opened (with the catalogues their product edition
 	// resolves to) and the ones that leave the view are kept in a cache for a while
 	// (Documents/TechDocs/2026-11-10-system-database.md, SDB-7). Datasets without display scales
-	// (the gridded products: S-102, S-104, S-111, ...) take no part in E-1.3; they are shown
-	// whenever their bounding box meets the view, under the selected ones.
+	// take no part in E-1.3; they are shown whenever their bounding box meets the view: the gridded
+	// products (S-102, S-104, S-111, ...) under the selected ones, the vector ones (S-124, S-128,
+	// ...) over them. The selected datasets of one scale band are drawn as one chart
+	// (LayerManager::drawGroups).
 	class SystemDatabaseChart final : public SpatialObject, public LayerContainer
 	{
 	public:
@@ -63,6 +65,7 @@ namespace GISLibrary
 		{
 			s100::sdb::RecordId id = 0;
 			s100::sdb::BoundingBox bounds;   // longitude/latitude
+			bool overlay = false;            // a vector product, drawn over the selected charts
 		};
 
 		[[nodiscard]] std::unique_ptr<Layer> OpenDataset(s100::sdb::RecordId dataset);

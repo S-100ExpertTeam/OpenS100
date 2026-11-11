@@ -48,6 +48,11 @@ public:
 	std::set<int> lineSuppressionMap;
 	bool m_baseMapOn = true;
 	bool onIC = true;
+	// With onIC off: consecutive vector layers in the same group are drawn as one chart, every
+	// layer's drawing priority before the next priority, so a cell's area fills do not cover the
+	// symbols and text a neighbouring cell draws across their common edge. Layers without a group
+	// are drawn one at a time, each over the one before.
+	std::unordered_map<const Layer*, int> drawGroups;
 	bool m_isScreenFitEnabled = true;
 
 	// Renderer used by this layer manager. Datasets never hold it; UI-side objects that
@@ -105,6 +110,8 @@ public:
 	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer);
 	void SetDrawingInstruction(S100Layer* layer);
 	void DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int minPriority, int maxPriority);
+	// Draws the layers priority by priority across them (see drawGroups).
+	void DrawS100Layers(HDC& hDC, int offset, const std::vector<S100Layer*>& group);
 	void AddSymbolDrawing(
 		int ,
 		HDC &hdc,

@@ -814,6 +814,21 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 {
 	if (onIC == false)
 	{
+		// Consecutive layers of one draw group are drawn together, when the group ends.
+		std::vector<S100Layer*> group;
+		int groupKey = 0;
+		const auto drawGroup = [&]() {
+			if (group.size() == 1)
+			{
+				DrawS100Layer(hdc, offset, group.front());
+			}
+			else if (group.size() > 1)
+			{
+				DrawS100Layers(hdc, offset, group);
+			}
+			group.clear();
+		};
+
 		for (auto i = layers.begin(); i != layers.end(); i++)
 		{
 			auto layer = (*i);
@@ -824,10 +839,24 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				{
 					if (layer->GetFileType() == S100_FileType::FILE_S_100_VECTOR)
 					{
-						DrawS100Layer(hdc, offset, (S100Layer*)layer);
+						const auto key = drawGroups.find(layer);
+						if (key == drawGroups.end() || (!group.empty() && key->second != groupKey))
+						{
+							drawGroup();
+						}
+						if (key == drawGroups.end())
+						{
+							DrawS100Layer(hdc, offset, (S100Layer*)layer);
+						}
+						else
+						{
+							groupKey = key->second;
+							group.push_back((S100Layer*)layer);
+						}
 					}
 					else if (layer->GetFileType() == S100_FileType::FILE_S_100_GRID_H5)
 					{
+						drawGroup();
 						// A grid without a renderer of its own shows where it lies.
 						if (!static_cast<S100Layer*>(layer)->DrawGrid(D2, hdc, scaler))
 						{
@@ -837,6 +866,7 @@ void LayerManager::DrawS100Datasets(HDC& hdc, int offset)
 				}
 			}
 		}
+		drawGroup();
 	}
 	else
 	{
@@ -1280,6 +1310,69 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int min
 	rt->EndDraw();
 }
 
+void LayerManager::DrawS100Layers(HDC& hDC, int offset, const std::vector<S100Layer*>& group)
+{
+	std::set<int> priorities;
+	std::vector<PortrayalCatalogue*> catalogues;
+	for (S100Layer* layer : group)
+	{
+		layer->InitDraw();
+		auto pc = layer->GetPC();
+		if (!pc)
+		{
+			continue;
+		}
+		SetDrawingInstruction(layer);
+		priorities.insert(layer->drawingPriority.begin(), layer->drawingPriority.end());
+		if (!layer->drawingPriority.empty() && std::find(catalogues.begin(), catalogues.end(), pc) == catalogues.end())
+		{
+			catalogues.push_back(pc);
+		}
+	}
+	if (priorities.empty())
+	{
+		return;
+	}
+
+	auto rt = D2->pRT;
+	const RECT screen = GISLibrary::D2DView::ScreenRECT(*scaler);
+	rt->BindDC(hDC, &screen);
+	rt->BeginDraw();
+	D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+
+	for (auto pc : catalogues)
+	{
+		pc->GetS100PCManager()->CreateBitmapBrush(D2->pRT);
+		pc->GetS100PCManager()->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
+	}
+
+	for (const int priority : priorities)
+	{
+		for (S100Layer* layer : group)
+		{
+			if (layer->drawingPriority.contains(priority))
+			{
+				AddSymbolDrawing(priority, hDC, offset,
+					layer->drawingSet.GetAugmentedRayList(),
+					layer->drawingSet.GetAugmentedPathList(),
+					layer->drawingSet.GetPointList(),
+					layer->drawingSet.GetLineList(),
+					layer->drawingSet.GetAreaList(),
+					layer->drawingSet.GetTextList(),
+					layer->GetPC());
+			}
+		}
+	}
+
+	for (auto pc : catalogues)
+	{
+		pc->GetS100PCManager()->DeleteBitmapBrush();
+	}
+
+	rt->EndDraw();
+}
+
 void LayerManager::S101RebuildPortrayal()
 {
 	for (auto i = layers.begin(); i != layers.end(); i++)
@@ -1448,6 +1541,7 @@ std::unique_ptr<Layer> LayerManager::ReleaseLayer(Layer* layer)
 	}
 	layers.erase(found);
 	mapLayer.erase(layer->GetID());
+	drawGroups.erase(layer);
 	ReMBR();
 	return std::unique_ptr<Layer>(layer);
 }

@@ -64,7 +64,7 @@ namespace GISLibrary
 		{
 			if (dataset.status == s100::sdb::DatasetStatus::Active && dataset.bounds && !scaled.contains(dataset.id))
 			{
-				unscaled_.push_back({ dataset.id, *dataset.bounds });
+				unscaled_.push_back({ dataset.id, *dataset.bounds, dataset.format != s100::sdb::DatasetFormat::Hdf5 });
 			}
 		}
 	}
@@ -128,8 +128,12 @@ namespace GISLibrary
 			return;
 		}
 		const auto selection = selector_.select(*view);
-		auto datasets = s100::sdb::DatasetSelector::datasetsOf(selection);
-		// Shown last in selection order, so drawn first: under the vector charts.
+		const auto selected = s100::sdb::DatasetSelector::datasetsOf(selection);
+
+		// Selection order is the larger scale first, and the first is drawn last, on top: the
+		// vector overlays (warnings, catalogues of products) before the charts, the grids after.
+		std::vector<s100::sdb::RecordId> datasets;
+		std::vector<s100::sdb::RecordId> grids;
 		for (const auto& dataset : unscaled_)
 		{
 			const bool inView = !view->ground
@@ -137,10 +141,23 @@ namespace GISLibrary
 					&& dataset.bounds.minY <= view->ground->maxY && dataset.bounds.maxY >= view->ground->minY);
 			if (inView)
 			{
-				datasets.push_back(dataset.id);
+				(dataset.overlay ? datasets : grids).push_back(dataset.id);
 			}
 		}
+		datasets.insert(datasets.end(), selected.begin(), selected.end());
+		datasets.insert(datasets.end(), grids.begin(), grids.end());
 		layers_->show(datasets);
+
+		// The charts of one scale band are drawn as one: adjacent cells do not cover each
+		// other's symbols where they spill over the common edge.
+		drawer_->drawGroups.clear();
+		for (const auto& coverage : selection)
+		{
+			if (const Layer* layer = layers_->layerOf(coverage.coverage->dataset))
+			{
+				drawer_->drawGroups.try_emplace(layer, coverage.scaleBand);
+			}
+		}
 		drawer_->Draw(hDC, static_cast<int>(offset));
 	}
 
