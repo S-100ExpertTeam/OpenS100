@@ -93,6 +93,47 @@ TEST(CoverageRaster, LaysAGeographicGridOutInMercatorNorthRowFirst)
 	EXPECT_NEAR(inverseMercatorY(mercatorY(34.25)), 34.25, 1e-12);
 }
 
+// The OpenS100 viewer draws an equirectangular chart: the image's rows must be spaced evenly in
+// latitude, each image row edge on a cell edge, where the safety contour and the S-102 boundary
+// run. Spaced in Mercator, the rows between the corners drift from them (by about 0.4 of a cell in
+// the middle of the KOR S-102, 0.5 degrees tall at 35 N).
+TEST(CoverageRaster, LaysAGeographicGridOutRowForRowOnAGeographicChart)
+{
+	const RegularGrid grid{ .originLon = 129.0005, .originLat = 35.0005, .spacingLon = 0.001, .spacingLat = 0.001, .cols = 500, .rows = 500 };
+	std::vector<float> values(grid.nodeCount());
+	std::iota(values.begin(), values.end(), 0.0f);
+	const CoverageRaster raster(grid, values, -1, nodeColor, RasterProjection::Geographic);
+	ASSERT_EQ(raster.width(), grid.cols);
+	ASSERT_EQ(raster.height(), grid.rows);
+	const auto& extent = raster.extent();
+	EXPECT_NEAR(raster.latitude(extent.north), 35.5, 1e-9);
+	EXPECT_NEAR(raster.latitude(extent.south), 35.0, 1e-9);
+	for (int y = 0; y <= raster.height(); ++y)
+	{
+		// The edge between image rows y - 1 and y, placed linearly between the corners.
+		const double edge = extent.north - y * (extent.north - extent.south) / raster.height();
+		const double cellEdge = grid.originLat + (grid.rows - y - 0.5) * grid.spacingLat;
+		ASSERT_NEAR(raster.latitude(edge), cellEdge, 1e-9) << "row edge " << y;
+	}
+	// Image row y shows grid row rows - 1 - y.
+	for (int y : { 0, 1, 249, 499 })
+	{
+		EXPECT_EQ(nodeOf(raster.pixels()[static_cast<std::size_t>(y) * raster.width()]), (grid.rows - 1 - y) * grid.cols) << y;
+	}
+
+	// The same grid laid out for Web Mercator: its row edges are off the cell edges in latitude
+	// by up to some tenths of a cell, which is what the viewer showed before.
+	const CoverageRaster mercator(grid, values, -1, nodeColor);
+	double worst = 0;
+	for (int y = 0; y <= mercator.height(); ++y)
+	{
+		const double edge = mercator.extent().north - y * (mercator.extent().north - mercator.extent().south) / mercator.height();
+		const double row = (35.5 - inverseMercatorY(edge)) / grid.spacingLat;
+		worst = (std::max)(worst, std::abs(row - std::round(row)));
+	}
+	EXPECT_GT(worst, 0.1) << "Mercator rows placed linearly in latitude miss the cell edges";
+}
+
 TEST(CoverageRaster, WarpsAUtmGridIntoMercator)
 {
 	// Far from the central meridian (135 W) so the grid is plainly turned on the chart.

@@ -80,9 +80,20 @@ namespace s100::coverage
         };
     }
 
-    CoverageRaster::CoverageRaster(const RegularGrid& grid, std::span<const float> values, double fillValue, const CellColor& colorOf)
-        : grid_(grid)
+    double CoverageRaster::latitude(double northing) const noexcept
     {
+        return projection_ == RasterProjection::Geographic ? northing : inverseMercatorY(northing);
+    }
+
+    CoverageRaster::CoverageRaster(const RegularGrid& grid, std::span<const float> values, double fillValue, const CellColor& colorOf,
+        RasterProjection projection)
+        : grid_(grid), projection_(projection)
+    {
+        // Latitude to the chart's northing, and back.
+        const bool geographic = projection == RasterProjection::Geographic;
+        const auto northing = [geographic](double lat) { return geographic ? lat : mercatorY(lat); };
+        const auto latitudeOf = [geographic](double y) { return geographic ? y : inverseMercatorY(y); };
+
         const std::size_t count = grid.nodeCount();
         std::vector<std::uint32_t> cells(count, 0);
         for (std::size_t i = 0; i < count && i < values.size(); ++i)
@@ -100,17 +111,17 @@ namespace s100::coverage
 
         if (!grid.utm)
         {
-            // A geographic grid is a rectangle in Web Mercator too, its columns evenly spaced and
-            // only its rows stretched with latitude: resampled row by row into Mercator, it goes
-            // onto the chart in one call.
+            // A geographic grid is a rectangle on the chart too, its columns evenly spaced and its
+            // rows stretched with latitude in Mercator (not at all on Geographic): resampled row by
+            // row, it goes onto the chart in one call.
             const auto latEdge = [&](double edge) { return grid.originLat + (edge - 0.5) * grid.spacingLat; };
             const auto lonEdge = [&](double edge) { return grid.originLon + (edge - 0.5) * grid.spacingLon; };
-            const double north = mercatorY(std::max(latEdge(0), latEdge(grid.rows)));
-            const double south = mercatorY(std::min(latEdge(0), latEdge(grid.rows)));
+            const double north = northing(std::max(latEdge(0), latEdge(grid.rows)));
+            const double south = northing(std::min(latEdge(0), latEdge(grid.rows)));
             extent_ = MercatorExtent{ std::min(lonEdge(0), lonEdge(grid.cols)), std::max(lonEdge(0), lonEdge(grid.cols)), south, north };
             // Enough rows that the grid row shortest in Mercator still gets one.
-            const double shortest = std::min(std::abs(mercatorY(latEdge(1)) - mercatorY(latEdge(0))),
-                std::abs(mercatorY(latEdge(grid.rows)) - mercatorY(latEdge(grid.rows - 1))));
+            const double shortest = std::min(std::abs(northing(latEdge(1)) - northing(latEdge(0))),
+                std::abs(northing(latEdge(grid.rows)) - northing(latEdge(grid.rows - 1))));
             height_ = std::min(MaxRows, std::max(grid.rows,
                 static_cast<int>(std::lround((north - south) / std::max(shortest, std::numeric_limits<double>::epsilon())))));
             width_ = grid.cols;
@@ -118,7 +129,7 @@ namespace s100::coverage
             pixels_.assign(static_cast<std::size_t>(width_) * static_cast<std::size_t>(height_), 0);
             for (int y = 0; y < height_; ++y)
             {
-                const double lat = inverseMercatorY(north - (y + 0.5) * pixelY);
+                const double lat = latitudeOf(north - (y + 0.5) * pixelY);
                 const int row = std::min(grid.rows - 1, std::max(0, static_cast<int>(std::floor((lat - latEdge(0)) / grid.spacingLat))));
                 std::copy_n(cells.begin() + static_cast<std::ptrdiff_t>(row) * grid.cols, grid.cols,
                     pixels_.begin() + static_cast<std::ptrdiff_t>(y) * width_);
@@ -130,14 +141,14 @@ namespace s100::coverage
         const GeoBounds bounds = gridCellBounds(grid);
         const CellSize size = gridCellSize(grid);
         const double middle = (bounds.minLat + bounds.maxLat) / 2;
-        extent_ = MercatorExtent{ bounds.minLon, bounds.maxLon, mercatorY(bounds.minLat), mercatorY(bounds.maxLat) };
+        extent_ = MercatorExtent{ bounds.minLon, bounds.maxLon, northing(bounds.minLat), northing(bounds.maxLat) };
         width_ = std::max(1, static_cast<int>(std::ceil((extent_.east - extent_.west) / size.lon)));
         height_ = std::max(1, static_cast<int>(std::ceil((extent_.north - extent_.south)
-            / (mercatorY(middle + size.lat / 2) - mercatorY(middle - size.lat / 2)))));
+            / (northing(middle + size.lat / 2) - northing(middle - size.lat / 2)))));
         const double pixelLon = (extent_.east - extent_.west) / width_;
         const double pixelY = (extent_.north - extent_.south) / height_;
         LatticeMapping mapping(width_, height_, [&](double x, double y) {
-            return GeoPosition{ extent_.west + (x + 0.5) * pixelLon, inverseMercatorY(extent_.north - (y + 0.5) * pixelY) };
+            return GeoPosition{ extent_.west + (x + 0.5) * pixelLon, latitudeOf(extent_.north - (y + 0.5) * pixelY) };
         }, grid);
         pixels_.assign(static_cast<std::size_t>(width_) * static_cast<std::size_t>(height_), 0);
         std::vector<double> cols(static_cast<std::size_t>(width_));

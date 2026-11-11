@@ -464,16 +464,16 @@ namespace GISLibrary
 				double x1 = edges[i], y1 = edges[i + 1], x2 = edges[i + 2], y2 = edges[i + 3];
 				projection(x1, y1);
 				projection(x2, y2);
-				long sx1 = 0, sy1 = 0, sx2 = 0, sy2 = 0;
-				scaler->WorldToDevice(x1, y1, &sx1, &sy1);
-				scaler->WorldToDevice(x2, y2, &sx2, &sy2);
+				// To the fraction of a pixel, as the image under the lines is placed.
+				float sx1 = 0, sy1 = 0, sx2 = 0, sy2 = 0;
+				scaler->WorldToDevice_F(x1, y1, &sx1, &sy1);
+				scaler->WorldToDevice_F(x2, y2, &sx2, &sy2);
 				if ((sx1 < screen.left && sx2 < screen.left) || (sx1 > screen.right && sx2 > screen.right)
 					|| (sy1 < screen.top && sy2 < screen.top) || (sy1 > screen.bottom && sy2 > screen.bottom))
 				{
 					continue;
 				}
-				rt->DrawLine(D2D1::Point2F(static_cast<float>(sx1), static_cast<float>(sy1)), D2D1::Point2F(static_cast<float>(sx2), static_cast<float>(sy2)),
-					brush, width, stroke);
+				rt->DrawLine(D2D1::Point2F(sx1, sy1), D2D1::Point2F(sx2, sy2), brush, width, stroke);
 			}
 		};
 		const std::string palette = paletteName();
@@ -558,8 +558,10 @@ namespace GISLibrary
 				}
 				const auto colorOf = s100::coverage::lookupCellColor(fill.instruction.lookup,
 					[this](std::string_view token) { return ResolveColor(token); });
+				// Rows evenly spaced in latitude, as the viewer's equirectangular chart draws them (and
+				// the grid lines drawn over the image).
 				image.raster = std::make_unique<s100::coverage::CoverageRaster>(feature->grid, *values,
-					feature->components[*component].fillValue, colorOf);
+					feature->components[*component].fillValue, colorOf, s100::coverage::RasterProjection::Geographic);
 				image.key = key;
 			}
 			const auto& raster = *image.raster;
@@ -580,20 +582,19 @@ namespace GISLibrary
 				}
 			}
 
-			// The image's corners on the screen: its extent is linear in Mercator, as the world is.
+			// The image's corners on the screen, to the fraction of a pixel: its rows are linear in
+			// latitude, as the world is.
 			const auto& extent = raster.extent();
 			double west = extent.west;
-			double north = s100::coverage::inverseMercatorY(extent.north);
+			double north = raster.latitude(extent.north);
 			double east = extent.east;
-			double south = s100::coverage::inverseMercatorY(extent.south);
+			double south = raster.latitude(extent.south);
 			projection(west, north);
 			projection(east, south);
-			long left = 0, top = 0, right = 0, bottom = 0;
-			scaler->WorldToDevice(west, north, &left, &top);
-			scaler->WorldToDevice(east, south, &right, &bottom);
-			rt->DrawBitmap(image.bitmap,
-				D2D1::RectF(static_cast<float>(left), static_cast<float>(top), static_cast<float>(right), static_cast<float>(bottom)),
-				1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+			float left = 0, top = 0, right = 0, bottom = 0;
+			scaler->WorldToDevice_F(west, north, &left, &top);
+			scaler->WorldToDevice_F(east, south, &right, &bottom);
+			rt->DrawBitmap(image.bitmap, D2D1::RectF(left, top, right, bottom), 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
 
 			if (fill.instruction.attributeCode == "depth")
 			{
