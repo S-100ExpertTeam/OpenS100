@@ -39,6 +39,12 @@ public:
     std::vector<GM::Object*> geometries;
 
     S100GML_NameSpace s100namespace;
+
+    // The order of the two horizontal axes of every position in the dataset, when its numbers
+    // allow only one reading (latitudes within +-90): data that writes longitude first under
+    // EPSG:4326 (the KOR S-124) is read the way it was written. Unknown: as the srsName says.
+    enum class AxisOrder { Unknown, LatitudeFirst, LongitudeFirst };
+    AxisOrder axisOrder = AxisOrder::Unknown;
 public:
     bool Open(const std::wstring& _filepath) override;
     bool OpenMetadata(const std::wstring& _filepath) override;
@@ -143,4 +149,10 @@ private:
     
     // for namespace name
     bool GetNameSpaceName(pugi::xml_attribute, std::string& name);
+
+    // The tuple indices of latitude and longitude: `latitudeFirst` as the srsName gives it,
+    // unless the dataset's numbers allow only the other order.
+    void AxisIndices(bool latitudeFirst, int& latIndex, int& lonIndex) const;
+    // gml:CircleByCenterPoint as a closed ring of points.
+    bool AddCircle(pugi::xml_node& circle, GM::Curve& curve) const;
 };

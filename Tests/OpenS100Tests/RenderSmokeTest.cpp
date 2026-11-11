@@ -29,6 +29,7 @@
 #include "PortrayalRenderCache.h"
 #include "S100ExchangeCatalogue.h"
 #include "CoverageDataset.h"
+#include "S10XGML.h"
 #include "SystemDatabaseSession.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
@@ -798,4 +799,95 @@ TEST(RenderSmoke, CoverageChartAtScales)
 	EXPECT_GT(CoverageDataset::CurrentWlaStatus().applied, 0u);
 	CoverageDataset::SetDepthSettings(original);
 	session.detach();
+}
+
+// S-124 and S-128 GML datasets installed in the System Database are drawn by the chart where they
+// lie: the KOR S-124 warning area off Busan North Port, the KOR S-128 product outlines.
+namespace
+{
+	void DrawGmlFromSystemDatabase(const char* product, const wchar_t* pcFolder, const std::filesystem::path& file)
+	{
+		if (!std::filesystem::exists(file))
+		{
+			GTEST_SKIP() << product << " test data not available: " << file.string();
+		}
+		const auto root = testpaths::tempDir() / (L"SystemDatabaseChartGml-" + file.stem().wstring());
+		std::filesystem::remove_all(root);
+		{
+			GISLibrary::SystemDatabaseSession session(root);
+			const auto fc = std::string(product) + "_FC.xml";
+			ASSERT_EQ(session.importer().importFeatureCatalogue(testpaths::repoRoot() / "ProgramData" / "FC" / fc).outcome,
+				s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(session.importer().importPortrayalCatalogue(testpaths::repoRoot() / "ProgramData" / "PC" / pcFolder).outcome,
+				s100::sdb::ImportOutcome::Added);
+			const auto imported = session.importer().importDataset(file);
+			ASSERT_EQ(imported.outcome, s100::sdb::ImportOutcome::Added) << imported.message;
+		}
+
+		GdiplusSession gdiplus;
+		CGISLibraryApp gis;
+		auto* catalogues = gis.GetCatalogManager();
+		catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
+		const RECT view{ 0, 0, kWidth, kHeight };
+		gis.SetScreen(view);
+
+		GISLibrary::SystemDatabaseSession session(root);
+		session.attach(*gis.GetLayerManager(), *catalogues);
+		auto* chart = session.chart();
+		ASSERT_NE(chart, nullptr);
+		const auto record = session.database().datasets().find(product, file.stem().string());
+		ASSERT_TRUE(record && record->bounds);
+
+		// The dataset with a margin of its own size each side.
+		const double width = record->bounds->maxX - record->bounds->minX;
+		const double height = record->bounds->maxY - record->bounds->minY;
+		MBR area(record->bounds->minX - width, record->bounds->minY - height, record->bounds->maxX + width, record->bounds->maxY + height);
+		projection(area);
+		gis.SetMap(area);
+		MemoryCanvas canvas(kWidth, kHeight);
+		gis.Draw(canvas.dc());
+		std::size_t nonWhite = 0;
+		std::size_t colours = 0;
+		canvas.Measure(nonWhite, colours);
+		const auto png = OutputDirectory() / ("sdb-chart-" + file.stem().string() + ".png");
+		EXPECT_TRUE(canvas.SavePng(png));
+		std::cout << "[ sdb chart ] " << product << " 1:" << gis.GetScaler()->GetCurrentScale() << " opened "
+			<< chart->GetLayerSet().openCount() << ", non-white " << nonWhite << ", colours " << colours << ", " << png.string() << std::endl;
+		// The viewer reads the geometry where the importer found it: the layer lies within the
+		// dataset's bounds (in the view's middle third).
+		auto* inner = chart->GetInnerLayers();
+		ASSERT_TRUE(inner && inner->LayerCount() == 1);
+		auto* gml = dynamic_cast<S10XGML*>(inner->GetLayer(0)->GetSpatialObject());
+		ASSERT_NE(gml, nullptr);
+		EXPECT_GT(gml->geometries.size(), 0u);
+		MBR bounds(record->bounds->minX, record->bounds->minY, record->bounds->maxX, record->bounds->maxY);
+		projection(bounds);
+		const MBR drawn = inner->GetLayer(0)->GetMBR();
+		const double tolerance = 1e-6 + (bounds.xmax - bounds.xmin) * 0.01;
+		EXPECT_GE(drawn.xmin, bounds.xmin - tolerance);
+		EXPECT_LE(drawn.xmax, bounds.xmax + tolerance);
+		EXPECT_GE(drawn.ymin, bounds.ymin - tolerance);
+		EXPECT_LE(drawn.ymax, bounds.ymax + tolerance);
+		EXPECT_TRUE(chart->GetLayerSet().isShown(record->id)) << "the dataset is in view";
+		EXPECT_EQ(chart->GetLayerSet().openCount(), 1u) << "opened with its catalogues";
+		EXPECT_GT(nonWhite, 500u) << "something is drawn";
+	}
+}
+
+TEST(RenderSmoke, SystemDatabaseChartDrawsS124Gml)
+{
+	DrawGmlFromSystemDatabase("S-124", L"S124_Portrayal", testpaths::korS124Gml());
+}
+
+// TEST2 is a circle of 185.2 m (gml:CircleByCenterPoint) off Busan.
+TEST(RenderSmoke, SystemDatabaseChartDrawsS124Circle)
+{
+	DrawGmlFromSystemDatabase("S-124", L"S124_Portrayal",
+		testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-124" / L"S-124" / L"124KR.KCG.XI.S100.TEST2.gml");
+}
+
+TEST(RenderSmoke, SystemDatabaseChartDrawsS128Gml)
+{
+	DrawGmlFromSystemDatabase("S-128", L"S128_Portrayal",
+		testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-128" / L"S-128" / L"128AA0020260522150149.gml");
 }

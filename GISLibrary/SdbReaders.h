@@ -36,6 +36,23 @@ namespace GISLibrary
 		[[nodiscard]] std::optional<s100::sdb::InspectedDataset> inspect(const std::filesystem::path& file) const override;
 	};
 
+	// S-100 Part 10b GML datasets (S-124, S-128, S-122, ...): the DatasetIdentificationInformation
+	// when there is one, else the product from the namespace of the root element; the bounding box
+	// from gml:boundedBy, else from every position in the file. These products carry no display
+	// scales either, so the coverage is the bounding box with none.
+	class GmlDatasetInspector final : public s100::sdb::DatasetInspector
+	{
+	public:
+		[[nodiscard]] bool accepts(const std::filesystem::path& file) const override;
+		[[nodiscard]] std::optional<s100::sdb::InspectedDataset> inspect(const std::filesystem::path& file) const override;
+	};
+
+	// The longitude/latitude bounding box of the positions of a GML document (gml:pos, gml:posList,
+	// gml:lowerCorner, gml:upperCorner). EPSG:4326 lists latitude first, CRS84 longitude first, as
+	// the nearest srsName says; a list whose latitudes read that way fall outside +-90 while its
+	// longitudes do not is read the other way round (data that ignores the EPSG axis order).
+	[[nodiscard]] std::optional<s100::sdb::BoundingBox> gmlPositionBounds(const char* xml);
+
 	// Feature catalogues and portrayal catalogues, from the top of their XML only.
 	class XmlCatalogueInspector final : public s100::sdb::CatalogueInspector
 	{

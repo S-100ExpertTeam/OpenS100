@@ -13,7 +13,79 @@
 #include "..\\LatLonUtility\\LatLonUtility.h"
 #include "..\\LatLonUtility\\cpp_util.h"
 
+#include <cmath>
 #include <sstream>
+
+namespace
+{
+	std::string_view LocalName(const char* name)
+	{
+		std::string_view text(name);
+		const auto colon = text.find(':');
+		return colon == std::string_view::npos ? text : text.substr(colon + 1);
+	}
+
+	// Which axis order the positions of a dataset allow: one only when every position is valid read
+	// one way (latitude within +-90, longitude within +-180) and some position is not the other way.
+	S10XGML::AxisOrder DetectAxisOrder(pugi::xml_node root)
+	{
+		struct Walker final : pugi::xml_tree_walker
+		{
+			bool latitudeFirst = true;
+			bool longitudeFirst = true;
+			bool any = false;
+
+			bool for_each(pugi::xml_node& node) override
+			{
+				if (node.type() != pugi::node_element)
+				{
+					return true;
+				}
+				const std::string_view name = LocalName(node.name());
+				const bool list = name == "posList";
+				if (!list && name != "pos" && name != "lowerCorner" && name != "upperCorner")
+				{
+					return true;
+				}
+				std::vector<double> numbers;
+				std::istringstream in(node.child_value());
+				for (double value = 0; in >> value;)
+				{
+					numbers.push_back(value);
+				}
+				std::size_t dimension = 2;
+				int declared = 0;
+				for (pugi::xml_node at = node; at && declared == 0; at = at.parent())
+				{
+					declared = at.attribute("srsDimension").as_int();
+				}
+				if (declared >= 2)
+				{
+					dimension = static_cast<std::size_t>(declared);
+				}
+				else if (!list && numbers.size() == 3)
+				{
+					dimension = 3;
+				}
+				for (std::size_t i = 0; i + 1 < numbers.size(); i += dimension)
+				{
+					any = true;
+					const double a = std::abs(numbers[i]);
+					const double b = std::abs(numbers[i + 1]);
+					latitudeFirst = latitudeFirst && a <= 90 && b <= 180;
+					longitudeFirst = longitudeFirst && b <= 90 && a <= 180;
+				}
+				return latitudeFirst || longitudeFirst;
+			}
+		} walker;
+		root.traverse(walker);
+		if (!walker.any || walker.latitudeFirst == walker.longitudeFirst)
+		{
+			return S10XGML::AxisOrder::Unknown;
+		}
+		return walker.latitudeFirst ? S10XGML::AxisOrder::LatitudeFirst : S10XGML::AxisOrder::LongitudeFirst;
+	}
+}
 
 S10XGML::S10XGML() : S100SpatialObject()
 {
@@ -123,6 +195,7 @@ bool S10XGML::Open(pugi::xml_node doc, pugi::xml_parse_result result)
 
 	envelop.SetNamespace(s100namespace);
 	datasetIdentificationInformation.SetNamespace(s100namespace);
+	axisOrder = DetectAxisOrder(root);
 
 	auto child = root.first_child();
 	while (child)
@@ -493,12 +566,8 @@ GM::Point* S10XGML::ReadPoint(pugi::xml_node& node, std::string id, std::string 
 
 	int latIndex = 1;
 	int lonIndex = 0;
-
-	if ((object->getSRSName().find("4326") != std::string::npos) ||
-		(object->getSRSName().empty() && envelop.isYXSequence())) {
-		latIndex = 0;
-		lonIndex = 1;
-	}
+	AxisIndices((object->getSRSName().find("4326") != std::string::npos) ||
+		(object->getSRSName().empty() && envelop.isYXSequence()), latIndex, lonIndex);
 
 	double lat = cpp_util::stod(strPosList.at(latIndex));
 	double lon = cpp_util::stod(strPosList.at(lonIndex));
@@ -517,12 +586,7 @@ GM::MultiPoint* S10XGML::ReadMultiPoint(pugi::xml_node& node, std::string id, st
 
 	int latIndex = 1;
 	int lonIndex = 0;
-
-	if (object->getSRSName().find("4326") != std::string::npos)
-	{
-		latIndex = 0;
-		lonIndex = 1;
-	}
+	AxisIndices(object->getSRSName().find("4326") != std::string::npos, latIndex, lonIndex);
 
 	auto nodePoint = node.child((s100namespace.namespace_gml + ":pointMembers").c_str()).child((s100namespace.namespace_gml + ":Point").c_str());
 
@@ -555,11 +619,17 @@ GM::Curve* S10XGML::ReadCurve(pugi::xml_node& node, std::string id, std::string 
 
 	int latIndex = 1;
 	int lonIndex = 0;
+	AxisIndices(object->getSRSName().find("4326") != std::string::npos, latIndex, lonIndex);
 
-	if (object->getSRSName().find("4326") != std::string::npos)
+	auto circle = node.child((s100namespace.namespace_gml + ":segments").c_str()).child((s100namespace.namespace_gml + ":CircleByCenterPoint").c_str());
+	if (circle)
 	{
-		latIndex = 0;
-		lonIndex = 1;
+		if (!AddCircle(circle, *object))
+		{
+			delete object;
+			return nullptr;
+		}
+		return object;
 	}
 
 	auto strPos = node.child((s100namespace.namespace_gml + ":segments").c_str()).child((s100namespace.namespace_gml + ":LineStringSegment").c_str()).child_value((s100namespace.namespace_gml + ":posList").c_str());
@@ -589,11 +659,17 @@ GM::Curve* S10XGML::ReadLinearRing(pugi::xml_node node)
 
 	auto strPos = node.child_value((s100namespace.namespace_gml + ":posList").c_str());
 
+	// Latitude first (EPSG:4326), unless the dataset's numbers say otherwise.
 	std::istringstream iss(strPos);
-	double lat = 0;
-	double lon = 0;
-	while (iss >> lat >> lon) {
-		object->Add(lon, lat);
+	double first = 0;
+	double second = 0;
+	while (iss >> first >> second) {
+		if (axisOrder == AxisOrder::LongitudeFirst) {
+			object->Add(first, second);
+		}
+		else {
+			object->Add(second, first);
+		}
 	}
 
 	//auto strPosList = LatLonUtility::Split(strPos, " ");
@@ -1074,6 +1150,22 @@ bool S10XGML::ReadFeatureGeometry(pugi::xml_node& node, GF::FeatureType* feature
 					//feature->SetGeometryID(addedSurface->GetID());
 					feature->SetGMGeometry(surface);
 				}
+			}
+		}
+		else
+		{
+			// The geometry itself, not wrapped in an S100 property (S-128 2.0: geometry/gml:Surface).
+			const std::string_view geometryName = LocalName(geomNode.name());
+			GM::Object* geometry = nullptr;
+			if (geometryName == "Point") geometry = ReadPoint(geomNode, "", envelop.getSrsName());
+			else if (geometryName == "MultiPoint") geometry = ReadMultiPoint(geomNode, "", envelop.getSrsName());
+			else if (geometryName == "Curve") geometry = ReadCurve(geomNode, "", envelop.getSrsName());
+			else if (geometryName == "CompositeCurve") geometry = ReadCompositeCurve(geomNode, "", envelop.getSrsName());
+			else if (geometryName == "Surface") geometry = ReadSurface(geomNode);
+			else if (geometryName == "Polygon") geometry = ReadPolygon(geomNode);
+			if (geometry && AddGeometry(geometry))
+			{
+				feature->SetGMGeometry(geometry);
 			}
 		}
 	}
@@ -1728,4 +1820,53 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 	result->Set(points, parts);
 
 	return result;
+}
+
+void S10XGML::AxisIndices(bool latitudeFirst, int& latIndex, int& lonIndex) const
+{
+	if (axisOrder != AxisOrder::Unknown)
+	{
+		latitudeFirst = axisOrder == AxisOrder::LatitudeFirst;
+	}
+	latIndex = latitudeFirst ? 0 : 1;
+	lonIndex = latitudeFirst ? 1 : 0;
+}
+
+bool S10XGML::AddCircle(pugi::xml_node& circle, GM::Curve& curve) const
+{
+	std::istringstream position(circle.child_value((s100namespace.namespace_gml + ":pos").c_str()));
+	double first = 0;
+	double second = 0;
+	if (!(position >> first >> second))
+	{
+		return false;
+	}
+	int latIndex = 0;
+	int lonIndex = 1;
+	AxisIndices(true, latIndex, lonIndex);
+	const double lat = latIndex == 0 ? first : second;
+	const double lon = latIndex == 0 ? second : first;
+
+	auto radiusNode = circle.child((s100namespace.namespace_gml + ":radius").c_str());
+	double radius = radiusNode.text().as_double();
+	const std::string unit = radiusNode.attribute("uom").value();
+	if (unit == "km") radius *= 1000;
+	else if (unit == "[nmi_i]" || unit == "NM" || unit == "nmi" || unit == "M") radius *= 1852;
+	if (!(radius > 0))
+	{
+		return false;
+	}
+
+	// A small circle: degrees of latitude and of longitude at the centre.
+	constexpr double pi = 3.14159265358979323846;
+	constexpr double metresPerDegree = 111320.0;
+	constexpr int steps = 72;
+	const double dLat = radius / metresPerDegree;
+	const double dLon = dLat / (std::max)(std::cos(lat * pi / 180), 0.01);
+	for (int i = 0; i <= steps; ++i)
+	{
+		const double angle = 2 * pi * (i % steps) / steps;
+		curve.Add(lon + dLon * std::cos(angle), lat + dLat * std::sin(angle));
+	}
+	return true;
 }

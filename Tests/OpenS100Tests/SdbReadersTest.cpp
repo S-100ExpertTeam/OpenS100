@@ -256,3 +256,116 @@ TEST(SdbReaders, ExchangeCatalogueJoinsEdition4FilePath)
 	EXPECT_EQ(set->supportFiles[0].file, (folder / "S-101" / "SUPPORT_FILES" / "101KR000010E100.TXT").lexically_normal());
 	EXPECT_EQ(set->supportFiles[0].product, "S-101");
 }
+
+// S-100 Part 10b GML positions: EPSG:4326 is latitude first, CRS84 longitude first; data that
+// writes longitude first under EPSG:4326 (the KOR S-124) is recognised by its latitudes.
+TEST(SdbReaders, BoundsGmlPositionsInEitherAxisOrder)
+{
+	const auto latitudeFirst = GISLibrary::gmlPositionBounds(R"(<D xmlns:gml="http://www.opengis.net/gml/3.2">
+		<gml:Curve srsName="EPSG:4326"><gml:posList>35.1 129.0 35.3 129.4</gml:posList></gml:Curve>
+		<gml:Point><gml:pos>35.2 129.2 12.5</gml:pos></gml:Point></D>)");
+	ASSERT_TRUE(latitudeFirst);
+	EXPECT_EQ(*latitudeFirst, (BoundingBox{ 129.0, 35.1, 129.4, 35.3 }));
+
+	const auto crs84 = GISLibrary::gmlPositionBounds(R"(<D xmlns:gml="http://www.opengis.net/gml/3.2" srsName="urn:ogc:def:crs:OGC:1.3:CRS84">
+		<gml:posList>10.5 50.0 11.5 51.0</gml:posList></D>)");
+	ASSERT_TRUE(crs84);
+	EXPECT_EQ(*crs84, (BoundingBox{ 10.5, 50.0, 11.5, 51.0 }));
+
+	const auto swapped = GISLibrary::gmlPositionBounds(R"(<D xmlns:gml="http://www.opengis.net/gml/3.2">
+		<gml:Surface srsName="EPSG:4326"><gml:posList>129.05 35.11 129.06 35.12</gml:posList></gml:Surface></D>)");
+	ASSERT_TRUE(swapped);
+	EXPECT_EQ(*swapped, (BoundingBox{ 129.05, 35.11, 129.06, 35.12 }));
+
+	// The envelope only counts when there is no geometry.
+	const auto envelope = GISLibrary::gmlPositionBounds(R"(<D xmlns:gml="http://www.opengis.net/gml/3.2">
+		<gml:boundedBy><gml:Envelope srsName="EPSG:4326"><gml:lowerCorner>0 0</gml:lowerCorner><gml:upperCorner>80 170</gml:upperCorner></gml:Envelope></gml:boundedBy>
+		<gml:pos srsDimension="2">35 129</gml:pos></D>)");
+	ASSERT_TRUE(envelope);
+	EXPECT_EQ(*envelope, (BoundingBox{ 129, 35, 129, 35 }));
+	EXPECT_FALSE(GISLibrary::gmlPositionBounds("<D/>"));
+}
+
+// The KOR S-124 (no DatasetIdentificationInformation; the product from its namespace) and S-128
+// (with one) are datasets of the System Database like the cells and grids.
+TEST(SdbReaders, InspectsKoreanS124AndS128Gml)
+{
+	const fs::path s124 = testpaths::korS124Gml();
+	const fs::path s128 = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-128" / L"S-128" / L"128AA0020260522150149.gml";
+	if (!fs::exists(s124) || !fs::exists(s128))
+	{
+		GTEST_SKIP() << "KOR S-124/S-128 test data not found under " << testpaths::tdsRoot();
+	}
+	const GISLibrary::GmlDatasetInspector inspector;
+	ASSERT_TRUE(inspector.accepts(s124));
+	EXPECT_FALSE(inspector.accepts(testpaths::korS101Cell()));
+	EXPECT_FALSE(GISLibrary::Hdf5DatasetInspector().accepts(s124));
+
+	const auto warning = inspector.inspect(s124);
+	ASSERT_TRUE(warning);
+	EXPECT_EQ(warning->name, "124KR.KCG.XI.S100.TEST1");
+	EXPECT_EQ(warning->product, "S-124");
+	EXPECT_EQ(warning->format, s100::sdb::DatasetFormat::Gml);
+	ASSERT_TRUE(warning->bounds);
+	// Off Busan North Port.
+	EXPECT_NEAR(warning->bounds->minX, 129.05, 0.01);
+	EXPECT_NEAR(warning->bounds->minY, 35.11, 0.01);
+	ASSERT_EQ(warning->coverages.size(), 1u);
+	EXPECT_TRUE(inKorea(warning->coverages[0].rings[0]));
+
+	const auto products = inspector.inspect(s128);
+	ASSERT_TRUE(products);
+	EXPECT_EQ(products->product, "S-128");
+	EXPECT_EQ(products->productEdition, "2.0");
+	EXPECT_EQ(products->issueDate, "2026-05-22");
+	EXPECT_EQ(products->updateNumber, 0);
+	EXPECT_FALSE(products->isUpdate);
+	ASSERT_TRUE(products->bounds);
+	EXPECT_GE(products->bounds->minX, 110);
+	EXPECT_LE(products->bounds->maxX, 150);
+	EXPECT_GE(products->bounds->minY, 20);
+	EXPECT_LE(products->bounds->maxY, 50);
+	std::cout << "[ gml ] S-128 bounds " << products->bounds->minX << " " << products->bounds->minY << " "
+		<< products->bounds->maxX << " " << products->bounds->maxY << "\n";
+
+	// XML that is not an S-100 dataset.
+	EXPECT_FALSE(inspector.inspect(testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml"));
+}
+
+// A folder of loose .gml files, as the KOR S-124 comes: each dataset once, none passed over.
+TEST(SdbReaders, ImportsAFolderOfGmlDatasets)
+{
+	const fs::path folder = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-124";
+	if (!fs::exists(folder))
+	{
+		GTEST_SKIP() << "KOR S-124 test data not found: " << folder;
+	}
+	const auto root = testpaths::tempDir() / L"SdbReaders" / L"GmlFolder";
+	fs::remove_all(root);
+	s100::sdb::ResourceStore store(root);
+	auto database = s100::sdb::SystemDatabase::open(store.databaseFile());
+	const GISLibrary::GmlDatasetInspector gml;
+	const GISLibrary::XmlCatalogueInspector catalogues;
+	s100::sdb::Importer importer(database, store, s100::sdb::Importer::Readers{ { &gml }, &catalogues, nullptr });
+
+	const auto report = importer.importFolder(folder);
+	std::size_t added = 0;
+	for (const auto& result : report.results)
+	{
+		std::cout << "[ gml ] " << result.source.filename().string() << ": " << static_cast<int>(result.outcome) << " " << result.message << "\n";
+		if (result.outcome == s100::sdb::ImportOutcome::Added) ++added;
+		EXPECT_EQ(result.message.find("no DataCoverage"), std::string::npos) << result.source;
+	}
+	EXPECT_GE(added, 2u) << "TEST1 and TEST2";
+	const auto record = database.datasets().find("S-124", "124KR.KCG.XI.S100.TEST1");
+	ASSERT_TRUE(record);
+	EXPECT_EQ(record->format, s100::sdb::DatasetFormat::Gml);
+	ASSERT_TRUE(record->bounds);
+	EXPECT_TRUE(store.exists(record->path));
+
+	// TEST2 is one circle of 185.2 m around a point: its bounds reach the radius.
+	const auto circle = database.datasets().find("S-124", "124KR.KCG.XI.S100.TEST2");
+	ASSERT_TRUE(circle && circle->bounds);
+	EXPECT_NEAR(circle->bounds->maxY - circle->bounds->minY, 2 * 185.2 / 111320.0, 1e-6);
+	EXPECT_NEAR((circle->bounds->minX + circle->bounds->maxX) / 2, 129.144397, 1e-6);
+}

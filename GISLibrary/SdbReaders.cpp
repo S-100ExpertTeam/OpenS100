@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cctype>
 #include <charconv>
+#include <cmath>
 
 namespace GISLibrary
 {
@@ -84,6 +85,184 @@ namespace GISLibrary
 				}
 			}
 			return {};
+		}
+
+		// --- GML -----------------------------------------------------------------------------
+
+		// An attribute of the node or of its nearest ancestor that has it (srsName, srsDimension).
+		std::string_view inheritedAttribute(pugi::xml_node node, const char* name)
+		{
+			for (; node; node = node.parent())
+			{
+				if (const pugi::xml_attribute attribute = node.attribute(name))
+				{
+					return attribute.value();
+				}
+			}
+			return {};
+		}
+
+		// OGC CRS84 lists longitude first; EPSG:4326, which S-100 Part 10b prescribes and which a
+		// position without srsName is taken to be, latitude first.
+		bool latitudeFirst(std::string_view srsName)
+		{
+			return srsName.find("CRS84") == std::string_view::npos && srsName.find("crs84") == std::string_view::npos;
+		}
+
+		std::vector<double> parseNumbers(std::string_view text)
+		{
+			std::vector<double> numbers;
+			std::size_t at = 0;
+			while (at < text.size())
+			{
+				while (at < text.size() && std::isspace(static_cast<unsigned char>(text[at]))) ++at;
+				if (at == text.size()) break;
+				double value = 0;
+				const auto [end, error] = std::from_chars(text.data() + at, text.data() + text.size(), value);
+				if (error != std::errc())
+				{
+					return {};   // not a list of numbers
+				}
+				numbers.push_back(value);
+				at = static_cast<std::size_t>(end - text.data());
+			}
+			return numbers;
+		}
+
+		void extend(std::optional<s100::sdb::BoundingBox>& bounds, double lon, double lat)
+		{
+			if (!bounds)
+			{
+				bounds = s100::sdb::BoundingBox{ lon, lat, lon, lat };
+				return;
+			}
+			bounds->minX = (std::min)(bounds->minX, lon);
+			bounds->minY = (std::min)(bounds->minY, lat);
+			bounds->maxX = (std::max)(bounds->maxX, lon);
+			bounds->maxY = (std::max)(bounds->maxY, lat);
+		}
+
+		// The tuples of one position list, in the axis order its srsName gives, or the other way
+		// round when only that gives latitudes within +-90. Empty for anything else.
+		std::vector<Position> readPositions(const std::vector<double>& numbers, std::size_t dimension, bool latFirst)
+		{
+			if (dimension < 2 || numbers.size() < dimension)
+			{
+				return {};
+			}
+			const std::size_t count = numbers.size() / dimension;
+			const auto fits = [&](bool latitudeAtFirst) {
+				for (std::size_t i = 0; i < count; ++i)
+				{
+					const double lat = numbers[i * dimension + (latitudeAtFirst ? 0 : 1)];
+					const double lon = numbers[i * dimension + (latitudeAtFirst ? 1 : 0)];
+					if (!(std::abs(lat) <= 90) || !(std::abs(lon) <= 180))
+					{
+						return false;
+					}
+				}
+				return true;
+			};
+			if (!fits(latFirst))
+			{
+				if (!fits(!latFirst))
+				{
+					return {};   // not geographic coordinates
+				}
+				latFirst = !latFirst;
+			}
+			std::vector<Position> positions;
+			positions.reserve(count);
+			for (std::size_t i = 0; i < count; ++i)
+			{
+				positions.push_back(Position{ numbers[i * dimension + (latFirst ? 1 : 0)], numbers[i * dimension + (latFirst ? 0 : 1)] });
+			}
+			return positions;
+		}
+
+		// The radius of a gml:CircleByCenterPoint or gml:ArcByCenterPoint in metres; 0 when it
+		// cannot be read.
+		double radiusInMetres(const pugi::xml_node& segment)
+		{
+			const pugi::xml_node radius = childByLocalName(segment, "radius");
+			const std::vector<double> value = parseNumbers(radius.child_value());
+			if (value.size() != 1 || !(value[0] > 0))
+			{
+				return 0;
+			}
+			const std::string_view unit = radius.attribute("uom").value();
+			if (unit == "km") return value[0] * 1000;
+			if (unit == "[nmi_i]" || unit == "NM" || unit == "nmi" || unit == "M") return value[0] * 1852;
+			return value[0];   // "m", and nothing said
+		}
+
+		// The bounding box of the geometry positions, and failing them of the envelope corners (an
+		// envelope alone may be a placeholder; the geometry is what is drawn).
+		std::optional<s100::sdb::BoundingBox> positionBounds(pugi::xml_node root)
+		{
+			std::optional<s100::sdb::BoundingBox> positions;
+			std::optional<s100::sdb::BoundingBox> corners;
+			struct Walker final : pugi::xml_tree_walker
+			{
+				std::optional<s100::sdb::BoundingBox>* positions = nullptr;
+				std::optional<s100::sdb::BoundingBox>* corners = nullptr;
+
+				bool for_each(pugi::xml_node& node) override
+				{
+					if (node.type() != pugi::node_element)
+					{
+						return true;
+					}
+					const std::string_view name = localName(node.name());
+					const bool list = name == "posList";
+					const bool corner = name == "lowerCorner" || name == "upperCorner";
+					if (!list && !corner && name != "pos")
+					{
+						return true;
+					}
+					const std::vector<double> numbers = parseNumbers(node.child_value());
+					std::size_t dimension = 2;
+					if (const auto declared = parseInt(inheritedAttribute(node, "srsDimension")); declared && *declared >= 2)
+					{
+						dimension = static_cast<std::size_t>(*declared);
+					}
+					else if (!list && (numbers.size() == 2 || numbers.size() == 3))
+					{
+						dimension = numbers.size();   // a single position: x y, or x y depth
+					}
+					std::optional<s100::sdb::BoundingBox>& bounds = corner ? *corners : *positions;
+					const auto read = readPositions(numbers, dimension, latitudeFirst(inheritedAttribute(node, "srsName")));
+					for (const Position& position : read)
+					{
+						extend(bounds, position.lon, position.lat);
+					}
+					// A circle (S-124 warning areas) reaches its radius around the centre.
+					const std::string_view segment = localName(node.parent().name());
+					if (read.size() == 1 && (segment == "CircleByCenterPoint" || segment == "ArcByCenterPoint"))
+					{
+						constexpr double metresPerDegree = 111320.0;
+						const double dLat = radiusInMetres(node.parent()) / metresPerDegree;
+						const double dLon = dLat / (std::max)(std::cos(read[0].lat * 3.14159265358979323846 / 180), 0.01);
+						extend(bounds, read[0].lon - dLon, read[0].lat - dLat);
+						extend(bounds, read[0].lon + dLon, read[0].lat + dLat);
+					}
+					return true;
+				}
+			} walker;
+			walker.positions = &positions;
+			walker.corners = &corners;
+			root.traverse(walker);
+			return positions ? positions : corners;
+		}
+
+		// The product a GML dataset's root element names by its namespace,
+		// "http://www.iho.int/S124/gml/2.0" -> "S-124".
+		std::string productOfNamespace(const pugi::xml_node& root)
+		{
+			const std::string_view name(root.name());
+			const auto colon = name.find(':');
+			const std::string attribute = colon == std::string_view::npos ? std::string("xmlns") : "xmlns:" + std::string(name.substr(0, colon));
+			return productFromIdentifier(root.attribute(attribute.c_str()).value());
 		}
 
 		// --- ISO 8211 ------------------------------------------------------------------------
@@ -448,6 +627,83 @@ namespace GISLibrary
 			InspectedCoverage coverage;
 			coverage.rings.push_back(Ring{ { west, south }, { east, south }, { east, north }, { west, north }, { west, south } });
 			dataset.coverages.push_back(std::move(coverage));
+		}
+		return dataset;
+	}
+
+	// --- GmlDatasetInspector -------------------------------------------------------------------
+
+	std::optional<s100::sdb::BoundingBox> gmlPositionBounds(const char* xml)
+	{
+		pugi::xml_document document;
+		if (!xml || !document.load_string(xml))
+		{
+			return std::nullopt;
+		}
+		return positionBounds(document.document_element());
+	}
+
+	bool GmlDatasetInspector::accepts(const fs::path& file) const
+	{
+		std::string extension = s100::sdb::toUtf8(file.extension());
+		std::ranges::transform(extension, extension.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+		return extension == ".gml";
+	}
+
+	std::optional<InspectedDataset> GmlDatasetInspector::inspect(const fs::path& file) const
+	{
+		pugi::xml_document document;
+		if (!document.load_file(file.c_str()))
+		{
+			return std::nullopt;
+		}
+		const pugi::xml_node root = document.document_element();
+		// Part 10b: the root is the product's Dataset element (DataSet in some older schemas).
+		std::string rootName(localName(root.name()));
+		std::ranges::transform(rootName, rootName.begin(), [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
+		if (rootName != "dataset")
+		{
+			return std::nullopt;
+		}
+
+		InspectedDataset dataset;
+		dataset.name = s100::sdb::toUtf8(file.stem());
+		dataset.format = s100::sdb::DatasetFormat::Gml;
+
+		// S-100 Part 10b 10b-9.3: optional, and left out by some producers (the KOR S-124).
+		const pugi::xml_node identification = childByLocalName(root, "DatasetIdentificationInformation");
+		if (identification)
+		{
+			dataset.product = productFromIdentifier(childByLocalName(identification, "productIdentifier").child_value());
+			dataset.productEdition = childByLocalName(identification, "productEdition").child_value();
+			dataset.issueDate = isoDate(childByLocalName(identification, "datasetReferenceDate").child_value());
+			dataset.edition = parseInt(childByLocalName(identification, "editionNumber").child_value());
+			dataset.updateNumber = parseInt(childByLocalName(identification, "updateNumber").child_value()).value_or(0);
+			dataset.isUpdate = std::string_view(childByLocalName(identification, "datasetPurpose").child_value()) == "update";
+		}
+		if (dataset.product.empty())
+		{
+			dataset.product = productOfNamespace(root);
+		}
+		if (dataset.product.empty() && dataset.name.size() >= 3)
+		{
+			dataset.product = productFromIdentifier(dataset.name.substr(0, 3));
+		}
+		if (dataset.product.empty() || dataset.product == "S-100")
+		{
+			return std::nullopt;   // a Dataset, but of no S-100 product
+		}
+
+		dataset.bounds = positionBounds(root);
+		if (dataset.bounds)
+		{
+			const auto& [west, south, east, north] = *dataset.bounds;
+			if (west < east && south < north)
+			{
+				InspectedCoverage coverage;
+				coverage.rings.push_back(Ring{ { west, south }, { east, south }, { east, north }, { west, north }, { west, south } });
+				dataset.coverages.push_back(std::move(coverage));
+			}
 		}
 		return dataset;
 	}
