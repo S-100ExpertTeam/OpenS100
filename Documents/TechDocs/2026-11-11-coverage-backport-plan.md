@@ -68,7 +68,24 @@
   - 검증: 렌더 테스트 `RenderSmoke.AdjustsS102ByTheS104OnScreen`(KOR S-102 + S-104를 레이어로, 첫 기록 시각·데이텀 무시: 적용 셀 > 0, 데이텀 불일치 보고, 화소 21,432개 달라짐, WLA 경계 그려짐 PNG 확인). 전체 173개 통과. 설정 탭은 빌드만 확인(화면 확인 남음).
   - 2부(픽 리포트, 2026-11-11): `CoverageDataset::PickAt`/`PickAllAt` — 클릭한 점의 셀(가장 가까운 노드, 지금 그리는 기록)에서 그려지는 피처의 값을 모두, 단위를 붙여 소수 둘째 자리로(웹 `picking.ts`). WLA가 적용된 셀은 "Water level"과 "Depth (adjusted) … [WLA hh:mm dd Mmm yyyy]"를 원수심과 함께(D-2 3b), 불확도만 적용된 셀은 "Depth (uncertainty)", 그리고 보정 수심이 드는 조회 항목("Portrayal: Deep Water"). 이름은 FC(`Portray` 때 받아 둠) → 파일 Group_F → 코드 순. 보기 창은 클릭한 점에 표시와 그 옆 상자로 그리고(선택한 레이어와 무관, 켜진 커버리지 전부), ESC·다음 픽·레이어 삭제로 지운다. 검증: `RenderSmoke.AdjustsS102ByTheS104OnScreen`에서 WLA가 적용된 셀을 픽해 Depth 44.95 m, Water level 0.34 m, Depth (adjusted) 45.29 m [WLA 15:00 29 Mar 2026], Portrayal Deep Water, Uncertainty 0.18 m 확인, 자료 밖 점은 비어 있음. 전체 174개 통과. 보기 창 상자는 빌드만 확인(화면 확인 남음).
   - 남은 것: 계산 스레드(지금은 그리기 스레드에서 동기, KOR 501×501은 수 ms), WLA 기록 시각 눈금 슬라이더. System Database 차트에서 S-104를 쓰려면 S-104 FC가 설치돼 있어야 한다(`ProgramData/FC/S-104_FC.xml`).
-- [ ] **CV-7** 화면 검증과 성능 기록: KOR S-102·S-104를 S-101과 함께 축척을 바꿔 캡처, 첫 그리기·다음 프레임 시간(웹 기준: S-102 프레임 1 s → 51 ms).
+- [x] **CV-7** 화면 검증과 성능 기록: KOR S-102·S-104를 S-101과 함께 축척을 바꿔 캡처, 첫 그리기·다음 프레임 시간(웹 기준: S-102 프레임 1 s → 51 ms). (2026-11-11)
+  - 렌더 테스트 `RenderSmoke.CoverageChartAtScales`: System Database에 S-101 FC/PC, S-102 FC/PC(zip), S-104 FC, 부산 S-101 셀 7개, KOR S-102, KOR S-104를 설치하고 차트로 그린다(1600×1000, Release x64). 보기마다 첫 프레임(데이터셋 열기·포트레이얼·보정 포함)과 다음 프레임:
+
+    | 보기 | 축척 | 첫 프레임 | 다음 프레임 |
+    |---|---|---|---|
+    | S-102 맞춤, ESC 끔 | 1:132,108 | 2.8~5.7 s | 96~211 ms |
+    | S-102 맞춤, ESC 켬 | 1:132,108 | 130~387 ms | 106~218 ms |
+    | 4배 축소, ESC 켬 | 1:528,434 | 58~128 ms | 54~112 ms |
+    | 4배 확대, ESC 켬 | 1:33,027 | 623~1,209 ms | 47~90 ms |
+    | 16배 확대, ESC 켬 | 1:8,256 | 34~64 ms | 32~67 ms |
+    | 맞춤, WLA 한 시각 | 1:132,108 | 108~227 ms | 104~233 ms |
+    | 4배 확대, WLA 한 시각 | 1:33,027 | 48~101 ms | 44~74 ms |
+    | 맞춤, WLA 기간 + 불확도 | 1:132,108 | 112~189 ms | 107~229 ms |
+
+    시간은 S-101과 S-102를 합친 한 프레임(실행마다 다름, 범위는 네 번 실행). 첫 프레임의 수 초는 S-101 셀을 처음 읽고 Lua로 포트레이얼하는 시간이고, 확대할 때 첫 프레임이 긴 것도 더 큰 축척 셀을 새로 여는 시간이다. WLA를 켠 첫 프레임이 다음 프레임과 거의 같아 501×501 보정은 수 ms 안이다. 계산 스레드는 지금 필요 없다(웹은 S-102 한 프레임 1 s를 51 ms로 줄인 뒤의 값이 기준).
+  - 뷰어 화면: 같은 System Database(`OPENS100_SDB_ROOT`)로 Release 뷰어를 띄워 창을 캡처. S-98 E-1.3 선택으로 S-101 셀·S-102·S-104가 열리고, 지도를 클릭하면 픽 리포트 상자가 그려진다(S-102 Bathymetry Coverage, Depth 42.99 m, Portrayal Deep Water, Uncertainty 0.40 m). 설정 창 "S-102 / S-104" 탭과 WLA 켠 화면은 사람이 확인할 몫으로 남김.
+  - 이 검증에서 찾은 결함(고침): ESC를 켜면 S-102 자료 밖의 S-101 수심 피처까지 사라졌다. `D2DView::Matrix`가 x 방향 비율만 써서, 지도 범위와 화면의 가로세로비가 다를 때 `Scaler::WorldToDevice`와 다른 변환을 냈다. 면·선 명령과 가리기 마스크는 이 행렬로, 점·문자·S-102 경계는 `WorldToDevice`로 그려 서로 어긋났다. 행렬을 `WorldToDevice`와 같게(두 비율 중 큰 쪽, 중심은 범위에서 계산) 고쳤고, 마스크의 바깥 도형은 화면 사각형(`D2DView::WorldRect`)에 여백을 둔 것으로 바꿨다. 테스트 `SuppressesS101DepthFeaturesUnderS102`에 "S-102 자료의 화면 범위 밖에서는 화소가 하나도 바뀌지 않는다"를 더했다(안: 413,834개, 밖: 0개). 전에 통과하던 판정(바뀐 화소 > 100,000)만으로는 이 결함을 잡지 못했다.
+  - 검증: 전체 175개 통과(3개는 환경 자료 필요로 건너뜀), 솔루션 빌드 오류·새 경고 0.
 - [x] **CV-8** 정리: 표시 경로에서 빠진 `S102H5`·`S102Renderer`·`S102_Color`·`H5_*` 제거, 문서 갱신. (2026-11-11)
   - 지운 것: `GISLibrary/S102H5`, `S102Renderer`, `S102_Color`, `S102_RootGroup`, `S102_FC_/S102_FI_/S102_VG_BathymetryCoverage`, `S102_GriddingMethod`(16개 파일), `S100Layer::DrawGrid`의 `S102H5` 분기, `S100LayerFactory::CopyS102H5`(복사본을 만들고도 `nullptr`을 돌려주던 함수), 형식 값 `S100SpatialObjectType::S102H5`·`SpatialObjectType::S102H5`, `tools/check-core-includes.py`의 허용 목록 항목.
   - 남긴 것: `S100H5`와 `H5_*`. S-102/S-104가 아닌 `.h5`(S-111 등)는 아직 `S100H5`로 열고, `SdbReaders`의 `Hdf5DatasetInspector`가 `H5_RootGroup`을 쓴다. 이 둘을 `Coverage/Hdf5Coverage`로 옮기는 일은 S-111 표시와 함께 한다.

@@ -12,14 +12,40 @@ namespace GISLibrary
 {
 	namespace D2DView
 	{
-		// World -> device transform of the current view.
+		// Device pixels per world unit, as Scaler::WorldToDevice has it: the map range fits the
+		// screen in both directions, so the larger of the two world-per-pixel ratios wins.
+		inline double PixelsPerWorldUnit(const Scaler& scaler)
+		{
+			const double xRatio = (scaler.mxMax - scaler.mxMin) / (scaler.sxMax - scaler.sxMin);
+			const double yRatio = (scaler.myMax - scaler.myMin) / (scaler.syMax - scaler.syMin);
+			return 1.0 / (xRatio > yRatio ? xRatio : yRatio);
+		}
+
+		// World -> device transform of the current view, for geometry in world coordinates with y
+		// negated (D2DGeometryCache); the same mapping as Scaler::WorldToDevice.
 		inline D2D1::Matrix3x2F Matrix(const Scaler& scaler)
 		{
-			const auto translation1 = D2D1::Matrix3x2F::Translation(static_cast<float>(-scaler.mox), static_cast<float>(scaler.moy));
-			const double ratio = (scaler.sxMax - scaler.sxMin) / (scaler.mxMax - scaler.mxMin);
+			const double mox = (scaler.mxMax + scaler.mxMin) / 2;
+			const double moy = (scaler.myMax + scaler.myMin) / 2;
+			const double sox = (scaler.sxMax + scaler.sxMin) / 2;
+			const double soy = (scaler.syMax + scaler.syMin) / 2;
+			const double ratio = PixelsPerWorldUnit(scaler);
+			const auto translation1 = D2D1::Matrix3x2F::Translation(static_cast<float>(-mox), static_cast<float>(moy));
 			const auto scale = D2D1::Matrix3x2F::Scale(static_cast<float>(ratio), static_cast<float>(ratio));
-			const auto translation2 = D2D1::Matrix3x2F::Translation(static_cast<float>(scaler.sox), static_cast<float>(scaler.soy));
+			const auto translation2 = D2D1::Matrix3x2F::Translation(static_cast<float>(sox), static_cast<float>(soy));
 			return translation1 * scale * translation2;
+		}
+
+		// The screen in world coordinates with y negated, as Matrix maps them.
+		inline D2D1_RECT_F WorldRect(const Scaler& scaler)
+		{
+			const double mox = (scaler.mxMax + scaler.mxMin) / 2;
+			const double moy = (scaler.myMax + scaler.myMin) / 2;
+			const double ratio = PixelsPerWorldUnit(scaler);
+			const double halfWidth = (scaler.sxMax - scaler.sxMin) / ratio / 2;
+			const double halfHeight = (scaler.syMax - scaler.syMin) / ratio / 2;
+			return D2D1::RectF(static_cast<float>(mox - halfWidth), static_cast<float>(-moy - halfHeight),
+				static_cast<float>(mox + halfWidth), static_cast<float>(-moy + halfHeight));
 		}
 
 		inline D2D1::Matrix3x2F InverseMatrix(const Scaler& scaler)

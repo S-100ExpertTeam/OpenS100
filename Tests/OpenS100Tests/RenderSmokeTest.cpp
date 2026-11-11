@@ -627,6 +627,24 @@ TEST(RenderSmoke, SuppressesS101DepthFeaturesUnderS102)
 	};
 	const auto off = render(false, "esc-off");
 	const auto on = render(true, "esc-on");
+	// The S-102 data outlines on the screen, as a bounding box: nothing outside it may change.
+	const auto rings = CoverageDataset::SuppressionRings();
+	long left = kWidth, top = kHeight, right = 0, bottom = 0;
+	for (const auto& ring : rings)
+	{
+		for (const auto& position : ring)
+		{
+			double x = position.lon;
+			double y = position.lat;
+			projection(x, y);
+			long sx = 0, sy = 0;
+			gis.WorldToDevice(x, y, &sx, &sy);
+			left = (std::min)(left, sx);
+			right = (std::max)(right, sx);
+			top = (std::min)(top, sy);
+			bottom = (std::max)(bottom, sy);
+		}
+	}
 	CoverageDataset::SetDepthSettings(original);
 
 	EXPECT_FALSE(CoverageDataset::SuppressionVersion() == 0);
@@ -642,7 +660,21 @@ TEST(RenderSmoke, SuppressesS101DepthFeaturesUnderS102)
 		[&](std::uint32_t a, std::uint32_t b) { return differs(a, b) ? std::size_t{ 1 } : std::size_t{ 0 }; });
 	std::cout << "[ suppression ] pixels that differ clearly with ESC on: " << changed << std::endl;
 	EXPECT_GT(changed, 100000u) << "the S-101 depth areas under the S-102 data are not drawn";
-	EXPECT_FALSE(CoverageDataset::SuppressionRings().empty());
+	EXPECT_FALSE(rings.empty());
+	// Outside the data (a few pixels of margin for antialiasing) the S-101 depth features stay.
+	std::size_t outside = 0;
+	for (int y = 0; y < kHeight; ++y)
+	{
+		for (int x = 0; x < kWidth; ++x)
+		{
+			const bool beyond = x < left - 3 || x > right + 3 || y < top - 3 || y > bottom + 3;
+			const auto i = static_cast<std::size_t>(y) * kWidth + x;
+			if (beyond && differs(off[i], on[i])) ++outside;
+		}
+	}
+	std::cout << "[ suppression ] S-102 data on screen: " << left << "," << top << " - " << right << "," << bottom
+		<< "; differing pixels outside it: " << outside << std::endl;
+	EXPECT_EQ(outside, 0u) << "S-101 depth features outside the S-102 data are suppressed too";
 
 	// Where they differ, in red over the ESC-on picture, for a person to look at.
 	std::vector<std::uint32_t> diff(on.size());
@@ -657,4 +689,113 @@ TEST(RenderSmoke, SuppressesS101DepthFeaturesUnderS102)
 	const auto png = OutputDirectory() / "s101-under-s102-diff.png";
 	EXPECT_TRUE(canvas.SavePng(png));
 	std::cout << "[ suppression ] differences: " << png.string() << std::endl;
+}
+
+
+// Coverage backport CV-7: KOR S-102 and S-104 with the Busan S-101 cells through the System
+// Database chart, drawn at several scales with the enhanced safety contour and with WLA, each view
+// timed on its first frame (datasets opened, portrayed, adjusted) and on the next one. The System
+// Database is left in place for a run of the viewer (OPENS100_SDB_ROOT=<temp>\OpenS100Tests\CoverageChart).
+TEST(RenderSmoke, CoverageChartAtScales)
+{
+	const auto cells = testpaths::tdsRoot() / L"KOR_TDS" / L"S100_ROOT" / L"S-101" / L"DATASET_FILES";
+	const auto s102 = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-102" / L"S-102" / L"102KR00T4G3B3000026.h5";
+	const auto s104 = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-104" / L"S-104" / L"104KR00KR4_MOHID2K_G3B30_20260330_F36.h5";
+	const auto pcZip = testpaths::tdsRoot() / L"FC_PC" / L"S-102" / L"unzipped" / L"S-102" / L"CATALOGUES" / L"102_Portrayal_Catalogue_3.0.0.zip";
+	for (const auto& path : { cells, s102, s104, pcZip })
+	{
+		if (!std::filesystem::exists(path))
+		{
+			GTEST_SKIP() << "not available: " << path.string();
+		}
+	}
+	using GISLibrary::CoverageDataset;
+	using Clock = std::chrono::steady_clock;
+	const auto root = testpaths::tempDir() / L"CoverageChart";
+	std::filesystem::remove_all(root);
+	const char* busan[] = { "101KR00659C81", "101KR00659C82", "101KR005G3B33", "101KR004G3B30", "101KR003G3B00", "101KR002G3000", "101KR001G0000" };
+	{
+		GISLibrary::SystemDatabaseSession session(root);
+		auto& importer = session.importer();
+		const auto fc = testpaths::repoRoot() / "ProgramData" / "FC";
+		ASSERT_EQ(importer.importFeatureCatalogue(fc / "S-101_FC.xml").outcome, s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(importer.importPortrayalCatalogue(testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal").outcome, s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(importer.importFeatureCatalogue(fc / "S-102_FC.xml").outcome, s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(importer.importPortrayalCatalogue(pcZip).outcome, s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(importer.importFeatureCatalogue(fc / "S-104_FC.xml").outcome, s100::sdb::ImportOutcome::Added);
+		for (const char* name : busan)
+		{
+			ASSERT_EQ(importer.importDataset(cells / name / (std::string(name) + ".000")).outcome, s100::sdb::ImportOutcome::Added) << name;
+		}
+		ASSERT_EQ(importer.importDataset(s102).outcome, s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(importer.importDataset(s104).outcome, s100::sdb::ImportOutcome::Added);
+	}
+
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto* catalogues = gis.GetCatalogManager();
+	catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	GISLibrary::SystemDatabaseSession session(root);
+	session.attach(*gis.GetLayerManager(), *catalogues);
+	const auto record = session.database().datasets().find("S-102", "102KR00T4G3B3000026");
+	ASSERT_TRUE(record && record->bounds);
+	const double cx = (record->bounds->minX + record->bounds->maxX) / 2;
+	const double cy = (record->bounds->minY + record->bounds->maxY) / 2;
+	const double hw = (record->bounds->maxX - record->bounds->minX) / 2;
+	const double hh = (record->bounds->maxY - record->bounds->minY) / 2;
+
+	const CoverageDataset::DepthSettings original = CoverageDataset::GetDepthSettings();
+	const auto ms = [](Clock::time_point a, Clock::time_point b) { return std::chrono::duration<double, std::milli>(b - a).count(); };
+	// The S-102 extent zoomed by `zoom` (1 fits it), drawn twice.
+	const auto frame = [&](double zoom, const CoverageDataset::DepthSettings& settings, const std::string& name) {
+		CoverageDataset::SetDepthSettings(settings);
+		MBR area(cx - hw / zoom, cy - hh / zoom, cx + hw / zoom, cy + hh / zoom);
+		projection(area);
+		gis.SetMap(area);
+		double times[2] = {};
+		std::size_t nonWhite = 0;
+		std::size_t colours = 0;
+		for (double& time : times)
+		{
+			MemoryCanvas canvas(kWidth, kHeight);
+			const auto start = Clock::now();
+			gis.Draw(canvas.dc());
+			::GdiFlush();
+			time = ms(start, Clock::now());
+			if (&time == &times[1])
+			{
+				canvas.Measure(nonWhite, colours);
+				EXPECT_TRUE(canvas.SavePng(OutputDirectory() / ("cv7-" + name + ".png")));
+			}
+		}
+		std::cout << "[ cv-7 ] " << name << " 1:" << static_cast<long long>(gis.GetScaler()->GetCurrentScale()) << "  first "
+			<< std::format("{:.0f}", times[0]) << " ms, next " << std::format("{:.0f}", times[1]) << " ms, colours " << colours << std::endl;
+		EXPECT_GT(nonWhite, static_cast<std::size_t>(kWidth) * kHeight / 50) << name;
+	};
+
+	CoverageDataset::DepthSettings esc = original;
+	esc.enhancedSafetyContour = true;
+	esc.adjustment = {};
+	CoverageDataset::DepthSettings plain = esc;
+	plain.enhancedSafetyContour = false;
+	frame(1, plain, "fit-esc-off");
+	frame(1, esc, "fit-esc-on");
+	frame(0.25, esc, "out4-esc-on");
+	frame(4, esc, "in4-esc-on");
+	frame(16, esc, "in16-esc-on");
+	const auto span = CoverageDataset::WaterLevelTimeSpan();
+	ASSERT_TRUE(span) << "the S-104 is opened with the S-102";
+	CoverageDataset::DepthSettings wla = esc;
+	wla.adjustment.wla = s100::coverage::WlaMethod::instant(span->first);
+	wla.adjustment.ignoreIncompatibleDatums = true;
+	frame(1, wla, "fit-wla-instant");
+	frame(4, wla, "in4-wla-instant");
+	wla.adjustment.wla = s100::coverage::WlaMethod::period(span->first, span->first + std::chrono::hours(6));
+	wla.adjustment.uncertainty = true;
+	frame(1, wla, "fit-wla-period-uncertainty");
+	EXPECT_GT(CoverageDataset::CurrentWlaStatus().applied, 0u);
+	CoverageDataset::SetDepthSettings(original);
+	session.detach();
 }

@@ -32,9 +32,6 @@ namespace GISLibrary::DepthSuppression
 			static CachedMask mask;
 			return mask;
 		}
-
-		// Far beyond any projected coordinate, so the outer figure covers every view.
-		constexpr float World = 1.0e9f;
 	}
 
 	bool IsSuppressedFeature(std::string_view featureCode) noexcept
@@ -42,7 +39,7 @@ namespace GISLibrary::DepthSuppression
 		return featureCode == "DepthArea" || featureCode == "DredgedArea" || featureCode == "DepthContour";
 	}
 
-	ID2D1Geometry* Mask(ID2D1Factory1* factory)
+	ID2D1Geometry* DataAreas(ID2D1Factory1* factory)
 	{
 		CachedMask& mask = cache();
 		const std::uint64_t version = CoverageDataset::SuppressionVersion();
@@ -70,13 +67,7 @@ namespace GISLibrary::DepthSuppression
 			if (geometry) geometry->Release();
 			return nullptr;
 		}
-		// Everything, less the S-102 data areas: under the alternate (even-odd) rule a ring inside
-		// the outer figure is a hole, and a hole of the data inside a ring is drawn again.
 		sink->SetFillMode(D2D1_FILL_MODE_ALTERNATE);
-		sink->BeginFigure(D2D1::Point2F(-World, -World), D2D1_FIGURE_BEGIN_FILLED);
-		const D2D1_POINT_2F outer[] = { { World, -World }, { World, World }, { -World, World } };
-		sink->AddLines(outer, 3);
-		sink->EndFigure(D2D1_FIGURE_END_CLOSED);
 		for (const auto& ring : rings)
 		{
 			bool first = true;
@@ -116,13 +107,35 @@ namespace GISLibrary::DepthSuppression
 	Runs::Runs(ID2D1RenderTarget* target, ID2D1Factory1* factory, const Scaler& scaler, bool worldTransform)
 		: target_(target), scaler_(&scaler), worldTransform_(worldTransform)
 	{
-		mask_ = target ? Mask(factory) : nullptr;
+		ID2D1Geometry* areas = target ? DataAreas(factory) : nullptr;
+		if (!areas)
+		{
+			return;
+		}
+		// The screen less the S-102 data areas: under the alternate (even-odd) rule the data areas
+		// are holes in a rectangle over the screen, with a margin of the screen's own size each side.
+		const D2D1_RECT_F screen = D2DView::WorldRect(scaler);
+		const float width = screen.right - screen.left;
+		const float height = screen.bottom - screen.top;
+		ID2D1RectangleGeometry* outer = nullptr;
+		if (FAILED(factory->CreateRectangleGeometry(D2D1::RectF(screen.left - width, screen.top - height, screen.right + width, screen.bottom + height), &outer)))
+		{
+			return;
+		}
+		ID2D1Geometry* parts[] = { outer, areas };
+		ID2D1GeometryGroup* group = nullptr;
+		if (SUCCEEDED(factory->CreateGeometryGroup(D2D1_FILL_MODE_ALTERNATE, parts, 2, &group)))
+		{
+			mask_ = group;
+		}
+		outer->Release();
 	}
 
 	Runs::~Runs()
 	{
 		Close();
 		if (layer_) layer_->Release();
+		if (mask_) mask_->Release();
 	}
 
 	void Runs::Close()
@@ -158,11 +171,12 @@ namespace GISLibrary::DepthSuppression
 		}
 		if (!layer_ && FAILED(target_->CreateLayer(&layer_)))
 		{
+			mask_->Release();
 			mask_ = nullptr;
 			return;
 		}
-		// The mask is in world coordinates: the world transform carries it to the device when the
-		// target draws in world coordinates; otherwise the mask transform does.
+		// The mask is in world coordinates: the target's world transform carries it to the device
+		// when the target draws in world coordinates; otherwise the mask transform does.
 		const D2D1_MATRIX_3X2_F maskTransform = worldTransform_ ? D2D1::Matrix3x2F::Identity() : D2DView::Matrix(*scaler_);
 		target_->PushLayer(D2D1::LayerParameters(D2D1::InfiniteRect(), mask_, D2D1_ANTIALIAS_MODE_PER_PRIMITIVE, maskTransform), layer_);
 		open_ = true;
