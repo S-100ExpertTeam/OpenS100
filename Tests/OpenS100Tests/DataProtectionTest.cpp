@@ -424,8 +424,10 @@ TEST_F(ProtectedImportTest, InstallsAProtectedExchangeSetFolder)
 	EXPECT_EQ(installed("101KR00BBBB"), plain("101KR00BBBB.000"));
 
 	// The expired permit is reported; its data is installed all the same.
-	ASSERT_EQ(report.warnings.size(), 1u);
-	EXPECT_NE(report.warnings[0].find("101KR00BBBB.000 expired on 2026-01-31"), std::string::npos);
+	ASSERT_EQ(report.expiredPermits.size(), 1u);
+	EXPECT_EQ(report.expiredPermits[0].fileName, "101KR00BBBB.000");
+	EXPECT_EQ(report.expiredPermits[0].expiry, "2026-01-31");
+	EXPECT_TRUE(report.warnings.empty());
 
 	// Results name the source, and the staging folder is gone.
 	for (const auto& result : report.import.results)
@@ -513,8 +515,8 @@ TEST_F(ProtectedImportTest, ReadsExpiryDatesWithoutDashes)
 	writeText(dir / "PERMIT.XML", xml);
 
 	const auto report = importProtected(*importer, request(source), options());
-	ASSERT_EQ(report.warnings.size(), 1u);
-	EXPECT_NE(report.warnings[0].find("expired on 20260131"), std::string::npos);
+	ASSERT_EQ(report.expiredPermits.size(), 1u);
+	EXPECT_EQ(report.expiredPermits[0].expiry, "20260131");
 }
 
 // --- real protected data, with the readers the viewer uses ------------------------------------
@@ -610,6 +612,11 @@ TEST(ProtectedImportReal, InstallsTheDataNamedByTheEnvironment)
 	for (const auto& warning : report.warnings)
 	{
 		std::cout << "  warning: " << warning << "\n";
+	}
+	if (!report.expiredPermits.empty())
+	{
+		std::cout << "  expired permits: " << report.expiredPermits.size() << " (first: "
+			<< report.expiredPermits.front().fileName << ", " << report.expiredPermits.front().expiry << ")\n";
 	}
 	std::cout << "store: " << toUtf8(root) << "\n";
 

@@ -214,7 +214,7 @@ namespace s100::sdb
 
                 if (const auto expiry = isoDate(permit.expiry); !expiry.empty() && expiry < today_)
                 {
-                    report_.warnings.push_back(std::format("the permit for {} expired on {}", permit.fileName, permit.expiry));
+                    report_.expiredPermits.push_back({ permit.fileName, permit.expiry });
                 }
             }
 

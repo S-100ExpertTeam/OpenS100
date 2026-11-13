@@ -184,7 +184,18 @@
 #define ID_FILE_DELETE32778             32778
 #define ID_FILE_OPENFOLDER              32779
 #define ID_FILE_LOADFOLDER              32780
-
+#define IDD_DIALOG_PROTECTED_DATA       371
+#define IDC_EDIT_P15_SOURCE             1010
+#define IDC_BUTTON_P15_SOURCE_FOLDER    1011
+#define IDC_BUTTON_P15_SOURCE_FILE      1012
+#define IDC_EDIT_P15_PERMIT             1013
+#define IDC_BUTTON_P15_PERMIT           1014
+#define IDC_EDIT_P15_MID                1015
+#define IDC_EDIT_P15_MKEY               1016
+#define IDC_EDIT_P15_HWID               1017
+#define IDC_EDIT_P15_USERPERMIT         1018
+#define IDC_STATIC_P15_HINT             1019
+#define ID_FILE_LOADPROTECTED           32781
 #define IDD_DIALOG_CONFIG_DEPTH         372
 #define IDC_DEPTH_ESC                   1020
 #define IDC_DEPTH_UNCERTAINTY           1021
@@ -198,13 +209,17 @@
 #define IDC_DEPTH_IGNORE_DATUM          1029
 #define IDC_DEPTH_S104_SPAN             1030
 #define IDC_DEPTH_FROM_S104             1031
+#define IDC_CURRENT_RECORD              1032
+#define IDC_CURRENT_SPAN                1033
+#define IDC_CURRENT_THINNING            1034
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        373
-#define _APS_NEXT_COMMAND_VALUE         32781
-#define _APS_NEXT_CONTROL_VALUE         1032
+#define _APS_NEXT_COMMAND_VALUE         32782
+#define _APS_NEXT_CONTROL_VALUE         1035
 #define _APS_NEXT_SYMED_VALUE           316
 #endif
 #endif

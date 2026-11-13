@@ -58,13 +58,20 @@ namespace s100::sdb
         std::string message;   // why it failed, empty on success
     };
 
+    struct ExpiredPermit
+    {
+        std::string fileName;
+        std::string expiry;   // as PERMIT.XML writes it
+    };
+
     struct ProtectedImportReport
     {
         std::string hwId;
         std::string dataServerName;
         std::vector<DecryptionResult> files;   // one per file a permit was found for
-        // Permits that have expired (their data is installed all the same, as with S-63) and
-        // permits for files the source does not hold.
+        // Permits that have expired. Their data is installed all the same, as with S-63.
+        std::vector<ExpiredPermit> expiredPermits;
+        // Permits for files the source does not hold, and archive entries that were skipped.
         std::vector<std::string> warnings;
         ImportReport import;
 

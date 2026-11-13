@@ -21,7 +21,9 @@ namespace DatasetManagerUi
 	GISLibrary::SystemDatabaseSession* Session(CWnd* parent);
 
 	// One message box summing up what an import did, listing the files that were not installed.
-	void Report(CWnd* parent, const std::vector<s100::sdb::ImportResult>& results, const std::vector<std::string>& problems = {});
+	// `notes` (UTF-8) come first and are information; `problems` make it a warning.
+	void Report(CWnd* parent, const std::vector<s100::sdb::ImportResult>& results, const std::vector<std::string>& problems = {},
+		const std::vector<std::string>& notes = {});
 
 	// Asks before removing installed resources; true to go ahead.
 	bool ConfirmRemoval(CWnd* parent, std::size_t count);

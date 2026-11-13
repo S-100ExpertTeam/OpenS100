@@ -40,13 +40,18 @@ public:
 	std::vector<s100::sdb::DatasetRecord> m_vecDS;
 	std::vector<s100::sdb::SupportFileRecord> m_vecSP;
 
+	// Protected data among `files` (a folder, CATALOG.XML or .zip with a PERMIT.XML) goes to the
+	// Load Protected Data dialog, one at a time; the rest is installed as it is.
 	void LoadFiles(const std::vector<std::filesystem::path>& files);
+	// Asks for PERMIT.XML and the credentials and installs S-100 Part 15 protected data.
+	void LoadProtected(const std::filesystem::path& source, const std::filesystem::path& permitFile);
 	void SetRefreshItem();
 
 	virtual BOOL OnInitDialog();
 
 	void OnMenuLoad(CCmdUI* pCmdUI);
 	afx_msg void OnMenuLoadFolder();
+	afx_msg void OnMenuLoadProtected();
 	void OnMenuDelete(CCmdUI* pCmdUI);
 	void OnMenuOpenFolder(CCmdUI* pCmdUI);
 
@@ -60,6 +65,8 @@ public:
 	afx_msg void OnCbnSelchangeComboProduct();
 
 private:
+	void LoadPlainFiles(const std::vector<std::filesystem::path>& files);
+
 	// The product specifications in the database, in combo order after "All"; the selected one,
 	// or empty for all products.
 	std::vector<std::string> m_products;

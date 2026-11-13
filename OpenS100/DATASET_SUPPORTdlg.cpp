@@ -6,6 +6,7 @@
 #include "afxdialogex.h"
 #include "DATASET_SUPPORTdlg.h"
 #include "DatasetManagerUi.h"
+#include "ProtectedDataDlg.h"
 
 #include <algorithm>
 #include <format>
@@ -82,6 +83,7 @@ BEGIN_MESSAGE_MAP(DATASET_SUPPORTdlg, CDialogEx)
 	ON_NOTIFY(NM_RCLICK, IDC_LIST2, &DATASET_SUPPORTdlg::OnNMRClickList2)
 	ON_UPDATE_COMMAND_UI(ID_FILE_LOAD, &DATASET_SUPPORTdlg::OnMenuLoad)
 	ON_COMMAND(ID_FILE_LOADFOLDER, &DATASET_SUPPORTdlg::OnMenuLoadFolder)
+	ON_COMMAND(ID_FILE_LOADPROTECTED, &DATASET_SUPPORTdlg::OnMenuLoadProtected)
 	ON_UPDATE_COMMAND_UI(ID_FILE_DELETE32778, &DATASET_SUPPORTdlg::OnMenuDelete)
 	ON_UPDATE_COMMAND_UI(ID_FILE_OPENFOLDER, &DATASET_SUPPORTdlg::OnMenuOpenFolder)
 	ON_WM_DROPFILES()
@@ -278,7 +280,93 @@ void DATASET_SUPPORTdlg::OnMenuLoadFolder()
 	}
 }
 
+void DATASET_SUPPORTdlg::OnMenuLoadProtected()
+{
+	LoadProtected({}, {});
+}
+
+void DATASET_SUPPORTdlg::LoadProtected(const std::filesystem::path& source, const std::filesystem::path& permitFile)
+{
+	auto* session = DatasetManagerUi::Session(this);
+	if (!session)
+	{
+		return;
+	}
+	ProtectedDataDlg dialog(*session, this);
+	dialog.source = source;
+	dialog.permitFile = permitFile;
+	if (dialog.DoModal() != IDOK || !dialog.report())
+	{
+		return;
+	}
+
+	// An exchange set may bring catalogues as well as datasets.
+	session->refreshCatalogues();
+	session->refreshDatasets();
+	SetRefreshItem();
+	theApp.MapRefresh();
+	theApp.m_pDockablePaneLayerManager.UpdateList();
+
+	const auto& report = *dialog.report();
+	const std::vector<std::string> notes{ std::format("Decrypted {} of {} protected files (HW_ID {}{}).", report.decryptedCount(),
+		report.files.size(), report.hwId, report.dataServerName.empty() ? "" : ", data server " + report.dataServerName) };
+	std::vector<std::string> problems;
+	constexpr std::size_t listed = 8;
+	std::size_t failed = 0;
+	for (const auto& file : report.files)
+	{
+		if (!file.decrypted && failed++ < listed)
+		{
+			problems.push_back(file.file + ": not decrypted: " + file.message);
+		}
+	}
+	if (failed > listed)
+	{
+		problems.push_back(std::format("... and {} more not decrypted", failed - listed));
+	}
+	if (!report.expiredPermits.empty())
+	{
+		const auto& first = report.expiredPermits.front();
+		problems.push_back(std::format("{} permit(s) have expired (the data was installed all the same), e.g. {} on {}.",
+			report.expiredPermits.size(), first.fileName, first.expiry));
+	}
+	for (std::size_t i = 0; i < report.warnings.size() && i < listed; ++i)
+	{
+		problems.push_back(report.warnings[i]);
+	}
+	problems.insert(problems.end(), report.import.installProblems.begin(), report.import.installProblems.end());
+	DatasetManagerUi::Report(this, report.import.results, problems, notes);
+}
+
 void DATASET_SUPPORTdlg::LoadFiles(const std::vector<std::filesystem::path>& files)
+{
+	auto* session = DatasetManagerUi::Session(this);
+	if (!session)
+	{
+		return;
+	}
+
+	// Protected data cannot be installed as it is: its files only read once decrypted.
+	std::vector<std::filesystem::path> plain;
+	for (const auto& file : files)
+	{
+		if (const auto permit = FindPermitFor(file))
+		{
+			LoadProtected(file, *permit);
+		}
+		else
+		{
+			plain.push_back(file);
+		}
+	}
+	if (plain.empty())
+	{
+		return;
+	}
+	LoadPlainFiles(plain);
+}
+
+void DATASET_SUPPORTdlg::LoadPlainFiles(const std::vector<std::filesystem::path>& files)
 {
 	auto* session = DatasetManagerUi::Session(this);
 	if (!session)

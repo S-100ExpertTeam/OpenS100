@@ -318,6 +318,7 @@
   <ItemGroup>
     <ClInclude Include="CDlg_Portrayal.h" />
     <ClInclude Include="DatasetManagerUi.h" />
+    <ClInclude Include="ProtectedDataDlg.h" />
     <ClInclude Include="LegacyDatasetManager.h" />
     <ClInclude Include="DATASET_SUPPORTdlg.h" />
     <ClInclude Include="DialogDatasetManager.h" />
@@ -354,6 +355,7 @@
   <ItemGroup>
     <ClCompile Include="CDlg_Portrayal.cpp" />
     <ClCompile Include="DatasetManagerUi.cpp" />
+    <ClCompile Include="ProtectedDataDlg.cpp" />
     <ClCompile Include="LegacyDatasetManager.cpp" />
     <ClCompile Include="DATASET_SUPPORTdlg.cpp" />
     <ClCompile Include="DialogDatasetManager.cpp" />

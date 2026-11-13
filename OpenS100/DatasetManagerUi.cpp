@@ -27,7 +27,8 @@ namespace DatasetManagerUi
 		return s100::text::ToWide(utf8);
 	}
 
-	void Report(CWnd* parent, const std::vector<s100::sdb::ImportResult>& results, const std::vector<std::string>& problems)
+	void Report(CWnd* parent, const std::vector<s100::sdb::ImportResult>& results, const std::vector<std::string>& problems,
+		const std::vector<std::string>& notes)
 	{
 		using s100::sdb::ImportOutcome;
 		std::array<std::size_t, 7> counts{};
@@ -35,7 +36,12 @@ namespace DatasetManagerUi
 		{
 			++counts[static_cast<std::size_t>(result.outcome)];
 		}
-		std::wstring text = std::format(L"Added {}, replaced {}, updates {}, cancelled {}, removed {}, unchanged {}, not installed {}.",
+		std::wstring text;
+		for (const auto& note : notes)
+		{
+			text += Widen(note) + L"\n";
+		}
+		text += std::format(L"Added {}, replaced {}, updates {}, cancelled {}, removed {}, unchanged {}, not installed {}.",
 			counts[static_cast<int>(ImportOutcome::Added)], counts[static_cast<int>(ImportOutcome::Replaced)],
 			counts[static_cast<int>(ImportOutcome::UpdateAdded)], counts[static_cast<int>(ImportOutcome::Cancelled)],
 			counts[static_cast<int>(ImportOutcome::Removed)], counts[static_cast<int>(ImportOutcome::Unchanged)],
