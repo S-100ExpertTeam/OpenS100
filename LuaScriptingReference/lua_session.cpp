@@ -46,14 +46,86 @@ lua_session::lua_session()
 
 	luaL_openlibs(m_l);
 
-	// [SECURITY PATCH] Disable dangerous libraries 
-	luaL_dostring(m_l,
-	"os = nil " "io = nil " "debug = nil "
-		"package.loadlib = nil " "package.cpath = ” " "loadfile = nil "
-		"dofile = nil "
-		"load = nil "
-		"rawset = nil " "loadstring = nil"
-		);
+	// [SECURITY] Restrict the scripting environment available to portrayal catalogues.
+	//
+	// Portrayal catalogues are data, not trusted code: they arrive with an S-100
+	// exchange set and are executed by this interpreter. The previous revision
+	// assigned nil to a handful of globals, which is not sufficient, because
+	// package.loaded still holds a live reference to every standard library that
+	// luaL_openlibs() opened. A catalogue could recover them with
+	//     require('os').execute(...)          -- or package.loaded.os.execute(...)
+	// and, on the LuaJIT runtime this project links against, reach arbitrary
+	// native code through the FFI library with
+	//     require('ffi')
+	//
+	// The chunk below therefore clears each dangerous module from _G,
+	// package.loaded and package.preload, drops the native module loaders, and
+	// removes the bytecode/chunk loading entry points. Pure-Lua require() is
+	// deliberately preserved: portrayal rule files use it to load sibling rules
+	// (require 'PortrayalModel', require 'RESTRN01', ...).
+	static const char kRestrictScriptEnvironment[] =
+		"local blocked = { 'os', 'io', 'debug', 'ffi', 'jit' }\n"
+		"for i = 1, #blocked do\n"
+		"  local name = blocked[i]\n"
+		"  _G[name] = nil\n"
+		"  if package then\n"
+		"    if package.loaded  then package.loaded[name]  = nil end\n"
+		"    if package.preload then package.preload[name] = nil end\n"
+		"  end\n"
+		"end\n"
+		"loadfile = nil\n"
+		"dofile = nil\n"
+		"load = nil\n"
+		"loadstring = nil\n"
+		"rawset = nil\n"
+		"if string then string.dump = nil end\n"
+		"if package then\n"
+		"  package.loadlib = nil\n"
+		"  package.cpath = ''\n"
+		"  local loaders = package.loaders or package.searchers\n"
+		"  if loaders then\n"
+		"    for i = #loaders, 3, -1 do loaders[i] = nil end\n"
+		"  end\n"
+		"end\n";
+
+	// A restriction that fails silently is worse than none, because callers keep
+	// assuming it holds. luaL_dostring() reports both compile and runtime errors,
+	// so the result is checked rather than discarded.
+	if (luaL_dostring(m_l, kRestrictScriptEnvironment) != 0)
+	{
+		const char* message = lua_tostring(m_l, -1);
+		std::string detail = message ? message : "(no message)";
+		lua_close(m_l);
+		m_l = nullptr;
+		throw std::runtime_error(
+			"lua_session: failed to restrict the script environment: " + detail);
+	}
+
+	// Confirm the restriction actually took effect before any catalogue runs.
+	// This is what turns the block above from an assumption into a guarantee.
+	static const char kVerifyScriptEnvironment[] =
+		"local names = { 'os', 'io', 'debug', 'ffi', 'jit' }\n"
+		"for i = 1, #names do\n"
+		"  local name = names[i]\n"
+		"  if _G[name] ~= nil then error('global still reachable: ' .. name, 0) end\n"
+		"  if package and package.loaded and package.loaded[name] ~= nil then\n"
+		"    error('package.loaded still holds: ' .. name, 0)\n"
+		"  end\n"
+		"  if pcall(require, name) then error('require still resolves: ' .. name, 0) end\n"
+		"end\n"
+		"if load or loadstring or loadfile or dofile then\n"
+		"  error('a chunk loader is still reachable', 0)\n"
+		"end\n";
+
+	if (luaL_dostring(m_l, kVerifyScriptEnvironment) != 0)
+	{
+		const char* message = lua_tostring(m_l, -1);
+		std::string detail = message ? message : "(no message)";
+		lua_close(m_l);
+		m_l = nullptr;
+		throw std::runtime_error(
+			"lua_session: script environment restriction did not hold: " + detail);
+	}
 
 	lua_atpanic(m_l, atpanic);
 
