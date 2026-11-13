@@ -129,10 +129,12 @@ bool S100Layer::Open(const std::wstring& _filepath, LayerManager* lm)
 	}
 	else if (!s100::text::CompareNoCase(extension, L"h5"))
 	{
-		if (GetFC()->getProductId().compare("S-102") == 0 || GetFC()->getProductId().compare("S-104") == 0)
+		if (GetFC()->getProductId().compare("S-102") == 0 || GetFC()->getProductId().compare("S-104") == 0
+			|| GetFC()->getProductId().compare("S-111") == 0)
 		{
 			// S-102: portrayed by its portrayal catalogue (CoverageFill), drawn as one image. S-104: the
-			// water levels S-102 is adjusted by (S-98 D-2), not drawn itself.
+			// water levels S-102 is adjusted by (S-98 D-2), not drawn itself. S-111: the arrows of its
+			// portrayal catalogue at the grid points, thinned as the chart is zoomed out.
 			auto coverage = new GISLibrary::CoverageDataset();
 			m_spatialObject = coverage;
 			coverage->SetLayer(this);

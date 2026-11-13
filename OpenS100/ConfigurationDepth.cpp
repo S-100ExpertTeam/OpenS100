@@ -3,6 +3,7 @@
 
 #include "../GISLibrary/CoverageDataset.h"
 
+#include <algorithm>
 #include <chrono>
 #include <format>
 
@@ -75,6 +76,8 @@ void CConfigurationDepth::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DEPTH_WLA_START_TIME, m_fromTime);
 	DDX_Control(pDX, IDC_DEPTH_WLA_END_DATE, m_toDate);
 	DDX_Control(pDX, IDC_DEPTH_WLA_END_TIME, m_toTime);
+	DDX_Control(pDX, IDC_CURRENT_RECORD, m_currentRecord);
+	DDX_Control(pDX, IDC_CURRENT_THINNING, m_currentThinning);
 }
 
 BEGIN_MESSAGE_MAP(CConfigurationDepth, CDialogEx)
@@ -103,6 +106,34 @@ BOOL CConfigurationDepth::OnInitDialog()
 	setPickers(m_atDate, m_atTime, wla.kind == WlaMethod::Kind::Instant ? wla.time : start);
 	setPickers(m_fromDate, m_fromTime, wla.kind == WlaMethod::Kind::Period ? wla.start : start);
 	setPickers(m_toDate, m_toTime, wla.kind == WlaMethod::Kind::Period ? wla.end : start + std::chrono::hours(6));
+
+	// S-111: the system clock, or one of the record times of the S-111 on the chart. A time set
+	// before that is not a record of what is on the chart now stays in the list.
+	const auto& display = CoverageDataset::GetDisplaySettings();
+	m_currentThinning.SetCheck(display.thinSymbols ? BST_CHECKED : BST_UNCHECKED);
+	m_currentTimes = CoverageDataset::DisplayRecordTimes();
+	const std::size_t recordCount = m_currentTimes.size();
+	if (display.time && !std::ranges::binary_search(m_currentTimes, *display.time))
+	{
+		m_currentTimes.insert(std::ranges::upper_bound(m_currentTimes, *display.time), *display.time);
+	}
+	const bool nowHasRecord = recordCount > 0 && now() >= m_currentTimes.front() && now() <= m_currentTimes.back();
+	m_currentRecord.AddString(nowHasRecord ? L"System clock (now)" : L"System clock (now): no record");
+	int selected = 0;
+	for (std::size_t i = 0; i < m_currentTimes.size(); ++i)
+	{
+		m_currentRecord.AddString(CString(s100::coverage::formatWlaDateTime(m_currentTimes[i]).c_str()));
+		if (display.time && m_currentTimes[i] == *display.time)
+		{
+			selected = static_cast<int>(i) + 1;
+		}
+	}
+	m_currentRecord.SetCurSel(selected);
+	const std::string recordsText = recordCount > 0
+		? std::format("{} records, {} to {}", recordCount, s100::coverage::formatWlaDateTime(m_currentTimes.front()),
+			s100::coverage::formatWlaDateTime(m_currentTimes.back()))
+		: std::string("No S-111 on the chart.");
+	SetDlgItemTextW(IDC_CURRENT_SPAN, CString(recordsText.c_str()));
 
 	ShowS104Span();
 	EnableTimes();
@@ -157,6 +188,18 @@ bool CConfigurationDepth::Apply()
 	{
 		return false;
 	}
+	// S-111: nothing is computed for these; the next drawing reads them.
+	CoverageDataset::DisplaySettings display = CoverageDataset::GetDisplaySettings();
+	const CoverageDataset::DisplaySettings displayBefore = display;
+	const int record = m_currentRecord.GetCurSel();
+	display.time = record > 0 && static_cast<std::size_t>(record) <= m_currentTimes.size()
+		? std::optional<TimePoint>(m_currentTimes[static_cast<std::size_t>(record) - 1]) : std::nullopt;
+	display.thinSymbols = m_currentThinning.GetCheck() == BST_CHECKED;
+	const bool displayChanged = display.time != displayBefore.time || display.thinSymbols != displayBefore.thinSymbols;
+	if (displayChanged)
+	{
+		CoverageDataset::SetDisplaySettings(display);
+	}
 	CoverageDataset::DepthSettings settings = CoverageDataset::GetDepthSettings();
 	const CoverageDataset::DepthSettings before = settings;
 	settings.enhancedSafetyContour = m_esc.GetCheck() == BST_CHECKED;
@@ -183,5 +226,5 @@ bool CConfigurationDepth::Apply()
 	{
 		CoverageDataset::SetDepthSettings(settings);
 	}
-	return changed;
+	return changed || displayChanged;
 }

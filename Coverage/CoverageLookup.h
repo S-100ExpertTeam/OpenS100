@@ -35,6 +35,28 @@ namespace s100::coverage
         double endTransparency = 0;
     };
 
+    // A symbol of a lookup entry, drawn at each grid point whose value falls in the entry's range
+    // (S-111 surface current arrows). It is turned by `rotation`, or by the point's value of
+    // `rotationAttribute` times `rotationFactor`; and scaled by `defaultScaleFactor`, or by the
+    // point's value of `scaleAttribute` times `scaleFactor`.
+    struct CoverageSymbol
+    {
+        std::string reference;     // the symbol's name in the portrayal catalogue
+        std::string rotationCRS;   // "GeographicCRS": degrees clockwise from north
+        double rotation = 0;
+        std::optional<std::string> rotationAttribute;
+        double rotationFactor = 1;
+        double defaultScaleFactor = 1;
+        std::optional<std::string> scaleAttribute;
+        double scaleFactor = 1;
+    };
+
+    // The factor the symbol is drawn at; `value` is the point's value of the scale attribute.
+    [[nodiscard]] double symbolScale(const CoverageSymbol& symbol, std::optional<double> value) noexcept;
+    // The angle the symbol is turned by, in degrees; `value` is the point's value of the rotation
+    // attribute.
+    [[nodiscard]] double symbolRotation(const CoverageSymbol& symbol, std::optional<double> value) noexcept;
+
     struct LookupEntry
     {
         std::string label;
@@ -42,6 +64,7 @@ namespace s100::coverage
         std::optional<double> upper;
         IntervalClosure closure = IntervalClosure::ClosedInterval;
         std::optional<CoverageColor> color;
+        std::optional<CoverageSymbol> symbol;
     };
 
     struct LookupMatch

@@ -72,7 +72,7 @@ BOOL CConfigrationDlg::OnInitDialog()
 	m_tab.InsertItem(1, strOne);
 	m_tab.InsertItem(2, strS101);
 	m_tab.InsertItem(3, strPortrayal);
-	m_tab.InsertItem(4, _T("S-102 / S-104"));
+	m_tab.InsertItem(4, _T("S-102 / S-104 / S-111"));
 
 	CRect r;
 	m_tab.GetWindowRect(&r);

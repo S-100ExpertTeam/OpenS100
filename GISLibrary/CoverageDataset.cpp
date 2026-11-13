@@ -21,6 +21,11 @@
 #include "../PortrayalCatalogue/S100_ColorProfile.h"
 #include "../PortrayalCatalogue/S100_Item.h"
 #include "../PortrayalCatalogue/S100_Palette.h"
+#include "../S100Engine/S100ColorProfile.h"
+#include "../S100Engine/S100PCManager.h"
+#include "../S100Engine/SVGReader.h"
+
+#include <pugixml.hpp>
 
 #include <algorithm>
 #include <cctype>
@@ -107,6 +112,194 @@ namespace GISLibrary
 		{
 			return source && source->dataset().productId == product;
 		}
+
+		CoverageDataset::DisplaySettings& displaySettings()
+		{
+			static CoverageDataset::DisplaySettings value;
+			return value;
+		}
+
+		// The time whose records are drawn: the one set, or now.
+		s100::coverage::TimePoint displayTime()
+		{
+			return displaySettings().time.value_or(
+				std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()));
+		}
+
+		// An element name without its namespace prefix: catalogues differ in the prefixes they use.
+		std::string_view localName(const pugi::xml_node& node)
+		{
+			const std::string_view name = node.name();
+			const auto colon = name.rfind(':');
+			return colon == std::string_view::npos ? name : name.substr(colon + 1);
+		}
+
+		pugi::xml_node childNamed(const pugi::xml_node& parent, std::string_view name)
+		{
+			for (const pugi::xml_node& child : parent.children())
+			{
+				if (localName(child) == name) return child;
+			}
+			return {};
+		}
+
+		std::optional<double> numberOf(const char* text)
+		{
+			if (!text || !*text)
+			{
+				return std::nullopt;
+			}
+			char* end = nullptr;
+			const double value = std::strtod(text, &end);
+			return end != text ? std::optional<double>(value) : std::nullopt;
+		}
+
+		// <symbol reference rotationCRS defaultScaleFactor rotation><rotationAttribute/><rotationFactor/>
+		// <scaleAttribute/><scaleFactor/></symbol> of a coverage lookup (S-100 Part 9, 9-12.x).
+		s100::coverage::CoverageSymbol symbolOf(const pugi::xml_node& node)
+		{
+			s100::coverage::CoverageSymbol symbol;
+			symbol.reference = node.attribute("reference").as_string();
+			symbol.rotationCRS = node.attribute("rotationCRS").as_string();
+			symbol.rotation = node.attribute("rotation").as_double(0);
+			symbol.defaultScaleFactor = node.attribute("defaultScaleFactor").as_double(1);
+			if (const auto attribute = childNamed(node, "rotationAttribute"))
+			{
+				symbol.rotationAttribute = attribute.text().as_string();
+				symbol.rotationFactor = numberOf(childNamed(node, "rotationFactor").text().as_string()).value_or(1);
+			}
+			if (const auto attribute = childNamed(node, "scaleAttribute"))
+			{
+				symbol.scaleAttribute = attribute.text().as_string();
+				symbol.scaleFactor = numberOf(childNamed(node, "scaleFactor").text().as_string()).value_or(1);
+			}
+			return symbol;
+		}
+
+		// The coverage instructions of a display list (the output of a catalogue's XSLT rules), with
+		// the feature each refers to.
+		std::vector<std::pair<std::string, s100::coverage::CoverageInstruction>> coverageInstructionsOf(const std::string& displayList)
+		{
+			std::vector<std::pair<std::string, s100::coverage::CoverageInstruction>> result;
+			pugi::xml_document document;
+			if (!document.load_buffer(displayList.data(), displayList.size()))
+			{
+				return result;
+			}
+			for (const pugi::xml_node& node : document.document_element().children())
+			{
+				if (localName(node) != "coverageInstruction")
+				{
+					continue;
+				}
+				s100::coverage::CoverageInstruction base;
+				for (const pugi::xml_node& child : node.children())
+				{
+					if (localName(child) == "viewingGroup") base.viewingGroups.push_back(child.text().as_int());
+				}
+				base.drawingPriority = childNamed(node, "drawingPriority").text().as_int();
+				if (const auto plane = childNamed(node, "displayPlane")) base.displayPlane = plane.text().as_string();
+				const std::string featureId = childNamed(node, "featureReference").text().as_string();
+				for (const pugi::xml_node& fill : node.children())
+				{
+					if (localName(fill) != "coverageFill")
+					{
+						continue;
+					}
+					s100::coverage::CoverageInstruction instruction = base;
+					instruction.attributeCode = childNamed(fill, "attributeCode").text().as_string();
+					if (const auto uom = childNamed(fill, "uom")) instruction.uom = uom.text().as_string();
+					for (const pugi::xml_node& lookup : fill.children())
+					{
+						if (localName(lookup) != "lookup")
+						{
+							continue;
+						}
+						const auto range = childNamed(lookup, "range");
+						const auto closure = s100::coverage::intervalClosureFromString(range.attribute("closure").as_string());
+						if (!closure)
+						{
+							continue;
+						}
+						s100::coverage::LookupEntry entry{ .label = childNamed(lookup, "label").text().as_string(),
+							.lower = numberOf(range.attribute("lower").as_string()), .upper = numberOf(range.attribute("upper").as_string()),
+							.closure = *closure };
+						if (const auto color = childNamed(lookup, "color"))
+						{
+							entry.color = s100::coverage::CoverageColor{ .startToken = color.attribute("token").as_string(color.text().as_string()),
+								.startTransparency = color.attribute("transparency").as_double(0) };
+						}
+						if (const auto symbol = childNamed(lookup, "symbol"))
+						{
+							entry.symbol = symbolOf(symbol);
+						}
+						instruction.lookup.push_back(std::move(entry));
+					}
+					if (!instruction.attributeCode.empty())
+					{
+						result.emplace_back(featureId, std::move(instruction));
+					}
+				}
+			}
+			return result;
+		}
+
+		std::string xmlEscaped(std::string_view text)
+		{
+			std::string out;
+			for (const char c : text)
+			{
+				switch (c)
+				{
+				case '&': out += "&amp;"; break;
+				case '<': out += "&lt;"; break;
+				case '"': out += "&quot;"; break;
+				default: out.push_back(c);
+				}
+			}
+			return out;
+		}
+
+		bool hasSymbols(const s100::coverage::CoverageInstruction& instruction)
+		{
+			return std::ranges::any_of(instruction.lookup, [](const auto& entry) { return entry.symbol.has_value(); });
+		}
+	}
+
+	const CoverageDataset::DisplaySettings& CoverageDataset::GetDisplaySettings() noexcept
+	{
+		return displaySettings();
+	}
+
+	void CoverageDataset::SetDisplaySettings(const DisplaySettings& value)
+	{
+		displaySettings() = value;
+	}
+
+	std::optional<std::pair<s100::coverage::TimePoint, s100::coverage::TimePoint>> CoverageDataset::DisplayTimeSpan()
+	{
+		const auto times = DisplayRecordTimes();
+		return times.empty() ? std::nullopt : std::optional(std::pair{ times.front(), times.back() });
+	}
+
+	std::vector<s100::coverage::TimePoint> CoverageDataset::DisplayRecordTimes()
+	{
+		std::set<s100::coverage::TimePoint> times;
+		for (CoverageDataset* dataset : registry())
+		{
+			if (!dataset->raw_ || dataset->fillsByFeature_.empty())
+			{
+				continue;
+			}
+			for (const auto& feature : dataset->raw_->dataset().features)
+			{
+				for (const auto& group : feature.timeGroups)
+				{
+					if (group.time) times.insert(*group.time);
+				}
+			}
+		}
+		return { times.begin(), times.end() };
 	}
 
 	const CoverageDataset::DepthSettings& CoverageDataset::GetDepthSettings() noexcept
@@ -316,7 +509,10 @@ namespace GISLibrary
 		ReleaseImages();
 		fillsByFeature_.clear();
 		fills_.clear();
-		if (!raw_ || !fc || !pc || pc->GetRuleFileFormat() != Portrayal::FileFormat::LUA || !pc->GetMainRuleFile())
+		symbolScales_.clear();
+		pc_ = pc;
+		const bool xslt = pc && pc->GetRuleFileFormat() == Portrayal::FileFormat::XSLT;
+		if (!raw_ || !fc || !pc || (pc->GetRuleFileFormat() != Portrayal::FileFormat::LUA && !xslt) || !pc->GetMainRuleFile())
 		{
 			return false;
 		}
@@ -368,6 +564,11 @@ namespace GISLibrary
 		}
 
 		const std::wstring mainRule = pc->GetRootPathW() + L"Rules\\" + pc->GetMainRuleFile()->GetFileNameW();
+		if (xslt)
+		{
+			PortrayXslt(fc, pc, utf8(mainRule));
+			return !fills_.empty();
+		}
 		try
 		{
 			resultDrawingInstructions.clear();
@@ -400,6 +601,31 @@ namespace GISLibrary
 			return false;
 		}
 		return !fills_.empty();
+	}
+
+	void CoverageDataset::PortrayXslt(FeatureCatalogue* /*fc*/, PortrayalCatalogue* pc, const std::string& mainRule)
+	{
+		// The rules see each coverage instance as one feature of primitive Coverage (S-100 Part 9,
+		// 9-7.2): <Dataset><Features><SurfaceCurrent id="..." primitive="Coverage"/></Features></Dataset>.
+		std::string input = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Dataset><Features>";
+		for (const auto& feature : raw_->dataset().features)
+		{
+			if (feature.code.empty() || !(std::isalpha(static_cast<unsigned char>(feature.code.front())) || feature.code.front() == '_'))
+			{
+				continue;
+			}
+			input += std::format("<{} id=\"{}\" primitive=\"Coverage\"/>", feature.code, xmlEscaped(feature.id));
+		}
+		input += "</Features></Dataset>";
+		for (auto& [featureId, instruction] : coverageInstructionsOf(ProcessS101::ProcessS100_XSLT(input, mainRule, pc)))
+		{
+			if (!raw_->dataset().feature(featureId))
+			{
+				continue;
+			}
+			fills_.push_back(instruction);
+			fillsByFeature_.push_back({ featureId, std::move(instruction) });
+		}
 	}
 
 	s100::coverage::Rgb CoverageDataset::ResolveColor(std::string_view token) const
@@ -528,7 +754,8 @@ namespace GISLibrary
 		rt->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		const auto& dataset = source->dataset();
-		const auto now = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now());
+		const auto now = displayTime();
+		symbolStatus_ = {};
 		for (const Fill& fill : fillsByFeature_)
 		{
 			const auto* feature = dataset.feature(fill.featureId);
@@ -540,6 +767,11 @@ namespace GISLibrary
 			const auto timeIndex = s100::coverage::displayTimeIndex(feature->timeGroups, now);
 			if (!component || !timeIndex)
 			{
+				continue;
+			}
+			if (hasSymbols(fill.instruction))
+			{
+				DrawSymbols(d2, scaler, *feature, fill.instruction, *component, *timeIndex);
 				continue;
 			}
 			const std::string key = std::format("{}|{}|{}", paletteName(), *timeIndex, source->revision());
@@ -602,10 +834,203 @@ namespace GISLibrary
 					feature->components[*component].fillValue);
 			}
 		}
+		rt->SetTransform(D2D1::Matrix3x2F::Identity());
 		if (rt->EndDraw() == static_cast<HRESULT>(D2DERR_RECREATE_TARGET))
 		{
 			ReleaseImages();
 		}
+	}
+
+	void CoverageDataset::DrawSymbols(D2D1Resources* d2, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
+		const s100::coverage::CoverageInstruction& instruction, std::size_t component, std::size_t timeIndex)
+	{
+		namespace cov = s100::coverage;
+		auto* manager = pc_ ? pc_->GetS100PCManager() : nullptr;
+		auto* profile = manager ? manager->GetS100ColorProfile() : nullptr;
+		auto* rt = d2->RenderTarget();
+		auto* brush = d2->SolidColorBrush();
+		if (!manager || !profile || !rt || !brush)
+		{
+			return;
+		}
+		const cov::CoverageSource* source = Source();
+		const auto values = source->readValues(feature.id, { .timeIndex = timeIndex, .component = component });
+		if (!values || values->size() < feature.grid.nodeCount())
+		{
+			return;
+		}
+		const double fillValue = feature.components[component].fillValue;
+
+		// The symbols of the entries, with the values they are turned and scaled by.
+		struct Drawn
+		{
+			const cov::CoverageSymbol* symbol = nullptr;
+			SVGReader* svg = nullptr;
+			cov::Values rotation;
+			double rotationFill = 0;
+			cov::Values scale;
+			double scaleFill = 0;
+		};
+		const auto valuesOf = [&](const std::optional<std::string>& attribute, cov::Values& out, double& fill) {
+			if (!attribute)
+			{
+				return true;
+			}
+			const auto index = feature.componentIndex(*attribute);
+			if (!index)
+			{
+				return false;
+			}
+			out = *index == component ? values : source->readValues(feature.id, { .timeIndex = timeIndex, .component = *index });
+			fill = feature.components[*index].fillValue;
+			return out && out->size() >= feature.grid.nodeCount();
+		};
+		std::vector<Drawn> drawn(instruction.lookup.size());
+		float symbolLength = 0;   // in the symbols' own unit, millimetres
+		for (std::size_t i = 0; i < instruction.lookup.size(); ++i)
+		{
+			const auto& entry = instruction.lookup[i];
+			if (!entry.symbol)
+			{
+				continue;
+			}
+			SVGReader* svg = manager->s100SymbolManager.GetSVG(entry.symbol->reference);
+			if (!svg)
+			{
+				continue;
+			}
+			// The catalogue's symbol geometry, when the viewer has not prepared it yet
+			// (PortrayalRender::Prepare).
+			if (svg->geometry.empty() && !svg->figures.empty() && d2->pD2Factory)
+			{
+				manager->CreateSVGGeometry(d2->pD2Factory);
+			}
+			Drawn item{ .symbol = &*entry.symbol, .svg = svg };
+			if (!valuesOf(entry.symbol->rotationAttribute, item.rotation, item.rotationFill)
+				|| !valuesOf(entry.symbol->scaleAttribute, item.scale, item.scaleFill))
+			{
+				continue;
+			}
+			symbolLength = (std::max)(symbolLength, (std::max)(svg->bounding_width, svg->bounding_height));
+			drawn[i] = std::move(item);
+		}
+		if (!(symbolLength > 0))
+		{
+			symbolLength = static_cast<float>(cov::ArrowScale{}.symbolLength);
+		}
+
+		// The largest scale over the field at this time: the longest symbol (L_smax of S-111 9.3.2).
+		const std::string key = std::format("{}|{}", timeIndex, source->revision());
+		auto& maxScale = symbolScales_[feature.id + "|" + instruction.attributeCode];
+		if (maxScale.first != key)
+		{
+			double largest = 0;
+			const std::size_t nodes = feature.grid.nodeCount();
+			for (std::size_t n = 0; n < nodes; ++n)
+			{
+				const float value = (*values)[n];
+				if (cov::isNoData(value, fillValue))
+				{
+					continue;
+				}
+				const auto match = cov::lookupCoverageEntry(instruction.lookup, value);
+				if (!match || !drawn[match->index].symbol)
+				{
+					continue;
+				}
+				const Drawn& item = drawn[match->index];
+				const std::optional<double> scaleValue = item.scale && !cov::isNoData((*item.scale)[n], item.scaleFill)
+					? std::optional<double>((*item.scale)[n]) : std::nullopt;
+				largest = (std::max)(largest, cov::symbolScale(*item.symbol, scaleValue));
+			}
+			maxScale = { key, largest };
+		}
+		if (!(maxScale.second > 0))
+		{
+			return;   // no value at this time has a symbol
+		}
+
+		// Millimetres at 96 device pixels per inch, as the lines over S-102 are drawn.
+		constexpr float pixelsPerMillimetre = 96.0f / 25.4f;
+		const cov::ToScreen toScreen = [scaler](const cov::GeoPosition& position) {
+			double x = position.lon;
+			double y = position.lat;
+			projection(x, y);
+			float sx = 0;
+			float sy = 0;
+			scaler->WorldToDevice_F(x, y, &sx, &sy);
+			return cov::ScreenPoint{ sx, sy };
+		};
+		MBR map = scaler->GetMap();
+		inverseProjection(map);
+		const cov::GeoBounds view{ .minLon = map.GetXMin(), .minLat = map.GetYMin(), .maxLon = map.GetXMax(), .maxLat = map.GetYMax() };
+		const double longest = static_cast<double>(symbolLength) * maxScale.second * pixelsPerMillimetre;
+		const cov::ThinnedNodes nodes = displaySettings().thinSymbols
+			? cov::thinArrows(feature.grid, toScreen, longest, view)
+			: cov::thinnedNodes(feature.grid, 1, view);
+		symbolStatus_.thinningFactor = nodes.factor;
+
+		const RECT screen = D2DView::ScreenRECT(*scaler);
+		const float margin = static_cast<float>(longest);
+		for (int j = 0; j < nodes.rows; ++j)
+		{
+			for (int i = 0; i < nodes.cols; ++i)
+			{
+				const int col = nodes.col(i);
+				const int row = nodes.row(j);
+				const std::size_t n = static_cast<std::size_t>(row) * static_cast<std::size_t>(feature.grid.cols) + static_cast<std::size_t>(col);
+				const float value = (*values)[n];
+				if (cov::isNoData(value, fillValue))
+				{
+					continue;
+				}
+				const auto match = cov::lookupCoverageEntry(instruction.lookup, value);
+				if (!match || !drawn[match->index].symbol)
+				{
+					continue;
+				}
+				const Drawn& item = drawn[match->index];
+				// A point without a direction has no arrow.
+				if (item.rotation && cov::isNoData((*item.rotation)[n], item.rotationFill))
+				{
+					continue;
+				}
+				const std::optional<double> rotationValue = item.rotation ? std::optional<double>((*item.rotation)[n]) : std::nullopt;
+				const std::optional<double> scaleValue = item.scale && !cov::isNoData((*item.scale)[n], item.scaleFill)
+					? std::optional<double>((*item.scale)[n]) : std::nullopt;
+				const cov::ScreenPoint at = toScreen(cov::gridPosition(feature.grid, col, row));
+				if (at.x < screen.left - margin || at.x > screen.right + margin || at.y < screen.top - margin || at.y > screen.bottom + margin)
+				{
+					continue;
+				}
+				const float scale = static_cast<float>(cov::symbolScale(*item.symbol, scaleValue)) * pixelsPerMillimetre;
+				const float rotation = static_cast<float>(cov::symbolRotation(*item.symbol, rotationValue));
+				// The symbol's millimetres to pixels, turned clockwise from north (up), at the point.
+				rt->SetTransform(D2D1::Matrix3x2F::Scale(scale, scale) * D2D1::Matrix3x2F::Rotation(rotation)
+					* D2D1::Matrix3x2F::Translation(static_cast<float>(at.x), static_cast<float>(at.y)));
+				for (const SVGGeometry& shape : item.svg->geometry)
+				{
+					if (!shape.pGeometry)
+					{
+						continue;
+					}
+					brush->SetOpacity(shape.alpha);
+					if (shape.bFill)
+					{
+						brush->SetColor(profile->GetColor(shape.fillColorName));
+						rt->FillGeometry(shape.pGeometry, brush);
+					}
+					if (shape.bStoke)
+					{
+						brush->SetColor(profile->GetColor(shape.strokeColorName));
+						rt->DrawGeometry(shape.pGeometry, brush, shape.width, d2->SolidStrokeStyle());
+					}
+				}
+				++symbolStatus_.drawn;
+			}
+		}
+		brush->SetOpacity(1.0f);
+		rt->SetTransform(D2D1::Matrix3x2F::Identity());
 	}
 
 	namespace
@@ -642,7 +1067,7 @@ namespace GISLibrary
 		}
 		PrepareAdjustment();
 		const auto& dataset = raw_->dataset();
-		const auto now = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now());
+		const auto now = displayTime();
 		PickSection section{ .dataset = dataset.name, .product = dataset.productId };
 		std::set<std::string, std::less<>> picked;
 		for (const Fill& drawn : fillsByFeature_)

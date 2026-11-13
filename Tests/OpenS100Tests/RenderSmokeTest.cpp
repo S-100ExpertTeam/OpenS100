@@ -496,6 +496,133 @@ TEST(RenderSmoke, DrawsS102GridAsLayer)
 	EXPECT_GE(colours, 4u) << "white and the three depth classes of the two-shade table";
 }
 
+// S-111 surface currents: the arrows of the S-111 portrayal catalogue (XSLT rules, SCAROW symbols)
+// at the grid points of the record in force at the display time, thinned as the chart is zoomed
+// out (S-111 Edition 2.0.0 clauses 9.3.2 and 9.4).
+TEST(RenderSmoke, DrawsS111ArrowsThinnedByZoom)
+{
+	const auto s111 = testpaths::tdsRoot() / L"KOR_TDS" / L"KOR_S-111" / L"S-111" / L"111KR00KR4_MOHID2K_G3B30_20260330_F36.h5";
+	if (!std::filesystem::exists(s111))
+	{
+		GTEST_SKIP() << "KOR S-111 not available: " << s111.string();
+	}
+	using GISLibrary::CoverageDataset;
+	const CoverageDataset::DisplaySettings original = CoverageDataset::GetDisplaySettings();
+
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto* catalogues = gis.GetCatalogManager();
+	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-111_FC.xml").string()), nullptr);
+	ASSERT_NE(catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S111_Portrayal" / "portrayal_catalogue.xml").wstring()), nullptr);
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddLayer(s111.wstring()));
+	auto* layer = gis.GetLayerManager()->GetLayer(gis.GetLayerManager()->LayerCount() - 1);
+	auto* dataset = dynamic_cast<CoverageDataset*>(layer->m_spatialObject);
+	ASSERT_NE(dataset, nullptr) << "S-111 opens as a coverage dataset";
+	ASSERT_FALSE(dataset->GetInstructions().empty()) << "the XSLT rules give a coverage instruction";
+	const auto& instruction = dataset->GetInstructions().front();
+	EXPECT_EQ(instruction.attributeCode, "surfaceCurrentSpeed");
+	ASSERT_EQ(instruction.lookup.size(), 9u) << "nine speed bands";
+	ASSERT_TRUE(instruction.lookup.front().symbol);
+	EXPECT_EQ(instruction.lookup.front().symbol->reference, "SCAROW01");
+	EXPECT_EQ(instruction.lookup.front().symbol->rotationAttribute, "surfaceCurrentDirection");
+	EXPECT_DOUBLE_EQ(instruction.lookup.front().symbol->defaultScaleFactor, 0.4);
+	ASSERT_TRUE(instruction.lookup[4].symbol);
+	EXPECT_EQ(instruction.lookup[4].symbol->scaleAttribute, "surfaceCurrentSpeed");
+	EXPECT_DOUBLE_EQ(instruction.lookup[4].symbol->scaleFactor, 0.2);
+
+	const auto span = CoverageDataset::DisplayTimeSpan();
+	ASSERT_TRUE(span) << "the S-111 records are known";
+
+	struct Frame
+	{
+		CoverageDataset::SymbolStatus status;
+		std::size_t nonWhite = 0;
+		std::size_t colours = 0;
+	};
+	const auto render = [&](const char* name) {
+		MemoryCanvas canvas(kWidth, kHeight);
+		gis.Draw(canvas.dc());
+		::GdiFlush();
+		Frame frame{ .status = dataset->LastSymbolStatus() };
+		canvas.Measure(frame.nonWhite, frame.colours);
+		const auto png = OutputDirectory() / (std::string("s111-") + name + ".png");
+		EXPECT_TRUE(canvas.SavePng(png));
+		std::cout << "[ s111 ] " << name << ": 1:" << gis.GetScaler()->GetCurrentScale() << ", every " << frame.status.thinningFactor
+			<< " node(s), " << frame.status.drawn << " arrows, non-white " << frame.nonWhite << ", colours " << frame.colours
+			<< ", " << png.string() << std::endl;
+		return frame;
+	};
+
+	// Clause 9.4: nothing before the first record.
+	gis.SetMap(layer->GetMBR());
+	CoverageDataset::SetDisplaySettings({ .time = span->first - std::chrono::hours(1) });
+	const Frame before = render("before");
+	EXPECT_EQ(before.status.drawn, 0u);
+
+	// At the first record, fitted to the screen. The Korean grid is coarse (about 2 km): its
+	// arrows have room at this scale, and every grid point is drawn.
+	CoverageDataset::SetDisplaySettings({ .time = span->first });
+	const Frame fitted = render("fitted");
+	EXPECT_GT(fitted.status.drawn, 0u);
+	EXPECT_EQ(fitted.status.thinningFactor, 1);
+	EXPECT_GT(fitted.nonWhite, before.nonWhite);
+	EXPECT_GE(fitted.colours, 2u) << "white and at least one speed band";
+
+	// Zooming out brings the grid points together: fewer and fewer rows and columns are drawn.
+	int factor = 1;
+	Frame thinned = fitted;
+	for (int step = 0; step < 4; ++step)
+	{
+		gis.GetScaler()->ZoomOut(100);
+		thinned = render(("out-" + std::to_string(step + 1)).c_str());
+		EXPECT_GE(thinned.status.thinningFactor, factor) << "coarser as the chart is zoomed out";
+		factor = thinned.status.thinningFactor;
+	}
+	EXPECT_GT(thinned.status.thinningFactor, 2) << "at a sixteenth of the size the arrows would run over each other";
+	EXPECT_GT(thinned.status.drawn, 0u);
+
+	// The same view without thinning: every grid point, which is far more arrows.
+	CoverageDataset::SetDisplaySettings({ .time = span->first, .thinSymbols = false });
+	const Frame dense = render("out-unthinned");
+	EXPECT_EQ(dense.status.thinningFactor, 1);
+	EXPECT_GT(dense.status.drawn, thinned.status.drawn * static_cast<std::size_t>(thinned.status.thinningFactor));
+	EXPECT_GT(dense.nonWhite, thinned.nonWhite);
+
+	// Zooming back in thins less, down to every grid point again.
+	CoverageDataset::SetDisplaySettings({ .time = span->first });
+	Frame zoomed = thinned;
+	for (int step = 0; step < 12 && zoomed.status.thinningFactor > 1; ++step)
+	{
+		gis.GetScaler()->ZoomIn(50);
+		zoomed = render(("in-" + std::to_string(step + 1)).c_str());
+		EXPECT_LE(zoomed.status.thinningFactor, factor);
+		factor = zoomed.status.thinningFactor;
+	}
+	EXPECT_EQ(zoomed.status.thinningFactor, 1) << "zoomed in far enough, nothing is left out";
+
+	// The pick report gives the speed and direction under a point with data.
+	const auto& feature = dataset->GetCoverage()->dataset().features.front();
+	const auto speedIndex = feature.componentIndex("surfaceCurrentSpeed");
+	ASSERT_TRUE(speedIndex);
+	const auto speeds = dataset->GetCoverage()->readValues(feature.id, { .timeIndex = 0, .component = *speedIndex });
+	ASSERT_TRUE(speeds);
+	const double fill = feature.components[*speedIndex].fillValue;
+	const auto valid = std::ranges::find_if(*speeds, [&](float value) { return !s100::coverage::isNoData(value, fill) && value > 0; });
+	ASSERT_NE(valid, speeds->end());
+	const auto index = static_cast<int>(valid - speeds->begin());
+	const auto section = dataset->PickAt(s100::coverage::gridPosition(feature.grid, index % feature.grid.cols, index / feature.grid.cols));
+	CoverageDataset::SetDisplaySettings(original);
+	ASSERT_TRUE(section);
+	EXPECT_EQ(section->product, "S-111");
+	for (const auto& [name, value] : section->rows)
+	{
+		std::cout << "[ s111 pick ] " << name << ": " << value << std::endl;
+	}
+	EXPECT_GE(section->rows.size(), 3u) << "time, speed and direction";
+}
+
 // Coverage backport CV-6: water level adjustment in the viewer. KOR S-102 and the S-104 over it,
 // opened as layers; with WLA at the first S-104 record (their datums differ, so only with the
 // datum check overridden, as opens100-web's viewer offers for test data) the depths change.

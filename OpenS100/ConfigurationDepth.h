@@ -1,9 +1,15 @@
 #pragma once
 #include "resource.h"
 
-// The "S-102 / S-104" tab of the settings window: the S-98 Appendix D depth settings, the
+#include "../Coverage/CoverageTime.h"
+
+#include <vector>
+
+// The "S-102 / S-104 / S-111" tab of the settings window: the S-98 Appendix D depth settings, the
 // enhanced safety contour (D-1.4), vertical uncertainty (D-1.5) and water level adjustment by
-// S-104 (D-2, Options 1 and 2). They take effect for every S-102 dataset on Apply.
+// S-104 (D-2, Options 1 and 2). They take effect for every S-102 dataset on Apply. And how S-111
+// surface currents are shown: the time whose record is drawn (S-111 9.4) and whether the arrows
+// are thinned as the chart is zoomed out (9.3.2).
 class CConfigurationDepth : public CDialogEx
 {
 	DECLARE_DYNAMIC(CConfigurationDepth)
@@ -38,4 +44,10 @@ private:
 	CDateTimeCtrl m_atDate, m_atTime;
 	CDateTimeCtrl m_fromDate, m_fromTime;
 	CDateTimeCtrl m_toDate, m_toTime;
+
+	// S-111: "System clock", then every record time of the S-111 on the chart; the time of item
+	// i > 0 is m_currentTimes[i - 1].
+	CComboBox m_currentRecord;
+	std::vector<s100::coverage::TimePoint> m_currentTimes;
+	CButton m_currentThinning;
 };

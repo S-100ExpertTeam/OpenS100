@@ -57,4 +57,14 @@ namespace s100::coverage
         }
         return std::nullopt;
     }
+
+    double symbolScale(const CoverageSymbol& symbol, std::optional<double> value) noexcept
+    {
+        return symbol.scaleAttribute && value ? *value * symbol.scaleFactor : symbol.defaultScaleFactor;
+    }
+
+    double symbolRotation(const CoverageSymbol& symbol, std::optional<double> value) noexcept
+    {
+        return symbol.rotationAttribute && value ? *value * symbol.rotationFactor : symbol.rotation;
+    }
 }

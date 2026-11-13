@@ -2,6 +2,7 @@
 
 #include "S100SpatialObject.h"
 
+#include "../Coverage/ArrowThinning.h"
 #include "../Coverage/CoverageInstructions.h"
 #include "../Coverage/CoverageModel.h"
 #include "../Coverage/CoverageRaster.h"
@@ -30,11 +31,17 @@ namespace GISLibrary
 {
 	class D2D1Resources;
 
-	// An S-100 Part 10c gridded dataset (S-102, ...) portrayed by its portrayal catalogue: the
-	// catalogue's Lua rules run over one feature per coverage instance (primitive Coverage, no
-	// attributes), and each CoverageFill they emit is drawn as one image of the grid coloured by
-	// its lookup table (Documents/TechDocs/2026-11-11-coverage-backport-plan.md, CV-3). The values
-	// are read from the file when first drawn; the images are kept until the colours change.
+	// An S-100 Part 10c gridded dataset (S-102, S-111, ...) portrayed by its portrayal catalogue: the
+	// catalogue's rules (Lua, or XSLT as S-111's) run over one feature per coverage instance
+	// (primitive Coverage, no attributes), and each CoverageFill they emit is drawn as one image of
+	// the grid coloured by its lookup table (Documents/TechDocs/2026-11-11-coverage-backport-plan.md,
+	// CV-3). The values are read from the file when first drawn; the images are kept until the
+	// colours change.
+	//
+	// A CoverageFill whose lookup entries carry symbols (S-111 surface current arrows) is drawn as
+	// those symbols at the grid points, turned and scaled by the point's values. Zoomed out, only
+	// every nth row and column is drawn so that the arrows do not run over each other (S-111
+	// Edition 2.0.0 clause 9.3.2, Coverage/ArrowThinning.h).
 	//
 	// An S-102 dataset is drawn with its depths adjusted by the depth settings (S-98 Appendix D):
 	// the uncertainty selector and water level adjustment by the S-104 datasets open at the time.
@@ -80,6 +87,33 @@ namespace GISLibrary
 		[[nodiscard]] static WlaStatus CurrentWlaStatus();
 		// The first and last S-104 record times over the S-104 datasets open now.
 		[[nodiscard]] static std::optional<std::pair<s100::coverage::TimePoint, s100::coverage::TimePoint>> WaterLevelTimeSpan();
+
+		// How time-varying coverages (S-111) are shown.
+		struct DisplaySettings
+		{
+			// The time whose record is drawn (S-111 Edition 2.0.0 clause 9.4: the closest record
+			// before it, nothing outside the dataset's time span); the system clock when not set.
+			std::optional<s100::coverage::TimePoint> time;
+			// Whether the symbols of a grid are thinned as the chart is zoomed out (clause 9.3.2).
+			bool thinSymbols = true;
+		};
+		[[nodiscard]] static const DisplaySettings& GetDisplaySettings() noexcept;
+		static void SetDisplaySettings(const DisplaySettings& settings);
+		// The first and last record times over the drawn datasets that vary with time (S-104, which
+		// is not drawn, left out).
+		[[nodiscard]] static std::optional<std::pair<s100::coverage::TimePoint, s100::coverage::TimePoint>> DisplayTimeSpan();
+		// The record times of those datasets, in order and each once: the times there is something
+		// to show at.
+		[[nodiscard]] static std::vector<s100::coverage::TimePoint> DisplayRecordTimes();
+
+		// What the last DrawCoverage drew as symbols: the thinning factor (1: every grid point; 0
+		// when no symbols were drawn) and how many symbols.
+		struct SymbolStatus
+		{
+			int thinningFactor = 0;
+			std::size_t drawn = 0;
+		};
+		[[nodiscard]] const SymbolStatus& LastSymbolStatus() const noexcept { return symbolStatus_; }
 
 		// S-98 D-1: where S-102 data covers the water, the S-101 depth features (DepthArea,
 		// DredgedArea, DepthContour) are suppressed while the enhanced safety contour is on. The
@@ -135,6 +169,11 @@ namespace GISLibrary
 		};
 
 		void ReleaseImages();
+		// The catalogue's XSLT rules over the coverage features: the display list's coverage
+		// instructions (S-111).
+		void PortrayXslt(FeatureCatalogue* fc, PortrayalCatalogue* pc, const std::string& mainRule);
+		void DrawSymbols(D2D1Resources* d2, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
+			const s100::coverage::CoverageInstruction& instruction, std::size_t component, std::size_t timeIndex);
 		void DrawLines(D2D1Resources* d2, Scaler* scaler, const s100::coverage::CoverageFeature& feature,
 			const s100::coverage::Values& depth, double fillValue);
 		[[nodiscard]] const s100::coverage::CoverageSource* Source() const noexcept;
@@ -154,6 +193,11 @@ namespace GISLibrary
 		std::vector<s100::coverage::CoverageInstruction> fills_;
 		std::map<std::string, Image> images_;   // by feature ID
 		std::map<std::string, Lines> lines_;    // by feature ID
+		// The largest symbol scale over the values drawn, by feature ID; the key is the time group
+		// and the revision of the values.
+		std::map<std::string, std::pair<std::string, double>> symbolScales_;
+		PortrayalCatalogue* pc_ = nullptr;   // the catalogue last portrayed with: its symbols
+		SymbolStatus symbolStatus_;
 		ID2D1StrokeStyle* s102BoundaryStroke_ = nullptr;
 		ID2D1StrokeStyle* wlaBoundaryStroke_ = nullptr;
 
