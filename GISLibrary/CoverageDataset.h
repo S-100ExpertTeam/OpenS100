@@ -93,6 +93,8 @@ namespace GISLibrary
 		{
 			// The time whose record is drawn (S-111 Edition 2.0.0 clause 9.4: the closest record
 			// before it, nothing outside the dataset's time span); the system clock when not set.
+			// A dataset with no record at the system clock is then drawn at its first record, so
+			// that data of another period shows when it is opened; the viewer says so on screen.
 			std::optional<s100::coverage::TimePoint> time;
 			// Whether the symbols of a grid are thinned as the chart is zoomed out (clause 9.3.2).
 			bool thinSymbols = true;
@@ -105,6 +107,18 @@ namespace GISLibrary
 		// The record times of those datasets, in order and each once: the times there is something
 		// to show at.
 		[[nodiscard]] static std::vector<s100::coverage::TimePoint> DisplayRecordTimes();
+		// Whether those datasets have a record to draw at the display time: how many there are,
+		// how many of them are not drawn because the set time is outside their records, and how
+		// many are drawn at their first record because the system clock is (the earliest of those
+		// first records is firstRecordShown).
+		struct DisplayTimeStatus
+		{
+			std::size_t datasets = 0;
+			std::size_t withoutRecord = 0;
+			std::size_t atFirstRecord = 0;
+			std::optional<s100::coverage::TimePoint> firstRecordShown;
+		};
+		[[nodiscard]] static DisplayTimeStatus CurrentDisplayTimeStatus();
 
 		// What the last DrawCoverage drew as symbols: the thinning factor (1: every grid point; 0
 		// when no symbols were drawn) and how many symbols.
@@ -198,6 +212,11 @@ namespace GISLibrary
 		std::map<std::string, std::pair<std::string, double>> symbolScales_;
 		PortrayalCatalogue* pc_ = nullptr;   // the catalogue last portrayed with: its symbols
 		SymbolStatus symbolStatus_;
+		// The first record, when it is drawn in place of the record of the system clock: no time
+		// is set and this dataset has records, none of them at the system clock.
+		[[nodiscard]] std::optional<s100::coverage::TimePoint> FirstRecordInsteadOfNow() const;
+		// The time whose records of this dataset are drawn.
+		[[nodiscard]] s100::coverage::TimePoint DisplayTime() const;
 		ID2D1StrokeStyle* s102BoundaryStroke_ = nullptr;
 		ID2D1StrokeStyle* wlaBoundaryStroke_ = nullptr;
 

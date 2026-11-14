@@ -119,11 +119,9 @@ namespace GISLibrary
 			return value;
 		}
 
-		// The time whose records are drawn: the one set, or now.
-		s100::coverage::TimePoint displayTime()
+		s100::coverage::TimePoint systemClock()
 		{
-			return displaySettings().time.value_or(
-				std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()));
+			return std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now());
 		}
 
 		// An element name without its namespace prefix: catalogues differ in the prefixes they use.
@@ -300,6 +298,74 @@ namespace GISLibrary
 			}
 		}
 		return { times.begin(), times.end() };
+	}
+
+	std::optional<s100::coverage::TimePoint> CoverageDataset::FirstRecordInsteadOfNow() const
+	{
+		if (displaySettings().time || !raw_)
+		{
+			return std::nullopt;
+		}
+		const auto now = systemClock();
+		std::optional<s100::coverage::TimePoint> first;
+		for (const auto& feature : raw_->dataset().features)
+		{
+			if (feature.timeGroups.empty() || !feature.timeGroups.front().time)
+			{
+				continue;
+			}
+			if (s100::coverage::displayTimeIndex(feature.timeGroups, now))
+			{
+				return std::nullopt;
+			}
+			first = first ? (std::min)(*first, *feature.timeGroups.front().time) : *feature.timeGroups.front().time;
+		}
+		return first;
+	}
+
+	s100::coverage::TimePoint CoverageDataset::DisplayTime() const
+	{
+		if (const auto& set = displaySettings().time)
+		{
+			return *set;
+		}
+		return FirstRecordInsteadOfNow().value_or(systemClock());
+	}
+
+	CoverageDataset::DisplayTimeStatus CoverageDataset::CurrentDisplayTimeStatus()
+	{
+		DisplayTimeStatus status;
+		for (CoverageDataset* dataset : registry())
+		{
+			if (!dataset->raw_ || dataset->fillsByFeature_.empty())
+			{
+				continue;
+			}
+			const auto time = dataset->DisplayTime();
+			bool varies = false;
+			bool hasRecord = false;
+			for (const auto& feature : dataset->raw_->dataset().features)
+			{
+				if (feature.timeGroups.empty() || !feature.timeGroups.front().time)
+				{
+					continue;
+				}
+				varies = true;
+				hasRecord = hasRecord || s100::coverage::displayTimeIndex(feature.timeGroups, time).has_value();
+			}
+			if (!varies)
+			{
+				continue;
+			}
+			++status.datasets;
+			status.withoutRecord += hasRecord ? 0 : 1;
+			if (const auto first = dataset->FirstRecordInsteadOfNow())
+			{
+				++status.atFirstRecord;
+				status.firstRecordShown = status.firstRecordShown ? (std::min)(*status.firstRecordShown, *first) : *first;
+			}
+		}
+		return status;
 	}
 
 	const CoverageDataset::DepthSettings& CoverageDataset::GetDepthSettings() noexcept
@@ -754,7 +820,7 @@ namespace GISLibrary
 		rt->SetTransform(D2D1::Matrix3x2F::Identity());
 
 		const auto& dataset = source->dataset();
-		const auto now = displayTime();
+		const auto now = DisplayTime();
 		symbolStatus_ = {};
 		for (const Fill& fill : fillsByFeature_)
 		{
@@ -1067,7 +1133,7 @@ namespace GISLibrary
 		}
 		PrepareAdjustment();
 		const auto& dataset = raw_->dataset();
-		const auto now = displayTime();
+		const auto now = DisplayTime();
 		PickSection section{ .dataset = dataset.name, .product = dataset.productId };
 		std::set<std::string, std::less<>> picked;
 		for (const Fill& drawn : fillsByFeature_)

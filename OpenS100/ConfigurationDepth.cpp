@@ -118,7 +118,7 @@ BOOL CConfigurationDepth::OnInitDialog()
 		m_currentTimes.insert(std::ranges::upper_bound(m_currentTimes, *display.time), *display.time);
 	}
 	const bool nowHasRecord = recordCount > 0 && now() >= m_currentTimes.front() && now() <= m_currentTimes.back();
-	m_currentRecord.AddString(nowHasRecord ? L"System clock (now)" : L"System clock (now): no record");
+	m_currentRecord.AddString(nowHasRecord ? L"System clock (now)" : L"System clock (now): no record, first record shown");
 	int selected = 0;
 	for (std::size_t i = 0; i < m_currentTimes.size(); ++i)
 	{

@@ -65,7 +65,7 @@ namespace GISLibrary
 		{
 			s100::sdb::RecordId id = 0;
 			s100::sdb::BoundingBox bounds;   // longitude/latitude
-			bool overlay = false;            // a vector product, drawn over the selected charts
+			bool overlay = false;            // drawn over the selected charts: vector products, S-111 arrows
 		};
 
 		[[nodiscard]] std::unique_ptr<Layer> OpenDataset(s100::sdb::RecordId dataset);

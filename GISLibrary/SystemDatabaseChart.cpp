@@ -64,7 +64,10 @@ namespace GISLibrary
 		{
 			if (dataset.status == s100::sdb::DatasetStatus::Active && dataset.bounds && !scaled.contains(dataset.id))
 			{
-				unscaled_.push_back({ dataset.id, *dataset.bounds, dataset.format != s100::sdb::DatasetFormat::Hdf5 });
+				// Grids fill areas and go under the charts (S-102 shows where the S-101 depth features
+				// are suppressed). S-111 is a grid of symbols, the current arrows, and goes over them.
+				const bool overlay = dataset.format != s100::sdb::DatasetFormat::Hdf5 || dataset.product == "S-111";
+				unscaled_.push_back({ dataset.id, *dataset.bounds, overlay });
 			}
 		}
 	}
@@ -131,7 +134,8 @@ namespace GISLibrary
 		const auto selected = s100::sdb::DatasetSelector::datasetsOf(selection);
 
 		// Selection order is the larger scale first, and the first is drawn last, on top: the
-		// vector overlays (warnings, catalogues of products) before the charts, the grids after.
+		// overlays (warnings, catalogues of products, current arrows) before the charts, the grids
+		// after.
 		std::vector<s100::sdb::RecordId> datasets;
 		std::vector<s100::sdb::RecordId> grids;
 		for (const auto& dataset : unscaled_)

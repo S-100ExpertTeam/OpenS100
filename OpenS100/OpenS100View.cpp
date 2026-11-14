@@ -1119,7 +1119,10 @@ void COpenS100View::DrawFromMapRefresh(CDC* pDC, CRect& rect)
 }
 
 // S-98 Appendix D indications for the S-102 depths on screen: the permanent WLA indication
-// (D-2.5, D-2.6) and why WLA could not be applied, and that uncertainty is applied (D-1.5).
+// (D-2.5, D-2.6) and why WLA could not be applied, and that uncertainty is applied (D-1.5). And
+// for S-111: that it is not drawn because it has no record at the time set (S-111 9.4), or that
+// what is drawn is not the record of the system clock: one chosen in the settings, or the first
+// record of data that has none at the system clock.
 void COpenS100View::DrawDepthIndications(CDC* pDC, const CRect& rect)
 {
 	using GISLibrary::CoverageDataset;
@@ -1127,12 +1130,27 @@ void COpenS100View::DrawDepthIndications(CDC* pDC, const CRect& rect)
 	using s100::coverage::WlaMethod;
 	const auto& settings = CoverageDataset::GetDepthSettings();
 	const bool wlaOn = settings.adjustment.wla.kind != WlaMethod::Kind::Off;
-	if (!wlaOn && !settings.adjustment.uncertainty)
-	{
-		return;
-	}
-	const CoverageDataset::WlaStatus status = CoverageDataset::CurrentWlaStatus();
+	const CoverageDataset::WlaStatus status = wlaOn ? CoverageDataset::CurrentWlaStatus() : CoverageDataset::WlaStatus{};
 	std::vector<std::string> texts;
+	const auto& display = CoverageDataset::GetDisplaySettings();
+	const auto currents = CoverageDataset::CurrentDisplayTimeStatus();
+	if (currents.withoutRecord > 0)
+	{
+		const auto span = CoverageDataset::DisplayTimeSpan();
+		const std::string records = span ? " (records " + s100::coverage::formatWlaDateTime(span->first) + " to "
+			+ s100::coverage::formatWlaDateTime(span->second) + " UTC)" : std::string();
+		texts.push_back("S-111 not shown: no record at "
+			+ (display.time ? s100::coverage::formatWlaDateTime(*display.time) + " UTC" : std::string("the system clock")) + records);
+	}
+	if (currents.firstRecordShown)
+	{
+		texts.push_back("S-111 at its first record, " + s100::coverage::formatWlaDateTime(*currents.firstRecordShown)
+			+ " UTC: no record at the system clock");
+	}
+	if (display.time && currents.datasets > currents.withoutRecord)
+	{
+		texts.push_back("S-111 at " + s100::coverage::formatWlaDateTime(*display.time) + " UTC, not the system clock");
+	}
 	if (wlaOn)
 	{
 		if (status.applied > 0)

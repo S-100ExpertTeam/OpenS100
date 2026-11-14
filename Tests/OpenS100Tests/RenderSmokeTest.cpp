@@ -555,15 +555,26 @@ TEST(RenderSmoke, DrawsS111ArrowsThinnedByZoom)
 		return frame;
 	};
 
-	// Clause 9.4: nothing before the first record.
 	gis.SetMap(layer->GetMBR());
+
+	// No time set and no record at the system clock: the first record is drawn, and reported.
+	CoverageDataset::SetDisplaySettings({});
+	EXPECT_EQ(CoverageDataset::CurrentDisplayTimeStatus().atFirstRecord, 1u);
+	EXPECT_EQ(CoverageDataset::CurrentDisplayTimeStatus().firstRecordShown, span->first);
+	EXPECT_EQ(CoverageDataset::CurrentDisplayTimeStatus().withoutRecord, 0u);
+	EXPECT_GT(render("system-clock").status.drawn, 0u);
+
+	// Clause 9.4: nothing before the first record at a set time.
 	CoverageDataset::SetDisplaySettings({ .time = span->first - std::chrono::hours(1) });
+	EXPECT_EQ(CoverageDataset::CurrentDisplayTimeStatus().datasets, 1u);
+	EXPECT_EQ(CoverageDataset::CurrentDisplayTimeStatus().withoutRecord, 1u) << "the viewer says why nothing is drawn";
 	const Frame before = render("before");
 	EXPECT_EQ(before.status.drawn, 0u);
 
 	// At the first record, fitted to the screen. The Korean grid is coarse (about 2 km): its
 	// arrows have room at this scale, and every grid point is drawn.
 	CoverageDataset::SetDisplaySettings({ .time = span->first });
+	EXPECT_EQ(CoverageDataset::CurrentDisplayTimeStatus().withoutRecord, 0u);
 	const Frame fitted = render("fitted");
 	EXPECT_GT(fitted.status.drawn, 0u);
 	EXPECT_EQ(fitted.status.thinningFactor, 1);
@@ -621,6 +632,106 @@ TEST(RenderSmoke, DrawsS111ArrowsThinnedByZoom)
 		std::cout << "[ s111 pick ] " << name << ": " << value << std::endl;
 	}
 	EXPECT_GE(section->rows.size(), 3u) << "time, speed and direction";
+}
+
+// S-111 through the System Database, as the viewer shows it: installed with its catalogues, picked
+// by the chart for the view and drawn as arrows, alone and over an S-101 cell with S-102 and S-104.
+TEST(RenderSmoke, SystemDatabaseChartDrawsS111)
+{
+	const auto tds = testpaths::tdsRoot() / L"KOR_TDS";
+	const auto s111 = tds / L"KOR_S-111" / L"S-111" / L"111KR00KR4_MOHID2K_G3B30_20260330_F36.h5";
+	const auto s104 = tds / L"KOR_S-104" / L"S-104" / L"104KR00KR4_MOHID2K_G3B30_20260330_F36.h5";
+	const auto s102 = tds / L"KOR_S-102" / L"S-102" / L"102KR00T4G3B3000026.h5";
+	const auto cell = tds / L"S100_ROOT" / L"S-101" / L"DATASET_FILES" / L"101KR005G3B33" / L"101KR005G3B33.000";
+	const auto s102pc = testpaths::webDataRoot().parent_path() / L"pc" / L"S102_Portrayal";
+	for (const auto& path : { s111, s104, s102, cell, s102pc })
+	{
+		if (!std::filesystem::exists(path))
+		{
+			GTEST_SKIP() << "test data not available: " << path.string();
+		}
+	}
+	using GISLibrary::CoverageDataset;
+	const CoverageDataset::DisplaySettings original = CoverageDataset::GetDisplaySettings();
+	CoverageDataset::SetDisplaySettings({});
+
+	const auto install = [&](const std::filesystem::path& root, bool withCharts) {
+		std::filesystem::remove_all(root);
+		GISLibrary::SystemDatabaseSession session(root);
+		auto& importer = session.importer();
+		const auto fc = testpaths::repoRoot() / "ProgramData" / "FC";
+		const auto pc = testpaths::repoRoot() / "ProgramData" / "PC";
+		ASSERT_EQ(importer.importFeatureCatalogue(fc / "S-111_FC.xml").outcome, s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(importer.importPortrayalCatalogue(pc / "S111_Portrayal").outcome, s100::sdb::ImportOutcome::Added);
+		ASSERT_EQ(importer.importDataset(s111).outcome, s100::sdb::ImportOutcome::Added);
+		if (withCharts)
+		{
+			ASSERT_EQ(importer.importFeatureCatalogue(fc / "S-101_FC.xml").outcome, s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(importer.importPortrayalCatalogue(pc / "S101_Portrayal").outcome, s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(importer.importFeatureCatalogue(fc / "S-102_FC.xml").outcome, s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(importer.importPortrayalCatalogue(s102pc).outcome, s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(importer.importFeatureCatalogue(fc / "S-104_FC.xml").outcome, s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(importer.importDataset(cell).outcome, s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(importer.importDataset(s102).outcome, s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(importer.importDataset(s104).outcome, s100::sdb::ImportOutcome::Added);
+		}
+	};
+
+	GdiplusSession gdiplus;
+	const auto draw = [&](const std::filesystem::path& root, const char* name) {
+		CGISLibraryApp gis;
+		auto* catalogues = gis.GetCatalogManager();
+		catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
+		const RECT view{ 0, 0, kWidth, kHeight };
+		gis.SetScreen(view);
+		GISLibrary::SystemDatabaseSession session(root);
+		session.attach(*gis.GetLayerManager(), *catalogues);
+		// Off Busan, a few grid nodes across: the view of the report that S-111 was not drawn.
+		MBR area(129.12, 35.11, 129.21, 35.17);
+		projection(area);
+		gis.SetMap(area);
+		MemoryCanvas canvas(kWidth, kHeight);
+		gis.Draw(canvas.dc());
+		::GdiFlush();
+		EXPECT_TRUE(canvas.SavePng(OutputDirectory() / (std::string("sdb-chart-s111-") + name + ".png")));
+		std::size_t arrows = 0;
+		std::size_t datasets = 0;
+		if (auto* inner = session.chart()->GetInnerLayers())
+		{
+			for (int i = 0; i < inner->LayerCount(); ++i)
+			{
+				auto* coverage = dynamic_cast<CoverageDataset*>(inner->GetLayer(i)->GetSpatialObject());
+				if (coverage && coverage->GetCoverage() && coverage->GetCoverage()->dataset().productId == "S-111")
+				{
+					++datasets;
+					arrows += coverage->LastSymbolStatus().drawn;
+					std::cout << "[ sdb chart ] S-111 " << name << ": instructions " << coverage->GetInstructions().size() << ", arrows "
+						<< coverage->LastSymbolStatus().drawn << ", every " << coverage->LastSymbolStatus().thinningFactor << std::endl;
+				}
+			}
+		}
+		std::cout << "[ sdb chart ] S-111 " << name << ": 1:" << gis.GetScaler()->GetCurrentScale() << ", shown "
+			<< session.chart()->GetLayerSet().shownCount() << ", S-111 layers " << datasets << ", arrows " << arrows << std::endl;
+		EXPECT_EQ(datasets, 1u) << "the chart opens the S-111 in view";
+		EXPECT_GT(arrows, 0u) << "its arrows are drawn";
+		// What the arrows change on screen: the same view drawn again with the S-111 hidden by a
+		// time before its records.
+		CoverageDataset::SetDisplaySettings({ .time = s100::coverage::TimePoint{} });
+		MemoryCanvas without(kWidth, kHeight);
+		gis.Draw(without.dc());
+		::GdiFlush();
+		CoverageDataset::SetDisplaySettings({});
+		const std::size_t changed = without.DifferingPixels(canvas);
+		std::cout << "[ sdb chart ] S-111 " << name << ": pixels the arrows change " << changed << std::endl;
+		EXPECT_GT(changed, 200u) << "the arrows show, over whatever else the chart draws";
+	};
+	const auto alone = testpaths::tempDir() / L"SystemDatabaseChartS111";
+	const auto withCharts = testpaths::tempDir() / L"SystemDatabaseChartS111Charts";
+	install(alone, false);
+	draw(alone, "alone");
+	install(withCharts, true);
+	draw(withCharts, "charts");
+	CoverageDataset::SetDisplaySettings(original);
 }
 
 // Coverage backport CV-6: water level adjustment in the viewer. KOR S-102 and the S-104 over it,

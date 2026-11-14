@@ -97,7 +97,7 @@
   - `Coverage/CoverageLookup`: 조회 항목에 심볼(`CoverageSymbol`: 회전·크기 속성과 계수).
   - `GISLibrary/CoverageDataset`: XSLT PC(S-111)도 받는다. 커버리지 인스턴스마다 `<SurfaceCurrent id primitive="Coverage"/>`를 넣어 규칙을 돌리고 결과의 `coverageInstruction`을 읽는다. 심볼이 있는 `coverageFill`은 격자점마다 PC의 SVG(SCAROW01~09)를 유향으로 돌리고 유속으로 크기를 정해 그린다(96 dpi로 mm→화소). L_smax는 그 시각 필드의 가장 큰 심볼. `DisplaySettings`(표시 시각, thinning 켬/끔), `LastSymbolStatus`. `S100Layer`는 S-111 `.h5`를 이 객체로 연다.
   - 검증: `CoverageArrowThinningTest.cpp` 10개, `RenderSmoke.DrawsS111ArrowsThinnedByZoom`(KOR S-111: 첫 기록 전에는 0개, 맞춤 보기 308개·n 1, 축소하면 n 2·3·5·9, thinning을 끄면 308개가 뭉침, 다시 확대하면 n 1, 픽 리포트에 유속·유향). 전체 195개 통과.
-  - 표시 시각: 설정 창 "S-102 / S-104 / S-111" 탭의 "Show at"에서 시스템 시각 또는 해도에 올라온 S-111의 기록 시각 하나를 고른다(`CoverageDataset::DisplaySettings`, `DisplayRecordTimes`). 화살표 솎기도 같은 탭에서 끈다. 설정은 실행 간에 저장하지 않는다.
+  - 표시 시각: 설정 창 "S-102 / S-104 / S-111" 탭의 "Show at"에서 시스템 시각 또는 해도에 올라온 S-111의 기록 시각 하나를 고른다(`CoverageDataset::DisplaySettings`, `DisplayRecordTimes`). 화살표 솎기도 같은 탭에서 끈다. 시각을 정하지 않았고 시스템 시각에 기록이 없는 자료는 첫 기록으로 그리고(9.4절에서 벗어나는 뷰어 편의), 화면 왼쪽 아래에 그 사실을 표시한다. 설정은 실행 간에 저장하지 않는다.
   - 남은 것: 해도 회전 시 화살표 방향, System Database 차트와 실제 뷰어에서의 화면 확인, `dataCodingFormat` 2 외의 자료.
 
 ## 5. 위험과 결정할 것
