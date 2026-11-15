@@ -1531,7 +1531,7 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 	if (layer && !layer->IsS100Layer())
 	{
 		// The System Database chart or an exchange set: pick from the topmost of its datasets
-		// (the largest scale) that covers the point.
+		// (the largest scale) with features that covers the point.
 		if (auto container = dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject))
 		{
 			layer = nullptr;
@@ -1542,7 +1542,10 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 			{
 				for (auto candidate = inner->layers.rbegin(); candidate != inner->layers.rend(); ++candidate)
 				{
-					if ((*candidate)->IsS100Layer() && (*candidate)->GetMBR().PtInMBR(x, y))
+					// Grids (S-102, S-104, S-111) have no features to list: their values are in
+					// the coverage pick report, and the chart under them is still picked.
+					if ((*candidate)->IsS100Layer() && (*candidate)->GetFileType() == S100_FileType::FILE_S_100_VECTOR
+						&& (*candidate)->GetMBR().PtInMBR(x, y))
 					{
 						layer = *candidate;
 						break;
