@@ -1525,50 +1525,84 @@ void COpenS100View::PickReport(CPoint _point)
 	}
 }
 
+// The features of a dataset at a point of the screen, as the rows of the Current Selection list.
+static void collectPickedFeatures(CPoint _point, S100SpatialObject* cell, CStringArray& csa);
+
 void COpenS100View::PickReport(CPoint _point, int layerIndex)
 {
-	auto layer = theApp.gisLib->GetLayerManager()->GetLayer(layerIndex);
-	if (layer && !layer->IsS100Layer())
+	struct Picked
 	{
-		// The System Database chart or an exchange set: pick from the topmost of its datasets
-		// (the largest scale) with features that covers the point.
-		if (auto container = dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject))
+		S100SpatialObject* cell = nullptr;
+		CStringArray features;
+	};
+	// The datasets picked from, the topmost first.
+	std::list<Picked> picked;
+	const auto pick = [&](Layer* layer)
+	{
+		if (layer && layer->IsS100Layer())
 		{
-			layer = nullptr;
-			double x = 0;
-			double y = 0;
-			theApp.gisLib->DeviceToWorld(_point.x, _point.y, &x, &y);
-			if (auto inner = container->GetInnerLayers())
+			if (auto cell = static_cast<S100Layer*>(layer)->GetS100SpatialObject())
 			{
-				for (auto candidate = inner->layers.rbegin(); candidate != inner->layers.rend(); ++candidate)
+				picked.emplace_back();
+				picked.back().cell = cell;
+				collectPickedFeatures(_point, cell, picked.back().features);
+				return !picked.back().features.IsEmpty();
+			}
+		}
+		return false;
+	};
+
+	auto layer = theApp.gisLib->GetLayerManager()->GetLayer(layerIndex);
+	auto container = layer && !layer->IsS100Layer() ? dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject) : nullptr;
+	if (container)
+	{
+		// The System Database chart or an exchange set: every dataset with features that covers
+		// the point, so that what is drawn over a chart (S-124 warnings, ...) and the chart are
+		// listed together. Of the charts (S-101), only the topmost with a feature there: the
+		// smaller scales under it are not what is on screen.
+		double x = 0;
+		double y = 0;
+		theApp.gisLib->DeviceToWorld(_point.x, _point.y, &x, &y);
+		if (auto inner = container->GetInnerLayers())
+		{
+			bool chartPicked = false;
+			for (auto candidate = inner->layers.rbegin(); candidate != inner->layers.rend(); ++candidate)
+			{
+				// Grids (S-102, S-104, S-111) have no features to list: their values are in
+				// the coverage pick report.
+				if (!(*candidate)->IsS100Layer() || (*candidate)->GetFileType() != S100_FileType::FILE_S_100_VECTOR
+					|| !(*candidate)->GetMBR().PtInMBR(x, y))
 				{
-					// Grids (S-102, S-104, S-111) have no features to list: their values are in
-					// the coverage pick report, and the chart under them is still picked.
-					if ((*candidate)->IsS100Layer() && (*candidate)->GetFileType() == S100_FileType::FILE_S_100_VECTOR
-						&& (*candidate)->GetMBR().PtInMBR(x, y))
-					{
-						layer = *candidate;
-						break;
-					}
+					continue;
 				}
+				auto cell = static_cast<S100Layer*>(*candidate)->GetS100SpatialObject();
+				const bool chart = cell && cell->GetProductNumber() == 101;
+				if (chart && chartPicked)
+				{
+					continue;
+				}
+				const bool found = pick(*candidate);
+				chartPicked = chartPicked || (chart && found);
 			}
 		}
 	}
-	if (nullptr == layer || !layer->IsS100Layer())
+	else
 	{
-		return;
+		pick(layer);
 	}
 
-	auto s100layer = (S100Layer*)layer;
-
-	auto cell = s100layer->GetS100SpatialObject();
-	if (nullptr == cell)
+	// The list inserts at its top: from the bottom dataset up, so that the topmost is listed first.
+	bool first = true;
+	for (auto dataset = picked.rbegin(); dataset != picked.rend(); ++dataset)
 	{
-		return;
+		theApp.m_DockablePaneCurrentSelection.UpdateListTest(&dataset->features, dataset->cell, first ? L"0" : L"1");
+		first = false;
 	}
+}
 
+static void collectPickedFeatures(CPoint _point, S100SpatialObject* cell, CStringArray& csa)
+{
 	CString featureType = L"Feature";
-	CStringArray csa;
 
 	double xmin = 0;
 	double ymin = 0;
@@ -1845,8 +1879,6 @@ void COpenS100View::PickReport(CPoint _point, int layerIndex)
 		auto str = csa[i];
 		OutputDebugString(str + L"\n");
 	}
-
-	theApp.m_DockablePaneCurrentSelection.UpdateListTest(&csa, cell, L"0");
 }
 
 void COpenS100View::ESC()

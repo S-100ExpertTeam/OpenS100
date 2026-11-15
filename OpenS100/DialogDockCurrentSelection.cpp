@@ -73,9 +73,10 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 
 			nSelectedItem = pNMLV->iItem;
 
-			if (m_Cell)
+			// The list can hold features of several datasets (a chart and what is drawn over it):
+			// each item carries its own.
+			if (auto cell = reinterpret_cast<S100SpatialObject*>(m_ListCurrentSelection.GetItemData(pNMLV->iItem)))
 			{
-				auto cell = m_Cell;
 				FeatureCatalogue* fc = ((S100Layer*)cell->m_pLayer)->GetFeatureCatalog();
 				if (nullptr == fc || nullptr == cell)
 				{
@@ -89,11 +90,7 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 				CString objId;
 				CString featureType;
 
-				idx = m_ListCurrentSelection.GetNextSelectedItem(pos);
-				if (idx < 0)
-				{
-					return;
-				}
+				idx = pNMLV->iItem;
 
 				// RCID 
 				objId.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_ID));
@@ -149,6 +146,11 @@ void CDialogDockCurrentSelection::OnLvnItemchangedList(NMHDR *pNMHDR, LRESULT *p
 					CString objId;
 					CString featureType;
 					idx = m_ListCurrentSelection.GetNextSelectedItem(pos);
+					if (reinterpret_cast<S100SpatialObject*>(m_ListCurrentSelection.GetItemData(idx)) != cell)
+					{
+						// The relations are those of one dataset.
+						continue;
+					}
 					objId.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_ID));
 					featureType.Format(m_ListCurrentSelection.GetItemText(idx, COL_INDEX_TYPE)); // feature/information type
 					//__int64 objIdN = _tcstoui64(objId, NULL, 10);
@@ -316,7 +318,8 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialO
 			// duplicate check (frid)
 			for (int j = 0; j < m_ListCurrentSelection.GetItemCount(); j++)
 			{
-				if (frid == m_ListCurrentSelection.GetItemText(j, COL_INDEX_ID) && featureType == m_ListCurrentSelection.GetItemText(j, COL_INDEX_TYPE))
+				if (frid == m_ListCurrentSelection.GetItemText(j, COL_INDEX_ID) && featureType == m_ListCurrentSelection.GetItemText(j, COL_INDEX_TYPE)
+					&& reinterpret_cast<S100SpatialObject*>(m_ListCurrentSelection.GetItemData(j)) == cell)
 				{
 					isExist = true;
 				}
@@ -339,21 +342,8 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialO
 				m_ListCurrentSelection.SetItemText(0, COL_INDEX_RELATION_CNT, assoCnt);
 				m_ListCurrentSelection.SetItemText(0, COL_INDEX_TYPE, featureType);
 
-				if (featureType == L"Feature")
-				{
-					// Acquired a catalog.
-					auto it = fc->GetFeatureTypes()->GetFeatureType().find(s_name);
-					if (it == fc->GetFeatureTypes()->GetFeatureType().end())
-					{
-						CString msg;
-						msg.Format(L"[%s] Feature not found. -CURRENT SELECTION", name.GetBuffer());
-					}
-					else
-					{
-						FeatureType* ft = it->second;
-						m_ListCurrentSelection.SetItemData(0, (LPARAM)ft);
-					}
-				}
+				// The dataset the item is of.
+				m_ListCurrentSelection.SetItemData(0, reinterpret_cast<DWORD_PTR>(cell));
 
 				UpdateData(false);
 			}
