@@ -237,6 +237,38 @@ void SCurve::SetMBR()
 
 void SCurve::Projection()
 {
+	// About a pole the segments, rhumb lines, are not straight on the chart: long ones get
+	// points between their ends (RhumbLinePointsBetween).
+	if (IsPolarProjection() && m_numPoints > 1)
+	{
+		std::vector<SPoint> points;
+		points.reserve(static_cast<std::size_t>(m_numPoints));
+		for (int i = 0; i < m_numPoints; i++)
+		{
+			points.push_back(m_pPoints[i]);
+			if (i + 1 == m_numPoints)
+			{
+				break;
+			}
+			for (const auto& [longitude, latitude] : RhumbLinePointsBetween(m_pPoints[i].x, m_pPoints[i].y, m_pPoints[i + 1].x, m_pPoints[i + 1].y))
+			{
+				SPoint between;
+				between.SetPoint(longitude, latitude);
+				points.push_back(between);
+			}
+		}
+		if (points.size() != static_cast<std::size_t>(m_numPoints))
+		{
+			delete[] m_pPoints;
+			m_numPoints = static_cast<int>(points.size());
+			m_pPoints = new SPoint[m_numPoints];
+			for (int i = 0; i < m_numPoints; i++)
+			{
+				m_pPoints[i] = points[i];
+			}
+		}
+	}
+
 	for (int i = 0; i < m_numPoints; i++)
 	{
 		projection(m_pPoints[i].x, m_pPoints[i].y);

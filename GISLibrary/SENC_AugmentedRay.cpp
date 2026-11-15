@@ -120,8 +120,10 @@ void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Portr
 
 				if (false == ENCCommon::FULL_SECTORS)
 				{
-					ix = pBeginningPt.x + (int)((cos((((int)direction - 90) % 360) * M_PI / 180) * length) * factor);
-					iy = pBeginningPt.y + (int)((sin((((int)direction - 90) % 360) * M_PI / 180) * length) * factor);
+					// The direction is from north, which is not up about a pole.
+					const double onScreen = direction + NorthAngle(mx, my) - 90;
+					ix = pBeginningPt.x + (int)((cos(onScreen * M_PI / 180) * length) * factor);
+					iy = pBeginningPt.y + (int)((sin(onScreen * M_PI / 180) * length) * factor);
 
 					// Point rotate
 					if (scaler->GetRotationDegree())

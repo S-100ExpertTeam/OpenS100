@@ -113,8 +113,11 @@ namespace GISLibrary
 		if (bounds.empty())
 		{
 			// Nothing installed yet: the same world view a layer manager without layers shows.
-			extent = MBR(-170.0, -30.0, 170.0, 30.0);
-			projection(extent);
+			extent = IsPolarProjection() ? ProjectionLimits() : MBR(-170.0, -30.0, 170.0, 30.0);
+			if (!IsPolarProjection())
+			{
+				projection(extent);
+			}
 		}
 		m_pLayer->SetMBR(extent);
 	}

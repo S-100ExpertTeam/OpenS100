@@ -3,6 +3,7 @@
 #include "OpenS100.h"
 #include "OpenS100View.h"
 #include "DialogDockLayerManager.h"
+#include "DialogDockCurrentSelection.h"
 
 #include "../LibMFCUtil/StringTokenizer.h"
 #include "../LibMFCUtil/LibMFCUtil.h"
@@ -191,6 +192,19 @@ void CConfigrationDlg::OnBnClickedApply()
 
 	mainTab.UpdateData();
 	s101Tab.UpdateData();
+
+	// The chart projection: every layer is read again in it, so what was picked is gone.
+	const int projection = mainTab.m_projection.GetCurSel();
+	if (projection >= 0 && static_cast<MapProjection>(projection) != GetMapProjection())
+	{
+		CWaitCursor wait;
+		theApp.pView->ClearPickReport();
+		theApp.m_DockablePaneCurrentSelection.pDlg->OnMenuRemoveAll();
+		theApp.m_DockablePaneEditWindow.DeleteAllItems();
+		theApp.gisLib->SetMapProjection(static_cast<MapProjection>(projection));
+		theApp.m_pDockablePaneLayerManager.UpdateList();
+		bMapRefresh = true;
+	}
 
 	// S-102 / S-104: the depths are adjusted again and redrawn.
 	if (depthTab.Apply())

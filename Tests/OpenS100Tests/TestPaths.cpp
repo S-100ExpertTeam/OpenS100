@@ -54,6 +54,19 @@ namespace testpaths
 		return repoRoot().parent_path() / L"bluemap-github" / L"opens100-web" / L"apps" / L"viewer-ol" / L"public" / L"data";
 	}
 
+	fs::path polarCells()
+	{
+		wchar_t* value = nullptr;
+		size_t len = 0;
+		if (_wdupenv_s(&value, &len, L"S100_POLAR_CELLS") == 0 && value != nullptr)
+		{
+			fs::path p(value);
+			free(value);
+			return p;
+		}
+		return repoRoot().parent_path() / L"iho-ohi" / L"S-164-Sub-Group" / L"data" / L"Staging" / L"S-101" / L"v2.0.0" / L"polar";
+	}
+
 	fs::path tempDir()
 	{
 		auto dir = fs::temp_directory_path() / L"OpenS100Tests";

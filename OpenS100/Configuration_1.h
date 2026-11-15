@@ -34,6 +34,8 @@ public:
 	CEdit	m_safetyWaterLevel;
 	CEdit	m_veryShallowWaterLevel;
 	CEdit	m_veryDeepWaterLevel;
+	// The chart projection, in the order of MapProjection.
+	CComboBox m_projection;
 
 public:
 	void SetFontList(std::vector<CString> fontList);

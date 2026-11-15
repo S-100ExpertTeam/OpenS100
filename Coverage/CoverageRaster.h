@@ -20,7 +20,8 @@ namespace s100::coverage
     [[nodiscard]] double inverseMercatorY(double y) noexcept;
 
     // How the chart the image goes onto spaces its rows: evenly in Web Mercator northing (opens100-web,
-    // OpenLayers) or evenly in latitude (an equirectangular chart, such as the OpenS100 viewer's).
+    // OpenLayers) or evenly in latitude (an equirectangular chart; the OpenS100 viewer too, which
+    // draws such an image in bands of rows on Mercator and resamples it about a pole).
     // The image's rows must be spaced as the chart's are, or the rows between its corners drift
     // from where the grid's cells are drawn by anything else.
     enum class RasterProjection

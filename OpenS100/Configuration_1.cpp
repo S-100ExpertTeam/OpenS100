@@ -7,6 +7,7 @@
 #include "ConfigrationDlg.h"
 
 #include "../GISLibrary/LayerManager.h"
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
 
 IMPLEMENT_DYNAMIC(CConfiguration_1, CDialogEx)
 
@@ -62,6 +63,7 @@ void CConfiguration_1::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_DPM_BASE, m_displayMode);
 
 	DDX_Control(pDX, IDC_CHECK_SHOW_INFORM01, showinform01);
+	DDX_Control(pDX, IDC_MAP_PROJECTION, m_projection);
 }
 
 
@@ -85,6 +87,12 @@ BOOL CConfiguration_1::OnInitDialog()
 	m_displayMode = (int)ENCCommon::DISPLAY_MODE;
 
 	showinform01.SetCheck(ENCCommon::Show_INFORM01);
+
+	// In the order of MapProjection.
+	m_projection.AddString(L"Mercator");
+	m_projection.AddString(L"Polar stereographic: Arctic (North Pole)");
+	m_projection.AddString(L"Polar stereographic: Antarctic (South Pole)");
+	m_projection.SetCurSel(static_cast<int>(GetMapProjection()));
 
 	UpdateData(FALSE);
 

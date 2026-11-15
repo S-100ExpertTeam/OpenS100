@@ -61,6 +61,7 @@ public:
 
 	LayerManager* GetInnerLayers() override { return m_pLayerManager; }
 	void DropCachedLayers() override { if (m_layers) m_layers->dropCache(); }
+	bool ReloadLayers() override { return false; }
 
 	// The layers of the selected datasets and the cache of deselected ones; null before Open.
 	[[nodiscard]] const GISLibrary::DatasetLayerSet* GetLayerSet() const noexcept { return m_layers.get(); }

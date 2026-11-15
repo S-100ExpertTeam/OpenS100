@@ -147,6 +147,11 @@ public:
 
 	void ReMBR();
 
+	// Reads every layer again from its file, and the background: after the chart projection
+	// changed (SetMapProjection), since layers hold world coordinates. Layers keep whether they
+	// are shown; those that cannot be read again are dropped.
+	void ReloadLayers();
+
 	void ChangeS100ColorPalette(GeoMetryLibrary::ColorTable value);
 	void ChangeS100ColorPalette(std::wstring paletteName);
 	// The palette of every S-100 layer's drawing instructions, including the layers of layer

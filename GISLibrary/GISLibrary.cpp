@@ -157,6 +157,40 @@ void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, 
 	}
 }
 
+void CGISLibraryApp::SetMapProjection(MapProjection value)
+{
+	if (value == ::GetMapProjection())
+	{
+		return;
+	}
+
+	// Where the view is, on the ground.
+	double longitude = (m_pScaler->mxMin + m_pScaler->mxMax) / 2;
+	double latitude = (m_pScaler->myMin + m_pScaler->myMax) / 2;
+	inverseProjection(longitude, latitude);
+	const int scale = m_pScaler->GetCurrentScale();
+
+	::SetMapProjection(value);
+	m_pScaler->UpdateLimits();
+	m_pLayerManager->ReloadLayers();
+
+	constexpr double polarRegion = 60.0;
+	const bool north = value == MapProjection::PolarStereographicNorth;
+	if (IsPolarProjection() && (north ? latitude < polarRegion : latitude > -polarRegion))
+	{
+		MBR region(-180.0, north ? polarRegion : -90.0, 180.0, north ? 90.0 : -polarRegion);
+		projection(region);
+		m_pScaler->SetMap(region);
+		m_pScaler->AdjustScreenMap();
+	}
+	else
+	{
+		projection(longitude, latitude);
+		m_pScaler->SetMap(longitude, latitude, longitude, latitude);
+		m_pScaler->SetScale(scale);
+	}
+}
+
 void CGISLibraryApp::DrawScaleBar()
 {
 	auto scaler = m_pLayerManager->GetScaler();

@@ -219,6 +219,81 @@ TEST(RenderSmoke, DrawsKoreanS101CellOffscreen)
 	EXPECT_GT(colours, 8u) << "expected more than a handful of colours in a portrayed chart";
 }
 
+// The chart projection is the user's choice: cells about the North Pole, which Mercator cannot
+// show, are read again and drawn about the pole when the projection changes.
+TEST(RenderSmoke, DrawsPolarCellsAboutThePole)
+{
+	const auto cells = testpaths::polarCells();
+	if (!std::filesystem::exists(cells))
+	{
+		GTEST_SKIP() << "polar cells not available: " << cells.string();
+	}
+	struct Restore
+	{
+		~Restore() { SetMapProjection(MapProjection::Mercator); }
+	} restore;
+
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto cm = gis.GetCatalogManager();
+	ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+	auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
+	ASSERT_NE(pc, nullptr);
+	GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
+
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	std::size_t opened = 0;
+	for (const auto& entry : std::filesystem::directory_iterator(cells))
+	{
+		if (entry.path().extension() == L".000")
+		{
+			ASSERT_TRUE(gis.AddLayer(entry.path().wstring())) << entry.path().string();
+			++opened;
+		}
+	}
+	ASSERT_GT(opened, 0u);
+
+	const auto draw = [&](const char* name) {
+		MemoryCanvas canvas(kWidth, kHeight);
+		gis.Draw(canvas.dc());
+		::GdiFlush();
+		std::size_t nonWhite = 0;
+		std::size_t colours = 0;
+		canvas.Measure(nonWhite, colours);
+		const auto png = OutputDirectory() / (std::string("polar-") + name + ".png");
+		EXPECT_TRUE(canvas.SavePng(png));
+		MBR ground = gis.GetLayerManager()->mbr;
+		inverseProjection(ground);
+		std::cout << "[ polar ] " << name << ": 1:" << gis.GetScaler()->GetCurrentScale() << ", layers " << gis.GetLayerManager()->LayerCount()
+			<< ", ground " << ground.xmin << " " << ground.ymin << " " << ground.xmax << " " << ground.ymax
+			<< ", non-white " << nonWhite << ", colours " << colours << ", " << png.string() << std::endl;
+		return nonWhite;
+	};
+
+	gis.SetMap(gis.GetLayerManager()->mbr);
+	draw("mercator");
+
+	gis.SetMapProjection(MapProjection::PolarStereographicNorth);
+	EXPECT_EQ(static_cast<std::size_t>(gis.GetLayerManager()->LayerCount()), opened) << "every cell is read again";
+	// The view keeps its place on the ground, which with these cells is by the pole: it is on
+	// the screen (the origin of the world).
+	EXPECT_TRUE(gis.GetScaler()->PtInMap(0.0, 0.0));
+	draw("region");
+
+	// The cells fitted to the screen: they are drawn, and the pole (the origin) is among them.
+	MBR extent = gis.GetLayerManager()->mbr;
+	gis.SetMap(extent);
+	EXPECT_GT(draw("north"), static_cast<std::size_t>(kWidth) * kHeight / 50) << "the chart is (almost) blank";
+	inverseProjection(extent);
+	EXPECT_GT(extent.ymax, 89.0);
+
+	// Back on Mercator the cells are read again there.
+	gis.SetMapProjection(MapProjection::Mercator);
+	EXPECT_EQ(static_cast<std::size_t>(gis.GetLayerManager()->LayerCount()), opened);
+	EXPECT_FALSE(IsPolarProjection());
+}
+
 // Opt-in: render the cells named in S100_RENDER_CELLS (';'-separated paths) for visual review.
 TEST(RenderSmoke, DrawsCellsFromEnvironment)
 {
@@ -1269,4 +1344,64 @@ TEST(RenderSmoke, SystemDatabaseChartDrawsS124OverTheS101)
 	std::cout << "[ sdb chart ] S-101 non-white " << nonWhite << ", pixels the S-124 changes " << changed << std::endl;
 	EXPECT_GT(nonWhite, 100000u) << "the chart is drawn";
 	EXPECT_GT(changed, 1000u) << "the warning shows over the chart";
+}
+
+// With the enhanced safety contour on, the S-101 depth areas are not drawn where the S-102 has
+// data, so the S-102 picture must lie exactly on its data: a picture off by part of a cell leaves
+// the chart blank along the edges of the data. Busan harbour, zoomed in, on Mercator, where the
+// rows of the grid are not evenly spaced.
+TEST(RenderSmoke, S102PictureCoversItsDataOnMercator)
+{
+	const auto root = testpaths::tdsRoot() / L"KOR_TDS";
+	const auto s102 = root / L"KOR_S-102" / L"S-102" / L"102KR00T4G3B3000026.h5";
+	const auto pc = testpaths::webDataRoot().parent_path() / L"pc" / L"S102_Portrayal" / L"portrayal_catalogue.xml";
+	const auto cellPath = [&](const wchar_t* name) {
+		return root / L"S100_ROOT" / L"S-101" / L"DATASET_FILES" / name / (std::wstring(name) + L".000");
+	};
+	if (!std::filesystem::exists(s102) || !std::filesystem::exists(pc) || !std::filesystem::exists(cellPath(L"101KR00659C71")))
+	{
+		GTEST_SKIP() << "KOR S-101/S-102 or the S-102 PC not available";
+	}
+	using GISLibrary::CoverageDataset;
+	const CoverageDataset::DepthSettings original = CoverageDataset::GetDepthSettings();
+
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto* catalogues = gis.GetCatalogManager();
+	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+	auto* s101pc = catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
+	ASSERT_NE(s101pc, nullptr);
+	GISLibrary::PortrayalRender::Prepare(s101pc, gis.GetD2D1Resources());
+	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-102_FC.xml").string()), nullptr);
+	ASSERT_NE(catalogues->addPC(pc.wstring()), nullptr);
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddLayer(cellPath(L"101KR00659C71").wstring()));
+	ASSERT_TRUE(gis.AddLayer(cellPath(L"101KR00659C72").wstring()));
+	ASSERT_TRUE(gis.AddLayer(s102.wstring()));
+	double x = 129.04607;
+	double y = 35.10813;
+	projection(x, y);
+	gis.SetMap(x - 1e-6, y - 1e-6, x + 1e-6, y + 1e-6);
+	gis.SetScale(2500);
+
+	const auto white = [&](bool esc, const char* name) {
+		CoverageDataset::DepthSettings settings = original;
+		settings.enhancedSafetyContour = esc;
+		CoverageDataset::SetDepthSettings(settings);
+		MemoryCanvas canvas(kWidth, kHeight);
+		gis.Draw(canvas.dc());
+		::GdiFlush();
+		EXPECT_TRUE(canvas.SavePng(OutputDirectory() / (std::string("s102-covers-data-") + name + ".png")));
+		std::size_t nonWhite = 0;
+		std::size_t colours = 0;
+		canvas.Measure(nonWhite, colours);
+		return static_cast<std::size_t>(kWidth) * kHeight - nonWhite;
+	};
+	const std::size_t off = white(false, "esc-off");
+	const std::size_t on = white(true, "esc-on");
+	CoverageDataset::SetDepthSettings(original);
+	std::cout << "[ s102 covers ] blank pixels with ESC off " << off << ", on " << on << std::endl;
+	// The chart is covered either way: a few pixels of antialiasing along the edges at most.
+	EXPECT_LT(on, off + 500u) << "the chart is blank where the S-101 depth areas are not drawn";
 }

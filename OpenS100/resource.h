@@ -212,6 +212,7 @@
 #define IDC_CURRENT_RECORD              1032
 #define IDC_CURRENT_SPAN                1033
 #define IDC_CURRENT_THINNING            1034
+#define IDC_MAP_PROJECTION               1035
 
 // Next default values for new objects
 // 
@@ -219,7 +220,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        373
 #define _APS_NEXT_COMMAND_VALUE         32782
-#define _APS_NEXT_CONTROL_VALUE         1035
+#define _APS_NEXT_CONTROL_VALUE         1036
 #define _APS_NEXT_SYMED_VALUE           316
 #endif
 #endif

@@ -21,4 +21,7 @@ namespace testpaths
 	// The HDF5 test data opens100-web ships for its viewer (S-102, S-104, S-111 tiles). Taken from
 	// OPENS100_WEB_DATA, default ../bluemap-github/opens100-web beside this checkout (DIRECTIVES.md, reference 14).
 	std::filesystem::path webDataRoot();
+	// The S-101 cells about the North Pole of the IHO S-164 test data. Taken from S100_POLAR_CELLS,
+	// default ../iho-ohi/S-164-Sub-Group/data/Staging/S-101/v2.0.0/polar beside this checkout.
+	std::filesystem::path polarCells();
 }

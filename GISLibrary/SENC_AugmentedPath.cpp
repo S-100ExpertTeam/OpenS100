@@ -135,7 +135,9 @@ void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Port
 					}
 				}
 
-				D2D1::Matrix3x2F trans = D2D1::Matrix3x2F::Translation(SGeometry::viewPoints[0].x, SGeometry::viewPoints[0].y);
+				// The arcs are built from north up: turned to where north is at the point.
+				D2D1::Matrix3x2F trans = D2D1::Matrix3x2F::Rotation(static_cast<FLOAT>(NorthAngle(p->x, p->y)))
+					* D2D1::Matrix3x2F::Translation(SGeometry::viewPoints[0].x, SGeometry::viewPoints[0].y);
 
 				rt->SetTransform(trans);
 

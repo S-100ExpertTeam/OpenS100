@@ -95,6 +95,7 @@ ECDIS behaviour described in **S-98**.
 | S-104 Water Level, with S-98 water level adjustment of S-102 | Supported |
 | GML products with XSLT portrayal (S-122 to S-131, S-201, S-4xx, ...) | Supported in the viewer |
 | S-111 Surface Currents | Regular grids are drawn as the portrayal catalogue's arrows, thinned as the chart is zoomed out (S-111 9.3.2), at the system clock or a record time chosen in the settings (data with no record at the system clock opens at its first record, with an indication) |
+| Chart projection | Mercator, or polar stereographic about the North or South Pole for data Mercator cannot show; chosen in the viewer's settings |
 | S-100 Part 15 data protection (encrypted and signed exchange sets) | Supported |
 | S-100 Part 17 exchange sets and the S-98 dataset loading algorithm | Supported |
 

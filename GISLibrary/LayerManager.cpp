@@ -560,6 +560,17 @@ void LayerManager::AddSymbolDrawing(
 
 		for (auto pi = points.begin(); pi != points.end(); pi++)
 		{
+			// A rotation from north (GeographicCRS) starts from where north is at the point,
+			// which is not up about a pole.
+			float northAngle = 0;
+			if (IsPolarProjection())
+			{
+				double mx = 0;
+				double my = 0;
+				scaler->DeviceToWorld(static_cast<long>(pi->x), static_cast<long>(pi->y), &mx, &my);
+				northAngle = static_cast<float>(NorthAngle(mx, my));
+			}
+
 			// rotate Point
 			if (scaler->GetRotationDegree())
 			{
@@ -577,6 +588,10 @@ void LayerManager::AddSymbolDrawing(
 			if ((instruction->symbol)->rotation)
 			{
 				rotation = (float)(instruction->symbol)->rotation;
+			}
+			if (instruction->symbol->rotationCRS == GEOGRAPHIC_CRS)
+			{
+				rotation += northAngle;
 			}
 
 
@@ -802,9 +817,16 @@ void LayerManager::DrawBackground(HDC &hDC, int offset)
 		{
 			if (MBR::CheckOverlap(scaler->GetMap(), backgroundLayer.m_mbr))
 			{
-				backgroundLayer.Draw(hDC, scaler, offset - 360);
+				// On Mercator the world goes round: the copies a turn of longitude either side.
+				if (!IsPolarProjection())
+				{
+					backgroundLayer.Draw(hDC, scaler, offset - 360);
+				}
 				backgroundLayer.Draw(hDC, scaler, offset);
-				backgroundLayer.Draw(hDC, scaler, offset + 360);
+				if (!IsPolarProjection())
+				{
+					backgroundLayer.Draw(hDC, scaler, offset + 360);
+				}
 			}
 		}
 	}
@@ -1601,18 +1623,12 @@ void LayerManager::ReMBR()
 {
 	if (LayerCount() == 0)
 	{
-		double xmin = -170.0;
-		double ymin = -30.0;
-		double xmax = 170.0;
-		double ymax = 30.0;
-
-		projection(xmin, ymax);
-		projection(xmax, ymin);
-
-		mbr.xmin = xmin;
-		mbr.ymin = ymin;
-		mbr.xmax = xmax;
-		mbr.ymax = ymax;
+		// The world between 30 degrees south and north; about a pole, the hemisphere.
+		mbr = IsPolarProjection() ? ProjectionLimits() : MBR(-170.0, -30.0, 170.0, 30.0);
+		if (!IsPolarProjection())
+		{
+			projection(mbr);
+		}
 	}
 	else
 	{
@@ -1623,6 +1639,74 @@ void LayerManager::ReMBR()
 			mbr.CalcMBR((*i)->GetMBR());
 		}
 	}
+}
+
+void LayerManager::ReloadLayers()
+{
+	if (backgroundLayer.m_spatialObject)
+	{
+		const std::wstring path = backgroundLayer.GetLayerPath();
+		delete backgroundLayer.m_spatialObject;
+		backgroundLayer.m_spatialObject = nullptr;
+		backgroundLayer.Open(path, this);
+	}
+
+	struct Opened
+	{
+		std::wstring path;
+		bool on = true;
+		bool info = false;
+	};
+	std::vector<Opened> opened;
+	for (auto it = layers.begin(); it != layers.end();)
+	{
+		Layer* layer = *it;
+		auto container = layer->m_spatialObject ? dynamic_cast<GISLibrary::LayerContainer*>(layer->m_spatialObject) : nullptr;
+		if (container && container->ReloadLayers())
+		{
+			++it;
+			continue;
+		}
+		if (layer->m_spatialObject)
+		{
+			opened.push_back({ layer->GetLayerPath(), layer->On, layer->Info });
+		}
+		mapLayer.erase(layer->GetID());
+		delete layer;
+		it = layers.erase(it);
+	}
+
+	// The view is left to the caller. An exchange catalogue opens its datasets as layers of
+	// their own: those are not opened a second time.
+	const bool fit = m_isScreenFitEnabled;
+	m_isScreenFitEnabled = false;
+	for (const auto& file : opened)
+	{
+		if (!IsContainFilePathToLayer(file.path))
+		{
+			AddLayer(file.path);
+		}
+	}
+	m_isScreenFitEnabled = fit;
+
+	for (Layer* layer : layers)
+	{
+		if (!layer->m_spatialObject)
+		{
+			continue;
+		}
+		const std::wstring path = layer->GetLayerPath();
+		for (const auto& file : opened)
+		{
+			if (file.path == path)
+			{
+				layer->On = file.on;
+				layer->Info = file.info;
+				break;
+			}
+		}
+	}
+	ReMBR();
 }
 
 void LayerManager::SetViewMBR(RECT r)

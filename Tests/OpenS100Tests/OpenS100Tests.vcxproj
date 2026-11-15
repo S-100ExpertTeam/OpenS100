@@ -106,6 +106,7 @@
     <ClCompile Include="ExchangeCatalogueTest.cpp" />
     <ClCompile Include="RenderSmokeTest.cpp" />
     <ClCompile Include="GeodesyTest.cpp" />
+    <ClCompile Include="MapProjectionTest.cpp" />
     <ClCompile Include="SystemDatabaseTest.cpp" />
   </ItemGroup>
   <ItemGroup>

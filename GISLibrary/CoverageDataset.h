@@ -180,6 +180,11 @@ namespace GISLibrary
 			std::string key;   // palette, time group, revision of the values
 			std::unique_ptr<s100::coverage::CoverageRaster> raster;
 			ID2D1Bitmap* bitmap = nullptr;
+			// About a pole the bitmap is the raster resampled into this box of the world.
+			double worldWest = 0;
+			double worldSouth = 0;
+			double worldEast = 0;
+			double worldNorth = 0;
 		};
 
 		void ReleaseImages();

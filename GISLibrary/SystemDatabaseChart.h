@@ -56,6 +56,7 @@ namespace GISLibrary
 
 		LayerManager* GetInnerLayers() override { return drawer_.get(); }
 		void DropCachedLayers() override { layers_->dropCache(); }
+		bool ReloadLayers() override { Reload(); return true; }
 
 		[[nodiscard]] const DatasetLayerSet& GetLayerSet() const noexcept { return *layers_; }
 		[[nodiscard]] const s100::sdb::DatasetSelector& GetSelector() const noexcept { return selector_; }

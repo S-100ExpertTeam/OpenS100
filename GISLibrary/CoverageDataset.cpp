@@ -78,6 +78,110 @@ namespace GISLibrary
 			}
 			return out;
 		}
+
+		// A raster laid out in longitude and latitude resampled into the box of the world that
+		// holds it, for a projection about a pole, where the meridians are not the chart's columns:
+		// about as many pixels as the grid has cells, each taking the cell it lies in.
+		std::vector<std::uint32_t> warpToWorld(const s100::coverage::CoverageRaster& raster, std::span<const std::uint32_t> source,
+			MBR& world, UINT32& width, UINT32& height)
+		{
+			const auto& extent = raster.extent();
+			const double north = raster.latitude(extent.north);
+			const double south = raster.latitude(extent.south);
+			world = MBR(extent.west, south, extent.east, north);
+			projection(world);
+
+			const double worldWidth = world.xmax - world.xmin;
+			const double worldHeight = world.ymax - world.ymin;
+			const int columns = raster.width();
+			const int rows = raster.height();
+			width = 0;
+			height = 0;
+			if (!(worldWidth > 0) || !(worldHeight > 0) || !(extent.east > extent.west) || !(north > south))
+			{
+				return {};
+			}
+			const double longest = std::clamp(1.5 * (std::max)(columns, rows), 16.0, 4096.0);
+			width = static_cast<UINT32>((std::max)(1.0, std::round(worldWidth >= worldHeight ? longest : longest * worldWidth / worldHeight)));
+			height = static_cast<UINT32>((std::max)(1.0, std::round(worldHeight >= worldWidth ? longest : longest * worldHeight / worldWidth)));
+
+			std::vector<std::uint32_t> pixels(static_cast<std::size_t>(width) * height, 0);
+			for (UINT32 y = 0; y < height; ++y)
+			{
+				for (UINT32 x = 0; x < width; ++x)
+				{
+					double longitude = world.xmin + (x + 0.5) / width * worldWidth;
+					double latitude = world.ymax - (y + 0.5) / height * worldHeight;
+					inverseProjection(longitude, latitude);
+					double east = longitude - extent.west;
+					east -= 360.0 * std::floor(east / 360.0);
+					if (east > extent.east - extent.west || latitude > north || latitude < south)
+					{
+						continue;
+					}
+					const int column = (std::min)(columns - 1, static_cast<int>(east / (extent.east - extent.west) * columns));
+					const int row = (std::min)(rows - 1, static_cast<int>((north - latitude) / (north - south) * rows));
+					pixels[static_cast<std::size_t>(y) * width + x] = source[static_cast<std::size_t>(row) * columns + column];
+				}
+			}
+			return pixels;
+		}
+
+		// A raster with rows evenly spaced in latitude drawn on Mercator, where the rows get taller
+		// with latitude: in bands of rows, each short enough that its rows, drawn evenly spaced
+		// between its ends, are within a quarter of a pixel of their place. Drawn as one picture the
+		// rows in the middle of a large grid would be off by a good part of a cell.
+		void drawRowBands(ID2D1RenderTarget* rt, Scaler* scaler, const s100::coverage::CoverageRaster& raster, ID2D1Bitmap* bitmap)
+		{
+			const auto& extent = raster.extent();
+			const int rows = raster.height();
+			if (rows < 1 || !(extent.north > extent.south))
+			{
+				return;
+			}
+			const float screenHeight = rt->GetSize().height;
+			// The screen position of the northern edge of a row (of the southern edge of the last).
+			const auto edge = [&](int row, float* x, double longitude) {
+				double worldX = longitude;
+				double worldY = extent.north - (extent.north - extent.south) * row / rows;
+				projection(worldX, worldY);
+				float y = 0;
+				scaler->WorldToDevice_F(worldX, worldY, x, &y);
+				return y;
+			};
+			float left = 0, right = 0;
+			const float top = edge(0, &left, extent.west);
+			const float bottom = edge(rows, &right, extent.east);
+
+			struct Band { int first; int end; float top; float bottom; };
+			std::vector<Band> pending{ Band{ 0, rows, top, bottom } };
+			while (!pending.empty())
+			{
+				const Band band = pending.back();
+				pending.pop_back();
+				if (band.bottom < 0 || band.top > screenHeight)
+				{
+					continue;
+				}
+				const int middle = band.first + (band.end - band.first) / 2;
+				if (band.end - band.first > 1)
+				{
+					float unused = 0;
+					const float at = edge(middle, &unused, extent.west);
+					const float even = band.top + (band.bottom - band.top) * (middle - band.first) / (band.end - band.first);
+					if (std::fabs(at - even) > 0.25f)
+					{
+						// Bands meet on a whole pixel, so that no seam shows between them.
+						const float seam = std::round(at);
+						pending.push_back(Band{ band.first, middle, band.top, seam });
+						pending.push_back(Band{ middle, band.end, seam, band.bottom });
+						continue;
+					}
+				}
+				rt->DrawBitmap(bitmap, D2D1::RectF(left, band.top, right, band.bottom), 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+					D2D1::RectF(0.0f, static_cast<float>(band.first), static_cast<float>(raster.width()), static_cast<float>(band.end)));
+			}
+		}
 	}
 
 	namespace
@@ -840,7 +944,8 @@ namespace GISLibrary
 				DrawSymbols(d2, scaler, *feature, fill.instruction, *component, *timeIndex);
 				continue;
 			}
-			const std::string key = std::format("{}|{}|{}", paletteName(), *timeIndex, source->revision());
+			const std::string key = std::format("{}|{}|{}|{}", paletteName(), *timeIndex, source->revision(),
+				static_cast<int>(GetMapProjection()));
 			Image& image = images_[fill.featureId];
 			if (image.key != key || !image.raster)
 			{
@@ -856,8 +961,9 @@ namespace GISLibrary
 				}
 				const auto colorOf = s100::coverage::lookupCellColor(fill.instruction.lookup,
 					[this](std::string_view token) { return ResolveColor(token); });
-				// Rows evenly spaced in latitude, as the viewer's equirectangular chart draws them (and
-				// the grid lines drawn over the image).
+				// Rows evenly spaced in latitude, one for each row of a geographic grid, so that no
+				// cell moves off its place: on Mercator the image is drawn in bands of rows
+				// (drawRowBands), and about a pole it is resampled when its bitmap is made.
 				image.raster = std::make_unique<s100::coverage::CoverageRaster>(feature->grid, *values,
 					feature->components[*component].fillValue, colorOf, s100::coverage::RasterProjection::Geographic);
 				image.key = key;
@@ -869,30 +975,44 @@ namespace GISLibrary
 			}
 			if (!image.bitmap)
 			{
-				const auto bgra = toPremultipliedBgra(raster.pixels());
+				auto bgra = toPremultipliedBgra(raster.pixels());
+				UINT32 width = static_cast<UINT32>(raster.width());
+				UINT32 height = static_cast<UINT32>(raster.height());
+				if (IsPolarProjection())
+				{
+					MBR world;
+					bgra = warpToWorld(raster, bgra, world, width, height);
+					image.worldWest = world.xmin;
+					image.worldSouth = world.ymin;
+					image.worldEast = world.xmax;
+					image.worldNorth = world.ymax;
+					if (bgra.empty())
+					{
+						continue;
+					}
+				}
 				const D2D1_BITMAP_PROPERTIES properties = D2D1::BitmapProperties(
 					D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM, D2D1_ALPHA_MODE_PREMULTIPLIED));
-				if (FAILED(rt->CreateBitmap(D2D1::SizeU(static_cast<UINT32>(raster.width()), static_cast<UINT32>(raster.height())),
-					bgra.data(), static_cast<UINT32>(raster.width()) * 4, properties, &image.bitmap)))
+				if (FAILED(rt->CreateBitmap(D2D1::SizeU(width, height), bgra.data(), width * 4, properties, &image.bitmap)))
 				{
 					image.bitmap = nullptr;
 					continue;
 				}
 			}
 
-			// The image's corners on the screen, to the fraction of a pixel: its rows are linear in
-			// latitude, as the world is.
-			const auto& extent = raster.extent();
-			double west = extent.west;
-			double north = raster.latitude(extent.north);
-			double east = extent.east;
-			double south = raster.latitude(extent.south);
-			projection(west, north);
-			projection(east, south);
-			float left = 0, top = 0, right = 0, bottom = 0;
-			scaler->WorldToDevice_F(west, north, &left, &top);
-			scaler->WorldToDevice_F(east, south, &right, &bottom);
-			rt->DrawBitmap(image.bitmap, D2D1::RectF(left, top, right, bottom), 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+			if (IsPolarProjection())
+			{
+				// The image's corners on the screen, to the fraction of a pixel: it was resampled
+				// into this box of the world.
+				float left = 0, top = 0, right = 0, bottom = 0;
+				scaler->WorldToDevice_F(image.worldWest, image.worldNorth, &left, &top);
+				scaler->WorldToDevice_F(image.worldEast, image.worldSouth, &right, &bottom);
+				rt->DrawBitmap(image.bitmap, D2D1::RectF(left, top, right, bottom), 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+			}
+			else
+			{
+				drawRowBands(rt, scaler, raster, image.bitmap);
+			}
 
 			if (fill.instruction.attributeCode == "depth")
 			{
@@ -1070,7 +1190,16 @@ namespace GISLibrary
 					continue;
 				}
 				const float scale = static_cast<float>(cov::symbolScale(*item.symbol, scaleValue)) * pixelsPerMillimetre;
-				const float rotation = static_cast<float>(cov::symbolRotation(*item.symbol, rotationValue));
+				float rotation = static_cast<float>(cov::symbolRotation(*item.symbol, rotationValue));
+				if (item.symbol->rotationCRS != "PortrayalCRS")
+				{
+					// From north, which is not up about a pole.
+					const cov::GeoPosition position = cov::gridPosition(feature.grid, col, row);
+					double x = position.lon;
+					double y = position.lat;
+					projection(x, y);
+					rotation += static_cast<float>(NorthAngle(x, y));
+				}
 				// The symbol's millimetres to pixels, turned clockwise from north (up), at the point.
 				rt->SetTransform(D2D1::Matrix3x2F::Scale(scale, scale) * D2D1::Matrix3x2F::Rotation(rotation)
 					* D2D1::Matrix3x2F::Translation(static_cast<float>(at.x), static_cast<float>(at.y)));

@@ -245,8 +245,48 @@ void SSurface::Init()
 	ResetRenderAttachment();
 }
 
-void SSurface::Set(std::vector<POINT>& points, std::vector<int>& parts)
+void SSurface::Set(std::vector<POINT>& sourcePoints, std::vector<int>& sourceParts)
 {
+	// About a pole the segments of the rings, rhumb lines, are not straight on the chart: long
+	// ones get points between their ends (RhumbLinePointsBetween), in the units of the points.
+	std::vector<POINT> points;
+	std::vector<int> parts;
+	if (IsPolarProjection())
+	{
+		constexpr double unit = 10000000.0;
+		std::size_t next = 0;   // the index into sourceParts of the end of the ring being copied
+		for (std::size_t i = 0; i < sourcePoints.size(); i++)
+		{
+			if (next + 1 < sourceParts.size() && static_cast<int>(i) == sourceParts[next])
+			{
+				parts.push_back(static_cast<int>(points.size()));
+				next++;
+			}
+			points.push_back(sourcePoints[i]);
+			const bool endOfRing = i + 1 == sourcePoints.size()
+				|| (next + 1 < sourceParts.size() && static_cast<int>(i + 1) == sourceParts[next]);
+			if (endOfRing)
+			{
+				continue;
+			}
+			for (const auto& [longitude, latitude] : RhumbLinePointsBetween(sourcePoints[i].x / unit, sourcePoints[i].y / unit,
+				sourcePoints[i + 1].x / unit, sourcePoints[i + 1].y / unit))
+			{
+				points.push_back(POINT{ static_cast<LONG>(std::lround(longitude * unit)), static_cast<LONG>(std::lround(latitude * unit)) });
+			}
+		}
+		// The last entry is not the start of a ring (see below): kept so the count of rings is.
+		if (!sourceParts.empty())
+		{
+			parts.push_back(static_cast<int>(points.size()));
+		}
+	}
+	else
+	{
+		points = sourcePoints;
+		parts = sourceParts;
+	}
+
 	m_numParts = (int)parts.size();
 	m_numPoints = (int)points.size();
 

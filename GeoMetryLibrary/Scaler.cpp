@@ -15,8 +15,7 @@
 
 Scaler::Scaler(void)
 {
-	projection(mxMinLimit, myMinLimit);
-	projection(mxMaxLimit, myMaxLimit);
+	UpdateLimits();
 
 	mxMin = mxMinLimit;
 	myMin = myMinLimit;
@@ -27,6 +26,15 @@ Scaler::Scaler(void)
 Scaler::~Scaler(void)
 {
 
+}
+
+void Scaler::UpdateLimits()
+{
+	const MBR limits = ProjectionLimits();
+	mxMinLimit = limits.xmin;
+	myMinLimit = limits.ymin;
+	mxMaxLimit = limits.xmax;
+	myMaxLimit = limits.ymax;
 }
 
 #pragma warning(disable:4244)
@@ -199,8 +207,9 @@ void Scaler::UpdateScale()
 	double _mxMin = mxMin;
 	double _mxMax = mxMax;
 
-	// The actual distance of the X-axis of the map (km)
-	double distance = (_mxMax - _mxMin) * EARTH_RADIUS;
+	// The actual distance of the X-axis of the map (km): the projection enlarges the ground by
+	// its scale factor, taken at the centre of the view.
+	double distance = (_mxMax - _mxMin) * EARTH_RADIUS / ProjectionScaleFactor((mxMin + mxMax) / 2, (myMin + myMax) / 2);
 
 	// The width of the screen.
 	int width = GetScreenWidth();
@@ -215,48 +224,18 @@ void Scaler::UpdateScale()
 #pragma warning(disable:4244)
 void Scaler::SetScale(int scale)
 {
-	// The center of the map.
-	double oldMox = mox;
-	double oldMoy = moy;
+	// The view keeps its centre; its width on the ground is that of the screen at the scale,
+	// enlarged as the projection enlarges the ground there.
+	mox = (mxMin + mxMax) / 2;
+	moy = (myMin + myMax) / 2;
 
-	// Change the map center point to latitude 0, 0. 
-	MoveMap(sox, soy, 0, 0);
+	const double width = GetScreenWidthKM() * (double)scale / EARTH_RADIUS * ProjectionScaleFactor(mox, moy);
+	const double height = (width * (double)GetScreenHeight()) / (double)GetScreenWidth();
 
-	// Find the actual coordinates of the center point of the screen (radian)
-	inverseProjection(mox, moy);
-
-	double finalWidthKM = GetScreenWidthKM() * (double)scale;
-	double offsetXtheta = finalWidthKM / (2 * EARTH_RADIUS);
-
-	// X coordinates are projection coordinates and radian coordinates.
-	mxMin = mox - offsetXtheta;
-	mxMax = mox + offsetXtheta;
-
-	double finalHeightKM = (finalWidthKM * (double)GetScreenHeight()) / (double)GetScreenWidth();
-	double offsetYtheta = finalHeightKM / (2 * EARTH_RADIUS);
-
-	myMin = moy - offsetYtheta;
-	myMax = moy + offsetYtheta;
-
-	double yLimit = 85;
-
-	yLimit *= DEG2RAD;
-
-	if (myMin < -yLimit)
-	{
-		myMin = -yLimit;
-	}
-
-	if (myMax > yLimit)
-	{
-		myMax = yLimit;
-	}
-
-	myMin = log(tan((myMin / 2.0) + M_PI_D4));
-	myMax = log(tan((myMax / 2.0) + M_PI_D4));
-	moy = log(tan((moy / 2.0) + M_PI_D4));
-
-	MoveMap(sox, soy, oldMox, oldMoy);
+	mxMin = mox - width / 2;
+	mxMax = mox + width / 2;
+	myMin = moy - height / 2;
+	myMax = moy + height / 2;
 
 	UpdateScale();
 }
@@ -339,7 +318,11 @@ void Scaler::ZoomIn(double value, int x, int y)
 
 	DeviceToWorld(x, y, &mx, &my);
 
-	if (mx >= 0)
+	if (IsPolarProjection())
+	{
+		// x is not a longitude: the world does not repeat.
+	}
+	else if (mx >= 0)
 	{
 		while (mx > (acos(-1.0)))
 		{
@@ -405,6 +388,12 @@ void Scaler::MoveMap(int x, int y)
 void Scaler::MoveMap(int sx, int sy, double mx, double my)
 {
 	PrivateMoveMap(sx, sy, mx, my);
+
+	if (IsPolarProjection())
+	{
+		// The world does not repeat in x about a pole: nothing to wrap around.
+		return;
+	}
 
 	long sx1 = 0, sy1 = 0;     // On the right side of the map.
 	long sx2 = 0, sy2 = 0;	   // The left side of the map.
@@ -482,6 +471,24 @@ void Scaler::PrivateMoveMap(int sx, int sy, double mx, double my)
 		myMax = myMaxLimit;
 		myMin = myMax - mHeight;
 		moy = (myMin + myMax) / 2;
+	}
+
+	// About a pole the x-axis has its ends as the y-axis has (on Mercator it goes round).
+	if (IsPolarProjection())
+	{
+		if (mxMin < mxMinLimit)
+		{
+			mxMin = mxMinLimit;
+			mxMax = mxMin + mWidth;
+			mox = (mxMin + mxMax) / 2;
+		}
+
+		if (mxMax > mxMaxLimit)
+		{
+			mxMax = mxMaxLimit;
+			mxMin = mxMax - mWidth;
+			mox = (mxMin + mxMax) / 2;
+		}
 	}
 }
 

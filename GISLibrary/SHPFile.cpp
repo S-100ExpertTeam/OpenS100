@@ -74,8 +74,7 @@ bool SHPFile::Open(const std::wstring& _filepath)
 	fdSHP.Read(&tmpMBR, sizeof(double));
 	m_pLayer->m_mbr.ymax = tmpMBR;
 
-	projection(m_pLayer->m_mbr.xmin, m_pLayer->m_mbr.ymin);
-	projection(m_pLayer->m_mbr.xmax, m_pLayer->m_mbr.ymax);
+	projection(m_pLayer->m_mbr);
 
 	// Get shape data
 	switch (m_nShapeType) 
@@ -136,8 +135,7 @@ bool SHPFile::Open(const std::wstring& _filepath)
 				fdSHP.Read(&tmpMBR, sizeof(double));
 				polylineMBR.ymax = tmpMBR;
 			
-				projection(polylineMBR.xmin, polylineMBR.ymin);
-				projection(polylineMBR.xmax, polylineMBR.ymax);
+				projection(polylineMBR);
 
 				// number of parts.
 				int numParts;
@@ -206,8 +204,7 @@ bool SHPFile::Open(const std::wstring& _filepath)
 				fdSHP.Read(&tmpMBR, sizeof(double));
 				polygonMBR.ymax = tmpMBR;
 				
-				projection(polygonMBR.xmin, polygonMBR.ymin);
-				projection(polygonMBR.xmax, polygonMBR.ymax);
+				projection(polygonMBR);
 
 				// num of the parts
 				int numParts;
@@ -260,8 +257,13 @@ bool SHPFile::OpenMetadata(const std::wstring& /*_filepath*/)
 
 void SHPFile::Draw(HDC &hDC, Scaler *scaler, double offset)
 {
-	double zero  = 0;
-	projection(offset, zero);
+	// The world a turn of longitude away (degrees): Mercator's x is the longitude in radians.
+	// About a pole there is no such copy.
+	if (IsPolarProjection() && offset != 0)
+	{
+		return;
+	}
+	offset *= ex;
 
 	for (unsigned int i = 0; i < m_nRecords; i++) {
 		GISLibrary::GdiRender::Draw(*m_pSHPObject[i], hDC, scaler, offset);

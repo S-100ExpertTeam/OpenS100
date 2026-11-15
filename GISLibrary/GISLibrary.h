@@ -5,6 +5,7 @@
 #include "S101Creator.h"
 #include "CatalogManager.h"
 
+#include "../GeoMetryLibrary/GeoCommonFuc.h"
 #include "../GeoMetryLibrary/Scaler.h"
 
 #include "../S100Engine/S100Render.h"
@@ -44,6 +45,11 @@ public:
 	void DeleteLayer(int index);
 	void DeleteLayer(const std::wstring& filepath);
 	void ReMBR();
+
+	// Changes the chart projection (Mercator, or stereographic about a pole) and reads every
+	// layer again in it. The view keeps its centre and scale; going to a polar projection from
+	// outside that polar region (60 degrees of latitude to the pole), it shows the region.
+	void SetMapProjection(MapProjection value);
 
 	void SetViewMBR(RECT r);
 

@@ -45,10 +45,13 @@ public:
 
 	double currentScale = 0;
 
-	double mxMinLimit = -179.9;
-	double myMinLimit = -84.9;
-	double mxMaxLimit = 179.9;
-	double myMaxLimit = 84.9;
+	// The world the chart projection can show (ProjectionLimits).
+	double mxMinLimit = 0;
+	double myMinLimit = 0;
+	double mxMaxLimit = 0;
+	double myMaxLimit = 0;
+	// Takes the limits of the chart projection again: after it changed.
+	void UpdateLimits();
 
 private:
 	int rotateDegree = 0;
