@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+#include "DeviceTypes.h"
 #include "Enum_S100_FileType.h"
 #include "Namespace_GISLibrary.h"
 #include "SpatialObjectType.h"

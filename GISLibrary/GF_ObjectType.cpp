@@ -4,7 +4,7 @@
 #include "GF_ComplexAttributeType.h"
 #include "ProcessS101.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <regex>
 #include <sstream>

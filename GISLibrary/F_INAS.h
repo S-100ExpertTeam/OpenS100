@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 
 #include "Field.h"
@@ -51,8 +52,8 @@ public:
 	static int GetSize();
 
 public:
-	void ReadField(BYTE *&buf);
-	void ReadField(BYTE *&buf, int loopCnt);
+	void ReadField(std::uint8_t *&buf);
+	void ReadField(std::uint8_t *&buf, int loopCnt);
 	bool WriteField(s100::io::BinaryWriter* file);
 	int GetFieldLength();
 

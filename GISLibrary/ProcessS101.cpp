@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "DebugOutput.h"
 #include "../GeoMetryLibrary/TextCodec.h"
 #include "ProcessS101.h"
 #include <stdexcept>
@@ -33,7 +34,7 @@
 #include "../PortrayalCatalogue/ViewingGroupLayer.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <libxml/parser.h>
 #include <libxml/tree.h>
@@ -205,17 +206,6 @@ ProcessS101::~ProcessS101()
 
 }
 
-void dump_com_error(_com_error &e)
-{
-	printf("Error\n");
-	printf("\a\t Code = %08lx\n", e.Error());
-	printf("\a\t Code meaning = %ws", e.ErrorMessage());
-	_bstr_t bstrSource(e.Source());
-	_bstr_t bstrDescription(e.Description());
-	printf("\a\tSource = %s\n", (LPCSTR)bstrSource);
-	printf("\a\tDescription = %s\n", (LPCSTR)bstrDescription);
-}
-
 int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 {
 	try {
@@ -270,17 +260,13 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 		KRS_LUA_SCRIPT_REFERENCE::SaveDrawingInstructions("..\\TEMP\\drawingCommands.txt");
 		KRS_LUA_SCRIPT_REFERENCE::RemoveResultDrawingInstructions();
 	}
-	catch (_com_error &e)
-	{
-		dump_com_error(e);
-	}
 	catch (const std::exception& e)
 	{
-		OutputDebugStringA(("Lua exception: " + std::string(e.what()) + "\n").c_str());
+		GISLibrary::DebugOutput("Lua exception: " + std::string(e.what()) + "\n");
 	}
 	catch (...)
 	{
-		OutputDebugStringA("Unknown Lua exception\n");
+		GISLibrary::DebugOutput("Unknown Lua exception\n");
 	}
 	return 0;
 }
@@ -318,12 +304,7 @@ int ProcessS101::ProcessS100_XSLT(std::string inputXmlPath, std::string mainRule
 	xmlDocPtr result = xsltApplyStylesheet(xslt, inputXml, params.data());
 
 	// Output the transformed XML
-	FILE* outFile = nullptr;
-	if (fopen_s(&outFile, outputXmlPath.c_str(), "wb") == 0 && outFile)
-	{
-		xsltSaveResultToFile(outFile, result, xslt);
-		fclose(outFile);
-	}
+	xsltSaveResultToFilename(outputXmlPath.c_str(), result, xslt, 0);
 
 	// Cleanup
 	xsltFreeStylesheet(xslt);
@@ -898,7 +879,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 
 			if (tag.compare("TextVerticalOffset") == 0)
 			{
-				OutputDebugString(L"A");
+				GISLibrary::DebugOutput(L"A");
 			}
 			else if (sizeForIndex == 2)
 			{
@@ -1132,7 +1113,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						}
 						else
 						{
-							//OutputDebugString(L"Error : Offset Value should have 2 arguments.");
+							//GISLibrary::DebugOutput(L"Error : Offset Value should have 2 arguments.");
 						}
 					}
 
@@ -1342,7 +1323,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 						}
 						else
 						{
-							//OutputDebugString(L"Error : Vector Point Value should have 3 arguments.");
+							//GISLibrary::DebugOutput(L"Error : Vector Point Value should have 3 arguments.");
 						}
 					}
 

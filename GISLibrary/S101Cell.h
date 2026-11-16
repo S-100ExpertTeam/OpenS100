@@ -1,4 +1,6 @@
 #pragma once
+#include "DeviceTypes.h"
+#include <cstdint>
 
 #include "S100SpatialObject.h"
 #include "R_DSGIR.h"
@@ -144,7 +146,7 @@ public:
 	bool HasOrientableCurve(pugi::xml_node& root, std::string id);
 	void AddOrientableCurve(pugi::xml_node& root, pugi::xml_node& prevNode, std::string odID, std::string refID);
 
-	bool ReadDDR(BYTE*& buf);
+	bool ReadDDR(std::uint8_t*& buf);
 	void SortByFeatureType();
 
 	bool MakeFullSpatialData();

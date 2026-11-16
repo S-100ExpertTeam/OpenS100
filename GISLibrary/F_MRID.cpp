@@ -39,7 +39,7 @@ F_MRID F_MRID::operator=(const F_MRID& other)
 	return *this;
 }
 
-void F_MRID::ReadField(BYTE*& buf)
+void F_MRID::ReadField(std::uint8_t*& buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);

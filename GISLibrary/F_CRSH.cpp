@@ -43,7 +43,7 @@ F_CRSH F_CRSH::operator=(const F_CRSH& other)
 	return *this;
 }
 
-void F_CRSH::ReadField(BYTE *&buf)
+void F_CRSH::ReadField(std::uint8_t *&buf)
 {
 	m_crix = *(buf++);
 	m_crst = *(buf++);

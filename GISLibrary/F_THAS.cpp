@@ -47,7 +47,7 @@ F_THAS F_THAS::operator=(const F_THAS& other)
 	return *this;
 }
 
-void F_THAS::ReadField(BYTE *&buf)
+void F_THAS::ReadField(std::uint8_t *&buf)
 {
 	while(*buf != 0x1E)
 	{
@@ -58,7 +58,7 @@ void F_THAS::ReadField(BYTE *&buf)
 	}
 }
 
-void F_THAS::ReadField(BYTE *&buf, int loopCnt)
+void F_THAS::ReadField(std::uint8_t *&buf, int loopCnt)
 {
 	for(int i = 0; i < loopCnt; i++)
 	{

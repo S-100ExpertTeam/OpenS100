@@ -144,7 +144,7 @@ int SGeometricFuc::overlap(double p1x, double p1y, SCurve *comPoly)
 			{
 				ret = 1;
 			}
-			else if (p3x <= p1x && p1x <= p4x && min(p3y, p4y) <= p1y && max(p3y, p4y) >= p1y)
+			else if (p3x <= p1x && p1x <= p4x && (std::min)(p3y, p4y) <= p1y && (std::max)(p3y, p4y) >= p1y)
 			{
 				ret = 1;
 			}
@@ -215,7 +215,7 @@ int SGeometricFuc::inside(double x, double y, SSurface *poly)
 			}
 		}
 
-		double max_px = max(max(poly->m_pPoints[i].x, poly->m_pPoints[i + 1].x) + 1, x + 1);
+		double max_px = (std::max)((std::max)(poly->m_pPoints[i].x, poly->m_pPoints[i + 1].x) + 1, x + 1);
 
 		ic = GeometricFuc::intersect_ccw(x, y, max_px, y, poly->m_pPoints[i].x, poly->m_pPoints[i].y, poly->m_pPoints[i + 1].x, poly->m_pPoints[i + 1].y);
 		icList[listIndex++] = ic;
@@ -225,7 +225,7 @@ int SGeometricFuc::inside(double x, double y, SSurface *poly)
 		}
 		if (ic == 0)
 		{
-			if (x > min(poly->m_pPoints[i].x, poly->m_pPoints[i + 1].x))
+			if (x > (std::min)(poly->m_pPoints[i].x, poly->m_pPoints[i + 1].x))
 			{
 				count = 0;
 				break;

@@ -46,7 +46,7 @@ F_PROJ F_PROJ::operator=(const F_PROJ& other)
 	return *this;
 }
 
-void F_PROJ::ReadField(BYTE *&buf)
+void F_PROJ::ReadField(std::uint8_t *&buf)
 {
 	m_prom = *(buf++);
 	m_prp1 = buf2double(buf, 8);
@@ -58,7 +58,7 @@ void F_PROJ::ReadField(BYTE *&buf)
 	m_fnor = buf2double(buf, 8);
 }
 
-void F_PROJ::ReadField(BYTE *&buf, int /*loopCnt*/)
+void F_PROJ::ReadField(std::uint8_t *&buf, int /*loopCnt*/)
 {
 	m_prom = *(buf++);
 	m_prp1 = buf2double(buf, 8);

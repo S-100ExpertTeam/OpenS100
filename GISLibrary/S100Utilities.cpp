@@ -2,7 +2,7 @@
 #include "S100Utilities.h"
 #include "GISLibrary.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <string>
 #include <filesystem>

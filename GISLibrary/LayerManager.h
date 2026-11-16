@@ -1,4 +1,5 @@
 #pragma once
+#include "DeviceTypes.h"
 #include <string>
 
 #include "S101Cell.h"

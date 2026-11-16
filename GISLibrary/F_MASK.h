@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 #include "Field.h"
 #include "RecordName.h"
@@ -19,14 +20,14 @@ public:
 
 private:
 	// Key : RCNM + RCID
-	std::unordered_map<__int64, MASK*> m_arr;
+	std::unordered_map<long long, MASK*> m_arr;
 
 public:
 	virtual F_MASK operator=(const F_MASK& other);
 
 public:
-	void ReadField(BYTE *&buf);
-	void ReadField(BYTE *&buf, int loopCnt);
+	void ReadField(std::uint8_t *&buf);
+	void ReadField(std::uint8_t *&buf, int loopCnt);
 	bool WriteField(s100::io::BinaryWriter* file);
 	int GetFieldLength();
 

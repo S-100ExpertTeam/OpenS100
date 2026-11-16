@@ -10,7 +10,7 @@ DRReader::~DRReader()
 {
 }
 
-bool DRReader::ReadReader(BYTE*& buf)
+bool DRReader::ReadReader(std::uint8_t*& buf)
 {
 	m_recordLength = atoi(buf, 5);
 	buf+= 7;

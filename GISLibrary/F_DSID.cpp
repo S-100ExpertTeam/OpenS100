@@ -64,7 +64,7 @@ F_DSID& F_DSID::operator=(const F_DSID& other)
 	return *this;
 }
 
-void F_DSID::ReadField(BYTE*& buf)
+void F_DSID::ReadField(std::uint8_t*& buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);

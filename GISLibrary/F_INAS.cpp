@@ -62,7 +62,7 @@ int F_INAS::GetSize()
 	return 10;
 }
 
-void F_INAS::ReadField(BYTE *&buf)
+void F_INAS::ReadField(std::uint8_t *&buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);
@@ -81,7 +81,7 @@ void F_INAS::ReadField(BYTE *&buf)
 	}
 }
 
-void F_INAS::ReadField(BYTE *&buf, int loopCnt)
+void F_INAS::ReadField(std::uint8_t *&buf, int loopCnt)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);

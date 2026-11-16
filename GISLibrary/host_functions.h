@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\\LuaScriptingReference\\Result_DrawingInstruction.h"
+#include "../LuaScriptingReference/Result_DrawingInstruction.h"
 
 #include <list>
 

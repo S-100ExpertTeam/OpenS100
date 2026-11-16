@@ -2,7 +2,7 @@
 #include "SENC_ColorFill.h"
 #include "SENC_Color.h"
 
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 SENC_ColorFill::SENC_ColorFill()
 {

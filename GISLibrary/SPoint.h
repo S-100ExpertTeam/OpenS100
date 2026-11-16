@@ -17,8 +17,6 @@ public:
 	double x = 0;
 	double y = 0;
 
-	// It also has a CPoint arrangement to minimize memory allocation and recovery.
-	POINT m_vPoint = {0, 0};
 
 public:
 	virtual SPoint operator=(const SPoint& other);

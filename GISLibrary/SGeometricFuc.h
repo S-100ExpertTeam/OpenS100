@@ -1,4 +1,5 @@
 #pragma once
+#include "DeviceTypes.h"
 #include "SPoint.h"
 #include "SCurve.h"
 #include "SCompositeCurve.h"

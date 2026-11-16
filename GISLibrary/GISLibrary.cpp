@@ -247,7 +247,7 @@ std::wstring CGISLibraryApp::GetLayerName(int index)
 {
 	return m_pLayerManager->GetLayerName(index);
 }
-BOOL CGISLibraryApp::IsOn(int index)
+bool CGISLibraryApp::IsOn(int index)
 {
 	return m_pLayerManager->IsOn(index);
 }

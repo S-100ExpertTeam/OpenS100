@@ -1,4 +1,6 @@
 #pragma once
+#include "DeviceTypes.h"
+#include <cstdint>
 
 #include "S100SpatialObject.h"
 

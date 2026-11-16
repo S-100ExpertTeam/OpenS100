@@ -54,7 +54,7 @@ F_CodeWithNumericCode F_CodeWithNumericCode::operator=(const F_CodeWithNumericCo
 	return *this;
 }
 
-void F_CodeWithNumericCode::ReadField(BYTE *&buf)
+void F_CodeWithNumericCode::ReadField(std::uint8_t *&buf)
 {
 	while (*buf != 0x1E)
 	{
@@ -68,7 +68,7 @@ void F_CodeWithNumericCode::ReadField(BYTE *&buf)
 	}
 }
 
-void F_CodeWithNumericCode::ReadField(BYTE *&buf, int loopCnt)
+void F_CodeWithNumericCode::ReadField(std::uint8_t *&buf, int loopCnt)
 {
 	for (int i = 0; i < loopCnt; i++)
 	{

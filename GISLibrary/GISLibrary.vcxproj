@@ -414,6 +414,7 @@
     <ClCompile Include="DataOrganizationIndex.cpp" />
     <ClCompile Include="dataProduct.cpp" />
     <ClCompile Include="DatasetLayerSet.cpp" />
+    <ClCompile Include="DebugOutput.cpp" />
     <ClCompile Include="DatasetPermit.cpp" />
     <ClCompile Include="DataStatus.cpp" />
     <ClCompile Include="DDR.cpp" />
@@ -761,6 +762,8 @@
     <ClInclude Include="DataOrganizationIndex.h" />
     <ClInclude Include="dataProduct.h" />
     <ClInclude Include="DatasetLayerSet.h" />
+    <ClInclude Include="DebugOutput.h" />
+    <ClInclude Include="DeviceTypes.h" />
     <ClInclude Include="DatasetPermit.h" />
     <ClInclude Include="DataStatus.h" />
     <ClInclude Include="DirectPosition.h" />

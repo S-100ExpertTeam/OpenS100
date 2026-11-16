@@ -57,7 +57,7 @@ F_FASC F_FASC::operator=(const F_FASC& other)
 	return *this;
 }
 
-void F_FASC::ReadField(BYTE *&buf)
+void F_FASC::ReadField(std::uint8_t *&buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);
@@ -66,7 +66,7 @@ void F_FASC::ReadField(BYTE *&buf)
 	m_faui = *(buf++);
 }
 
-void F_FASC::ReadField(BYTE *&buf, int /*loopCnt*/)
+void F_FASC::ReadField(std::uint8_t *&buf, int /*loopCnt*/)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);

@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include <cstddef>
 #include <string>
 #include <string_view>
@@ -7,13 +8,13 @@
 #include "../GeoMetryLibrary/TextCodec.h"
 
 // Reads a UTF-8 text subfield up to the unit terminator (consumed) into a wide string.
-void buf2charArr(std::wstring& dest, BYTE*& buf);
+void buf2charArr(std::wstring& dest, std::uint8_t*& buf);
 // Reads exactly `len` bytes of UTF-8 text into a wide string.
-void buf2charArr(std::wstring& dest, BYTE*& buf, int len);
-DWORD buf2uint(BYTE*& buf, int len);
-double buf2double(BYTE*& buf, int size);
-DWORD buf2int(BYTE*& buf, int len);
-DWORD atoi(BYTE*& buf, int len);
+void buf2charArr(std::wstring& dest, std::uint8_t*& buf, int len);
+std::uint32_t buf2uint(std::uint8_t*& buf, int len);
+double buf2double(std::uint8_t*& buf, int size);
+std::uint32_t buf2int(std::uint8_t*& buf, int len);
+std::uint32_t atoi(std::uint8_t*& buf, int len);
 
 int asNumeric( wchar_t wch );
 wchar_t const* const digitTables[] =

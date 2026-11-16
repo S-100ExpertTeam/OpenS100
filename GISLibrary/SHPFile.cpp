@@ -31,7 +31,7 @@ bool SHPFile::Open(const std::wstring& _filepath)
 	if (!fdSHP.Open(_filepath))
 	{
 		//OutputDebugString(_T("SHP File Open Error!"));
-		return FALSE;
+		return false;
 	}
 
 	// Path of the SHX file: same name, extension swapped.
@@ -41,7 +41,7 @@ bool SHPFile::Open(const std::wstring& _filepath)
 	if (!fdSHX.Open(ShxFilePath))
 	{
 		//OutputDebugString(_T("SHX File Open Error!"));
-		return FALSE;
+		return false;
 	}
 
 	// Find out the number of records.
@@ -60,7 +60,7 @@ bool SHPFile::Open(const std::wstring& _filepath)
 
 	if (!((m_nShapeType == GEOPOINT) || (m_nShapeType == GEOPOLYLINE) || (m_nShapeType == GEOPOLYGON))) {
 		//OutputDebugString(_T("Invalid shape type.\n"));
-		return FALSE;
+		return false;
 	}
 
 	// Get a MBR
@@ -247,7 +247,7 @@ bool SHPFile::Open(const std::wstring& _filepath)
 	}
 	
 
-	return TRUE;
+	return true;
 }
 
 bool SHPFile::OpenMetadata(const std::wstring& /*_filepath*/)

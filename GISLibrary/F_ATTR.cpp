@@ -47,7 +47,7 @@ F_ATTR F_ATTR::operator=(const F_ATTR& other)
 	return *this;
 }
 
-void F_ATTR::ReadField(BYTE *&buf)
+void F_ATTR::ReadField(std::uint8_t *&buf)
 {
 	while (*buf != 0x1E)
 	{
@@ -62,7 +62,7 @@ void F_ATTR::ReadField(BYTE *&buf)
 	}
 }
 
-void F_ATTR::ReadField(BYTE *&buf, int loopCnt)
+void F_ATTR::ReadField(std::uint8_t *&buf, int loopCnt)
 {
 	for(int i = 0; i < loopCnt; i++)
 	{

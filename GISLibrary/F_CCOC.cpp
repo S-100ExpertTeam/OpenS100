@@ -36,7 +36,7 @@ int F_CCOC::GetSize()
 	return 5;
 }
 
-void F_CCOC::ReadField(BYTE*& buf)
+void F_CCOC::ReadField(std::uint8_t*& buf)
 {
 	m_ccui = buf2uint(buf, 1);
 	m_ccix = buf2uint(buf, 2);

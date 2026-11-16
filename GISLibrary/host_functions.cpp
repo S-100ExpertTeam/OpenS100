@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "DebugOutput.h"
 //#include "stdio.h"
 #include "host_functions.h"
 #include "host_data.h"
@@ -523,14 +524,14 @@ int HostDebuggerEntry(lua_State *l)
 		auto text = "Lua debugger: " + ls->peek<std::string>(2);
 		//std::cout << '\t\n' << text << std::endl;
 		text.append("\n");
-		OutputDebugStringA(text.c_str());
+		GISLibrary::DebugOutput(text);
 	}
 	//else
 	//{
 	//	auto text = ls->peek<std::string>(2);
 	//	//std::cout << '\t\n' << text << std::endl;
 	//	text.append("\n");
-	//	OutputDebugStringA(text.c_str());
+	//	GISLibrary::DebugOutput(text);
 	//}
 
 	return 0;

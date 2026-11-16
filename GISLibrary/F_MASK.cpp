@@ -51,7 +51,7 @@ F_MASK F_MASK::operator=(const F_MASK& other)
 	return *this;
 }
 
-void F_MASK::ReadField(BYTE*& buf)
+void F_MASK::ReadField(std::uint8_t*& buf)
 {
 	while (*buf != 0x1E)
 	{
@@ -66,7 +66,7 @@ void F_MASK::ReadField(BYTE*& buf)
 	}
 }
 
-void F_MASK::ReadField(BYTE*& buf, int loopCnt)
+void F_MASK::ReadField(std::uint8_t*& buf, int loopCnt)
 {
 	for (int i = 0; i < loopCnt; i++)
 	{

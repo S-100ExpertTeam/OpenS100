@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 #include "R_VectorRecord.h"
 #include "F_CCID.h"
@@ -29,7 +30,7 @@ public:
 	virtual R_CompositeRecord operator=(const R_CompositeRecord& other);
 
 public:
-	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool ReadRecord(DRDirectoryInfo *dir, std::uint8_t*& buf);
 	bool WriteRecord(s100::io::BinaryWriter* file);
 	RecordName GetRecordName();
 

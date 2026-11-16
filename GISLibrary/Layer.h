@@ -1,9 +1,10 @@
 #pragma once
+#include "DeviceTypes.h"
 #include <string>
 #include "Namespace_GISLibrary.h"
 #include "Enum_S100_FileType.h"
 
-#include "..\\GeoMetryLibrary\\MBR.h"
+#include "../GeoMetryLibrary/MBR.h"
 
 using namespace GISLibrary;
 

@@ -1,6 +1,7 @@
 #pragma once
+#include "DeviceTypes.h"
 #include <string>
-#include "spatialobject.h"
+#include "SpatialObject.h"
 #include "ExchangeCatalogue.h"
 
 #include "DatasetLayerSet.h"

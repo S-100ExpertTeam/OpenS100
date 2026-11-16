@@ -5,7 +5,7 @@
 #include "SENC_Dash.h"
 #include "SENC_LineSymbol.h"
 
-#include "..\\PortrayalCatalogue\\S100_LineStyle.h"
+#include "../PortrayalCatalogue/S100_LineStyle.h"
 
 #include <list>
 

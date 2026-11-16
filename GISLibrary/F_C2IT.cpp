@@ -31,7 +31,7 @@ F_C2IT F_C2IT::operator=(const F_C2IT& other)
 	return *this;
 }
 
-void F_C2IT::ReadField(BYTE *&buf)
+void F_C2IT::ReadField(std::uint8_t *&buf)
 {
 	m_ycoo = buf2int(buf, 4);
 	m_xcoo = buf2int(buf, 4);

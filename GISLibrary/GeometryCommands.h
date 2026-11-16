@@ -2,7 +2,7 @@
 #include "StateCommand.h"
 #include "PointParameter.h"
 
-#include "..\\GeoMetryLibrary\\GeoPoint.h"
+#include "../GeoMetryLibrary/GeoPoint.h"
 #include "../PortrayalCatalogue/GraphicBasePackage_Enum.h"
 
 namespace Part9a

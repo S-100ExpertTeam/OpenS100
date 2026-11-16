@@ -93,7 +93,7 @@ bool SCompositeCurve::ImportFromWkb(unsigned char* value, int size)
 
 	int type = 0;
 
-	memcpy_s(&type, 4, value + 1, 4);
+	memcpy(&type, value + 1, 4);
 
 	if (type == (int)WKBGeometryType::wkbLineString)
 	{
@@ -105,7 +105,7 @@ bool SCompositeCurve::ImportFromWkb(unsigned char* value, int size)
 	{
 		int numLineStrings = 0;
 
-		memcpy_s(&numLineStrings, 4, value + 5, 4);
+		memcpy(&numLineStrings, value + 5, 4);
 
 		int offset = 0;
 		for (int i = 0; i < numLineStrings; i++)
@@ -139,10 +139,10 @@ bool SCompositeCurve::ExportToWkb(unsigned char** value, int* size)
 
 	int type = (int)WKBGeometryType::wkbLineString;
 
-	memcpy_s((*value) + 1, 4, &type, 4);
+	memcpy((*value) + 1, &type, 4);
 
 	int numPoints = GetPointCount();
-	memcpy_s((*value) + 5, 4, &numPoints, 4);
+	memcpy((*value) + 5, &numPoints, 4);
 
 	for (int i = 0; i < numPoints; i++)
 	{
@@ -151,8 +151,8 @@ bool SCompositeCurve::ExportToWkb(unsigned char** value, int* size)
 
 		inverseProjection(p.x, p.y);
 
-		memcpy_s((*value) + (9 + (16 * i)), 8, &p.x, 8);
-		memcpy_s((*value) + (17 + (16 * i)), 8, &p.y, 8);
+		memcpy((*value) + (9 + (16 * i)), &p.x, 8);
+		memcpy((*value) + (17 + (16 * i)), &p.y, 8);
 	}
 
 	return true;
@@ -171,10 +171,10 @@ bool SCompositeCurve::ExportToWkbMultiLineString(unsigned char** value, int* siz
 
 	int type = (int)WKBGeometryType::wkbMultiLineString;
 
-	memcpy_s((*value) + 1, 4, &type, 4);
+	memcpy((*value) + 1, &type, 4);
 
 	int numLineStrings = (int)m_listCurveLink.size();
-	memcpy_s((*value) + 5, 4, &numLineStrings, 4);
+	memcpy((*value) + 5, &numLineStrings, 4);
 
 	int offset = 0;
 	for (auto i = m_listCurveLink.begin(); i != m_listCurveLink.end(); i++)

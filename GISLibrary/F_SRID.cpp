@@ -39,7 +39,7 @@ F_SRID F_SRID::operator=(const F_SRID& other)
 	return *this;
 }
 
-void F_SRID::ReadField(BYTE *&buf)
+void F_SRID::ReadField(std::uint8_t *&buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);

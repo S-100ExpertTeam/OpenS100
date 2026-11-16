@@ -40,7 +40,7 @@ F_FRID F_FRID::operator=(const F_FRID& other)
 	return *this;
 }
 
-void F_FRID::ReadField(BYTE*& buf)
+void F_FRID::ReadField(std::uint8_t*& buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);

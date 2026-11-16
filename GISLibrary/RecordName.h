@@ -29,7 +29,7 @@ public:
 	int RCID = 0;
 
 public:
-	__int64 GetName();
+	long long GetName();
 	int GetLength();
 	std::string GetRCIDasString(std::string prefix = "");
 	std::wstring GetRCIDasWstring();

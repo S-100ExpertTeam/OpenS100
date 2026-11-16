@@ -4,14 +4,13 @@
 #include "S101Cell.h"
 
 #include "R_FeatureRecord.h"
-#include "GISLibrary.h"
 #include "S100Layer.h"
 #include "SENC_CommonFuc.h"
 #include "SENC_LineStyle.h"
 #include "SENC_ColorFill.h"
 #include "SENC_AreaFillReference.h"
 #include "SENC_SymbolFill.h"
-#include "SENC_PixmapFill.h"
+#include "SENC_pixmapFill.h"
 #include "SENC_HatchFill.h"
 #include "SENC_SpatialReference.h"
 #include "SENC_DisplayList.h"
@@ -40,8 +39,8 @@
 #include "../PortrayalCatalogue/S100_AugmentedRay.h"
 #include "../PortrayalCatalogue/S100_AlertReference.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/LatLonUtility.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
@@ -187,7 +186,7 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 {
 	si->displayPlane = tp->GetDisplayPlane().compare("UNDERRADAR") == 0 ? 0 : 1;
 	si->drawingPriority = tp->GetDrawingProiority();
-	si->addVewingGroup(_wtoi(tp->GetViewingGroupW(0).c_str()));
+	si->addVewingGroup(static_cast<int>(std::wcstol(tp->GetViewingGroupW(0).c_str(), nullptr, 10)));
 	si->featureReference = tp->GetFeatureReference();
 	si->scaleMinimum = tp->GetScaleMinimum();
 	si->scaleMaximum = tp->GetScaleMaximum();
@@ -214,7 +213,7 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 		}
 		
 		//ssr->SetRCNM(sr->GetType());
-		//ssr->reference = _wtoi(sr->GetReference().c_str());
+		//ssr->reference = static_cast<int>(std::wcstol(sr->GetReference().c_str(), nullptr, 10));
 		ssr->bForward = sr->isForward();
 
 		si->spatialReference.push_back(ssr);

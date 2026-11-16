@@ -1,5 +1,28 @@
 #pragma once
 
+// Standard headers the sources of this project rely on through the precompiled header.
+#include <algorithm>
+#include <cassert>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <filesystem>
+#include <fstream>
+#include <functional>
+#include <list>
+#include <map>
+#include <memory>
+#include <optional>
+#include <set>
+#include <sstream>
+#include <string>
+#include <unordered_map>
+#include <variant>
+#include <vector>
+
+#ifdef _WIN32
 #ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN           
 #endif
@@ -17,8 +40,11 @@
 #include <atlbase.h>
 #include <atlconv.h>
 #include <atlsafe.h>
+#endif // _WIN32
 
 #include "Common.h"
+
+#ifdef _WIN32
 #include <gdiplus.h>
 // GDI+ names were previously pulled in unqualified through a PortrayalCatalogue header; keep
 // that for the legacy GDI drawing code in this project until it moves to the renderer.
@@ -50,3 +76,4 @@ inline void SafeRelease(Interface **ppInterfaceToRelease)
 }
 
 #endif
+#endif // _WIN32

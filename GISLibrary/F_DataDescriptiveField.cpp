@@ -153,7 +153,7 @@ bool F_DataDescriptiveField::WriteField(s100::io::BinaryWriter* file)
 
 	ddf = Replace(ddf);
 
-	file->Write(ddf.data(), (UINT)ddf.size());
+	file->Write(ddf.data(), (unsigned int)ddf.size());
 
 	return true;
 }

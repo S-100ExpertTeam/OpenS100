@@ -118,7 +118,7 @@ R_DSGIR R_DSGIR::operator=(const R_DSGIR& other)
 }
 
 #pragma warning(disable:4018)
-BOOL R_DSGIR::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
+bool R_DSGIR::ReadRecord(DRDirectoryInfo* dir, std::uint8_t*& buf)
 {
 	//USES_CONVERSION;
 	for (unsigned i = 0; i < dir->m_count; i++)

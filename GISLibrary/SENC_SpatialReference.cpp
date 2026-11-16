@@ -37,5 +37,5 @@ void SENC_SpatialReference::SetRCNM(std::wstring& value)
 
 long long SENC_SpatialReference::GetRecordName()
 {
-	return ((__int64)RCNM) << 32 | (int)reference;
+	return ((long long)RCNM) << 32 | (int)reference;
 }

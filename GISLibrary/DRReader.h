@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 
 #define DR_LENGTH			24
 #define RECORD_LENGTH		5
@@ -22,5 +23,5 @@ public:
 	int m_fieldPosition;
 
 public:
-	bool ReadReader(BYTE*& buf);
+	bool ReadReader(std::uint8_t*& buf);
 };

@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 
 #include "S100_GF.h"
@@ -28,7 +29,7 @@ public:
 	virtual R_InformationRecord operator=(const R_InformationRecord& other);
 
 public:
-	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool ReadRecord(DRDirectoryInfo *dir, std::uint8_t*& buf);
 	bool WriteRecord(s100::io::BinaryWriter* file);
 	RecordName GetRecordName();
 

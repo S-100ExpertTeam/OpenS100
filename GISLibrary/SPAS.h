@@ -5,7 +5,7 @@ struct SPAS {
 public:
 	SPAS();
 	SPAS(const SPAS& other);
-	SPAS(RecordName name, int ornt, UINT smin, UINT smax, int saui);
+	SPAS(RecordName name, int ornt, unsigned int smin, unsigned int smax, int saui);
 	virtual ~SPAS();
 
 public:

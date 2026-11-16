@@ -10,6 +10,11 @@
 
 namespace GISLibrary
 {
+	DatasetLayerSet::DatasetLayerSet(LayerManager& drawer, Opener opener)
+		: DatasetLayerSet(drawer, std::move(opener), CacheLimit{})
+	{
+	}
+
 	DatasetLayerSet::DatasetLayerSet(LayerManager& drawer, Opener opener, CacheLimit cacheLimit)
 		: drawer_(&drawer), opener_(std::move(opener)), cost_(std::move(cacheLimit.cost)), cache_(cacheLimit.capacity)
 	{

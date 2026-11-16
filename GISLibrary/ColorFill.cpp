@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "ColorFill.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/LatLonUtility.h"
+#include "../LatLonUtility/cpp_util.h"
 
 namespace Part9a
 {

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GM_Object.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <regex>
 

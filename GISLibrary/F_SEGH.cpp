@@ -37,7 +37,7 @@ F_SEGH F_SEGH::operator=(const F_SEGH& other)
 	return *this;
 }
 
-void F_SEGH::ReadField(BYTE *&buf)
+void F_SEGH::ReadField(std::uint8_t *&buf)
 {
 	m_intp = *(buf++);
 }

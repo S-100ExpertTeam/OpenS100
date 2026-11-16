@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 #include "R_VectorRecord.h"
 #include "F_CRID.h"
@@ -50,7 +51,7 @@ public:
 	virtual R_CurveRecord operator=(const R_CurveRecord& other);
 
 public:
-	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool ReadRecord(DRDirectoryInfo *dir, std::uint8_t*& buf);
 	bool WriteRecord(s100::io::BinaryWriter* file);
 	RecordName GetRecordName();
 
@@ -68,9 +69,7 @@ public:
 	void SetSEGH(int intp = 4, int circ = 0, double ycoo = 0, double xcoo = 0, double dist = 0, int disu = 0, double sbrg = 0, double angl = 0);
 
 	void InsertC2IL(int x, int y);
-	void InsertC2IL(int cmfx, int cmfy, SAFEARRAY* xcoo, SAFEARRAY* ycoo);
 
-	void GetC2IL(double cmfx, double cmfy, SAFEARRAY** xcoo, SAFEARRAY** ycoo);
 
 	int GetBeginningPointRCID();
 	int GetEndPointRCID();

@@ -15,7 +15,6 @@ SPoint::SPoint(const SPoint& other) : SGeometry(other)
 {
 	x = other.x;
 	y = other.y;
-	m_vPoint = other.m_vPoint;
 }
 
 SPoint::SPoint(double _x, double _y)
@@ -35,7 +34,6 @@ SPoint SPoint::operator=(const SPoint& other)
 {
 	x = other.x;
 	y = other.y;
-	m_vPoint = other.m_vPoint;
 
 	return *this;
 }
@@ -67,15 +65,15 @@ bool SPoint::ImportFromWkb(unsigned char* value, int size)
 
 	int type = 0;
 
-	memcpy_s(&type, 4, value + 1, 4);
+	memcpy(&type, value + 1, 4);
 
 	if (type != (int)WKBGeometryType::wkbPoint)
 	{
 		return false;
 	}
 
-	memcpy_s(&x, 8, value + 5, 8);
-	memcpy_s(&y, 8, value + 13, 8);
+	memcpy(&x, value + 5, 8);
+	memcpy(&y, value + 13, 8);
 
 	projection(x, y);
 
@@ -96,15 +94,15 @@ bool SPoint::ExportToWkb(unsigned char** value, int* size)
 	(*value)[0] = 0x01;
 	
 	int type = (int)WKBGeometryType::wkbPoint;
-	memcpy_s((*value) + 1, 4, &type, 4);
+	memcpy((*value) + 1, &type, 4);
 
 	double localX = x;
 	double localY = y;
 
 	inverseProjection(localX, localY);
 
-	memcpy_s((*value) + 5, 8, &localX, 8);
-	memcpy_s((*value) + 13, 8, &localY, 8);
+	memcpy((*value) + 5, &localX, 8);
+	memcpy((*value) + 13, &localY, 8);
 
 	return true;
 }

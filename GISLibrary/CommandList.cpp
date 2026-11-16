@@ -12,7 +12,7 @@
 #include "DrawingCommands.h"
 #include "PointInstruction.h"
 
-#include "..\\PortrayalCatalogue\\S100_Instruction.h"
+#include "../PortrayalCatalogue/S100_Instruction.h"
 
 #include <unordered_map>
 #include <memory>

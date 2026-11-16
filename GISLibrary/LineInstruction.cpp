@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "LineInstruction.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "../LatLonUtility/LatLonUtility.h"
 
 namespace Part9a
 {

@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 
 #include "Field.h"
@@ -28,7 +29,7 @@ public:
     virtual F_FieldControlField operator=(const F_FieldControlField& other);
     
 public:
-    void ReadField(BYTE*& /*buf*/) {};
+    void ReadField(std::uint8_t*& /*buf*/) {};
     bool WriteField(s100::io::BinaryWriter* file);
     void AddTagPair(const char* tag1, const char* tag2);
     int GetFieldLength();

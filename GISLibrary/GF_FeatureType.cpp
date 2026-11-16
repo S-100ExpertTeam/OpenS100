@@ -8,7 +8,7 @@
 #include "SCurve.h"
 #include "SCoverage.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <regex>
 

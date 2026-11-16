@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "S100PCLineStylesReader.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/LatLonUtility.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <iostream>
 #include <filesystem>

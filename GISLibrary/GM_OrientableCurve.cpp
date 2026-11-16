@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "GM_OrientableCurve.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <regex>
 

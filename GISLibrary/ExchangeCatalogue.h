@@ -7,15 +7,19 @@
 #include "CatalogueDiscoveryMetadata.h"
 #include "SupportFileDiscoveryMetadata.h"
 #include "PT_Locale.h"
-#include "CataloguePointOfContact.h"
+#include "CataloguePointofContact.h"
 #include "pugiSupportClass.h"
-#include "../GISLibrary/D2D1Resources.h"
 #include "../GeoMetryLibrary/Scaler.h"
 
 #include <filesystem>
 #include <string>
 #include <memory>
 #include <vector>
+
+namespace GISLibrary
+{
+	class D2D1Resources;
+}
 
 namespace S100
 {

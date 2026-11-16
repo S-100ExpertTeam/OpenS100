@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SENC_SymbolFill.h"
 
-#include "..\\S100Engine\\AreaFill.h"
+#include "../S100Engine/AreaFill.h"
 
 SENC_SymbolFill::SENC_SymbolFill()
 {

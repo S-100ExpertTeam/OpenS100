@@ -3,7 +3,7 @@
 
 void ToLower(std::wstring& str)
 {
-	BOOL bStartExtension = FALSE;
+	bool bStartExtension = false;
 
 	std::wstring::iterator it = str.begin();
 	while (it != str.end())
@@ -13,7 +13,7 @@ void ToLower(std::wstring& str)
 
 		if (bStartExtension)
 		{
-			bStartExtension = FALSE;
+			bStartExtension = false;
 		}
 		else
 		{
@@ -24,7 +24,7 @@ void ToLower(std::wstring& str)
 			}
 			else
 			{
-				bStartExtension = TRUE;
+				bStartExtension = true;
 			}
 		}
 
@@ -225,11 +225,11 @@ int SENC_CommonFuc::GetLinePlacement(std::wstring name)
 	ToLower(name);
 	if (!name.compare(L"relative"))
 	{
-		return RELATIVE;
+		return 2; // relative
 	}
 	else if (!name.compare(L"absolute"))
 	{
-		return ABSOLUTE;
+		return 1; // absolute
 	}
 	return 0;
 }

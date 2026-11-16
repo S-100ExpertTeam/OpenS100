@@ -9,7 +9,7 @@
 #include "PortrayalRenderCache.h"
 #include "ProcessS101.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 

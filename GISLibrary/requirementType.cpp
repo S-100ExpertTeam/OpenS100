@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "RequirementType.h"
+#include "requirementType.h"
 
 namespace S100 {
 

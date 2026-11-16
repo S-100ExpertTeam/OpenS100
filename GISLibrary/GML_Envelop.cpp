@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/LatLonUtility.h"
+#include "../LatLonUtility/cpp_util.h"
 
 namespace S100GML
 {

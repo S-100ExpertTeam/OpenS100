@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "DebugOutput.h"
 #include "R_DSCRS.h"
 #include "DRDirectoryInfo.h"
 #include "F_VDAT.h"
@@ -68,7 +69,7 @@ R_DSCRS R_DSCRS::operator=(const R_DSCRS& other)
 
 #pragma warning(disable:4244)
 #pragma warning(disable:4018)
-BOOL R_DSCRS::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
+bool R_DSCRS::ReadRecord(DRDirectoryInfo* dir, std::uint8_t*& buf)
 {
 	Release();
 
@@ -101,11 +102,11 @@ BOOL R_DSCRS::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 
 		if (*(buf++) != 0x1E)
 		{
-			OutputDebugString(L"terminator error\n");
+			GISLibrary::DebugOutput(L"terminator error\n");
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 bool R_DSCRS::WriteRecord(s100::io::BinaryWriter* file)

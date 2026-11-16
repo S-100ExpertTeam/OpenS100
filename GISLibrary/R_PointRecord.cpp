@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "DebugOutput.h"
 #include "R_PointRecord.h"
 #include "DRDirectoryInfo.h"
 #include "F_C2IT.h"
@@ -56,7 +57,7 @@ R_PointRecord R_PointRecord::operator=(const R_PointRecord& other)
 	return *this;
 }
 
-BOOL R_PointRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
+bool R_PointRecord::ReadRecord(DRDirectoryInfo* dir, std::uint8_t*& buf)
 {
 	int i = 0;
 	for (i = 0; i < dir->m_count; i++)
@@ -93,10 +94,10 @@ BOOL R_PointRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 		}
 
 		if (*(buf++) != 0x1E)//{}
-			OutputDebugStringW(L"terminator error\n");
+			GISLibrary::DebugOutput(L"terminator error\n");
 	}
 
-	return TRUE;
+	return true;
 }
 
 bool R_PointRecord::WriteRecord(s100::io::BinaryWriter* file)

@@ -1,4 +1,6 @@
 #pragma once
+#include "DeviceTypes.h"
+#include <cstdint>
 #include "BinaryWriter.h"
 
 #include "R_VectorRecord.h"
@@ -49,7 +51,7 @@ public:
 	virtual R_FeatureRecord operator=(const R_FeatureRecord& other);
 
 public:
-	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool ReadRecord(DRDirectoryInfo *dir, std::uint8_t*& buf);
 	bool WriteRecord(s100::io::BinaryWriter* file);
 	RecordName GetRecordName();
 

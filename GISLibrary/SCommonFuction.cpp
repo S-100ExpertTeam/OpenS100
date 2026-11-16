@@ -3,7 +3,6 @@
 #include "SPoint.h"
 #include "SCurve.h"
 #include "SSurface.h"
-#include "GISLibrary.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 
@@ -25,7 +24,7 @@ void SCommonFuction::CalculateCenterOfGravityOfSurface(std::vector<POINT> &vp, S
 
 	for (int count = 0; count < _surface->getNumPoint(); count++)
 	{
-		LONG x = 0, y = 0;
+		long x = 0, y = 0;
 		pScaler->WorldToDevice(_surface->m_pPoints[count].x, _surface->m_pPoints[count].y, &x, &y);
 		SGeometry::viewPoints[count].x = x;
 		SGeometry::viewPoints[count].y = y;
@@ -268,8 +267,8 @@ POINT SCommonFuction::CalculateCenterOfGravityOfSurface(ClipperLib::Path polygon
 	centerY = centerY / (6.0 * area);
 
 	POINT returnValue;
-	returnValue.x = (LONG)centerX;
-	returnValue.y = (LONG)centerY;
+	returnValue.x = (long)centerX;
+	returnValue.y = (long)centerY;
 
 	return returnValue;
 }
@@ -290,8 +289,8 @@ POINT SCommonFuction::GetOffsetPointOnLine(POINT _p1, POINT _p2, double offset)
 	double angle = GetAngle(_p1, _p2);  // The angle of the line in the positive direction of the x-axis.
 
 	POINT returnValue;
-	returnValue.x = (LONG)(_p1.x + offset * cos(angle));
-	returnValue.y = (LONG)(_p1.y + offset * sin(angle));
+	returnValue.x = (long)(_p1.x + offset * cos(angle));
+	returnValue.y = (long)(_p1.y + offset * sin(angle));
 
 	return returnValue;
 }
@@ -342,13 +341,13 @@ void SCommonFuction::CutLineToIntersect(POINT &_s1, POINT &_e1, POINT _s2, POINT
 		viewPort->bottom	< _s1.y ||
 		viewPort->top	> _s1.y)
 	{
-		_s1.x = (LONG)x;
-		_s1.y = (LONG)y;
+		_s1.x = (long)x;
+		_s1.y = (long)y;
 	}
 	else
 	{
-		_e1.x = (LONG)x;
-		_e1.y = (LONG)y;
+		_e1.x = (long)x;
+		_e1.y = (long)y;
 	}
 }
 
@@ -488,7 +487,7 @@ int SCommonFuction::inside(double x, double y, SSurface* poly, bool /*applyOptio
 			}
 		}
 
-		double max_px = max(max(poly->m_pPoints[i].x, poly->m_pPoints[i + 1].x) + 1, x + 1);
+		double max_px = (std::max)((std::max)(poly->m_pPoints[i].x, poly->m_pPoints[i + 1].x) + 1, x + 1);
 
 		ic = intersect_ccw(x, y, max_px, y, poly->m_pPoints[i].x, poly->m_pPoints[i].y, poly->m_pPoints[i + 1].x, poly->m_pPoints[i + 1].y);
 		icList[listIndex++] = ic;
@@ -498,7 +497,7 @@ int SCommonFuction::inside(double x, double y, SSurface* poly, bool /*applyOptio
 		}
 		if (ic == 0)
 		{
-			if (x > min(poly->m_pPoints[i].x, poly->m_pPoints[i + 1].x))
+			if (x > (std::min)(poly->m_pPoints[i].x, poly->m_pPoints[i + 1].x))
 			{
 				count = 0;
 				break;
@@ -713,7 +712,7 @@ int SCommonFuction::intersect_ccw(double p1x, double p1y, double p2x, double p2y
 		{
 			return 22;
 		}
-		else if (p3x <= p1x && p1x <= p4x && min(p3y, p4y) <= p1y && max(p3y, p4y) >= p1y)
+		else if (p3x <= p1x && p1x <= p4x && (std::min)(p3y, p4y) <= p1y && (std::max)(p3y, p4y) >= p1y)
 		{
 			if (r342 == 1) // clockwise
 			{
@@ -748,7 +747,7 @@ int SCommonFuction::intersect_ccw(double p1x, double p1y, double p2x, double p2y
 		{
 			return 22;
 		}
-		else if (p3x <= p2x && p2x <= p4x && min(p3y, p4y) <= p2y && max(p3y, p4y) >= p2y)
+		else if (p3x <= p2x && p2x <= p4x && (std::min)(p3y, p4y) <= p2y && (std::max)(p3y, p4y) >= p2y)
 		{
 			if (r341 == 1) // clockwise
 			{
@@ -782,7 +781,7 @@ int SCommonFuction::intersect_ccw(double p1x, double p1y, double p2x, double p2y
 		{
 			return 12;
 		}
-		else if (p1x <= p3x && p3x <= p2x && min(p1y, p2y) <= p3y && max(p1y, p2y) >= p3y)
+		else if (p1x <= p3x && p3x <= p2x && (std::min)(p1y, p2y) <= p3y && (std::max)(p1y, p2y) >= p3y)
 		{
 			if (r124 == 1) // clockwise
 			{
@@ -816,7 +815,7 @@ int SCommonFuction::intersect_ccw(double p1x, double p1y, double p2x, double p2y
 		{
 			return 12;
 		}
-		else if (p1x <= p4x && p4x <= p2x && min(p1y, p2y) <= p4y && max(p1y, p2y) >= p4y)
+		else if (p1x <= p4x && p4x <= p2x && (std::min)(p1y, p2y) <= p4y && (std::max)(p1y, p2y) >= p4y)
 		{
 			if (r123 == 1) // clockwise
 			{

@@ -38,7 +38,7 @@ F_C3IT F_C3IT::operator=(const F_C3IT& other)
 	return *this;
 }
 
-void F_C3IT::ReadField(BYTE*& buf)
+void F_C3IT::ReadField(std::uint8_t*& buf)
 {
 	m_vcid = *(buf++);
 	m_ycoo = buf2int(buf, 4);

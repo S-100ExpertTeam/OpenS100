@@ -48,7 +48,7 @@ F_RIAS F_RIAS::operator=(const F_RIAS& other)
 	return *this;
 }
 
-void F_RIAS::ReadField(BYTE *&buf)
+void F_RIAS::ReadField(std::uint8_t *&buf)
 {
 	while(*buf != 0x1E){
 		RIAS* rias = new RIAS();
@@ -61,7 +61,7 @@ void F_RIAS::ReadField(BYTE *&buf)
 	}
 }
 
-void F_RIAS::ReadField(BYTE *&buf, int loopCnt)
+void F_RIAS::ReadField(std::uint8_t *&buf, int loopCnt)
 {
 	for(int i = 0; i < loopCnt; i++)
 	{

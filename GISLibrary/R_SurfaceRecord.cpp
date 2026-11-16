@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "DebugOutput.h"
 #include "R_SurfaceRecord.h"
 #include "DRDirectoryInfo.h"
 #include "F_INAS.h"
@@ -56,7 +57,7 @@ R_SurfaceRecord R_SurfaceRecord::operator=(const R_SurfaceRecord& other)
 	return *this;
 }
 
-BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
+bool R_SurfaceRecord::ReadRecord(DRDirectoryInfo* dir, std::uint8_t*& buf)
 {
 	for (int i = 0; i < dir->m_count; i++)
 	{
@@ -85,10 +86,10 @@ BOOL R_SurfaceRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
 
 		if (*(buf++) != 0x1E)
 		{
-			OutputDebugStringW(L"terminator error\n");
+			GISLibrary::DebugOutput(L"terminator error\n");
 		}
 	}
-	return TRUE;
+	return true;
 }
 
 bool R_SurfaceRecord::WriteRecord(s100::io::BinaryWriter* file)

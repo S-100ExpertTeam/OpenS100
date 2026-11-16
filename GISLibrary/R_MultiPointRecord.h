@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 #include "R_VectorRecord.h"
 #include "F_MRID.h"
@@ -29,7 +30,7 @@ public:
 	virtual R_MultiPointRecord operator=(const R_MultiPointRecord& other);
 
 public:
-	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool ReadRecord(DRDirectoryInfo *dir, std::uint8_t*& buf);
 	bool WriteRecord(s100::io::BinaryWriter* file);
 	RecordName GetRecordName();
 
@@ -41,10 +42,7 @@ public:
 	void SetCOCC(int coui, int coix, int ncor);
 
 	void InsertC3IL(int x, int y, int z);
-	void InsertC3IL(int cmfx, int cmfy, int cmfz, SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo);
 
-	void SetC3IL(int cmfx, int cmfy, int cmfz, SAFEARRAY* xcoo, SAFEARRAY* ycoo, SAFEARRAY* zcoo);
-	void GetC3IL(double cmfx, double cmfy, double cmfz, SAFEARRAY** xcoo, SAFEARRAY** ycoo, SAFEARRAY** zcoo);
 
 	std::vector<C2IL*> GetAllC2IL();
 	std::vector<C3IL*> GetAllC3IL();

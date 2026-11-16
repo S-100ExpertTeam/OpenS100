@@ -8,16 +8,16 @@ public:
 	HDF5Wrapper();
 	virtual ~HDF5Wrapper();
 
-	static bool ReadMetadataIntegerAttribute(__int64 id, const char* attributeName, int& attributeValue);
-	static bool ReadMetadataInteger64Attribute(__int64 id, const char* attributeName, __int64& attributeValue);
-	static bool ReadMetadataFloatAttribute(__int64 id, const char* attributeName, float& attributeValue);
-	static bool ReadMetadataDoubleAttribute(__int64 id, const char* attributeName, double& attributeValue);
-	static bool ReadMetadataStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue);
-	static bool ReadMetadataVariableLengthStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue);
-	static bool ReadMetadataAnyStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue);
+	static bool ReadMetadataIntegerAttribute(long long id, const char* attributeName, int& attributeValue);
+	static bool ReadMetadataInteger64Attribute(long long id, const char* attributeName, long long& attributeValue);
+	static bool ReadMetadataFloatAttribute(long long id, const char* attributeName, float& attributeValue);
+	static bool ReadMetadataDoubleAttribute(long long id, const char* attributeName, double& attributeValue);
+	static bool ReadMetadataStringAttribute(long long id, const char* attributeName, std::string& attributeValue);
+	static bool ReadMetadataVariableLengthStringAttribute(long long id, const char* attributeName, std::string& attributeValue);
+	static bool ReadMetadataAnyStringAttribute(long long id, const char* attributeName, std::string& attributeValue);
 
-	static bool IsFloat32Attribute(__int64 id);
-	static bool IsFloat64Attribute(__int64 id);
-	static bool IsInteger32Attribute(__int64 id);
-	static bool IsInteger64Attribute(__int64 id);
+	static bool IsFloat32Attribute(long long id);
+	static bool IsFloat64Attribute(long long id);
+	static bool IsInteger32Attribute(long long id);
+	static bool IsInteger64Attribute(long long id);
 };

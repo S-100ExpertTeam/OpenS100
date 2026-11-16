@@ -7,7 +7,7 @@ public:
 	~SENC_Font();
 
 public:
-	boolean serifs;
+	bool serifs;
 	int weight;
 	int slant; // 0 : Upright, 1 : Italics
 	int proportion;

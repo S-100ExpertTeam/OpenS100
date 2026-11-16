@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100_Time.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <iostream>
 #include <sstream>

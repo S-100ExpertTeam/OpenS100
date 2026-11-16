@@ -15,7 +15,7 @@ SPAS::SPAS(const SPAS& other)
 	m_saui = other.m_saui;
 }
 
-SPAS::SPAS(RecordName name, int ornt, UINT smin, UINT smax, int saui)
+SPAS::SPAS(RecordName name, int ornt, unsigned int smin, unsigned int smax, int saui)
 {
 	m_name = name;
 	m_ornt = ornt;

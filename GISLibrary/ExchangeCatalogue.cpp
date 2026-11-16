@@ -7,8 +7,8 @@
 #include "S10XGML.h"
 #include "ExchangeCatalogueNameSpace.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/LatLonUtility.h"
+#include "../LatLonUtility/cpp_util.h"
 
 
 #include <filesystem>

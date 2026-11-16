@@ -651,7 +651,7 @@ void SENC_PointInstruction::FromS100Instruction(S100_Instruction* s100Instructio
 		//if (s100PointInstruction->GetSymbol()->GetLinePlacement())
 		//{
 		//	s->linePlacement = new SENC_LinePlacement();
-		//	s->linePlacement->offset = (float)(_wtof(s100PointInstruction->GetSymbol()->GetLinePlacement()->GetOffset().c_str()));
+		//	s->linePlacement->offset = (float)(std::wcstod(s100PointInstruction->GetSymbol()->GetLinePlacement()->GetOffset().c_str(), nullptr));
 		//	s->linePlacement->placementMode = SENC_CommonFuc::GetLinePlacement(s100PointInstruction->GetSymbol()->GetLinePlacement()->GetPlacementMode());
 		//}
 		//if (s100PointInstruction->GetSymbol()->GetAreaPlacement())

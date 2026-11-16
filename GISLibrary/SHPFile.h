@@ -1,5 +1,6 @@
 #pragma once
-#include "spatialobject.h"
+#include "DeviceTypes.h"
+#include "SpatialObject.h"
 
 class Geometry;
 class Scaler;

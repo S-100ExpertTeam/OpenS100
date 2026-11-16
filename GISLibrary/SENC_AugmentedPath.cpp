@@ -226,12 +226,12 @@ void SENC_AugmentedPath::FromS100Instruction(S100_Instruction* s100Instruction, 
 			SENC_ArcByRadius* sp = new SENC_ArcByRadius();
 			sp->center.x = p->GetCenter()->GetX();
 			sp->center.y = p->GetCenter()->GetY();
-			sp->radius = _wtof(p->GetRadiusW().c_str());
+			sp->radius = std::wcstod(p->GetRadiusW().c_str(), nullptr);
 			if (p->GetSector())
 			{
 				sp->sector = new SENC_Sector();
-				sp->sector->angularDistance = _wtof(p->GetSector()->GetAnglearDistanceW().c_str());
-				sp->sector->startAngle = _wtof(p->GetSector()->GetStartAngleW().c_str());
+				sp->sector->angularDistance = std::wcstod(p->GetSector()->GetAnglearDistanceW().c_str(), nullptr);
+				sp->sector->startAngle = std::wcstod(p->GetSector()->GetStartAngleW().c_str(), nullptr);
 			}
 			path->arcByRadiuses.push_back(sp);
 		}

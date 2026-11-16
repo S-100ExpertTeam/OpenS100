@@ -3,8 +3,8 @@
 #include "SENC_LineStyle.h"
 #include "SENC_LineStyleReference.h"
 
-#include "..\\PortrayalCatalogue\\S100_CompositeLineStyle.h"
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/S100_CompositeLineStyle.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 SENC_CompositeLineStyle::SENC_CompositeLineStyle()
 {

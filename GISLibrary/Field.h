@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 
 #include <vector>
@@ -11,7 +12,7 @@ public:
 	virtual ~Field();
 
 public:
-	virtual void ReadField(BYTE*& buf) = 0;
+	virtual void ReadField(std::uint8_t*& buf) = 0;
 	virtual bool WriteField(s100::io::BinaryWriter* file) = 0;
 	virtual int GetFieldLength() = 0;
 };

@@ -13,14 +13,14 @@ DDR::~DDR()
 	Delete();
 }
 
-void DDR::Set(BYTE* buffer)
+void DDR::Set(std::uint8_t* buffer)
 {
 	size = atoi(buffer, 5);
 	buffer -= 5;
 
 	if (size > 0)
 	{
-		content = new BYTE[size];
+		content = new std::uint8_t[size];
 		memcpy(content, buffer, size);
 	}
 
@@ -33,7 +33,7 @@ void DDR::Delete()
 	content = nullptr;
 }
 
-BYTE* DDR::GetContent()
+std::uint8_t* DDR::GetContent()
 {
 	return content;
 }
@@ -49,10 +49,10 @@ void DDR::Allocate()
 void DDR::Allocate(int _size)
 {
 	SetSize(_size);
-	content = new BYTE[GetSize()];
+	content = new std::uint8_t[GetSize()];
 }
 
-void DDR::SetByte(int index, BYTE value)
+void DDR::SetByte(int index, std::uint8_t value)
 {
 	if (nullptr != content &&
 		index >= 0 &&
@@ -62,14 +62,14 @@ void DDR::SetByte(int index, BYTE value)
 	}
 }
 
-void DDR::SetBytes(int _size, BYTE* value)
+void DDR::SetBytes(int _size, std::uint8_t* value)
 {
 	Delete();
 
 	if (_size > 0 && nullptr != value)
 	{
 		Allocate(_size);
-		memcpy_s(content, _size, value, _size);
+		memcpy(content, value, _size);
 	}
 }
 

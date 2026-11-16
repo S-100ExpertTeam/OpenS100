@@ -44,7 +44,7 @@
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 #include "../LatLonUtility/LatLonUtility.h"
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <ctime> 
 #include <mmsystem.h> 
@@ -121,7 +121,7 @@ bool LayerManager::AddBackgroundLayer(const std::wstring& _filepath)
 		scaler->SetMap(_mbr);
 	mbr.SetMBR(_mbr);
 
-	return TRUE;
+	return true;
 }
 
 int LayerManager::AddLayer(Layer* _layer , const std::wstring& FilePath, bool InsertBack)
@@ -1909,7 +1909,7 @@ namespace
 			return S100_FileType::FILE_NONE;
 		}
 
-		BYTE* cursor = bytes->data();
+		std::uint8_t* cursor = bytes->data();
 		DRReader drReader;
 		drReader.ReadReader(cursor);
 		const std::size_t tagOffset = static_cast<std::size_t>(cursor - bytes->data()) + drReader.m_fieldPosition + drReader.m_fieldLength + 4;

@@ -48,7 +48,7 @@ F_PTAS F_PTAS::operator=(const F_PTAS& other)
 	return *this;
 }
 
-void F_PTAS::ReadField(BYTE *&buf)
+void F_PTAS::ReadField(std::uint8_t *&buf)
 {
 	while(*buf != 0x1E){
 		PTAS *ptas = new PTAS();
@@ -60,7 +60,7 @@ void F_PTAS::ReadField(BYTE *&buf)
 	}
 }
 
-void F_PTAS::ReadField(BYTE *&buf, int loopCnt)
+void F_PTAS::ReadField(std::uint8_t *&buf, int loopCnt)
 {
 	for(int i = 0; i < loopCnt; i++)
 	{

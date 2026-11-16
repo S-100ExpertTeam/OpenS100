@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <bitset> // Convert the 32-bit binary encoding into hexadecimal
 
-void buf2charArr(std::wstring& dest, BYTE*& buf)
+void buf2charArr(std::wstring& dest, std::uint8_t*& buf)
 {
 	std::size_t len = 0;
 	while (buf[len] != NonPrintableCharacter::unitTerminator)
@@ -17,34 +17,34 @@ void buf2charArr(std::wstring& dest, BYTE*& buf)
 	buf += len + 1; // skip the unit terminator
 }
 
-void buf2charArr(std::wstring& dest, BYTE*& buf, int len)
+void buf2charArr(std::wstring& dest, std::uint8_t*& buf, int len)
 {
 	dest = s100::text::ToWide(std::string_view(reinterpret_cast<const char*>(buf), static_cast<std::size_t>(len)));
 	buf += len;
 }
 
-DWORD buf2uint(BYTE*& buf, int size)
+std::uint32_t buf2uint(std::uint8_t*& buf, int size)
 {
-	DWORD ret = 0;
-	memcpy_s(&ret, size, buf, size);
+	std::uint32_t ret = 0;
+	memcpy(&ret, buf, size);
 
 	buf += size;
 	return ret;
 }
 
-DWORD buf2int(BYTE*& buf, int size)
+std::uint32_t buf2int(std::uint8_t*& buf, int size)
 {
-	DWORD ret = 0;
-	memcpy_s(&ret, size, buf, size);
+	std::uint32_t ret = 0;
+	memcpy(&ret, buf, size);
 
 	buf += size;
 	return ret;
 }
 
 char TEMP_BUF256[1024];
-DWORD atoi(BYTE*& buf, int len)
+std::uint32_t atoi(std::uint8_t*& buf, int len)
 {
-	DWORD ret = 0;
+	std::uint32_t ret = 0;
 	for(int i=0; i< len;i++)
 	{
 		ret = ret * 10 + *(buf++) - '0';
@@ -52,10 +52,10 @@ DWORD atoi(BYTE*& buf, int len)
 	return ret;
 }
 
-double buf2double(BYTE*& buf, int /*size*/)
+double buf2double(std::uint8_t*& buf, int /*size*/)
 {
 	double ret = 0;
-	memcpy_s(&ret, 8, buf, 8);
+	memcpy(&ret, buf, 8);
 	buf += 8;
 	return ret;
 }

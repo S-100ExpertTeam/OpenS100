@@ -1,4 +1,5 @@
 #pragma once
+#include "DeviceTypes.h"
 
 #include "LayerManager.h"
 #include "D2D1Resources.h"
@@ -41,7 +42,7 @@ public:
 	void DrawScaleBar();
 
 	std::wstring GetLayerName(int index);
-	BOOL IsOn(int index);
+	bool IsOn(int index);
 	void DeleteLayer(int index);
 	void DeleteLayer(const std::wstring& filepath);
 	void ReMBR();
@@ -55,8 +56,8 @@ public:
 
 	MBR* GetMBR();
 						
-	void DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate = TRUE);
-	void WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate = TRUE);
+	void DeviceToWorld(long sx, long sy, double *mx, double *my, bool rotate = true);
+	void WorldToDevice(double mx, double my, long *sx, long *sy, bool rotate = true);
 	void WorldToDevice(D2D1_POINT_2F& p);
 	void DeviceToWorld(D2D1_POINT_2F& p);
 

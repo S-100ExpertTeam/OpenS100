@@ -13,8 +13,8 @@
 #include "SdbReaders.h"
 #include "ViewSelection.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/LatLonUtility.h"
+#include "../LatLonUtility/cpp_util.h"
 
 S100ExchangeCatalogue::S100ExchangeCatalogue(Scaler* scaler, CatalogManager* cm, D2D1Resources* d2d1, LayerManager* parent) : SpatialObject()
 {

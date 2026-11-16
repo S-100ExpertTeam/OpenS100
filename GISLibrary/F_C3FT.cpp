@@ -38,7 +38,7 @@ int F_C3FT::GetSize()
 	return 25;
 }
 
-void F_C3FT::ReadField(BYTE *&buf)
+void F_C3FT::ReadField(std::uint8_t *&buf)
 {
 	m_ycoo = buf2double(buf, 8);
 	m_xcoo = buf2double(buf, 8);

@@ -53,13 +53,13 @@ std::wstring SENC_LineStyle::GetPenColorToken()
 
 void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalogue *pc)
 {
-	intervalLength = _wtof(lineStyle->GetIntervalLengthW().c_str());
+	intervalLength = std::wcstod(lineStyle->GetIntervalLengthW().c_str(), nullptr);
 	capStyle = SENC_CommonFuc::GetCapStyle(lineStyle->GetCapStyleW());
 	joinStyle = SENC_CommonFuc::GetJoinStyle(lineStyle->GetJoinStyleW());
-	offset = (float)(_wtof(lineStyle->GetOffsetW().c_str()));
+	offset = (float)(std::wcstod(lineStyle->GetOffsetW().c_str(), nullptr));
 
 	std::wstring _colorToken = lineStyle->GetPen()->GetColor().GetTokenW();
-	pen_width = _wtof(lineStyle->GetPen()->GetWidthW().c_str()) + 0.01;
+	pen_width = std::wcstod(lineStyle->GetPen()->GetWidthW().c_str(), nullptr) + 0.01;
 	pen_transparency = lineStyle->GetPen()->GetColor().GetTransparency();
 
 	auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
@@ -77,8 +77,8 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 	{
 		S100_Dash dash = *itor;
 		SENC_Dash* dashSENC = new SENC_Dash();
-		dashSENC->length = (float)(_wtof(dash.GetLengthW().c_str()));
-		dashSENC->start = (float)(_wtof(dash.GetStartW().c_str()));
+		dashSENC->length = (float)(std::wcstod(dash.GetLengthW().c_str(), nullptr));
+		dashSENC->start = (float)(std::wcstod(dash.GetStartW().c_str(), nullptr));
 
 		dashes.push_back(dashSENC);
 	}
@@ -92,7 +92,7 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 		S100_LineSymbol symbol = *itor;
 		SENC_LineSymbol* symbolSENC = new SENC_LineSymbol();
 		symbolSENC->reference = symbol.GetReferenceW();
-		symbolSENC->position = (float)(_wtof(symbol.GetPositionW().c_str()));
+		symbolSENC->position = (float)(std::wcstod(symbol.GetPositionW().c_str(), nullptr));
 
 		symbols.push_back(symbolSENC);
 	}

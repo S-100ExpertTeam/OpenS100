@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "DebugOutput.h"
 #include "PortrayalRenderCache.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_TextInstruction.h"
@@ -167,7 +168,7 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 
 	if (fr->GetIDAsInteger() == 250)
 	{
-		OutputDebugString(L"A");
+		GISLibrary::DebugOutput(L"A");
 	}
 
 	if (true == HasSpatialReference())
@@ -286,13 +287,13 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 
 			textPoint->elements.push_back(e2);
 
-			e2->bodySize = _wtoi(e1->GetBodySizeW().c_str());
-			e2->verticalOffset = (float)(_wtof(e1->GetVerticalOffsetW().c_str()));
+			e2->bodySize = static_cast<int>(std::wcstol(e1->GetBodySizeW().c_str(), nullptr, 10));
+			e2->verticalOffset = (float)(std::wcstod(e1->GetVerticalOffsetW().c_str(), nullptr));
 
 			if (e1->GetFont())
 			{
 				e2->font.proportion = SENC_CommonFuc::GetFontProportion(e1->GetFont()->GetProportionW());
-				e2->font.serifs = _wtoi(e1->GetFont()->GetSerifsW().c_str()) != 0 ? true : false;
+				e2->font.serifs = static_cast<int>(std::wcstol(e1->GetFont()->GetSerifsW().c_str(), nullptr, 10)) != 0 ? true : false;
 
 				if (true == e1->GetFont()->isUpright())
 				{
@@ -303,14 +304,14 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 					e2->font.setItalics();
 				}
 
-				//e2->font.slant = _wtoi(e1->GetFont()->GetSlant().c_str());
-				e2->font.weight = _wtoi(e1->GetFont()->GetWeightW().c_str());
+				//e2->font.slant = static_cast<int>(std::wcstol(e1->GetFont()->GetSlant().c_str(), nullptr, 10));
+				e2->font.weight = static_cast<int>(std::wcstol(e1->GetFont()->GetWeightW().c_str(), nullptr, 10));
 			}
 
 			if (e1->GetForground())
 			{
 				e2->foreground.token = e1->GetForground()->GetTokenW();
-				e2->foreground.transparency = (int)(_wtof(e1->GetForground()->GetTransparencyW().c_str()) * 100);
+				e2->foreground.transparency = (int)(std::wcstod(e1->GetForground()->GetTransparencyW().c_str(), nullptr) * 100);
 				
 				auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
 

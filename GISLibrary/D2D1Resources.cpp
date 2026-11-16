@@ -2,7 +2,7 @@
 #include "D2D1Resources.h"
 #include "GISLibrary.h"
 
-#include "..\\GeoMetryLibrary\\ENCCommon.h"
+#include "../GeoMetryLibrary/ENCCommon.h"
 
 namespace GISLibrary
 {

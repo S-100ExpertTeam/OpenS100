@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <string>
-#include <atlsafe.h>
+#include "DeviceTypes.h"
 
 class SSurface;
 class Symbol;

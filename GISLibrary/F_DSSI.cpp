@@ -61,7 +61,7 @@ F_DSSI F_DSSI::operator=(const F_DSSI& other)
 	return *this;
 }
 
-void F_DSSI::ReadField(BYTE *&buf)
+void F_DSSI::ReadField(std::uint8_t *&buf)
 {
 	m_dcox = buf2double(buf, 8);
 	m_dcoy = buf2double(buf, 8);

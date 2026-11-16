@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include <string>
 #include <vector>
 #include "BinaryWriter.h"
@@ -32,7 +33,7 @@ public:
 	virtual F_DSID& operator=(const F_DSID& other);
 
 public:
-	void ReadField(BYTE *&buf);
+	void ReadField(std::uint8_t *&buf);
 	bool WriteField(s100::io::BinaryWriter* file);
 	int GetFieldLength();
 };

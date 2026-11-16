@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 #include "Field.h"
 class F_C2FT :
@@ -27,7 +28,7 @@ public:
 	virtual F_C2FT operator=(const F_C2FT& other);
 
 public:
-	void ReadField(BYTE *&buf);
+	void ReadField(std::uint8_t *&buf);
 	bool WriteField(s100::io::BinaryWriter* /*file*/) { return true; }
 	int GetFieldLength();
 };

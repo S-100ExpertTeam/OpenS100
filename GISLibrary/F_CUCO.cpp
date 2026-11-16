@@ -48,7 +48,7 @@ F_CUCO F_CUCO::operator=(const F_CUCO& other)
 	return *this;
 }
 
-void F_CUCO::ReadField(BYTE *&buf)
+void F_CUCO::ReadField(std::uint8_t *&buf)
 {
 	while(*buf != 0x1E){
 		CUCO *cuco = new CUCO();
@@ -59,7 +59,7 @@ void F_CUCO::ReadField(BYTE *&buf)
 	}
 }
 
-void F_CUCO::ReadField(BYTE *&buf, int loopCnt)
+void F_CUCO::ReadField(std::uint8_t *&buf, int loopCnt)
 {
 	for(int i = 0; i < loopCnt; i++){
 		CUCO *cuco = new CUCO();

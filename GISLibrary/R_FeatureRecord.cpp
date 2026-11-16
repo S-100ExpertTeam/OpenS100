@@ -201,7 +201,7 @@ R_FeatureRecord R_FeatureRecord::operator=(const R_FeatureRecord& other)
 }
 
 #pragma warning(disable:4018)
-BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
+bool R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, std::uint8_t*& buf)
 {
 	unsigned i = 0, j = 0, cnt;
 	for (i = 0; i < dir->m_count; i++)
@@ -218,7 +218,7 @@ BOOL R_FeatureRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		{
 			cnt = 0;
 			j = 0;
-			BYTE *sIndex = buf;
+			std::uint8_t *sIndex = buf;
 
 			unsigned head = 0;
 			for (j = 1; j < dir->GetDirectory(i)->length; j++)

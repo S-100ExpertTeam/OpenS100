@@ -29,9 +29,9 @@ RecordName::~RecordName(void)
 
 }
 
-__int64 RecordName::GetName()
+long long RecordName::GetName()
 {
-	return ((__int64)RCNM) << 32 | RCID;
+	return ((long long)RCNM) << 32 | RCID;
 }
 
 int RecordName::GetLength()

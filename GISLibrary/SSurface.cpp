@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "SSurface.h"
 #include "SCommonFuction.h"
-#include "GISLibrary.h"
 
 #include "../GeoMetryLibrary/MBR.h"
 #include "../GeoMetryLibrary/Scaler.h"
@@ -272,7 +271,7 @@ void SSurface::Set(std::vector<POINT>& sourcePoints, std::vector<int>& sourcePar
 			for (const auto& [longitude, latitude] : RhumbLinePointsBetween(sourcePoints[i].x / unit, sourcePoints[i].y / unit,
 				sourcePoints[i + 1].x / unit, sourcePoints[i + 1].y / unit))
 			{
-				points.push_back(POINT{ static_cast<LONG>(std::lround(longitude * unit)), static_cast<LONG>(std::lround(latitude * unit)) });
+				points.push_back(POINT{ static_cast<long>(std::lround(longitude * unit)), static_cast<long>(std::lround(latitude * unit)) });
 			}
 		}
 		// The last entry is not the start of a ring (see below): kept so the count of rings is.
@@ -421,14 +420,14 @@ bool SSurface::ImportFromWkb(unsigned char* value, int /*size*/)
 
 	int type = 0;
 
-	memcpy_s(&type, 4, value + 1, 4);
+	memcpy(&type, value + 1, 4);
 
 	if (type != (int)WKBGeometryType::wkbPolygon)
 	{
 		return false;
 	}
 
-	memcpy_s(&m_numParts, 4, value + 5, 4);
+	memcpy(&m_numParts, value + 5, 4);
 	m_pParts = new int[m_numParts];
 	memset(m_pParts, 0, sizeof(int) * m_numParts);
 
@@ -439,7 +438,7 @@ bool SSurface::ImportFromWkb(unsigned char* value, int /*size*/)
 	for (int i = 0; i < m_numParts; i++)
 	{
 		int numPointPerPart = 0;
-		memcpy_s(&numPointPerPart, 4, value + 9 + offset, 4);
+		memcpy(&numPointPerPart, value + 9 + offset, 4);
 		offset += 4;
 
 		m_pParts[i] = (int)localPointArray.size();
@@ -451,8 +450,8 @@ bool SSurface::ImportFromWkb(unsigned char* value, int /*size*/)
 		for (int j = 0; j < numPointPerPart; j++)
 		{
 			GeoPoint point;
-			memcpy_s(&point.x, 8, value + 9 + offset, 8);
-			memcpy_s(&point.y, 8, value + 17 + offset, 8);
+			memcpy(&point.x, value + 9 + offset, 8);
+			memcpy(&point.y, value + 17 + offset, 8);
 			offset += 16;
 
 			projection(point.x, point.y);
@@ -486,16 +485,16 @@ bool SSurface::ExportToWkb(unsigned char** value, int* size)
 
 	int type = (int)WKBGeometryType::wkbPolygon;
 
-	memcpy_s((*value) + 1, 4, &type, 4);
+	memcpy((*value) + 1, &type, 4);
 
 	int numRings = m_numParts;
-	memcpy_s((*value) + 5, 4, &numRings, 4);
+	memcpy((*value) + 5, &numRings, 4);
 
 	auto mem = (*value) + 9;
 	for (int i = 0; i < numRings; i++)
 	{
 		int numPoints = GetNumPointPerPart(i);
-		memcpy_s(mem, 4, &numPoints, 4);
+		memcpy(mem, &numPoints, 4);
 		mem += 4;
 
 		for (int j = 0; j < numPoints; j++)
@@ -504,10 +503,10 @@ bool SSurface::ExportToWkb(unsigned char** value, int* size)
 
 			inverseProjection(xy.x, xy.y);
 
-			memcpy_s(mem, 8, &xy.x, 8);
+			memcpy(mem, &xy.x, 8);
 			mem += 8;
 
-			memcpy_s(mem, 8, &xy.y, 8);
+			memcpy(mem, &xy.y, 8);
 			mem += 8;
 		}
 	}

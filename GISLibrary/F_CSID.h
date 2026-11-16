@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 #include "Field.h"
 #include "RecordName.h"
@@ -18,7 +19,7 @@ public:
 	virtual F_CSID operator=(const F_CSID& other);
 
 public:
-	void ReadField(BYTE *&buf);
+	void ReadField(std::uint8_t *&buf);
 	bool WriteField(s100::io::BinaryWriter* file);
 
 	int GetFieldLength();

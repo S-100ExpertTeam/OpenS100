@@ -125,7 +125,7 @@ R_CurveRecord R_CurveRecord::operator=(const R_CurveRecord& other)
 }
 
 #pragma warning(disable:4018)
-BOOL R_CurveRecord::ReadRecord(DRDirectoryInfo* dir, BYTE*& buf)
+bool R_CurveRecord::ReadRecord(DRDirectoryInfo* dir, std::uint8_t*& buf)
 {
 	for (int i = 0; i < dir->m_count; i++)
 	{
@@ -384,72 +384,6 @@ void R_CurveRecord::InsertC2IL(int x, int y)
 	}
 
 	m_c2il.front()->m_arr.push_back(new C2IL(y, x));
-}
-
-void R_CurveRecord::InsertC2IL(int cmfx, int cmfy, SAFEARRAY* xcoo, SAFEARRAY* ycoo)
-{
-	if (xcoo == nullptr || xcoo->cDims != 1 ||
-		ycoo == nullptr || ycoo->cDims != 1)
-		return;
-
-	if (m_c2il.size() == 0)
-	{
-		m_c2il.push_back(new F_C2IL());
-	}
-
-	LONG lBound, uBound;
-	SafeArrayGetLBound(xcoo, 1, &lBound);
-	SafeArrayGetUBound(xcoo, 1, &uBound);
-
-	double* pxData = nullptr;
-	SafeArrayAccessData(xcoo, reinterpret_cast<void**>(&pxData));
-	double* pyData = nullptr;
-	SafeArrayAccessData(ycoo, reinterpret_cast<void**>(&pyData));
-
-	for (LONG i = lBound; i <= uBound; ++i)
-	{
-		double x = pxData[i] * cmfx;
-		double y = pyData[i] * cmfy;
-
-		m_c2il.front()->m_arr.push_back(new C2IL((int)y, (int)x));
-	}
-
-	SafeArrayUnaccessData(xcoo);
-	SafeArrayUnaccessData(ycoo);
-
-	return;
-}
-
-void R_CurveRecord::GetC2IL(double cmfx, double cmfy, SAFEARRAY** xcoo, SAFEARRAY** ycoo)
-{
-	if ((!xcoo) ||
-		(!ycoo))
-		return;
-
-	CComSafeArray<double> xArray;
-	CComSafeArray<double> yArray;
-
-	xArray.Create();
-	yArray.Create();
-
-	int i = 0;
-	for (const auto& f_c2il : m_c2il)
-	{
-		xArray.Resize(xArray.GetCount() + (int)f_c2il->m_arr.size());
-		yArray.Resize(yArray.GetCount() + (int)f_c2il->m_arr.size());
-
-		for (const auto& c2il : f_c2il->m_arr)
-		{
-			xArray.SetAt(i, static_cast<double>(c2il->m_xcoo / cmfx));
-			yArray.SetAt(i, static_cast<double>(c2il->m_ycoo / cmfy));
-			i++;
-		}
-	}
-
-	*xcoo = xArray.Detach();
-	*ycoo = yArray.Detach();
-
-	return;
 }
 
 int R_CurveRecord::GetBeginningPointRCID()

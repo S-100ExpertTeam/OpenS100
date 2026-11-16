@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 
 class DDR
 {
@@ -8,17 +9,17 @@ public:
 
 private:
 	int size = 0;
-	BYTE* content = nullptr;
+	std::uint8_t* content = nullptr;
 
 public:
-	void Set(BYTE* buffer);
+	void Set(std::uint8_t* buffer);
 	void Delete();
 
-	BYTE* GetContent();
+	std::uint8_t* GetContent();
 	void Allocate();
 	void Allocate(int size);
-	void SetByte(int index, BYTE value);
-	void SetBytes(int size, BYTE* value);
+	void SetByte(int index, std::uint8_t value);
+	void SetBytes(int size, std::uint8_t* value);
 
 	int GetSize();
 	void SetSize(int value);

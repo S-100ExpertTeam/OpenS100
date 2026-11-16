@@ -29,7 +29,7 @@ F_CSID F_CSID::operator=(const F_CSID& other)
 	return *this;
 }
 
-void F_CSID::ReadField(BYTE *&buf)
+void F_CSID::ReadField(std::uint8_t *&buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);

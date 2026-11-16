@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "GISLibrary.h"
+#include "DebugOutput.h"
 #include "S10XGML.h"
 #include "GM_Point.h"
 #include "GM_MultiPoint.h"
@@ -10,8 +10,8 @@
 #include "GF_FeatureType.h"
 #include "GF_InformationType.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/LatLonUtility.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <cmath>
 #include <sstream>
@@ -800,7 +800,7 @@ GM::CompositeCurve* S10XGML::ReadCompositeCurve(pugi::xml_node& node, std::strin
 					object->Add(orientableCurve);
 				}
 				else {
-					OutputDebugStringW((L"Failed to find curve (" + pugi::as_wide(curveMemberID) + L")\n").c_str());
+					GISLibrary::DebugOutput(L"Failed to find curve (" + pugi::as_wide(curveMemberID) + L")\n");
 				}
 				//object->Add(curveMemberID);
 			}
@@ -1755,7 +1755,7 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 		
 		inverseProjection(x, y);
 
-		POINT pt = { (LONG)(x * 10000000), (LONG)(y * 10000000) };
+		POINT pt = { (long)(x * 10000000), (long)(y * 10000000) };
 
 		points.push_back(pt);
 	}
@@ -1781,7 +1781,7 @@ SSurface* S10XGML::SurfaceToSSurface(GM::Surface* surface)
 
 				inverseProjection(x, y);
 
-				POINT pt = { (LONG)(x * 10000000), (LONG)(y * 10000000) };
+				POINT pt = { (long)(x * 10000000), (long)(y * 10000000) };
 
 				points.push_back(pt);
 			}

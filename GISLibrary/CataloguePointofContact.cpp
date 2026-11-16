@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "CataloguePointOfContact.h"
+#include "CataloguePointofContact.h"
 #include "CT_Catalogue.h"
 
 namespace S100 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "..\\PortrayalCatalogue\\S100_PointInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_LineInstruction.h"
+#include "../PortrayalCatalogue/S100_PointInstruction.h"
+#include "../PortrayalCatalogue/S100_LineInstruction.h"
 
 #include "ProcessS101.h"
 

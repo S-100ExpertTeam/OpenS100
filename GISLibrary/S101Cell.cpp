@@ -5,7 +5,6 @@
 #include "S101Cell.h"
 #include "BinaryFile.h"
 #include "BinaryWriter.h"
-#include "GISLibrary.h"
 #include "S100Layer.h"
 #include "F_CUCO.h"
 #include "F_PTAS.h"
@@ -73,7 +72,7 @@
 #include "../FeatureCatalog/FeatureCatalogue.h"
 #include "../FeatureCatalog/S100_CD_AttributeValueType.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <sstream> 
 #include <iomanip>
@@ -358,8 +357,8 @@ bool S101Cell::Read8211(std::wstring path)
 		return false;
 	}
 
-	BYTE* pBuf = bytes->data();
-	BYTE* endOfBuf = pBuf + bytes->size() - 1;
+	std::uint8_t* pBuf = bytes->data();
+	std::uint8_t* endOfBuf = pBuf + bytes->size() - 1;
 
 	ReadDDR(pBuf);
 
@@ -504,8 +503,8 @@ bool S101Cell::OpenMetadataBy000(const std::wstring& path)
 		return false;
 	}
 
-	BYTE* pBuf = bytes->data();
-	BYTE* endOfBuf = pBuf + bytes->size() - 1;
+	std::uint8_t* pBuf = bytes->data();
+	std::uint8_t* endOfBuf = pBuf + bytes->size() - 1;
 
 	ReadDDR(pBuf);
 
@@ -602,7 +601,7 @@ bool S101Cell::OpenMetadataByGML(const std::wstring& /*path*/)
 	return true;
 }
 
-bool S101Cell::ReadDDR(BYTE*& buf)
+bool S101Cell::ReadDDR(std::uint8_t*& buf)
 {
 	int size = atoi(buf, 5);
 	buf -= 5;
@@ -612,7 +611,7 @@ bool S101Cell::ReadDDR(BYTE*& buf)
 
 	buf += ddr.GetSize();
 
-	return TRUE;
+	return true;
 }
 
 void S101Cell::SortByFeatureType()
@@ -657,7 +656,7 @@ bool S101Cell::MakeFullSpatialData()
 		GetFullMaskData(fr);
 	}
 
-	return TRUE;
+	return true;
 }
 
 bool S101Cell::MakePointData(R_FeatureRecord* fe)
@@ -692,7 +691,7 @@ bool S101Cell::MakePointData(R_FeatureRecord* fe)
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 bool S101Cell::MakeSoundingData(R_FeatureRecord* fe)
@@ -725,7 +724,7 @@ bool S101Cell::MakeSoundingData(R_FeatureRecord* fe)
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 bool S101Cell::MakeLineData(R_FeatureRecord* fe)
@@ -772,7 +771,7 @@ bool S101Cell::MakeLineData(R_FeatureRecord* fe)
 	}
 
 
-	return TRUE;
+	return true;
 }
 
 // France
@@ -830,7 +829,7 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							}
 							else
 							{
-								return FALSE;
+								return false;
 							}
 						}
 						else if (rias->m_name.RCNM == 125)
@@ -846,12 +845,12 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 							}
 							else
 							{
-								return FALSE;
+								return false;
 							}
 						}
 						else
 						{
-							return FALSE;
+							return false;
 						}
 
 
@@ -881,14 +880,14 @@ bool S101Cell::MakeAreaData(R_FeatureRecord* fe)
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
 			R_InformationRecord* info = nullptr;
-			if (TRUE == s100::Lookup(m_infMap, infoKey, info))
+			if (true == s100::Lookup(m_infMap, infoKey, info))
 			{
 				geo->AddInformationType(info);
 			}
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 bool S101Cell::GetFullSpatialData(R_PointRecord* r, SPoint* point)
@@ -928,13 +927,13 @@ bool S101Cell::GetFullSpatialData(R_PointRecord* r, SPoint* point)
 		auto f_inas = *i;
 		auto infoKey = f_inas->m_name.GetName();
 		R_InformationRecord* info = nullptr;
-		if (TRUE == s100::Lookup(m_infMap, infoKey, info))
+		if (true == s100::Lookup(m_infMap, infoKey, info))
 		{
 			point->AddInformationType(info);
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 bool S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint)
@@ -968,16 +967,16 @@ bool S101Cell::GetFullSpatialData(R_MultiPointRecord* r, SMultiPoint* multiPoint
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
 			R_InformationRecord* info = nullptr;
-			if (TRUE == s100::Lookup(m_infMap, infoKey, info))
+			if (true == s100::Lookup(m_infMap, infoKey, info))
 			{
 				multiPoint->AddInformationType(info);
 			}
 		}
 
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 bool S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, int ORNT)
@@ -988,7 +987,7 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, 
 
 		if (countPTAS != 1 && countPTAS != 2)
 		{
-			return FALSE;
+			return false;
 		}
 
 		auto beginPointKey = r->m_ptas->m_arr.front()->m_name.GetName();
@@ -997,13 +996,13 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, 
 		auto beginPointRecord = GetPointRecord(beginPointKey);
 		if (nullptr == beginPointRecord || nullptr == beginPointRecord->m_c2it)
 		{
-			return FALSE;
+			return false;
 		}
 
 		auto endPointRecord = GetPointRecord(endPointKey);
 		if (nullptr == endPointRecord || nullptr == endPointRecord->m_c2it)
 		{
-			return FALSE;
+			return false;
 		}
 
 		// PTAS
@@ -1017,7 +1016,7 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, 
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 
 		// C2IL
@@ -1043,12 +1042,12 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, 
 			}
 			else
 			{
-				return FALSE;
+				return false;
 			}
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 
 		// PTAS
@@ -1062,13 +1061,13 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, std::vector<POINT>& geoArr, 
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
@@ -1076,7 +1075,7 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 	int pointCount = r->GetPointCount();
 	if (pointCount == 0)
 	{
-		return FALSE;
+		return false;
 	}
 
 	curve->Init(pointCount);
@@ -1089,7 +1088,7 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 
 		if (countPTAS != 1 && countPTAS != 2)
 		{
-			return FALSE;
+			return false;
 		}
 
 		auto beginPointKey = r->m_ptas->m_arr.front()->m_name.GetName();
@@ -1098,13 +1097,13 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		auto beginPointRecord = GetPointRecord(beginPointKey);
 		if (nullptr == beginPointRecord || nullptr == beginPointRecord->m_c2it)
 		{
-			return FALSE;
+			return false;
 		}
 
 		auto endPointRecord = GetPointRecord(endPointKey);
 		if (nullptr == endPointRecord || nullptr == endPointRecord->m_c2it)
 		{
-			return FALSE;
+			return false;
 		}
 
 		// PTAS
@@ -1122,7 +1121,7 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 
 		// C2IL
@@ -1148,12 +1147,12 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 			}
 			else
 			{
-				return FALSE;
+				return false;
 			}
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 
 		// PTAS
@@ -1171,7 +1170,7 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 		}
 		else
 		{
-			return FALSE;
+			return false;
 		}
 
 		curve->SetMultiplicationFactor(m_dsgir.m_dssi.m_cmfx, m_dsgir.m_dssi.m_cmfy);
@@ -1183,16 +1182,16 @@ bool S101Cell::GetFullSpatialData(R_CurveRecord* r, SCurve* curve, int ORNT)
 			auto f_inas = *i;
 			auto infoKey = f_inas->m_name.GetName();
 			R_InformationRecord* info = nullptr;
-			if (TRUE == s100::Lookup(m_infMap, infoKey, info))
+			if (true == s100::Lookup(m_infMap, infoKey, info))
 			{
 				curve->AddInformationType(info);
 			}
 		}
 
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, int ORNT)
@@ -1237,13 +1236,13 @@ bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 					}
 					else
 					{
-						return FALSE;
+						return false;
 					}
 				}
 				else
 				{
 					// Failed to find curve record
-					return FALSE;
+					return false;
 				}
 			}
 			else if (cuco->m_name.RCNM == 125)
@@ -1260,13 +1259,13 @@ bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 				else
 				{
 					// Failed to find composite curve record
-					return FALSE;
+					return false;
 				}
 			}
 			else
 			{
 				// Invalid rcnm
-				return FALSE;
+				return false;
 			}
 		}
 	}
@@ -1278,13 +1277,13 @@ bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, SCompositeCurve* curve, 
 		auto f_inas = *i;
 		auto infoKey = f_inas->m_name.GetName();
 		R_InformationRecord* info = nullptr;
-		if (TRUE == s100::Lookup(m_infMap, infoKey, info))
+		if (true == s100::Lookup(m_infMap, infoKey, info))
 		{
 			curve->AddInformationType(info);
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoArr, int /*ORNT*/)
@@ -1314,12 +1313,12 @@ bool S101Cell::GetFullSpatialData(R_CompositeRecord* r, std::vector<POINT>& geoA
 			}
 			else
 			{
-				return FALSE;
+				return false;
 			}
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 bool S101Cell::GetFullMaskData(R_FeatureRecord* fe)
@@ -1328,7 +1327,7 @@ bool S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 
 	if (fe->geometry == nullptr)
 	{
-		return FALSE;
+		return false;
 	}
 
 	if (fe->geometry->GetType() == SGeometryType::CompositeCurve)
@@ -1347,7 +1346,7 @@ bool S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 	}
 	else
 	{
-		return FALSE;
+		return false;
 	}
 
 	for (auto i = listCurveLink.begin(); i != listCurveLink.end(); i++)
@@ -1365,7 +1364,7 @@ bool S101Cell::GetFullMaskData(R_FeatureRecord* fe)
 		}
 	}
 
-	return TRUE;
+	return true;
 }
 
 MBR S101Cell::CalcMBR()
@@ -1672,7 +1671,7 @@ void S101Cell::InsertRecord(Record* record)
 void S101Cell::InsertInformationRecord(std::int64_t key, R_InformationRecord* record)
 {
 	R_InformationRecord* informationRecord = nullptr;
-	if (TRUE == s100::Lookup(m_infMap, key, informationRecord))
+	if (true == s100::Lookup(m_infMap, key, informationRecord))
 	{
 		if (!informationRecord)
 		{
@@ -1690,7 +1689,7 @@ void S101Cell::InsertInformationRecord(std::int64_t key, R_InformationRecord* re
 void S101Cell::RemoveInformationRecord(std::int64_t key)
 {
 	R_InformationRecord* informationRecord = nullptr;
-	if (TRUE == s100::Lookup(m_infMap, key, informationRecord))
+	if (true == s100::Lookup(m_infMap, key, informationRecord))
 	{
 		if (informationRecord)
 		{
@@ -1712,7 +1711,7 @@ R_InformationRecord* S101Cell::GetInformationRecord(std::int64_t key)
 	}
 
 	R_InformationRecord* item = nullptr;
-	if (TRUE == s100::Lookup(m_infMap, key, item))
+	if (true == s100::Lookup(m_infMap, key, item))
 	{
 		return item;
 	}
@@ -1804,7 +1803,7 @@ void S101Cell::RemovePointRecord(std::int64_t key, R_PointRecord* /*record*/)
 R_PointRecord* S101Cell::GetPointRecord(std::int64_t key)
 {
 	R_PointRecord* item = nullptr;
-	if (TRUE == s100::Lookup(m_ptMap, key, item))
+	if (true == s100::Lookup(m_ptMap, key, item))
 	{
 		return item;
 	}
@@ -1860,7 +1859,7 @@ void S101Cell::RemoveMultiPointRecord(std::int64_t key)
 R_MultiPointRecord* S101Cell::GetMultiPointRecord(std::int64_t key)
 {
 	R_MultiPointRecord* item = nullptr;
-	if (TRUE == s100::Lookup(m_mpMap, key, item))
+	if (true == s100::Lookup(m_mpMap, key, item))
 	{
 		return item;
 	}
@@ -1909,7 +1908,7 @@ void S101Cell::RemoveCurveRecord(std::int64_t key, R_CurveRecord* /*record*/)
 R_CurveRecord* S101Cell::GetCurveRecord(std::int64_t key)
 {
 	R_CurveRecord* item = nullptr;
-	if (TRUE == s100::Lookup(m_curMap, key, item))
+	if (true == s100::Lookup(m_curMap, key, item))
 	{
 		return item;
 	}
@@ -1955,7 +1954,7 @@ void S101Cell::RemoveCompositeCurveRecord(std::int64_t key, R_CompositeRecord* /
 R_CompositeRecord* S101Cell::GetCompositeCurveRecord(std::int64_t key)
 {
 	R_CompositeRecord* item = nullptr;
-	if (TRUE == s100::Lookup(m_comMap, key, item))
+	if (true == s100::Lookup(m_comMap, key, item))
 	{
 		return item;
 	}
@@ -2011,7 +2010,7 @@ void S101Cell::RemoveSurfaceRecord(std::int64_t key, R_SurfaceRecord* /*record*/
 R_SurfaceRecord* S101Cell::GetSurfaceRecord(std::int64_t key)
 {
 	R_SurfaceRecord* item = nullptr;
-	if (TRUE == s100::Lookup(m_surMap, key, item))
+	if (true == s100::Lookup(m_surMap, key, item))
 	{
 		return item;
 	}
@@ -2053,7 +2052,7 @@ void S101Cell::RemoveFeatureRecord(std::int64_t key)
 R_FeatureRecord* S101Cell::GetFeatureRecord(std::int64_t key)
 {
 	R_FeatureRecord* item = nullptr;
-	if (TRUE == s100::Lookup(m_feaMap, key, item))
+	if (true == s100::Lookup(m_feaMap, key, item))
 	{
 		return item;
 	}
@@ -4138,7 +4137,7 @@ std::wstring S101Cell::GetInformationTypeCodeByID(int id)
 {
 	RecordName rn(150, id);
 	R_InformationRecord* ir = nullptr;
-	if (TRUE == s100::Lookup(m_infMap, rn.GetName(), ir))
+	if (true == s100::Lookup(m_infMap, rn.GetName(), ir))
 	{
 		if (ir)
 		{

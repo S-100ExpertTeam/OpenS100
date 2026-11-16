@@ -46,7 +46,7 @@ F_CSAX F_CSAX::operator=(const F_CSAX& other)
 	return *this;
 }
 
-void F_CSAX::ReadField(BYTE *&buf)
+void F_CSAX::ReadField(std::uint8_t *&buf)
 {
 	while(*buf != 0x1E) 
 	{
@@ -57,7 +57,7 @@ void F_CSAX::ReadField(BYTE *&buf)
 	}
 }
 
-void F_CSAX::ReadField(BYTE *&buf, int loopCnt)
+void F_CSAX::ReadField(std::uint8_t *&buf, int loopCnt)
 {
 	for(int i = 0;i < loopCnt; i++)
 	{

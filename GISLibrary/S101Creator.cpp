@@ -26,7 +26,6 @@
 #include "CUCO.h"
 #include "RIAS.h"
 #include "SPAS.h"
-#include "GISLibrary.h"
 #include "SPoint.h"
 #include "SMultiPoint.h"
 #include "SCompositeCurve.h"

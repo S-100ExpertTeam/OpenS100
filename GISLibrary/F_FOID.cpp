@@ -35,7 +35,7 @@ F_FOID F_FOID::operator=(const F_FOID& other)
 	return *this;
 }
 
-void F_FOID::ReadField(BYTE*& buf)
+void F_FOID::ReadField(std::uint8_t*& buf)
 {
 	AGEN = buf2uint(buf, 2);
 	FIDN = buf2uint(buf, 4);
@@ -58,9 +58,9 @@ int F_FOID::GetFieldLength()
 	return 9; // 8 + 1;
 }
 
-__int64 F_FOID::GetName()
+long long F_FOID::GetName()
 {
-	return ((__int64)AGEN) << 48 | ((__int64)FIDN) << 16 | FIDS;
+	return ((long long)AGEN) << 48 | ((long long)FIDN) << 16 | FIDS;
 }
 
 

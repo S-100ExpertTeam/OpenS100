@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CommandToInstruction.h"
 
-#include "..\\PortrayalCatalogue\\S100_AugmentedRay.h"
+#include "../PortrayalCatalogue/S100_AugmentedRay.h"
 
 S100_PointInstruction* CommandToInstruction::ToS100PointInstruction(Local_StateCommands& sc, Part9a::PointInstruction& pi)
 {

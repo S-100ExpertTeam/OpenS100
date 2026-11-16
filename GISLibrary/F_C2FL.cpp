@@ -45,7 +45,7 @@ F_C2FL F_C2FL::operator=(const F_C2FL& other)
 	return *this;
 }
 
-void F_C2FL::ReadField(BYTE *&buf)
+void F_C2FL::ReadField(std::uint8_t *&buf)
 {
 	while (*buf != 0x1E)
 	{
@@ -56,7 +56,7 @@ void F_C2FL::ReadField(BYTE *&buf)
 	}
 }
 
-void F_C2FL::ReadField(BYTE *&buf, int loopCnt)
+void F_C2FL::ReadField(std::uint8_t *&buf, int loopCnt)
 {
 	for (int i = 0; i < loopCnt; i++)
 	{

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "lineSymbol.h"
+#include "LineSymbol.h"
 
 namespace LineStylesPackage
 {

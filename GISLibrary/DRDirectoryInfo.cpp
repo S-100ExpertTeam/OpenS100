@@ -18,7 +18,7 @@ DRDirectoryInfo::~DRDirectoryInfo()
 	Delete();
 }
 
-bool DRDirectoryInfo::ReadDir(DRReader drReader, BYTE*& buf)
+bool DRDirectoryInfo::ReadDir(DRReader drReader, std::uint8_t*& buf)
 {
 	for (int i = 0; i < m_count; i++)
 	{

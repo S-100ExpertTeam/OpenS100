@@ -105,7 +105,7 @@ SENC_Template* SENC_Rule::FindPortrayalObject(int typeOfGeometry, std::wstring c
 	else
 	{
 		//OutputDebugString(L"Fail to search Feature ( Feature : ");
-		//OutputDebugString(camelCase.c_str());
+		//OutputDebugString(camelCase);
 		//OutputDebugString(L")\n");
 
 		return 0;

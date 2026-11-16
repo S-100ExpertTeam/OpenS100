@@ -14,7 +14,7 @@ HDF5Wrapper::~HDF5Wrapper()
 }
 
 
-bool HDF5Wrapper::ReadMetadataIntegerAttribute(__int64 id, const char* attributeName, int& attributeValue)
+bool HDF5Wrapper::ReadMetadataIntegerAttribute(long long id, const char* attributeName, int& attributeValue)
 {
 	if (IsInteger64Attribute(id))
 	{
@@ -53,7 +53,7 @@ bool HDF5Wrapper::ReadMetadataIntegerAttribute(__int64 id, const char* attribute
 }
 
 
-bool HDF5Wrapper::ReadMetadataInteger64Attribute(__int64 id, const char* attributeName, __int64& attributeValue)
+bool HDF5Wrapper::ReadMetadataInteger64Attribute(long long id, const char* attributeName, long long& attributeValue)
 {
 	if (IsInteger32Attribute(id))
 	{
@@ -93,7 +93,7 @@ bool HDF5Wrapper::ReadMetadataInteger64Attribute(__int64 id, const char* attribu
 
 
 
-bool HDF5Wrapper::ReadMetadataFloatAttribute(__int64 id, const char* attributeName, float& attributeValue)
+bool HDF5Wrapper::ReadMetadataFloatAttribute(long long id, const char* attributeName, float& attributeValue)
 {
 	if (IsFloat64Attribute(id))
 	{
@@ -132,7 +132,7 @@ bool HDF5Wrapper::ReadMetadataFloatAttribute(__int64 id, const char* attributeNa
 }
 
 
-bool HDF5Wrapper::ReadMetadataDoubleAttribute(__int64 id, const char* attributeName, double& attributeValue)
+bool HDF5Wrapper::ReadMetadataDoubleAttribute(long long id, const char* attributeName, double& attributeValue)
 {
 	if (IsFloat32Attribute(id))
 	{
@@ -172,7 +172,7 @@ bool HDF5Wrapper::ReadMetadataDoubleAttribute(__int64 id, const char* attributeN
 
 
 
-bool HDF5Wrapper::ReadMetadataStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue)
+bool HDF5Wrapper::ReadMetadataStringAttribute(long long id, const char* attributeName, std::string& attributeValue)
 {
 	herr_t status = 0;
 
@@ -252,7 +252,7 @@ bool HDF5Wrapper::ReadMetadataStringAttribute(__int64 id, const char* attributeN
 }
 
 
-bool HDF5Wrapper::ReadMetadataVariableLengthStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue)
+bool HDF5Wrapper::ReadMetadataVariableLengthStringAttribute(long long id, const char* attributeName, std::string& attributeValue)
 {
 	const hid_t attribute = H5Aopen_name(id, attributeName);
 	if (attribute < 0)
@@ -292,7 +292,7 @@ bool HDF5Wrapper::ReadMetadataVariableLengthStringAttribute(__int64 id, const ch
 	return status >= 0;
 }
 
-bool HDF5Wrapper::ReadMetadataAnyStringAttribute(__int64 id, const char* attributeName, std::string& attributeValue)
+bool HDF5Wrapper::ReadMetadataAnyStringAttribute(long long id, const char* attributeName, std::string& attributeValue)
 {
 	if (!ReadMetadataStringAttribute(id, attributeName, attributeValue))
 	{
@@ -302,7 +302,7 @@ bool HDF5Wrapper::ReadMetadataAnyStringAttribute(__int64 id, const char* attribu
 	return true;
 }
 
-bool HDF5Wrapper::IsFloat32Attribute(__int64 id)
+bool HDF5Wrapper::IsFloat32Attribute(long long id)
 {
 	auto type = H5Aget_type(id);
 
@@ -316,7 +316,7 @@ bool HDF5Wrapper::IsFloat32Attribute(__int64 id)
 	return false;
 }
 
-bool HDF5Wrapper::IsFloat64Attribute(__int64 id)
+bool HDF5Wrapper::IsFloat64Attribute(long long id)
 {
 	auto type = H5Aget_type(id);
 
@@ -330,7 +330,7 @@ bool HDF5Wrapper::IsFloat64Attribute(__int64 id)
 	return false;
 }
 
-bool HDF5Wrapper::IsInteger32Attribute(__int64 id)
+bool HDF5Wrapper::IsInteger32Attribute(long long id)
 {
 	auto type = H5Aget_type(id);
 
@@ -344,7 +344,7 @@ bool HDF5Wrapper::IsInteger32Attribute(__int64 id)
 	return false;
 }
 
-bool HDF5Wrapper::IsInteger64Attribute(__int64 id)
+bool HDF5Wrapper::IsInteger64Attribute(long long id)
 {
 	auto type = H5Aget_type(id);
 

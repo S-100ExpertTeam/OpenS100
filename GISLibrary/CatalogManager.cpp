@@ -2,7 +2,6 @@
 #include "PortrayalRenderCache.h"
 #include "../GeoMetryLibrary/TextCodec.h"
 #include "CatalogManager.h"
-#include "GISLibrary.h"
 
 #include "../SystemDatabase/ResourceStore.h"
 #include "../SystemDatabase/SystemDatabase.h"

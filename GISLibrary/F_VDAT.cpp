@@ -34,7 +34,7 @@ F_VDAT F_VDAT::operator=(const F_VDAT& other)
 	return *this;
 }
 
-void F_VDAT::ReadField(BYTE*& buf)
+void F_VDAT::ReadField(std::uint8_t*& buf)
 {
 	buf2charArr(m_dtnm, buf);
 	buf2charArr(m_dtid, buf);

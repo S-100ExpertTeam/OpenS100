@@ -2,7 +2,7 @@
 #include <filesystem>
 #include "SVGReader.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <pugixml.hpp>
 

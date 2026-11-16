@@ -35,7 +35,8 @@ namespace GISLibrary
 			Cost cost;   // empty: one unit per dataset
 		};
 
-		DatasetLayerSet(LayerManager& drawer, Opener opener, CacheLimit cacheLimit = {});
+		DatasetLayerSet(LayerManager& drawer, Opener opener);
+		DatasetLayerSet(LayerManager& drawer, Opener opener, CacheLimit cacheLimit);
 		DatasetLayerSet(const DatasetLayerSet&) = delete;
 		DatasetLayerSet& operator=(const DatasetLayerSet&) = delete;
 		~DatasetLayerSet();

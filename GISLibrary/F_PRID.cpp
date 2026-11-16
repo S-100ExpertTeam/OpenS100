@@ -39,7 +39,7 @@ F_PRID F_PRID::operator=(const F_PRID& other)
 	return *this;
 }
 
-void F_PRID::ReadField(BYTE *&buf)
+void F_PRID::ReadField(std::uint8_t *&buf)
 {
 	m_name.RCNM = *(buf++);
 	m_name.RCID = buf2uint(buf, 4);

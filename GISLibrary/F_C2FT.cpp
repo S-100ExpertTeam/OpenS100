@@ -33,7 +33,7 @@ F_C2FT F_C2FT::operator=(const F_C2FT& other)
 	return *this;
 }
 
-void F_C2FT::ReadField(BYTE *&buf)
+void F_C2FT::ReadField(std::uint8_t *&buf)
 {
 	m_ycoo = buf2double(buf, 8);
 	m_xcoo = buf2double(buf, 8);

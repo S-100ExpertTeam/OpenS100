@@ -78,7 +78,7 @@ F_GDAT F_GDAT::operator=(const F_GDAT& other)
 	return *this;
 }
 
-void F_GDAT::ReadField(BYTE *&buf)
+void F_GDAT::ReadField(std::uint8_t *&buf)
 {
 	buf2charArr(m_dtnm, buf);
 	buf2charArr(m_elnm, buf);

@@ -1,4 +1,5 @@
 #pragma once
+#include "DeviceTypes.h"
 
 #include "SGeometry.h"
 #include "SAbstractCurve.h"

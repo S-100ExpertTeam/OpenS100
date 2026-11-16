@@ -2,7 +2,7 @@
 
 #include "StateCommand.h"
 
-#include "..\\FeatureCatalog\\IntervalType.h"
+#include "../FeatureCatalog/IntervalType.h"
 
 namespace Part9a
 {

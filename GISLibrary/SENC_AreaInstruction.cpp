@@ -6,21 +6,21 @@
 #include "D2DGeometryCache.h"
 #include "SENC_ColorFill.h"
 #include "SENC_AreaFillReference.h"
-#include "SENC_PixmapFill.h"
+#include "SENC_pixmapFill.h"
 #include "SENC_SymbolFill.h"
 #include "SENC_HatchFill.h"
 #include "SENC_CommonFuc.h"
 #include "PCOutputSchemaManager.h"
 #include "GISLibrary.h"
 
-#include "..\\S100Engine\\AreaPatternBitmap.h"
+#include "../S100Engine/AreaPatternBitmap.h"
 
-#include "..\\PortrayalCatalogue\\PortrayalCatalogue.h"
-#include "..\\PortrayalCatalogue\\S100_ColorFill.h"
-#include "..\\PortrayalCatalogue\\S100_AreaInstruction.h"
-#include "..\\PortrayalCatalogue\\S100_AreaFillReference.h"
+#include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../PortrayalCatalogue/S100_ColorFill.h"
+#include "../PortrayalCatalogue/S100_AreaInstruction.h"
+#include "../PortrayalCatalogue/S100_AreaFillReference.h"
 
-#include "..\\GISLibrary\\R_FeatureRecord.h"
+#include "../GISLibrary/R_FeatureRecord.h"
 
 #include "SCommonFuction.h"
 #include "SCoverage.h"
@@ -281,7 +281,7 @@ void SENC_AreaInstruction::FromS100Instruction(
 			{
 				colorFill->color = new SENC_Color();
 				colorFill->color->SetToken(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTokenW());
-				colorFill->color->SetTransparency((float)_wtof(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTransparencyW().c_str()));
+				colorFill->color->SetTransparency((float)std::wcstod(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTransparencyW().c_str(), nullptr));
 
 				auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
 

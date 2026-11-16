@@ -2,13 +2,12 @@
 #include "SCurve.h"
 #include "SPoint.h"
 #include "SPoint.h"
-#include "GISLibrary.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../GeoMetryLibrary/Enum_WKBGeometryType.h"
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <sstream>
 
@@ -150,21 +149,21 @@ bool SCurve::ImportFromWkb(unsigned char* value, int /*size*/)
 
 	int type = 0;
 
-	memcpy_s(&type, 4, value + 1, 4);
+	memcpy(&type, value + 1, 4);
 
 	if (type != (int)WKBGeometryType::wkbLineString)
 	{
 		return false;
 	}
 
-	memcpy_s(&m_numPoints, 4, value + 5, 4);
+	memcpy(&m_numPoints, value + 5, 4);
 
 	Init(m_numPoints);
 
 	for (int i = 0; i < m_numPoints; i++)
 	{
-		memcpy_s(&m_pPoints[i].x, 8, value + (9 + (16 * i)), 8);
-		memcpy_s(&m_pPoints[i].y, 8, value + (17 + (16 * i)), 8);
+		memcpy(&m_pPoints[i].x, value + (9 + (16 * i)), 8);
+		memcpy(&m_pPoints[i].y, value + (17 + (16 * i)), 8);
 
 		projection(m_pPoints[i].x, m_pPoints[i].y);
 	}
@@ -187,9 +186,9 @@ bool SCurve::ExportToWkb(unsigned char** value, int* size)
 
 	int type = (int)WKBGeometryType::wkbLineString;
 
-	memcpy_s((*value) + 1, 4, &type, 4);
+	memcpy((*value) + 1, &type, 4);
 
-	memcpy_s((*value) + 5, 4, &m_numPoints, 4);
+	memcpy((*value) + 5, &m_numPoints, 4);
 
 	for (int i = 0; i < m_numPoints; i++)
 	{
@@ -197,8 +196,8 @@ bool SCurve::ExportToWkb(unsigned char** value, int* size)
 		double localY = m_pPoints[i].y;
 		inverseProjection(localX, localY);
 
-		memcpy_s((*value) + (9 + (16 * i)), 8, &localX, 8);
-		memcpy_s((*value) + (17 + (16 * i)), 8, &localY, 8);
+		memcpy((*value) + (9 + (16 * i)), &localX, 8);
+		memcpy((*value) + (17 + (16 * i)), &localY, 8);
 	}
 
 	return true;

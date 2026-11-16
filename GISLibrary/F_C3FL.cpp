@@ -49,7 +49,7 @@ F_C3FL F_C3FL::operator=(const F_C3FL& other)
 	return *this;
 }
 
-void F_C3FL::ReadField(BYTE *&buf)
+void F_C3FL::ReadField(std::uint8_t *&buf)
 {
 	m_vcid = *(buf++);
 	while (*buf != 0x1E)
@@ -63,7 +63,7 @@ void F_C3FL::ReadField(BYTE *&buf)
 	}
 }
 
-void F_C3FL::ReadField(BYTE *&buf, int loopCnt)
+void F_C3FL::ReadField(std::uint8_t *&buf, int loopCnt)
 {
 	m_vcid = *(buf++);
 	for (int i = 0; i < loopCnt; i++)

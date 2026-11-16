@@ -124,7 +124,7 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, int current
 
 		if (geom)
 		{
-			if (ENCCommon::APPLY_SCALE_MIN == TRUE)
+			if (ENCCommon::APPLY_SCALE_MIN == true)
 			{
 				if ((instruction->scaleMinimum == 0 || currentScale <= (int)instruction->scaleMinimum) &&
 					(instruction->scaleMaximum == 0 || currentScale >= (int)instruction->scaleMaximum) &&
@@ -224,7 +224,7 @@ int SENC_DisplayList::GetType(int type)
 	return 10;
 }
 
-__int64 SENC_DisplayList::GetKey(int priority, int type)
+long long SENC_DisplayList::GetKey(int priority, int type)
 {
-	return ((__int64)priority) << 32 | GetType(type);
+	return ((long long)priority) << 32 | GetType(type);
 }

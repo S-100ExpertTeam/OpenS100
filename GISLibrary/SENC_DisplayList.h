@@ -17,7 +17,7 @@ public:
 
 public:
 	// key : priority + type
-	std::multimap<__int64, SENC_Instruction*> displayInstructions;
+	std::multimap<long long, SENC_Instruction*> displayInstructions;
 
 	// key : id
 	std::unordered_map<std::string, SENC_AlertReference*> alertInstructions;
@@ -47,5 +47,5 @@ public:
 	void AddAlertIndication(SENC_Instruction* value);
 
 	int GetType(int type);
-	__int64 GetKey(int priority, int type);
+	long long GetKey(int priority, int type);
 };

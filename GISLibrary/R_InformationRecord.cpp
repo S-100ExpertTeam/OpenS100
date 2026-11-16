@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "DebugOutput.h"
 #include "R_InformationRecord.h"
 #include "DRDirectoryInfo.h"
 #include "F_INAS.h"
@@ -85,7 +86,7 @@ R_InformationRecord R_InformationRecord::operator=(const R_InformationRecord& ot
 	return *this;
 }
 
-BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
+bool R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, std::uint8_t*& buf)
 {
 	int i = 0, j = 0, cnt;
 	for(i = 0; i < dir->m_count; i++)
@@ -104,7 +105,7 @@ BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		{
 			cnt = 0;
 			j = 0;
-			BYTE *sIndex = buf;
+			std::uint8_t *sIndex = buf;
 
 			int head = 0;
 			for (j = 1; j < dir->GetDirectory(i)->length; j++)
@@ -133,9 +134,9 @@ BOOL R_InformationRecord::ReadRecord(DRDirectoryInfo *dir, BYTE*& buf)
 		}
 		
 		if(*(buf++)!= 0x1E)//{}
-			OutputDebugStringW(L"terminator error\n");
+			GISLibrary::DebugOutput(L"terminator error\n");
 	}
-	return TRUE;
+	return true;
 }
 
 bool R_InformationRecord::WriteRecord(s100::io::BinaryWriter* file)

@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 #include "BinaryWriter.h"
 
 #include "Record.h"
@@ -30,7 +31,7 @@ public:
 	virtual R_DSGIR operator=(const R_DSGIR& other);
 
 public:
-	BOOL ReadRecord(DRDirectoryInfo *dir, BYTE*& buf);
+	bool ReadRecord(DRDirectoryInfo *dir, std::uint8_t*& buf);
 	bool WriteRecord(s100::io::BinaryWriter* file);
 	// function to get the code with the new memory code.
 	std::wstring GetFeatureCode(int numericCode);
