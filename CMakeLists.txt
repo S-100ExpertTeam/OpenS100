@@ -110,8 +110,13 @@ endif()
 
 if(OPENS100_BUILD_COVERAGE)
     # S-100 Part 10c gridded coverages: grid model, HDF5 reader, lookups (Documents/TechDocs/2026-11-11-coverage-backport-plan.md).
-    opens100_add_module(coverage Coverage DEPENDS hdf5::hdf5-shared)
-    target_compile_definitions(coverage PUBLIC H5_BUILT_AS_DYNAMIC_LIB)
+    # HDF5 is shared or static with the vcpkg triplet; link whichever one the package provides.
+    if(TARGET hdf5::hdf5-shared)
+        opens100_add_module(coverage Coverage DEPENDS hdf5::hdf5-shared)
+        target_compile_definitions(coverage PUBLIC H5_BUILT_AS_DYNAMIC_LIB)
+    else()
+        opens100_add_module(coverage Coverage DEPENDS hdf5::hdf5-static)
+    endif()
 endif()
 
 # --- package ------------------------------------------------------------------------------

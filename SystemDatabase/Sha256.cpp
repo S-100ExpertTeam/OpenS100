@@ -1,5 +1,6 @@
 #include "Sha256.h"
 
+#include <algorithm>
 #include <bit>
 #include <fstream>
 #include <system_error>

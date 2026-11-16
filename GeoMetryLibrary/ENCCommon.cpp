@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "ENCCommon.h"
-#include "comutil.h"
 
 #include "TextCodec.h"
 #include "StringTokenizer.h"
@@ -9,6 +8,18 @@
 #include <fstream>
 #include <locale>
 #include <unordered_map>
+#include <cstdio>
+
+namespace
+{
+	// Shortest text of a double that reads back the same for settings values ("30", "2.5").
+	std::string NumberToString(double value)
+	{
+		char buffer[32];
+		std::snprintf(buffer, sizeof(buffer), "%.15g", value);
+		return buffer;
+	}
+}
 
 bool   ENCCommon::TEXTOUT = true;
 bool   ENCCommon::APPLY_SCALE_MIN = true;
@@ -90,22 +101,22 @@ bool ENCCommon::Save(std::string filePath)
 	ofs.write(t.c_str(), t.size());
 
 	t = "DEEP_CONTOUR\t";
-	t.append(_bstr_t(ENCCommon::DEEP_CONTOUR));
+	t.append(NumberToString(ENCCommon::DEEP_CONTOUR));
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
 	t = "DISPLAY_MODE\t";
-	t.append(_bstr_t((int)ENCCommon::DISPLAY_MODE));
+	t.append(std::to_string((int)ENCCommon::DISPLAY_MODE));
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
 	t = "SAFETY_CONTOUR\t";
-	t.append(_bstr_t(ENCCommon::SAFETY_CONTOUR));
+	t.append(NumberToString(ENCCommon::SAFETY_CONTOUR));
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
 	t = "SHALLOW_CONTOUR\t";
-	t.append(_bstr_t(ENCCommon::SHALLOW_CONTOUR));
+	t.append(NumberToString(ENCCommon::SHALLOW_CONTOUR));
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
@@ -115,7 +126,7 @@ bool ENCCommon::Save(std::string filePath)
 	ofs.write(t.c_str(), t.size());
 
 	t = "DISPLAY_FONT_SIZE\t";
-	t.append(_bstr_t(ENCCommon::DISPLAY_FONT_SIZE));
+	t.append(std::to_string(ENCCommon::DISPLAY_FONT_SIZE));
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 
@@ -131,7 +142,7 @@ bool ENCCommon::Save(std::string filePath)
 
 	//write Setting 
 	t = "m_eColorTable\t";
-	t.append(_bstr_t((int)ENCCommon::m_eColorTable));
+	t.append(std::to_string((int)ENCCommon::m_eColorTable));
 	t.append("\n");
 	ofs.write(t.c_str(), t.size());
 

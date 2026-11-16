@@ -2,7 +2,7 @@
 #include "StringUtil.h"
 #include "Version.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <sstream>
 #include <vector>

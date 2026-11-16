@@ -60,16 +60,16 @@ bool GeoPointZ::ImportFromWkb(unsigned char* value, int size)
 	}
 
 	int type = 0;
-	memcpy_s(&type, 4, value + 1, 4);
+	memcpy(&type, value + 1, 4);
 
 	if (size == 29 && type == (int)WKBGeometryType::wkbPointZ) {
-		memcpy_s(&x, 8, value + 5, 8);
-		memcpy_s(&y, 8, value + 13, 8);
-		memcpy_s(&z, 8, value + 21, 8);
+		memcpy(&x, value + 5, 8);
+		memcpy(&y, value + 13, 8);
+		memcpy(&z, value + 21, 8);
 	} 
 	else if (size == 21 && type == (int)WKBGeometryType::wkbPoint) {
-		memcpy_s(&x, 8, value + 5, 8);
-		memcpy_s(&y, 8, value + 13, 8);
+		memcpy(&x, value + 5, 8);
+		memcpy(&y, value + 13, 8);
 		z = 0;
 	}
 	else {
@@ -93,11 +93,11 @@ bool GeoPointZ::ExportToWkb(unsigned char** value, int* size)
 	(*value)[0] = 0x01;
 
 	int type = (int)WKBGeometryType::wkbPointZ;
-	memcpy_s((*value) + 1, 4, &type, 4);
+	memcpy((*value) + 1, &type, 4);
 
-	memcpy_s((*value) + 5, 8, &x, 8);
-	memcpy_s((*value) + 13, 8, &y, 8);
-	memcpy_s((*value) + 21, 8, &z, 8);
+	memcpy((*value) + 5, &x, 8);
+	memcpy((*value) + 13, &y, 8);
+	memcpy((*value) + 21, &z, 8);
 	return true;
 }
 

@@ -175,7 +175,7 @@ namespace LatLonUtility {
 	 * @param replace Replacement string
 	 * @return New string with all replacements applied
 	 */
-	std::string replace_all(__in const std::string& message, __in const std::string& pattern, __in const std::string& replace);
+	std::string replace_all(const std::string& message, const std::string& pattern, const std::string& replace);
 	
 	/**
 	 * @brief Replace all occurrences of a substring in-place

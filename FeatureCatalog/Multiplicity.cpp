@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Multiplicity.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 #include <string>
 

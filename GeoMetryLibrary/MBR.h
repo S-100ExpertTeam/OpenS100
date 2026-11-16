@@ -1,4 +1,6 @@
 #pragma once
+#include <cfloat>
+
 class MBR
 {
 public:

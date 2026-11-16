@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "IntegerCode.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 IntegerCode::IntegerCode()
 {

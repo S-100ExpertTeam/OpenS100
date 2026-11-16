@@ -2,7 +2,9 @@
 #include "Geometry.h"
 
 #include "TextCodec.h"
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
+
+#include <filesystem>
 
 #include <fstream>
 #include <iostream>
@@ -80,7 +82,7 @@ bool Geometry::WriteWkb(std::wstring path)
 	int size = 0;
 	ExportToWkb(&wkb, &size);
 
-	std::ofstream writeFile(path.data());
+	std::ofstream writeFile{ std::filesystem::path(path) };
 	if (writeFile.is_open())
 	{
 		writeFile.write((char*)wkb, size);

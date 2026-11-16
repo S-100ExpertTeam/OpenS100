@@ -2,7 +2,7 @@
 #include "StringUtil.h"
 #include "AttributeConstraints.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 AttributeConstraints::AttributeConstraints()
 {

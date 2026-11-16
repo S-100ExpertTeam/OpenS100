@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <sstream>
 #include <chrono>
+#include <ctime>
 #include <iomanip>
 
 
@@ -160,7 +161,11 @@ private:
 
         std::tm tm_buf;
         char buf[80];
+#ifdef _WIN32
         localtime_s(&tm_buf, &in_time_t);
+#else
+        localtime_r(&in_time_t, &tm_buf);
+#endif
         std::strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &tm_buf);
 
         return std::string(buf);
