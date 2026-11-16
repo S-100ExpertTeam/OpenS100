@@ -75,7 +75,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     env:
-      FEATURES: "opens100[core,feature-catalogue,geometry,coverage,system-database]"
+      FEATURES: "opens100[core,feature-catalogue,geometry,portrayal-catalogue,coverage,system-database]"
     steps:
       - uses: actions/checkout@v4
 
@@ -127,7 +127,7 @@ jobs:
           cmake -S examples/consumer -B build/consumer -G Ninja -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_TOOLCHAIN_FILE="$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_MODE=OFF
           cmake --build build/consumer
-          build/consumer/opens100_consumer ProgramData/FC/S-101_FC.xml
+          build/consumer/opens100_consumer ProgramData/FC/S-101_FC.xml ProgramData/PC/S101_Portrayal/portrayal_catalogue.xml
 
       - name: Upload vcpkg build logs
         if: failure()

@@ -25,7 +25,12 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 option(OPENS100_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 option(OPENS100_BUILD_GEOMETRY "Build opens100::geometry (GeoMetryLibrary)" ON)
 option(OPENS100_BUILD_FEATURECATALOG "Build opens100::featurecatalog (FeatureCatalog)" ON)
+option(OPENS100_BUILD_PORTRAYALCATALOGUE "Build opens100::portrayalcatalogue (PortrayalCatalogue)" ON)
 option(OPENS100_BUILD_SYSTEMDATABASE "Build opens100::sdb (SystemDatabase)" ON)
+
+if(OPENS100_BUILD_PORTRAYALCATALOGUE AND NOT (OPENS100_BUILD_GEOMETRY AND OPENS100_BUILD_FEATURECATALOG))
+    message(FATAL_ERROR "opens100::portrayalcatalogue needs opens100::geometry and opens100::featurecatalog")
+endif()
 option(OPENS100_BUILD_COVERAGE "Build opens100::coverage (Coverage)" ON)
 
 include(GNUInstallDirs)
@@ -95,14 +100,19 @@ function(opens100_add_module target directory)
     install(FILES ${headers} DESTINATION "${OPENS100_INSTALL_INCLUDEDIR}/${directory}")
 endfunction()
 
-# Dependency order: latlon <- geometry, featurecatalog; sdb stands alone. (PortrayalCatalogue still includes the
-# Direct2D render module and joins after step 2-3c of the Phase 1 plan.)
+# Dependency order: latlon <- geometry, featurecatalog <- portrayalcatalogue; sdb stands alone.
+# The portrayal catalogue here is the catalogue data. Its symbol, line style, area fill and colour
+# profile files are read by a Portrayal::ResourceStore the application supplies; the Direct2D one
+# (S100Engine) stays in the Visual Studio solution.
 opens100_add_module(latlon LatLonUtility DEPENDS GeographicLib::GeographicLib)
 if(OPENS100_BUILD_GEOMETRY)
     opens100_add_module(geometry GeoMetryLibrary DEPENDS latlon)
 endif()
 if(OPENS100_BUILD_FEATURECATALOG)
     opens100_add_module(featurecatalog FeatureCatalog DEPENDS latlon pugixml::pugixml utf8cpp::utf8cpp)
+endif()
+if(OPENS100_BUILD_PORTRAYALCATALOGUE)
+    opens100_add_module(portrayalcatalogue PortrayalCatalogue DEPENDS latlon geometry featurecatalog pugixml::pugixml)
 endif()
 if(OPENS100_BUILD_SYSTEMDATABASE)
     opens100_add_module(sdb SystemDatabase DEPENDS unofficial::sqlite3::sqlite3 pugixml::pugixml OpenSSL::Crypto ZLIB::ZLIB)

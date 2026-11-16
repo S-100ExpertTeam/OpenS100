@@ -3,6 +3,7 @@
 #include <FeatureCatalog/FeatureCatalogue.h>
 #include <FeatureCatalog/FeatureTypes.h>
 #include <GeoMetryLibrary/MBR.h>
+#include <PortrayalCatalogue/PortrayalCatalogue.h>
 
 #include <iostream>
 #include <string>
@@ -11,7 +12,7 @@ int main(int argc, char** argv)
 {
 	if (argc < 2)
 	{
-		std::cerr << "usage: opens100_consumer <feature catalogue xml>\n";
+		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml]\n";
 		return 2;
 	}
 
@@ -30,5 +31,23 @@ int main(int argc, char** argv)
 	// A second module, to prove more than one target links.
 	MBR korea(124.0, 33.0, 132.0, 39.0);
 	std::cout << "Busan inside the Korean box: " << std::boolalpha << korea.PtInMBR(129.04, 35.10) << "\n";
+
+	// Optional: a portrayal catalogue, read as data (no resource store, so nothing is drawn).
+	if (argc >= 3)
+	{
+		PortrayalCatalogue pc;
+		if (!pc.Open(std::string(argv[2])))
+		{
+			std::cerr << "cannot read " << argv[2] << "\n";
+			return 1;
+		}
+
+		auto* mainRule = pc.GetMainRuleFile();
+		std::cout << "portrayal:     " << pc.GetProduct() << " " << pc.GetVersion() << "\n"
+			<< "rule files:    " << pc.GetRules()->GetRuleFiles().size() << "\n"
+			<< "symbols:       " << pc.GetSymbols()->GetSymbolsVector()->size() << "\n"
+			<< "viewing groups: " << pc.GetViewingGroups()->GetViewingGroup()->size() << "\n"
+			<< "main rule:     " << (mainRule ? mainRule->GetFileName() : "(none)") << "\n";
+	}
 	return 0;
 }

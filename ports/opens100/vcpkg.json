@@ -18,7 +18,8 @@
   ],
   "default-features": [
     "feature-catalogue",
-    "geometry"
+    "geometry",
+    "portrayal-catalogue"
   ],
   "features": {
     "coverage": {
@@ -36,6 +37,19 @@
     },
     "geometry": {
       "description": "Geometry primitives, map scaler and display settings (opens100::geometry)"
+    },
+    "portrayal-catalogue": {
+      "description": "S-100 Part 9 portrayal catalogue model and reader: rules, viewing groups, display modes, context parameters (opens100::portrayalcatalogue)",
+      "dependencies": [
+        {
+          "name": "opens100",
+          "default-features": false,
+          "features": [
+            "feature-catalogue",
+            "geometry"
+          ]
+        }
+      ]
     },
     "system-database": {
       "description": "System Database: local store of installed datasets, catalogues and support files, and S-100 Part 15 data protection (opens100::sdb)",

@@ -26,6 +26,7 @@ vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
         coverage          OPENS100_BUILD_COVERAGE
         feature-catalogue OPENS100_BUILD_FEATURECATALOG
         geometry          OPENS100_BUILD_GEOMETRY
+        portrayal-catalogue OPENS100_BUILD_PORTRAYALCATALOGUE
         system-database   OPENS100_BUILD_SYSTEMDATABASE
 )
 

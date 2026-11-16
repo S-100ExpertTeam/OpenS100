@@ -76,6 +76,7 @@ Each module is a separate CMake target, so you only pull in the dependencies you
 | `opens100::latlon` | (base) | Geodesy and coordinate utilities | GeographicLib |
 | `opens100::geometry` | `geometry` (default) | Geometry primitives, map scaler, display settings | |
 | `opens100::featurecatalog` | `feature-catalogue` (default) | S-100 Part 5 feature catalogue model and reader | pugixml, utfcpp |
+| `opens100::portrayalcatalogue` | `portrayal-catalogue` (default) | S-100 Part 9 portrayal catalogue model and reader: rules, viewing groups, display modes, context parameters. Symbols, line styles, area fills and colour profiles go to a `Portrayal::ResourceStore` the application supplies | pugixml |
 | `opens100::coverage` | `coverage` | S-100 Part 10c HDF5 coverages, depth lines, water level adjustment | HDF5 |
 | `opens100::sdb` | `system-database` | Local store of installed datasets and catalogues, S-98 dataset selection, S-100 Part 15 data protection | SQLite, OpenSSL, zlib, pugixml |
 

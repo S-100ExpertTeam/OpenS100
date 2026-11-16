@@ -8,6 +8,10 @@ Headers keep the module directory names:
     #include <FeatureCatalog/FeatureCatalogue.h>
     #include <GeoMetryLibrary/MBR.h>
 
+The portrayal catalogue (feature "portrayal-catalogue") is opens100::portrayalcatalogue:
+
+    #include <PortrayalCatalogue/PortrayalCatalogue.h>
+
 The System Database (feature "system-database") is opens100::sdb:
 
     #include <SystemDatabase/SystemDatabase.h>

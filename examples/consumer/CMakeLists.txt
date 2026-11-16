@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(opens100 CONFIG REQUIRED)
 
 add_executable(opens100_consumer main.cpp)
-target_link_libraries(opens100_consumer PRIVATE opens100::featurecatalog opens100::geometry)
+target_link_libraries(opens100_consumer PRIVATE opens100::featurecatalog opens100::geometry opens100::portrayalcatalogue)
 if(MSVC)
     target_compile_options(opens100_consumer PRIVATE /utf-8 /W4)
 endif()
