@@ -44,11 +44,31 @@ namespace s100::sdb
             rings.reserve(coverage.rings.size());
             for (const Ring& ring : coverage.rings)
             {
+                // A long edge is projected in steps: straight between its ends on a Mercator chart,
+                // it is a curve about a pole, where the edge of a cell along a parallel is an arc.
+                constexpr double step = 2.0;   // degrees
                 std::vector<DevicePoint> points;
                 points.reserve(ring.size());
-                for (const Position& position : ring)
+                for (std::size_t i = 0; i < ring.size(); ++i)
                 {
-                    points.push_back(projection(position));
+                    const Position& from = ring[i];
+                    points.push_back(projection(from));
+                    if (i + 1 == ring.size())
+                    {
+                        break;
+                    }
+                    const Position& to = ring[i + 1];
+                    const double span = std::max(std::abs(to.lon - from.lon), std::abs(to.lat - from.lat));
+                    if (!(span > step) || !std::isfinite(span))
+                    {
+                        continue;
+                    }
+                    const int pieces = static_cast<int>(std::ceil(span / step));
+                    for (int piece = 1; piece < pieces; ++piece)
+                    {
+                        const double t = static_cast<double>(piece) / pieces;
+                        points.push_back(projection(Position{ from.lon + (to.lon - from.lon) * t, from.lat + (to.lat - from.lat) * t }));
+                    }
                 }
                 // A ring that does not project (beyond the projection's limits) cannot be filled.
                 if (std::ranges::all_of(points, finite))

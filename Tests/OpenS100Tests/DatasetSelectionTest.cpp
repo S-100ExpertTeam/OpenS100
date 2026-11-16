@@ -139,8 +139,11 @@ TEST_F(SelectDataCoverages, StopsOnceTheViewportIsCovered)
 
 TEST_F(SelectDataCoverages, LeavesACoverageOutsideTheGroundTheViewportCanShowUnprojected)
 {
-	int projected = 0;
-	const DeviceProjection counting = [&](const Position& p) { ++projected; return DevicePoint{ p.lon, p.lat }; };
+	// Long edges are projected in steps, so what is counted is where the projected points lie:
+	// those of `elsewhere` are east of 200.
+	int near = 0;
+	int far = 0;
+	const DeviceProjection counting = [&](const Position& p) { ++(p.lon >= 200 ? far : near); return DevicePoint{ p.lon, p.lat }; };
 	const std::vector<SelectableCoverage> two = { detailed, elsewhere };
 	const BoundingBox within{ -1, -1, 120, 120 };
 
@@ -148,13 +151,13 @@ TEST_F(SelectDataCoverages, LeavesACoverageOutsideTheGroundTheViewportCanShowUnp
 	const auto selected = selectDataCoverages(two, 20'000, viewport, counting, within);
 	ASSERT_EQ(selected.size(), 1u);
 	EXPECT_EQ(selected[0].coverage->dataset, 0);
-	EXPECT_EQ(projected, static_cast<int>(detailed.rings[0].size()));
+	EXPECT_GE(near, static_cast<int>(detailed.rings[0].size()));
+	EXPECT_EQ(far, 0);
 
 	// Without the ground bounds every coverage of the band is projected, off the device or not.
-	projected = 0;
 	DeviceRegion again(100, 100, 10);
 	(void)selectDataCoverages(two, 20'000, again, counting);
-	EXPECT_EQ(projected, static_cast<int>(detailed.rings[0].size() + elsewhere.rings[0].size()));
+	EXPECT_GE(far, static_cast<int>(elsewhere.rings[0].size()));
 }
 
 TEST_F(SelectDataCoverages, SelectsNothingWhenNoBandDownToOneHasCoverage)

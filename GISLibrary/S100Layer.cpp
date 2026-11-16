@@ -75,7 +75,8 @@ bool S100Layer::Open(const std::wstring& _filepath, LayerManager* lm)
 				fc = lm->catalogManager->getFC(GetProductNumber());
 			}
 
-			if (nullptr == fc) {
+			// A dataset of an edition no portrayal catalogue was made for is drawn with the one there is.
+			if (nullptr == pc) {
 				pc = lm->catalogManager->getPC(GetProductNumber());
 			}
 

@@ -13,6 +13,7 @@
 #include <windows.h>
 #include <objidl.h>
 #include <gdiplus.h>
+#include <psapi.h>
 
 #include <chrono>
 #include <cstdint>
@@ -292,6 +293,94 @@ TEST(RenderSmoke, DrawsPolarCellsAboutThePole)
 	gis.SetMapProjection(MapProjection::Mercator);
 	EXPECT_EQ(static_cast<std::size_t>(gis.GetLayerManager()->LayerCount()), opened);
 	EXPECT_FALSE(IsPolarProjection());
+}
+
+// Charts about the pole installed in the System Database are drawn in the polar view: those of
+// the edition the catalogues are of, and those of an older one, which are drawn with the
+// catalogues there are.
+TEST(RenderSmoke, SystemDatabaseChartDrawsPolarCellsAboutThePole)
+{
+	const auto data = testpaths::polarCells().parent_path().parent_path().parent_path().parent_path();
+	const std::filesystem::path folders[] = {
+		testpaths::polarCells(),
+		data / L"ExchangeSets" / L"S-100" / L"PolarData" / L"S-101" / L"DATASET_FILES",
+	};
+	struct Restore
+	{
+		~Restore() { SetMapProjection(MapProjection::Mercator); }
+	} restore;
+
+	for (const auto& cells : folders)
+	{
+		if (!std::filesystem::exists(cells))
+		{
+			continue;
+		}
+		SCOPED_TRACE(cells.string());
+		const auto root = testpaths::tempDir() / L"SystemDatabasePolar";
+		std::filesystem::remove_all(root);
+		std::size_t installed = 0;
+		{
+			GISLibrary::SystemDatabaseSession session(root);
+			ASSERT_EQ(session.importer().importFeatureCatalogue(testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").outcome,
+				s100::sdb::ImportOutcome::Added);
+			ASSERT_EQ(session.importer().importPortrayalCatalogue(testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal").outcome,
+				s100::sdb::ImportOutcome::Added);
+			for (const auto& entry : std::filesystem::directory_iterator(cells))
+			{
+				if (entry.path().extension() == L".000")
+				{
+					const auto result = session.importer().importDataset(entry.path());
+					EXPECT_EQ(result.outcome, s100::sdb::ImportOutcome::Added) << entry.path().string();
+					++installed;
+				}
+			}
+		}
+		ASSERT_GT(installed, 0u);
+
+		GdiplusSession gdiplus;
+		CGISLibraryApp gis;
+		auto* catalogues = gis.GetCatalogManager();
+		catalogues->onPortrayalLoaded = [&gis](PortrayalCatalogue* pc) { GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources()); };
+		const RECT view{ 0, 0, kWidth, kHeight };
+		gis.SetScreen(view);
+
+		GISLibrary::SystemDatabaseSession session(root);
+		session.attach(*gis.GetLayerManager(), *catalogues);
+		auto* chart = session.chart();
+		ASSERT_NE(chart, nullptr);
+		gis.SetMapProjection(MapProjection::PolarStereographicNorth);
+		chart = session.chart();
+		ASSERT_NE(chart, nullptr);
+
+		// The view about a place, at a scale the cells are made for.
+		const auto drawAround = [&](double longitude, double latitude, const char* name) {
+			projection(longitude, latitude);
+			gis.SetMap(MBR(longitude, latitude, longitude, latitude));
+			gis.SetScale(3000000);
+			MemoryCanvas canvas(kWidth, kHeight);
+			gis.Draw(canvas.dc());
+			std::size_t nonWhite = 0;
+			std::size_t colours = 0;
+			canvas.Measure(nonWhite, colours);
+			const auto png = OutputDirectory() / (std::string("sdb-polar-") + cells.parent_path().parent_path().filename().string() + "-" + name + ".png");
+			EXPECT_TRUE(canvas.SavePng(png));
+			std::cout << "[ sdb polar ] " << name << " 1:" << gis.GetScaler()->GetCurrentScale() << " shown "
+				<< chart->GetLayerSet().shownCount() << ", opened " << chart->GetLayerSet().openCount() << ", non-white " << nonWhite
+				<< ", " << png.string() << std::endl;
+			EXPECT_GT(nonWhite, static_cast<std::size_t>(kWidth) * kHeight / 50) << name << ": the chart is (almost) blank";
+			return chart->GetLayerSet().shownCount();
+		};
+		// Both halves of the cap meet at the pole; the third cell lies about Svalbard.
+		EXPECT_GE(drawAround(0.0, 90.0, "pole"), 2u);
+		EXPECT_GE(drawAround(90.0, 87.0, "east-half"), 1u);
+		EXPECT_GE(drawAround(-90.0, 87.0, "west-half"), 1u);
+		EXPECT_GE(drawAround(22.0, 80.0, "svalbard"), 1u);
+		EXPECT_EQ(chart->GetLayerSet().openCount(), installed) << "every cell was opened, once";
+
+		session.detach();
+		SetMapProjection(MapProjection::Mercator);
+	}
 }
 
 // Opt-in: render the cells named in S100_RENDER_CELLS (';'-separated paths) for visual review.
@@ -1404,4 +1493,67 @@ TEST(RenderSmoke, S102PictureCoversItsDataOnMercator)
 	std::cout << "[ s102 covers ] blank pixels with ESC off " << off << ", on " << on << std::endl;
 	// The chart is covered either way: a few pixels of antialiasing along the edges at most.
 	EXPECT_LT(on, off + 500u) << "the chart is blank where the S-101 depth areas are not drawn";
+}
+
+// Changing the projection reads the layers again: what was read before is given back, so that
+// going to a projection about a pole and back does not grow the process (reading a cell about a
+// pole once held on to a copy of every point of its curves).
+TEST(RenderSmoke, ChangingProjectionDoesNotGrowMemory)
+{
+	const auto cell = testpaths::tdsRoot() / L"KOR_TDS" / L"S100_ROOT" / L"S-101" / L"DATASET_FILES" / L"101KR00659C71" / L"101KR00659C71.000";
+	if (!std::filesystem::exists(cell))
+	{
+		GTEST_SKIP() << "KOR S-101 cell not available: " << cell.string();
+	}
+	struct Restore
+	{
+		~Restore() { SetMapProjection(MapProjection::Mercator); }
+	} restore;
+
+	GdiplusSession gdiplus;
+	CGISLibraryApp gis;
+	auto* catalogues = gis.GetCatalogManager();
+	ASSERT_NE(catalogues->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+	auto* pc = catalogues->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
+	ASSERT_NE(pc, nullptr);
+	GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
+	const RECT view{ 0, 0, kWidth, kHeight };
+	gis.SetScreen(view);
+	ASSERT_TRUE(gis.AddLayer(cell.wstring()));
+
+	const auto megabytes = [] {
+		PROCESS_MEMORY_COUNTERS_EX counters{};
+		::GetProcessMemoryInfo(::GetCurrentProcess(), reinterpret_cast<PROCESS_MEMORY_COUNTERS*>(&counters), sizeof(counters));
+		return counters.PrivateUsage / (1024 * 1024);
+	};
+	// The first change settles what is allocated once.
+	gis.SetMapProjection(MapProjection::PolarStereographicNorth);
+	gis.SetMapProjection(MapProjection::Mercator);
+	const auto before = megabytes();
+	for (int i = 0; i < 3; i++)
+	{
+		gis.SetMapProjection(MapProjection::PolarStereographicNorth);
+		gis.SetMapProjection(MapProjection::Mercator);
+	}
+	const auto after = megabytes();
+	std::cout << "[ projection memory ] " << before << " MB, after three changes to polar and back " << after << " MB" << std::endl;
+	EXPECT_LT(after, before + 100) << "the layers read before a change of projection are not given back";
+}
+
+// A cell of an edition of S-101 no catalogue was made for (here 1.0, with the 2.0.0 catalogues)
+// is read and drawn with the catalogues there are, not opened as an empty layer.
+TEST(RenderSmoke, DrawsCellOfAnotherEditionWithTheCataloguesThereAre)
+{
+	// <data>/Staging/S-101/v2.0.0/polar to <data>/ExchangeSets/S-100/PolarData.
+	const auto cell = testpaths::polarCells().parent_path().parent_path().parent_path().parent_path()
+		/ L"ExchangeSets" / L"S-100" / L"PolarData" / L"S-101" / L"DATASET_FILES" / L"101AA00AA1NPOLA.000";
+	if (!std::filesystem::exists(cell))
+	{
+		GTEST_SKIP() << "S-101 1.0 polar cell not available: " << cell.string();
+	}
+	std::size_t nonWhite = 0;
+	std::size_t colours = 0;
+	RenderCell(cell, nonWhite, colours);
+	// On Mercator a cell about the pole is a strip along its northern limit.
+	EXPECT_GT(nonWhite, 5000u) << "the cell is not drawn";
 }

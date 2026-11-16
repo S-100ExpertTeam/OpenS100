@@ -187,7 +187,13 @@ namespace GISLibrary
 		{
 			return nullptr;
 		}
-		const auto catalogues = drawer_->catalogManager->resolve(record->product, record->productEdition);
+		auto catalogues = drawer_->catalogManager->resolve(record->product, record->productEdition);
+		if (!catalogues.fc)
+		{
+			// A dataset of an edition no catalogue was installed for is drawn with the newest there
+			// is of its product, as one opened from a file is.
+			catalogues = drawer_->catalogManager->resolve(record->product, {});
+		}
 		if (!catalogues.fc)
 		{
 			return nullptr;   // no feature catalogue for the product: kept until one is installed
