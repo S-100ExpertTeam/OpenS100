@@ -1,5 +1,5 @@
 #pragma once
-#include "geometry.h"
+#include "Geometry.h"
 
 class GeoPoint;
 class GeoPolygon : public Geometry
