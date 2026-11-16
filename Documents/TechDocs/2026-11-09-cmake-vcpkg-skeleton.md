@@ -74,8 +74,8 @@ build\consumer\opens100_consumer.exe ProgramData\FC\S-101_FC.xml
   - 오버레이 포트 뒤의 소스를 고치면 `port-version`을 올려야 한다. `vcpkg_installed`만 지우면 바이너리 캐시에서 예전 빌드가 복원된다(이번에 1 → 3). 소비자 쪽 MSBuild 통합은 `.msbuildstamp-<triplet>.stamp`도 지워야 다시 설치한다.
   - API의 `W` 쌍(`GetNameW()` 등)이 있어서 wide 문자열 소비자의 포팅이 기계적으로 됐다(346개 오류 중 110여 곳). 반대로 `GetAttributeCodeAsWstring()`처럼 이름과 달리 `std::string`을 반환하는 접근자가 남아 있다. 공개 API 정리(Phase 4) 때 없앤다.
   - `LuaScriptingReference`는 바인딩마다 대상 타입 수만큼 같은 Lua 바인딩을 중복 생성한다(`CreateFeatureBinding(ls, fb, i)`가 `i`를 쓰지 않음). 뷰어 쪽 포팅에서는 바인딩당 한 번만 만든다. 이쪽도 고칠 것.
-- [ ] `portrayalcatalogue` 타깃: Phase 1의 2-3c(`S100PCManager` 분리)가 선행.
+- [x] `portrayalcatalogue` 타깃 (557bc717, 2026-11-16): 포트 기능 `portrayal-catalogue`(기본). 카탈로그 데이터만이며 심볼·선 스타일·면 채움·색상 프로파일은 앱이 주는 `Portrayal::ResourceStore`가 읽는다(Phase 1의 2-3c(a)).
 - [ ] `iso8211`·`gml` 타깃: `GISLibrary`에서 8211/GML 모델과 리더를 렌더·Win32 코드와 떼어 내야 한다(Phase 4의 `S101Cell` 분리).
 - [ ] CMake로 테스트 빌드(`OPENS100_BUILD_TESTS`), GitHub Actions에 CMake 잡 추가(수동 실행 유지).
-- [ ] `x64-linux` 구성 시도. 지금 세 모듈에서 Windows 전용으로 남은 것은 `ENCCommon.cpp`의 로캘 이름과 `LatLonUtility/Logger.h`.
+- [x] `x64-linux`·macOS 구성 (700fa4fe, ec157193, 04e46464, 2026-11-16): Phase 1의 5-2 참조. GitHub Actions `port` 잡(수동 실행)이 두 플랫폼에서 포트를 빌드한다. 버전 0.2.0(db3c03d0).
 - [ ] 자체 Git 레지스트리(`S-100ExpertTeam/vcpkg-registry`)에 포트 게시: 첫 태그(0.1.0)와 함께.
