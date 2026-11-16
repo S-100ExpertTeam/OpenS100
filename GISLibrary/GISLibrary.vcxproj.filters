@@ -108,6 +108,9 @@
     <ClCompile Include="Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LayerOpen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="LayerManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -283,6 +286,9 @@
       <Filter>S101\Record</Filter>
     </ClCompile>
     <ClCompile Include="S100Layer.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="S100LayerPortrayal.cpp">
       <Filter>S100</Filter>
     </ClCompile>
     <ClCompile Include="DDR.cpp">
@@ -535,6 +541,9 @@
       <Filter>S101</Filter>
     </ClCompile>
     <ClCompile Include="S100SpatialObject.cpp">
+      <Filter>S100</Filter>
+    </ClCompile>
+    <ClCompile Include="S100SpatialObjectPortrayal.cpp">
       <Filter>S100</Filter>
     </ClCompile>
     <ClCompile Include="S100EditRender.cpp">
@@ -1134,6 +1143,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerOpen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LayerManager.h">

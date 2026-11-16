@@ -5,7 +5,6 @@
 #include "S101Cell.h"
 #include "BinaryFile.h"
 #include "BinaryWriter.h"
-#include "S100Layer.h"
 #include "F_CUCO.h"
 #include "F_PTAS.h"
 #include "F_SPAS.h"
@@ -43,13 +42,6 @@
 #include "F_SECC.h"
 #include "R_DDR.h"
 #include "DRDirectoryInfo.h"
-#include "PCOutputSchemaManager.h"
-#include "SENC_SpatialReference.h"
-#include "SENC_Attribute.h"
-#include "SENC_DisplayList.h"
-#include "SENC_Instruction.h"
-#include "SENC_LineInstruction.h"
-#include "SENC_PointInstruction.h"
 #include "Record.h"
 #include "SPoint.h"
 #include "SMultiPoint.h"
@@ -76,7 +68,6 @@
 
 #include <sstream> 
 #include <iomanip>
-#include <mmsystem.h> 
 #include <unordered_map>
 #include <vector>
 #include <string>

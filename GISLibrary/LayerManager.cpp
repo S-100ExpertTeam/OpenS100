@@ -4,6 +4,7 @@
 #include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "LayerManager.h"
+#include "LayerOpen.h"
 #include "PortrayalRenderCache.h"
 #include "BinaryFile.h"
 #include <filesystem>
@@ -105,7 +106,7 @@ bool LayerManager::AddBackgroundLayer(const std::wstring& _filepath)
 
 	if (s100::text::CompareNoCase(file_extension, L"SHP") == 0) 
 	{
-		if (backgroundLayer.Open(_filepath, this) == false)
+		if (GISLibrary::OpenLayer(backgroundLayer, _filepath, this) == false)
 		{
 			return false;
 		}
@@ -273,7 +274,7 @@ std::unique_ptr<Layer> LayerManager::CreateS100Layer(const std::wstring& _filepa
 		return nullptr;
 	}
 	auto layer = std::make_unique<S100Layer>(productNumber, fc, pc);
-	if (layer->Open(_filepath, this) == false || !layer->m_spatialObject)
+	if (GISLibrary::OpenLayer(*layer, _filepath, this) == false || !layer->m_spatialObject)
 	{
 		return nullptr;
 	}
@@ -291,7 +292,7 @@ std::unique_ptr<Layer> LayerManager::CreateLayer(const std::wstring& _filepath)
 		fileType == S100_FileType::FILE_ETC)
 	{
 		layer = std::make_unique<Layer>();
-		if (layer->Open(_filepath, this) == false)
+		if (GISLibrary::OpenLayer(*layer, _filepath, this) == false)
 		{
 			return nullptr;
 		}
@@ -343,7 +344,7 @@ int LayerManager::AddLayerFront(const std::wstring& _filepath)
 		fileType == S100_FileType::FILE_ETC)
 	{
 		layer = new Layer();
-		if (layer->Open(_filepath, this) == false)
+		if (GISLibrary::OpenLayer(*layer, _filepath, this) == false)
 		{
 			delete layer;
 			return -1;
@@ -359,7 +360,7 @@ int LayerManager::AddLayerFront(const std::wstring& _filepath)
 		if (fc)
 		{
 			layer = new S100Layer(fc, pc);
-			if (layer->Open(_filepath, this) == false)
+			if (GISLibrary::OpenLayer(*layer, _filepath, this) == false)
 			{
 				delete layer;
 				return -1;
@@ -1648,7 +1649,7 @@ void LayerManager::ReloadLayers()
 		const std::wstring path = backgroundLayer.GetLayerPath();
 		delete backgroundLayer.m_spatialObject;
 		backgroundLayer.m_spatialObject = nullptr;
-		backgroundLayer.Open(path, this);
+		GISLibrary::OpenLayer(backgroundLayer, path, this);
 	}
 
 	struct Opened

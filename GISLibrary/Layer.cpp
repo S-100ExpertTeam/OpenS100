@@ -1,9 +1,5 @@
 #include "stdafx.h"
-#include "PathUtil.h"
-#include "TextCompare.h"
 #include "Layer.h"
-#include "S100Utilities.h"
-#include "S100ExchangeCatalogue.h"
 
 Layer::Layer(void)
 {
@@ -19,34 +15,6 @@ Layer::~Layer(void)
 		delete m_spatialObject;
 		m_spatialObject = nullptr;
 	}
-}
-
-bool Layer::Open(const std::wstring& _filepath, LayerManager* lm)
-{
-	const auto extension = s100::path::Extension(_filepath);
-
-	if (nullptr == m_spatialObject)
-	{
-		if (s100::text::IEquals(extension, L"SHP")) {
-			m_spatialObject = new SHPFile();
-		}
-		else if (s100::text::IEquals(extension, L"XML")) {
-			m_spatialObject = new S100ExchangeCatalogue(lm->GetScaler(), lm->catalogManager, lm->GetRenderResources(), lm);
-		}
-	}
-
-	if (nullptr == m_spatialObject)
-	{
-		return false;
-	}
-	m_spatialObject->m_pLayer = this;
-
-	// Relative paths are resolved against the executable directory (legacy behaviour).
-	const std::wstring fullPath = s100::path::IsAbsolute(_filepath)
-		? _filepath
-		: (s100::path::ExecutableDirectory() / _filepath).wstring();
-
-	return m_spatialObject->Open(fullPath);
 }
 
 void Layer::Draw(HDC &hDC, Scaler *scaler, double offset)

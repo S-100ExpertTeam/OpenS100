@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "S100SpatialObject.h"
-#include "PCOutputSchemaManager.h"
 #include "S100Layer.h"
 
 S100SpatialObject::S100SpatialObject() : SpatialObject()
@@ -10,26 +9,21 @@ S100SpatialObject::S100SpatialObject() : SpatialObject()
 
 S100SpatialObject::~S100SpatialObject()
 {
-	if (pcManager)
+	ReleaseDrawingInstruction();
+}
+
+void S100SpatialObject::ReleaseDrawingInstruction()
+{
+	if (pcManager && pcManagerDeleter)
 	{
-		delete pcManager;
-		pcManager = nullptr;
+		pcManagerDeleter(pcManager);
 	}
+	pcManager = nullptr;
 }
 
 S100SpatialObjectType S100SpatialObject::getS100SpatialObjectType()
 {
 	return type;
-}
-
-void S100SpatialObject::InitDrawingInstruction()
-{
-	if (pcManager)
-	{
-		delete pcManager;
-	}
-
-	pcManager = new PCOutputSchemaManager();
 }
 
 PCOutputSchemaManager* S100SpatialObject::GetPCOutputManager()
@@ -78,15 +72,6 @@ void S100SpatialObject::SetFC(FeatureCatalogue* fc)
 void S100SpatialObject::SetPC(PortrayalCatalogue* pc)
 {
 	m_pc = pc;
-}
-
-bool S100SpatialObject::OpenOutputXML(std::string path)
-{
-	InitDrawingInstruction();
-	pcManager->displayList->OpenOutputXML(path);
-	pcManager->GenerateSENCInstruction(this, GetPC());
-
-	return true;
 }
 
 GF::ObjectType* S100SpatialObject::GetObjectType(int _type, std::string id)

@@ -524,6 +524,7 @@
     <ClCompile Include="ISO8211Fuc.cpp" />
     <ClCompile Include="LanguageCode.cpp" />
     <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="LayerOpen.cpp" />
     <ClCompile Include="LayerManager.cpp" />
     <ClCompile Include="Leader.cpp" />
     <ClCompile Include="Length.cpp" />
@@ -616,7 +617,9 @@
     <ClCompile Include="S101Factory.cpp" />
     <ClCompile Include="S10XGML.cpp" />
     <ClCompile Include="S100Layer.cpp" />
+    <ClCompile Include="S100LayerPortrayal.cpp" />
     <ClCompile Include="S100SpatialObject.cpp" />
+    <ClCompile Include="S100SpatialObjectPortrayal.cpp" />
     <ClCompile Include="S100Utilities.cpp" />
     <ClCompile Include="S101Creator.cpp" />
     <ClCompile Include="S101LuaScriptingReference.cpp" />
@@ -910,6 +913,7 @@
     <ClInclude Include="GF_SimpleAttributeType.h" />
     <ClInclude Include="ISO8211Fuc.h" />
     <ClInclude Include="Layer.h" />
+    <ClInclude Include="LayerOpen.h" />
     <ClInclude Include="LayerManager.h" />
     <ClInclude Include="Leader.h" />
     <ClInclude Include="MASK.h" />

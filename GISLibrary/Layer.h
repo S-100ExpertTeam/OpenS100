@@ -31,7 +31,6 @@ public:
 	int scaleMaximum = 0;
 
 public:
-	virtual bool Open(const std::wstring& _filepath, LayerManager* lm = nullptr);
 	virtual void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 	bool IsOn();
 	bool IsOn(int scale);

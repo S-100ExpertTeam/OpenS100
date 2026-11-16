@@ -1,5 +1,4 @@
 #pragma once
-#include "DeviceTypes.h"
 #include <cstdint>
 #include "BinaryWriter.h"
 
@@ -55,7 +54,6 @@ public:
 	bool WriteRecord(s100::io::BinaryWriter* file);
 	RecordName GetRecordName();
 
-	void Draw(HDC &hDC, Scaler *scaler, double offset = 0);
 	
 	MBR GetMBR();
 	int GetRCID();

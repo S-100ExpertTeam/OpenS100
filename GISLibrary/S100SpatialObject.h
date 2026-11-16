@@ -27,6 +27,11 @@ public:
 	PCOutputSchemaManager* pcManager = nullptr;
 
 private:
+	// PCOutputSchemaManager is a render-side type; whoever creates pcManager says how to delete it.
+	void (*pcManagerDeleter)(PCOutputSchemaManager*) = nullptr;
+	void ReleaseDrawingInstruction();
+
+private:
 	// Catalogues bound directly to this dataset. Used when the dataset is not attached to a
 	// Layer (library use, tests). When a Layer is attached its catalogues take precedence.
 	FeatureCatalogue* m_fc = nullptr;

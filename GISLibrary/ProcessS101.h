@@ -205,7 +205,7 @@ public:
 
 public:
 	static S101LuaScriptingReference theInstance;
-	static std::string g_unknown_attribute_value;
+	inline static std::string g_unknown_attribute_value;
 
 public:
 	static int ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer);

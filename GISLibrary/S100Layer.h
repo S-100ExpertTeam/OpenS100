@@ -33,7 +33,6 @@ public: // for draw
 	DrawingSet drawingSet;
 
 public:
-	bool Open(const std::wstring& _filepath, LayerManager* lm = nullptr) override;
 	// Grid datasets (S-102 ...) are drawn by a renderer that receives the D2D resources explicitly.
 	// False for a grid that has no renderer (nothing is drawn).
 	bool DrawGrid(D2D1Resources* d2, HDC& hDC, Scaler* scaler);

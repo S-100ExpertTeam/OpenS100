@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "R_FeatureRecord.h"
-#include "GdiGeometryRenderer.h"
 #include "F_SPAS.h"
 #include "F_FASC.h"
 #include "F_MASK.h"
@@ -383,14 +382,6 @@ bool R_FeatureRecord::WriteRecord(s100::io::BinaryWriter* file)
 RecordName R_FeatureRecord::GetRecordName()
 {
 	return m_frid.m_name;
-}
-
-void R_FeatureRecord::Draw(HDC &hdc, Scaler *scaler, double offset)
-{
-	if (geometry != NULL)
-	{
-		GISLibrary::GdiRender::Draw(*geometry, hdc, scaler, offset);
-	}
 }
 
 MBR R_FeatureRecord::GetMBR()

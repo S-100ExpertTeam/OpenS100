@@ -47,7 +47,6 @@
 using namespace LatLonUtility;
 
 S101LuaScriptingReference ProcessS101::theInstance;
-std::string ProcessS101::g_unknown_attribute_value = "";
 
 void Local_StateCommands::Init()
 {
