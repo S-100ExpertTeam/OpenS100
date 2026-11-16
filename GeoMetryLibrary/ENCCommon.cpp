@@ -78,7 +78,10 @@ bool   ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE = true;
 
 bool ENCCommon::Save(std::string filePath)
 {
+#ifdef _WIN32
+	// "Korean" is a Windows locale name; std::locale throws on it elsewhere.
 	std::locale::global(std::locale("Korean"));
+#endif
 	std::ofstream ofs;
 
 	const std::filesystem::path target(s100::text::ToWide(filePath));
