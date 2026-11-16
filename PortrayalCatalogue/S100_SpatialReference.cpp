@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100_SpatialReference.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "../LatLonUtility/LatLonUtility.h"
 
 #include <pugixml.hpp>
 

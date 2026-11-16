@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "CoverageDataset.h"
 
 #include "D2D1Resources.h"
@@ -1031,7 +1032,7 @@ namespace GISLibrary
 		const s100::coverage::CoverageInstruction& instruction, std::size_t component, std::size_t timeIndex)
 	{
 		namespace cov = s100::coverage;
-		auto* manager = pc_ ? pc_->GetS100PCManager() : nullptr;
+		auto* manager = pc_ ? GISLibrary::PortrayalRender::Caches(pc_) : nullptr;
 		auto* profile = manager ? manager->GetS100ColorProfile() : nullptr;
 		auto* rt = d2->RenderTarget();
 		auto* brush = d2->SolidColorBrush();

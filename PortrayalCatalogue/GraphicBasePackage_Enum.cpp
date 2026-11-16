@@ -2,7 +2,7 @@
 
 #include "GraphicBasePackage_Enum.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "../LatLonUtility/LatLonUtility.h"
 
 namespace GraphicBasePackage
 {
@@ -31,6 +31,6 @@ namespace GraphicBasePackage
 
 	CRSType GetCRSTypeFromString(const std::wstring& value)
 	{
-		return GetCRSTypeFromString(std::string(value.begin(), value.end()));
+		return GetCRSTypeFromString(toUtf8(value));
 	}
 }

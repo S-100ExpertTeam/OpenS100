@@ -4,8 +4,8 @@
 #include "S100_LineStyle.h"
 #include "S100_AlertReference.h"
 
-#include "..\\FeatureCatalog\\PrimitiveTypes.h"
-#include "..\\FeatureCatalog\\S100_TM_Period.h"
+#include "../FeatureCatalog/PrimitiveTypes.h"
+#include "../FeatureCatalog/S100_TM_Period.h"
 
 #include <string>
 #include <optional>

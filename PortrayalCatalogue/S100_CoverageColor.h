@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\\S100Engine\\Color.h"
+#include "Color.h"
 
 #include <optional>
 

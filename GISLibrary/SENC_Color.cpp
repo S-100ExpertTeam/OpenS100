@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_Color.h"
 
@@ -47,7 +48,7 @@ int SENC_Color::GetTransparency()
 
 void SENC_Color::ChangePallete(PortrayalCatalogue *pc)
 {
-	RGBColor = pc->GetS100PCManager()->GetS100ColorProfile()->GetColor(GetToken());
+	RGBColor = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile()->GetColor(GetToken());
 	////auto colorProfile = pc->GetColorProfile();
 	////if (colorProfile)
 	//{

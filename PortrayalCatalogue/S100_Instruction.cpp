@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100_Instruction.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 S100_Instruction::S100_Instruction() : type(0)
 {

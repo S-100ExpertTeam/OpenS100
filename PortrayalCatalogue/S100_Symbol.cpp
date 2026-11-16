@@ -2,9 +2,9 @@
 #include "S100_Symbol.h"
 #include "S100_Description.h"
 
-#include "..\\S100Engine\\GraphicBasePackage_Enum.h"
+#include "GraphicBasePackage_Enum.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 S100_Symbol::S100_Symbol()
 {

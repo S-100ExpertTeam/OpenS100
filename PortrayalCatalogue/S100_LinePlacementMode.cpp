@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100_LinePlacementMode.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "../LatLonUtility/LatLonUtility.h"
 
 S100_LinePlacementMode StringToLinePlacementMode(const std::string& value)
 {

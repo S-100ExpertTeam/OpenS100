@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "../S100Engine/S100PCManager.h"
 #include "GISLibrary.h"
 #include "Product.h"
@@ -132,7 +133,7 @@ void CGISLibraryApp::DrawS100Symbol(int productNumber, std::wstring symbolName, 
 	
 	if (pc && D2)
 	{
-		auto pcManager = pc->GetS100PCManager();
+		auto pcManager = GISLibrary::PortrayalRender::Caches(pc);
 		if (pcManager)
 		{
 			auto rt = D2->RenderTarget();

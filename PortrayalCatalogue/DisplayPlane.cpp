@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DisplayPlane.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 namespace Portrayal
 {

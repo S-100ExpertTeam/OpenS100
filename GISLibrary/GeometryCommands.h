@@ -3,7 +3,7 @@
 #include "PointParameter.h"
 
 #include "..\\GeoMetryLibrary\\GeoPoint.h"
-#include "..\\S100Engine\\GraphicBasePackage_Enum.h"
+#include "../PortrayalCatalogue/GraphicBasePackage_Enum.h"
 
 namespace Part9a
 {

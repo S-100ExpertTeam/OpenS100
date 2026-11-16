@@ -597,7 +597,7 @@ void LayerManager::AddSymbolDrawing(
 
 			if (instruction && instruction->symbol)
 			{
-				auto s100PCManager = pc->GetS100PCManager();
+				auto s100PCManager = GISLibrary::PortrayalRender::Caches(pc);
 				if (s100PCManager)
 				{
 					auto pRenderTarget = D2->RenderTarget();
@@ -1144,8 +1144,8 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 	D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 	D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
-	pc->GetS100PCManager()->CreateBitmapBrush(D2->pRT);
-	pc->GetS100PCManager()->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
+	GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapBrush(D2->pRT);
+	GISLibrary::PortrayalRender::Caches(pc)->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
 
 	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
 	{
@@ -1159,7 +1159,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer)
 			pc);
 	}
 
-	pc->GetS100PCManager()->DeleteBitmapBrush();
+	GISLibrary::PortrayalRender::Caches(pc)->DeleteBitmapBrush();
 
 	rt->EndDraw();
 }
@@ -1309,8 +1309,8 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int min
 	D2->pDWriteTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 	D2->pDWriteTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 
-	pc->GetS100PCManager()->CreateBitmapBrush(D2->pRT);
-	pc->GetS100PCManager()->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
+	GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapBrush(D2->pRT);
+	GISLibrary::PortrayalRender::Caches(pc)->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
 
 	for (auto dp = layer->drawingPriority.begin(); dp != layer->drawingPriority.end(); dp++)
 	{
@@ -1327,7 +1327,7 @@ void LayerManager::DrawS100Layer(HDC& hDC, int offset, S100Layer* layer, int min
 		}
 	}
 
-	pc->GetS100PCManager()->DeleteBitmapBrush();
+	GISLibrary::PortrayalRender::Caches(pc)->DeleteBitmapBrush();
 
 	rt->EndDraw();
 }
@@ -1365,8 +1365,8 @@ void LayerManager::DrawS100Layers(HDC& hDC, int offset, const std::vector<S100La
 
 	for (auto pc : catalogues)
 	{
-		pc->GetS100PCManager()->CreateBitmapBrush(D2->pRT);
-		pc->GetS100PCManager()->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
+		GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapBrush(D2->pRT);
+		GISLibrary::PortrayalRender::Caches(pc)->InverseMatrixBitmapBrush(GISLibrary::D2DView::InverseMatrix(*scaler));
 	}
 
 	for (const int priority : priorities)
@@ -1389,7 +1389,7 @@ void LayerManager::DrawS100Layers(HDC& hDC, int offset, const std::vector<S100La
 
 	for (auto pc : catalogues)
 	{
-		pc->GetS100PCManager()->DeleteBitmapBrush();
+		GISLibrary::PortrayalRender::Caches(pc)->DeleteBitmapBrush();
 	}
 
 	rt->EndDraw();

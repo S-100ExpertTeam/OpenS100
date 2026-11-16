@@ -1,7 +1,7 @@
 #pragma once
 #include "S100_Color.h"
 
-#include "..\\S100Engine\\Color.h"
+#include "Color.h"
 #include <pugixml.hpp>
 
 #include <string>

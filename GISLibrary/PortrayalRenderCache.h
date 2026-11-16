@@ -5,9 +5,16 @@
 // geometry and area/line patterns rasterised into bitmaps. Those caches are built here, by
 // the renderer, instead of inside CatalogManager, so catalogue management stays free of
 // Direct2D. Step 2-3 of Documents/TechDocs/2026-11-08-phase1-core-decoupling.md.
+#include <memory>
 #include <string>
 
 class PortrayalCatalogue;
+class S100PCManager;
+
+namespace Portrayal
+{
+	class ResourceStore;
+}
 
 namespace GISLibrary
 {
@@ -15,6 +22,13 @@ namespace GISLibrary
 
 	namespace PortrayalRender
 	{
+		// The store GISLibrary gives every portrayal catalogue it opens.
+		std::unique_ptr<Portrayal::ResourceStore> NewResourceStore();
+
+		// That store of a catalogue, with its Direct2D caches. Null when pc is null or was
+		// opened without a store.
+		S100PCManager* Caches(PortrayalCatalogue* pc);
+
 		// Build (or rebuild) the render caches of a catalogue. No-op when pc or d2 is null.
 		void Prepare(PortrayalCatalogue* pc, D2D1Resources* d2);
 

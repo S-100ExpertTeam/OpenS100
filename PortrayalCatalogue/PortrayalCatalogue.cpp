@@ -7,14 +7,25 @@
 #include "S100_ColorFill.h"
 #include "S100_ColorProfiles.h"
 
-#include "../S100Engine/S100PCManager.h"
-
+#include <cstring>
+#include <filesystem>
 #include <vector>
 #include <string>
 
-PortrayalCatalogue::PortrayalCatalogue()
+namespace
 {
-	Init();
+	// <catalogue folder>/<folder>/<file name>, with the platform's separator.
+	std::wstring ResourcePath(const std::string& rootPath, const wchar_t* folder, const std::wstring& fileName)
+	{
+		return (std::filesystem::path(toWide(rootPath)) / folder / fileName).wstring();
+	}
+}
+
+PortrayalCatalogue::PortrayalCatalogue() = default;
+
+PortrayalCatalogue::PortrayalCatalogue(std::unique_ptr<Portrayal::ResourceStore> _resources)
+	: resources(std::move(_resources))
+{
 }
 
 PortrayalCatalogue::~PortrayalCatalogue()
@@ -39,11 +50,6 @@ bool PortrayalCatalogue::Open(std::wstring path)
 	return false;
 }
 
-void PortrayalCatalogue::Init()
-{
-	s100PCManager = std::make_unique<S100PCManager>();
-}
-
 void PortrayalCatalogue::Delete()
 {
 	for (auto i = s100_lineStyles.begin(); i != s100_lineStyles.end(); i++)
@@ -53,16 +59,14 @@ void PortrayalCatalogue::Delete()
 	}
 	s100_lineStyles.clear();
 
-	s100PCManager.reset();
+	resources.reset();
 }
 
 bool PortrayalCatalogue::ReadPortrayalCatalogueByPugiXML(std::wstring& path)
 {
-	CoInitialize(nullptr);
-
 	if (!path.empty())
 	{
-		auto itor = path.find_last_of('\\');
+		auto itor = path.find_last_of(L"\\/");
 		rootPath = toUtf8(path.substr(0, ++itor));
 		catalogPath = toUtf8(path);
 
@@ -189,9 +193,9 @@ void PortrayalCatalogue::SetLineStyles(const std::wstring& key, S100_LineStyleBa
 void PortrayalCatalogue::SetCurrentPaletteName(const std::string& paletteName)
 {
 	currentPalette = paletteName;
-	if (nullptr != s100PCManager)
+	if (resources)
 	{
-		s100PCManager->GetS100ColorProfile()->ChangePalette(toWide(paletteName));
+		resources->ChangePalette(toWide(paletteName));
 	}
 }
 
@@ -239,7 +243,7 @@ void PortrayalCatalogue::GetLineStylesByPugiXml()
 	for (auto itor = lineStyleFiles.begin(); itor != lineStyleFiles.end(); itor++)
 	{
 		ExternalFile* lineStyleFile = itor->second;
-		std::wstring path = toWide(rootPath) + L"LineStyles\\" + lineStyleFile->GetFileNameW();
+		std::wstring path = ResourcePath(rootPath, L"LineStyles", lineStyleFile->GetFileNameW());
 
 		if (!path.empty())
 		{
@@ -283,7 +287,7 @@ std::string  PortrayalCatalogue::GetMainRuleFilePath()
 	auto itor = mainRules.begin();
 	if (itor == mainRules.end())
 		return "";
-	return rootPath + "Rules\\" + itor->first;
+	return toUtf8(ResourcePath(rootPath, L"Rules", toWide(itor->first)));
 }
 
 std::wstring PortrayalCatalogue::GetMainRuleFilePathW()
@@ -309,30 +313,19 @@ S100_RuleFile* PortrayalCatalogue::GetMainRuleFile()
 std::string  PortrayalCatalogue::GetCurrentPaletteName()  { return currentPalette; }
 std::wstring PortrayalCatalogue::GetCurrentPaletteNameW() { return toWide(currentPalette); }
 
-S100PCManager* PortrayalCatalogue::GetS100PCManager() { return s100PCManager.get(); }
-
-void PortrayalCatalogue::DeletePatternImage()
-{
-	if (nullptr != s100PCManager)
-	{
-		s100PCManager->DeleteBitmapImage();
-	}
-}
-
-void PortrayalCatalogue::DeleteLineImages()
-{
-	if (nullptr != s100PCManager)
-	{
-		s100PCManager->DeleteLineImage();
-	}
-}
+Portrayal::ResourceStore* PortrayalCatalogue::GetResources() { return resources.get(); }
 
 bool PortrayalCatalogue::OpenSVG()
 {
+	if (!resources)
+	{
+		return true;
+	}
+
 	auto symbol = symbols.GetSymbolsVector();
 	for (auto i = symbol->begin(); i != symbol->end(); i++)
 	{
-		auto result = s100PCManager->AddS100Symbol(toWide(rootPath) + L"Symbols\\" + (*i)->GetFileNameW());
+		auto result = resources->AddSymbol(ResourcePath(rootPath, L"Symbols", (*i)->GetFileNameW()));
 		if (result == false)
 		{
 			return false;
@@ -344,20 +337,20 @@ bool PortrayalCatalogue::OpenSVG()
 
 bool PortrayalCatalogue::HasSymbol(std::wstring fileName)
 {
-	if (s100PCManager->s100SymbolManager.GetSVG(fileName))
-	{
-		return true;
-	}
-
-	return false;
+	return resources && resources->HasSymbol(fileName);
 }
 
 bool PortrayalCatalogue::OpenLineStyle()
 {
+	if (!resources)
+	{
+		return true;
+	}
+
 	auto line = lineStyles.GetLineStyleFilesVector();
 	for (auto i = line->begin(); i != line->end(); i++)
 	{
-		auto result = s100PCManager->AddS100LineStyle(toWide(rootPath) + L"LineStyles\\" + (*i)->GetFileNameW());
+		auto result = resources->AddLineStyle(ResourcePath(rootPath, L"LineStyles", (*i)->GetFileNameW()));
 		if (result == false)
 		{
 			return false;
@@ -369,10 +362,15 @@ bool PortrayalCatalogue::OpenLineStyle()
 
 bool PortrayalCatalogue::OpenAreaFill()
 {
+	if (!resources)
+	{
+		return true;
+	}
+
 	auto area = areaFills.GetAreaFillFilesVecter();
 	for (auto i = area->begin(); i != area->end(); i++)
 	{
-		auto result = s100PCManager->AddS100AreaFill(toWide(rootPath) + L"AreaFills\\" + (*i)->GetFileNameW());
+		auto result = resources->AddAreaFill(ResourcePath(rootPath, L"AreaFills", (*i)->GetFileNameW()));
 		if (result == false)
 		{
 			return false;
@@ -384,10 +382,15 @@ bool PortrayalCatalogue::OpenAreaFill()
 
 bool PortrayalCatalogue::OpenColorProfile()
 {
+	if (!resources)
+	{
+		return true;
+	}
+
 	auto colorProfile = colorProfiles.GetColorProfilesVector();
 	for (auto i = colorProfile->begin(); i != colorProfile->end(); i++)
 	{
-		auto result = s100PCManager->AddS100ColorProfile((*i)->GetIdW(), toWide(rootPath) + L"ColorProfiles\\" + (*i)->GetFileNameW());
+		auto result = resources->AddColorProfile((*i)->GetIdW(), ResourcePath(rootPath, L"ColorProfiles", (*i)->GetFileNameW()));
 		if (result == false)
 		{
 			return false;

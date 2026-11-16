@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_AreaInstruction.h"
@@ -131,7 +132,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 		case 2:
 			areaFillReference = (SENC_AreaFillReference*)areaFill;
 			{
-				auto patternMap = &pc->GetS100PCManager()->areaFillInfo.patternMap;
+				auto patternMap = &GISLibrary::PortrayalRender::Caches(pc)->areaFillInfo.patternMap;
 				auto i = patternMap->find(areaFillReference->GetFileStem().c_str());
 
 				if (i == patternMap->end())
@@ -182,7 +183,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 			symbolFill = (SENC_SymbolFill*)areaFill;
 			//if (symbolFill->symbol)			
 			{
-				auto patternMap = &pc->GetS100PCManager()->areaFillInfo.patternMap;
+				auto patternMap = &GISLibrary::PortrayalRender::Caches(pc)->areaFillInfo.patternMap;
 				auto i = patternMap->find(symbolFill->GetFileStem().c_str());
 
 				ID2D1Brush* imageBrush = nullptr;
@@ -199,10 +200,10 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 				else
 				{
 					auto _areaFill = symbolFill->as_AreaFill();
-					bitmapImage = pc->GetS100PCManager()->CreateBitmapImage(_areaFill.get(), pDirect2dFactory, d2->pImagingFactory, d2->SolidStrokeStyle());
+					bitmapImage = GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapImage(_areaFill.get(), pDirect2dFactory, d2->pImagingFactory, d2->SolidStrokeStyle());
 					if (bitmapImage)
 					{
-						bitmapImage->pBitmapBrush = pc->GetS100PCManager()->CreateBitmapBrush(bitmapImage, rt);
+						bitmapImage->pBitmapBrush = GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapBrush(bitmapImage, rt);
 						imageBrush = bitmapImage->pBitmapBrush;
 						imageBrush->SetTransform(GISLibrary::D2DView::InverseMatrix(*scaler));
 					}
@@ -282,7 +283,7 @@ void SENC_AreaInstruction::FromS100Instruction(
 				colorFill->color->SetToken(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTokenW());
 				colorFill->color->SetTransparency((float)_wtof(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTransparencyW().c_str()));
 
-				auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
+				auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
 
 				if (colorProfile)
 				{
@@ -319,7 +320,7 @@ void SENC_AreaInstruction::FromS100Instruction(
 				symbolFill->symbol->scaleFactor = s100Symbol->GetScaleFactor();
 
 
-				auto svgSymbolManger = &(pc->GetS100PCManager()->s100SymbolManager);
+				auto svgSymbolManger = &(GISLibrary::PortrayalRender::Caches(pc)->s100SymbolManager);
 				auto svg = svgSymbolManger->GetSVG(symbolFill->symbol->reference);
 
 				if (svg == nullptr)

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100_VectorPoint.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 S100_VectorPoint::S100_VectorPoint()
 {

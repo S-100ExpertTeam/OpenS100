@@ -15,8 +15,8 @@ namespace Portrayal
 
 	private:
 		std::string FileName;
-		FileType FileType = FileType::none;
-		FileFormat FileFormat = FileFormat::none;
+		FileType fileType = FileType::none;
+		FileFormat fileFormat = FileFormat::none;
 
 	public:
 		std::string  GetFileName();

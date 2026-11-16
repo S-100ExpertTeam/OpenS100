@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_TextInstruction.h"
 #include "SENC_CommonFuc.h"
@@ -237,7 +238,7 @@ void SENC_TextInstruction::ChangePallete(PortrayalCatalogue* pc)
 {
 	if (textPoint)
 	{
-		auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
+		auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
 		if (colorProfile)
 		{
 			auto itorTp = textPoint->elements.begin();
@@ -311,7 +312,7 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 				e2->foreground.token = e1->GetForground()->GetTokenW();
 				e2->foreground.transparency = (int)(_wtof(e1->GetForground()->GetTransparencyW().c_str()) * 100);
 				
-				auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
+				auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
 
 				if (colorProfile)
 				{

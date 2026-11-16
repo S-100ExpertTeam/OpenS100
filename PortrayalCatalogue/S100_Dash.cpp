@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100_Dash.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "../LatLonUtility/LatLonUtility.h"
 
 #include <string>
 #include <vector>

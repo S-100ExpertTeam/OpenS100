@@ -16,13 +16,24 @@ namespace GISLibrary
 {
 	namespace PortrayalRender
 	{
+		std::unique_ptr<Portrayal::ResourceStore> NewResourceStore()
+		{
+			return std::make_unique<S100PCManager>();
+		}
+
+		S100PCManager* Caches(PortrayalCatalogue* pc)
+		{
+			// Every store in this library comes from NewResourceStore().
+			return pc ? static_cast<S100PCManager*>(pc->GetResources()) : nullptr;
+		}
+
 		void Prepare(PortrayalCatalogue* pc, D2D1Resources* d2)
 		{
 			if (!pc || !d2 || !d2->pD2Factory)
 			{
 				return;
 			}
-			auto manager = pc->GetS100PCManager();
+			auto manager = Caches(pc);
 			if (!manager)
 			{
 				return;
@@ -39,7 +50,7 @@ namespace GISLibrary
 				return;
 			}
 			pc->ChangePalette(paletteName);
-			auto manager = pc->GetS100PCManager();
+			auto manager = Caches(pc);
 			if (!manager)
 			{
 				return;

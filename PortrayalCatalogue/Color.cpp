@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Color.h"
 
+#include "../GeoMetryLibrary/TextCodec.h"
+
 namespace libS100Engine
 {
 	Color::Color()

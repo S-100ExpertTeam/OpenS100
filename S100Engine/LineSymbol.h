@@ -1,6 +1,6 @@
 #pragma once
 #include "LineStylesPackageEnum.h"
-#include "GraphicBasePackage.h"
+#include "../PortrayalCatalogue/GraphicBasePackage.h"
 
 #include <string>
 

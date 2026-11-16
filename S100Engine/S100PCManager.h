@@ -11,8 +11,12 @@
 #include "LineStylesPackage.h"
 #include "AreaFillInfo.h"
 
+#include "../PortrayalCatalogue/PortrayalResourceStore.h"
+
 struct ID2D1StrokeStyle1;
-class S100PCManager
+// The renderer's store of a portrayal catalogue's resources: the parsed symbols, line styles,
+// area fills and colour profiles, and the Direct2D caches drawn from them.
+class S100PCManager : public Portrayal::ResourceStore
 {
 public:
 	S100PCManager();
@@ -30,6 +34,14 @@ private:
 	char* ConvertWCtoC(wchar_t* str);
 
 public:
+	// Portrayal::ResourceStore
+	bool AddColorProfile(const std::wstring& id, const std::wstring& path) override;
+	bool AddSymbol(const std::wstring& path) override;
+	bool AddLineStyle(const std::wstring& path) override;
+	bool AddAreaFill(const std::wstring& path) override;
+	bool HasSymbol(const std::wstring& name) override;
+	void ChangePalette(const std::wstring& paletteName) override;
+
 	// Open single color profile
 	bool AddS100ColorProfile(const std::string& id, const std::string& path);
 	bool AddS100ColorProfile(const std::wstring& id, const std::wstring& path);

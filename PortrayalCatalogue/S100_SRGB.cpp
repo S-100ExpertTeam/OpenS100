@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100_SRGB.h"
 
-#include "..\\LatLonUtility\\cpp_util.h"
+#include "../LatLonUtility/cpp_util.h"
 
 S100_SRGB::S100_SRGB()
 {

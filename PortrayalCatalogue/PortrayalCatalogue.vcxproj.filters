@@ -111,6 +111,21 @@
     <ClInclude Include="S100_Foreground.h">
       <Filter>Contents</Filter>
     </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="Pen.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicBasePackage.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicBasePackage_Enum.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="PortrayalResourceStore.h">
+      <Filter>Catalogue</Filter>
+    </ClInclude>
     <ClInclude Include="S100_Pen.h">
       <Filter>Contents</Filter>
     </ClInclude>
@@ -495,6 +510,18 @@
       <Filter>Contents</Filter>
     </ClCompile>
     <ClCompile Include="S100_Foreground.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="Pen.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicBasePackage.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicBasePackage_Enum.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
     <ClCompile Include="S100_Pen.cpp">

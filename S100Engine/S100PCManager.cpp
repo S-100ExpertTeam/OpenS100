@@ -9,12 +9,27 @@
 
 S100PCManager::S100PCManager()
 {
-
+	// The WIC bitmaps of the pattern and line caches need COM on the thread that opens the catalogue.
+	CoInitialize(nullptr);
 }
 
 S100PCManager::~S100PCManager()
 {
 
+}
+
+bool S100PCManager::AddColorProfile(const std::wstring& id, const std::wstring& path) { return AddS100ColorProfile(id, path); }
+bool S100PCManager::AddSymbol(const std::wstring& path) { return AddS100Symbol(path); }
+bool S100PCManager::AddLineStyle(const std::wstring& path) { return AddS100LineStyle(path); }
+bool S100PCManager::AddAreaFill(const std::wstring& path) { return AddS100AreaFill(path); }
+bool S100PCManager::HasSymbol(const std::wstring& name) { return s100SymbolManager.GetSVG(name) != nullptr; }
+
+void S100PCManager::ChangePalette(const std::wstring& paletteName)
+{
+	if (auto colorProfile = GetS100ColorProfile())
+	{
+		colorProfile->ChangePalette(paletteName);
+	}
 }
 
 bool S100PCManager::AddS100ColorProfile(const std::string& id, const std::string& path)

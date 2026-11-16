@@ -6,8 +6,8 @@
 #include "S100_LineSymbolPlacement.h"
 #include "S100_AreaSymbolPlacement.h"
 
-#include "..\\S100Engine\\GraphicBasePackage_Enum.h"
-#include "..\\S100Engine\\GraphicBasePackage.h"
+#include "GraphicBasePackage_Enum.h"
+#include "GraphicBasePackage.h"
 
 #include <pugixml.hpp>
 

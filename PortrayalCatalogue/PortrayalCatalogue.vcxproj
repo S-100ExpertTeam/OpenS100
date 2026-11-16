@@ -397,6 +397,11 @@
     <ClInclude Include="S100_Transform.h" />
     <ClInclude Include="S100_VectorPoint.h" />
     <ClInclude Include="S100_WithParam.h" />
+    <ClInclude Include="Color.h" />
+    <ClInclude Include="Pen.h" />
+    <ClInclude Include="GraphicBasePackage.h" />
+    <ClInclude Include="GraphicBasePackage_Enum.h" />
+    <ClInclude Include="PortrayalResourceStore.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextPackage_HorizontalAlignment.h" />
@@ -524,6 +529,10 @@
     <ClCompile Include="S100_Transform.cpp" />
     <ClCompile Include="S100_VectorPoint.cpp" />
     <ClCompile Include="S100_WithParam.cpp" />
+    <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Pen.cpp" />
+    <ClCompile Include="GraphicBasePackage.cpp" />
+    <ClCompile Include="GraphicBasePackage_Enum.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -552,12 +561,6 @@
     </ProjectReference>
     <ProjectReference Include="..\LatLonUtility\LatLonUtility.vcxproj">
       <Project>{d87f9640-70b7-4695-85c5-105ba24fa7c0}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\LibMFCUtil\LibMFCUtil.vcxproj">
-      <Project>{423e4835-a278-43c4-ad2d-e8a4d0c98f8a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\S100Engine\S100Engine.vcxproj">
-      <Project>{e3f7a8cb-3453-4046-a4fc-94bb8769021a}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

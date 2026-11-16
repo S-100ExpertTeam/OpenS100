@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_LineStyle.h"
@@ -61,7 +62,7 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 	pen_width = _wtof(lineStyle->GetPen()->GetWidthW().c_str()) + 0.01;
 	pen_transparency = lineStyle->GetPen()->GetColor().GetTransparency();
 
-	auto colorProfile = pc->GetS100PCManager()->GetS100ColorProfile();
+	auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
 
 	if (colorProfile)
 	{
@@ -99,7 +100,7 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 
 void SENC_LineStyle::ChangePallete(PortrayalCatalogue *pc)
 {
-	SetPenColor(pc->GetS100PCManager()->GetS100ColorProfile()->GetColor(GetPenColorToken()));
+	SetPenColor(GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile()->GetColor(GetPenColorToken()));
 }
 
 void SENC_LineStyle::SetLineStyleName(const std::wstring& value)
@@ -138,7 +139,7 @@ void SENC_LineStyle::DrawInstruction(
 				&d2Points[pi].y);
 		}
 
-		auto s100PCManager = pc->GetS100PCManager();
+		auto s100PCManager = GISLibrary::PortrayalRender::Caches(pc);
 		if (s100PCManager)
 		{
 			IWICBitmap* pIWICBitmap = s100PCManager->GetLineImage(GetLineStyleName() + _T(".xml"));

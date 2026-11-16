@@ -16,25 +16,25 @@ namespace Portrayal
 	std::string  ExternalFile::GetFileName()  { return FileName; }
 	std::wstring ExternalFile::GetFileNameW() { return toWide(FileName); }
 
-	std::string  ExternalFile::GetFileTypeAsString() { return FileTypeToString(FileType); }
-	std::wstring ExternalFile::GetFileType()         { return FileTypeToWString(FileType); }
+	std::string  ExternalFile::GetFileTypeAsString() { return FileTypeToString(fileType); }
+	std::wstring ExternalFile::GetFileType()         { return FileTypeToWString(fileType); }
 
-	std::string  ExternalFile::GetFileFormatAsString()  { return FileFormatToString(FileFormat); }
-	std::wstring ExternalFile::GetFileFormatAsWstring() { return FileFormatToWString(FileFormat); }
+	std::string  ExternalFile::GetFileFormatAsString()  { return FileFormatToString(fileFormat); }
+	std::wstring ExternalFile::GetFileFormatAsWstring() { return FileFormatToWString(fileFormat); }
 
 	Portrayal::FileFormat ExternalFile::GetFileFormat()
 	{
-		return FileFormat;
+		return fileFormat;
 	}
 
 	void ExternalFile::SetFileName(const std::string& value)  { FileName = value; }
 	void ExternalFile::SetFileName(const std::wstring& value) { FileName = toUtf8(value); }
 
-	void ExternalFile::SetFileType(const std::string& value)  { FileType = StringToFileType(value); }
-	void ExternalFile::SetFileType(const std::wstring& value) { FileType = StringToFileType(value); }
+	void ExternalFile::SetFileType(const std::string& value)  { fileType = StringToFileType(value); }
+	void ExternalFile::SetFileType(const std::wstring& value) { fileType = StringToFileType(value); }
 
-	void ExternalFile::SetFileFormat(const std::string& value)  { FileFormat = StringToFileFormat(value); }
-	void ExternalFile::SetFileFormat(const std::wstring& value) { FileFormat = StringToFileFormat(value); }
+	void ExternalFile::SetFileFormat(const std::string& value)  { fileFormat = StringToFileFormat(value); }
+	void ExternalFile::SetFileFormat(const std::wstring& value) { fileFormat = StringToFileFormat(value); }
 
 	void ExternalFile::GetContents(pugi::xml_node& node)
 	{

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "S100_LineStyle.h"
 
-#include "..\\LatLonUtility\\LatLonUtility.h"
+#include "../LatLonUtility/LatLonUtility.h"
 
 S100_LineStyle::S100_LineStyle()
 {

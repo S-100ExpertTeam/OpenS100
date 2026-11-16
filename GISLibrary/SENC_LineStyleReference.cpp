@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_LineStyleReference.h"
@@ -60,7 +61,7 @@ void SENC_LineStyleReference::DrawInstruction(
 			&d2Points[pi].y);
 	}
 
-	auto s100PCManager = pc->GetS100PCManager();
+	auto s100PCManager = GISLibrary::PortrayalRender::Caches(pc);
 
 	if (s100PCManager)
 	{

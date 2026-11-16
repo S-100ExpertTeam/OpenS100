@@ -2,7 +2,7 @@
 #include "S100_AreaInstruction.h"
 #include "S100_ColorFill.h"
 #include "S100_AreaFillReference.h"
-#include "S100_pixmapFill.h"
+#include "S100_PixmapFill.h"
 #include "S100_SymbolFill.h"
 #include "S100_HatchFill.h"
 

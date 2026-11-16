@@ -10,5 +10,6 @@
 #include <optional>
 #include <algorithm>
 #include <cstdint>
+#include <cstring>
 #include <pugixml.hpp>
 #include "../FeatureCatalog/StringUtil.h"

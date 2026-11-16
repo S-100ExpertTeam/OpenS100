@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "../GeoMetryLibrary/TextCodec.h"
 #include "CatalogManager.h"
 #include "GISLibrary.h"
@@ -59,7 +60,7 @@ PortrayalCatalogue* CatalogManager::addPC(std::string path)
 
 PortrayalCatalogue* CatalogManager::addPC(std::wstring path)
 {
-	auto pc = new PortrayalCatalogue();
+	auto pc = new PortrayalCatalogue(GISLibrary::PortrayalRender::NewResourceStore());
 
 	if (pc->Open(path)) {
 		// Render caches (SVG geometry, pattern bitmaps) are built by the renderer:
@@ -359,7 +360,7 @@ PortrayalCatalogue* CatalogManager::loadRegisteredPC(std::size_t index)
 	Registration& registration = registeredPCs[index];
 	if (!registration.loaded && !registration.failed)
 	{
-		auto pc = std::make_unique<PortrayalCatalogue>();
+		auto pc = std::make_unique<PortrayalCatalogue>(GISLibrary::PortrayalRender::NewResourceStore());
 		if (pc->Open(registration.file.wstring()))
 		{
 			registration.loaded = pc.get();

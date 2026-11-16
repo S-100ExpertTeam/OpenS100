@@ -327,14 +327,11 @@
     <ClCompile Include="BackgroundLayer.cpp" />
     <ClCompile Include="BackgroundSHPFile.cpp" />
     <ClCompile Include="Circle.cpp" />
-    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Colors.cpp" />
     <ClCompile Include="CompositeLineStyle.cpp" />
     <ClCompile Include="CRSType.cpp" />
     <ClCompile Include="Dash.cpp" />
     <ClCompile Include="figure.cpp" />
-    <ClCompile Include="GraphicBasePackage.cpp" />
-    <ClCompile Include="GraphicBasePackage_Enum.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LineStyle.cpp" />
@@ -344,7 +341,6 @@
     <ClCompile Include="LineSymbol.cpp" />
     <ClCompile Include="Palette.cpp" />
     <ClCompile Include="Path.cpp" />
-    <ClCompile Include="Pen.cpp" />
     <ClCompile Include="PivotPoint.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="S100ColorProfile.cpp" />
@@ -379,15 +375,12 @@
     <ClInclude Include="BackgroundLayer.h" />
     <ClInclude Include="BackgroundSHPFile.h" />
     <ClInclude Include="Circle.h" />
-    <ClInclude Include="Color.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="CompositeLineStyle.h" />
     <ClInclude Include="CRSType.h" />
     <ClInclude Include="Dash.h" />
     <ClInclude Include="EnumTypeOfDrawingInstruction.h" />
     <ClInclude Include="figure.h" />
-    <ClInclude Include="GraphicBasePackage.h" />
-    <ClInclude Include="GraphicBasePackage_Enum.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LineStyle.h" />
@@ -399,7 +392,6 @@
     <ClInclude Include="LineSymbol.h" />
     <ClInclude Include="Palette.h" />
     <ClInclude Include="Path.h" />
-    <ClInclude Include="Pen.h" />
     <ClInclude Include="PivotPoint.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="S100BaseModelGeometricPrimitive.h" />

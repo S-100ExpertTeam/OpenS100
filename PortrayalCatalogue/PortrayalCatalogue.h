@@ -17,6 +17,7 @@
 #include "DisplayMode.h"
 #include "DisplayPlane.h"
 #include "ContextParameter.h"
+#include "PortrayalResourceStore.h"
 
 #include <pugixml.hpp>
 
@@ -28,12 +29,12 @@
 
 using namespace Portrayal;
 
-class S100PCManager;
-
 class PortrayalCatalogue
 {
 public:
 	PortrayalCatalogue();
+	// A catalogue that loads its symbols, line styles, area fills and colour profiles into the store.
+	explicit PortrayalCatalogue(std::unique_ptr<Portrayal::ResourceStore> _resources);
 	virtual ~PortrayalCatalogue();
 
 protected:
@@ -89,17 +90,16 @@ protected:
 	std::unordered_map<std::string, S100_RuleFile*> mainRules;
 
 	std::string currentPalette = "Day";
-	// Symbol/line-style/area-fill/colour-profile resources of this catalogue plus the
-	// renderer's caches for them. Owned here; Direct2D caches are built by
-	// GISLibrary::PortrayalRender (render side), never by this class.
-	std::unique_ptr<S100PCManager> s100PCManager;
+	// Symbol/line-style/area-fill/colour-profile resources of this catalogue, in the form the
+	// renderer draws them from. Owned here, supplied by whoever opens the catalogue; null for
+	// a catalogue that is used as data only.
+	std::unique_ptr<Portrayal::ResourceStore> resources;
 
 public:
 	bool Read(std::wstring path);
 	bool Read(const std::string& path);
 	bool Open(std::wstring path);
 	bool Open(const std::string& path);
-	void Init();
 	void Delete();
 	bool ReadPortrayalCatalogueByPugiXML(std::wstring& path);
 	void GetContents(pugi::xml_node& node);
@@ -153,7 +153,7 @@ public:
 	S100_RuleFile* GetMainRules(const std::wstring& key);
 	std::unordered_map<std::string, S100_RuleFile*> GetMainRules();
 
-	S100PCManager* GetS100PCManager();
+	Portrayal::ResourceStore* GetResources();
 
 	S100_LineStyles* GetTreeLineStyles();
 
@@ -169,10 +169,6 @@ public:
 	// Model-side palette switch (name + colour profile). Rebuilding pattern/line
 	// bitmaps for the new palette is the renderer's job (PortrayalRender::ChangePalette).
 	void ChangePalette(const std::string& paletteName);
-
-	void DeletePatternImage();
-
-	void DeleteLineImages();
 
 	bool OpenSVG();
 

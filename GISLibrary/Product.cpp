@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "Product.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
@@ -45,7 +46,7 @@ bool Product::OpenFC(std::wstring path)
 
 bool Product::OpenPC(std::wstring path)
 {
-	auto _pc = new PortrayalCatalogue();
+	auto _pc = new PortrayalCatalogue(GISLibrary::PortrayalRender::NewResourceStore());
 	if (_pc->Open(path)) {
 
 		if (this->pc.find(_pc->GetVersionW()) == this->pc.end()) {

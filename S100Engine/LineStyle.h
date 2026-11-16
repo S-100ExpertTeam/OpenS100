@@ -1,7 +1,7 @@
 #pragma once
 #include "AbstractLineStyle.h"
 #include "Dash.h"
-#include "GraphicBasePackage.h"
+#include "../PortrayalCatalogue/GraphicBasePackage.h"
 
 #include <string>
 #include <vector>
