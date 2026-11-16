@@ -5,6 +5,7 @@
 #include "PCOutputSchemaManager.h"
 #include "SCommonFuction.h"
 #include "SCurve.h"
+#include "SMultiPoint.h"
 
 #include "../GISLibrary/R_FeatureRecord.h"
 
@@ -602,7 +603,19 @@ void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2
 		scaler->WorldToDevice_F(mx, my, &tempPoint.x, &tempPoint.y);
 		points.push_back(tempPoint);
 	}
-	else 
+	else if (geom && geom->GetType() == SGeometryType::MultiPoint)
+	{
+		// A point symbol of a feature of many points (a default symbol over soundings the rules
+		// do not know) is at each of them: the geometry has no one position of its own.
+		auto multiPoint = static_cast<SMultiPoint*>(geom);
+		for (int i = 0; i < multiPoint->GetNumPoints(); i++)
+		{
+			D2D1_POINT_2F tempPoint;
+			scaler->WorldToDevice_F(multiPoint->GetX(i), multiPoint->GetY(i), &tempPoint.x, &tempPoint.y);
+			points.push_back(tempPoint);
+		}
+	}
+	else if (geom)
 	{
 		D2D1_POINT_2F tempPoint;
 
