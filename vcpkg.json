@@ -1,6 +1,6 @@
 {
   "name": "opens100",
-  "version-string": "0.1.0-dev",
+  "version-string": "0.2.0-dev",
   "description": "OpenS100: core C++ library for IHO S-100 hydrographic data (ISO 8211, GML, HDF5, feature/portrayal catalogues, portrayal engine) with a reference Windows viewer.",
   "homepage": "https://github.com/S-100ExpertTeam/OpenS100",
   "license": "MPL-2.0",
