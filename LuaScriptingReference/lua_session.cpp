@@ -70,6 +70,19 @@ lua_session::~lua_session()
 	lua_close(m_l);
 }
 
+namespace
+{
+	// The debugger output window on Windows, stderr elsewhere.
+	void report_error(const std::string& text)
+	{
+#ifdef _WIN32
+		OutputDebugStringA(text.c_str());
+#else
+		std::cerr << text;
+#endif
+	}
+}
+
 void lua_session::check_status(int status)
 {
 	if (status != 0 && status != LUA_YIELD)
@@ -77,12 +90,11 @@ void lua_session::check_status(int status)
 		const char *message = lua_tostring(m_l, -1);
 		if (message)
 		{
-			std::string msg = std::string("[Lua Error] ") + message + "\n";
-			OutputDebugStringA(msg.c_str());
+			report_error(std::string("[Lua Error] ") + message + "\n");
 		}
 		else
 		{
-			OutputDebugStringA("[Lua Error] (no message)\n");
+			report_error("[Lua Error] (no message)\n");
 		}
 	}
 }
