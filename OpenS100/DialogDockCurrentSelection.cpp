@@ -277,7 +277,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialO
 				if (fc_featureTypeORG)
 					name.Format(_T("%s"), fc_featureTypeORG->GetNameW().c_str());
 				else
-					name.Format(_T("%s"), ws_name);
+					name = ws_name.c_str();   // a code the catalogue does not know is shown as it is
 			}
 			else 
 			{
@@ -285,7 +285,7 @@ void CDialogDockCurrentSelection::UpdateListTest(CStringArray *csa, S100SpatialO
 				if (fc_inforTypeORG)
 					name.Format(_T("%s"), fc_inforTypeORG->GetNameW().c_str());
 				else
-					name.Format(_T("%s"), ws_name);
+					name = ws_name.c_str();   // a code the catalogue does not know is shown as it is
 			}
 
 			if (csType == "1")
