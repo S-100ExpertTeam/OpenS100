@@ -5,6 +5,12 @@ name: build
 # from source and takes a long time. Enable push/pull_request triggers once the binary cache is warm.
 on:
   workflow_dispatch:
+    inputs:
+      jobs:
+        description: Which jobs to run
+        type: choice
+        default: all
+        options: [all, windows, port]
 
 env:
   VCPKG_BINARY_SOURCES: "clear;files,${{ github.workspace }}/vcpkg-cache,readwrite"
@@ -12,6 +18,7 @@ env:
 
 jobs:
   windows:
+    if: inputs.jobs != 'port'
     runs-on: windows-2025
     timeout-minutes: 180
     strategy:
@@ -60,6 +67,7 @@ jobs:
   # The vcpkg port (ports/opens100) with every feature, on the platforms the Visual Studio
   # solution does not cover, then the external consumer example against the installed package.
   port:
+    if: inputs.jobs != 'windows'
     runs-on: ${{ matrix.os }}
     timeout-minutes: 120
     strategy:
@@ -67,7 +75,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     env:
-      VCPKG_ROOT: ${{ github.workspace }}/vcpkg-root
       FEATURES: "opens100[core,feature-catalogue,geometry,coverage,system-database]"
     steps:
       - uses: actions/checkout@v4
@@ -87,8 +94,12 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y ninja-build pkg-config
 
+      # vcpkg lives outside the checkout and runs from its own directory: next to the repository's
+      # vcpkg.json it would switch to manifest mode and refuse package arguments.
       - name: Get vcpkg at the manifest baseline
         run: |
+          VCPKG_ROOT="$RUNNER_TEMP/vcpkg"
+          echo "VCPKG_ROOT=$VCPKG_ROOT" >> "$GITHUB_ENV"
           baseline=$(python3 -c "import json;print(json.load(open('vcpkg.json'))['builtin-baseline'])")
           mkdir -p "$VCPKG_ROOT" "${{ github.workspace }}/vcpkg-cache"
           git -C "$VCPKG_ROOT" init -q
@@ -98,16 +109,18 @@ jobs:
           "$VCPKG_ROOT/bootstrap-vcpkg.sh" -disableMetrics
 
       - name: Install dependencies (cached)
+        working-directory: ${{ runner.temp }}/vcpkg
         run: |
-          "$VCPKG_ROOT/vcpkg" install geographiclib pugixml utfcpp hdf5 openssl sqlite3 zlib
+          ./vcpkg install geographiclib pugixml utfcpp hdf5 openssl sqlite3 zlib
 
       # The port builds this checkout and vcpkg does not hash its sources, so never take
       # opens100 itself from the binary cache.
       - name: Build the port
         env:
           VCPKG_BINARY_SOURCES: "clear"
+        working-directory: ${{ runner.temp }}/vcpkg
         run: |
-          "$VCPKG_ROOT/vcpkg" install "$FEATURES" --overlay-ports=ports
+          ./vcpkg install "$FEATURES" --overlay-ports="$GITHUB_WORKSPACE/ports"
 
       - name: Build and run the consumer example
         run: |
