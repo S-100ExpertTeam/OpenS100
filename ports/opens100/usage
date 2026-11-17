@@ -19,3 +19,7 @@ The System Database (feature "system-database") is opens100::sdb:
 The dataset model and readers (feature "dataset") are opens100::dataset:
 
     #include <GISLibrary/S101Cell.h>
+
+The Lua session of S-101 portrayal (feature "lua-scripting") is opens100::luascripting:
+
+    #include <LuaScriptingReference/lua_session.h>

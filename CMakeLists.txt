@@ -33,7 +33,11 @@ if(OPENS100_BUILD_PORTRAYALCATALOGUE AND NOT (OPENS100_BUILD_GEOMETRY AND OPENS1
 endif()
 option(OPENS100_BUILD_COVERAGE "Build opens100::coverage (Coverage)" ON)
 option(OPENS100_BUILD_DATASET "Build opens100::dataset (GISLibrary: dataset model and ISO 8211, GML, HDF5 readers)" ON)
+option(OPENS100_BUILD_LUASCRIPTING "Build opens100::luascripting (LuaScriptingReference: the Lua session of S-100 Part 9a portrayal)" ON)
 
+if(OPENS100_BUILD_LUASCRIPTING AND NOT OPENS100_BUILD_FEATURECATALOG)
+    message(FATAL_ERROR "opens100::luascripting needs opens100::featurecatalog")
+endif()
 if(OPENS100_BUILD_DATASET AND NOT OPENS100_BUILD_PORTRAYALCATALOGUE)
     message(FATAL_ERROR "opens100::dataset needs opens100::portrayalcatalogue")
 endif()
@@ -55,6 +59,10 @@ if(OPENS100_BUILD_DATASET)
     find_package(pugixml CONFIG REQUIRED)
     find_package(polyclipping CONFIG REQUIRED)
     find_package(Boost REQUIRED)   # Boost.Geometry, header-only
+endif()
+if(OPENS100_BUILD_LUASCRIPTING)
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+    find_package(LuaJIT REQUIRED)
 endif()
 if(OPENS100_BUILD_FEATURECATALOG)
     find_package(pugixml CONFIG REQUIRED)
@@ -173,10 +181,29 @@ if(OPENS100_BUILD_DATASET)
     else()
         target_compile_options(dataset PRIVATE -Wno-sign-compare -Wno-unused-parameter)
     endif()
-    install(FILES
-        LuaScriptingReference/LuaScriptingReference.h
-        LuaScriptingReference/spatial_association.h
-        DESTINATION "${OPENS100_INSTALL_INCLUDEDIR}/LuaScriptingReference")
+    if(NOT OPENS100_BUILD_LUASCRIPTING)
+        install(FILES
+            LuaScriptingReference/LuaScriptingReference.h
+            LuaScriptingReference/spatial_association.h
+            DESTINATION "${OPENS100_INSTALL_INCLUDEDIR}/LuaScriptingReference")
+    endif()
+endif()
+
+if(OPENS100_BUILD_LUASCRIPTING)
+    # The Lua side of S-100 Part 9a portrayal: a Lua session, the standard host-call table and the
+    # drawing instruction results. S-100 requires Lua 5.1; LuaJIT implements it. The host
+    # functions that answer the rules from a dataset are still in the Visual Studio solution.
+    # lua_helpers.cpp is in no project (it includes a header that does not exist).
+    opens100_add_module(luascripting LuaScriptingReference
+        DEPENDS featurecatalog LuaJIT::LuaJIT
+        EXCLUDE lua_helpers)
+    target_compile_definitions(luascripting PUBLIC KRS_LUA_SCRIPT_REFERENCE_STATIC)
+    if(MSVC)
+        # LuaScriptingReference.vcxproj builds at /W3; these are the /W4 warnings its sources raise.
+        target_compile_options(luascripting PRIVATE /wd4100 /wd4244 /wd4456 /wd4505 /wd4706)
+    else()
+        target_compile_options(luascripting PRIVATE -Wno-unused-parameter -Wno-unused-function -Wno-shadow)
+    endif()
 endif()
 
 # --- package ------------------------------------------------------------------------------
@@ -195,6 +222,9 @@ write_basic_package_version_file(
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY SameMinorVersion)   # 0.x: every minor may break the API
 
+if(OPENS100_BUILD_LUASCRIPTING)
+    install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindLuaJIT.cmake" DESTINATION "${OPENS100_INSTALL_CMAKEDIR}")
+endif()
 install(FILES
     "${CMAKE_CURRENT_BINARY_DIR}/opens100Config.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/opens100ConfigVersion.cmake"

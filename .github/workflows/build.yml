@@ -75,7 +75,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     env:
-      FEATURES: "opens100[core,feature-catalogue,geometry,portrayal-catalogue,coverage,system-database,dataset]"
+      FEATURES: "opens100[core,feature-catalogue,geometry,portrayal-catalogue,coverage,system-database,dataset,lua-scripting]"
     steps:
       - uses: actions/checkout@v4
 
@@ -111,7 +111,7 @@ jobs:
       - name: Install dependencies (cached)
         working-directory: ${{ runner.temp }}/vcpkg
         run: |
-          ./vcpkg install geographiclib pugixml utfcpp hdf5 openssl sqlite3 zlib polyclipping boost-geometry
+          ./vcpkg install geographiclib pugixml utfcpp hdf5 openssl sqlite3 zlib polyclipping boost-geometry luajit
 
       # The port builds this checkout and vcpkg does not hash its sources, so never take
       # opens100 itself from the binary cache.

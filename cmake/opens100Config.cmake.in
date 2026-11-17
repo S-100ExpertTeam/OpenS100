@@ -21,6 +21,11 @@ if(@OPENS100_BUILD_DATASET@)
     find_dependency(polyclipping CONFIG)
     find_dependency(Boost)
 endif()
+if(@OPENS100_BUILD_LUASCRIPTING@)
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
+    find_dependency(LuaJIT)
+    list(REMOVE_AT CMAKE_MODULE_PATH -1)
+endif()
 
 include("${CMAKE_CURRENT_LIST_DIR}/opens100Targets.cmake")
 

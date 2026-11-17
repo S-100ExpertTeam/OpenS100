@@ -8,7 +8,12 @@
 #include <GISLibrary/S101Cell.h>
 #endif
 
+#ifdef OPENS100_CONSUMER_HAS_LUA
+#include <LuaScriptingReference/lua_session.h>
+#endif
+
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <string>
 
@@ -53,6 +58,23 @@ int main(int argc, char** argv)
 			<< "viewing groups: " << pc.GetViewingGroups()->GetViewingGroup()->size() << "\n"
 			<< "main rule:     " << (mainRule ? mainRule->GetFileName() : "(none)") << "\n";
 	}
+
+#ifdef OPENS100_CONSUMER_HAS_LUA
+	// The Lua engine S-101 portrayal rules run on. The rules format numbers with string.format;
+	// how an exact half rounds is the engine's choice, so show it.
+	{
+		const auto script = std::filesystem::temp_directory_path() / "opens100_consumer.lua";
+		std::ofstream(script)
+			<< "function consumer_engine() return jit and jit.version or _VERSION end\n"
+			<< "function consumer_format(f, v) return string.format(f, v) end\n";
+
+		lua_session lua;
+		lua.load_file(script.string());
+		std::cout << "lua engine:    " << lua.call<std::string>("consumer_engine") << "\n"
+			<< "%.0f of 0.5, 2.5: " << lua.call<std::string>("consumer_format", { "%.0f", 0.5 }) << ", "
+			<< lua.call<std::string>("consumer_format", { "%.0f", 2.5 }) << "\n";
+	}
+#endif
 
 #ifdef OPENS100_CONSUMER_HAS_DATASET
 	// Optional: an S-101 dataset (ISO 8211), read against the feature catalogue above.
