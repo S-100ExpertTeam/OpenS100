@@ -15,3 +15,7 @@ The portrayal catalogue (feature "portrayal-catalogue") is opens100::portrayalca
 The System Database (feature "system-database") is opens100::sdb:
 
     #include <SystemDatabase/SystemDatabase.h>
+
+The dataset model and readers (feature "dataset") are opens100::dataset:
+
+    #include <GISLibrary/S101Cell.h>

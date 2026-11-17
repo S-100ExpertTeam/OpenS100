@@ -32,13 +32,29 @@ if(OPENS100_BUILD_PORTRAYALCATALOGUE AND NOT (OPENS100_BUILD_GEOMETRY AND OPENS1
     message(FATAL_ERROR "opens100::portrayalcatalogue needs opens100::geometry and opens100::featurecatalog")
 endif()
 option(OPENS100_BUILD_COVERAGE "Build opens100::coverage (Coverage)" ON)
+option(OPENS100_BUILD_DATASET "Build opens100::dataset (GISLibrary: dataset model and ISO 8211, GML, HDF5 readers)" ON)
+
+if(OPENS100_BUILD_DATASET AND NOT OPENS100_BUILD_PORTRAYALCATALOGUE)
+    message(FATAL_ERROR "opens100::dataset needs opens100::portrayalcatalogue")
+endif()
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 find_package(GeographicLib CONFIG REQUIRED)
-if(OPENS100_BUILD_COVERAGE)
+if(OPENS100_BUILD_COVERAGE OR OPENS100_BUILD_DATASET)
     find_package(hdf5 CONFIG REQUIRED)
+    # HDF5 is shared or static with the vcpkg triplet; link whichever one the package provides.
+    if(TARGET hdf5::hdf5-shared)
+        set(OPENS100_HDF5_TARGET hdf5::hdf5-shared)
+    else()
+        set(OPENS100_HDF5_TARGET hdf5::hdf5-static)
+    endif()
+endif()
+if(OPENS100_BUILD_DATASET)
+    find_package(pugixml CONFIG REQUIRED)
+    find_package(polyclipping CONFIG REQUIRED)
+    find_package(Boost REQUIRED)   # Boost.Geometry, header-only
 endif()
 if(OPENS100_BUILD_FEATURECATALOG)
     find_package(pugixml CONFIG REQUIRED)
@@ -57,12 +73,19 @@ endif()
 # consumers write  #include <FeatureCatalog/FeatureCatalogue.h>.
 set(OPENS100_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}/opens100")
 
-# opens100_add_module(<target> <directory> [DEPENDS <targets>...])
-# One static library per source directory, every *.cpp in it (the .vcxproj lists exactly those).
+# opens100_add_module(<target> <directory> [DEPENDS <targets>...] [EXCLUDE <source names>...])
+# One static library per source directory, every *.cpp in it (the .vcxproj lists exactly those)
+# except the EXCLUDE names (without ".cpp").
 function(opens100_add_module target directory)
-    cmake_parse_arguments(ARG "" "" "DEPENDS" ${ARGN})
+    cmake_parse_arguments(ARG "" "" "DEPENDS;EXCLUDE" ${ARGN})
 
     file(GLOB sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${directory}/*.cpp")
+    foreach(name IN LISTS ARG_EXCLUDE)
+        if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${directory}/${name}.cpp")
+            message(FATAL_ERROR "opens100_add_module(${target}): EXCLUDE names ${directory}/${name}.cpp, which does not exist")
+        endif()
+        list(REMOVE_ITEM sources "${CMAKE_CURRENT_SOURCE_DIR}/${directory}/${name}.cpp")
+    endforeach()
     file(GLOB headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${directory}/*.h")
     list(FILTER headers EXCLUDE REGEX "/(stdafx|targetver|resource)\\.h$")
 
@@ -120,13 +143,40 @@ endif()
 
 if(OPENS100_BUILD_COVERAGE)
     # S-100 Part 10c gridded coverages: grid model, HDF5 reader, lookups (Documents/TechDocs/2026-11-11-coverage-backport-plan.md).
-    # HDF5 is shared or static with the vcpkg triplet; link whichever one the package provides.
+    opens100_add_module(coverage Coverage DEPENDS ${OPENS100_HDF5_TARGET})
     if(TARGET hdf5::hdf5-shared)
-        opens100_add_module(coverage Coverage DEPENDS hdf5::hdf5-shared)
         target_compile_definitions(coverage PUBLIC H5_BUILT_AS_DYNAMIC_LIB)
-    else()
-        opens100_add_module(coverage Coverage DEPENDS hdf5::hdf5-static)
     endif()
+endif()
+
+if(OPENS100_BUILD_DATASET)
+    # The dataset model and its readers: S-101 ISO 8211 cells (S101Cell), GML datasets (S10XGML)
+    # and HDF5 datasets (S100H5). GISLibrary without its display, portrayal-run and System
+    # Database parts; the list of what is left out is in cmake/GISLibraryDatasetSources.cmake.
+    include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/GISLibraryDatasetSources.cmake")
+    opens100_add_module(dataset GISLibrary
+        DEPENDS latlon geometry featurecatalog portrayalcatalogue
+                pugixml::pugixml polyclipping::polyclipping Boost::headers ${OPENS100_HDF5_TARGET}
+        EXCLUDE ${OPENS100_GISLIBRARY_NON_DATASET_SOURCES})
+    # GISLIBRARY_MODEL_ONLY keeps COM, ATL, GDI+ and Direct2D out of the precompiled header.
+    target_compile_definitions(dataset
+        PRIVATE GISLIBRARY_MODEL_ONLY
+        # spatial_association (a plain struct of the Lua scripting module) is named by the feature
+        # model; without this it would be declared __declspec(dllimport) on Windows.
+        PUBLIC KRS_LUA_SCRIPT_REFERENCE_STATIC)
+    if(TARGET hdf5::hdf5-shared)
+        target_compile_definitions(dataset PUBLIC H5_BUILT_AS_DYNAMIC_LIB)
+    endif()
+    if(MSVC)
+        # The same conversion warnings GISLibrary.vcxproj disables for these legacy sources.
+        target_compile_options(dataset PRIVATE /wd4244 /wd4267 /wd4245 /wd4389 /wd4251)
+    else()
+        target_compile_options(dataset PRIVATE -Wno-sign-compare -Wno-unused-parameter)
+    endif()
+    install(FILES
+        LuaScriptingReference/LuaScriptingReference.h
+        LuaScriptingReference/spatial_association.h
+        DESTINATION "${OPENS100_INSTALL_INCLUDEDIR}/LuaScriptingReference")
 endif()
 
 # --- package ------------------------------------------------------------------------------

@@ -75,7 +75,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     env:
-      FEATURES: "opens100[core,feature-catalogue,geometry,portrayal-catalogue,coverage,system-database]"
+      FEATURES: "opens100[core,feature-catalogue,geometry,portrayal-catalogue,coverage,system-database,dataset]"
     steps:
       - uses: actions/checkout@v4
 
@@ -111,7 +111,7 @@ jobs:
       - name: Install dependencies (cached)
         working-directory: ${{ runner.temp }}/vcpkg
         run: |
-          ./vcpkg install geographiclib pugixml utfcpp hdf5 openssl sqlite3 zlib
+          ./vcpkg install geographiclib pugixml utfcpp hdf5 openssl sqlite3 zlib polyclipping boost-geometry
 
       # The port builds this checkout and vcpkg does not hash its sources, so never take
       # opens100 itself from the binary cache.
@@ -122,6 +122,8 @@ jobs:
         run: |
           ./vcpkg install "$FEATURES" --overlay-ports="$GITHUB_WORKSPACE/ports"
 
+      # The example links opens100::dataset too; its cell-reading branch is not run here because
+      # the repository carries no dataset (SampleData/ is not tracked).
       - name: Build and run the consumer example
         run: |
           cmake -S examples/consumer -B build/consumer -G Ninja -DCMAKE_BUILD_TYPE=Release \

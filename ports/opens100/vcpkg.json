@@ -28,6 +28,22 @@
         "hdf5"
       ]
     },
+    "dataset": {
+      "description": "S-100 dataset model and readers: S-101 ISO 8211 cells, GML and HDF5 datasets (opens100::dataset)",
+      "dependencies": [
+        "boost-geometry",
+        "hdf5",
+        "polyclipping",
+        "pugixml",
+        {
+          "name": "opens100",
+          "default-features": false,
+          "features": [
+            "portrayal-catalogue"
+          ]
+        }
+      ]
+    },
     "feature-catalogue": {
       "description": "S-100 Part 5 feature catalogue model and reader (opens100::featurecatalog)",
       "dependencies": [

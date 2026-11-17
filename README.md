@@ -28,14 +28,14 @@ OpenS100 ships a vcpkg port and CMake package. A complete, working consumer is i
 **2. Depend on it** (`vcpkg.json`):
 
 ```json
-{ "dependencies": ["opens100"] }
+{ "dependencies": [{ "name": "opens100", "features": ["dataset"] }] }
 ```
 
 **3. Link the modules you need** (`CMakeLists.txt`):
 
 ```cmake
 find_package(opens100 CONFIG REQUIRED)
-target_link_libraries(app PRIVATE opens100::featurecatalog opens100::geometry)
+target_link_libraries(app PRIVATE opens100::dataset)
 ```
 
 **4. Read an S-101 ENC:**
@@ -63,9 +63,8 @@ int main()
 }
 ```
 
-> `S101Cell` is in GISLibrary, which is built by `OpenS100.sln` today and is not in the vcpkg package
-> yet. [examples/consumer](examples/consumer) shows what links from the package right now: it reads a
-> feature catalogue with `opens100::featurecatalog`.
+> [examples/consumer](examples/consumer) is this program as a complete project: it reads a feature
+> catalogue, a portrayal catalogue and an S-101 cell from the installed package.
 
 ### Modules
 
@@ -77,11 +76,12 @@ Each module is a separate CMake target, so you only pull in the dependencies you
 | `opens100::geometry` | `geometry` (default) | Geometry primitives, map scaler, display settings | |
 | `opens100::featurecatalog` | `feature-catalogue` (default) | S-100 Part 5 feature catalogue model and reader | pugixml, utfcpp |
 | `opens100::portrayalcatalogue` | `portrayal-catalogue` (default) | S-100 Part 9 portrayal catalogue model and reader: rules, viewing groups, display modes, context parameters. Symbols, line styles, area fills and colour profiles go to a `Portrayal::ResourceStore` the application supplies | pugixml |
+| `opens100::dataset` | `dataset` | Dataset model and readers: S-101 ISO 8211 cells (`S101Cell`), GML (`S10XGML`) and HDF5 (`S100H5`) datasets. No window or renderer | portrayalcatalogue, HDF5, pugixml, polyclipping, Boost.Geometry |
 | `opens100::coverage` | `coverage` | S-100 Part 10c HDF5 coverages, depth lines, water level adjustment | HDF5 |
 | `opens100::sdb` | `system-database` | Local store of installed datasets and catalogues, S-98 dataset selection, S-100 Part 15 data protection | SQLite, OpenSSL, zlib, pugixml |
 
-The dataset readers (ISO 8211, GML) and the portrayal engine are built by the Visual Studio solution
-today and are joining the CMake package as they are separated from MFC and Direct2D.
+Running portrayal (the Lua and XSLT engines) and drawing are built by the Visual Studio solution
+today and are joining the CMake package as they are separated from Direct2D.
 
 ## What it supports
 

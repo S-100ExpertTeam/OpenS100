@@ -24,6 +24,7 @@ vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
 vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
     FEATURES
         coverage          OPENS100_BUILD_COVERAGE
+        dataset           OPENS100_BUILD_DATASET
         feature-catalogue OPENS100_BUILD_FEATURECATALOG
         geometry          OPENS100_BUILD_GEOMETRY
         portrayal-catalogue OPENS100_BUILD_PORTRAYALCATALOGUE

@@ -4,7 +4,11 @@
 #include <FeatureCatalog/FeatureTypes.h>
 #include <GeoMetryLibrary/MBR.h>
 #include <PortrayalCatalogue/PortrayalCatalogue.h>
+#ifdef OPENS100_CONSUMER_HAS_DATASET
+#include <GISLibrary/S101Cell.h>
+#endif
 
+#include <filesystem>
 #include <iostream>
 #include <string>
 
@@ -12,7 +16,7 @@ int main(int argc, char** argv)
 {
 	if (argc < 2)
 	{
-		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml]\n";
+		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [S-101 cell]\n";
 		return 2;
 	}
 
@@ -49,5 +53,26 @@ int main(int argc, char** argv)
 			<< "viewing groups: " << pc.GetViewingGroups()->GetViewingGroup()->size() << "\n"
 			<< "main rule:     " << (mainRule ? mainRule->GetFileName() : "(none)") << "\n";
 	}
+
+#ifdef OPENS100_CONSUMER_HAS_DATASET
+	// Optional: an S-101 dataset (ISO 8211), read against the feature catalogue above.
+	if (argc >= 4)
+	{
+		const std::filesystem::path cellPath(argv[3]);
+		S101Cell cell(&fc);
+		if (!cell.Open(cellPath.wstring()))
+		{
+			std::cerr << "cannot read " << argv[3] << "\n";
+			return 1;
+		}
+
+		std::cout << "dataset:       " << cellPath.filename().string() << "\n"
+			<< "features:      " << cell.GetCount_FeatureTypeRecord() << "\n"
+			<< "information:   " << cell.GetCount_InformationRecord() << "\n"
+			<< "points:        " << cell.GetCount_PointRecord() << "\n"
+			<< "curves:        " << cell.GetCount_CurveRecord() << "\n"
+			<< "surfaces:      " << cell.GetCount_SurfaceRecord() << "\n";
+	}
+#endif
 	return 0;
 }
