@@ -91,7 +91,8 @@ tainted core headers: 213 (render-side files allowed: 4)
     - 설치 헤더: GISLibrary의 모든 헤더(표시용 헤더도 섞여 있다 — 걸러내지 않았다)와 `LuaScriptingReference/{LuaScriptingReference,spatial_association}.h`(피처 모델이 이름을 쓰는 단순 구조체). `S101Cell.h`는 PCH 없이 include해도 컴파일된다(소비자 예제로 확인). 다른 진입 헤더(`S10XGML.h`, `S100H5.h`)의 단독 include는 확인하지 않았다.
     - 실측(2026-11-17): 설치된 패키지로 빌드한 소비자 예제가 `SampleData/10100AA_X01SE.000`을 읽어 Windows(MSVC, `cmake --install` 프리픽스)와 Linux(Ubuntu 24.04 GCC 13, vcpkg 오버레이 포트 전체 기능)에서 같은 수를 낸다: 피처 21, 정보 1, 점 34, 곡선 40, 면 12.
     - CI는 예제의 링크까지만 확인한다. `SampleData/`가 `.gitignore`에 있어 저장소에 데이터셋이 없으므로 셀 읽기 분기는 CI에서 실행되지 않는다. macOS에서는 빌드해 보지 않았다.
-    - 남은 일: 포트레이얼 실행(Lua 5.1은 vcpkg에 포트가 없다 — `lua`는 5.4, 대안은 `luajit`), 추적되는 작은 샘플 데이터셋(CI에서 읽기 실행), 설치 헤더에서 표시용 헤더 분리.
+    - 남은 일: 포트레이얼 실행(S-100은 Lua 5.1만 허용한다. vcpkg `lua`는 5.4라 쓸 수 없고 `luajit`을 쓴다 — 아래 실측), 추적되는 작은 샘플 데이터셋(CI에서 읽기 실행), 설치 헤더에서 표시용 헤더 분리.
+  - LuaJIT 실측(2026-11-17, Windows x64): 번들된 `extlibs/Lua`의 `lua51.dll`은 `readme.txt`의 표기(lua-5.1.5)와 달리 **이미 LuaJIT 2.1.0-beta3**이다(DLL의 버전 문자열, `luaJIT_setmode` 내보내기, 커밋 d3eaecf3 "Apply luajit"). vcpkg `luajit`(2026-10-30, LuaJIT 2.1.1793383622)의 `lua51.dll`로 바꿔 `RenderSmoke.DrawsCellsFromEnvironment`로 `SampleData`의 S-101 셀 15개를 그리면 PNG 15개가 번들 DLL의 결과와 바이트 단위로 같고(같은 DLL로 두 번 그려도 같음을 먼저 확인), 전체 테스트도 통과한다. `lua.h`·`lauxlib.h`는 두 배포본이 동일하다. 한계: DLL만 바꿨고 vcpkg 헤더·임포트 라이브러리로 다시 빌드하지 않았다. 화면에 맞춘 한 축척의 그림 비교이며 그리기 명령 자체를 비교한 것은 아니다. Linux·macOS의 vcpkg `luajit`으로는 돌려 보지 않았다.
   - 컴파일되지 않는 45개는 실제로 Direct2D·GDI로 그리는 코드다: `SENC_*`(28), `D2D*`·`Gdi*` 렌더러, `LayerManager`, `GISLibrary`(앱 싱글턴), `CoverageDataset`, 교환 카탈로그 뷰(`ExchangeCatalogue`, `S100ExchangeCatalogue`, `Inventory*`), `SHPFile`(GDI `Draw`), `SdbReaders`·`SystemDatabase*`(교환 카탈로그 헤더 경유), `PCOutputSchemaManager`, `PortrayalRenderCache`. 렌더 백엔드 교체(Phase 3)의 범위다.
   - 정리 후보(이번에 건드리지 않음): `LuaScriptingReference/lua_helpers.cpp`는 어느 프로젝트에도 없고 존재하지 않는 `lsr.h`를 include한다.
 
