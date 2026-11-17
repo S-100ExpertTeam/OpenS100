@@ -1,5 +1,5 @@
 #pragma once
-#include "D2DForward.h"
+#include "SENC_InstructionVisitor.h"
 #include "RenderCacheSlot.h"
 
 #include <vector>
@@ -29,14 +29,7 @@ public:
 	void SetType(int value);
 	int GetType();
 
-	virtual void DrawInstruction(
-		SCurve* /*curveHasOrient*/,
-		ID2D1DCRenderTarget* /*rt*/,
-		ID2D1Factory1* /*pDirect2dFactory*/,
-		ID2D1SolidColorBrush* /*brush*/,
-		std::vector<ID2D1StrokeStyle1*>* /*strokeGroup*/,
-		Scaler */*scaler*/,
-		PortrayalCatalogue* /*pc*/ = nullptr) {};
+	virtual void Accept(SENC_LineStyleVisitor& /*visitor*/) {}
 
 	bool IsLineStyle();
 	bool IsLineStyleReference();

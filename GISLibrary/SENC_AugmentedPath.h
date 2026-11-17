@@ -16,6 +16,6 @@ public:
 	std::vector<SENC_LineStyleBase*> lineStyles;
 
 public:
-	void DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc = nullptr) override;
+	void Accept(SENC_InstructionVisitor& visitor) override { visitor.Visit(*this); }
 	void FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output);
 };

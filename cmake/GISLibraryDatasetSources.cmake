@@ -11,7 +11,7 @@
 set(OPENS100_GISLIBRARY_DISPLAY_SOURCES
     CoverageDataset D2D1Resources D2DGeometryCache DepthSuppression ExchangeCatalogue GISLibrary
     GdiGeometryRenderer Inventory InventoryItem LayerManager LayerOpen PCOutputSchemaManager
-    PortrayalRenderCache D2DInstructionCache S100EditRender S100ExchangeCatalogue S100LayerPortrayal
+    PortrayalRenderCache D2DInstructionCache D2DInstructionPainter S100EditRender S100ExchangeCatalogue S100LayerPortrayal
     S100SpatialObjectPortrayal S100Utilities SHPFile
     SENC_AreaInstruction SENC_AugmentedPath SENC_AugmentedRay SENC_Color SENC_ColorFill
     SENC_ColorProfile SENC_CompositeLineStyle SENC_DisplayList SENC_Element SENC_Font SENC_Hatch

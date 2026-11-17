@@ -15,6 +15,7 @@ public:
 	SENC_VectorPoint *vectorPoint = nullptr;
 
 public:
+	void Accept(SENC_InstructionVisitor& visitor) override { visitor.Visit(*this); }
 	void GetDrawPoints(Scaler *scaler, std::list<GISLibrary::PointF> &points);
 	//void GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points);
 	void FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output);

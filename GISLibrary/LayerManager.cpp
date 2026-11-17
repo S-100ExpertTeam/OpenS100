@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "D2DConvert.h"
-#include "D2DInstructionCache.h"
+#include "D2DInstructionPainter.h"
 #include "PathUtil.h"
 #include "TextCompare.h"
 #include "D2DView.h"
@@ -497,7 +497,7 @@ void LayerManager::AddSymbolDrawing(
 	std::list<SENC_Instruction*>* text,
 	PortrayalCatalogue* pc)
 {
-	std::list<GISLibrary::PointF> points;
+	GISLibrary::D2DInstructionPainter painter(D2, scaler, pc);
 
 	D2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
 
@@ -510,10 +510,7 @@ void LayerManager::AddSymbolDrawing(
 		worldRuns->Update(instruction);
 
 		D2->pBrush->SetOpacity(1.0f);
-		instruction->DrawInstruction(
-			D2,
-			scaler,
-			pc);
+		instruction->Accept(painter);
 	}
 
 	// Line
@@ -521,10 +518,7 @@ void LayerManager::AddSymbolDrawing(
 	{
 		auto instruction = *i;
 		worldRuns->Update(instruction);
-		instruction->DrawInstruction(
-			D2,
-			scaler,
-			pc);
+		instruction->Accept(painter);
 	}
 	worldRuns.reset();   // pops a run still open before the transform changes
 
@@ -534,93 +528,20 @@ void LayerManager::AddSymbolDrawing(
 	for (auto i = augmentedRay[drawingPrioriy].begin(); i != augmentedRay[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(D2, scaler, pc);
+		instruction->Accept(painter);
 	}
 
 	// AugmentedPath
 	for (auto i = augmentedPath[drawingPrioriy].begin(); i != augmentedPath[drawingPrioriy].end(); i++)
 	{
 		auto instruction = *i;
-		instruction->DrawInstruction(D2, scaler, pc);
+		instruction->Accept(painter);
 	}
 
 	// Point
 	for (auto i = point[drawingPrioriy].begin(); i != point[drawingPrioriy].end(); i++)
 	{
-		auto instruction = (SENC_PointInstruction*)*i;
-
-		points.clear();
-
-		//if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
-		//{
-		//	instruction->GetDrawPointsDynamic(scaler, points);
-		//}
-		//else
-		//{
-		//	instruction->GetDrawPoints(scaler, points);
-		//}
-		instruction->GetDrawPoints(scaler, points);
-
-		for (auto pi = points.begin(); pi != points.end(); pi++)
-		{
-			// A rotation from north (GeographicCRS) starts from where north is at the point,
-			// which is not up about a pole.
-			float northAngle = 0;
-			if (IsPolarProjection())
-			{
-				double mx = 0;
-				double my = 0;
-				scaler->DeviceToWorld(static_cast<long>(pi->x), static_cast<long>(pi->y), &mx, &my);
-				northAngle = static_cast<float>(NorthAngle(mx, my));
-			}
-
-			// rotate Point
-			if (scaler->GetRotationDegree())
-			{
-				double radian = (180 - scaler->GetRotationDegree()) * DEG2RAD;
-
-				FLOAT tempX = (float)(scaler->soy - pi->y) * (float)sin(radian) + (float)(scaler->sox - pi->x) * (float)cos(radian);
-				FLOAT tempY = (float)(scaler->soy - pi->y) * (float)cos(radian) - (float)(scaler->sox - pi->x) * (float)sin(radian);
-
-				pi->x = tempX + (float)scaler->sox;
-				pi->y = tempY + (float)scaler->soy;
-			}
-
-			float rotation = 0;
-
-			if ((instruction->symbol)->rotation)
-			{
-				rotation = (float)(instruction->symbol)->rotation;
-			}
-			if (instruction->symbol->rotationCRS == GEOGRAPHIC_CRS)
-			{
-				rotation += northAngle;
-			}
-
-
-			if (instruction && instruction->symbol)
-			{
-				auto s100PCManager = GISLibrary::PortrayalRender::Caches(pc);
-				if (s100PCManager)
-				{
-					auto pRenderTarget = D2->RenderTarget();
-
-					D2D1::Matrix3x2F oldTransform;
-					pRenderTarget->GetTransform(&oldTransform);
-						
-					s100PCManager->Draw(
-						pugi::as_utf8(instruction->symbol->reference),
-						pRenderTarget,
-						D2->SolidColorBrush(),
-						D2->SolidStrokeStyle(),
-						D2D1::Point2F(pi->x, pi->y),
-						rotation,
-						5);
-
-					pRenderTarget->SetTransform(oldTransform);
-				}
-			}
-		}
+		(*i)->Accept(painter);
 	}
 
 	// Text
@@ -630,183 +551,12 @@ void LayerManager::AddSymbolDrawing(
 		D2->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Black));
 		if (text[drawingPrioriy].size() > 0)
 		{
-			D2D1_SIZE_F renderTargetSize = D2->pRT->GetSize();
-
 			GISLibrary::DepthSuppression::Runs textRuns(D2->pRT, D2->Factory(), *scaler, false);
 			for (auto i = text[drawingPrioriy].begin(); i != text[drawingPrioriy].end(); i++)
 			{
 				auto instruction = (SENC_TextInstruction*)*i;
 				textRuns.Update(instruction);
-				points.clear();
-
-				//if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
-				//{
-				//	instruction->GetDrawPointsDynamic(scaler, points);
-				//}
-				//else
-				//{
-				//	instruction->GetDrawPoints(scaler, points);
-				//}
-				instruction->GetDrawPoints(scaler, points);
-
-				SENC_TextPoint* textPoint = instruction->textPoint;
-				auto itorTp = textPoint->elements.begin();
-
-				if (itorTp != textPoint->elements.end())
-				{
-					SENC_Element* element = *itorTp;
-
-					std::wstring viewString = element->text.value;
-
-					int angle = element->font.slant;
-					double radian = 0;
-					if (angle)
-					{
-						radian = -angle / 180. * M_PI;
-					}
-
-					int bodySize = (int)(element->bodySize * (float)1.358);
-
-					IDWriteTextFormat* useWTF = nullptr;
-					
-					if (element->font.isUpright())
-					{
-						useWTF = D2->getWriteTextFormat(bodySize);
-					}
-					else
-					{
-						useWTF = D2->getSlantWriteTextFormat(bodySize);
-					}
-
-					useWTF->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
-
-					auto textMetrics = D2DInstructionCache::TextMetrics(*instruction);
-					if (!textMetrics)
-					{
-						IDWriteTextLayout* textLayout = nullptr;
-						float caretX = renderTargetSize.width;
-						float caretY = renderTargetSize.height;
-
-						const wchar_t* vText = element->text.value.c_str();
-						int vTextSize = (int)element->text.value.size();
-						D2->pDWriteFactory->CreateTextLayout(
-							vText,
-							vTextSize,
-							useWTF,
-							caretX,
-							caretY,
-							&textLayout
-						);
-
-						textMetrics = &D2DInstructionCache::NewTextMetrics(*instruction);
-						textLayout->GetMetrics(textMetrics);
-
-						SafeRelease(&textLayout);
-					}
-
-					float width = textMetrics->width;
-					float height = textMetrics->height;
-
-					float offset_x = 0;
-					float offset_y = 0;
-
-					//// INCH to mm
-	/*				float offsetUnitX = (dpiX / (float)25.4);
-					float offsetUnitY = (dpiY / (float)25.4);*/
-
-					// Determine the size of the Offset
-					//float XOFFS = ((float)textPoint->offset.x * offsetUnitX);
-					//float YOFFS = -((float)textPoint->offset.y * offsetUnitY);
-					float XOFFS = (float)(((float)textPoint->offset.x / 0.32) * 1.358);
-					float YOFFS = (float)(-((float)textPoint->offset.y / 0.32) * 1.358);
-
-					// HJUST 
-					// CENTRE
-					if (textPoint->horizontalAlignment == CENTER)
-					{
-						offset_x = -width / (float)2.;
-					}
-					// RIGHT
-					else if (textPoint->horizontalAlignment == END)
-					{
-						offset_x = -width;
-					}
-					// LEFT
-					else if (textPoint->horizontalAlignment == START)
-					{
-						offset_x = 0;
-					}
-					else
-					{
-						offset_x = 0;
-					}
-
-					// VJUST
-					// BOTTOM
-					if (textPoint->verticalAlignment == BOTTOM)
-					{
-						offset_y = -height;
-					}
-					// CENTRE
-					else if (textPoint->verticalAlignment == CENTER)
-					{
-						offset_y = -height / (float)2.;
-					}
-					// TOP
-					else if (textPoint->verticalAlignment == TOP)
-					{
-						offset_y = -height;
-					}
-					else
-					{
-						offset_y = -height / (float)2.;
-					}
-
-					offset_x += XOFFS;
-					offset_y += YOFFS;
-
-					if (element->hasForeground)
-					{
-						D2->pBrush->SetColor(GISLibrary::ToD2D(PortrayalRender::Color(pc, element->foreground.token)));
-						D2->pBrush->SetOpacity(1 - element->foreground.transparency);
-					}
-
-					for (auto itor = points.begin(); itor != points.end(); itor++)
-					{
-						GISLibrary::PointF* p = &(*itor);
-
-						float x = p->x + offset_x;
-						float y = p->y + offset_y;
-						float _width = textMetrics->width;
-						float _height = textMetrics->height;
-
-						const wchar_t* vText = element->text.value.c_str();
-
-						int vTextSize = (int)element->text.value.size();
-
-
-						// rotate Point
-						if (scaler->GetRotationDegree())
-						{
-							double _radian = (180 - scaler->GetRotationDegree()) * DEG2RAD;
-
-							FLOAT tempX = (float)(scaler->soy - y) * (float)sin(_radian) + (float)(scaler->sox - x) * (float)cos(_radian);
-							FLOAT tempY = (float)(scaler->soy - y) * (float)cos(_radian) - (float)(scaler->sox - x) * (float)sin(_radian);
-
-							x = tempX + (float)scaler->sox;
-							y = tempY + (float)scaler->soy;
-						}
-
-						D2->pRT->SetTransform(D2D1::Matrix3x2F::Identity());
-						D2->pRT->DrawText(
-							vText,
-							vTextSize,
-							useWTF,
-							D2D1::RectF(x, y, x + _width, y + _height),
-							D2->pBrush
-						);
-					}
-				}
+				instruction->Accept(painter);
 			}
 		}
 	}

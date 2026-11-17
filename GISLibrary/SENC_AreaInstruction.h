@@ -15,10 +15,7 @@ public:
 	void SetAreaFill(SENC_AreaFillBase* value);
 	SENC_AreaFillBase* GetAreaFill();
 
-	void DrawInstruction(
-		D2D1Resources* d2,
-		Scaler *scaler, 
-		PortrayalCatalogue* pc = nullptr) override;
+	void Accept(SENC_InstructionVisitor& visitor) override { visitor.Visit(*this); }
 
 
 	void FromS100Instruction(

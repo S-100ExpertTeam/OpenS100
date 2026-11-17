@@ -632,6 +632,7 @@
     <ClCompile Include="PathUtil.cpp" />
     <ClCompile Include="PortrayalRenderCache.cpp" />
     <ClCompile Include="D2DInstructionCache.cpp" />
+    <ClCompile Include="D2DInstructionPainter.cpp" />
     <ClCompile Include="SCurve.cpp" />
     <ClCompile Include="SENC_AlertReference.cpp" />
     <ClCompile Include="SENC_Annulus.cpp" />
@@ -769,6 +770,8 @@
     <ClInclude Include="DebugOutput.h" />
     <ClInclude Include="D2DConvert.h" />
     <ClInclude Include="D2DInstructionCache.h" />
+    <ClInclude Include="D2DInstructionPainter.h" />
+    <ClInclude Include="SENC_InstructionVisitor.h" />
     <ClInclude Include="RenderCacheSlot.h" />
     <ClInclude Include="D2DForward.h" />
     <ClInclude Include="DeviceTypes.h" />

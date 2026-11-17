@@ -2240,6 +2240,12 @@
     <ClInclude Include="D2DInstructionCache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="D2DInstructionPainter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SENC_InstructionVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="RenderCacheSlot.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -1,10 +1,5 @@
 ﻿#include "stdafx.h"
-#include "D2DConvert.h"
-#include "PortrayalRenderCache.h"
-#include "D2DView.h"
-#include "../S100Engine/S100PCManager.h"
 #include "SENC_AreaInstruction.h"
-#include "D2DGeometryCache.h"
 #include "SENC_ColorFill.h"
 #include "SENC_AreaFillReference.h"
 #include "SENC_pixmapFill.h"
@@ -12,9 +7,7 @@
 #include "SENC_HatchFill.h"
 #include "SENC_CommonFuc.h"
 #include "PCOutputSchemaManager.h"
-#include "GISLibrary.h"
 
-#include "../S100Engine/AreaPatternBitmap.h"
 
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 #include "../PortrayalCatalogue/S100_ColorFill.h"
@@ -66,187 +59,6 @@ void SENC_AreaInstruction::SetAreaFill(SENC_AreaFillBase* value)
 SENC_AreaFillBase* SENC_AreaInstruction::GetAreaFill()
 {
 	return areaFill;
-}
-
-// Area Instruction
-void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc)
-{
-	auto rt = d2->RenderTarget();
-	auto pDirect2dFactory = d2->Factory();
-	auto brush = d2->SolidColorBrush();
-	if (!brush || !pDirect2dFactory || !rt)
-	{
-		return;
-	}
-
-	rt->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
-
-	auto surface = (SSurface*)fr->GetGeometry();
-
-	if (areaFill)
-	{
-		SENC_ColorFill* colorFill = nullptr;
-		SENC_SymbolFill* symbolFill = nullptr;
-		SENC_AreaFillReference* areaFillReference = nullptr;
-
-		switch (areaFill->type)
-		{
-		case 1:
-			colorFill = (SENC_ColorFill*)areaFill;
-			if (colorFill->color)
-			{
-				D2D1_COLOR_F color = GISLibrary::ToD2D(GISLibrary::PortrayalRender::Color(pc, colorFill->color->token));
-				
-				color.a = 1 - colorFill->color->transparency;
-				brush->SetColor(color);
-
-				if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
-				{
-					auto geometry = GISLibrary::D2DGeometry::Get(surface, pDirect2dFactory);
-					
-					if (geometry)
-					{
-						rt->FillGeometry(geometry, brush);
-					}
-				}
-				else
-				{
-					auto geometry = GISLibrary::D2DGeometry::CreateScaled(surface, pDirect2dFactory, scaler);
-					if (geometry)
-					{
-						D2D1_MATRIX_3X2_F oldMatrix;
-						rt->GetTransform(&oldMatrix);
-						rt->SetTransform(D2D1::Matrix3x2F::Identity());
-						// Apply the rotation transform to the render target.
-						rt->SetTransform(
-							D2D1::Matrix3x2F::Rotation(
-								(float)scaler->GetRotationDegree(),
-								D2D1::Point2F((float)scaler->sox, (float)scaler->soy))
-						);
-						rt->FillGeometry(geometry, brush);
-						rt->SetTransform(oldMatrix);
-						SafeRelease(&geometry);
-					}
-				}
-			}
-			break;
-		case 2:
-			areaFillReference = (SENC_AreaFillReference*)areaFill;
-			{
-				auto patternMap = &GISLibrary::PortrayalRender::Caches(pc)->areaFillInfo.patternMap;
-				auto i = patternMap->find(areaFillReference->GetFileStem().c_str());
-
-				if (i == patternMap->end())
-				{
-					i = patternMap->find(L"QUESMRK1");
-				}
-
-				if (i != patternMap->end())
-				{
-					if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
-					{
-						auto geometry = GISLibrary::D2DGeometry::Get(surface, pDirect2dFactory);
-						if (geometry)
-						{
-							rt->FillGeometry(geometry, i->second->pBitmapBrush);
-						}
-					}
-					else
-					{
-						auto geometry = GISLibrary::D2DGeometry::CreateScaled(surface, pDirect2dFactory, scaler);
-
-						if (geometry)
-						{
-							D2D1_MATRIX_3X2_F oldMatrix;
-							rt->GetTransform(&oldMatrix);
-							rt->SetTransform(D2D1::Matrix3x2F::Identity());
-							rt->SetTransform(
-								D2D1::Matrix3x2F::Rotation(
-									(float)scaler->GetRotationDegree(),
-									D2D1::Point2F((float)scaler->sox, (float)scaler->soy))
-							);
-
-							auto featureMBR = surface->GetMBR();
-							long sxmin = 0;
-							long symin = 0;
-							scaler->WorldToDevice(featureMBR.xmin, featureMBR.ymax, &sxmin, &symin);
-
-							i->second->pBitmapBrush->SetTransform(D2D1::Matrix3x2F::Identity());
-							rt->FillGeometry(geometry, i->second->pBitmapBrush);
-							rt->SetTransform(oldMatrix);
-							SafeRelease(&geometry);
-						}
-					}
-				}
-			}
-			break;
-		case 4:
-			symbolFill = (SENC_SymbolFill*)areaFill;
-			//if (symbolFill->symbol)			
-			{
-				auto patternMap = &GISLibrary::PortrayalRender::Caches(pc)->areaFillInfo.patternMap;
-				auto i = patternMap->find(symbolFill->GetFileStem().c_str());
-
-				ID2D1Brush* imageBrush = nullptr;
-				AreaPatternBitmap* bitmapImage = nullptr;
-
-				// Symbol Fill을 별도의 파일(AreaFills)에서 읽은 경우
-				if (symbolFill->GetFileStem().empty() == false)
-				{
-					if (i != patternMap->end())
-					{
-						imageBrush = i->second->pBitmapBrush;
-					}
-				}
-				else
-				{
-					auto _areaFill = symbolFill->as_AreaFill();
-					bitmapImage = GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapImage(_areaFill.get(), pDirect2dFactory, d2->pImagingFactory, d2->SolidStrokeStyle());
-					if (bitmapImage)
-					{
-						bitmapImage->pBitmapBrush = GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapBrush(bitmapImage, rt);
-						imageBrush = bitmapImage->pBitmapBrush;
-						imageBrush->SetTransform(GISLibrary::D2DView::InverseMatrix(*scaler));
-					}
-				}
-
-				if (imageBrush != nullptr)
-				{
-					if (scaler->GetCurrentScale() >= SCommonFuction::NewGeometryScale)
-					{
-						auto geometry = GISLibrary::D2DGeometry::Get(surface, pDirect2dFactory);
-						if (geometry)
-						{
-							rt->FillGeometry(geometry, imageBrush);
-						}
-					}
-					else
-					{
-						auto geometry = GISLibrary::D2DGeometry::CreateScaled(surface, pDirect2dFactory, scaler);
-						if (geometry)
-						{
-							D2D1_MATRIX_3X2_F oldMatrix;
-							rt->GetTransform(&oldMatrix);
-							rt->SetTransform(D2D1::Matrix3x2F::Identity());
-							imageBrush->SetTransform(D2D1::Matrix3x2F::Identity());
-							rt->FillGeometry(geometry, imageBrush);
-							rt->SetTransform(oldMatrix);
-							SafeRelease(&geometry);
-						}
-					}
-				}
-
-				if (bitmapImage)
-				{
-					delete bitmapImage;
-					bitmapImage = nullptr;
-				}
-			}
-			break;
-		}
-	}
-
-	rt->SetAntialiasMode(D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 }
 
 void SENC_AreaInstruction::FromS100Instruction(

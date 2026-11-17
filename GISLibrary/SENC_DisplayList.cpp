@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "SENC_DisplayList.h"
-#include "LayerManager.h"
 #include "R_FeatureRecord.h"
 #include "SENC_Instruction.h"
 #include "SENC_NullInstruction.h"
@@ -11,7 +10,6 @@
 #include "SENC_AugmentedRay.h"
 #include "SENC_AugmentedPath.h"
 #include "SENC_AlertReference.h"
-#include "GISLibrary.h"
 
 #include "SGeometry.h"
 

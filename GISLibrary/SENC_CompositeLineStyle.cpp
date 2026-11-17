@@ -60,19 +60,3 @@ void SENC_CompositeLineStyle::GetStyleFromS100(S100_CompositeLineStyle* lineStyl
 		}
 	}
 }
-
-
-void SENC_CompositeLineStyle::DrawInstruction(
-	SCurve* curveHasOrient,
-	ID2D1DCRenderTarget* rt,
-	ID2D1Factory1* pDirect2dFactory,
-	ID2D1SolidColorBrush* brush,
-	std::vector<ID2D1StrokeStyle1*>* strokeGroup,
-	Scaler *scaler,
-	PortrayalCatalogue* pc)
-{
-	for (auto i = lineStyles.begin(); i != lineStyles.end(); i++)
-	{
-		(*i)->DrawInstruction(curveHasOrient, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
-	}
-}

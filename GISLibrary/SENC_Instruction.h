@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SENC_AlertReference.h"
-#include "D2DForward.h"
+#include "SENC_InstructionVisitor.h"
 #include "DrawTypes.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
@@ -116,10 +116,9 @@ public:
 	//void GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points);
 	//virtual void GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points){};
 	
-	virtual void DrawInstruction(
-		GISLibrary::D2D1Resources* /*d2*/,
-		Scaler */*scaler*/, 
-		PortrayalCatalogue* /*pc*/ = nullptr) {};
+	// Hands the instruction, as what it is, to a visitor. The base class is no instruction of
+	// its own: nothing to visit.
+	virtual void Accept(SENC_InstructionVisitor& /*visitor*/) {}
 
 	virtual void FromS100Instruction(S100_Instruction* /*s100Instruction*/, PortrayalCatalogue */*pc*/, PCOutputSchemaManager* /*output*/) {};
 

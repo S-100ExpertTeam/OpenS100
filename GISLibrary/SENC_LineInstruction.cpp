@@ -7,7 +7,6 @@
 #include "PCOutputSchemaManager.h"
 #include "SCommonFuction.h"
 #include "SCurve.h"
-#include "D2D1Resources.h"
 
 #include "../GISLibrary/R_FeatureRecord.h"
 
@@ -16,10 +15,8 @@
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 #include "../PortrayalCatalogue/S100_LineInstruction.h"
 
-#include "../S100Engine/S100Render.h"
 
 #include <ctime> 
-#include <mmsystem.h> 
 
 SENC_LineInstruction::SENC_LineInstruction()
 {
@@ -58,92 +55,8 @@ bool SENC_LineInstruction::GetSuppression()
 	return suppression;
 }
 
-// Line Instruction
 #pragma warning(disable:4244)
 #pragma warning(disable:4838)
-void SENC_LineInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc)
-{
-	auto rt = d2->RenderTarget();
-	auto pDirect2dFactory = d2->Factory();
-	auto brush = d2->SolidColorBrush();
-	auto strokeGroup = &d2->D2D1StrokeStyleGroup;
-
-	auto geom = fr->GetGeometry();
-
-	std::list<SCurve*> curListCurveLink;
-
-	// Surface
-	if (geom->GetType() == SGeometryType::Surface)
-	{
-		auto surface = (SSurface*)geom;
-		surface->GetCurveList(curListCurveLink);
-	}
-	// Composite Curve
-	else if (geom->GetType() == SGeometryType::CompositeCurve)
-	{
-		auto compositeCurve = (SCompositeCurve*)geom;
-		compositeCurve->GetCurveList(curListCurveLink);
-	}
-	// Curve
-	else if (geom->GetType() == SGeometryType::Curve)
-	{
-		auto curve = (SCurve*)geom;
-		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
-		{
-			SENC_LineStyleBase* lineStyleBase = *itor;
-
-			if (curve->isDraw())
-			{
-				lineStyleBase->DrawInstruction(curve, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
-			}
-			
-		}
-		return;
-	}
-
-	if (curListCurveLink.size() == 0)
-	{
-		return;
-	}
-
-	if (spatialReference.size() == 0)
-	{
-		for (auto i = curListCurveLink.begin(); i != curListCurveLink.end(); i++)
-		{
-			auto curve = (*i);
-
-			if (curve->isDraw())
-			{
-				for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
-				{
-					SENC_LineStyleBase* lineStyleBase = *itor;
-					lineStyleBase->DrawInstruction(*i, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
-				}
-			}
-		}
-	}
-
-	//rt->SetTransform(scaler->GetMatrix());
-	for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
-	{
-		for (auto j = curListCurveLink.begin(); j != curListCurveLink.end(); j++)
-		{
-			if ((*i)->reference == (*j)->GetRCID())
-			{
-				if ((*j)->isDraw())
-				{
-					for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
-					{
-						SENC_LineStyleBase* lineStyleBase = *itor;
-						lineStyleBase->DrawInstruction(*j, rt, pDirect2dFactory, brush, strokeGroup, scaler, pc);
-					}
-				}
-				break;
-			}
-		}
-	}
-}
-
 void SENC_LineInstruction::FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output)
 {
 	auto s100LineInstruction = (S100_LineInstruction*)s100Instruction;
