@@ -135,6 +135,8 @@ namespace s100::render {
 }
 ```
 
+**R5 첫 조각에서 바뀐 것(2026-11-17)**: 위 초안의 `SetTransform(const Matrix3x2&)`와 끝점으로 주는 호는 쓰지 않는다. 페인터는 변환을 **단계의 나열**(`Rotate(도)`, `Translate(x, y)`)로, 호를 **반지름·시작각·끝각**으로 넘기고, 행렬과 끝점은 백엔드가 자기 수학으로 만든다(`IRenderer.h`). 이유: Direct2D의 `Matrix3x2F::Rotation`은 자체 근사식을 써서(`sin(-x) ≠ -sin(x)`인 값이 있다) 밖에서 비트 단위로 재현되지 않는다 — 7가지 식을 144,001개 각도로 대조했고 가장 가까운 것도 105,730개가 달랐다. 페인터가 행렬을 계산해 넘기면 "그림 동일"을 보장할 수 없고, 각도와 의미를 넘기면 Direct2D 쪽은 옮기기 전과 같은 호출이 된다. Skia도 호를 각도로 받는다(`SkPath::arcTo`). 점선은 선 굵기의 배수로 넘긴다(Direct2D의 관례; 절대 길이를 쓰는 백엔드는 곱한다).
+
 `Path`·`Matrix3x2`·`PointF`·`ColorF`는 자체 값 타입이다(`DrawTypes.h`가 그 시작). 심볼(SVG)·패턴·이미지의 실체는 백엔드가 만들고 핸들로만 오간다. 카탈로그 쪽은 이미 `Portrayal::ResourceStore` 뒤에 있다.
 
 ### 3.3 그리기 순서는 한곳에서 정한다
@@ -153,7 +155,7 @@ namespace s100::render {
 | **R3p** ✔ | 새 타깃 `opens100::portrayal`: 인스트럭션 모델 + `PCOutputSchemaManager` + Lua 호스트 + `ProcessS101`. 포트 기능 `portrayal`. 소비자 예제가 셀 하나를 포트레이얼해 인스트럭션 수를 낸다 | 해당 없음 | **패키지가 "무엇을 그릴지"를 낸다.** Windows·Linux에서 같은 수 |
 | **R4a** ✔ | 디스플레이 리스트 JSON 직렬화(웹 IR과 같은 필드). 골든 해시 테스트 | 해당 없음 | 플랫폼 간·웹과의 결과 비교가 그림 없이 된다 |
 | **R4b** | 셀 간 병합 + `comparePainting` 정렬 후 한 번에 그리기 | **달라짐**(의도) | 셀 경계 겹침 순서가 표준대로 |
-| **R5** | `IRenderer` + `DisplayListPainter`. D2D로 `IRenderer` 구현. 인스트럭션 종류 하나씩 공용 페인터로 전환 | 종류별로 동일 또는 허용 오차 | S-100 그리기 로직이 백엔드와 분리된다 |
+| **R5** (진행 중: 광선·경로 ✔) | `IRenderer` + `DisplayListPainter`. D2D로 `IRenderer` 구현. 인스트럭션 종류 하나씩 공용 페인터로 전환 | 종류별로 동일 또는 허용 오차 | S-100 그리기 로직이 백엔드와 분리된다 |
 | **R6** | Skia로 `IRenderer` 구현(포트 기능 `render-skia`). D2D 결과와 허용 오차로 비교. 통과하면 D2D 제거(지침 24) | 허용 오차 | 전 플랫폼 렌더링 |
 
 R1~R3은 "옮기기"라서 그림이 바뀌면 안 되고, 바뀌면 버그다. R3p가 vcpkg 관점의 첫 성과다. R4b·R5·R6은 그림이 바뀔 수 있어 사람이 봐야 한다(지침 23).
@@ -185,7 +187,7 @@ R1~R3은 "옮기기"라서 그림이 바뀌면 안 되고, 바뀌면 버그다. 
 
 ## 8. 결정이 필요한 것 (사용자)
 
-1. **`IRenderer`의 수준**: (A) 캔버스 수준 + 공용 페인터를 최종 목표로 하고 (B)를 거쳐 간다는 3.2의 권고대로 갈지.
+1. ✔ (A)로 진행 중(2026-11-17, R5 첫 조각). **`IRenderer`의 수준**: (A) 캔버스 수준 + 공용 페인터를 최종 목표로 하고 (B)를 거쳐 간다는 3.2의 권고대로 갈지.
 2. **색을 그릴 때 푼다(R1)**: 모델에서 RGB를 없애는 데 동의하는지. 대안은 RGB를 모델에 두고 "팔레트 적용"만 모델 밖 함수로 빼는 것(변경이 작지만 모델이 팔레트 상태를 계속 갖는다).
 3. **R3p를 vcpkg 등록보다 먼저 할지**: 지금 등록하면 패키지는 "읽기"까지다. R3p까지 하면 "포트레이얼 결과"까지 낸다.
 4. **셀 간 통합 정렬(R4b)**: 그림이 달라지는 변경이다. 이번 흐름에 넣을지, 따로 뗄지.
@@ -206,6 +208,7 @@ R1~R3은 "옮기기"라서 그림이 바뀌면 안 되고, 바뀌면 버그다. 
 | 2026-11-17 | Lua 샌드박스의 `package.cpath = ” `(U+201D)를 `''`로 고쳤다. 규칙 파일을 못 찾을 때의 오류가 `'package.cpath' must be a string`에서 정상적인 "module not found"로 바뀐다 | 058b5ebf | KOR TDS 808개 셀 해시가 수정 전과 같고(Windows), Windows와 Linux가 같다 |
 | 2026-11-17 | 드로잉 명령 파서에 남아 있던 디버그 출력(`DebugOutput(L"A")`) 삭제 — Linux에서는 표준 오류로 `A`가 찍혔다 | 9fdbc295 | 위와 같은 실행에 포함 |
 | 2026-11-17 | 그림 비교용 스위치: `D2D1Resources::softwareRenderTarget`(기본 꺼짐 — 뷰어는 그대로). 켜면 DC 렌더 타깃을 소프트웨어로 만든다. `RenderSmoke.DrawsCellsFromEnvironment`가 `S100_RENDER_SOFTWARE=1`일 때 켠다(9.1 참고) | 1a0a8b7e | 10개 셀을 소프트웨어로 두 번 그려 동일. `RenderSmoke.*` 21개 통과. 808개 셀의 소프트웨어 기준 그림을 새로 뽑았다(이후 단계의 기준) |
+| 2026-11-17 | **R5 첫 조각 — 보조 기하(광선·경로)**: 8절 1번은 권고 (A)로 진행했다(사용자가 "가능한 데까지 진행"을 지시). `s100::render::IRenderer`(`SetTransform`, `StrokePath`)와 값 타입(`IRenderer.h`), 백엔드와 무관한 `DisplayListPainter`(광선: 점에서 방위·길이로 선분, 화면 회전과 극 부근의 북쪽 각 반영 / 경로: 점 둘레의 섹터 호), Direct2D 구현 `D2DRenderer`. `D2DInstructionPainter`는 이 두 종류를 `DisplayListPainter`로 넘긴다. 선 스타일의 호 지오메트리 캐시(`D2DInstructionCache::ArcGeometries`)와 `SENC_LineStyleBase::renderCache`는 쓰는 곳이 없어져 지웠다(호는 그릴 때마다 만든다). `DisplayListPainter`는 당분간 `opens100::portrayal`에 들어 있다(이식 가능한 백엔드가 생기면 타깃을 나눈다). 소비자 예제에 "기록만 하는 렌더러"를 넣어 페인터가 낸 호출을 텍스트·해시로 낸다 | e3c9fa6f | **그림**: KOR TDS 808개 셀이 소프트웨어 기준(`base_sw`)과 바이트 단위로 동일(보조 기하가 있는 셀 275개 포함). 시간(808개, 변경 전→후): 첫 그리기 28.1 → 27.9 s, 다음 4프레임 95.3 → 94.3 s — 캐시를 없앴지만 느려지지 않았다. **페인터 출력**: 기록 렌더러에 그린 호출의 해시가 KOR TDS 808개 셀 전부 Windows(MSVC)와 Linux(GCC, vcpkg 오버레이 포트)에서 같다 — 275개 셀에 긋기 5,413회. 디스플레이 리스트 해시도 여전히 두 플랫폼에서 같다. 새 테스트 `DisplayListPainter.AugmentedGeometryOfTheSampleCellIsStrokedAsRecorded`(샘플 셀 `10100AA_X01NE`: 광선 10, 경로 10 → 긋기 20회, 골든 해시 `d89733292a9a0986` — 소비자 예제가 내는 값과 같다). 테스트 214/217(3개는 외부 데이터 필요로 건너뜀). 미확인: 뷰어 화면(하드웨어 렌더), 화면 회전·극 투영·`FULL_SECTORS` 상태에서의 그림(808개 렌더는 회전 0, 메르카토르, 기본 설정뿐이다 — 코드는 그대로 옮겼다), macOS, CI |
 
 ### 9.2 R3p에서 드러난, 고치지 않은 것
 
