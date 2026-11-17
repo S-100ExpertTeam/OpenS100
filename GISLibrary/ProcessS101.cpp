@@ -879,7 +879,7 @@ bool ProcessS101::LUA_ParsingDrawingInstructions(std::string_view featureID, std
 
 			if (tag.compare("TextVerticalOffset") == 0)
 			{
-				GISLibrary::DebugOutput(L"A");
+				// No action for this command here.
 			}
 			else if (sizeForIndex == 2)
 			{
