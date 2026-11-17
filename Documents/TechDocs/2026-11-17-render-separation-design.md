@@ -1,6 +1,6 @@
 # 그리기를 인스트럭션 모델 밖으로 빼는 설계
 
-- 작성: 2026-11-17. 상태: **초안 — 결정 대기**(8절). 코드는 아직 바꾸지 않았다.
+- 작성: 2026-11-17. 상태: **진행 중** — R1 완료(9절). 8절의 결정 중 2번(색을 그릴 때 푼다)은 사용자가 "R1부터"로 승인. 나머지는 해당 단계 전에 정한다.
 - 상위 문서: [로드맵](2026-11-08-roadmap-library-first.md)(Phase 3), [지침](DIRECTIVES.md) 18·22·24, [Phase 1 작업 로그](2026-11-08-phase1-core-decoupling.md) 5-3 (5), [역이식 계획](2026-11-08-backport-plan-from-opens100-web.md)("디스플레이 리스트 IR 공통화", "셀 간 통합 정렬").
 - 요청: "Windows 종속성을 추가로 걷어내야 한다" → 남은 것은 걷어내기가 아니라 구조 변경이므로 설계부터 한다(사용자, 2026-11-17).
 
@@ -144,7 +144,7 @@ namespace s100::render {
 
 | 단계 | 내용 | 그림 | 끝나면 |
 |---|---|---|---|
-| **R1** | 색을 토큰으로만 저장. 그릴 때 팔레트로 푼다. `ChangePallete` 사슬과 모델 안의 RGB 삭제 | 동일해야 함 | 모델에서 색상 프로파일(S100Engine) 의존이 사라진다 |
+| **R1** ✔ | 색을 토큰으로만 저장. 그릴 때 팔레트로 푼다. `ChangePallete` 사슬과 모델 안의 RGB 삭제 | 동일해야 함 | 모델에서 색상 프로파일(S100Engine) 의존이 사라진다 |
 | **R2** | 렌더 캐시를 모델 밖으로(`geometryVector`, `pGeometry`, `textMatrix`, `pSvg`, `s100Render`). `D2DInstructionCache` 신설 | 동일해야 함 | 모델에 D2D 포인터가 없다 |
 | **R3** | 방문자 도입. `DrawInstruction` 본문과 `LayerManager::AddSymbolDrawing`의 점·텍스트 그리기를 `D2DInstructionPainter`로 **그대로 옮긴다** | 동일해야 함 | `SENC_*` 전체가 Direct2D 없이 컴파일·링크된다 |
 | **R3p** | 새 타깃 `opens100::portrayal`: 인스트럭션 모델 + `PCOutputSchemaManager` + Lua 호스트 + `ProcessS101`. 포트 기능 `portrayal`. 소비자 예제가 셀 하나를 포트레이얼해 인스트럭션 수를 낸다 | 해당 없음 | **패키지가 "무엇을 그릴지"를 낸다.** Windows·Linux에서 같은 수 |
@@ -193,3 +193,4 @@ R1~R3은 "옮기기"라서 그림이 바뀌면 안 되고, 바뀌면 버그다. 
 | 날짜 | 내용 | 커밋 | 검증 |
 |---|---|---|---|
 | 2026-11-17 | 설계 초안 작성 | (문서만) | 코드 변경 없음 |
+| 2026-11-17 | **R1**: 인스트럭션은 색 토큰만 갖고 렌더러가 그릴 때 푼다(`GISLibrary::PortrayalRender::Color`). `SENC_Color::RGBColor`, `SENC_LineStyle::pen_color`, `SENC_Element::pColor`와 `ChangePallete` 사슬(모델 클래스 14개 + `PCOutputSchemaManager`) 삭제. 텍스트는 "전경색이 지정됐는가"만 `hasForeground`로 남긴다 | fdaa6dee | KOR TDS 808개 셀 그림이 변경 전과 바이트 단위로 동일. 새 테스트 `RenderSmoke.PaletteSwitchRedrawsAnOpenChartInTheNewColours`(열린 해도의 팔레트를 Night로 바꾼 그림 = Night로 연 그림)가 변경 전·후 코드 모두 통과하고 두 코드의 Night 그림이 같다. 테스트 207/210(3개는 외부 데이터 필요로 건너뜀). 시간(150개 셀, 조용한 상태): 첫 그리기 7.7 s → 7.3~7.4 s, 다음 4프레임 17.2 s → 16.3~16.6 s — 늘지 않았다(오차 범위). CMake `dataset` 빌드 통과. 뷰어 화면·Linux 포트 빌드·CI 미확인. 팔레트 테스트의 기준 셀(`101KR003G2M00`)은 색이 적은 심해 셀이라 검증력이 약하다 |
