@@ -16,6 +16,7 @@
 #include <GISLibrary/DisplayListJson.h>
 #include <GISLibrary/PCOutputSchemaManager.h>
 #include <GISLibrary/S100Layer.h>
+#include <GISLibrary/S10XGML.h>
 #include <GISLibrary/SENC_DisplayList.h>
 #include <GISLibrary/SENC_Instruction.h>
 #include <GISLibrary/SENC_InstructionVisitor.h>
@@ -49,7 +50,7 @@ int main(int argc, char** argv)
 {
 	if (argc < 2)
 	{
-		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [--json <directory>] [S-101 cell ...]\n";
+		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [--json <directory>] [dataset ...]\n";
 		return 2;
 	}
 
@@ -106,7 +107,7 @@ int main(int argc, char** argv)
 
 #ifdef OPENS100_CONSUMER_HAS_DATASET
 	// Optional: an S-101 dataset (ISO 8211), read against the feature catalogue above.
-	if (argc >= 4 && std::string(argv[3]) != "--json")
+	if (argc >= 4 && std::filesystem::path(argv[3]).extension() == ".000")
 	{
 		const std::filesystem::path cellPath(argv[3]);
 		S101Cell cell(&fc);
@@ -128,6 +129,7 @@ int main(int argc, char** argv)
 #ifdef OPENS100_CONSUMER_HAS_PORTRAYAL
 	// Optional: portray every dataset given with the rules of the portrayal catalogue. The
 	// result is drawing instructions (S-100 Part 9): what is to be drawn, not a picture.
+	// An S-101 cell (ISO 8211) runs the Lua rules, a GML dataset the XSLT rules.
 	if (argc >= 4)
 	{
 		PortrayalCatalogue pc;
@@ -150,7 +152,17 @@ int main(int argc, char** argv)
 		{
 			const std::filesystem::path cellPath(argv[i]);
 			S100Layer layer(&fc, &pc);
-			auto* cell = new S101Cell(&fc);   // the layer owns its dataset
+			S100SpatialObject* cell = nullptr;   // the layer owns its dataset
+			if (cellPath.extension() == ".gml")
+			{
+				auto* gml = new S10XGML();
+				gml->SetFC(&fc);
+				cell = gml;
+			}
+			else
+			{
+				cell = new S101Cell(&fc);
+			}
 			layer.m_spatialObject = cell;
 			cell->SetLayer(&layer);
 			if (!cell->Open(cellPath.wstring()))

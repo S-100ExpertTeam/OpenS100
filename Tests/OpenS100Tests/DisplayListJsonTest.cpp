@@ -18,6 +18,7 @@
 #include "PCOutputSchemaManager.h"
 #include "S100Layer.h"
 #include "S101Cell.h"
+#include "S10XGML.h"
 #include "SENC_ColorFill.h"
 #include "SENC_AreaInstruction.h"
 #include "SENC_DisplayList.h"
@@ -30,31 +31,59 @@
 
 namespace
 {
-	// Portrays one cell the way a consumer of the package does: no renderer, no window.
-	std::string PortrayToJson(const std::filesystem::path& cellPath)
+	// Portrays one dataset the way a consumer of the package does: no renderer, no window.
+	// An S-101 cell (ISO 8211) runs the Lua rules, a GML dataset the XSLT rules.
+	std::string PortrayToJson(const char* fcFile, const char* pcFolder, const std::filesystem::path& datasetPath)
 	{
 		const auto root = testpaths::repoRoot();
 		FeatureCatalogue fc;
-		EXPECT_TRUE(fc.Read((root / "ProgramData" / "FC" / "S-101_FC.xml").string()));
+		EXPECT_TRUE(fc.Read((root / "ProgramData" / "FC" / fcFile).string()));
 		PortrayalCatalogue pc;
-		EXPECT_TRUE(pc.Open((root / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").string()));
+		EXPECT_TRUE(pc.Open((root / "ProgramData" / "PC" / pcFolder / "portrayal_catalogue.xml").string()));
 
 		S100Layer layer(&fc, &pc);
-		auto* cell = new S101Cell(&fc);   // the layer owns its dataset
-		layer.m_spatialObject = cell;
-		cell->SetLayer(&layer);
-		if (!cell->Open(cellPath.wstring()))
+		S100SpatialObject* dataset = nullptr;   // the layer owns its dataset
+		if (datasetPath.extension() == ".gml")
 		{
-			ADD_FAILURE() << "cannot read " << cellPath;
+			auto* gml = new S10XGML();
+			gml->SetFC(&fc);
+			dataset = gml;
+		}
+		else
+		{
+			dataset = new S101Cell(&fc);
+		}
+		layer.m_spatialObject = dataset;
+		dataset->SetLayer(&layer);
+		if (!dataset->Open(datasetPath.wstring()))
+		{
+			ADD_FAILURE() << "cannot read " << datasetPath;
 			return {};
 		}
 		layer.BuildPortrayalCatalogue();
-		if (!cell->pcManager || !cell->pcManager->displayListSENC)
+		if (!dataset->pcManager || !dataset->pcManager->displayListSENC)
 		{
 			ADD_FAILURE() << "no display list";
 			return {};
 		}
-		return GISLibrary::DisplayListToJson(*cell->pcManager->displayListSENC);
+		return GISLibrary::DisplayListToJson(*dataset->pcManager->displayListSENC);
+	}
+
+	std::string PortrayS101ToJson(const std::filesystem::path& cellPath)
+	{
+		return PortrayToJson("S-101_FC.xml", "S101_Portrayal", cellPath);
+	}
+
+	// The hash of the text; on a mismatch the text is left in the temp directory of the run.
+	void ExpectGoldenHash(const std::string& json, const std::string& golden, const char* dumpName)
+	{
+		const std::string hash = std::format("{:016x}", GISLibrary::JsonHash(json));
+		if (hash != golden)
+		{
+			const auto dump = testpaths::tempDir() / dumpName;
+			std::ofstream(dump, std::ios::binary | std::ios::trunc) << json;
+			ADD_FAILURE() << "display list hash " << hash << ", " << json.size() << " bytes; the text is in " << dump;
+		}
 	}
 }
 
@@ -137,17 +166,26 @@ TEST(DisplayListJson, SampleCellMatchesTheGoldenHash)
 	const auto cellPath = testpaths::repoRoot() / "SampleData" / "10100AA_X01SE.000";
 	ASSERT_TRUE(std::filesystem::exists(cellPath)) << cellPath;
 
-	const std::string json = PortrayToJson(cellPath);
+	const std::string json = PortrayS101ToJson(cellPath);
 	ASSERT_FALSE(json.empty());
 
 	// Twice gives the same text: nothing in it depends on addresses or on what was left in memory.
-	EXPECT_EQ(PortrayToJson(cellPath), json);
+	EXPECT_EQ(PortrayS101ToJson(cellPath), json);
 
-	const std::string hash = std::format("{:016x}", GISLibrary::JsonHash(json));
-	if (hash != "74cada0555afe32c")   // the same value the consumer example prints, on Windows and on Linux
-	{
-		const auto dump = testpaths::tempDir() / "10100AA_X01SE.json";
-		std::ofstream(dump, std::ios::binary | std::ios::trunc) << json;
-		ADD_FAILURE() << "display list hash " << hash << ", " << json.size() << " bytes; the text is in " << dump;
-	}
+	// The same value the consumer example prints, on Windows and on Linux.
+	ExpectGoldenHash(json, "74cada0555afe32c", "10100AA_X01SE.json");
+}
+
+// The other engine: a GML dataset portrayed by the XSLT rules of its catalogue.
+TEST(DisplayListJson, XsltSampleMatchesTheGoldenHash)
+{
+	const auto gmlPath = testpaths::repoRoot() / "SampleData" / "12900MCTDS120TS.gml";
+	ASSERT_TRUE(std::filesystem::exists(gmlPath)) << gmlPath;
+
+	const std::string json = PortrayToJson("S-129_FC.xml", "S129_Portrayal", gmlPath);
+	ASSERT_FALSE(json.empty());
+	EXPECT_NE(json.find("\"type\":"), std::string::npos) << "no instruction: " << json;
+	EXPECT_EQ(PortrayToJson("S-129_FC.xml", "S129_Portrayal", gmlPath), json);
+
+	ExpectGoldenHash(json, "544183a60186ab0d", "12900MCTDS120TS.json");
 }
