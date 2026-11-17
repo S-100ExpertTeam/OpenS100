@@ -256,7 +256,8 @@ int ProcessS101::ProcessS101_LUA(std::wstring luaRulePath, S100Layer* layer)
 
 		c->pcManager->InitDisplayList();
 
-		KRS_LUA_SCRIPT_REFERENCE::SaveDrawingInstructions("..\\TEMP\\drawingCommands.txt");
+		// A library does not write into the working directory. To look at the drawing commands,
+		// call KRS_LUA_SCRIPT_REFERENCE::SaveDrawingInstructions(path) here.
 		KRS_LUA_SCRIPT_REFERENCE::RemoveResultDrawingInstructions();
 	}
 	catch (const std::exception& e)
