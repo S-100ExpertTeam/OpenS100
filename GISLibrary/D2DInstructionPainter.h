@@ -7,6 +7,7 @@
 class PortrayalCatalogue;
 class Scaler;
 class SCurve;
+class SENC_Instruction;
 class SENC_LineStyleBase;
 
 namespace GISLibrary
@@ -34,6 +35,9 @@ namespace GISLibrary
 		void Visit(SENC_LineStyle& lineStyle) override;
 		void Visit(SENC_LineStyleReference& lineStyle) override;
 		void Visit(SENC_CompositeLineStyle& lineStyle) override;
+
+		// The kinds DisplayListPainter has taken over: drawn by it on a D2DRenderer.
+		void PaintOnRenderer(SENC_Instruction& instruction);
 
 		// Draws one curve with a line style, whatever kind the style is.
 		void DrawLineStyle(SENC_LineStyleBase* lineStyle, SCurve* curve);

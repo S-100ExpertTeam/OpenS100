@@ -13,7 +13,12 @@
 #endif
 
 #ifdef OPENS100_CONSUMER_HAS_PORTRAYAL
+#include <GeoMetryLibrary/Scaler.h>
+#include <charconv>
+#include <string>
 #include <GISLibrary/DisplayListJson.h>
+#include <GISLibrary/DisplayListPainter.h>
+#include <GISLibrary/IRenderer.h>
 #include <GISLibrary/PCOutputSchemaManager.h>
 #include <GISLibrary/S100Layer.h>
 #include <GISLibrary/S10XGML.h>
@@ -36,6 +41,87 @@ namespace
 		void Visit(SENC_TextInstruction&) override { text++; }
 		void Visit(SENC_AugmentedRay&) override { ray++; }
 		void Visit(SENC_AugmentedPath&) override { path++; }
+	};
+
+	// A render backend of the smallest kind: it is asked to stroke paths and writes down what
+	// it was asked. A real one (Skia, Cairo, a canvas) draws them; the S-100 side of drawing,
+	// where things go on the screen and how they are stroked, is DisplayListPainter and is the
+	// same for all of them.
+	class RecordingRenderer : public s100::render::IRenderer
+	{
+	public:
+		std::string text;
+		int strokes = 0;
+
+		void SetTransform(const s100::render::Transform& transform) override
+		{
+			text += "transform";
+			for (const auto& step : transform)
+			{
+				if (step.kind == s100::render::TransformStep::Kind::Rotate)
+				{
+					text += " rotate";
+					Number(step.degrees);
+				}
+				else
+				{
+					text += " translate";
+					Number(step.x);
+					Number(step.y);
+				}
+			}
+			text += '\n';
+		}
+
+		void StrokePath(const s100::render::Path& path, const s100::render::ColorF& color,
+			const s100::render::Stroke& stroke) override
+		{
+			strokes++;
+			text += "stroke width";
+			Number(stroke.width);
+			text += " color";
+			Number(color.r);
+			Number(color.g);
+			Number(color.b);
+			Number(color.a);
+			text += " dashes";
+			for (const float dash : stroke.dashes)
+			{
+				Number(dash);
+			}
+			for (const auto& figure : path.figures)
+			{
+				text += " | from";
+				Number(figure.start.x);
+				Number(figure.start.y);
+				for (const auto& to : figure.lines)
+				{
+					text += " line";
+					Number(to.x);
+					Number(to.y);
+				}
+				text += figure.closed ? " closed" : " open";
+			}
+			for (const auto& arc : path.arcs)
+			{
+				text += " | arc radius";
+				Number(arc.radius);
+				text += " from";
+				Number(arc.startDegrees);
+				text += " to";
+				Number(arc.endDegrees);
+			}
+			text += '\n';
+		}
+
+	private:
+		void Number(float value)
+		{
+			char buffer[32];
+			const auto end = std::to_chars(buffer, buffer + sizeof(buffer), value).ptr;
+			text += ' ';
+			text.append(buffer, end);
+		}
 	};
 }
 #endif
@@ -203,6 +289,24 @@ int main(int argc, char** argv)
 				<< ", null " << count.null << "\n"
 				<< "display list:  " << json.size() << " bytes, hash "
 				<< std::hex << std::setw(16) << std::setfill('0') << GISLibrary::JsonHash(json)
+				<< std::dec << std::setfill(' ') << "\n";
+
+			// Drawing, as far as the library does it without a backend: the dataset fitted to a
+			// 1600 x 1000 surface, the instructions painted on the recording renderer. Colours
+			// are left as tokens (a renderer resolves them in its palette).
+			Scaler scaler;
+			scaler.SetScreen(0, 0, 1600, 1000);
+			scaler.SetMap(layer.m_mbr);
+			RecordingRenderer renderer;
+			s100::render::DisplayListPainter painter(renderer, scaler, [](const std::wstring& token) {
+				return s100::render::ColorF{ static_cast<float>(token.size()), token.empty() ? 0.0f : static_cast<float>(token[0]), 0.0f, 1.0f };
+			});
+			for (auto& [key, instruction] : displayList.displayInstructions)
+			{
+				instruction->Accept(painter);
+			}
+			std::cout << "painted:       " << renderer.strokes << " strokes, hash "
+				<< std::hex << std::setw(16) << std::setfill('0') << GISLibrary::JsonHash(renderer.text)
 				<< std::dec << std::setfill(' ') << "\n";
 		}
 	}

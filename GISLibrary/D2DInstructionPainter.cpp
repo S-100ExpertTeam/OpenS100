@@ -3,6 +3,8 @@
 #include "D2DConvert.h"
 #include "D2DGeometryCache.h"
 #include "D2DInstructionCache.h"
+#include "D2DRenderer.h"
+#include "DisplayListPainter.h"
 #include "D2DView.h"
 #include "D2D1Resources.h"
 #include "PortrayalRenderCache.h"
@@ -51,9 +53,6 @@
 
 namespace
 {
-	// Millimetres of an augmented ray to pixels.
-	const float factor = 3.5;
-
 	// The area fill the pattern bitmap is built from, for a symbol fill given in the instruction.
 	std::unique_ptr<AreaFill> ToAreaFill(const SENC_SymbolFill& symbolFill)
 	{
@@ -603,335 +602,27 @@ void GISLibrary::D2DInstructionPainter::Visit(SENC_LineStyleReference& lineStyle
 	d2Points = nullptr;
 }
 
-// ---- SENC_AugmentedRay::DrawInstruction
+// ---- Augmented ray and path: drawn by the shared painter, on Direct2D through D2DRenderer
 void GISLibrary::D2DInstructionPainter::Visit(SENC_AugmentedRay& instruction)
 {
-	auto& fr = instruction.fr;
-	auto& lineStyles = instruction.lineStyles;
-	auto& direction = instruction.direction;
-	auto& length = instruction.length;
-
-	auto factory = d2->Factory();
-	auto brush = d2->SolidColorBrush();
-	auto rt = d2->RenderTarget();
-	auto solidStroke = d2->SolidStrokeStyle();
-
-	if (!factory || !brush || !rt || !solidStroke)
-	{
-		return;
-	}
-
-	if (nullptr == fr || nullptr == fr->GetGeometry())
-	{
-		return;
-	}
-
-	auto geom = fr->GetGeometry();
-
-	if (geom->GetType() == SGeometryType::Point)
-	{
-		auto p = (SPoint*)geom;
-
-		scaler->WorldToDevice(
-			p->x, 
-			p->y,
-			&SGeometry::viewPoints[0].x, 
-			&SGeometry::viewPoints[0].y);
-
-		for (auto i = lineStyles.begin(); i != lineStyles.end(); i++)
-		{
-			auto lineStyle = *i;
-
-			if (lineStyle->IsLineStyle() == true)
-			{
-				SENC_LineStyle* ls = (SENC_LineStyle*)lineStyle;
-				//int PEN_COLOR = ls->GetPenColor();
-				int PEN_WIDTH = (int)(ls->pen_width / 0.319);
-
-				D2D1_POINT_2F pBeginningPt = { (FLOAT)SGeometry::viewPoints[0].x, (FLOAT)SGeometry::viewPoints[0].y };
-				D2D1_POINT_2F pEndPt;
-
-				// Point rotate
-				if (scaler->GetRotationDegree())
-				{
-					double radian = (180 - scaler->GetRotationDegree()) * DEG2RAD;
-
-					FLOAT tempX = (scaler->soy - pBeginningPt.y) * sin(radian) + (scaler->sox - pBeginningPt.x) * cos(radian);
-					FLOAT tempY = (scaler->soy - pBeginningPt.y) * cos(radian) - (scaler->sox - pBeginningPt.x) * sin(radian);
-
-					pBeginningPt.x = tempX + scaler->sox;
-					pBeginningPt.y = tempY + scaler->soy;
-				}
-
-				long ix = 0;
-				long iy = 0; 
-				double mx = p->x;
-				double my = p->y;
-
-				if (false == ENCCommon::FULL_SECTORS)
-				{
-					// The direction is from north, which is not up about a pole.
-					const double onScreen = direction + NorthAngle(mx, my) - 90;
-					ix = pBeginningPt.x + (int)((cos(onScreen * M_PI / 180) * length) * factor);
-					iy = pBeginningPt.y + (int)((sin(onScreen * M_PI / 180) * length) * factor);
-
-					// Point rotate
-					if (scaler->GetRotationDegree())
-					{
-						double radian = (180 - scaler->GetRotationDegree()) * DEG2RAD;
-
-						FLOAT tempX = (pBeginningPt.y - iy) * sin(radian) + (pBeginningPt.x - ix) * cos(radian);
-						FLOAT tempY = (pBeginningPt.y - iy) * cos(radian) - (pBeginningPt.x - ix) * sin(radian);
-
-						ix = tempX + pBeginningPt.x;
-						iy = tempY + pBeginningPt.y;
-					}
-				}
-				else
-				{
-					inverseProjection(mx, my);
-					auto dest = LatLonUtility::GetDestinationPointRhumbLineMercatorByGeographicLib(my, mx, direction, length);
-					projection(dest.lon, dest.lat);
-					scaler->WorldToDevice(dest.lon, dest.lat, &ix, &iy);
-
-					// Point rotate
-					if (scaler->GetRotationDegree())
-					{
-						double radian = (180 - scaler->GetRotationDegree()) * DEG2RAD;
-
-						FLOAT tempX = (scaler->soy - iy) * sin(radian) + (scaler->sox - ix) * cos(radian);
-						FLOAT tempY = (scaler->soy - iy) * cos(radian) - (scaler->sox - ix) * sin(radian);
-
-						ix = tempX + scaler->sox;
-						iy = tempY + scaler->soy;
-					}
-				}
-
-				ID2D1PathGeometry* pGeometry = nullptr;
-				HRESULT hr = factory->CreatePathGeometry(&pGeometry);
-
-				pEndPt.x = (FLOAT)ix;
-				pEndPt.y = (FLOAT)iy;
-
-
-				if (SUCCEEDED(hr))
-				{
-					ID2D1GeometrySink *pSink = nullptr;
-
-					hr = pGeometry->Open(&pSink);
-
-					if (SUCCEEDED(hr))
-					{
-						pSink->SetFillMode(D2D1_FILL_MODE_ALTERNATE);
-						pSink->BeginFigure(
-							pBeginningPt,
-							D2D1_FIGURE_BEGIN_FILLED
-						);
-
-						pSink->AddLine(pEndPt);
-
-						pSink->EndFigure(D2D1_FIGURE_END_OPEN);
-
-						hr = pSink->Close();
-
-						if (SUCCEEDED(hr))
-						{
-								
-						}
-						else
-						{
-							pGeometry = NULL;
-						}
-					}
-				}
-				
-				brush->SetColor(GISLibrary::ToD2D(GISLibrary::PortrayalRender::Color(pc, ls->GetPenColorToken())));
-
-				if (ls->dashes.size() > 0 || ls->symbols.size() > 0)
-				{
-					float dashes[] = { (ls->dashes.front()->length + 0.01) / (0.32 * PEN_WIDTH), (ls->intervalLength - ls->dashes.front()->length + 0.01) / (0.32 * PEN_WIDTH) };
-					ID2D1StrokeStyle1* dash = nullptr;
-					factory->CreateStrokeStyle(
-						D2D1::StrokeStyleProperties1(
-							D2D1_CAP_STYLE_FLAT,
-							D2D1_CAP_STYLE_FLAT,
-							D2D1_CAP_STYLE_ROUND,
-							D2D1_LINE_JOIN_MITER,
-							10.0f,
-							D2D1_DASH_STYLE_CUSTOM,
-							0.0f
-						),
-						dashes,
-						ARRAYSIZE(dashes),
-						&dash
-					);
-					rt->DrawGeometry(pGeometry, brush, PEN_WIDTH, dash);
-					SafeRelease(&dash);
-				}
-				else
-				{
-					rt->DrawGeometry(pGeometry, brush, PEN_WIDTH, solidStroke);
-				}
-
-				SafeRelease(&pGeometry);
-			}
-			else if (lineStyle->IsLineStyleReference() == true)
-			{
-			}
-			else if (lineStyle->IsCompositeLineStyle() == true)
-			{
-			}
-		}
-	}
+	PaintOnRenderer(instruction);
 }
 
-// ---- SENC_AugmentedPath::DrawInstruction
 void GISLibrary::D2DInstructionPainter::Visit(SENC_AugmentedPath& instruction)
 {
-	auto& fr = instruction.fr;
-	auto& path = instruction.path;
-	auto& lineStyles = instruction.lineStyles;
+	PaintOnRenderer(instruction);
+}
 
-	auto factory = d2->Factory();
-	auto rt = d2->RenderTarget();
-	auto brush = d2->SolidColorBrush();
-	auto stroke = d2->SolidStrokeStyle();
-	if (!factory || !rt || !brush || !stroke)
+void GISLibrary::D2DInstructionPainter::PaintOnRenderer(SENC_Instruction& instruction)
+{
+	GISLibrary::D2DRenderer renderer(d2);
+	if (!renderer.Ready())
 	{
 		return;
 	}
-
-	if (!fr) {
-		return;
-	}
-
-	auto geom = fr->GetGeometry();
-
-	if (!fr->GetGeometry()) {
-		return;
-	}
-
-	if (!path) {
-		return;
-	}
-
-	if (geom->GetType() == SGeometryType::Point)
-	{
-		SPoint* p = (SPoint*)geom;
-		scaler->WorldToDevice(p->x, p->y, &SGeometry::viewPoints[0].x, &SGeometry::viewPoints[0].y);
-
-		for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
-		{
-			SENC_LineStyleBase *lineStyle = *itor;
-			if (lineStyle->type == 1)
-			{
-				SENC_LineStyle* ls = (SENC_LineStyle*)lineStyle;
-
-				auto& arcs = GISLibrary::D2DInstructionCache::ArcGeometries(*ls);
-				if (arcs.size() == 0)
-				{
-					for (auto _itor = path->arcByRadiuses.begin(); _itor != path->arcByRadiuses.end(); _itor++)
-					{
-						SENC_ArcByRadius* _arcByRadius = *_itor;
-						ID2D1PathGeometry *pGeometry = nullptr;
-
-						HRESULT hr = factory->CreatePathGeometry(&pGeometry);
-						ID2D1PathGeometry *pathGeo = (ID2D1PathGeometry*)pGeometry;
-						ID2D1GeometrySink* pSink = nullptr;
-						hr = pathGeo->Open(&pSink);
-
-						FLOAT displayRadius = _arcByRadius->radius * 3.5;
-
-						D2D1_POINT_2F startPoint = { 0.0F, displayRadius };
-						D2D1_POINT_2F endPoint = { 0.0F, displayRadius };
-
-						float startAngle = _arcByRadius->sector->startAngle + 180;
-						float endAngle = startAngle + _arcByRadius->sector->angularDistance;
-
-						D2D1::Matrix3x2F matrix1 = D2D1::Matrix3x2F::Identity();
-						matrix1 = matrix1.Rotation(startAngle);
-						startPoint = matrix1.TransformPoint(startPoint);
-
-						D2D1::Matrix3x2F matrix2 = D2D1::Matrix3x2F::Identity();
-						matrix2 = matrix2.Rotation(endAngle);
-						endPoint = matrix2.TransformPoint(endPoint);
-
-						pSink->BeginFigure(
-							startPoint,
-							D2D1_FIGURE_BEGIN_HOLLOW);
-
-						pSink->AddArc(
-							D2D1::ArcSegment(
-								endPoint,
-								D2D1::SizeF(displayRadius, displayRadius),
-								0,
-								D2D1_SWEEP_DIRECTION_CLOCKWISE,
-								(endAngle - startAngle) > 180 ? D2D1_ARC_SIZE_LARGE : D2D1_ARC_SIZE_SMALL
-							)
-						);
-
-						pSink->EndFigure(D2D1_FIGURE_END_OPEN);
-
-						hr = pSink->Close();
-
-						SafeRelease(&pSink);
-
-						arcs.push_back(pGeometry);
-					}
-				}
-
-				// The arcs are built from north up: turned to where north is at the point.
-				D2D1::Matrix3x2F trans = D2D1::Matrix3x2F::Rotation(static_cast<FLOAT>(NorthAngle(p->x, p->y)))
-					* D2D1::Matrix3x2F::Translation(SGeometry::viewPoints[0].x, SGeometry::viewPoints[0].y);
-
-				rt->SetTransform(trans);
-
-				for (auto iter = arcs.begin(); iter != arcs.end(); iter++)
-				{
-					auto pGeometry = *iter;
-
-					//brush->SetColor(D2D1::ColorF((FLOAT)(GetRValue(ls->pen_color) / 255.0), (FLOAT)(GetGValue(ls->pen_color) / 255.0), (FLOAT)(GetBValue(ls->pen_color) / 255.0)));
-					brush->SetColor(GISLibrary::ToD2D(GISLibrary::PortrayalRender::Color(pc, ls->GetPenColorToken())));
-
-					if (ls->dashes.size() > 0)
-					{
-						float dashes[] = {
-							(float)(ls->dashes.front()->length + 0.01) / (float)0.32,
-							(float)(ls->intervalLength - ls->dashes.front()->length + 0.01) / (float)0.32
-						};
-						ID2D1StrokeStyle1* dash = nullptr;
-						factory->CreateStrokeStyle(
-							D2D1::StrokeStyleProperties1(
-								D2D1_CAP_STYLE_FLAT,
-								D2D1_CAP_STYLE_FLAT,
-								D2D1_CAP_STYLE_ROUND,
-								D2D1_LINE_JOIN_MITER,
-								10.0f,
-								D2D1_DASH_STYLE_CUSTOM,
-								0.0f
-							),
-							dashes,
-							ARRAYSIZE(dashes),
-							&dash
-						);
-
-						rt->DrawGeometry(pGeometry, brush, ls->pen_width / 0.32, dash);
-						SafeRelease(&dash);
-					}
-					else
-					{
-						rt->DrawGeometry(pGeometry, brush, ls->pen_width / 0.32, stroke);
-					}
-				}
-			}
-			else if (lineStyle->type == 2)
-			{
-			}
-			else if (lineStyle->type == 3)
-			{
-			}
-		}
-	}
+	s100::render::DisplayListPainter painter(renderer, *scaler,
+		[this](const std::wstring& token) { return GISLibrary::PortrayalRender::Color(pc, token); });
+	instruction.Accept(painter);
 }
 
 // ---- LayerManager::AddSymbolDrawing, the body of the loop over point instructions

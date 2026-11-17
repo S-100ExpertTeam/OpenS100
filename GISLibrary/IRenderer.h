@@ -1,0 +1,99 @@
+#pragma once
+// The drawing surface the S-100 painter draws on (DIRECTIVES 24).
+//
+// DisplayListPainter decides what goes where: it projects, lays out dashes and symbols, resolves
+// colour tokens. What is left for a backend is the primitive: stroke this path with this colour.
+// A backend implements IRenderer and knows nothing of S-100; the painter knows nothing of the
+// backend. Direct2D is the first backend (D2DRenderer); tests record the calls.
+//
+// Angles and transforms are handed over as what they mean (turn by so many degrees, an arc
+// from this angle to that), not as matrices and end points worked out here: every backend has
+// its own trigonometry, and the last bit of a sine decides whether a picture is the same byte
+// for byte as before. Direct2D's rotation matrix, for one, cannot be reproduced outside it.
+//
+// The interface grows with the painter: each kind of instruction that moves from
+// D2DInstructionPainter to DisplayListPainter brings the primitives it needs.
+#include "DrawTypes.h"
+
+#include <vector>
+
+namespace s100::render
+{
+	using GISLibrary::ColorF;
+	using GISLibrary::PointF;
+
+	// One step of a transform. Steps apply in order: { Rotate(a), Translate(x, y) } turns about
+	// the origin first and moves after.
+	struct TransformStep
+	{
+		enum class Kind { Rotate, Translate };
+
+		Kind kind = Kind::Translate;
+		float degrees = 0.0f;   // Rotate: clockwise on a surface whose y axis points down
+		float x = 0.0f;         // Translate
+		float y = 0.0f;
+
+		static TransformStep Rotate(float degrees)
+		{
+			TransformStep step;
+			step.kind = Kind::Rotate;
+			step.degrees = degrees;
+			return step;
+		}
+
+		static TransformStep Translate(float x, float y)
+		{
+			TransformStep step;
+			step.x = x;
+			step.y = y;
+			return step;
+		}
+	};
+
+	// No step is the identity: device pixels.
+	using Transform = std::vector<TransformStep>;
+
+	// Straight lines from a start point.
+	struct PathFigure
+	{
+		PointF start;
+		std::vector<PointF> lines;
+		bool closed = false;
+	};
+
+	// An arc of a circle about the origin. An angle is where the point (0, radius), straight
+	// down the screen, lands when turned clockwise by it; the arc runs clockwise from
+	// startDegrees to endDegrees.
+	struct ArcFigure
+	{
+		float radius = 0.0f;
+		float startDegrees = 0.0f;
+		float endDegrees = 0.0f;
+	};
+
+	// What is stroked in one call, in the coordinates of the current transform.
+	struct Path
+	{
+		std::vector<PathFigure> figures;
+		std::vector<ArcFigure> arcs;
+	};
+
+	// How a path is stroked. The look of an S-100 line is fixed: flat ends, mitre joins (limit
+	// 10), round ends on the dashes; a backend applies that to every stroke.
+	struct Stroke
+	{
+		float width = 1.0f;
+		// Ink and gap lengths in turn, in multiples of the width; empty for a solid line.
+		std::vector<float> dashes;
+	};
+
+	class IRenderer
+	{
+	public:
+		virtual ~IRenderer() = default;
+
+		// Replaces the transform; it stays until the next call.
+		virtual void SetTransform(const Transform& transform) = 0;
+		virtual void StrokePath(const Path& path, const ColorF& color, const Stroke& stroke) = 0;
+	};
+}
