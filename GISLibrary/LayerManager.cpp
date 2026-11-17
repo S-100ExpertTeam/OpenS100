@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "D2DConvert.h"
+#include "D2DInstructionCache.h"
 #include "PathUtil.h"
 #include "TextCompare.h"
 #include "D2DView.h"
@@ -679,7 +680,8 @@ void LayerManager::AddSymbolDrawing(
 
 					useWTF->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
 
-					if (!instruction->textMatrix)
+					auto textMetrics = D2DInstructionCache::TextMetrics(*instruction);
+					if (!textMetrics)
 					{
 						IDWriteTextLayout* textLayout = nullptr;
 						float caretX = renderTargetSize.width;
@@ -696,14 +698,14 @@ void LayerManager::AddSymbolDrawing(
 							&textLayout
 						);
 
-						instruction->textMatrix = new DWRITE_TEXT_METRICS();
-						textLayout->GetMetrics(instruction->textMatrix);
+						textMetrics = &D2DInstructionCache::NewTextMetrics(*instruction);
+						textLayout->GetMetrics(textMetrics);
 
 						SafeRelease(&textLayout);
 					}
 
-					float width = instruction->textMatrix->width;
-					float height = instruction->textMatrix->height;
+					float width = textMetrics->width;
+					float height = textMetrics->height;
 
 					float offset_x = 0;
 					float offset_y = 0;
@@ -775,8 +777,8 @@ void LayerManager::AddSymbolDrawing(
 
 						float x = p->x + offset_x;
 						float y = p->y + offset_y;
-						float _width = instruction->textMatrix->width;
-						float _height = instruction->textMatrix->height;
+						float _width = textMetrics->width;
+						float _height = textMetrics->height;
 
 						const wchar_t* vText = element->text.value.c_str();
 

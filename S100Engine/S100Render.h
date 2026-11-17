@@ -40,7 +40,7 @@ public:
 	BackgroundLayer backgroundLayer;
 	
 public:
-	void DrawBitmapOnLine(
+	static void DrawBitmapOnLine(
 		ID2D1RenderTarget *pRenderTarget,
 		D2D1_POINT_2F point1,
 		D2D1_POINT_2F point2,
@@ -48,7 +48,7 @@ public:
 		D2D1_COLOR_F penColor = D2D1::ColorF(D2D1::ColorF::Black),
 		ID2D1StrokeStyle1 *stroke = nullptr);
 
-	void DrawBitmapOnPolyline(
+	static void DrawBitmapOnPolyline(
 		ID2D1RenderTarget *pRenderTarget,
 		D2D1_POINT_2F *points,
 		int cnt,

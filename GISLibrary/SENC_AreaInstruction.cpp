@@ -251,7 +251,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 
 void SENC_AreaInstruction::FromS100Instruction(
 	S100_Instruction* s100Instruction,
-	PortrayalCatalogue *pc,
+	PortrayalCatalogue* /*pc*/,
 	PCOutputSchemaManager* output)
 {
 	output->GetSENCFromS100Common(s100Instruction, this);
@@ -304,18 +304,6 @@ void SENC_AreaInstruction::FromS100Instruction(
 				symbolFill->symbol->rotationCRS = SENC_CommonFuc::GetRotationCRS(s100Symbol->GetRotationCRS());
 				symbolFill->symbol->scaleFactor = s100Symbol->GetScaleFactor();
 
-
-				auto svgSymbolManger = &(GISLibrary::PortrayalRender::Caches(pc)->s100SymbolManager);
-				auto svg = svgSymbolManger->GetSVG(symbolFill->symbol->reference);
-
-				if (svg == nullptr)
-				{
-					svg = svgSymbolManger->GetSVG(L"QUESMRK1");
-				}
-				else
-				{
-					symbolFill->symbol->pSvg = svg;
-				}
 
 				symbolFill->symbol->offset.x = s100Symbol->GetOffsetX();
 				symbolFill->symbol->offset.y = s100Symbol->GetOffsetY();

@@ -1,5 +1,6 @@
 #pragma once
 #include "D2DForward.h"
+#include "RenderCacheSlot.h"
 
 #include <vector>
 
@@ -21,7 +22,8 @@ public:
 	* 3 : Composite Line Style
 	*/
 	int type = 0; 
-	std::vector<ID2D1PathGeometry*> geometryVector;
+	// Filled by the renderer (built geometry); see RenderCacheSlot.h.
+	GISLibrary::RenderCacheSlot renderCache;
 
 public:
 	void SetType(int value);

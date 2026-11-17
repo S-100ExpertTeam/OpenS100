@@ -1,6 +1,5 @@
 #pragma once
 #include "SENC_Instruction.h"
-#include "D2DForward.h"
 #include "SENC_LineStyleBase.h"
 
 class SENC_AugmentedRay :
@@ -13,7 +12,6 @@ public:
 public:
 	std::vector<SENC_LineStyleBase*> lineStyles;
 	int areaCRSType;
-	ID2D1PathGeometry *pGeometry = nullptr;
 	double direction;
 	double length;
 

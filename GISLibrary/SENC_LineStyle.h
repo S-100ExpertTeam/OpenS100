@@ -7,10 +7,8 @@
 #include "../PortrayalCatalogue/S100_LineStyle.h"
 
 #include <list>
-#include <memory>
 
 class PortrayalCatalogue;
-class S100Render;
 class Scaler;
 class SENC_LineStyle : public SENC_LineStyleBase
 {
@@ -32,9 +30,6 @@ public:
 	std::wstring colorToken = L"";
 	std::wstring lineStyleName = L"";
 
-	// The Direct2D helper that lays a symbol bitmap along a line. Held by pointer so this header
-	// does not need the render module; created with the line style.
-	std::unique_ptr<S100Render> s100Render;
 public:
 
 	void SetPenColorToken(std::wstring& value);

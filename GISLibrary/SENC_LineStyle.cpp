@@ -19,7 +19,6 @@
 SENC_LineStyle::SENC_LineStyle() : SENC_LineStyleBase()
 {
 	type = 1;
-	s100Render = std::make_unique<S100Render>();
 }
 
 SENC_LineStyle::~SENC_LineStyle()
@@ -166,7 +165,7 @@ void SENC_LineStyle::DrawInstruction(
 						}
 					}
 
-					s100Render->DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler), GISLibrary::ToD2D(GISLibrary::PortrayalRender::Color(pc, GetPenColorToken())), strokeGroup->at(1));
+					S100Render::DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler), GISLibrary::ToD2D(GISLibrary::PortrayalRender::Color(pc, GetPenColorToken())), strokeGroup->at(1));
 					SafeRelease(&pBitmap);
 				}
 			}

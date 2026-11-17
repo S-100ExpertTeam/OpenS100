@@ -2237,6 +2237,12 @@
     <ClInclude Include="D2DConvert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="D2DInstructionCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderCacheSlot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="D2DForward.h">
       <Filter>Header Files</Filter>
     </ClInclude>

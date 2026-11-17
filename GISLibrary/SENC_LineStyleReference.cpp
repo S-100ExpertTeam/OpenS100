@@ -15,7 +15,6 @@
 SENC_LineStyleReference::SENC_LineStyleReference()
 {
 	type = 2;
-	s100Render = std::make_unique<S100Render>();
 }
 
 SENC_LineStyleReference::~SENC_LineStyleReference()
@@ -92,7 +91,7 @@ void SENC_LineStyleReference::DrawInstruction(
 			else
 			{
 				//pc->GetS100Render().DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
-				s100Render->DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler));
+				S100Render::DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler));
 				SafeRelease(&pBitmap);
 			}
 		}

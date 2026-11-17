@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DInstructionCache.h"
 #include "PortrayalRenderCache.h"
 #include "D2DConvert.h"
 #include "GISLibrary.h"
@@ -85,7 +86,8 @@ void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Port
 			{
 				SENC_LineStyle* ls = (SENC_LineStyle*)lineStyle;
 
-				if (ls->geometryVector.size() == 0)
+				auto& arcs = GISLibrary::D2DInstructionCache::ArcGeometries(*ls);
+				if (arcs.size() == 0)
 				{
 					for (auto _itor = path->arcByRadiuses.begin(); _itor != path->arcByRadiuses.end(); _itor++)
 					{
@@ -133,7 +135,7 @@ void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Port
 
 						SafeRelease(&pSink);
 
-						ls->geometryVector.push_back(pGeometry);
+						arcs.push_back(pGeometry);
 					}
 				}
 
@@ -143,7 +145,7 @@ void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Port
 
 				rt->SetTransform(trans);
 
-				for (auto iter = ls->geometryVector.begin(); iter != ls->geometryVector.end(); iter++)
+				for (auto iter = arcs.begin(); iter != arcs.end(); iter++)
 				{
 					auto pGeometry = *iter;
 

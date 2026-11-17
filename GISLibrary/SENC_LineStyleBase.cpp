@@ -8,12 +8,6 @@ SENC_LineStyleBase::SENC_LineStyleBase()
 
 SENC_LineStyleBase::~SENC_LineStyleBase()
 {
-	for (auto iter = geometryVector.begin(); iter != geometryVector.end(); iter++)
-	{
-		auto pGeometry = *iter;
-		SafeRelease(& pGeometry);
-	}
-	geometryVector.clear();
 }
 
 void SENC_LineStyleBase::SetType(int value)

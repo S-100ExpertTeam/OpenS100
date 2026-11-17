@@ -1,6 +1,7 @@
 #pragma once
 #include "SENC_Instruction.h"
 #include "SENC_TextPoint.h"
+#include "RenderCacheSlot.h"
 
 class SENC_TextInstruction :
 	public SENC_Instruction
@@ -11,7 +12,8 @@ public:
 
 public:
 	SENC_TextPoint *textPoint;
-	DWRITE_TEXT_METRICS* textMatrix = nullptr;
+	// Filled by the renderer (the measured text size); see RenderCacheSlot.h.
+	GISLibrary::RenderCacheSlot renderCache;
 
 public:
 	void GetDrawPoints(Scaler *scaler, std::list<GISLibrary::PointF> &points);

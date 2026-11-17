@@ -51,9 +51,6 @@ SENC_AugmentedRay::~SENC_AugmentedRay()
 			break;
 		}
 	}
-
-	if (pGeometry)
-		SafeRelease(& pGeometry);
 }
 
 DWORD dwTimeCheck_AumentedRayInstruction[100] = { 0 };
@@ -159,6 +156,7 @@ void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Portr
 					}
 				}
 
+				ID2D1PathGeometry* pGeometry = nullptr;
 				HRESULT hr = factory->CreatePathGeometry(&pGeometry);
 
 				pEndPt.x = (FLOAT)ix;

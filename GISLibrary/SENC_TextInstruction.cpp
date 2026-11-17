@@ -1,8 +1,5 @@
 #include "stdafx.h"
-#include "D2DConvert.h"
 #include "DebugOutput.h"
-#include "PortrayalRenderCache.h"
-#include "../S100Engine/S100PCManager.h"
 #include "SENC_TextInstruction.h"
 #include "SENC_CommonFuc.h"
 #include "PCOutputSchemaManager.h"
@@ -29,7 +26,6 @@ SENC_TextInstruction::SENC_TextInstruction()
 SENC_TextInstruction::~SENC_TextInstruction()
 {
 	if (textPoint) delete textPoint;
-	if (textMatrix) delete textMatrix;
 }
 
 void rotate_v(double &nx, double &ny, double tx, double ty, double cx, double cy, double rad)

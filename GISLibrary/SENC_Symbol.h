@@ -7,8 +7,6 @@
 #include "SENC_OverrideColor.h"
 #include "SENC_VectorPoint.h"
 
-#include "D2DForward.h"
-
 class SENC_Symbol
 {
 public:
@@ -16,8 +14,6 @@ public:
 	virtual ~SENC_Symbol();
 
 public:
-
-	SVGReader* pSvg = nullptr;
 
 	// element
 	SENC_VectorPoint offset;
