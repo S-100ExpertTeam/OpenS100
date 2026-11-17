@@ -34,13 +34,3 @@ bool SENC_Font::isItalics()
 {
 	return slant == 1;
 }
-
-DWRITE_FONT_STYLE SENC_Font::getFontStyle()
-{
-	if (slant == 1)
-	{
-		return DWRITE_FONT_STYLE_ITALIC;
-	}
-
-	return DWRITE_FONT_STYLE_NORMAL;
-}

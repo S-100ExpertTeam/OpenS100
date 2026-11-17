@@ -19,5 +19,4 @@ public:
 	void setItalics();
 	bool isItalics();
 
-	DWRITE_FONT_STYLE getFontStyle();
 };

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DConvert.h"
 #include "DebugOutput.h"
 #include "PortrayalRenderCache.h"
 #include "../S100Engine/S100PCManager.h"
@@ -250,8 +251,7 @@ void SENC_TextInstruction::ChangePallete(PortrayalCatalogue* pc)
 
 				if (element->foreground.token.size() > 0)
 				{
-					element->pColor = new D2D1_COLOR_F();
-					*element->pColor = colorProfile->GetColor(element->foreground.token);
+					element->pColor = new GISLibrary::ColorF(GISLibrary::FromD2D(colorProfile->GetColor(element->foreground.token)));
 				}
 				else
 				{
@@ -318,8 +318,7 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 				if (colorProfile)
 				{
 					auto color = colorProfile->GetColor(e2->foreground.token);
-					e2->pColor = new D2D1_COLOR_F();
-					*e2->pColor = color;
+					e2->pColor = new GISLibrary::ColorF(GISLibrary::FromD2D(color));
 				}
 			}
 

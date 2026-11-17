@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ScaleBand.h"
+#include "DrawTypes.h"
 
 #include <string>
 #include <vector>
@@ -11,7 +12,7 @@ public:
 	//EX : 10100AA_X0000.000
 	std::string strFileName;
 	std::shared_ptr<MBR> mbrBoundingBox;
-	std::vector<D2D1_POINT_2F> BoundingPolygon;
+	std::vector<GISLibrary::PointF> BoundingPolygon;
 	ScaleBand ScaleRange;
 
 	std::wstring strFilePath;

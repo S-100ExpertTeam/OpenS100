@@ -645,6 +645,7 @@
     <ClCompile Include="SENC_AugmentedRay.cpp" />
     <ClCompile Include="SENC_CallTemplate.cpp" />
     <ClCompile Include="SENC_Color.cpp" />
+    <ClCompile Include="SENC_ColorPalette.cpp" />
     <ClCompile Include="SENC_ColorFill.cpp" />
     <ClCompile Include="SENC_ColorProfile.cpp" />
     <ClCompile Include="SENC_CommonFuc.cpp" />
@@ -766,7 +767,9 @@
     <ClInclude Include="dataProduct.h" />
     <ClInclude Include="DatasetLayerSet.h" />
     <ClInclude Include="DebugOutput.h" />
+    <ClInclude Include="D2DConvert.h" />
     <ClInclude Include="DeviceTypes.h" />
+    <ClInclude Include="DrawTypes.h" />
     <ClInclude Include="DatasetPermit.h" />
     <ClInclude Include="DataStatus.h" />
     <ClInclude Include="DirectPosition.h" />

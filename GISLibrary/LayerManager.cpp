@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DConvert.h"
 #include "PathUtil.h"
 #include "TextCompare.h"
 #include "D2DView.h"
@@ -764,7 +765,7 @@ void LayerManager::AddSymbolDrawing(
 
 					if (element->pColor)
 					{
-						D2->pBrush->SetColor(element->pColor);
+						D2->pBrush->SetColor(GISLibrary::ToD2D(*element->pColor));
 						D2->pBrush->SetOpacity(1 - element->foreground.transparency);
 					}
 

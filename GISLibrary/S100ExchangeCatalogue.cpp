@@ -85,7 +85,7 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
             auto dataCoverages = DDM[i].dataCoverage;
             for (int idx = 0; idx < dataCoverages.size(); idx++)
             {
-                std::vector<D2D1_POINT_2F> point;
+                std::vector<GISLibrary::PointF> point;
 
                 ScaleBand sr;
 
@@ -133,12 +133,12 @@ bool S100ExchangeCatalogue::Open(const std::wstring& _filepath)
                         if (reverse)
                         {
                             projection(lat, lon);
-                            point.push_back(D2D1::Point2F(lat, lon));
+                            point.push_back(GISLibrary::PointF{ static_cast<float>(lat), static_cast<float>(lon) });
                         }
                         else
                         {
                             projection(lon, lat);
-                            point.push_back(D2D1::Point2F(lon, lat));
+                            point.push_back(GISLibrary::PointF{ static_cast<float>(lon), static_cast<float>(lat) });
                         }
                     }
                 }

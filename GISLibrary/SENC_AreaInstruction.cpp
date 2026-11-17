@@ -1,4 +1,5 @@
 ﻿#include "stdafx.h"
+#include "D2DConvert.h"
 #include "PortrayalRenderCache.h"
 #include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
@@ -94,7 +95,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 			colorFill = (SENC_ColorFill*)areaFill;
 			if (colorFill->color)
 			{
-				D2D1_COLOR_F color = colorFill->color->RGBColor;
+				D2D1_COLOR_F color = GISLibrary::ToD2D(colorFill->color->RGBColor);
 				
 				color.a = 1 - colorFill->color->transparency;
 				brush->SetColor(color);
@@ -287,7 +288,7 @@ void SENC_AreaInstruction::FromS100Instruction(
 
 				if (colorProfile)
 				{
-					colorFill->color->RGBColor = colorProfile->GetColor(colorFill->color->token);
+					colorFill->color->RGBColor = GISLibrary::FromD2D(colorProfile->GetColor(colorFill->color->token));
 				}
 			}
 			break;

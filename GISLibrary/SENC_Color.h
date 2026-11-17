@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DrawTypes.h"
+
 #include <string>
 
 class PortrayalCatalogue;
@@ -10,13 +12,13 @@ public:
 	~SENC_Color();
 
 public:
-	D2D1_COLOR_F RGBColor;
+	GISLibrary::ColorF RGBColor;
 	std::wstring token;
 	float transparency;
 
 public:
-	void SetRGBColor(D2D1_COLOR_F value);
-	D2D1_COLOR_F GetRGBColor();
+	void SetRGBColor(GISLibrary::ColorF value);
+	GISLibrary::ColorF GetRGBColor();
 	void SetToken(const std::wstring& value);
 	std::wstring GetToken();
 	void SetTransparency(float value);

@@ -3,6 +3,7 @@
 #include "SENC_Text.h"
 #include "SENC_Foreground.h"
 #include "SENC_Font.h"
+#include "DrawTypes.h"
 
 class SENC_Element
 {
@@ -18,5 +19,5 @@ public:
 	SENC_Font font;
 
 	// For show text on screen
-	D2D1_COLOR_F* pColor = nullptr;
+	GISLibrary::ColorF* pColor = nullptr;
 };

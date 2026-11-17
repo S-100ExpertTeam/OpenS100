@@ -13,7 +13,7 @@ set(OPENS100_GISLIBRARY_DISPLAY_SOURCES
     GdiGeometryRenderer Inventory InventoryItem LayerManager LayerOpen PCOutputSchemaManager
     PortrayalRenderCache S100EditRender S100ExchangeCatalogue S100LayerPortrayal
     S100SpatialObjectPortrayal S100Utilities SHPFile
-    SENC_AreaInstruction SENC_AugmentedPath SENC_AugmentedRay SENC_Color SENC_ColorFill
+    SENC_AreaInstruction SENC_AugmentedPath SENC_AugmentedRay SENC_Color SENC_ColorPalette SENC_ColorFill
     SENC_ColorProfile SENC_CompositeLineStyle SENC_DisplayList SENC_Element SENC_Font SENC_Hatch
     SENC_HatchFill SENC_Instruction SENC_LineInstruction SENC_LineStyle SENC_LineStyleBase
     SENC_LineStyleReference SENC_NullInstruction SENC_OverrideColor SENC_Pen SENC_Pixmap

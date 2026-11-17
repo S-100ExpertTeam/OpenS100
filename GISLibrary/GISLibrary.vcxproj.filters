@@ -384,6 +384,9 @@
     <ClCompile Include="SENC_Color.cpp">
       <Filter>SENC_Instruction\Items</Filter>
     </ClCompile>
+    <ClCompile Include="SENC_ColorPalette.cpp">
+      <Filter>SENC_Instruction\Items</Filter>
+    </ClCompile>
     <ClCompile Include="SENC_ColorFill.cpp">
       <Filter>SENC_Instruction\Items</Filter>
     </ClCompile>
@@ -2232,6 +2235,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DeviceTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D2DConvert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LayerContainer.h">

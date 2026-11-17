@@ -2,6 +2,7 @@
 
 #include "ScaleBand.h"
 #include "DataCoverage.h"
+#include "DrawTypes.h"
 
 #include <string>
 #include <memory>
@@ -13,7 +14,7 @@ public:
 	std::string strFileName;
 	std::shared_ptr<MBR> mbrBoundingBox;
 	//std::vector<SSurface*> vecBoundingPolygon;
-	std::vector<std::vector<D2D1_POINT_2F>> vecBoundingPolygon;
+	std::vector<std::vector<GISLibrary::PointF>> vecBoundingPolygon;
 	std::vector<ScaleBand> vecScaleRange;
 
 	ScaleBand totalScaleBand;

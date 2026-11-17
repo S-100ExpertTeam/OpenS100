@@ -1,9 +1,6 @@
 #include "stdafx.h"
-#include "PortrayalRenderCache.h"
-#include "../S100Engine/S100PCManager.h"
 #include "SENC_Color.h"
 
-#include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 SENC_Color::SENC_Color()
 {
@@ -16,12 +13,12 @@ SENC_Color::~SENC_Color()
 
 }
 
-void SENC_Color::SetRGBColor(D2D1_COLOR_F value)
+void SENC_Color::SetRGBColor(GISLibrary::ColorF value)
 {
 	RGBColor = value;
 }
 
-D2D1_COLOR_F SENC_Color::GetRGBColor()
+GISLibrary::ColorF SENC_Color::GetRGBColor()
 {
 	return RGBColor;
 }
@@ -44,16 +41,4 @@ void SENC_Color::SetTransparency(float value)
 int SENC_Color::GetTransparency()
 {
 	return (int)transparency;
-}
-
-void SENC_Color::ChangePallete(PortrayalCatalogue *pc)
-{
-	RGBColor = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile()->GetColor(GetToken());
-	////auto colorProfile = pc->GetColorProfile();
-	////if (colorProfile)
-	//{
-	//	auto paletteName = pc->GetCurrentPaletteName();
-	//	auto rgb = colorProfile->GetRGBRef(paletteName, GetToken());
-	//	SetRGBColor(rgb);
-	//}
 }
