@@ -100,6 +100,12 @@ tainted core headers: 213 (render-side files allowed: 4)
     - 어느 쪽이 "Lua 5.1"인가: PUC Lua 5.1은 C `sprintf`를 그대로 쓴다. 이 PC의 `msvcrt`는 0에서 먼 쪽(`1`), `ucrtbase`는 옵션에 따라 둘 다(`_CRT_INTERNAL_PRINTF_STANDARD_ROUNDING`이면 `0`)를 낸다. 즉 참조 구현 자체가 C 런타임에 따라 갈린다. Linux glibc에서의 값은 이번에 돌려 보지 않았다.
     - 실제로 걸리는 속성(808개 셀, 진단용 복사본의 `S100Scripting.lua`에서 절반 값으로 결과가 갈리는 `string.format` 호출을 기록): **`LandElevation.elevation`** 1,100건·292개 셀(`%3.0f m`; 0.5 591건, 2.5 267건, 4.5 149건, 6.5 53건, 8.5 27건 등 — 정수부가 홀수인 x.5는 두 방식이 같아 나오지 않는다), **`RecommendedTrack.orientationValue`** 5건·3개 셀(`%03.0f deg`; 86.5, 92.5, 88.5, 60.5). 합쳐 295개 셀이고 그림이 달랐던 38개는 모두 여기에 든다. 수직 여유고·유속·소해 수심·자기 편차·분호등 방위는 이 데이터에서 0건.
     - **결정(2026-11-17, 사용자): 새 반올림(짝수 쪽)을 수용한다.** 근거: Lua 5.1 → C `sprintf` → IEEE 754 기본 반올림의 사슬과 일치하고, 호스트에 반올림 보정 코드를 두지 않는다. 육지 고도와 권고 항로 방위의 반올림을 정한 규정은 S-4·S-101 포트레이얼 카탈로그에서 찾지 못했다(S-4 본문을 직접 확인한 것은 아니다). vcpkg `luajit`으로 옮기는 릴리스의 노트에 "x.5인 `LandElevation.elevation`·`RecommendedTrack.orientationValue`의 표시가 달라진다(예: 0.5 m → `0 m`, 86.5° → `086 deg`)"를 적는다. 그리기 명령 자체의 비교와 Linux·macOS 시험은 여전히 하지 않았다.
+  - [x] (4a) Lua를 vcpkg `luajit`으로 교체, `opens100::luascripting`. (99187994, 69023c56)
+    - 솔루션: `extlibs/Lua`(헤더·lib·dll) 삭제, 매니페스트에 `luajit`, 소스는 `<lua.hpp>`(include 경로 `include/luajit`는 `OpenS100.Common.props`), `lua51.dll`은 vcpkg가 출력 폴더로 복사(테스트 프로젝트의 xcopy 단계 삭제).
+    - CMake: `LuaScriptingReference` → `opens100::luascripting`(포트 기능 `lua-scripting`, 의존 `featurecatalog`·LuaJIT). LuaJIT은 CMake 패키지를 설치하지 않아 `cmake/FindLuaJIT.cmake`를 두고 패키지와 함께 설치한다.
+    - 실측(2026-11-17): Release x64 솔루션 빌드, 테스트 206/209(3개는 외부 데이터 필요로 건너뜀). 다시 빌드한 솔루션으로 그린 KOR TDS 808개 셀이 앞서 DLL만 바꿔 그린 808개와 바이트 단위로 같다. 설치된 패키지로 빌드한 소비자 예제가 Windows(MSVC)와 Linux(Ubuntu 24.04 GCC 13, vcpkg 오버레이 포트 전체 기능) 모두에서 `LuaJIT 2.1.1793383622`, `%.0f`의 0.5·2.5 → `0`·`2`를 낸다.
+    - 확인하지 않은 것: Win32·ARM64 구성과 Debug 구성의 솔루션 빌드, 뷰어 화면, macOS, CI.
+  - [ ] (4b) 포트레이얼 실행을 패키지로: Lua 호스트(`host_data`, `host_functions`, `S101LuaScriptingReference`)와 `ProcessS101`. `ProcessS101`은 결과를 표시 쪽 구조(`PCOutputSchemaManager`, `SENC_*`)로 넘기고 libxslt도 쓰므로, 그리기 명령을 표시와 무관한 형태로 받는 경계를 먼저 정해야 한다.
   - 컴파일되지 않는 45개는 실제로 Direct2D·GDI로 그리는 코드다: `SENC_*`(28), `D2D*`·`Gdi*` 렌더러, `LayerManager`, `GISLibrary`(앱 싱글턴), `CoverageDataset`, 교환 카탈로그 뷰(`ExchangeCatalogue`, `S100ExchangeCatalogue`, `Inventory*`), `SHPFile`(GDI `Draw`), `SdbReaders`·`SystemDatabase*`(교환 카탈로그 헤더 경유), `PCOutputSchemaManager`, `PortrayalRenderCache`. 렌더 백엔드 교체(Phase 3)의 범위다.
   - 정리 후보(이번에 건드리지 않음): `LuaScriptingReference/lua_helpers.cpp`는 어느 프로젝트에도 없고 존재하지 않는 `lsr.h`를 include한다.
 
@@ -135,3 +141,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-17 | 5-3 (1)(2): GISLibrary 모델·리더와 LuaScriptingReference에서 `windows.h` 의존 제거 | 19d833c9, ff64a2fd | 테스트 206/209(3개는 외부 데이터 필요로 건너뜀), GCC 구문 통과 149 → 296 |
 | 2026-11-17 | 5-3 (3a): 모델과 표시 소스 분리, `GISLibrary::OpenLayer` | 167340b4 | 테스트 206/209, Linux에서 301개 컴파일·S-101 셀 열기 링크 확인. 뷰어 화면은 눈으로 확인하지 않음 |
 | 2026-11-17 | 5-3 (3b): `opens100::dataset` CMake 타깃과 포트 기능 `dataset`, 소비자 예제에 S-101 셀 읽기 | fe9c755d, dcec3bac | 테스트 206/209(3개는 외부 데이터 필요로 건너뜀), Windows·Linux에서 설치 패키지로 셀 읽기 동일 결과. CI 미실행, macOS 미확인 |
+| 2026-11-17 | 5-3 (4a): Lua를 vcpkg `luajit`으로 교체(`extlibs/Lua` 삭제), `opens100::luascripting`과 포트 기능 `lua-scripting`. x.5 반올림 변화 수용 | 99187994, 69023c56 | 테스트 206/209, 808개 셀 그림이 vcpkg DLL 교체 시험과 동일, Windows·Linux 소비자 예제에서 같은 엔진·같은 반올림. Win32/ARM64/Debug·CI·macOS 미확인 |
