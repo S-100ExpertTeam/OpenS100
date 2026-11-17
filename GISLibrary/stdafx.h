@@ -35,16 +35,20 @@
 #define WIN32_LEAN_AND_MEAN // keep commdlg.h and friends out of the PCH (their function-name macros clash with model methods)
 #endif
 #include <windows.h>
+// GISLIBRARY_MODEL_ONLY: the dataset model and readers built on their own (CMake target
+// opens100::dataset). They need none of the COM, ATL, GDI+ and Direct2D headers below.
+#ifndef GISLIBRARY_MODEL_ONLY
 #include <tchar.h>
 #include <comdef.h>
 #include <atlbase.h>
 #include <atlconv.h>
 #include <atlsafe.h>
+#endif // GISLIBRARY_MODEL_ONLY
 #endif // _WIN32
 
 #include "Common.h"
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(GISLIBRARY_MODEL_ONLY)
 #include <gdiplus.h>
 // GDI+ names were previously pulled in unqualified through a PortrayalCatalogue header; keep
 // that for the legacy GDI drawing code in this project until it moves to the renderer.
@@ -76,4 +80,4 @@ inline void SafeRelease(Interface **ppInterfaceToRelease)
 }
 
 #endif
-#endif // _WIN32
+#endif // _WIN32 && !GISLIBRARY_MODEL_ONLY

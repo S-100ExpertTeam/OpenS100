@@ -55,7 +55,7 @@ namespace S100
         std::shared_ptr<ProductSpecification> productSpecification;
         std::shared_ptr<CI_Responsibility> ProducingAgency;
         std::shared_ptr<std::string> ProducerCode;
-        std::shared_ptr<EncodingFormat> EncodingFormat;
+        std::shared_ptr<S100::EncodingFormat> EncodingFormat;
         std::vector<DataCoverage>  dataCoverage;
         std::shared_ptr<std::string> Comment;
         std::shared_ptr<PT_Locale> DefaultLocale;
@@ -64,7 +64,7 @@ namespace S100
         std::shared_ptr<S100_Date> MetadataDateStamp;
         std::shared_ptr<bool> ReplacedData;
         std::vector<std::string> DataReplacement;
-        std::vector<NavigationPurpose> NavigationPurpose;
+        std::vector<S100::NavigationPurpose> NavigationPurpose;
         std::shared_ptr<MD_MaintenanceInformation> ResourceMaintenance;
 
         void GetContents(pugi::xml_node& node) override;

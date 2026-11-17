@@ -2,7 +2,6 @@
 
 #include "SENC_Define.h"
 
-#include "../S100Engine/CRSType.h"
 
 #include <string>
 

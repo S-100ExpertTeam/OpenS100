@@ -9,7 +9,7 @@ public:
 	virtual ~IndeterminateDate();
 
 public:
-	indeterminatePosition *indeterminatePosition = nullptr;
+	::indeterminatePosition *indeterminatePosition = nullptr;
 	time_t dateValue = 0;
 };
 

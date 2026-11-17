@@ -9,7 +9,7 @@ namespace S100 {
     class S100_SE_SignatureOnData : public S100_SE_DigitalSignature
     {
     public:
-        DataStatus DataStatus;
+        S100::DataStatus DataStatus;
 
         void GetContents(pugi::xml_node& node);
         void Save(pugi::xml_node& node);

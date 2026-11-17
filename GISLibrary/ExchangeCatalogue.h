@@ -43,9 +43,9 @@ namespace S100
         std::shared_ptr<std::string> ExchangeCatalogueComment;
         std::vector<S100_SE_CertificateContainerType> Certificates;
         std::shared_ptr<std::string> DataServerIdentifier;
-        XmlCollection<DatasetDiscoveryMetadata> DatasetDiscoveryMetadata;
-        XmlCollection<CatalogueDiscoveryMetadata> CatalogueDiscoveryMetadata;
-        XmlCollection<SupportFileDiscoveryMetadata> SupportFileDiscoveryMetadata;
+        XmlCollection<S100::DatasetDiscoveryMetadata> DatasetDiscoveryMetadata;
+        XmlCollection<S100::CatalogueDiscoveryMetadata> CatalogueDiscoveryMetadata;
+        XmlCollection<S100::SupportFileDiscoveryMetadata> SupportFileDiscoveryMetadata;
 
         void GetContents(pugi::xml_node& node);
 
