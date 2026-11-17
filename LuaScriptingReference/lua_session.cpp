@@ -49,7 +49,7 @@ lua_session::lua_session()
 	// [SECURITY PATCH] Disable dangerous libraries 
 	luaL_dostring(m_l,
 	"os = nil " "io = nil " "debug = nil "
-		"package.loadlib = nil " "package.cpath = ” " "loadfile = nil "
+		"package.loadlib = nil " "package.cpath = '' " "loadfile = nil "
 		"dofile = nil "
 		"load = nil "
 		"rawset = nil " "loadstring = nil"
