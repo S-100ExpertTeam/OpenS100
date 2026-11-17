@@ -235,33 +235,7 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<GISLibrary::P
 	}
 }
 
-void SENC_TextInstruction::ChangePallete(PortrayalCatalogue* pc)
-{
-	if (textPoint)
-	{
-		auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
-		if (colorProfile)
-		{
-			auto itorTp = textPoint->elements.begin();
-
-			if (itorTp != textPoint->elements.end())
-			{
-				SENC_Element* element = *itorTp;
-
-				if (element->foreground.token.size() > 0)
-				{
-					element->pColor = new GISLibrary::ColorF(GISLibrary::FromD2D(colorProfile->GetColor(element->foreground.token)));
-				}
-				else
-				{
-					element->pColor = nullptr;
-				}
-			}
-		}
-	}
-}
-
-void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output)
+void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue* /*pc*/, PCOutputSchemaManager* output)
 {
 	auto s100TextInstruction = (S100_TextInstruction*)s100Instruction;
 
@@ -311,14 +285,7 @@ void SENC_TextInstruction::FromS100Instruction(S100_Instruction* s100Instruction
 			{
 				e2->foreground.token = e1->GetForground()->GetTokenW();
 				e2->foreground.transparency = (int)(std::wcstod(e1->GetForground()->GetTransparencyW().c_str(), nullptr) * 100);
-				
-				auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
-
-				if (colorProfile)
-				{
-					auto color = colorProfile->GetColor(e2->foreground.token);
-					e2->pColor = new GISLibrary::ColorF(GISLibrary::FromD2D(color));
-				}
+				e2->hasForeground = true;
 			}
 
 			if (e1->GetText())

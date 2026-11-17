@@ -218,11 +218,3 @@ void PCOutputSchemaManager::GetSENCFromS100Common(S100_Instruction* tp, SENC_Ins
 		si->spatialReference.push_back(ssr);
 	}
 }
-
-void PCOutputSchemaManager::ChangePallete(PortrayalCatalogue *pc)
-{
-	if (displayListSENC)
-	{
-		displayListSENC->ChangePallete(pc);
-	}
-}

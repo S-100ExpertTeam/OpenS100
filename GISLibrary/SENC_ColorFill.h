@@ -13,5 +13,4 @@ public:
 	SENC_Color *color = nullptr;
 
 public:
-	void ChangePallete(PortrayalCatalogue *pc);
 };

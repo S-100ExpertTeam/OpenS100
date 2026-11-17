@@ -28,6 +28,5 @@ public:
 		Scaler *scaler, 
 		PortrayalCatalogue* pc = nullptr);
 	
-	void ChangePallete(PortrayalCatalogue *pc);
 	void FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output);
 };

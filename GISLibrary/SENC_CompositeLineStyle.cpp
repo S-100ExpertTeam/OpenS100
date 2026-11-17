@@ -62,14 +62,6 @@ void SENC_CompositeLineStyle::GetStyleFromS100(S100_CompositeLineStyle* lineStyl
 }
 
 
-void SENC_CompositeLineStyle::ChangePallete(PortrayalCatalogue *pc)
-{
-	for (auto i = lineStyles.begin(); i != lineStyles.end(); i++)
-	{
-		(*i)->ChangePallete(pc);
-	}
-}
-
 void SENC_CompositeLineStyle::DrawInstruction(
 	SCurve* curveHasOrient,
 	ID2D1DCRenderTarget* rt,

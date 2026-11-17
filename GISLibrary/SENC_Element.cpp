@@ -7,9 +7,4 @@ SENC_Element::SENC_Element()
 
 SENC_Element::~SENC_Element()
 {
-	if (pColor) 
-	{	
-		delete pColor; 
-		pColor = nullptr;	
-	}
 }

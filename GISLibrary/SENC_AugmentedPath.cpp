@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "D2DConvert.h"
 #include "GISLibrary.h"
 #include "D2D1Resources.h"
@@ -47,7 +48,7 @@ SENC_AugmentedPath::~SENC_AugmentedPath()
 }
 
 #pragma warning(disable:4244)
-void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* /*pc*/)
+void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc)
 {
 	auto factory = d2->Factory();
 	auto rt = d2->RenderTarget();
@@ -147,7 +148,7 @@ void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Port
 					auto pGeometry = *iter;
 
 					//brush->SetColor(D2D1::ColorF((FLOAT)(GetRValue(ls->pen_color) / 255.0), (FLOAT)(GetGValue(ls->pen_color) / 255.0), (FLOAT)(GetBValue(ls->pen_color) / 255.0)));
-					brush->SetColor(GISLibrary::ToD2D(ls->pen_color));
+					brush->SetColor(GISLibrary::ToD2D(GISLibrary::PortrayalRender::Color(pc, ls->GetPenColorToken())));
 
 					if (ls->dashes.size() > 0)
 					{
@@ -187,14 +188,6 @@ void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Port
 			{
 			}
 		}
-	}
-}
-
-void SENC_AugmentedPath::ChangePallete(PortrayalCatalogue *pc)
-{
-	for (auto i = lineStyles.begin(); i != lineStyles.end(); i++)
-	{
-		(*i)->ChangePallete(pc);
 	}
 }
 

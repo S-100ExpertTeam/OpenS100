@@ -17,6 +17,5 @@ public:
 
 public:
 	void DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc = nullptr) override;
-	void ChangePallete(PortrayalCatalogue *pc);
 	void FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output);
 };

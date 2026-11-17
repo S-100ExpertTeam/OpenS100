@@ -121,8 +121,6 @@ public:
 		Scaler */*scaler*/, 
 		PortrayalCatalogue* /*pc*/ = nullptr) {};
 
-	virtual void ChangePallete(PortrayalCatalogue */*pc*/) {};
-
 	virtual void FromS100Instruction(S100_Instruction* /*s100Instruction*/, PortrayalCatalogue */*pc*/, PCOutputSchemaManager* /*output*/) {};
 
 	static SENC_Instruction* S1002SENC(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output, S100SpatialObject* so);

@@ -384,9 +384,6 @@
     <ClCompile Include="SENC_Color.cpp">
       <Filter>SENC_Instruction\Items</Filter>
     </ClCompile>
-    <ClCompile Include="SENC_ColorPalette.cpp">
-      <Filter>SENC_Instruction\Items</Filter>
-    </ClCompile>
     <ClCompile Include="SENC_ColorFill.cpp">
       <Filter>SENC_Instruction\Items</Filter>
     </ClCompile>

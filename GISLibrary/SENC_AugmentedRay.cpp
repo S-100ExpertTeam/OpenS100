@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "PortrayalRenderCache.h"
 #include "D2DConvert.h"
 #include "SENC_AugmentedRay.h"
 #include "SENC_LineStyle.h"
@@ -60,7 +61,7 @@ int iDebugCount_AumentedRayInstruction[100] = { 0 };
 
 #pragma warning(disable:4244)
 #pragma warning(disable:4838)
-void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* /*pc*/)
+void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, PortrayalCatalogue* pc)
 {
 	auto factory = d2->Factory();
 	auto brush = d2->SolidColorBrush();
@@ -195,7 +196,7 @@ void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Portr
 					}
 				}
 				
-				brush->SetColor(GISLibrary::ToD2D(ls->pen_color));
+				brush->SetColor(GISLibrary::ToD2D(GISLibrary::PortrayalRender::Color(pc, ls->GetPenColorToken())));
 
 				if (ls->dashes.size() > 0 || ls->symbols.size() > 0)
 				{
@@ -232,14 +233,6 @@ void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Portr
 			{
 			}
 		}
-	}
-}
-
-void SENC_AugmentedRay::ChangePallete(PortrayalCatalogue *pc)
-{
-	for (auto i = lineStyles.begin(); i != lineStyles.end(); i++)
-	{
-		(*i)->ChangePallete(pc);
 	}
 }
 

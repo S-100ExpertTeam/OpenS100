@@ -3,7 +3,6 @@
 #include "SENC_Text.h"
 #include "SENC_Foreground.h"
 #include "SENC_Font.h"
-#include "DrawTypes.h"
 
 class SENC_Element
 {
@@ -18,6 +17,7 @@ public:
 	SENC_Foreground foreground;
 	SENC_Font font;
 
-	// For show text on screen
-	GISLibrary::ColorF* pColor = nullptr;
+	// Whether the instruction gave this element a foreground colour (foreground.token). Text
+	// without one is drawn in whatever colour was last used.
+	bool hasForeground = false;
 };

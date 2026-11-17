@@ -645,7 +645,6 @@
     <ClCompile Include="SENC_AugmentedRay.cpp" />
     <ClCompile Include="SENC_CallTemplate.cpp" />
     <ClCompile Include="SENC_Color.cpp" />
-    <ClCompile Include="SENC_ColorPalette.cpp" />
     <ClCompile Include="SENC_ColorFill.cpp" />
     <ClCompile Include="SENC_ColorProfile.cpp" />
     <ClCompile Include="SENC_CommonFuc.cpp" />

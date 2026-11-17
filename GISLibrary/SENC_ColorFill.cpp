@@ -16,11 +16,3 @@ SENC_ColorFill::~SENC_ColorFill()
 		delete color;
 	}
 }
-
-void SENC_ColorFill::ChangePallete(PortrayalCatalogue *pc)
-{
-	if (color)
-	{
-		color->ChangePallete(pc);
-	}
-}

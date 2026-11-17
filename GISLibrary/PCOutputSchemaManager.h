@@ -22,5 +22,4 @@ public:
 	void InitDisplayList();
 	void GenerateSENCAlertInstruction(S101Cell* cell, PortrayalCatalogue* pc);
 	void GetSENCFromS100Common(S100_Instruction* tp, SENC_Instruction* si);
-	void ChangePallete(PortrayalCatalogue *pc);
 };

@@ -763,9 +763,9 @@ void LayerManager::AddSymbolDrawing(
 					offset_x += XOFFS;
 					offset_y += YOFFS;
 
-					if (element->pColor)
+					if (element->hasForeground)
 					{
-						D2->pBrush->SetColor(GISLibrary::ToD2D(*element->pColor));
+						D2->pBrush->SetColor(GISLibrary::ToD2D(PortrayalRender::Color(pc, element->foreground.token)));
 						D2->pBrush->SetOpacity(1 - element->foreground.transparency);
 					}
 
@@ -1762,16 +1762,6 @@ void LayerManager::ChangeLayerPalettes(const std::wstring& paletteName)
 			if (nullptr != pc)
 			{
 				PortrayalRender::ChangePalette(pc, paletteName, D2);
-			}
-
-			auto s100so = (S100SpatialObject*)layer->GetSpatialObject();
-			if (nullptr != s100so)
-			{
-				auto pcOutputManager = s100so->GetPCOutputManager();
-				if (nullptr != pcOutputManager)
-				{
-					pcOutputManager->ChangePallete(pc);
-				}
 			}
 		}
 	}

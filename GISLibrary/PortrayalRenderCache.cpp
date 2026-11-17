@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DConvert.h"
 #include "PortrayalRenderCache.h"
 #include "D2D1Resources.h"
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
@@ -25,6 +26,13 @@ namespace GISLibrary
 		{
 			// Every store in this library comes from NewResourceStore().
 			return pc ? static_cast<S100PCManager*>(pc->GetResources()) : nullptr;
+		}
+
+		ColorF Color(PortrayalCatalogue* pc, const std::wstring& token)
+		{
+			auto manager = Caches(pc);
+			auto profile = manager ? manager->GetS100ColorProfile() : nullptr;
+			return profile ? FromD2D(profile->GetColor(token)) : ColorF{};
 		}
 
 		void Prepare(PortrayalCatalogue* pc, D2D1Resources* d2)

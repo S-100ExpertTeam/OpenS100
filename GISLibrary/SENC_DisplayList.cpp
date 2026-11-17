@@ -144,14 +144,6 @@ void SENC_DisplayList::GetDrawingInstruction(int priority, int type, int current
 	}
 }
 
-void SENC_DisplayList::ChangePallete(PortrayalCatalogue *pc)
-{
-	for (auto i = displayInstructions.begin(); i != displayInstructions.end(); i++)
-	{
-		i->second->ChangePallete(pc);
-	}
-}
-
 void SENC_DisplayList::AddInstruction(SENC_Instruction* value)
 {
 	/*0 : Null Instruction

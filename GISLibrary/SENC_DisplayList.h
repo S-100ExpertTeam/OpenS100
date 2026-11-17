@@ -41,7 +41,6 @@ public:
 	*/
 	void GetDrawingInstruction(int priority, int type, int currentScale, Scaler* scaler, std::list<SENC_Instruction*>& itList);
 
-	void ChangePallete(PortrayalCatalogue *pc);
 
 	void AddInstruction(SENC_Instruction* value);
 	void AddAlertIndication(SENC_Instruction* value);

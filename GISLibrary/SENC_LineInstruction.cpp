@@ -144,14 +144,6 @@ void SENC_LineInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 	}
 }
 
-void SENC_LineInstruction::ChangePallete(PortrayalCatalogue *pc)
-{
-	for (auto i = lineStyles.begin(); i != lineStyles.end(); i++)
-	{
-		(*i)->ChangePallete(pc);
-	}
-}
-
 void SENC_LineInstruction::FromS100Instruction(S100_Instruction* s100Instruction, PortrayalCatalogue *pc, PCOutputSchemaManager* output)
 {
 	auto s100LineInstruction = (S100_LineInstruction*)s100Instruction;

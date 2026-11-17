@@ -1,6 +1,5 @@
 #pragma once
 #include "SENC_LineStyleBase.h"
-#include "DrawTypes.h"
 #include "SENC_Symbol.h"
 #include "SENC_Dash.h"
 #include "SENC_LineSymbol.h"
@@ -30,7 +29,6 @@ public:
 	int capStyle = 0;
 	int joinStyle = 0;
 	float offset = 0;
-	GISLibrary::ColorF pen_color;
 	std::wstring colorToken = L"";
 	std::wstring lineStyleName = L"";
 
@@ -38,15 +36,12 @@ public:
 	// does not need the render module; created with the line style.
 	std::unique_ptr<S100Render> s100Render;
 public:
-	void SetPenColor(GISLibrary::ColorF value);
-	GISLibrary::ColorF GetPenColor();
 
 	void SetPenColorToken(std::wstring& value);
 	std::wstring GetPenColorToken();
 
 	void GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalogue *pc);
 	
-	void ChangePallete(PortrayalCatalogue *pc);
 
 	void SetLineStyleName(const std::wstring& value);
 	std::wstring GetLineStyleName();

@@ -23,7 +23,6 @@ public:
 		PortrayalCatalogue *pc,
 		std::vector<SENC_LineStyle*> &lineStyles);
 
-	void ChangePallete(PortrayalCatalogue *pc);
 
 public: // override from SENC_LineStyleBase
 	void DrawInstruction(

@@ -34,16 +34,6 @@ SENC_LineStyle::~SENC_LineStyle()
 	}
 }
 
-void SENC_LineStyle::SetPenColor(GISLibrary::ColorF value)
-{
-	pen_color = value;
-}
-
-GISLibrary::ColorF SENC_LineStyle::GetPenColor()
-{
-	return pen_color;
-}
-
 void SENC_LineStyle::SetPenColorToken(std::wstring& value)
 {
 	colorToken = value;
@@ -54,7 +44,7 @@ std::wstring SENC_LineStyle::GetPenColorToken()
 	return colorToken;
 }
 
-void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalogue *pc)
+void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalogue* /*pc*/)
 {
 	intervalLength = std::wcstod(lineStyle->GetIntervalLengthW().c_str(), nullptr);
 	capStyle = SENC_CommonFuc::GetCapStyle(lineStyle->GetCapStyleW());
@@ -64,14 +54,7 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 	std::wstring _colorToken = lineStyle->GetPen()->GetColor().GetTokenW();
 	pen_width = std::wcstod(lineStyle->GetPen()->GetWidthW().c_str(), nullptr) + 0.01;
 	pen_transparency = lineStyle->GetPen()->GetColor().GetTransparency();
-
-	auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
-
-	if (colorProfile)
-	{
-		SetPenColor(GISLibrary::FromD2D(colorProfile->GetColor(_colorToken)));
-		SetPenColorToken(_colorToken);
-	}
+	SetPenColorToken(_colorToken);
 
 	auto dashs= lineStyle->GetDashs();
 	for (auto itor = dashs.begin();
@@ -99,11 +82,6 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 
 		symbols.push_back(symbolSENC);
 	}
-}
-
-void SENC_LineStyle::ChangePallete(PortrayalCatalogue *pc)
-{
-	SetPenColor(GISLibrary::FromD2D(GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile()->GetColor(GetPenColorToken())));
 }
 
 void SENC_LineStyle::SetLineStyleName(const std::wstring& value)
@@ -188,7 +166,7 @@ void SENC_LineStyle::DrawInstruction(
 						}
 					}
 
-					s100Render->DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler), GISLibrary::ToD2D(GetPenColor()), strokeGroup->at(1));
+					s100Render->DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler), GISLibrary::ToD2D(GISLibrary::PortrayalRender::Color(pc, GetPenColorToken())), strokeGroup->at(1));
 					SafeRelease(&pBitmap);
 				}
 			}
@@ -199,7 +177,7 @@ void SENC_LineStyle::DrawInstruction(
 	}
 	else
 	{
-		auto PEN_COLOR = GISLibrary::ToD2D(GetPenColor());
+		auto PEN_COLOR = GISLibrary::ToD2D(GISLibrary::PortrayalRender::Color(pc, GetPenColorToken()));
 		auto PEN_WIDTH = (float)((pen_width + 0.01) / 0.32);
 
 		D2D1_COLOR_F color = PEN_COLOR;

@@ -95,7 +95,7 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 			colorFill = (SENC_ColorFill*)areaFill;
 			if (colorFill->color)
 			{
-				D2D1_COLOR_F color = GISLibrary::ToD2D(colorFill->color->RGBColor);
+				D2D1_COLOR_F color = GISLibrary::ToD2D(GISLibrary::PortrayalRender::Color(pc, colorFill->color->token));
 				
 				color.a = 1 - colorFill->color->transparency;
 				brush->SetColor(color);
@@ -249,15 +249,6 @@ void SENC_AreaInstruction::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Po
 	rt->SetAntialiasMode(D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 }
 
-void SENC_AreaInstruction::ChangePallete(PortrayalCatalogue *pc)
-{
-	auto _areaFill = GetAreaFill();
-	if (_areaFill)
-	{
-		_areaFill->ChangePallete(pc);
-	}
-}
-
 void SENC_AreaInstruction::FromS100Instruction(
 	S100_Instruction* s100Instruction,
 	PortrayalCatalogue *pc,
@@ -283,13 +274,6 @@ void SENC_AreaInstruction::FromS100Instruction(
 				colorFill->color = new SENC_Color();
 				colorFill->color->SetToken(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTokenW());
 				colorFill->color->SetTransparency((float)std::wcstod(((S100_ColorFill*)s100AreaInstruction->GetAreaFill())->GetColor()->GetTransparencyW().c_str(), nullptr));
-
-				auto colorProfile = GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile();
-
-				if (colorProfile)
-				{
-					colorFill->color->RGBColor = GISLibrary::FromD2D(colorProfile->GetColor(colorFill->color->token));
-				}
 			}
 			break;
 		case 2:

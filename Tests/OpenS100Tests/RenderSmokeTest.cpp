@@ -220,6 +220,56 @@ TEST(RenderSmoke, DrawsKoreanS101CellOffscreen)
 	EXPECT_GT(colours, 8u) << "expected more than a handful of colours in a portrayed chart";
 }
 
+// Drawing instructions carry colour tokens, not colours: the renderer looks a token up in the
+// current palette each time it draws. So switching the palette of an open chart must give the
+// picture the chart has when it is opened under that palette, with no portrayal run in between.
+TEST(RenderSmoke, PaletteSwitchRedrawsAnOpenChartInTheNewColours)
+{
+	const auto cell = testpaths::korS101Cell();
+	if (!std::filesystem::exists(cell))
+	{
+		GTEST_SKIP() << "reference cell not available: " << cell.string();
+	}
+
+	GdiplusSession gdiplus;
+	const RECT view{ 0, 0, kWidth, kHeight };
+	const auto open = [&](CGISLibraryApp& gis, bool nightBeforeOpening)
+	{
+		auto cm = gis.GetCatalogManager();
+		ASSERT_NE(cm->addFC((testpaths::repoRoot() / "ProgramData" / "FC" / "S-101_FC.xml").string()), nullptr);
+		auto pc = cm->addPC((testpaths::repoRoot() / "ProgramData" / "PC" / "S101_Portrayal" / "portrayal_catalogue.xml").wstring());
+		ASSERT_NE(pc, nullptr);
+		GISLibrary::PortrayalRender::Prepare(pc, gis.GetD2D1Resources());
+		gis.SetScreen(view);
+		if (nightBeforeOpening)
+		{
+			gis.GetLayerManager()->ChangeS100ColorPalette(L"Night");
+		}
+		ASSERT_TRUE(gis.AddLayer(cell.wstring()));
+		gis.SetViewMBR(view);
+	};
+
+	CGISLibraryApp switched;
+	open(switched, false);
+	ASSERT_FALSE(HasFatalFailure());
+	MemoryCanvas day(kWidth, kHeight);
+	switched.Draw(day.dc());
+	switched.GetLayerManager()->ChangeS100ColorPalette(L"Night");
+	MemoryCanvas nightAfterSwitch(kWidth, kHeight);
+	switched.Draw(nightAfterSwitch.dc());
+
+	CGISLibraryApp openedAtNight;
+	open(openedAtNight, true);
+	ASSERT_FALSE(HasFatalFailure());
+	MemoryCanvas nightFromTheStart(kWidth, kHeight);
+	openedAtNight.Draw(nightFromTheStart.dc());
+
+	EXPECT_GT(nightAfterSwitch.DifferingPixels(day), static_cast<std::size_t>(kWidth) * kHeight / 50) << "the palette switch changed (almost) nothing";
+	EXPECT_EQ(nightAfterSwitch.DifferingPixels(nightFromTheStart), 0u);
+	EXPECT_TRUE(nightAfterSwitch.SavePng(OutputDirectory() / "palette_night_after_switch.png"));
+	EXPECT_TRUE(nightFromTheStart.SavePng(OutputDirectory() / "palette_night_from_the_start.png"));
+}
+
 // The chart projection is the user's choice: cells about the North Pole, which Mercator cannot
 // show, are read again and drawn about the pole when the projection changes.
 TEST(RenderSmoke, DrawsPolarCellsAboutThePole)
