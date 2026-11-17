@@ -9,7 +9,7 @@ public:
 	virtual ~SENC_Pixmap();
 
 public:
-	unsigned reference;
+	unsigned reference = 0;
 	SENC_Color overrideColor;
 	SENC_OverrideColor overrideAll;
 };

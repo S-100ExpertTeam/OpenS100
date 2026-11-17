@@ -9,5 +9,5 @@ public:
 	~SENC_AreaFillReference();
 
 public:
-	int reference;
+	int reference = 0;
 };

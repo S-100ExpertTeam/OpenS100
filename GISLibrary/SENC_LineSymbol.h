@@ -9,12 +9,12 @@ public:
 	~SENC_LineSymbol();
 
 public:
-	double position;
+	double position = 0;
 
 	std::wstring reference;
 	double rotation = 0;
-	double scaleFactor;
-	int crsType;
+	double scaleFactor = 1;
+	int crsType = 0;
 
 	//S100_SVG_D2D1_DLL::SVG* pSvg;
 };

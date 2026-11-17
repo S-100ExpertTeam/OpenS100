@@ -9,5 +9,5 @@ public:
 	virtual ~SENC_PatternFill();
 
 public:
-	int areaCRSType;
+	int areaCRSType = 0;
 };

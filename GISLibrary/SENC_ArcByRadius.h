@@ -11,5 +11,5 @@ public:
 public:
 	SENC_VectorPoint center;
 	SENC_Sector *sector = nullptr;
-	double radius;
+	double radius = 0;
 };

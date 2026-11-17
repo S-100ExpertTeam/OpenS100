@@ -11,6 +11,6 @@ public:
 public:
 	SENC_VectorPoint point;
 	double *innerRadius = nullptr;
-	double outerRaius;
+	double outerRaius = 0;
 	SENC_Sector *sector = nullptr;
 };

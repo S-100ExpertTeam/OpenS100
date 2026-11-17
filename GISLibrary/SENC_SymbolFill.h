@@ -16,6 +16,6 @@ public:
 	SENC_VectorPoint v1;
 	SENC_VectorPoint v2;
 
-	bool clipSymbols;
+	bool clipSymbols = false;
 };
 

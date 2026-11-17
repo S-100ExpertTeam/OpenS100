@@ -12,9 +12,10 @@
 
 # opens100::portrayal - what is to be drawn: the drawing instruction model (SENC_*), the manager
 # that builds it from the output of the rules, the Lua host that answers the rules from an S-101
-# dataset, and the run itself (Lua 5.1 for S-101, XSLT 1.0 for the other products).
+# dataset, the run itself (Lua 5.1 for S-101, XSLT 1.0 for the other products), and the
+# instructions as JSON text (DisplayListJson).
 set(OPENS100_GISLIBRARY_PORTRAYAL_SOURCES
-    PCOutputSchemaManager ProcessS101 S100LayerBuildPortrayal S100SpatialObjectPortrayal
+    DisplayListJson PCOutputSchemaManager ProcessS101 S100LayerBuildPortrayal S100SpatialObjectPortrayal
     S101LuaScriptingReference host_data host_functions
     SENC_AreaInstruction SENC_AugmentedPath SENC_AugmentedRay SENC_Color SENC_ColorFill
     SENC_ColorProfile SENC_CompositeLineStyle SENC_DisplayList SENC_Element SENC_Font SENC_Hatch

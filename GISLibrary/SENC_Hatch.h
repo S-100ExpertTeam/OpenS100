@@ -9,7 +9,7 @@ public:
 	~SENC_Hatch();
 
 public:
-	SENC_LineStyleBase* lineStyle;
+	SENC_LineStyleBase* lineStyle = nullptr;
 	SENC_VectorPoint direction;
-	double distance; 
+	double distance = 0;
 };

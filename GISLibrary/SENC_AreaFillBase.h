@@ -16,7 +16,7 @@ public:
 	* 4 : SymbolFill
 	* 5 : HatchFill
 	*/
-	int type;
+	int type = 0;
 	std::wstring fileStem; 
 
 public:

@@ -617,6 +617,7 @@
     <ClCompile Include="S101Factory.cpp" />
     <ClCompile Include="S10XGML.cpp" />
     <ClCompile Include="S100Layer.cpp" />
+    <ClCompile Include="DisplayListJson.cpp" />
     <ClCompile Include="S100LayerBuildPortrayal.cpp" />
     <ClCompile Include="S100LayerPortrayal.cpp" />
     <ClCompile Include="S100SpatialObject.cpp" />
@@ -1006,6 +1007,7 @@
     <ClInclude Include="S101Factory.h" />
     <ClInclude Include="S10XGML.h" />
     <ClInclude Include="S100_GF.h" />
+    <ClInclude Include="DisplayListJson.h" />
     <ClInclude Include="S100Layer.h" />
     <ClInclude Include="S100SpatialObject.h" />
     <ClInclude Include="S100Utilities.h" />

@@ -7,6 +7,6 @@ public:
 	virtual ~SENC_Sector();
 
 public:
-	double startAngle;
-	double angularDistance;
+	double startAngle = 0;
+	double angularDistance = 0;
 };

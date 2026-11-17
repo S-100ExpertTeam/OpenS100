@@ -13,6 +13,7 @@
 #endif
 
 #ifdef OPENS100_CONSUMER_HAS_PORTRAYAL
+#include <GISLibrary/DisplayListJson.h>
 #include <GISLibrary/PCOutputSchemaManager.h>
 #include <GISLibrary/S100Layer.h>
 #include <GISLibrary/SENC_DisplayList.h>
@@ -40,6 +41,7 @@ namespace
 
 #include <filesystem>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <string>
 
@@ -47,7 +49,7 @@ int main(int argc, char** argv)
 {
 	if (argc < 2)
 	{
-		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [S-101 cell]\n";
+		std::cerr << "usage: opens100_consumer <feature catalogue xml> [portrayal catalogue xml] [--json <directory>] [S-101 cell ...]\n";
 		return 2;
 	}
 
@@ -104,7 +106,7 @@ int main(int argc, char** argv)
 
 #ifdef OPENS100_CONSUMER_HAS_DATASET
 	// Optional: an S-101 dataset (ISO 8211), read against the feature catalogue above.
-	if (argc >= 4)
+	if (argc >= 4 && std::string(argv[3]) != "--json")
 	{
 		const std::filesystem::path cellPath(argv[3]);
 		S101Cell cell(&fc);
@@ -124,8 +126,8 @@ int main(int argc, char** argv)
 #endif
 
 #ifdef OPENS100_CONSUMER_HAS_PORTRAYAL
-	// Optional: portray the dataset with the rules of the portrayal catalogue. The result is
-	// drawing instructions (S-100 Part 9): what is to be drawn, not a picture.
+	// Optional: portray every dataset given with the rules of the portrayal catalogue. The
+	// result is drawing instructions (S-100 Part 9): what is to be drawn, not a picture.
 	if (argc >= 4)
 	{
 		PortrayalCatalogue pc;
@@ -135,31 +137,62 @@ int main(int argc, char** argv)
 			return 1;
 		}
 
-		S100Layer layer(&fc, &pc);
-		auto* cell = new S101Cell(&fc);   // the layer owns its dataset
-		layer.m_spatialObject = cell;
-		cell->SetLayer(&layer);
-		if (!cell->Open(std::filesystem::path(argv[3]).wstring()))
+		// --json <directory>: the display list of each dataset as a JSON file there.
+		const char* jsonDirectory = nullptr;
+		int firstDataset = 3;
+		if (argc >= 5 && std::string(argv[3]) == "--json")
 		{
-			std::cerr << "cannot read " << argv[3] << "\n";
-			return 1;
+			jsonDirectory = argv[4];
+			firstDataset = 5;
 		}
 
-		layer.BuildPortrayalCatalogue();
-
-		InstructionCounter count;
-		if (cell->pcManager && cell->pcManager->displayListSENC)
+		for (int i = firstDataset; i < argc; i++)
 		{
-			for (auto& [key, instruction] : cell->pcManager->displayListSENC->displayInstructions)
+			const std::filesystem::path cellPath(argv[i]);
+			S100Layer layer(&fc, &pc);
+			auto* cell = new S101Cell(&fc);   // the layer owns its dataset
+			layer.m_spatialObject = cell;
+			cell->SetLayer(&layer);
+			if (!cell->Open(cellPath.wstring()))
+			{
+				std::cerr << "cannot read " << argv[i] << "\n";
+				return 1;
+			}
+
+			layer.BuildPortrayalCatalogue();
+			if (!cell->pcManager || !cell->pcManager->displayListSENC)
+			{
+				std::cerr << "no display list for " << argv[i] << "\n";
+				return 1;
+			}
+			auto& displayList = *cell->pcManager->displayListSENC;
+
+			InstructionCounter count;
+			for (auto& [key, instruction] : displayList.displayInstructions)
 			{
 				instruction->Accept(count);
 			}
+
+			// The same instructions as text. Its hash is the same on every platform, which is
+			// how two builds are compared without drawing anything.
+			const std::string json = GISLibrary::DisplayListToJson(displayList);
+			if (jsonDirectory)
+			{
+				std::ofstream out(std::filesystem::path(jsonDirectory) / (cellPath.stem().string() + ".json"),
+					std::ios::binary | std::ios::trunc);
+				out << json;
+			}
+
+			std::cout << "portrayed:     " << cellPath.filename().string() << "\n"
+				<< "drawing instructions: "
+				<< (count.null + count.point + count.line + count.area + count.text + count.ray + count.path) << "\n"
+				<< "  point " << count.point << ", line " << count.line << ", area " << count.area
+				<< ", text " << count.text << ", augmented ray " << count.ray << ", augmented path " << count.path
+				<< ", null " << count.null << "\n"
+				<< "display list:  " << json.size() << " bytes, hash "
+				<< std::hex << std::setw(16) << std::setfill('0') << GISLibrary::JsonHash(json)
+				<< std::dec << std::setfill(' ') << "\n";
 		}
-		std::cout << "drawing instructions: "
-			<< (count.null + count.point + count.line + count.area + count.text + count.ray + count.path) << "\n"
-			<< "  point " << count.point << ", line " << count.line << ", area " << count.area
-			<< ", text " << count.text << ", augmented ray " << count.ray << ", augmented path " << count.path
-			<< ", null " << count.null << "\n";
 	}
 #endif
 	return 0;

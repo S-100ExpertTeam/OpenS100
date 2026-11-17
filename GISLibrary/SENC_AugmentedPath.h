@@ -11,7 +11,7 @@ public:
 	virtual ~SENC_AugmentedPath();
 
 public:
-	int areaCRSType;
+	int areaCRSType = 0;
 	SENC_Path *path;
 	std::vector<SENC_LineStyleBase*> lineStyles;
 

@@ -8,7 +8,7 @@ public:
 	~SENC_Dash();
 
 public:
-	float start;
-	float length;
+	float start = 0;
+	float length = 0;
 };
 

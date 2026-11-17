@@ -1,6 +1,7 @@
 #pragma once
 
 class S101Cell;
+class S100SpatialObject;
 class S100_DisplayList;
 class SENC_DisplayList;
 class PortrayalCatalogue;

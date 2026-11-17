@@ -65,18 +65,18 @@ public:
 	* 0 : UNDERRADAR
 	* 1 : Overradar
 	*/
-	int displayPlane;
+	int displayPlane = 0;
 
 	/*
 	* display priority
 	* 10 ~ 90 (term unit is 10 in ENC Object)
 	*/
-	int drawingPriority;
+	int drawingPriority = 0;
 
 	// Scale Minimum
-	unsigned scaleMinimum;
+	unsigned scaleMinimum = 0;
 	// Scale Maximum
-	unsigned scaleMaximum;
+	unsigned scaleMaximum = 0;
 
 	// Feature ID
 	std::string featureReference;
