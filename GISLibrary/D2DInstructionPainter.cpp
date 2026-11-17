@@ -36,6 +36,7 @@
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../LatLonUtility/LatLonUtility.h"
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
+#include "../S100Engine/AreaFill.h"
 #include "../S100Engine/AreaPatternBitmap.h"
 #include "../S100Engine/S100PCManager.h"
 #include "../S100Engine/S100Render.h"
@@ -52,6 +53,20 @@ namespace
 {
 	// Millimetres of an augmented ray to pixels.
 	const float factor = 3.5;
+
+	// The area fill the pattern bitmap is built from, for a symbol fill given in the instruction.
+	std::unique_ptr<AreaFill> ToAreaFill(const SENC_SymbolFill& symbolFill)
+	{
+		auto areaFill = std::make_unique<AreaFill>();
+		areaFill->v1_x = symbolFill.v1.x;
+		areaFill->v1_y = symbolFill.v1.y;
+		areaFill->v2_x = symbolFill.v2.x;
+		areaFill->v2_y = symbolFill.v2.y;
+		areaFill->_symbolReference = pugi::as_utf8(symbolFill.symbol->reference);
+		areaFill->offset_x = symbolFill.symbol->offset.x;
+		areaFill->offset_y = symbolFill.symbol->offset.y;
+		return areaFill;
+	}
 }
 
 namespace GISLibrary
@@ -214,7 +229,7 @@ void GISLibrary::D2DInstructionPainter::Visit(SENC_AreaInstruction& instruction)
 				}
 				else
 				{
-					auto _areaFill = symbolFill->as_AreaFill();
+					auto _areaFill = ToAreaFill(*symbolFill);
 					bitmapImage = GISLibrary::PortrayalRender::Caches(pc)->CreateBitmapImage(_areaFill.get(), pDirect2dFactory, d2->pImagingFactory, d2->SolidStrokeStyle());
 					if (bitmapImage)
 					{

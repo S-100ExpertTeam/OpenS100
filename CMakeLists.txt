@@ -35,6 +35,11 @@ option(OPENS100_BUILD_COVERAGE "Build opens100::coverage (Coverage)" ON)
 option(OPENS100_BUILD_DATASET "Build opens100::dataset (GISLibrary: dataset model and ISO 8211, GML, HDF5 readers)" ON)
 option(OPENS100_BUILD_LUASCRIPTING "Build opens100::luascripting (LuaScriptingReference: the Lua session of S-100 Part 9a portrayal)" ON)
 
+option(OPENS100_BUILD_PORTRAYAL "Build opens100::portrayal (GISLibrary: drawing instruction model and the portrayal run)" ON)
+
+if(OPENS100_BUILD_PORTRAYAL AND NOT (OPENS100_BUILD_DATASET AND OPENS100_BUILD_LUASCRIPTING))
+    message(FATAL_ERROR "opens100::portrayal needs opens100::dataset and opens100::luascripting")
+endif()
 if(OPENS100_BUILD_LUASCRIPTING AND NOT OPENS100_BUILD_FEATURECATALOG)
     message(FATAL_ERROR "opens100::luascripting needs opens100::featurecatalog")
 endif()
@@ -64,6 +69,10 @@ if(OPENS100_BUILD_LUASCRIPTING)
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
     find_package(LuaJIT REQUIRED)
 endif()
+if(OPENS100_BUILD_PORTRAYAL)
+    find_package(LibXml2 REQUIRED)
+    find_package(LibXslt REQUIRED)   # XSLT 1.0 portrayal rules
+endif()
 if(OPENS100_BUILD_FEATURECATALOG)
     find_package(pugixml CONFIG REQUIRED)
     find_package(utf8cpp CONFIG REQUIRED)
@@ -81,13 +90,25 @@ endif()
 # consumers write  #include <FeatureCatalog/FeatureCatalogue.h>.
 set(OPENS100_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}/opens100")
 
-# opens100_add_module(<target> <directory> [DEPENDS <targets>...] [EXCLUDE <source names>...])
-# One static library per source directory, every *.cpp in it (the .vcxproj lists exactly those)
-# except the EXCLUDE names (without ".cpp").
+# opens100_add_module(<target> <directory> [DEPENDS <targets>...]
+#                     [EXCLUDE <source names>...] | [SOURCES <source names>...])
+# A static library from a source directory: every *.cpp in it (the .vcxproj lists exactly those)
+# except the EXCLUDE names, or only the SOURCES names (both without ".cpp"). A directory shared
+# by two targets has its headers installed by the one without SOURCES.
 function(opens100_add_module target directory)
-    cmake_parse_arguments(ARG "" "" "DEPENDS;EXCLUDE" ${ARGN})
+    cmake_parse_arguments(ARG "" "" "DEPENDS;EXCLUDE;SOURCES" ${ARGN})
 
-    file(GLOB sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${directory}/*.cpp")
+    if(ARG_SOURCES)
+        set(sources "")
+        foreach(name IN LISTS ARG_SOURCES)
+            if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${directory}/${name}.cpp")
+                message(FATAL_ERROR "opens100_add_module(${target}): SOURCES names ${directory}/${name}.cpp, which does not exist")
+            endif()
+            list(APPEND sources "${CMAKE_CURRENT_SOURCE_DIR}/${directory}/${name}.cpp")
+        endforeach()
+    else()
+        file(GLOB sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${directory}/*.cpp")
+    endif()
     foreach(name IN LISTS ARG_EXCLUDE)
         if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${directory}/${name}.cpp")
             message(FATAL_ERROR "opens100_add_module(${target}): EXCLUDE names ${directory}/${name}.cpp, which does not exist")
@@ -128,7 +149,9 @@ function(opens100_add_module target directory)
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
-    install(FILES ${headers} DESTINATION "${OPENS100_INSTALL_INCLUDEDIR}/${directory}")
+    if(NOT ARG_SOURCES)
+        install(FILES ${headers} DESTINATION "${OPENS100_INSTALL_INCLUDEDIR}/${directory}")
+    endif()
 endfunction()
 
 # Dependency order: latlon <- geometry, featurecatalog <- portrayalcatalogue; sdb stands alone.
@@ -203,6 +226,23 @@ if(OPENS100_BUILD_LUASCRIPTING)
         target_compile_options(luascripting PRIVATE /wd4100 /wd4244 /wd4456 /wd4505 /wd4706)
     else()
         target_compile_options(luascripting PRIVATE -Wno-unused-parameter -Wno-unused-function -Wno-shadow)
+    endif()
+endif()
+
+if(OPENS100_BUILD_PORTRAYAL)
+    # What is to be drawn: the portrayal rules of a product run over a dataset and leave drawing
+    # instructions (S-100 Part 9) in the dataset's PCOutputSchemaManager. Nothing here draws; a
+    # renderer visits the instructions (SENC_InstructionVisitor). The sources are the part of
+    # GISLibrary listed in cmake/GISLibraryDatasetSources.cmake.
+    opens100_add_module(portrayal GISLibrary
+        DEPENDS dataset luascripting LibXslt::LibXslt LibXml2::LibXml2
+        SOURCES ${OPENS100_GISLIBRARY_PORTRAYAL_SOURCES})
+    target_compile_definitions(portrayal PRIVATE GISLIBRARY_MODEL_ONLY)
+    if(MSVC)
+        # As for dataset; C4505: the Lua host keeps two unused static helpers.
+        target_compile_options(portrayal PRIVATE /wd4244 /wd4267 /wd4245 /wd4389 /wd4251 /wd4505)
+    else()
+        target_compile_options(portrayal PRIVATE -Wno-sign-compare -Wno-unused-parameter -Wno-unused-function)
     endif()
 endif()
 

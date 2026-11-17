@@ -617,6 +617,7 @@
     <ClCompile Include="S101Factory.cpp" />
     <ClCompile Include="S10XGML.cpp" />
     <ClCompile Include="S100Layer.cpp" />
+    <ClCompile Include="S100LayerBuildPortrayal.cpp" />
     <ClCompile Include="S100LayerPortrayal.cpp" />
     <ClCompile Include="S100SpatialObject.cpp" />
     <ClCompile Include="S100SpatialObjectPortrayal.cpp" />

@@ -67,6 +67,21 @@
         }
       ]
     },
+    "portrayal": {
+      "description": "Portrayal run: the rules of a portrayal catalogue (Lua for S-101, XSLT otherwise) turn a dataset into S-100 Part 9 drawing instructions; no renderer (opens100::portrayal)",
+      "dependencies": [
+        "libxml2",
+        "libxslt",
+        {
+          "name": "opens100",
+          "default-features": false,
+          "features": [
+            "dataset",
+            "lua-scripting"
+          ]
+        }
+      ]
+    },
     "portrayal-catalogue": {
       "description": "S-100 Part 9 portrayal catalogue model and reader: rules, viewing groups, display modes, context parameters (opens100::portrayalcatalogue)",
       "dependencies": [

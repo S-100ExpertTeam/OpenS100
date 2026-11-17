@@ -23,3 +23,9 @@ The dataset model and readers (feature "dataset") are opens100::dataset:
 The Lua session of S-101 portrayal (feature "lua-scripting") is opens100::luascripting:
 
     #include <LuaScriptingReference/lua_session.h>
+
+Running the portrayal rules over a dataset (feature "portrayal") is opens100::portrayal. It
+leaves drawing instructions; a renderer of your own visits them:
+
+    #include <GISLibrary/S100Layer.h>
+    #include <GISLibrary/SENC_InstructionVisitor.h>

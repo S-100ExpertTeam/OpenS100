@@ -1470,10 +1470,13 @@ void ProcessS101::InitPortrayal(const char* topLevelRule, S100SpatialObject* cel
 	theInstance.m_lua_session->register_function("HostPortrayalEmit", HostPortrayalEmit);
 
 	// Extract rules path from top level rule file name
-	std::string rules_path = top_level_rule.substr(0, top_level_rule.find_last_of('\\'));
+	// (either separator: ".../Rules/main.lua" as well as the Windows form)
+	const auto separatorAt = top_level_rule.find_last_of("\\/");
+	const std::string separator(1, separatorAt == std::string::npos ? '\\' : top_level_rule[separatorAt]);
+	std::string rules_path = top_level_rule.substr(0, separatorAt);
 
 	// Setup path so Lua can find the rules files
-	std::string path = rules_path + (std::string)"\\?.lua";
+	std::string path = rules_path + separator + "?.lua";
 
 	theInstance.m_lua_session->set_field("package", "path", path.c_str());
 

@@ -28,6 +28,7 @@ vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
         feature-catalogue OPENS100_BUILD_FEATURECATALOG
         geometry          OPENS100_BUILD_GEOMETRY
         lua-scripting     OPENS100_BUILD_LUASCRIPTING
+        portrayal         OPENS100_BUILD_PORTRAYAL
         portrayal-catalogue OPENS100_BUILD_PORTRAYALCATALOGUE
         system-database   OPENS100_BUILD_SYSTEMDATABASE
 )

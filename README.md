@@ -78,11 +78,12 @@ Each module is a separate CMake target, so you only pull in the dependencies you
 | `opens100::portrayalcatalogue` | `portrayal-catalogue` (default) | S-100 Part 9 portrayal catalogue model and reader: rules, viewing groups, display modes, context parameters. Symbols, line styles, area fills and colour profiles go to a `Portrayal::ResourceStore` the application supplies | pugixml |
 | `opens100::dataset` | `dataset` | Dataset model and readers: S-101 ISO 8211 cells (`S101Cell`), GML (`S10XGML`) and HDF5 (`S100H5`) datasets. No window or renderer | portrayalcatalogue, HDF5, pugixml, polyclipping, Boost.Geometry |
 | `opens100::luascripting` | `lua-scripting` | Lua session of S-100 Part 9a portrayal (Lua 5.1 on LuaJIT), host-call table, drawing instruction results | featurecatalog, LuaJIT |
+| `opens100::portrayal` | `portrayal` | Portrayal run over a dataset: the drawing instruction model (S-100 Part 9), the Lua host for S-101 rules, the XSLT engine. Leaves instructions for a renderer to visit; draws nothing | dataset, luascripting, libxslt, libxml2 |
 | `opens100::coverage` | `coverage` | S-100 Part 10c HDF5 coverages, depth lines, water level adjustment | HDF5 |
 | `opens100::sdb` | `system-database` | Local store of installed datasets and catalogues, S-98 dataset selection, S-100 Part 15 data protection | SQLite, OpenSSL, zlib, pugixml |
 
-Running portrayal against a dataset (the host functions the Lua rules call, the XSLT engine) and
-drawing are built by the Visual Studio solution today and are joining the CMake package as they are separated from Direct2D.
+Drawing is built by the Visual Studio solution today (Direct2D); the package stops at the drawing
+instructions until a portable render backend joins it.
 
 ## What it supports
 

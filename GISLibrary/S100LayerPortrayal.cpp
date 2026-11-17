@@ -1,5 +1,5 @@
 #include "stdafx.h"
-// The parts of S100Layer that open a dataset for display, run its portrayal and draw it.
+// The parts of S100Layer that open a dataset for display and draw it.
 // Kept apart from S100Layer.cpp, which is the model (catalogues, product number, drawing set).
 #include "PathUtil.h"
 #include "TextCompare.h"
@@ -10,7 +10,6 @@
 #include "S100H5.h"
 #include "CoverageDataset.h"
 #include "PortrayalRenderCache.h"
-#include "ProcessS101.h"
 
 #include "../FeatureCatalog/FeatureCatalogue.h"
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
@@ -192,33 +191,4 @@ void S100Layer::DrawInfo(HDC &hDC, Scaler *scaler)
 		graphics.FillRectangle(&internalBrush, position.X, position.Y, position.Width, position.Height);
 		graphics.DrawString(chatName.c_str(), -1, &F, position, &sf, &B); 
 	}
-}
-
-void S100Layer::BuildPortrayalCatalogue()
-{
-	if ((portrayalCatalogue == nullptr) ||
-		(m_spatialObject == nullptr))
-		return;
-
-	if (m_spatialObject->m_FileType != S100_FileType::FILE_S_100_VECTOR)
-		return;
-
-	auto mainRuleFile = portrayalCatalogue->GetMainRuleFile();
-	auto RulefileFormat = portrayalCatalogue->GetRuleFileFormat();
-	auto fileName = mainRuleFile->GetFileNameW();
-	auto rootPath = portrayalCatalogue->GetRootPathW();
-	auto mainRulePath = rootPath + L"Rules\\" + fileName;
-	
-	if (RulefileFormat == Portrayal::FileFormat::LUA)
-		ProcessS101::ProcessS101_LUA(mainRulePath, this);
-	else if (RulefileFormat == Portrayal::FileFormat::XSLT)
-	{
-		auto gml = (S10XGML*)m_spatialObject;
-		gml->SaveToInputXML("..\\TEMP\\input.xml");
-		ProcessS101::ProcessS100_XSLT("..\\TEMP\\input.xml", pugi::as_utf8(mainRulePath), "..\\TEMP\\output.xml");
-		auto s100so = (S100SpatialObject*)m_spatialObject;
-		s100so->OpenOutputXML("..\\TEMP\\output.xml");
-	}
-
-	return;
 }
