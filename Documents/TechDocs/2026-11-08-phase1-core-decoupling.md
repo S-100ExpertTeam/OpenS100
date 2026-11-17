@@ -84,7 +84,14 @@ tainted core headers: 213 (render-side files allowed: 4)
   - [x] (2) PCH를 "표준 헤더 + `#ifdef _WIN32` Windows 블록"으로. 모델 헤더의 `POINT`·`RECT`·`HDC`는 `DeviceTypes.h`(Windows에서는 전방 선언, 그 외에는 단순 구조체). `OutputDebugString` → `GISLibrary::DebugOutput`. 호출자 없는 COM `SAFEARRAY` 오버로드 삭제. LuaScriptingReference도 `windows.h` 없이 빌드. (19d833c9, ff64a2fd)
   - [x] (3a) 모델과 표시(display) 소스 분리: `Layer::Open`/`S100Layer::Open` → `GISLibrary::OpenLayer`(`LayerOpen.cpp`, `S100LayerPortrayal.cpp`), `S100SpatialObject`의 `PCOutputSchemaManager` 생성·삭제 → `S100SpatialObjectPortrayal.cpp`. (167340b4)
   - 실측(2026-11-17, Ubuntu 24.04 GCC 13, 대소문자 구분 복사본): **GISLibrary 346개 중 301개가 컴파일**되고, 표시 소스(`LayerOpen`, `S100LayerPortrayal`, `S100SpatialObjectPortrayal`, `ProcessS101`)를 뺀 오브젝트만으로 링크한 프로그램이 S-101 ISO 8211 셀을 연다(`SampleData/10100AA_X01SE.000`: 피처 21, 정보 1, 점 34, 곡선 40, 면 12). 이 수치를 Windows 빌드의 결과와 대조하지는 않았다.
-  - [ ] (3b) CMake 타깃. 남은 일: ① 소스 목록 확정(컴파일되는 301개 중 데이터셋 읽기에 필요한 닫힌 집합 — Lua 호스트 `host_*.cpp`가 끌려오는지 확인), ② 의존성(`polyclipping`, `hdf5`, 필요 시 Lua 5.1)을 vcpkg 포트 기능으로, ③ 설치 헤더 범위, ④ 소비자 예제에 셀 읽기 추가.
+  - [x] (3b) CMake 타깃 `opens100::dataset`, vcpkg 포트 기능 `dataset`. (fe9c755d, dcec3bac)
+    - 소스: GISLibrary 346개 중 **286개**. 빠지는 60개는 `cmake/GISLibraryDatasetSources.cmake`에 이유별로 적었다 — 표시(Direct2D·GDI) 48, 표시 코드를 부르는 것 3(`DatasetLayerSet`, `Product`, `S101Factory`), 포트레이얼 실행 4(Lua 호스트 `host_*`, `S101LuaScriptingReference`, `ProcessS101`), SDB 의존 4, `Base64String`(OpenSSL) 1. 286개는 `--whole-archive`로 링크해 미해결 심벌이 없는 닫힌 집합임을 확인했다.
+    - 의존성: `portrayalcatalogue`(→ `featurecatalog`, `geometry`, `latlon`), HDF5, pugixml, polyclipping, Boost.Geometry. Lua 5.1·libxml2/libxslt·SQLite·OpenSSL은 필요 없다.
+    - Windows에서도 `GISLIBRARY_MODEL_ONLY`로 PCH의 COM·ATL·GDI+·Direct2D를 건너뛴다(`windows.h`만 남는다). 경고는 `GISLibrary.vcxproj`가 끄는 것(4244·4267·4245·4389·4251)만 끄고 `/W4 /WX /permissive-`로 통과.
+    - 설치 헤더: GISLibrary의 모든 헤더(표시용 헤더도 섞여 있다 — 걸러내지 않았다)와 `LuaScriptingReference/{LuaScriptingReference,spatial_association}.h`(피처 모델이 이름을 쓰는 단순 구조체). `S101Cell.h`는 PCH 없이 include해도 컴파일된다(소비자 예제로 확인). 다른 진입 헤더(`S10XGML.h`, `S100H5.h`)의 단독 include는 확인하지 않았다.
+    - 실측(2026-11-17): 설치된 패키지로 빌드한 소비자 예제가 `SampleData/10100AA_X01SE.000`을 읽어 Windows(MSVC, `cmake --install` 프리픽스)와 Linux(Ubuntu 24.04 GCC 13, vcpkg 오버레이 포트 전체 기능)에서 같은 수를 낸다: 피처 21, 정보 1, 점 34, 곡선 40, 면 12.
+    - CI는 예제의 링크까지만 확인한다. `SampleData/`가 `.gitignore`에 있어 저장소에 데이터셋이 없으므로 셀 읽기 분기는 CI에서 실행되지 않는다. macOS에서는 빌드해 보지 않았다.
+    - 남은 일: 포트레이얼 실행(Lua 5.1은 vcpkg에 포트가 없다 — `lua`는 5.4, 대안은 `luajit`), 추적되는 작은 샘플 데이터셋(CI에서 읽기 실행), 설치 헤더에서 표시용 헤더 분리.
   - 컴파일되지 않는 45개는 실제로 Direct2D·GDI로 그리는 코드다: `SENC_*`(28), `D2D*`·`Gdi*` 렌더러, `LayerManager`, `GISLibrary`(앱 싱글턴), `CoverageDataset`, 교환 카탈로그 뷰(`ExchangeCatalogue`, `S100ExchangeCatalogue`, `Inventory*`), `SHPFile`(GDI `Draw`), `SdbReaders`·`SystemDatabase*`(교환 카탈로그 헤더 경유), `PCOutputSchemaManager`, `PortrayalRenderCache`. 렌더 백엔드 교체(Phase 3)의 범위다.
   - 정리 후보(이번에 건드리지 않음): `LuaScriptingReference/lua_helpers.cpp`는 어느 프로젝트에도 없고 존재하지 않는 `lsr.h`를 include한다.
 
@@ -119,3 +126,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-09 | 줄바꿈 복구(120개 파일), 4-2c: GISLibrary·S100Engine `/W4`+경고=에러, 결함 6건 수정 | 7c919b67, 5466bc38 | 테스트 16/16, 앱 기동 확인 |
 | 2026-11-17 | 5-3 (1)(2): GISLibrary 모델·리더와 LuaScriptingReference에서 `windows.h` 의존 제거 | 19d833c9, ff64a2fd | 테스트 206/209(3개는 외부 데이터 필요로 건너뜀), GCC 구문 통과 149 → 296 |
 | 2026-11-17 | 5-3 (3a): 모델과 표시 소스 분리, `GISLibrary::OpenLayer` | 167340b4 | 테스트 206/209, Linux에서 301개 컴파일·S-101 셀 열기 링크 확인. 뷰어 화면은 눈으로 확인하지 않음 |
+| 2026-11-17 | 5-3 (3b): `opens100::dataset` CMake 타깃과 포트 기능 `dataset`, 소비자 예제에 S-101 셀 읽기 | fe9c755d, dcec3bac | 테스트 206/209(3개는 외부 데이터 필요로 건너뜀), Windows·Linux에서 설치 패키지로 셀 읽기 동일 결과. CI 미실행, macOS 미확인 |
