@@ -25,6 +25,12 @@ namespace GISLibrary
 		D2D1Resources();
 		virtual ~D2D1Resources();
 
+		// Set before the first draw to rasterise in software (WARP) instead of leaving the
+		// choice to the system. The picture then does not depend on the display adapter or on
+		// the state of the session (console, remote, disconnected); picture comparisons in the
+		// tests set it. Off by default: the viewer draws as before.
+		static inline bool softwareRenderTarget = false;
+
 		// Device Independet Resources
 		ID2D1Factory1 *pD2Factory = nullptr;
 		

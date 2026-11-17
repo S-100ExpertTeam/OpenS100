@@ -5,6 +5,8 @@
 // saved as PNG for a human (or an agent) to look at:
 //
 //   set S100_RENDER_OUT=<directory>     default: the per-run temp directory of the tests
+//   set S100_RENDER_SOFTWARE=1          rasterise in software: the same bytes whatever the display
+//                                       adapter or the session state (use it to compare pictures)
 //
 // The assertion is deliberately coarse (the chart is not blank); pixel-exact golden images
 // come with the display-list work in Phase 3.
@@ -444,6 +446,13 @@ TEST(RenderSmoke, DrawsCellsFromEnvironment)
 	}
 	const std::string list(value);
 	free(value);
+
+	char* software = nullptr;
+	if (_dupenv_s(&software, &length, "S100_RENDER_SOFTWARE") == 0 && software)
+	{
+		GISLibrary::D2D1Resources::softwareRenderTarget = std::string(software) == "1";
+		free(software);
+	}
 
 	std::size_t start = 0;
 	while (start <= list.size())
