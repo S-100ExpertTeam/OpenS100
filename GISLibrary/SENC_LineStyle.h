@@ -1,6 +1,6 @@
 #pragma once
 #include "SENC_LineStyleBase.h"
-#include "../S100Engine/S100Render.h"
+#include "DrawTypes.h"
 #include "SENC_Symbol.h"
 #include "SENC_Dash.h"
 #include "SENC_LineSymbol.h"
@@ -8,8 +8,10 @@
 #include "../PortrayalCatalogue/S100_LineStyle.h"
 
 #include <list>
+#include <memory>
 
 class PortrayalCatalogue;
+class S100Render;
 class Scaler;
 class SENC_LineStyle : public SENC_LineStyleBase
 {
@@ -28,14 +30,16 @@ public:
 	int capStyle = 0;
 	int joinStyle = 0;
 	float offset = 0;
-	D2D1_COLOR_F pen_color;
+	GISLibrary::ColorF pen_color;
 	std::wstring colorToken = L"";
 	std::wstring lineStyleName = L"";
 
-	S100Render s100Render;
+	// The Direct2D helper that lays a symbol bitmap along a line. Held by pointer so this header
+	// does not need the render module; created with the line style.
+	std::unique_ptr<S100Render> s100Render;
 public:
-	void SetPenColor(D2D1_COLOR_F value);
-	D2D1_COLOR_F GetPenColor();
+	void SetPenColor(GISLibrary::ColorF value);
+	GISLibrary::ColorF GetPenColor();
 
 	void SetPenColorToken(std::wstring& value);
 	std::wstring GetPenColorToken();

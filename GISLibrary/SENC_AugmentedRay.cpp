@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DConvert.h"
 #include "SENC_AugmentedRay.h"
 #include "SENC_LineStyle.h"
 #include "SENC_LineStyleReference.h"
@@ -194,7 +195,7 @@ void SENC_AugmentedRay::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Portr
 					}
 				}
 				
-				brush->SetColor(ls->pen_color);
+				brush->SetColor(GISLibrary::ToD2D(ls->pen_color));
 
 				if (ls->dashes.size() > 0 || ls->symbols.size() > 0)
 				{

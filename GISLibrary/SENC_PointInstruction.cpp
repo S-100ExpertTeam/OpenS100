@@ -15,7 +15,6 @@
 #include "../PortrayalCatalogue/PortrayalCatalogue.h"
 
 #include <ctime> 
-#include <mmsystem.h> 
 
 SENC_PointInstruction::SENC_PointInstruction()
 {
@@ -534,7 +533,7 @@ SENC_PointInstruction::~SENC_PointInstruction()
 //	}
 //}
 
-void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2F>& points)
+void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<GISLibrary::PointF>& points)
 {
 	auto geom = fr->GetGeometry();	
 
@@ -557,7 +556,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2
 					{
 						double mx = curve->getCenterPoint().GetX();
 						double my = curve->getCenterPoint().GetY();
-						D2D1_POINT_2F sp;
+						GISLibrary::PointF sp;
 						scaler->WorldToDevice_F(mx, my, &sp.x, &sp.y);
 						points.push_back(sp);
 					}
@@ -578,7 +577,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2
 					{
 						double mx = curve->getCenterPoint().GetX();
 						double my = curve->getCenterPoint().GetY();
-						D2D1_POINT_2F sp;
+						GISLibrary::PointF sp;
 						scaler->WorldToDevice_F(mx, my, &sp.x, &sp.y);
 						points.push_back(sp);
 					}
@@ -595,7 +594,7 @@ void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2
 	
 	if (vectorPoint)
 	{
-		D2D1_POINT_2F tempPoint;
+		GISLibrary::PointF tempPoint;
 		double mx = vectorPoint->GetX();
 		double my = vectorPoint->GetY();
 
@@ -610,14 +609,14 @@ void SENC_PointInstruction::GetDrawPoints(Scaler* scaler, std::list<D2D1_POINT_2
 		auto multiPoint = static_cast<SMultiPoint*>(geom);
 		for (int i = 0; i < multiPoint->GetNumPoints(); i++)
 		{
-			D2D1_POINT_2F tempPoint;
+			GISLibrary::PointF tempPoint;
 			scaler->WorldToDevice_F(multiPoint->GetX(i), multiPoint->GetY(i), &tempPoint.x, &tempPoint.y);
 			points.push_back(tempPoint);
 		}
 	}
 	else if (geom)
 	{
-		D2D1_POINT_2F tempPoint;
+		GISLibrary::PointF tempPoint;
 
 		auto mx = geom->GetX();
 		auto my = geom->GetY();

@@ -19,7 +19,6 @@
 #include "../PortrayalCatalogue/S100_TextInstruction.h"
 
 #include <ctime> 
-#include <mmsystem.h> 
 
 SENC_TextInstruction::SENC_TextInstruction()
 {
@@ -163,7 +162,7 @@ void rotate_v(double &nx, double &ny, double tx, double ty, double cx, double cy
 //	}
 //}
 //
-void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F> &points)
+void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<GISLibrary::PointF> &points)
 {
 	auto geom = fr->GetGeometry();
 
@@ -190,7 +189,7 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 					{
 						double mx = curve->getCenterPoint().GetX();
 						double my = curve->getCenterPoint().GetY();
-						D2D1_POINT_2F sp;
+						GISLibrary::PointF sp;
 						scaler->WorldToDevice_F(mx, my, &sp.x, &sp.y);
 						points.push_back(sp);
 					}
@@ -210,7 +209,7 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 					{
 						double mx = curve->getCenterPoint().GetX();
 						double my = curve->getCenterPoint().GetY();
-						D2D1_POINT_2F sp;
+						GISLibrary::PointF sp;
 						scaler->WorldToDevice_F(mx, my, &sp.x, &sp.y);
 						points.push_back(sp);
 					}
@@ -226,7 +225,7 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<D2D1_POINT_2F
 	}
 	else
 	{
-		D2D1_POINT_2F tempPoint;
+		GISLibrary::PointF tempPoint;
 
 		auto mx = geom->GetX();
 		auto my = geom->GetY();

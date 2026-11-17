@@ -3,6 +3,8 @@
 #include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_LineStyle.h"
+#include "D2DConvert.h"
+#include "../S100Engine/S100Render.h"
 #include "D2DGeometryCache.h"
 #include "SENC_CommonFuc.h"
 #include "GISLibrary.h"
@@ -17,6 +19,7 @@
 SENC_LineStyle::SENC_LineStyle() : SENC_LineStyleBase()
 {
 	type = 1;
+	s100Render = std::make_unique<S100Render>();
 }
 
 SENC_LineStyle::~SENC_LineStyle()
@@ -31,12 +34,12 @@ SENC_LineStyle::~SENC_LineStyle()
 	}
 }
 
-void SENC_LineStyle::SetPenColor(D2D1_COLOR_F value)
+void SENC_LineStyle::SetPenColor(GISLibrary::ColorF value)
 {
 	pen_color = value;
 }
 
-D2D1_COLOR_F SENC_LineStyle::GetPenColor()
+GISLibrary::ColorF SENC_LineStyle::GetPenColor()
 {
 	return pen_color;
 }
@@ -66,7 +69,7 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 
 	if (colorProfile)
 	{
-		SetPenColor(colorProfile->GetColor(_colorToken));
+		SetPenColor(GISLibrary::FromD2D(colorProfile->GetColor(_colorToken)));
 		SetPenColorToken(_colorToken);
 	}
 
@@ -100,7 +103,7 @@ void SENC_LineStyle::GetStyleFromS100(S100_LineStyle* lineStyle, PortrayalCatalo
 
 void SENC_LineStyle::ChangePallete(PortrayalCatalogue *pc)
 {
-	SetPenColor(GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile()->GetColor(GetPenColorToken()));
+	SetPenColor(GISLibrary::FromD2D(GISLibrary::PortrayalRender::Caches(pc)->GetS100ColorProfile()->GetColor(GetPenColorToken())));
 }
 
 void SENC_LineStyle::SetLineStyleName(const std::wstring& value)
@@ -185,7 +188,7 @@ void SENC_LineStyle::DrawInstruction(
 						}
 					}
 
-					s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler), GetPenColor(), strokeGroup->at(1));
+					s100Render->DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler), GISLibrary::ToD2D(GetPenColor()), strokeGroup->at(1));
 					SafeRelease(&pBitmap);
 				}
 			}
@@ -196,7 +199,7 @@ void SENC_LineStyle::DrawInstruction(
 	}
 	else
 	{
-		auto PEN_COLOR = GetPenColor();
+		auto PEN_COLOR = GISLibrary::ToD2D(GetPenColor());
 		auto PEN_WIDTH = (float)((pen_width + 0.01) / 0.32);
 
 		D2D1_COLOR_F color = PEN_COLOR;

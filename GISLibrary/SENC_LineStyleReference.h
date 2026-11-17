@@ -1,9 +1,10 @@
 #pragma once
 #include "SENC_LineStyleBase.h"
-#include "../S100Engine/S100Render.h"
-#include "string"
+#include <memory>
+#include <string>
 
 class S100_LineStyleReference;
+class S100Render;
 class SENC_LineStyleReference : public SENC_LineStyleBase
 {
 public:
@@ -12,7 +13,9 @@ public:
 
 public:
 	std::wstring reference;
-	S100Render s100Render;
+	// The Direct2D helper that lays a symbol bitmap along a line. Held by pointer so this header
+	// does not need the render module; created with the line style.
+	std::unique_ptr<S100Render> s100Render;
 
 public:
 	void GetStyleFromS100(S100_LineStyleReference* lineStyle);

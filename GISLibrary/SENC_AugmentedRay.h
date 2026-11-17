@@ -1,5 +1,6 @@
 #pragma once
 #include "SENC_Instruction.h"
+#include "D2DForward.h"
 #include "SENC_LineStyleBase.h"
 
 class SENC_AugmentedRay :

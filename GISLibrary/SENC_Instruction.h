@@ -1,6 +1,8 @@
 #pragma once
 
 #include "SENC_AlertReference.h"
+#include "D2DForward.h"
+#include "DrawTypes.h"
 
 #include "../GeoMetryLibrary/Scaler.h"
 
@@ -115,7 +117,7 @@ public:
 	//virtual void GetDrawPointsDynamic(Scaler *scaler, std::list<D2D1_POINT_2F> &points){};
 	
 	virtual void DrawInstruction(
-		D2D1Resources* /*d2*/,
+		GISLibrary::D2D1Resources* /*d2*/,
 		Scaler */*scaler*/, 
 		PortrayalCatalogue* /*pc*/ = nullptr) {};
 

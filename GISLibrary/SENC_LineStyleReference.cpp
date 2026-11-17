@@ -3,6 +3,7 @@
 #include "D2DView.h"
 #include "../S100Engine/S100PCManager.h"
 #include "SENC_LineStyleReference.h"
+#include "../S100Engine/S100Render.h"
 #include "GISLibrary.h"
 #include "SCurve.h"
 
@@ -14,6 +15,7 @@
 SENC_LineStyleReference::SENC_LineStyleReference()
 {
 	type = 2;
+	s100Render = std::make_unique<S100Render>();
 }
 
 SENC_LineStyleReference::~SENC_LineStyleReference()
@@ -90,7 +92,7 @@ void SENC_LineStyleReference::DrawInstruction(
 			else
 			{
 				//pc->GetS100Render().DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, scaler->GetD2Rect());
-				s100Render.DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler));
+				s100Render->DrawBitmapOnPolyline(rt, d2Points, numPoints, pBitmap, GISLibrary::D2DView::Rect(*scaler));
 				SafeRelease(&pBitmap);
 			}
 		}

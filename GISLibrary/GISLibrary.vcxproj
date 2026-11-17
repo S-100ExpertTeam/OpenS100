@@ -768,6 +768,7 @@
     <ClInclude Include="DatasetLayerSet.h" />
     <ClInclude Include="DebugOutput.h" />
     <ClInclude Include="D2DConvert.h" />
+    <ClInclude Include="D2DForward.h" />
     <ClInclude Include="DeviceTypes.h" />
     <ClInclude Include="DrawTypes.h" />
     <ClInclude Include="DatasetPermit.h" />

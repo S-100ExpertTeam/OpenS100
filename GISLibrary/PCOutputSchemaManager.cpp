@@ -46,7 +46,6 @@
 
 #include <pugixml.hpp>
 
-#include <mmsystem.h> 
 
 PCOutputSchemaManager::PCOutputSchemaManager()
 {

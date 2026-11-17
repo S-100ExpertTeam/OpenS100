@@ -1,4 +1,6 @@
 #pragma once
+#include "D2DForward.h"
+
 #include <vector>
 
 class PortrayalCatalogue;

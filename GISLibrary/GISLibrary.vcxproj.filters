@@ -2240,6 +2240,9 @@
     <ClInclude Include="D2DConvert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="D2DForward.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="DrawTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>

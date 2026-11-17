@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "D2DConvert.h"
 #include "GISLibrary.h"
 #include "D2D1Resources.h"
 #include "SENC_AugmentedPath.h"
@@ -146,7 +147,7 @@ void SENC_AugmentedPath::DrawInstruction(D2D1Resources* d2, Scaler *scaler, Port
 					auto pGeometry = *iter;
 
 					//brush->SetColor(D2D1::ColorF((FLOAT)(GetRValue(ls->pen_color) / 255.0), (FLOAT)(GetGValue(ls->pen_color) / 255.0), (FLOAT)(GetBValue(ls->pen_color) / 255.0)));
-					brush->SetColor(ls->pen_color);
+					brush->SetColor(GISLibrary::ToD2D(ls->pen_color));
 
 					if (ls->dashes.size() > 0)
 					{

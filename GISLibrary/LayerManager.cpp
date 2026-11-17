@@ -496,7 +496,7 @@ void LayerManager::AddSymbolDrawing(
 	std::list<SENC_Instruction*>* text,
 	PortrayalCatalogue* pc)
 {
-	std::list<D2D1_POINT_2F> points;
+	std::list<GISLibrary::PointF> points;
 
 	D2->pRT->SetTransform(GISLibrary::D2DView::Matrix(*scaler));
 
@@ -771,7 +771,7 @@ void LayerManager::AddSymbolDrawing(
 
 					for (auto itor = points.begin(); itor != points.end(); itor++)
 					{
-						D2D1_POINT_2F* p = &(*itor);
+						GISLibrary::PointF* p = &(*itor);
 
 						float x = p->x + offset_x;
 						float y = p->y + offset_y;

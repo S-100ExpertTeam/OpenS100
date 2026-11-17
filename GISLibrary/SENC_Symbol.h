@@ -7,7 +7,7 @@
 #include "SENC_OverrideColor.h"
 #include "SENC_VectorPoint.h"
 
-#include "../S100Engine/SVGReader.h"
+#include "D2DForward.h"
 
 class SENC_Symbol
 {
