@@ -106,6 +106,13 @@ tainted core headers: 213 (render-side files allowed: 4)
     - 실측(2026-11-17): Release x64 솔루션 빌드, 테스트 206/209(3개는 외부 데이터 필요로 건너뜀). 다시 빌드한 솔루션으로 그린 KOR TDS 808개 셀이 앞서 DLL만 바꿔 그린 808개와 바이트 단위로 같다. 설치된 패키지로 빌드한 소비자 예제가 Windows(MSVC)와 Linux(Ubuntu 24.04 GCC 13, vcpkg 오버레이 포트 전체 기능) 모두에서 `LuaJIT 2.1.1793383622`, `%.0f`의 0.5·2.5 → `0`·`2`를 낸다.
     - 확인하지 않은 것: Win32·ARM64 구성과 Debug 구성의 솔루션 빌드, 뷰어 화면, macOS, CI.
   - [ ] (4b) 포트레이얼 실행을 패키지로: Lua 호스트(`host_data`, `host_functions`, `S101LuaScriptingReference`)와 `ProcessS101`. `ProcessS101`은 결과를 표시 쪽 구조(`PCOutputSchemaManager`, `SENC_*`)로 넘기고 libxslt도 쓰므로, 그리기 명령을 표시와 무관한 형태로 받는 경계를 먼저 정해야 한다.
+  - [x] (5) 인스트럭션 모델(`SENC_*`)에서 Direct2D 타입 걷어내기. (b18e099b, b4e2517c)
+    - 값 타입: `D2D1_COLOR_F`·`D2D1_POINT_2F` → `GISLibrary::ColorF`·`PointF`(`DrawTypes.h`, 같은 메모리 배치). 변환은 그리는 쪽에서만(`D2DConvert.h`). 대상: `SENC_Color`, `SENC_Element::pColor`, `SENC_LineStyle::pen_color`, 교환 카탈로그 `Inventory*`의 커버리지 폴리곤, 점·텍스트 인스트럭션의 `GetDrawPoints`.
+    - 헤더: 그리기 함수가 포인터로만 받는 Direct2D 인터페이스는 전방 선언(`D2DForward.h`). `SENC_LineStyle`·`SENC_LineStyleReference`는 `S100Render`를 값 멤버 대신 `unique_ptr`로(개수·수명은 전과 같다). `SENC_Symbol.h`는 `SVGReader.h`를 include하지 않는다.
+    - 옮기거나 지운 것: `SENC_Color::ChangePallete` → `SENC_ColorPalette.cpp`(표시 쪽), 호출자 없는 `SENC_Font::getFontStyle` 삭제, 쓰이지 않는 `<mmsystem.h>` include 3곳 삭제.
+    - 실측(2026-11-17, Ubuntu 24.04 GCC 13): **GISLibrary 347개 중 323개 컴파일**(이 작업 전 301/346). Windows: Release x64 솔루션 빌드, 테스트 206/209(3개는 외부 데이터 필요로 건너뜀), KOR TDS 셀 150개의 그림이 작업 전과 바이트 단위로 같다, CMake `dataset` 타깃 빌드 통과.
+    - 새로 컴파일되는 22개(`PCOutputSchemaManager`, `SENC_Instruction`·`PointInstruction`·`Template`·`Symbol`·`Hatch` 등)는 아직 `opens100::dataset`에 넣지 않았다. 그리기 함수(`DrawInstruction`)가 가상 함수라 표시 소스 없이는 링크되지 않는다.
+    - 남은 24개는 Direct2D·GDI를 실제로 호출한다: `D2D*`·`Gdi*`·`DepthSuppression`·`CoverageDataset`·`LayerManager`·`GISLibrary`·`PortrayalRenderCache`·`S100EditRender`·`S100LayerPortrayal`·교환 카탈로그 뷰 2개·`SHPFile`·`S100Utilities`, 그리고 `SENC_AreaInstruction`·`AugmentedPath`·`AugmentedRay`·`LineInstruction`·`LineStyle`·`LineStyleBase`·`LineStyleReference`·`TextInstruction`·`DisplayList`·`ColorPalette`. S100Engine 36개는 PCH부터 Direct2D 모듈이다. 이 이상은 그리기를 인스트럭션 클래스 밖으로 빼는 설계(Phase 3)가 있어야 한다.
   - 컴파일되지 않는 45개는 실제로 Direct2D·GDI로 그리는 코드다: `SENC_*`(28), `D2D*`·`Gdi*` 렌더러, `LayerManager`, `GISLibrary`(앱 싱글턴), `CoverageDataset`, 교환 카탈로그 뷰(`ExchangeCatalogue`, `S100ExchangeCatalogue`, `Inventory*`), `SHPFile`(GDI `Draw`), `SdbReaders`·`SystemDatabase*`(교환 카탈로그 헤더 경유), `PCOutputSchemaManager`, `PortrayalRenderCache`. 렌더 백엔드 교체(Phase 3)의 범위다.
   - 정리 후보(이번에 건드리지 않음): `LuaScriptingReference/lua_helpers.cpp`는 어느 프로젝트에도 없고 존재하지 않는 `lsr.h`를 include한다.
 
@@ -142,3 +149,4 @@ tainted core headers: 213 (render-side files allowed: 4)
 | 2026-11-17 | 5-3 (3a): 모델과 표시 소스 분리, `GISLibrary::OpenLayer` | 167340b4 | 테스트 206/209, Linux에서 301개 컴파일·S-101 셀 열기 링크 확인. 뷰어 화면은 눈으로 확인하지 않음 |
 | 2026-11-17 | 5-3 (3b): `opens100::dataset` CMake 타깃과 포트 기능 `dataset`, 소비자 예제에 S-101 셀 읽기 | fe9c755d, dcec3bac | 테스트 206/209(3개는 외부 데이터 필요로 건너뜀), Windows·Linux에서 설치 패키지로 셀 읽기 동일 결과. CI 미실행, macOS 미확인 |
 | 2026-11-17 | 5-3 (4a): Lua를 vcpkg `luajit`으로 교체(`extlibs/Lua` 삭제), `opens100::luascripting`과 포트 기능 `lua-scripting`. x.5 반올림 변화 수용 | 99187994, 69023c56 | 테스트 206/209, 808개 셀 그림이 vcpkg DLL 교체 시험과 동일, Windows·Linux 소비자 예제에서 같은 엔진·같은 반올림. Win32/ARM64/Debug·CI·macOS 미확인 |
+| 2026-11-17 | 5-3 (5): `SENC_*` 인스트럭션 모델에서 Direct2D 값 타입·헤더 의존 제거(`DrawTypes.h`, `D2DConvert.h`, `D2DForward.h`) | b18e099b, b4e2517c | 테스트 206/209, 150개 셀 그림 동일, Linux 컴파일 301 → 323(전체 347). 808개 전체 재렌더링·뷰어 화면·CI 미확인 |
