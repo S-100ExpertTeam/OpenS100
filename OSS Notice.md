@@ -9,8 +9,8 @@ The MIT License (MIT)
 ### HDF5
 Limited portions of HDF5 were developed by Lawrence Berkeley National Laboratory (LBNL).
 
-### Lua
-The MIT License (MIT)
+### LuaJIT
+The MIT License (MIT). Includes Lua, Copyright (C) 1994-2012 Lua.org, PUC-Rio (MIT).
 
 ### pugixml
 The MIT License (MIT)

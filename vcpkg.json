@@ -11,6 +11,7 @@
     "polyclipping",
     "hdf5",
     "libxslt",
+    "luajit",
     "libxml2",
     "openssl",
     "zlib",

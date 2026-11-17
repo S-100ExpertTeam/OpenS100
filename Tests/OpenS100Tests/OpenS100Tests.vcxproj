@@ -59,11 +59,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <!-- LuaScriptingReference.dll imports lua51.dll from the extlibs folder; no project copies it to OutDir otherwise. -->
-      <Command>xcopy /Y /D "$(SolutionDir)extlibs\Lua\bin\x64\lua51.dll" "$(OutDir)"</Command>
-      <Message>Copy lua51.dll next to the test executable</Message>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

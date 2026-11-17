@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "lua_reference.h"
 #include "lua_session.h"
-#include "../extlibs/Lua/include/lua.h"
 
 lua_reference::lua_reference(lua_session *ls)
 {

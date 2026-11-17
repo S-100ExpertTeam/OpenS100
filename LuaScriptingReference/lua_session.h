@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../extlibs/Lua/include/lua.hpp"
+#include <lua.hpp>
 
 #include "lua_reference.h"
 #include "LuaScriptingReference.h"
