@@ -15,6 +15,7 @@
 #ifdef OPENS100_CONSUMER_HAS_PORTRAYAL
 #include <GeoMetryLibrary/Scaler.h>
 #include <charconv>
+#include <cmath>
 #include <string>
 #include <GISLibrary/DisplayListJson.h>
 #include <GISLibrary/DisplayListPainter.h>
@@ -43,7 +44,7 @@ namespace
 		void Visit(SENC_AugmentedPath&) override { path++; }
 	};
 
-	// A render backend of the smallest kind: it is asked to stroke paths and writes down what
+	// A render backend of the smallest kind: it is asked to stroke paths and place symbols and writes down what
 	// it was asked. A real one (Skia, Cairo, a canvas) draws them; the S-100 side of drawing,
 	// where things go on the screen and how they are stroked, is DisplayListPainter and is the
 	// same for all of them.
@@ -52,6 +53,7 @@ namespace
 	public:
 		std::string text;
 		int strokes = 0;
+		int symbols = 0;
 
 		void SetTransform(const s100::render::Transform& transform) override
 		{
@@ -114,9 +116,29 @@ namespace
 			text += '\n';
 		}
 
+		void DrawSymbol(const std::string& reference, s100::render::PointF at, float rotationDegrees, float scale) override
+		{
+			symbols++;
+			text += "symbol " + reference + " at";
+			Number(at.x);
+			Number(at.y);
+			text += " rotation";
+			Number(rotationDegrees);
+			text += " scale";
+			Number(scale);
+			text += '\n';
+		}
+
 	private:
+		// To a thousandth: the last bits of a coordinate differ between platforms (a point on
+		// the edge of the dataset came out as 1e-11 on one and 0 on another).
 		void Number(float value)
 		{
+			value = std::round(value * 1000.0f) / 1000.0f;
+			if (value == 0)
+			{
+				value = 0;   // no "-0"
+			}
 			char buffer[32];
 			const auto end = std::to_chars(buffer, buffer + sizeof(buffer), value).ptr;
 			text += ' ';
@@ -305,9 +327,15 @@ int main(int argc, char** argv)
 			{
 				instruction->Accept(painter);
 			}
-			std::cout << "painted:       " << renderer.strokes << " strokes, hash "
+			std::cout << "painted:       " << renderer.symbols << " symbols, " << renderer.strokes << " strokes, hash "
 				<< std::hex << std::setw(16) << std::setfill('0') << GISLibrary::JsonHash(renderer.text)
 				<< std::dec << std::setfill(' ') << "\n";
+			if (jsonDirectory)
+			{
+				std::ofstream out(std::filesystem::path(jsonDirectory) / (cellPath.stem().string() + ".painted.txt"),
+					std::ios::binary | std::ios::trunc);
+				out << renderer.text;
+			}
 		}
 	}
 #endif

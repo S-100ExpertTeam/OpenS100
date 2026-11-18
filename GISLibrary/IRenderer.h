@@ -15,6 +15,7 @@
 // D2DInstructionPainter to DisplayListPainter brings the primitives it needs.
 #include "DrawTypes.h"
 
+#include <string>
 #include <vector>
 
 namespace s100::render
@@ -95,5 +96,12 @@ namespace s100::render
 		// Replaces the transform; it stays until the next call.
 		virtual void SetTransform(const Transform& transform) = 0;
 		virtual void StrokePath(const Path& path, const ColorF& color, const Stroke& stroke) = 0;
+
+		// A symbol of the portrayal catalogue with its pivot at a point of the surface (device
+		// pixels, whatever the transform), turned clockwise by so many degrees. The scale is
+		// pixels to a millimetre of the symbol. The backend owns what a symbol looks like (it
+		// built it from the SVG of the catalogue) and the palette it is coloured in. The
+		// transform is the same after the call as before.
+		virtual void DrawSymbol(const std::string& reference, PointF at, float rotationDegrees, float scale) = 0;
 	};
 }

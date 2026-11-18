@@ -3,8 +3,6 @@
 #include "D2DConvert.h"
 #include "D2DGeometryCache.h"
 #include "D2DInstructionCache.h"
-#include "D2DRenderer.h"
-#include "DisplayListPainter.h"
 #include "D2DView.h"
 #include "D2D1Resources.h"
 #include "PortrayalRenderCache.h"
@@ -71,7 +69,8 @@ namespace
 namespace GISLibrary
 {
 	D2DInstructionPainter::D2DInstructionPainter(D2D1Resources* d2, Scaler* scaler, PortrayalCatalogue* pc)
-		: d2(d2), scaler(scaler), pc(pc)
+		: d2(d2), scaler(scaler), pc(pc), renderer(d2, pc),
+		shared(renderer, *scaler, [pc](const std::wstring& token) { return PortrayalRender::Color(pc, token); })
 	{
 	}
 
@@ -615,94 +614,17 @@ void GISLibrary::D2DInstructionPainter::Visit(SENC_AugmentedPath& instruction)
 
 void GISLibrary::D2DInstructionPainter::PaintOnRenderer(SENC_Instruction& instruction)
 {
-	GISLibrary::D2DRenderer renderer(d2);
 	if (!renderer.Ready())
 	{
 		return;
 	}
-	s100::render::DisplayListPainter painter(renderer, *scaler,
-		[this](const std::wstring& token) { return GISLibrary::PortrayalRender::Color(pc, token); });
-	instruction.Accept(painter);
+	instruction.Accept(shared);
 }
 
-// ---- LayerManager::AddSymbolDrawing, the body of the loop over point instructions
-void GISLibrary::D2DInstructionPainter::Visit(SENC_PointInstruction& target)
+// ---- Point instructions: drawn by the shared painter as well
+void GISLibrary::D2DInstructionPainter::Visit(SENC_PointInstruction& instruction)
 {
-	auto D2 = d2;
-	auto instruction = &target;
-
-	points.clear();
-
-	//if (ENCCommon::AREA_SYMBOL_DYNAMIC_POSITION_MODE)
-	//{
-	//	instruction->GetDrawPointsDynamic(scaler, points);
-	//}
-	//else
-	//{
-	//	instruction->GetDrawPoints(scaler, points);
-	//}
-	instruction->GetDrawPoints(scaler, points);
-
-	for (auto pi = points.begin(); pi != points.end(); pi++)
-	{
-		// A rotation from north (GeographicCRS) starts from where north is at the point,
-		// which is not up about a pole.
-		float northAngle = 0;
-		if (IsPolarProjection())
-		{
-			double mx = 0;
-			double my = 0;
-			scaler->DeviceToWorld(static_cast<long>(pi->x), static_cast<long>(pi->y), &mx, &my);
-			northAngle = static_cast<float>(NorthAngle(mx, my));
-		}
-
-		// rotate Point
-		if (scaler->GetRotationDegree())
-		{
-			double radian = (180 - scaler->GetRotationDegree()) * DEG2RAD;
-
-			FLOAT tempX = (float)(scaler->soy - pi->y) * (float)sin(radian) + (float)(scaler->sox - pi->x) * (float)cos(radian);
-			FLOAT tempY = (float)(scaler->soy - pi->y) * (float)cos(radian) - (float)(scaler->sox - pi->x) * (float)sin(radian);
-
-			pi->x = tempX + (float)scaler->sox;
-			pi->y = tempY + (float)scaler->soy;
-		}
-
-		float rotation = 0;
-
-		if ((instruction->symbol)->rotation)
-		{
-			rotation = (float)(instruction->symbol)->rotation;
-		}
-		if (instruction->symbol->rotationCRS == GEOGRAPHIC_CRS)
-		{
-			rotation += northAngle;
-		}
-
-
-		if (instruction && instruction->symbol)
-		{
-			auto s100PCManager = GISLibrary::PortrayalRender::Caches(pc);
-			if (s100PCManager)
-			{
-				auto pRenderTarget = D2->RenderTarget();
-
-				D2D1::Matrix3x2F oldTransform;
-				pRenderTarget->GetTransform(&oldTransform);
-
-				s100PCManager->Draw(
-					pugi::as_utf8(instruction->symbol->reference),
-					pRenderTarget,
-					D2->SolidColorBrush(),
-					D2->SolidStrokeStyle(),
-					D2D1::Point2F(pi->x, pi->y),
-					rotation,
-					5);
-
-				pRenderTarget->SetTransform(oldTransform);
-			}
-		}
-	}
+	PaintOnRenderer(instruction);
 }
 
 // ---- LayerManager::AddSymbolDrawing, the body of the loop over text instructions

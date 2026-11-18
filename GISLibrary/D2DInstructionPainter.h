@@ -1,4 +1,6 @@
 #pragma once
+#include "D2DRenderer.h"
+#include "DisplayListPainter.h"
 #include "DrawTypes.h"
 #include "SENC_InstructionVisitor.h"
 
@@ -24,7 +26,7 @@ namespace GISLibrary
 	public:
 		D2DInstructionPainter(D2D1Resources* d2, Scaler* scaler, PortrayalCatalogue* pc);
 
-		void Visit(SENC_PointInstruction& target) override;
+		void Visit(SENC_PointInstruction& instruction) override;
 		void Visit(SENC_LineInstruction& instruction) override;
 		void Visit(SENC_AreaInstruction& instruction) override;
 		void Visit(SENC_TextInstruction& target) override;
@@ -45,6 +47,10 @@ namespace GISLibrary
 		D2D1Resources* d2;
 		Scaler* scaler;
 		PortrayalCatalogue* pc;
+
+		// The backend-neutral painter and the Direct2D surface it draws on.
+		D2DRenderer renderer;
+		s100::render::DisplayListPainter shared;
 
 		// The curve the line style being visited is drawn along.
 		SCurve* styleCurve = nullptr;

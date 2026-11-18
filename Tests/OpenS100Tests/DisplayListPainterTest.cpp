@@ -2,6 +2,7 @@
 // is asked to draw.
 #include <gtest/gtest.h>
 
+#include <cmath>
 #include <filesystem>
 #include <format>
 #include <fstream>
@@ -22,6 +23,14 @@
 
 namespace
 {
+	// To a thousandth, as the consumer example writes it: the last bits of a coordinate differ
+	// between platforms.
+	float Q(float value)
+	{
+		value = std::round(value * 1000.0f) / 1000.0f;
+		return value == 0 ? 0.0f : value;
+	}
+
 	// Writes every call down as a line of text.
 	class RecordingRenderer : public s100::render::IRenderer
 	{
@@ -37,8 +46,8 @@ namespace
 			for (const auto& step : transform)
 			{
 				text += step.kind == s100::render::TransformStep::Kind::Rotate
-					? std::format(" rotate {}", step.degrees)
-					: std::format(" translate {} {}", step.x, step.y);
+					? std::format(" rotate {}", Q(step.degrees))
+					: std::format(" translate {} {}", Q(step.x), Q(step.y));
 			}
 			text += "\n";
 		}
@@ -48,33 +57,41 @@ namespace
 		{
 			strokes++;
 			dashed += stroke.dashes.empty() ? 0 : 1;
-			text += std::format("stroke width {} color {} {} {} {} dashes", stroke.width, color.r, color.g, color.b, color.a);
+			text += std::format("stroke width {} color {} {} {} {} dashes", Q(stroke.width), Q(color.r), Q(color.g), Q(color.b), Q(color.a));
 			for (const float dash : stroke.dashes)
 			{
-				text += std::format(" {}", dash);
+				text += std::format(" {}", Q(dash));
 			}
 			for (const auto& figure : path.figures)
 			{
-				text += std::format(" | from {} {}", figure.start.x, figure.start.y);
+				text += std::format(" | from {} {}", Q(figure.start.x), Q(figure.start.y));
 				for (const auto& to : figure.lines)
 				{
-					text += std::format(" line {} {}", to.x, to.y);
+					text += std::format(" line {} {}", Q(to.x), Q(to.y));
 				}
 				text += figure.closed ? " closed" : " open";
 			}
 			for (const auto& arc : path.arcs)
 			{
 				arcs++;
-				text += std::format(" | arc radius {} from {} to {}", arc.radius, arc.startDegrees, arc.endDegrees);
+				text += std::format(" | arc radius {} from {} to {}", Q(arc.radius), Q(arc.startDegrees), Q(arc.endDegrees));
 			}
 			text += "\n";
 		}
+
+		void DrawSymbol(const std::string& reference, s100::render::PointF at, float rotationDegrees, float scale) override
+		{
+			symbols++;
+			text += std::format("symbol {} at {} {} rotation {} scale {}\n", reference, Q(at.x), Q(at.y), Q(rotationDegrees), Q(scale));
+		}
+
+		int symbols = 0;
 	};
 }
 
-// A sample cell with lights: its augmented rays and paths (sector limits and arcs) drawn on the
+// A sample cell with lights: its symbols and its augmented rays and paths (sector limits and arcs) drawn on the
 // recording renderer. No Direct2D and no window: this is what runs on every platform.
-TEST(DisplayListPainter, AugmentedGeometryOfTheSampleCellIsStrokedAsRecorded)
+TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 {
 	const auto root = testpaths::repoRoot();
 	const auto cellPath = root / "SampleData" / "10100AA_X01NE.000";
@@ -116,16 +133,17 @@ TEST(DisplayListPainter, AugmentedGeometryOfTheSampleCellIsStrokedAsRecorded)
 
 	EXPECT_EQ(rays, 10);
 	EXPECT_EQ(paths, 10);
-	EXPECT_GE(renderer.strokes, rays);          // every ray is a stroke; a path has an arc a stroke
+	EXPECT_EQ(renderer.strokes, 20);            // every ray is a stroke; here every path has one arc
+	EXPECT_GT(renderer.symbols, 0);             // a point instruction is a symbol at each of its points
 	EXPECT_GT(renderer.arcs, 0);
 	EXPECT_GT(lookups, 0);
 
 	const std::string hash = std::format("{:016x}", GISLibrary::JsonHash(renderer.text));
-	if (hash != "d89733292a9a0986")
+	if (hash != "42af51448573ee52")
 	{
 		const auto dump = testpaths::tempDir() / "10100AA_X01NE.strokes.txt";
 		std::ofstream(dump, std::ios::binary | std::ios::trunc) << renderer.text;
 		ADD_FAILURE() << "recorded calls hash " << hash << ", strokes " << renderer.strokes << ", arcs " << renderer.arcs
-			<< ", dashed " << renderer.dashed << "; the text is in " << dump;
+			<< ", dashed " << renderer.dashed << ", symbols " << renderer.symbols << "; the text is in " << dump;
 	}
 }

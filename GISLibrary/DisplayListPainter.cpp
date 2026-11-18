@@ -7,7 +7,10 @@
 #include "SENC_AugmentedRay.h"
 #include "SENC_Dash.h"
 #include "SENC_LineStyle.h"
+#include "SENC_Define.h"
 #include "SENC_Path.h"
+#include "SENC_PointInstruction.h"
+#include "SENC_Symbol.h"
 #include "SENC_Sector.h"
 #include "SGeometry.h"
 #include "SPoint.h"
@@ -16,6 +19,8 @@
 #include "../GeoMetryLibrary/GeoCommonFuc.h"
 #include "../GeoMetryLibrary/Scaler.h"
 #include "../LatLonUtility/LatLonUtility.h"
+
+#include <pugixml.hpp>
 
 #include <cmath>
 #include <utility>
@@ -29,6 +34,9 @@ namespace
 {
 	// Millimetres of an augmented ray or arc to pixels.
 	const float factor = 3.5;
+
+	// Pixels to a millimetre of a symbol.
+	const float symbolScale = 5;
 }
 
 namespace s100::render
@@ -36,6 +44,59 @@ namespace s100::render
 	DisplayListPainter::DisplayListPainter(IRenderer& renderer, Scaler& scaler, ColorLookup color)
 		: renderer(renderer), scaler(scaler), color(std::move(color))
 	{
+	}
+
+	// A symbol at every point the instruction is drawn at (a point feature, the points of a
+	// multipoint, the place chosen in a surface), turned as the instruction says.
+	void DisplayListPainter::Visit(SENC_PointInstruction& target)
+	{
+		auto instruction = &target;
+		if (!instruction->symbol)
+		{
+			return;
+		}
+
+		points.clear();
+		instruction->GetDrawPoints(&scaler, points);
+
+		for (auto pi = points.begin(); pi != points.end(); pi++)
+		{
+			// A rotation from north (GeographicCRS) starts from where north is at the point,
+			// which is not up about a pole.
+			float northAngle = 0;
+			if (IsPolarProjection())
+			{
+				double mx = 0;
+				double my = 0;
+				scaler.DeviceToWorld(static_cast<long>(pi->x), static_cast<long>(pi->y), &mx, &my);
+				northAngle = static_cast<float>(NorthAngle(mx, my));
+			}
+
+			// rotate Point
+			if (scaler.GetRotationDegree())
+			{
+				double radian = (180 - scaler.GetRotationDegree()) * DEG2RAD;
+
+				float tempX = (float)(scaler.soy - pi->y) * (float)sin(radian) + (float)(scaler.sox - pi->x) * (float)cos(radian);
+				float tempY = (float)(scaler.soy - pi->y) * (float)cos(radian) - (float)(scaler.sox - pi->x) * (float)sin(radian);
+
+				pi->x = tempX + (float)scaler.sox;
+				pi->y = tempY + (float)scaler.soy;
+			}
+
+			float rotation = 0;
+
+			if ((instruction->symbol)->rotation)
+			{
+				rotation = (float)(instruction->symbol)->rotation;
+			}
+			if (instruction->symbol->rotationCRS == GEOGRAPHIC_CRS)
+			{
+				rotation += northAngle;
+			}
+
+			renderer.DrawSymbol(pugi::as_utf8(instruction->symbol->reference), { pi->x, pi->y }, rotation, symbolScale);
+		}
 	}
 
 	// A ray from a point feature: a line of a given length in a given direction from north

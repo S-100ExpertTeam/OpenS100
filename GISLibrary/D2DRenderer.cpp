@@ -2,10 +2,13 @@
 #include "D2DRenderer.h"
 #include "D2D1Resources.h"
 #include "D2DConvert.h"
+#include "PortrayalRenderCache.h"
+
+#include "../S100Engine/S100PCManager.h"
 
 namespace GISLibrary
 {
-	D2DRenderer::D2DRenderer(D2D1Resources* d2) : d2(d2)
+	D2DRenderer::D2DRenderer(D2D1Resources* d2, PortrayalCatalogue* pc) : d2(d2), pc(pc)
 	{
 	}
 
@@ -116,5 +119,34 @@ namespace GISLibrary
 			}
 		}
 		geometry->Release();
+	}
+
+	void D2DRenderer::DrawSymbol(const std::string& reference, s100::render::PointF at, float rotationDegrees, float scale)
+	{
+		if (!Ready())
+		{
+			return;
+		}
+		auto symbols = PortrayalRender::Caches(pc);
+		if (!symbols)
+		{
+			return;
+		}
+		auto rt = d2->RenderTarget();
+
+		// The symbol sets a transform of its own.
+		D2D1::Matrix3x2F oldTransform;
+		rt->GetTransform(&oldTransform);
+
+		symbols->Draw(
+			reference,
+			rt,
+			d2->SolidColorBrush(),
+			d2->SolidStrokeStyle(),
+			ToD2D(at),
+			rotationDegrees,
+			scale);
+
+		rt->SetTransform(oldTransform);
 	}
 }
