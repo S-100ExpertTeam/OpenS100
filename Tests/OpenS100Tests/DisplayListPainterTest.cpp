@@ -85,11 +85,28 @@ namespace
 			text += std::format("symbol {} at {} {} rotation {} scale {}\n", reference, Q(at.x), Q(at.y), Q(rotationDegrees), Q(scale));
 		}
 
+		// A font with no glyphs: every byte of a text is half the font size wide.
+		s100::render::SizeF MeasureText(const std::string& measured, const s100::render::TextFont& font) override
+		{
+			measures++;
+			return { static_cast<float>(measured.size()) * font.size * 0.5f, font.size * 1.25f };
+		}
+
+		void FillText(const std::string& filled, s100::render::PointF topLeft, const s100::render::TextFont& font,
+			const s100::render::ColorF& color) override
+		{
+			texts++;
+			text += std::format("text \"{}\" at {} {} size {} {} color {} {} {} {}\n", filled, Q(topLeft.x), Q(topLeft.y),
+				Q(font.size), font.italic ? "italic" : "upright", Q(color.r), Q(color.g), Q(color.b), Q(color.a));
+		}
+
 		int symbols = 0;
+		int texts = 0;
+		int measures = 0;
 	};
 }
 
-// A sample cell with lights: its symbols and its augmented rays and paths (sector limits and arcs) drawn on the
+// A sample cell with lights: its symbols, its texts and its augmented rays and paths (sector limits and arcs) drawn on the
 // recording renderer. No Direct2D and no window: this is what runs on every platform.
 TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 {
@@ -135,15 +152,17 @@ TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 	EXPECT_EQ(paths, 10);
 	EXPECT_EQ(renderer.strokes, 20);            // every ray is a stroke; here every path has one arc
 	EXPECT_GT(renderer.symbols, 0);             // a point instruction is a symbol at each of its points
+	EXPECT_GT(renderer.texts, 0);               // a text instruction is a text at each of its points
+	EXPECT_GT(renderer.measures, 0);            // the painter asks the backend how large a text is
 	EXPECT_GT(renderer.arcs, 0);
 	EXPECT_GT(lookups, 0);
 
 	const std::string hash = std::format("{:016x}", GISLibrary::JsonHash(renderer.text));
-	if (hash != "42af51448573ee52")
+	if (hash != "acbb233d2d6fa7d0")
 	{
 		const auto dump = testpaths::tempDir() / "10100AA_X01NE.strokes.txt";
 		std::ofstream(dump, std::ios::binary | std::ios::trunc) << renderer.text;
 		ADD_FAILURE() << "recorded calls hash " << hash << ", strokes " << renderer.strokes << ", arcs " << renderer.arcs
-			<< ", dashed " << renderer.dashed << ", symbols " << renderer.symbols << "; the text is in " << dump;
+			<< ", dashed " << renderer.dashed << ", symbols " << renderer.symbols << ", texts " << renderer.texts << ", measures " << renderer.measures << "; the text is in " << dump;
 	}
 }

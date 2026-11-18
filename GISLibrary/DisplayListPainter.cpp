@@ -12,6 +12,8 @@
 #include "SENC_PointInstruction.h"
 #include "SENC_Symbol.h"
 #include "SENC_Sector.h"
+#include "SENC_TextInstruction.h"
+#include "RenderCacheSlot.h"
 #include "SGeometry.h"
 #include "SPoint.h"
 
@@ -23,6 +25,7 @@
 #include <pugixml.hpp>
 
 #include <cmath>
+#include <memory>
 #include <utility>
 
 // The arithmetic below is the arithmetic of the Direct2D painter it came from, type for type:
@@ -37,6 +40,13 @@ namespace
 
 	// Pixels to a millimetre of a symbol.
 	const float symbolScale = 5;
+
+	// The measured size of a text, kept in the cache slot of its instruction. A display list is
+	// drawn by one backend, so the size is that backend's.
+	struct TextSizeEntry : GISLibrary::RenderCacheEntry
+	{
+		s100::render::SizeF size;
+	};
 }
 
 namespace s100::render
@@ -96,6 +106,117 @@ namespace s100::render
 			}
 
 			renderer.DrawSymbol(pugi::as_utf8(instruction->symbol->reference), { pi->x, pi->y }, rotation, symbolScale);
+		}
+	}
+
+	// The first element of a text at every point the instruction is drawn at, placed by its
+	// alignment and offset about the point.
+	void DisplayListPainter::Visit(SENC_TextInstruction& target)
+	{
+		auto instruction = &target;
+
+		// A text of a feature with no geometry has no place to be drawn at.
+		SENC_TextPoint* textPoint = instruction->textPoint;
+		if (!textPoint || !instruction->fr || !instruction->fr->GetGeometry())
+		{
+			return;
+		}
+
+		points.clear();
+		instruction->GetDrawPoints(&scaler, points);
+
+		auto itorTp = textPoint->elements.begin();
+
+		if (itorTp != textPoint->elements.end())
+		{
+			SENC_Element* element = *itorTp;
+
+			TextFont font;
+			font.size = (int)(element->bodySize * (float)1.358);
+			font.italic = !element->font.isUpright();
+
+			const std::string text = pugi::as_utf8(element->text.value);
+
+			// Measured once: the size is kept with the instruction.
+			auto measured = dynamic_cast<TextSizeEntry*>(instruction->renderCache.get());
+			if (!measured)
+			{
+				auto entry = std::make_unique<TextSizeEntry>();
+				entry->size = renderer.MeasureText(text, font);
+				measured = entry.get();
+				instruction->renderCache = std::move(entry);
+			}
+
+			float width = measured->size.width;
+			float height = measured->size.height;
+
+			float offset_x = 0;
+			float offset_y = 0;
+
+			// Determine the size of the Offset
+			float XOFFS = (float)(((float)textPoint->offset.x / 0.32) * 1.358);
+			float YOFFS = (float)(-((float)textPoint->offset.y / 0.32) * 1.358);
+
+			// HJUST
+			// CENTRE
+			if (textPoint->horizontalAlignment == CENTER)
+			{
+				offset_x = -width / (float)2.;
+			}
+			// RIGHT
+			else if (textPoint->horizontalAlignment == END)
+			{
+				offset_x = -width;
+			}
+			// LEFT
+			else
+			{
+				offset_x = 0;
+			}
+
+			// VJUST
+			// BOTTOM and TOP (as before: a text aligned at the top is placed as one at the bottom)
+			if (textPoint->verticalAlignment == BOTTOM || textPoint->verticalAlignment == TOP)
+			{
+				offset_y = -height;
+			}
+			// CENTRE
+			else
+			{
+				offset_y = -height / (float)2.;
+			}
+
+			offset_x += XOFFS;
+			offset_y += YOFFS;
+
+			// A text with no colour of its own is black.
+			ColorF foreground{ 0.0f, 0.0f, 0.0f, 1.0f };
+			if (element->hasForeground)
+			{
+				foreground = color(element->foreground.token);
+				foreground.a *= 1 - element->foreground.transparency;
+			}
+
+			for (auto itor = points.begin(); itor != points.end(); itor++)
+			{
+				float x = itor->x + offset_x;
+				float y = itor->y + offset_y;
+
+				// rotate Point
+				if (scaler.GetRotationDegree())
+				{
+					double _radian = (180 - scaler.GetRotationDegree()) * DEG2RAD;
+
+					float tempX = (float)(scaler.soy - y) * (float)sin(_radian) + (float)(scaler.sox - x) * (float)cos(_radian);
+					float tempY = (float)(scaler.soy - y) * (float)cos(_radian) - (float)(scaler.sox - x) * (float)sin(_radian);
+
+					x = tempX + (float)scaler.sox;
+					y = tempY + (float)scaler.soy;
+				}
+
+				renderer.SetTransform({});
+				renderer.FillText(text, { x, y }, font, foreground);
+			}
 		}
 	}
 

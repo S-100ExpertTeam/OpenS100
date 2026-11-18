@@ -162,11 +162,6 @@ void SENC_TextInstruction::GetDrawPoints(Scaler *scaler, std::list<GISLibrary::P
 {
 	auto geom = fr->GetGeometry();
 
-	if (fr->GetIDAsInteger() == 250)
-	{
-		GISLibrary::DebugOutput(L"A");
-	}
-
 	if (true == HasSpatialReference())
 	{
 		for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)

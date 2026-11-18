@@ -2,6 +2,7 @@
 #include "IRenderer.h"
 
 class PortrayalCatalogue;
+struct IDWriteTextFormat;
 
 namespace GISLibrary
 {
@@ -23,8 +24,14 @@ namespace GISLibrary
 		void StrokePath(const s100::render::Path& path, const s100::render::ColorF& color,
 			const s100::render::Stroke& stroke) override;
 		void DrawSymbol(const std::string& reference, s100::render::PointF at, float rotationDegrees, float scale) override;
+		s100::render::SizeF MeasureText(const std::string& text, const s100::render::TextFont& font) override;
+		void FillText(const std::string& text, s100::render::PointF topLeft, const s100::render::TextFont& font,
+			const s100::render::ColorF& color) override;
 
 	private:
+		// The DirectWrite format of a font, with wrapping off.
+		IDWriteTextFormat* Format(const s100::render::TextFont& font);
+
 		D2D1Resources* d2;
 		PortrayalCatalogue* pc;
 	};

@@ -29,7 +29,7 @@ namespace GISLibrary
 		void Visit(SENC_PointInstruction& instruction) override;
 		void Visit(SENC_LineInstruction& instruction) override;
 		void Visit(SENC_AreaInstruction& instruction) override;
-		void Visit(SENC_TextInstruction& target) override;
+		void Visit(SENC_TextInstruction& instruction) override;
 		void Visit(SENC_AugmentedRay& instruction) override;
 		void Visit(SENC_AugmentedPath& instruction) override;
 
@@ -54,7 +54,5 @@ namespace GISLibrary
 
 		// The curve the line style being visited is drawn along.
 		SCurve* styleCurve = nullptr;
-		// Where a point or text instruction is drawn; kept to reuse its storage.
-		std::list<PointF> points;
 	};
 }

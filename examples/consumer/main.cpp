@@ -44,7 +44,7 @@ namespace
 		void Visit(SENC_AugmentedPath&) override { path++; }
 	};
 
-	// A render backend of the smallest kind: it is asked to stroke paths and place symbols and writes down what
+	// A render backend of the smallest kind: it is asked to stroke paths, place symbols and write texts, and writes down what
 	// it was asked. A real one (Skia, Cairo, a canvas) draws them; the S-100 side of drawing,
 	// where things go on the screen and how they are stroked, is DisplayListPainter and is the
 	// same for all of them.
@@ -54,6 +54,7 @@ namespace
 		std::string text;
 		int strokes = 0;
 		int symbols = 0;
+		int texts = 0;
 
 		void SetTransform(const s100::render::Transform& transform) override
 		{
@@ -126,6 +127,30 @@ namespace
 			Number(rotationDegrees);
 			text += " scale";
 			Number(scale);
+			text += '\n';
+		}
+
+		// A font with no glyphs: every byte of a text is half the font size wide.
+		s100::render::SizeF MeasureText(const std::string& measured, const s100::render::TextFont& font) override
+		{
+			return { static_cast<float>(measured.size()) * font.size * 0.5f, font.size * 1.25f };
+		}
+
+		void FillText(const std::string& filled, s100::render::PointF topLeft, const s100::render::TextFont& font,
+			const s100::render::ColorF& color) override
+		{
+			texts++;
+			text += "text \"" + filled + "\" at";
+			Number(topLeft.x);
+			Number(topLeft.y);
+			text += " size";
+			Number(font.size);
+			text += font.italic ? " italic" : " upright";
+			text += " color";
+			Number(color.r);
+			Number(color.g);
+			Number(color.b);
+			Number(color.a);
 			text += '\n';
 		}
 
@@ -327,7 +352,7 @@ int main(int argc, char** argv)
 			{
 				instruction->Accept(painter);
 			}
-			std::cout << "painted:       " << renderer.symbols << " symbols, " << renderer.strokes << " strokes, hash "
+			std::cout << "painted:       " << renderer.symbols << " symbols, " << renderer.texts << " texts, " << renderer.strokes << " strokes, hash "
 				<< std::hex << std::setw(16) << std::setfill('0') << GISLibrary::JsonHash(renderer.text)
 				<< std::dec << std::setfill(' ') << "\n";
 			if (jsonDirectory)

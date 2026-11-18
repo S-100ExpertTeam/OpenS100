@@ -2,7 +2,8 @@
 // The drawing surface the S-100 painter draws on (DIRECTIVES 24).
 //
 // DisplayListPainter decides what goes where: it projects, lays out dashes and symbols, resolves
-// colour tokens. What is left for a backend is the primitive: stroke this path with this colour.
+// colour tokens. What is left for a backend is the primitive: stroke this path with this colour,
+// put this symbol here, measure and draw this line of text.
 // A backend implements IRenderer and knows nothing of S-100; the painter knows nothing of the
 // backend. Direct2D is the first backend (D2DRenderer); tests record the calls.
 //
@@ -88,6 +89,21 @@ namespace s100::render
 		std::vector<float> dashes;
 	};
 
+	// The size of something on the surface, in device pixels.
+	struct SizeF
+	{
+		float width = 0.0f;
+		float height = 0.0f;
+	};
+
+	// The font of a text. The typeface is the backend's (the display font of the application);
+	// the painter says how large and whether slanted.
+	struct TextFont
+	{
+		float size = 0.0f;      // the height of the font, in device pixels
+		bool italic = false;
+	};
+
 	class IRenderer
 	{
 	public:
@@ -103,5 +119,13 @@ namespace s100::render
 		// built it from the SVG of the catalogue) and the palette it is coloured in. The
 		// transform is the same after the call as before.
 		virtual void DrawSymbol(const std::string& reference, PointF at, float rotationDegrees, float scale) = 0;
+
+		// The box a line of text (UTF-8, never wrapped) takes in a font. The painter places a
+		// text by it (centred, right aligned), so a backend answers for the glyphs it will draw.
+		virtual SizeF MeasureText(const std::string& text, const TextFont& font) = 0;
+
+		// A line of text with the top left corner of its box at a point, in the coordinates of
+		// the current transform. (Not DrawText: that name is a macro of the Windows headers.)
+		virtual void FillText(const std::string& text, PointF topLeft, const TextFont& font, const ColorF& color) = 0;
 	};
 }

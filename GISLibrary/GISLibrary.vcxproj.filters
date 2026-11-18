@@ -2237,9 +2237,6 @@
     <ClInclude Include="D2DConvert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="D2DInstructionCache.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="D2DInstructionPainter.h">
       <Filter>Header Files</Filter>
     </ClInclude>

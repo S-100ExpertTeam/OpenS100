@@ -6,6 +6,8 @@
 
 #include "../S100Engine/S100PCManager.h"
 
+#include <pugixml.hpp>
+
 namespace GISLibrary
 {
 	D2DRenderer::D2DRenderer(D2D1Resources* d2, PortrayalCatalogue* pc) : d2(d2), pc(pc)
@@ -148,5 +150,78 @@ namespace GISLibrary
 			scale);
 
 		rt->SetTransform(oldTransform);
+	}
+
+	IDWriteTextFormat* D2DRenderer::Format(const s100::render::TextFont& font)
+	{
+		const int size = static_cast<int>(font.size);
+		IDWriteTextFormat* format = font.italic ? d2->getSlantWriteTextFormat(size) : d2->getWriteTextFormat(size);
+		if (format)
+		{
+			format->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
+		}
+		return format;
+	}
+
+	s100::render::SizeF D2DRenderer::MeasureText(const std::string& text, const s100::render::TextFont& font)
+	{
+		if (!Ready() || !d2->pDWriteFactory)
+		{
+			return {};
+		}
+		IDWriteTextFormat* format = Format(font);
+		if (!format)
+		{
+			return {};
+		}
+
+		const std::wstring wide = pugi::as_wide(text);
+		const D2D1_SIZE_F surface = d2->RenderTarget()->GetSize();
+
+		IDWriteTextLayout* layout = nullptr;
+		d2->pDWriteFactory->CreateTextLayout(
+			wide.c_str(),
+			static_cast<UINT32>(wide.size()),
+			format,
+			surface.width,
+			surface.height,
+			&layout);
+		if (!layout)
+		{
+			return {};
+		}
+
+		DWRITE_TEXT_METRICS metrics{};
+		layout->GetMetrics(&metrics);
+		layout->Release();
+		return { metrics.width, metrics.height };
+	}
+
+	void D2DRenderer::FillText(const std::string& text, s100::render::PointF topLeft, const s100::render::TextFont& font,
+		const s100::render::ColorF& color)
+	{
+		if (!Ready())
+		{
+			return;
+		}
+		IDWriteTextFormat* format = Format(font);
+		if (!format)
+		{
+			return;
+		}
+		auto rt = d2->RenderTarget();
+		auto brush = d2->SolidColorBrush();
+		brush->SetColor(ToD2D(color));
+
+		// The text is not wrapped and starts at the corner, so the far edges of the box are of no
+		// account: the surface is box enough.
+		const std::wstring wide = pugi::as_wide(text);
+		const D2D1_SIZE_F surface = rt->GetSize();
+		rt->DrawText(
+			wide.c_str(),
+			static_cast<UINT32>(wide.size()),
+			format,
+			D2D1::RectF(topLeft.x, topLeft.y, topLeft.x + surface.width, topLeft.y + surface.height),
+			brush);
 	}
 }
