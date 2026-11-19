@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "D2DGeometryCache.h"
-#include "SCurve.h"
 #include "SSurface.h"
 #include "../GeoMetryLibrary/Scaler.h"
 
@@ -60,25 +59,7 @@ namespace
 		return path;
 	}
 
-	// Curve points: world (x, -y) or device space depending on scaler.
-	std::vector<D2D1_POINT_2F> CurvePoints(SCurve* curve, Scaler* scaler)
-	{
-		std::vector<D2D1_POINT_2F> points(static_cast<size_t>(curve->m_numPoints));
-		for (int i = 0; i < curve->m_numPoints; i++)
-		{
-			if (scaler)
-			{
-				scaler->WorldToDevice_F(curve->m_pPoints[i].x, curve->m_pPoints[i].y, &points[i].x, &points[i].y);
-			}
-			else
-			{
-				points[i].x = static_cast<float>(curve->m_pPoints[i].x);
-				points[i].y = static_cast<float>(-curve->m_pPoints[i].y);
-			}
-		}
-		return points;
-	}
-
+	// Surface points: world (x, -y) or device space depending on scaler.
 	std::vector<D2D1_POINT_2F> SurfacePoints(SSurface* surface, Scaler* scaler)
 	{
 		std::vector<D2D1_POINT_2F> points(static_cast<size_t>(surface->m_numPoints));
@@ -145,20 +126,6 @@ namespace GISLibrary
 {
 	namespace D2DGeometry
 	{
-		ID2D1PathGeometry* Get(SCurve* curve, ID2D1Factory1* factory)
-		{
-			if (!curve || !factory)
-			{
-				return nullptr;
-			}
-			auto slot = Slot(*curve);
-			if (!slot->geometry)
-			{
-				slot->geometry = BuildPath(factory, CurvePoints(curve, nullptr), false);
-			}
-			return static_cast<ID2D1PathGeometry*>(slot->geometry);
-		}
-
 		ID2D1Geometry* Get(SSurface* surface, ID2D1Factory1* factory)
 		{
 			if (!surface || !factory)
@@ -171,15 +138,6 @@ namespace GISLibrary
 				slot->geometry = BuildSurface(surface, factory, nullptr);
 			}
 			return slot->geometry;
-		}
-
-		ID2D1PathGeometry* CreateScaled(SCurve* curve, ID2D1Factory1* factory, Scaler* scaler)
-		{
-			if (!curve || !factory || !scaler)
-			{
-				return nullptr;
-			}
-			return BuildPath(factory, CurvePoints(curve, scaler), false);
 		}
 
 		ID2D1Geometry* CreateScaled(SSurface* surface, ID2D1Factory1* factory, Scaler* scaler)

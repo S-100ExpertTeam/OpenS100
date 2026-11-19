@@ -3,6 +3,7 @@
 
 class PortrayalCatalogue;
 struct IDWriteTextFormat;
+struct ID2D1Geometry;
 
 namespace GISLibrary
 {
@@ -23,12 +24,20 @@ namespace GISLibrary
 		void SetTransform(const s100::render::Transform& transform) override;
 		void StrokePath(const s100::render::Path& path, const s100::render::ColorF& color,
 			const s100::render::Stroke& stroke) override;
+		std::unique_ptr<s100::render::RetainedPath> Retain(const s100::render::Path& path) override;
+		void StrokePath(const s100::render::RetainedPath& path, const s100::render::ColorF& color,
+			const s100::render::Stroke& stroke) override;
+		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
+			const s100::render::ColorF* shortStretches) override;
 		void DrawSymbol(const std::string& reference, s100::render::PointF at, float rotationDegrees, float scale) override;
 		s100::render::SizeF MeasureText(const std::string& text, const s100::render::TextFont& font) override;
 		void FillText(const std::string& text, s100::render::PointF topLeft, const s100::render::TextFont& font,
 			const s100::render::ColorF& color) override;
 
 	private:
+		// Strokes a geometry as a path is stroked (see Stroke).
+		void StrokeGeometry(ID2D1Geometry* geometry, const s100::render::ColorF& color, const s100::render::Stroke& stroke);
+
 		// The DirectWrite format of a font, with wrapping off.
 		IDWriteTextFormat* Format(const s100::render::TextFont& font);
 

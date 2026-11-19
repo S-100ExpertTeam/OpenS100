@@ -2,6 +2,14 @@
 #include "DisplayListPainter.h"
 
 #include "R_FeatureRecord.h"
+#include "SCommonFuction.h"
+#include "SCompositeCurve.h"
+#include "SCurve.h"
+#include "SSurface.h"
+#include "SENC_CompositeLineStyle.h"
+#include "SENC_LineInstruction.h"
+#include "SENC_LineStyleReference.h"
+#include "SENC_SpatialReference.h"
 #include "SENC_ArcByRadius.h"
 #include "SENC_AugmentedPath.h"
 #include "SENC_AugmentedRay.h"
@@ -40,6 +48,13 @@ namespace
 
 	// Pixels to a millimetre of a symbol.
 	const float symbolScale = 5;
+
+	// The path of a curve as the backend keeps it, parked with the curve. A dataset is drawn by
+	// one backend, so the path is that backend's.
+	struct CurvePath : Geometry::RenderAttachment
+	{
+		std::unique_ptr<s100::render::RetainedPath> path;   // nothing for a curve of one point
+	};
 
 	// The measured size of a text, kept in the cache slot of its instruction. A display list is
 	// drawn by one backend, so the size is that backend's.
@@ -106,6 +121,267 @@ namespace s100::render
 			}
 
 			renderer.DrawSymbol(pugi::as_utf8(instruction->symbol->reference), { pi->x, pi->y }, rotation, symbolScale);
+		}
+	}
+
+	// The curves of the feature the instruction names (all of them when it names none), each
+	// drawn with every line style of the instruction.
+	void DisplayListPainter::Visit(SENC_LineInstruction& instruction)
+	{
+		auto& fr = instruction.fr;
+		auto& lineStyles = instruction.lineStyles;
+		auto& spatialReference = instruction.spatialReference;
+
+		if (!fr || !fr->GetGeometry())
+		{
+			return;
+		}
+		auto geom = fr->GetGeometry();
+
+		std::list<SCurve*> curListCurveLink;
+
+		// Surface
+		if (geom->GetType() == SGeometryType::Surface)
+		{
+			auto surface = (SSurface*)geom;
+			surface->GetCurveList(curListCurveLink);
+		}
+		// Composite Curve
+		else if (geom->GetType() == SGeometryType::CompositeCurve)
+		{
+			auto compositeCurve = (SCompositeCurve*)geom;
+			compositeCurve->GetCurveList(curListCurveLink);
+		}
+		// Curve
+		else if (geom->GetType() == SGeometryType::Curve)
+		{
+			auto curve = (SCurve*)geom;
+			for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+			{
+				SENC_LineStyleBase* lineStyleBase = *itor;
+
+				if (curve->isDraw())
+				{
+					DrawLineStyle(lineStyleBase, curve);
+				}
+			}
+			return;
+		}
+
+		if (curListCurveLink.size() == 0)
+		{
+			return;
+		}
+
+		if (spatialReference.size() == 0)
+		{
+			for (auto i = curListCurveLink.begin(); i != curListCurveLink.end(); i++)
+			{
+				auto curve = (*i);
+
+				if (curve->isDraw())
+				{
+					for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+					{
+						SENC_LineStyleBase* lineStyleBase = *itor;
+						DrawLineStyle(lineStyleBase, *i);
+					}
+				}
+			}
+		}
+
+		for (auto i = spatialReference.begin(); i != spatialReference.end(); i++)
+		{
+			for (auto j = curListCurveLink.begin(); j != curListCurveLink.end(); j++)
+			{
+				if ((*i)->reference == (*j)->GetRCID())
+				{
+					if ((*j)->isDraw())
+					{
+						for (auto itor = lineStyles.begin(); itor != lineStyles.end(); itor++)
+						{
+							SENC_LineStyleBase* lineStyleBase = *itor;
+							DrawLineStyle(lineStyleBase, *j);
+						}
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	void DisplayListPainter::DrawLineStyle(SENC_LineStyleBase* lineStyle, SCurve* curve)
+	{
+		// A composite style visits its parts with the same curve.
+		const auto outer = styleCurve;
+		styleCurve = curve;
+		lineStyle->Accept(*this);
+		styleCurve = outer;
+	}
+
+	void DisplayListPainter::Visit(SENC_CompositeLineStyle& lineStyle)
+	{
+		for (auto i = lineStyle.lineStyles.begin(); i != lineStyle.lineStyles.end(); i++)
+		{
+			DrawLineStyle(*i, styleCurve);
+		}
+	}
+
+	// A line style given in the instruction: a pen, dashed or not. One with a name is a style of
+	// the catalogue under that name.
+	void DisplayListPainter::Visit(SENC_LineStyle& lineStyle)
+	{
+		auto& dashes = lineStyle.dashes;
+		auto& symbols = lineStyle.symbols;
+		auto& intervalLength = lineStyle.intervalLength;
+		auto& pen_width = lineStyle.pen_width;
+
+		auto name = lineStyle.GetLineStyleName();
+
+		if (name != L"")
+		{
+			CurveOnDevice(true);
+			const ColorF penColor = color(lineStyle.GetPenColorToken());
+			renderer.StrokeLineStyle(pugi::as_utf8(name), devicePoints, &penColor);
+		}
+		else
+		{
+			auto PEN_COLOR = color(lineStyle.GetPenColorToken());
+			auto PEN_WIDTH = (float)((pen_width + 0.01) / 0.32);
+
+			ColorF penColor = PEN_COLOR;
+			penColor.a = 1;
+
+			Stroke stroke;
+			stroke.width = PEN_WIDTH;
+
+			if (dashes.size() > 0)
+			{
+				float _dashes[] = { (float)(dashes.front()->length + 0.01) / (float)(0.32 * PEN_WIDTH), (float)(intervalLength - dashes.front()->length + 0.01) / (float)(0.32 * PEN_WIDTH) };
+				stroke.dashes.assign(std::begin(_dashes), std::end(_dashes));
+				StrokeCurve(penColor, stroke);
+			}
+			else if (symbols.size() > 0)
+			{
+				// Symbols along a line with no dashes: not drawn (as before).
+			}
+			else
+			{
+				StrokeCurve(penColor, stroke);
+			}
+		}
+	}
+
+	// A line style of the catalogue. (Not turned with the view, as before: see the design notes.)
+	void DisplayListPainter::Visit(SENC_LineStyleReference& lineStyle)
+	{
+		CurveOnDevice(false);
+		renderer.StrokeLineStyle(pugi::as_utf8(lineStyle.GetReference()), devicePoints, nullptr);
+	}
+
+	void DisplayListPainter::CurveOnDevice(bool turnWithView)
+	{
+		auto curve = styleCurve;
+		auto numPoints = curve->GetNumPoints();
+		devicePoints.resize(numPoints > 0 ? numPoints : 0);
+
+		for (int pi = 0; pi < numPoints; pi++)
+		{
+			scaler.WorldToDevice_F(
+				curve->GetX(pi),
+				curve->GetY(pi),
+				&devicePoints[pi].x,
+				&devicePoints[pi].y);
+		}
+
+		// Point rotate
+		if (turnWithView && scaler.GetRotationDegree())
+		{
+			double radian = (180 - scaler.GetRotationDegree()) * DEG2RAD;
+
+			for (auto id = 0; id < numPoints; id++)
+			{
+				auto p = &devicePoints[id];
+				float tempX = (float)(scaler.soy - p->y) * (float)sin(radian) + (float)(scaler.sox - p->x) * (float)cos(radian);
+				float tempY = (float)(scaler.soy - p->y) * (float)cos(radian) - (float)(scaler.sox - p->x) * (float)sin(radian);
+
+				p->x = (float)tempX + (float)scaler.sox;
+				p->y = (float)tempY + (float)scaler.soy;
+			}
+		}
+	}
+
+	const Transform& DisplayListPainter::ViewTransform()
+	{
+		// The map range fits the screen in both directions, so the larger of the two
+		// world-per-pixel ratios wins.
+		const double xRatio = (scaler.mxMax - scaler.mxMin) / (scaler.sxMax - scaler.sxMin);
+		const double yRatio = (scaler.myMax - scaler.myMin) / (scaler.syMax - scaler.syMin);
+		const double ratio = 1.0 / (xRatio > yRatio ? xRatio : yRatio);
+
+		const double mox = (scaler.mxMax + scaler.mxMin) / 2;
+		const double moy = (scaler.myMax + scaler.myMin) / 2;
+		const double sox = (scaler.sxMax + scaler.sxMin) / 2;
+		const double soy = (scaler.syMax + scaler.syMin) / 2;
+
+		viewTransform.clear();
+		viewTransform.push_back(TransformStep::Translate(static_cast<float>(-mox), static_cast<float>(moy)));
+		viewTransform.push_back(TransformStep::Scale(static_cast<float>(ratio)));
+		viewTransform.push_back(TransformStep::Translate(static_cast<float>(sox), static_cast<float>(soy)));
+		return viewTransform;
+	}
+
+	void DisplayListPainter::StrokeCurve(const ColorF& penColor, const Stroke& stroke)
+	{
+		auto curve = styleCurve;
+
+		if (scaler.GetCurrentScale() >= SCommonFuction::NewGeometryScale)
+		{
+			// The path of the curve in the coordinates of the dataset (x, -y), built once.
+			auto kept = dynamic_cast<CurvePath*>(curve->renderAttachment.get());
+			if (!kept)
+			{
+				auto attachment = std::make_unique<CurvePath>();
+				if (curve->m_numPoints >= 2)
+				{
+					PathFigure figure;
+					figure.start = { static_cast<float>(curve->m_pPoints[0].x), static_cast<float>(-curve->m_pPoints[0].y) };
+					figure.lines.resize(static_cast<size_t>(curve->m_numPoints - 1));
+					for (int i = 1; i < curve->m_numPoints; i++)
+					{
+						figure.lines[i - 1].x = static_cast<float>(curve->m_pPoints[i].x);
+						figure.lines[i - 1].y = static_cast<float>(-curve->m_pPoints[i].y);
+					}
+					Path path;
+					path.figures.push_back(std::move(figure));
+					attachment->path = renderer.Retain(path);
+				}
+				kept = attachment.get();
+				curve->renderAttachment = std::move(attachment);
+			}
+
+			if (kept->path)
+			{
+				renderer.SetTransform(ViewTransform());
+				renderer.StrokePath(*kept->path, penColor, stroke);
+			}
+		}
+		else
+		{
+			CurveOnDevice(false);
+			if (devicePoints.size() >= 2)
+			{
+				PathFigure figure;
+				figure.start = devicePoints[0];
+				figure.lines.assign(devicePoints.begin() + 1, devicePoints.end());
+				Path path;
+				path.figures.push_back(std::move(figure));
+
+				renderer.SetTransform({ TransformStep::RotateAbout(
+					(float)scaler.GetRotationDegree(), (float)scaler.sox, (float)scaler.soy) });
+				renderer.StrokePath(path, penColor, stroke);
+				renderer.SetTransform(ViewTransform());
+			}
 		}
 	}
 

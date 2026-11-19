@@ -5,8 +5,11 @@
 #include <functional>
 #include <list>
 #include <string>
+#include <vector>
 
 class Scaler;
+class SCurve;
+class SENC_LineStyleBase;
 
 namespace s100::render
 {
@@ -19,22 +22,46 @@ namespace s100::render
 	//
 	// It visits the kinds of instruction it has taken over from D2DInstructionPainter; the
 	// others it leaves alone (the visitor's default), so the Direct2D painter forwards exactly
-	// those kinds here. Taken over so far: point (symbol), text, augmented ray, augmented path.
-	class DisplayListPainter : public SENC_InstructionVisitor
+	// those kinds here. Taken over so far: point (symbol), line, text, augmented ray, augmented
+	// path.
+	//
+	// A line is drawn in the coordinates of the dataset under the transform of the view, so the
+	// path of a curve is built once and kept by the backend. That transform is left set after a
+	// line: the code that still draws areas and masks depths by the transform counts on it.
+	class DisplayListPainter : public SENC_InstructionVisitor, private SENC_LineStyleVisitor
 	{
 	public:
 		DisplayListPainter(IRenderer& renderer, Scaler& scaler, ColorLookup color);
 
 		void Visit(SENC_PointInstruction& instruction) override;
+		void Visit(SENC_LineInstruction& instruction) override;
 		void Visit(SENC_TextInstruction& instruction) override;
 		void Visit(SENC_AugmentedRay& instruction) override;
 		void Visit(SENC_AugmentedPath& instruction) override;
 
 	private:
+		void Visit(SENC_LineStyle& lineStyle) override;
+		void Visit(SENC_LineStyleReference& lineStyle) override;
+		void Visit(SENC_CompositeLineStyle& lineStyle) override;
+
+		// Draws one curve with a line style, whatever kind the style is.
+		void DrawLineStyle(SENC_LineStyleBase* lineStyle, SCurve* curve);
+		// Strokes the curve being styled: its kept path under the transform of the view, or,
+		// zoomed far in, a path in device pixels.
+		void StrokeCurve(const ColorF& penColor, const Stroke& stroke);
+		// The curve being styled in device pixels, turned with the view if asked.
+		void CurveOnDevice(bool turnWithView);
+		// The dataset (x, -y) to device pixels, as Scaler::WorldToDevice has it.
+		const Transform& ViewTransform();
+
 		IRenderer& renderer;
 		Scaler& scaler;
 		ColorLookup color;
 		// Where a point or text instruction is drawn; kept to reuse its storage.
 		std::list<PointF> points;
+		// The curve the line style being visited is drawn along, and its points on the device.
+		SCurve* styleCurve = nullptr;
+		std::vector<PointF> devicePoints;
+		Transform viewTransform;
 	};
 }

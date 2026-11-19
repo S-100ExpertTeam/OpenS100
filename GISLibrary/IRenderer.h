@@ -16,6 +16,7 @@
 // D2DInstructionPainter to DisplayListPainter brings the primitives it needs.
 #include "DrawTypes.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -28,18 +29,35 @@ namespace s100::render
 	// the origin first and moves after.
 	struct TransformStep
 	{
-		enum class Kind { Rotate, Translate };
+		enum class Kind { Rotate, Translate, Scale };
 
 		Kind kind = Kind::Translate;
 		float degrees = 0.0f;   // Rotate: clockwise on a surface whose y axis points down
-		float x = 0.0f;         // Translate
+		float x = 0.0f;         // Translate: how far. Rotate: the point turned about
 		float y = 0.0f;
+		float factor = 1.0f;    // Scale: about the origin, the same in both directions
 
 		static TransformStep Rotate(float degrees)
 		{
 			TransformStep step;
 			step.kind = Kind::Rotate;
 			step.degrees = degrees;
+			return step;
+		}
+
+		static TransformStep RotateAbout(float degrees, float x, float y)
+		{
+			TransformStep step = Rotate(degrees);
+			step.x = x;
+			step.y = y;
+			return step;
+		}
+
+		static TransformStep Scale(float factor)
+		{
+			TransformStep step;
+			step.kind = Kind::Scale;
+			step.factor = factor;
 			return step;
 		}
 
@@ -80,10 +98,21 @@ namespace s100::render
 		std::vector<ArcFigure> arcs;
 	};
 
-	// How a path is stroked. The look of an S-100 line is fixed: flat ends, mitre joins (limit
-	// 10), round ends on the dashes; a backend applies that to every stroke.
+	// A path a backend keeps in its own form (IRenderer::Retain), so that a curve of a dataset
+	// is built once and stroked every frame. It belongs to the backend that made it.
+	class RetainedPath
+	{
+	public:
+		virtual ~RetainedPath() = default;
+	};
+
+	// How a path is stroked. The look is fixed, as the viewer has drawn it: a solid line has
+	// round ends and round joins; a dashed line has flat ends, mitre joins (limit 10) and round
+	// ends on the dashes. A backend applies that to every stroke.
 	struct Stroke
 	{
+		// In device pixels, whatever the transform: a line is as wide on a map scaled a
+		// thousand times as on one drawn in pixels.
 		float width = 1.0f;
 		// Ink and gap lengths in turn, in multiples of the width; empty for a solid line.
 		std::vector<float> dashes;
@@ -112,6 +141,17 @@ namespace s100::render
 		// Replaces the transform; it stays until the next call.
 		virtual void SetTransform(const Transform& transform) = 0;
 		virtual void StrokePath(const Path& path, const ColorF& color, const Stroke& stroke) = 0;
+
+		// A path to keep: nothing if it has nothing to draw (a single point).
+		virtual std::unique_ptr<RetainedPath> Retain(const Path& path) = 0;
+		virtual void StrokePath(const RetainedPath& path, const ColorF& color, const Stroke& stroke) = 0;
+
+		// A line style of the portrayal catalogue (a strip repeated along the line) along a
+		// polyline given in device pixels, whatever the transform. As with a symbol, the
+		// backend owns what the style looks like. With a colour, a stretch too short for the
+		// strip is a thin dashed line in it. The transform is the same after the call as before.
+		virtual void StrokeLineStyle(const std::string& reference, const std::vector<PointF>& points,
+			const ColorF* shortStretches) = 0;
 
 		// A symbol of the portrayal catalogue with its pivot at a point of the surface (device
 		// pixels, whatever the transform), turned clockwise by so many degrees. The scale is

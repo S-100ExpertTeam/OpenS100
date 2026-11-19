@@ -45,9 +45,18 @@ namespace
 			text += "transform";
 			for (const auto& step : transform)
 			{
-				text += step.kind == s100::render::TransformStep::Kind::Rotate
-					? std::format(" rotate {}", Q(step.degrees))
-					: std::format(" translate {} {}", Q(step.x), Q(step.y));
+				switch (step.kind)
+				{
+				case s100::render::TransformStep::Kind::Rotate:
+					text += std::format(" rotate {} about {} {}", Q(step.degrees), Q(step.x), Q(step.y));
+					break;
+				case s100::render::TransformStep::Kind::Scale:
+					text += std::format(" scale {:.6g}", step.factor);
+					break;
+				default:
+					text += std::format(" translate {} {}", Q(step.x), Q(step.y));
+					break;
+				}
 			}
 			text += "\n";
 		}
@@ -56,12 +65,68 @@ namespace
 			const s100::render::Stroke& stroke) override
 		{
 			strokes++;
+			StrokeText(color, stroke);
+			PathText(path);
+			text += "\n";
+		}
+
+		// A kept path is written down once and is a number from then on.
+		struct Kept : s100::render::RetainedPath
+		{
+			int number = 0;
+		};
+
+		std::unique_ptr<s100::render::RetainedPath> Retain(const s100::render::Path& path) override
+		{
+			auto kept = std::make_unique<Kept>();
+			kept->number = ++retained;
+			text += std::format("path {}", kept->number);
+			PathText(path);
+			text += "\n";
+			return kept;
+		}
+
+		void StrokePath(const s100::render::RetainedPath& path, const s100::render::ColorF& color,
+			const s100::render::Stroke& stroke) override
+		{
+			retainedStrokes++;
+			StrokeText(color, stroke);
+			text += std::format(" | path {}\n", static_cast<const Kept&>(path).number);
+		}
+
+		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
+			const s100::render::ColorF* shortStretches) override
+		{
+			lineStyles++;
+			text += "line style " + reference;
+			if (shortStretches)
+			{
+				text += std::format(" color {} {} {} {}", Q(shortStretches->r), Q(shortStretches->g), Q(shortStretches->b), Q(shortStretches->a));
+			}
+			for (const auto& point : points)
+			{
+				text += std::format(" {} {}", Q(point.x), Q(point.y));
+			}
+			text += "\n";
+		}
+
+		int retained = 0;
+		int retainedStrokes = 0;
+		int lineStyles = 0;
+
+	private:
+		void StrokeText(const s100::render::ColorF& color, const s100::render::Stroke& stroke)
+		{
 			dashed += stroke.dashes.empty() ? 0 : 1;
 			text += std::format("stroke width {} color {} {} {} {} dashes", Q(stroke.width), Q(color.r), Q(color.g), Q(color.b), Q(color.a));
 			for (const float dash : stroke.dashes)
 			{
 				text += std::format(" {}", Q(dash));
 			}
+		}
+
+		void PathText(const s100::render::Path& path)
+		{
 			for (const auto& figure : path.figures)
 			{
 				text += std::format(" | from {} {}", Q(figure.start.x), Q(figure.start.y));
@@ -76,8 +141,9 @@ namespace
 				arcs++;
 				text += std::format(" | arc radius {} from {} to {}", Q(arc.radius), Q(arc.startDegrees), Q(arc.endDegrees));
 			}
-			text += "\n";
 		}
+
+	public:
 
 		void DrawSymbol(const std::string& reference, s100::render::PointF at, float rotationDegrees, float scale) override
 		{
@@ -106,7 +172,7 @@ namespace
 	};
 }
 
-// A sample cell with lights: its symbols, its texts and its augmented rays and paths (sector limits and arcs) drawn on the
+// A sample cell with lights: its symbols, lines, texts and augmented rays and paths (sector limits and arcs) drawn on the
 // recording renderer. No Direct2D and no window: this is what runs on every platform.
 TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 {
@@ -152,17 +218,31 @@ TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 	EXPECT_EQ(paths, 10);
 	EXPECT_EQ(renderer.strokes, 20);            // every ray is a stroke; here every path has one arc
 	EXPECT_GT(renderer.symbols, 0);             // a point instruction is a symbol at each of its points
+	EXPECT_GT(renderer.retained, 0);            // a curve is kept as a path once
+	EXPECT_GE(renderer.retainedStrokes, renderer.retained);   // and stroked for every instruction on it
+	EXPECT_GT(renderer.lineStyles, 0);          // a line style of the catalogue goes to the backend by name
 	EXPECT_GT(renderer.texts, 0);               // a text instruction is a text at each of its points
 	EXPECT_GT(renderer.measures, 0);            // the painter asks the backend how large a text is
 	EXPECT_GT(renderer.arcs, 0);
 	EXPECT_GT(lookups, 0);
 
 	const std::string hash = std::format("{:016x}", GISLibrary::JsonHash(renderer.text));
-	if (hash != "acbb233d2d6fa7d0")
+	if (hash != "6ae9eb1654a20698")
 	{
 		const auto dump = testpaths::tempDir() / "10100AA_X01NE.strokes.txt";
 		std::ofstream(dump, std::ios::binary | std::ios::trunc) << renderer.text;
 		ADD_FAILURE() << "recorded calls hash " << hash << ", strokes " << renderer.strokes << ", arcs " << renderer.arcs
-			<< ", dashed " << renderer.dashed << ", symbols " << renderer.symbols << ", texts " << renderer.texts << ", measures " << renderer.measures << "; the text is in " << dump;
+			<< ", dashed " << renderer.dashed << ", symbols " << renderer.symbols << ", texts " << renderer.texts << ", measures " << renderer.measures
+			<< ", kept paths " << renderer.retained << ", strokes of them " << renderer.retainedStrokes << ", line styles " << renderer.lineStyles << "; the text is in " << dump;
 	}
+
+	// Painted again, no curve is built again: its path is kept with it.
+	const int kept = renderer.retained;
+	const int strokesOfKept = renderer.retainedStrokes;
+	for (auto& [key, instruction] : cell->pcManager->displayListSENC->displayInstructions)
+	{
+		instruction->Accept(painter);
+	}
+	EXPECT_EQ(renderer.retained, kept);
+	EXPECT_EQ(renderer.retainedStrokes, 2 * strokesOfKept);
 }

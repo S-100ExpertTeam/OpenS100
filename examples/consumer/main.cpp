@@ -16,6 +16,7 @@
 #include <GeoMetryLibrary/Scaler.h>
 #include <charconv>
 #include <cmath>
+#include <cstdio>
 #include <string>
 #include <GISLibrary/DisplayListJson.h>
 #include <GISLibrary/DisplayListPainter.h>
@@ -65,6 +66,16 @@ namespace
 				{
 					text += " rotate";
 					Number(step.degrees);
+					text += " about";
+					Number(step.x);
+					Number(step.y);
+				}
+				else if (step.kind == s100::render::TransformStep::Kind::Scale)
+				{
+					// Not to a thousandth: the scale of a chart is a small number.
+					char buffer[32];
+					const int length = std::snprintf(buffer, sizeof(buffer), " scale %.6g", static_cast<double>(step.factor));
+					text.append(buffer, static_cast<size_t>(length));
 				}
 				else
 				{
@@ -80,6 +91,62 @@ namespace
 			const s100::render::Stroke& stroke) override
 		{
 			strokes++;
+			StrokeText(color, stroke);
+			PathText(path);
+			text += '\n';
+		}
+
+		// A kept path is written down once and is a number from then on.
+		struct Kept : s100::render::RetainedPath
+		{
+			int number = 0;
+		};
+
+		std::unique_ptr<s100::render::RetainedPath> Retain(const s100::render::Path& path) override
+		{
+			auto kept = std::make_unique<Kept>();
+			kept->number = ++retained;
+			text += "path " + std::to_string(kept->number);
+			PathText(path);
+			text += '\n';
+			return kept;
+		}
+
+		void StrokePath(const s100::render::RetainedPath& path, const s100::render::ColorF& color,
+			const s100::render::Stroke& stroke) override
+		{
+			strokes++;
+			StrokeText(color, stroke);
+			text += " | path " + std::to_string(static_cast<const Kept&>(path).number) + "\n";
+		}
+
+		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
+			const s100::render::ColorF* shortStretches) override
+		{
+			lineStyles++;
+			text += "line style " + reference;
+			if (shortStretches)
+			{
+				text += " color";
+				Number(shortStretches->r);
+				Number(shortStretches->g);
+				Number(shortStretches->b);
+				Number(shortStretches->a);
+			}
+			for (const auto& point : points)
+			{
+				Number(point.x);
+				Number(point.y);
+			}
+			text += '\n';
+		}
+
+		int retained = 0;
+		int lineStyles = 0;
+
+	private:
+		void StrokeText(const s100::render::ColorF& color, const s100::render::Stroke& stroke)
+		{
 			text += "stroke width";
 			Number(stroke.width);
 			text += " color";
@@ -92,6 +159,10 @@ namespace
 			{
 				Number(dash);
 			}
+		}
+
+		void PathText(const s100::render::Path& path)
+		{
 			for (const auto& figure : path.figures)
 			{
 				text += " | from";
@@ -114,8 +185,9 @@ namespace
 				text += " to";
 				Number(arc.endDegrees);
 			}
-			text += '\n';
 		}
+
+	public:
 
 		void DrawSymbol(const std::string& reference, s100::render::PointF at, float rotationDegrees, float scale) override
 		{
@@ -352,7 +424,7 @@ int main(int argc, char** argv)
 			{
 				instruction->Accept(painter);
 			}
-			std::cout << "painted:       " << renderer.symbols << " symbols, " << renderer.texts << " texts, " << renderer.strokes << " strokes, hash "
+			std::cout << "painted:       " << renderer.symbols << " symbols, " << renderer.texts << " texts, " << renderer.strokes << " strokes, " << renderer.lineStyles << " line styles, hash "
 				<< std::hex << std::setw(16) << std::setfill('0') << GISLibrary::JsonHash(renderer.text)
 				<< std::dec << std::setfill(' ') << "\n";
 			if (jsonDirectory)
