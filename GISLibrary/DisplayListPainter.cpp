@@ -6,7 +6,11 @@
 #include "SCompositeCurve.h"
 #include "SCurve.h"
 #include "SSurface.h"
+#include "SENC_AreaFillReference.h"
+#include "SENC_AreaInstruction.h"
+#include "SENC_ColorFill.h"
 #include "SENC_CompositeLineStyle.h"
+#include "SENC_SymbolFill.h"
 #include "SENC_LineInstruction.h"
 #include "SENC_LineStyleReference.h"
 #include "SENC_SpatialReference.h"
@@ -49,12 +53,43 @@ namespace
 	// Pixels to a millimetre of a symbol.
 	const float symbolScale = 5;
 
-	// The path of a curve as the backend keeps it, parked with the curve. A dataset is drawn by
-	// one backend, so the path is that backend's.
-	struct CurvePath : Geometry::RenderAttachment
+	// The path of a curve or a surface as the backend keeps it, parked with the geometry. A
+	// dataset is drawn by one backend, so the path is that backend's.
+	struct KeptPath : Geometry::RenderAttachment
 	{
-		std::unique_ptr<s100::render::RetainedPath> path;   // nothing for a curve of one point
+		std::unique_ptr<s100::render::RetainedPath> path;   // nothing when there is nothing to draw
 	};
+
+	// The rings of a surface as closed figures; the points are given by a function of the index.
+	template <typename PointAt>
+	s100::render::Path SurfaceRings(SSurface* surface, PointAt pointAt)
+	{
+		s100::render::Path path;
+		if (surface->m_numPoints < 3)
+		{
+			return path;
+		}
+		const int parts = surface->m_numParts <= 1 ? 1 : surface->m_numParts;
+		for (int part = 0; part < parts; part++)
+		{
+			const int start = surface->m_numParts <= 1 ? 0 : surface->m_pParts[part];
+			const int count = surface->m_numParts <= 1 ? surface->m_numPoints : surface->GetNumPointPerPart(part);
+			if (count < 2)
+			{
+				continue;
+			}
+			s100::render::PathFigure ring;
+			ring.closed = true;
+			ring.start = pointAt(start);
+			ring.lines.resize(static_cast<size_t>(count - 1));
+			for (int i = 1; i < count; i++)
+			{
+				ring.lines[i - 1] = pointAt(start + i);
+			}
+			path.figures.push_back(std::move(ring));
+		}
+		return path;
+	}
 
 	// The measured size of a text, kept in the cache slot of its instruction. A display list is
 	// drawn by one backend, so the size is that backend's.
@@ -121,6 +156,112 @@ namespace s100::render
 			}
 
 			renderer.DrawSymbol(pugi::as_utf8(instruction->symbol->reference), { pi->x, pi->y }, rotation, symbolScale);
+		}
+	}
+
+	// The surface of the feature filled with a colour, an area fill of the catalogue or a symbol
+	// repeated.
+	void DisplayListPainter::Visit(SENC_AreaInstruction& instruction)
+	{
+		auto& fr = instruction.fr;
+		auto& areaFill = instruction.areaFill;
+
+		if (!areaFill || !fr || !fr->GetGeometry() || fr->GetGeometry()->GetType() != SGeometryType::Surface)
+		{
+			return;
+		}
+		auto surface = (SSurface*)fr->GetGeometry();
+
+		// Zoomed far in, the surface is drawn in device pixels and turned with the view.
+		const Transform turned = { TransformStep::RotateAbout(
+			(float)scaler.GetRotationDegree(), (float)scaler.sox, (float)scaler.soy) };
+
+		Fill fill;
+		switch (areaFill->type)
+		{
+		case 1:
+		{
+			auto colorFill = (SENC_ColorFill*)areaFill;
+			if (colorFill->color)
+			{
+				fill.color = color(colorFill->color->token);
+				fill.color.a = 1 - colorFill->color->transparency;
+				FillSurface(surface, fill, turned);
+			}
+			break;
+		}
+		case 2:
+		{
+			auto areaFillReference = (SENC_AreaFillReference*)areaFill;
+			fill.kind = Fill::Kind::AreaFill;
+			fill.reference = pugi::as_utf8(areaFillReference->GetFileStem());
+			fill.fallback = "QUESMRK1";
+			FillSurface(surface, fill, turned);
+			break;
+		}
+		case 4:
+		{
+			auto symbolFill = (SENC_SymbolFill*)areaFill;
+			if (symbolFill->GetFileStem().empty() == false)
+			{
+				// Read from a file of the catalogue (AreaFills): an area fill by name.
+				fill.kind = Fill::Kind::AreaFill;
+				fill.reference = pugi::as_utf8(symbolFill->GetFileStem());
+			}
+			else if (symbolFill->symbol)
+			{
+				fill.kind = Fill::Kind::SymbolTiles;
+				fill.symbol = pugi::as_utf8(symbolFill->symbol->reference);
+				fill.v1 = { (float)symbolFill->v1.x, (float)symbolFill->v1.y };
+				fill.v2 = { (float)symbolFill->v2.x, (float)symbolFill->v2.y };
+				fill.offset = { (float)symbolFill->symbol->offset.x, (float)symbolFill->symbol->offset.y };
+			}
+			else
+			{
+				break;
+			}
+			// Zoomed far in, not turned with the view (as before).
+			FillSurface(surface, fill, {});
+			break;
+		}
+		}
+	}
+
+	void DisplayListPainter::FillSurface(SSurface* surface, const Fill& fill, const Transform& zoomedIn)
+	{
+		if (scaler.GetCurrentScale() >= SCommonFuction::NewGeometryScale)
+		{
+			// The path of the surface in the coordinates of the dataset (x, -y), built once.
+			auto kept = dynamic_cast<KeptPath*>(surface->renderAttachment.get());
+			if (!kept)
+			{
+				auto attachment = std::make_unique<KeptPath>();
+				attachment->path = renderer.Retain(SurfaceRings(surface, [surface](int i) {
+					return PointF{ static_cast<float>(surface->m_pPoints[i].x), static_cast<float>(-surface->m_pPoints[i].y) };
+				}));
+				kept = attachment.get();
+				surface->renderAttachment = std::move(attachment);
+			}
+
+			if (kept->path)
+			{
+				renderer.SetTransform(ViewTransform());
+				renderer.FillPath(*kept->path, fill);
+			}
+		}
+		else
+		{
+			const Path path = SurfaceRings(surface, [this, surface](int i) {
+				PointF point;
+				scaler.WorldToDevice_F(surface->m_pPoints[i].x, surface->m_pPoints[i].y, &point.x, &point.y);
+				return point;
+			});
+			if (!path.figures.empty())
+			{
+				renderer.SetTransform(zoomedIn);
+				renderer.FillPath(path, fill);
+				renderer.SetTransform(ViewTransform());
+			}
 		}
 	}
 
@@ -338,10 +479,10 @@ namespace s100::render
 		if (scaler.GetCurrentScale() >= SCommonFuction::NewGeometryScale)
 		{
 			// The path of the curve in the coordinates of the dataset (x, -y), built once.
-			auto kept = dynamic_cast<CurvePath*>(curve->renderAttachment.get());
+			auto kept = dynamic_cast<KeptPath*>(curve->renderAttachment.get());
 			if (!kept)
 			{
-				auto attachment = std::make_unique<CurvePath>();
+				auto attachment = std::make_unique<KeptPath>();
 				if (curve->m_numPoints >= 2)
 				{
 					PathFigure figure;

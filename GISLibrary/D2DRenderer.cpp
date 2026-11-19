@@ -4,6 +4,8 @@
 #include "D2DConvert.h"
 #include "PortrayalRenderCache.h"
 
+#include "../S100Engine/AreaFill.h"
+#include "../S100Engine/AreaPatternBitmap.h"
 #include "../S100Engine/S100PCManager.h"
 #include "../S100Engine/S100Render.h"
 
@@ -46,8 +48,10 @@ namespace GISLibrary
 		// Direct2D's own matrices: the same arithmetic the painter code used before it moved.
 		D2D1::Matrix3x2F matrix = D2D1::Matrix3x2F::Identity();
 		bool first = true;
+		scaled = false;
 		for (const auto& step : transform)
 		{
+			scaled = scaled || step.kind == s100::render::TransformStep::Kind::Scale;
 			D2D1::Matrix3x2F next;
 			switch (step.kind)
 			{
@@ -155,12 +159,8 @@ namespace GISLibrary
 		}
 	}
 
-	std::unique_ptr<s100::render::RetainedPath> D2DRenderer::Retain(const s100::render::Path& path)
+	ID2D1PathGeometry* D2DRenderer::Build(const s100::render::Path& path)
 	{
-		if (!Ready())
-		{
-			return nullptr;
-		}
 		bool drawable = !path.arcs.empty();
 		for (const auto& figure : path.figures)
 		{
@@ -182,6 +182,7 @@ namespace GISLibrary
 			geometry->Release();
 			return nullptr;
 		}
+		sink->SetFillMode(D2D1_FILL_MODE_ALTERNATE);
 		for (const auto& figure : path.figures)
 		{
 			if (figure.lines.empty())
@@ -194,10 +195,122 @@ namespace GISLibrary
 		}
 		sink->Close();
 		sink->Release();
+		return geometry;
+	}
 
+	std::unique_ptr<s100::render::RetainedPath> D2DRenderer::Retain(const s100::render::Path& path)
+	{
+		if (!Ready())
+		{
+			return nullptr;
+		}
+		ID2D1PathGeometry* geometry = Build(path);
+		if (!geometry)
+		{
+			return nullptr;
+		}
 		auto retained = std::make_unique<RetainedGeometry>();
 		retained->geometry = geometry;
 		return retained;
+	}
+
+	void D2DRenderer::FillPath(const s100::render::Path& path, const s100::render::Fill& fill)
+	{
+		if (!Ready())
+		{
+			return;
+		}
+		if (ID2D1PathGeometry* geometry = Build(path))
+		{
+			FillGeometry(geometry, fill);
+			geometry->Release();
+		}
+	}
+
+	void D2DRenderer::FillPath(const s100::render::RetainedPath& path, const s100::render::Fill& fill)
+	{
+		auto retained = dynamic_cast<const RetainedGeometry*>(&path);
+		if (!Ready() || !retained || !retained->geometry)
+		{
+			return;   // a path of another backend is not drawn
+		}
+		FillGeometry(retained->geometry, fill);
+	}
+
+	void D2DRenderer::FillGeometry(ID2D1Geometry* geometry, const s100::render::Fill& fill)
+	{
+		auto rt = d2->RenderTarget();
+
+		// A pattern stays in device pixels: its brush undoes the scaling of the map.
+		D2D1::Matrix3x2F brushTransform = D2D1::Matrix3x2F::Identity();
+		if (scaled)
+		{
+			rt->GetTransform(&brushTransform);
+			brushTransform.Invert();
+		}
+
+		rt->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
+		switch (fill.kind)
+		{
+		case s100::render::Fill::Kind::Color:
+		{
+			auto brush = d2->SolidColorBrush();
+			brush->SetColor(ToD2D(fill.color));
+			rt->FillGeometry(geometry, brush);
+			break;
+		}
+		case s100::render::Fill::Kind::AreaFill:
+		{
+			auto manager = PortrayalRender::Caches(pc);
+			if (!manager)
+			{
+				break;
+			}
+			auto& patterns = manager->areaFillInfo.patternMap;
+			auto found = patterns.find(pugi::as_wide(fill.reference));
+			if (found == patterns.end() && !fill.fallback.empty())
+			{
+				found = patterns.find(pugi::as_wide(fill.fallback));
+			}
+			if (found != patterns.end() && found->second->pBitmapBrush)
+			{
+				found->second->pBitmapBrush->SetTransform(brushTransform);
+				rt->FillGeometry(geometry, found->second->pBitmapBrush);
+			}
+			break;
+		}
+		case s100::render::Fill::Kind::SymbolTiles:
+		{
+			auto manager = PortrayalRender::Caches(pc);
+			if (!manager)
+			{
+				break;
+			}
+			// The tile is drawn from the symbol each time (as before).
+			AreaFill tiles;
+			tiles.v1_x = fill.v1.x;
+			tiles.v1_y = fill.v1.y;
+			tiles.v2_x = fill.v2.x;
+			tiles.v2_y = fill.v2.y;
+			tiles._symbolReference = fill.symbol;
+			tiles.offset_x = fill.offset.x;
+			tiles.offset_y = fill.offset.y;
+
+			AreaPatternBitmap* image = manager->CreateBitmapImage(&tiles, d2->Factory(), d2->pImagingFactory, d2->SolidStrokeStyle());
+			if (image)
+			{
+				image->pBitmapBrush = manager->CreateBitmapBrush(image, rt);
+				if (image->pBitmapBrush)
+				{
+					image->pBitmapBrush->SetTransform(brushTransform);
+					rt->FillGeometry(geometry, image->pBitmapBrush);
+				}
+				delete image;
+			}
+			break;
+		}
+		}
+		rt->SetAntialiasMode(D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);
 	}
 
 	void D2DRenderer::StrokePath(const s100::render::RetainedPath& path, const s100::render::ColorF& color,

@@ -45,7 +45,7 @@ namespace
 		void Visit(SENC_AugmentedPath&) override { path++; }
 	};
 
-	// A render backend of the smallest kind: it is asked to stroke paths, place symbols and write texts, and writes down what
+	// A render backend of the smallest kind: it is asked to fill and stroke paths, place symbols and write texts, and writes down what
 	// it was asked. A real one (Skia, Cairo, a canvas) draws them; the S-100 side of drawing,
 	// where things go on the screen and how they are stroked, is DisplayListPainter and is the
 	// same for all of them.
@@ -120,6 +120,21 @@ namespace
 			text += " | path " + std::to_string(static_cast<const Kept&>(path).number) + "\n";
 		}
 
+		void FillPath(const s100::render::Path& path, const s100::render::Fill& fill) override
+		{
+			fills++;
+			FillText(fill);
+			PathText(path);
+			text += '\n';
+		}
+
+		void FillPath(const s100::render::RetainedPath& path, const s100::render::Fill& fill) override
+		{
+			fills++;
+			FillText(fill);
+			text += " | path " + std::to_string(static_cast<const Kept&>(path).number) + "\n";
+		}
+
 		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
 			const s100::render::ColorF* shortStretches) override
 		{
@@ -143,8 +158,36 @@ namespace
 
 		int retained = 0;
 		int lineStyles = 0;
+		int fills = 0;
 
 	private:
+		void FillText(const s100::render::Fill& fill)
+		{
+			switch (fill.kind)
+			{
+			case s100::render::Fill::Kind::Color:
+				text += "fill color";
+				Number(fill.color.r);
+				Number(fill.color.g);
+				Number(fill.color.b);
+				Number(fill.color.a);
+				break;
+			case s100::render::Fill::Kind::AreaFill:
+				text += "fill area fill " + fill.reference + " or " + (fill.fallback.empty() ? std::string("nothing") : fill.fallback);
+				break;
+			case s100::render::Fill::Kind::SymbolTiles:
+				text += "fill symbol " + fill.symbol + " lattice";
+				Number(fill.v1.x);
+				Number(fill.v1.y);
+				Number(fill.v2.x);
+				Number(fill.v2.y);
+				text += " offset";
+				Number(fill.offset.x);
+				Number(fill.offset.y);
+				break;
+			}
+		}
+
 		void StrokeText(const s100::render::ColorF& color, const s100::render::Stroke& stroke)
 		{
 			text += "stroke width";
@@ -424,7 +467,7 @@ int main(int argc, char** argv)
 			{
 				instruction->Accept(painter);
 			}
-			std::cout << "painted:       " << renderer.symbols << " symbols, " << renderer.texts << " texts, " << renderer.strokes << " strokes, " << renderer.lineStyles << " line styles, hash "
+			std::cout << "painted:       " << renderer.symbols << " symbols, " << renderer.texts << " texts, " << renderer.fills << " fills, " << renderer.strokes << " strokes, " << renderer.lineStyles << " line styles, hash "
 				<< std::hex << std::setw(16) << std::setfill('0') << GISLibrary::JsonHash(renderer.text)
 				<< std::dec << std::setfill(' ') << "\n";
 			if (jsonDirectory)

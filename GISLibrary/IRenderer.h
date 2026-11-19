@@ -118,6 +118,36 @@ namespace s100::render
 		std::vector<float> dashes;
 	};
 
+	// What a path is filled with.
+	//
+	// A pattern is a tile repeated over the surface. It is laid in device pixels from the corner
+	// of the surface, whatever the transform the path is drawn under, so the patterns of two
+	// areas side by side run on. As with a symbol, the backend owns what a tile looks like.
+	struct Fill
+	{
+		enum class Kind
+		{
+			Color,       // one colour
+			AreaFill,    // an area fill of the portrayal catalogue, by name
+			SymbolTiles  // a symbol of the catalogue repeated on a lattice
+		};
+
+		Kind kind = Kind::Color;
+		ColorF color;
+
+		// AreaFill: the name, and the area fill drawn when the catalogue has none of that name
+		// (empty: nothing is drawn then).
+		std::string reference;
+		std::string fallback;
+
+		// SymbolTiles: the symbol, the two vectors of the lattice and where the symbol sits in
+		// a tile, in millimetres.
+		std::string symbol;
+		PointF v1;
+		PointF v2;
+		PointF offset;
+	};
+
 	// The size of something on the surface, in device pixels.
 	struct SizeF
 	{
@@ -145,6 +175,11 @@ namespace s100::render
 		// A path to keep: nothing if it has nothing to draw (a single point).
 		virtual std::unique_ptr<RetainedPath> Retain(const Path& path) = 0;
 		virtual void StrokePath(const RetainedPath& path, const ColorF& color, const Stroke& stroke) = 0;
+
+		// The inside of a path by the even-odd rule (a ring inside a ring is a hole), without
+		// antialiasing: areas side by side must not show a seam.
+		virtual void FillPath(const Path& path, const Fill& fill) = 0;
+		virtual void FillPath(const RetainedPath& path, const Fill& fill) = 0;
 
 		// A line style of the portrayal catalogue (a strip repeated along the line) along a
 		// polyline given in device pixels, whatever the transform. As with a symbol, the

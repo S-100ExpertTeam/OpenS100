@@ -94,6 +94,21 @@ namespace
 			text += std::format(" | path {}\n", static_cast<const Kept&>(path).number);
 		}
 
+		void FillPath(const s100::render::Path& path, const s100::render::Fill& fill) override
+		{
+			fills++;
+			FillText(fill);
+			PathText(path);
+			text += "\n";
+		}
+
+		void FillPath(const s100::render::RetainedPath& path, const s100::render::Fill& fill) override
+		{
+			fills++;
+			FillText(fill);
+			text += std::format(" | path {}\n", static_cast<const Kept&>(path).number);
+		}
+
 		void StrokeLineStyle(const std::string& reference, const std::vector<s100::render::PointF>& points,
 			const s100::render::ColorF* shortStretches) override
 		{
@@ -113,8 +128,29 @@ namespace
 		int retained = 0;
 		int retainedStrokes = 0;
 		int lineStyles = 0;
+		int fills = 0;
+		int patternFills = 0;
 
 	private:
+		void FillText(const s100::render::Fill& fill)
+		{
+			switch (fill.kind)
+			{
+			case s100::render::Fill::Kind::Color:
+				text += std::format("fill color {} {} {} {}", Q(fill.color.r), Q(fill.color.g), Q(fill.color.b), Q(fill.color.a));
+				break;
+			case s100::render::Fill::Kind::AreaFill:
+				patternFills++;
+				text += std::format("fill area fill {} or {}", fill.reference, fill.fallback.empty() ? "nothing" : fill.fallback);
+				break;
+			case s100::render::Fill::Kind::SymbolTiles:
+				patternFills++;
+				text += std::format("fill symbol {} lattice {} {} {} {} offset {} {}", fill.symbol, Q(fill.v1.x), Q(fill.v1.y),
+					Q(fill.v2.x), Q(fill.v2.y), Q(fill.offset.x), Q(fill.offset.y));
+				break;
+			}
+		}
+
 		void StrokeText(const s100::render::ColorF& color, const s100::render::Stroke& stroke)
 		{
 			dashed += stroke.dashes.empty() ? 0 : 1;
@@ -172,7 +208,7 @@ namespace
 	};
 }
 
-// A sample cell with lights: its symbols, lines, texts and augmented rays and paths (sector limits and arcs) drawn on the
+// A sample cell with lights: its areas, lines, symbols, texts and augmented rays and paths (sector limits and arcs) drawn on the
 // recording renderer. No Direct2D and no window: this is what runs on every platform.
 TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 {
@@ -218,8 +254,9 @@ TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 	EXPECT_EQ(paths, 10);
 	EXPECT_EQ(renderer.strokes, 20);            // every ray is a stroke; here every path has one arc
 	EXPECT_GT(renderer.symbols, 0);             // a point instruction is a symbol at each of its points
+	EXPECT_GT(renderer.fills, 0);               // an area instruction is a fill of its surface
 	EXPECT_GT(renderer.retained, 0);            // a curve is kept as a path once
-	EXPECT_GE(renderer.retainedStrokes, renderer.retained);   // and stroked for every instruction on it
+	EXPECT_GE(renderer.retainedStrokes + renderer.fills, renderer.retained);   // and drawn for every instruction on it
 	EXPECT_GT(renderer.lineStyles, 0);          // a line style of the catalogue goes to the backend by name
 	EXPECT_GT(renderer.texts, 0);               // a text instruction is a text at each of its points
 	EXPECT_GT(renderer.measures, 0);            // the painter asks the backend how large a text is
@@ -227,22 +264,25 @@ TEST(DisplayListPainter, SampleCellIsPaintedAsRecorded)
 	EXPECT_GT(lookups, 0);
 
 	const std::string hash = std::format("{:016x}", GISLibrary::JsonHash(renderer.text));
-	if (hash != "6ae9eb1654a20698")
+	if (hash != "03d8aa8f9386d8e4")
 	{
 		const auto dump = testpaths::tempDir() / "10100AA_X01NE.strokes.txt";
 		std::ofstream(dump, std::ios::binary | std::ios::trunc) << renderer.text;
 		ADD_FAILURE() << "recorded calls hash " << hash << ", strokes " << renderer.strokes << ", arcs " << renderer.arcs
 			<< ", dashed " << renderer.dashed << ", symbols " << renderer.symbols << ", texts " << renderer.texts << ", measures " << renderer.measures
-			<< ", kept paths " << renderer.retained << ", strokes of them " << renderer.retainedStrokes << ", line styles " << renderer.lineStyles << "; the text is in " << dump;
+			<< ", kept paths " << renderer.retained << ", strokes of them " << renderer.retainedStrokes << ", line styles " << renderer.lineStyles
+			<< ", fills " << renderer.fills << ", of them patterns " << renderer.patternFills << "; the text is in " << dump;
 	}
 
 	// Painted again, no curve is built again: its path is kept with it.
 	const int kept = renderer.retained;
 	const int strokesOfKept = renderer.retainedStrokes;
+	const int fills = renderer.fills;
 	for (auto& [key, instruction] : cell->pcManager->displayListSENC->displayInstructions)
 	{
 		instruction->Accept(painter);
 	}
 	EXPECT_EQ(renderer.retained, kept);
 	EXPECT_EQ(renderer.retainedStrokes, 2 * strokesOfKept);
+	EXPECT_EQ(renderer.fills, 2 * fills);
 }

@@ -16,8 +16,8 @@ namespace GISLibrary
 {
 	class D2D1Resources;
 
-	// Draws drawing instructions with Direct2D. Everything Direct2D does with an instruction is
-	// here; the instruction model only describes what is to be drawn.
+	// Draws drawing instructions with Direct2D: the shared painter (DisplayListPainter) on a
+	// D2DRenderer. What is drawn where is the painter's; everything Direct2D is the renderer's.
 	//
 	// The transform, the brush opacity and the depth suppression runs are set by the caller
 	// (LayerManager::AddSymbolDrawing) between the groups of instructions, as before.
